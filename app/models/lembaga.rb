@@ -1,0 +1,2 @@
+class Lembaga < ApplicationRecord
+end
