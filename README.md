@@ -1,24 +1,10 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Proyek Lanjutan SKP / PK
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Kerangka Acuan Kerja ( KAK )
+- Garis besar aplikasi ini adalah membantu ASN eselon 4 ( KaSi ) untuk mengumpulkan bukti pendukung - Rencana aksi pada satu subkegiatan OPD
+- Hasil dari KAK adalah analisa GAP Gender, Detail Aksi subkegiatan
+- KAK dilakukan sebelum perancangan SKP dan PK
+- Implementasi pada tahun 2023
+* to be updated
