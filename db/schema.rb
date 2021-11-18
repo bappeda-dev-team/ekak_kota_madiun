@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_17_134919) do
+ActiveRecord::Schema.define(version: 2021_11_18_014824) do
 
   create_table "lembagas", force: :cascade do |t|
     t.string "nama_lembaga"
@@ -22,6 +22,17 @@ ActiveRecord::Schema.define(version: 2021_11_17_134919) do
   create_table "opds", force: :cascade do |t|
     t.string "nama_opd"
     t.string "kode_opd"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "program_kegiatans", force: :cascade do |t|
+    t.string "nama_program"
+    t.string "nama_kegiatan"
+    t.string "nama_subkegiatan"
+    t.string "indikator_kinerja"
+    t.string "target"
+    t.string "satuan"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
