@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_18_014824) do
+ActiveRecord::Schema.define(version: 2021_11_22_011717) do
 
   create_table "lembagas", force: :cascade do |t|
     t.string "nama_lembaga"
@@ -33,6 +33,14 @@ ActiveRecord::Schema.define(version: 2021_11_18_014824) do
     t.string "indikator_kinerja"
     t.string "target"
     t.string "satuan"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "nama"
+    t.string "nik"
+    t.string "password"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
