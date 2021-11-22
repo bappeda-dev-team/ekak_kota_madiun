@@ -11,4 +11,5 @@ class ProgramKegiatan < ApplicationRecord
   validates :indikator_kinerja, presence: true
   validates :target, presence: true
   validates :satuan, presence: true
+  belongs_to :opd
 end

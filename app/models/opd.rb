@@ -7,4 +7,6 @@ class Opd < ApplicationRecord
   validates :nama_opd, presence: true
   validates :kode_opd, presence: true
   has_many :users
+  has_many :program_kegiatans
+  belongs_to :lembaga
 end

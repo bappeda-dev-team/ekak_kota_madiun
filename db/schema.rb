@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_22_155526) do
+ActiveRecord::Schema.define(version: 2021_11_22_161823) do
 
   create_table "lembagas", force: :cascade do |t|
     t.string "nama_lembaga"
-    t.time "tahun"
+    t.string "tahun"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2021_11_22_155526) do
     t.string "kode_opd"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "lembaga_id"
   end
 
   create_table "program_kegiatans", force: :cascade do |t|
@@ -35,6 +36,7 @@ ActiveRecord::Schema.define(version: 2021_11_22_155526) do
     t.string "satuan"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "opd_id"
   end
 
   create_table "users", force: :cascade do |t|
