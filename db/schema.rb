@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_22_011717) do
+ActiveRecord::Schema.define(version: 2021_11_22_155526) do
 
   create_table "lembagas", force: :cascade do |t|
     t.string "nama_lembaga"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2021_11_22_011717) do
     t.string "password"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "opd_id"
   end
 
 end
