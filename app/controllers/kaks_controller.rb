@@ -64,6 +64,6 @@ class KaksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def kak_params
-      params.require(:kak).permit(:dasar_hukum, :tujuan, :sasaran_kinerja, :indikator_kinerja, :target, :satuan, :penerima_manfaat, :data_terpilah, :akses, :partisipasi, :kontrol, :manfaat, :penyebab_internal, :penyebab_external, :permasalahan_umum, :permasalahan_gender, :resiko, :lokasi_pelaksanaan)
+      params.require(:kak).permit(:program_kegiatan_id ,:dasar_hukum, :tujuan, :sasaran_kinerja, :indikator_kinerja, :target, :satuan, :penerima_manfaat, :data_terpilah, :akses, :partisipasi, :kontrol, :manfaat, :penyebab_internal, :penyebab_external, :permasalahan_umum, :permasalahan_gender, :resiko, :lokasi_pelaksanaan)
     end
 end
