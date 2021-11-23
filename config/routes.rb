@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   resources :lembagas
   get "/opds", to: "opds#index"
   get "/opd/:id", to: "opds#show"
-  get "/programKegiatans", to: "program_kegiatans#index"
-  get "/programKegiatan/new", to: "program_kegiatans#new"
-  get "/programKegiatan/:id", to: "program_kegiatans#show"
-  post "/programKegiatan", to: "program_kegiatans#create"
+  get "/program_kegiatans", to: "program_kegiatans#index"
+  get "/program_kegiatans/new", to: "program_kegiatans#new"
+  get "/program_kegiatan/:id", to: "program_kegiatans#show"
+  post "/program_kegiatans", to: "program_kegiatans#create"
 end

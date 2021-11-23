@@ -1,1 +1,36 @@
-<h1>Program Kegiatans OPD A Lembaga A</h1>
+<p id="notice"><%= notice %></p>
+
+<h1>Program Kegiatan</h1>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Nama Program</th>
+      <th>Nama Kegiatan</th>
+      <th>Nama SubKegiatan</th>
+      <th>Indikator Kinerja</th>
+      <th>Target</th>
+      <th>Satuan</th>
+      <th colspan="1">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @programKegiatan.each do |prog| %>
+      <tr>
+        <td><%= prog.nama_program %></td>
+        <td><%= prog.nama_kegiatan %></td>
+        <td><%= prog.nama_subkegiatan %></td>
+        <td><%= prog.indikator_kinerja %></td>
+        <td><%= prog.target %></td>
+        <td><%= prog.satuan %></td>
+        <td><%= link_to 'Show', prog %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+ <%= link_to 'Tambah Program', "/program_kegiatans/new" %> 

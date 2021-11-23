@@ -1,0 +1,48 @@
+<%= form_with model: program_kegiatan do |form| %>
+  <% if program_kegiatan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(program_kegiatan.errors.count, "error") %> prohibited this program_kegiatan from being saved:</h2>
+
+      <ul>
+        <% program_kegiatan.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :nama_program %>
+    <%= form.text_field :nama_program %>
+  </div>
+
+  <div class="field">
+    <%= form.label :nama_kegiatan %>
+    <%= form.text_field :nama_kegiatan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :nama_subkegiatan %>
+    <%= form.text_field :nama_subkegiatan %>
+  </div>
+
+ <div class="field">
+    <%= form.label :indikator_kinerja %>
+    <%= form.text_field :indikator_kinerja %>
+  </div>
+
+ <div class="field">
+    <%= form.label :target %>
+    <%= form.text_field :target %>
+  </div>
+
+  
+ <div class="field">
+    <%= form.label :satuan %>
+    <%= form.text_field :satuan %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
