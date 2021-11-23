@@ -1,0 +1,107 @@
+<%= form_with(model: kak) do |form| %>
+  <% if kak.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(kak.errors.count, "error") %> prohibited this kak from being saved:</h2>
+
+      <ul>
+        <% kak.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :dasar_hukum %>
+    <%= form.text_area :dasar_hukum %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tujuan %>
+    <%= form.text_area :tujuan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sasaran_kinerja %>
+    <%= form.text_area :sasaran_kinerja %>
+  </div>
+
+  <div class="field">
+    <%= form.label :indikator_kinerja %>
+    <%= form.text_area :indikator_kinerja %>
+  </div>
+
+  <div class="field">
+    <%= form.label :target %>
+    <%= form.text_field :target %>
+  </div>
+
+  <div class="field">
+    <%= form.label :satuan %>
+    <%= form.text_field :satuan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :penerima_manfaat %>
+    <%= form.text_field :penerima_manfaat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :data_terpilah %>
+    <%= form.text_area :data_terpilah %>
+  </div>
+
+  <div class="field">
+    <%= form.label :akses %>
+    <%= form.text_area :akses %>
+  </div>
+
+  <div class="field">
+    <%= form.label :partisipasi %>
+    <%= form.text_area :partisipasi %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kontrol %>
+    <%= form.text_area :kontrol %>
+  </div>
+
+  <div class="field">
+    <%= form.label :manfaat %>
+    <%= form.text_area :manfaat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :penyebab_internal %>
+    <%= form.text_area :penyebab_internal %>
+  </div>
+
+  <div class="field">
+    <%= form.label :penyebab_external %>
+    <%= form.text_area :penyebab_external %>
+  </div>
+
+  <div class="field">
+    <%= form.label :permasalahan_umum %>
+    <%= form.text_area :permasalahan_umum %>
+  </div>
+
+  <div class="field">
+    <%= form.label :permasalahan_gender %>
+    <%= form.text_area :permasalahan_gender %>
+  </div>
+
+  <div class="field">
+    <%= form.label :resiko %>
+    <%= form.text_area :resiko %>
+  </div>
+
+  <div class="field">
+    <%= form.label :lokasi_pelaksanaan %>
+    <%= form.text_field :lokasi_pelaksanaan %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

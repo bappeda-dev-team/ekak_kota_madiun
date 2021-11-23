@@ -1,0 +1,2 @@
+class Kak < ApplicationRecord
+end

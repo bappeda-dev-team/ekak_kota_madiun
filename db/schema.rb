@@ -10,11 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_22_161823) do
+ActiveRecord::Schema.define(version: 2021_11_23_004734) do
+
+  create_table "kaks", force: :cascade do |t|
+    t.text "dasar_hukum"
+    t.text "tujuan"
+    t.text "sasaran_kinerja"
+    t.text "indikator_kinerja"
+    t.string "target"
+    t.string "satuan"
+    t.string "penerima_manfaat"
+    t.text "data_terpilah"
+    t.text "akses"
+    t.text "partisipasi"
+    t.text "kontrol"
+    t.text "manfaat"
+    t.text "penyebab_internal"
+    t.text "penyebab_external"
+    t.text "permasalahan_umum"
+    t.text "permasalahan_gender"
+    t.text "resiko"
+    t.string "lokasi_pelaksanaan"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "lembagas", force: :cascade do |t|
     t.string "nama_lembaga"
-    t.string "tahun"
+    t.time "tahun"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
