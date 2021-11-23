@@ -1,1 +1,19 @@
-<h1>Show File</h1>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nama OPD:</strong>
+  <%= @opd.nama_opd %>
+</p>
+
+<p>
+  <strong>Kode OPD:</strong>
+  <%= @opd.kode_opd %>
+</p>
+
+<p>
+  <strong>Lembaga:</strong>
+  <%= @opd.lembaga.nama_lembaga %>
+</p>
+
+<%= link_to 'Edit', edit_opd_path(@opd) %> |
+<%= link_to 'Back', opds_path %>

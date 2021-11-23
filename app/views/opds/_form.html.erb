@@ -1,0 +1,32 @@
+<%= form_with(model: opd) do |form| %>
+  <% if opd.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(opd.errors.count, "error") %> prohibited this opd from being saved:</h2>
+
+      <ul>
+        <% opd.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :nama_opd %>
+    <%= form.text_field :nama_opd %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kode_opd %>
+    <%= form.text_field :kode_opd %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :lembaga_id %>
+    <%= form.text_field :lembaga_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

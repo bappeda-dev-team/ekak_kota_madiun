@@ -1,0 +1,28 @@
+<%= form_with(model: lembaga) do |form| %>
+  <% if lembaga.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(lembaga.errors.count, "error") %> prohibited this lembaga from being saved:</h2>
+
+      <ul>
+        <% lembaga.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :nama_lembaga %>
+    <%= form.text_field :nama_lembaga %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tahun %>
+    <%= form.text_field :tahun %>
+  </div>
+
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

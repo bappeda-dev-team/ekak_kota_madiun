@@ -5,6 +5,7 @@ class ProgramKegiatansController < ApplicationController
 
   def new
     @programKegiatan = ProgramKegiatan.new
+    @opds = Opd.all
   end
 
   def show
