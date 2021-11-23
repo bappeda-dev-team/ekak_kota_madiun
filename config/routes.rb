@@ -4,8 +4,9 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :lembagas
   resources :opds
-  get "/program_kegiatans", to: "program_kegiatans#index"
-  get "/program_kegiatans/new", to: "program_kegiatans#new"
-  get "/program_kegiatan/:id", to: "program_kegiatans#show"
-  post "/program_kegiatans", to: "program_kegiatans#create"
+  resources :program_kegiatans
+  # get "/program_kegiatans", to: "program_kegiatans#index"
+  # get "/program_kegiatans/new", to: "program_kegiatans#new"
+  # get "/program_kegiatan/:id", to: "program_kegiatans#show"
+  # post "/program_kegiatans", to: "program_kegiatans#create"
 end

@@ -1,10 +1,10 @@
-<%= form_with model: program_kegiatan do |form| %>
-  <% if program_kegiatan.errors.any? %>
+<%= form_with model: programKegiatan do |form| %>
+  <% if programKegiatan.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(program_kegiatan.errors.count, "error") %> prohibited this program_kegiatan from being saved:</h2>
+      <h2><%= pluralize(programKegiatan.errors.count, "error") %> prohibited this programKegiatan from being saved:</h2>
 
       <ul>
-        <% program_kegiatan.errors.each do |error| %>
+        <% programKegiatan.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
@@ -40,6 +40,12 @@
  <div class="field">
     <%= form.label :satuan %>
     <%= form.text_field :satuan %>
+  </div>
+
+<!--TODO: Kasih select dropdown -->
+ <div class="field">
+    <%= form.label :opd_id %>
+    <%= form.text_field :opd_id %>
   </div>
 
   <div class="actions">

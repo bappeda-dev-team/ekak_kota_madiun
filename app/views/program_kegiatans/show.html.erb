@@ -1,1 +1,37 @@
-<h1>Show Program Kegiatan</h1>
+<p id="notice"><%= notice %></p>
+<p>
+  <strong>Nama Lembaga:</strong>
+  <%= @programKegiatan.opd.lembaga.nama_lembaga %>
+</p>
+<p>
+  <strong>Nama OPD:</strong>
+  <%= @programKegiatan.opd.nama_opd %>
+</p>
+<p>
+  <strong>Nama Program:</strong>
+  <%= @programKegiatan.nama_program %>
+</p>
+<p>
+  <strong>Nama Kegiatan:</strong>
+  <%= @programKegiatan.nama_kegiatan %>
+</p>
+<p>
+  <strong>Nama SubKegiatan:</strong>
+  <%= @programKegiatan.nama_subkegiatan %>
+</p>
+<p>
+  <strong>Indikator Kinerja:</strong>
+  <%= @programKegiatan.indikator_kinerja %>
+</p>
+<p>
+  <strong>Target:</strong>
+  <%= @programKegiatan.target %>
+</p>
+<p>
+  <strong>Satuan:</strong>
+  <%= @programKegiatan.satuan %>
+</p>
+
+
+<%= link_to 'Edit', edit_program_kegiatan_path(@programKegiatan) %> |
+<%= link_to 'Back', program_kegiatans_path %>

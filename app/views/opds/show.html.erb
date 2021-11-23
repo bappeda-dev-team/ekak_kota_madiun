@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Lembaga:</strong>
+  <%= @opd.lembaga.nama_lembaga %>
+</p>
+
+<p>
   <strong>Nama OPD:</strong>
   <%= @opd.nama_opd %>
 </p>
@@ -11,9 +16,22 @@
 </p>
 
 <p>
-  <strong>Lembaga:</strong>
-  <%= @opd.lembaga.nama_lembaga %>
+<strong>Program Kegiatan</strong>
+<hr>
+<% @opd.program_kegiatans.each do |prog| %>
+  <p>
+    <strong>Program:</strong>
+    <%= prog.nama_program %>
+  </p>
+  <p>
+    <strong>Kegiatan:</strong>
+    <%= prog.nama_kegiatan %>
+  </p>
+  <p>
+    <strong>SubKegiatan:</strong>
+    <%= prog.nama_subkegiatan %>
+  </p>
+<% end %>
 </p>
-
 <%= link_to 'Edit', edit_opd_path(@opd) %> |
 <%= link_to 'Back', opds_path %>

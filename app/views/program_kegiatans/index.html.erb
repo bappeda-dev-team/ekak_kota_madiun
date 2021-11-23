@@ -12,12 +12,13 @@
       <th>Indikator Kinerja</th>
       <th>Target</th>
       <th>Satuan</th>
-      <th colspan="1">Action</th>
+      <th>OPD</th>
+      <th colspan="3">Action</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @programKegiatan.each do |prog| %>
+    <% @programKegiatans.each do |prog| %>
       <tr>
         <td><%= prog.nama_program %></td>
         <td><%= prog.nama_kegiatan %></td>
@@ -25,7 +26,10 @@
         <td><%= prog.indikator_kinerja %></td>
         <td><%= prog.target %></td>
         <td><%= prog.satuan %></td>
+        <td><%= prog.opd.nama_opd %></td>
         <td><%= link_to 'Show', prog %></td>
+        <td><%= link_to 'Edit', edit_program_kegiatan_path(prog) %></td>
+        <td><%= link_to 'Destroy', prog, method: :delete, data: { confirm: "Apakah Anda Ingin Menghapus ?"} %></td>
       </tr>
     <% end %>
   </tbody>

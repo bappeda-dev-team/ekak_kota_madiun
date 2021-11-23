@@ -1,30 +1,55 @@
 class ProgramKegiatansController < ApplicationController
+  before_action :set_programKegiatan, only: %i[ show edit update destroy ]
   def index
-    @programKegiatan = ProgramKegiatan.all
+    @programKegiatans = ProgramKegiatan.all
   end
 
   def new
     @programKegiatan = ProgramKegiatan.new
-    @opds = Opd.all
   end
 
   def show
   end
 
+  def edit
+  end
+
   def create
-    @programKegiatan = ProgramKegiatan.new(program_kegiatan_params)
+    @programKegiatan = ProgramKegiatan.new(programKegiatan_params)
     respond_to do |format|
       if @programKegiatan.save
-        format.html { redirect_to @programKegiatan, notice: "User was successfully created." }
+        format.html { redirect_to @programKegiatan, notice: "Program Kegiatan Dibuat" }
       else
-        format.html { render :new, notice: "Failed create user" }
+        format.html { render :new, notice: "Gagal menyimpan Program Kegiatan" }
       end
+    end
+  end
+
+  def update
+    respond_to do |format|
+      if @programKegiatan.update(programKegiatan_params)
+        format.html { redirect_to @programKegiatan, notice: "Program Kegiatan diupdate"}
+      else
+        format.html { render :edit, notice: "Program Kegiatan Gagal diupdate" }
+      end
+    end
+  end
+
+  def destroy
+    @programKegiatan.destroy
+    respond_to do |format|
+      format.html { redirect_to program_kegiatans_url, notice: "Program dihapus" }
     end
   end
 
 
   private
-  def program_kegiatan_params
+
+  def set_programKegiatan
+    @programKegiatan = ProgramKegiatan.find(params[:id])
+  end
+
+  def programKegiatan_params
     params.require(:program_kegiatan).permit!
   end
 
