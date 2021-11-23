@@ -12,4 +12,5 @@ class ProgramKegiatan < ApplicationRecord
   validates :target, presence: true
   validates :satuan, presence: true
   belongs_to :opd
+  has_many :kaks
 end

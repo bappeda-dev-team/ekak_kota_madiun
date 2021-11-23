@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_23_004734) do
+ActiveRecord::Schema.define(version: 2021_11_23_011849) do
 
   create_table "kaks", force: :cascade do |t|
     t.text "dasar_hukum"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 2021_11_23_004734) do
     t.string "lokasi_pelaksanaan"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "program_kegiatan_id"
   end
 
   create_table "lembagas", force: :cascade do |t|
