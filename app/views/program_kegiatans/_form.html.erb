@@ -42,10 +42,11 @@
     <%= form.text_field :satuan %>
   </div>
 
-<!--TODO: Kasih select dropdown -->
+
  <div class="field">
+    <% options = options_from_collection_for_select(opds, 'id', 'nama_opd') %>
     <%= form.label :opd_id %>
-    <%= form.text_field :opd_id %>
+    <%= form.select :opd_id, options %>
   </div>
 
   <div class="actions">

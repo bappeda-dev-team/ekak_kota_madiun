@@ -219,7 +219,7 @@ GEM
     semantic_range (3.0.0)
     shoulda-matchers (5.0.0)
       activesupport (>= 5.2.0)
-    solargraph (0.44.1)
+    solargraph (0.44.2)
       backport (~> 1.2)
       benchmark
       bundler (>= 1.17.2)

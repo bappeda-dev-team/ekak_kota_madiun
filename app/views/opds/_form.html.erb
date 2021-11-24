@@ -22,8 +22,9 @@
   </div>
   
   <div class="field">
+    <% options = options_from_collection_for_select(lembagas, 'id', 'nama_lembaga') %>
     <%= form.label :lembaga_id %>
-    <%= form.text_field :lembaga_id %>
+    <%= form.select :lembaga_id, options %>
   </div>
 
   <div class="actions">

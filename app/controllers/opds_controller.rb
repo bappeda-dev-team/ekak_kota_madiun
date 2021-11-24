@@ -9,9 +9,11 @@ class OpdsController < ApplicationController
 
   def new
     @opd = Opd.new
+    @lembagas = Lembaga.all
   end
 
   def edit
+    @lembagas = Lembaga.all
   end
 
   def create

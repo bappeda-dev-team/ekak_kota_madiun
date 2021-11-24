@@ -13,10 +13,12 @@ class KaksController < ApplicationController
   # GET /kaks/new
   def new
     @kak = Kak.new
+    @program_kegiatans = ProgramKegiatan.all
   end
 
   # GET /kaks/1/edit
   def edit
+    @program_kegiatans = ProgramKegiatan.all
   end
 
   # POST /kaks or /kaks.json

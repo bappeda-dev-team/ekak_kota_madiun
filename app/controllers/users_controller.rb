@@ -13,10 +13,12 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    @opds = Opd.all
   end
 
   # GET /users/1/edit
   def edit
+    @opds = Opd.all
   end
 
   # POST /users or /users.json

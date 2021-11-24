@@ -10,10 +10,11 @@
       </ul>
     </div>
   <% end %>
-<!-- TODO: Biasa dropdown disini -->
+<!-- TODO: Disini ada dropdown terkait dengan OPD, chain OPD -> programKegiatan -->
   <div class="field">
+    <% options = options_from_collection_for_select(program_kegiatans, 'id', 'nama_program') %>
     <%= form.label :program_kegiatan_id %>
-    <%= form.text_field :program_kegiatan_id %>
+    <%= form.select :program_kegiatan_id, options %>
   </div>
 
   <div class="field">
