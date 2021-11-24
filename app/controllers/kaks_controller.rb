@@ -1,5 +1,6 @@
 class KaksController < ApplicationController
   before_action :set_kak, only: %i[ show edit update destroy ]
+  before_action :set_dropdown, only: %i[ new edit ]
 
   # GET /kaks or /kaks.json
   def index
@@ -13,12 +14,10 @@ class KaksController < ApplicationController
   # GET /kaks/new
   def new
     @kak = Kak.new
-    @program_kegiatans = ProgramKegiatan.all
   end
 
   # GET /kaks/1/edit
   def edit
-    @program_kegiatans = ProgramKegiatan.all
   end
 
   # POST /kaks or /kaks.json
@@ -62,6 +61,11 @@ class KaksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_kak
       @kak = Kak.find(params[:id])
+    end
+    
+    def set_dropdown
+      # TODO : update  -> agar sesuai dengan opd masing masing
+      @program_kegiatans = ProgramKegiatan.all
     end
 
     # Only allow a list of trusted parameters through.

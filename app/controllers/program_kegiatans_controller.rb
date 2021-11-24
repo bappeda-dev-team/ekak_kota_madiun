@@ -1,19 +1,19 @@
 class ProgramKegiatansController < ApplicationController
   before_action :set_programKegiatan, only: %i[ show edit update destroy ]
+  before_action :set_dropdown, only: %i[ new edit ]
+
   def index
     @programKegiatans = ProgramKegiatan.all
   end
 
   def new
     @programKegiatan = ProgramKegiatan.new
-    @opds = Opd.all
   end
 
   def show
   end
 
   def edit
-    @opds = Opd.all
   end
 
   def create
@@ -49,6 +49,10 @@ class ProgramKegiatansController < ApplicationController
 
   def set_programKegiatan
     @programKegiatan = ProgramKegiatan.find(params[:id])
+  end
+
+  def set_dropdown
+    @opds = Opd.all
   end
 
   def programKegiatan_params

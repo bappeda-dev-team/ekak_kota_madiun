@@ -1,5 +1,7 @@
 class OpdsController < ApplicationController
   before_action :set_opd, only: %i[ show edit update destroy ]
+  before_action :set_dropdown, only: %i[ new edit ]
+  
   def index
     @opds = Opd.all
   end
@@ -9,11 +11,9 @@ class OpdsController < ApplicationController
 
   def new
     @opd = Opd.new
-    @lembagas = Lembaga.all
   end
 
   def edit
-    @lembagas = Lembaga.all
   end
 
   def create
@@ -48,6 +48,10 @@ class OpdsController < ApplicationController
 
   def set_opd
     @opd = Opd.find(params[:id])
+  end
+
+  def set_dropdown
+    @lembagas = Lembaga.all
   end
 
   def opd_params

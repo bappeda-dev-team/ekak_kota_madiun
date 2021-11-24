@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
-
+  before_action :set_dropdown, only: %i[ new edit ]
   # GET /users or /users.json
   def index
     @users = User.all
@@ -13,12 +13,10 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
-    @opds = Opd.all
   end
 
   # GET /users/1/edit
   def edit
-    @opds = Opd.all
   end
 
   # POST /users or /users.json
@@ -62,6 +60,10 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def set_dropdown
+      @opds = Opd.all
     end
 
     # Only allow a list of trusted parameters through.
