@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Pks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Eselon 4</th>
+      <th>Sasaran</th>
+      <th>Indikator kinerja</th>
+      <th>Target</th>
+      <th>Satuan</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pks.each do |pk| %>
+      <tr>
+        <td><%= pk.user.nama %></td>
+        <td><%= pk.sasaran %></td>
+        <td><%= pk.indikator_kinerja %></td>
+        <td><%= pk.target %></td>
+        <td><%= pk.satuan %></td>
+        <td><%= link_to 'Show', pk %></td>
+        <td><%= link_to 'Edit', edit_pk_path(pk) %></td>
+        <td><%= link_to 'Destroy', pk, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pk', new_pk_path %>

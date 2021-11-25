@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_23_011849) do
+ActiveRecord::Schema.define(version: 2021_11_25_060916) do
 
   create_table "kaks", force: :cascade do |t|
     t.text "dasar_hukum"
@@ -34,6 +34,10 @@ ActiveRecord::Schema.define(version: 2021_11_23_011849) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "program_kegiatan_id"
+    t.integer "user_id"
+    t.integer "pk_id"
+    t.index ["pk_id"], name: "index_kaks_on_pk_id"
+    t.index ["user_id"], name: "index_kaks_on_user_id"
   end
 
   create_table "lembagas", force: :cascade do |t|
@@ -49,6 +53,17 @@ ActiveRecord::Schema.define(version: 2021_11_23_011849) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "lembaga_id"
+  end
+
+  create_table "pks", force: :cascade do |t|
+    t.string "sasaran"
+    t.string "indikator_kinerja"
+    t.string "target"
+    t.string "satuan"
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_pks_on_user_id"
   end
 
   create_table "program_kegiatans", force: :cascade do |t|
@@ -72,4 +87,5 @@ ActiveRecord::Schema.define(version: 2021_11_23_011849) do
     t.integer "opd_id"
   end
 
+  add_foreign_key "pks", "users"
 end

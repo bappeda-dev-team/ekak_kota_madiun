@@ -10,6 +10,16 @@
       </ul>
     </div>
   <% end %>
+   <div class="field">
+    <% options = options_from_collection_for_select(users, 'id', 'nama') %>
+    <%= form.label :user_id %>
+    <%= form.select :user_id, options %>
+  </div>
+   <div class="field">
+    <% options = options_from_collection_for_select(pks, 'id', 'sasaran') %>
+    <%= form.label :pk_id %>
+    <%= form.select :pk_id, options %>
+  </div>
 <!-- TODO: Disini ada dropdown terkait dengan OPD, chain OPD -> programKegiatan -->
   <div class="field">
     <% options = options_from_collection_for_select(program_kegiatans, 'id', 'nama_program') %>

@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<h1>PK "<%= @pk.user.nama %>"</h1>
+<p>
+  <strong>Sasaran:</strong>
+  <%= @pk.sasaran %>
+</p>
+
+<p>
+  <strong>Indikator kinerja:</strong>
+  <%= @pk.indikator_kinerja %>
+</p>
+
+<p>
+  <strong>Target:</strong>
+  <%= @pk.target %>
+</p>
+
+<p>
+  <strong>Satuan:</strong>
+  <%= @pk.satuan %>
+</p>
+
+
+<%= link_to 'Edit', edit_pk_path(@pk) %> |
+<%= link_to 'Back', pks_path %>

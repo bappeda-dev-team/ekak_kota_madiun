@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-<h1>KAK  Eselon 4 User : <%= @kak.program_kegiatan.opd.users.first.nama %> </h1>
+
 <p>
   <strong>Lembaga:</strong>
   <%= @kak.program_kegiatan.opd.lembaga.nama_lembaga %>
@@ -69,7 +69,7 @@
   120.000.000
 </p>
 <hr>
-
+<h1>A. Latar Belakang</h1>
 <p>
   <strong>Dasar hukum:</strong>
   <%= @kak.dasar_hukum %>
@@ -79,27 +79,28 @@
   <strong>Tujuan:</strong>
   <%= @kak.tujuan %>
 </p>
-
+<h1>B. Gambaran Umum</h1>
+<hr>
 <p>
   <strong>Sasaran kinerja:</strong>
-  <%= @kak.sasaran_kinerja %>
+  <%= @kak.pk.sasaran %>
 </p>
 
 <p>
   <strong>Indikator kinerja:</strong>
-  <%= @kak.indikator_kinerja %>
+  <%= @kak.pk.indikator_kinerja %>
 </p>
 
 <p>
   <strong>Target:</strong>
-  <%= @kak.target %>
+  <%= @kak.pk.target %>
 </p>
 
 <p>
   <strong>Satuan:</strong>
-  <%= @kak.satuan %>
+  <%= @kak.pk.satuan %>
 </p>
-
+<hr>
 <p>
   <strong>Penerima manfaat:</strong>
   <%= @kak.penerima_manfaat %>
@@ -110,6 +111,8 @@
   <%= @kak.data_terpilah %>
 </p>
 
+<h3>Faktor Kesenjangan : </h3>
+<hr>
 <p>
   <strong>Akses:</strong>
   <%= @kak.akses %>
@@ -130,6 +133,7 @@
   <%= @kak.manfaat %>
 </p>
 
+<hr>
 <p>
   <strong>Penyebab internal:</strong>
   <%= @kak.penyebab_internal %>

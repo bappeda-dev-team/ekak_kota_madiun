@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-
+<h1>Detail User "<%= @user.nama %>"</h1>
 <p>
   <strong>Nama:</strong>
   <%= @user.nama %>
@@ -14,6 +14,56 @@
   <strong>OPD:</strong>
   <%= @user.opd.nama_opd %>
 </p>
+
+<div class="pk-user">
+  <h4>PK</h4>
+  <table>
+  <thead>
+  <tr>
+    <th>No</th>
+    <th>Sasaran</th>
+    <th>Indikator</th>
+    <th>Target</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @user.pks.each.with_index(1) do |pk, no| %>
+  <tr>
+    <td><%= no %></td>
+    <td><%= pk.sasaran %></td>
+    <td><%= pk.indikator_kinerja %></td>
+    <td><%= pk.target %></td>
+  </tr>
+  <% end %>
+  </tbody>
+  </table>
+  
+</div>
+
+<div class="kak-user">
+  <h4>KaK</h4>
+  <table>
+  <thead>
+  <tr>
+    <th>No</th>
+    <th>Program Kegiatan</th>
+    <th>Dasar Hukum</th>
+    <th>Tujuan</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @user.kaks.each.with_index(1) do |kak, no| %>
+  <tr>
+    <td><%= no %></td>
+    <td><%= kak.program_kegiatan.nama_program %></td>
+    <td><%= kak.dasar_hukum %></td>
+    <td><%= kak.tujuan %></td>
+  </tr>
+  <% end %>
+  </tbody>
+  </table>
+  
+</div>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
