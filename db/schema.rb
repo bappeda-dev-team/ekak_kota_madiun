@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2021_11_25_073143) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "kaks", force: :cascade do |t|
     t.text "dasar_hukum"
     t.text "tujuan"
@@ -30,7 +33,7 @@ ActiveRecord::Schema.define(version: 2021_11_25_073143) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "program_kegiatan_id"
-    t.integer "pk_id"
+    t.bigint "pk_id"
     t.index ["pk_id"], name: "index_kaks_on_pk_id"
   end
 
@@ -57,7 +60,7 @@ ActiveRecord::Schema.define(version: 2021_11_25_073143) do
     t.integer "volume"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "kak_id"
+    t.bigint "kak_id"
     t.index ["kak_id"], name: "index_pagus_on_kak_id"
   end
 
@@ -66,7 +69,7 @@ ActiveRecord::Schema.define(version: 2021_11_25_073143) do
     t.string "indikator_kinerja"
     t.string "target"
     t.string "satuan"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_pks_on_user_id"
