@@ -5,10 +5,11 @@
 <table>
   <thead>
     <tr>
-      <th>Dasar hukum</th>
-      <th>Tujuan</th>
       <th>Sasaran kinerja</th>
       <th>Indikator kinerja</th>
+      <th>Program</th>
+      <th>Dasar hukum</th>
+      <th>Tujuan</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,10 +17,11 @@
   <tbody>
     <% @kaks.each do |kak| %>
       <tr>
+        <td><%= kak.pk.sasaran %></td>
+        <td><%= kak.pk.indikator_kinerja %></td>
+        <td><%= kak.program_kegiatan.nama_program %></td>
         <td><%= kak.dasar_hukum %></td>
         <td><%= kak.tujuan %></td>
-        <td><%= kak.sasaran_kinerja %></td>
-        <td><%= kak.indikator_kinerja %></td>
         <td><%= link_to 'Show', kak %></td>
         <td><%= link_to 'Edit', edit_kak_path(kak) %></td>
         <td><%= link_to 'Destroy', kak, method: :delete, data: { confirm: 'Are you sure?' } %></td>

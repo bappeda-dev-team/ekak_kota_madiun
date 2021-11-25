@@ -10,14 +10,10 @@
       </ul>
     </div>
   <% end %>
-   <div class="field">
-    <% options = options_from_collection_for_select(users, 'id', 'nama') %>
-    <%= form.label :user_id %>
-    <%= form.select :user_id, options %>
-  </div>
-   <div class="field">
+
+  <div class="field">
     <% options = options_from_collection_for_select(pks, 'id', 'sasaran') %>
-    <%= form.label :pk_id %>
+    <%= form.label :pk_id, 'Sasaran Kinerja' %>
     <%= form.select :pk_id, options %>
   </div>
 <!-- TODO: Disini ada dropdown terkait dengan OPD, chain OPD -> programKegiatan -->
@@ -35,26 +31,6 @@
   <div class="field">
     <%= form.label :tujuan %>
     <%= form.text_area :tujuan %>
-  </div>
-
-  <div class="field">
-    <%= form.label :sasaran_kinerja %>
-    <%= form.text_area :sasaran_kinerja %>
-  </div>
-
-  <div class="field">
-    <%= form.label :indikator_kinerja %>
-    <%= form.text_area :indikator_kinerja %>
-  </div>
-
-  <div class="field">
-    <%= form.label :target %>
-    <%= form.text_field :target %>
-  </div>
-
-  <div class="field">
-    <%= form.label :satuan %>
-    <%= form.text_field :satuan %>
   </div>
 
   <div class="field">

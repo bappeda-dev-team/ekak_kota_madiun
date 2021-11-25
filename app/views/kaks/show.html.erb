@@ -10,6 +10,11 @@
   <%= @kak.program_kegiatan.opd.nama_opd %>
 </p>
 <hr>
+  <p>
+    <strong>ASN :</strong>
+    <%= link_to @kak.pk.user.nama, user_path(@kak.pk.user) %>
+  </p>
+<hr>
 <p>
   <strong>Program</strong>
   <%= @kak.program_kegiatan.nama_program %>

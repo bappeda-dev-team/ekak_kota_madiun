@@ -1,5 +1,6 @@
 class PksController < ApplicationController
   before_action :set_pk, only: %i[ show edit update destroy ]
+  before_action :set_dropdown, only: %i[ new edit ]
 
   # GET /pks or /pks.json
   def index
@@ -62,6 +63,9 @@ class PksController < ApplicationController
       @pk = Pk.find(params[:id])
     end
 
+    def set_dropdown
+      @users = User.all
+    end
     # Only allow a list of trusted parameters through.
     def pk_params
       params.require(:pk).permit(:sasaran, :indikator_kinerja, :target, :satuan, :user_id)

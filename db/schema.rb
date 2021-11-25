@@ -10,15 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_25_060916) do
+ActiveRecord::Schema.define(version: 2021_11_25_063107) do
 
   create_table "kaks", force: :cascade do |t|
     t.text "dasar_hukum"
     t.text "tujuan"
-    t.text "sasaran_kinerja"
-    t.text "indikator_kinerja"
-    t.string "target"
-    t.string "satuan"
     t.string "penerima_manfaat"
     t.text "data_terpilah"
     t.text "akses"
@@ -34,15 +30,13 @@ ActiveRecord::Schema.define(version: 2021_11_25_060916) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "program_kegiatan_id"
-    t.integer "user_id"
     t.integer "pk_id"
     t.index ["pk_id"], name: "index_kaks_on_pk_id"
-    t.index ["user_id"], name: "index_kaks_on_user_id"
   end
 
   create_table "lembagas", force: :cascade do |t|
     t.string "nama_lembaga"
-    t.time "tahun"
+    t.string "tahun"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

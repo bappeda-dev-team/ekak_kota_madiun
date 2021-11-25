@@ -43,6 +43,7 @@ UKK -> jika nempel di subkegiatan jadi gede karena ada UKK
 * User tampil PK
 * Menu PK di navbar ( delete later )
 * 1 KaK 1 SubKegiatan
+* PK Bisa otomatis keisi Usernya jika diklik dari user !!
 ## Story Baru
 User masuk / Login -> Pilih OPD
 -> Menu Rancang KaK -> Masuk Menu new KaK
