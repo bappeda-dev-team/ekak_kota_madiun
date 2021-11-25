@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_25_063107) do
+ActiveRecord::Schema.define(version: 2021_11_25_073143) do
 
   create_table "kaks", force: :cascade do |t|
     t.text "dasar_hukum"
@@ -47,6 +47,18 @@ ActiveRecord::Schema.define(version: 2021_11_25_063107) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "lembaga_id"
+  end
+
+  create_table "pagus", force: :cascade do |t|
+    t.string "item"
+    t.integer "uang"
+    t.string "tipe"
+    t.string "satuan"
+    t.integer "volume"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "kak_id"
+    t.index ["kak_id"], name: "index_pagus_on_kak_id"
   end
 
   create_table "pks", force: :cascade do |t|

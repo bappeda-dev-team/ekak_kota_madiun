@@ -1,0 +1,48 @@
+<%= form_with(model: pagu) do |form| %>
+  <% if pagu.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(pagu.errors.count, "error") %> prohibited this pagu from being saved:</h2>
+
+      <ul>
+        <% pagu.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+   <div class="field">
+    <% options = options_from_collection_for_select(kaks, :id, :dasar_hukum) %>
+    <%= form.label :kak_id %>
+    <%= form.select :kak_id, options %>
+  </div>
+
+  <div class="field">
+    <%= form.label :item %>
+    <%= form.text_field :item %>
+  </div>
+
+  <div class="field">
+    <%= form.label :uang %>
+    <%= form.number_field :uang %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tipe %>
+    <%= form.text_field :tipe %>
+  </div>
+
+  <div class="field">
+    <%= form.label :satuan %>
+    <%= form.text_field :satuan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :volume %>
+    <%= form.number_field :volume %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Item:</strong>
+  <%= @pagu.item %>
+</p>
+
+<p>
+  <strong>Uang:</strong>
+  <%= @pagu.uang %>
+</p>
+
+<p>
+  <strong>Tipe:</strong>
+  <%= @pagu.tipe %>
+</p>
+
+<p>
+  <strong>Satuan:</strong>
+  <%= @pagu.satuan %>
+</p>
+
+<p>
+  <strong>Volume:</strong>
+  <%= @pagu.volume %>
+</p>
+
+<%= link_to 'Edit', edit_pagu_path(@pagu) %> |
+<%= link_to 'Back', pagus_path %>
