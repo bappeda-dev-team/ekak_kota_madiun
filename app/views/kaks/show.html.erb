@@ -68,12 +68,19 @@
   <strong>Satuan</strong>
   <%= @kak.program_kegiatan.satuan %>
 </p>
-
+<hr>
+<% unless @kak.pagu %>
+<p>
+  <strong>Pagu Anggaran :  0</strong>
+</p>
+<% else %>
 <p>
   <strong>Pagu Anggaran:</strong>
   Rp. <%= @kak.pagu.uang %>
   <%= link_to 'Detail Pagu', pagu_path(@kak.pagu) %>
 </p>
+  
+<% end %>
 <hr>
 <h1>A. Latar Belakang</h1>
 <p>
