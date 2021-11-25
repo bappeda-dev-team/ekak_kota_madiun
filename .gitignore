@@ -8,7 +8,7 @@
 /.bundle
 
 # ignore bin folder
-/bin
+#/bin
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
