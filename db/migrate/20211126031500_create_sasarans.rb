@@ -7,7 +7,7 @@ class CreateSasarans < ActiveRecord::Migration[6.1]
       t.integer :kualitas
       t.string :satuan
       t.string :penerima_manfaat
-      t.references :rincian, null: false, foreign_key: true
+      
 
       t.timestamps
     end

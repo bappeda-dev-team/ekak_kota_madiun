@@ -12,14 +12,16 @@
   <% end %>
 
   <div class="field">
+    <% options = options_from_collection_for_select(sasarans, 'id', 'sasaran_kinerja') %>
+    <%= form.label :sasaran_id %>
+    <%= form.select :sasaran_id, options %>
+  </div>
+
+  <div class="field">
     <%= form.label :data_terpilah %>
     <%= form.text_field :data_terpilah %>
   </div>
 
-  <div class="field">
-    <%= form.label :kesenjangan_id %>
-    <%= form.text_field :kesenjangan_id %>
-  </div>
 
   <div class="field">
     <%= form.label :penyebab_internal %>
@@ -49,11 +51,6 @@
   <div class="field">
     <%= form.label :lokasi_pelaksanaan %>
     <%= form.text_field :lokasi_pelaksanaan %>
-  </div>
-
-  <div class="field">
-    <%= form.label :tahapan_id %>
-    <%= form.text_field :tahapan_id %>
   </div>
 
   <div class="actions">

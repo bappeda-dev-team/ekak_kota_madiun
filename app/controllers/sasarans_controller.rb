@@ -1,5 +1,6 @@
 class SasaransController < ApplicationController
   before_action :set_sasaran, only: %i[ show edit update destroy ]
+  before_action :set_dropdown, only: %i[ new edit ]
 
   # GET /sasarans or /sasarans.json
   def index
@@ -62,8 +63,12 @@ class SasaransController < ApplicationController
       @sasaran = Sasaran.find(params[:id])
     end
 
+    def set_dropdown
+      @users = User.all
+    end
+
     # Only allow a list of trusted parameters through.
     def sasaran_params
-      params.require(:sasaran).permit(:sasaran_kinerja, :indikator_kinerja, :target, :kualitas, :satuan, :penerima_manfaat, :rincian_id)
+      params.require(:sasaran).permit(:sasaran_kinerja, :indikator_kinerja, :target, :kualitas, :satuan, :penerima_manfaat, :user_id)
     end
 end

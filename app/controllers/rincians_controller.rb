@@ -1,5 +1,6 @@
 class RinciansController < ApplicationController
   before_action :set_rincian, only: %i[ show edit update destroy ]
+  before_action :set_dropdown, only: %i[ new edit ]
 
   # GET /rincians or /rincians.json
   def index
@@ -62,8 +63,12 @@ class RinciansController < ApplicationController
       @rincian = Rincian.find(params[:id])
     end
 
+    def set_dropdown
+      @sasarans = Sasaran.all
+    end
+
     # Only allow a list of trusted parameters through.
     def rincian_params
-      params.require(:rincian).permit(:data_terpilah, :kesenjangan_id, :penyebab_internal, :penyebab_external, :permasalahan_umum, :permasalahan_gender, :resiko, :lokasi_pelaksanaan, :tahapan_id)
+      params.require(:rincian).permit(:data_terpilah, :penyebab_internal, :penyebab_external, :permasalahan_umum, :permasalahan_gender, :resiko, :lokasi_pelaksanaan, :sasaran_id)
     end
 end

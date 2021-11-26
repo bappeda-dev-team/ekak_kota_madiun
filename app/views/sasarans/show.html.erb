@@ -26,9 +26,25 @@
 </p>
 
 <p>
-  <strong>Rincian:</strong>
-  <%= @sasaran.rincian_id %>
+  <strong>Data Terpilah:</strong>
+  <%= @sasaran.rincians.first.data_terpilah %>
 </p>
+
+<p>
+  <strong>Permasalahan gender:</strong>
+  <%= @sasaran.rincians.first.permasalahan_gender %>
+</p>
+
+<p>
+  <strong>Resiko:</strong>
+  <%= @sasaran.rincians.first.resiko %>
+</p>
+
+<p>
+  <strong>lokasi_pelaksanaan:</strong>
+  <%= @sasaran.rincians.first.lokasi_pelaksanaan %>
+</p>
+
 
 <%= link_to 'Edit', edit_sasaran_path(@sasaran) %> |
 <%= link_to 'Back', sasarans_path %>

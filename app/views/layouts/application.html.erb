@@ -11,14 +11,7 @@
   </head>
 
   <body>
-    <div class="topnav">
-      <%= active_link_to "Lembaga", lembagas_path %>
-      <%= active_link_to "OPD", opds_path %>
-      <%= active_link_to "Program Kegiatan", program_kegiatans_path %>
-      <%= active_link_to "User", users_path %>
-      <%= active_link_to "KaK", kaks_path %>
-      <%= active_link_to "Pagu", pagus_path %>
-    </div>
+   <%= render 'layouts/navbar-top' %>
     <%= yield %>
   </body>
 </html>

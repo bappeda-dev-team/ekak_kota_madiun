@@ -12,6 +12,12 @@
   <% end %>
 
   <div class="field">
+    <% options = options_from_collection_for_select(users, 'id', 'nama') %>
+    <%= form.label :user_id %>
+    <%= form.select :user_id, options %>
+  </div>
+
+  <div class="field">
     <%= form.label :sasaran_kinerja %>
     <%= form.text_field :sasaran_kinerja %>
   </div>
@@ -39,11 +45,6 @@
   <div class="field">
     <%= form.label :penerima_manfaat %>
     <%= form.text_field :penerima_manfaat %>
-  </div>
-
-  <div class="field">
-    <%= form.label :rincian_id %>
-    <%= form.text_field :rincian_id %>
   </div>
 
   <div class="actions">

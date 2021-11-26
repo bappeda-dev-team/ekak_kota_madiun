@@ -1,3 +1,3 @@
 class Sasaran < ApplicationRecord
-  belongs_to :rincian
+  has_many :rincians
 end
