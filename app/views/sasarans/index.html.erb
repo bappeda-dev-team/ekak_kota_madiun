@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Sasarans</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Sasaran kinerja</th>
+      <th>Indikator kinerja</th>
+      <th>Target</th>
+      <th>Satuan</th>
+      <th>Penerima manfaat</th>
+      <th>Rincian</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sasarans.each do |sasaran| %>
+      <tr>
+        <td><%= sasaran.sasaran_kinerja %></td>
+        <td><%= sasaran.indikator_kinerja %></td>
+        <td><%= sasaran.target %></td>
+        <td><%= sasaran.satuan %></td>
+        <td><%= sasaran.penerima_manfaat %></td>
+        <td><%= sasaran.rincian_id %></td>
+        <td><%= link_to 'Show', sasaran %></td>
+        <td><%= link_to 'Edit', edit_sasaran_path(sasaran) %></td>
+        <td><%= link_to 'Destroy', sasaran, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Sasaran', new_sasaran_path %>

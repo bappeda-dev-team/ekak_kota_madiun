@@ -56,3 +56,15 @@ User masuk / Login -> Pilih OPD
 
  ### Pagu Anggaran
  Ref Sasaran Kinerja -> Belanja Modal ( angka ) -> Belanja Operasional -> Bisa add field sendiri ( ada satuan, volume, dan total ) -> Sum kebawah -> Jadi Anggaran Sub kegiatan
+
+ # Tracker 26/11/2021
+ * Mengganti Nama PK jadi Sasaran ( tulisane aja )
+ * Mengganti Alur pengisian , User -> Sasaran -> Program Kegiatan -> KaK / Pagu < ? >
+ * Sasaran Punya Banyak Program Kegiatan -> PK ganti ke Sasaran aja, buang kalimat pk
+ * Program Kegiatan punya KaK
+ * Sasaran punya Pagu
+ * Dalam Sasasran Terdapat Elemen KaK
+ * Gambaran Umum merefer ke Sasaran
+ * Di Sasaran Ada isian banyak itu
+ * 1 Kak -* Sasaran Kinerja ( PK )
+ * !!! Perbaiki Isian Sasaran

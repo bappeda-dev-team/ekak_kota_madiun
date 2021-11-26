@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :tahapans
+  resources :kesenjangans
+  resources :rincians
+  resources :sasarans
   resources :pagus
   resources :pks
   resources :kaks

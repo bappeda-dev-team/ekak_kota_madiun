@@ -1,0 +1,62 @@
+<%= form_with(model: rincian) do |form| %>
+  <% if rincian.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(rincian.errors.count, "error") %> prohibited this rincian from being saved:</h2>
+
+      <ul>
+        <% rincian.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :data_terpilah %>
+    <%= form.text_field :data_terpilah %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kesenjangan_id %>
+    <%= form.text_field :kesenjangan_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :penyebab_internal %>
+    <%= form.text_field :penyebab_internal %>
+  </div>
+
+  <div class="field">
+    <%= form.label :penyebab_external %>
+    <%= form.text_field :penyebab_external %>
+  </div>
+
+  <div class="field">
+    <%= form.label :permasalahan_umum %>
+    <%= form.text_field :permasalahan_umum %>
+  </div>
+
+  <div class="field">
+    <%= form.label :permasalahan_gender %>
+    <%= form.text_field :permasalahan_gender %>
+  </div>
+
+  <div class="field">
+    <%= form.label :resiko %>
+    <%= form.text_field :resiko %>
+  </div>
+
+  <div class="field">
+    <%= form.label :lokasi_pelaksanaan %>
+    <%= form.text_field :lokasi_pelaksanaan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tahapan_id %>
+    <%= form.text_field :tahapan_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Sasaran kinerja:</strong>
+  <%= @sasaran.sasaran_kinerja %>
+</p>
+
+<p>
+  <strong>Indikator kinerja:</strong>
+  <%= @sasaran.indikator_kinerja %>
+</p>
+
+<p>
+  <strong>Target:</strong>
+  <%= @sasaran.target %>
+</p>
+
+<p>
+  <strong>Satuan:</strong>
+  <%= @sasaran.satuan %>
+</p>
+
+<p>
+  <strong>Penerima manfaat:</strong>
+  <%= @sasaran.penerima_manfaat %>
+</p>
+
+<p>
+  <strong>Rincian:</strong>
+  <%= @sasaran.rincian_id %>
+</p>
+
+<%= link_to 'Edit', edit_sasaran_path(@sasaran) %> |
+<%= link_to 'Back', sasarans_path %>

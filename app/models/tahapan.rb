@@ -1,0 +1,2 @@
+class Tahapan < ApplicationRecord
+end
