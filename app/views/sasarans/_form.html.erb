@@ -1,4 +1,4 @@
-<%= form_with(model: sasaran) do |form| %>
+<%= form_with(model: [ @user, sasaran ], local: true) do |form| %>
   <% if sasaran.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(sasaran.errors.count, "error") %> prohibited this sasaran from being saved:</h2>
@@ -10,12 +10,6 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <% options = options_from_collection_for_select(users, 'id', 'nama') %>
-    <%= form.label :user_id %>
-    <%= form.select :user_id, options %>
-  </div>
 
   <div class="field">
     <%= form.label :sasaran_kinerja %>

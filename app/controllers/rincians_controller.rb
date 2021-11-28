@@ -1,10 +1,11 @@
 class RinciansController < ApplicationController
+  before_action :get_sasaran
   before_action :set_rincian, only: %i[ show edit update destroy ]
   before_action :set_dropdown, only: %i[ new edit ]
 
   # GET /rincians or /rincians.json
   def index
-    @rincians = Rincian.all
+    @rincians = @sasaran.rincian
   end
 
   # GET /rincians/1 or /rincians/1.json
@@ -13,7 +14,7 @@ class RinciansController < ApplicationController
 
   # GET /rincians/new
   def new
-    @rincian = Rincian.new
+    @rincian = @sasaran.build_rincian
   end
 
   # GET /rincians/1/edit
@@ -22,11 +23,11 @@ class RinciansController < ApplicationController
 
   # POST /rincians or /rincians.json
   def create
-    @rincian = Rincian.new(rincian_params)
+    @rincian = @sasaran.build_rincian(rincian_params)
 
     respond_to do |format|
       if @rincian.save
-        format.html { redirect_to @rincian, notice: "Rincian was successfully created." }
+        format.html { redirect_to sasaran_path(@sasaran), notice: "Rincian was successfully created." }
         format.json { render :show, status: :created, location: @rincian }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +40,7 @@ class RinciansController < ApplicationController
   def update
     respond_to do |format|
       if @rincian.update(rincian_params)
-        format.html { redirect_to @rincian, notice: "Rincian was successfully updated." }
+        format.html { redirect_to sasaran_path(@sasaran), notice: "Rincian was successfully updated." }
         format.json { render :show, status: :ok, location: @rincian }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,15 +53,19 @@ class RinciansController < ApplicationController
   def destroy
     @rincian.destroy
     respond_to do |format|
-      format.html { redirect_to rincians_url, notice: "Rincian was successfully destroyed." }
+      format.html { redirect_to sasaran_path(@sasaran), notice: "Rincian was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def get_sasaran
+      @sasaran = Sasaran.find(params[:sasaran_id])
+    end
+
     def set_rincian
-      @rincian = Rincian.find(params[:id])
+      @rincian = @sasaran.rincian.find(params[:id])
     end
 
     def set_dropdown

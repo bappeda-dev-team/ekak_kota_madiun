@@ -69,3 +69,20 @@ User masuk / Login -> Pilih OPD
  * 1 Kak -* Sasaran Kinerja ( PK )
  * !!! Perbaiki Isian Sasaran
  * Todo : Sasaran - Rincian : One to One
+ 
+
+ # Todo Today 27-11-2021
+ * Nested Opd , Program Kegiatan
+ * Atau coba deep nested kan Lembaga , Opd , Program Kegiatan
+ * Perbaiki Definisi KaK
+    * KaK adalah gabungan dari Sasaran User dengan SUbkegiatan yang disasar oleh Sasaran Tersebut
+    * Hasil : 1 Subkegiatan ( Dengan detail program, kegiatan, indikator, dan sasaran program kegiatan ) dan banyak Sasaran User tersebut
+ * Nonaktifkan PK routes 
+ * User -* Sasaran [ done ]
+ * Nested User - Sasaran [ done ]
+ * Pas isi sasaran, sekalian isi punya rinciannya [ done ]
+    * Bug : Redirect ke sasaran error tidak ada id user
+ # Todo 29-11-2021
+ * !! Edit and Destroy in Sasarans show
+ * Rincian in form edit Sasarans if the sasaran have it
+ * Nested shallow again for pagu and tahapan

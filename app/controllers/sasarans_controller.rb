@@ -1,10 +1,11 @@
 class SasaransController < ApplicationController
+  before_action :get_user, only: %i[index create new ]
   before_action :set_sasaran, only: %i[ show edit update destroy ]
   before_action :set_dropdown, only: %i[ new edit ]
 
   # GET /sasarans or /sasarans.json
   def index
-    @sasarans = Sasaran.all
+    @sasarans = @user.sasarans
   end
 
   # GET /sasarans/1 or /sasarans/1.json
@@ -13,7 +14,7 @@ class SasaransController < ApplicationController
 
   # GET /sasarans/new
   def new
-    @sasaran = Sasaran.new
+    @sasaran = @user.sasarans.build
   end
 
   # GET /sasarans/1/edit
@@ -22,11 +23,11 @@ class SasaransController < ApplicationController
 
   # POST /sasarans or /sasarans.json
   def create
-    @sasaran = Sasaran.new(sasaran_params)
+    @sasaran = @user.sasarans.build(sasaran_params)
 
     respond_to do |format|
       if @sasaran.save
-        format.html { redirect_to @sasaran, notice: "Sasaran was successfully created." }
+        format.html { redirect_to user_path(@user), notice: "Sasaran was successfully created." }
         format.json { render :show, status: :created, location: @sasaran }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +40,7 @@ class SasaransController < ApplicationController
   def update
     respond_to do |format|
       if @sasaran.update(sasaran_params)
-        format.html { redirect_to @sasaran, notice: "Sasaran was successfully updated." }
+        format.html { redirect_to user_path(@user), notice: "Sasaran was successfully updated." }
         format.json { render :show, status: :ok, location: @sasaran }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,13 +53,17 @@ class SasaransController < ApplicationController
   def destroy
     @sasaran.destroy
     respond_to do |format|
-      format.html { redirect_to sasarans_url, notice: "Sasaran was successfully destroyed." }
+      format.html { redirect_to user_path(@user), notice: "Sasaran was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def get_user
+      @user = User.find(params[:user_id])
+    end
+
     def set_sasaran
       @sasaran = Sasaran.find(params[:id])
     end

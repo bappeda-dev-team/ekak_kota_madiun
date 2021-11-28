@@ -1,7 +1,3 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Sasarans</h1>
-
 <table>
   <thead>
     <tr>
@@ -10,20 +6,20 @@
       <th>Target</th>
       <th>Satuan</th>
       <th>Penerima manfaat</th>
-      <th colspan="3"></th>
+      <th colspan="3">actions</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @sasarans.each do |sasaran| %>
+    <% user.sasarans.each do |sasaran| %>
       <tr>
         <td><%= sasaran.sasaran_kinerja %></td>
         <td><%= sasaran.indikator_kinerja %></td>
         <td><%= sasaran.target %></td>
         <td><%= sasaran.satuan %></td>
         <td><%= sasaran.penerima_manfaat %></td>
-        <td><%= link_to 'Show', user_sasarans_path(@user) %></td>
-        </tr>
+        <td><%= link_to 'Show', sasaran_path(sasaran) %></td>
+      </tr>
     <% end %>
   </tbody>
 </table>
