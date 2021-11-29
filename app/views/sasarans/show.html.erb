@@ -67,7 +67,9 @@
     <%= @sasaran.rincian.lokasi_pelaksanaan  %>
   </p>
 
-  <% if @sasaran.rincian.tahapans.any? %>
+  <% unless @sasaran.rincian.tahapans.any? %>
+    <%= link_to 'Tambah Renaksi', new_rincian_tahapan_path(@sasaran.rincian) %>
+  <% else %>
   <hr>
     <h3>Rencana Aksi ( Tahapan pelaksaanaan ) </h3>
     <%= link_to 'Tambah Renaksi', new_rincian_tahapan_path(@sasaran.rincian) %>
@@ -94,7 +96,10 @@
 
   <% end %>
   
-  <% if @sasaran.pagus.any? %>
+  <% unless @sasaran.pagus.any? %>
+    <%= link_to 'Tambah Pagu', new_sasaran_pagu_path(@sasaran) %>
+
+  <% else %>
     <hr>
     <h3>Pagu  <span>
     <h3>Pagu Total : <%= number_with_delimiter(@sasaran.pagus.sum(:uang) , :delimiter => ',') %></h3>

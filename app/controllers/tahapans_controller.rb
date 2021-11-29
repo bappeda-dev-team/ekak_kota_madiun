@@ -29,7 +29,7 @@ class TahapansController < ApplicationController
 
     respond_to do |format|
       if @tahapan.save
-        format.html { redirect_to rincian_tahapan_path(@rincian, @tahapan), notice: "Tahapan was successfully created." }
+        format.html { redirect_to sasaran_path(@rincian.sasaran), notice: "Tahapan was successfully created." }
         format.json { render :show, status: :created, location: @tahapan }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -42,7 +42,7 @@ class TahapansController < ApplicationController
   def update
     respond_to do |format|
       if @tahapan.update(tahapan_params)
-        format.html { redirect_to rincian_tahapan_path(@rincian, @tahapan), notice: "Tahapan was successfully updated." }
+        format.html { redirect_to sasaran_path(@rincian.sasaran), notice: "Tahapan was successfully updated." }
         format.json { render :show, status: :ok, location: @tahapan }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -56,7 +56,7 @@ class TahapansController < ApplicationController
     @tahapan.destroy
     respond_to do |format|
       # FIXME : bakalan rusak disini
-      format.html { redirect_to rincian_url, notice: "Tahapan was successfully destroyed." }
+      format.html { redirect_to sasaran_path(@rincian.sasaran), notice: "Tahapan was successfully destroyed." }
       format.json { head :no_content }
     end
   end

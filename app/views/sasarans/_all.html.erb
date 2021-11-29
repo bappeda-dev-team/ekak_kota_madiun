@@ -6,6 +6,7 @@
       <th>Target</th>
       <th>Satuan</th>
       <th>Penerima manfaat</th>
+      <th>Anggaran</th>
       <th colspan="3">actions</th>
     </tr>
   </thead>
@@ -18,6 +19,7 @@
         <td><%= sasaran.target %></td>
         <td><%= sasaran.satuan %></td>
         <td><%= sasaran.penerima_manfaat %></td>
+        <td><%= number_with_delimiter(sasaran.pagus.sum(:uang) , :delimiter => ',') %></td>
         <td><%= link_to 'Show', sasaran_path(sasaran) %></td>
       </tr>
     <% end %>

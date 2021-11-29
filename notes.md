@@ -86,3 +86,6 @@ User masuk / Login -> Pilih OPD
  * !! Edit and Destroy in Sasarans show
  * Rincian in form edit Sasarans if the sasaran have it
  * Nested shallow again for pagu and tahapan
+ * BUg renaksi after create
+ * Fix Field Pagu ( maybe )
+ * Kesenjangan
