@@ -31,10 +31,16 @@
   <strong>Satuan:</strong>
   <%= @programKegiatan.satuan %>
 </p>
+<% unless @programKegiatan.sasarans.any? %>
+  <p>
+  <strong>Pagu Anggaran:</strong> 0
+  </p>
+<% else %>
 <p>
   <strong>Pagu Anggaran:</strong>
- 0
+  Rp.  <%= number_with_delimiter(@programKegiatan.sasarans.pagus.sum(:total) , :delimiter => ',') %>
 </p>
+<% end %>
 
 <% if @programKegiatan.sasarans.any? %>
 <hr>
@@ -54,7 +60,7 @@
       <% else %>
     <p>
     <strong>Anggaran Sasaran Kinerja : </strong>
-    Rp.  <%= number_with_delimiter(sasaran.pagus.sum(:uang) , :delimiter => ',') %>
+    Rp.  <%= number_with_delimiter(sasaran.pagus.sum(:total) , :delimiter => ',') %>
     </p>
 
     <% end %>

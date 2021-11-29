@@ -26,7 +26,7 @@
           <%= link_to 'Rencana Aksi', sasaran_path(sasaran) %>
         <% end %>
         </td>
-        <td><%= number_with_delimiter(sasaran.pagus.sum(:uang) , :delimiter => ',') %></td>
+        <td><%= number_with_delimiter(sasaran.pagus.sum(:total) , :delimiter => ',') %></td>
         <% unless  sasaran.program_kegiatan %>
           <td>Belum ada ( masukkan action kesini )</td>
           <% else %>
