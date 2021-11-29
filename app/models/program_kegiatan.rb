@@ -13,4 +13,5 @@ class ProgramKegiatan < ApplicationRecord
   validates :satuan, presence: true
   belongs_to :opd
   has_many :kaks
+  has_many :sasarans
 end

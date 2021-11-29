@@ -31,7 +31,39 @@
   <strong>Satuan:</strong>
   <%= @programKegiatan.satuan %>
 </p>
+<p>
+  <strong>Pagu Anggaran:</strong>
+ 0
+</p>
 
+<% if @programKegiatan.sasarans.any? %>
+<hr>
+  <h4><strong>Sasaran Kinerja</strong></h4>
+  <% @programKegiatan.sasarans.each.with_index(1) do |sasaran, index| %>
+    <hr>
+    <p>
+    <strong>Sasaran Kinerja <%= index %> :</strong>
+    <%= sasaran.sasaran_kinerja %>
+    </p>
+    <p>
+    <strong>Indikator Kinerja <%= index %></strong>
+    <%= sasaran.sasaran_kinerja %>
+    </p>
+    <% unless sasaran.pagus.any? %>
+      <strong>Anggaran Sasaran Kinerja : 0</strong>
+      <% else %>
+    <p>
+    <strong>Anggaran Sasaran Kinerja : </strong>
+    Rp.  <%= number_with_delimiter(sasaran.pagus.sum(:uang) , :delimiter => ',') %>
+    </p>
+
+    <% end %>
+    <p>
+    <strong>Detail :</strong>
+    <%= link_to "KaK", sasaran_path(sasaran) %>
+    </p>
+  <% end %>
+<% end %>
 
 <%= link_to 'Edit', edit_program_kegiatan_path(@programKegiatan) %> |
 <%= link_to 'Back', program_kegiatans_path %>

@@ -1,6 +1,26 @@
 <p id="notice"><%= notice %></p>
 <h2>User : <%= @sasaran.user.nama %></h2>
-<h2>NIK : <%= @sasaran.user.nik %></h2>
+<h2>NIK : <%= link_to @sasaran.user.nik, user_path(@sasaran.user) %></h2>
+<hr>
+<% unless @sasaran.program_kegiatan %>
+<h3>Tambah Sub Kegiatan, pakai forrm untuk update hanya program_kegiatan_id</h3>
+<% program = ProgramKegiatan.all %>
+<%= form_with(model: @sasaran, local: true) do |form| %>
+  <div class="field">
+    <% options = options_from_collection_for_select(program, 'id', 'nama_subkegiatan') %>
+    <%= form.label :program_kegiatan_id, 'Sub Kegiatan : ' %>
+    <%= form.select :program_kegiatan_id, options %>
+  </div>
+   <div class="actions">
+    <%= form.submit %>
+  </div>
+  <% end %>
+<% else %>
+<p>
+  <strong>Sub Kegiatan :</strong>
+  <%= @sasaran.program_kegiatan.nama_subkegiatan %>
+</p>
+<% end %>
 <hr>
 <p>
   <strong>Sasaran kinerja:</strong>

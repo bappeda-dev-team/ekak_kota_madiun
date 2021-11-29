@@ -1,6 +1,6 @@
 class SasaransController < ApplicationController
   before_action :get_user, only: %i[index create new ]
-  before_action :set_sasaran, only: %i[ show edit update destroy ]
+  before_action :set_sasaran, only: %i[ show edit update destroy update_program_kegiatan  ]
   before_action :set_dropdown, only: %i[ new edit ]
 
   # GET /sasarans or /sasarans.json
@@ -40,7 +40,7 @@ class SasaransController < ApplicationController
   def update
     respond_to do |format|
       if @sasaran.update(sasaran_params)
-        format.html { redirect_to user_path(@user), notice: "Sasaran was successfully updated." }
+        format.html { redirect_to sasaran_path(@sasaran), notice: "Sasaran was successfully updated." }
         format.json { render :show, status: :ok, location: @sasaran }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -64,6 +64,10 @@ class SasaransController < ApplicationController
       @user = User.find(params[:user_id])
     end
 
+    def get_program_kegiatan
+      @program_kegiatan = ProgramKegiatan.find(params[:program_kegiatan_id])
+    end
+
     def set_sasaran
       @sasaran = Sasaran.find(params[:id])
     end
@@ -74,6 +78,8 @@ class SasaransController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def sasaran_params
-      params.require(:sasaran).permit(:sasaran_kinerja, :indikator_kinerja, :target, :kualitas, :satuan, :penerima_manfaat, :user_id)
+      params.require(:sasaran).permit(:sasaran_kinerja, 
+        :indikator_kinerja, :target, :kualitas, 
+        :satuan, :penerima_manfaat, :user_id, :program_kegiatan_id)
     end
 end
