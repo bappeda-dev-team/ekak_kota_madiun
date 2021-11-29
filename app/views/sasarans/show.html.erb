@@ -3,7 +3,7 @@
 <h2>NIK : <%= link_to @sasaran.user.nik, user_path(@sasaran.user) %></h2>
 <hr>
 <% unless @sasaran.program_kegiatan %>
-<h3>Tambah Sub Kegiatan, pakai forrm untuk update hanya program_kegiatan_id</h3>
+<h3>Tambah Sub Kegiatan</h3>
 <% program = ProgramKegiatan.all %>
 <%= form_with(model: @sasaran, local: true) do |form| %>
   <div class="field">
@@ -18,7 +18,7 @@
 <% else %>
 <p>
   <strong>Sub Kegiatan :</strong>
-  <%= @sasaran.program_kegiatan.nama_subkegiatan %>
+  <%= link_to @sasaran.program_kegiatan.nama_subkegiatan, program_kegiatan_path(@sasaran.program_kegiatan) %>
 </p>
 <% end %>
 <hr>
@@ -115,14 +115,14 @@
     <% end %>
 
   <% end %>
-  
+  <!-- TODO: Add ajax to inline form -->
   <% unless @sasaran.pagus.any? %>
     <%= link_to 'Tambah Pagu', new_sasaran_pagu_path(@sasaran) %>
 
   <% else %>
     <hr>
     <h3>Pagu  <span>
-    <h3>Pagu Total : <%= number_with_delimiter(@sasaran.pagus.sum(:uang) , :delimiter => ',') %></h3>
+    <h3>Pagu Total : <%= number_with_delimiter(@sasaran.pagus.sum(:total) , :delimiter => ',') %></h3>
     <%= link_to 'Tambah Pagu', new_sasaran_pagu_path(@sasaran) %>
     </span></h3>
    
@@ -143,6 +143,14 @@
        <p>
         <strong>Volume: </strong>
         <%= pagu.volume %>
+      </p>
+      <p>
+        <strong>Total :</strong>
+        <%= pagu.total %>
+      </p>
+      <p>
+        <%= link_to 'Edit', edit_sasaran_pagu_path(@sasaran, pagu) %>
+        <%= link_to 'Delete', sasaran_pagu_path(@sasaran, pagu), method: :delete, data: { confirm: "Hapus Pagu #{pagu.item} ?" } %>
       </p>
       <hr>
     <% end %>

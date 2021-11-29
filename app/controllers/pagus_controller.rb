@@ -56,7 +56,7 @@ class PagusController < ApplicationController
   def destroy
     @pagu.destroy
     respond_to do |format|
-      format.html { redirect_to sasarans_path(@sasaran), notice: "Pagu was successfully destroyed." }
+      format.html { redirect_to sasaran_pagus_path(@sasaran), notice: "Pagu was successfully destroyed." }
       format.json { head :no_content }
     end
   end
