@@ -33,9 +33,64 @@
 </p>
 <% else %>
   <p>
-    <strong>rincian :</strong>
+    <strong>Data Terpilah :</strong>
     <%= @sasaran.rincian.data_terpilah %>
   </p>
+<!-- NOTE : Refactor -->
+  <p>
+    <strong>Penyebab Internal :</strong>
+    <%= @sasaran.rincian.penyebab_internal %>
+  </p>
+  <p>
+    <strong>Penyebab External :</strong>
+    <%= @sasaran.rincian.penyebab_external %>
+  </p>
+  
+  <p>
+    <strong>Permasalahan Umum :</strong>
+    <%= @sasaran.rincian.permasalahan_umum %>
+  </p>
+  <p>
+    <strong>Permasalahan Gender :</strong>
+    <%= @sasaran.rincian.permasalahan_gender %>
+  </p>
+
+  <p>
+    <strong>Resiko</strong>
+    <%= @sasaran.rincian.resiko  %>
+  </p>
+
+  <p>
+    <strong>Lokasi Pelaksanaan</strong>
+    <%= @sasaran.rincian.lokasi_pelaksanaan  %>
+  </p>
+
+  <% if @sasaran.rincian.tahapans.any? %>
+  <hr>
+    <h3>Rencana Aksi ( Tahapan pelaksaanaan ) </h3>
+    <% @sasaran.rincian.tahapans.each do |tahapan| %>
+      <hr>
+      <p>
+        <strong>Tahapan Kerja: </strong>
+        <%= tahapan.tahapan_kerja %>
+      </p>
+      <p>
+        <strong>Bulan: </strong>
+        <%= tahapan.bulan %>
+      </p>
+      <p>
+        <strong>Keterangan: </strong>
+        <%= tahapan.keterangan %>
+      </p>
+      <p>
+        <strong>Realisasi: </strong>
+        <%= tahapan.realisasi %>
+      </p>
+      <hr>
+    <% end %>
+  <% end %>
+
+
 <% end %>
 
 

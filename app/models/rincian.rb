@@ -1,4 +1,4 @@
 class Rincian < ApplicationRecord
   has_many :kesenjangan
-  has_many :tahapan
+  has_many :tahapans
 end

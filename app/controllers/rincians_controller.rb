@@ -1,5 +1,5 @@
 class RinciansController < ApplicationController
-  before_action :get_sasaran
+  before_action :get_sasaran, only: %i[index create new ]
   before_action :set_rincian, only: %i[ show edit update destroy ]
   before_action :set_dropdown, only: %i[ new edit ]
 
@@ -65,7 +65,7 @@ class RinciansController < ApplicationController
     end
 
     def set_rincian
-      @rincian = @sasaran.rincian.find(params[:id])
+      @rincian = Rincian.find(params[:id])
     end
 
     def set_dropdown

@@ -1,4 +1,4 @@
-<%= form_with(model: tahapan) do |form| %>
+<%= form_with(model: [@rincian, tahapan ], local: true) do |form| %>
   <% if tahapan.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(tahapan.errors.count, "error") %> prohibited this tahapan from being saved:</h2>
