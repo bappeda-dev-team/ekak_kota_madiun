@@ -38,7 +38,7 @@
 <% else %>
 <p>
   <strong>Pagu Anggaran:</strong>
-  Rp.  <%= number_with_delimiter(@programKegiatan.sasarans.pagus.sum(:total) , :delimiter => ',') %>
+  Rp.  <%= number_with_delimiter(@programKegiatan.sasarans.sum(:anggaran) , :delimiter => ',') %>
 </p>
 <% end %>
 

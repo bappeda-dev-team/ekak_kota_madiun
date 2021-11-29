@@ -18,7 +18,7 @@
 <% else %>
 <p>
   <strong>Sub Kegiatan :</strong>
-  <%= @sasaran.program_kegiatan.nama_subkegiatan %>
+  <%= link_to @sasaran.program_kegiatan.nama_subkegiatan, program_kegiatan_path(@sasaran.program_kegiatan) %>
 </p>
 <% end %>
 <hr>
@@ -147,6 +147,10 @@
       <p>
         <strong>Total :</strong>
         <%= pagu.total %>
+      </p>
+      <p>
+        <%= link_to 'Edit', edit_sasaran_pagu_path(@sasaran, pagu) %>
+        <%= link_to 'Delete', sasaran_pagu_path(@sasaran, pagu), method: :delete, data: { confirm: "Hapus Pagu #{pagu.item} ?" } %>
       </p>
       <hr>
     <% end %>
