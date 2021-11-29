@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_26_060741) do
+ActiveRecord::Schema.define(version: 2021_11_29_022042) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,8 +71,8 @@ ActiveRecord::Schema.define(version: 2021_11_26_060741) do
     t.integer "volume"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "kak_id"
-    t.index ["kak_id"], name: "index_pagus_on_kak_id"
+    t.bigint "sasaran_id", null: false
+    t.index ["sasaran_id"], name: "index_pagus_on_sasaran_id"
   end
 
   create_table "pks", force: :cascade do |t|
@@ -151,6 +151,7 @@ ActiveRecord::Schema.define(version: 2021_11_26_060741) do
   end
 
   add_foreign_key "kesenjangans", "rincians"
+  add_foreign_key "pagus", "sasarans"
   add_foreign_key "pks", "users"
   add_foreign_key "rincians", "sasarans"
   add_foreign_key "tahapans", "rincians"

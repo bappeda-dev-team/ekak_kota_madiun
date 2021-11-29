@@ -5,12 +5,14 @@ Rails.application.routes.draw do
   resources :pagus
   resources :pks
   resources :kaks
-  resources :users do
-    resources :sasarans, shallow: true
+  resources :users , shallow: true do
+    resources :sasarans
   end
   resources :sasarans, shallow: true do 
     resources :rincians
+    resources :pagus, shallow: false
   end
+
 
   resources :rincians do
     resources :tahapans

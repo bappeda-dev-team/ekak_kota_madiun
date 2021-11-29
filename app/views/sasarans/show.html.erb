@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
-
+<h2>User : <%= @sasaran.user.nama %></h2>
+<h2>NIK : <%= @sasaran.user.nik %></h2>
+<hr>
 <p>
   <strong>Sasaran kinerja:</strong>
   <%= @sasaran.sasaran_kinerja %>
@@ -68,6 +70,7 @@
   <% if @sasaran.rincian.tahapans.any? %>
   <hr>
     <h3>Rencana Aksi ( Tahapan pelaksaanaan ) </h3>
+    <%= link_to 'Tambah Renaksi', new_rincian_tahapan_path(@sasaran.rincian) %>
     <% @sasaran.rincian.tahapans.each do |tahapan| %>
       <hr>
       <p>
@@ -88,8 +91,38 @@
       </p>
       <hr>
     <% end %>
-  <% end %>
 
+  <% end %>
+  
+  <% if @sasaran.pagus.any? %>
+    <hr>
+    <h3>Pagu  <span>
+    <h3>Pagu Total : <%= number_with_delimiter(@sasaran.pagus.sum(:uang) , :delimiter => ',') %></h3>
+    <%= link_to 'Tambah Pagu', new_sasaran_pagu_path(@sasaran) %>
+    </span></h3>
+   
+    <% @sasaran.pagus.each do |pagu| %>
+    <hr>
+      <p>
+        <strong>Item: </strong>
+        <%= pagu.item %>
+      </p>
+      <p>
+        <strong>Uang: </strong>
+        <%= number_with_delimiter pagu.uang, :delimiter => ',' %>
+      </p>
+       <p>
+        <strong>Satuan: </strong>
+        <%= pagu.satuan %>
+      </p>
+       <p>
+        <strong>Volume: </strong>
+        <%= pagu.volume %>
+      </p>
+      <hr>
+    <% end %>
+  <% end %>
+  
 
 <% end %>
 
