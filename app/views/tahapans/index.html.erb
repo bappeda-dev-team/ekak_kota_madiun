@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Tahapans</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tahapan kerja</th>
+      <th>Target</th>
+      <th>Realisasi</th>
+      <th>Bulan</th>
+      <th>Jumlah target</th>
+      <th>Jumlah realisasi</th>
+      <th>Keterangan</th>
+      <th>Waktu</th>
+      <th>Progress</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tahapans.each do |tahapan| %>
+      <tr>
+        <td><%= tahapan.tahapan_kerja %></td>
+        <td><%= tahapan.target %></td>
+        <td><%= tahapan.realisasi %></td>
+        <td><%= tahapan.bulan %></td>
+        <td><%= tahapan.jumlah_target %></td>
+        <td><%= tahapan.jumlah_realisasi %></td>
+        <td><%= tahapan.keterangan %></td>
+        <td><%= tahapan.waktu %></td>
+        <td><%= tahapan.progress %></td>
+        <td><%= link_to 'Show', tahapan %></td>
+        <td><%= link_to 'Edit', edit_tahapan_path(tahapan) %></td>
+        <td><%= link_to 'Destroy', tahapan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tahapan', new_tahapan_path %>

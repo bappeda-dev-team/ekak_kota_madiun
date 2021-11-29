@@ -1,4 +1,4 @@
-<%= form_with(model: pagu) do |form| %>
+<%= form_with(model: [@sasaran, pagu]) do |form| %>
   <% if pagu.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(pagu.errors.count, "error") %> prohibited this pagu from being saved:</h2>
@@ -10,12 +10,6 @@
       </ul>
     </div>
   <% end %>
-
-   <div class="field">
-    <% options = options_from_collection_for_select(kaks, :id, :dasar_hukum) %>
-    <%= form.label :kak_id %>
-    <%= form.select :kak_id, options %>
-  </div>
 
   <div class="field">
     <%= form.label :item %>

@@ -1,0 +1,39 @@
+<table>
+  <thead>
+    <tr>
+      <th>Sasaran kinerja</th>
+      <th>Indikator kinerja</th>
+      <th>Target</th>
+      <th>Satuan</th>
+      <th>Rencana Aksi</th>
+      <th>Anggaran</th>
+      <th>SubKegiatan</th>
+      <th colspan="3">actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% user.sasarans.each do |sasaran| %>
+      <tr>
+        <td><%= sasaran.sasaran_kinerja %></td>
+        <td><%= sasaran.indikator_kinerja %></td>
+        <td><%= sasaran.target %></td>
+        <td><%= sasaran.satuan %></td>
+        <td>
+        <% unless sasaran.rincian %>
+          <%= link_to 'Tambah Rincian', new_sasaran_rincian_path(sasaran) %>
+        <% else %>
+          <%= link_to 'Rencana Aksi', sasaran_path(sasaran) %>
+        <% end %>
+        </td>
+        <td><%= number_with_delimiter(sasaran.pagus.sum(:uang) , :delimiter => ',') %></td>
+        <% unless  sasaran.program_kegiatan %>
+          <td>Belum ada ( masukkan action kesini )</td>
+          <% else %>
+        <td><%= link_to sasaran.program_kegiatan.nama_subkegiatan, program_kegiatan_path(sasaran.program_kegiatan) %></td>
+        <% end %>
+        <td><%= link_to 'Show', sasaran_path(sasaran) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

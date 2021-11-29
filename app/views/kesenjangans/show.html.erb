@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Akses:</strong>
+  <%= @kesenjangan.akses %>
+</p>
+
+<p>
+  <strong>Partisipasi:</strong>
+  <%= @kesenjangan.partisipasi %>
+</p>
+
+<p>
+  <strong>Kontrol:</strong>
+  <%= @kesenjangan.kontrol %>
+</p>
+
+<p>
+  <strong>Manfaat:</strong>
+  <%= @kesenjangan.manfaat %>
+</p>
+
+<%= link_to 'Edit', edit_kesenjangan_path(@kesenjangan) %> |
+<%= link_to 'Back', kesenjangans_path %>

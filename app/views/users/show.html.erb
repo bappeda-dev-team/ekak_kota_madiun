@@ -1,5 +1,4 @@
 <p id="notice"><%= notice %></p>
-<h1>Detail User "<%= @user.nama %>"</h1>
 <p>
   <strong>Nama:</strong>
   <%= @user.nama %>
@@ -14,43 +13,23 @@
   <strong>OPD:</strong>
   <%= @user.opd.nama_opd %>
 </p>
-
-<div class="pk-user">
-  <h4>PK</h4>
-<%= link_to 'New Pk', new_pk_path %>
-  <table>
-  <thead>
-  <tr>
-    <th>No</th>
-    <th>Sasaran</th>
-    <th>Indikator</th>
-    <th>Target</th>
-    <th>KaK</th>
-    <th>Action</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @user.pks.each.with_index(1) do |pk, no| %>
-  <tr>
-    <td><%= no %></td>
-    <td><%= pk.sasaran %></td>
-    <td><%= pk.indikator_kinerja %></td>
-    <td><%= pk.target %></td>
-    <% unless pk.kak %>
-      <td>Kak Belom ada</td>
-    <% else %>  
-     <td><%= link_to 'Show', kak_path(pk.kak) %></td>
-    <% end %>
-    <td><%= link_to 'Tambah KaK', new_kak_path %></td>
-  </tr>
-  <% end %>
-  </tbody>
-  </table>
-  
-</div>
-
-
-
-<hr>
+<p> 
 <%= link_to 'Edit User', edit_user_path(@user) %> |
 <%= link_to 'Kembali', users_path %>
+</p>
+
+
+<% if @user.sasarans.any? %>
+<hr>
+
+<div class="sasaran-kinerja">
+  <h4>Sasaran Kinerja</h4>
+  <%= render 'sasarans/all' , user: @user %>
+</div>
+
+<hr>
+
+<h2>Tambah Sasaran Kinerja</h2>
+<%= render 'sasarans/form', sasaran: @user.sasarans.build %>
+
+<% end %>

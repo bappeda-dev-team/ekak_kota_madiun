@@ -1,8 +1,22 @@
 Rails.application.routes.draw do
+  resources :tahapans
+  resources :kesenjangans
+  # resources :rincians
   resources :pagus
   resources :pks
   resources :kaks
-  resources :users
+  resources :users , shallow: true do
+    resources :sasarans
+  end
+  resources :sasarans, shallow: true do 
+    resources :rincians
+    resources :pagus, shallow: false
+  end
+
+
+  resources :rincians do
+    resources :tahapans
+  end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :lembagas
   resources :opds

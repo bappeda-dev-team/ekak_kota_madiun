@@ -1,3 +1,3 @@
 class Pagu < ApplicationRecord
-  belongs_to :kak
+  belongs_to :sasaran
 end

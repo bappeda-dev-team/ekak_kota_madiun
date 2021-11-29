@@ -56,3 +56,36 @@ User masuk / Login -> Pilih OPD
 
  ### Pagu Anggaran
  Ref Sasaran Kinerja -> Belanja Modal ( angka ) -> Belanja Operasional -> Bisa add field sendiri ( ada satuan, volume, dan total ) -> Sum kebawah -> Jadi Anggaran Sub kegiatan
+
+ # Tracker 26/11/2021
+ * Mengganti Nama PK jadi Sasaran ( tulisane aja )
+ * Mengganti Alur pengisian , User -> Sasaran -> Program Kegiatan -> KaK / Pagu < ? >
+ * Sasaran Punya Banyak Program Kegiatan -> PK ganti ke Sasaran aja, buang kalimat pk
+ * Program Kegiatan punya KaK
+ * Sasaran punya Pagu
+ * Dalam Sasasran Terdapat Elemen KaK
+ * Gambaran Umum merefer ke Sasaran
+ * Di Sasaran Ada isian banyak itu
+ * 1 Kak -* Sasaran Kinerja ( PK )
+ * !!! Perbaiki Isian Sasaran
+ * Todo : Sasaran - Rincian : One to One
+ 
+
+ # Todo Today 27-11-2021
+ * Nested Opd , Program Kegiatan
+ * Atau coba deep nested kan Lembaga , Opd , Program Kegiatan
+ * Perbaiki Definisi KaK
+    * KaK adalah gabungan dari Sasaran User dengan SUbkegiatan yang disasar oleh Sasaran Tersebut
+    * Hasil : 1 Subkegiatan ( Dengan detail program, kegiatan, indikator, dan sasaran program kegiatan ) dan banyak Sasaran User tersebut
+ * Nonaktifkan PK routes 
+ * User -* Sasaran [ done ]
+ * Nested User - Sasaran [ done ]
+ * Pas isi sasaran, sekalian isi punya rinciannya [ done ]
+    * Bug : Redirect ke sasaran error tidak ada id user
+ # Todo 29-11-2021
+ * !! Edit and Destroy in Sasarans show
+ * Rincian in form edit Sasarans if the sasaran have it
+ * Nested shallow again for pagu and tahapan
+ * BUg renaksi after create
+ * Fix Field Pagu ( maybe )
+ * Kesenjangan

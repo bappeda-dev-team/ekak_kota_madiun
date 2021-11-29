@@ -1,0 +1,62 @@
+<%= form_with(model: [@rincian, tahapan ], local: true) do |form| %>
+  <% if tahapan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(tahapan.errors.count, "error") %> prohibited this tahapan from being saved:</h2>
+
+      <ul>
+        <% tahapan.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :tahapan_kerja %>
+    <%= form.text_field :tahapan_kerja %>
+  </div>
+
+  <div class="field">
+    <%= form.label :target %>
+    <%= form.text_field :target %>
+  </div>
+
+  <div class="field">
+    <%= form.label :realisasi %>
+    <%= form.text_field :realisasi %>
+  </div>
+
+  <div class="field">
+    <%= form.label :bulan %>
+    <%= form.text_field :bulan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :jumlah_target %>
+    <%= form.text_field :jumlah_target %>
+  </div>
+
+  <div class="field">
+    <%= form.label :jumlah_realisasi %>
+    <%= form.text_field :jumlah_realisasi %>
+  </div>
+
+  <div class="field">
+    <%= form.label :keterangan %>
+    <%= form.text_field :keterangan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :waktu %>
+    <%= form.text_field :waktu %>
+  </div>
+
+  <div class="field">
+    <%= form.label :progress %>
+    <%= form.text_field :progress %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

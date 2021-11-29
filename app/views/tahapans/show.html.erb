@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Tahapan kerja:</strong>
+  <%= @tahapan.tahapan_kerja %>
+</p>
+
+<p>
+  <strong>Target:</strong>
+  <%= @tahapan.target %>
+</p>
+
+<p>
+  <strong>Realisasi:</strong>
+  <%= @tahapan.realisasi %>
+</p>
+
+<p>
+  <strong>Bulan:</strong>
+  <%= @tahapan.bulan %>
+</p>
+
+<p>
+  <strong>Jumlah target:</strong>
+  <%= @tahapan.jumlah_target %>
+</p>
+
+<p>
+  <strong>Jumlah realisasi:</strong>
+  <%= @tahapan.jumlah_realisasi %>
+</p>
+
+<p>
+  <strong>Keterangan:</strong>
+  <%= @tahapan.keterangan %>
+</p>
+
+<p>
+  <strong>Waktu:</strong>
+  <%= @tahapan.waktu %>
+</p>
+
+<p>
+  <strong>Progress:</strong>
+  <%= @tahapan.progress %>
+</p>
+
+<%= link_to 'Edit', edit_tahapan_path(@tahapan) %> |
+<%= link_to 'Back', tahapans_path %>

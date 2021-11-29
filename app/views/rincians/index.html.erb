@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Rincians</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Data terpilah</th>
+      <th>Penyebab internal</th>
+      <th>Penyebab external</th>
+      <th>Permasalahan umum</th>
+      <th>Permasalahan gender</th>
+      <th>Resiko</th>
+      <th>Lokasi pelaksanaan</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rincians.each do |rincian| %>
+      <tr>
+        <td><%= rincian.data_terpilah %></td>
+        <td><%= rincian.penyebab_internal %></td>
+        <td><%= rincian.penyebab_external %></td>
+        <td><%= rincian.permasalahan_umum %></td>
+        <td><%= rincian.permasalahan_gender %></td>
+        <td><%= rincian.resiko %></td>
+        <td><%= rincian.lokasi_pelaksanaan %></td>
+        <td><%= link_to 'Show', rincian %></td>
+        <td><%= link_to 'Edit', edit_rincian_path(rincian) %></td>
+        <td><%= link_to 'Destroy', rincian, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Rincian', new_rincian_path %>
