@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :perhitungans
+  # resources :perhitungans
   resources :kesenjangans
   # resources :rincians
   resources :pagus
@@ -19,6 +19,10 @@ Rails.application.routes.draw do
       resources :aksis
       resources :anggarans
     end
+  end
+
+  resources :anggarans  do
+    resources :perhitungans
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

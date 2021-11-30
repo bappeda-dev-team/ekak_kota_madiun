@@ -1,19 +1,49 @@
 <p id="notice"><%= notice %></p>
+<h2>Sasaran : <%= @rincian.sasaran.sasaran_kinerja %></h2>
+<h2>Tahapan : <%= @tahapan.tahapan_kerja %></h2>
+<p>
+  <strong>Kode rek:</strong>
+  <%= @anggaran.kode_rek %>.1
+  <strong><%= @anggaran.uraian %></strong>
+</p>
 
 <p>
   <strong>Kode rek:</strong>
-  <%= @anggaran.kode_rek %>
+  <%= @anggaran.kode_rek %>.1
+  <strong><%= @anggaran.uraian %></strong>
 </p>
 
-<p>
-  <strong>Uraian:</strong>
-  <%= @anggaran.uraian %>
-</p>
-
-<p>
-  <strong>Jumlah:</strong>
-  <%= @anggaran.jumlah %>
-</p>
-
-<%= link_to 'Edit', edit_anggaran_path(@anggaran) %> |
-<%= link_to 'Back', anggarans_path %>
+<hr>
+<h3>Rincian Anggaran</h3>
+<!-- SECTION - Table Anggaran -->
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2">Kode Rekening</th>
+      <th rowspan="2">Uraian</th>
+      <th colspan="4">Rincian Perhitungan</th>
+      <th rowspan="2">Jumlah</th>
+    </tr>
+    <tr>
+      <th>Koefisien</th>
+      <th>Satuan</th>
+      <th>Harga</th>
+      <th>PPN</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>5.1.0.1.0.1.0.0001</td>
+      <td>Belanja gaji pokok pns</td>
+      <td>12 bulan</td>
+      <td></td>
+      <td>3.800.000</td>
+      <td>0</td>
+      <td>Rp. 45.600.000</td>
+    </tr>
+  </tbody>
+</table>
+<!-- !SECTION - End Table Anggaran -->
+<hr>
+<%= link_to 'Edit', edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, @anggaran) %> |
+<%= link_to 'Kembali', sasaran_path(@tahapan.rincian.sasaran) %>
