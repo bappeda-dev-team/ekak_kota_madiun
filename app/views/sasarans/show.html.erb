@@ -111,6 +111,9 @@
         <strong>Realisasi: </strong>
         <%= tahapan.realisasi %>
       </p>
+      <p>
+        <%= link_to 'Delete', rincian_tahapan_path(@sasaran.rincian, tahapan), method: :delete, data: { confirm: "Hapus Tahapan #{tahapan.tahapan_kerja} ?" } %>
+      </p>
       <hr>
     <% end %>
 
