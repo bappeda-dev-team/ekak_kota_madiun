@@ -93,29 +93,109 @@
   <hr>
     <h3>Rencana Aksi ( Tahapan pelaksaanaan ) </h3>
     <%= link_to 'Tambah Renaksi', new_rincian_tahapan_path(@sasaran.rincian) %>
-    <% @sasaran.rincian.tahapans.each do |tahapan| %>
       <hr>
-      <p>
-        <strong>Tahapan Kerja: </strong>
-        <%= tahapan.tahapan_kerja %>
-      </p>
-      <p>
-        <strong>Bulan: </strong>
-        <%= tahapan.bulan %>
-      </p>
-      <p>
-        <strong>Keterangan: </strong>
-        <%= tahapan.keterangan %>
-      </p>
-      <p>
-        <strong>Realisasi: </strong>
-        <%= tahapan.realisasi %>
-      </p>
-      <p>
-        <%= link_to 'Delete', rincian_tahapan_path(@sasaran.rincian, tahapan), method: :delete, data: { confirm: "Hapus Tahapan #{tahapan.tahapan_kerja} ?" } %>
-      </p>
-      <hr>
+      <table class="renaksi">
+      <thead>
+      <tr>
+        <th rowspan="2">No</th>
+        <th rowspan="2">Tahapan Kerja</th>
+        <th colspan="2">1</th>
+        <th colspan="2">2</th>
+        <th colspan="2">3</th>
+        <th colspan="2">4</th>
+        <th colspan="2">5</th>
+        <th colspan="2">6</th>
+        <th colspan="2">7</th>
+        <th colspan="2">8</th>
+        <th colspan="2">9</th>
+        <th colspan="2">10</th>
+        <th colspan="2">11</th>
+        <th colspan="2">12</th>
+        <th colspan="2">Jumlah</th>
+        <th rowspan="2">Keterangan</th>
+      </tr>
+      <tr>
+        <td>T</td>
+        <td>R</td>
+        <td>T</td>
+        <td>R</td>
+        <td>T</td>
+        <td>R</td>
+        <td>T</td>
+        <td>R</td>
+        <td>T</td>
+        <td>R</td>
+        <td>T</td>
+        <td>R</td>
+        <td>T</td>
+        <td>R</td>
+        <td>T</td>
+        <td>R</td>
+        <td>T</td>
+        <td>R</td>
+        <td>T</td>
+        <td>R</td>
+        <td>T</td>
+        <td>R</td>
+        <td>T</td>
+        <td>R</td>
+        <td>T</td>
+        <td>R</td>
+      </tr>
+      </thead>
+      <tbody>
+    <% @sasaran.rincian.tahapans.each.with_index(1) do |tahapan, index| %>
+        <tr>
+          <td><%= index %></td>
+          <td><%= tahapan.tahapan_kerja %></td>
+          <!-- 1-->
+          <td><%= tahapan.target if tahapan.bulan == "1"  %></td>
+          <td><%= tahapan.target if tahapan.bulan == "1"  %></td>
+          <!-- 1-->
+          <td><%= tahapan.target if tahapan.bulan == "2"  %></td>
+          <td><%= tahapan.target if tahapan.bulan == "2"  %></td>
+          <!-- 1-->
+          <td><%= tahapan.target if tahapan.bulan == "3"  %></td>
+          <td><%= tahapan.target if tahapan.bulan == "3"  %></td>
+          <!-- 1-->
+          <td><%= tahapan.target if tahapan.bulan == "4"  %></td>
+          <td><%= tahapan.target if tahapan.bulan == "4"  %></td>
+          <!-- 1-->
+          <td><%= tahapan.target if tahapan.bulan == "5"  %></td>
+          <td><%= tahapan.target if tahapan.bulan == "5"  %></td>
+          <!-- 1-->
+          <td><%= tahapan.target if tahapan.bulan == "6"  %></td>
+          <td><%= tahapan.target if tahapan.bulan == "6"  %></td>
+          <!-- 1-->
+          <td><%= tahapan.target if tahapan.bulan == "7"  %></td>
+          <td><%= tahapan.realisasi if tahapan.bulan == "7" %></td>
+          <!-- 1-->
+          <td><%= tahapan.target if tahapan.bulan == "8"  %></td>
+          <td><%= tahapan.realisasi if tahapan.bulan == "8"  %></td>
+          <!-- 9 -->
+          <td><%= tahapan.target if tahapan.bulan == "9"  %></td>
+          <td><%= tahapan.target if tahapan.bulan == "9"  %></td>
+          <!--10 -->
+          <td><%= tahapan.target if tahapan.bulan == "10"  %></td>
+          <td><%= tahapan.target if tahapan.bulan == "10"  %></td>
+          <!-- 11 -->
+          <td><%= tahapan.target if tahapan.bulan == "11"  %></td>
+          <td><%= tahapan.target if tahapan.bulan == "11"  %></td>
+          <!-- 12-->
+          <td><%= tahapan.target if tahapan.bulan == "12"  %></td>
+          <td><%= tahapan.target if tahapan.bulan == "12"  %></td>
+          <!-- Sum -->
+          <td><%= tahapan.target  %></td>
+          <td><%= tahapan.realisasi %></td>
+          <td><%= tahapan.id  %></td>
+        </tr>
     <% end %>
+
+      </tbody>
+      
+      </table>
+    
+      <hr>
 
   <% end %>
   <!-- TODO: Add ajax to inline form -->
