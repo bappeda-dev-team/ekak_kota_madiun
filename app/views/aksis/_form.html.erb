@@ -23,7 +23,7 @@
 
   <div class="field">
     <%= form.label :bulan %>
-    <%= form.number_field :bulan , within: 1..12 %>
+    <%= form.number_field :bulan , within: 1..12, :value => @bulan, readonly: true %>
   </div>
 
   <div class="actions">

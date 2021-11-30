@@ -15,10 +15,12 @@ class AksisController < ApplicationController
   def new
     # @aksi = Aksi.new
     @aksi = @tahapan.aksis.build
+    @bulan = params[:bulan]
   end
 
   # GET /aksis/1/edit
   def edit
+    @bulan = params[:bulan]
   end
 
   # POST /aksis or /aksis.json

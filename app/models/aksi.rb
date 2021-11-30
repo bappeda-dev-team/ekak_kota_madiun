@@ -4,6 +4,9 @@ class Aksi < ApplicationRecord
   after_save :update_total_realisasi_bulan
   after_update :update_total_target_bulan
   after_update :update_total_realisasi_bulan
+  after_destroy  :update_total_target_bulan
+  after_destroy  :update_total_realisasi_bulan
+  
 
   
   def update_total_target_bulan

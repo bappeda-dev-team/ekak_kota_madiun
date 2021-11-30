@@ -2,14 +2,18 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 table.renaksi {
+  width: 100%;
   border-collapse: collapse;
   text-align: center;
+  td.tahapan {
+    text-align: left;
+  }
   th {
     padding: 5px;
-    border: 1px solid black;
+    border: 0.5px solid black;
   }
-  tr td {
+  td {
     padding: 5px;
-    border: 1px solid black;
+    border: 0.5px solid black;
   }  
 }
