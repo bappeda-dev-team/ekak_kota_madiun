@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Target:</strong>
+  <%= @aksi.target %>
+</p>
+
+<p>
+  <strong>Realisasi:</strong>
+  <%= @aksi.realisasi %>
+</p>
+
+<p>
+  <strong>Bulan:</strong>
+  <%= @aksi.bulan %>
+</p>
+
+<%= link_to 'Edit', edit_aksi_path(@aksi) %> |
+<%= link_to 'Back', aksis_path %>

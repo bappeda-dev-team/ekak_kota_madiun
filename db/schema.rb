@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_29_223607) do
+ActiveRecord::Schema.define(version: 2021_11_30_024454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "aksis", force: :cascade do |t|
+    t.integer "target"
+    t.integer "realisasi"
+    t.integer "bulan"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "tahapan_id"
+    t.index ["tahapan_id"], name: "index_aksis_on_tahapan_id"
+  end
 
   create_table "kaks", force: :cascade do |t|
     t.text "dasar_hukum"
