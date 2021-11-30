@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :perhitungans
   resources :kesenjangans
   # resources :rincians
   resources :pagus
@@ -16,6 +17,7 @@ Rails.application.routes.draw do
   resources :rincians do
     resources :tahapans do
       resources :aksis
+      resources :anggarans
     end
   end
 

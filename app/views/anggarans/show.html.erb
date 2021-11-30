@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Kode rek:</strong>
+  <%= @anggaran.kode_rek %>
+</p>
+
+<p>
+  <strong>Uraian:</strong>
+  <%= @anggaran.uraian %>
+</p>
+
+<p>
+  <strong>Jumlah:</strong>
+  <%= @anggaran.jumlah %>
+</p>
+
+<%= link_to 'Edit', edit_anggaran_path(@anggaran) %> |
+<%= link_to 'Back', anggarans_path %>

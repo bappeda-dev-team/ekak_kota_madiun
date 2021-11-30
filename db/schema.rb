@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_30_024454) do
+ActiveRecord::Schema.define(version: 2021_11_30_134647) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(version: 2021_11_30_024454) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "tahapan_id"
     t.index ["tahapan_id"], name: "index_aksis_on_tahapan_id"
+  end
+
+  create_table "anggarans", force: :cascade do |t|
+    t.string "kode_rek"
+    t.text "uraian"
+    t.integer "jumlah"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "tahapan_id"
+    t.index ["tahapan_id"], name: "index_anggarans_on_tahapan_id"
   end
 
   create_table "kaks", force: :cascade do |t|
@@ -84,6 +94,17 @@ ActiveRecord::Schema.define(version: 2021_11_30_024454) do
     t.bigint "sasaran_id", null: false
     t.integer "total"
     t.index ["sasaran_id"], name: "index_pagus_on_sasaran_id"
+  end
+
+  create_table "perhitungans", force: :cascade do |t|
+    t.string "koefisien"
+    t.integer "volume"
+    t.string "satuan"
+    t.integer "harga"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "anggaran_id"
+    t.index ["anggaran_id"], name: "index_perhitungans_on_anggaran_id"
   end
 
   create_table "pks", force: :cascade do |t|

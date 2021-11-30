@@ -1,0 +1,32 @@
+<%= form_with(model: anggaran) do |form| %>
+  <% if anggaran.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(anggaran.errors.count, "error") %> prohibited this anggaran from being saved:</h2>
+
+      <ul>
+        <% anggaran.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :kode_rek %>
+    <%= form.text_field :kode_rek %>
+  </div>
+
+  <div class="field">
+    <%= form.label :uraian %>
+    <%= form.text_area :uraian %>
+  </div>
+
+  <div class="field">
+    <%= form.label :jumlah %>
+    <%= form.number_field :jumlah %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
