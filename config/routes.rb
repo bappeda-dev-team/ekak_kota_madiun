@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :tahapans
   resources :kesenjangans
   # resources :rincians
   resources :pagus
@@ -15,8 +14,11 @@ Rails.application.routes.draw do
 
 
   resources :rincians do
-    resources :tahapans
+    resources :tahapans do
+      resources :aksis
+    end
   end
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :lembagas
   resources :opds

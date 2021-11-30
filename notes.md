@@ -72,20 +72,29 @@ User masuk / Login -> Pilih OPD
  
 
  # Todo Today 27-11-2021
- * Nested Opd , Program Kegiatan
- * Atau coba deep nested kan Lembaga , Opd , Program Kegiatan
- * Perbaiki Definisi KaK
+ * Nested Opd , Program Kegiatan [ Done ]
+ * Atau coba deep nested kan Lembaga , Opd , Program Kegiatan [ Bad ]
+ * Perbaiki Definisi KaK [ Done ]
     * KaK adalah gabungan dari Sasaran User dengan SUbkegiatan yang disasar oleh Sasaran Tersebut
     * Hasil : 1 Subkegiatan ( Dengan detail program, kegiatan, indikator, dan sasaran program kegiatan ) dan banyak Sasaran User tersebut
  * Nonaktifkan PK routes 
  * User -* Sasaran [ done ]
  * Nested User - Sasaran [ done ]
  * Pas isi sasaran, sekalian isi punya rinciannya [ done ]
-    * Bug : Redirect ke sasaran error tidak ada id user
+    * Bug : Redirect ke sasaran error tidak ada id user [ FIXME ]
  # Todo 29-11-2021
- * !! Edit and Destroy in Sasarans show
- * Rincian in form edit Sasarans if the sasaran have it
- * Nested shallow again for pagu and tahapan
- * BUg renaksi after create
+ * !! Edit and Destroy in Sasarans show [ maybe done FIXME ]
+ * Rincian in form edit Sasarans if the sasaran have it [ done ]
+ * Nested shallow again for pagu and tahapan [ done ]
+ * BUg renaksi after create [ done ]
  * Fix Field Pagu ( maybe )
- * Kesenjangan
+ * Kesenjangan !! [ FIXME ]
+
+ # Do 30-11-2021
+ * Ubah Pagu dari Parent Sasaran ke Parent Tahapan [ ANCHOR - Will broken ]
+ * Detail Pagu anggaran [ ANCHOR - After Ubah parent ]
+ * Tampilan Seperti di Excel [ TODO - Lihat tampilan excel ]
+ * Test Update and Delete [ FIXME - Urgensi kedua ]
+ * !! CRUD Renaksi
+ * Tahapan back -> [ FIXME - Bug ]
+ * Tahapan masuk ke Sasaran Saja [ ANCHOR - Urgent ]

@@ -1,0 +1,9 @@
+<h1>Editing Target / Realisasi Tahapan Kinerja : "<%= @tahapan.tahapan_kerja %>"</h1>
+
+
+<%= render 'form', aksi: @aksi %>
+
+<%= link_to 'Hapus', rincian_tahapan_aksi_path(@tahapan.rincian, @tahapan, @aksi), method: :delete, data: { confirm: "Hapus ?"} %>
+
+<%= link_to 'Kembali', sasaran_path(@tahapan.rincian.sasaran) %>
+

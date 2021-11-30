@@ -92,27 +92,76 @@
   <% else %>
   <hr>
     <h3>Rencana Aksi ( Tahapan pelaksaanaan ) </h3>
-    <%= link_to 'Tambah Renaksi', new_rincian_tahapan_path(@sasaran.rincian) %>
-    <% @sasaran.rincian.tahapans.each do |tahapan| %>
+    <%= link_to 'Tambah Tahapan', new_rincian_tahapan_path(@sasaran.rincian) %>
       <hr>
+      <!-- TODO - Refactor and Add AJAX -->
+      <table class="renaksi">
+      <thead>
+      <tr>
+        <th rowspan="2">No</th>
+        <th rowspan="2">Tahapan Kerja</th>
+        <% (1..12).each do |i| %>
+        <th colspan="2"><%= i %></th>
+        <% end %>
+        <th colspan="2">Jumlah</th>
+        <th rowspan="2">Keterangan</th>
+      </tr>
+      <tr>
+      <% (1..13).each do |item| %>
+        <td>T</td>
+        <td>R</td>
+      <% end %>
+      </tr>
+      </thead>
+      <tbody>
+        <% @sasaran.rincian.tahapans.each.with_index(1) do |tahapan, index| %>
+          <% aksi = tahapan.aksis %>
+            <tr>
+              <td><%= index %></td>
+              <td class="tahapan"><%= tahapan.tahapan_kerja %></td>
+              <!-- Loop Tanggal-->
+              <% (1..12).each do |i| %>
+              <td><%= aksi.find_by(bulan: i) ? 
+              link_to(aksi.find_by(bulan: i).target, edit_rincian_tahapan_aksi_path(tahapan.rincian, tahapan, aksi.find_by(bulan: i).id, :bulan => i))  
+              :
+              link_to('+', new_rincian_tahapan_aksi_path(@sasaran.rincian, tahapan, :bulan => i)  )   %> </td>
+              <td><%= aksi.find_by(bulan: i) ? aksi.find_by(bulan: i).realisasi : ''  %></td>
+              <% end %>
+              <!-- Sum -->
+              <td><%= tahapan.jumlah_target  %></td>
+              <td><%= tahapan.jumlah_realisasi %></td>
+              <td><%= tahapan.keterangan  %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      <tfoot>
+      <% total_target_aksi_bulan = Aksi.all.group(:bulan).sum(:target) %>
+      <% total_realisasi_aksi_bulan = Aksi.all.group(:bulan).sum(:realisasi) %>
+      <% jumlah_target = @sasaran.rincian.tahapans.sum :jumlah_target %>
+      <% jumlah_realisasi = @sasaran.rincian.tahapans.sum :jumlah_realisasi %>
+        <tr>
+          <td colspan="2">Total</td>
+          <% (1..12).each do |i| %>
+          <td><%= total_target_aksi_bulan[i] %></td>
+          <td><%= total_realisasi_aksi_bulan[i] %></td>
+          <% end %>
+          <td><%= jumlah_target %></td>
+          <td><%= jumlah_realisasi %></td>
+          <td></td>
+        </tr>
+      </tfoot>
+      </table>
       <p>
-        <strong>Tahapan Kerja: </strong>
-        <%= tahapan.tahapan_kerja %>
+        <strong>Waktu yang dibutuhkan :</strong>
+        <%= total_target_aksi_bulan.count %> bulan
       </p>
       <p>
-        <strong>Bulan: </strong>
-        <%= tahapan.bulan %>
-      </p>
-      <p>
-        <strong>Keterangan: </strong>
-        <%= tahapan.keterangan %>
-      </p>
-      <p>
-        <strong>Realisasi: </strong>
-        <%= tahapan.realisasi %>
+        <strong>Progress Pelaksanaan :</strong>
+        <% if jumlah_target * jumlah_realisasi != 0 %>
+        <%= number_to_percentage((jumlah_realisasi.to_f / jumlah_target.to_f ) * 100, precision: 2) %>
+        <% end %>
       </p>
       <hr>
-    <% end %>
 
   <% end %>
   <!-- TODO: Add ajax to inline form -->
