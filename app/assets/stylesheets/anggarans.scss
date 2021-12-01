@@ -1,10 +1,11 @@
 // Place all the styles related to the Anggarans controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.anggaran
 table {
   width: 100%;
   border-collapse: collapse;
-  text-align: center;
+  text-align: left;
   td.tahapan {
     text-align: left;
   }
@@ -15,5 +16,12 @@ table {
   td {
     padding: 5px;
     border: 0.5px solid black;
-  }  
+  } 
+  tr td:first-child {
+    color: blue;
+  }
+  tr.kres-tahapan {
+    color: green;
+    text-align: start;
+  }
 }

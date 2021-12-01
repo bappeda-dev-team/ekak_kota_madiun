@@ -12,6 +12,20 @@
   <% end %>
 
   <div class="field">
+    <% options = (0..5) %>
+    <%= form.label :level %>
+    <%= form.select :level, options %>
+  </div>
+
+  <div class="field">
+  <% anggarans = @tahapan.anggarans %>
+    <% options = options_from_collection_for_select(anggarans, 'id', 'uraian') %>
+    <%= form.label :parent_id %>
+    <%= form.select :parent_id, options %>
+  </div>
+
+
+  <div class="field">
     <%= form.label :kode_rek %>
     <%= form.text_field :kode_rek %>
   </div>

@@ -41,7 +41,7 @@ class AnggaransController < ApplicationController
   def update
     respond_to do |format|
       if @anggaran.update(anggaran_params)
-        format.html { redirect_to sasaran_path(@rincian.sasaran), notice: "Anggaran was successfully updated." }
+        format.html { redirect_to rincian_tahapan_anggaran_path(@rincian, @tahapan, @anggaran), notice: "Anggaran was successfully updated." }
         format.json { render :show, status: :ok, location: @anggaran }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -72,6 +72,6 @@ class AnggaransController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def anggaran_params
-      params.require(:anggaran).permit(:kode_rek, :uraian, :jumlah, :tahapan_id)
+      params.require(:anggaran).permit(:kode_rek, :uraian, :jumlah, :tahapan_id, :parent_id, :level)
     end
 end

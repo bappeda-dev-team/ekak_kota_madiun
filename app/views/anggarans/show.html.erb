@@ -16,34 +16,100 @@
 <hr>
 <h3>Rincian Anggaran</h3>
 <!-- SECTION - Table Anggaran -->
-<table>
-  <thead>
-    <tr>
-      <th rowspan="2">Kode Rekening</th>
-      <th rowspan="2">Uraian</th>
-      <th colspan="4">Rincian Perhitungan</th>
-      <th rowspan="2">Jumlah</th>
-    </tr>
-    <tr>
-      <th>Koefisien</th>
-      <th>Satuan</th>
-      <th>Harga</th>
-      <th>PPN</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>5.1.0.1.0.1.0.0001</td>
-      <td>Belanja gaji pokok pns</td>
-      <td>12 bulan</td>
-      <td></td>
-      <td>3.800.000</td>
-      <td>0</td>
-      <td>Rp. 45.600.000</td>
-    </tr>
-  </tbody>
-</table>
+<div class="anggaran">
+  <table>
+    <thead>
+      <tr>
+        <th rowspan="2">Kode Rekening</th>
+        <th rowspan="2">Uraian</th>
+        <th colspan="3">Rincian Perhitungan</th>
+        <th rowspan="2">PPN (10%)</th>
+        <th rowspan="2">Jumlah</th>
+      </tr>
+      <tr>
+        <th>Koefisien</th>
+        <th>Satuan</th>
+        <th>Harga</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= @anggaran.kode_rek %></td>
+        <td><%= link_to @anggaran.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, @anggaran) %></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><%= @anggaran.level %></td>
+        <td><%= @anggaran.parent_id %></td>
+      </tr>
+      <% @anggaran.childs.each do |child| %>
+        <tr>
+          <td><%= @anggaran.kode_rek + child.kode_rek %></td>
+          <td><%= link_to  child.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child) %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= child.level %></td>
+          <td><%= child.parent_id %></td>
+        </tr>
+        <% child.childs.each do |child2| %>
+        <tr>
+          <td><%= @anggaran.kode_rek + child.kode_rek + child2.kode_rek %></td>
+          <td><%= link_to child2.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child2) %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= child2.level %></td>
+          <td><%= child2.parent_id %></td>
+        </tr>
+        <% child2.childs.each do |child3| %>
+        <tr>
+          <td><%= @anggaran.kode_rek + child.kode_rek + child2.kode_rek + child3.kode_rek %></td>
+          <td><%= link_to child3.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child3) %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= child3.level %></td>
+          <td><%= child3.parent_id %></td>
+        </tr>
+        <% child3.childs.each do |child4| %>
+        <tr>
+          <td><%= @anggaran.kode_rek + child.kode_rek + child2.kode_rek + child3.kode_rek + child4.kode_rek %></td>
+          <td><%= link_to child4.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child4) %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= child4.level %></td>
+          <td><%= child4.parent_id %></td>
+        </tr>
+        <tr class="kres-tahapan">
+          <td>Tahapan ->></td>
+          <td colspan="6"># Tahapan -> <%= @tahapan.tahapan_kerja %></td>
+        </tr>
+        <% child4.childs.each do |child5| %>
+        <tr>
+          <td><%= child5.kode_rek %></td>
+          <td colspan="6">[ - ] <%= link_to child5.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child5) %></td>
+        </tr>
+        <tr class="rincian-anggaran">
+          <td>Rician Anggaran ->></td>
+          <td>Belanja Gaji Pokok PNS</td>
+          <td>12 Bulan</td>
+          <td></td>
+          <td>3.800.000</td>
+          <td>0</td>
+          <td>45.600.000</td>
+        </tr>
+        <% end %>
+        <% end %>
+        <% end %>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 <!-- !SECTION - End Table Anggaran -->
 <hr>
+<%= link_to 'New', new_rincian_tahapan_anggaran_path(@rincian, @tahapan) %>
 <%= link_to 'Edit', edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, @anggaran) %> |
 <%= link_to 'Kembali', sasaran_path(@tahapan.rincian.sasaran) %>

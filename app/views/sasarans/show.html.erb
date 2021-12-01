@@ -173,64 +173,7 @@
   <% end %>
   <!-- TODO: Add ajax to inline form -->
 <!-- SECTION - anggaran baru -->
-  <table>
-    <thead>
-      <tr>
-        <th rowspan="2">Kode Rekening</th>
-        <th rowspan="2">Uraian</th>
-        <th rowspan="2">Tahapan Kerja</th>
-        <th colspan="10">Rincian Perhitungan</th>
-        <th rowspan="2">Jumlah</th>
-      </tr>
-      <tr>
-      <% (1..3).each do |i| %>
-        <th>Koefisien</th>
-        <th>Satuan</th>
-        <th>Harga</th>
-      <% end %>
-        <th>PPN (10%)</th>
-      </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>5.1.0.1.0.1.01</td>
-        <td>Belanja gaji pokok asn</td>
-        <td></td>
-        <% (1..3).each do |i| %>
-        <td></td>
-        <td></td>
-        <td></td>
-        <% end %>
-        <td></td>
-        <td>Rp. 45.600.000</td>
-      </tr>
-      <tr>
-        <td>5.1.0.1.0.1.0.0001</td>
-        <td>Belanja gaji pokok pns</td>
-        <td></td>
-        <% (1..3).each do |i| %>
-        <td>12 bulan</td>
-        <td>Laut <%= i %></td>
-        <td>3.800.000</td>
-        <% end %>
-        <td>380.000</td>
-        <td>Rp. 45.600.000</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>Belanja Gaji Pokok PNS
-[Belanja Gaji dan Tunjangan]</td>
-        <td>Architecto et at aut</td>
-        <% (1..3).each do |i| %>
-        <td>12 bulan</td>
-        <td>Laut <%= i %></td>
-        <td>3.800.000</td>
-        <% end %>
-        <td>380.000</td>
-        <td>Rp. 45.600.000</td>
-      </tr>
-    </tbody>
-  </table>
+
 <!-- !!SECTION - end anggaran-->
 <br>
 <br>
