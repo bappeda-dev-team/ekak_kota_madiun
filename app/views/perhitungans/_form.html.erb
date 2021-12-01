@@ -1,4 +1,4 @@
-<%= form_with(model: perhitungan) do |form| %>
+<%= form_with(model: [@anggaran, perhitungan]) do |form| %>
   <% if perhitungan.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(perhitungan.errors.count, "error") %> prohibited this perhitungan from being saved:</h2>
@@ -12,13 +12,18 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :koefisien %>
-    <%= form.text_field :koefisien %>
+    <%= form.label :deskripsi %>
+    <%= form.text_field :deskripsi %>
   </div>
 
   <div class="field">
     <%= form.label :volume %>
     <%= form.number_field :volume %>
+  </div>
+
+  <div class="field">
+    <%= form.label :koefisien %>
+    <%= form.text_field :koefisien %>
   </div>
 
   <div class="field">

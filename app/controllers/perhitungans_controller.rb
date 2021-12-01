@@ -1,9 +1,10 @@
 class PerhitungansController < ApplicationController
+  before_action :set_anggaran
   before_action :set_perhitungan, only: %i[ show edit update destroy ]
 
   # GET /perhitungans or /perhitungans.json
   def index
-    @perhitungans = Perhitungan.all
+    @perhitungans = @anggaran.perhitungans
   end
 
   # GET /perhitungans/1 or /perhitungans/1.json
@@ -12,7 +13,8 @@ class PerhitungansController < ApplicationController
 
   # GET /perhitungans/new
   def new
-    @perhitungan = Perhitungan.new
+    # @perhitungan = Perhitungan.new
+    @perhitungan = @anggaran.perhitungans.build
   end
 
   # GET /perhitungans/1/edit
@@ -21,11 +23,11 @@ class PerhitungansController < ApplicationController
 
   # POST /perhitungans or /perhitungans.json
   def create
-    @perhitungan = Perhitungan.new(perhitungan_params)
+    @perhitungan =  @anggaran.perhitungans.build(perhitungan_params)
 
     respond_to do |format|
       if @perhitungan.save
-        format.html { redirect_to @perhitungan, notice: "Perhitungan was successfully created." }
+        format.html { redirect_to rincian_tahapan_anggaran_path(@anggaran.tahapan.rincian, @anggaran.tahapan, @anggaran), notice: "Perhitungan was successfully created." }
         format.json { render :show, status: :created, location: @perhitungan }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +40,7 @@ class PerhitungansController < ApplicationController
   def update
     respond_to do |format|
       if @perhitungan.update(perhitungan_params)
-        format.html { redirect_to @perhitungan, notice: "Perhitungan was successfully updated." }
+        format.html { redirect_to rincian_tahapan_anggaran_path(@anggaran.tahapan.rincian, @anggaran.tahapan, @anggaran), notice: "Perhitungan was successfully updated." }
         format.json { render :show, status: :ok, location: @perhitungan }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -51,19 +53,23 @@ class PerhitungansController < ApplicationController
   def destroy
     @perhitungan.destroy
     respond_to do |format|
-      format.html { redirect_to perhitungans_url, notice: "Perhitungan was successfully destroyed." }
+      format.html { redirect_to anggaran_url, notice: "Perhitungan was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_anggaran
+      @anggaran = Anggaran.find(params[:anggaran_id])
+    end
+
     def set_perhitungan
-      @perhitungan = Perhitungan.find(params[:id])
+      @perhitungan = @anggaran.perhitungans.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def perhitungan_params
-      params.require(:perhitungan).permit(:koefisien, :volume, :satuan, :harga)
+      params.require(:perhitungan).permit(:koefisien, :volume, :satuan, :harga, :anggaran_id, :deskripsi)
     end
 end

@@ -33,73 +33,73 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr class="level-0">
         <td><%= @anggaran.kode_rek %></td>
-        <td><%= link_to @anggaran.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, @anggaran) %></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><%= @anggaran.level %></td>
-        <td><%= @anggaran.parent_id %></td>
+        <td colspan="5"><%= link_to @anggaran.uraian, 
+        edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, @anggaran) %>
+          <%= link_to '[ + ] Child', new_rincian_tahapan_anggaran_path(@rincian, @tahapan, :parent => @anggaran.id, :level => @anggaran.level + 1) %>
+        </td>
+        <td class="uang"><%= number_with_delimiter(@anggaran.jumlah, :delimiter => '.') %></td>
       </tr>
-      <% @anggaran.childs.each do |child| %>
-        <tr>
+      <% @anggaran.childs.order(:id).each do |child| %>
+        <tr class="level-1">
           <td><%= @anggaran.kode_rek + child.kode_rek %></td>
-          <td><%= link_to  child.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child) %></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td><%= child.level %></td>
-          <td><%= child.parent_id %></td>
+          <td colspan="5"><%= link_to  child.uraian, 
+          edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child) %>
+            <%= link_to '[ + ] Child', new_rincian_tahapan_anggaran_path(@rincian, @tahapan, :parent => child.id, :level => child.level + 1) %>
+          </td>
+          <td class="uang"><%= number_with_delimiter(child.jumlah, :delimiter => '.') %></td>
         </tr>
-        <% child.childs.each do |child2| %>
+        <% child.childs.order(:id).each do |child2| %>
         <tr>
           <td><%= @anggaran.kode_rek + child.kode_rek + child2.kode_rek %></td>
-          <td><%= link_to child2.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child2) %></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td><%= child2.level %></td>
-          <td><%= child2.parent_id %></td>
+          <td colspan="5"><%= link_to child2.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child2) %>
+            <%= link_to '[ + ] Child', new_rincian_tahapan_anggaran_path(@rincian, @tahapan, :parent => child2.id, :level => child2.level + 1) %>
+          </td>
+          <td class="uang"><%= number_with_delimiter(child2.jumlah, :delimiter => '.') %></td>
         </tr>
-        <% child2.childs.each do |child3| %>
+        <% child2.childs.order(:id).each do |child3| %>
         <tr>
           <td><%= @anggaran.kode_rek + child.kode_rek + child2.kode_rek + child3.kode_rek %></td>
-          <td><%= link_to child3.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child3) %></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td><%= child3.level %></td>
-          <td><%= child3.parent_id %></td>
+          <td colspan="5"><%= link_to child3.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child3) %>
+            <%= link_to '[ + ] Child', new_rincian_tahapan_anggaran_path(@rincian, @tahapan, :parent => child3.id, :level => child3.level + 1) %>
+          </td>
+          <td class="uang"><%= number_with_delimiter(child3.jumlah, :delimiter => '.') %></td>
         </tr>
-        <% child3.childs.each do |child4| %>
+        <% child3.childs.order(:id).each do |child4| %>
         <tr>
           <td><%= @anggaran.kode_rek + child.kode_rek + child2.kode_rek + child3.kode_rek + child4.kode_rek %></td>
-          <td><%= link_to child4.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child4) %></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td><%= child4.level %></td>
-          <td><%= child4.parent_id %></td>
+          <td colspan="5"><%= link_to child4.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child4) %>
+            <%= link_to '[ + ] Child', new_rincian_tahapan_anggaran_path(@rincian, @tahapan, :parent => child4.id, :level => child4.level + 1) %>
+          </td>
+          <td class="uang"><%= number_with_delimiter(child4.jumlah, :delimiter => '.') %></td>
         </tr>
         <tr class="kres-tahapan">
-          <td>Tahapan ->></td>
-          <td colspan="6"># Tahapan -> <%= @tahapan.tahapan_kerja %></td>
+          <td>Tahapan ->> Level 5 mulai sini</td>
+          <td colspan="6">#<%= @tahapan.tahapan_kerja %></td>
         </tr>
-        <% child4.childs.each do |child5| %>
+        <% child4.childs.order(:id).each do |child5| %>
         <tr>
           <td><%= child5.kode_rek %></td>
-          <td colspan="6">[ - ] <%= link_to child5.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child5) %></td>
+          <td colspan="6">[ - ] 
+          <%= link_to child5.uraian, 
+          edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child5) %>
+           <%= link_to '[ + ]', new_anggaran_perhitungan_path(child5) %>
+          </td>
         </tr>
-        <tr class="rincian-anggaran">
-          <td>Rician Anggaran ->></td>
-          <td>Belanja Gaji Pokok PNS</td>
-          <td>12 Bulan</td>
-          <td></td>
-          <td>3.800.000</td>
-          <td>0</td>
-          <td>45.600.000</td>
-        </tr>
+        <% if child5.perhitungans.any? %>
+          <% child5.perhitungans.order(:id).each do |hitung| %>
+            <tr class="rincian-anggaran">
+              <td></td>
+              <td><%= link_to hitung.deskripsi, edit_anggaran_perhitungan_path(child5, hitung) %></td>
+              <td><%= hitung.volume %> <%= hitung.koefisien %></td>
+              <td><%= hitung.satuan %></td>
+              <td><%= number_with_delimiter(hitung.harga, :delimiter => '.') %></td>
+              <td></td>
+              <td class="uang"><%= number_with_delimiter(hitung.total, :delimiter => '.') %></td>
+            </tr>
+          <% end %>
+        <% end %>
         <% end %>
         <% end %>
         <% end %>

@@ -15,6 +15,8 @@ class AnggaransController < ApplicationController
   def new
     # @anggaran = Anggaran.new
     @anggaran = @tahapan.anggarans.build
+    @parent = params[:parent]
+    @level = params[:level]
   end
 
   # GET /anggarans/1/edit

@@ -12,16 +12,11 @@
   <% end %>
 
   <div class="field">
-    <% options = (0..5) %>
-    <%= form.label :level %>
-    <%= form.select :level, options %>
+    <%= form.hidden_field :parent_id,:value => @level.to_i %>
   </div>
 
   <div class="field">
-  <% anggarans = @tahapan.anggarans %>
-    <% options = options_from_collection_for_select(anggarans, 'id', 'uraian') %>
-    <%= form.label :parent_id %>
-    <%= form.select :parent_id, options %>
+    <%= form.hidden_field :parent_id,:value => @parent.to_i %>
   </div>
 
 
