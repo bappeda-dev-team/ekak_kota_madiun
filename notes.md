@@ -98,3 +98,8 @@ User masuk / Login -> Pilih OPD
  * !! CRUD Renaksi
  * Tahapan back -> [ FIXME - Bug ]
  * Tahapan masuk ke Sasaran Saja [ ANCHOR - Urgent ]
+
+ # DO 1 Des 2021
+ * Koefisien dan volume boleh ditambah
+ * Error back from perhitungan anggaran
+ * Pajak dan Volume + koefisien dynamic

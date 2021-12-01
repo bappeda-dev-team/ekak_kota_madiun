@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Koefisien:</strong>
+  <%= @perhitungan.koefisien %>
+</p>
+
+<p>
+  <strong>Volume:</strong>
+  <%= @perhitungan.volume %>
+</p>
+
+<p>
+  <strong>Satuan:</strong>
+  <%= @perhitungan.satuan %>
+</p>
+
+<p>
+  <strong>Harga:</strong>
+  <%= @perhitungan.harga %>
+</p>
+
+<%= link_to 'Edit', edit_perhitungan_path(@perhitungan) %> |
+<%= link_to 'Back', perhitungans_path %>

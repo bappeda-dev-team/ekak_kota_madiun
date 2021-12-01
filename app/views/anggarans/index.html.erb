@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Anggarans</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Kode rek</th>
+      <th>Uraian</th>
+      <th>Jumlah</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @anggarans.each do |anggaran| %>
+      <tr>
+        <td><%= anggaran.kode_rek %></td>
+        <td><%= anggaran.uraian %></td>
+        <td><%= anggaran.jumlah %></td>
+        <td><%= link_to 'Show', anggaran %></td>
+        <td><%= link_to 'Edit', edit_anggaran_path(anggaran) %></td>
+        <td><%= link_to 'Destroy', anggaran, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Anggaran', new_anggaran_path %>
