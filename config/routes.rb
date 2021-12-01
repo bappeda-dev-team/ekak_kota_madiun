@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :koefisiens
   # resources :perhitungans
   resources :kesenjangans
   # resources :rincians

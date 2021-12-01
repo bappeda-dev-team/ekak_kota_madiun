@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_01_041756) do
+ActiveRecord::Schema.define(version: 2021_12_01_082317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,7 +100,6 @@ ActiveRecord::Schema.define(version: 2021_12_01_041756) do
   end
 
   create_table "perhitungans", force: :cascade do |t|
-    t.string "koefisien"
     t.integer "volume"
     t.string "satuan"
     t.integer "harga"

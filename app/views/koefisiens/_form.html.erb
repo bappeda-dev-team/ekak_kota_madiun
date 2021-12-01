@@ -1,0 +1,27 @@
+<%= form_with(model: koefisien) do |form| %>
+  <% if koefisien.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(koefisien.errors.count, "error") %> prohibited this koefisien from being saved:</h2>
+
+      <ul>
+        <% koefisien.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :volume %>
+    <%= form.number_field :volume %>
+  </div>
+
+  <div class="field">
+    <%= form.label :satuan_volume %>
+    <%= form.text_field :satuan_volume %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

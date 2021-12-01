@@ -1,0 +1,2 @@
+class Koefisien < ApplicationRecord
+end
