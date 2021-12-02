@@ -89,6 +89,7 @@
         </tr>
         <% if child5.perhitungans.any? %>
           <% child5.perhitungans.order(:id).each do |hitung| %>
+            <% pajak = hitung.total * child5.pajak.potongan %>
             <tr class="rincian-anggaran">
               <td></td>
               <td><%= link_to hitung.deskripsi, edit_anggaran_perhitungan_path(child5, hitung) %></td>
@@ -98,8 +99,8 @@
               </td>
               <td><%= hitung.satuan %></td>
               <td><%= number_with_delimiter(hitung.harga, :delimiter => '.') %></td>
-              <td></td>
-              <td class="uang"><%= number_with_delimiter(hitung.total, :delimiter => '.') %></td>
+              <td><%= number_with_delimiter(pajak.to_i, :delimiter => '.') %> | pajak = <%= child5.pajak.potongan * 100 %> %</td>
+              <td class="uang"><%= number_with_delimiter(hitung.total + pajak, :delimiter => '.') %></td>
             </tr>
           <% end %>
         <% end %>

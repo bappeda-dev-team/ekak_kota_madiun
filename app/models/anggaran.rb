@@ -7,5 +7,11 @@ class Anggaran < ApplicationRecord
   belongs_to :pajak
 
   scope :tanpa_pajak, -> { where(pajak_id: nil) }
-  scope :root_anggaran, -> { where(level: 0) }
+  scope :ujung_anggaran, -> { where(level: 0) }
+  scope :pangkal_anggaran, -> { where(level: 5)}
+
+  # get all anggaran with koefisiens
+  def with_koefisiens
+    self.perhitungans.includes(:koefisiens).map(&:koefisiens)
+  end
 end
