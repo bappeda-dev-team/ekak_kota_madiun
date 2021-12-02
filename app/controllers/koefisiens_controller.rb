@@ -1,10 +1,10 @@
 class KoefisiensController < ApplicationController
-  before_action :set_anggaran_perhitungan
+  before_action :set_perhitungan, except: %i[edit show]
   before_action :set_koefisien, only: %i[ show edit update destroy ]
 
   # GET /koefisiens or /koefisiens.json
   def index
-    @koefisiens = Koefisien.all
+    @koefisiens = @perhitungan.koefisiens
   end
 
   # GET /koefisiens/1 or /koefisiens/1.json
@@ -13,7 +13,7 @@ class KoefisiensController < ApplicationController
 
   # GET /koefisiens/new
   def new
-    @koefisien = Koefisien.new
+    @koefisien = @perhitungan.koefisiens.build
   end
 
   # GET /koefisiens/1/edit
@@ -22,11 +22,11 @@ class KoefisiensController < ApplicationController
 
   # POST /koefisiens or /koefisiens.json
   def create
-    @koefisien = Koefisien.new(koefisien_params)
+    @koefisien = @perhitungan.koefisiens.build(koefisien_params)
 
     respond_to do |format|
       if @koefisien.save
-        format.html { redirect_to @koefisien, notice: "Koefisien was successfully created." }
+        format.html { redirect_to rincian_tahapan_anggarans_path(@anggaran.tahapan.rincian, @anggaran.tahapan), notice: "Koefisien was successfully created." }
         format.json { render :show, status: :created, location: @koefisien }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -59,9 +59,9 @@ class KoefisiensController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_anggaran_perhitungan
-      @anggaran = Anggaran.find(params[:anggaran_id])
-      @perhitungan = @anggaran.find(params[:perhitungan_id])
+    def set_perhitungan
+      @perhitungan = Perhitungan.find(params[:perhitungan_id])
+      @anggaran = @perhitungan.anggaran
     end
 
     def set_koefisien

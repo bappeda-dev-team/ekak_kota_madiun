@@ -22,9 +22,11 @@ Rails.application.routes.draw do
   end
 
   resources :anggarans  do
-    resources :perhitungans do
-      resources :koefisiens
-    end
+    resources :perhitungans
+  end
+
+  resources :perhitungans, shallow: true do
+    resources :koefisiens
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

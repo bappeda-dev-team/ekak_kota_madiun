@@ -92,7 +92,10 @@
             <tr class="rincian-anggaran">
               <td></td>
               <td><%= link_to hitung.deskripsi, edit_anggaran_perhitungan_path(child5, hitung) %></td>
-              <td><%= hitung.volume %> <%= hitung.koefisien %></td>
+              <td><% hitung.koefisiens.each do |koef|%>
+                  |  <%= koef.volume %> <%= koef.satuan_volume %>  |
+                <% end %>
+              </td>
               <td><%= hitung.satuan %></td>
               <td><%= number_with_delimiter(hitung.harga, :delimiter => '.') %></td>
               <td></td>

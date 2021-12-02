@@ -11,4 +11,4 @@
 </p>
 
 <%= link_to 'Edit', edit_koefisien_path(@koefisien) %> |
-<%= link_to 'Back', koefisiens_path %>
+<%= link_to 'Back', rincian_tahapan_anggarans_path(@koefisien.perhitungan.anggaran.tahapan.rincian, @koefisien.perhitungan.anggaran.tahapan) %>

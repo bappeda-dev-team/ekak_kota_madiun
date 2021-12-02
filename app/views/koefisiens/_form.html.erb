@@ -1,4 +1,4 @@
-<%= form_with(model: koefisien) do |form| %>
+<%= form_with(model: [@perhitungan, koefisien]) do |form| %>
   <% if koefisien.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(koefisien.errors.count, "error") %> prohibited this koefisien from being saved:</h2>
