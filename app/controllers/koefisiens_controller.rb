@@ -1,4 +1,5 @@
 class KoefisiensController < ApplicationController
+  before_action :set_anggaran_perhitungan
   before_action :set_koefisien, only: %i[ show edit update destroy ]
 
   # GET /koefisiens or /koefisiens.json
@@ -58,12 +59,17 @@ class KoefisiensController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_anggaran_perhitungan
+      @anggaran = Anggaran.find(params[:anggaran_id])
+      @perhitungan = @anggaran.find(params[:perhitungan_id])
+    end
+
     def set_koefisien
       @koefisien = Koefisien.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def koefisien_params
-      params.require(:koefisien).permit(:volume, :satuan_volume)
+      params.require(:koefisien).permit(:volume, :satuan_volume, :perhitungan_id)
     end
 end

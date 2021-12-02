@@ -6,6 +6,7 @@ class Perhitungan < ApplicationRecord
   after_destroy :update_jumlah_anggaran
 
   belongs_to :anggaran
+  has_many :koefisiens
 
   def hitung_total
     self.total = self.volume * self.harga

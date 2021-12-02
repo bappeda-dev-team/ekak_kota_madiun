@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_01_082317) do
+ActiveRecord::Schema.define(version: 2021_12_02_024937) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,15 @@ ActiveRecord::Schema.define(version: 2021_12_01_082317) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["rincian_id"], name: "index_kesenjangans_on_rincian_id"
+  end
+
+  create_table "koefisiens", force: :cascade do |t|
+    t.integer "volume"
+    t.string "satuan_volume"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "perhitungan_id"
+    t.index ["perhitungan_id"], name: "index_koefisiens_on_perhitungan_id"
   end
 
   create_table "lembagas", force: :cascade do |t|
