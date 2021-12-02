@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_02_024937) do
+ActiveRecord::Schema.define(version: 2021_12_02_035522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 2021_12_02_024937) do
     t.bigint "tahapan_id"
     t.integer "level", default: 0
     t.bigint "parent_id"
+    t.bigint "pajak_id"
+    t.index ["pajak_id"], name: "index_anggarans_on_pajak_id"
     t.index ["parent_id"], name: "index_anggarans_on_parent_id"
     t.index ["tahapan_id"], name: "index_anggarans_on_tahapan_id"
   end
@@ -106,6 +108,14 @@ ActiveRecord::Schema.define(version: 2021_12_02_024937) do
     t.bigint "sasaran_id", null: false
     t.integer "total"
     t.index ["sasaran_id"], name: "index_pagus_on_sasaran_id"
+  end
+
+  create_table "pajaks", force: :cascade do |t|
+    t.string "tahun"
+    t.string "tipe"
+    t.float "potongan"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "perhitungans", force: :cascade do |t|
@@ -198,6 +208,7 @@ ActiveRecord::Schema.define(version: 2021_12_02_024937) do
     t.integer "opd_id"
   end
 
+  add_foreign_key "anggarans", "pajaks"
   add_foreign_key "kesenjangans", "rincians"
   add_foreign_key "pagus", "sasarans"
   add_foreign_key "pks", "users"
