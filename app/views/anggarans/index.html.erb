@@ -13,14 +13,14 @@
   </thead>
 
   <tbody>
-    <% @anggarans.each do |anggaran| %>
+    <% @anggarans.order(:id).each do |anggaran| %>
       <tr>
         <td><%= anggaran.kode_rek %></td>
         <td><%= anggaran.uraian %></td>
         <td><%= anggaran.jumlah %></td>
-        <td><%= link_to 'Show', anggaran %></td>
-        <td><%= link_to 'Edit', edit_anggaran_path(anggaran) %></td>
-        <td><%= link_to 'Destroy', anggaran, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', rincian_tahapan_anggaran_path(@rincian, @tahapan, anggaran) %></td>
+        <td><%= link_to 'Edit', edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, anggaran) %></td>
+        <td><%= link_to 'Destroy', rincian_tahapan_anggaran_path(@rincian, @tahapan, anggaran), method: :delete, data: { confirm: "Menghapus Anggaran '#{anggaran.uraian}' ?" } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +28,4 @@
 
 <br>
 
-<%= link_to 'New Anggaran', new_anggaran_path %>
+<%= link_to 'New Anggaran', new_rincian_tahapan_anggaran_path(@rincian, @tahapan) %>
