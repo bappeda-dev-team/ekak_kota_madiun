@@ -136,7 +136,8 @@
               <% unless tahapan.anggarans.any? %>
               <td><%= link_to 'Tambah Anggaran', new_rincian_tahapan_anggaran_path(@sasaran.rincian, tahapan)  %></td>
                 <% else %>
-              <td><%= link_to tahapan.anggarans.first.uraian, rincian_tahapan_anggaran_path(@sasaran.rincian, tahapan, tahapan.anggarans.first.id)  %></td>
+                <% total_anggaran = tahapan.anggarans.find_by(level: 0) %>
+              <td><%= link_to total_anggaran.uraian, rincian_tahapan_anggaran_path(@sasaran.rincian, tahapan, tahapan.anggarans.first.id)  %></td>
               <% end %>
             </tr>
         <% end %>
