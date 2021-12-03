@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Tahun:</strong>
+  <%= @pajak.tahun %>
+</p>
+
+<p>
+  <strong>Tipe:</strong>
+  <%= @pajak.tipe %>
+</p>
+
+<p>
+  <strong>Potongan:</strong>
+  <%= @pajak.potongan %>
+</p>
+
+<%= link_to 'Edit', edit_pajak_path(@pajak) %> |
+<%= link_to 'Back', pajaks_path %>

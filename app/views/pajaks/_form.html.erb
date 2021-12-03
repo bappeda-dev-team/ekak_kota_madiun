@@ -1,0 +1,32 @@
+<%= form_with(model: pajak) do |form| %>
+  <% if pajak.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(pajak.errors.count, "error") %> prohibited this pajak from being saved:</h2>
+
+      <ul>
+        <% pajak.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :tahun %>
+    <%= form.text_field :tahun %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tipe %>
+    <%= form.text_field :tipe %>
+  </div>
+
+  <div class="field">
+    <%= form.label :potongan %>
+    <%= form.text_field :potongan %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -13,8 +13,8 @@ class PerhitungansController < ApplicationController
 
   # GET /perhitungans/new
   def new
-    # @perhitungan = Perhitungan.new
-    @perhitungan = @anggaran.perhitungans.build
+    @perhitungan = Perhitungan.new
+    @perhitungan.koefisiens.build
   end
 
   # GET /perhitungans/1/edit
@@ -70,6 +70,9 @@ class PerhitungansController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def perhitungan_params
-      params.require(:perhitungan).permit(:koefisien, :volume, :satuan, :harga, :anggaran_id, :deskripsi)
+      params.require(:perhitungan).permit(:satuan, 
+        :harga, :anggaran_id, :deskripsi,
+        koefisiens_attributes: %i[ id volume satuan_volume ]
+      )
     end
 end

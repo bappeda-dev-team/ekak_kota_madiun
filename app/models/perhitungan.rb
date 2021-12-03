@@ -6,11 +6,21 @@ class Perhitungan < ApplicationRecord
   after_destroy :update_jumlah_anggaran
 
   belongs_to :anggaran
+  has_many :koefisiens
+  accepts_nested_attributes_for :koefisiens
 
   def hitung_total
-    self.total = self.volume * self.harga
+    if self.koefisiens.any?
+      total_volume = []
+      self.koefisiens.map do |k|
+        total_volume << k.volume
+      end
+      volume = total_volume.reduce(:*)
+      self.total = volume * self.harga
+    else
+      self.total = 0
+    end
   end
-
   def update_jumlah_anggaran
     anggaran = self.anggaran
     if anggaran.perhitungans.any?
