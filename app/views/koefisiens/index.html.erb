@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Koefisiens</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Volume</th>
+      <th>Satuan volume</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @koefisiens.each do |koefisien| %>
+      <tr>
+        <td><%= koefisien.volume %></td>
+        <td><%= koefisien.satuan_volume %></td>
+        <td><%= link_to 'Show', koefisien %></td>
+        <td><%= link_to 'Edit', edit_koefisien_path(koefisien) %></td>
+        <td><%= link_to 'Destroy', koefisien, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Koefisien', new_koefisien_path %>
