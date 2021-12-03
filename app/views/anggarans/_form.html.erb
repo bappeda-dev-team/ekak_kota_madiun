@@ -31,11 +31,6 @@
   </div>
 
   <div class="field">
-    <%= form.label :jumlah %>
-    <%= form.number_field :jumlah %>
-  </div>
-
-  <div class="field">
     <% pajaks = Pajak.all %>
     <% options = options_from_collection_for_select(pajaks, :id, :simple_pajak) %>
     <%= form.label :pajak_id %>
