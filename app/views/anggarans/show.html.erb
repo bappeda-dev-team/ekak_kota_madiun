@@ -7,14 +7,10 @@
   <strong><%= @anggaran.uraian %></strong>
 </p>
 
-<p>
-  <strong>Kode rek:</strong>
-  <%= @anggaran.kode_rek %>.1
-  <strong><%= @anggaran.uraian %></strong>
-</p>
-
 <hr>
 <h3>Rincian Anggaran</h3>
+<%= link_to 'Tambah Induk Anggaran', new_rincian_tahapan_anggaran_path(@rincian, @tahapan) %>
+<br>
 <!-- SECTION - Table Anggaran -->
 <div class="anggaran">
   <table>
@@ -99,8 +95,8 @@
               </td>
               <td><%= hitung.satuan %></td>
               <td><%= number_with_delimiter(hitung.harga, :delimiter => '.') %></td>
-              <td><%= number_with_delimiter(pajak.to_i, :delimiter => '.') %> | pajak = <%= child5.pajak.potongan * 100 %> %</td>
-              <td class="uang"><%= number_with_delimiter(hitung.total + pajak, :delimiter => '.') %></td>
+              <td><%= number_with_delimiter(pajak.to_i, :delimiter => '.') %> | pajak = <%= (child5.pajak.potongan * 100).to_i %> %</td>
+              <td class="uang"><%= number_with_delimiter((hitung.total).to_i, :delimiter => '.') %></td>
             </tr>
           <% end %>
         <% end %>
@@ -114,6 +110,4 @@
 </div>
 <!-- !SECTION - End Table Anggaran -->
 <hr>
-<%= link_to 'New', new_rincian_tahapan_anggaran_path(@rincian, @tahapan) %>
-<%= link_to 'Edit', edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, @anggaran) %> |
 <%= link_to 'Kembali', sasaran_path(@tahapan.rincian.sasaran) %>

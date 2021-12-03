@@ -1,4 +1,6 @@
-<h1>Anggaran Level <%= @level || 0 %></h1>
+<% upper_parent = Anggaran.find_by(id: @parent)  %>
+<h1>Anggaran Level <%= @level || 0 %> </h1>
+<h1>Parent : <%= upper_parent && upper_parent.uraian %></h1>
 
 <%= render 'form', anggaran: @anggaran, 
     parent:  @parent,

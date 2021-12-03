@@ -10,18 +10,28 @@
       </ul>
     </div>
   <% end %>
+  <% if @level && @parent %>
+    <div class="field">
+      <%= form.hidden_field :level,:value => @level.to_i %>
+    </div>
 
-  <div class="field">
-    <%= form.hidden_field :parent_id,:value => @level.to_i %>
-  </div>
+    <div class="field">
+      <%= form.hidden_field :parent_id,:value => @parent.to_i %>
+    </div>
+    <% parent_rek = Anggaran.find(@parent).kode_rek %>
+    <% else %>
+      <div class="field">
+      <%= form.hidden_field :level %>
+    </div>
 
-  <div class="field">
-    <%= form.hidden_field :parent_id,:value => @parent.to_i %>
-  </div>
-
+    <div class="field">
+      <%= form.hidden_field :parent_id %>
+    </div>
+  <% end %>
 
   <div class="field">
     <%= form.label :kode_rek %>
+    <%= parent_rek || '' %>
     <%= form.text_field :kode_rek %>
   </div>
 
@@ -32,8 +42,9 @@
 
   <div class="field">
     <% pajaks = Pajak.all %>
-    <% options = options_from_collection_for_select(pajaks, :id, :simple_pajak) %>
+    <% options = options_from_collection_for_select(pajaks, :id, :simple_pajak, anggaran.pajak_id) %>
     <%= form.label :pajak_id %>
+    <%# form.select :pajak_id, options, {} , :disabled => form.object.persisted? %>
     <%= form.select :pajak_id, options %>
   </div>
 

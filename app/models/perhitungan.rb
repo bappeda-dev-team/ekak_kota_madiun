@@ -10,13 +10,20 @@ class Perhitungan < ApplicationRecord
   accepts_nested_attributes_for :koefisiens
 
   def hitung_total
+    # cek koefisien di perhitungan
     if self.koefisiens.any?
+      # array total volume
+      # dan meloop untuk insert semua volume
       total_volume = []
       self.koefisiens.map do |k|
         total_volume << k.volume
       end
+      # hitung volume ( seluruh volume dikalikan )
+      # pajak mengambil data dari anggaran diatasnya
       volume = total_volume.reduce(:*)
-      self.total = volume * self.harga
+      total = volume * self.harga
+      pajak = total * self.anggaran.pajak.potongan
+      self.total = total + pajak.to_i
     else
       self.total = 0
     end
