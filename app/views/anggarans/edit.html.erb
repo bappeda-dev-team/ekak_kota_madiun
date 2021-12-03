@@ -1,4 +1,5 @@
-<h1>Editing Anggaran</h1>
+<h1>Edit Anggaranan <%= @anggaran.uraian %></h1>
+<h5>Level : <%= @anggaran.level %></h5>
 <%= render 'form', anggaran: @anggaran %>
 
 <%= link_to 'Show', @anggaran %> |
