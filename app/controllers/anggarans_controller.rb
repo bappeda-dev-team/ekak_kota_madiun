@@ -74,6 +74,6 @@ class AnggaransController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def anggaran_params
-      params.require(:anggaran).permit(:kode_rek, :uraian, :jumlah, :tahapan_id, :parent_id, :level)
+      params.require(:anggaran).permit(:kode_rek, :uraian, :jumlah, :tahapan_id, :parent_id, :level, :pajak_id)
     end
 end

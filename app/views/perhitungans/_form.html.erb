@@ -16,15 +16,12 @@
     <%= form.text_field :deskripsi %>
   </div>
 
-  <div class="field">
-    <%= form.label :volume %>
-    <%= form.number_field :volume %>
-  </div>
-
-  <div class="field">
-    <%= form.label :koefisien %>
-    <%= form.text_field :koefisien %>
-  </div>
+  <h4><strong>Koefisiens : </strong></h4>
+    <%= form.fields_for :koefisiens do |f| %> 
+      <%= render 'koefisien_fields', f: f %>
+    <% end %>
+    <%= add_koefisiens "Tambah Koefisien", form, :koefisiens %>
+  <hr>
 
   <div class="field">
     <%= form.label :satuan %>
@@ -40,3 +37,13 @@
     <%= form.submit %>
   </div>
 <% end %>
+
+<script>
+ let fields =  document.querySelectorAll('.add_fields');
+ console.log(fields)
+ for (field of fields) {
+   field.addEventListener('click', function(event) {
+     console.log('Helo')
+   });
+ }
+</script>

@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Pajaks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tahun</th>
+      <th>Tipe</th>
+      <th>Potongan</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pajaks.each do |pajak| %>
+      <tr>
+        <td><%= pajak.tahun %></td>
+        <td><%= pajak.tipe %></td>
+        <td><%= pajak.potongan %></td>
+        <td><%= link_to 'Show', pajak %></td>
+        <td><%= link_to 'Edit', edit_pajak_path(pajak) %></td>
+        <td><%= link_to 'Destroy', pajak, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pajak', new_pajak_path %>
