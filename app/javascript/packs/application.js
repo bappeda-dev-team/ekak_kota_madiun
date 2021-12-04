@@ -8,15 +8,14 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
+// Bootstrap 5 thing
+import 'bootstrap'
+import '@popperjs/core'
+import jQuery from 'jquery'
+import '../src/my_script'
+
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
-// Bootstrap 5 thing
-import 'bootstrap'
-import '../stylsheets/application'
-
-document.addEventListener("turbolinks:load", () => {
-  $('[data-bs-toggle="tooltip"]').tooltip()
-  $('[data-bs-toggle="popover"]').popover()
-})
+window.$ = window.jQuery = jQuery

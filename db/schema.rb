@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_02_035522) do
+ActiveRecord::Schema.define(version: 2021_12_02_142012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2021_12_02_035522) do
     t.bigint "tahapan_id"
     t.integer "level", default: 0
     t.bigint "parent_id"
+    t.string "grand_parent"
     t.bigint "pajak_id"
     t.index ["pajak_id"], name: "index_anggarans_on_pajak_id"
     t.index ["parent_id"], name: "index_anggarans_on_parent_id"
