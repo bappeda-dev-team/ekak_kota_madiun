@@ -12,7 +12,7 @@
     <%= form.label :program_kegiatan_id, 'Sub Kegiatan : ' %>
     <%= form.select :program_kegiatan_id, options %>
   </div>
-   <div class="actions">
+  <div class="actions">
     <%= form.submit %>
   </div>
   <% end %>
@@ -23,30 +23,32 @@
 </p>
 <% end %>
 <hr>
-<p>
-  <strong>Sasaran kinerja:</strong>
-  <%= @sasaran.sasaran_kinerja %>
-</p>
+<div class="sasaran">
+  <p>
+    <strong>Sasaran kinerja:</strong>
+    <%= @sasaran.sasaran_kinerja %>
+  </p>
 
-<p>
-  <strong>Indikator kinerja:</strong>
-  <%= @sasaran.indikator_kinerja %>
-</p>
+  <p>
+    <strong>Indikator kinerja:</strong>
+    <%= @sasaran.indikator_kinerja %>
+  </p>
 
-<p>
-  <strong>Target:</strong>
-  <%= @sasaran.target %>
-</p>
+  <p>
+    <strong>Target:</strong>
+    <%= @sasaran.target %>
+  </p>
 
-<p>
-  <strong>Satuan:</strong>
-  <%= @sasaran.satuan %>
-</p>
+  <p>
+    <strong>Satuan:</strong>
+    <%= @sasaran.satuan %>
+  </p>
 
-<p>
-  <strong>Penerima manfaat:</strong>
-  <%= @sasaran.penerima_manfaat %>
-</p>
+  <p>
+    <strong>Penerima manfaat:</strong>
+    <%= @sasaran.penerima_manfaat %>
+  </p>
+</div>
 
 <% unless @sasaran.rincian %>
 <p>
@@ -55,11 +57,13 @@
   <%= render 'rincians/form', rincian: @sasaran.build_rincian %>
 </p>
 <% else %>
+<!-- NOTE - Refactor -->
+<div class="rincian-sasaran">
   <p>
     <strong>Data Terpilah :</strong>
     <%= @sasaran.rincian.data_terpilah %>
   </p>
-<!-- NOTE : Refactor -->
+
   <p>
     <strong>Penyebab Internal :</strong>
     <%= @sasaran.rincian.penyebab_internal %>
@@ -87,83 +91,86 @@
     <strong>Lokasi Pelaksanaan</strong>
     <%= @sasaran.rincian.lokasi_pelaksanaan  %>
   </p>
+</div>
 
   <% unless @sasaran.rincian.tahapans.any? %>
-    <%= link_to 'Tambah Renaksi', new_rincian_tahapan_path(@sasaran.rincian) %>
+    <%= link_to 'Tambah Renaksi', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'} %>
   <% else %>
   <hr>
     <h3>Rencana Aksi ( Tahapan pelaksaanaan ) </h3>
-    <%= link_to 'Tambah Tahapan', new_rincian_tahapan_path(@sasaran.rincian) %>
+    <%= link_to 'Tambah Tahapan', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'} %>
       <hr>
+    <% jumlah_target = @sasaran.rincian.tahapans.sum :jumlah_target %>
+    <% jumlah_realisasi = @sasaran.rincian.tahapans.sum :jumlah_realisasi %>
       <!-- TODO - Refactor and Add AJAX -->
       <table class="renaksi">
-      <thead>
-      <tr>
-        <th rowspan="2">No</th>
-        <th rowspan="2">Tahapan Kerja</th>
-        <% (1..12).each do |i| %>
-        <th colspan="2"><%= i %></th>
-        <% end %>
-        <th colspan="2">Jumlah</th>
-        <th rowspan="2">Keterangan</th>
-        <th rowspan="2">Anggaran</th>
-      </tr>
-      <tr>
-      <% (1..13).each do |item| %>
-        <td>T</td>
-        <td>R</td>
-      <% end %>
-      </tr>
-      </thead>
-      <tbody>
-        <% @sasaran.rincian.tahapans.each.with_index(1) do |tahapan, index| %>
-          <% aksi = tahapan.aksis %>
-            <tr>
-              <td><%= index %></td>
-              <td class="tahapan"><%= tahapan.tahapan_kerja %></td>
-              <!-- Loop Tanggal-->
-              <% (1..12).each do |i| %>
-              <td><%= aksi.find_by(bulan: i) ? 
-              link_to(aksi.find_by(bulan: i).target, edit_rincian_tahapan_aksi_path(tahapan.rincian, tahapan, aksi.find_by(bulan: i).id, :bulan => i))  
-              :
-              link_to('+', new_rincian_tahapan_aksi_path(@sasaran.rincian, tahapan, :bulan => i)  )   %> </td>
-              <td><%= aksi.find_by(bulan: i) ? aksi.find_by(bulan: i).realisasi : ''  %></td>
-              <% end %>
-              <!-- Sum -->
-              <td><%= tahapan.jumlah_target  %></td>
-              <td><%= tahapan.jumlah_realisasi %></td>
-              <td><%= tahapan.keterangan  %></td>
-              <% unless tahapan.anggarans.any? %>
-              <td><%= link_to 'Tambah Anggaran', new_rincian_tahapan_anggaran_path(@sasaran.rincian, tahapan)  %></td>
-                <% else %>
-                <% total_anggaran = tahapan.anggarans.find_by(level: 0) %>
-              <td><%= link_to total_anggaran.uraian, rincian_tahapan_anggaran_path(@sasaran.rincian, tahapan, tahapan.anggarans.first.id)  %></td>
-              <% end %>
-            </tr>
-        <% end %>
-        </tbody>
-      <tfoot>
-      <% total_target_aksi_bulan = Aksi.all.group(:bulan).sum(:target) %>
-      <% total_realisasi_aksi_bulan = Aksi.all.group(:bulan).sum(:realisasi) %>
-      <% jumlah_target = @sasaran.rincian.tahapans.sum :jumlah_target %>
-      <% jumlah_realisasi = @sasaran.rincian.tahapans.sum :jumlah_realisasi %>
-        <tr>
-          <td colspan="2">Total</td>
-          <% (1..12).each do |i| %>
-          <td><%= total_target_aksi_bulan[i] %></td>
-          <td><%= total_realisasi_aksi_bulan[i] %></td>
+        <thead>
+          <tr>
+            <th rowspan="2">No</th>
+            <th rowspan="2">Tahapan Kerja</th>
+            <% (1..12).each do |i| %>
+            <th colspan="2"><%= i %></th>
+            <% end %>
+            <th colspan="2">Jumlah</th>
+            <th rowspan="2">Keterangan</th>
+            <th rowspan="2">Anggaran</th>
+          </tr>
+          <tr>
+          <% (1..13).each do |item| %>
+            <td>T</td>
+            <td>R</td>
           <% end %>
-          <td><%= jumlah_target %></td>
-          <td><%= jumlah_realisasi %></td>
-          <td colspan="2"></td>
-        </tr>
-      </tfoot>
+          </tr>
+        </thead>
+        <tbody>
+          <% @sasaran.rincian.tahapans.each.with_index(1) do |tahapan, index| %>
+            <% aksi = tahapan.aksis %>
+              <tr>
+                <td><%= index %></td>
+                <td class="tahapan"><%= tahapan.tahapan_kerja %></td>
+                <!-- Loop Tanggal-->
+                <% (1..12).each do |i| %>
+                <td><%= aksi.find_by(bulan: i) ? 
+                link_to(aksi.find_by(bulan: i).target, edit_rincian_tahapan_aksi_path(tahapan.rincian, tahapan, aksi.find_by(bulan: i).id, :bulan => i))  
+                :
+                link_to('+', new_rincian_tahapan_aksi_path(@sasaran.rincian, tahapan, :bulan => i)  )   %> </td>
+                <td><%= aksi.find_by(bulan: i) ? aksi.find_by(bulan: i).realisasi : ''  %></td>
+                <% end %>
+                <!-- Sum -->
+                <td><%= tahapan.jumlah_target  %></td>
+                <td><%= tahapan.jumlah_realisasi %></td>
+                <td><%= tahapan.keterangan  %></td>
+                <% unless tahapan.anggarans.any? %>
+                <td><%= link_to 'Tambah Anggaran', new_rincian_tahapan_anggaran_path(@sasaran.rincian, tahapan)  %></td>
+                  <% else %>
+                  <% total_anggaran = tahapan.anggarans.find_by(level: 0) %>
+                <td><%= link_to total_anggaran.uraian, rincian_tahapan_anggaran_path(@sasaran.rincian, tahapan, tahapan.anggarans.first.id)  %></td>
+                <% end %>
+              </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+            <tr>
+              <% target_bulan = @sasaran.rincian.tahapans.map{|t| t.aksis.group(:bulan).sum(:target)} %>
+              <% realisasi_bulan = @sasaran.rincian.tahapans.map{|t| t.aksis.group(:bulan).sum(:realisasi)} %>
+              <% total_target_aksi_bulan = target_bulan.inject{|bln, val| bln.merge(val) { |k, old_v, new_v| old_v + new_v} } %>
+              <% total_realisasi_aksi_bulan = realisasi_bulan.inject{|bln, val| bln.merge(val) { |k, old_v, new_v| old_v + new_v} } %>
+              <td colspan="2">Total</td>
+              <% (1..12).each do |i| %>
+              <td><%= total_target_aksi_bulan[i] %></td>
+              <td><%= total_realisasi_aksi_bulan[i] %></td>
+              <% end %>
+              <td><%= jumlah_target %></td>
+              <td><%= jumlah_realisasi %></td>
+              <td colspan="2"></td>
+            </tr>
+        </tfoot>
       </table>
-      <p>
+      <p class="waktu-renaksi">
         <strong>Waktu yang dibutuhkan :</strong>
         <%= total_target_aksi_bulan.count %> bulan
       </p>
-      <p>
+      <p class="progress-renaksi">
         <strong>Progress Pelaksanaan :</strong>
         <% if jumlah_target * jumlah_realisasi != 0 %>
         <%= number_to_percentage((jumlah_realisasi.to_f / jumlah_target.to_f ) * 100, precision: 2) %>
@@ -176,10 +183,6 @@
 <!-- SECTION - anggaran baru -->
 
 <!-- !!SECTION - end anggaran-->
-<br>
-<br>
-<hr>
-
 <% end %>
-
-
+<!-- SECTION - Modal-->
+<%= render 'modal' %>
