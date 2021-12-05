@@ -5,8 +5,7 @@
 <table>
   <thead>
     <tr>
-      <th>Koefisien</th>
-      <th>Volume</th>
+     
       <th>Satuan</th>
       <th>Harga</th>
       <th colspan="3"></th>
@@ -16,8 +15,6 @@
   <tbody>
     <% @perhitungans.each do |perhitungan| %>
       <tr>
-        <td><%= perhitungan.koefisien %></td>
-        <td><%= perhitungan.volume %></td>
         <td><%= perhitungan.satuan %></td>
         <td><%= perhitungan.harga %></td>
         <td><%= link_to 'Show', perhitungan %></td>
