@@ -33,7 +33,7 @@
         <td><%= @anggaran.kode_rek %></td>
         <td colspan="5"><%= link_to @anggaran.uraian, 
         edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, @anggaran) %>
-          <%= link_to '[ + ] Child', new_rincian_tahapan_anggaran_path(@rincian, @tahapan, :parent => @anggaran.id, :level => @anggaran.level + 1) %>
+          <%= link_to '[ + ] 1', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-anggaran', 'level': 1, 'parent': @anggaran.id } %>
         </td>
         <td class="uang"><%= number_with_delimiter(@anggaran.jumlah, :delimiter => '.') %></td>
       </tr>
@@ -42,7 +42,8 @@
           <td><%= @anggaran.kode_rek + child.kode_rek %></td>
           <td colspan="5"><%= link_to  child.uraian, 
           edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child) %>
-            <%= link_to '[ + ] Child', new_rincian_tahapan_anggaran_path(@rincian, @tahapan, :parent => child.id, :level => child.level + 1) %>
+          test yang ini
+            <%= link_to '[ + ] 2', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-anggaran', 'level': child.level + 1, 'parent': child.id } %>
           </td>
           <td class="uang"><%= number_with_delimiter(child.jumlah, :delimiter => '.') %></td>
         </tr>
@@ -50,7 +51,7 @@
         <tr>
           <td><%= @anggaran.kode_rek + child.kode_rek + child2.kode_rek %></td>
           <td colspan="5"><%= link_to child2.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child2) %>
-            <%= link_to '[ + ] Child', new_rincian_tahapan_anggaran_path(@rincian, @tahapan, :parent => child2.id, :level => child2.level + 1) %>
+            <%= link_to '[ + ] 3', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-anggaran', 'level': child2.level + 1, 'parent': child2.id } %>
           </td>
           <td class="uang"><%= number_with_delimiter(child2.jumlah, :delimiter => '.') %></td>
         </tr>
@@ -58,9 +59,7 @@
         <tr>
           <td><%= @anggaran.kode_rek + child.kode_rek + child2.kode_rek + child3.kode_rek %></td>
           <td colspan="5"><%= link_to child3.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child3) %>
-            <%= link_to '[ + ] Child', new_rincian_tahapan_anggaran_path(@rincian, @tahapan, :parent => child3.id, :level => child3.level + 1) %>
-           <%= link_to '[ + ]', new_anggaran_perhitungan_path(child3) %>
-
+            <%= link_to '[ + ] 4', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-anggaran', 'level': child3.level + 1 , 'parent': child3.id} %>
           </td>
           <td class="uang"><%= number_with_delimiter(child3.jumlah, :delimiter => '.') %></td>
         </tr>
@@ -68,8 +67,7 @@
         <tr>
           <td><%= @anggaran.kode_rek + child.kode_rek + child2.kode_rek + child3.kode_rek + child4.kode_rek %></td>
           <td colspan="5"><%= link_to child4.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child4) %>
-            <%= link_to '[ + ] Child', new_rincian_tahapan_anggaran_path(@rincian, @tahapan, :parent => child4.id, :level => child4.level + 1) %>
-           <%= link_to '[ + ]', new_anggaran_perhitungan_path(child4) %>
+            <%= link_to '[ + ] 5', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-anggaran', 'level': child4.level + 1 , 'parent': child4.id}  %>
           </td>
           <td class="uang"><%= number_with_delimiter(child4.jumlah, :delimiter => '.') %></td>
         </tr>
@@ -83,7 +81,7 @@
           <td colspan="6">[ - ] 
           <%= link_to child5.uraian, 
           edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child5) %>
-           <%= link_to '[ + ]', new_anggaran_perhitungan_path(child5) %>
+          <%= link_to '[ + ]', new_anggaran_perhitungan_path(child5) %>
           </td>
         </tr>
         <% if child5.perhitungans.any? %>
@@ -112,5 +110,6 @@
   </table>
 </div>
 <!-- !SECTION - End Table Anggaran -->
+<%= render 'modal' %>
 <hr>
 <%= link_to 'Kembali', sasaran_path(@tahapan.rincian.sasaran) %>

@@ -1,0 +1,32 @@
+<%= form_with(model: [rincian, tahapan, anggaran], local: false, :html => {:id => "new-anggaran"}) do |form| %>
+  <div class="field">
+    <%= form.label :kode_rek %>
+    
+    <%= form.text_field :kode_rek %>
+  </div>
+
+  <div class="field">
+    <%= form.hidden_field :level %>
+  </div>
+
+  <div class="field">
+    <%= form.hidden_field :parent_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :uraian %>
+    <%= form.text_area :uraian %>
+  </div>
+
+  <div class="field">
+    <% pajaks = Pajak.all %>
+    <% options = options_from_collection_for_select(pajaks, :id, :simple_pajak, @anggaran.pajak_id) %>
+    <%= form.label :pajak_id %>
+    <%# form.select :pajak_id, options, {} , :disabled => form.object.persisted? %>
+    <%= form.select :pajak_id, options %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

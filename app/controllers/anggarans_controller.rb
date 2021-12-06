@@ -14,7 +14,7 @@ class AnggaransController < ApplicationController
   # GET /anggarans/new
   def new
     # @anggaran = Anggaran.new
-    @anggaran = @tahapan.anggarans.build
+    @anggaran = Anggaran.new
     @parent = params[:parent]
     @level = params[:level]
   end
@@ -32,6 +32,7 @@ class AnggaransController < ApplicationController
       if @anggaran.save
         format.html { redirect_to sasaran_path(@rincian.sasaran), notice: "Anggaran was successfully created." }
         format.json { render :show, status: :created, location: @anggaran }
+        format.js
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @anggaran.errors, status: :unprocessable_entity }
