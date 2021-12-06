@@ -59,6 +59,8 @@
           <td><%= @anggaran.kode_rek + child.kode_rek + child2.kode_rek + child3.kode_rek %></td>
           <td colspan="5"><%= link_to child3.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child3) %>
             <%= link_to '[ + ] Child', new_rincian_tahapan_anggaran_path(@rincian, @tahapan, :parent => child3.id, :level => child3.level + 1) %>
+           <%= link_to '[ + ]', new_anggaran_perhitungan_path(child3) %>
+
           </td>
           <td class="uang"><%= number_with_delimiter(child3.jumlah, :delimiter => '.') %></td>
         </tr>
@@ -67,6 +69,7 @@
           <td><%= @anggaran.kode_rek + child.kode_rek + child2.kode_rek + child3.kode_rek + child4.kode_rek %></td>
           <td colspan="5"><%= link_to child4.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child4) %>
             <%= link_to '[ + ] Child', new_rincian_tahapan_anggaran_path(@rincian, @tahapan, :parent => child4.id, :level => child4.level + 1) %>
+           <%= link_to '[ + ]', new_anggaran_perhitungan_path(child4) %>
           </td>
           <td class="uang"><%= number_with_delimiter(child4.jumlah, :delimiter => '.') %></td>
         </tr>

@@ -10,15 +10,18 @@
       </ul>
     </div>
   <% end %>
+<div class="card">
+  <div class="card-body">
+    <div class="mb-3">
+      <%= form.label :tahapan_kerja , {class: "form-label"} %>
+      <%= form.text_field :tahapan_kerja , {class: "form-control "} %>
+    </div>
 
-  <div class="field">
-    <%= form.label :tahapan_kerja %>
-    <%= form.text_field :tahapan_kerja %>
+    <div class="mb-3">
+      <%= form.label :keterangan , {class: "form-label"} %>
+      <%= form.text_field :keterangan , {class: "form-control "} %>
+    </div>
   </div>
-
-  <div class="field">
-    <%= form.label :keterangan %>
-    <%= form.text_field :keterangan %>
-  </div>
+</div>
 
 <% end %>
