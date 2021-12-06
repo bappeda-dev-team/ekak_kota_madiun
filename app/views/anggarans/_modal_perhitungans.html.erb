@@ -1,0 +1,24 @@
+<div class="modal fade " id="form-perhitungan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="form-perhitungan-title">Form perhitungan</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="form-perhitungan-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+        <button type="button" class="btn btn-primary" id="form-perhitungan-submit-btn">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+<% perhitungan = Perhitungan.new
+  perhitungan.koefisiens.build %>
+<script>
+$(function(){
+  $('#form-perhitungan-body').html("<%= j (render 'perhitungan', anggaran: @anggaran, perhitungan: perhitungan) %>")
+});
+</script>

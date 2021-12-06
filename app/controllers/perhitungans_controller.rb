@@ -27,6 +27,7 @@ class PerhitungansController < ApplicationController
 
     respond_to do |format|
       if @perhitungan.save
+        format.js
         format.html { redirect_to rincian_tahapan_anggaran_path(@anggaran.tahapan.rincian, @anggaran.tahapan, @anggaran), notice: "Perhitungan was successfully created." }
         format.json { render :show, status: :created, location: @perhitungan }
       else

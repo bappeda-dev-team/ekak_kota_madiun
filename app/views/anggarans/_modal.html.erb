@@ -27,9 +27,7 @@ $(function(){
 
     $('#anggaran_level').val(level)
     $('#anggaran_parent_id').val(parent)
-
-
-});
+  });
 
   $('#form-anggaran-body').html("<%= j (render 'new', rincian: @rincian, tahapan: @tahapan, anggaran: Anggaran.new) %>")
   
@@ -39,7 +37,7 @@ $(function(){
   })
 
   $('#new-anggaran').on('ajax:success', (event) => {
-     location.reload();
+    location.reload();
   });
   
 });

@@ -79,9 +79,8 @@
         <tr>
           <td><%= child5.kode_rek %></td>
           <td colspan="6">[ - ] 
-          <%= link_to child5.uraian, 
-          edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child5) %>
-          <%= link_to '[ + ]', new_anggaran_perhitungan_path(child5) %>
+          <%= link_to child5.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child5) %>
+          <%= link_to '[ + ]', new_anggaran_perhitungan_path(child5),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-perhitungan', 'child5': child5.id}   %>
           </td>
         </tr>
         <% if child5.perhitungans.any? %>
@@ -91,7 +90,7 @@
               <td></td>
               <td><%= link_to hitung.deskripsi, edit_anggaran_perhitungan_path(child5, hitung) %></td>
               <td><% hitung.koefisiens.each do |koef|%>
-                  |  <%= koef.volume %> <%= koef.satuan_volume %>  |
+                |  <%= koef.volume %> <%= koef.satuan_volume %>  |
                 <% end %>
               </td>
               <td><%= hitung.satuan %></td>
@@ -111,5 +110,6 @@
 </div>
 <!-- !SECTION - End Table Anggaran -->
 <%= render 'modal' %>
+<%= render 'modal_perhitungans' %>
 <hr>
 <%= link_to 'Kembali', sasaran_path(@tahapan.rincian.sasaran) %>
