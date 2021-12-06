@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="form-perhitungan-title">Form perhitungan</h5>
+        <h5 class="modal-title" id="form-perhitungan-title">Form perhitungan <%= anggaran.uraian %></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" id="form-perhitungan-body">
@@ -19,6 +19,14 @@
   perhitungan.koefisiens.build %>
 <script>
 $(function(){
-  $('#form-perhitungan-body').html("<%= j (render 'perhitungan', anggaran: @anggaran, perhitungan: perhitungan) %>")
+  $('#form-perhitungan-body').html("<%= j (render 'perhitungan', anggaran: anggaran, perhitungan: perhitungan) %>")
+
+
+  $('#form-perhitungan-submit-btn').on('click', function() {
+    $('#new-anggaran-perhitungan').find("input[type=submit]").click();
+  })
+  $('#new-anggaran-perhitungan').on('ajax:success', (event) => {
+    location.reload();
+  })
 });
 </script>
