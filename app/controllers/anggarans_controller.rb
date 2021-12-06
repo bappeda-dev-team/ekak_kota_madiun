@@ -25,14 +25,15 @@ class AnggaransController < ApplicationController
 
   # POST /anggarans or /anggarans.json
   def create
+    sleep 1
     # @anggaran = Anggaran.new(anggaran_params)
     @anggaran = @tahapan.anggarans.build(anggaran_params)
-
+    
     respond_to do |format|
       if @anggaran.save
+        format.js
         format.html { redirect_to sasaran_path(@rincian.sasaran), notice: "Anggaran was successfully created." }
         format.json { render :show, status: :created, location: @anggaran }
-        format.js
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @anggaran.errors, status: :unprocessable_entity }

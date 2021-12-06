@@ -33,8 +33,14 @@ $(function(){
 
   $('#form-anggaran-body').html("<%= j (render 'new', rincian: @rincian, tahapan: @tahapan, anggaran: Anggaran.new) %>")
   
-  $('#form-anggaran-submit-btn').on('click', () => {
-    $('#new-anggaran').submit();
+  $('#form-anggaran-submit-btn').on('click', function() {
+    $('#new-anggaran').find("input[type=submit]").click();
+    return this
+  })
+
+  $('#new-anggaran').on('ajax:success', (event) => {
+     location.reload();
   });
+  
 });
 </script>
