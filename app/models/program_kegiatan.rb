@@ -14,4 +14,8 @@ class ProgramKegiatan < ApplicationRecord
   belongs_to :opd
   has_many :kaks
   has_many :sasarans
+
+  def my_pagu
+    self.sasarans.sum{ |s| s.rincian.total_anggaran }
+  end
 end
