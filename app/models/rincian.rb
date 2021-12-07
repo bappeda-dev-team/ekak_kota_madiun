@@ -30,4 +30,8 @@ class Rincian < ApplicationRecord
     ((jumlah_realisasi.to_f / jumlah_target.to_f ) * 100) rescue 0
   end
 
+  def total_anggaran
+    self.tahapans.map{ |t| t.anggarans.find_by(level: 0)}.sum{|n| n.jumlah}
+  end
+
 end
