@@ -105,6 +105,12 @@
         <% end %>
       <% end %>
     </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="6" style="text-align:right">Jumlah Anggaran Sub Kegiatan :</td>
+        <td><%= number_with_delimiter((@anggaran.jumlah).to_i, :delimiter => '.') %></td>
+      </tr>
+    </tfoot>
   </table>
 </div>
 <!-- !SECTION - End Table Anggaran -->

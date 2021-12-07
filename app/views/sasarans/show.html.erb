@@ -168,13 +168,11 @@
       </table>
       <p class="waktu-renaksi">
         <strong>Waktu yang dibutuhkan :</strong>
-        <%= total_target_aksi_bulan.count %> bulan
+        <%= @sasaran.rincian.waktu_total == 0 ? "-" : @sasaran.rincian.waktu_total %> bulan
       </p>
       <p class="progress-renaksi">
         <strong>Progress Pelaksanaan :</strong>
-        <% if jumlah_target * jumlah_realisasi != 0 %>
-        <%= number_to_percentage((jumlah_realisasi.to_f / jumlah_target.to_f ) * 100, precision: 2) %>
-        <% end %>
+        <%=  @sasaran.rincian.progress_total.nan? ? 0 :  number_to_percentage( @sasaran.rincian.progress_total, precision: 2) %>
       </p>
       <hr>
 
