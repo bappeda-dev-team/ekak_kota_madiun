@@ -79,7 +79,7 @@
           <td><%= child5.kode_rek %></td>
           <td colspan="6">[ - ] 
           <%= link_to child5.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child5) %>
-          <%= link_to '[ + ]', '#',remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-perhitungan'}   %>
+          <%= link_to '[ + ]', '#',remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan-#{child5.id}"}   %>
           </td>
         </tr>
         <% if child5.perhitungans.any? %>
@@ -94,7 +94,7 @@
               </td>
               <td><%= hitung.satuan %></td>
               <td><%= number_with_delimiter(hitung.harga, :delimiter => '.') %></td>
-              <td><%= number_with_delimiter(pajak.to_i, :delimiter => '.') %> | pajak = <%= (child5.pajak.potongan * 100).to_i %> %</td>
+              <td><%= (child5.pajak.potongan * 100).to_i %> %</td>
               <td class="uang"><%= number_with_delimiter((hitung.total).to_i, :delimiter => '.') %></td>
             </tr>
           <% end %>
