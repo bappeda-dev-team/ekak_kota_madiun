@@ -1,8 +1,14 @@
 <p id="notice"><%= notice %></p>
-<%= link_to 'Kembali', user_path(@sasaran.user) %>
-<h2>User : <%= @sasaran.user.nama %></h2>
-<h2>NIK : <%= link_to @sasaran.user.nik, user_path(@sasaran.user) %></h2>
+<h4>Rencana Aksi</h4>
 <hr>
+<p>
+    <strong>Nama OPD:</strong>
+    <%= @sasaran.user.opd.nama_opd %>
+</p>
+<p>
+    <strong>Jabatan :</strong>
+    Eselon III / IV
+</p>
 <% unless @sasaran.program_kegiatan %>
 <h3>Tambah Sub Kegiatan</h3>
 <% program = ProgramKegiatan.all %>
@@ -17,6 +23,14 @@
   </div>
   <% end %>
 <% else %>
+<p>
+  <strong>Program :</strong>
+  <%= @sasaran.program_kegiatan.nama_program %>
+</p>
+<p>
+  <strong>Kegiatan :</strong>
+  <%= @sasaran.program_kegiatan.nama_kegiatan %>
+</p>
 <p>
   <strong>Sub Kegiatan :</strong>
   <%= link_to @sasaran.program_kegiatan.nama_subkegiatan, program_kegiatan_path(@sasaran.program_kegiatan) %>
@@ -45,8 +59,8 @@
   </p>
 
   <p>
-    <strong>Penerima manfaat:</strong>
-    <%= @sasaran.penerima_manfaat %>
+    <strong>Kualitas :</strong>
+    <%= @sasaran.kualitas %>
   </p>
 </div>
 
@@ -57,49 +71,12 @@
   <%= render 'rincians/form', rincian: @sasaran.build_rincian %>
 </p>
 <% else %>
-<!-- NOTE - Refactor -->
-<div class="rincian-sasaran">
-  <p>
-    <strong>Data Terpilah :</strong>
-    <%= @sasaran.rincian.data_terpilah %>
-  </p>
-
-  <p>
-    <strong>Penyebab Internal :</strong>
-    <%= @sasaran.rincian.penyebab_internal %>
-  </p>
-  <p>
-    <strong>Penyebab External :</strong>
-    <%= @sasaran.rincian.penyebab_external %>
-  </p>
-  
-  <p>
-    <strong>Permasalahan Umum :</strong>
-    <%= @sasaran.rincian.permasalahan_umum %>
-  </p>
-  <p>
-    <strong>Permasalahan Gender :</strong>
-    <%= @sasaran.rincian.permasalahan_gender %>
-  </p>
-
-  <p>
-    <strong>Resiko</strong>
-    <%= @sasaran.rincian.resiko  %>
-  </p>
-
-  <p>
-    <strong>Lokasi Pelaksanaan</strong>
-    <%= @sasaran.rincian.lokasi_pelaksanaan  %>
-  </p>
-</div>
 
   <% unless @sasaran.rincian.tahapans.any? %>
     <%= link_to 'Tambah Renaksi', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'} %>
   <% else %>
   <hr>
-    <h3>Rencana Aksi ( Tahapan pelaksaanaan ) </h3>
     <%= link_to 'Tambah Tahapan', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'} %>
-      <hr>
     <% jumlah_target = @sasaran.rincian.tahapans.sum :jumlah_target %>
     <% jumlah_realisasi = @sasaran.rincian.tahapans.sum :jumlah_realisasi %>
       <!-- TODO - Refactor and Add AJAX -->
@@ -186,3 +163,5 @@
 <% end %>
 <!-- SECTION - Modal-->
 <%= render 'modal' %>
+
+<%= link_to 'Kembali', user_path(@sasaran.user) %>

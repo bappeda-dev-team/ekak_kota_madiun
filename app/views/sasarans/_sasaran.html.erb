@@ -1,4 +1,4 @@
-  <h4>Sasaran Kinerja - </h4>
+  <h4>Sasaran Kinerja - <%= sasaran_counter + 1 %></h4>
 <table class="table table-bordered table-full table-responsive-lg">
   <thead>
     <tr>
@@ -38,7 +38,6 @@
 </table>
 
 <div>
-  <h5>Rincian Sasaran</h5>
   <%= render sasaran.rincian %>
 <hr>
 <%= render sasaran.rincian.tahapans %>
