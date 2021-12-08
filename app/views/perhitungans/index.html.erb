@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Perhitungan Anggaran "<%= @anggaran.uraian %>"</h1>
-<% balik = @anggaran.parent.parent.parent.parent.parent %>
+<% balik = @anggaran.grand_parent %>
 <table>
   <thead>
     <tr>

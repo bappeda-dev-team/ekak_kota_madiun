@@ -24,4 +24,8 @@ class Anggaran < ApplicationRecord
     return parents
   end
 
+  def grand_parent
+    the_parent.last
+  end
+
 end
