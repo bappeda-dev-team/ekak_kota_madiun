@@ -23,7 +23,7 @@
         <% unless sasaran.rincian %>
           <%= link_to 'Tambah Rincian', new_sasaran_rincian_path(sasaran) %>
         <% else %>
-          <%= link_to 'Rencana Aksi', sasaran_path(sasaran) %>
+          <%= link_to sasaran.sasaran_kinerja, sasaran_path(sasaran) %>
         <% end %>
         </td>
         <td><%= number_with_delimiter(sasaran.pagus.sum(:total) , :delimiter => ',') %></td>
@@ -32,13 +32,18 @@
           <% else %>
         <td><%= link_to sasaran.program_kegiatan.nama_subkegiatan, program_kegiatan_path(sasaran.program_kegiatan) %></td>
         <% end %>
-        <td><%= link_to 'Show', sasaran_path(sasaran) %></td>
+        <td><%= link_to 'Hapus', sasaran_path(sasaran), method: :destroy, data: {confirm: "Hapus ?"} %></td>
       </tr>
   </tbody>
 </table>
-
+<% if sasaran.rincian.present? %>
 <div>
   <%= render sasaran.rincian %>
 <hr>
 <%= render sasaran.rincian.tahapans %>
 </div>
+<% else %>
+  <p>Belum ada rincian Sasaran</p>
+<hr>
+
+<% end %>
