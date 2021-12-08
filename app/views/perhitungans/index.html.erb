@@ -1,11 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Perhitungans</h1>
-
+<h1>Perhitungan Anggaran "<%= @anggaran.uraian %>"</h1>
+<% balik = @anggaran.parent.parent.parent.parent.parent %>
 <table>
   <thead>
     <tr>
-     
+     <th>Deskripsi</th>
       <th>Satuan</th>
       <th>Harga</th>
       <th colspan="3"></th>
@@ -15,6 +15,7 @@
   <tbody>
     <% @perhitungans.each do |perhitungan| %>
       <tr>
+        <td><%= perhitungan.deskripsi %></td>
         <td><%= perhitungan.satuan %></td>
         <td><%= perhitungan.harga %></td>
         <td><%= link_to 'Show', perhitungan %></td>
@@ -27,4 +28,4 @@
 
 <br>
 
-<%= link_to 'New Perhitungan', new_perhitungan_path %>
+<%= link_to 'Kembali', rincian_tahapan_anggaran_path(balik.tahapan.rincian, balik.tahapan, balik) %>

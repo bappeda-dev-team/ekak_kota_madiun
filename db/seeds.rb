@@ -10,3 +10,17 @@ Pajak.destroy_all
 Lembaga.create(nama_lembaga: 'Kota Madiun', tahun: '2021')
 Pajak.create(tahun: "2021", tipe: "Tanpa Pajak", potongan: 0)
 Pajak.create(tahun: "2021", tipe: "PPN", potongan: 0.1)
+# Sample seed for anggaran
+# Root category
+# root = Category.create name: 'sport'
+# # Sport subcategories
+# basketball_cat = root.children.create name: 'basketball'
+# fitness_cat = root.children.create name: 'fitness'
+# # Basketball categories
+# basketball_cat.children.create name: 'clothing'
+# basketball_cat.children.create name: 'basketballs'
+# basketball_cat.children.create name: 'footwear'
+# # Fitness subcategories
+# fitness_cat.children.create name: 'dumbbells'
+# fitness_cat.children.create name: 'benches'
+# fitness_cat.children.create name: 'kettlebells'
