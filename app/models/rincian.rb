@@ -4,6 +4,10 @@ class Rincian < ApplicationRecord
   has_many :tahapans
   accepts_nested_attributes_for :tahapans
 
+  def method_missing(method, *args, &block)
+    return 0
+  end
+
   def target_bulan
     self.tahapans.map{|t| t.aksis.group(:bulan).sum(:target)}
   end
@@ -21,7 +25,11 @@ class Rincian < ApplicationRecord
   end
 
   def waktu_total
+    begin
     self.total_target_aksi_bulan.count
+    rescue NoMethodError => e
+      print_exception(e, true)
+    end
   end
 
   def progress_total

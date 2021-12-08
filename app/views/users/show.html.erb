@@ -22,15 +22,10 @@
 <% if @user.sasarans.any? %>
 <hr>
 
-<div class="sasaran-kinerja">
-  <h4>Sasaran Kinerja</h4>
-  <%= render 'sasarans/all' , user: @user %>
+<div class="sasaran-kinerja">  
+  <%= render @user.sasarans %>
 </div>
 
-<hr>
 <% end %>
+<hr>
 
-<h2>Tambah Sasaran Kinerja</h2>
-<div class="form-sasaran">
-  <%= render 'sasarans/form', sasaran: @user.sasarans.build %>
-</div>
