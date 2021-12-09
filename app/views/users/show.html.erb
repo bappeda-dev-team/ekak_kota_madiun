@@ -13,19 +13,16 @@
   <strong>OPD:</strong>
   <%= @user.opd.nama_opd %>
 </p>
-<p> 
-<%= link_to 'Edit User', edit_user_path(@user) %> |
-<%= link_to 'Kembali', users_path %>
-</p>
 
 
-<% if @user.sasarans.any? %>
 <hr>
-
+<h5>Sasaran User <%= @user.nama %></h5>
 <div class="sasaran-kinerja">  
-  <%= render @user.sasarans %>
-<hr>
+  <%= render(@user.sasarans) || render("sasarans/form", sasaran: @user.sasarans.build) %>
+  <hr>
 </div>
 
-<% end %>
-
+<p> 
+<%= link_to "Edit User", edit_user_path(@user) %> |
+<%= link_to "Kembali", users_path %>
+</p>

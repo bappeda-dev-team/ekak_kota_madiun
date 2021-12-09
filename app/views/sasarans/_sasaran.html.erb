@@ -1,4 +1,4 @@
-  <h4>Sasaran Kinerja - <%= sasaran_counter + 1 %></h4>
+  <h4>Sasaran Kinerja - <%= sasaran_counter + 1 %>  Menyasar pada - <%= sasaran.program_kegiatan.nil? ? "" : sasaran.program_kegiatan.nama_subkegiatan %></h4>
 <table class="table table-bordered table-full table-responsive-lg">
   <thead>
     <tr>
@@ -6,8 +6,7 @@
       <th>Indikator kinerja</th>
       <th>Target</th>
       <th>Satuan</th>
-      <th>Rencana Aksi</th>
-      <th>Anggaran</th>
+      <th>Rincian Sasaran</th>
       <th>SubKegiatan</th>
       <th colspan="3">actions</th>
     </tr>
@@ -21,21 +20,21 @@
         <td><%= sasaran.satuan %></td>
         <td>
         <% unless sasaran.rincian %>
-          <%= link_to 'Tambah Rincian', new_sasaran_rincian_path(sasaran) %>
+          <%= link_to "Tambah Rincian", new_sasaran_rincian_path(sasaran) %>
         <% else %>
-          <%= link_to sasaran.sasaran_kinerja, sasaran_path(sasaran) %>
+          <%= link_to "Susun Rencana Aksi", sasaran_path(sasaran) %>
         <% end %>
         </td>
-        <td><%= number_with_delimiter(sasaran.pagus.sum(:total) , :delimiter => ',') %></td>
-        <% unless  sasaran.program_kegiatan %>
+        <% unless sasaran.program_kegiatan %>
           <td>Belum ada ( masukkan action kesini )</td>
           <% else %>
         <td><%= link_to sasaran.program_kegiatan.nama_subkegiatan, program_kegiatan_path(sasaran.program_kegiatan) %></td>
         <% end %>
-        <td><%= link_to 'Hapus', sasaran_path(sasaran), method: :destroy, data: {confirm: "Hapus ?"} %></td>
+        <td><%= link_to "Hapus", sasaran_path(sasaran), method: :destroy, data: { confirm: "Hapus ?" } %></td>
       </tr>
   </tbody>
 </table>
+
 <% if sasaran.rincian.present? %>
 <div>
   <%= render sasaran.rincian %>
@@ -43,7 +42,8 @@
 <%= render sasaran.rincian.tahapans %>
 </div>
 <% else %>
-  <p>Belum ada rincian Sasaran</p>
+  <h5>Harap Isi Rincian Sasaran</h5>
+
 <hr>
 
 <% end %>

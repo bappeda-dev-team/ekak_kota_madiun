@@ -31,16 +31,6 @@
   <strong>Satuan:</strong>
   <%= @programKegiatan.satuan %>
 </p>
-<% unless @programKegiatan.sasarans.any? %>
-  <p>
-  <strong>Pagu Anggaran:</strong> 0
-  </p>
-<% else %>
-<p>
-  <strong>Pagu Anggaran:</strong>
-  Rp.  <%= number_with_delimiter(@programKegiatan.my_pagu , :delimiter => ',') %>
-</p>
-<% end %>
 
 <% if @programKegiatan.sasarans.any? %>
 <hr>
