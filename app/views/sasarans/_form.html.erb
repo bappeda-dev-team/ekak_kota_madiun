@@ -1,4 +1,4 @@
-<%= form_with(model: [ @user, sasaran ], local: true) do |form| %>
+<%= form_with(model: [@user, sasaran], local: true) do |form| %>
   <% if sasaran.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(sasaran.errors.count, "error") %> prohibited this sasaran from being saved:</h2>
@@ -12,33 +12,33 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :sasaran_kinerja, {class: 'form-label'} %>
-    <%= form.text_field :sasaran_kinerja, {class: 'form-control'} %>
+    <%= form.label :sasaran_kinerja, { class: "form-label" } %>
+    <%= form.text_field :sasaran_kinerja, { class: "form-control" } %>
   </div>
 
   <div class="field">
-    <%= form.label :indikator_kinerja, {class: 'form-label'} %>
-    <%= form.text_field :indikator_kinerja, {class: 'form-control'} %>
+    <%= form.label :indikator_kinerja, { class: "form-label" } %>
+    <%= form.text_field :indikator_kinerja, { class: "form-control" } %>
   </div>
 
   <div class="field">
-    <%= form.label :target, {class: 'form-label'} %>
-    <%= form.number_field :target , {class: 'form-control'}%>
+    <%= form.label :target, { class: "form-label" } %>
+    <%= form.number_field :target, { class: "form-control" } %>
   </div>
 
   <div class="field">
-    <%= form.label :kualitas, {class: 'form-label'} %>
-    <%= form.number_field :kualitas , {class: 'form-control'}%>
+    <%= form.label :kualitas, { class: "form-label" } %>
+    <%= form.number_field :kualitas, { class: "form-control" } %>
   </div>
 
   <div class="field">
-    <%= form.label :satuan, {class: 'form-label'} %>
-    <%= form.text_field :satuan, {class: 'form-control'} %>
+    <%= form.label :satuan, { class: "form-label" } %>
+    <%= form.text_field :satuan, { class: "form-control" } %>
   </div>
 
   <div class="field">
-    <%= form.label :penerima_manfaat, {class: 'form-label'} %>
-    <%= form.text_field :penerima_manfaat, {class: 'form-control'} %>
+    <%= form.label :penerima_manfaat, { class: "form-label" } %>
+    <%= form.text_field :penerima_manfaat, { class: "form-control" } %>
   </div>
 
   <div class="actions">
