@@ -5,5 +5,5 @@ class User < ApplicationRecord
   belongs_to :opd
   has_many :pks
   has_many :kaks
-  has_many :sasarans
+  has_many :sasarans, dependent: :destroy
 end

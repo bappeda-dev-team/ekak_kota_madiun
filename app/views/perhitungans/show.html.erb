@@ -1,19 +1,23 @@
 <p id="notice"><%= notice %></p>
-
+  <p>
+    <strong>Anggaran :</strong>
+    <%= @perhitungan.anggaran.uraian %> -
+    <%= @perhitungan.deskripsi %>
+  </p>
 <p>
-  <strong>Koefisien:</strong>
-  <%= @perhitungan.koefisien %>
+  <% @perhitungan.koefisiens.each do |koef| %>
+  <p>
+    <strong>Volume:</strong>
+    <%= koef.volume %>
+  </p>
+
+  <p>
+    <strong>Satuan:</strong>
+    <%= koef.satuan_volume %>
+  </p>
+  <% end %>
 </p>
 
-<p>
-  <strong>Volume:</strong>
-  <%= @perhitungan.volume %>
-</p>
-
-<p>
-  <strong>Satuan:</strong>
-  <%= @perhitungan.satuan %>
-</p>
 
 <p>
   <strong>Harga:</strong>

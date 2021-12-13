@@ -21,7 +21,7 @@
     <%= form.fields_for :koefisiens do |f| %> 
       <%= render 'koefisien_fields', f: f %>
     <% end %>
-    <%= add_koefisiens "Tambah Koefisien", form, :koefisiens %>
+    <%= add_koefisiens "Tambah Koefisien", form, :koefisiens, @anggaran.id %>
   </div>
 
   <hr>
@@ -50,7 +50,7 @@
       return event.preventDefault();
     });
 
-    $('form').on('click', '.add_fields', function(event) {
+    $('form').on('click', '.add_fields_<%= @anggaran.id %>', function(event) {
       let regexp, time;
       time = new Date().getTime();
       regexp = new RegExp($(this).data('id'), 'g')

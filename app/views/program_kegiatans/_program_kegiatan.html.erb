@@ -1,0 +1,29 @@
+<table class="table table-primary table-bordered table-sm table-hover">
+  <thead>
+    <tr>
+      <th>Nama Program</th>
+      <th>Nama Kegiatan</th>
+      <th>Nama SubKegiatan</th>
+      <th>Indikator Kinerja</th>
+      <th>Target</th>
+      <th>Satuan</th>
+      <th>OPD</th>
+      <th colspan="3">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <tr>
+        <td><%= program_kegiatan.nama_program %></td>
+        <td><%= program_kegiatan.nama_kegiatan %></td>
+        <td><%= program_kegiatan.nama_subkegiatan %></td>
+        <td><%= program_kegiatan.indikator_kinerja %></td>
+        <td><%= program_kegiatan.target %></td>
+        <td><%= program_kegiatan.satuan %></td>
+        <td><%= program_kegiatan.opd.kode_opd %></td>
+        <td><%= link_to 'Show', program_kegiatan %></td>
+        <td><%= link_to 'Edit', edit_program_kegiatan_path(program_kegiatan) %></td>
+        <td><%= link_to 'Destroy', program_kegiatan, method: :delete, data: { confirm: "Apakah Anda Ingin Menghapus ?"} %></td>
+      </tr>
+  </tbody>
+</table>

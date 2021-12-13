@@ -16,6 +16,6 @@ class ProgramKegiatan < ApplicationRecord
   has_many :sasarans
 
   def my_pagu
-    self.sasarans.sum{ |s| s.rincian.total_anggaran }
+    self.sasarans.map { |s| s.rincian.total_anggaran }.compact.sum
   end
 end
