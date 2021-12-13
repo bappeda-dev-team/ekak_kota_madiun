@@ -42,6 +42,10 @@
   <% @programKegiatan.sasarans.each.with_index(1) do |sasaran, index| %>
     <hr>
     <p>
+    <strong>Sasaran Kinerja Milik : </strong>
+    <%= sasaran.user.nama %>
+    </p>
+    <p>
     <strong>Sasaran Kinerja <%= index %> :</strong>
     <%= sasaran.sasaran_kinerja %>
     </p>

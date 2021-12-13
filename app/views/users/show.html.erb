@@ -23,7 +23,8 @@
 
   </div>
 <% else %>
-  <h5>Sasaran User <%= @user.nama %></h5>
+  <h5>Sasaran "<%= @user.nama %>"</h5>
+  <hr>
   <div class="sasaran-kinerja">  
     <%= render(@user.sasarans) %>
   </div>
