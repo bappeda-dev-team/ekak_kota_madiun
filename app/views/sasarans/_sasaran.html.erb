@@ -8,7 +8,7 @@
       <th>Satuan</th>
       <th>Rincian Sasaran</th>
       <th>SubKegiatan</th>
-      <th colspan="3">actions</th>
+      <th colspan="3">Aksi</th>
     </tr>
   </thead>
 
@@ -30,7 +30,10 @@
           <% else %>
         <td><%= link_to sasaran.program_kegiatan.nama_subkegiatan, program_kegiatan_path(sasaran.program_kegiatan) %></td>
         <% end %>
-        <td><%= link_to "Hapus", sasaran_path(sasaran), method: :destroy, data: { confirm: "Hapus ?" } %></td>
+        <td>
+        <%= link_to "Edit", edit_sasaran_path(sasaran) %>
+        <%= link_to "Hapus", sasaran_path(sasaran), method: :delete, data: { confirm: "Hapus ?" } %>
+        </td>
       </tr>
   </tbody>
 </table>
