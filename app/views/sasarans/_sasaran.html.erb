@@ -26,7 +26,7 @@
         <% end %>
         </td>
         <% unless sasaran.program_kegiatan %>
-          <td>Belum ada ( masukkan action kesini )</td>
+          <td class="text-danger">Belum terhubung</td>
           <% else %>
         <td><%= link_to sasaran.program_kegiatan.nama_subkegiatan, program_kegiatan_path(sasaran.program_kegiatan) %></td>
         <% end %>

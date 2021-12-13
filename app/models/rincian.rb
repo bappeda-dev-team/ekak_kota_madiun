@@ -40,6 +40,6 @@ class Rincian < ApplicationRecord
   end
 
   def total_anggaran
-    self.tahapans.map { |t| t.anggarans.find_by(level: 0) }.sum { |n| n.jumlah }
+    self.tahapans.map { |t| t.anggarans.find_by(level: 0) }.compact.sum { |n| n.jumlah }
   end
 end
