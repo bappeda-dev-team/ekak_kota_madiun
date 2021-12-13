@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root to: 'home#index'
+  get 'dashboard', to: 'home#dashboard'
   resources :pajaks
   # resources :perhitungans
   resources :kesenjangans
@@ -9,7 +11,7 @@ Rails.application.routes.draw do
   resources :users , shallow: true do
     resources :sasarans
   end
-  resources :sasarans, shallow: true do 
+  resources :sasarans, shallow: true do
     resources :rincians
     resources :pagus, shallow: false
   end
@@ -35,7 +37,7 @@ Rails.application.routes.draw do
   resources :opds
   resources :program_kegiatans
 
-  root to: 'opds#index'
+
   # get "/program_kegiatans", to: "program_kegiatans#index"
   # get "/program_kegiatans/new", to: "program_kegiatans#new"
   # get "/program_kegiatan/:id", to: "program_kegiatans#show"
