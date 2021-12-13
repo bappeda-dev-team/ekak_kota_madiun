@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+
   def homepage
     render 'index'
   end
