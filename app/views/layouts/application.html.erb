@@ -16,6 +16,18 @@
   <%= render "layouts/navbar-top" %>
 
   <div class="container">
+
+<%# user sign in checker %>
+    <% unless user_signed_in? %>
+      <%= link_to "Sign In", new_user_session_path %>
+      <span> Or </span>
+      <%= link_to "Sign Up", new_user_registration_path %>
+    <% else %>
+      <%= link_to  "Profil #{current_user.email}", edit_user_registration_path %>
+      <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+    <% end %>
+    <p class="notice mt-3"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
     <%= yield %>
   </div>
 
