@@ -1,0 +1,27 @@
+<div class="modal fade " id="form-new-sasaran" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="form-new-sasaran-title">Form Rencana Aksi</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="form-new-sasaran-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+        <button type="button" class="btn btn-primary" id="form-new-sasaran-submit-btn">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$(function(){
+  $('#form-new-sasaran-body').html("<%= j render "sasaran_form", user: @user, sasaran: @user.sasarans.build %>")
+
+  $('#form-new-sasaran-submit-btn').on('click', () => {
+    $('#new-sasaran').submit();
+  });
+});
+</script>

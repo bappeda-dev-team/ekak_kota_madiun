@@ -13,9 +13,7 @@ Rails.application.routes.draw do
   end
   resources :sasarans, shallow: true do
     resources :rincians
-    resources :pagus, shallow: false
   end
-
 
   resources :rincians do
     resources :tahapans do
@@ -24,7 +22,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :anggarans  do
+  resources :anggarans do
     resources :perhitungans
   end
 
