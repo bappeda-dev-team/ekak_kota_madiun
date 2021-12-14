@@ -12,7 +12,6 @@ import "channels"
 import 'bootstrap'
 import '@popperjs/core'
 import jQuery from 'jquery'
-import '../src/my_script'
 
 Rails.start()
 Turbolinks.start()
