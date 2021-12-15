@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   # validates :nama, presence: true
   # validates :nik, presence: true
-  # belongs_to :opd
+  belongs_to :opd
   has_many :pks
   has_many :kaks
   has_many :sasarans, dependent: :destroy
