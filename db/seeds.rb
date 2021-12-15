@@ -7,9 +7,10 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 Lembaga.destroy_all
 Pajak.destroy_all
-Lembaga.create(nama_lembaga: 'Kota Madiun', tahun: '2021')
+lembaga = Lembaga.create(nama_lembaga: 'Kota Madiun', tahun: '2021')
 Pajak.create(tahun: "2021", tipe: "Tanpa Pajak", potongan: 0)
 Pajak.create(tahun: "2021", tipe: "PPN", potongan: 0.1)
+Opd.create(nama_opd: 'Contoh OPD 1', kode_opd: '12345', lembaga_id: lembaga.id)
 # Sample seed for anggaran
 # Root category
 # root = Category.create name: 'sport'

@@ -15,7 +15,7 @@
           <span class="mt-1 ms-1 sidebar-text">Dashboard KaK</span>
       <% end %>
       </li>
-      <li class="nav-item  active ">
+      <li class="nav-item  <%= request.path == '/' ? "active" : "" %> ">
       <%= link_to(root_path, class: "nav-link") do %>
           <span class="sidebar-icon">
             <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -26,8 +26,8 @@
           <span class="sidebar-text">Dashboard</span>
       <% end %>
       </li>
-      <li class="nav-item">
-      <%= link_to(user_path(current_user), class: "nav-link d-flex justify-content-between") do %>
+      <li class="nav-item <%= request.path == '/kaks' ? "active" : "" %>" >
+      <%= link_to(kaks_path, class: "nav-link d-flex justify-content-between") do %>
           <span>
             <span class="sidebar-icon">
               <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -37,9 +37,6 @@
               </svg>
             </span>
             <span class="sidebar-text">KaK</span>
-          </span>
-          <span>
-            <span class="badge badge-sm bg-secondary ms-1 text-gray-800">Pro</span>
           </span>
       <% end %>
       </li>

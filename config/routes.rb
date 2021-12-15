@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
   root to: 'home#dashboard'
   get 'dashboard', to: 'home#dashboard'
 
@@ -7,7 +9,7 @@ Rails.application.routes.draw do
   # resources :rincians
   # resources :pagus
   # resources :pks
-  # resources :kaks
+  resources :kaks
   resources :users , shallow: true do
     resources :sasarans
   end
