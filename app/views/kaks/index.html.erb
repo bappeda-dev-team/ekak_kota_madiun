@@ -1,35 +1,103 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Kaks</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Sasaran kinerja</th>
-      <th>Indikator kinerja</th>
-      <th>Program</th>
-      <th>Dasar hukum</th>
-      <th>Tujuan</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @kaks.each do |kak| %>
-      <tr>
-        <td><%= kak.pk.sasaran %></td>
-        <td><%= kak.pk.indikator_kinerja %></td>
-        <td><%= kak.program_kegiatan.nama_program %></td>
-        <td><%= kak.dasar_hukum %></td>
-        <td><%= kak.tujuan %></td>
-        <td><%= link_to 'Show', kak %></td>
-        <td><%= link_to 'Edit', edit_kak_path(kak) %></td>
-        <td><%= link_to 'Destroy', kak, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Kak', new_kak_path %>
+<div class="table-responsive">
+    <table class="table table-centered table-nowrap mb-0 rounded">
+        <thead class="thead-light">
+            <tr>
+                <th class="border-0 rounded-start">Country</th>
+                <th class="border-0">All</th>
+                <th class="border-0 rounded-end">All Change</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Item -->
+            <tr>
+                <td class="border-0">
+                    <a href="#" class="d-flex align-items-center">
+                        <img class="me-2 image image-small rounded-circle" alt="Image placeholder" src="../../assets/img/flags/united-states-of-america.svg">
+                        <div><span class="h6">United States</span></div>
+                    </a>
+                </td>
+                <td class="border-0 font-weight-bold">106</td>
+                <td class="border-0 text-danger">
+                    <span class="fas fa-angle-down"></span>
+                    <span class="font-weight-bold">5</span>
+                </td>
+            </tr>
+            <!-- End of Item -->
+            <!-- Item -->
+            <tr>
+                <td class="border-0">
+                    <a href="#" class="d-flex align-items-center">
+                        <img class="me-2 image image-small rounded-circle" alt="Image placeholder" src="../../assets/img/flags/canada.svg">
+                        <div><span class="h6">Canada</span></div>
+                    </a>
+                </td>
+                <td class="border-0 font-weight-bold">76</td>
+                <td class="border-0 text-success">
+                    <span class="fas fa-angle-up"></span>
+                    <span class="font-weight-bold">17</span>
+                </td>
+            </tr>
+            <!-- End of Item -->
+            <!-- Item -->
+            <tr>
+                <td class="border-0">
+                    <a href="#" class="d-flex align-items-center">
+                        <img class="me-2 image image-small rounded-circle" alt="Image placeholder" src="../../assets/img/flags/united-kingdom.svg">
+                        <div><span class="h6">United Kingdom</span></div>
+                    </a>
+                </td>
+                <td class="border-0 font-weight-bold">147</td>
+                <td class="border-0 text-success">
+                    <span class="fas fa-angle-up"></span>
+                    <span class="font-weight-bold">10</span>
+                </td>
+            </tr>
+            <!-- End of Item -->
+            <!-- Item -->
+            <tr>
+                <td class="border-0">
+                    <a href="#" class="d-flex align-items-center">
+                        <img class="me-2 image image-small rounded-circle" alt="Image placeholder" src="../../assets/img/flags/france.svg">
+                        <div><span class="h6">France</span></div>
+                    </a>
+                </td>
+                <td class="border-0 font-weight-bold">112</td>
+                <td class="border-0 text-success">
+                    <span class="fas fa-angle-up"></span>
+                    <span class="font-weight-bold">3</span>
+                </td>
+            </tr>
+            <!-- End of Item -->
+            <!-- Item -->
+            <tr>
+                <td class="border-0">
+                    <a href="#" class="d-flex align-items-center">
+                        <img class="me-2 image image-small rounded-circle" alt="Image placeholder" src="../../assets/img/flags/japan.svg">
+                        <div><span class="h6">Japan</span></div>
+                    </a>
+                </td>
+                <td class="border-0 font-weight-bold">115</td>
+                <td class="border-0 text-danger">
+                    <span class="fas fa-angle-down"></span>
+                    <span class="font-weight-bold">12</span>
+                </td>
+            </tr>
+            <!-- End of Item -->
+            <!-- Item -->
+            <tr>
+                <td class="border-0">
+                    <a href="#" class="d-flex align-items-center">
+                        <img class="me-2 image image-small rounded-circle" alt="Image placeholder" src="../../assets/img/flags/germany.svg">
+                        <div><span class="h6">Germany</span></div>
+                    </a>
+                </td>
+                <td class="border-0 font-weight-bold">220</td>
+                <td class="border-0 text-danger">
+                    <span class="fas fa-angle-down"></span>
+                    <span class="font-weight-bold">56</span>
+                </td>
+            </tr>
+            <!-- End of Item -->
+        </tbody>
+    </table>
+</div>
