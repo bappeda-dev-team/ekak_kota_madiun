@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
+  get '/hello', to: 'home#homepage'
+
   devise_for :users, controllers: {
     registrations: 'users/registrations'
   }
   root to: 'home#dashboard'
-  get 'dashboard', to: 'home#dashboard'
 
   # resources :perhitungans
   # resources :rincians
