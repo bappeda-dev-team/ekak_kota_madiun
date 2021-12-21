@@ -1,29 +1,46 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Sasarans</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Sasaran kinerja</th>
-      <th>Indikator kinerja</th>
-      <th>Target</th>
-      <th>Satuan</th>
-      <th>Penerima manfaat</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @sasarans.each do |sasaran| %>
-      <tr>
-        <td><%= sasaran.sasaran_kinerja %></td>
-        <td><%= sasaran.indikator_kinerja %></td>
-        <td><%= sasaran.target %></td>
-        <td><%= sasaran.satuan %></td>
-        <td><%= sasaran.penerima_manfaat %></td>
-        <td><%= link_to 'Show', user_sasarans_path(@user) %></td>
+<div class="table-responsive">
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Sasaran kinerja</th>
+            <th scope="col">Indikator kinerja</th>
+            <th scope="col">Target</th>
+            <th scope="col">Satuan</th>
+            <th scope="col">Penerima manfaat</th>
+            <th scope="col" colspan="3">Actions</th>
         </tr>
-    <% end %>
-  </tbody>
+    </thead>
+    <tbody>
+      <% @sasarans.each.with_index(1) do |sasaran , index| %>
+        <tr>
+            <th scope="row"><%= index %></th>
+            <td>
+                <div class="d-flex align-items-center">
+                    <%= sasaran.sasaran_kinerja %>
+                </div>
+            </td>
+            <td><%= sasaran.indikator_kinerja %></td>
+            <td><%= sasaran.target %></td>
+            <td><%= sasaran.satuan %></td>
+            <td><%= sasaran.penerima_manfaat %></td>
+            <td>
+              <%= link_to sasaran_path(sasaran) do %>
+                <i class="fa-solid fa-eye" data-toggle="tooltip" data-placement="top" title="Show item"></i>
+              <% end %>
+            </td>
+            <td>
+              <%= link_to edit_sasaran_path(sasaran) do  %>
+                <i class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Edit item"></i>
+              <% end %>
+            </td>
+            <td>
+              <%= link_to sasaran_path(sasaran), method: :delete, data: { confirm: "Hapus Sasaran ini ?"} do %>
+                <i class="fas fa-trash text-danger" data-toggle="tooltip" data-placement="top" title="Delete item"></i>
+              <% end %>
+            </td>
+        </tr>
+      <% end %>
+    </tbody>
 </table>
+</div>

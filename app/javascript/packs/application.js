@@ -11,6 +11,7 @@ import "channels"
 // Bootstrap 5 thing
 import 'bootstrap'
 import '@popperjs/core'
+import './volt/volt.js'
 import jQuery from 'jquery'
 
 Rails.start()

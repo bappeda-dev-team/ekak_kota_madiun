@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get '/hello', to: 'home#homepage'
 
   devise_for :users, controllers: {
     registrations: 'users/registrations'

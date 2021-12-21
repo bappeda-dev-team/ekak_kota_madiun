@@ -27,12 +27,12 @@
             <div class="media d-flex align-items-center">
                 <%= image_tag('team/profile-picture-3.jpg', class: "avatar rounded-circle") %>
               <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
-                <span class="mb-0 font-small fw-bold text-gray-900">User A</span>
+                <span class="mb-0 font-small fw-bold text-gray-900"><%= current_user.nama %></span>
               </div>
             </div>
           </a>
           <div class="dropdown-menu dashboard-dropdown dropdown-menu-end mt-2 py-1">
-            <a class="dropdown-item d-flex align-items-center" href="#">
+          <%= link_to user_path(current_user), class: "dropdown-item d-flex align-items-center" do %>
               <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd"
@@ -40,7 +40,7 @@
                   clip-rule="evenodd"></path>
               </svg>
               My Profile
-            </a>
+            <% end %>
             <a class="dropdown-item d-flex align-items-center" href="#">
               <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg">
