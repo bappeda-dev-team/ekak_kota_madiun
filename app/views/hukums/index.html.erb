@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Hukums</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Dasar hukum</th>
+      <th>Kak</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @hukums.each do |hukum| %>
+      <tr>
+        <td><%= hukum.dasar_hukum %></td>
+        <td><%= hukum.kak_id %></td>
+        <td><%= link_to 'Show', hukum %></td>
+        <td><%= link_to 'Edit', edit_hukum_path(hukum) %></td>
+        <td><%= link_to 'Destroy', hukum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Hukum', new_hukum_path %>
