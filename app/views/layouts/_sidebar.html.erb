@@ -27,7 +27,7 @@
       <% end %>
       </li>
       <li class="nav-item <%= request.path == '/kaks' ? "active" : "" %>" >
-      <%= link_to(kaks_path, class: "nav-link d-flex justify-content-between") do %>
+      <%= link_to(user_kaks_path(current_user.id), class: "nav-link d-flex justify-content-between") do %>
           <span>
             <span class="sidebar-icon">
               <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

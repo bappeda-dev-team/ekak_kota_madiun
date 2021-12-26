@@ -1,5 +1,5 @@
 class Kak < ApplicationRecord
-  belongs_to :program_kegiatan
-  belongs_to :pk
-  has_one :pagu
+  belongs_to :program_kegiatan, optional: true
+  belongs_to :user
+  has_many :sasarans
 end

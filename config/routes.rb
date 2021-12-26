@@ -9,9 +9,9 @@ Rails.application.routes.draw do
   # resources :rincians
   # resources :pagus
   # resources :pks
-  resources :kaks
   resources :users , shallow: true do
     resources :sasarans
+    resources :kaks
   end
   resources :sasarans, shallow: true do
     resources :rincians
