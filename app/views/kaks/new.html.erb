@@ -1,5 +1,5 @@
 <h1>New Kak</h1>
 
-<%= render 'form', kak: @kak, program_kegiatans: @program_kegiatans, pks: @pks %>
+<%= render 'form', kak: @kak, user: @user %>
 
-<%= link_to 'Back', kaks_path %>
+<%= link_to 'Back', user_kaks_path(@user) %>

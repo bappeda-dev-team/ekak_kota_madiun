@@ -1,16 +1,19 @@
 <div class="table-responsive">
     <h1>Desain KaK</h1>
-
-    <div class="detail">
-    <span>Kak 1 </span>
-    <h3>Nama Program Kegiatan</h3>
-      <div class="sasaran">
-        <p>Sasaran A</p>
-        <p>Rincian A</p>
-        <p>Link To Tahapan Kinerja</p>
-      </div>
-    </div>
-    <div class="alert alert-danger">
-      Make this grid card
-    </div>
+    <table>
+      <tr>
+        <th>Dasar Hukum</th>
+        <th>Tujuan</th>
+        <th>Program Kegiatan</th>
+      </tr>
+      <tbody>
+      <% @kaks.each do |k| %>
+      <tr>
+        <td><%= k.dasar_hukum %></td>
+        <td><%= k.tujuan %></td>
+        <td><%= k.program_kegiatan %></td>
+      </tr>
+      <% end %>
+      </tbody>
+    </table>
 </div>
