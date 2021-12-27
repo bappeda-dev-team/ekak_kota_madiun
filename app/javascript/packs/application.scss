@@ -1,2 +1,29 @@
 // @import "~bootstrap/scss/bootstrap";
 @import "volt/volt.scss";
+
+.field {
+  @extend .my-3;
+}
+.form-label {
+  @extend .form-label;
+  @extend .my-2;
+  font-weight: bolder;
+}
+
+.form-field-container {
+  @extend .bg-gray-200;
+  @extend .p-3;
+  @extend .mb-3; 
+}
+
+input[name="commit"] {
+  @extend .btn;
+  @extend .btn-tertiary;
+  @extend .w-100;
+  @extend .mt-5;
+}
+
+form {
+  @extend .mt-2;
+}
+

@@ -1,4 +1,4 @@
-<%= form_with(model: [user, kak]) do |form| %>
+<%= form_with(model: [user, kak], class: "mt-2") do |form| %>
   <% if kak.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(kak.errors.count, "error") %> prohibited this kak from being saved:</h2>
@@ -9,22 +9,16 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
-    <%= form.label :dasar_hukum %>
-    <%= form.text_area :dasar_hukum, multiple: true %>
+    <%= form.label :dasar_hukum, class: "form-label" %>
+    <%= form.text_area :dasar_hukum, multiple: true, value: "", class: "form-control" %>
   </div>
   <!-- TODO dynamic add field untuk keduanya-->
-
   <div class="field">
-    <%= form.label :tujuan %>
-    <%= form.text_area :tujuan, multiple: true %>
+    <%= form.label :tujuan, class: "form-label" %>
+    <%= form.text_area :tujuan, multiple: true, value: "", class: "form-control" %>
   </div>
-
   <!-- TODO render form sasaran-->
-  
-
-
   <div class="actions">
     <%= form.submit %>
   </div>

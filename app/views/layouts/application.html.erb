@@ -7,61 +7,51 @@
     <%= csp_meta_tag %>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <%= stylesheet_pack_tag "application", media: "all", 'data-turbolinks-track': "reload" %>
-
     <%= javascript_pack_tag "application", 'data-turbolinks-track': "reload" %>
   </head>
-
   <body>
-
-  <% if user_signed_in? %>
-    
-  <!-- edit top -->
-  <%= render "layouts/sidebar" %>
-
-  <main class="content d-flex flex-column min-vh-100">
-    <%= render 'layouts/navbar' %>
-    
-    <%# !ANCHOR WARNING %>
-    <div class="py-4">
-      <%= render 'layouts/dropdown_action' %>
-    </div>
-
-    <div class="row">
-      <%= yield %>
-    </div>
-    <%# ANCHOR %>
-    
-    <!-- ANCHOR footer -->
-    <footer class="bg-white rounded shadow p-5 mb-4 mt-auto">
-      <div class="row">
-        <div class="col-12 col-md-4 col-xl-6 mb-4 mb-md-0">
-          <p class="mb-0 text-center text-lg-start">© 2019-<span class="current-year"></span> <a
+    <% if user_signed_in? %>
+      <!-- edit top -->
+      <%= render "layouts/sidebar" %>
+      <main class="content d-flex flex-column min-vh-100">
+        <%= render 'layouts/navbar' %>
+        <%# !ANCHOR WARNING %>
+        <div class="py-4">
+          <%= render 'layouts/dropdown_action' %>
+        </div>
+        <div class="row p-3">
+          <%= yield %>
+        </div>
+        <%# ANCHOR %>
+        <!-- ANCHOR footer -->
+        <footer class="bg-white rounded shadow p-5 mb-2 mt-auto">
+          <div class="row">
+            <div class="col-12 col-md-4 col-xl-6 mb-4 mb-md-0">
+              <p class="mb-0 text-center text-lg-start">© 2019-<span class="current-year"></span> <a
               class="text-primary fw-normal" href="https://themesberg.com" target="_blank">Themesberg</a></p>
-        </div>
-        <div class="col-12 col-md-8 col-xl-6 text-center text-lg-start">
-          <!-- List -->
-          <ul class="list-inline list-group-flush list-group-borderless text-md-end mb-0">
-            <li class="list-inline-item px-0 px-sm-2">
-              <a href="https://themesberg.com/about">About</a>
-            </li>
-            <li class="list-inline-item px-0 px-sm-2">
-              <a href="https://themesberg.com/themes">Themes</a>
-            </li>
-            <li class="list-inline-item px-0 px-sm-2">
-              <a href="https://themesberg.com/blog">Blog</a>
-            </li>
-            <li class="list-inline-item px-0 px-sm-2">
-              <a href="https://themesberg.com/contact">Contact</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </footer>
-
-  </main>
-  <% else %>
-    <%= yield :login %>
-  <% end %>
-
+            </div>
+            <div class="col-12 col-md-8 col-xl-6 text-center text-lg-start">
+              <!-- List -->
+              <ul class="list-inline list-group-flush list-group-borderless text-md-end mb-0">
+                <li class="list-inline-item px-0 px-sm-2">
+                  <a href="https://themesberg.com/about">About</a>
+                </li>
+                <li class="list-inline-item px-0 px-sm-2">
+                  <a href="https://themesberg.com/themes">Themes</a>
+                </li>
+                <li class="list-inline-item px-0 px-sm-2">
+                  <a href="https://themesberg.com/blog">Blog</a>
+                </li>
+                <li class="list-inline-item px-0 px-sm-2">
+                  <a href="https://themesberg.com/contact">Contact</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </footer>
+      </main>
+    <% else %>
+      <%= yield :login %>
+    <% end %>
   </body>
 </html>
