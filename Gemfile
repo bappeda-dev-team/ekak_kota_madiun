@@ -50,6 +50,7 @@ group :development do
   gem 'spring'
   gem 'solargraph'
   gem 'letter_opener'
+  gem 'htmlbeautifier'
 end
 
 group :test do
