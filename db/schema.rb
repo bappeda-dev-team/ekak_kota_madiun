@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2021_12_26_135624) do
-=======
-ActiveRecord::Schema.define(version: 2021_12_22_073744) do
->>>>>>> f74b4e41c244484a6d2893ab143b26abb997f57c
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -210,7 +206,6 @@ ActiveRecord::Schema.define(version: 2021_12_22_073744) do
   end
 
   add_foreign_key "anggarans", "pajaks"
-  add_foreign_key "hukums", "kaks"
   add_foreign_key "kesenjangans", "rincians"
   add_foreign_key "pagus", "sasarans"
   add_foreign_key "pks", "users"
