@@ -12,21 +12,17 @@
 
   <div class="field">
     <%= form.label :dasar_hukum %>
-    <%= form.text_area :dasar_hukum %>
+    <%= form.text_area :dasar_hukum, multiple: true %>
   </div>
-  <div class="field">
-    <%= form.label :dasar_hukum %>
-    <%= form.text_area :dasar_hukum %>
-  </div>
+  <!-- TODO dynamic add field untuk keduanya-->
 
   <div class="field">
     <%= form.label :tujuan %>
-    <%= form.text_area :tujuan %>
+    <%= form.text_area :tujuan, multiple: true %>
   </div>
-  <div class="field">
-    <%= form.label :tujuan %>
-    <%= form.text_area :tujuan %>
-  </div>
+
+  <!-- TODO render form sasaran-->
+  
 
 
   <div class="actions">

@@ -69,6 +69,6 @@ class KaksController < ApplicationController
     
     # Only allow a list of trusted parameters through.
     def kak_params
-      params.require(:kak).permit(:dasar_hukum, :tujuan, :user_id, :program_kegiatan_id)
+      params.require(:kak).permit({:dasar_hukum => []}, {:tujuan => []}, :user_id, :program_kegiatan_id)
     end
 end
