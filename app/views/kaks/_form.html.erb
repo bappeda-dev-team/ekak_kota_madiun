@@ -13,13 +13,26 @@
     <%= form.label :dasar_hukum, class: "form-label" %>
     <%= form.text_area :dasar_hukum, multiple: true, value: "", class: "form-control" %>
   </div>
-  <!-- TODO dynamic add field untuk keduanya-->
+  <%= add_new_field("Tambah Dasar Hukum", form, :dasar_hukum, kak )  %>
   <div class="field">
     <%= form.label :tujuan, class: "form-label" %>
     <%= form.text_area :tujuan, multiple: true, value: "", class: "form-control" %>
   </div>
+  <%= add_new_field 'Tambah Tujuan', form, :tujuan, kak %>
   <!-- TODO render form sasaran-->
   <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>
+<script>
+  $(function() {
+    $('form').on('click', '.add_fields_<%= kak.id %>', function(event) {
+      let regexp, time;
+      time = new Date().getTime();
+      regexp = new RegExp($(this).data('id'), 'g')
+      $(this).before($(this).data('fields').replace(regexp, time))
+      return event.preventDefault()
+    });
+
+  });
+</script>

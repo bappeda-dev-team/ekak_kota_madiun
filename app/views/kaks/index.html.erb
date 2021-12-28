@@ -1,19 +1,21 @@
 <div class="table-responsive">
-    <h1>Desain KaK</h1>
-    <table>
-      <tr>
-        <th>Dasar Hukum</th>
-        <th>Tujuan</th>
-        <th>Program Kegiatan</th>
-      </tr>
-      <tbody>
+  <h1>Desain KaK</h1>
+  <table>
+    <tr>
+      <th>Dasar Hukum</th>
+      <th>Tujuan</th>
+      <th>Program Kegiatan</th>
+      <th>Action</th>
+    </tr>
+    <tbody>
       <% @kaks.each do |k| %>
-      <tr>
-        <td><%= k.dasar_hukum %></td>
-        <td><%= k.tujuan %></td>
-        <td><%= k.program_kegiatan %></td>
-      </tr>
+        <tr>
+          <td><%= k.dasar_hukum.first %></td>
+          <td><%= k.tujuan.first %></td>
+          <td><%= k.program_kegiatan %></td>
+          <td><%= link_to "Show", user_kak_path(current_user, k) %></td>
+        </tr>
       <% end %>
-      </tbody>
-    </table>
+    </tbody>
+  </table>
 </div>

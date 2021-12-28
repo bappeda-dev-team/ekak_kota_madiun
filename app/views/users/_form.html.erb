@@ -2,7 +2,6 @@
   <% if user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
       <ul>
         <% user.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,28 +9,18 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
-    <%= form.label :nama %>
-    <%= form.text_field :nama %>
+    <%= form.label :nama, class: "form-label" %>
+    <%= form.text_field :nama, class: "form-control" %>
   </div>
-
   <div class="field">
-    <%= form.label :nik %>
-    <%= form.text_field :nik %>
+    <%= form.label :nik, class: "form-label" %>
+    <%= form.text_field :nik, class: "form-control" %>
   </div>
-
   <div class="field">
-    <%= form.label :password %>
-    <%= form.text_field :password %>
+    <%= form.label :email, class: "form-label" %>
+    <%= form.email_field :email, class: "form-control" %>
   </div>
-
-  <div class="field">
-    <% options = options_from_collection_for_select(opds, 'id', 'nama_opd') %>
-    <%= form.label :opd_id %>
-    <%= form.select :opd_id, options %>
-  </div>
-
   <div class="actions">
     <%= form.submit %>
   </div>
