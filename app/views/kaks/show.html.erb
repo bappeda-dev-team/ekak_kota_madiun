@@ -1,181 +1,23 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Lembaga:</strong>
-  <%= @kak.program_kegiatan.opd.lembaga.nama_lembaga %>
-</p>
-<hr>
-<p>
-  <strong>Nama OPD:</strong>
-  <%= @kak.program_kegiatan.opd.nama_opd %>
-</p>
-<hr>
-  <p>
-    <strong>ASN :</strong>
-    <%= link_to @kak.pk.user.nama, user_path(@kak.pk.user) %>
-  </p>
-<hr>
-<p>
-  <strong>Program</strong>
-  <%= @kak.program_kegiatan.nama_program %>
-</p>
-<p>
-  <strong>Indikator</strong>
-  <%= @kak.program_kegiatan.indikator_kinerja %>
-</p>
-<p>
-  <strong>Target</strong>
-  <%= @kak.program_kegiatan.target %>
-</p>
-<p>
-  <strong>Satuan</strong>
-  <%= @kak.program_kegiatan.satuan %>
-</p>
-
-<hr>
-<p>
-  <strong>Kegiatan</strong>
-  <%= @kak.program_kegiatan.nama_kegiatan %>
-</p>
-<p>
-  <strong>Indikator</strong>
-  <%= @kak.program_kegiatan.indikator_kinerja %>
-</p>
-<p>
-  <strong>Target</strong>
-  <%= @kak.program_kegiatan.target %>
-</p>
-<p>
-  <strong>Satuan</strong>
-  <%= @kak.program_kegiatan.satuan %>
-</p>
-
-<hr>
-
-<p>
-  <strong>SubKegiatan</strong>
-  <%= @kak.program_kegiatan.nama_subkegiatan %>
-</p>
-<p>
-  <strong>Indikator</strong>
-  <%= @kak.program_kegiatan.indikator_kinerja %>
-</p>
-<p>
-  <strong>Target</strong>
-  <%= @kak.program_kegiatan.target %>
-</p>
-<p>
-  <strong>Satuan</strong>
-  <%= @kak.program_kegiatan.satuan %>
-</p>
-<hr>
-<% unless @kak.pagu %>
-<p>
-  <strong>Pagu Anggaran :  0</strong>
-</p>
-<% else %>
-<p>
-  <strong>Pagu Anggaran:</strong>
-  Rp. <%= @kak.pagu.uang %>
-  <%= link_to 'Detail Pagu', pagu_path(@kak.pagu) %>
-</p>
-  
-<% end %>
-<hr>
-<h1>A. Latar Belakang</h1>
-<p>
-  <strong>Dasar hukum:</strong>
-  <%= @kak.dasar_hukum %>
-</p>
-
-<p>
-  <strong>Tujuan:</strong>
-  <%= @kak.tujuan %>
-</p>
-<h1>B. Gambaran Umum</h1>
-<hr>
-<p>
-  <strong>Sasaran kinerja:</strong>
-  <%= @kak.pk.sasaran %>
-</p>
-
-<p>
-  <strong>Indikator kinerja:</strong>
-  <%= @kak.pk.indikator_kinerja %>
-</p>
-
-<p>
-  <strong>Target:</strong>
-  <%= @kak.pk.target %>
-</p>
-
-<p>
-  <strong>Satuan:</strong>
-  <%= @kak.pk.satuan %>
-</p>
-<hr>
-<p>
-  <strong>Penerima manfaat:</strong>
-  <%= @kak.penerima_manfaat %>
-</p>
-
-<p>
-  <strong>Data terpilah:</strong>
-  <%= @kak.data_terpilah %>
-</p>
-
-<h3>Faktor Kesenjangan : </h3>
-<hr>
-<p>
-  <strong>Akses:</strong>
-  <%= @kak.akses %>
-</p>
-
-<p>
-  <strong>Partisipasi:</strong>
-  <%= @kak.partisipasi %>
-</p>
-
-<p>
-  <strong>Kontrol:</strong>
-  <%= @kak.kontrol %>
-</p>
-
-<p>
-  <strong>Manfaat:</strong>
-  <%= @kak.manfaat %>
-</p>
-
-<hr>
-<p>
-  <strong>Penyebab internal:</strong>
-  <%= @kak.penyebab_internal %>
-</p>
-
-<p>
-  <strong>Penyebab external:</strong>
-  <%= @kak.penyebab_external %>
-</p>
-
-<p>
-  <strong>Permasalahan umum:</strong>
-  <%= @kak.permasalahan_umum %>
-</p>
-
-<p>
-  <strong>Permasalahan gender:</strong>
-  <%= @kak.permasalahan_gender %>
-</p>
-
-<p>
-  <strong>Resiko:</strong>
-  <%= @kak.resiko %>
-</p>
-
-<p>
-  <strong>Lokasi pelaksanaan:</strong>
-  <%= @kak.lokasi_pelaksanaan %>
-</p>
-
-<%= link_to 'Edit', edit_kak_path(@kak) %> |
-<%= link_to 'Back', kaks_path %>
+<div class="program-kegiatan">
+  <h3>Program Kegiatan A</h3>
+</div>
+<div class="dasar-hukum">
+  <h3>Dasar Hukum :</h3>
+  <ol>
+    <% @kak.dasar_hukum.each do |dh|  %>
+      <li>
+        <%= dh  %>
+      </li>
+    <% end %>
+  </ol>
+</div>
+<div class="tujuan">
+  <h3>Tujuan :</h3>
+  <ol>
+    <% @kak.tujuan.each do |tj|  %>
+      <li>
+        <%= tj %>
+      </li>
+    <% end %>
+  </ol>
+</div>

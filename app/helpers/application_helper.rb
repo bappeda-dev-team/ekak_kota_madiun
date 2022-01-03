@@ -13,4 +13,10 @@ module ApplicationHelper
     link_to(name, '#', class: "add_fields_#{dc}", data: {id: id, fields: fields.gsub("\n", "")})
   end
 
+  def add_new_field(name, f, model, dc)
+    new_obj = dc.object_id
+    fields = f.text_area(model, multiple: true, value: "", class: "form-control my-3" )
+    link_to(name, '#', class: "add_fields_#{dc.id}", data: {id: new_obj, fields: fields})
+  end
+
 end
