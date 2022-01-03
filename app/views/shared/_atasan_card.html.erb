@@ -1,0 +1,84 @@
+<div class="card border-0 shadow">
+  <div class="card-header border-bottom d-flex align-items-center justify-content-between">
+    <h2 class="fs-5 fw-bold mb-0">Atasan <%= current_user.nama %> dalam <%= current_user.opd.nama_opd %></h2>
+  </div>
+  <div class="card-body">
+    <ul class="list-group list-group-flush list my--3">
+      <li class="list-group-item px-0">
+        <div class="row align-items-center">
+          <div class="col-auto">
+            <!-- Avatar -->
+            <a href="#" class="avatar">
+              <%= image_tag('team/profile-picture-2.jpg', class: "rounded") %>
+            </a>
+          </div>
+          <div class="col-auto ms--2">
+            <h4 class="h6 mb-0">
+              <a href="#">Jose Leos</a>
+            </h4>
+            <div class="d-flex align-items-center">
+              <div class="bg-success dot rounded-circle me-1"></div>
+              <small>Jabatan A</small>
+            </div>
+          </div>
+          <div class="col text-end">
+            <!-- jadikan link to data sasaran atasan ( dummy )-->
+            <a href="#" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
+              <span class="fas fa-user-check mr-auto"></span>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item px-0">
+        <div class="row align-items-center">
+          <div class="col-auto">
+            <!-- Avatar -->
+            <a href="#" class="avatar">
+              <%= image_tag('team/profile-picture-3.jpg', class: "rounded") %>
+            </a>
+          </div>
+          <div class="col-auto ms--2">
+            <h4 class="h6 mb-0">
+              <a href="#">Bonnie Green</a>
+            </h4>
+            <div class="d-flex align-items-center">
+              <div class="bg-warning dot rounded-circle me-1"></div>
+              <small>Jabatan B</small>
+            </div>
+          </div>
+          <div class="col text-end">
+            <!-- jadikan link to data sasaran atasan ( dummy )-->
+            <a href="#" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
+              <span class="fas fa-user-check mr-auto"></span>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item px-0">
+        <div class="row align-items-center">
+          <div class="col-auto">
+            <!-- Avatar -->
+            <a href="#" class="avatar">
+              <%= image_tag('team/profile-picture-4.jpg', class: "rounded") %>
+            </a>
+          </div>
+          <div class="col-auto ms--2">
+            <h4 class="h6 mb-0">
+              <a href="#">Neil Sims</a>
+            </h4>
+            <div class="d-flex align-items-center">
+              <div class="bg-info dot rounded-circle me-1"></div>
+              <small>Jabatan C</small>
+            </div>
+          </div>
+          <div class="col text-end">
+            <!-- jadikan link to data sasaran atasan ( dummy )-->
+            <a href="#" class="btn btn-sm btn-secondary d-inline-flex align-items-center">
+              <span class="fas fa-user-check mr-auto"></span>
+            </a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
