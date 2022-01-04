@@ -39,7 +39,7 @@ class KaksController < ApplicationController
   def update
     respond_to do |format|
       if @kak.update(kak_params)
-        format.html { redirect_to @kak, notice: "Kak was successfully updated." }
+        format.html { redirect_to user_kaks_path(@user), notice: "Kak was successfully updated." }
         format.json { render :show, status: :ok, location: @kak }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +52,7 @@ class KaksController < ApplicationController
   def destroy
     @kak.destroy
     respond_to do |format|
-      format.html { redirect_to kaks_url, notice: "Kak was successfully destroyed." }
+      format.html { redirect_to user_kaks_path(@user), notice: "Kak was successfully destroyed." }
       format.json { head :no_content }
     end
   end

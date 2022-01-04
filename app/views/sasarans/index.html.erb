@@ -1,46 +1,64 @@
-<div class="table-responsive">
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Sasaran kinerja</th>
-            <th scope="col">Indikator kinerja</th>
-            <th scope="col">Target</th>
-            <th scope="col">Satuan</th>
-            <th scope="col">Penerima manfaat</th>
-            <th scope="col" colspan="3">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-      <% @sasarans.each.with_index(1) do |sasaran , index| %>
-        <tr>
-            <th scope="row"><%= index %></th>
-            <td>
-                <div class="d-flex align-items-center">
-                    <%= sasaran.sasaran_kinerja %>
-                </div>
-            </td>
-            <td><%= sasaran.indikator_kinerja %></td>
-            <td><%= sasaran.target %></td>
-            <td><%= sasaran.satuan %></td>
-            <td><%= sasaran.penerima_manfaat %></td>
-            <td>
-              <%= link_to sasaran_path(sasaran) do %>
-                <i class="fa-solid fa-eye" data-toggle="tooltip" data-placement="top" title="Show item"></i>
-              <% end %>
-            </td>
-            <td>
-              <%= link_to edit_sasaran_path(sasaran) do  %>
-                <i class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Edit item"></i>
-              <% end %>
-            </td>
-            <td>
-              <%= link_to sasaran_path(sasaran), method: :delete, data: { confirm: "Hapus Sasaran ini ?"} do %>
-                <i class="fas fa-trash text-danger" data-toggle="tooltip" data-placement="top" title="Delete item"></i>
-              <% end %>
-            </td>
-        </tr>
-      <% end %>
-    </tbody>
-</table>
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to 'Sasarans', user_sasarans_path(current_user) %></li>
+      </ol>
+    </nav>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Sasaran Kinerja </h2>
+          </div>
+          <div class="col text-end">
+            <%= link_to "Tambah Data Sasaran",new_user_sasaran_path(current_user), class: "btn btn-sm btn-info" %>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center">
+          <thead class="thead-light">
+            <tr>
+              <th class="border-bottom" scope="col">No.</th>
+              <th class="border-bottom" scope="col">Sasaran Kinerja</th>
+              <th class="border-bottom" scope="col">Indikator Kinerja</th>
+              <th class="border-bottom" scope="col">Target</th>
+              <th class="border-bottom" scope="col">Satuan</th>
+              <th class="border-bottom" scope="col">Penerima manfaat</th>
+              <th class="border-bottom text-center" scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @sasarans.each.with_index(1) do |sasaran, i| %>
+              <tr>
+                <th class="text-gray-900 fw-bolder" scope="row"><%= i %></th>
+                <th class="text-gray-900" scope="row"><%= sasaran.sasaran_kinerja %></th>
+                <td class="fw-bolder text-gray-500"><%= sasaran.indikator_kinerja %></td>
+                <td class="fw-bolder text-gray-500"><%= sasaran.target %></td>
+                <td class="fw-bolder text-gray-500"><%= sasaran.satuan %></td>
+                <td class="fw-bolder text-gray-500"><%= sasaran.penerima_manfaat %></td>
+                <td class="fw-bolder text-gray-500 text-center">
+                  <%= link_to user_sasaran_path(current_user, sasaran), class: "m-3" do %>
+                    <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
+                  <% end %>
+                  <%= link_to edit_user_sasaran_path(current_user, sasaran), class: "m-3" do %>
+                    <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+                  <% end %>
+                  <%= link_to user_sasaran_path(current_user, sasaran), method: :delete, data: { confirm: "Apakah Anda Ingin Menghapus ?"}, class: "m-3" do %>
+                    <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

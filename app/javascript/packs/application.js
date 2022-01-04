@@ -8,16 +8,25 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
-// Bootstrap 5 thing
-import 'bootstrap'
-import '@popperjs/core'
-import './volt/volt.js'
-import jQuery from 'jquery'
-
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
+// Bootstrap 5 thing
+import jQuery from 'jquery'
+import Swal from 'sweetalert2'
+import '@popperjs/core'
+import Chartist from "chartist"
+import bootstrap from "bootstrap"
+// import './volt/volt.scss'
+import './volt/volt.js'
+
+
 import "@fortawesome/fontawesome-free/css/all"
 
 window.$ = window.jQuery = jQuery
+
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
