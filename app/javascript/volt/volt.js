@@ -14,10 +14,6 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. Please contact us to request a removal. Contact us if you want to remove it.
 
 */
-import Swal from "sweetalert2"
-window.Swal = Swal;
-import Chartist from "chartist"
-window.Chartist = Chartist;
 "use strict";
 const d = document;
 d.addEventListener("DOMContentLoaded", function (event) {
@@ -108,7 +104,9 @@ d.addEventListener("DOMContentLoaded", function (event) {
   //Tooltips
   var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
   var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl)
+    return new bootstrap.Tooltip(tooltipTriggerEl, {
+      boundary: document.body
+    })
   })
 
 

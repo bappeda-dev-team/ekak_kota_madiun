@@ -1,0 +1,23 @@
+<%= form_with(model: latar_belakang) do |form| %>
+  <% if latar_belakang.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(latar_belakang.errors.count, "error") %> prohibited this latar_belakang from being saved:</h2>
+      <ul>
+        <% latar_belakang.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :dasar_hukum %>
+    <%= form.rich_text_area :dasar_hukum %>
+  </div>
+  <div class="field">
+    <%= form.label :gambaran_umum %>
+    <%= form.rich_text_area :gambaran_umum %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

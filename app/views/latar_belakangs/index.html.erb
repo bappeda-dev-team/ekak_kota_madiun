@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+<h1>Latar Belakangs</h1>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Dasar hukum</th>
+      <th>Gambaran umum</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @latar_belakangs.each.with_index(1) do |latar_belakang, i| %>
+      <tr>
+        <td><%= i %></td>
+        <td><%= latar_belakang.dasar_hukum %></td>
+        <td><%= latar_belakang.gambaran_umum %></td>
+        <td><%= link_to 'Show', latar_belakang %></td>
+        <td><%= link_to 'Edit', edit_latar_belakang_path(latar_belakang) %></td>
+        <td><%= link_to 'Destroy', latar_belakang, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<%= link_to 'New Latar Belakang', new_latar_belakang_path %>

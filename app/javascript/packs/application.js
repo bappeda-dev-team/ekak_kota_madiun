@@ -7,26 +7,26 @@ import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
+import "./sweetalert"
+
+import jQuery from 'jquery'
+import Swal from 'sweetalert2'
+import '@popperjs/core'
+import Chartist from "chartist"
+import SmoothScroll from "smooth-scroll"
+import '../volt/volt.js'
+import "@fortawesome/fontawesome-free/css/all"
 
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
-// Bootstrap 5 thing
-import jQuery from 'jquery'
-import Swal from 'sweetalert2'
-import '@popperjs/core'
-import Chartist from "chartist"
-import bootstrap from "bootstrap"
-// import './volt/volt.scss'
-import './volt/volt.js'
-
-
-import "@fortawesome/fontawesome-free/css/all"
+require("trix")
+require("@rails/actiontext")
 
 window.$ = window.jQuery = jQuery
+window.bootstrap = require('bootstrap')
+window.Chartist = Chartist
+window.SmoothScroll = SmoothScroll
 
-var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
-})
+const tooltip = require("chartist-plugin-tooltips")
