@@ -29,8 +29,8 @@ RUN bundle install
 COPY . ${APP_PATH}
 RUN yarn
 
-COPY ./dev-docker-entrypoint.sh /usr/local/bin/dev-entrypoint.sh
-RUN chmod +x /usr/local/bin/dev-entrypoint.sh
+COPY ./dev-docker-entrypoint.sh /usr/local/bin/dev-docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/dev-docker-entrypoint.sh
 
 EXPOSE $RAILS_PORT
 

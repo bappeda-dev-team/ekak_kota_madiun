@@ -20,16 +20,13 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     container_name: web
+    entrypoint: dev-docker-entrypoint.sh
     volumes:
       - .:/app
       - shared_data:/var/shared
       - gem_cache:/usr/local/bundle/gems
     ports:
       - "3000:3000"
-    stdin_open: true
-    tty: true
-    env_file: .env.development
-    entrypoint: dev-entrypoint.sh
     command: ["rails", "server", "-p", "3000", "-b", "0.0.0.0"]
     environment:
       RAILS_ENV: development
