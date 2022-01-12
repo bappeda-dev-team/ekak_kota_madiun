@@ -10,14 +10,14 @@
     </div>
   <% end %>
   <div class="field">
-    <%= form.label :dasar_hukum %>
-    <%= form.rich_text_area :dasar_hukum %>
+    <%= form.label :dasar_hukum, class: "form-label" %>
+    <%= form.rich_text_area :dasar_hukum, class: "form-control" %>
   </div>
   <div class="field">
-    <%= form.label :gambaran_umum %>
-    <%= form.rich_text_area :gambaran_umum %>
+    <%= form.label :gambaran_umum, class: "form-label" %>
+    <%= form.rich_text_area :gambaran_umum, class: "form-control" %>
   </div>
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Tambah Latar Belakang"%>
   </div>
 <% end %>
