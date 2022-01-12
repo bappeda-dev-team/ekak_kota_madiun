@@ -2,10 +2,10 @@
 
 set -e
 
-echo "ENVIRONMENT: $RAILS_ENV"
+echo "Environment: $RAILS_ENV"
 
 bundle check || bundle install
 
-rm -f $APP_PATH/tmp/pids/server.pids
+
 
 bundle exec ${@}
