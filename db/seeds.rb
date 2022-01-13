@@ -5,4 +5,23 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-Lembaga.create(nama_lembaga: 'Kota Madiun', tahun: '2021')
+Lembaga.destroy_all
+Pajak.destroy_all
+lembaga = Lembaga.create(nama_lembaga: 'Kota Madiun', tahun: '2021')
+Pajak.create(tahun: "2021", tipe: "Tanpa Pajak", potongan: 0)
+Pajak.create(tahun: "2021", tipe: "PPN", potongan: 0.1)
+Opd.create(nama_opd: 'Contoh OPD 1', kode_opd: '12345', lembaga_id: lembaga.id)
+# Sample seed for anggaran
+# Root category
+# root = Category.create name: 'sport'
+# # Sport subcategories
+# basketball_cat = root.children.create name: 'basketball'
+# fitness_cat = root.children.create name: 'fitness'
+# # Basketball categories
+# basketball_cat.children.create name: 'clothing'
+# basketball_cat.children.create name: 'basketballs'
+# basketball_cat.children.create name: 'footwear'
+# # Fitness subcategories
+# fitness_cat.children.create name: 'dumbbells'
+# fitness_cat.children.create name: 'benches'
+# fitness_cat.children.create name: 'kettlebells'

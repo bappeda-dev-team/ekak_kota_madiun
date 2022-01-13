@@ -10,10 +10,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_02_035522) do
+ActiveRecord::Schema.define(version: 2022_01_09_013855) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "action_text_rich_texts", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "body"
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
 
   create_table "aksis", force: :cascade do |t|
     t.integer "target"
@@ -41,25 +79,14 @@ ActiveRecord::Schema.define(version: 2021_12_02_035522) do
   end
 
   create_table "kaks", force: :cascade do |t|
-    t.text "dasar_hukum"
-    t.text "tujuan"
-    t.string "penerima_manfaat"
-    t.text "data_terpilah"
-    t.text "akses"
-    t.text "partisipasi"
-    t.text "kontrol"
-    t.text "manfaat"
-    t.text "penyebab_internal"
-    t.text "penyebab_external"
-    t.text "permasalahan_umum"
-    t.text "permasalahan_gender"
-    t.text "resiko"
-    t.string "lokasi_pelaksanaan"
+    t.text "dasar_hukum", default: [], array: true
+    t.text "tujuan", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "program_kegiatan_id"
-    t.bigint "pk_id"
-    t.index ["pk_id"], name: "index_kaks_on_pk_id"
+    t.bigint "user_id", null: false
+    t.bigint "program_kegiatan_id"
+    t.index ["program_kegiatan_id"], name: "index_kaks_on_program_kegiatan_id"
+    t.index ["user_id"], name: "index_kaks_on_user_id"
   end
 
   create_table "kesenjangans", force: :cascade do |t|
@@ -80,6 +107,13 @@ ActiveRecord::Schema.define(version: 2021_12_02_035522) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "perhitungan_id"
     t.index ["perhitungan_id"], name: "index_koefisiens_on_perhitungan_id"
+  end
+
+  create_table "latar_belakangs", force: :cascade do |t|
+    t.text "dasar_hukum"
+    t.text "gambaran_umum"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "lembagas", force: :cascade do |t|
@@ -202,12 +236,20 @@ ActiveRecord::Schema.define(version: 2021_12_02_035522) do
   create_table "users", force: :cascade do |t|
     t.string "nama"
     t.string "nik"
-    t.string "password"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "opd_id"
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "anggarans", "pajaks"
   add_foreign_key "kesenjangans", "rincians"
   add_foreign_key "pagus", "sasarans"

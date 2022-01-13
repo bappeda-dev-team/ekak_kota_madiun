@@ -1,6 +1,7 @@
 module ApplicationHelper
-  def add_koefisiens(name, f, association)
+  def add_koefisiens(name, f, association, dc)
     ## create new object from the association
+    ## dc == dynamic class for css
     new_object = f.object.send(association).klass.new
 
     ## create or take id from the new created obejct
@@ -9,7 +10,13 @@ module ApplicationHelper
       render(association.to_s.singularize + "_fields", f: builder)
       end
     ## pass down the link to the fields form
-    link_to(name, '#', class: 'add_fields', data: {id: id, fields: fields.gsub("\n", "")})
+    link_to(name, '#', class: "add_fields_#{dc}", data: {id: id, fields: fields.gsub("\n", "")})
+  end
+
+  def add_new_field(name, f, model, dc)
+    new_obj = dc.object_id
+    fields = f.text_area(model, multiple: true, value: "", class: "form-control my-3" )
+    link_to(name, '#', class: "add_fields_#{dc.id}", data: {id: new_obj, fields: fields})
   end
 
 end

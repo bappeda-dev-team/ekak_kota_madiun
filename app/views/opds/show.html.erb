@@ -33,5 +33,11 @@
   </p>
 <% end %>
 </p>
+<hr>
+<h3>Program Kegiatan</h3>
+<div class="align-center">
+<%= render @opd.program_kegiatans %>
+</div>
+
 <%= link_to 'Edit', edit_opd_path(@opd) %> |
 <%= link_to 'Back', opds_path %>

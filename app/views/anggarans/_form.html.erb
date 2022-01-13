@@ -30,22 +30,22 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :kode_rek %>
+    <%= form.label :kode_rek , {class: "form-label"}%>
     <%= parent_rek || '' %>
-    <%= form.text_field :kode_rek %>
+    <%= form.text_field :kode_rek, {class: "form-control"}  %>
   </div>
 
   <div class="field">
-    <%= form.label :uraian %>
-    <%= form.text_area :uraian %>
+    <%= form.label :uraian, {class: "form-label"} %>
+    <%= form.text_area :uraian , {class: "form-control"} %>
   </div>
 
   <div class="field">
     <% pajaks = Pajak.all %>
     <% options = options_from_collection_for_select(pajaks, :id, :simple_pajak, anggaran.pajak_id) %>
-    <%= form.label :pajak_id %>
+    <%= form.label :pajak_id , {class: "form-label"}%>
     <%# form.select :pajak_id, options, {} , :disabled => form.object.persisted? %>
-    <%= form.select :pajak_id, options %>
+    <%= form.select :pajak_id, options, {}, { :class => "form-select"} %>
   </div>
 
   <div class="actions">

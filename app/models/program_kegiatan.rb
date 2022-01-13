@@ -12,6 +12,10 @@ class ProgramKegiatan < ApplicationRecord
   validates :target, presence: true
   validates :satuan, presence: true
   belongs_to :opd
-  has_many :kaks
+  has_many :kaks 
   has_many :sasarans
+
+  def my_pagu
+    self.sasarans.map { |s| s.rincian.total_anggaran }.compact.sum
+  end
 end

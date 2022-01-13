@@ -14,7 +14,7 @@ class AnggaransController < ApplicationController
   # GET /anggarans/new
   def new
     # @anggaran = Anggaran.new
-    @anggaran = @tahapan.anggarans.build
+    @anggaran = Anggaran.new
     @parent = params[:parent]
     @level = params[:level]
   end
@@ -25,11 +25,13 @@ class AnggaransController < ApplicationController
 
   # POST /anggarans or /anggarans.json
   def create
+    sleep 1
     # @anggaran = Anggaran.new(anggaran_params)
     @anggaran = @tahapan.anggarans.build(anggaran_params)
-
+    
     respond_to do |format|
       if @anggaran.save
+        format.js
         format.html { redirect_to sasaran_path(@rincian.sasaran), notice: "Anggaran was successfully created." }
         format.json { render :show, status: :created, location: @anggaran }
       else

@@ -1,8 +1,7 @@
-<%= form_with model: programKegiatan do |form| %>
+<%= form_with model: programKegiatan, class: "mt-2" do |form| %>
   <% if programKegiatan.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(programKegiatan.errors.count, "error") %> prohibited this programKegiatan from being saved:</h2>
-
       <ul>
         <% programKegiatan.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,46 +9,36 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
-    <%= form.label :nama_program %>
-    <%= form.text_field :nama_program %>
+    <%= form.label :nama_program, class: "form-label" %>
+    <%= form.text_field :nama_program, class: "form-control", placeholder: "..." %>
   </div>
-
   <div class="field">
-    <%= form.label :nama_kegiatan %>
-    <%= form.text_field :nama_kegiatan %>
+    <%= form.label :nama_kegiatan, class: "form-label" %>
+    <%= form.text_field :nama_kegiatan, class: "form-control", placeholder: "..."  %>
   </div>
-
   <div class="field">
-    <%= form.label :nama_subkegiatan %>
-    <%= form.text_field :nama_subkegiatan %>
+    <%= form.label :nama_subkegiatan, class: "form-label" %>
+    <%= form.text_field :nama_subkegiatan , class: "form-control", placeholder: "..." %>
   </div>
-
- <div class="field">
-    <%= form.label :indikator_kinerja %>
-    <%= form.text_field :indikator_kinerja %>
+  <div class="field">
+    <%= form.label :indikator_kinerja, class: "form-label" %>
+    <%= form.text_field :indikator_kinerja , class: "form-control", placeholder: "..." %>
   </div>
-
- <div class="field">
-    <%= form.label :target %>
-    <%= form.text_field :target %>
+  <div class="field">
+    <%= form.label :target, class: "form-label" %>
+    <%= form.number_field :target , class: "form-control", placeholder: "0" %>
   </div>
-
-  
- <div class="field">
-    <%= form.label :satuan %>
-    <%= form.text_field :satuan %>
+  <div class="field">
+    <%= form.label :satuan, class: "form-label" %>
+    <%= form.text_field :satuan , class: "form-control", placeholder: "%" %>
   </div>
-
-
- <div class="field">
+  <div class="field">
     <% options = options_from_collection_for_select(opds, 'id', 'nama_opd') %>
-    <%= form.label :opd_id %>
-    <%= form.select :opd_id, options %>
+    <%= form.label :opd_id , class: "form-label" %>
+    <%= form.select :opd_id, options, {:prompt => 'Pilih OPD'} , class: "form-select" %>
   </div>
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class="actions mt-5">
+    <%= form.submit "Submit", :class => "btn btn-tertiary w-100"  %>
   </div>
 <% end %>

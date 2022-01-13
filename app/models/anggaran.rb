@@ -14,4 +14,18 @@ class Anggaran < ApplicationRecord
   def with_koefisiens
     self.perhitungans.includes(:koefisiens).map(&:koefisiens)
   end
+
+  def the_parent
+    parents = []
+    unless self.parent.nil?
+      parents << self.parent
+      parents.concat(self.parent.the_parent)
+    end
+    return parents
+  end
+
+  def grand_parent
+    the_parent.last
+  end
+
 end

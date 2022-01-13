@@ -24,10 +24,11 @@ class PerhitungansController < ApplicationController
   # POST /perhitungans or /perhitungans.json
   def create
     @perhitungan =  @anggaran.perhitungans.build(perhitungan_params)
-
+    awal = @anggaran.grand_parent || @anggaran
     respond_to do |format|
       if @perhitungan.save
-        format.html { redirect_to rincian_tahapan_anggaran_path(@anggaran.tahapan.rincian, @anggaran.tahapan, @anggaran), notice: "Perhitungan was successfully created." }
+        format.js
+        format.html { redirect_to rincian_tahapan_anggaran_path(@anggaran.tahapan.rincian, @anggaran.tahapan, awal), notice: "Perhitungan was successfully created." }
         format.json { render :show, status: :created, location: @perhitungan }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,9 +39,10 @@ class PerhitungansController < ApplicationController
 
   # PATCH/PUT /perhitungans/1 or /perhitungans/1.json
   def update
+    awal = @anggaran.grand_parent || @anggaran
     respond_to do |format|
       if @perhitungan.update(perhitungan_params)
-        format.html { redirect_to rincian_tahapan_anggaran_path(@anggaran.tahapan.rincian, @anggaran.tahapan, @anggaran), notice: "Perhitungan was successfully updated." }
+        format.html { redirect_to rincian_tahapan_anggaran_path(@anggaran.tahapan.rincian, @anggaran.tahapan, awal), notice: "#{@perhitungan.deskripsi} updated." }
         format.json { render :show, status: :ok, location: @perhitungan }
       else
         format.html { render :edit, status: :unprocessable_entity }

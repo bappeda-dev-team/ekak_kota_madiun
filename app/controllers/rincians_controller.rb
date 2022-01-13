@@ -1,5 +1,5 @@
 class RinciansController < ApplicationController
-  before_action :get_sasaran, only: %i[index create new ]
+  before_action :get_sasaran, only: %i[index create new]
   before_action :set_rincian, only: %i[ show edit update destroy ]
   before_action :set_dropdown, only: %i[ new edit ]
 
@@ -27,7 +27,7 @@ class RinciansController < ApplicationController
 
     respond_to do |format|
       if @rincian.save
-        format.html { redirect_to sasaran_path(@sasaran), notice: "Rincian was successfully created." }
+        format.html { redirect_to user_path(@sasaran.user), notice: "Rincian was successfully created." }
         format.json { render :show, status: :created, location: @rincian }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -59,21 +59,22 @@ class RinciansController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def get_sasaran
-      @sasaran = Sasaran.find(params[:sasaran_id])
-    end
 
-    def set_rincian
-      @rincian = Rincian.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def get_sasaran
+    @sasaran = Sasaran.find(params[:sasaran_id])
+  end
 
-    def set_dropdown
-      @sasarans = Sasaran.all
-    end
+  def set_rincian
+    @rincian = Rincian.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def rincian_params
-      params.require(:rincian).permit(:data_terpilah, :penyebab_internal, :penyebab_external, :permasalahan_umum, :permasalahan_gender, :resiko, :lokasi_pelaksanaan, :sasaran_id)
-    end
+  def set_dropdown
+    @sasarans = Sasaran.all
+  end
+
+  # Only allow a list of trusted parameters through.
+  def rincian_params
+    params.require(:rincian).permit(:data_terpilah, :penyebab_internal, :penyebab_external, :permasalahan_umum, :permasalahan_gender, :resiko, :lokasi_pelaksanaan, :sasaran_id)
+  end
 end

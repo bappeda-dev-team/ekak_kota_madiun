@@ -1,4 +1,4 @@
-<%= form_with(model: [@anggaran, perhitungan]) do |form| %>
+<%= form_with(model: [@anggaran, perhitungan], local: false) do |form| %>
   <% if perhitungan.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(perhitungan.errors.count, "error") %> prohibited this perhitungan from being saved:</h2>
@@ -17,10 +17,13 @@
   </div>
 
   <h4><strong>Koefisiens : </strong></h4>
+  <div class="field mb-3">
     <%= form.fields_for :koefisiens do |f| %> 
       <%= render 'koefisien_fields', f: f %>
     <% end %>
-    <%= add_koefisiens "Tambah Koefisien", form, :koefisiens %>
+    <%= add_koefisiens "Tambah Koefisien", form, :koefisiens, @anggaran.id %>
+  </div>
+
   <hr>
 
   <div class="field">
@@ -39,11 +42,21 @@
 <% end %>
 
 <script>
- let fields =  document.querySelectorAll('.add_fields');
- console.log(fields)
- for (field of fields) {
-   field.addEventListener('click', function(event) {
-     console.log('Helo')
-   });
- }
+  $(function() {
+    $('form').on('click', '.remove-field', function(event) {
+      console.log('remove click')
+      $(this).prev('input[type=hidden]').val('1')
+      $(this).closest('fieldset').hide()
+      return event.preventDefault();
+    });
+
+    $('form').on('click', '.add_fields_<%= @anggaran.id %>', function(event) {
+      let regexp, time;
+      time = new Date().getTime();
+      regexp = new RegExp($(this).data('id'), 'g')
+      $(this).before($(this).data('fields').replace(regexp, time))
+      return event.preventDefault()
+    });
+
+  });
 </script>

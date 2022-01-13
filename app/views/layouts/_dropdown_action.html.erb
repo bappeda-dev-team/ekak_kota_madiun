@@ -1,0 +1,39 @@
+<div class="dropdown">
+  <button class="btn btn-gray-800 d-inline-flex align-items-center me-2 dropdown-toggle" data-bs-toggle="dropdown"
+    aria-haspopup="true" aria-expanded="false">
+    <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+    </svg>
+    Aksi
+  </button>
+  <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1">
+    <%= link_to new_user_sasaran_path(current_user), class:"dropdown-item d-flex align-items-center" do %>
+      <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z">
+        </path>
+      </svg>
+      Tambah Sasaran
+    <% end %>
+    <%= link_to new_program_kegiatan_path, class:"dropdown-item d-flex align-items-center" do %>
+      <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z">
+        </path>
+      </svg>
+      Tambah Program Kegiatan
+    <% end %>
+    <%= link_to new_latar_belakang_path, class:"dropdown-item d-flex align-items-center" do %>
+      <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z">
+        </path>
+      </svg>
+      Tambah Data Latar Belakang
+    <% end %>
+  </div>
+</div>

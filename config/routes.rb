@@ -1,19 +1,22 @@
 Rails.application.routes.draw do
-  resources :pajaks
-  # resources :perhitungans
-  resources :kesenjangans
-  # resources :rincians
-  resources :pagus
-  resources :pks
-  resources :kaks
-  resources :users , shallow: true do
-    resources :sasarans
-  end
-  resources :sasarans, shallow: true do 
-    resources :rincians
-    resources :pagus, shallow: false
-  end
 
+  resources :latar_belakangs
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
+  root to: 'home#dashboard'
+
+  # resources :perhitungans
+  # resources :rincians
+  # resources :pagus
+  # resources :pks
+  resources :users do
+    resources :sasarans
+    resources :kaks
+  end
+  resources :sasarans, shallow: true do
+    resources :rincians
+  end
 
   resources :rincians do
     resources :tahapans do
@@ -22,7 +25,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :anggarans  do
+  resources :anggarans do
     resources :perhitungans
   end
 
@@ -34,8 +37,9 @@ Rails.application.routes.draw do
   resources :lembagas
   resources :opds
   resources :program_kegiatans
+  resources :pajaks
+  resources :kesenjangans
 
-  root to: 'opds#index'
   # get "/program_kegiatans", to: "program_kegiatans#index"
   # get "/program_kegiatans/new", to: "program_kegiatans#new"
   # get "/program_kegiatan/:id", to: "program_kegiatans#show"
