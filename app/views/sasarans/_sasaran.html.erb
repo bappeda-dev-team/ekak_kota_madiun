@@ -6,9 +6,8 @@
       <th class="border-bottom" scope="col">Indikator kinerja</th>
       <th class="border-bottom" scope="col">Target</th>
       <th class="border-bottom" scope="col">Satuan</th>
-      <th class="border-bottom" scope="col">Rincian Sasaran</th>
+      <th class="border-bottom" scope="col">Rencana Aksi</th>
       <th class="border-bottom" scope="col">SubKegiatan</th>
-      <th class="border-bottom" scope="col" colspan="3">Aksi</th>
     </tr>
   </thead>
   <tbody>
@@ -29,22 +28,7 @@
           <% else %>
         <td class="fw-bolder text-gray-500"><%= link_to sasaran.program_kegiatan.nama_subkegiatan, program_kegiatan_path(sasaran.program_kegiatan) %></td>
         <% end %>
-        <td class="fw-bolder text-gray-500">
-        <%= link_to "Edit", edit_sasaran_path(sasaran) %>
-        <%= link_to "Hapus", sasaran_path(sasaran), method: :delete, data: { confirm: "Hapus ?" } %>
-        </td>
       </tr>
   </tbody>
 </table>
 </div>
-<hr>
-<% if sasaran.rincian.present? %>
-<div>
-  <%= render sasaran.rincian %>
-<hr>
-<%= render sasaran.rincian.tahapans %>
-</div>
-<% else %>
-  <h5>Harap Isi Rincian Sasaran</h5>
-<% end %>
-<hr>
