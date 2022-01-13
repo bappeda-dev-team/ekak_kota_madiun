@@ -3,6 +3,7 @@ volumes:
   db_data:
   gem_cache:
   shared_data:
+  packs:
 services:
   db:
     image: "postgres:13.5-alpine"
@@ -23,6 +24,7 @@ services:
     entrypoint: dev-docker-entrypoint.sh
     volumes:
       - .:/app
+      - packs:/app/public/packs
       - shared_data:/var/shared
       - gem_cache:/usr/local/bundle/gems
     ports:
