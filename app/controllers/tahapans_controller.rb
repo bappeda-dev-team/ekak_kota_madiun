@@ -55,7 +55,6 @@ class TahapansController < ApplicationController
   def destroy
     @tahapan.destroy
     respond_to do |format|
-      # FIXME : bakalan rusak disini
       format.html { redirect_to sasaran_path(@rincian.sasaran), notice: "Tahapan was successfully destroyed." }
       format.json { head :no_content }
     end
