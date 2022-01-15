@@ -52,11 +52,12 @@
               <!-- Loop Tanggal-->
               <% (1..12).each do |i| %>
                 <!-- TODO: Kasi teknik js seperti di skp rencana aksi -->
+                <%= render 'aksis/modal_target', rincian: sasaran.rincian, tahapan: tahapan, bulan: i  %>
                 <td class="fw-bolder text-gray-500 border">
                   <%= aksi.find_by(bulan: i) ?
                     link_to(aksi.find_by(bulan: i).target, edit_rincian_tahapan_aksi_path(tahapan.rincian, tahapan, aksi.find_by(bulan: i).id, :bulan => i))
                     :
-                    link_to('+', new_rincian_tahapan_aksi_path(sasaran.rincian, tahapan, :bulan => i)  )  %>
+                    link_to('+', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-aksi-target' }  )  %>
                 </td>
                 <td class="fw-bolder text-gray-500 border"><%= aksi.find_by(bulan: i) ? aksi.find_by(bulan: i).realisasi : ''  %></td>
               <% end %>

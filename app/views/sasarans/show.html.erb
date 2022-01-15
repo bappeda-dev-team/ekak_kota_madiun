@@ -1,20 +1,17 @@
 <% unless @sasaran.rincian %>
-<p>
-  <strong>Harap isi Rincian Sasaran</strong>
-  <hr>
-  <%= render 'rincians/form', rincian: @sasaran.build_rincian %>
-</p>
+  <p>
+    <strong>Harap isi Rincian Sasaran</strong>
+    <hr>
+    <%= render 'rincians/form', rincian: @sasaran.build_rincian %>
+  </p>
 <% else %>
-
   <% unless @sasaran.rincian.tahapans.any? %>
     <%= link_to 'Tambah Renaksi', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'} %>
   <% else %>
     <%= render 'rincians/renaksi', sasaran: @sasaran %>
-
   <% end %>
-<!-- SECTION - render anggaran here -->
-
-<!-- !!SECTION - end anggaran-->
+  <!-- SECTION - render anggaran here -->
+  <!-- !!SECTION - end anggaran-->
 <% end %>
 <!-- SECTION - Modal-->
 <%= render 'modal' %>
