@@ -57,7 +57,7 @@
                   <%= aksi.find_by(bulan: i) ?
                     link_to(aksi.find_by(bulan: i).target, edit_rincian_tahapan_aksi_path(tahapan.rincian, tahapan, aksi.find_by(bulan: i).id, :bulan => i))
                     :
-                    link_to('+', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-aksi-target' }  )  %>
+                    link_to('+', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-aksi-target-#{i}" }  )  %>
                 </td>
                 <td class="fw-bolder text-gray-500 border"><%= aksi.find_by(bulan: i) ? aksi.find_by(bulan: i).realisasi : ''  %></td>
               <% end %>
