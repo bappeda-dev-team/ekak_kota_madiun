@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id=<%= "form-aksi-target-#{bulan}-title" %>%>Form Tahapan Bulan <%= bulan %></h5>
+        <h5 class="modal-title" id=<%= "form-aksi-target-#{bulan}-title" %>%>Target Bulan <%= bulan %></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" id=<%= "form-aksi-target-#{bulan}-body" %> >
@@ -17,7 +17,7 @@
 </div>
 <script>
   $(function(){
-    $("<%= "#form-aksi-target-#{bulan}-body" %>").html("<%= j render "aksis/target_form", rincian: rincian, tahapan: tahapan, aksi: tahapan.aksis.build , bulan: bulan %>")
+    $("<%= "#form-aksi-target-#{bulan}-body" %>").html("<%= j render "aksis/target_form", rincian: rincian, tahapan: tahapan, aksi: aksi , bulan: bulan %>")
 
     $("<%= "#form-aksi-target-#{bulan}-submit-btn" %>").on('click', () => {
       $("<%= "#new-aksi-#{bulan}" %>").submit();
