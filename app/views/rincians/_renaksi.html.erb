@@ -60,16 +60,16 @@
                 <% end %>
                 <td class="fw-bolder text-gray-500 border">
                   <%= aksi.find_by(bulan: i) ?
-                    link_to(aksi.find_by(bulan: i).target, '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-aksi-target-#{i}" } )
+                    link_to(aksi.find_by(bulan: i).target, '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-aksi-target-#{tahapan.id}-#{i}" } )
                     :
-                    link_to('+', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-aksi-target-#{i}" }  )  %>
+                    link_to('+', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-aksi-target-#{tahapan.id}-#{i}" }  )  %>
                 </td>
                 <td class="fw-bolder text-gray-500 border">
                   <% if aksi.find_by(bulan: i) %>
                     <%= aksi.find_by(bulan: i).realisasi ? 
-                      link_to(aksi.find_by(bulan: i).realisasi, '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-aksi-realisasi-#{i}" } )
+                      link_to(aksi.find_by(bulan: i).realisasi, '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-aksi-realisasi-#{tahapan.id}-#{i}" } )
                         :
-                      link_to('+', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-aksi-realisasi-#{i}" }  ) %>
+                      link_to('+', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-aksi-realisasi-#{tahapan.id}-#{i}" }  ) %>
                   <% end %>
                 </td>
               <% end %>

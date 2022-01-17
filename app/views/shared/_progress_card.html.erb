@@ -13,10 +13,11 @@
           <div class="progress-wrapper">
             <div class="progress-info">
               <div class="h6 mb-0"><%= sas.sasaran_kinerja %></div>
-              <div class="small fw-bold text-gray-500"><span><%= sas.rincian.total_target_realisasi_bulan %> %</span></div>
+              <% jumlah = sas.rincian.progress_total.nan? ? '0%' :  number_to_percentage( sas.rincian.progress_total, precision: 2) %>
+              <div class="small fw-bold text-gray-500"><span><%= jumlah %></span></div>
             </div>
             <div class="progress mb-0">
-              <div class="progress-bar bg-success" role="progressbar" style="<%= "width: #{sas.rincian.total_target_realisasi_bulan}" %>"></div>
+              <div class="progress-bar bg-success" role="progressbar" style="<%= "width: #{jumlah}" %>"></div>
             </div>
           </div>
         </div>
