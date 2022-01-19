@@ -97,10 +97,8 @@
         </tbody>
         <tfoot>
           <tr>
-            <% target_bulan = sasaran.rincian.tahapans.map{|t| t.aksis.group(:bulan).sum(:target)} %>
-            <% realisasi_bulan = sasaran.rincian.tahapans.map{|t| t.aksis.group(:bulan).sum(:realisasi)} %>
-            <% total_target_aksi_bulan = target_bulan.inject{|bln, val| bln.merge(val) { |k, old_v, new_v| old_v + new_v} } %>
-            <% total_realisasi_aksi_bulan = realisasi_bulan.inject{|bln, val| bln.merge(val) { |k, old_v, new_v| old_v + new_v} } %>
+            <% total_target_aksi_bulan = sasaran.rincian.target_bulan.inject{|bln, val| bln.merge(val) { |k, old_v, new_v| old_v + new_v} } %>
+            <% total_realisasi_aksi_bulan = sasaran.rincian.realisasi_bulan.inject{|bln, val| bln.merge(val) { |k, old_v, new_v| old_v + new_v} } %>
             <td class="border-bottom border-start border-end" colspan="2">Total</td>
             <% (1..12).each do |i| %>
               <td class="border-bottom border-end"><%= total_target_aksi_bulan[i] %></td>

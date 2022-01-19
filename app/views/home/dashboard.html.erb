@@ -62,20 +62,20 @@
       <div class="card-header d-flex flex-row align-items-center flex-0 border-bottom">
         <div class="d-block">
           <div class="h6 fw-normal text-gray mb-2">Grafik Capaian (contoh)</div>
-          <h2 class="h3 fw-extrabold">452</h2>
+          <h2 class="fw-extrabold">Sasaran : <%= @sasaran.count %></h2>
           <div class="small mt-2">
             <span class="fas fa-angle-up text-success"></span>
-            <span class="text-success fw-bold">18.2%</span>
+            <span class="text-success fw-bold"><%= number_to_percentage(@avg_progress, precision: 2) %></span>
           </div>
         </div>
         <div class="d-block ms-auto">
           <div class="d-flex align-items-center text-end mb-2">
             <span class="dot rounded-circle bg-gray-800 me-2"></span>
-            <span class="fw-normal small">July</span>
+            <span class="fw-normal small">Target</span>
           </div>
           <div class="d-flex align-items-center text-end">
             <span class="dot rounded-circle bg-secondary me-2"></span>
-            <span class="fw-normal small">August</span>
+            <span class="fw-normal small">Realisasi</span>
           </div>
         </div>
       </div>
@@ -85,3 +85,42 @@
     </div>
   </div>
 </div>
+<script>
+  var chart = new Chartist.Bar('.ct-chart-ranking', {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'],
+      series: [
+        [1, 5, 2, 5, 4, 3, 1, 5, 2, 5, 4, 3],
+        [2, 3, 4, 8, 1, 2, 1, 5, 2, 5, 4, 3],
+      ]
+    }, {
+      low: 0,
+      showArea: true,
+      plugins: [
+        Chartist.plugins.tooltip()
+      ],
+      axisX: {
+        // On the x-axis start means top and end means bottom
+        position: 'end'
+      },
+      axisY: {
+        // On the y-axis start means left and end means right
+        showGrid: false,
+        showLabel: false,
+        offset: 0
+      }
+    });
+
+    chart.on('draw', function (data) {
+      if (data.type === 'line' || data.type === 'area') {
+        data.element.animate({
+          d: {
+            begin: 2000 * data.index,
+            dur: 2000,
+            from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+            to: data.path.clone().stringify(),
+            easing: Chartist.Svg.Easing.easeOutQuint
+          }
+        });
+      }
+    });
+</script>
