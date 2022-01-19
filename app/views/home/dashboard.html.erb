@@ -64,7 +64,7 @@
           <div class="h6 fw-normal text-gray mb-2">Grafik Capaian (contoh)</div>
           <h2 class="fw-extrabold">Sasaran : <%= @sasaran.count %></h2>
           <div class="small mt-2">
-            <span class="fas fa-angle-up text-success"></span>
+            <span>Capaian rata-rata : </span>
             <span class="text-success fw-bold"><%= number_to_percentage(@avg_progress, precision: 2) %></span>
           </div>
         </div>
@@ -86,11 +86,13 @@
   </div>
 </div>
 <script>
+  let data = <%= @chart %>
+  let data_realisasi = <%= @chart_real %>
   var chart = new Chartist.Bar('.ct-chart-ranking', {
       labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'],
       series: [
-        [1, 5, 2, 5, 4, 3, 1, 5, 2, 5, 4, 3],
-        [2, 3, 4, 8, 1, 2, 1, 5, 2, 5, 4, 3],
+        data,
+        data_realisasi,
       ]
     }, {
       low: 0,
