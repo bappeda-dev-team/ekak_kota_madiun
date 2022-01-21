@@ -1,0 +1,23 @@
+<%= form_with(model: strategi_keluaran) do |form| %>
+  <% if strategi_keluaran.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(strategi_keluaran.errors.count, "error") %> prohibited this strategi_keluaran from being saved:</h2>
+      <ul>
+        <% strategi_keluaran.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :metode, class: "form-label" %>
+    <%= form.rich_text_area :metode, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.label :tahapan, class: "form-label" %>
+    <%= form.rich_text_area :tahapan, class: "form-control" %>
+  </div>
+  <div class="actions">
+    <%= form.submit "Buat Strategi Keluaran" %>
+  </div>
+<% end %>

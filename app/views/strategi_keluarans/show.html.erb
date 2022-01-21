@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Metode:</strong>
+  <%= @strategi_keluaran.metode %>
+</p>
+
+<p>
+  <strong>Tahapan:</strong>
+  <%= @strategi_keluaran.tahapan %>
+</p>
+
+<%= link_to 'Edit', edit_strategi_keluaran_path(@strategi_keluaran) %> |
+<%= link_to 'Back', strategi_keluarans_path %>

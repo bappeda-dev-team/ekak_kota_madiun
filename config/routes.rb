@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :strategi_keluarans
   resources :latar_belakangs
   devise_for :users, controllers: {
     registrations: 'users/registrations'
