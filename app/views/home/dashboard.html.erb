@@ -23,13 +23,15 @@
                 <th class="border-bottom" scope="col">Indikator</th>
                 <th class="border-bottom" scope="col">Target</th>
                 <th class="border-bottom" scope="col">Penerima Manfaat</th>
+                <th class="border-bottom" scope="col">Kurun Waktu</th>
+                <th class="border-bottom" scope="col">Aksi</th>
               </tr>
             </thead>
             <tbody>
               <% @sasaran.each do |s| %>
                 <tr>
                   <th class="text-gray-900" scope="row">
-                    <%= link_to s.sasaran_kinerja.to_s, edit_sasaran_path(s)%>
+                    <%= link_to s.sasaran_kinerja.to_s, edit_sasaran_path(s), :data => { "bs-toggle" => "tooltip", "bs-placement"=> "bottom"}, title: "Edit Sasaran" %>
                   </th>
                   <td class="fw-bolder text-gray-500">
                     <%= s.indikator_kinerja %>
@@ -40,6 +42,14 @@
                   </td>
                   <td class="fw-bolder text-gray-500">
                     <%= s.penerima_manfaat %>
+                  </td>
+                  <td class="fw-bolder text-gray-500">
+                    <%= s.rincian.waktu_total == 0 ? "-" : s.rincian.waktu_total %> bulan
+                  </td>
+                  <td class="fw-bolder text-gray-500">
+                    <%= link_to user_sasaran_path(current_user, s) do  %>
+                      <i class="fas fa-edit fa-lg" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit Rencana Aksi"></i>
+                    <% end  %>
                   </td>
                 </tr>
               <% end %>

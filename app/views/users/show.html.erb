@@ -56,7 +56,7 @@
               </div>
             </div>
           </div>
-          <%= render(@user.sasarans) %>
+          <%= render "sasarans/sasaran", sasarans: current_user.sasarans %>
         </div>
       </div>
     <% end %>

@@ -1,34 +1,36 @@
 <div class="table-responsive">
-<table class="table align-items-center table-flush">
-  <thead class="thead-light">
-    <tr>
-      <th class="border-bottom" scope="col">Sasaran kinerja</th>
-      <th class="border-bottom" scope="col">Indikator kinerja</th>
-      <th class="border-bottom" scope="col">Target</th>
-      <th class="border-bottom" scope="col">Satuan</th>
-      <th class="border-bottom" scope="col">Rencana Aksi</th>
-      <th class="border-bottom" scope="col">SubKegiatan</th>
-    </tr>
-  </thead>
-  <tbody>
+  <table class="table table-flush">
+    <thead class="thead-light">
       <tr>
-        <td class="fw-bolder text-gray-500"><%= sasaran.sasaran_kinerja %></td>
-        <td class="fw-bolder text-gray-500"><%= sasaran.indikator_kinerja %></td>
-        <td class="fw-bolder text-gray-500"><%= sasaran.target %></td>
-        <td class="fw-bolder text-gray-500"><%= sasaran.satuan %></td>
-        <td class="fw-bolder text-gray-500">
-        <% unless sasaran.rincian %>
-          <%= link_to "Tambah Rincian", new_sasaran_rincian_path(sasaran) %>
-        <% else %>
-          <%= link_to "Susun Rencana Aksi", sasaran_path(sasaran) %>
-        <% end %>
-        </td>
-        <% unless sasaran.program_kegiatan %>
-          <td class="text-danger">Belum terhubung</td>
-          <% else %>
-        <td class="fw-bolder text-gray-500"><%= link_to sasaran.program_kegiatan.nama_subkegiatan, program_kegiatan_path(sasaran.program_kegiatan) %></td>
-        <% end %>
+        <th class="border-bottom" scope="col">Sasaran kinerja</th>
+        <th class="border-bottom" scope="col">Indikator kinerja</th>
+        <th class="border-bottom" scope="col">Target</th>
+        <th class="border-bottom" scope="col">Satuan</th>
+        <th class="border-bottom" scope="col">Rencana Aksi</th>
+        <th class="border-bottom" scope="col">SubKegiatan</th>
       </tr>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% sasarans.each.with_index(1) do |sasaran, index| %>
+        <tr>
+          <td class="fw-bolder text-gray-500"><%= sasaran.sasaran_kinerja %></td>
+          <td class="fw-bolder text-gray-500"><%= sasaran.indikator_kinerja %></td>
+          <td class="fw-bolder text-gray-500"><%= sasaran.target %></td>
+          <td class="fw-bolder text-gray-500"><%= sasaran.satuan %></td>
+          <td class="fw-bolder text-gray-500">
+            <% unless sasaran.rincian %>
+              <%= link_to "Tambah Rincian", new_sasaran_rincian_path(sasaran) %>
+            <% else %>
+              <%= link_to "Susun Rencana Aksi", sasaran_path(sasaran) %>
+            <% end %>
+          </td>
+          <% unless sasaran.program_kegiatan %>
+            <td class="text-danger">Belum terhubung</td>
+          <% else %>
+            <td class="fw-bolder text-gray-500"><%= link_to sasaran.program_kegiatan.nama_subkegiatan, program_kegiatan_path(sasaran.program_kegiatan) %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>

@@ -1,19 +1,12 @@
 Rails.application.routes.draw do
 
-  resources :strategi_keluarans
-  resources :latar_belakangs
   devise_for :users, controllers: {
     registrations: 'users/registrations'
   }
   root to: 'home#dashboard'
-
-  # resources :perhitungans
-  # resources :rincians
-  # resources :pagus
-  # resources :pks
   resources :users do
-    resources :sasarans
-    resources :kaks
+    resources :sasarans, :path => "sasaran_kerja"
+    resources :kaks, :path => "acuan_kerja"
   end
   resources :sasarans, shallow: true do
     resources :rincians
@@ -21,7 +14,7 @@ Rails.application.routes.draw do
 
   resources :rincians do
     resources :tahapans do
-      resources :aksis
+      resources :aksis, :path => "rencana_aksi"
       resources :anggarans
     end
   end
@@ -40,6 +33,8 @@ Rails.application.routes.draw do
   resources :program_kegiatans
   resources :pajaks
   resources :kesenjangans
+  resources :strategi_keluarans, :path => "strategi"
+  resources :latar_belakangs, :path => "dasar_aksi"
 
   # get "/program_kegiatans", to: "program_kegiatans#index"
   # get "/program_kegiatans/new", to: "program_kegiatans#new"
