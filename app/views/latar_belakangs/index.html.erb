@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to 'Latar Belakang', latar_belakangs_path %></li>
+      </ol>
+    </nav>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Daftar Latar Belakang</h2>
+          </div>
+          <div class="col text-end">
+            <%= link_to "Tambah Data Latar Belakang", new_latar_belakang_path, class: "btn btn-sm btn-info" %>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center">
+          <thead class="thead-light">
+            <tr>
+              <th class="border-bottom" scope="col">No.</th>
+              <th class="border-bottom" scope="col">Dasar Hukum</th>
+              <th class="border-bottom" scope="col">Gambaran Umum</th>
+              <th class="border-bottom text-center" scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @latar_belakangs.each.with_index(1) do |latar_belakang, i| %>
+              <tr>
+                <th class="text-gray-900 fw-bolder" scope="row"><%= i %></th>
+                <th class="text-gray-900" scope="row"><%= latar_belakang.dasar_hukum %></th>
+                <td class="fw-bolder text-gray-500"><%= latar_belakang.gambaran_umum %></td>
+                <td class="fw-bolder text-gray-500 text-center">
+                  <%= link_to latar_belakang_path(latar_belakang), class: "m-3" do %>
+                    <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
+                  <% end %>
+                  <%= link_to edit_latar_belakang_path(latar_belakang), class: "m-3" do %>
+                    <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+                  <% end %>
+                  <%= link_to latar_belakang_path(latar_belakang), method: :delete, data: { confirm_swal: "Hapus Latar Belakang ini ?"}, class: "m-3" do %>
+                    <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

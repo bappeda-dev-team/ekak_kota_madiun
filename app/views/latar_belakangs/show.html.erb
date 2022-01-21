@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Dasar hukum:</strong>
+  <%= @latar_belakang.dasar_hukum %>
+</p>
+
+<p>
+  <strong>Gambaran umum:</strong>
+  <%= @latar_belakang.gambaran_umum %>
+</p>
+
+<%= link_to 'Edit', edit_latar_belakang_path(@latar_belakang) %> |
+<%= link_to 'Back', latar_belakangs_path %>

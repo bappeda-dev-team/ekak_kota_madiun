@@ -1,0 +1,23 @@
+<%= form_with(model: [rincian, tahapan, aksi ], remote: true, :html => {:id => "new-realisasi-#{tahapan.id}-#{bulan}"} ) do |form| %>
+  <% if aksi.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(tahapan.errors.count, "error") %> prohibited this tahapan from being saved:</h2>
+      <ul>
+        <% aksi.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="card">
+    <div class="card-body">
+      <div class="mb-3">
+        <%= form.label :realisasi , {class: "form-label"} %>
+        <%= form.number_field :realisasi , {class: "form-control "} %>
+      </div>
+      <div class="mb-3">
+        <%= form.hidden_field :bulan , within: 1..12, :value => bulan, readonly: true %>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -10,6 +10,11 @@ default: &default
   timeout: 5000
   username: ry
   password: secret
+  #for docker 
+  # host: db
+  # port: 5432
+  # username: postgres
+  # password: postgres
 
 development:
   <<: *default

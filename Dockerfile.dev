@@ -1,0 +1,37 @@
+FROM ruby:3.0.1-slim-buster
+
+ENV APP_PATH /app
+ENV BUNDLE_VERSION 2.2.15
+ENV BUNDLE_PATH /user/local/bundle/gems
+ENV TMP_PATH /tmp/
+ENV RAILS_LOG_TO_SDOUT true
+ENV RAILS_PORT 3000
+
+# base install
+RUN apt-get update -qq && apt-get install -y \
+build-essential \
+libpq-dev \
+postgresql-client \
+curl \
+&& rm -rf /var/lib/apt/lists/*
+
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
+RUN apt update -qq && apt install yarn -y
+
+# navigate to app directory
+WORKDIR $APP_PATH
+COPY Gemfile ${APP_PATH}/Gemfile
+COPY Gemfile.lock ${APP_PATH}/Gemfile.lock
+
+RUN bundle install
+COPY . ${APP_PATH}
+RUN yarn
+
+COPY ./dev-docker-entrypoint.sh /usr/local/bin/dev-docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/dev-docker-entrypoint.sh
+
+EXPOSE $RAILS_PORT
+
+CMD ["bundle", "exec"]

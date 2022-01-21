@@ -1,50 +1,36 @@
-  <h5>Sasaran Kinerja - <%= sasaran_counter + 1 %>  Menyasar pada - <%= sasaran.program_kegiatan.nil? ? "" : sasaran.program_kegiatan.nama_subkegiatan %></h5>
-<table class="table table-bordered table-full table-responsive-lg">
-  <thead>
-    <tr>
-      <th>Sasaran kinerja</th>
-      <th>Indikator kinerja</th>
-      <th>Target</th>
-      <th>Satuan</th>
-      <th>Rincian Sasaran</th>
-      <th>SubKegiatan</th>
-      <th colspan="3">Aksi</th>
-    </tr>
-  </thead>
-
-  <tbody>
+<div class="table-responsive">
+  <table class="table table-flush">
+    <thead class="thead-light">
       <tr>
-        <td><%= sasaran.sasaran_kinerja %></td>
-        <td><%= sasaran.indikator_kinerja %></td>
-        <td><%= sasaran.target %></td>
-        <td><%= sasaran.satuan %></td>
-        <td>
-        <% unless sasaran.rincian %>
-          <%= link_to "Tambah Rincian", new_sasaran_rincian_path(sasaran) %>
-        <% else %>
-          <%= link_to "Susun Rencana Aksi", sasaran_path(sasaran) %>
-        <% end %>
-        </td>
-        <% unless sasaran.program_kegiatan %>
-          <td class="text-danger">Belum terhubung</td>
-          <% else %>
-        <td><%= link_to sasaran.program_kegiatan.nama_subkegiatan, program_kegiatan_path(sasaran.program_kegiatan) %></td>
-        <% end %>
-        <td>
-        <%= link_to "Edit", edit_sasaran_path(sasaran) %>
-        <%= link_to "Hapus", sasaran_path(sasaran), method: :delete, data: { confirm: "Hapus ?" } %>
-        </td>
+        <th class="border-bottom" scope="col">Sasaran kinerja</th>
+        <th class="border-bottom" scope="col">Indikator kinerja</th>
+        <th class="border-bottom" scope="col">Target</th>
+        <th class="border-bottom" scope="col">Satuan</th>
+        <th class="border-bottom" scope="col">Rencana Aksi</th>
+        <th class="border-bottom" scope="col">SubKegiatan</th>
       </tr>
-  </tbody>
-</table>
-<hr>
-<% if sasaran.rincian.present? %>
-<div>
-  <%= render sasaran.rincian %>
-<hr>
-<%= render sasaran.rincian.tahapans %>
+    </thead>
+    <tbody>
+      <% sasarans.each.with_index(1) do |sasaran, index| %>
+        <tr>
+          <td class="fw-bolder text-gray-500"><%= sasaran.sasaran_kinerja %></td>
+          <td class="fw-bolder text-gray-500"><%= sasaran.indikator_kinerja %></td>
+          <td class="fw-bolder text-gray-500"><%= sasaran.target %></td>
+          <td class="fw-bolder text-gray-500"><%= sasaran.satuan %></td>
+          <td class="fw-bolder text-gray-500">
+            <% unless sasaran.rincian %>
+              <%= link_to "Tambah Rincian", new_sasaran_rincian_path(sasaran) %>
+            <% else %>
+              <%= link_to "Susun Rencana Aksi", sasaran_path(sasaran) %>
+            <% end %>
+          </td>
+          <% unless sasaran.program_kegiatan %>
+            <td class="text-danger">Belum terhubung</td>
+          <% else %>
+            <td class="fw-bolder text-gray-500"><%= link_to sasaran.program_kegiatan.nama_subkegiatan, program_kegiatan_path(sasaran.program_kegiatan) %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
-<% else %>
-  <h5>Harap Isi Rincian Sasaran</h5>
-<% end %>
-<hr>

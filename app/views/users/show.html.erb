@@ -1,37 +1,65 @@
-<p id="notice"><%= notice %></p>
-<p>
-  <strong>Nama:</strong>
-  <%= @user.nama %>
+<p id="notice">
+  <%= notice %>
 </p>
-
-<p>
-  <strong>Nik:</strong>
-  <%= @user.nik %>
-</p>
-
-<p>
-  <strong>OPD:</strong>
-  <%= @user.opd.nama_opd %>
-</p>
-<% # <%= link_to "Tambah Sasaran", new_user_sasaran_path(@user.id) %>
-<%= link_to "Tambah Sasaran", "#", remote: true, data: { 'bs-toggle': "modal", 'bs-target': "#form-new-sasaran" } %>
-<hr>
-<% unless @user.sasarans.any? %>
-  <div class="alert alert-danger" role="alert">
-    User Belum memiliki Sasaran, 
-    <%= link_to "Tambah Sasaran Baru", new_user_sasaran_path(@user.id) %>
-
+<div class="row mb-5">
+  <div class="col-12">
+    <div class="card border-0 shadow">
+      <div class="card-header border-bottom d-flex align-items-center justify-content-between">
+        <h2 class="fs-5 fw-bold mb-0">User <%= current_user.nama %></h2>
+      </div>
+      <div class="card-body">
+        <ul class="list-group list-group-flush list my--3">
+          <li class="list-group-item px-0">
+            <div class="row align-items-center">
+              <div class="col-auto">
+                <a href="#" class="avatar">
+                  <%= image_tag('team/profile-picture-3.jpg', class: "rounded") %>
+                </a>
+              </div>
+              <div class="col-auto ms--2">
+                <h4 class="h6 mb-0">
+                  <a href="#"><%= current_user.nama.capitalize %></a>
+                </h4>
+                <div class="d-flex align-items-center">
+                  <div class="bg-success dot rounded-circle me-1"></div>
+                  <small><%= current_user.email %></small>
+                </div>
+                <div class="d-flex align-items-center">
+                  <div class="bg-secondary dot rounded-circle me-1"></div>
+                  <small><%= current_user.opd.nama_opd %></small>
+                </div>
+              </div>
+              <div class="col text-end">
+                <%= link_to edit_user_path(current_user), class: "btn btn-sm btn-secondary d-inline-flex align-items-center" do %>
+                  <svg class="icon icon-xxs me-2" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                      d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  Edit
+                <% end %>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- ANCHOR sasaran_user -->
+    <% if current_user.sasarans.any? %>
+      <div class="col-12 my-4">
+        <div class="card border-0 shadow">
+          <div class="card-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h2 class="fs-5 fw-bold mb-0">Sasaran</h2>
+              </div>
+            </div>
+          </div>
+          <%= render "sasarans/sasaran", sasarans: current_user.sasarans %>
+        </div>
+      </div>
+    <% end %>
   </div>
-<% else %>
-  <h5>Sasaran "<%= @user.nama %>"</h5>
-  <hr>
-  <div class="sasaran-kinerja">  
-    <%= render(@user.sasarans) %>
-  </div>
-<% end %>
-<hr>
+</div>
 <%= render "modal" %>
-<p> 
-<%= link_to "Edit User", edit_user_path(@user) %> |
-<%= link_to "Kembali", users_path %>
-</p>

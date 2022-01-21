@@ -1,8 +1,7 @@
-<%= form_with(model: kak) do |form| %>
+<%= form_with(model: [user, kak], class: "mt-2") do |form| %>
   <% if kak.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(kak.errors.count, "error") %> prohibited this kak from being saved:</h2>
-
       <ul>
         <% kak.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,90 +9,30 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
-    <% options = options_from_collection_for_select(pks, 'id', 'sasaran') %>
-    <%= form.label :pk_id, 'Sasaran Kinerja' %>
-    <%= form.select :pk_id, options %>
+    <%= form.label :dasar_hukum, class: "form-label" %>
+    <%= form.text_area :dasar_hukum, multiple: true, value: "", class: "form-control" %>
   </div>
-<!-- TODO: Disini ada dropdown terkait dengan OPD, chain OPD -> programKegiatan -->
+  <%= add_new_field("Tambah Dasar Hukum", form, :dasar_hukum, kak )  %>
   <div class="field">
-    <% options = options_from_collection_for_select(program_kegiatans, 'id', 'nama_program') %>
-    <%= form.label :program_kegiatan_id %>
-    <%= form.select :program_kegiatan_id, options %>
+    <%= form.label :tujuan, class: "form-label" %>
+    <%= form.text_area :tujuan, multiple: true, value: "", class: "form-control" %>
   </div>
-
-  <div class="field">
-    <%= form.label :dasar_hukum %>
-    <%= form.text_area :dasar_hukum %>
-  </div>
-
-  <div class="field">
-    <%= form.label :tujuan %>
-    <%= form.text_area :tujuan %>
-  </div>
-
-  <div class="field">
-    <%= form.label :penerima_manfaat %>
-    <%= form.text_field :penerima_manfaat %>
-  </div>
-
-  <div class="field">
-    <%= form.label :data_terpilah %>
-    <%= form.text_area :data_terpilah %>
-  </div>
-
-  <div class="field">
-    <%= form.label :akses %>
-    <%= form.text_area :akses %>
-  </div>
-
-  <div class="field">
-    <%= form.label :partisipasi %>
-    <%= form.text_area :partisipasi %>
-  </div>
-
-  <div class="field">
-    <%= form.label :kontrol %>
-    <%= form.text_area :kontrol %>
-  </div>
-
-  <div class="field">
-    <%= form.label :manfaat %>
-    <%= form.text_area :manfaat %>
-  </div>
-
-  <div class="field">
-    <%= form.label :penyebab_internal %>
-    <%= form.text_area :penyebab_internal %>
-  </div>
-
-  <div class="field">
-    <%= form.label :penyebab_external %>
-    <%= form.text_area :penyebab_external %>
-  </div>
-
-  <div class="field">
-    <%= form.label :permasalahan_umum %>
-    <%= form.text_area :permasalahan_umum %>
-  </div>
-
-  <div class="field">
-    <%= form.label :permasalahan_gender %>
-    <%= form.text_area :permasalahan_gender %>
-  </div>
-
-  <div class="field">
-    <%= form.label :resiko %>
-    <%= form.text_area :resiko %>
-  </div>
-
-  <div class="field">
-    <%= form.label :lokasi_pelaksanaan %>
-    <%= form.text_field :lokasi_pelaksanaan %>
-  </div>
-
+  <%= add_new_field 'Tambah Tujuan', form, :tujuan, kak %>
+  <!-- TODO render form sasaran-->
   <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>
+<script>
+  $(function() {
+    $('form').on('click', '.add_fields_<%= kak.id %>', function(event) {
+      let regexp, time;
+      time = new Date().getTime();
+      regexp = new RegExp($(this).data('id'), 'g')
+      $(this).before($(this).data('fields').replace(regexp, time))
+      return event.preventDefault()
+    });
+
+  });
+</script>

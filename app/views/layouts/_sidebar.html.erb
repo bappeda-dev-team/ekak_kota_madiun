@@ -1,0 +1,81 @@
+<nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
+  <div class="d-flex align-items-center">
+    <button class="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse"
+      data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<nav id="sidebarMenu" class="sidebar d-lg-block bg-gray-800 text-white collapse" data-simplebar>
+  <div class="sidebar-inner px-4 pt-3">
+    <ul class="nav flex-column pt-3 pt-md-0">
+      <li class="nav-item">
+        <%= link_to(root_path, class: "nav-link d-flex align-items-center") do %>
+          <span class="mt-1 ms-1 sidebar-text">Dashboard KaK</span>
+        <% end %>
+      </li>
+      <li class="nav-item  <%= request.path == '/' ? "active" : "" %> ">
+        <%= link_to(root_path, class: "nav-link") do %>
+          <span class="sidebar-icon">
+            <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+              <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+            </svg>
+          </span>
+          <span class="sidebar-text">Dashboard</span>
+        <% end %>
+      </li>
+      <li class="nav-item <%= request.path == latar_belakangs_path ? "active" : "" %>" >
+        <%= link_to(latar_belakangs_path, class: "nav-link d-flex justify-content-between") do %>
+          <span>
+            <span class="sidebar-icon">
+              <i class="fas fa-map icon icon-xs me-2"></i>
+            </span>
+            <span class="sidebar-text">Latar Belakang</span>
+          </span>
+        <% end %>
+      </li>
+      <li class="nav-item <%= request.path == strategi_keluarans_path ? "active" : "" %>" >
+        <%= link_to(strategi_keluarans_path, class: "nav-link d-flex justify-content-between") do %>
+          <span>
+            <span class="sidebar-icon">
+              <i class="fas fa-scroll icon icon-xs me-2"></i>
+            </span>
+            <span class="sidebar-text">Strategi</span>
+          </span>
+        <% end %>
+      </li>
+      <li class="nav-item <%= request.path == user_sasarans_path(current_user.id) ? "active" : "" %>">
+        <%= link_to( user_sasarans_path(current_user.id), class: "nav-link d-flex justify-content-between") do %>
+          <span>
+            <span class="sidebar-icon">
+              <i class="fas fa-bullseye icon icon-xs me-2"></i>
+            </span>
+            <span class="sidebar-text">Sasaran Kinerja</span>
+          </span>
+        <% end %>
+      </li>
+      <li class="nav-item <%= request.path == program_kegiatans_path ? "active" : "" %>" >
+        <%= link_to(program_kegiatans_path, class: "nav-link d-flex justify-content-between") do %>
+          <span>
+            <span class="sidebar-icon">
+              <i class="fas fa-tasks icon icon-xs me-2"></i>
+            </span>
+            <span class="sidebar-text">Program Kegiatan</span>
+          </span>
+        <% end %>
+      </li>
+      <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
+      <li class="nav-item">
+        <%= link_to destroy_user_session_path, {method: :delete, class: "nav-link d-flex justify-content-between"}  do %>
+          <span>
+            <span class="sidebar-icon">
+              <i class="fas fa-sign-out-alt icon icon-xs me-2 text-danger"></i>
+            </span>
+            <span class="sidebar-text">Logout</span>
+          </span>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</nav>

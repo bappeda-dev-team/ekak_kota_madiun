@@ -5,19 +5,29 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <meta name="turbolinks-visit-control" content="reload">
     <%= stylesheet_link_tag "application", media: "all", 'data-turbolinks-track': "reload" %>
-
-    <%= stylesheet_pack_tag "application", media: "all", 'data-turbolinks-track': "reload" %>
     <%= javascript_pack_tag "application", 'data-turbolinks-track': "reload" %>
   </head>
-
   <body>
-  <!-- edit top -->
-  <%= render "layouts/navbar-top" %>
-
-  <div class="container">
-    <%= yield %>
-  </div>
-
+    <% if user_signed_in? %>
+      <!-- edit top -->
+      <%= render "layouts/sidebar" %>
+      <main class="content d-flex flex-column min-vh-100">
+        <%= render 'layouts/navbar' %>
+        <%# !ANCHOR WARNING %>
+        <div class="pb-2 pt-3">
+          <%= render 'layouts/dropdown_action' %>
+        </div>
+        <div class="row p-2">
+          <%= yield %>
+        </div>
+        <%# ANCHOR %>
+        <!-- ANCHOR footer -->
+        <%= render 'layouts/footer' %>
+      </main>
+    <% else %>
+      <%= yield :login %>
+    <% end %>
   </body>
 </html>

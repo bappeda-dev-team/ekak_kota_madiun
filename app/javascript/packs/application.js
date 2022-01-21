@@ -7,15 +7,26 @@ import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
+import "./sweetalert"
 
-// Bootstrap 5 thing
-import 'bootstrap'
-import '@popperjs/core'
 import jQuery from 'jquery'
-import '../src/my_script'
+import Swal from 'sweetalert2'
+import '@popperjs/core'
+import Chartist from "chartist"
+import SmoothScroll from "smooth-scroll"
+import '../volt/volt.js'
+import "@fortawesome/fontawesome-free/css/all"
 
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
+require("trix")
+require("@rails/actiontext")
+
 window.$ = window.jQuery = jQuery
+window.bootstrap = require('bootstrap')
+window.Chartist = Chartist
+window.SmoothScroll = SmoothScroll
+
+const tooltip = require("chartist-plugin-tooltips")

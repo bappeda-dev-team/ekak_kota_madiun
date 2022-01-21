@@ -1,0 +1,138 @@
+<div class="col-12 col-xl-8">
+  <div class="row">
+    <div class="col-12 mb-4">
+      <div class="card border-0 shadow">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2 class="fs-5 fw-bold mb-0">Sasaran Kinerja <%= current_user.nama %></h2>
+            </div>
+            <div class="col text-end">
+              <%= link_to user_sasarans_path(current_user), class:"btn btn-sm btn-primary" do %>
+                <i class="fas fa-eye"></i>
+                All Sasaran
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-items-center">
+            <thead class="thead-light">
+              <tr>
+                <th class="border-bottom" scope="col">Sasaran</th>
+                <th class="border-bottom" scope="col">Indikator</th>
+                <th class="border-bottom" scope="col">Target</th>
+                <th class="border-bottom" scope="col">Penerima Manfaat</th>
+                <th class="border-bottom" scope="col">Kurun Waktu</th>
+                <th class="border-bottom" scope="col">Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @sasaran.each do |s| %>
+                <tr>
+                  <th class="text-gray-900" scope="row">
+                    <%= link_to s.sasaran_kinerja.to_s, edit_sasaran_path(s), :data => { "bs-toggle" => "tooltip", "bs-placement"=> "bottom"}, title: "Edit Sasaran" %>
+                  </th>
+                  <td class="fw-bolder text-gray-500">
+                    <%= s.indikator_kinerja %>
+                  </td>
+                  <td class="fw-bolder text-gray-500">
+                    <%= s.target %>
+                    <%= s.satuan %>
+                  </td>
+                  <td class="fw-bolder text-gray-500">
+                    <%= s.penerima_manfaat %>
+                  </td>
+                  <td class="fw-bolder text-gray-500">
+                    <%= s.rincian.waktu_total == 0 ? "-" : s.rincian.waktu_total %> bulan
+                  </td>
+                  <td class="fw-bolder text-gray-500">
+                    <%= link_to user_sasaran_path(current_user, s) do  %>
+                      <i class="fas fa-edit fa-lg" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit Rencana Aksi"></i>
+                    <% end  %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-xxl-6 mb-4">
+      <%= render 'shared/atasan_card' %>
+    </div>
+    <div class="col-12 col-xxl-6 mb-4">
+      <%= render 'shared/progress_card', sasaran: @sasaran %>
+    </div>
+  </div>
+</div>
+<div class="col-12 col-xl-4">
+  <div class="col-12 px-0 mb-4">
+    <div class="card border-0 shadow">
+      <div class="card-header d-flex flex-row align-items-center flex-0 border-bottom">
+        <div class="d-block">
+          <div class="h6 fw-normal text-gray mb-2">Grafik Capaian (contoh)</div>
+          <h2 class="fw-extrabold">Sasaran : <%= @sasaran.count %></h2>
+          <div class="small mt-2">
+            <span>Capaian rata-rata : </span>
+            <span class="text-success fw-bold"><%= number_to_percentage(@avg_progress, precision: 2) %></span>
+          </div>
+        </div>
+        <div class="d-block ms-auto">
+          <div class="d-flex align-items-center text-end mb-2">
+            <span class="dot rounded-circle bg-gray-800 me-2"></span>
+            <span class="fw-normal small">Target</span>
+          </div>
+          <div class="d-flex align-items-center text-end">
+            <span class="dot rounded-circle bg-secondary me-2"></span>
+            <span class="fw-normal small">Realisasi</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-body p-2">
+        <div class="ct-chart-ranking ct-golden-section ct-series-a"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  let data = <%= @chart %>
+  let data_realisasi = <%= @chart_real %>
+  var chart = new Chartist.Bar('.ct-chart-ranking', {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'],
+      series: [
+        data,
+        data_realisasi,
+      ]
+    }, {
+      low: 0,
+      showArea: true,
+      plugins: [
+        Chartist.plugins.tooltip()
+      ],
+      axisX: {
+        // On the x-axis start means top and end means bottom
+        position: 'end'
+      },
+      axisY: {
+        // On the y-axis start means left and end means right
+        showGrid: false,
+        showLabel: false,
+        offset: 0
+      }
+    });
+
+    chart.on('draw', function (data) {
+      if (data.type === 'line' || data.type === 'area') {
+        data.element.animate({
+          d: {
+            begin: 2000 * data.index,
+            dur: 2000,
+            from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+            to: data.path.clone().stringify(),
+            easing: Chartist.Svg.Easing.easeOutQuint
+          }
+        });
+      }
+    });
+</script>

@@ -1,29 +1,64 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Sasarans</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Sasaran kinerja</th>
-      <th>Indikator kinerja</th>
-      <th>Target</th>
-      <th>Satuan</th>
-      <th>Penerima manfaat</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @sasarans.each do |sasaran| %>
-      <tr>
-        <td><%= sasaran.sasaran_kinerja %></td>
-        <td><%= sasaran.indikator_kinerja %></td>
-        <td><%= sasaran.target %></td>
-        <td><%= sasaran.satuan %></td>
-        <td><%= sasaran.penerima_manfaat %></td>
-        <td><%= link_to 'Show', user_sasarans_path(@user) %></td>
-        </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to 'Sasarans', user_sasarans_path(current_user) %></li>
+      </ol>
+    </nav>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Sasaran Kinerja </h2>
+          </div>
+          <div class="col text-end">
+            <%= link_to "Tambah Data Sasaran",new_user_sasaran_path(current_user), class: "btn btn-sm btn-info" %>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center">
+          <thead class="thead-light">
+            <tr>
+              <th class="border-bottom" scope="col">No.</th>
+              <th class="border-bottom" scope="col">Sasaran Kinerja</th>
+              <th class="border-bottom" scope="col">Indikator Kinerja</th>
+              <th class="border-bottom" scope="col">Target</th>
+              <th class="border-bottom" scope="col">Satuan</th>
+              <th class="border-bottom" scope="col">Penerima manfaat</th>
+              <th class="border-bottom text-center" scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @sasarans.each.with_index(1) do |sasaran, i| %>
+              <tr>
+                <th class="text-gray-900 fw-bolder" scope="row"><%= i %></th>
+                <th class="text-gray-900" scope="row"><%= sasaran.sasaran_kinerja %></th>
+                <td class="fw-bolder text-gray-500"><%= sasaran.indikator_kinerja %></td>
+                <td class="fw-bolder text-gray-500"><%= sasaran.target %></td>
+                <td class="fw-bolder text-gray-500"><%= sasaran.satuan %></td>
+                <td class="fw-bolder text-gray-500"><%= sasaran.penerima_manfaat %></td>
+                <td class="fw-bolder text-gray-500 text-center">
+                  <%= link_to user_sasaran_path(current_user, sasaran), class: "m-3" do %>
+                    <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
+                  <% end %>
+                  <%= link_to edit_user_sasaran_path(current_user, sasaran), class: "m-3" do %>
+                    <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+                  <% end %>
+                  <%= link_to user_sasaran_path(current_user, sasaran), method: :delete, data: { confirm_swal: "Hapus #{sasaran.sasaran_kinerja} ?"}, class: "m-3" do %>
+                    <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

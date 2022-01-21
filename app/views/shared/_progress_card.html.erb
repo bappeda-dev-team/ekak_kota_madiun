@@ -1,0 +1,27 @@
+<div class="card border-0 shadow">
+  <div class="card-header border-bottom d-flex align-items-center justify-content-between">
+    <h2 class="fs-5 fw-bold mb-0">Progress Sasaran Kinerja</h2>
+  </div>
+  <div class="card-body">
+    <% sasaran.each do |sas| %>
+      <!-- Project 1 -->
+      <div class="row mb-4">
+        <div class="col-auto">
+          <i class="fas fa-check-square"></i>
+        </div>
+        <div class="col">
+          <div class="progress-wrapper">
+            <div class="progress-info">
+              <div class="h6 mb-0"><%= sas.sasaran_kinerja %></div>
+              <% jumlah = sas.rincian.progress_total.nan? ? '0%' :  number_to_percentage( sas.rincian.progress_total, precision: 2) %>
+              <div class="small fw-bold text-gray-500"><span><%= jumlah %></span></div>
+            </div>
+            <div class="progress mb-0">
+              <div class="progress-bar bg-success" role="progressbar" style="<%= "width: #{jumlah}" %>"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
