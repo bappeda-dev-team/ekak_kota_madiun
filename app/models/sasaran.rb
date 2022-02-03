@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: sasarans
+#
+#  id                  :bigint           not null, primary key
+#  sasaran_kinerja     :string
+#  indikator_kinerja   :string
+#  target              :integer
+#  kualitas            :integer
+#  satuan              :string
+#  penerima_manfaat    :string
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  user_id             :bigint
+#  program_kegiatan_id :bigint
+#  anggaran            :integer
+#
 class Sasaran < ApplicationRecord
   belongs_to :user
   has_one :rincian, dependent: :destroy

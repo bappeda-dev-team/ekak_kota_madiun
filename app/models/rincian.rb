@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: rincians
+#
+#  id                  :bigint           not null, primary key
+#  sasaran_id          :bigint           not null
+#  data_terpilah       :string
+#  penyebab_internal   :string
+#  penyebab_external   :string
+#  permasalahan_umum   :string
+#  permasalahan_gender :string
+#  resiko              :string
+#  lokasi_pelaksanaan  :string
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#
 class Rincian < ApplicationRecord
   belongs_to :sasaran
   has_many :kesenjangan

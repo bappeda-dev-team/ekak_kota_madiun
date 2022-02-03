@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: perhitungans
+#
+#  id          :bigint           not null, primary key
+#  volume      :integer
+#  satuan      :string
+#  harga       :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  anggaran_id :bigint
+#  total       :integer
+#  deskripsi   :string
+#
 class Perhitungan < ApplicationRecord
   before_save :hitung_total
   before_update :hitung_total

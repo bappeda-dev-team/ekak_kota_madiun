@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: pagus
+#
+#  id         :bigint           not null, primary key
+#  item       :string
+#  uang       :integer
+#  tipe       :string
+#  satuan     :string
+#  volume     :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  sasaran_id :bigint           not null
+#  total      :integer
+#
 class Pagu < ApplicationRecord
   before_save :hitung_total
   before_update :hitung_total

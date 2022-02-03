@@ -52,6 +52,7 @@ group :development do
   gem 'solargraph'
   gem 'letter_opener'
   gem 'htmlbeautifier'
+  gem 'annotate'
 end
 
 group :test do
