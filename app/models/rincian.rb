@@ -20,6 +20,8 @@ class Rincian < ApplicationRecord
   has_many :tahapans
   accepts_nested_attributes_for :tahapans
 
+  validates :lokasi_pelaksanaan, presence: true
+
   def method_missing(method, *args, &block)
     return 0
   end
