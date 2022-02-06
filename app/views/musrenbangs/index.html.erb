@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Musrenbangs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Usulan</th>
+      <th>Tahun</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @musrenbangs.each do |musrenbang| %>
+      <tr>
+        <td><%= musrenbang.usulan %></td>
+        <td><%= musrenbang.tahun %></td>
+        <td><%= link_to 'Show', musrenbang %></td>
+        <td><%= link_to 'Edit', edit_musrenbang_path(musrenbang) %></td>
+        <td><%= link_to 'Destroy', musrenbang, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Musrenbang', new_musrenbang_path %>

@@ -1,0 +1,2 @@
+class Musrenbang < ApplicationRecord
+end

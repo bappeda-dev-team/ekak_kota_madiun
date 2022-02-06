@@ -1,0 +1,2 @@
+module MusrenbangsHelper
+end

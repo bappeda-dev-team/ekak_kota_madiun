@@ -1,0 +1,27 @@
+<%= form_with(model: musrenbang) do |form| %>
+  <% if musrenbang.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(musrenbang.errors.count, "error") %> prohibited this musrenbang from being saved:</h2>
+
+      <ul>
+        <% musrenbang.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :usulan %>
+    <%= form.text_area :usulan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tahun %>
+    <%= form.text_field :tahun %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
