@@ -3,17 +3,22 @@
 # Table name: sasarans
 #
 #  id                  :bigint           not null, primary key
-#  sasaran_kinerja     :string
+#  anggaran            :integer
 #  indikator_kinerja   :string
-#  target              :integer
 #  kualitas            :integer
-#  satuan              :string
 #  penerima_manfaat    :string
+#  sasaran_kinerja     :string
+#  satuan              :string
+#  target              :integer
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
-#  user_id             :bigint
 #  program_kegiatan_id :bigint
-#  anggaran            :integer
+#  user_id             :bigint
+#
+# Indexes
+#
+#  index_sasarans_on_program_kegiatan_id  (program_kegiatan_id)
+#  index_sasarans_on_user_id              (user_id)
 #
 class Sasaran < ApplicationRecord
   belongs_to :user

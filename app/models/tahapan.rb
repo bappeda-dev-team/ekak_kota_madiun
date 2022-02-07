@@ -3,18 +3,26 @@
 # Table name: tahapans
 #
 #  id               :bigint           not null, primary key
-#  rincian_id       :bigint           not null
+#  bulan            :string
+#  jumlah_realisasi :integer
+#  jumlah_target    :integer
+#  keterangan       :string
+#  progress         :integer
+#  realisasi        :integer
 #  tahapan_kerja    :string
 #  target           :integer
-#  realisasi        :integer
-#  bulan            :string
-#  jumlah_target    :integer
-#  jumlah_realisasi :integer
-#  keterangan       :string
 #  waktu            :integer
-#  progress         :integer
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
+#  rincian_id       :bigint           not null
+#
+# Indexes
+#
+#  index_tahapans_on_rincian_id  (rincian_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (rincian_id => rincians.id)
 #
 class Tahapan < ApplicationRecord
   belongs_to :rincian
