@@ -4,14 +4,22 @@
 #
 #  id         :bigint           not null, primary key
 #  item       :string
-#  uang       :integer
-#  tipe       :string
 #  satuan     :string
+#  tipe       :string
+#  total      :integer
+#  uang       :integer
 #  volume     :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  sasaran_id :bigint           not null
-#  total      :integer
+#
+# Indexes
+#
+#  index_pagus_on_sasaran_id  (sasaran_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (sasaran_id => sasarans.id)
 #
 class Pagu < ApplicationRecord
   before_save :hitung_total

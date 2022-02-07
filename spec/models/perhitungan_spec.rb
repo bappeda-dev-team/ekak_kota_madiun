@@ -3,14 +3,18 @@
 # Table name: perhitungans
 #
 #  id          :bigint           not null, primary key
-#  volume      :integer
-#  satuan      :string
+#  deskripsi   :string
 #  harga       :integer
+#  satuan      :string
+#  total       :integer
+#  volume      :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  anggaran_id :bigint
-#  total       :integer
-#  deskripsi   :string
+#
+# Indexes
+#
+#  index_perhitungans_on_anggaran_id  (anggaran_id)
 #
 require 'rails_helper'
 
