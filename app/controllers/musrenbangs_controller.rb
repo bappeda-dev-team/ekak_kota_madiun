@@ -3,7 +3,7 @@ class MusrenbangsController < ApplicationController
 
   # GET /musrenbangs or /musrenbangs.json
   def index
-    @musrenbangs = Musrenbang.all
+    @musrenbangs = Musrenbang.all.with_rich_text_usulan
   end
 
   # GET /musrenbangs/1 or /musrenbangs/1.json

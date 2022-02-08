@@ -32,9 +32,10 @@
             </tr>
           </thead>
           <tbody>
-            <% @musrenbangs.each do |musrenbang| %>
+            <% @musrenbangs.each.with_index(1) do |musrenbang, i| %>
               <tr>
-                <td class="text-gray-900 fw-bolder" scope="row"><%= musrenbang.usulan %></td>
+                <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
+                <td class="fw-bolder text-gray-500"><%= musrenbang.usulan %></td>
                 <td class="fw-bolder text-gray-500"><%= musrenbang.tahun %></td>
                 <td class="fw-bolder text-gray-500 text-center">
                   <%= link_to musrenbang, class: "m-3" do %>
