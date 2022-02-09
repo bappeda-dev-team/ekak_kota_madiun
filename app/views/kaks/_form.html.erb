@@ -9,17 +9,24 @@
       </ul>
     </div>
   <% end %>
-  <div class="field">
-    <%= form.label :dasar_hukum, class: "form-label" %>
-    <%= form.text_area :dasar_hukum, multiple: true, value: "", class: "form-control" %>
+  <h4>Latar Belakang</h4>
+  <!-- Latar Belakang -->
+  <div class="latar-belakang">
+    <div class="field">
+      <%= form.label :dasar_hukum, class: "form-label" %>
+      <select name="dasar_hukum" id="dropdown" data-ajax--url="/dasar_aksi.json" data-placeholder="Dasar Hukum">
+        <option value=""></option>
+      </select>
+    </div>
+    <%= add_new_field("Tambah Dasar Hukum", form, :dasar_hukum, kak )  %>
+    <div class="field">
+      <%= form.label :tujuan, class: "form-label" %>
+      <%= form.text_area :tujuan, multiple: true, value: "", class: "form-control" %>
+    </div>
+    <%= add_new_field 'Tambah Tujuan', form, :tujuan, kak %>
   </div>
-  <%= add_new_field("Tambah Dasar Hukum", form, :dasar_hukum, kak )  %>
-  <div class="field">
-    <%= form.label :tujuan, class: "form-label" %>
-    <%= form.text_area :tujuan, multiple: true, value: "", class: "form-control" %>
-  </div>
-  <%= add_new_field 'Tambah Tujuan', form, :tujuan, kak %>
   <!-- TODO render form sasaran-->
+  <!-- Gambaran Umum -->
   <div class="actions">
     <%= form.submit %>
   </div>
