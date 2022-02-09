@@ -25,7 +25,17 @@
           <span class="sidebar-text">Dashboard</span>
         <% end %>
       </li>
-      <li class="nav-item <%= request.path == latar_belakangs_path ? "active" : "" %>" >
+      <li class="nav-item <%= request.path.match(/\bmusrenbang/) ? "active" : "" %>" >
+        <%= link_to(musrenbangs_path, class: "nav-link d-flex justify-content-between") do %>
+          <span>
+            <span class="sidebar-icon">
+              <i class="fas fa-atlas icon icon-xs me-2"></i>
+            </span>
+            <span class="sidebar-text">Musrenbang</span>
+          </span>
+        <% end %>
+      </li>
+      <li class="nav-item <%= request.path.match(/\bdasar_aksi/) ? "active" : "" %>" >
         <%= link_to(latar_belakangs_path, class: "nav-link d-flex justify-content-between") do %>
           <span>
             <span class="sidebar-icon">
@@ -35,7 +45,7 @@
           </span>
         <% end %>
       </li>
-      <li class="nav-item <%= request.path == strategi_keluarans_path ? "active" : "" %>" >
+      <li class="nav-item <%= request.path.match(/\bstrategi/) ? "active" : "" %>" >
         <%= link_to(strategi_keluarans_path, class: "nav-link d-flex justify-content-between") do %>
           <span>
             <span class="sidebar-icon">
@@ -45,7 +55,7 @@
           </span>
         <% end %>
       </li>
-      <li class="nav-item <%= request.path == user_sasarans_path(current_user.id) ? "active" : "" %>">
+      <li class="nav-item <%= request.path.match(/\bsasaran/) ? "active" : "" %>">
         <%= link_to( user_sasarans_path(current_user.id), class: "nav-link d-flex justify-content-between") do %>
           <span>
             <span class="sidebar-icon">
@@ -55,13 +65,23 @@
           </span>
         <% end %>
       </li>
-      <li class="nav-item <%= request.path == program_kegiatans_path ? "active" : "" %>" >
+      <li class="nav-item <%= request.path.match(/\bprogram_kegiatan/) ? "active" : "" %>" >
         <%= link_to(program_kegiatans_path, class: "nav-link d-flex justify-content-between") do %>
           <span>
             <span class="sidebar-icon">
               <i class="fas fa-tasks icon icon-xs me-2"></i>
             </span>
             <span class="sidebar-text">Program Kegiatan</span>
+          </span>
+        <% end %>
+      </li>
+      <li class="nav-item <%= request.path.match(/\bacuan_kerja/) ? "active" : "" %>" >
+        <%= link_to(user_kaks_path(current_user), class: "nav-link d-flex justify-content-between") do %>
+          <span>
+            <span class="sidebar-icon">
+              <i class="fas fa-tasks icon icon-xs me-2"></i>
+            </span>
+            <span class="sidebar-text">KaK</span>
           </span>
         <% end %>
       </li>

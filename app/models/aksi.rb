@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: aksis
+#
+#  id         :bigint           not null, primary key
+#  bulan      :integer
+#  realisasi  :integer
+#  target     :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  tahapan_id :bigint
+#
+# Indexes
+#
+#  index_aksis_on_tahapan_id  (tahapan_id)
+#
 class Aksi < ApplicationRecord
   belongs_to :tahapan
   after_save :update_total_target_bulan

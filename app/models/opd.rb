@@ -1,8 +1,14 @@
 # == Schema Information
+#
 # Table name: opds
-# id        :integer
-# nama_opd  :string
-# kode_opd  :string
+#
+#  id         :bigint           not null, primary key
+#  nama_opd   :string
+#  kode_opd   :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  lembaga_id :integer
+#
 class Opd < ApplicationRecord
   validates :nama_opd, presence: true
   validates :kode_opd, presence: true
