@@ -39,6 +39,6 @@ const tooltip = require("chartist-plugin-tooltips")
 $(function () {
   console.log('javascript application is on')
   $("#dropdown").select2({
-    width: '80%',
+    width: '100%',
   });
 })
