@@ -55,7 +55,7 @@
           </span>
         <% end %>
       </li>
-      <li class="nav-item <%= request.path.match(/\bsasaran_kerja/) ? "active" : "" %>">
+      <li class="nav-item <%= request.path.match(/\bsasaran/) ? "active" : "" %>">
         <%= link_to( user_sasarans_path(current_user.id), class: "nav-link d-flex justify-content-between") do %>
           <span>
             <span class="sidebar-icon">
@@ -72,6 +72,16 @@
               <i class="fas fa-tasks icon icon-xs me-2"></i>
             </span>
             <span class="sidebar-text">Program Kegiatan</span>
+          </span>
+        <% end %>
+      </li>
+      <li class="nav-item <%= request.path.match(/\bacuan_kerja/) ? "active" : "" %>" >
+        <%= link_to(user_kaks_path(current_user), class: "nav-link d-flex justify-content-between") do %>
+          <span>
+            <span class="sidebar-icon">
+              <i class="fas fa-tasks icon icon-xs me-2"></i>
+            </span>
+            <span class="sidebar-text">KaK</span>
           </span>
         <% end %>
       </li>
