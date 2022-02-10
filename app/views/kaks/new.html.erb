@@ -5,12 +5,12 @@
         <i class="fas fa-home"></i>
       <% end %>
     </li>
-    <li class="breadcrumb-item"><%= link_to 'KaK', user_kaks_path(current_user) %></li>
+    <li class="breadcrumb-item"><%= link_to 'KaK', kaks_path %></li>
     <li class="breadcrumb-item active" aria-current="page">Tambah KaK</li>
   </ol>
 </nav>
 <div class="form-field-container">
   <h3>Form Penyusunan KaK</h3>
   <hr>
-  <%= render 'form', kak: @kak, user: @user %>
+  <%= render 'form', kak: @kak %>
 </div>

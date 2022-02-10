@@ -1,8 +1,9 @@
 <div class="program-kegiatan">
   <h3>Program Kegiatan A</h3>
 </div>
+<h4>A. Latar Belakang</h4>
 <div class="dasar-hukum">
-  <h3>Dasar Hukum :</h3>
+  Dasar Hukum
   <ol>
     <% @kak.dasar_hukum.each do |dh|  %>
       <li>
@@ -11,13 +12,15 @@
     <% end %>
   </ol>
 </div>
-<div class="tujuan">
-  <h3>Tujuan :</h3>
-  <ol>
-    <% @kak.tujuan.each do |tj|  %>
-      <li>
-        <%= tj %>
-      </li>
-    <% end %>
-  </ol>
+<h4>B. Penerima Manfaat</h4>
+<div class="penerima-manfaat">
+  <%= @kak.penerima_manfaat %>
+</div>
+<h4>C. Strategi Pencapaian Keluaran</h4>
+<div class="tahapan_pelaksanaan">
+  <%= @kak.tahapan_pelaksanaan %>
+</div>
+<h4>D. Kurun Waktu Pencapaian Keluaran</h4>
+<div class="tahapan_pelaksanaan">
+  <%= @kak.waktu_dibutuhkan %>
 </div>
