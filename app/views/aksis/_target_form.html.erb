@@ -11,6 +11,13 @@
   <% end %>
   <div class="card">
     <div class="card-body">
+       <div class="mb-2">
+       Tahapan
+       <small>
+       <%= tahapan.tahapan_kerja %>
+       </small>
+       </div>
+    
       <div class="mb-3">
         <%= form.label :target , {class: "form-label"} %>
         <%= form.number_field :target , {class: "form-control "} %>

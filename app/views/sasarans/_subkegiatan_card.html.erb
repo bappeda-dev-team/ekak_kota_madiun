@@ -1,0 +1,43 @@
+<div class="card border-2 shadow mb-3">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="row align-items-center">
+          <div class="col">
+            <h5>SubKegiatan </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% unless sasaran.program_kegiatan.nil? %>
+
+    <div class="card-body">
+      <table>
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>SubKegiatan</th>
+                <th>Pagu</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td><%= sasaran.program_kegiatan.nama_subkegiatan %></td>
+                <td><%= rand(5000...6000) %></td>
+              </tr>
+            </tbody>
+            </table>
+    </div>
+    <hr>
+    <% end %>
+
+    <div class="card-body">
+      <p>Tambah SubKegiatan</p>
+      <%= form_with(model: sasaran) do |f| %>
+        <%= f.select(:program_kegiatan_id, (['']), {}, {:id => 'dropdown', data: {'ajax--url': "/program_kegiatans.json", "ajax--cache": "true", "placeholder": "Pilih SubKegiatan"}} )%>
+        <div class="actions">
+          <%= f.submit %>
+        </div>
+      <% end %>
+    </div>
+  </div>

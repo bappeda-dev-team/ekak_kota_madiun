@@ -1,3 +1,28 @@
+# == Schema Information
+#
+# Table name: anggarans
+#
+#  id         :bigint           not null, primary key
+#  jumlah     :integer
+#  kode_rek   :string
+#  level      :integer          default(0)
+#  uraian     :text
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  pajak_id   :bigint
+#  parent_id  :bigint
+#  tahapan_id :bigint
+#
+# Indexes
+#
+#  index_anggarans_on_pajak_id    (pajak_id)
+#  index_anggarans_on_parent_id   (parent_id)
+#  index_anggarans_on_tahapan_id  (tahapan_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (pajak_id => pajaks.id)
+#
 class Anggaran < ApplicationRecord
   belongs_to :tahapan
   has_many :perhitungans

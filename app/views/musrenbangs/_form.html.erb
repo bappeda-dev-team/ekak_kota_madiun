@@ -1,0 +1,26 @@
+<%= form_with(model: musrenbang) do |form| %>
+  <% if musrenbang.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(musrenbang.errors.count, "error") %> prohibited this musrenbang from being saved:</h2>
+
+      <ul>
+        <% musrenbang.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :usulan %>
+    <%= form.rich_text_area :usulan %>
+  </div>
+
+  <div class="field">
+    <%= form.select(:tahun, (['',2021,2022,2023,2024]), {}, {:id => 'dropdown',data: {"placeholder": "Pilih Tahun",}}) %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

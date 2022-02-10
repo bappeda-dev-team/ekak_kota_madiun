@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_21_185156) do
+ActiveRecord::Schema.define(version: 2022_02_10_230618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,15 +78,26 @@ ActiveRecord::Schema.define(version: 2022_01_21_185156) do
     t.index ["tahapan_id"], name: "index_anggarans_on_tahapan_id"
   end
 
-  create_table "kaks", force: :cascade do |t|
-    t.text "dasar_hukum", default: [], array: true
-    t.text "tujuan", default: [], array: true
+  create_table "dasar_hukums", force: :cascade do |t|
+    t.text "peraturan"
+    t.string "judul"
+    t.string "tahun"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "user_id", null: false
+  end
+
+  create_table "kaks", force: :cascade do |t|
+    t.text "dasar_hukum", default: [], array: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.bigint "program_kegiatan_id"
+    t.text "gambaran_umum"
+    t.text "penerima_manfaat"
+    t.text "metode_pelaksanaan"
+    t.text "tahapan_pelaksanaan"
+    t.text "waktu_dibutuhkan"
+    t.text "biaya_diperlukan"
     t.index ["program_kegiatan_id"], name: "index_kaks_on_program_kegiatan_id"
-    t.index ["user_id"], name: "index_kaks_on_user_id"
   end
 
   create_table "kesenjangans", force: :cascade do |t|
@@ -118,6 +129,13 @@ ActiveRecord::Schema.define(version: 2022_01_21_185156) do
 
   create_table "lembagas", force: :cascade do |t|
     t.string "nama_lembaga"
+    t.string "tahun"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "musrenbangs", force: :cascade do |t|
+    t.text "usulan"
     t.string "tahun"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

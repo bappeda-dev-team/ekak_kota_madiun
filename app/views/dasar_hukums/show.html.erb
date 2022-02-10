@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Peraturan:</strong>
+  <%= @dasar_hukum.peraturan %>
+</p>
+
+<p>
+  <strong>Judul:</strong>
+  <%= @dasar_hukum.judul %>
+</p>
+
+<p>
+  <strong>Tahun:</strong>
+  <%= @dasar_hukum.tahun %>
+</p>
+
+<%= link_to 'Edit', edit_dasar_hukum_path(@dasar_hukum) %> |
+<%= link_to 'Back', dasar_hukums_path %>

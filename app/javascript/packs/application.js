@@ -16,6 +16,8 @@ import Chartist from "chartist"
 import SmoothScroll from "smooth-scroll"
 import '../volt/volt.js'
 import "@fortawesome/fontawesome-free/css/all"
+import 'select2'
+import 'select2/dist/css/select2.css'
 
 Rails.start()
 Turbolinks.start()
@@ -29,4 +31,14 @@ window.bootstrap = require('bootstrap')
 window.Chartist = Chartist
 window.SmoothScroll = SmoothScroll
 
+
 const tooltip = require("chartist-plugin-tooltips")
+
+
+
+$(function () {
+  console.log('javascript application is on')
+  $("#dropdown").select2({
+    width: '100%',
+  });
+})

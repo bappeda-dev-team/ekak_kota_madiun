@@ -57,13 +57,14 @@ class LatarBelakangsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_latar_belakang
-      @latar_belakang = LatarBelakang.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def latar_belakang_params
-      params.require(:latar_belakang).permit(:dasar_hukum, :gambaran_umum)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_latar_belakang
+    @latar_belakang = LatarBelakang.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def latar_belakang_params
+    params.require(:latar_belakang).permit(:dasar_hukum, :gambaran_umum)
+  end
 end

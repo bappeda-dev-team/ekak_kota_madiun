@@ -1,4 +1,4 @@
-<%= form_with(model: [user, kak], class: "mt-2") do |form| %>
+<%= form_with(model: [kak], class: "mt-2") do |form| %>
   <% if kak.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(kak.errors.count, "error") %> prohibited this kak from being saved:</h2>
@@ -9,17 +9,47 @@
       </ul>
     </div>
   <% end %>
-  <div class="field">
-    <%= form.label :dasar_hukum, class: "form-label" %>
-    <%= form.text_area :dasar_hukum, multiple: true, value: "", class: "form-control" %>
+  <% program = ProgramKegiatan.all %>
+  <ul>
+    <% program.each do |p| %>
+      <li><%= p.nama_subkegiatan %></li>
+    <% end %>
+  </ul>
+  <h4>A. Latar Belakang</h4>
+  <!-- Latar Belakang -->
+  <div class="latar-belakang">
+    <div class="field">
+      <%= form.label :dasar_hukum, class: "form-label" %>
+      <%= form.text_area :dasar_hukum,multiple: true, value: "", class: "form-control" %>
+    </div>
+    <%= add_new_field("Tambah Dasar Hukum", form, :dasar_hukum, kak )  %>
+    <div class="field">
+      <%= form.label :gambaran_umum, class: "form-label" %>
+      <%= form.text_area :gambaran_umum, class: "form-control" %>
+    </div>
   </div>
-  <%= add_new_field("Tambah Dasar Hukum", form, :dasar_hukum, kak )  %>
-  <div class="field">
-    <%= form.label :tujuan, class: "form-label" %>
-    <%= form.text_area :tujuan, multiple: true, value: "", class: "form-control" %>
+  <h4>B. Penerima Manfaat</h4>
+  <div class="penerima-manfaat">
+    <div class="field">
+      <%= form.text_field :penerima_manfaat, class: "form-control" %>
+    </div>
   </div>
-  <%= add_new_field 'Tambah Tujuan', form, :tujuan, kak %>
+  <h4>C. Strategi Pencapaian Keluaran</h4>
+  <div class="strategi">
+    <div class="field">
+      <%= form.label :tahapan_pelaksanaan, class: "form-label" %>
+      <%= form.text_area :tahapan_pelaksanaan, class: "form-control" %>
+    </div>
+  </div>
+  <h4>D. Kurun Waktu Pencapaian Keluaran</h4>
+  <div class="strategi">
+    <div class="field">
+      <%= form.label :waktu_dibutuhkan, class: "form-label" %>
+      <%= form.text_area :waktu_dibutuhkan, class: "form-control" %>
+    </div>
+  </div>
   <!-- TODO render form sasaran-->
+  <!-- Gambaran Umum -->
   <div class="actions">
     <%= form.submit %>
   </div>

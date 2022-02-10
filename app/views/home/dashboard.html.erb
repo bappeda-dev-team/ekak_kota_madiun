@@ -31,10 +31,10 @@
               <% @sasaran.each do |s| %>
                 <tr>
                   <th class="text-gray-900" scope="row">
-                    <%= link_to s.sasaran_kinerja.to_s, edit_sasaran_path(s), :data => { "bs-toggle" => "tooltip", "bs-placement"=> "bottom"}, title: "Edit Sasaran" %>
+                    <%= link_to s.sasaran_kinerja.to_s.truncate(50, omission: '...'), sasaran_path(s), :data => { "bs-toggle" => "tooltip", "bs-placement"=> "bottom"}, title: "Buka Sasaran" %>
                   </th>
                   <td class="fw-bolder text-gray-500">
-                    <%= s.indikator_kinerja %>
+                    <%= s.indikator_kinerja.truncate(50, omission: '...') %>
                   </td>
                   <td class="fw-bolder text-gray-500">
                     <%= s.target %>

@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
 
+  resources :dasar_hukums
   devise_for :users, controllers: {
     registrations: 'users/registrations'
   }
   root to: 'home#dashboard'
   resources :users do
     resources :sasarans, :path => "sasaran_kerja"
-    resources :kaks, :path => "acuan_kerja"
   end
   resources :sasarans, shallow: true do
     resources :rincians
@@ -28,6 +28,8 @@ Rails.application.routes.draw do
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  resources :kaks, :path => "acuan_kerja"
+  resources :musrenbangs
   resources :lembagas
   resources :opds
   resources :program_kegiatans
