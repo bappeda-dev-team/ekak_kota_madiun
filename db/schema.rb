@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_10_064526) do
+ActiveRecord::Schema.define(version: 2022_02_10_080923) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,11 +88,16 @@ ActiveRecord::Schema.define(version: 2022_02_10_064526) do
 
   create_table "kaks", force: :cascade do |t|
     t.text "dasar_hukum", default: [], array: true
-    t.text "tujuan", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
     t.bigint "program_kegiatan_id"
+    t.text "gambaran_umum"
+    t.text "penerima_manfaat"
+    t.text "metode_pelaksanaan"
+    t.text "tahapan_pelaksanaan"
+    t.text "waktu_dibutuhkan"
+    t.text "biaya_diperlukan"
     t.index ["program_kegiatan_id"], name: "index_kaks_on_program_kegiatan_id"
     t.index ["user_id"], name: "index_kaks_on_user_id"
   end
