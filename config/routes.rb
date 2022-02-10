@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :dasar_hukums
   devise_for :users, controllers: {
     registrations: 'users/registrations'
   }

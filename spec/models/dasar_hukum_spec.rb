@@ -1,0 +1,61 @@
+# == Schema Information
+#
+# Table name: dasar_hukums
+#
+#  id         :bigint           not null, primary key
+#  judul      :string
+#  peraturan  :text
+#  tahun      :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+require "rails_helper"
+
+RSpec.describe DasarHukum, type: :model do
+  context "validation" do
+    it "invalid jika tidak ada peraturan yang ditulis" do
+      d = DasarHukum.create(
+        peraturan: nil,
+        judul: "Permen 86",
+        tahun: "2017",
+      )
+      expect(d).to_not be_valid
+    end
+
+    it "invalid tanpa judul" do
+      d = DasarHukum.create(
+        peraturan: "Peraturan Menteri Dalam Negeri Nomor 86 Tahun 2017 tentang Tata Cara Perencanaan, Pengendalian dan Evaluasi ..",
+        tahun: "2017",
+        judul: nil,
+      )
+      expect(d).to_not be_valid
+    end
+
+    it "invalid jika tahun diisi selain angka" do
+      d = DasarHukum.create(
+        peraturan: "Peraturan Menteri Dalam Negeri Nomor 86 Tahun 2017 tentang Tata Cara Perencanaan, Pengendalian dan Evaluasi ..",
+        tahun: "ABS",
+        judul: "Terserah",
+      )
+      expect(d).to_not be_valid
+    end
+
+    it "invalid jika tahun lebih dari 4 karakter" do
+      d = DasarHukum.create(
+        peraturan: "Peraturan Menteri Dalam Negeri Nomor 86 Tahun 2017 tentang Tata Cara Perencanaan, Pengendalian dan Evaluasi ..",
+        tahun: "200001",
+        judul: "Terserah",
+      )
+      expect(d).to_not be_valid
+    end
+
+    it "valid with this attribute" do
+      d = DasarHukum.create(
+        peraturan: "Peraturan Menteri Dalam Negeri Nomor 86 Tahun 2017 tentang Tata Cara Perencanaan, Pengendalian dan Evaluasi ..",
+        tahun: "2017",
+        judul: "Terserah",
+      )
+      expect(d).to be_valid
+    end
+  end
+end
