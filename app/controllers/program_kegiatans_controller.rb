@@ -1,6 +1,7 @@
 class ProgramKegiatansController < ApplicationController
-  before_action :set_programKegiatan, only: %i[ show edit update destroy ]
+  before_action :set_programKegiatan, only: %i[ show edit update destroy show_to_kak ]
   before_action :set_dropdown, only: %i[ new edit ]
+  layout false, only: %i[show_to_kak]
 
   def index
     @programKegiatans = ProgramKegiatan.all
@@ -11,6 +12,10 @@ class ProgramKegiatansController < ApplicationController
   end
 
   def show
+  end
+
+  def show_to_kak
+    # render "program_kegiatans/show_to_kak", :layout => false
   end
 
   def edit
@@ -30,7 +35,7 @@ class ProgramKegiatansController < ApplicationController
   def update
     respond_to do |format|
       if @programKegiatan.update(programKegiatan_params)
-        format.html { redirect_to @programKegiatan, notice: "Program Kegiatan diupdate"}
+        format.html { redirect_to @programKegiatan, notice: "Program Kegiatan diupdate" }
       else
         format.html { render :edit, notice: "Program Kegiatan Gagal diupdate" }
       end
@@ -43,7 +48,6 @@ class ProgramKegiatansController < ApplicationController
       format.html { redirect_to program_kegiatans_url, notice: "Program dihapus" }
     end
   end
-
 
   private
 
@@ -58,5 +62,4 @@ class ProgramKegiatansController < ApplicationController
   def programKegiatan_params
     params.require(:program_kegiatan).permit!
   end
-
 end

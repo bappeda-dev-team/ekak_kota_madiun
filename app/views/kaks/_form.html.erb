@@ -10,11 +10,10 @@
     </div>
   <% end %>
   <% program = ProgramKegiatan.all %>
-  <ul>
-    <% program.each do |p| %>
-      <li><%= p.nama_subkegiatan %></li>
-    <% end %>
-  </ul>
+  <%= form.select :program_kegiatan_id, options_for_select(program.collect { | n | [n.nama_subkegiatan, n.id]}), {include_blank: true}, {id: "dropdown", "data-placeholder": "Pilih SubKegiatan"} %>
+  <div id="detail-subkegiatan">
+    
+  </div>
   <h4>A. Latar Belakang</h4>
   <!-- Latar Belakang -->
   <div class="latar-belakang">
@@ -63,6 +62,15 @@
       $(this).before($(this).data('fields').replace(regexp, time))
       return event.preventDefault()
     });
+    let subkegiatan_space = $('#detail-subkegiatan');
+    let value;
+    $('#dropdown').on('select2:select', (e) => {
+      value = e.target.selectedOptions[0].value
+      isian_detail = $.get(`/program_kegiatans_to_kak/${value}`, (data) => {
+        subkegiatan_space.html(data);
+        alert('program kegiatan')
+      })
+    })
 
   });
 </script>
