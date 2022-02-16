@@ -36,7 +36,7 @@
   <div class="field">
     <% options = options_from_collection_for_select(opds, 'id', 'nama_opd') %>
     <%= form.label :opd_id , class: "form-label" %>
-    <%= form.select :opd_id, options, {:prompt => 'Pilih OPD'} , class: "form-select" %>
+    <%= form.select :opd_id, options, {include_blank: true} , {class: "select2-waw", "data-placeholder": "Pilih OPD"} %>
   </div>
   <div class="actions mt-5">
     <%= form.submit "Submit", :class => "btn btn-tertiary w-100"  %>
