@@ -15,7 +15,6 @@ class ProgramKegiatansController < ApplicationController
   end
 
   def show_to_kak
-    # render "program_kegiatans/show_to_kak", :layout => false
   end
 
   def edit

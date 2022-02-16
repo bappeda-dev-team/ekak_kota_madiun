@@ -1,0 +1,71 @@
+<p id="notice"><%= notice %></p>
+<p>
+  <strong>Nama Lembaga:</strong>
+  <%= programKegiatan.opd.lembaga.nama_lembaga %>
+</p>
+<p>
+  <strong>Nama OPD:</strong>
+  <%= programKegiatan.opd.nama_opd %>
+</p>
+<p>
+  <strong>Nama Program:</strong>
+  <%= programKegiatan.nama_program %>
+</p>
+<p>
+  <strong>Nama Kegiatan:</strong>
+  <%= programKegiatan.nama_kegiatan %>
+</p>
+<p>
+  <strong>Nama SubKegiatan:</strong>
+  <%= programKegiatan.nama_subkegiatan %>
+</p>
+<p>
+  <strong>Indikator Kinerja:</strong>
+  <%= programKegiatan.indikator_kinerja %>
+</p>
+<p>
+  <strong>Target:</strong>
+  <%= programKegiatan.target %>
+</p>
+<p>
+  <strong>Satuan:</strong>
+  <%= programKegiatan.satuan %>
+</p>
+<p>
+  <strong>Pagu Anggaran ( dari semua sasaran ) : </strong>
+  Rp. <%= number_with_delimiter(programKegiatan.my_pagu, :delimiter => ".") %>
+</p>
+
+<% if programKegiatan.sasarans.any? %>
+  <hr>
+  <h4><strong>Sasaran Kinerja</strong></h4>
+  <% programKegiatan.sasarans.each.with_index(1) do |sasaran, index| %>
+    <hr>
+    <p>
+    <strong>Sasaran Kinerja Milik : </strong>
+    <%= sasaran.user.nama %>
+    </p>
+    <p>
+    <strong>Sasaran Kinerja <%= index %> :</strong>
+    <%= sasaran.sasaran_kinerja %>
+    </p>
+    <p>
+    <strong>Indikator Kinerja <%= index %></strong>
+    <%= sasaran.sasaran_kinerja %>
+    </p>
+    <p>
+    <strong>Progress Kinerja : </strong>
+    <%= number_to_percentage(sasaran.rincian.progress_total, :precision => 2) %>
+    </p>
+    <p>
+    <strong>Waktu Yang Dibutuhkan : </strong>
+    <%= sasaran.rincian.waktu_total %> Bulan
+    </p>
+    <p>
+    <strong>Total Anggaran : </strong>
+    Rp.  <%= number_with_delimiter(sasaran.rincian.total_anggaran, :delimiter => ".") %>
+    </p>
+  <% end %>
+<% else %>
+  <p>Belum Terhubung Dengan Sasaran Kinerja</p>
+<% end %>

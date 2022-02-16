@@ -1,6 +1,10 @@
-<div class="program-kegiatan">
-  <h3>Program Kegiatan A</h3>
-</div>
+<% unless @kak.program_kegiatan.nil? %>
+  <div class="program-kegiatan">
+    <%= render partial: 'program_kegiatans/show_to_kak', locals: {programKegiatan: @kak.program_kegiatan} %>
+  </div>
+  <% else %>
+    Belum ada Program Kegiatan !!!
+<% end %>
 <h4>A. Latar Belakang</h4>
 <div class="dasar-hukum">
   Dasar Hukum
