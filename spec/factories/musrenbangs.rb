@@ -7,6 +7,11 @@
 #  usulan     :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  sasaran_id :bigint
+#
+# Indexes
+#
+#  index_musrenbangs_on_sasaran_id  (sasaran_id)
 #
 FactoryBot.define do
   factory :musrenbang do

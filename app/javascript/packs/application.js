@@ -41,4 +41,7 @@ $(function () {
   $("#dropdown").select2({
     width: '100%',
   });
+  $('.select2-waw').select2({
+    width: '100%'
+  })
 })

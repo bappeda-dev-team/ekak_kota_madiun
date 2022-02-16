@@ -65,6 +65,6 @@ class MusrenbangsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def musrenbang_params
-    params.require(:musrenbang).permit(:usulan, :tahun)
+    params.require(:musrenbang).permit(:usulan, :tahun, :sasaran_id)
   end
 end

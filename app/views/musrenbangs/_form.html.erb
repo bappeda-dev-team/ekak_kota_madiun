@@ -16,8 +16,15 @@
     <%= form.rich_text_area :usulan %>
   </div>
 
-  <div class="field">
+  <div class="field mt-3">
+    <%= form.label :tahun %>
     <%= form.select(:tahun, (['',2021,2022,2023,2024]), {}, {:id => 'dropdown',data: {"placeholder": "Pilih Tahun",}}) %>
+  </div>
+  
+  <div class="field">
+  <% sasaran = Sasaran.all %>
+    <%= form.label :sasaran %>
+    <%= form.select :sasaran_id, options_for_select(sasaran.collect { | n | [n.sasaran_kinerja, n.id]  }), {include_blank: true}, {class: "select2-waw", "data-placeholder": "Pilih Sasaran"} %>
   </div>
 
   <div class="actions">
