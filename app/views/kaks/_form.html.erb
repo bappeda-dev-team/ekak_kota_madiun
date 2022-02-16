@@ -11,8 +11,8 @@
   <% end %>
   <% program = ProgramKegiatan.all %>
   <%= form.select :program_kegiatan_id, options_for_select(program.collect { | n | [n.nama_subkegiatan, n.id]}), {include_blank: true}, {id: "dropdown", "data-placeholder": "Pilih SubKegiatan"} %>
-  <div id="detail-subkegiatan">
-    
+  <div id="detail-subkegiatan" class="my-3">
+    <small>Detail SubKegiatan</small>
   </div>
   <h4>A. Latar Belakang</h4>
   <!-- Latar Belakang -->
