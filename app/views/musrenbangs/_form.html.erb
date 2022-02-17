@@ -2,7 +2,6 @@
   <% if musrenbang.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(musrenbang.errors.count, "error") %> prohibited this musrenbang from being saved:</h2>
-
       <ul>
         <% musrenbang.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,23 +9,19 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
     <%= form.label :usulan %>
     <%= form.rich_text_area :usulan %>
   </div>
-
   <div class="field mt-3">
     <%= form.label :tahun %>
     <%= form.select(:tahun, (['',2021,2022,2023,2024]), {}, {:id => 'dropdown',data: {"placeholder": "Pilih Tahun",}}) %>
   </div>
-  
   <div class="field">
-  <% sasaran = Sasaran.all %>
-    <%= form.label :sasaran %>
+    <% sasaran = Sasaran.all %>
+    <label for="sasaran_id">Sasaran / Rencana Kinerja ( Output )</label>
     <%= form.select :sasaran_id, options_for_select(sasaran.collect { | n | [n.sasaran_kinerja, n.id]  }), {include_blank: true}, {class: "select2-waw", "data-placeholder": "Pilih Sasaran"} %>
   </div>
-
   <div class="actions">
     <%= form.submit %>
   </div>

@@ -86,7 +86,7 @@
           <% child5.perhitungans.order(:id).each do |hitung| %>
             <% pajak = hitung.total * child5.pajak.potongan %>
             <tr class="rincian-anggaran">
-              <td></td>
+              <td>hapus_anggaran</td>
               <td><%= link_to hitung.deskripsi, edit_anggaran_perhitungan_path(child5, hitung) %></td>
               <td><% hitung.koefisiens.each do |koef|%>
                 |  <%= koef.volume %> <%= koef.satuan_volume %>  |

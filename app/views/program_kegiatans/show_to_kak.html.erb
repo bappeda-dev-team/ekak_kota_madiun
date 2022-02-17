@@ -35,37 +35,23 @@
   <strong>Pagu Anggaran ( dari semua sasaran ) : </strong>
   Rp. <%= number_with_delimiter(@programKegiatan.my_pagu, :delimiter => ".") %>
 </p>
-
-<% if @programKegiatan.sasarans.any? %>
-  <hr>
-  <h4><strong>Sasaran Kinerja</strong></h4>
-  <% @programKegiatan.sasarans.each.with_index(1) do |sasaran, index| %>
-    <hr>
-    <p>
-    <strong>Sasaran Kinerja Milik : </strong>
-    <%= sasaran.user.nama %>
-    </p>
-    <p>
-    <strong>Sasaran Kinerja <%= index %> :</strong>
-    <%= sasaran.sasaran_kinerja %>
-    </p>
-    <p>
-    <strong>Indikator Kinerja <%= index %></strong>
-    <%= sasaran.sasaran_kinerja %>
-    </p>
-    <p>
-    <strong>Progress Kinerja : </strong>
-    <%= number_to_percentage(sasaran.rincian.progress_total, :precision => 2) %>
-    </p>
-    <p>
-    <strong>Waktu Yang Dibutuhkan : </strong>
-    <%= sasaran.rincian.waktu_total %> Bulan
-    </p>
-    <p>
-    <strong>Total Anggaran : </strong>
-    Rp.  <%= number_with_delimiter(sasaran.rincian.total_anggaran, :delimiter => ".") %>
-    </p>
-  <% end %>
-<% else %>
-  <p>Belum Terhubung Dengan Sasaran Kinerja</p>
-<% end %>
+<hr>
+<p>Rincian Anggaran</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th>no</th>
+      <th>Sasaran Kinerja</th>
+      <th>Indikator</th>
+      <th>Pagu</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Sasaran Kinerja Dengan Pagu 9999</td>
+      <td>Indikator Contoh 1</td>
+      <td>Rp. 9999999</td>
+    </tr>
+  </tbody>
+</table>
