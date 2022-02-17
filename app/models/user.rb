@@ -5,6 +5,7 @@
 #  id                     :bigint           not null, primary key
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
+#  kode_opd               :string
 #  nama                   :string
 #  nik                    :string
 #  remember_created_at    :datetime
@@ -12,12 +13,15 @@
 #  reset_password_token   :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
-#  opd_id                 :integer
 #
 # Indexes
 #
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (kode_opd => opds.kode_opd)
 #
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
@@ -26,7 +30,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   # validates :nama, presence: true
   # validates :nik, presence: true
-  belongs_to :opd
+  belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_opd'
   has_many :pks
   has_many :kaks
   has_many :sasarans, dependent: :destroy
@@ -40,7 +44,7 @@ class User < ApplicationRecord
   end
 
   def target_renaksi_per_month
-    self.sasarans.map{ |s| s.rincian.target_bulan.inject{ | bln, val | bln.merge(val) { | k, old_v, new_v | old_v + new_v } } }      
+    self.sasarans.map{ |s| s.rincian.target_bulan.inject{ | bln, val | bln.merge(val) { | k, old_v, new_v | old_v + new_v } } }
   end
 
   def sum_target_renaksi_per_month
@@ -51,7 +55,7 @@ class User < ApplicationRecord
   end
 
   def realisasi_renaksi_per_month
-    self.sasarans.map{ |s| s.rincian.realisasi_bulan.inject{ | bln, val | bln.merge(val) { | k, old_v, new_v | old_v + new_v } } }      
+    self.sasarans.map{ |s| s.rincian.realisasi_bulan.inject{ | bln, val | bln.merge(val) { | k, old_v, new_v | old_v + new_v } } }
   end
 
   def sum_realisasi_renaksi_per_month
