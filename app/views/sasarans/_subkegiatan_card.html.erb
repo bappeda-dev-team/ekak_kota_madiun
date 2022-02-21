@@ -8,6 +8,16 @@
       </div>
     </div>
   </div>
+   <div class="card-body">
+    <p>Tambah SubKegiatan</p>
+    <%= form_with(model: sasaran) do |f| %>
+      <%= f.select(:program_kegiatan_id, (['']), {}, {:id => 'dropdown', data: {'ajax--url': "/program_kegiatans.json", "ajax--cache": "true", "placeholder": "Pilih SubKegiatan"}} )%>
+      <div class="actions">
+        <%= f.submit %>
+      </div>
+    <% end %>
+  </div>
+  <br>
   <% unless sasaran.program_kegiatan.nil? %>
     <div class="card-body">
       <table>
@@ -29,13 +39,4 @@
     </div>
     <hr>
   <% end %>
-  <div class="card-body">
-    <p>Tambah SubKegiatan</p>
-    <%= form_with(model: sasaran) do |f| %>
-      <%= f.select(:program_kegiatan_id, (['']), {}, {:id => 'dropdown', data: {'ajax--url': "/program_kegiatans.json", "ajax--cache": "true", "placeholder": "Pilih SubKegiatan"}} )%>
-      <div class="actions">
-        <%= f.submit %>
-      </div>
-    <% end %>
-  </div>
 </div>

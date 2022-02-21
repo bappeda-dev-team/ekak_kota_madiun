@@ -12,6 +12,15 @@
           </span>
         </button>
       </div>
+      <br>
+      <div>
+      Musrenbang Terhubung: 
+      <ol>
+        <% sasaran.musrenbangs.each do |musren| %>
+          <li><%= musren.usulan %></li>
+        <% end %>
+      </ol>
+      </div>
       <div class="col text-end">
         <%= link_to 'Tambah Tahapan', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'},  class: "btn btn-sm btn-info"  %>
       </div>
