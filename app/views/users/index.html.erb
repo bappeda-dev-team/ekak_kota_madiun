@@ -1,7 +1,10 @@
 <p id="notice"><%= notice %></p>
-
 <h1>Users</h1>
-<table class="filtered_user">
+
+<div id="users">
+<input class="search" placeholder="Search" />
+
+<table>
   <thead>
     <tr>
       <th>Nama</th>
@@ -12,11 +15,11 @@
     </tr>
   </thead>
 
-  <tbody>
+  <tbody class="list">
     <% @users.each do |user| %>
       <tr>
-        <td><%= user.nama %></td>
-        <td><%= user.nik %></td>
+        <td class="name"><%= user.nama %></td>
+        <td class="nip"><%= user.nik %></td>
         <td><%= user.roles.pluck(:name) %></td>
         <td><%= user.email %></td>
         <td><%= link_to 'Show', user %></td>
@@ -27,6 +30,6 @@
   </tbody>
 </table>
 
-<br>
+</div>
 
 <%= link_to "New User", new_user_path %>

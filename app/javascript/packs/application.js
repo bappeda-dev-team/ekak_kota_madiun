@@ -3,45 +3,49 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
-import Rails from "@rails/ujs"
-import Turbolinks from "turbolinks"
-import * as ActiveStorage from "@rails/activestorage"
-import "channels"
-import "./sweetalert"
+import Rails from "@rails/ujs";
+import Turbolinks from "turbolinks";
+import * as ActiveStorage from "@rails/activestorage";
+import "channels";
+import "./sweetalert";
 
-import jQuery from 'jquery'
-import Swal from 'sweetalert2'
-import '@popperjs/core'
-import Chartist from "chartist"
-import SmoothScroll from "smooth-scroll"
-import '../volt/volt.js'
-import "@fortawesome/fontawesome-free/css/all"
-import 'select2'
-import 'select2/dist/css/select2.css'
+import jQuery from "jquery";
+import Swal from "sweetalert2";
+import "@popperjs/core";
+import Chartist from "chartist";
+import SmoothScroll from "smooth-scroll";
+import "../volt/volt.js";
+import "@fortawesome/fontawesome-free/css/all";
+import "select2";
+import "select2/dist/css/select2.css";
+import List from "list.js";
 
-Rails.start()
-Turbolinks.start()
-ActiveStorage.start()
+Rails.start();
+Turbolinks.start();
+ActiveStorage.start();
 
-require("trix")
-require("@rails/actiontext")
+require("trix");
+require("@rails/actiontext");
 
-window.$ = window.jQuery = jQuery
-window.bootstrap = require('bootstrap')
-window.Chartist = Chartist
-window.SmoothScroll = SmoothScroll
+window.$ = window.jQuery = jQuery;
+window.bootstrap = require("bootstrap");
+window.Chartist = Chartist;
+window.SmoothScroll = SmoothScroll;
+window.List = require("list.js");
 
-
-const tooltip = require("chartist-plugin-tooltips")
-
-
+const tooltip = require("chartist-plugin-tooltips");
 
 $(function () {
-  console.log('javascript application is on')
-  $("#dropdown").select2({
-    width: '100%',
-  });
-  $('.select2-waw').select2({
-    width: '100%'
-  })
-})
+	console.log("javascript application is on");
+	$("#dropdown").select2({
+		width: "100%",
+	});
+	$(".select2-waw").select2({
+		width: "100%",
+	});
+	// list js options
+	let searchOptions = {
+		valueNames: ["name", "nip"],
+	};
+	let userList = new List("users", searchOptions);
+});
