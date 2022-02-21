@@ -16,7 +16,7 @@
 class Musrenbang < ApplicationRecord
   validates :usulan, presence: true
   validates :tahun, presence: true, numericality: { only_integer: true }
-  has_rich_text :usulan
+  # has_rich_text :usulan
 
   belongs_to :sasaran, optional: true
 end
