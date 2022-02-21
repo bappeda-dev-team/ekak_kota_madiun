@@ -14,7 +14,7 @@
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Usulan Musrenbang </h2>
+            <h2 class="fs-5 fw-bold mb-0">My Usulan Musrenbang</h2>
           </div>
           <% if current_user.has_role? :admin %>
             <div class="col text-end">
@@ -25,6 +25,46 @@
       </div>
     </div>
     <div class="card border-0 shadow">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-3">Pilih Usulan </h2>
+          </div>
+          <div class="pilih-usulan">
+            <% musren_all = Musrenbang.all %>
+            <% musrenbang = Musrenbang.new %>
+            <%= form_with(model: musrenbang) do |form| %>
+              <% if musrenbang.errors.any? %>
+                <div id="error_explanation">
+                  <h2><%= pluralize(musrenbang.errors.count, "error") %> prohibited this musrenbang from being saved:</h2>
+                  <ul>
+                    <% musrenbang.errors.each do |error| %>
+                      <li><%= error.full_message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+              <div class="field">
+                <%= form.hidden_field :nip_asn, value: current_user.nik   %>
+                <%= form.label :usulan %>
+                <%= form.select :usulan, options_for_select(musren_all.collect { |n| [n.usulan, n.usulan]}), {include_blank: true}, {class: "select2-waw", "data-placeholder": "Pilih Usulan"} %>
+              </div>
+              <div class="field mt-3">
+                <%= form.label :tahun %>
+                <%= form.select(:tahun, (['',2021,2022,2023,2024]), {}, {:id => 'dropdown',data: {"placeholder": "Pilih Tahun",}}) %>
+              </div>
+              <div class="field">
+                <% sasaran = Sasaran.all %>
+                <label for="sasaran_id">Sasaran / Rencana Kinerja ( Output )</label>
+                <%= form.select :sasaran_id, options_for_select(sasaran.collect { | n | [n.sasaran_kinerja, n.id]  }), {include_blank: true}, {class: "select2-waw", "data-placeholder": "Pilih Sasaran"} %>
+              </div>
+              <div class="actions">
+                <%= form.submit %>
+              </div>
+            <% end %>
+          </div>
+          </div>
+      </div>
       <div class="table-responsive">
         <table class="table align-items-center">
           <thead class="thead-light">
@@ -40,8 +80,8 @@
             <% @musrenbangs.each.with_index(1) do |musrenbang, i| %>
               <tr>
                 <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                <td class="fw-bolder text-gray-500" style="max-width: 25%;"><%= link_to musrenbang.usulan.truncate(35, separator: '...'), edit_musrenbang_path(musrenbang) %></td>
-                <td class="fw-bolder text-gray-500"><%= musrenbang.alamat.truncate(35) %></td>
+                <td class="fw-bolder text-gray-500"><%= link_to musrenbang.usulan, edit_musrenbang_path(musrenbang) %></td>
+                <td class="fw-bolder text-gray-500"><%= musrenbang.alamat %></td>
                 <td class="fw-bolder text-gray-500"><%= musrenbang.sasaran.nil? ? ' -- ' : musrenbang.sasaran.sasaran_kinerja %></td>
                 <td class="fw-bolder text-gray-500 text-center">
                   <%= link_to musrenbang, class: "m-3" do %>

@@ -26,7 +26,11 @@
                 </div>
                 <div class="d-flex align-items-center">
                   <div class="bg-secondary dot rounded-circle me-1"></div>
-                  <small><%= current_user.opd.nama_opd %></small>
+                  <small><%= current_user.opd.nil? ? '---' : current_user.opd.nama_opd %></small>
+                </div>
+                <div class="d-flex align-items-center">
+                  <div class="bg-info dot rounded-circle me-1"></div>
+                  <small><%= current_user.roles.pluck :name %></small>
                 </div>
               </div>
               <div class="col text-end">

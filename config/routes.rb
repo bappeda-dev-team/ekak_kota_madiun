@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :asn_musrenbangs, :path => "asn_usulan"
   resources :dasar_hukums
   devise_for :users, controllers: {
             registrations: "users/registrations",
@@ -38,7 +39,7 @@ Rails.application.routes.draw do
   resources :latar_belakangs, :path => "dasar_aksi"
 
   get "/program_kegiatans_to_kak/:id", to: "program_kegiatans#show_to_kak"
-
+  get "/asn_musrenbangs/:nip", to: "musrenbangs#asn_musrenbang"
   # get "/program_kegiatans", to: "program_kegiatans#index"
   # get "/program_kegiatans/new", to: "program_kegiatans#new"
   # get "/program_kegiatan/:id", to: "program_kegiatans#show"

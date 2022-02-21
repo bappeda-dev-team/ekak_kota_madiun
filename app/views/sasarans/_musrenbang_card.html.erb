@@ -1,0 +1,27 @@
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="row align-items-center">
+        <div class="col">
+          <h5>Musrenbang Terhubung </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Usulan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+          <% sasaran.musrenbangs.each.with_index(1) do |sas, i| %>
+            <td><%= i %></td>
+            <td><%= sas.usulan %></td>
+          <% end %>
+          </tr>
+        </tbody>
+      </table>
+</div>

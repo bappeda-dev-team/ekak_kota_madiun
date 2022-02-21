@@ -6,6 +6,11 @@ class MusrenbangsController < ApplicationController
     @musrenbangs = Musrenbang.all
   end
 
+  def asn_musrenbang
+    nip_asn = params[:nip]
+    @musrenbangs = Musrenbang.where(nip_asn: nip_asn)
+  end
+
   # GET /musrenbangs/1 or /musrenbangs/1.json
   def show
   end
@@ -65,6 +70,6 @@ class MusrenbangsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def musrenbang_params
-    params.require(:musrenbang).permit(:usulan, :tahun, :sasaran_id)
+    params.require(:musrenbang).permit(:usulan, :tahun, :sasaran_id, :nip_asn, )
   end
 end

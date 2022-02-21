@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_21_093506) do
+ActiveRecord::Schema.define(version: 2022_02_21_205058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,16 @@ ActiveRecord::Schema.define(version: 2022_02_21_093506) do
     t.index ["tahapan_id"], name: "index_anggarans_on_tahapan_id"
   end
 
+  create_table "asn_musrenbangs", force: :cascade do |t|
+    t.string "usulan"
+    t.string "alamat"
+    t.string "asn_nip"
+    t.string "tahun"
+    t.string "opd"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "dasar_hukums", force: :cascade do |t|
     t.text "peraturan"
     t.string "judul"
@@ -140,6 +150,9 @@ ActiveRecord::Schema.define(version: 2022_02_21_093506) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "sasaran_id"
+    t.string "opd"
+    t.string "nip_asn"
+    t.text "alamat"
     t.index ["sasaran_id"], name: "index_musrenbangs_on_sasaran_id"
   end
 

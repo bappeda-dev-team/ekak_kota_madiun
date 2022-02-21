@@ -10,6 +10,11 @@
     <li class="breadcrumb-item active" aria-current="page">Rencana Aksi</li>
   </ol>
 </nav>
+<% if @sasaran.musrenbangs.any? %>
+  <%= render 'musrenbang_card', sasaran: @sasaran %>
+<% else %>
+  <p>Belum Terhubung Dengan Musrenbang</p>
+<% end %>
 <% unless @sasaran.rincian %>
   <p>
     <strong>Harap isi Rincian Sasaran</strong>

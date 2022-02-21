@@ -3,6 +3,9 @@
 # Table name: musrenbangs
 #
 #  id         :bigint           not null, primary key
+#  alamat     :text
+#  nip_asn    :string
+#  opd        :string
 #  tahun      :string
 #  usulan     :text
 #  created_at :datetime         not null

@@ -26,7 +26,8 @@
         <% end %>
       </li>
       <li class="nav-item <%= request.path.match(/\bmusrenbang/) ? "active" : "" %>" >
-        <%= link_to(musrenbangs_path, class: "nav-link d-flex justify-content-between") do %>
+      <% path_musrenbang = (current_user.has_role? :admin) ? musrenbangs_path : "/asn_musrenbangs/#{current_user.nik}"  %>
+        <%= link_to(path_musrenbang, class: "nav-link d-flex justify-content-between") do %>
           <span>
             <span class="sidebar-icon">
               <i class="fas fa-atlas icon icon-xs me-2"></i>
