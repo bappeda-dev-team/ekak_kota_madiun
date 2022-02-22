@@ -16,11 +16,9 @@
           <div class="col">
             <h2 class="fs-5 fw-bold mb-0">Usulan Musrenbang </h2>
           </div>
-          <% if current_user.has_role? :admin %>
             <div class="col text-end">
               <%= link_to "Tambah Usulan", new_musrenbang_path, class: "btn btn-sm btn-info" %>
             </div>
-          <% end %>
         </div>
       </div>
     </div>
