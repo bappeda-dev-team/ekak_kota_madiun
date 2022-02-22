@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :rekenings
   resources :pokpirs
   resources :inovasis
   resources :mandatoris

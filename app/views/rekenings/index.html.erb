@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Rekenings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Kode rekening</th>
+      <th>Jenis rekening</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rekenings.each do |rekening| %>
+      <tr>
+        <td><%= rekening.kode_rekening %></td>
+        <td><%= rekening.jenis_rekening %></td>
+        <td><%= link_to 'Show', rekening %></td>
+        <td><%= link_to 'Edit', edit_rekening_path(rekening) %></td>
+        <td><%= link_to 'Destroy', rekening, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Rekening', new_rekening_path %>
