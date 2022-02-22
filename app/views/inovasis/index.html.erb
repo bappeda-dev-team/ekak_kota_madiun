@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Inovasis</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Usulan</th>
+      <th>Manfaat</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @inovasis.each do |inovasi| %>
+      <tr>
+        <td><%= inovasi.usulan %></td>
+        <td><%= inovasi.manfaat %></td>
+        <td><%= link_to 'Show', inovasi %></td>
+        <td><%= link_to 'Edit', edit_inovasi_path(inovasi) %></td>
+        <td><%= link_to 'Destroy', inovasi, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Inovasi', new_inovasi_path %>

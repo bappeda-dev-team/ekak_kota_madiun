@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Usulan:</strong>
+  <%= @pokpir.usulan %>
+</p>
+
+<p>
+  <strong>Alamat:</strong>
+  <%= @pokpir.alamat %>
+</p>
+
+<%= link_to 'Edit', edit_pokpir_path(@pokpir) %> |
+<%= link_to 'Back', pokpirs_path %>

@@ -39,7 +39,7 @@
               <tr>
                 <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
                 <td class="fw-bolder text-gray-500" style="max-width: 25%;"><%= link_to musrenbang.usulan.truncate(35, separator: '...'), edit_musrenbang_path(musrenbang) %></td>
-                <td class="fw-bolder text-gray-500"><%= musrenbang.alamat.truncate(35) %></td>
+                <td class="fw-bolder text-gray-500"><%= musrenbang.alamat %></td>
                 <td class="fw-bolder text-gray-500"><%= musrenbang.sasaran.nil? ? ' -- ' : musrenbang.sasaran.sasaran_kinerja %></td>
                 <td class="fw-bolder text-gray-500 text-center">
                   <%= link_to musrenbang, class: "m-3" do %>

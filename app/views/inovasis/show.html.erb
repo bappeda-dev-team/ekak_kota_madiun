@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Usulan:</strong>
+  <%= @inovasi.usulan %>
+</p>
+
+<p>
+  <strong>Manfaat:</strong>
+  <%= @inovasi.manfaat %>
+</p>
+
+<%= link_to 'Edit', edit_inovasi_path(@inovasi) %> |
+<%= link_to 'Back', inovasis_path %>

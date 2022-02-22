@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Usulan:</strong>
+  <%= @mandatori.usulan %>
+</p>
+
+<p>
+  <strong>Peraturan terkait:</strong>
+  <%= @mandatori.peraturan_terkait %>
+</p>
+
+<%= link_to 'Edit', edit_mandatori_path(@mandatori) %> |
+<%= link_to 'Back', mandatoris_path %>

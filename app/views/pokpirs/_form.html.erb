@@ -1,0 +1,27 @@
+<%= form_with(model: pokpir) do |form| %>
+  <% if pokpir.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(pokpir.errors.count, "error") %> prohibited this pokpir from being saved:</h2>
+
+      <ul>
+        <% pokpir.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :usulan %>
+    <%= form.text_field :usulan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :alamat %>
+    <%= form.text_field :alamat %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

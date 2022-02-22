@@ -1,0 +1,27 @@
+<%= form_with(model: inovasi) do |form| %>
+  <% if inovasi.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(inovasi.errors.count, "error") %> prohibited this inovasi from being saved:</h2>
+
+      <ul>
+        <% inovasi.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :usulan %>
+    <%= form.text_field :usulan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :manfaat %>
+    <%= form.text_field :manfaat %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

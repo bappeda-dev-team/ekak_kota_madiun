@@ -10,11 +10,6 @@
     <li class="breadcrumb-item active" aria-current="page">Rencana Aksi</li>
   </ol>
 </nav>
-<% if @sasaran.musrenbangs.any? %>
-  <%= render 'musrenbang_card', sasaran: @sasaran %>
-<% else %>
-  <p>Belum Terhubung Dengan Musrenbang</p>
-<% end %>
 <% unless @sasaran.rincian %>
   <p>
     <strong>Harap isi Rincian Sasaran</strong>
@@ -26,6 +21,12 @@
     <%= link_to 'Tambah Renaksi', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'} %>
   <% else %>
     <%= render 'rincians/renaksi', sasaran: @sasaran %>
+  <% end %>
+  <!-- SECTION - musrenbang -->
+  <% if @sasaran.musrenbangs.any? %>
+    <%= render 'musrenbang_card', sasaran: @sasaran %>
+  <% else %>
+    <p>Belum Terhubung Dengan Musrenbang</p>
   <% end %>
   <!-- SECTION - render anggaran here -->
     <%= render 'subkegiatan_card', sasaran: @sasaran %>

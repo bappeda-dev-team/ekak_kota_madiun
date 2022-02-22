@@ -1,0 +1,2 @@
+module MandatorisHelper
+end

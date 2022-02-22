@@ -5,7 +5,6 @@
 #  id                     :bigint           not null, primary key
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
-#  id_struktur            :integer
 #  kode_opd               :string
 #  nama                   :string
 #  nik                    :string

@@ -1,0 +1,27 @@
+<%= form_with(model: mandatori) do |form| %>
+  <% if mandatori.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(mandatori.errors.count, "error") %> prohibited this mandatori from being saved:</h2>
+
+      <ul>
+        <% mandatori.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :usulan %>
+    <%= form.text_field :usulan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :peraturan_terkait %>
+    <%= form.text_field :peraturan_terkait %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

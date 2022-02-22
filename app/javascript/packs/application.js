@@ -31,21 +31,15 @@ window.$ = window.jQuery = jQuery;
 window.bootstrap = require("bootstrap");
 window.Chartist = Chartist;
 window.SmoothScroll = SmoothScroll;
-window.List = require("list.js");
 
 const tooltip = require("chartist-plugin-tooltips");
 
 $(function () {
-	console.log("javascript application is on");
-	$("#dropdown").select2({
-		width: "100%",
-	});
-	$(".select2-waw").select2({
-		width: "100%",
-	});
-	// list js options
-	let searchOptions = {
-		valueNames: ["name", "nip"],
-	};
-	let userList = new List("users", searchOptions);
+  console.log("javascript application is on");
+  $("#dropdown").select2({
+    width: "100%",
+  });
+  $(".select2-waw").select2({
+    width: "100%",
+  });
 });

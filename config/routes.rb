@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :pokpirs
+  resources :inovasis
+  resources :mandatoris
   resources :asn_musrenbangs, :path => "asn_usulan"
   resources :dasar_hukums
   devise_for :users, controllers: {

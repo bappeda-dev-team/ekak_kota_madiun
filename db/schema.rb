@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_21_205058) do
+ActiveRecord::Schema.define(version: 2022_02_22_005700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,20 +78,17 @@ ActiveRecord::Schema.define(version: 2022_02_21_205058) do
     t.index ["tahapan_id"], name: "index_anggarans_on_tahapan_id"
   end
 
-  create_table "asn_musrenbangs", force: :cascade do |t|
-    t.string "usulan"
-    t.string "alamat"
-    t.string "asn_nip"
-    t.string "tahun"
-    t.string "opd"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "dasar_hukums", force: :cascade do |t|
     t.text "peraturan"
     t.string "judul"
     t.string "tahun"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "inovasis", force: :cascade do |t|
+    t.string "usulan"
+    t.string "manfaat"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -140,6 +137,13 @@ ActiveRecord::Schema.define(version: 2022_02_21_205058) do
   create_table "lembagas", force: :cascade do |t|
     t.string "nama_lembaga"
     t.string "tahun"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "mandatoris", force: :cascade do |t|
+    t.string "usulan"
+    t.string "peraturan_terkait"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -211,6 +215,13 @@ ActiveRecord::Schema.define(version: 2022_02_21_205058) do
     t.index ["user_id"], name: "index_pks_on_user_id"
   end
 
+  create_table "pokpirs", force: :cascade do |t|
+    t.string "usulan"
+    t.string "alamat"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "program_kegiatans", force: :cascade do |t|
     t.string "nama_program"
     t.string "nama_kegiatan"
@@ -259,6 +270,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_205058) do
     t.bigint "user_id"
     t.bigint "program_kegiatan_id"
     t.integer "anggaran"
+    t.string "id_struktur"
+    t.integer "tahun"
     t.index ["program_kegiatan_id"], name: "index_sasarans_on_program_kegiatan_id"
     t.index ["user_id"], name: "index_sasarans_on_user_id"
   end
@@ -297,7 +310,6 @@ ActiveRecord::Schema.define(version: 2022_02_21_205058) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.string "kode_opd"
-    t.integer "id_struktur"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
