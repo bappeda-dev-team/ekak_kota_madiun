@@ -47,11 +47,13 @@
     </tr>
   </thead>
   <tbody>
+   <% @programKegiatan.sasarans.each.with_index(1) do |sasaran, i| %>
     <tr>
-      <td>1</td>
-      <td>Sasaran Kinerja Dengan Pagu 9999</td>
-      <td>Indikator Contoh 1</td>
-      <td>Rp. 9999999</td>
+      <td><%= i %></td>
+      <td><%= sasaran.sasaran_kinerja.truncate(35, separator: '...') %></td>
+      <td><%= sasaran.indikator_kinerja %></td>
+      <td><%= sasaran.rincian.total_anggaran %></td>
     </tr>
+  <% end %>
   </tbody>
 </table>

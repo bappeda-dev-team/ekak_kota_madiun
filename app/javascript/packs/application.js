@@ -42,4 +42,12 @@ $(function () {
   $(".select2-waw").select2({
     width: "100%",
   });
+  $(".select2-sasaran").select2({
+    width: "100%",
+    language: {
+      noResults: function () {
+        return 'Sasaran Tidak Ditemukan';
+      },
+    },
+  })
 });

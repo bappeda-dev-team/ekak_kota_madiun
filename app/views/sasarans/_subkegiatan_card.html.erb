@@ -20,19 +20,19 @@
   <br>
   <% unless sasaran.program_kegiatan.nil? %>
     <div class="card-body">
-      <table>
+      <table class="table">
         <thead>
           <tr>
             <th>No</th>
             <th>SubKegiatan</th>
-            <th>Pagu</th>
+            <th>Indikator</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>1</td>
             <td><%= sasaran.program_kegiatan.nama_subkegiatan %></td>
-            <td>random pagu : <%= rand(5000...6000) %></td>
+            <td><%= sasaran.program_kegiatan.indikator_kinerja %></td>
           </tr>
         </tbody>
       </table>
