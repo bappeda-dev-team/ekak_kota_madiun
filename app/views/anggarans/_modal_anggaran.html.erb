@@ -1,4 +1,5 @@
-<div class="modal fade " id="modal-anggaran" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<%= link_to 'Tambah Anggaran', '#', remote: true, data: {'bs-toggle': 'modal', 'bs-target': "#modal-anggaran-#{index_tahapan}"}  %>
+<div class="modal fade " id="<%= "modal-anggaran-#{index_tahapan}" %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -6,21 +7,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" id="modal-anggaran-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-        <button type="button" class="btn btn-primary" id="modal-anggaran-submit-btn">Submit</button>
+        <%= render 'anggarans/modal_form', rincian: rincian, tahapan: tahapan, anggaran: tahapan.anggarans.build %>
       </div>
     </div>
   </div>
 </div>
-<script>
-  $(function(){
-    // $('#form-renaksi-body').html("<%= j render "tahapan_form", tahapan: @sasaran.rincian.tahapans.build, rincian: @sasaran.rincian %>")
-
-    // $('#form-renaksi-submit-btn').on('click', () => {
-    //   $('#new-renaksi').submit();
-    // });
-  });
-</script>
