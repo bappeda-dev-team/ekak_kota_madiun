@@ -80,6 +80,16 @@ ActiveRecord::Schema.define(version: 2022_02_23_041123) do
     t.index ["tahapan_id"], name: "index_anggarans_on_tahapan_id"
   end
 
+  create_table "asn_musrenbangs", force: :cascade do |t|
+    t.string "usulan"
+    t.string "alamat"
+    t.string "asn_nip"
+    t.string "tahun"
+    t.string "opd"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "dasar_hukums", force: :cascade do |t|
     t.text "peraturan"
     t.string "judul"
@@ -279,8 +289,7 @@ ActiveRecord::Schema.define(version: 2022_02_23_041123) do
     t.bigint "user_id"
     t.bigint "program_kegiatan_id"
     t.integer "anggaran"
-    t.string "id_struktur"
-    t.integer "tahun"
+    t.string "nip_asn"
     t.index ["program_kegiatan_id"], name: "index_sasarans_on_program_kegiatan_id"
     t.index ["user_id"], name: "index_sasarans_on_user_id"
   end
@@ -319,6 +328,7 @@ ActiveRecord::Schema.define(version: 2022_02_23_041123) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.string "kode_opd"
+    t.integer "id_struktur"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
