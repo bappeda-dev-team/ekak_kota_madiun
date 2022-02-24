@@ -6,6 +6,8 @@
 #  jumlah     :integer
 #  kode_rek   :string
 #  level      :integer          default(0)
+#  set_input  :string           default("0")
+#  tahun      :integer
 #  uraian     :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_22_073321) do
+ActiveRecord::Schema.define(version: 2022_02_23_041123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,8 @@ ActiveRecord::Schema.define(version: 2022_02_22_073321) do
     t.integer "level", default: 0
     t.bigint "parent_id"
     t.bigint "pajak_id"
+    t.string "set_input", default: "0"
+    t.integer "tahun"
     t.index ["pajak_id"], name: "index_anggarans_on_pajak_id"
     t.index ["parent_id"], name: "index_anggarans_on_parent_id"
     t.index ["tahapan_id"], name: "index_anggarans_on_tahapan_id"
