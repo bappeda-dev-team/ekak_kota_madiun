@@ -4,20 +4,25 @@
   <div class="card-header">
     <div class="row align-items-center">
       <div class="col">
-        <span class="fs-5 fw-bold mb-0">Rencana Aksi dari Sasaran Kinerja </span>
-        <button type="button" class="btn btn-primary">
-          <%= sasaran.sasaran_kinerja %>
-          <span class="badge bg-secondary">
-            <%=  sasaran.rincian.progress_total.nan? ? 0 :  number_to_percentage( sasaran.rincian.progress_total, precision: 2) %>
-          </span>
-        </button>
+        <span class="fs-5 fw-bold mb-0">1. Sasaran Kinerja </span>
+        <ul class="list mb-0">
+          <li><%= sasaran.sasaran_kinerja %></li>
+          <li><%= sasaran.indikator_kinerja %></li>
+          <li><%= sasaran.target %> <%= sasaran.satuan %></li>
+          <li><%= sasaran.rincian.lokasi_pelaksanaan %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row align-items-center mb-3">
+      <div class="col">
+        <span class="fs-5 fw-bold mb-0">2. Rencana Aksi dan Anggaran</span>
       </div>
       <div class="col text-end">
         <%= link_to 'Tambah Tahapan', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'},  class: "btn btn-sm btn-info"  %>
       </div>
     </div>
-  </div>
-  <div class="card-body">
     <div class="table-responsive">
       <table class="table table-sm align-items-center">
         <caption class="waktu-renaksi">
@@ -78,7 +83,7 @@
               <td class="fw-bolder text-gray-500 border"><%= tahapan.jumlah_realisasi or '-' %></td>
               <% unless tahapan.anggarans.any? %>
                 <!--TODO: Add modal for anggaran -->
-                <td class="fw-bolder text-gray-500 border"><%= link_to 'Tambah Anggaran', new_rincian_tahapan_anggaran_path(sasaran.rincian, tahapan)  %></td>
+                <td class="fw-bolder text-gray-500 border"><%= link_to 'Tambah Anggaran', '#', remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#modal-anggaran'}  %></td>
               <% else %>
                 <% total_anggaran = tahapan.anggarans.find_by(level: 0) %>
                 <td class="fw-bolder text-gray-500 border"><%= link_to total_anggaran.uraian, rincian_tahapan_anggaran_path(sasaran.rincian, tahapan, tahapan.anggarans.first.id) %></td>

@@ -18,13 +18,14 @@
   </p>
 <% else %>
   <% unless @sasaran.rincian.tahapans.any? %>
-    <%= link_to 'Tambah Renaksi', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'} %>
+    <%= render 'rencana_aksi_card' %>
   <% else %>
     <%= render 'rincians/renaksi', sasaran: @sasaran %>
   <% end %>
   <!-- SECTION - render anggaran here -->
-    <%= render 'subkegiatan_card', sasaran: @sasaran %>
+  <%= render 'subkegiatan_card', sasaran: @sasaran %>
   <!-- !!SECTION - end anggaran-->
 <% end %>
 <!-- SECTION - Modal-->
 <%= render 'modal' %>
+<%= render 'anggarans/modal_anggaran' %>
