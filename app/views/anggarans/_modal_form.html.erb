@@ -27,12 +27,10 @@
   <% end %>
   <div class="field">
     <%= form.label :kode_rek , {class: "form-label"}%>
-    <%= parent_rek || '' %>
-    <%= form.text_field :kode_rek, {class: "form-control"}  %>
-  </div>
-  <div class="field">
-    <%= form.label :uraian, {class: "form-label"} %>
-    <%= form.text_area :uraian , {class: "form-control"} %>
+    <br>
+    <!-- TODO Buat agar bisa ajax search based -->
+    <% rekening = Rekening.where(set_input: 1) %>
+     <%= form.select(:kode_rek, options_for_select(rekening.collect { | n | ["#{n.kode_rekening} - #{n.jenis_rekening}", n.id]  }), {include_blank: true}, {:class => 'select2-anggaran', id: "anggaran-#{index_tahapan}",data: {"placeholder": "Pilih Kode Rekening"}} )%>
   </div>
   <div class="field">
     <% pajaks = Pajak.all %>

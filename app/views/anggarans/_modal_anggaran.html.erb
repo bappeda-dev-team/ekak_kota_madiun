@@ -1,5 +1,5 @@
 <%= link_to 'Tambah Anggaran', '#', remote: true, data: {'bs-toggle': 'modal', 'bs-target': "#modal-anggaran-#{index_tahapan}"}  %>
-<div class="modal fade " id="<%= "modal-anggaran-#{index_tahapan}" %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade " id="<%= "modal-anggaran-#{index_tahapan}" %>" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -7,8 +7,21 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" id="modal-anggaran-body">
-        <%= render 'anggarans/modal_form', rincian: rincian, tahapan: tahapan, anggaran: tahapan.anggarans.build %>
+        <%= render 'anggarans/modal_form', rincian: rincian, tahapan: tahapan, anggaran: tahapan.anggarans.build, index_tahapan: index_tahapan %>
       </div>
     </div>
   </div>
 </div>
+<script>
+  $(function() {
+    $(".select2-anggaran").select2({
+    width: "100%",
+    dropdownParent: $("#<%= "modal-anggaran-#{index_tahapan}" %>"),
+    language: {
+      noResults: function () {
+        return 'Sasaran Tidak Ditemukan';
+      },
+    },
+  })
+  })
+</script>

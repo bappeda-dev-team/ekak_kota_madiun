@@ -2,7 +2,6 @@
   <% if anggaran.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(anggaran.errors.count, "error") %> prohibited this anggaran from being saved:</h2>
-
       <ul>
         <% anggaran.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -14,32 +13,23 @@
     <div class="field">
       <%= form.hidden_field :level,:value => @level.to_i %>
     </div>
-
     <div class="field">
       <%= form.hidden_field :parent_id,:value => @parent.to_i %>
     </div>
     <% parent_rek = Anggaran.find(@parent).kode_rek %>
-    <% else %>
-      <div class="field">
+  <% else %>
+    <div class="field">
       <%= form.hidden_field :level %>
     </div>
-
     <div class="field">
       <%= form.hidden_field :parent_id %>
     </div>
   <% end %>
-
   <div class="field">
-    <%= form.label :kode_rek , {class: "form-label"}%>
+    <%= form.label :kode_rek, "Anggaran" , {class: "form-label"}%>
     <%= parent_rek || '' %>
-    <%= form.text_field :kode_rek, {class: "form-control"}  %>
+    <%= form.select :kode_rek, Rekening.where(set_input: 1).collect {|rek| ["#{rek.kode_rekening} - #{rek.jenis_rekening}", rek.id] } ,{include_blank: true},{class: "form-control select2-waw", data: {"placeholder": "Pilih Anggaran"}}  %>
   </div>
-
-  <div class="field">
-    <%= form.label :uraian, {class: "form-label"} %>
-    <%= form.text_area :uraian , {class: "form-control"} %>
-  </div>
-
   <div class="field">
     <% pajaks = Pajak.all %>
     <% options = options_from_collection_for_select(pajaks, :id, :simple_pajak, anggaran.pajak_id) %>
@@ -47,7 +37,6 @@
     <%# form.select :pajak_id, options, {} , :disabled => form.object.persisted? %>
     <%= form.select :pajak_id, options, {}, { :class => "form-select"} %>
   </div>
-
   <div class="actions">
     <%= form.submit %>
   </div>

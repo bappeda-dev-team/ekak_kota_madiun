@@ -62,7 +62,8 @@
         </tr>
         <% child3.childs.order(:id).each do |child4| %>
         <tr>
-          <td><%= @anggaran.kode_rek + child.kode_rek + child2.kode_rek + child3.kode_rek + child4.kode_rek %></td>
+          <td><%= @anggaran.kode_rek + child.kode_rek + child2.kode_rek + child3.kode_rek + child4.kode_rek %>
+          level : <%= child4.level  %></td>
           <td colspan="5"><%= link_to child4.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child4) %>
           <%= link_to '[ + ] 5', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-anggaran', 'level': child4.level + 1 , 'parent': child4.id}  %>
           </td>

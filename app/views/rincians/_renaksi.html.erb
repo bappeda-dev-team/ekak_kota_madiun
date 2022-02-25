@@ -85,7 +85,7 @@
               <% unless tahapan.anggarans.any? %>
                 <!--TODO: Add modal for anggaran -->
                 <td class="fw-bolder text-gray-500 border">
-                  <%= render 'anggarans/modal_anggaran', index_tahapan: i, rincian: sasaran.rincian, tahapan: tahapan  %>
+                  <%= link_to 'Tambah Anggaran', new_rincian_tahapan_anggaran_path(sasaran.rincian, tahapan)  %>
                 </td>
               <% else %>
                 <% total_anggaran = tahapan.anggarans.find_by(level: 0) %>
