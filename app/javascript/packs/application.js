@@ -38,12 +38,15 @@ $(function () {
   console.log("javascript application is on");
   $("#dropdown").select2({
     width: "100%",
+    theme: "bootstrap-5",
   });
   $(".select2-waw").select2({
     width: "100%",
+    theme: "bootstrap-5",
   });
   $(".select2-sasaran").select2({
     width: "100%",
+    theme: "bootstrap-5",
     language: {
       noResults: function () {
         return 'Sasaran Tidak Ditemukan';

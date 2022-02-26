@@ -1,4 +1,4 @@
-<%= form_with(model: [@rincian, @tahapan, anggaran], local: true) do |form| %>
+<%= form_with(model: [rincian, tahapan, anggaran], local: true) do |form| %>
   <% if anggaran.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(anggaran.errors.count, "error") %> prohibited this anggaran from being saved:</h2>
@@ -26,9 +26,11 @@
     </div>
   <% end %>
   <div class="field">
-    <%= form.label :kode_rek, "Anggaran" , {class: "form-label"}%>
-    <%= parent_rek || '' %>
-    <%= form.select :kode_rek, Rekening.where(set_input: 1).collect {|rek| ["#{rek.kode_rekening} - #{rek.jenis_rekening}", rek.id] } ,{include_blank: true},{class: "form-control select2-waw", data: {"placeholder": "Pilih Anggaran"}}  %>
+    <%= form.label :kode_rek , {class: "form-label"}%>
+    <br>
+    <!-- TODO Buat agar bisa ajax search based -->
+    <% rekening = Rekening.where(set_input: 1) %>
+     <%= form.select(:kode_rek, options_for_select(rekening.collect { | n | ["#{n.kode_rekening} - #{n.jenis_rekening}", n.id]  }), {include_blank: true}, {:class => 'select2-anggaran', id: "anggaran-#{index_tahapan}",data: {"placeholder": "Pilih Kode Rekening"}} )%>
   </div>
   <div class="field">
     <% pajaks = Pajak.all %>

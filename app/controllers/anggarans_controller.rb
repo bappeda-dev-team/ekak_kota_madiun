@@ -28,7 +28,12 @@ class AnggaransController < ApplicationController
     sleep 1
     # @anggaran = Anggaran.new(anggaran_params)
     @anggaran = @tahapan.anggarans.build(anggaran_params)
-    
+    rekening = Rekening.find(anggaran_params[:kode_rek])
+    uraian = rekening.jenis_rekening
+    kode_rekening = rekening.kode_rekening
+    @anggaran.kode_rek = kode_rekening
+    @anggaran.uraian = uraian
+    @anggaran.level = 4
     respond_to do |format|
       if @anggaran.save
         format.js
@@ -64,18 +69,19 @@ class AnggaransController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_tahapan_rincian
-      @rincian = Rincian.find(params[:rincian_id])
-      @tahapan = @rincian.tahapans.find(params[:tahapan_id])
-    end
 
-    def set_anggaran
-      @anggaran = Anggaran.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_tahapan_rincian
+    @rincian = Rincian.find(params[:rincian_id])
+    @tahapan = @rincian.tahapans.find(params[:tahapan_id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def anggaran_params
-      params.require(:anggaran).permit(:kode_rek, :uraian, :jumlah, :tahapan_id, :parent_id, :level, :pajak_id)
-    end
+  def set_anggaran
+    @anggaran = Anggaran.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def anggaran_params
+    params.require(:anggaran).permit(:kode_rek, :uraian, :jumlah, :tahapan_id, :parent_id, :level, :pajak_id)
+  end
 end
