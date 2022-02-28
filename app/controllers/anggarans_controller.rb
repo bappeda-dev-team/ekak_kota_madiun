@@ -31,13 +31,12 @@ class AnggaransController < ApplicationController
     rekening = Rekening.find(anggaran_params[:kode_rek])
     uraian = rekening.jenis_rekening
     kode_rekening = rekening.kode_rekening
-    @anggaran.kode_rek = kode_rekening
     @anggaran.uraian = uraian
     @anggaran.level = helpers.anggaran_level kode_rekening
     respond_to do |format|
       if @anggaran.save
         format.js
-        format.html { redirect_to sasaran_path(@rincian.sasaran), notice: "Anggaran was successfully created." }
+        format.html { redirect_to sasaran_tahapan_anggaran_path(@sasaran, @tahapan, @anggaran), notice: "Anggaran was successfully created." }
         format.json { render :show, status: :created, location: @anggaran }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -48,9 +47,15 @@ class AnggaransController < ApplicationController
 
   # PATCH/PUT /anggarans/1 or /anggarans/1.json
   def update
+    rekening = Rekening.find(anggaran_params[:kode_rek])
+    uraian = rekening.jenis_rekening
+    kode_rekening = rekening.kode_rekening
+    @anggaran.kode_rek = kode_rekening
+    @anggaran.uraian = uraian
+    @anggaran.level = helpers.anggaran_level kode_rekening
     respond_to do |format|
       if @anggaran.update(anggaran_params)
-        format.html { redirect_to rincian_tahapan_anggaran_path(@rincian, @tahapan, @anggaran), notice: "Anggaran was successfully updated." }
+        format.html { redirect_to sasaran_tahapan_anggaran_path(@sasaran, @tahapan, @anggaran), notice: "Anggaran was successfully updated." }
         format.json { render :show, status: :ok, location: @anggaran }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -63,7 +68,7 @@ class AnggaransController < ApplicationController
   def destroy
     @anggaran.destroy
     respond_to do |format|
-      format.html { redirect_to sasaran_path(@rincian.sasaran), notice: "Anggaran was successfully destroyed." }
+      format.html { redirect_to sasaran_path(@sasaran), notice: "Anggaran was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -72,8 +77,8 @@ class AnggaransController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_tahapan_rincian
-    @rincian = Rincian.find(params[:rincian_id])
-    @tahapan = @rincian.tahapans.find(params[:tahapan_id])
+    @sasaran = Sasaran.find(params[:sasaran_id])
+    @tahapan = @sasaran.tahapans.find(params[:tahapan_id])
   end
 
   def set_anggaran

@@ -35,7 +35,7 @@
             <td><%= sasaran.program_kegiatan.nama_subkegiatan %></td>
             <td><%= sasaran.program_kegiatan.indikator_kinerja %></td>
             <td>
-              Rp.  <%= number_with_delimiter(sasaran.rincian.total_anggaran, :delimiter => ".") %>
+              Rp.  <%= number_with_delimiter(sasaran.total_anggaran, :delimiter => ".") %>
             </td>
           </tr>
         </tbody>

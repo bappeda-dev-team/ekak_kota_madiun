@@ -17,7 +17,7 @@
 </div>
 <script>
   $(function(){
-    $("<%= "#form-aksi-target-#{tahapan.id}-#{bulan}-body" %>").html("<%= j render "aksis/target_form", rincian: rincian, tahapan: tahapan, aksi: aksi , bulan: bulan %>")
+    $("<%= "#form-aksi-target-#{tahapan.id}-#{bulan}-body" %>").html("<%= j render "aksis/target_form", sasaran: sasaran, tahapan: tahapan, aksi: aksi , bulan: bulan %>")
 
     $("<%= "#form-aksi-target-#{tahapan.id}-#{bulan}-submit-btn" %>").on('click', () => {
       $("<%= "#new-aksi-#{tahapan.id}-#{bulan}" %>").submit();

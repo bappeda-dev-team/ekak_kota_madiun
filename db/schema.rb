@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_25_022813) do
+ActiveRecord::Schema.define(version: 2022_02_28_153139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -303,7 +303,6 @@ ActiveRecord::Schema.define(version: 2022_02_25_022813) do
   end
 
   create_table "tahapans", force: :cascade do |t|
-    t.bigint "rincian_id", null: false
     t.string "tahapan_kerja"
     t.integer "target"
     t.integer "realisasi"
@@ -315,7 +314,8 @@ ActiveRecord::Schema.define(version: 2022_02_25_022813) do
     t.integer "progress"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["rincian_id"], name: "index_tahapans_on_rincian_id"
+    t.bigint "sasaran_id"
+    t.index ["sasaran_id"], name: "index_tahapans_on_sasaran_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -349,6 +349,5 @@ ActiveRecord::Schema.define(version: 2022_02_25_022813) do
   add_foreign_key "pagus", "sasarans"
   add_foreign_key "pks", "users"
   add_foreign_key "rincians", "sasarans"
-  add_foreign_key "tahapans", "rincians"
   add_foreign_key "users", "opds", column: "kode_opd", primary_key: "kode_opd"
 end

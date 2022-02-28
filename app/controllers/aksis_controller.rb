@@ -1,5 +1,5 @@
 class AksisController < ApplicationController
-  before_action :set_tahapan_tincian
+  before_action :set_sasaran
   before_action :set_aksi, only: %i[ show edit update destroy ]
 
   # GET /aksis or /aksis.json
@@ -29,7 +29,7 @@ class AksisController < ApplicationController
 
     respond_to do |format|
       if @aksi.save
-        format.html { redirect_to sasaran_path(@rincian.sasaran), notice: "Aksi was successfully created." }
+        format.html { redirect_to sasaran_path(@sasaran), notice: "Aksi was successfully created." }
         format.json { render :show, status: :created, location: @aksi }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -42,7 +42,7 @@ class AksisController < ApplicationController
   def update
     respond_to do |format|
       if @aksi.update(aksi_params)
-        format.html { redirect_to sasaran_path(@rincian.sasaran), notice: "Aksi was successfully updated." }
+        format.html { redirect_to sasaran_path(@sasaran), notice: "Aksi was successfully updated." }
         format.json { render :show, status: :ok, location: @aksi }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -55,16 +55,16 @@ class AksisController < ApplicationController
   def destroy
     @aksi.destroy
     respond_to do |format|
-      format.html { redirect_to sasaran_path(@rincian.sasaran), notice: "Aksi was successfully destroyed." }
+      format.html { redirect_to sasaran_path(@sasaran), notice: "Aksi was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_tahapan_tincian
-      @rincian = Rincian.find(params[:rincian_id])
-      @tahapan = @rincian.tahapans.find(params[:tahapan_id])
+    def set_sasaran
+      @sasaran = Sasaran.find(params[:sasaran_id])
+      @tahapan = @sasaran.tahapans.find(params[:tahapan_id])
     end
 
     def set_aksi

@@ -18,7 +18,7 @@
 
 <script>
 $(function(){
-  $('#form-renaksi-body').html("<%= j render "tahapan_form", tahapan: @sasaran.rincian.tahapans.build, rincian: @sasaran.rincian %>")
+  $('#form-renaksi-body').html("<%= j render "tahapan_form", tahapan: @sasaran.tahapans.build, sasaran: @sasaran %>")
 
   $('#form-renaksi-submit-btn').on('click', () => {
     $('#new-renaksi').submit();

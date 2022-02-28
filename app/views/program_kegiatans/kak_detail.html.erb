@@ -1,0 +1,18 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>no</th>
+      <th>Sasaran Kinerja</th>
+      <th>Penerima Manfaat</th>
+    </tr>
+  </thead>
+  <tbody>
+   <% @programKegiatan.sasarans.each.with_index(1) do |sasaran, i| %>
+    <tr>
+      <td><%= i %></td>
+      <td><%= sasaran.sasaran_kinerja.truncate(35, separator: '...') %></td>
+      <td><%= sasaran.penerima_manfaat %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

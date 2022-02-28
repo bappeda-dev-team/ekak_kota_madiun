@@ -18,9 +18,9 @@
         <td><%= anggaran.kode_rek %></td>
         <td><%= anggaran.uraian %></td>
         <td><%= anggaran.jumlah %></td>
-        <td><%= link_to 'Show', rincian_tahapan_anggaran_path(@rincian, @tahapan, anggaran) %></td>
-        <td><%= link_to 'Edit', edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, anggaran) %></td>
-        <td><%= link_to 'Destroy', rincian_tahapan_anggaran_path(@rincian, @tahapan, anggaran), method: :delete, data: { confirm: "Menghapus Anggaran '#{anggaran.uraian}' ?" } %></td>
+        <td><%= link_to 'Show', sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran) %></td>
+        <td><%= link_to 'Edit', edit_sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran) %></td>
+        <td><%= link_to 'Destroy', sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran), method: :delete, data: { confirm: "Menghapus Anggaran '#{anggaran.uraian}' ?" } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +28,4 @@
 
 <br>
 
-<%= link_to 'New Anggaran', new_rincian_tahapan_anggaran_path(@rincian, @tahapan) %>
+<%= link_to 'New Anggaran', new_sasaran_tahapan_anggaran_path(@sasaran, @tahapan) %>

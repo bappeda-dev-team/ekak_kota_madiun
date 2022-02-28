@@ -12,16 +12,20 @@ Rails.application.routes.draw do
   resources :users do
     resources :sasarans, :path => "sasaran_kerja"
   end
-  resources :sasarans, shallow: true do
+  resources :sasarans do
     resources :rincians
-  end
-
-  resources :rincians do
     resources :tahapans do
       resources :aksis, :path => "rencana_aksi"
       resources :anggarans
     end
   end
+
+  # resources :rincians do
+  #   resources :tahapans do
+  #     resources :aksis, :path => "rencana_aksi"
+  #     resources :anggarans
+  #   end
+  # end
 
   resources :anggarans do
     resources :perhitungans
@@ -43,6 +47,7 @@ Rails.application.routes.draw do
   resources :latar_belakangs, :path => "dasar_aksi"
 
   get "/program_kegiatans_to_kak/:id", to: "program_kegiatans#show_to_kak"
+  get "/program_kegiatans_to_kak_detail/:id", to: "program_kegiatans#kak_detail"
   get "/asn_musrenbangs/:nip", to: "musrenbangs#asn_musrenbang"
   # get "/program_kegiatans", to: "program_kegiatans#index"
   # get "/program_kegiatans/new", to: "program_kegiatans#new"

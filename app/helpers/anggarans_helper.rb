@@ -16,4 +16,14 @@ module AnggaransHelper
     end
     return level
   end
+
+  def rekening_anggaran(id_rekening)
+    rekening = Rekening.find(id_rekening)
+    if rekening
+      rekening.kode_rekening
+    else
+      id_rekening
+    end
+
+  end
 end

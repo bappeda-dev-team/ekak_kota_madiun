@@ -1,7 +1,7 @@
 class ProgramKegiatansController < ApplicationController
-  before_action :set_programKegiatan, only: %i[ show edit update destroy show_to_kak ]
+  before_action :set_programKegiatan, only: %i[ show edit update destroy show_to_kak kak_detail ]
   before_action :set_dropdown, only: %i[ new edit ]
-  layout false, only: %i[show_to_kak]
+  layout false, only: %i[show_to_kak kak_detail]
 
   def index
     @programKegiatans = ProgramKegiatan.all
@@ -15,6 +15,9 @@ class ProgramKegiatansController < ApplicationController
   end
 
   def show_to_kak
+  end
+
+  def kak_detail
   end
 
   def edit

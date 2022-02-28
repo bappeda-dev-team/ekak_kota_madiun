@@ -1,4 +1,4 @@
-<%= form_with(model: [rincian, tahapan, aksi ], remote: true, :html => {:id => "new-aksi-#{tahapan.id}-#{bulan}"} ) do |form| %>
+<%= form_with(model: [sasaran, tahapan, aksi ], remote: true, :html => {:id => "new-aksi-#{tahapan.id}-#{bulan}"} ) do |form| %>
   <% if aksi.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(tahapan.errors.count, "error") %> prohibited this tahapan from being saved:</h2>
@@ -17,7 +17,7 @@
        <%= tahapan.tahapan_kerja %>
        </small>
        </div>
-    
+
       <div class="mb-3">
         <%= form.label :target , {class: "form-label"} %>
         <%= form.number_field :target , {class: "form-control "} %>

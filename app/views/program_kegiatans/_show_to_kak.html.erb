@@ -55,15 +55,15 @@
     </p>
     <p>
     <strong>Progress Kinerja : </strong>
-    <%= number_to_percentage(sasaran.rincian.progress_total, :precision => 2) %>
+    <%= number_to_percentage(sasaran.progress_total, :precision => 2) %>
     </p>
     <p>
     <strong>Waktu Yang Dibutuhkan : </strong>
-    <%= sasaran.rincian.waktu_total %> Bulan
+    <%= sasaran.waktu_total %> Bulan
     </p>
     <p>
     <strong>Total Anggaran : </strong>
-    Rp.  <%= number_with_delimiter(sasaran.rincian.total_anggaran, :delimiter => ".") %>
+    Rp.  <%= number_with_delimiter(sasaran.total_anggaran, :delimiter => ".") %>
     </p>
   <% end %>
 <% else %>

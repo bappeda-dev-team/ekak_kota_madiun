@@ -1,9 +1,9 @@
 <% upper_parent = Anggaran.find_by(id: @parent)  %>
 <h1>Anggaran <%= @level || "Induk" %> </h1>
 
-<%= render 'form', anggaran: @anggaran, 
+<%= render 'form', anggaran: @anggaran,
     parent:  @parent,
     level: @level %>
 
-<%= link_to 'Kembali', sasaran_path(@tahapan.rincian.sasaran) %>
+<%= link_to 'Kembali', sasaran_path(@tahapan.sasaran) %>
 

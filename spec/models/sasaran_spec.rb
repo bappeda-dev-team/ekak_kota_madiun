@@ -28,6 +28,21 @@ RSpec.describe Sasaran, type: :model do
   let(:opd) { Opd.create!(nama_opd: "Dinas Komunikasi dan Informatika", kode_opd: "2.16.2.20.2.21.04.000", lembaga_id: lembaga.id) }
   let(:user) { User.create!(nama: "NOOR AFLAH", nik: "197609072003121007", opd_id: opd.id, email: "197609072003121007@madiunkota.go.id", password: "123456") }
 
+  def sasaran_base
+    Sasaran.create(
+        sasaran_kinerja: "Meningkatnya kualitas dokumen perencanaan, penganggaran, pengendalian dan evaluasi perangkat daerah",
+        indikator_kinerja: "presentase penyusunan dokumen perencanaan, penganggaran, pengendalian dan evaluasi PD tepat waktu",
+        target: 100 ,
+        satuan: "%",
+        user_id: user.id,
+      )
+  end
+  def tahapan_base
+    Tahapan.create(
+      tahapan_kerja: "Tahapan Testing",
+      keterangan: "Keterangan buatan"
+    )
+  end
   context "punya pak aflah" do
     let(:s_kerja) { "Meningkatnya kualitas dokumen perencanaan, penganggaran, pengendalian dan evaluasi perangkat daerah" }
     let(:i_kerja) { "presentase penyusunan dokumen perencanaan, penganggaran, pengendalian dan evaluasi PD tepat waktu" }
@@ -122,6 +137,13 @@ RSpec.describe Sasaran, type: :model do
     end
   end
 
-  # pending "tells the sasaran is duplicated"
-
+  context "Sasaran#Tahapans" do
+    it "can add tahapans to sasaran" do
+      sasaran = FactoryBot.build(:sasaran)
+      tahapan = tahapan_base
+      sasaran.tahapan = tahapan
+      sasaran.save
+      expect(sasaran).to be_valid
+    end
+  end
 end

@@ -34,19 +34,3 @@
   <strong>Lokasi pelaksanaan:</strong>
   <%= rincian.lokasi_pelaksanaan %>
 </p>
-
-<br>
-
-<% if rincian.tahapans.any? %>
-  
-<div class="itungan">
-  <p class="waktu-renaksi">
-    <strong>Waktu yang dibutuhkan :</strong>
-    <%= rincian.waktu_total == 0 ? "-" : rincian.waktu_total %> bulan
-  </p>
-  <p class="progress-renaksi">
-    <strong>Progress Pelaksanaan :</strong>
-    <%= rincian.progress_total.nan? ? 0 : number_to_percentage(rincian.progress_total, precision: 2) %>
-  </p>
-</div>
-<% end %>

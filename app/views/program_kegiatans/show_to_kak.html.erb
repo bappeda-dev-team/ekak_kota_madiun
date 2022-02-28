@@ -52,7 +52,7 @@
       <td><%= i %></td>
       <td><%= sasaran.sasaran_kinerja.truncate(35, separator: '...') %></td>
       <td><%= sasaran.indikator_kinerja %></td>
-      <td><%= sasaran.rincian.total_anggaran %></td>
+      <td>Rp. <%= number_with_delimiter(sasaran.total_anggaran, :delimiter => ".") %></td>
     </tr>
   <% end %>
   </tbody>

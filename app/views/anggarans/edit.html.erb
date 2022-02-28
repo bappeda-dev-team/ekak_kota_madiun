@@ -3,4 +3,4 @@
 <%= render 'form', anggaran: @anggaran %>
 <% awal = @anggaran.grand_parent || @anggaran %>
 <%= link_to 'Show', @anggaran %> |
-<%= link_to 'Back', rincian_tahapan_anggaran_path(@rincian, @tahapan, awal) %>
+<%= link_to 'Back', sasaran_tahapan_anggaran_path(@sasaran, @tahapan, awal) %>

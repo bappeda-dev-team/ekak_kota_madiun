@@ -10,14 +10,28 @@
     <li class="breadcrumb-item active" aria-current="page">Rencana Aksi</li>
   </ol>
 </nav>
-<% unless @sasaran.rincian %>
-  <p>
-    <strong>Harap isi Rincian Sasaran</strong>
-    <hr>
-    <%= render 'rincians/form', rincian: @sasaran.build_rincian %>
-  </p>
-<% else %>
-  <% unless @sasaran.rincian.tahapans.any? %>
+    <div class="card border-2 shadow mb-3">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="row align-items-center">
+            <div class="col">
+              <h5>Rincian Sasaran</h5>
+            </div>
+          <% unless @sasaran.rincian %>
+            <div>
+              <%= link_to "Tambah Rincian Sasaran", edit_user_sasaran_path(current_user, @sasaran), class: "btn btn-warning " %>
+            </div>
+          <% else %>
+            <div>
+              <%= link_to "Lihat Rincian", edit_user_sasaran_path(current_user, @sasaran), class: "btn btn-info text-white"  %>
+            </div>
+          <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <% unless @sasaran.tahapans.any? %>
     <%= render 'rencana_aksi_card' %>
   <% else %>
     <%= render 'rincians/renaksi', sasaran: @sasaran %>
@@ -31,6 +45,5 @@
   <!-- SECTION - render anggaran here -->
   <%= render 'subkegiatan_card', sasaran: @sasaran %>
   <!-- !!SECTION - end anggaran-->
-<% end %>
 <!-- SECTION - Modal-->
 <%= render 'modal' %>

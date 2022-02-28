@@ -14,15 +14,11 @@
 #  waktu            :integer
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
-#  rincian_id       :bigint           not null
+#  sasaran_id       :bigint
 #
 # Indexes
 #
-#  index_tahapans_on_rincian_id  (rincian_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (rincian_id => rincians.id)
+#  index_tahapans_on_sasaran_id  (sasaran_id)
 #
 require 'rails_helper'
 

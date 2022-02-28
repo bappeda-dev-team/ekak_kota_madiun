@@ -1,5 +1,5 @@
-<%= form_with(model: [rincian, tahapan, anggaran], local: false, :html => {:id => "new-anggaran"}) do |form| %>
- 
+<%= form_with(model: [sasaran, tahapan, anggaran], local: false, :html => {:id => "new-anggaran"}) do |form| %>
+
  <div class="card">
    <div class="card-body">
     <div class="field">
@@ -12,7 +12,7 @@
 
     <div class="field">
       <%= form.label :kode_rek, {class: "form-label"} %>
-      
+
       <%= form.text_field :kode_rek, {class: "form-control"} %>
     </div>
 

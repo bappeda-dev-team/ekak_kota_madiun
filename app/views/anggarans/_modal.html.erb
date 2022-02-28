@@ -29,8 +29,8 @@ $(function(){
     $('#anggaran_parent_id').val(parent)
   });
 
-  $('#form-anggaran-body').html("<%= j (render 'new', rincian: @rincian, tahapan: @tahapan, anggaran: Anggaran.new) %>")
-  
+  $('#form-anggaran-body').html("<%= j (render 'new', sasaran: @sasaran, tahapan: @tahapan, anggaran: Anggaran.new) %>")
+
   $('#form-anggaran-submit-btn').on('click', function() {
     $('#new-anggaran').find("input[type=submit]").click();
   })
@@ -38,6 +38,6 @@ $(function(){
   $('#new-anggaran').on('ajax:success', (event) => {
     location.reload();
   });
-  
+
 });
 </script>

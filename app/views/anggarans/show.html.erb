@@ -1,9 +1,9 @@
 <p id="notice"><%= notice %></p>
-<h2>Sasaran : <%= @rincian.sasaran.sasaran_kinerja %></h2>
+<h2>Sasaran : <%= @sasaran.sasaran_kinerja %></h2>
 <h2>Tahapan : <%= @tahapan.tahapan_kerja %></h2>
 <p>
   <strong>Kode rek:</strong>
-  <%= @anggaran.kode_rek %>.1
+  <%= rekening_anggaran @anggaran.kode_rek %>
   <strong><%= @anggaran.uraian %></strong>
 </p>
 
@@ -29,12 +29,13 @@
     </thead>
     <tbody>
       <tr class="level-0">
-        <td><%= @anggaran.kode_rek %></td>
+        <td><%= rekening_anggaran @anggaran.kode_rek %></td>
         <td colspan="5"><%= @anggaran.uraian %>
         <% if @anggaran.level == 4 %>
           <%= render :partial => 'modal_perhitungans', :locals => { :anggaran => @anggaran } %>
           <%= link_to '[ + ]', '#',remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan-#{@anggaran.id}"}, class: "btn btn-sm btn-info text-secondary animate-up-2"   %>
-         <% else %>
+          <%= link_to "Edit Anggaran", edit_sasaran_tahapan_anggaran_path(@sasaran, @tahapan, @anggaran)  %>
+        <% else %>
           <%= link_to '[ + ] 1', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-anggaran', 'level': 1, 'parent': @anggaran.id } %>
         <% end %>
         </td>
@@ -137,4 +138,4 @@
 <!-- !SECTION - End Table Anggaran -->
 <%= render 'modal' %>
 <hr>
-<%= link_to 'Kembali', sasaran_path(@tahapan.rincian.sasaran) %>
+<%= link_to 'Kembali', sasaran_path(@tahapan.sasaran) %>
