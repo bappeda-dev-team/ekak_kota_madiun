@@ -54,8 +54,9 @@ class PerhitungansController < ApplicationController
   # DELETE /perhitungans/1 or /perhitungans/1.json
   def destroy
     @perhitungan.destroy
+    awal = @anggaran.grand_parent || @anggaran
     respond_to do |format|
-      format.html { redirect_to anggaran_url, notice: "Perhitungan was successfully destroyed." }
+      format.html { redirect_to rincian_tahapan_anggaran_path(@anggaran.tahapan.rincian, @anggaran.tahapan, awal), notice: "Perhitungan was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -72,7 +73,7 @@ class PerhitungansController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def perhitungan_params
-      params.require(:perhitungan).permit(:satuan, 
+      params.require(:perhitungan).permit(:satuan,
         :harga, :anggaran_id, :deskripsi,
         koefisiens_attributes: %i[ id volume satuan_volume ]
       )

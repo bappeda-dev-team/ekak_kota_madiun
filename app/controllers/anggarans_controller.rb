@@ -33,7 +33,7 @@ class AnggaransController < ApplicationController
     kode_rekening = rekening.kode_rekening
     @anggaran.kode_rek = kode_rekening
     @anggaran.uraian = uraian
-    @anggaran.level = 4
+    @anggaran.level = helpers.anggaran_level kode_rekening
     respond_to do |format|
       if @anggaran.save
         format.js

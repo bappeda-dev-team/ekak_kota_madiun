@@ -30,12 +30,33 @@
     <tbody>
       <tr class="level-0">
         <td><%= @anggaran.kode_rek %></td>
-        <td colspan="5"><%= link_to @anggaran.uraian, 
-        edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, @anggaran) %>
+        <td colspan="5"><%= @anggaran.uraian %>
+        <% if @anggaran.level == 4 %>
+          <%= render :partial => 'modal_perhitungans', :locals => { :anggaran => @anggaran } %>
+          <%= link_to '[ + ]', '#',remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan-#{@anggaran.id}"}, class: "btn btn-sm btn-info text-secondary animate-up-2"   %>
+         <% else %>
           <%= link_to '[ + ] 1', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-anggaran', 'level': 1, 'parent': @anggaran.id } %>
+        <% end %>
         </td>
         <td class="uang"><%= number_with_delimiter(@anggaran.jumlah, :delimiter => '.') %></td>
       </tr>
+      <% if @anggaran.perhitungans.any? %>
+          <% @anggaran.perhitungans.order(:id).each do |hitung| %>
+            <% pajak = hitung.total * @anggaran.pajak.potongan %>
+            <tr class="rincian-anggaran">
+              <td><%= link_to "Hapus Anggaran", anggaran_perhitungan_path(@anggaran, hitung), method: :delete, data: { confirm_swal: "Hapus Anggaran #{hitung.deskripsi} ?" }, class: "btn btn-danger" %></td>
+              <td><%= link_to hitung.deskripsi, edit_anggaran_perhitungan_path(@anggaran, hitung) %></td>
+              <td><% hitung.koefisiens.each do |koef|%>
+                |  <%= koef.volume %> <%= koef.satuan_volume %>  |
+                <% end %>
+              </td>
+              <td><%= hitung.satuan %></td>
+              <td><%= number_with_delimiter(hitung.harga, :delimiter => '.') %></td>
+              <td><%= (@anggaran.pajak.potongan * 100).to_i %> %</td>
+              <td class="uang"><%= number_with_delimiter((hitung.total).to_i, :delimiter => '.') %></td>
+            </tr>
+          <% end %>
+      <% end %>
       <% @anggaran.childs.order(:id).each do |child| %>
         <tr class="level-1">
           <td><%= @anggaran.kode_rek + child.kode_rek %></td>
@@ -77,7 +98,7 @@
         <%= render :partial => 'modal_perhitungans', :locals => { :anggaran => child5 } %>
         <tr>
           <td><%= child5.kode_rek %></td>
-          <td colspan="6">[ - ] 
+          <td colspan="6">[ - ]
           <%= link_to child5.uraian, edit_rincian_tahapan_anggaran_path(@rincian, @tahapan, child5) %>
           <%= link_to '[ + ]', '#',remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan-#{child5.id}"}   %>
           </td>
