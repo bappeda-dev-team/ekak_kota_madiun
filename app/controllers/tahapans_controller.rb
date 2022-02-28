@@ -55,23 +55,24 @@ class TahapansController < ApplicationController
   def destroy
     @tahapan.destroy
     respond_to do |format|
-      format.html { redirect_to sasaran_path(@sasaran.sasaran), notice: "Tahapan was successfully destroyed." }
+      format.html { redirect_to sasaran_path(@sasaran), notice: "Tahapan was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def get_sasaran
-      @sasaran = Sasaran.find(params[:sasaran_id])
-    end
 
-    def set_tahapan
-      @tahapan = @sasaran.tahapans.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def get_sasaran
+    @sasaran = Sasaran.find(params[:sasaran_id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def tahapan_params
-      params.require(:tahapan).permit(:sasaran_id, :tahapan_kerja, :target, :realisasi, :bulan, :jumlah_target, :jumlah_realisasi, :keterangan, :waktu, :progress)
-    end
+  def set_tahapan
+    @tahapan = @sasaran.tahapans.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def tahapan_params
+    params.require(:tahapan).permit(:sasaran_id, :tahapan_kerja, :target, :realisasi, :bulan, :jumlah_target, :jumlah_realisasi, :keterangan, :waktu, :progress)
+  end
 end

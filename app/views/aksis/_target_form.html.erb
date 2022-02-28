@@ -25,6 +25,10 @@
       <div class="mb-3">
         <%= form.hidden_field :bulan , within: 1..12, :value => bulan, readonly: true %>
       </div>
+      
+      <div class="action">
+        <%= form.submit "Tambah Target" %>
+      </div>
     </div>
   </div>
 <% end %>

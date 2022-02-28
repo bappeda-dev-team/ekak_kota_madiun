@@ -8,19 +8,11 @@
       <div class="modal-body" id=<%= "form-aksi-realisasi-#{tahapan.id}-#{bulan}-body" %> >
         ...
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-        <button type="button" class="btn btn-primary" id=<%= "form-aksi-realisasi-#{tahapan.id}-#{bulan}-submit-btn" %> >Submit</button>
-      </div>
     </div>
   </div>
 </div>
 <script>
   $(function(){
     $("<%= "#form-aksi-realisasi-#{tahapan.id}-#{bulan}-body" %>").html("<%= j render "aksis/realisasi_form", sasaran: sasaran, tahapan: tahapan, aksi: aksi , bulan: bulan %>")
-
-    $("<%= "#form-aksi-realisasi-#{tahapan.id}-#{bulan}-submit-btn" %>").on('click', () => {
-      $("<%= "#new-realisasi-#{tahapan.id}-#{bulan}" %>").submit();
-    });
   });
 </script>

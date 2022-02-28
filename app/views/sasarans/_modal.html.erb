@@ -8,10 +8,6 @@
       <div class="modal-body" id="form-renaksi-body">
         ...
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-        <button type="button" class="btn btn-primary" id="form-renaksi-submit-btn">Submit</button>
-      </div>
     </div>
   </div>
 </div>
@@ -19,9 +15,5 @@
 <script>
 $(function(){
   $('#form-renaksi-body').html("<%= j render "tahapan_form", tahapan: @sasaran.tahapans.build, sasaran: @sasaran %>")
-
-  $('#form-renaksi-submit-btn').on('click', () => {
-    $('#new-renaksi').submit();
-  });
 });
 </script>

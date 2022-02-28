@@ -49,7 +49,7 @@
           </tr>
         </thead>
         <tbody>
-          <% sasaran.tahapans.each.with_index(1) do |tahapan, i| %>
+          <% sasaran.tahapans.order(:created_at).each.with_index(1) do |tahapan, i| %>
             <% aksi = tahapan.aksis %>
             <tr>
               <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= i %></td>
