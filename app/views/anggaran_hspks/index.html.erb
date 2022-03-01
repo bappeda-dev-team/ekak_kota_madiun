@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Anggaran Hspks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Kode kelompok barang</th>
+      <th>Uraian kelompok barang</th>
+      <th>Kode barang</th>
+      <th>Uraian barang</th>
+      <th>Spesifikasi</th>
+      <th>Satuan</th>
+      <th>Harga satuan</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @anggaran_hspks.each do |anggaran_hspk| %>
+      <tr>
+        <td><%= anggaran_hspk.kode_kelompok_barang %></td>
+        <td><%= anggaran_hspk.uraian_kelompok_barang %></td>
+        <td><%= anggaran_hspk.kode_barang %></td>
+        <td><%= anggaran_hspk.uraian_barang %></td>
+        <td><%= anggaran_hspk.spesifikasi %></td>
+        <td><%= anggaran_hspk.satuan %></td>
+        <td><%= anggaran_hspk.harga_satuan %></td>
+        <td><%= link_to 'Show', anggaran_hspk %></td>
+        <td><%= link_to 'Edit', edit_anggaran_hspk_path(anggaran_hspk) %></td>
+        <td><%= link_to 'Destroy', anggaran_hspk, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Anggaran Hspk', new_anggaran_hspk_path %>

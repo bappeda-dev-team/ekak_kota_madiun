@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Anggaran Sbus</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Kode kelompok barang</th>
+      <th>Uraian kelompok barang</th>
+      <th>Kode barang</th>
+      <th>Uraian barang</th>
+      <th>Spesifikasi</th>
+      <th>Satuan</th>
+      <th>Harga satuan</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @anggaran_sbus.each do |anggaran_sbus| %>
+      <tr>
+        <td><%= anggaran_sbus.kode_kelompok_barang %></td>
+        <td><%= anggaran_sbus.uraian_kelompok_barang %></td>
+        <td><%= anggaran_sbus.kode_barang %></td>
+        <td><%= anggaran_sbus.uraian_barang %></td>
+        <td><%= anggaran_sbus.spesifikasi %></td>
+        <td><%= anggaran_sbus.satuan %></td>
+        <td><%= anggaran_sbus.harga_satuan %></td>
+        <td><%= link_to 'Show', anggaran_sbus %></td>
+        <td><%= link_to 'Edit', edit_anggaran_sbus_path(anggaran_sbus) %></td>
+        <td><%= link_to 'Destroy', anggaran_sbus, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Anggaran Sbus', new_anggaran_sbus_path %>

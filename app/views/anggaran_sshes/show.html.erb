@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Kode kelompok barang:</strong>
+  <%= @anggaran_ssh.kode_kelompok_barang %>
+</p>
+
+<p>
+  <strong>Uraian kelompok barang:</strong>
+  <%= @anggaran_ssh.uraian_kelompok_barang %>
+</p>
+
+<p>
+  <strong>Kode barang:</strong>
+  <%= @anggaran_ssh.kode_barang %>
+</p>
+
+<p>
+  <strong>Uraian barang:</strong>
+  <%= @anggaran_ssh.uraian_barang %>
+</p>
+
+<p>
+  <strong>Spesifikasi:</strong>
+  <%= @anggaran_ssh.spesifikasi %>
+</p>
+
+<p>
+  <strong>Satuan:</strong>
+  <%= @anggaran_ssh.satuan %>
+</p>
+
+<p>
+  <strong>Harga satuan:</strong>
+  <%= @anggaran_ssh.harga_satuan %>
+</p>
+
+<%= link_to 'Edit', edit_anggaran_ssh_path(@anggaran_ssh) %> |
+<%= link_to 'Back', anggaran_sshes_path %>

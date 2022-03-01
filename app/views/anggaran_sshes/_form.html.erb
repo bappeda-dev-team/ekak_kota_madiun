@@ -1,0 +1,52 @@
+<%= form_with(model: anggaran_ssh) do |form| %>
+  <% if anggaran_ssh.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(anggaran_ssh.errors.count, "error") %> prohibited this anggaran_ssh from being saved:</h2>
+
+      <ul>
+        <% anggaran_ssh.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :kode_kelompok_barang %>
+    <%= form.text_field :kode_kelompok_barang %>
+  </div>
+
+  <div class="field">
+    <%= form.label :uraian_kelompok_barang %>
+    <%= form.text_field :uraian_kelompok_barang %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kode_barang %>
+    <%= form.text_field :kode_barang %>
+  </div>
+
+  <div class="field">
+    <%= form.label :uraian_barang %>
+    <%= form.text_field :uraian_barang %>
+  </div>
+
+  <div class="field">
+    <%= form.label :spesifikasi %>
+    <%= form.text_field :spesifikasi %>
+  </div>
+
+  <div class="field">
+    <%= form.label :satuan %>
+    <%= form.text_field :satuan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :harga_satuan %>
+    <%= form.text_field :harga_satuan %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_01_075120) do
+ActiveRecord::Schema.define(version: 2022_03_01_080938) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,30 @@ ActiveRecord::Schema.define(version: 2022_03_01_075120) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "tahapan_id"
     t.index ["tahapan_id"], name: "index_aksis_on_tahapan_id"
+  end
+
+  create_table "anggaran_sbus", force: :cascade do |t|
+    t.string "kode_kelompok_barang"
+    t.string "uraian_kelompok_barang"
+    t.string "kode_barang"
+    t.string "uraian_barang"
+    t.string "spesifikasi"
+    t.string "satuan"
+    t.bigint "harga_satuan"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "anggaran_sshes", force: :cascade do |t|
+    t.string "kode_kelompok_barang"
+    t.string "uraian_kelompok_barang"
+    t.string "kode_barang"
+    t.string "uraian_barang"
+    t.string "spesifikasi"
+    t.string "satuan"
+    t.bigint "harga_satuan"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "anggarans", force: :cascade do |t|

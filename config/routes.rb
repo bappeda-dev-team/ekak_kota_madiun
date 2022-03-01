@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :anggaran_hspks
+  resources :anggaran_sbus
+  resources :anggaran_sshes
   resources :subkegiatan_tematiks, :path => "tematiks"
   resources :rekenings
   resources :pokpirs

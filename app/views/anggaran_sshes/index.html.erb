@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Anggaran Sshes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Kode kelompok barang</th>
+      <th>Uraian kelompok barang</th>
+      <th>Kode barang</th>
+      <th>Uraian barang</th>
+      <th>Spesifikasi</th>
+      <th>Satuan</th>
+      <th>Harga satuan</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @anggaran_sshes.each do |anggaran_ssh| %>
+      <tr>
+        <td><%= anggaran_ssh.kode_kelompok_barang %></td>
+        <td><%= anggaran_ssh.uraian_kelompok_barang %></td>
+        <td><%= anggaran_ssh.kode_barang %></td>
+        <td><%= anggaran_ssh.uraian_barang %></td>
+        <td><%= anggaran_ssh.spesifikasi %></td>
+        <td><%= anggaran_ssh.satuan %></td>
+        <td><%= anggaran_ssh.harga_satuan %></td>
+        <td><%= link_to 'Show', anggaran_ssh %></td>
+        <td><%= link_to 'Edit', edit_anggaran_ssh_path(anggaran_ssh) %></td>
+        <td><%= link_to 'Destroy', anggaran_ssh, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Anggaran Ssh', new_anggaran_ssh_path %>

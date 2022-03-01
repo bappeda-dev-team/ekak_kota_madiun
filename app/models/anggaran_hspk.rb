@@ -1,0 +1,2 @@
+class AnggaranHspk < ApplicationRecord
+end
