@@ -6,6 +6,7 @@
 #  deskripsi   :string
 #  harga       :integer
 #  satuan      :string
+#  spesifikasi :text
 #  total       :integer
 #  volume      :integer
 #  created_at  :datetime         not null

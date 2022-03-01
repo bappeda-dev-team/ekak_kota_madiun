@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_01_032833) do
+ActiveRecord::Schema.define(version: 2022_03_01_075120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -203,6 +203,7 @@ ActiveRecord::Schema.define(version: 2022_03_01_032833) do
     t.bigint "anggaran_id"
     t.integer "total"
     t.string "deskripsi"
+    t.text "spesifikasi"
     t.index ["anggaran_id"], name: "index_perhitungans_on_anggaran_id"
   end
 
