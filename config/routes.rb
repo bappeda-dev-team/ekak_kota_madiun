@@ -6,8 +6,8 @@ Rails.application.routes.draw do
   resources :asn_musrenbangs, :path => "asn_usulan"
   resources :dasar_hukums
   devise_for :users, controllers: {
-            registrations: "users/registrations",
-          }
+                       registrations: "users/registrations",
+                     }
   root to: "home#dashboard"
   resources :users do
     resources :sasarans, :path => "sasaran_kerja"
@@ -48,6 +48,8 @@ Rails.application.routes.draw do
 
   get "/program_kegiatans_to_kak/:id", to: "program_kegiatans#show_to_kak"
   get "/program_kegiatans_to_kak_detail/:id", to: "program_kegiatans#kak_detail"
+  get "/program_kegiatans_to_kak_renaksi/:id", to: "program_kegiatans#kak_renaksi"
+  get "/program_kegiatans_to_kak_waktu/:id", to: "program_kegiatans#kak_waktu"
   get "/asn_musrenbangs/:nip", to: "musrenbangs#asn_musrenbang"
   # get "/program_kegiatans", to: "program_kegiatans#index"
   # get "/program_kegiatans/new", to: "program_kegiatans#new"

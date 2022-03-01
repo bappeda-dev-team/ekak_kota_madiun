@@ -58,6 +58,9 @@
                 <label for="sasaran_id">Sasaran / Rencana Kinerja ( Output )</label>
                 <%= form.select :sasaran_id, options_for_select(sasaran.collect { | n | [n.sasaran_kinerja, n.id]  }), {include_blank: true}, {class: "select2-sasaran", "data-placeholder": "Pilih Sasaran"} %>
               </div>
+              <div class="col text-end">
+                <%= link_to "Tambah Data Sasaran",new_user_sasaran_path(current_user), class: "btn btn-sm btn-info" %>
+              </div>
               <div class="actions">
                 <%= form.submit %>
               </div>
@@ -81,11 +84,11 @@
               <tr>
                 <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
                 <td class="fw-bolder text-gray-500"><%= link_to musrenbang.usulan, edit_musrenbang_path(musrenbang) %></td>
-                <td class="fw-bolder text-gray-500"><%= musrenbang.alamat %></td>
-                <td class="fw-bolder text-gray-500"><%= musrenbang.sasaran.nil? ? ' -- ' : musrenbang.sasaran.sasaran_kinerja %></td>
+                <td class="fw-bolder text-gray-500"><%= musrenbang.alamat or '-' %></td>
+                <td class="fw-bolder text-gray-500"><%= musrenbang.sasaran.nil? ? ' -- ' : musrenbang.sasaran.sasaran_kinerja.truncate(35, separator: '...')  %></td>
                 <td class="fw-bolder text-gray-500 text-center">
-                  <%= link_to musrenbang, class: "m-3" do %>
-                    <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
+                  <%= link_to user_sasaran_path(current_user, musrenbang.sasaran), class: "m-3" do %>
+                    <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Detail Sasaran"></i>
                   <% end %>
                   <%= link_to edit_musrenbang_path(musrenbang), class: "m-3" do %>
                     <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>

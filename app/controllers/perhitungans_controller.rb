@@ -23,7 +23,8 @@ class PerhitungansController < ApplicationController
 
   # POST /perhitungans or /perhitungans.json
   def create
-    @perhitungan =  @anggaran.perhitungans.build(perhitungan_params)
+    sleep 1
+    @perhitungan = @anggaran.perhitungans.build(perhitungan_params)
     awal = @anggaran.grand_parent || @anggaran
     respond_to do |format|
       if @perhitungan.save
@@ -62,20 +63,20 @@ class PerhitungansController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_anggaran
-      @anggaran = Anggaran.find(params[:anggaran_id])
-    end
 
-    def set_perhitungan
-      @perhitungan = @anggaran.perhitungans.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_anggaran
+    @anggaran = Anggaran.find(params[:anggaran_id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def perhitungan_params
-      params.require(:perhitungan).permit(:satuan,
-        :harga, :anggaran_id, :deskripsi,
-        koefisiens_attributes: %i[ id volume satuan_volume ]
-      )
-    end
+  def set_perhitungan
+    @perhitungan = @anggaran.perhitungans.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def perhitungan_params
+    params.require(:perhitungan).permit(:satuan,
+                                        :harga, :anggaran_id, :deskripsi,
+                                        koefisiens_attributes: %i[ id volume satuan_volume ])
+  end
 end

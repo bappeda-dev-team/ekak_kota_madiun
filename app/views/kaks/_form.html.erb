@@ -9,22 +9,21 @@
       </ul>
     </div>
   <% end %>
-  <% program = ProgramKegiatan.all %>
+  <% program = ProgramKegiatan.includes(:sasarans).where.not(sasarans: {id: nil}) %>
   <%= form.select :program_kegiatan_id, options_for_select(program.collect { | n | [n.nama_subkegiatan, n.id]}), {include_blank: true}, {id: "dropdown", "data-placeholder": "Pilih SubKegiatan"} %>
   <div id="detail-subkegiatan" class="my-3">
-    <small>Detail SubKegiatan</small>
   </div>
   <h4>A. Latar Belakang</h4>
   <!-- Latar Belakang -->
   <div class="latar-belakang">
     <div class="field">
       <%= form.label :dasar_hukum, class: "form-label" %>
-      <%= form.text_field :dasar_hukum,multiple: true, value: "", class: "form-control" %>
+      <%= form.text_field :dasar_hukum,multiple: true, value: "", class: "form-control", placeholder: "Isikan Dasar Hukum SubKegiatan ...." %>
     </div>
     <%= add_new_field("Tambah Dasar Hukum", form, :dasar_hukum, kak )  %>
     <div class="field">
       <%= form.label :gambaran_umum, class: "form-label" %>
-      <%= form.text_area :gambaran_umum, class: "form-control" %>
+      <%= form.text_area :gambaran_umum, class: "form-control", placeholder: "Isikan Gambaran Umum SubKegiatan ....." %>
     </div>
   </div>
   <h4>B. Penerima Manfaat</h4>
@@ -34,14 +33,14 @@
     </div>
   </div>
   <h4>C. Strategi Pencapaian Keluaran</h4>
-  <div class="strategi">
+  <div class="strategi" id="rencana-aksi">
     <div class="field">
       <%= form.label :tahapan_pelaksanaan, class: "form-label" %>
       <%= form.text_area :tahapan_pelaksanaan, class: "form-control" %>
     </div>
   </div>
   <h4>D. Kurun Waktu Pencapaian Keluaran</h4>
-  <div class="strategi">
+  <div class="strategi" id="waktu-dibutuhkan">
     <div class="field">
       <%= form.label :waktu_dibutuhkan, class: "form-label" %>
       <%= form.text_area :waktu_dibutuhkan, class: "form-control" %>
@@ -65,15 +64,26 @@
     let subkegiatan_space = $('#detail-subkegiatan');
     // penerima manfaat kurun waktu strategi
     let penerima_manfaat = $('#penerima-manfaat');
+    let rencana_aksi = $('#rencana-aksi');
+    let waktu_dibutuhkan = $('#waktu-dibutuhkan')
     let value;
     $('#dropdown').on('select2:select', (e) => {
       value = e.target.selectedOptions[0].value
+      /* Detail SubKegiatn terpilih */
       isian_detail = $.get(`/program_kegiatans_to_kak/${value}`, (data) => {
         subkegiatan_space.html(data);
       });
+      /* Detail Penerima Manfaat */
       kak_detail = $.get(`/program_kegiatans_to_kak_detail/${value}`, (data) => {
         penerima_manfaat.html(data)
-        console.log('thing is works')
+      })
+      /* Detail Rencana AKsi */
+      rencana_aksi_detail = $.get(`/program_kegiatans_to_kak_renaksi/${value}`, (data) => {
+        rencana_aksi.html(data)
+      })
+      /* Detail Waktu Rencana Aksi */
+      waktu_dibutuhkan_detail = $.get(`/program_kegiatans_to_kak_waktu/${value}`, (data) => {
+        waktu_dibutuhkan.html(data)
       })
 
     });

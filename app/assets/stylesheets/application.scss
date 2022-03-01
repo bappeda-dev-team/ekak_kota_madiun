@@ -30,9 +30,11 @@
 }
 
 .form-field-container {
-  @extend .bg-gray-200;
+  @extend .card;
+  @extend .border-0;
+  @extend .shadow;
   @extend .p-3;
-  @extend .mb-3; 
+  @extend .mb-3;
 }
 
 input[name="commit"] {
