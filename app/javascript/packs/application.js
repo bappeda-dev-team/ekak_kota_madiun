@@ -52,5 +52,17 @@ $(function () {
         return 'Sasaran Tidak Ditemukan';
       },
     },
-  })
+  });
+  $('#form-tematik-body').on('show', function () {
+    $(".select2-tematik").select2({
+      width: "100%",
+      theme: "bootstrap-5",
+      dropdownParent: $("#form-tematik"),
+      language: {
+        noResults: function () {
+          return 'Tematik Tidak Ditemukan';
+        },
+      },
+    })
+  });
 });

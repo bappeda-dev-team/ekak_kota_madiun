@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Subkegiatan Tematiks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Tematik</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @subkegiatan_tematiks.each.with_index(1) do |subkegiatan_tematik, i| %>
+      <tr>
+        <td><%= i %></td>
+        <td><%= subkegiatan_tematik.nama_tematik %></td>
+        <td><%= link_to 'Show', subkegiatan_tematik %></td>
+        <td><%= link_to 'Edit', edit_subkegiatan_tematik_path(subkegiatan_tematik) %></td>
+        <td><%= link_to 'Destroy', subkegiatan_tematik, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Subkegiatan Tematik', new_subkegiatan_tematik_path %>

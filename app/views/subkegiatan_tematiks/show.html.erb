@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+<p>
+  <strong>Nama Tematik:</strong>
+  <%= @subkegiatan_tematik.nama_tematik %>
+</p>
+
+<p>
+  <strong>Kode Tematik:</strong>
+  <%= @subkegiatan_tematik.kode_tematik %>
+</p>
+
+<p>
+  <strong>Tahun Tematik:</strong>
+  <%= @subkegiatan_tematik.tahun %>
+</p>
+<%= link_to 'Edit', edit_subkegiatan_tematik_path(@subkegiatan_tematik) %> |
+<%= link_to 'Back', subkegiatan_tematiks_path %>

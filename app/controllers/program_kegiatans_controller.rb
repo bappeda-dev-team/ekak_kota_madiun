@@ -44,6 +44,7 @@ class ProgramKegiatansController < ApplicationController
     respond_to do |format|
       if @programKegiatan.update(programKegiatan_params)
         format.html { redirect_to @programKegiatan, notice: "Program Kegiatan diupdate" }
+        format.json { render :show, status: :updated, location: @programKegiatan }
       else
         format.html { render :edit, notice: "Program Kegiatan Gagal diupdate" }
       end

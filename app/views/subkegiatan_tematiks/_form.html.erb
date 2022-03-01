@@ -1,0 +1,28 @@
+<%= form_with(model: subkegiatan_tematik) do |form| %>
+  <% if subkegiatan_tematik.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(subkegiatan_tematik.errors.count, "error") %> prohibited this subkegiatan_tematik from being saved:</h2>
+
+      <ul>
+        <% subkegiatan_tematik.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :kode_tematik, class: "form-label" %>
+    <%= form.text_field :kode_tematik, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.label :nama_tematik, class: "form-label" %>
+    <%= form.text_field :nama_tematik, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.label :tahun, class: "form-label" %>
+    <%= form.text_field :tahun, class: "form-control" %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

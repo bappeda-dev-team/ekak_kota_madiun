@@ -2,16 +2,25 @@
 #
 # Table name: program_kegiatans
 #
-#  id                :bigint           not null, primary key
-#  indikator_kinerja :string
-#  nama_kegiatan     :string
-#  nama_program      :string
-#  nama_subkegiatan  :string
-#  satuan            :string
-#  target            :string
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  opd_id            :integer
+#  id                     :bigint           not null, primary key
+#  indikator_kinerja      :string
+#  nama_kegiatan          :string
+#  nama_program           :string
+#  nama_subkegiatan       :string
+#  satuan                 :string
+#  target                 :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  opd_id                 :integer
+#  subkegiatan_tematik_id :bigint
+#
+# Indexes
+#
+#  index_program_kegiatans_on_subkegiatan_tematik_id  (subkegiatan_tematik_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (subkegiatan_tematik_id => subkegiatan_tematiks.id)
 #
 
 class ProgramKegiatan < ApplicationRecord
@@ -20,6 +29,7 @@ class ProgramKegiatan < ApplicationRecord
   validates :target, presence: true
   validates :satuan, presence: true
   belongs_to :opd
+  belongs_to :subkegiatan_tematik, optional: true
   has_many :kaks
   has_many :sasarans
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_28_153139) do
+ActiveRecord::Schema.define(version: 2022_03_01_032833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -234,6 +234,8 @@ ActiveRecord::Schema.define(version: 2022_02_28_153139) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "opd_id"
+    t.bigint "subkegiatan_tematik_id"
+    t.index ["subkegiatan_tematik_id"], name: "index_program_kegiatans_on_subkegiatan_tematik_id"
   end
 
   create_table "rekenings", force: :cascade do |t|
@@ -293,6 +295,14 @@ ActiveRecord::Schema.define(version: 2022_02_28_153139) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "subkegiatan_tematiks", force: :cascade do |t|
+    t.string "nama_tematik"
+    t.string "kode_tematik"
+    t.string "tahun"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "tahapans", force: :cascade do |t|
     t.string "tahapan_kerja"
     t.integer "target"
@@ -338,6 +348,7 @@ ActiveRecord::Schema.define(version: 2022_02_28_153139) do
   add_foreign_key "kesenjangans", "rincians"
   add_foreign_key "pagus", "sasarans"
   add_foreign_key "pks", "users"
+  add_foreign_key "program_kegiatans", "subkegiatan_tematiks"
   add_foreign_key "rincians", "sasarans"
   add_foreign_key "users", "opds", column: "kode_opd", primary_key: "kode_opd"
 end

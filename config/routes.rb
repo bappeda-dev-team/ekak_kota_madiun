@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :subkegiatan_tematiks, :path => "tematiks"
   resources :rekenings
   resources :pokpirs
   resources :inovasis

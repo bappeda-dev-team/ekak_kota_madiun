@@ -1,0 +1,20 @@
+<%= form_with model: programKegiatan, class: "mt-2", remote: true do |form| %>
+  <% if programKegiatan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(programKegiatan.errors.count, "error") %> prohibited this programKegiatan from being saved:</h2>
+      <ul>
+        <% programKegiatan.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <% tematiks = options_from_collection_for_select(SubkegiatanTematik.all, 'id', 'nama_tematik') %>
+    <%= form.label :subkegiatan_tematik_id, class: "form-label" %>
+    <%= form.select :subkegiatan_tematik_id, tematiks, {include_blank: true} , {class: "select2-tematik", "data-placeholder": "Pilih Tematik"} %>
+  </div>
+  <div class="actions mt-5">
+    <%= form.submit "Submit", :class => "btn btn-tertiary w-100"  %>
+  </div>
+<% end %>

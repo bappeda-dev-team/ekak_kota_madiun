@@ -27,7 +27,6 @@
               <th class="border-bottom" scope="col">Indikator Kinerja</th>
               <th class="border-bottom" scope="col">Target</th>
               <th class="border-bottom" scope="col">Satuan</th>
-              <th class="border-bottom" scope="col">Penerima manfaat</th>
               <th class="border-bottom text-center" scope="col">Action</th>
             </tr>
           </thead>
@@ -35,11 +34,10 @@
             <% @sasarans.each.with_index(1) do |sasaran, i| %>
               <tr>
                 <th class="text-gray-900 fw-bolder" scope="row"><%= i %></th>
-                <th class="text-gray-900" scope="row"><%= sasaran.sasaran_kinerja %></th>
-                <td class="fw-bolder text-gray-500"><%= sasaran.indikator_kinerja %></td>
+                <th class="text-gray-900" scope="row"><%= sasaran.sasaran_kinerja.truncate(40, omission: '...') %></th>
+                <td class="fw-bolder text-gray-500"><%= sasaran.indikator_kinerja.truncate(40, omission: '...') %></td>
                 <td class="fw-bolder text-gray-500"><%= sasaran.target %></td>
                 <td class="fw-bolder text-gray-500"><%= sasaran.satuan %></td>
-                <td class="fw-bolder text-gray-500"><%= sasaran.penerima_manfaat %></td>
                 <td class="fw-bolder text-gray-500 text-center">
                   <%= link_to user_sasaran_path(current_user, sasaran), class: "m-3" do %>
                     <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>

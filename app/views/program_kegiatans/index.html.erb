@@ -31,12 +31,12 @@
               <th class="border-bottom" scope="col">Nama Program</th>
               <th class="border-bottom" scope="col">Indikator Kinerja</th>
               <th class="border-bottom" scope="col">Target</th>
-              <th class="border-bottom" scope="col">OPD</th>
+              <th class="border-bottom" scope="col">Tematik</th>
               <th class="border-bottom" scope="col"></th>
             </tr>
           </thead>
           <tbody>
-            <% @programKegiatans.each.with_index(1) do |prog, i| %>
+            <% @programKegiatans.order(:created_at).each.with_index(1) do |prog, i| %>
               <tr>
                 <th class="text-gray-900 fw-bolder" scope="row"><%= i %></th>
                 <td class="fw-bolder text-gray-500"><%= prog.nama_subkegiatan %></td>
@@ -44,7 +44,13 @@
                 <th class="text-gray-900" scope="row"><%= prog.nama_program %></th>
                 <td class="fw-bolder text-gray-500"><%= prog.indikator_kinerja %></td>
                 <td class="fw-bolder text-gray-500"><%= prog.target %> <%= prog.satuan %></td>
-                <td class="fw-bolder text-gray-500"><%= prog.opd.kode_opd %></td>
+                <% tematik = SubkegiatanTematik.new %>
+                <td class="fw-bolder text-gray-500">
+                  <% if prog.subkegiatan_tematik %>
+                      <%= prog.subkegiatan_tematik.nama_tematik %>
+                  <% else %>
+                    <%= link_to 'Tambah Tematik', edit_program_kegiatan_path(prog), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-tematik" } %></td>
+                  <% end %>
                 <td class="fw-bolder text-gray-500">
                   <%= link_to prog, class: "m-3" do %>
                     <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
@@ -64,3 +70,4 @@
     </div>
   </div>
 </div>
+<%= render 'modal_tematik' %>
