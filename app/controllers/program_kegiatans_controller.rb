@@ -41,10 +41,11 @@ class ProgramKegiatansController < ApplicationController
   end
 
   def update
+    sleep 1
     respond_to do |format|
       if @programKegiatan.update(programKegiatan_params)
         format.html { redirect_to @programKegiatan, notice: "Program Kegiatan diupdate" }
-        format.json { render :show, status: :updated, location: @programKegiatan }
+        format.js
       else
         format.html { render :edit, notice: "Program Kegiatan Gagal diupdate" }
       end

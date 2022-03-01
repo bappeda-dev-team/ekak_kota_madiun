@@ -1,0 +1,10 @@
+Swal.fire(
+  'Sukses',
+  'Tematik Berhasil Ditambahkan',
+  'success'
+)
+$('#form-modal-tematik').on('ajax:success', (event) => {
+      setTimeout(() => {
+      location.reload(true);
+      }, 1500);
+    });
