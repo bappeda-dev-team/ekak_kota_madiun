@@ -6,6 +6,11 @@ class RekeningsController < ApplicationController
     @rekenings = Rekening.all
   end
 
+  def rekening_search
+    param = params[:q] || ""
+    @rekenings = Rekening.where(set_input: 1).where("jenis_rekening ILIKE ?", "%#{param}%").limit(50)
+  end
+
   # GET /rekenings/1 or /rekenings/1.json
   def show
   end
@@ -57,13 +62,14 @@ class RekeningsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_rekening
-      @rekening = Rekening.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def rekening_params
-      params.require(:rekening).permit(:kode_rekening, :jenis_rekening)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_rekening
+    @rekening = Rekening.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def rekening_params
+    params.require(:rekening).permit(:kode_rekening, :jenis_rekening)
+  end
 end

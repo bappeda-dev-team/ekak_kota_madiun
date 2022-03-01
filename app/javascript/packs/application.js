@@ -53,6 +53,21 @@ $(function () {
       },
     },
   });
+  $(".select2-rekenings").select2({
+    width: "100%",
+    theme: "bootstrap-5",
+    minimumInputLength: 3,
+    ajax: {
+      delay: 1000,
+      url: '/rekening_search.json',
+      data: (params) => ({ q: params.term })
+    },
+    language: {
+      inputTooShort: function () {
+        return "Input minimal 3 Karakter";
+      }
+    }
+  });
   $('#form-tematik-body').on('show', function () {
     $(".select2-tematik").select2({
       width: "100%",
