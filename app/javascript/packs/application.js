@@ -56,7 +56,6 @@ $(function () {
   $(".select2-rekenings").select2({
     width: "100%",
     theme: "bootstrap-5",
-    minimumInputLength: 3,
     ajax: {
       delay: 1000,
       url: '/rekening_search.json',
@@ -74,6 +73,20 @@ $(function () {
     ajax: {
       delay: 1000,
       url: '/musrenbang_search.json',
+      data: (params) => ({ q: params.term })
+    },
+    language: {
+      inputTooShort: function () {
+        return "Input minimal 3 Karakter";
+      }
+    }
+  });
+  $("#select2-anggaran-ssh").select2({
+    width: "100%",
+    theme: "bootstrap-5",
+    ajax: {
+      delay: 1000,
+      url: '/anggaran_ssh_search.json',
       data: (params) => ({ q: params.term })
     },
     language: {

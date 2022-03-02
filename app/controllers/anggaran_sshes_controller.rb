@@ -6,6 +6,11 @@ class AnggaranSshesController < ApplicationController
     @anggaran_sshes = AnggaranSsh.all
   end
 
+  def anggaran_ssh_search
+    param = params[:q] || ""
+    @anggaran_sshes = AnggaranSsh.where("uraian_barang ILIKE ?", "%#{param}%").limit(50)
+  end
+
   # GET /anggaran_sshes/1 or /anggaran_sshes/1.json
   def show
   end
@@ -57,13 +62,14 @@ class AnggaranSshesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_anggaran_ssh
-      @anggaran_ssh = AnggaranSsh.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def anggaran_ssh_params
-      params.require(:anggaran_ssh).permit(:kode_kelompok_barang, :uraian_kelompok_barang, :kode_barang, :uraian_barang, :spesifikasi, :satuan, :harga_satuan)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_anggaran_ssh
+    @anggaran_ssh = AnggaranSsh.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def anggaran_ssh_params
+    params.require(:anggaran_ssh).permit(:kode_kelompok_barang, :uraian_kelompok_barang, :kode_barang, :uraian_barang, :spesifikasi, :satuan, :harga_satuan)
+  end
 end

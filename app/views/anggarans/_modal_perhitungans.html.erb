@@ -1,24 +1,13 @@
-<div class="modal fade " id="form-perhitungan-<%= anggaran.id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade " id="form-perhitungan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="form-perhitungan-title">Form perhitungan</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body" id="form-perhitungan-body-<%= anggaran.id %>">
+      <div class="modal-body" id="form-perhitungan-body">
         ...
       </div>
     </div>
   </div>
 </div>
-<% perhitungan = Perhitungan.new
-  perhitungan.koefisiens.build %>
-<script>
-  $(function(){
-    $('#form-perhitungan-body-<%= anggaran.id %>').html("<%= j (render 'perhitungan', anggaran: anggaran, perhitungan: perhitungan) %>")
-
-    $('#new-anggaran-perhitungan-<%= anggaran.id %>').on('ajax:success', (event) => {
-      location.reload();
-    })
-  });
-</script>

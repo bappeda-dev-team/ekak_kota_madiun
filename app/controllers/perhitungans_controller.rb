@@ -14,7 +14,7 @@ class PerhitungansController < ApplicationController
   # GET /perhitungans/new
   def new
     @perhitungan = Perhitungan.new
-    @perhitungan.koefisiens.build
+    # @perhitungan.koefisiens.build
   end
 
   # GET /perhitungans/1/edit

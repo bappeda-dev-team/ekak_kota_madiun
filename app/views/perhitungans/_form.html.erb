@@ -1,4 +1,4 @@
-<%= form_with(model: [@anggaran, perhitungan], local: false) do |form| %>
+<%= form_with(model: [anggaran, perhitungan], local: false) do |form| %>
   <% if perhitungan.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(perhitungan.errors.count, "error") %> prohibited this perhitungan from being saved:</h2>
@@ -12,8 +12,12 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :deskripsi %>
-    <%= form.text_field :deskripsi %>
+    <%= form.label :uraian, {class: "form-label"} %>
+    <%= form.text_field :deskripsi, {class: "form-control"} %>
+  </div>
+  <div class="field">
+    <%= form.label :spesifikasi, {class: "form-label"} %>
+    <%= form.text_field :spesifikasi, {class: "form-control"} %>
   </div>
 
   <h4><strong>Koefisiens : </strong></h4>
@@ -21,23 +25,23 @@
     <%= form.fields_for :koefisiens do |f| %> 
       <%= render 'koefisien_fields', f: f %>
     <% end %>
-    <%= add_koefisiens "Tambah Koefisien", form, :koefisiens, @anggaran.id %>
+    <%= add_koefisiens "Tambah Koefisien", form, :koefisiens, anggaran.id %>
   </div>
 
   <hr>
 
   <div class="field">
-    <%= form.label :satuan %>
-    <%= form.text_field :satuan %>
+    <%= form.label :satuan, {class: "form-label"} %>
+    <%= form.text_field :satuan, {class: "form-control"} %>
   </div>
 
   <div class="field">
-    <%= form.label :harga %>
-    <%= form.number_field :harga %>
+    <%= form.label :harga, {class: "form-label"} %>
+    <%= form.number_field :harga, {class: "form-control"} %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Tambah Anggaran", data: { disable_with: "Processing..." } %>
   </div>
 <% end %>
 
@@ -50,7 +54,7 @@
       return event.preventDefault();
     });
 
-    $('form').on('click', '.add_fields_<%= @anggaran.id %>', function(event) {
+    $('form').on('click', '.add_fields_<%= anggaran.id %>', function(event) {
       let regexp, time;
       time = new Date().getTime();
       regexp = new RegExp($(this).data('id'), 'g')
