@@ -3,28 +3,35 @@
     <%= render partial: 'program_kegiatans/show_to_kak', locals: {programKegiatan: @kak.program_kegiatan} %>
   </div>
   <% else %>
+    <!-- Form Tambah Program Kegiatan disini / atau lempar ke edit-->
     Belum ada Program Kegiatan !!!
 <% end %>
 <h4>A. Latar Belakang</h4>
 <div class="dasar-hukum">
-  Dasar Hukum
-  <ol>
-    <% @kak.dasar_hukum.each do |dh|  %>
-      <li>
-        <%= dh  %>
-      </li>
-    <% end %>
-  </ol>
+  <div class="card border-2 shadow mb-3">
+    <div class="card-header">
+      Dasar Hukum
+    </div>
+    <div class="card-body">
+      <ol>
+        <% @kak.dasar_hukum.each do |dh|  %>
+          <li>
+            <%= dh  %>
+          </li>
+        <% end %>
+      </ol>
+    </div>
+  </div>
 </div>
 <h4>B. Penerima Manfaat</h4>
 <div class="penerima-manfaat">
-  <%= @kak.penerima_manfaat %>
+  <%= render "program_kegiatans/kak_detail", programKegiatan: @kak.program_kegiatan %>
 </div>
 <h4>C. Strategi Pencapaian Keluaran</h4>
 <div class="tahapan_pelaksanaan">
-  <%= @kak.tahapan_pelaksanaan %>
+  <%= render 'program_kegiatans/kak_renaksi', programKegiatan: @kak.program_kegiatan %>
 </div>
 <h4>D. Kurun Waktu Pencapaian Keluaran</h4>
 <div class="tahapan_pelaksanaan">
-  <%= @kak.waktu_dibutuhkan %>
+  <%= render 'program_kegiatans/kak_waktu', programKegiatan: @kak.program_kegiatan %>
 </div>

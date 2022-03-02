@@ -20,4 +20,5 @@
 #
 class Kak < ApplicationRecord
   belongs_to :program_kegiatan, optional: true
+  validates :dasar_hukum, presence: true
 end

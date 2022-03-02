@@ -33,9 +33,9 @@
           <tbody>
             <% @sasarans.each.with_index(1) do |sasaran, i| %>
               <tr>
-                <th class="text-gray-900 fw-bolder" scope="row"><%= i %></th>
-                <th class="text-gray-900" scope="row"><%= sasaran.sasaran_kinerja.truncate(40, omission: '...') %></th>
-                <td class="fw-bolder text-gray-500"><%= sasaran.indikator_kinerja.truncate(40, omission: '...') %></td>
+                <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
+                <td class="text-gray-900" scope="row"><%= sasaran.sasaran_kinerja %></td>
+                <td class="fw-bolder text-gray-500"><%= sasaran.indikator_kinerja %></td>
                 <td class="fw-bolder text-gray-500"><%= sasaran.target %></td>
                 <td class="fw-bolder text-gray-500"><%= sasaran.satuan %></td>
                 <td class="fw-bolder text-gray-500 text-center">

@@ -1,0 +1,22 @@
+<div class="card border-2 shadow mb-3">
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>no</th>
+          <th>Sasaran Kinerja</th>
+          <th>Penerima Manfaat</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% programKegiatan.sasarans.each.with_index(1) do |sasaran, i| %>
+        <tr>
+          <td><%= i %></td>
+          <td class="sasaran-kerja"><%= sasaran.sasaran_kinerja %></td>
+          <td class="sasaran-kerja"><%= sasaran.penerima_manfaat %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

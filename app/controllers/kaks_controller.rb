@@ -10,6 +10,10 @@ class KaksController < ApplicationController
   def show
   end
 
+  def laporan_kak
+    @kaks = Kak.includes(:program_kegiatan).where.not(program_kegiatan: { id: nil })
+  end
+
   # GET /kaks/new
   def new
     @kak = Kak.new
@@ -57,18 +61,19 @@ class KaksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_kak
-      @kak = Kak.find(params[:id])
-    end
-    
-    # Only allow a list of trusted parameters through.
-    def kak_params
-      params.require(:kak).permit({:dasar_hukum => []}, 
-        :gambaran_umum,
-        :metode_pelaksanaan,
-        :penerima_manfaat, 
-        :tahapan_pelaksanaan, 
-        :waktu_dibutuhkan,:program_kegiatan_id)
-    end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_kak
+    @kak = Kak.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def kak_params
+    params.require(:kak).permit({ :dasar_hukum => [] },
+                                :gambaran_umum,
+                                :metode_pelaksanaan,
+                                :penerima_manfaat,
+                                :tahapan_pelaksanaan,
+                                :waktu_dibutuhkan, :program_kegiatan_id)
+  end
 end

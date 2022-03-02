@@ -57,6 +57,7 @@ Rails.application.routes.draw do
   get "/asn_musrenbangs/:nip", to: "musrenbangs#asn_musrenbang"
   get "/musrenbang_search", to: "musrenbangs#musrenbang_search"
   get "/rekening_search", to: "rekenings#rekening_search"
+  get "/laporan_kak", to: "kaks#laporan_kak"
   # get "/program_kegiatans", to: "program_kegiatans#index"
   # get "/program_kegiatans/new", to: "program_kegiatans#new"
   # get "/program_kegiatan/:id", to: "program_kegiatans#show"

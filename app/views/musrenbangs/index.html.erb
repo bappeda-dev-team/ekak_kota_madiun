@@ -38,7 +38,7 @@
             <% @musrenbangs.each.with_index(1) do |musrenbang, i| %>
               <tr>
                 <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                <td class="fw-bolder text-gray-500" style="max-width: 25%;"><%= link_to musrenbang.usulan.truncate(35, separator: '...'), edit_musrenbang_path(musrenbang) %></td>
+                <td class="fw-bolder text-gray-500" style="max-width: 25%;"><%= link_to musrenbang.usulan, edit_musrenbang_path(musrenbang) %></td>
                 <td class="fw-bolder text-gray-500"><%= musrenbang.alamat %></td>
                 <td class="fw-bolder text-gray-500"><%= musrenbang.sasaran.nil? ? ' -- ' : musrenbang.sasaran.sasaran_kinerja %></td>
                 <td class="fw-bolder text-gray-500 text-center">

@@ -1,20 +1,22 @@
 <div class="card border-2 shadow mb-3">
+<div class="table-responsive">
 <table class="table">
   <thead>
     <tr>
       <th>no</th>
       <th>Sasaran Kinerja</th>
-      <th>Penerima Manfaat</th>
+      <th>Waktu Dibutuhkan</th>
     </tr>
   </thead>
   <tbody>
-   <% @programKegiatan.sasarans.each.with_index(1) do |sasaran, i| %>
+   <% programKegiatan.sasarans.each.with_index(1) do |sasaran, i| %>
     <tr>
       <td><%= i %></td>
       <td><%= sasaran.sasaran_kinerja %></td>
-      <td><%= sasaran.penerima_manfaat %></td>
+      <td><%= sasaran.waktu_total %> Bulan</td>
     </tr>
   <% end %>
   </tbody>
 </table>
+</div>
 </div>
