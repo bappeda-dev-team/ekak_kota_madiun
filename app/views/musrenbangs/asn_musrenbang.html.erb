@@ -31,23 +31,11 @@
             <h2 class="fs-5 fw-bold mb-3">Pilih Usulan </h2>
           </div>
           <div class="pilih-usulan">
-            <% musren_all = Musrenbang.all %>
-            <% musrenbang = Musrenbang.new %>
-            <%= form_with(model: musrenbang) do |form| %>
-              <% if musrenbang.errors.any? %>
-                <div id="error_explanation">
-                  <h2><%= pluralize(musrenbang.errors.count, "error") %> prohibited this musrenbang from being saved:</h2>
-                  <ul>
-                    <% musrenbang.errors.each do |error| %>
-                      <li><%= error.full_message %></li>
-                    <% end %>
-                  </ul>
-                </div>
-              <% end %>
+            <%= form_with(model: @musrenbang) do |form| %>
               <div class="field">
                 <%= form.hidden_field :nip_asn, value: current_user.nik   %>
                 <%= form.label :usulan %>
-                <%= form.select :usulan, options_for_select(musren_all.collect { |n| [n.usulan, n.usulan]}), {include_blank: true}, {class: "select2-waw", "data-placeholder": "Pilih Usulan"} %>
+                <%= form.select :usulan, [], {include_blank: true}, {id: "select2-musrenbang", "data-placeholder": "Pilih Usulan"} %>
               </div>
               <div class="field mt-3">
                 <%= form.label :tahun %>

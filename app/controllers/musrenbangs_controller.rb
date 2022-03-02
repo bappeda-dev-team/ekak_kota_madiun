@@ -9,6 +9,12 @@ class MusrenbangsController < ApplicationController
   def asn_musrenbang
     nip_asn = params[:nip]
     @musrenbangs = Musrenbang.where(nip_asn: nip_asn)
+    @musrenbang = Musrenbang.new
+  end
+
+  def musrenbang_search
+    param = params[:q] || ""
+    @musrenbangs = Musrenbang.where("usulan ILIKE ?", "%#{param}%").limit(50)
   end
 
   # GET /musrenbangs/1 or /musrenbangs/1.json
@@ -70,6 +76,6 @@ class MusrenbangsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def musrenbang_params
-    params.require(:musrenbang).permit(:usulan, :tahun, :sasaran_id, :nip_asn, )
+    params.require(:musrenbang).permit(:usulan, :tahun, :sasaran_id, :nip_asn)
   end
 end

@@ -68,6 +68,20 @@ $(function () {
       }
     }
   });
+  $("#select2-musrenbang").select2({
+    width: "100%",
+    theme: "bootstrap-5",
+    ajax: {
+      delay: 1000,
+      url: '/musrenbang_search.json',
+      data: (params) => ({ q: params.term })
+    },
+    language: {
+      inputTooShort: function () {
+        return "Input minimal 3 Karakter";
+      }
+    }
+  });
   $('#form-tematik-body').on('show', function () {
     $(".select2-tematik").select2({
       width: "100%",
