@@ -81,19 +81,24 @@ $(function () {
       }
     }
   });
-  $("#select2-anggaran-ssh").select2({
-    width: "100%",
-    theme: "bootstrap-5",
-    ajax: {
-      delay: 1000,
-      url: '/anggaran_ssh_search.json',
-      data: (params) => ({ q: params.term })
-    },
-    language: {
-      inputTooShort: function () {
-        return "Input minimal 3 Karakter";
+  $('#form-perhitungan-body').on('show', function () {
+    $(".select2-anggaran-ssh").select2({
+      width: "100%",
+      theme: "bootstrap-5",
+      dropdownParent: $("#form-perhitungan"),
+      ajax: {
+        delay: 1000,
+        url: '/anggaran_ssh_search.json',
+        data: (params) => ({ q: params.term })
+      },
+      language: {
+        inputTooShort: function () {
+          return "Input minimal 3 Karakter";
+        }
       }
-    }
+    }).on('select2:opening', function (e) {
+      $(this).data('select2').$dropdown.find(':input.select2-search__field').attr('placeholder', 'Ketik Untuk mencari')
+    });
   });
   $('#form-tematik-body').on('show', function () {
     $(".select2-tematik").select2({
