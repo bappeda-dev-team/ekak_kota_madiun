@@ -24,7 +24,7 @@
     </div>
     <div class="card border-0 shadow">
       <div class="table-responsive">
-        <table class="table align-items-center">
+        <table class="table table-flush" id="datatable">
           <thead class="thead-light">
             <tr>
               <th class="border-bottom" scope="col">No.</th>
@@ -38,8 +38,8 @@
             <% @musrenbangs.each.with_index(1) do |musrenbang, i| %>
               <tr>
                 <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                <td class="fw-bolder text-gray-500" style="max-width: 25%;"><%= link_to musrenbang.usulan, edit_musrenbang_path(musrenbang) %></td>
-                <td class="fw-bolder text-gray-500"><%= musrenbang.alamat %></td>
+                <td class="fw-bolder text-gray-500" style="max-width: 25%; white-space: pre-line !important; "><%= link_to musrenbang.usulan, edit_musrenbang_path(musrenbang) %></td>
+                <td class="fw-bolder text-gray-500" style="white-space: pre-line !important;"><%= musrenbang.alamat %></td>
                 <td class="fw-bolder text-gray-500"><%= musrenbang.sasaran.nil? ? ' -- ' : musrenbang.sasaran.sasaran_kinerja %></td>
                 <td class="fw-bolder text-gray-500 text-center">
                   <%= link_to musrenbang, class: "m-3" do %>

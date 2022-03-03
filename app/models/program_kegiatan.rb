@@ -2,17 +2,20 @@
 #
 # Table name: program_kegiatans
 #
-#  id                     :bigint           not null, primary key
-#  indikator_kinerja      :string
-#  nama_kegiatan          :string
-#  nama_program           :string
-#  nama_subkegiatan       :string
-#  satuan                 :string
-#  target                 :string
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  opd_id                 :integer
-#  subkegiatan_tematik_id :bigint
+#  id                        :bigint           not null, primary key
+#  indikator_kinerja         :string
+#  indikator_subkegiatan     :string
+#  nama_kegiatan             :string
+#  nama_program              :string
+#  nama_subkegiatan          :string
+#  satuan                    :string
+#  satuan_target_subkegiatan :string
+#  target                    :string
+#  target_subkegiatan        :string
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  opd_id                    :integer
+#  subkegiatan_tematik_id    :bigint
 #
 # Indexes
 #
@@ -34,6 +37,6 @@ class ProgramKegiatan < ApplicationRecord
   has_many :sasarans
 
   def my_pagu
-    self.sasarans.map { |s| s.total_anggaran }.compact.sum
+    self.sasarans.map(&:total_anggaran).compact.sum
   end
 end

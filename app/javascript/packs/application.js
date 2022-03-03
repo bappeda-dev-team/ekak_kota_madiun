@@ -19,6 +19,10 @@ import "@fortawesome/fontawesome-free/css/all";
 import "select2";
 import "select2/dist/css/select2.css";
 import List from "list.js";
+import 'datatables.net-dt'
+import 'datatables.net-dt/css/jquery.dataTables.min.css'
+
+
 
 Rails.start();
 Turbolinks.start();
@@ -36,6 +40,7 @@ const tooltip = require("chartist-plugin-tooltips");
 
 $(function () {
   console.log("javascript application is on");
+  $('#datatable').DataTable();
   $("#dropdown").select2({
     width: "100%",
     theme: "bootstrap-5",

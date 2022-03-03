@@ -38,11 +38,11 @@
           <tbody>
             <% @programKegiatans.order(:created_at).each.with_index(1) do |prog, i| %>
               <tr>
-                <th class="text-gray-900 fw-bolder" scope="row"><%= i %></th>
-                <td class="fw-bolder text-gray-500"><%= prog.nama_subkegiatan %></td>
-                <td class="fw-bolder text-gray-500"><%= prog.nama_kegiatan %></td>
-                <th class="text-gray-900" scope="row"><%= prog.nama_program %></th>
-                <td class="fw-bolder text-gray-500"><%= prog.indikator_kinerja %></td>
+                <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
+                <td class="fw-bolder text-gray-500" style="white-space: pre-line !important;"><%= prog.nama_subkegiatan %></td>
+                <td class="fw-bolder text-gray-500" style="white-space: pre-line !important;"><%= prog.nama_kegiatan %></td>
+                <td class="text-gray-900" scope="row" style="white-space: pre-line !important;"><%= prog.nama_program %></td>
+                <td class="fw-bolder text-gray-500" style="white-space: pre-line !important;"><%= prog.indikator_kinerja %></td>
                 <td class="fw-bolder text-gray-500"><%= prog.target %> <%= prog.satuan %></td>
                 <% tematik = SubkegiatanTematik.new %>
                 <td class="fw-bolder text-gray-500">
