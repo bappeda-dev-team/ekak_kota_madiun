@@ -1,12 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Subkegiatan Tematiks</h1>
+<h1>Tematik</h1>
 
 <table>
   <thead>
     <tr>
       <th>No</th>
       <th>Tematik</th>
+      <th>Kode Tematik</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,6 +17,7 @@
       <tr>
         <td><%= i %></td>
         <td><%= subkegiatan_tematik.nama_tematik %></td>
+        <td><%= subkegiatan_tematik.kode_tematik %></td>
         <td><%= link_to 'Show', subkegiatan_tematik %></td>
         <td><%= link_to 'Edit', edit_subkegiatan_tematik_path(subkegiatan_tematik) %></td>
         <td><%= link_to 'Destroy', subkegiatan_tematik, method: :delete, data: { confirm: 'Are you sure?' } %></td>
