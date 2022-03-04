@@ -3,7 +3,7 @@ class MusrenbangsController < ApplicationController
 
   # GET /musrenbangs or /musrenbangs.json
   def index
-    @musrenbangs = Musrenbang.all
+    @pagy, @musrenbangs = pagy(Musrenbang.all)
   end
 
   def asn_musrenbang

@@ -12,24 +12,21 @@
 class Rekening < ApplicationRecord
   def grand_parent
     kode_rekening = self.kode_rekening
-    hasil = Rekening.find_by(kode_rekening: kode_rekening[0..2])
+    Rekening.find_by(kode_rekening: kode_rekening[0..2])
   end
 
   def parent
     # TODO : tambah exception untuk NilClass kode_rekening
     kode_rekening = self.kode_rekening
-    if self.level == 4
-      hasil = Rekening.find_by(kode_rekening: kode_rekening[0..-6])
-    elsif self.level == 3
-      hasil = Rekening.find_by(kode_rekening: kode_rekening[0..-4])
-    elsif self.level == 2
-      hasil = Rekening.find_by(kode_rekening: kode_rekening[0..-4])
-    elsif self.level == 1
-      hasil = Rekening.find_by(kode_rekening: kode_rekening[0..-4])
+    my_level = self.level
+    case my_level
+    when 4
+      Rekening.find_by(kode_rekening: kode_rekening[0..-6])
+    when 1..3
+      Rekening.find_by(kode_rekening: kode_rekening[0..-4])
     else
-      hasil = self.grand_parent
+      Rekening.find_by(kode_rekening: kode_rekening[0..2])
     end
-    return hasil
   end
 
   def level

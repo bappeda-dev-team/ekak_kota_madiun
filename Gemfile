@@ -68,3 +68,4 @@ gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "wdm", ">= 0.1.0" if Gem.win_platform?
 gem "devise"
 gem "rolify", "~> 6.0"
+gem "pagy", "~> 5.10"

@@ -58,6 +58,7 @@ Rails.application.routes.draw do
   get "/musrenbang_search", to: "musrenbangs#musrenbang_search"
   get "/rekening_search", to: "rekenings#rekening_search"
   get "/laporan_kak", to: "kaks#laporan_kak"
+  get "/anggaran_ssh_search", to: "anggaran_sshes#anggaran_ssh_search"
   # get "/program_kegiatans", to: "program_kegiatans#index"
   # get "/program_kegiatans/new", to: "program_kegiatans#new"
   # get "/program_kegiatan/:id", to: "program_kegiatans#show"
