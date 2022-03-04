@@ -1,0 +1,48 @@
+<div class="program-kegiatan">
+  <table class="table table-bordered">
+    <tr>
+      <td>Lembaga</td>
+      <td><%= programKegiatan.opd.lembaga.nama_lembaga %></td>
+    </tr>
+    <tr>
+      <td>OPD</td>
+      <td><%= programKegiatan.opd.nama_opd %></td>
+    </tr>
+    <tr>
+      <td>Program</td>
+      <td><%= programKegiatan.nama_program %></td>
+    </tr>
+    <tr>
+      <td>Kegiatan</td>
+      <td><%= programKegiatan.nama_kegiatan %></td>
+    </tr>
+    <tr>
+      <td>Indikator Kinerja Kegiatan (Output)</td>
+      <td><%= programKegiatan.indikator_kinerja %></td>
+    </tr>
+    <tr>
+      <td>Volume Keluaran (target)</td>
+      <td><%= programKegiatan.target %></td>
+    </tr>
+    <tr>
+      <td>Satuan Ukur Keluaran (Output)</td>
+      <td><%= programKegiatan.satuan %></td>
+    </tr>
+  </table>
+</div>
+<div class="subkegiatan">
+  <table class="table table-bordered">
+    <tr>
+      <td>Sub Kegiatan</td>
+      <td><%= programKegiatan.nama_subkegiatan %></td>
+    </tr>
+    <tr>
+      <td>Indikator</td>
+      <td><%= programKegiatan.indikator_subkegiatan %></td>
+    </tr>
+    <tr>
+      <td>Target</td>
+      <td><%= programKegiatan.target_subkegiatan %></td>
+    </tr>
+  </table>
+</div>

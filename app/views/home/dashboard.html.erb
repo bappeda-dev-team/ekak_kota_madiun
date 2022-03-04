@@ -29,10 +29,10 @@
             <tbody>
               <% @sasaran.each do |s| %>
                 <tr>
-                  <td class="text-gray-900">
-                    <%= link_to s.sasaran_kinerja.to_s, sasaran_path(s), :data => { "bs-toggle" => "tooltip", "bs-placement"=> "bottom"}, title: "Buka Sasaran" %>
+                  <td class="text-gray-900" style="white-space: pre-line !important;">
+                    <%= s.sasaran_kinerja %>
                   </td>
-                  <td class="fw-bolder text-gray-500">
+                  <td class="fw-bolder text-gray-500" style="white-space: pre-line !important;">
                     <%= s.indikator_kinerja %>
                   </td>
                   <td class="fw-bolder text-gray-500">
