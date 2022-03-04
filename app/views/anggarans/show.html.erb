@@ -10,7 +10,7 @@
     <li class="breadcrumb-item active" aria-current="page">Anggaran</li>
   </ol>
 </nav>
-<div class="card border-2 shadow mb-3">
+<div class="card border-2 shadow mb-1">
   <div class="card-header">
     <div class="row align-items-center">
       <p><%= link_to sasaran_path(@tahapan.sasaran) do %>
@@ -18,13 +18,12 @@
         <span>Kembali</span>
       <% end %>
       </p>
-      <h3>Sub Kegiatan: <%= @sasaran.program_kegiatan.nama_subkegiatan %></h3>
       <h5>Sasaran : <%= @sasaran.sasaran_kinerja %></h5>
       <p>Tahapan : <%= @tahapan.tahapan_kerja %></p>
     </div>
   </div>
   <div class="card-body">
-    <h5>Rincian Anggaran</h5>
+    <p>Rincian Anggaran</p>
     <div class="anggaran">
     <table id="detail-anggaran">
       <thead>

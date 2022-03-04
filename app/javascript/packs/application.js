@@ -10,19 +10,13 @@ import "channels";
 import "./sweetalert";
 
 import jQuery from "jquery";
-import Swal from "sweetalert2";
 import "@popperjs/core";
 import Chartist from "chartist";
 import SmoothScroll from "smooth-scroll";
 import "../volt/volt.js";
-import "@fortawesome/fontawesome-free/css/all";
+import "@fortawesome/fontawesome-free/js/all.js";
 import "select2";
-import "select2/dist/css/select2.css";
-import List from "list.js";
-import 'datatables.net-dt'
-import 'datatables.net-dt/css/jquery.dataTables.min.css'
-
-
+import 'datatables.net-bs5';
 
 Rails.start();
 Turbolinks.start();
