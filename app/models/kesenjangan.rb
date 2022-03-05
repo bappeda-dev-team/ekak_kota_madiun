@@ -20,4 +20,5 @@
 #  fk_rails_...  (rincian_id => rincians.id)
 #
 class Kesenjangan < ApplicationRecord
+  belongs_to :rincian
 end

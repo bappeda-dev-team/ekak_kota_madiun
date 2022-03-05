@@ -20,5 +20,16 @@
 require 'rails_helper'
 
 RSpec.describe Perhitungan, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'validation' do
+    it { should validate_presence_of(:deskripsi) }
+    it { should validate_presence_of(:satuan) }
+    it { should validate_presence_of(:harga) }
+    it { should validate_numericality_of(:harga) }
+  end
+
+  context 'association' do
+    it { should belong_to(:anggaran) }
+    it { should have_many(:koefisiens) }
+    it { should accept_nested_attributes_for(:koefisiens) }
+  end
 end

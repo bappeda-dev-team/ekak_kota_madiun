@@ -32,13 +32,15 @@ class User < ApplicationRecord
   # validates :nama, presence: true
   # validates :nik, presence: true
   belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_opd'
-  has_many :pks
   has_many :kaks
   has_many :sasarans, dependent: :destroy
 
   after_create :assign_default_role
 
+  validates :nama, presence: true
+  validates :nik, presence: true
+
   def assign_default_role
-    self.add_role(:asn) if self.roles.blank?
+    add_role(:asn) if roles.blank?
   end
 end

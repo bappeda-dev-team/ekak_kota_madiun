@@ -15,4 +15,5 @@
 #
 class Koefisien < ApplicationRecord
   belongs_to :perhitungan
+  validates :volume, presence: true
 end

@@ -30,15 +30,15 @@ class Pagu < ApplicationRecord
 
   belongs_to :sasaran
 
+  validates :item, presence: true
 
   def hitung_total
-    self.total = self.volume * self.uang
+    self.total = volume * uang
   end
 
   def update_anggaran
     sasaran = self.sasaran
-    sasaran.anggaran = self.total
+    sasaran.anggaran = total
     sasaran.save
   end
-
 end

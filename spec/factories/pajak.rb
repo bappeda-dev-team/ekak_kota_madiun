@@ -9,13 +9,10 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-class Pajak < ApplicationRecord
-  has_many :anggarans
-
-  validates :tipe, presence: true
-  validates :potongan, presence: true, numericality: true
-
-  def simple_pajak
-    "#{Integer potongan * 100}%"
+FactoryBot.define do
+  factory :pajak do
+    tipe { 'Pajak Penghasilan' }
+    tahun { '2022' }
+    potongan { 0.1 }
   end
 end

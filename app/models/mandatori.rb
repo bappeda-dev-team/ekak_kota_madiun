@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: mandatoris
@@ -9,4 +11,6 @@
 #  updated_at        :datetime         not null
 #
 class Mandatori < ApplicationRecord
+  validates :usulan, presence: true
+  validates :peraturan_terkait, presence: true
 end

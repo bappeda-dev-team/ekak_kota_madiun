@@ -322,8 +322,6 @@ ActiveRecord::Schema.define(version: 2022_03_03_132948) do
     t.bigint "user_id"
     t.bigint "program_kegiatan_id"
     t.integer "anggaran"
-    t.string "id_struktur"
-    t.integer "tahun"
     t.index ["program_kegiatan_id"], name: "index_sasarans_on_program_kegiatan_id"
     t.index ["user_id"], name: "index_sasarans_on_user_id"
   end

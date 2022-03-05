@@ -29,8 +29,10 @@ class Aksi < ApplicationRecord
   after_destroy  :update_waktu
   after_destroy  :update_progress
   
+  validates :target, presence: true, numericality: { only_integer: true } 
+  validates :realisasi, numericality: { only_integer: true }
 
-  
+
   def update_total_target_bulan
     tahapan = self.tahapan
     tahapan.jumlah_target = tahapan.aksis.sum :target

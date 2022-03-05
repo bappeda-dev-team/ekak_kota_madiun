@@ -4,13 +4,11 @@
 #
 #  id                  :bigint           not null, primary key
 #  anggaran            :integer
-#  id_struktur         :string
 #  indikator_kinerja   :string
 #  kualitas            :integer
 #  penerima_manfaat    :string
 #  sasaran_kinerja     :string
 #  satuan              :string
-#  tahun               :integer
 #  target              :integer
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null

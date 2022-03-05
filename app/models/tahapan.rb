@@ -22,6 +22,8 @@
 #
 class Tahapan < ApplicationRecord
   belongs_to :sasaran, optional: true
-  has_many :aksis , :dependent => :destroy
-  has_many :anggarans, :dependent => :destroy
+  has_many :aksis, dependent: :destroy
+  has_many :anggarans, dependent: :destroy
+
+  validates :tahapan_kerja, presence: true
 end

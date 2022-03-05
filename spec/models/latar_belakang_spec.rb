@@ -11,5 +11,7 @@
 require 'rails_helper'
 
 RSpec.describe LatarBelakang, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'validation' do
+    it { should validate_presence_of(:dasar_hukum) }
+  end
 end

@@ -16,5 +16,8 @@
 require 'rails_helper'
 
 RSpec.describe AnggaranHspk, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'validations' do
+    it { should validate_presence_of(:kode_barang)  }
+    it { should validate_presence_of(:kode_kelompok_barang)  }
+  end
 end

@@ -14,4 +14,6 @@
 #  updated_at             :datetime         not null
 #
 class AnggaranSbu < ApplicationRecord
+  validates :kode_barang, presence: true
+  validates :kode_kelompok_barang, presence: true
 end

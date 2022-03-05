@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: anggarans
@@ -26,29 +28,33 @@
 #  fk_rails_...  (pajak_id => pajaks.id)
 #
 class Anggaran < ApplicationRecord
+  # TODO: Tes method penting
+  # TODO: Single Responsibility Principle, rekening_level violates this
   belongs_to :tahapan
   has_many :perhitungans
   # child untuk memanggil id isian bawahnya
-  has_many :childs, :class_name => "Anggaran", :foreign_key => "parent_id"
-  belongs_to :parent, class_name: "Anggaran", optional: true
+  has_many :childs, class_name: 'Anggaran', foreign_key: 'parent_id'
+  belongs_to :parent, class_name: 'Anggaran', optional: true
   belongs_to :pajak
 
   scope :tanpa_pajak, -> { where(pajak_id: nil) }
   scope :ujung_anggaran, -> { where(level: 0) }
   scope :pangkal_anggaran, -> { where(level: 5) }
 
+  validates :uraian, presence: true
+
   # get all anggaran with koefisiens
   def with_koefisiens
-    self.perhitungans.includes(:koefisiens).map(&:koefisiens)
+    perhitungans.includes(:koefisiens).map(&:koefisiens)
   end
 
   def the_parent
     parents = []
-    unless self.parent.nil?
-      parents << self.parent
-      parents.concat(self.parent.the_parent)
+    unless parent.nil?
+      parents << parent
+      parents.concat(parent.the_parent)
     end
-    return parents
+    parents
   end
 
   def grand_parent
@@ -56,12 +62,12 @@ class Anggaran < ApplicationRecord
   end
 
   def rekening_level
-    if self.level == 4
-      rek_level_3 = self.kode_rek[0..-6]
-      rek_level_2 = self.kode_rek[0..-9]
-      rek_level_1 = self.kode_rek[0..-12]
-      rek_level_0 = self.kode_rek[0..-15]
-      return { "level_3" => rek_level_3, "level_2" => rek_level_2, "level_1" => rek_level_1, "level_0" => rek_level_0 }
-    end
+    return unless level == 4
+
+    rek_level3 = kode_rek[0..-6]
+    rek_level2 = kode_rek[0..-9]
+    rek_level1 = kode_rek[0..-12]
+    rek_level0 = kode_rek[0..-15]
+    { 'level_3' => rek_level3, 'level_2' => rek_level2, 'level_1' => rek_level1, 'level_0' => rek_level0 }
   end
 end

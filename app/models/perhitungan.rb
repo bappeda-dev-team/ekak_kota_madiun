@@ -28,25 +28,30 @@ class Perhitungan < ApplicationRecord
   has_many :koefisiens
   accepts_nested_attributes_for :koefisiens
 
+  validates :deskripsi, presence: true # uraian
+  validates :satuan, presence: true
+  validates :harga, presence: true, numericality: true
+
   def hitung_total
     # cek koefisien di perhitungan
-    if self.koefisiens.any?
+    if koefisiens.any?
       # array total volume
       # dan meloop untuk insert semua volume
       total_volume = []
-      self.koefisiens.map do |k|
+      koefisiens.map do |k|
         total_volume << k.volume
       end
       # hitung volume ( seluruh volume dikalikan )
       # pajak mengambil data dari anggaran diatasnya
       volume = total_volume.reduce(:*)
-      total = volume * self.harga
-      pajak = total * self.anggaran.pajak.potongan
+      total = volume * harga
+      pajak = total * anggaran.pajak.potongan
       self.total = total + pajak.to_i
     else
       self.total = 0
     end
   end
+
   def update_jumlah_anggaran
     anggaran = self.anggaran
     if anggaran.perhitungans.any?
@@ -75,5 +80,4 @@ class Perhitungan < ApplicationRecord
       level_0.save
     end
   end
-
 end

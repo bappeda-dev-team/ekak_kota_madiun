@@ -1,6 +1,6 @@
 class AnggaransController < ApplicationController
   before_action :set_tahapan_rincian
-  before_action :set_anggaran, only: %i[ show edit update destroy ]
+  before_action :set_anggaran, only: %i[show edit update destroy]
 
   # GET /anggarans or /anggarans.json
   def index
@@ -8,8 +8,7 @@ class AnggaransController < ApplicationController
   end
 
   # GET /anggarans/1 or /anggarans/1.json
-  def show
-  end
+  def show; end
 
   # GET /anggarans/new
   def new
@@ -20,8 +19,7 @@ class AnggaransController < ApplicationController
   end
 
   # GET /anggarans/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /anggarans or /anggarans.json
   def create
@@ -36,7 +34,10 @@ class AnggaransController < ApplicationController
     respond_to do |format|
       if @anggaran.save
         format.js
-        format.html { redirect_to sasaran_tahapan_anggaran_path(@sasaran, @tahapan, @anggaran), notice: "Anggaran was successfully created." }
+        format.html do
+          redirect_to sasaran_tahapan_anggaran_path(@sasaran, @tahapan, @anggaran),
+                      notice: 'Anggaran was successfully created.'
+        end
         format.json { render :show, status: :created, location: @anggaran }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -55,7 +56,10 @@ class AnggaransController < ApplicationController
     @anggaran.level = helpers.anggaran_level kode_rekening
     respond_to do |format|
       if @anggaran.update(anggaran_params)
-        format.html { redirect_to sasaran_tahapan_anggaran_path(@sasaran, @tahapan, @anggaran), notice: "Anggaran was successfully updated." }
+        format.html do
+          redirect_to sasaran_tahapan_anggaran_path(@sasaran, @tahapan, @anggaran),
+                      notice: 'Anggaran was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @anggaran }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -68,7 +72,7 @@ class AnggaransController < ApplicationController
   def destroy
     @anggaran.destroy
     respond_to do |format|
-      format.html { redirect_to sasaran_path(@sasaran), notice: "Anggaran was successfully destroyed." }
+      format.html { redirect_to sasaran_path(@sasaran), notice: 'Anggaran was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

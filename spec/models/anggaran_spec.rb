@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: anggarans
@@ -28,5 +30,18 @@
 require 'rails_helper'
 
 RSpec.describe Anggaran, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'validation' do
+    it { should validate_presence_of(:uraian) }
+  end
+
+  context 'association' do
+    it { should belong_to(:tahapan) }
+    it { should belong_to(:pajak) }
+    it { should have_many(:perhitungans) }
+  end
+
+  context 'parent-child' do
+    it { should belong_to(:parent).class_name('Anggaran').optional }
+    it { should have_many(:childs).class_name('Anggaran') }
+  end
 end

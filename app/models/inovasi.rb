@@ -9,4 +9,5 @@
 #  updated_at :datetime         not null
 #
 class Inovasi < ApplicationRecord
+  validates :usulan, presence: true, length: { minimum: 5 }
 end

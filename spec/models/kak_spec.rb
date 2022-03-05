@@ -21,11 +21,10 @@
 require 'rails_helper'
 
 RSpec.describe Kak, type: :model do
-  it "bisa dibuat tanpa program kegiatan" do
-    expect(Kak.new.program_kegiatan).to be_nil 
+  context 'validation' do
+    it { should validate_presence_of(:dasar_hukum) }
   end
-
-  it { is_expected.to belong_to(:user) }
-  
-  
+  context 'association' do
+    it { should belong_to(:program_kegiatan).optional }
+  end
 end

@@ -12,5 +12,13 @@
 require 'rails_helper'
 
 RSpec.describe Pajak, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'validation' do
+    it { should validate_presence_of(:potongan) }
+    it { should validate_numericality_of(:potongan) }
+    it { should validate_presence_of(:tipe) }
+  end
+  context '#simple_pajak' do
+    subject { build(:pajak) }
+    it { expect(subject.simple_pajak).to eq('10%') }
+  end
 end

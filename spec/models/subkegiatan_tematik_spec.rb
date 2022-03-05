@@ -12,5 +12,12 @@
 require 'rails_helper'
 
 RSpec.describe SubkegiatanTematik, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'validation' do
+    it { should validate_presence_of(:kode_tematik) }
+    it { should validate_presence_of(:nama_tematik) }
+  end
+
+  context 'association' do
+    it { should have_many(:program_kegiatans) }
+  end
 end

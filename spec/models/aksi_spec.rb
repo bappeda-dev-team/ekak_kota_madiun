@@ -17,5 +17,9 @@
 require 'rails_helper'
 
 RSpec.describe Aksi, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'validations' do
+    it { should validate_presence_of(:target)  }
+    it { should validate_numericality_of(:target) }
+    it { should validate_numericality_of(:realisasi) }
+  end
 end

@@ -23,5 +23,13 @@
 require 'rails_helper'
 
 RSpec.describe Tahapan, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'validation' do
+    it { should validate_presence_of(:tahapan_kerja) }
+  end
+
+  context 'association' do
+    it { should belong_to(:sasaran).optional }
+    it { should have_many(:aksis) }
+    it { should have_many(:anggarans) }
+  end
 end
