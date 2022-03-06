@@ -10,4 +10,5 @@
 #
 class Lembaga < ApplicationRecord
   has_many :opds
+  validates :nama_lembaga, presence: true
 end
