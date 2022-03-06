@@ -7,7 +7,7 @@ import Rails from "@rails/ujs";
 import Turbolinks from "turbolinks";
 import * as ActiveStorage from "@rails/activestorage";
 import "channels";
-import "./sweetalert";
+import "../sweetalert/sweetalert";
 
 import jQuery from "jquery";
 import "@popperjs/core";
@@ -15,8 +15,10 @@ import Chartist from "chartist";
 import SmoothScroll from "smooth-scroll";
 import "@fortawesome/fontawesome-free/js/all.js";
 import "select2";
-import {DataTable} from 'simple-datatables'
-import "../volt/volt.js";
+
+import { DataTable } from 'simple-datatables';
+import "simple-datatables/src/style.css";
+// import "../volt/volt.js";
 
 Rails.start();
 Turbolinks.start();
@@ -34,13 +36,15 @@ window.SmoothScroll = SmoothScroll;
 
 // const tooltip = require("chartist-plugin-tooltips");
 
+
 $(function () {
+  require('../volt/volt');
   const dataTable = new DataTable('#datatable', {
     layout: {
       bottom: "{info}{pager}"
     }
   });
-  
+
   $("#dropdown").select2({
     width: "100%",
     theme: "bootstrap-5",

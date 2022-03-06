@@ -1,19 +1,18 @@
 class AnggaranSshesController < ApplicationController
-  before_action :set_anggaran_ssh, only: %i[ show edit update destroy ]
+  before_action :set_anggaran_ssh, only: %i[show edit update destroy]
 
   # GET /anggaran_sshes or /anggaran_sshes.json
   def index
-    @anggaran_sshes = AnggaranSsh.all
+    @anggaran_sshes = AnggaranSsh.all.limit(50)
   end
 
   def anggaran_ssh_search
-    param = params[:q] || ""
-    @anggaran_sshes = AnggaranSsh.where("uraian_barang ILIKE ?", "%#{param}%").limit(30)
+    param = params[:q] || ''
+    @anggaran_sshes = AnggaranSsh.where('uraian_barang ILIKE ?', "%#{param}%").limit(30)
   end
 
   # GET /anggaran_sshes/1 or /anggaran_sshes/1.json
-  def show
-  end
+  def show; end
 
   # GET /anggaran_sshes/new
   def new
@@ -21,8 +20,7 @@ class AnggaranSshesController < ApplicationController
   end
 
   # GET /anggaran_sshes/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /anggaran_sshes or /anggaran_sshes.json
   def create
@@ -30,7 +28,7 @@ class AnggaranSshesController < ApplicationController
 
     respond_to do |format|
       if @anggaran_ssh.save
-        format.html { redirect_to @anggaran_ssh, notice: "Anggaran ssh was successfully created." }
+        format.html { redirect_to @anggaran_ssh, notice: 'Anggaran ssh was successfully created.' }
         format.json { render :show, status: :created, location: @anggaran_ssh }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,7 +41,7 @@ class AnggaranSshesController < ApplicationController
   def update
     respond_to do |format|
       if @anggaran_ssh.update(anggaran_ssh_params)
-        format.html { redirect_to @anggaran_ssh, notice: "Anggaran ssh was successfully updated." }
+        format.html { redirect_to @anggaran_ssh, notice: 'Anggaran ssh was successfully updated.' }
         format.json { render :show, status: :ok, location: @anggaran_ssh }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -56,7 +54,7 @@ class AnggaranSshesController < ApplicationController
   def destroy
     @anggaran_ssh.destroy
     respond_to do |format|
-      format.html { redirect_to anggaran_sshes_url, notice: "Anggaran ssh was successfully destroyed." }
+      format.html { redirect_to anggaran_sshes_url, notice: 'Anggaran ssh was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -70,6 +68,7 @@ class AnggaranSshesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def anggaran_ssh_params
-    params.require(:anggaran_ssh).permit(:kode_kelompok_barang, :uraian_kelompok_barang, :kode_barang, :uraian_barang, :spesifikasi, :satuan, :harga_satuan)
+    params.require(:anggaran_ssh).permit(:kode_kelompok_barang, :uraian_kelompok_barang, :kode_barang, :uraian_barang,
+                                         :spesifikasi, :satuan, :harga_satuan)
   end
 end

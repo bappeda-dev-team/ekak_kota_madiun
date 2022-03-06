@@ -1,39 +1,54 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Anggaran Sshes</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Kode kelompok barang</th>
-      <th>Uraian kelompok barang</th>
-      <th>Kode barang</th>
-      <th>Uraian barang</th>
-      <th>Spesifikasi</th>
-      <th>Satuan</th>
-      <th>Harga satuan</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @anggaran_sshes.each do |anggaran_ssh| %>
-      <tr>
-        <td><%= anggaran_ssh.kode_kelompok_barang %></td>
-        <td><%= anggaran_ssh.uraian_kelompok_barang %></td>
-        <td><%= anggaran_ssh.kode_barang %></td>
-        <td><%= anggaran_ssh.uraian_barang %></td>
-        <td><%= anggaran_ssh.spesifikasi %></td>
-        <td><%= anggaran_ssh.satuan %></td>
-        <td><%= anggaran_ssh.harga_satuan %></td>
-        <td><%= link_to 'Show', anggaran_ssh %></td>
-        <td><%= link_to 'Edit', edit_anggaran_ssh_path(anggaran_ssh) %></td>
-        <td><%= link_to 'Destroy', anggaran_ssh, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Anggaran Ssh', new_anggaran_ssh_path %>
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to "Anggaran SSH", anggaran_sshes_path %></li>
+      </ol>
+    </nav>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Anggaran SSH</h2>
+          </div>
+          <div class="col text-end">
+            <%= link_to "Tambah Data", new_anggaran_ssh_path, class: "btn btn-sm btn-info" %>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive p-4">
+        <table class="table table-flush" id="datatable">
+          <thead>
+            <tr>
+              <th>Kode kelompok barang</th>
+              <th>Uraian kelompok barang</th>
+              <th>Kode barang</th>
+              <th>Uraian barang</th>
+              <th>Spesifikasi</th>
+              <th>Satuan</th>
+              <th>Harga satuan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @anggaran_sshes.each do |anggaran_ssh| %>
+              <tr>
+                <td><%= anggaran_ssh.kode_kelompok_barang %></td>
+                <td><%= anggaran_ssh.uraian_kelompok_barang %></td>
+                <td><%= anggaran_ssh.kode_barang %></td>
+                <td><%= anggaran_ssh.uraian_barang %></td>
+                <td><%= anggaran_ssh.spesifikasi %></td>
+                <td><%= anggaran_ssh.satuan %></td>
+                <td><%= anggaran_ssh.harga_satuan %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
