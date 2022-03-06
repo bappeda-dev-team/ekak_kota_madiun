@@ -16,14 +16,12 @@
           <div class="col">
             <h2 class="fs-5 fw-bold mb-0">Usulan Musrenbang </h2>
           </div>
-            <div class="col text-end">
-              <%= link_to "Tambah Usulan", new_musrenbang_path, class: "btn btn-sm btn-info" %>
-            </div>
+          <div class="col text-end">
+            <%= link_to "Tambah Usulan", new_musrenbang_path, class: "btn btn-sm btn-info" %>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="card border-0 shadow">
-      <div class="table-responsive">
+      <div class="table-responsive p-4">
         <table class="table table-flush" id="datatable">
           <thead class="thead-light">
             <tr>
@@ -38,8 +36,8 @@
             <% @musrenbangs.each.with_index(1) do |musrenbang, i| %>
               <tr>
                 <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                <td class="fw-bolder text-gray-500" style="max-width: 25%; white-space: initial !important; "><%= link_to musrenbang.usulan, edit_musrenbang_path(musrenbang) %></td>
-                <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= musrenbang.alamat %></td>
+                <td class="fw-bolder text-gray-500"><%= link_to musrenbang.usulan, edit_musrenbang_path(musrenbang) %></td>
+                <td class="fw-bolder text-gray-500"><%= musrenbang.alamat %></td>
                 <td class="fw-bolder text-gray-500"><%= musrenbang.sasaran.nil? ? ' -- ' : musrenbang.sasaran.sasaran_kinerja %></td>
                 <td class="fw-bolder text-gray-500 text-center">
                   <%= link_to musrenbang, class: "m-3" do %>

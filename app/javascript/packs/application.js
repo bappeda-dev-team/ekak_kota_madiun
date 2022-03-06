@@ -13,10 +13,10 @@ import jQuery from "jquery";
 import "@popperjs/core";
 import Chartist from "chartist";
 import SmoothScroll from "smooth-scroll";
-import "../volt/volt.js";
 import "@fortawesome/fontawesome-free/js/all.js";
 import "select2";
-import 'datatables.net-bs5';
+import {DataTable} from 'simple-datatables'
+import "../volt/volt.js";
 
 Rails.start();
 Turbolinks.start();
@@ -26,15 +26,21 @@ require("trix");
 require("@rails/actiontext");
 
 window.$ = window.jQuery = jQuery;
-window.bootstrap = require("bootstrap");
+window.bootstrap = require('bootstrap');
 window.Chartist = Chartist;
 window.SmoothScroll = SmoothScroll;
 
-const tooltip = require("chartist-plugin-tooltips");
+
+
+// const tooltip = require("chartist-plugin-tooltips");
 
 $(function () {
-  console.log("javascript application is on");
-  $('#datatable').DataTable();
+  const dataTable = new DataTable('#datatable', {
+    layout: {
+      bottom: "{info}{pager}"
+    }
+  });
+  
   $("#dropdown").select2({
     width: "100%",
     theme: "bootstrap-5",
