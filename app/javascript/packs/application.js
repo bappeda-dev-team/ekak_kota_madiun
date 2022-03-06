@@ -39,10 +39,9 @@ window.SmoothScroll = SmoothScroll;
 
 $(function () {
   require('../volt/volt');
-  const dataTable = new DataTable('#datatable', {
-    layout: {
-      bottom: "{info}{pager}"
-    }
+
+  [].slice.call(document.querySelectorAll('.datatable')).map(function (el) {
+    el = new DataTable('.datatable')
   });
 
   $("#dropdown").select2({

@@ -3,13 +3,12 @@ module ApplicationHelper
     [
       { title: 'Sasaran Kinerja', href: user_sasarans_path(current_user), icon: 'fas fa-bullseye',
         identifier: 'sasaran' },
-      { title: 'Sub Kegiatan', href: program_kegiatans_path, icon: 'fas fa-tasks', identifier: 'program_kegiatan' },
       { title: 'Kak', href: kaks_path, icon: 'fas fa-sitemap', identifier: 'acuan_kerja' },
       { title: 'Laporan KaK', href: laporan_kak_path, icon: 'far fa-file', identifier: 'laporan_kak' }
     ]
   end
 
-  def sub_sidebar_items
+  def usulan_items
     [
       { title: 'Musrenbang', href: musrenbangs_path, identifier: 'musrenbang' },
       { title: 'Pokok Pikiran', href: pokpirs_path, identifier: 'pokpir' },
@@ -18,11 +17,20 @@ module ApplicationHelper
     ]
   end
 
-  def data_master_items
+  def anggaran_items
     [
       { title: 'Anggaran SSH', href: anggaran_sshes_path, identifier: 'anggaran_ssh' },
       { title: 'Anggaran SBU', href: anggaran_sbus_index_path, identifier: 'anggaran_sbu' },
-      { title: 'Anggaran HSPK', href: anggaran_hspks_path, identifier: 'anggaran_hspk' }
+      { title: 'Anggaran HSPK', href: anggaran_hspks_path, identifier: 'anggaran_hspk' },
+      { title: 'Kode Rekening', href: rekenings_path, identifier: 'rekening' }
+    ]
+  end
+
+  def master_data_items
+    [
+      { title: 'Program', href: program_kegiatans_path, identifier: 'program_kegiatan', icon: 'fas fa-tasks' },
+      { title: 'Sasaran Kinerja', href: user_sasarans_path(current_user), icon: 'fas fa-bullseye',
+        identifier: 'sasaran' }
     ]
   end
 
