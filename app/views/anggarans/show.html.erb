@@ -14,9 +14,9 @@
   <div class="card-header">
     <div class="row align-items-center">
       <p><%= link_to sasaran_path(@tahapan.sasaran) do %>
-        <span class="fas fa-arrow-left"></span>
-        <span>Kembali</span>
-      <% end %>
+          <span class="fas fa-arrow-left"></span>
+          <span>Kembali</span>
+        <% end %>
       </p>
       <h5>Sasaran : <%= @sasaran.sasaran_kinerja %></h5>
       <p>Tahapan : <%= @tahapan.tahapan_kerja %></p>
@@ -25,38 +25,38 @@
   <div class="card-body">
     <p>Rincian Anggaran</p>
     <div class="anggaran">
-    <table id="detail-anggaran">
-      <thead>
-        <tr>
-          <th rowspan="2">Kode Rekening</th>
-          <th rowspan="2">Uraian</th>
-          <th colspan="3">Rincian Perhitungan</th>
-          <th rowspan="2">PPN (10%)</th>
-          <th rowspan="2">Jumlah</th>
-        </tr>
-        <tr>
-          <th>Koefisien</th>
-          <th>Satuan</th>
-          <th>Harga</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="level-0">
-          <td><%= rekening_anggaran @anggaran.kode_rek %></td>
-          <td colspan="5"><%= @anggaran.uraian %>
-            <%= link_to '[ + ]', new_anggaran_perhitungan_path(@anggaran),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "btn btn-sm btn-info text-secondary animate-up-2"   %>
-            <%= link_to "Edit Anggaran", edit_sasaran_tahapan_anggaran_path(@sasaran, @tahapan, @anggaran)  %>
-          </td>
-          <td class="uang"><%= number_with_delimiter(@anggaran.jumlah, :delimiter => '.') %></td>
-        </tr>
-        <% if @anggaran.perhitungans.any? %>
+      <table id="detail-anggaran">
+        <thead>
+          <tr>
+            <th rowspan="2">Kode Rekening</th>
+            <th rowspan="2">Uraian</th>
+            <th colspan="3">Rincian Perhitungan</th>
+            <th rowspan="2">PPN (10%)</th>
+            <th rowspan="2">Jumlah</th>
+          </tr>
+          <tr>
+            <th>Koefisien</th>
+            <th>Satuan</th>
+            <th>Harga</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="level-0">
+            <td><%= rekening_anggaran @anggaran.kode_rek %></td>
+            <td colspan="5"><%= @anggaran.uraian %>
+              <%= link_to '[ + ]', new_anggaran_perhitungan_path(@anggaran),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "btn btn-sm btn-info text-secondary animate-up-2"   %>
+              <%= link_to "Edit Anggaran", edit_sasaran_tahapan_anggaran_path(@sasaran, @tahapan, @anggaran)  %>
+            </td>
+            <td class="uang"><%= number_with_delimiter(@anggaran.jumlah, :delimiter => '.') %></td>
+          </tr>
+          <% if @anggaran.perhitungans.any? %>
             <% @anggaran.perhitungans.order(:id).each do |hitung| %>
               <% pajak = hitung.total * @anggaran.pajak.potongan %>
               <tr class="rincian-anggaran">
                 <td><%= link_to "Hapus Anggaran", anggaran_perhitungan_path(@anggaran, hitung), method: :delete, data: { confirm_swal: "Hapus Anggaran #{hitung.deskripsi} ?" }, class: "btn btn-danger" %></td>
-                <td><%= link_to hitung.deskripsi, edit_anggaran_perhitungan_path(@anggaran, hitung) %></td>
-                <td><% hitung.koefisiens.each do |koef|%>
-                  |  <%= koef.volume %> <%= koef.satuan_volume %>  |
+                <td><%= hitung.deskripsi %></td>
+                <td><% hitung.koefisiens.each.with_index(1) do |koef, index|%>
+                    <%= koef.volume %> <%= koef.satuan_volume %> <%= 'x' if index < hitung.koefisiens.length %>
                   <% end %>
                 </td>
                 <td><%= hitung.satuan %></td>
@@ -65,16 +65,16 @@
                 <td class="uang"><%= number_with_delimiter((hitung.total).to_i, :delimiter => '.') %></td>
               </tr>
             <% end %>
-        <% end %>
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="6" style="text-align:right">Jumlah Anggaran Sub Kegiatan :</td>
-          <td><%= number_with_delimiter((@anggaran.jumlah).to_i, :delimiter => '.') %></td>
-        </tr>
-      </tfoot>
-    </table>
-  </div>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6" style="text-align:right">Jumlah Anggaran Sub Kegiatan :</td>
+            <td><%= number_with_delimiter((@anggaran.jumlah).to_i, :delimiter => '.') %></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
   </div>
 </div>
 <!-- SECTION - Table Anggaran -->
