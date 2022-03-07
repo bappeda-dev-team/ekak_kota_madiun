@@ -1,31 +1,63 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Tematik</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>No</th>
-      <th>Tematik</th>
-      <th>Kode Tematik</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @subkegiatan_tematiks.each.with_index(1) do |subkegiatan_tematik, i| %>
-      <tr>
-        <td><%= i %></td>
-        <td><%= subkegiatan_tematik.nama_tematik %></td>
-        <td><%= subkegiatan_tematik.kode_tematik %></td>
-        <td><%= link_to 'Show', subkegiatan_tematik %></td>
-        <td><%= link_to 'Edit', edit_subkegiatan_tematik_path(subkegiatan_tematik) %></td>
-        <td><%= link_to 'Destroy', subkegiatan_tematik, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Subkegiatan Tematik', new_subkegiatan_tematik_path %>
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to "Tematik", subkegiatan_tematiks_path %></li>
+      </ol>
+    </nav>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Tematik</h2>
+          </div>
+          <div class="col text-end">
+            <%= link_to "Tambah Tematik", new_subkegiatan_tematik_path, class: "btn btn-sm btn-info" %>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th class="border-bottom" scope="col">No.</th>
+                <th class="border-bottom" scope="col">Tematik</th>
+                <th class="border-bottom" scope="col">Kode Tematik</th>
+                <th class="border-bottom" scope="col">Tambah User</th>
+                <th class="border-bottom text-center" colspan="3">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @subkegiatan_tematiks.each.with_index(1) do |subkegiatan_tematik, i| %>
+                <tr>
+                  <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
+                  <td class="fw-bolder text-gray-500"><%= subkegiatan_tematik.nama_tematik %></td>
+                  <td class="fw-bolder text-gray-500"><%= subkegiatan_tematik.kode_tematik %></td>
+                  <td class="fw-bolder text-gray-500"><%= link_to 'Tambah User', '#' %></td>
+                  <td class="fw-bolder text-gray-500"><%= link_to subkegiatan_tematik do %>
+                    <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
+                  <% end %>
+                  </td>
+                  <td class="fw-bolder text-gray-500"><%= link_to edit_subkegiatan_tematik_path(subkegiatan_tematik) do %>
+                    <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+                  <% end %>
+                  </td>
+                  <td class="fw-bolder text-gray-500"><%= link_to subkegiatan_tematik, method: :delete, data: { confirm: 'Hapus Tematik?' } do %>
+                    <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+                  <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

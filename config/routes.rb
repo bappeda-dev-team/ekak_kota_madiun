@@ -65,6 +65,7 @@ Rails.application.routes.draw do
   
   #admin thing
   get "/adminsasarans", to: "sasarans#sasaran_admin"
+  get "/adminusers", to: "users#user_admin"
   #
   # get "/program_kegiatans", to: "program_kegiatans#index"
   # get "/program_kegiatans/new", to: "program_kegiatans#new"
