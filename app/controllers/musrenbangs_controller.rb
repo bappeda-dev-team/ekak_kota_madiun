@@ -1,5 +1,5 @@
 class MusrenbangsController < ApplicationController
-  before_action :set_musrenbang, only: %i[ show edit update destroy ]
+  before_action :set_musrenbang, only: %i[show edit update destroy]
 
   # GET /musrenbangs or /musrenbangs.json
   def index
@@ -13,13 +13,12 @@ class MusrenbangsController < ApplicationController
   end
 
   def musrenbang_search
-    param = params[:q] || ""
-    @musrenbangs = Musrenbang.where("usulan ILIKE ?", "%#{param}%").limit(50)
+    param = params[:q] || ''
+    @musrenbangs = Musrenbang.where('usulan ILIKE ?', "%#{param}%").limit(50)
   end
 
   # GET /musrenbangs/1 or /musrenbangs/1.json
-  def show
-  end
+  def show; end
 
   # GET /musrenbangs/new
   def new
@@ -27,8 +26,7 @@ class MusrenbangsController < ApplicationController
   end
 
   # GET /musrenbangs/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /musrenbangs or /musrenbangs.json
   def create
@@ -36,7 +34,7 @@ class MusrenbangsController < ApplicationController
 
     respond_to do |format|
       if @musrenbang.save
-        format.html { redirect_to @musrenbang, notice: "Musrenbang was successfully created." }
+        format.html { redirect_to @musrenbang, notice: 'Musrenbang was successfully created.' }
         format.json { render :show, status: :created, location: @musrenbang }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -49,7 +47,7 @@ class MusrenbangsController < ApplicationController
   def update
     respond_to do |format|
       if @musrenbang.update(musrenbang_params)
-        format.html { redirect_to @musrenbang, notice: "Musrenbang was successfully updated." }
+        format.html { redirect_to @musrenbang, notice: 'Musrenbang was successfully updated.' }
         format.json { render :show, status: :ok, location: @musrenbang }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -62,7 +60,7 @@ class MusrenbangsController < ApplicationController
   def destroy
     @musrenbang.destroy
     respond_to do |format|
-      format.html { redirect_to musrenbangs_url, notice: "Musrenbang was successfully destroyed." }
+      format.html { redirect_to musrenbangs_url, notice: 'Musrenbang was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -76,6 +74,6 @@ class MusrenbangsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def musrenbang_params
-    params.require(:musrenbang).permit(:usulan, :tahun, :sasaran_id, :nip_asn)
+    params.require(:musrenbang).permit(:usulan, :alamat, :tahun, :sasaran_id, :nip_asn)
   end
 end

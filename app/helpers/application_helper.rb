@@ -13,7 +13,7 @@ module ApplicationHelper
       { title: 'Musrenbang', href: musrenbangs_path, identifier: 'musrenbang' },
       { title: 'Pokok Pikiran', href: pokpirs_path, identifier: 'pokpir' },
       { title: 'Mandatori', href: mandatoris_path, identifier: 'mandatori' },
-      { title: 'Inovasi', href: inovasis_path, identifier: 'inovasi' }
+      { title: 'Inisiatif', href: inovasis_path, identifier: 'inovasi' }
     ]
   end
 
@@ -32,7 +32,8 @@ module ApplicationHelper
       { title: 'Program', href: program_kegiatans_path, identifier: 'program_kegiatan', icon: 'fas fa-tasks' },
       { title: 'Sasaran Kinerja', href: adminsasarans_path, icon: 'fas fa-bullseye',
         identifier: 'adminsasarans' },
-      { title: 'Daftar SubKegiatan OPD', href: daftar_subkegiatan_path, icon: 'fas fa-folder-open', identifier: 'daftar_subkegiatan' },
+      { title: 'Daftar SubKegiatan OPD', href: daftar_subkegiatan_path, icon: 'fas fa-folder-open',
+        identifier: 'daftar_subkegiatan' },
       { title: 'User', href: adminusers_path, icon: 'fas fa-user-check', identifier: 'adminusers' }
     ]
   end

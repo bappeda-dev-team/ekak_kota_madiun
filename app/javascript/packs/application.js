@@ -16,8 +16,6 @@ import SmoothScroll from "smooth-scroll";
 import "@fortawesome/fontawesome-free/js/all.js";
 import "select2";
 
-import { DataTable } from 'simple-datatables';
-import "simple-datatables/src/style.css";
 // import "../volt/volt.js";
 
 Rails.start();
@@ -32,17 +30,9 @@ window.bootstrap = require('bootstrap');
 window.Chartist = Chartist;
 window.SmoothScroll = SmoothScroll;
 
-
-
-// const tooltip = require("chartist-plugin-tooltips");
-
+require('../volt/volt');
 
 $(function () {
-  require('../volt/volt');
-
-  [].slice.call(document.querySelectorAll('.datatable')).map(function (el) {
-    el = new DataTable('.datatable')
-  });
 
   $("#dropdown").select2({
     width: "100%",

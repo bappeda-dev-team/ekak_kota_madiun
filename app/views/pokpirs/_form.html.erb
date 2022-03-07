@@ -2,7 +2,6 @@
   <% if pokpir.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(pokpir.errors.count, "error") %> prohibited this pokpir from being saved:</h2>
-
       <ul>
         <% pokpir.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,17 +9,25 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
     <%= form.label :usulan %>
-    <%= form.text_field :usulan %>
+    <%= form.text_field :usulan, class: 'form-control' %>
   </div>
-
   <div class="field">
     <%= form.label :alamat %>
-    <%= form.text_field :alamat %>
+    <%= form.text_field :alamat, class: 'form-control' %>
   </div>
-
+  <div class="field mt-3">
+    <%= form.label :tahun %>
+    <%= form.select(:tahun, (['',2021,2022,2023,2024]), {}, {:id => 'dropdown',data: {"placeholder": "Pilih Tahun",}}) %>
+  </div>
+  <% unless current_page? action: 'new' %>
+    <div class="field">
+      <% sasaran = Sasaran.all %>
+      <label for="sasaran_id">Sasaran / Rencana Kinerja ( Output )</label>
+      <%= form.select :sasaran_id, options_for_select(sasaran.collect { | n | [n.sasaran_kinerja, n.id]  }), {include_blank: true}, {class: "select2-waw", "data-placeholder": "Pilih Sasaran"} %>
+    </div>
+  <% end %>
   <div class="actions">
     <%= form.submit %>
   </div>

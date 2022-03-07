@@ -16,8 +16,12 @@
 */
 "use strict";
 
-const d = document;
+import 'simple-datatables/dist/style.css';
+import { DataTable } from 'simple-datatables';
 
+
+const d = document;
+d.addEventListener("DOMContentLoaded", function (event) {
   // options
   const breakpoints = {
     sm: 540,
@@ -84,6 +88,12 @@ const d = document;
       buttonClass: 'btn'
     });
   })
+
+  // DataTable
+  var dataTables = [].slice.call(d.querySelectorAll('[data-datatable]'))
+  var dataTableList = dataTables.map(function (el) {
+    el = new DataTable(el)
+  });
 
   if (d.querySelector('.input-slider-container')) {
     [].slice.call(d.querySelectorAll('.input-slider-container')).map(function (el) {
@@ -297,3 +307,4 @@ const d = document;
       autoplay: 2000
     }).mount();
   }
+});

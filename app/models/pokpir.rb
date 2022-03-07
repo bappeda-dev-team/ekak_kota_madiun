@@ -10,4 +10,6 @@
 #
 class Pokpir < ApplicationRecord
   validates :usulan, presence: true
+
+  belongs_to :sasaran, optional: true
 end
