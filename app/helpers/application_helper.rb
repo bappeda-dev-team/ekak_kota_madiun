@@ -29,8 +29,9 @@ module ApplicationHelper
   def master_data_items
     [
       { title: 'Program', href: program_kegiatans_path, identifier: 'program_kegiatan', icon: 'fas fa-tasks' },
-      { title: 'Sasaran Kinerja', href: user_sasarans_path(current_user), icon: 'fas fa-bullseye',
-        identifier: 'sasaran' }
+      { title: 'Sasaran Kinerja', href: adminsasarans_path, icon: 'fas fa-bullseye',
+        identifier: 'adminsasarans' },
+      { title: 'Daftar Sub Kegiatan OPD', href: daftar_subkegiatan_path, icon: 'fas fa-folder-open', identifier: 'daftar_subkegiatan' }
     ]
   end
 

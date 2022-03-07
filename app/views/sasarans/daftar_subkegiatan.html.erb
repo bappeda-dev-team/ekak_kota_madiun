@@ -1,0 +1,60 @@
+<nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+  <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+    <li class="breadcrumb-item">
+      <%= link_to root_path do %>
+        <i class="fas fa-home"></i>
+      <% end %>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Daftar Sub Kegiatan OPD</li>
+  </ol>
+</nav>
+<div class="card border-0 shadow">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">Daftar Sub Kegiatan OPD</h2>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-flush">
+        <thead class="thead-light">
+          <tr>
+            <th>No.</th>
+            <th>Sub Kegiatan</th>
+            <th>Sasaran Kinerja</th>
+            <th>Pejabat</th>
+            <th colspan="3" class="text-center">Usulan</th>
+            <th>Pagu Anggaran</th>
+            <th>Keterangan</th>
+          </tr>
+          <tr>
+            <th colspan="4"></th>
+            <th>nama</th>
+            <th>jenis</th>
+            <th>lokasi</th>
+            <th colspan="2"></th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @sasarans.each.with_index(1) do |sasaran, index| %>
+          <tr>
+            <td><%= index %></td>
+            <td><%= sasaran.program_kegiatan.nama_subkegiatan %></td>
+            <td class="wrap-text"><%= sasaran.sasaran_kinerja %></td>
+            <td><%= sasaran.user.nama %></td>
+            <% sasaran.musrenbangs.each do |mus| %>
+            <td><%= mus.usulan or '-' %></td>
+            <td><%= mus.class.name.to_s or '-' %></td>
+            <td><%= mus.class.name.to_s or '-' %></td>
+            <% end %>
+            <td><%= sasaran.total_anggaran or '-' %></td>
+            <td></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

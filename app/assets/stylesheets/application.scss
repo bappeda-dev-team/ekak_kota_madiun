@@ -24,7 +24,6 @@ $fa-font-path: '@fortawesome/fontawesome-free/webfonts';
 @import "../../../node_modules/chartist/dist/scss/chartist.scss";
 @import "../../../node_modules/select2/src/scss/core.scss";
 @import "../../../node_modules/select2-bootstrap-5-theme/src/include-all";
-@import "../../../node_modules/sweetalert2/dist/sweetalert2.min.css";
 
 @import "./actiontext.scss";
 .field {
@@ -53,6 +52,10 @@ input[name="commit"] {
 
 form {
   @extend .mt-2;
+}
+
+td.wrap-text {
+  white-space: normal;
 }
 
 // .table td {

@@ -11,6 +11,17 @@ class SasaransController < ApplicationController
   # GET /sasarans/1 or /sasarans/1.json
   def show
   end
+  
+  def sasaran_admin
+    @sasarans = Sasaran.all
+  end
+  
+  def daftar_subkegiatan
+    @sasarans = Sasaran.includes(:program_kegiatan).where.not(program_kegiatan: { id: nil }).joins(:musrenbangs)
+  end
+
+  def pdf_daftar_subkegiatan
+  end
 
   # GET /sasarans/new
   def new

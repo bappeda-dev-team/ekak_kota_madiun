@@ -70,3 +70,4 @@ gem 'pagy', '~> 5.10'
 gem 'rolify', '~> 6.0'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?
+gem 'prawn-rails', '~> 1.4', '>= 1.4.2'
