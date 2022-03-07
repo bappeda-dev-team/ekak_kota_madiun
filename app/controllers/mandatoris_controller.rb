@@ -1,5 +1,5 @@
 class MandatorisController < ApplicationController
-  before_action :set_mandatori, only: %i[ show edit update destroy ]
+  before_action :set_mandatori, only: %i[show edit update destroy]
 
   # GET /mandatoris or /mandatoris.json
   def index
@@ -7,8 +7,7 @@ class MandatorisController < ApplicationController
   end
 
   # GET /mandatoris/1 or /mandatoris/1.json
-  def show
-  end
+  def show; end
 
   # GET /mandatoris/new
   def new
@@ -16,8 +15,7 @@ class MandatorisController < ApplicationController
   end
 
   # GET /mandatoris/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /mandatoris or /mandatoris.json
   def create
@@ -25,7 +23,7 @@ class MandatorisController < ApplicationController
 
     respond_to do |format|
       if @mandatori.save
-        format.html { redirect_to @mandatori, notice: "Mandatori was successfully created." }
+        format.html { redirect_to @mandatori, notice: 'Mandatori was successfully created.' }
         format.json { render :show, status: :created, location: @mandatori }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +36,7 @@ class MandatorisController < ApplicationController
   def update
     respond_to do |format|
       if @mandatori.update(mandatori_params)
-        format.html { redirect_to @mandatori, notice: "Mandatori was successfully updated." }
+        format.html { redirect_to @mandatori, notice: 'Mandatori was successfully updated.' }
         format.json { render :show, status: :ok, location: @mandatori }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -51,19 +49,20 @@ class MandatorisController < ApplicationController
   def destroy
     @mandatori.destroy
     respond_to do |format|
-      format.html { redirect_to mandatoris_url, notice: "Mandatori was successfully destroyed." }
+      format.html { redirect_to mandatoris_url, notice: 'Mandatori was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_mandatori
-      @mandatori = Mandatori.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def mandatori_params
-      params.require(:mandatori).permit(:usulan, :peraturan_terkait)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_mandatori
+    @mandatori = Mandatori.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def mandatori_params
+    params.require(:mandatori).permit(:usulan, :peraturan_terkait, :tahun, :sasaran_id, :nip_asn)
+  end
 end

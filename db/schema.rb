@@ -129,6 +129,11 @@ ActiveRecord::Schema.define(version: 2022_03_07_154823) do
     t.string "manfaat"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "tahun"
+    t.string "opd"
+    t.string "nip_asn"
+    t.bigint "sasaran_id"
+    t.index ["sasaran_id"], name: "index_inovasis_on_sasaran_id"
   end
 
   create_table "kaks", force: :cascade do |t|
@@ -184,6 +189,11 @@ ActiveRecord::Schema.define(version: 2022_03_07_154823) do
     t.string "peraturan_terkait"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "tahun"
+    t.string "opd"
+    t.string "nip_asn"
+    t.bigint "sasaran_id"
+    t.index ["sasaran_id"], name: "index_mandatoris_on_sasaran_id"
   end
 
   create_table "musrenbangs", force: :cascade do |t|
@@ -259,6 +269,11 @@ ActiveRecord::Schema.define(version: 2022_03_07_154823) do
     t.string "alamat"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "tahun"
+    t.string "opd"
+    t.string "nip_asn"
+    t.bigint "sasaran_id"
+    t.index ["sasaran_id"], name: "index_pokpirs_on_sasaran_id"
   end
 
   create_table "program_kegiatans", force: :cascade do |t|

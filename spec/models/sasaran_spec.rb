@@ -155,4 +155,20 @@ RSpec.describe Sasaran, type: :model do
       expect(sasaran).to be_valid
     end
   end
+
+  context 'association' do
+    it { should have_many(:musrenbangs) }
+    it { should have_many(:pokpirs) }
+    it { should have_many(:mandatoris) }
+    it { should have_many(:inovasis) }
+    it { should have_many(:tahapans) }
+    it { should have_one(:rincian) }
+    it { should belong_to(:user) }
+    it { should belong_to(:program_kegiatan).optional }
+  end
+
+  context 'nested_attribute' do
+    it { should accept_nested_attributes_for(:rincian).update_only(true) }
+    it { should accept_nested_attributes_for(:tahapans) }
+  end
 end

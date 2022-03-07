@@ -1,5 +1,5 @@
 class InovasisController < ApplicationController
-  before_action :set_inovasi, only: %i[ show edit update destroy ]
+  before_action :set_inovasi, only: %i[show edit update destroy]
 
   # GET /inovasis or /inovasis.json
   def index
@@ -7,8 +7,7 @@ class InovasisController < ApplicationController
   end
 
   # GET /inovasis/1 or /inovasis/1.json
-  def show
-  end
+  def show; end
 
   # GET /inovasis/new
   def new
@@ -16,8 +15,7 @@ class InovasisController < ApplicationController
   end
 
   # GET /inovasis/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /inovasis or /inovasis.json
   def create
@@ -25,7 +23,7 @@ class InovasisController < ApplicationController
 
     respond_to do |format|
       if @inovasi.save
-        format.html { redirect_to @inovasi, notice: "Inovasi was successfully created." }
+        format.html { redirect_to @inovasi, notice: 'Inovasi was successfully created.' }
         format.json { render :show, status: :created, location: @inovasi }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +36,7 @@ class InovasisController < ApplicationController
   def update
     respond_to do |format|
       if @inovasi.update(inovasi_params)
-        format.html { redirect_to @inovasi, notice: "Inovasi was successfully updated." }
+        format.html { redirect_to @inovasi, notice: 'Inovasi was successfully updated.' }
         format.json { render :show, status: :ok, location: @inovasi }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -51,19 +49,20 @@ class InovasisController < ApplicationController
   def destroy
     @inovasi.destroy
     respond_to do |format|
-      format.html { redirect_to inovasis_url, notice: "Inovasi was successfully destroyed." }
+      format.html { redirect_to inovasis_url, notice: 'Inovasi was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_inovasi
-      @inovasi = Inovasi.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def inovasi_params
-      params.require(:inovasi).permit(:usulan, :manfaat)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_inovasi
+    @inovasi = Inovasi.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def inovasi_params
+    params.require(:inovasi).permit(:usulan, :manfaat, :nip_asn, :tahun, :sasaran_id)
+  end
 end
