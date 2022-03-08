@@ -28,10 +28,9 @@ class Aksi < ApplicationRecord
   after_destroy  :update_total_realisasi_bulan
   after_destroy  :update_waktu
   after_destroy  :update_progress
-  
-  validates :target, presence: true, numericality: { only_integer: true } 
-  validates :realisasi, numericality: { only_integer: true }
 
+  validates :target, presence: true, numericality: { only_integer: true }
+  # validates :realisasi, numericality: { only_integer: true }
 
   def update_total_target_bulan
     tahapan = self.tahapan
@@ -53,16 +52,14 @@ class Aksi < ApplicationRecord
 
   def update_progress
     tahapan = self.tahapan
-    t= tahapan.jumlah_target
-    r= tahapan.jumlah_realisasi
+    t = tahapan.jumlah_target
+    r = tahapan.jumlah_realisasi
     check = r * t
-    if check != 0
-      tahapan.progress = r / t * 100
-    else
-      tahapan.progress = 0
-    end
+    tahapan.progress = if check != 0
+                         r / t * 100
+                       else
+                         0
+                       end
     tahapan.save
   end
-
-
 end

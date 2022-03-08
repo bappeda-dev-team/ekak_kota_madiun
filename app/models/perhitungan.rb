@@ -57,6 +57,9 @@ class Perhitungan < ApplicationRecord
     if anggaran.perhitungans.any?
       anggaran.jumlah = anggaran.perhitungans.sum(:total)
       anggaran.save
+    else
+      anggaran.jumlah = 0
+      anggaran.save
     end
     if anggaran.childs.any?
       level_4 = anggaran.parent

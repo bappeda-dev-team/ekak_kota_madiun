@@ -28,7 +28,7 @@ class PerhitungansController < ApplicationController
       if @perhitungan.save
         format.js
         format.html do
-          redirect_to rincian_tahapan_anggaran_path(@anggaran.tahapan.rincian, @anggaran.tahapan, awal),
+          redirect_to sasaran_tahapan_anggaran_path(@anggaran.tahapan.sasaran, @anggaran.tahapan, awal),
                       notice: 'Perhitungan was successfully created.'
         end
         format.json { render :show, status: :created, location: @perhitungan }
@@ -45,7 +45,7 @@ class PerhitungansController < ApplicationController
     respond_to do |format|
       if @perhitungan.update(perhitungan_params)
         format.html do
-          redirect_to rincian_tahapan_anggaran_path(@anggaran.tahapan.rincian, @anggaran.tahapan, awal),
+          redirect_to sasaran_tahapan_anggaran_path(@anggaran.tahapan.sasaran, @anggaran.tahapan, awal),
                       notice: "#{@perhitungan.deskripsi} updated."
         end
         format.json { render :show, status: :ok, location: @perhitungan }
@@ -62,7 +62,7 @@ class PerhitungansController < ApplicationController
     awal = @anggaran.grand_parent || @anggaran
     respond_to do |format|
       format.html do
-        redirect_to rincian_tahapan_anggaran_path(@anggaran.tahapan.rincian, @anggaran.tahapan, awal),
+        redirect_to sasaran_tahapan_anggaran_path(@anggaran.tahapan.sasaran, @anggaran.tahapan, awal),
                     notice: 'Perhitungan was successfully destroyed.'
       end
       format.json { head :no_content }

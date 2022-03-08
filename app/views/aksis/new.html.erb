@@ -1,4 +1,3 @@
 <h1>Tambah Target / Realisasi Tahapan Kinerja : "<%= @tahapan.tahapan_kerja %>"</h1>
 <%= render 'form', aksi: @aksi, bulan: @bulan%>
-
-<%= link_to 'Kembali', sasaran_path(@tahapan.rincian.sasaran) %>
+<%= link_to 'Kembali', sasaran_path(@tahapan.sasaran) %>

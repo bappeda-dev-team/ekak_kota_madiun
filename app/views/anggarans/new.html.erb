@@ -1,9 +1,19 @@
-<% upper_parent = Anggaran.find_by(id: @parent)  %>
-<h1>Anggaran <%= @level || "Induk" %> </h1>
-
-<%= render 'form', anggaran: @anggaran,
+<nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+  <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+    <li class="breadcrumb-item">
+      <%= link_to root_path do %>
+        <i class="fas fa-home"></i>
+      <% end %>
+    </li>
+    <li class="breadcrumb-item"><%= link_to 'Musrenbang', musrenbangs_path %></li>
+    <li class="breadcrumb-item active" aria-current="page">Form Anggaran Program Kegiatan</li>
+  </ol>
+</nav>
+<div class="form-field-container">
+  <h3>Anggaran Program Kegiatan</h3>
+  <hr>
+  <% upper_parent = Anggaran.find_by(id: @parent)  %>
+  <%= render 'form', anggaran: @anggaran,
     parent:  @parent,
     level: @level %>
-
-<%= link_to 'Kembali', sasaran_path(@tahapan.sasaran) %>
-
+</div>

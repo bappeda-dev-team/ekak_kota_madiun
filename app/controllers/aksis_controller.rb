@@ -1,6 +1,6 @@
 class AksisController < ApplicationController
   before_action :set_sasaran
-  before_action :set_aksi, only: %i[ show edit update destroy ]
+  before_action :set_aksi, only: %i[show edit update destroy]
 
   # GET /aksis or /aksis.json
   def index
@@ -8,8 +8,7 @@ class AksisController < ApplicationController
   end
 
   # GET /aksis/1 or /aksis/1.json
-  def show
-  end
+  def show; end
 
   # GET /aksis/new
   def new
@@ -29,7 +28,7 @@ class AksisController < ApplicationController
 
     respond_to do |format|
       if @aksi.save
-        format.html { redirect_to sasaran_path(@sasaran), notice: "Aksi was successfully created." }
+        format.html { redirect_to sasaran_path(@sasaran), notice: 'Aksi was successfully created.' }
         format.json { render :show, status: :created, location: @aksi }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -42,7 +41,7 @@ class AksisController < ApplicationController
   def update
     respond_to do |format|
       if @aksi.update(aksi_params)
-        format.html { redirect_to sasaran_path(@sasaran), notice: "Aksi was successfully updated." }
+        format.html { redirect_to sasaran_path(@sasaran), notice: 'Aksi was successfully updated.' }
         format.json { render :show, status: :ok, location: @aksi }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -55,24 +54,25 @@ class AksisController < ApplicationController
   def destroy
     @aksi.destroy
     respond_to do |format|
-      format.html { redirect_to sasaran_path(@sasaran), notice: "Aksi was successfully destroyed." }
+      format.html { redirect_to sasaran_path(@sasaran), notice: 'Aksi was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_sasaran
-      @sasaran = Sasaran.find(params[:sasaran_id])
-      @tahapan = @sasaran.tahapans.find(params[:tahapan_id])
-    end
 
-    def set_aksi
-      @aksi = @tahapan.aksis.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_sasaran
+    @sasaran = Sasaran.find(params[:sasaran_id])
+    @tahapan = @sasaran.tahapans.find(params[:tahapan_id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def aksi_params
-      params.require(:aksi).permit(:target, :realisasi, :bulan, :tahapan_id)
-    end
+  def set_aksi
+    @aksi = @tahapan.aksis.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def aksi_params
+    params.require(:aksi).permit(:target, :realisasi, :bulan, :tahapan_id)
+  end
 end

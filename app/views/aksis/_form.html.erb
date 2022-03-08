@@ -1,8 +1,7 @@
-<%= form_with(model: [@rincian, @tahapan, aksi], local: true) do |form| %>
+<%= form_with(model: [@sasaran, @tahapan, aksi], local: true) do |form| %>
   <% if aksi.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(aksi.errors.count, "error") %> prohibited this aksi from being saved:</h2>
-
       <ul>
         <% aksi.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,22 +9,18 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
     <%= form.label :target %>
     <%= form.number_field :target %>
   </div>
-
   <div class="field">
     <%= form.label :realisasi %>
     <%= form.number_field :realisasi %>
   </div>
-
   <div class="field">
     <%= form.label :bulan %>
     <%= form.number_field :bulan , within: 1..12, :value => @bulan, readonly: true %>
   </div>
-
   <div class="actions">
     <%= form.submit %>
   </div>
