@@ -1,41 +1,37 @@
 class ProgramKegiatansController < ApplicationController
-  before_action :set_programKegiatan, only: %i[ show edit update destroy show_to_kak kak_detail kak_renaksi kak_waktu ]
-  before_action :set_dropdown, only: %i[ new edit ]
-  layout false, only: %i[ show_to_kak kak_detail kak_renaksi kak_waktu ]
+  before_action :set_programKegiatan, only: %i[show edit update destroy show_to_kak kak_detail kak_renaksi kak_waktu]
+  before_action :set_dropdown, only: %i[new edit]
+
+  layout false, only: %i[show_to_kak kak_detail kak_renaksi kak_waktu]
 
   def index
-    @programKegiatans = ProgramKegiatan.all
+    # modif untuk admin
+    @programKegiatans = ProgramKegiatan.where('kode_opd ILIKE ?', "%#{current_user.kode_opd}%")
   end
 
   def new
     @programKegiatan = ProgramKegiatan.new
   end
 
-  def show
-  end
+  def show; end
 
-  def show_to_kak
-  end
+  def show_to_kak; end
 
-  def kak_detail
-  end
+  def kak_detail; end
 
-  def kak_renaksi
-  end
+  def kak_renaksi; end
 
-  def kak_waktu
-  end
+  def kak_waktu; end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @programKegiatan = ProgramKegiatan.new(programKegiatan_params)
     respond_to do |format|
       if @programKegiatan.save
-        format.html { redirect_to @programKegiatan, notice: "Program Kegiatan Dibuat" }
+        format.html { redirect_to @programKegiatan, notice: 'Program Kegiatan Dibuat' }
       else
-        format.html { render :new, notice: "Gagal menyimpan Program Kegiatan" }
+        format.html { render :new, notice: 'Gagal menyimpan Program Kegiatan' }
       end
     end
   end
@@ -44,10 +40,10 @@ class ProgramKegiatansController < ApplicationController
     sleep 1
     respond_to do |format|
       if @programKegiatan.update(programKegiatan_params)
-        format.html { redirect_to @programKegiatan, notice: "Program Kegiatan diupdate" }
+        format.html { redirect_to @programKegiatan, notice: 'Program Kegiatan diupdate' }
         format.js
       else
-        format.html { render :edit, notice: "Program Kegiatan Gagal diupdate" }
+        format.html { render :edit, notice: 'Program Kegiatan Gagal diupdate' }
       end
     end
   end
@@ -55,7 +51,7 @@ class ProgramKegiatansController < ApplicationController
   def destroy
     @programKegiatan.destroy
     respond_to do |format|
-      format.html { redirect_to program_kegiatans_url, notice: "Program dihapus" }
+      format.html { redirect_to program_kegiatans_url, notice: 'Program dihapus' }
     end
   end
 

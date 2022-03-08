@@ -46,9 +46,9 @@
     <%= form.text_field :satuan_target_subkegiatan , class: "form-control", placeholder: "%" %>
   </div>
   <div class="field">
-    <% options = options_from_collection_for_select(opds, 'id', 'nama_opd') %>
-    <%= form.label :opd_id , class: "form-label" %>
-    <%= form.select :opd_id, options, {include_blank: true} , {class: "select2-waw", "data-placeholder": "Pilih OPD"} %>
+    <% options = options_from_collection_for_select(Opd.all, 'kode_opd', 'nama_opd') %>
+    <%= form.label :kode_opd , class: "form-label" %>
+    <%= form.select :kode_opd, options, {include_blank: true} , {class: "select2-waw", "data-placeholder": "Pilih OPD"} %>
   </div>
   <div class="actions mt-5">
     <%= form.submit "Submit", :class => "btn btn-tertiary w-100"  %>

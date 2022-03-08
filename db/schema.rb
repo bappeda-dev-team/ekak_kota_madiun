@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_07_154823) do
+ActiveRecord::Schema.define(version: 2022_03_08_073415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -285,11 +285,11 @@ ActiveRecord::Schema.define(version: 2022_03_07_154823) do
     t.string "satuan"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "opd_id"
     t.bigint "subkegiatan_tematik_id"
     t.string "indikator_subkegiatan"
     t.string "target_subkegiatan"
     t.string "satuan_target_subkegiatan"
+    t.string "kode_opd"
     t.index ["subkegiatan_tematik_id"], name: "index_program_kegiatans_on_subkegiatan_tematik_id"
   end
 
@@ -401,6 +401,7 @@ ActiveRecord::Schema.define(version: 2022_03_07_154823) do
   add_foreign_key "kesenjangans", "rincians"
   add_foreign_key "pagus", "sasarans"
   add_foreign_key "pks", "users"
+  add_foreign_key "program_kegiatans", "opds", column: "kode_opd", primary_key: "kode_opd"
   add_foreign_key "program_kegiatans", "subkegiatan_tematiks"
   add_foreign_key "rincians", "sasarans"
   add_foreign_key "users", "opds", column: "kode_opd", primary_key: "kode_opd"

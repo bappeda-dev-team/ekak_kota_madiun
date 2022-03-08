@@ -5,6 +5,7 @@
 #  id                        :bigint           not null, primary key
 #  indikator_kinerja         :string
 #  indikator_subkegiatan     :string
+#  kode_opd                  :string
 #  nama_kegiatan             :string
 #  nama_program              :string
 #  nama_subkegiatan          :string
@@ -14,7 +15,6 @@
 #  target_subkegiatan        :string
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
-#  opd_id                    :integer
 #  subkegiatan_tematik_id    :bigint
 #
 # Indexes
@@ -23,6 +23,7 @@
 #
 # Foreign Keys
 #
+#  fk_rails_...  (kode_opd => opds.kode_opd)
 #  fk_rails_...  (subkegiatan_tematik_id => subkegiatan_tematiks.id)
 #
 require 'rails_helper'
