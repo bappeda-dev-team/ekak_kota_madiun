@@ -8,6 +8,8 @@
       </div>
     </div>
   </div>
+  <% unless sasaran.musrenbangs.any? %>
+    <div class="card-body">
       <table class="table">
         <thead>
           <tr>
@@ -17,11 +19,13 @@
         </thead>
         <tbody>
           <% sasaran.musrenbangs.each.with_index(1) do |sas, i| %>
-          <tr>
-            <td><%= i %></td>
-            <td><%= sas.usulan %></td>
-          </tr>
+            <tr>
+              <td><%= i %></td>
+              <td><%= sas.usulan %></td>
+            </tr>
           <% end %>
         </tbody>
       </table>
+    </div>
+  <% end %>
 </div>

@@ -3,6 +3,8 @@ module ApplicationHelper
     [
       { title: 'Sasaran Kinerja', href: user_sasarans_path(current_user), icon: 'fas fa-bullseye',
         identifier: 'sasaran' },
+      { title: 'Usulan', href: "/asn_musrenbangs/#{current_user.nik}", icon: 'fas fa-sitemap',
+        identifier: 'asn_musrenbang' },
       { title: 'Kak', href: kaks_path, icon: 'fas fa-sitemap', identifier: 'acuan_kerja' },
       { title: 'Laporan KaK', href: laporan_kak_path, icon: 'far fa-file', identifier: 'laporan_kak' }
     ]

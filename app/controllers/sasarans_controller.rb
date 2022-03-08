@@ -1,7 +1,7 @@
 class SasaransController < ApplicationController
   before_action :get_user, only: %i[index create new]
-  before_action :set_sasaran, only: %i[ show edit update destroy update_program_kegiatan ]
-  before_action :set_dropdown, only: %i[ new edit ]
+  before_action :set_sasaran, only: %i[show edit update destroy update_program_kegiatan]
+  before_action :set_dropdown, only: %i[new edit]
 
   # GET /sasarans or /sasarans.json
   def index
@@ -9,19 +9,17 @@ class SasaransController < ApplicationController
   end
 
   # GET /sasarans/1 or /sasarans/1.json
-  def show
-  end
-  
+  def show; end
+
   def sasaran_admin
     @sasarans = Sasaran.all
   end
-  
+
   def daftar_subkegiatan
-    @sasarans = Sasaran.includes(:program_kegiatan).where.not(program_kegiatan: { id: nil }).joins(:musrenbangs)
+    @sasarans = Sasaran.includes(:program_kegiatan).where.not(program_kegiatan: { id: nil })
   end
 
-  def pdf_daftar_subkegiatan
-  end
+  def pdf_daftar_subkegiatan; end
 
   # GET /sasarans/new
   def new
@@ -40,7 +38,7 @@ class SasaransController < ApplicationController
 
     respond_to do |format|
       if @sasaran.save
-        format.html { redirect_to user_path(@user), notice: "Sasaran was successfully created." }
+        format.html { redirect_to user_path(@user), notice: 'Sasaran was successfully created.' }
         format.json { render :show, status: :created, location: @sasaran }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -55,7 +53,7 @@ class SasaransController < ApplicationController
 
     respond_to do |format|
       if @sasaran.update(sasaran_params)
-        format.html { redirect_to sasaran_path, notice: "Sasaran was successfully updated." }
+        format.html { redirect_to sasaran_path, notice: 'Sasaran was successfully updated.' }
         format.json { render :show, status: :ok, location: @sasaran }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -69,7 +67,7 @@ class SasaransController < ApplicationController
     user = @sasaran.user.id
     @sasaran.destroy
     respond_to do |format|
-      format.html { redirect_to sasaran_path, notice: "Sasaran was successfully destroyed." }
+      format.html { redirect_to sasaran_path, notice: 'Sasaran was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -97,7 +95,7 @@ class SasaransController < ApplicationController
   def sasaran_params
     params.require(:sasaran).permit(:sasaran_kinerja, :indikator_kinerja, :target, :kualitas,
                                     :satuan, :penerima_manfaat, :user_id, :program_kegiatan_id,
-                                    rincian_attributes: [:data_terpilah, :penyebab_internal, :penyebab_external,
-                                                         :permasalahan_umum, :permasalahan_gender, :resiko, :lokasi_pelaksanaan])
+                                    rincian_attributes: %i[data_terpilah penyebab_internal penyebab_external
+                                                           permasalahan_umum permasalahan_gender resiko lokasi_pelaksanaan])
   end
 end

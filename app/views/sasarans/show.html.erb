@@ -10,40 +10,35 @@
     <li class="breadcrumb-item active" aria-current="page">Rencana Aksi</li>
   </ol>
 </nav>
-    <div class="card border-2 shadow mb-3">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="row align-items-center">
-            <div class="col">
-              <h5>Rincian Sasaran</h5>
-            </div>
-          <% unless @sasaran.rincian %>
-            <div>
-              <%= link_to "Tambah Rincian Sasaran", edit_user_sasaran_path(current_user, @sasaran), class: "btn btn-warning " %>
-            </div>
-          <% else %>
-            <div>
-              <%= link_to "Lihat Rincian", edit_user_sasaran_path(current_user, @sasaran), class: "btn btn-info text-white"  %>
-            </div>
-          <% end %>
-          </div>
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="row align-items-center">
+        <div class="col">
+          <h5>Rincian Sasaran</h5>
         </div>
+        <% unless @sasaran.rincian %>
+          <div>
+            <%= link_to "Tambah Rincian Sasaran", edit_user_sasaran_path(current_user, @sasaran), class: "btn btn-warning " %>
+          </div>
+        <% else %>
+          <div>
+            <%= link_to "Lihat Rincian", edit_user_sasaran_path(current_user, @sasaran), class: "btn btn-info text-white"  %>
+          </div>
+        <% end %>
       </div>
     </div>
-
-  <% unless @sasaran.tahapans.any? %>
-    <%= render 'rencana_aksi_card' %>
-  <% else %>
-    <%= render 'rincians/renaksi', sasaran: @sasaran %>
-  <% end %>
-  <!-- SECTION - musrenbang -->
-  <% if @sasaran.musrenbangs.any? %>
-    <%= render 'musrenbang_card', sasaran: @sasaran %>
-  <% else %>
-    <p>Belum Terhubung Dengan Musrenbang</p>
-  <% end %>
-  <!-- SECTION - render anggaran here -->
-  <%= render 'subkegiatan_card', sasaran: @sasaran %>
-  <!-- !!SECTION - end anggaran-->
+  </div>
+</div>
+<% unless @sasaran.tahapans.any? %>
+  <%= render 'rencana_aksi_card' %>
+<% else %>
+  <%= render 'rincians/renaksi', sasaran: @sasaran %>
+<% end %>
+<!-- SECTION - musrenbang -->
+<%= render 'musrenbang_card', sasaran: @sasaran %>
+<!-- SECTION - render anggaran here -->
+<%= render 'subkegiatan_card', sasaran: @sasaran %>
+<!-- !!SECTION - end anggaran-->
 <!-- SECTION - Modal-->
 <%= render 'modal' %>

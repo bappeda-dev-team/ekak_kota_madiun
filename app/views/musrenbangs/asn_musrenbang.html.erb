@@ -54,7 +54,7 @@
               </div>
             <% end %>
           </div>
-          </div>
+        </div>
       </div>
       <div class="table-responsive">
         <table class="table align-items-center">
@@ -71,7 +71,7 @@
             <% @musrenbangs.each.with_index(1) do |musrenbang, i| %>
               <tr>
                 <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                <td class="fw-bolder text-gray-500"><%= link_to musrenbang.usulan, edit_musrenbang_path(musrenbang) %></td>
+                <td class="fw-bolder text-gray-500"><%=  usrenbang.usulan %></td>
                 <td class="fw-bolder text-gray-500"><%= musrenbang.alamat or '-' %></td>
                 <td class="fw-bolder text-gray-500"><%= musrenbang.sasaran.nil? ? ' -- ' : musrenbang.sasaran.sasaran_kinerja  %></td>
                 <td class="fw-bolder text-gray-500 text-center">
