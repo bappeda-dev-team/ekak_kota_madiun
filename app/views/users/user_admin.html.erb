@@ -16,6 +16,9 @@
           <div class="col">
             <h2 class="fs-5 fw-bold mb-0">List User</h2>
           </div>
+          <div class="col text-end">
+            <%= link_to "Tambah User", new_user_path, class: "btn btn-sm btn-info" %>
+          </div>
         </div>
       </div>
       <div class="card-body">
@@ -27,6 +30,7 @@
                 <th class="border-bottom" scope="col">Nama</th>
                 <th class="border-bottom" scope="col">OPD</th>
                 <th class="border-bottom" scope="col">NIP</th>
+                <th class="border-bottom" scope="col">Peran</th>
                 <th class="border-bottom text-center" scope="col">Action</th>
               </tr>
             </thead>
@@ -37,6 +41,7 @@
                   <td class="fw-bolder text-gray-500"><%= user.nama %></td>
                   <td class="fw-bolder text-gray-500"><%= user.opd.nama_opd %></td>
                   <td class="fw-bolder text-gray-500"><%= user.nik %></td>
+                  <td class="fw-bolder text-gray-500"><%= user.roles.pluck :name %></td>
                   <td class="fw-bolder text-gray-500 text-center">
                     <%= link_to edit_user_path(user), class: "m-3" do %>
                       <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>

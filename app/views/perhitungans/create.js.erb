@@ -1,10 +1,11 @@
 $('#form-perhitungan').on('ajax:success', (event) => {
-  setTimeout(() => {
-  location.reload(true);
-  }, 1500);
-});
+$(this).hide
+setTimeout(() => {
+location.reload(true);
+}, 1500);
+}).toggle();
 Swal.fire(
-  'Sukses',
-  'Data Anggaran Ditambahkan',
-  'success'
+'Sukses',
+'Data Anggaran Ditambahkan',
+'success'
 )

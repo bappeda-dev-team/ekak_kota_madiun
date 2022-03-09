@@ -15,7 +15,7 @@
   </div>
   <div class="field">
     <%= form.label :spesifikasi, {class: "form-label"} %>
-    <%= form.text_field :spesifikasi, {id: 'spesifikasi', class: "form-control"} %>
+    <%= form.text_field :spesifikasi, {id: 'spesifikasi', class: "form-control", readonly: true} %>
   </div>
   <h4><strong>Koefisiens : </strong></h4>
   <div class="field">
@@ -29,11 +29,11 @@
   <hr>
   <div class="field">
     <%= form.label :satuan, {class: "form-label"} %>
-    <%= form.text_field :satuan, {id: 'satuan', class: "form-control"} %>
+    <%= form.text_field :satuan, {id: 'satuan', class: "form-control", readonly: true} %>
   </div>
   <div class="field">
     <%= form.label :harga, {class: "form-label"} %>
-    <%= form.number_field :harga, {id: 'harga', class: "form-control"} %>
+    <%= form.number_field :harga, {id: 'harga', class: "form-control", readonly: true} %>
   </div>
   <div class="actions">
     <%= form.submit "Tambah Anggaran", data: { disable_with: "Processing..." } %>

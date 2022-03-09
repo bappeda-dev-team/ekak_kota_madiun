@@ -9,11 +9,25 @@
     <li class="breadcrumb-item active" aria-current="page">Form Anggaran Program Kegiatan</li>
   </ol>
 </nav>
-<div class="form-field-container">
-  <h3>Anggaran Program Kegiatan</h3>
-  <hr>
-  <% upper_parent = Anggaran.find_by(id: @parent)  %>
-  <%= render 'form', anggaran: @anggaran,
+<div class="card border-2 shadow mb-1">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <p><%= link_to sasaran_path(@tahapan.sasaran) do %>
+          <span class="fas fa-arrow-left"></span>
+          <span>Kembali</span>
+        <% end %>
+      </p>
+      <h5>Sasaran : <%= @sasaran.sasaran_kinerja %></h5>
+      <p>Tahapan : <%= @tahapan.tahapan_kerja %></p>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="form-field-container">
+      <h3>Anggaran Program Kegiatan</h3>
+      <% upper_parent = Anggaran.find_by(id: @parent)  %>
+      <%= render 'form', anggaran: @anggaran,
     parent:  @parent,
     level: @level %>
+    </div>
+  </div>
 </div>

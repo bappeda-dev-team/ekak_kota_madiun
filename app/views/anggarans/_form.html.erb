@@ -26,9 +26,9 @@
     </div>
   <% end %>
   <div class="field">
-    <%= form.label :kode_rek, "Anggaran" , {class: "form-label"}%>
+    <%= form.label :kode_rek, "Kode Rekening" , {class: "form-label"}%>
     <%= parent_rek || '' %>
-    <%= form.select :kode_rek, [] ,{include_blank: true},{class: "form-control select2-rekenings", data: {"placeholder": "Pilih Anggaran"}}  %>
+    <%= form.select :kode_rek, [] ,{include_blank: true},{class: "form-control select2-rekenings", data: {"placeholder": "Pilih Kode Rekening"}}  %>
   </div>
   <div class="field">
     <% pajaks = Pajak.all %>
