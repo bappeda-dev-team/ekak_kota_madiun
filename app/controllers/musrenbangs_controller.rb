@@ -1,9 +1,9 @@
 class MusrenbangsController < ApplicationController
-  before_action :set_musrenbang, only: %i[show edit update destroy]
+  before_action :set_musrenbang, only: %i[show edit update destroy aktifkan_usulan non_aktifkan_usulan]
 
   # GET /musrenbangs or /musrenbangs.json
   def index
-    @pagy, @musrenbangs = pagy(Musrenbang.all)
+    @musrenbangs = Musrenbang.all.order(:created_at)
   end
 
   def asn_musrenbang
@@ -15,6 +15,18 @@ class MusrenbangsController < ApplicationController
   def musrenbang_search
     param = params[:q] || ''
     @musrenbangs = Musrenbang.where('usulan ILIKE ?', "%#{param}%").limit(50)
+  end
+
+  def aktifkan_usulan
+    respond_to do |format|
+      format.js { render :aktifkan_usulan } if @musrenbang.update_attribute(:is_active, 1)
+    end
+  end
+
+  def non_aktifkan_usulan
+    respond_to do |format|
+      format.js { render :non_aktifkan_usulan } if @musrenbang.update_attribute(:is_active, 0)
+    end
   end
 
   # GET /musrenbangs/1 or /musrenbangs/1.json
@@ -74,6 +86,6 @@ class MusrenbangsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def musrenbang_params
-    params.require(:musrenbang).permit(:usulan, :alamat, :tahun, :sasaran_id, :nip_asn)
+    params.require(:musrenbang).permit!
   end
 end

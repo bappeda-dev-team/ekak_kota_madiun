@@ -1,5 +1,5 @@
 class PokpirsController < ApplicationController
-  before_action :set_pokpir, only: %i[show edit update destroy]
+  before_action :set_pokpir, only: %i[show edit update destroy aktifkan_pokpir non_aktifkan_pokpir]
 
   # GET /pokpirs or /pokpirs.json
   def index
@@ -8,6 +8,18 @@ class PokpirsController < ApplicationController
 
   # GET /pokpirs/1 or /pokpirs/1.json
   def show; end
+
+  def aktifkan_pokpir
+    respond_to do |format|
+      format.js { render :aktifkan_pokpir } if @pokpir.update_attribute(:is_active, 1)
+    end
+  end
+
+  def non_aktifkan_pokpir
+    respond_to do |format|
+      format.js { render :non_aktifkan_pokpir } if @pokpir.update_attribute(:is_active, 0)
+    end
+  end
 
   # GET /pokpirs/new
   def new
@@ -23,7 +35,7 @@ class PokpirsController < ApplicationController
 
     respond_to do |format|
       if @pokpir.save
-        format.html { redirect_to @pokpir, notice: 'Pokpir was successfully created.' }
+        format.html { redirect_to pokpirs_path, notice: 'Pokpir was successfully created.' }
         format.json { render :show, status: :created, location: @pokpir }
       else
         format.html { render :new, status: :unprocessable_entity }

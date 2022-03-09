@@ -10,15 +10,29 @@ default: &default
   timeout: 5000
   username: ry
   password: secret
-  #for docker 
-  # host: db
-  # port: 5432
-  # username: postgres
-  # password: postgres
+
 
 development:
   <<: *default
   database: prototype_kak_dev
+
+# local windows ( laptop )
+# development:
+#   <<: *default
+#   username: postgres
+#   password: nsgt88
+#   port: 5433
+#   database: prototype_kak_dev
+
+#docker
+# development:
+#   <<: *default
+#   host: db
+#   username: postgres
+#   password: postgres
+#   port: 5432
+#   database: prototype_kak_dev
+
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

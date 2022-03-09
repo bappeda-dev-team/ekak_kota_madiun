@@ -1,0 +1,5 @@
+Swal.fire({
+title: 'Sukses Noaktifkan Usulan',
+icon: 'success',
+confirmButtonText: 'Yes',
+}).then($("<%= "#musren-#{@musrenbang.id}" %>").html("<i class='fas fa-times'></i>"))

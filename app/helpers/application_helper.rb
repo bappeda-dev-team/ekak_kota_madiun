@@ -21,9 +21,9 @@ module ApplicationHelper
 
   def anggaran_items
     [
-      { title: 'Anggaran SSH', href: anggaran_sshes_path, identifier: 'anggaran_ssh' },
-      { title: 'Anggaran SBU', href: anggaran_sbus_index_path, identifier: 'anggaran_sbu' },
-      { title: 'Anggaran HSPK', href: anggaran_hspks_path, identifier: 'anggaran_hspk' },
+      { title: 'SSH', href: anggaran_sshes_path, identifier: 'anggaran_ssh' },
+      { title: 'SBU', href: anggaran_sbus_index_path, identifier: 'anggaran_sbu' },
+      { title: 'HSPK', href: anggaran_hspks_path, identifier: 'anggaran_hspk' },
       { title: 'Kode Rekening', href: rekenings_path, identifier: 'rekening' }
     ]
   end
@@ -50,6 +50,14 @@ module ApplicationHelper
         menu: '' }
     else
       { aria: 'false', sub_menu: 'collapse', menu: 'collapsed' }
+    end
+  end
+
+  def status_icon(status)
+    if status
+      content_tag(:i, '', class: 'fas fa-check')
+    else
+      content_tag(:i, '', class: 'fas fa-times')
     end
   end
 

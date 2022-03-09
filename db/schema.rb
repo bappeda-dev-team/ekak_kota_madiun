@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_08_073415) do
+ActiveRecord::Schema.define(version: 2022_03_09_011023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(version: 2022_03_08_073415) do
     t.string "opd"
     t.string "nip_asn"
     t.bigint "sasaran_id"
+    t.boolean "is_active", default: false
     t.index ["sasaran_id"], name: "index_inovasis_on_sasaran_id"
   end
 
@@ -193,6 +194,7 @@ ActiveRecord::Schema.define(version: 2022_03_08_073415) do
     t.string "opd"
     t.string "nip_asn"
     t.bigint "sasaran_id"
+    t.boolean "is_active", default: false
     t.index ["sasaran_id"], name: "index_mandatoris_on_sasaran_id"
   end
 
@@ -205,6 +207,7 @@ ActiveRecord::Schema.define(version: 2022_03_08_073415) do
     t.string "opd"
     t.string "nip_asn"
     t.text "alamat"
+    t.boolean "is_active", default: false
     t.index ["sasaran_id"], name: "index_musrenbangs_on_sasaran_id"
   end
 
@@ -273,6 +276,7 @@ ActiveRecord::Schema.define(version: 2022_03_08_073415) do
     t.string "opd"
     t.string "nip_asn"
     t.bigint "sasaran_id"
+    t.boolean "is_active", default: false
     t.index ["sasaran_id"], name: "index_pokpirs_on_sasaran_id"
   end
 

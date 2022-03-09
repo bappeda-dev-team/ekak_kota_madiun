@@ -3,6 +3,7 @@
 # Table name: inovasis
 #
 #  id         :bigint           not null, primary key
+#  is_active  :boolean          default(FALSE)
 #  manfaat    :string
 #  nip_asn    :string
 #  opd        :string

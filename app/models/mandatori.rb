@@ -5,6 +5,7 @@
 # Table name: mandatoris
 #
 #  id                :bigint           not null, primary key
+#  is_active         :boolean          default(FALSE)
 #  nip_asn           :string
 #  opd               :string
 #  peraturan_terkait :string
