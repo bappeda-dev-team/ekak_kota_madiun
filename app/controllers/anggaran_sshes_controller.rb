@@ -11,6 +11,11 @@ class AnggaranSshesController < ApplicationController
     @anggaran_sshes = AnggaranSsh.where('uraian_barang ILIKE ?', "%#{param}%").limit(30)
   end
 
+  def anggaran_spesifikasi_search
+    param = params[:q] || ''
+    @anggaran_sshes = AnggaranSsh.where('kode_barang ILIKE ?', "%#{param}%").limit(30)
+  end
+
   # GET /anggaran_sshes/1 or /anggaran_sshes/1.json
   def show; end
 

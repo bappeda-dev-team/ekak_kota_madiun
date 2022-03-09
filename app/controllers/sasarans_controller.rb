@@ -38,7 +38,7 @@ class SasaransController < ApplicationController
 
     respond_to do |format|
       if @sasaran.save
-        format.html { redirect_to user_path(@user), notice: 'Sasaran was successfully created.' }
+        format.html { redirect_to user_sasaran_path(@user, @sasaran), notice: 'Sasaran was successfully created.' }
         format.json { render :show, status: :created, location: @sasaran }
       else
         format.html { render :new, status: :unprocessable_entity }

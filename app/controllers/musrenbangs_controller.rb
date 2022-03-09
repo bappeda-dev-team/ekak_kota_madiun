@@ -1,5 +1,6 @@
 class MusrenbangsController < ApplicationController
-  before_action :set_musrenbang, only: %i[show edit update destroy aktifkan_usulan non_aktifkan_usulan]
+  before_action :set_musrenbang,
+                only: %i[show edit update destroy aktifkan_usulan non_aktifkan_usulan update_sasaran_asn]
 
   # GET /musrenbangs or /musrenbangs.json
   def index
@@ -14,7 +15,8 @@ class MusrenbangsController < ApplicationController
 
   def musrenbang_search
     param = params[:q] || ''
-    @musrenbangs = Musrenbang.where('usulan ILIKE ?', "%#{param}%").limit(50)
+    @musrenbangs = Musrenbang.where(sasaran_id: nil).where(is_active: true).where('usulan ILIKE ?',
+                                                                                  "%#{param}%").limit(50)
   end
 
   def aktifkan_usulan
@@ -26,6 +28,13 @@ class MusrenbangsController < ApplicationController
   def non_aktifkan_usulan
     respond_to do |format|
       format.js { render :non_aktifkan_usulan } if @musrenbang.update_attribute(:is_active, 0)
+    end
+  end
+
+  def update_sasaran_asn
+    sasaran = params[:sasaran_id]
+    respond_to do |format|
+      format.js { render :update_sasaran_asn } if @musrenbang.update_attribute(:sasaran_id, sasaran)
     end
   end
 

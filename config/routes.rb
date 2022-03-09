@@ -61,6 +61,8 @@ Rails.application.routes.draw do
   get '/musrenbang_search', to: 'musrenbangs#musrenbang_search'
   patch '/aktifkan_usulan/:id', to: 'musrenbangs#aktifkan_usulan'
   patch '/non_aktifkan_usulan/:id', to: 'musrenbangs#non_aktifkan_usulan'
+  post '/update_sasaran_asn', to: 'musrenbangs#update_sasaran_asn'
+  # pokpir
   patch '/aktifkan_pokpir/:id', to: 'pokpirs#aktifkan_pokpir'
   patch '/non_aktifkan_pokpir/:id', to: 'pokpirs#non_aktifkan_pokpir'
   # laporan kak
@@ -73,6 +75,9 @@ Rails.application.routes.draw do
 
   # Anggaran
   get '/anggaran_ssh_search', to: 'anggaran_sshes#anggaran_ssh_search'
+  get '/anggaran_spesifikasi_search', to: 'anggaran_sshes#anggaran_spesifikasi_search'
+
+  # Reknening
   get '/rekening_search', to: 'rekenings#rekening_search'
 
   # admin thing

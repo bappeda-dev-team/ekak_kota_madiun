@@ -96,6 +96,40 @@ $(function () {
       }
     }).on('select2:opening', function (e) {
       $(this).data('select2').$dropdown.find(':input.select2-search__field').attr('placeholder', 'Ketik Untuk mencari')
+    }).on('select2:select', function (e) {
+      $("#spesifikasi").empty();
+      let data_barang = e.params.data.id;
+      let data_spesifikasi = [];
+      $.ajax({
+        type: 'get',
+        url: '/anggaran_spesifikasi_search.json',
+        data: {
+          q: data_barang
+        },
+        success: function (res) {
+          if (res) {
+            console.log(res.results)
+            data_spesifikasi = res.results
+            $("#spesifikasi").select2({
+              width: "100%",
+              theme: "bootstrap-5",
+              data: data_spesifikasi,
+              minimumResultsForSearch: -1,
+              dropdownParent: $("#form-perhitungan"),
+              language: {
+                inputTooShort: function () {
+                  return "Input minimal 3 Karakter";
+                }
+              }
+            })
+            $('#satuan').val(res.results[0].satuan)
+            $('#harga').val(res.results[0].harga)
+          }
+        },
+        error: function (er) {
+          console.log(er)
+        }
+      })
     });
   });
   $('#form-tematik-body').on('show', function () {
