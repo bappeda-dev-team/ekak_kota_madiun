@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_09_011023) do
+ActiveRecord::Schema.define(version: 2022_03_10_160049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -345,6 +345,16 @@ ActiveRecord::Schema.define(version: 2022_03_09_011023) do
     t.index ["user_id"], name: "index_sasarans_on_user_id"
   end
 
+  create_table "search_entries", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.string "searchable_type", null: false
+    t.bigint "searchable_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["searchable_type", "searchable_id"], name: "index_search_entries_on_searchable"
+  end
+
   create_table "strategi_keluarans", force: :cascade do |t|
     t.text "metode"
     t.text "tahapan"
@@ -409,4 +419,34 @@ ActiveRecord::Schema.define(version: 2022_03_09_011023) do
   add_foreign_key "program_kegiatans", "subkegiatan_tematiks"
   add_foreign_key "rincians", "sasarans"
   add_foreign_key "users", "opds", column: "kode_opd", primary_key: "kode_opd"
+
+  create_view "search_all_usulans", sql_definition: <<-SQL
+      SELECT musrenbangs.usulan,
+      musrenbangs.sasaran_id,
+      'Musrenbang'::text AS searchable_type,
+      musrenbangs.id AS searchable_id
+     FROM musrenbangs
+    WHERE (musrenbangs.is_active = true)
+  UNION
+   SELECT pokpirs.usulan,
+      pokpirs.sasaran_id,
+      'Pokpir'::text AS searchable_type,
+      pokpirs.id AS searchable_id
+     FROM pokpirs
+    WHERE (pokpirs.is_active = true)
+  UNION
+   SELECT mandatoris.usulan,
+      mandatoris.sasaran_id,
+      'Mandatori'::text AS searchable_type,
+      mandatoris.id AS searchable_id
+     FROM mandatoris
+    WHERE (mandatoris.is_active = true)
+  UNION
+   SELECT inovasis.usulan,
+      inovasis.sasaran_id,
+      'Inovasi'::text AS searchable_type,
+      inovasis.id AS searchable_id
+     FROM inovasis
+    WHERE (inovasis.is_active = true);
+  SQL
 end

@@ -15,8 +15,11 @@ class MusrenbangsController < ApplicationController
 
   def musrenbang_search
     param = params[:q] || ''
-    @musrenbangs = Musrenbang.where(sasaran_id: nil).where(is_active: true).where('usulan ILIKE ?',
-                                                                                  "%#{param}%").limit(50)
+    @musrenbangs = Search::AllUsulan.where(sasaran_id: nil)
+                                    .where(
+                                      'usulan ILIKE ?', "%#{param}%"
+                                    ).includes(:searchable)
+                                    .collect(&:searchable)
   end
 
   def aktifkan_usulan
