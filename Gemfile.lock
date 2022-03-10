@@ -270,6 +270,9 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    scenic (1.6.0)
+      activerecord (>= 4.0.0)
+      railties (>= 4.0.0)
     selenium-webdriver (4.1.0)
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
@@ -313,7 +316,6 @@ GEM
     unicode-display_width (2.1.0)
     warden (1.2.9)
       rack (>= 2.0.9)
-    wdm (0.1.1)
     web-console (4.2.0)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -368,13 +370,13 @@ DEPENDENCIES
   rspec-core
   rspec-rails
   sass-rails (>= 6)
+  scenic
   selenium-webdriver
   shoulda-matchers (~> 5.0)
   solargraph
   spring
   turbolinks (~> 5)
   tzinfo-data
-  wdm (>= 0.1.0)
   web-console (>= 4.1.0)
   webdrivers
   webpacker (~> 5.0)

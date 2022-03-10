@@ -73,3 +73,4 @@ gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 gem 'prawn-rails', '~> 1.4', '>= 1.4.2'
 gem 'caxlsx'
 gem 'caxlsx_rails'
+gem 'scenic'
