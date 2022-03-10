@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_10_160049) do
+ActiveRecord::Schema.define(version: 2022_03_10_231308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -448,5 +448,61 @@ ActiveRecord::Schema.define(version: 2022_03_10_160049) do
       inovasis.id AS searchable_id
      FROM inovasis
     WHERE (inovasis.is_active = true);
+  SQL
+  create_view "views_all_anggarans", sql_definition: <<-SQL
+      SELECT anggaran_sshes.uraian_barang,
+      anggaran_sshes.kode_barang,
+      anggaran_sshes.spesifikasi,
+      anggaran_sshes.satuan,
+      anggaran_sshes.harga_satuan,
+      'AnggaranSsh'::text AS searchable_type,
+      anggaran_sshes.id AS searchable_id
+     FROM anggaran_sshes
+  UNION
+   SELECT anggaran_sbus.uraian_barang,
+      anggaran_sbus.kode_barang,
+      anggaran_sbus.spesifikasi,
+      anggaran_sbus.satuan,
+      anggaran_sbus.harga_satuan,
+      'AnggaranSbu'::text AS searchable_type,
+      anggaran_sbus.id AS searchable_id
+     FROM anggaran_sbus
+  UNION
+   SELECT anggaran_hspks.uraian_barang,
+      anggaran_hspks.kode_barang,
+      anggaran_hspks.spesifikasi,
+      anggaran_hspks.satuan,
+      anggaran_hspks.harga_satuan,
+      'AnggaranHspk'::text AS searchable_type,
+      anggaran_hspks.id AS searchable_id
+     FROM anggaran_hspks;
+  SQL
+  create_view "search_all_anggarans", sql_definition: <<-SQL
+      SELECT anggaran_sshes.uraian_barang,
+      anggaran_sshes.kode_barang,
+      anggaran_sshes.spesifikasi,
+      anggaran_sshes.satuan,
+      anggaran_sshes.harga_satuan,
+      'AnggaranSsh'::text AS searchable_type,
+      anggaran_sshes.id AS searchable_id
+     FROM anggaran_sshes
+  UNION
+   SELECT anggaran_sbus.uraian_barang,
+      anggaran_sbus.kode_barang,
+      anggaran_sbus.spesifikasi,
+      anggaran_sbus.satuan,
+      anggaran_sbus.harga_satuan,
+      'AnggaranSbu'::text AS searchable_type,
+      anggaran_sbus.id AS searchable_id
+     FROM anggaran_sbus
+  UNION
+   SELECT anggaran_hspks.uraian_barang,
+      anggaran_hspks.kode_barang,
+      anggaran_hspks.spesifikasi,
+      anggaran_hspks.satuan,
+      anggaran_hspks.harga_satuan,
+      'AnggaranHspk'::text AS searchable_type,
+      anggaran_hspks.id AS searchable_id
+     FROM anggaran_hspks;
   SQL
 end
