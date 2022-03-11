@@ -67,7 +67,7 @@ Rails.application.routes.draw do
   patch '/non_aktifkan_pokpir/:id', to: 'pokpirs#non_aktifkan_pokpir'
   # laporan kak
   get '/laporan_kak', to: 'kaks#laporan_kak'
-  get '/pdf_kak', to: 'kaks#pdf_kak'
+  get '/pdf_kak/:id', to: 'kaks#pdf_kak'
 
   #  Sasaran
   get '/daftar_subkegiatan', to: 'sasarans#daftar_subkegiatan'

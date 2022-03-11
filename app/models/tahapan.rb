@@ -26,4 +26,10 @@ class Tahapan < ApplicationRecord
   has_many :anggarans, dependent: :destroy
 
   validates :tahapan_kerja, presence: true
+
+  def find_target_bulan(i)
+    aksis.find_by_bulan(i).target
+  rescue NoMethodError
+    '-'
+  end
 end

@@ -12,17 +12,17 @@ default: &default
   password: secret
 
 
-development:
-  <<: *default
-  database: prototype_kak_dev
-
-# local windows ( laptop )
 # development:
 #   <<: *default
-#   username: postgres
-#   password: nsgt88
-#   port: 5433
 #   database: prototype_kak_dev
+
+# local windows ( laptop )
+development:
+  <<: *default
+  username: postgres
+  password: nsgt88
+  port: 5433
+  database: prototype_kak_dev
 
 #docker
 # development:

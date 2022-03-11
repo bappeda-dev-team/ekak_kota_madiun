@@ -1,5 +1,5 @@
 class KaksController < ApplicationController
-  before_action :set_kak, only: %i[ show edit update destroy ]
+  before_action :set_kak, only: %i[show edit update destroy pdf_kak]
 
   # GET /kaks or /kaks.json
   def index
@@ -7,15 +7,13 @@ class KaksController < ApplicationController
   end
 
   # GET /kaks/1 or /kaks/1.json
-  def show
-  end
+  def show; end
 
   def laporan_kak
     @kaks = Kak.includes(:program_kegiatan).where.not(program_kegiatan: { id: nil })
   end
 
-  def pdf_kak
-  end
+  def pdf_kak; end
 
   # GET /kaks/new
   def new
@@ -23,8 +21,7 @@ class KaksController < ApplicationController
   end
 
   # GET /kaks/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /kaks or /kaks.json
   def create
@@ -32,7 +29,7 @@ class KaksController < ApplicationController
 
     respond_to do |format|
       if @kak.save
-        format.html { redirect_to kaks_path, notice: "Kak was successfully created." }
+        format.html { redirect_to kaks_path, notice: 'Kak was successfully created.' }
         format.json { render :show, status: :created, location: @kak }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -45,7 +42,7 @@ class KaksController < ApplicationController
   def update
     respond_to do |format|
       if @kak.update(kak_params)
-        format.html { redirect_to kaks_path, notice: "Kak was successfully updated." }
+        format.html { redirect_to kaks_path, notice: 'Kak was successfully updated.' }
         format.json { render :show, status: :ok, location: @kak }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -58,7 +55,7 @@ class KaksController < ApplicationController
   def destroy
     @kak.destroy
     respond_to do |format|
-      format.html { redirect_to kaks_path, notice: "Kak was successfully destroyed." }
+      format.html { redirect_to kaks_path, notice: 'Kak was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -72,7 +69,7 @@ class KaksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def kak_params
-    params.require(:kak).permit({ :dasar_hukum => [] },
+    params.require(:kak).permit({ dasar_hukum: [] },
                                 :gambaran_umum,
                                 :metode_pelaksanaan,
                                 :penerima_manfaat,
