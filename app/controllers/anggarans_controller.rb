@@ -35,7 +35,7 @@ class AnggaransController < ApplicationController
       if @anggaran.save
         format.js
         format.html do
-          redirect_to sasaran_tahapan_anggaran_path(@sasaran, @tahapan, @anggaran),
+          redirect_to sasaran_tahapan_anggarans_path(@sasaran, @tahapan),
                       notice: 'Anggaran was successfully created.'
         end
         format.json { render :show, status: :created, location: @anggaran }

@@ -1,31 +1,87 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Anggarans</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Kode rek</th>
-      <th>Uraian</th>
-      <th>Jumlah</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @anggarans.order(:id).each do |anggaran| %>
-      <tr>
-        <td><%= anggaran.kode_rek %></td>
-        <td><%= anggaran.uraian %></td>
-        <td><%= anggaran.jumlah %></td>
-        <td><%= link_to 'Show', sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran) %></td>
-        <td><%= link_to 'Edit', edit_sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran) %></td>
-        <td><%= link_to 'Destroy', sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran), method: :delete, data: { confirm: "Menghapus Anggaran '#{anggaran.uraian}' ?" } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Anggaran', new_sasaran_tahapan_anggaran_path(@sasaran, @tahapan) %>
+<nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+  <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+    <li class="breadcrumb-item">
+      <%= link_to root_path do %>
+        <i class="fas fa-home"></i>
+      <% end %>
+    </li>
+    <li class="breadcrumb-item" aria-current="page"><%= link_to 'Sasaran Kinerja', user_sasarans_path(current_user.id) %></li>
+    <li class="breadcrumb-item" aria-current="page"><%= link_to @sasaran.sasaran_kinerja, sasaran_path(@tahapan.sasaran) %></li>
+    <li class="breadcrumb-item active" aria-current="page">Anggaran</li>
+  </ol>
+</nav>
+<div class="card border-2 shadow mb-1">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <p><%= link_to sasaran_path(@tahapan.sasaran) do %>
+          <span class="fas fa-arrow-left"></span>
+          <span>Kembali</span>
+        <% end %>
+      </p>
+      <h5>Sasaran : <%= @sasaran.sasaran_kinerja %></h5>
+      <p>Tahapan : <%= @tahapan.tahapan_kerja %></p>
+    </div>
+  </div>
+  <div class="card-body">
+    <p>Rincian Anggaran</p>
+    <div class="anggaran">
+      <%= link_to 'Tambah Anggaran', new_sasaran_tahapan_anggaran_path(@sasaran, @tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 btn btn-sm btn-success text-white animate-up-2"   %>
+      <table id="detail-anggaran">
+        <thead>
+          <tr>
+            <th rowspan="2" class="text-center">Kode Rekening</th>
+            <th rowspan="2" class="text-center">Uraian</th>
+            <th colspan="3" class="text-center">Rincian Perhitungan</th>
+            <th rowspan="2" class="text-center">PPN (10%)</th>
+            <th rowspan="2" class="text-center">Jumlah</th>
+          </tr>
+          <tr>
+            <th class="text-center">Koefisien</th>
+            <th class="text-center">Satuan</th>
+            <th class="text-center">Harga</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @anggarans.order(:created_at).each do |anggaran| %>
+            <tr class="level-0">
+              <td><%= rekening_anggaran anggaran.kode_rek %></td>
+              <td colspan="5">
+                <%= anggaran.uraian %>
+                <%= link_to 'Tambah Rincian', new_anggaran_perhitungan_path(anggaran),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 btn btn-sm btn-success text-white animate-up-2"   %>
+                <%= link_to "Edit", edit_sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran), class: 'text-info'  %>
+                <%= link_to "Hapus", sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran), method: :delete, data: {confirm_swal: "Hapus Anggaran #{anggaran.uraian}"}, class: "text-danger"  %>
+              </td>
+              <td class="uang text-end"></td>
+            </tr>
+            <% if anggaran.perhitungans.any? %>
+              <% anggaran.perhitungans.order(:created_at).each do |hitung| %>
+                <% pajak = hitung.total * anggaran.pajak.potongan %>
+                <tr class="rincian-anggaran">
+                  <td><%= link_to "Hapus Anggaran", anggaran_perhitungan_path(anggaran, hitung), method: :delete, data: { confirm_swal: "Hapus Anggaran #{hitung.deskripsi} ?" }, class: "btn btn-danger" %></td>
+                  <td><%= uraian_kode hitung.deskripsi %></td>
+                  <td><% hitung.koefisiens.each.with_index(1) do |koef, index|%>
+                      <%= koef.volume %> <%= koef.satuan_volume %> <%= 'x' if index < hitung.koefisiens.length %>
+                    <% end %>
+                  </td>
+                  <td><%= hitung.satuan %></td>
+                  <td><%= number_with_delimiter(hitung.harga, :delimiter => '.') %></td>
+                  <td><%= (anggaran.pajak.potongan * 100).to_i %> %</td>
+                  <td class="uang text-end"><%= number_with_delimiter((hitung.total).to_i, :delimiter => '.') %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6" style="text-align:right">Jumlah Anggaran Sub Kegiatan :</td>
+            <td class="text-end"><%= number_with_delimiter(@anggarans.sum(:jumlah), :delimiter => '.') %></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- SECTION - Table Anggaran -->
+<!-- !SECTION - End Table Anggaran -->
+<%= render 'modal_perhitungans' %>

@@ -1,0 +1,4 @@
+$('#form-perhitungan-body').html("<%= j render 'form', anggaran: @anggaran,
+    parent:  @parent,
+    level: @level %>").trigger('show');
+console.log('form dirender di new.js.erb')

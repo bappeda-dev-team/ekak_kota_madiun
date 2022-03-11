@@ -80,6 +80,21 @@ $(function () {
     }
   });
   $('#form-perhitungan-body').on('show', function () {
+    $(".select2-rekenings").select2({
+      width: "100%",
+      theme: "bootstrap-5",
+      dropdownParent: $("#form-perhitungan"),
+      ajax: {
+        delay: 1000,
+        url: '/rekening_search.json',
+        data: (params) => ({ q: params.term })
+      },
+      language: {
+        inputTooShort: function () {
+          return "Input minimal 3 Karakter";
+        }
+      }
+    });
     $(".select2-anggaran-ssh").select2({
       width: "100%",
       theme: "bootstrap-5",

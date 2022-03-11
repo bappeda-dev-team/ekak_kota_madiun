@@ -87,5 +87,7 @@ class Sasaran < ApplicationRecord
 
   def total_anggaran
     tahapans.map { |t| t.anggarans.compact.sum { |n| n.jumlah } }.inject(:+)
+  rescue TypeError
+    '-'
   end
 end
