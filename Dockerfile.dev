@@ -15,10 +15,11 @@ postgresql-client \
 curl \
 && rm -rf /var/lib/apt/lists/*
 
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
-RUN apt update -qq && apt install yarn -y
+RUN apt update -qq && apt install nodejs yarn -y
 
 # navigate to app directory
 WORKDIR $APP_PATH
