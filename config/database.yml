@@ -12,9 +12,9 @@ default: &default
   password: secret
 
 
-development:
-  <<: *default
-  database: prototype_kak_dev
+# development:
+#   <<: *default
+#   database: prototype_kak_dev
 
 # local windows ( laptop )
 #development:
@@ -23,24 +23,31 @@ development:
 #  password: nsgt88
 #  port: 5433
 #  database: prototype_kak_dev
+docker: &docker
+  <<: *default
+  host: db
+  username: postgres
+  password: postgres
+  port: 5432
 
 #docker
-# development:
-#   <<: *default
-#   host: db
-#   username: postgres
-#   password: postgres
-#   port: 5432
-#   database: prototype_kak_dev
+development:
+  <<: *docker
+  database: prototype_kak_dev
 
-
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
 test:
-  <<: *default
+  <<: *docker
   database: prototype_kak_test
 
 production:
-  <<: *default
+  <<: *docker
   database: prototype_kak_prod
+#end docker
+
+# test:
+#   <<: *default
+#   database: prototype_kak_test
+
+# production:
+#   <<: *default
+#   database: prototype_kak_prod
