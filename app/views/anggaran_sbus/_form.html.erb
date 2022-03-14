@@ -1,4 +1,4 @@
-<%= form_with(model: anggaran_sbus) do |form| %>
+<%= form_with(scope: :anggaran_sbus, url: anggaran_sbus_index_path ) do |form| %>
   <div class="field">
     <%= form.label :kode_kelompok_barang %>
     <%= form.text_field :kode_kelompok_barang %>
