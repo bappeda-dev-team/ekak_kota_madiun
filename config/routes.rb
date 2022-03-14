@@ -68,7 +68,8 @@ Rails.application.routes.draw do
   # laporan kak
   get '/laporan_kak', to: 'kaks#laporan_kak'
   get '/pdf_kak/:id', to: 'kaks#pdf_kak'
-
+  # laporan rka
+  get '/laporan_rka', to: 'program_kegiatans#laporan_rka'
   #  Sasaran
   get '/daftar_subkegiatan', to: 'sasarans#daftar_subkegiatan'
   get '/pdf_daftar_subkegiatan', to: 'sasarans#pdf_daftar_subkegiatan'

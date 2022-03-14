@@ -23,6 +23,11 @@ class ProgramKegiatansController < ApplicationController
 
   def kak_waktu; end
 
+  def laporan_rka
+    @programKegiatans = ProgramKegiatan.includes(:sasarans).where.not(sasarans: {id: nil})
+    console
+  end
+
   def edit; end
 
   def create
