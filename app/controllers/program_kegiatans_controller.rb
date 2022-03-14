@@ -1,5 +1,5 @@
 class ProgramKegiatansController < ApplicationController
-  before_action :set_programKegiatan, only: %i[show edit update destroy show_to_kak kak_detail kak_renaksi kak_waktu]
+  before_action :set_programKegiatan, only: %i[show edit update destroy show_to_kak kak_detail kak_renaksi kak_waktu pdf_rka]
   before_action :set_dropdown, only: %i[new edit]
 
   layout false, only: %i[show_to_kak kak_detail kak_renaksi kak_waktu]
@@ -25,8 +25,9 @@ class ProgramKegiatansController < ApplicationController
 
   def laporan_rka
     @programKegiatans = ProgramKegiatan.includes(:sasarans).where.not(sasarans: {id: nil})
-    console
   end
+
+  def pdf_rka; end
 
   def edit; end
 

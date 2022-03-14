@@ -38,7 +38,7 @@
                   <%= link_to '#', class: "m-3" do %>
                     <span class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Lihat KaK"></span>
                   <% end %>
-                  <%= link_to "#", class: "m-3",remote: true do %>
+                  <%= link_to "/pdf_rka/#{program.id}.pdf", class: "m-3",remote: true do %>
                     <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
                   <% end %>
                 </td>
