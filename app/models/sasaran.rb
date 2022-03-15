@@ -40,7 +40,7 @@ class Sasaran < ApplicationRecord
   validates :target, presence: true
   validates :satuan, presence: true
 
-  def method_missing(_method, *_args)
+  def respond_to_missing?(_method, *_args)
     0
   end
 
@@ -70,24 +70,28 @@ class Sasaran < ApplicationRecord
   end
 
   def waktu_total
-    total_target_aksi_bulan.count
-  rescue NoMethodError => e
-    print_exception(e, true)
+    tahapans.map { |t| t.aksis.group(:bulan).count(:target) }.inject(:merge).count
+  rescue NoMethodError
+    '-'
   end
 
   def progress_total
     jumlah_target = tahapans.sum :jumlah_target
     jumlah_realisasi = tahapans.sum :jumlah_realisasi
     begin
-      ((jumlah_realisasi.to_f / jumlah_target.to_f) * 100)
+      ((jumlah_realisasi / jumlah_target.to_f) * 100)
     rescue StandardError
       0
     end
   end
 
   def total_anggaran
-    tahapans.map { |t| t.anggarans.compact.sum { |n| n.jumlah } }.inject(:+)
+    tahapans.map { |t| t.anggarans.compact.sum(&:jumlah) }.inject(:+)
   rescue TypeError
     '-'
+  end
+
+  def jumlah_target
+    tahapans.sum(:jumlah_target).nonzero? || '-'
   end
 end
