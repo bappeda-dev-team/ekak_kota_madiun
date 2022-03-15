@@ -35,9 +35,11 @@ prawn_document do |pdf|
 
   pdf.move_down 20
   pdf.text 'B. Penerima Manfaat', size: 14, style: :bold
-  data_penerima_manfaat = [['No', 'Rencana Kinerja', 'Penerima Manfaat']]
+  data_penerima_manfaat = [['No', 'Rencana Kinerja', 'Penerima Manfaat', 'Nama Usulan',
+                            'Jenis Usulan', 'Alamat', 'Cek Lokasi', 'Keterangan']]
   @kak.program_kegiatan.sasarans.each.with_index(1).map do |sasaran, i|
-    data_penerima_manfaat << [i.to_s, sasaran.sasaran_kinerja.to_s, sasaran.penerima_manfaat.to_s]
+    data_penerima_manfaat << [i.to_s, sasaran.sasaran_kinerja.to_s, sasaran.penerima_manfaat.to_s, 'Usulan Contoh',
+                              'Musrenbang', 'Alamat ABC', '111111', '']
   end
   pdf.move_down 10
   pdf.table(data_penerima_manfaat, cell_style: { size: 8 })

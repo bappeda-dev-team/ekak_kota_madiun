@@ -14,7 +14,7 @@ class KaksController < ApplicationController
   end
 
   def pdf_kak
-    @filename = "laporan_rka.pdf"
+    @filename = "laporan_kak.pdf"
   end
 
   # GET /kaks/new
