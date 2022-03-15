@@ -13,7 +13,9 @@ class KaksController < ApplicationController
     @kaks = Kak.includes(:program_kegiatan).where.not(program_kegiatan: { id: nil })
   end
 
-  def pdf_kak; end
+  def pdf_kak
+    @filename = "laporan_rka.pdf"
+  end
 
   # GET /kaks/new
   def new

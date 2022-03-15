@@ -27,7 +27,9 @@ class ProgramKegiatansController < ApplicationController
     @programKegiatans = ProgramKegiatan.includes(:sasarans).where.not(sasarans: {id: nil})
   end
 
-  def pdf_rka; end
+  def pdf_rka
+    @filename = "laporan_rka.pdf"
+  end
 
   def edit; end
 
