@@ -16,10 +16,10 @@ COPY Gemfile ${APP_PATH}/Gemfile
 COPY Gemfile.lock ${APP_PATH}/Gemfile.lock
 
 RUN gem install bundler
-RUN if [[ "$RAILS_ENV" == "production" ]]; then bundle install --without development test; else bundle install; fi
-
 COPY . ${APP_PATH}
+RUN if [[ "$RAILS_ENV" == "production" ]]; then bundle install --without development test; else bundle install; fi
 RUN yarn
+RUN rake assets:precompile
 
 COPY ./dev-docker-entrypoint.sh /usr/local/bin/dev-docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/dev-docker-entrypoint.sh
