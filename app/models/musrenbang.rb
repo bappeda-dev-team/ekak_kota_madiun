@@ -23,4 +23,5 @@ class Musrenbang < ApplicationRecord
   # has_rich_text :usulan
 
   belongs_to :sasaran, optional: true
+  has_many :usulans, as: :usulanable
 end
