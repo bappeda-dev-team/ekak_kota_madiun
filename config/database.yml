@@ -11,9 +11,9 @@ default: &default
   username: ry
   password: secret
 
-# development:
-#   <<: *default
-#   database: prototype_kak_dev
+development:
+  <<: *default
+  database: prototype_kak_dev
 
 # local windows ( laptop )
 #development:
@@ -22,30 +22,18 @@ default: &default
 #  password: nsgt88
 #  port: 5433
 #  database: prototype_kak_dev
-docker: &docker
+
+
+live: &live
   <<: *default
   username: ryan
   password: nsgt88
   port: 5432
 
-#docker
-development:
-  <<: *docker
-  database: prototype_kak_dev
-
 test:
-  <<: *docker
+  <<: *default
   database: prototype_kak_test
 
 production:
-  <<: *docker
+  <<: *default
   database: prototype_kak_prod
-#end docker
-
-# test:
-#   <<: *default
-#   database: prototype_kak_test
-
-# production:
-#   <<: *default
-#   database: prototype_kak_prod
