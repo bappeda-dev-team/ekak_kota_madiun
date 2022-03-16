@@ -24,10 +24,9 @@ default: &default
 #  database: prototype_kak_dev
 docker: &docker
   <<: *default
-  host: db
-  username: postgres
-  password: postgres
-  port: 54321
+  username: ryan
+  password: nsgt88
+  port: 5432
 
 #docker
 development:
