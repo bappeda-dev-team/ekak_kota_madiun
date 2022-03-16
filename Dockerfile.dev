@@ -5,25 +5,25 @@ ENV BUNDLE_VERSION 2.2.15
 ENV BUNDLE_PATH /user/local/bundle/gems
 ENV TMP_PATH /tmp/
 ENV RAILS_LOG_TO_SDOUT true
-ENV RAILS_PORT 3000
+ENV RAILS_PORT 3001
 
 # base install
 RUN apk --update add build-base nodejs tzdata postgresql-dev postgresql-client libxslt-dev libxml2-dev imagemagick yarn
 
 # navigate to app directory
 WORKDIR $APP_PATH
-COPY Gemfile ${APP_PATH}/Gemfile
-COPY Gemfile.lock ${APP_PATH}/Gemfile.lock
+ADD Gemfile $APP_PATH/Gemfile
+ADD Gemfile.lock $APP_PATH/Gemfile.lock
 
 RUN gem install bundler
-COPY . ${APP_PATH}
+ADD . $APP_PATH
 RUN if [[ "$RAILS_ENV" == "production" ]]; then bundle install --without development test; else bundle install; fi
-RUN yarn
-RUN rake assets:precompile
+RUN yarn install --check-files
 
-COPY ./dev-docker-entrypoint.sh /usr/local/bin/dev-docker-entrypoint.sh
+ADD ./dev-docker-entrypoint.sh /usr/local/bin/dev-docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/dev-docker-entrypoint.sh
 
 EXPOSE $RAILS_PORT
 ENTRYPOINT ["sh","/usr/local/bin/dev-docker-entrypoint.sh"]
-CMD ["bundle", "exec"]
+CMD ["rails","server","-b","0.0.0.0"]
+RUN RAILS_ENV=production bundle exec rake assets:precompile

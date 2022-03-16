@@ -27,7 +27,7 @@ docker: &docker
   host: db
   username: postgres
   password: postgres
-  port: 5432
+  port: 54321
 
 #docker
 development:
