@@ -27,9 +27,19 @@ class Tahapan < ApplicationRecord
 
   validates :tahapan_kerja, presence: true
 
-  def find_target_bulan(i)
-    aksis.find_by_bulan(i).target
+  def find_target_bulan(bulan)
+    aksis.find_by_bulan(bulan).target
   rescue NoMethodError
     '-'
+  end
+  
+  def target_total
+    jumlah_target.nil? ? '-' : jumlah_target
+  end
+  
+  def anggaran_tahapan
+    anggarans.compact.sum { |n| n.jumlah }
+  rescue NoMethodError
+    '0'
   end
 end

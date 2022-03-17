@@ -112,26 +112,10 @@ $(function () {
     }).on('select2:opening', function (e) {
       $(this).data('select2').$dropdown.find(':input.select2-search__field').attr('placeholder', 'Ketik Untuk mencari')
     }).on('select2:select', function (e) {
-      let data_barang = e.params.data.id;
-      let data_spesifikasi = [];
-      $.ajax({
-        type: 'get',
-        url: '/anggaran_spesifikasi_search.json',
-        data: {
-          q: data_barang
-        },
-        success: function (res) {
-          if (res) {
-            data_spesifikasi = res.results
-            $("#spesifikasi").val(res.results[0].spesifikasi)
-            $('#satuan').val(res.results[0].satuan)
-            $('#harga').val(res.results[0].harga)
-          }
-        },
-        error: function (er) {
-          console.log(er)
-        }
-      })
+      let data_barang = e.params.data;
+      $("#spesifikasi").val(data_barang.spesifikasi)
+      $('#satuan').val(data_barang.satuan)
+      $('#harga').val(data_barang.harga)
     });
   });
   $('#form-tematik-body').on('show', function () {
