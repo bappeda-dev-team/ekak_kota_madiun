@@ -157,14 +157,11 @@ RSpec.describe Sasaran, type: :model do
   end
 
   context 'association' do
-    it { should have_many(:musrenbangs) }
-    it { should have_many(:pokpirs) }
-    it { should have_many(:mandatoris) }
-    it { should have_many(:inovasis) }
     it { should have_many(:tahapans) }
     it { should have_one(:rincian) }
     it { should belong_to(:user) }
     it { should belong_to(:program_kegiatan).optional }
+    it { should have_many(:usulans) }
   end
 
   context 'nested_attribute' do

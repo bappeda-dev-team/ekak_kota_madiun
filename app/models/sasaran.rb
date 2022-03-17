@@ -25,11 +25,11 @@ class Sasaran < ApplicationRecord
   belongs_to :program_kegiatan, optional: true
 
   has_many :usulans, as: :usulanable
-  # has_many :musrenbangs
+  has_many :musrenbangs
   # has_many :pokpirs
   # has_many :mandatoris
   # has_many :inovasis
-  # has_many :tahapans
+  has_many :tahapans
   has_one :rincian, dependent: :destroy
 
   accepts_nested_attributes_for :rincian, update_only: true
