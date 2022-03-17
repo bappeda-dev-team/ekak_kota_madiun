@@ -40,8 +40,4 @@ class ProgramKegiatan < ApplicationRecord
   def my_pagu
     sasarans.map(&:total_anggaran).compact.sum
   end
-  
-  def my_waktu
-    sasarans.map(&:waktu_total).compact.sum
-  end
 end

@@ -4,8 +4,7 @@ module ApplicationHelper
       { title: 'Sasaran Kinerja', href: user_sasarans_path(current_user), icon: 'fas fa-bullseye',
         identifier: 'sasaran' },
       { title: 'Kak', href: kaks_path, icon: 'fas fa-sitemap', identifier: 'acuan_kerja' },
-      { title: 'Laporan KAK', href: laporan_kak_path, icon: 'far fa-file', identifier: 'laporan_kak' },
-      { title: 'Laporan RKA', href: laporan_rka_path, icon: 'fas fa-money-check', identifier: 'laporan_rka' }
+      { title: 'Laporan KaK', href: laporan_kak_path, icon: 'far fa-file', identifier: 'laporan_kak' }
     ]
   end
 

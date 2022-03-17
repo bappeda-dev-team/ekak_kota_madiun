@@ -26,7 +26,7 @@ module AnggaransHelper
 
   def uraian_kode(kode_barang)
     # update using delgate method polymorphic
-    Search::AllAnggaran.find_by_kode_barang(kode_barang).uraian_barang
+    AnggaranSsh.find_by_kode_barang(kode_barang).uraian_kelompok_barang
   rescue NoMethodError
     'Tidak Ditemukan'
   end
