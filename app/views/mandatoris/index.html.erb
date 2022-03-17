@@ -28,7 +28,7 @@
               <tr>
                 <th class="border-bottom" scope="col">No.</th>
                 <th class="border-bottom" scope="col">Usulan</th>
-                <th class="border-bottom" scope="col">Alamat</th>
+                <th class="border-bottom" scope="col">Peraturan Terkait</th>
                 <th class="border-bottom" scope="col">Tambah User</th>
                 <th class="border-bottom text-center" scope="col">Action</th>
               </tr>
@@ -38,7 +38,7 @@
                 <tr>
                   <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
                   <td class="fw-bolder text-gray-500"><%= truncate(mandatori.usulan, length: 30, separator: '...') %></td>
-                  <td class="fw-bolder text-gray-500"><%= truncate(mandatori.alamat, length: 25, separator: '...') %></td>
+                  <td class="fw-bolder text-gray-500"><%= truncate(mandatori.peraturan_terkait, length: 25, separator: '...') %></td>
                   <td class="fw-bolder text-gray-500"><%= link_to 'Pilih User', '#' %></td>
                   <td class="fw-bolder text-gray-500 text-center">
                     <%= link_to mandatori do %>

@@ -78,6 +78,9 @@ $(function () {
         return "Input minimal 3 Karakter";
       }
     }
+  }).on('select2:select', function (e) {
+    $('input:hidden[name=usulan_type]').val(e.params.data.usulan_type)
+    console.log(e.params.data)
   });
   $('#form-perhitungan-body').on('show', function () {
     $(".select2-rekenings").select2({
