@@ -24,7 +24,7 @@ class Sasaran < ApplicationRecord
   belongs_to :user
   belongs_to :program_kegiatan, optional: true
 
-  has_many :usulans, as: :usulanable
+  has_many :usulans
   has_many :musrenbangs
   # has_many :pokpirs
   # has_many :mandatoris
@@ -94,5 +94,9 @@ class Sasaran < ApplicationRecord
 
   def jumlah_target
     tahapans.sum(:jumlah_target).nonzero? || '-'
+  end
+  
+  def my_usulan
+    usulans.map(&:usulanable)
   end
 end
