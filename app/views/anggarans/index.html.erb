@@ -25,7 +25,7 @@
   <div class="card-body">
     <p>Rincian Anggaran</p>
     <div class="anggaran">
-      <%= link_to 'Tambah Anggaran', new_sasaran_tahapan_anggaran_path(@sasaran, @tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 btn btn-sm btn-success text-white animate-up-2"   %>
+      <%= link_to 'Tambah Anggaran', new_sasaran_tahapan_anggaran_path(@sasaran, @tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 mb-3 text-success animate-up-2"   %>
       <table id="detail-anggaran">
         <thead>
           <tr>
@@ -44,10 +44,10 @@
         <tbody>
           <% @anggarans.order(:created_at).each do |anggaran| %>
             <tr class="level-0">
-              <td><%= rekening_anggaran anggaran.kode_rek %></td>
-              <td colspan="5">
+              <td><%= rekening_anggaran(anggaran.kode_rek) %></td>
+              <td colspan="5" class="mx-auto">
                 <%= anggaran.uraian %>
-                <%= link_to 'Tambah Rincian', new_anggaran_perhitungan_path(anggaran),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 btn btn-sm btn-success text-white animate-up-2"   %>
+                <%= link_to 'Tambah Rincian', new_anggaran_perhitungan_path(anggaran),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 text-success animate-up-2" %>
                 <%= link_to "Edit", edit_sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran), class: 'text-info'  %>
                 <%= link_to "Hapus", sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran), method: :delete, data: {confirm_swal: "Hapus Anggaran #{anggaran.uraian}"}, class: "text-danger"  %>
               </td>
@@ -57,16 +57,19 @@
               <% anggaran.perhitungans.order(:created_at).each do |hitung| %>
                 <% pajak = hitung.total * anggaran.pajak.potongan %>
                 <tr class="rincian-anggaran">
-                  <td><%= link_to "Hapus Anggaran", anggaran_perhitungan_path(anggaran, hitung), method: :delete, data: { confirm_swal: "Hapus Anggaran #{hitung.deskripsi} ?" }, class: "btn btn-danger" %></td>
-                  <td><%= uraian_kode hitung.deskripsi %></td>
-                  <td><% hitung.koefisiens.each.with_index(1) do |koef, index|%>
+                  <td><%= link_to "Hapus Anggaran", anggaran_perhitungan_path(anggaran, hitung), method: :delete, data: { confirm_swal: "Hapus Anggaran #{hitung.deskripsi} ?" }, class: "text-danger" %></td>
+                  <td><%= uraian_kode(hitung.deskripsi) %>
+                  <br>
+                  <%= spesifikasi(hitung.deskripsi) %>
+                  </td>
+                  <td class="text-center"><% hitung.koefisiens.each.with_index(1) do |koef, index|%>
                       <%= koef.volume %> <%= koef.satuan_volume %> <%= 'x' if index < hitung.koefisiens.length %>
                     <% end %>
                   </td>
-                  <td><%= hitung.satuan %></td>
-                  <td><%= number_with_delimiter(hitung.harga, :delimiter => '.') %></td>
-                  <td><%= (anggaran.pajak.potongan * 100).to_i %> %</td>
-                  <td class="uang text-end"><%= number_with_delimiter((hitung.total).to_i, :delimiter => '.') %></td>
+                  <td class="text-center"><%= hitung.satuan %></td>
+                  <td class="text-center"><%= number_with_delimiter(hitung.harga, :delimiter => '.') %></td>
+                  <td class="text-end"><%= (anggaran.pajak.potongan * 100).to_i %> %</td>
+                  <td class="uang text-end">Rp. <%= number_with_delimiter((hitung.total).to_i, :delimiter => '.') %></td>
                 </tr>
               <% end %>
             <% end %>
@@ -75,7 +78,7 @@
         <tfoot>
           <tr>
             <td colspan="6" style="text-align:right">Jumlah Anggaran Sub Kegiatan :</td>
-            <td class="text-end"><%= number_with_delimiter(@anggarans.sum(:jumlah), :delimiter => '.') %></td>
+            <td class="text-end">Rp. <%= number_with_delimiter(@anggarans.sum(:jumlah), :delimiter => '.') %></td>
           </tr>
         </tfoot>
       </table>

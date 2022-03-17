@@ -18,14 +18,10 @@
         <td><%= perhitungan.deskripsi %></td>
         <td><%= perhitungan.satuan %></td>
         <td><%= perhitungan.harga %></td>
-        <td><%= link_to 'Show', perhitungan %></td>
-        <td><%= link_to 'Edit', edit_perhitungan_path(perhitungan) %></td>
+        <td><%= link_to 'Show', anggaran_perhitungan_path(@anggaran, perhitungan) %></td>
+        <td><%= link_to 'Edit', edit_anggaran_perhitungan_path(@anggaran, perhitungan) %></td>
         <td><%= link_to 'Destroy', perhitungan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'Kembali', rincian_tahapan_anggaran_path(balik.tahapan.rincian, balik.tahapan, balik) %>

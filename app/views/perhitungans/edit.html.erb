@@ -2,6 +2,5 @@
 
 <%= render 'form', perhitungan: @perhitungan %>
 <% awal = @anggaran.grand_parent || @anggaran %>
-<%= link_to 'Show', anggaran_perhitungan_path %> |
-<%= link_to 'Back',  rincian_tahapan_anggaran_path(awal.tahapan.rincian, awal.tahapan, awal) %>
+<%= link_to 'Show', anggaran_perhitungan_path %>
 

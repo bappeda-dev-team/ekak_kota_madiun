@@ -43,7 +43,7 @@
                 <td><%= anggaran_sbu.uraian_barang %></td>
                 <td><%= anggaran_sbu.spesifikasi %></td>
                 <td><%= anggaran_sbu.satuan %></td>
-                <td><%= anggaran_sbu.harga_satuan %></td>
+                <td><%=number_with_delimiter(anggaran_sbu.harga_satuan, delimiter: '.') %></td>
               </tr>
             <% end %>
           </tbody>
