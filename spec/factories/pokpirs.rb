@@ -19,7 +19,7 @@
 #
 FactoryBot.define do
   factory :pokpir do
-    usulan { "MyString" }
-    alamat { "MyString" }
+    usulan { "Usulan Pokok Pikiran 123" }
+    alamat { "Alamat Entah" }
   end
 end

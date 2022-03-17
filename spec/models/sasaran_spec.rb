@@ -157,18 +157,55 @@ RSpec.describe Sasaran, type: :model do
   end
 
   context 'association' do
-    it { should have_many(:musrenbangs) }
-    it { should have_many(:pokpirs) }
-    it { should have_many(:mandatoris) }
-    it { should have_many(:inovasis) }
     it { should have_many(:tahapans) }
     it { should have_one(:rincian) }
     it { should belong_to(:user) }
     it { should belong_to(:program_kegiatan).optional }
+    it { should have_many(:usulans) }
   end
 
   context 'nested_attribute' do
     it { should accept_nested_attributes_for(:rincian).update_only(true) }
     it { should accept_nested_attributes_for(:tahapans) }
+  end
+  
+  context 'sasaran take usulan from different type' do
+    let(:musren) { build(:musrenbang, usulan: 'contoh usulan diambil') }
+    let(:pokpir) { build(:pokpir, usulan: 'usulan pokok pikiran') }
+    let(:inovasi) { build(:inovasi, usulan: 'usulan inovasi') }
+    let(:mandatori) { build(:mandatori, usulan: 'usulan mandatori') }
+    let(:sasaran1) { build(:sasaran) }
+    it 'can save from musrenbang' do
+      usulan = Usulan.create(keterangan: 'contoh usulan sasaran 1', usulanable: musren, sasaran: sasaran1 )
+      expect(usulan).to be_valid
+      usulan_tadi = sasaran1.usulans.first.usulanable.usulan
+      expect(usulan_tadi).to eq('contoh usulan diambil')
+      class_usulan_tadi = sasaran1.usulans.first.usulanable.class.name
+      expect(class_usulan_tadi).to eq('Musrenbang')
+    end
+    it 'can save from pokok pikiran' do
+      usulan = Usulan.create(keterangan: 'contoh usulan sasaran 1', usulanable: pokpir, sasaran: sasaran1 )
+      expect(usulan).to be_valid
+      usulan_tadi = sasaran1.usulans.first.usulanable.usulan
+      expect(usulan_tadi).to eq('usulan pokok pikiran')
+      class_usulan_tadi = sasaran1.usulans.first.usulanable.class.name
+      expect(class_usulan_tadi).to eq('Pokpir')
+    end
+    it 'can save from inovasi' do
+      usulan = Usulan.create(keterangan: 'contoh usulan sasaran 1', usulanable: inovasi, sasaran: sasaran1 )
+      expect(usulan).to be_valid
+      usulan_tadi = sasaran1.usulans.first.usulanable.usulan
+      expect(usulan_tadi).to eq('usulan inovasi')
+      class_usulan_tadi = sasaran1.usulans.first.usulanable.class.name
+      expect(class_usulan_tadi).to eq('Inovasi')
+    end
+    it 'can save from mandatori' do
+      usulan = Usulan.create(keterangan: 'contoh usulan sasaran 1', usulanable: mandatori, sasaran: sasaran1 )
+      expect(usulan).to be_valid
+      usulan_tadi = sasaran1.usulans.first.usulanable.usulan
+      expect(usulan_tadi).to eq('usulan mandatori')
+      class_usulan_tadi = sasaran1.usulans.first.usulanable.class.name
+      expect(class_usulan_tadi).to eq('Mandatori')
+    end
   end
 end

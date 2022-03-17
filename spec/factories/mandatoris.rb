@@ -19,7 +19,7 @@
 #
 FactoryBot.define do
   factory :mandatori do
-    usulan { "MyString" }
-    peraturan_terkait { "MyString" }
+    usulan { "Usulan Mandatori" }
+    peraturan_terkait { "Peraturan Mandatori yang dibuat" }
   end
 end

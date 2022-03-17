@@ -4,7 +4,7 @@ class AnggaransController < ApplicationController
 
   # GET /anggarans or /anggarans.json
   def index
-    @anggarans = Anggaran.all
+    @anggarans = @tahapan.anggarans.all
   end
 
   # GET /anggarans/1 or /anggarans/1.json
@@ -23,14 +23,13 @@ class AnggaransController < ApplicationController
 
   # POST /anggarans or /anggarans.json
   def create
-    sleep 1
     # @anggaran = Anggaran.new(anggaran_params)
     @anggaran = @tahapan.anggarans.build(anggaran_params)
     rekening = Rekening.find(anggaran_params[:kode_rek])
     uraian = rekening.jenis_rekening
     kode_rekening = rekening.kode_rekening
     @anggaran.uraian = uraian
-    @anggaran.level = helpers.anggaran_level kode_rekening
+    @anggaran.level = helpers.anggaran_level(kode_rekening)
     respond_to do |format|
       if @anggaran.save
         format.js
@@ -48,6 +47,7 @@ class AnggaransController < ApplicationController
 
   # PATCH/PUT /anggarans/1 or /anggarans/1.json
   def update
+  # TODO: UPDATE ON HOW TO UPDATE KODE REKNEING DYNAMICLY
     rekening = Rekening.find(anggaran_params[:kode_rek])
     uraian = rekening.jenis_rekening
     kode_rekening = rekening.kode_rekening
@@ -57,7 +57,7 @@ class AnggaransController < ApplicationController
     respond_to do |format|
       if @anggaran.update(anggaran_params)
         format.html do
-          redirect_to sasaran_tahapan_anggaran_path(@sasaran, @tahapan, @anggaran),
+          redirect_to sasaran_tahapan_anggarans_path(@sasaran, @tahapan),
                       notice: 'Anggaran was successfully updated.'
         end
         format.json { render :show, status: :ok, location: @anggaran }
@@ -72,7 +72,7 @@ class AnggaransController < ApplicationController
   def destroy
     @anggaran.destroy
     respond_to do |format|
-      format.html { redirect_to sasaran_path(@sasaran), notice: 'Anggaran was successfully destroyed.' }
+      format.html { redirect_to sasaran_tahapan_anggarans_path(@sasaran, @tahapan), notice: 'Anggaran was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

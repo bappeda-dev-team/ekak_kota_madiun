@@ -61,7 +61,7 @@ Rails.application.routes.draw do
   get '/musrenbang_search', to: 'musrenbangs#musrenbang_search'
   patch '/aktifkan_usulan/:id', to: 'musrenbangs#aktifkan_usulan'
   patch '/non_aktifkan_usulan/:id', to: 'musrenbangs#non_aktifkan_usulan'
-  post '/update_sasaran_asn', to: 'musrenbangs#update_sasaran_asn'
+  post '/update_sasaran_asn', to: 'usulans#update_sasaran_asn'
   # pokpir
   patch '/aktifkan_pokpir/:id', to: 'pokpirs#aktifkan_pokpir'
   patch '/non_aktifkan_pokpir/:id', to: 'pokpirs#non_aktifkan_pokpir'

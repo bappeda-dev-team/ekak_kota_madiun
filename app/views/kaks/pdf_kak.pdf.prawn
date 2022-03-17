@@ -15,34 +15,36 @@ prawn_document do |pdf|
     ['Indikator', ':', @kak.program_kegiatan.indikator_subkegiatan],
     ['Target', ':', "#{@kak.program_kegiatan.target_subkegiatan} #{@kak.program_kegiatan.satuan_target_subkegiatan}"]
   ]
-  pdf.table(tabel_program_kegiatan, cell_style: { size: 8 })
+  pdf.table(tabel_program_kegiatan, cell_style: { size: 8, align: :justify })
   pdf.move_down 20
   pdf.text 'A. Latar Belakang', size: 14, style: :bold
   pdf.move_down 5
   pdf.text '1. Dasar Hukum', indent_paragraphs: 5, size: 12, style: :bold
   pdf.move_down 5
-  @kak.dasar_hukum.each do |hukum|
+  @kak.dasar_hukum.each.with_index(1) do |hukum, i|
     pdf.bounding_box([30, pdf.cursor], width: 450) do
-      pdf.text hukum.to_s, align: :justify, size: 8
+      pdf.text "#{i}. #{hukum.to_s}", align: :justify, size: 10
     end
   end
   pdf.move_down 5
   pdf.text '2. Gambaran Umum', indent_paragraphs: 5, size: 12, style: :bold
   pdf.move_down 5
   pdf.bounding_box([30, pdf.cursor], width: 450) do
-    pdf.text @kak.gambaran_umum, align: :justify, size: 8
+    pdf.text @kak.gambaran_umum, align: :justify, size: 10
   end
 
   pdf.move_down 20
   pdf.text 'B. Penerima Manfaat', size: 14, style: :bold
   data_penerima_manfaat = [['No', 'Rencana Kinerja', 'Penerima Manfaat', 'Nama Usulan',
-                            'Jenis Usulan', 'Alamat', 'Cek Lokasi', 'Keterangan']]
+                            'Jenis Usulan', 'Alamat', 'Keterangan']]
   @kak.program_kegiatan.sasarans.each.with_index(1).map do |sasaran, i|
-    data_penerima_manfaat << [i.to_s, sasaran.sasaran_kinerja.to_s, sasaran.penerima_manfaat.to_s, 'Usulan Contoh',
-                              'Musrenbang', 'Alamat ABC', '111111', '']
+    sasaran.my_usulan.each do |u|
+      data_penerima_manfaat << [i.to_s, sasaran.sasaran_kinerja.to_s, sasaran.penerima_manfaat.to_s, u.usulan,
+                                u.class.name.to_s, u.alamat, '']
+    end
   end
   pdf.move_down 10
-  pdf.table(data_penerima_manfaat, cell_style: { size: 8 })
+  pdf.table(data_penerima_manfaat, cell_style: { size: 8, align: :center })
 
   pdf.move_down 20
   pdf.text 'C. Strategi Pencapaain Keluaran', size: 14, style: :bold
@@ -75,7 +77,7 @@ prawn_document do |pdf|
     end
     data_rencana_aksi << [{ content: "Total sasaran ini adalah #{sasaran.waktu_total} bulan", colspan: 14 },
                           sasaran.jumlah_target, "Rp. #{number_with_delimiter(sasaran.total_anggaran, delimiter: '.')}", '']
-    pdf.table(data_rencana_aksi, cell_style: { size: 8 })
+    pdf.table(data_rencana_aksi, cell_style: { size: 8, align: :center })
     data_rencana_aksi.clear
     pdf.move_down 10
   end

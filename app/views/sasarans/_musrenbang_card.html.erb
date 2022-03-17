@@ -8,8 +8,9 @@
         <%= form_with(url: '/update_sasaran_asn', local: false) do |form| %>
           <div class="field">
             <%= form.hidden_field :sasaran_id, value: sasaran.id   %>
+            <%= form.hidden_field :usulan_type  %>
             <%= form.label :usulan %>
-            <%= form.select :id, [], {include_blank: true}, {id: "select2-musrenbang", "data-placeholder": "Pilih Usulan"} %>
+            <%= form.select :usulan_id, [], {include_blank: true}, {id: "select2-musrenbang", "data-placeholder": "Pilih Usulan"} %>
           </div>
           <div class="actions">
             <%= form.submit %>
@@ -24,13 +25,17 @@
         <tr>
           <th>No</th>
           <th>Usulan</th>
+          <th>Alamat</th>
+          <th>Jenis Usulan</th>
         </tr>
       </thead>
       <tbody>
-        <% sasaran.musrenbangs.each.with_index(1) do |sas, i| %>
+        <% sasaran.my_usulan.each.with_index(1) do |sas, i| %>
           <tr>
             <td><%= i %></td>
             <td><%= sas.usulan %></td>
+            <td><%= sas.alamat %></td>
+            <td><%= sas.class.name %></td>
           </tr>
         <% end %>
       </tbody>

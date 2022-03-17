@@ -30,4 +30,11 @@ module AnggaransHelper
   rescue NoMethodError
     'Tidak Ditemukan'
   end
+  
+  def spesifikasi(kode_barang)
+    # update using delgate method polymorphic
+    Search::AllAnggaran.find_by_kode_barang(kode_barang).spesifikasi
+  rescue NoMethodError
+    'Tidak Ditemukan'
+  end
 end
