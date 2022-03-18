@@ -70,4 +70,8 @@ class Anggaran < ApplicationRecord
     rek_level0 = kode_rek[0..-15]
     { 'level_3' => rek_level3, 'level_2' => rek_level2, 'level_1' => rek_level1, 'level_0' => rek_level0 }
   end
+  
+  def plus_pajak
+    pajak.potongan * 100
+  end
 end
