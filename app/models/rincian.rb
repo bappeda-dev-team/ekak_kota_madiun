@@ -23,9 +23,7 @@
 #  fk_rails_...  (sasaran_id => sasarans.id)
 #
 class Rincian < ApplicationRecord
-  belongs_to :sasaran
-  has_many :kesenjangan
+  has_many :kesenjangans
 
   validates :lokasi_pelaksanaan, presence: true
-
 end

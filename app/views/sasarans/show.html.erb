@@ -19,11 +19,11 @@
         </div>
         <% unless @sasaran.rincian %>
           <div>
-            <%= link_to "Tambah Rincian Sasaran", edit_user_sasaran_path(current_user, @sasaran), class: "btn btn-warning " %>
+            <%= link_to "Tambah Rincian Sasaran", new_sasaran_rincian_path(@sasaran), class: "btn btn-warning " %>
           </div>
         <% else %>
           <div>
-            <%= link_to "Lihat Rincian", edit_user_sasaran_path(current_user, @sasaran), class: "btn btn-info text-white"  %>
+            <%= link_to "Lihat Rincian", sasaran_rincian_path(@sasaran, @sasaran.rincian), class: "btn btn-info text-white"  %>
           </div>
         <% end %>
       </div>

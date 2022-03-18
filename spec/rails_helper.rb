@@ -1,10 +1,14 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
 abort('The Rails environment is running in production mode!') if Rails.env.production?
+require 'spec_helper'
 require 'rspec/rails'
+require 'capybara/rails'
+require 'devise'
+require 'shoulda/matchers'
+require 'support/factory_bot'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'database_cleaner'
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -83,12 +87,14 @@ RSpec.configure do |config|
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
+  config.include Devise::TestHelpers, type: :controller
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-  Shoulda::Matchers.configure do |config|
-    config.integrate do |with|
-      with.test_framework :rspec
-      with.library :rails
-    end
+end
+
+Shoulda::Matchers.configure do |conf|
+  conf.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
   end
 end

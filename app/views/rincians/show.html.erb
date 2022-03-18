@@ -1,40 +1,31 @@
 <p id="notice"><%= notice %></p>
-
 <p>
   <strong>Data terpilah:</strong>
   <%= @rincian.data_terpilah %>
 </p>
-
 <p>
   <strong>Penyebab internal:</strong>
   <%= @rincian.penyebab_internal %>
 </p>
-
 <p>
   <strong>Penyebab external:</strong>
   <%= @rincian.penyebab_external %>
 </p>
-
 <p>
   <strong>Permasalahan umum:</strong>
   <%= @rincian.permasalahan_umum %>
 </p>
-
 <p>
   <strong>Permasalahan gender:</strong>
   <%= @rincian.permasalahan_gender %>
 </p>
-
 <p>
   <strong>Resiko:</strong>
   <%= @rincian.resiko %>
 </p>
-
 <p>
   <strong>Lokasi pelaksanaan:</strong>
   <%= @rincian.lokasi_pelaksanaan %>
 </p>
-
-
-<%= link_to 'Edit', edit_rincian_path(@rincian) %> |
-<%= link_to 'Back', rincians_path %>
+<%= link_to 'Edit', edit_sasaran_rincian_path(@sasaran, @rincian) %> |
+<%= link_to 'Back', user_sasarans_path(current_user, @sasaran) %>
