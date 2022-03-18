@@ -41,30 +41,19 @@ prawn_document do |pdf|
       pdf.text "Tahapan #{index}.  #{tahapan.tahapan_kerja}"
       pdf.move_down 5
       header_anggaran = [
-        [{ content: 'Kode rekening', rowspan: 2 }, { content: 'Uraian', rowspan: 2 },
-         { content: 'Rincian Perhitungan', colspan: 4}, { content: 'Jumlah', rowspan: 2 }],
-        %w[Koefisien Satuan Harga PPN]
-    ]
-      cell_perhitungan_deskripsi = ''
-      cell_perhitungan_satuan = ''
-      cell_perhitungan_harga_satuan = ''
-      cell_total = ''
-      cell_koefisien = ''
-      tabel_perhitungan = ''
+                          [{ content: 'Kode rekening', rowspan: 2 }, { content: 'Uraian', rowspan: 2 },
+                           { content: 'Rincian Perhitungan', colspan: 4 }, { content: 'Jumlah', rowspan: 2 }],
+                          %w[Koefisien Satuan Harga PPN]
+                        ]
       tahapan.anggarans.each do |anggaran|
-        header_anggaran << [rekening_anggaran(anggaran.kode_rek), { content: anggaran.uraian, colspan: 5 }, "Rp. #{anggaran.jumlah}"]
+        header_anggaran << [rekening_anggaran(anggaran.kode_rek), { content: anggaran.uraian, colspan: 5 }, { content: "Rp. #{anggaran.jumlah}", align: :right}]
         anggaran.perhitungans.each do |perhitungan|
-          cell_perhitungan_deskripsi = pdf.make_cell(content: uraian_kode(perhitungan.deskripsi))
-          cell_perhitungan_satuan = pdf.make_cell(content: perhitungan.satuan)
-          cell_perhitungan_harga_satuan = pdf.make_cell(content:"Rp. #{number_with_delimiter(perhitungan.harga, delimiter: '.')}")
-          cell_total = pdf.make_cell(content: "Rp. #{number_with_delimiter((perhitungan.total).to_i, delimiter: '.')}")
-          header_anggaran << ['', uraian_kode(perhitungan.deskripsi), 'harus e koefisien', perhitungan.satuan,
-                              perhitungan.harga, anggaran.pajak.potongan, perhitungan.total]
-          # make helper to make koefisien list
+          header_anggaran << ['', uraian_kode(perhitungan.deskripsi), perhitungan.list_koefisien, perhitungan.satuan,
+                              { content: perhitungan.harga.to_s, align: :right }, { content: anggaran.plus_pajak.to_s}, { content: "Rp. #{perhitungan.total}", align: :right }]
         end
-        pdf.table(header_anggaran, cell_style: { size: 7 })
-        header_anggaran.clear
       end
+      pdf.table(header_anggaran, cell_style: { size: 6 }, width: pdf.bounds.width)
+      header_anggaran.clear
     end
   end
 end
