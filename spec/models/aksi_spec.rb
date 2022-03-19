@@ -18,8 +18,7 @@ require 'rails_helper'
 
 RSpec.describe Aksi, type: :model do
   context 'validations' do
-    it { should validate_presence_of(:target)  }
+    it { should validate_presence_of(:target) }
     it { should validate_numericality_of(:target) }
-    it { should validate_numericality_of(:realisasi) }
   end
 end

@@ -1,5 +1,5 @@
 class SasaransController < ApplicationController
-  before_action :get_user, only: %i[index create new]
+  before_action :get_user, only: %i[index new create]
   before_action :set_sasaran, only: %i[show edit update destroy update_program_kegiatan]
   before_action :set_dropdown, only: %i[new edit]
 
@@ -49,7 +49,7 @@ class SasaransController < ApplicationController
 
   # PATCH/PUT /sasarans/1 or /sasarans/1.json
   def update
-    user = @sasaran.user.id
+    @sasaran.user.id
 
     respond_to do |format|
       if @sasaran.update(sasaran_params)
@@ -64,7 +64,7 @@ class SasaransController < ApplicationController
 
   # DELETE /sasarans/1 or /sasarans/1.json
   def destroy
-    user = @sasaran.user.id
+    @sasaran.user.id
     @sasaran.destroy
     respond_to do |format|
       format.html { redirect_to sasaran_path, notice: 'Sasaran was successfully destroyed.' }

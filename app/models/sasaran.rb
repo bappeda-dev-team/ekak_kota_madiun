@@ -95,7 +95,7 @@ class Sasaran < ApplicationRecord
   def jumlah_target
     tahapans.sum(:jumlah_target).nonzero? || '-'
   end
-  
+
   def my_usulan
     usulans.map(&:usulanable)
   end

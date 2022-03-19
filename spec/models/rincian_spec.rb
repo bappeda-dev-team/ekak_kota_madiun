@@ -75,4 +75,8 @@ RSpec.describe Rincian, type: :model do
       expect(rincian.errors[:lokasi_pelaksanaan]).to include("can't be blank")
     end
   end
+
+  context 'validation' do
+    it { should have_many(:kesenjangans) }
+  end
 end

@@ -33,37 +33,6 @@
     <%= form.label :penerima_manfaat, { class: "form-label" } %>
     <%= form.text_field :penerima_manfaat, { class: "form-control" } %>
   </div>
-  <!-- Rincian form-->
-  <%= form.fields_for :rincian do |rinci| %>
-    <div class="field">
-      <%= rinci.label :data_terpilah, { class: "form-label" } %>
-      <%= rinci.text_field :data_terpilah, { class: "form-control" } %>
-    </div>
-    <div class="field">
-      <%= rinci.label :permasalahan_gender, { class: "form-label" } %>
-      <%= rinci.text_field :permasalahan_gender, { class: "form-control" } %>
-    </div>
-    <div class="field">
-      <%= rinci.label :permasalahan_umum, { class: "form-label" } %>
-      <%= rinci.text_field :permasalahan_umum, { class: "form-control" } %>
-    </div>
-    <div class="field">
-      <%= rinci.label :penyebab_internal, { class: "form-label" } %>
-      <%= rinci.text_field :penyebab_internal, { class: "form-control" } %>
-    </div>
-    <div class="field">
-      <%= rinci.label :penyebab_external, { class: "form-label" } %>
-      <%= rinci.text_field :penyebab_external, { class: "form-control" } %>
-    </div>
-    <div class="field">
-      <%= rinci.label :resiko, { class: "form-label" } %>
-      <%= rinci.text_field :resiko, { class: "form-control" } %>
-    </div>
-    <div class="field">
-      <%= rinci.label :lokasi_pelaksanaan, { class: "form-label" } %>
-      <%= rinci.text_field :lokasi_pelaksanaan, { class: "form-control" } %>
-    </div>
-  <% end %>
   <div class="actions my-4">
     <%= form.submit "Simpan", :class => "btn btn-tertiary" %>
   </div>

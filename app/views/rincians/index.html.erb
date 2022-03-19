@@ -11,11 +11,12 @@
       <th>Permasalahan gender</th>
       <th>Resiko</th>
       <th>Lokasi pelaksanaan</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><%= @rincians.sasaran.sasaran_kinerja %></td>
+      <td><%= @sasaran.sasaran_kinerja %></td>
       <td><%= @rincians.data_terpilah %></td>
       <td><%= @rincians.penyebab_internal %></td>
       <td><%= @rincians.penyebab_external %></td>
@@ -23,6 +24,7 @@
       <td><%= @rincians.permasalahan_gender %></td>
       <td><%= @rincians.resiko %></td>
       <td><%= @rincians.lokasi_pelaksanaan %></td>
+      <td><%= link_to 'Destroy', @rincian, method: :delete, data: { confirm_swal: "Hapus rincian ini?"} %></td>
     </tr>
   </tbody>
 </table>

@@ -27,7 +27,7 @@
     <% data = options_from_collection_for_select(opds, :kode_opd, :nama_opd, user.kode_opd) %>
     <% disabled = true unless user.has_role? :admin %>
     <%= form.label :opd, class: "form-label" %>
-    <%= form.select :kode_opd, data, {include_blank: true}, class: "form-select select2-waw", data: { placeholder: 'Pilih OPD'}, disabled: disabled %>
+    <%= form.select :kode_opd, data, {include_blank: true}, class: "form-select select2-waw", data: { placeholder: 'Pilih OPD'} %>
   </div>
   <div class="field">
     <% data_role = options_from_collection_for_select(Role.all, :id, :name) %>
