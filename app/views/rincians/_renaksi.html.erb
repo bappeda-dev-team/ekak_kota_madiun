@@ -19,7 +19,7 @@
         <span class="fs-5 fw-bold mb-0">2. Rencana Aksi dan Anggaran</span>
       </div>
       <div class="col text-end">
-        <%= link_to 'Tambah Tahapan', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'},  class: "btn btn-sm btn-info"  %>
+        <%= link_to 'Tambah Tahapan', new_sasaran_tahapan_path(sasaran) ,remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'},  class: "btn btn-sm btn-info"  %>
       </div>
     </div>
     <div class="table-responsive">
@@ -48,17 +48,14 @@
           </tr>
         </thead>
         <tbody>
-          <% sasaran.tahapans.order(:created_at).each.with_index(1) do |tahapan, i| %>
+          <% sasaran.tahapans.order(:created_at).each.with_index(1) do |tahapan, index| %>
             <tr>
-              <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= i %></td>
+              <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= index %></td>
               <td class="text-gray-900"><%= tahapan.tahapan_kerja %></td>
-              <!-- Loop Tanggal-->
-              <% (1..12).each do |i| %>
-                <!-- FIXME kotor sekali disni, DRY this up-->
-                <%= aksi_di_bulan(sasaran, tahapan, i) %>
-                <%= realisasi_di_bulan(sasaran, tahapan, i) %>
+              <% (1..12).each do |bulan| %>
+                <%= aksi_di_bulan(sasaran, tahapan, bulan) %>
+                <%= realisasi_di_bulan(sasaran, tahapan, bulan) %>
               <% end %>
-              <!-- Sum -->
               <td class="fw-bolder text-gray-500 border"><%= tahapan.jumlah_target or '-'  %></td>
               <td class="fw-bolder text-gray-500 border"><%= tahapan.jumlah_realisasi or '-' %></td>
               <% unless tahapan.anggarans.any? %>
@@ -70,7 +67,7 @@
               <% end %>
               <td class="fw-bolder text-gray-500 border"><%= tahapan.keterangan  %></td>
               <td class="fw-bolder text-gray-500 text-center">
-                <%= link_to edit_sasaran_tahapan_path(sasaran, tahapan), class: "m-3" do %>
+                <%= link_to edit_sasaran_tahapan_path(sasaran, tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'}, class: "m-3" do %>
                   <i class="fa fa-pencil-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
                 <% end %>
                 <%= link_to sasaran_tahapan_path(sasaran, tahapan), method: :delete, data: { confirm_swal: "Hapus Tahapan #{tahapan.tahapan_kerja}?"}, class: "m-3" do %>
@@ -82,12 +79,10 @@
         </tbody>
         <tfoot>
           <tr>
-            <% total_target_aksi_bulan = sasaran.target_bulan.inject{|bln, val| bln.merge(val) { |k, old_v, new_v| old_v + new_v} } %>
-            <% total_realisasi_aksi_bulan = sasaran.realisasi_bulan.inject{|bln, val| bln.merge(val) { |k, old_v, new_v| old_v + new_v} } %>
             <td class="border-bottom border-start border-end" colspan="2">Total</td>
             <% (1..12).each do |i| %>
-              <td class="border-bottom border-end"><%= total_target_aksi_bulan[i] %></td>
-              <td class="border-bottom border-end"><%= total_realisasi_aksi_bulan[i] %></td>
+              <td class="border-bottom border-end"><%= sasaran.total_target_aksi_bulan[i] %></td>
+              <td class="border-bottom border-end"><%= sasaran.total_realisasi_aksi_bulan[i] %></td>
             <% end %>
             <td class="border-bottom border-end"><%= jumlah_target %></td>
             <td class="border-bottom border-end"><%= jumlah_realisasi %></td>

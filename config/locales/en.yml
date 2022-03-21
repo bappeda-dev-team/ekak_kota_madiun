@@ -31,3 +31,7 @@
 
 en:
   hello: "Hello world"
+  helpers:
+    submit:
+      create: "Buat %{model} baru"
+      update: "Ganti isian %{model}"

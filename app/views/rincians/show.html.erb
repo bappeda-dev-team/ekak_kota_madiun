@@ -1,31 +1,60 @@
-<p id="notice"><%= notice %></p>
-<p>
-  <strong>Data terpilah:</strong>
-  <%= @rincian.data_terpilah %>
-</p>
-<p>
-  <strong>Penyebab internal:</strong>
-  <%= @rincian.penyebab_internal %>
-</p>
-<p>
-  <strong>Penyebab external:</strong>
-  <%= @rincian.penyebab_external %>
-</p>
-<p>
-  <strong>Permasalahan umum:</strong>
-  <%= @rincian.permasalahan_umum %>
-</p>
-<p>
-  <strong>Permasalahan gender:</strong>
-  <%= @rincian.permasalahan_gender %>
-</p>
-<p>
-  <strong>Resiko:</strong>
-  <%= @rincian.resiko %>
-</p>
-<p>
-  <strong>Lokasi pelaksanaan:</strong>
-  <%= @rincian.lokasi_pelaksanaan %>
-</p>
-<%= link_to 'Edit', edit_sasaran_rincian_path(@sasaran, @rincian) %> |
-<%= link_to 'Back', user_sasarans_path(current_user, @sasaran) %>
+<nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+  <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+    <li class="breadcrumb-item">
+      <%= link_to root_path do %>
+        <i class="fas fa-home"></i>
+      <% end %>
+    </li>
+    <li class="breadcrumb-item" aria-current="page"><%= link_to 'Sasaran Kinerja', user_sasarans_path(current_user.id) %></li>
+    <li class="breadcrumb-item" aria-current="page"><%= link_to @sasaran.sasaran_kinerja, user_sasarans_path(current_user.id) %></li>
+    <li class="breadcrumb-item active" aria-current="page">Rincian Sasaran Kinerja</li>
+  </ol>
+</nav>
+<div class="card border-2 shadow mb-1">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <p><%= link_to sasaran_path(@sasaran) do %>
+          <span class="fas fa-arrow-left"></span>
+          <span>Kembali</span>
+        <% end %>
+      </p>
+      <div class="col">
+        <h5>Sasaran : <%= @sasaran.sasaran_kinerja %></h5>
+      </div>
+      <div class="col text-end">
+        <%= link_to "Edit Rincian", edit_sasaran_rincian_path(@sasaran),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-rincian'}, class: "btn btn-sm btn-info" %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p>
+      <strong>Data terpilah:</strong>
+      <%= @rincian.data_terpilah %>
+    </p>
+    <p>
+      <strong>Penyebab internal:</strong>
+      <%= @rincian.penyebab_internal %>
+    </p>
+    <p>
+      <strong>Penyebab external:</strong>
+      <%= @rincian.penyebab_external %>
+    </p>
+    <p>
+      <strong>Permasalahan umum:</strong>
+      <%= @rincian.permasalahan_umum %>
+    </p>
+    <p>
+      <strong>Permasalahan gender:</strong>
+      <%= @rincian.permasalahan_gender %>
+    </p>
+    <p>
+      <strong>Resiko:</strong>
+      <%= @rincian.resiko %>
+    </p>
+    <p>
+      <strong>Lokasi pelaksanaan:</strong>
+      <%= @rincian.lokasi_pelaksanaan %>
+    </p>
+  </div>
+</div>
+<%= render 'modal_rincian' %>

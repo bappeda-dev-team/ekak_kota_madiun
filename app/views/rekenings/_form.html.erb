@@ -2,7 +2,6 @@
   <% if rekening.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(rekening.errors.count, "error") %> prohibited this rekening from being saved:</h2>
-
       <ul>
         <% rekening.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,17 +9,18 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
     <%= form.label :kode_rekening %>
     <%= form.text_field :kode_rekening %>
   </div>
-
   <div class="field">
     <%= form.label :jenis_rekening %>
     <%= form.text_field :jenis_rekening %>
   </div>
-
+  <div class="field">
+    <%= form.label :set_input %>
+    <%= form.check_box :set_input %>
+  </div>
   <div class="actions">
     <%= form.submit %>
   </div>

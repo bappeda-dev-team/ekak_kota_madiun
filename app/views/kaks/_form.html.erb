@@ -10,7 +10,7 @@
     </div>
   <% end %>
   <% program = ProgramKegiatan.includes(:sasarans).where.not(sasarans: {id: nil}) %>
-  <%= form.select :program_kegiatan_id, options_for_select(program.collect { | n | [n.nama_subkegiatan, n.id]}), {include_blank: true}, {id: "dropdown", "data-placeholder": "Pilih SubKegiatan"} %>
+  <%= form.select :program_kegiatan_id, program.collect { | n | [n.nama_subkegiatan, n.id]}, {include_blank: true}, {id: "dropdown", "data-placeholder": "Pilih SubKegiatan"} %>
   <div id="detail-subkegiatan" class="my-3">
   </div>
   <h4>A. Latar Belakang</h4>
@@ -18,7 +18,7 @@
   <div class="latar-belakang">
     <div class="field">
       <%= form.label :dasar_hukum, class: "form-label" %>
-      <%= form.text_field :dasar_hukum,multiple: true, value: "", class: "form-control", placeholder: "Isikan Dasar Hukum SubKegiatan ...." %>
+      <%= form.text_field :dasar_hukum,multiple: true, class: "form-control", placeholder: "Isikan Dasar Hukum SubKegiatan ...." %>
     </div>
     <%= add_new_field("Tambah Dasar Hukum", form, :dasar_hukum, kak )  %>
     <div class="field">
