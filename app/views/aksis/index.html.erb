@@ -1,31 +1,24 @@
 <p id="notice"><%= notice %></p>
-
 <h1>Aksis</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Target</th>
-      <th>Realisasi</th>
-      <th>Bulan</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @aksis.each do |aksi| %>
+<div class="card">
+  <table>
+    <thead>
       <tr>
-        <td><%= aksi.target %></td>
-        <td><%= aksi.realisasi %></td>
-        <td><%= aksi.bulan %></td>
-        <td><%= link_to 'Show', aksi %></td>
-        <td><%= link_to 'Edit', edit_aksi_path(aksi) %></td>
-        <td><%= link_to 'Destroy', aksi, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Target</th>
+        <th>Realisasi</th>
+        <th>Bulan</th>
+        <th>Aksi</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Aksi', new_aksi_path %>
+    </thead>
+    <tbody>
+      <% @aksis.each do |aksi| %>
+        <tr>
+          <td><%= aksi.target %></td>
+          <td><%= aksi.realisasi %></td>
+          <td><%= aksi.bulan %></td>
+          <td><%= link_to 'hapus', sasaran_tahapan_aksi_path(@sasaran, @tahapan, aksi), method: :delete, data: {confirm_swal: 'Hapus tahapan ?'} %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

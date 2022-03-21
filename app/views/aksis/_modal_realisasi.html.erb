@@ -1,18 +1,13 @@
-<div class="modal fade " id=<%= "form-aksi-realisasi-#{tahapan.id}-#{bulan}"%> data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade " id=<%= "form-aksi-realisasi"%> data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id=<%= "form-aksi-realisasi-#{tahapan.id}-#{bulan}-title" %>%>Realisasi Bulan <%= bulan %></h5>
+        <h5 class="modal-title" id=<%= "form-aksi-realisasi-title" %>%>Realisasi Bulan <span id='bulan-realisasi'></span></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body" id=<%= "form-aksi-realisasi-#{tahapan.id}-#{bulan}-body" %> >
+      <div class="modal-body" id=<%= "form-aksi-realisasi-body" %> >
         ...
       </div>
     </div>
   </div>
 </div>
-<script>
-  $(function(){
-    $("<%= "#form-aksi-realisasi-#{tahapan.id}-#{bulan}-body" %>").html("<%= j render "aksis/realisasi_form", sasaran: sasaran, tahapan: tahapan, aksi: aksi , bulan: bulan %>")
-  });
-</script>

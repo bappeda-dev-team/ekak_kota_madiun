@@ -49,33 +49,14 @@
         </thead>
         <tbody>
           <% sasaran.tahapans.order(:created_at).each.with_index(1) do |tahapan, i| %>
-            <% aksi = tahapan.aksis %>
             <tr>
               <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= i %></td>
               <td class="text-gray-900"><%= tahapan.tahapan_kerja %></td>
               <!-- Loop Tanggal-->
               <% (1..12).each do |i| %>
                 <!-- FIXME kotor sekali disni, DRY this up-->
-                <% if aksi.find_by(bulan: i) %>
-                  <%= render 'aksis/modal_target', sasaran: sasaran, tahapan: tahapan, bulan: i, aksi: aksi.find_by(bulan: i)  %>
-                  <%= render 'aksis/modal_realisasi', sasaran: sasaran, tahapan: tahapan, bulan: i, aksi: aksi.find_by(bulan: i)  %>
-                <% else %>
-                  <%= render 'aksis/modal_target', sasaran: sasaran, tahapan: tahapan, bulan: i, aksi: tahapan.aksis.build  %>
-                <% end %>
-                <td class="fw-bolder text-gray-500 border">
-                  <%= aksi.find_by(bulan: i) ?
-                    link_to(aksi.find_by(bulan: i).target, '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-aksi-target-#{tahapan.id}-#{i}" } )
-                    :
-                    link_to('+', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-aksi-target-#{tahapan.id}-#{i}" }  )  %>
-                </td>
-                <td class="fw-bolder text-gray-500 border">
-                  <% if aksi.find_by(bulan: i) %>
-                    <%= aksi.find_by(bulan: i).realisasi ?
-                      link_to(aksi.find_by(bulan: i).realisasi, '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-aksi-realisasi-#{tahapan.id}-#{i}" } )
-                        :
-                      link_to('+', '#', remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-aksi-realisasi-#{tahapan.id}-#{i}" }  ) %>
-                  <% end %>
-                </td>
+                <%= aksi_di_bulan(sasaran, tahapan, i) %>
+                <%= realisasi_di_bulan(sasaran, tahapan, i) %>
               <% end %>
               <!-- Sum -->
               <td class="fw-bolder text-gray-500 border"><%= tahapan.jumlah_target or '-'  %></td>

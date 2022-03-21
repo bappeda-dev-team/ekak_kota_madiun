@@ -1,0 +1,8 @@
+<% if @type == 'realisasi' %>
+  $("<%= '#form-aksi-realisasi-body' %>").html("<%= j render 'realisasi_form', sasaran: @sasaran,
+  tahapan: @tahapan, aksi: @aksi , 
+  bulan: @bulan %>");
+<% end %>
+$("<%= '#form-aksi-target-body' %>").html("<%= j render 'target_form', sasaran: @sasaran,
+  tahapan: @tahapan, aksi: @aksi , 
+  bulan: @bulan %>");
