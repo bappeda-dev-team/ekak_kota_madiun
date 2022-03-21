@@ -2,14 +2,18 @@
 #
 # Table name: opds
 #
-#  id            :bigint           not null, primary key
-#  id_opd_skp    :integer
-#  kode_opd      :string
-#  kode_unik_opd :string
-#  nama_opd      :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  lembaga_id    :integer
+#  id                 :bigint           not null, primary key
+#  bidang_urusan      :string
+#  id_opd_skp         :integer
+#  kode_bidang_urusan :string
+#  kode_opd           :string
+#  kode_unik_opd      :string
+#  kode_urusan        :string
+#  nama_opd           :string
+#  urusan             :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  lembaga_id         :integer
 #
 # Indexes
 #
@@ -21,4 +25,12 @@ class Opd < ApplicationRecord
   has_many :users
   has_many :program_kegiatans
   belongs_to :lembaga
+
+  def text_urusan
+    "#{kode_urusan} #{urusan.capitalize}"
+  end
+  
+  def text_bidang_urusan
+    "#{kode_bidang_urusan} #{bidang_urusan.capitalize}"
+  end
 end

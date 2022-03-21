@@ -5,11 +5,11 @@ prawn_document do |pdf|
   pdf.move_down 7
   pdf.font_size 10
   pdf.table([
-              ['Urusan Pemerintahan', ':', '5 Unsur Penunjang urusan Pemerintahan'],
-              ['Bidang Urusan', ':', '5.01 Perencanaan'],
+              ['Urusan Pemerintahan', ':', @programKegiatan.opd.text_urusan],
+              ['Bidang Urusan', ':', @programKegiatan.opd.text_bidang_urusan],
               ['Program', ':', @programKegiatan.nama_program],
-              ['Indikator', ':', 'Dummy'],
-              ['Target', ':', 'Dummy'],
+              ['Indikator', ':', @programKegiatan.indikator_program],
+              ['Target', ':', "#{@programKegiatan.target_program} #{@programKegiatan.satuan_target_program}"],
               ['Kegiatan', ':', @programKegiatan.nama_kegiatan],
               ['Indikator', ':', @programKegiatan.indikator_kinerja],
               ['Target', ':', "#{@programKegiatan.target} #{@programKegiatan.satuan}"],
