@@ -58,7 +58,7 @@
                   <%= link_to edit_program_kegiatan_path(prog), class: "m-3" do %>
                     <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
                   <% end %>
-                  <%= link_to prog, method: :delete, data: { confirm: "Apakah Anda Ingin Menghapus ?"}, class: "m-3" do %>
+                  <%= link_to prog, method: :delete, data: { 'confirm-swal': "Hapus #{prog.nama_subkegiatan} ?"}, class: "m-3" do %>
                     <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
                   <% end %>
                 </td>

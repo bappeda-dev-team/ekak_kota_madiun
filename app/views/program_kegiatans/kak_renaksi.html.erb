@@ -9,19 +9,13 @@
             <table class="table table-sm align-items-center table-flush">
               <thead class="thead-light">
                 <tr>
-                  <th class="border-bottom border-end border-start" scope="col" rowspan="2">No.</th>
-                  <th class="border-bottom border-end" scope="col" rowspan="2">Tahapan Kerja</th>
+                  <th class="border-bottom border-end border-start" scope="col" rowspan="1">No.</th>
+                  <th class="border-bottom border-end" scope="col" rowspan="1">Tahapan Kerja</th>
                   <% (1..12).each do |i| %>
-                    <th class="border-bottom border-end text-center" colspan="2" scope="col"><%= i %></th>
+                    <th class="border-bottom border-end text-center" colspan="1" scope="col"><%= i %></th>
                   <% end %>
-                  <th class="border-bottom border-end text-center" colspan="2" scope="col">Jumlah</th>
-                  <th class="border-bottom border-end" scope="col" rowspan="2">Keterangan</th>
-                </tr>
-                <tr>
-                  <% (1..13).each do |item| %>
-                    <td class="border border-gray-900 bg-tertiary text-center text-gray-300" scope="col">T</td>
-                    <td class="border border-gray-900 bg-info text-center text-gray-300" scope="col">R</td>
-                  <% end %>
+                  <th class="border-bottom border-end text-center" colspan="1" scope="col">Jumlah</th>
+                  <th class="border-bottom border-end" scope="col" rowspan="1">Keterangan</th>
                 </tr>
               </thead>
               <tbody>
@@ -32,21 +26,12 @@
                     <td class="text-gray-900"><%= tahapan.tahapan_kerja %></td>
                     <!-- Loop Tanggal-->
                     <% (1..12).each do |i| %>
-                      <!-- FIXME kotor sekali disni, DRY this up-->
                       <td class="fw-bolder text-gray-500 border">
                         <%= aksi.find_by(bulan: i) ? aksi.find_by(bulan: i).target : '-' %>
                       </td>
-                      <td class="fw-bolder text-gray-500 border">
-                        <% if aksi.find_by(bulan: i) %>
-                          <%= aksi.find_by(bulan: i).realisasi ? aksi.find_by(bulan: i).realisasi : '-' %>
-                        <% else %>
-                          -
-                        <% end %>
-                      </td>
                     <% end %>
                     <!-- Sum -->
-                    <td class="fw-bolder text-gray-500 border"><%= tahapan.jumlah_target or '-'  %></td>
-                    <td class="fw-bolder text-gray-500 border"><%= tahapan.jumlah_realisasi or '-' %></td>
+                    <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.jumlah_target or '-'  %></td>
                     <td class="fw-bolder text-gray-500 border"><%= tahapan.keterangan  %></td>
                   </tr>
                 <% end %>

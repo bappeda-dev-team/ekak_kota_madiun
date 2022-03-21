@@ -24,7 +24,7 @@ class ProgramKegiatansController < ApplicationController
   def kak_waktu; end
 
   def laporan_rka
-    @programKegiatans = ProgramKegiatan.includes(:sasarans).where.not(sasarans: {id: nil})
+    @programKegiatans = ProgramKegiatan.includes(:sasarans).where.not(sasarans: {id: nil, anggaran: nil})
   end
 
   def pdf_rka

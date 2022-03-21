@@ -25,4 +25,12 @@ class Opd < ApplicationRecord
   has_many :users
   has_many :program_kegiatans
   belongs_to :lembaga
+
+  def text_urusan
+    "#{kode_urusan} #{urusan.capitalize}"
+  end
+  
+  def text_bidang_urusan
+    "#{kode_bidang_urusan} #{bidang_urusan.capitalize}"
+  end
 end
