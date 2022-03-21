@@ -1,38 +1,28 @@
-FROM ruby:3.0.1-slim-buster
+FROM ruby:3.0.1-alpine
 
 ENV APP_PATH /app
 ENV BUNDLE_VERSION 2.2.15
 ENV BUNDLE_PATH /user/local/bundle/gems
 ENV TMP_PATH /tmp/
 ENV RAILS_LOG_TO_SDOUT true
-ENV RAILS_PORT 3000
-
+ENV RAILS_PORT 3001
 # base install
-RUN apt-get update -qq && apt-get install -y \
-build-essential \
-libpq-dev \
-postgresql-client \
-curl \
-&& rm -rf /var/lib/apt/lists/*
-
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-
-RUN apt update -qq && apt install nodejs yarn -y
+RUN apk --update add build-base nodejs tzdata postgresql-dev postgresql-client libxslt-dev libxml2-dev imagemagick yarn
+ENV TZ=Asia/Jakarta
 
 # navigate to app directory
 WORKDIR $APP_PATH
-COPY Gemfile ${APP_PATH}/Gemfile
-COPY Gemfile.lock ${APP_PATH}/Gemfile.lock
+ADD Gemfile $APP_PATH/Gemfile
+ADD Gemfile.lock $APP_PATH/Gemfile.lock
 
-RUN bundle install
-COPY . ${APP_PATH}
-RUN yarn
+RUN gem install bundler
+ADD . $APP_PATH
+RUN if [[ "$RAILS_ENV" == "production" ]]; then bundle install --without development test; else bundle install; fi
+RUN yarn install --check-files
 
-COPY ./dev-docker-entrypoint.sh /usr/local/bin/dev-docker-entrypoint.sh
+ADD ./dev-docker-entrypoint.sh /usr/local/bin/dev-docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/dev-docker-entrypoint.sh
 
 EXPOSE $RAILS_PORT
-
-CMD ["bundle", "exec"]
+ENTRYPOINT ["sh","/usr/local/bin/dev-docker-entrypoint.sh"]
+CMD ["bundle","exec"]

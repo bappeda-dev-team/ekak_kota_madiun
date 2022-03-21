@@ -54,6 +54,11 @@ group :development do
   gem 'letter_opener'
   gem 'solargraph'
   gem 'spring'
+  # capistrano thing
+  gem 'capistrano', '~> 3.11', require: false
+  gem 'capistrano-rails', '~> 1.4', require: false
+  gem 'capistrano-passenger', '~> 0.2.0', require: false
+  gem 'capistrano-rbenv', '~> 2.1', '>= 2.1.4', require: false
 end
 
 group :test do

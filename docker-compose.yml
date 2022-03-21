@@ -9,7 +9,7 @@ services:
     image: "postgres:13.5-alpine"
     container_name: db
     ports:
-      - "54321:5432"
+      - "5432:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -21,16 +21,18 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     container_name: web
-    entrypoint: dev-docker-entrypoint.sh
+    entrypoint: [ "sh", "dev-docker-entrypoint.sh" ]
     volumes:
-      - ./:/app
+      - ./:/app:cached
       - packs:/app/public/packs
       - shared_data:/var/shared
       - gem_cache:/usr/local/bundle/gems
     ports:
-      - "3000:3000"
-    command: ["rails", "server", "-p", "3000", "-b", "0.0.0.0"]
+      - "3001:3001"
+    command: [ "rails", "server", "-p", "3001", "-b", "0.0.0.0" ]
     environment:
-      RAILS_ENV: development
+      RAILS_ENV: production
+      RAILS_SERVE_STATIC_FILES: 'true'
+      RAILS_LOG_TO_STDOUT: 'true'
     depends_on:
       - db

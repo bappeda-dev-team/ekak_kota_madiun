@@ -12,6 +12,5 @@ class RemoveOldKakColumn < ActiveRecord::Migration[6.1]
     remove_column :kaks, :permasalahan_gender, :text
     remove_column :kaks, :resiko, :text
     remove_column :kaks, :lokasi_pelaksanaan, :string
-    remove_reference :kaks, :pk
   end
 end
