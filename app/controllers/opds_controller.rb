@@ -1,7 +1,7 @@
 class OpdsController < ApplicationController
-  before_action :set_opd, only: %i[ show edit update destroy ]
-  before_action :set_dropdown, only: %i[ new edit ]
-  
+  before_action :set_opd, only: %i[show edit update destroy]
+  before_action :set_dropdown, only: %i[new edit]
+
   def index
     @opds = Opd.all
   end
@@ -28,7 +28,7 @@ class OpdsController < ApplicationController
   end
 
   def update
-    respond_to |f|
+    respond_to do |f|
       if @opd.update(opd_params)
         f.html { redirect_to @opd, notice: "Opd berhasil diupdate." }
       else
@@ -57,3 +57,4 @@ class OpdsController < ApplicationController
   def opd_params
     params.require(:opd).permit!
   end
+end

@@ -4,14 +4,17 @@
 #
 #  id                        :bigint           not null, primary key
 #  indikator_kinerja         :string
+#  indikator_program         :string
 #  indikator_subkegiatan     :string
 #  kode_opd                  :string
 #  nama_kegiatan             :string
 #  nama_program              :string
 #  nama_subkegiatan          :string
 #  satuan                    :string
+#  satuan_target_program     :string
 #  satuan_target_subkegiatan :string
 #  target                    :string
+#  target_program            :string
 #  target_subkegiatan        :string
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
