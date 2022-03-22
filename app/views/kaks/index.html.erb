@@ -41,9 +41,6 @@
                   <%= link_to kak_path(kak), class: "m-3" do %>
                     <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
                   <% end %>
-                  <%= link_to edit_kak_path(kak), class: "m-3" do %>
-                    <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
-                  <% end %>
                   <%= link_to kak_path(kak), method: :delete, data: { confirm: "Apakah Anda Ingin Menghapus ?"}, class: "m-3" do %>
                     <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
                   <% end %>

@@ -35,9 +35,6 @@
                 <th class="text-gray-900" scope="row"><%= program.opd.nama_opd %></th>
                 <th class="text-gray-900" scope="row"><%= program.nama_subkegiatan %></th>
                 <td class="fw-bolder text-gray-500 text-center">
-                  <%= link_to '#', class: "m-3" do %>
-                    <span class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Lihat KaK"></span>
-                  <% end %>
                   <%= link_to "/pdf_rka/#{program.id}.pdf", class: "m-3" do %>
                     <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
                   <% end %>

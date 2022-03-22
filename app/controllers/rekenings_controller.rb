@@ -1,5 +1,5 @@
 class RekeningsController < ApplicationController
-  before_action :set_rekening, only: %i[ show edit update destroy ]
+  before_action :set_rekening, only: %i[show edit update destroy]
 
   # GET /rekenings or /rekenings.json
   def index
@@ -7,13 +7,12 @@ class RekeningsController < ApplicationController
   end
 
   def rekening_search
-    param = params[:q] || ""
-    @rekenings = Rekening.where(set_input: 1).where("jenis_rekening ILIKE ?", "%#{param}%").limit(50)
+    param = params[:q] || ''
+    @rekenings = Rekening.where(set_input: 1).where('jenis_rekening ILIKE ?', "%#{param}%").limit(50)
   end
 
   # GET /rekenings/1 or /rekenings/1.json
-  def show
-  end
+  def show; end
 
   # GET /rekenings/new
   def new
@@ -21,8 +20,7 @@ class RekeningsController < ApplicationController
   end
 
   # GET /rekenings/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /rekenings or /rekenings.json
   def create
@@ -30,7 +28,7 @@ class RekeningsController < ApplicationController
 
     respond_to do |format|
       if @rekening.save
-        format.html { redirect_to @rekening, notice: "Rekening was successfully created." }
+        format.html { redirect_to @rekening, notice: 'Rekening was successfully created.' }
         format.json { render :show, status: :created, location: @rekening }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,7 +41,7 @@ class RekeningsController < ApplicationController
   def update
     respond_to do |format|
       if @rekening.update(rekening_params)
-        format.html { redirect_to @rekening, notice: "Rekening was successfully updated." }
+        format.html { redirect_to @rekening, notice: 'Rekening was successfully updated.' }
         format.json { render :show, status: :ok, location: @rekening }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -56,7 +54,7 @@ class RekeningsController < ApplicationController
   def destroy
     @rekening.destroy
     respond_to do |format|
-      format.html { redirect_to rekenings_url, notice: "Rekening was successfully destroyed." }
+      format.html { redirect_to rekenings_url, notice: 'Rekening was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -70,6 +68,6 @@ class RekeningsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def rekening_params
-    params.require(:rekening).permit(:kode_rekening, :jenis_rekening)
+    params.require(:rekening).permit(:kode_rekening, :jenis_rekening, :set_input)
   end
 end

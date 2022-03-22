@@ -1,14 +1,15 @@
 <p id="notice"><%= notice %></p>
-
 <p>
   <strong>Kode rekening:</strong>
   <%= @rekening.kode_rekening %>
 </p>
-
 <p>
   <strong>Jenis rekening:</strong>
   <%= @rekening.jenis_rekening %>
 </p>
-
+<p>
+  <strong>set_input:</strong>
+  <%= @rekening.set_input %>
+</p>
 <%= link_to 'Edit', edit_rekening_path(@rekening) %> |
 <%= link_to 'Back', rekenings_path %>

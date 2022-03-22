@@ -20,6 +20,7 @@ class AksisController < ApplicationController
   # GET /aksis/1/edit
   def edit
     @bulan = params[:bulan]
+    @type = params[:type]
   end
 
   # POST /aksis or /aksis.json

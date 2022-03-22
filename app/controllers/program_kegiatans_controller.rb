@@ -6,7 +6,9 @@ class ProgramKegiatansController < ApplicationController
 
   def index
     # modif untuk admin
+    param = params[:q] || ''
     @programKegiatans = ProgramKegiatan.where('kode_opd ILIKE ?', "%#{current_user.kode_opd}%")
+                                       .where('nama_subkegiatan ILIKE ?', "%#{param}%")
   end
 
   def new

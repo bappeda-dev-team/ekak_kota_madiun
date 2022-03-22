@@ -2,7 +2,6 @@
   <% if opd.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(opd.errors.count, "error") %> prohibited this opd from being saved:</h2>
-
       <ul>
         <% opd.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,48 +9,38 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
     <%= form.label :kode_urusan %>
     <%= form.text_field :kode_urusan, class: "form-control" %>
   </div>
-
   <div class="field">
     <%= form.label :urusan %>
     <%= form.text_field :urusan, class: "form-control" %>
   </div>
-
   <div class="field">
     <%= form.label :kode_bidang_urusan %>
     <%= form.text_field :kode_bidang_urusan, class: "form-control" %>
   </div>
-
   <div class="field">
     <%= form.label :bidang_urusan %>
     <%= form.text_field :bidang_urusan, class: "form-control" %>
   </div>
-
   <div class="field">
     <%= form.label :nama_opd %>
     <%= form.text_field :nama_opd, class: "form-control" %>
   </div>
-
   <div class="field">
     <%= form.label :id_opd_skp %>
     <%= form.text_field :id_opd_skp, class: "form-control" %>
   </div>
-
   <div class="field">
     <%= form.label :kode_unik_opd %>
     <%= form.text_field :kode_unik_opd, class: "form-control" %>
   </div>
-  
   <div class="field">
-    <% options = options_from_collection_for_select(lembagas, 'id', 'nama_lembaga') %>
     <%= form.label :lembaga_id %>
-    <%= form.select :lembaga_id, options, {include_blank: true}, {class: "select2-waw", "data-placeholder": "Pilih Lembaga", required: true} %>
+    <%= form.select :lembaga_id, Lembaga.all.collect {|n| [n.nama_lembaga, n.id]}, {include_blank: true}, {class: "select2-waw", "data-placeholder": "Pilih Lembaga", required: true} %>
   </div>
-
   <div class="actions">
     <%= form.submit %>
   </div>

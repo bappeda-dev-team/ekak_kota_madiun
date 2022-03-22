@@ -28,13 +28,11 @@
   <div class="field">
     <%= form.label :kode_rek, "Kode Rekening" , {class: "form-label"}%>
     <%= parent_rek || '' %>
-    <%= form.select :kode_rek, [] ,{include_blank: true},{class: "form-control select2-rekenings", data: {"placeholder": "Pilih Kode Rekening"}}  %>
+    <%= form.select :kode_rek, Rekening.where(id: anggaran.kode_rek).pluck(:jenis_rekening, :id) ,{include_blank: true},{class: "form-control select2-rekenings", data: {"placeholder": "Pilih Kode Rekening"}}  %>
   </div>
   <div class="field">
-    <% pajaks = Pajak.all %>
-    <% options = options_from_collection_for_select(pajaks, :id, :simple_pajak, anggaran.pajak_id) %>
+    <% options = options_from_collection_for_select(Pajak.all, :id, :simple_pajak, anggaran.pajak_id) %>
     <%= form.label :pajak_id , {class: "form-label"}%>
-    <%# form.select :pajak_id, options, {} , :disabled => form.object.persisted? %>
     <%= form.select :pajak_id, options, {}, { :class => "form-select"} %>
   </div>
   <div class="actions">

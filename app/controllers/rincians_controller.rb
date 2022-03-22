@@ -40,7 +40,9 @@ class RinciansController < ApplicationController
   def update
     respond_to do |format|
       if @rincian.update(rincian_params)
-        format.html { redirect_to sasaran_path(@sasaran), notice: 'Rincian was successfully updated.' }
+        format.html do
+          redirect_to sasaran_rincian_path(@rincian.sasaran_id, @rincian), notice: 'Rincian was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @rincian }
       else
         format.html { render :edit, status: :unprocessable_entity }
