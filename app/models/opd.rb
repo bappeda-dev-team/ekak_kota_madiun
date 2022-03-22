@@ -27,10 +27,14 @@ class Opd < ApplicationRecord
   belongs_to :lembaga
 
   def text_urusan
+    return nil unless urusan
+
     "#{kode_urusan} #{urusan.capitalize}"
   end
-  
+
   def text_bidang_urusan
+    return nil unless bidang_urusan
+
     "#{kode_bidang_urusan} #{bidang_urusan.capitalize}"
   end
 end

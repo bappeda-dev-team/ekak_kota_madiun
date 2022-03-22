@@ -60,9 +60,9 @@
   <div class="field">
     <% options = options_from_collection_for_select(Opd.all, 'kode_opd', 'nama_opd') %>
     <%= form.label :kode_opd , class: "form-label" %>
-    <%= form.select :kode_opd, options, {include_blank: true} , {class: "select2-waw", "data-placeholder": "Pilih OPD"} %>
+    <%= form.select :kode_opd, Opd.pluck(:nama_opd, :kode_opd), {include_blank: true} , {class: "select2-waw", "data-placeholder": "Pilih OPD"} %>
   </div>
   <div class="actions mt-5">
-    <%= form.submit "Submit", :class => "btn btn-tertiary w-100"  %>
+    <%= form.submit class: "btn btn-tertiary w-100"  %>
   </div>
 <% end %>

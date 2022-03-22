@@ -11,7 +11,7 @@
   <div class="card-body">
     <p>Tambah SubKegiatan</p>
     <%= form_with(model: sasaran) do |f| %>
-      <%= f.select(:program_kegiatan_id, (['']), {}, {:id => 'dropdown', data: {'ajax--url': "/program_kegiatans.json", "ajax--cache": "true", "placeholder": "Pilih SubKegiatan"}} )%>
+      <%= f.select(:program_kegiatan_id, ProgramKegiatan.where(id: sasaran.program_kegiatan_id).pluck(:nama_subkegiatan, :id), {}, {:id => 'dropdown', data: {'ajax--url': "/program_kegiatans.json", "ajax--cache": "true", "placeholder": "Pilih SubKegiatan"}} )%>
       <div class="actions">
         <%= f.submit "Tambah Sub kegiatan" %>
       </div>
