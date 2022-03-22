@@ -133,4 +133,21 @@ $(function () {
       },
     })
   });
+  $('#form-user-body').on('show', function () {
+    $(".select2-opd").select2({
+      width: "100%",
+      theme: "bootstrap-5",
+      dropdownParent: $("#form-user"),
+      language: {
+        noResults: function () {
+          return 'OPD Tidak Ditemukan';
+        },
+      },
+    });
+    $(".select2-role").select2({
+      width: "100%",
+      theme: "bootstrap-5",
+      dropdownParent: $("#form-user")
+    });
+  });
 });
