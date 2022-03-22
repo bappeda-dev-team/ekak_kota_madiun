@@ -17,7 +17,7 @@
             <h2 class="fs-5 fw-bold mb-0">List User</h2>
           </div>
           <div class="col text-end">
-            <%= link_to "Tambah User", new_user_path, class: "btn btn-sm btn-info" %>
+            <%= link_to "Tambah User", new_user_path, remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-user"}, class: "btn btn-sm btn-info" %>
           </div>
         </div>
       </div>
@@ -43,7 +43,7 @@
                   <td class="fw-bolder text-gray-500"><%= user.nik %></td>
                   <td class="fw-bolder text-gray-500"><%= user.roles.pluck :name %></td>
                   <td class="fw-bolder text-gray-500 text-center">
-                    <%= link_to edit_user_path(user), class: "m-3" do %>
+                    <%= link_to edit_user_path(user),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-user"}, class: "m-3" do %>
                       <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
                     <% end %>
                   </td>
@@ -56,3 +56,4 @@
     </div>
   </div>
 </div>
+<%= render 'modal_user' %>

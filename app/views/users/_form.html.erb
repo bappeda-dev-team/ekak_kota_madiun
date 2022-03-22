@@ -13,26 +13,26 @@
     <%= form.label :nama, class: "form-label" %>
     <%= form.text_field :nama, class: "form-control" %>
   </div>
-  <% if user.has_role? :admin %>
-    <div class="field">
-      <%= form.label :nik, class: "form-label" %>
-      <%= form.text_field :nik, class: "form-control" %>
-    </div>
-  <% end %>
+  <div class="field">
+    <%= form.label :nip, class: "form-label" %>
+    <%= form.text_field :nik, class: "form-control" %>
+  </div>
   <div class="field">
     <%= form.label :email, class: "form-label" %>
     <%= form.email_field :email, class: "form-control" %>
   </div>
   <div class="field">
-    <% data = options_from_collection_for_select(opds, :kode_opd, :nama_opd, user.kode_opd) %>
-    <% disabled = true unless user.has_role? :admin %>
+    <%= form.label :password, class: "form-label" %>
+    <%= form.password_field :password, class: "form-control" %>
+  </div>
+  <div class="field">
     <%= form.label :opd, class: "form-label" %>
-    <%= form.select :kode_opd, data, {include_blank: true}, class: "form-select select2-waw", data: { placeholder: 'Pilih OPD'} %>
+    <%= form.select :kode_opd, Opd.pluck(:nama_opd, :kode_opd), {include_blank: true}, {class: "form-control select2-opd", "data-placeholder": "Pilih Opd"} %>
   </div>
   <div class="field">
     <% data_role = options_from_collection_for_select(Role.all, :id, :name) %>
     <%= form.label :role, class: "form-label" %>
-    <%= form.select :role, data_role, {include_blank: true}, class: "form-select select2-waw", data: { placeholder: 'Pilih Role'}, multiple: true %>
+    <%= form.select :role, data_role, {include_blank: true}, class: "form-select select2-role", data: { placeholder: 'Pilih Role'}, multiple: true %>
   </div>
   <div class="actions">
     <%= form.submit %>
