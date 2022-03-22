@@ -29,12 +29,12 @@
             <th>Pagu Anggaran</th>
             <th class="border-end">Keterangan</th>
           </tr>
-          <tr>
-            <th colspan="4"></th>
+          <tr class="text-center">
+            <th colspan="4" class="border-start"></th>
             <th>nama</th>
             <th>jenis</th>
             <th>lokasi</th>
-            <th colspan="2"></th>
+            <th colspan="2" class="border-end"></th>
           </tr>
         </thead>
         <tbody>
@@ -44,16 +44,33 @@
               <td><%= sasaran.program_kegiatan.nama_subkegiatan %></td>
               <td class="wrap-text"><%= sasaran.sasaran_kinerja %></td>
               <td><%= sasaran.user.nama %></td>
-              <% unless sasaran.musrenbangs.any? %>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-              <% end %>
-              <% sasaran.musrenbangs.each do |mus| %>
-                <td><%= mus.usulan or '-' %></td>
-                <td><%= mus.class.name.to_s or '-' %></td>
-                <td><%= mus.alamat or '-' %></td>
-              <% end %>
+              <td>
+                <table class="table table-bordered text-center">
+                  <% sasaran.my_usulan.each do |usulan|  %>
+                    <tr class="border">
+                      <td class="text-wrap"><%= usulan.usulan %></td>
+                    </tr>
+                  <% end %>
+                </table>
+              </td>
+              <td>
+                <table class="table table-bordered text-center">
+                  <% sasaran.my_usulan.each do |usulan|  %>
+                    <tr class="border">
+                      <td><%= usulan.class.name %></td>
+                    </tr>
+                  <% end %>
+                </table>
+              </td>
+              <td>
+                <table class="table table-bordered text-center">
+                  <% sasaran.my_usulan.each do |usulan|  %>
+                    <tr class="border">
+                      <td><%= usulan.alamat %></td>
+                    </tr>
+                  <% end %>
+                </table>
+              </td>
               <td><%= sasaran.total_anggaran or '-' %></td>
               <td class="border-end"></td>
             </tr>
