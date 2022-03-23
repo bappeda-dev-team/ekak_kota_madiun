@@ -21,6 +21,12 @@ class SasaransController < ApplicationController
 
   def pdf_daftar_subkegiatan; end
 
+  def hapus_program_from_sasaran
+    param_id = params[:id_sasaran]
+    sasaran = Sasaran.find(param_id)
+    sasaran&.update(program_kegiatan_id: nil)
+  end
+
   # GET /sasarans/new
   def new
     @sasaran = @user.sasarans.build

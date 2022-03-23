@@ -20,26 +20,30 @@
   <br>
   <% unless sasaran.program_kegiatan.nil? %>
     <div class="card-body">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>SubKegiatan</th>
-            <th>Indikator</th>
-            <th>Pagu</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td><%= sasaran.program_kegiatan.nama_subkegiatan %></td>
-            <td><%= sasaran.program_kegiatan.indikator_kinerja %></td>
-            <td>
-              Rp.  <%= number_with_delimiter(sasaran.total_anggaran, :delimiter => ".") %>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>SubKegiatan</th>
+              <th>Indikator</th>
+              <th>Pagu</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align-middle text-wrap"><%= sasaran.program_kegiatan.nama_subkegiatan %></td>
+              <td class="align-middle"><%= sasaran.program_kegiatan.indikator_kinerja %></td>
+              <td class="align-middle">
+                Rp.  <%= number_with_delimiter(sasaran.total_anggaran, :delimiter => ".") %>
+              </td>
+              <td class="text-center align-middle">
+                <%= button_to 'X', "/hapus_program_from_sasaran", remote: true, method: :post, class: 'btn btn-danger', data: {confirm: "Hapus sub kegiatan?"}, params: {id_sasaran: sasaran.id} %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <hr>
   <% end %>

@@ -22,56 +22,56 @@
         <thead class="thead-light">
           <tr>
             <th class="border-start">No.</th>
-            <th>Sub Kegiatan</th>
-            <th>Sasaran Kinerja</th>
-            <th>Pejabat</th>
+            <th class="text-center">Sub Kegiatan</th>
+            <th class="text-center">Sasaran Kinerja</th>
+            <th class="text-center">Pejabat</th>
             <th colspan="3" class="text-center">Usulan</th>
-            <th>Pagu Anggaran</th>
-            <th class="border-end">Keterangan</th>
+            <th class="text-center">Pagu Anggaran</th>
+            <th class="border-end text-center">Keterangan</th>
           </tr>
           <tr class="text-center">
             <th colspan="4" class="border-start"></th>
-            <th>nama</th>
-            <th>jenis</th>
-            <th>lokasi</th>
+            <th class="border-start border-end">nama</th>
+            <th class="border-start border-end">jenis</th>
+            <th class="border-start border-end">lokasi</th>
             <th colspan="2" class="border-end"></th>
           </tr>
         </thead>
         <tbody>
           <% @sasarans.each.with_index(1) do |sasaran, index| %>
-            <tr>
-              <td class="border-start"><%= index %></td>
-              <td><%= sasaran.program_kegiatan.nama_subkegiatan %></td>
-              <td class="wrap-text"><%= sasaran.sasaran_kinerja %></td>
-              <td><%= sasaran.user.nama %></td>
-              <td>
-                <table class="table table-bordered text-center">
+            <tr class="border-bottom">
+              <td class="border-start align-middle"><%= index %></td>
+              <td class="align-middle"><%= sasaran.program_kegiatan.nama_subkegiatan %></td>
+              <td class="align-middle"><%= sasaran.sasaran_kinerja %></td>
+              <td class="align-middle" ><%= sasaran.user.nama %></td>
+              <td class="border p-0">
+                <table class="table table-bordered px-0 text-center">
                   <% sasaran.my_usulan.each do |usulan|  %>
-                    <tr class="border">
-                      <td class="text-wrap"><%= usulan.usulan %></td>
+                    <tr>
+                      <td class="border-bottom"><%= usulan.usulan %></td>
                     </tr>
                   <% end %>
                 </table>
               </td>
-              <td>
-                <table class="table table-bordered text-center">
+              <td class="border p-0">
+                <table class="table table-bordered px-0 text-center">
                   <% sasaran.my_usulan.each do |usulan|  %>
-                    <tr class="border">
-                      <td><%= usulan.class.name %></td>
+                    <tr>
+                      <td class="border-bottom"><%= usulan.class.name %></td>
                     </tr>
                   <% end %>
                 </table>
               </td>
-              <td>
-                <table class="table table-bordered text-center">
+              <td class="border p-0">
+                <table class="table table-bordered px-0 text-center">
                   <% sasaran.my_usulan.each do |usulan|  %>
-                    <tr class="border">
-                      <td><%= usulan.alamat %></td>
+                    <tr>
+                      <td class="border-bottom"><%= usulan.alamat %></td>
                     </tr>
                   <% end %>
                 </table>
               </td>
-              <td><%= sasaran.total_anggaran or '-' %></td>
+              <td class="align-middle text-center"><%= sasaran.total_anggaran or '-' %></td>
               <td class="border-end"></td>
             </tr>
           <% end %>
