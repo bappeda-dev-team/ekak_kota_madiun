@@ -33,16 +33,15 @@ module Api
     def update_data_sasaran(response)
       data = Oj.load(response.body)
       pegawai = data['data']['data_pegawai']
-      pegawai.each do |p|
-        p['list_rencana_kinerja'].each do |rencana|
+      pegawai.each do |pegawai|
+        pegawai['list_rencana_kinerja'].each do |rencana|
           rencana['list_indikator'].each do |indikator|
             Sasaran.create(
-              penerima_manfaat: "#{p['nip']} - #{p['nama']}", # TODO: add column pemilik_sasran
               sasaran_kinerja: rencana['rencana_kerja'],
               indikator_kinerja: indikator['iki'],
               target: indikator['target'],
               satuan: indikator['satuan'],
-              user_id: 1 # TODO: Change this from id to NIP
+              nip_asn: pegawai['nip'] # TODO: Change this from id to NIP
             )
           end
         end
