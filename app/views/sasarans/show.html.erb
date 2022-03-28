@@ -31,7 +31,7 @@
   </div>
 </div>
 <% unless @sasaran.tahapans.any? %>
-  <%= render 'rencana_aksi_card' %>
+  <%= render 'rencana_aksi_card', sasaran: @sasaran %>
 <% else %>
   <%= render 'rincians/renaksi', sasaran: @sasaran %>
 <% end %>
