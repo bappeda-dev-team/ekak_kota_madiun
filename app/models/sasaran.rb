@@ -24,7 +24,8 @@
 #  fk_rails_...  (nip_asn => users.nik)
 #
 class Sasaran < ApplicationRecord
-  belongs_to :user
+  # belongs_to :user
+  belongs_to :user, foreign_key: 'nip_asn', primary_key: 'nik'
   belongs_to :program_kegiatan, optional: true
 
   has_many :usulans

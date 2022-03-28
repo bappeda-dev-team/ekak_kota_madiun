@@ -37,7 +37,7 @@ class User < ApplicationRecord
   # validates :nik, presence: true
   belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_opd'
   has_many :kaks
-  has_many :sasarans, dependent: :destroy
+  has_many :sasarans, dependent: :destroy, foreign_key: 'nip_asn', primary_key: 'nik'
 
   after_create :assign_default_role
 
