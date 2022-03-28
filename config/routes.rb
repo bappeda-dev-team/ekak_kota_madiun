@@ -89,6 +89,8 @@ Rails.application.routes.draw do
   get '/adminsasarans', to: 'sasarans#sasaran_admin'
   get '/adminusers', to: 'users#user_admin'
   #
+  # third party Api
+  get '/sync_sasaran', to: 'api/sipd_client#sync_sasaran'
   # get "/program_kegiatans", to: "program_kegiatans#index"
   # get "/program_kegiatans/new", to: "program_kegiatans#new"
   # get "/program_kegiatan/:id", to: "program_kegiatans#show"

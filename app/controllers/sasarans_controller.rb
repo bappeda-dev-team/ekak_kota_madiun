@@ -82,7 +82,7 @@ class SasaransController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def get_user
-    @user = User.find(params[:user_id])
+    @user = current_user
   end
 
   def get_program_kegiatan
@@ -100,7 +100,7 @@ class SasaransController < ApplicationController
   # Only allow a list of trusted parameters through.
   def sasaran_params
     params.require(:sasaran).permit(:sasaran_kinerja, :indikator_kinerja, :target, :kualitas,
-                                    :satuan, :penerima_manfaat, :user_id, :program_kegiatan_id,
+                                    :satuan, :penerima_manfaat, :nip_asn, :program_kegiatan_id,
                                     rincian_attributes: %i[data_terpilah penyebab_internal penyebab_external
                                                            permasalahan_umum permasalahan_gender resiko lokasi_pelaksanaan])
   end
