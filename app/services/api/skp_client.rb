@@ -22,8 +22,7 @@ module Api
     end
 
     def data_sasaran_asn_opd
-      request = request_skp(kode_opd, tahun, bulan)
-      Oj.load(request.body)
+      request_skp(kode_opd, tahun, bulan)
     end
 
     def data_pegawai
@@ -68,9 +67,16 @@ module Api
           nip_asn = pegawai['nip']
           data_sasaran << { sasaran_kinerja: sasaran_kinerja, indikator_kinerja: indikator_kinerja, target: target,
                             satuan: satuan, nip_asn: nip_asn, id_rencana: id_rencana }
+          rencana['list_rencana_aksi'].each do |rencana_aksi|
+            id_rencana = rencana_aksi['id_rencana_kerja']
+            tahapan = rencana_aksi['tahapan_kerja']
+            id_rencana_aksi = rencana_aksi['id']
+            data_renaksi << { tahapan: tahapan, id_rencana_aksi: id_rencana_aksi, id_rencana: id_rencana }
+          end
         end
       end
-      data_sasaran
+      Sasaran.upsert_all(data_sasaran)
+      Tahapan.upsert_all(data_renaksi)
     end
 
     def update_data_pegawai(response)

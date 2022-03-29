@@ -6,7 +6,8 @@ module Api
     before_action :set_params
     def sync_sasaran
       request = Api::SkpClient.new(@kode_opd, @tahun, @bulan)
-      render json: request.data_sasaran_asn_opd
+      request.update_sasaran
+      redirect_to adminsasarans_path
     end
 
     def sync_pegawai

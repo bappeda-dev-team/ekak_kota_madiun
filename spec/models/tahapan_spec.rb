@@ -4,6 +4,8 @@
 #
 #  id               :bigint           not null, primary key
 #  bulan            :string
+#  id_rencana       :string
+#  id_rencana_aksi  :string
 #  jumlah_realisasi :integer
 #  jumlah_target    :integer
 #  keterangan       :string
