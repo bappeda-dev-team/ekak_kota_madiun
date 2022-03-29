@@ -85,6 +85,7 @@ module Api
           end
         end
       end
+      data_renaksi.reject! { |renaksi| renaksi[:target].zero? }
       Sasaran.upsert_all(data_sasaran, unique_by: :id_rencana)
       Tahapan.upsert_all(data_tahapan, unique_by: :id_rencana_aksi)
       Aksi.upsert_all(data_renaksi, unique_by: :id_aksi_bulan)

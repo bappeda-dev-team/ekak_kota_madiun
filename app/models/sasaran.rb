@@ -77,7 +77,7 @@ class Sasaran < ApplicationRecord
   end
 
   def waktu_total
-    tahapans.map { |t| t.aksis.group(:bulan).count(:target) }.inject(:merge).count
+    tahapans.map { |t| t.aksis.group(:bulan).where('target > 0').count(:target) }.inject(:merge).count
   rescue NoMethodError
     '-'
   end
