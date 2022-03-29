@@ -35,6 +35,11 @@ module Api
       update_data_pegawai(request)
     end
 
+    def update_sasaran
+      request = data_sasaran_asn_opd
+      update_data_sasaran(request)
+    end
+
     private
 
     def request_skp(kode_opd, tahun, bulan)
@@ -50,19 +55,22 @@ module Api
     def update_data_sasaran(response) # rubocop:disable Metrics/MethodLength
       data = Oj.load(response.body)
       pegawais = data['data']['data_pegawai']
+      pegawais.reject! { |pe| pe['eselon'].match(/^(2|3)/) }
+      data_sasaran = []
+      data_renaksi = []
       pegawais.each do |pegawai|
         pegawai['list_rencana_kinerja'].each do |rencana|
-          rencana['list_indikator'].each do |indikator|
-            Sasaran.create(
-              sasaran_kinerja: rencana['rencana_kerja'],
-              indikator_kinerja: indikator['iki'],
-              target: indikator['target'],
-              satuan: indikator['satuan'],
-              nip_asn: pegawai['nip'] # TODO: Change this from id to NIP
-            )
-          end
+          id_rencana = rencana['id']
+          sasaran_kinerja = rencana['rencana_kerja']
+          indikator_kinerja = rencana['list_indikator'][0]['iki']
+          target = rencana['list_indikator'][0]['target']
+          satuan = rencana['list_indikator'][0]['satuan']
+          nip_asn = pegawai['nip']
+          data_sasaran << { sasaran_kinerja: sasaran_kinerja, indikator_kinerja: indikator_kinerja, target: target,
+                            satuan: satuan, nip_asn: nip_asn, id_rencana: id_rencana }
         end
       end
+      data_sasaran
     end
 
     def update_data_pegawai(response)

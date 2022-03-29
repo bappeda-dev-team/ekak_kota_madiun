@@ -4,6 +4,7 @@
 #
 #  id                  :bigint           not null, primary key
 #  anggaran            :integer
+#  id_rencana          :string
 #  indikator_kinerja   :string
 #  kualitas            :integer
 #  nip_asn             :string
