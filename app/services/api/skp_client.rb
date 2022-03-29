@@ -27,8 +27,12 @@ module Api
     end
 
     def data_pegawai
-      request = request_pegawai(kode_opd, tahun, bulan)
-      Oj.load(request.body)
+      request_pegawai(kode_opd, tahun, bulan)
+    end
+
+    def update_pegawai
+      request = data_pegawai
+      update_data_pegawai(request)
     end
 
     private
@@ -59,6 +63,23 @@ module Api
           end
         end
       end
+    end
+
+    def update_data_pegawai(response)
+      kode_opd = Opd.find_by(kode_unik_opd: @kode_opd).kode_opd || '0'
+      data = Oj.load(response.body)
+      pegawais = data['data']
+      data_pegawai = []
+      pegawais.each do |pegawai|
+        email = "#{pegawai[1]['nip']}@madiunkota.go.id"
+        nip = pegawai[1]['nip']
+        nama = pegawai[1]['nama']
+        jabatan = pegawai[1]['jabatan']
+        eselon = 'NON ESELON' # WARNING: Hardcoded
+        data_pegawai << { nik: nip, email: email, encrypted_password: '123456', nama: nama, jabatan: jabatan, eselon: eselon,
+                          kode_opd: kode_opd, created_at: Time.now, updated_at: Time.now }
+      end
+      User.find_or_create_by(data_pegawai, unique_by: :nik)
     end
   end
 end
