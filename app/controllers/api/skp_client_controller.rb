@@ -17,7 +17,7 @@ module Api
 
     def set_params
       # @kode_opd = params[:kode_opd]
-      @kode_opd = '5.01.5.05.0.00.02.0000'
+      @kode_opd = '5.01.5.05.0.00.02.0000' # Warning Hardcoded to only bappeda, create some filter to do this
       @tahun = params[:tahun]
       @bulan = params[:bulan]
     end
