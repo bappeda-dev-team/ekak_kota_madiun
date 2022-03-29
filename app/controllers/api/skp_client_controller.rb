@@ -5,9 +5,9 @@ module Api
   class SkpClientController < ApplicationController
     before_action :set_params
     def sync_sasaran
-      request = Api::SkpClient.new(@kode_opd, @tahun, @bulan)
-      request.update_sasaran
-      redirect_to adminsasarans_path
+      UpdateSkpJob.perform_later(@kode_opd, @tahun, @bulan)
+      redirect_to adminsasarans_path,
+                  notice: "Update SKP #{@kode_opd} Bulan #{@bulan} Tahun #{@tahun}, sedang diproses"
     end
 
     def sync_pegawai
@@ -18,7 +18,7 @@ module Api
 
     def set_params
       # @kode_opd = params[:kode_opd]
-      @kode_opd = '5.01.5.05.0.00.02.0000' # Warning Hardcoded to only bappeda, create some filter to do this
+      @kode_opd = '2.16.2.20.2.21.04.0000' # Warning Hardcoded to only bappeda, create some filter to do this
       @tahun = params[:tahun]
       @bulan = params[:bulan]
     end
