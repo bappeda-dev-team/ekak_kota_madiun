@@ -18,6 +18,7 @@
 #
 # Indexes
 #
+#  index_sasarans_on_id_rencana           (id_rencana) UNIQUE
 #  index_sasarans_on_program_kegiatan_id  (program_kegiatan_id)
 #
 # Foreign Keys
@@ -34,7 +35,7 @@ class Sasaran < ApplicationRecord
   # has_many :pokpirs
   # has_many :mandatoris
   # has_many :inovasis
-  has_many :tahapans
+  has_many :tahapans, foreign_key: 'id_rencana', primary_key: 'id_rencana'
   has_one :rincian, dependent: :destroy
 
   accepts_nested_attributes_for :rincian, update_only: true

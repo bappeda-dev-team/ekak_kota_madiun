@@ -20,7 +20,8 @@
 #
 # Indexes
 #
-#  index_tahapans_on_sasaran_id  (sasaran_id)
+#  index_tahapans_on_id_rencana_aksi  (id_rencana_aksi) UNIQUE
+#  index_tahapans_on_sasaran_id       (sasaran_id)
 #
 require 'rails_helper'
 

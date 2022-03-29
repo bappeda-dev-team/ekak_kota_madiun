@@ -56,6 +56,7 @@ module Api
       pegawais = data['data']['data_pegawai']
       pegawais.reject! { |pe| pe['eselon'].match(/^(2|3)/) }
       data_sasaran = []
+      data_tahapan = []
       data_renaksi = []
       pegawais.each do |pegawai|
         pegawai['list_rencana_kinerja'].each do |rencana|
@@ -66,17 +67,27 @@ module Api
           satuan = rencana['list_indikator'][0]['satuan']
           nip_asn = pegawai['nip']
           data_sasaran << { sasaran_kinerja: sasaran_kinerja, indikator_kinerja: indikator_kinerja, target: target,
-                            satuan: satuan, nip_asn: nip_asn, id_rencana: id_rencana }
+                            satuan: satuan, nip_asn: nip_asn, id_rencana: id_rencana, created_at: Time.now, updated_at: Time.now }
           rencana['list_rencana_aksi'].each do |rencana_aksi|
             id_rencana = rencana_aksi['id_rencana_kerja']
-            tahapan = rencana_aksi['tahapan_kerja']
+            tahapan_kerja = rencana_aksi['tahapan_kerja']
             id_rencana_aksi = rencana_aksi['id']
-            data_renaksi << { tahapan: tahapan, id_rencana_aksi: id_rencana_aksi, id_rencana: id_rencana }
+            data_tahapan << { tahapan_kerja: tahapan_kerja, id_rencana_aksi: id_rencana_aksi, id_rencana: id_rencana,
+                              created_at: Time.now, updated_at: Time.now }
+            rencana_aksi['list_bulan'].each do |aksi|
+              bulan = aksi['bulan']
+              target = aksi['target']
+              id_rencana_aksi = aksi['id_tahapan']
+              id_aksi_bulan = aksi['id']
+              data_renaksi << { bulan: bulan, target: target.to_i, id_rencana_aksi: id_rencana_aksi,
+                                id_aksi_bulan: id_aksi_bulan, created_at: Time.now, updated_at: Time.now }
+            end
           end
         end
       end
-      Sasaran.upsert_all(data_sasaran)
-      Tahapan.upsert_all(data_renaksi)
+      Sasaran.upsert_all(data_sasaran, unique_by: :id_rencana)
+      Tahapan.upsert_all(data_tahapan, unique_by: :id_rencana_aksi)
+      Aksi.upsert_all(data_renaksi, unique_by: :id_aksi_bulan)
     end
 
     def update_data_pegawai(response)

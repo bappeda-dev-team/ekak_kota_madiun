@@ -20,11 +20,12 @@
 #
 # Indexes
 #
-#  index_tahapans_on_sasaran_id  (sasaran_id)
+#  index_tahapans_on_id_rencana_aksi  (id_rencana_aksi) UNIQUE
+#  index_tahapans_on_sasaran_id       (sasaran_id)
 #
 class Tahapan < ApplicationRecord
-  belongs_to :sasaran, optional: true
-  has_many :aksis, dependent: :destroy
+  belongs_to :sasaran, foreign_key: 'id_rencana', primary_key: 'id_rencana', optional: true
+  has_many :aksis, foreign_key: 'id_rencana_aksi', primary_key: 'id_rencana_aksi', dependent: :destroy
   has_many :anggarans, dependent: :destroy
 
   validates :tahapan_kerja, presence: true
@@ -34,11 +35,11 @@ class Tahapan < ApplicationRecord
   rescue NoMethodError
     '-'
   end
-  
+
   def target_total
     jumlah_target.nil? ? '-' : jumlah_target
   end
-  
+
   def anggaran_tahapan
     anggarans.compact.sum { |n| n.jumlah }
   rescue NoMethodError

@@ -18,6 +18,7 @@
 #
 # Indexes
 #
+#  index_sasarans_on_id_rencana           (id_rencana) UNIQUE
 #  index_sasarans_on_program_kegiatan_id  (program_kegiatan_id)
 #
 # Foreign Keys
