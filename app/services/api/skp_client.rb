@@ -1,39 +1,52 @@
+# frozen_string_literal: true
+
 module Api
+  # Client for SKP API
   class SkpClient
     require 'http'
     require 'oj'
-    URL = 'https://skp.madiunkota.go.id/api'.freeze
+    URL = 'https://skp.madiunkota.go.id/api'
     H = HTTP.accept(:json)
-    attr_reader :username, :password
     attr_accessor :kode_opd, :bulan, :tahun
 
+    USERNAME = 'bappeda'
+    PASSWORD = 'bapp7832KH'
+
     def initialize(kode_opd, tahun, bulan)
-      @username = 'bappeda'
-      @password = 'bapp7832KH'
-      # TODO: dynamic assign this later
-      @kode_opd = kode_opd
-      @tahun = tahun
-      @bulan = bulan
       # @kode_opd = '2.16.2.20.2.21.04.0000'
       # @tahun = 2022
       # @bulan = 2
+      @kode_opd = kode_opd
+      @tahun = tahun
+      @bulan = bulan
     end
 
     def data_sasaran_asn_opd
-      request(kode_opd, bulan, tahun)
+      request = request_skp(kode_opd, tahun, bulan)
+      Oj.load(request.body)
+    end
+
+    def data_pegawai
+      request = request_pegawai(kode_opd, tahun, bulan)
+      Oj.load(request.body)
     end
 
     private
 
-    def request(kode_opd, bulan, tahun)
+    def request_skp(kode_opd, tahun, bulan)
       H.post("#{URL}/sasaran-kinerja-pegawai/#{kode_opd}/#{tahun}/#{bulan}",
-             form: { username: username, password: password })
+             form: { username: USERNAME, password: PASSWORD })
     end
 
-    def update_data_sasaran(response)
+    def request_pegawai(kode_opd, tahun, bulan)
+      H.post("#{URL}/data-pegawai/#{kode_opd}/#{tahun}/#{bulan}",
+             form: { username: USERNAME, password: PASSWORD })
+    end
+
+    def update_data_sasaran(response) # rubocop:disable Metrics/MethodLength
       data = Oj.load(response.body)
-      pegawai = data['data']['data_pegawai']
-      pegawai.each do |pegawai|
+      pegawais = data['data']['data_pegawai']
+      pegawais.each do |pegawai|
         pegawai['list_rencana_kinerja'].each do |rencana|
           rencana['list_indikator'].each do |indikator|
             Sasaran.create(
