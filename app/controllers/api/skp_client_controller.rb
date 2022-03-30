@@ -7,18 +7,22 @@ module Api
     def sync_sasaran
       UpdateSkpJob.perform_later(@kode_opd, @tahun, @bulan)
       redirect_to adminsasarans_path,
-                  notice: "Update SKP #{@kode_opd} Bulan #{@bulan} Tahun #{@tahun}, sedang diproses"
+                  notice: "Update Sasaran #{nama_opd} Dikerjakan..."
     end
 
     def sync_pegawai
-      request = Api::SkpClient.new(@kode_opd, @tahun, @bulan)
-      request.update_pegawai
-      redirect_to adminusers_path
+      UpdateUserJob.perform_later(@kode_opd, @tahun, @bulan)
+      redirect_to adminusers_path, notice: "Update Pegawai #{nama_opd} Dikerjakan..."
+    end
+
+    private
+
+    def nama_opd
+      Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
     end
 
     def set_params
       @kode_opd = params[:kode_opd]
-      # @kode_opd = '2.16.2.20.2.21.04.0000' # Warning Hardcoded to only bappeda, create some filter to do this
       @tahun = params[:tahun]
       @bulan = params[:bulan]
     end

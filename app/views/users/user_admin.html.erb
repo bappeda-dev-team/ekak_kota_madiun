@@ -10,6 +10,11 @@
         <li class="breadcrumb-item active" aria-current="page">List User</li>
       </ol>
     </nav>
+    <% flash.each do |type, msg| %>
+      <div class="alert alert-info">
+        <%= msg %>
+      </div>
+    <% end %>
     <%= render 'shared/filter_card', filter_url: '/filter_user' %>
     <div class="card border-0 shadow" id="user_filter">
       <div class="card-header">
