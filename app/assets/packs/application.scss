@@ -1,0 +1,49 @@
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/regular.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+@import "~@fortawesome/fontawesome-free/scss/v4-shims.scss";
+// volt
+@import "../stylesheets/volt/volt.scss";
+@import "~chartist/dist/scss/chartist.scss";
+@import "~select2/src/scss/core.scss";
+@import "~select2-bootstrap-5-theme/src/include-all";
+
+@import "../stylesheets/actiontext.scss";
+@import "../stylesheets/anggarans.scss";
+.field {
+  @extend .my-3;
+}
+.form-label {
+  @extend .form-label;
+  @extend .my-2;
+  font-weight: bolder;
+}
+
+.form-field-container {
+  @extend .card;
+  @extend .border-0;
+  @extend .shadow;
+  @extend .p-3;
+  @extend .mb-3;
+}
+
+input[name="commit"] {
+  @extend .btn;
+  @extend .btn-tertiary;
+  @extend .w-100;
+  @extend .mt-5;
+}
+
+form {
+  @extend .mt-2;
+}
+
+td.wrap-text {
+  white-space: normal;
+}
+
+// .table td {
+//   white-space: normal;
+// }

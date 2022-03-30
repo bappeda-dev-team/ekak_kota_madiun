@@ -16,8 +16,6 @@
 */
 "use strict";
 
-import 'simple-datatables/dist/style.css';
-import { DataTable } from 'simple-datatables';
 
 
 const d = document;
@@ -89,11 +87,7 @@ d.addEventListener("DOMContentLoaded", function (event) {
     });
   })
 
-  // DataTable
-  var dataTables = [].slice.call(d.querySelectorAll('[data-datatable]'))
-  var dataTableList = dataTables.map(function (el) {
-    el = new DataTable(el)
-  });
+
 
   if (d.querySelector('.input-slider-container')) {
     [].slice.call(d.querySelectorAll('.input-slider-container')).map(function (el) {
