@@ -1,17 +1,3 @@
-<% if flash.any? %>
-  <% flash.each do |type, msg| %>
-    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-header">
-        <svg class="icon icon-xs text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"></path><path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path></svg>
-        <strong class="me-auto">E-KaK</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-      </div>
-      <div class="toast-body">
-        <%= msg %>
-      </div>
-    </div>
-  <% end %>
-<% end %>
 <div class="row">
   <div class="col-12">
     <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
@@ -25,39 +11,16 @@
       </ol>
     </nav>
     <%# TODO: Refactor to partials %>
-    <div class="card border-0 shadow mb-4">
-      <div class="card-header">
-        <div class="row">
-          <div class="col">
-            <h2 class="mb-0">
-              Filter Sasaran
-            </h2>
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <%= form_with url: '/filter_sasaran', local: false do |form| %>
-          <%= form.label :kode_opd %>
-          <%= form.select :kode_opd, Opd.all.pluck(:nama_opd, :kode_unik_opd) ,{include_blank: true},{class: "form-control select2-waw", data: {"placeholder": "Pilih Opd"}}  %>
-          <%= form.submit 'filter' %>
-        <% end %>
-      </div>
-    </div>
-    <div class="card border-0 shadow">
+    <%= render 'shared/filter_card', filter_url: '/filter_sasaran' %>
+    <div class="card border-0 shadow" id="sasaran_filter">
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">
             <h2 class="fs-5 fw-bold mb-0">Sasaran Kinerja</h2>
           </div>
-          <div class="col-2 text-end">
-            <%= link_to sync_sasaran_path(kode_opd: current_user.opd.kode_unik_opd, tahun: Date.today.year, bulan: Date.today.month), class:"btn btn-sm btn-primary" do %>
-              <i class="fas fa-sync me-2"></i>
-              Sync Sasaran
-            <% end %>
-          </div>
         </div>
       </div>
-      <div class="table-responsive" id="sasaran_filter">
+      <div class="table-responsive">
         ...
       </div>
     </div>

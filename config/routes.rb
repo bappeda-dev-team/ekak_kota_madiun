@@ -96,6 +96,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/sync_pegawai', to: 'api/skp_client#sync_pegawai'
 
   post '/filter_sasaran', to: 'filter#filter_sasaran'
+  post '/filter_user', to: 'filter#filter_user'
   # get "/program_kegiatans", to: "program_kegiatans#index"
   # get "/program_kegiatans/new", to: "program_kegiatans#new"
   # get "/program_kegiatan/:id", to: "program_kegiatans#show"

@@ -1,0 +1,19 @@
+ 
+<div class="card border-0 shadow mb-4">
+  <div class="card-header">
+    <div class="row">
+      <div class="col">
+        <h2 class="mb-0">
+          Filter
+        </h2>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <%= form_with url: filter_url, local: false do |form| %>
+      <%= form.label :kode_opd %>
+      <%= form.select :kode_opd, Opd.all.pluck(:nama_opd, :kode_unik_opd) ,{include_blank: true},{class: "form-control select2-waw", data: {"placeholder": "Pilih Opd"}}  %>
+      <%= form.submit 'filter' %>
+    <% end %>
+  </div>
+</div>

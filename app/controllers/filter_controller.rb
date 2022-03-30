@@ -8,6 +8,13 @@ class FilterController < ApplicationController
     end
   end
 
+  def filter_user
+    @users = User.joins(:opd).where(opds: { kode_unik_opd: @kode_opd })
+    respond_to do |format|
+      format.js { render 'users/user_filter' }
+    end
+  end
+
   private
 
   def filter_params
