@@ -10,7 +10,6 @@
         <li class="breadcrumb-item active" aria-current="page"><%= link_to 'Sasarans', user_sasarans_path(current_user) %></li>
       </ol>
     </nav>
-    <%# TODO: Refactor to partials %>
     <%= render 'shared/filter_card', filter_url: '/filter_sasaran' %>
     <div class="card border-0 shadow" id="sasaran_filter">
       <div class="card-header">
