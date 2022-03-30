@@ -4,8 +4,10 @@
 #
 #  id                  :bigint           not null, primary key
 #  anggaran            :integer
+#  id_rencana          :string
 #  indikator_kinerja   :string
 #  kualitas            :integer
+#  nip_asn             :string
 #  penerima_manfaat    :string
 #  sasaran_kinerja     :string
 #  satuan              :string
@@ -13,15 +15,19 @@
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  program_kegiatan_id :bigint
-#  user_id             :bigint
 #
 # Indexes
 #
+#  index_sasarans_on_id_rencana           (id_rencana) UNIQUE
 #  index_sasarans_on_program_kegiatan_id  (program_kegiatan_id)
-#  index_sasarans_on_user_id              (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (nip_asn => users.nik)
 #
 class Sasaran < ApplicationRecord
-  belongs_to :user
+  # belongs_to :user
+  belongs_to :user, foreign_key: 'nip_asn', primary_key: 'nik'
   belongs_to :program_kegiatan, optional: true
 
   has_many :usulans
@@ -29,7 +35,7 @@ class Sasaran < ApplicationRecord
   # has_many :pokpirs
   # has_many :mandatoris
   # has_many :inovasis
-  has_many :tahapans
+  has_many :tahapans, foreign_key: 'id_rencana', primary_key: 'id_rencana'
   has_one :rincian, dependent: :destroy
 
   accepts_nested_attributes_for :rincian, update_only: true
@@ -40,6 +46,8 @@ class Sasaran < ApplicationRecord
   validates :indikator_kinerja, presence: true
   validates :target, presence: true
   validates :satuan, presence: true
+
+  default_scope { order(id_rencana: :asc) }
 
   def respond_to_missing?(_method, *_args)
     0
@@ -71,7 +79,7 @@ class Sasaran < ApplicationRecord
   end
 
   def waktu_total
-    tahapans.map { |t| t.aksis.group(:bulan).count(:target) }.inject(:merge).count
+    tahapans.map { |t| t.aksis.group(:bulan).where('target > 0').count(:target) }.inject(:merge).count
   rescue NoMethodError
     '-'
   end

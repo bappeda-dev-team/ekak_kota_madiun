@@ -5,9 +5,12 @@
 #  id                     :bigint           not null, primary key
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
+#  eselon                 :string
+#  jabatan                :string
 #  kode_opd               :string
 #  nama                   :string
 #  nik                    :string
+#  pangkat                :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
@@ -17,6 +20,7 @@
 # Indexes
 #
 #  index_users_on_email                 (email) UNIQUE
+#  index_users_on_nik                   (nik) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 # Foreign Keys
@@ -33,7 +37,7 @@ class User < ApplicationRecord
   # validates :nik, presence: true
   belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_opd'
   has_many :kaks
-  has_many :sasarans, dependent: :destroy
+  has_many :sasarans, dependent: :destroy, foreign_key: 'nip_asn', primary_key: 'nik'
 
   after_create :assign_default_role
 

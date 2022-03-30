@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_21_034451) do
+ActiveRecord::Schema.define(version: 2022_03_29_105912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,9 @@ ActiveRecord::Schema.define(version: 2022_03_21_034451) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "tahapan_id"
+    t.string "id_rencana_aksi"
+    t.string "id_aksi_bulan"
+    t.index ["id_aksi_bulan"], name: "index_aksis_on_id_aksi_bulan", unique: true
     t.index ["tahapan_id"], name: "index_aksis_on_tahapan_id"
   end
 
@@ -234,9 +237,7 @@ ActiveRecord::Schema.define(version: 2022_03_21_034451) do
     t.integer "volume"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "sasaran_id", null: false
     t.integer "total"
-    t.index ["sasaran_id"], name: "index_pagus_on_sasaran_id"
   end
 
   create_table "pajaks", force: :cascade do |t|
@@ -258,17 +259,6 @@ ActiveRecord::Schema.define(version: 2022_03_21_034451) do
     t.string "deskripsi"
     t.text "spesifikasi"
     t.index ["anggaran_id"], name: "index_perhitungans_on_anggaran_id"
-  end
-
-  create_table "pks", force: :cascade do |t|
-    t.string "sasaran"
-    t.string "indikator_kinerja"
-    t.string "target"
-    t.string "satuan"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_pks_on_user_id"
   end
 
   create_table "pokpirs", force: :cascade do |t|
@@ -345,21 +335,12 @@ ActiveRecord::Schema.define(version: 2022_03_21_034451) do
     t.string "penerima_manfaat"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "user_id"
     t.bigint "program_kegiatan_id"
     t.integer "anggaran"
+    t.string "nip_asn"
+    t.string "id_rencana"
+    t.index ["id_rencana"], name: "index_sasarans_on_id_rencana", unique: true
     t.index ["program_kegiatan_id"], name: "index_sasarans_on_program_kegiatan_id"
-    t.index ["user_id"], name: "index_sasarans_on_user_id"
-  end
-
-  create_table "search_entries", force: :cascade do |t|
-    t.string "title"
-    t.text "body"
-    t.string "searchable_type", null: false
-    t.bigint "searchable_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["searchable_type", "searchable_id"], name: "index_search_entries_on_searchable"
   end
 
   create_table "strategi_keluarans", force: :cascade do |t|
@@ -390,6 +371,9 @@ ActiveRecord::Schema.define(version: 2022_03_21_034451) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "sasaran_id"
+    t.string "id_rencana_aksi"
+    t.string "id_rencana"
+    t.index ["id_rencana_aksi"], name: "index_tahapans_on_id_rencana_aksi", unique: true
     t.index ["sasaran_id"], name: "index_tahapans_on_sasaran_id"
   end
 
@@ -404,7 +388,11 @@ ActiveRecord::Schema.define(version: 2022_03_21_034451) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.string "kode_opd"
+    t.string "pangkat"
+    t.string "jabatan"
+    t.string "eselon"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["nik"], name: "index_users_on_nik", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -431,11 +419,10 @@ ActiveRecord::Schema.define(version: 2022_03_21_034451) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "anggarans", "pajaks"
   add_foreign_key "kesenjangans", "rincians"
-  add_foreign_key "pagus", "sasarans"
-  add_foreign_key "pks", "users"
   add_foreign_key "program_kegiatans", "opds", column: "kode_opd", primary_key: "kode_opd"
   add_foreign_key "program_kegiatans", "subkegiatan_tematiks"
   add_foreign_key "rincians", "sasarans"
+  add_foreign_key "sasarans", "users", column: "nip_asn", primary_key: "nik"
   add_foreign_key "users", "opds", column: "kode_opd", primary_key: "kode_opd"
 
   create_view "search_all_usulans", sql_definition: <<-SQL
@@ -466,34 +453,6 @@ ActiveRecord::Schema.define(version: 2022_03_21_034451) do
       inovasis.id AS searchable_id
      FROM inovasis
     WHERE (inovasis.is_active = true);
-  SQL
-  create_view "views_all_anggarans", sql_definition: <<-SQL
-      SELECT anggaran_sshes.uraian_barang,
-      anggaran_sshes.kode_barang,
-      anggaran_sshes.spesifikasi,
-      anggaran_sshes.satuan,
-      anggaran_sshes.harga_satuan,
-      'AnggaranSsh'::text AS searchable_type,
-      anggaran_sshes.id AS searchable_id
-     FROM anggaran_sshes
-  UNION
-   SELECT anggaran_sbus.uraian_barang,
-      anggaran_sbus.kode_barang,
-      anggaran_sbus.spesifikasi,
-      anggaran_sbus.satuan,
-      anggaran_sbus.harga_satuan,
-      'AnggaranSbu'::text AS searchable_type,
-      anggaran_sbus.id AS searchable_id
-     FROM anggaran_sbus
-  UNION
-   SELECT anggaran_hspks.uraian_barang,
-      anggaran_hspks.kode_barang,
-      anggaran_hspks.spesifikasi,
-      anggaran_hspks.satuan,
-      anggaran_hspks.harga_satuan,
-      'AnggaranHspk'::text AS searchable_type,
-      anggaran_hspks.id AS searchable_id
-     FROM anggaran_hspks;
   SQL
   create_view "search_all_anggarans", sql_definition: <<-SQL
       SELECT anggaran_sshes.uraian_barang,

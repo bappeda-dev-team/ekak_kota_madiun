@@ -4,6 +4,8 @@
 #
 #  id               :bigint           not null, primary key
 #  bulan            :string
+#  id_rencana       :string
+#  id_rencana_aksi  :string
 #  jumlah_realisasi :integer
 #  jumlah_target    :integer
 #  keterangan       :string
@@ -18,7 +20,8 @@
 #
 # Indexes
 #
-#  index_tahapans_on_sasaran_id  (sasaran_id)
+#  index_tahapans_on_id_rencana_aksi  (id_rencana_aksi) UNIQUE
+#  index_tahapans_on_sasaran_id       (sasaran_id)
 #
 require 'rails_helper'
 

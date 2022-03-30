@@ -37,8 +37,8 @@
             <% @sasarans.each.with_index(1) do |sasaran, i| %>
               <tr>
                 <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                <td class="text-gray-900" scope="row"><%= sasaran.sasaran_kinerja %></td>
-                <td class="fw-bolder text-gray-500"><%= sasaran.indikator_kinerja %></td>
+                <td class="text-gray-900" scope="row" style="white-space: initial !important;"><%= sasaran.sasaran_kinerja %></td>
+                <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= sasaran.indikator_kinerja %></td>
                 <td class="fw-bolder text-gray-500"><%= sasaran.target %></td>
                 <td class="fw-bolder text-gray-500"><%= sasaran.satuan %></td>
                 <td class="fw-bolder text-gray-500 text-center">

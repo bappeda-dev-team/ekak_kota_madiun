@@ -5,15 +5,15 @@ prawn_document do |pdf|
   pdf.move_down 7
   pdf.font_size 10
   pdf.table([
-              ['Urusan Pemerintahan', ':', @programKegiatan.opd.text_urusan],
-              ['Bidang Urusan', ':', @programKegiatan.opd.text_bidang_urusan],
-              ['Program', ':', @programKegiatan.nama_program],
+              ['Urusan Pemerintahan', ':', { content: @programKegiatan.opd.text_urusan, font_style: :bold }],
+              ['Bidang Urusan', ':', { content: @programKegiatan.opd.text_bidang_urusan, font_style: :bold }],
+              ['Program', ':', { content: @programKegiatan.nama_program, font_style: :bold }],
               ['Indikator', ':', @programKegiatan.indikator_program],
               ['Target', ':', "#{@programKegiatan.target_program} #{@programKegiatan.satuan_target_program}"],
-              ['Kegiatan', ':', @programKegiatan.nama_kegiatan],
+              ['Kegiatan', ':', { content: @programKegiatan.nama_kegiatan, font_style: :bold }],
               ['Indikator', ':', @programKegiatan.indikator_kinerja],
               ['Target', ':', "#{@programKegiatan.target} #{@programKegiatan.satuan}"],
-              ['Sub Kegiatan', ':', @programKegiatan.nama_subkegiatan],
+              ['Sub Kegiatan', ':', { content: @programKegiatan.nama_subkegiatan, font_style: :bold }],
               ['Indikator', ':', @programKegiatan.indikator_subkegiatan],
               ['Target', ':', "#{@programKegiatan.target_subkegiatan} #{@programKegiatan.satuan}"],
               ['Pagu Anggaran', ':', "Rp. #{number_with_delimiter(@programKegiatan.my_pagu, delimiter: '.')}"]
@@ -31,8 +31,8 @@ prawn_document do |pdf|
                 ['Sasaran/ Rencana Kinerja', ':', sasaran.sasaran_kinerja],
                 ['Indikator', ':', sasaran.indikator_kinerja],
                 ['Target', ':', "#{sasaran.target} #{sasaran.satuan}"],
-                ['Pagu Anggaran', ':', sasaran.total_anggaran],
-                ['Sub Kegiatan', ':', '5.01.01.2.01.01 Penyusunan Dokumen Perenanaan Perangkat Daerah'],
+                ['Pagu Anggaran', ':', "Rp. #{number_with_delimiter(sasaran.total_anggaran, delimiter: '.')}"],
+                ['Sub Kegiatan', ':', '5.01.01.2.01.01 Penyusunan Dokumen Perenanaan Perangkat Daerah']
               ], cell_style: { borders: [] })
     pdf.move_down 5
     # tahapan
@@ -41,18 +41,20 @@ prawn_document do |pdf|
       pdf.text "Tahapan #{index}.  #{tahapan.tahapan_kerja}"
       pdf.move_down 5
       header_anggaran = [
-                          [{ content: 'Kode rekening', rowspan: 2 }, { content: 'Uraian', rowspan: 2 },
-                           { content: 'Rincian Perhitungan', colspan: 4 }, { content: 'Jumlah', rowspan: 2 }],
-                          %w[Koefisien Satuan Harga PPN]
-                        ]
+        [{ content: 'Kode rekening', rowspan: 2 }, { content: 'Uraian', rowspan: 2 },
+         { content: 'Rincian Perhitungan', colspan: 4 }, { content: 'Jumlah', rowspan: 2 }],
+        %w[Koefisien Satuan Harga PPN]
+      ]
       tahapan.anggarans.each do |anggaran|
-        header_anggaran << [rekening_anggaran(anggaran.kode_rek), { content: anggaran.uraian, colspan: 5 }, { content: "Rp. #{anggaran.jumlah}", align: :right}]
+        header_anggaran << [rekening_anggaran(anggaran.kode_rek), { content: anggaran.uraian, colspan: 5 },
+                            { content: "Rp. #{anggaran.jumlah}", align: :right }]
         anggaran.perhitungans.each do |perhitungan|
           header_anggaran << ['', uraian_kode(perhitungan.deskripsi), perhitungan.list_koefisien, perhitungan.satuan,
-                              { content: perhitungan.harga.to_s, align: :right }, { content: anggaran.plus_pajak.to_s}, { content: "Rp. #{perhitungan.total}", align: :right }]
+                              { content: perhitungan.harga.to_s, align: :right }, { content: anggaran.plus_pajak.to_s }, { content: "Rp. #{perhitungan.total}", align: :right }]
         end
       end
       pdf.table(header_anggaran, cell_style: { size: 6 }, width: pdf.bounds.width)
+      pdf.text "Pemilik Sasaran : #{sasaran.user.nama}"
       header_anggaran.clear
     end
   end

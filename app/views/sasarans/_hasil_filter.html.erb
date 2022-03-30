@@ -1,0 +1,53 @@
+<div class="card-header">
+  <div class="row align-items-center">
+    <div class="col">
+      <h2 class="fs-5 fw-bold mb-0">Sasaran Kinerja</h2>
+    </div>
+    <div class="col-2 text-end">
+      <%= link_to sync_sasaran_path(kode_opd: kode_opd, tahun: Date.today.year, bulan: Date.today.month), class:"btn btn-sm btn-primary" do %>
+        <i class="fas fa-sync me-2"></i>
+        Sync Sasaran
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="table-responsive">
+  <table class="table align-items-center">
+    <thead class="thead-light">
+      <tr>
+        <th class="border-bottom" scope="col">No.</th>
+        <th class="border-bottom" scope="col">ASN Eselon 4</th>
+        <th class="border-bottom" scope="col">OPD</th>
+        <th class="border-bottom" scope="col">Sasaran Kinerja Output</th>
+        <th class="border-bottom" scope="col">Indikator Kinerja</th>
+        <th class="border-bottom" scope="col">Target</th>
+        <th class="border-bottom" scope="col">Satuan</th>
+        <th class="border-bottom text-center" scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% sasarans.each.with_index(1) do |sasaran, i| %>
+        <tr>
+          <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
+          <td class="text-gray-900" scope="row"><%= sasaran.user.nama %></td>
+          <td class="text-gray-900" scope="row"><%= sasaran.user.opd.nama_opd %></td>
+          <td class="text-gray-900" scope="row"><%= sasaran.sasaran_kinerja %></td>
+          <td class="fw-bolder text-gray-500"><%= sasaran.indikator_kinerja %></td>
+          <td class="fw-bolder text-gray-500"><%= sasaran.target %></td>
+          <td class="fw-bolder text-gray-500"><%= sasaran.satuan %></td>
+          <td class="fw-bolder text-gray-500 text-center">
+            <%= link_to user_sasaran_path(current_user, sasaran), class: "m-3" do %>
+              <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
+            <% end %>
+            <%= link_to edit_user_sasaran_path(current_user, sasaran), class: "m-3" do %>
+              <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+            <% end %>
+            <%= link_to user_sasaran_path(current_user, sasaran), method: :delete, data: { confirm_swal: "Hapus #{sasaran.sasaran_kinerja} ?"}, class: "m-3" do %>
+              <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

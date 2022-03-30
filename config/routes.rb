@@ -1,4 +1,6 @@
-Rails.application.routes.draw do
+# frozen_string_literal: true
+
+Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :anggaran_hspks
   resources :anggaran_sbus
   resources :anggaran_sshes
@@ -89,6 +91,12 @@ Rails.application.routes.draw do
   get '/adminsasarans', to: 'sasarans#sasaran_admin'
   get '/adminusers', to: 'users#user_admin'
   #
+  # third party Api
+  get '/sync_sasaran', to: 'api/skp_client#sync_sasaran'
+  get '/sync_pegawai', to: 'api/skp_client#sync_pegawai'
+
+  post '/filter_sasaran', to: 'filter#filter_sasaran'
+  post '/filter_user', to: 'filter#filter_user'
   # get "/program_kegiatans", to: "program_kegiatans#index"
   # get "/program_kegiatans/new", to: "program_kegiatans#new"
   # get "/program_kegiatan/:id", to: "program_kegiatans#show"

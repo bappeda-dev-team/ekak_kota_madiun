@@ -11,15 +11,6 @@
 #  volume     :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  sasaran_id :bigint           not null
-#
-# Indexes
-#
-#  index_pagus_on_sasaran_id  (sasaran_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (sasaran_id => sasarans.id)
 #
 require 'rails_helper'
 
