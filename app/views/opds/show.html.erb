@@ -1,20 +1,19 @@
 <p id="notice"><%= notice %></p>
-
 <p>
   <strong>Lembaga:</strong>
   <%= @opd.lembaga.nama_lembaga %>
 </p>
-
 <p>
   <strong>Nama OPD:</strong>
   <%= @opd.nama_opd %>
 </p>
-
 <p>
   <strong>Kode OPD:</strong>
   <%= @opd.kode_opd %>
 </p>
-
-
+<p>
+  <strong>Kode Unik OPD:</strong>
+  <%= @opd.kode_unik_opd %>
+</p>
 <%= link_to 'Edit', edit_opd_path(@opd) %> |
 <%= link_to 'Back', opds_path %>

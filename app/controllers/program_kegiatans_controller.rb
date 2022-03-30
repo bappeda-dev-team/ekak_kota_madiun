@@ -6,10 +6,15 @@ class ProgramKegiatansController < ApplicationController
   layout false, only: %i[show_to_kak kak_detail kak_renaksi kak_waktu]
 
   def index
-    # modif untuk admin
+    # TODO: refactor untuk json query
     param = params[:q] || ''
     @programKegiatans = ProgramKegiatan.where('kode_opd ILIKE ?', "%#{current_user.kode_opd}%")
                                        .where('nama_subkegiatan ILIKE ?', "%#{param}%")
+  end
+
+  def admin_program_kegiatan
+    @programKegiatans = ProgramKegiatan.includes([:subkegiatan_tematik]).all
+    render 'index'
   end
 
   def new

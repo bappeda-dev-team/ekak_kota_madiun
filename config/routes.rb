@@ -90,6 +90,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # admin thing
   get '/adminsasarans', to: 'sasarans#sasaran_admin'
   get '/adminusers', to: 'users#user_admin'
+  get '/admin_program_kegiatan', to: 'program_kegiatans#admin_program_kegiatan'
   #
   # third party Api
   get '/sync_sasaran', to: 'api/skp_client#sync_sasaran'
