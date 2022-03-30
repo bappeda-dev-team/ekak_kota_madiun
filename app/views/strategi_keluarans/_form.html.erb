@@ -1,3 +1,6 @@
+<% content_for :priority_blocking_js do %>
+  <%= javascript_pack_tag "trix" %>
+<% end %>
 <%= form_with(model: strategi_keluaran) do |form| %>
   <% if strategi_keluaran.errors.any? %>
     <div id="error_explanation">

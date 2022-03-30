@@ -1,4 +1,4 @@
-require "active_support/core_ext/integer/time"
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   config.after_initialize do
@@ -6,7 +6,7 @@ Rails.application.configure do
     Bullet.alert         = true
     Bullet.bullet_logger = true
     Bullet.console       = true
-  # Bullet.growl         = true
+    # Bullet.growl         = true
     Bullet.rails_logger  = true
     Bullet.add_footer    = true
   end
@@ -67,14 +67,6 @@ Rails.application.configure do
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
 
-  # Debug mode disables concatenation and preprocessing of assets.
-  # This option may cause significant delays in view rendering with a large
-  # number of complex assets.
-  config.assets.debug = true
-
-  # Suppress logger output for asset requests.
-  config.assets.quiet = true
-
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
@@ -83,7 +75,7 @@ Rails.application.configure do
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
-  #config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   config.file_watcher = ActiveSupport::FileUpdateChecker
 
   # Uncomment if you wish to allow Action Cable access from any origin.

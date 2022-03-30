@@ -1,3 +1,6 @@
+<% content_for :priority_blocking_js do %>
+  <%= javascript_pack_tag "trix" %>
+<% end %>
 <%= form_with(model: latar_belakang) do |form| %>
   <% if latar_belakang.errors.any? %>
     <div id="error_explanation">

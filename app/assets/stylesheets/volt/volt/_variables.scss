@@ -308,22 +308,22 @@ $gradient: linear-gradient(180deg, rgba($white, .15), rgba($white, 0)) !default;
 
 $spacer: 1rem !default;
 $spacers: (0: 0,
-    1: $spacer / 4,
-    2: $spacer / 2,
+    1: calc($spacer / 4),
+    2: calc($spacer / 2),
     3: $spacer,
-    4: $spacer * 1.5,
-    5: $spacer * 3,
-    6: ($spacer * 5),
-    7: ($spacer * 8),
-    8: ($spacer * 10),
-    9: ($spacer * 11),
-    10: ($spacer * 14),
-    11: ($spacer * 16),
-    12: ($spacer * 20),
-    'sm': ($spacer * 1),
-    'md': ($spacer * 2),
-    'lg': ($spacer * 4),
-    'xl': ($spacer * 8)) !default;
+    4: calc($spacer * 1.5),
+    5: calc($spacer * 3),
+    6: calc($spacer * 5),
+    7: calc($spacer * 8),
+    8: calc($spacer * 10),
+    9: calc($spacer * 11),
+    10: calc($spacer * 14),
+    11: calc($spacer * 16),
+    12: calc($spacer * 20),
+    'sm': calc($spacer * 1),
+    'md': (calc$spacer * 2),
+    'lg': calc($spacer * 4),
+    'xl': calc($spacer * 8)) !default;
 
 $negative-spacers: if($enable-negative-margins, negativify-map($spacers), null) !default;
 
@@ -501,7 +501,7 @@ $h4-font-size: $font-size-base * 1.5 !default;
 $h5-font-size: $font-size-base * 1.25 !default;
 $h6-font-size: $font-size-base !default;
 
-$headings-margin-bottom: $spacer / 2 !default;
+$headings-margin-bottom: calc($spacer / 2) !default;
 $headings-font-family  : null !default;
 $headings-font-style   : null !default;
 $headings-font-weight  : $font-weight-bold !default;
@@ -1187,7 +1187,7 @@ $dropdown-border-radius      : $border-radius-sm !default;
 $dropdown-border-width       : $border-width !default;
 $dropdown-inner-border-radius: subtract($dropdown-border-radius, $dropdown-border-width) !default;
 $dropdown-divider-bg         : $gray-200 !default;
-$dropdown-divider-margin-y   : $spacer / 2 !default;
+$dropdown-divider-margin-y   : calc($spacer / 2) !default;
 $dropdown-box-shadow         : 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05) !default;
 
 $dropdown-link-color      : $gray-900 !default;
@@ -1199,7 +1199,7 @@ $dropdown-link-active-bg   : $gray-200 !default;
 
 $dropdown-link-disabled-color: $gray-600 !default;
 
-$dropdown-item-padding-y: $spacer / 4 !default;
+$dropdown-item-padding-y: calc($spacer / 4) !default;
 $dropdown-item-padding-x: $spacer !default;
 
 $dropdown-header-color      : $gray-900 !default;
@@ -1473,7 +1473,7 @@ $list-group-border-radius: $border-radius !default;
 $list-group-sm-item-padding-y: .625rem !default;
 $list-group-sm-item-padding-x: .875rem !default;
 
-$list-group-item-padding-y    : $spacer / 2 !default;
+$list-group-item-padding-y    : calc($spacer / 2) !default;
 $list-group-item-padding-x    : $spacer !default;
 $list-group-item-bg-level     : -9 !default;
 $list-group-item-color-level  : 6 !default;
@@ -1512,7 +1512,7 @@ $figure-caption-color    : $gray-600 !default;
 // Breadcrumbs
 
 $breadcrumb-font-size     : null !default;
-$breadcrumb-padding-y     : $spacer / 2 !default;
+$breadcrumb-padding-y     : calc($spacer / 2) !default;
 $breadcrumb-padding-x     : $spacer !default;
 $breadcrumb-item-padding-x: .5rem !default;
 $breadcrumb-margin-bottom : 1rem !default;
