@@ -47,6 +47,8 @@ class Sasaran < ApplicationRecord
   validates :target, presence: true
   validates :satuan, presence: true
 
+  default_scope { order(id_rencana: :asc) }
+
   def respond_to_missing?(_method, *_args)
     0
   end

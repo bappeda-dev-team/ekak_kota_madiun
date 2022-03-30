@@ -5,15 +5,15 @@ prawn_document do |pdf|
   pdf.move_down 7
   pdf.font_size 10
   pdf.table([
-              ['Urusan Pemerintahan', ':', @programKegiatan.opd.text_urusan],
-              ['Bidang Urusan', ':', @programKegiatan.opd.text_bidang_urusan],
-              ['Program', ':', @programKegiatan.nama_program],
+              ['Urusan Pemerintahan', ':', { content: @programKegiatan.opd.text_urusan, font_style: :bold }],
+              ['Bidang Urusan', ':', { content: @programKegiatan.opd.text_bidang_urusan, font_style: :bold }],
+              ['Program', ':', { content: @programKegiatan.nama_program, font_style: :bold }],
               ['Indikator', ':', @programKegiatan.indikator_program],
               ['Target', ':', "#{@programKegiatan.target_program} #{@programKegiatan.satuan_target_program}"],
-              ['Kegiatan', ':', @programKegiatan.nama_kegiatan],
+              ['Kegiatan', ':', { content: @programKegiatan.nama_kegiatan, font_style: :bold }],
               ['Indikator', ':', @programKegiatan.indikator_kinerja],
               ['Target', ':', "#{@programKegiatan.target} #{@programKegiatan.satuan}"],
-              ['Sub Kegiatan', ':', @programKegiatan.nama_subkegiatan],
+              ['Sub Kegiatan', ':', { content: @programKegiatan.nama_subkegiatan, font_style: :bold }],
               ['Indikator', ':', @programKegiatan.indikator_subkegiatan],
               ['Target', ':', "#{@programKegiatan.target_subkegiatan} #{@programKegiatan.satuan}"],
               ['Pagu Anggaran', ':', "Rp. #{number_with_delimiter(@programKegiatan.my_pagu, delimiter: '.')}"]
@@ -54,6 +54,7 @@ prawn_document do |pdf|
         end
       end
       pdf.table(header_anggaran, cell_style: { size: 6 }, width: pdf.bounds.width)
+      pdf.text "Pemilik Sasaran : #{sasaran.user.nama}"
       header_anggaran.clear
     end
   end

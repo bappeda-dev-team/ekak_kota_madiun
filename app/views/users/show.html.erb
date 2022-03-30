@@ -18,18 +18,21 @@
               </div>
               <div class="col-auto ms--2">
                 <h4 class="h6 mb-0">
-                  <a href="#"><%= current_user.nama.capitalize %></a>
+                  Nama : <a href="#"><%= current_user.nama.capitalize %></a>
                 </h4>
                 <div class="d-flex align-items-center">
                   <div class="bg-success dot rounded-circle me-1"></div>
+                  <small>Login :</small>
                   <small><%= current_user.email %></small>
                 </div>
                 <div class="d-flex align-items-center">
                   <div class="bg-secondary dot rounded-circle me-1"></div>
+                  <small>OPD :</small>
                   <small><%= current_user.opd.nil? ? '---' : current_user.opd.nama_opd %></small>
                 </div>
                 <div class="d-flex align-items-center">
                   <div class="bg-info dot rounded-circle me-1"></div>
+                  <small>Peran :</small>
                   <small><%= current_user.roles.pluck :name %></small>
                 </div>
               </div>

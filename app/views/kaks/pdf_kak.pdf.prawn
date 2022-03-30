@@ -4,16 +4,20 @@ prawn_document do |pdf|
   # tabel pertama
   pdf.move_down 20
   tabel_program_kegiatan = [
-    ['Kementrian negara/Lembaga', ':', 'Pemerintah Daerah Kota Madiun'],
-    ['Unit Eselon I/II', ':', 'Badan Perencanaan, Penelitian dan Pengembangan Daerah'],
-    ['Program', ':', @kak.program_kegiatan.nama_program],
-    ['Kegiatan', ':', @kak.program_kegiatan.nama_kegiatan],
-    ['Indikator', ':',@kak.program_kegiatan.indikator_kinerja],
+    ['Kementrian negara/Lembaga', ':', { content: 'Pemerintah Daerah Kota Madiun', font_style: :bold }],
+    ['Unit Eselon I/II', ':', { content: 'Badan Perencanaan, Penelitian dan Pengembangan Daerah', font_style: :bold }],
+    ['Program', ':', { content: @kak.program_kegiatan.nama_program, font_style: :bold }],
+    ['Indikator', ':', @kak.program_kegiatan.indikator_program],
+    ['Target', ':', @kak.program_kegiatan.target_program],
+    ['Satuan', ':', @kak.program_kegiatan.satuan_target_program],
+    ['Kegiatan', ':',  { content: @kak.program_kegiatan.nama_kegiatan, font_style: :bold }],
+    ['Indikator', ':', @kak.program_kegiatan.indikator_kinerja],
     ['Target', ':', @kak.program_kegiatan.target],
     ['Satuan', ':', @kak.program_kegiatan.satuan],
     ['Sub Kegiatan', ':', { content: @kak.program_kegiatan.nama_subkegiatan, font_style: :bold }],
     ['Indikator', ':', @kak.program_kegiatan.indikator_subkegiatan],
-    ['Target', ':', "#{@kak.program_kegiatan.target_subkegiatan} #{@kak.program_kegiatan.satuan_target_subkegiatan}"]
+    ['Target', ':', @kak.program_kegiatan.target_subkegiatan.to_s],
+    ['Satuan', ':', @kak.program_kegiatan.satuan_target_subkegiatan.to_s]
   ]
   pdf.table(tabel_program_kegiatan, cell_style: { size: 8, align: :justify })
   pdf.move_down 20
@@ -23,7 +27,7 @@ prawn_document do |pdf|
   pdf.move_down 5
   @kak.dasar_hukum.each.with_index(1) do |hukum, i|
     pdf.bounding_box([30, pdf.cursor], width: 450) do
-      pdf.text "#{i}. #{hukum.to_s}", align: :justify, size: 10
+      pdf.text "#{i}. #{hukum}", align: :justify, size: 10
     end
   end
   pdf.move_down 5
@@ -47,7 +51,7 @@ prawn_document do |pdf|
   pdf.table(data_penerima_manfaat, cell_style: { size: 8, align: :center })
 
   pdf.move_down 20
-  pdf.text 'C. Strategi Pencapaain Keluaran', size: 14, style: :bold
+  pdf.text 'C. Capaian Keluaran ( Jadwal & Anggaran )', size: 14, style: :bold
   # sasaran 1
   pdf.move_down 10
   @kak.program_kegiatan.sasarans.order(:created_at).each.with_index(1) do |sasaran, index|
@@ -82,9 +86,9 @@ prawn_document do |pdf|
     pdf.move_down 10
   end
   pdf.move_down 10
-  pdf.text "Total waktu yang diperlukan dalama pencapaian output sub kegiatan ini adalah #{@kak.program_kegiatan.my_waktu} bulan", size: 8
-  pdf.move_down 20
-  pdf.text 'D. Pagu Anggaran', size: 14, style: :bold
+  pdf.text "Total waktu yang diperlukan dalama pencapaian output sub kegiatan ini adalah #{@kak.program_kegiatan.my_waktu} bulan",
+           size: 8
   pdf.move_down 10
-  pdf.text "Pagu Anggaran yang diperlukan dalam sub kegiatan ini, adalah sebesar Rp. #{number_with_delimiter(@kak.program_kegiatan.my_pagu, delimiter: '.')}", size: 8
+  pdf.text "Pagu Anggaran yang diperlukan dalam sub kegiatan ini, adalah sebesar Rp. #{number_with_delimiter(@kak.program_kegiatan.my_pagu, delimiter: '.')}",
+           size: 8
 end
