@@ -11,8 +11,11 @@ import "../javascript/sweetalert/sweetalert";
 import '../javascript/datatables/simple-datatables';
 
 import jQuery from "jquery";
-import('../javascript/plugins/plugins')
+import "@popperjs/core";
+import Chartist from "chartist";
+import SmoothScroll from "smooth-scroll";
 import "@fortawesome/fontawesome-free/js/all.js";
+import "select2";
 
 // images
 require.context("../images", true);
