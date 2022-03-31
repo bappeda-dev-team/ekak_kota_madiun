@@ -14,7 +14,6 @@ class ProgramKegiatansController < ApplicationController
 
   def admin_program_kegiatan
     @programKegiatans = ProgramKegiatan.includes([:subkegiatan_tematik]).all
-    render 'index'
   end
 
   def new

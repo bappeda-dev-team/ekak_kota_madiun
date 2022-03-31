@@ -151,4 +151,16 @@ $(function () {
       dropdownParent: $("#form-user")
     });
   });
+  $('#form-programkegiatan-body').on('show', function () {
+    $(".select2-program").select2({
+      width: "100%",
+      theme: "bootstrap-5",
+      dropdownParent: $("#form-programkegiatan"),
+      language: {
+        noResults: function () {
+          return 'OPD Tidak Ditemukan';
+        },
+      },
+    });
+  });
 });

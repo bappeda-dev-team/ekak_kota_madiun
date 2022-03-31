@@ -15,6 +15,13 @@ class FilterController < ApplicationController
     end
   end
 
+  def filter_program
+    @programKegiatans = ProgramKegiatan.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd })
+    respond_to do |format|
+      format.js { render 'program_kegiatans/program_kegiatan_filter' }
+    end
+  end
+
   private
 
   def filter_params
