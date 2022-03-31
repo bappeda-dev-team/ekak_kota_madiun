@@ -21,6 +21,8 @@
         <span class="fs-5 fw-bold mb-0">2. Rencana Aksi dan Anggaran</span>
       </div>
       <div class="col text-end">
+        <%# TODO: Implement this logic to touch renaksi to sync total %>
+        <%= link_to 'Sync Total', renaksi_update_path ,remote: true,  class: "btn btn-sm btn-primary"  %>
         <%= link_to 'Tambah Tahapan', new_sasaran_tahapan_path(sasaran) ,remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'},  class: "btn btn-sm btn-info"  %>
       </div>
     </div>
