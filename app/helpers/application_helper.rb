@@ -30,7 +30,8 @@ module ApplicationHelper
   def master_data_items
     [
       { title: 'Tematik', href: subkegiatan_tematiks_path, identifier: 'tematik', icon: 'fas fa-tags' },
-      { title: 'Program', href: program_kegiatans_path, identifier: 'program_kegiatan', icon: 'fas fa-tasks' },
+      { title: 'Program', href: admin_program_kegiatan_path, identifier: 'admin_program_kegiatan',
+        icon: 'fas fa-tasks' },
       { title: 'Sasaran Kinerja', href: adminsasarans_path, icon: 'fas fa-bullseye',
         identifier: 'adminsasarans' },
       { title: 'Daftar SubKegiatan OPD', href: daftar_subkegiatan_path, icon: 'fas fa-folder-open',

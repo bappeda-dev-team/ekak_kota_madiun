@@ -6,8 +6,9 @@
 import Rails from "@rails/ujs";
 import Turbolinks from "turbolinks";
 import * as ActiveStorage from "@rails/activestorage";
-import "channels";
-import "../sweetalert/sweetalert";
+import "../javascript/channels";
+import "../javascript/sweetalert/sweetalert";
+import '../javascript/datatables/simple-datatables';
 
 import jQuery from "jquery";
 import "@popperjs/core";
@@ -16,21 +17,21 @@ import SmoothScroll from "smooth-scroll";
 import "@fortawesome/fontawesome-free/js/all.js";
 import "select2";
 
-// import "../volt/volt.js";
+// images
+require.context("../images", true);
+
 
 Rails.start();
 Turbolinks.start();
 ActiveStorage.start();
 
-require("trix");
-require("@rails/actiontext");
 
 window.$ = window.jQuery = jQuery;
 window.bootstrap = require('bootstrap');
 window.Chartist = Chartist;
 window.SmoothScroll = SmoothScroll;
 
-require('../volt/volt');
+require('../javascript/volt/volt');
 
 $(function () {
 
@@ -148,6 +149,18 @@ $(function () {
       width: "100%",
       theme: "bootstrap-5",
       dropdownParent: $("#form-user")
+    });
+  });
+  $('#form-programkegiatan-body').on('show', function () {
+    $(".select2-program").select2({
+      width: "100%",
+      theme: "bootstrap-5",
+      dropdownParent: $("#form-programkegiatan"),
+      language: {
+        noResults: function () {
+          return 'OPD Tidak Ditemukan';
+        },
+      },
     });
   });
 });

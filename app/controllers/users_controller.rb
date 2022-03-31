@@ -14,9 +14,7 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def user_admin
-    @users = User.all
-  end
+  def user_admin; end
 
   # GET /users/1/edit
   def edit; end

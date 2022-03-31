@@ -3,26 +3,24 @@ class OpdsController < ApplicationController
   before_action :set_dropdown, only: %i[new edit]
 
   def index
-    @opds = Opd.all
+    @opds = Opd.all.includes([:lembaga])
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @opd = Opd.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @opd = Opd.new(opd_params)
     respond_to do |f|
       if @opd.save
-        f.html { redirect_to@opd, notice: "Opd berhasil ditambahkan." }
+        f.html { redirect_to @opd, notice: 'Opd berhasil ditambahkan.' }
       else
-        f.html { render :new, notice: "Opd gagal ditambahkan" }
+        f.html { render :new, notice: 'Opd gagal ditambahkan' }
       end
     end
   end
@@ -30,9 +28,9 @@ class OpdsController < ApplicationController
   def update
     respond_to do |f|
       if @opd.update(opd_params)
-        f.html { redirect_to @opd, notice: "Opd berhasil diupdate." }
+        f.html { redirect_to @opd, notice: 'Opd berhasil diupdate.' }
       else
-        f.html { render :edit, notice: "Opd gagal diupdate." }
+        f.html { render :edit, notice: 'Opd gagal diupdate.' }
       end
     end
   end
@@ -40,7 +38,7 @@ class OpdsController < ApplicationController
   def destroy
     @opd.destroy
     respond_to do |f|
-      f.html { redirect_to opds_url, notice: "Opd Berhasil Dihapus." }
+      f.html { redirect_to opds_url, notice: 'Opd Berhasil Dihapus.' }
     end
   end
 

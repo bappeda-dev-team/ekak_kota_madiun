@@ -3,7 +3,7 @@ class AnggaranSshesController < ApplicationController
 
   # GET /anggaran_sshes or /anggaran_sshes.json
   def index
-    @anggaran_sshes = AnggaranSsh.all
+    @anggaran_sshes = AnggaranSsh.all.limit(50)
   end
 
   def anggaran_ssh_search
