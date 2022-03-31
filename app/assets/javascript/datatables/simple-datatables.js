@@ -1,5 +1,6 @@
 
 // Simple DataTable
+import 'simple-datatables/src/style.css';
 import { DataTable } from 'simple-datatables';
 const d = document;
 d.addEventListener("DOMContentLoaded", function (event) {

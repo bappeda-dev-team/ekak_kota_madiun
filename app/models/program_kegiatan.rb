@@ -40,10 +40,12 @@ class ProgramKegiatan < ApplicationRecord
   has_many :kaks
   has_many :sasarans
 
+  default_scope { order(created_at: :desc) }
+
   def my_pagu
     sasarans.map(&:total_anggaran).compact.sum
   end
-  
+
   def my_waktu
     sasarans.map(&:waktu_total).compact.sum
   end
