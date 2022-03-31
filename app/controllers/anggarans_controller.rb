@@ -35,7 +35,7 @@ class AnggaransController < ApplicationController
         format.js
         format.html do
           redirect_to sasaran_tahapan_anggarans_path(@sasaran, @tahapan),
-                      notice: 'Anggaran was successfully created.'
+                      notice: 'Sukses Membuat Anggaran.'
         end
         format.json { render :show, status: :created, location: @anggaran }
       else
@@ -47,7 +47,7 @@ class AnggaransController < ApplicationController
 
   # PATCH/PUT /anggarans/1 or /anggarans/1.json
   def update
-  # TODO: UPDATE ON HOW TO UPDATE KODE REKNEING DYNAMICLY
+    # TODO: UPDATE ON HOW TO UPDATE KODE REKNEING DYNAMICLY
     rekening = Rekening.find(anggaran_params[:kode_rek])
     uraian = rekening.jenis_rekening
     kode_rekening = rekening.kode_rekening
@@ -72,7 +72,9 @@ class AnggaransController < ApplicationController
   def destroy
     @anggaran.destroy
     respond_to do |format|
-      format.html { redirect_to sasaran_tahapan_anggarans_path(@sasaran, @tahapan), notice: 'Anggaran was successfully destroyed.' }
+      format.html do
+        redirect_to sasaran_tahapan_anggarans_path(@sasaran, @tahapan), notice: 'Anggaran was successfully destroyed.'
+      end
       format.json { head :no_content }
     end
   end
