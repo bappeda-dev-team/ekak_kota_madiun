@@ -36,12 +36,14 @@
             <td class="text-gray-900" scope="row" style="white-space: initial !important;"><%= prog.nama_program %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.indikator_kinerja %></td>
             <td class="fw-bolder text-gray-500"><%= prog.target %> <%= prog.satuan %></td>
-            <% tematik = SubkegiatanTematik.new %>
-            <td class="fw-bolder text-gray-500">
-              <% if prog.subkegiatan_tematik %>
+            <% if prog.subkegiatan_tematik %>
+              <td class="fw-bolder text-success">
                 <%= prog.subkegiatan_tematik.nama_tematik %>
-              <% else %>
-                <%= link_to 'Tambah Tematik', edit_program_kegiatan_path(prog), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-tematik" } %></td>
+              </td>
+            <% else %>
+              <td class="fw-bolder text-info">
+                <%= link_to 'Tambah Tematik', edit_program_kegiatan_path(prog), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-tematik" } %>
+              </td>
             <% end %>
             <td class="fw-bolder text-gray-500">
               <%= link_to prog, class: "m-3" do %>

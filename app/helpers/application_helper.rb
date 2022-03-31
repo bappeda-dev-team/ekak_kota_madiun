@@ -56,9 +56,9 @@ module ApplicationHelper
 
   def status_icon(status)
     if status
-      content_tag(:i, '', class: 'fas fa-check')
+      content_tag(:i, '', class: 'fas fa-check text-success')
     else
-      content_tag(:i, '', class: 'fas fa-times')
+      content_tag(:i, '', class: 'fas fa-times text-danger')
     end
   end
 
