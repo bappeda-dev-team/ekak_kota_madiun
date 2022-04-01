@@ -31,7 +31,7 @@ class Anggaran < ApplicationRecord
   # TODO: Tes method penting
   # TODO: Single Responsibility Principle, rekening_level violates this
   after_update :update_perhitungan
-  after_save :update_perhitungan
+  # after_save :update_perhitungan
 
   belongs_to :tahapan
   has_many :perhitungans
@@ -82,12 +82,13 @@ class Anggaran < ApplicationRecord
     perhitungans.each(&:hitung_total)
   end
 
-  def update_jumlah_anggaran
-    self.jumlah = if perhitungans.any?
-                    perhitungans.sum(:total)
-                  else
-                    0
-                  end
-    update_column(:jumlah, jumlah)
+  def update_jumlah_anggaran(jumlah_total)
+    hasil_total = jumlah + jumlah_total
+    update_column(:jumlah, hasil_total)
+  end
+
+  def kurangi_jumlah_anggaran(jumlah_total)
+    hasil_total = jumlah - jumlah_total
+    update_column(:jumlah, hasil_total)
   end
 end

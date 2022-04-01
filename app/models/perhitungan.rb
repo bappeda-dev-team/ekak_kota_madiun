@@ -22,7 +22,7 @@ class Perhitungan < ApplicationRecord
   # before_update :hitung_total
   after_save :update_jumlah_anggaran
   # after_update :update_jumlah_anggaran
-  # after_destroy :update_jumlah_anggaran
+  after_destroy :update_jumlah_anggaran_destroy
 
   belongs_to :anggaran
   has_many :koefisiens
@@ -73,8 +73,16 @@ class Perhitungan < ApplicationRecord
   end
 
   def update_jumlah_anggaran
-    update_column(:total, total_harga)
-    anggaran.update_jumlah_anggaran
+    jumlah_total = total_harga
+
+    update_column(:total, jumlah_total)
+
+    anggaran.update_jumlah_anggaran(jumlah_total)
+  end
+
+  def update_jumlah_anggaran_destroy
+    jumlah_total = total_harga
+    anggaran.kurangi_jumlah_anggaran(jumlah_total)
   end
 
   def list_koefisien

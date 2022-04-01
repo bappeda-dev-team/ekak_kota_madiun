@@ -23,7 +23,6 @@ class PerhitungansController < ApplicationController
   def create
     sleep 1
     @perhitungan = @anggaran.perhitungans.build(perhitungan_params)
-    awal = @anggaran.grand_parent || @anggaran
     respond_to do |format|
       if @perhitungan.save
         format.js
@@ -41,7 +40,6 @@ class PerhitungansController < ApplicationController
 
   # PATCH/PUT /perhitungans/1 or /perhitungans/1.json
   def update
-    awal = @anggaran.grand_parent || @anggaran
     respond_to do |format|
       if @perhitungan.update(perhitungan_params)
         format.html do
@@ -59,7 +57,6 @@ class PerhitungansController < ApplicationController
   # DELETE /perhitungans/1 or /perhitungans/1.json
   def destroy
     @perhitungan.destroy
-    awal = @anggaran.grand_parent || @anggaran
     respond_to do |format|
       format.html do
         redirect_to sasaran_tahapan_anggarans_path(@anggaran.tahapan.sasaran, @anggaran.tahapan),
