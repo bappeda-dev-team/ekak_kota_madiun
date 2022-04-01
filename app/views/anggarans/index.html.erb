@@ -59,8 +59,7 @@
               <td class="uang text-end"></td>
             </tr>
             <% if anggaran.perhitungans.any? %>
-              <% anggaran.perhitungans.order(:created_at).each do |hitung| %>
-                <% pajak = hitung.total * anggaran.pajak.potongan %>
+              <% anggaran.perhitungans.includes([:koefisiens]).order(:created_at).each do |hitung| %>
                 <tr class="rincian-anggaran">
                   <td><%= link_to "Hapus Anggaran", anggaran_perhitungan_path(anggaran, hitung), method: :delete, data: { confirm_swal: "Hapus Anggaran #{hitung.deskripsi} ?" }, class: "text-danger" %></td>
                   <td><%= uraian_kode(hitung.deskripsi) %>

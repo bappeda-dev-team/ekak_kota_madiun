@@ -30,6 +30,9 @@
 class Anggaran < ApplicationRecord
   # TODO: Tes method penting
   # TODO: Single Responsibility Principle, rekening_level violates this
+  after_update :update_perhitungan
+  after_save :update_perhitungan
+
   belongs_to :tahapan
   has_many :perhitungans
   # child untuk memanggil id isian bawahnya
@@ -42,8 +45,6 @@ class Anggaran < ApplicationRecord
   scope :pangkal_anggaran, -> { where(level: 5) }
 
   validates :uraian, presence: true
-
-  after_commit :update_perhitungan
 
   # get all anggaran with koefisiens
   def with_koefisiens
@@ -78,6 +79,15 @@ class Anggaran < ApplicationRecord
   end
 
   def update_perhitungan
-    perhitungans.update_all(updated_at: Time.now)
+    perhitungans.each(&:hitung_total)
+  end
+
+  def update_jumlah_anggaran
+    self.jumlah = if perhitungans.any?
+                    perhitungans.sum(:total)
+                  else
+                    0
+                  end
+    update_column(:jumlah, jumlah)
   end
 end

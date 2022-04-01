@@ -62,8 +62,8 @@ class PerhitungansController < ApplicationController
     awal = @anggaran.grand_parent || @anggaran
     respond_to do |format|
       format.html do
-        redirect_to sasaran_tahapan_anggaran_path(@anggaran.tahapan.sasaran, @anggaran.tahapan),
-                    notice: 'Perhitungan was successfully destroyed.'
+        redirect_to sasaran_tahapan_anggarans_path(@anggaran.tahapan.sasaran, @anggaran.tahapan),
+                    notice: 'Rincian Anggaran dihapus'
       end
       format.json { head :no_content }
     end
