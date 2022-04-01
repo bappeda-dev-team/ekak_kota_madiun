@@ -35,6 +35,12 @@ class Aksi < ApplicationRecord
   validates :target, presence: true, numericality: { only_integer: true }
   # validates :realisasi, numericality: { only_integer: true }
 
+  def sync_total
+    run_callbacks :update do
+      puts '- save'
+    end
+  end
+
   def update_total_target_bulan
     tahapan = self.tahapan
     tahapan.jumlah_target = tahapan.aksis.sum :target

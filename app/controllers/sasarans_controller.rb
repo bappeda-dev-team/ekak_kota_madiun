@@ -1,6 +1,6 @@
 class SasaransController < ApplicationController
   before_action :get_user, only: %i[index new create]
-  before_action :set_sasaran, only: %i[show edit update destroy update_program_kegiatan]
+  before_action :set_sasaran, only: %i[show edit update destroy update_program_kegiatan renaksi_update]
   before_action :set_dropdown, only: %i[new edit]
 
   # GET /sasarans or /sasarans.json
@@ -23,6 +23,10 @@ class SasaransController < ApplicationController
     param_id = params[:id_sasaran]
     sasaran = Sasaran.find(param_id)
     sasaran&.update(program_kegiatan_id: nil)
+  end
+
+  def renaksi_update
+    @sasaran.sync_total_renaksi
   end
 
   # GET /sasarans/new
