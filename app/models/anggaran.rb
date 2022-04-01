@@ -30,6 +30,7 @@
 class Anggaran < ApplicationRecord
   # TODO: Tes method penting
   # TODO: Single Responsibility Principle, rekening_level violates this
+  before_update :set_to_zero
   after_update :update_perhitungan
   # after_save :update_perhitungan
 
@@ -78,11 +79,21 @@ class Anggaran < ApplicationRecord
     pajak.potongan * 100
   end
 
+  def set_to_zero
+    update_column(:jumlah, 0)
+  end
+
+  def total_harga
+    perhitungans.each(&:total_harga)
+  end
+
   def update_perhitungan
-    perhitungans.each(&:hitung_total)
+    harga = total_harga.map(&:total).reduce(&:+)
+    update_jumlah_anggaran(harga)
   end
 
   def update_jumlah_anggaran(jumlah_total)
+    jumlah = 0 if jumlah.nil?
     hasil_total = jumlah + jumlah_total
     update_column(:jumlah, hasil_total)
   end
