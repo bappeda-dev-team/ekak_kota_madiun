@@ -10,6 +10,11 @@
     <li class="breadcrumb-item active" aria-current="page">Anggaran</li>
   </ol>
 </nav>
+<% flash.each do |type, msg| %>
+  <div class="alert alert-success">
+    <%= msg %>
+  </div>
+<% end %>
 <div class="card border-2 shadow mb-1">
   <div class="card-header">
     <div class="row align-items-center">

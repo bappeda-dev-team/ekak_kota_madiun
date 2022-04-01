@@ -39,7 +39,7 @@ class SasaransController < ApplicationController
   # POST /sasarans or /sasarans.json
   def create
     @sasaran = @user.sasarans.build(sasaran_params)
-
+    @sasaran.id_rencana = Sasaran.last.id
     respond_to do |format|
       if @sasaran.save
         format.html { redirect_to user_sasaran_path(@user, @sasaran), notice: 'Sasaran was successfully created.' }

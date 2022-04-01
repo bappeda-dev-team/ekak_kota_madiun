@@ -32,9 +32,9 @@
 
 class ProgramKegiatan < ApplicationRecord
   validates :nama_program, presence: true
-  validates :indikator_kinerja, presence: true
-  validates :target, presence: true
-  validates :satuan, presence: true
+  # validates :indikator_kinerja, presence: true
+  # validates :target, presence: true
+  # validates :satuan, presence: true
   belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_opd'
   belongs_to :subkegiatan_tematik, optional: true
   has_many :kaks

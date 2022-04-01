@@ -83,7 +83,7 @@ class Perhitungan < ApplicationRecord
       level_0.save
     end
   end
-  
+
   def list_koefisien
     koefisiens.map { |m| "#{m.volume} #{m.satuan_volume}" }.join(' x ')
   end
