@@ -8,8 +8,6 @@ class TahapansController < ApplicationController
     @tahapans = @sasaran.tahapans
   end
 
-  def renaksi_update; end
-
   # GET /tahapans/1 or /tahapans/1.json
   def show; end
 

@@ -32,6 +32,10 @@ class Tahapan < ApplicationRecord
 
   default_scope { order(id_rencana_aksi: :asc) }
 
+  def sync_total_renaksi
+    aksis.each(&:sync_total)
+  end
+
   def find_target_bulan(bulan)
     aksis.find_by_bulan(bulan).target
   rescue NoMethodError

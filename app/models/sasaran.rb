@@ -107,4 +107,8 @@ class Sasaran < ApplicationRecord
   def my_usulan
     usulans.map(&:usulanable)
   end
+
+  def sync_total_renaksi
+    tahapans.each(&:sync_total_renaksi)
+  end
 end

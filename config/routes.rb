@@ -79,9 +79,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   #  Sasaran
   get '/daftar_subkegiatan', to: 'sasarans#daftar_subkegiatan'
   get '/pdf_daftar_subkegiatan', to: 'sasarans#pdf_daftar_subkegiatan'
+  post '/renaksi_update', to: 'sasarans#renaksi_update'
 
   # Tahapan
-  get '/renaksi_update', to: 'tahapans#renaksi_update'
   # Anggaran
   get '/anggaran_ssh_search', to: 'anggaran_sshes#anggaran_ssh_search'
   get '/anggaran_spesifikasi_search', to: 'anggaran_sshes#anggaran_spesifikasi_search'
