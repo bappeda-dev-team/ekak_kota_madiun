@@ -48,11 +48,10 @@ class Perhitungan < ApplicationRecord
       pajak_anggaran = anggaran.pajak.potongan
       total_plus_pajak = total_harga * pajak_anggaran
       total_akhir = total_harga + total_plus_pajak.to_i
-      puts 'end here'
-      update(total: total_akhir)
+      update_column(:total, total_akhir)
     else
       total_akhir = 0
-      update(total: total_akhir)
+      update_column(:total, total_akhir)
     end
   end
 
@@ -73,16 +72,19 @@ class Perhitungan < ApplicationRecord
   end
 
   def update_jumlah_anggaran
-    jumlah_total = total_harga
-
-    update_column(:total, jumlah_total)
-
-    anggaran.update_jumlah_anggaran(jumlah_total)
+    # perhitungan_harga_total = total_harga
+    # jumlah_total = perhitungan_harga_total
+    # perhitungan_hasil_total = jumlah_total + anggaran.jumlah
+    # # update_column(:total, jumlah_total)
+    anggaran.update_perhitungan
+    # anggaran.update_jumlah_anggaran(perhitungan_hasil_total)
   end
 
   def update_jumlah_anggaran_destroy
-    jumlah_total = total_harga
-    anggaran.kurangi_jumlah_anggaran(jumlah_total)
+    # jumlah_total = total_harga
+    # hasil_total = anggaran.jumlah - jumlah_total
+    # anggaran.kurangi_jumlah_anggaran(hasil_total)
+    anggaran.update_perhitungan
   end
 
   def list_koefisien

@@ -30,12 +30,12 @@
 class Anggaran < ApplicationRecord
   # TODO: Tes method penting
   # TODO: Single Responsibility Principle, rekening_level violates this
-  before_update :set_to_zero
+  after_initialize :set_default_values
   after_update :update_perhitungan
   # after_save :update_perhitungan
 
   belongs_to :tahapan
-  has_many :perhitungans
+  has_many :perhitungans, dependent: :destroy
   # child untuk memanggil id isian bawahnya
   has_many :childs, class_name: 'Anggaran', foreign_key: 'parent_id'
   belongs_to :parent, class_name: 'Anggaran', optional: true
@@ -46,6 +46,10 @@ class Anggaran < ApplicationRecord
   scope :pangkal_anggaran, -> { where(level: 5) }
 
   validates :uraian, presence: true
+
+  def set_default_values
+    self.jumlah = 0 if new_record?
+  end
 
   # get all anggaran with koefisiens
   def with_koefisiens
@@ -79,27 +83,20 @@ class Anggaran < ApplicationRecord
     pajak.potongan * 100
   end
 
-  def set_to_zero
-    update_column(:jumlah, 0)
-  end
-
-  def total_harga
-    perhitungans.each(&:total_harga)
-  end
-
   def update_perhitungan
-    harga = total_harga.map(&:total).reduce(&:+)
-    update_jumlah_anggaran(harga)
+    perhitungan_semua = perhitungans.each(&:hitung_total)
+    hasil_perhitungan = perhitungan_semua.map(&:total).sum
+    puts ' stop '
+    update_column(:jumlah, hasil_perhitungan)
   end
 
   def update_jumlah_anggaran(jumlah_total)
-    jumlah = 0 if jumlah.nil?
-    hasil_total = jumlah + jumlah_total
+    hasil_total = jumlah_total
     update_column(:jumlah, hasil_total)
   end
 
   def kurangi_jumlah_anggaran(jumlah_total)
-    hasil_total = jumlah - jumlah_total
+    hasil_total = jumlah_total
     update_column(:jumlah, hasil_total)
   end
 end
