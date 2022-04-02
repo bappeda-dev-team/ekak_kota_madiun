@@ -31,6 +31,7 @@
     <p>Rincian Anggaran</p>
     <div class="anggaran">
       <%= link_to 'Tambah Anggaran', new_sasaran_tahapan_anggaran_path(@sasaran, @tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 mb-3 text-success animate-up-2"   %>
+      <%= link_to 'Review Anggaran', new_sasaran_tahapan_anggaran_path(@sasaran, @tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 mb-3 text-secondary animate-up-2"   %>
       <table id="detail-anggaran">
         <thead>
           <tr>
@@ -85,7 +86,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="6" style="text-align:right">Jumlah Anggaran Sub Kegiatan :</td>
+            <td colspan="6" style="text-align:right">Jumlah Anggaran Tahapan :</td>
             <td class="text-end">Rp. <%= number_with_delimiter(@anggarans.sum(:jumlah), :delimiter => '.') %></td>
           </tr>
         </tfoot>
