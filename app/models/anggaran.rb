@@ -30,8 +30,11 @@
 class Anggaran < ApplicationRecord
   # TODO: Tes method penting
   # TODO: Single Responsibility Principle, rekening_level violates this
+  after_initialize :set_default_values
+  after_update :update_perhitungan
+
   belongs_to :tahapan
-  has_many :perhitungans
+  has_many :perhitungans, dependent: :destroy
   # child untuk memanggil id isian bawahnya
   has_many :childs, class_name: 'Anggaran', foreign_key: 'parent_id'
   belongs_to :parent, class_name: 'Anggaran', optional: true
@@ -43,7 +46,9 @@ class Anggaran < ApplicationRecord
 
   validates :uraian, presence: true
 
-  after_commit :update_perhitungan
+  def set_default_values
+    self.jumlah = 0 if new_record?
+  end
 
   # get all anggaran with koefisiens
   def with_koefisiens
@@ -78,6 +83,8 @@ class Anggaran < ApplicationRecord
   end
 
   def update_perhitungan
-    perhitungans.update_all(updated_at: Time.now)
+    perhitungan_semua = perhitungans.each(&:hitung_total)
+    hasil_perhitungan = perhitungan_semua.map(&:total).sum
+    update_column(:jumlah, hasil_perhitungan)
   end
 end

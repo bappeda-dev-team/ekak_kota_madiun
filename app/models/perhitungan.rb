@@ -18,11 +18,9 @@
 #  index_perhitungans_on_anggaran_id  (anggaran_id)
 #
 class Perhitungan < ApplicationRecord
-  before_save :hitung_total
-  before_update :hitung_total
   after_save :update_jumlah_anggaran
   after_update :update_jumlah_anggaran
-  after_destroy :update_jumlah_anggaran
+  after_destroy :update_jumlah_anggaran_destroy
 
   belongs_to :anggaran
   has_many :koefisiens
@@ -33,55 +31,34 @@ class Perhitungan < ApplicationRecord
   validates :harga, presence: true, numericality: true
 
   def hitung_total
-    # cek koefisien di perhitungan
+    unless destroyed?
+      total_akhir = kalkulasi_harga_total
+      update_column(:total, total_akhir)
+    end
+  end
+
+  def kalkulasi_harga_total
     if koefisiens.any?
-      # array total volume
-      # dan meloop untuk insert semua volume
       total_volume = []
       koefisiens.map do |k|
         total_volume << k.volume
       end
-      # hitung volume ( seluruh volume dikalikan )
-      # pajak mengambil data dari anggaran diatasnya
       volume = total_volume.reduce(:*)
-      total = volume * harga
-      pajak = total * anggaran.pajak.potongan
-      self.total = total + pajak.to_i
+      total_harga = volume * harga
+      pajak_anggaran = anggaran.pajak.potongan
+      total_plus_pajak = total_harga * pajak_anggaran
+      total_harga + total_plus_pajak.to_i
     else
-      self.total = 0
+      0
     end
   end
 
   def update_jumlah_anggaran
-    anggaran = self.anggaran
-    if anggaran.perhitungans.any?
-      anggaran.jumlah = anggaran.perhitungans.sum(:total)
-      anggaran.save
-    else
-      anggaran.jumlah = 0
-      anggaran.save
-    end
-    if anggaran.childs.any?
-      level_4 = anggaran.parent
-      level_4.jumlah = level_4.childs.sum(:jumlah)
-      level_4.save
+    anggaran.update_perhitungan
+  end
 
-      level_3 = level_4.parent
-      level_3.jumlah = level_3.childs.sum(:jumlah)
-      level_3.save
-
-      level_2 = level_3.parent
-      level_2.jumlah = level_2.childs.sum(:jumlah)
-      level_2.save
-
-      level_1 = level_2.parent
-      level_1.jumlah = level_1.childs.sum(:jumlah)
-      level_1.save
-
-      level_0 = level_1.parent
-      level_0.jumlah = level_0.childs.sum(:jumlah)
-      level_0.save
-    end
+  def update_jumlah_anggaran_destroy
+    anggaran.update_perhitungan
   end
 
   def list_koefisien

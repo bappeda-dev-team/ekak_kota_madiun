@@ -51,16 +51,19 @@
             <tr class="level-0">
               <td><%= rekening_anggaran(anggaran.kode_rek) %></td>
               <td colspan="5" class="mx-auto">
-                <%= anggaran.uraian %>
-                <%= link_to 'Tambah Rincian', new_anggaran_perhitungan_path(anggaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 text-success animate-up-2" %>
-                <%= link_to "Edit", edit_sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: 'text-info'  %>
-                <%= link_to "Hapus", sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran), method: :delete, data: {confirm_swal: "Hapus Anggaran #{anggaran.uraian}"}, class: "text-danger"  %>
+                <div class="row">
+                  <div class="text-wrap inline col"><%= anggaran.uraian %></div>
+                  <div class="text-end col-3">
+                    <%= link_to 'Tambah Rincian', new_anggaran_perhitungan_path(anggaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "text-success animate-up-2" %>
+                    <%= link_to "Edit", edit_sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: 'text-info'  %>
+                    <%= link_to "Hapus", sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran), method: :delete, data: {confirm_swal: "Hapus Anggaran #{anggaran.uraian}"}, class: "text-danger"  %>
+                  </div>
+                </div>
               </td>
-              <td class="uang text-end"></td>
+              <td class="uang text-end">Rp. <%= number_with_delimiter(anggaran.jumlah, delimiter: '.') %></td>
             </tr>
             <% if anggaran.perhitungans.any? %>
-              <% anggaran.perhitungans.order(:created_at).each do |hitung| %>
-                <% pajak = hitung.total * anggaran.pajak.potongan %>
+              <% anggaran.perhitungans.includes([:koefisiens]).order(:created_at).each do |hitung| %>
                 <tr class="rincian-anggaran">
                   <td><%= link_to "Hapus Anggaran", anggaran_perhitungan_path(anggaran, hitung), method: :delete, data: { confirm_swal: "Hapus Anggaran #{hitung.deskripsi} ?" }, class: "text-danger" %></td>
                   <td><%= uraian_kode(hitung.deskripsi) %>
