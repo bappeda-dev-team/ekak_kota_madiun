@@ -32,7 +32,6 @@ class Anggaran < ApplicationRecord
   # TODO: Single Responsibility Principle, rekening_level violates this
   after_initialize :set_default_values
   after_update :update_perhitungan
-  # after_save :update_perhitungan
 
   belongs_to :tahapan
   has_many :perhitungans, dependent: :destroy
@@ -86,17 +85,6 @@ class Anggaran < ApplicationRecord
   def update_perhitungan
     perhitungan_semua = perhitungans.each(&:hitung_total)
     hasil_perhitungan = perhitungan_semua.map(&:total).sum
-    puts ' stop '
     update_column(:jumlah, hasil_perhitungan)
-  end
-
-  def update_jumlah_anggaran(jumlah_total)
-    hasil_total = jumlah_total
-    update_column(:jumlah, hasil_total)
-  end
-
-  def kurangi_jumlah_anggaran(jumlah_total)
-    hasil_total = jumlah_total
-    update_column(:jumlah, hasil_total)
   end
 end

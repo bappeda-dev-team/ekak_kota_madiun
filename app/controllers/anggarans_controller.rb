@@ -4,7 +4,7 @@ class AnggaransController < ApplicationController
 
   # GET /anggarans or /anggarans.json
   def index
-    @anggarans = @tahapan.anggarans.all
+    @anggarans = @tahapan.anggarans.includes(%i[perhitungans pajak]).all
   end
 
   # GET /anggarans/1 or /anggarans/1.json
