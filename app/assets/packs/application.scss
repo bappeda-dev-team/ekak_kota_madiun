@@ -12,9 +12,11 @@ $fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
 
 @import "../stylesheets/actiontext.scss";
 @import "../stylesheets/anggarans.scss";
+
 .field {
   @extend .my-3;
 }
+
 .form-label {
   @extend .form-label;
   @extend .my-2;
@@ -42,6 +44,10 @@ form {
 
 td.wrap-text {
   white-space: normal;
+}
+
+.higlighted {
+  background-color: #e9e504;
 }
 
 // .table td {

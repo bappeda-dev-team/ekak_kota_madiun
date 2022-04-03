@@ -5,6 +5,7 @@
         <i class="fas fa-home"></i>
       <% end %>
     </li>
+    <%# DANGER: link_to untuk ke Sasaran Kinerja dibawah salah, karena akan mengarah ke 'user' sekarang,  %>
     <li class="breadcrumb-item" aria-current="page"><%= link_to 'Sasaran Kinerja', user_sasarans_path(current_user.id) %></li>
     <li class="breadcrumb-item" aria-current="page"><%= link_to @sasaran.sasaran_kinerja, sasaran_path(@tahapan.sasaran) %></li>
     <li class="breadcrumb-item active" aria-current="page">Anggaran</li>
@@ -30,8 +31,7 @@
   <div class="card-body">
     <p>Rincian Anggaran</p>
     <div class="anggaran">
-      <%= link_to 'Tambah Anggaran', new_sasaran_tahapan_anggaran_path(@sasaran, @tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 mb-3 text-success animate-up-2"   %>
-      <%= link_to 'Review Anggaran', new_sasaran_tahapan_anggaran_path(@sasaran, @tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 mb-3 text-secondary animate-up-2"   %>
+      <%= link_to 'Tambah Anggaran', new_sasaran_tahapan_anggaran_path(@sasaran, @tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 mb-3 text-success animate-up-2" %>
       <table id="detail-anggaran">
         <thead>
           <tr>
@@ -49,12 +49,13 @@
         </thead>
         <tbody>
           <% @anggarans.order(:created_at).each do |anggaran| %>
-            <tr class="level-0">
+            <tr class="level-0" id="anggaran-<%= anggaran.id %>">
               <td><%= rekening_anggaran(anggaran.kode_rek) %></td>
               <td colspan="5" class="mx-auto">
                 <div class="row">
                   <div class="text-wrap inline col"><%= anggaran.uraian %></div>
-                  <div class="text-end col-3">
+                  <div class="text-end col-5">
+                    <%= link_to 'Review Anggaran', new_comment_path(anggaran_id: anggaran.id, user_id: current_user.id ),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-comment" }, class: "ml-5 mb-3 text-secondary animate-up-2" %>
                     <%= link_to 'Tambah Rincian', new_anggaran_perhitungan_path(anggaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "text-success animate-up-2" %>
                     <%= link_to "Edit", edit_sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: 'text-info'  %>
                     <%= link_to "Hapus", sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran), method: :delete, data: {confirm_swal: "Hapus Anggaran #{anggaran.uraian}"}, class: "text-danger"  %>
@@ -94,6 +95,17 @@
     </div>
   </div>
 </div>
+<p>
+  <h3>Tambah Review</h3>
+  <hr>
+  <strong>Review: </strong>
+  <ul>
+    <% @anggarans.order(created_at: :desc).each do |anggComm| %>
+      <%= render anggComm.comments %>
+    <% end %>
+  </ul>
+</p>
 <!-- SECTION - Table Anggaran -->
 <!-- !SECTION - End Table Anggaran -->
 <%= render 'modal_perhitungans' %>
+<%= render 'comments/modal' %>

@@ -39,6 +39,7 @@ class Anggaran < ApplicationRecord
   has_many :childs, class_name: 'Anggaran', foreign_key: 'parent_id'
   belongs_to :parent, class_name: 'Anggaran', optional: true
   belongs_to :pajak
+  has_many :comments, dependent: :destroy
 
   scope :tanpa_pajak, -> { where(pajak_id: nil) }
   scope :ujung_anggaran, -> { where(level: 0) }
