@@ -17,7 +17,7 @@
             <h2 class="fs-5 fw-bold mb-0">Usulan Inisiatif</h2>
           </div>
           <div class="col text-end">
-            <%= link_to "Tambah Usulan", new_inovasi_path, class: "btn btn-sm btn-info" %>
+            <%= link_to "Tambah Usulan", new_inovasi_path, remote: true, class: "btn btn-sm btn-info" %>
           </div>
         </div>
       </div>
@@ -28,7 +28,7 @@
               <tr>
                 <th class="border-bottom" scope="col">No.</th>
                 <th class="border-bottom" scope="col">Usulan</th>
-                <th class="border-bottom" scope="col">Alamat</th>
+                <th class="border-bottom" scope="col">Manfaat</th>
                 <th class="border-bottom" scope="col">Tambah User</th>
                 <th class="border-bottom text-center" scope="col">Action</th>
               </tr>
@@ -38,7 +38,7 @@
                 <tr>
                   <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
                   <td class="fw-bolder text-gray-500"><%= truncate(inovasi.usulan, length: 30, separator: '...') %></td>
-                  <td class="fw-bolder text-gray-500"><%= truncate(inovasi.alamat, length: 25, separator: '...') %></td>
+                  <td class="fw-bolder text-gray-500"><%= truncate(inovasi.manfaat, length: 25, separator: '...') %></td>
                   <td class="fw-bolder text-gray-500"><%= link_to 'Pilih User', '#' %></td>
                   <td class="fw-bolder text-gray-500 text-center">
                     <%= link_to inovasi do %>
