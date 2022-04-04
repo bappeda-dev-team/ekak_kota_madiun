@@ -22,13 +22,16 @@
       ]
     },
     {
-      "name": "Debug Attach",
+      "name": "Rails Rdebug",
       "type": "Ruby",
-      "request": "attach",
+      "request": "launch",
       "cwd": "${workspaceRoot}",
-      "remoteWorkspaceRoot": "${workspaceRoot}",
-      "remoteHost": "SERVER_IP_ADDRESS",
-      "remotePort": "SERVER_LISTENING_PORT"
+      "program": "${workspaceRoot}/bin/rails",
+      "pathToRDebugIDE": "~/.rvm/gems/ruby-3.0.1/bin/rdebug-ide",
+      "showDebuggerOutput": true,
+      "args": [
+        "server"
+      ]
     }
   ]
 }

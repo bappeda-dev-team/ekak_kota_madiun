@@ -1,0 +1,15 @@
+<%= form_with model: comment, local: false do |form| %>
+  <div class="field">
+    <%= form.hidden_field :anggaran_id, value: anggaran_id, readonly: true  %>
+    <%= form.hidden_field :user_id, value: user_id, readonly: true  %>
+  </div>
+  <div class="field">
+    <%= form.label 'Judul Review', class: "form-label" %>
+    <%= form.text_field :head, {class: "form-control", required: true} %>
+  </div>
+  <div class="field">
+    <%= form.label 'Review', class: "form-label" %>
+    <%= form.text_area :body, {class: "form-control", required: true} %>
+  </div>
+  <%= form.submit 'Review' %>
+<% end %>
