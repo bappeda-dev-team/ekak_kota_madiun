@@ -1,0 +1,8 @@
+$('#form-comment').modal('hide')
+Swal.fire({
+  title: 'Review Berhasil Ditambahkan',
+  icon: 'success',
+  confirmButtonText: 'Yes',
+}).then(() => {
+  Turbolinks.visit(window.location, { action: "replace" })
+})
