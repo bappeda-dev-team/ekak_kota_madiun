@@ -1,13 +1,10 @@
 <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
   <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
     <li class="breadcrumb-item">
-      <%= link_to root_path do %>
-        <i class="fas fa-home"></i>
-      <% end %>
+      <i class="fas fa-home"></i>
     </li>
-    <%# DANGER: link_to untuk ke Sasaran Kinerja dibawah salah, karena akan mengarah ke 'user' sekarang,  %>
-    <li class="breadcrumb-item" aria-current="page"><%= link_to 'Sasaran Kinerja', user_sasarans_path(current_user.id) %></li>
-    <li class="breadcrumb-item" aria-current="page"><%= link_to @sasaran.sasaran_kinerja, sasaran_path(@tahapan.sasaran) %></li>
+    <li class="breadcrumb-item" aria-current="page"><%= 'Sasaran Kinerja' %></li>
+    <li class="breadcrumb-item" aria-current="page"><%=  @tahapan.tahapan_kerja  %></li>
     <li class="breadcrumb-item active" aria-current="page">Anggaran</li>
   </ol>
 </nav>
@@ -19,7 +16,7 @@
 <div class="card border-2 shadow mb-1">
   <div class="card-header">
     <div class="row align-items-center">
-      <p><%= link_to sasaran_path(@tahapan.sasaran) do %>
+      <p><%= link_to sasaran_path(@sasaran) do %>
           <span class="fas fa-arrow-left"></span>
           <span>Kembali</span>
         <% end %>
@@ -49,7 +46,7 @@
         </thead>
         <tbody>
           <% @anggarans.order(:created_at).each do |anggaran| %>
-            <tr class="level-0" id="anggaran-<%= anggaran.id %>">
+            <tr class="level-0 <%= 'higlighted' if anggaran.comments.any? %>">
               <td><%= rekening_anggaran(anggaran.kode_rek) %></td>
               <td colspan="5" class="mx-auto">
                 <div class="row">
@@ -95,16 +92,18 @@
     </div>
   </div>
 </div>
-<p>
-  <h3>Tambah Review</h3>
-  <hr>
-  <strong>Review: </strong>
-  <ul>
-    <% @anggarans.order(created_at: :desc).each do |anggComm| %>
-      <%= render anggComm.comments %>
-    <% end %>
-  </ul>
-</p>
+<div class="card">
+  <div class="card-header d-flex align-items-center">
+    <h2 class="fs-5 fw-bold mb-0">Review</h2>
+  </div>
+  <div class="card-body">
+    <div class="list-group list-group-flush list-group-timeline">
+      <% @anggarans.includes([:comments]).order(created_at: :desc).each do |anggComm| %>
+        <%= render anggComm.comments %>
+      <% end %>
+    </div>
+  </div>
+</div>
 <!-- SECTION - Table Anggaran -->
 <!-- !SECTION - End Table Anggaran -->
 <%= render 'modal_perhitungans' %>
