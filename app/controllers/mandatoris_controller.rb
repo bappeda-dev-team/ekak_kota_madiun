@@ -23,6 +23,7 @@ class MandatorisController < ApplicationController
 
     respond_to do |format|
       if @mandatori.save
+        format.js
         format.html { redirect_to @mandatori, notice: 'Mandatori was successfully created.' }
         format.json { render :show, status: :created, location: @mandatori }
       else
@@ -36,6 +37,7 @@ class MandatorisController < ApplicationController
   def update
     respond_to do |format|
       if @mandatori.update(mandatori_params)
+        format.js
         format.html { redirect_to @mandatori, notice: 'Mandatori was successfully updated.' }
         format.json { render :show, status: :ok, location: @mandatori }
       else
