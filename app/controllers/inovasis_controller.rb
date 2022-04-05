@@ -23,6 +23,7 @@ class InovasisController < ApplicationController
 
     respond_to do |format|
       if @inovasi.save
+        format.js
         format.html { redirect_to @inovasi, notice: 'Inovasi was successfully created.' }
         format.json { render :show, status: :created, location: @inovasi }
       else
