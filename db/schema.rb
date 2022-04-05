@@ -272,17 +272,6 @@ ActiveRecord::Schema.define(version: 2022_04_02_133813) do
     t.index ["anggaran_id"], name: "index_perhitungans_on_anggaran_id"
   end
 
-  create_table "pks", force: :cascade do |t|
-    t.string "sasaran"
-    t.string "indikator_kinerja"
-    t.string "target"
-    t.string "satuan"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_pks_on_user_id"
-  end
-
   create_table "pokpirs", force: :cascade do |t|
     t.string "usulan"
     t.string "alamat"
@@ -365,16 +354,6 @@ ActiveRecord::Schema.define(version: 2022_04_02_133813) do
     t.index ["program_kegiatan_id"], name: "index_sasarans_on_program_kegiatan_id"
   end
 
-  create_table "search_entries", force: :cascade do |t|
-    t.string "title"
-    t.text "body"
-    t.string "searchable_type", null: false
-    t.bigint "searchable_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["searchable_type", "searchable_id"], name: "index_search_entries_on_searchable"
-  end
-
   create_table "strategi_keluarans", force: :cascade do |t|
     t.text "metode"
     t.text "tahapan"
@@ -453,7 +432,6 @@ ActiveRecord::Schema.define(version: 2022_04_02_133813) do
   add_foreign_key "comments", "anggarans"
   add_foreign_key "comments", "users"
   add_foreign_key "kesenjangans", "rincians"
-  add_foreign_key "pks", "users"
   add_foreign_key "program_kegiatans", "opds", column: "kode_opd", primary_key: "kode_opd"
   add_foreign_key "program_kegiatans", "subkegiatan_tematiks"
   add_foreign_key "rincians", "sasarans"
@@ -488,34 +466,6 @@ ActiveRecord::Schema.define(version: 2022_04_02_133813) do
       inovasis.id AS searchable_id
      FROM inovasis
     WHERE (inovasis.is_active = true);
-  SQL
-  create_view "views_all_anggarans", sql_definition: <<-SQL
-      SELECT anggaran_sshes.uraian_barang,
-      anggaran_sshes.kode_barang,
-      anggaran_sshes.spesifikasi,
-      anggaran_sshes.satuan,
-      anggaran_sshes.harga_satuan,
-      'AnggaranSsh'::text AS searchable_type,
-      anggaran_sshes.id AS searchable_id
-     FROM anggaran_sshes
-  UNION
-   SELECT anggaran_sbus.uraian_barang,
-      anggaran_sbus.kode_barang,
-      anggaran_sbus.spesifikasi,
-      anggaran_sbus.satuan,
-      anggaran_sbus.harga_satuan,
-      'AnggaranSbu'::text AS searchable_type,
-      anggaran_sbus.id AS searchable_id
-     FROM anggaran_sbus
-  UNION
-   SELECT anggaran_hspks.uraian_barang,
-      anggaran_hspks.kode_barang,
-      anggaran_hspks.spesifikasi,
-      anggaran_hspks.satuan,
-      anggaran_hspks.harga_satuan,
-      'AnggaranHspk'::text AS searchable_type,
-      anggaran_hspks.id AS searchable_id
-     FROM anggaran_hspks;
   SQL
   create_view "search_all_anggarans", sql_definition: <<-SQL
       SELECT anggaran_sshes.uraian_barang,
