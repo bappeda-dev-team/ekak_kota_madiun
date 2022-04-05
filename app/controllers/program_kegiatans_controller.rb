@@ -12,6 +12,11 @@ class ProgramKegiatansController < ApplicationController
                                        .where('nama_subkegiatan ILIKE ?', "%#{param}%")
   end
 
+  def subkegiatan_user
+    @programKegiatans = ProgramKegiatan.includes([:subkegiatan_tematik]).all
+    render 'admin_program_kegiatan'
+  end
+
   def admin_program_kegiatan
     @programKegiatans = ProgramKegiatan.includes([:subkegiatan_tematik]).all
   end

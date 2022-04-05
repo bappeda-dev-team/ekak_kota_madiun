@@ -1,9 +1,10 @@
 module ApplicationHelper
   def asn_sidebar_items
     [
-      { title: 'Sasaran Kinerja', href: user_sasarans_path(current_user), icon: 'fas fa-bullseye',
+      { title: 'Rencana Kinerja 2023', href: user_sasarans_path(current_user), icon: 'fas fa-bullseye',
         identifier: 'sasaran' },
       { title: 'Kak', href: kaks_path, icon: 'fas fa-sitemap', identifier: 'acuan_kerja' },
+      { title: 'Sub Kegiatan', href: subkegiatan_user_path, icon: 'fas fa-tasks', identifier: 'subkegiatan_user' },
       { title: 'Laporan KAK', href: laporan_kak_path, icon: 'far fa-file', identifier: 'laporan_kak' },
       { title: 'Laporan RKA', href: laporan_rka_path, icon: 'fas fa-money-check', identifier: 'laporan_rka' }
     ]
@@ -15,6 +16,15 @@ module ApplicationHelper
       { title: 'Pokok Pikiran', href: pokpirs_path, identifier: 'pokpir' },
       { title: 'Mandatori', href: mandatoris_path, identifier: 'mandatori' },
       { title: 'Inisiatif', href: inovasis_path, identifier: 'inovasi' }
+    ]
+  end
+
+  def usulan_users
+    [
+      { title: 'Musrenbang', href: usulan_musrenbang_path, identifier: 'usulan_musrenbang' },
+      { title: 'Pokok Pikiran', href: usulan_pokpir_path, identifier: 'usulan_pokpir' },
+      { title: 'Mandatori', href: usulan_mandatori_path, identifier: 'usulan_mandatori' },
+      { title: 'Inisiatif', href: usulan_inisiatif_path, identifier: 'usulan_inisiatif' }
     ]
   end
 

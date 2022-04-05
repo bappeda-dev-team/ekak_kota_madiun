@@ -6,6 +6,11 @@ class PokpirsController < ApplicationController
     @pokpirs = Pokpir.all
   end
 
+  def usulan_pokpir
+    @pokpirs = Pokpir.all.order(:created_at)
+    render 'index'
+  end
+
   # GET /pokpirs/1 or /pokpirs/1.json
   def show; end
 

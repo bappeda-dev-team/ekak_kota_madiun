@@ -7,6 +7,11 @@ class MusrenbangsController < ApplicationController
     @musrenbangs = Musrenbang.all.order(:created_at)
   end
 
+  def usulan_musrenbang
+    @musrenbangs = Musrenbang.all.order(:created_at)
+    render 'index'
+  end
+
   def asn_musrenbang
     nip_asn = params[:nip]
     @musrenbangs = Musrenbang.where(nip_asn: nip_asn)
