@@ -39,6 +39,13 @@ $(function () {
     width: "100%",
     theme: "bootstrap-5",
   });
+  $('#form-usulan').on('show', () => {
+    $('#dropdown-tahun').select2({
+      width: "100%",
+      theme: "bootstrap-5",
+      dropdownParent: $("#form-usulan"),
+    })
+  })
   $(".select2-waw").select2({
     width: "100%",
     theme: "bootstrap-5",
