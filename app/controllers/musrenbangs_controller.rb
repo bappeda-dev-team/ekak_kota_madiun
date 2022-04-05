@@ -7,6 +7,11 @@ class MusrenbangsController < ApplicationController
     @musrenbangs = Musrenbang.all.order(:created_at)
   end
 
+  def usulan_musrenbang
+    @musrenbangs = Musrenbang.all.order(:created_at)
+    render 'index'
+  end
+
   def asn_musrenbang
     nip_asn = params[:nip]
     @musrenbangs = Musrenbang.where(nip_asn: nip_asn)
@@ -58,6 +63,7 @@ class MusrenbangsController < ApplicationController
 
     respond_to do |format|
       if @musrenbang.save
+        format.js
         format.html { redirect_to @musrenbang, notice: 'Musrenbang was successfully created.' }
         format.json { render :show, status: :created, location: @musrenbang }
       else
@@ -71,6 +77,7 @@ class MusrenbangsController < ApplicationController
   def update
     respond_to do |format|
       if @musrenbang.update(musrenbang_params)
+        format.js
         format.html { redirect_to @musrenbang, notice: 'Musrenbang was successfully updated.' }
         format.json { render :show, status: :ok, location: @musrenbang }
       else

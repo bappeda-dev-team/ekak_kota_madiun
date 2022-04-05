@@ -17,7 +17,7 @@
             <h2 class="fs-5 fw-bold mb-0">Usulan Mandatori</h2>
           </div>
           <div class="col text-end">
-            <%= link_to "Tambah Usulan", new_mandatori_path, class: "btn btn-sm btn-info" %>
+            <%= link_to "Tambah Usulan", new_mandatori_path, remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#form-mandatori'}, class: "btn btn-sm btn-info" %>
           </div>
         </div>
       </div>
@@ -29,7 +29,6 @@
                 <th class="border-bottom" scope="col">No.</th>
                 <th class="border-bottom" scope="col">Usulan</th>
                 <th class="border-bottom" scope="col">Peraturan Terkait</th>
-                <th class="border-bottom" scope="col">Tambah User</th>
                 <th class="border-bottom text-center" scope="col">Action</th>
               </tr>
             </thead>
@@ -39,10 +38,12 @@
                   <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
                   <td class="fw-bolder text-gray-500"><%= truncate(mandatori.usulan, length: 30, separator: '...') %></td>
                   <td class="fw-bolder text-gray-500"><%= truncate(mandatori.peraturan_terkait, length: 25, separator: '...') %></td>
-                  <td class="fw-bolder text-gray-500"><%= link_to 'Pilih User', '#' %></td>
                   <td class="fw-bolder text-gray-500 text-center">
-                    <%= link_to mandatori do %>
-                      <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
+                    <%= link_to edit_mandatori_path(mandatori), remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#form-mandatori'} do %>
+                      <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit usulan mandatori"></i>
+                    <% end %>
+                    <%= link_to mandatori_path(mandatori), method: :delete, remote: true, class: 'mx-3', data: {'confirm-swal': 'Hapus usulan?'} do %>
+                      <i class="fas fa-trash" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus usulan mandatori"></i>
                     <% end %>
                   </td>
                 </tr>
@@ -54,3 +55,4 @@
     </div>
   </div>
 </div>
+<%= render 'modal' %>

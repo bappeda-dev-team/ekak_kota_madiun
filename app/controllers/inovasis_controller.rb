@@ -6,6 +6,11 @@ class InovasisController < ApplicationController
     @inovasis = Inovasi.all
   end
 
+  def usulan_inisiatif
+    @inovasis = Inovasi.all.order(:created_at)
+    render 'index'
+  end
+
   # GET /inovasis/1 or /inovasis/1.json
   def show; end
 
@@ -23,6 +28,7 @@ class InovasisController < ApplicationController
 
     respond_to do |format|
       if @inovasi.save
+        format.js
         format.html { redirect_to @inovasi, notice: 'Inovasi was successfully created.' }
         format.json { render :show, status: :created, location: @inovasi }
       else
@@ -36,6 +42,7 @@ class InovasisController < ApplicationController
   def update
     respond_to do |format|
       if @inovasi.update(inovasi_params)
+        format.js
         format.html { redirect_to @inovasi, notice: 'Inovasi was successfully updated.' }
         format.json { render :show, status: :ok, location: @inovasi }
       else

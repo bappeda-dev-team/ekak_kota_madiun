@@ -24,4 +24,6 @@ class Musrenbang < ApplicationRecord
 
   belongs_to :sasaran, optional: true
   has_many :usulans, as: :usulanable
+
+  default_scope { order(created_at: :desc) }
 end

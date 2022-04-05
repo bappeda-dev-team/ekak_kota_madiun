@@ -71,7 +71,7 @@
                   <% end %>
                 </table>
               </td>
-              <td class="align-middle text-center"><%= sasaran.total_anggaran or '-' %></td>
+              <td class="align-middle text-center">Rp. <%= number_with_delimiter(sasaran.total_anggaran, delimiter: '.') or '-' %></td>
               <td class="border-end"></td>
             </tr>
           <% end %>

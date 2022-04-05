@@ -6,6 +6,11 @@ class PokpirsController < ApplicationController
     @pokpirs = Pokpir.all
   end
 
+  def usulan_pokpir
+    @pokpirs = Pokpir.all.order(:created_at)
+    render 'index'
+  end
+
   # GET /pokpirs/1 or /pokpirs/1.json
   def show; end
 
@@ -35,6 +40,7 @@ class PokpirsController < ApplicationController
 
     respond_to do |format|
       if @pokpir.save
+        format.js
         format.html { redirect_to pokpirs_path, notice: 'Pokpir was successfully created.' }
         format.json { render :show, status: :created, location: @pokpir }
       else
@@ -48,6 +54,7 @@ class PokpirsController < ApplicationController
   def update
     respond_to do |format|
       if @pokpir.update(pokpir_params)
+        format.js
         format.html { redirect_to @pokpir, notice: 'Pokpir was successfully updated.' }
         format.json { render :show, status: :ok, location: @pokpir }
       else

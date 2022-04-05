@@ -25,7 +25,7 @@ class TahapansController < ApplicationController
     # @tahapan = Tahapan.new(tahapan_params)
     @tahapan = @sasaran.tahapans.build(tahapan_params)
     @tahapan.id_rencana = @sasaran.id_rencana
-    @tahapan.id_rencana_aksi = Tahapan.last.id
+    @tahapan.id_rencana_aksi = SecureRandom.base36(6)
     respond_to do |format|
       if @tahapan.save
         format.html { redirect_to sasaran_path(@sasaran), notice: 'Tahapan was successfully created.' }

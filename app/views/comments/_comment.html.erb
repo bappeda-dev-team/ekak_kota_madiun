@@ -1,19 +1,17 @@
-<%# TODO: perbaiki UI %>
-<article>
-  <p><strong>
-      Head: <%= comment.head %>
-    </strong>
-    <small>by : <%= comment.user.nik %> on <%= comment.anggaran.uraian %></small>
-  </p>
-  <p><%= comment.body %></p>
-  <hr>
-  <p>
-    <%# TODO: remote data this %>
-    <%= link_to 'Edit', edit_comment_path(comment), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-comment" }  %>
-    <%= link_to 'Hapus', comment_path(comment), method: :delete, data: {confirm_swal: 'Hapus Review anda ?'} %>
-  </p>
-</article>
-<hr />
-<script>
-  $("#anggaran-<%= comment.anggaran_id %>").addClass('higlighted')
-</script>
+<div class="row ps-lg-1 border-bottom pb-4 mb-4">
+  <div class="d-flex align-items-center mb-3">
+    <i class="far fa-clock icon icon-xxs me-1"></i>
+    <span class="small"><%= comment.created_at.to_formatted_s(:long) %></span>
+  </div>
+  <div class="col ms-n2 mb-3">
+    <strong class="fw-bold mb-1">Kode Rekening: </strong>
+    <%= rekening_anggaran(comment.anggaran.kode_rek) %>
+    <p>Judul Komentar: <%= comment.head %></p>
+    <div class="d-flex align-items-center mt-2">
+      <strong class="fw-bold">Komentar</strong>
+      <%= link_to 'Edit', edit_comment_path(comment), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-comment" } %>
+      <%= link_to 'Hapus', comment_path(comment), method: :delete, data: {confirm_swal: 'Hapus Review ?'} %>
+    </div>
+    <p class="mb-0 mt-1"><%= comment.body %></p>
+  </div>
+</div>

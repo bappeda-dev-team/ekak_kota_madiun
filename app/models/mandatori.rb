@@ -23,4 +23,6 @@ class Mandatori < ApplicationRecord
   validates :usulan, presence: true
   validates :peraturan_terkait, presence: true
   belongs_to :sasaran, optional: true
+
+  default_scope { order(created_at: :desc) }
 end
