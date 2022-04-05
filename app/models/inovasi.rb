@@ -18,7 +18,7 @@
 #  index_inovasis_on_sasaran_id  (sasaran_id)
 #
 class Inovasi < ApplicationRecord
-  validates :usulan, presence: true, length: { minimum: 5 }
+  validates :usulan, presence: true
   belongs_to :sasaran, optional: true
   has_many :usulans, as: :usulanable
 end

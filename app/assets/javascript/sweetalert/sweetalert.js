@@ -10,15 +10,18 @@ const confirmed = (element, result) => {
   // If result `success`
   if (result.value) {
     if (!!element.getAttribute('data-remote')) {
-      let reloadAfterSuccess = !!element.getAttribute('data-reload');
-
+      let reloadAfterSuccess = true;
+      let token = $('meta[name="csrf-token"]').attr('content');
       $.ajax({
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader('X-CSRF-Token', token);
+        },
         method: element.getAttribute('data-method') || 'GET',
         url: element.getAttribute('href'),
         dataType: 'json',
         success: function (result) {
-          Swal.fire('Success!', result.message || '', 'success')
-            .then((_result) => {
+          Swal.fire('Success!', '', 'success')
+            .then(() => {
               if (reloadAfterSuccess) {
                 window.location.reload();
               }

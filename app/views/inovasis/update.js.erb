@@ -1,0 +1,8 @@
+$('#form-inovasi').modal('hide')
+Swal.fire({
+  title: 'Usulan berhasil diupdate',
+  icon: 'success',
+  confirmButtonText: 'Yes',
+}).then(() => {
+  Turbolinks.visit(window.location, { action: "replace" })
+})
