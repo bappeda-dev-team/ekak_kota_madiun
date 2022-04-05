@@ -6,6 +6,11 @@ class MandatorisController < ApplicationController
     @mandatoris = Mandatori.all
   end
 
+  def usulan_mandatori
+    @mandatoris = Mandatori.all.order(:created_at)
+    render 'index'
+  end
+
   # GET /mandatoris/1 or /mandatoris/1.json
   def show; end
 

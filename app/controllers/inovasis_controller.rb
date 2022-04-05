@@ -6,6 +6,11 @@ class InovasisController < ApplicationController
     @inovasis = Inovasi.all
   end
 
+  def usulan_inisiatif
+    @inovasis = Inovasi.all.order(:created_at)
+    render 'index'
+  end
+
   # GET /inovasis/1 or /inovasis/1.json
   def show; end
 
