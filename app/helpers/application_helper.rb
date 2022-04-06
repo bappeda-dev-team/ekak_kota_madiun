@@ -47,7 +47,8 @@ module ApplicationHelper
       { title: 'Daftar SubKegiatan OPD', href: daftar_subkegiatan_path, icon: 'fas fa-folder-open',
         identifier: 'daftar_subkegiatan' },
       { title: 'User', href: adminusers_path, icon: 'fas fa-user-check', identifier: 'adminusers' },
-      { title: 'OPD', href: opds_path, icon: 'fas fa-building', identifier: 'opds' }
+      { title: 'OPD', href: opds_path, icon: 'fas fa-building', identifier: 'opds' },
+      { title: 'Role', href: roles_path, icon: 'fas fa-user-tag', identifier: 'roles' }
     ]
   end
 

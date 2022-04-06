@@ -1,4 +1,3 @@
- 
 <div class="card border-0 shadow mb-4">
   <div class="card-header">
     <div class="row">
@@ -12,7 +11,8 @@
   <div class="card-body">
     <%= form_with url: filter_url, local: false do |form| %>
       <%= form.label :kode_opd %>
-      <%= form.select :kode_opd, Opd.all.pluck(:nama_opd, :kode_unik_opd) ,{include_blank: true},{class: "form-control select2-waw", data: {"placeholder": "Pilih Opd"}}  %>
+      <% options = options_for_select(Opd.all.pluck(:nama_opd, :kode_unik_opd), current_user.opd.kode_unik_opd ) %>
+      <%= form.select :kode_opd, options ,{include_blank: true},{class: "form-control select2-waw", data: {"placeholder": "Pilih Opd"}}  %>
       <%= form.submit 'filter' %>
     <% end %>
   </div>

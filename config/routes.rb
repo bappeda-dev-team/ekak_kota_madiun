@@ -52,6 +52,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :strategi_keluarans, path: 'strategi'
   resources :latar_belakangs, path: 'dasar_aksi'
   resources :comments, except: %i[index show]
+  resources :roles
   # sasaran
   post '/hapus_program_from_sasaran', to: 'sasarans#hapus_program_from_sasaran'
 

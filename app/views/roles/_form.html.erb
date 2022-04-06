@@ -1,0 +1,9 @@
+<%= form_with(model: role) do |form| %>
+  <div class="field">
+    <%= form.label :nama_role, class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-control' %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
