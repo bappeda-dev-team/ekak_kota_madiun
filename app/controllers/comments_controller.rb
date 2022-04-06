@@ -26,7 +26,7 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_back(fallback_location: root_path, notice: 'Review Dihapus') }
+      format.html { redirect_back(fallback_location: root_path, success: 'komentar dihapus') }
       format.json { head :no_content }
     end
   end

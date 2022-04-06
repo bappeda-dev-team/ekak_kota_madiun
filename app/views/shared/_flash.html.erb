@@ -1,0 +1,9 @@
+<% unless flash.empty? %>
+  <script>
+    Swal.fire({
+     icon: 'success',
+     title: 'Sukses',
+     text: '<%= flash[flash.keys[0]] %>',
+    })
+  </script>
+<% end %>
