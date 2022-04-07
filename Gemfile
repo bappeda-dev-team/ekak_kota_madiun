@@ -54,6 +54,7 @@ group :development do
   gem 'letter_opener'
   gem 'solargraph'
   gem 'spring'
+  gem 'strong_migrations'
   # capistrano thing
   gem 'capistrano', '~> 3.11', require: false
   gem 'capistrano-passenger', '~> 0.2.0', require: false
@@ -81,3 +82,5 @@ gem 'rolify', '~> 6.0'
 gem 'scenic'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?
+gem 'redis'
+gem 'resque', require: 'resque/server'

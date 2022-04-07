@@ -5,7 +5,8 @@ module Api
   class SkpClientController < ApplicationController
     before_action :set_params
     def sync_sasaran
-      UpdateSkpJob.perform_later(@kode_opd, @tahun, @bulan)
+      Resque.enqueue(UpdateSkpJob.perform_later(@kode_opd, @tahun, @bulan))
+
       redirect_to adminsasarans_path,
                   notice: "Update Sasaran #{nama_opd} Dikerjakan..."
     end
