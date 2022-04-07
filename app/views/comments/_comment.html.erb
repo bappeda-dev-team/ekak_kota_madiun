@@ -6,12 +6,22 @@
   <div class="col ms-n2 mb-3">
     <strong class="fw-bold mb-1">Kode Rekening: </strong>
     <%= rekening_anggaran(comment.anggaran.kode_rek) %>
-    <p>Judul Komentar: <%= comment.head %></p>
     <div class="d-flex align-items-center mt-2">
-      <strong class="fw-bold">Komentar</strong>
-      <%= link_to 'Edit', edit_comment_path(comment), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-comment" } %>
-      <%= link_to 'Hapus', comment_path(comment), method: :delete, data: {confirm_swal: 'Hapus Review ?'} %>
+      <%= link_to edit_comment_path(comment), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-comment" } do %>
+        <i class="fas fa-edit icon icon-xxs me-1" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit"></i>
+      <% end %>
+      <%= link_to comment_path(comment), method: :delete, data: {confirm_swal: 'Hapus Review ?'} do %>
+        <i class="fas fa-trash-alt icon icon-xxs me-1" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus"></i>
+      <% end %>
     </div>
+    <hr>
+    <h5>Review <%= comment.user.nama %></h5>
     <p class="mb-0 mt-1"><%= comment.body %></p>
   </div>
 </div>
+<style>
+  #<%= comment.head %>:target {
+    background-color: #ffa;
+    -webkit-transition: all 1s linear;
+  }
+</style>

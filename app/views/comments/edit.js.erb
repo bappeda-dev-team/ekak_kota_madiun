@@ -1,1 +1,1 @@
-$('#form-comment-body').html("<%= j render 'form', comment: @comment, anggaran_id: @anggaran_id, user_id: @user_id %>").trigger('show')
+$('#form-comment-body').html("<%= j render 'form', comment: @comment, anggaran_id: @comment.anggaran_id, user_id: @comment.user_id %>").trigger('show')

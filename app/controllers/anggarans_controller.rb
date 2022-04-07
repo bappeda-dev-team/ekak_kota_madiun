@@ -4,6 +4,8 @@ class AnggaransController < ApplicationController
 
   # GET /anggarans or /anggarans.json
   def index
+    Bullet.add_safelist type: :unused_eager_loading, class_name: 'Anggaran', association: :comments
+    Bullet.add_safelist type: :unused_eager_loading, class_name: 'Anggaran', association: :pajak
     @anggarans = @tahapan.anggarans.includes(%i[perhitungans pajak]).all
   end
 

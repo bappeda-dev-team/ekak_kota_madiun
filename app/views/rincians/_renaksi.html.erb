@@ -39,9 +39,9 @@
             <th class="border-bottom border-end border-start" scope="col" rowspan="2">No.</th>
             <th class="border-bottom border-end" scope="col" rowspan="2">Tahapan Kerja</th>
             <% (1..12).each do |i| %>
-              <th class="border-bottom border-end text-center" colspan="2" scope="col"><%= i %></th>
+              <th class="border-bottom border-end text-center" scope="col"><%= i %></th>
             <% end %>
-            <th class="border-bottom border-end text-center" colspan="2" scope="col">Jumlah</th>
+            <th class="border-bottom border-end text-center" scope="col">Jumlah</th>
             <th class="border-bottom border-end text-center" scope="col" rowspan="2">Anggaran</th>
             <th class="border-bottom border-end" scope="col" rowspan="2">Keterangan</th>
             <th class="border-bottom border-end text-center" scope="col" rowspan="2">Action</th>
@@ -49,7 +49,6 @@
           <tr>
             <% (1..13).each do |item| %>
               <td class="border border-gray-900 bg-tertiary text-center text-gray-300" scope="col">T</td>
-              <td class="border border-gray-900 bg-info text-center text-gray-300" scope="col">R</td>
             <% end %>
           </tr>
         </thead>
@@ -60,10 +59,8 @@
               <td class="text-gray-900"><%= tahapan.tahapan_kerja %></td>
               <% (1..12).each do |bulan| %>
                 <%= aksi_di_bulan(sasaran, tahapan, bulan) %>
-                <%= realisasi_di_bulan(sasaran, tahapan, bulan) %>
               <% end %>
-              <td class="fw-bolder text-gray-500 border"><%= tahapan.jumlah_target or '-'  %></td>
-              <td class="fw-bolder text-gray-500 border"><%= tahapan.jumlah_realisasi or '-' %></td>
+              <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.jumlah_target or '-'  %></td>
               <% unless tahapan.anggarans.any? %>
                 <td class="fw-bolder text-gray-500 border">
                   <%= link_to 'Tambah Anggaran', new_sasaran_tahapan_anggaran_path(sasaran, tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 btn btn-sm btn-success text-white animate-up-2"   %>
@@ -71,8 +68,8 @@
               <% else %>
                 <td class="fw-bolder text-gray-500 border"><%= link_to "Detail Anggaran", sasaran_tahapan_anggarans_path(sasaran, tahapan) %></td>
               <% end %>
-              <td class="fw-bolder text-gray-500 border"><%= tahapan.keterangan  %></td>
-              <td class="fw-bolder text-gray-500 text-center">
+              <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.keterangan  %></td>
+              <td class="fw-bolder text-gray-500 text-center border-end">
                 <%= link_to edit_sasaran_tahapan_path(sasaran, tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'}, class: "m-3" do %>
                   <i class="fa fa-pencil-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
                 <% end %>
@@ -87,11 +84,9 @@
           <tr>
             <td class="border-bottom border-start border-end" colspan="2">Total</td>
             <% (1..12).each do |i| %>
-              <td class="border-bottom border-end"><%= sasaran.total_target_aksi_bulan[i] %></td>
-              <td class="border-bottom border-end"><%= sasaran.total_realisasi_aksi_bulan[i] %></td>
+              <td class="border-bottom border-end text-center"><%= sasaran.total_target_aksi_bulan[i] %></td>
             <% end %>
-            <td class="border-bottom border-end"><%= jumlah_target %></td>
-            <td class="border-bottom border-end"><%= jumlah_realisasi %></td>
+            <td class="border-bottom border-end text-center"><%= sasaran.jumlah_target %></td>
             <td class="border-bottom border-end" colspan="3"></td>
           </tr>
         </tfoot>

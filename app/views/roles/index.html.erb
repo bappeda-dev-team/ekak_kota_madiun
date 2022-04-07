@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Roles</li>
+      </ol>
+    </nav>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Master Role</h2>
+          </div>
+          <div class="col text-end">
+            <%= link_to "Tambah Role", new_role_path, remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#form-role'}, class: "btn btn-sm btn-info" %>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-flush datatable" data-datatable>
+            <thead class="thead-light">
+              <tr>
+                <th class="border-bottom" scope="col">No.</th>
+                <th class="border-bottom" scope="col">Role</th>
+                <th class="border-bottom" scope="col">Resource Type</th>
+                <th class="border-bottom text-center" scope="col" colspan='2'>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @roles.each.with_index(1) do |role, i| %>
+                <tr>
+                  <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
+                  <td class="fw-bolder text-gray-500"><%= role.name %></td>
+                  <td class="fw-bolder text-gray-500"><%= role.resource_type %></td>
+                  <td class="fw-bolder text-gray-500 text-center">
+                    <%= link_to edit_role_path(role), remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#form-role'} do %>
+                      <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit role"></i>
+                    <% end %>
+                    <%= link_to role_path(role), method: :delete, data: {'confirm-swal': 'Hapus role?'} do %>
+                      <i class="fas fa-trash" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus role"></i>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render 'modal' %>

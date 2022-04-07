@@ -8,25 +8,36 @@ class CommentsController < ApplicationController
 
   def edit
     @comment = Comment.find(params[:id])
-    @anggaran_id = @comment.anggaran_id
-    @user_id = @comment.user_id
   end
 
   def create
     @comment = Comment.new(comment_params)
-    respond_to :js if @comment.save
+    respond_to do |format|
+      if @comment.save
+        format.js
+      else
+        format.js { render :new, status: :unprocessable_entity }
+      end
+    end
   end
 
   def update
     @comment = Comment.find(params[:id])
-    respond_to :js if @comment.update(comment_params)
+    # respond_to :js if @comment.update(comment_params)
+    respond_to do |format|
+      if @comment.update(comment_params)
+        format.js
+      else
+        format.js { render :edit, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy
     @comment = Comment.find(params[:id])
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_back(fallback_location: root_path, notice: 'Review Dihapus') }
+      format.html { redirect_back(fallback_location: root_path, success: 'komentar dihapus') }
       format.json { head :no_content }
     end
   end

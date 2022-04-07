@@ -1,0 +1,13 @@
+<% unless flash.empty? %>
+  <% flash.each do |key, value| %>
+    <% unless value.blank? %>
+      <script>
+        Swal.fire({
+         icon: 'success',
+         title: 'Sukses',
+         text: '<%= value %>',
+        })
+      </script>
+    <% end %>
+  <% end %>
+<% end %>
