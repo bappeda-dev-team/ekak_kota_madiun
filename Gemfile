@@ -39,6 +39,7 @@ group :development, :test do
   gem 'rspec-core'
   gem 'rspec-rails'
   gem 'shoulda-matchers', '~> 5.0'
+  gem 'strong_migrations'
 end
 
 group :development do
@@ -54,7 +55,6 @@ group :development do
   gem 'letter_opener'
   gem 'solargraph'
   gem 'spring'
-  gem 'strong_migrations'
   # capistrano thing
   gem 'capistrano', '~> 3.11', require: false
   gem 'capistrano-passenger', '~> 0.2.0', require: false
