@@ -31,8 +31,8 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'bullet'
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
@@ -54,6 +54,7 @@ group :development do
   gem 'letter_opener'
   gem 'solargraph'
   gem 'spring'
+  gem 'strong_migrations'
   # capistrano thing
   gem 'capistrano', '~> 3.11', require: false
   gem 'capistrano-passenger', '~> 0.2.0', require: false
@@ -77,6 +78,8 @@ gem 'http'
 gem 'oj'
 gem 'pagy', '~> 5.10'
 gem 'prawn-rails', '~> 1.4', '>= 1.4.2'
+gem 'redis'
+gem 'resque', require: 'resque/server'
 gem 'rolify', '~> 6.0'
 gem 'scenic'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

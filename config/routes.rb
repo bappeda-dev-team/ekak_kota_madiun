@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'resque/server'
 Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :anggaran_hspks
   resources :anggaran_sbus
@@ -53,6 +54,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :latar_belakangs, path: 'dasar_aksi'
   resources :comments, except: %i[index show]
   resources :roles
+
+  # resque
+  mount Resque::Server, at: '/jobs'
   # sasaran
   post '/hapus_program_from_sasaran', to: 'sasarans#hapus_program_from_sasaran'
 
