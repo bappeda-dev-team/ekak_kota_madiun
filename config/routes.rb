@@ -56,7 +56,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :roles
 
   # resque
-  mount Resque::Server, at: '/jobs'
+  authenticate :user, ->(u) { u.id == 1 } do
+    mount Resque::Server, at: '/jobs'
+  end
   # sasaran
   post '/hapus_program_from_sasaran', to: 'sasarans#hapus_program_from_sasaran'
 
