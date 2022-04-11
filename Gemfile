@@ -39,7 +39,6 @@ group :development, :test do
   gem 'rspec-core'
   gem 'rspec-rails'
   gem 'shoulda-matchers', '~> 5.0'
-  gem 'strong_migrations'
 end
 
 group :development do
@@ -84,3 +83,4 @@ gem 'rolify', '~> 6.0'
 gem 'scenic'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?
+gem 'strong_migrations'

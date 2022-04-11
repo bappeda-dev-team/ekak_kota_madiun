@@ -272,6 +272,17 @@ ActiveRecord::Schema.define(version: 2022_04_02_133813) do
     t.index ["anggaran_id"], name: "index_perhitungans_on_anggaran_id"
   end
 
+  create_table "pks", force: :cascade do |t|
+    t.string "sasaran"
+    t.string "indikator_kinerja"
+    t.string "target"
+    t.string "satuan"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_pks_on_user_id"
+  end
+
   create_table "pokpirs", force: :cascade do |t|
     t.string "usulan"
     t.string "alamat"
@@ -432,6 +443,7 @@ ActiveRecord::Schema.define(version: 2022_04_02_133813) do
   add_foreign_key "comments", "anggarans"
   add_foreign_key "comments", "users"
   add_foreign_key "kesenjangans", "rincians"
+  add_foreign_key "pks", "users"
   add_foreign_key "program_kegiatans", "opds", column: "kode_opd", primary_key: "kode_opd"
   add_foreign_key "program_kegiatans", "subkegiatan_tematiks"
   add_foreign_key "rincians", "sasarans"
