@@ -106,7 +106,6 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/usulan_pokpir', to: 'pokpirs#usulan_pokpir'
   get '/usulan_mandatori', to: 'mandatoris#usulan_mandatori'
   get '/usulan_inisiatif', to: 'inovasis#usulan_inisiatif'
-  get '/subkegiatan_user', to: 'program_kegiatans#subkegiatan_user'
   # third party Api
   get '/sync_sasaran', to: 'api/skp_client#sync_sasaran'
   get '/sync_pegawai', to: 'api/skp_client#sync_pegawai'
