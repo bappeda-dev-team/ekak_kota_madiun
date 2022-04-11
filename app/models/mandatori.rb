@@ -25,4 +25,10 @@ class Mandatori < ApplicationRecord
   belongs_to :sasaran, optional: true
 
   default_scope { order(created_at: :desc) }
+
+  def asn_pengusul
+    User.find_by(nik: nip_asn).nama
+  rescue NoMethodError
+    '-'
+  end
 end

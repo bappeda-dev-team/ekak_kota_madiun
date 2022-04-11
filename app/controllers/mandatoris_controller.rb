@@ -7,7 +7,7 @@ class MandatorisController < ApplicationController
   end
 
   def usulan_mandatori
-    @mandatoris = Mandatori.all.order(:created_at)
+    @mandatoris = Mandatori.where(nip_asn: current_user.nik).order(:created_at)
     render 'index'
   end
 
@@ -29,7 +29,7 @@ class MandatorisController < ApplicationController
     respond_to do |format|
       if @mandatori.save
         format.js
-        format.html { redirect_to @mandatori, notice: 'Mandatori was successfully created.' }
+        format.html { redirect_to usulan_mandatori_path, notice: 'Usulan mandatori berhasil dibuat' }
         format.json { render :show, status: :created, location: @mandatori }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,7 +43,7 @@ class MandatorisController < ApplicationController
     respond_to do |format|
       if @mandatori.update(mandatori_params)
         format.js
-        format.html { redirect_to @mandatori, notice: 'Mandatori was successfully updated.' }
+        format.html { redirect_to usulan_mandatori_path, notice: 'Usulan mandatori berhasil diperbarui' }
         format.json { render :show, status: :ok, location: @mandatori }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -56,9 +56,14 @@ class MandatorisController < ApplicationController
   def destroy
     @mandatori.destroy
     respond_to do |format|
-      format.html { redirect_to mandatoris_url, notice: 'Mandatori was successfully destroyed.' }
+      format.html { redirect_to usulan_mandatori_path, notice: 'Usulan dihapus' }
       format.json { head :no_content }
     end
+  end
+
+  def toggle_is_active
+    @mandatori = Mandatori.find(params[:id])
+    @mandatori.toggle! :is_active
   end
 
   private

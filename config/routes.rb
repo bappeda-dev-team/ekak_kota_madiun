@@ -9,7 +9,11 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :rekenings
   resources :pokpirs
   resources :inovasis
-  resources :mandatoris
+  resources :mandatoris do
+    member do
+      post :toggle_is_active
+    end
+  end
   resources :asn_musrenbangs, path: 'asn_usulan'
   resources :dasar_hukums
   devise_for :users, controllers: {

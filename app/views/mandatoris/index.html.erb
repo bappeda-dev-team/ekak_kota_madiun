@@ -26,19 +26,35 @@
           <table class="table table-flush datatable" data-datatable>
             <thead class="thead-light">
               <tr>
-                <th class="border-bottom" scope="col">No.</th>
-                <th class="border-bottom" scope="col">Usulan</th>
-                <th class="border-bottom" scope="col">Peraturan Terkait</th>
-                <th class="border-bottom text-center" scope="col">Action</th>
+                <th class="border-bottom text-gray-700" scope="col">No.</th>
+                <th class="border-bottom text-gray-700" scope="col">Usulan</th>
+                <th class="border-bottom text-gray-700" scope="col">Peraturan Terkait</th>
+                <th class="border-bottom text-gray-700" scope="col">Pengusul</th>
+                <th class="border-bottom text-gray-700 text-center" scope="col">Status</th>
+                <th class="border-bottom text-gray-700 text-center" scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
               <% @mandatoris.each.with_index(1) do |mandatori, i| %>
-                <tr>
+                <tr id="<%= dom_id(mandatori) %>">
                   <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                  <td class="fw-bolder text-gray-500"><%= truncate(mandatori.usulan, length: 30, separator: '...') %></td>
-                  <td class="fw-bolder text-gray-500"><%= truncate(mandatori.peraturan_terkait, length: 25, separator: '...') %></td>
-                  <td class="fw-bolder text-gray-500 text-center">
+                  <td class="fw-bolder"><%= truncate(mandatori.usulan, length: 30, separator: '...') %></td>
+                  <td class="fw-bolder"><%= truncate(mandatori.peraturan_terkait, length: 25, separator: '...') %></td>
+                  <td class="fw-bolder"><%= mandatori.asn_pengusul %></td>
+                  <td class="text-center">
+                    <% unless mandatori.is_active %>
+                      <%= button_to toggle_is_active_mandatori_path(mandatori), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
+                        Aktifkan
+                        <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
+                      <% end %>
+                    <% else %>
+                      <button class='btn btn-primary d-inline-flex align-items-center toggle-active' disabled>
+                        Aktif
+                        <i class="fas fa-key text-success icon icon-xs ms-2"></i>
+                      </button>
+                    <% end %>
+                  </td>
+                  <td class="fw-bolder text-center">
                     <%= link_to edit_mandatori_path(mandatori), remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#form-mandatori'} do %>
                       <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit usulan mandatori"></i>
                     <% end %>
