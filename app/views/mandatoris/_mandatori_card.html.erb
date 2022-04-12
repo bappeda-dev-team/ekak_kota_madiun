@@ -1,0 +1,45 @@
+<div class="card border-2 shadow mb-3" id="musrenbang-card">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="row align-items-center">
+        <div class="col">
+          <h5>Usulan</h5>
+        </div>
+        <%= form_with(url: '/update_sasaran_asn', local: false) do |form| %>
+          <div class="field">
+            <%= form.hidden_field :sasaran_id, value: sasaran.id   %>
+            <%= form.hidden_field :usulan_type  %>
+            <%= form.label 'Mandatori' %>
+            <% options = options_for_select(Mandatori.pluck(:usulan, :id)) %>
+            <%= form.select :usulan_id, options, {include_blank: true}, {class: "select2-waw", "data-placeholder": "Usulan Mandatori"} %>
+          </div>
+          <div class="actions">
+            <%= form.submit %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <table class="table" id="musrenbang-table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Usulan</th>
+          <th>Alamat</th>
+          <th>Jenis Usulan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% sasaran.my_usulan.each.with_index(1) do |sas, i| %>
+          <tr>
+            <td><%= i %></td>
+            <td><%= sas.usulan %></td>
+            <td>Mandatori</td>
+            <td><%= sas.class.name %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

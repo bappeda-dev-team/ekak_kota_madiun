@@ -12,6 +12,7 @@
 </nav>
 <!-- SECTION - musrenbang -->
 <%= render 'musrenbang_card', sasaran: @sasaran %>
+<%= render 'mandatoris/mandatori_card', sasaran: @sasaran %>
 <!-- SECTION - render anggaran here -->
 <%= render 'subkegiatan_card', sasaran: @sasaran %>
 <% unless @sasaran.tahapans.any? %>
