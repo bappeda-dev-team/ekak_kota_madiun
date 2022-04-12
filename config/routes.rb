@@ -74,9 +74,12 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   # musrenbang
   get '/asn_musrenbangs/:nip', to: 'musrenbangs#asn_musrenbang'
+  # search usulans
   get '/musrenbang_search', to: 'musrenbangs#musrenbang_search'
+  get '/mandatori_search', to: 'mandatoris#mandatori_search'
   patch '/aktifkan_usulan/:id', to: 'musrenbangs#aktifkan_usulan'
   patch '/non_aktifkan_usulan/:id', to: 'musrenbangs#non_aktifkan_usulan'
+  # usulans
   post '/update_sasaran_asn', to: 'usulans#update_sasaran_asn'
   # pokpir
   patch '/aktifkan_pokpir/:id', to: 'pokpirs#aktifkan_pokpir'

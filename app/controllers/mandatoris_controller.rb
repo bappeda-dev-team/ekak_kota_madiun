@@ -66,6 +66,16 @@ class MandatorisController < ApplicationController
     @mandatori.toggle! :is_active
   end
 
+  def mandatori_search
+    param = params[:q] || ''
+    @mandatoris = Search::AllUsulan
+                  .where(
+                    "searchable_type = 'Mandatori' and sasaran_id is null and usulan ILIKE ?", "%#{param}%"
+                  )
+                  .includes(:searchable)
+                  .collect(&:searchable)
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -75,6 +85,6 @@ class MandatorisController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def mandatori_params
-    params.require(:mandatori).permit(:usulan, :peraturan_terkait, :tahun, :sasaran_id, :nip_asn)
+    params.require(:mandatori).permit!
   end
 end

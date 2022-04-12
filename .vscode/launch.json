@@ -27,7 +27,6 @@
       "request": "launch",
       "cwd": "${workspaceRoot}",
       "program": "${workspaceRoot}/bin/rails",
-      "pathToRDebugIDE": "~/.rvm/gems/ruby-3.0.1/bin/rdebug-ide",
       "showDebuggerOutput": true,
       "args": [
         "server"

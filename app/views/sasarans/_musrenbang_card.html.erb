@@ -30,11 +30,11 @@
         </tr>
       </thead>
       <tbody>
-        <% sasaran.my_usulan.each.with_index(1) do |sas, i| %>
+        <% sasaran.my_usulan.filter { |g| g.instance_of?(Musrenbang) }.each.with_index(1) do |sas, i| %>
           <tr>
             <td><%= i %></td>
             <td><%= sas.usulan %></td>
-            <td><%= sas.alamat %></td>
+            <td><%= sas.try(:alamat) || sas.try(:peraturan_terkait) %></td>
             <td><%= sas.class.name %></td>
           </tr>
         <% end %>
