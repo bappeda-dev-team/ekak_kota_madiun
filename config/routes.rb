@@ -51,6 +51,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :musrenbangs do
     member do
       post :toggle_is_active
+      post :diambil_asn
     end
   end
   resources :lembagas

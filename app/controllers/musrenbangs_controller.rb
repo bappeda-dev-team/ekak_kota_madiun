@@ -1,6 +1,6 @@
 class MusrenbangsController < ApplicationController
   before_action :set_musrenbang,
-                only: %i[show edit update destroy aktifkan_usulan non_aktifkan_usulan]
+                only: %i[show edit update destroy aktifkan_usulan non_aktifkan_usulan diambil_asn]
 
   # GET /musrenbangs or /musrenbangs.json
   def index
@@ -10,6 +10,12 @@ class MusrenbangsController < ApplicationController
   def usulan_musrenbang
     @musrenbangs = Musrenbang.all.order(:created_at)
     render 'user_musrenbang'
+  end
+
+  def diambil_asn
+    @musrenbang.update(nip_asn: current_user.nik)
+    flash[:notice] = 'Usulan berhasil diambil'
+    redirect_back fallback_location: usulan_musrenbang_path
   end
 
   def asn_musrenbang

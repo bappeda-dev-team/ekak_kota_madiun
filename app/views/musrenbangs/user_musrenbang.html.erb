@@ -38,16 +38,16 @@
                   <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
                   <td class="fw-bolder text-gray-500"><%= truncate(musrenbang.usulan, length: 30, separator: '...') %></td>
                   <td class="fw-bolder text-gray-500"><%= truncate(musrenbang.alamat, length: 25, separator: '...') %></td>
-                  <td class="fw-bolder text-center" id="musren-<%= musrenbang.id %>"><%= status_icon(musrenbang.is_active) %></td>
                   <td class="action-<%= musrenbang.id %> text-center">
-                    <% unless musrenbang.is_active %>
-                      <%= link_to "/aktifkan_usulan/#{musrenbang.id}", method: :patch, remote: true do %>
-                        <i class="fas fa-check-square text-success" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Aktifkan"></i>
+                    <% if musrenbang.nip_asn.nil? %>
+                      <%= button_to diambil_asn_musrenbang_path(musrenbang), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
+                        Ambil Usulan
                       <% end %>
                     <% else %>
-                      <%= link_to "/non_aktifkan_usulan/#{musrenbang.id}", method: :patch, remote: true do %>
-                        <i class="fas fa-times-circle text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Non Aktifkan"></i>
-                      <% end %>
+                      <button class= 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
+                        Usulan Diambil
+                        <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
+                      </button>
                     <% end %>
                   </td>
                 </tr>
