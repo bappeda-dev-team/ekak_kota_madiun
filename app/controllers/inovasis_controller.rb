@@ -8,7 +8,7 @@ class InovasisController < ApplicationController
 
   def usulan_inisiatif
     @inovasis = Inovasi.all.order(:created_at)
-    render 'index'
+    render 'user_inisiatif'
   end
 
   # GET /inovasis/1 or /inovasis/1.json
@@ -59,6 +59,21 @@ class InovasisController < ApplicationController
       format.html { redirect_to inovasis_url, notice: 'Inovasi was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def toggle_is_active
+    @inovasi = Inovasi.find(params[:id])
+    @inovasi.toggle! :is_active
+  end
+
+  def inovasi_search
+    param = params[:q] || ''
+    @inovasis = Search::AllUsulan
+                .where(
+                  "searchable_type = 'Inovasi' and sasaran_id is null and usulan ILIKE ?", "%#{param}%"
+                )
+                .includes(:searchable)
+                .collect(&:searchable)
   end
 
   private

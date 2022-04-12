@@ -23,4 +23,10 @@ class Inovasi < ApplicationRecord
   has_many :usulans, as: :usulanable
 
   default_scope { order(created_at: :desc) }
+
+  def asn_pengusul
+    User.find_by(nik: nip_asn).nama
+  rescue NoMethodError
+    '-'
+  end
 end

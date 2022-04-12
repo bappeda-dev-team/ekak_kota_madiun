@@ -66,7 +66,7 @@
                 <table class="table table-bordered px-0 text-center">
                   <% sasaran.my_usulan.each do |usulan|  %>
                     <tr>
-                      <td class="border-bottom"><%= usulan.try(:alamat) || usulan.try(:peraturan_terkait) %></td>
+                      <td class="border-bottom"><%= usulan.try(:alamat) || usulan.try(:peraturan_terkait) || usulan.try(:manfaat) %></td>
                     </tr>
                   <% end %>
                 </table>

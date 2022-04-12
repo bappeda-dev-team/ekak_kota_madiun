@@ -7,11 +7,22 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :anggaran_sshes
   resources :subkegiatan_tematiks, path: 'tematiks'
   resources :rekenings
-  resources :pokpirs
-  resources :inovasis
+  resources :pokpirs do
+    member do
+      post :toggle_is_active
+      post :diambil_asn
+    end
+  end
+  resources :inovasis do
+    member do
+      post :toggle_is_active
+      post :diambil_asn
+    end
+  end
   resources :mandatoris do
     member do
       post :toggle_is_active
+      post :diambil_asn
     end
   end
   resources :asn_musrenbangs, path: 'asn_usulan'
@@ -48,7 +59,12 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :kaks, path: 'acuan_kerja'
-  resources :musrenbangs
+  resources :musrenbangs do
+    member do
+      post :toggle_is_active
+      post :diambil_asn
+    end
+  end
   resources :lembagas
   resources :opds
   resources :program_kegiatans
@@ -77,11 +93,14 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # search usulans
   get '/musrenbang_search', to: 'musrenbangs#musrenbang_search'
   get '/mandatori_search', to: 'mandatoris#mandatori_search'
+  get '/pokpir_search', to: 'pokpirs#pokpir_search'
+  get '/inovasi_search', to: 'inovasis#inovasi_search'
+  # delete later
   patch '/aktifkan_usulan/:id', to: 'musrenbangs#aktifkan_usulan'
   patch '/non_aktifkan_usulan/:id', to: 'musrenbangs#non_aktifkan_usulan'
   # usulans
   post '/update_sasaran_asn', to: 'usulans#update_sasaran_asn'
-  # pokpir
+  # pokpir delete later
   patch '/aktifkan_pokpir/:id', to: 'pokpirs#aktifkan_pokpir'
   patch '/non_aktifkan_pokpir/:id', to: 'pokpirs#non_aktifkan_pokpir'
   # laporan kak

@@ -30,31 +30,24 @@
                 <th class="border-bottom" scope="col">Usulan</th>
                 <th class="border-bottom" scope="col">Alamat</th>
                 <th class="border-bottom text-center" scope="col">Status</th>
-                <th class="border-bottom text-center" scope="col" colspan="1">Action</th>
               </tr>
             </thead>
             <tbody>
               <% @pokpirs.each.with_index(1) do |pokpir, i| %>
                 <tr>
                   <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                  <td class="fw-bolder text-gray-500"><%= truncate(pokpir.usulan, length: 30, separator: '...') %></td>
-                  <td class="fw-bolder text-gray-500"><%= truncate(pokpir.alamat, length: 25, separator: '...') %></td>
+                  <td class="fw-bolder align-middle"><%= truncate(pokpir.usulan, length: 30, separator: '...') %></td>
+                  <td class="fw-bolder align-middle"><%= truncate(pokpir.alamat, length: 25, separator: '...') %></td>
                   <td class="action-<%= pokpir.id %> text-center">
-                    <% unless pokpir.is_active %>
-                      <%= button_to toggle_is_active_pokpir_path(pokpir), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
-                        Aktifkan
-                        <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
+                    <% if pokpir.nip_asn.nil? %>
+                      <%= button_to diambil_asn_pokpir_path(pokpir), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
+                        Ambil Usulan
                       <% end %>
                     <% else %>
-                      <%= button_to toggle_is_active_pokpir_path(pokpir), remote: true, class: 'btn btn-danger d-inline-flex align-items-center toggle-active' do %>
-                        Non Aktifkan
-                        <i class="fas fa-ban text-primary icon icon-xs ms-2"></i>
-                      <% end %>
-                    <% end %>
-                  </td>
-                  <td class="fw-bolder text-gray-500 text-center">
-                    <%= link_to edit_pokpir_path(pokpir), remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#form-usulan'} do %>
-                      <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit usulan"></i>
+                      <button class= 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
+                        Usulan Diambil
+                        <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
+                      </button>
                     <% end %>
                   </td>
                 </tr>

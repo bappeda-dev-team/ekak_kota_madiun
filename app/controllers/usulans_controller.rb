@@ -7,9 +7,9 @@ class UsulansController < ApplicationController
     usulan = usulan_type.constantize.find(usulan)
     respond_to do |format|
       if u.save && usulan.update(sasaran_id: sasaran)
-        format.js { render 'musrenbangs/update_sasaran_asn' }
+        format.js { render 'update_sasaran_asn' }
       else
-        format.js { render 'musrenbangs/update_sasaran_asn', status: :unprocessable_entity }
+        format.js { render 'update_sasaran_asn', status: :unprocessable_entity }
       end
     end
   end

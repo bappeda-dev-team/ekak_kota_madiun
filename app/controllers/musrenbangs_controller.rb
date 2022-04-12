@@ -1,6 +1,6 @@
 class MusrenbangsController < ApplicationController
   before_action :set_musrenbang,
-                only: %i[show edit update destroy aktifkan_usulan non_aktifkan_usulan update_sasaran_asn]
+                only: %i[show edit update destroy aktifkan_usulan non_aktifkan_usulan diambil_asn]
 
   # GET /musrenbangs or /musrenbangs.json
   def index
@@ -9,7 +9,13 @@ class MusrenbangsController < ApplicationController
 
   def usulan_musrenbang
     @musrenbangs = Musrenbang.all.order(:created_at)
-    render 'index'
+    render 'user_musrenbang'
+  end
+
+  def diambil_asn
+    @musrenbang.update(nip_asn: current_user.nik)
+    flash[:notice] = 'Usulan berhasil diambil'
+    redirect_back fallback_location: usulan_musrenbang_path
   end
 
   def asn_musrenbang
@@ -20,13 +26,19 @@ class MusrenbangsController < ApplicationController
 
   def musrenbang_search
     param = params[:q] || ''
-    @musrenbangs = Search::AllUsulan.where(sasaran_id: nil)
-                                    .where(
-                                      'usulan ILIKE ?', "%#{param}%"
-                                    ).includes(:searchable)
-                                    .collect(&:searchable)
+    @musrenbangs = Search::AllUsulan
+                   .where(
+                     "searchable_type = 'Musrenbang' and sasaran_id is null and usulan ILIKE ?", "%#{param}%"
+                   ).includes(:searchable)
+                   .collect(&:searchable)
   end
 
+  def toggle_is_active
+    @musrenbang = Musrenbang.find(params[:id])
+    @musrenbang.toggle! :is_active
+  end
+
+  # TODO: hapus nanti
   def aktifkan_usulan
     respond_to do |format|
       format.js { render :aktifkan_usulan } if @musrenbang.update_attribute(:is_active, 1)
@@ -36,13 +48,6 @@ class MusrenbangsController < ApplicationController
   def non_aktifkan_usulan
     respond_to do |format|
       format.js { render :non_aktifkan_usulan } if @musrenbang.update_attribute(:is_active, 0)
-    end
-  end
-
-  def update_sasaran_asn
-    sasaran = params[:sasaran_id]
-    respond_to do |format|
-      format.js { render :update_sasaran_asn } if @musrenbang.update_attribute(:sasaran_id, sasaran)
     end
   end
 

@@ -1,14 +1,35 @@
 class PokpirsController < ApplicationController
-  before_action :set_pokpir, only: %i[show edit update destroy aktifkan_pokpir non_aktifkan_pokpir]
+  before_action :set_pokpir, only: %i[show edit update destroy aktifkan_pokpir non_aktifkan_pokpir diambil_asn]
 
   # GET /pokpirs or /pokpirs.json
   def index
     @pokpirs = Pokpir.all
   end
 
+  def toggle_is_active
+    @pokpir = Pokpir.find(params[:id])
+    @pokpir.toggle! :is_active
+  end
+
   def usulan_pokpir
     @pokpirs = Pokpir.all.order(:created_at)
-    render 'index'
+    render 'user_pokpir'
+  end
+
+  def diambil_asn
+    @pokpir.update(nip_asn: current_user.nik)
+    flash[:notice] = 'Usulan berhasil diambil'
+    redirect_back fallback_location: usulan_pokpir_path
+  end
+
+  def pokpir_search
+    param = params[:q] || ''
+    @pokpirs = Search::AllUsulan
+               .where(
+                 "searchable_type = 'Pokpir' and sasaran_id is null and usulan ILIKE ?", "%#{param}%"
+               )
+               .includes(:searchable)
+               .collect(&:searchable)
   end
 
   # GET /pokpirs/1 or /pokpirs/1.json
