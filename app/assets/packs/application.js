@@ -124,6 +124,23 @@ $(function () {
     $('input:hidden[name=usulan_type]').val(e.params.data.usulan_type)
     console.log(e.params.data)
   });
+  $("#select2-inovasi").select2({
+    width: "100%",
+    theme: "bootstrap-5",
+    ajax: {
+      delay: 1000,
+      url: '/inovasi_search.json',
+      data: (params) => ({ q: params.term })
+    },
+    language: {
+      inputTooShort: function () {
+        return "Input minimal 3 Karakter";
+      }
+    }
+  }).on('select2:select', function (e) {
+    $('input:hidden[name=usulan_type]').val(e.params.data.usulan_type)
+    console.log(e.params.data)
+  });
   $('#form-perhitungan-body').on('show', function () {
     $(".select2-rekenings").select2({
       width: "100%",

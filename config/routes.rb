@@ -13,7 +13,12 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       post :diambil_asn
     end
   end
-  resources :inovasis
+  resources :inovasis do
+    member do
+      post :toggle_is_active
+      post :diambil_asn
+    end
+  end
   resources :mandatoris do
     member do
       post :toggle_is_active
@@ -89,11 +94,13 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/musrenbang_search', to: 'musrenbangs#musrenbang_search'
   get '/mandatori_search', to: 'mandatoris#mandatori_search'
   get '/pokpir_search', to: 'pokpirs#pokpir_search'
+  get '/inovasi_search', to: 'inovasis#inovasi_search'
+  # delete later
   patch '/aktifkan_usulan/:id', to: 'musrenbangs#aktifkan_usulan'
   patch '/non_aktifkan_usulan/:id', to: 'musrenbangs#non_aktifkan_usulan'
   # usulans
   post '/update_sasaran_asn', to: 'usulans#update_sasaran_asn'
-  # pokpir
+  # pokpir delete later
   patch '/aktifkan_pokpir/:id', to: 'pokpirs#aktifkan_pokpir'
   patch '/non_aktifkan_pokpir/:id', to: 'pokpirs#non_aktifkan_pokpir'
   # laporan kak

@@ -36,8 +36,8 @@
               <% @pokpirs.each.with_index(1) do |pokpir, i| %>
                 <tr>
                   <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                  <td class="fw-bolder text-gray-500"><%= truncate(pokpir.usulan, length: 30, separator: '...') %></td>
-                  <td class="fw-bolder text-gray-500"><%= truncate(pokpir.alamat, length: 25, separator: '...') %></td>
+                  <td class="fw-bolder align-middle"><%= truncate(pokpir.usulan, length: 30, separator: '...') %></td>
+                  <td class="fw-bolder align-middle"><%= truncate(pokpir.alamat, length: 25, separator: '...') %></td>
                   <td class="action-<%= pokpir.id %> text-center">
                     <% if pokpir.nip_asn.nil? %>
                       <%= button_to diambil_asn_pokpir_path(pokpir), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>

@@ -36,8 +36,8 @@
               <% @musrenbangs.each.with_index(1) do |musrenbang, i| %>
                 <tr>
                   <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                  <td class="fw-bolder text-gray-500"><%= truncate(musrenbang.usulan, length: 30, separator: '...') %></td>
-                  <td class="fw-bolder text-gray-500"><%= truncate(musrenbang.alamat, length: 25, separator: '...') %></td>
+                  <td class="fw-bolder align-middle"><%= truncate(musrenbang.usulan, length: 30, separator: '...') %></td>
+                  <td class="fw-bolder align-middle"><%= truncate(musrenbang.alamat, length: 25, separator: '...') %></td>
                   <td class="action-<%= musrenbang.id %> text-center">
                     <% if musrenbang.nip_asn.nil? %>
                       <%= button_to diambil_asn_musrenbang_path(musrenbang), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
