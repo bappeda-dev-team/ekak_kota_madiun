@@ -1,0 +1,9 @@
+$("#<%= dom_id(@mandatori) %> .toggle-active").contents().filter(function () {
+  return this.nodeType == 3 && this.textContent.trim();
+})[0].textContent = 'Aktif';
+
+$("#<%= dom_id(@mandatori) %> .toggle-active .fa-check-circle")
+  .addClass('fas fa-key')
+  .removeClass('fas fa-check-circle');
+
+$("#<%= dom_id(@mandatori) %> .toggle-active").prop('disabled', true)
