@@ -90,6 +90,23 @@ $(function () {
     $('input:hidden[name=usulan_type]').val(e.params.data.usulan_type)
     console.log(e.params.data)
   });
+  $("#select2-pokpir").select2({
+    width: "100%",
+    theme: "bootstrap-5",
+    ajax: {
+      delay: 1000,
+      url: '/pokpir_search.json',
+      data: (params) => ({ q: params.term })
+    },
+    language: {
+      inputTooShort: function () {
+        return "Input minimal 3 Karakter";
+      }
+    }
+  }).on('select2:select', function (e) {
+    $('input:hidden[name=usulan_type]').val(e.params.data.usulan_type)
+    console.log(e.params.data)
+  });
   $("#select2-mandatori").select2({
     width: "100%",
     theme: "bootstrap-5",

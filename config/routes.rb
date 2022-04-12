@@ -7,11 +7,17 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :anggaran_sshes
   resources :subkegiatan_tematiks, path: 'tematiks'
   resources :rekenings
-  resources :pokpirs
+  resources :pokpirs do
+    member do
+      post :toggle_is_active
+      post :diambil_asn
+    end
+  end
   resources :inovasis
   resources :mandatoris do
     member do
       post :toggle_is_active
+      post :diambil_asn
     end
   end
   resources :asn_musrenbangs, path: 'asn_usulan'
@@ -82,6 +88,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # search usulans
   get '/musrenbang_search', to: 'musrenbangs#musrenbang_search'
   get '/mandatori_search', to: 'mandatoris#mandatori_search'
+  get '/pokpir_search', to: 'pokpirs#pokpir_search'
   patch '/aktifkan_usulan/:id', to: 'musrenbangs#aktifkan_usulan'
   patch '/non_aktifkan_usulan/:id', to: 'musrenbangs#non_aktifkan_usulan'
   # usulans
