@@ -34,7 +34,7 @@
           <tr>
             <td><%= i %></td>
             <td><%= sas.usulan %></td>
-            <td><%= sas.alamat %></td>
+            <td><%= sas.try(:alamat) || sas.try(:peraturan_terkait) %></td>
             <td><%= sas.class.name %></td>
           </tr>
         <% end %>
