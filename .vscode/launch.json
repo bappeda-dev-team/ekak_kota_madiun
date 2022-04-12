@@ -27,6 +27,7 @@
       "request": "launch",
       "cwd": "${workspaceRoot}",
       "program": "${workspaceRoot}/bin/rails",
+      "pathToRDebugIDE": "/home/ry/.rbenv/shims/rdebug-ide",
       "showDebuggerOutput": true,
       "args": [
         "server"
