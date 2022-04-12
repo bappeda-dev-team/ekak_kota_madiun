@@ -8,7 +8,7 @@ class MandatorisController < ApplicationController
 
   def usulan_mandatori
     @mandatoris = Mandatori.where(nip_asn: current_user.nik).order(:created_at)
-    render 'index'
+    render 'user_mandatori'
   end
 
   # GET /mandatoris/1 or /mandatoris/1.json
