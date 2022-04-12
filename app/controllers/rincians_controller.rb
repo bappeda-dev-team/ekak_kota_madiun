@@ -1,5 +1,5 @@
 class RinciansController < ApplicationController
-  before_action :my_sasaran, only: %i[index new create show edit]
+  before_action :my_sasaran, only: %i[index new create show edit subkegiatan sasaran]
   before_action :set_rincian, only: %i[show edit update destroy]
   before_action :set_dropdown, only: %i[new edit]
 
@@ -14,6 +14,12 @@ class RinciansController < ApplicationController
   # GET /rincians/new
   def new
     @rincian = Rincian.new
+  end
+
+  def subkegiatan
+    @rincian = Rincian.new
+    @jenis = 'subkegiatan'
+    render :new
   end
 
   # GET /rincians/1/edit

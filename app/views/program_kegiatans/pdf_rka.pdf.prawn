@@ -54,6 +54,7 @@ prawn_document do |pdf|
         end
       end
       pdf.table(header_anggaran, cell_style: { size: 6 }, width: pdf.bounds.width)
+      pdf.move_down 5
       pdf.text "Pemilik Sasaran : #{sasaran.user.nama}"
       header_anggaran.clear
     end

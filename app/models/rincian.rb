@@ -25,5 +25,5 @@
 class Rincian < ApplicationRecord
   has_many :kesenjangans
 
-  validates :lokasi_pelaksanaan, presence: true
+  # validates :lokasi_pelaksanaan, presence: true
 end
