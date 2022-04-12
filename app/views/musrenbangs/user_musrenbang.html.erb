@@ -29,32 +29,25 @@
                 <th class="border-bottom" scope="col">No.</th>
                 <th class="border-bottom" scope="col">Usulan</th>
                 <th class="border-bottom" scope="col">Alamat</th>
-                <th class="border-bottom text-center" scope="col">Status</th>
-                <th class="border-bottom text-center" scope="col" colspan='1'>Action</th>
+                <th class="border-bottom text-center" scope="col">Active ?</th>
               </tr>
             </thead>
             <tbody>
               <% @musrenbangs.each.with_index(1) do |musrenbang, i| %>
-                <tr id="<%= dom_id(musrenbang) %>">
+                <tr>
                   <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
                   <td class="fw-bolder text-gray-500"><%= truncate(musrenbang.usulan, length: 30, separator: '...') %></td>
                   <td class="fw-bolder text-gray-500"><%= truncate(musrenbang.alamat, length: 25, separator: '...') %></td>
+                  <td class="fw-bolder text-center" id="musren-<%= musrenbang.id %>"><%= status_icon(musrenbang.is_active) %></td>
                   <td class="action-<%= musrenbang.id %> text-center">
                     <% unless musrenbang.is_active %>
-                      <%= button_to toggle_is_active_musrenbang_path(musrenbang), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
-                        Aktifkan
-                        <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
+                      <%= link_to "/aktifkan_usulan/#{musrenbang.id}", method: :patch, remote: true do %>
+                        <i class="fas fa-check-square text-success" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Aktifkan"></i>
                       <% end %>
                     <% else %>
-                      <%= button_to toggle_is_active_musrenbang_path(musrenbang), remote: true, class: 'btn btn-danger d-inline-flex align-items-center toggle-active' do %>
-                        Non Aktifkan
-                        <i class="fas fa-ban text-primary icon icon-xs ms-2"></i>
+                      <%= link_to "/non_aktifkan_usulan/#{musrenbang.id}", method: :patch, remote: true do %>
+                        <i class="fas fa-times-circle text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Non Aktifkan"></i>
                       <% end %>
-                    <% end %>
-                  </td>
-                  <td class="fw-bolder text-gray-500 text-center">
-                    <%= link_to edit_musrenbang_path(musrenbang), remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#form-usulan'} do %>
-                      <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit usulan"></i>
                     <% end %>
                   </td>
                 </tr>

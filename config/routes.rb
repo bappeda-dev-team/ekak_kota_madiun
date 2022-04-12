@@ -48,7 +48,11 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :kaks, path: 'acuan_kerja'
-  resources :musrenbangs
+  resources :musrenbangs do
+    member do
+      post :toggle_is_active
+    end
+  end
   resources :lembagas
   resources :opds
   resources :program_kegiatans
