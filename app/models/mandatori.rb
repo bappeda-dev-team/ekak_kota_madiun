@@ -23,6 +23,13 @@ class Mandatori < ApplicationRecord
   validates :usulan, presence: true
   validates :peraturan_terkait, presence: true
   belongs_to :sasaran, optional: true
+  has_many :usulans, as: :usulanable
 
   default_scope { order(created_at: :desc) }
+
+  def asn_pengusul
+    User.find_by(nik: nip_asn).nama
+  rescue NoMethodError
+    '-'
+  end
 end

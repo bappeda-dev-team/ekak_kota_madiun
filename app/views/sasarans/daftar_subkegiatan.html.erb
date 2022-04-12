@@ -33,7 +33,7 @@
             <th colspan="4" class="border-start"></th>
             <th class="border-start border-end">nama</th>
             <th class="border-start border-end">jenis</th>
-            <th class="border-start border-end">lokasi</th>
+            <th class="border-start border-end">keterangan</th>
             <th colspan="2" class="border-end"></th>
           </tr>
         </thead>
@@ -66,7 +66,7 @@
                 <table class="table table-bordered px-0 text-center">
                   <% sasaran.my_usulan.each do |usulan|  %>
                     <tr>
-                      <td class="border-bottom"><%= usulan.alamat %></td>
+                      <td class="border-bottom"><%= usulan.try(:alamat) || usulan.try(:peraturan_terkait) %></td>
                     </tr>
                   <% end %>
                 </table>

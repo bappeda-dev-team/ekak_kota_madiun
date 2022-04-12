@@ -10,6 +10,9 @@
     </div>
   <% end %>
   <div class="field">
+    <%= form.hidden_field :nip_asn, value: current_user.nik %>
+  </div>
+  <div class="field">
     <%= form.label :usulan, class: 'form-label' %>
     <%= form.text_field :usulan, class: 'form-control' %>
   </div>

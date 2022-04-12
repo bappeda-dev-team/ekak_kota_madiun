@@ -9,8 +9,8 @@
           <div class="field">
             <%= form.hidden_field :sasaran_id, value: sasaran.id   %>
             <%= form.hidden_field :usulan_type  %>
-            <%= form.label :usulan %>
-            <%= form.select :usulan_id, [], {include_blank: true}, {id: "select2-musrenbang", "data-placeholder": "Pilih Usulan"} %>
+            <%= form.label 'Mandatori' %>
+            <%= form.select :usulan_id, [], {include_blank: true}, {id: "select2-mandatori", "data-placeholder": "Usulan Mandatori"} %>
           </div>
           <div class="actions">
             <%= form.submit %>
@@ -25,16 +25,16 @@
         <tr>
           <th>No</th>
           <th>Usulan</th>
-          <th>Alamat</th>
+          <th>Peraturan Terkait</th>
           <th>Jenis Usulan</th>
         </tr>
       </thead>
       <tbody>
-        <% sasaran.my_usulan.filter { |g| g.instance_of?(Musrenbang) }.each.with_index(1) do |sas, i| %>
+        <% sasaran.my_usulan.filter { |g| g.instance_of?(Mandatori) }.each.with_index(1) do |sas, i| %>
           <tr>
             <td><%= i %></td>
             <td><%= sas.usulan %></td>
-            <td><%= sas.try(:alamat) || sas.try(:peraturan_terkait) %></td>
+            <td><%= sas.peraturan_terkait %></td>
             <td><%= sas.class.name %></td>
           </tr>
         <% end %>
