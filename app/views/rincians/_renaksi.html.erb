@@ -37,6 +37,10 @@
           <strong>Waktu yang dibutuhkan :</strong>
           <%= waktu = sasaran.waktu_total == 0 ? "-" : sasaran.waktu_total %> bulan
         </caption>
+        <caption class="waktu-renaksi">
+          <strong>Anggaran yang dibutuhkan :</strong>
+          Rp. <%= sasaran.total_anggaran_dengan_komentar %>
+        </caption>
         <thead class="thead-light">
           <tr>
             <th class="border-bottom border-end border-start" scope="col" rowspan="2">No.</th>

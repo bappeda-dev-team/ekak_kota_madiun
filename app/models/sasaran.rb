@@ -100,6 +100,12 @@ class Sasaran < ApplicationRecord
     '-'
   end
 
+  def total_anggaran_dengan_komentar
+    tahapans.map { |t| t.anggarans.where.missing(:comments).compact.sum(&:jumlah) }.inject(:+)
+  rescue TypeError
+    '-'
+  end
+
   def jumlah_target
     tahapans.sum(:jumlah_target).nonzero? || '-'
   end
