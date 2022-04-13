@@ -89,7 +89,7 @@
         <tfoot>
           <tr>
             <td colspan="6" style="text-align:right">Jumlah Anggaran Tahapan :</td>
-            <td class="text-end">Rp. <%= number_with_delimiter(@anggarans.sum(:jumlah), :delimiter => '.') %></td>
+            <td class="text-end">Rp. <%= number_with_delimiter(@anggarans.compact.sum(&:jumlah), :delimiter => '.') %></td>
           </tr>
         </tfoot>
       </table>
