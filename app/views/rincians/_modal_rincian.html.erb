@@ -11,3 +11,14 @@
     </div>
   </div>
 </div>
+<script>
+  $(document).ready(function() {
+    $('#form-rincian').on('show.bs.modal', function(event) {
+      const title = $('#form-rincian-title')
+      const button = $('.rincian').on('click', function(e) {
+       const text = $(this).data('title') || 'Form Rincian Sasaran'
+       title.text(text)
+      })
+    });
+  });
+</script>

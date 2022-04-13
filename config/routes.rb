@@ -35,7 +35,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     resources :sasarans, path: 'sasaran_kerja'
   end
   resources :sasarans do
-    resources :rincians
+    resources :rincians do
+      get 'subkegiatan', on: :new
+    end
     resources :tahapans do
       resources :aksis, path: 'rencana_aksi'
       resources :anggarans

@@ -1,0 +1,40 @@
+<%= form_with(model: [@sasaran, rincian]) do |form| %>
+  <% if rincian.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(rincian.errors.count, "error") %> prohibited this rincian from being saved:</h2>
+      <ul>
+        <% rincian.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= form.hidden_field :sasaran_id, value: @sasaran.id  %>
+  <div class="field">
+    <%= form.label :data_terpilah, { class: "form-label" } %>
+    <%= form.text_field :data_terpilah, { class: "form-control" } %>
+  </div>
+  <div class="field">
+    <%= form.label :penyebab_internal, { class: "form-label" } %>
+    <%= form.text_field :penyebab_internal, { class: "form-control" } %>
+  </div>
+  <div class="field">
+    <%= form.label :penyebab_external, { class: "form-label" } %>
+    <%= form.text_field :penyebab_external, { class: "form-control" } %>
+  </div>
+  <div class="field">
+    <%= form.label :permasalahan_umum, { class: "form-label" } %>
+    <%= form.text_field :permasalahan_umum, { class: "form-control" } %>
+  </div>
+  <div class="field">
+    <%= form.label :permasalahan_gender, { class: "form-label" } %>
+    <%= form.text_field :permasalahan_gender, { class: "form-control" } %>
+  </div>
+  <div class="field">
+    <%= form.label :resiko, { class: "form-label" } %>
+    <%= form.text_field :resiko, { class: "form-control" } %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

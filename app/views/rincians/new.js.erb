@@ -1,0 +1,6 @@
+if ("<%= j @jenis %>" == 'subkegiatan') {
+  $('#form-rincian-body').html("<%= j render 'form_subkegiatan', rincian: @rincian %>").trigger('show')
+}
+else {
+  $('#form-rincian-body').html("<%= j render 'form', rincian: @rincian %>").trigger('show')
+}

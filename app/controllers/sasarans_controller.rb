@@ -1,5 +1,5 @@
 class SasaransController < ApplicationController
-  before_action :get_user, only: %i[index new create]
+  before_action :get_user, only: %i[index new create update destroy]
   before_action :set_sasaran, only: %i[show edit update destroy update_program_kegiatan renaksi_update]
   before_action :set_dropdown, only: %i[new edit]
 
@@ -61,7 +61,7 @@ class SasaransController < ApplicationController
 
     respond_to do |format|
       if @sasaran.update(sasaran_params)
-        format.html { redirect_to sasaran_path, notice: 'Sasaran was successfully updated.' }
+        format.html { redirect_to user_sasaran_path(@user, @sasaran), notice: 'Sasaran was successfully updated.' }
         format.json { render :show, status: :ok, location: @sasaran }
       else
         format.html { render :edit, status: :unprocessable_entity }
