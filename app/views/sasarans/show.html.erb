@@ -22,32 +22,9 @@
 <% else %>
   <%= render 'rincians/renaksi', sasaran: @sasaran %>
 <% end %>
-<div class="card border-2 shadow mb-3">
-  <div class="card-header">
-    <div class="row align-items-center">
-      <div class="row align-items-center">
-        <div class="col">
-          <h5>Rincian KAK</h5>
-        </div>
-        <% unless @sasaran.rincian %>
-          <div>
-            <%= link_to "Tambah Rincian Sub Kegiatan", subkegiatan_new_sasaran_rincian_path(@sasaran), remote: true, 
-                  class: "btn btn-primary", data: {'bs-toggle': 'modal', 'bs-target': '#form-rincian'} %>
-          </div>
-          <div>
-            <%= link_to "Tambah Rincian Sasaran", new_sasaran_rincian_path(@sasaran), remote: true,
-                  class: "btn btn-secondary", data: {'bs-toggle': 'modal', 'bs-target': '#form-rincian'} %>
-          </div>
-        <% else %>
-          <div>
-            <%= link_to "Lihat Rincian", sasaran_rincian_path(@sasaran, @sasaran.rincian), class: "btn btn-info text-white"  %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
+<%= render 'rincians/rincian_card', sasaran: @sasaran %>
 <!-- SECTION - Modal-->
+<!-- TODO - DRY-->
 <%= render 'modal' %>
 <%= render 'modal_perhitungans' %>
 <%= render 'aksis/modal_target'  %>

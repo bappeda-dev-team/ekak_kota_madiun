@@ -1,5 +1,5 @@
 class RinciansController < ApplicationController
-  before_action :my_sasaran, only: %i[index new create show edit subkegiatan sasaran]
+  before_action :my_sasaran, only: %i[index new create update show edit subkegiatan sasaran]
   before_action :set_rincian, only: %i[show edit update destroy]
   before_action :set_dropdown, only: %i[new edit]
 
@@ -32,7 +32,7 @@ class RinciansController < ApplicationController
     respond_to do |format|
       if @rincian.save
         format.html do
-          redirect_to user_sasaran_path(@sasaran.user, @sasaran), notice: 'Rincian was successfully created.'
+          redirect_to user_sasaran_path(@sasaran.user, @sasaran), notice: 'Rincian berhasil ditambahkan.'
         end
         format.json { render :show, status: :created, location: @rincian }
       else
@@ -47,7 +47,7 @@ class RinciansController < ApplicationController
     respond_to do |format|
       if @rincian.update(rincian_params)
         format.html do
-          redirect_to sasaran_rincian_path(@rincian.sasaran_id, @rincian), notice: 'Rincian was successfully updated.'
+          redirect_to user_sasaran_path(@sasaran.user, @sasaran), notice: 'Rincian berhasil diupdate.'
         end
         format.json { render :show, status: :ok, location: @rincian }
       else
