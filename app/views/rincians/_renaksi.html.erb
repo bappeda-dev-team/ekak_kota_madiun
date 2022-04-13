@@ -61,7 +61,7 @@
         </thead>
         <tbody>
           <% sasaran.tahapans.includes([:anggarans]).order(:created_at).each.with_index(1) do |tahapan, index| %>
-            <tr>
+            <tr class="<%= tahapan.ada_komentar? ? 'higlighted' : '' %>">
               <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= index %></td>
               <td class="text-gray-900"><%= tahapan.tahapan_kerja %></td>
               <% (1..12).each do |bulan| %>

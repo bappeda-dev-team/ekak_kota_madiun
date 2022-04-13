@@ -51,4 +51,8 @@ class Tahapan < ApplicationRecord
   rescue NoMethodError
     '0'
   end
+
+  def ada_komentar?
+    anggarans.map(&:comments).any?(&:present?)
+  end
 end
