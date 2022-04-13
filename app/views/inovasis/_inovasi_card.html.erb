@@ -5,19 +5,20 @@
         <div class="col">
           <h5>Usulan Inisiatif</h5>
         </div>
-        <%= form_with(url: '/update_sasaran_asn', local: false) do |form| %>
-          <div class="field">
-            <%= form.hidden_field :sasaran_id, value: sasaran.id   %>
-            <%= form.hidden_field :usulan_type  %>
-            <%= form.label 'Inisiatif' %>
-            <%= form.select :usulan_id, [], {include_blank: true}, {id: "select2-inovasi", "data-placeholder": "Usulan Inisiatif"} %>
-          </div>
-          <div class="actions">
-            <%= form.submit %>
-          </div>
-        <% end %>
       </div>
     </div>
+  </div>
+  <div class="card-body">
+    <%= form_with(url: '/update_sasaran_asn', local: false) do |form| %>
+      <div class="field">
+        <%= form.hidden_field :sasaran_id, value: sasaran.id   %>
+        <%= form.hidden_field :usulan_type  %>
+        <%= form.select :usulan_id, [], {include_blank: true}, {id: "select2-inovasi", "data-placeholder": "Pilih Usulan"} %>
+      </div>
+      <div class="actions">
+        <%= form.submit %>
+      </div>
+    <% end %>
   </div>
   <div class="card-body">
     <table class="table" id="musrenbang-table">
