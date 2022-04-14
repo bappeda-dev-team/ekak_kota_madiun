@@ -1,9 +1,9 @@
 class UpdateProgramJob < ApplicationJob
   queue_as :default
   after_perform :show_message
-  def perform(_kode_opd, _tahun, _bulan)
-    request = Api::SipdClient.new('test', 'test')
-    request.data_master_program
+  def perform(kode_opd, tahun)
+    request = Api::SipdClient.new(kode_opd, tahun)
+    request.data_subkegiatan_all
   end
 
   private

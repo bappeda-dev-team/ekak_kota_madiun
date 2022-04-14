@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_02_133813) do
+ActiveRecord::Schema.define(version: 2022_04_14_062221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "action_mailbox_inbound_emails", force: :cascade do |t|
+    t.integer "status", default: 0, null: false
+    t.string "message_id", null: false
+    t.string "message_checksum", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["message_id", "message_checksum"], name: "index_action_mailbox_inbound_emails_uniqueness", unique: true
+  end
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -272,17 +281,6 @@ ActiveRecord::Schema.define(version: 2022_04_02_133813) do
     t.index ["anggaran_id"], name: "index_perhitungans_on_anggaran_id"
   end
 
-  create_table "pks", force: :cascade do |t|
-    t.string "sasaran"
-    t.string "indikator_kinerja"
-    t.string "target"
-    t.string "satuan"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_pks_on_user_id"
-  end
-
   create_table "pokpirs", force: :cascade do |t|
     t.string "usulan"
     t.string "alamat"
@@ -313,6 +311,25 @@ ActiveRecord::Schema.define(version: 2022_04_02_133813) do
     t.string "indikator_program"
     t.string "target_program"
     t.string "satuan_target_program"
+    t.string "urusan"
+    t.string "bidang_urusan"
+    t.string "outcome"
+    t.string "pagu_giat"
+    t.string "pagu_subgiat"
+    t.string "id_program"
+    t.string "id_renstra"
+    t.string "id_unit"
+    t.string "kode_urusan"
+    t.string "nama_urusan"
+    t.string "kode_bidang_urusan"
+    t.string "nama_bidang_urusan"
+    t.string "id_program_sipd"
+    t.string "kode_program"
+    t.string "kode_giat"
+    t.string "id_sub_giat"
+    t.string "kode_sub_giat"
+    t.string "pagu"
+    t.string "identifier_belanja"
     t.index ["subkegiatan_tematik_id"], name: "index_program_kegiatans_on_subkegiatan_tematik_id"
   end
 
@@ -443,7 +460,6 @@ ActiveRecord::Schema.define(version: 2022_04_02_133813) do
   add_foreign_key "comments", "anggarans"
   add_foreign_key "comments", "users"
   add_foreign_key "kesenjangans", "rincians"
-  add_foreign_key "pks", "users"
   add_foreign_key "program_kegiatans", "opds", column: "kode_opd", primary_key: "kode_opd"
   add_foreign_key "program_kegiatans", "subkegiatan_tematiks"
   add_foreign_key "rincians", "sasarans"

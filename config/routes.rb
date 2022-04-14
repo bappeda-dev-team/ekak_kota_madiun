@@ -137,6 +137,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # third party Api
   get '/sync_sasaran', to: 'api/skp_client#sync_sasaran'
   get '/sync_pegawai', to: 'api/skp_client#sync_pegawai'
+  get '/sync_subkegiatan', to: 'api/sipd_client#sync_subkegiatan'
 
   post '/filter_sasaran', to: 'filter#filter_sasaran'
   post '/filter_user', to: 'filter#filter_user'

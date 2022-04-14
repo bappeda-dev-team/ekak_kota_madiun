@@ -4,7 +4,8 @@
       <h2 class="fs-5 fw-bold mb-0">Daftar Program Kegiatan</h2>
     </div>
     <div class="col text-end">
-      <%= link_to '#', class:"btn btn-sm btn-primary" do %>
+      <% id_opd = Opd.find_by(kode_unik_opd: @kode_opd).id_opd_skp %>
+      <%= link_to sync_subkegiatan_path(kode_opd: id_opd, tahun: Date.today.year), class:"btn btn-sm btn-primary" do %>
         <i class="fas fa-sync me-2"></i>
         Sync Program, Kegiatan, dan Sub Kegiatan
       <% end %>

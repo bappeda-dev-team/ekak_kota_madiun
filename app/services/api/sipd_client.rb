@@ -6,22 +6,27 @@ module Api
     URL = 'http://10.11.15.120:8888'.freeze
     H = HTTP.accept(:json)
 
-    attr_accessor :id_sipd, :bulan, :tahun
+    attr_accessor :id_sipd, :tahun
 
-    def initialize(_id_sipd, _tahun)
+    def initialize(id_sipd, tahun)
       # TODO: dynamic assign this later
-      @id_sipd = '474'
-      @tahun = 2022
+      @id_sipd = id_sipd || '481'
+      @tahun = tahun || 2022
+    end
+
+    def data_subkegiatan_all
+      request = request_sub_kegiatan_all(@tahun, @id_sipd)
+      proses_data_subkegiatan(request)
     end
 
     def data_master_program
       request = request_master_program
-      request_data_master_program(request)
+      proses_data_master_program(request)
     end
 
     def detail_master_program(id_program)
       request = request_detail_master_program(id_program)
-      update_detail_master_program(request)
+      proses_detail_master_program(request)
     end
 
     def gabung_data(program, id_gabung)
@@ -37,12 +42,11 @@ module Api
       result.data
     end
 
-    def sub_kegiatan_detail
-      response = H.get("#{URL}/get_komponen_all/109?tahun=#{tahun}&id_sub_skpd=#{id_sipd}")
-      response.parse['data']
-    end
-
     private
+
+    def request_sub_kegiatan_all(tahun, id_sipd)
+      H.get("#{URL}/get_komponen_all/109?tahun=#{tahun}&id_sub_skpd=#{id_sipd}")
+    end
 
     def request_master_program
       H.get("#{URL}/master_program/109")
@@ -52,7 +56,7 @@ module Api
       H.get("#{URL}/indikator_per_program/109/#{id_program}")
     end
 
-    def request_data_master_program(response)
+    def proses_data_master_program(response)
       data = Oj.load(response.body)
       programs = data['data']
       data_program = []
@@ -69,7 +73,7 @@ module Api
       data_program
     end
 
-    def update_detail_master_program(response)
+    def proses_detail_master_program(response)
       data = Oj.load(response.body)
       program_details = data['data']
       detail_program = []
@@ -84,6 +88,50 @@ module Api
                             target: target, nama_urusan: nama_urusan, nama_bidang_urusan: nama_bidang_urusan }
       end
       detail_program
+    end
+
+    def proses_data_subkegiatan(response)
+      data = Oj.load(response.body)
+      data_detail = data['data']
+     jajals = data_detail.uniq { |el| el['kode_sub_giat'] }
+      data_subkegiatan = []
+      jajals.each do |sub|
+        id_rinci_sub_bl = sub['id_rinci_sub_bl']
+        kode_sub_skpd = sub["kode_sub_skpd"]
+        id_unit = sub['id_unit']
+        kode_urusan = sub['kode_urusan']
+        nama_urusan = sub['nama_urusan']
+        kode_bidang_urusan = sub['kode_bidang_urusan']
+        nama_bidang_urusan = sub['nama_bidang_urusan']
+        id_program_sipd = sub['id_program']
+        kode_program = sub['kode_program']
+        nama_program = sub['nama_program']
+        kode_giat = sub['kode_giat']
+        nama_kegiatan = sub['nama_giat']
+        kode_sub_giat = sub['kode_sub_giat']
+        nama_sub_giat = sub['nama_sub_giat']
+        pagu = sub['pagu']
+        data_subkegiatan << {
+          identifier_belanja: id_rinci_sub_bl,
+          id_unit: id_unit,
+          kode_urusan: kode_urusan,
+          nama_urusan: nama_urusan,
+          kode_bidang_urusan: kode_bidang_urusan,
+          nama_bidang_urusan: nama_bidang_urusan,
+          id_program_sipd: id_program_sipd,
+          kode_program: kode_program,
+          nama_program: nama_program,
+          kode_giat: kode_giat,
+          nama_kegiatan: nama_kegiatan,
+          kode_sub_giat: kode_sub_giat,
+          nama_subkegiatan: nama_sub_giat,
+          pagu: pagu,
+          created_at: Time.now, 
+          updated_at: Time.now,
+          kode_opd: 1275 # warning hard coded 
+        }
+      end
+      ProgramKegiatan.insert_all(data_subkegiatan)
     end
   end
 end
