@@ -29,4 +29,8 @@ class Inovasi < ApplicationRecord
   rescue NoMethodError
     '-'
   end
+
+  def self.type
+    'Inisiatif'
+  end
 end

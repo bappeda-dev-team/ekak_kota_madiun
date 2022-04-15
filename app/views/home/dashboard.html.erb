@@ -19,20 +19,19 @@
           <table class="table table-hover align-items-center">
             <thead class="thead-light">
               <tr>
-                <th class="border-bottom text-center" scope="col">Sasaran</th>
-                <th class="border-bottom text-center" scope="col">Indikator</th>
+                <th class="border-bottom text-left" scope="col">Sasaran</th>
+                <th class="border-bottom text-left" scope="col">Indikator</th>
                 <th class="border-bottom text-center" scope="col">Target</th>
                 <th class="border-bottom text-center" scope="col">Satuan</th>
-                <th class="border-bottom text-center" scope="col">Aksi</th>
               </tr>
             </thead>
             <tbody>
               <% @sasaran.each do |s| %>
                 <tr>
-                  <td class="text-gray-900 text-justify" style="white-space: initial !important;">
+                  <td class="text-gray-900 text-left" style="white-space: initial !important;">
                     <%= s.sasaran_kinerja %>
                   </td>
-                  <td class="fw-bolder text-gray-500 text-justify" style="white-space: initial !important;">
+                  <td class="fw-bolder text-gray-500 text-left" style="white-space: initial !important;">
                     <%= s.indikator_kinerja %>
                   </td>
                   <td class="fw-bolder text-gray-500 text-center">
@@ -40,11 +39,6 @@
                   </td>
                   <td class="fw-bolder text-gray-500 text-center">
                     <%= s.satuan %>
-                  </td>
-                  <td class="fw-bolder text-gray-500 text-center">
-                    <%= link_to user_sasaran_path(current_user, s) do  %>
-                      <i class="fas fa-eye fa-lg" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Rencana Kinerja"></i>
-                    <% end  %>
                   </td>
                 </tr>
               <% end %>

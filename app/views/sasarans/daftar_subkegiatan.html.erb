@@ -57,7 +57,7 @@
                 <table class="table table-bordered px-0 text-center">
                   <% sasaran.my_usulan.each do |usulan|  %>
                     <tr>
-                      <td class="border-bottom"><%= usulan.class.name %></td>
+                      <td class="border-bottom"><%= usulan.class.type || usulan.class.name %></td>
                     </tr>
                   <% end %>
                 </table>

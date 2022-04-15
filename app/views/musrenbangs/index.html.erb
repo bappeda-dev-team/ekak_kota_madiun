@@ -36,10 +36,10 @@
             <tbody>
               <% @musrenbangs.each.with_index(1) do |musrenbang, i| %>
                 <tr id="<%= dom_id(musrenbang) %>">
-                  <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                  <td class="fw-bolder text-gray-500"><%= truncate(musrenbang.usulan, length: 30, separator: '...') %></td>
-                  <td class="fw-bolder text-gray-500"><%= truncate(musrenbang.alamat, length: 25, separator: '...') %></td>
-                  <td class="action-<%= musrenbang.id %> text-center">
+                  <td class="text-gray-900 fw-bolder align-middle" scope="row"><%= i %></td>
+                  <td class="fw-bolder text-gray-500 align-middle"><%= truncate(musrenbang.usulan, length: 30, separator: '...') %></td>
+                  <td class="fw-bolder text-gray-500 align-middle"><%= truncate(musrenbang.alamat, length: 25, separator: '...') %></td>
+                  <td class="action-<%= musrenbang.id %> text-center align-middle">
                     <% unless musrenbang.is_active %>
                       <%= button_to toggle_is_active_musrenbang_path(musrenbang), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
                         Aktifkan
@@ -52,7 +52,7 @@
                       <% end %>
                     <% end %>
                   </td>
-                  <td class="fw-bolder text-gray-500 text-center">
+                  <td class="fw-bolder text-gray-500 text-center align-middle">
                     <%= link_to edit_musrenbang_path(musrenbang), remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#form-usulan'} do %>
                       <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit usulan"></i>
                     <% end %>

@@ -24,4 +24,8 @@ class Pokpir < ApplicationRecord
   has_many :usulans, as: :usulanable
 
   default_scope { order(created_at: :desc) }
+
+  def self.type
+    "Pokok Pikiran DPRD"
+  end
 end
