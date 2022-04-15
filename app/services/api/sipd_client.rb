@@ -34,6 +34,7 @@ module Api
       detail_program = id_program.map { |id| detail_master_program(id) }.flatten
       flat_jajal = program << detail_program
       flat_jajal.flatten.group_by { |id| id[id_gabung] }.map { |_k, v| v.reduce(:merge) }
+      Program.upsert_all(flat_jajal, unique_by: [:id_program])
     end
 
     def list_opd

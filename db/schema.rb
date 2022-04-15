@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_14_062221) do
+ActiveRecord::Schema.define(version: 2022_04_15_222139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -326,6 +326,21 @@ ActiveRecord::Schema.define(version: 2022_04_14_062221) do
     t.string "pagu"
     t.string "identifier_belanja"
     t.index ["subkegiatan_tematik_id"], name: "index_program_kegiatans_on_subkegiatan_tematik_id"
+  end
+
+  create_table "programs", force: :cascade do |t|
+    t.string "id_program"
+    t.string "tahun"
+    t.string "kode_program"
+    t.string "nama_program"
+    t.string "id_unik"
+    t.string "indikator"
+    t.string "satuan"
+    t.string "target"
+    t.string "nama_urusan"
+    t.string "nama_bidang_urusan"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "rekenings", force: :cascade do |t|
