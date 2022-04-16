@@ -14,9 +14,13 @@ class MusrenbangsController < ApplicationController
   end
 
   def diambil_asn
-    @musrenbang.update(nip_asn: current_user.nik, status: 'pengajuan')
-    flash[:notice] = 'Usulan berhasil diambil'
-    redirect_back fallback_location: usulan_musrenbang_path
+    @musrenbang = Musrenbang.find(params[:id])
+    if @musrenbang.update(nip_asn: current_user.nik)
+      flash.now[:success] = 'Usulan berhasil diambil'
+    else
+      flash.now[:error] = 'Usulan gagal diambil'
+      :unprocessable_entity
+    end
   end
 
   def asn_musrenbang
@@ -36,8 +40,15 @@ class MusrenbangsController < ApplicationController
 
   def toggle_is_active
     @musrenbang = Musrenbang.find(params[:id])
-    @musrenbang.update(status: 'disetujui')
-    @musrenbang.toggle! :is_active
+    respond_to do |format|
+      if @musrenbang.update(status: 'disetujui')
+        @musrenbang.toggle! :is_active
+        format.js { render 'toggle_is_active', notice: 'Sukses Mengaktifkan' }
+      else
+        flash.now[:alert] = 'Gagal Mengaktifkan'
+        format.js { :unprocessable_entity }
+      end
+    end
   end
 
   # TODO: hapus nanti

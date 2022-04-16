@@ -30,7 +30,7 @@
       <%= yield :login %>
     <% end %>
   </body>
-  <% flash.each do |type, msg| %>
+  <div id="notice">
     <%= render 'shared/flash' %>
-  <% end %>
+  </div>
 </html>
