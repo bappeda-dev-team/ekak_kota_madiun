@@ -38,4 +38,12 @@ class Inovasi < ApplicationRecord
   def self.type
     'Inisiatif'
   end
+
+  def sasaran_aktif?
+    sasaran_id.present?
+  end
+
+  def asn_aktif?
+    nip_asn.present?
+  end
 end

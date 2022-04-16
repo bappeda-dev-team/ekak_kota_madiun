@@ -55,12 +55,12 @@
                       <% end %>
                     <% else %>
                       <% if musrenbang.sasaran_aktif? %>
-                        <button class="btn btn-success" disabled>Diambil Sasaran</button>
+                        <button class="btn btn-success text-dark" disabled>Diambil Sasaran</button>
                       <% else %>
-                        <%= button_to toggle_is_active_musrenbang_path(musrenbang), remote: true, class: 'btn btn-danger d-inline-flex align-items-center toggle-active' do %>
-                          Non Aktifkan
-                          <i class="fas fa-ban text-primary icon icon-xs ms-2"></i>
-                        <% end %>
+                        <button class='btn btn-primary d-inline-flex align-items-center toggle-active' disabled>
+                          Aktif
+                          <i class="fas fa-key text-success icon icon-xs ms-2"></i>
+                        </button>
                       <% end %>
                     <% end %>
                   </td>
