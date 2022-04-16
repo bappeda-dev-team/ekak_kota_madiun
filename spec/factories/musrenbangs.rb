@@ -7,6 +7,7 @@
 #  is_active  :boolean          default(FALSE)
 #  nip_asn    :string
 #  opd        :string
+#  status     :enum             default("draft")
 #  tahun      :string
 #  usulan     :text
 #  created_at :datetime         not null
@@ -16,6 +17,7 @@
 # Indexes
 #
 #  index_musrenbangs_on_sasaran_id  (sasaran_id)
+#  index_musrenbangs_on_status      (status)
 #
 FactoryBot.define do
   factory :musrenbang do

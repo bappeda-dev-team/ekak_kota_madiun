@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_15_222139) do
+ActiveRecord::Schema.define(version: 2022_04_16_041551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,18 +138,8 @@ ActiveRecord::Schema.define(version: 2022_04_15_222139) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "inovasis", force: :cascade do |t|
-    t.string "usulan"
-    t.string "manfaat"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "tahun"
-    t.string "opd"
-    t.string "nip_asn"
-    t.bigint "sasaran_id"
-    t.boolean "is_active", default: false
-    t.index ["sasaran_id"], name: "index_inovasis_on_sasaran_id"
-  end
+# Could not dump table "inovasis" because of following StandardError
+#   Unknown type 'usulan_status' for column 'status'
 
   create_table "kaks", force: :cascade do |t|
     t.text "dasar_hukum", default: [], array: true
@@ -199,31 +189,11 @@ ActiveRecord::Schema.define(version: 2022_04_15_222139) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "mandatoris", force: :cascade do |t|
-    t.string "usulan"
-    t.string "peraturan_terkait"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "tahun"
-    t.string "opd"
-    t.string "nip_asn"
-    t.bigint "sasaran_id"
-    t.boolean "is_active", default: false
-    t.index ["sasaran_id"], name: "index_mandatoris_on_sasaran_id"
-  end
+# Could not dump table "mandatoris" because of following StandardError
+#   Unknown type 'usulan_status' for column 'status'
 
-  create_table "musrenbangs", force: :cascade do |t|
-    t.text "usulan"
-    t.string "tahun"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "sasaran_id"
-    t.string "opd"
-    t.string "nip_asn"
-    t.text "alamat"
-    t.boolean "is_active", default: false
-    t.index ["sasaran_id"], name: "index_musrenbangs_on_sasaran_id"
-  end
+# Could not dump table "musrenbangs" because of following StandardError
+#   Unknown type 'usulan_status' for column 'status'
 
   create_table "opds", force: :cascade do |t|
     t.string "nama_opd"
@@ -283,18 +253,8 @@ ActiveRecord::Schema.define(version: 2022_04_15_222139) do
     t.index ["user_id"], name: "index_pks_on_user_id"
   end
 
-  create_table "pokpirs", force: :cascade do |t|
-    t.string "usulan"
-    t.string "alamat"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "tahun"
-    t.string "opd"
-    t.string "nip_asn"
-    t.bigint "sasaran_id"
-    t.boolean "is_active", default: false
-    t.index ["sasaran_id"], name: "index_pokpirs_on_sasaran_id"
-  end
+# Could not dump table "pokpirs" because of following StandardError
+#   Unknown type 'usulan_status' for column 'status'
 
   create_table "program_kegiatans", force: :cascade do |t|
     t.string "nama_program"

@@ -9,6 +9,7 @@
 #  nip_asn           :string
 #  opd               :string
 #  peraturan_terkait :string
+#  status            :enum             default("draft")
 #  tahun             :string
 #  usulan            :string
 #  created_at        :datetime         not null
@@ -18,10 +19,14 @@
 # Indexes
 #
 #  index_mandatoris_on_sasaran_id  (sasaran_id)
+#  index_mandatoris_on_status      (status)
 #
 class Mandatori < ApplicationRecord
   validates :usulan, presence: true
   validates :peraturan_terkait, presence: true
+
+  enum status: { draft: 'draft', pengajuan: 'pengajuan', disetujui: 'disetujui', ditolak: 'ditolak' }
+
   belongs_to :sasaran, optional: true
   has_many :usulans, as: :usulanable
 

@@ -8,12 +8,13 @@ class MusrenbangsController < ApplicationController
   end
 
   def usulan_musrenbang
+    # TODO: Pisah per OPD user masing masing ( nunggu API )
     @musrenbangs = Musrenbang.all.order(:created_at)
     render 'user_musrenbang'
   end
 
   def diambil_asn
-    @musrenbang.update(nip_asn: current_user.nik)
+    @musrenbang.update(nip_asn: current_user.nik, status: 'pengajuan')
     flash[:notice] = 'Usulan berhasil diambil'
     redirect_back fallback_location: usulan_musrenbang_path
   end
@@ -35,6 +36,7 @@ class MusrenbangsController < ApplicationController
 
   def toggle_is_active
     @musrenbang = Musrenbang.find(params[:id])
+    @musrenbang.update(status: 'disetujui')
     @musrenbang.toggle! :is_active
   end
 
