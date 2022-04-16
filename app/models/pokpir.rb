@@ -28,8 +28,24 @@ class Pokpir < ApplicationRecord
   has_many :usulans, as: :usulanable
 
   default_scope { order(created_at: :desc) }
+  scope :diambil_asn, -> { where.not(nip_asn: nil) }
+  scope :belum_diambil_asn, -> { where(sasaran_id: nil) }
 
   def self.type
     "Pokok Pikiran DPRD"
+  end
+
+  def asn_pengambil
+    User.find_by(nik: nip_asn).nama
+  rescue NoMethodError
+    '-'
+  end
+
+  def sasaran_aktif?
+    sasaran_id.present?
+  end
+
+  def asn_aktif?
+    nip_asn.present?
   end
 end

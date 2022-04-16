@@ -17,9 +17,13 @@ class PokpirsController < ApplicationController
   end
 
   def diambil_asn
-    @pokpir.update(nip_asn: current_user.nik)
-    flash[:notice] = 'Usulan berhasil diambil'
-    redirect_back fallback_location: usulan_pokpir_path
+    @pokpir = Pokpir.find(params[:id])
+    if @pokpir.update(nip_asn: current_user.nik, status: 'pengajuan')
+      flash.now[:success] = 'Usulan berhasil diambil'
+    else
+      flash.now[:error] = 'Usulan gagal diambil'
+      :unprocessable_entity
+    end
   end
 
   def pokpir_search

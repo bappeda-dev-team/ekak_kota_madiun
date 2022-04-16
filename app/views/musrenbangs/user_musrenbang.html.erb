@@ -26,16 +26,16 @@
                 <th class="border-bottom" scope="col">No.</th>
                 <th class="border-bottom" scope="col">Usulan</th>
                 <th class="border-bottom" scope="col">Alamat</th>
-                <th class="border-bottom text-center" scope="col">Active ?</th>
+                <th class="border-bottom text-center" scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
-              <% @musrenbangs.each.with_index(1) do |musrenbang, i| %>
+              <% @musrenbangs.belum_diambil_asn.each.with_index(1) do |musrenbang, i| %>
                 <tr>
                   <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
                   <td class="fw-bolder align-middle"><%= truncate(musrenbang.usulan, length: 30, separator: '...') %></td>
                   <td class="fw-bolder align-middle"><%= truncate(musrenbang.alamat, length: 25, separator: '...') %></td>
-                  <td class="action-<%= musrenbang.id %> text-center">
+                  <td class="action-<%= dom_id(musrenbang) %> text-center">
                     <% if musrenbang.nip_asn.nil? %>
                       <%= button_to diambil_asn_musrenbang_path(musrenbang), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
                         Ambil Usulan
