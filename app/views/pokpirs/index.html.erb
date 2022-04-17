@@ -43,7 +43,7 @@
                   <td class="fw-bolder text-gray-500 align-middle"><%= pokpir.alamat %></td>
                   <td class="fw-bolder text-gray-500 align-middle text-wrap"><%= pokpir.uraian %></td>
                   <td class="fw-bolder text-gray-500 align-middle"><%= pokpir.asn_pengambil %></td>
-                  <td class="action-<%= pokpir.id %> text-center align-middle">
+                  <td class="action-<%= dom_id(pokpir) %> text-center align-middle">
                     <% unless pokpir.is_active %>
                       <% if pokpir.asn_aktif? %>
                         <%= button_to toggle_is_active_pokpir_path(pokpir), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>

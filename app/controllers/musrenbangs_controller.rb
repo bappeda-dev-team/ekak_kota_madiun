@@ -43,7 +43,8 @@ class MusrenbangsController < ApplicationController
     respond_to do |format|
       if @musrenbang.update(status: 'disetujui')
         @musrenbang.toggle! :is_active
-        format.js { render 'toggle_is_active', notice: 'Sukses Mengaktifkan' }
+        flash.now[:success] = 'Usulan diaktifkan'
+        format.js { render 'toggle_is_active' }
       else
         flash.now[:alert] = 'Gagal Mengaktifkan'
         format.js { :unprocessable_entity }

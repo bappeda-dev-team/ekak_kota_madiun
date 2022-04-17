@@ -6,6 +6,8 @@ const d = document;
 d.addEventListener("DOMContentLoaded", function (event) {
   var dataTables = [].slice.call(d.querySelectorAll('[data-datatable]'))
   var dataTableList = dataTables.map(function (el) {
-    el = new DataTable(el)
+    el = new DataTable(el, {
+      fixedColumns: true
+    })
   });
 });

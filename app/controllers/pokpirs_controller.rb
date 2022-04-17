@@ -8,7 +8,16 @@ class PokpirsController < ApplicationController
 
   def toggle_is_active
     @pokpir = Pokpir.find(params[:id])
-    @pokpir.toggle! :is_active
+    respond_to do |format|
+      if @pokpir.update(status: 'disetujui')
+        @pokpir.toggle! :is_active
+        flash.now[:success] = 'Usulan diaktifkan'
+        format.js { render 'toggle_is_active' }
+      else
+        flash.now[:alert] = 'Gagal Mengaktifkan'
+        format.js { :unprocessable_entity }
+      end
+    end
   end
 
   def usulan_pokpir

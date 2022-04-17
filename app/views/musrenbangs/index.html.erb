@@ -43,7 +43,7 @@
                   <td class="fw-bolder text-gray-500 align-middle"><%= musrenbang.alamat %></td>
                   <td class="fw-bolder text-gray-500 align-middle text-wrap"><%= musrenbang.uraian %></td>
                   <td class="fw-bolder text-gray-500 align-middle"><%= musrenbang.asn_pengambil %></td>
-                  <td class="action-<%= musrenbang.id %> text-center align-middle">
+                  <td class="action-<%= dom_id(musrenbang) %> text-center align-middle">
                     <% unless musrenbang.is_active %>
                       <% if musrenbang.asn_aktif? %>
                         <%= button_to toggle_is_active_musrenbang_path(musrenbang), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>

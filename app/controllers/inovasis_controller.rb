@@ -63,7 +63,16 @@ class InovasisController < ApplicationController
 
   def toggle_is_active
     @inovasi = Inovasi.find(params[:id])
-    @inovasi.toggle! :is_active
+    respond_to do |format|
+      if @inovasi.update(status: 'disetujui')
+        @inovasi.toggle! :is_active
+        flash.now[:success] = 'Usulan diaktifkan'
+        format.js { render 'toggle_is_active' }
+      else
+        flash.now[:alert] = 'Gagal Mengaktifkan'
+        format.js { :unprocessable_entity }
+      end
+    end
   end
 
   def inovasi_search

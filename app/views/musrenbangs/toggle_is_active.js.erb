@@ -1,8 +1,6 @@
-Swal.fire({
-  title: 'Sukses',
-  icon: 'success',
-  confirmButtonText: 'Yes',
-}).then(() => {
-  Turbolinks.visit(location.href)
-}
-)
+$('#notice').html("<%= j render 'shared/flash', flash: flash %>");
+var tombol_pengganti = `<button class='btn btn-primary d-inline-flex align-items-center toggle-active' disabled>
+  Aktif
+  <i class="fas fa-key text-success icon icon-xs ms-2"></i>
+</button>`;
+$(".action-<%= dom_id(@musrenbang) %>").html(tombol_pengganti);
