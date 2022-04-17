@@ -102,6 +102,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   patch '/non_aktifkan_usulan/:id', to: 'musrenbangs#non_aktifkan_usulan'
   # usulans
   post '/update_sasaran_asn', to: 'usulans#update_sasaran_asn'
+  post '/hapus_usulan_dari_sasaran', to: 'usulans#hapus_usulan_dari_sasaran'
   # pokpir delete later
   patch '/aktifkan_pokpir/:id', to: 'pokpirs#aktifkan_pokpir'
   patch '/non_aktifkan_pokpir/:id', to: 'pokpirs#non_aktifkan_pokpir'
