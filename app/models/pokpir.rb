@@ -9,6 +9,7 @@
 #  opd        :string
 #  status     :enum             default("draft")
 #  tahun      :string
+#  uraian     :string
 #  usulan     :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

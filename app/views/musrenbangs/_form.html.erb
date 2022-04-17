@@ -17,6 +17,10 @@
     <%= form.label :alamat %>
     <%= form.text_area :alamat, class: "form-control" %>
   </div>
+  <div class="field">
+    <%= form.label :permasalahan %>
+    <%= form.text_area :uraian, class: 'form-control' %>
+  </div>
   <div class="field mt-3">
     <%= form.label :tahun %>
     <%= form.select(:tahun, (['',2021,2022,2023,2024]), {}, {:id => 'dropdown-tahun',data: {"placeholder": "Pilih Tahun",}}) %>

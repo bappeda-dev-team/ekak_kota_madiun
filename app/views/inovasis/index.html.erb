@@ -26,6 +26,7 @@
                 <th class="border-bottom" scope="col">No.</th>
                 <th class="border-bottom" scope="col">Usulan</th>
                 <th class="border-bottom" scope="col">Manfaat</th>
+                <th class="border-bottom" scope="col">Uraian</th>
                 <th class="border-bottom" scope="col">Pengusul</th>
                 <th class="border-bottom text-gray-700 text-center" scope="col">Status</th>
                 <th class="border-bottom text-gray-700 text-center" scope="col">Action</th>
@@ -35,8 +36,9 @@
               <% @inovasis.each.with_index(1) do |inovasi, i| %>
                 <tr id="<%= dom_id(inovasi) %>">
                   <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                  <td class="fw-bolder align-middle"><%= truncate(inovasi.usulan, length: 30, separator: '...') %></td>
-                  <td class="fw-bolder align-middle"><%= truncate(inovasi.manfaat, length: 25, separator: '...') %></td>
+                  <td class="fw-bolder align-middle"><%= inovasi.usulan %></td>
+                  <td class="fw-bolder align-middle"><%= inovasi.manfaat %></td>
+                  <td class="fw-bolder align-middle"><%= inovasi.uraian %></td>
                   <td class="fw-bolder align-middle"><%= inovasi.asn_pengusul %></td>
                   <td class="text-center align-middle">
                     <% unless inovasi.is_active %>

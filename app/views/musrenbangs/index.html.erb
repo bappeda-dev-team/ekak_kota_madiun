@@ -29,7 +29,7 @@
                 <th class="border-bottom" scope="col">No.</th>
                 <th class="border-bottom" scope="col">Usulan</th>
                 <th class="border-bottom" scope="col">Alamat</th>
-                <th class="border-bottom" scope="col">Pemrasalahan</th>
+                <th class="border-bottom" scope="col">Permasalahan</th>
                 <th class="border-bottom" scope="col">Pengambil Usulan</th>
                 <th class="border-bottom text-center" scope="col">Status</th>
                 <th class="border-bottom text-center" scope="col" colspan='1'>Action</th>
@@ -39,9 +39,9 @@
               <% @musrenbangs.each.with_index(1) do |musrenbang, i| %>
                 <tr id="<%= dom_id(musrenbang) %>">
                   <td class="text-gray-900 fw-bolder align-middle" scope="row"><%= i %></td>
-                  <td class="fw-bolder text-gray-500 align-middle"><%= truncate(musrenbang.usulan, length: 30, separator: '...') %></td>
-                  <td class="fw-bolder text-gray-500 align-middle"><%= truncate(musrenbang.alamat, length: 25, separator: '...') %></td>
-                  <td class="fw-bolder text-gray-500 align-middle">...</td>
+                  <td class="fw-bolder text-gray-500 align-middle text-wrap" width="6rem"><%= musrenbang.usulan %></td>
+                  <td class="fw-bolder text-gray-500 align-middle"><%= musrenbang.alamat %></td>
+                  <td class="fw-bolder text-gray-500 align-middle text-wrap"><%= musrenbang.uraian %></td>
                   <td class="fw-bolder text-gray-500 align-middle"><%= musrenbang.asn_pengambil %></td>
                   <td class="action-<%= musrenbang.id %> text-center align-middle">
                     <% unless musrenbang.is_active %>
