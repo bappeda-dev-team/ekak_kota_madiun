@@ -27,6 +27,7 @@
           <th>No</th>
           <th>Usulan</th>
           <th>Alamat</th>
+          <th>Permasalahan</th>
           <th>Jenis Usulan</th>
         </tr>
       </thead>
@@ -35,7 +36,8 @@
           <tr>
             <td><%= i %></td>
             <td><%= sas.usulan %></td>
-            <td><%= sas.alamat %></td>
+            <td><%= sas.try(:alamat) || sas.try(:peraturan_terkait) %></td>
+            <td><%= sas.uraian %></td>
             <td><%= sas.class.type %></td>
           </tr>
         <% end %>

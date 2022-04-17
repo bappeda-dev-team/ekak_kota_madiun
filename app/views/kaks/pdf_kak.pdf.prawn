@@ -40,7 +40,7 @@ prawn_document do |pdf|
   pdf.move_down 20
   pdf.text 'B. Penerima Manfaat', size: 14, style: :bold
   data_penerima_manfaat = [['No', 'Rencana Kinerja', 'Penerima Manfaat', 'Nama Usulan',
-                            'Jenis Usulan', 'Keterangan']]
+                            'Jenis Usulan', 'Permasalahan/ Uraian', 'Keterangan']]
   count = 0
   @kak.program_kegiatan.sasarans.each.map do |sasaran|
     sasaran.my_usulan.each do |u|
@@ -48,7 +48,7 @@ prawn_document do |pdf|
       keterangan = u.try(:alamat) || u.try(:peraturan_terkait) || u.try(:manfaat)
       tipe = u.class.try(:type) || u.class.name.to_s
       data_penerima_manfaat << [count, sasaran.sasaran_kinerja.to_s, sasaran.penerima_manfaat.to_s, u.usulan,
-                                tipe, keterangan]
+                                tipe, u.uraian, keterangan]
     end
   end
   pdf.move_down 10

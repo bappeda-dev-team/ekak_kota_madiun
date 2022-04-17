@@ -27,6 +27,7 @@
           <th>No</th>
           <th>Usulan</th>
           <th>Peraturan Terkait</th>
+          <th>Uraian</th>
           <th>Jenis Usulan</th>
         </tr>
       </thead>
@@ -35,7 +36,8 @@
           <tr>
             <td><%= i %></td>
             <td><%= sas.usulan %></td>
-            <td><%= sas.peraturan_terkait %></td>
+            <td><%= sas.try(:alamat) || sas.try(:peraturan_terkait) %></td>
+            <td><%= sas.uraian %></td>
             <td><%= sas.class.name %></td>
           </tr>
         <% end %>
