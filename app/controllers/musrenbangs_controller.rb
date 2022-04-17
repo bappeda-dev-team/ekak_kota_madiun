@@ -9,7 +9,7 @@ class MusrenbangsController < ApplicationController
 
   def usulan_musrenbang
     # TODO: Pisah per OPD user masing masing ( nunggu API )
-    @musrenbangs = Musrenbang.all.order(:created_at)
+    @musrenbangs = Musrenbang.belum_diajukan.or(Musrenbang.where(nip_asn: current_user.nik)).order(:updated_at)
     render 'user_musrenbang'
   end
 

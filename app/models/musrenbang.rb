@@ -32,6 +32,7 @@ class Musrenbang < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
   scope :diambil_asn, -> { where.not(nip_asn: nil) }
+  scope :belum_diajukan, -> { where(nip_asn: nil) }
   scope :belum_diambil_asn, -> { where(sasaran_id: nil) }
 
   def asn_pengambil
