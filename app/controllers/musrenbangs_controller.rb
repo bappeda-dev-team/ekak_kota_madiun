@@ -34,7 +34,9 @@ class MusrenbangsController < ApplicationController
     @musrenbangs = Search::AllUsulan
                    .where(
                      "searchable_type = 'Musrenbang' and sasaran_id is null and usulan ILIKE ?", "%#{param}%"
-                   ).includes(:searchable)
+                   )
+                   .where(searchable: Musrenbang.where(nip_asn: current_user.nik))
+                   .includes(:searchable)
                    .collect(&:searchable)
   end
 
