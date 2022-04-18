@@ -41,6 +41,7 @@ class PokpirsController < ApplicationController
                .where(
                  "searchable_type = 'Pokpir' and sasaran_id is null and usulan ILIKE ?", "%#{param}%"
                )
+               .where(searchable: Pokpir.where(nip_asn: current_user.nik))
                .includes(:searchable)
                .collect(&:searchable)
   end

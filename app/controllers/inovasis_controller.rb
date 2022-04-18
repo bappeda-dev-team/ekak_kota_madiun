@@ -7,7 +7,7 @@ class InovasisController < ApplicationController
   end
 
   def usulan_inisiatif
-    @inovasis = Inovasi.all.order(:created_at)
+    @inovasis = Inovasi.where(nip_asn: current_user.nik)
     render 'user_inisiatif'
   end
 
@@ -81,6 +81,7 @@ class InovasisController < ApplicationController
                 .where(
                   "searchable_type = 'Inovasi' and sasaran_id is null and usulan ILIKE ?", "%#{param}%"
                 )
+                .where(searchable: Inovasi.where(nip_asn: current_user.nik))
                 .includes(:searchable)
                 .collect(&:searchable)
   end
