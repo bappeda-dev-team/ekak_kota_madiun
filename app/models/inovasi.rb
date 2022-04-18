@@ -7,7 +7,9 @@
 #  manfaat    :string
 #  nip_asn    :string
 #  opd        :string
+#  status     :enum             default("draft")
 #  tahun      :string
+#  uraian     :string
 #  usulan     :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -16,9 +18,13 @@
 # Indexes
 #
 #  index_inovasis_on_sasaran_id  (sasaran_id)
+#  index_inovasis_on_status      (status)
 #
 class Inovasi < ApplicationRecord
   validates :usulan, presence: true
+
+  enum status: { draft: 'draft', pengajuan: 'pengajuan', disetujui: 'disetujui', ditolak: 'ditolak' }
+
   belongs_to :sasaran, optional: true
   has_many :usulans, as: :usulanable
 
@@ -28,5 +34,17 @@ class Inovasi < ApplicationRecord
     User.find_by(nik: nip_asn).nama
   rescue NoMethodError
     '-'
+  end
+
+  def self.type
+    'Inisiatif'
+  end
+
+  def sasaran_aktif?
+    sasaran_id.present?
+  end
+
+  def asn_aktif?
+    nip_asn.present?
   end
 end

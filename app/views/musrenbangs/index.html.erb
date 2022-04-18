@@ -14,7 +14,7 @@
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Usulan Musrenbang </h2>
+            <h2 class="fs-5 fw-bold mb-0">Usulan Musrenbang</h2>
           </div>
           <div class="col text-end">
             <%= link_to "Tambah Usulan", new_musrenbang_path, remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#form-usulan'}, class: "btn btn-sm btn-info" %>
@@ -29,6 +29,8 @@
                 <th class="border-bottom" scope="col">No.</th>
                 <th class="border-bottom" scope="col">Usulan</th>
                 <th class="border-bottom" scope="col">Alamat</th>
+                <th class="border-bottom" scope="col">Permasalahan</th>
+                <th class="border-bottom" scope="col">Pengambil Usulan</th>
                 <th class="border-bottom text-center" scope="col">Status</th>
                 <th class="border-bottom text-center" scope="col" colspan='1'>Action</th>
               </tr>
@@ -36,23 +38,33 @@
             <tbody>
               <% @musrenbangs.each.with_index(1) do |musrenbang, i| %>
                 <tr id="<%= dom_id(musrenbang) %>">
-                  <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                  <td class="fw-bolder text-gray-500"><%= truncate(musrenbang.usulan, length: 30, separator: '...') %></td>
-                  <td class="fw-bolder text-gray-500"><%= truncate(musrenbang.alamat, length: 25, separator: '...') %></td>
-                  <td class="action-<%= musrenbang.id %> text-center">
+                  <td class="text-gray-900 fw-bolder align-middle" scope="row"><%= i %></td>
+                  <td class="fw-bolder text-gray-500 align-middle text-wrap" width="6rem"><%= musrenbang.usulan %></td>
+                  <td class="fw-bolder text-gray-500 align-middle"><%= musrenbang.alamat %></td>
+                  <td class="fw-bolder text-gray-500 align-middle text-wrap"><%= musrenbang.uraian %></td>
+                  <td class="fw-bolder text-gray-500 align-middle"><%= musrenbang.asn_pengambil %></td>
+                  <td class="action-<%= dom_id(musrenbang) %> text-center align-middle">
                     <% unless musrenbang.is_active %>
-                      <%= button_to toggle_is_active_musrenbang_path(musrenbang), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
-                        Aktifkan
-                        <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
+                      <% if musrenbang.asn_aktif? %>
+                        <%= button_to toggle_is_active_musrenbang_path(musrenbang), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
+                          Aktifkan
+                          <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
+                        <% end %>
+                      <% else %>
+                        <button class="btn btn-warning" disabled>Menungu diambil</button>
                       <% end %>
                     <% else %>
-                      <%= button_to toggle_is_active_musrenbang_path(musrenbang), remote: true, class: 'btn btn-danger d-inline-flex align-items-center toggle-active' do %>
-                        Non Aktifkan
-                        <i class="fas fa-ban text-primary icon icon-xs ms-2"></i>
+                      <% if musrenbang.sasaran_aktif? %>
+                        <button class="btn btn-success text-dark" disabled>Diambil Sasaran</button>
+                      <% else %>
+                        <button class='btn btn-primary d-inline-flex align-items-center toggle-active' disabled>
+                          Aktif
+                          <i class="fas fa-key text-success icon icon-xs ms-2"></i>
+                        </button>
                       <% end %>
                     <% end %>
                   </td>
-                  <td class="fw-bolder text-gray-500 text-center">
+                  <td class="fw-bolder text-gray-500 text-center align-middle">
                     <%= link_to edit_musrenbang_path(musrenbang), remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#form-usulan'} do %>
                       <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit usulan"></i>
                     <% end %>

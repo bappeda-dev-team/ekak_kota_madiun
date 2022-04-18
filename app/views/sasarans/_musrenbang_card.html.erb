@@ -28,7 +28,9 @@
           <th>No</th>
           <th>Usulan</th>
           <th>Alamat</th>
+          <th>Permasalahan</th>
           <th>Jenis Usulan</th>
+          <th>Aksi</th>
         </tr>
       </thead>
       <tbody>
@@ -37,7 +39,9 @@
             <td><%= i %></td>
             <td><%= sas.usulan %></td>
             <td><%= sas.try(:alamat) || sas.try(:peraturan_terkait) %></td>
+            <td><%= sas.uraian %></td>
             <td><%= sas.class.name %></td>
+            <td><%= button_to 'Hapus', hapus_usulan_dari_sasaran_path, params: { usulan_id: sas.id, usulan_type: sas.class.name } ,remote: true, class: 'btn btn-danger' %></td>
           </tr>
         <% end %>
       </tbody>

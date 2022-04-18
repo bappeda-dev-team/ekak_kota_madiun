@@ -14,7 +14,7 @@
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Usulan Pokok Pikiran</h2>
+            <h2 class="fs-5 fw-bold mb-0">Usulan Pokok Pikiran DPRD</h2>
           </div>
         </div>
       </div>
@@ -26,25 +26,38 @@
                 <th class="border-bottom" scope="col">No.</th>
                 <th class="border-bottom" scope="col">Usulan</th>
                 <th class="border-bottom" scope="col">Alamat</th>
+                <th class="border-bottom" scope="col">Permasalahan</th>
                 <th class="border-bottom text-center" scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
-              <% @pokpirs.each.with_index(1) do |pokpir, i| %>
+              <% @pokpirs.belum_diambil_asn.each.with_index(1) do |pokpir, i| %>
                 <tr>
                   <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                  <td class="fw-bolder align-middle"><%= truncate(pokpir.usulan, length: 30, separator: '...') %></td>
-                  <td class="fw-bolder align-middle"><%= truncate(pokpir.alamat, length: 25, separator: '...') %></td>
-                  <td class="action-<%= pokpir.id %> text-center">
-                    <% if pokpir.nip_asn.nil? %>
-                      <%= button_to diambil_asn_pokpir_path(pokpir), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
-                        Ambil Usulan
+                  <td class="fw-bolder align-middle"><%= pokpir.usulan %></td>
+                  <td class="fw-bolder align-middle"><%= pokpir.alamat %></td>
+                  <td class="fw-bolder align-middle text-wrap"><%= pokpir.uraian %></td>
+                  <td class="action-<%= dom_id(pokpir) %> text-center">
+                    <% unless pokpir.is_active %>
+                      <% if pokpir.status == 'pengajuan' %>
+                        <button class= 'btn btn-tertiary d-inline-flex align-items-center toggle-active' disabled>
+                          Usulan Diajukan
+                          <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
+                        </button>
+                      <% else %>
+                        <%= button_to diambil_asn_pokpir_path(pokpir), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
+                          Ambil Usulan
+                        <% end %>
                       <% end %>
                     <% else %>
-                      <button class= 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
-                        Usulan Diambil
-                        <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
-                      </button>
+                      <% if pokpir.sasaran_aktif? %>
+                        <button class="btn btn-success text-dark" disabled>Diambil Sasaran</button>
+                      <% else %>
+                        <button class='btn btn-primary d-inline-flex align-items-center toggle-active' disabled>
+                          Aktif
+                          <i class="fas fa-key text-success icon icon-xs ms-2"></i>
+                        </button>
+                      <% end %>
                     <% end %>
                   </td>
                 </tr>

@@ -8,14 +8,19 @@ class MusrenbangsController < ApplicationController
   end
 
   def usulan_musrenbang
-    @musrenbangs = Musrenbang.all.order(:created_at)
+    # TODO: Pisah per OPD user masing masing ( nunggu API )
+    @musrenbangs = Musrenbang.belum_diajukan.or(Musrenbang.where(nip_asn: current_user.nik)).order(:updated_at)
     render 'user_musrenbang'
   end
 
   def diambil_asn
-    @musrenbang.update(nip_asn: current_user.nik)
-    flash[:notice] = 'Usulan berhasil diambil'
-    redirect_back fallback_location: usulan_musrenbang_path
+    @musrenbang = Musrenbang.find(params[:id])
+    if @musrenbang.update(nip_asn: current_user.nik, status: 'pengajuan')
+      flash.now[:success] = 'Usulan berhasil diambil'
+    else
+      flash.now[:error] = 'Usulan gagal diambil'
+      :unprocessable_entity
+    end
   end
 
   def asn_musrenbang
@@ -35,7 +40,16 @@ class MusrenbangsController < ApplicationController
 
   def toggle_is_active
     @musrenbang = Musrenbang.find(params[:id])
-    @musrenbang.toggle! :is_active
+    respond_to do |format|
+      if @musrenbang.update(status: 'disetujui')
+        @musrenbang.toggle! :is_active
+        flash.now[:success] = 'Usulan diaktifkan'
+        format.js { render 'toggle_is_active' }
+      else
+        flash.now[:alert] = 'Gagal Mengaktifkan'
+        format.js { :unprocessable_entity }
+      end
+    end
   end
 
   # TODO: hapus nanti

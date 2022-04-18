@@ -8,7 +8,16 @@ class PokpirsController < ApplicationController
 
   def toggle_is_active
     @pokpir = Pokpir.find(params[:id])
-    @pokpir.toggle! :is_active
+    respond_to do |format|
+      if @pokpir.update(status: 'disetujui')
+        @pokpir.toggle! :is_active
+        flash.now[:success] = 'Usulan diaktifkan'
+        format.js { render 'toggle_is_active' }
+      else
+        flash.now[:alert] = 'Gagal Mengaktifkan'
+        format.js { :unprocessable_entity }
+      end
+    end
   end
 
   def usulan_pokpir
@@ -17,9 +26,13 @@ class PokpirsController < ApplicationController
   end
 
   def diambil_asn
-    @pokpir.update(nip_asn: current_user.nik)
-    flash[:notice] = 'Usulan berhasil diambil'
-    redirect_back fallback_location: usulan_pokpir_path
+    @pokpir = Pokpir.find(params[:id])
+    if @pokpir.update(nip_asn: current_user.nik, status: 'pengajuan')
+      flash.now[:success] = 'Usulan berhasil diambil'
+    else
+      flash.now[:error] = 'Usulan gagal diambil'
+      :unprocessable_entity
+    end
   end
 
   def pokpir_search

@@ -102,6 +102,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   patch '/non_aktifkan_usulan/:id', to: 'musrenbangs#non_aktifkan_usulan'
   # usulans
   post '/update_sasaran_asn', to: 'usulans#update_sasaran_asn'
+  post '/hapus_usulan_dari_sasaran', to: 'usulans#hapus_usulan_dari_sasaran'
   # pokpir delete later
   patch '/aktifkan_pokpir/:id', to: 'pokpirs#aktifkan_pokpir'
   patch '/non_aktifkan_pokpir/:id', to: 'pokpirs#non_aktifkan_pokpir'
@@ -137,6 +138,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # third party Api
   get '/sync_sasaran', to: 'api/skp_client#sync_sasaran'
   get '/sync_pegawai', to: 'api/skp_client#sync_pegawai'
+  get '/sync_subkegiatan', to: 'api/sipd_client#sync_subkegiatan'
 
   post '/filter_sasaran', to: 'filter#filter_sasaran'
   post '/filter_user', to: 'filter#filter_user'

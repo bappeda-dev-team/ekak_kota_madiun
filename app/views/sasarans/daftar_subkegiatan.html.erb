@@ -45,7 +45,7 @@
               <td class="align-middle"><%= sasaran.sasaran_kinerja %></td>
               <td class="align-middle" ><%= sasaran.user.nama %></td>
               <td class="border p-0">
-                <table class="table table-bordered px-0 text-center">
+                <table class="table table-bordered px-0 align-middle">
                   <% sasaran.my_usulan.each do |usulan|  %>
                     <tr>
                       <td class="border-bottom"><%= usulan.usulan %></td>
@@ -54,16 +54,16 @@
                 </table>
               </td>
               <td class="border p-0">
-                <table class="table table-bordered px-0 text-center">
+                <table class="table table-bordered px-0 align-middle">
                   <% sasaran.my_usulan.each do |usulan|  %>
                     <tr>
-                      <td class="border-bottom"><%= usulan.class.name %></td>
+                      <td class="border-bottom"><%= usulan.class.try(:type) || usulan.class.name %></td>
                     </tr>
                   <% end %>
                 </table>
               </td>
               <td class="border p-0">
-                <table class="table table-bordered px-0 text-center">
+                <table class="table table-bordered px-0 align-middle">
                   <% sasaran.my_usulan.each do |usulan|  %>
                     <tr>
                       <td class="border-bottom"><%= usulan.try(:alamat) || usulan.try(:peraturan_terkait) || usulan.try(:manfaat) %></td>

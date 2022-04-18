@@ -3,7 +3,7 @@
     <div class="row align-items-center">
       <div class="row align-items-center">
         <div class="col">
-          <h5>Usulan Pokpir</h5>
+          <h5>Usulan Pokok Pikiran DPRD</h5>
         </div>
       </div>
     </div>
@@ -27,7 +27,9 @@
           <th>No</th>
           <th>Usulan</th>
           <th>Alamat</th>
+          <th>Permasalahan</th>
           <th>Jenis Usulan</th>
+          <th class="text-center align-middle">Aksi</th>
         </tr>
       </thead>
       <tbody>
@@ -35,8 +37,10 @@
           <tr>
             <td><%= i %></td>
             <td><%= sas.usulan %></td>
-            <td><%= sas.alamat %></td>
-            <td><%= sas.class.name %></td>
+            <td><%= sas.try(:alamat) || sas.try(:peraturan_terkait) %></td>
+            <td><%= sas.uraian %></td>
+            <td><%= sas.class.type %></td>
+            <td class="text-center align-middle"><%= button_to 'Hapus', hapus_usulan_dari_sasaran_path, params: { usulan_id: sas.id, usulan_type: sas.class.name } ,remote: true, class: 'btn btn-danger' %></td>
           </tr>
         <% end %>
       </tbody>

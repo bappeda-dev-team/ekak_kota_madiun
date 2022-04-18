@@ -29,6 +29,7 @@
                 <th class="border-bottom text-gray-700" scope="col">No.</th>
                 <th class="border-bottom text-gray-700" scope="col">Usulan</th>
                 <th class="border-bottom text-gray-700" scope="col">Peraturan Terkait</th>
+                <th class="border-bottom text-gray-700" scope="col">Uraian</th>
                 <th class="border-bottom text-gray-700" scope="col">Pengusul</th>
                 <th class="border-bottom text-gray-700 text-center" scope="col">Status</th>
                 <th class="border-bottom text-gray-700 text-center" scope="col">Action</th>
@@ -40,18 +41,23 @@
                   <td class="text-gray-900 fw-bolder align-middle" scope="row"><%= i %></td>
                   <td class="fw-bolder align-middle"><%= truncate(mandatori.usulan, length: 30, separator: '...') %></td>
                   <td class="fw-bolder align-middle"><%= truncate(mandatori.peraturan_terkait, length: 25, separator: '...') %></td>
+                  <td class="fw-bolder align-middle"><%= truncate(mandatori.uraian, length: 25, separator: '...') %></td>
                   <td class="fw-bolder align-middle"><%= mandatori.asn_pengusul %></td>
                   <td class="text-center align-middle">
                     <% unless mandatori.is_active %>
-                      <button class = 'btn btn-primary d-inline-flex align-items-center toggle-active'>
-                        Non Aktif
+                      <button class= 'btn btn-tertiary d-inline-flex align-items-center toggle-active' disabled>
+                        Usulan Diajukan
                         <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
                       </button>
                     <% else %>
-                      <button class='btn btn-primary d-inline-flex align-items-center toggle-active' disabled>
-                        Aktif
-                        <i class="fas fa-key text-success icon icon-xs ms-2"></i>
-                      </button>
+                      <% if mandatori.sasaran_aktif? %>
+                        <button class="btn btn-success text-dark" disabled>Diambil Sasaran</button>
+                      <% else %>
+                        <button class='btn btn-primary d-inline-flex align-items-center toggle-active' disabled>
+                          Aktif
+                          <i class="fas fa-key text-success icon icon-xs ms-2"></i>
+                        </button>
+                      <% end %>
                     <% end %>
                   </td>
                   <td class="fw-bolder text-center align-middle">

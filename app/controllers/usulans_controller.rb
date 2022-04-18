@@ -7,9 +7,28 @@ class UsulansController < ApplicationController
     usulan = usulan_type.constantize.find(usulan)
     respond_to do |format|
       if u.save && usulan.update(sasaran_id: sasaran)
+        flash.now[:success] = 'Usulan berhasil ditambahkan'
         format.js { render 'update_sasaran_asn' }
       else
+        flash.now[:error] = 'Terjadi kesalahan'
         format.js { render 'update_sasaran_asn', status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def hapus_usulan_dari_sasaran
+    usulan = params[:usulan_id].to_i
+    usulan_type = params[:usulan_type]
+    u = Usulan.find_by(usulanable_id: usulan)
+    usulan = usulan_type.constantize.find(usulan)
+    respond_to do |format|
+      if u.destroy
+        usulan.update(sasaran_id: nil)
+        flash.now[:success] = 'Usulan berhasil dihapus'
+        format.js { render 'update_sasaran_asn' }
+      else
+        flash.now[:error] = 'Usulan gagal dihapus'
+        format.js { render 'update_sasaaran_asn', status: :unprocessable_entity }
       end
     end
   end

@@ -7,7 +7,9 @@
 #  nip_asn           :string
 #  opd               :string
 #  peraturan_terkait :string
+#  status            :enum             default("draft")
 #  tahun             :string
+#  uraian            :string
 #  usulan            :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
@@ -16,6 +18,7 @@
 # Indexes
 #
 #  index_mandatoris_on_sasaran_id  (sasaran_id)
+#  index_mandatoris_on_status      (status)
 #
 require 'rails_helper'
 

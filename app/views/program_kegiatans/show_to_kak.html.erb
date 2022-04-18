@@ -37,24 +37,26 @@
 <hr>
 <p>Rincian Anggaran</p>
 <div class="card border-2 shadow mb-3">
-<table class="table">
-  <thead>
-    <tr>
-      <th>no</th>
-      <th>Sasaran Kinerja</th>
-      <th>Indikator</th>
-      <th>Pagu</th>
-    </tr>
-  </thead>
-  <tbody>
-  <% @programKegiatan.sasarans.each.with_index(1) do |sasaran, i| %>
-    <tr>
-      <td><%= i %></td>
-      <td><%= sasaran.sasaran_kinerja %></td>
-      <td><%= sasaran.indikator_kinerja %></td>
-      <td>Rp. <%= number_with_delimiter(sasaran.total_anggaran, :delimiter => ".") %></td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>no</th>
+          <th>Sasaran Kinerja</th>
+          <th>Indikator</th>
+          <th>Pagu</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @programKegiatan.sasarans.each.with_index(1) do |sasaran, i| %>
+          <tr>
+            <td><%= i %></td>
+            <td><%= sasaran.sasaran_kinerja %></td>
+            <td><%= sasaran.indikator_kinerja %></td>
+            <td>Rp. <%= number_with_delimiter(sasaran.total_anggaran, :delimiter => ".") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
