@@ -29,6 +29,7 @@
           <th>Manfaat</th>
           <th>Uraian</th>
           <th>Jenis Usulan</th>
+          <th class="text-center align-middle">Aksi</th>
         </tr>
       </thead>
       <tbody>
@@ -39,6 +40,7 @@
             <td><%= sas.try(:alamat) || sas.try(:peraturan_terkait) || sas.try(:manfaat) %></td>
             <td><%= sas.uraian %></td>
             <td><%= sas.class.type %></td>
+            <td class="text-center align-middle"><%= button_to 'Hapus', hapus_usulan_dari_sasaran_path, params: { usulan_id: sas.id, usulan_type: sas.class.name } ,remote: true, class: 'btn btn-danger' %></td>
           </tr>
         <% end %>
       </tbody>

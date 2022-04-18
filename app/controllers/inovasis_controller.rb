@@ -94,6 +94,6 @@ class InovasisController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def inovasi_params
-    params.require(:inovasi).permit(:usulan, :manfaat, :nip_asn, :tahun, :sasaran_id)
+    params.require(:inovasi).permit!
   end
 end
