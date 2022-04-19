@@ -6,12 +6,13 @@ module Api
     URL = 'http://10.11.15.120:8888'.freeze
     H = HTTP.accept(:json)
 
-    attr_accessor :id_sipd, :tahun
+    attr_accessor :id_sipd, :tahun, :id_opd
 
-    def initialize(id_sipd, tahun)
+    def initialize(id_sipd, tahun, id_opd)
       # TODO: dynamic assign this later
-      @id_sipd = id_sipd || '481'
+      @id_sipd = id_sipd
       @tahun = tahun || 2022
+      @id_opd = id_opd
     end
 
     def data_subkegiatan_all
@@ -129,7 +130,7 @@ module Api
           pagu: pagu,
           created_at: Time.now, 
           updated_at: Time.now,
-          kode_opd: 1275 # warning hard coded 
+          kode_opd: @id_opd # warning hard coded 
         }
       end
       ProgramKegiatan.insert_all(data_subkegiatan)
