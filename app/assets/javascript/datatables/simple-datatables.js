@@ -7,8 +7,7 @@ d.addEventListener("DOMContentLoaded", function (event) {
   var dataTables = [].slice.call(d.querySelectorAll('[data-datatable]'))
   dataTables.map(function (el) {
     el = new DataTable(el, {
-      fixedColumns: true,
-      fixedHeight: true
+      fixedColumns: false,
     })
   });
 });
