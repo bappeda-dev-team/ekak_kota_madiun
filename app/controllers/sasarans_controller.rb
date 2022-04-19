@@ -61,7 +61,12 @@ class SasaransController < ApplicationController
 
     respond_to do |format|
       if @sasaran.update(sasaran_params)
-        format.html { redirect_to user_sasaran_path(@user, @sasaran), notice: 'Sasaran was successfully updated.' }
+        if(sasaran_params[:program_kegiatan_id])
+          flash[:success] = "Sukses menambah subkegiatan"
+        else
+          flash[:success] = "Sukses update sasaran"
+        end
+        format.html { redirect_to user_sasaran_path(@user, @sasaran) }
         format.json { render :show, status: :ok, location: @sasaran }
       else
         format.html { render :edit, status: :unprocessable_entity }

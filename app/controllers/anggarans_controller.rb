@@ -35,7 +35,7 @@ class AnggaransController < ApplicationController
         format.js
         format.html do
           redirect_to sasaran_tahapan_anggarans_path(@sasaran, @tahapan),
-                      notice: 'Sukses Membuat Anggaran.'
+                      success: 'Sukses Membuat Anggaran.'
         end
         format.json { render :show, status: :created, location: @anggaran }
       else
@@ -58,7 +58,7 @@ class AnggaransController < ApplicationController
       if @anggaran.update(anggaran_params)
         format.html do
           redirect_to sasaran_tahapan_anggarans_path(@sasaran, @tahapan),
-                      notice: 'Anggaran was successfully updated.'
+                      success: 'Anggaran was successfully updated.'
         end
         format.json { render :show, status: :ok, location: @anggaran }
       else

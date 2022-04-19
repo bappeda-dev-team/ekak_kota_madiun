@@ -117,6 +117,6 @@ class PokpirsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def pokpir_params
-    params.require(:pokpir).permit(:usulan, :alamat, :tahun, :sasaran_id, :nip_asn)
+    params.require(:pokpir).permit!
   end
 end
