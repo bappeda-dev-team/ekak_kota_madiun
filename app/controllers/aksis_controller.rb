@@ -29,7 +29,7 @@ class AksisController < ApplicationController
 
     respond_to do |format|
       if @aksi.save
-        format.html { redirect_to sasaran_path(@sasaran), notice: 'Aksi was successfully created.' }
+        format.html { redirect_to sasaran_path(@sasaran), success: 'Sukses menambah target' }
         format.json { render :show, status: :created, location: @aksi }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -42,7 +42,7 @@ class AksisController < ApplicationController
   def update
     respond_to do |format|
       if @aksi.update(aksi_params)
-        format.html { redirect_to sasaran_path(@sasaran), notice: 'Aksi was successfully updated.' }
+        format.html { redirect_to sasaran_path(@sasaran), success: 'Aksi was successfully updated.' }
         format.json { render :show, status: :ok, location: @aksi }
       else
         format.html { render :edit, status: :unprocessable_entity }

@@ -28,9 +28,11 @@ class TahapansController < ApplicationController
     @tahapan.id_rencana_aksi = SecureRandom.base36(6)
     respond_to do |format|
       if @tahapan.save
-        format.html { redirect_to sasaran_path(@sasaran), notice: 'Tahapan was successfully created.' }
+        flash[:success] = "Sukses menambahkan tahapan"
+        format.html { redirect_to sasaran_path(@sasaran) }
         format.json { render :show, status: :created, location: @tahapan }
       else
+        flash[:error] = "Terjadi kesalahan"
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @tahapan.errors, status: :unprocessable_entity }
       end

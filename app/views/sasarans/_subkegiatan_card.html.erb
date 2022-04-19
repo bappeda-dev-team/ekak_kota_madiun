@@ -26,7 +26,7 @@
               <th>SubKegiatan</th>
               <th>Indikator</th>
               <th>Pagu</th>
-              <th>Action</th>
+              <th class="text-center align-middle">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -37,7 +37,7 @@
                 Rp.  <%= number_with_delimiter(sasaran.total_anggaran, :delimiter => ".") %>
               </td>
               <td class="text-center align-middle">
-                <%= button_to 'X', "/hapus_program_from_sasaran", remote: true, method: :post, class: 'btn btn-danger', data: {confirm: "Hapus sub kegiatan?"}, params: {id_sasaran: sasaran.id} %>
+                <%= button_to 'X', "/hapus_program_from_sasaran", remote: true, method: :post, class: 'btn btn-danger text-center', data: {confirm: "Hapus sub kegiatan?"}, params: {id_sasaran: sasaran.id} %>
               </td>
             </tr>
           </tbody>
