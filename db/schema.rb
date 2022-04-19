@@ -15,15 +15,6 @@ ActiveRecord::Schema.define(version: 2022_04_17_070528) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "action_mailbox_inbound_emails", force: :cascade do |t|
-    t.integer "status", default: 0, null: false
-    t.string "message_id", null: false
-    t.string "message_checksum", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["message_id", "message_checksum"], name: "index_action_mailbox_inbound_emails_uniqueness", unique: true
-  end
-
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -271,13 +262,6 @@ ActiveRecord::Schema.define(version: 2022_04_17_070528) do
     t.string "indikator_program"
     t.string "target_program"
     t.string "satuan_target_program"
-    t.string "urusan"
-    t.string "bidang_urusan"
-    t.string "outcome"
-    t.string "pagu_giat"
-    t.string "pagu_subgiat"
-    t.string "id_program"
-    t.string "id_renstra"
     t.string "id_unit"
     t.string "kode_urusan"
     t.string "nama_urusan"
