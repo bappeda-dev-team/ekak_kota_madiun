@@ -28,7 +28,9 @@ class RinciansController < ApplicationController
   # POST /rincians or /rincians.json
   def create
     @rincian = Rincian.new(rincian_params)
-
+    penerima_manfaat = params[:rincian][:penerima_manfaat]
+    sasaran = Sasaran.find(params[:sasaran_id])
+    sasaran.update(penerima_manfaat: penerima_manfaat)
     respond_to do |format|
       if @rincian.save
         format.html do
@@ -45,6 +47,11 @@ class RinciansController < ApplicationController
   # PATCH/PUT /rincians/1 or /rincians/1.json
   def update
     respond_to do |format|
+      penerima_manfaat = params[:rincian][:penerima_manfaat]
+      if penerima_manfaat
+        sasaran = Sasaran.find(params[:sasaran_id])
+        sasaran.update(penerima_manfaat: penerima_manfaat)
+      end
       if @rincian.update(rincian_params)
         format.html do
           redirect_to user_sasaran_path(@sasaran.user, @sasaran), notice: 'Rincian berhasil diupdate.'
