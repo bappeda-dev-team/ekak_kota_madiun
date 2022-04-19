@@ -47,7 +47,10 @@ class Sasaran < ApplicationRecord
   validates :target, presence: true
   validates :satuan, presence: true
 
-  default_scope { order(id_rencana: :asc) }
+  # default_scope { order(id_rencana: :asc) }
+  scope :hangus, -> { left_outer_joins(:usulans).where(usulans: { sasaran_id: nil }).where(program_kegiatan_id: nil) }
+  scope :belum_ada_sub, -> { where(program_kegiatan_id: nil) }
+  scope :sudah_lengkap, -> { left_outer_joins(:usulans).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan_id: nil) }
 
   def respond_to_missing?(_method, *_args)
     0

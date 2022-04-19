@@ -11,6 +11,18 @@
         </div>
         <div class="table-responsive">
           <table class="table table-hover align-items-center">
+            <caption class="px-4">
+              <strong>Jumlah sasaran: </strong> <%= current_user.sasarans.count %>
+            </caption>
+            <caption class="px-4">
+              <strong class="text-danger">Jumlah sasaran hangus: </strong> <%= current_user.sasarans.hangus.count %>
+            </caption>
+            <caption class="px-4">
+              <strong class="text-warning">Jumlah sasaran belum ada subkegiatan: </strong> <%= current_user.sasarans.belum_ada_sub.count %>
+            </caption>
+            <caption class="px-4">
+              <strong class="text-success">Jumlah sasaran sudah lengkap: </strong> <%= current_user.sasarans.sudah_lengkap.count %>
+            </caption>
             <thead class="thead-light">
               <tr>
                 <th class="border-bottom text-left" scope="col">Sasaran</th>
