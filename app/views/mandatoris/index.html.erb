@@ -35,11 +35,11 @@
             <tbody>
               <% @mandatoris.each.with_index(1) do |mandatori, i| %>
                 <tr id="<%= dom_id(mandatori) %>">
-                  <td class="text-gray-900 fw-bolder align-middle" scope="row"><%= i %></td>
-                  <td class="fw-bolder align-middle"><%= mandatori.usulan %></td>
-                  <td class="fw-bolder align-middle"><%= mandatori.peraturan_terkait %></td>
-                  <td class="fw-bolder align-middle"><%= mandatori.uraian %></td>
-                  <td class="fw-bolder align-middle"><%= mandatori.asn_pengusul %></td>
+                  <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
+                  <td class="fw-bolder text-wrap"><%= mandatori.usulan %></td>
+                  <td class="fw-bolder text-wrap"><%= mandatori.peraturan_terkait %></td>
+                  <td class="fw-bolder text-wrap"><%= mandatori.uraian %></td>
+                  <td class="fw-bolder text-wrap"><%= mandatori.asn_pengusul %></td>
                   <td class="action-<%= dom_id(mandatori) %> text-center align-middle">
                     <% unless mandatori.is_active %>
                       <%= button_to toggle_is_active_mandatori_path(mandatori), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>

@@ -30,7 +30,7 @@ class Musrenbang < ApplicationRecord
   belongs_to :sasaran, optional: true
   has_many :usulans, as: :usulanable
 
-  default_scope { order(created_at: :desc) }
+  default_scope { order(updated_at: :desc) }
   scope :diambil_asn, -> { where.not(nip_asn: nil) }
   scope :belum_diajukan, -> { where(nip_asn: nil) }
   scope :belum_diambil_asn, -> { where(sasaran_id: nil) }

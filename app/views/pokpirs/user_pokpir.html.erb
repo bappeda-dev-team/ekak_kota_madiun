@@ -23,21 +23,21 @@
           <table class="table table-flush datatable" data-datatable>
             <thead class="thead-light">
               <tr>
-                <th class="border-bottom" scope="col">No.</th>
-                <th class="border-bottom" scope="col">Usulan</th>
-                <th class="border-bottom" scope="col">Alamat</th>
-                <th class="border-bottom" scope="col">Permasalahan</th>
-                <th class="border-bottom text-center" scope="col">Status</th>
+                <th class="border-bottom text-gray-700" scope="col">No.</th>
+                <th class="border-bottom text-gray-700" scope="col">Usulan</th>
+                <th class="border-bottom text-gray-700" scope="col">Alamat</th>
+                <th class="border-bottom text-gray-700" scope="col">Permasalahan</th>
+                <th class="border-bottom text-gray-700 text-center" scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
               <% @pokpirs.belum_diambil_asn.each.with_index(1) do |pokpir, i| %>
                 <tr>
                   <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                  <td class="fw-bolder align-middle"><%= pokpir.usulan %></td>
-                  <td class="fw-bolder align-middle"><%= pokpir.alamat %></td>
-                  <td class="fw-bolder align-middle text-wrap"><%= pokpir.uraian %></td>
-                  <td class="action-<%= dom_id(pokpir) %> text-center">
+                  <td class="fw-bolder text-wrap"><%= pokpir.usulan %></td>
+                  <td class="fw-bolder text-wrap"><%= pokpir.alamat %></td>
+                  <td class="fw-bolder text-wrap"><%= pokpir.uraian %></td>
+                  <td class="action-<%= dom_id(pokpir) %> text-center align-middle">
                     <% unless pokpir.is_active %>
                       <% if pokpir.status == 'pengajuan' %>
                         <button class= 'btn btn-tertiary d-inline-flex align-items-center toggle-active' disabled>

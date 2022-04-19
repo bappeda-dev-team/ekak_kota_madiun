@@ -1,8 +1,6 @@
 module ApplicationHelper
   def asn_sidebar_items
     [
-      { title: 'Rencana Kinerja 2023', href: user_sasarans_path(current_user), icon: 'fas fa-bullseye',
-        identifier: 'sasaran' },
       { title: 'Kak', href: kaks_path, icon: 'fas fa-sitemap', identifier: 'acuan_kerja' },
       { title: 'Laporan KAK', href: laporan_kak_path, icon: 'far fa-file', identifier: 'laporan_kak' },
       { title: 'Laporan RKA', href: laporan_rka_path, icon: 'fas fa-money-check', identifier: 'laporan_rka' }
@@ -14,7 +12,7 @@ module ApplicationHelper
       { title: 'Musrenbang', href: musrenbangs_path, identifier: 'musrenbang' },
       { title: 'Pokok Pikiran', href: pokpirs_path, identifier: 'pokpir' },
       { title: 'Mandatori', href: mandatoris_path, identifier: 'mandatori' },
-      { title: 'Inisiatif', href: inovasis_path, identifier: 'inovasi' }
+      { title: 'Inisiatif Walikota', href: inovasis_path, identifier: 'inovasi' }
     ]
   end
 
@@ -23,7 +21,7 @@ module ApplicationHelper
       { title: 'Musrenbang', href: usulan_musrenbang_path, identifier: 'usulan_musrenbang' },
       { title: 'Pokok Pikiran', href: usulan_pokpir_path, identifier: 'usulan_pokpir' },
       { title: 'Mandatori', href: usulan_mandatori_path, identifier: 'usulan_mandatori' },
-      { title: 'Inisiatif', href: usulan_inisiatif_path, identifier: 'usulan_inisiatif' }
+      { title: 'Inisiatif Walikota', href: usulan_inisiatif_path, identifier: 'usulan_inisiatif' }
     ]
   end
 
@@ -46,7 +44,12 @@ module ApplicationHelper
       { title: 'Daftar SubKegiatan OPD', href: daftar_subkegiatan_path, icon: 'fas fa-folder-open',
         identifier: 'daftar_subkegiatan' },
       { title: 'User', href: adminusers_path, icon: 'fas fa-user-check', identifier: 'adminusers' },
-      { title: 'OPD', href: opds_path, icon: 'fas fa-building', identifier: 'opds' },
+      { title: 'OPD', href: opds_path, icon: 'fas fa-building', identifier: 'opds' }
+    ]
+  end
+
+  def super_admin_items
+    [
       { title: 'Role', href: roles_path, icon: 'fas fa-user-tag', identifier: 'roles' }
     ]
   end

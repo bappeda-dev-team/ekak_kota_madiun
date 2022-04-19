@@ -4,7 +4,7 @@ class MusrenbangsController < ApplicationController
 
   # GET /musrenbangs or /musrenbangs.json
   def index
-    @musrenbangs = Musrenbang.all.order(:created_at)
+    @musrenbangs = Musrenbang.all.order(:updated_at)
   end
 
   def usulan_musrenbang
