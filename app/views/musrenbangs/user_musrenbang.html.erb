@@ -23,29 +23,35 @@
           <table class="table table-flush datatable" data-datatable>
             <thead class="thead-light">
               <tr>
-                <th class="border-bottom" scope="col">No.</th>
-                <th class="border-bottom" scope="col">Usulan</th>
-                <th class="border-bottom" scope="col">Alamat</th>
-                <th class="border-bottom" scope="col">Permasalahan</th>
-                <th class="border-bottom text-center" scope="col">Status</th>
+                <th class="border-bottom text-gray-700" scope="col">No.</th>
+                <th class="border-bottom text-gray-700" scope="col">Usulan</th>
+                <th class="border-bottom text-gray-700" scope="col">Alamat</th>
+                <th class="border-bottom text-gray-700" scope="col">Permasalahan</th>
+                <th class="border-bottom text-gray-700 text-center" scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
               <% @musrenbangs.each.with_index(1) do |musrenbang, i| %>
                 <tr>
                   <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                  <td class="fw-bolder align-middle text-wrap"><%= musrenbang.usulan %></td>
-                  <td class="fw-bolder align-middle"><%= musrenbang.alamat %></td>
-                  <td class="fw-bolder align-middle text-wrap"><%= musrenbang.uraian %></td>
-                  <td class="action-<%= dom_id(musrenbang) %> text-center">
+                  <td class="fw-bolder text-wrap"><%= musrenbang.usulan %></td>
+                  <td class="fw-bolder text-wrap"><%= musrenbang.alamat %></td>
+                  <td class="fw-bolder text-wrap"><%= musrenbang.uraian %></td>
+                  <td class="action-<%= dom_id(musrenbang) %> text-center align-middle">
                     <% unless musrenbang.is_active %>
                       <% if musrenbang.status == 'pengajuan' %>
                         <button class= 'btn btn-tertiary d-inline-flex align-items-center toggle-active' disabled>
                           Usulan Diajukan
                           <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
                         </button>
+                        <%= button_to diambil_asn_musrenbang_path(musrenbang), remote: true, class: 'btn btn-danger d-inline-flex align-items-center toggle-active',
+                        params: { nip_asn: nil, status: 'draft' } do %>
+                          Batalkan
+                          <i class="fas fa-ban text-primary icon icon-xs ms-2"></i>
+                        <% end %>
                       <% else %>
-                        <%= button_to diambil_asn_musrenbang_path(musrenbang), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
+                        <%= button_to diambil_asn_musrenbang_path(musrenbang), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active',
+                        params: { nip_asn: current_user.nik, status: 'pengajuan' } do %>
                           Ambil Usulan
                         <% end %>
                       <% end %>

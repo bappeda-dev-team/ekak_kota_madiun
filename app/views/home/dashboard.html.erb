@@ -4,19 +4,25 @@
       <div class="card border-0 shadow">
         <div class="card-header">
           <div class="row align-items-center">
-            <div class="col-8">
-              <h2 class="fs-5 fw-bold mb-0">Sasaran Kinerja <%= current_user.nama %></h2>
-            </div>
-            <div class="col text-end">
-              <%= link_to user_sasarans_path(current_user), class:"btn btn-sm btn-primary" do %>
-                <i class="fas fa-eye me-2"></i>
-                Lihat Sasaran
-              <% end %>
+            <div class="col">
+              <h2 class="fs-5 fw-bold mb-0">Sasaran Kinerja / Rencana Kinerja Tahun <%= Date.today.year %></h2>
             </div>
           </div>
         </div>
         <div class="table-responsive">
           <table class="table table-hover align-items-center">
+            <caption class="px-4">
+              <strong>Jumlah sasaran: </strong> <%= current_user.sasarans.count %>
+            </caption>
+            <caption class="px-4">
+              <strong class="text-danger">Jumlah sasaran hangus: </strong> <%= current_user.sasarans.hangus.count %>
+            </caption>
+            <caption class="px-4">
+              <strong class="text-secondary">Jumlah sasaran belum ada subkegiatan: </strong> <%= current_user.sasarans.belum_ada_sub.count %>
+            </caption>
+            <caption class="px-4">
+              <strong class="text-success">Jumlah sasaran sudah lengkap: </strong> <%= current_user.sasarans.sudah_lengkap.count %>
+            </caption>
             <thead class="thead-light">
               <tr>
                 <th class="border-bottom text-left" scope="col">Sasaran</th>
@@ -27,17 +33,17 @@
             </thead>
             <tbody>
               <% @sasaran.each do |s| %>
-                <tr>
-                  <td class="text-gray-900 text-left" style="white-space: initial !important;">
+                <tr class="<%= 'text-danger' if s.hangus?  %> <%= 'text-warning' if s.belum_ada_sub? %> text-success">
+                  <td class="fw-bolder text-left" style="white-space: initial !important;">
                     <%= s.sasaran_kinerja %>
                   </td>
-                  <td class="fw-bolder text-gray-500 text-left" style="white-space: initial !important;">
+                  <td class="fw-bolder text-left" style="white-space: initial !important;">
                     <%= s.indikator_kinerja %>
                   </td>
-                  <td class="fw-bolder text-gray-500 text-center">
+                  <td class="fw-bolder text-center">
                     <%= s.target %>
                   </td>
-                  <td class="fw-bolder text-gray-500 text-center">
+                  <td class="fw-bolder text-center">
                     <%= s.satuan %>
                   </td>
                 </tr>

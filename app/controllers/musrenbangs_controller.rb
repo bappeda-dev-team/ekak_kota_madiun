@@ -4,7 +4,7 @@ class MusrenbangsController < ApplicationController
 
   # GET /musrenbangs or /musrenbangs.json
   def index
-    @musrenbangs = Musrenbang.all.order(:created_at)
+    @musrenbangs = Musrenbang.all.order(:updated_at)
   end
 
   def usulan_musrenbang
@@ -15,7 +15,9 @@ class MusrenbangsController < ApplicationController
 
   def diambil_asn
     @musrenbang = Musrenbang.find(params[:id])
-    if @musrenbang.update(nip_asn: current_user.nik, status: 'pengajuan')
+    @status = params[:status]
+    @nip_asn = params[:nip_asn]
+    if @musrenbang.update(nip_asn: @nip_asn, status: @status)
       flash.now[:success] = 'Usulan berhasil diambil'
     else
       flash.now[:error] = 'Usulan gagal diambil'

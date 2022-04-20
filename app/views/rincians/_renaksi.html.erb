@@ -10,6 +10,8 @@
         <ul class="list mb-0">
           <li>OPD : <%= sasaran.user.opd.nama_opd %></li>
           <li>ASN : <%= sasaran.user.nama %></li>
+          <li>NIP : <%= sasaran.user.nik %></li>
+          <li>Pangkat : -</li>
           <li>Sasaran Kinerja : <%= sasaran.sasaran_kinerja %></li>
           <li>Indikator Kinerja : <%= sasaran.indikator_kinerja %></li>
           <li>Target Indikator Kinerja: <%= sasaran.target %> <%= sasaran.satuan %></li>
@@ -37,7 +39,7 @@
           <strong>Waktu yang dibutuhkan :</strong>
           <%= waktu = sasaran.waktu_total == 0 ? "-" : sasaran.waktu_total %> bulan
         </caption>
-        <caption class="waktu-renaksi">
+        <caption class="anggaran-renaksi">
           <strong>Anggaran yang dibutuhkan :</strong>
           Rp. <%= number_with_delimiter(sasaran.total_anggaran_dengan_komentar, delimiter: '.') %>
         </caption>

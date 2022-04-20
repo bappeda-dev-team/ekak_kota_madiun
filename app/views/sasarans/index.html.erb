@@ -16,13 +16,13 @@
           <div class="col">
             <h2 class="fs-5 fw-bold mb-0">Sasaran Kinerja </h2>
           </div>
-          <div class="col text-end">
-            <%= link_to "Buat sasaran kinerja baru",new_user_sasaran_path(current_user), class: "btn btn-sm btn-info" %>
-          </div>
         </div>
       </div>
       <div class="table-responsive">
         <table class="table align-items-center">
+          <caption class="p-3 mt-3">
+            <%= link_to "Buat sasaran kinerja baru",new_user_sasaran_path(current_user), class: "btn btn-info w-100" %>
+          </caption>
           <thead class="thead-light">
             <tr>
               <th class="border-bottom" scope="col">No.</th>
@@ -35,12 +35,12 @@
           </thead>
           <tbody>
             <% @sasarans.each.with_index(1) do |sasaran, i| %>
-              <tr>
-                <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                <td class="text-gray-900" scope="row" style="white-space: initial !important;"><%= sasaran.sasaran_kinerja %></td>
-                <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= sasaran.indikator_kinerja %></td>
-                <td class="fw-bolder text-gray-500"><%= sasaran.target %></td>
-                <td class="fw-bolder text-gray-500"><%= sasaran.satuan %></td>
+              <tr class="<%= 'text-danger' if sasaran.hangus?  %> <%= 'text-warning' if sasaran.belum_ada_sub? %> text-success">
+                <td class="fw-bolder" scope="row"><%= i %></td>
+                <td class="fw-bolder" scope="row" style="white-space: initial !important;"><%= sasaran.sasaran_kinerja %></td>
+                <td class="fw-bolder" style="white-space: initial !important;"><%= sasaran.indikator_kinerja %></td>
+                <td class="fw-bolder"><%= sasaran.target %></td>
+                <td class="fw-bolder"><%= sasaran.satuan %></td>
                 <td class="fw-bolder text-gray-500 text-center">
                   <%= link_to user_sasaran_path(current_user, sasaran), class: "m-3" do %>
                     <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>

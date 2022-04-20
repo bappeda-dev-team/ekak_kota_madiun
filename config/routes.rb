@@ -7,6 +7,12 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :anggaran_sshes
   resources :subkegiatan_tematiks, path: 'tematiks'
   resources :rekenings
+  resources :musrenbangs do
+    member do
+      post :toggle_is_active
+      post :diambil_asn
+    end
+  end
   resources :pokpirs do
     member do
       post :toggle_is_active
@@ -61,12 +67,6 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :kaks, path: 'acuan_kerja'
-  resources :musrenbangs do
-    member do
-      post :toggle_is_active
-      post :diambil_asn
-    end
-  end
   resources :lembagas
   resources :opds
   resources :program_kegiatans
