@@ -1,6 +1,6 @@
 prawn_document do |pdf|
   pdf.font_size 16
-  judul_rka = pdf.make_table([["RINCIAN BELANJA #{@programKegiatan.opd.nama_opd}"]])
+  judul_rka = pdf.make_table([["RINCIAN BELANJA"], [@programKegiatan.opd.nama_opd]], width: pdf.bounds.width)
   judul_rka.draw
   pdf.move_down 7
   pdf.font_size 10
@@ -17,7 +17,7 @@ prawn_document do |pdf|
               ['Indikator', ':', @programKegiatan.indikator_subkegiatan],
               ['Target', ':', "#{@programKegiatan.target_subkegiatan} #{@programKegiatan.satuan}"],
               ['Pagu Anggaran', ':', "Rp. #{number_with_delimiter(@programKegiatan.my_pagu, delimiter: '.')}"]
-            ], cell_style: { borders: [] })
+            ], cell_style: { borders: [] }, width: pdf.bounds.width)
   pdf.start_new_page
 
   # new page

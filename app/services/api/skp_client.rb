@@ -89,9 +89,9 @@ module Api
       kode_opd = data_opd['id']
       kode_unik_opd = data_opd['unit_id']
       id_opd_skp = data_opd['id_sipd']
-      insert_to_opd = [{ kode_opd: kode_opd, kode_unik_opd: kode_unik_opd, id_opd_skp: id_opd_skp}]
-      Opd.upsert(insert_to_opd, unique_)
-      
+      insert_to_opd = { kode_opd: kode_opd, kode_unik_opd: kode_unik_opd, id_opd_skp: id_opd_skp}
+      opd = Opd.find_by(kode_opd: kode_opd)
+      opd.update(insert_to_opd)
       data_renaksi.reject! { |renaksi| renaksi[:target].zero? }
       Sasaran.upsert_all(data_sasaran, unique_by: :id_rencana)
       Tahapan.upsert_all(data_tahapan, unique_by: :id_rencana_aksi)

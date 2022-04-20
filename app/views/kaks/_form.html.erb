@@ -85,8 +85,10 @@
       waktu_dibutuhkan_detail = $.get(`/program_kegiatans_to_kak_waktu/${value}`, (data) => {
         waktu_dibutuhkan.html(data)
       })
-
     });
+    if("<%= kak.program_kegiatan_id %>" != ""){
+      $('#dropdown').trigger('select2:select');
+    }
 
   });
 </script>
