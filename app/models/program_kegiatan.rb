@@ -62,7 +62,7 @@ class ProgramKegiatan < ApplicationRecord
   default_scope { order(created_at: :desc) }
 
   def my_pagu
-    sasarans.map(&:total_anggaran).compact.sum
+    sasarans.sudah_lengkap.map(&:total_anggaran).compact.sum
   end
 
   def my_waktu
