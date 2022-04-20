@@ -57,8 +57,6 @@ class SasaransController < ApplicationController
 
   # PATCH/PUT /sasarans/1 or /sasarans/1.json
   def update
-    @sasaran.user.id
-
     respond_to do |format|
       if @sasaran.update(sasaran_params)
         if(sasaran_params[:program_kegiatan_id])
@@ -66,9 +64,11 @@ class SasaransController < ApplicationController
         else
           flash[:success] = "Sukses update sasaran"
         end
+        format.js { render 'shared/_notifier', locals: { message: flash[:success] } }
         format.html { redirect_to user_sasaran_path(@user, @sasaran) }
         format.json { render :show, status: :ok, location: @sasaran }
       else
+        format.js { render 'shared/notifier', :unprocessable_entity}
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @sasaran.errors, status: :unprocessable_entity }
       end
@@ -77,7 +77,6 @@ class SasaransController < ApplicationController
 
   # DELETE /sasarans/1 or /sasarans/1.json
   def destroy
-    @sasaran.user.id
     @sasaran.destroy
     respond_to do |format|
       format.html { redirect_to sasaran_path, notice: 'Sasaran was successfully destroyed.' }
@@ -110,5 +109,9 @@ class SasaransController < ApplicationController
                                     :satuan, :penerima_manfaat, :nip_asn, :program_kegiatan_id,
                                     rincian_attributes: %i[data_terpilah penyebab_internal penyebab_external
                                                            permasalahan_umum permasalahan_gender resiko lokasi_pelaksanaan])
+  end
+  
+  rescue_from ActionController::ParameterMissing do |exception|
+    render 'shared/_notifier', locals: { message: 'belum diambil' }, status: :unprocessable_entity
   end
 end
