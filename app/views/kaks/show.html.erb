@@ -2,24 +2,36 @@
   <div class="program-kegiatan">
     <%= render partial: 'program_kegiatans/show_to_kak', locals: {programKegiatan: @kak.program_kegiatan} %>
   </div>
-  <% else %>
-    <!-- Form Tambah Program Kegiatan disini / atau lempar ke edit-->
-    Belum ada Program Kegiatan !!!
+<% else %>
+  <!-- Form Tambah Program Kegiatan disini / atau lempar ke edit-->
+  Belum ada Program Kegiatan !!!
 <% end %>
 <h4>A. Latar Belakang</h4>
 <div class="dasar-hukum">
   <div class="card border-2 shadow mb-3">
-    <div class="card-header">
-      Dasar Hukum
-    </div>
     <div class="card-body">
-      <ol>
-        <% @kak.dasar_hukum.each do |dh|  %>
-          <li>
-            <%= dh  %>
-          </li>
-        <% end %>
-      </ol>
+      <div class="card border-2 shadow mb-3">
+        <div class="card-header">
+          <strong>Dasar Hukum</strong>
+        </div>
+        <div class="card-body">
+          <ol>
+            <% @kak.dasar_hukum.each do |dh|  %>
+              <li>
+                <%= dh  %>
+              </li>
+            <% end %>
+          </ol>
+        </div>
+      </div>
+      <div class="card border-2 shadow mb-3">
+        <div class="card-header">
+          <strong>Gambaran Umum</strong>
+        </div>
+        <div class="card-body">
+          <%= @kak.gambaran_umum %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

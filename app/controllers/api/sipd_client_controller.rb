@@ -1,16 +1,25 @@
 # frozen_string_literal: true
 
-# this module not used yet
 # used for handling Sipd Service, synchronize Program etc
 module Api
   class SipdClientController < ApplicationController
+    before_action :set_program_params
     def sync_subkegiatan
-      tahun = params[:tahun]
-      kode_opd = params[:kode_opd]
-      id_opd = Opd.find_by(id_opd_skp: kode_opd).kode_opd
-      UpdateProgramJob.perform_later(kode_opd, tahun, id_opd)
+      UpdateProgramJob.perform_later(@kode_opd, @tahun, @id_opd)
       redirect_to admin_program_kegiatan_path,
-                  notice: "Update ProgramKegiatan Dikerjakan..."
+                  notice: "Update ProgramKegiatan #{nama_opd} Dikerjakan..."
+    end
+
+    private
+
+    def nama_opd
+      Opd.find_by(id_opd_skp: @kode_opd).nama_opd
+    end
+
+    def set_program_params
+      @kode_opd = params[:kode_opd]
+      @tahun = params[:tahun]
+      @id_opd = Opd.find_by(id_opd_skp: @kode_opd).kode_opd
     end
   end
 end
