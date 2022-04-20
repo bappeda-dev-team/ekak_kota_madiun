@@ -35,12 +35,12 @@
           </thead>
           <tbody>
             <% @sasarans.each.with_index(1) do |sasaran, i| %>
-              <tr>
-                <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                <td class="text-gray-900" scope="row" style="white-space: initial !important;"><%= sasaran.sasaran_kinerja %></td>
-                <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= sasaran.indikator_kinerja %></td>
-                <td class="fw-bolder text-gray-500"><%= sasaran.target %></td>
-                <td class="fw-bolder text-gray-500"><%= sasaran.satuan %></td>
+              <tr class="<%= 'text-danger' if sasaran.hangus?  %> <%= 'text-warning' if sasaran.belum_ada_sub? %> text-success">
+                <td class="fw-bolder" scope="row"><%= i %></td>
+                <td class="fw-bolder" scope="row" style="white-space: initial !important;"><%= sasaran.sasaran_kinerja %></td>
+                <td class="fw-bolder" style="white-space: initial !important;"><%= sasaran.indikator_kinerja %></td>
+                <td class="fw-bolder"><%= sasaran.target %></td>
+                <td class="fw-bolder"><%= sasaran.satuan %></td>
                 <td class="fw-bolder text-gray-500 text-center">
                   <%= link_to user_sasaran_path(current_user, sasaran), class: "m-3" do %>
                     <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>

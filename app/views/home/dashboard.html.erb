@@ -18,7 +18,7 @@
               <strong class="text-danger">Jumlah sasaran hangus: </strong> <%= current_user.sasarans.hangus.count %>
             </caption>
             <caption class="px-4">
-              <strong class="text-warning">Jumlah sasaran belum ada subkegiatan: </strong> <%= current_user.sasarans.belum_ada_sub.count %>
+              <strong class="text-secondary">Jumlah sasaran belum ada subkegiatan: </strong> <%= current_user.sasarans.belum_ada_sub.count %>
             </caption>
             <caption class="px-4">
               <strong class="text-success">Jumlah sasaran sudah lengkap: </strong> <%= current_user.sasarans.sudah_lengkap.count %>
@@ -33,17 +33,17 @@
             </thead>
             <tbody>
               <% @sasaran.each do |s| %>
-                <tr>
-                  <td class="text-gray-900 text-left" style="white-space: initial !important;">
+                <tr class="<%= 'text-danger' if s.hangus?  %> <%= 'text-warning' if s.belum_ada_sub? %> text-success">
+                  <td class="fw-bolder text-left" style="white-space: initial !important;">
                     <%= s.sasaran_kinerja %>
                   </td>
-                  <td class="fw-bolder text-gray-500 text-left" style="white-space: initial !important;">
+                  <td class="fw-bolder text-left" style="white-space: initial !important;">
                     <%= s.indikator_kinerja %>
                   </td>
-                  <td class="fw-bolder text-gray-500 text-center">
+                  <td class="fw-bolder text-center">
                     <%= s.target %>
                   </td>
-                  <td class="fw-bolder text-gray-500 text-center">
+                  <td class="fw-bolder text-center">
                     <%= s.satuan %>
                   </td>
                 </tr>

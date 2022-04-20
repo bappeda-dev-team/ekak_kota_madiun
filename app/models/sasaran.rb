@@ -47,10 +47,10 @@ class Sasaran < ApplicationRecord
   validates :target, presence: true
   validates :satuan, presence: true
 
-  # default_scope { order(id_rencana: :asc) }
+  default_scope { order(created_at: :asc) }
   scope :hangus, -> { left_outer_joins(:usulans).where(usulans: { sasaran_id: nil }).where(program_kegiatan_id: nil) }
   scope :belum_ada_sub, -> { where(program_kegiatan_id: nil) }
-  scope :sudah_lengkap, -> { left_outer_joins(:usulans).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan_id: nil) }
+  scope :sudah_lengkap, -> { includes(:usulans).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan_id: nil) }
 
   def respond_to_missing?(_method, *_args)
     0
@@ -119,5 +119,17 @@ class Sasaran < ApplicationRecord
 
   def sync_total_renaksi
     tahapans.each(&:sync_total_renaksi)
+  end
+
+  def hangus?
+    usulans.empty?
+  end
+
+  def belum_ada_sub?
+    program_kegiatan.nil?
+  end
+
+  def selesai?
+    !(hangus? || belum_ada_sub?)
   end
 end
