@@ -106,12 +106,10 @@ class SasaransController < ApplicationController
   # Only allow a list of trusted parameters through.
   def sasaran_params
     params.require(:sasaran).permit(:sasaran_kinerja, :indikator_kinerja, :target, :kualitas,
-                                    :satuan, :penerima_manfaat, :nip_asn, :program_kegiatan_id,
-                                    rincian_attributes: %i[data_terpilah penyebab_internal penyebab_external
-                                                           permasalahan_umum permasalahan_gender resiko lokasi_pelaksanaan])
+                                    :satuan, :penerima_manfaat, :nip_asn, :program_kegiatan_id)
   end
-  
-  rescue_from ActionController::ParameterMissing do |exception|
-    render 'shared/_notifier', locals: { message: 'belum diambil' }, status: :unprocessable_entity
+
+  rescue_from ActionController::ParameterMissing do
+    render 'shared/_notifier', locals: { message: 'isian belum terisi' }, status: :unprocessable_entity
   end
 end

@@ -3,10 +3,7 @@
 # Table name: program_kegiatans
 #
 #  id                        :bigint           not null, primary key
-#  bidang_urusan             :string
-#  id_program                :string
 #  id_program_sipd           :string
-#  id_renstra                :string
 #  id_sub_giat               :string
 #  id_unit                   :string
 #  identifier_belanja        :string
@@ -24,17 +21,13 @@
 #  nama_program              :string
 #  nama_subkegiatan          :string
 #  nama_urusan               :string
-#  outcome                   :string
 #  pagu                      :string
-#  pagu_giat                 :string
-#  pagu_subgiat              :string
 #  satuan                    :string
 #  satuan_target_program     :string
 #  satuan_target_subkegiatan :string
 #  target                    :string
 #  target_program            :string
 #  target_subkegiatan        :string
-#  urusan                    :string
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
 #  subkegiatan_tematik_id    :bigint

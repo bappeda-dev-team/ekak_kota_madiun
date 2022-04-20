@@ -13,4 +13,8 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit :sign_in, keys: %i[login password]
     devise_parameter_sanitizer.permit :account_update, keys: added_attrs
   end
+
+    # rescue_from ActionController::ParameterMissing do |exception|
+    #   redirect_back(fallback_location: sasarans_path, flash: { error: "Belum dipilih" })
+    # end
 end
