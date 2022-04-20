@@ -15,6 +15,22 @@
     <%= form.select :kode_opd, Opd.pluck(:nama_opd, :kode_opd), {include_blank: true} , {class: "select2-program", "data-placeholder": "Pilih OPD"} %>
   </div>
   <div class="field">
+    <%= form.label :kode_urusan, class: "form-label" %>
+    <%= form.text_field :kode_urusan, class: "form-control", placeholder: "..." %>
+  </div>
+  <div class="field">
+    <%= form.label :nama_urusan, class: "form-label" %>
+    <%= form.text_field :nama_urusan, class: "form-control", placeholder: "..." %>
+  </div>
+  <div class="field">
+    <%= form.label :kode_bidang_urusan, class: "form-label" %>
+    <%= form.text_field :kode_bidang_urusan, class: "form-control", placeholder: "..." %>
+  </div>
+  <div class="field">
+    <%= form.label :nama_bidang_urusan, class: "form-label" %>
+    <%= form.text_field :nama_bidang_urusan, class: "form-control", placeholder: "..." %>
+  </div>
+  <div class="field">
     <%= form.label :program, class: "form-label" %>
     <%= form.text_field :nama_program, class: "form-control", placeholder: "..." %>
   </div>

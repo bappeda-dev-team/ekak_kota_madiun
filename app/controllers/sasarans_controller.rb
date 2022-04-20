@@ -22,7 +22,17 @@ class SasaransController < ApplicationController
   def hapus_program_from_sasaran
     param_id = params[:id_sasaran]
     sasaran = Sasaran.find(param_id)
-    sasaran&.update(program_kegiatan_id: nil)
+    respond_to do |format|
+      if sasaran.update(program_kegiatan_id: nil)
+        @status = 'success'
+        @text = 'Sukses menghapus program kegiatan'
+        format.js
+      else
+        @status = 'error'
+        @text = 'Terjadi kesalahan saat menghapus program kegiatan'
+        format.js :unprocessable_entity
+      end
+    end
   end
 
   def renaksi_update
@@ -59,16 +69,15 @@ class SasaransController < ApplicationController
   def update
     respond_to do |format|
       if @sasaran.update(sasaran_params)
-        if(sasaran_params[:program_kegiatan_id])
-          flash[:success] = "Sukses menambah subkegiatan"
+        if sasaran_params[:program_kegiatan_id]
+          flash.now[:success] = 'Sukses menambah subkegiatan'
         else
-          flash[:success] = "Sukses update sasaran"
+          flash.now[:success] = 'Sukses update sasaran'
         end
-        format.js { render 'shared/_notifier', locals: { message: flash[:success] } }
-        format.html { redirect_to user_sasaran_path(@user, @sasaran) }
+        format.js
+        format.html { redirect_to user_sasaran_path(@user, @sasaran), notice: 'Sasaran was successfully created.'  }
         format.json { render :show, status: :ok, location: @sasaran }
       else
-        format.js { render 'shared/notifier', :unprocessable_entity}
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @sasaran.errors, status: :unprocessable_entity }
       end
@@ -79,7 +88,7 @@ class SasaransController < ApplicationController
   def destroy
     @sasaran.destroy
     respond_to do |format|
-      format.html { redirect_to sasaran_path, notice: 'Sasaran was successfully destroyed.' }
+      format.html { redirect_to sasarans_path, notice: 'Sasaran was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
