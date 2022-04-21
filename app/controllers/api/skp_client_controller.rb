@@ -4,19 +4,27 @@ module Api
   # Controller for SKP API
   class SkpClientController < ApplicationController
     before_action :set_params
+    before_action :verify_kode_opd, only: [:sync_sasaran]
+
     def sync_sasaran
       UpdateSkpJob.perform_later(@kode_opd, @tahun, @bulan)
-
       redirect_to adminsasarans_path,
-                  notice: "Update Sasaran #{nama_opd} Dikerjakan..."
+                  success: "Update Sasaran #{nama_opd} Dikerjakan..."
     end
 
     def sync_pegawai
       UpdateUserJob.perform_later(@kode_opd, @tahun, @bulan)
-      redirect_to adminusers_path, notice: "Update Pegawai #{nama_opd} Dikerjakan..."
+      redirect_to adminusers_path, success: "Update Pegawai #{nama_opd} Dikerjakan..."
     end
 
     private
+
+    def verify_kode_opd
+      user = User.find_by(kode_opd: @kode_opd).nil?
+      if user
+        redirect_to adminsasarans_path, error: "Harap update pegawai #{nama_opd} terlebih dahulu" 
+      end
+    end
 
     def nama_opd
       Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
@@ -24,10 +32,6 @@ module Api
 
     def set_params
       @kode_opd = params[:kode_opd]
-      if User.find_by(kode_opd: @kode_opd).nil?
-        redirect_to adminsasarans_path,
-                  error: "Harap update pegawai terlebih dahulu"
-      end
       @tahun = params[:tahun]
       @bulan = params[:bulan]
     end
