@@ -21,7 +21,7 @@ module Api
       @tahun = params[:tahun]
       if @kode_opd.nil?
         redirect_to admin_program_kegiatan_path,
-                  alert: "Harap Sync Sasaran dahulu"
+                  error: "Harap Sync Sasaran #{nama_opd} dahulu"
       end
       @id_opd = Opd.find_by(id_opd_skp: @kode_opd).kode_opd
     end

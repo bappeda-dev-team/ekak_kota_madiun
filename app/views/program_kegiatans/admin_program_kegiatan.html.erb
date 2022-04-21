@@ -11,7 +11,8 @@
       </ol>
     </nav>
     <% flash.each do |type, msg| %>
-      <div class="alert alert-info">
+      <% tipe = type == 'error' ? 'danger' : type %>
+      <div class="alert alert-<%= tipe %>">
         <%= msg %>
       </div>
     <% end %>
