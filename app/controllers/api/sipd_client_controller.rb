@@ -7,7 +7,7 @@ module Api
     def sync_subkegiatan
       UpdateProgramJob.perform_later(@kode_opd, @tahun, @id_opd)
       redirect_to admin_program_kegiatan_path,
-                  notice: "Update ProgramKegiatan #{nama_opd} Dikerjakan..."
+                  success: "Update ProgramKegiatan #{nama_opd} Dikerjakan..."
     end
 
     private
@@ -19,6 +19,10 @@ module Api
     def set_program_params
       @kode_opd = params[:kode_opd]
       @tahun = params[:tahun]
+      if @kode_opd.nil?
+        redirect_to admin_program_kegiatan_path,
+                  alert: "Harap Sync Sasaran dahulu"
+      end
       @id_opd = Opd.find_by(id_opd_skp: @kode_opd).kode_opd
     end
   end
