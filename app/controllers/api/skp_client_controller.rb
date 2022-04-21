@@ -20,7 +20,8 @@ module Api
     private
 
     def verify_kode_opd
-      user = User.find_by(kode_opd: @kode_opd).nil?
+      opd = Opd.find_by(kode_unik_opd: @kode_opd).kode_opd
+      user = User.find_by(kode_opd: opd).nil?
       if user
         redirect_to adminsasarans_path, error: "Harap update pegawai #{nama_opd} terlebih dahulu" 
       end
