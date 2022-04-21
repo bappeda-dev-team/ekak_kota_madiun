@@ -24,6 +24,10 @@ module Api
 
     def set_params
       @kode_opd = params[:kode_opd]
+      if User.find_by(kode_opd: @kode_opd).nil?
+        redirect_to adminsasarans_path,
+                  error: "Harap update pegawai terlebih dahulu"
+      end
       @tahun = params[:tahun]
       @bulan = params[:bulan]
     end

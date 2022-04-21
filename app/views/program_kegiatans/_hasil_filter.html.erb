@@ -5,7 +5,9 @@
       <h2 class="fs-5 fw-bold mb-0">Daftar Program Kegiatan <%= opd.nama_opd %></h2>
     </div>
     <div class="col text-end">
-      <%= link_to sync_subkegiatan_path(kode_opd: opd.id_opd_skp, tahun: Date.today.year), class:"btn btn-sm btn-primary" do %>
+      <%= link_to sync_subkegiatan_path(kode_opd: opd.id_opd_skp, tahun: Date.today.year), 
+      data: { disable_with: 'Memproses....'},
+      class:"btn btn-sm btn-primary" do %>
         <i class="fas fa-sync me-2"></i>
         Sync Program, Kegiatan, dan Sub Kegiatan
       <% end %>

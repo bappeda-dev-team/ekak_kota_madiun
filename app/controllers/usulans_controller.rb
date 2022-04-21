@@ -1,4 +1,6 @@
 class UsulansController < ApplicationController
+  before_action :check_params
+
   def update_sasaran_asn
     sasaran = params[:sasaran_id]
     usulan = params[:usulan_id].to_i
@@ -30,6 +32,14 @@ class UsulansController < ApplicationController
         flash.now[:error] = 'Usulan gagal dihapus'
         format.js { render 'update_sasaaran_asn', status: :unprocessable_entity }
       end
+    end
+  end
+
+  private
+
+  def check_params
+    if params[:usulan_type].empty? && params[:usulan_id].empty?
+      render 'shared/_notifier', locals: { message: 'Usulan belum diambil' }, status: :unprocessable_entity
     end
   end
 end

@@ -1,8 +1,9 @@
 Swal.fire({
-title: 'Sub kegiatan dihapus',
-icon: 'success',
-confirmButtonText: 'Yes',
+  title: "<%= @status.capitalize %>",
+  text: "<%= @text %>",
+  icon: "<%= @status %>",
+  timer: 1000,
+  showConfirmButton: false,
+}).then(() => {
+  Turbolinks.visit(window.location, { action: "replace" })
 })
-setTimeout(() => {
-location.reload(true);
-}, 1500);

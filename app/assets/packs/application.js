@@ -34,6 +34,9 @@ window.SmoothScroll = SmoothScroll;
 require('../javascript/volt/volt');
 
 $(function () {
+  $(document).on('select2:open', () => {
+    document.querySelector('.select2-search__field').focus();
+  });
 
   $("#dropdown").select2({
     width: "100%",

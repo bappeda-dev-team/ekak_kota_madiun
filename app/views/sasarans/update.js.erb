@@ -1,0 +1,4 @@
+$('#notice').html("<%= j render 'shared/flash', flash: flash %>");
+setTimeout(() => {
+  Turbolinks.visit(location.href);
+}, 700)

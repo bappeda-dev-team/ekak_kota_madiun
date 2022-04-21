@@ -22,7 +22,17 @@ class SasaransController < ApplicationController
   def hapus_program_from_sasaran
     param_id = params[:id_sasaran]
     sasaran = Sasaran.find(param_id)
-    sasaran&.update(program_kegiatan_id: nil)
+    respond_to do |format|
+      if sasaran.update(program_kegiatan_id: nil)
+        @status = 'success'
+        @text = 'Sukses menghapus program kegiatan'
+        format.js
+      else
+        @status = 'error'
+        @text = 'Terjadi kesalahan saat menghapus program kegiatan'
+        format.js :unprocessable_entity
+      end
+    end
   end
 
   def renaksi_update
@@ -57,16 +67,15 @@ class SasaransController < ApplicationController
 
   # PATCH/PUT /sasarans/1 or /sasarans/1.json
   def update
-    @sasaran.user.id
-
     respond_to do |format|
       if @sasaran.update(sasaran_params)
-        if(sasaran_params[:program_kegiatan_id])
-          flash[:success] = "Sukses menambah subkegiatan"
+        if sasaran_params[:program_kegiatan_id]
+          flash.now[:success] = 'Sukses menambah subkegiatan'
         else
-          flash[:success] = "Sukses update sasaran"
+          flash.now[:success] = 'Sukses update sasaran'
         end
-        format.html { redirect_to user_sasaran_path(@user, @sasaran) }
+        format.js
+        format.html { redirect_to user_sasaran_path(@user, @sasaran), notice: 'Sasaran was successfully created.'  }
         format.json { render :show, status: :ok, location: @sasaran }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -77,10 +86,9 @@ class SasaransController < ApplicationController
 
   # DELETE /sasarans/1 or /sasarans/1.json
   def destroy
-    @sasaran.user.id
     @sasaran.destroy
     respond_to do |format|
-      format.html { redirect_to sasaran_path, notice: 'Sasaran was successfully destroyed.' }
+      format.html { redirect_to sasarans_path, notice: 'Sasaran was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -107,8 +115,10 @@ class SasaransController < ApplicationController
   # Only allow a list of trusted parameters through.
   def sasaran_params
     params.require(:sasaran).permit(:sasaran_kinerja, :indikator_kinerja, :target, :kualitas,
-                                    :satuan, :penerima_manfaat, :nip_asn, :program_kegiatan_id,
-                                    rincian_attributes: %i[data_terpilah penyebab_internal penyebab_external
-                                                           permasalahan_umum permasalahan_gender resiko lokasi_pelaksanaan])
+                                    :satuan, :penerima_manfaat, :nip_asn, :program_kegiatan_id)
+  end
+
+  rescue_from ActionController::ParameterMissing do
+    render 'shared/_notifier', locals: { message: 'isian belum terisi' }, status: :unprocessable_entity
   end
 end

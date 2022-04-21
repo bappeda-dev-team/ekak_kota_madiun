@@ -22,29 +22,31 @@
     <% end %>
   </div>
   <div class="card-body">
-    <table class="table" id="musrenbang-table">
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Usulan</th>
-          <th>Alamat</th>
-          <th>Permasalahan</th>
-          <th>Jenis Usulan</th>
-          <th class="text-center align-middle">Aksi</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% sasaran.my_usulan.filter { |g| g.instance_of?(Musrenbang) }.each.with_index(1) do |sas, i| %>
+    <div class="table-responsive">
+      <table class="table" id="musrenbang-table">
+        <thead>
           <tr>
-            <td><%= i %></td>
-            <td><%= sas.usulan %></td>
-            <td><%= sas.try(:alamat) || sas.try(:peraturan_terkait) %></td>
-            <td><%= sas.uraian %></td>
-            <td><%= sas.class.name %></td>
-            <td class="text-center align-middle"><%= button_to 'Hapus', hapus_usulan_dari_sasaran_path, params: { usulan_id: sas.id, usulan_type: sas.class.name } ,remote: true, class: 'btn btn-danger' %></td>
+            <th>No</th>
+            <th>Usulan</th>
+            <th>Alamat</th>
+            <th>Permasalahan</th>
+            <th>Jenis Usulan</th>
+            <th class="text-center align-middle">Aksi</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% sasaran.my_usulan.filter { |g| g.instance_of?(Musrenbang) }.each.with_index(1) do |sas, i| %>
+            <tr>
+              <td><%= i %></td>
+              <td><%= sas.usulan %></td>
+              <td><%= sas.try(:alamat) || sas.try(:peraturan_terkait) %></td>
+              <td><%= sas.uraian %></td>
+              <td><%= sas.class.name %></td>
+              <td class="text-center align-middle"><%= button_to 'Hapus', hapus_usulan_dari_sasaran_path, params: { usulan_id: sas.id, usulan_type: sas.class.name } ,remote: true, class: 'btn btn-danger' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

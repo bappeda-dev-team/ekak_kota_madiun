@@ -55,8 +55,8 @@ const showConfirmationDialog = (element) => {
     text: text || '',
     icon: 'warning',
     showCancelButton: true,
-    confirmButtonText: 'Yes',
-    cancelButtonText: 'Cancel',
+    confirmButtonText: 'Ya',
+    cancelButtonText: 'Tidak',
   }).then(result => confirmed(element, result));
 
 };
@@ -77,3 +77,4 @@ function handleConfirm(element) {
 }
 
 Rails.delegate(document, 'a[data-confirm-swal]', 'click', handleConfirm);
+Rails.delegate(document, 'input[data-confirm-swal]', 'click', handleConfirm);
