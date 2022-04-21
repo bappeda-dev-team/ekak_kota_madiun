@@ -31,11 +31,11 @@ class Sasaran < ApplicationRecord
   belongs_to :program_kegiatan, optional: true
 
   has_many :usulans
-  has_many :musrenbangs
+  # has_many :musrenbangs
   # has_many :pokpirs
   # has_many :mandatoris
   # has_many :inovasis
-  has_many :tahapans, foreign_key: 'id_rencana', primary_key: 'id_rencana'
+  has_many :tahapans, foreign_key: 'id_rencana', primary_key: 'id_rencana', dependent: :destroy
   has_one :rincian, dependent: :destroy
 
   accepts_nested_attributes_for :rincian, update_only: true
