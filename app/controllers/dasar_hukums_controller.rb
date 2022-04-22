@@ -65,6 +65,6 @@ class DasarHukumsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def dasar_hukum_params
-    params.require(:dasar_hukum).permit(:peraturan, :judul, :tahun)
+    params.require(:dasar_hukum).permit!
   end
 end

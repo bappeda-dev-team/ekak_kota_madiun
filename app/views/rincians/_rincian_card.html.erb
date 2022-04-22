@@ -24,6 +24,39 @@
     <% end %>
   </div>
   <div class="card-body">
+    <%= form_for(sasaran.dasar_hukums.build) do |form| %>
+      <%= form.hidden_field :sasaran_id, value: sasaran.id_rencana %>
+      <div class="col">
+        <%= form.label :judul %>
+        <%= form.text_area :judul, class: "form-control", rows: 3 %>
+      </div>
+      <div class="col">
+        <%= form.label :peraturan %>
+        <%= form.text_area :peraturan, class: "form-control", rows: 3 %>
+      </div>
+      <div class="col">
+        <%= form.label :tahun %>
+        <%= form.text_area :tahun, class: "form-control", rows: 3, value: '2024' %>
+      </div>
+      <div class="col">
+        <%= form.submit 'Buat Dasar Hukum' %>
+      </div>
+    <% end %>
+  </div>
+  <div class="card-body">
+    <% sasaran.dasar_hukums.each do |das| %>
+      <div class="row">
+        <div class="col">
+          <%= das.judul %>
+        </div>
+        <div class="col">
+          <%= das.peraturan %>
+        </div>
+        <div class="col">
+          <%= das.tahun %>
+        </div>
+      </div>
+    <% end %>
     <% if sasaran.rincian %>
       <div class="row">
         <div class="col">
