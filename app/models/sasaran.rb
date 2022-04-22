@@ -31,7 +31,7 @@ class Sasaran < ApplicationRecord
   belongs_to :program_kegiatan, optional: true
 
   has_many :usulans
-  has_many :dasar_hukums, foreign_key: 'sasaran_id', primary_key: 'id_rencana'
+  has_many :dasar_hukums, foreign_key: 'sasaran_id', primary_key: 'id_rencana', class_name: 'DasarHukum'
   # has_many :musrenbangs
   # has_many :pokpirs
   # has_many :mandatoris
