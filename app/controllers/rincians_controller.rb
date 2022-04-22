@@ -34,7 +34,7 @@ class RinciansController < ApplicationController
     respond_to do |format|
       if @rincian.save
         format.html do
-          redirect_to user_sasaran_path(@sasaran.user, @sasaran), notice: 'Rincian berhasil ditambahkan.'
+          redirect_to user_sasaran_path(@sasaran.user, @sasaran), success: 'Rincian berhasil ditambahkan.'
         end
         format.json { render :show, status: :created, location: @rincian }
       else
@@ -54,7 +54,7 @@ class RinciansController < ApplicationController
       end
       if @rincian.update(rincian_params)
         format.html do
-          redirect_to user_sasaran_path(@sasaran.user, @sasaran), notice: 'Rincian berhasil diupdate.'
+          redirect_to user_sasaran_path(@sasaran.user, @sasaran), success: 'Rincian berhasil diupdate.'
         end
         format.json { render :show, status: :ok, location: @rincian }
       else
@@ -69,7 +69,7 @@ class RinciansController < ApplicationController
     @rincian.destroy
     respond_to do |format|
       format.html do
-        redirect_to user_sasaran_path(current_user, @sasaran), notice: 'Rincian was successfully destroyed.'
+        redirect_to user_sasaran_path(current_user, @sasaran), success: 'Rincian dihapus.'
       end
       format.json { head :no_content }
     end
