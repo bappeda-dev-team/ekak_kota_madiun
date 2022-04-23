@@ -17,7 +17,9 @@
             <h2 class="fs-5 fw-bold mb-0">KaK </h2>
           </div>
           <div class="col text-end">
-            <%= link_to "Tambah Data KaK", new_kak_path, class: "btn btn-sm btn-info" %>
+            <span><%= current_user.nama %></span>
+            |
+            <span><%= current_user.nik %></span>
           </div>
         </div>
       </div>
@@ -34,13 +36,13 @@
             </tr>
           </thead>
           <tbody>
-            <% @kaks.includes(:program_kegiatan).where.not(program_kegiatan: {id: nil}).each.with_index(1) do |kak, i| %>
+            <% current_user.sasarans.includes(:program_kegiatan).where.not(program_kegiatan: {id: nil}).each.with_index(1) do |kak, i| %>
               <tr>
                 <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
                 <td class="text-gray-900" scope="row"><%= kak.program_kegiatan.nama_program %></td>
                 <td class="text-gray-900" scope="row"><%= kak.program_kegiatan.nama_subkegiatan %></td>
-                <td class="text-gray-900">
-                  <table>
+                <td class="border p-0">
+                  <table class="table p-0">
                     <tbody>
                       <% kak.program_kegiatan.sasarans.each do |show_sasaran| %>
                         <tr>
@@ -52,8 +54,8 @@
                     </tbody>
                   </table>
                 </td>
-                <td class="text-gray-900">
-                  <table>
+                <td class="border p-0">
+                  <table class="table p-0">
                     <tbody>
                       <% kak.program_kegiatan.sasarans.each do |show_user| %>
                         <tr>

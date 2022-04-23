@@ -7,33 +7,51 @@
   Belum ada Program Kegiatan !!!
 <% end %>
 <h4>A. Latar Belakang</h4>
-<div class="dasar-hukum">
-  <div class="card border-2 shadow mb-3">
-    <div class="card-body">
-      <div class="card border-2 shadow mb-3">
-        <div class="card-header">
-          <strong>Dasar Hukum</strong>
-        </div>
-        <div class="card-body">
-          <ol>
-            <% @kak.dasar_hukum.each do |dh|  %>
-              <li>
-                <%= dh  %>
-              </li>
-            <% end %>
-          </ol>
-        </div>
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <h5>1. Dasar Hukum</h5>
+  </div>
+  <% current_user.sasarans.includes(:program_kegiatan).where.not(program_kegiatan: {id: nil}).each do |sas_dh|  %>
+    <div class="card mb-2">
+      <div class="card-header">
+        <strong>Dasar Hukum Sasaran <%= sas_dh.sasaran_kinerja %></strong>
       </div>
-      <div class="card border-2 shadow mb-3">
-        <div class="card-header">
-          <strong>Gambaran Umum</strong>
-        </div>
-        <div class="card-body">
-          <%= @kak.gambaran_umum %>
-        </div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr class="border">
+              <th>Peraturan terkait</th>
+              <th>Uraian</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% sas_dh.dasar_hukums.order(:updated_at).each do |dashu| %>
+              <tr class="border">
+                <td class="align-middle"><%= dashu.judul %></td>
+                <td class="align-middle"><%= dashu.peraturan %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
+  <% end %>
+  <div class="card-header">
+    <h5>2. Gambaran Umum</h5>
   </div>
+  <% current_user.sasarans.includes(:program_kegiatan).where.not(program_kegiatan: {id: nil}).each do |sas_gambumum|  %>
+    <div class="card mb-2">
+      <div class="card-header">
+        <strong>Gambaran Umum Sasaran <%= sas_gambumum.sasaran_kinerja %></strong>
+      </div>
+      <% sas_gambumum.latar_belakangs.order(:updated_at).each do |gambumum| %>
+        <div class="card-body">
+          <p class="px-2"><%= gambumum.gambaran_umum %></p>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
 </div>
 <h4>B. Penerima Manfaat</h4>
 <div class="penerima-manfaat">
