@@ -10,5 +10,7 @@
 require 'rails_helper'
 
 RSpec.describe Search::AllUsulan, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'validation' do
+    it { is_expected.to belong_to(:searchable) }
+  end
 end
