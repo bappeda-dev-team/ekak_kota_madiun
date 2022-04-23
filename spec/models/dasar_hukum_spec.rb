@@ -36,24 +36,6 @@ RSpec.describe DasarHukum, type: :model do
       expect(d).to_not be_valid
     end
 
-    it "invalid jika tahun diisi selain angka" do
-      d = DasarHukum.create(
-        peraturan: "Peraturan Menteri Dalam Negeri Nomor 86 Tahun 2017 tentang Tata Cara Perencanaan, Pengendalian dan Evaluasi ..",
-        tahun: "ABS",
-        judul: "Terserah",
-      )
-      expect(d).to_not be_valid
-    end
-
-    it "invalid jika tahun lebih dari 4 karakter" do
-      d = DasarHukum.create(
-        peraturan: "Peraturan Menteri Dalam Negeri Nomor 86 Tahun 2017 tentang Tata Cara Perencanaan, Pengendalian dan Evaluasi ..",
-        tahun: "200001",
-        judul: "Terserah",
-      )
-      expect(d).to_not be_valid
-    end
-
     it "valid with this attribute" do
       d = DasarHukum.create(
         peraturan: "Peraturan Menteri Dalam Negeri Nomor 86 Tahun 2017 tentang Tata Cara Perencanaan, Pengendalian dan Evaluasi ..",

@@ -18,5 +18,4 @@ class DasarHukum < ApplicationRecord
   belongs_to :sasaran, foreign_key: 'sasaran_id', primary_key: 'id_rencana', optional: true
   validates :peraturan, presence: true
   validates :judul, presence: true
-  validates :tahun, numericality: { only_integer: true }, length: { is: 4 }
 end

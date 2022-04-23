@@ -31,6 +31,7 @@ class DasarHukumsController < ApplicationController
         format.html { redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Dasar Hukum berhasil ditambahkan" }
         format.json { render :show, status: :created, location: @dasar_hukum }
       else
+        format.js { render :new, status: :unprocessable_entity }
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @dasar_hukum.errors, status: :unprocessable_entity }
       end

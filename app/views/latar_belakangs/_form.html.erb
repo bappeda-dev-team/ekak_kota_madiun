@@ -1,4 +1,4 @@
-<%= form_with(model: latar_belakang) do |form| %>
+<%= form_with(model: [@sasaran, latar_belakang]) do |form| %>
   <% if latar_belakang.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(latar_belakang.errors.count, "error") %> prohibited this latar_belakang from being saved:</h2>
@@ -10,12 +10,8 @@
     </div>
   <% end %>
   <div class="field">
-    <%= form.label :dasar_hukum, class: "form-label" %>
-    <%= form.text :dasar_hukum, class: "form-control" %>
-  </div>
-  <div class="field">
     <%= form.label :gambaran_umum, class: "form-label" %>
-    <%= form.text :gambaran_umum, class: "form-control" %>
+    <%= form.text_area :gambaran_umum, class: "form-control" %>
   </div>
   <div class="actions">
     <%= form.submit "Tambah Latar Belakang"%>

@@ -1,0 +1,36 @@
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <h4 class="card-title">
+      Gambaran Umum 
+    </h4>
+    <div class="link-tambah">
+      <%= link_to 'Tambah Gambaran Umum', new_sasaran_latar_belakang_path(sasaran), remote: true, class: 'btn btn-primary',
+          data: {'bs-toggle': 'modal', 'bs-target': '#form-gambaranumum'} %>
+    </div>
+  </div>
+  <% unless sasaran.latar_belakangs.nil? %>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Gambaran Umum</th>
+              <th class="text-center align-middle">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% sasaran.latar_belakangs.order(:updated_at).each do |latarbelakang| %>
+              <tr>
+                <td class="align-middle text-wrap"><%= latarbelakang.gambaran_umum %></td>
+                <td class="text-center align-middle">
+                  <%= link_to 'Edit Gambaran Umum', edit_sasaran_latar_belakang_path(sasaran,latarbelakang), remote: true, class: 'btn btn-outline-info text-center',
+                  data: {'bs-toggle': 'modal', 'bs-target': '#form-gambaranumum'} %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% end %>
+</div>

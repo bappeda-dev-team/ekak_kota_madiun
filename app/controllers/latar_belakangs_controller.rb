@@ -18,6 +18,7 @@ class LatarBelakangsController < ApplicationController
 
   # GET /latar_belakangs/1/edit
   def edit
+    @sasaran = Sasaran.find(params[:sasaran_id])
   end
 
   # POST /latar_belakangs or /latar_belakangs.json
