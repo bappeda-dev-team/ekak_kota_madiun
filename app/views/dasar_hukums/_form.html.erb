@@ -1,8 +1,7 @@
-<%= form_with(model: dasar_hukum) do |form| %>
+<%= form_with(model: [@sasaran,dasar_hukum]) do |form| %>
   <% if dasar_hukum.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(dasar_hukum.errors.count, "error") %> prohibited this dasar_hukum from being saved:</h2>
-
       <ul>
         <% dasar_hukum.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,22 +9,14 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
-    <%= form.label :judul, class: "form-label" %>
+    <%= form.label 'Peraturan terkait', class: "form-label" %>
     <%= form.text_field :judul, {class: "form-control", required: true} %>
   </div>
-
   <div class="field">
-    <%= form.label :peraturan, class: "form-label" %>
+    <%= form.label 'Uraian', class: "form-label" %>
     <%= form.text_area :peraturan ,{class: "form-control", required: true} %>
   </div>
-
-  <div class="field">
-    <%= form.label :tahun, class: "form-label" %>
-    <%= form.number_field :tahun ,{class: "form-control", value: Time.zone.now.year, min: 1945, max: Time.zone.now.year} %>
-  </div>
-
   <div class="actions">
     <%= form.submit "Submit", :class => "btn btn-tertiary w-100" %>
   </div>
