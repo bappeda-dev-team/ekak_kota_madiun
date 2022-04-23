@@ -18,6 +18,7 @@ class PermasalahansController < ApplicationController
 
   # GET /permasalahans/1/edit
   def edit
+    @sasaran = Sasaran.find(params[:sasaran_id])
   end
 
   # POST /permasalahans or /permasalahans.json
@@ -38,9 +39,10 @@ class PermasalahansController < ApplicationController
 
   # PATCH/PUT /permasalahans/1 or /permasalahans/1.json
   def update
+    @sasaran = Sasaran.find(params[:sasaran_id])
     respond_to do |format|
       if @permasalahan.update(permasalahan_params)
-        format.html { redirect_to permasalahan_url(@permasalahan), notice: "Permasalahan was successfully updated." }
+        format.html { redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Permasalahan berhasil diupdate" }
         format.json { render :show, status: :ok, location: @permasalahan }
       else
         format.html { render :edit, status: :unprocessable_entity }

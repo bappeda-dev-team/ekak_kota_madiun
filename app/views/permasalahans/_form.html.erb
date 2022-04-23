@@ -10,20 +10,20 @@
     </div>
   <% end %>
   <div class="field">
-    <%= form.label :permasalahan %>
-    <%= form.text_area :permasalahan %>
+    <%= form.label :jenis, class: "form-label" %>
+    <%= form.select :jenis, [ "Umum", "Gender" ],{include_blank: true}, {class: "form-control select2-permasalahan",  "data-placeholder": "Pilih Jenis Permasalahan"} %>
   </div>
   <div class="field">
-    <%= form.label :jenis %>
-    <%= form.text_area :jenis %>
+    <%= form.label :permasalahan, class: "form-label" %>
+    <%= form.text_area :permasalahan, class: "form-control" %>
   </div>
   <div class="field">
-    <%= form.label :penyebab_internal %>
-    <%= form.text_field :penyebab_internal %>
+    <%= form.label :penyebab_internal, class: "form-label" %>
+    <%= form.text_field :penyebab_internal, class: "form-control" %>
   </div>
   <div class="field">
-    <%= form.label :penyebab_external %>
-    <%= form.text_field :penyebab_external %>
+    <%= form.label :penyebab_external, class: "form-label" %>
+    <%= form.text_field :penyebab_external, class: "form-control" %>
   </div>
   <div class="actions">
     <%= form.submit %>

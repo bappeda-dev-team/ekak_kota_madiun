@@ -8,7 +8,37 @@
           data: {'bs-toggle': 'modal', 'bs-target': '#form-permasalahan'} %>
     </div>
   </div>
-  <div class="card-body">
-    Sample Permsalahan A
-  </div>
+  <% unless sasaran.permasalahans.nil? %>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Jenis</th>
+              <th>Permasalahan</th>
+              <th>Penyebab Internal</th>
+              <th>Penyebab External</th>
+              <th class="text-center align-middle">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% sasaran.permasalahans.order(:updated_at).each do |permasalahan| %>
+              <tr>
+                <td class="align-middle text-wrap"><%= permasalahan.jenis %></td>
+                <td class="align-middle"><%= permasalahan.permasalahan %></td>
+                <td class="align-middle"><%= permasalahan.penyebab_internal %></td>
+                <td class="align-middle"><%= permasalahan.penyebab_external %></td>
+                <td class="text-center align-middle">
+                  <%= link_to 'Edit permasalahan', edit_sasaran_permasalahan_path(sasaran,permasalahan), remote: true, class: 'btn btn-outline-info text-center',
+                  data: {'bs-toggle': 'modal', 'bs-target': '#form-permasalahan'} %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <hr>
+  <% end %>
+</div>
 </div>
