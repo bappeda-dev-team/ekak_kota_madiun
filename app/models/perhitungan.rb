@@ -43,6 +43,13 @@ class Perhitungan < ApplicationRecord
     end
   end
 
+  def new_hitung_total
+    unless destroyed?
+      total_akhir = new_kalkulasi_harga_total
+      update_column(:total, total_akhir)
+    end
+  end
+
   def kalkulasi_harga_total
     if koefisiens.any?
       total_volume = []
@@ -53,6 +60,21 @@ class Perhitungan < ApplicationRecord
       total_harga = volume * harga
       pajak_anggaran = anggaran.pajak.potongan
       total_plus_pajak = total_harga * pajak_anggaran
+      total_harga + total_plus_pajak.to_i
+    else
+      0
+    end
+  end
+
+  def new_kalkulasi_harga_total
+    if koefisiens.any?
+      total_volume = []
+      koefisiens.map do |k|
+        total_volume << k.volume
+      end
+      volume = total_volume.reduce(:*)
+      total_harga = volume * harga
+      total_plus_pajak = total_harga * pajak.potongan
       total_harga + total_plus_pajak.to_i
     else
       0

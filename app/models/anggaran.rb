@@ -88,4 +88,10 @@ class Anggaran < ApplicationRecord
     hasil_perhitungan = perhitungan_semua.map(&:total).sum
     update_column(:jumlah, hasil_perhitungan)
   end
+
+  def perhitungan_jumlah
+    perhitungan_semua = perhitungans.each(&:new_hitung_total)
+    hasil_perhitungan = perhitungan_semua.map(&:total).sum
+    update_column(:jumlah, hasil_perhitungan)
+  end
 end

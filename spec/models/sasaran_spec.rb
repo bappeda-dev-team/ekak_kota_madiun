@@ -48,7 +48,9 @@ RSpec.describe Sasaran, type: :model do # rubocop :disable Metrics/BlockLength
 
   describe 'Sasaran#Tahapans' do
     it 'can add tahapans to sasaran' do
-      sasaran.tahapans << tahapan
+      1..10.times do |i|
+        sasaran.tahapans.build [{ tahapan_kerja: "Contoh Tahapan kerja #{i}" }]
+      end
       sasaran.save
       expect(sasaran).to be_valid
     end
