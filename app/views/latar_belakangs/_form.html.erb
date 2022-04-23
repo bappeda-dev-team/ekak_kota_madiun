@@ -1,6 +1,3 @@
-<% content_for :priority_blocking_js do %>
-  <%= javascript_pack_tag "trix" %>
-<% end %>
 <%= form_with(model: latar_belakang) do |form| %>
   <% if latar_belakang.errors.any? %>
     <div id="error_explanation">
@@ -14,11 +11,11 @@
   <% end %>
   <div class="field">
     <%= form.label :dasar_hukum, class: "form-label" %>
-    <%= form.rich_text_area :dasar_hukum, class: "form-control" %>
+    <%= form.text :dasar_hukum, class: "form-control" %>
   </div>
   <div class="field">
     <%= form.label :gambaran_umum, class: "form-label" %>
-    <%= form.rich_text_area :gambaran_umum, class: "form-control" %>
+    <%= form.text :gambaran_umum, class: "form-control" %>
   </div>
   <div class="actions">
     <%= form.submit "Tambah Latar Belakang"%>

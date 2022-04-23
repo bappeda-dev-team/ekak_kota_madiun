@@ -578,7 +578,8 @@ CREATE TABLE public.latar_belakangs (
     dasar_hukum text,
     gambaran_umum text,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    sasaran_id bigint
 );
 
 
@@ -2500,6 +2501,14 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: latar_belakangs fk_rails_b420bec91b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.latar_belakangs
+    ADD CONSTRAINT fk_rails_b420bec91b FOREIGN KEY (sasaran_id) REFERENCES public.sasarans(id);
+
+
+--
 -- Name: comments fk_rails_ba01fcc435; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2667,6 +2676,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220422171227'),
 ('20220423095629'),
 ('20220423095836'),
-('20220423100357');
+('20220423100357'),
+('20220423134650'),
+('20220423134924');
 
 

@@ -39,6 +39,7 @@ class Sasaran < ApplicationRecord
   has_many :tahapans, foreign_key: 'id_rencana', primary_key: 'id_rencana', dependent: :destroy
   has_one :rincian, dependent: :destroy
   has_many :permasalahans, dependent: :destroy
+  has_many :latar_belakangs, dependent: :destroy
 
   accepts_nested_attributes_for :rincian, update_only: true
   accepts_nested_attributes_for :tahapans

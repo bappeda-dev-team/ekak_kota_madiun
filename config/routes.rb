@@ -49,6 +49,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
     resources :permasalahans
     resources :dasar_hukums
+    resources :latar_belakangs, path: 'gambaran_umum'
   end
 
   # resources :rincians do
@@ -74,7 +75,6 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :pajaks
   resources :kesenjangans
   resources :strategi_keluarans, path: 'strategi'
-  resources :latar_belakangs, path: 'dasar_aksi'
   resources :comments, except: %i[index show]
   resources :roles
 
