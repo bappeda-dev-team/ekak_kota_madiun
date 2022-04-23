@@ -12,6 +12,7 @@ class PermasalahansController < ApplicationController
 
   # GET /permasalahans/new
   def new
+    @sasaran = Sasaran.find(params[:sasaran_id])
     @permasalahan = Permasalahan.new
   end
 
@@ -26,7 +27,7 @@ class PermasalahansController < ApplicationController
 
     respond_to do |format|
       if @permasalahan.save
-        format.html { redirect_to permasalahan_url(@permasalahan), notice: "Permasalahan was successfully created." }
+        format.html { redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Permasalahan berhasil ditambahkan" }
         format.json { render :show, status: :created, location: @permasalahan }
       else
         format.html { render :new, status: :unprocessable_entity }

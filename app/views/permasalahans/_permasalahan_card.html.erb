@@ -1,0 +1,14 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">
+      Permasalahan 
+    </h4>
+    <div class="link-tambah">
+      <%= link_to 'Tambah Permasalahan', new_sasaran_permasalahan_path(sasaran), remote: true, class: 'btn btn-primary',
+          data: {'bs-toggle': 'modal', 'bs-target': '#form-permasalahan'} %>
+    </div>
+  </div>
+  <div class="card-body">
+    Sample Permsalahan A
+  </div>
+</div>
