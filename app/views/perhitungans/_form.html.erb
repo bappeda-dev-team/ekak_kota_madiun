@@ -17,6 +17,11 @@
     <%= form.label :spesifikasi, {class: "form-label"} %>
     <%= form.text_field :spesifikasi, {id: 'spesifikasi', class: "form-control", readonly: true} %>
   </div>
+  <div class="field">
+    <% options = options_from_collection_for_select(Pajak.all, :id, :simple_pajak, anggaran.pajak_id) %>
+    <%= form.label :pajak_id , {class: "form-label"}%>
+    <%= form.select :pajak_id, options, {}, { :class => "form-select"} %>
+  </div>
   <h4><strong>Koefisiens : </strong></h4>
   <div class="field">
     <%= form.fields_for :koefisiens do |f| %>

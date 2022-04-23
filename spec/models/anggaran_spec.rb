@@ -36,7 +36,7 @@ RSpec.describe Anggaran, type: :model do
 
   context 'association' do
     it { should belong_to(:tahapan) }
-    it { should belong_to(:pajak) }
+    it { should belong_to(:pajak).optional(true) }
     it { should have_many(:perhitungans) }
   end
 

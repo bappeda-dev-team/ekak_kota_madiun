@@ -35,7 +35,7 @@
             <th rowspan="2" class="text-center">Kode Rekening</th>
             <th rowspan="2" class="text-center">Uraian</th>
             <th colspan="3" class="text-center">Rincian Perhitungan</th>
-            <th rowspan="2" class="text-center">PPN (10%)</th>
+            <th rowspan="2" class="text-center">Pajak</th>
             <th rowspan="2" class="text-center">Jumlah</th>
           </tr>
           <tr>
@@ -68,7 +68,10 @@
             <% if anggaran.perhitungans.any? %>
               <% anggaran.perhitungans.includes([:koefisiens]).order(:created_at).each do |hitung| %>
                 <tr class="rincian-anggaran">
-                  <td><%= link_to "Hapus Anggaran", anggaran_perhitungan_path(anggaran, hitung), method: :delete, data: { confirm_swal: "Hapus Anggaran #{hitung.deskripsi} ?" }, class: "text-danger" %></td>
+                  <td>
+                    <%= link_to "Edit Anggaran", edit_anggaran_perhitungan_path(anggaran, hitung),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan" }, class: "btn btn-outline-info" %>
+                    <%= link_to "Hapus Anggaran", anggaran_perhitungan_path(anggaran, hitung), method: :delete, data: { confirm_swal: "Hapus Anggaran #{hitung.deskripsi} ?" }, class: "btn btn-outline-danger" %>
+                  </td>
                   <td><%= uraian_kode(hitung.deskripsi) %>
                     <br>
                     <%= spesifikasi(hitung.deskripsi) %>
@@ -79,7 +82,7 @@
                   </td>
                   <td class="text-center"><%= hitung.satuan %></td>
                   <td class="text-center"><%= number_with_delimiter(hitung.harga, :delimiter => '.') %></td>
-                  <td class="text-end"><%= (anggaran.pajak.potongan * 100).to_i %> %</td>
+                  <td class="text-end"><%= (hitung.pajak.potongan * 100).to_i %> %</td>
                   <td class="uang text-end">Rp. <%= number_with_delimiter((hitung.total).to_i, :delimiter => '.') %></td>
                 </tr>
               <% end %>

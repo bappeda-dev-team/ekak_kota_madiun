@@ -82,14 +82,18 @@ class Perhitungan < ApplicationRecord
   end
 
   def update_jumlah_anggaran
-    anggaran.update_perhitungan
+    anggaran.perhitungan_jumlah
   end
 
   def update_jumlah_anggaran_destroy
-    anggaran.update_perhitungan
+    anggaran.perhitungan_jumlah
   end
 
   def list_koefisien
     koefisiens.map { |m| "#{m.volume} #{m.satuan_volume}" }.join(' x ')
+  end
+
+  def harga_plus_pajak
+    pajak.potongan * total
   end
 end
