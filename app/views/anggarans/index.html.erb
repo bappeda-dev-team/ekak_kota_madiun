@@ -51,15 +51,15 @@
               <td colspan="5" class="mx-auto">
                 <div class="row">
                   <div class="text-wrap inline col"><%= anggaran.uraian %></div>
-                  <div class="text-end col-5">
+                  <div class="text-end col-8">
                     <% unless anggaran.comments.any? %>
-                      <%= link_to 'Review Anggaran', new_comment_path(anggaran_id: anggaran.id, user_id: current_user.id ),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-comment" }, class: "ml-5 mb-3 text-secondary animate-up-2" %>
+                      <%= link_to 'Review Anggaran', new_comment_path(anggaran_id: anggaran.id, user_id: current_user.id ),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-comment" }, class: "btn btn-outline-secondary" %>
                     <% else %>
                       <%= link_to 'Lihat Komentar',anchor: 'komentar' %>
                     <% end %>
-                    <%= link_to 'Tambah Rincian', new_anggaran_perhitungan_path(anggaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "text-success animate-up-2" %>
-                    <%= link_to "Edit", edit_sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: 'text-info'  %>
-                    <%= link_to "Hapus", sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran), method: :delete, data: {confirm_swal: "Hapus Anggaran #{anggaran.uraian}"}, class: "text-danger"  %>
+                    <%= link_to "Edit Anggaran", edit_sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: 'btn btn-outline-info'  %>
+                    <%= link_to "Hapus Anggaran", sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran), method: :delete, data: {confirm_swal: "Hapus Anggaran #{anggaran.uraian}"}, class: "btn btn-outline-danger"  %>
+                    <%= link_to 'Tambah Rincian', new_anggaran_perhitungan_path(anggaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "btn btn-outline-success" %>
                   </div>
                 </div>
               </td>
@@ -69,8 +69,8 @@
               <% anggaran.perhitungans.includes([:koefisiens]).order(:created_at).each do |hitung| %>
                 <tr class="rincian-anggaran">
                   <td>
-                    <%= link_to "Edit Anggaran", edit_anggaran_perhitungan_path(anggaran, hitung),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan" }, class: "btn btn-outline-info" %>
-                    <%= link_to "Hapus Anggaran", anggaran_perhitungan_path(anggaran, hitung), method: :delete, data: { confirm_swal: "Hapus Anggaran #{hitung.deskripsi} ?" }, class: "btn btn-outline-danger" %>
+                    <%= link_to "Edit Rincian", edit_anggaran_perhitungan_path(anggaran, hitung),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan" }, class: "btn btn-outline-info" %>
+                    <%= link_to "Hapus Rincian", anggaran_perhitungan_path(anggaran, hitung), method: :delete, data: { confirm_swal: "Hapus Anggaran #{hitung.deskripsi} ?" }, class: "btn btn-outline-danger" %>
                   </td>
                   <td><%= uraian_kode(hitung.deskripsi) %>
                     <br>

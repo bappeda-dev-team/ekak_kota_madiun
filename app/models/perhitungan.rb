@@ -96,4 +96,10 @@ class Perhitungan < ApplicationRecord
   def harga_plus_pajak
     pajak.potongan * total
   end
+
+  def plus_pajak
+    pajak.potongan * 100
+  rescue
+    0
+  end
 end
