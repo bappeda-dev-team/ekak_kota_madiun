@@ -48,6 +48,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       resources :aksis, path: 'rencana_aksi'
       resources :anggarans
     end
+    resources :permasalahans
   end
 
   # resources :rincians do

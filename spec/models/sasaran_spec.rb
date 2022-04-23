@@ -60,6 +60,7 @@ RSpec.describe Sasaran, type: :model do # rubocop :disable Metrics/BlockLength
     it { should have_many(:usulans) }
     it { should accept_nested_attributes_for(:rincian).update_only(true) }
     it { should accept_nested_attributes_for(:tahapans) }
+    it { should have_many(:permasalahans) }
   end
 
   context 'sasaran take usulan from different type' do
@@ -94,6 +95,18 @@ RSpec.describe Sasaran, type: :model do # rubocop :disable Metrics/BlockLength
       expect(usulan_tadi).to eq('usulan mandatori')
       class_usulan_tadi = sasaran.usulans.first.usulanable.class.name
       expect(class_usulan_tadi).to eq('Mandatori')
+    end
+  end
+
+  context 'sasaran can create permasalahans' do
+    it 'success create permasalahans' do
+      sasaran.permasalahans.create([{ permasalahan: 'Contoh Permasalahan',
+                                      jenis: 'Umum', penyebab_internal: 'Internal',
+                                      penyebab_external: 'External' },
+                                    { permasalahan: 'Contoh Permasalahan kedua',
+                                      jenis: 'Gender', penyebab_internal: 'Internal Gender',
+                                      penyebab_external: 'External Gender' }])
+      expect(sasaran).to be_valid
     end
   end
 end

@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Permasalahans</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Permasalahan</th>
+      <th>Jenis</th>
+      <th>Penyebab internal</th>
+      <th>Penyebab external</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @permasalahans.each do |permasalahan| %>
+      <tr>
+        <td><%= permasalahan.permasalahan %></td>
+        <td><%= permasalahan.jenis %></td>
+        <td><%= permasalahan.penyebab_internal %></td>
+        <td><%= permasalahan.penyebab_external %></td>
+        <td><%= link_to 'Show', permasalahan %></td>
+        <td><%= link_to 'Edit', edit_permasalahan_path(permasalahan) %></td>
+        <td><%= link_to 'Destroy', permasalahan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Permasalahan', new_permasalahan_path %>

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Permasalahan:</strong>
+  <%= @permasalahan.permasalahan %>
+</p>
+
+<p>
+  <strong>Jenis:</strong>
+  <%= @permasalahan.jenis %>
+</p>
+
+<p>
+  <strong>Penyebab internal:</strong>
+  <%= @permasalahan.penyebab_internal %>
+</p>
+
+<p>
+  <strong>Penyebab external:</strong>
+  <%= @permasalahan.penyebab_external %>
+</p>
+
+<%= link_to 'Edit', edit_permasalahan_path(@permasalahan) %> |
+<%= link_to 'Back', permasalahans_path %>

@@ -1,0 +1,37 @@
+<%= form_with(model: permasalahan) do |form| %>
+  <% if permasalahan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(permasalahan.errors.count, "error") %> prohibited this permasalahan from being saved:</h2>
+
+      <ul>
+        <% permasalahan.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :permasalahan %>
+    <%= form.text_area :permasalahan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :jenis %>
+    <%= form.text_area :jenis %>
+  </div>
+
+  <div class="field">
+    <%= form.label :penyebab_internal %>
+    <%= form.text_field :penyebab_internal %>
+  </div>
+
+  <div class="field">
+    <%= form.label :penyebab_external %>
+    <%= form.text_field :penyebab_external %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
