@@ -834,7 +834,8 @@ CREATE TABLE public.perhitungans (
     anggaran_id bigint,
     total integer,
     deskripsi character varying,
-    spesifikasi text
+    spesifikasi text,
+    pajak_id bigint
 );
 
 
@@ -2445,6 +2446,14 @@ ALTER TABLE ONLY public.anggarans
 
 
 --
+-- Name: perhitungans fk_rails_2be8e57a69; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.perhitungans
+    ADD CONSTRAINT fk_rails_2be8e57a69 FOREIGN KEY (pajak_id) REFERENCES public.pajaks(id) ON DELETE SET NULL NOT VALID;
+
+
+--
 -- Name: permasalahans fk_rails_4bce9be9f2; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2678,6 +2687,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220423095836'),
 ('20220423100357'),
 ('20220423134650'),
-('20220423134924');
+('20220423134924'),
+('20220423154555');
 
 

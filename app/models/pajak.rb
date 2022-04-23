@@ -11,7 +11,7 @@
 #
 class Pajak < ApplicationRecord
   has_many :anggarans
-
+  has_many :perhitungans
   validates :tipe, presence: true
   validates :potongan, presence: true, numericality: true
 

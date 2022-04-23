@@ -12,10 +12,15 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  anggaran_id :bigint
+#  pajak_id    :bigint
 #
 # Indexes
 #
 #  index_perhitungans_on_anggaran_id  (anggaran_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (pajak_id => pajaks.id) ON DELETE => nullify
 #
 class Perhitungan < ApplicationRecord
   after_save :update_jumlah_anggaran
@@ -23,6 +28,7 @@ class Perhitungan < ApplicationRecord
   after_destroy :update_jumlah_anggaran_destroy
 
   belongs_to :anggaran
+  belongs_to :pajak, optional: true
   has_many :koefisiens
   accepts_nested_attributes_for :koefisiens
 
