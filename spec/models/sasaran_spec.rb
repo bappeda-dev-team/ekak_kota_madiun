@@ -61,6 +61,7 @@ RSpec.describe Sasaran, type: :model do # rubocop :disable Metrics/BlockLength
     it { should accept_nested_attributes_for(:rincian).update_only(true) }
     it { should accept_nested_attributes_for(:tahapans) }
     it { should have_many(:permasalahans) }
+    it { should have_many(:dasar_hukums) }
   end
 
   context 'sasaran take usulan from different type' do
@@ -106,6 +107,18 @@ RSpec.describe Sasaran, type: :model do # rubocop :disable Metrics/BlockLength
                                     { permasalahan: 'Contoh Permasalahan kedua',
                                       jenis: 'Gender', penyebab_internal: 'Internal Gender',
                                       penyebab_external: 'External Gender' }])
+      expect(sasaran).to be_valid
+    end
+  end
+
+  context 'sasaran can create dasar hukum' do
+    it 'success create dasar hukum' do
+      sasaran.dasar_hukums.create([{ judul: 'Contoh Dasar Hukum',
+                                     peraturan: 'Contoh Peraturan',
+                                     tahun: '2024' },
+                                    { judul: 'Contoh Dasar Hukum kedua',
+                                      peraturan: 'Contoh peraturan kedau',
+                                      tahun: '2022' }])
       expect(sasaran).to be_valid
     end
   end

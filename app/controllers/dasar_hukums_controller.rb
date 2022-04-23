@@ -21,11 +21,12 @@ class DasarHukumsController < ApplicationController
 
   # POST /dasar_hukums or /dasar_hukums.json
   def create
-    @dasar_hukum = DasarHukum.new(dasar_hukum_params)
+    @sasaran = Sasaran.find(params[:sasaran_id])
+    @dasar_hukum = @sasaran.dasar_hukums.build(dasar_hukum_params)
 
     respond_to do |format|
       if @dasar_hukum.save
-        format.html { redirect_to dasar_hukums_path, notice: "Dasar hukum was successfully created." }
+        format.html { redirect_to user_sasaran_path(current_user, @sasaran), notice: "Data Dasar Hukum berhasil ditambahkan" }
         format.json { render :show, status: :created, location: @dasar_hukum }
       else
         format.html { render :new, status: :unprocessable_entity }

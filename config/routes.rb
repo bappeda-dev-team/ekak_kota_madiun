@@ -32,7 +32,6 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
   end
   resources :asn_musrenbangs, path: 'asn_usulan'
-  resources :dasar_hukums
   devise_for :users, controllers: {
     registrations: 'users/registrations'
   }
@@ -49,6 +48,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       resources :anggarans
     end
     resources :permasalahans
+    resources :dasar_hukums
   end
 
   # resources :rincians do
