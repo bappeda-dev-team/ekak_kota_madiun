@@ -2,20 +2,21 @@
 #
 # Table name: sasarans
 #
-#  id                  :bigint           not null, primary key
-#  anggaran            :integer
-#  id_rencana          :string
-#  indikator_kinerja   :string
-#  kualitas            :integer
-#  nip_asn             :string
-#  penerima_manfaat    :string
-#  sasaran_kinerja     :string
-#  satuan              :string
-#  sumber_dana         :string
-#  target              :integer
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  program_kegiatan_id :bigint
+#  id                     :bigint           not null, primary key
+#  anggaran               :integer
+#  id_rencana             :string
+#  indikator_kinerja      :string
+#  kualitas               :integer
+#  nip_asn                :string
+#  penerima_manfaat       :string
+#  sasaran_kinerja        :string
+#  satuan                 :string
+#  sumber_dana            :string
+#  target                 :integer
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  program_kegiatan_id    :bigint
+#  subkegiatan_tematik_id :bigint
 #
 # Indexes
 #
@@ -25,11 +26,13 @@
 # Foreign Keys
 #
 #  fk_rails_...  (nip_asn => users.nik)
+#  fk_rails_...  (subkegiatan_tematik_id => subkegiatan_tematiks.id)
 #
 class Sasaran < ApplicationRecord
   # belongs_to :user
   belongs_to :user, foreign_key: 'nip_asn', primary_key: 'nik'
   belongs_to :program_kegiatan, optional: true
+  belongs_to :subkegiatan_tematik, optional: true
 
   has_many :usulans
   has_many :dasar_hukums, foreign_key: 'sasaran_id', primary_key: 'id_rencana', class_name: 'DasarHukum'
@@ -58,9 +61,10 @@ class Sasaran < ApplicationRecord
 
   SUMBERS = { dana_transfer: 'Dana Transfer', dak: 'DAK', dbhcht: 'DBHCHT', bk_provinsi: 'BK Provinsi' }.freeze
 
-  def respond_to_missing?(_method, *_args)
-    0
-  end
+  # DANGER, maybe broke something, uncomment this
+  # def respond_to_missing?(_method, *_args)
+  #   0
+  # end
 
   # method yang ada map nya memang sengaja begitu, karena dibuat collection dan di loop untuk footer bulan
   def target_bulan

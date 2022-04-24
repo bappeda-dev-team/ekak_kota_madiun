@@ -85,11 +85,11 @@
               <% end %>
               <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.jumlah_target or '-'  %></td>
               <% unless tahapan.anggarans.any? %>
-                <td class="fw-bolder text-gray-500 border">
+                <td class="fw-bolder text-gray-500 border text-center">
                   <%= link_to 'Tambah Anggaran', new_sasaran_tahapan_anggaran_path(sasaran, tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 btn btn-sm btn-success text-white animate-up-2"   %>
                 </td>
               <% else %>
-                <td class="fw-bolder text-gray-500 border text-center">
+                <td class="fw-bolder text-gray-500 border text-end">
                   Rp. <%= link_to number_with_delimiter(tahapan.anggaran_tahapan, delimiter: '.'), sasaran_tahapan_anggarans_path(sasaran, tahapan) %></td>
               <% end %>
               <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.keterangan  %></td>
@@ -111,7 +111,8 @@
               <td class="border-bottom border-end text-center"><%= sasaran.total_target_aksi_bulan[i] %></td>
             <% end %>
             <td class="border-bottom border-end text-center"><%= sasaran.jumlah_target %></td>
-            <td class="border-bottom border-end" colspan="3"></td>
+            <td class="border-bottom border-end text-end">Rp. <%= number_with_delimiter(sasaran.total_anggaran_dengan_komentar, delimiter: '.') %></td>
+            <td class="border-bottom border-end" colspan="2"></td>
           </tr>
         </tfoot>
       </table>

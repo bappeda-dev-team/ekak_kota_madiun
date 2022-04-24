@@ -35,6 +35,22 @@ class SasaransController < ApplicationController
     end
   end
 
+  def hapus_tematik_from_sasaran
+    param_id = params[:id_sasaran]
+    sasaran = Sasaran.find(param_id)
+    respond_to do |format|
+      if sasaran.update(subkegiatan_tematik_id: nil)
+        @status = 'success'
+        @text = 'Sukses menghapus tematik'
+        format.js { render :hapus_program_from_sasaran}
+      else
+        @status = 'error'
+        @text = 'Terjadi kesalahan saat menghapus tematik'
+        format.js :unprocessable_entity
+      end
+    end
+  end
+
   def renaksi_update
     @sasaran.sync_total_renaksi
   end
@@ -75,7 +91,7 @@ class SasaransController < ApplicationController
           flash.now[:success] = 'Sukses update sasaran'
         end
         format.js
-        format.html { redirect_to user_sasaran_path(@user, @sasaran), notice: 'Sasaran was successfully created.'  }
+        format.html { redirect_to user_sasaran_path(@user, @sasaran), success: 'Sasaran was successfully created.'  }
         format.json { render :show, status: :ok, location: @sasaran }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -115,7 +131,8 @@ class SasaransController < ApplicationController
   # Only allow a list of trusted parameters through.
   def sasaran_params
     params.require(:sasaran).permit(:sasaran_kinerja, :indikator_kinerja, :target, :kualitas,
-                                    :satuan, :penerima_manfaat, :nip_asn, :program_kegiatan_id, :sumber_dana)
+                                    :satuan, :penerima_manfaat, :nip_asn, :program_kegiatan_id,
+                                    :sumber_dana, :subkegiatan_tematik_id)
   end
 
   rescue_from ActionController::ParameterMissing do

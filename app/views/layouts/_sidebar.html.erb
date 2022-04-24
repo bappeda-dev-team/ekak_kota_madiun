@@ -136,7 +136,7 @@
         <% end %>
         <% asn_sidebar_items.each do |item| %>
           <li class="nav-item<%= navigation_class(item[:identifier]) %>">
-            <%= link_to( item[:href], class: "nav-link d-flex justify-content-between") do %>
+            <%= link_to( item[:href], class: "nav-link d-flex justify-content-between #{item[:href] == '#' ? 'text-danger' : ''}") do %>
               <span>
                 <span class="sidebar-icon">
                   <i class="<%= item[:icon] %> icon icon-xs me-2"></i>
