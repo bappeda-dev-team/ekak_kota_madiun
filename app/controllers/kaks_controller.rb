@@ -7,7 +7,9 @@ class KaksController < ApplicationController
   end
 
   # GET /kaks/1 or /kaks/1.json
-  def show; end
+  def show
+    render 'new_format'
+  end
 
   def laporan_kak
     @kaks = Kak.includes(:program_kegiatan).where.not(program_kegiatan: { id: nil })

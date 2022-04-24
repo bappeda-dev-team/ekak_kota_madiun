@@ -68,14 +68,8 @@
                   </table>
                 </td>
                 <td class="fw-bolder text-gray-500 text-center">
-                  <%= link_to kak_path(kak), class: "m-3" do %>
+                  <%= link_to "/acuan_kerja_new/#{kak.program_kegiatan.id}", class: "m-3" do %>
                     <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
-                  <% end %>
-                  <%= link_to edit_kak_path(kak), class: "m-3" do %>
-                    <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
-                  <% end %>
-                  <%= link_to kak_path(kak), method: :delete, data: { 'confirm-swal': "Apakah Anda Ingin Menghapus ?"}, class: "m-3" do %>
-                    <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
                   <% end %>
                 </td>
               </tr>
