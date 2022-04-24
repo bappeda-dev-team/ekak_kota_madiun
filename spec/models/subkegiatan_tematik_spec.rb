@@ -19,5 +19,6 @@ RSpec.describe SubkegiatanTematik, type: :model do
 
   context 'association' do
     it { should have_many(:program_kegiatans) }
+    it { should have_many(:sasarans) }
   end
 end

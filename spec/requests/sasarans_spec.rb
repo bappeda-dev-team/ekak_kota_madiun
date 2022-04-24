@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Sasarans', type: :request do
   let(:sasaran) { FactoryBot.create :sasaran }
+  let(:subkegiatan_tematik) { FactoryBot.create :subkegiatan_tematik }
 
   context 'sasaran can add the details after created' do
     it 'add rincian and display it' do
@@ -54,6 +55,30 @@ RSpec.describe 'Sasarans', type: :request do
       expect(flash[:success]).to be_present
       expect(flash[:success]).to eq('Data Gambaran Umum berhasil ditambahkan')
       expect(response.body).to include 'Data Gambaran Umum berhasil ditambahkan'
+    end
+  end
+
+  context 'add belongs_to relation like tematik and program kegiatan' do
+    it 'add tematik to current sasaran' do
+      sign_in sasaran.user
+      get user_sasaran_path(sasaran.user, sasaran)
+      expect(response).to have_http_status(200)
+      patch sasaran_path(sasaran), params: { sasaran: { subkegiatan_tematik_id: subkegiatan_tematik.id } }
+      sasaran.reload
+      expect(response).to redirect_to(user_sasaran_path(sasaran.user, sasaran))
+      follow_redirect!
+      expect(response).to render_template(:show)
+      expect(sasaran.subkegiatan_tematik).to eq(subkegiatan_tematik)
+    end
+
+    it 'add sumber dana to current sasaran' do
+      sign_in sasaran.user
+      patch user_sasaran_path(sasaran.user, sasaran), params: { sasaran: { sumber_dana: 'BDBHCT' } }
+      sasaran.reload
+      expect(response).to redirect_to(user_sasaran_path(sasaran.user, sasaran))
+      follow_redirect!
+      expect(response).to render_template(:show)
+      expect(sasaran.sumber_dana).to eq('BDBHCT')
     end
   end
 end

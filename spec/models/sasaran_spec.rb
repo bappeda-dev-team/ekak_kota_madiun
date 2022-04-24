@@ -2,20 +2,21 @@
 #
 # Table name: sasarans
 #
-#  id                  :bigint           not null, primary key
-#  anggaran            :integer
-#  id_rencana          :string
-#  indikator_kinerja   :string
-#  kualitas            :integer
-#  nip_asn             :string
-#  penerima_manfaat    :string
-#  sasaran_kinerja     :string
-#  satuan              :string
-#  sumber_dana         :string
-#  target              :integer
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  program_kegiatan_id :bigint
+#  id                     :bigint           not null, primary key
+#  anggaran               :integer
+#  id_rencana             :string
+#  indikator_kinerja      :string
+#  kualitas               :integer
+#  nip_asn                :string
+#  penerima_manfaat       :string
+#  sasaran_kinerja        :string
+#  satuan                 :string
+#  sumber_dana            :string
+#  target                 :integer
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  program_kegiatan_id    :bigint
+#  subkegiatan_tematik_id :bigint
 #
 # Indexes
 #
@@ -25,6 +26,7 @@
 # Foreign Keys
 #
 #  fk_rails_...  (nip_asn => users.nik)
+#  fk_rails_...  (subkegiatan_tematik_id => subkegiatan_tematiks.id)
 #
 require 'rails_helper'
 
@@ -39,11 +41,27 @@ RSpec.describe Sasaran, type: :model do # rubocop :disable Metrics/BlockLength
   let(:mandatori) { build(:mandatori, usulan: 'usulan mandatori') }
   let(:tahapan) { FactoryBot.create :tahapan }
 
-  context 'sudah terisi dan menambah subkegiatan' do
+  context 'sudah terisi dan menambah rincian' do
     it 'can update subkegiatan from local record' do
       program = FactoryBot.build(:program_kegiatan)
       sasaran = FactoryBot.build(:sasaran, program_kegiatan: program)
       expect(sasaran).to be_valid
+    end
+
+    it 'can update tematiks from local record' do
+      tematik = FactoryBot.build(:subkegiatan_tematik)
+      sasaran.update(subkegiatan_tematik: tematik)
+      expect(sasaran).to be_valid
+      sasaran.reload
+      expect(sasaran.subkegiatan_tematik.nama_tematik).to eq(tematik.nama_tematik)
+    end
+
+    it 'can update sumberdana' do
+      sumber_dana = Sasaran::SUMBERS
+      sasaran.update(sumber_dana: sumber_dana[:dana_transfer])
+      expect(sasaran).to be_valid
+      sasaran.reload
+      expect(sasaran.sumber_dana).to eq('Dana Transfer')
     end
   end
 
@@ -66,6 +84,9 @@ RSpec.describe Sasaran, type: :model do # rubocop :disable Metrics/BlockLength
     it { should have_many(:permasalahans) }
     it { should have_many(:dasar_hukums) }
     it { should have_many(:latar_belakangs) }
+    it { should belong_to(:user) }
+    it { should belong_to(:program_kegiatan).optional(true) }
+    it { should belong_to(:subkegiatan_tematik).optional(true) }
   end
 
   context 'sasaran take usulan from different type' do

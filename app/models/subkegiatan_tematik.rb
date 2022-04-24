@@ -11,7 +11,7 @@
 #
 class SubkegiatanTematik < ApplicationRecord
   has_many :program_kegiatans
-
+  has_many :sasarans
   validates :kode_tematik, presence: true
   validates :nama_tematik, presence: true
 end

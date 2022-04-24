@@ -1185,7 +1185,8 @@ CREATE TABLE public.sasarans (
     anggaran integer,
     nip_asn character varying,
     id_rencana character varying,
-    sumber_dana character varying
+    sumber_dana character varying,
+    subkegiatan_tematik_id bigint
 );
 
 
@@ -2487,6 +2488,14 @@ ALTER TABLE ONLY public.kesenjangans
 
 
 --
+-- Name: sasarans fk_rails_78dfe7067c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sasarans
+    ADD CONSTRAINT fk_rails_78dfe7067c FOREIGN KEY (subkegiatan_tematik_id) REFERENCES public.subkegiatan_tematiks(id);
+
+
+--
 -- Name: dasar_hukums fk_rails_9530516a5c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2690,6 +2699,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220423134650'),
 ('20220423134924'),
 ('20220423154555'),
-('20220424080049');
+('20220424080049'),
+('20220424151655'),
+('20220424152317');
 
 

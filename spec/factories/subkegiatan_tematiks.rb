@@ -11,6 +11,8 @@
 #
 FactoryBot.define do
   factory :subkegiatan_tematik do
-    
+    kode_tematik { 'smart-city' }
+    nama_tematik { 'SMART CITY' }
+    tahun { '2022' }
   end
 end

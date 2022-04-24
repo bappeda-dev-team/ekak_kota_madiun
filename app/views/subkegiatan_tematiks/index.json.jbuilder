@@ -1,1 +1,4 @@
-json.array! @subkegiatan_tematiks, partial: "subkegiatan_tematiks/subkegiatan_tematik", as: :subkegiatan_tematik
+json.results @subkegiatan_tematiks do |tematik|
+  json.id tematik.id
+  json.text tematik.nama_tematik
+end
