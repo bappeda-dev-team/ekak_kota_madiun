@@ -400,7 +400,8 @@ CREATE TABLE public.dasar_hukums (
     judul character varying,
     tahun character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    sasaran_id character varying
 );
 
 
@@ -577,7 +578,8 @@ CREATE TABLE public.latar_belakangs (
     dasar_hukum text,
     gambaran_umum text,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    sasaran_id bigint
 );
 
 
@@ -832,7 +834,8 @@ CREATE TABLE public.perhitungans (
     anggaran_id bigint,
     total integer,
     deskripsi character varying,
-    spesifikasi text
+    spesifikasi text,
+    pajak_id bigint
 );
 
 
@@ -853,6 +856,41 @@ CREATE SEQUENCE public.perhitungans_id_seq
 --
 
 ALTER SEQUENCE public.perhitungans_id_seq OWNED BY public.perhitungans.id;
+
+
+--
+-- Name: permasalahans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.permasalahans (
+    id bigint NOT NULL,
+    permasalahan text,
+    jenis text,
+    penyebab_internal character varying,
+    penyebab_external character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    sasaran_id bigint
+);
+
+
+--
+-- Name: permasalahans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.permasalahans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: permasalahans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.permasalahans_id_seq OWNED BY public.permasalahans.id;
 
 
 --
@@ -1064,7 +1102,7 @@ ALTER SEQUENCE public.rekenings_id_seq OWNED BY public.rekenings.id;
 
 CREATE TABLE public.rincians (
     id bigint NOT NULL,
-    sasaran_id bigint NOT NULL,
+    sasaran_id bigint,
     data_terpilah character varying,
     penyebab_internal character varying,
     penyebab_external character varying,
@@ -1666,6 +1704,13 @@ ALTER TABLE ONLY public.perhitungans ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: permasalahans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.permasalahans ALTER COLUMN id SET DEFAULT nextval('public.permasalahans_id_seq'::regclass);
+
+
+--
 -- Name: pks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1953,6 +1998,14 @@ ALTER TABLE ONLY public.pajaks
 
 ALTER TABLE ONLY public.perhitungans
     ADD CONSTRAINT perhitungans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: permasalahans permasalahans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.permasalahans
+    ADD CONSTRAINT permasalahans_pkey PRIMARY KEY (id);
 
 
 --
@@ -2393,6 +2446,22 @@ ALTER TABLE ONLY public.anggarans
 
 
 --
+-- Name: perhitungans fk_rails_2be8e57a69; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.perhitungans
+    ADD CONSTRAINT fk_rails_2be8e57a69 FOREIGN KEY (pajak_id) REFERENCES public.pajaks(id) ON DELETE SET NULL NOT VALID;
+
+
+--
+-- Name: permasalahans fk_rails_4bce9be9f2; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.permasalahans
+    ADD CONSTRAINT fk_rails_4bce9be9f2 FOREIGN KEY (sasaran_id) REFERENCES public.sasarans(id);
+
+
+--
 -- Name: program_kegiatans fk_rails_569fe757c0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2417,6 +2486,14 @@ ALTER TABLE ONLY public.kesenjangans
 
 
 --
+-- Name: dasar_hukums fk_rails_9530516a5c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.dasar_hukums
+    ADD CONSTRAINT fk_rails_9530516a5c FOREIGN KEY (sasaran_id) REFERENCES public.sasarans(id_rencana);
+
+
+--
 -- Name: active_storage_variant_records fk_rails_993965df05; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2430,6 +2507,14 @@ ALTER TABLE ONLY public.active_storage_variant_records
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT fk_rails_99e914ccf2 FOREIGN KEY (kode_opd) REFERENCES public.opds(kode_opd);
+
+
+--
+-- Name: latar_belakangs fk_rails_b420bec91b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.latar_belakangs
+    ADD CONSTRAINT fk_rails_b420bec91b FOREIGN KEY (sasaran_id) REFERENCES public.sasarans(id);
 
 
 --
@@ -2594,6 +2679,15 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220415222139'),
 ('20220416035018'),
 ('20220416041551'),
-('20220417070528');
+('20220417070528'),
+('20220422033311'),
+('20220422055009'),
+('20220422171227'),
+('20220423095629'),
+('20220423095836'),
+('20220423100357'),
+('20220423134650'),
+('20220423134924'),
+('20220423154555');
 
 

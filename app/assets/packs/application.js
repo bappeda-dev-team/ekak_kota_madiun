@@ -91,7 +91,6 @@ $(function () {
     }
   }).on('select2:select', function (e) {
     $('input:hidden[name=usulan_type]').val(e.params.data.usulan_type)
-    console.log(e.params.data)
   });
   $("#select2-pokpir").select2({
     width: "100%",
@@ -108,7 +107,6 @@ $(function () {
     }
   }).on('select2:select', function (e) {
     $('input:hidden[name=usulan_type]').val(e.params.data.usulan_type)
-    console.log(e.params.data)
   });
   $("#select2-mandatori").select2({
     width: "100%",
@@ -125,7 +123,6 @@ $(function () {
     }
   }).on('select2:select', function (e) {
     $('input:hidden[name=usulan_type]').val(e.params.data.usulan_type)
-    console.log(e.params.data)
   });
   $("#select2-inovasi").select2({
     width: "100%",
@@ -142,7 +139,6 @@ $(function () {
     }
   }).on('select2:select', function (e) {
     $('input:hidden[name=usulan_type]').val(e.params.data.usulan_type)
-    console.log(e.params.data)
   });
   $('#form-perhitungan-body').on('show', function () {
     $(".select2-rekenings").select2({
@@ -223,5 +219,17 @@ $(function () {
         },
       },
     });
+  });
+  $('#form-permasalahan-body').on('show', function () {
+    $(".select2-permasalahan").select2({
+      width: "100%",
+      theme: "bootstrap-5",
+      dropdownParent: $("#form-permasalahan"),
+      language: {
+        noResults: function () {
+          return 'Jenis Permasalahan Tidak Ditemukan';
+        },
+      },
+    })
   });
 });

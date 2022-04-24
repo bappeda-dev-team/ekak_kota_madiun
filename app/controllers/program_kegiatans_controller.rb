@@ -30,6 +30,11 @@ class ProgramKegiatansController < ApplicationController
 
   def kak_waktu; end
 
+  def new_kak_format
+    @program_kegiatan = ProgramKegiatan.find(params[:id])
+    render 'new_kak_format'
+  end
+
   def laporan_rka
     @programKegiatans = ProgramKegiatan.includes(:sasarans).where.not(sasarans: { id: nil, anggaran: nil })
   end

@@ -12,22 +12,26 @@ class DasarHukumsController < ApplicationController
 
   # GET /dasar_hukums/new
   def new
+    @sasaran = Sasaran.find(params[:sasaran_id])
     @dasar_hukum = DasarHukum.new
   end
 
   # GET /dasar_hukums/1/edit
   def edit
+    @sasaran = Sasaran.find(params[:sasaran_id])
   end
 
   # POST /dasar_hukums or /dasar_hukums.json
   def create
-    @dasar_hukum = DasarHukum.new(dasar_hukum_params)
+    @sasaran = Sasaran.find(params[:sasaran_id])
+    @dasar_hukum = @sasaran.dasar_hukums.build(dasar_hukum_params)
 
     respond_to do |format|
       if @dasar_hukum.save
-        format.html { redirect_to dasar_hukums_path, notice: "Dasar hukum was successfully created." }
+        format.html { redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Dasar Hukum berhasil ditambahkan" }
         format.json { render :show, status: :created, location: @dasar_hukum }
       else
+        format.js { render :new, status: :unprocessable_entity }
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @dasar_hukum.errors, status: :unprocessable_entity }
       end
@@ -36,9 +40,10 @@ class DasarHukumsController < ApplicationController
 
   # PATCH/PUT /dasar_hukums/1 or /dasar_hukums/1.json
   def update
+    @sasaran = Sasaran.find(params[:sasaran_id])
     respond_to do |format|
       if @dasar_hukum.update(dasar_hukum_params)
-        format.html { redirect_to dasar_hukums_path, notice: "Dasar hukum was successfully updated." }
+        format.html { redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Dasar Hukum berhasil diupdate" }
         format.json { render :show, status: :ok, location: @dasar_hukum }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -65,6 +70,6 @@ class DasarHukumsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def dasar_hukum_params
-    params.require(:dasar_hukum).permit(:peraturan, :judul, :tahun)
+    params.require(:dasar_hukum).permit!
   end
 end

@@ -12,7 +12,7 @@
 #  resiko              :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
-#  sasaran_id          :bigint           not null
+#  sasaran_id          :bigint
 #
 # Indexes
 #
@@ -24,6 +24,6 @@
 #
 class Rincian < ApplicationRecord
   has_many :kesenjangans
-
+  belongs_to :sasaran, optional: true
   # validates :lokasi_pelaksanaan, presence: true
 end

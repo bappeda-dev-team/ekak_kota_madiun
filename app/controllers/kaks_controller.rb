@@ -7,7 +7,9 @@ class KaksController < ApplicationController
   end
 
   # GET /kaks/1 or /kaks/1.json
-  def show; end
+  def show
+    render 'new_format'
+  end
 
   def laporan_kak
     @kaks = Kak.includes(:program_kegiatan).where.not(program_kegiatan: { id: nil })
@@ -31,7 +33,7 @@ class KaksController < ApplicationController
 
     respond_to do |format|
       if @kak.save
-        format.html { redirect_to kaks_path, notice: 'Kak was successfully created.' }
+        format.html { redirect_to kaks_path, success: 'Kak was successfully created.' }
         format.json { render :show, status: :created, location: @kak }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -44,7 +46,7 @@ class KaksController < ApplicationController
   def update
     respond_to do |format|
       if @kak.update(kak_params)
-        format.html { redirect_to kaks_path, notice: 'Kak was successfully updated.' }
+        format.html { redirect_to kaks_path, success: 'Kak was successfully updated.' }
         format.json { render :show, status: :ok, location: @kak }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -57,7 +59,7 @@ class KaksController < ApplicationController
   def destroy
     @kak.destroy
     respond_to do |format|
-      format.html { redirect_to kaks_path, notice: 'Kak was successfully destroyed.' }
+      format.html { redirect_to kaks_path, success: 'Kak was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

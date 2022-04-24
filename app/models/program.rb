@@ -17,6 +17,7 @@
 #  updated_at         :datetime         not null
 #
 class Program < ApplicationRecord
+  validates :nama_program, presence: true
   scope :tahun, -> { where(tahun: Date.today.year) }
   scope :urusan, -> { group_by(&:nama_urusan) }
   scope :bidang, -> { group_by(&:nama_bidang_urusan) }

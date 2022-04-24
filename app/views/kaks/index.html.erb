@@ -17,7 +17,9 @@
             <h2 class="fs-5 fw-bold mb-0">KaK </h2>
           </div>
           <div class="col text-end">
-            <%= link_to "Tambah Data KaK", new_kak_path, class: "btn btn-sm btn-info" %>
+            <span><%= current_user.nama %></span>
+            |
+            <span><%= current_user.nik %></span>
           </div>
         </div>
       </div>
@@ -28,30 +30,46 @@
               <th class="border-bottom" scope="col">No.</th>
               <th class="border-bottom" scope="col">Program Kegiatan</th>
               <th class="border-bottom" scope="col">Sub Kegiatan</th>
-              <th class="border-bottom" scope="col">Pembuat</th>
+              <th class="border-bottom text-center" scope="col">Sasaran</th>
+              <th class="border-bottom text-center" scope="col">Pembuat</th>
               <th class="border-bottom text-center" scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
-            <% @kaks.includes(:program_kegiatan).where.not(program_kegiatan: {id: nil}) .each.with_index(1) do |kak, i| %>
+            <% current_user.sasarans.includes(:program_kegiatan).where.not(program_kegiatan: {id: nil}).each.with_index(1) do |kak, i| %>
               <tr>
                 <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
                 <td class="text-gray-900" scope="row"><%= kak.program_kegiatan.nama_program %></td>
-                <th class="text-gray-900" scope="row"><%= kak.program_kegiatan.nama_subkegiatan %></th>
-                <th class="text-gray-900" scope="row">
-                  <% kak.program_kegiatan.sasarans.each do |show_user| %>
-                    <%= show_user.user.nama %> , 
-                  <% end %>
-                </th>
+                <td class="text-gray-900" scope="row"><%= kak.program_kegiatan.nama_subkegiatan %></td>
+                <td class="border p-0">
+                  <table class="table p-0">
+                    <tbody>
+                      <% kak.program_kegiatan.sasarans.each do |show_sasaran| %>
+                        <tr>
+                          <td>
+                            <%= show_sasaran.sasaran_kinerja %>
+                          </td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </td>
+                <td class="border p-0">
+                  <table class="table p-0">
+                    <tbody>
+                      <% kak.program_kegiatan.sasarans.each do |show_user| %>
+                        <tr>
+                          <td>
+                            <%= show_user.user.nama %>
+                          </td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </td>
                 <td class="fw-bolder text-gray-500 text-center">
-                  <%= link_to kak_path(kak), class: "m-3" do %>
+                  <%= link_to "/acuan_kerja_new/#{kak.program_kegiatan.id}", class: "m-3" do %>
                     <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
-                  <% end %>
-                  <%= link_to edit_kak_path(kak), class: "m-3" do %>
-                    <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
-                  <% end %>
-                  <%= link_to kak_path(kak), method: :delete, data: { 'confirm-swal': "Apakah Anda Ingin Menghapus ?"}, class: "m-3" do %>
-                    <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
                   <% end %>
                 </td>
               </tr>

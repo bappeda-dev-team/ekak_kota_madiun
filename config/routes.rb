@@ -32,7 +32,6 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
   end
   resources :asn_musrenbangs, path: 'asn_usulan'
-  resources :dasar_hukums
   devise_for :users, controllers: {
     registrations: 'users/registrations'
   }
@@ -48,6 +47,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       resources :aksis, path: 'rencana_aksi'
       resources :anggarans
     end
+    resources :permasalahans
+    resources :dasar_hukums
+    resources :latar_belakangs, path: 'gambaran_umum'
   end
 
   # resources :rincians do
@@ -73,7 +75,6 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :pajaks
   resources :kesenjangans
   resources :strategi_keluarans, path: 'strategi'
-  resources :latar_belakangs, path: 'dasar_aksi'
   resources :comments, except: %i[index show]
   resources :roles
 
@@ -89,6 +90,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/program_kegiatans_to_kak_detail/:id', to: 'program_kegiatans#kak_detail'
   get '/program_kegiatans_to_kak_renaksi/:id', to: 'program_kegiatans#kak_renaksi'
   get '/program_kegiatans_to_kak_waktu/:id', to: 'program_kegiatans#kak_waktu'
+  get '/acuan_kerja_new/:id', to: 'program_kegiatans#new_kak_format'
 
   # musrenbang
   get '/asn_musrenbangs/:nip', to: 'musrenbangs#asn_musrenbang'

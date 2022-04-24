@@ -23,6 +23,9 @@
   <%= render 'rincians/renaksi', sasaran: @sasaran %>
 <% end %>
 <%= render 'rincians/rincian_card', sasaran: @sasaran %>
+<%= render 'permasalahans/permasalahan_card', sasaran: @sasaran %>
+<%= render 'dasar_hukums/dasar_hukum_card', sasaran: @sasaran %>
+<%= render 'latar_belakangs/gambaran_umum_card', sasaran: @sasaran %>
 <!-- SECTION - Modal-->
 <!-- TODO - DRY-->
 <%= render 'modal' %>
@@ -30,3 +33,6 @@
 <%= render 'aksis/modal_target'  %>
 <%= render 'aksis/modal_realisasi'  %>
 <%= render 'rincians/modal_rincian' %>
+<%= render 'permasalahans/modal_permasalahan' %>
+<%= render 'dasar_hukums/modal_dasar_hukum' %>
+<%= render 'latar_belakangs/modal_gambaran_umum' %>

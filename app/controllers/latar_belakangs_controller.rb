@@ -12,20 +12,23 @@ class LatarBelakangsController < ApplicationController
 
   # GET /latar_belakangs/new
   def new
+    @sasaran = Sasaran.find(params[:sasaran_id])
     @latar_belakang = LatarBelakang.new
   end
 
   # GET /latar_belakangs/1/edit
   def edit
+    @sasaran = Sasaran.find(params[:sasaran_id])
   end
 
   # POST /latar_belakangs or /latar_belakangs.json
   def create
-    @latar_belakang = LatarBelakang.new(latar_belakang_params)
+    @sasaran = Sasaran.find(params[:sasaran_id])
+    @latar_belakang = @sasaran.latar_belakangs.build(latar_belakang_params)
 
     respond_to do |format|
       if @latar_belakang.save
-        format.html { redirect_to @latar_belakang, notice: "Latar belakang was successfully created." }
+        format.html { redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Gambaran Umum berhasil ditambahkan" }
         format.json { render :show, status: :created, location: @latar_belakang }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -65,6 +68,6 @@ class LatarBelakangsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def latar_belakang_params
-    params.require(:latar_belakang).permit(:dasar_hukum, :gambaran_umum)
+    params.require(:latar_belakang).permit!
   end
 end

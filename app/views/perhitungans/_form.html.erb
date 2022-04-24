@@ -9,13 +9,25 @@
       </ul>
     </div>
   <% end %>
+  <% 
+  unless perhitungan.deskripsi.blank?
+    selected = Search::AllAnggaran.where('kode_barang ILIKE ?',
+                                                "%#{perhitungan.deskripsi}%").limit(30).includes(:searchable).collect(&:searchable)
+    uraian = selected.first.class.name + '|' + selected.first.uraian_barang + ' | ' + selected.first.spesifikasi
+  end
+  %>
   <div class="field">
     <%= form.label :uraian, {class: "form-label"} %>
-    <%= form.select :deskripsi, [], {include_blank: true} , {class: "form-control select2-anggaran-ssh", "data-placeholder": "Pilih Uraian"} %>
+    <%= form.select :deskripsi, raw("<option value='#{perhitungan.deskripsi}' selected='selected'>#{uraian}</option>"), {include_blank: true} , {class: "form-control select2-anggaran-ssh", "data-placeholder": "Pilih Uraian"} %>
   </div>
   <div class="field">
     <%= form.label :spesifikasi, {class: "form-label"} %>
     <%= form.text_field :spesifikasi, {id: 'spesifikasi', class: "form-control", readonly: true} %>
+  </div>
+  <div class="field">
+    <% options = options_from_collection_for_select(Pajak.all, :id, :simple_pajak, anggaran.pajak_id) %>
+    <%= form.label :pajak_id , {class: "form-label"}%>
+    <%= form.select :pajak_id, options, {}, { :class => "form-select"} %>
   </div>
   <h4><strong>Koefisiens : </strong></h4>
   <div class="field">

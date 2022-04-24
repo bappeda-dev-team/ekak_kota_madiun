@@ -47,10 +47,12 @@ prawn_document do |pdf|
       ]
       tahapan.anggarans.each do |anggaran|
         header_anggaran << [rekening_anggaran(anggaran.kode_rek), { content: anggaran.uraian, colspan: 5 },
-                            { content: "Rp. #{anggaran.jumlah}", align: :right }]
+                            { content: "Rp. #{number_with_delimiter(anggaran.jumlah, delimiter: '.')}", align: :right }]
         anggaran.perhitungans.each do |perhitungan|
           header_anggaran << ['', uraian_kode(perhitungan.deskripsi), perhitungan.list_koefisien, perhitungan.satuan,
-                              { content: perhitungan.harga.to_s, align: :right }, { content: anggaran.plus_pajak.to_s }, { content: "Rp. #{perhitungan.total}", align: :right }]
+                              { content: "Rp. #{number_with_delimiter(perhitungan.harga, delimiter: '.')}", align: :right },
+                              { content: perhitungan.plus_pajak.to_s },
+                              { content: "Rp. #{number_with_delimiter(perhitungan.total, delimiter: '.')}", align: :right }]
         end
       end
       pdf.table(header_anggaran, cell_style: { size: 6 }, width: pdf.bounds.width)

@@ -16,6 +16,7 @@ RSpec.describe Pajak, type: :model do
     it { should validate_presence_of(:potongan) }
     it { should validate_numericality_of(:potongan) }
     it { should validate_presence_of(:tipe) }
+    it { should have_many(:perhitungans) }
   end
   context '#simple_pajak' do
     subject { build(:pajak) }

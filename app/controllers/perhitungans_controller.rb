@@ -32,6 +32,7 @@ class PerhitungansController < ApplicationController
         end
         format.json { render :show, status: :created, location: @perhitungan }
       else
+        format.js { render :new, status: :unprocessable_entity }
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @perhitungan.errors, status: :unprocessable_entity }
       end
@@ -80,7 +81,7 @@ class PerhitungansController < ApplicationController
   # Only allow a list of trusted parameters through.
   def perhitungan_params
     params.require(:perhitungan).permit(:satuan,
-                                        :harga, :anggaran_id, :deskripsi,
+                                        :harga, :anggaran_id, :deskripsi, :pajak_id,
                                         koefisiens_attributes: %i[id volume satuan_volume])
   end
 end

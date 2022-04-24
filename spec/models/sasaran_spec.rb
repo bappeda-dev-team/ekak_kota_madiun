@@ -27,119 +27,16 @@
 #
 require 'rails_helper'
 
-RSpec.describe Sasaran, type: :model do
-  let(:lembaga) { Lembaga.create!(nama_lembaga: 'Kota Madiun', tahun: '2022') }
-  let(:opd) do
-    Opd.create!(nama_opd: 'Dinas Komunikasi dan Informatika', kode_opd: '2.16.2.20.2.21.04.000', lembaga_id: lembaga.id)
-  end
-  let(:user) do
-    User.create!(nama: 'NOOR AFLAH', nik: '197609072003121007', kode_opd: opd.kode_opd,
-                 email: '197609072003121007@madiunkota.go.id', password: '123456')
-  end
-
-  def sasaran_base
-    Sasaran.create(
-      sasaran_kinerja: 'Meningkatnya kualitas dokumen perencanaan, penganggaran, pengendalian dan evaluasi perangkat daerah',
-      indikator_kinerja: 'presentase penyusunan dokumen perencanaan, penganggaran, pengendalian dan evaluasi PD tepat waktu',
-      target: 100,
-      satuan: '%',
-      user_id: user.id
-    )
-  end
-
-  def tahapan_base
-    Tahapan.create(
-      tahapan_kerja: 'Tahapan Testing',
-      keterangan: 'Keterangan buatan'
-    )
-  end
-  context 'punya pak aflah' do
-    let(:s_kerja) do
-      'Meningkatnya kualitas dokumen perencanaan, penganggaran, pengendalian dan evaluasi perangkat daerah'
-    end
-    let(:i_kerja) do
-      'presentase penyusunan dokumen perencanaan, penganggaran, pengendalian dan evaluasi PD tepat waktu'
-    end
-    let(:target) { '100' }
-    let(:satuan) { '%' }
-    let(:u_kerja) { user.id }
-
-    it 'is valid with a sasaran, indikator, target, and satuan' do
-      sasaran = Sasaran.create(
-        sasaran_kinerja: s_kerja,
-        indikator_kinerja: i_kerja,
-        target: target,
-        satuan: satuan,
-        user_id: u_kerja
-      )
-      expect(sasaran).to be_valid
-    end
-    it 'is not valid without a sasaran' do
-      sasaran = Sasaran.create(
-        sasaran_kinerja: nil,
-        indikator_kinerja: i_kerja,
-        target: target,
-        satuan: satuan,
-        user_id: u_kerja
-      )
-      expect(sasaran).to_not be_valid
-      expect(sasaran.errors[:sasaran_kinerja]).to include("can't be blank")
-    end
-
-    it 'is not valid without a indikator' do
-      sasaran = Sasaran.create(
-        sasaran_kinerja: s_kerja,
-        indikator_kinerja: nil,
-        target: target,
-        satuan: satuan,
-        user_id: u_kerja
-      )
-      expect(sasaran).to_not be_valid
-      expect(sasaran.errors[:indikator_kinerja]).to include("can't be blank")
-    end
-
-    it 'is not valid without target' do
-      sasaran = Sasaran.create(
-        sasaran_kinerja: s_kerja,
-        indikator_kinerja: i_kerja,
-        target: nil,
-        satuan: satuan,
-        user_id: u_kerja
-      )
-      expect(sasaran).to_not be_valid
-      expect(sasaran.errors[:target]).to include("can't be blank")
-    end
-
-    it 'is not valid without satuan' do
-      sasaran = Sasaran.create(
-        sasaran_kinerja: s_kerja,
-        indikator_kinerja: i_kerja,
-        target: target,
-        satuan: nil,
-        user_id: u_kerja
-      )
-      expect(sasaran).to_not be_valid
-      expect(sasaran.errors[:satuan]).to include("can't be blank")
-    end
-
-    it 'is valid with duplicate' do
-      Sasaran.create!(
-        sasaran_kinerja: s_kerja,
-        indikator_kinerja: i_kerja,
-        target: target,
-        satuan: satuan,
-        user_id: u_kerja
-      )
-      sasaran_2 = sasaran = Sasaran.create(
-        sasaran_kinerja: s_kerja,
-        indikator_kinerja: i_kerja,
-        target: target,
-        satuan: satuan,
-        user_id: u_kerja
-      )
-      expect(sasaran_2).to be_valid
-    end
-  end
+RSpec.describe Sasaran, type: :model do # rubocop :disable Metrics/BlockLength
+  let(:lembaga) { FactoryBot.create :lembaga }
+  let(:opd) { FactoryBot.create :opd }
+  let(:user) { FactoryBot.create :user }
+  let(:sasaran) { FactoryBot.create :sasaran }
+  let(:musren) { build(:musrenbang, usulan: 'contoh usulan diambil') }
+  let(:pokpir) { build(:pokpir, usulan: 'usulan pokok pikiran') }
+  let(:inovasi) { build(:inovasi, usulan: 'usulan inovasi') }
+  let(:mandatori) { build(:mandatori, usulan: 'usulan mandatori') }
+  let(:tahapan) { FactoryBot.create :tahapan }
 
   context 'sudah terisi dan menambah subkegiatan' do
     it 'can update subkegiatan from local record' do
@@ -149,63 +46,91 @@ RSpec.describe Sasaran, type: :model do
     end
   end
 
-  context 'Sasaran#Tahapans' do
+  describe 'Sasaran#Tahapans' do
     it 'can add tahapans to sasaran' do
-      sasaran = FactoryBot.build(:sasaran)
-      sasaran.tahapans << tahapan_base
+      1..10.times do |i|
+        sasaran.tahapans.build [{ tahapan_kerja: "Contoh Tahapan kerja #{i}" }]
+      end
       sasaran.save
       expect(sasaran).to be_valid
     end
   end
 
-  context 'association' do
+  context 'validation' do
     it { should have_many(:tahapans) }
     it { should have_one(:rincian) }
     it { should have_many(:usulans) }
-  end
-
-  context 'nested_attribute' do
     it { should accept_nested_attributes_for(:rincian).update_only(true) }
     it { should accept_nested_attributes_for(:tahapans) }
+    it { should have_many(:permasalahans) }
+    it { should have_many(:dasar_hukums) }
+    it { should have_many(:latar_belakangs) }
   end
 
   context 'sasaran take usulan from different type' do
-    let(:musren) { build(:musrenbang, usulan: 'contoh usulan diambil') }
-    let(:pokpir) { build(:pokpir, usulan: 'usulan pokok pikiran') }
-    let(:inovasi) { build(:inovasi, usulan: 'usulan inovasi') }
-    let(:mandatori) { build(:mandatori, usulan: 'usulan mandatori') }
-    let(:sasaran1) { build(:sasaran) }
     it 'can save from musrenbang' do
-      usulan = Usulan.create(keterangan: 'contoh usulan sasaran 1', usulanable: musren, sasaran: sasaran1)
+      usulan = Usulan.create(keterangan: 'contoh usulan sasaran 1', usulanable: musren, sasaran: sasaran)
       expect(usulan).to be_valid
-      usulan_tadi = sasaran1.usulans.first.usulanable.usulan
+      usulan_tadi = sasaran.usulans.first.usulanable.usulan
       expect(usulan_tadi).to eq('contoh usulan diambil')
-      class_usulan_tadi = sasaran1.usulans.first.usulanable.class.name
+      class_usulan_tadi = sasaran.usulans.first.usulanable.class.name
       expect(class_usulan_tadi).to eq('Musrenbang')
     end
     it 'can save from pokok pikiran' do
-      usulan = Usulan.create(keterangan: 'contoh usulan sasaran 1', usulanable: pokpir, sasaran: sasaran1)
+      usulan = Usulan.create(keterangan: 'contoh usulan sasaran 1', usulanable: pokpir, sasaran: sasaran)
       expect(usulan).to be_valid
-      usulan_tadi = sasaran1.usulans.first.usulanable.usulan
+      usulan_tadi = sasaran.usulans.first.usulanable.usulan
       expect(usulan_tadi).to eq('usulan pokok pikiran')
-      class_usulan_tadi = sasaran1.usulans.first.usulanable.class.name
+      class_usulan_tadi = sasaran.usulans.first.usulanable.class.name
       expect(class_usulan_tadi).to eq('Pokpir')
     end
     it 'can save from inovasi' do
-      usulan = Usulan.create(keterangan: 'contoh usulan sasaran 1', usulanable: inovasi, sasaran: sasaran1)
+      usulan = Usulan.create(keterangan: 'contoh usulan sasaran 1', usulanable: inovasi, sasaran: sasaran)
       expect(usulan).to be_valid
-      usulan_tadi = sasaran1.usulans.first.usulanable.usulan
+      usulan_tadi = sasaran.usulans.first.usulanable.usulan
       expect(usulan_tadi).to eq('usulan inovasi')
-      class_usulan_tadi = sasaran1.usulans.first.usulanable.class.name
+      class_usulan_tadi = sasaran.usulans.first.usulanable.class.name
       expect(class_usulan_tadi).to eq('Inovasi')
     end
     it 'can save from mandatori' do
-      usulan = Usulan.create(keterangan: 'contoh usulan sasaran 1', usulanable: mandatori, sasaran: sasaran1)
+      usulan = Usulan.create(keterangan: 'contoh usulan sasaran 1', usulanable: mandatori, sasaran: sasaran)
       expect(usulan).to be_valid
-      usulan_tadi = sasaran1.usulans.first.usulanable.usulan
+      usulan_tadi = sasaran.usulans.first.usulanable.usulan
       expect(usulan_tadi).to eq('usulan mandatori')
-      class_usulan_tadi = sasaran1.usulans.first.usulanable.class.name
+      class_usulan_tadi = sasaran.usulans.first.usulanable.class.name
       expect(class_usulan_tadi).to eq('Mandatori')
+    end
+  end
+
+  context 'sasaran can create permasalahans' do
+    it 'success create permasalahans' do
+      sasaran.permasalahans.create([{ permasalahan: 'Contoh Permasalahan',
+                                      jenis: 'Umum', penyebab_internal: 'Internal',
+                                      penyebab_external: 'External' },
+                                    { permasalahan: 'Contoh Permasalahan kedua',
+                                      jenis: 'Gender', penyebab_internal: 'Internal Gender',
+                                      penyebab_external: 'External Gender' }])
+      expect(sasaran).to be_valid
+    end
+  end
+
+  context 'sasaran can create dasar hukum' do
+    it 'success create dasar hukum' do
+      sasaran.dasar_hukums.create([{ judul: 'Contoh Dasar Hukum',
+                                     peraturan: 'Contoh Peraturan',
+                                     tahun: '2024' },
+                                    { judul: 'Contoh Dasar Hukum kedua',
+                                      peraturan: 'Contoh peraturan kedau',
+                                      tahun: '2022' }])
+      expect(sasaran).to be_valid
+    end
+  end
+
+  context 'sasaran can create latar belakang' do
+    it 'success create latar belakang' do
+      sasaran.latar_belakangs.create([{ gambaran_umum: 'Contoh Dasar Hukum' },
+                                      { gambaran_umum: 'Contoh Dasar Hukum kedua' }])
+      expect(sasaran).to be_valid
     end
   end
 end

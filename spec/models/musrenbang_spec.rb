@@ -32,17 +32,6 @@ RSpec.describe Musrenbang, type: :model do
   end
 
   context 'isian tahun' do
-    it 'invalid saat tidak ada tahun' do
-      mus = FactoryBot.build(:musrenbang, tahun: nil)
-      expect(mus).to_not be_valid
-      expect(mus.errors[:tahun]).to include("can't be blank")
-    end
-
-    it 'invalid saat diisi selain tahun' do
-      mus = FactoryBot.build(:musrenbang, tahun: 'error_year')
-      expect(mus).to_not be_valid
-    end
-
     it 'valid saat diisi tahun dengan integer' do
       mus = FactoryBot.build(:musrenbang, tahun: 2025)
       expect(mus).to be_valid

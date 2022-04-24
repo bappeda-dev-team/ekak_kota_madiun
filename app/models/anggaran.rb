@@ -38,7 +38,7 @@ class Anggaran < ApplicationRecord
   # child untuk memanggil id isian bawahnya
   has_many :childs, class_name: 'Anggaran', foreign_key: 'parent_id'
   belongs_to :parent, class_name: 'Anggaran', optional: true
-  belongs_to :pajak
+  belongs_to :pajak, optional: true
   has_many :comments, dependent: :destroy
 
   scope :tanpa_pajak, -> { where(pajak_id: nil) }
@@ -85,6 +85,12 @@ class Anggaran < ApplicationRecord
 
   def update_perhitungan
     perhitungan_semua = perhitungans.each(&:hitung_total)
+    hasil_perhitungan = perhitungan_semua.map(&:total).sum
+    update_column(:jumlah, hasil_perhitungan)
+  end
+
+  def perhitungan_jumlah
+    perhitungan_semua = perhitungans.each(&:new_hitung_total)
     hasil_perhitungan = perhitungan_semua.map(&:total).sum
     update_column(:jumlah, hasil_perhitungan)
   end

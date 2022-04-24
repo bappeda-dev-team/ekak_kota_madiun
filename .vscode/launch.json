@@ -13,6 +13,18 @@
       "remoteWorkspaceRoot": "${workspaceRoot}"
     },
     {
+      "name": "Run tests",
+      "type": "Ruby",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "program": "${workspaceFolder}/bin/rspec",
+      "useBundler": true,
+      "pathToBundler": "${workspaceFolder}/bin/bundle",
+      "showDebuggerOutput": true,
+      "pathToRDebugIDE": "/home/ry/.rbenv/shims/rdebug-ide",
+      "args": []
+    },
+    {
       "name": "Rails server",
       "type": "Ruby",
       "request": "launch",
