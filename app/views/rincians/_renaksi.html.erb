@@ -46,13 +46,13 @@
             </div>
             <div class="col-8 align-middle">
               <%= form_with(model: [current_user, sasaran], local:false, html: { class: 'd-flex flex gap-3' }) do |f| %>
-                <select name="sasaran[sumber_dana]" id="sumber_dana_sasaran" class="select2-waw" data-placeholder="Sumber Dana" data-width="25%">
+                <select name="sasaran[sumber_dana]" id="sumber_dana_sasaran" class="select2-waw" data-placeholder="<%= sasaran.sumber_dana || 'Sumber Dana' %>" data-width="25%">
+                  <option value=""></option>
                   <% Sasaran::SUMBERS.each do |key, value| %>
-                    <option value=""></option>
                     <option id='<%= key %>'><%= value %></option>
                   <% end %>
                 </select>
-                <input type="submit" value="Simpan" data-disable-with="Simpan" class="btn btn-sm btn-tertiary ml-3">
+                <input type="submit" value="<%= sasaran.sumber_dana.nil? ? 'Simpan' : 'Ubah' %>" data-disable-with="memproses.." class="btn btn-sm btn-tertiary ml-3">
               <% end %>
             </div>
           </div>
