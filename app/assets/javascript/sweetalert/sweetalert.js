@@ -49,11 +49,24 @@ const confirmed = (element, result) => {
 const showConfirmationDialog = (element) => {
   const message = element.getAttribute('data-confirm-swal');
   const text = element.getAttribute('data-text');
+  const icon = element.getAttribute('data-icon');
+  const alert_only = element.getAttribute('data-alert-only');
+  console.log(alert_only)
+  if (alert_only == 'true') {
+    Swal.fire({
+      title: message || 'Are you sure?',
+      text: text || '',
+      icon: icon || 'warning',
+      showCancelButton: false,
+      confirmButtonText: 'Ok',
+    })
+    return;
+  }
 
   Swal.fire({
     title: message || 'Are you sure?',
     text: text || '',
-    icon: 'warning',
+    icon: icon || 'warning',
     showCancelButton: true,
     confirmButtonText: 'Ya',
     cancelButtonText: 'Tidak',

@@ -28,15 +28,15 @@
             </tr>
           </thead>
           <tbody>
-            <% @kaks.includes(:program_kegiatan).where.not(program_kegiatan: {id: nil}) .each.with_index(1) do |kak, i| %>
+            <% current_user.sasarans.includes(:program_kegiatan).where.not(program_kegiatan: {id: nil}).each.with_index(1) do |kak, i| %>
               <tr>
                 <th class="text-gray-900 fw-bolder" scope="row"><%= i %></th>
                 <th class="text-gray-900" scope="row"><%= kak.program_kegiatan.nama_subkegiatan %></th>
                 <td class="fw-bolder text-gray-500 text-center">
-                  <%= link_to kak_path(kak), class: "m-3" do %>
-                    <span class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Lihat KaK"></span>
+                  <%= link_to "/acuan_kerja_new/#{kak.program_kegiatan.id}", class: "m-3" do %>
+                    <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
                   <% end %>
-                  <%= link_to "/pdf_kak/#{kak.id}.pdf", class: "m-3" do %>
+                  <%= link_to "#", class: "m-3", data: {confirm_swal: 'Sedang Proses Penyesuaian', icon: 'warning', alert_only: 'true'} do %>
                     <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
                   <% end %>
                 </td>
