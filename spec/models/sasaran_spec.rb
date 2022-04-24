@@ -11,6 +11,7 @@
 #  penerima_manfaat    :string
 #  sasaran_kinerja     :string
 #  satuan              :string
+#  sumber_dana         :string
 #  target              :integer
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null

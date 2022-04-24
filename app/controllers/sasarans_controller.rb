@@ -115,7 +115,7 @@ class SasaransController < ApplicationController
   # Only allow a list of trusted parameters through.
   def sasaran_params
     params.require(:sasaran).permit(:sasaran_kinerja, :indikator_kinerja, :target, :kualitas,
-                                    :satuan, :penerima_manfaat, :nip_asn, :program_kegiatan_id)
+                                    :satuan, :penerima_manfaat, :nip_asn, :program_kegiatan_id, :sumber_dana)
   end
 
   rescue_from ActionController::ParameterMissing do

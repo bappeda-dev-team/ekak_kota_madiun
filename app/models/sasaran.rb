@@ -11,6 +11,7 @@
 #  penerima_manfaat    :string
 #  sasaran_kinerja     :string
 #  satuan              :string
+#  sumber_dana         :string
 #  target              :integer
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
@@ -54,6 +55,8 @@ class Sasaran < ApplicationRecord
   scope :hangus, -> { left_outer_joins(:usulans).where(usulans: { sasaran_id: nil }).where(program_kegiatan_id: nil) }
   scope :belum_ada_sub, -> { where(program_kegiatan_id: nil) }
   scope :sudah_lengkap, -> { includes(:usulans).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan_id: nil) }
+
+  SUMBERS = { dana_transfer: 'Dana Transfer', dak: 'DAK', dbhcht: 'DBHCHT', bk_provinsi: 'BK Provinsi' }.freeze
 
   def respond_to_missing?(_method, *_args)
     0
