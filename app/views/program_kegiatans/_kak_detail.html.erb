@@ -1,34 +1,36 @@
 <div class="card border-2 shadow mb-3">
   <div class="table-responsive">
-    <% programKegiatan.sasarans.each.with_index(1) do |sasaran, i| %>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>no</th>
-            <th>Sasaran Kinerja</th>
-            <th>Penerima Manfaat</th>
-            <th>Nama Usulan</th>
-            <th>Jenis Usulan</th>
-            <th>Permasalahan/ Uraian</th>
-            <th>Keterangan</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% sasaran.my_usulan.each.with_index(1) do |usulan, h| %>
-            <%  tipe = usulan.class.try(:type) || usulan.class.name.to_s %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>no</th>
+          <th>Sasaran Kinerja</th>
+          <th>Penerima Manfaat</th>
+          <th>Nama Usulan</th>
+          <th>Jenis Usulan</th>
+          <th>Permasalahan/ Uraian</th>
+          <th>Keterangan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%  count = 0 %>
+        <% programKegiatan.sasarans.each do |sasaran| %>
+          <% sasaran.my_usulan.each do |usulan| %>
+            <%  count += 1 %>
+            <% tipe = usulan.class.try(:type) || usulan.class.name.to_s %>
             <% keterangan = usulan.try(:alamat) || usulan.try(:peraturan_terkait) || usulan.try(:manfaat) %>
             <tr>
-              <td><%= h %></td>
-              <td class="sasaran-kerja"><%= sasaran.sasaran_kinerja %></td>
-              <td class="sasaran-kerja"><%= sasaran.penerima_manfaat %></td>
-              <td class="sasaran-kerja"><%= usulan.usulan %></td>
+              <td><%= count %></td>
+              <td class="sasaran-kerja text-wrap"><%= sasaran.sasaran_kinerja %></td>
+              <td class="sasaran-kerja text-wrap"><%= sasaran.penerima_manfaat %></td>
+              <td class="sasaran-kerja text-wrap"><%= usulan.usulan %></td>
               <td class="sasaran-kerja"><%= tipe %></td>
-              <td class="sasaran-kerja"><%= usulan.uraian %></td>
-              <td class="sasaran-kerja"><%= keterangan %></td>
+              <td class="sasaran-kerja text-wrap"><%= usulan.uraian %></td>
+              <td class="sasaran-kerja text-wrap"><%= keterangan %></td>
             </tr>
           <% end %>
-        </tbody>
-      </table>
-    <% end %>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>

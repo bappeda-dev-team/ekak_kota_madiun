@@ -9,18 +9,24 @@
           <th>no</th>
           <th>Sasaran Kinerja</th>
           <th>Indikator</th>
-          <th>Pagu</th>
+          <th class="text-end">Pagu</th>
+          <th class="text-center">Sumber Dana</th>
         </tr>
       </thead>
       <tbody>
         <% programKegiatan.sasarans.each.with_index(1) do |sasaran, i| %>
           <tr>
             <td><%= i %></td>
-            <td><%= sasaran.sasaran_kinerja %></td>
-            <td><%= sasaran.indikator_kinerja %></td>
-            <td>Rp. <%= number_with_delimiter(sasaran.total_anggaran, :delimiter => ".") %></td>
+            <td class="text-wrap"><%= sasaran.sasaran_kinerja %></td>
+            <td class="text-wrap"><%= sasaran.indikator_kinerja %></td>
+            <td class="text-end border-1">Rp. <%= number_with_delimiter(sasaran.total_anggaran, :delimiter => ".") %></td>
+            <td class="text-wrap"><%= sasaran.sumber_dana %></td>
           </tr>
         <% end %>
+        <tr>
+          <td colspan="3">Total Pagu</td>
+          <td class="text-end border-1">Rp. <%= number_with_delimiter(programKegiatan.my_pagu, delimiter: '.')  %></td>
+        </tr>
       </tbody>
     </table>
   </div>

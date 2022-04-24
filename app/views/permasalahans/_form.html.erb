@@ -11,7 +11,7 @@
   <% end %>
   <div class="field">
     <%= form.label :jenis, class: "form-label" %>
-    <%= form.select :jenis, [ "Umum", "Gender" ],{include_blank: true}, {class: "form-control select2-permasalahan",  "data-placeholder": "Pilih Jenis Permasalahan"} %>
+    <%= form.select :jenis, options_for_select([ "Umum" ], "Umum"),{include_blank: false}, {class: "form-control select2-permasalahan",  "data-placeholder": "Pilih Jenis Permasalahan"} %>
   </div>
   <div class="field">
     <%= form.label :permasalahan, class: "form-label" %>

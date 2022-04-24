@@ -1184,7 +1184,8 @@ CREATE TABLE public.sasarans (
     program_kegiatan_id bigint,
     anggaran integer,
     nip_asn character varying,
-    id_rencana character varying
+    id_rencana character varying,
+    sumber_dana character varying
 );
 
 
@@ -2688,6 +2689,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220423100357'),
 ('20220423134650'),
 ('20220423134924'),
-('20220423154555');
+('20220423154555'),
+('20220424080049');
 
 

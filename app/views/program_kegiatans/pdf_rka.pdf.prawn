@@ -31,7 +31,7 @@ prawn_document do |pdf|
                 ['Sasaran/ Rencana Kinerja', ':', sasaran.sasaran_kinerja],
                 ['Indikator', ':', sasaran.indikator_kinerja],
                 ['Target', ':', "#{sasaran.target} #{sasaran.satuan}"],
-                ['Pagu Anggaran', ':', "Rp. #{number_with_delimiter(sasaran.total_anggaran, delimiter: '.')}"],
+                ['Pagu Anggaran', ':', "Rp. #{number_with_delimiter(sasaran.total_anggaran, delimiter: '.')} | Sumber Dana : #{sasaran.sumber_dana}"],
                 ['Sub Kegiatan', ':', '5.01.01.2.01.01 Penyusunan Dokumen Perenanaan Perangkat Daerah']
               ], cell_style: { borders: [] })
     pdf.move_down 5
