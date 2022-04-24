@@ -27,6 +27,7 @@ class Tahapan < ApplicationRecord
   belongs_to :sasaran, foreign_key: 'id_rencana', primary_key: 'id_rencana', optional: true
   has_many :aksis, foreign_key: 'id_rencana_aksi', primary_key: 'id_rencana_aksi', dependent: :destroy
   has_many :anggarans, dependent: :destroy
+  has_many :comments, through: :anggarans
 
   validates :tahapan_kerja, presence: true
 
