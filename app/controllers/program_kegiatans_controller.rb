@@ -35,6 +35,10 @@ class ProgramKegiatansController < ApplicationController
     render 'new_kak_format'
   end
 
+  def pdf_kak
+    @programKegiatans = current_user.sasarans.sudah_lengkap.where.not(program_kegiatan: {id: nil})
+  end
+
   def laporan_rka
     @programKegiatans = ProgramKegiatan.includes(:sasarans).where.not(sasarans: { id: nil, anggaran: nil })
   end

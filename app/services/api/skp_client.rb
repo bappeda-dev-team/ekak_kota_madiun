@@ -47,7 +47,7 @@ module Api
     end
 
     def request_pegawai(kode_opd, tahun, bulan)
-      H.post("#{URL}/data-pegawai/#{kode_opd}/#{tahun}/#{bulan}",
+      H.post("#{URL}/data-pegawai-all/#{kode_opd}/#{tahun}/#{bulan}",
              form: { username: USERNAME, password: PASSWORD })
     end
 
@@ -107,11 +107,15 @@ module Api
         nip = pegawai[1]['nip']
         nama = pegawai[1]['nama']
         jabatan = pegawai[1]['jabatan']
-        eselon = 'NON ESELON' # WARNING: Hardcoded
+        eselon = pegawai[1]['eselon']
+        pangkat = pegawai[1]['pangkat']
+        nama_pangkat = pegawai[1]['nama_pangkat']
         User.create_or_find_by(nik: nip) do |u|
           u.nama = nama
           u.email = email
           u.jabatan = jabatan
+          u.pangkat = pangkat
+          u.nama_pangkat = nama_pangkat
           u.eselon = eselon
           u.kode_opd = kode_opd
           u.password = '123456'
