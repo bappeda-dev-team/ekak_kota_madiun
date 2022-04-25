@@ -12,7 +12,7 @@
 #  resiko              :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
-#  sasaran_id          :bigint
+#  sasaran_id          :bigint           not null
 #
 # Indexes
 #

@@ -84,7 +84,7 @@
                   </td>
                   <td class="text-center"><%= hitung.satuan %></td>
                   <td class="text-center"><%= number_with_delimiter(hitung.harga, :delimiter => '.') %></td>
-                  <td class="text-end"><%= (hitung.pajak.potongan * 100).to_i %> %</td>
+                  <td class="text-end"><%= (hitung.pajak.nil? ? 0 : hitung.pajak.potongan * 100).to_i %> %</td>
                   <td class="uang text-end">Rp. <%= number_with_delimiter((hitung.total).to_i, :delimiter => '.') %></td>
                 </tr>
               <% end %>
