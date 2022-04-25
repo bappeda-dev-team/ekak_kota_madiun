@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# update Sasaran dan User dari SKP
+# params: kode_opd: kode_opd, tahun: Date.today.year, bulan: Date.today.month
+
 module Api
   # Controller for SKP API
   class SkpClientController < ApplicationController
@@ -7,14 +10,14 @@ module Api
     before_action :verify_kode_opd, only: [:sync_sasaran]
 
     def sync_sasaran
-      UpdateSkpJob.perform_later(@kode_opd, @tahun, @bulan)
+      UpdateSkpJob.set(queue: "#{nama_opd}-#{@kode_opd}-sasaran-#{@tahun}-#{@bulan}").perform_later(@kode_opd, @tahun, @bulan)
       redirect_to adminsasarans_path,
-                  success: "Update Sasaran #{nama_opd} Dikerjakan..."
+                  success: "Update Sasaran #{nama_opd} Dikerjakan. Harap menunggu..."
     end
 
     def sync_pegawai
-      UpdateUserJob.perform_later(@kode_opd, @tahun, @bulan)
-      redirect_to adminusers_path, success: "Update Pegawai #{nama_opd} Dikerjakan..."
+      UpdateUserJob.set(queue: "#{nama_opd}-#{@kode_opd}-user-#{@tahun}-#{@bulan}").perform_later(@kode_opd, @tahun, @bulan)
+      redirect_to adminusers_path, success: "Update Pegawai #{nama_opd} Dikerjakan. Harap menunggu..."
     end
 
     private

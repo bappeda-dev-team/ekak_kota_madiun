@@ -16,6 +16,26 @@ class UsersController < ApplicationController
 
   def user_admin; end
 
+  def aktifkan_user
+    @user = User.find_by(nik: params[:id])
+    @user.remove_role(:admin) if @user.has_role? :admin
+    @user.remove_role :non_aktif
+    respond_to do |format|
+      flash.now[:success] = "#{@user.nama} di aktifkan"
+      format.js
+    end
+  end
+
+  def nonaktifkan_user
+    @user = User.find_by(nik: params[:id])
+    @user.remove_role(:admin) if @user.has_role? :admin
+    @user.has_role?(:non_aktif) ? @user.remove_role(:non_aktif) : @user.add_role(:non_aktif)
+    respond_to do |format|
+      flash.now[:success] = "#{@user.nama} di nonaktifkan"
+      format.js
+    end
+  end
+
   # GET /users/1/edit
   def edit; end
 

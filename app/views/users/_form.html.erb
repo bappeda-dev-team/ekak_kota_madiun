@@ -30,7 +30,7 @@
     <%= form.select :kode_opd, Opd.pluck(:nama_opd, :kode_opd), {include_blank: true}, {class: "form-control select2-opd", "data-placeholder": "Pilih Opd"} %>
   </div>
   <div class="field">
-    <% data_role = options_from_collection_for_select(Role.all, :name, :name) %>
+    <% data_role = options_from_collection_for_select(Role.all, :name, :name, user.roles.pluck(:name)) %>
     <%= form.label :role, class: "form-label" %>
     <%= form.select :role, data_role, {include_blank: true}, class: "form-select select2-role", data: { placeholder: 'Pilih Role'} %>
   </div>

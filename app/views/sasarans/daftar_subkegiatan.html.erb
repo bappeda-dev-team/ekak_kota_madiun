@@ -25,26 +25,33 @@
             <th class="text-center">Sub Kegiatan</th>
             <th class="text-center">Sasaran Kinerja</th>
             <th class="text-center">Pejabat</th>
-            <th class="text-center">Usulan</th>
+            <th class="text-center" colspan="3">Usulan</th>
             <th class="text-center">Pagu Anggaran</th>
             <th class="border-end text-center">Keterangan</th>
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td colspan="4"></td>
+            <td>AJAJA</td>
+            <td>AJAJA</td>
+            <td>AJAJA</td>
+            <td colspan="2"></td>
+          </tr>
           <% @sasarans.each.with_index(1) do |sasaran, index| %>
             <tr class="border-bottom">
               <td class="border-start align-middle"><%= index %></td>
               <td class="align-middle text-wrap"><%= sasaran.program_kegiatan.nama_subkegiatan %></td>
               <td class="align-middle text-wrap"><%= sasaran.sasaran_kinerja %></td>
               <td class="align-middle" ><%= sasaran.user.nama %></td>
-              <td class="border p-0">
-                <table class="table table-bordered px-0 align-middle">
+              <td class="border p-0" colspan="3">
+                <table class="table table-bordered align-middle">
                   <tbody>
                     <% sasaran.my_usulan.each do |usulan|  %>
-                      <tr>
-                        <td class="border-bottom text-wrap"><%= usulan.usulan %></td>
-                        <td class="border-bottom text-wrap"><%= usulan.class.try(:type) || usulan.class.name %></td>
-                        <td class="border-bottom text-wrap"><%= usulan.try(:alamat) || usulan.try(:peraturan_terkait) || usulan.try(:manfaat) %></td>
+                      <tr class="border">
+                        <td class="border text-wrap"><%= usulan.usulan %></td>
+                        <td class="border text-wrap"><%= usulan.class.try(:type) || usulan.class.name %></td>
+                        <td class="border text-wrap"><%= usulan.try(:alamat) || usulan.try(:peraturan_terkait) || usulan.try(:manfaat) %></td>
                       </tr>
                     <% end %>
                   </tbody>
