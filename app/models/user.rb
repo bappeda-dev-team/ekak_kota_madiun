@@ -9,6 +9,7 @@
 #  jabatan                :string
 #  kode_opd               :string
 #  nama                   :string
+#  nama_pangkat           :string
 #  nik                    :string
 #  pangkat                :string
 #  remember_created_at    :datetime

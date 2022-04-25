@@ -26,39 +26,6 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: action_mailbox_inbound_emails; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.action_mailbox_inbound_emails (
-    id bigint NOT NULL,
-    status integer DEFAULT 0 NOT NULL,
-    message_id character varying NOT NULL,
-    message_checksum character varying NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: action_mailbox_inbound_emails_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.action_mailbox_inbound_emails_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: action_mailbox_inbound_emails_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.action_mailbox_inbound_emails_id_seq OWNED BY public.action_mailbox_inbound_emails.id;
-
-
---
 -- Name: action_text_rich_texts; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -987,13 +954,6 @@ CREATE TABLE public.program_kegiatans (
     indikator_program character varying,
     target_program character varying,
     satuan_target_program character varying,
-    urusan character varying,
-    bidang_urusan character varying,
-    outcome character varying,
-    pagu_giat character varying,
-    pagu_subgiat character varying,
-    id_program character varying,
-    id_renstra character varying,
     id_unit character varying,
     kode_urusan character varying,
     nama_urusan character varying,
@@ -1415,7 +1375,8 @@ CREATE TABLE public.users (
     kode_opd character varying,
     pangkat character varying,
     jabatan character varying,
-    eselon character varying
+    eselon character varying,
+    nama_pangkat character varying
 );
 
 
@@ -1480,13 +1441,6 @@ CREATE SEQUENCE public.usulans_id_seq
 --
 
 ALTER SEQUENCE public.usulans_id_seq OWNED BY public.usulans.id;
-
-
---
--- Name: action_mailbox_inbound_emails id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.action_mailbox_inbound_emails ALTER COLUMN id SET DEFAULT nextval('public.action_mailbox_inbound_emails_id_seq'::regclass);
 
 
 --
@@ -1739,14 +1693,6 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 --
 
 ALTER TABLE ONLY public.usulans ALTER COLUMN id SET DEFAULT nextval('public.usulans_id_seq'::regclass);
-
-
---
--- Name: action_mailbox_inbound_emails action_mailbox_inbound_emails_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.action_mailbox_inbound_emails
-    ADD CONSTRAINT action_mailbox_inbound_emails_pkey PRIMARY KEY (id);
 
 
 --
@@ -2051,13 +1997,6 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.usulans
     ADD CONSTRAINT usulans_pkey PRIMARY KEY (id);
-
-
---
--- Name: index_action_mailbox_inbound_emails_uniqueness; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_action_mailbox_inbound_emails_uniqueness ON public.action_mailbox_inbound_emails USING btree (message_id, message_checksum);
 
 
 --
@@ -2586,8 +2525,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220329104150'),
 ('20220329105912'),
 ('20220402133813'),
-('20220408014916'),
-('20220411052324'),
 ('20220414052715'),
 ('20220414062221'),
 ('20220415222139'),
@@ -2604,6 +2541,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220423154555'),
 ('20220424080049'),
 ('20220424151655'),
-('20220424152317');
+('20220424152317'),
+('20220425044032');
 
 
