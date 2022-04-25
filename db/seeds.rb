@@ -17,10 +17,10 @@ Pajak.create(tahun: '2022', tipe: 'PPN', potongan: 0.1)
 opd = Opd.create(nama_opd: 'Super Admin', kode_opd: '123456890', lembaga_id: lembaga.id)
 user = User.create(nama: 'Super Admin', nik: 'super_admin', kode_opd: opd.kode_opd, email: 'admin@test.com',
                    password: '123456')
-%w[admin asn reviewer].each do |role_name|
+%w[admin asn reviewer non_aktif super_admin].each do |role_name|
   Role.create! name: role_name
 end
-user.add_role :admin
+user.add_role :super_admin
 # Sample seed for anggaran
 # Root category
 # root = Category.create name: 'sport'

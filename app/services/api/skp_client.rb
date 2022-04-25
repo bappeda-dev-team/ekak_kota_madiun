@@ -57,31 +57,53 @@ module Api
       pegawais = data['data']['data_pegawai']
       pegawais.reject! { |pe| pe['eselon'].match(/^(2|3)/) }
       data_sasaran = []
+      data_indikator = []
       data_tahapan = []
       data_renaksi = []
       pegawais.each do |pegawai|
+        next unless pegawai['list_rencana_kinerja']
+
         pegawai['list_rencana_kinerja'].each do |rencana|
           id_rencana = rencana['id']
           sasaran_kinerja = rencana['rencana_kerja']
-          indikator_kinerja = rencana['list_indikator'][0]['iki']
-          target = rencana['list_indikator'][0]['target']
-          satuan = rencana['list_indikator'][0]['satuan']
           nip_asn = pegawai['nip']
-          data_sasaran << { sasaran_kinerja: sasaran_kinerja, indikator_kinerja: indikator_kinerja, target: target,
-                            satuan: satuan, nip_asn: nip_asn, id_rencana: id_rencana, created_at: Time.now, updated_at: Time.now }
+          data_sasaran << { sasaran_kinerja: sasaran_kinerja,
+                            indikator_kinerja: nil, target: nil, satuan: nil,
+                            nip_asn: nip_asn, id_rencana: id_rencana,
+                            created_at: Time.now, updated_at: Time.now }
+          next unless rencana['list_indikator']
+
+          rencana['list_indikator'].each do |indikator|
+            indikator_kinerja = indikator['iki']
+            target = indikator['target']
+            satuan = indikator['satuan']
+            aspek = indikator['aspek']
+            id_indikator = indikator['id']
+            data_indikator << { indikator_kinerja: indikator_kinerja,
+                                target: target, satuan: satuan,
+                                id_indikator: id_indikator,
+                                aspek: aspek, sasaran_id: id_rencana,
+                                created_at: Time.now, updated_at: Time.now }
+          end
+          next unless rencana['list_rencana_aksi']
+
           rencana['list_rencana_aksi'].each do |rencana_aksi|
             id_rencana = rencana_aksi['id_rencana_kerja']
             tahapan_kerja = rencana_aksi['tahapan_kerja']
             id_rencana_aksi = rencana_aksi['id']
-            data_tahapan << { tahapan_kerja: tahapan_kerja, id_rencana_aksi: id_rencana_aksi, id_rencana: id_rencana,
+            data_tahapan << { tahapan_kerja: tahapan_kerja,
+                              id_rencana_aksi: id_rencana_aksi,
+                              id_rencana: id_rencana,
                               created_at: Time.now, updated_at: Time.now }
             rencana_aksi['list_bulan'].each do |aksi|
               bulan = aksi['bulan']
               target = aksi['target']
               id_rencana_aksi = aksi['id_tahapan']
               id_aksi_bulan = aksi['id']
-              data_renaksi << { bulan: bulan, target: target.to_i, id_rencana_aksi: id_rencana_aksi,
-                                id_aksi_bulan: id_aksi_bulan, created_at: Time.now, updated_at: Time.now }
+              data_renaksi << { bulan: bulan, target: target.to_i,
+                                id_rencana_aksi: id_rencana_aksi,
+                                id_aksi_bulan: id_aksi_bulan,
+                                created_at: Time.now, updated_at: Time.now }
             end
           end
         end
@@ -94,6 +116,7 @@ module Api
       opd.update(insert_to_opd)
       data_renaksi.reject! { |renaksi| renaksi[:target].zero? }
       Sasaran.upsert_all(data_sasaran, unique_by: :id_rencana)
+      IndikatorSasaran.upsert_all(data_indikator, unique_by: :id_indikator)
       Tahapan.upsert_all(data_tahapan, unique_by: :id_rencana_aksi)
       Aksi.upsert_all(data_renaksi, unique_by: :id_aksi_bulan)
     end

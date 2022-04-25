@@ -40,6 +40,7 @@ class Sasaran < ApplicationRecord
   # has_many :pokpirs
   # has_many :mandatoris
   # has_many :inovasis
+  has_many :indikator_sasarans, foreign_key: 'sasaran_id', primary_key: 'id_rencana', dependent: :destroy
   has_many :tahapans, foreign_key: 'id_rencana', primary_key: 'id_rencana', dependent: :destroy
   has_one :rincian, dependent: :destroy
   has_many :permasalahans, dependent: :destroy

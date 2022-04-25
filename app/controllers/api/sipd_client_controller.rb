@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 # used for handling Sipd Service, synchronize Program etc
+# params : kode_opd: opd.id_opd_skp, tahun: Date.today.year
 module Api
   class SipdClientController < ApplicationController
     before_action :set_program_params
     def sync_subkegiatan
-      UpdateProgramJob.perform_later(@kode_opd, @tahun, @id_opd)
+      UpdateProgramJob.set(queue: "#{nama_opd}-#{@kode_opd}-renstra-#{@tahun}").perform_later(@kode_opd, @tahun, @id_opd)
       redirect_to admin_program_kegiatan_path,
-                  success: "Update ProgramKegiatan #{nama_opd} Dikerjakan..."
+                  success: "Update ProgramKegiatan #{nama_opd} Dikerjakan. Harap menunggu..."
     end
 
     private
