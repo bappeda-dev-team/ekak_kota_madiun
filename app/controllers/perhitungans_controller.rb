@@ -27,13 +27,16 @@ class PerhitungansController < ApplicationController
       if @perhitungan.save
         format.js
         format.html do
-          redirect_to sasaran_tahapan_anggaran_path(@anggaran.tahapan.sasaran, @anggaran.tahapan),
-                      notice: 'Perhitungan was successfully created.'
+          redirect_to sasaran_tahapan_anggarans_path(@anggaran.tahapan.sasaran, @anggaran.tahapan),
+                      success: 'Perhitungan was successfully created.'
         end
         format.json { render :show, status: :created, location: @perhitungan }
       else
         format.js { render :new, status: :unprocessable_entity }
-        format.html { render :new, status: :unprocessable_entity }
+        format.html do
+          redirect_to sasaran_tahapan_anggarans_path(@anggaran.tahapan.sasaran, @anggaran.tahapan),
+                      error: 'Terjadi Kesalahan'
+        end
         format.json { render json: @perhitungan.errors, status: :unprocessable_entity }
       end
     end
@@ -43,13 +46,18 @@ class PerhitungansController < ApplicationController
   def update
     respond_to do |format|
       if @perhitungan.update(perhitungan_params)
+        format.js { render :create }
         format.html do
-          redirect_to sasaran_tahapan_anggaran_path(@anggaran.tahapan.sasaran, @anggaran.tahapan),
-                      notice: "#{@perhitungan.deskripsi} updated."
+          redirect_to sasaran_tahapan_anggarans_path(@anggaran.tahapan.sasaran, @anggaran.tahapan),
+                      success: "Anggaran terupdate."
         end
         format.json { render :show, status: :ok, location: @perhitungan }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.js { render :edit, status: :unprocessable_entity }
+        format.html do
+          redirect_to sasaran_tahapan_anggarans_path(@anggaran.tahapan.sasaran, @anggaran.tahapan),
+                      error: 'Terjadi Kesalahan'
+        end
         format.json { render json: @perhitungan.errors, status: :unprocessable_entity }
       end
     end

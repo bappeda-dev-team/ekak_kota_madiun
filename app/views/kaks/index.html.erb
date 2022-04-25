@@ -30,8 +30,7 @@
               <th class="border-bottom" scope="col">No.</th>
               <th class="border-bottom" scope="col">Program Kegiatan</th>
               <th class="border-bottom" scope="col">Sub Kegiatan</th>
-              <th class="border-bottom text-center" scope="col">Sasaran</th>
-              <th class="border-bottom text-center" scope="col">Pembuat</th>
+              <th class="border-bottom text-center" scope="col">Sasaran | Pembuat</th>
               <th class="border-bottom text-center" scope="col">Action</th>
             </tr>
           </thead>
@@ -39,28 +38,18 @@
             <% current_user.sasarans.sudah_lengkap.includes(:program_kegiatan).where.not(program_kegiatan: {id: nil}).each.with_index(1) do |kak, i| %>
               <tr>
                 <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                <td class="text-gray-900" scope="row"><%= kak.program_kegiatan.nama_program %></td>
-                <td class="text-gray-900" scope="row"><%= kak.program_kegiatan.nama_subkegiatan %></td>
-                <td class="border p-0">
+                <td class="text-gray-900 text-wrap" scope="row"><%= kak.program_kegiatan.nama_program %></td>
+                <td class="text-gray-900 text-wrap" scope="row"><%= kak.program_kegiatan.nama_subkegiatan %></td>
+                <td class="border p-0 text-wrap">
                   <table class="table p-0">
                     <tbody>
                       <% kak.program_kegiatan.sasarans.each do |show_sasaran| %>
                         <tr>
-                          <td>
+                          <td class="text-wrap">
                             <%= show_sasaran.sasaran_kinerja %>
                           </td>
-                        </tr>
-                      <% end %>
-                    </tbody>
-                  </table>
-                </td>
-                <td class="border p-0">
-                  <table class="table p-0">
-                    <tbody>
-                      <% kak.program_kegiatan.sasarans.each do |show_user| %>
-                        <tr>
-                          <td>
-                            <%= show_user.user.nama %>
+                          <td class="text-wrap">
+                            <%= show_sasaran.user.nama %>
                           </td>
                         </tr>
                       <% end %>

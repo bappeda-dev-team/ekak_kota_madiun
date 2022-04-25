@@ -23,7 +23,7 @@
             <% sasaran.dasar_hukums.order(:updated_at).each do |dashu| %>
               <tr>
                 <td class="align-middle text-wrap"><%= dashu.judul %></td>
-                <td class="align-middle"><%= dashu.peraturan %></td>
+                <td class="align-middle text-wrap"><%= dashu.peraturan %></td>
                 <td class="text-center align-middle">
                   <%= link_to 'Edit Dasar Hukum', edit_sasaran_dasar_hukum_path(sasaran,dashu), remote: true, class: 'btn btn-outline-info text-center',
                   data: {'bs-toggle': 'modal', 'bs-target': '#form-dasarhukum'} %>

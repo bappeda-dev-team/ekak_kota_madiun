@@ -103,13 +103,13 @@ module Api
       data = Oj.load(response.body)
       pegawais = data['data']
       pegawais.each do |pegawai|
-        email = "#{pegawai[1]['nip']}@madiunkota.go.id"
-        nip = pegawai[1]['nip']
-        nama = pegawai[1]['nama']
-        jabatan = pegawai[1]['jabatan']
-        eselon = pegawai[1]['eselon']
-        pangkat = pegawai[1]['pangkat']
-        nama_pangkat = pegawai[1]['nama_pangkat']
+        email = "#{pegawai['nip']}@madiunkota.go.id"
+        nip = pegawai['nip']
+        nama = pegawai['nama']
+        jabatan = pegawai['jabatan']
+        eselon = pegawai['eselon']
+        pangkat = pegawai['pangkat']
+        nama_pangkat = pegawai['nama_pangkat']
         User.create_or_find_by(nik: nip) do |u|
           u.nama = nama
           u.email = email

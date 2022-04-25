@@ -37,10 +37,10 @@
           <% sasaran.my_usulan.filter { |g| g.instance_of?(Inovasi) }.each.with_index(1) do |sas, i| %>
             <tr>
               <td><%= i %></td>
-              <td><%= sas.usulan %></td>
-              <td><%= sas.try(:alamat) || sas.try(:peraturan_terkait) || sas.try(:manfaat) %></td>
-              <td><%= sas.uraian %></td>
-              <td><%= sas.class.type %></td>
+              <td class="text-wrap"><%= sas.usulan %></td>
+              <td class="text-wrap"><%= sas.try(:alamat) || sas.try(:peraturan_terkait) || sas.try(:manfaat) %></td>
+              <td class="text-wrap"><%= sas.uraian %></td>
+              <td class="text-wrap"><%= sas.class.type %></td>
               <td class="text-center align-middle"><%= button_to 'Hapus', hapus_usulan_dari_sasaran_path, params: { usulan_id: sas.id, usulan_type: sas.class.name } ,remote: true, class: 'btn btn-danger' %></td>
             </tr>
           <% end %>
