@@ -21,6 +21,8 @@
         <th class="border-bottom" scope="col">No.</th>
         <th class="border-bottom" scope="col">ASN Eselon 4</th>
         <th class="border-bottom" scope="col">OPD</th>
+        <th class="border-bottom" scope="col">Jabatan</th>
+        <th class="border-bottom" scope="col">Pangkat</th>
         <th class="border-bottom" scope="col">Sasaran Kinerja Output</th>
         <th class="border-bottom" scope="col">Indikator Kinerja</th>
         <th class="border-bottom" scope="col">Target</th>
@@ -32,10 +34,12 @@
       <% sasarans.each.with_index(1) do |sasaran, i| %>
         <tr>
           <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-          <td class="text-gray-900" scope="row"><%= sasaran.user.nama %></td>
+          <td class="text-gray-900 text-wrap" scope="row"><%= sasaran.user.nama %></td>
           <td class="text-gray-900" scope="row"><%= sasaran.user.opd.nama_opd %></td>
-          <td class="text-gray-900" scope="row"><%= sasaran.sasaran_kinerja %></td>
-          <td class="fw-bolder text-gray-500"><%= sasaran.indikator_kinerja %></td>
+          <td class="text-gray-900 text-wrap" scope="row"><%= sasaran.user.jabatan %></td>
+          <td class="text-gray-900" scope="row"><%= sasaran.user.pangkat %></td>
+          <td class="text-gray-900 text-wrap" scope="row"><%= sasaran.sasaran_kinerja %></td>
+          <td class="fw-bolder text-gray-500 text-wrap"><%= sasaran.indikator_kinerja %></td>
           <td class="fw-bolder text-gray-500"><%= sasaran.target %></td>
           <td class="fw-bolder text-gray-500"><%= sasaran.satuan %></td>
           <td class="fw-bolder text-gray-500 text-center">

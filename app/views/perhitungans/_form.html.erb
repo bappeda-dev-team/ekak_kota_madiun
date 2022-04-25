@@ -9,7 +9,7 @@
       </ul>
     </div>
   <% end %>
-  <% 
+  <%
   unless perhitungan.deskripsi.blank?
     selected = Search::AllAnggaran.where('kode_barang ILIKE ?',
                                                 "%#{perhitungan.deskripsi}%").limit(30).includes(:searchable).collect(&:searchable)
@@ -25,7 +25,7 @@
     <%= form.text_field :spesifikasi, {id: 'spesifikasi', class: "form-control", readonly: true} %>
   </div>
   <div class="field">
-    <% options = options_from_collection_for_select(Pajak.all, :id, :simple_pajak, anggaran.pajak_id) %>
+    <% options = options_from_collection_for_select(Pajak.all, :id, :simple_pajak, perhitungan.pajak.id) %>
     <%= form.label :pajak_id , {class: "form-label"}%>
     <%= form.select :pajak_id, options, {}, { :class => "form-select"} %>
   </div>
