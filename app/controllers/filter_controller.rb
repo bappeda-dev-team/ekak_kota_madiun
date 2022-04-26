@@ -10,6 +10,7 @@ class FilterController < ApplicationController
 
   def filter_user
     @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd })
+    @filter_file = 'hasil_filter' if params[:filter_file].empty?
     respond_to do |format|
       format.js { render 'users/user_filter' }
     end

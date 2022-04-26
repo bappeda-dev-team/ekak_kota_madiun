@@ -18,5 +18,5 @@
 class Permasalahan < ApplicationRecord
   belongs_to :sasaran, optional: true
 
-  validates :permasalahan, presence: true
+  # validates :permasalahan, presence: true
 end
