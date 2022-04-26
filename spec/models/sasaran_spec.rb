@@ -44,8 +44,10 @@ RSpec.describe Sasaran, type: :model do # rubocop :disable Metrics/BlockLength
   context 'sudah terisi dan menambah rincian' do
     it 'can update subkegiatan from local record' do
       program = FactoryBot.build(:program_kegiatan)
-      sasaran = FactoryBot.build(:sasaran, program_kegiatan: program)
+      sasaran.update(program_kegiatan: program)
       expect(sasaran).to be_valid
+      sasaran.reload
+      expect(sasaran.program_kegiatan.nama_subkegiatan).to eq(program.nama_subkegiatan)
     end
 
     it 'can update tematiks from local record' do
