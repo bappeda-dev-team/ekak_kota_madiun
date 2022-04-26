@@ -11,7 +11,9 @@
         <i class="fas fa-sync me-2"></i>
         Sync Program, Kegiatan, dan Sub Kegiatan
       <% end %>
-      <%= link_to "Tambah Program Kegiatan",new_program_kegiatan_path, remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-programkegiatan"}, class: "btn btn-sm btn-info" %>
+      <% if current_user.has_role? :super_admin %>
+        <%= link_to "Tambah Program Kegiatan",new_program_kegiatan_path, remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-programkegiatan"}, class: "btn btn-sm btn-info" %>
+      <% end %>
     </div>
   </div>
 </div>
@@ -49,14 +51,16 @@
               </td>
             <% end %>
             <td class="fw-bolder text-gray-500">
-              <%= link_to prog, class: "m-3" do %>
-                <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
-              <% end %>
-              <%= link_to edit_program_kegiatan_path(prog), class: "m-3" do %>
-                <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
-              <% end %>
-              <%= link_to prog, method: :delete, data: { 'confirm-swal': "Hapus #{prog.nama_subkegiatan} ?"}, class: "m-3" do %>
-                <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+              <% if current_user.has_role? :super_admin %>
+                <%= link_to prog, class: "m-3" do %>
+                  <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
+                <% end %>
+                <%= link_to edit_program_kegiatan_path(prog), class: "m-3" do %>
+                  <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+                <% end %>
+                <%= link_to prog, method: :delete, data: { 'confirm-swal': "Hapus #{prog.nama_subkegiatan} ?"}, class: "m-3" do %>
+                  <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+                <% end %>
               <% end %>
             </td>
           </tr>

@@ -44,7 +44,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     respond_to do |format|
       if @user.save
-        @user.add_role(params[:user][:role].to_sym)
+        params[:user][:role] && @user.add_role(params[:user][:role].to_sym)
         format.html { redirect_to adminusers_path, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
