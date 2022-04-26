@@ -48,7 +48,7 @@
                 <table class="table table-bordered px-0 align-middle">
                   <% sasaran.my_usulan.each do |usulan|  %>
                     <tr>
-                      <td class="border-bottom"><%= usulan.usulan %></td>
+                      <td class="border-bottom"><%= usulan&.usulan || '-' %></td>
                     </tr>
                   <% end %>
                 </table>
