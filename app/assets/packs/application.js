@@ -141,6 +141,11 @@ $(function () {
     $('input:hidden[name=usulan_type]').val(e.params.data.usulan_type)
   });
   $('#form-perhitungan-body').on('show', function () {
+    $(".select2-pajak").select2({
+      width: "100%",
+      theme: "bootstrap-5",
+      dropdownParent: $("#form-perhitungan")
+    });
     $(".select2-rekenings").select2({
       width: "100%",
       theme: "bootstrap-5",
