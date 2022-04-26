@@ -36,7 +36,7 @@
                   <%= link_to "/acuan_kerja_new/#{kak.program_kegiatan.id}", class: "m-3" do %>
                     <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
                   <% end %>
-                  <%= link_to "#", class: "m-3", data: {confirm_swal: 'Sedang Proses Penyesuaian', icon: 'warning', alert_only: 'true'} do %>
+                  <%= link_to "/pdf_kak/#{kak.program_kegiatan.id}.pdf", class: "m-3" do %>
                     <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
                   <% end %>
                 </td>

@@ -36,7 +36,7 @@ class ProgramKegiatansController < ApplicationController
   end
 
   def pdf_kak
-    @programKegiatans = current_user.sasarans.sudah_lengkap.where.not(program_kegiatan: {id: nil})
+    @program_kegiatan = ProgramKegiatan.find(params[:id])
   end
 
   def laporan_rka
