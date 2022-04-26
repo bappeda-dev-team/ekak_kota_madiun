@@ -13,8 +13,15 @@
           <li>NIP : <%= sasaran.user.nik %></li>
           <li>Pangkat : <%= sasaran.user.pangkat %></li>
           <li>Sasaran Kinerja : <%= sasaran.sasaran_kinerja %></li>
-          <li>Indikator Kinerja : <%= sasaran.indikator_kinerja %></li>
-          <li>Target Indikator Kinerja: <%= sasaran.target %> <%= sasaran.satuan %></li>
+          <% if sasaran.indikator_sasarans.exists? %>
+            <% sasaran.indikator_sasarans.each do |indikator| %>
+              <li>Indikator Kinerja : <%= indikator.indikator_kinerja %></li>
+              <li>Target Indikator Kinerja: <%= indikator.target %> <%= indikator.satuan %></li>
+            <% end %>
+          <% else %>
+            <li>Indikator Kinerja : <%= sasaran.indikator_kinerja %></li>
+            <li>Target Indikator Kinerja: <%= sasaran.target %> <%= sasaran.satuan %></li>
+          <% end %>
         </ul>
       </div>
     </div>

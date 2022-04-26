@@ -94,7 +94,9 @@ class SasaransController < ApplicationController
         format.html { redirect_to user_sasaran_path(@user, @sasaran), success: 'Sasaran was successfully created.'  }
         format.json { render :show, status: :ok, location: @sasaran }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        flash.now[:error] = 'Sasaran gagal update.'
+        format.js
+        format.html { redirect_to user_sasaran_path(@user, @sasaran), error: 'Sasaran gagal update.'  }
         format.json { render json: @sasaran.errors, status: :unprocessable_entity }
       end
     end
