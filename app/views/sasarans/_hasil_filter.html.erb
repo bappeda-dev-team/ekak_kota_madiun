@@ -43,14 +43,16 @@
           <td class="fw-bolder text-gray-500"><%= sasaran.target %></td>
           <td class="fw-bolder text-gray-500"><%= sasaran.satuan %></td>
           <td class="fw-bolder text-gray-500 text-center">
-            <%= link_to user_sasaran_path(current_user, sasaran), class: "m-3" do %>
-              <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
-            <% end %>
-            <%= link_to edit_user_sasaran_path(current_user, sasaran), class: "m-3" do %>
-              <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
-            <% end %>
-            <%= link_to user_sasaran_path(current_user, sasaran), method: :delete, data: { confirm_swal: "Hapus #{sasaran.sasaran_kinerja} ?"}, class: "m-3" do %>
-              <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+            <% if current_user.has_role? :super_admin %>
+              <%= link_to user_sasaran_path(current_user, sasaran), class: "m-3" do %>
+                <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
+              <% end %>
+              <%= link_to edit_user_sasaran_path(current_user, sasaran), class: "m-3" do %>
+                <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+              <% end %>
+              <%= link_to user_sasaran_path(current_user, sasaran), method: :delete, data: { confirm_swal: "Hapus #{sasaran.sasaran_kinerja} ?"}, class: "m-3" do %>
+                <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+              <% end %>
             <% end %>
           </td>
         </tr>
