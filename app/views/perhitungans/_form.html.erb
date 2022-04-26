@@ -25,9 +25,9 @@
     <%= form.text_field :spesifikasi, {id: 'spesifikasi', class: "form-control", readonly: true} %>
   </div>
   <div class="field">
-    <% options = options_from_collection_for_select(Pajak.all, :id, :simple_pajak, perhitungan.pajak.id) %>
+    <% options = options_from_collection_for_select(Pajak.all, :id, :simple_pajak, perhitungan&.pajak&.id || '') %>
     <%= form.label :pajak_id , {class: "form-label"}%>
-    <%= form.select :pajak_id, options, {}, { :class => "form-select"} %>
+    <%= form.select :pajak_id, options, {}, { :class => "select2-pajak"} %>
   </div>
   <h4><strong>Koefisiens : </strong></h4>
   <div class="field">
