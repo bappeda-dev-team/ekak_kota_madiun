@@ -55,8 +55,8 @@ prawn_document do |pdf|
       pdf.move_down 10
       pdf.text 'Data Terpilah:'
       pdf.move_down 5
-      pdf.text "DATA TERPILAH : #{sas_gambumum.rincian.data_terpilah}", align: :justify, size: 10
-      pdf.text "RESIKO : #{sas_gambumum.rincian.resiko}", align: :justify, size: 10
+      pdf.text "DATA TERPILAH : #{sas_gambumum&.rincian&.data_terpilah}", align: :justify, size: 10
+      pdf.text "RESIKO : #{sas_gambumum&.rincian&.resiko}", align: :justify, size: 10
     end
   end
 

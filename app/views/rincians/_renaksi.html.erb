@@ -55,8 +55,8 @@
               <%= form_with(model: [current_user, sasaran], local:false, html: { class: 'd-flex flex gap-3' }) do |f| %>
                 <select name="sasaran[sumber_dana]" id="sumber_dana_sasaran" class="select2-waw" data-placeholder="<%= sasaran.sumber_dana || 'Sumber Dana' %>" data-width="25%">
                   <option value=""></option>
-                  <% Sasaran::SUMBERS.each do |key, value| %>
-                    <option id='<%= key %>'><%= value %></option>
+                  <% SumberDana.all.each do |sumber_dana| %>
+                    <option id='<%= sumber_dana.kode_sumber_dana %>'><%= sumber_dana.sumber_dana %></option>
                   <% end %>
                 </select>
                 <input type="submit" value="<%= sasaran.sumber_dana.nil? ? 'Simpan' : 'Ubah' %>" data-disable-with="memproses.." class="btn btn-sm btn-tertiary ml-3">

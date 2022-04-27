@@ -1,0 +1,8 @@
+$("#<%= form_name %>").modal('hide')
+Swal.fire({
+  title: "<%= message %>",
+  icon: "<%= status_icon %>",
+  confirmButtonText: 'Ok',
+}).then(() => {
+  Turbolinks.visit(window.location, { action: "replace" })
+})
