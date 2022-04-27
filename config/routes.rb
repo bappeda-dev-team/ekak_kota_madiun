@@ -77,6 +77,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :strategi_keluarans, path: 'strategi'
   resources :comments, except: %i[index show]
   resources :roles
+  resources :sumber_danas, except: %i[show]
 
   # resque
   authenticate :user, ->(u) { u.id == 1 } do

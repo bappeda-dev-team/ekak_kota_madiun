@@ -39,9 +39,17 @@
           <td class="text-gray-900 text-wrap" scope="row"><%= sasaran.user.jabatan %></td>
           <td class="text-gray-900" scope="row"><%= sasaran.user.pangkat %></td>
           <td class="text-gray-900 text-wrap" scope="row"><%= sasaran.sasaran_kinerja %></td>
-          <td class="fw-bolder text-gray-500 text-wrap"><%= sasaran.indikator_kinerja %></td>
-          <td class="fw-bolder text-gray-500"><%= sasaran.target %></td>
-          <td class="fw-bolder text-gray-500"><%= sasaran.satuan %></td>
+          <% if sasaran.indikator_sasarans.exists? %>
+            <% sasaran.indikator_sasarans.each do |indikator| %>
+              <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.indikator_kinerja %></td>
+              <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.target %></td>
+              <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.satuan %></td>
+            <% end %>
+          <% else %>
+            <td class="fw-bolder" style="white-space: initial !important;"><%= sasaran.indikator_kinerja %></td>
+            <td class="fw-bolder" style="white-space: initial !important;"><%= sasaran.target %></td>
+            <td class="fw-bolder" style="white-space: initial !important;"><%= sasaran.satuan %></td>
+          <% end %>
           <td class="fw-bolder text-gray-500 text-center">
             <% if current_user.has_role? :super_admin %>
               <%= link_to user_sasaran_path(current_user, sasaran), class: "m-3" do %>

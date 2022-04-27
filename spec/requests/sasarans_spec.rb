@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Sasarans', type: :request do
   let(:sasaran) { FactoryBot.create :sasaran }
   let(:subkegiatan_tematik) { FactoryBot.create :subkegiatan_tematik }
+  let(:program_kegiatan) { FactoryBot.create :program_kegiatan }
 
   context 'sasaran can add the details after created' do
     it 'add rincian and display it' do
@@ -79,6 +80,18 @@ RSpec.describe 'Sasarans', type: :request do
       follow_redirect!
       expect(response).to render_template(:show)
       expect(sasaran.sumber_dana).to eq('BDBHCT')
+    end
+
+    it 'add program_kegiatan to current sasaran' do
+      sign_in sasaran.user
+      get user_sasaran_path(sasaran.user, sasaran)
+      expect(response).to have_http_status(200)
+      patch sasaran_path(sasaran), params: { sasaran: { program_kegiatan_id: program_kegiatan.id } }
+      sasaran.reload
+      expect(response).to redirect_to(user_sasaran_path(sasaran.user, sasaran))
+      follow_redirect!
+      expect(response).to render_template(:show)
+      expect(sasaran.program_kegiatan).to eq(program_kegiatan)
     end
   end
 end

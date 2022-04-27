@@ -24,10 +24,6 @@
 #  index_users_on_nik                   (nik) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
-# Foreign Keys
-#
-#  fk_rails_...  (kode_opd => opds.kode_opd)
-#
 require 'rails_helper'
 
 RSpec.describe User, type: :model do

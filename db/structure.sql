@@ -26,6 +26,39 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: action_mailbox_inbound_emails; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.action_mailbox_inbound_emails (
+    id bigint NOT NULL,
+    status integer DEFAULT 0 NOT NULL,
+    message_id character varying NOT NULL,
+    message_checksum character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: action_mailbox_inbound_emails_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.action_mailbox_inbound_emails_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: action_mailbox_inbound_emails_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.action_mailbox_inbound_emails_id_seq OWNED BY public.action_mailbox_inbound_emails.id;
+
+
+--
 -- Name: action_text_rich_texts; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -990,6 +1023,13 @@ CREATE TABLE public.program_kegiatans (
     indikator_program character varying,
     target_program character varying,
     satuan_target_program character varying,
+    urusan character varying,
+    bidang_urusan character varying,
+    outcome character varying,
+    pagu_giat character varying,
+    pagu_subgiat character varying,
+    id_program character varying,
+    id_renstra character varying,
     id_unit character varying,
     kode_urusan character varying,
     nama_urusan character varying,
@@ -1352,6 +1392,39 @@ ALTER SEQUENCE public.subkegiatan_tematiks_id_seq OWNED BY public.subkegiatan_te
 
 
 --
+-- Name: sumber_danas; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.sumber_danas (
+    id bigint NOT NULL,
+    kode_sumber_dana character varying,
+    sumber_dana character varying,
+    tahun character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: sumber_danas_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.sumber_danas_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: sumber_danas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.sumber_danas_id_seq OWNED BY public.sumber_danas.id;
+
+
+--
 -- Name: tahapans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1477,6 +1550,13 @@ CREATE SEQUENCE public.usulans_id_seq
 --
 
 ALTER SEQUENCE public.usulans_id_seq OWNED BY public.usulans.id;
+
+
+--
+-- Name: action_mailbox_inbound_emails id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.action_mailbox_inbound_emails ALTER COLUMN id SET DEFAULT nextval('public.action_mailbox_inbound_emails_id_seq'::regclass);
 
 
 --
@@ -1718,6 +1798,13 @@ ALTER TABLE ONLY public.subkegiatan_tematiks ALTER COLUMN id SET DEFAULT nextval
 
 
 --
+-- Name: sumber_danas id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sumber_danas ALTER COLUMN id SET DEFAULT nextval('public.sumber_danas_id_seq'::regclass);
+
+
+--
 -- Name: tahapans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1736,6 +1823,14 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 --
 
 ALTER TABLE ONLY public.usulans ALTER COLUMN id SET DEFAULT nextval('public.usulans_id_seq'::regclass);
+
+
+--
+-- Name: action_mailbox_inbound_emails action_mailbox_inbound_emails_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.action_mailbox_inbound_emails
+    ADD CONSTRAINT action_mailbox_inbound_emails_pkey PRIMARY KEY (id);
 
 
 --
@@ -2027,6 +2122,14 @@ ALTER TABLE ONLY public.subkegiatan_tematiks
 
 
 --
+-- Name: sumber_danas sumber_danas_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sumber_danas
+    ADD CONSTRAINT sumber_danas_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: tahapans tahapans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2048,6 +2151,13 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.usulans
     ADD CONSTRAINT usulans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_action_mailbox_inbound_emails_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_action_mailbox_inbound_emails_uniqueness ON public.action_mailbox_inbound_emails USING btree (message_id, message_checksum);
 
 
 --
@@ -2205,13 +2315,6 @@ CREATE INDEX index_musrenbangs_on_status ON public.musrenbangs USING btree (stat
 
 
 --
--- Name: index_opds_on_kode_opd; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_opds_on_kode_opd ON public.opds USING btree (kode_opd);
-
-
---
 -- Name: index_perhitungans_on_anggaran_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2265,13 +2368,6 @@ CREATE INDEX index_roles_on_resource ON public.roles USING btree (resource_type,
 --
 
 CREATE UNIQUE INDEX index_sasarans_on_id_rencana ON public.sasarans USING btree (id_rencana);
-
-
---
--- Name: index_sasarans_on_program_kegiatan_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_sasarans_on_program_kegiatan_id ON public.sasarans USING btree (program_kegiatan_id);
 
 
 --
@@ -2425,14 +2521,6 @@ ALTER TABLE ONLY public.active_storage_variant_records
 
 
 --
--- Name: users fk_rails_99e914ccf2; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT fk_rails_99e914ccf2 FOREIGN KEY (kode_opd) REFERENCES public.opds(kode_opd);
-
-
---
 -- Name: latar_belakangs fk_rails_b420bec91b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2446,14 +2534,6 @@ ALTER TABLE ONLY public.latar_belakangs
 
 ALTER TABLE ONLY public.comments
     ADD CONSTRAINT fk_rails_ba01fcc435 FOREIGN KEY (anggaran_id) REFERENCES public.anggarans(id);
-
-
---
--- Name: program_kegiatans fk_rails_bde191eb18; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.program_kegiatans
-    ADD CONSTRAINT fk_rails_bde191eb18 FOREIGN KEY (kode_opd) REFERENCES public.opds(kode_opd);
 
 
 --
@@ -2583,6 +2663,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220329104150'),
 ('20220329105912'),
 ('20220402133813'),
+('20220408014916'),
+('20220411052324'),
 ('20220414052715'),
 ('20220414062221'),
 ('20220415222139'),
@@ -2602,6 +2684,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220424152317'),
 ('20220425044032'),
 ('20220425184806'),
-('20220425190940');
+('20220425190940'),
+('20220427020239'),
+('20220427030931');
 
 

@@ -20,8 +20,7 @@
 #
 # Indexes
 #
-#  index_sasarans_on_id_rencana           (id_rencana) UNIQUE
-#  index_sasarans_on_program_kegiatan_id  (program_kegiatan_id)
+#  index_sasarans_on_id_rencana  (id_rencana) UNIQUE
 #
 # Foreign Keys
 #
@@ -40,6 +39,7 @@ RSpec.describe Sasaran, type: :model do # rubocop :disable Metrics/BlockLength
   let(:inovasi) { build(:inovasi, usulan: 'usulan inovasi') }
   let(:mandatori) { build(:mandatori, usulan: 'usulan mandatori') }
   let(:tahapan) { FactoryBot.create :tahapan }
+  let(:sumber_dana) { FactoryBot.create :sumber_dana }
 
   context 'sudah terisi dan menambah rincian' do
     it 'can update subkegiatan from local record' do
@@ -59,11 +59,11 @@ RSpec.describe Sasaran, type: :model do # rubocop :disable Metrics/BlockLength
     end
 
     it 'can update sumberdana' do
-      sumber_dana = Sasaran::SUMBERS
-      sasaran.update(sumber_dana: sumber_dana[:dana_transfer])
+      # sasaran.update(sumber_dana: sumber_dana[:dana_transfer])
+      sasaran.update(sumber_dana: sumber_dana)
       expect(sasaran).to be_valid
       sasaran.reload
-      expect(sasaran.sumber_dana).to eq('Dana Transfer')
+      expect(sasaran.sumber_dana.sumber_dana).to eq(sumber_dana.sumber_dana)
     end
   end
 
@@ -89,6 +89,7 @@ RSpec.describe Sasaran, type: :model do # rubocop :disable Metrics/BlockLength
     it { should belong_to(:user) }
     it { should belong_to(:program_kegiatan).optional(true) }
     it { should belong_to(:subkegiatan_tematik).optional(true) }
+    it { should belong_to(:sumber_dana).optional(true) }
   end
 
   context 'sasaran take usulan from different type' do
