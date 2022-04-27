@@ -725,7 +725,9 @@ CREATE TABLE public.musrenbangs (
     alamat text,
     is_active boolean DEFAULT false,
     status public.usulan_status DEFAULT 'draft'::public.usulan_status,
-    uraian character varying
+    uraian character varying,
+    id_unik bigint,
+    id_kamus bigint
 );
 
 
@@ -980,7 +982,9 @@ CREATE TABLE public.pokpirs (
     sasaran_id bigint,
     is_active boolean DEFAULT false,
     status public.usulan_status DEFAULT 'draft'::public.usulan_status,
-    uraian character varying
+    uraian character varying,
+    id_unik bigint,
+    id_kamus bigint
 );
 
 
@@ -2806,6 +2810,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220425184806'),
 ('20220425190940'),
 ('20220427020239'),
-('20220427030931');
+('20220427030931'),
+('20220427165709');
 
 

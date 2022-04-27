@@ -11,6 +11,16 @@ module Api
                   success: "Update ProgramKegiatan #{nama_opd} Dikerjakan. Harap menunggu..."
     end
 
+    def sync_musrenbang
+      UpdateMusrenbangJob.set(queue: "Musrenbang-#{@tahun}").perform_later(@tahun)
+      redirect_to musrenbangs_path, success: "Update Musrenbang #{@tahun} Dikerjakan. Harap menunggu..."
+    end
+
+    def sync_pokpir
+      UpdatePokpirJob.set(queue: "PokokPikiran-#{@tahun}").perform_later(@tahun)
+      redirect_to pokpirs_path, success: "Update Usulan Pokok Pikiran #{@tahun} Dikerjakan. Harap menunggu..."
+    end
+
     private
 
     def nama_opd
