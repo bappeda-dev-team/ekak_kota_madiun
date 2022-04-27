@@ -20,7 +20,7 @@
             <td class="text-wrap"><%= sasaran.sasaran_kinerja %></td>
             <td class="text-wrap"><%= sasaran.indikator_kinerja %></td>
             <td class="text-end border-1">Rp. <%= number_with_delimiter(sasaran.total_anggaran, :delimiter => ".") %></td>
-            <td class="text-wrap"><%= sasaran.sumber_dana %></td>
+            <td class="text-wrap"><%= sasaran&.sumber_dana&.sumber_dana %></td>
           </tr>
         <% end %>
         <tr>

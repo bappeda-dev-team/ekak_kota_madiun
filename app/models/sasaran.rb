@@ -42,7 +42,7 @@ class Sasaran < ApplicationRecord
   has_many :indikator_sasarans, foreign_key: 'sasaran_id', primary_key: 'id_rencana', dependent: :destroy
   has_many :tahapans, foreign_key: 'id_rencana', primary_key: 'id_rencana', dependent: :destroy
   has_one :rincian, dependent: :destroy
-  # belongs_to :sumber_dana, foreign_key: 'sumber_dana', primary_key: 'kode_sumber_dana', optional: true
+  belongs_to :sumber_dana, foreign_key: 'kode_sumber_dana', primary_key: 'sumber_dana', optional: true
   has_many :permasalahans, dependent: :destroy
   has_many :latar_belakangs, dependent: :destroy
 
