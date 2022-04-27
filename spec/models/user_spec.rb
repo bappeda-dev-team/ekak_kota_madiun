@@ -6,9 +6,11 @@
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  eselon                 :string
+#  id_bidang              :bigint
 #  jabatan                :string
 #  kode_opd               :string
 #  nama                   :string
+#  nama_bidang            :string
 #  nama_pangkat           :string
 #  nik                    :string
 #  pangkat                :string
