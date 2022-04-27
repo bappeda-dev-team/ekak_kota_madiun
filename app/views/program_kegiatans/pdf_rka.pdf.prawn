@@ -18,6 +18,19 @@ prawn_document do |pdf|
               ['Target', ':', "#{@programKegiatan.target_subkegiatan} #{@programKegiatan.satuan}"],
               ['Pagu Anggaran', ':', "Rp. #{number_with_delimiter(@programKegiatan.my_pagu, delimiter: '.')}"]
             ], cell_style: { borders: [] }, width: pdf.bounds.width)
+  pdf.move_down 20
+  pdf.text 'Sumber Dana', style: :bold, indent_paragraphs: 5
+  header_sumber_dana = [['No', 'Sasaran', 'Pemilik Sasaran', 'Pagu', 'Sumber Dana']]
+  @programKegiatan.sasarans.each.with_index(1) do |sasaran_sumber_dana, no|
+    header_sumber_dana << [no, sasaran_sumber_dana.sasaran_kinerja,
+                           sasaran_sumber_dana.user.nama, 
+                           { content: "Rp. #{number_with_delimiter(sasaran_sumber_dana.total_anggaran, delimiter: ".")}" },
+                           sasaran_sumber_dana.sumber_dana]
+  end
+  pdf.table(header_sumber_dana,
+            cell_style: { size: 8,
+                          column_widths: { 0 => 10, 1 => 150, 2 => 50 } },
+            width: pdf.bounds.width, position: 5)
   pdf.start_new_page
 
   # new page
@@ -45,15 +58,19 @@ prawn_document do |pdf|
          { content: 'Rincian Perhitungan', colspan: 4 }, { content: 'Jumlah', rowspan: 2 }],
         %w[Koefisien Satuan Harga PPN]
       ]
-      tahapan.anggarans.each do |anggaran|
-        header_anggaran << [rekening_anggaran(anggaran.kode_rek), { content: anggaran.uraian, colspan: 5 },
-                            { content: "Rp. #{number_with_delimiter(anggaran.jumlah, delimiter: '.')}", align: :right }]
-        anggaran.perhitungans.each do |perhitungan|
-          header_anggaran << ['', uraian_kode(perhitungan.deskripsi), perhitungan.list_koefisien, perhitungan.satuan,
-                              { content: "Rp. #{number_with_delimiter(perhitungan.harga, delimiter: '.')}", align: :right },
-                              { content: perhitungan.plus_pajak.to_s },
-                              { content: "Rp. #{number_with_delimiter(perhitungan.total, delimiter: '.')}", align: :right }]
+      if tahapan.anggarans.exists?
+        tahapan.anggarans.each do |anggaran|
+          header_anggaran << [rekening_anggaran(anggaran.kode_rek), { content: anggaran.uraian, colspan: 5 },
+                              { content: "Rp. #{number_with_delimiter(anggaran.jumlah, delimiter: '.')}", align: :right }]
+          anggaran.perhitungans.each do |perhitungan|
+            header_anggaran << ['', uraian_kode(perhitungan.deskripsi), perhitungan.list_koefisien, perhitungan.satuan,
+                                { content: "Rp. #{number_with_delimiter(perhitungan.harga, delimiter: '.')}", align: :right },
+                                { content: perhitungan.plus_pajak.to_s },
+                                { content: "Rp. #{number_with_delimiter(perhitungan.total, delimiter: '.')}", align: :right }]
+          end
         end
+      else
+        header_anggaran << ['-', '-', '-', '-', '-', '-',  { content: "0", align: :right }]
       end
       pdf.table(header_anggaran, cell_style: { size: 6 }, width: pdf.bounds.width)
       pdf.move_down 5
