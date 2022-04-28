@@ -51,9 +51,9 @@ class Sasaran < ApplicationRecord
   # TODO: ganti kualitas dengan aspek ( multiple choice )
   # validation
   validates :sasaran_kinerja, presence: true
-  validates :indikator_kinerja, presence: true
-  validates :target, presence: true
-  validates :satuan, presence: true
+  # validates :indikator_kinerja, presence: true
+  # validates :target, presence: true
+  # validates :satuan, presence: true
 
   default_scope { order(created_at: :asc) }
   scope :hangus, -> { left_outer_joins(:usulans).where(usulans: { sasaran_id: nil }).where(program_kegiatan_id: nil) }
