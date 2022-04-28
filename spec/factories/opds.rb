@@ -15,10 +15,6 @@
 #  updated_at         :datetime         not null
 #  lembaga_id         :integer
 #
-# Indexes
-#
-#  index_opds_on_kode_opd  (kode_opd) UNIQUE
-#
 FactoryBot.define do
   factory :opd do
     nama_opd { "Dinas Komunikasi dan Informatika" }

@@ -5,15 +5,17 @@
       <h2 class="fs-5 fw-bold mb-0">Sasaran Kinerja <%= opd.nama_opd %></h2>
     </div>
     <div class="col-2 text-end">
-      <%= link_to sync_sasaran_path(kode_opd: @kode_opd, tahun: Date.today.year, bulan: Date.today.month),
+      <%= link_to sync_sasaran_path(kode_opd: @kode_opd, tahun: Date.today.year, bulan: Date.today.month, tipe_asn: 'pns'),
       data: { disable_with: 'Memproses....'}, 
       class:"btn btn-sm btn-primary" do %>
         <i class="fas fa-sync me-2"></i>
         Sync Sasaran
       <% end %>
+    </div>
+    <div class="col-2 text-end">
       <%= link_to sync_sasaran_path(kode_opd: @kode_opd, tahun: Date.today.year, bulan: Date.today.month, tipe_asn: 'non_pns'),
       data: { disable_with: 'Memproses....'}, 
-      class:"btn btn-sm btn-primary" do %>
+      class:"btn btn-sm btn-primary text-success" do %>
         <i class="fas fa-sync me-2"></i>
         Sync Sasaran ASN Bidang
       <% end %>

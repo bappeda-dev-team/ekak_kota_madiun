@@ -30,6 +30,21 @@ module Api
       proses_detail_master_program(request)
     end
 
+    def musrenbang_master
+      response = request_musrenbang_data(@tahun)
+      proses_data_musrenbang(response)
+    end
+
+    def pokpir_master
+      response = request_pokpir_data(@tahun)
+      proses_data_pokir(response)
+    end
+
+    def kamus_usulan_master
+      response = request_kamus_usulan_data(@tahun)
+      proses_data_kamus_usulan(response)
+    end
+
     def gabung_data(program, id_gabung)
       id_program = program.collect { |prg| prg[:id_program] }
       detail_program = id_program.map { |id| detail_master_program(id) }.flatten
@@ -55,7 +70,19 @@ module Api
     end
 
     def request_detail_master_program(id_program)
-      H.get("#{URL}/indikator_per_program/109/#{id_program}")
+      H.get("#{URL}/usulan_musrenbang/109/#{id_program}")
+    end
+
+    def request_musrenbang_data(tahun)
+      H.get("#{URL}/usulan_musrenbang/109?tahun=#{tahun}")
+    end
+
+    def request_pokpir_data(tahun)
+      H.get("#{URL}/usul_reses/109?tahun=#{tahun}")
+    end
+
+    def request_kamus_usulan_data(tahun)
+      H.get("#{URL}/kamus_usulan_musrenbang/109?tahun=#{tahun}")
     end
 
     def proses_data_master_program(response)
@@ -95,7 +122,7 @@ module Api
     def proses_data_subkegiatan(response)
       data = Oj.load(response.body)
       data_detail = data['data']
-     jajals = data_detail.uniq { |el| el['kode_sub_giat'] }
+      jajals = data_detail.uniq { |el| el['kode_sub_giat'] }
       data_subkegiatan = []
       jajals.each do |sub|
         id_rinci_sub_bl = sub['id_rinci_sub_bl']
@@ -133,7 +160,61 @@ module Api
           kode_opd: @id_opd # warning hard coded 
         }
       end
-      ProgramKegiatan.insert_all(data_subkegiatan)
+      ProgramKegiatan.upsert_all(data_subkegiatan, unique_by: :identifier_belanja)
+    end
+
+    def proses_data_musrenbang(response)
+      data = Oj.load(response.body)
+      data_musrenbang = data['data']
+      musrenbangs = []
+      data_musrenbang.each do |musren|
+        id_unik = musren['id_usulan']
+        id_kamus = musren['id_kamus']
+        tahun = musren['tahun']
+        alamat = musren['alamat_teks']
+        uraian = musren['koefisien']
+        usulan = musren['masalah']
+        musrenbangs << { id_unik: id_unik,
+                         id_kamus: id_kamus, tahun: tahun, alamat: alamat, usulan: usulan,
+                         uraian: uraian, created_at: Time.now, updated_at: Time.now }
+      end
+      Musrenbang.upsert_all(musrenbangs, unique_by: :id_unik)
+    end
+
+    def proses_data_pokir(response)
+      data = Oj.load(response.body)
+      data_pokirs = data['data']
+      pokirs = []
+      data_pokirs.each do |pokir|
+        id_unik = pokir['id_reses']
+        id_kamus = pokir['id_kamus']
+        tahun = pokir['tahun']
+        alamat = pokir['alamat_teks']
+        uraian = pokir['koefisien']
+        usulan = pokir['masalah']
+        opd = pokir['rev_unit']
+        pokirs << { id_unik: id_unik, id_kamus: id_kamus, usulan: usulan,
+                    tahun: tahun, alamat: alamat, uraian: uraian, opd: opd,
+                    created_at: Time.now, updated_at: Time.now }
+      end
+      Pokpir.upsert_all(pokirs, unique_by: :id_unik)
+    end
+
+    def proses_data_kamus_usulan(response)
+      data = Oj.load(response.body)
+      data_kamus = data['data']
+      kamus_usulans = []
+      data_kamus.each do |kamus|
+        id_kamus = kamus['id_kamus']
+        id_unit = kamus['id_unit']
+        id_program = kamus['id_program']
+        bidang_urusan = kamus['bidang_urusan']
+        usulan = kamus['giat_teks']
+        kamus_usulans << { id_kamus: id_kamus, id_unit: id_unit, id_program: id_program,
+                           bidang_urusan: bidang_urusan, usulan: usulan,
+                           created_at: Time.now, updated_at: Time.now }
+      end
+      KamusUsulan.upsert_all(kamus_usulans, unique_by: :id_kamus)
     end
   end
 end

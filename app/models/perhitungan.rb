@@ -24,7 +24,7 @@
 #
 class Perhitungan < ApplicationRecord
   after_save :update_jumlah_anggaran
-  after_update :update_jumlah_anggaran
+  after_update :new_hitung_total
   after_destroy :update_jumlah_anggaran_destroy
 
   belongs_to :anggaran
@@ -33,7 +33,7 @@ class Perhitungan < ApplicationRecord
   accepts_nested_attributes_for :koefisiens
 
   validates :deskripsi, presence: true # uraian
-  validates :satuan, presence: true
+  # validates :satuan, presence: true
   validates :harga, presence: true, numericality: true
 
   def hitung_total

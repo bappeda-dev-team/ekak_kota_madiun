@@ -31,7 +31,7 @@ class Anggaran < ApplicationRecord
   # TODO: Tes method penting
   # TODO: Single Responsibility Principle, rekening_level violates this
   after_initialize :set_default_values
-  after_update :update_perhitungan
+  # after_update :update_perhitungan
 
   belongs_to :tahapan
   has_many :perhitungans, dependent: :destroy

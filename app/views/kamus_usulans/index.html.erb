@@ -1,0 +1,75 @@
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to "kamus_usulan", kamus_usulans_path %></li>
+      </ol>
+    </nav>
+    <% flash.each do |type, msg| %>
+      <% tipe = type == 'error' ? 'danger' : type %>
+      <div class="alert alert-<%= tipe %>">
+        <%= msg %>
+      </div>
+    <% end %>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Usulan kamus_usulan</h2>
+          </div>
+          <div class="col text-end">
+            <%= link_to "Tambah Usulan", new_kamus_usulan_path, remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#form-usulan'}, class: "btn btn-sm btn-info" %>
+          </div>
+          <% if current_user.has_role? :super_admin %>
+            <div class="col text-end">
+              <%= link_to sync_kamus_usulan_path(kode_opd: '', tahun: 2023), 
+                                                data: { disable_with: 'Memproses....'},
+                                                class:"btn btn-sm btn-primary" do %>
+                <i class="fas fa-sync me-2"></i>
+                Sync kamus_usulan
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-flush datatable" data-datatable>
+            <thead class="thead-light">
+              <tr>
+                <th class="border-bottom text-gray-700" scope="col">No.</th>
+                <th class="border-bottom text-gray-700" scope="col">Usulan</th>
+                <th class="border-bottom text-gray-700" scope="col">Bidang Urusan</th>
+                <th class="border-bottom text-gray-700" scope="col">OPD</th>
+                <th class="border-bottom text-gray-700" scope="col">Program</th>
+                <th class="border-bottom text-gray-700 text-center" scope="col">Status</th>
+                <th class="border-bottom text-gray-700 text-center" scope="col" colspan='1'>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @kamus_usulans.each.with_index(1) do |kamus_usulan, i| %>
+                <tr id="<%= dom_id(kamus_usulan) %>">
+                  <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
+                  <td class="fw-bolder text-gray-500 text-wrap"><%= kamus_usulan.usulan %></td>
+                  <td class="fw-bolder text-gray-500 text-wrap"><%= kamus_usulan.bidang_urusan %></td>
+                  <td class="fw-bolder text-gray-500 text-wrap"><%= kamus_usulan.id_program %></td>
+                  <td class="fw-bolder text-gray-500 text-wrap"><%= kamus_usulan.id_unit %></td>
+                  <td class="fw-bolder text-gray-500 text-center align-middle">
+                    <%= link_to edit_kamus_usulan_path(kamus_usulan), remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#form-usulan'} do %>
+                      <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit usulan"></i>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= render 'modal' %>
