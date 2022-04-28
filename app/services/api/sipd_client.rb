@@ -40,6 +40,11 @@ module Api
       proses_data_pokir(response)
     end
 
+    def kamus_usulan_master
+      response = request_kamus_usulan_data(@tahun)
+      proses_data_kamus_usulan(response)
+    end
+
     def gabung_data(program, id_gabung)
       id_program = program.collect { |prg| prg[:id_program] }
       detail_program = id_program.map { |id| detail_master_program(id) }.flatten
@@ -74,6 +79,10 @@ module Api
 
     def request_pokpir_data(tahun)
       H.get("#{URL}/usul_reses/109?tahun=#{tahun}")
+    end
+
+    def request_kamus_usulan_data(tahun)
+      H.get("#{URL}/kamus_usulan_musrenbang/109?tahun=#{tahun}")
     end
 
     def proses_data_master_program(response)
@@ -151,7 +160,7 @@ module Api
           kode_opd: @id_opd # warning hard coded 
         }
       end
-      ProgramKegiatan.upsert_all(data_subkegiatan, unique_by: :kode_sub_giat)
+      ProgramKegiatan.upsert_all(data_subkegiatan, unique_by: :identifier_belanja)
     end
 
     def proses_data_musrenbang(response)
@@ -189,6 +198,23 @@ module Api
                     created_at: Time.now, updated_at: Time.now }
       end
       Pokpir.upsert_all(pokirs, unique_by: :id_unik)
+    end
+
+    def proses_data_kamus_usulan(response)
+      data = Oj.load(response.body)
+      data_kamus = data['data']
+      kamus_usulans = []
+      data_kamus.each do |kamus|
+        id_kamus = kamus['id_kamus']
+        id_unit = kamus['id_unit']
+        id_program = kamus['id_program']
+        bidang_urusan = kamus['bidang_urusan']
+        usulan = kamus['giat_teks']
+        kamus_usulans << { id_kamus: id_kamus, id_unit: id_unit, id_program: id_program,
+                           bidang_urusan: bidang_urusan, usulan: usulan,
+                           created_at: Time.now, updated_at: Time.now }
+      end
+      KamusUsulan.upsert_all(kamus_usulans, unique_by: :id_kamus)
     end
   end
 end

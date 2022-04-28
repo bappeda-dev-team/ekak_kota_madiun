@@ -1,0 +1,27 @@
+<%= form_with(model: kamus_usulan) do |form| %>
+  <% if kamus_usulan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(kamus_usulan.errors.count, "error") %> prohibited this kamus_usulan from being saved:</h2>
+      <ul>
+        <% kamus_usulan.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :usulan %>
+    <%= form.text_area :usulan, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.label :bidang_urusan %>
+    <%= form.text_area :bidang_urusan, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.label :opd %>
+    <%= form.text_area :id_unit, class: 'form-control' %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

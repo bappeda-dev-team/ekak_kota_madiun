@@ -78,6 +78,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :comments, except: %i[index show]
   resources :roles
   resources :sumber_danas, except: %i[show]
+  resources :kamus_usulans
 
   # resque
   authenticate :user, ->(u) { u.id == 1 } do
@@ -147,6 +148,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/sync_subkegiatan', to: 'api/sipd_client#sync_subkegiatan'
   get '/sync_musrenbang', to: 'api/sipd_client#sync_musrenbang'
   get '/sync_pokpir', to: 'api/sipd_client#sync_pokpir'
+  get '/sync_kamus_usulan', to: 'api/sipd_client#sync_kamus_usulan'
 
   post '/filter_sasaran', to: 'filter#filter_sasaran'
   post '/filter_user', to: 'filter#filter_user'

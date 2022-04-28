@@ -571,6 +571,41 @@ ALTER SEQUENCE public.kaks_id_seq OWNED BY public.kaks.id;
 
 
 --
+-- Name: kamus_usulans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.kamus_usulans (
+    id bigint NOT NULL,
+    id_kamus bigint NOT NULL,
+    id_unit bigint,
+    id_program bigint,
+    bidang_urusan character varying,
+    usulan character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: kamus_usulans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.kamus_usulans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: kamus_usulans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.kamus_usulans_id_seq OWNED BY public.kamus_usulans.id;
+
+
+--
 -- Name: kesenjangans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1664,6 +1699,13 @@ ALTER TABLE ONLY public.kaks ALTER COLUMN id SET DEFAULT nextval('public.kaks_id
 
 
 --
+-- Name: kamus_usulans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.kamus_usulans ALTER COLUMN id SET DEFAULT nextval('public.kamus_usulans_id_seq'::regclass);
+
+
+--
 -- Name: kesenjangans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1957,6 +1999,14 @@ ALTER TABLE ONLY public.inovasis
 
 ALTER TABLE ONLY public.kaks
     ADD CONSTRAINT kaks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: kamus_usulans kamus_usulans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.kamus_usulans
+    ADD CONSTRAINT kamus_usulans_pkey PRIMARY KEY (id);
 
 
 --
@@ -2279,6 +2329,13 @@ CREATE INDEX index_kaks_on_program_kegiatan_id ON public.kaks USING btree (progr
 
 
 --
+-- Name: index_kamus_usulans_on_id_kamus; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_kamus_usulans_on_id_kamus ON public.kamus_usulans USING btree (id_kamus);
+
+
+--
 -- Name: index_kesenjangans_on_rincian_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2353,6 +2410,13 @@ CREATE INDEX index_pokpirs_on_sasaran_id ON public.pokpirs USING btree (sasaran_
 --
 
 CREATE INDEX index_pokpirs_on_status ON public.pokpirs USING btree (status);
+
+
+--
+-- Name: index_program_kegiatans_on_identifier_belanja; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_program_kegiatans_on_identifier_belanja ON public.program_kegiatans USING btree (identifier_belanja);
 
 
 --
@@ -2710,6 +2774,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220427165709'),
 ('20220427172539'),
 ('20220428015251'),
-('20220428031837');
+('20220428031837'),
+('20220428034402'),
+('20220428034736'),
+('20220428060458');
 
 
