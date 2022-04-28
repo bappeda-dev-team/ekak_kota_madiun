@@ -4,8 +4,6 @@
 #
 #  id         :bigint           not null, primary key
 #  alamat     :text
-#  id_kamus   :bigint
-#  id_unik    :bigint
 #  is_active  :boolean          default(FALSE)
 #  nip_asn    :string
 #  opd        :string
