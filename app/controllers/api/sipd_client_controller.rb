@@ -4,7 +4,7 @@
 # params : kode_opd: opd.id_opd_skp, tahun: Date.today.year
 module Api
   class SipdClientController < ApplicationController
-    before_action :set_program_params
+    before_action :set_program_params, except: [:sync_musrenbang, :sync_pokpir]
     def sync_subkegiatan
       UpdateProgramJob.set(queue: "#{nama_opd}-#{@kode_opd}-renstra-#{@tahun}").perform_later(@kode_opd, @tahun, @id_opd)
       redirect_to admin_program_kegiatan_path,

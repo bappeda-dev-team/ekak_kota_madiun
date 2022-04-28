@@ -30,13 +30,13 @@ module Api
       proses_detail_master_program(request)
     end
 
-    def musrenbang_master(tahun)
-      response = request_musrenbang_data(tahun)
+    def musrenbang_master
+      response = request_musrenbang_data(@tahun)
       proses_data_musrenbang(response)
     end
 
-    def pokpir_master(tahun)
-      response = request_pokpir_data(tahun)
+    def pokpir_master
+      response = request_pokpir_data(@tahun)
       proses_data_pokir(response)
     end
 

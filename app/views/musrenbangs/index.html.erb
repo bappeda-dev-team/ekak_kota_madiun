@@ -10,6 +10,12 @@
         <li class="breadcrumb-item active" aria-current="page"><%= link_to "Musrenbang", musrenbangs_path %></li>
       </ol>
     </nav>
+    <% flash.each do |type, msg| %>
+      <% tipe = type == 'error' ? 'danger' : type %>
+      <div class="alert alert-<%= tipe %>">
+        <%= msg %>
+      </div>
+    <% end %>
     <div class="card border-0 shadow">
       <div class="card-header">
         <div class="row align-items-center">
@@ -19,6 +25,16 @@
           <div class="col text-end">
             <%= link_to "Tambah Usulan", new_musrenbang_path, remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#form-usulan'}, class: "btn btn-sm btn-info" %>
           </div>
+          <% if current_user.has_role? :super_admin %>
+            <div class="col text-end">
+              <%= link_to sync_musrenbang_path(kode_opd: '', tahun: 2023), 
+                                                data: { disable_with: 'Memproses....'},
+                                                class:"btn btn-sm btn-primary" do %>
+                <i class="fas fa-sync me-2"></i>
+                Sync Musrenbang
+              <% end %>
+            </div>
+          <% end %>
         </div>
       </div>
       <div class="card-body">
@@ -37,7 +53,7 @@
             </thead>
             <tbody>
               <% @musrenbangs.each.with_index(1) do |musrenbang, i| %>
-                <% if musrenbang.opd_pemilik == current_user.opd.kode_opd %>
+                <% if musrenbang.opd_pemilik == current_user.opd.kode_opd or current_user.has_role? :super_admin %>
                   <tr id="<%= dom_id(musrenbang) %>">
                     <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
                     <td class="fw-bolder text-gray-500 text-wrap"><%= musrenbang.usulan %></td>

@@ -19,6 +19,7 @@
 #
 # Indexes
 #
+#  index_pokpirs_on_id_unik     (id_unik) UNIQUE
 #  index_pokpirs_on_sasaran_id  (sasaran_id)
 #  index_pokpirs_on_status      (status)
 #

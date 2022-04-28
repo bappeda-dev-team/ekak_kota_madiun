@@ -19,6 +19,7 @@
 #
 # Indexes
 #
+#  index_musrenbangs_on_id_unik     (id_unik) UNIQUE
 #  index_musrenbangs_on_sasaran_id  (sasaran_id)
 #  index_musrenbangs_on_status      (status)
 #
