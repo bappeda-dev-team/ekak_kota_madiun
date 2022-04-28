@@ -32,6 +32,7 @@ class Sasaran < ApplicationRecord
   belongs_to :user, foreign_key: 'nip_asn', primary_key: 'nik'
   belongs_to :program_kegiatan, optional: true
   belongs_to :subkegiatan_tematik, optional: true
+  # belongs_to :sumber_dana, foreign_key: 'sumber_dana', primary_key: 'kode_sumber_dana', optional: true
 
   has_many :usulans
   has_many :dasar_hukums, foreign_key: 'sasaran_id', primary_key: 'id_rencana', class_name: 'DasarHukum'
@@ -42,7 +43,6 @@ class Sasaran < ApplicationRecord
   has_many :indikator_sasarans, foreign_key: 'sasaran_id', primary_key: 'id_rencana', dependent: :destroy
   has_many :tahapans, foreign_key: 'id_rencana', primary_key: 'id_rencana', dependent: :destroy
   has_one :rincian, dependent: :destroy
-  # belongs_to :sumber_dana, foreign_key: 'sumber_dana', primary_key: 'kode_sumber_dana', optional: true
   has_many :permasalahans, dependent: :destroy
   has_many :latar_belakangs, dependent: :destroy
 

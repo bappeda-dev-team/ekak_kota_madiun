@@ -6,9 +6,11 @@
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  eselon                 :string
+#  id_bidang              :bigint
 #  jabatan                :string
 #  kode_opd               :string
 #  nama                   :string
+#  nama_bidang            :string
 #  nama_pangkat           :string
 #  nik                    :string
 #  pangkat                :string
@@ -23,6 +25,10 @@
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_nik                   (nik) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (kode_opd => opds.kode_opd)
 #
 FactoryBot.define do
   factory :user do

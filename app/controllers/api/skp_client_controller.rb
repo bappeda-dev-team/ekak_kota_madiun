@@ -10,7 +10,7 @@ module Api
     before_action :verify_kode_opd, only: [:sync_sasaran]
 
     def sync_sasaran
-      UpdateSkpJob.set(queue: "#{nama_opd}-#{@kode_opd}-sasaran-#{@tahun}-#{@bulan}").perform_later(@kode_opd, @tahun, @bulan)
+      UpdateSkpJob.set(queue: "#{nama_opd}-#{@kode_opd}-sasaran-#{@tahun}-#{@bulan}").perform_later(@kode_opd, @tahun, @bulan, @tipe_asn)
       redirect_to adminsasarans_path,
                   success: "Update Sasaran #{nama_opd} Dikerjakan. Harap menunggu..."
     end
@@ -38,6 +38,7 @@ module Api
       @kode_opd = params[:kode_opd]
       @tahun = params[:tahun]
       @bulan = params[:bulan]
+      @tipe_asn = params[:tipe_asn]
     end
   end
 end

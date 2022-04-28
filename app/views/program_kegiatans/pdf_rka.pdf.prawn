@@ -23,14 +23,11 @@ prawn_document do |pdf|
   header_sumber_dana = [['No', 'Sasaran', 'Pemilik Sasaran', 'Pagu', 'Sumber Dana']]
   @programKegiatan.sasarans.each.with_index(1) do |sasaran_sumber_dana, no|
     header_sumber_dana << [no, sasaran_sumber_dana.sasaran_kinerja,
-                           sasaran_sumber_dana.user.nama, 
-                           { content: "Rp. #{number_with_delimiter(sasaran_sumber_dana.total_anggaran, delimiter: ".")}" },
+                           sasaran_sumber_dana.user.nama,
+                           { content: "Rp. #{number_with_delimiter(sasaran_sumber_dana.total_anggaran, delimiter: '.')}" },
                            sasaran_sumber_dana.sumber_dana]
   end
-  pdf.table(header_sumber_dana,
-            cell_style: { size: 8,
-                          column_widths: { 0 => 10, 1 => 150, 2 => 50 } },
-            width: pdf.bounds.width, position: 5)
+  pdf.table(header_sumber_dana, cell_style: { size: 8, column_widths: { 0 => 10, 1 => 150, 2 => 50 } }, width: pdf.bounds.width, position: 5)
   pdf.start_new_page
 
   # new page

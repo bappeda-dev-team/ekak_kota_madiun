@@ -7,22 +7,24 @@ module Api
     require 'oj'
     URL = 'https://skp.madiunkota.go.id/api'
     H = HTTP.accept(:json)
-    attr_accessor :kode_opd, :bulan, :tahun
+    attr_accessor :kode_opd, :bulan, :tahun, :tipe_asn
 
     USERNAME = 'bappeda'
     PASSWORD = 'bapp7832KH'
 
-    def initialize(kode_opd, tahun, bulan)
+    def initialize(kode_opd, tahun, bulan, tipe_asn = 'pns')
       # @kode_opd = '2.16.2.20.2.21.04.0000'
       # @tahun = 2022
       # @bulan = 2
+      # tipe_asn = 'pns' | 'non_pns'
       @kode_opd = kode_opd
       @tahun = tahun
       @bulan = bulan
+      @tipe_asn = tipe_asn
     end
 
     def data_sasaran_asn_opd
-      request_skp(kode_opd, tahun, bulan)
+      request_skp(kode_opd, tahun, bulan, tipe_asn)
     end
 
     def data_pegawai
@@ -41,8 +43,8 @@ module Api
 
     private
 
-    def request_skp(kode_opd, tahun, bulan)
-      H.post("#{URL}/sasaran-kinerja-pegawai/#{kode_opd}/#{tahun}/#{bulan}",
+    def request_skp(kode_opd, tahun, bulan, tipe_asn)
+      H.post("#{URL}/sasaran-kinerja-pegawai/#{kode_opd}/#{tahun}/#{bulan}/#{tipe_asn}",
              form: { username: USERNAME, password: PASSWORD })
     end
 
@@ -125,6 +127,7 @@ module Api
       kode_opd = Opd.find_by(kode_unik_opd: @kode_opd).kode_opd || '0'
       data = Oj.load(response.body)
       pegawais = data['data']
+      data_pegawais = []
       pegawais.each do |pegawai|
         email = "#{pegawai['nip']}@madiunkota.go.id"
         nip = pegawai['nip']
@@ -133,17 +136,16 @@ module Api
         eselon = pegawai['eselon']
         pangkat = pegawai['pangkat']
         nama_pangkat = pegawai['nama_pangkat']
-        User.create_or_find_by(nik: nip) do |u|
-          u.nama = nama
-          u.email = email
-          u.jabatan = jabatan
-          u.pangkat = pangkat
-          u.nama_pangkat = nama_pangkat
-          u.eselon = eselon
-          u.kode_opd = kode_opd
-          u.password = '123456'
-        end
+        id_bidang = pegawai['id_bidang']
+        nama_bidang = pegawai['nama_bidang']
+        password = User.new(password: 123456).encrypted_password
+        data_pegawais << { kode_opd: kode_opd, nik: nip, nama: nama, jabatan: jabatan,
+                           eselon: eselon, pangkat: pangkat, nama_pangkat: nama_pangkat,
+                           id_bidang: id_bidang, nama_bidang: nama_bidang, email: email,
+                           encrypted_password: password,
+                           created_at: Time.now, updated_at: Time.now }
       end
+      User.upsert_all(data_pegawais, unique_by: :nik)
     end
   end
 end

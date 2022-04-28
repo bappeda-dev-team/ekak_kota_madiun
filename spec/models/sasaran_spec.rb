@@ -59,11 +59,12 @@ RSpec.describe Sasaran, type: :model do # rubocop :disable Metrics/BlockLength
     end
 
     it 'can update sumberdana' do
-      # sasaran.update(sumber_dana: sumber_dana[:dana_transfer])
-      sasaran.update(sumber_dana: sumber_dana)
+      sumber_dana = Sasaran::SUMBERS
+      sasaran.update(sumber_dana: sumber_dana[:dana_transfer])
       expect(sasaran).to be_valid
       sasaran.reload
-      expect(sasaran.sumber_dana.sumber_dana).to eq(sumber_dana.sumber_dana)
+      expect(sasaran.sumber_dana).to eq(sumber_dana[:dana_transfer])
+      expect(sasaran.sumber_dana).to eq('Dana Transfer')
     end
   end
 
@@ -89,7 +90,6 @@ RSpec.describe Sasaran, type: :model do # rubocop :disable Metrics/BlockLength
     it { should belong_to(:user) }
     it { should belong_to(:program_kegiatan).optional(true) }
     it { should belong_to(:subkegiatan_tematik).optional(true) }
-    it { should belong_to(:sumber_dana).optional(true) }
   end
 
   context 'sasaran take usulan from different type' do

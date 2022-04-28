@@ -26,39 +26,6 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: action_mailbox_inbound_emails; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.action_mailbox_inbound_emails (
-    id bigint NOT NULL,
-    status integer DEFAULT 0 NOT NULL,
-    message_id character varying NOT NULL,
-    message_checksum character varying NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: action_mailbox_inbound_emails_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.action_mailbox_inbound_emails_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: action_mailbox_inbound_emails_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.action_mailbox_inbound_emails_id_seq OWNED BY public.action_mailbox_inbound_emails.id;
-
-
---
 -- Name: action_text_rich_texts; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -758,7 +725,9 @@ CREATE TABLE public.musrenbangs (
     alamat text,
     is_active boolean DEFAULT false,
     status public.usulan_status DEFAULT 'draft'::public.usulan_status,
-    uraian character varying
+    uraian character varying,
+    id_unik bigint,
+    id_kamus bigint
 );
 
 
@@ -963,6 +932,41 @@ ALTER SEQUENCE public.permasalahans_id_seq OWNED BY public.permasalahans.id;
 
 
 --
+-- Name: pks; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.pks (
+    id bigint NOT NULL,
+    sasaran character varying,
+    indikator_kinerja character varying,
+    target character varying,
+    satuan character varying,
+    user_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: pks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.pks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: pks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.pks_id_seq OWNED BY public.pks.id;
+
+
+--
 -- Name: pokpirs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -978,7 +982,9 @@ CREATE TABLE public.pokpirs (
     sasaran_id bigint,
     is_active boolean DEFAULT false,
     status public.usulan_status DEFAULT 'draft'::public.usulan_status,
-    uraian character varying
+    uraian character varying,
+    id_unik bigint,
+    id_kamus bigint
 );
 
 
@@ -1023,13 +1029,6 @@ CREATE TABLE public.program_kegiatans (
     indikator_program character varying,
     target_program character varying,
     satuan_target_program character varying,
-    urusan character varying,
-    bidang_urusan character varying,
-    outcome character varying,
-    pagu_giat character varying,
-    pagu_subgiat character varying,
-    id_program character varying,
-    id_renstra character varying,
     id_unit character varying,
     kode_urusan character varying,
     nama_urusan character varying,
@@ -1143,7 +1142,7 @@ ALTER SEQUENCE public.rekenings_id_seq OWNED BY public.rekenings.id;
 
 CREATE TABLE public.rincians (
     id bigint NOT NULL,
-    sasaran_id bigint NOT NULL,
+    sasaran_id bigint,
     data_terpilah character varying,
     penyebab_internal character varying,
     penyebab_external character varying,
@@ -1327,6 +1326,40 @@ UNION
 
 
 --
+-- Name: search_entries; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.search_entries (
+    id bigint NOT NULL,
+    title character varying,
+    body text,
+    searchable_type character varying NOT NULL,
+    searchable_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: search_entries_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.search_entries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: search_entries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.search_entries_id_seq OWNED BY public.search_entries.id;
+
+
+--
 -- Name: strategi_keluarans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1485,7 +1518,9 @@ CREATE TABLE public.users (
     pangkat character varying,
     jabatan character varying,
     eselon character varying,
-    nama_pangkat character varying
+    nama_pangkat character varying,
+    id_bidang bigint,
+    nama_bidang character varying
 );
 
 
@@ -1553,10 +1588,36 @@ ALTER SEQUENCE public.usulans_id_seq OWNED BY public.usulans.id;
 
 
 --
--- Name: action_mailbox_inbound_emails id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: views_all_anggarans; Type: VIEW; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.action_mailbox_inbound_emails ALTER COLUMN id SET DEFAULT nextval('public.action_mailbox_inbound_emails_id_seq'::regclass);
+CREATE VIEW public.views_all_anggarans AS
+ SELECT anggaran_sshes.uraian_barang,
+    anggaran_sshes.kode_barang,
+    anggaran_sshes.spesifikasi,
+    anggaran_sshes.satuan,
+    anggaran_sshes.harga_satuan,
+    'AnggaranSsh'::text AS searchable_type,
+    anggaran_sshes.id AS searchable_id
+   FROM public.anggaran_sshes
+UNION
+ SELECT anggaran_sbus.uraian_barang,
+    anggaran_sbus.kode_barang,
+    anggaran_sbus.spesifikasi,
+    anggaran_sbus.satuan,
+    anggaran_sbus.harga_satuan,
+    'AnggaranSbu'::text AS searchable_type,
+    anggaran_sbus.id AS searchable_id
+   FROM public.anggaran_sbus
+UNION
+ SELECT anggaran_hspks.uraian_barang,
+    anggaran_hspks.kode_barang,
+    anggaran_hspks.spesifikasi,
+    anggaran_hspks.satuan,
+    anggaran_hspks.harga_satuan,
+    'AnggaranHspk'::text AS searchable_type,
+    anggaran_hspks.id AS searchable_id
+   FROM public.anggaran_hspks;
 
 
 --
@@ -1735,6 +1796,13 @@ ALTER TABLE ONLY public.permasalahans ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
+-- Name: pks id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pks ALTER COLUMN id SET DEFAULT nextval('public.pks_id_seq'::regclass);
+
+
+--
 -- Name: pokpirs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1784,6 +1852,13 @@ ALTER TABLE ONLY public.sasarans ALTER COLUMN id SET DEFAULT nextval('public.sas
 
 
 --
+-- Name: search_entries id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.search_entries ALTER COLUMN id SET DEFAULT nextval('public.search_entries_id_seq'::regclass);
+
+
+--
 -- Name: strategi_keluarans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1823,14 +1898,6 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 --
 
 ALTER TABLE ONLY public.usulans ALTER COLUMN id SET DEFAULT nextval('public.usulans_id_seq'::regclass);
-
-
---
--- Name: action_mailbox_inbound_emails action_mailbox_inbound_emails_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.action_mailbox_inbound_emails
-    ADD CONSTRAINT action_mailbox_inbound_emails_pkey PRIMARY KEY (id);
 
 
 --
@@ -2042,6 +2109,14 @@ ALTER TABLE ONLY public.permasalahans
 
 
 --
+-- Name: pks pks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pks
+    ADD CONSTRAINT pks_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: pokpirs pokpirs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2106,6 +2181,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: search_entries search_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.search_entries
+    ADD CONSTRAINT search_entries_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: strategi_keluarans strategi_keluarans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2151,13 +2234,6 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.usulans
     ADD CONSTRAINT usulans_pkey PRIMARY KEY (id);
-
-
---
--- Name: index_action_mailbox_inbound_emails_uniqueness; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_action_mailbox_inbound_emails_uniqueness ON public.action_mailbox_inbound_emails USING btree (message_id, message_checksum);
 
 
 --
@@ -2315,10 +2391,24 @@ CREATE INDEX index_musrenbangs_on_status ON public.musrenbangs USING btree (stat
 
 
 --
+-- Name: index_opds_on_kode_opd; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_opds_on_kode_opd ON public.opds USING btree (kode_opd);
+
+
+--
 -- Name: index_perhitungans_on_anggaran_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_perhitungans_on_anggaran_id ON public.perhitungans USING btree (anggaran_id);
+
+
+--
+-- Name: index_pks_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_pks_on_user_id ON public.pks USING btree (user_id);
 
 
 --
@@ -2368,6 +2458,13 @@ CREATE INDEX index_roles_on_resource ON public.roles USING btree (resource_type,
 --
 
 CREATE UNIQUE INDEX index_sasarans_on_id_rencana ON public.sasarans USING btree (id_rencana);
+
+
+--
+-- Name: index_search_entries_on_searchable; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_search_entries_on_searchable ON public.search_entries USING btree (searchable_type, searchable_id);
 
 
 --
@@ -2521,6 +2618,14 @@ ALTER TABLE ONLY public.active_storage_variant_records
 
 
 --
+-- Name: users fk_rails_99e914ccf2; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT fk_rails_99e914ccf2 FOREIGN KEY (kode_opd) REFERENCES public.opds(kode_opd);
+
+
+--
 -- Name: latar_belakangs fk_rails_b420bec91b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2534,6 +2639,14 @@ ALTER TABLE ONLY public.latar_belakangs
 
 ALTER TABLE ONLY public.comments
     ADD CONSTRAINT fk_rails_ba01fcc435 FOREIGN KEY (anggaran_id) REFERENCES public.anggarans(id);
+
+
+--
+-- Name: program_kegiatans fk_rails_bde191eb18; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.program_kegiatans
+    ADD CONSTRAINT fk_rails_bde191eb18 FOREIGN KEY (kode_opd) REFERENCES public.opds(kode_opd);
 
 
 --
@@ -2553,6 +2666,14 @@ ALTER TABLE ONLY public.rincians
 
 
 --
+-- Name: pks fk_rails_e2ba622d5f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pks
+    ADD CONSTRAINT fk_rails_e2ba622d5f FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -2568,7 +2689,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211122161823'),
 ('20211123004734'),
 ('20211123011849'),
+('20211125010606'),
 ('20211125014415'),
+('20211125060916'),
 ('20211125062414'),
 ('20211125063107'),
 ('20211125072846'),
@@ -2649,6 +2772,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220309011023'),
 ('20220310145807'),
 ('20220310160049'),
+('20220310230417'),
 ('20220310231308'),
 ('20220315224940'),
 ('20220317022005'),
@@ -2658,13 +2782,14 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220327020014'),
 ('20220329044557'),
 ('20220329074240'),
+('20220329101154'),
+('20220329101620'),
 ('20220329101930'),
 ('20220329102302'),
 ('20220329104150'),
 ('20220329105912'),
+('20220329133529'),
 ('20220402133813'),
-('20220408014916'),
-('20220411052324'),
 ('20220414052715'),
 ('20220414062221'),
 ('20220415222139'),
@@ -2673,6 +2798,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220417070528'),
 ('20220422033311'),
 ('20220422055009'),
+('20220422171227'),
 ('20220423095629'),
 ('20220423095836'),
 ('20220423100357'),
@@ -2686,6 +2812,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220425184806'),
 ('20220425190940'),
 ('20220427020239'),
-('20220427030931');
+('20220427030931'),
+('20220427165709'),
+('20220427170837'),
+('20220427172539');
 
 
