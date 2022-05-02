@@ -58,9 +58,12 @@ class Sasaran < ApplicationRecord
   default_scope { order(created_at: :asc) }
   scope :hangus, -> { left_outer_joins(:usulans).where(usulans: { sasaran_id: nil }).where(program_kegiatan_id: nil) }
   scope :belum_ada_sub, -> { where(program_kegiatan_id: nil) }
-  scope :sudah_lengkap, -> { includes(:usulans).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan_id: nil) }
+  scope :sudah_lengkap, lambda {
+                          includes(:usulans).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan_id: nil)
+                        }
 
-  SUMBERS = { dana_transfer: 'Dana Transfer', dak: 'DAK', dbhcht: 'DBHCHT', bk_provinsi: 'BK Provinsi', blud: 'BLUD' }.freeze
+  SUMBERS = { dana_transfer: 'Dana Transfer', dak: 'DAK', dbhcht: 'DBHCHT', bk_provinsi: 'BK Provinsi',
+              blud: 'BLUD' }.freeze
 
   # DANGER, maybe broke something, uncomment this
   # def respond_to_missing?(_method, *_args)

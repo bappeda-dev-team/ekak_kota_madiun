@@ -48,7 +48,7 @@ class Tahapan < ApplicationRecord
   end
 
   def anggaran_tahapan
-    anggarans.compact.sum { |n| n.jumlah }
+    anggarans.compact.sum(&:jumlah)
   rescue NoMethodError
     '0'
   end

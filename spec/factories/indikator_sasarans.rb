@@ -18,6 +18,5 @@
 #
 FactoryBot.define do
   factory :indikator_sasaran do
-    
   end
 end

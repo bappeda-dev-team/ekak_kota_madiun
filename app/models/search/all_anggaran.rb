@@ -10,6 +10,8 @@
 #  uraian_barang   :string
 #  searchable_id   :bigint
 #
-class Search::AllAnggaran < ApplicationRecord
-  belongs_to :searchable, polymorphic: true
+module Search
+  class AllAnggaran < ApplicationRecord
+    belongs_to :searchable, polymorphic: true
+  end
 end

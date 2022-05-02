@@ -12,6 +12,5 @@
 #
 FactoryBot.define do
   factory :search_all_anggaran, class: 'Search::AllAnggaran' do
-    
   end
 end

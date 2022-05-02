@@ -155,9 +155,9 @@ module Api
           kode_sub_giat: kode_sub_giat,
           nama_subkegiatan: nama_sub_giat,
           pagu: pagu,
-          created_at: Time.now, 
+          created_at: Time.now,
           updated_at: Time.now,
-          kode_opd: @id_opd # warning hard coded 
+          kode_opd: @id_opd # warning hard coded
         }
       end
       ProgramKegiatan.upsert_all(data_subkegiatan, unique_by: :identifier_belanja)

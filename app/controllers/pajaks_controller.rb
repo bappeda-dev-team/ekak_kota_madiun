@@ -1,5 +1,5 @@
 class PajaksController < ApplicationController
-  before_action :set_pajak, only: %i[ show edit update destroy ]
+  before_action :set_pajak, only: %i[show edit update destroy]
 
   # GET /pajaks or /pajaks.json
   def index
@@ -7,8 +7,7 @@ class PajaksController < ApplicationController
   end
 
   # GET /pajaks/1 or /pajaks/1.json
-  def show
-  end
+  def show; end
 
   # GET /pajaks/new
   def new
@@ -16,8 +15,7 @@ class PajaksController < ApplicationController
   end
 
   # GET /pajaks/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /pajaks or /pajaks.json
   def create
@@ -57,13 +55,14 @@ class PajaksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pajak
-      @pajak = Pajak.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def pajak_params
-      params.require(:pajak).permit(:tahun, :tipe, :potongan)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pajak
+    @pajak = Pajak.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def pajak_params
+    params.require(:pajak).permit(:tahun, :tipe, :potongan)
+  end
 end

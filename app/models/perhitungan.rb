@@ -99,7 +99,7 @@ class Perhitungan < ApplicationRecord
 
   def plus_pajak
     pajak.potongan * 100
-  rescue
+  rescue StandardError
     0
   end
 end

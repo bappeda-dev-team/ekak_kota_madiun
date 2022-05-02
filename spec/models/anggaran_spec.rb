@@ -72,7 +72,7 @@ RSpec.describe Anggaran, type: :model do
     end
 
     it 'should update perhitungan with pajak 11%' do
-      anggaran.perhitungans.create(deskripsi: '1.1.7.01.01.01.002', satuan: 'orang', harga: 500000, pajak: pajak)
+      anggaran.perhitungans.create(deskripsi: '1.1.7.01.01.01.002', satuan: 'orang', harga: 500_000, pajak: pajak)
       anggaran.perhitungans.first.koefisiens.create(satuan_volume: 'Orang', volume: 5)
       anggaran.reload
       anggaran.perhitungan_jumlah

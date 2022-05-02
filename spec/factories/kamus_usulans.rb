@@ -17,6 +17,5 @@
 #
 FactoryBot.define do
   factory :kamus_usulan do
-    
   end
 end

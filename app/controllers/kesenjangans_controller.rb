@@ -1,5 +1,5 @@
 class KesenjangansController < ApplicationController
-  before_action :set_kesenjangan, only: %i[ show edit update destroy ]
+  before_action :set_kesenjangan, only: %i[show edit update destroy]
 
   # GET /kesenjangans or /kesenjangans.json
   def index
@@ -7,8 +7,7 @@ class KesenjangansController < ApplicationController
   end
 
   # GET /kesenjangans/1 or /kesenjangans/1.json
-  def show
-  end
+  def show; end
 
   # GET /kesenjangans/new
   def new
@@ -16,8 +15,7 @@ class KesenjangansController < ApplicationController
   end
 
   # GET /kesenjangans/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /kesenjangans or /kesenjangans.json
   def create
@@ -57,13 +55,14 @@ class KesenjangansController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_kesenjangan
-      @kesenjangan = Kesenjangan.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def kesenjangan_params
-      params.require(:kesenjangan).permit(:akses, :partisipasi, :kontrol, :manfaat)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_kesenjangan
+    @kesenjangan = Kesenjangan.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def kesenjangan_params
+    params.require(:kesenjangan).permit(:akses, :partisipasi, :kontrol, :manfaat)
+  end
 end

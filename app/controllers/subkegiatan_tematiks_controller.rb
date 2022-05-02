@@ -1,5 +1,5 @@
 class SubkegiatanTematiksController < ApplicationController
-  before_action :set_subkegiatan_tematik, only: %i[ show edit update destroy ]
+  before_action :set_subkegiatan_tematik, only: %i[show edit update destroy]
 
   # GET /subkegiatan_tematiks or /subkegiatan_tematiks.json
   def index
@@ -7,8 +7,7 @@ class SubkegiatanTematiksController < ApplicationController
   end
 
   # GET /subkegiatan_tematiks/1 or /subkegiatan_tematiks/1.json
-  def show
-  end
+  def show; end
 
   # GET /subkegiatan_tematiks/new
   def new
@@ -16,8 +15,7 @@ class SubkegiatanTematiksController < ApplicationController
   end
 
   # GET /subkegiatan_tematiks/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /subkegiatan_tematiks or /subkegiatan_tematiks.json
   def create

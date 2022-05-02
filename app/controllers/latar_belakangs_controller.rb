@@ -1,5 +1,5 @@
 class LatarBelakangsController < ApplicationController
-  before_action :set_latar_belakang, only: %i[ show edit update destroy ]
+  before_action :set_latar_belakang, only: %i[show edit update destroy]
 
   # GET /latar_belakangs or /latar_belakangs.json
   def index
@@ -7,8 +7,7 @@ class LatarBelakangsController < ApplicationController
   end
 
   # GET /latar_belakangs/1 or /latar_belakangs/1.json
-  def show
-  end
+  def show; end
 
   # GET /latar_belakangs/new
   def new
@@ -28,7 +27,9 @@ class LatarBelakangsController < ApplicationController
 
     respond_to do |format|
       if @latar_belakang.save
-        format.html { redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Gambaran Umum berhasil ditambahkan" }
+        format.html do
+          redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Gambaran Umum berhasil ditambahkan"
+        end
         format.json { render :show, status: :created, location: @latar_belakang }
       else
         format.html { render :new, status: :unprocessable_entity }

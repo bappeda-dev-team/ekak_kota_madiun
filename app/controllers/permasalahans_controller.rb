@@ -1,5 +1,5 @@
 class PermasalahansController < ApplicationController
-  before_action :set_permasalahan, only: %i[ show edit update destroy ]
+  before_action :set_permasalahan, only: %i[show edit update destroy]
 
   # GET /permasalahans or /permasalahans.json
   def index
@@ -7,8 +7,7 @@ class PermasalahansController < ApplicationController
   end
 
   # GET /permasalahans/1 or /permasalahans/1.json
-  def show
-  end
+  def show; end
 
   # GET /permasalahans/new
   def new
@@ -28,7 +27,9 @@ class PermasalahansController < ApplicationController
 
     respond_to do |format|
       if @permasalahan.save
-        format.html { redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Permasalahan berhasil ditambahkan" }
+        format.html do
+          redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Permasalahan berhasil ditambahkan"
+        end
         format.json { render :show, status: :created, location: @permasalahan }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -42,7 +43,9 @@ class PermasalahansController < ApplicationController
     @sasaran = Sasaran.find(params[:sasaran_id])
     respond_to do |format|
       if @permasalahan.update(permasalahan_params)
-        format.html { redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Permasalahan berhasil diupdate" }
+        format.html do
+          redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Permasalahan berhasil diupdate"
+        end
         format.json { render :show, status: :ok, location: @permasalahan }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -62,13 +65,14 @@ class PermasalahansController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_permasalahan
-      @permasalahan = Permasalahan.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def permasalahan_params
-      params.require(:permasalahan).permit(:permasalahan, :jenis, :penyebab_internal, :penyebab_external)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_permasalahan
+    @permasalahan = Permasalahan.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def permasalahan_params
+    params.require(:permasalahan).permit(:permasalahan, :jenis, :penyebab_internal, :penyebab_external)
+  end
 end

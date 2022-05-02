@@ -1,5 +1,5 @@
 class StrategiKeluaransController < ApplicationController
-  before_action :set_strategi_keluaran, only: %i[ show edit update destroy ]
+  before_action :set_strategi_keluaran, only: %i[show edit update destroy]
 
   # GET /strategi_keluarans or /strategi_keluarans.json
   def index
@@ -7,8 +7,7 @@ class StrategiKeluaransController < ApplicationController
   end
 
   # GET /strategi_keluarans/1 or /strategi_keluarans/1.json
-  def show
-  end
+  def show; end
 
   # GET /strategi_keluarans/new
   def new
@@ -16,8 +15,7 @@ class StrategiKeluaransController < ApplicationController
   end
 
   # GET /strategi_keluarans/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /strategi_keluarans or /strategi_keluarans.json
   def create
@@ -57,13 +55,14 @@ class StrategiKeluaransController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_strategi_keluaran
-      @strategi_keluaran = StrategiKeluaran.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def strategi_keluaran_params
-      params.require(:strategi_keluaran).permit(:metode, :tahapan)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_strategi_keluaran
+    @strategi_keluaran = StrategiKeluaran.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def strategi_keluaran_params
+    params.require(:strategi_keluaran).permit(:metode, :tahapan)
+  end
 end

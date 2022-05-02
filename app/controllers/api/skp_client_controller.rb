@@ -10,13 +10,15 @@ module Api
     before_action :verify_kode_opd, only: [:sync_sasaran]
 
     def sync_sasaran
-      UpdateSkpJob.set(queue: "#{nama_opd}-#{@kode_opd}-sasaran-#{@tahun}-#{@bulan}").perform_later(@kode_opd, @tahun, @bulan, @tipe_asn)
+      UpdateSkpJob.set(queue: "#{nama_opd}-#{@kode_opd}-sasaran-#{@tahun}-#{@bulan}").perform_later(@kode_opd, @tahun,
+                                                                                                    @bulan, @tipe_asn)
       redirect_to adminsasarans_path,
                   success: "Update Sasaran #{nama_opd} Dikerjakan. Harap menunggu..."
     end
 
     def sync_pegawai
-      UpdateUserJob.set(queue: "#{nama_opd}-#{@kode_opd}-user-#{@tahun}-#{@bulan}").perform_later(@kode_opd, @tahun, @bulan)
+      UpdateUserJob.set(queue: "#{nama_opd}-#{@kode_opd}-user-#{@tahun}-#{@bulan}").perform_later(@kode_opd, @tahun,
+                                                                                                  @bulan)
       redirect_to adminusers_path, success: "Update Pegawai #{nama_opd} Dikerjakan. Harap menunggu..."
     end
 
@@ -25,9 +27,7 @@ module Api
     def verify_kode_opd
       opd = Opd.find_by(kode_unik_opd: @kode_opd).kode_opd
       user = User.find_by(kode_opd: opd).nil?
-      if user
-        redirect_to adminsasarans_path, error: "Harap update pegawai #{nama_opd} terlebih dahulu" 
-      end
+      redirect_to adminsasarans_path, error: "Harap update pegawai #{nama_opd} terlebih dahulu" if user
     end
 
     def nama_opd

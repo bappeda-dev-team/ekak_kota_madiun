@@ -63,5 +63,4 @@ class Musrenbang < ApplicationRecord
   def asn_aktif?
     nip_asn.present?
   end
-
 end

@@ -1,5 +1,4 @@
 class SumberDanasController < ApplicationController
-
   def index
     @sumber_danas = SumberDana.all
   end
@@ -16,18 +15,22 @@ class SumberDanasController < ApplicationController
   def create
     @sumber_danas = SumberDana.create(sumber_dana_params)
     if @sumber_danas.save
-      render 'shared/_notifier_v2', locals: { message: 'sumber dana dibuat', status_icon: 'success', form_name: 'form-sumberdana' }
+      render 'shared/_notifier_v2',
+             locals: { message: 'sumber dana dibuat', status_icon: 'success', form_name: 'form-sumberdana' }
     else
-      render 'shared/_notifier_v2', locals: { message: 'isian belum terisi', status_icon: 'error' }, status: :unprocessable_entity
+      render 'shared/_notifier_v2', locals: { message: 'isian belum terisi', status_icon: 'error' },
+                                    status: :unprocessable_entity
     end
   end
 
   def update
     @sumber_dana = SumberDana.find(params[:id])
     if @sumber_dana.update(sumber_dana_params)
-      render 'shared/_notifier_v2', locals: { message: 'sumber dana diupdate', status_icon: 'success', form_name: 'form-sumberdana' }
+      render 'shared/_notifier_v2',
+             locals: { message: 'sumber dana diupdate', status_icon: 'success', form_name: 'form-sumberdana' }
     else
-      render 'shared/_notifier_v2', locals: { message: 'isian belum terisi', status_icon: 'error' }, status: :unprocessable_entity
+      render 'shared/_notifier_v2', locals: { message: 'isian belum terisi', status_icon: 'error' },
+                                    status: :unprocessable_entity
     end
   end
 

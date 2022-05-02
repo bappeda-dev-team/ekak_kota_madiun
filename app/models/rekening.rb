@@ -18,7 +18,7 @@ class Rekening < ApplicationRecord
   def parent
     # TODO : tambah exception untuk NilClass kode_rekening
     kode_rekening = self.kode_rekening
-    my_level = self.level
+    my_level = level
     case my_level
     when 4
       Rekening.find_by(kode_rekening: kode_rekening[0..-6])
@@ -30,17 +30,17 @@ class Rekening < ApplicationRecord
   end
 
   def level
-    panjang_kode_rek = self.kode_rekening.length
+    panjang_kode_rek = kode_rekening.length
     if panjang_kode_rek <= 3
-      return 0
+      0
     elsif panjang_kode_rek <= 6
-      return 1
+      1
     elsif panjang_kode_rek <= 9
-      return 2
+      2
     elsif panjang_kode_rek <= 12
-      return 3
+      3
     else
-      return 4
+      4
     end
   end
 end

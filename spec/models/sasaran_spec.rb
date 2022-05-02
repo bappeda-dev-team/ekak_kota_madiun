@@ -29,7 +29,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe Sasaran, type: :model do # rubocop :disable Metrics/BlockLength
+RSpec.describe Sasaran, type: :model do
   let(:lembaga) { FactoryBot.create :lembaga }
   let(:opd) { FactoryBot.create :opd }
   let(:user) { FactoryBot.create :user }
@@ -70,9 +70,9 @@ RSpec.describe Sasaran, type: :model do # rubocop :disable Metrics/BlockLength
 
   describe 'Sasaran#Tahapans' do
     it 'can add tahapans to sasaran' do
-      1..10.times do |i|
+      1..(10.times do |i|
         sasaran.tahapans.build [{ tahapan_kerja: "Contoh Tahapan kerja #{i}" }]
-      end
+      end)
       sasaran.save
       expect(sasaran).to be_valid
     end
@@ -144,9 +144,9 @@ RSpec.describe Sasaran, type: :model do # rubocop :disable Metrics/BlockLength
       sasaran.dasar_hukums.create([{ judul: 'Contoh Dasar Hukum',
                                      peraturan: 'Contoh Peraturan',
                                      tahun: '2024' },
-                                    { judul: 'Contoh Dasar Hukum kedua',
-                                      peraturan: 'Contoh peraturan kedau',
-                                      tahun: '2022' }])
+                                   { judul: 'Contoh Dasar Hukum kedua',
+                                     peraturan: 'Contoh peraturan kedau',
+                                     tahun: '2022' }])
       expect(sasaran).to be_valid
     end
   end

@@ -1,5 +1,5 @@
 class AnggaranSbusController < ApplicationController
-  before_action :set_anggaran_sbus, only: %i[ show edit update destroy ]
+  before_action :set_anggaran_sbus, only: %i[show edit update destroy]
 
   # GET /anggaran_sbus or /anggaran_sbus.json
   def index
@@ -7,8 +7,7 @@ class AnggaranSbusController < ApplicationController
   end
 
   # GET /anggaran_sbus/1 or /anggaran_sbus/1.json
-  def show
-  end
+  def show; end
 
   # GET /anggaran_sbus/new
   def new
@@ -16,8 +15,7 @@ class AnggaranSbusController < ApplicationController
   end
 
   # GET /anggaran_sbus/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /anggaran_sbus or /anggaran_sbus.json
   def create
@@ -57,13 +55,15 @@ class AnggaranSbusController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_anggaran_sbus
-      @anggaran_sbus = AnggaranSbu.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def anggaran_sbus_params
-      params.require(:anggaran_sbus).permit(:kode_kelompok_barang, :uraian_kelompok_barang, :kode_barang, :uraian_barang, :spesifikasi, :satuan, :harga_satuan)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_anggaran_sbus
+    @anggaran_sbus = AnggaranSbu.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def anggaran_sbus_params
+    params.require(:anggaran_sbus).permit(:kode_kelompok_barang, :uraian_kelompok_barang, :kode_barang,
+                                          :uraian_barang, :spesifikasi, :satuan, :harga_satuan)
+  end
 end

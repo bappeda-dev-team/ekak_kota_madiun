@@ -1,0 +1,40 @@
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'db/migrate/*.rb'
+    - 'config/**/*.rb'
+    - 'bin/*'
+    - 'spec/rails_helper.rb'
+    - 'lib/**/*.rb' #it should be fixed later
+    - 'spec/lib/**/*.rb' #it should be fixed later
+    - 'spec/requests/**/*.rb' #it should be fixed later
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'spec/**/*.rb'
+    - 'app/admin/**/*.rb'
+    - 'db/**/*.rb'
+    - 'db/migrate/*.rb'
+    - 'config/*.rb'
+Layout/LineLength:
+  Exclude:
+    - 'spec/**/*.rb'
+    - 'app/views/*/*.json.jbuilder'
+Style/Documentation:
+  Include:
+    - 'app/models/**/*.rb'
+  Exclude:
+    - 'app/models/ability.rb'
+    - 'app/models/application_record.rb'
+    - 'app/models/concerns/**'
+    - 'app/models/filter_client.rb'
+    - 'app/models/filter_warehouse.rb'
+Metrics/MethodLength:
+  Max: 12
+Metrics/ClassLength:
+  Max: 1000
+Style/StringLiterals:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false

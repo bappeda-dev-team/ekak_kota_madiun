@@ -35,6 +35,6 @@ RSpec.describe Usulan, type: :model do
       expect(usulan).to be_valid
     end
   end
-  
+
   it { should belong_to(:sasaran).optional }
 end

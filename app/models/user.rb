@@ -26,6 +26,10 @@
 #  index_users_on_nik                   (nik) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
+# Foreign Keys
+#
+#  fk_rails_...  (kode_opd => opds.kode_opd)
+#
 class User < ApplicationRecord
   rolify
   # Include default devise modules. Others available are:
@@ -54,7 +58,7 @@ class User < ApplicationRecord
     if (login = conditions.delete(:login))
       where(conditions.to_h).where(['lower(nik) = :value OR lower(email) = :value',
                                     { value: login.downcase }]).first
-    elsif conditions.has_key?(:nik) || conditions.has_key?(:email)
+    elsif conditions.key?(:nik) || conditions.key?(:email)
       where(conditions.to_h).first
     end
   end

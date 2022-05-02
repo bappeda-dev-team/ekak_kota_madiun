@@ -42,7 +42,7 @@ class SasaransController < ApplicationController
       if sasaran.update(subkegiatan_tematik_id: nil)
         @status = 'success'
         @text = 'Sukses menghapus tematik'
-        format.js { render :hapus_program_from_sasaran}
+        format.js { render :hapus_program_from_sasaran }
       else
         @status = 'error'
         @text = 'Terjadi kesalahan saat menghapus tematik'
@@ -85,18 +85,18 @@ class SasaransController < ApplicationController
   def update
     respond_to do |format|
       if @sasaran.update(sasaran_params)
-        if sasaran_params[:program_kegiatan_id]
-          flash.now[:success] = 'Sukses menambah subkegiatan'
-        else
-          flash.now[:success] = 'Sukses update sasaran'
-        end
+        flash.now[:success] = if sasaran_params[:program_kegiatan_id]
+                                'Sukses menambah subkegiatan'
+                              else
+                                'Sukses update sasaran'
+                              end
         format.js
-        format.html { redirect_to user_sasaran_path(@user, @sasaran), success: 'Sasaran was successfully created.'  }
+        format.html { redirect_to user_sasaran_path(@user, @sasaran), success: 'Sasaran was successfully created.' }
         format.json { render :show, status: :ok, location: @sasaran }
       else
         flash.now[:error] = 'Sasaran gagal update.'
         format.js
-        format.html { redirect_to user_sasaran_path(@user, @sasaran), error: 'Sasaran gagal update.'  }
+        format.html { redirect_to user_sasaran_path(@user, @sasaran), error: 'Sasaran gagal update.' }
         format.json { render json: @sasaran.errors, status: :unprocessable_entity }
       end
     end

@@ -42,7 +42,7 @@ RSpec.describe Rincian, type: :model do
 
     it 'manually create rincian, then attach to sasarn' do
       rincian_custom = Rincian.create(data_terpilah: 'contoh data terpilah',
-                               lokasi_pelaksanaan: 'contoh lokasi pelaksanaan', sasaran: sasaran)
+                                      lokasi_pelaksanaan: 'contoh lokasi pelaksanaan', sasaran: sasaran)
       expect(rincian_custom).to be_valid
     end
   end
