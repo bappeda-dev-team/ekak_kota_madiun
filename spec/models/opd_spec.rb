@@ -15,10 +15,6 @@
 #  updated_at         :datetime         not null
 #  lembaga_id         :integer
 #
-# Indexes
-#
-#  index_opds_on_kode_opd  (kode_opd) UNIQUE
-#
 require 'rails_helper'
 
 RSpec.describe Opd, type: :model do

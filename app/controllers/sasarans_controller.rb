@@ -36,17 +36,28 @@ class SasaransController < ApplicationController
   end
 
   def hapus_tematik_from_sasaran
-    param_id = params[:id_sasaran]
-    sasaran = Sasaran.find(param_id)
+    id_sasaran = params[:id_sasaran]
+    id_tematik = params[:id_tematik]
+    TematikSasaran.where(sasaran_id: id_sasaran, subkegiatan_tematik_id: id_tematik).first.destroy
     respond_to do |format|
-      if sasaran.update(subkegiatan_tematik_id: nil)
+      @status = 'success'
+      @text = 'Sukses menghapus tematik'
+      format.js { render :hapus_program_from_sasaran }
+    end
+  end
+
+  def add_sasaran_tematik
+    sasaran = Sasaran.find(params[:id_sasaran])
+    tematik = params[:id_tematik]
+    respond_to do |format|
+      if sasaran.add_tematik(sasaran: sasaran.id, tematik: tematik)
         @status = 'success'
-        @text = 'Sukses menghapus tematik'
+        @text = 'Sukses menambah tematik'
         format.js { render :hapus_program_from_sasaran }
       else
         @status = 'error'
-        @text = 'Terjadi kesalahan saat menghapus tematik'
-        format.js :unprocessable_entity
+        @text = 'Terjadi kesalahan saat menambah tematik'
+        format.js { render :hapus_program_from_sasaran, :unprocessable_entity }
       end
     end
   end
@@ -85,13 +96,13 @@ class SasaransController < ApplicationController
   def update
     respond_to do |format|
       if @sasaran.update(sasaran_params)
-        flash.now[:success] = if sasaran_params[:program_kegiatan_id]
-                                'Sukses menambah subkegiatan'
-                              else
-                                'Sukses update sasaran'
-                              end
+        flash[:success] = if sasaran_params[:program_kegiatan_id]
+                            'Sukses menambah subkegiatan'
+                          else
+                            'Sukses update sasaran'
+                          end
         format.js
-        format.html { redirect_to user_sasaran_path(@user, @sasaran), success: 'Sasaran was successfully created.' }
+        format.html { redirect_to user_sasaran_path(@user, @sasaran) }
         format.json { render :show, status: :ok, location: @sasaran }
       else
         flash.now[:error] = 'Sasaran gagal update.'

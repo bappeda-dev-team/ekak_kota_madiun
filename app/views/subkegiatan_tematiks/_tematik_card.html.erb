@@ -10,14 +10,18 @@
   </div>
   <div class="card-body">
     <p>Tambah Tematik</p>
-    <%= form_with(model: sasaran) do |f| %>
-      <%= f.select(:subkegiatan_tematik_id, SubkegiatanTematik.where(id: sasaran.subkegiatan_tematik_id).pluck(:nama_tematik, :id), {}, {class:'select2-waw',data: {'ajax--url': "/tematiks.json", "ajax--cache": "true", "placeholder": "Pilih Tematik"}} )%>
+    <%= form_with(url: add_sasaran_tematik_path, local: false) do |f| %>
+      <%= f.select(:id_tematik,
+          [],
+          {}, { class:'select2-waw',
+          data: {'ajax--url': "/tematiks.json", "ajax--cache": "true", "placeholder": "Pilih Tematik"} } )%>
+      <%= f.hidden_field :id_sasaran, value: sasaran.id %>
       <div class="actions">
-        <%= f.submit "Pilih Tematik" %>
+        <%= f.submit "Tambah Tematik" %>
       </div>
     <% end %>
   </div>
-  <% unless sasaran.subkegiatan_tematik.nil? %>
+  <% unless sasaran.subkegiatan_tematiks.nil? %>
     <div class="card-body">
       <div class="table-responsive">
         <table class="table">
@@ -28,12 +32,16 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="align-middle text-wrap"><%= sasaran.subkegiatan_tematik.nama_tematik %></td>
-              <td class="text-center align-middle">
-                <%= button_to 'X', "/hapus_tematik_from_sasaran", remote: true, method: :post, class: 'btn btn-danger text-center', data: {confirm_swal: "Hapus tematik?"}, params: {id_sasaran: sasaran.id} %>
-              </td>
-            </tr>
+            <% sasaran.subkegiatan_tematiks.each do |tematik| %>
+              <tr>
+                <td class="align-middle text-wrap"><%= tematik.nama_tematik %></td>
+                <td class="text-center align-middle">
+                  <%= button_to 'X', "/hapus_tematik_from_sasaran", remote: true, method: :post,
+                    class: 'btn btn-danger text-center',
+                    data: {confirm_swal: "Hapus tematik?"}, params: {id_sasaran: sasaran.id, id_tematik: tematik.id} %>
+                </td>
+              </tr>
+            <% end %>
           </tbody>
         </table>
       </div>

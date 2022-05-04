@@ -87,7 +87,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # sasaran
   post '/hapus_program_from_sasaran', to: 'sasarans#hapus_program_from_sasaran'
   post '/hapus_tematik_from_sasaran', to: 'sasarans#hapus_tematik_from_sasaran'
-
+  post '/add_sasaran_tematik', to: 'sasarans#add_sasaran_tematik'
   # user control
   post '/nonaktifkan_user/:id', to: 'users#nonaktifkan_user'
   # program program_kegiatan

@@ -26,6 +26,39 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: action_mailbox_inbound_emails; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.action_mailbox_inbound_emails (
+    id bigint NOT NULL,
+    status integer DEFAULT 0 NOT NULL,
+    message_id character varying NOT NULL,
+    message_checksum character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: action_mailbox_inbound_emails_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.action_mailbox_inbound_emails_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: action_mailbox_inbound_emails_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.action_mailbox_inbound_emails_id_seq OWNED BY public.action_mailbox_inbound_emails.id;
+
+
+--
 -- Name: action_text_rich_texts; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -34,7 +67,7 @@ CREATE TABLE public.action_text_rich_texts (
     name character varying NOT NULL,
     body text,
     record_type character varying NOT NULL,
-    record_id integer NOT NULL,
+    record_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -1029,6 +1062,13 @@ CREATE TABLE public.program_kegiatans (
     indikator_program character varying,
     target_program character varying,
     satuan_target_program character varying,
+    urusan character varying,
+    bidang_urusan character varying,
+    outcome character varying,
+    pagu_giat character varying,
+    pagu_subgiat character varying,
+    id_program character varying,
+    id_renstra character varying,
     id_unit character varying,
     kode_urusan character varying,
     nama_urusan character varying,
@@ -1225,8 +1265,7 @@ CREATE TABLE public.sasarans (
     anggaran integer,
     nip_asn character varying,
     id_rencana character varying,
-    sumber_dana character varying,
-    subkegiatan_tematik_id bigint
+    sumber_dana character varying
 );
 
 
@@ -1466,6 +1505,38 @@ ALTER SEQUENCE public.tahapans_id_seq OWNED BY public.tahapans.id;
 
 
 --
+-- Name: tematik_sasarans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.tematik_sasarans (
+    id bigint NOT NULL,
+    sasaran_id bigint,
+    subkegiatan_tematik_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: tematik_sasarans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.tematik_sasarans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: tematik_sasarans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.tematik_sasarans_id_seq OWNED BY public.tematik_sasarans.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1551,6 +1622,13 @@ CREATE SEQUENCE public.usulans_id_seq
 --
 
 ALTER SEQUENCE public.usulans_id_seq OWNED BY public.usulans.id;
+
+
+--
+-- Name: action_mailbox_inbound_emails id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.action_mailbox_inbound_emails ALTER COLUMN id SET DEFAULT nextval('public.action_mailbox_inbound_emails_id_seq'::regclass);
 
 
 --
@@ -1813,6 +1891,13 @@ ALTER TABLE ONLY public.tahapans ALTER COLUMN id SET DEFAULT nextval('public.tah
 
 
 --
+-- Name: tematik_sasarans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tematik_sasarans ALTER COLUMN id SET DEFAULT nextval('public.tematik_sasarans_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1824,6 +1909,14 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 --
 
 ALTER TABLE ONLY public.usulans ALTER COLUMN id SET DEFAULT nextval('public.usulans_id_seq'::regclass);
+
+
+--
+-- Name: action_mailbox_inbound_emails action_mailbox_inbound_emails_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.action_mailbox_inbound_emails
+    ADD CONSTRAINT action_mailbox_inbound_emails_pkey PRIMARY KEY (id);
 
 
 --
@@ -2139,6 +2232,14 @@ ALTER TABLE ONLY public.tahapans
 
 
 --
+-- Name: tematik_sasarans tematik_sasarans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tematik_sasarans
+    ADD CONSTRAINT tematik_sasarans_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2152,6 +2253,13 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.usulans
     ADD CONSTRAINT usulans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_action_mailbox_inbound_emails_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_action_mailbox_inbound_emails_uniqueness ON public.action_mailbox_inbound_emails USING btree (message_id, message_checksum);
 
 
 --
@@ -2323,13 +2431,6 @@ CREATE INDEX index_musrenbangs_on_status ON public.musrenbangs USING btree (stat
 
 
 --
--- Name: index_opds_on_kode_opd; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_opds_on_kode_opd ON public.opds USING btree (kode_opd);
-
-
---
 -- Name: index_perhitungans_on_anggaran_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2414,6 +2515,20 @@ CREATE INDEX index_tahapans_on_sasaran_id ON public.tahapans USING btree (sasara
 
 
 --
+-- Name: index_tematik_sasarans_on_sasaran_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_tematik_sasarans_on_sasaran_id ON public.tematik_sasarans USING btree (sasaran_id);
+
+
+--
+-- Name: index_tematik_sasarans_on_subkegiatan_tematik_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_tematik_sasarans_on_subkegiatan_tematik_id ON public.tematik_sasarans USING btree (subkegiatan_tematik_id);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2478,6 +2593,22 @@ ALTER TABLE ONLY public.comments
 
 
 --
+-- Name: tematik_sasarans fk_rails_09b7ad3d51; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tematik_sasarans
+    ADD CONSTRAINT fk_rails_09b7ad3d51 FOREIGN KEY (sasaran_id) REFERENCES public.sasarans(id);
+
+
+--
+-- Name: tematik_sasarans fk_rails_22e78acf56; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tematik_sasarans
+    ADD CONSTRAINT fk_rails_22e78acf56 FOREIGN KEY (subkegiatan_tematik_id) REFERENCES public.subkegiatan_tematiks(id);
+
+
+--
 -- Name: anggarans fk_rails_283268988b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2526,14 +2657,6 @@ ALTER TABLE ONLY public.kesenjangans
 
 
 --
--- Name: sasarans fk_rails_78dfe7067c; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.sasarans
-    ADD CONSTRAINT fk_rails_78dfe7067c FOREIGN KEY (subkegiatan_tematik_id) REFERENCES public.subkegiatan_tematiks(id);
-
-
---
 -- Name: dasar_hukums fk_rails_9530516a5c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2550,14 +2673,6 @@ ALTER TABLE ONLY public.active_storage_variant_records
 
 
 --
--- Name: users fk_rails_99e914ccf2; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT fk_rails_99e914ccf2 FOREIGN KEY (kode_opd) REFERENCES public.opds(kode_opd);
-
-
---
 -- Name: latar_belakangs fk_rails_b420bec91b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2571,14 +2686,6 @@ ALTER TABLE ONLY public.latar_belakangs
 
 ALTER TABLE ONLY public.comments
     ADD CONSTRAINT fk_rails_ba01fcc435 FOREIGN KEY (anggaran_id) REFERENCES public.anggarans(id);
-
-
---
--- Name: program_kegiatans fk_rails_bde191eb18; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.program_kegiatans
-    ADD CONSTRAINT fk_rails_bde191eb18 FOREIGN KEY (kode_opd) REFERENCES public.opds(kode_opd);
 
 
 --
@@ -2708,6 +2815,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220329104150'),
 ('20220329105912'),
 ('20220402133813'),
+('20220408014916'),
+('20220411052324'),
 ('20220414052715'),
 ('20220414062221'),
 ('20220415222139'),
@@ -2736,6 +2845,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220428031837'),
 ('20220428034402'),
 ('20220428034736'),
-('20220428060458');
+('20220428060458'),
+('20220503064338');
 
 
