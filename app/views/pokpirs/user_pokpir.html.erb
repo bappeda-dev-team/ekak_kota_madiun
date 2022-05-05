@@ -21,22 +21,25 @@
       <div class="card-body">
         <div class="table-responsive">
           <table class="table table-flush datatable" data-datatable>
+            <caption>Usulan Pokok Pikiran OPD <%= current_user.opd.nama_opd %></caption>
             <thead class="thead-light">
               <tr>
                 <th class="border-bottom text-gray-700" scope="col">No.</th>
                 <th class="border-bottom text-gray-700" scope="col">Usulan</th>
                 <th class="border-bottom text-gray-700" scope="col">Alamat</th>
                 <th class="border-bottom text-gray-700" scope="col">Permasalahan</th>
+                <th class="border-bottom text-gray-700" scope="col">OPD</th>
                 <th class="border-bottom text-gray-700 text-center" scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
-              <% @pokpirs.belum_diambil_asn.each.with_index(1) do |pokpir, i| %>
+              <% @pokpirs.each.with_index(1) do |pokpir, i| %>
                 <tr>
                   <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
                   <td class="fw-bolder text-wrap"><%= pokpir.usulan %></td>
                   <td class="fw-bolder text-wrap"><%= pokpir.alamat %></td>
                   <td class="fw-bolder text-wrap"><%= pokpir.uraian %></td>
+                  <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.opd_dituju&.nama_opd or pokpir.opd %></td>
                   <td class="action-<%= dom_id(pokpir) %> text-center align-middle">
                     <% unless pokpir.is_active %>
                       <% if pokpir.status == 'pengajuan' %>

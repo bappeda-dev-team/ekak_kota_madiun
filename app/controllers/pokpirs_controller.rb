@@ -3,7 +3,7 @@ class PokpirsController < ApplicationController
 
   # GET /pokpirs or /pokpirs.json
   def index
-    @pokpirs = Pokpir.all
+    @pokpirs = Pokpir.all.order(:updated_at).select { |m| m.opd_dituju&.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin }
   end
 
   def toggle_is_active
@@ -42,7 +42,7 @@ class PokpirsController < ApplicationController
   end
 
   def usulan_pokpir
-    @pokpirs = Pokpir.all.order(:created_at)
+    @pokpirs = Pokpir.belum_diajukan.order(:created_at).select { |m| m.opd_dituju&.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin }
     render 'user_pokpir'
   end
 
