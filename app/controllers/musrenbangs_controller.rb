@@ -75,6 +75,7 @@ class MusrenbangsController < ApplicationController
     @musrenbang = Musrenbang.with_kamus
     @musrenbang.map { |m| m.update(opd: m.kamus_usulans.first.id_unit) }
     flash[:success] = 'Usulan disesuaikan dengan kamus'
+    redirect_to musrenbangs_path
   end
 
   # TODO: hapus nanti

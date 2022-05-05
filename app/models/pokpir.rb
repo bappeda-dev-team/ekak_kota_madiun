@@ -37,6 +37,7 @@ class Pokpir < ApplicationRecord
   default_scope { order(updated_at: :desc) }
   scope :diambil_asn, -> { where.not(nip_asn: nil) }
   scope :belum_diambil_asn, -> { where(sasaran_id: nil) }
+  scope :with_kamus, -> { joins(:kamus_usulans) }
 
   def self.type
     "Pokok Pikiran DPRD"

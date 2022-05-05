@@ -104,6 +104,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # musrenbang
   get '/asn_musrenbangs/:nip', to: 'musrenbangs#asn_musrenbang'
   post '/update_opd', to: 'musrenbangs#update_opd'
+  post '/update_opd_pokpir', to: 'pokpirs#update_opd'
   # search usulans
   get '/musrenbang_search', to: 'musrenbangs#musrenbang_search'
   get '/mandatori_search', to: 'mandatoris#mandatori_search'

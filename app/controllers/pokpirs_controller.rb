@@ -34,6 +34,13 @@ class PokpirsController < ApplicationController
     end
   end
 
+  def update_opd
+    @pokpir = Pokpir.with_kamus
+    @pokpir.map { |m| m.update(opd: m.kamus_usulans.first.id_unit) }
+    flash[:success] = 'Usulan disesuaikan dengan kamus'
+    redirect_to pokpirs_path
+  end
+
   def usulan_pokpir
     @pokpirs = Pokpir.all.order(:created_at)
     render 'user_pokpir'
