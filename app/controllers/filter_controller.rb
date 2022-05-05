@@ -1,6 +1,30 @@
 class FilterController < ApplicationController
   before_action :filter_params
 
+  OPD_TABLE = {
+    'Dinas Kesehatan, Pengendalian Penduduk dan Keluarga Berencana': 'Dinas Kesehatan',
+    'Rumah Sakit Umum Daerah Kota Madiun': 'Rumah Sakit Umum Daerah',
+    'Sekretariat Daerah': nil,
+    'Bagian Umum': 'Bagian Umum',
+    'Bagian Pengadaan Barang / Jasa dan Administrasi Pembangunan': 'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan',
+    'Bagian Organisasi': 'Bagian Organisasi',
+    'Bagian Hukum': 'Bagian Hukum',
+    'Bagian Perekonomian dan Kesejahteraan Rakyat': 'Bagian Perekonomian dan Kesejahteraan Rakyat',
+    'Bagian Pemerintahan': 'Bagian Pemerintahan'
+  }.freeze
+
+  KODE_OPD_TABLE = {
+    'Dinas Kesehatan, Pengendalian Penduduk dan Keluarga Berencana': '1.02.2.14.0.00.03.0000',
+    'Rumah Sakit Umum Daerah Kota Madiun': '1.02.2.14.0.00.03.0000',
+    'Sekretariat Daerah': '4.01.0.00.0.00.01.00',
+    'Bagian Umum': '4.01.0.00.0.00.01.00',
+    'Bagian Pengadaan Barang / Jasa dan Administrasi Pembangunan': '4.01.0.00.0.00.01.00',
+    'Bagian Organisasi': '4.01.0.00.0.00.01.00',
+    'Bagian Hukum': '4.01.0.00.0.00.01.00',
+    'Bagian Perekonomian dan Kesejahteraan Rakyat': '4.01.0.00.0.00.01.00',
+    'Bagian Pemerintahan': '4.01.0.00.0.00.01.00'
+  }.freeze
+
   def filter_sasaran
     @sasarans = Sasaran.includes([user: :opd]).where(opds: { kode_unik_opd: @kode_opd })
     respond_to do |format|
@@ -9,7 +33,15 @@ class FilterController < ApplicationController
   end
 
   def filter_user
+    opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
     @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd })
+    if OPD_TABLE.key?(opd.to_sym)
+      @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] })
+      @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])
+    end
+    # if opd == 'Dinas Kesehatan, Pengendalian Penduduk dan Keluarga Berencana'
+    #   @users = @users.where(nama_bidang: 'Dinas Kesehatan')
+    # end
     @filter_file = 'hasil_filter' if params[:filter_file].empty?
     respond_to do |format|
       format.js { render 'users/user_filter' }
