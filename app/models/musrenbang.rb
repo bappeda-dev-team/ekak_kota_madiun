@@ -28,15 +28,20 @@ class Musrenbang < ApplicationRecord
   # validates :tahun, presence: true, numericality: { only_integer: true }
   # has_rich_text :usulan
 
-  enum status: { draft: 'draft', pengajuan: 'pengajuan', disetujui: 'disetujui', ditolak: 'ditolak' }
+  enum status: { draft: 'draft', pengajuan: 'pengajuan', disetujui: 'disetujui', aktif: 'aktif',
+                 ditolak: 'ditolak', menunggu_persetujuan: 'menunggu_persetujuan' }
 
   belongs_to :sasaran, optional: true
+  belongs_to :opd_dituju, class_name: 'Opd', foreign_key: 'opd', primary_key: 'id_opd_skp', optional: true
   has_many :usulans, as: :usulanable
+  has_many :kamus_usulans, foreign_key: 'id_kamus', primary_key: 'id_kamus'
 
   default_scope { order(updated_at: :desc) }
   scope :diambil_asn, -> { where.not(nip_asn: nil) }
   scope :belum_diajukan, -> { where(nip_asn: nil) }
   scope :belum_diambil_asn, -> { where(sasaran_id: nil) }
+  scope :menunggu_persetujuan, -> { where(status: 'menunggu_persetujuan') }
+  scope :with_kamus, -> { joins(:kamus_usulans) }
 
   def asn_pengambil
     User.find_by(nik: nip_asn).nama

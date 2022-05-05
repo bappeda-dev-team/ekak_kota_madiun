@@ -12,6 +12,7 @@
 #  sasaran_kinerja     :string
 #  satuan              :string
 #  sumber_dana         :string
+#  tahun               :string
 #  target              :integer
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null

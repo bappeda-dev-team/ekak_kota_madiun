@@ -11,24 +11,28 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     member do
       post :toggle_is_active
       post :diambil_asn
+      post :setujui_usulan_di_sasaran
     end
   end
   resources :pokpirs do
     member do
       post :toggle_is_active
       post :diambil_asn
+      post :setujui_usulan_di_sasaran
     end
   end
   resources :inovasis do
     member do
       post :toggle_is_active
       post :diambil_asn
+      post :setujui_usulan_di_sasaran
     end
   end
   resources :mandatoris do
     member do
       post :toggle_is_active
       post :diambil_asn
+      post :setujui_usulan_di_sasaran
     end
   end
   resources :asn_musrenbangs, path: 'asn_usulan'
@@ -99,6 +103,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   # musrenbang
   get '/asn_musrenbangs/:nip', to: 'musrenbangs#asn_musrenbang'
+  post '/update_opd', to: 'musrenbangs#update_opd'
   # search usulans
   get '/musrenbang_search', to: 'musrenbangs#musrenbang_search'
   get '/mandatori_search', to: 'mandatoris#mandatori_search'

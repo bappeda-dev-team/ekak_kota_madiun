@@ -9,9 +9,23 @@ class PokpirsController < ApplicationController
   def toggle_is_active
     @pokpir = Pokpir.find(params[:id])
     respond_to do |format|
-      if @pokpir.update(status: 'disetujui')
+      if @pokpir.update(status: 'aktif')
         @pokpir.toggle! :is_active
         flash.now[:success] = 'Usulan diaktifkan'
+        format.js { render 'toggle_is_active' }
+      else
+        flash.now[:alert] = 'Gagal Mengaktifkan'
+        format.js { :unprocessable_entity }
+      end
+    end
+  end
+
+  def setujui_usulan_di_sasaran
+    @pokpir = Musrenbang.find(params[:id])
+    respond_to do |format|
+      if @pokpir.update(status: 'disetujui')
+        @pokpir.toggle! :is_active
+        flash.now[:success] = 'Usulan disetujui'
         format.js { render 'toggle_is_active' }
       else
         flash.now[:alert] = 'Gagal Mengaktifkan'

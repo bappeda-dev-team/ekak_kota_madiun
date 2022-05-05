@@ -17,7 +17,9 @@ CREATE TYPE public.usulan_status AS ENUM (
     'draft',
     'pengajuan',
     'disetujui',
-    'ditolak'
+    'ditolak',
+    'menunggu_persetujuan',
+    'aktif'
 );
 
 
@@ -1265,7 +1267,8 @@ CREATE TABLE public.sasarans (
     anggaran integer,
     nip_asn character varying,
     id_rencana character varying,
-    sumber_dana character varying
+    sumber_dana character varying,
+    tahun character varying
 );
 
 
@@ -2846,6 +2849,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220428034402'),
 ('20220428034736'),
 ('20220428060458'),
-('20220503064338');
+('20220503064338'),
+('20220504045005'),
+('20220504114533');
 
 

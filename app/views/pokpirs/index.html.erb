@@ -46,6 +46,7 @@
                 <th class="border-bottom text-gray-700" scope="col">Usulan</th>
                 <th class="border-bottom text-gray-700" scope="col">Alamat</th>
                 <th class="border-bottom text-gray-700" scope="col">Permasalahan</th>
+                <th class="border-bottom text-gray-700" scope="col">OPD</th>
                 <th class="border-bottom text-gray-700" scope="col">Pengambil Usulan</th>
                 <th class="border-bottom text-gray-700 text-center" scope="col">Status</th>
                 <th class="border-bottom text-gray-700 text-center" scope="col" colspan="1">Action</th>
@@ -59,23 +60,27 @@
                     <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.usulan %></td>
                     <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.alamat %></td>
                     <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.uraian %></td>
+                    <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.opd_dituju&.nama_opd or pokpir.opd %></td>
                     <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.asn_pengambil %></td>
                     <td class="action-<%= dom_id(pokpir) %> text-center align-middle">
                       <% unless pokpir.is_active %>
                         <% if pokpir.asn_aktif? %>
                           <%= button_to toggle_is_active_pokpir_path(pokpir), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
-                            Aktifkan
+                            <%= statuses(code: pokpir.status) %>
                             <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
                           <% end %>
                         <% else %>
-                          <button class="btn btn-warning" disabled>Menungu diambil</button>
+                          <button class="btn btn-warning" disabled><%= statuses(code: pokpir.status) %></button>
                         <% end %>
                       <% else %>
                         <% if pokpir.sasaran_aktif? %>
-                          <button class="btn btn-success text-dark" disabled>Diambil Sasaran</button>
+                          <%= button_to setujui_usulan_di_sasaran_pokpir_path(pokpir), remote: true, class: 'btn btn-tertiary text-light d-inline-flex align-items-center toggle-active' do %>
+                            <%= statuses(code: pokpir.status) %>
+                            <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
+                          <% end %>
                         <% else %>
                           <button class='btn btn-primary d-inline-flex align-items-center toggle-active' disabled>
-                            Aktif
+                            <%= statuses(code: pokpir.status) %>
                             <i class="fas fa-key text-success icon icon-xs ms-2"></i>
                           </button>
                         <% end %>

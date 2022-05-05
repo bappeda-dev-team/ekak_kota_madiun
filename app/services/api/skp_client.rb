@@ -64,12 +64,13 @@ module Api
       data_renaksi = []
       pegawais.each do |pegawai|
         next unless pegawai['list_rencana_kinerja']
-
+        
         pegawai['list_rencana_kinerja'].each do |rencana|
           id_rencana = rencana['id']
           sasaran_kinerja = rencana['rencana_kerja']
           nip_asn = pegawai['nip']
-          data_sasaran << { sasaran_kinerja: sasaran_kinerja,
+          tahun = pegawai['tahun']
+          data_sasaran << { sasaran_kinerja: sasaran_kinerja, tahun: tahun,
                             indikator_kinerja: nil, target: nil, satuan: nil,
                             nip_asn: nip_asn, id_rencana: id_rencana,
                             created_at: Time.now, updated_at: Time.now }
@@ -145,7 +146,9 @@ module Api
                            encrypted_password: password,
                            created_at: Time.now, updated_at: Time.now }
       end
-      User.upsert_all(data_pegawais, unique_by: :nik)
+      data_pegawais.each do |data_p|
+        User.upsert(data_p, unique_by: :nik)
+      end
     end
   end
 end

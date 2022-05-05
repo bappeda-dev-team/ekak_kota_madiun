@@ -10,7 +10,7 @@ class UsulansController < ApplicationController
     sasaran_update = Sasaran.find(sasaran)
     sasaran_update.permasalahans.create!(jenis: 'Umum', permasalahan: usulan.uraian)
     respond_to do |format|
-      if u.save && usulan.update(sasaran_id: sasaran)
+      if u.save && usulan.update(sasaran_id: sasaran, status: 'menunggu_persetujuan')
         flash.now[:success] = 'Usulan berhasil ditambahkan'
         format.js { render 'update_sasaran_asn' }
       else
