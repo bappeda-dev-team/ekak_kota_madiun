@@ -46,18 +46,18 @@
                     <td class="action-<%= dom_id(mandatori) %> text-center align-middle">
                       <% unless mandatori.is_active %>
                         <%= button_to toggle_is_active_mandatori_path(mandatori), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
-                          <%= stasues(code: mandatori.status) %>
+                          <%= statuses(code: mandatori.status) %>
                           <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
                         <% end %>
                       <% else %>
                         <% if mandatori.sasaran_aktif? %>
-                          <%= button_to setujui_usulan_di_sasaran_musrenbang_path(musrenbang), remote: true, class: 'btn btn-tertiary text-light d-inline-flex align-items-center toggle-active' do %>
+                          <%= button_to setujui_usulan_di_sasaran_mandatori_path(mandatori), remote: true, class: 'btn btn-tertiary text-light d-inline-flex align-items-center toggle-active' do %>
                             <%= statuses(code: mandatori.status) %>
                             <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
                           <% end %>
                         <% else %>
                           <button class='btn btn-primary d-inline-flex align-items-center toggle-active' disabled>
-                            <%= stasues(code: mandatori.status) %>
+                            <%= statuses(code: mandatori.status) %>
                             <i class="fas fa-key text-success icon icon-xs ms-2"></i>
                           </button>
                         <% end %>

@@ -8,7 +8,11 @@ class UsulansController < ApplicationController
     u = Usulan.create(usulanable_id: usulan, usulanable_type: usulan_type, sasaran_id: sasaran)
     usulan = usulan_type.constantize.find(usulan)
     sasaran_update = Sasaran.find(sasaran)
-    sasaran_update.permasalahans.create!(jenis: 'Umum', permasalahan: usulan.uraian)
+    if usulan_type == 'Mandatori'
+      sasaran_update.dasar_hukums.create!(judul: usulan.usulan, peraturan: usulan.peraturan_terkait, tahun: usulan.tahun)
+    else
+      sasaran_update.permasalahans.create!(jenis: 'Umum', permasalahan: usulan.uraian)
+    end
     respond_to do |format|
       if u.save && usulan.update(sasaran_id: sasaran, status: 'menunggu_persetujuan')
         flash.now[:success] = 'Usulan berhasil ditambahkan'
