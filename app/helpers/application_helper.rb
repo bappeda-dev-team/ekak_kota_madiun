@@ -38,6 +38,8 @@ module ApplicationHelper
 
   def master_data_items
     [
+      { title: 'Verifikasi', href: verifikasi_sasarans_path, identifier: 'verifikasi_sasaran', icon: 'fas fa-check-double' },
+      { title: 'Laporan Hasil', href: laporan_sasarans_path, identifier: 'laporan_sasaran', icon: 'fas fa-copy' },
       { title: 'Tematik', href: subkegiatan_tematiks_path, identifier: 'tematik', icon: 'fas fa-tags' },
       { title: 'Program', href: admin_program_kegiatan_path, identifier: 'admin_program_kegiatan',
         icon: 'fas fa-tasks' },

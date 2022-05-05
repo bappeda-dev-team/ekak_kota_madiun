@@ -66,10 +66,36 @@ class SasaransController < ApplicationController
     @sasaran.sync_total_renaksi
   end
 
+  def laporan_sasaran
+    @sasarans = Sasaran.sudah_lengkap
+                       .select do |s|
+                         s.user.opd.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin
+                       end
+  end
+
+  def verifikasi_sasaran
+    @sasarans = Sasaran.where(status: 'pengajuan')
+                       .select do |s|
+                         s.user.opd.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin
+                       end
+  end
+
   def ajukan_verifikasi
     @sasaran = Sasaran.find(params[:id])
     @sasaran.update(status: 'pengajuan')
     render 'shared/_notifier_v2', locals: { message: 'Sasaran berhasil diajukan', status_icon: 'success', form_name: 'non-exists' }
+  end
+
+  def setujui
+    @sasaran = Sasaran.find(params[:id])
+    @sasaran.update(status: 'disetujui')
+    render 'shared/_notifier_v2', locals: { message: 'Sasaran disetujui', status_icon: 'success', form_name: 'non-exists' }
+  end
+
+  def tolak
+    @sasaran = Sasaran.find(params[:id])
+    @sasaran.update(status: 'ditolak')
+    render 'shared/_notifier_v2', locals: { message: 'Sasaran ditolak', status_icon: 'info', form_name: 'non-exists' }
   end
 
   # GET /sasarans/new

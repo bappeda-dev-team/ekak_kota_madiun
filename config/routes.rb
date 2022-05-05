@@ -56,6 +56,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     resources :latar_belakangs, path: 'gambaran_umum'
     member do
       post :ajukan_verifikasi
+      post :setujui
+      post :tolak
     end
   end
 
@@ -92,6 +94,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     mount Resque::Server, at: '/jobs'
   end
   # sasaran
+  get '/verifikasi_sasarans', to: 'sasarans#verifikasi_sasaran'
+  get '/laporan_sasarans', to: 'sasarans#laporan_sasaran'
   post '/hapus_program_from_sasaran', to: 'sasarans#hapus_program_from_sasaran'
   post '/hapus_tematik_from_sasaran', to: 'sasarans#hapus_tematik_from_sasaran'
   post '/add_sasaran_tematik', to: 'sasarans#add_sasaran_tematik'
