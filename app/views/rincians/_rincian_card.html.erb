@@ -1,33 +1,30 @@
 <div class="card border-2 shadow mb-3">
   <div class="card-header">
-    <div class="row align-items-center mb-3">
-      <div class="row align-items-center">
-        <div class="col">
-          <h5>Rincian Sasaran</h5>
-        </div>
-      </div>
-    </div>
-    <% unless sasaran.rincian %>
-      <div class="row">
-        <div class="col">
-          <%= link_to "Tambah Rincian Sasaran", new_sasaran_rincian_path(sasaran), remote: true, 
+    <h4 class="card-title">
+      Rincian Sasaran 
+    </h4>
+    <% unless diajukan? %>
+      <% unless sasaran.rincian %>
+        <div class="row">
+          <div class="col">
+            <%= link_to "Tambah Rincian Sasaran", new_sasaran_rincian_path(sasaran), remote: true, 
                   class: "btn btn-primary rincian", data: {'bs-toggle': 'modal', 'bs-target': '#form-rincian', 'title': 'Form Rincian Sasaran'} %>
+          </div>
         </div>
-      </div>
-    <% else %>
-      <div class="row">
-        <div class="col">
-          <%= link_to "Edit Rincian Sasaran", edit_sasaran_rincian_path(sasaran, sasaran.rincian), remote: true, 
+      <% else %>
+        <div class="row">
+          <div class="col">
+            <%= link_to "Edit Rincian Sasaran", edit_sasaran_rincian_path(sasaran, sasaran.rincian), remote: true, 
                   class: "btn btn-primary rincian", data: {'bs-toggle': 'modal', 'bs-target': '#form-rincian', 'title': 'Form Rincian Sasaran'} %>
+          </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
   </div>
   <div class="card-body">
     <% if sasaran.rincian %>
       <div class="row">
         <div class="col">
-          <span class="fs-5 fw-bold mb-0">Rincian Sasaran</span>
           <ul class="list mb-0">
             <li><strong>Penerima manfaat</strong> : <%= sasaran.penerima_manfaat %></li>
             <li><strong>Data terpilah</strong> : <%= sasaran.rincian.data_terpilah %></li>

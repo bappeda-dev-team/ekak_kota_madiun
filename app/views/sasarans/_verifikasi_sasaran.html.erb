@@ -1,7 +1,11 @@
 <div class="card border-2 shadow mb-3">
   <div class="card-body">
-    <%= button_to 'Ajukan Verifikasi', ajukan_verifikasi_sasaran_path(sasaran), remote: true,
+    <% unless diajukan? %>
+      <%= button_to 'Ajukan Verifikasi', ajukan_verifikasi_sasaran_path(sasaran), remote: true,
         class: 'btn btn-tertiary w-100'
     %>
+    <% else %>
+      <button class="btn btn-tertiary w-100" disabled>Menunggu Verifikasi Admin...</button>
+    <% end %>
   </div>
 </div>

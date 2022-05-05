@@ -8,19 +8,21 @@
       </div>
     </div>
   </div>
-  <div class="card-body">
-    <p>Tambah Tematik</p>
-    <%= form_with(url: add_sasaran_tematik_path, local: false) do |f| %>
-      <%= f.select(:id_tematik,
+  <% unless diajukan? %>
+    <div class="card-body">
+      <p>Tambah Tematik</p>
+      <%= form_with(url: add_sasaran_tematik_path, local: false) do |f| %>
+        <%= f.select(:id_tematik,
           [],
           {}, { class:'select2-waw',
           data: {'ajax--url': "/tematiks.json", "ajax--cache": "true", "placeholder": "Pilih Tematik"} } )%>
-      <%= f.hidden_field :id_sasaran, value: sasaran.id %>
-      <div class="actions">
-        <%= f.submit "Tambah Tematik" %>
-      </div>
-    <% end %>
-  </div>
+        <%= f.hidden_field :id_sasaran, value: sasaran.id %>
+        <div class="actions">
+          <%= f.submit "Tambah Tematik" %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
   <% unless sasaran.subkegiatan_tematiks.nil? %>
     <div class="card-body">
       <div class="table-responsive">
@@ -28,18 +30,22 @@
           <thead>
             <tr>
               <th>Tematik</th>
-              <th class="text-center align-middle">Action</th>
+              <% unless diajukan? %>
+                <th class="text-center align-middle">Action</th>
+              <% end %>
             </tr>
           </thead>
           <tbody>
             <% sasaran.subkegiatan_tematiks.each do |tematik| %>
               <tr>
                 <td class="align-middle text-wrap"><%= tematik.nama_tematik %></td>
-                <td class="text-center align-middle">
-                  <%= button_to 'X', "/hapus_tematik_from_sasaran", remote: true, method: :post,
+                <% unless diajukan? %>
+                  <td class="text-center align-middle">
+                    <%= button_to 'X', "/hapus_tematik_from_sasaran", remote: true, method: :post,
                     class: 'btn btn-danger text-center',
                     data: {confirm_swal: "Hapus tematik?"}, params: {id_sasaran: sasaran.id, id_tematik: tematik.id} %>
-                </td>
+                  </td>
+                <% end %>
               </tr>
             <% end %>
           </tbody>
