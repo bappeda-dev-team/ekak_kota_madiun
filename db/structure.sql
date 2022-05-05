@@ -10,6 +10,18 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: sasaran_status; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.sasaran_status AS ENUM (
+    'draft',
+    'pengajuan',
+    'disetujui',
+    'ditolak'
+);
+
+
+--
 -- Name: usulan_status; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -1268,7 +1280,8 @@ CREATE TABLE public.sasarans (
     nip_asn character varying,
     id_rencana character varying,
     sumber_dana character varying,
-    tahun character varying
+    tahun character varying,
+    status public.sasaran_status DEFAULT 'draft'::public.sasaran_status
 );
 
 
@@ -2851,6 +2864,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220428060458'),
 ('20220503064338'),
 ('20220504045005'),
-('20220504114533');
+('20220504114533'),
+('20220505175922');
 
 

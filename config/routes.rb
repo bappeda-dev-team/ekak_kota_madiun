@@ -54,6 +54,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     resources :permasalahans
     resources :dasar_hukums
     resources :latar_belakangs, path: 'gambaran_umum'
+    member do
+      post :ajukan_verifikasi
+    end
   end
 
   # resources :rincians do

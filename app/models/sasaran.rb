@@ -11,6 +11,7 @@
 #  penerima_manfaat    :string
 #  sasaran_kinerja     :string
 #  satuan              :string
+#  status              :enum             default("draft")
 #  sumber_dana         :string
 #  tahun               :string
 #  target              :integer
@@ -64,6 +65,8 @@ class Sasaran < ApplicationRecord
 
   SUMBERS = { dana_transfer: 'Dana Transfer', dak: 'DAK', dbhcht: 'DBHCHT', bk_provinsi: 'BK Provinsi',
               blud: 'BLUD' }.freeze
+
+  enum status: { draft: 'draft', pengajuan: 'pengajuan', disetujui: 'disetujui', ditolak: 'ditolak' }
 
   # DANGER, maybe broke something, uncomment this
   # def respond_to_missing?(_method, *_args)

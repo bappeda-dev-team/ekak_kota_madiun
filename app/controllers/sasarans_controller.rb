@@ -66,6 +66,12 @@ class SasaransController < ApplicationController
     @sasaran.sync_total_renaksi
   end
 
+  def ajukan_verifikasi
+    @sasaran = Sasaran.find(params[:id])
+    @sasaran.update(status: 'pengajuan')
+    render 'shared/_notifier_v2', locals: { message: 'Sasaran berhasil diajukan', status_icon: 'success', form_name: 'non-exists' }
+  end
+
   # GET /sasarans/new
   def new
     @sasaran = @user.sasarans.build

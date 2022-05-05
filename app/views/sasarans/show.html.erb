@@ -10,6 +10,11 @@
     <li class="breadcrumb-item active" aria-current="page">Rencana Aksi</li>
   </ol>
 </nav>
+<div class="card border-2 shadow mb-3">
+  <div class="card-body">
+    <h5>Status Sasaran: <%= @sasaran.status %></h5>
+  </div>
+</div>
 <!-- SECTION - musrenbang -->
 <%= render 'musrenbang_card', sasaran: @sasaran %>
 <%= render 'pokpirs/pokpir_card', sasaran: @sasaran %>
@@ -27,6 +32,9 @@
 <%= render 'dasar_hukums/dasar_hukum_card', sasaran: @sasaran %>
 <%= render 'latar_belakangs/gambaran_umum_card', sasaran: @sasaran %>
 <%= render 'subkegiatan_tematiks/tematik_card', sasaran: @sasaran %>
+<% if @sasaran.selesai? %>
+  <%= render 'verifikasi_sasaran', sasaran: @sasaran %>
+<% end %>
 <!-- SECTION - Modal-->
 <!-- TODO - DRY-->
 <%= render 'modal' %>

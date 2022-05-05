@@ -11,6 +11,7 @@
 #  penerima_manfaat    :string
 #  sasaran_kinerja     :string
 #  satuan              :string
+#  status              :enum             default("draft")
 #  sumber_dana         :string
 #  tahun               :string
 #  target              :integer
