@@ -26,7 +26,12 @@ class FilterController < ApplicationController
   }.freeze
 
   def filter_sasaran
+    opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
     @sasarans = Sasaran.includes([user: :opd]).where(opds: { kode_unik_opd: @kode_opd })
+    if OPD_TABLE.key?(opd.to_sym)
+      @sasarans = Sasaran.includes([user: :opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] })
+      @sasarans = @sasarans.where(user: { nama_bidang: OPD_TABLE[opd.to_sym] })
+    end
     respond_to do |format|
       format.js { render 'sasarans/sasaran_filter' }
     end
@@ -39,9 +44,6 @@ class FilterController < ApplicationController
       @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] })
       @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])
     end
-    # if opd == 'Dinas Kesehatan, Pengendalian Penduduk dan Keluarga Berencana'
-    #   @users = @users.where(nama_bidang: 'Dinas Kesehatan')
-    # end
     @filter_file = 'hasil_filter' if params[:filter_file].empty?
     respond_to do |format|
       format.js { render 'users/user_filter' }

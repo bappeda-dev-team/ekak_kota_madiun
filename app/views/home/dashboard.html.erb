@@ -33,20 +33,19 @@
               <tbody>
                 <% @sasaran.each.with_index(1) do |s, i| %>
                   <tr class="<%= 'text-danger' if s.hangus?  %> <%= 'text-warning' if s.belum_ada_sub? %> text-success">
-                    <td class="fw-bolder text-left" width="1em"><%= i %></td>
-                    <td class="fw-bolder text-left" style="white-space: initial !important;">
+                    <td class="fw-bolder text-left" width="1em" rowspan="<%= s.indikator_sasarans.count + 1 %>"><%= i %></td>
+                    <td class="fw-bolder text-left" style="white-space: initial !important;" rowspan="<%= s.indikator_sasarans.count + 1 %>">
                       <%= s.sasaran_kinerja %>
                     </td>
-                    <td class="fw-bolder text-left" style="white-space: initial !important;">
-                      <%= s.indikator_kinerja %>
-                    </td>
-                    <td class="fw-bolder text-center">
-                      <%= s.target %>
-                    </td>
-                    <td class="fw-bolder text-center">
-                      <%= s.satuan %>
-                    </td>
+                    <td class="p-0 m-0" colspan="3"></td>
                   </tr>
+                  <% s.indikator_sasarans.each do |indikator| %>
+                    <tr class="<%= 'text-danger' if s.hangus?  %> <%= 'text-warning' if s.belum_ada_sub? %> text-success">
+                      <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.indikator_kinerja %></td>
+                      <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.target %></td>
+                      <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.satuan %></td>
+                    </tr>
+                  <% end %>
                 <% end %>
               </tbody>
             </table>
