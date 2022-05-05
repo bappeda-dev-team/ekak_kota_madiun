@@ -37,11 +37,13 @@
 <% end %>
 <!-- SECTION - Modal-->
 <!-- TODO - DRY-->
-<%= render 'modal' %>
-<%= render 'modal_perhitungans' %>
-<%= render 'aksis/modal_target'  %>
-<%= render 'aksis/modal_realisasi'  %>
-<%= render 'rincians/modal_rincian' %>
-<%= render 'permasalahans/modal_permasalahan' %>
-<%= render 'dasar_hukums/modal_dasar_hukum' %>
-<%= render 'latar_belakangs/modal_gambaran_umum' %>
+<% unless diajukan? %>
+  <%= render 'modal' %>
+  <%= render 'modal_perhitungans' %>
+  <%= render 'aksis/modal_target'  %>
+  <%= render 'aksis/modal_realisasi'  %>
+  <%= render 'rincians/modal_rincian' %>
+  <%= render 'permasalahans/modal_permasalahan' %>
+  <%= render 'dasar_hukums/modal_dasar_hukum' %>
+  <%= render 'latar_belakangs/modal_gambaran_umum' %>
+<% end %>
