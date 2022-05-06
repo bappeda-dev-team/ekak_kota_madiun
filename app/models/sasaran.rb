@@ -2,21 +2,22 @@
 #
 # Table name: sasarans
 #
-#  id                     :bigint           not null, primary key
-#  anggaran               :integer
-#  id_rencana             :string
-#  indikator_kinerja      :string
-#  kualitas               :integer
-#  nip_asn                :string
-#  penerima_manfaat       :string
-#  sasaran_kinerja        :string
-#  satuan                 :string
-#  sumber_dana            :string
-#  target                 :integer
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  program_kegiatan_id    :bigint
-#  subkegiatan_tematik_id :bigint
+#  id                  :bigint           not null, primary key
+#  anggaran            :integer
+#  id_rencana          :string
+#  indikator_kinerja   :string
+#  kualitas            :integer
+#  nip_asn             :string
+#  penerima_manfaat    :string
+#  sasaran_kinerja     :string
+#  satuan              :string
+#  status              :enum             default("draft")
+#  sumber_dana         :string
+#  tahun               :string
+#  target              :integer
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  program_kegiatan_id :bigint
 #
 # Indexes
 #
@@ -25,13 +26,13 @@
 # Foreign Keys
 #
 #  fk_rails_...  (nip_asn => users.nik)
-#  fk_rails_...  (subkegiatan_tematik_id => subkegiatan_tematiks.id)
 #
 class Sasaran < ApplicationRecord
   # belongs_to :user
   belongs_to :user, foreign_key: 'nip_asn', primary_key: 'nik'
   belongs_to :program_kegiatan, optional: true
-  belongs_to :subkegiatan_tematik, optional: true
+  has_many :tematik_sasarans
+  has_many :subkegiatan_tematiks, through: :tematik_sasarans
   # belongs_to :sumber_dana, foreign_key: 'sumber_dana', primary_key: 'kode_sumber_dana', optional: true
 
   has_many :usulans
@@ -58,9 +59,14 @@ class Sasaran < ApplicationRecord
   default_scope { order(created_at: :asc) }
   scope :hangus, -> { left_outer_joins(:usulans).where(usulans: { sasaran_id: nil }).where(program_kegiatan_id: nil) }
   scope :belum_ada_sub, -> { where(program_kegiatan_id: nil) }
-  scope :sudah_lengkap, -> { includes(:usulans).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan_id: nil) }
+  scope :sudah_lengkap, lambda {
+                          includes(:usulans).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan_id: nil)
+                        }
 
-  SUMBERS = { dana_transfer: 'Dana Transfer', dak: 'DAK', dbhcht: 'DBHCHT', bk_provinsi: 'BK Provinsi', blud: 'BLUD' }.freeze
+  SUMBERS = { dana_transfer: 'Dana Transfer', dak: 'DAK', dbhcht: 'DBHCHT', bk_provinsi: 'BK Provinsi',
+              blud: 'BLUD' }.freeze
+
+  enum status: { draft: 'draft', pengajuan: 'pengajuan', disetujui: 'disetujui', ditolak: 'ditolak' }
 
   # DANGER, maybe broke something, uncomment this
   # def respond_to_missing?(_method, *_args)
@@ -142,5 +148,14 @@ class Sasaran < ApplicationRecord
 
   def selesai?
     !(hangus? || belum_ada_sub?)
+  end
+
+  def add_tematik(sasaran:, tematik:)
+    tematik_exists = TematikSasaran.where(sasaran_id: sasaran, subkegiatan_tematik_id: tematik)
+    if tematik_exists.exists?
+      tematik_exists.update(sasaran_id: sasaran, subkegiatan_tematik_id: tematik)
+    else
+      TematikSasaran.create(sasaran_id: sasaran, subkegiatan_tematik_id: tematik)
+    end
   end
 end

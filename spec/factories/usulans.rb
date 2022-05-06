@@ -17,6 +17,5 @@
 #
 FactoryBot.define do
   factory :usulan do
-    
   end
 end

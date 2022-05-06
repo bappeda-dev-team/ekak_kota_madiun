@@ -36,23 +36,66 @@ class SasaransController < ApplicationController
   end
 
   def hapus_tematik_from_sasaran
-    param_id = params[:id_sasaran]
-    sasaran = Sasaran.find(param_id)
+    id_sasaran = params[:id_sasaran]
+    id_tematik = params[:id_tematik]
+    TematikSasaran.where(sasaran_id: id_sasaran, subkegiatan_tematik_id: id_tematik).first.destroy
     respond_to do |format|
-      if sasaran.update(subkegiatan_tematik_id: nil)
+      @status = 'success'
+      @text = 'Sukses menghapus tematik'
+      format.js { render :hapus_program_from_sasaran }
+    end
+  end
+
+  def add_sasaran_tematik
+    sasaran = Sasaran.find(params[:id_sasaran])
+    tematik = params[:id_tematik]
+    respond_to do |format|
+      if sasaran.add_tematik(sasaran: sasaran.id, tematik: tematik)
         @status = 'success'
-        @text = 'Sukses menghapus tematik'
-        format.js { render :hapus_program_from_sasaran}
+        @text = 'Sukses menambah tematik'
+        format.js { render :hapus_program_from_sasaran }
       else
         @status = 'error'
-        @text = 'Terjadi kesalahan saat menghapus tematik'
-        format.js :unprocessable_entity
+        @text = 'Terjadi kesalahan saat menambah tematik'
+        format.js { render :hapus_program_from_sasaran, :unprocessable_entity }
       end
     end
   end
 
   def renaksi_update
     @sasaran.sync_total_renaksi
+  end
+
+  def laporan_sasaran
+    @sasarans = Sasaran.sudah_lengkap
+                       .select do |s|
+                         s.user.opd.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin
+                       end
+  end
+
+  def verifikasi_sasaran
+    @sasarans = Sasaran.where(status: 'pengajuan')
+                       .select do |s|
+                         s.user.opd.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin
+                       end
+  end
+
+  def ajukan_verifikasi
+    @sasaran = Sasaran.find(params[:id])
+    @sasaran.update(status: 'pengajuan')
+    render 'shared/_notifier_v2', locals: { message: 'Sasaran berhasil diajukan', status_icon: 'success', form_name: 'non-exists' }
+  end
+
+  def setujui
+    @sasaran = Sasaran.find(params[:id])
+    @sasaran.update(status: 'disetujui')
+    render 'shared/_notifier_v2', locals: { message: 'Sasaran disetujui', status_icon: 'success', form_name: 'non-exists' }
+  end
+
+  def tolak
+    @sasaran = Sasaran.find(params[:id])
+    @sasaran.update(status: 'ditolak')
+    render 'shared/_notifier_v2', locals: { message: 'Sasaran ditolak', status_icon: 'info', form_name: 'non-exists' }
   end
 
   # GET /sasarans/new
@@ -85,18 +128,18 @@ class SasaransController < ApplicationController
   def update
     respond_to do |format|
       if @sasaran.update(sasaran_params)
-        if sasaran_params[:program_kegiatan_id]
-          flash.now[:success] = 'Sukses menambah subkegiatan'
-        else
-          flash.now[:success] = 'Sukses update sasaran'
-        end
+        flash[:success] = if sasaran_params[:program_kegiatan_id]
+                            'Sukses menambah subkegiatan'
+                          else
+                            'Sukses update sasaran'
+                          end
         format.js
-        format.html { redirect_to user_sasaran_path(@user, @sasaran), success: 'Sasaran was successfully created.'  }
+        format.html { redirect_to user_sasaran_path(@user, @sasaran) }
         format.json { render :show, status: :ok, location: @sasaran }
       else
         flash.now[:error] = 'Sasaran gagal update.'
         format.js
-        format.html { redirect_to user_sasaran_path(@user, @sasaran), error: 'Sasaran gagal update.'  }
+        format.html { redirect_to user_sasaran_path(@user, @sasaran), error: 'Sasaran gagal update.' }
         format.json { render json: @sasaran.errors, status: :unprocessable_entity }
       end
     end

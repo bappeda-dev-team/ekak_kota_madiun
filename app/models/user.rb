@@ -54,7 +54,7 @@ class User < ApplicationRecord
     if (login = conditions.delete(:login))
       where(conditions.to_h).where(['lower(nik) = :value OR lower(email) = :value',
                                     { value: login.downcase }]).first
-    elsif conditions.has_key?(:nik) || conditions.has_key?(:email)
+    elsif conditions.key?(:nik) || conditions.key?(:email)
       where(conditions.to_h).first
     end
   end

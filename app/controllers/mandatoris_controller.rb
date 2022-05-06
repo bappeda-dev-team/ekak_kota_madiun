@@ -75,6 +75,20 @@ class MandatorisController < ApplicationController
     end
   end
 
+  def setujui_usulan_di_sasaran
+    @mandatori = Mandatori.find(params[:id])
+    respond_to do |format|
+      if @mandatori.update(status: 'disetujui')
+        @mandatori.toggle! :is_active
+        flash.now[:success] = 'Usulan disetujui'
+        format.js { render 'toggle_is_active' }
+      else
+        flash.now[:alert] = 'Gagal Mengaktifkan'
+        format.js { :unprocessable_entity }
+      end
+    end
+  end
+
   def mandatori_search
     param = params[:q] || ''
     @mandatoris = Search::AllUsulan

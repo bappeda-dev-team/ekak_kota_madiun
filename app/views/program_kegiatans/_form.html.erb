@@ -1,4 +1,4 @@
-<%= form_with model: programKegiatan, class: "mt-2" do |form| %>
+<%= form_with model: programKegiatan, local: false, class: "mt-2" do |form| %>
   <% if programKegiatan.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(programKegiatan.errors.count, "error") %> prohibited this programKegiatan from being saved:</h2>

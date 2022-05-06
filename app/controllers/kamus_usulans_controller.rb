@@ -1,5 +1,5 @@
 class KamusUsulansController < ApplicationController
-  before_action :set_kamus_usulan, only: %i[ show edit update destroy ]
+  before_action :set_kamus_usulan, only: %i[show edit update destroy]
 
   # GET /kamus_usulans or /kamus_usulans.json
   def index
@@ -7,8 +7,7 @@ class KamusUsulansController < ApplicationController
   end
 
   # GET /kamus_usulans/1 or /kamus_usulans/1.json
-  def show
-  end
+  def show; end
 
   # GET /kamus_usulans/new
   def new
@@ -16,8 +15,7 @@ class KamusUsulansController < ApplicationController
   end
 
   # GET /kamus_usulans/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /kamus_usulans or /kamus_usulans.json
   def create
@@ -58,13 +56,14 @@ class KamusUsulansController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_kamus_usulan
-      @kamus_usulan = KamusUsulan.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def kamus_usulan_params
-      params.fetch(:kamus_usulan, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_kamus_usulan
+    @kamus_usulan = KamusUsulan.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def kamus_usulan_params
+    params.fetch(:kamus_usulan, {})
+  end
 end

@@ -1,2 +1,4 @@
-module Api::SipdClientHelper
+module Api
+  module SipdClientHelper
+  end
 end

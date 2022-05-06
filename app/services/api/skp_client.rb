@@ -64,12 +64,13 @@ module Api
       data_renaksi = []
       pegawais.each do |pegawai|
         next unless pegawai['list_rencana_kinerja']
-
+        
         pegawai['list_rencana_kinerja'].each do |rencana|
           id_rencana = rencana['id']
           sasaran_kinerja = rencana['rencana_kerja']
           nip_asn = pegawai['nip']
-          data_sasaran << { sasaran_kinerja: sasaran_kinerja,
+          tahun = pegawai['tahun']
+          data_sasaran << { sasaran_kinerja: sasaran_kinerja, tahun: tahun,
                             indikator_kinerja: nil, target: nil, satuan: nil,
                             nip_asn: nip_asn, id_rencana: id_rencana,
                             created_at: Time.now, updated_at: Time.now }
@@ -113,7 +114,7 @@ module Api
       kode_opd = data_opd['id']
       kode_unik_opd = data_opd['unit_id']
       id_opd_skp = data_opd['id_sipd']
-      insert_to_opd = { kode_opd: kode_opd, kode_unik_opd: kode_unik_opd, id_opd_skp: id_opd_skp}
+      insert_to_opd = { kode_opd: kode_opd, kode_unik_opd: kode_unik_opd, id_opd_skp: id_opd_skp }
       opd = Opd.find_by(kode_opd: kode_opd)
       opd.update(insert_to_opd)
       data_renaksi.reject! { |renaksi| renaksi[:target].zero? }
@@ -138,14 +139,16 @@ module Api
         nama_pangkat = pegawai['nama_pangkat']
         id_bidang = pegawai['id_bidang']
         nama_bidang = pegawai['nama_bidang']
-        password = User.new(password: 123456).encrypted_password
+        password = User.new(password: 123_456).encrypted_password
         data_pegawais << { kode_opd: kode_opd, nik: nip, nama: nama, jabatan: jabatan,
                            eselon: eselon, pangkat: pangkat, nama_pangkat: nama_pangkat,
                            id_bidang: id_bidang, nama_bidang: nama_bidang, email: email,
                            encrypted_password: password,
                            created_at: Time.now, updated_at: Time.now }
       end
-      User.upsert_all(data_pegawais, unique_by: :nik)
+      data_pegawais.each do |data_p|
+        User.upsert(data_p, unique_by: :nik)
+      end
     end
   end
 end

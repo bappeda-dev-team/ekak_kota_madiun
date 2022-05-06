@@ -1,10 +1,10 @@
 module AksisHelper
-  def aksi_di_bulan(sasaran, tahapan, bulan)
+  def aksi_di_bulan(sasaran, tahapan, bulan, disabled: false)
     aksi = tahapan.aksis.find_by(bulan: bulan)
     if aksi
-      target_dengan_bulan(sasaran, tahapan, aksi, bulan)
+      target_dengan_bulan(sasaran, tahapan, aksi, bulan, disabled)
     else
-      target_tanpa_bulan(sasaran, tahapan, bulan)
+      target_tanpa_bulan(sasaran, tahapan, bulan, disabled)
     end
   end
 
@@ -22,17 +22,27 @@ module AksisHelper
 
   private
 
-  def target_tanpa_bulan(sasaran, tahapan, bulan)
+  def target_tanpa_bulan(sasaran, tahapan, bulan, disabled)
     "<td class='fw-bolder text-gray-500 border'>
-      #{link_to('+', new_sasaran_tahapan_aksi_path(sasaran, tahapan, bulan: bulan),
-                remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-aksi-target' })}
+      #{ if disabled
+           '-'
+         else
+           link_to('+', new_sasaran_tahapan_aksi_path(sasaran, tahapan, bulan: bulan),
+                   remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-aksi-target' })
+         end
+      }
     </td>".html_safe
   end
 
-  def target_dengan_bulan(sasaran, tahapan, aksi, bulan)
+  def target_dengan_bulan(sasaran, tahapan, aksi, bulan, disabled)
     "<td class='fw-bolder text-gray-500 border'>
-      #{link_to(aksi.target, edit_sasaran_tahapan_aksi_path(sasaran, tahapan, aksi.id, bulan: bulan),
-                remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-aksi-target' })}
+      #{ if disabled
+           aksi.target
+         else
+           link_to(aksi.target, edit_sasaran_tahapan_aksi_path(sasaran, tahapan, aksi.id, bulan: bulan),
+                   remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-aksi-target' })
+         end
+      }
     </td>".html_safe
   end
 

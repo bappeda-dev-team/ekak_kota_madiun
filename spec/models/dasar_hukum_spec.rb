@@ -22,7 +22,7 @@ RSpec.describe DasarHukum, type: :model do
       d = DasarHukum.create(
         peraturan: nil,
         judul: "Permen 86",
-        tahun: "2017",
+        tahun: "2017"
       )
       expect(d).to_not be_valid
     end
@@ -31,7 +31,7 @@ RSpec.describe DasarHukum, type: :model do
       d = DasarHukum.create(
         peraturan: "Peraturan Menteri Dalam Negeri Nomor 86 Tahun 2017 tentang Tata Cara Perencanaan, Pengendalian dan Evaluasi ..",
         tahun: "2017",
-        judul: nil,
+        judul: nil
       )
       expect(d).to_not be_valid
     end
@@ -40,7 +40,7 @@ RSpec.describe DasarHukum, type: :model do
       d = DasarHukum.create(
         peraturan: "Peraturan Menteri Dalam Negeri Nomor 86 Tahun 2017 tentang Tata Cara Perencanaan, Pengendalian dan Evaluasi ..",
         tahun: "2017",
-        judul: "Terserah",
+        judul: "Terserah"
       )
       expect(d).to be_valid
     end

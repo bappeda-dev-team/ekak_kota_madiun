@@ -8,19 +8,21 @@
       </div>
     </div>
   </div>
-  <div class="card-body">
-    <p>Pilih Musrenbang</p>
-    <%= form_with(url: '/update_sasaran_asn', local: false) do |form| %>
-      <div class="field">
-        <%= form.hidden_field :sasaran_id, value: sasaran.id   %>
-        <%= form.hidden_field :usulan_type  %>
-        <%= form.select :usulan_id, [], {include_blank: true}, {id: "select2-musrenbang", "data-placeholder": "Pilih Usulan"} %>
-      </div>
-      <div class="actions">
-        <%= form.submit %>
-      </div>
-    <% end %>
-  </div>
+  <% unless diajukan? %>
+    <div class="card-body">
+      <p>Pilih Musrenbang</p>
+      <%= form_with(url: '/update_sasaran_asn', local: false) do |form| %>
+        <div class="field">
+          <%= form.hidden_field :sasaran_id, value: sasaran.id   %>
+          <%= form.hidden_field :usulan_type  %>
+          <%= form.select :usulan_id, [], {include_blank: true}, {id: "select2-musrenbang", "data-placeholder": "Pilih Usulan"} %>
+        </div>
+        <div class="actions">
+          <%= form.submit %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
   <div class="card-body">
     <div class="table-responsive">
       <table class="table" id="musrenbang-table">
@@ -31,7 +33,10 @@
             <th>Alamat</th>
             <th>Permasalahan</th>
             <th>Jenis Usulan</th>
-            <th class="text-center align-middle">Aksi</th>
+            <th>Status</th>
+            <% unless diajukan? %>
+              <th class="text-center align-middle">Aksi</th>
+            <% end %>
           </tr>
         </thead>
         <tbody>
@@ -42,7 +47,10 @@
               <td class="text-wrap align-middle"><%= sas.try(:alamat) || sas.try(:peraturan_terkait) %></td>
               <td class="text-wrap align-middle"><%= sas.uraian %></td>
               <td class="text-wrap align-middle"><%= sas.class.name %></td>
-              <td class="text-center align-middle"><%= button_to 'Hapus', hapus_usulan_dari_sasaran_path, params: { usulan_id: sas.id, usulan_type: sas.class.name } ,remote: true, class: 'btn btn-danger' %></td>
+              <td class="text-wrap align-middle"><%= sas.status %></td>
+              <% unless diajukan? %>
+                <td class="text-center align-middle"><%= button_to 'Hapus', hapus_usulan_dari_sasaran_path, params: { usulan_id: sas.id, usulan_type: sas.class.name } ,remote: true, class: 'btn btn-danger' %></td>
+              <% end %>
             </tr>
           <% end %>
         </tbody>

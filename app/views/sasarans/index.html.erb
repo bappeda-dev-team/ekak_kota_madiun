@@ -35,21 +35,11 @@
           </thead>
           <tbody>
             <% @sasarans.each.with_index(1) do |sasaran, i| %>
-              <tr class="<%= 'text-danger' if sasaran.hangus?  %> <%= 'text-warning' if sasaran.belum_ada_sub? %> text-success" rowspan='<%= sasaran.indikator_sasarans.count %>'>
-                <td class="fw-bolder" scope="row"><%= i %></td>
-                <td class="fw-bolder" scope="row" style="white-space: initial !important;"><%= sasaran.sasaran_kinerja %></td>
-                <% if sasaran.indikator_sasarans.exists? %>
-                  <% sasaran.indikator_sasarans.each do |indikator| %>
-                    <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.indikator_kinerja %></td>
-                    <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.target %></td>
-                    <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.satuan %></td>
-                  <% end %>
-                <% else %>
-                  <td class="fw-bolder" style="white-space: initial !important;"><%= sasaran.indikator_kinerja %></td>
-                  <td class="fw-bolder" style="white-space: initial !important;"><%= sasaran.target %></td>
-                  <td class="fw-bolder" style="white-space: initial !important;"><%= sasaran.satuan %></td>
-                <% end %>
-                <td class="fw-bolder text-gray-500 text-center">
+              <tr class="<%= 'text-danger' if sasaran.hangus?  %> <%= 'text-warning' if sasaran.belum_ada_sub? %> text-success">
+                <td class="fw-bolder" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
+                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
+                <td class="p-0 m-0" colspan="3"></td>
+                <td class="fw-bolder text-gray-500 text-center" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
                   <%= link_to user_sasaran_path(current_user, sasaran), class: "m-3" do %>
                     <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="isi usulan"></i>
                   <% end %>
@@ -57,6 +47,13 @@
                     <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus rencana kinerja"></i>
                   <% end %>
                 </td>
+                <% sasaran.indikator_sasarans.each do |indikator| %>
+                  <tr class="<%= 'text-danger' if sasaran.hangus?  %> <%= 'text-warning' if sasaran.belum_ada_sub? %> text-success">
+                    <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.indikator_kinerja %></td>
+                    <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.target %></td>
+                    <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.satuan %></td>
+                  </tr>
+                <% end %>
               </tr>
             <% end %>
           </tbody>

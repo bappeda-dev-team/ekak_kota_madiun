@@ -7,6 +7,8 @@
 #  sasaran_id      :bigint
 #  searchable_id   :bigint
 #
-class Search::AllUsulan < ApplicationRecord
-  belongs_to :searchable, polymorphic: true
+module Search
+  class AllUsulan < ApplicationRecord
+    belongs_to :searchable, polymorphic: true
+  end
 end

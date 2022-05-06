@@ -64,10 +64,10 @@ class Aksi < ApplicationRecord
     t = tahapan.jumlah_target
     r = tahapan.jumlah_realisasi
     check = r * t
-    tahapan.progress = if check != 0
-                         r / t * 100
-                       else
+    tahapan.progress = if check.zero?
                          0
+                       else
+                         r / t * 100
                        end
     tahapan.save
   end

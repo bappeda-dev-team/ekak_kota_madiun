@@ -1,5 +1,5 @@
 class DasarHukumsController < ApplicationController
-  before_action :set_dasar_hukum, only: %i[ show edit update destroy ]
+  before_action :set_dasar_hukum, only: %i[show edit update destroy]
 
   # GET /dasar_hukums or /dasar_hukums.json
   def index
@@ -7,8 +7,7 @@ class DasarHukumsController < ApplicationController
   end
 
   # GET /dasar_hukums/1 or /dasar_hukums/1.json
-  def show
-  end
+  def show; end
 
   # GET /dasar_hukums/new
   def new
@@ -28,7 +27,9 @@ class DasarHukumsController < ApplicationController
 
     respond_to do |format|
       if @dasar_hukum.save
-        format.html { redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Dasar Hukum berhasil ditambahkan" }
+        format.html do
+          redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Dasar Hukum berhasil ditambahkan"
+        end
         format.json { render :show, status: :created, location: @dasar_hukum }
       else
         format.js { render :new, status: :unprocessable_entity }
@@ -43,7 +44,9 @@ class DasarHukumsController < ApplicationController
     @sasaran = Sasaran.find(params[:sasaran_id])
     respond_to do |format|
       if @dasar_hukum.update(dasar_hukum_params)
-        format.html { redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Dasar Hukum berhasil diupdate" }
+        format.html do
+          redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Dasar Hukum berhasil diupdate"
+        end
         format.json { render :show, status: :ok, location: @dasar_hukum }
       else
         format.html { render :edit, status: :unprocessable_entity }

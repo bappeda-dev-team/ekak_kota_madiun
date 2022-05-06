@@ -5,11 +5,15 @@ class MusrenbangsController < ApplicationController
   # GET /musrenbangs or /musrenbangs.json
   def index
     @musrenbangs = Musrenbang.all.order(:updated_at)
+                             .select { |m| m.opd_dituju&.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin }
   end
 
   def usulan_musrenbang
     # TODO: Pisah per OPD user masing masing ( nunggu API )
-    @musrenbangs = Musrenbang.belum_diajukan.or(Musrenbang.where(nip_asn: current_user.nik)).order(:updated_at)
+    @musrenbangs = Musrenbang.belum_diajukan
+                             .or(Musrenbang.where(nip_asn: current_user.nik))
+                             .order(:updated_at)
+                             .select { |m| m.opd_dituju&.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin }
     render 'user_musrenbang'
   end
 
@@ -37,6 +41,7 @@ class MusrenbangsController < ApplicationController
                    .where(
                      "searchable_type = 'Musrenbang' and sasaran_id is null and usulan ILIKE ?", "%#{param}%"
                    )
+                   .where(searchable: Musrenbang.where(status: 'aktif'))
                    .where(searchable: Musrenbang.where(nip_asn: current_user.nik))
                    .includes(:searchable)
                    .collect(&:searchable)
@@ -45,7 +50,7 @@ class MusrenbangsController < ApplicationController
   def toggle_is_active
     @musrenbang = Musrenbang.find(params[:id])
     respond_to do |format|
-      if @musrenbang.update(status: 'disetujui')
+      if @musrenbang.update(status: 'aktif')
         @musrenbang.toggle! :is_active
         flash.now[:success] = 'Usulan diaktifkan'
         format.js { render 'toggle_is_active' }
@@ -54,6 +59,27 @@ class MusrenbangsController < ApplicationController
         format.js { :unprocessable_entity }
       end
     end
+  end
+
+  def setujui_usulan_di_sasaran
+    @musrenbang = Musrenbang.find(params[:id])
+    respond_to do |format|
+      if @musrenbang.update(status: 'disetujui')
+        @musrenbang.toggle! :is_active
+        flash.now[:success] = 'Usulan disetujui'
+        format.js { render 'toggle_is_active' }
+      else
+        flash.now[:alert] = 'Gagal Mengaktifkan'
+        format.js { :unprocessable_entity }
+      end
+    end
+  end
+
+  def update_opd
+    @musrenbang = Musrenbang.with_kamus
+    @musrenbang.map { |m| m.update(opd: m.kamus_usulans.first.id_unit) }
+    flash[:success] = 'Usulan disesuaikan dengan kamus'
+    redirect_to musrenbangs_path
   end
 
   # TODO: hapus nanti

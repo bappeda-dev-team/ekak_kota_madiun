@@ -15,35 +15,35 @@ RSpec.describe Rekening, type: :model do
   def rekening_level_4
     Rekening.create(
       kode_rekening: "5.1.02.02.08.0026",
-      jenis_rekening: "Parent Level 4",
+      jenis_rekening: "Parent Level 4"
     )
   end
 
   def rekening_level_3
     Rekening.create(
       kode_rekening: "5.1.02.02.08",
-      jenis_rekening: "Parent Level 3",
+      jenis_rekening: "Parent Level 3"
     )
   end
 
   def rekening_level_2
     Rekening.create(
       kode_rekening: "5.1.02.02",
-      jenis_rekening: "Parent Level 2",
+      jenis_rekening: "Parent Level 2"
     )
   end
 
   def rekening_level_1
     Rekening.create(
       kode_rekening: "5.1.02",
-      jenis_rekening: "Parent Level 1",
+      jenis_rekening: "Parent Level 1"
     )
   end
 
   def rekening_level_0
     Rekening.create(
       kode_rekening: "5.1",
-      jenis_rekening: "Grand Parent",
+      jenis_rekening: "Grand Parent"
     )
   end
 

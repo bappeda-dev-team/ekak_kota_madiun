@@ -1,5 +1,5 @@
 class AnggaranHspksController < ApplicationController
-  before_action :set_anggaran_hspk, only: %i[ show edit update destroy ]
+  before_action :set_anggaran_hspk, only: %i[show edit update destroy]
 
   # GET /anggaran_hspks or /anggaran_hspks.json
   def index
@@ -7,8 +7,7 @@ class AnggaranHspksController < ApplicationController
   end
 
   # GET /anggaran_hspks/1 or /anggaran_hspks/1.json
-  def show
-  end
+  def show; end
 
   # GET /anggaran_hspks/new
   def new
@@ -16,8 +15,7 @@ class AnggaranHspksController < ApplicationController
   end
 
   # GET /anggaran_hspks/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /anggaran_hspks or /anggaran_hspks.json
   def create
@@ -57,13 +55,15 @@ class AnggaranHspksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_anggaran_hspk
-      @anggaran_hspk = AnggaranHspk.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def anggaran_hspk_params
-      params.require(:anggaran_hspk).permit(:kode_kelompok_barang, :uraian_kelompok_barang, :kode_barang, :uraian_barang, :spesifikasi, :satuan, :harga_satuan)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_anggaran_hspk
+    @anggaran_hspk = AnggaranHspk.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def anggaran_hspk_params
+    params.require(:anggaran_hspk).permit(:kode_kelompok_barang, :uraian_kelompok_barang, :kode_barang,
+                                          :uraian_barang, :spesifikasi, :satuan, :harga_satuan)
+  end
 end

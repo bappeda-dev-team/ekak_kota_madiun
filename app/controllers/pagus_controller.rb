@@ -1,7 +1,7 @@
 class PagusController < ApplicationController
   before_action :get_sasaran
-  before_action :set_pagu, only: %i[ show edit update destroy ]
-  before_action :set_dropdown, only: %i[ new edit ]
+  before_action :set_pagu, only: %i[show edit update destroy]
+  before_action :set_dropdown, only: %i[new edit]
 
   # GET /pagus or /pagus.json
   def index
@@ -10,8 +10,7 @@ class PagusController < ApplicationController
   end
 
   # GET /pagus/1 or /pagus/1.json
-  def show
-  end
+  def show; end
 
   # GET /pagus/new
   def new
@@ -20,8 +19,7 @@ class PagusController < ApplicationController
   end
 
   # GET /pagus/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /pagus or /pagus.json
   def create
@@ -62,22 +60,23 @@ class PagusController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def get_sasaran
-      @sasaran = Sasaran.find(params[:sasaran_id])
-    end
 
-    def set_pagu
-      # @pagu = Pagu.find(params[:id])
-      @pagu = @sasaran.pagus.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def get_sasaran
+    @sasaran = Sasaran.find(params[:sasaran_id])
+  end
 
-    def set_dropdown
-      @kaks = Kak.all
-    end
+  def set_pagu
+    # @pagu = Pagu.find(params[:id])
+    @pagu = @sasaran.pagus.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def pagu_params
-      params.require(:pagu).permit(:sasaran_id,:item, :uang, :tipe, :satuan, :volume)
-    end
+  def set_dropdown
+    @kaks = Kak.all
+  end
+
+  # Only allow a list of trusted parameters through.
+  def pagu_params
+    params.require(:pagu).permit(:sasaran_id, :item, :uang, :tipe, :satuan, :volume)
+  end
 end

@@ -34,18 +34,29 @@
                 Sync Pokok Pikiran tahun 2023
               <% end %>
             </div>
+            <div class="col text-end">
+              <%= link_to update_opd_pokpir_path,
+                  method: :post,
+                  data: { disable_with: 'Memproses....'},
+                  class:"btn btn-sm btn-primary" do %>
+                <i class="fas fa-sync me-2"></i>
+                Sync Kamus
+              <% end %>
+            </div>
           <% end %>
         </div>
       </div>
       <div class="card-body">
         <div class="table-responsive">
           <table class="table table-flush datatable" data-datatable>
+            <caption>Usulan Pokok Pikiran OPD <%= current_user.opd.nama_opd %></caption>
             <thead class="thead-light">
               <tr>
                 <th class="border-bottom text-gray-700" scope="col">No.</th>
                 <th class="border-bottom text-gray-700" scope="col">Usulan</th>
                 <th class="border-bottom text-gray-700" scope="col">Alamat</th>
                 <th class="border-bottom text-gray-700" scope="col">Permasalahan</th>
+                <th class="border-bottom text-gray-700" scope="col">OPD</th>
                 <th class="border-bottom text-gray-700" scope="col">Pengambil Usulan</th>
                 <th class="border-bottom text-gray-700 text-center" scope="col">Status</th>
                 <th class="border-bottom text-gray-700 text-center" scope="col" colspan="1">Action</th>
@@ -53,41 +64,43 @@
             </thead>
             <tbody>
               <% @pokpirs.each.with_index(1) do |pokpir, i| %>
-                <% if pokpir.opd_pemilik == current_user.opd.kode_opd or current_user.has_role? :super_admin %>
-                  <tr id="<%= dom_id(pokpir) %>">
-                    <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                    <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.usulan %></td>
-                    <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.alamat %></td>
-                    <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.uraian %></td>
-                    <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.asn_pengambil %></td>
-                    <td class="action-<%= dom_id(pokpir) %> text-center align-middle">
-                      <% unless pokpir.is_active %>
-                        <% if pokpir.asn_aktif? %>
-                          <%= button_to toggle_is_active_pokpir_path(pokpir), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
-                            Aktifkan
-                            <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
-                          <% end %>
-                        <% else %>
-                          <button class="btn btn-warning" disabled>Menungu diambil</button>
+                <tr id="<%= dom_id(pokpir) %>">
+                  <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
+                  <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.usulan %></td>
+                  <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.alamat %></td>
+                  <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.uraian %></td>
+                  <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.opd_dituju&.nama_opd or pokpir.opd %></td>
+                  <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.asn_pengambil %></td>
+                  <td class="action-<%= dom_id(pokpir) %> text-center align-middle">
+                    <% unless pokpir.is_active %>
+                      <% if pokpir.asn_aktif? %>
+                        <%= button_to toggle_is_active_pokpir_path(pokpir), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
+                          <%= statuses(code: pokpir.status) %>
+                          <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
                         <% end %>
                       <% else %>
-                        <% if pokpir.sasaran_aktif? %>
-                          <button class="btn btn-success text-dark" disabled>Diambil Sasaran</button>
-                        <% else %>
-                          <button class='btn btn-primary d-inline-flex align-items-center toggle-active' disabled>
-                            Aktif
-                            <i class="fas fa-key text-success icon icon-xs ms-2"></i>
-                          </button>
+                        <button class="btn btn-warning" disabled><%= statuses(code: pokpir.status) %></button>
+                      <% end %>
+                    <% else %>
+                      <% if pokpir.sasaran_aktif? %>
+                        <%= button_to setujui_usulan_di_sasaran_pokpir_path(pokpir), remote: true, class: 'btn btn-tertiary text-light d-inline-flex align-items-center toggle-active' do %>
+                          <%= statuses(code: pokpir.status) %>
+                          <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
                         <% end %>
+                      <% else %>
+                        <button class='btn btn-primary d-inline-flex align-items-center toggle-active' disabled>
+                          <%= statuses(code: pokpir.status) %>
+                          <i class="fas fa-key text-success icon icon-xs ms-2"></i>
+                        </button>
                       <% end %>
-                    </td>
-                    <td class="fw-bolder text-gray-500 text-center align-middle">
-                      <%= link_to edit_pokpir_path(pokpir), remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#form-usulan'} do %>
-                        <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit usulan"></i>
-                      <% end %>
-                    </td>
-                  </tr>
-                <% end %>
+                    <% end %>
+                  </td>
+                  <td class="fw-bolder text-gray-500 text-center align-middle">
+                    <%= link_to edit_pokpir_path(pokpir), remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#form-usulan'} do %>
+                      <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit usulan"></i>
+                    <% end %>
+                  </td>
+                </tr>
               <% end %>
             </tbody>
           </table>

@@ -38,6 +38,8 @@ module ApplicationHelper
 
   def master_data_items
     [
+      { title: 'Verifikasi', href: verifikasi_sasarans_path, identifier: 'verifikasi_sasaran', icon: 'fas fa-check-double' },
+      { title: 'Laporan Hasil', href: laporan_sasarans_path, identifier: 'laporan_sasaran', icon: 'fas fa-copy' },
       { title: 'Tematik', href: subkegiatan_tematiks_path, identifier: 'tematik', icon: 'fas fa-tags' },
       { title: 'Program', href: admin_program_kegiatan_path, identifier: 'admin_program_kegiatan',
         icon: 'fas fa-tasks' },
@@ -85,7 +87,7 @@ module ApplicationHelper
     ## create or take id from the new created obejct
     id = new_object.object_id
     fields = f.fields_for(association, new_object, child_index: id) do |builder|
-      render(association.to_s.singularize + '_fields', f: builder)
+      render("#{association.to_s.singularize}_fields", f: builder)
     end
     ## pass down the link to the fields form
     link_to(name, '#', class: "add_fields_#{dc} btn btn-primary btn-sm",

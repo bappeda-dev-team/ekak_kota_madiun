@@ -1,6 +1,6 @@
 class KoefisiensController < ApplicationController
   before_action :set_perhitungan, except: %i[edit show]
-  before_action :set_koefisien, only: %i[ show edit update destroy ]
+  before_action :set_koefisien, only: %i[show edit update destroy]
 
   # GET /koefisiens or /koefisiens.json
   def index
@@ -8,8 +8,7 @@ class KoefisiensController < ApplicationController
   end
 
   # GET /koefisiens/1 or /koefisiens/1.json
-  def show
-  end
+  def show; end
 
   # GET /koefisiens/new
   def new
@@ -17,8 +16,7 @@ class KoefisiensController < ApplicationController
   end
 
   # GET /koefisiens/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /koefisiens or /koefisiens.json
   def create
@@ -26,7 +24,10 @@ class KoefisiensController < ApplicationController
 
     respond_to do |format|
       if @koefisien.save
-        format.html { redirect_to rincian_tahapan_anggarans_path(@anggaran.tahapan.rincian, @anggaran.tahapan), notice: "Koefisien was successfully created." }
+        format.html do
+          redirect_to rincian_tahapan_anggarans_path(@anggaran.tahapan.rincian, @anggaran.tahapan),
+                      notice: "Koefisien was successfully created."
+        end
         format.json { render :show, status: :created, location: @koefisien }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -58,18 +59,19 @@ class KoefisiensController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_perhitungan
-      @perhitungan = Perhitungan.find(params[:perhitungan_id])
-      @anggaran = @perhitungan.anggaran
-    end
 
-    def set_koefisien
-      @koefisien = Koefisien.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_perhitungan
+    @perhitungan = Perhitungan.find(params[:perhitungan_id])
+    @anggaran = @perhitungan.anggaran
+  end
 
-    # Only allow a list of trusted parameters through.
-    def koefisien_params
-      params.require(:koefisien).permit(:volume, :satuan_volume, :perhitungan_id)
-    end
+  def set_koefisien
+    @koefisien = Koefisien.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def koefisien_params
+    params.require(:koefisien).permit(:volume, :satuan_volume, :perhitungan_id)
+  end
 end

@@ -4,9 +4,10 @@
 # params : kode_opd: opd.id_opd_skp, tahun: Date.today.year
 module Api
   class SipdClientController < ApplicationController
-    before_action :set_program_params, except: [:sync_musrenbang, :sync_pokpir, :sync_kamus_usulan]
+    before_action :set_program_params, except: %i[sync_musrenbang sync_pokpir sync_kamus_usulan]
     def sync_subkegiatan
-      UpdateProgramJob.set(queue: "#{nama_opd}-#{@kode_opd}-renstra-#{@tahun}").perform_later(@kode_opd, @tahun, @id_opd)
+      UpdateProgramJob.set(queue: "#{nama_opd}-#{@kode_opd}-renstra-#{@tahun}").perform_later(@kode_opd, @tahun,
+                                                                                              @id_opd)
       redirect_to admin_program_kegiatan_path,
                   success: "Update ProgramKegiatan #{nama_opd} Dikerjakan. Harap menunggu..."
     end
@@ -37,7 +38,7 @@ module Api
       @tahun = params[:tahun]
       if @kode_opd.nil?
         redirect_to admin_program_kegiatan_path,
-                  error: "Harap Sync Sasaran #{nama_opd} dahulu"
+                    error: "Harap Sync Sasaran #{nama_opd} dahulu"
       end
       @id_opd = Opd.find_by(id_opd_skp: @kode_opd).kode_opd
     end

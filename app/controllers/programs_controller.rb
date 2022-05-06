@@ -1,5 +1,4 @@
 class ProgramsController < ApplicationController
-  
   def index
     tahun = params[:tahun]
     @programs = Program.all

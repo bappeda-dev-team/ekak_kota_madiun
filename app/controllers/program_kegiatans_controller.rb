@@ -53,9 +53,10 @@ class ProgramKegiatansController < ApplicationController
     @programKegiatan = ProgramKegiatan.new(programKegiatan_params)
     respond_to do |format|
       if @programKegiatan.save
-        format.html { redirect_to @programKegiatan, notice: 'Program Kegiatan Dibuat' }
+        format.js { render '_notifikasi_update', locals: { message: 'Program Kegiatan berhasil dibuat', status_icon: 'success', form_name: 'form-programkegiatan', type: 'create' } }
+        format.html { redirect_to program_kegiatans_url, success: 'Program Kegiatan Dibuat' }
       else
-        format.html { render :new, notice: 'Gagal menyimpan Program Kegiatan' }
+        format.html { render :new, error: 'Gagal menyimpan Program Kegiatan' }
       end
     end
   end
@@ -64,10 +65,10 @@ class ProgramKegiatansController < ApplicationController
     sleep 1
     respond_to do |format|
       if @programKegiatan.update(programKegiatan_params)
-        format.html { redirect_to @programKegiatan, notice: 'Program Kegiatan diupdate' }
-        format.js
+        format.js { render '_notifikasi_update', locals: { message: 'Program Kegiatan berhasil diupdate', status_icon: 'success', form_name: 'form-programkegiatan', type: 'update' } }
+        format.html { redirect_to program_kegiatans_url, success: 'Program Kegiatan diupdate' }
       else
-        format.html { render :edit, notice: 'Program Kegiatan Gagal diupdate' }
+        format.html { render :edit, error: 'Program Kegiatan Gagal diupdate' }
       end
     end
   end

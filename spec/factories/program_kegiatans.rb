@@ -42,7 +42,6 @@
 # Indexes
 #
 #  index_program_kegiatans_on_identifier_belanja      (identifier_belanja) UNIQUE
-#  index_program_kegiatans_on_kode_sub_giat           (kode_sub_giat) UNIQUE
 #  index_program_kegiatans_on_subkegiatan_tematik_id  (subkegiatan_tematik_id)
 #
 # Foreign Keys

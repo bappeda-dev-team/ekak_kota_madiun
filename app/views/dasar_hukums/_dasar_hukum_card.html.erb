@@ -3,10 +3,12 @@
     <h4 class="card-title">
       Dasar Hukum 
     </h4>
-    <div class="link-tambah">
-      <%= link_to 'Tambah Dasar Hukum', new_sasaran_dasar_hukum_path(sasaran), remote: true, class: 'btn btn-primary',
+    <% unless diajukan? %>
+      <div class="link-tambah">
+        <%= link_to 'Tambah Dasar Hukum', new_sasaran_dasar_hukum_path(sasaran), remote: true, class: 'btn btn-primary',
           data: {'bs-toggle': 'modal', 'bs-target': '#form-dasarhukum'} %>
-    </div>
+      </div>
+    <% end %>
   </div>
   <% unless sasaran.dasar_hukums.nil? %>
     <div class="card-body">
@@ -16,7 +18,9 @@
             <tr>
               <th>Peraturan terkait</th>
               <th>Uraian</th>
-              <th class="text-center align-middle">Action</th>
+              <% unless diajukan? %>
+                <th class="text-center align-middle">Action</th>
+              <% end %>
             </tr>
           </thead>
           <tbody>
@@ -24,10 +28,12 @@
               <tr>
                 <td class="align-middle text-wrap"><%= dashu.judul %></td>
                 <td class="align-middle text-wrap"><%= dashu.peraturan %></td>
-                <td class="text-center align-middle">
-                  <%= link_to 'Edit Dasar Hukum', edit_sasaran_dasar_hukum_path(sasaran,dashu), remote: true, class: 'btn btn-outline-info text-center',
+                <% unless diajukan? %>
+                  <td class="text-center align-middle">
+                    <%= link_to 'Edit Dasar Hukum', edit_sasaran_dasar_hukum_path(sasaran,dashu), remote: true, class: 'btn btn-outline-info text-center',
                   data: {'bs-toggle': 'modal', 'bs-target': '#form-dasarhukum'} %>
-                </td>
+                  </td>
+                <% end %>
               </tr>
             <% end %>
           </tbody>

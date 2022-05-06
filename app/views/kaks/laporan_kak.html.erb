@@ -23,38 +23,39 @@
           <thead class="thead-light">
             <tr>
               <th class="border-bottom" scope="col">No.</th>
-              <th class="border-bottom" scope="col">Sub Kegiatan KaK</th>
-              <th class="border-bottom text-center" scope="col">Sasaran | Pembuat</th>
+              <th class="border-bottom text-center" scope="col">Sub Kegiatan KaK</th>
+              <th class="border-bottom text-center" scope="col" colspan="2">Informasi KaK</th>
               <th class="border-bottom text-center" scope="col">Action</th>
+            </tr>
+            <tr>
+              <th colspan="2"></th>
+              <th class="border-bottom text-center">Rencana Kinerja</th>
+              <th class="border-bottom text-center">Pemilik Rencana</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             <% current_user.sasarans.includes(:program_kegiatan).where.not(program_kegiatan: {id: nil}).each.with_index(1) do |kak, i| %>
               <tr>
-                <th class="text-gray-900 fw-bolder" scope="row"><%= i %></th>
-                <th class="text-gray-900" scope="row"><%= kak.program_kegiatan.nama_subkegiatan %></th>
-                <td class="border p-0 text-wrap">
-                  <table class="table p-0">
-                    <tbody>
-                      <% kak.program_kegiatan.sasarans.each do |show_sasaran| %>
-                        <tr>
-                          <td class="text-wrap">
-                            <%= show_sasaran.sasaran_kinerja %>
-                          </td>
-                          <td class="text-wrap">
-                            <%= show_sasaran.user.nama %>
-                          </td>
-                        </tr>
-                      <% end %>
-                    </tbody>
-                  </table>
-                </td>
-                <td class="fw-bolder text-gray-500 text-center">
+                <th class="text-gray-900 fw-bolder" scope="row" rowspan="<%= kak.program_kegiatan.sasarans.count + 1 %>"><%= i %></th>
+                <th class="text-gray-900" scope="row" rowspan="<%= kak.program_kegiatan.sasarans.count + 1 %>"><%= kak.program_kegiatan.nama_subkegiatan %></th>
+                <td class="p-0 m-0" colspan="2"></td>
+                <td class="fw-bolder text-gray-500 text-center" rowspan="<%= kak.program_kegiatan.sasarans.count + 1 %>">
                   <%= link_to "/pdf_kak/#{kak.program_kegiatan.id}.pdf", class: "m-3" do %>
                     <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
                   <% end %>
                 </td>
               </tr>
+              <% kak.program_kegiatan.sasarans.each do |show_sasaran| %>
+                <tr>
+                  <td class="text-wrap" width="450px">
+                    <%= show_sasaran.sasaran_kinerja %>
+                  </td>
+                  <td class="text-wrap border-bottom text-center">
+                    <%= show_sasaran.user.nama %>
+                  </td>
+                </tr>
+              <% end %>
             <% end %>
           </tbody>
         </table>

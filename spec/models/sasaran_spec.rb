@@ -2,21 +2,22 @@
 #
 # Table name: sasarans
 #
-#  id                     :bigint           not null, primary key
-#  anggaran               :integer
-#  id_rencana             :string
-#  indikator_kinerja      :string
-#  kualitas               :integer
-#  nip_asn                :string
-#  penerima_manfaat       :string
-#  sasaran_kinerja        :string
-#  satuan                 :string
-#  sumber_dana            :string
-#  target                 :integer
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  program_kegiatan_id    :bigint
-#  subkegiatan_tematik_id :bigint
+#  id                  :bigint           not null, primary key
+#  anggaran            :integer
+#  id_rencana          :string
+#  indikator_kinerja   :string
+#  kualitas            :integer
+#  nip_asn             :string
+#  penerima_manfaat    :string
+#  sasaran_kinerja     :string
+#  satuan              :string
+#  status              :enum             default("draft")
+#  sumber_dana         :string
+#  tahun               :string
+#  target              :integer
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  program_kegiatan_id :bigint
 #
 # Indexes
 #
@@ -25,11 +26,10 @@
 # Foreign Keys
 #
 #  fk_rails_...  (nip_asn => users.nik)
-#  fk_rails_...  (subkegiatan_tematik_id => subkegiatan_tematiks.id)
 #
 require 'rails_helper'
 
-RSpec.describe Sasaran, type: :model do # rubocop :disable Metrics/BlockLength
+RSpec.describe Sasaran, type: :model do
   let(:lembaga) { FactoryBot.create :lembaga }
   let(:opd) { FactoryBot.create :opd }
   let(:user) { FactoryBot.create :user }
@@ -70,9 +70,9 @@ RSpec.describe Sasaran, type: :model do # rubocop :disable Metrics/BlockLength
 
   describe 'Sasaran#Tahapans' do
     it 'can add tahapans to sasaran' do
-      1..10.times do |i|
+      1..(10.times do |i|
         sasaran.tahapans.build [{ tahapan_kerja: "Contoh Tahapan kerja #{i}" }]
-      end
+      end)
       sasaran.save
       expect(sasaran).to be_valid
     end
@@ -89,7 +89,8 @@ RSpec.describe Sasaran, type: :model do # rubocop :disable Metrics/BlockLength
     it { should have_many(:latar_belakangs) }
     it { should belong_to(:user) }
     it { should belong_to(:program_kegiatan).optional(true) }
-    it { should belong_to(:subkegiatan_tematik).optional(true) }
+    it { should have_many(:subkegiatan_tematiks) }
+    it { should have_many(:tematik_sasarans) }
   end
 
   context 'sasaran take usulan from different type' do
@@ -144,9 +145,9 @@ RSpec.describe Sasaran, type: :model do # rubocop :disable Metrics/BlockLength
       sasaran.dasar_hukums.create([{ judul: 'Contoh Dasar Hukum',
                                      peraturan: 'Contoh Peraturan',
                                      tahun: '2024' },
-                                    { judul: 'Contoh Dasar Hukum kedua',
-                                      peraturan: 'Contoh peraturan kedau',
-                                      tahun: '2022' }])
+                                   { judul: 'Contoh Dasar Hukum kedua',
+                                     peraturan: 'Contoh peraturan kedau',
+                                     tahun: '2022' }])
       expect(sasaran).to be_valid
     end
   end

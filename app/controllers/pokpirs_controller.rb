@@ -3,13 +3,13 @@ class PokpirsController < ApplicationController
 
   # GET /pokpirs or /pokpirs.json
   def index
-    @pokpirs = Pokpir.all
+    @pokpirs = Pokpir.all.order(:updated_at).select { |m| m.opd_dituju&.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin }
   end
 
   def toggle_is_active
     @pokpir = Pokpir.find(params[:id])
     respond_to do |format|
-      if @pokpir.update(status: 'disetujui')
+      if @pokpir.update(status: 'aktif')
         @pokpir.toggle! :is_active
         flash.now[:success] = 'Usulan diaktifkan'
         format.js { render 'toggle_is_active' }
@@ -20,8 +20,29 @@ class PokpirsController < ApplicationController
     end
   end
 
+  def setujui_usulan_di_sasaran
+    @pokpir = Musrenbang.find(params[:id])
+    respond_to do |format|
+      if @pokpir.update(status: 'disetujui')
+        @pokpir.toggle! :is_active
+        flash.now[:success] = 'Usulan disetujui'
+        format.js { render 'toggle_is_active' }
+      else
+        flash.now[:alert] = 'Gagal Mengaktifkan'
+        format.js { :unprocessable_entity }
+      end
+    end
+  end
+
+  def update_opd
+    @pokpir = Pokpir.with_kamus
+    @pokpir.map { |m| m.update(opd: m.kamus_usulans.first.id_unit) }
+    flash[:success] = 'Usulan disesuaikan dengan kamus'
+    redirect_to pokpirs_path
+  end
+
   def usulan_pokpir
-    @pokpirs = Pokpir.all.order(:created_at)
+    @pokpirs = Pokpir.belum_diajukan.order(:created_at).select { |m| m.opd_dituju&.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin }
     render 'user_pokpir'
   end
 

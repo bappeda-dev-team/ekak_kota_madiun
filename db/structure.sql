@@ -10,6 +10,18 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: sasaran_status; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.sasaran_status AS ENUM (
+    'draft',
+    'pengajuan',
+    'disetujui',
+    'ditolak'
+);
+
+
+--
 -- Name: usulan_status; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -17,7 +29,9 @@ CREATE TYPE public.usulan_status AS ENUM (
     'draft',
     'pengajuan',
     'disetujui',
-    'ditolak'
+    'ditolak',
+    'menunggu_persetujuan',
+    'aktif'
 );
 
 
@@ -1266,7 +1280,8 @@ CREATE TABLE public.sasarans (
     nip_asn character varying,
     id_rencana character varying,
     sumber_dana character varying,
-    subkegiatan_tematik_id bigint
+    tahun character varying,
+    status public.sasaran_status DEFAULT 'draft'::public.sasaran_status
 );
 
 
@@ -1503,6 +1518,38 @@ CREATE SEQUENCE public.tahapans_id_seq
 --
 
 ALTER SEQUENCE public.tahapans_id_seq OWNED BY public.tahapans.id;
+
+
+--
+-- Name: tematik_sasarans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.tematik_sasarans (
+    id bigint NOT NULL,
+    sasaran_id bigint,
+    subkegiatan_tematik_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: tematik_sasarans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.tematik_sasarans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: tematik_sasarans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.tematik_sasarans_id_seq OWNED BY public.tematik_sasarans.id;
 
 
 --
@@ -1860,6 +1907,13 @@ ALTER TABLE ONLY public.tahapans ALTER COLUMN id SET DEFAULT nextval('public.tah
 
 
 --
+-- Name: tematik_sasarans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tematik_sasarans ALTER COLUMN id SET DEFAULT nextval('public.tematik_sasarans_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2194,6 +2248,14 @@ ALTER TABLE ONLY public.tahapans
 
 
 --
+-- Name: tematik_sasarans tematik_sasarans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tematik_sasarans
+    ADD CONSTRAINT tematik_sasarans_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2469,6 +2531,20 @@ CREATE INDEX index_tahapans_on_sasaran_id ON public.tahapans USING btree (sasara
 
 
 --
+-- Name: index_tematik_sasarans_on_sasaran_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_tematik_sasarans_on_sasaran_id ON public.tematik_sasarans USING btree (sasaran_id);
+
+
+--
+-- Name: index_tematik_sasarans_on_subkegiatan_tematik_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_tematik_sasarans_on_subkegiatan_tematik_id ON public.tematik_sasarans USING btree (subkegiatan_tematik_id);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2533,6 +2609,22 @@ ALTER TABLE ONLY public.comments
 
 
 --
+-- Name: tematik_sasarans fk_rails_09b7ad3d51; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tematik_sasarans
+    ADD CONSTRAINT fk_rails_09b7ad3d51 FOREIGN KEY (sasaran_id) REFERENCES public.sasarans(id);
+
+
+--
+-- Name: tematik_sasarans fk_rails_22e78acf56; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tematik_sasarans
+    ADD CONSTRAINT fk_rails_22e78acf56 FOREIGN KEY (subkegiatan_tematik_id) REFERENCES public.subkegiatan_tematiks(id);
+
+
+--
 -- Name: anggarans fk_rails_283268988b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2578,14 +2670,6 @@ ALTER TABLE ONLY public.sasarans
 
 ALTER TABLE ONLY public.kesenjangans
     ADD CONSTRAINT fk_rails_617f862287 FOREIGN KEY (rincian_id) REFERENCES public.rincians(id);
-
-
---
--- Name: sasarans fk_rails_78dfe7067c; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.sasarans
-    ADD CONSTRAINT fk_rails_78dfe7067c FOREIGN KEY (subkegiatan_tematik_id) REFERENCES public.subkegiatan_tematiks(id);
 
 
 --
@@ -2777,6 +2861,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220428031837'),
 ('20220428034402'),
 ('20220428034736'),
-('20220428060458');
+('20220428060458'),
+('20220503064338'),
+('20220504045005'),
+('20220504114533'),
+('20220505175922');
 
 

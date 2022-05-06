@@ -13,14 +13,9 @@
           <li>NIP : <%= sasaran.user.nik %></li>
           <li>Pangkat : <%= sasaran.user.pangkat %></li>
           <li>Sasaran Kinerja : <%= sasaran.sasaran_kinerja %></li>
-          <% if sasaran.indikator_sasarans.exists? %>
-            <% sasaran.indikator_sasarans.each do |indikator| %>
-              <li>Indikator Kinerja : <%= indikator.indikator_kinerja %></li>
-              <li>Target Indikator Kinerja: <%= indikator.target %> <%= indikator.satuan %></li>
-            <% end %>
-          <% else %>
-            <li>Indikator Kinerja : <%= sasaran.indikator_kinerja %></li>
-            <li>Target Indikator Kinerja: <%= sasaran.target %> <%= sasaran.satuan %></li>
+          <% sasaran.indikator_sasarans.each do |indikator| %>
+            <li>Indikator Kinerja : <%= indikator.indikator_kinerja %></li>
+            <li>Target Indikator Kinerja: <%= indikator.target %> <%= indikator.satuan %></li>
           <% end %>
         </ul>
       </div>
@@ -36,9 +31,11 @@
       <div class="col text-end">
         <%= button_to 'Sync Total', renaksi_update_path, remote: true, method: :post, class: 'btn btn-sm btn-primary', params: {id: sasaran.id} %>
       </div>
-      <div class="col text-end">
-        <%= link_to 'Tambah Tahapan', new_sasaran_tahapan_path(sasaran) ,remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'},  class: "btn btn-sm btn-info"  %>
-      </div>
+      <% unless diajukan? %>
+        <div class="col text-end">
+          <%= link_to 'Tambah Tahapan', new_sasaran_tahapan_path(sasaran) ,remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'},  class: "btn btn-sm btn-info"  %>
+        </div>
+      <% end %>
     </div>
     <div class="table-responsive">
       <table class="table table-sm align-items-center">
@@ -51,17 +48,23 @@
               <strong>Anggaran yang dibutuhkan :</strong>
               Rp. <%= number_with_delimiter(sasaran.total_anggaran_dengan_komentar, delimiter: '.') %>
             </div>
-            <div class="col-8 align-middle">
-              <%= form_with(model: [current_user, sasaran], local:false, html: { class: 'd-flex flex gap-3' }) do |f| %>
-                <select name="sasaran[sumber_dana]" id="sumber_dana_sasaran" class="select2-waw" data-placeholder="<%= sasaran.sumber_dana || 'Sumber Dana' %>" data-width="25%">
-                  <option value=""></option>
-                  <% SumberDana.all.each do |sumber_dana| %>
-                    <option value='<%= sumber_dana.sumber_dana %>'><%= sumber_dana.sumber_dana %></option>
-                  <% end %>
-                </select>
-                <input type="submit" value="<%= sasaran.sumber_dana.nil? ? 'Simpan' : 'Ubah' %>" data-disable-with="memproses.." class="btn btn-sm btn-tertiary ml-3">
-              <% end %>
-            </div>
+            <% unless diajukan? %>
+              <div class="col-8 align-middle">
+                <%= form_with(model: [current_user, sasaran], local:false, html: { class: 'd-flex flex gap-3' }) do |f| %>
+                  <select name="sasaran[sumber_dana]" id="sumber_dana_sasaran" class="select2-waw" data-placeholder="<%= sasaran.sumber_dana || 'Sumber Dana' %>" data-width="25%">
+                    <option value=""></option>
+                    <% SumberDana.all.each do |sumber_dana| %>
+                      <option value='<%= sumber_dana.sumber_dana %>'><%= sumber_dana.sumber_dana %></option>
+                    <% end %>
+                  </select>
+                  <input type="submit" value="<%= sasaran.sumber_dana.nil? ? 'Simpan' : 'Ubah' %>" data-disable-with="memproses.." class="btn btn-sm btn-tertiary ml-3">
+                <% end %>
+              </div>
+            <% else %>
+              <div class="col-8 align-middle">
+                Sumber Dana: <%= sasaran.sumber_dana %>
+              </div>
+            <% end %>
           </div>
         </caption>
         <thead class="thead-light">
@@ -74,7 +77,9 @@
             <th class="border-bottom border-end text-center" scope="col">Jumlah</th>
             <th class="border-bottom border-end text-center" scope="col" rowspan="2">Anggaran</th>
             <th class="border-bottom border-end" scope="col" rowspan="2">Keterangan</th>
-            <th class="border-bottom border-end text-center" scope="col" rowspan="2">Action</th>
+            <% unless diajukan? %>
+              <th class="border-bottom border-end text-center" scope="col" rowspan="2">Action</th>
+            <% end %>
           </tr>
           <tr>
             <% (1..13).each do |item| %>
@@ -84,32 +89,42 @@
         </thead>
         <tbody>
           <% sasaran.tahapans.includes([:anggarans]).order(:created_at).each.with_index(1) do |tahapan, index| %>
-            <tr class="<%= tahapan.ada_komentar? ? 'higlighted' : '' %>">
+            <tr class="<%= tahapan.ada_komentar? ? 'higlighted' : 'clean' %>">
               <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= index %></td>
               <td class="text-gray-900"><%= tahapan.tahapan_kerja %></td>
               <% (1..12).each do |bulan| %>
-                <%= aksi_di_bulan(sasaran, tahapan, bulan) %>
+                <% unless diajukan? %>
+                  <%= aksi_di_bulan(sasaran, tahapan, bulan) %>
+                <% else %>
+                  <%= aksi_di_bulan(sasaran, tahapan, bulan, disabled: true) %>
+                <% end %>
               <% end %>
               <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.jumlah_target or '-'  %></td>
               <% unless tahapan.anggarans.any? %>
-                <td class="fw-bolder text-gray-500 border text-center">
-                  <%= link_to 'Tambah Anggaran', new_sasaran_tahapan_anggaran_path(sasaran, tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 btn btn-sm btn-success text-white animate-up-2"   %>
-                </td>
+                <% unless diajukan? %>
+                  <td class="fw-bolder text-gray-500 border text-center">
+                    <%= link_to 'Tambah Anggaran', new_sasaran_tahapan_anggaran_path(sasaran, tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 btn btn-sm btn-success text-white animate-up-2"   %>
+                  </td>
+                <% end %>
               <% else %>
                 <td class="fw-bolder text-gray-500 border text-end">
                   Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan, delimiter: '.') %>
-                  | <%= link_to 'Edit Anggaran', sasaran_tahapan_anggarans_path(sasaran, tahapan), class: 'btn btn-info btn-sm' %>
+                  <% unless diajukan? %>
+                    | <%= link_to 'Edit Anggaran', sasaran_tahapan_anggarans_path(sasaran, tahapan), class: 'btn btn-info btn-sm' %>
+                  <% end %>
                 </td>
               <% end %>
               <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.keterangan  %></td>
-              <td class="fw-bolder text-gray-500 text-center border-end">
-                <%= link_to edit_sasaran_tahapan_path(sasaran, tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'}, class: "m-3" do %>
-                  <i class="fa fa-pencil-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
-                <% end %>
-                <%= link_to sasaran_tahapan_path(sasaran, tahapan), method: :delete, data: { confirm_swal: "Hapus Tahapan #{tahapan.tahapan_kerja}?"}, class: "m-3" do %>
-                  <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
-                <% end %>
-              </td>
+              <% unless diajukan? %>
+                <td class="fw-bolder text-gray-500 text-center border-end">
+                  <%= link_to edit_sasaran_tahapan_path(sasaran, tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'}, class: "m-3" do %>
+                    <i class="fa fa-pencil-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+                  <% end %>
+                  <%= link_to sasaran_tahapan_path(sasaran, tahapan), method: :delete, data: { confirm_swal: "Hapus Tahapan #{tahapan.tahapan_kerja}?"}, class: "m-3" do %>
+                    <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+                  <% end %>
+                </td>
+              <% end %>
             </tr>
           <% end %>
         </tbody>

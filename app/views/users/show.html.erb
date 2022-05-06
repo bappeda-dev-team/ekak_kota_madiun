@@ -40,6 +40,11 @@
                   <small>Peran :</small>
                   <small><%= current_user.roles.pluck :name %></small>
                 </div>
+                <div class="d-flex align-items-center">
+                  <div class="bg-info dot rounded-circle me-1"></div>
+                  <small>Bidang :</small>
+                  <small><%= current_user.nama_bidang %></small>
+                </div>
               </div>
             </div>
           </li>

@@ -26,7 +26,7 @@ require 'rails_helper'
 
 RSpec.describe Perhitungan, type: :model do
   let(:pajak) { FactoryBot.create(:pajak) }
-  let(:pajak0) { FactoryBot.create(:pajak, potongan: 0) } 
+  let(:pajak0) { FactoryBot.create(:pajak, potongan: 0) }
   let(:anggaran) { FactoryBot.build(:anggaran) }
   let(:perhitungan) { FactoryBot.build(:perhitungan) }
   let(:koefisien) { FactoryBot.build(:koefisien) }

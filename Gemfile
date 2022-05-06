@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
-gem 'rails', '~> 6.1.4.6'
+gem 'rails', '~> 6.1'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3', '~> 1.4'
 gem 'pg'
@@ -81,6 +81,6 @@ gem 'redis'
 gem 'resque', require: 'resque/server'
 gem 'rolify', '~> 6.0'
 gem 'scenic'
+gem 'strong_migrations'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?
-gem 'strong_migrations'
