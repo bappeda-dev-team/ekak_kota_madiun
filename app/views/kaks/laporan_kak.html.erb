@@ -35,18 +35,18 @@
             </tr>
           </thead>
           <tbody>
-            <% current_user.sasarans.includes(:program_kegiatan).where.not(program_kegiatan: {id: nil}).each.with_index(1) do |kak, i| %>
+            <% @program_kegiatans.each.with_index(1) do |kak, i| %>
               <tr>
-                <th class="text-gray-900 fw-bolder" scope="row" rowspan="<%= kak.program_kegiatan.sasarans.count + 1 %>"><%= i %></th>
-                <th class="text-gray-900" scope="row" rowspan="<%= kak.program_kegiatan.sasarans.count + 1 %>"><%= kak.program_kegiatan.nama_subkegiatan %></th>
+                <th class="text-gray-900 fw-bolder" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= i %></th>
+                <th class="text-gray-900" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.nama_subkegiatan %></th>
                 <td class="p-0 m-0" colspan="2"></td>
-                <td class="fw-bolder text-gray-500 text-center" rowspan="<%= kak.program_kegiatan.sasarans.count + 1 %>">
-                  <%= link_to "/pdf_kak/#{kak.program_kegiatan.id}.pdf", class: "m-3" do %>
+                <td class="fw-bolder text-gray-500 text-center" rowspan="<%= kak.sasarans.count + 1 %>">
+                  <%= link_to "/pdf_kak/#{kak.id}.pdf", class: "m-3" do %>
                     <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
                   <% end %>
                 </td>
               </tr>
-              <% kak.program_kegiatan.sasarans.each do |show_sasaran| %>
+              <% kak.sasarans.each do |show_sasaran| %>
                 <tr>
                   <td class="text-wrap" width="450px">
                     <%= show_sasaran.sasaran_kinerja %>

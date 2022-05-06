@@ -36,19 +36,19 @@
             </tr>
           </thead>
           <tbody>
-            <% current_user.sasarans.includes(:program_kegiatan).where.not(program_kegiatan: {id: nil}).each.with_index(1) do |program, i| %>
+            <% @program_kegiatans.each.with_index(1) do |program, i| %>
               <tr>
-                <th class="text-gray-900 fw-bolder" scope="row" rowspan="<%= program.program_kegiatan.sasarans.count + 1 %>"><%= i %></th>
-                <th class="text-gray-900" scope="row" rowspan="<%= program.program_kegiatan.sasarans.count + 1 %>"><%= program.program_kegiatan.opd.nama_opd %></th>
-                <th class="text-gray-900" scope="row" rowspan="<%= program.program_kegiatan.sasarans.count + 1 %>"><%= program.program_kegiatan.nama_subkegiatan %></th>
+                <th class="text-gray-900 fw-bolder" scope="row" rowspan="<%= program.sasarans.count + 1 %>"><%= i %></th>
+                <th class="text-gray-900" scope="row" rowspan="<%= program.sasarans.count + 1 %>"><%= program.opd.nama_opd %></th>
+                <th class="text-gray-900" scope="row" rowspan="<%= program.sasarans.count + 1 %>"><%= program.nama_subkegiatan %></th>
                 <td class="p-0 m-0" colspan="2"></td>
-                <td class="fw-bolder text-gray-500 text-center" rowspan="<%= program.program_kegiatan.sasarans.count + 1 %>">
-                  <%= link_to "/pdf_rka/#{program.program_kegiatan.id}.pdf", class: "m-3" do %>
+                <td class="fw-bolder text-gray-500 text-center" rowspan="<%= program.sasarans.count + 1 %>">
+                  <%= link_to "/pdf_rka/#{program.id}.pdf", class: "m-3" do %>
                     <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
                   <% end %>
                 </td>
               </tr>
-              <% program.program_kegiatan.sasarans.each do |show_sasaran| %>
+              <% program.sasarans.each do |show_sasaran| %>
                 <tr>
                   <td class="text-wrap" width="450px">
                     <%= show_sasaran.sasaran_kinerja %>

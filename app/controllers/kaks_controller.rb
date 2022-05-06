@@ -3,7 +3,7 @@ class KaksController < ApplicationController
 
   # GET /kaks or /kaks.json
   def index
-    @kaks = Kak.all
+    @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik }).group(:id)
   end
 
   # GET /kaks/1 or /kaks/1.json
@@ -12,7 +12,7 @@ class KaksController < ApplicationController
   end
 
   def laporan_kak
-    @kaks = Kak.includes(:program_kegiatan).where.not(program_kegiatan: { id: nil })
+    @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik }).group(:id)
   end
 
   def pdf_kak
