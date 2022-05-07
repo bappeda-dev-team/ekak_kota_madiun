@@ -26,7 +26,7 @@
         <% collapsed_item_usulan = collapse_class('(\binovasi|\basn_musrenbang|\bmusrenbang|\bpokpir|\bmandatori)') %>
         <% collapsed_item_usulan_user = collapse_class('(\busulan_inisiatif|\busulan_musrenbang|\busulan_pokpir|\busulan_mandatori)') %>
         <% collapsed_item_anggaran = collapse_class('(\banggaran_ssh|\banggaran_sbu|\banggaran_hspk|\brekening)') %>
-        <% if current_user.has_role? :admin %>
+        <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
           <hr>
           <p>Data Master</p>
           <li class="nav-item">
@@ -98,7 +98,7 @@
           <hr>
         <% end %>
         <%# usulan user %>
-        <% unless current_user.has_role? :admin %>
+        <% unless current_user.has_role? :admin or current_user.has_role? :super_admin %>
           <li class="nav-item">
             <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_item_usulan_user[:menu] %>" data-bs-toggle="collapse" data-bs-target="#usulan-user" aria-expanded="<%= collapsed_item_usulan_user[:aria] %>">
               <span>

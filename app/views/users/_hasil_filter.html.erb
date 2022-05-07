@@ -33,27 +33,26 @@
       </thead>
       <tbody>
         <% users.each.with_index(1) do |user, i| %>
-          <% unless user.has_role? :non_aktif %>
-            <tr>
-              <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-              <td class="fw-bolder text-gray-500"><%= user.nama %></td>
-              <td class="fw-bolder text-gray-500"><%= user.opd.nama_opd %></td>
-              <td class="text-gray-900 text-wrap" scope="row"><%= user.jabatan %></td>
-              <td class="text-gray-900" scope="row"><%= user.pangkat %></td>
-              <td class="fw-bolder text-gray-500"><%= user.nik %></td>
-              <td class="fw-bolder text-gray-500"><%= user.nama_bidang %></td>
-              <td class="fw-bolder text-gray-500" id="<%= dom_id(user) %>-roles"><%= user.roles.pluck :name %></td>
-              <td class="fw-bolder text-gray-500 text-center">
-                <% if current_user.has_role? :super_admin %>
-                  <%= link_to 'Edit User', edit_user_path(user),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-user"}, class: "btn btn-sm btn-info" %>
-                  <%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger btn-sm' %>
-                <% end %>
-                <% if current_user.has_role? :admin %>
-                  <%= link_to 'Non Aktifkan',"/nonaktifkan_user/#{user.nik}", remote: true, method: :post ,class: 'btn btn-sm btn-danger', id: "#{dom_id(user)}" %>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
+          <tr>
+            <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
+            <td class="fw-bolder text-gray-500 text-wrap"><%= user.nama %></td>
+            <td class="fw-bolder text-gray-500 text-wrap"><%= user.opd.nama_opd %></td>
+            <td class="text-gray-900 text-wrap" scope="row"><%= user.jabatan %></td>
+            <td class="text-gray-900 text-wrap" scope="row"><%= user.pangkat %></td>
+            <td class="fw-bolder text-gray-500"><%= user.nik %></td>
+            <td class="fw-bolder text-gray-500"><%= user.nama_bidang %></td>
+            <td class="fw-bolder text-gray-500" id="<%= dom_id(user) %>-roles"><%= user.roles.pluck :name %></td>
+            <td class="fw-bolder text-gray-500 text-center">
+              <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
+                <%= link_to 'Aktifkan',"/aktifkan_user/#{user.nik}", remote: true, method: :post ,class: 'btn btn-sm btn-success', id: "#{dom_id(user)}" %>
+                <%= link_to 'Non Aktifkan',"/nonaktifkan_user/#{user.nik}", remote: true, method: :post ,class: 'btn btn-sm btn-danger', id: "#{dom_id(user)}" %>
+              <% end %>
+              <% if current_user.has_role? :super_admin %>
+                <%= link_to 'Edit User', edit_user_path(user),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-user"}, class: "btn btn-sm btn-info" %>
+                <%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger btn-sm' %>
+              <% end %>
+            </td>
+          </tr>
         <% end %>
       </tbody>
     </table>

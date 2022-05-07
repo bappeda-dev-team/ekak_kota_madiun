@@ -38,6 +38,8 @@ class User < ApplicationRecord
   has_many :kaks
   has_many :sasarans, dependent: :destroy, foreign_key: 'nip_asn', primary_key: 'nik'
 
+  scope :asn_aktif, -> { includes(:roles).where(roles: { name: 'asn' }) }
+
   after_create :assign_default_role
 
   validates :nama, presence: true

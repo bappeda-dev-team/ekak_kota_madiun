@@ -35,7 +35,7 @@
           </thead>
           <tbody>
             <% @sasarans.each.with_index(1) do |sasaran, i| %>
-              <tr class="<%= 'text-danger' if sasaran.hangus?  %> <%= 'text-warning' if sasaran.belum_ada_sub? %> text-success">
+              <tr class="<%= warna_sasaran(sasaran.status_sasaran) %>">
                 <td class="fw-bolder" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
                 <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
                 <td class="p-0 m-0" colspan="3"></td>
@@ -48,7 +48,7 @@
                   <% end %>
                 </td>
                 <% sasaran.indikator_sasarans.each do |indikator| %>
-                  <tr class="<%= 'text-danger' if sasaran.hangus?  %> <%= 'text-warning' if sasaran.belum_ada_sub? %> text-success">
+                  <tr class="<%= warna_sasaran(sasaran.status_sasaran) %>">
                     <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.indikator_kinerja %></td>
                     <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.target %></td>
                     <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.satuan %></td>

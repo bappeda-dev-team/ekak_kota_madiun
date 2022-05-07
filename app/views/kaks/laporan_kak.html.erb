@@ -41,6 +41,9 @@
                 <th class="text-gray-900" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.nama_subkegiatan %></th>
                 <td class="p-0 m-0" colspan="2"></td>
                 <td class="fw-bolder text-gray-500 text-center" rowspan="<%= kak.sasarans.count + 1 %>">
+                  <%= link_to "/acuan_kerja_new/#{kak.id}", class: "m-3" do %>
+                    <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
+                  <% end %>
                   <%= link_to "/pdf_kak/#{kak.id}.pdf", class: "m-3" do %>
                     <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
                   <% end %>
@@ -48,10 +51,10 @@
               </tr>
               <% kak.sasarans.each do |show_sasaran| %>
                 <tr>
-                  <td class="text-wrap" width="450px">
+                  <td class="text-wrap border-start border-end" width="450px">
                     <%= show_sasaran.sasaran_kinerja %>
                   </td>
-                  <td class="text-wrap border-bottom text-center">
+                  <td class="text-wrap border-start border-end border-bottom text-center">
                     <%= show_sasaran.user.nama %>
                   </td>
                 </tr>

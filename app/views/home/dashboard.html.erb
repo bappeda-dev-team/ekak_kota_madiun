@@ -15,11 +15,11 @@
               <caption class="px-4">
                 <strong>Jumlah sasaran: </strong> <%= current_user.sasarans.count %>
                 <hr>
-                <strong class="text-danger">Jumlah sasaran tidak digunakan: </strong> <%= current_user.sasarans.hangus.count %>
+                <strong class="text-danger">Jumlah sasaran tidak digunakan: </strong> <%= current_user.sasarans.total_hangus %>
                 <hr>
-                <strong class="text-secondary">Jumlah sasaran belum ada subkegiatan: </strong> <%= current_user.sasarans.belum_ada_sub.count %>
+                <strong class="text-secondary">jumlah sasaran kinerja yang rincian/keterangannya belum lengkap: </strong> <%= current_user.sasarans.total_belum_lengkap %>
                 <hr>
-                <strong class="text-success">Jumlah sasaran sudah lengkap: </strong> <%= current_user.sasarans.sudah_lengkap.count %>
+                <strong class="text-success">jumlah sasaran kinerja yang sudah lengkap (digunakan): </strong> <%= current_user.sasarans.total_sudah_lengkap %>
               </caption>
               <thead class="thead-light">
                 <tr>
@@ -32,7 +32,7 @@
               </thead>
               <tbody>
                 <% @sasaran.each.with_index(1) do |s, i| %>
-                  <tr class="<%= 'text-danger' if s.hangus?  %> <%= 'text-warning' if s.belum_ada_sub? %> text-success">
+                  <tr class="<%= warna_sasaran(s.status_sasaran) %>">
                     <td class="fw-bolder text-left" width="1em" rowspan="<%= s.indikator_sasarans.count + 1 %>"><%= i %></td>
                     <td class="fw-bolder text-left" style="white-space: initial !important;" rowspan="<%= s.indikator_sasarans.count + 1 %>">
                       <%= s.sasaran_kinerja %>
@@ -40,7 +40,7 @@
                     <td class="p-0 m-0" colspan="3"></td>
                   </tr>
                   <% s.indikator_sasarans.each do |indikator| %>
-                    <tr class="<%= 'text-danger' if s.hangus?  %> <%= 'text-warning' if s.belum_ada_sub? %> text-success">
+                    <tr class="<%= warna_sasaran(s.status_sasaran) %>">
                       <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.indikator_kinerja %></td>
                       <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.target %></td>
                       <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.satuan %></td>
