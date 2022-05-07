@@ -67,10 +67,7 @@ class SasaransController < ApplicationController
   end
 
   def laporan_sasaran
-    @sasarans = Sasaran.sudah_lengkap
-                       .select do |s|
-                         s.user.opd.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin
-                       end
+    @sasarans = User.asn_aktif.where(kode_opd: current_user.kode_opd)
   end
 
   def verifikasi_sasaran

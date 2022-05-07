@@ -40,7 +40,7 @@ class ProgramKegiatansController < ApplicationController
   end
 
   def laporan_rka
-    @programKegiatans = ProgramKegiatan.includes(:sasarans).where.not(sasarans: { id: nil, anggaran: nil })
+    @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik }).where.not(sasarans: { id: nil, anggaran: nil }).group(:id)
   end
 
   def pdf_rka

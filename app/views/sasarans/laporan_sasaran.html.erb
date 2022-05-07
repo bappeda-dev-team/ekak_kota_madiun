@@ -7,7 +7,7 @@
             <i class="fas fa-home"></i>
           <% end %>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Verifikasi Sasaran</li>
+        <li class="breadcrumb-item active" aria-current="page">Laporan Sasaran</li>
       </ol>
     </nav>
     <div class="card border-0 shadow">
@@ -23,19 +23,28 @@
           <table class="table table-flush">
             <thead class="thead-light">
               <tr>
-                <th class="border-bottom" scope="col">No.</th>
-                <th class="border-bottom" scope="col">Sasaran</th>
-                <th class="border-bottom" scope="col">Pembuat</th>
-                <th class="border-bottom" scope="col">Status</th>
+                <th class="border-bottom align-middle" rowspan="2" scope="col">No.</th>
+                <th class="border-bottom align-middle" rowspan="2" scope="col">ASN</th>
+                <th class="border-bottom text-center" scope="col" colspan="4">Status Sasaran</th>
+                <th class="text-center align-middle" rowspan="2">Jumlah Sasaran</th>
+              </tr>
+              <tr>
+                <th class="text-danger text-center">Tidak digunakan</th>
+                <th class="text-warning bg-gray-600 text-center">Belum lengkap</th>
+                <th class="text-success text-center">Sudah lengkap (digunakan)</th>
+                <th class="bg-gray-600 text-white text-center">Disetujui Admin OPD</th>
               </tr>
             </thead>
             <tbody>
               <% @sasarans.each.with_index(1) do |sasaran, i| %>
                 <tr>
                   <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                  <td class="fw-bolder text-gray-500 text-wrap"><%= sasaran.sasaran_kinerja %></td>
-                  <td class="fw-bolder text-gray-500"><%= sasaran.user.nama %></td>
-                  <td class="fw-bolder text-gray-500"><%= status_sasaran(sasaran.status) %></td>
+                  <td class="fw-bolder text-gray-500"><%= sasaran.nama %></td>
+                  <td class="fw-bolder text-danger text-center"><%= sasaran.sasarans.total_hangus %></td>
+                  <td class="fw-bolder text-warning bg-gray-500 text-center"><%= sasaran.sasarans.total_belum_lengkap %></td>
+                  <td class="fw-bolder text-success text-center"><%= sasaran.sasarans.total_sudah_lengkap %></td>
+                  <td class="fw-bolder bg-gray-500 text-white text-center"><%= sasaran.sasarans.total_digunakan %></td>
+                  <td class="fw-bolder text-gray-500 text-center"><%= sasaran.sasarans.count %></td>
                 </tr>
               <% end %>
             </tbody>

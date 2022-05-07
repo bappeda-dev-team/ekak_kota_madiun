@@ -41,18 +41,18 @@
             </tr>
           </thead>
           <tbody>
-            <% current_user.sasarans.sudah_lengkap.includes(:program_kegiatan).where.not(program_kegiatan: {id: nil}).each.with_index(1) do |kak, i| %>
+            <% @program_kegiatans.each.with_index(1) do |kak, i| %>
               <tr>
-                <td class="text-gray-900 fw-bolder" scope="row" rowspan="<%= kak.program_kegiatan.sasarans.count + 1 %>"><%= i %></td>
-                <td class="text-gray-900 text-wrap" scope="row" rowspan="<%= kak.program_kegiatan.sasarans.count + 1 %>"><%= kak.program_kegiatan.nama_program %></td>
-                <td class="text-gray-900 text-wrap" scope="row" rowspan="<%= kak.program_kegiatan.sasarans.count + 1 %>"><%= kak.program_kegiatan.nama_subkegiatan %></td>
+                <td class="text-gray-900 fw-bolder" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= i %></td>
+                <td class="text-gray-900 text-wrap" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.nama_program %></td>
+                <td class="text-gray-900 text-wrap" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.nama_subkegiatan %></td>
                 <td class="p-0 m-" colspan="2"></td>
-                <td class="fw-bolder text-gray-500 text-center" rowspan="<%= kak.program_kegiatan.sasarans.count + 1 %>">
-                  <%= link_to "/acuan_kerja_new/#{kak.program_kegiatan.id}", class: "m-3" do %>
+                <td class="fw-bolder text-gray-500 text-center" rowspan="<%= kak.sasarans.count + 1 %>">
+                  <%= link_to "/acuan_kerja_new/#{kak.id}", class: "m-3" do %>
                     <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
                   <% end %>
                 </td>
-                <% kak.program_kegiatan.sasarans.each do |show_sasaran| %>
+                <% kak.sasarans.each do |show_sasaran| %>
                   <tr>
                     <td class="text-wrap border-bottom" width="450px">
                       <%= show_sasaran.sasaran_kinerja %>

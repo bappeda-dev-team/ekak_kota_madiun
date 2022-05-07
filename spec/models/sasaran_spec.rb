@@ -51,11 +51,11 @@ RSpec.describe Sasaran, type: :model do
     end
 
     it 'can update tematiks from local record' do
-      tematik = FactoryBot.build(:subkegiatan_tematik)
-      sasaran.update(subkegiatan_tematik: tematik)
-      expect(sasaran).to be_valid
+      tematik = FactoryBot.create(:subkegiatan_tematik)
+      sasaran.add_tematik(sasaran: sasaran.id, tematik: tematik.id)
       sasaran.reload
-      expect(sasaran.subkegiatan_tematik.nama_tematik).to eq(tematik.nama_tematik)
+      expect(sasaran.subkegiatan_tematiks.count).to eq(1)
+      expect(sasaran.subkegiatan_tematiks.first.nama_tematik).to eq(tematik.nama_tematik)
     end
 
     it 'can update sumberdana' do
@@ -157,6 +157,72 @@ RSpec.describe Sasaran, type: :model do
       sasaran.latar_belakangs.create([{ gambaran_umum: 'Contoh Dasar Hukum' },
                                       { gambaran_umum: 'Contoh Dasar Hukum kedua' }])
       expect(sasaran).to be_valid
+    end
+  end
+
+  context 'state sasaran awal' do
+    it 'have status of draft' do
+      expect(sasaran.status).to eq('draft')
+    end
+    it 'have condition of hangus' do
+      expect(sasaran.status_sasaran).to eq('hangus')
+    end
+    it 'have total hangus of 1' do
+      sasaran
+      expect(Sasaran.total_hangus).to eq(1)
+    end
+  end
+
+  context 'after added usulan but no subkegiatan' do
+    def sasaran_terisi
+      Usulan.create(keterangan: 'contoh usulan sasaran 1', usulanable: mandatori, sasaran: sasaran)
+      sasaran
+    end
+    it 'have status of draft' do
+      expect(sasaran_terisi.status).to eq('draft')
+    end
+    it 'have at least one usulans' do
+      expect(sasaran_terisi.usulans).not_to be_empty
+    end
+    it 'have condition of blm_lengkap' do
+      expect(sasaran_terisi.status_sasaran).to eq('blm_lengkap')
+    end
+    it 'have subkegiatan but no usulans' do
+      program = FactoryBot.build(:program_kegiatan)
+      sasaran.update(program_kegiatan: program)
+      sasaran.reload
+      expect(sasaran.status).to eq('draft')
+      expect(sasaran.status_sasaran).not_to eq('blm_lengkap')
+      expect(sasaran.status_sasaran).to eq('hangus')
+    end
+    it 'have total belum lengkap of 1' do
+      sasaran_terisi
+      expect(Sasaran.total_belum_lengkap).to eq(1)
+    end
+  end
+
+  context 'sasaran have been added with usulan and subkegiatan' do
+    def sasaran_lengkap
+      Usulan.create(keterangan: 'contoh usulan sasaran 1', usulanable: mandatori, sasaran: sasaran)
+      program = FactoryBot.build(:program_kegiatan)
+      sasaran.update(program_kegiatan: program)
+      sasaran.reload
+      sasaran
+    end
+    it 'lengkap, not diajukan' do
+      expect(sasaran_lengkap.status).to eq('draft')
+    end
+    it 'have usulans and subkegiatan' do
+      expect(sasaran_lengkap.usulans).not_to be_empty
+      expect(sasaran_lengkap.program_kegiatan).not_to be_nil
+    end
+    it 'have state of digunakan' do
+      expect(sasaran_lengkap.status_sasaran).to eq('digunakan')
+    end
+
+    it 'have total digunakan of 1' do
+      sasaran_lengkap
+      expect(Sasaran.total_sudah_lengkap).to eq(1)
     end
   end
 end

@@ -58,10 +58,17 @@ class Sasaran < ApplicationRecord
 
   default_scope { order(created_at: :asc) }
   scope :hangus, -> { left_outer_joins(:usulans).where(usulans: { sasaran_id: nil }).where(program_kegiatan_id: nil) }
-  scope :belum_ada_sub, -> { where(program_kegiatan_id: nil) }
+  scope :total_hangus, -> { left_outer_joins(:usulans).where(usulans: { sasaran_id: nil }).where(program_kegiatan_id: nil).count }
+  scope :belum_ada_sub, -> { left_outer_joins(:usulans).where.not(usulans: { sasaran_id: nil }).where(program_kegiatan_id: nil) }
+  scope :total_belum_lengkap, -> { left_outer_joins(:usulans).where.not(usulans: { sasaran_id: nil }).where(program_kegiatan_id: nil).count }
   scope :sudah_lengkap, lambda {
                           includes(:usulans).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan_id: nil)
                         }
+  scope :total_sudah_lengkap, lambda {
+                          includes(:usulans).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan_id: nil).count
+                        }
+  scope :digunakan, -> { where(status: 'disetujui') }
+  scope :total_digunakan, -> { where(status: 'disetujui').count }
 
   SUMBERS = { dana_transfer: 'Dana Transfer', dak: 'DAK', dbhcht: 'DBHCHT', bk_provinsi: 'BK Provinsi',
               blud: 'BLUD' }.freeze
@@ -148,6 +155,16 @@ class Sasaran < ApplicationRecord
 
   def selesai?
     !(hangus? || belum_ada_sub?)
+  end
+
+  def status_sasaran
+    if hangus? && status != 'disetujui'
+      'hangus'
+    elsif belum_ada_sub? && status != 'disetujui'
+      'blm_lengkap'
+    else
+      'digunakan'
+    end
   end
 
   def add_tematik(sasaran:, tematik:)
