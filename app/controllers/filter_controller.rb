@@ -41,7 +41,7 @@ class FilterController < ApplicationController
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
     @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd })
     if OPD_TABLE.key?(opd.to_sym)
-      @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] })
+      @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).with_any_role(:asn, :admin)
       @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])
     end
     @filter_file = 'hasil_filter' if params[:filter_file].empty?

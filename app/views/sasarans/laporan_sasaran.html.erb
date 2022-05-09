@@ -20,7 +20,7 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table table-flush">
+          <table class="table table-flush table-hover">
             <thead class="thead-light">
               <tr>
                 <th class="border-bottom align-middle" rowspan="2" scope="col">No.</th>
@@ -28,10 +28,9 @@
                 <th class="border-bottom text-center" scope="col" colspan="4">Status Sasaran</th>
               </tr>
               <tr>
-                <th class="text-danger text-center"> jumlah sasaran tahun <%= Date.today.year %></th>
-                <th class="text-warning bg-gray-600 text-center"> jumlah sasaran tahun <%= Date.today.year + 1 %> (rincian blm lengkap)</th>
                 <th class="text-success text-center"> jumlah sasaran tahun <%= Date.today.year + 1 %> (lengkap)</th>
-                <th class="bg-gray-600 text-white text-center">Disetujui Admin OPD</th>
+                <th class="text-warning bg-gray-600 text-center"> jumlah sasaran tahun <%= Date.today.year + 1 %> (rincian blm lengkap)</th>
+                <th class="text-center"> jumlah sasaran tahun <%= Date.today.year %></th>
               </tr>
             </thead>
             <tbody>
@@ -39,10 +38,9 @@
                 <tr>
                   <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
                   <td class="fw-bolder text-gray-500"><%= sasaran.nama %></td>
-                  <td class="fw-bolder text-danger text-center"><%= sasaran.sasarans.count %></td>
-                  <td class="fw-bolder text-warning bg-gray-500 text-center"><%= sasaran.sasarans.total_belum_lengkap %></td>
                   <td class="fw-bolder text-success text-center"><%= sasaran.sasarans.total_sudah_lengkap %></td>
-                  <td class="fw-bolder bg-gray-500 text-white text-center"><%= sasaran.sasarans.total_digunakan %></td>
+                  <td class="fw-bolder text-warning bg-gray-600 text-center"><%= sasaran.sasarans.total_belum_lengkap %></td>
+                  <td class="fw-bolder text-center"><%= sasaran.sasarans.count %></td>
                 </tr>
               <% end %>
             </tbody>

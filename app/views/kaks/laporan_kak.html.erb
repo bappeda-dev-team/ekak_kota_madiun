@@ -18,50 +18,55 @@
           </div>
         </div>
       </div>
-      <div class="table-responsive">
-        <table class="table align-items-center">
-          <thead class="thead-light">
-            <tr>
-              <th class="border-bottom" scope="col">No.</th>
-              <th class="border-bottom text-center" scope="col">Sub Kegiatan KaK</th>
-              <th class="border-bottom text-center" scope="col" colspan="2">Informasi KaK</th>
-              <th class="border-bottom text-center" scope="col">Action</th>
-            </tr>
-            <tr>
-              <th colspan="2"></th>
-              <th class="border-bottom text-center">Rencana Kinerja</th>
-              <th class="border-bottom text-center">Pemilik Rencana</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @program_kegiatans.each.with_index(1) do |kak, i| %>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table align-items-center border-start border-end">
+            <thead class="thead-light">
               <tr>
-                <th class="text-gray-900 fw-bolder" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= i %></th>
-                <th class="text-gray-900" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.nama_subkegiatan %></th>
-                <td class="p-0 m-0" colspan="2"></td>
-                <td class="fw-bolder text-gray-500 text-center" rowspan="<%= kak.sasarans.count + 1 %>">
-                  <%= link_to "/acuan_kerja_new/#{kak.id}", class: "m-3" do %>
-                    <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
-                  <% end %>
-                  <%= link_to "/pdf_kak/#{kak.id}.pdf", class: "m-3" do %>
-                    <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
-                  <% end %>
-                </td>
+                <th class="border-bottom" scope="col">No.</th>
+                <th class="border-bottom text-center" scope="col">Sub Kegiatan KaK</th>
+                <th class="border-bottom text-center border-start border-end" scope="col" colspan="2">Informasi KaK</th>
+                <th class="border-bottom text-center" scope="col">Action</th>
               </tr>
-              <% kak.sasarans.each do |show_sasaran| %>
+              <tr>
+                <th colspan="2"></th>
+                <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
+                <th class="border-bottom text-center border-start border-end">Pemilik Rencana</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @program_kegiatans.each.with_index(1) do |kak, i| %>
                 <tr>
-                  <td class="text-wrap border-start border-end" width="450px">
-                    <%= show_sasaran.sasaran_kinerja %>
-                  </td>
-                  <td class="text-wrap border-start border-end border-bottom text-center">
-                    <%= show_sasaran.user.nama %>
+                  <th class="text-gray-900 fw-bolder" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= i %></th>
+                  <th class="text-gray-900" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.nama_subkegiatan %></th>
+                  <td class="p-0 m-0" colspan="2"></td>
+                  <td class="fw-bolder text-gray-500 text-center" rowspan="<%= kak.sasarans.count + 1 %>">
+                    <%= link_to "/acuan_kerja_new/#{kak.id}", class: "m-3" do %>
+                      <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
+                    <% end %>
+                    <%= link_to "/pdf_kak/#{kak.id}.pdf", class: "m-3" do %>
+                      <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
+                    <% end %>
                   </td>
                 </tr>
+                <% kak.sasarans.each do |show_sasaran| %>
+                  <tr>
+                    <td class="text-wrap border-start border-end" width="450px">
+                      <%= show_sasaran.sasaran_kinerja %>
+                    </td>
+                    <td class="text-wrap border-start border-end border-bottom text-center">
+                      <%= show_sasaran.user.nama %>
+                    </td>
+                  </tr>
+                <% end %>
               <% end %>
-            <% end %>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card-body">
+        Ajukan Verifikasi
       </div>
     </div>
   </div>
