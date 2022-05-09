@@ -1280,6 +1280,7 @@ CREATE TABLE public.sasarans (
     nip_asn character varying,
     id_rencana character varying,
     sumber_dana character varying,
+    subkegiatan_tematik_id bigint,
     tahun character varying,
     status public.sasaran_status DEFAULT 'draft'::public.sasaran_status
 );
@@ -2670,6 +2671,14 @@ ALTER TABLE ONLY public.sasarans
 
 ALTER TABLE ONLY public.kesenjangans
     ADD CONSTRAINT fk_rails_617f862287 FOREIGN KEY (rincian_id) REFERENCES public.rincians(id);
+
+
+--
+-- Name: sasarans fk_rails_78dfe7067c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sasarans
+    ADD CONSTRAINT fk_rails_78dfe7067c FOREIGN KEY (subkegiatan_tematik_id) REFERENCES public.subkegiatan_tematiks(id);
 
 
 --
