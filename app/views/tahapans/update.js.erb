@@ -1,3 +1,6 @@
+$('#form-renaksi').on('ajax:success', (event) => {
+  $(this).hide
+}).toggle();
 $('#notice').html("<%= j render 'shared/flash', flash: flash %>");
 setTimeout(() => {
   Turbolinks.visit(window.location, { action: "replace" })

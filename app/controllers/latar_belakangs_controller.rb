@@ -27,6 +27,10 @@ class LatarBelakangsController < ApplicationController
 
     respond_to do |format|
       if @latar_belakang.save
+        @status = 'success'
+        @text = 'Gambaran Umum berhasil disimpan'
+        flash[:success] = "Gambaran Umum berhasil disimpan"
+        format.js { render 'create.js.erb' }
         format.html do
           redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Gambaran Umum berhasil ditambahkan"
         end
@@ -42,6 +46,10 @@ class LatarBelakangsController < ApplicationController
   def update
     respond_to do |format|
       if @latar_belakang.update(latar_belakang_params)
+        @status = 'success'
+        @text = 'Gambaran Umum berhasil disimpan'
+        flash[:success] = "Gambaran Umum berhasil disimpan"
+        format.js { render 'create.js.erb' }
         format.html { redirect_to @latar_belakang, notice: "Latar belakang was successfully updated." }
         format.json { render :show, status: :ok, location: @latar_belakang }
       else

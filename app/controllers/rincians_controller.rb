@@ -33,6 +33,10 @@ class RinciansController < ApplicationController
     sasaran.update(penerima_manfaat: penerima_manfaat)
     respond_to do |format|
       if @rincian.save
+        @status = 'success'
+        @text = 'Sukses menambah tematik'
+        flash[:success] = "Edit rincian sukses"
+        format.js { render 'create.js.erb' }
         format.html do
           redirect_to user_sasaran_path(@sasaran.user, @sasaran), success: 'Rincian berhasil ditambahkan.'
         end
@@ -53,6 +57,10 @@ class RinciansController < ApplicationController
         sasaran.update(penerima_manfaat: penerima_manfaat)
       end
       if @rincian.update(rincian_params)
+        @status = 'success'
+        @text = 'Sukses menambah tematik'
+        flash[:success] = "Edit rincian sukses"
+        format.js { render 'create.js.erb' }
         format.html do
           redirect_to user_sasaran_path(@sasaran.user, @sasaran), success: 'Rincian berhasil diupdate.'
         end

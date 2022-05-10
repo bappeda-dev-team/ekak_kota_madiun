@@ -29,6 +29,7 @@ class TahapansController < ApplicationController
     respond_to do |format|
       if @tahapan.save
         flash[:success] = "Sukses menambahkan tahapan"
+        format.js { render 'update.js.erb' }
         format.html { redirect_to sasaran_path(@sasaran) }
         format.json { render :show, status: :created, location: @tahapan }
       else
@@ -43,6 +44,8 @@ class TahapansController < ApplicationController
   def update
     respond_to do |format|
       if @tahapan.update(tahapan_params)
+        flash[:success] = "Edit Tahapan berhasil"
+        format.js
         format.html { redirect_to sasaran_path(@sasaran), notice: 'Tahapan was successfully updated.' }
         format.json { render :show, status: :ok, location: @tahapan }
       else
