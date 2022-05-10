@@ -16,6 +16,11 @@
           <div class="col">
             <h2 class="fs-5 fw-bold mb-0">Laporan KaK</h2>
           </div>
+          <div class="col text-end">
+            <span><%= current_user.nama %></span>
+            |
+            <span><%= current_user.nik %></span>
+          </div>
         </div>
       </div>
       <div class="card-body">
@@ -66,7 +71,10 @@
         </div>
       </div>
       <div class="card-body">
-        Ajukan Verifikasi
+        <p>Jumlah Sasaran Aktif : <%= @jumlah_sasaran %></p>
+        <p>Jumlah SubKegiatan : <%= @jumlah_subkegiatan %></p>
+        <p>Total Usulan : <%= @jumlah_usulan %></p>
+        <p>Total Pagu Anggaran : Rp. <%= number_with_delimiter @total_pagu, delimiter: '.' %></p>
       </div>
     </div>
   </div>
