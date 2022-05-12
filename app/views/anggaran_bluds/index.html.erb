@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Anggaran Bluds</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @anggaran_bluds.each do |anggaran_blud| %>
+      <tr>
+        <td><%= link_to 'Show', anggaran_blud %></td>
+        <td><%= link_to 'Edit', edit_anggaran_blud_path(anggaran_blud) %></td>
+        <td><%= link_to 'Destroy', anggaran_blud, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Anggaran Blud', new_anggaran_blud_path %>
