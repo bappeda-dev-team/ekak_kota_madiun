@@ -242,6 +242,43 @@ ALTER SEQUENCE public.aksis_id_seq OWNED BY public.aksis.id;
 
 
 --
+-- Name: anggaran_bluds; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.anggaran_bluds (
+    id bigint NOT NULL,
+    kode_kelompok_barang character varying,
+    uraian_kelompok_barang character varying,
+    kode_barang character varying,
+    uraian_barang character varying,
+    spesifikasi character varying,
+    satuan character varying,
+    harga_satuan bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: anggaran_bluds_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.anggaran_bluds_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: anggaran_bluds_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.anggaran_bluds_id_seq OWNED BY public.anggaran_bluds.id;
+
+
+--
 -- Name: anggaran_hspks; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1280,7 +1317,6 @@ CREATE TABLE public.sasarans (
     nip_asn character varying,
     id_rencana character varying,
     sumber_dana character varying,
-    subkegiatan_tematik_id bigint,
     tahun character varying,
     status public.sasaran_status DEFAULT 'draft'::public.sasaran_status
 );
@@ -1344,7 +1380,16 @@ UNION
     anggaran_hspks.harga_satuan,
     'AnggaranHspk'::text AS searchable_type,
     anggaran_hspks.id AS searchable_id
-   FROM public.anggaran_hspks;
+   FROM public.anggaran_hspks
+UNION
+ SELECT anggaran_bluds.uraian_barang,
+    anggaran_bluds.kode_barang,
+    anggaran_bluds.spesifikasi,
+    anggaran_bluds.satuan,
+    anggaran_bluds.harga_satuan,
+    'AnggaranBlud'::text AS searchable_type,
+    anggaran_bluds.id AS searchable_id
+   FROM public.anggaran_bluds;
 
 
 --
@@ -1684,6 +1729,13 @@ ALTER TABLE ONLY public.aksis ALTER COLUMN id SET DEFAULT nextval('public.aksis_
 
 
 --
+-- Name: anggaran_bluds id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.anggaran_bluds ALTER COLUMN id SET DEFAULT nextval('public.anggaran_bluds_id_seq'::regclass);
+
+
+--
 -- Name: anggaran_hspks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1974,6 +2026,14 @@ ALTER TABLE ONLY public.active_storage_variant_records
 
 ALTER TABLE ONLY public.aksis
     ADD CONSTRAINT aksis_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: anggaran_bluds anggaran_bluds_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.anggaran_bluds
+    ADD CONSTRAINT anggaran_bluds_pkey PRIMARY KEY (id);
 
 
 --
@@ -2674,14 +2734,6 @@ ALTER TABLE ONLY public.kesenjangans
 
 
 --
--- Name: sasarans fk_rails_78dfe7067c; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.sasarans
-    ADD CONSTRAINT fk_rails_78dfe7067c FOREIGN KEY (subkegiatan_tematik_id) REFERENCES public.subkegiatan_tematiks(id);
-
-
---
 -- Name: dasar_hukums fk_rails_9530516a5c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2874,6 +2926,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220503064338'),
 ('20220504045005'),
 ('20220504114533'),
-('20220505175922');
+('20220505175922'),
+('20220512221743'),
+('20220512224036');
 
 

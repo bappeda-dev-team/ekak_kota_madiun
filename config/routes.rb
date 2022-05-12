@@ -5,6 +5,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :anggaran_hspks
   resources :anggaran_sbus
   resources :anggaran_sshes
+  resources :anggaran_bluds
   resources :subkegiatan_tematiks, path: 'tematiks'
   resources :rekenings
   resources :musrenbangs do
