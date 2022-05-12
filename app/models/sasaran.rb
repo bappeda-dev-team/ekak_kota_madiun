@@ -2,22 +2,23 @@
 #
 # Table name: sasarans
 #
-#  id                  :bigint           not null, primary key
-#  anggaran            :integer
-#  id_rencana          :string
-#  indikator_kinerja   :string
-#  kualitas            :integer
-#  nip_asn             :string
-#  penerima_manfaat    :string
-#  sasaran_kinerja     :string
-#  satuan              :string
-#  status              :enum             default("draft")
-#  sumber_dana         :string
-#  tahun               :string
-#  target              :integer
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  program_kegiatan_id :bigint
+#  id                     :bigint           not null, primary key
+#  anggaran               :integer
+#  id_rencana             :string
+#  indikator_kinerja      :string
+#  kualitas               :integer
+#  nip_asn                :string
+#  penerima_manfaat       :string
+#  sasaran_kinerja        :string
+#  satuan                 :string
+#  status                 :enum             default("draft")
+#  sumber_dana            :string
+#  tahun                  :string
+#  target                 :integer
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  program_kegiatan_id    :bigint
+#  subkegiatan_tematik_id :bigint
 #
 # Indexes
 #
@@ -26,6 +27,7 @@
 # Foreign Keys
 #
 #  fk_rails_...  (nip_asn => users.nik)
+#  fk_rails_...  (subkegiatan_tematik_id => subkegiatan_tematiks.id)
 #
 class Sasaran < ApplicationRecord
   # belongs_to :user
@@ -57,16 +59,16 @@ class Sasaran < ApplicationRecord
   # validates :satuan, presence: true
 
   default_scope { order(created_at: :asc) }
-  scope :hangus, -> { left_outer_joins(:usulans).where(usulans: { sasaran_id: nil }).where(program_kegiatan_id: nil) }
-  scope :total_hangus, -> { left_outer_joins(:usulans).where(usulans: { sasaran_id: nil }).where(program_kegiatan_id: nil).count }
-  scope :belum_ada_sub, -> { left_outer_joins(:usulans).where.not(usulans: { sasaran_id: nil }).where(program_kegiatan_id: nil) }
-  scope :total_belum_lengkap, -> { left_outer_joins(:usulans).where.not(usulans: { sasaran_id: nil }).where(program_kegiatan_id: nil).count }
+  scope :hangus, -> { left_outer_joins(:usulans).where(usulans: { sasaran_id: nil }).where(program_kegiatan: nil) }
+  scope :total_hangus, -> { left_outer_joins(:usulans).where(usulans: { sasaran_id: nil }).where(program_kegiatan: nil).count }
+  scope :belum_ada_sub, -> { left_outer_joins(:usulans).where.not(usulans: { sasaran_id: nil }).where(program_kegiatan: nil) }
+  scope :total_belum_lengkap, -> { left_outer_joins(:usulans).where.not(usulans: { sasaran_id: nil }).where(program_kegiatan: nil).count }
   scope :sudah_lengkap, lambda {
-                          includes(:usulans).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan_id: nil)
+                          includes(:usulans).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan: nil)
                         }
   scope :total_sudah_lengkap, lambda {
-                          includes(:usulans).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan_id: nil).count
-                        }
+                                includes(:usulans).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan: nil).count
+                              }
   scope :digunakan, -> { where(status: 'disetujui') }
   scope :total_digunakan, -> { where(status: 'disetujui').count }
 
@@ -160,7 +162,7 @@ class Sasaran < ApplicationRecord
   def status_sasaran
     if hangus? && status != 'disetujui'
       'hangus'
-    elsif belum_ada_sub? && status != 'disetujui'
+    elsif belum_ada_sub?
       'blm_lengkap'
     else
       'digunakan'

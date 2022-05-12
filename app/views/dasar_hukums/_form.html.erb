@@ -1,4 +1,4 @@
-<%= form_with(model: [@sasaran,dasar_hukum]) do |form| %>
+<%= form_with(model: [@sasaran,dasar_hukum], local: false) do |form| %>
   <% if dasar_hukum.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(dasar_hukum.errors.count, "error") %> prohibited this dasar_hukum from being saved:</h2>

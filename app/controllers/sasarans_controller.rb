@@ -71,10 +71,9 @@ class SasaransController < ApplicationController
   end
 
   def verifikasi_sasaran
-    @sasarans = Sasaran.where(status: 'pengajuan')
-                       .select do |s|
-                         s.user.opd.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin
-                       end
+    @sasarans = Sasaran.where.not(status: 'draft').select do |s|
+      s.user.opd.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin
+    end
   end
 
   def ajukan_verifikasi
@@ -93,6 +92,12 @@ class SasaransController < ApplicationController
     @sasaran = Sasaran.find(params[:id])
     @sasaran.update(status: 'ditolak')
     render 'shared/_notifier_v2', locals: { message: 'Sasaran ditolak', status_icon: 'info', form_name: 'non-exists' }
+  end
+
+  def revisi
+    @sasaran = Sasaran.find(params[:id])
+    @sasaran.update(status: 'draft')
+    render 'shared/_notifier_v2', locals: { message: 'Revisi', status_icon: 'warning', form_name: 'non-exists' }
   end
 
   # GET /sasarans/new
@@ -127,10 +132,14 @@ class SasaransController < ApplicationController
       if @sasaran.update(sasaran_params)
         flash[:success] = if sasaran_params[:program_kegiatan_id]
                             'Sukses menambah subkegiatan'
+                          elsif sasaran_params[:sumber_dana]
+                            'Sumber dana disimpan'
                           else
                             'Sukses update sasaran'
                           end
-        format.js
+        @status = 'success'
+        @text = 'Sukses menambah tematik'
+        format.js { render 'update.js.erb' }
         format.html { redirect_to user_sasaran_path(@user, @sasaran) }
         format.json { render :show, status: :ok, location: @sasaran }
       else

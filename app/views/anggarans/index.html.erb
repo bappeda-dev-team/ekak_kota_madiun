@@ -16,11 +16,6 @@
 <div class="card border-2 shadow mb-1">
   <div class="card-header">
     <div class="row align-items-center">
-      <p><%= link_to sasaran_path(@sasaran) do %>
-          <span class="fas fa-arrow-left"></span>
-          <span>Kembali</span>
-        <% end %>
-      </p>
       <h5>Sasaran : <%= @sasaran.sasaran_kinerja %></h5>
       <p>Tahapan : <%= @tahapan.tahapan_kerja %></p>
     </div>
@@ -99,6 +94,12 @@
         </tfoot>
       </table>
     </div>
+  </div>
+  <div class="card-body">
+    <%= link_to sasaran_path(@sasaran), class: 'btn btn-info w-100 text-white' do %>
+      <span class="fas fa-arrow-left"></span>
+      <span>Kembali</span>
+    <% end %>
   </div>
 </div>
 <% if @tahapan.comments.any? %>

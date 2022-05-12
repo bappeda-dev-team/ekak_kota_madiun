@@ -42,6 +42,7 @@
 # Indexes
 #
 #  index_program_kegiatans_on_identifier_belanja      (identifier_belanja) UNIQUE
+#  index_program_kegiatans_on_kode_sub_giat           (kode_sub_giat) UNIQUE
 #  index_program_kegiatans_on_subkegiatan_tematik_id  (subkegiatan_tematik_id)
 #
 # Foreign Keys
@@ -57,7 +58,7 @@ class ProgramKegiatan < ApplicationRecord
   belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_opd'
   belongs_to :subkegiatan_tematik, optional: true
   has_many :kaks
-  has_many :sasarans
+  has_many :sasarans, dependent: :nullify
 
   default_scope { order(created_at: :desc) }
 

@@ -27,6 +27,10 @@ class DasarHukumsController < ApplicationController
 
     respond_to do |format|
       if @dasar_hukum.save
+        @status = 'success'
+        @text = 'Sukses menambah tematik'
+        flash[:success] = "Dasar Hukum ditambahkan"
+        format.js { render 'create.js.erb' }
         format.html do
           redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Dasar Hukum berhasil ditambahkan"
         end
@@ -44,6 +48,10 @@ class DasarHukumsController < ApplicationController
     @sasaran = Sasaran.find(params[:sasaran_id])
     respond_to do |format|
       if @dasar_hukum.update(dasar_hukum_params)
+        @status = 'success'
+        @text = 'Sukses menambah tematik'
+        flash[:success] = "Edit Dasar Hukum sukses"
+        format.js { render 'create.js.erb' }
         format.html do
           redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Dasar Hukum berhasil diupdate"
         end

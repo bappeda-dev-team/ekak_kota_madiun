@@ -36,15 +36,24 @@
                   <td class="fw-bolder text-gray-500 text-wrap"><%= sasaran.sasaran_kinerja %></td>
                   <td class="fw-bolder text-gray-500"><%= sasaran.user.nama %></td>
                   <td class="fw-bolder text-gray-500">
-                    <%= button_to setujui_sasaran_path(sasaran), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
-                      Setujui
-                      <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
+                    <% if sasaran.status == 'pengajuan' %>
+                      <%= button_to setujui_sasaran_path(sasaran), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
+                        Setujui
+                        <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
+                      <% end %>
                     <% end %>
                   </td>
                   <td class="fw-bolder text-gray-500">
-                    <%= button_to tolak_sasaran_path(sasaran), remote: true, class: 'btn btn-danger d-inline-flex align-items-center toggle-active' do %>
-                      Tolak
-                      <i class="fas fa-times-circle text-white icon icon-xs ms-2"></i>
+                    <% if sasaran.status == 'pengajuan' %>
+                      <%= button_to tolak_sasaran_path(sasaran), remote: true, class: 'btn btn-danger d-inline-flex align-items-center toggle-active' do %>
+                        Tolak
+                        <i class="fas fa-times-circle text-white icon icon-xs ms-2"></i>
+                      <% end %>
+                    <% else %>
+                      <%= button_to revisi_sasaran_path(sasaran), remote: true, class: 'btn btn-info d-inline-flex align-items-center toggle-active' do %>
+                        Revisi
+                        <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
+                      <% end %>
                     <% end %>
                   </td>
                 </tr>

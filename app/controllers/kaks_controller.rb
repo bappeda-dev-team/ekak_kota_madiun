@@ -13,6 +13,10 @@ class KaksController < ApplicationController
 
   def laporan_kak
     @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik }).group(:id)
+    @jumlah_sasaran = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik }).count(:sasarans)
+    @jumlah_subkegiatan = ProgramKegiatan.includes(:sasarans).where(sasarans: { nip_asn: current_user.nik }).count
+    @jumlah_usulan = ProgramKegiatan.includes(:sasarans).where(sasarans: { nip_asn: current_user.nik }).map { |program| program.sasarans.map{ |s| s.usulans.count }.reduce(:+) }.reduce(:+)
+    @total_pagu = @program_kegiatans.map { |program| program.my_pagu }.sum
   end
 
   def pdf_kak

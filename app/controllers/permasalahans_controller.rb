@@ -27,6 +27,10 @@ class PermasalahansController < ApplicationController
 
     respond_to do |format|
       if @permasalahan.save
+        @status = 'success'
+        @text = 'Sukses menambah tematik'
+        flash[:success] = "Permaslahaan ditambahkan"
+        format.js { render 'create.js.erb' }
         format.html do
           redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Permasalahan berhasil ditambahkan"
         end
@@ -43,6 +47,10 @@ class PermasalahansController < ApplicationController
     @sasaran = Sasaran.find(params[:sasaran_id])
     respond_to do |format|
       if @permasalahan.update(permasalahan_params)
+        @status = 'success'
+        @text = 'Sukses menambah tematik'
+        flash[:success] = "Edit rincian sukses"
+        format.js { render 'create.js.erb' }
         format.html do
           redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Permasalahan berhasil diupdate"
         end
