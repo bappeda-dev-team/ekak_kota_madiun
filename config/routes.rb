@@ -58,6 +58,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       post :ajukan_verifikasi
       post :setujui
       post :tolak
+      post :revisi
     end
   end
 
