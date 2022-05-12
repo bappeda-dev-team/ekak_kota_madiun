@@ -21,5 +21,8 @@
 require 'rails_helper'
 
 RSpec.describe TematikSasaran, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'relation bridge sasaran to subkegiatan_tematik(too lazy to re-implements sasaran has many tematik so it become sasaran has many through)' do
+    it { should belong_to(:sasaran) }
+    it { should belong_to(:subkegiatan_tematik) }
+  end
 end

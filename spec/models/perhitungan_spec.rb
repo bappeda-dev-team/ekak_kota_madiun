@@ -33,7 +33,6 @@ RSpec.describe Perhitungan, type: :model do
 
   context 'validation' do
     it { should validate_presence_of(:deskripsi) }
-    it { should validate_presence_of(:satuan) }
     it { should validate_presence_of(:harga) }
     it { should validate_numericality_of(:harga) }
     it { should belong_to(:pajak).optional(true) }
