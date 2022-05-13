@@ -17,6 +17,10 @@ class AnggaranBludsController < ApplicationController
 
   # GET /anggaran_bluds/1/edit
   def edit
+    respond_to do |f|
+      f.js { render 'new.js.erb' }
+      f.html
+    end
   end
 
   # POST /anggaran_bluds or /anggaran_bluds.json
@@ -59,7 +63,7 @@ class AnggaranBludsController < ApplicationController
     @anggaran_blud.destroy
 
     respond_to do |format|
-      format.html { redirect_to anggaran_bluds_url, notice: "Anggaran blud was successfully destroyed." }
+      format.html { redirect_to anggaran_bluds_url, success: "Anggaran dihapus." }
       format.json { head :no_content }
     end
   end

@@ -17,7 +17,7 @@
             <h2 class="fs-5 fw-bold mb-0">Anggaran Blud</h2>
           </div>
           <div class="col text-end">
-            <%= link_to "Tambah Data", new_anggaran_blud_path, class: "btn btn-sm btn-info" %>
+            <%= link_to "Tambah Data", new_anggaran_blud_path, remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-blud'}, class: "btn btn-sm btn-info" %>
           </div>
         </div>
       </div>
@@ -32,18 +32,29 @@
               <th>Spesifikasi</th>
               <th>Satuan</th>
               <th>Harga satuan</th>
+              <th class="text-center" colspan="2">Action</th>
             </tr>
           </thead>
           <tbody>
             <% @anggaran_bluds.each do |anggaran_blud| %>
-              <tr>
-                <td><%= anggaran_blud.kode_kelompok_barang %></td>
-                <td><%= anggaran_blud.uraian_kelompok_barang %></td>
-                <td><%= anggaran_blud.kode_barang %></td>
-                <td><%= anggaran_blud.uraian_barang %></td>
-                <td><%= anggaran_blud.spesifikasi %></td>
-                <td><%= anggaran_blud.satuan %></td>
+              <tr id="<%= dom_id(anggaran_blud) %>">
+                <td class="text-wrap"><%= anggaran_blud.kode_kelompok_barang %></td>
+                <td class="text-wrap"><%= anggaran_blud.uraian_kelompok_barang %></td>
+                <td class="text-wrap"><%= anggaran_blud.kode_barang %></td>
+                <td class="text-wrap"><%= anggaran_blud.uraian_barang %></td>
+                <td class="text-wrap"><%= anggaran_blud.spesifikasi %></td>
+                <td class="text-wrap"><%= anggaran_blud.satuan %></td>
                 <td><%= anggaran_blud.harga_satuan %></td>
+                <td><%= link_to edit_anggaran_blud_path(anggaran_blud), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-blud'}, class: "btn btn-sm btn-warning" do %>
+                    <i class="fas fa-edit me-2"></i>
+                    <span>Edit</span>
+                  <% end %>
+                </td>
+                <td><%= link_to anggaran_blud, method: :delete, data: { confirm_swal: "Yakin ingin menghapus data ini?" }, class: "btn btn-sm btn-danger" do %>
+                    <i class="fas fa-trash me-2"></i>
+                    <span>Hapus</span>
+                  <% end %>
+                </td>
               </tr>
             <% end %>
           </tbody>
@@ -52,3 +63,4 @@
     </div>
   </div>
 </div>
+<%= render 'modal' %>
