@@ -12,7 +12,7 @@
   <%= form.hidden_field :sasaran_id, value: @sasaran.id  %>
   <div class="field">
     <%= form.label :penerima_manfaat, { class: "form-label" } %>
-    <%= form.text_field :penerima_manfaat, { class: "form-control" ,value: @sasaran.penerima_manfaat } %>
+    <%= form.text_area :penerima_manfaat, { class: "form-control" ,value: @sasaran.penerima_manfaat } %>
   </div>
   <div class="field">
     <%= form.label :data_terpilah, { class: "form-label" } %>

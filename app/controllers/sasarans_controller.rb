@@ -76,6 +76,11 @@ class SasaransController < ApplicationController
     end
   end
 
+  def ajukan_semua_sasaran
+    sasarans = params[:sasaran_diajukans]
+    sasarans.count
+  end
+
   def ajukan_verifikasi
     @sasaran = Sasaran.find(params[:id])
     @sasaran.update(status: 'pengajuan')
