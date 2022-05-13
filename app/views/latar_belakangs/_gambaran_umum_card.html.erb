@@ -26,8 +26,12 @@
                 <td class="align-middle text-wrap"><%= latarbelakang.gambaran_umum %></td>
                 <% unless diajukan? %>
                   <td class="text-center align-middle">
-                    <%= link_to 'Edit Gambaran Umum', edit_sasaran_latar_belakang_path(sasaran,latarbelakang), remote: true, class: 'btn btn-outline-info text-center',
+                    <%= link_to 'Edit Gambaran Umum', edit_sasaran_latar_belakang_path(sasaran,latarbelakang), remote: true, class: 'btn btn-outline-info text-center me-3',
                   data: {'bs-toggle': 'modal', 'bs-target': '#form-gambaranumum'} %>
+                    <%= link_to sasaran_latar_belakang_path(sasaran,latarbelakang), method: :delete, remote: true, data: { confirm_swal: "Yakin ingin menghapus data ini?" }, class: "btn btn-sm btn-danger" do %>
+                      <i class="fas fa-trash me-2"></i>
+                      <span>Hapus</span>
+                    <% end %>
                   </td>
                 <% end %>
               </tr>

@@ -34,8 +34,12 @@
                 <td class="align-middle text-wrap"><%= permasalahan.penyebab_external %></td>
                 <% unless diajukan? %>
                   <td class="text-center align-middle">
-                    <%= link_to 'Edit permasalahan', edit_sasaran_permasalahan_path(sasaran,permasalahan), remote: true, class: 'btn btn-outline-info text-center',
+                    <%= link_to 'Edit permasalahan', edit_sasaran_permasalahan_path(sasaran,permasalahan), remote: true, class: 'btn btn-outline-info text-center me-3',
                   data: {'bs-toggle': 'modal', 'bs-target': '#form-permasalahan'} %>
+                    <%= link_to sasaran_permasalahan_path(sasaran,permasalahan), method: :delete, remote: true, data: { confirm_swal: "Yakin ingin menghapus data ini?" }, class: "btn btn-sm btn-danger" do %>
+                      <i class="fas fa-trash me-2"></i>
+                      <span>Hapus</span>
+                    <% end %>
                   </td>
                 <% end %>
               </tr>

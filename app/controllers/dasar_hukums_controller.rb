@@ -65,9 +65,11 @@ class DasarHukumsController < ApplicationController
 
   # DELETE /dasar_hukums/1 or /dasar_hukums/1.json
   def destroy
+    @sasaran = Sasaran.find(params[:sasaran_id])
     @dasar_hukum.destroy
     respond_to do |format|
-      format.html { redirect_to dasar_hukums_url, notice: "Dasar hukum was successfully destroyed." }
+      format.js
+      format.html { redirect_to user_sasaran_path(current_user, @sasaran), success: "Dasar hukum was successfully destroyed." }
       format.json { head :no_content }
     end
   end
