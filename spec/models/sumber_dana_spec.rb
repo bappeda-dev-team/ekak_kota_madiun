@@ -12,5 +12,14 @@
 require 'rails_helper'
 
 RSpec.describe SumberDana, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'crud' do
+    it 'can create sumber dana' do
+      sumber_dana = SumberDana.create(
+        kode_sumber_dana: '1',
+        sumber_dana: 'DAU',
+        tahun: '2022'
+      )
+      expect(sumber_dana).to be_valid
+    end
+  end
 end

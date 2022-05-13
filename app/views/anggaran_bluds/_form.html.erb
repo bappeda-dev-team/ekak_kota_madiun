@@ -1,0 +1,43 @@
+<%= form_with(model: anggaran_blud) do |form| %>
+  <% if anggaran_blud.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(anggaran_blud.errors.count, "error") %> prohibited this anggaran_blud from being saved:</h2>
+      <ul>
+        <% anggaran_blud.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :kode_kelompok_barang, class: 'form-label' %>
+    <%= form.text_field :kode_kelompok_barang, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.label :uraian_kelompok_barang, class: 'form-label' %>
+    <%= form.text_field :uraian_kelompok_barang, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.label :kode_barang, class: 'form-label' %>
+    <%= form.text_field :kode_barang, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.label :uraian_barang, class: 'form-label'%>
+    <%= form.text_field :uraian_barang, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.label :spesifikasi, class: 'form-label' %>
+    <%= form.text_field :spesifikasi, class: "form-control", required: true %>
+  </div>
+  <div class="field">
+    <%= form.label :satuan, class: 'form-label' %>
+    <%= form.text_field :satuan , class: "form-control", required: true %>
+  </div>
+  <div class="field">
+    <%= form.label :harga_satuan, class: 'form-label' %>
+    <%= form.number_field :harga_satuan, class: "form-control", required: true %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -20,6 +20,5 @@ require 'rails_helper'
 RSpec.describe Permasalahan, type: :model do
   context 'validation' do
     it { should belong_to(:sasaran).optional(true) }
-    it { should validate_presence_of(:permasalahan) }
   end
 end

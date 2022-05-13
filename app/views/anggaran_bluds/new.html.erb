@@ -1,0 +1,21 @@
+<nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+  <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+    <li class="breadcrumb-item">
+      <%= link_to root_path do %>
+        <i class="fas fa-home"></i>
+      <% end %>
+    </li>
+    <li class="breadcrumb-item"><%= link_to 'Anggaran Blud', anggaran_bluds_path %></li>
+    <li class="breadcrumb-item active" aria-current="page">Tambah Anggaran</li>
+  </ol>
+</nav>
+<div class="form-field-container">
+  <h1>Tambah Anggaran Blud</h1>
+  <%= render 'form', anggaran_blud: @anggaran_blud %>
+</div>
+<div>
+  <%= link_to anggaran_bluds_path, class: 'btn btn-info w-100 text-white' do %>
+    <span class="fas fa-arrow-left"></span>
+    <span>Kembali</span>
+  <% end %>
+</div>

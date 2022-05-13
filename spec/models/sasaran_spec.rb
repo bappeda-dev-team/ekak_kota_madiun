@@ -2,23 +2,22 @@
 #
 # Table name: sasarans
 #
-#  id                     :bigint           not null, primary key
-#  anggaran               :integer
-#  id_rencana             :string
-#  indikator_kinerja      :string
-#  kualitas               :integer
-#  nip_asn                :string
-#  penerima_manfaat       :string
-#  sasaran_kinerja        :string
-#  satuan                 :string
-#  status                 :enum             default("draft")
-#  sumber_dana            :string
-#  tahun                  :string
-#  target                 :integer
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  program_kegiatan_id    :bigint
-#  subkegiatan_tematik_id :bigint
+#  id                  :bigint           not null, primary key
+#  anggaran            :integer
+#  id_rencana          :string
+#  indikator_kinerja   :string
+#  kualitas            :integer
+#  nip_asn             :string
+#  penerima_manfaat    :string
+#  sasaran_kinerja     :string
+#  satuan              :string
+#  status              :enum             default("draft")
+#  sumber_dana         :string
+#  tahun               :string
+#  target              :integer
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  program_kegiatan_id :bigint
 #
 # Indexes
 #
@@ -27,7 +26,6 @@
 # Foreign Keys
 #
 #  fk_rails_...  (nip_asn => users.nik)
-#  fk_rails_...  (subkegiatan_tematik_id => subkegiatan_tematiks.id)
 #
 require 'rails_helper'
 

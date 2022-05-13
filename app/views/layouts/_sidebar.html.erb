@@ -83,6 +83,20 @@
               </div>
             </li>
           <% end %>
+          <%# Anggaran Blud %>
+          <% if current_user.nik == 'rsud2022' or current_user.has_role? :super_admin %>
+            <li class="nav-item<%= navigation_class('anggaran_blud') %>" >
+              <%= link_to(anggaran_bluds_path, class: "nav-link d-flex justify-content-between") do %>
+                <span>
+                  <span class="sidebar-icon">
+                    <i class="fas fa-hospital-user icon icon-xs me-2"></i>
+                  </span>
+                  <span class="sidebar-text">Anggaran Blud</span>
+                </span>
+              <% end %>
+            </li>
+          <% end %>
+          <%# end %>
           <% master_data_items.each do |master_item| %>
             <li class="nav-item<%= navigation_class(master_item[:identifier]) %>">
               <%= link_to( master_item[:href], class: "nav-link d-flex justify-content-between") do %>
