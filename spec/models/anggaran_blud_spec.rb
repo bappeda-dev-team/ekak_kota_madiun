@@ -54,5 +54,6 @@ RSpec.describe AnggaranBlud, type: :model do
     it { should validate_presence_of(:kode_barang) }
     it { should validate_presence_of(:kode_kelompok_barang) }
     it { should validate_presence_of(:uraian_barang) }
+    it { should validate_numericality_of(:harga_satuan) }
   end
 end

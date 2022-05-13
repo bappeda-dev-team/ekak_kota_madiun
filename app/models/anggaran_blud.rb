@@ -17,4 +17,5 @@ class AnggaranBlud < ApplicationRecord
   validates :kode_barang, presence: true
   validates :kode_kelompok_barang, presence: true
   validates :uraian_barang, presence: true
+  validates :harga_satuan, numericality: true
 end

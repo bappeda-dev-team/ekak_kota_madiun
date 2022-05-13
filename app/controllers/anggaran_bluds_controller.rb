@@ -25,7 +25,11 @@ class AnggaranBludsController < ApplicationController
 
     respond_to do |format|
       if @anggaran_blud.save
-        format.html { redirect_to anggaran_blud_url(@anggaran_blud), notice: "Anggaran blud was successfully created." }
+        @status = 'success'
+        @text = 'Anggaran Blud ditambahkan'
+        flash[:success] = "Permaslahaan ditambahkan"
+        format.js
+        format.html { redirect_to anggaran_bluds_url, success: @text }
         format.json { render :show, status: :created, location: @anggaran_blud }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +42,10 @@ class AnggaranBludsController < ApplicationController
   def update
     respond_to do |format|
       if @anggaran_blud.update(anggaran_blud_params)
-        format.html { redirect_to anggaran_blud_url(@anggaran_blud), notice: "Anggaran blud was successfully updated." }
+        @status = 'success'
+        @text = 'Anggaran Blud diupdate'
+        flash[:success] = "Permaslahaan diupdate"
+        format.html { redirect_to anggaran_bluds_url, success: @text }
         format.json { render :show, status: :ok, location: @anggaran_blud }
       else
         format.html { render :edit, status: :unprocessable_entity }
