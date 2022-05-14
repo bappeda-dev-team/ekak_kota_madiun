@@ -50,8 +50,10 @@
                     <%= link_to "/acuan_kerja_new/#{kak.id}", class: "m-3" do %>
                       <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
                     <% end %>
-                    <%= link_to "/pdf_kak/#{kak.id}.pdf", class: "m-3" do %>
-                      <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
+                    <% if @sasarans.any? {|s| s.status == 'pengajuan' } %>
+                      <%= link_to "/pdf_kak/#{kak.id}.pdf", class: "m-3" do %>
+                        <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
+                      <% end %>
                     <% end %>
                   </td>
                 </tr>
@@ -70,21 +72,29 @@
           </table>
         </div>
       </div>
+      <% if @sasarans.any? {|s| s.status == 'pengajuan' or 'disetujui' } %>
+        <div class="card-body">
+          <p>Jumlah Sasaran Aktif : <%= @jumlah_sasaran %></p>
+          <p>Jumlah SubKegiatan : <%= @jumlah_subkegiatan %></p>
+          <p>Total Usulan : <%= @jumlah_usulan %></p>
+          <p>Total Pagu Anggaran : Rp. <%= number_with_delimiter @total_pagu, delimiter: '.' %></p>
+        </div>
+      <% end %>
       <div class="card-body">
-        <p>Jumlah Sasaran Aktif : <%= @jumlah_sasaran %></p>
-        <p>Jumlah SubKegiatan : <%= @jumlah_subkegiatan %></p>
-        <p>Total Usulan : <%= @jumlah_usulan %></p>
-        <p>Total Pagu Anggaran : Rp. <%= number_with_delimiter @total_pagu, delimiter: '.' %></p>
-      </div>
-      <% console %>
-      <div class="card-body">
-        <%= form_with url: ajukan_semua_sasaran_path do |f| %>
-          <% @sasarans.pluck(:id).each do |s| %>
-            <%= f.hidden_field :sasaran_diajukans, value: s, multiple: true  %>
-          <% end %>
-          <%= button_tag type: 'submit', class: 'btn btn-success w-100 text-white' do %>
-            <span>Ajukan Verifikasi</span>
+        <% if @sasarans.any? {|s| s.status == 'pengajuan' or 'disetujui' } %>
+          <%= button_tag type: 'submit', class: 'btn btn-info w-100 text-white', disabled: true do %>
+            <span><%= @sasarans.first.status.capitalize || 'Diajukan' %></span>
             <i class="fas fa-check ms-2"></i>
+          <% end %>
+        <% else %>
+          <%= form_with url: ajukan_semua_sasaran_path, local: false do |f| %>
+            <% @sasarans.pluck(:id).each do |s| %>
+              <%= f.hidden_field :sasaran_diajukans, value: s, multiple: true  %>
+            <% end %>
+            <%= button_tag type: 'submit', class: 'btn btn-success w-100 text-white' do %>
+              <span>Ajukan Verifikasi</span>
+              <i class="fas fa-check ms-2"></i>
+            <% end %>
           <% end %>
         <% end %>
       </div>

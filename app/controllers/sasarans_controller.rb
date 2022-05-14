@@ -78,7 +78,13 @@ class SasaransController < ApplicationController
 
   def ajukan_semua_sasaran
     sasarans = params[:sasaran_diajukans]
-    sasarans.count
+    Sasaran.where(id: sasarans).update_all(status: 'pengajuan')
+    respond_to do |format|
+      flash[:success] = 'KaK Diajukan'
+      @status = 'success'
+      @text = 'KaK Berhasil Diajukan'
+      format.js { render 'update.js.erb' }
+    end
   end
 
   def ajukan_verifikasi
