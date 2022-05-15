@@ -93,6 +93,17 @@ class SasaransController < ApplicationController
     render 'shared/_notifier_v2', locals: { message: 'Sasaran berhasil diajukan', status_icon: 'success', form_name: 'non-exists' }
   end
 
+  def setujui_semua_sasaran
+    sasarans = params[:sasaran_diajukans]
+    Sasaran.where(id: sasarans).update_all(status: 'disetujui')
+    respond_to do |format|
+      flash[:success] = 'KaK Disetujui'
+      @status = 'success'
+      @text = 'KaK Berhasil Disetujui'
+      format.js { render 'update.js.erb' }
+    end
+  end
+
   def setujui
     @sasaran = Sasaran.find(params[:id])
     @sasaran.update(status: 'disetujui')
