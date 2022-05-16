@@ -10,7 +10,10 @@
         <li class="breadcrumb-item active" aria-current="page">Laporan RKA</li>
       </ol>
     </nav>
-    <div class="card border-0 shadow">
+    <% if current_user.has_role? :admin %>
+      <%= render 'shared/filter_card', filter_url: '/filter_rab', filter_file: 'hasil_filter_rab' %>
+    <% end %>
+    <div class="card border-0 shadow" id="user_filter">
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">

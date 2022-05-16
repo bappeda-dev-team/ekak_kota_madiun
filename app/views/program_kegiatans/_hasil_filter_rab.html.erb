@@ -1,0 +1,60 @@
+<div class="card border-0 shadow" id="user_filter">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">Laporan RAB</h2>
+      </div>
+      <div class="col text-end">
+        <span><%= current_user.nama %></span>
+        |
+        <span><%= current_user.nik %></span>
+      </div>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table align-items-center">
+      <thead class="thead-light">
+        <tr>
+          <th class="border-bottom" scope="col">No.</th>
+          <th class="border-bottom text-wrap text-center" scope="col">Sub Kegiatan</th>
+          <th class="border-bottom text-center" scope="col" colspan="2">Informasi RaB</th>
+          <th class="border-bottom text-center" scope="col">Action</th>
+        </tr>
+        <tr>
+          <th colspan="2"></th>
+          <th class="border-bottom text-center">Rencana Kinerja</th>
+          <th class="border-bottom text-center">Pemilik Rencana</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% i = 1 %>
+        <% @users.each do |user| %>
+          <% user.program_kegiatans.each do |program| %>
+            <tr>
+              <th class="text-gray-900 fw-bolder" scope="row" rowspan="<%= program.sasarans.count + 1 %>"><%= i %></th>
+              <th class="text-gray-900 text-wrap" scope="row" rowspan="<%= program.sasarans.count + 1 %>"><%= program.nama_subkegiatan %></th>
+              <td class="p-0 m-0" colspan="2"></td>
+              <td class="fw-bolder text-gray-500 text-center" rowspan="<%= program.sasarans.count + 1 %>">
+                <%= link_to "/pdf_rka/#{program.id}.pdf", class: "m-3" do %>
+                  <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
+                <% end %>
+              </td>
+            </tr>
+            <% program.sasarans.each do |show_sasaran| %>
+              <tr>
+                <td class="text-wrap border-start border-end" width="450px">
+                  <%= show_sasaran.sasaran_kinerja %>
+                </td>
+                <td class="text-wrap border-start border-end border-bottom text-center">
+                  <%= show_sasaran.user.nama %>
+                </td>
+              </tr>
+            <% end %>
+            <% i = i + 1 %>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

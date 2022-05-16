@@ -172,6 +172,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   post '/filter_user', to: 'filter#filter_user'
   post '/filter_program', to: 'filter#filter_program'
   post '/filter_kak', to: 'filter#filter_kak'
+  post '/filter_rab', to: 'filter#filter_rab'
   # get "/program_kegiatans", to: "program_kegiatans#index"
   # get "/program_kegiatans/new", to: "program_kegiatans#new"
   # get "/program_kegiatan/:id", to: "program_kegiatans#show"
