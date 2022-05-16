@@ -57,6 +57,19 @@ class FilterController < ApplicationController
     end
   end
 
+  def filter_kak
+    opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
+    @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd }).sasaran_diajukan
+    if OPD_TABLE.key?(opd.to_sym)
+      @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).sasaran_diajukan
+      @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])
+    end
+    @filter_file = 'hasil_filter' if params[:filter_file].empty?
+    respond_to do |format|
+      format.js { render 'kaks/kak_filter' }
+    end
+  end
+
   private
 
   def filter_params

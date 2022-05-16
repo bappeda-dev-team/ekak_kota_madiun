@@ -25,12 +25,13 @@
             <th class="text-center border-start border-end">Sub Kegiatan</th>
             <th class="text-center border-start border-end">Sasaran Kinerja</th>
             <th class="text-center border-start border-end">Pejabat</th>
+            <th class="text-center border-start border-end">OPD</th>
             <th class="text-center border-start border-end">Pagu Anggaran</th>
             <th class="border-end text-center">Keterangan</th>
             <th colspan="3" class="text-center">Usulan</th>
           </tr>
           <tr class="text-center">
-            <th colspan="4" class="border-start"></th>
+            <th colspan="5" class="border-start"></th>
             <th colspan="2" class="border-end"></th>
             <th class="border-start border-end">nama</th>
             <th class="border-start border-end">jenis</th>
@@ -39,17 +40,18 @@
         </thead>
         <tbody>
           <% @sasarans.each.with_index(1) do |sasaran, index| %>
-            <tr class="border-bottom">
+            <tr class="border-bottom border-end">
               <td class="border-start align-middle border-start border-end" rowspan="<%= sasaran.my_usulan.count + 1 %>"><%= index %></td>
               <td class="align-middle text-wrap border-start border-end" rowspan="<%= sasaran.my_usulan.count + 1 %>" width="150px"><%= sasaran.program_kegiatan.nama_subkegiatan %></td>
               <td class="align-middle text-wrap border-start border-end" rowspan="<%= sasaran.my_usulan.count + 1 %>" width="250px"><%= sasaran.sasaran_kinerja %></td>
               <td class="align-middle text-wrap" rowspan="<%= sasaran.my_usulan.count + 1 %>" ><%= sasaran.user.nama %></td>
+              <td class="align-middle text-wrap" rowspan="<%= sasaran.my_usulan.count + 1 %>" ><%= sasaran.user.opd.nama_opd %></td>
               <td class="align-middle text-center border-end" rowspan="<%= sasaran.my_usulan.count + 1 %>">Rp. <%= number_with_delimiter(sasaran&.total_anggaran, delimiter: '.') or '-' %></td>
               <td class="border-end" rowspan="<%= sasaran.my_usulan.count + 1 %>"></td>
               <td class="p-0 m-0 border-start border-end d-none" colspan="3"></td>
             </tr>
             <% sasaran.my_usulan.each do |usulan|  %>
-              <tr class="border-bottom">
+              <tr class="border-bottom border-end">
                 <td class="border-start border-end align-middle text-wrap"><%= usulan&.usulan || '-' %></td>
                 <td class="border-start border-end align-middle text-wrap"><%= usulan.class.try(:type) || usulan.class.name %></td>
                 <td class="border-start border-end align-middle text-wrap"><%= usulan.try(:alamat) || usulan.try(:peraturan_terkait) || usulan.try(:manfaat) %></td>

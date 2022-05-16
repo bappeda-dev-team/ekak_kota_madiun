@@ -58,17 +58,16 @@ class Sasaran < ApplicationRecord
 
   default_scope { order(created_at: :asc) }
   scope :hangus, -> { left_outer_joins(:usulans).where(usulans: { sasaran_id: nil }).where(program_kegiatan: nil) }
-  scope :total_hangus, -> { left_outer_joins(:usulans).where(usulans: { sasaran_id: nil }).where(program_kegiatan: nil).count }
+  scope :total_hangus, -> { hangus.count }
   scope :belum_ada_sub, -> { left_outer_joins(:usulans).where.not(usulans: { sasaran_id: nil }).where(program_kegiatan: nil) }
-  scope :total_belum_lengkap, -> { left_outer_joins(:usulans).where.not(usulans: { sasaran_id: nil }).where(program_kegiatan: nil).count }
+  scope :total_belum_lengkap, -> { belum_ada_sub.count }
   scope :sudah_lengkap, lambda {
                           includes(:usulans).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan: nil)
                         }
-  scope :total_sudah_lengkap, lambda {
-                                includes(:usulans).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan: nil).count
-                              }
+  scope :total_sudah_lengkap, -> { sudah_lengkap.count }
   scope :digunakan, -> { where(status: 'disetujui') }
   scope :total_digunakan, -> { where(status: 'disetujui').count }
+  scope :dilaporan, -> { where(status: ['pengajuan', 'disetujui', 'ditolak']) }
 
   SUMBERS = { dana_transfer: 'Dana Transfer', dak: 'DAK', dbhcht: 'DBHCHT', bk_provinsi: 'BK Provinsi',
               blud: 'BLUD' }.freeze
