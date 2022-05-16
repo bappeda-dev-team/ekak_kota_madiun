@@ -27,27 +27,14 @@ prawn_document do |pdf|
   # loop sasaran 
   
   @program_kegiatan.sasarans.where.not(program_kegiatan: nil).each.with_index(1) do |sasaran, index|
-    indikator_sasaran = []
-    indikator_target = []
-    indikator_satuan = []
-    dasar_hukum = []
-    gambaran_umum = []
-    permasalahan = []
-    sasaran.indikator_sasarans.each do |indikator|
-      indikator_sasaran << [['', 'Indikator Kinerja (Output)', ':', { content: indikator.indikator_kinerja }]]
-      indikator_target << [['', 'Target', ':', { content: indikator.target }]]
-      indikator_satuan << [['', 'Satuan', ':', { content: indikator.satuan }]]
-    end
-    sasaran.dasar_hukums.each do |dh|
-      dasar_hukum << [dh.peraturan.to_s]
-    end
+    dasar_hukum_cell = pdf.make_cell(content: sasaran.dasar_hukums.size.to_s)
     tabel_sasaran = [
       [index, { content: "Sasaran/Rencana Kinerja #{index}", font_style: :bold }, ':', { content: sasaran.sasaran_kinerja }],
-      indikator_sasaran.flatten!,
-      indikator_target.flatten!,
-      indikator_satuan.flatten!,
+      ['', 'Indikator Kinerja Sub Kegiatan (Output)', ':', { content: @program_kegiatan.indikator_subkegiatan }],
+      ['', 'Target', ':', { content: @program_kegiatan.target_subkegiatan.to_s }],
+      ['', 'Satuan', ':', { content: @program_kegiatan.satuan_target_subkegiatan.to_s }],
       ['', '', '', ''],
-      ['a.', 'Dasar Hukum', ':', dasar_hukum],
+      ['a.', 'Dasar Hukum', ':', dasar_hukum_cell],
       ['b.', 'Gambaran Umum', ':', { content: sasaran.latar_belakangs.first&.gambaran_umum }],
       ['c.', 'Penerima Manfaat', ':', { content: sasaran.penerima_manfaat }],
       ['d.', 'Data Terpilah', ':', { content: sasaran.rincian&.data_terpilah }],
