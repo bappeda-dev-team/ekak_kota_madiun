@@ -9,7 +9,7 @@ class UsulansController < ApplicationController
     usulan = usulan_type.constantize.find(usulan)
     sasaran_update = Sasaran.find(sasaran)
     if usulan_type == 'Mandatori'
-      sasaran_update.dasar_hukums.create!(judul: usulan.usulan, peraturan: usulan.peraturan_terkait, tahun: usulan.tahun)
+      sasaran_update.dasar_hukums.create!(judul: usulan.peraturan_terkait, peraturan: usulan.uraian, tahun: usulan.tahun)
     else
       sasaran_update.permasalahans.create!(jenis: 'Umum', permasalahan: usulan.uraian)
     end

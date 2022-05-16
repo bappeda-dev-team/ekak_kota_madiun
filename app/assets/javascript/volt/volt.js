@@ -29,14 +29,14 @@ d.addEventListener("DOMContentLoaded", function (event) {
   };
 
   var sidebar = document.getElementById('sidebarMenu')
-  if (sidebar && d.body.clientWidth < breakpoints.lg) {
-    sidebar.addEventListener('shown.bs.collapse', function () {
-      document.querySelector('body').style.position = 'fixed';
-    });
-    sidebar.addEventListener('hidden.bs.collapse', function () {
-      document.querySelector('body').style.position = 'relative';
-    });
-  }
+  // if (sidebar && d.body.clientWidth < breakpoints.lg) {
+  //   sidebar.addEventListener('shown.bs.collapse', function () {
+  //     document.querySelector('body').style.position = 'fixed';
+  //   });
+  //   sidebar.addEventListener('hidden.bs.collapse', function () {
+  //     document.querySelector('body').style.position = 'relative';
+  //   });
+  // }
 
   var iconNotifications = d.querySelector('.notification-bell');
   if (iconNotifications) {

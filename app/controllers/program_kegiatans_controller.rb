@@ -36,6 +36,9 @@ class ProgramKegiatansController < ApplicationController
   end
 
   def pdf_kak
+    @nama_file = ProgramKegiatan.find(params[:id]).nama_subkegiatan
+    @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
+    @filename = "Laporan_KAK_#{@nama_file}_#{@waktu}.pdf"
     @program_kegiatan = ProgramKegiatan.find(params[:id])
   end
 
@@ -44,7 +47,9 @@ class ProgramKegiatansController < ApplicationController
   end
 
   def pdf_rka
-    @filename = 'laporan_rka.pdf'
+    @nama_file = ProgramKegiatan.find(params[:id]).nama_subkegiatan
+    @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
+    @filename = "Laporan_RAB_#{@nama_file}_#{@waktu}.pdf"
   end
 
   def edit; end

@@ -12,19 +12,19 @@
   <%= form.hidden_field :sasaran_id, value: @sasaran.id  %>
   <div class="field">
     <%= form.label :penerima_manfaat, { class: "form-label" } %>
-    <%= form.text_field :penerima_manfaat, { class: "form-control" ,value: @sasaran.penerima_manfaat } %>
+    <%= form.text_area :penerima_manfaat, { class: "form-control" ,value: @sasaran.penerima_manfaat } %>
   </div>
   <div class="field">
     <%= form.label :data_terpilah, { class: "form-label" } %>
-    <%= form.text_field :data_terpilah, { class: "form-control" } %>
+    <%= form.text_area :data_terpilah, { class: "form-control" } %>
   </div>
   <div class="field">
     <%= form.label :resiko, { class: "form-label" } %>
-    <%= form.text_field :resiko, { class: "form-control" } %>
+    <%= form.text_area :resiko, { class: "form-control" } %>
   </div>
   <div class="field">
     <%= form.label :lokasi_pelaksanaan, { class: "form-label" } %>
-    <%= form.text_field :lokasi_pelaksanaan, { class: "form-control" } %>
+    <%= form.text_area :lokasi_pelaksanaan, { class: "form-control" } %>
   </div>
   <div class="actions">
     <%= form.submit %>
