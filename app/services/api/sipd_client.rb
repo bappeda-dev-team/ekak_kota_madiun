@@ -54,9 +54,15 @@ module Api
     end
 
     def list_opd
-      response = H.get("#{URL}/list_opd_get/109").to_s
+      response = request_opd_list(tahun: @tahun)
       result = JSON.parse(response, object_class: OpenStruct)
       result.data
+    end
+
+    def subkegiatan_opd
+      # TODO Test this
+      response = request_kamus_usulan_data(tahun: @tahun, id_opd: @id_sipd)
+      proses_data_subkegiatan_opd(response)
     end
 
     private
@@ -229,5 +235,52 @@ module Api
       end
       KamusUsulan.upsert_all(kamus_usulans, unique_by: :id_kamus)
     end
+
+    def proses_data_subkegiatan_opd(response)
+      data = Oj.load(response.body)
+      data_detail = data['data']
+      subkegiatans = data_detail.uniq { |el| el['id_sub_giat'] }
+      data_subkegiatan = []
+      subkegiatans.each do |sub|
+        kode_sub_skpd = sub["kode_sub_skpd"]
+        id_unit = sub['id_skpd']
+        id_sub_unit = sub['id_sub_skpd']
+        kode_urusan = sub['kode_urusan']
+        nama_urusan = sub['nama_urusan']
+        kode_bidang_urusan = sub['kode_bidang_urusan']
+        nama_bidang_urusan = sub['nama_bidang_urusan']
+        id_program_sipd = sub['id_program']
+        kode_program = sub['kode_program']
+        nama_program = sub['nama_program']
+        id_giat = sub['id_giat']
+        kode_giat = sub['kode_giat']
+        nama_kegiatan = sub['nama_giat']
+        id_sub_giat = sub['id_sub_giat']
+        kode_sub_giat = sub['kode_sub_giat']
+        nama_sub_giat = sub['nama_sub_giat']
+        indikator_sub = sub['indikator_sub']
+        target_sub = sub['target_sub']
+        satuan_sub = sub['satuan_sub']
+        data_subkegiatan << {
+          id_unit: id_unit,
+          kode_urusan: kode_urusan,
+          nama_urusan: nama_urusan,
+          kode_bidang_urusan: kode_bidang_urusan,
+          nama_bidang_urusan: nama_bidang_urusan,
+          id_program_sipd: id_program_sipd,
+          kode_program: kode_program,
+          nama_program: nama_program,
+          kode_giat: kode_giat,
+          nama_kegiatan: nama_kegiatan,
+          kode_sub_giat: kode_sub_giat,
+          nama_subkegiatan: nama_sub_giat,
+          created_at: Time.now,
+          updated_at: Time.now,
+          kode_opd: @id_opd # warning hard coded
+        }
+      end
+      ProgramKegiatan.upsert_all(data_subkegiatan, unique_by: :identifier_belanja)
+    end
+
   end
 end

@@ -12,6 +12,13 @@ module Api
                   success: "Update ProgramKegiatan #{nama_opd} Dikerjakan. Harap menunggu..."
     end
 
+    def sync_subkegiatan_opd
+      UpdateProgramJob.set(queue: "Subkegiatan-#{nama_opd}-#{@kode_opd}-#{@tahun}").perform_later(@kode_opd, @tahun,
+                                                                                                  @id_opd)
+      redirect_to admin_program_kegiatan_path,
+                  success: "Update SubKegiatan #{nama_opd} Dikerjakan. Harap menunggu..."
+    end
+
     def sync_musrenbang
       UpdateMusrenbangJob.set(queue: "Musrenbang-#{@tahun}").perform_later(@tahun)
       redirect_to musrenbangs_path, success: "Update Musrenbang #{@tahun} Dikerjakan. Harap menunggu..."
