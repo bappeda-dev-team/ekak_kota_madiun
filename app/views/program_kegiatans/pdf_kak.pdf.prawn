@@ -21,36 +21,86 @@ prawn_document do |pdf|
     ['Satuan', ':', @program_kegiatan.satuan_target_subkegiatan.to_s],
     ['Jumlah Sasaran/Rencana Kinerja', ':', @program_kegiatan.sasarans.count]
   ]
-  pdf.table(tabel_program_kegiatan, cell_style: { size: 8, border_width: 0 })
+  pdf.table(tabel_program_kegiatan, column_widths: { 0=> 150,1 => 12 }, cell_style: { size: 8, border_width: 0 }, width: pdf.bounds.width)
   # after tabel pertama
   pdf.move_down 30
-  # loop sasaran 
-  
+  # loop sasaran
   @program_kegiatan.sasarans.where.not(program_kegiatan: nil).each.with_index(1) do |sasaran, index|
-    dasar_hukum_cell = pdf.make_cell(content: sasaran.dasar_hukums.size.to_s)
+    dasar_hukum_cell = pdf.make_table([['Text Dasar Hukum 1'], ['Text Dasar Hukum 2'], ['Text Dasar Hukum 3']], cell_style: {size: 8, border_width: 0})
+    permasalahan_cell = pdf.make_table([
+      [{content: 'Contoh Permasalahan', colspan: 3}],
+      [{content: 'Penyebab', colspan: 3}],
+      ['1. Internal', ':', 'Lorem '],
+      ['2. External', ':', 'Extenral 1'],
+      [{content: 'Contoh Permasalahan', colspan: 3}],
+      [{content: 'Penyebab', colspan: 3}],
+      ['1. Internal', ':', 'Internal 2'],
+      ['2. External', ':', 'Extenral 2'],
+      ], cell_style: {size: 8, border_width: 0}, column_widths: [50, 12, 350])
     tabel_sasaran = [
-      [index, { content: "Sasaran/Rencana Kinerja #{index}", font_style: :bold }, ':', { content: sasaran.sasaran_kinerja }],
-      ['', 'Indikator Kinerja Sub Kegiatan (Output)', ':', { content: @program_kegiatan.indikator_subkegiatan }],
+      [{ content: "#{index}.", font_style: :bold }, { content: "Sasaran/Rencana Kinerja", font_style: :bold }, ':', { content: sasaran.sasaran_kinerja }],
+      ['', 'Indikator Kinerja (Output)', ':', { content: @program_kegiatan.indikator_subkegiatan }],
       ['', 'Target', ':', { content: @program_kegiatan.target_subkegiatan.to_s }],
       ['', 'Satuan', ':', { content: @program_kegiatan.satuan_target_subkegiatan.to_s }],
-      ['', '', '', ''],
       ['a.', 'Dasar Hukum', ':', dasar_hukum_cell],
       ['b.', 'Gambaran Umum', ':', { content: sasaran.latar_belakangs.first&.gambaran_umum }],
       ['c.', 'Penerima Manfaat', ':', { content: sasaran.penerima_manfaat }],
       ['d.', 'Data Terpilah', ':', { content: sasaran.rincian&.data_terpilah }],
-      ['e.', 'Permasalahan', ':', { content: sasaran.permasalahans.first&.permasalahan }],
-      ['f.', 'Penyebab', '', ''],
-      ['', '1. Internal', ':', { content: sasaran.permasalahans.first&.penyebab_internal }],
-      ['', '2. External', ':', { content: sasaran.permasalahans.first&.penyebab_external }],
-      ['g.', 'Resiko', ':', { content: sasaran.rincian&.resiko }],
-      ['h.', 'Rencana Aksi dan Anggaran', ':', { content: 'Pending' }],
-      ['i.', 'Usulan yang terakomodir', '', ''],
-      ['', 'Musrenbang', '', ''],
-      ['', 'Pokir', '', ''],
-      ['', 'Mandatori', '', ''],
-      ['', 'Inisiatif Walikota', '', '']
+      ['e.', 'Permasalahan', ':', permasalahan_cell],
+      ['f.', 'Resiko', ':', { content: sasaran.rincian&.resiko }],
+      ['g.', {content: 'Rencana Aksi dan Anggaran', colspan: 3}]
     ]
-    pdf.table(tabel_sasaran, cell_style: { size: 8, border_width: 0 })
-    pdf.move_down 30
+    pdf.table(tabel_sasaran, column_widths: { 0=> 17, 2=> 12 }, cell_style: { size: 8, border_width: 0 })
+    pdf.move_down 10
+    data_rencana_aksi = [[{ content: 'No', rowspan: 2 }, { content: 'Tahapan Kerja', rowspan: 2 },
+                          { content: 'Target pada bulan', colspan: 12 }, { content: 'Jumlah', rowspan: 2 },
+                          { content: 'Pagu Anggaran', rowspan: 2 }, { content: 'Keterangan', rowspan: 2 }], %w[1 2 3 4 5 6 7 8 9 20 11 12]]
+
+    sasaran.tahapans.each.with_index(1) do |tahapan, i|
+      data_rencana_aksi << [i, tahapan.tahapan_kerja,
+                            tahapan.find_target_bulan(1),
+                            tahapan.find_target_bulan(2),
+                            tahapan.find_target_bulan(3),
+                            tahapan.find_target_bulan(4),
+                            tahapan.find_target_bulan(5),
+                            tahapan.find_target_bulan(6),
+                            tahapan.find_target_bulan(7),
+                            tahapan.find_target_bulan(8),
+                            tahapan.find_target_bulan(9),
+                            tahapan.find_target_bulan(10),
+                            tahapan.find_target_bulan(11),
+                            tahapan.find_target_bulan(12),
+                            tahapan.target_total,
+                            "Rp. #{number_with_delimiter(tahapan.anggaran_tahapan, delimiter: '.')}",
+                            tahapan.keterangan]
+    end
+  data_rencana_aksi << [{ content: "Total sasaran ini adalah #{sasaran.waktu_total} bulan", colspan: 14 },
+                        sasaran.jumlah_target, "Rp. #{number_with_delimiter(sasaran.total_anggaran, delimiter: '.')}", '']
+
+  tabel_renaksi = pdf.make_table(data_rencana_aksi, column_widths: { 0 => 17, 1 => 130, 14 => 30 }, cell_style: { size: 6, align: :left }, width: pdf.bounds.width)
+  if pdf.cursor - tabel_renaksi.height < 0
+    pdf.start_new_page
+  end
+  tabel_renaksi.draw
+  data_rencana_aksi.clear
+
+  # Usulan
+  pdf.move_down 10
+  tabel_usulan = [
+    ['h.', 'Usulan yang terakomodir']
+  ]
+  pdf.table(tabel_usulan, column_widths: { 0 => 17, 1 => 100}, cell_style: { size: 8, border_width: 0 })
+  data_penerima_manfaat = [['No', 'Jenis Usulan', 'Usulan', 'Permasalahan/ Uraian', 'Keterangan']]
+  count = 0
+  sasaran.my_usulan.each do |u|
+  count += 1
+  keterangan = u.try(:alamat) || u.try(:peraturan_terkait) || u.try(:manfaat)
+  tipe = u.class.try(:type) || u.class.name.to_s
+  data_penerima_manfaat << [count, tipe, u.usulan, u.uraian, keterangan]
+  end
+  pdf.move_down 10
+  pdf.table(data_penerima_manfaat, column_widths: { 0 => 17, 1 => 50, 2 => 100 },
+            cell_style: { size: 6, align: :left }, width: pdf.bounds.width)
+  pdf.move_down 30
   end
 end
