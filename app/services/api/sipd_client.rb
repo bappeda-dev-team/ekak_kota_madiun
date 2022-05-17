@@ -60,7 +60,19 @@ module Api
     end
 
     private
+# TODO: buat fungsi get datanya
+    def request_opd_list(tahun:)
+      H.get("#{URL}/list_opd_get/109?tahun=#{tahun}")
+    end
 
+    def request_subkegiatan_opd(tahun:, id_opd:)
+      H.get("#{URL}/get_sub_kegiatan_opd/109?id_giat=&id_skpd=#{id_opd}&tahun=#{tahun}")
+    end
+
+    def request_indikator_program(id_program:)
+      H.get("#{URL}/indikator_per_program/109/#{id_program}")
+    end
+# TODO Depreceate this thing
     def request_sub_kegiatan_all(tahun, id_sipd)
       H.get("#{URL}/get_komponen_all/109?tahun=#{tahun}&id_sub_skpd=#{id_sipd}")
     end
@@ -174,6 +186,7 @@ module Api
         alamat = musren['alamat_teks']
         uraian = musren['koefisien']
         usulan = musren['masalah']
+        rev_unit = musren['rev_unit'] # TODO: make column for this
         musrenbangs << { id_unik: id_unik,
                          id_kamus: id_kamus, tahun: tahun, alamat: alamat, usulan: usulan,
                          uraian: uraian, created_at: Time.now, updated_at: Time.now }
