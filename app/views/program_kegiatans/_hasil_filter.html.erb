@@ -39,7 +39,7 @@
         <% @programKegiatans.each.with_index(1) do |prog, i| %>
           <tr id="<%= dom_id(prog) %>">
             <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-            <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.nama_subkegiatan %> <%= prog.id_sub_giat %></td>
+            <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.nama_subkegiatan %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.indikator_subkegiatan %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.target_subkegiatan %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.satuan_target_subkegiatan %></td>

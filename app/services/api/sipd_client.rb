@@ -161,10 +161,10 @@ module Api
       data_subkegiatan = []
       jajals.each do |sub|
         id_rinci_sub_bl = sub['id_rinci_sub_bl']
-        tahun = sub['tahun']
         kode_skpd = sub["kode_skpd"]
         kode_sub_skpd = sub["kode_sub_skpd"]
         id_unit = sub['id_unit']
+        id_sub_unit = sub['id_sub_skpd']
         kode_urusan = sub['kode_urusan']
         nama_urusan = sub['nama_urusan']
         kode_bidang_urusan = sub['kode_bidang_urusan']
@@ -181,7 +181,6 @@ module Api
         pagu = sub['pagu']
         data_subkegiatan << {
           identifier_belanja: id_rinci_sub_bl,
-          tahun: tahun,
           kode_skpd: kode_skpd,
           kode_sub_skpd: kode_sub_skpd,
           id_unit: id_unit,
@@ -269,7 +268,6 @@ module Api
       subkegiatans = data_detail.uniq { |el| el['id_sub_giat'] }
       data_subkegiatan = []
       subkegiatans.each do |sub|
-        tahun = sub['tahun']
         kode_skpd = sub["kode_skpd"]
         kode_sub_skpd = sub["kode_sub_skpd"]
         id_unit = sub['id_skpd']
@@ -291,7 +289,6 @@ module Api
         target_sub = sub['target_sub']
         satuan_sub = sub['satuan_sub']
         data_subkegiatan << {
-          tahun: tahun,
           identifier_belanja: id_sub_giat,
           kode_skpd: kode_skpd,
           kode_sub_skpd: kode_sub_skpd,
