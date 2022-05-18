@@ -95,7 +95,7 @@ class SasaransController < ApplicationController
 
   def setujui_semua_sasaran
     sasarans = params[:sasaran_diajukans]
-    Sasaran.where(id: sasarans).update_all(status: 'disetujui')
+    Sasaran.where(id: sasarans.flatten!).update_all(status: 'disetujui')
     respond_to do |format|
       flash[:success] = 'KaK Disetujui'
       @status = 'success'

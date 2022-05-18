@@ -41,7 +41,13 @@
                 <th class="text-gray-900 text-wrap" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.nama_subkegiatan %></th>
                 <td class="p-0 m-0" colspan="2"></td>
                 <td class="fw-bolder text-gray-500 text-center border-start border-end" rowspan="<%= kak.sasarans.count + 1 %>">
-                  Verifikasi
+                  <%= link_to setujui_semua_sasaran_path(sasaran_diajukans: [kak.sasarans.pluck(:id)]),
+                      method: :post, remote: true,
+                      data: { disable_with: 'Memproses....'},
+                      class:"btn btn-sm btn-primary" do %>
+                    <i class="fas fa-check me-2"></i>
+                    Verifikasi
+                  <% end %>
                 </td>
                 <td class="fw-bolder text-gray-500 text-center" rowspan="<%= kak.sasarans.count + 1 %>">
                   <%= link_to "/acuan_kerja_new/#{kak.id}", class: "m-3" do %>
@@ -56,6 +62,7 @@
                 <tr>
                   <td class="text-wrap border-start border-end" width="450px">
                     <%= show_sasaran.sasaran_kinerja %>
+                    / <%= show_sasaran.status %>
                   </td>
                   <td class="text-wrap border-start border-end border-bottom text-center">
                     Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar, delimiter: '.') or 0 %>
