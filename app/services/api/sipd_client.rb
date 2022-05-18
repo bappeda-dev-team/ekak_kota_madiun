@@ -8,7 +8,7 @@ module Api
 
     attr_accessor :id_sipd, :tahun, :id_opd, :id_program
 
-    def initialize(id_sipd, tahun, id_opd, id_program = nil)
+    def initialize(id_sipd:, tahun:, id_opd:, id_program: nil)
       # TODO: dynamic assign this later
       @id_sipd = id_sipd
       @tahun = tahun || 2022
@@ -35,21 +35,6 @@ module Api
       response = request_subkegiatan_opd(tahun: @tahun, id_opd: @id_sipd)
       proses_detail_master_subkegiatan(response)
     end
-
-    def proses_detail_master_subkegiatan(response)
-      data = Oj.load(response.body)
-      subkegiatan_details = data['data']
-      # list_sub_kegiatan = ProgramKegiatan.where(id_unit: @id_sipd).pluck(:id_sub_giat)
-      # subkegiatan_details.select! { |sub| list_sub_kegiatan.include?(sub['id_sub_giat']) }
-      subkegiatan_details.each do |sub_giat|
-        indikator_sub = sub_giat['indikator_sub']
-        target_sub = sub_giat['target_sub']
-        satuan_sub = sub_giat['satuan_sub']
-        ProgramKegiatan.where(id_sub_giat: sub_giat['id_sub_giat'])
-                       .update_all(indikator_subkegiatan: indikator_sub, target_subkegiatan: target_sub, satuan_target_subkegiatan: satuan_sub)
-      end
-    end
-
 
     def musrenbang_master
       response = request_musrenbang_data(@tahun)
@@ -97,6 +82,10 @@ module Api
 
     def request_indikator_program(id_program:)
       H.get("#{URL}/indikator_per_program/109/#{id_program}")
+    end
+
+    def request_indikator_kegiatan(id_kegiatan:)
+      H.get("#{URL}/indikator_per_kegiatan/109/#{id_opd}/#{id_kegiatan}")
     end
 # TODO Depreceate this thing
     def request_sub_kegiatan_all(tahun, id_sipd)
@@ -152,7 +141,32 @@ module Api
                                  satuan_target_program: satuan_target_program)
     end
 
-    
+    def proses_detail_master_kegiatan(response)
+      data = Oj.load(response.body)
+      kegiatan_details = data['data']
+      indikator_kegiatan = kegiatan_details.first['indikator']
+      target_kegiatan = kegiatan_details.first['target_3'] # target_1 asumsi tahun 2020, 2021 target_2, 2022 target_3
+      satuan_target_kegiatan = kegiatan_details.first['satuan']
+      ProgramKegiatan.where(id_giat: @id_program)
+                     .update_all(indikator: indikator_kegiatan,
+                                 target: target_kegiatan,
+                                 satuan: satuan_target_kegiatan)
+    end
+
+    def proses_detail_master_subkegiatan(response)
+      data = Oj.load(response.body)
+      subkegiatan_details = data['data']
+      # list_sub_kegiatan = ProgramKegiatan.where(id_unit: @id_sipd).pluck(:id_sub_giat)
+      # subkegiatan_details.select! { |sub| list_sub_kegiatan.include?(sub['id_sub_giat']) }
+      subkegiatan_details.each do |sub_giat|
+        indikator_sub = sub_giat['indikator_sub']
+        target_sub = sub_giat['target_sub']
+        satuan_sub = sub_giat['satuan_sub']
+        ProgramKegiatan.where(id_sub_giat: sub_giat['id_sub_giat'])
+                       .update_all(indikator_subkegiatan: indikator_sub, target_subkegiatan: target_sub,
+                                   satuan_target_subkegiatan: satuan_sub)
+      end
+    end
 
     def proses_data_subkegiatan(response)
       data = Oj.load(response.body)

@@ -23,7 +23,7 @@ module Api
       id_programs = @id_programs.flatten!
       unless id_programs.empty?
         id_programs.each do |id_program|
-          Api::SipdClient.new(@kode_opd, @tahun, @id_opd, id_program).detail_master_program
+          Api::SipdClient.new(id_sipd: @kode_opd, tahun: @tahun, id_opd: @id_opd, id_program: id_program).detail_master_program
         end
       end
       redirect_to admin_program_path, success: "Program pada #{nama_opd} Berhasil diupdate"
@@ -31,7 +31,7 @@ module Api
 
     def update_detail_subkegiatan
       # id opd to find subkegiatan on that opd
-      Api::SipdClient.new(@kode_opd, @tahun, @id_opd).detail_master_subkegiatan
+      Api::SipdClient.new(id_sipd: @kode_opd, tahun: @tahun, id_opd: @id_opd).detail_master_subkegiatan
       redirect_to admin_sub_kegiatan_path, success: "Subkegiatan pada #{nama_opd} Berhasil diupdate"
     end
 
