@@ -21,6 +21,11 @@ module Api
       proses_data_subkegiatan(request)
     end
 
+    def opd_master
+      request = request_opd_master(@tahun)
+      proses_data_master_opd(request)
+    end
+
     def data_master_program
       request = request_master_program
       proses_data_master_program(request)
@@ -29,6 +34,11 @@ module Api
     def detail_master_program
       request = request_detail_master_program(@id_program)
       proses_detail_master_program(request)
+    end
+
+    def detail_master_kegiatan
+      request = request_indikator_kegiatan(id_kegiatan: @id_program)
+      proses_detail_master_kegiatan(request)
     end
 
     def detail_master_subkegiatan
@@ -60,7 +70,7 @@ module Api
     end
 
     def list_opd
-      response = request_opd_list(tahun: @tahun)
+      response = request_opd_master(tahun: @tahun)
       result = JSON.parse(response, object_class: OpenStruct)
       result.data
     end
@@ -72,7 +82,7 @@ module Api
 
     private
 # TODO: buat fungsi get datanya
-    def request_opd_list(tahun:)
+    def request_opd_master(tahun:)
       H.get("#{URL}/list_opd_get/109?tahun=#{tahun}")
     end
 
@@ -110,6 +120,23 @@ module Api
 
     def request_kamus_usulan_data(tahun)
       H.get("#{URL}/kamus_usulan_musrenbang/109?tahun=#{tahun}")
+    end
+
+    def proses_data_master_opd(response)
+      data = Oj.load(response.body)
+      opds = data['data']
+      data_opd = []
+      opds.each do |opd|
+        data_opd << {
+          id_opd: opd['id_skpd'],
+          nama_opd: opd['nama_skpd'],
+          id_opd_induk: opd['id_skpd_induk'],
+          nama_opd_induk: opd['nama_skpd_induk'],
+          lembaga_id: Lembaga.first.id,
+          created_at: Time.now,
+          updated_at: Time.now,
+        }
+      end
     end
 
     def proses_data_master_program(response)
