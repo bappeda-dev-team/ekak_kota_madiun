@@ -168,6 +168,23 @@ class Sasaran < ApplicationRecord
     end
   end
 
+  def lengkap_semua
+    usulan_dan_sub = selesai?
+    rincian_sasaran = rincian.present? && penerima_manfaat.exists?
+    permasalahan_rencan = permasalahans.any?
+    dasar_hukum = dasar_hukums.any?
+    gambaran_umum = latar_belakangs.any?
+    tematik_saaran = subkegiatan_tematiks.any?
+    {
+      usulan_dan_sub: usulan_dan_sub,
+      rincian_sasaran: rincian_sasaran,
+      permasalahan: permasalahan_rencan,
+      dasar_hukum: dasar_hukum,
+      gambaran_umum: gambaran_umum,
+      tematik: tematik_saaran
+    }
+  end
+
   def add_tematik(sasaran:, tematik:)
     tematik_exists = TematikSasaran.where(sasaran_id: sasaran, subkegiatan_tematik_id: tematik)
     if tematik_exists.exists?
