@@ -3,11 +3,10 @@
 # Table name: program_kegiatans
 #
 #  id                        :bigint           not null, primary key
-#  bidang_urusan             :string
-#  id_program                :string
+#  id_giat                   :string
 #  id_program_sipd           :string
-#  id_renstra                :string
 #  id_sub_giat               :string
+#  id_sub_unit               :string
 #  id_unit                   :string
 #  identifier_belanja        :string
 #  indikator_kinerja         :string
@@ -17,24 +16,23 @@
 #  kode_giat                 :string
 #  kode_opd                  :string
 #  kode_program              :string
+#  kode_skpd                 :string
 #  kode_sub_giat             :string
+#  kode_sub_skpd             :string
 #  kode_urusan               :string
 #  nama_bidang_urusan        :string
 #  nama_kegiatan             :string
 #  nama_program              :string
 #  nama_subkegiatan          :string
 #  nama_urusan               :string
-#  outcome                   :string
 #  pagu                      :string
-#  pagu_giat                 :string
-#  pagu_subgiat              :string
 #  satuan                    :string
 #  satuan_target_program     :string
 #  satuan_target_subkegiatan :string
+#  tahun                     :string
 #  target                    :string
 #  target_program            :string
 #  target_subkegiatan        :string
-#  urusan                    :string
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
 #  subkegiatan_tematik_id    :bigint
@@ -59,7 +57,7 @@ class ProgramKegiatan < ApplicationRecord
   has_many :kaks
   has_many :sasarans, dependent: :nullify
 
-  default_scope { order(created_at: :desc) }
+  # default_scope { order(created_at: :desc) }
 
   def my_pagu
     sasarans.sudah_lengkap.map(&:total_anggaran).compact.sum

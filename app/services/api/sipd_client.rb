@@ -6,13 +6,14 @@ module Api
     URL = 'http://10.11.15.120:8888'.freeze
     H = HTTP.accept(:json)
 
-    attr_accessor :id_sipd, :tahun, :id_opd
+    attr_accessor :id_sipd, :tahun, :id_opd, :id_program
 
-    def initialize(id_sipd, tahun, id_opd)
+    def initialize(id_sipd, tahun, id_opd, id_program = nil)
       # TODO: dynamic assign this later
       @id_sipd = id_sipd
       @tahun = tahun || 2022
       @id_opd = id_opd
+      @id_program = id_program
     end
 
     def data_subkegiatan_all
@@ -25,10 +26,30 @@ module Api
       proses_data_master_program(request)
     end
 
-    def detail_master_program(id_program)
-      request = request_detail_master_program(id_program)
+    def detail_master_program
+      request = request_detail_master_program(@id_program)
       proses_detail_master_program(request)
     end
+
+    def detail_master_subkegiatan
+      response = request_subkegiatan_opd(tahun: @tahun, id_opd: @id_sipd)
+      proses_detail_master_subkegiatan(response)
+    end
+
+    def proses_detail_master_subkegiatan(response)
+      data = Oj.load(response.body)
+      subkegiatan_details = data['data']
+      # list_sub_kegiatan = ProgramKegiatan.where(id_unit: @id_sipd).pluck(:id_sub_giat)
+      # subkegiatan_details.select! { |sub| list_sub_kegiatan.include?(sub['id_sub_giat']) }
+      subkegiatan_details.each do |sub_giat|
+        indikator_sub = sub_giat['indikator_sub']
+        target_sub = sub_giat['target_sub']
+        satuan_sub = sub_giat['satuan_sub']
+        ProgramKegiatan.where(id_sub_giat: sub_giat['id_sub_giat'])
+                       .update_all(indikator_subkegiatan: indikator_sub, target_subkegiatan: target_sub, satuan_target_subkegiatan: satuan_sub)
+      end
+    end
+
 
     def musrenbang_master
       response = request_musrenbang_data(@tahun)
@@ -60,8 +81,7 @@ module Api
     end
 
     def subkegiatan_opd
-      # TODO Test this
-      response = request_kamus_usulan_data(tahun: @tahun, id_opd: @id_sipd)
+      response = request_subkegiatan_opd(tahun: @tahun, id_opd: @id_sipd)
       proses_data_subkegiatan_opd(response)
     end
 
@@ -80,7 +100,7 @@ module Api
     end
 # TODO Depreceate this thing
     def request_sub_kegiatan_all(tahun, id_sipd)
-      H.get("#{URL}/get_komponen_all/109?tahun=#{tahun}&id_sub_skpd=#{id_sipd}")
+      H.get("#{URL}/get_komponen_all/109?id_sub_giat=&id_sub_skpd=#{id_sipd}&tahun=#{tahun}")
     end
 
     def request_master_program
@@ -88,7 +108,7 @@ module Api
     end
 
     def request_detail_master_program(id_program)
-      H.get("#{URL}/usulan_musrenbang/109/#{id_program}")
+      H.get("#{URL}/indikator_per_program/109/#{id_program}")
     end
 
     def request_musrenbang_data(tahun)
@@ -123,19 +143,16 @@ module Api
     def proses_detail_master_program(response)
       data = Oj.load(response.body)
       program_details = data['data']
-      detail_program = []
-      program_details.each do |program_detail|
-        id_program = program_detail['id_program']
-        indikator = program_detail['indikator']
-        satuan = program_detail['satuan']
-        target = program_detail['target_4']
-        nama_urusan = program_detail['nama_urusan']
-        nama_bidang_urusan = program_detail['nama_bidang_urusan']
-        detail_program << { id_program: id_program, indikator: indikator, satuan: satuan,
-                            target: target, nama_urusan: nama_urusan, nama_bidang_urusan: nama_bidang_urusan }
-      end
-      detail_program
+      indikator_program = program_details.first['indikator']
+      target_program = program_details.first['target_3'] # target_1 asumsi tahun 2020, 2021 target_2, 2022 target_3
+      satuan_target_program = program_details.first['satuan']
+      ProgramKegiatan.where(id_program_sipd: @id_program)
+                     .update_all(indikator_program: indikator_program,
+                                 target_program: target_program,
+                                 satuan_target_program: satuan_target_program)
     end
+
+    
 
     def proses_data_subkegiatan(response)
       data = Oj.load(response.body)
@@ -144,6 +161,8 @@ module Api
       data_subkegiatan = []
       jajals.each do |sub|
         id_rinci_sub_bl = sub['id_rinci_sub_bl']
+        tahun = sub['tahun']
+        kode_skpd = sub["kode_skpd"]
         kode_sub_skpd = sub["kode_sub_skpd"]
         id_unit = sub['id_unit']
         kode_urusan = sub['kode_urusan']
@@ -153,14 +172,20 @@ module Api
         id_program_sipd = sub['id_program']
         kode_program = sub['kode_program']
         nama_program = sub['nama_program']
+        id_giat = sub['id_giat']
         kode_giat = sub['kode_giat']
         nama_kegiatan = sub['nama_giat']
+        id_sub_giat = sub['id_sub_giat']
         kode_sub_giat = sub['kode_sub_giat']
         nama_sub_giat = sub['nama_sub_giat']
         pagu = sub['pagu']
         data_subkegiatan << {
           identifier_belanja: id_rinci_sub_bl,
+          tahun: tahun,
+          kode_skpd: kode_skpd,
+          kode_sub_skpd: kode_sub_skpd,
           id_unit: id_unit,
+          id_sub_unit: id_sub_unit,
           kode_urusan: kode_urusan,
           nama_urusan: nama_urusan,
           kode_bidang_urusan: kode_bidang_urusan,
@@ -168,8 +193,10 @@ module Api
           id_program_sipd: id_program_sipd,
           kode_program: kode_program,
           nama_program: nama_program,
+          id_giat: id_giat,
           kode_giat: kode_giat,
           nama_kegiatan: nama_kegiatan,
+          id_sub_giat: id_sub_giat,
           kode_sub_giat: kode_sub_giat,
           nama_subkegiatan: nama_sub_giat,
           pagu: pagu,
@@ -192,8 +219,8 @@ module Api
         alamat = musren['alamat_teks']
         uraian = musren['koefisien']
         usulan = musren['masalah']
-        rev_unit = musren['rev_unit'] # TODO: make column for this
-        musrenbangs << { id_unik: id_unik,
+        opd = musren['rev_unit'] # TODO: make column for this
+        musrenbangs << { id_unik: id_unik, opd: opd,
                          id_kamus: id_kamus, tahun: tahun, alamat: alamat, usulan: usulan,
                          uraian: uraian, created_at: Time.now, updated_at: Time.now }
       end
@@ -242,6 +269,8 @@ module Api
       subkegiatans = data_detail.uniq { |el| el['id_sub_giat'] }
       data_subkegiatan = []
       subkegiatans.each do |sub|
+        tahun = sub['tahun']
+        kode_skpd = sub["kode_skpd"]
         kode_sub_skpd = sub["kode_sub_skpd"]
         id_unit = sub['id_skpd']
         id_sub_unit = sub['id_sub_skpd']
@@ -262,7 +291,12 @@ module Api
         target_sub = sub['target_sub']
         satuan_sub = sub['satuan_sub']
         data_subkegiatan << {
+          tahun: tahun,
+          identifier_belanja: id_sub_giat,
+          kode_skpd: kode_skpd,
+          kode_sub_skpd: kode_sub_skpd,
           id_unit: id_unit,
+          id_sub_unit: id_sub_unit,
           kode_urusan: kode_urusan,
           nama_urusan: nama_urusan,
           kode_bidang_urusan: kode_bidang_urusan,
@@ -270,10 +304,15 @@ module Api
           id_program_sipd: id_program_sipd,
           kode_program: kode_program,
           nama_program: nama_program,
+          id_giat: id_giat,
           kode_giat: kode_giat,
           nama_kegiatan: nama_kegiatan,
+          id_sub_giat: id_sub_giat,
           kode_sub_giat: kode_sub_giat,
           nama_subkegiatan: nama_sub_giat,
+          indikator_subkegiatan: indikator_sub,
+          target_subkegiatan: target_sub,
+          satuan_target_subkegiatan: satuan_sub,
           created_at: Time.now,
           updated_at: Time.now,
           kode_opd: @id_opd # warning hard coded
@@ -281,6 +320,5 @@ module Api
       end
       ProgramKegiatan.upsert_all(data_subkegiatan, unique_by: :identifier_belanja)
     end
-
   end
 end

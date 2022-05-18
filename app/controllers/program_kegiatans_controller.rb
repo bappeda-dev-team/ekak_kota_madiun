@@ -13,7 +13,17 @@ class ProgramKegiatansController < ApplicationController
   end
 
   def admin_program_kegiatan
-    @programKegiatans = ProgramKegiatan.includes([:subkegiatan_tematik]).all
+    @filter_url = 'filter_program'
+  end
+
+  def admin_program
+    @filter_url = 'filter_program_saja'
+    render :admin_program_kegiatan
+  end
+
+  def admin_kegiatan
+    @filter_url = 'filter_kegiatan'
+    render :admin_program_kegiatan
   end
 
   def new

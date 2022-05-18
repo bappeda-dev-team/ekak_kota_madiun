@@ -1091,7 +1091,12 @@ CREATE TABLE public.program_kegiatans (
     id_sub_giat character varying,
     kode_sub_giat character varying,
     pagu character varying,
-    identifier_belanja character varying
+    identifier_belanja character varying,
+    kode_skpd character varying,
+    kode_sub_skpd character varying,
+    id_sub_unit character varying,
+    id_giat character varying,
+    tahun character varying
 );
 
 
@@ -2873,6 +2878,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220504114533'),
 ('20220505175922'),
 ('20220512221743'),
-('20220512224036');
+('20220512224036'),
+('20220518040710'),
+('20220518074325');
 
 

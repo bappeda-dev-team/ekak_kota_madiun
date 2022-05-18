@@ -53,6 +53,23 @@ class FilterController < ApplicationController
   def filter_program
     @programKegiatans = ProgramKegiatan.includes(%i[opd subkegiatan_tematik]).where(opds: { kode_unik_opd: @kode_opd })
     respond_to do |format|
+      @render_file = 'program_kegiatans/hasil_filter'
+      format.js { render 'program_kegiatans/program_kegiatan_filter' }
+    end
+  end
+
+  def filter_program_saja
+    @programKegiatans = ProgramKegiatan.includes(:opd).select("DISTINCT ON(program_kegiatans.id_program_sipd) program_kegiatans.*").where(opds: { kode_unik_opd: @kode_opd })
+    respond_to do |format|
+      @render_file = 'program_kegiatans/hasil_filter_program'
+      format.js { render 'program_kegiatans/program_kegiatan_filter' }
+    end
+  end
+
+  def filter_kegiatan
+    @programKegiatans = ProgramKegiatan.includes(:opd).select("DISTINCT ON(program_kegiatans.kode_giat) program_kegiatans.*").where(opds: { kode_unik_opd: @kode_opd })
+    respond_to do |format|
+      @render_file = 'program_kegiatans/hasil_filter_kegiatan'
       format.js { render 'program_kegiatans/program_kegiatan_filter' }
     end
   end

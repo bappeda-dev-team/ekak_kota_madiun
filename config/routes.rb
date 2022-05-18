@@ -153,7 +153,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # admin thing
   get '/adminsasarans', to: 'sasarans#sasaran_admin'
   get '/adminusers', to: 'users#user_admin'
-  get '/admin_program_kegiatan', to: 'program_kegiatans#admin_program_kegiatan'
+  get '/admin_program', to: 'program_kegiatans#admin_program'
+  get '/admin_kegiatan', to: 'program_kegiatans#admin_kegiatan'
+  get '/admin_sub_kegiatan', to: 'program_kegiatans#admin_program_kegiatan'
   #
   # user_specific_thing
   get '/usulan_musrenbang', to: 'musrenbangs#usulan_musrenbang'
@@ -163,14 +165,18 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # third party Api
   get '/sync_sasaran', to: 'api/skp_client#sync_sasaran'
   get '/sync_pegawai', to: 'api/skp_client#sync_pegawai'
-  # get '/sync_subkegiatan', to: 'api/sipd_client#sync_subkegiatan'
-  get '/sync_subkegiatan', to: 'api/sipd_client#sync_subkegiatan_opd'
+  get '/sync_subkegiatan', to: 'api/sipd_client#sync_subkegiatan'
+  get '/sync_subkegiatan_opd', to: 'api/sipd_client#sync_subkegiatan_opd'
+  get '/update_detail_program', to: 'api/sipd_client#update_detail_program'
+  get '/update_detail_subkegiatan', to: 'api/sipd_client#update_detail_subkegiatan'
   get '/sync_musrenbang', to: 'api/sipd_client#sync_musrenbang'
   get '/sync_pokpir', to: 'api/sipd_client#sync_pokpir'
   get '/sync_kamus_usulan', to: 'api/sipd_client#sync_kamus_usulan'
 
   post '/filter_sasaran', to: 'filter#filter_sasaran'
   post '/filter_user', to: 'filter#filter_user'
+  post '/filter_program_saja', to: 'filter#filter_program_saja'
+  post '/filter_kegiatan', to: 'filter#filter_kegiatan'
   post '/filter_program', to: 'filter#filter_program'
   post '/filter_kak', to: 'filter#filter_kak'
   post '/filter_rab', to: 'filter#filter_rab'

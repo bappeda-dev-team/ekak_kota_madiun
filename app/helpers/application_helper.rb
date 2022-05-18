@@ -40,7 +40,11 @@ module ApplicationHelper
     [
       { title: 'Laporan Hasil', href: laporan_sasarans_path, identifier: 'laporan_sasaran', icon: 'fas fa-copy' },
       { title: 'Tematik', href: subkegiatan_tematiks_path, identifier: 'tematik', icon: 'fas fa-tags' },
-      { title: 'Program', href: admin_program_kegiatan_path, identifier: 'admin_program_kegiatan',
+      { title: 'Program', href: admin_program_path, identifier: 'admin_program',
+        icon: 'fas fa-tasks' },
+      { title: 'Kegiatan', href: admin_kegiatan_path, identifier: 'admin_kegiatan',
+        icon: 'fas fa-tasks' },
+      { title: 'Subkegiatan', href: admin_sub_kegiatan_path, identifier: 'admin_sub_kegiatan',
         icon: 'fas fa-tasks' },
       { title: 'Sasaran Kinerja', href: adminsasarans_path, icon: 'fas fa-bullseye',
         identifier: 'adminsasarans' },
