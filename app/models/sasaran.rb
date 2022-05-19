@@ -170,7 +170,7 @@ class Sasaran < ApplicationRecord
 
   def lengkap_semua
     usulan_dan_sub = selesai?
-    rincian_sasaran = rincian.present? && penerima_manfaat.exists?
+    rincian_sasaran = rincian.present? && penerima_manfaat.blank?
     permasalahan_rencan = permasalahans.any?
     dasar_hukum = dasar_hukums.any?
     gambaran_umum = latar_belakangs.any?
