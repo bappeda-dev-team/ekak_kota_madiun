@@ -95,11 +95,34 @@ class SasaransController < ApplicationController
 
   def setujui_semua_sasaran
     sasarans = params[:sasaran_diajukans]
-    Sasaran.where(id: sasarans.flatten!).update_all(status: 'disetujui')
+    @user = params[:user_id]
+    @sasaran = Sasaran.where(id: sasarans.flatten!).update_all(status: 'disetujui')
     respond_to do |format|
       flash[:success] = 'KaK Disetujui'
       @status = 'success'
       @text = 'KaK Berhasil Disetujui'
+      format.js { render 'update.js.erb' }
+    end
+  end
+
+  def revisi_semua_sasaran
+    sasarans = params[:sasaran_diajukans]
+    Sasaran.where(id: sasarans.flatten!).update_all(status: 'draft')
+    respond_to do |format|
+      flash[:info] = 'KaK direvisi'
+      @status = 'warning'
+      @text = 'KaK direvisi'
+      format.js { render 'update.js.erb' }
+    end
+  end
+
+  def tolak_semua_sasaran
+    sasarans = params[:sasaran_diajukans]
+    Sasaran.where(id: sasarans.flatten!).update_all(status: 'ditolak')
+    respond_to do |format|
+      flash[:danger] = 'KaK ditolak'
+      @status = 'danger'
+      @text = 'KaK ditolak'
       format.js { render 'update.js.erb' }
     end
   end

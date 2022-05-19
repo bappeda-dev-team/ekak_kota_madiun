@@ -1,0 +1,2 @@
+$('#notice').html("<%= j render 'shared/flash', flash: flash %>");
+$("#<%= dom_id(@user) %>").replaceWith("<%= j render 'sasarans/user', user: @user %>")

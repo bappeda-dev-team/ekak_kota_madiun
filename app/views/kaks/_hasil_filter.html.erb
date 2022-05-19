@@ -13,7 +13,7 @@
   </div>
   <div class="card-body">
     <div class="table-responsive">
-      <table class="table align-items-center border-start border-end">
+      <table class="table align-items-center border-start border-end" id="tabel_laporan_kak">
         <thead class="thead-light">
           <tr>
             <th class="border-bottom" scope="col">No.</th>
@@ -36,33 +36,41 @@
           <% @users.each.with_index(1) do |user, i| %>
             <% row_awal = user.program_kegiatan_sasarans.map { |up| up.sasarans.size }.compact %>
             <% row = row_awal.empty? ? 1 : row_awal.reduce(:+) %>
-            <tr class="border-bottom">
+            <tr class="border-bottom" id="<%= dom_id(user) %>">
               <td class="text-gray-900 fw-bolder border-bottom" rowspan="<%= user.program_kegiatan_sasarans.count + row %>" scope="rowgroup"><%= i %></td>
               <td class="<%= 'bg-danger text-white' if row_awal.empty? %> text-wrap border-end border-bottom" rowspan="<%= user.program_kegiatan_sasarans.count + row %>" scope="rowgroup"><%= user.nama %></td>
               <td class="border-start border-end text-center" rowspan="<%= user.program_kegiatan_sasarans.count + row %>" scope="rowgroup">
                 <table>
                   <tr>
-                    <td class="m-0 p-0">
-                      <i class="far fa-check-circle text-success"></i>
+                    <td class="m-0 p-0 text-success">
+                      <i class="fas fa-battery-full"></i>
                     </td>
                     <td class="text-success">
-                      <%= user.sasarans.total_sudah_lengkap %>
+                      <%= user.petunjuk_sasaran[:hijau] || 0 %>
                     </td>
                   </tr>
                   <tr>
-                    <td class="m-0 p-0">
-                      <i class="fas fa-exclamation-circle text-warning"></i>
+                    <td class="m-0 p-0 text-info">
+                      <i class="fas fa-battery-half"></i>
+                    </td>
+                    <td class="text-info">
+                      <%= user.petunjuk_sasaran[:biru] %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="m-0 p-0 text-warning">
+                      <i class="fas fa-battery-quarter"></i>
                     </td>
                     <td class="text-warning">
-                      <%= user.sasarans.total_belum_lengkap %>
+                      <%= user.petunjuk_sasaran[:kuning] %>
                     </td>
                   </tr>
                   <tr>
-                    <td class="m-0 p-0">
-                      <i class="far fa-times-circle text-danger"></i>
+                    <td class="m-0 p-0 text-danger">
+                      <i class="fas fa-battery-empty"></i>
                     </td>
                     <td class="text-danger">
-                      <%= user.sasarans.total_hangus %>
+                      <%= user.petunjuk_sasaran[:merah] %>
                     </td>
                   </tr>
                 </table>
@@ -72,7 +80,7 @@
                 <td class="p-0 m-0"></td>
                 <td class="p-0 m-0"></td>
                 <td class="fw-bolder text-gray-500 text-center border-start border-end" rowspan="<%= kak.sasarans.count + 1 %>">
-                  <%= link_to setujui_semua_sasaran_path(sasaran_diajukans: [kak.sasarans.pluck(:id)]),
+                  <%= link_to setujui_semua_sasaran_path(sasaran_diajukans: [kak.sasarans.pluck(:id)], user_id: user),
                       method: :post, remote: true,
                       data: { disable_with: 'Memproses....'},
                       class:"btn btn-sm btn-primary" do %>
@@ -91,7 +99,7 @@
                 <% kak.sasarans.each do |show_sasaran| %>
                   <tr class="<%= warna_sasaran(show_sasaran.status_sasaran) %>">
                     <td class="text-wrap border-start border-end" width="450px">
-                      <%= show_sasaran.sasaran_kinerja %> - <%= show_sasaran.id %>
+                      <%= show_sasaran.sasaran_kinerja %>
                     </td>
                     <td class="border-start border-end border-bottom text-center">
                       Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar, delimiter: '.') or 0 %>

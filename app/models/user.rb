@@ -70,4 +70,28 @@ class User < ApplicationRecord
   def program_kegiatan_sasarans
     sasarans.map(&:program_kegiatan).compact.uniq
   end
+
+  def sasaran_aktif
+    program = program_kegiatan_sasarans.count
+    usulan = sasarans.map(&:usulans).flatten.count
+    {
+      program_aktif: program,
+      usulan_aktif: usulan
+    }
+  end
+
+  def petunjuk_sasaran
+    status = sasarans.map { |s| s.petunjuk_status }
+    merah = sasarans.total_hangus
+    kuning = program_kegiatan_sasarans.count
+    biru = status.select { |stat| stat[:usulan_dan_sub] == true }.count
+    hijau = status.select { |stat| stat.values == true }.count
+
+    {
+      merah: merah,
+      kuning: kuning,
+      biru: biru,
+      hijau: hijau
+    }
+  end
 end
