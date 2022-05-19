@@ -37,7 +37,7 @@ class User < ApplicationRecord
   belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_opd'
   has_many :kaks
   has_many :sasarans, dependent: :destroy, foreign_key: 'nip_asn', primary_key: 'nik'
-  has_many :program_kegiatans, through: :sasarans
+  # has_many :program_kegiatans, through: :sasarans
 
   scope :asn_aktif, -> { includes(:roles).where(roles: { name: 'asn' }) }
   scope :sasaran_diajukan, -> { asn_aktif.includes(:sasarans, :program_kegiatans).merge(Sasaran.sudah_lengkap) }
@@ -65,5 +65,9 @@ class User < ApplicationRecord
 
   def assign_default_role
     add_role(:asn) if roles.blank?
+  end
+
+  def program_kegiatan_sasarans
+    sasarans.map(&:program_kegiatan).compact.uniq
   end
 end
