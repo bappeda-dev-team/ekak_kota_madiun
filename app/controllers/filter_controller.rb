@@ -76,9 +76,9 @@ class FilterController < ApplicationController
 
   def filter_kak
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
-    @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd }).sasaran_diajukan
+    @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd }).asn_aktif
     if OPD_TABLE.key?(opd.to_sym)
-      @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).sasaran_diajukan
+      @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).asn_aktif
       @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])
     end
     @filter_file = 'hasil_filter' if params[:filter_file].empty?
@@ -89,9 +89,9 @@ class FilterController < ApplicationController
 
   def filter_rab
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
-    @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd }).sasaran_diajukan
+    @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd }).asn_aktif
     if OPD_TABLE.key?(opd.to_sym)
-      @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).sasaran_diajukan
+      @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).asn_aktif
       @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])
     end
     @filter_file = 'hasil_filter_rab' if params[:filter_file].empty?

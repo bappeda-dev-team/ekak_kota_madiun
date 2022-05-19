@@ -80,6 +80,9 @@ class Sasaran < ApplicationRecord
   # def respond_to_missing?(_method, *_args)
   #   0
   # end
+  def program_nil?
+    program_kegiatan.nil?
+  end
 
   # method yang ada map nya memang sengaja begitu, karena dibuat collection dan di loop untuk footer bulan
   def target_bulan

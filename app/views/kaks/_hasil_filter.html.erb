@@ -35,8 +35,9 @@
         </thead>
         <tbody>
           <% @users.each.with_index(1) do |user, i| %>
-            <% row = user.program_kegiatans.map { |up| up.sasarans.size }.reduce(:+) %>
-            <tr>
+            <% row_awal = user.program_kegiatans.map { |up| up.sasarans.size }.compact %>
+            <% row = row_awal.empty? ? 1 : row_awal.reduce(:+) %>
+            <tr class="border-bottom <%= 'bg-danger text-white' if row_awal.empty? %>">
               <td class="text-gray-900 fw-bolder border-bottom" rowspan="<%= user.program_kegiatans.count + row %>" scope="rowgroup"><%= i %></td>
               <td class="text-gray-900 text-wrap border-end border-bottom" rowspan="<%= user.program_kegiatans.count + row %>" scope="rowgroup"><%= user.nama %></td>
               <% user.program_kegiatans.each do |kak| %>

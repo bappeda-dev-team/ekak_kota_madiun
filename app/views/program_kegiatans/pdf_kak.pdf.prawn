@@ -26,28 +26,45 @@ prawn_document do |pdf|
   pdf.move_down 30
   # loop sasaran
   @program_kegiatan.sasarans.where.not(program_kegiatan: nil).each.with_index(1) do |sasaran, index|
-    dasar_hukum_cell = pdf.make_table([['Text Dasar Hukum 1'], ['Text Dasar Hukum 2'], ['Text Dasar Hukum 3']], cell_style: {size: 8, border_width: 0})
-    permasalahan_cell = pdf.make_table([
-      [{content: 'Contoh Permasalahan', colspan: 3}],
-      [{content: 'Penyebab', colspan: 3}],
-      ['1. Internal', ':', 'Lorem '],
-      ['2. External', ':', 'Extenral 1'],
-      [{content: 'Contoh Permasalahan', colspan: 3}],
-      [{content: 'Penyebab', colspan: 3}],
-      ['1. Internal', ':', 'Internal 2'],
-      ['2. External', ':', 'Extenral 2'],
-      ], cell_style: {size: 8, border_width: 0}, column_widths: [50, 12, 350])
+    dasar_hukum_arr = nil
+    permasalahan_arr = nil
+    if sasaran.dasar_hukums.any?
+      sasaran.dasar_hukums.each do |dasar_hukum|
+        dasar_hukum_arr = [[dasar_hukum.peraturan]]
+      end
+    else
+      dasar_hukum_arr = [['-']]
+    end
+    if sasaran.permasalahans.any?
+      sasaran.permasalahans.each do |permasalahan|
+        permasalahan_arr = [[
+            [permasalahan.permasalahan, '',''],
+            ['Penyebab', '', ''],
+            ['1. Internal', ':', permasalahan.penyebab_internal || '-'],
+            ['2. External', ':', permasalahan.penyebab_external || '-']
+          ]]
+      end
+    else
+      permasalahan_arr = [
+        ['-', '', ''],
+        ['Penyebab', '', ''],
+        ['1. Internal', ':', '-'],
+        ['2. External', ':', '-']
+      ]
+    end
+    dasar_hukum_cell = pdf.make_table(dasar_hukum_arr, cell_style: {size: 8, border_width: 0})
+    permasalahan_cell = pdf.make_table(permasalahan_arr, cell_style: {size: 8, border_width: 0})
     tabel_sasaran = [
       [{ content: "#{index}.", font_style: :bold }, { content: "Sasaran/Rencana Kinerja", font_style: :bold }, ':', { content: sasaran.sasaran_kinerja }],
       ['', 'Indikator Kinerja (Output)', ':', { content: @program_kegiatan.indikator_subkegiatan }],
       ['', 'Target', ':', { content: @program_kegiatan.target_subkegiatan.to_s }],
       ['', 'Satuan', ':', { content: @program_kegiatan.satuan_target_subkegiatan.to_s }],
       ['a.', 'Dasar Hukum', ':', dasar_hukum_cell],
-      ['b.', 'Gambaran Umum', ':', { content: sasaran.latar_belakangs.first&.gambaran_umum }],
-      ['c.', 'Penerima Manfaat', ':', { content: sasaran.penerima_manfaat }],
-      ['d.', 'Data Terpilah', ':', { content: sasaran.rincian&.data_terpilah }],
+      ['b.', 'Gambaran Umum', ':', { content: sasaran.latar_belakangs.first&.gambaran_umum || '-' }],
+      ['c.', 'Penerima Manfaat', ':', { content: sasaran.penerima_manfaat || '-' }],
+      ['d.', 'Data Terpilah', ':', { content: sasaran.rincian&.data_terpilah || '-' }],
       ['e.', 'Permasalahan', ':', permasalahan_cell],
-      ['f.', 'Resiko', ':', { content: sasaran.rincian&.resiko }],
+      ['f.', 'Resiko', ':', { content: sasaran.rincian&.resiko || '-' }],
       ['g.', {content: 'Rencana Aksi dan Anggaran', colspan: 3}]
     ]
     pdf.table(tabel_sasaran, column_widths: { 0=> 17, 2=> 12 }, cell_style: { size: 8, border_width: 0 })
