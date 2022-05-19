@@ -32,12 +32,12 @@
           </tr>
         </thead>
         <tbody>
-          <% i = 1 %>
-          <% @users.each do |user| %>
-            <% user.program_kegiatans.each do |kak| %>
-              <tr>
-                <th class="text-gray-900 fw-bolder" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= i %></th>
-                <th class="text-gray-900 text-wrap border-end" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= user.nama %></th>
+          <% @users.each.with_index(1) do |user, i| %>
+            <% row = user.program_kegiatans.map { |up| up.sasarans.size }.reduce(:+) %>
+            <tr>
+              <td class="text-gray-900 fw-bolder" rowspan="<%= user.program_kegiatans.count + row %>" scope="rowgroup"><%= i %></td>
+              <td class="text-gray-900 text-wrap border-end" rowspan="<%= user.program_kegiatans.count + row %>" scope="rowgroup"><%= user.nama %></td>
+              <% user.program_kegiatans.each do |kak| %>
                 <th class="text-gray-900 text-wrap" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.nama_subkegiatan %></th>
                 <td class="p-0 m-0" colspan="2"></td>
                 <td class="fw-bolder text-gray-500 text-center border-start border-end" rowspan="<%= kak.sasarans.count + 1 %>">
@@ -57,20 +57,18 @@
                     <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
                   <% end %>
                 </td>
-              </tr>
-              <% kak.sasarans.each do |show_sasaran| %>
-                <tr>
-                  <td class="text-wrap border-start border-end" width="450px">
-                    <%= show_sasaran.sasaran_kinerja %>
-                    / <%= show_sasaran.status %>
-                  </td>
-                  <td class="text-wrap border-start border-end border-bottom text-center">
-                    Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar, delimiter: '.') or 0 %>
-                  </td>
-                </tr>
+                <% kak.sasarans.each do |show_sasaran| %>
+                  <tr>
+                    <td class="text-wrap border-start border-end" width="450px">
+                      <%= show_sasaran.sasaran_kinerja %>
+                    </td>
+                    <td class="text-wrap border-start border-end border-bottom text-center">
+                      Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar, delimiter: '.') or 0 %>
+                    </td>
+                  </tr>
+                <% end %>
               <% end %>
-              <% i = i + 1 %>
-            <% end %>
+            </tr>
           <% end %>
         </tbody>
       </table>

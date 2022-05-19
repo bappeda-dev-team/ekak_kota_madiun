@@ -128,7 +128,7 @@ module Api
       data_opd = []
       opds.each do |opd|
         data_opd << {
-          id_opd: opd['id_skpd'],
+          id_opd_skp: opd['id_skpd'],
           nama_opd: opd['nama_skpd'],
           id_opd_induk: opd['id_skpd_induk'],
           nama_opd_induk: opd['nama_skpd_induk'],
