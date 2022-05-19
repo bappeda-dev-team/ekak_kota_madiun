@@ -2,21 +2,15 @@
   <div class="row align-items-center">
     <div class="col">
       <% opd = Opd.find_by(kode_unik_opd: @kode_opd) %>
-      <h2 class="fs-5 fw-bold mb-0">Daftar Program Kegiatan <%= opd.nama_opd %></h2>
+      <h2 class="fs-5 fw-bold mb-0">Daftar Program <%= opd.nama_opd %></h2>
     </div>
     <div class="col text-end">
-      <%# Remove it later %>
-      <%= link_to sync_subkegiatan_path(kode_opd: opd.id_opd_skp, tahun: Date.today.year), 
+      <%= link_to update_detail_program_path(kode_opd: opd.id_opd_skp, tahun: Date.today.year, 
+      id_programs: [@programKegiatans.pluck(:id_program_sipd).uniq]), 
       data: { disable_with: 'Memproses....'},
       class:"btn btn-sm btn-primary" do %>
         <i class="fas fa-sync me-2"></i>
-        Sync Belanja
-      <% end %>
-      <%= link_to update_detail_subkegiatan_path(kode_opd: opd.id_opd_skp, tahun: Date.today.year), 
-      data: { disable_with: 'Memproses....'},
-      class:"btn btn-sm btn-primary" do %>
-        <i class="fas fa-sync me-2"></i>
-        Update Sub Kegiatan
+        Update Detail Program
       <% end %>
       <%= link_to "Tambah Program Kegiatan",new_program_kegiatan_path, remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-programkegiatan"}, class: "btn btn-sm btn-info" %>
     </div>
@@ -28,8 +22,8 @@
       <thead class="thead-light">
         <tr>
           <th class="border-bottom" scope="col">No.</th>
-          <th class="border-bottom" scope="col">Nama SubKegiatan</th>
-          <th class="border-bottom" scope="col">Indikator Sub kegiatan</th>
+          <th class="border-bottom" scope="col">Nama Program</th>
+          <th class="border-bottom" scope="col">Indikator Program</th>
           <th class="border-bottom" scope="col">Target</th>
           <th class="border-bottom" scope="col">Satuan</th>
           <th class="border-bottom" scope="col"></th>
@@ -39,10 +33,10 @@
         <% @programKegiatans.each.with_index(1) do |prog, i| %>
           <tr id="<%= dom_id(prog) %>">
             <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-            <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.nama_subkegiatan %></td>
-            <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.indikator_subkegiatan %></td>
-            <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.target_subkegiatan %></td>
-            <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.satuan_target_subkegiatan %></td>
+            <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.nama_program %></td>
+            <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.indikator_program %></td>
+            <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.target_program %></td>
+            <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.satuan_target_program %></td>
             <td class="fw-bolder text-gray-500">
               <%= link_to prog, class: "m-3" do %>
                 <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
@@ -50,7 +44,7 @@
               <%= link_to edit_program_kegiatan_path(prog), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-programkegiatan"}, class: "m-3" do %>
                 <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
               <% end %>
-              <%= link_to prog, method: :delete, data: { 'confirm-swal': "Hapus #{prog.nama_subkegiatan} ?"}, class: "m-3" do %>
+              <%= link_to prog, method: :delete, data: { 'confirm-swal': "Hapus #{prog.nama_program} ?"}, class: "m-3" do %>
                 <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
               <% end %>
             </td>

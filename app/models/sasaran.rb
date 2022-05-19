@@ -2,22 +2,23 @@
 #
 # Table name: sasarans
 #
-#  id                  :bigint           not null, primary key
-#  anggaran            :integer
-#  id_rencana          :string
-#  indikator_kinerja   :string
-#  kualitas            :integer
-#  nip_asn             :string
-#  penerima_manfaat    :string
-#  sasaran_kinerja     :string
-#  satuan              :string
-#  status              :enum             default("draft")
-#  sumber_dana         :string
-#  tahun               :string
-#  target              :integer
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  program_kegiatan_id :bigint
+#  id                     :bigint           not null, primary key
+#  anggaran               :integer
+#  id_rencana             :string
+#  indikator_kinerja      :string
+#  kualitas               :integer
+#  nip_asn                :string
+#  penerima_manfaat       :string
+#  sasaran_kinerja        :string
+#  satuan                 :string
+#  status                 :enum             default("draft")
+#  sumber_dana            :string
+#  tahun                  :string
+#  target                 :integer
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  program_kegiatan_id    :bigint
+#  subkegiatan_tematik_id :bigint
 #
 # Indexes
 #
@@ -26,6 +27,7 @@
 # Foreign Keys
 #
 #  fk_rails_...  (nip_asn => users.nik)
+#  fk_rails_...  (subkegiatan_tematik_id => subkegiatan_tematiks.id)
 #
 class Sasaran < ApplicationRecord
   # belongs_to :user
@@ -78,6 +80,9 @@ class Sasaran < ApplicationRecord
   # def respond_to_missing?(_method, *_args)
   #   0
   # end
+  def program_nil?
+    program_kegiatan.nil?
+  end
 
   # method yang ada map nya memang sengaja begitu, karena dibuat collection dan di loop untuk footer bulan
   def target_bulan
@@ -164,6 +169,23 @@ class Sasaran < ApplicationRecord
     else
       'digunakan'
     end
+  end
+
+  def lengkap_semua
+    usulan_dan_sub = selesai?
+    rincian_sasaran = rincian.present? && penerima_manfaat.blank?
+    permasalahan_rencan = permasalahans.any?
+    dasar_hukum = dasar_hukums.any?
+    gambaran_umum = latar_belakangs.any?
+    tematik_saaran = subkegiatan_tematiks.any?
+    {
+      usulan_dan_sub: usulan_dan_sub,
+      rincian_sasaran: rincian_sasaran,
+      permasalahan: permasalahan_rencan,
+      dasar_hukum: dasar_hukum,
+      gambaran_umum: gambaran_umum,
+      tematik: tematik_saaran
+    }
   end
 
   def add_tematik(sasaran:, tematik:)

@@ -7,4 +7,13 @@ module HomeHelper
     }.freeze
     row_color[status_sasaran.to_sym]
   end
+  
+  def bg_sasaran(status_sasaran)
+    row_color = {
+      hangus: 'bg-danger',
+      blm_lengkap: 'bg-warning',
+      digunakan: 'bg-success'
+    }.freeze
+    row_color[status_sasaran.to_sym]
+  end
 end

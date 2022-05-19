@@ -25,9 +25,10 @@
         <div class="table-responsive">
           <table class="table table-flush datatable" data-datatable>
             <thead class="thead-light">
-               <tr>
+              <tr>
                 <th>Nama OPD</th>
-                <th>Kode OPD</th>
+                <th>Kode OPD SKP</th>
+                <th>Kode SKPD</th>
                 <th>Lembaga</th>
                 <th colspan="3"></th>
               </tr>
@@ -36,7 +37,8 @@
               <% @opds.each do |opd| %>
                 <tr>
                   <td><%= opd.nama_opd %></td>
-                  <td><%= opd.kode_opd %></td>
+                  <td><%= opd.id_opd_skp %></td>
+                  <td><%= opd.kode_unik_opd %></td>
                   <td><%= opd.lembaga.nama_lembaga %></td>
                   <td><%= link_to 'Show', opd %></td>
                   <td><%= link_to 'Edit', edit_opd_path(opd) %></td>

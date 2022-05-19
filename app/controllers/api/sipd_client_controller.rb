@@ -8,8 +8,31 @@ module Api
     def sync_subkegiatan
       UpdateProgramJob.set(queue: "#{nama_opd}-#{@kode_opd}-renstra-#{@tahun}").perform_later(@kode_opd, @tahun,
                                                                                               @id_opd)
-      redirect_to admin_program_kegiatan_path,
+      redirect_to admin_sub_kegiatan_path,
                   success: "Update ProgramKegiatan #{nama_opd} Dikerjakan. Harap menunggu..."
+    end
+
+    def sync_subkegiatan_opd
+      UpdateSubkegiatanJob.set(queue: "Subkegiatan-#{nama_opd}-#{@kode_opd}-#{@tahun}").perform_later(@kode_opd, @tahun,
+                                                                                                  @id_opd)
+      redirect_to admin_sub_kegiatan_path,
+                  success: "Update SubKegiatan #{nama_opd} Dikerjakan. Harap menunggu..."
+    end
+
+    def update_detail_program
+      id_programs = @id_programs.flatten!
+      unless id_programs.empty?
+        id_programs.each do |id_program|
+          Api::SipdClient.new(id_sipd: @kode_opd, tahun: @tahun, id_opd: @id_opd, id_program: id_program).detail_master_program
+        end
+      end
+      redirect_to admin_program_path, success: "Program pada #{nama_opd} Berhasil diupdate"
+    end
+
+    def update_detail_subkegiatan
+      # id opd to find subkegiatan on that opd
+      Api::SipdClient.new(id_sipd: @kode_opd, tahun: @tahun, id_opd: @id_opd).detail_master_subkegiatan
+      redirect_to admin_sub_kegiatan_path, success: "Subkegiatan pada #{nama_opd} Berhasil diupdate"
     end
 
     def sync_musrenbang
@@ -37,10 +60,11 @@ module Api
       @kode_opd = params[:kode_opd]
       @tahun = params[:tahun]
       if @kode_opd.nil?
-        redirect_to admin_program_kegiatan_path,
+        redirect_to admin_sub_kegiatan_path,
                     error: "Harap Sync Sasaran #{nama_opd} dahulu"
       end
       @id_opd = Opd.find_by(id_opd_skp: @kode_opd).kode_opd
+      @id_programs = params[:id_programs]
     end
   end
 end

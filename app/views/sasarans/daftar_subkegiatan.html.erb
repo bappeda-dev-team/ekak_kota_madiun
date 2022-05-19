@@ -22,9 +22,9 @@
         <thead class="thead-light">
           <tr>
             <th class="border-start">No.</th>
+            <th class="text-center border-start border-end">Pejabat</th>
             <th class="text-center border-start border-end">Sub Kegiatan</th>
             <th class="text-center border-start border-end">Sasaran Kinerja</th>
-            <th class="text-center border-start border-end">Pejabat</th>
             <th class="text-center border-start border-end">OPD</th>
             <th class="text-center border-start border-end">Pagu Anggaran</th>
             <th class="border-end text-center">Keterangan</th>
@@ -42,9 +42,9 @@
           <% @sasarans.each.with_index(1) do |sasaran, index| %>
             <tr class="border-bottom border-end">
               <td class="border-start align-middle border-start border-end" rowspan="<%= sasaran.my_usulan.count + 1 %>"><%= index %></td>
+              <td class="align-middle text-wrap" rowspan="<%= sasaran.my_usulan.count + 1 %>" ><%= sasaran.user.nama %></td>
               <td class="align-middle text-wrap border-start border-end" rowspan="<%= sasaran.my_usulan.count + 1 %>" width="150px"><%= sasaran.program_kegiatan.nama_subkegiatan %></td>
               <td class="align-middle text-wrap border-start border-end" rowspan="<%= sasaran.my_usulan.count + 1 %>" width="250px"><%= sasaran.sasaran_kinerja %></td>
-              <td class="align-middle text-wrap" rowspan="<%= sasaran.my_usulan.count + 1 %>" ><%= sasaran.user.nama %></td>
               <td class="align-middle text-wrap" rowspan="<%= sasaran.my_usulan.count + 1 %>" ><%= sasaran.user.opd.nama_opd %></td>
               <td class="align-middle text-center border-end" rowspan="<%= sasaran.my_usulan.count + 1 %>">Rp. <%= number_with_delimiter(sasaran&.total_anggaran, delimiter: '.') or '-' %></td>
               <td class="border-end" rowspan="<%= sasaran.my_usulan.count + 1 %>"></td>

@@ -26,4 +26,8 @@ class Rincian < ApplicationRecord
   has_many :kesenjangans
   belongs_to :sasaran, optional: true
   # validates :lokasi_pelaksanaan, presence: true
+
+  def lengkap
+    data_terpilah.exists? && lokasi_pelaksanaan.exists?
+  end
 end
