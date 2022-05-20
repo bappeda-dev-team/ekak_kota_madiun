@@ -852,7 +852,12 @@ CREATE TABLE public.opds (
     urusan character varying,
     bidang_urusan character varying,
     kode_urusan character varying,
-    kode_bidang_urusan character varying
+    kode_bidang_urusan character varying,
+    nama_kepala character varying,
+    nip_kepala character varying,
+    status_kepala character varying,
+    tahun character varying,
+    id_daerah character varying
 );
 
 
@@ -2452,6 +2457,13 @@ CREATE INDEX index_musrenbangs_on_status ON public.musrenbangs USING btree (stat
 
 
 --
+-- Name: index_opds_on_kode_unik_opd; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_opds_on_kode_unik_opd ON public.opds USING btree (kode_unik_opd);
+
+
+--
 -- Name: index_perhitungans_on_anggaran_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2880,6 +2892,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220512221743'),
 ('20220512224036'),
 ('20220518040710'),
-('20220518074325');
+('20220518074325'),
+('20220520072832'),
+('20220520074832');
 
 
