@@ -37,19 +37,23 @@ prawn_document do |pdf|
     end
     if sasaran.permasalahans.any?
       sasaran.permasalahans.each do |permasalahan|
-        permasalahan_arr = [[
-            [permasalahan.permasalahan, '',''],
-            ['Penyebab', '', ''],
-            ['1. Internal', ':', permasalahan.penyebab_internal || '-'],
-            ['2. External', ':', permasalahan.penyebab_external || '-']
-          ]]
+        permasalahan_arr = [
+            [permasalahan.permasalahan, ''],
+            ['Penyebab', ''],
+            ['1. Internal'],
+            [permasalahan.penyebab_internal || '-'],
+            ['2. External'],
+            [permasalahan.penyebab_external || '-']
+          ]
       end
     else
       permasalahan_arr = [
-        ['-', '', ''],
-        ['Penyebab', '', ''],
-        ['1. Internal', ':', '-'],
-        ['2. External', ':', '-']
+        ['-', ''],
+        ['Penyebab', ''],
+        ['1. Internal'],
+        ['-', ''],
+        ['2. External'],
+        ['-', '']
       ]
     end
     dasar_hukum_cell = pdf.make_table(dasar_hukum_arr, cell_style: {size: 8, border_width: 0})

@@ -1,2 +1,2 @@
 $('#notice').html("<%= j render 'shared/flash', flash: flash %>");
-$("#<%= dom_id(@user) %>").replaceWith("<%= j render 'sasarans/user', user: @user %>")
+$("#<%= @dom %>").replaceWith("<%= j render 'sasarans/tombol_verifikasi_sasaran', rowspan: @rowspan, dom: @dom, sasarans: @sasarans %>")

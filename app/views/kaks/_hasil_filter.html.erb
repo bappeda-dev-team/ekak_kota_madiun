@@ -36,7 +36,8 @@
           <% @users.each.with_index(1) do |user, i| %>
             <% row_awal = user.program_kegiatan_sasarans.map { |up| up.sasarans.size }.compact %>
             <% row = row_awal.empty? ? 1 : row_awal.reduce(:+) %>
-            <tr class="border-bottom" id="<%= dom_id(user) %>">
+            <% row_atas = user.program_kegiatan_sasarans.count + row %>
+            <tr class="border-bottom">
               <td class="text-gray-900 fw-bolder border-bottom" rowspan="<%= user.program_kegiatan_sasarans.count + row %>" scope="rowgroup"><%= i %></td>
               <td class="<%= 'bg-danger text-white' if row_awal.empty? %> text-wrap border-end border-bottom" rowspan="<%= user.program_kegiatan_sasarans.count + row %>" scope="rowgroup"><%= user.nama %></td>
               <td class="border-start border-end text-center" rowspan="<%= user.program_kegiatan_sasarans.count + row %>" scope="rowgroup">
@@ -76,16 +77,24 @@
                 </table>
               </td>
               <% user.program_kegiatan_sasarans.each do |kak| %>
+                <% row_dalam = kak.sasarans.count + 1  %>
                 <td class="text-gray-900 text-wrap" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.nama_subkegiatan %></td>
                 <td class="p-0 m-0"></td>
                 <td class="p-0 m-0"></td>
-                <td class="fw-bolder text-gray-500 text-center border-start border-end" rowspan="<%= kak.sasarans.count + 1 %>">
-                  <%= link_to setujui_semua_sasaran_path(sasaran_diajukans: [kak.sasarans.pluck(:id)], user_id: user),
+                <td class="fw-bolder text-gray-500 text-center border-start border-end" rowspan="<%= kak.sasarans.count + 1 %>" id="<%= dom_id(kak) %>">
+                  <%= link_to setujui_semua_sasaran_path(sasaran_diajukans: [kak.sasarans.pluck(:id)], dom: dom_id(kak), rowspan: row_dalam ),
                       method: :post, remote: true,
                       data: { disable_with: 'Memproses....'},
                       class:"btn btn-sm btn-primary" do %>
                     <i class="fas fa-check me-2"></i>
                     Verifikasi
+                  <% end %>
+                  <%= link_to tolak_semua_sasaran_path(sasaran_diajukans: [kak.sasarans.pluck(:id)], dom: dom_id(kak), rowspan: row_dalam ),
+                      method: :post, remote: true,
+                      data: { disable_with: 'Memproses....'},
+                      class:"btn btn-sm btn-danger" do %>
+                    <i class="fas fa-times me-2"></i>
+                    Tolak
                   <% end %>
                 </td>
                 <td class="fw-bolder text-gray-500 text-center" rowspan="<%= kak.sasarans.count + 1 %>">
