@@ -85,7 +85,7 @@ class User < ApplicationRecord
     merah = sasarans.total_hangus
     kuning = program_kegiatan_sasarans.count
     biru_map = status.map { |stat| stat.values }.reject { |r| r.all? false }
-    biru = biru_map.reject! { |b| b.all?(true) }.count
+    biru = biru_map.reject! { |b| b.all?(true) }&.count || 0
     hijau = status.map { |stat| stat.values }.select { |s| s.all?(true) }.count
 
     {
