@@ -22,6 +22,7 @@
 #
 # Indexes
 #
+#  index_opds_on_kode_opd       (kode_opd) UNIQUE
 #  index_opds_on_kode_unik_opd  (kode_unik_opd) UNIQUE
 #
 FactoryBot.define do

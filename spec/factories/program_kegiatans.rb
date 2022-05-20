@@ -44,6 +44,7 @@
 #
 # Foreign Keys
 #
+#  fk_rails_...  (kode_opd => opds.kode_opd)
 #  fk_rails_...  (subkegiatan_tematik_id => subkegiatan_tematiks.id)
 #
 FactoryBot.define do

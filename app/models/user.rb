@@ -26,6 +26,10 @@
 #  index_users_on_nik                   (nik) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
+# Foreign Keys
+#
+#  fk_rails_...  (kode_opd => opds.kode_opd)
+#
 class User < ApplicationRecord
   rolify
   # Include default devise modules. Others available are:
@@ -83,9 +87,8 @@ class User < ApplicationRecord
   def petunjuk_sasaran
     status = sasarans.map { |s| s.petunjuk_status }
     merah = sasarans.total_hangus
-    kuning = program_kegiatan_sasarans.count
-    biru_map = status.map { |stat| stat.values }.reject { |r| r.all? false }
-    biru = biru_map.reject! { |b| b.all?(true) }&.count || 0
+    kuning = sasarans.select { |s| s.usulans.exists? && s.belum_ada_sub? }.count
+    biru = status.select { |s| s[:usulan_dan_sub] }.select { |j| j.except(:usulan_dan_sub).values.any?(false) }.count
     hijau = status.map { |stat| stat.values }.select { |s| s.all?(true) }.count
 
     {
