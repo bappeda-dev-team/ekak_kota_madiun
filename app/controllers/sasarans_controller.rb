@@ -101,6 +101,7 @@ class SasaransController < ApplicationController
       flash.now[:success] = 'KaK disetujui'
       Sasaran.where(id: @sasarans.flatten!).update_all(status: 'disetujui')
       @status = 'success'
+      @type = 'setuju'
       @text = 'KaK Berhasil Disetujui'
       format.js { render 'update_kak.js.erb' }
     end
@@ -108,12 +109,13 @@ class SasaransController < ApplicationController
 
   def revisi_semua_sasaran
     @sasarans = params[:sasaran_diajukans]
-    Sasaran.where(id: sasarans.flatten!).update_all(status: 'draft')
+    Sasaran.where(id: @sasarans.flatten!).update_all(status: 'draft')
     respond_to do |format|
       @rowspan = params[:rowspan]
       @dom = params[:dom]
-      flash[:info] = 'KaK direvisi'
+      flash.now[:info] = 'KaK direvisi'
       @status = 'warning'
+      @type = 'revisi'
       @text = 'KaK direvisi'
       format.js { render 'update_kak.js.erb' }
     end
@@ -121,12 +123,13 @@ class SasaransController < ApplicationController
 
   def tolak_semua_sasaran
     @sasarans = params[:sasaran_diajukans]
-    Sasaran.where(id: sasarans.flatten!).update_all(status: 'ditolak')
+    Sasaran.where(id: @sasarans.flatten!).update_all(status: 'ditolak')
     respond_to do |format|
       @rowspan = params[:rowspan]
       @dom = params[:dom]
-      flash[:danger] = 'KaK ditolak'
+      flash.now[:danger] = 'KaK ditolak'
       @status = 'danger'
+      @type = 'revisi'
       @text = 'KaK ditolak'
       format.js { render 'update_kak.js.erb' }
     end
