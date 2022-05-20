@@ -5,6 +5,14 @@
       <h2 class="fs-5 fw-bold mb-0">Daftar Kegiatan <%= opd.nama_opd %></h2>
     </div>
     <div class="col text-end">
+      <%= link_to update_detail_kegiatan_path(kode_opd: opd.id_opd_skp, tahun: Date.today.year), 
+      data: { disable_with: 'Memproses....'},
+      class:"btn btn-sm btn-primary" do %>
+        <i class="fas fa-sync me-2"></i>
+        Update Kegiatan
+      <% end %>
+    </div>
+    <div class="col text-end">
       <%= link_to "Tambah Program Kegiatan",new_program_kegiatan_path, remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-programkegiatan"}, class: "btn btn-sm btn-info" %>
     </div>
   </div>
