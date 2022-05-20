@@ -158,24 +158,58 @@ class Sasaran < ApplicationRecord
   end
 
   def selesai?
-    !(hangus? || belum_ada_sub?)
+    # !(hangus? || belum_ada_sub?)
+    usulans.exists? && program_kegiatan.present?
   end
 
+  def lengkap?
+    selesai? && rincian? && permasalahan? && dasar_hukum? && gambaran_umum? && tematik?
+  end
+
+  def rincian?
+    rincian.present? && penerima_manfaat.present?
+  end
+
+  def permasalahan?
+    permasalahans.exists?
+  end
+
+  def dasar_hukum?
+    dasar_hukums.exists?
+  end
+
+  def gambaran_umum?
+    latar_belakangs.exists?
+  end
+
+  def tematik?
+    subkegiatan_tematiks.exists?
+  end
+
+  def biru?
+    selesai? && subkegiatan_tematiks.empty?
+  end
+
+  def biru_helper
+    petunjuk_status.except(:usulan_dan_sub).values.any?(false)
+  end
+
+# TODO: try this method to simplify in user
   def status_sasaran
     if hangus?
-      'hangus'
+      'hangus' # merah
     elsif belum_ada_sub?
-      'blm_lengkap'
-    elsif selesai?
-      'krg_lengkap'
-    else
-      'digunakan'
+      'blm_lengkap' # kuning
+    elsif biru_helper
+      'krg_lengkap'# biru
+    elsif lengkap?
+      'digunakan' #hijau
     end
   end
 
   def petunjuk_status
     usulan_dan_sub = selesai?
-    rincian_sasaran = rincian.present? && penerima_manfaat.blank?
+    rincian_sasaran = rincian.present? && penerima_manfaat.present?
     permasalahan_rencan = permasalahans.any?
     dasar_hukum = dasar_hukums.any?
     gambaran_umum = latar_belakangs.any?

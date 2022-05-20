@@ -15,11 +15,13 @@
               <caption class="px-4">
                 <strong>Jumlah sasaran: </strong> <%= current_user.sasarans.count %>
                 <hr>
-                <strong class="text-danger">Jumlah sasaran tidak digunakan: </strong> <%= current_user.sasarans.total_hangus %>
+                <strong class="text-danger">Jumlah sasaran tidak digunakan: </strong> <%= current_user.petunjuk_sasaran[:merah] %>
                 <hr>
-                <strong class="text-secondary">Jumlah sasaran kinerja yang rincian/keterangannya belum lengkap: </strong> <%= current_user.sasarans.total_belum_lengkap %>
+                <strong class="text-secondary">Jumlah sasaran kinerja yang belum terdapat subkegiatan: </strong> <%= current_user.petunjuk_sasaran[:kuning] %>
                 <hr>
-                <strong class="text-success">Jumlah sasaran kinerja yang sudah lengkap (digunakan): </strong> <%= current_user.sasarans.total_sudah_lengkap %>
+                <strong class="text-info">Jumlah sasaran kinerja yang rincian/keterangannya belum lengkap: </strong> <%= current_user.petunjuk_sasaran[:biru] %>
+                <hr>
+                <strong class="text-success">Jumlah sasaran kinerja yang sudah lengkap (digunakan): </strong> <%= current_user.petunjuk_sasaran[:hijau] %>
               </caption>
               <thead class="thead-light">
                 <tr>
