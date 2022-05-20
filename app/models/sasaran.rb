@@ -162,10 +162,12 @@ class Sasaran < ApplicationRecord
   end
 
   def status_sasaran
-    if hangus? && status != 'disetujui'
+    if hangus?
       'hangus'
     elsif belum_ada_sub?
       'blm_lengkap'
+    elsif selesai?
+      'krg_lengkap'
     else
       'digunakan'
     end
