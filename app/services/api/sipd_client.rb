@@ -179,9 +179,21 @@ module Api
       # list_sub_kegiatan = ProgramKegiatan.where(id_unit: @id_sipd).pluck(:id_sub_giat)
       # kegiatans.select! { |sub| list_sub_kegiatan.include?(sub['id_sub_giat']) }
       kegiatans.each do |giat|
-        indikator_kinerja = giat['indikator_keg']
-        target = giat['target_keg']
-        satuan = giat['satuan_keg']
+        target_kegiatan = giat['outcome_giat2']
+        target_kegiatan_cadangan = giat['outcome_giat1']
+        if target_kegiatan.any?
+          indikator_kinerja = target_kegiatan.first['indikator_keg']
+          target = target_kegiatan.first['target_keg']
+          satuan = target_kegiatan.first['satuan_keg']
+        elsif target_kegiatan_cadangan.any?
+          indikator_kinerja = target_kegiatan_cadangan.first['indikator_keg']
+          target = target_kegiatan_cadangan.first['target_keg']
+          satuan = target_kegiatan_cadangan.first['satuan_keg']
+        else
+          indikator_kinerja = ''
+          target = ''
+          satuan = ''
+        end
         ProgramKegiatan.where(id_giat: giat['id_giat'])
                        .update_all(indikator_kinerja: indikator_kinerja, target: target,
                                    satuan: satuan)
