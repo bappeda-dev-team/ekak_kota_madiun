@@ -1,0 +1,16 @@
+<td class="fw-bolder text-gray-500 text-center border-start border-end" rowspan="<%= rowspan %>" id="<%= dom %>">
+  <%= link_to revisi_semua_sasaran_path(sasaran_diajukans: [sasarans], dom: dom , rowspan: rowspan),
+                      method: :post, remote: true,
+                      data: { disable_with: 'Memproses....'},
+                      class:"btn btn-sm btn-info" do %>
+    <i class="fas fa-pencil-alt me-2"></i>
+    Revisi
+  <% end %>
+  <%= link_to tolak_semua_sasaran_path(sasaran_diajukans: [sasarans], dom: dom, rowspan: rowspan ),
+                      method: :post, remote: true,
+                      data: { disable_with: 'Memproses....'},
+                      class:"btn btn-sm btn-danger" do %>
+    <i class="fas fa-times me-2"></i>
+    Tolak
+  <% end %>
+</td>

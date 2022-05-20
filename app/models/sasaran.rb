@@ -171,7 +171,7 @@ class Sasaran < ApplicationRecord
     end
   end
 
-  def lengkap_semua
+  def petunjuk_status
     usulan_dan_sub = selesai?
     rincian_sasaran = rincian.present? && penerima_manfaat.blank?
     permasalahan_rencan = permasalahans.any?

@@ -103,6 +103,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   post '/add_sasaran_tematik', to: 'sasarans#add_sasaran_tematik'
   post '/ajukan_semua_sasaran', to: 'sasarans#ajukan_semua_sasaran'
   post '/setujui_semua_sasaran', to: 'sasarans#setujui_semua_sasaran'
+  post '/revisi_semua_sasaran', to: 'sasarans#revisi_semua_sasaran'
+  post '/tolak_semua_sasaran', to: 'sasarans#tolak_semua_sasaran'
   # user control
   post '/aktifkan_user/:id', to: 'users#aktifkan_user'
   post '/nonaktifkan_user/:id', to: 'users#nonaktifkan_user'
