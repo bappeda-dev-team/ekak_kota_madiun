@@ -29,6 +29,12 @@ module Api
       redirect_to admin_program_path, success: "Program pada #{nama_opd} Berhasil diupdate"
     end
 
+    def update_detail_kegiatan
+      # id opd to find subkegiatan on that opd
+      Api::SipdClient.new(id_sipd: @kode_opd, tahun: @tahun, id_opd: @id_opd).detail_master_kegiatan
+      redirect_to admin_kegiatan_path, success: "Kegiatan pada #{nama_opd} Berhasil diupdate"
+    end
+
     def update_detail_subkegiatan
       # id opd to find subkegiatan on that opd
       Api::SipdClient.new(id_sipd: @kode_opd, tahun: @tahun, id_opd: @id_opd).detail_master_subkegiatan
