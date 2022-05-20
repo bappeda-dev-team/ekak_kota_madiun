@@ -37,7 +37,7 @@ module Api
     end
 
     def detail_master_kegiatan
-      request = request_indikator_kegiatan(id_kegiatan: @id_program)
+      request = request_subkegiatan_opd(tahun: @tahun, id_opd: @id_sipd)
       proses_detail_master_kegiatan(request)
     end
 
@@ -133,7 +133,6 @@ module Api
           id_opd_skp: opd['id_skpd'],
           nama_opd: opd['nama_skpd'],
           kode_unik_opd: opd['kode_skpd'],
-          kode_opd: opd['kode_unit'],
           nama_kepala: opd['nama_kepala'],
           nip_kepala: opd['nip_kepala'],
           status_kepala: opd['status_kepala'],
@@ -176,14 +175,29 @@ module Api
 
     def proses_detail_master_kegiatan(response)
       data = Oj.load(response.body)
-      kegiatan_details = data['data']
-      indikator_kegiatan = kegiatan_details.first['indikator']
-      target_kegiatan = kegiatan_details.first['target_3'] # target_1 asumsi tahun 2020, 2021 target_2, 2022 target_3
-      satuan_target_kegiatan = kegiatan_details.first['satuan']
-      ProgramKegiatan.where(id_giat: @id_program)
-                     .update_all(indikator: indikator_kegiatan,
-                                 target: target_kegiatan,
-                                 satuan: satuan_target_kegiatan)
+      kegiatans = data['data']
+      # list_sub_kegiatan = ProgramKegiatan.where(id_unit: @id_sipd).pluck(:id_sub_giat)
+      # kegiatans.select! { |sub| list_sub_kegiatan.include?(sub['id_sub_giat']) }
+      kegiatans.each do |giat|
+        target_kegiatan = giat['outcome_giat2']
+        target_kegiatan_cadangan = giat['outcome_giat1']
+        if target_kegiatan.any?
+          indikator_kinerja = target_kegiatan.first['indikator_keg']
+          target = target_kegiatan.first['target_keg']
+          satuan = target_kegiatan.first['satuan_keg']
+        elsif target_kegiatan_cadangan.any?
+          indikator_kinerja = target_kegiatan_cadangan.first['indikator_keg']
+          target = target_kegiatan_cadangan.first['target_keg']
+          satuan = target_kegiatan_cadangan.first['satuan_keg']
+        else
+          indikator_kinerja = ''
+          target = ''
+          satuan = ''
+        end
+        ProgramKegiatan.where(id_giat: giat['id_giat'])
+                       .update_all(indikator_kinerja: indikator_kinerja, target: target,
+                                   satuan: satuan)
+      end
     end
 
     def proses_detail_master_subkegiatan(response)
@@ -357,7 +371,7 @@ module Api
           id_giat: id_giat,
           kode_giat: kode_giat,
           nama_kegiatan: nama_kegiatan,
-          indikator: indikator_keg,
+          indikator_kinerja: indikator_keg,
           target: target_keg,
           satuan: satuan_keg,
           id_sub_giat: id_sub_giat,
