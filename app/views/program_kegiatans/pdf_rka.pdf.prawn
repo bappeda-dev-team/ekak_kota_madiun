@@ -42,7 +42,7 @@ prawn_document do |pdf|
                 ['Indikator', ':', sasaran.indikator_kinerja],
                 ['Target', ':', "#{sasaran.target} #{sasaran.satuan}"],
                 ['Pagu Anggaran', ':', "Rp. #{number_with_delimiter(sasaran.total_anggaran, delimiter: '.')} | Sumber Dana : #{sasaran.sumber_dana}"],
-                ['Sub Kegiatan', ':', '5.01.01.2.01.01 Penyusunan Dokumen Perenanaan Perangkat Daerah']
+                ['Sub Kegiatan', ':', "#{sasaran.program_kegiatan.kode_sub_giat} #{sasaran.program_kegiatan.nama_subkegiatan}" || '-']
               ], cell_style: { borders: [] })
     pdf.move_down 5
     # tahapan

@@ -89,7 +89,7 @@ class FilterController < ApplicationController
 
   def filter_rab
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
-    @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd }).asn_aktif.order(:nik)
+    @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd }).asn_aktif
     if OPD_TABLE.key?(opd.to_sym)
       @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).asn_aktif
       @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])

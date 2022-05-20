@@ -17,43 +17,84 @@
         <thead class="thead-light">
           <tr>
             <th class="border-bottom" scope="col">No.</th>
+            <th class="border-bottom text-center" scope="col">Pemilik Rencana</th>
+            <th class="border-bottom text-center" scope="col">Status</th>
             <th class="border-bottom text-wrap text-center" scope="col">Sub Kegiatan</th>
-            <th class="border-bottom text-center" scope="col" colspan="2">Informasi RaB</th>
+            <th class="border-bottom text-center" scope="col" colspan="2">Informasi RAB</th>
             <th class="border-bottom text-center" scope="col">Action</th>
           </tr>
           <tr>
-            <th colspan="2"></th>
+            <th colspan="4"></th>
             <th class="border-bottom text-center">Rencana Kinerja</th>
-            <th class="border-bottom text-center">Pemilik Rencana</th>
+            <th class="border-bottom text-center">Pagu Anggaran</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <% i = 1 %>
-          <% @users.each do |user| %>
-            <% user.program_kegiatans.each do |program| %>
-              <tr>
-                <th class="text-gray-900 fw-bolder" scope="row" rowspan="<%= program.sasarans.count + 1 %>"><%= i %></th>
-                <th class="text-gray-900 text-wrap" scope="row" rowspan="<%= program.sasarans.count + 1 %>"><%= program.nama_subkegiatan %></th>
-                <td class="p-0 m-0" colspan="2"></td>
+          <% @users.each.with_index(1) do |user, i| %>
+            <% row_awal = user.program_kegiatan_sasarans.map { |up| up.sasarans.size }.compact %>
+            <% row = row_awal.empty? ? 1 : row_awal.reduce(:+) %>
+            <% row_atas = user.program_kegiatan_sasarans.count + row %>
+            <tr class="border-bottom">
+              <td class="text-gray-900 fw-bolder border-bottom" rowspan="<%= user.program_kegiatan_sasarans.count + row %>" scope="rowgroup"><%= i %></td>
+              <td class="<%= 'bg-danger text-white' if row_awal.empty? %> text-wrap border-end border-bottom" rowspan="<%= user.program_kegiatan_sasarans.count + row %>" scope="rowgroup"><%= user.nama %></td>
+              <td class="border-start border-end text-center" rowspan="<%= user.program_kegiatan_sasarans.count + row %>" scope="rowgroup">
+                <table>
+                  <tr>
+                    <td class="m-0 p-0 text-success">
+                      <i class="fas fa-battery-full"></i>
+                    </td>
+                    <td class="text-success">
+                      <%= user.petunjuk_sasaran[:hijau] || 0 %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="m-0 p-0 text-info">
+                      <i class="fas fa-battery-half"></i>
+                    </td>
+                    <td class="text-info">
+                      <%= user.petunjuk_sasaran[:biru] %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="m-0 p-0 text-warning">
+                      <i class="fas fa-battery-quarter"></i>
+                    </td>
+                    <td class="text-warning">
+                      <%= user.petunjuk_sasaran[:kuning] %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="m-0 p-0 text-danger">
+                      <i class="fas fa-battery-empty"></i>
+                    </td>
+                    <td class="text-danger">
+                      <%= user.petunjuk_sasaran[:merah] %>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <% user.program_kegiatan_sasarans.each do |program| %>
+                <td class="text-gray-900 text-wrap" scope="row" rowspan="<%= program.sasarans.count + 1 %>"><%= program.nama_subkegiatan %></td>
+                <td class="p-0 m-0"></td>
+                <td class="p-0 m-0"></td>
                 <td class="fw-bolder text-gray-500 text-center" rowspan="<%= program.sasarans.count + 1 %>">
                   <%= link_to "/pdf_rka/#{program.id}.pdf", class: "m-3" do %>
-                    <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
+                    <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak RAB"></span>
                   <% end %>
                 </td>
-              </tr>
-              <% program.sasarans.each do |show_sasaran| %>
-                <tr>
-                  <td class="text-wrap border-start border-end" width="450px">
-                    <%= show_sasaran.sasaran_kinerja %>
-                  </td>
-                  <td class="text-wrap border-start border-end border-bottom text-center">
-                    <%= show_sasaran.user.nama %>
-                  </td>
-                </tr>
+                <% program.sasarans.each do |show_sasaran| %>
+                  <tr class="<%= warna_sasaran(show_sasaran.status_sasaran) %>">
+                    <td class="text-wrap border-start border-end" width="450px">
+                      <%= show_sasaran.sasaran_kinerja %>
+                    </td>
+                    <td class="text-wrap border-start border-end border-bottom text-center">
+                      Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar, delimiter: '.') or 0 %>
+                    </td>
+                  </tr>
+                <% end %>
               <% end %>
-              <% i = i + 1 %>
-            <% end %>
+            </tr>
           <% end %>
         </tbody>
       </table>
