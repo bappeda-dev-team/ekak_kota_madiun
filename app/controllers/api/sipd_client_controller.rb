@@ -4,7 +4,7 @@
 # params : kode_opd: opd.id_opd_skp, tahun: Date.today.year
 module Api
   class SipdClientController < ApplicationController
-    before_action :set_program_params, except: %i[sync_musrenbang sync_pokpir sync_kamus_usulan]
+    before_action :set_program_params, except: %i[sync_musrenbang sync_pokpir sync_kamus_usulan sync_data_opd]
     def sync_subkegiatan
       UpdateProgramJob.set(queue: "#{nama_opd}-#{@kode_opd}-renstra-#{@tahun}").perform_later(@kode_opd, @tahun,
                                                                                               @id_opd)
@@ -36,18 +36,27 @@ module Api
     end
 
     def sync_musrenbang
+      @tahun = params[:tahun]
       UpdateMusrenbangJob.set(queue: "Musrenbang-#{@tahun}").perform_later(@tahun)
       redirect_to musrenbangs_path, success: "Update Musrenbang #{@tahun} Dikerjakan. Harap menunggu..."
     end
 
     def sync_pokpir
+      @tahun = params[:tahun]
       UpdatePokpirJob.set(queue: "PokokPikiran-#{@tahun}").perform_later(@tahun)
       redirect_to pokpirs_path, success: "Update Usulan Pokok Pikiran #{@tahun} Dikerjakan. Harap menunggu..."
     end
 
     def sync_kamus_usulan
+      @tahun = params[:tahun]
       UpdateKamusUsulanJob.set(queue: "KamusUsulan-#{@tahun}").perform_later(@tahun)
       redirect_to kamus_usulans_path, success: "Update Kamus Usulan #{@tahun} Dikerjakan. Harap menunggu..."
+    end
+
+    def sync_data_opd
+      @tahun = params[:tahun]
+      UpdateDataOpdJob.set(queue: "Opd-#{@tahun}").perform_later(@tahun)
+      redirect_to opds_path, success: "Update OPD Tahun #{@tahun} Dikerjakan. Harap menunggu..."
     end
 
     private

@@ -17,6 +17,14 @@
             <h2 class="fs-5 fw-bold mb-0">List OPD</h2>
           </div>
           <div class="col text-end">
+            <%= link_to sync_data_opd_path(tahun: Date.today.year + 1), 
+      data: { disable_with: 'Memproses....'},
+      class:"btn btn-sm btn-tertiary" do %>
+              <i class="fas fa-sync me-2"></i>
+              Sync OPD <%= Date.today.year + 1 %>
+            <% end %>
+          </div>
+          <div class="col text-end">
             <%= link_to "Tambah OPD", new_opd_path, class: "btn btn-sm btn-info" %>
           </div>
         </div>
@@ -35,7 +43,7 @@
               </tr>
             </thead>
             <tbody>
-              <% @opds.each do |opd| %>
+              <% @opds.order(:id_opd_skp).each do |opd| %>
                 <tr>
                   <td><%= opd.nama_opd %></td>
                   <td><%= opd.id_opd_skp %></td>

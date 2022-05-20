@@ -174,6 +174,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/sync_musrenbang', to: 'api/sipd_client#sync_musrenbang'
   get '/sync_pokpir', to: 'api/sipd_client#sync_pokpir'
   get '/sync_kamus_usulan', to: 'api/sipd_client#sync_kamus_usulan'
+  get '/sync_data_opd', to: 'api/sipd_client#sync_data_opd'
 
   post '/filter_sasaran', to: 'filter#filter_sasaran'
   post '/filter_user', to: 'filter#filter_user'

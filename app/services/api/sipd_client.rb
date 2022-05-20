@@ -8,7 +8,7 @@ module Api
 
     attr_accessor :id_sipd, :tahun, :id_opd, :id_program
 
-    def initialize(id_sipd:, tahun:, id_opd:, id_program: nil)
+    def initialize(id_sipd: nil, tahun: nil, id_opd: nil, id_program: nil)
       # TODO: dynamic assign this later
       @id_sipd = id_sipd
       @tahun = tahun || 2022
@@ -22,7 +22,7 @@ module Api
     end
 
     def opd_master
-      request = request_opd_master(@tahun)
+      request = request_opd_master(tahun: @tahun)
       proses_data_master_opd(request)
     end
 
@@ -128,15 +128,21 @@ module Api
       data_opd = []
       opds.each do |opd|
         data_opd << {
+          tahun: opd['tahun'],
+          id_daerah: opd['id_daerah'],
           id_opd_skp: opd['id_skpd'],
           nama_opd: opd['nama_skpd'],
-          id_opd_induk: opd['id_skpd_induk'],
-          nama_opd_induk: opd['nama_skpd_induk'],
+          kode_unik_opd: opd['kode_skpd'],
+          kode_opd: opd['kode_unit'],
+          nama_kepala: opd['nama_kepala'],
+          nip_kepala: opd['nip_kepala'],
+          status_kepala: opd['status_kepala'],
           lembaga_id: Lembaga.first.id,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         }
       end
+      Opd.upsert_all(data_opd, unique_by: :kode_unik_opd)
     end
 
     def proses_data_master_program(response)
@@ -195,6 +201,7 @@ module Api
       end
     end
 
+    # ref belanja, depreciated soon, use proses_data_subkegiatan_opd
     def proses_data_subkegiatan(response)
       data = Oj.load(response.body)
       data_detail = data['data']
@@ -309,6 +316,7 @@ module Api
       subkegiatans = data_detail.uniq { |el| el['id_sub_giat'] }
       data_subkegiatan = []
       subkegiatans.each do |sub|
+        tahun = sub['tahun']
         kode_skpd = sub["kode_skpd"]
         kode_sub_skpd = sub["kode_sub_skpd"]
         id_unit = sub['id_skpd']
@@ -323,6 +331,9 @@ module Api
         id_giat = sub['id_giat']
         kode_giat = sub['kode_giat']
         nama_kegiatan = sub['nama_giat']
+        indikator_keg = sub['outcome_giat2'].first['indikator_keg']
+        target_keg = sub['outcome_giat2'].first['target_keg']
+        satuan_keg = sub['outcome_giat2'].first['satuan_keg']
         id_sub_giat = sub['id_sub_giat']
         kode_sub_giat = sub['kode_sub_giat']
         nama_sub_giat = sub['nama_sub_giat']
@@ -331,6 +342,7 @@ module Api
         satuan_sub = sub['satuan_sub']
         data_subkegiatan << {
           identifier_belanja: id_sub_giat,
+          tahun: tahun,
           kode_skpd: kode_skpd,
           kode_sub_skpd: kode_sub_skpd,
           id_unit: id_unit,
@@ -345,6 +357,9 @@ module Api
           id_giat: id_giat,
           kode_giat: kode_giat,
           nama_kegiatan: nama_kegiatan,
+          indikator: indikator_keg,
+          target: target_keg,
+          satuan: satuan_keg,
           id_sub_giat: id_sub_giat,
           kode_sub_giat: kode_sub_giat,
           nama_subkegiatan: nama_sub_giat,

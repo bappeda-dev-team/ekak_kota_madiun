@@ -4,20 +4,34 @@
       <% opd = Opd.find_by(kode_unik_opd: @kode_opd) %>
       <h2 class="fs-5 fw-bold mb-0">Daftar Program Kegiatan <%= opd.nama_opd %></h2>
     </div>
+    <% if current_user.has_role? :super_admin %>
+      <div class="col text-end">
+        <%= link_to sync_subkegiatan_opd_path(kode_opd: opd.id_opd_skp, tahun: Date.today.year + 1), 
+      data: { disable_with: 'Memproses....'},
+      class:"btn btn-sm btn-tertiary" do %>
+          <i class="fas fa-sync me-2"></i>
+          Sync <%= Date.today.year + 1 %>
+        <% end %>
+      </div>
+    <% end %>
     <div class="col text-end">
       <%# Remove it later %>
       <%= link_to sync_subkegiatan_path(kode_opd: opd.id_opd_skp, tahun: Date.today.year), 
       data: { disable_with: 'Memproses....'},
       class:"btn btn-sm btn-primary" do %>
         <i class="fas fa-sync me-2"></i>
-        Sync Belanja
+        Sync <%= Date.today.year %>
       <% end %>
+    </div>
+    <div class="col text-end">
       <%= link_to update_detail_subkegiatan_path(kode_opd: opd.id_opd_skp, tahun: Date.today.year), 
       data: { disable_with: 'Memproses....'},
       class:"btn btn-sm btn-primary" do %>
         <i class="fas fa-sync me-2"></i>
         Update Sub Kegiatan
       <% end %>
+    </div>
+    <div class="col text-end">
       <%= link_to "Tambah Program Kegiatan",new_program_kegiatan_path, remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-programkegiatan"}, class: "btn btn-sm btn-info" %>
     </div>
   </div>
