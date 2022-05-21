@@ -222,7 +222,8 @@ CREATE TABLE public.anggaran_bluds (
     satuan character varying,
     harga_satuan bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    tahun character varying
 );
 
 
@@ -259,7 +260,9 @@ CREATE TABLE public.anggaran_hspks (
     satuan character varying,
     harga_satuan bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    tahun character varying,
+    id_standar_harga character varying
 );
 
 
@@ -296,7 +299,9 @@ CREATE TABLE public.anggaran_sbus (
     satuan character varying,
     harga_satuan bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    tahun character varying,
+    id_standar_harga character varying
 );
 
 
@@ -333,7 +338,9 @@ CREATE TABLE public.anggaran_sshes (
     satuan character varying,
     harga_satuan bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    tahun character varying,
+    id_standar_harga character varying
 );
 
 
@@ -2894,6 +2901,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220518040710'),
 ('20220518074325'),
 ('20220520072832'),
-('20220520074832');
+('20220520074832'),
+('20220520162623');
 
 
