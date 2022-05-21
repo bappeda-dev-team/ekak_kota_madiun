@@ -2464,13 +2464,6 @@ CREATE INDEX index_musrenbangs_on_status ON public.musrenbangs USING btree (stat
 
 
 --
--- Name: index_opds_on_kode_opd; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_opds_on_kode_opd ON public.opds USING btree (kode_opd);
-
-
---
 -- Name: index_opds_on_kode_unik_opd; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2728,14 +2721,6 @@ ALTER TABLE ONLY public.active_storage_variant_records
 
 
 --
--- Name: users fk_rails_99e914ccf2; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT fk_rails_99e914ccf2 FOREIGN KEY (kode_opd) REFERENCES public.opds(kode_opd);
-
-
---
 -- Name: latar_belakangs fk_rails_b420bec91b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2749,14 +2734,6 @@ ALTER TABLE ONLY public.latar_belakangs
 
 ALTER TABLE ONLY public.comments
     ADD CONSTRAINT fk_rails_ba01fcc435 FOREIGN KEY (anggaran_id) REFERENCES public.anggarans(id);
-
-
---
--- Name: program_kegiatans fk_rails_bde191eb18; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.program_kegiatans
-    ADD CONSTRAINT fk_rails_bde191eb18 FOREIGN KEY (kode_opd) REFERENCES public.opds(kode_opd);
 
 
 --
