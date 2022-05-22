@@ -37,4 +37,17 @@ module AnggaransHelper
   rescue NoMethodError
     'Tidak Ditemukan'
   end
+
+  def tahun_kode(kode_barang)
+    # update using delgate method polymorphic
+
+    # TODO test this
+
+    finder = Search::AllAnggaran.find_by_kode_barang(kode_barang)
+    type = finder.searchable_type
+    id_type = finder.searchable_id
+    type.constantize.find(id_type).tahun || '2022'
+  rescue NoMethodError
+    'Tidak Ditemukan'
+  end
 end
