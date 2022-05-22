@@ -72,6 +72,8 @@
                   <td><%= uraian_kode(hitung.deskripsi) %>
                     <br>
                     <%= spesifikasi(hitung.deskripsi) %>
+                    <br>
+                    - <%= tahun_kode(hitung.deskripsi) %>
                   </td>
                   <td class="text-center"><% hitung.koefisiens.each.with_index(1) do |koef, index|%>
                       <%= koef.volume %> <%= koef.satuan_volume %> <%= 'x' if index < hitung.koefisiens.length %>
