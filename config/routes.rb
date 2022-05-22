@@ -172,6 +172,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/sync_subkegiatan', to: 'api/sipd_client#sync_subkegiatan'
   get '/sync_subkegiatan_opd', to: 'api/sipd_client#sync_subkegiatan_opd'
   get '/update_detail_program', to: 'api/sipd_client#update_detail_program'
+  get '/update_detail_kegiatan_lama', to: 'api/sipd_client#update_detail_kegiatan_lama'
   get '/update_detail_kegiatan', to: 'api/sipd_client#update_detail_kegiatan'
   get '/update_detail_subkegiatan', to: 'api/sipd_client#update_detail_subkegiatan'
   get '/sync_musrenbang', to: 'api/sipd_client#sync_musrenbang'

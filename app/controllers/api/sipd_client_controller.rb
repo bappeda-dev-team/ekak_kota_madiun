@@ -29,6 +29,16 @@ module Api
       redirect_to admin_program_path, success: "Program pada #{nama_opd} Berhasil diupdate"
     end
 
+    def update_detail_kegiatan_lama
+      id_programs = @id_programs.flatten!
+      unless id_programs.empty?
+        id_programs.each do |id_program|
+          Api::SipdClient.new(id_sipd: @kode_opd, tahun: @tahun, id_opd: @id_opd, id_program: id_program).detail_kegiatan_lama
+        end
+      end
+      redirect_to admin_kegiatan_path, success: "Kegiatan Lama pada #{nama_opd} Berhasil diupdate"
+    end
+
     def update_detail_kegiatan
       # id opd to find subkegiatan on that opd
       Api::SipdClient.new(id_sipd: @kode_opd, tahun: @tahun, id_opd: @id_opd).detail_master_kegiatan

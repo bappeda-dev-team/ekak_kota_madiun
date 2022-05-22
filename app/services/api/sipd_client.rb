@@ -36,6 +36,11 @@ module Api
       proses_detail_master_program(request)
     end
 
+    def detail_kegiatan_lama
+      request = request_indikator_kegiatan(id_kegiatan: @id_program, id_opd: @id_sipd)
+      proses_detail_kegiatan_lama(request)
+    end
+
     def detail_master_kegiatan
       request = request_subkegiatan_opd(tahun: @tahun, id_opd: @id_sipd)
       proses_detail_master_kegiatan(request)
@@ -94,7 +99,7 @@ module Api
       H.get("#{URL}/indikator_per_program/109/#{id_program}")
     end
 
-    def request_indikator_kegiatan(id_kegiatan:)
+    def request_indikator_kegiatan(id_kegiatan:, id_opd:)
       H.get("#{URL}/indikator_per_kegiatan/109/#{id_opd}/#{id_kegiatan}")
     end
 # TODO Depreceate this thing
@@ -171,6 +176,24 @@ module Api
                      .update_all(indikator_program: indikator_program,
                                  target_program: target_program,
                                  satuan_target_program: satuan_target_program)
+    end
+
+    def proses_detail_kegiatan_lama(response)
+      data = Oj.load(response.body)
+      kegiatan_details = data['data']
+      if kegiatan_details.empty?
+        indikator_kinerja = ''
+        target = ''
+        satuan = ''
+      else
+        indikator_kinerja = kegiatan_details.first['indikator_keg']
+        target = kegiatan_details.first['target_keg'] # indikator_per_kegiatan
+        satuan = kegiatan_details.first['satuan_keg']
+      end
+      ProgramKegiatan.where(id_giat: @id_program)
+                     .update_all(indikator_kinerja: indikator_kinerja,
+                                 target: target,
+                                 satuan: satuan)
     end
 
     def proses_detail_master_kegiatan(response)
