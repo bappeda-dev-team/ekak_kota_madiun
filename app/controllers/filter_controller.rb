@@ -16,7 +16,7 @@ class FilterController < ApplicationController
   KODE_OPD_TABLE = {
     'Dinas Kesehatan, Pengendalian Penduduk dan Keluarga Berencana': '1.02.2.14.0.00.03.0000',
     'Rumah Sakit Umum Daerah Kota Madiun': '1.02.2.14.0.00.03.0000',
-    'Sekretariat Daerah': '4.01.0.00.0.00.01.00',
+    'Sekretariat Daerah': '4.01.0.00.0.00.01.00', # don't change, this still used
     'Bagian Umum': '4.01.0.00.0.00.01.00',
     'Bagian Pengadaan Barang / Jasa dan Administrasi Pembangunan': '4.01.0.00.0.00.01.00',
     'Bagian Organisasi': '4.01.0.00.0.00.01.00',
