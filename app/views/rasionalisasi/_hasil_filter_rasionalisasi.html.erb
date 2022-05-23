@@ -21,11 +21,13 @@
             <th class="border-bottom text-center text-wrap" scope="col">Pagu Anggaran</th>
             <th class="border-bottom text-center border-start border-end" scope="col" colspan="2">Usulan</th>
             <th class="border-bottom text-center border-start border-end" scope="col">Rasionalisasi</th>
+            <th class="border-bottom text-center border-start border-end" scope="col">Action</th>
           </tr>
           <tr>
             <th colspan="3"></th>
             <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
             <th class="border-bottom text-center border-start border-end">Pagu Anggaran</th>
+            <th></th>
             <th></th>
           </tr>
         </thead>
@@ -49,6 +51,9 @@
                   </td>
                   <td class="border-start border-end border-bottom text-center">
                     Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar, delimiter: '.') or 0 %>
+                  </td>
+                  <td class="border-start border-end border-bottom text-center text-gray">
+                    <%= link_to 'Rasionalkan', "/rasional_sasaran/#{show_sasaran.id}", class: 'btn btn-sm btn-primary' %>
                   </td>
                 </tr>
               <% end %>

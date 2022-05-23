@@ -53,6 +53,18 @@ class Tahapan < ApplicationRecord
     '0'
   end
 
+  def total_anggaran_tahapan_setelah_komentar
+    anggarans.where.missing(:comments).compact.sum(&:jumlah)
+  rescue NoMethodError
+    '0'
+  end
+
+  def anggaran_tahapan_dengan_komentar
+    anggarans.select(&:comments).map(&:jumlah)
+  rescue NoMethodError
+    '0'
+  end
+
   def ada_komentar?
     anggarans.map(&:comments).any?(&:present?)
   end

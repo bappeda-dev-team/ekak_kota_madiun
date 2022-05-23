@@ -1,0 +1,113 @@
+<div class="card border-2 mb-2">
+  <div class="card-header">
+    <h5>Sasaran : <%= @sasaran.sasaran_kinerja %></h5>
+  </div>
+</div>
+<% @sasaran.tahapans.each do |tahapan| %>
+  <div class="card border-2 shadow my-3">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <p>Tahapan : <%= tahapan.tahapan_kerja %></p>
+        <p>Total Anggaran : Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan, delimiter: '.') %></p>
+        <% tahapan.anggaran_tahapan_dengan_komentar.each.with_index(1) do |angg, i| %>
+          <p>Anggaran Rasionalisasi <%= i %> : Rp. <%= number_with_delimiter(angg, delimiter: '.') %></p>
+        <% end %>
+        <p>Total Anggaran Setelah Rasionalisasi : Rp. <%= number_with_delimiter(tahapan.total_anggaran_tahapan_setelah_komentar, delimiter: '.') %></p>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>Rincian Anggaran</p>
+      <div class="anggaran">
+        <table id="detail-anggaran">
+          <thead>
+            <tr>
+              <th rowspan="2" class="text-center">Kode Rekening</th>
+              <th rowspan="2" class="text-center">Uraian</th>
+              <th colspan="3" class="text-center">Rincian Perhitungan</th>
+              <th rowspan="2" class="text-center">Pajak</th>
+              <th rowspan="2" class="text-center">Jumlah</th>
+            </tr>
+            <tr>
+              <th class="text-center">Koefisien</th>
+              <th class="text-center">Satuan</th>
+              <th class="text-center">Harga</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% tahapan.anggarans.includes([:comments]).order(:created_at).each do |anggaran| %>
+              <tr class="level-0 <%= 'higlighted' if anggaran.comments.any? %>">
+                <td><%= rekening_anggaran(anggaran.kode_rek) %></td>
+                <td colspan="5" class="mx-auto">
+                  <div class="row">
+                    <div class="text-wrap inline col"><%= anggaran.uraian %></div>
+                    <div class="text-end col-8">
+                      <% if current_user.has_any_role? :reviewer, :admin %>
+                        <% unless anggaran.comments.any? %>
+                          <%= link_to 'Review Anggaran', new_comment_path(anggaran_id: anggaran.id, user_id: current_user.id ),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-comment" }, class: "btn btn-outline-secondary" %>
+                        <% else %>
+                          <%= link_to 'Lihat Komentar',anchor: 'komentar',class: 'btn btn-primary' %>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                </td>
+                <td class="uang text-end">Rp. <%= number_with_delimiter(anggaran.jumlah, delimiter: '.') %></td>
+              </tr>
+              <% if anggaran.perhitungans.any? %>
+                <% anggaran.perhitungans.includes([:koefisiens]).order(:created_at).each do |hitung| %>
+                  <tr class="rincian-anggaran">
+                    <td>
+                      -
+                    </td>
+                    <td><%= uraian_kode(hitung.deskripsi) %>
+                      <br>
+                      <%= spesifikasi(hitung.deskripsi) %>
+                      <br>
+                      - <%= tahun_kode(hitung.deskripsi) %>
+                    </td>
+                    <td class="text-center"><% hitung.koefisiens.each.with_index(1) do |koef, index|%>
+                        <%= koef.volume %> <%= koef.satuan_volume %> <%= 'x' if index < hitung.koefisiens.length %>
+                      <% end %>
+                    </td>
+                    <td class="text-center"><%= hitung.satuan %></td>
+                    <td class="text-center"><%= number_with_delimiter(hitung.harga, :delimiter => '.') %></td>
+                    <td class="text-end"><%= (hitung.pajak.nil? ? 0 : hitung.pajak.potongan * 100).to_i %> %</td>
+                    <td class="uang text-end">Rp. <%= number_with_delimiter((hitung.total).to_i, :delimiter => '.') %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            <% end %>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="6" style="text-align:right">Jumlah Anggaran Tahapan :</td>
+              <td class="text-end">Rp. <%= number_with_delimiter(tahapan.anggarans.compact.sum(&:jumlah), :delimiter => '.') %></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+    <% if tahapan.comments.any? %>
+      <div class="card my-2 bg-gray-100" id="komentar">
+        <div class="card-header d-flex align-items-center">
+          <h2 class="fs-5 fw-bold mb-0">Daftar Review Tahapan: <%= tahapan.tahapan_kerja %></h2>
+        </div>
+        <div class="card-body">
+          <div class="list-group list-group-flush list-group-timeline">
+            <% tahapan.anggarans.includes([:comments]).order(created_at: :asc).each do |anggComm| %>
+              <%= render anggComm.comments %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+<div class="card-body">
+  <%= link_to '#', class: 'btn btn-info w-100 text-white' do %>
+    <span class="fas fa-arrow-left"></span>
+    <span>Kembali</span>
+  <% end %>
+</div>
+<%= render 'anggarans/modal_perhitungans' %>
+<%= render 'comments/modal' %>
