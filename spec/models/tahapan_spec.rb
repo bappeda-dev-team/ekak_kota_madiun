@@ -35,4 +35,38 @@ RSpec.describe Tahapan, type: :model do
     it { should have_many(:aksis) }
     it { should have_many(:anggarans) }
   end
+
+  context 'get anggaran by tahapan' do
+    context 'when tahapan have comment' do
+      it 'should get all anggaran with comments only' do
+        tahapan = Tahapan.create(tahapan_kerja: 'tahapan 1', sasaran_id: 1)
+        user = FactoryBot.create(:user)
+        anggaran = Anggaran.create!(tahapan_id: tahapan.id, jumlah: 100, uraian: 'Test Uraian')
+        anggaran2 = Anggaran.create!(tahapan_id: tahapan.id, jumlah: 200, uraian: 'Test Uraian 2')
+        anggaran3 = Anggaran.create!(tahapan_id: tahapan.id, jumlah: 300, uraian: 'Test Uraian 3')
+        anggaran.update!(jumlah: 100)
+        anggaran2.update!(jumlah: 200)
+        anggaran.comments.create!(user_id: user.id, body: 'comment 1')
+        anggaran2.comments.create!(user_id: user.id, body: 'comment 2')
+        expect(tahapan.anggaran_tahapan_dengan_komentar).to eq([100, 200])
+      end
+
+      it 'should get all anggaran with comments only after comment removed' do
+        tahapan = Tahapan.create(tahapan_kerja: 'tahapan 1', sasaran_id: 1)
+        user = FactoryBot.create(:user)
+        anggaran = Anggaran.create!(tahapan_id: tahapan.id, jumlah: 100, uraian: 'Test Uraian')
+        anggaran2 = Anggaran.create!(tahapan_id: tahapan.id, jumlah: 200, uraian: 'Test Uraian 2')
+        anggaran3 = Anggaran.create!(tahapan_id: tahapan.id, jumlah: 300, uraian: 'Test Uraian 3')
+        anggaran.update!(jumlah: 100)
+        anggaran2.update!(jumlah: 200)
+        anggaran3.update!(jumlah: 300)
+        anggaran.comments.create!(user_id: user.id, body: 'comment 1')
+        anggaran2.comments.create!(user_id: user.id, body: 'comment 2')
+        anggaran3.comments.create!(user_id: user.id, body: 'comment 2')
+        expect(tahapan.anggaran_tahapan_dengan_komentar).to eq([100, 200, 300])
+        anggaran3.comments.first.destroy!
+        expect(tahapan.anggaran_tahapan_dengan_komentar).to eq([100, 200])
+      end
+    end
+  end
 end
