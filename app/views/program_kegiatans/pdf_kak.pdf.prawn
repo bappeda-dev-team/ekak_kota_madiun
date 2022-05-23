@@ -120,8 +120,21 @@ prawn_document do |pdf|
   data_penerima_manfaat << [count, tipe, u.usulan, u.uraian, keterangan]
   end
   pdf.move_down 10
-  pdf.table(data_penerima_manfaat, column_widths: { 0 => 17, 1 => 50, 2 => 100 },
+  tabel_penerima_manfaat = pdf.make_table(data_penerima_manfaat, column_widths: { 0 => 17, 1 => 50, 2 => 100 },
             cell_style: { size: 6, align: :left }, width: pdf.bounds.width)
+  tabel_penerima_manfaat.draw
   pdf.move_down 30
+  if pdf.cursor - tabel_penerima_manfaat.height < 0
+    pdf.start_new_page
   end
+end
+pdf.bounding_box([pdf.bounds.width - 300, pdf.cursor - 50], width: pdf.bounds.width - 200) do
+  pdf.text "Madiun, #{I18n.l Date.today}", size: 8, align: :center
+  pdf.move_down 5
+  pdf.text "<strong>Kepala</strong>", size: 8, align: :center, inline_format: true
+  pdf.text "<strong>#{@program_kegiatan.opd.nama_opd}</strong>", size: 8, align: :center, inline_format: true
+  pdf.move_down 50
+  pdf.text "#{@program_kegiatan.opd.nama_kepala || 'belum disetting'}", size: 8, align: :center
+  pdf.text "#{@program_kegiatan.opd.nip_kepala || 'belum disetting'}", size: 8, align: :center
+end
 end
