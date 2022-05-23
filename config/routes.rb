@@ -159,6 +159,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/admin_kegiatan', to: 'program_kegiatans#admin_kegiatan'
   get '/admin_sub_kegiatan', to: 'program_kegiatans#admin_program_kegiatan'
   get '/rasionalisasi', to: 'rasionalisasi#rasionalisasi'
+  get '/rasional_sasaran/:sasaran', to: 'rasionalisasi#rasional_sasaran'
+  get '/rasional_sasaran_anggaran/:sasaran', to: 'rasionalisasi#rasional_sasaran_anggaran'
   get '/laporan_renja', to: 'program_kegiatans#laporan_renja'
   #
   # user_specific_thing
