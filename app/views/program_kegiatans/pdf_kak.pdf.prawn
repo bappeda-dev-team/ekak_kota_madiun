@@ -1,6 +1,6 @@
-prawn_document do |pdf|
+prawn_document(filename: @filename, disposition: "attachment") do |pdf|
   pdf.text 'KERANGKA ACUAN KERJA/ TERM OF REFERENCE', size: 16, align: :center
-  pdf.text "KELUARAN (OUTPUT) KEGIATAN TA #{@program_kegiatan.created_at.year}", align: :center
+  pdf.text "KELUARAN (OUTPUT) KEGIATAN TA #{@tahun}", align: :center
   # tabel pertama
   pdf.move_down 20
   tabel_program_kegiatan = [
