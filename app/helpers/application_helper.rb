@@ -1,7 +1,7 @@
 module ApplicationHelper
   def asn_sidebar_items
     [
-      { title: 'Pengarusutamaan Gender', href: '#', icon: 'fas fa-people-carry', identifier: 'gender' },
+      { title: 'Pengarusutamaan Gender', href: gender_path, icon: 'fas fa-people-carry', identifier: 'gender' },
       { title: 'Manajemen Resiko', href: '#', icon: 'fas fa-chart-line', identifier: 'man_risk' },
       # { title: 'Kak', href: kaks_path, icon: 'fas fa-sitemap', identifier: 'acuan_kerja' },
       { title: 'Laporan KAK', href: laporan_kak_path, icon: 'fas fa-file', identifier: 'laporan_kak' },
