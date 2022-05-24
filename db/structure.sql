@@ -864,7 +864,8 @@ CREATE TABLE public.opds (
     nip_kepala character varying,
     status_kepala character varying,
     tahun character varying,
-    id_daerah character varying
+    id_daerah character varying,
+    pangkat_kepala character varying
 );
 
 
@@ -2902,6 +2903,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220518074325'),
 ('20220520072832'),
 ('20220520074832'),
-('20220520162623');
+('20220520162623'),
+('20220524004152');
 
 

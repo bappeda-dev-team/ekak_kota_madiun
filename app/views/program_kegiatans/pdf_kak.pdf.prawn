@@ -134,7 +134,8 @@ pdf.bounding_box([pdf.bounds.width - 300, pdf.cursor - 50], width: pdf.bounds.wi
   pdf.text "<strong>Kepala</strong>", size: 8, align: :center, inline_format: true
   pdf.text "<strong>#{@program_kegiatan.opd.nama_opd}</strong>", size: 8, align: :center, inline_format: true
   pdf.move_down 50
-  pdf.text "#{@program_kegiatan.opd.nama_kepala || 'belum disetting'}", size: 8, align: :center
-  pdf.text "#{@program_kegiatan.opd.nip_kepala || 'belum disetting'}", size: 8, align: :center
+  pdf.text "<u>#{@program_kegiatan.opd.nama_kepala || '!!belum disetting'}</u>", size: 8, align: :center, inline_format: true
+  pdf.text "#{@program_kegiatan.opd.pangkat_kepala || '!! belum disetting'}", size: 8, align: :center
+  pdf.text "NIP. #{@program_kegiatan.opd.nip_kepala || '!! belum disetting'}", size: 8, align: :center
 end
 end
