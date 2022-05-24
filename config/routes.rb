@@ -135,10 +135,10 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   patch '/non_aktifkan_pokpir/:id', to: 'pokpirs#non_aktifkan_pokpir'
   # laporan kak
   get '/laporan_kak', to: 'kaks#laporan_kak'
-  get '/pdf_kak/:id', to: 'program_kegiatans#pdf_kak'
+  get '/pdf_kak/:id/:tahun', to: 'program_kegiatans#pdf_kak'
   # laporan rka
   get '/laporan_rka', to: 'program_kegiatans#laporan_rka'
-  get '/pdf_rka/:id', to: 'program_kegiatans#pdf_rka'
+  get '/pdf_rka/:id/:tahun', to: 'program_kegiatans#pdf_rka'
   #  Sasaran
   get '/daftar_subkegiatan', to: 'sasarans#daftar_subkegiatan'
   get '/pdf_daftar_subkegiatan', to: 'sasarans#pdf_daftar_subkegiatan'

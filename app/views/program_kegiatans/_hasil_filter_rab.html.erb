@@ -79,7 +79,7 @@
                 <td class="p-0 m-0"></td>
                 <td class="p-0 m-0"></td>
                 <td class="fw-bolder text-gray-500 text-center" rowspan="<%= program.sasarans.count + 1 %>">
-                  <%= link_to "/pdf_rka/#{program.id}.pdf", class: "m-3" do %>
+                  <%= link_to "/pdf_rka/#{program.id}/#{@tahun}.pdf", class: "m-3" do %>
                     <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak RAB"></span>
                   <% end %>
                 </td>
