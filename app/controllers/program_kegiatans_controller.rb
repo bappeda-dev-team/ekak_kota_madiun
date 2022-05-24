@@ -47,6 +47,7 @@ class ProgramKegiatansController < ApplicationController
 
   def pdf_kak
     @nama_file = ProgramKegiatan.find(params[:id]).nama_subkegiatan
+    @tahun = params[:tahun] || Time.now.year
     @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
     @filename = "Laporan_KAK_#{@nama_file}_#{@waktu}.pdf"
     @program_kegiatan = ProgramKegiatan.find(params[:id])
@@ -58,6 +59,7 @@ class ProgramKegiatansController < ApplicationController
 
   def pdf_rka
     @nama_file = ProgramKegiatan.find(params[:id]).nama_subkegiatan
+    @tahun = params[:tahun] || Time.now.year
     @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
     @filename = "Laporan_RAB_#{@nama_file}_#{@waktu}.pdf"
   end
