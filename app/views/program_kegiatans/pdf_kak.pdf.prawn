@@ -28,6 +28,23 @@ prawn_document do |pdf|
   @program_kegiatan.sasarans.where.not(program_kegiatan: nil).each.with_index(1) do |sasaran, index|
     dasar_hukum_arr = nil
     permasalahan_arr = nil
+    sasaran_arr = nil
+    indikator_arr = nil
+    satuan_arr = nil
+    target_arr = nil
+    sasaran_arr = [[sasaran.sasaran_kinerja]]
+    if sasaran.indikator_sasarans.any?
+      sasaran.indikator_sasarans.each do |indikator|
+        indikator_arr = [[indikator.indikator_kinerja]]
+        satuan_arr = [[indikator.satuan]]
+        target_arr = [[indikator.target]]
+      end
+    else
+      indikator_arr = [['-']]
+      satuan_arr = [['-']]
+      target_arr = [['-']]
+    end
+    # DasarHukum
     if sasaran.dasar_hukums.any?
       sasaran.dasar_hukums.each do |dasar_hukum|
         dasar_hukum_arr = [[dasar_hukum.peraturan]]
@@ -56,28 +73,54 @@ prawn_document do |pdf|
         ['-', '']
       ]
     end
-    dasar_hukum_cell = pdf.make_table(dasar_hukum_arr, cell_style: {size: 8, border_width: 0})
-    permasalahan_cell = pdf.make_table(permasalahan_arr, cell_style: {size: 8, border_width: 0})
-    tabel_sasaran = [
-      [{ content: "#{index}.", font_style: :bold }, { content: "Sasaran/Rencana Kinerja", font_style: :bold }, ':', { content: sasaran.sasaran_kinerja }],
-      ['', 'Indikator Kinerja (Output)', ':', { content: @program_kegiatan.indikator_subkegiatan }],
-      ['', 'Target', ':', { content: @program_kegiatan.target_subkegiatan.to_s }],
-      ['', 'Satuan', ':', { content: @program_kegiatan.satuan_target_subkegiatan.to_s }]
+    sasaran_cell = pdf.make_table(sasaran_arr, cell_style: {size: 8, border_width: 0}, width: 388)
+    indikator_cell = pdf.make_table(indikator_arr, cell_style: {size: 8, border_width: 0}, width: 388)
+    satuan_cell = pdf.make_table(satuan_arr, cell_style: {size: 8, border_width: 0}, width: 388)
+    target_cell = pdf.make_table(target_arr, cell_style: {size: 8, border_width: 0}, width: 388)
+    dasar_hukum_cell = pdf.make_table(dasar_hukum_arr, cell_style: {size: 8, border_width: 0}, width: 300)
+    permasalahan_cell = pdf.make_table(permasalahan_arr, cell_style: {size: 8, border_width: 0}, width: 300)
+    sasaran_judul = [
+      [{ content: "#{index}.", font_style: :bold }, { content: "Sasaran/Rencana Kinerja", font_style: :bold }, ':', sasaran_cell],
+      ['', 'Indikator Kinerja (Output)', ':', indikator_cell],
+      ['', 'Target', ':', satuan_cell],
+      ['', 'Satuan', ':', target_cell]
+    ]
+    dasar_hukum = [
+      ['', 'a.', 'Dasar Hukum', ':', dasar_hukum_cell]
+    ]
+    gambaran_umum = [
+      ['', 'b.', 'Gambaran Umum', ':', { content: sasaran.latar_belakangs.first&.gambaran_umum || '-' }]
+    ]
+    penerima_manfaat = [
+      ['', 'c.', 'Penerima Manfaat', ':', { content: sasaran.penerima_manfaat || '-' }]
+    ]
+    data_terpilah = [
+      ['', 'd.', 'Data Terpilah', ':', { content: sasaran.rincian&.data_terpilah || '-' }]
+    ]
+    permasalahan = [
+      ['', 'e.', 'Permasalahan', ':', permasalahan_cell]
     ]
     rincian_sasaran = [
-      ['', 'a.', 'Dasar Hukum', ':', dasar_hukum_cell],
-      ['', 'b.', 'Gambaran Umum', ':', { content: sasaran.latar_belakangs.first&.gambaran_umum || '-' }],
-      ['', 'c.', 'Penerima Manfaat', ':', { content: sasaran.penerima_manfaat || '-' }],
-      ['', 'd.', 'Data Terpilah', ':', { content: sasaran.rincian&.data_terpilah || '-' }],
-      ['', 'e.', 'Permasalahan', ':', permasalahan_cell],
       ['', 'f.', 'Resiko', ':', { content: sasaran.rincian&.resiko || '-' }]
     ]
-    rencana_aksi_dan_anggaran = [
+    rencana_aksi_judul = [
       ['', 'g.', {content: 'Rencana Aksi dan Anggaran'}]
     ]
-    tabel_rincian = pdf.make_table(rincian_sasaran, column_widths: { 0=> 17, 1=>17, 2=> 89, 3=> 12  }, cell_style: { size: 8, border_width: 0 })
-    tabel_rencana_aksi_judul = pdf.make_table(rencana_aksi_dan_anggaran, column_widths: { 0=> 17, 1=>17}, cell_style: { size: 8, border_width: 0 })
-    pdf.table(tabel_sasaran, column_widths: { 0=> 17, 2=> 12 }, cell_style: { size: 8, border_width: 0 })
+    tabel_sasaran = pdf.make_table(sasaran_judul, column_widths: { 0=> 17, 2=> 13 }, cell_style: { size: 8, border_width: 0 }, width: pdf.bounds.width)
+    tabel_dasar_hukum = pdf.make_table(dasar_hukum, column_widths: { 0=> 17, 1=>17, 2=> 88, 3=> 12  }, cell_style: { size: 8, border_width: 0, :overflow => :expand }, width: pdf.bounds.width)
+    tabel_gambaran_umum = pdf.make_table(gambaran_umum, column_widths: { 0=> 17, 1=>17, 2=> 88, 3=> 12  }, cell_style: { size: 8, border_width: 0, :overflow => :expand }, width: pdf.bounds.width)
+    tabel_penerima_manfaat = pdf.make_table(penerima_manfaat, column_widths: { 0=> 17, 1=>17, 2=> 88, 3=> 12  }, cell_style: { size: 8, border_width: 0, :overflow => :expand }, width: pdf.bounds.width)
+    tabel_data_terpilah = pdf.make_table(data_terpilah, column_widths: { 0=> 17, 1=>17, 2=> 88, 3=> 12  }, cell_style: { size: 8, border_width: 0, :overflow => :expand }, width: pdf.bounds.width)
+    tabel_permasalahan = pdf.make_table(permasalahan, column_widths: { 0=> 17, 1=>17, 2=> 88, 3=> 12  }, cell_style: { size: 8, border_width: 0, :overflow => :expand }, width: pdf.bounds.width)
+    tabel_rincian = pdf.make_table(rincian_sasaran, column_widths: { 0=> 17, 1=>17, 2=> 88, 3=> 12  }, cell_style: { size: 8, border_width: 0, :overflow => :expand }, width: pdf.bounds.width)
+    tabel_rencana_aksi_judul = pdf.make_table(rencana_aksi_judul, column_widths: { 0=> 17, 1=>17}, cell_style: { size: 8, border_width: 0 })
+    # pdf.table(tabel_sasaran, column_widths: { 0=> 17, 2=> 13 }, cell_style: { size: 8, border_width: 0 })
+    tabel_sasaran.draw
+    tabel_dasar_hukum.draw
+    tabel_gambaran_umum.draw
+    tabel_penerima_manfaat.draw
+    tabel_data_terpilah.draw
+    tabel_permasalahan.draw
     tabel_rincian.draw
     tabel_rencana_aksi_judul.draw
     pdf.move_down 10
