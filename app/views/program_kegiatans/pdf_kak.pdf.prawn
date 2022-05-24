@@ -26,18 +26,17 @@ prawn_document do |pdf|
   pdf.move_down 30
   # loop sasaran
   @program_kegiatan.sasarans.where.not(program_kegiatan: nil).each.with_index(1) do |sasaran, index|
-    dasar_hukum_arr = nil
-    permasalahan_arr = nil
-    sasaran_arr = nil
-    indikator_arr = nil
-    satuan_arr = nil
-    target_arr = nil
+    dasar_hukum_arr = []
+    permasalahan_arr = []
+    indikator_arr = []
+    satuan_arr = []
+    target_arr = []
     sasaran_arr = [[sasaran.sasaran_kinerja]]
     if sasaran.indikator_sasarans.any?
       sasaran.indikator_sasarans.each do |indikator|
-        indikator_arr = [[indikator.indikator_kinerja]]
-        satuan_arr = [[indikator.satuan]]
-        target_arr = [[indikator.target]]
+        indikator_arr << [indikator.indikator_kinerja]
+        satuan_arr << [indikator.satuan]
+        target_arr << [indikator.target]
       end
     else
       indikator_arr = [['-']]
@@ -47,21 +46,19 @@ prawn_document do |pdf|
     # DasarHukum
     if sasaran.dasar_hukums.any?
       sasaran.dasar_hukums.each do |dasar_hukum|
-        dasar_hukum_arr = [[dasar_hukum.peraturan]]
+        dasar_hukum_arr << [dasar_hukum.judul]
       end
     else
       dasar_hukum_arr = [['-']]
     end
     if sasaran.permasalahans.any?
       sasaran.permasalahans.each do |permasalahan|
-        permasalahan_arr = [
-            [permasalahan.permasalahan, ''],
-            ['Penyebab', ''],
-            ['1. Internal'],
-            [permasalahan.penyebab_internal || '-'],
-            ['2. External'],
-            [permasalahan.penyebab_external || '-']
-          ]
+        permasalahan_arr << [permasalahan.permasalahan]
+        permasalahan_arr << ['Penyebab', '']
+        permasalahan_arr << ['1. Internal']
+        permasalahan_arr << [permasalahan.penyebab_internal || '-']
+        permasalahan_arr << ['2. External']
+        permasalahan_arr << [permasalahan.penyebab_external || '-']
       end
     else
       permasalahan_arr = [
