@@ -70,12 +70,16 @@ prawn_document do |pdf|
       ['', 'c.', 'Penerima Manfaat', ':', { content: sasaran.penerima_manfaat || '-' }],
       ['', 'd.', 'Data Terpilah', ':', { content: sasaran.rincian&.data_terpilah || '-' }],
       ['', 'e.', 'Permasalahan', ':', permasalahan_cell],
-      ['', 'f.', 'Resiko', ':', { content: sasaran.rincian&.resiko || '-' }],
-      ['', 'g.', {content: 'Rencana Aksi dan Anggaran', colspan: 3}]
+      ['', 'f.', 'Resiko', ':', { content: sasaran.rincian&.resiko || '-' }]
     ]
-    tabel_rincian = pdf.make_table(rincian_sasaran, cell_style: { size: 8, border_width: 0 })
+    rencana_aksi_dan_anggaran = [
+      ['', 'g.', {content: 'Rencana Aksi dan Anggaran'}]
+    ]
+    tabel_rincian = pdf.make_table(rincian_sasaran, column_widths: { 0=> 17, 1=>17, 2=> 89, 3=> 12  }, cell_style: { size: 8, border_width: 0 })
+    tabel_rencana_aksi_judul = pdf.make_table(rencana_aksi_dan_anggaran, column_widths: { 0=> 17, 1=>17}, cell_style: { size: 8, border_width: 0 })
     pdf.table(tabel_sasaran, column_widths: { 0=> 17, 2=> 12 }, cell_style: { size: 8, border_width: 0 })
     tabel_rincian.draw
+    tabel_rencana_aksi_judul.draw
     pdf.move_down 10
     data_rencana_aksi = [[{ content: 'No', rowspan: 2 }, { content: 'Tahapan Kerja', rowspan: 2 },
                           { content: 'Target pada bulan', colspan: 12 }, { content: 'Jumlah', rowspan: 2 },
@@ -114,7 +118,7 @@ prawn_document do |pdf|
   tabel_usulan = [
     ['', 'h.', 'Usulan yang terakomodir']
   ]
-  pdf.table(tabel_usulan, cell_style: { size: 8, border_width: 0 })
+  pdf.table(tabel_usulan, column_widths: { 0=> 17, 1=>17 }, cell_style: { size: 8, border_width: 0 })
   data_penerima_manfaat = [['No', 'Jenis Usulan', 'Usulan', 'Permasalahan/ Uraian', 'Keterangan']]
   count = 0
   sasaran.my_usulan.each do |u|
