@@ -246,6 +246,7 @@ module Api
       data_subkegiatan = []
       jajals.each do |sub|
         id_rinci_sub_bl = sub['id_rinci_sub_bl']
+        tahun = sub['tahun']
         kode_skpd = sub["kode_skpd"]
         kode_sub_skpd = sub["kode_sub_skpd"]
         id_unit = sub['id_unit']
@@ -266,6 +267,7 @@ module Api
         pagu = sub['pagu']
         data_subkegiatan << {
           identifier_belanja: id_rinci_sub_bl,
+          tahun: tahun,
           kode_skpd: kode_skpd,
           kode_sub_skpd: kode_sub_skpd,
           id_unit: id_unit,
@@ -368,9 +370,9 @@ module Api
         id_giat = sub['id_giat']
         kode_giat = sub['kode_giat']
         nama_kegiatan = sub['nama_giat']
-        indikator_keg = sub['outcome_giat2'].first['indikator_keg']
-        target_keg = sub['outcome_giat2'].first['target_keg']
-        satuan_keg = sub['outcome_giat2'].first['satuan_keg']
+        # indikator_keg = sub['outcome_giat2'].first['indikator_keg']
+        # target_keg = sub['outcome_giat2'].first['target_keg']
+        # satuan_keg = sub['outcome_giat2'].first['satuan_keg']
         id_sub_giat = sub['id_sub_giat']
         kode_sub_giat = sub['kode_sub_giat']
         nama_sub_giat = sub['nama_sub_giat']
@@ -394,9 +396,9 @@ module Api
           id_giat: id_giat,
           kode_giat: kode_giat,
           nama_kegiatan: nama_kegiatan,
-          indikator_kinerja: indikator_keg,
-          target: target_keg,
-          satuan: satuan_keg,
+          # indikator_kinerja: indikator_keg,
+          # target: target_keg,
+          # satuan: satuan_keg,
           id_sub_giat: id_sub_giat,
           kode_sub_giat: kode_sub_giat,
           nama_subkegiatan: nama_sub_giat,

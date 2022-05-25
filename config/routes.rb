@@ -82,7 +82,12 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :kaks, path: 'acuan_kerja'
   resources :lembagas
   resources :opds
-  resources :program_kegiatans
+  resources :program_kegiatans do
+    member do
+      get :subgiat_edit
+      patch :subgiat_update
+    end
+  end
   resources :pajaks
   resources :kesenjangans
   resources :strategi_keluarans, path: 'strategi'
