@@ -116,6 +116,7 @@ class FilterController < ApplicationController
     end
   end
 
+
   def filter_usulan
     @type = params[:jenis].capitalize
     @type_alsi = @type.capitalize
