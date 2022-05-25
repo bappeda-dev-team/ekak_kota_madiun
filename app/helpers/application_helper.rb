@@ -27,6 +27,15 @@ module ApplicationHelper
     ]
   end
 
+  def laporan_usulans
+    [
+      { title: 'Laporan Musrenbang', href: '/laporan_usulan/musrenbang', identifier: 'laporan_usulan\/musrenbang' },
+      { title: 'Laporan Pokok Pikiran', href: '/laporan_usulan/pokpir', identifier: 'laporan_usulan\/pokpir' },
+      { title: 'Laporan Mandatori', href: '/laporan_usulan/mandatori', identifier: 'laporan_usulan\/mandatori' },
+      { title: 'Laporan Inisiatif Walikota', href: '/laporan_usulan/inisiatif', identifier: 'laporan_usulan\/inisiatif' }
+    ]
+  end
+
   def anggaran_items
     [
       { title: 'SSH', href: anggaran_sshes_path, identifier: 'anggaran_ssh' },

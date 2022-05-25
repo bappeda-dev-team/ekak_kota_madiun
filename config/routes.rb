@@ -162,6 +162,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/rasional_sasaran/:sasaran', to: 'rasionalisasi#rasional_sasaran'
   get '/rasional_sasaran_anggaran/:sasaran', to: 'rasionalisasi#rasional_sasaran_anggaran'
   get '/laporan_renja', to: 'program_kegiatans#laporan_renja'
+  get '/laporan_usulan/:jenis', to: 'usulans#laporan_usulan'
   #
   # user_specific_thing
   get '/usulan_musrenbang', to: 'musrenbangs#usulan_musrenbang'
@@ -191,6 +192,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   post '/filter_rab', to: 'filter#filter_rab'
   post '/filter_rasionalisasi', to: 'filter#filter_rasionalisasi'
   post '/filter_opd', to: 'filter#filter_opd'
+  post '/filter_usulan', to: 'filter#filter_usulan'
+
   # get "/program_kegiatans", to: "program_kegiatans#index"
   # get "/program_kegiatans/new", to: "program_kegiatans#new"
   # get "/program_kegiatan/:id", to: "program_kegiatans#show"
