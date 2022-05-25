@@ -83,7 +83,7 @@ class ProgramKegiatansController < ApplicationController
         target_subkegiatan: params[:program_kegiatan][:target_subkegiatan],
         satuan_target_subkegiatan: params[:program_kegiatan][:satuan_target_subkegiatan]
       }
-      ProgramKegiatan.where(id_sub_giat: id_sub).update_all(subgiat_param)
+      ProgramKegiatan.where(id_sub_giat: id_sub).update_all(programKegiatan_params)
       @prog = ProgramKegiatan.find params[:id]
       format.js { render '_notifikasi', locals: { message: 'Perubahan sub kegiatan disimpan', status_icon: 'success', form_name: 'form-programkegiatan', type: 'update' } }
     end
