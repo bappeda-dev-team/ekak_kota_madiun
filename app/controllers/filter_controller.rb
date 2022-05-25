@@ -116,14 +116,19 @@ class FilterController < ApplicationController
     end
   end
 
-  def filter_mandatori
+  def filter_usulan
+    @type = params[:jenis].capitalize
+    @type_alsi = @type.capitalize
+    if @type == 'Inisiatif'
+      @type = 'Inovasi'
+      @type_alsi = 'Inisiatif Walikota'
+    end
     @program_kegiatans = ProgramKegiatan.includes(%i[opd usulans]).where(opds: { kode_unik_opd: @kode_opd })
-                                        .where(usulans: { usulanable_type: 'Mandatori' })
+                                        .where(usulans: { usulanable_type: @type })
                                         .select { |p| p.sasarans.exists? }
-    @type = 'Mandatori'
     @nama_opd = nama_opd
     respond_to do |format|
-      format.js { render 'usulans/mandatori_filter' }
+      format.js { render 'usulans/usulan_filter' }
     end
   end
 

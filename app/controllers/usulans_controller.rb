@@ -43,6 +43,11 @@ class UsulansController < ApplicationController
 
   def laporan_usulan
     # render laporan usulan
+    @jenis = params[:jenis]
+    @jenis_asli = @jenis
+    if @jenis == 'inisiatif'
+      @jenis_asli = 'inisiatif walikota'
+    end
   end
 
   private
