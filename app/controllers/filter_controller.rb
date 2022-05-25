@@ -117,7 +117,11 @@ class FilterController < ApplicationController
   end
 
   def filter_mandatori
-    @program_kegiatans = ProgramKegiatan.includes(%i[opd]).where(opds: { kode_unik_opd: @kode_opd }).select { |p| p.sasarans.exists? }
+    @program_kegiatans = ProgramKegiatan.includes(%i[opd usulans]).where(opds: { kode_unik_opd: @kode_opd })
+                                        .where(usulans: { usulanable_type: 'Mandatori' })
+                                        .select { |p| p.sasarans.exists? }
+    @type = 'Mandatori'
+    @nama_opd = nama_opd
     respond_to do |format|
       format.js { render 'usulans/mandatori_filter' }
     end
@@ -129,5 +133,9 @@ class FilterController < ApplicationController
     @kode_opd = params[:kode_opd]
     @tahun = params[:tahun]
     @bulan = params[:bulan]
+  end
+
+  def nama_opd
+    @nama_opd ||= Opd.find_by(kode_unik_opd: @kode_opd).nama_opd || '-'
   end
 end

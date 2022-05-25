@@ -2,10 +2,10 @@
   <div class="card-header">
     <div class="row align-items-center">
       <div class="col">
-        <h2 class="fs-5 fw-bold mb-0">Laporan Usulan</h2>
+        <h2 class="fs-5 fw-bold mb-0">Laporan Usulan <%= @type %></h2>
       </div>
       <div class="col text-end">
-        Nama OPD
+        <%= @nama_opd %>
       </div>
     </div>
   </div>
@@ -29,12 +29,12 @@
               <td class="text-gray-900 fw-bolder border-bottom" rowspan="<%= pk.usulans.where(usulanable_type: 'Mandatori').count + 1 %>"><%= i %></td>
               <td class="p-0 m-0"></td>
               <td class="text-gray-900 border-end border-start text-wrap" width="200px" rowspan="<%= pk.usulans.where(usulanable_type: 'Mandatori').count + 1 %>"><%= pk.nama_subkegiatan %></td>
-              <td class="text-gray-900 border-end border-start" rowspan="<%= pk.usulans.where(usulanable_type: 'Mandatori').count + 1 %>">Rp. <%= number_with_delimiter(pk.my_pagu, delimiter: '.') %></td>
+              <td class="text-gray-900 border-end border-start px-3" rowspan="<%= pk.usulans.where(usulanable_type: 'Mandatori').count + 1 %>">Rp. <%= number_with_delimiter(pk.my_pagu, delimiter: '.') %></td>
               <td class="p-0 m-0"></td>
               <% pk.usulans.where(usulanable_type: 'Mandatori').each do |us| %>
                 <tr>
                   <td class="text-gray-900 border-end border-start text-wrap" width="300px"><%= us.usulanable.usulan %></td>
-                  <td class="text-gray-900 border-end border-start text-wrap pagu-sasaran" width="150px">Rp. <%= number_with_delimiter(us.sasaran.total_anggaran, delimiter: '.') %></td>
+                  <td class="text-gray-900 border-end border-start text-wrap pagu-sasaran px-3" width="150px">Rp. <%= number_with_delimiter(us.sasaran.total_anggaran, delimiter: '.') %></td>
                   <td class="text-gray-900 border-end border-start text-wrap"><%= us.usulanable.uraian %></td>
                   <td class="text-gray-900 border-end border-start text-wrap"><%= us.usulanable.peraturan_terkait %></td>
                 </tr>
