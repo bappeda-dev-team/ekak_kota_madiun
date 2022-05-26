@@ -158,7 +158,7 @@
     </div>
   </div>
   <div class="card-body">
-    <% jumlah_sasaran = @users.map { |n| n.program_kegiatan_sasarans.map { |j| j.sasarans.count} }.flatten.reduce(:+) %>
+    <% jumlah_sasaran = @users.map(&:jumlah_sasaran).compact.reduce(:+) %>
     <% jumlah_anggaran = @users.map { |n| n.program_kegiatan_sasarans.map { |j| j&.my_pagu } }.flatten.reduce(:+) %>
     <p>Jumlah SubKegiatan : <%= @users.map {|u| u.program_kegiatan_sasarans.size }.reduce(:+) %></p>
     <p>Jumlah Sasaran Aktif : <%= jumlah_sasaran %></p>

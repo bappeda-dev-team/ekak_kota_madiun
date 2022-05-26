@@ -67,10 +67,6 @@ class User < ApplicationRecord
     add_role(:asn) if roles.blank?
   end
 
-  def program_kegiatan_sasarans
-    sasarans.map(&:program_kegiatan).compact.uniq
-  end
-
   def sasaran_aktif
     program = program_kegiatan_sasarans.count
     usulan = sasarans.map(&:usulans).flatten.count
@@ -80,18 +76,46 @@ class User < ApplicationRecord
     }
   end
 
-  def petunjuk_sasaran
-    status = sasarans.map { |s| s.petunjuk_status }
-    merah = sasarans.total_hangus
-    kuning = sasarans.select { |s| s.usulans.exists? && s.belum_ada_sub? }.count
-    biru = status.select { |s| s[:usulan_dan_sub] }.select { |j| j.except(:usulan_dan_sub).values.any?(false) }.count
-    hijau = status.map { |stat| stat.values }.select { |s| s.all?(true) }.count
+  def program_kegiatan_sasarans
+    @program_kegiatan_sasarans ||= sasarans.map(&:program_kegiatan).compact.uniq
+  end
 
+  def jumlah_sasaran
+    @program_kegiatan_sasarans.map { |j| j.sasarans.count }.flatten.reduce(:+)
+  end
+
+  def jumlah_anggaran
+    @program_kegiatan_sasarans.map { |j| j&.my_pagu }.flatten.reduce(:+)
+  end
+
+  def petunjuk_sasaran
     {
-      merah: merah,
-      kuning: kuning,
+      merah: total_hangus,
+      kuning: kurang_lengkap,
       biru: biru,
       hijau: hijau
     }
+  end
+
+  private
+
+  def petunjuk_status
+    @petunjuk_status ||= sasarans.map(&:petunjuk_status)
+  end
+
+  def biru
+    @biru ||= petunjuk_status.select { |s| s[:usulan_dan_sub] }.select { |j| j.except(:usulan_dan_sub).values.any?(false) }.count
+  end
+
+  def hijau
+    @hijau ||= petunjuk_status.map(&:values).select { |s| s.all?(true) }.count
+  end
+
+  def total_hangus
+    @total_hangus ||= sasarans.total_hangus
+  end
+
+  def kurang_lengkap
+    @kurang_lengkap ||= sasarans.select { |s| s.usulans.exists? && s.belum_ada_sub? }.count
   end
 end
