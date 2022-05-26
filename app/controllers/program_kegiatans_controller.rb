@@ -2,7 +2,7 @@ class ProgramKegiatansController < ApplicationController
   before_action :set_programKegiatan,
                 only: %i[show edit update destroy
                          show_to_kak kak_detail kak_renaksi kak_waktu
-                         subgiat_edit program_edit kegiatan_edit
+                         subgiat_edit subgiat_update program_edit kegiatan_edit
                          pdf_rka]
   before_action :set_dropdown, only: %i[new edit]
 
@@ -77,14 +77,7 @@ class ProgramKegiatansController < ApplicationController
     respond_to do |format|
       @row_num = params[:program_kegiatan][:row_num]
       id_sub = params[:program_kegiatan][:id_subgiat]
-      subgiat_param = {
-        nama_subkegiatan:  params[:program_kegiatan][:nama_subkegiatan],
-        indikator_subkegiatan: params[:program_kegiatan][:indikator_subkegiatan],
-        target_subkegiatan: params[:program_kegiatan][:target_subkegiatan],
-        satuan_target_subkegiatan: params[:program_kegiatan][:satuan_target_subkegiatan]
-      }
-      ProgramKegiatan.where(id_sub_giat: id_sub).update_all(programKegiatan_params)
-      @prog = ProgramKegiatan.find params[:id]
+      ProgramKegiatan.where(id_sub_giat: id_sub).update_all(programKegiatan_params.to_h.except(:row_num, :id_subgiat))
       format.js { render '_notifikasi', locals: { message: 'Perubahan sub kegiatan disimpan', status_icon: 'success', form_name: 'form-programkegiatan', type: 'update' } }
     end
   end

@@ -6,4 +6,4 @@ Swal.fire({
   confirmButtonText: 'Ok',
 })
 // prepend table with new result
-$("#<%= dom_id(@prog) %>").replaceWith("<%= j render 'program_kegiatans/subgiat_row', prog: @prog %>");
+$("#<%= dom_id(@programKegiatan) %>").replaceWith("<%= j render 'program_kegiatans/subgiat_row', prog: @programKegiatan %>");
