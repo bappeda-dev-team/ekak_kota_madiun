@@ -4,6 +4,16 @@
       <div class="col">
         <h2 class="fs-5 fw-bold mb-0">Laporan Usulan <%= @type_alsi %></h2>
       </div>
+      <div class="col">
+        <%= link_to "/pdf_usulan.pdf", class:"btn btn-sm btn-primary" do %>
+          Download PDF 
+          <i class="fas fa-file-pdf ms-2"></i>
+        <% end %>
+        <%= link_to "/pdf_usulan.pdf", class:"btn btn-sm btn-primary" do %>
+          Download Excel 
+          <i class="fas fa-file-excel ms-2"></i>
+        <% end %>
+      </div>
       <div class="col text-end">
         <%= @nama_opd %>
       </div>

@@ -50,6 +50,19 @@ class UsulansController < ApplicationController
     end
   end
 
+  def pdf_usulan
+    # render laporan usulan
+    @jenis = params[:jenis]
+    @jenis_asli = @jenis
+    if @jenis == 'inisiatif'
+      @jenis_asli = 'inisiatif walikota'
+    end
+    @nama_file = 'nama_opd'
+    @tahun = params[:tahun] || Time.now.year
+    @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
+    @filename = "Laporan_USULAN_#{@jenis_asli}_#{@nama_file}_#{@waktu}.pdf"
+  end
+
   private
 
   def check_params
