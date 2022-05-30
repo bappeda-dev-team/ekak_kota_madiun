@@ -1,4 +1,4 @@
-prawn_document(filename: @filename, page_layout: :landscape) do |pdf|
+prawn_document(filename: @filename, page_layout: :landscape, disposition: "attachment") do |pdf|
   size_cell = 8
   height_nested = 30
   width_nested = 200
