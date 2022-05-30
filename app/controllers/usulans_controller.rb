@@ -55,13 +55,14 @@ class UsulansController < ApplicationController
     @jenis = params[:jenis]
     @jenis_asli = @jenis
     @kode_opd = params[:opd]
-    if @jenis == 'inisiatif'
+    if @jenis == 'Inisiatif Walikota'
+      @jenis = 'Inovasi'
       @jenis_asli = 'inisiatif walikota'
     end
     @program_kegiatans = ProgramKegiatan.includes(%i[opd usulans]).where(opds: { id_opd_skp: @kode_opd })
                                         .where(usulans: { usulanable_type: @jenis })
                                         .select { |p| p.sasarans.exists? }
-    @nama_opd = params[:nama_opd]
+    @nama_opd = Opd.find_by(id_opd_skp: @kode_opd).nama_opd
     @nama_file = @nama_opd
     @tahun = params[:tahun] || Time.now.year
     @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
