@@ -3,7 +3,7 @@ prawn_document(filename: @filename, page_layout: :landscape) do |pdf|
   height_nested = 30
   width_nested = 200
   rowspan = 0
-  pdf.text "DAFTAR SUB KEGIATAN #{@jenis_asli}", align: :center
+  pdf.text "DAFTAR SUB KEGIATAN #{@jenis_asli.upcase}", align: :center
   pdf.move_down 3
   pdf.text "KOTA MADIUN TAHUN #{@tahun}", align: :center
   pdf.move_down 3
