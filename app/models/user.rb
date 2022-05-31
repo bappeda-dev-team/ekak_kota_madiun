@@ -64,7 +64,7 @@ class User < ApplicationRecord
   end
 
   def assign_default_role
-    add_role(:asn) if roles.blank?
+    add_role(:non_aktif) if roles.blank?
   end
 
   def program_kegiatan_sasarans
@@ -93,5 +93,13 @@ class User < ApplicationRecord
       biru: biru,
       hijau: hijau
     }
+  end
+
+  def pegawai_kelurahan?
+    jabatan.upcase.include?('KELURAHAN')
+  end
+
+  def petunjuk_kelurahan
+    jabatan.split(/KELURAHAN/, 2).last.strip if pegawai_kelurahan?
   end
 end
