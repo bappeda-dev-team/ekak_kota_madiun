@@ -104,6 +104,7 @@ class User < ApplicationRecord
 
   def petunjuk_kelurahan
     jabatan.split(/KELURAHAN/, 2).last.strip if pegawai_kelurahan?
+  end
 
   private
 
