@@ -11,8 +11,12 @@ class ProgramKegiatansController < ApplicationController
   def index
     # TODO: refactor untuk json query
     param = params[:q] || ''
+    # FIXME REFACTOR TOO MUCH LOGIC
     @programKegiatans = ProgramKegiatan.where('kode_opd ILIKE ?', "%#{current_user.kode_opd}%")
                                        .where('nama_subkegiatan ILIKE ?', "%#{param}%")
+    if current_user.pegawai_kelurahan?
+      @programKegiatans = @programKegiatans.select { |program| program.nama_opd_pemilik.upcase.split(/KELURAHAN/, 2).last.strip == current_user.petunjuk_kelurahan }
+    end
   end
 
   def admin_program_kegiatan
