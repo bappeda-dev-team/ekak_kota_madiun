@@ -11,7 +11,7 @@
       </ol>
     </nav>
     <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
-      <%= render 'shared/filter_card', filter_url: '/filter_usulan', jenis: @jenis %>
+      <%= render 'shared/filter_with_tahun_card', filter_url: '/filter_usulan', jenis: @jenis %>
     <% end %>
     <div class="card border-0 shadow" id="usulan_filter">
       <div class="card-header">

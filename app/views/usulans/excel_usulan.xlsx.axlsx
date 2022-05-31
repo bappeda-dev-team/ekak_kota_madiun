@@ -1,0 +1,24 @@
+wb = xlsx_package.workbook
+s = wb.styles
+project_heading = s.add_style sz: 16, b: true, alignment: { horizontal: :center }
+wb.add_worksheet(name: "Usulan #{@jenis_asli.upcase}") do |sheet|
+  # 4.times do
+  #   sheet.add_row %w(a b c d e f g)
+  # end
+  # sheet.merge_cells "A1:A2"
+  # sheet.merge_cells "B1:B2"
+  sheet.add_row ['', "Laporan Usulan #{@jenis_asli.upcase}"], style: project_heading
+  sheet.add_row ['No', @jenis_asli, 'Sub Kegiatan', 'Pagu Anggaran', 'Uraian', 'Keterangan']
+  @program_kegiatans.each.with_index(1) do |pk, i|
+    pk.usulans.where(usulanable_type: @jenis).each do |us|
+      keterangan = us.usulanable.try(:alamat) || us.usulanable.try(:peraturan_terkait) || us.usulanable.try(:manfaat)
+      sheet.add_row [i, us.usulanable.usulan, pk.nama_subkegiatan, "Rp. #{number_with_delimiter(pk.my_pagu, delimiter: '.')}",
+                     pk.usulans.first.usulanable.uraian, keterangan]
+      # pk_cell.cells.each.with_index do |cell, isv|
+      #   puts "index #{isv} - #{cell.pos} - #{cell.value} - #{cell.r}"
+      # end
+      # sheet.merge_cells("#{pk_cell.cells[2].r}:#{pk_cell.cells.last.r}")
+    end
+  end
+  sheet.add_row ['', '', 'Jumlah', "Rp. #{number_with_delimiter(@program_kegiatans.map(&:my_pagu).compact.sum)}", '', '']
+end

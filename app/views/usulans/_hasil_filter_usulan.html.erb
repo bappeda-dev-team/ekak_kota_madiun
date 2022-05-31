@@ -4,6 +4,17 @@
       <div class="col">
         <h2 class="fs-5 fw-bold mb-0">Laporan Usulan <%= @type_alsi %></h2>
       </div>
+      <div class="col">
+        <% opd = Opd.find_by(kode_unik_opd: @kode_opd).id_opd_skp %>
+        <%= link_to "/pdf_usulan/#{@type_alsi}/#{opd}/#{@tahun}.pdf", class:"btn btn-sm btn-primary" do %>
+          Download PDF 
+          <i class="fas fa-file-pdf ms-2"></i>
+        <% end %>
+        <%= link_to "/excel_usulan/#{@type_alsi}/#{opd}/#{@tahun}.xlsx", class:"btn btn-sm btn-primary" do %>
+          Download Excel 
+          <i class="fas fa-file-excel ms-2"></i>
+        <% end %>
+      </div>
       <div class="col text-end">
         <%= @nama_opd %>
       </div>
@@ -43,6 +54,16 @@
             </tr>
           <% end %>
         </tbody>
+        <tfoot>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>Jumlah</td>
+            <td>Rp. <%= number_with_delimiter(@program_kegiatans.map(&:my_pagu).compact.sum) %></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>

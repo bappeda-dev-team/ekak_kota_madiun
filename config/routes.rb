@@ -163,6 +163,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/rasional_sasaran_anggaran/:sasaran', to: 'rasionalisasi#rasional_sasaran_anggaran'
   get '/laporan_renja', to: 'program_kegiatans#laporan_renja'
   get '/laporan_usulan/:jenis', to: 'usulans#laporan_usulan'
+  get '/pdf_usulan/:jenis/:opd/:tahun', to: 'usulans#pdf_usulan'
+  get '/excel_usulan/:jenis/:opd/:tahun', to: 'usulans#excel_usulan'
   #
   # user_specific_thing
   get '/usulan_musrenbang', to: 'musrenbangs#usulan_musrenbang'
