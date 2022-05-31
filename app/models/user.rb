@@ -109,6 +109,14 @@ class User < ApplicationRecord
     nama_bidang.upcase.include?('RUMAH SAKIT') unless nama_bidang.nil?
   end
 
+  def pegawai_bagian?
+    nama_bidang.upcase.include?('BAGIAN') unless nama_bidang.nil?
+  end
+
+  def petunjuk_bagian
+    nama_bidang.upcase.split(/BAGIAN/, 2).last.strip if pegawai_bagian?
+  end
+
   def petunjuk_status
     @petunjuk_status ||= sasarans.map(&:petunjuk_status)
   end
