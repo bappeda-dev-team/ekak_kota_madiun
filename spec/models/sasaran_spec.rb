@@ -219,7 +219,7 @@ RSpec.describe Sasaran, type: :model do
       expect(sasaran_lengkap.program_kegiatan).not_to be_nil
     end
     it 'have state of digunakan' do
-      expect(sasaran_lengkap.status_sasaran).to eq('digunakan')
+      expect(sasaran_lengkap.status_sasaran).to eq('krg_lengkap')
     end
 
     it 'have total digunakan of 1' do
