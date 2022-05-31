@@ -16,6 +16,8 @@ class ProgramKegiatansController < ApplicationController
                                        .where('nama_subkegiatan ILIKE ?', "%#{param}%")
     if current_user.pegawai_kelurahan?
       @programKegiatans = @programKegiatans.select { |program| program.nama_opd_pemilik.upcase.split(/KELURAHAN/, 2).last.strip == current_user.petunjuk_kelurahan }
+    elsif current_user.pegawai_rsud?
+      @programKegiatans = @programKegiatans.select { |program| program.nama_opd_pemilik.upcase == 'RUMAH SAKIT UMUM DAERAH KOTA MADIUN' }
     end
   end
 

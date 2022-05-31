@@ -97,7 +97,6 @@ class User < ApplicationRecord
     }
   end
 
-
   def pegawai_kelurahan?
     jabatan.upcase.include?('KELURAHAN')
   end
@@ -106,7 +105,9 @@ class User < ApplicationRecord
     jabatan.split(/KELURAHAN/, 2).last.strip if pegawai_kelurahan?
   end
 
-  private
+  def pegawai_rsud?
+    nama_bidang.upcase.include?('RUMAH SAKIT') unless nama_bidang.nil?
+  end
 
   def petunjuk_status
     @petunjuk_status ||= sasarans.map(&:petunjuk_status)
