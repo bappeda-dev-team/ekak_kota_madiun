@@ -69,6 +69,6 @@ class ProgramKegiatan < ApplicationRecord
   end
 
   def nama_opd_pemilik
-    Opd.find_by(id_opd_skp: id_sub_unit).nama_opd
+    id_sub_unit.nil? ? '-' : Opd.find_by(id_opd_skp: id_sub_unit).nama_opd
   end
 end
