@@ -67,4 +67,8 @@ class ProgramKegiatan < ApplicationRecord
   def my_waktu
     sasarans.map(&:waktu_total).compact.sum
   end
+
+  def nama_opd_pemilik
+    id_sub_unit.nil? ? '-' : Opd.find_by(id_opd_skp: id_sub_unit).nama_opd
+  end
 end

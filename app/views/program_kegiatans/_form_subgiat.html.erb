@@ -1,0 +1,27 @@
+<%= form_with model: programKegiatan, url: subgiat_update_program_kegiatan_path(programKegiatan), local: false, class: "mt-2" do |form| %>
+  <%= form.hidden_field :row_num, value: @row_num %>
+  <%= form.hidden_field :id_subgiat, value: programKegiatan.id_sub_giat %>
+  <div class="field">
+    <%= form.label :tahun, class: "form-label" %>
+    <%= form.text_field :tahun , class: "form-control", placeholder: "...", readonly: true %>
+  </div>
+  <div class="field">
+    <%= form.label :subkegiatan, class: "form-label" %>
+    <%= form.text_field :nama_subkegiatan , class: "form-control", placeholder: "..." %>
+  </div>
+  <div class="field">
+    <%= form.label :indikator_subkegiatan, class: "form-label" %>
+    <%= form.text_field :indikator_subkegiatan , class: "form-control", placeholder: "..." %>
+  </div>
+  <div class="field">
+    <%= form.label :target_subkegiatan, class: "form-label" %>
+    <%= form.text_field :target_subkegiatan , class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.label :satuan_target_subkegiatan, class: "form-label" %>
+    <%= form.text_field :satuan_target_subkegiatan , class: "form-control", placeholder: "%" %>
+  </div>
+  <div class="actions mt-5">
+    <%= form.submit class: "btn btn-tertiary w-100"  %>
+  </div>
+<% end %>
