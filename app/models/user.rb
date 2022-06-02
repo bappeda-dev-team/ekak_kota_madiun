@@ -41,6 +41,7 @@ class User < ApplicationRecord
 
   scope :asn_aktif, -> { includes(:roles).where(roles: { name: 'asn' }) }
   scope :sasaran_diajukan, -> { asn_aktif.includes(:sasarans, :program_kegiatans).merge(Sasaran.sudah_lengkap) }
+  scope :opd_by_role, ->(kode_opd, role) { where(kode_opd: kode_opd).with_role(role.to_sym) }
 
   after_create :assign_default_role
 
@@ -74,7 +75,7 @@ class User < ApplicationRecord
 
   def nonaktifkan_user
     self.remove_role(:asn) if self.has_role? :asn
-    self.add_role(:non_aktif) unless self.has_role? :non_aktif
+    self.add_role(:non_aktif) unless self.has_role? :admin
   end
 
   def sasaran_aktif
