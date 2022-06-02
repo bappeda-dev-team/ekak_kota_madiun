@@ -14,6 +14,7 @@
           Sync User
         <% end %>
         <%= link_to "Tambah User", new_user_path, remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-user"}, class: "btn btn-sm btn-info" %>
+        <%= link_to "Non Aktifkan Semua User", "/nonaktifkan_semua_user/#{opd.kode_opd}", remote: true, method: :post, class: "btn btn-sm btn-danger" %>
       </div>
     <% end %>
   </div>
@@ -47,8 +48,10 @@
             <td class="fw-bolder text-gray-500" id="<%= dom_id(user) %>-roles"><%= user.roles.pluck :name %></td>
             <td class="fw-bolder text-gray-500 text-center">
               <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
-                <%= link_to 'Aktifkan',"/aktifkan_user/#{user.nik}", remote: true, method: :post ,class: 'btn btn-sm btn-success', id: "#{dom_id(user)}" %>
-                <%= link_to 'Non Aktifkan',"/nonaktifkan_user/#{user.nik}", remote: true, method: :post ,class: 'btn btn-sm btn-danger', id: "#{dom_id(user)}" %>
+                <% unless user.has_role? :admin %>
+                  <%= link_to 'Aktifkan',"/aktifkan_user/#{user.nik}", remote: true, method: :post ,class: 'btn btn-sm btn-success', id: "#{dom_id(user)}" %>
+                  <%= link_to 'Non Aktifkan',"/nonaktifkan_user/#{user.nik}", remote: true, method: :post ,class: 'btn btn-sm btn-danger', id: "#{dom_id(user)}" %>
+                <% end %>
               <% end %>
               <% if current_user.has_role? :super_admin %>
                 <%= link_to 'Edit User', edit_user_path(user),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-user"}, class: "btn btn-sm btn-info" %>
