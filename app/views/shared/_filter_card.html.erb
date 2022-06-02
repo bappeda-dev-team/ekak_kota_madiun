@@ -15,8 +15,16 @@
       <%= form.hidden_field :filter_file, value: filter_value %>
       <%= form.hidden_field :jenis, value: filter_jenis %>
       <%= form.label :kode_opd %>
-      <% options = options_for_select(Opd.where.not(kode_opd: nil).pluck(:nama_opd, :kode_unik_opd), current_user.opd.kode_unik_opd ) %>
-      <%= form.select :kode_opd, options ,{include_blank: true},{ class: "form-control select2-waw", data: {"placeholder": "Pilih Opd"}, required: true }  %>
+      <% 
+        if current_user.has_role? :super_admin
+          options = options_for_select(Opd.where.not(kode_opd: nil).pluck(:nama_opd, :kode_unik_opd), current_user.opd.kode_unik_opd )
+        elsif current_user.nik == 'rsud2022'
+          options = options_for_select(Opd.where.not(kode_opd: nil).where(kode_opd: 1270).pluck(:nama_opd, :kode_unik_opd), current_user.opd.kode_unik_opd )
+        else
+          options = options_for_select(Opd.where.not(kode_opd: nil).where(kode_opd: current_user.kode_opd).pluck(:nama_opd, :kode_unik_opd), current_user.opd.kode_unik_opd )
+        end
+      %>
+      <%= form.select :kode_opd, dropdown_opd ,{include_blank: true},{ class: "form-control select2-waw", data: {"placeholder": "Pilih Opd"}, required: true }  %>
       <%= form.submit 'filter' %>
     <% end %>
   </div>

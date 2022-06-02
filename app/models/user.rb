@@ -67,6 +67,16 @@ class User < ApplicationRecord
     add_role(:non_aktif) if roles.blank?
   end
 
+  def aktifkan_user
+    self.remove_role :non_aktif if self.has_role? :non_aktif
+    self.add_role(:asn) unless self.has_role? :asn
+  end
+
+  def nonaktifkan_user
+    self.remove_role(:asn) if self.has_role? :asn
+    self.add_role(:non_aktif) unless self.has_role? :non_aktif
+  end
+
   def sasaran_aktif
     program = program_kegiatan_sasarans.count
     usulan = sasarans.map(&:usulans).flatten.count
