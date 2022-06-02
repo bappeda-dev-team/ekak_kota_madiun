@@ -38,10 +38,10 @@
           Update Sub Kegiatan
         <% end %>
       </div>
+      <div class="col text-end">
+        <%= link_to "Tambah Program Kegiatan",new_program_kegiatan_path, remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-programkegiatan"}, class: "btn btn-sm btn-info" %>
+      </div>
     <% end %>
-    <div class="col text-end">
-      <%= link_to "Tambah Program Kegiatan",new_program_kegiatan_path, remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-programkegiatan"}, class: "btn btn-sm btn-info" %>
-    </div>
   </div>
 </div>
 <div class="card-body">
