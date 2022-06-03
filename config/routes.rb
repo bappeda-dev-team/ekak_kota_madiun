@@ -171,6 +171,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   
   get '/gender', to: 'genders#gender'
   get '/laporan_gender', to: 'genders#laporan_gender'
+  get '/pdf_gender/:id', to: 'genders#pdf_gender'
   
   get '/laporan_renja', to: 'program_kegiatans#laporan_renja'
   get '/laporan_usulan/:jenis', to: 'usulans#laporan_usulan'

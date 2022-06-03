@@ -109,7 +109,6 @@ class FilterController < ApplicationController
     end
   end
 
-
   def filter_gender
     @program_kegiatans = ProgramKegiatan.includes(%i[opd subkegiatan_tematik]).where(opds: { kode_unik_opd: @kode_opd })
     respond_to do |format|
@@ -117,7 +116,7 @@ class FilterController < ApplicationController
       format.js { render 'genders/gender_filter' }
     end
   end
-  
+
   def filter_opd
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @filter_file = 'hasil_filter_opd' if params[:filter_file].empty?
