@@ -1,0 +1,9 @@
+$("#<%= form_name %>").modal('hide')
+Swal.fire({
+  title: 'Sukses',
+  text: "<%= message %>",
+  icon: "<%= status_icon %>",
+  confirmButtonText: 'Ok',
+})
+// prepend table with new result
+$("#<%= dom_id(@programKegiatan) %>").replaceWith("<%= j render 'program_kegiatans/subgiat_row', prog: @programKegiatan %>");

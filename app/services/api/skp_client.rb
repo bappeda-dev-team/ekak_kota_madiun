@@ -111,12 +111,13 @@ module Api
           end
         end
       end
-      kode_opd = data_opd['id']
-      kode_unik_opd = data_opd['unit_id']
-      id_opd_skp = data_opd['id_sipd']
-      insert_to_opd = { kode_opd: kode_opd, kode_unik_opd: kode_unik_opd, id_opd_skp: id_opd_skp }
-      opd = Opd.find_by(kode_opd: kode_opd)
-      opd.update(insert_to_opd)
+      # Updater OPD
+      # kode_opd = data_opd['id']
+      # kode_unik_opd = data_opd['unit_id']
+      # id_opd_skp = data_opd['id_sipd']
+      # insert_to_opd = { kode_opd: kode_opd, kode_unik_opd: kode_unik_opd, id_opd_skp: id_opd_skp }
+      # opd = Opd.find_by(kode_opd: kode_opd)
+      # opd.update(insert_to_opd)
       data_renaksi.reject! { |renaksi| renaksi[:target].zero? }
       Sasaran.upsert_all(data_sasaran, unique_by: :id_rencana)
       IndikatorSasaran.upsert_all(data_indikator, unique_by: :id_indikator)

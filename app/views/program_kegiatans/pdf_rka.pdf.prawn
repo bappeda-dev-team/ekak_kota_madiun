@@ -1,4 +1,4 @@
-prawn_document do |pdf|
+prawn_document(filename: @filename, disposition: "attachment") do |pdf|
   pdf.font_size 16
   judul_rka = pdf.make_table([["RINCIAN BELANJA"], [@programKegiatan.opd.nama_opd]], width: pdf.bounds.width)
   judul_rka.draw

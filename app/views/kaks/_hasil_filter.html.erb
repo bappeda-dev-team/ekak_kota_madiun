@@ -2,7 +2,7 @@
   <div class="card-header">
     <div class="row align-items-center">
       <div class="col">
-        <h2 class="fs-5 fw-bold mb-0">Laporan KaK</h2>
+        <h2 class="fs-5 fw-bold mb-0">Laporan KaK Tahun <%= @tahun %></h2>
       </div>
       <div class="col text-end">
         <span><%= current_user.nama %></span>
@@ -135,7 +135,8 @@
                   <%= link_to "/acuan_kerja_new/#{kak.id}", class: "m-3" do %>
                     <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
                   <% end %>
-                  <%= link_to "/pdf_kak/#{kak.id}.pdf", class: "m-3" do %>
+                  <% @tahun = Date.today.year if @tahun.nil? %>
+                  <%= link_to "/pdf_kak/#{kak.id}/#{@tahun}.pdf", class: "m-3" do %>
                     <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
                   <% end %>
                 </td>
@@ -157,7 +158,7 @@
     </div>
   </div>
   <div class="card-body">
-    <% jumlah_sasaran = @users.map { |n| n.program_kegiatan_sasarans.map { |j| j.sasarans.count} }.flatten.reduce(:+) %>
+    <% jumlah_sasaran = @users.map(&:jumlah_sasaran).compact.reduce(:+) %>
     <% jumlah_anggaran = @users.map { |n| n.program_kegiatan_sasarans.map { |j| j&.my_pagu } }.flatten.reduce(:+) %>
     <p>Jumlah SubKegiatan : <%= @users.map {|u| u.program_kegiatan_sasarans.size }.reduce(:+) %></p>
     <p>Jumlah Sasaran Aktif : <%= jumlah_sasaran %></p>

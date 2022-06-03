@@ -1,5 +1,5 @@
 class UsulansController < ApplicationController
-  before_action :check_params
+  before_action :check_params, only: %i[update_sasaran_asn hapus_usulan_dari_sasaran]
 
   def update_sasaran_asn
     sasaran = params[:sasaran_id]
@@ -40,6 +40,55 @@ class UsulansController < ApplicationController
       end
     end
   end
+
+  def laporan_usulan
+    # render laporan usulan
+    @jenis = params[:jenis]
+    @jenis_asli = @jenis
+    if @jenis == 'inisiatif'
+      @jenis_asli = 'inisiatif walikota'
+    end
+  end
+
+  def pdf_usulan
+    # render laporan usulan
+    @jenis = params[:jenis]
+    @jenis_asli = @jenis
+    @kode_opd = params[:opd]
+    if @jenis == 'Inisiatif Walikota'
+      @jenis = 'Inovasi'
+      @jenis_asli = 'inisiatif walikota'
+    end
+    @program_kegiatans = ProgramKegiatan.includes(%i[opd usulans]).where(opds: { id_opd_skp: @kode_opd })
+                                        .where(usulans: { usulanable_type: @jenis })
+                                        .select { |p| p.sasarans.exists? }
+    @nama_opd = Opd.find_by(id_opd_skp: @kode_opd).nama_opd
+    @nama_file = @nama_opd
+    @tahun = params[:tahun] || Time.now.year
+    @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
+    @filename = "Laporan_USULAN_#{@jenis_asli}_#{@nama_file}_#{@waktu}.pdf"
+  end
+
+  def excel_usulan
+    # render laporan usulan
+    @jenis = params[:jenis]
+    @jenis_asli = @jenis
+    @kode_opd = params[:opd]
+    if @jenis == 'Inisiatif Walikota'
+      @jenis = 'Inovasi'
+      @jenis_asli = 'inisiatif walikota'
+    end
+    @program_kegiatans = ProgramKegiatan.includes(%i[opd usulans]).where(opds: { id_opd_skp: @kode_opd })
+                                        .where(usulans: { usulanable_type: @jenis })
+                                        .select { |p| p.sasarans.exists? }
+    @nama_opd = Opd.find_by(id_opd_skp: @kode_opd).nama_opd
+    @nama_file = @nama_opd
+    @tahun = params[:tahun] || Time.now.year
+    @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
+    @filename = "Laporan_USULAN_#{@jenis_asli}_#{@nama_file}_#{@waktu}.xlsx"
+    render xlsx: "excel_usulan", filename: @filename
+  end
+
 
   private
 

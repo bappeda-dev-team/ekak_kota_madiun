@@ -56,6 +56,7 @@ class ProgramKegiatan < ApplicationRecord
   belongs_to :subkegiatan_tematik, optional: true
   has_many :kaks
   has_many :sasarans, dependent: :nullify
+  has_many :usulans, through: :sasarans
 
   # default_scope { order(created_at: :desc) }
 
@@ -65,5 +66,9 @@ class ProgramKegiatan < ApplicationRecord
 
   def my_waktu
     sasarans.map(&:waktu_total).compact.sum
+  end
+
+  def nama_opd_pemilik
+    id_sub_unit.nil? ? '-' : Opd.find_by(id_opd_skp: id_sub_unit).nama_opd
   end
 end

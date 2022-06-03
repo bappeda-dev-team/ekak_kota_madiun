@@ -1,6 +1,9 @@
 class ProgramKegiatansController < ApplicationController
   before_action :set_programKegiatan,
-                only: %i[show edit update destroy show_to_kak kak_detail kak_renaksi kak_waktu pdf_rka]
+                only: %i[show edit update destroy
+                         show_to_kak kak_detail kak_renaksi kak_waktu
+                         subgiat_edit subgiat_update program_edit kegiatan_edit
+                         pdf_rka]
   before_action :set_dropdown, only: %i[new edit]
 
   layout false, only: %i[show_to_kak kak_detail kak_renaksi kak_waktu]
@@ -8,8 +11,14 @@ class ProgramKegiatansController < ApplicationController
   def index
     # TODO: refactor untuk json query
     param = params[:q] || ''
+    # FIXME REFACTOR TOO MUCH LOGIC
     @programKegiatans = ProgramKegiatan.where('kode_opd ILIKE ?', "%#{current_user.kode_opd}%")
                                        .where('nama_subkegiatan ILIKE ?', "%#{param}%")
+    if current_user.pegawai_kelurahan?
+      @programKegiatans = @programKegiatans.select { |program| program.nama_opd_pemilik.upcase.split(/KELURAHAN/, 2).last.strip == current_user.petunjuk_kelurahan }
+    elsif current_user.pegawai_bagian?
+      @programKegiatans = @programKegiatans.select { |program| program.nama_opd_pemilik.upcase.split(/BAGIAN/, 2).last.strip == current_user.petunjuk_bagian }
+    end
   end
 
   def admin_program_kegiatan
@@ -47,6 +56,7 @@ class ProgramKegiatansController < ApplicationController
 
   def pdf_kak
     @nama_file = ProgramKegiatan.find(params[:id]).nama_subkegiatan
+    @tahun = params[:tahun] || Time.now.year
     @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
     @filename = "Laporan_KAK_#{@nama_file}_#{@waktu}.pdf"
     @program_kegiatan = ProgramKegiatan.find(params[:id])
@@ -58,11 +68,25 @@ class ProgramKegiatansController < ApplicationController
 
   def pdf_rka
     @nama_file = ProgramKegiatan.find(params[:id]).nama_subkegiatan
+    @tahun = params[:tahun] || Time.now.year
     @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
     @filename = "Laporan_RAB_#{@nama_file}_#{@waktu}.pdf"
   end
 
   def edit; end
+
+  def subgiat_edit
+    @row_num = params[:row_num]
+  end
+
+  def subgiat_update
+    respond_to do |format|
+      @row_num = params[:program_kegiatan][:row_num]
+      id_sub = params[:program_kegiatan][:id_subgiat]
+      ProgramKegiatan.where(id_sub_giat: id_sub).update_all(programKegiatan_params.to_h.except(:row_num, :id_subgiat))
+      format.js { render '_notifikasi', locals: { message: 'Perubahan sub kegiatan disimpan', status_icon: 'success', form_name: 'form-programkegiatan', type: 'update' } }
+    end
+  end
 
   def create
     @programKegiatan = ProgramKegiatan.new(programKegiatan_params)
@@ -77,7 +101,17 @@ class ProgramKegiatansController < ApplicationController
   end
 
   def update
-    sleep 1
+    respond_to do |format|
+      if @programKegiatan.update(programKegiatan_params)
+        format.js { render '_notifikasi_update', locals: { message: 'Program Kegiatan berhasil diupdate', status_icon: 'success', form_name: 'form-programkegiatan', type: 'update' } }
+        format.html { redirect_to program_kegiatans_url, success: 'Program Kegiatan diupdate' }
+      else
+        format.html { render :edit, error: 'Program Kegiatan Gagal diupdate' }
+      end
+    end
+  end
+
+  def update_subgiat
     respond_to do |format|
       if @programKegiatan.update(programKegiatan_params)
         format.js { render '_notifikasi_update', locals: { message: 'Program Kegiatan berhasil diupdate', status_icon: 'success', form_name: 'form-programkegiatan', type: 'update' } }

@@ -39,6 +39,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def nonaktifkan_semua_user
+    opd = params[:opd]
+    nama_opd = Opd.find_by(kode_opd: opd).nama_opd
+    @asn_aktif = User.opd_by_role(opd, 'asn')
+    @user_empty = User.where(kode_opd: opd).without_role(:asn).without_role(:non_aktif).without_role(:admin)
+    @users = @asn_aktif + @user_empty
+    @users.each { |asn| asn.nonaktifkan_user }
+    respond_to do |format|
+      flash.now[:success] = "Seluruh Pegawai #{nama_opd} di nonaktifkan"
+      format.js { render 'shared/_notifikasi_simple' }
+    end
+  end
+
   # GET /users/1/edit
   def edit; end
 

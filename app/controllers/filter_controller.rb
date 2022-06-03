@@ -7,7 +7,7 @@ class FilterController < ApplicationController
     'Rumah Sakit Umum Daerah Kota Madiun': 'Rumah Sakit Umum Daerah',
     'Sekretariat Daerah': nil,
     'Bagian Umum': 'Bagian Umum',
-    'Bagian Pengadaan Barang / Jasa dan Administrasi Pembangunan': 'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan',
+    'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan': 'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan',
     'Bagian Organisasi': 'Bagian Organisasi',
     'Bagian Hukum': 'Bagian Hukum',
     'Bagian Perekonomian dan Kesejahteraan Rakyat': 'Bagian Perekonomian dan Kesejahteraan Rakyat',
@@ -19,7 +19,7 @@ class FilterController < ApplicationController
     'Rumah Sakit Umum Daerah Kota Madiun': '1.02.2.14.0.00.03.0000',
     'Sekretariat Daerah': '4.01.0.00.0.00.01.00', # don't change, this still used
     'Bagian Umum': '4.01.0.00.0.00.01.00',
-    'Bagian Pengadaan Barang / Jasa dan Administrasi Pembangunan': '4.01.0.00.0.00.01.00',
+    'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan': '4.01.0.00.0.00.01.00',
     'Bagian Organisasi': '4.01.0.00.0.00.01.00',
     'Bagian Hukum': '4.01.0.00.0.00.01.00',
     'Bagian Perekonomian dan Kesejahteraan Rakyat': '4.01.0.00.0.00.01.00',
@@ -38,7 +38,7 @@ class FilterController < ApplicationController
     end
   end
 
-  def filter_user
+  def filter_user # FIXME: jika tidak ada bidang pada opd table, user tidak akan tampil
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
     @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd })
     if OPD_TABLE.key?(opd.to_sym)
@@ -109,11 +109,36 @@ class FilterController < ApplicationController
     end
   end
 
+
   def filter_gender
     @program_kegiatans = ProgramKegiatan.includes(%i[opd subkegiatan_tematik]).where(opds: { kode_unik_opd: @kode_opd })
     respond_to do |format|
       @render_file = 'genders/hasil_filter_gender'
       format.js { render 'genders/gender_filter' }
+    end
+  end
+  
+  def filter_opd
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @filter_file = 'hasil_filter_opd' if params[:filter_file].empty?
+    respond_to do |format|
+      format.js { render 'opds/opd_filter' }
+    end
+  end
+
+  def filter_usulan
+    @type = params[:jenis].capitalize
+    @type_alsi = @type.capitalize
+    if @type == 'Inisiatif'
+      @type = 'Inovasi'
+      @type_alsi = 'Inisiatif Walikota'
+    end
+    @program_kegiatans = ProgramKegiatan.includes(%i[opd usulans]).where(opds: { kode_unik_opd: @kode_opd })
+                                        .where(usulans: { usulanable_type: @type })
+                                        .select { |p| p.sasarans.exists? }
+    @nama_opd = nama_opd
+    respond_to do |format|
+      format.js { render 'usulans/usulan_filter' }
     end
   end
 
@@ -125,7 +150,7 @@ class FilterController < ApplicationController
     @bulan = params[:bulan]
   end
 
-  def nama_opd # TODO: memoization thing
+  def nama_opd
     @nama_opd ||= Opd.find_by(kode_unik_opd: @kode_opd).nama_opd || '-'
   end
 end

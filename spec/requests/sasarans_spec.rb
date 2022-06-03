@@ -64,6 +64,7 @@ RSpec.describe 'Sasarans', type: :request do
       sign_in sasaran.user
       get user_sasaran_path(sasaran.user, sasaran)
       expect(response).to have_http_status(200)
+      # TODO update spec ( error )
       patch sasaran_path(sasaran), params: { sasaran: { subkegiatan_tematik_id: subkegiatan_tematik.id } }
       sasaran.reload
       expect(response).to redirect_to(user_sasaran_path(sasaran.user, sasaran))

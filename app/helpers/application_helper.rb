@@ -27,6 +27,15 @@ module ApplicationHelper
     ]
   end
 
+  def laporan_usulans
+    [
+      { title: 'Laporan Musrenbang', href: '/laporan_usulan/musrenbang', identifier: 'laporan_usulan\/musrenbang' },
+      { title: 'Laporan Pokok Pikiran', href: '/laporan_usulan/pokpir', identifier: 'laporan_usulan\/pokpir' },
+      { title: 'Laporan Mandatori', href: '/laporan_usulan/mandatori', identifier: 'laporan_usulan\/mandatori' },
+      { title: 'Laporan Inisiatif Walikota', href: '/laporan_usulan/inisiatif', identifier: 'laporan_usulan\/inisiatif' }
+    ]
+  end
+
   def anggaran_items
     [
       { title: 'SSH', href: anggaran_sshes_path, identifier: 'anggaran_ssh' },
@@ -108,5 +117,15 @@ module ApplicationHelper
     new_obj = dc.object_id
     fields = f.text_field(model, multiple: true, value: '', class: 'form-control my-3')
     link_to(name, '#', class: "add_fields_#{dc.id}", data: { id: new_obj, fields: fields })
+  end
+
+  def dropdown_opd
+    if current_user.has_role? :super_admin
+      options_for_select(Opd.where.not(kode_opd: nil).pluck(:nama_opd, :kode_unik_opd), current_user.opd.kode_unik_opd)
+    elsif current_user.nik == 'rsud2022'
+      options_for_select(Opd.where.not(kode_opd: nil).where(kode_opd: 1270).pluck(:nama_opd, :kode_unik_opd), current_user.opd.kode_unik_opd )
+    else
+      options_for_select(Opd.where.not(kode_opd: nil).where(kode_opd: current_user.kode_opd).pluck(:nama_opd, :kode_unik_opd), current_user.opd.kode_unik_opd )
+    end
   end
 end

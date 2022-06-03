@@ -82,7 +82,12 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :kaks, path: 'acuan_kerja'
   resources :lembagas
   resources :opds
-  resources :program_kegiatans
+  resources :program_kegiatans do
+    member do
+      get :subgiat_edit
+      patch :subgiat_update
+    end
+  end
   resources :pajaks
   resources :kesenjangans
   resources :strategi_keluarans, path: 'strategi'
@@ -108,6 +113,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # user control
   post '/aktifkan_user/:id', to: 'users#aktifkan_user'
   post '/nonaktifkan_user/:id', to: 'users#nonaktifkan_user'
+  post '/nonaktifkan_semua_user/:opd', to: 'users#nonaktifkan_semua_user'
   # program program_kegiatan
   get '/program_kegiatans_to_kak/:id', to: 'program_kegiatans#show_to_kak'
   get '/program_kegiatans_to_kak_detail/:id', to: 'program_kegiatans#kak_detail'
@@ -135,10 +141,10 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   patch '/non_aktifkan_pokpir/:id', to: 'pokpirs#non_aktifkan_pokpir'
   # laporan kak
   get '/laporan_kak', to: 'kaks#laporan_kak'
-  get '/pdf_kak/:id', to: 'program_kegiatans#pdf_kak'
+  get '/pdf_kak/:id/:tahun', to: 'program_kegiatans#pdf_kak'
   # laporan rka
   get '/laporan_rka', to: 'program_kegiatans#laporan_rka'
-  get '/pdf_rka/:id', to: 'program_kegiatans#pdf_rka'
+  get '/pdf_rka/:id/:tahun', to: 'program_kegiatans#pdf_rka'
   #  Sasaran
   get '/daftar_subkegiatan', to: 'sasarans#daftar_subkegiatan'
   get '/pdf_daftar_subkegiatan', to: 'sasarans#pdf_daftar_subkegiatan'
@@ -162,8 +168,14 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/rasionalisasi', to: 'rasionalisasi#rasionalisasi'
   get '/rasional_sasaran/:sasaran', to: 'rasionalisasi#rasional_sasaran'
   get '/rasional_sasaran_anggaran/:sasaran', to: 'rasionalisasi#rasional_sasaran_anggaran'
+  
   get '/gender', to: 'genders#gender'
   get '/laporan_gender', to: 'genders#laporan_gender'
+  
+  get '/laporan_renja', to: 'program_kegiatans#laporan_renja'
+  get '/laporan_usulan/:jenis', to: 'usulans#laporan_usulan'
+  get '/pdf_usulan/:jenis/:opd/:tahun', to: 'usulans#pdf_usulan'
+  get '/excel_usulan/:jenis/:opd/:tahun', to: 'usulans#excel_usulan'
   #
   # user_specific_thing
   get '/usulan_musrenbang', to: 'musrenbangs#usulan_musrenbang'
@@ -193,6 +205,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   post '/filter_rab', to: 'filter#filter_rab'
   post '/filter_rasionalisasi', to: 'filter#filter_rasionalisasi'
   post '/filter_gender', to: 'filter#filter_gender'
+  post '/filter_opd', to: 'filter#filter_opd'
+  post '/filter_usulan', to: 'filter#filter_usulan'
+
   # get "/program_kegiatans", to: "program_kegiatans#index"
   # get "/program_kegiatans/new", to: "program_kegiatans#new"
   # get "/program_kegiatan/:id", to: "program_kegiatans#show"

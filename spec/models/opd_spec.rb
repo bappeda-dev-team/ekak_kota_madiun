@@ -13,6 +13,7 @@
 #  nama_kepala        :string
 #  nama_opd           :string
 #  nip_kepala         :string
+#  pangkat_kepala     :string
 #  status_kepala      :string
 #  tahun              :string
 #  urusan             :string

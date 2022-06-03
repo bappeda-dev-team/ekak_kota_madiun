@@ -41,6 +41,7 @@ class User < ApplicationRecord
 
   scope :asn_aktif, -> { includes(:roles).where(roles: { name: 'asn' }) }
   scope :sasaran_diajukan, -> { asn_aktif.includes(:sasarans, :program_kegiatans).merge(Sasaran.sudah_lengkap) }
+  scope :opd_by_role, ->(kode_opd, role) { where(kode_opd: kode_opd).with_role(role.to_sym) }
 
   after_create :assign_default_role
 
@@ -64,11 +65,17 @@ class User < ApplicationRecord
   end
 
   def assign_default_role
-    add_role(:asn) if roles.blank?
+    add_role(:non_aktif) if roles.blank?
   end
 
-  def program_kegiatan_sasarans
-    sasarans.map(&:program_kegiatan).compact.uniq
+  def aktifkan_user
+    self.remove_role :non_aktif if self.has_role? :non_aktif
+    self.add_role(:asn) unless self.has_role? :asn
+  end
+
+  def nonaktifkan_user
+    self.remove_role(:asn) if self.has_role? :asn
+    self.add_role(:non_aktif) unless self.has_role? :admin
   end
 
   def sasaran_aktif
@@ -80,18 +87,64 @@ class User < ApplicationRecord
     }
   end
 
-  def petunjuk_sasaran
-    status = sasarans.map { |s| s.petunjuk_status }
-    merah = sasarans.total_hangus
-    kuning = sasarans.select { |s| s.usulans.exists? && s.belum_ada_sub? }.count
-    biru = status.select { |s| s[:usulan_dan_sub] }.select { |j| j.except(:usulan_dan_sub).values.any?(false) }.count
-    hijau = status.map { |stat| stat.values }.select { |s| s.all?(true) }.count
+  def program_kegiatan_sasarans
+    @program_kegiatan_sasarans ||= sasarans.map(&:program_kegiatan).compact.uniq
+  end
 
+  def jumlah_sasaran
+    @program_kegiatan_sasarans.map { |j| j.sasarans.count }.flatten.reduce(:+)
+  end
+
+  def jumlah_anggaran
+    @program_kegiatan_sasarans.map { |j| j&.my_pagu }.flatten.reduce(:+)
+  end
+
+  def petunjuk_sasaran
     {
-      merah: merah,
-      kuning: kuning,
+      merah: total_hangus,
+      kuning: kurang_lengkap,
       biru: biru,
       hijau: hijau
     }
+  end
+
+  def pegawai_kelurahan?
+    jabatan.upcase.include?('KELURAHAN')
+  end
+
+  def petunjuk_kelurahan
+    jabatan.split(/KELURAHAN/, 2).last.strip if pegawai_kelurahan?
+  end
+
+  def pegawai_rsud?
+    nama_bidang.upcase.include?('RUMAH SAKIT') unless nama_bidang.nil?
+  end
+
+  def pegawai_bagian?
+    nama_bidang.upcase.include?('BAGIAN') unless nama_bidang.nil?
+  end
+
+  def petunjuk_bagian
+    nama_bidang.upcase.split(/BAGIAN/, 2).last.strip if pegawai_bagian?
+  end
+
+  def petunjuk_status
+    @petunjuk_status ||= sasarans.map(&:petunjuk_status)
+  end
+
+  def biru
+    @biru ||= petunjuk_status.select { |s| s[:usulan_dan_sub] }.select { |j| j.except(:usulan_dan_sub).values.any?(false) }.count
+  end
+
+  def hijau
+    @hijau ||= petunjuk_status.map(&:values).select { |s| s.all?(true) }.count
+  end
+
+  def total_hangus
+    @total_hangus ||= sasarans.total_hangus
+  end
+
+  def kurang_lengkap
+    @kurang_lengkap ||= sasarans.select { |s| s.usulans.exists? && s.belum_ada_sub? }.count
   end
 end
