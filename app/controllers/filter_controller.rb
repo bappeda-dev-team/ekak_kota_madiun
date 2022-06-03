@@ -1,12 +1,13 @@
 class FilterController < ApplicationController
   before_action :filter_params
+  before_action :nama_opd, only: %i[filter_gender]
 
   OPD_TABLE = {
     'Dinas Kesehatan, Pengendalian Penduduk dan Keluarga Berencana': 'Dinas Kesehatan',
     'Rumah Sakit Umum Daerah Kota Madiun': 'Rumah Sakit Umum Daerah',
     'Sekretariat Daerah': nil,
     'Bagian Umum': 'Bagian Umum',
-    'Bagian Pengadaan Barang / Jasa dan Administrasi Pembangunan': 'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan',
+    'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan': 'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan',
     'Bagian Organisasi': 'Bagian Organisasi',
     'Bagian Hukum': 'Bagian Hukum',
     'Bagian Perekonomian dan Kesejahteraan Rakyat': 'Bagian Perekonomian dan Kesejahteraan Rakyat',
@@ -18,7 +19,7 @@ class FilterController < ApplicationController
     'Rumah Sakit Umum Daerah Kota Madiun': '1.02.2.14.0.00.03.0000',
     'Sekretariat Daerah': '4.01.0.00.0.00.01.00', # don't change, this still used
     'Bagian Umum': '4.01.0.00.0.00.01.00',
-    'Bagian Pengadaan Barang / Jasa dan Administrasi Pembangunan': '4.01.0.00.0.00.01.00',
+    'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan': '4.01.0.00.0.00.01.00',
     'Bagian Organisasi': '4.01.0.00.0.00.01.00',
     'Bagian Hukum': '4.01.0.00.0.00.01.00',
     'Bagian Perekonomian dan Kesejahteraan Rakyat': '4.01.0.00.0.00.01.00',
@@ -37,7 +38,7 @@ class FilterController < ApplicationController
     end
   end
 
-  def filter_user
+  def filter_user # FIXME: jika tidak ada bidang pada opd table, user tidak akan tampil
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
     @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd })
     if OPD_TABLE.key?(opd.to_sym)
@@ -105,6 +106,14 @@ class FilterController < ApplicationController
     respond_to do |format|
       @render_file = 'rasionalisasi/hasil_filter_rasionalisasi'
       format.js { render 'rasionalisasi/rasionalisasi_filter' }
+    end
+  end
+
+  def filter_gender
+    @program_kegiatans = ProgramKegiatan.includes(%i[opd subkegiatan_tematik]).where(opds: { kode_unik_opd: @kode_opd })
+    respond_to do |format|
+      @render_file = 'genders/hasil_filter_gender'
+      format.js { render 'genders/gender_filter' }
     end
   end
 

@@ -164,9 +164,15 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/admin_program', to: 'program_kegiatans#admin_program'
   get '/admin_kegiatan', to: 'program_kegiatans#admin_kegiatan'
   get '/admin_sub_kegiatan', to: 'program_kegiatans#admin_program_kegiatan'
+  get '/laporan_renja', to: 'program_kegiatans#laporan_renja' # TODO: implement this
   get '/rasionalisasi', to: 'rasionalisasi#rasionalisasi'
   get '/rasional_sasaran/:sasaran', to: 'rasionalisasi#rasional_sasaran'
   get '/rasional_sasaran_anggaran/:sasaran', to: 'rasionalisasi#rasional_sasaran_anggaran'
+  
+  get '/gender', to: 'genders#gender'
+  get '/laporan_gender', to: 'genders#laporan_gender'
+  get '/pdf_gender/:id', to: 'genders#pdf_gender'
+  
   get '/laporan_renja', to: 'program_kegiatans#laporan_renja'
   get '/laporan_usulan/:jenis', to: 'usulans#laporan_usulan'
   get '/pdf_usulan/:jenis/:opd/:tahun', to: 'usulans#pdf_usulan'
@@ -190,7 +196,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/sync_pokpir', to: 'api/sipd_client#sync_pokpir'
   get '/sync_kamus_usulan', to: 'api/sipd_client#sync_kamus_usulan'
   get '/sync_data_opd', to: 'api/sipd_client#sync_data_opd'
-
+  # internal filter
   post '/filter_sasaran', to: 'filter#filter_sasaran'
   post '/filter_user', to: 'filter#filter_user'
   post '/filter_program_saja', to: 'filter#filter_program_saja'
@@ -199,6 +205,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   post '/filter_kak', to: 'filter#filter_kak'
   post '/filter_rab', to: 'filter#filter_rab'
   post '/filter_rasionalisasi', to: 'filter#filter_rasionalisasi'
+  post '/filter_gender', to: 'filter#filter_gender'
   post '/filter_opd', to: 'filter#filter_opd'
   post '/filter_usulan', to: 'filter#filter_usulan'
 
