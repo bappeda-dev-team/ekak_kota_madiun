@@ -6,7 +6,7 @@ class FilterController < ApplicationController
     'Rumah Sakit Umum Daerah Kota Madiun': 'Rumah Sakit Umum Daerah',
     'Sekretariat Daerah': nil,
     'Bagian Umum': 'Bagian Umum',
-    'Bagian Pengadaan Barang / Jasa dan Administrasi Pembangunan': 'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan',
+    'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan': 'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan',
     'Bagian Organisasi': 'Bagian Organisasi',
     'Bagian Hukum': 'Bagian Hukum',
     'Bagian Perekonomian dan Kesejahteraan Rakyat': 'Bagian Perekonomian dan Kesejahteraan Rakyat',
@@ -18,7 +18,7 @@ class FilterController < ApplicationController
     'Rumah Sakit Umum Daerah Kota Madiun': '1.02.2.14.0.00.03.0000',
     'Sekretariat Daerah': '4.01.0.00.0.00.01.00', # don't change, this still used
     'Bagian Umum': '4.01.0.00.0.00.01.00',
-    'Bagian Pengadaan Barang / Jasa dan Administrasi Pembangunan': '4.01.0.00.0.00.01.00',
+    'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan': '4.01.0.00.0.00.01.00',
     'Bagian Organisasi': '4.01.0.00.0.00.01.00',
     'Bagian Hukum': '4.01.0.00.0.00.01.00',
     'Bagian Perekonomian dan Kesejahteraan Rakyat': '4.01.0.00.0.00.01.00',
@@ -37,7 +37,7 @@ class FilterController < ApplicationController
     end
   end
 
-  def filter_user
+  def filter_user # FIXME: jika tidak ada bidang pada opd table, user tidak akan tampil
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
     @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd })
     if OPD_TABLE.key?(opd.to_sym)
