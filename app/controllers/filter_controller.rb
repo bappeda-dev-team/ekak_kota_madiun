@@ -1,5 +1,6 @@
 class FilterController < ApplicationController
   before_action :filter_params
+  before_action :nama_opd, only: %i[filter_gender]
 
   OPD_TABLE = {
     'Dinas Kesehatan, Pengendalian Penduduk dan Keluarga Berencana': 'Dinas Kesehatan',
@@ -108,6 +109,15 @@ class FilterController < ApplicationController
     end
   end
 
+
+  def filter_gender
+    @program_kegiatans = ProgramKegiatan.includes(%i[opd subkegiatan_tematik]).where(opds: { kode_unik_opd: @kode_opd })
+    respond_to do |format|
+      @render_file = 'genders/hasil_filter_gender'
+      format.js { render 'genders/gender_filter' }
+    end
+  end
+  
   def filter_opd
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @filter_file = 'hasil_filter_opd' if params[:filter_file].empty?
