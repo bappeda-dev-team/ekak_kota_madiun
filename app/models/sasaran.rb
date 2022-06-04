@@ -33,7 +33,7 @@ class Sasaran < ApplicationRecord
   # belongs_to :user
   belongs_to :user, foreign_key: 'nip_asn', primary_key: 'nik'
   belongs_to :program_kegiatan, optional: true
-  has_many :tematik_sasarans
+  has_many :tematik_sasarans, dependent: :destroy
   has_many :subkegiatan_tematiks, through: :tematik_sasarans
   # belongs_to :sumber_dana, foreign_key: 'sumber_dana', primary_key: 'kode_sumber_dana', optional: true
 
@@ -52,6 +52,7 @@ class Sasaran < ApplicationRecord
 
   accepts_nested_attributes_for :rincian, update_only: true
   accepts_nested_attributes_for :tahapans
+  accepts_nested_attributes_for :indikator_sasarans
   # TODO: ganti kualitas dengan aspek ( multiple choice )
   # validation
   validates :sasaran_kinerja, presence: true

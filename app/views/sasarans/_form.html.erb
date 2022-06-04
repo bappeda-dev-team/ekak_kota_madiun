@@ -13,25 +13,15 @@
     <%= form.label :sasaran_kinerja, { class: "form-label" } %>
     <%= form.text_field :sasaran_kinerja, { class: "form-control" } %>
   </div>
+  <h4><strong>Indikator Sasaran : </strong></h4>
   <div class="field">
-    <%= form.label :indikator_kinerja, { class: "form-label" } %>
-    <%= form.text_field :indikator_kinerja, { class: "form-control" } %>
+    <%= form.fields_for :indikator_sasarans_attributes, IndikatorSasaran.new do |f| %>
+      <%= render 'indikator_sasaran_fields', f: f %>
+    <% end %>
   </div>
-  <div class="field">
-    <%= form.label :target, { class: "form-label" } %>
-    <%= form.number_field :target, { class: "form-control" } %>
-  </div>
-  <div class="field">
-    <%= form.label :kualitas, { class: "form-label" } %>
-    <%= form.number_field :kualitas, { class: "form-control" } %>
-  </div>
-  <div class="field">
-    <%= form.label :satuan, { class: "form-label" } %>
-    <%= form.text_field :satuan, { class: "form-control" } %>
-  </div>
-  <div class="field">
-    <%= form.label :penerima_manfaat, { class: "form-label" } %>
-    <%= form.text_field :penerima_manfaat, { class: "form-control" } %>
+  <div class="field mt-3">
+    <%= form.label :tahun, { class: "form-label" } %>
+    <%= form.select(:tahun, (['',2021,2022,2023,2024]), {}, {:class => 'select2-waw',data: {"placeholder": "Pilih Tahun",}}) %>
   </div>
   <div class="actions my-4">
     <%= form.submit "Simpan", :class => "btn btn-tertiary" %>

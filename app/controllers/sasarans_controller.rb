@@ -50,7 +50,7 @@ class SasaransController < ApplicationController
     sasaran = Sasaran.find(params[:id_sasaran])
     tematik = params[:id_tematik]
     respond_to do |format|
-      if sasaran.add_tematik(sasaran: sasaran.id, tematik: tematik)
+      if sasaran.add_tematik(ssasaranasaran: sasaran.id, tematik: tematik)
         @status = 'success'
         @text = 'Sukses menambah tematik'
         format.js { render :hapus_program_from_sasaran }
@@ -166,10 +166,11 @@ class SasaransController < ApplicationController
 
   # POST /sasarans or /sasarans.json
   def create
-    @sasaran = @user.sasarans.build(sasaran_params)
+    @sasaran = @user.sasarans.build(sasaran_params.except(:indikator_sasarans_attributes))
     @sasaran.id_rencana = SecureRandom.base36(6)
     respond_to do |format|
       if @sasaran.save
+        @sasaran.indikator_sasarans.create!(sasaran_params[:indikator_sasarans_attributes].merge!(sasaran_id: @sasaran.id_rencana))
         format.html { redirect_to user_sasaran_path(@user, @sasaran), notice: 'Sasaran was successfully created.' }
         format.json { render :show, status: :created, location: @sasaran }
       else
@@ -208,7 +209,7 @@ class SasaransController < ApplicationController
   def destroy
     @sasaran.destroy
     respond_to do |format|
-      format.html { redirect_to sasarans_path, notice: 'Sasaran was successfully destroyed.' }
+      format.html { redirect_to sasarans_path, success: 'Sasaran berhasil dihapus' }
       format.json { head :no_content }
     end
   end
@@ -234,9 +235,9 @@ class SasaransController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def sasaran_params
-    params.require(:sasaran).permit(:sasaran_kinerja, :indikator_kinerja, :target, :kualitas,
-                                    :satuan, :penerima_manfaat, :nip_asn, :program_kegiatan_id,
-                                    :sumber_dana, :subkegiatan_tematik_id)
+    params.require(:sasaran).permit(:sasaran_kinerja, :penerima_manfaat, :nip_asn, :program_kegiatan_id,
+                                    :sumber_dana, :subkegiatan_tematik_id, :tahun,
+                                    { indikator_sasarans_attributes: [:indikator_kinerja, :aspek, :target, :satuan] })
   end
 
   rescue_from ActionController::ParameterMissing do
