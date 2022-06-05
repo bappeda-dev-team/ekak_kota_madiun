@@ -161,7 +161,7 @@ class SasaransController < ApplicationController
 
   # GET /sasarans/1/edit
   def edit
-    @sasaran.build_rincian if @sasaran.rincian.nil?
+    
   end
 
   # POST /sasarans or /sasarans.json
