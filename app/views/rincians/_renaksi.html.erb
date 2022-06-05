@@ -6,6 +6,9 @@
       <div class="col mb-3">
         <span class="fs-5 fw-bold mb-0">1. Sasaran Kinerja </span>
       </div>
+      <div class="col text-end">
+        <%= link_to 'Edit Sasaran', edit_sasaran_path(sasaran), class: 'btn btn-sm btn-primary' %>
+      </div>
       <div class="">
         <ul class="list mb-0">
           <li>OPD : <%= sasaran.user.opd.nama_opd %></li>

@@ -156,7 +156,7 @@ class SasaransController < ApplicationController
   # GET /sasarans/new
   def new
     @sasaran = @user.sasarans.build
-    @sasaran.build_rincian
+    @sasaran.indikator_sasarans.build
   end
 
   # GET /sasarans/1/edit
@@ -166,11 +166,11 @@ class SasaransController < ApplicationController
 
   # POST /sasarans or /sasarans.json
   def create
-    @sasaran = @user.sasarans.build(sasaran_params.except(:indikator_sasarans_attributes))
-    @sasaran.id_rencana = SecureRandom.base36(6)
+    @sasaran = @user.sasarans.build(sasaran_params)
+    # @sasaran.id_rencana = (SecureRandom.random_number(9e5) + 1e5).to_i # This method will bites back, look up in here
     respond_to do |format|
       if @sasaran.save
-        @sasaran.indikator_sasarans.create!(sasaran_params[:indikator_sasarans_attributes].merge!(sasaran_id: @sasaran.id_rencana))
+        # @sasaran.indikator_sasarans.create!(sasaran_params[:indikator_sasarans_attributes].merge!(sasaran_id: sasaran_params[:id_rencana]))
         format.html { redirect_to user_sasaran_path(@user, @sasaran), notice: 'Sasaran was successfully created.' }
         format.json { render :show, status: :created, location: @sasaran }
       else
@@ -236,8 +236,8 @@ class SasaransController < ApplicationController
   # Only allow a list of trusted parameters through.
   def sasaran_params
     params.require(:sasaran).permit(:sasaran_kinerja, :penerima_manfaat, :nip_asn, :program_kegiatan_id,
-                                    :sumber_dana, :subkegiatan_tematik_id, :tahun,
-                                    { indikator_sasarans_attributes: [:indikator_kinerja, :aspek, :target, :satuan] })
+                                    :sumber_dana, :subkegiatan_tematik_id, :tahun, :id_rencana,
+                                    indikator_sasarans_attributes: %i[indikator_kinerja aspek target satuan])
   end
 
   rescue_from ActionController::ParameterMissing do

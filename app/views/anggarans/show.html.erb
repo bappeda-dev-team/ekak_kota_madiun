@@ -13,17 +13,12 @@
 <div class="card border-2 shadow mb-1">
   <div class="card-header">
     <div class="row align-items-center">
-      <p><%= link_to sasaran_path(@tahapan.sasaran) do %>
-          <span class="fas fa-arrow-left"></span>
-          <span>Kembali</span>
-        <% end %>
-      </p>
       <h5>Sasaran : <%= @sasaran.sasaran_kinerja %></h5>
       <p>Tahapan : <%= @tahapan.tahapan_kerja %></p>
     </div>
   </div>
   <div class="card-body">
-    <p>Rincian Anggaran</p>
+    <p>Anggaran - <strong><%= @anggaran.uraian %></strong></p>
     <div class="anggaran">
       <table id="detail-anggaran">
         <thead>
@@ -43,17 +38,22 @@
         <tbody>
           <tr class="level-0">
             <td><%= rekening_anggaran @anggaran.kode_rek %></td>
-            <td colspan="5">
-              <%= @anggaran.uraian %>
-              <%= link_to 'Tambah Rincian', new_anggaran_perhitungan_path(@anggaran),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 btn btn-sm btn-success text-white animate-up-2"   %>
-              <%= link_to "Edit", edit_sasaran_tahapan_anggaran_path(@sasaran, @tahapan, @anggaran), class: 'text-info'  %>
-              <%= link_to "Hapus", sasaran_tahapan_anggaran_path(@sasaran, @tahapan, @anggaran), method: :delete, data: {confirm_swal: "Hapus Anggaran #{@anggaran.uraian}"}, class: "text-danger"  %>
+            <td colspan="5 mx-auto">
+              <div class="row">
+                <div class="text-wrap inline col">
+                  <%= @anggaran.uraian %>
+                </div>
+                <div class="text-end col-8">
+                  <%= link_to "Edit Anggaran", edit_sasaran_tahapan_anggaran_path(@sasaran, @tahapan, @anggaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: 'btn btn-outline-info'  %>
+                  <%= link_to "Hapus Anggaran", sasaran_tahapan_anggaran_path(@sasaran, @tahapan, @anggaran), method: :delete, data: {confirm_swal: "Hapus Anggaran #{@anggaran.uraian}"}, class: "btn btn-outline-danger"  %>
+                  <%= link_to 'Tambah Rincian', new_anggaran_perhitungan_path(@anggaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "btn btn-outline-success" %>
+                </div>
+              </div>
             </td>
             <td class="uang text-end"><%= number_with_delimiter(@anggaran.jumlah, :delimiter => '.') %></td>
           </tr>
           <% if @anggaran.perhitungans.any? %>
             <% @anggaran.perhitungans.order(:id).each do |hitung| %>
-              <% pajak = hitung.total * @anggaran.pajak.potongan %>
               <tr class="rincian-anggaran">
                 <td><%= link_to "Hapus Anggaran", anggaran_perhitungan_path(@anggaran, hitung), method: :delete, data: { confirm_swal: "Hapus Anggaran #{hitung.deskripsi} ?" }, class: "btn btn-danger" %></td>
                 <td><%= uraian_kode hitung.deskripsi %></td>
@@ -63,7 +63,7 @@
                 </td>
                 <td><%= hitung.satuan %></td>
                 <td><%= number_with_delimiter(hitung.harga, :delimiter => '.') %></td>
-                <td><%= (@anggaran.pajak.potongan * 100).to_i %> %</td>
+                <td><%= (hitung.pajak.nil? ? 0 : hitung.pajak.potongan * 100).to_i %> %</td>
                 <td class="uang text-end"><%= number_with_delimiter((hitung.total).to_i, :delimiter => '.') %></td>
               </tr>
             <% end %>
@@ -71,12 +71,18 @@
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="6" style="text-align:right">Jumlah Anggaran Sub Kegiatan :</td>
+            <td colspan="6" style="text-align:right">Jumlah Anggaran Tahapan :</td>
             <td class="text-end"><%= number_with_delimiter((@anggaran.jumlah).to_i, :delimiter => '.') %></td>
           </tr>
         </tfoot>
       </table>
     </div>
+  </div>
+  <div class="card-body">
+    <%= link_to sasaran_path(@sasaran), class: 'btn btn-info w-100 text-white' do %>
+      <span class="fas fa-arrow-left"></span>
+      <span>Kembali</span>
+    <% end %>
   </div>
 </div>
 <!-- SECTION - Table Anggaran -->
