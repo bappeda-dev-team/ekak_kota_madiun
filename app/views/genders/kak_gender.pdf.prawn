@@ -1,5 +1,5 @@
 prawn_document(filename: @filename) do |pdf|
-  pdf.text 'KERANGKA ACUAN KERJA/ TERM OF REFERENCE', size: 16, align: :center
+  pdf.text 'KERANGKA ACUAN KERJA/ TERM OF REFERENCE GENDER', size: 16, align: :center
   pdf.text "KELUARAN (OUTPUT) KEGIATAN TA #{@tahun}", align: :center
   # tabel pertama
   pdf.move_down 20
