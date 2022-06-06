@@ -39,6 +39,8 @@ $(function () {
     document.querySelector('.select2-search__field').focus();
   });
 
+  initailizeSelect2()
+
   $("#dropdown").select2({
     width: "100%",
     theme: "bootstrap-5",
@@ -238,4 +240,15 @@ $(function () {
       },
     })
   });
+
+  document.addEventListener('vanilla-nested:fields-added', function (e) {
+    initailizeSelect2()
+  })
 });
+
+function initailizeSelect2() {
+  $('.myselect').select2({
+    width: "100%",
+    theme: "bootstrap-5",
+  });
+}

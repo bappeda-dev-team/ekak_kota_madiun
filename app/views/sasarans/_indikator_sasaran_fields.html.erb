@@ -1,7 +1,7 @@
 <fieldset class="mb-5">
   <div class="field">
     <%= form.label :aspek, { class: "form-label" } %>
-    <%= form.text_field :aspek, { class: "form-control" } %>
+    <%= form.select(:aspek, (['Kualitas','Kuantitas']), {}, {:class => 'myselect'}) %>
   </div>
   <div class="field">
     <%= form.label :indikator_kinerja, { class: "form-label" } %>

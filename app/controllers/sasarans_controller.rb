@@ -169,7 +169,7 @@ class SasaransController < ApplicationController
     respond_to do |format|
       if @sasaran.save
         # @sasaran.indikator_sasarans.create!(sasaran_params[:indikator_sasarans_attributes].merge!(sasaran_id: sasaran_params[:id_rencana]))
-        format.html { redirect_to user_sasaran_path(@user, @sasaran), notice: 'Sasaran was successfully created.' }
+        format.html { redirect_to user_sasaran_path(@user, @sasaran), success: 'Sasaran berhasil dibuat.' }
         format.json { render :show, status: :created, location: @sasaran }
       else
         format.html { render :new, status: :unprocessable_entity }
