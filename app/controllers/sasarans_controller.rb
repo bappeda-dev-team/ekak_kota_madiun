@@ -50,7 +50,7 @@ class SasaransController < ApplicationController
     sasaran = Sasaran.find(params[:id_sasaran])
     tematik = params[:id_tematik]
     respond_to do |format|
-      if sasaran.add_tematik(ssasaranasaran: sasaran.id, tematik: tematik)
+      if sasaran.add_tematik(sasaran: sasaran.id, tematik: tematik)
         @status = 'success'
         @text = 'Sukses menambah tematik'
         format.js { render :hapus_program_from_sasaran }
