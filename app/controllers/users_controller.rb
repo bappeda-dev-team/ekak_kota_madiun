@@ -61,7 +61,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         params[:user][:role] && @user.add_role(params[:user][:role].to_sym)
-        format.html { redirect_to adminusers_path, notice: 'User was successfully created.' }
+        format.html { redirect_to adminusers_path, success: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, notice: 'Failed create user' }
@@ -73,10 +73,11 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1 or /users/1.json
   def update
     respond_to do |format|
+      @user.nulify_sasaran(@user.nik)
       if @user.update(user_params)
-        @user.add_role(params[:user][:role].to_sym)
+        @user.add_role(params[:user][:role].to_sym) if params[:user][:role].present?
 
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to adminusers_path, success: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, notice: 'Failed update user' }
@@ -89,7 +90,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to adminusers_path, notice: 'User dihapus.' }
+      format.html { redirect_to adminusers_path, success: 'User dihapus.' }
       format.json { head :no_content }
     end
   end

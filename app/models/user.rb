@@ -43,6 +43,7 @@ class User < ApplicationRecord
   scope :sasaran_diajukan, -> { asn_aktif.includes(:sasarans, :program_kegiatans).merge(Sasaran.sudah_lengkap) }
   scope :opd_by_role, ->(kode_opd, role) { where(kode_opd: kode_opd).with_role(role.to_sym) }
 
+  after_update :update_sasaran
   after_create :assign_default_role
 
   validates :nama, presence: true
@@ -66,6 +67,14 @@ class User < ApplicationRecord
 
   def assign_default_role
     add_role(:non_aktif) if roles.blank?
+  end
+
+  def nulify_sasaran(nip)
+    Sasaran.where(nip_asn: nip).update_all(nip_asn: nil)
+  end
+
+  def update_sasaran
+    Sasaran.where(nip_asn: nil).update_all(nip_asn: nik)
   end
 
   def aktifkan_user
