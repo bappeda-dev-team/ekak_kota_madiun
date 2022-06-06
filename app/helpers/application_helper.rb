@@ -120,7 +120,7 @@ module ApplicationHelper
   end
 
   def dropdown_opd
-    if current_user.has_role? :super_admin
+    if current_user.has_role? :super_admin or current_user.has_role? :reviewer
       options_for_select(Opd.where.not(kode_opd: nil).pluck(:nama_opd, :kode_unik_opd), current_user.opd.kode_unik_opd)
     elsif current_user.nik == 'rsud2022'
       options_for_select(Opd.where.not(kode_opd: nil).where(kode_opd: 1270).pluck(:nama_opd, :kode_unik_opd), current_user.opd.kode_unik_opd )
