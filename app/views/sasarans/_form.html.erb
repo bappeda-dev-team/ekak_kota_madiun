@@ -9,29 +9,22 @@
       </ul>
     </div>
   <% end %>
+  <% random_number = sasaran.id_rencana.nil? ? (SecureRandom.random_number(9e5) + 1e5).to_i : sasaran.id_rencana %>
+  <%= form.hidden_field :id_rencana, :value => random_number, readonly: true %>
   <div class="field">
     <%= form.label :sasaran_kinerja, { class: "form-label" } %>
     <%= form.text_field :sasaran_kinerja, { class: "form-control" } %>
   </div>
-  <div class="field">
-    <%= form.label :indikator_kinerja, { class: "form-label" } %>
-    <%= form.text_field :indikator_kinerja, { class: "form-control" } %>
+  <h4><strong>Indikator Sasaran : </strong></h4>
+  <div class="field" id="indikator-sasarans">
+    <%= form.fields_for :indikator_sasarans do |indikator_sas| %>
+      <%= render 'indikator_sasaran_fields', form: indikator_sas %>
+    <% end %>
   </div>
-  <div class="field">
-    <%= form.label :target, { class: "form-label" } %>
-    <%= form.number_field :target, { class: "form-control" } %>
-  </div>
-  <div class="field">
-    <%= form.label :kualitas, { class: "form-label" } %>
-    <%= form.number_field :kualitas, { class: "form-control" } %>
-  </div>
-  <div class="field">
-    <%= form.label :satuan, { class: "form-label" } %>
-    <%= form.text_field :satuan, { class: "form-control" } %>
-  </div>
-  <div class="field">
-    <%= form.label :penerima_manfaat, { class: "form-label" } %>
-    <%= form.text_field :penerima_manfaat, { class: "form-control" } %>
+  <%= link_to_add_nested(form, :indikator_sasarans, '#indikator-sasarans', link_classes: 'btn btn-primary btn-sm', link_text: 'Tambah Indikator') %>
+  <div class="field mt-3">
+    <%= form.label :tahun, { class: "form-label" } %>
+    <%= form.select(:tahun, (['',2021,2022,2023,2024]), {}, {:class => 'select2-waw',data: {"placeholder": "Pilih Tahun",}}) %>
   </div>
   <div class="actions my-4">
     <%= form.submit "Simpan", :class => "btn btn-tertiary" %>

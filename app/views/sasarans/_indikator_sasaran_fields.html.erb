@@ -1,0 +1,19 @@
+<fieldset class="mb-5">
+  <div class="field">
+    <%= form.label :aspek, { class: "form-label" } %>
+    <%= form.select(:aspek, (['Kualitas','Kuantitas']), {}, {:class => 'myselect'}) %>
+  </div>
+  <div class="field">
+    <%= form.label :indikator_kinerja, { class: "form-label" } %>
+    <%= form.text_field :indikator_kinerja, { class: "form-control" } %>
+  </div>
+  <div class="field">
+    <%= form.label :target, { class: "form-label" } %>
+    <%= form.number_field :target, { class: "form-control" } %>
+  </div>
+  <div class="field">
+    <%= form.label :satuan, { class: "form-label" } %>
+    <%= form.text_field :satuan, { class: "form-control" } %>
+  </div>
+  <%= link_to_remove_nested(form, link_text: 'Hapus Indikator', link_classes: 'text-danger') %>
+</fieldset>

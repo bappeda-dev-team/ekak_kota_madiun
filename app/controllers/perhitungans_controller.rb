@@ -21,7 +21,6 @@ class PerhitungansController < ApplicationController
 
   # POST /perhitungans or /perhitungans.json
   def create
-    sleep 1
     @perhitungan = @anggaran.perhitungans.build(perhitungan_params)
     respond_to do |format|
       if @perhitungan.save

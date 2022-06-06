@@ -50,7 +50,7 @@ class SasaransController < ApplicationController
     sasaran = Sasaran.find(params[:id_sasaran])
     tematik = params[:id_tematik]
     respond_to do |format|
-      if sasaran.add_tematik(sasaran: sasaran.id, tematik: tematik)
+      if sasaran.add_tematik(ssasaranasaran: sasaran.id, tematik: tematik)
         @status = 'success'
         @text = 'Sukses menambah tematik'
         format.js { render :hapus_program_from_sasaran }
@@ -156,21 +156,20 @@ class SasaransController < ApplicationController
   # GET /sasarans/new
   def new
     @sasaran = @user.sasarans.build
-    @sasaran.build_rincian
+    @sasaran.indikator_sasarans.build
   end
 
   # GET /sasarans/1/edit
-  def edit
-    @sasaran.build_rincian if @sasaran.rincian.nil?
-  end
+  def edit; end
 
   # POST /sasarans or /sasarans.json
   def create
     @sasaran = @user.sasarans.build(sasaran_params)
-    @sasaran.id_rencana = SecureRandom.base36(6)
+    # @sasaran.id_rencana = (SecureRandom.random_number(9e5) + 1e5).to_i # This method will bites back, look up in here
     respond_to do |format|
       if @sasaran.save
-        format.html { redirect_to user_sasaran_path(@user, @sasaran), notice: 'Sasaran was successfully created.' }
+        # @sasaran.indikator_sasarans.create!(sasaran_params[:indikator_sasarans_attributes].merge!(sasaran_id: sasaran_params[:id_rencana]))
+        format.html { redirect_to user_sasaran_path(@user, @sasaran), success: 'Sasaran berhasil dibuat.' }
         format.json { render :show, status: :created, location: @sasaran }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -181,6 +180,7 @@ class SasaransController < ApplicationController
 
   # PATCH/PUT /sasarans/1 or /sasarans/1.json
   def update
+    @sasaran = @user.sasarans.find(params[:id])
     respond_to do |format|
       if @sasaran.update(sasaran_params)
         flash[:success] = if sasaran_params[:program_kegiatan_id]
@@ -208,7 +208,7 @@ class SasaransController < ApplicationController
   def destroy
     @sasaran.destroy
     respond_to do |format|
-      format.html { redirect_to sasarans_path, notice: 'Sasaran was successfully destroyed.' }
+      format.html { redirect_to sasarans_path, success: 'Sasaran berhasil dihapus' }
       format.json { head :no_content }
     end
   end
@@ -234,9 +234,9 @@ class SasaransController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def sasaran_params
-    params.require(:sasaran).permit(:sasaran_kinerja, :indikator_kinerja, :target, :kualitas,
-                                    :satuan, :penerima_manfaat, :nip_asn, :program_kegiatan_id,
-                                    :sumber_dana, :subkegiatan_tematik_id)
+    params.require(:sasaran).permit(:sasaran_kinerja, :penerima_manfaat, :nip_asn, :program_kegiatan_id,
+                                    :sumber_dana, :subkegiatan_tematik_id, :tahun, :id_rencana,
+                                    indikator_sasarans_attributes: %i[id indikator_kinerja aspek target satuan _destroy])
   end
 
   rescue_from ActionController::ParameterMissing do

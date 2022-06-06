@@ -4,6 +4,8 @@
       <i class="fas fa-home"></i>
     </li>
     <li class="breadcrumb-item" aria-current="page"><%= 'Sasaran Kinerja' %></li>
+    <li class="breadcrumb-item" aria-current="page"><%=  @sasaran.sasaran_kinerja  %></li>
+    <li class="breadcrumb-item" aria-current="page"><%= 'Tahapan' %></li>
     <li class="breadcrumb-item" aria-current="page"><%=  @tahapan.tahapan_kerja  %></li>
     <li class="breadcrumb-item active" aria-current="page">Anggaran</li>
   </ol>
@@ -21,7 +23,7 @@
     </div>
   </div>
   <div class="card-body">
-    <p>Rincian Anggaran</p>
+    <p>Rincian Anggaran Sub Kegiatan - <strong><%= @sasaran.program_kegiatan&.nama_subkegiatan || 'Belum diisi' %></strong></p>
     <div class="anggaran">
       <%= link_to 'Tambah Rekening', new_sasaran_tahapan_anggaran_path(@sasaran, @tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 mb-3 btn btn-outline-success" %>
       <table id="detail-anggaran">

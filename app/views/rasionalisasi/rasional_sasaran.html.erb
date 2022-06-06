@@ -1,12 +1,13 @@
 <div class="card border-2 mb-2">
   <div class="card-header">
-    <h5>Sasaran : <%= @sasaran.sasaran_kinerja %></h5>
+    <h5>Sub Kegiatan : <%= @sasaran.program_kegiatan&.nama_subkegiatan || 'Belum diisi' %></h5>
   </div>
 </div>
 <% @sasaran.tahapans.each do |tahapan| %>
   <div class="card border-2 shadow my-3">
     <div class="card-header">
       <div class="row align-items-center">
+        <p>Sasaran : <%= @sasaran.sasaran_kinerja %></p>
         <p>Tahapan : <%= tahapan.tahapan_kerja %></p>
         <p>Total Anggaran : Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan, delimiter: '.') %></p>
         <% tahapan.anggaran_tahapan_dengan_komentar.each.with_index(1) do |angg, i| %>

@@ -16,6 +16,7 @@ import Chartist from "chartist";
 import SmoothScroll from "smooth-scroll";
 import "@fortawesome/fontawesome-free/js/all.js";
 import "select2";
+import "vanilla-nested";
 
 // images
 require.context("../images", true);
@@ -37,6 +38,8 @@ $(function () {
   $(document).on('select2:open', () => {
     document.querySelector('.select2-search__field').focus();
   });
+
+  initailizeSelect2()
 
   $("#dropdown").select2({
     width: "100%",
@@ -237,4 +240,15 @@ $(function () {
       },
     })
   });
+
+  document.addEventListener('vanilla-nested:fields-added', function (e) {
+    initailizeSelect2()
+  })
 });
+
+function initailizeSelect2() {
+  $('.myselect').select2({
+    width: "100%",
+    theme: "bootstrap-5",
+  });
+}
