@@ -52,7 +52,7 @@ class Sasaran < ApplicationRecord
 
   accepts_nested_attributes_for :rincian, update_only: true
   accepts_nested_attributes_for :tahapans
-  accepts_nested_attributes_for :indikator_sasarans
+  accepts_nested_attributes_for :indikator_sasarans, reject_if: :all_blank, allow_destroy: true
   # TODO: ganti kualitas dengan aspek ( multiple choice )
   # validation
   validates :sasaran_kinerja, presence: true

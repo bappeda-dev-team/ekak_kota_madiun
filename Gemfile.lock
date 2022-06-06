@@ -372,6 +372,7 @@ GEM
     unf_ext (0.0.8.1-x64-mingw32)
     unicode-display_width (2.1.0)
     uniform_notifier (1.16.0)
+    vanilla_nested (1.6.1)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.0)
@@ -444,6 +445,7 @@ DEPENDENCIES
   strong_migrations
   turbolinks (~> 5)
   tzinfo-data
+  vanilla_nested
   web-console (>= 4.1.0)
   webdrivers
   webpacker (~> 5.0)

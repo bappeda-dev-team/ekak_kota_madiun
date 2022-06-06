@@ -160,9 +160,7 @@ class SasaransController < ApplicationController
   end
 
   # GET /sasarans/1/edit
-  def edit
-    
-  end
+  def edit; end
 
   # POST /sasarans or /sasarans.json
   def create
@@ -182,6 +180,7 @@ class SasaransController < ApplicationController
 
   # PATCH/PUT /sasarans/1 or /sasarans/1.json
   def update
+    @sasaran = @user.sasarans.find(params[:id])
     respond_to do |format|
       if @sasaran.update(sasaran_params)
         flash[:success] = if sasaran_params[:program_kegiatan_id]
@@ -237,7 +236,7 @@ class SasaransController < ApplicationController
   def sasaran_params
     params.require(:sasaran).permit(:sasaran_kinerja, :penerima_manfaat, :nip_asn, :program_kegiatan_id,
                                     :sumber_dana, :subkegiatan_tematik_id, :tahun, :id_rencana,
-                                    indikator_sasarans_attributes: %i[indikator_kinerja aspek target satuan])
+                                    indikator_sasarans_attributes: %i[id indikator_kinerja aspek target satuan _destroy])
   end
 
   rescue_from ActionController::ParameterMissing do
