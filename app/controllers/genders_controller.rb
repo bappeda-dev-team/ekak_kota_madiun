@@ -5,12 +5,13 @@ class GendersController < ApplicationController
   end
 
   def pdf_gender
+    # nama_file = Nama subkegiatan
     @nama_file = ProgramKegiatan.find(params[:id]).nama_subkegiatan
     @tahun = params[:tahun] || Time.now.year
     @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
-    @filename = "Laporan_GAP_#{@nama_file}_#{@waktu}.pdf"
+    @filename = "KAK_Gender_#{@nama_file}_#{@waktu}.pdf"
     @program_kegiatan = ProgramKegiatan.find(params[:id])
-    # render 'kak_gender.pdf' # delete this line to alter
-    render 'pdf_gap.pdf' # delete this line to alter
+    render 'kak_gender.pdf'
+    # render 'pdf_gap.pdf'
   end
 end
