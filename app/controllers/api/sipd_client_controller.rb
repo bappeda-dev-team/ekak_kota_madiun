@@ -20,7 +20,7 @@ module Api
     end
 
     def update_detail_program
-      id_programs = @id_programs.flatten!
+      id_programs = @id_programs.flatten.reject { |id_prg| id_prg.empty? }
       unless id_programs.empty?
         id_programs.each do |id_program|
           Api::SipdClient.new(id_sipd: @kode_opd, tahun: @tahun, id_opd: @id_opd, id_program: id_program).detail_master_program
@@ -30,7 +30,7 @@ module Api
     end
 
     def update_detail_kegiatan_lama
-      id_programs = @id_programs.flatten!
+      id_programs = @id_programs.flatten.reject { |id_prg| id_prg.empty? }
       unless id_programs.empty?
         id_programs.each do |id_program|
           Api::SipdClient.new(id_sipd: @kode_opd, tahun: @tahun, id_opd: @id_opd, id_program: id_program).detail_kegiatan_lama
