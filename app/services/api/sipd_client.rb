@@ -166,18 +166,26 @@ module Api
       data_program
     end
 
+    # Update Program
     def proses_detail_master_program(response)
       data = Oj.load(response.body)
       program_details = data['data']
-      indikator_program = program_details.first['indikator']
-      target_program = program_details.first['target_3'] # target_1 asumsi tahun 2020, 2021 target_2, 2022 target_3
-      satuan_target_program = program_details.first['satuan']
+      if program_details.empty?
+        indikator_program = ''
+        target_program = ''
+        satuan_target_program = ''
+      else
+        indikator_program = program_details.first['indikator']
+        target_program = program_details.first['target_3'] # target_1 asumsi tahun 2020, 2021 target_2, 2022 target_3
+        satuan_target_program = program_details.first['satuan']
+      end
       ProgramKegiatan.where(id_program_sipd: @id_program)
                      .update_all(indikator_program: indikator_program,
                                  target_program: target_program,
                                  satuan_target_program: satuan_target_program)
     end
 
+    # Update Kegiatans
     def proses_detail_kegiatan_lama(response)
       data = Oj.load(response.body)
       kegiatan_details = data['data']
@@ -196,6 +204,7 @@ module Api
                                  satuan: satuan)
     end
 
+    # Update Kegiatan irisan dari subkegiatan
     def proses_detail_master_kegiatan(response)
       data = Oj.load(response.body)
       kegiatans = data['data']
@@ -223,6 +232,7 @@ module Api
       end
     end
 
+    # Update subkegiatan indikator dll
     def proses_detail_master_subkegiatan(response)
       data = Oj.load(response.body)
       subkegiatan_details = data['data']
@@ -349,6 +359,7 @@ module Api
       KamusUsulan.upsert_all(kamus_usulans, unique_by: :id_kamus)
     end
 
+    # Basis sinkronisasi data subkegiatan
     def proses_data_subkegiatan_opd(response)
       data = Oj.load(response.body)
       data_detail = data['data']
