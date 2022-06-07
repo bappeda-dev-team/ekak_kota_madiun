@@ -47,35 +47,38 @@
         <% collapsed_item_laporan_usulan = collapse_class('(\blaporan_usulan\/inisiatif|\blaporan_usulan\/musrenbang|\blaporan_usulan\/pokpir|\blaporan_usulan\/mandatori)') %>
         <% collapsed_item_usulan_user = collapse_class('(\busulan_inisiatif|\busulan_musrenbang|\busulan_pokpir|\busulan_mandatori)') %>
         <% collapsed_item_anggaran = collapse_class('(\banggaran_ssh|\banggaran_sbu|\banggaran_hspk|\brekening)') %>
-        <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
+        <% if current_user.has_role? :admin or current_user.has_role? :super_admin or current_user.has_role? :reviewer %>
           <hr>
           <p>Data Master</p>
-          <li class="nav-item">
-            <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_item_usulan[:menu] %>" data-bs-toggle="collapse" data-bs-target="#usulan-master" aria-expanded="<%= collapsed_item_usulan[:aria] %>">
-              <span>
-                <span class="sidebar-icon">
-                  <i class="fas fa-book-open icon icon-xs me-2"></i>
+          <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
+            <li class="nav-item">
+              <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_item_usulan[:menu] %>" data-bs-toggle="collapse" data-bs-target="#usulan-master" aria-expanded="<%= collapsed_item_usulan[:aria] %>">
+                <span>
+                  <span class="sidebar-icon">
+                    <i class="fas fa-book-open icon icon-xs me-2"></i>
+                  </span>
+                  <span class="sidebar-text">Usulan</span>
                 </span>
-                <span class="sidebar-text">Usulan</span>
+                <span class="link-arrow">
+                  <i class="fas fa-angle-right icon icon-sm"></i>
+                </span>
               </span>
-              <span class="link-arrow">
-                <i class="fas fa-angle-right icon icon-sm"></i>
-              </span>
-            </span>
-            <div class="multi-level <%= collapsed_item_usulan[:sub_menu] %>" role="list" id="usulan-master" aria-expanded="<%= collapsed_item_usulan[:aria] %>">
-              <ul class="flex-column nav">
-                <% usulan_items.each do |usulan| %>
-                  <li class="nav-item<%= navigation_class(usulan[:identifier]) %>" >
-                    <%= link_to(usulan[:href], class: "nav-link") do %>
-                      <span>
-                        <span class="sidebar-text"><%= usulan[:title] %></span>
-                      </span>
-                    <% end %>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
-          </li>
+              <div class="multi-level <%= collapsed_item_usulan[:sub_menu] %>" role="list" id="usulan-master" aria-expanded="<%= collapsed_item_usulan[:aria] %>">
+                <ul class="flex-column nav">
+                  <% usulan_items.each do |usulan| %>
+                    <li class="nav-item<%= navigation_class(usulan[:identifier]) %>" >
+                      <%= link_to(usulan[:href], class: "nav-link") do %>
+                        <span>
+                          <span class="sidebar-text"><%= usulan[:title] %></span>
+                        </span>
+                      <% end %>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
+            </li>
+          <% end %>
+          <%# khusus superadmin %>
           <% if current_user.has_role? :super_admin %>
             <li class="nav-item">
               <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_item_anggaran[:menu] %>" data-bs-toggle="collapse" data-bs-target="#anggaran-master" aria-expanded="<%= collapsed_item_anggaran[:aria] %>">
@@ -132,22 +135,24 @@
               </li>
             <% end %>
           <% end %>
-          <% master_data_items.each do |master_item| %>
-            <li class="nav-item<%= navigation_class(master_item[:identifier]) %>">
-              <%= link_to( master_item[:href], class: "nav-link d-flex justify-content-between") do %>
-                <span>
-                  <span class="sidebar-icon">
-                    <i class="<%= master_item[:icon] %> icon icon-xs me-2"></i>
+          <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
+            <% master_data_items.each do |master_item| %>
+              <li class="nav-item<%= navigation_class(master_item[:identifier]) %>">
+                <%= link_to( master_item[:href], class: "nav-link d-flex justify-content-between") do %>
+                  <span>
+                    <span class="sidebar-icon">
+                      <i class="<%= master_item[:icon] %> icon icon-xs me-2"></i>
+                    </span>
+                    <span class="sidebar-text"><%= master_item[:title] %></span>
                   </span>
-                  <span class="sidebar-text"><%= master_item[:title] %></span>
-                </span>
-              <% end %>
-            </li>
+                <% end %>
+              </li>
+            <% end %>
           <% end %>
           <hr>
         <% end %>
         <%# usulan user %>
-        <% unless current_user.has_role? :admin or current_user.has_role? :super_admin %>
+        <% unless current_user.has_role? :admin or current_user.has_role? :super_admin or current_user.has_role? :reviewer %>
           <li class="nav-item">
             <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_item_usulan_user[:menu] %>" data-bs-toggle="collapse" data-bs-target="#usulan-user" aria-expanded="<%= collapsed_item_usulan_user[:aria] %>">
               <span>
@@ -197,6 +202,7 @@
             <% end %>
           </li>
         <% end %>
+        <%# Laporan Usulan %>
         <% if current_user.nik == 'bapelitbangda' or current_user.has_role? :super_admin %>
           <li class="nav-item">
             <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_item_laporan_usulan[:menu] %>" data-bs-toggle="collapse" data-bs-target="#laporan_usulan" aria-expanded="<%= collapsed_item_laporan_usulan[:aria] %>">

@@ -10,17 +10,77 @@
         <li class="breadcrumb-item active" aria-current="page">Gender</li>
       </ol>
     </nav>
-    <% if current_user.has_role? :admin %>
+    <% if current_user.has_role? :admin or current_user.has_role? :super_admin or current_user.has_role? :reviewer %>
       <%= render 'shared/filter_card', filter_url: '/filter_gender' %>
     <% end %>
     <div class="card border-0 shadow" id="gender_filter">
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Gender</h2>
+            <h2 class="fs-5 fw-bold mb-0">Laporan Gender</h2>
+          </div>
+          <div class="col text-end">
+            <span><%= current_user.nama %></span>
+            |
+            <span><%= current_user.nik %></span>
           </div>
         </div>
       </div>
+      <% unless current_user.has_role? :admin %>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table align-items-center border-start border-end" id="tabel_gender">
+              <thead class="thead-light">
+                <tr>
+                  <th class="border-bottom" scope="col">No.</th>
+                  <th class="border-bottom text-center text-wrap" scope="col">Sub Kegiatan</th>
+                  <th class="border-bottom text-center text-wrap" scope="col">Pagu Anggaran</th>
+                  <th class="border-bottom text-center border-start border-end" scope="col" colspan="3">Data Pembuka Wawasan</th>
+                  <th class="border-bottom text-center text-wrap" scope="col">Action</th>
+                </tr>
+                <tr>
+                  <th colspan="3"></th>
+                  <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
+                  <th class="border-bottom text-center border-start border-end">Data Terpilah</th>
+                  <th class="border-bottom text-center border-start border-end">Penerima Manfaat</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @program_kegiatans.each.with_index(1) do |kak, i| %>
+                  <tr class="border-bottom">
+                    <% row_dalam = kak.sasarans.count + 1  %>
+                    <td class="text-gray-900 fw-bolder border-bottom" rowspan="<%= row_dalam %>"><%= i %></td>
+                    <td class="text-gray-900 text-wrap" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.nama_subkegiatan %></td>
+                    <td class="text-gray-900 border-end border-start" rowspan="<%= kak.sasarans.count + 1 %>">Rp. <%= number_with_delimiter(kak.my_pagu, delimiter: '.') or 0 %></td>
+                    <td class="p-0 m-0"></td>
+                    <td class="p-0 m-0"></td>
+                    <td class="p-0 m-0"></td>
+                    <td class="text-gray-900 text-wrap" rowspan="<%= kak.sasarans.count + 1 %>">
+                      <%= link_to "/pdf_gender/#{kak.id}.pdf", class:"m-3" do %>
+                        <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak GAB"></span>
+                      <% end %>
+                    </td>
+                    <% kak.sasarans.each do |show_sasaran| %>
+                      <tr class="<%= warna_sasaran(show_sasaran.status_sasaran) %>">
+                        <td class="text-wrap border-start border-end" width="450px">
+                          <%= show_sasaran.sasaran_kinerja %>
+                        </td>
+                        <td class="text-wrap border-start border-end border-bottom text-center">
+                          <%= show_sasaran.rincian&.data_terpilah || '-' %>
+                        </td>
+                        <td class="text-wrap border-start border-end border-bottom text-center">
+                          <%= show_sasaran.penerima_manfaat || '-' %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

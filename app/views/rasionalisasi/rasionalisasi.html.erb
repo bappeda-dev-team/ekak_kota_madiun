@@ -10,7 +10,7 @@
         <li class="breadcrumb-item active" aria-current="page">Rasionalisasi</li>
       </ol>
     </nav>
-    <% if current_user.has_role? :admin %>
+    <% if current_user.has_role? :admin or current_user.has_role? :super_admin or current_user.has_role? :reviewer %>
       <%= render 'shared/filter_card', filter_url: '/filter_rasionalisasi' %>
     <% end %>
     <div class="card border-0 shadow" id="rasionalisasi_filter">
