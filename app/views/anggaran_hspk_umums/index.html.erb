@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to "Anggaran HSPK Umum", anggaran_hspk_umums_path %></li>
+      </ol>
+    </nav>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Anggaran HSPK Dinas PU</h2>
+          </div>
+          <div class="col text-end">
+            <%= link_to "Tambah Data", new_anggaran_hspk_umum_path, remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-hspk-umum'}, class: "btn btn-sm btn-info" %>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive p-4">
+        <table class="table table-flush datatable" data-datatable>
+          <thead>
+            <tr>
+              <th>Kode kelompok barang</th>
+              <th>Uraian kelompok barang</th>
+              <th>Kode barang</th>
+              <th>Uraian barang</th>
+              <th>Spesifikasi</th>
+              <th>Satuan</th>
+              <th>Harga satuan</th>
+              <th class="text-center" colspan="2">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @anggaran_hspk_umum.each do |anggaran_pu| %>
+              <tr id="<%= dom_id(anggaran_pu) %>">
+                <td class="text-wrap"><%= anggaran_pu.kode_kelompok_barang %></td>
+                <td class="text-wrap"><%= anggaran_pu.uraian_kelompok_barang %></td>
+                <td class="text-wrap"><%= anggaran_pu.kode_barang %></td>
+                <td class="text-wrap"><%= anggaran_pu.uraian_barang %></td>
+                <td class="text-wrap"><%= anggaran_pu.spesifikasi %></td>
+                <td class="text-wrap"><%= anggaran_pu.satuan %></td>
+                <td><%= anggaran_pu.harga_satuan %></td>
+                <td><%= link_to edit_anggaran_hspk_umum_path(anggaran_pu), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-hspk-umum'}, class: "btn btn-sm btn-warning" do %>
+                    <i class="fas fa-edit me-2"></i>
+                    <span>Edit</span>
+                  <% end %>
+                </td>
+                <td><%= link_to anggaran_pu, method: :delete, data: { confirm_swal: "Yakin ingin menghapus data ini?" }, class: "btn btn-sm btn-danger" do %>
+                    <i class="fas fa-trash me-2"></i>
+                    <span>Hapus</span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render 'modal' %>

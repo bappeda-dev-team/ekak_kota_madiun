@@ -31,7 +31,6 @@ class AnggaranBludsController < ApplicationController
       if @anggaran_blud.save
         @status = 'success'
         @text = 'Anggaran Blud ditambahkan'
-        flash[:success] = "Permaslahaan ditambahkan"
         format.js
         format.html { redirect_to anggaran_bluds_url, success: @text }
         format.json { render :show, status: :created, location: @anggaran_blud }

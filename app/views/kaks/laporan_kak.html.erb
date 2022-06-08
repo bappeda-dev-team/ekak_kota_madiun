@@ -55,7 +55,8 @@
                         <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
                       <% end %>
                       <% if @sasarans.any? {|s| s.status == 'pengajuan' } %>
-                        <%= link_to "/pdf_kak/#{kak.id}.pdf", class: "m-3" do %>
+                        <% tahun = Date.today.year + 1 %>
+                        <%= link_to "/pdf_kak/#{kak.id}/#{tahun}.pdf", class: "m-3" do %>
                           <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
                         <% end %>
                       <% end %>

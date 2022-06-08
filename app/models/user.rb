@@ -118,7 +118,7 @@ class User < ApplicationRecord
   end
 
   def pegawai_kelurahan?
-    jabatan.upcase.include?('KELURAHAN')
+    jabatan&.upcase&.include?('KELURAHAN')
   end
 
   def petunjuk_kelurahan
@@ -126,11 +126,11 @@ class User < ApplicationRecord
   end
 
   def pegawai_rsud?
-    nama_bidang.upcase.include?('RUMAH SAKIT') unless nama_bidang.nil?
+    nama_bidang&.upcase&.include?('RUMAH SAKIT') unless nama_bidang.nil?
   end
 
   def pegawai_bagian?
-    nama_bidang.upcase.include?('BAGIAN') unless nama_bidang.nil?
+    nama_bidang&.upcase&.include?('BAGIAN') unless nama_bidang.nil?
   end
 
   def petunjuk_bagian

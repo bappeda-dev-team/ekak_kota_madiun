@@ -240,6 +240,31 @@ $(function () {
       },
     })
   });
+  $('#form-hspk-umum-body').on('show', function () {
+    $("#search-anggaran-hspk").select2({
+      width: "100%",
+      theme: "bootstrap-5",
+      dropdownParent: $("#form-hspk-umum"),
+      ajax: {
+        delay: 1000,
+        url: '/anggaran_hspk_search.json',
+        data: (params) => ({ q: params.term })
+      },
+      language: {
+        inputTooShort: function () {
+          return "Input minimal 3 Karakter";
+        }
+      }
+    }).on('select2:opening', function (e) {
+      $(this).data('select2').$dropdown.find(':input.select2-search__field').attr('placeholder', 'Ketik Untuk mencari')
+    }).on('select2:select', function (e) {
+      let data_barang = e.params.data;
+      $('#uraian_barang').val(data_barang.uraian_barang)
+      $("#spesifikasi").val(data_barang.spesifikasi)
+      $('#satuan').val(data_barang.satuan)
+      $('#harga_satuan').val(data_barang.harga)
+    });
+  })
 
   document.addEventListener('vanilla-nested:fields-added', function (e) {
     initailizeSelect2()

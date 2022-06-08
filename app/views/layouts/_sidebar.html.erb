@@ -120,6 +120,19 @@
               <% end %>
             </li>
           <% end %>
+          <%# Anggaran HSPK PU %>
+          <% if current_user.nik == 'dinasputr' or current_user.has_role? :super_admin %>
+            <li class="nav-item<%= navigation_class('anggaran_hspk_umums') %>" >
+              <%= link_to(anggaran_hspk_umums_path, class: "nav-link d-flex justify-content-between") do %>
+                <span>
+                  <span class="sidebar-icon">
+                    <i class="fas fa-city icon icon-xs me-2"></i>
+                  </span>
+                  <span class="sidebar-text">Anggaran HSPK PU</span>
+                </span>
+              <% end %>
+            </li>
+          <% end %>
           <%# end %>
           <% if current_user.nik == 'bapelitbangda' or current_user.has_role? :super_admin or current_user.has_role? :reviewer %>
             <% reviewer_items.each do |reviewer_item| %>
