@@ -40,7 +40,7 @@ module ApplicationHelper
     [
       { title: 'SSH', href: anggaran_sshes_path, identifier: 'anggaran_ssh' },
       { title: 'SBU', href: anggaran_sbus_index_path, identifier: 'anggaran_sbu' },
-      { title: 'HSPK', href: anggaran_hspks_path, identifier: 'anggaran_hspk' },
+      { title: 'HSPK', href: anggaran_hspks_path, identifier: 'anggaran_hspks' },
       { title: 'Kode Rekening', href: rekenings_path, identifier: 'rekening' }
     ]
   end

@@ -43,8 +43,8 @@ en:
   hello: "Hello world"
   helpers:
     submit:
-      create: "Buat %{model} baru"
-      update: "Ganti isian %{model}"
+      create: "Simpan %{model}"
+      update: "Simpan Perubahan %{model}"
   date:
     abbr_day_names:
     - Min

@@ -1,0 +1,39 @@
+<%= form_with(model: anggaran_hspk_umum) do |form| %>
+  <% if anggaran_hspk_umum.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(anggaran_hspk_umum.errors.count, "error") %> prohibited this anggaran_hspk_umum from being saved:</h2>
+      <ul>
+        <% anggaran_hspk_umum.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :tahun_anggaran, class: 'form-label' %>
+    <%= form.number_field :tahun, class: "form-control", required: true, value: Date.today.year %>
+  </div>
+  <div class="field">
+    <%= form.label :pilih_hspk, {class: "form-label"} %>
+    <%= form.select :hspk_id, [''],{include_blank: true} , {class: "form-control",id: 'search-anggaran-hspk', "data-placeholder": "Pilih Uraian"} %>
+  </div>
+  <div class="field">
+    <%= form.label :uraian_barang, class: 'form-label'%>
+    <%= form.text_field :uraian_barang, class: "form-control", required: true, id: 'uraian_barang' %>
+  </div>
+  <div class="field">
+    <%= form.label :spesifikasi, class: 'form-label' %>
+    <%= form.text_field :spesifikasi, class: "form-control", id: 'spesifikasi' %>
+  </div>
+  <div class="field">
+    <%= form.label :satuan, class: 'form-label' %>
+    <%= form.text_field :satuan , class: "form-control", required: true, id: 'satuan' %>
+  </div>
+  <div class="field">
+    <%= form.label :harga_satuan, class: 'form-label' %>
+    <%= form.number_field :harga_satuan, class: "form-control", required: true, id: 'harga_satuan' %>
+  </div>
+  <div class="actions">
+    <%= form.submit "Simpan Anggaran" %>
+  </div>
+<% end %>

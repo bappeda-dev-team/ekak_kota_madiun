@@ -6,6 +6,14 @@ class AnggaranHspksController < ApplicationController
     @anggaran_hspks = AnggaranHspk.all
   end
 
+  def anggaran_hspk_search
+    param = params[:q] || ''
+    @anggaran_hspks = AnggaranHspk.where('uraian_barang ILIKE ?',
+                                                "%#{param}%")
+                                                .or(AnggaranHspk.where('spesifikasi ILIKE ?', "%#{param}%"))
+                                                .limit(80)
+  end
+
   # GET /anggaran_hspks/1 or /anggaran_hspks/1.json
   def show; end
 

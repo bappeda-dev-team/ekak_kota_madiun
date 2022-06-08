@@ -6,6 +6,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :anggaran_sbus
   resources :anggaran_sshes
   resources :anggaran_bluds
+  resources :anggaran_hspk_umums
   resources :subkegiatan_tematiks, path: 'tematiks'
   resources :rekenings
   resources :musrenbangs do
@@ -154,6 +155,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # Anggaran
   get '/anggaran_ssh_search', to: 'anggaran_sshes#anggaran_ssh_search'
   get '/anggaran_spesifikasi_search', to: 'anggaran_sshes#anggaran_spesifikasi_search'
+  get '/anggaran_hspk_search', to: 'anggaran_hspks#anggaran_hspk_search'
 
   # Reknening
   get '/rekening_search', to: 'rekenings#rekening_search'

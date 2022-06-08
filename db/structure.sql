@@ -247,6 +247,46 @@ ALTER SEQUENCE public.anggaran_bluds_id_seq OWNED BY public.anggaran_bluds.id;
 
 
 --
+-- Name: anggaran_hspk_umums; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.anggaran_hspk_umums (
+    id bigint NOT NULL,
+    kode_kelompok_barang character varying,
+    uraian_kelompok_barang character varying,
+    kode_barang character varying,
+    uraian_barang character varying,
+    spesifikasi character varying,
+    satuan character varying,
+    harga_satuan bigint,
+    tahun character varying,
+    id_standar_harga character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    hspk_id bigint
+);
+
+
+--
+-- Name: anggaran_hspk_umums_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.anggaran_hspk_umums_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: anggaran_hspk_umums_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.anggaran_hspk_umums_id_seq OWNED BY public.anggaran_hspk_umums.id;
+
+
+--
 -- Name: anggaran_hspks; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1708,6 +1748,13 @@ ALTER TABLE ONLY public.anggaran_bluds ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: anggaran_hspk_umums id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.anggaran_hspk_umums ALTER COLUMN id SET DEFAULT nextval('public.anggaran_hspk_umums_id_seq'::regclass);
+
+
+--
 -- Name: anggaran_hspks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1998,6 +2045,14 @@ ALTER TABLE ONLY public.aksis
 
 ALTER TABLE ONLY public.anggaran_bluds
     ADD CONSTRAINT anggaran_bluds_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: anggaran_hspk_umums anggaran_hspk_umums_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.anggaran_hspk_umums
+    ADD CONSTRAINT anggaran_hspk_umums_pkey PRIMARY KEY (id);
 
 
 --
@@ -2904,6 +2959,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220520072832'),
 ('20220520074832'),
 ('20220520162623'),
-('20220524004152');
+('20220524004152'),
+('20220608034333'),
+('20220608063442');
 
 
