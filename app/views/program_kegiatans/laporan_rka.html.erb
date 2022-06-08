@@ -50,7 +50,8 @@
                   <th class="text-gray-900 text-wrap" scope="row" rowspan="<%= program.sasarans.count + 1 %>"><%= program.nama_subkegiatan %></th>
                   <td class="p-0 m-0" colspan="2"></td>
                   <td class="fw-bolder text-gray-500 text-center" rowspan="<%= program.sasarans.count + 1 %>">
-                    <%= link_to "/pdf_rka/#{program.id}.pdf", class: "m-3" do %>
+                    <% tahun = Date.today.year + 1 %>
+                    <%= link_to "/pdf_rka/#{program.id}/#{tahun}.pdf", class: "m-3" do %>
                       <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
                     <% end %>
                   </td>

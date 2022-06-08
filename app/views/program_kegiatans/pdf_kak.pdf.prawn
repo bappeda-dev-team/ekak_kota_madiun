@@ -143,47 +143,44 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
                             "Rp. #{number_with_delimiter(tahapan.anggaran_tahapan, delimiter: '.')}",
                             tahapan.keterangan]
     end
-  data_rencana_aksi << [{ content: "Total sasaran ini adalah #{sasaran.waktu_total} bulan", colspan: 14 },
-                        sasaran.jumlah_target, "Rp. #{number_with_delimiter(sasaran.total_anggaran, delimiter: '.')}", '']
+    data_rencana_aksi << [{ content: "Total sasaran ini adalah #{sasaran.waktu_total} bulan", colspan: 14 },
+                          sasaran.jumlah_target, "Rp. #{number_with_delimiter(sasaran.total_anggaran, delimiter: '.')}", '']
 
-  tabel_renaksi = pdf.make_table(data_rencana_aksi, column_widths: { 0 => 17, 1 => 130, 14 => 30 }, cell_style: { size: 6, align: :left }, width: pdf.bounds.width)
-  if pdf.cursor - tabel_renaksi.height < 0
-    pdf.start_new_page
-  end
-  tabel_renaksi.draw
-  data_rencana_aksi.clear
+    tabel_renaksi = pdf.make_table(data_rencana_aksi, column_widths: { 0 => 17, 1 => 130, 14 => 30 }, cell_style: { size: 6, align: :left }, width: pdf.bounds.width)
+    pdf.start_new_page if (pdf.cursor - tabel_renaksi.height).negative?
+    tabel_renaksi.draw
+    data_rencana_aksi.clear
 
-  # Usulan
-  pdf.move_down 10
-  tabel_usulan = [
-    ['', 'h.', 'Usulan yang terakomodir']
-  ]
-  pdf.table(tabel_usulan, column_widths: { 0=> 17, 1=>17 }, cell_style: { size: 8, border_width: 0 })
-  data_penerima_manfaat = [['No', 'Jenis Usulan', 'Usulan', 'Permasalahan/ Uraian', 'Keterangan']]
-  count = 0
-  sasaran.my_usulan.each do |u|
-  count += 1
-  keterangan = u.try(:alamat) || u.try(:peraturan_terkait) || u.try(:manfaat)
-  tipe = u.class.try(:type) || u.class.name.to_s
-  data_penerima_manfaat << [count, tipe, u.usulan, u.uraian, keterangan]
+    # Usulan
+    pdf.move_down 10
+    tabel_usulan = [
+      ['', 'h.', 'Usulan yang terakomodir']
+    ]
+    pdf.table(tabel_usulan, column_widths: { 0=> 17, 1=>17 }, cell_style: { size: 8, border_width: 0 })
+    data_usulan_terakomodir = [['No', 'Jenis Usulan', 'Usulan', 'Permasalahan/ Uraian', 'Keterangan']]
+    count = 0
+    sasaran.my_usulan.each do |u|
+      count += 1
+      keterangan = u.try(:alamat) || u.try(:peraturan_terkait) || u.try(:manfaat)
+      tipe = u.class.try(:type) || u.class.name.to_s
+      data_usulan_terakomodir << [count, tipe, u.usulan, u.uraian, keterangan.force_encoding('utf-8')]
+    end
+    pdf.move_down 10
+    tabel_usulan_terakomodir = pdf.make_table(data_usulan_terakomodir,
+                                              column_widths: { 0 => 17, 1 => 50, 2 => 100 },
+                                              cell_style: { size: 6, align: :left }, width: pdf.bounds.width)
+    tabel_usulan_terakomodir.draw
+    pdf.move_down 30
+    pdf.start_new_page if (pdf.cursor - tabel_usulan_terakomodir.height).negative?
   end
-  pdf.move_down 10
-  tabel_penerima_manfaat = pdf.make_table(data_penerima_manfaat, column_widths: { 0 => 17, 1 => 50, 2 => 100 },
-            cell_style: { size: 6, align: :left }, width: pdf.bounds.width)
-  tabel_penerima_manfaat.draw
-  pdf.move_down 30
-  if pdf.cursor - tabel_penerima_manfaat.height < 0
-    pdf.start_new_page
+  pdf.bounding_box([pdf.bounds.width - 300, pdf.cursor - 50], width: pdf.bounds.width - 200) do
+    pdf.text "Madiun, #{I18n.l Date.today}", size: 8, align: :center
+    pdf.move_down 5
+    pdf.text "<strong>Kepala</strong>", size: 8, align: :center, inline_format: true
+    pdf.text "<strong>#{@program_kegiatan.opd.nama_opd}</strong>", size: 8, align: :center, inline_format: true
+    pdf.move_down 50
+    pdf.text "<u>#{@program_kegiatan.opd.nama_kepala || '!!belum disetting'}</u>", size: 8, align: :center, inline_format: true
+    pdf.text @program_kegiatan.opd.pangkat_kepala || '!! belum disetting', size: 8, align: :center
+    pdf.text "NIP. #{@program_kegiatan.opd.nip_kepala || '!! belum disetting'}", size: 8, align: :center
   end
-end
-pdf.bounding_box([pdf.bounds.width - 300, pdf.cursor - 50], width: pdf.bounds.width - 200) do
-  pdf.text "Madiun, #{I18n.l Date.today}", size: 8, align: :center
-  pdf.move_down 5
-  pdf.text "<strong>Kepala</strong>", size: 8, align: :center, inline_format: true
-  pdf.text "<strong>#{@program_kegiatan.opd.nama_opd}</strong>", size: 8, align: :center, inline_format: true
-  pdf.move_down 50
-  pdf.text "<u>#{@program_kegiatan.opd.nama_kepala || '!!belum disetting'}</u>", size: 8, align: :center, inline_format: true
-  pdf.text "#{@program_kegiatan.opd.pangkat_kepala || '!! belum disetting'}", size: 8, align: :center
-  pdf.text "NIP. #{@program_kegiatan.opd.nip_kepala || '!! belum disetting'}", size: 8, align: :center
-end
 end
