@@ -4,11 +4,11 @@
 #
 #  id          :bigint           not null, primary key
 #  deskripsi   :string
-#  harga       :integer
+#  harga       :decimal(, )
 #  satuan      :string
 #  spesifikasi :text
-#  total       :integer
-#  volume      :integer
+#  total       :decimal(, )
+#  volume      :decimal(, )
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  anggaran_id :bigint

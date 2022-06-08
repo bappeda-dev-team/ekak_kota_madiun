@@ -9,11 +9,11 @@
       <div class="row align-items-center">
         <p>Sasaran : <%= @sasaran.sasaran_kinerja %></p>
         <p>Tahapan : <%= tahapan.tahapan_kerja %></p>
-        <p>Total Anggaran : Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan, delimiter: '.') %></p>
+        <p>Total Anggaran : Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %></p>
         <% tahapan.anggaran_tahapan_dengan_komentar.each.with_index(1) do |angg, i| %>
-          <p>Anggaran Rasionalisasi <%= i %> : Rp. <%= number_with_delimiter(angg, delimiter: '.') %></p>
+          <p>Anggaran Rasionalisasi <%= i %> : Rp. <%= number_with_delimiter(angg) %></p>
         <% end %>
-        <p>Total Anggaran Setelah Rasionalisasi : Rp. <%= number_with_delimiter(tahapan.total_anggaran_tahapan_setelah_komentar, delimiter: '.') %></p>
+        <p>Total Anggaran Setelah Rasionalisasi : Rp. <%= number_with_delimiter(tahapan.total_anggaran_tahapan_setelah_komentar) %></p>
       </div>
     </div>
     <div class="card-body">
@@ -52,7 +52,7 @@
                     </div>
                   </div>
                 </td>
-                <td class="uang text-end">Rp. <%= number_with_delimiter(anggaran.jumlah, delimiter: '.') %></td>
+                <td class="uang text-end">Rp. <%= number_with_delimiter(anggaran.jumlah) %></td>
               </tr>
               <% if anggaran.perhitungans.any? %>
                 <% anggaran.perhitungans.includes([:koefisiens]).order(:created_at).each do |hitung| %>
@@ -71,9 +71,9 @@
                       <% end %>
                     </td>
                     <td class="text-center"><%= hitung.satuan %></td>
-                    <td class="text-center"><%= number_with_delimiter(hitung.harga, :delimiter => '.') %></td>
+                    <td class="text-center"><%= number_with_delimiter(hitung.harga) %></td>
                     <td class="text-end"><%= (hitung.pajak.nil? ? 0 : hitung.pajak.potongan * 100).to_i %> %</td>
-                    <td class="uang text-end">Rp. <%= number_with_delimiter((hitung.total).to_i, :delimiter => '.') %></td>
+                    <td class="uang text-end">Rp. <%= number_with_delimiter((hitung.total).to_i) %></td>
                   </tr>
                 <% end %>
               <% end %>
@@ -82,7 +82,7 @@
           <tfoot>
             <tr>
               <td colspan="6" style="text-align:right">Jumlah Anggaran Tahapan :</td>
-              <td class="text-end">Rp. <%= number_with_delimiter(tahapan.anggarans.compact.sum(&:jumlah), :delimiter => '.') %></td>
+              <td class="text-end">Rp. <%= number_with_delimiter(tahapan.anggarans.compact.sum(&:jumlah)) %></td>
             </tr>
           </tfoot>
         </table>

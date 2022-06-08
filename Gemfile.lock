@@ -200,6 +200,8 @@ GEM
     nokogiri (1.13.4-x86_64-linux)
       racc (~> 1.4)
     oj (3.13.11)
+    online_migrations (0.4.1)
+      activerecord (>= 4.2)
     orm_adapter (0.5.0)
     pagy (5.10.1)
       activesupport
@@ -354,8 +356,6 @@ GEM
     sshkit (1.21.2)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    strong_migrations (1.0.0)
-      activerecord (>= 5.2)
     thor (1.2.1)
     tilt (2.0.10)
     ttfunk (1.7.0)
@@ -425,6 +425,7 @@ DEPENDENCIES
   letter_opener
   listen (~> 3.3)
   oj
+  online_migrations
   pagy (~> 5.10)
   pg
   prawn-rails (~> 1.4, >= 1.4.2)
@@ -442,7 +443,6 @@ DEPENDENCIES
   shoulda-matchers (~> 5.0)
   solargraph
   spring
-  strong_migrations
   turbolinks (~> 5)
   tzinfo-data
   vanilla_nested

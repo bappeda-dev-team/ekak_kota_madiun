@@ -81,7 +81,8 @@ gem 'redis'
 gem 'resque', require: 'resque/server'
 gem 'rolify', '~> 6.0'
 gem 'scenic'
-gem 'strong_migrations'
+# gem 'strong_migrations'
+gem 'online_migrations'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'vanilla_nested'
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?

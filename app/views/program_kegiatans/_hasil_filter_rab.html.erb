@@ -89,7 +89,7 @@
                       <%= show_sasaran.sasaran_kinerja %>
                     </td>
                     <td class="text-wrap border-start border-end border-bottom text-center">
-                      Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar, delimiter: '.') or 0 %>
+                      Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar) or 0 %>
                     </td>
                   </tr>
                 <% end %>

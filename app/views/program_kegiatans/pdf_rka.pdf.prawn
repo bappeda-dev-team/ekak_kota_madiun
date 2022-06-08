@@ -16,7 +16,7 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
               ['Sub Kegiatan', ':', { content: @programKegiatan.nama_subkegiatan, font_style: :bold }],
               ['Indikator', ':', @programKegiatan.indikator_subkegiatan],
               ['Target', ':', "#{@programKegiatan.target_subkegiatan} #{@programKegiatan.satuan}"],
-              ['Pagu Anggaran', ':', "Rp. #{number_with_delimiter(@programKegiatan.my_pagu, delimiter: '.')}"]
+              ['Pagu Anggaran', ':', "Rp. #{number_with_delimiter(@programKegiatan.my_pagu)}"]
             ], cell_style: { borders: [] }, width: pdf.bounds.width)
   pdf.move_down 20
   pdf.text 'Sumber Dana', style: :bold, indent_paragraphs: 5
@@ -24,7 +24,7 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
   @programKegiatan.sasarans.each.with_index(1) do |sasaran_sumber_dana, no|
     header_sumber_dana << [no, sasaran_sumber_dana.sasaran_kinerja,
                            sasaran_sumber_dana.user.nama,
-                           { content: "Rp. #{number_with_delimiter(sasaran_sumber_dana.total_anggaran, delimiter: '.')}" },
+                           { content: "Rp. #{number_with_delimiter(sasaran_sumber_dana.total_anggaran)}" },
                            sasaran_sumber_dana.sumber_dana]
   end
   pdf.table(header_sumber_dana, cell_style: { size: 8, column_widths: { 0 => 10, 1 => 150, 2 => 50 } }, width: pdf.bounds.width, position: 5)
@@ -41,7 +41,7 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
                 ['Sasaran/ Rencana Kinerja', ':', sasaran.sasaran_kinerja],
                 ['Indikator', ':', sasaran.indikator_kinerja],
                 ['Target', ':', "#{sasaran.target} #{sasaran.satuan}"],
-                ['Pagu Anggaran', ':', "Rp. #{number_with_delimiter(sasaran.total_anggaran, delimiter: '.')} | Sumber Dana : #{sasaran.sumber_dana}"],
+                ['Pagu Anggaran', ':', "Rp. #{number_with_delimiter(sasaran.total_anggaran)} | Sumber Dana : #{sasaran.sumber_dana}"],
                 ['Sub Kegiatan', ':', "#{sasaran.program_kegiatan.kode_sub_giat} #{sasaran.program_kegiatan.nama_subkegiatan}" || '-']
               ], cell_style: { borders: [] })
     pdf.move_down 5
@@ -58,12 +58,12 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
       if tahapan.anggarans.exists?
         tahapan.anggarans.each do |anggaran|
           header_anggaran << [rekening_anggaran(anggaran.kode_rek), { content: anggaran.uraian, colspan: 5 },
-                              { content: "Rp. #{number_with_delimiter(anggaran.jumlah, delimiter: '.')}", align: :right }]
+                              { content: "Rp. #{number_with_delimiter(anggaran.jumlah)}", align: :right }]
           anggaran.perhitungans.each do |perhitungan|
             header_anggaran << ['', uraian_kode(perhitungan.deskripsi), perhitungan.list_koefisien, perhitungan.satuan,
-                                { content: "Rp. #{number_with_delimiter(perhitungan.harga, delimiter: '.')}", align: :right },
+                                { content: "Rp. #{number_with_delimiter(perhitungan.harga)}", align: :right },
                                 { content: perhitungan.plus_pajak.to_s },
-                                { content: "Rp. #{number_with_delimiter(perhitungan.total, delimiter: '.')}", align: :right }]
+                                { content: "Rp. #{number_with_delimiter(perhitungan.total)}", align: :right }]
           end
         end
       else

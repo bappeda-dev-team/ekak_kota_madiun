@@ -49,7 +49,7 @@
           <div class="row">
             <div class="col-4 align-middle">
               <strong>Anggaran yang dibutuhkan :</strong>
-              Rp. <%= number_with_delimiter(sasaran.total_anggaran_dengan_komentar, delimiter: '.') %>
+              Rp. <%= number_with_delimiter(sasaran.total_anggaran_dengan_komentar) %>
             </div>
             <% unless diajukan? %>
               <div class="col-8 align-middle">
@@ -111,7 +111,7 @@
                 <% end %>
               <% else %>
                 <td class="fw-bolder text-gray-500 border text-end">
-                  Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan, delimiter: '.') %>
+                  Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %>
                   <% unless diajukan? %>
                     | <%= link_to 'Edit Anggaran', sasaran_tahapan_anggarans_path(sasaran, tahapan), class: 'btn btn-info btn-sm' %>
                   <% end %>
@@ -138,7 +138,7 @@
               <td class="border-bottom border-end text-center"><%= sasaran.total_target_aksi_bulan[i] %></td>
             <% end %>
             <td class="border-bottom border-end text-center"><%= sasaran.jumlah_target %></td>
-            <td class="border-bottom border-end text-end">Rp. <%= number_with_delimiter(sasaran.total_anggaran_dengan_komentar, delimiter: '.') %></td>
+            <td class="border-bottom border-end text-end">Rp. <%= number_with_delimiter(sasaran.total_anggaran_dengan_komentar) %></td>
             <td class="border-bottom border-end" colspan="2"></td>
           </tr>
         </tfoot>

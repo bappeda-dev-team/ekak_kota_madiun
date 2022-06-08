@@ -146,7 +146,7 @@
                       <%= show_sasaran.sasaran_kinerja %>
                     </td>
                     <td class="border-start border-end border-bottom text-center">
-                      Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar, delimiter: '.') or 0 %>
+                      Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar) or 0 %>
                     </td>
                   </tr>
                 <% end %>
@@ -169,6 +169,6 @@
       <li>Mandatori: <%= @users.map { |u| u.program_kegiatan_sasarans.map { |n| n.sasarans.map { |s| s.my_usulan.filter { |u| u.instance_of?(Mandatori) } } } }.flatten.size %></li>
       <li>Inisiatif Walikota: <%= @users.map { |u| u.program_kegiatan_sasarans.map { |n| n.sasarans.map { |s| s.my_usulan.filter { |u| u.instance_of?(Pokpir) } } } }.flatten.size %></li>
     </ul>
-    <p>Total Pagu Anggaran : Rp. <%= number_with_delimiter(jumlah_anggaran, delimiter: '.') or 0 %> </p>
+    <p>Total Pagu Anggaran : Rp. <%= number_with_delimiter(jumlah_anggaran) or 0 %> </p>
   </div>
 </div>

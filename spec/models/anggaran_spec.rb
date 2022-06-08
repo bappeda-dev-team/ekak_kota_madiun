@@ -5,7 +5,7 @@
 # Table name: anggarans
 #
 #  id         :bigint           not null, primary key
-#  jumlah     :integer
+#  jumlah     :decimal(, )
 #  kode_rek   :string
 #  level      :integer          default(0)
 #  set_input  :string           default("0")

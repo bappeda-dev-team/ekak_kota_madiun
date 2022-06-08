@@ -62,7 +62,7 @@
                   </div>
                 </div>
               </td>
-              <td class="uang text-end">Rp. <%= number_with_delimiter(anggaran.jumlah, delimiter: '.') %></td>
+              <td class="uang text-end">Rp. <%= number_with_delimiter(anggaran.jumlah) %></td>
             </tr>
             <% if anggaran.perhitungans.any? %>
               <% anggaran.perhitungans.includes([:koefisiens]).order(:created_at).each do |hitung| %>
@@ -82,9 +82,9 @@
                     <% end %>
                   </td>
                   <td class="text-center"><%= hitung.satuan %></td>
-                  <td class="text-center"><%= number_with_delimiter(hitung.harga, :delimiter => '.') %></td>
+                  <td class="me-1 text-end">Rp. <%= number_with_delimiter(hitung.harga) %></td>
                   <td class="text-end"><%= (hitung.pajak.nil? ? 0 : hitung.pajak.potongan * 100).to_i %> %</td>
-                  <td class="uang text-end">Rp. <%= number_with_delimiter((hitung.total).to_i, :delimiter => '.') %></td>
+                  <td class="uang text-end">Rp. <%= number_with_delimiter((hitung.total)) %></td>
                 </tr>
               <% end %>
             <% end %>
@@ -93,7 +93,7 @@
         <tfoot>
           <tr>
             <td colspan="6" style="text-align:right">Jumlah Anggaran Tahapan :</td>
-            <td class="text-end">Rp. <%= number_with_delimiter(@anggarans.compact.sum(&:jumlah), :delimiter => '.') %></td>
+            <td class="text-end">Rp. <%= number_with_delimiter(@anggarans.compact.sum(&:jumlah)) %></td>
           </tr>
         </tfoot>
       </table>

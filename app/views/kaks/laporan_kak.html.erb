@@ -82,7 +82,7 @@
             <p>Jumlah Sasaran Aktif : <%= @jumlah_sasaran %></p>
             <p>Jumlah SubKegiatan : <%= @jumlah_subkegiatan %></p>
             <p>Total Usulan : <%= @jumlah_usulan %></p>
-            <p>Total Pagu Anggaran : Rp. <%= number_with_delimiter @total_pagu, delimiter: '.' %></p>
+            <p>Total Pagu Anggaran : Rp. <%= number_with_delimiter @total_pagu %></p>
           </div>
         <% end %>
         <% if @program_kegiatans.exists? %>
