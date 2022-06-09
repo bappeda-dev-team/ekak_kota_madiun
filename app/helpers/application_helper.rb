@@ -55,8 +55,6 @@ module ApplicationHelper
         icon: 'fas fa-tasks' },
       { title: 'Subkegiatan', href: admin_sub_kegiatan_path, identifier: 'admin_sub_kegiatan',
         icon: 'fas fa-tasks' },
-      { title: 'Sasaran Kinerja', href: adminsasarans_path, icon: 'fas fa-bullseye',
-        identifier: 'adminsasarans' },
       { title: 'Daftar SubKegiatan OPD', href: daftar_subkegiatan_path, icon: 'fas fa-folder-open',
         identifier: 'daftar_subkegiatan' },
       { title: 'User', href: adminusers_path, icon: 'fas fa-user-check', identifier: 'adminusers' },
