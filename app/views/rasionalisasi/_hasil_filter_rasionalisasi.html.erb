@@ -37,7 +37,7 @@
               <% row_dalam = kak.sasarans.count + 1  %>
               <td class="text-gray-900 fw-bolder border-bottom" rowspan="<%= row_dalam %>"><%= i %></td>
               <td class="text-gray-900 text-wrap" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.nama_subkegiatan %></td>
-              <td class="text-gray-900 border-end border-start" rowspan="<%= kak.sasarans.count + 1 %>">Rp. <%= number_with_delimiter(kak.my_pagu, delimiter: '.') or 0 %></td>
+              <td class="text-gray-900 border-end border-start" rowspan="<%= kak.sasarans.count + 1 %>">Rp. <%= number_with_delimiter(kak.my_pagu) or 0 %></td>
               <td class="p-0 m-0"></td>
               <td class="p-0 m-0"></td>
               <td class="p-0 m-0"></td>
@@ -47,10 +47,10 @@
                     <%= show_sasaran.sasaran_kinerja %>
                   </td>
                   <td class="border-start border-end border-bottom text-center text-gray-700">
-                    Rp. <%= number_with_delimiter(show_sasaran.total_anggaran, delimiter: '.') or 0 %>
+                    Rp. <%= number_with_delimiter(show_sasaran.total_anggaran) or 0 %>
                   </td>
                   <td class="border-start border-end border-bottom text-center">
-                    Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar, delimiter: '.') or 0 %>
+                    Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar) or 0 %>
                   </td>
                   <td class="border-start border-end border-bottom text-center text-gray">
                     <%= link_to 'Rasionalkan', "/rasional_sasaran/#{show_sasaran.id}", class: 'btn btn-sm btn-primary' %>

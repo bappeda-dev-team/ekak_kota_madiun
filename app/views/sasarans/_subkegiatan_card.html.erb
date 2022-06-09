@@ -14,7 +14,7 @@
       <%= form_with(model: sasaran, local: false) do |f| %>
         <%= f.select(:program_kegiatan_id, ProgramKegiatan.where(id: sasaran.program_kegiatan_id).pluck(:nama_subkegiatan, :id), {}, {:id => 'dropdown', data: {'ajax--url': "/program_kegiatans.json", "ajax--cache": "true", "placeholder": "Pilih SubKegiatan"}} )%>
         <div class="actions">
-          <%= f.submit "Tambah Sub kegiatan" %>
+          <%= f.submit "Simpan" %>
         </div>
       <% end %>
     </div>
@@ -38,7 +38,7 @@
               <td class="align-middle text-wrap"><%= sasaran.program_kegiatan.nama_subkegiatan %></td>
               <td class="align-middle text-wrap"><%= sasaran.program_kegiatan.indikator_subkegiatan %></td>
               <td class="align-middle">
-                Rp.  <%= number_with_delimiter(sasaran.total_anggaran, :delimiter => ".") %>
+                Rp.  <%= number_with_delimiter(sasaran.total_anggaran) %>
               </td>
               <% unless diajukan? %>
                 <td class="text-center align-middle">

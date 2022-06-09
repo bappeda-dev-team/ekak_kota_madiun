@@ -30,11 +30,11 @@ prawn_document(filename: @filename, page_layout: :landscape, disposition: "attac
     header_tabel_usulan << [
                               { content: i.to_s, width: 20, align: :center, valign: :center, rowspan: rowspan },
                               usulan_table, { content: pk.nama_subkegiatan, valign: :center, rowspan: rowspan },
-                              { content: "Rp. #{number_with_delimiter(pk.my_pagu, delimiter: '.')}", width: 90, valign: :center, rowspan: rowspan },
+                              { content: "Rp. #{number_with_delimiter(pk.my_pagu)}", width: 90, valign: :center, rowspan: rowspan },
                               lokasi_table, keterangan_table
                             ]
   end
-  footer_tabel_usulan = ['', '', 'Jumlah', "Rp. #{number_with_delimiter(@program_kegiatans.map(&:my_pagu).compact.sum, delimiter: '.')}", '', '']
+  footer_tabel_usulan = ['', '', 'Jumlah', "Rp. #{number_with_delimiter(@program_kegiatans.map(&:my_pagu).compact.sum)}", '', '']
   header_tabel_usulan << footer_tabel_usulan
 
   pdf.table(header_tabel_usulan, cell_style: { size: size_cell }, width: pdf.bounds.width)

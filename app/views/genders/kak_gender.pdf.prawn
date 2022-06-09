@@ -149,11 +149,11 @@ prawn_document(filename: @filename) do |pdf|
                             tahapan.find_target_bulan(11),
                             tahapan.find_target_bulan(12),
                             tahapan.target_total,
-                            "Rp. #{number_with_delimiter(tahapan.anggaran_tahapan, delimiter: '.')}",
+                            "Rp. #{number_with_delimiter(tahapan.anggaran_tahapan)}",
                             tahapan.keterangan]
     end
     data_rencana_aksi << [{ content: "Total sasaran ini adalah #{sasaran.waktu_total} bulan", colspan: 14 },
-                          sasaran.jumlah_target, "Rp. #{number_with_delimiter(sasaran.total_anggaran, delimiter: '.')}", '']
+                          sasaran.jumlah_target, "Rp. #{number_with_delimiter(sasaran.total_anggaran)}", '']
 
     tabel_renaksi = pdf.make_table(data_rencana_aksi, column_widths: { 0 => 17, 1 => 130, 14 => 30 }, cell_style: { size: 6, align: :left }, width: pdf.bounds.width)
     if pdf.cursor - tabel_renaksi.height < 0
@@ -179,12 +179,12 @@ prawn_document(filename: @filename) do |pdf|
       if tahapan.anggarans.exists?
         tahapan.anggarans.each do |anggaran|
           header_anggaran << [rekening_anggaran(anggaran.kode_rek), { content: anggaran.uraian, colspan: 5 },
-                              { content: "Rp. #{number_with_delimiter(anggaran.jumlah, delimiter: '.')}", align: :right }]
+                              { content: "Rp. #{number_with_delimiter(anggaran.jumlah)}", align: :right }]
           anggaran.perhitungans.each do |perhitungan|
             header_anggaran << ['', uraian_kode(perhitungan.deskripsi), perhitungan.list_koefisien, perhitungan.satuan,
-                                { content: "Rp. #{number_with_delimiter(perhitungan.harga, delimiter: '.')}", align: :right },
+                                { content: "Rp. #{number_with_delimiter(perhitungan.harga)}", align: :right },
                                 { content: perhitungan.plus_pajak.to_s },
-                                { content: "Rp. #{number_with_delimiter(perhitungan.total, delimiter: '.')}", align: :right }]
+                                { content: "Rp. #{number_with_delimiter(perhitungan.total)}", align: :right }]
           end
         end
       else

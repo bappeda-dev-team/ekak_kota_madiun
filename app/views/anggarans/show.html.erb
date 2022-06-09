@@ -50,7 +50,7 @@
                 </div>
               </div>
             </td>
-            <td class="uang text-end"><%= number_with_delimiter(@anggaran.jumlah, :delimiter => '.') %></td>
+            <td class="uang text-end"><%= number_with_delimiter(@anggaran.jumlah) %></td>
           </tr>
           <% if @anggaran.perhitungans.any? %>
             <% @anggaran.perhitungans.order(:id).each do |hitung| %>
@@ -62,9 +62,9 @@
                   <% end %>
                 </td>
                 <td><%= hitung.satuan %></td>
-                <td><%= number_with_delimiter(hitung.harga, :delimiter => '.') %></td>
+                <td><%= number_with_delimiter(hitung.harga) %></td>
                 <td><%= (hitung.pajak.nil? ? 0 : hitung.pajak.potongan * 100).to_i %> %</td>
-                <td class="uang text-end"><%= number_with_delimiter((hitung.total).to_i, :delimiter => '.') %></td>
+                <td class="uang text-end"><%= number_with_delimiter((hitung.total).to_i) %></td>
               </tr>
             <% end %>
           <% end %>
@@ -72,7 +72,7 @@
         <tfoot>
           <tr>
             <td colspan="6" style="text-align:right">Jumlah Anggaran Tahapan :</td>
-            <td class="text-end"><%= number_with_delimiter((@anggaran.jumlah).to_i, :delimiter => '.') %></td>
+            <td class="text-end"><%= number_with_delimiter((@anggaran.jumlah)) %></td>
           </tr>
         </tfoot>
       </table>

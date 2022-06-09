@@ -73,7 +73,7 @@
 </p>
 <p>
   <strong>Pagu Anggaran ( dari semua sasaran ) : </strong>
-  Rp. <%= number_with_delimiter(@programKegiatan.my_pagu, :delimiter => ".") %>
+  Rp. <%= number_with_delimiter(@programKegiatan.my_pagu) %>
 </p>
 <% if @programKegiatan.sasarans.any? %>
   <hr>
@@ -102,7 +102,7 @@
     </p>
     <p>
       <strong>Total Anggaran : </strong>
-      Rp.  <%= number_with_delimiter(sasaran.total_anggaran, :delimiter => ".") %>
+      Rp.  <%= number_with_delimiter(sasaran.total_anggaran) %>
     </p>
     <p>
       <strong>Detail :</strong>

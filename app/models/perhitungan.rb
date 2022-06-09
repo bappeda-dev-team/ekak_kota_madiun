@@ -4,11 +4,11 @@
 #
 #  id          :bigint           not null, primary key
 #  deskripsi   :string
-#  harga       :integer
+#  harga       :decimal(, )
 #  satuan      :string
 #  spesifikasi :text
-#  total       :integer
-#  volume      :integer
+#  total       :decimal(, )
+#  volume      :decimal(, )
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  anggaran_id :bigint
@@ -60,7 +60,7 @@ class Perhitungan < ApplicationRecord
       total_harga = volume * harga
       pajak_anggaran = anggaran.pajak.potongan
       total_plus_pajak = total_harga * pajak_anggaran
-      total_harga + total_plus_pajak.to_i
+      total_harga + total_plus_pajak
     else
       0
     end
@@ -75,7 +75,7 @@ class Perhitungan < ApplicationRecord
       volume = total_volume.reduce(:*)
       total_harga = volume * harga
       total_plus_pajak = total_harga * pajak.potongan
-      total_harga + total_plus_pajak.to_i
+      total_harga + total_plus_pajak
     else
       0
     end

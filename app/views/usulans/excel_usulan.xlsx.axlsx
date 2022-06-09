@@ -12,7 +12,7 @@ wb.add_worksheet(name: "Usulan #{@jenis_asli.upcase}") do |sheet|
   @program_kegiatans.each.with_index(1) do |pk, i|
     pk.usulans.where(usulanable_type: @jenis).each do |us|
       keterangan = us.usulanable.try(:alamat) || us.usulanable.try(:peraturan_terkait) || us.usulanable.try(:manfaat)
-      sheet.add_row [i, us.usulanable.usulan, pk.nama_subkegiatan, "Rp. #{number_with_delimiter(pk.my_pagu, delimiter: '.')}",
+      sheet.add_row [i, us.usulanable.usulan, pk.nama_subkegiatan, "Rp. #{number_with_delimiter(pk.my_pagu)}",
                      pk.usulans.first.usulanable.uraian, keterangan]
       # pk_cell.cells.each.with_index do |cell, isv|
       #   puts "index #{isv} - #{cell.pos} - #{cell.value} - #{cell.r}"

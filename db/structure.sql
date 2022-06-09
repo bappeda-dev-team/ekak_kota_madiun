@@ -411,7 +411,6 @@ CREATE TABLE public.anggarans (
     id bigint NOT NULL,
     kode_rek character varying,
     uraian text,
-    jumlah integer,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     tahapan_id bigint,
@@ -419,7 +418,8 @@ CREATE TABLE public.anggarans (
     parent_id bigint,
     pajak_id bigint,
     set_input character varying DEFAULT '0'::character varying,
-    tahun integer
+    tahun integer,
+    jumlah numeric
 );
 
 
@@ -452,6 +452,92 @@ CREATE TABLE public.ar_internal_metadata (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
+
+
+--
+-- Name: background_migration_jobs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.background_migration_jobs (
+    id bigint NOT NULL,
+    migration_id bigint NOT NULL,
+    min_value bigint NOT NULL,
+    max_value bigint NOT NULL,
+    batch_size integer NOT NULL,
+    sub_batch_size integer NOT NULL,
+    pause_ms integer NOT NULL,
+    started_at timestamp without time zone,
+    finished_at timestamp without time zone,
+    status character varying DEFAULT 'enqueued'::character varying NOT NULL,
+    max_attempts integer NOT NULL,
+    attempts integer DEFAULT 0 NOT NULL,
+    error_class character varying,
+    error_message character varying,
+    backtrace character varying[],
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: background_migration_jobs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.background_migration_jobs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: background_migration_jobs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.background_migration_jobs_id_seq OWNED BY public.background_migration_jobs.id;
+
+
+--
+-- Name: background_migrations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.background_migrations (
+    id bigint NOT NULL,
+    migration_name character varying NOT NULL,
+    arguments jsonb DEFAULT '[]'::jsonb NOT NULL,
+    batch_column_name character varying NOT NULL,
+    min_value bigint NOT NULL,
+    max_value bigint NOT NULL,
+    rows_count bigint,
+    batch_size integer NOT NULL,
+    sub_batch_size integer NOT NULL,
+    batch_pause integer NOT NULL,
+    sub_batch_pause_ms integer NOT NULL,
+    batch_max_attempts integer NOT NULL,
+    status character varying DEFAULT 'enqueued'::character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: background_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.background_migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: background_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.background_migrations_id_seq OWNED BY public.background_migrations.id;
 
 
 --
@@ -711,11 +797,11 @@ ALTER SEQUENCE public.kesenjangans_id_seq OWNED BY public.kesenjangans.id;
 
 CREATE TABLE public.koefisiens (
     id bigint NOT NULL,
-    volume integer,
     satuan_volume character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    perhitungan_id bigint
+    perhitungan_id bigint,
+    volume numeric
 );
 
 
@@ -1003,16 +1089,16 @@ ALTER SEQUENCE public.pajaks_id_seq OWNED BY public.pajaks.id;
 
 CREATE TABLE public.perhitungans (
     id bigint NOT NULL,
-    volume integer,
     satuan character varying,
-    harga integer,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     anggaran_id bigint,
-    total integer,
     deskripsi character varying,
     spesifikasi text,
-    pajak_id bigint
+    pajak_id bigint,
+    harga numeric,
+    total numeric,
+    volume numeric
 );
 
 
@@ -1792,6 +1878,20 @@ ALTER TABLE ONLY public.anggarans ALTER COLUMN id SET DEFAULT nextval('public.an
 
 
 --
+-- Name: background_migration_jobs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.background_migration_jobs ALTER COLUMN id SET DEFAULT nextval('public.background_migration_jobs_id_seq'::regclass);
+
+
+--
+-- Name: background_migrations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.background_migrations ALTER COLUMN id SET DEFAULT nextval('public.background_migrations_id_seq'::regclass);
+
+
+--
 -- Name: comments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2102,6 +2202,22 @@ ALTER TABLE ONLY public.anggarans
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: background_migration_jobs background_migration_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.background_migration_jobs
+    ADD CONSTRAINT background_migration_jobs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: background_migrations background_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.background_migrations
+    ADD CONSTRAINT background_migrations_pkey PRIMARY KEY (id);
 
 
 --
@@ -2431,6 +2547,34 @@ CREATE INDEX index_anggarans_on_tahapan_id ON public.anggarans USING btree (taha
 
 
 --
+-- Name: index_background_migration_jobs_on_finished_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_background_migration_jobs_on_finished_at ON public.background_migration_jobs USING btree (migration_id, finished_at);
+
+
+--
+-- Name: index_background_migration_jobs_on_max_value; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_background_migration_jobs_on_max_value ON public.background_migration_jobs USING btree (migration_id, max_value);
+
+
+--
+-- Name: index_background_migration_jobs_on_updated_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_background_migration_jobs_on_updated_at ON public.background_migration_jobs USING btree (migration_id, status, updated_at);
+
+
+--
+-- Name: index_background_migrations_on_unique_configuration; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_background_migrations_on_unique_configuration ON public.background_migrations USING btree (migration_name, arguments);
+
+
+--
 -- Name: index_comments_on_anggaran_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2722,6 +2866,14 @@ ALTER TABLE ONLY public.anggarans
 
 
 --
+-- Name: background_migration_jobs fk_rails_2aea8b9084; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.background_migration_jobs
+    ADD CONSTRAINT fk_rails_2aea8b9084 FOREIGN KEY (migration_id) REFERENCES public.background_migrations(id) ON DELETE CASCADE;
+
+
+--
 -- Name: perhitungans fk_rails_2be8e57a69; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2971,6 +3123,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220524004152'),
 ('20220608034333'),
 ('20220608063442'),
-('20220608072733');
+('20220608072733'),
+('20220608160351'),
+('20220608160457'),
+('20220608160705'),
+('20220608160820'),
+('20220608163724');
 
 

@@ -140,11 +140,11 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
                             tahapan.find_target_bulan(11),
                             tahapan.find_target_bulan(12),
                             tahapan.target_total,
-                            "Rp. #{number_with_delimiter(tahapan.anggaran_tahapan, delimiter: '.')}",
+                            "Rp. #{number_with_delimiter(tahapan.anggaran_tahapan)}",
                             tahapan.keterangan]
     end
     data_rencana_aksi << [{ content: "Total sasaran ini adalah #{sasaran.waktu_total} bulan", colspan: 14 },
-                          sasaran.jumlah_target, "Rp. #{number_with_delimiter(sasaran.total_anggaran, delimiter: '.')}", '']
+                          sasaran.jumlah_target, "Rp. #{number_with_delimiter(sasaran.total_anggaran)}", '']
 
     tabel_renaksi = pdf.make_table(data_rencana_aksi, column_widths: { 0 => 17, 1 => 130, 14 => 30 }, cell_style: { size: 6, align: :left }, width: pdf.bounds.width)
     pdf.start_new_page if (pdf.cursor - tabel_renaksi.height).negative?
