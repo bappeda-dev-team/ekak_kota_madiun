@@ -1,0 +1,68 @@
+<%= form_with(model: [@anggaran, perhitungan], local: false) do |form| %>
+  <% if perhitungan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(perhitungan.errors.count, "error") %> prohibited this perhitungan from being saved:</h2>
+      <ul>
+        <% perhitungan.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :tahun, {class: "form-label"} %>
+    <%= form.text_field :tahun, {class: "form-control"} %>
+  </div>
+  <div class="field">
+    <%= form.label :uraian, {class: "form-label"} %>
+    <%= form.text_field :deskripsi, {class: "form-control"} %>
+  </div>
+  <div class="field">
+    <%= form.label :spesifikasi, {class: "form-label"} %>
+    <%= form.text_field :spesifikasi, {class: "form-control", readonly: true, value: "Belanja Gaji dan Tunjangan"} %>
+  </div>
+  <div class="field">
+    <% options = options_from_collection_for_select(Pajak.all, :id, :simple_pajak, perhitungan&.pajak&.id || '') %>
+    <%= form.label :pajak_id , {class: "form-label"}%>
+    <%= form.select :pajak_id, options, {}, { :class => "select2-pajak"} %>
+  </div>
+  <h4><strong>Koefisiens : </strong></h4>
+  <div class="field">
+    <%= form.fields_for :koefisiens do |f| %>
+      <%= render 'koefisien_fields', f: f %>
+    <% end %>
+    <div class="action mt-3">
+      <%= add_koefisiens "Tambah Koefisien", form, :koefisiens, @anggaran.id %>
+    </div>
+  </div>
+  <hr>
+  <div class="field">
+    <%= form.label :satuan, {class: "form-label"} %>
+    <%= form.text_field :satuan, {class: "form-control", readonly: true, value: "Orang/Bulan"} %>
+  </div>
+  <div class="field">
+    <%= form.label :harga, {class: "form-label"} %>
+    <%= form.number_field :harga, {id: 'harga', class: "form-control"} %>
+  </div>
+  <div class="actions">
+    <%= form.submit "Tambah Anggaran", data: { disable_with: "Processing..." } %>
+  </div>
+<% end %>
+<script>
+  $(function() {
+    $('form').on('click', '.remove-field', function(event) {
+      $(this).prev('input[type=hidden]').val('1')
+      $(this).closest('fieldset').remove()
+      return event.preventDefault();
+    });
+
+    $('form').on('click', '.add_fields_<%= @anggaran.id %>', function(event) {
+      let regexp, time;
+      time = new Date().getTime();
+      regexp = new RegExp($(this).data('id'), 'g')
+      $(this).before($(this).data('fields').replace(regexp, time))
+      return event.preventDefault()
+    });
+
+  });
+</script>

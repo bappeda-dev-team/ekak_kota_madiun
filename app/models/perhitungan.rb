@@ -7,6 +7,7 @@
 #  harga       :decimal(, )
 #  satuan      :string
 #  spesifikasi :text
+#  tahun       :string
 #  total       :decimal(, )
 #  volume      :decimal(, )
 #  created_at  :datetime         not null

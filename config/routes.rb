@@ -72,7 +72,14 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # end
 
   resources :anggarans do
-    resources :perhitungans
+    resources :perhitungans do
+      collection do
+        get :new_gaji
+      end
+      member do
+        get :edit_gaji
+      end
+    end
   end
 
   resources :perhitungans, shallow: true do
