@@ -94,4 +94,8 @@ class Anggaran < ApplicationRecord
     hasil_perhitungan = perhitungan_semua.map(&:total).sum
     update_column(:jumlah, hasil_perhitungan)
   end
+
+  def sync_total_perhitungan
+    perhitungans.each(&:sync_total)
+  end
 end

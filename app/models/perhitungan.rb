@@ -37,6 +37,8 @@ class Perhitungan < ApplicationRecord
   # validates :satuan, presence: true
   validates :harga, presence: true, numericality: true
 
+  BATAS_KENA_PAJAK = 2_000_000
+
   def hitung_total
     unless destroyed?
       total_akhir = kalkulasi_harga_total
@@ -46,8 +48,12 @@ class Perhitungan < ApplicationRecord
 
   def new_hitung_total
     unless destroyed?
+      # TODO: TEST THIS PLEASE
       total_akhir = new_kalkulasi_harga_total
       update_column(:total, total_akhir)
+      unless spesifikasi&.include?('Belanja Gaji')
+        update_pajak_otomatis!
+      end
     end
   end
 
@@ -75,11 +81,19 @@ class Perhitungan < ApplicationRecord
       end
       volume = total_volume.reduce(:*)
       total_harga = volume * harga
+      unless spesifikasi&.include?('Belanja Gaji')
+        self.pajak = Pajak.find_by(potongan: 0.11) if total_harga >= BATAS_KENA_PAJAK
+      end
       total_plus_pajak = total_harga * pajak.potongan
       total_harga + total_plus_pajak
     else
       0
     end
+  end
+
+  def update_pajak_otomatis!
+    pajak_update = Pajak.find_by(potongan: 0.11).id
+    update_column(:pajak_id, pajak_update) if total >= BATAS_KENA_PAJAK
   end
 
   def update_jumlah_anggaran
@@ -102,5 +116,11 @@ class Perhitungan < ApplicationRecord
     pajak.potongan * 100
   rescue StandardError
     0
+  end
+
+  def sync_total
+    run_callbacks :update do
+      puts '- save'
+    end
   end
 end

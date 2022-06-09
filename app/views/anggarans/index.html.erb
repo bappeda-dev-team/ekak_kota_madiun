@@ -46,6 +46,7 @@
             <tr class="level-0 <%= 'higlighted' if anggaran.comments.any? %>">
               <td><%= rekening_anggaran(anggaran.kode_rek) %>
                 | <%= link_to 'Tambah Gaji', new_gaji_anggaran_perhitungans_path(anggaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan" }, class: "btn btn-outline-warning" %>
+                | <%= button_to 'Update Perhitungan', perhitungan_update_path, remote: true, method: :post, class: 'btn btn-sm btn-primary', params: {id: anggaran.id} %>
               </td>
               <td colspan="5" class="mx-auto">
                 <div class="row">
