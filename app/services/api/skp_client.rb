@@ -7,12 +7,12 @@ module Api
     require 'oj'
     URL = 'https://skp.madiunkota.go.id/api'
     H = HTTP.accept(:json)
-    attr_accessor :kode_opd, :bulan, :tahun, :tipe_asn
+    attr_accessor :kode_opd, :bulan, :tahun, :nip_asn
 
     USERNAME = 'bappeda'
     PASSWORD = 'bapp7832KH'
 
-    def initialize(kode_opd, tahun, bulan, tipe_asn = 'pns')
+    def initialize(kode_opd, tahun, bulan, nip_asn = '')
       # @kode_opd = '2.16.2.20.2.21.04.0000'
       # @tahun = 2022
       # @bulan = 2
@@ -20,11 +20,11 @@ module Api
       @kode_opd = kode_opd
       @tahun = tahun
       @bulan = bulan
-      @tipe_asn = tipe_asn
+      @nip_asn = nip_asn
     end
 
     def data_sasaran_asn_opd
-      request_skp(kode_opd, tahun, bulan, tipe_asn)
+      request_skp(kode_opd, tahun, bulan, nip_asn)
     end
 
     def data_pegawai
@@ -43,10 +43,11 @@ module Api
 
     private
 
-    def request_skp(kode_opd, tahun, bulan, tipe_asn)
-      H.post("#{URL}/sasaran-kinerja-pegawai/#{kode_opd}/#{tahun}/#{bulan}/#{tipe_asn}",
+    def request_skp(kode_opd, tahun, bulan, nip_asn)
+      H.post("#{URL}/sasaran-kinerja-pegawai/#{kode_opd}/#{tahun}/#{bulan}/#{nip_asn}",
              form: { username: USERNAME, password: PASSWORD })
     end
+    # https://skp.madiunkota.go.id/api/sasaran-kinerja-pegawai/1.02.2.14.0.00.03.0000/2022/5/199301212015071003
 
     def request_pegawai(kode_opd, tahun, bulan)
       H.post("#{URL}/data-pegawai-all/#{kode_opd}/#{tahun}/#{bulan}",

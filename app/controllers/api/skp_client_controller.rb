@@ -11,9 +11,9 @@ module Api
 
     def sync_sasaran
       UpdateSkpJob.set(queue: "#{nama_opd}-#{@kode_opd}-sasaran-#{@tahun}-#{@bulan}").perform_later(@kode_opd, @tahun,
-                                                                                                    @bulan, @tipe_asn)
+                                                                                                    @bulan, @nip_asn)
       redirect_to adminsasarans_path,
-                  success: "Update Sasaran #{nama_opd} Dikerjakan. Harap menunggu..."
+                  success: "Update Sasaran #{@nip_asn} Dikerjakan. Harap menunggu..."
     end
 
     def sync_pegawai
@@ -38,7 +38,7 @@ module Api
       @kode_opd = params[:kode_opd]
       @tahun = params[:tahun]
       @bulan = params[:bulan]
-      @tipe_asn = params[:tipe_asn]
+      @nip_asn = params[:nip_asn]
     end
   end
 end
