@@ -44,7 +44,9 @@
         <tbody>
           <% @anggarans.includes([:comments]).order(:created_at).each do |anggaran| %>
             <tr class="level-0 <%= 'higlighted' if anggaran.comments.any? %>">
-              <td><%= rekening_anggaran(anggaran.kode_rek) %></td>
+              <td><%= rekening_anggaran(anggaran.kode_rek) %>
+                | <%= link_to 'Tambah Gaji', new_gaji_anggaran_perhitungans_path(anggaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan" }, class: "btn btn-outline-warning" %>
+              </td>
               <td colspan="5" class="mx-auto">
                 <div class="row">
                   <div class="text-wrap inline col"><%= anggaran.uraian %></div>
@@ -67,15 +69,16 @@
             <% if anggaran.perhitungans.any? %>
               <% anggaran.perhitungans.includes([:koefisiens]).order(:created_at).each do |hitung| %>
                 <tr class="rincian-anggaran">
+                  <% edit_hitung = hitung.spesifikasi&.include?('Belanja Gaji') ? edit_gaji_anggaran_perhitungan_path(anggaran, hitung) : edit_anggaran_perhitungan_path(anggaran, hitung) %>
                   <td>
-                    <%= link_to "Edit Rincian", edit_anggaran_perhitungan_path(anggaran, hitung),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan" }, class: "btn btn-outline-info" %>
+                    <%= link_to "Edit Rincian", edit_hitung,remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan" }, class: "btn btn-outline-info" %>
                     <%= link_to "Hapus Rincian", anggaran_perhitungan_path(anggaran, hitung), method: :delete, data: { confirm_swal: "Hapus Anggaran #{hitung.deskripsi} ?" }, class: "btn btn-outline-danger" %>
                   </td>
-                  <td><%= uraian_kode(hitung.deskripsi) %>
+                  <td><%= hitung.spesifikasi&.include?('Belanja Gaji') ? hitung.deskripsi : uraian_kode(hitung.deskripsi)  %>
                     <br>
-                    <%= spesifikasi(hitung.deskripsi) %>
+                    <%= hitung.spesifikasi&.include?('Belanja Gaji') ? hitung.spesifikasi : spesifikasi(hitung.deskripsi) %>
                     <br>
-                    - <%= tahun_kode(hitung.deskripsi) %>
+                    - <%= hitung.spesifikasi&.include?('Belanja Gaji') ? hitung.tahun : tahun_kode(hitung.deskripsi) %>
                   </td>
                   <td class="text-center"><% hitung.koefisiens.each.with_index(1) do |koef, index|%>
                       <%= koef.volume %> <%= koef.satuan_volume %> <%= 'x' if index < hitung.koefisiens.length %>

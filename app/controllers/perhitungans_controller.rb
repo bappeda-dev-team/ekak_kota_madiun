@@ -1,6 +1,6 @@
 class PerhitungansController < ApplicationController
   before_action :set_anggaran
-  before_action :set_perhitungan, only: %i[show edit update destroy]
+  before_action :set_perhitungan, only: %i[show edit update destroy edit_gaji]
 
   # GET /perhitungans or /perhitungans.json
   def index
@@ -74,6 +74,13 @@ class PerhitungansController < ApplicationController
     end
   end
 
+  def new_gaji
+    @perhitungan = Perhitungan.new
+    @perhitungan.koefisiens.build
+  end
+
+  def edit_gaji; end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -87,7 +94,7 @@ class PerhitungansController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def perhitungan_params
-    params.require(:perhitungan).permit(:satuan,
+    params.require(:perhitungan).permit(:satuan, :spesifikasi, :tahun,
                                         :harga, :anggaran_id, :deskripsi, :pajak_id,
                                         koefisiens_attributes: %i[id volume satuan_volume])
   end

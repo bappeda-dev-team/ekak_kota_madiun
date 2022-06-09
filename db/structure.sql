@@ -1098,7 +1098,8 @@ CREATE TABLE public.perhitungans (
     pajak_id bigint,
     harga numeric,
     total numeric,
-    volume numeric
+    volume numeric,
+    tahun character varying
 );
 
 
@@ -3128,6 +3129,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220608160457'),
 ('20220608160705'),
 ('20220608160820'),
-('20220608163724');
+('20220608163724'),
+('20220609014559');
 
 
