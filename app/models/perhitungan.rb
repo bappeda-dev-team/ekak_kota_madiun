@@ -117,4 +117,10 @@ class Perhitungan < ApplicationRecord
   rescue StandardError
     0
   end
+
+  def sync_total
+    run_callbacks :update do
+      puts '- save'
+    end
+  end
 end

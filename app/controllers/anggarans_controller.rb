@@ -1,6 +1,6 @@
 class AnggaransController < ApplicationController
-  before_action :set_tahapan_rincian
-  before_action :set_anggaran, only: %i[show edit update destroy]
+  before_action :set_tahapan_rincian, except: %i[perhitungan_update]
+  before_action :set_anggaran, only: %i[show edit update destroy perhitungan_update]
 
   # GET /anggarans or /anggarans.json
   def index
@@ -77,6 +77,10 @@ class AnggaransController < ApplicationController
       end
       format.json { head :no_content }
     end
+  end
+
+  def perhitungan_update
+    @anggaran.sync_total_perhitungan
   end
 
   private
