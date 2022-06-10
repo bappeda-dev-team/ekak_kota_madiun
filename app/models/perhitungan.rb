@@ -51,9 +51,6 @@ class Perhitungan < ApplicationRecord
       # TODO: TEST THIS PLEASE
       total_akhir = new_kalkulasi_harga_total
       update_column(:total, total_akhir)
-      unless spesifikasi&.include?('Belanja Gaji')
-        update_pajak_otomatis!
-      end
     end
   end
 
@@ -81,9 +78,6 @@ class Perhitungan < ApplicationRecord
       end
       volume = total_volume.reduce(:*)
       total_harga = volume * harga
-      unless spesifikasi&.include?('Belanja Gaji')
-        self.pajak = Pajak.find_by(potongan: 0.11) if total_harga >= BATAS_KENA_PAJAK
-      end
       total_plus_pajak = total_harga * pajak.potongan
       total_harga + total_plus_pajak
     else
