@@ -78,7 +78,8 @@ class Perhitungan < ApplicationRecord
       end
       volume = total_volume.reduce(:*)
       total_harga = volume * harga
-      total_plus_pajak = total_harga * pajak.potongan
+      potongan = pajak&.potongan || 0
+      total_plus_pajak = total_harga * potongan
       total_harga + total_plus_pajak
     else
       0
