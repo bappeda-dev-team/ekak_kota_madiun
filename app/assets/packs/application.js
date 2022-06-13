@@ -269,6 +269,24 @@ $(function () {
   document.addEventListener('vanilla-nested:fields-added', function (e) {
     initailizeSelect2()
   })
+
+  $("#kode_opd_select").select2({
+    width: "100%",
+    theme: "bootstrap-5",
+  }).on('select2:select', function (e) {
+    // on select search asn associated with opd
+    let opd_id = e.params.data.id
+    console.log(opd_id)
+    $('#nip_asn_select').select2({
+      width: "100%",
+      theme: "bootstrap-5",
+      ajax: {
+        delay: 1000,
+        url: '/user_search.json',
+        data: (params) => ({ q: opd_id })
+      },
+    })
+  });
 });
 
 function initailizeSelect2() {

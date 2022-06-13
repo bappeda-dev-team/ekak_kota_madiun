@@ -122,6 +122,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   post '/aktifkan_user/:id', to: 'users#aktifkan_user'
   post '/nonaktifkan_user/:id', to: 'users#nonaktifkan_user'
   post '/nonaktifkan_semua_user/:opd', to: 'users#nonaktifkan_semua_user'
+  get '/user_search', to: 'users#user_search'
   # program program_kegiatan
   get '/program_kegiatans_to_kak/:id', to: 'program_kegiatans#show_to_kak'
   get '/program_kegiatans_to_kak_detail/:id', to: 'program_kegiatans#kak_detail'
