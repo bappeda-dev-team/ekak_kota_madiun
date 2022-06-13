@@ -109,7 +109,7 @@
               <% end %>
             <% else %>
               <%= form_with url: ajukan_semua_sasaran_path, local: false do |f| %>
-                <% @sasarans.pluck(:id).each do |s| %>
+                <% @sasarans.sudah_lengkap.pluck(:id).each do |s| %>
                   <%= f.hidden_field :sasaran_diajukans, value: s, multiple: true  %>
                 <% end %>
                 <%= button_tag type: 'submit', class: 'btn btn-success w-100 text-white' do %>
