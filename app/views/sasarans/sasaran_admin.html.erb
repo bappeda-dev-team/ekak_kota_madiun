@@ -16,7 +16,32 @@
         <%= msg %>
       </div>
     <% end %>
-    <%= render 'shared/filter_card', filter_url: '/filter_sasaran' %>
+    <div class="card border-0 shadow mb-4">
+      <div class="card-header">
+        <div class="row">
+          <div class="col">
+            <h2 class="mb-0">
+              Filter
+            </h2>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <% filter_value =  '' if local_assigns[:filter_file].nil? %>
+        <% filter_jenis = local_assigns[:jenis] || '' %>
+        <%= form_with url: '/filter_sasaran', local: false do |form| %>
+          <%= form.hidden_field :filter_file, value: filter_value %>
+          <%= form.hidden_field :jenis, value: filter_jenis %>
+          <%= form.label :kode_opd %>
+          <% dropdown = options_for_select(Opd.where.not(kode_opd: nil).pluck(:nama_opd, :kode_opd), current_user.opd.kode_unik_opd) %>
+          <%= form.select :kode_opd, dropdown ,{include_blank: true},{ class: "form-control", id: 'kode_opd_select',data: {"placeholder": "Pilih Opd"}, required: true }  %>
+          <br>
+          <%= form.label :nip_asn %>
+          <%= form.select :nip_asn, [''] ,{include_blank: true},{ class: "form-control", id: 'nip_asn_select',data: {"placeholder": "Pilih Opd Dahulu"}, required: true }  %>
+          <%= form.submit 'filter' %>
+        <% end %>
+      </div>
+    </div>
     <div class="card border-0 shadow" id="sasaran_filter">
       <div class="card-header">
         <div class="row align-items-center">

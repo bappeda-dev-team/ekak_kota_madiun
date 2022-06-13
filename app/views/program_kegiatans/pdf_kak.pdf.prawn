@@ -19,7 +19,8 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
     ['Indikator Kinerja Sub Kegiatan (Output)', ':', @program_kegiatan.indikator_subkegiatan],
     ['Target', ':', @program_kegiatan.target_subkegiatan.to_s],
     ['Satuan', ':', @program_kegiatan.satuan_target_subkegiatan.to_s],
-    ['Jumlah Sasaran/Rencana Kinerja', ':', @program_kegiatan.sasarans.count]
+    ['Jumlah Sasaran/Rencana Kinerja', ':', @program_kegiatan.sasarans.count],
+    ['Pagu Anggaran', ':', "Rp. #{number_with_delimiter(@program_kegiatan.my_pagu)}"]
   ]
   pdf.table(tabel_program_kegiatan, column_widths: { 0=> 150,1 => 12 }, cell_style: { size: 8, border_width: 0 }, width: pdf.bounds.width)
   # after tabel pertama

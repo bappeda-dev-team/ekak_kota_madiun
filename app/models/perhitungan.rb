@@ -104,7 +104,7 @@ class Perhitungan < ApplicationRecord
   end
 
   def harga_plus_pajak
-    pajak.potongan * total
+    pajak.potongan * harga_non_pajak
   end
 
   def plus_pajak
@@ -116,6 +116,19 @@ class Perhitungan < ApplicationRecord
   def sync_total
     run_callbacks :update do
       puts '- save'
+    end
+  end
+
+  def harga_non_pajak
+    if koefisiens.any?
+      total_volume = []
+      koefisiens.map do |k|
+        total_volume << k.volume
+      end
+      volume = total_volume.reduce(:*)
+      volume * harga
+    else
+      0
     end
   end
 end

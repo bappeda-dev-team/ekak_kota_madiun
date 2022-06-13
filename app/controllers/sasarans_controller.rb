@@ -121,6 +121,20 @@ class SasaransController < ApplicationController
     end
   end
 
+  def revisi_sasaran
+    @sasaran = params[:sasaran_diajukans]
+    Sasaran.find(@sasaran).update(status: 'draft')
+    respond_to do |format|
+      @rowspan = params[:rowspan]
+      @dom = params[:dom]
+      flash.now[:info] = 'Sasaran direvisi'
+      @status = 'warning'
+      @type = 'revisi'
+      @text = 'Sasaran direvisi'
+      format.js { render 'update_kak.js.erb' }
+    end
+  end
+
   def tolak_semua_sasaran
     @sasarans = params[:sasaran_diajukans]
     Sasaran.where(id: @sasarans.flatten!).update_all(status: 'ditolak')
