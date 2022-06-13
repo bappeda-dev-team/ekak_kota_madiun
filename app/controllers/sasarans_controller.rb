@@ -113,10 +113,10 @@ class SasaransController < ApplicationController
     respond_to do |format|
       @rowspan = params[:rowspan]
       @dom = params[:dom]
-      flash.now[:info] = 'KaK direvisi'
+      flash.now[:info] = 'Kuncian Dibuka'
       @status = 'warning'
       @type = 'revisi'
-      @text = 'KaK direvisi'
+      @text = 'Kuncian Dibuka'
       format.js { render 'update_kak.js.erb' }
     end
   end

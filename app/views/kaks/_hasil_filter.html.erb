@@ -83,13 +83,6 @@
                 <td class="p-0 m-0"></td>
                 <td class="fw-bolder text-gray-500 text-center border-start border-end" rowspan="<%= kak.sasarans.count + 1 %>" id="<%= dom_id(kak) %>">
                   <% if kak.sasarans.exists? status: 'draft' %>
-                    <%= link_to setujui_semua_sasaran_path(sasaran_diajukans: [kak.sasarans.pluck(:id)], dom: dom_id(kak), rowspan: row_dalam ),
-                      method: :post, remote: true,
-                      data: { disable_with: 'Memproses....'},
-                      class:"btn btn-sm btn-primary" do %>
-                      <i class="fas fa-check me-2"></i>
-                      Verifikasi
-                    <% end %>
                     <button class="btn btn-sm btn-danger" disabled>
                       <i class="fas fa-times me-2"></i>
                       ! Belum diajukan
@@ -99,30 +92,16 @@
                       method: :post, remote: true,
                       data: { disable_with: 'Memproses....'},
                       class:"btn btn-sm btn-primary" do %>
-                      <i class="fas fa-check me-2"></i>
-                      Verifikasi
-                    <% end %>
-                    <%= link_to tolak_semua_sasaran_path(sasaran_diajukans: [kak.sasarans.pluck(:id)], dom: dom_id(kak), rowspan: row_dalam ),
-                      method: :post, remote: true,
-                      data: { disable_with: 'Memproses....'},
-                      class:"btn btn-sm btn-danger" do %>
-                      <i class="fas fa-times me-2"></i>
-                      Tolak
+                      <i class="fas fa-lock me-2"></i>
+                      Kunci
                     <% end %>
                   <% elsif kak.sasarans.exists? status: 'disetujui' %>
                     <%= link_to revisi_semua_sasaran_path(sasaran_diajukans: [kak.sasarans.pluck(:id)], dom: dom_id(kak), rowspan: row_dalam),
                       method: :post, remote: true,
                       data: { disable_with: 'Memproses....'},
                       class:"btn btn-sm btn-info" do %>
-                      <i class="fas fa-pencil-alt me-2"></i>
-                      Revisi
-                    <% end %>
-                    <%= link_to tolak_semua_sasaran_path(sasaran_diajukans: [kak.sasarans.pluck(:id)], dom: dom_id(kak), rowspan: row_dalam ),
-                      method: :post, remote: true,
-                      data: { disable_with: 'Memproses....'},
-                      class:"btn btn-sm btn-danger" do %>
-                      <i class="fas fa-times me-2"></i>
-                      Tolak
+                      <i class="fas fa-lock-open me-2"></i>
+                      Buka Kuncian
                     <% end %>
                   <% else %>
                     <button class="btn btn-sm btn-danger" disabled>
