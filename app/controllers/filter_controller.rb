@@ -26,6 +26,16 @@ class FilterController < ApplicationController
     'Bagian Pemerintahan': '4.01.0.00.0.00.01.00'
   }.freeze
 
+  KODE_OPD_BAGIAN = {
+    'Sekretariat Daerah': '4.01.0.00.0.00.01.00', # don't change, this still used
+    'Bagian Umum': '4402',
+    'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan': '4400',
+    'Bagian Organisasi': '4398',
+    'Bagian Hukum': '4399',
+    'Bagian Perekonomian dan Kesejahteraan Rakyat': '4401',
+    'Bagian Pemerintahan': '4397'
+  }.freeze
+
   def filter_sasaran
     opd = Opd.find_by(kode_opd: @kode_opd).nama_opd
     @nama_opd ||= Opd.find_by(kode_opd: @kode_opd).nama_opd || '-'
@@ -52,8 +62,13 @@ class FilterController < ApplicationController
     end
   end
 
+  # filter subkegiatan
   def filter_program
+    opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
     @programKegiatans = ProgramKegiatan.includes(%i[opd subkegiatan_tematik]).where(opds: { kode_unik_opd: @kode_opd })
+    if OPD_TABLE.key?(opd.to_sym)
+      @programKegiatans = ProgramKegiatan.includes(%i[opd subkegiatan_tematik]).where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
+    end
     respond_to do |format|
       @render_file = 'program_kegiatans/hasil_filter'
       format.js { render 'program_kegiatans/program_kegiatan_filter' }
@@ -61,7 +76,11 @@ class FilterController < ApplicationController
   end
 
   def filter_program_saja
+    opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
     @programKegiatans = ProgramKegiatan.includes(:opd).select("DISTINCT ON(program_kegiatans.id_program_sipd) program_kegiatans.*").where(opds: { kode_unik_opd: @kode_opd })
+    if OPD_TABLE.key?(opd.to_sym)
+      @programKegiatans = ProgramKegiatan.includes(:opd).select("DISTINCT ON(program_kegiatans.id_program_sipd) program_kegiatans.*").where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
+    end
     respond_to do |format|
       @render_file = 'program_kegiatans/hasil_filter_program'
       format.js { render 'program_kegiatans/program_kegiatan_filter' }
@@ -69,7 +88,11 @@ class FilterController < ApplicationController
   end
 
   def filter_kegiatan
+    opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
     @programKegiatans = ProgramKegiatan.includes(:opd).select("DISTINCT ON(program_kegiatans.kode_giat) program_kegiatans.*").where(opds: { kode_unik_opd: @kode_opd })
+    if OPD_TABLE.key?(opd.to_sym)
+      @programKegiatans = ProgramKegiatan.includes(:opd).select("DISTINCT ON(program_kegiatans.kode_giat) program_kegiatans.*").where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
+    end
     respond_to do |format|
       @render_file = 'program_kegiatans/hasil_filter_kegiatan'
       format.js { render 'program_kegiatans/program_kegiatan_filter' }
@@ -103,7 +126,11 @@ class FilterController < ApplicationController
   end
 
   def filter_rasionalisasi
+    opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
     @program_kegiatans = ProgramKegiatan.includes(%i[opd subkegiatan_tematik]).where(opds: { kode_unik_opd: @kode_opd })
+    if OPD_TABLE.key?(opd.to_sym)
+      @program_kegiatans = ProgramKegiatan.includes(%i[opd subkegiatan_tematik]).where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
+    end
     respond_to do |format|
       @render_file = 'rasionalisasi/hasil_filter_rasionalisasi'
       format.js { render 'rasionalisasi/rasionalisasi_filter' }
@@ -111,7 +138,11 @@ class FilterController < ApplicationController
   end
 
   def filter_gender
+    opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
     @program_kegiatans = ProgramKegiatan.includes(%i[opd subkegiatan_tematik]).where(opds: { kode_unik_opd: @kode_opd })
+    if OPD_TABLE.key?(opd.to_sym)
+      @program_kegiatans = ProgramKegiatan.includes(%i[opd subkegiatan_tematik]).where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
+    end
     respond_to do |format|
       @render_file = 'genders/hasil_filter_gender'
       format.js { render 'genders/gender_filter' }
