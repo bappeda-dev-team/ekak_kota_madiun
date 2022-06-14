@@ -21,7 +21,7 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
     ['Satuan', ':', @program_kegiatan.satuan_target_subkegiatan.to_s],
     ['Jumlah Sasaran/Rencana Kinerja', ':', @program_kegiatan.sasarans.count]
   ]
-  pdf.table(tabel_program_kegiatan, column_widths: { 0=> 150,1 => 12 }, cell_style: { size: 8, border_width: 0 }, width: pdf.bounds.width)
+  pdf.table(tabel_program_kegiatan, column_widths: { 0 => 150, 1 => 12 }, cell_style: { size: 8, border_width: 0 }, width: pdf.bounds.width)
   # after tabel pertama
   pdf.move_down 30
   # loop sasaran
@@ -78,13 +78,13 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
     else
       gambaran_umum_arr = [['-']]
     end
-    sasaran_cell = pdf.make_table(sasaran_arr, cell_style: {size: 8, border_width: 0}, width: 388)
-    indikator_cell = pdf.make_table(indikator_arr, cell_style: {size: 8, border_width: 0}, width: 388)
-    satuan_cell = pdf.make_table(satuan_arr, cell_style: {size: 8, border_width: 0}, width: 388)
-    target_cell = pdf.make_table(target_arr, cell_style: {size: 8, border_width: 0}, width: 388)
-    dasar_hukum_cell = pdf.make_table(dasar_hukum_arr, cell_style: {size: 8, border_width: 0}, width: 300)
-    gambaran_umum_cell = pdf.make_table(gambaran_umum_arr, cell_style: {size: 8, border_width: 0}, width: 300)
-    permasalahan_cell = pdf.make_table(permasalahan_arr, cell_style: {size: 8, border_width: 0}, width: 300)
+    sasaran_cell = pdf.make_table(sasaran_arr, cell_style: { size: 8, border_width: 0 }, width: 388)
+    indikator_cell = pdf.make_table(indikator_arr, cell_style: { size: 8, border_width: 0 }, width: 388)
+    satuan_cell = pdf.make_table(satuan_arr, cell_style: { size: 8, border_width: 0 }, width: 388)
+    target_cell = pdf.make_table(target_arr, cell_style: { size: 8, border_width: 0 }, width: 388)
+    dasar_hukum_cell = pdf.make_table(dasar_hukum_arr, cell_style: { size: 8, border_width: 0 }, width: 300)
+    gambaran_umum_cell = pdf.make_table(gambaran_umum_arr, cell_style: { size: 8, border_width: 0 }, width: 300)
+    permasalahan_cell = pdf.make_table(permasalahan_arr, cell_style: { size: 8, border_width: 0 }, width: 300)
     sasaran_judul = [
       [{ content: "#{index}.", font_style: :bold }, { content: "Sasaran/Rencana Kinerja", font_style: :bold }, ':', sasaran_cell],
       ['', 'Indikator Kinerja (Output)', ':', indikator_cell],
@@ -110,17 +110,17 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
       ['', 'f.', 'Resiko', ':', { content: sasaran.rincian&.resiko || '-' }]
     ]
     rencana_aksi_judul = [
-      ['', 'g.', {content: 'Rencana Aksi dan Anggaran'}]
+      ['', 'g.', { content: 'Rencana Aksi dan Anggaran' }]
     ]
-    tabel_sasaran = pdf.make_table(sasaran_judul, column_widths: { 0=> 17, 2=> 13 }, cell_style: { size: 8, border_width: 0 }, width: pdf.bounds.width)
-    tabel_dasar_hukum = pdf.make_table(dasar_hukum, column_widths: { 0=> 17, 1=>17, 2=> 88, 3=> 12  }, cell_style: { size: 8, border_width: 0, :overflow => :expand }, width: pdf.bounds.width)
-    tabel_gambaran_umum = pdf.make_table(gambaran_umum, column_widths: { 0=> 17, 1=>17, 2=> 88, 3=> 12  }, cell_style: { size: 8, border_width: 0, :overflow => :expand }, width: pdf.bounds.width)
-    tabel_penerima_manfaat = pdf.make_table(penerima_manfaat, column_widths: { 0=> 17, 1=>17, 2=> 88, 3=> 12  }, cell_style: { size: 8, border_width: 0, :overflow => :expand }, width: pdf.bounds.width)
-    tabel_data_terpilah = pdf.make_table(data_terpilah, column_widths: { 0=> 17, 1=>17, 2=> 88, 3=> 12  }, cell_style: { size: 8, border_width: 0, :overflow => :expand }, width: pdf.bounds.width)
-    tabel_permasalahan = pdf.make_table(permasalahan, column_widths: { 0=> 17, 1=>17, 2=> 88, 3=> 12  }, cell_style: { size: 8, border_width: 0, :overflow => :expand }, width: pdf.bounds.width)
-    tabel_rincian = pdf.make_table(rincian_sasaran, column_widths: { 0=> 17, 1=>17, 2=> 88, 3=> 12  }, cell_style: { size: 8, border_width: 0, :overflow => :expand }, width: pdf.bounds.width)
-    tabel_rencana_aksi_judul = pdf.make_table(rencana_aksi_judul, column_widths: { 0=> 17, 1=>17}, cell_style: { size: 8, border_width: 0 })
-    # pdf.table(tabel_sasaran, column_widths: { 0=> 17, 2=> 13 }, cell_style: { size: 8, border_width: 0 })
+    tabel_sasaran = pdf.make_table(sasaran_judul, column_widths: { 0 => 17, 2 => 13 }, cell_style: { size: 8, border_width: 0 }, width: pdf.bounds.width)
+    tabel_dasar_hukum = pdf.make_table(dasar_hukum, column_widths: { 0 => 17, 1 => 17, 2 => 88, 3 => 12 }, cell_style: { size: 8, border_width: 0, :overflow => :expand }, width: pdf.bounds.width)
+    tabel_gambaran_umum = pdf.make_table(gambaran_umum, column_widths: { 0 => 17, 1 => 17, 2 => 88, 3 => 12 }, cell_style: { size: 8, border_width: 0, :overflow => :expand }, width: pdf.bounds.width)
+    tabel_penerima_manfaat = pdf.make_table(penerima_manfaat, column_widths: { 0 => 17, 1 => 17, 2 => 88, 3 => 12 }, cell_style: { size: 8, border_width: 0, :overflow => :expand }, width: pdf.bounds.width)
+    tabel_data_terpilah = pdf.make_table(data_terpilah, column_widths: { 0 => 17, 1 => 17, 2 => 88, 3 => 12 }, cell_style: { size: 8, border_width: 0, :overflow => :expand }, width: pdf.bounds.width)
+    tabel_permasalahan = pdf.make_table(permasalahan, column_widths: { 0 => 17, 1 => 17, 2 => 88, 3 => 12 }, cell_style: { size: 8, border_width: 0, :overflow => :expand }, width: pdf.bounds.width)
+    tabel_rincian = pdf.make_table(rincian_sasaran, column_widths: { 0 => 17, 1 => 17, 2 => 88, 3 => 12 }, cell_style: { size: 8, border_width: 0, :overflow => :expand }, width: pdf.bounds.width)
+    tabel_rencana_aksi_judul = pdf.make_table(rencana_aksi_judul, column_widths: { 0 => 17, 1 => 17 }, cell_style: { size: 8, border_width: 0 })
+    # pdf.table(tabel_sasaran, column_widths: { 0 => 17, 2 => 13 }, cell_style: { size: 8, border_width: 0 })
     tabel_sasaran.draw
     tabel_dasar_hukum.draw
     tabel_gambaran_umum.draw
@@ -156,9 +156,7 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
                           sasaran.jumlah_target, "Rp. #{number_with_delimiter(sasaran.total_anggaran)}", '']
 
     tabel_renaksi = pdf.make_table(data_rencana_aksi, column_widths: { 0 => 17, 1 => 130, 14 => 30 }, cell_style: { size: 6, align: :left }, width: pdf.bounds.width)
-    if pdf.cursor - tabel_renaksi.height < 0
-      pdf.start_new_page
-    end
+    pdf.start_new_page if pdf.cursor - tabel_renaksi.height < 0
     tabel_renaksi.draw
     data_rencana_aksi.clear
 
@@ -166,10 +164,10 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
     tabel_usulan = [
       ['', 'h.', 'RAB']
     ]
-    pdf.table(tabel_usulan, column_widths: { 0=> 17, 1=>17 }, cell_style: { size: 8, border_width: 0 })
-    sasaran.tahapans.each.with_index(1) do |tahapan, index|
+    pdf.table(tabel_usulan, column_widths: { 0 => 17, 1 => 17 }, cell_style: { size: 8, border_width: 0 })
+    sasaran.tahapans.each.with_index(1) do |tahapan, t_index|
       pdf.move_down 10
-      pdf.text "Tahapan #{index}.  #{tahapan.tahapan_kerja}"
+      pdf.text "Tahapan #{t_index}.  #{tahapan.tahapan_kerja}"
       pdf.move_down 5
       header_anggaran = [
         [{ content: 'Kode rekening', rowspan: 2 }, { content: 'Uraian', rowspan: 2 },
@@ -189,14 +187,18 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
           end
         end
       else
-        header_anggaran << ['-', '-', '-', '-', '-', '-',  { content: "0", align: :right }]
+        header_anggaran << ['-', '-', '-', '-', '-', '-', { content: "0", align: :right }]
       end
-      pdf.table(header_anggaran, cell_style: { size: 6 }, width: pdf.bounds.width)
-      pdf.move_down 5
+      tabel_tahapans = pdf.make_table(header_anggaran, column_widths: { 0 => 60}, cell_style: { size: 6 }, width: pdf.bounds.width, header: true)
+      tabel_tahapans.draw
       header_anggaran.clear
+      pdf.move_down 20
+      # create new page if, last position cursr is greater than bounds
+      pdf.start_new_page if (pdf.cursor - 50).negative?
     end
   end
-  pdf.bounding_box([pdf.bounds.width - 300, pdf.cursor - 50], width: pdf.bounds.width - 200) do
+  pdf.start_new_page if (pdf.cursor - 111).negative?
+  pdf.bounding_box([pdf.bounds.width - 300, pdf.cursor - 10], width: pdf.bounds.width - 200) do
     pdf.text "Madiun, #{I18n.l Date.today}", size: 8, align: :center
     pdf.move_down 5
     pdf.text "<strong>Kepala</strong>", size: 8, align: :center, inline_format: true
