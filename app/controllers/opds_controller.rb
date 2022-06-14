@@ -6,6 +6,10 @@ class OpdsController < ApplicationController
     @opds = Opd.all.includes([:lembaga])
   end
 
+  def all_opd
+    @opds = Opd.all.includes([:lembaga])
+  end
+
   def show; end
 
   def new

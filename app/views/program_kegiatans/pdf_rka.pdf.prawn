@@ -1,4 +1,10 @@
 prawn_document(filename: @filename, disposition: "attachment") do |pdf|
+  pdf.font_families.update("NotoSans" => {
+                                            normal: "vendor/assets/fonts/NotoSans-Regular.ttf",
+                                            italic: "vendor/assets/fontsNotoSans-Italic.ttf",
+                                            bold: "vendor/assets/fonts/NotoSans-Bold.ttf"
+                                          })
+  pdf.font "NotoSans"
   pdf.font_size 16
   judul_rka = pdf.make_table([["RINCIAN BELANJA"], [@programKegiatan.opd.nama_opd]], width: pdf.bounds.width)
   judul_rka.draw
