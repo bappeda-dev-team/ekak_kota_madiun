@@ -1,4 +1,10 @@
-prawn_document(filename: @filename, disposition: "inline") do |pdf|
+prawn_document(filename: @filename, disposition: "attachment") do |pdf|
+  pdf.font_families.update("NotoSans" => {
+                                            normal: "vendor/assets/fonts/NotoSans-Regular.ttf",
+                                            italic: "vendor/assets/fontsNotoSans-Italic.ttf",
+                                            bold: "vendor/assets/fonts/NotoSans-Bold.ttf"
+                                          })
+  pdf.font "NotoSans"
   pdf.text 'KERANGKA ACUAN KERJA/ TERM OF REFERENCE', size: 16, align: :center
   pdf.text "KELUARAN (OUTPUT) KEGIATAN TA #{@tahun}", align: :center
   # tabel pertama
@@ -102,7 +108,7 @@ prawn_document(filename: @filename, disposition: "inline") do |pdf|
       ['', 'f.', 'Resiko', ':', { content: sasaran.rincian&.resiko || '-' }]
     ]
     rencana_aksi_judul = [
-      ['', 'g.', {content: 'Rencana Aksi dan Anggaran'}]
+      ['', 'g.', { content: 'Rencana Aksi dan Anggaran' }]
     ]
     tabel_sasaran = pdf.make_table(sasaran_judul, column_widths: { 0=> 17, 2=> 13 }, cell_style: { size: 8, border_width: 0 }, width: pdf.bounds.width)
     tabel_dasar_hukum = pdf.make_table(dasar_hukum, column_widths: { 0=> 17, 1=>17, 2=> 88, 3=> 12  }, cell_style: { size: 8, border_width: 0, :overflow => :expand }, width: pdf.bounds.width)
@@ -147,7 +153,7 @@ prawn_document(filename: @filename, disposition: "inline") do |pdf|
     data_rencana_aksi << [{ content: "Total sasaran ini adalah #{sasaran.waktu_total} bulan", colspan: 14 },
                           sasaran.jumlah_target, "Rp. #{number_with_delimiter(sasaran.total_anggaran)}", '']
 
-    tabel_renaksi = pdf.make_table(data_rencana_aksi, column_widths: { 0 => 17, 1 => 130, 14 => 30 }, cell_style: { size: 6, align: :left }, width: pdf.bounds.width)
+    tabel_renaksi = pdf.make_table(data_rencana_aksi, column_widths: { 0 => 18, 1 => 130, 14 => 30 }, cell_style: { size: 6, align: :left }, width: pdf.bounds.width)
     pdf.start_new_page if (pdf.cursor - tabel_renaksi.height).negative?
     tabel_renaksi.draw
     data_rencana_aksi.clear
@@ -157,7 +163,7 @@ prawn_document(filename: @filename, disposition: "inline") do |pdf|
     tabel_usulan = [
       ['', 'h.', 'Usulan yang terakomodir']
     ]
-    pdf.table(tabel_usulan, column_widths: { 0=> 17, 1=>17 }, cell_style: { size: 8, border_width: 0 })
+    pdf.table(tabel_usulan, column_widths: { 0=> 18, 1=>17 }, cell_style: { size: 8, border_width: 0 })
     data_usulan_terakomodir = [['No', 'Jenis Usulan', 'Usulan', 'Permasalahan/ Uraian', 'Keterangan']]
     count = 0
     sasaran.my_usulan.each do |u|
@@ -168,7 +174,7 @@ prawn_document(filename: @filename, disposition: "inline") do |pdf|
     end
     pdf.move_down 10
     tabel_usulan_terakomodir = pdf.make_table(data_usulan_terakomodir,
-                                              column_widths: { 0 => 17, 1 => 50, 2 => 100 },
+                                              column_widths: { 0 => 18, 1 => 50, 2 => 100 },
                                               cell_style: { size: 6, align: :left }, width: pdf.bounds.width, header: true)
     tabel_usulan_terakomodir.draw
     pdf.move_down 30
