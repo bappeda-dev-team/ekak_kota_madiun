@@ -1,4 +1,4 @@
-prawn_document(filename: @filename, disposition: "attachment") do |pdf|
+prawn_document(filename: @filename, disposition: "inline") do |pdf|
   pdf.text 'KERANGKA ACUAN KERJA/ TERM OF REFERENCE', size: 16, align: :center
   pdf.text "KELUARAN (OUTPUT) KEGIATAN TA #{@tahun}", align: :center
   # tabel pertama
@@ -169,12 +169,13 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
     pdf.move_down 10
     tabel_usulan_terakomodir = pdf.make_table(data_usulan_terakomodir,
                                               column_widths: { 0 => 17, 1 => 50, 2 => 100 },
-                                              cell_style: { size: 6, align: :left }, width: pdf.bounds.width)
+                                              cell_style: { size: 6, align: :left }, width: pdf.bounds.width, header: true)
     tabel_usulan_terakomodir.draw
     pdf.move_down 30
-    pdf.start_new_page if (pdf.cursor - tabel_usulan_terakomodir.height).negative?
+    pdf.start_new_page if (pdf.cursor - 50).negative?
   end
-  pdf.bounding_box([pdf.bounds.width - 300, pdf.cursor - 50], width: pdf.bounds.width - 200) do
+  pdf.start_new_page if (pdf.cursor - 111).negative?
+  pdf.bounding_box([pdf.bounds.width - 300, pdf.cursor - 10], width: pdf.bounds.width - 200) do
     pdf.text "Madiun, #{I18n.l Date.today}", size: 8, align: :center
     pdf.move_down 5
     pdf.text "<strong>Kepala</strong>", size: 8, align: :center, inline_format: true
