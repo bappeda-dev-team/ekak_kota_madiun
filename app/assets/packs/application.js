@@ -283,7 +283,10 @@ $(function () {
       ajax: {
         delay: 1000,
         url: '/user_search.json',
-        data: (params) => ({ q: opd_id })
+        data: (params) => ({
+          q: opd_id,
+          search: params.term
+        })
       },
     })
   });
