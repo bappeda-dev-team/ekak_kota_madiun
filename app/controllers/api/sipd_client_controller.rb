@@ -20,12 +20,21 @@ module Api
     end
 
     def update_detail_program
+      # Heavy lifting method, be careful
       id_programs = @id_programs.flatten.reject { |id_prg| id_prg.empty? }
       unless id_programs.empty?
-        id_programs.each do |id_program|
-          Api::SipdClient.new(id_sipd: @kode_opd, tahun: @tahun, id_opd: @id_opd, id_program: id_program).detail_master_program
+        programs = ProgramKegiatan.where(id_program_sipd: id_programs)
+        programs.each do |prg|
+          Api::SipdClient.new(id_program: prg.id_program_sipd, id_giat: prg.id_giat).indikator_program
         end
       end
+      redirect_to admin_program_path, success: "Program pada #{nama_opd} Berhasil diupdate"
+    end
+
+    def sync_indikator_program
+      id_program = params[:id_program]
+      id_giat = params[:id_giat]
+      Api::SipdClient.new(id_program: id_program, id_giat: id_giat).indikator_program
       redirect_to admin_program_path, success: "Program pada #{nama_opd} Berhasil diupdate"
     end
 

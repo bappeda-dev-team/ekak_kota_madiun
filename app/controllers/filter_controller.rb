@@ -77,9 +77,9 @@ class FilterController < ApplicationController
 
   def filter_program_saja
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
-    @programKegiatans = ProgramKegiatan.includes(:opd).select("DISTINCT ON(program_kegiatans.id_program_sipd) program_kegiatans.*").where(opds: { kode_unik_opd: @kode_opd })
+    @programKegiatans = ProgramKegiatan.includes(:opd).select("DISTINCT ON(program_kegiatans.kode_giat) program_kegiatans.*").where(opds: { kode_unik_opd: @kode_opd })
     if OPD_TABLE.key?(opd.to_sym)
-      @programKegiatans = ProgramKegiatan.includes(:opd).select("DISTINCT ON(program_kegiatans.id_program_sipd) program_kegiatans.*").where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
+      @programKegiatans = ProgramKegiatan.includes(:opd).select("DISTINCT ON(program_kegiatans.kode_giat) program_kegiatans.*").where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
     end
     respond_to do |format|
       @render_file = 'program_kegiatans/hasil_filter_program'
