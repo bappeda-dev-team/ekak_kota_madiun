@@ -6,14 +6,15 @@ module Api
     URL = 'http://10.11.15.120:8888'.freeze
     H = HTTP.accept(:json)
 
-    attr_accessor :id_sipd, :tahun, :id_opd, :id_program
+    attr_accessor :id_sipd, :tahun, :id_opd, :id_program, :id_giat
 
-    def initialize(id_sipd: nil, tahun: nil, id_opd: nil, id_program: nil)
+    def initialize(id_sipd: nil, tahun: nil, id_opd: nil, id_program: nil, id_giat: nil)
       # TODO: dynamic assign this later
       @id_sipd = id_sipd
       @tahun = tahun || 2022
       @id_opd = id_opd
       @id_program = id_program
+      @id_giat = id_giat
     end
 
     def data_subkegiatan_all
@@ -31,8 +32,8 @@ module Api
       proses_data_master_program(request)
     end
 
-    def detail_master_program
-      request = request_detail_master_program(@id_program)
+    def indikator_program
+      request = request_indikator_program(id_program: @id_program, id_giat: @id_giat)
       proses_detail_master_program(request)
     end
 
@@ -95,8 +96,8 @@ module Api
       H.get("#{URL}/get_sub_kegiatan_opd/109?id_giat=&id_skpd=#{id_opd}&tahun=#{tahun}")
     end
 
-    def request_indikator_program(id_program:)
-      H.get("#{URL}/indikator_per_program/109/#{id_program}")
+    def request_indikator_program(id_program:, id_giat:)
+      H.get("#{URL}/indikator_per_program/109/#{id_program}?id_giat=#{id_giat}")
     end
 
     def request_indikator_kegiatan(id_kegiatan:, id_opd:)
@@ -175,11 +176,12 @@ module Api
         target_program = ''
         satuan_target_program = ''
       else
-        indikator_program = program_details.first['indikator']
-        target_program = program_details.first['target_3'] # target_1 asumsi tahun 2020, 2021 target_2, 2022 target_3
-        satuan_target_program = program_details.first['satuan']
+        indikator_program = program_details.last['tolak_ukur']
+        target_program = program_details.last['target'] # target_1 asumsi tahun 2020, 2021 target_2, 2022 target_3
+        satuan_target_program = program_details.last['satuan']
       end
       ProgramKegiatan.where(id_program_sipd: @id_program)
+                     .where(id_giat: @id_giat)
                      .update_all(indikator_program: indikator_program,
                                  target_program: target_program,
                                  satuan_target_program: satuan_target_program)

@@ -200,7 +200,6 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/sync_pegawai', to: 'api/skp_client#sync_pegawai'
   get '/sync_subkegiatan', to: 'api/sipd_client#sync_subkegiatan'
   get '/sync_subkegiatan_opd', to: 'api/sipd_client#sync_subkegiatan_opd'
-  get '/update_detail_program', to: 'api/sipd_client#update_detail_program'
   get '/update_detail_kegiatan_lama', to: 'api/sipd_client#update_detail_kegiatan_lama'
   get '/update_detail_kegiatan', to: 'api/sipd_client#update_detail_kegiatan'
   get '/update_detail_subkegiatan', to: 'api/sipd_client#update_detail_subkegiatan'
@@ -208,6 +207,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/sync_pokpir', to: 'api/sipd_client#sync_pokpir'
   get '/sync_kamus_usulan', to: 'api/sipd_client#sync_kamus_usulan'
   get '/sync_data_opd', to: 'api/sipd_client#sync_data_opd'
+  post '/update_detail_program', to: 'api/sipd_client#update_detail_program'
+  post '/sync_indikator_program', to: 'api/sipd_client#sync_indikator_program'
   # internal filter
   post '/filter_sasaran', to: 'filter#filter_sasaran'
   post '/filter_user', to: 'filter#filter_user'

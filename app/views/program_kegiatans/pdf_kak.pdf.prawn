@@ -1,10 +1,11 @@
-prawn_document(filename: @filename, disposition: "attachment") do |pdf|
-  pdf.font_families.update("NotoSans" => {
-                                            normal: "vendor/assets/fonts/NotoSans-Regular.ttf",
-                                            italic: "vendor/assets/fontsNotoSans-Italic.ttf",
-                                            bold: "vendor/assets/fonts/NotoSans-Bold.ttf"
-                                          })
-  pdf.font "NotoSans"
+prawn_document(filename: @filename, disposition: "inline") do |pdf|
+  pdf.font_families.clear
+  pdf.font_families.update("TiroKannada" => {
+                                      normal: "vendor/assets/fonts/TiroKannada-Regular.ttf",
+                                      italic: "vendor/assets/fonts/TiroKannada-Italic.ttf",
+                                      bold: "vendor/assets/fonts/NotoSerif-Bold.ttf"
+                                      })
+  pdf.font "TiroKannada"
   pdf.text 'KERANGKA ACUAN KERJA/ TERM OF REFERENCE', size: 16, align: :center
   pdf.text "KELUARAN (OUTPUT) KEGIATAN TA #{@tahun}", align: :center
   # tabel pertama
@@ -105,7 +106,7 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
       ['', 'e.', 'Permasalahan', ':', permasalahan_cell]
     ]
     rincian_sasaran = [
-      ['', 'f.', 'Resiko', ':', { content: sasaran.rincian&.resiko || '-' }]
+      ['', 'f.', 'Resiko', ':', { content: sasaran.rincian&.resiko || '-', :inline_format => true }]
     ]
     rencana_aksi_judul = [
       ['', 'g.', { content: 'Rencana Aksi dan Anggaran' }]

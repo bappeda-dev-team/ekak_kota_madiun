@@ -55,6 +55,20 @@ class ProgramKegiatansController < ApplicationController
   end
 
   def pdf_kak
+    # respond_to do |format|
+    #   format.pdf do
+    #     @nama_file = ProgramKegiatan.find(params[:id]).nama_subkegiatan
+    #     @tahun = params[:tahun] || Time.now.year
+    #     @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
+    #     @filename = "Laporan_KAK_#{@nama_file}_#{@waktu}.pdf"
+    #     @program_kegiatan = ProgramKegiatan.find(params[:id])
+    #     pdf = KakDocument.new(program_kegiatan: @program_kegiatan, tahun: @tahun)
+    #     send_data pdf.render,
+    #     filename: @filename,
+    #     type: 'application/pdf',
+    #     disposition: 'inline'
+    #   end
+    # end
     @nama_file = ProgramKegiatan.find(params[:id]).nama_subkegiatan
     @tahun = params[:tahun] || Time.now.year
     @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")

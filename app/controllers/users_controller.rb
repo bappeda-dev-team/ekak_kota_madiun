@@ -8,7 +8,12 @@ class UsersController < ApplicationController
 
   def user_search
     param = params[:q] || ''
+    param_search = params[:search] || ''
     @users = User.where(kode_opd: param)
+    unless param_search.empty?
+      param_search.strip!
+      @users = User.where(kode_opd: param).where('nama ILIKE ?', "%#{param_search}%").or(User.where('nik ILIKE ?', "%#{param_search}%"))
+    end
   end
 
   # GET /users/1 or /users/1.json
