@@ -117,9 +117,10 @@ module ApplicationHelper
     link_to(name, '#', class: "add_fields_#{dc.id}", data: { id: new_obj, fields: fields })
   end
 
-  def dropdown_opd
-    if current_user.has_role? :super_admin or current_user.has_role? :reviewer
-      options_for_select(Opd.where.not(kode_opd: nil).pluck(:nama_opd, :kode_unik_opd), current_user.opd.kode_unik_opd)
+  def dropdown_opd(all: false)
+    all = ['All Opd', 'all'] if all
+    if current_user.has_role? :super_admin or current_user.has_role? :reviewer or current_user.nik == 'bapelitbangda'
+      options_for_select(Opd.where.not(kode_opd: nil).pluck(:nama_opd, :kode_unik_opd).prepend(all))
     elsif current_user.nik == 'rsud2022'
       options_for_select(Opd.where.not(kode_opd: nil).where(kode_opd: 1270).pluck(:nama_opd, :kode_unik_opd), current_user.opd.kode_unik_opd )
     elsif current_user.nik == 'bagianpemerintahan'

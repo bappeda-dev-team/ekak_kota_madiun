@@ -35,6 +35,7 @@
           <th class="border-bottom" scope="col">Indikator Kegiatan</th>
           <th class="border-bottom" scope="col">Target</th>
           <th class="border-bottom" scope="col">Satuan</th>
+          <th class="border-bottom" scope="col">Id Giat</th>
           <th class="border-bottom" scope="col"></th>
         </tr>
       </thead>
@@ -46,6 +47,7 @@
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.indikator_kinerja %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.target %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.satuan %></td>
+            <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.id_giat %></td>
             <td class="fw-bolder text-gray-500">
               <%= link_to edit_program_kegiatan_path(prog), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-programkegiatan"}, class: "m-3" do %>
                 <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>

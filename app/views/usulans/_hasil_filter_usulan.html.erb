@@ -5,7 +5,11 @@
         <h2 class="fs-5 fw-bold mb-0">Laporan Usulan <%= @type_alsi %></h2>
       </div>
       <div class="col">
-        <% opd = Opd.find_by(kode_unik_opd: @kode_opd).id_opd_skp %>
+        <% if @kode_opd == 'all' %>
+          <% opd = 'all_opd' %>
+        <% else %>
+          <% opd = Opd.find_by(kode_unik_opd: @kode_opd).id_opd_skp %>
+        <% end %>
         <%= link_to "/pdf_usulan/#{@type_alsi}/#{opd}/#{@tahun}.pdf", class:"btn btn-sm btn-primary" do %>
           Download PDF 
           <i class="fas fa-file-pdf ms-2"></i>
@@ -28,8 +32,9 @@
             <th class="border-bottom" scope="col">No.</th>
             <th class="border-bottom text-center text-wrap" scope="col"><%= @type_alsi %></th>
             <th class="border-bottom text-center text-wrap" scope="col">Sub Kegiatan</th>
+            <th class="border-bottom text-center text-wrap" scope="col">Program</th>
             <th class="border-bottom text-center text-wrap" scope="col">Pagu</th>
-            <th class="border-bottom text-center text-wrap" scope="col">Pagu Sasaran</th>
+            <th class="border-bottom text-center text-wrap" scope="col">OPD</th>
             <th class="border-bottom text-center text-wrap" scope="col">Permasalahan/ Uraian</th>
             <th class="border-bottom text-center text-wrap" scope="col">Keterangan</th>
           </tr>
@@ -40,14 +45,15 @@
               <td class="text-gray-900 fw-bolder border-bottom" width="50px" rowspan="<%= pk.usulans.where(usulanable_type: @type).count + 1 %>"><%= i %></td>
               <td class="p-0 m-0"></td>
               <td class="text-gray-900 border-end border-start text-wrap" width="200px" rowspan="<%= pk.usulans.where(usulanable_type: @type).count + 1 %>"><%= pk.nama_subkegiatan %></td>
+              <td class="text-gray-900 border-end border-start text-wrap" width="200px" rowspan="<%= pk.usulans.where(usulanable_type: @type).count + 1 %>"><%= pk.nama_program %></td>
               <td class="text-gray-900 border-end border-start px-3"  width="150px" rowspan="<%= pk.usulans.where(usulanable_type: @type).count + 1 %>">Rp. <%= number_with_delimiter(pk.my_pagu) %></td>
+              <td class="text-gray-900 border-end border-start text-wrap" width="200px" rowspan="<%= pk.usulans.where(usulanable_type: @type).count + 1 %>"><%= pk.opd.nama_opd %></td>
               <td class="p-0 m-0"></td>
               <% pk.usulans.where(usulanable_type: @type).each do |us| %>
                 <% keterangan = us.usulanable.try(:alamat) || us.usulanable.try(:peraturan_terkait) || us.usulanable.try(:manfaat) %>
                 <tr>
-                  <td class="text-gray-900 border-end border-start text-wrap" width="300px"><%= us.usulanable.usulan %></td>
-                  <td class="text-gray-900 border-end border-start text-wrap pagu-sasaran px-3" width="150px">Rp. <%= number_with_delimiter(us.sasaran.total_anggaran) %></td>
-                  <td class="text-gray-900 border-end border-start text-wrap"><%= us.usulanable.uraian %></td>
+                  <td class="text-gray-900 border-end border-start text-wrap" width="300px"><%= us.usulanable&.usulan %></td>
+                  <td class="text-gray-900 border-end border-start text-wrap"><%= us.usulanable&.uraian %></td>
                   <td class="text-gray-900 border-end border-start text-wrap"><%= keterangan %></td>
                 </tr>
               <% end %>

@@ -7,20 +7,30 @@
     <% if current_user.has_role? :super_admin %>
       <div class="col text-end">
         <%= link_to sync_subkegiatan_opd_path(kode_opd: opd.id_opd_skp, tahun: Date.today.year + 1), 
-      data: { disable_with: 'Memproses....'},
-      class:"btn btn-sm btn-tertiary" do %>
+            data: { disable_with: 'Memproses....'},
+            class:"btn btn-sm btn-tertiary" do %>
           <i class="fas fa-sync me-2"></i>
           Sync <%= Date.today.year + 1 %>
         <% end %>
       </div>
       <div class="col text-end">
         <%= link_to sync_subkegiatan_opd_path(kode_opd: opd.id_opd_skp, tahun: Date.today.year), 
-      data: { disable_with: 'Memproses....'},
-      class:"btn btn-sm btn-tertiary" do %>
+            data: { disable_with: 'Memproses....'},
+            class:"btn btn-sm btn-tertiary" do %>
           <i class="fas fa-sync me-2"></i>
           Sync <%= Date.today.year %>
         <% end %>
       </div>
+      <% if current_user.has_role? :super_admin %>
+        <div class="col text-end">
+          <%= link_to destroy_all_path(kode_opd: opd.id_opd_skp),
+            data: { disable_with: 'Memproses....'},
+            class:"btn btn-sm btn-danger" do %>
+            <i class="fas fa-trash me-2"></i>
+            Hapus All
+          <% end %>
+        </div>
+      <% end %>
       <div class="col text-end">
         <%= link_to "Tambah Program Kegiatan",new_program_kegiatan_path, remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-programkegiatan"}, class: "btn btn-sm btn-info" %>
       </div>
