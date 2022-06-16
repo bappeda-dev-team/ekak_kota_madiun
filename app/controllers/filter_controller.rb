@@ -27,7 +27,9 @@ class FilterController < ApplicationController
   }.freeze
 
   KODE_OPD_BAGIAN = {
-    'Sekretariat Daerah': '4.01.0.00.0.00.01.00', # don't change, this still used
+    'Dinas Kesehatan, Pengendalian Penduduk dan Keluarga Berencana': '448',
+    'Rumah Sakit Umum Daerah Kota Madiun': '3408',
+    'Sekretariat Daerah': '479', # don't change, this still used
     'Bagian Umum': '4402',
     'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan': '4400',
     'Bagian Organisasi': '4398',
@@ -164,10 +166,17 @@ class FilterController < ApplicationController
       @type = 'Inovasi'
       @type_alsi = 'Inisiatif Walikota'
     end
-    @program_kegiatans = ProgramKegiatan.includes(%i[opd usulans]).where(opds: { kode_unik_opd: @kode_opd })
-                                        .where(usulans: { usulanable_type: @type })
-                                        .select { |p| p.sasarans.exists? }
-    @nama_opd = nama_opd
+    if @kode_opd == 'all'
+      @program_kegiatans = ProgramKegiatan.includes(%i[opd usulans])
+                                          .where(usulans: { usulanable_type: @type })
+                                          .select { |p| p.sasarans.exists? }
+      @nama_opd = 'Semua OPD'
+    else
+      @program_kegiatans = ProgramKegiatan.includes(%i[opd usulans]).where(opds: { kode_unik_opd: @kode_opd })
+                                          .where(usulans: { usulanable_type: @type })
+                                          .select { |p| p.sasarans.exists? }
+      @nama_opd = nama_opd
+    end
     respond_to do |format|
       format.js { render 'usulans/usulan_filter' }
     end

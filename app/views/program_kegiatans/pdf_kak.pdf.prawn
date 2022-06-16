@@ -1,4 +1,4 @@
-prawn_document(filename: @filename, disposition: "inline") do |pdf|
+prawn_document(filename: @filename, disposition: "attachment") do |pdf|
   pdf.font_families.clear
   pdf.font_families.update("TiroKannada" => {
                                       normal: "vendor/assets/fonts/TiroKannada-Regular.ttf",

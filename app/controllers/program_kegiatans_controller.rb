@@ -143,6 +143,14 @@ class ProgramKegiatansController < ApplicationController
     end
   end
 
+  def destroy_all
+    kode_opd = params[:kode_opd]
+    ProgramKegiatan.where(id_sub_unit: kode_opd).destroy_all
+    respond_to do |format|
+      format.html { redirect_to program_kegiatans_url, notice: 'Program dihapus' }
+    end
+  end
+
   private
 
   def set_programKegiatan

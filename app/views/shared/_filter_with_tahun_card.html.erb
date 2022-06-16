@@ -20,8 +20,8 @@
           {class: "form-control select2-waw", required: true,  data: {"placeholder": "Tahun"}}  %>
       <br>
       <%= form.label :kode_opd %>
-      <% options = options_for_select(Opd.all.pluck(:nama_opd, :kode_unik_opd), current_user.opd.kode_unik_opd ) %>
-      <%= form.select :kode_opd, dropdown_opd ,{include_blank: true},
+      <% all_opd = local_assigns[:all]  %>
+      <%= form.select :kode_opd,  dropdown_opd(all: all_opd),{include_blank: true},
           {class: "form-control select2-waw", data: {"placeholder": "Pilih Opd"}, required: true }  %>
       <%= form.submit 'filter' %>
     <% end %>
