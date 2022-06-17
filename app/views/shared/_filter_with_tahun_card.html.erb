@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="card-body">
-    <% filter_value =  '' if local_assigns[:filter_file].nil? %>
+    <% filter_value = local_assigns[:filter_file] || '' %>
     <% filter_jenis = local_assigns[:jenis] || '' %>
     <%= form_with url: filter_url, local: false do |form| %>
       <%= form.hidden_field :filter_file, value: filter_value %>
@@ -19,7 +19,7 @@
       <%= form.select :tahun, [year, year + 1] ,{include_blank: true},
           {class: "form-control select2-waw", required: true,  data: {"placeholder": "Tahun"}}  %>
       <br>
-      <%= form.label :kode_opd %>
+      <%= form.label :opd %>
       <% all_opd = local_assigns[:all]  %>
       <%= form.select :kode_opd,  dropdown_opd(all: all_opd),{include_blank: true},
           {class: "form-control select2-waw", data: {"placeholder": "Pilih Opd"}, required: true }  %>

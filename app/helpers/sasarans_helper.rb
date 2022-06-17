@@ -24,4 +24,34 @@ module SasaransHelper
     }.freeze
     status_map[status.to_sym]
   end
+
+  def status_helper(kak)
+    if kak.sasarans.exists? status: 'draft'
+      `<button class="btn btn-sm btn-danger" disabled>
+          <i class="fas fa-times me-2"></i>
+          ! Belum diajukan
+        </button>`.html_safe
+    elsif kak.sasarans.exists? status: 'pengajuan'
+      `<%= link_to setujui_semua_sasaran_path(sasaran_diajukans: [kak.sasarans.pluck(:id)], dom: dom_id(kak), rowspan: row_dalam ),
+        method: :post, remote: true,
+        data: { disable_with: 'Memproses....'},
+        class:"btn btn-sm btn-primary" do %>
+        <i class="fas fa-lock me-2"></i>
+        Kunci
+      <% end %>`
+    elsif kak.sasarans.exists? status: 'disetujui'
+      `<%= link_to revisi_semua_sasaran_path(sasaran_diajukans: [kak.sasarans.pluck(:id)], dom: dom_id(kak), rowspan: row_dalam),
+        method: :post, remote: true,
+        data: { disable_with: 'Memproses....'},
+        class:"btn btn-sm btn-info" do %>
+        <i class="fas fa-lock-open me-2"></i>
+        Buka Kuncian
+      <% end %>`
+    else
+      `<button class="btn btn-sm btn-danger" disabled>
+        <i class="fas fa-times me-2"></i>
+        Ditolak
+      </button>`.html_safe
+    end
+  end
 end
