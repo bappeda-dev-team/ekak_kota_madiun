@@ -2,13 +2,20 @@
   <% flash.each do |key, value| %>
     <% unless value.blank? %>
       <script>
-        Swal.fire({
-         icon: "<%= key %>",
-         title: "<%= key.capitalize %>",
-         text: "<%= value %>",
-         showConfirmButton: false,
-         timer: 2000,
-        })
+        <% if value.is_a? Array %>
+          var text = "<%= value[0]  %>"
+          var title = "<%= value[1].capitalize %>"
+        <% else %>
+          var text = "<%= value %>"
+          var title = "<%= value.capitalize %>"
+        <% end %>
+          Swal.fire({
+           icon: "<%= key %>",
+           title: title,
+           text: text,
+           showConfirmButton: false,
+           timer: 2000,
+          })
       </script>
     <% end %>
   <% end %>

@@ -1,0 +1,34 @@
+<table>
+  <tr>
+    <td class="m-0 p-0 text-success">
+      <i class="fas fa-battery-full"></i>
+    </td>
+    <td class="text-success">
+      <%= user.petunjuk_sasaran[:hijau] || 0 %>
+    </td>
+  </tr>
+  <tr>
+    <td class="m-0 p-0 text-info">
+      <i class="fas fa-battery-half"></i>
+    </td>
+    <td class="text-info">
+      <%= user.petunjuk_sasaran[:biru] %>
+    </td>
+  </tr>
+  <tr>
+    <td class="m-0 p-0 text-warning">
+      <i class="fas fa-battery-quarter"></i>
+    </td>
+    <td class="text-warning">
+      <%= user.petunjuk_sasaran[:kuning] %>
+    </td>
+  </tr>
+  <tr>
+    <td class="m-0 p-0 text-danger">
+      <i class="fas fa-battery-empty"></i>
+    </td>
+    <td class="text-danger">
+      <%= user.petunjuk_sasaran[:merah] %>
+    </td>
+  </tr>
+</table>

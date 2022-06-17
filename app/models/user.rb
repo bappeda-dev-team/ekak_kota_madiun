@@ -108,6 +108,10 @@ class User < ApplicationRecord
     @program_kegiatan_sasarans.map { |j| j&.my_pagu }.flatten.reduce(:+)
   end
 
+  def sasaran_program
+    sasarans.group_by(&:program_kegiatan)
+  end
+
   def petunjuk_sasaran
     {
       merah: total_hangus,
