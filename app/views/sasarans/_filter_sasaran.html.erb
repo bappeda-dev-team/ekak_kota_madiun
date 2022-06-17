@@ -18,11 +18,12 @@
             <th class="border-bottom text-center" rowspan="2" scope="col">Pemilik Rencana</th>
             <th class="border-bottom text-center" rowspan="2" scope="col">Status</th>
             <th class="border-bottom text-center border-start border-end" rowspan="2" scope="col">Sub Kegiatan</th>
-            <th class="border-bottom text-center border-start border-end" scope="col" colspan="3">Informasi KaK</th>
+            <th class="border-bottom text-center border-start border-end" scope="col" colspan="4">Informasi KaK</th>
           </tr>
           <tr>
             <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
             <th class="border-bottom text-center border-start border-end">Pagu Anggaran</th>
+            <th class="border-bottom text-center border-start border-end">Status</th>
             <th class="border-bottom text-center border-start border-end">Aksi</th>
           </tr>
         </thead>
@@ -47,6 +48,18 @@
                     </td>
                     <td class="border-start border-end border-bottom text-center">
                       Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar) or 0 %>
+                    </td>
+                    <td class="border-start border-end border-bottom text-center">
+                      <% show_sasaran.petunjuk_status.select { |s, v| v == false }.each do |key, value| %>
+                        - <%= key.to_s.humanize %>
+                        <br>
+                      <% end %>
+                      <hr>
+                      <% if show_sasaran.status == 'disetujui' %>
+                        Terkunci
+                      <% else %>
+                        Terbuka
+                      <% end %>
                     </td>
                     <td class="fw-bolder text-gray-500 text-center border-start border-end" id="<%= dom_id(show_sasaran) %>">
                       <% if show_sasaran.status == 'draft' %>

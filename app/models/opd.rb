@@ -43,4 +43,10 @@ class Opd < ApplicationRecord
 
     "#{kode_bidang_urusan} #{bidang_urusan.capitalize}"
   end
+
+  def jabatan_kepala
+    User.find_by(nik: nip_kepala.delete(" \t\r\n")).jabatan
+    rescue NoMethodError
+      'Kepala'
+  end
 end

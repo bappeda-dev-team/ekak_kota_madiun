@@ -185,7 +185,7 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
   pdf.bounding_box([pdf.bounds.width - 300, pdf.cursor - 10], width: pdf.bounds.width - 200) do
     pdf.text "Madiun, #{I18n.l Date.today}", size: 8, align: :center
     pdf.move_down 5
-    pdf.text "<strong>Kepala</strong>", size: 8, align: :center, inline_format: true
+    pdf.text "<strong>#{@program_kegiatan.opd.jabatan_kepala}</strong>", size: 8, align: :center, inline_format: true
     pdf.text "<strong>#{@program_kegiatan.opd.nama_opd}</strong>", size: 8, align: :center, inline_format: true
     pdf.move_down 50
     pdf.text "<u>#{@program_kegiatan.opd.nama_kepala || '!!belum disetting'}</u>", size: 8, align: :center, inline_format: true
