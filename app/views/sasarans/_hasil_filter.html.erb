@@ -40,7 +40,7 @@
                   <i class="fas fa-lock me-2"></i>
                   Kunci
                 <% end %>
-              <% elsif sasaran.status == 'pengajuan' %>
+              <% else %>
                 <%= link_to revisi_semua_sasaran_path(sasaran_diajukans: [sasarans.pluck(:id)], dom: dom_id(sasaran), rowspan: sasaran.indikator_sasarans.count + 1),
                       method: :post, remote: true,
                       data: { disable_with: 'Memproses....'},
