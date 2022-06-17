@@ -10,42 +10,19 @@
         <li class="breadcrumb-item active" aria-current="page">Laporan Sasaran</li>
       </ol>
     </nav>
-    <div class="card border-0 shadow">
+    <% if current_user.has_role? :admin %>
+      <%= render 'shared/filter_with_tahun_card', filter_url: '/filter_user_sasarans', filter_file: 'sasarans/filter_sasaran' %>
+    <% end %>
+    <div class="card border-0 shadow"  id="user_sasaran_filter">
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Laporan Sasaran <%= current_user.opd.nama_opd %></h2>
+            <h2 class="fs-5 fw-bold mb-0">Laporan Sasaran</h2>
           </div>
         </div>
       </div>
       <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-flush table-hover">
-            <thead class="thead-light">
-              <tr>
-                <th class="border-bottom align-middle" rowspan="2" scope="col">No.</th>
-                <th class="border-bottom align-middle" rowspan="2" scope="col">ASN</th>
-                <th class="border-bottom text-center" scope="col" colspan="4">Status Sasaran</th>
-              </tr>
-              <tr>
-                <th class="text-success text-center"> jumlah sasaran tahun <%= Date.today.year + 1 %> (lengkap)</th>
-                <th class="text-warning bg-gray-600 text-center"> jumlah sasaran tahun <%= Date.today.year + 1 %> (rincian blm lengkap)</th>
-                <th class="text-center"> jumlah sasaran tahun <%= Date.today.year %></th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @sasarans.each.with_index(1) do |sasaran, i| %>
-                <tr>
-                  <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                  <td class="fw-bolder text-gray-500"><%= sasaran.nama %></td>
-                  <td class="fw-bolder text-success text-center"><%= sasaran.sasarans.total_sudah_lengkap %></td>
-                  <td class="fw-bolder text-warning bg-gray-600 text-center"><%= sasaran.sasarans.total_belum_lengkap %></td>
-                  <td class="fw-bolder text-center"><%= sasaran.sasarans.count %></td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
+        <p>Pilih Tahun dan OPD</p>
       </div>
     </div>
   </div>

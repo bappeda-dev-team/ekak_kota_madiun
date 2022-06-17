@@ -1,0 +1,60 @@
+<div class="card border-0 shadow" id="user_filter">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">Laporan Sasaran Tahun <%= @tahun %></h2>
+      </div>
+      <div class="col text-end">
+        <span><%= @nama_opd %></span>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table align-items-center border-start border-end" id="tabel_laporan_kak">
+        <thead class="thead-light">
+          <tr>
+            <th class="border-bottom" scope="col">No.</th>
+            <th class="border-bottom text-center" scope="col">Pemilik Rencana</th>
+            <th class="border-bottom text-center" scope="col">Status</th>
+            <th class="border-bottom text-center border-start border-end" scope="col">Sub Kegiatan</th>
+            <th class="border-bottom text-center border-start border-end" scope="col" colspan="2">Informasi KaK</th>
+          </tr>
+          <tr>
+            <th colspan="4"></th>
+            <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
+            <th class="border-bottom text-center border-start border-end">Pagu Anggaran</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each.with_index(1) do |user, i| %>
+            <% jumlah_sasaran = user.sasarans.count %>
+            <% jumlah_program = user.sasaran_program.count %>
+            <% row_atas = jumlah_sasaran + jumlah_program %>
+            <tr class="border-bottom">
+              <td class="text-gray-900 fw-bolder border-end border-bottom text-center" rowspan="<%= row_atas %>" scope="rowgroup"><%= i %></td>
+              <td class="text-wrap border-end border-bottom" rowspan="<%= row_atas %>" scope="rowgroup"><%= user.nama %></td>
+              <td class="border-start border-end text-center" rowspan="<%= row_atas %>" scope="rowgroup">
+                <%= render 'shared/user_sasaran_status_table', user: user %>
+              </td>
+              <% user.sasaran_program.each do |program_kegiatan, sasarans| %>
+                <% row_dalam = sasarans.count + 1 %>
+                <td class="text-wrap" rowspan="<%= row_dalam %>"><%= program_kegiatan&.nama_subkegiatan || '-' %></td>
+                <% sasarans.each do |show_sasaran| %>
+                  <tr class="<%= warna_sasaran(show_sasaran.status_sasaran) %>">
+                    <td class="text-wrap border-start border-end" width="450px">
+                      <%= show_sasaran.sasaran_kinerja %>
+                    </td>
+                    <td class="border-start border-end border-bottom text-center">
+                      Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar) or 0 %>
+                    </td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

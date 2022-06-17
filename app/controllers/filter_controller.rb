@@ -182,6 +182,20 @@ class FilterController < ApplicationController
     end
   end
 
+  def filter_user_sasarans
+    opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
+    @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd }).asn_aktif
+    if OPD_TABLE.key?(opd.to_sym)
+      @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).asn_aktif
+      @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])
+    end
+    nama_opd
+    @filter_file = params[:filter_file].empty? ? 'hasil_filter' : params[:filter_file]
+    respond_to do |format|
+      format.js { render 'sasarans/user_sasarans' }
+    end
+  end
+
   private
 
   def filter_params
