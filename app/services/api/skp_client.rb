@@ -65,7 +65,7 @@ module Api
       data_renaksi = []
       pegawais.each do |pegawai|
         next unless pegawai['list_rencana_kinerja']
-        
+
         pegawai['list_rencana_kinerja'].each do |rencana|
           id_rencana = rencana['id']
           sasaran_kinerja = rencana['rencana_kerja']
