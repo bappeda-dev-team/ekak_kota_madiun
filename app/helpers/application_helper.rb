@@ -118,7 +118,7 @@ module ApplicationHelper
   end
 
   def dropdown_opd(all: false)
-    all = ['All Opd', 'all'] if all
+    all = ['Kota Madiun', 'all'] if all
     if current_user.has_role? :super_admin or current_user.has_role? :reviewer or current_user.nik == 'bapelitbangda'
       options_for_select(Opd.where.not(kode_opd: nil).pluck(:nama_opd, :kode_unik_opd).prepend(all))
     elsif current_user.nik == 'rsud2022'

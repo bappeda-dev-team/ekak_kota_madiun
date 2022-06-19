@@ -245,6 +245,16 @@
           </li>
         <% end %>
       <% end %>
+      <li class="nav-item<%= navigation_class('laporan_tematik') %>">
+        <%= link_to( laporan_tematik_path, class: "nav-link d-flex justify-content-between") do %>
+          <span>
+            <span class="sidebar-icon">
+              <i class="fas fa-tag icon icon-xs me-2"></i>
+            </span>
+            <span class="sidebar-text">Laporan Tematik</span>
+          </span>
+        <% end %>
+      </li>
       <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
       <li class="nav-item">
         <%= link_to destroy_user_session_path, {method: :delete, class: "nav-link d-flex justify-content-between"}  do %>

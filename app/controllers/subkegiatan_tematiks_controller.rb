@@ -6,6 +6,8 @@ class SubkegiatanTematiksController < ApplicationController
     @subkegiatan_tematiks = SubkegiatanTematik.all
   end
 
+  def laporan_tematik; end
+
   # GET /subkegiatan_tematiks/1 or /subkegiatan_tematiks/1.json
   def show; end
 

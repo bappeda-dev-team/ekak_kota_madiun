@@ -189,6 +189,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/laporan_usulan/:jenis', to: 'usulans#laporan_usulan'
   get '/pdf_usulan/:jenis/:opd/:tahun', to: 'usulans#pdf_usulan'
   get '/excel_usulan/:jenis/:opd/:tahun', to: 'usulans#excel_usulan'
+  get '/laporan_tematik', to: 'subkegiatan_tematiks#laporan_tematik'
   #
   # user_specific_thing
   get '/usulan_musrenbang', to: 'musrenbangs#usulan_musrenbang'
@@ -222,6 +223,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   post '/filter_opd', to: 'filter#filter_opd'
   post '/filter_usulan', to: 'filter#filter_usulan'
   post '/filter_user_sasarans', to: 'filter#filter_user_sasarans'
+  post '/filter_tematiks', to: 'filter#filter_tematiks'
 
   get "/all_opd", to: "opds#all_opd"
   get "/destroy_all", to: "program_kegiatans#destroy_all"
