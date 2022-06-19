@@ -32,56 +32,65 @@
             <% jumlah_sasaran = user.sasarans.count %>
             <% jumlah_program = user.sasaran_program.count %>
             <% row_atas = jumlah_sasaran + jumlah_program %>
+            <% row_atas = row_atas.zero? ? 1 : row_atas %>
             <tr class="border-bottom">
               <td class="text-gray-900 fw-bolder border-end border-bottom text-center" rowspan="<%= row_atas %>" scope="rowgroup"><%= i %></td>
               <td class="text-wrap border-end border-bottom" rowspan="<%= row_atas %>" scope="rowgroup"><%= user.nama %></td>
               <td class="border-start border-end text-center" rowspan="<%= row_atas %>" scope="rowgroup">
                 <%= render 'shared/user_sasaran_status_table', user: user %>
               </td>
-              <% user.sasaran_program.each do |program_kegiatan, sasarans| %>
-                <% row_dalam = sasarans.count + 1 %>
-                <td class="text-wrap" rowspan="<%= row_dalam %>"><%= program_kegiatan&.nama_subkegiatan || '-' %></td>
-                <% sasarans.each do |show_sasaran| %>
-                  <tr class="<%= warna_sasaran(show_sasaran.status_sasaran) %>">
-                    <td class="text-wrap border-start border-end" width="450px">
-                      <%= show_sasaran.sasaran_kinerja %>
-                    </td>
-                    <td class="border-start border-end border-bottom text-center">
-                      Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar) or 0 %>
-                    </td>
-                    <td class="border-start border-end border-bottom text-center">
-                      <% show_sasaran.petunjuk_status.select { |s, v| v == false }.each do |key, value| %>
-                        - <%= key.to_s.humanize %>
-                        <br>
-                      <% end %>
-                      <hr>
-                      <% if show_sasaran.status == 'disetujui' %>
-                        Terkunci
-                      <% else %>
-                        Terbuka
-                      <% end %>
-                    </td>
-                    <td class="fw-bolder text-gray-500 text-center border-start border-end" id="<%= dom_id(show_sasaran) %>">
-                      <% if show_sasaran.status == 'draft' %>
-                        <%= link_to setujui_sasaran_path(id: show_sasaran.id, dom: dom_id(show_sasaran), rowspan: 1),
+              <% if user.sasaran_program.any? %>
+                <% user.sasaran_program.each do |program_kegiatan, sasarans| %>
+                  <% row_dalam = sasarans.count + 1 %>
+                  <td class="text-wrap" rowspan="<%= row_dalam %>"><%= program_kegiatan&.nama_subkegiatan || '-' %></td>
+                  <% sasarans.each do |show_sasaran| %>
+                    <tr class="<%= warna_sasaran(show_sasaran.status_sasaran) %>">
+                      <td class="text-wrap border-start border-end" width="450px">
+                        <%= show_sasaran.sasaran_kinerja %>
+                      </td>
+                      <td class="border-start border-end border-bottom text-center">
+                        Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar) or 0 %>
+                      </td>
+                      <td class="border-start border-end border-bottom text-center">
+                        <% show_sasaran.petunjuk_status.select { |s, v| v == false }.each do |key, value| %>
+                          - <%= key.to_s.humanize %>
+                          <br>
+                        <% end %>
+                        <hr>
+                        <% if show_sasaran.status == 'disetujui' %>
+                          Terkunci
+                        <% else %>
+                          Terbuka
+                        <% end %>
+                      </td>
+                      <td class="fw-bolder text-gray-500 text-center border-start border-end" id="<%= dom_id(show_sasaran) %>">
+                        <% if show_sasaran.status == 'draft' %>
+                          <%= link_to setujui_sasaran_path(id: show_sasaran.id, dom: dom_id(show_sasaran), rowspan: 1),
                       method: :post, remote: true,
                       data: { disable_with: 'Memproses....'},
                       class:"btn btn-sm btn-primary" do %>
-                          <i class="fas fa-lock me-2"></i>
-                          Kunci
-                        <% end %>
-                      <% else %>
-                        <%= link_to revisi_sasaran_path(id: show_sasaran.id, dom: dom_id(show_sasaran), rowspan: 1),
+                            <i class="fas fa-lock me-2"></i>
+                            Kunci
+                          <% end %>
+                        <% else %>
+                          <%= link_to revisi_sasaran_path(id: show_sasaran.id, dom: dom_id(show_sasaran), rowspan: 1),
                       method: :post, remote: true,
                       data: { disable_with: 'Memproses....'},
                       class:"btn btn-sm btn-info" do %>
-                          <i class="fas fa-lock-open me-2"></i>
-                          Buka Kuncian
+                            <i class="fas fa-lock-open me-2"></i>
+                            Buka Kuncian
+                          <% end %>
                         <% end %>
-                      <% end %>
-                    </td>
-                  </tr>
+                      </td>
+                    </tr>
+                  <% end %>
                 <% end %>
+              <% else %>
+                <td class="text-wrap">Kosong</td>
+                <td class="text-wrap border-start border-end" width="450px">Kosong</td>
+                <td class="border-start border-end border-bottom text-center">Kosong</td>
+                <td class="border-start border-end border-bottom text-center">Kosong</td>
+                <td class="fw-bolder text-gray-500 text-center border-start border-end">Kosong</td>
               <% end %>
             </tr>
           <% end %>

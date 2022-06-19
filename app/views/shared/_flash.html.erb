@@ -9,8 +9,14 @@
           var text = "<%= value %>"
           var title = "<%= value.capitalize %>"
         <% end %>
+        <% if key == 'alert' %>
+          var key = 'error'
+        <% else %>
+          var key = "<%= key %>"
+        <% end %>
+        console.log(key)
           Swal.fire({
-           icon: "<%= key %>",
+           icon: key,
            title: title,
            text: text,
            showConfirmButton: false,
