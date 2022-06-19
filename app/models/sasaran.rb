@@ -32,6 +32,7 @@
 class Sasaran < ApplicationRecord
   # belongs_to :user
   belongs_to :user, foreign_key: 'nip_asn', primary_key: 'nik'
+  has_one :opd, through: :user
   belongs_to :program_kegiatan, optional: true
   has_many :tematik_sasarans, dependent: :destroy
   has_many :subkegiatan_tematiks, through: :tematik_sasarans
@@ -71,7 +72,10 @@ class Sasaran < ApplicationRecord
   scope :total_sudah_lengkap, -> { sudah_lengkap.count }
   scope :digunakan, -> { where(status: 'disetujui') }
   scope :total_digunakan, -> { where(status: 'disetujui').count }
-  scope :dilaporan, -> { where(status: ['pengajuan', 'disetujui', 'ditolak']) }
+  scope :dilaporan, -> { where(status: %w[pengajuan disetujui ditolak]) }
+  scope :sasaran_tematik, lambda { |tematik|
+                            includes(:subkegiatan_tematiks).where(subkegiatan_tematiks: { kode_tematik: tematik })
+                          }
 
   SUMBERS = { dana_transfer: 'Dana Transfer', dak: 'DAK', dbhcht: 'DBHCHT', bk_provinsi: 'BK Provinsi',
               blud: 'BLUD' }.freeze

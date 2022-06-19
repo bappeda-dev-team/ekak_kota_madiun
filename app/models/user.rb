@@ -39,7 +39,7 @@ class User < ApplicationRecord
   has_many :sasarans, dependent: :destroy, foreign_key: 'nip_asn', primary_key: 'nik'
   # has_many :program_kegiatans, through: :sasarans
 
-  scope :asn_aktif, -> { includes(:roles).where(roles: { name: 'asn' }) }
+  scope :asn_aktif, -> { without_role(:admin).with_role(:asn) }
   scope :sasaran_diajukan, -> { asn_aktif.includes(:sasarans, :program_kegiatans).merge(Sasaran.sudah_lengkap) }
   scope :opd_by_role, ->(kode_opd, role) { where(kode_opd: kode_opd).with_role(role.to_sym) }
 

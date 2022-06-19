@@ -1,5 +1,5 @@
 class FilterController < ApplicationController
-  before_action :filter_params
+  before_action :filter_params, except: %i[filter_tematiks]
   before_action :nama_opd, only: %i[filter_gender]
 
   OPD_TABLE = {
@@ -193,6 +193,16 @@ class FilterController < ApplicationController
     @filter_file = params[:filter_file].empty? ? 'hasil_filter' : params[:filter_file]
     respond_to do |format|
       format.js { render 'sasarans/user_sasarans' }
+    end
+  end
+
+  def filter_tematiks
+    kode_tematik = params[:kode_tematik]
+    @tahun = params[:tahun]
+    @nama_tematik = SubkegiatanTematik.find_by(kode_tematik: kode_tematik).nama_tematik
+    @tematiks = Sasaran.sasaran_tematik(kode_tematik)
+    respond_to do |format|
+      format.js { render 'subkegiatan_tematiks/tematik_filter' }
     end
   end
 
