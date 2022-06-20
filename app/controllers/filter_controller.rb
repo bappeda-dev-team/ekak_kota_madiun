@@ -121,7 +121,7 @@ class FilterController < ApplicationController
       @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).asn_aktif
       @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])
     end
-    @filter_file = 'hasil_filter_rab' if params[:filter_file].empty?
+    @filter_file = params[:filter_file].empty? ? 'hasil_filter_rab' : params[:filter_file]
     respond_to do |format|
       format.js { render 'program_kegiatans/rab_filter' }
     end
@@ -197,10 +197,10 @@ class FilterController < ApplicationController
   end
 
   def filter_tematiks
-    kode_tematik = params[:kode_tematik]
+    @kode_tematik = params[:kode_tematik]
     @tahun = params[:tahun]
-    @nama_tematik = SubkegiatanTematik.find_by(kode_tematik: kode_tematik).nama_tematik
-    @tematiks = Sasaran.sasaran_tematik(kode_tematik)
+    @nama_tematik = SubkegiatanTematik.find_by(kode_tematik: @kode_tematik).nama_tematik
+    @tematiks = Sasaran.sasaran_tematik(@kode_tematik)
     respond_to do |format|
       format.js { render 'subkegiatan_tematiks/tematik_filter' }
     end
