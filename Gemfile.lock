@@ -428,7 +428,9 @@ DEPENDENCIES
   online_migrations
   pagy (~> 5.10)
   pg
+  prawn
   prawn-rails (~> 1.4, >= 1.4.2)
+  prawn-table
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1)

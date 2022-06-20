@@ -7,7 +7,11 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :anggaran_sshes
   resources :anggaran_bluds
   resources :anggaran_hspk_umums
-  resources :subkegiatan_tematiks, path: 'tematiks'
+  resources :subkegiatan_tematiks, path: 'tematiks' do
+    member do
+      get :cetak_pdf
+    end
+  end
   resources :rekenings
   resources :musrenbangs do
     member do

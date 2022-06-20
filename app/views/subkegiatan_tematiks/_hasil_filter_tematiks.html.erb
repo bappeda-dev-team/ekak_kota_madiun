@@ -2,10 +2,15 @@
   <div class="card-header">
     <div class="row align-items-center">
       <div class="col">
-        <h2 class="fs-5 fw-bold mb-0">Peta SPBE</h2>
+        <h2 class="fs-5 fw-bold mb-0">
+          Kota Madiun - <%= @nama_tematik %> - <%= @tahun %>
+        </h2>
       </div>
-      <div class="col text-end">
-        Kota Madiun - <%= @nama_tematik %> - <%= @tahun %>
+      <div class="col visually-hidden">
+        <%= link_to cetak_pdf_subkegiatan_tematik_path(@kode_tematik), class:"btn btn-sm btn-primary" do %>
+          Download PDF 
+          <i class="fas fa-file-pdf ms-2"></i>
+        <% end %>
       </div>
     </div>
   </div>
