@@ -315,8 +315,8 @@ module Api
         id_kamus = musren['id_kamus']
         tahun = musren['tahun']
         alamat = musren['alamat_teks']
-        uraian = musren['koefisien']
-        usulan = musren['masalah']
+        uraian = musren['masalah']
+        usulan = musren['id_usulan']
         opd = musren['rev_unit'] # TODO: make column for this
         musrenbangs << { id_unik: id_unik, opd: opd,
                          id_kamus: id_kamus, tahun: tahun, alamat: alamat, usulan: usulan,
@@ -334,8 +334,8 @@ module Api
         id_kamus = pokir['id_kamus']
         tahun = pokir['tahun']
         alamat = pokir['alamat_teks']
-        uraian = pokir['koefisien']
-        usulan = pokir['masalah']
+        uraian = pokir['masalah']
+        usulan = pokir['id_reses']
         opd = pokir['rev_unit']
         pokirs << { id_unik: id_unik, id_kamus: id_kamus, usulan: usulan,
                     tahun: tahun, alamat: alamat, uraian: uraian, opd: opd,
