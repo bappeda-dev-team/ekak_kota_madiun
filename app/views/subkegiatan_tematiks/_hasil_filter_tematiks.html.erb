@@ -6,8 +6,8 @@
           Kota Madiun - <%= @nama_tematik %> - <%= @tahun %>
         </h2>
       </div>
-      <div class="col visually-hidden">
-        <%= link_to cetak_pdf_subkegiatan_tematik_path(@kode_tematik), class:"btn btn-sm btn-primary" do %>
+      <div class="col">
+        <%= link_to cetak_pdf_subkegiatan_tematik_path(@kode_tematik, format: :pdf), class:"btn btn-sm btn-primary" do %>
           Download PDF 
           <i class="fas fa-file-pdf ms-2"></i>
         <% end %>
@@ -61,6 +61,9 @@
             <td></td>
             <td></td>
             <td class="fw-bolder border-start border-end">Rp. <%= number_with_delimiter(@tematiks.map(&:total_anggaran).compact.sum) %></td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
         </tfoot>
       </table>
