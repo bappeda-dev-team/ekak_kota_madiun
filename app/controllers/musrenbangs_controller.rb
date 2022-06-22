@@ -77,7 +77,10 @@ class MusrenbangsController < ApplicationController
 
   def update_opd
     @musrenbang = Musrenbang.with_kamus
-    @musrenbang.map { |m| m.update(opd: m.kamus_usulans.first.id_unit) }
+    @musrenbang.map do |m|
+      m.update(opd: m.kamus_usulans.first.id_unit)
+      m.update(usulan: m.kamus_usulans.first.usulan)
+    end
     flash[:success] = 'Usulan disesuaikan dengan kamus'
     redirect_to musrenbangs_path
   end

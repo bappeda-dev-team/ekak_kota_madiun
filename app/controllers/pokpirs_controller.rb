@@ -36,7 +36,10 @@ class PokpirsController < ApplicationController
 
   def update_opd
     @pokpir = Pokpir.with_kamus
-    @pokpir.map { |m| m.update(opd: m.kamus_usulans.first.id_unit) }
+    @pokpir.map do |m|
+      m.update(opd: m.kamus_usulans.first.id_unit)
+      m.update(usulan: m.kamus_usulans.first.usulan)
+    end
     flash[:success] = 'Usulan disesuaikan dengan kamus'
     redirect_to pokpirs_path
   end

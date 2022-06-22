@@ -22,6 +22,10 @@
     <%= form.email_field :email, class: "form-control" %>
   </div>
   <div class="field">
+    <%= form.label :password, class: "form-label" %>
+    <%= form.password_field :password, class: "form-control" %>
+  </div>
+  <div class="field">
     <%= form.label :opd, class: "form-label" %>
     <%= form.select :kode_opd, Opd.pluck(:nama_opd, :kode_opd), {include_blank: true}, {class: "form-control select2-opd", "data-placeholder": "Pilih Opd"} %>
   </div>
