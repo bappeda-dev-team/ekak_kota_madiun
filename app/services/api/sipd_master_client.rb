@@ -17,7 +17,7 @@ module Api
       @id = id
     end
 
-    def master_program
+    def sync_master_program
       request = url_master_program
       proses_data_master_program(response: request)
     end
@@ -59,7 +59,7 @@ module Api
           updated_at: Time.now
         }
       end
-      Master::Program.upsert_all(data_program, unique_by: :kode_unik_opd)
+      Master::Program.upsert_all(data_program, unique_by: :id_unik_sipd)
     end
   end
 end
