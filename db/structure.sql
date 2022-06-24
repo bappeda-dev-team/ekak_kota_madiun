@@ -1006,6 +1006,46 @@ ALTER SEQUENCE public.master_programs_id_seq OWNED BY public.master_programs.id;
 
 
 --
+-- Name: master_subkegiatans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.master_subkegiatans (
+    id bigint NOT NULL,
+    id_sub_kegiatan_sipd character varying,
+    kode_sub_kegiatan character varying,
+    tahun character varying DEFAULT '2022'::character varying,
+    id_urusan character varying,
+    id_bidang_urusan character varying,
+    nama_sub_kegiatan character varying DEFAULT '-'::character varying,
+    no_sub_kegiatan character varying,
+    id_unik_sipd character varying NOT NULL,
+    id_program character varying,
+    id_kegiatan character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: master_subkegiatans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.master_subkegiatans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: master_subkegiatans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.master_subkegiatans_id_seq OWNED BY public.master_subkegiatans.id;
+
+
+--
 -- Name: musrenbangs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2061,6 +2101,13 @@ ALTER TABLE ONLY public.master_programs ALTER COLUMN id SET DEFAULT nextval('pub
 
 
 --
+-- Name: master_subkegiatans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.master_subkegiatans ALTER COLUMN id SET DEFAULT nextval('public.master_subkegiatans_id_seq'::regclass);
+
+
+--
 -- Name: musrenbangs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2414,6 +2461,14 @@ ALTER TABLE ONLY public.master_kegiatans
 
 ALTER TABLE ONLY public.master_programs
     ADD CONSTRAINT master_programs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: master_subkegiatans master_subkegiatans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.master_subkegiatans
+    ADD CONSTRAINT master_subkegiatans_pkey PRIMARY KEY (id);
 
 
 --
@@ -2771,6 +2826,13 @@ CREATE UNIQUE INDEX index_master_kegiatans_on_id_unik_sipd ON public.master_kegi
 --
 
 CREATE UNIQUE INDEX index_master_programs_on_id_unik_sipd ON public.master_programs USING btree (id_unik_sipd);
+
+
+--
+-- Name: index_master_subkegiatans_on_id_unik_sipd; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_master_subkegiatans_on_id_unik_sipd ON public.master_subkegiatans USING btree (id_unik_sipd);
 
 
 --
@@ -3253,6 +3315,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220608163724'),
 ('20220609014559'),
 ('20220623072453'),
-('20220624012209');
+('20220624012209'),
+('20220624014758');
 
 

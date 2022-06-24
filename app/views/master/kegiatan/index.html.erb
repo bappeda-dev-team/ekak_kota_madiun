@@ -7,14 +7,14 @@
             <i class="fas fa-home"></i>
           <% end %>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Master Program</li>
+        <li class="breadcrumb-item active" aria-current="page">Master Kegiatan</li>
       </ol>
     </nav>
     <div class="card border-0 shadow">
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Master Program</h2>
+            <h2 class="fs-5 fw-bold mb-0">Master Kegiatan</h2>
           </div>
           <div class="col text-end">
             <%= link_to '/sync_master_kegiatan/2023',
@@ -22,7 +22,7 @@
                                                   data: { disable_with: 'Memproses....'},
                                                   class:"btn btn-sm btn-primary" do %>
               <i class="fas fa-sync me-2"></i>
-              Update Master Program tahun-x
+              Update Master Kegiatan tahun-x
             <% end %>
           </div>
         </div>
@@ -41,7 +41,7 @@
             </tr>
           </thead>
           <tbody>
-            <% @kegiatans.each.with_index(1) do |keg, i| %>
+            <% @kegiatans.order(:no_giat).each.with_index(1) do |keg, i| %>
               <tr>
                 <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
                 <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= keg.no_giat %></td>

@@ -27,6 +27,11 @@ module Api
       proses_data_master_kegiatan(response: request)
     end
 
+    def sync_master_subkegiatan
+      request = url_master_subkegiatan(id_giat: @id)
+      proses_data_master_subkegiatan(response: request)
+    end
+
     private
 
     def url_master_program
@@ -80,13 +85,36 @@ module Api
           nama_giat: kegiatan['nama_giat'],
           no_giat: kegiatan['no_giat'],
           tahun: kegiatan['tahun'],
-          id_unik_sipd: kegiatan['id_unik'],
+          id_unik_sipd: kegiatan['id_unik'].to_s + '-' + kegiatan['tahun'].to_s,
           id_program: kegiatan['id_program'],
           created_at: Time.now,
           updated_at: Time.now
         }
       end
       Master::Kegiatan.upsert_all(data_kegiatan, unique_by: :id_unik_sipd)
+    end
+
+    def proses_data_master_subkegiatan(response:)
+      data = Oj.load(response.body)
+      subkegiatans = data['data']
+      data_subkegiatan = []
+      subkegiatans.each do |subkegiatan|
+        data_subkegiatan << {
+          id_sub_kegiatan_sipd: subkegiatan['id_sub_giat'],
+          id_urusan: subkegiatan['id_urusan'],
+          id_bidang_urusan: subkegiatan['id_bidang_urusan'],
+          kode_sub_kegiatan: subkegiatan['kode_sub_giat'],
+          nama_sub_kegiatan: subkegiatan['nama_sub_giat'],
+          no_sub_kegiatan: subkegiatan['no_sub_giat'],
+          tahun: subkegiatan['tahun'],
+          id_unik_sipd: subkegiatan['id_unik'],
+          id_program: subkegiatan['id_program'],
+          id_kegiatan: subkegiatan['id_giat'],
+          created_at: Time.now,
+          updated_at: Time.now
+        }
+      end
+      Master::Subkegiatan.upsert_all(data_subkegiatan, unique_by: :id_unik_sipd)
     end
   end
 end

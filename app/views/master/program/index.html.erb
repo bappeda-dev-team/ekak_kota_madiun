@@ -40,7 +40,7 @@
             </tr>
           </thead>
           <tbody>
-            <% @programs.each.with_index(1) do |prog, i| %>
+            <% @programs.order(:no_program).each.with_index(1) do |prog, i| %>
               <tr>
                 <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
                 <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.no_program %></td>
