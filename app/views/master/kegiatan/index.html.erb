@@ -16,6 +16,22 @@
           <div class="col">
             <h2 class="fs-5 fw-bold mb-0">Master Kegiatan</h2>
           </div>
+          <div class="col">
+            <form action="/master_kegiatans" method="GET" class="row">
+              <input type="hidden" name="filter_query" value="tahun">
+              <div class="col">
+                <select name="tahun" id="tahun" class="select2-waw">
+                  <option value="">Pilih Tahun</option>
+                  <% for tahun in (2020..Date.today.year + 1) do %>
+                    <option value="<%= tahun %>"><%= tahun %></option>
+                  <% end %>
+                </select>
+              </div>
+              <div class="col-auto">
+                <input type="submit" value="Filter" class="btn btn-primary">
+              </div>
+            </form>
+          </div>
           <div class="col text-end">
             <%= link_to '/sync_master_kegiatan/2023',
                                                   method: :post,
@@ -23,6 +39,14 @@
                                                   class:"btn btn-sm btn-primary" do %>
               <i class="fas fa-sync me-2"></i>
               Update Master Kegiatan tahun-x
+            <% end %>
+            <%= link_to sync_master_subkegiatan_all_path(
+                        tahun: 2023),
+                        method: :post,
+                        data: { disable_with: 'Memproses....'},
+                        class:"btn btn-sm btn-primary" do %>
+              <i class="fas fa-sync me-2"></i>
+              Update Sub Kegiatan All
             <% end %>
           </div>
         </div>
@@ -38,6 +62,7 @@
               <th class="border-bottom" scope="col">Tahun</th>
               <th class="border-bottom" scope="col">id_kegiatan</th>
               <th class="border-bottom" scope="col">id_program</th>
+              <th class="border-bottom" scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -50,6 +75,15 @@
                 <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= keg.tahun %></td>
                 <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= keg.id_kegiatan_sipd %></td>
                 <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= keg.id_program %></td>
+                <td class="fw-bolder text-gray-500">
+                  <%= link_to "/sync_master_subkegiatan/#{keg.tahun}/#{keg.id_kegiatan_sipd}",
+                                                  method: :post,
+                                                  data: { disable_with: 'Memproses....'},
+                                                  class:"btn btn-sm btn-tertiary" do %>
+                    <i class="fas fa-sync me-2"></i>
+                    Sync Sub
+                  <% end %>
+                </td>
               </tr>
             <% end %>
           </tbody>

@@ -1,6 +1,6 @@
 class Master::KegiatanController < ApplicationController
   def index
-    @kegiatans = Master::Kegiatan.all
+    handle_filters
   end
 
   def sync_master_kegiatan
@@ -9,5 +9,15 @@ class Master::KegiatanController < ApplicationController
     request.sync_master_kegiatan
     redirect_to master_kegiatans_path,
                 success: "Update Master Kegiatan Selesai"
+  end
+
+  def handle_filters
+    filter_query = params[:filter_query]
+    if filter_query == 'tahun'
+      tahun = params[:tahun]
+      @kegiatans = Master::Kegiatan.where(tahun: tahun)
+    else
+      @kegiatans = Master::Kegiatan.all
+    end
   end
 end

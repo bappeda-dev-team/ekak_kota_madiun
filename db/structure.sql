@@ -968,6 +968,50 @@ ALTER SEQUENCE public.master_kegiatans_id_seq OWNED BY public.master_kegiatans.i
 
 
 --
+-- Name: master_output_kegiatans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.master_output_kegiatans (
+    id bigint NOT NULL,
+    id_output_bl character varying NOT NULL,
+    id_bl character varying,
+    id_skpd character varying,
+    id_sub_skpd character varying,
+    id_program character varying,
+    id_kegiatan character varying,
+    id_sub_kegiatan character varying,
+    indikator_kegiatan character varying,
+    target_kegiatan character varying,
+    satuan_kegiatan character varying,
+    indikator_sub_kegiatan character varying,
+    target_sub_kegiatan character varying,
+    satuan_sub_kegiatan character varying,
+    tahun character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: master_output_kegiatans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.master_output_kegiatans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: master_output_kegiatans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.master_output_kegiatans_id_seq OWNED BY public.master_output_kegiatans.id;
+
+
+--
 -- Name: master_programs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2094,6 +2138,13 @@ ALTER TABLE ONLY public.master_kegiatans ALTER COLUMN id SET DEFAULT nextval('pu
 
 
 --
+-- Name: master_output_kegiatans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.master_output_kegiatans ALTER COLUMN id SET DEFAULT nextval('public.master_output_kegiatans_id_seq'::regclass);
+
+
+--
 -- Name: master_programs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2453,6 +2504,14 @@ ALTER TABLE ONLY public.mandatoris
 
 ALTER TABLE ONLY public.master_kegiatans
     ADD CONSTRAINT master_kegiatans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: master_output_kegiatans master_output_kegiatans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.master_output_kegiatans
+    ADD CONSTRAINT master_output_kegiatans_pkey PRIMARY KEY (id);
 
 
 --
@@ -2819,6 +2878,13 @@ CREATE INDEX index_mandatoris_on_status ON public.mandatoris USING btree (status
 --
 
 CREATE UNIQUE INDEX index_master_kegiatans_on_id_unik_sipd ON public.master_kegiatans USING btree (id_unik_sipd);
+
+
+--
+-- Name: index_master_output_kegiatans_on_id_output_bl; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_master_output_kegiatans_on_id_output_bl ON public.master_output_kegiatans USING btree (id_output_bl);
 
 
 --
@@ -3316,6 +3382,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220609014559'),
 ('20220623072453'),
 ('20220624012209'),
-('20220624014758');
+('20220624014758'),
+('20220624060055');
 
 

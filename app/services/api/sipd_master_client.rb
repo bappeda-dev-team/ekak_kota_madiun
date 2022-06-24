@@ -32,6 +32,11 @@ module Api
       proses_data_master_subkegiatan(response: request)
     end
 
+    def sync_master_output_kegiatans
+      request = url_output_belanja(tahun: @tahun)
+      proses_data_master_output_kegiatans(response: request)
+    end
+
     private
 
     def url_master_program
@@ -115,6 +120,33 @@ module Api
         }
       end
       Master::Subkegiatan.upsert_all(data_subkegiatan, unique_by: :id_unik_sipd)
+    end
+
+    def proses_data_master_output_kegiatans(response:)
+      data = Oj.load(response.body)
+      output_kegiatans = data['data']
+      data_output = []
+      output_kegiatans.each do |output|
+        data_output << {
+          id_output_bl: output['id_output_bl'],
+          id_bl: output['id_bl'],
+          id_skpd: output['id_skpd'],
+          id_sub_skpd: output['id_sub_skpd'],
+          id_program: output['id_program'],
+          id_kegiatan: output['id_giat'],
+          id_sub_kegiatan: output['id_sub_giat'],
+          indikator_kegiatan: output['tolak_ukur'],
+          target_kegiatan: output['target'],
+          satuan_kegiatan: output['satuan'],
+          indikator_sub_kegiatan: output['tolok_ukur_sub'],
+          target_sub_kegiatan: output['target_sub'],
+          satuan_sub_kegiatan: output['satuan_sub'],
+          tahun: output['tahun'],
+          created_at: Time.now,
+          updated_at: Time.now
+        }
+      end
+      Master::OutputKegiatan.upsert_all(data_output, unique_by: :id_output_bl)
     end
   end
 end

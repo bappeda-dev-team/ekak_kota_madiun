@@ -9,6 +9,15 @@ class Master::SubkegiatanController < ApplicationController
     request = Api::SipdMasterClient.new(tahun: tahun, id: id_giat)
     request.sync_master_subkegiatan
     redirect_to master_subkegiatans_path,
-                success: "Update Master Program Selesai"
+                success: "Update Master Sub Kegiatan Selesai"
+  end
+
+  def sync_master_subkegiatan_all
+    tahun = params[:tahun]
+    kegiatans = Master::Kegiatan.where(tahun: tahun)
+    kegiatans.each do |kegiatan|
+      request = Api::SipdMasterClient.new(tahun: tahun, id: kegiatan.id_kegiatan_sipd)
+      request.sync_master_subkegiatan
+    end
   end
 end
