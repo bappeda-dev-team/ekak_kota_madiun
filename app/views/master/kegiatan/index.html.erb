@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Master Program</li>
+      </ol>
+    </nav>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Master Program</h2>
+          </div>
+          <div class="col text-end">
+            <%= link_to '/sync_master_kegiatan/2023',
+                                                  method: :post,
+                                                  data: { disable_with: 'Memproses....'},
+                                                  class:"btn btn-sm btn-primary" do %>
+              <i class="fas fa-sync me-2"></i>
+              Update Master Program tahun-x
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center">
+          <thead class="thead-light">
+            <tr>
+              <th class="border-bottom" scope="col">No.</th>
+              <th class="border-bottom" scope="col">No Kegiatan</th>
+              <th class="border-bottom" scope="col">Kode Kegiatan</th>
+              <th class="border-bottom" scope="col">Nama Kegiatan</th>
+              <th class="border-bottom" scope="col">Tahun</th>
+              <th class="border-bottom" scope="col">id_kegiatan</th>
+              <th class="border-bottom" scope="col">id_program</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @kegiatans.each.with_index(1) do |keg, i| %>
+              <tr>
+                <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
+                <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= keg.no_giat %></td>
+                <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= keg.kode_giat %></td>
+                <td class="text-gray-900" scope="row" style="white-space: initial !important;"><%= keg.nama_giat %></td>
+                <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= keg.tahun %></td>
+                <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= keg.id_kegiatan_sipd %></td>
+                <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= keg.id_program %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

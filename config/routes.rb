@@ -215,6 +215,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   post '/update_detail_program', to: 'api/sipd_client#update_detail_program'
   post '/sync_indikator_program', to: 'api/sipd_client#sync_indikator_program'
   post '/sync_master_program/:tahun', to: 'master/program#sync_master_program'
+  post '/sync_master_kegiatan/:tahun', to: 'master/kegiatan#sync_master_kegiatan'
   # internal filter
   post '/filter_sasaran', to: 'filter#filter_sasaran'
   post '/filter_user', to: 'filter#filter_user'
@@ -233,6 +234,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get "/all_opd", to: "opds#all_opd"
   get "/destroy_all", to: "program_kegiatans#destroy_all"
   get '/master_programs', to: 'master/program#index'
+  get '/master_kegiatans', to: 'master/kegiatan#index'
   # get "/program_kegiatans", to: "program_kegiatans#index"
   # get "/program_kegiatans/new", to: "program_kegiatans#new"
   # get "/program_kegiatan/:id", to: "program_kegiatans#show"

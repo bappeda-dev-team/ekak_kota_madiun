@@ -22,6 +22,11 @@ module Api
       proses_data_master_program(response: request)
     end
 
+    def sync_master_kegiatan
+      request = url_master_kegiatan
+      proses_data_master_kegiatan(response: request)
+    end
+
     private
 
     def url_master_program
@@ -29,7 +34,7 @@ module Api
     end
 
     def url_master_kegiatan
-      H.get("#{URL}/master_program/109")
+      H.get("#{URL}/master_kegiatan/109")
     end
 
     def url_master_subkegiatan(id_giat:)
@@ -60,6 +65,28 @@ module Api
         }
       end
       Master::Program.upsert_all(data_program, unique_by: :id_unik_sipd)
+    end
+
+    def proses_data_master_kegiatan(response:)
+      data = Oj.load(response.body)
+      kegiatans = data['data']
+      data_kegiatan = []
+      kegiatans.each do |kegiatan|
+        data_kegiatan << {
+          id_kegiatan_sipd: kegiatan['id_giat'],
+          id_urusan: kegiatan['id_urusan'],
+          id_bidang_urusan: kegiatan['id_bidang_urusan'],
+          kode_giat: kegiatan['kode_giat'],
+          nama_giat: kegiatan['nama_giat'],
+          no_giat: kegiatan['no_giat'],
+          tahun: kegiatan['tahun'],
+          id_unik_sipd: kegiatan['id_unik'],
+          id_program: kegiatan['id_program'],
+          created_at: Time.now,
+          updated_at: Time.now
+        }
+      end
+      Master::Kegiatan.upsert_all(data_kegiatan, unique_by: :id_unik_sipd)
     end
   end
 end
