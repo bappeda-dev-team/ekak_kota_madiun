@@ -16,6 +16,7 @@
           <div class="col">
             <h2 class="fs-5 fw-bold mb-0">Master Urusan</h2>
           </div>
+          <%= render 'shared/inline_filter', url: master_urusan_path, filter: 'urusan_tahun', dropdown: dropdown_urusan %>
           <div class="col text-end">
             <%= link_to sync_master_urusan_path,
                                                 method: :post,
