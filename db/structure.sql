@@ -1966,7 +1966,9 @@ CREATE TABLE public.users (
     eselon character varying,
     nama_pangkat character varying,
     id_bidang bigint,
-    nama_bidang character varying
+    nama_bidang character varying,
+    type character varying,
+    atasan character varying
 );
 
 
@@ -3500,6 +3502,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220624014758'),
 ('20220624060055'),
 ('20220627001747'),
-('20220627003603');
+('20220627003603'),
+('20220627025154');
 
 

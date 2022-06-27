@@ -41,6 +41,11 @@ module Api
       update_data_sasaran(request)
     end
 
+    def update_struktur
+      request = request_struktur(kode_opd, tahun, bulan)
+      update_struktur_pegawai(request)
+    end
+
     private
 
     def request_skp(kode_opd, tahun, bulan, nip_asn)
@@ -54,11 +59,16 @@ module Api
              form: { username: USERNAME, password: PASSWORD })
     end
 
+    def request_struktur(kode_opd, tahun, bulan)
+      H.post("#{URL}/struktur_pegawai/#{kode_opd}/#{tahun}/#{bulan}",
+             form: { username: USERNAME, password: PASSWORD })
+    end
+
     def update_data_sasaran(response) # rubocop:disable Metrics/MethodLength
       data = Oj.load(response.body)
       data_opd = data['data']['data_opd']
       pegawais = data['data']['data_pegawai']
-      pegawais.reject! { |pe| pe['eselon'].match(/^(2|3)/) }
+      # pegawais.reject! { |pe| pe['eselon'].match(/^(2|3)/) }
       data_sasaran = []
       data_indikator = []
       data_tahapan = []
@@ -121,9 +131,9 @@ module Api
       # opd.update(insert_to_opd)
       data_renaksi.reject! { |renaksi| renaksi[:target].zero? }
       Sasaran.upsert_all(data_sasaran, unique_by: :id_rencana)
-      IndikatorSasaran.upsert_all(data_indikator, unique_by: :id_indikator)
-      Tahapan.upsert_all(data_tahapan, unique_by: :id_rencana_aksi)
-      Aksi.upsert_all(data_renaksi, unique_by: :id_aksi_bulan)
+      IndikatorSasaran.upsert_all(data_indikator, unique_by: :id_indikator) unless data_indikator.blank?
+      Tahapan.upsert_all(data_tahapan, unique_by: :id_rencana_aksi) unless data_tahapan.blank?
+      Aksi.upsert_all(data_renaksi, unique_by: :id_aksi_bulan) unless data_renaksi.blank?
     end
 
     def update_data_pegawai(response)
@@ -149,6 +159,43 @@ module Api
                            created_at: Time.now, updated_at: Time.now }
       end
       data_pegawais.each do |data_p|
+        User.upsert(data_p, unique_by: :nik)
+      end
+    end
+
+    def update_struktur_pegawai(response)
+      kode_opd = Opd.find_by(kode_unik_opd: @kode_opd).kode_opd || '0'
+      data = Oj.load(response.body)
+      pegawais = data['data']['data_pegawai']
+      data_pegawais = []
+      pegawais.each do |pegawai|
+        email = "#{pegawai['nip']}@madiunkota.go.id"
+        nip = pegawai['nip']
+        nama = pegawai['nama']
+        jabatan = pegawai['jabatan']
+        eselon = pegawai['eselon']
+        pangkat = pegawai['pangkat']
+        nama_pangkat = pegawai['nama_pangkat']
+        id_bidang = pegawai['id_bidang']
+        nama_bidang = pegawai['nama_bidang']
+        atasan = pegawai['atasan_nip']
+        password = User.new(password: 123_456).encrypted_password
+        data_pegawais << { kode_opd: kode_opd, nik: nip, nama: nama, jabatan: jabatan,
+                           eselon: eselon, pangkat: pangkat, nama_pangkat: nama_pangkat,
+                           id_bidang: id_bidang, nama_bidang: nama_bidang, email: email,
+                           encrypted_password: password, atasan: atasan,
+                           created_at: Time.now, updated_at: Time.now }
+      end
+      data_pegawais.each do |data_p|
+        tipe = ''
+        if data_p[:atasan].blank?
+          tipe = 'Kepala'
+        elsif data_p[:atasan].present? && data_p[:eselon].match(/^(2|3)/)
+          tipe = 'Atasan'
+        else
+          tipe = 'User'
+        end
+        data_p.store(:type, tipe)
         User.upsert(data_p, unique_by: :nik)
       end
     end

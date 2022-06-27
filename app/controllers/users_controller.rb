@@ -6,6 +6,10 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  def struktur
+    @users = User.opd_by_role(params[:opd], 'asn')
+  end
+
   def user_search
     param = params[:q] || ''
     param_search = params[:search] || ''

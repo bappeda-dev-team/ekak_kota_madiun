@@ -3,6 +3,7 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
+#  atasan                 :string
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  eselon                 :string
@@ -17,6 +18,7 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  type                   :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #

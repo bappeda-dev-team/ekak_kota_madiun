@@ -1,0 +1,2 @@
+class Kepala < User
+end

@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Struktur User A</li>
+      </ol>
+    </nav>
+    <% flash.each do |type, msg| %>
+      <div class="alert alert-info">
+        <%= msg %>
+      </div>
+    <% end %>
+    <%= render 'shared/filter_card', filter_url: '/filter_user', filter_file: 'hasil_filter_all' %>
+    <div class="card border-0 shadow" id="user_filter">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Struktur User A</h2>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="atasan">
+          <% atasan = User.find_by(nik: '198003102006042018') %>
+          <p><%= atasan.nama %></p>
+          <hr>
+          <% atasan.users.each do |s| %>
+            <span><%= s.nama + '-' + s.nik %></span> |
+            <hr>
+            <% if s.type == 'Atasan' %>
+              <% s.users.each do |b| %>
+                <span><%= b.nama %></span> |
+                <hr>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

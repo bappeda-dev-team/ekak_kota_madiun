@@ -48,7 +48,12 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   root to: 'home#dashboard'
   resources :users do
     resources :sasarans, path: 'sasaran_kerja'
+    collection do
+      get :struktur
+    end
   end
+  resources :atasans
+  resources :kepalas
   resources :sasarans do
     resources :rincians do
       get 'subkegiatan', on: :new
@@ -203,6 +208,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # third party Api
   get '/sync_sasaran', to: 'api/skp_client#sync_sasaran'
   get '/sync_pegawai', to: 'api/skp_client#sync_pegawai'
+  get '/sync_struktur_pegawai', to: 'api/skp_client#sync_struktur_pegawai'
   get '/sync_subkegiatan', to: 'api/sipd_client#sync_subkegiatan'
   get '/sync_subkegiatan_opd', to: 'api/sipd_client#sync_subkegiatan_opd'
   get '/update_detail_kegiatan_lama', to: 'api/sipd_client#update_detail_kegiatan_lama'
