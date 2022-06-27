@@ -1,0 +1,2 @@
+module Master::UrusansHelper
+end

@@ -37,6 +37,11 @@ module Api
       proses_data_master_output_kegiatans(response: request)
     end
 
+    def sync_master_urusans
+      request = url_master_urusan
+      proses_data_master_urusan(response: request)
+    end
+
     private
 
     def url_master_program
@@ -53,6 +58,10 @@ module Api
 
     def url_output_belanja(tahun:)
       H.get("#{URL}/output_bl/109?tahun=#{tahun}") # this will load 1000 records
+    end
+
+    def url_master_urusan
+      H.get("#{URL}/master_urusan/109")
     end
 
     # data processing
@@ -147,6 +156,24 @@ module Api
         }
       end
       Master::OutputKegiatan.upsert_all(data_output, unique_by: :id_output_bl)
+    end
+
+    def proses_data_master_urusan(response:)
+      data = Oj.load(response.body)
+      urusans = data['data']
+      data_urusan = []
+      urusans.each do |urusan|
+        data_urusan << {
+          id_urusan_sipd: urusan['id_urusan'],
+          tahun: urusan['tahun'],
+          kode_urusan: urusan['kode_urusan'],
+          nama_urusan: urusan['nama_urusan'],
+          id_unik_sipd: urusan['id_unik'].to_s + '-' + urusan['tahun'].to_s,
+          created_at: Time.now,
+          updated_at: Time.now
+        }
+      end
+      Master::Urusan.upsert_all(data_urusan, unique_by: :id_unik_sipd)
     end
   end
 end

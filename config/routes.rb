@@ -219,6 +219,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   post '/sync_master_subkegiatan/:tahun/:id_giat', to: 'master/subkegiatan#sync_master_subkegiatan'
   post '/sync_master_subkegiatan_all', to: 'master/subkegiatan#sync_master_subkegiatan_all'
   post '/sync_master_output_kegiatans/:tahun', to: 'master/output_kegiatans#sync_master_output_kegiatans'
+  post '/sync_master_urusan', to: 'master/urusans#sync_master_urusan'
   # internal filter
   post '/filter_sasaran', to: 'filter#filter_sasaran'
   post '/filter_user', to: 'filter#filter_user'
@@ -240,6 +241,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/master_kegiatans', to: 'master/kegiatan#index'
   get '/master_subkegiatans', to: 'master/subkegiatan#index'
   get '/master_output', to: 'master/output_kegiatans#index'
+  get '/master_urusan', to: 'master/urusans#index'
   # get "/program_kegiatans", to: "program_kegiatans#index"
   # get "/program_kegiatans/new", to: "program_kegiatans#new"
   # get "/program_kegiatan/:id", to: "program_kegiatans#show"

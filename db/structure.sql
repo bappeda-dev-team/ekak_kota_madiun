@@ -1090,6 +1090,41 @@ ALTER SEQUENCE public.master_subkegiatans_id_seq OWNED BY public.master_subkegia
 
 
 --
+-- Name: master_urusans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.master_urusans (
+    id bigint NOT NULL,
+    id_urusan_sipd character varying,
+    id_unik_sipd character varying NOT NULL,
+    tahun character varying,
+    kode_urusan character varying,
+    nama_urusan character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: master_urusans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.master_urusans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: master_urusans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.master_urusans_id_seq OWNED BY public.master_urusans.id;
+
+
+--
 -- Name: musrenbangs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2159,6 +2194,13 @@ ALTER TABLE ONLY public.master_subkegiatans ALTER COLUMN id SET DEFAULT nextval(
 
 
 --
+-- Name: master_urusans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.master_urusans ALTER COLUMN id SET DEFAULT nextval('public.master_urusans_id_seq'::regclass);
+
+
+--
 -- Name: musrenbangs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2531,6 +2573,14 @@ ALTER TABLE ONLY public.master_subkegiatans
 
 
 --
+-- Name: master_urusans master_urusans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.master_urusans
+    ADD CONSTRAINT master_urusans_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: musrenbangs musrenbangs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2899,6 +2949,13 @@ CREATE UNIQUE INDEX index_master_programs_on_id_unik_sipd ON public.master_progr
 --
 
 CREATE UNIQUE INDEX index_master_subkegiatans_on_id_unik_sipd ON public.master_subkegiatans USING btree (id_unik_sipd);
+
+
+--
+-- Name: index_master_urusans_on_id_unik_sipd; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_master_urusans_on_id_unik_sipd ON public.master_urusans USING btree (id_unik_sipd);
 
 
 --
@@ -3383,6 +3440,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220623072453'),
 ('20220624012209'),
 ('20220624014758'),
-('20220624060055');
+('20220624060055'),
+('20220627001747');
 
 
