@@ -15,9 +15,9 @@ class Master::OutputKegiatansController < ApplicationController
     filter_query = params[:filter_query]
     if filter_query == 'opd'
       opd = params[:opd]
-      @output_kegiatans = Master::OutputKegiatan.where(id_skpd: opd)
+      @output_kegiatans = opd == 'all' ? Master::OutputKegiatan.all : Master::OutputKegiatan.where(id_skpd: opd)
     else
-      @output_kegiatans = Master::OutputKegiatan.all
+      @output_kegiatans = Master::OutputKegiatan.all.limit(10)
     end
   end
 end

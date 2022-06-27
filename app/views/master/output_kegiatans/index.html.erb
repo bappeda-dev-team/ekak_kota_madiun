@@ -23,6 +23,7 @@
               <div class="col">
                 <select name="opd" id="opd" class="select2-waw">
                   <option value="">Pilih Opd</option>
+                  <option value="all">Kota Madiun</option>
                   <% for opd in (Master::OutputKegiatan.pluck(:id_skpd).uniq) do %>
                     <option value="<%= opd %>"><%= Master::OutputKegiatan.new.nama_opd(id_skpd: opd) %></option>
                   <% end %>
@@ -34,12 +35,14 @@
             </form>
           </div>
           <div class="col text-end">
-            <%= link_to '/sync_master_output_kegiatans/2023',
+            <%# FIXME - make year dynamic in filter %>
+            <% tahun = Date.today.year + 1 %>
+            <%= link_to "/sync_master_output_kegiatans/#{tahun}",
                                                   method: :post,
                                                   data: { disable_with: 'Memproses....'},
                                                   class:"btn btn-sm btn-primary" do %>
               <i class="fas fa-sync me-2"></i>
-              Update Master Output tahun-x
+              Update Master Output Tahun <%= tahun %>
             <% end %>
           </div>
         </div>
