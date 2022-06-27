@@ -15,8 +15,8 @@
         <%= msg %>
       </div>
     <% end %>
-    <%= render 'shared/filter_card', filter_url: '/filter_user', filter_file: 'hasil_filter_all' %>
-    <div class="card border-0 shadow" id="user_filter">
+    <%= render 'shared/filter_card', filter_url: '/filter_struktur', filter_file: 'hasil_filter_struktur' %>
+    <div class="card border-0 shadow" id="user_struktur">
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">
@@ -25,21 +25,7 @@
         </div>
       </div>
       <div class="card-body">
-        <div class="atasan">
-          <% atasan = User.find_by(nik: '198003102006042018') %>
-          <p><%= atasan.nama %></p>
-          <hr>
-          <% atasan.users.each do |s| %>
-            <span><%= s.nama + '-' + s.nik %></span> |
-            <hr>
-            <% if s.type == 'Atasan' %>
-              <% s.users.each do |b| %>
-                <span><%= b.nama %></span> |
-                <hr>
-              <% end %>
-            <% end %>
-          <% end %>
-        </div>
+        ...
       </div>
     </div>
   </div>

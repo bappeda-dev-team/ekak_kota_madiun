@@ -1,0 +1,27 @@
+<div class="card-header">
+  <div class="row align-items-center">
+    <div class="col">
+      <h2 class="fs-5 fw-bold mb-0">Struktur Opd <%= @nama_opd %></h2>
+    </div>
+  </div>
+</div>
+<div class="card-body">
+  <% unless @strukturs.nil? %>
+    <div class="atasan">
+      Kepala : <%= @strukturs.nama %>
+      <br>
+      <br>
+      <% @strukturs.users.group_by(&:atasan).each do |key, value| %>
+        <% value.each do |kabid| %>
+          <p><%= kabid.jabatan %> : <%= kabid.nama %></p>
+          <% kabid.users.each do |kasi| %>
+            <p> -- Eselon 4 : <%= kasi.nama %></p>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <p class="alert alert-danger">Tidak ada data</p>
+  <p class="alert alert-info">Harap Sync Struktur OPD via Admin</p>
+<% end %>

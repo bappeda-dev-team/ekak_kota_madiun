@@ -186,11 +186,12 @@ module Api
                            encrypted_password: password, atasan: atasan,
                            created_at: Time.now, updated_at: Time.now }
       end
+      kepala = data_pegawais.select { |pegawai| pegawai[:atasan].blank? }.first[:nik]
       data_pegawais.each do |data_p|
         tipe = ''
         if data_p[:atasan].blank?
           tipe = 'Kepala'
-        elsif data_p[:atasan].present? && data_p[:eselon].match(/^(2|3)/)
+        elsif data_p[:atasan].present? && data_p[:atasan] == kepala
           tipe = 'Atasan'
         else
           tipe = 'User'

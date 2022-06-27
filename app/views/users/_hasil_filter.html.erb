@@ -4,25 +4,25 @@
       <% opd = Opd.find_by(kode_unik_opd: @kode_opd) %>
       <h2 class="fs-5 fw-bold mb-0">List ASN <%= opd.nama_opd %> - <%= opd.kode_unik_opd %></h2>
     </div>
-    <% if current_user.has_role? :super_admin %>
-      <div class="col text-end">
-        <% bulan = Date.today.month %>
-        <%= link_to sync_pegawai_path(kode_opd: kode_opd, tahun: Date.today.year, bulan: bulan), 
+    <div class="col text-end">
+      <% bulan = Date.today.month %>
+      <%= link_to sync_pegawai_path(kode_opd: kode_opd, tahun: Date.today.year, bulan: bulan), 
       data: { disable_with: 'Memproses....'}, 
       class:"btn btn-sm btn-primary" do %>
-          <i class="fas fa-sync me-2"></i>
-          Sync User
-        <% end %>
-        <%= link_to sync_struktur_pegawai_path(kode_opd: kode_opd, tahun: Date.today.year, bulan: bulan), 
+        <i class="fas fa-sync me-2"></i>
+        Sync User
+      <% end %>
+      <%= link_to sync_struktur_pegawai_path(kode_opd: kode_opd, tahun: Date.today.year, bulan: bulan), 
       data: { disable_with: 'Memproses....'}, 
       class:"btn btn-sm btn-primary" do %>
-          <i class="fas fa-sync me-2"></i>
-          Sync Struktur
-        <% end %>
+        <i class="fas fa-sync me-2"></i>
+        Sync Struktur
+      <% end %>
+      <% if current_user.has_role? :super_admin %>
         <%= link_to "Tambah User", new_user_path, remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-user"}, class: "btn btn-sm btn-info" %>
         <%= link_to "Non Aktifkan Semua User", "/nonaktifkan_semua_user/#{opd.kode_opd}", remote: true, method: :post, class: "btn btn-sm btn-danger" %>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 </div>
 <div class="card-body">
@@ -32,12 +32,10 @@
         <tr>
           <th class="border-bottom" scope="col">No.</th>
           <th class="border-bottom" scope="col">Nama</th>
-          <th class="border-bottom" scope="col">OPD</th>
           <th class="border-bottom" scope="col">Jabatan</th>
+          <th class="border-bottom" scope="col">Eselon</th>
           <th class="border-bottom" scope="col">Pangkat</th>
-          <th class="border-bottom" scope="col">NIP</th>
           <th class="border-bottom" scope="col">Atasan</th>
-          <th class="border-bottom" scope="col">Tipe</th>
           <th class="border-bottom" scope="col">Sub OPD</th>
           <th class="border-bottom" scope="col">Peran</th>
           <th class="border-bottom text-center" scope="col">Action</th>
@@ -48,13 +46,11 @@
           <tr>
             <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
             <td class="fw-bolder text-gray-500 text-wrap"><%= user.nama %></td>
-            <td class="fw-bolder text-gray-500 text-wrap"><%= user.opd.nama_opd %></td>
             <td class="text-gray-900 text-wrap" scope="row"><%= user.jabatan %></td>
+            <td class="text-gray-900 text-wrap" scope="row"><%= user.eselon %></td>
             <td class="text-gray-900 text-wrap" scope="row"><%= user.pangkat %></td>
-            <td class="fw-bolder text-gray-500"><%= user.nik %></td>
-            <td class="fw-bolder text-gray-500"><%= nama_asn(nik: user.atasan) %></td>
-            <td class="fw-bolder text-gray-500"><%= user.type %></td>
-            <td class="fw-bolder text-gray-500"><%= user.nama_bidang %></td>
+            <td class="fw-bolder text-gray-500 text-wrap"><%= nama_asn(nik: user.atasan) %></td>
+            <td class="fw-bolder text-gray-500 text-wrap"><%= user.nama_bidang %></td>
             <td class="fw-bolder text-gray-500" id="<%= dom_id(user) %>-roles"><%= user.roles.pluck :name %></td>
             <td class="fw-bolder text-gray-500 text-center">
               <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>

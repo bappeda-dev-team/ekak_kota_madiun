@@ -1,6 +1,6 @@
 class FilterController < ApplicationController
   before_action :filter_params, except: %i[filter_tematiks]
-  before_action :nama_opd, only: %i[filter_gender]
+  before_action :nama_opd, only: %i[filter_gender filter_struktur]
 
   OPD_TABLE = {
     'Dinas Kesehatan, Pengendalian Penduduk dan Keluarga Berencana': 'Dinas Kesehatan',
@@ -203,6 +203,15 @@ class FilterController < ApplicationController
     @tematiks = Sasaran.sasaran_tematik(@kode_tematik)
     respond_to do |format|
       format.js { render 'subkegiatan_tematiks/tematik_filter' }
+    end
+  end
+
+  def filter_struktur
+    @strukturs = Opd.find_by(kode_unik_opd: @kode_opd).kepala
+    # @filter_file = params[:filter_file]
+    @filter_file = 'hasil_filter_struktur'
+    respond_to do |format|
+      format.js { render "users/strukturs" }
     end
   end
 
