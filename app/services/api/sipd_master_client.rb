@@ -42,6 +42,11 @@ module Api
       proses_data_master_urusan(response: request)
     end
 
+    def sync_master_bidang_urusans
+      request = url_master_bidang_urusan
+      proses_data_master_bidang_urusan(response: request)
+    end
+
     private
 
     def url_master_program
@@ -62,6 +67,10 @@ module Api
 
     def url_master_urusan
       H.get("#{URL}/master_urusan/109")
+    end
+
+    def url_master_bidang_urusan
+      H.get("#{URL}/master_bidang_urusan/109")
     end
 
     # data processing
@@ -174,6 +183,25 @@ module Api
         }
       end
       Master::Urusan.upsert_all(data_urusan, unique_by: :id_unik_sipd)
+    end
+
+    def proses_data_master_bidang_urusan(response:)
+      data = Oj.load(response.body)
+      bidang_urusans = data['data']
+      data_bidang_urusan = []
+      bidang_urusans.each do |urusan|
+        data_bidang_urusan << {
+          id_bidang_urusan_sipd: urusan['id_bidang_urusan'],
+          id_urusan: urusan['id_urusan'],
+          tahun: urusan['tahun'],
+          kode_bidang_urusan: urusan['kode_bidang_urusan'],
+          nama_bidang_urusan: urusan['nama_bidang_urusan'],
+          id_unik_sipd: urusan['id_unik'].to_s + '-' + urusan['tahun'].to_s,
+          created_at: Time.now,
+          updated_at: Time.now
+        }
+      end
+      Master::BidangUrusan.upsert_all(data_bidang_urusan, unique_by: :id_unik_sipd)
     end
   end
 end

@@ -929,6 +929,42 @@ ALTER SEQUENCE public.mandatoris_id_seq OWNED BY public.mandatoris.id;
 
 
 --
+-- Name: master_bidang_urusans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.master_bidang_urusans (
+    id bigint NOT NULL,
+    id_bidang_urusan_sipd character varying,
+    id_urusan character varying,
+    tahun character varying,
+    kode_bidang_urusan character varying,
+    nama_bidang_urusan character varying,
+    id_unik_sipd character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: master_bidang_urusans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.master_bidang_urusans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: master_bidang_urusans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.master_bidang_urusans_id_seq OWNED BY public.master_bidang_urusans.id;
+
+
+--
 -- Name: master_kegiatans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2166,6 +2202,13 @@ ALTER TABLE ONLY public.mandatoris ALTER COLUMN id SET DEFAULT nextval('public.m
 
 
 --
+-- Name: master_bidang_urusans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.master_bidang_urusans ALTER COLUMN id SET DEFAULT nextval('public.master_bidang_urusans_id_seq'::regclass);
+
+
+--
 -- Name: master_kegiatans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2538,6 +2581,14 @@ ALTER TABLE ONLY public.lembagas
 
 ALTER TABLE ONLY public.mandatoris
     ADD CONSTRAINT mandatoris_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: master_bidang_urusans master_bidang_urusans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.master_bidang_urusans
+    ADD CONSTRAINT master_bidang_urusans_pkey PRIMARY KEY (id);
 
 
 --
@@ -2921,6 +2972,13 @@ CREATE INDEX index_mandatoris_on_sasaran_id ON public.mandatoris USING btree (sa
 --
 
 CREATE INDEX index_mandatoris_on_status ON public.mandatoris USING btree (status);
+
+
+--
+-- Name: index_master_bidang_urusans_on_id_unik_sipd; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_master_bidang_urusans_on_id_unik_sipd ON public.master_bidang_urusans USING btree (id_unik_sipd);
 
 
 --
@@ -3441,6 +3499,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220624012209'),
 ('20220624014758'),
 ('20220624060055'),
-('20220627001747');
+('20220627001747'),
+('20220627003603');
 
 
