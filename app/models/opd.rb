@@ -31,7 +31,7 @@ class Opd < ApplicationRecord
   has_many :users
   has_many :program_kegiatans
   belongs_to :lembaga
-
+  has_one :kepala, -> { where(type: 'Kepala') }, class_name: 'Kepala', foreign_key: :kode_opd, primary_key: :kode_opd
   def text_urusan
     return nil unless urusan
 

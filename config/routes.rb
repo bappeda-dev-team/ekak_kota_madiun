@@ -48,7 +48,16 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   root to: 'home#dashboard'
   resources :users do
     resources :sasarans, path: 'sasaran_kerja'
+    collection do
+      get :struktur
+    end
+    member do
+      get :edit_detail
+      patch :update_detail
+    end
   end
+  resources :atasans
+  resources :kepalas
   resources :sasarans do
     resources :rincians do
       get 'subkegiatan', on: :new
@@ -125,6 +134,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # user control
   post '/aktifkan_user/:id', to: 'users#aktifkan_user'
   post '/nonaktifkan_user/:id', to: 'users#nonaktifkan_user'
+  post '/hapus_asn/:id', to: 'users#hapus_asn'
   post '/nonaktifkan_semua_user/:opd', to: 'users#nonaktifkan_semua_user'
   get '/user_search', to: 'users#user_search'
   # program program_kegiatan
@@ -203,6 +213,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # third party Api
   get '/sync_sasaran', to: 'api/skp_client#sync_sasaran'
   get '/sync_pegawai', to: 'api/skp_client#sync_pegawai'
+  get '/sync_struktur_pegawai', to: 'api/skp_client#sync_struktur_pegawai'
   get '/sync_subkegiatan', to: 'api/sipd_client#sync_subkegiatan'
   get '/sync_subkegiatan_opd', to: 'api/sipd_client#sync_subkegiatan_opd'
   get '/update_detail_kegiatan_lama', to: 'api/sipd_client#update_detail_kegiatan_lama'
@@ -235,6 +246,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   post '/filter_usulan', to: 'filter#filter_usulan'
   post '/filter_user_sasarans', to: 'filter#filter_user_sasarans'
   post '/filter_tematiks', to: 'filter#filter_tematiks'
+  post '/filter_struktur', to: 'filter#filter_struktur'
 
   get "/all_opd", to: "opds#all_opd"
   get "/destroy_all", to: "program_kegiatans#destroy_all"

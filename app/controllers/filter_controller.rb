@@ -1,11 +1,11 @@
 class FilterController < ApplicationController
   before_action :filter_params, except: %i[filter_tematiks]
-  before_action :nama_opd, only: %i[filter_gender]
+  before_action :nama_opd, only: %i[filter_gender filter_struktur]
 
   OPD_TABLE = {
     'Dinas Kesehatan, Pengendalian Penduduk dan Keluarga Berencana': 'Dinas Kesehatan',
     'Rumah Sakit Umum Daerah Kota Madiun': 'Rumah Sakit Umum Daerah',
-    'Sekretariat Daerah': nil,
+    'Sekretariat Daerah': 'Sekretaris Daerah',
     'Bagian Umum': 'Bagian Umum',
     'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan': 'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan',
     'Bagian Organisasi': 'Bagian Organisasi',
@@ -56,7 +56,7 @@ class FilterController < ApplicationController
     @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd })
     if OPD_TABLE.key?(opd.to_sym)
       @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] })
-      @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])
+                   .where(nama_bidang: OPD_TABLE[opd.to_sym])
     end
     @filter_file = 'hasil_filter' if params[:filter_file].empty?
     respond_to do |format|
@@ -206,6 +206,19 @@ class FilterController < ApplicationController
     end
   end
 
+  def filter_struktur
+    opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
+    @strukturs = Opd.find_by(kode_unik_opd: @kode_opd).kepala
+    if OPD_TABLE.key?(opd.to_sym)
+      @strukturs = Opd.find_by(kode_unik_opd: KODE_OPD_TABLE[opd.to_sym]).kepala
+    end
+    # @filter_file = params[:filter_file]
+    @filter_file = 'hasil_filter_struktur'
+    respond_to do |format|
+      format.js { render "users/strukturs" }
+    end
+  end
+
   private
 
   def filter_params
@@ -216,5 +229,14 @@ class FilterController < ApplicationController
 
   def nama_opd
     @nama_opd ||= Opd.find_by(kode_unik_opd: @kode_opd).nama_opd || '-'
+  end
+
+  def bidang_checker(models)
+    opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
+    @results = models.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd })
+    if OPD_TABLE.key?(opd.to_sym)
+      @results = models.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] })
+      @results = @results.where(nama_bidang: OPD_TABLE[opd.to_sym])
+    end
   end
 end
