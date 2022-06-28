@@ -42,7 +42,7 @@ class User < ApplicationRecord
   # has_many :program_kegiatans, through: :sasarans
 
   scope :asn_aktif, -> { without_role(:admin).with_role(:asn) }
-  scope :sasaran_diajukan, -> { asn_aktif.includes(:sasarans, :program_kegiatans).merge(Sasaran.sudah_lengkap) }
+  scope :sasaran_diajukan, -> { asn_aktif.includes(:sasarans, :program_kegiatans).merge(Sasaran.sudah_lengkap) } # depreceated
   scope :opd_by_role, ->(kode_opd, role) { where(kode_opd: kode_opd).with_role(role.to_sym) }
 
   after_update :update_sasaran

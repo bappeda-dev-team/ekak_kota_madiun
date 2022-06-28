@@ -1,0 +1,91 @@
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Laporan KaK</li>
+      </ol>
+    </nav>
+    <div class="card border-0 shadow" id="user_filter">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Laporan KaK</h2>
+          </div>
+          <div class="col text-end">
+            <span><%= current_user.nama %></span>
+            |
+            <span><%= current_user.nik %></span>
+          </div>
+        </div>
+      </div>
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Sasaran Kinerja Nama Atasan</h2>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center">
+          <thead class="thead-light">
+            <tr>
+              <th class="border-bottom" scope="col">ASN Eselon 4</th>
+              <th class="border-bottom text-center" scope="col">Sasaran Kinerja</th>
+              <th class="border-bottom text-center" scope="col">Indikator Kinerja</th>
+              <th class="border-bottom text-center" scope="col">Target</th>
+              <th class="border-bottom text-center" scope="col">Satuan</th>
+              <th class="border-bottom text-center" scope="col">Status</th>
+              <th class="border-bottom text-center" scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @sasarans.each do |data| %>
+              <% data.each do |asn, sasarans| %>
+                <tr>
+                  <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= sasarans.count + 1 %>"><%= asn.nama %></td>
+                  <% sasarans.each do |sasaran| %>
+                    <tr>
+                      <td class="text-gray-900 text-wrap" scope="row"><%= sasaran.sasaran_kinerja %></td>
+                      <td class="p-0 m-0 border-start border-end"></td>
+                      <td class="p-0 m-0 border-start border-end"></td>
+                      <td class="p-0 m-0 border-start border-end"></td>
+                      <td class="text-gray-900 border-end" scope="row"><%= sasaran.status %></td>
+                      <td class="fw-bolder text-gray-500 text-center" id="<%= dom_id(sasaran) %>">
+                        <%= link_to user_sasaran_path(current_user, sasaran), class: "btn btn-sm btn-info" do %>
+                          <i class="fas fa-eye me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
+                          Lihat Sasaran
+                        <% end %>
+                        <% if sasaran.status == 'draft' %>
+                          <%= link_to setujui_semua_sasaran_path(sasaran_diajukans: [sasarans.pluck(:id)], dom: dom_id(sasaran), rowspan: sasaran.indikator_sasarans.count + 1),
+                      method: :post, remote: true,
+                      data: { disable_with: 'Memproses....'},
+                      class:"btn btn-sm btn-primary" do %>
+                            <i class="fas fa-lock me-2"></i>
+                            Kunci
+                          <% end %>
+                        <% else %>
+                          <%= link_to revisi_semua_sasaran_path(sasaran_diajukans: [sasarans.pluck(:id)], dom: dom_id(sasaran), rowspan: sasaran.indikator_sasarans.count + 1),
+                      method: :post, remote: true,
+                      data: { disable_with: 'Memproses....'},
+                      class:"btn btn-sm btn-info" do %>
+                            <i class="fas fa-lock-open me-2"></i>
+                            Buka Kuncian
+                          <% end %>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -116,6 +116,11 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :roles
   resources :sumber_danas, except: %i[show]
   resources :kamus_usulans
+  resources :laporans, only: %i[index] do
+    collection do
+      get :atasan
+    end
+  end
 
   # resque
   authenticate :user, ->(u) { u.id == 1 } do
