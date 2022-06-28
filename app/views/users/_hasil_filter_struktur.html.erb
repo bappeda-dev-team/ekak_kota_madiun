@@ -3,6 +3,15 @@
     <div class="col">
       <h2 class="fs-5 fw-bold mb-0">Struktur Opd <%= @nama_opd %></h2>
     </div>
+    <div class="col text-end">
+      <% bulan = Date.today.month %>
+      <%= link_to sync_struktur_pegawai_path(kode_opd: kode_opd, tahun: Date.today.year, bulan: bulan), 
+      data: { disable_with: 'Memproses....'}, 
+      class:"btn btn-sm btn-primary" do %>
+        <i class="fas fa-sync me-2"></i>
+        Sync Struktur
+      <% end %>
+    </div>
   </div>
 </div>
 <div class="card-body">

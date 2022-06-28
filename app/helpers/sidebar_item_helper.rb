@@ -5,8 +5,7 @@ module SidebarItemHelper
       { title: 'Manajemen Resiko', href: '#', icon: 'fas fa-chart-line', identifier: 'man_risk' },
       # { title: 'Kak', href: kaks_path, icon: 'fas fa-sitemap', identifier: 'acuan_kerja' },
       { title: 'Laporan KAK', href: laporan_kak_path, icon: 'fas fa-file', identifier: 'laporan_kak' },
-      { title: 'Laporan RAB', href: laporan_rka_path, icon: 'fas fa-money-check', identifier: 'laporan_rka' },
-      { title: 'Struktur Organisasi', href: struktur_users_path, icon: 'fas fa-sitemap', identifier: 'struktur' }
+      { title: 'Laporan RAB', href: laporan_rka_path, icon: 'fas fa-money-check', identifier: 'laporan_rka' }
     ]
   end
 
@@ -59,7 +58,8 @@ module SidebarItemHelper
       { title: 'Daftar SubKegiatan OPD', href: daftar_subkegiatan_path, icon: 'fas fa-folder-open',
         identifier: 'daftar_subkegiatan' },
       { title: 'User', href: adminusers_path, icon: 'fas fa-user-check', identifier: 'adminusers' },
-      { title: 'OPD', href: opds_path, icon: 'fas fa-building', identifier: 'opds' }
+      { title: 'OPD', href: opds_path, icon: 'fas fa-building', identifier: 'opds' },
+      { title: 'Struktur Organisasi', href: struktur_users_path, icon: 'fas fa-sitemap', identifier: 'struktur' }
     ]
   end
 
