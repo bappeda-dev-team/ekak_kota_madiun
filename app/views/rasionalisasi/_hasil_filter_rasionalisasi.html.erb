@@ -2,7 +2,8 @@
   <div class="card-header">
     <div class="row align-items-center">
       <div class="col">
-        <h2 class="fs-5 fw-bold mb-0">Rasionalisasi</h2>
+        <% opd = Opd.find_by(kode_unik_opd: @kode_opd) %>
+        <h2 class="fs-5 fw-bold mb-0">Rasionalisasi - <%= opd.nama_opd %></h2>
       </div>
       <div class="col text-end">
         <span><%= current_user.nama %></span>
@@ -60,6 +61,15 @@
             </tr>
           <% end %>
         </tbody>
+        <tfoot>
+          <td></td>
+          <td>Total</td>
+          <td>Rp. <%= number_with_delimiter(@program_kegiatans.sum(&:my_pagu)) or 0 %></td>
+          <td></td>
+          <td></td>
+          <td>Rp. <%= number_with_delimiter(@program_kegiatans.map { |s| s.sasarans.sum(&:total_anggaran_dengan_komentar)}.inject(:+)) or 0 %></td>
+          <td></td>
+        </tfoot>
       </table>
     </div>
   </div>
