@@ -17,6 +17,8 @@ import SmoothScroll from "smooth-scroll";
 import "@fortawesome/fontawesome-free/js/all.js";
 import "select2";
 import "vanilla-nested";
+import 'simplebar';
+import 'simplebar/dist/simplebar.css';
 
 // images
 require.context("../images", true);

@@ -8,15 +8,18 @@
 <div class="card-body">
   <% unless @strukturs.nil? %>
     <div class="atasan">
-      Kepala : <%= @strukturs.nama %>
-      <br>
-      <br>
+      <p class="py-1">Kepala OPD:</p>
+      <strong><%= @strukturs.nama %></strong>
+      <hr>
       <% @strukturs.users.group_by(&:atasan).each do |key, value| %>
         <% value.each do |kabid| %>
-          <p><%= kabid.jabatan %> : <%= kabid.nama %></p>
+          <p>&#9492;&nbsp;<%= kabid.jabatan %></p>
+          <p><strong>&nbsp;&nbsp;&nbsp;<%= kabid.nama %></strong></p>
           <% kabid.users.each do |kasi| %>
-            <p> -- Eselon 4 : <%= kasi.nama %></p>
+            <p>&nbsp;&nbsp;&nbsp;&#9492;&nbsp;<%= kasi.jabatan %></p>
+            <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= kasi.nama %></strong></p>
           <% end %>
+          <hr>
         <% end %>
       <% end %>
     </div>

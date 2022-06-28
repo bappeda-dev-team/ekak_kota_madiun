@@ -71,6 +71,10 @@ class User < ApplicationRecord
     add_role(:non_aktif) if roles.blank?
   end
 
+  def nama_opd
+    opd.nama_opd
+  end
+
   def nulify_sasaran(nip)
     Sasaran.where(nip_asn: nip).update_all(nip_asn: nil)
   end

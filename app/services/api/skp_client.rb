@@ -169,22 +169,9 @@ module Api
       pegawais = data['data']['data_pegawai']
       data_pegawais = []
       pegawais.each do |pegawai|
-        email = "#{pegawai['nip']}@madiunkota.go.id"
         nip = pegawai['nip']
-        nama = pegawai['nama']
-        jabatan = pegawai['jabatan']
-        eselon = pegawai['eselon']
-        pangkat = pegawai['pangkat']
-        nama_pangkat = pegawai['nama_pangkat']
-        id_bidang = pegawai['id_bidang']
-        nama_bidang = pegawai['nama_bidang']
         atasan = pegawai['atasan_nip']
-        password = User.new(password: 123_456).encrypted_password
-        data_pegawais << { kode_opd: kode_opd, nik: nip, nama: nama, jabatan: jabatan,
-                           eselon: eselon, pangkat: pangkat, nama_pangkat: nama_pangkat,
-                           id_bidang: id_bidang, nama_bidang: nama_bidang, email: email,
-                           encrypted_password: password, atasan: atasan,
-                           created_at: Time.now, updated_at: Time.now }
+        data_pegawais << { kode_opd: kode_opd, nik: nip, atasan: atasan }
       end
       kepala = data_pegawais.select { |pegawai| pegawai[:atasan].blank? }.first[:nik]
       data_pegawais.each do |data_p|
@@ -197,7 +184,8 @@ module Api
           tipe = 'User'
         end
         data_p.store(:type, tipe)
-        User.upsert(data_p, unique_by: :nik)
+        u = User.find_by(nik: data_p[:nik])
+        u&.update(data_p)
       end
     end
   end

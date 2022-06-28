@@ -51,6 +51,10 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     collection do
       get :struktur
     end
+    member do
+      get :edit_detail
+      patch :update_detail
+    end
   end
   resources :atasans
   resources :kepalas
@@ -130,6 +134,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # user control
   post '/aktifkan_user/:id', to: 'users#aktifkan_user'
   post '/nonaktifkan_user/:id', to: 'users#nonaktifkan_user'
+  post '/hapus_asn/:id', to: 'users#hapus_asn'
   post '/nonaktifkan_semua_user/:opd', to: 'users#nonaktifkan_semua_user'
   get '/user_search', to: 'users#user_search'
   # program program_kegiatan

@@ -1,0 +1,35 @@
+<%= form_with(model: user, url: update_detail_user_path) do |form| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <ul>
+        <% user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :type, class: "form-label" %>
+    <%= form.text_field :type, class: "form-control", disabled: true %>
+  </div>
+  <div class="field">
+    <%= form.label :opd, class: "form-label" %>
+    <%= form.text_field :nama_opd, class: "form-control", disabled: true %>
+  </div>
+  <div class="field">
+    <%= form.label :nama, class: "form-label" %>
+    <%= form.text_field :nama, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.label :nama_bidang, class: "form-label" %>
+    <%= form.text_field :nama_bidang, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.label :email, class: "form-label" %>
+    <%= form.email_field :email, class: "form-control", disabled: true %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
