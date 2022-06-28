@@ -141,9 +141,13 @@ class FilterController < ApplicationController
 
   def filter_gender
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
-    @program_kegiatans = ProgramKegiatan.includes(%i[opd subkegiatan_tematik]).where(opds: { kode_unik_opd: @kode_opd })
+    @program_kegiatans = ProgramKegiatan.includes(%i[opd subkegiatan_tematik sasarans])
+                                        .joins(:sasarans)
+                                        .where(opds: { kode_unik_opd: @kode_opd })
     if OPD_TABLE.key?(opd.to_sym)
-      @program_kegiatans = ProgramKegiatan.includes(%i[opd subkegiatan_tematik]).where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
+      @program_kegiatans = ProgramKegiatan.includes(%i[opd subkegiatan_tematik])
+                                          .joins(:sasarans)
+                                          .where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
     end
     respond_to do |format|
       @render_file = 'genders/hasil_filter_gender'
