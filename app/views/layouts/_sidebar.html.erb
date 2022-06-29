@@ -205,7 +205,8 @@
             <% end %>
           </li>
         <% end %>
-        <% asn_sidebar_items.each do |item| %>
+        <% item_filtered = current_user.instance_of?(Atasan) ? asn_sidebar_items :  asn_sidebar_items.reject! { |i| i[:title] == 'Laporan Atasan' }  %>
+        <% item_filtered.each do |item| %>
           <li class="nav-item<%= navigation_class(item[:identifier]) %>">
             <%= link_to( item[:href], class: "nav-link d-flex justify-content-between #{item[:href] == '#' ? 'text-danger' : ''}") do %>
               <span>

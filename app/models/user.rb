@@ -115,7 +115,14 @@ class User < ApplicationRecord
   end
 
   def sasaran_program
-    sasarans.group_by(&:program_kegiatan)
+    sasarans.includes(%i[program_kegiatan
+                         rincian
+                         permasalahans
+                         dasar_hukums
+                         latar_belakangs
+                         subkegiatan_tematiks
+                         usulans
+                         tahapans]).group_by(&:program_kegiatan)
   end
 
   def petunjuk_sasaran
