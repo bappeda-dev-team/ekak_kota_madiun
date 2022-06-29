@@ -69,6 +69,12 @@
                         Buka Kuncian
                       <% end %>
                     <% end %>
+                    <%= link_to detail_sasaran_path(show_sasaran),
+                      target: "_blank", rel: "nofollow",
+                      class:"btn btn-sm btn-info" do %>
+                      <i class="fas fa-book-open me-2"></i>
+                      Lihat Detail
+                    <% end %>
                   </td>
                 </tr>
               <% end %>

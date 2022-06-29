@@ -74,6 +74,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       post :setujui
       post :tolak
       post :revisi
+      get :detail
     end
   end
 

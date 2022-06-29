@@ -1,6 +1,6 @@
 class SasaransController < ApplicationController
   before_action :get_user, only: %i[index new create update destroy]
-  before_action :set_sasaran, only: %i[show edit update destroy update_program_kegiatan renaksi_update]
+  before_action :set_sasaran, only: %i[show edit update destroy update_program_kegiatan renaksi_update detail]
   before_action :set_dropdown, only: %i[new edit]
 
   # GET /sasarans or /sasarans.json
@@ -10,6 +10,10 @@ class SasaransController < ApplicationController
 
   # GET /sasarans/1 or /sasarans/1.json
   def show; end
+
+  def detail
+    @program_kegiatan = @sasaran.program_kegiatan
+  end
 
   def sasaran_admin; end
 

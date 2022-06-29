@@ -120,7 +120,6 @@ class User < ApplicationRecord
                          permasalahans
                          dasar_hukums
                          latar_belakangs
-                         subkegiatan_tematiks
                          usulans
                          tahapans]).group_by(&:program_kegiatan)
   end

@@ -3,7 +3,7 @@ module SidebarItemHelper
     [
       { title: 'Pengarusutamaan Gender', href: gender_path, icon: 'fas fa-people-carry', identifier: 'gender' },
       { title: 'Manajemen Resiko', href: '#', icon: 'fas fa-chart-line', identifier: 'man_risk' },
-      { title: 'Laporan Atasan', href: atasan_laporans_path, icon: 'fas fa-chart-line', identifier: ' atasan_laporans' },
+      { title: 'Laporan Atasan', href: atasan_laporans_path, icon: 'fas fa-chart-line', identifier: 'atasan' },
       { title: 'Laporan KAK', href: laporan_kak_path, icon: 'fas fa-file', identifier: 'laporan_kak' },
       { title: 'Laporan RAB', href: laporan_rka_path, icon: 'fas fa-money-check', identifier: 'laporan_rka' }
     ]
@@ -55,8 +55,6 @@ module SidebarItemHelper
         icon: 'fas fa-tasks' },
       { title: 'Subkegiatan', href: admin_sub_kegiatan_path, identifier: 'admin_sub_kegiatan',
         icon: 'fas fa-tasks' },
-      { title: 'Daftar SubKegiatan OPD', href: daftar_subkegiatan_path, icon: 'fas fa-folder-open',
-        identifier: 'daftar_subkegiatan' },
       { title: 'User', href: adminusers_path, icon: 'fas fa-user-check', identifier: 'adminusers' },
       { title: 'OPD', href: opds_path, icon: 'fas fa-building', identifier: 'opds' },
       { title: 'Struktur Organisasi', href: struktur_users_path, icon: 'fas fa-sitemap', identifier: 'struktur' }
