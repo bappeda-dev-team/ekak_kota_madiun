@@ -16,15 +16,6 @@
           <div class="col">
             <h2 class="fs-5 fw-bold mb-0">Master Subkegiatan</h2>
           </div>
-          <div class="col text-end">
-            <%= link_to '/sync_master_subkegiatan/2023/3803',
-                                                  method: :post,
-                                                  data: { disable_with: 'Memproses....'},
-                                                  class:"btn btn-sm btn-primary" do %>
-              <i class="fas fa-sync me-2"></i>
-              Update Master Subkegiatan Kegiatan -x
-            <% end %>
-          </div>
         </div>
       </div>
       <div class="table-responsive">
@@ -42,9 +33,10 @@
             </tr>
           </thead>
           <tbody>
-            <% @subkegiatans.each.with_index(1) do |subgiat, i| %>
+            <% @subkegiatans.each_with_index do |subgiat, i| %>
+              <% ranges = @pagy.from..@pagy.to %>
               <tr>
-                <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
+                <td class="text-gray-900 fw-bolder" scope="row"><%= ranges.to_a[i] %></td>
                 <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= subgiat.no_sub_kegiatan %></td>
                 <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= subgiat.kode_sub_kegiatan %></td>
                 <td class="text-gray-900" scope="row" style="white-space: initial !important;"><%= subgiat.nama_sub_kegiatan %></td>
@@ -56,6 +48,11 @@
             <% end %>
           </tbody>
         </table>
+      </div>
+      <div class="row">
+        <div class="col align-self-center">
+          <%= render partial: 'shared/pagination', locals: { pagy: @pagy } %>
+        </div>
       </div>
     </div>
   </div>

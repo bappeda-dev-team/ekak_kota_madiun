@@ -69,6 +69,17 @@ module SidebarItemHelper
     ]
   end
 
+  def master_sipd_items
+    [
+      { title: 'Master Urusan', href: master_urusan_path, icon: 'fas fa-user-tag', identifier: 'master_urusan' },
+      { title: 'Master Bidang Urusan', href: master_bidang_urusan_path, icon: 'fas fa-user-tag', identifier: 'master_bidang_urusan' },
+      { title: 'Master Program', href: master_programs_path, icon: 'fas fa-user-tag', identifier: 'master_programs' },
+      { title: 'Master Kegiatan', href: master_kegiatans_path, icon: 'fas fa-user-tag', identifier: 'master_kegiatans' },
+      { title: 'Master Output', href: master_output_path, icon: 'fas fa-user-tag', identifier: 'master_output' },
+      { title: 'Master Sub Kegiatan', href: master_subkegiatans_path, icon: 'fas fa-user-tag', identifier: 'master_subkegiatans' }
+    ]
+  end
+
   def reviewer_items
     [
       { title: 'Rasionalisasi', href: rasionalisasi_path, identifier: 'rasionalisasi', icon: 'fas fa-balance-scale' },

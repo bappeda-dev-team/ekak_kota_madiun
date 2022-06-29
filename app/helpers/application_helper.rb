@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include Pagy::Frontend
+
   def add_koefisiens(name, f, association, dc)
     ## create new object from the association
     ## dc == dynamic class for css
