@@ -1,0 +1,38 @@
+<div class="card-body">
+  <div class="card mb-2">
+    <div class="card-header">
+      <h5>2. Gambaran Umum</h5>
+      Sasaran Kinerja:<strong> <%= sasaran.sasaran_kinerja %></strong>
+    </div>
+    <div class="card-body">
+      <% sasaran.latar_belakangs.order(:updated_at).each do |gambumum| %>
+        <strong>Gambaran Umum: </strong>
+        <div class="card-body">
+          <div><%= gambumum.gambaran_umum %></div>
+        </div>
+        <hr>
+        <strong>Permasalahan: </strong>
+        <div class="card-body">
+          <% sasaran.permasalahans.each do |masalah| %>
+            <li><strong>Jenis Permasalahan</strong>:</li>
+            <p class="mx-4 mt-2"><%= masalah.jenis %></p>
+            <li><strong>Permasalahan</strong>:</li>
+            <p class="mx-4 mt-2"><%= masalah.permasalahan %></p>
+            <li><strong>Penyebab Internal</strong>:</li>
+            <p class="mx-4 mt-2"><%= masalah.penyebab_internal %></p>
+            <li><strong>Penyebab External</strong>:</li>
+            <p class="mx-4 mt-2"><%= masalah.penyebab_external %></p>
+          <% end %>
+        </div>
+        <hr>
+        <strong>Data Terpilah: </strong>
+        <div class="card-body">
+          <li><strong>Data Terpilah</strong>:</li>
+          <p class="mx-4 mt-2"><%= sasaran.rincian.data_terpilah %></p>
+          <li><strong>Resiko</strong>:</li>
+          <p class="mx-4 mt-2"><%= sasaran.rincian.resiko %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

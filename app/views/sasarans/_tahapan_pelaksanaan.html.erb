@@ -1,9 +1,11 @@
-<div class="card border-2 shadow mb-3">
+<div class="card my-2">
   <% jumlah_target = sasaran.tahapans.sum :jumlah_target %>
   <% jumlah_realisasi = sasaran.tahapans.sum :jumlah_realisasi %>
+  <div class="card-header">
+    <h5><%= sasaran.sasaran_kinerja %></h5>
+  </div>
   <div class="card-body">
     <div class="table-responsive">
-      <h5><%= sasaran.sasaran_kinerja %></h5>
       <% if sasaran.tahapans.any? %>
         <table class="table table-sm align-items-center table-flush">
           <thead class="thead-light">

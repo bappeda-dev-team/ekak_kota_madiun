@@ -1,0 +1,11 @@
+<div class="card-body">
+  <table class="table">
+    <tbody>
+      <% sasaran.subkegiatan_tematiks.each do |tematik| %>
+        <tr class="border">
+          <td class="text-wrap"><%= tematik.nama_tematik %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

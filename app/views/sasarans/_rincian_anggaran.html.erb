@@ -1,0 +1,41 @@
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>Rincian Anggaran Sasaran Kinerja</h4>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="border">
+          <tr>
+            <th>Sasaran Kinerja</th>
+            <th>Indikator</th>
+            <th class="text-end">Pagu</th>
+            <th class="text-center">Sumber Dana</th>
+          </tr>
+        </thead>
+        <tbody class="border">
+          <tr>
+            <td class="text-wrap" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
+            <td class="m-0 p-0"></td>
+            <td class="text-end border-1" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
+            <td class="text-wrap" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sumber_dana || '-' %></td>
+            <% sasaran.indikator_sasarans.each do |indikator| %>
+              <tr>
+                <td><%= indikator.indikator_kinerja %></td>
+              </tr>
+            <% end %>
+          </tr>
+          <tr class="border">
+            <td colspan="2">Total Pagu</td>
+            <td class="text-end border bg-gray-300">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %> </td>
+            <td class="border"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

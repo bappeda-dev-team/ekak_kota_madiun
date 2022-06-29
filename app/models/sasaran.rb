@@ -132,7 +132,7 @@ class Sasaran < ApplicationRecord
   end
 
   def total_anggaran
-    tahapans.map { |t| t.anggarans.compact.sum(&:jumlah) }.inject(:+)
+    tahapans.includes([:anggarans]).map { |t| t.anggarans.compact.sum(&:jumlah) }.inject(:+)
   rescue TypeError
     '-'
   end
