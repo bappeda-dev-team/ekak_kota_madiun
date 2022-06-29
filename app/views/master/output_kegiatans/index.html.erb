@@ -1,0 +1,86 @@
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Master Output</li>
+      </ol>
+    </nav>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Master Output</h2>
+          </div>
+          <%# FIXME: OPTIMIZE PLEASE %>
+          <div class="col">
+            <form action="/master_output" method="GET" class="row">
+              <input type="hidden" name="filter_query" value="opd">
+              <div class="col">
+                <select name="opd" id="opd" class="select2-waw">
+                  <option value="">Pilih Opd</option>
+                  <option value="all">Kota Madiun</option>
+                  <% for opd in (Master::OutputKegiatan.pluck(:id_skpd).uniq) do %>
+                    <option value="<%= opd %>"><%= Master::OutputKegiatan.new.nama_opd(id_skpd: opd) %></option>
+                  <% end %>
+                </select>
+              </div>
+              <div class="col-auto">
+                <input type="submit" value="Filter" class="btn btn-primary">
+              </div>
+            </form>
+          </div>
+          <div class="col text-end">
+            <%# FIXME - make year dynamic in filter %>
+            <% tahun = Date.today.year + 1 %>
+            <%= link_to "/sync_master_output_kegiatans/#{tahun}",
+                                                  method: :post,
+                                                  data: { disable_with: 'Memproses....'},
+                                                  class:"btn btn-sm btn-primary" do %>
+              <i class="fas fa-sync me-2"></i>
+              Update Master Output Tahun <%= tahun %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center">
+          <thead class="thead-light">
+            <tr>
+              <th class="border-bottom" scope="col">No.</th>
+              <th class="border-bottom" scope="col">id_program</th>
+              <th class="border-bottom" scope="col">id_kegiatan</th>
+              <th class="border-bottom" scope="col">id_subkegiatan</th>
+              <th class="border-bottom" scope="col">indikator sub</th>
+              <th class="border-bottom" scope="col">target sub</th>
+              <th class="border-bottom" scope="col">satuan sub</th>
+              <th class="border-bottom" scope="col">Tahun</th>
+              <th class="border-bottom" scope="col">id_skpd</th>
+              <th class="border-bottom" scope="col">id_sub_skpd</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @output_kegiatans.each.with_index(1) do |output, i| %>
+              <tr>
+                <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
+                <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= output.nama_program %></td>
+                <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= output.nama_kegiatan %></td>
+                <td class="text-gray-900" scope="row" style="white-space: initial !important;"><%= output.nama_sub_kegiatan %></td>
+                <td class="text-gray-900" scope="row" style="white-space: initial !important;"><%= output.indikator_sub_kegiatan %></td>
+                <td class="text-gray-900" scope="row" style="white-space: initial !important;"><%= output.target_sub_kegiatan %></td>
+                <td class="text-gray-900" scope="row" style="white-space: initial !important;"><%= output.satuan_sub_kegiatan %></td>
+                <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= output.tahun %></td>
+                <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= output.nama_opd(id_skpd: output.id_skpd) %></td>
+                <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= output.nama_opd(id_skpd: output.id_sub_skpd) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

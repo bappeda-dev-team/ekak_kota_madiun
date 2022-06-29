@@ -929,6 +929,238 @@ ALTER SEQUENCE public.mandatoris_id_seq OWNED BY public.mandatoris.id;
 
 
 --
+-- Name: master_bidang_urusans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.master_bidang_urusans (
+    id bigint NOT NULL,
+    id_bidang_urusan_sipd character varying,
+    id_urusan character varying,
+    tahun character varying,
+    kode_bidang_urusan character varying,
+    nama_bidang_urusan character varying,
+    id_unik_sipd character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: master_bidang_urusans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.master_bidang_urusans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: master_bidang_urusans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.master_bidang_urusans_id_seq OWNED BY public.master_bidang_urusans.id;
+
+
+--
+-- Name: master_kegiatans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.master_kegiatans (
+    id bigint NOT NULL,
+    id_kegiatan_sipd character varying,
+    kode_giat character varying,
+    tahun character varying DEFAULT '2022'::character varying,
+    id_urusan character varying,
+    id_bidang_urusan character varying,
+    nama_giat character varying DEFAULT '-'::character varying,
+    no_giat character varying,
+    id_unik_sipd character varying NOT NULL,
+    id_program character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: master_kegiatans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.master_kegiatans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: master_kegiatans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.master_kegiatans_id_seq OWNED BY public.master_kegiatans.id;
+
+
+--
+-- Name: master_output_kegiatans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.master_output_kegiatans (
+    id bigint NOT NULL,
+    id_output_bl character varying NOT NULL,
+    id_bl character varying,
+    id_skpd character varying,
+    id_sub_skpd character varying,
+    id_program character varying,
+    id_kegiatan character varying,
+    id_sub_kegiatan character varying,
+    indikator_kegiatan character varying,
+    target_kegiatan character varying,
+    satuan_kegiatan character varying,
+    indikator_sub_kegiatan character varying,
+    target_sub_kegiatan character varying,
+    satuan_sub_kegiatan character varying,
+    tahun character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: master_output_kegiatans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.master_output_kegiatans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: master_output_kegiatans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.master_output_kegiatans_id_seq OWNED BY public.master_output_kegiatans.id;
+
+
+--
+-- Name: master_programs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.master_programs (
+    id bigint NOT NULL,
+    id_program_sipd character varying,
+    kode_program character varying,
+    tahun character varying DEFAULT '2022'::character varying,
+    id_urusan character varying,
+    id_bidang_urusan character varying,
+    nama_program character varying DEFAULT '-'::character varying,
+    no_program character varying,
+    id_unik_sipd character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: master_programs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.master_programs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: master_programs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.master_programs_id_seq OWNED BY public.master_programs.id;
+
+
+--
+-- Name: master_subkegiatans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.master_subkegiatans (
+    id bigint NOT NULL,
+    id_sub_kegiatan_sipd character varying,
+    kode_sub_kegiatan character varying,
+    tahun character varying DEFAULT '2022'::character varying,
+    id_urusan character varying,
+    id_bidang_urusan character varying,
+    nama_sub_kegiatan character varying DEFAULT '-'::character varying,
+    no_sub_kegiatan character varying,
+    id_unik_sipd character varying NOT NULL,
+    id_program character varying,
+    id_kegiatan character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: master_subkegiatans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.master_subkegiatans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: master_subkegiatans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.master_subkegiatans_id_seq OWNED BY public.master_subkegiatans.id;
+
+
+--
+-- Name: master_urusans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.master_urusans (
+    id bigint NOT NULL,
+    id_urusan_sipd character varying,
+    id_unik_sipd character varying NOT NULL,
+    tahun character varying,
+    kode_urusan character varying,
+    nama_urusan character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: master_urusans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.master_urusans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: master_urusans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.master_urusans_id_seq OWNED BY public.master_urusans.id;
+
+
+--
 -- Name: musrenbangs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1734,7 +1966,9 @@ CREATE TABLE public.users (
     eselon character varying,
     nama_pangkat character varying,
     id_bidang bigint,
-    nama_bidang character varying
+    nama_bidang character varying,
+    type character varying,
+    atasan character varying
 );
 
 
@@ -1967,6 +2201,48 @@ ALTER TABLE ONLY public.lembagas ALTER COLUMN id SET DEFAULT nextval('public.lem
 --
 
 ALTER TABLE ONLY public.mandatoris ALTER COLUMN id SET DEFAULT nextval('public.mandatoris_id_seq'::regclass);
+
+
+--
+-- Name: master_bidang_urusans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.master_bidang_urusans ALTER COLUMN id SET DEFAULT nextval('public.master_bidang_urusans_id_seq'::regclass);
+
+
+--
+-- Name: master_kegiatans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.master_kegiatans ALTER COLUMN id SET DEFAULT nextval('public.master_kegiatans_id_seq'::regclass);
+
+
+--
+-- Name: master_output_kegiatans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.master_output_kegiatans ALTER COLUMN id SET DEFAULT nextval('public.master_output_kegiatans_id_seq'::regclass);
+
+
+--
+-- Name: master_programs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.master_programs ALTER COLUMN id SET DEFAULT nextval('public.master_programs_id_seq'::regclass);
+
+
+--
+-- Name: master_subkegiatans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.master_subkegiatans ALTER COLUMN id SET DEFAULT nextval('public.master_subkegiatans_id_seq'::regclass);
+
+
+--
+-- Name: master_urusans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.master_urusans ALTER COLUMN id SET DEFAULT nextval('public.master_urusans_id_seq'::regclass);
 
 
 --
@@ -2310,6 +2586,54 @@ ALTER TABLE ONLY public.mandatoris
 
 
 --
+-- Name: master_bidang_urusans master_bidang_urusans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.master_bidang_urusans
+    ADD CONSTRAINT master_bidang_urusans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: master_kegiatans master_kegiatans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.master_kegiatans
+    ADD CONSTRAINT master_kegiatans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: master_output_kegiatans master_output_kegiatans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.master_output_kegiatans
+    ADD CONSTRAINT master_output_kegiatans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: master_programs master_programs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.master_programs
+    ADD CONSTRAINT master_programs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: master_subkegiatans master_subkegiatans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.master_subkegiatans
+    ADD CONSTRAINT master_subkegiatans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: master_urusans master_urusans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.master_urusans
+    ADD CONSTRAINT master_urusans_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: musrenbangs musrenbangs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2650,6 +2974,48 @@ CREATE INDEX index_mandatoris_on_sasaran_id ON public.mandatoris USING btree (sa
 --
 
 CREATE INDEX index_mandatoris_on_status ON public.mandatoris USING btree (status);
+
+
+--
+-- Name: index_master_bidang_urusans_on_id_unik_sipd; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_master_bidang_urusans_on_id_unik_sipd ON public.master_bidang_urusans USING btree (id_unik_sipd);
+
+
+--
+-- Name: index_master_kegiatans_on_id_unik_sipd; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_master_kegiatans_on_id_unik_sipd ON public.master_kegiatans USING btree (id_unik_sipd);
+
+
+--
+-- Name: index_master_output_kegiatans_on_id_output_bl; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_master_output_kegiatans_on_id_output_bl ON public.master_output_kegiatans USING btree (id_output_bl);
+
+
+--
+-- Name: index_master_programs_on_id_unik_sipd; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_master_programs_on_id_unik_sipd ON public.master_programs USING btree (id_unik_sipd);
+
+
+--
+-- Name: index_master_subkegiatans_on_id_unik_sipd; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_master_subkegiatans_on_id_unik_sipd ON public.master_subkegiatans USING btree (id_unik_sipd);
+
+
+--
+-- Name: index_master_urusans_on_id_unik_sipd; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_master_urusans_on_id_unik_sipd ON public.master_urusans USING btree (id_unik_sipd);
 
 
 --
@@ -3130,6 +3496,13 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220608160705'),
 ('20220608160820'),
 ('20220608163724'),
-('20220609014559');
+('20220609014559'),
+('20220623072453'),
+('20220624012209'),
+('20220624014758'),
+('20220624060055'),
+('20220627001747'),
+('20220627003603'),
+('20220627025154');
 
 

@@ -1,60 +1,67 @@
-<div class="card">
-  <div class="program-kegiatan">
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>Program Kegiatan</h4>
+      </div>
+    </div>
+  </div>
+  <div class="card-body program-kegiatan">
     <table class="table table-bordered">
       <tr>
-        <td>Lembaga</td>
+        <td><strong>Lembaga</strong></td>
         <td><%= programKegiatan.opd.lembaga.nama_lembaga %></td>
       </tr>
       <tr>
-        <td>Unit Eselon I/II</td>
+        <td><strong>Unit Eselon I/II</strong></td>
         <td><%= programKegiatan.opd.nama_opd %></td>
       </tr>
       <tr>
-        <td>Program</td>
+        <td><strong>Program</strong></td>
         <td><%= programKegiatan.nama_program %></td>
       </tr>
       <tr>
-        <td>Indikator Program (Outcome)</td>
+        <td><strong>Indikator Program (Outcome)</strong></td>
         <td><%= programKegiatan.indikator_program %></td>
       </tr>
       <tr>
-        <td>Target</td>
+        <td><strong>Target</strong></td>
         <td><%= programKegiatan.target_program %></td>
       </tr>
       <tr>
-        <td>Satuan</td>
+        <td><strong>Satuan</strong></td>
         <td><%= programKegiatan.satuan_target_program %></td>
       </tr>
       <tr>
-        <td>Kegiatan</td>
+        <td><strong>Kegiatan</strong></td>
         <td><%= programKegiatan.nama_kegiatan %></td>
       </tr>
       <tr>
-        <td>Indikator Kinerja Kegiatan (Output)</td>
+        <td><strong>Indikator Kinerja Kegiatan (Output)</strong></td>
         <td><%= programKegiatan.indikator_kinerja %></td>
       </tr>
       <tr>
-        <td>Volume Keluaran (target)</td>
+        <td><strong>Volume Keluaran (target)</strong></td>
         <td><%= programKegiatan.target %></td>
       </tr>
       <tr>
-        <td>Satuan Ukur Keluaran (Output)</td>
+        <td><strong>Satuan Ukur Keluaran (Output)</strong></td>
         <td><%= programKegiatan.satuan %></td>
       </tr>
       <tr>
-        <td>Sub Kegiatan</td>
+        <td><strong>Sub Kegiatan</strong></td>
         <td><%= programKegiatan.nama_subkegiatan %></td>
       </tr>
       <tr>
-        <td>Indikator Sub Kegiatan (Output)</td>
+        <td><strong>Indikator Sub Kegiatan (Output)</strong></td>
         <td><%= programKegiatan.indikator_subkegiatan %></td>
       </tr>
       <tr>
-        <td>Target</td>
+        <td><strong>Target</strong></td>
         <td><%= programKegiatan.target_subkegiatan %></td>
       </tr>
       <tr>
-        <td>Satuan</td>
+        <td><strong>Satuan</strong></td>
         <td><%= programKegiatan.satuan_target_subkegiatan %></td>
       </tr>
     </table>

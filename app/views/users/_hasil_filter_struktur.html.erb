@@ -1,0 +1,39 @@
+<div class="card-header">
+  <div class="row align-items-center">
+    <div class="col">
+      <h2 class="fs-5 fw-bold mb-0">Struktur Opd <%= @nama_opd %></h2>
+    </div>
+    <div class="col text-end">
+      <% bulan = Date.today.month %>
+      <%= link_to sync_struktur_pegawai_path(kode_opd: kode_opd, tahun: Date.today.year, bulan: bulan), 
+      data: { disable_with: 'Memproses....'}, 
+      class:"btn btn-sm btn-primary" do %>
+        <i class="fas fa-sync me-2"></i>
+        Sync Struktur
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="card-body">
+  <% unless @strukturs.nil? %>
+    <div class="atasan">
+      <p class="py-1">Kepala OPD:</p>
+      <strong><%= @strukturs.nama %></strong>
+      <hr>
+      <% @strukturs.users.group_by(&:atasan).each do |key, value| %>
+        <% value.each do |kabid| %>
+          <p>&#9492;&nbsp;<%= kabid.jabatan %></p>
+          <p><strong>&nbsp;&nbsp;&nbsp;<%= kabid.nama %></strong></p>
+          <% kabid.users.each do |kasi| %>
+            <p>&nbsp;&nbsp;&nbsp;&#9492;&nbsp;<%= kasi.jabatan %></p>
+            <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= kasi.nama %></strong></p>
+          <% end %>
+          <hr>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <p class="alert alert-danger">Tidak ada data</p>
+  <p class="alert alert-info">Harap Sync Struktur OPD via Admin</p>
+<% end %>

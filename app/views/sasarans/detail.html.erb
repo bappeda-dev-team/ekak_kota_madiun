@@ -1,0 +1,61 @@
+<h1>Kerangka Acuan Kerja</h1>
+<hr>
+<% unless @program_kegiatan.nil? %>
+  <%= render 'program_kegiatans/detail_program_kegiatan', programKegiatan: @program_kegiatan %>
+<% else %>
+  <p class="alert alert-info text-dark">
+    Belum ada Program Kegiatan !!!
+  </p>
+<% end %>
+<%= render 'sasarans/rincian_anggaran', sasaran: @sasaran %>
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>A. Latar Belakang</h4>
+      </div>
+    </div>
+  </div>
+  <%= render 'sasarans/dasar_hukum', sasaran: @sasaran %>
+  <%= render 'sasarans/gambaran_umum', sasaran: @sasaran %>
+</div>
+<div class="card border-2 shadow mb-3 penerima-manfaat">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>B. Penerima Manfaat</h4>
+      </div>
+    </div>
+  </div>
+  <%= render "penerima_manfaat", sasaran: @sasaran %>
+</div>
+<div class="card border-2 shadow mb-3 tahapan_pelaksanaan">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>C. Strategi Pencapaian Keluaran</h4>
+      </div>
+    </div>
+  </div>
+  <%= render 'tahapan_pelaksanaan', sasaran: @sasaran %>
+</div>
+<div class="card border-2 shadow mb-3 kurun_waktu">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>D. Kurun Waktu Pencapaian Keluaran</h4>
+      </div>
+    </div>
+  </div>
+  <%= render 'kurun_waktu', sasaran: @sasaran %>
+</div>
+<div class="card border-2 shadow mb-3 kurun_waktu">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>Tematik</h4>
+      </div>
+    </div>
+  </div>
+  <%= render 'tematik', sasaran: @sasaran %>
+</div>

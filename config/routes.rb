@@ -48,7 +48,16 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   root to: 'home#dashboard'
   resources :users do
     resources :sasarans, path: 'sasaran_kerja'
+    collection do
+      get :struktur
+    end
+    member do
+      get :edit_detail
+      patch :update_detail
+    end
   end
+  resources :atasans
+  resources :kepalas
   resources :sasarans do
     resources :rincians do
       get 'subkegiatan', on: :new
@@ -65,6 +74,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       post :setujui
       post :tolak
       post :revisi
+      get :detail
     end
   end
 
@@ -107,6 +117,11 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :roles
   resources :sumber_danas, except: %i[show]
   resources :kamus_usulans
+  resources :laporans, only: %i[index] do
+    collection do
+      get :atasan
+    end
+  end
 
   # resque
   authenticate :user, ->(u) { u.id == 1 } do
@@ -125,6 +140,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # user control
   post '/aktifkan_user/:id', to: 'users#aktifkan_user'
   post '/nonaktifkan_user/:id', to: 'users#nonaktifkan_user'
+  post '/hapus_asn/:id', to: 'users#hapus_asn'
   post '/nonaktifkan_semua_user/:opd', to: 'users#nonaktifkan_semua_user'
   get '/user_search', to: 'users#user_search'
   # program program_kegiatan
@@ -203,6 +219,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # third party Api
   get '/sync_sasaran', to: 'api/skp_client#sync_sasaran'
   get '/sync_pegawai', to: 'api/skp_client#sync_pegawai'
+  get '/sync_struktur_pegawai', to: 'api/skp_client#sync_struktur_pegawai'
   get '/sync_subkegiatan', to: 'api/sipd_client#sync_subkegiatan'
   get '/sync_subkegiatan_opd', to: 'api/sipd_client#sync_subkegiatan_opd'
   get '/update_detail_kegiatan_lama', to: 'api/sipd_client#update_detail_kegiatan_lama'
@@ -214,6 +231,13 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/sync_data_opd', to: 'api/sipd_client#sync_data_opd'
   post '/update_detail_program', to: 'api/sipd_client#update_detail_program'
   post '/sync_indikator_program', to: 'api/sipd_client#sync_indikator_program'
+  post '/sync_master_program/:tahun', to: 'master/program#sync_master_program'
+  post '/sync_master_kegiatan/:tahun', to: 'master/kegiatan#sync_master_kegiatan'
+  post '/sync_master_subkegiatan/:tahun/:id_giat', to: 'master/subkegiatan#sync_master_subkegiatan'
+  post '/sync_master_subkegiatan_all', to: 'master/subkegiatan#sync_master_subkegiatan_all'
+  post '/sync_master_output_kegiatans/:tahun', to: 'master/output_kegiatans#sync_master_output_kegiatans'
+  post '/sync_master_urusan', to: 'master/urusans#sync_master_urusan'
+  post '/sync_master_bidang_urusan', to: 'master/bidang_urusans#sync_master_bidang_urusan'
   # internal filter
   post '/filter_sasaran', to: 'filter#filter_sasaran'
   post '/filter_user', to: 'filter#filter_user'
@@ -228,9 +252,16 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   post '/filter_usulan', to: 'filter#filter_usulan'
   post '/filter_user_sasarans', to: 'filter#filter_user_sasarans'
   post '/filter_tematiks', to: 'filter#filter_tematiks'
+  post '/filter_struktur', to: 'filter#filter_struktur'
 
   get "/all_opd", to: "opds#all_opd"
   get "/destroy_all", to: "program_kegiatans#destroy_all"
+  get '/master_programs', to: 'master/program#index'
+  get '/master_kegiatans', to: 'master/kegiatan#index'
+  get '/master_subkegiatans', to: 'master/subkegiatan#index'
+  get '/master_output', to: 'master/output_kegiatans#index'
+  get '/master_urusan', to: 'master/urusans#index'
+  get '/master_bidang_urusan', to: 'master/bidang_urusans#index'
   # get "/program_kegiatans", to: "program_kegiatans#index"
   # get "/program_kegiatans/new", to: "program_kegiatans#new"
   # get "/program_kegiatan/:id", to: "program_kegiatans#show"

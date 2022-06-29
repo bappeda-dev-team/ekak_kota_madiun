@@ -3,6 +3,7 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
+#  atasan                 :string
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  eselon                 :string
@@ -17,6 +18,7 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  type                   :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
@@ -40,7 +42,7 @@ class User < ApplicationRecord
   # has_many :program_kegiatans, through: :sasarans
 
   scope :asn_aktif, -> { without_role(:admin).with_role(:asn) }
-  scope :sasaran_diajukan, -> { asn_aktif.includes(:sasarans, :program_kegiatans).merge(Sasaran.sudah_lengkap) }
+  scope :sasaran_diajukan, -> { asn_aktif.includes(:sasarans, :program_kegiatans).merge(Sasaran.sudah_lengkap) } # depreceated
   scope :opd_by_role, ->(kode_opd, role) { where(kode_opd: kode_opd).with_role(role.to_sym) }
 
   after_update :update_sasaran
@@ -67,6 +69,10 @@ class User < ApplicationRecord
 
   def assign_default_role
     add_role(:non_aktif) if roles.blank?
+  end
+
+  def nama_opd
+    opd.nama_opd
   end
 
   def nulify_sasaran(nip)
@@ -109,7 +115,13 @@ class User < ApplicationRecord
   end
 
   def sasaran_program
-    sasarans.group_by(&:program_kegiatan)
+    sasarans.includes(%i[program_kegiatan
+                         rincian
+                         permasalahans
+                         dasar_hukums
+                         latar_belakangs
+                         usulans
+                         tahapans]).group_by(&:program_kegiatan)
   end
 
   def petunjuk_sasaran

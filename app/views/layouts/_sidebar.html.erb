@@ -1,3 +1,4 @@
+<%# ANCHOR -- Mobile navbar %>
 <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
   <a class="navbar-brand me-lg-5" href="#">
     <img class="navbar-brand-dark" src="#" alt="E-KaK logo">
@@ -10,6 +11,7 @@
     </button>
   </div>
 </nav>
+<%# ANCHOR %>
 <nav id="sidebarMenu" class="sidebar d-lg-block bg-gray-800 text-white collapse" data-simplebar>
   <div class="sidebar-inner ps-2 pe-4 pt-3">
     <div class="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
@@ -47,6 +49,7 @@
         <% collapsed_item_laporan_usulan = collapse_class('(\blaporan_usulan\/inisiatif|\blaporan_usulan\/musrenbang|\blaporan_usulan\/pokpir|\blaporan_usulan\/mandatori)') %>
         <% collapsed_item_usulan_user = collapse_class('(\busulan_inisiatif|\busulan_musrenbang|\busulan_pokpir|\busulan_mandatori)') %>
         <% collapsed_item_anggaran = collapse_class('(\banggaran_ssh|\banggaran_sbu|\banggaran_hspk|\brekening)') %>
+        <% collapsed_item_sipd_master = collapse_class('(\bmaster_urusan|\bmaster_bidang_urusan|\bmaster_programs|\bmaster_kegiatans|\bmaster_output|\bmaster_subkegiatans)') %>
         <% if current_user.has_role? :admin or current_user.has_role? :super_admin or current_user.has_role? :reviewer %>
           <hr>
           <p>Data Master</p>
@@ -99,6 +102,32 @@
                       <%= link_to(anggaran[:href], class: "nav-link") do %>
                         <span>
                           <span class="sidebar-text"><%= anggaran[:title] %></span>
+                        </span>
+                      <% end %>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_item_sipd_master[:menu] %>" data-bs-toggle="collapse" data-bs-target="#sipd-item-master" aria-expanded="<%= collapsed_item_sipd_master[:aria] %>">
+                <span>
+                  <span class="sidebar-icon">
+                    <i class="fas fa-coins icon icon-xs me-2"></i>
+                  </span>
+                  <span class="sidebar-text">Master SIPD</span>
+                </span>
+                <span class="link-arrow">
+                  <i class="fas fa-angle-right icon icon-sm"></i>
+                </span>
+              </span>
+              <div class="multi-level <%= collapsed_item_sipd_master[:sub_menu] %>" role="list" id="sipd-item-master" aria-expanded="<%= collapsed_item_sipd_master[:aria] %>">
+                <ul class="flex-column nav">
+                  <% master_sipd_items.each do |sipd| %>
+                    <li class="nav-item<%= navigation_class(sipd[:identifier]) %>" >
+                      <%= link_to(sipd[:href], class: "nav-link") do %>
+                        <span>
+                          <span class="sidebar-text"><%= sipd[:title] %></span>
                         </span>
                       <% end %>
                     </li>
@@ -203,7 +232,8 @@
             <% end %>
           </li>
         <% end %>
-        <% asn_sidebar_items.each do |item| %>
+        <% item_filtered = current_user.instance_of?(Atasan) ? asn_sidebar_items :  asn_sidebar_items.reject! { |i| i[:title] == 'Laporan Atasan' }  %>
+        <% item_filtered.each do |item| %>
           <li class="nav-item<%= navigation_class(item[:identifier]) %>">
             <%= link_to( item[:href], class: "nav-link d-flex justify-content-between #{item[:href] == '#' ? 'text-danger' : ''}") do %>
               <span>

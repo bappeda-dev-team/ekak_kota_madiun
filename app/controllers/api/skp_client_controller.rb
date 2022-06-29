@@ -22,6 +22,12 @@ module Api
       redirect_to adminusers_path, success: "Update Pegawai #{nama_opd} Dikerjakan. Harap menunggu..."
     end
 
+    def sync_struktur_pegawai
+      UpdateStrukturJob.set(queue: "#{nama_opd}-#{@kode_opd}-user-#{@tahun}-#{@bulan}")
+                       .perform_later(@kode_opd, @tahun, @bulan)
+      redirect_to struktur_users_path, success: "Update Pegawai #{nama_opd} Dikerjakan. Harap menunggu..."
+    end
+
     private
 
     def verify_kode_opd

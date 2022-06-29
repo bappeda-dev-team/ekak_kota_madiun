@@ -1,33 +1,46 @@
 <%= render 'program_kegiatans/detail_program_kegiatan', programKegiatan: programKegiatan %>
 <hr>
-<p>Rincian Anggaran</p>
 <div class="card border-2 shadow mb-3">
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>no</th>
-          <th>Sasaran Kinerja</th>
-          <th>Indikator</th>
-          <th class="text-end">Pagu</th>
-          <th class="text-center">Sumber Dana</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% programKegiatan.sasarans.each.with_index(1) do |sasaran, i| %>
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>Rincian Anggaran</h4>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="border">
           <tr>
-            <td><%= i %></td>
-            <td class="text-wrap"><%= sasaran.sasaran_kinerja %></td>
-            <td class="text-wrap"><%= sasaran.indikator_kinerja %></td>
-            <td class="text-end border-1">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
-            <td class="text-wrap"><%= sasaran.sumber_dana %></td>
+            <th>no</th>
+            <th>Sasaran Kinerja</th>
+            <th>Indikator</th>
+            <th class="text-end">Pagu</th>
+            <th class="text-center">Sumber Dana</th>
           </tr>
-        <% end %>
-        <tr>
-          <td colspan="3">Total Pagu</td>
-          <td class="text-end border-1">Rp. <%= number_with_delimiter(programKegiatan.my_pagu)  %></td>
-        </tr>
-      </tbody>
-    </table>
+        </thead>
+        <tbody class="border">
+          <% programKegiatan.sasarans.each.with_index(1) do |sasaran, i| %>
+            <tr>
+              <td rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
+              <td class="text-wrap" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
+              <td class="m-0 p-0"></td>
+              <td class="text-end border-1" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
+              <td class="text-wrap" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sumber_dana || '-' %></td>
+              <% sasaran.indikator_sasarans.each do |indikator| %>
+                <tr>
+                  <td><%= indikator.indikator_kinerja %></td>
+                </tr>
+              <% end %>
+            </tr>
+          <% end %>
+          <tr class="border">
+            <td colspan="3">Total Pagu</td>
+            <td class="text-end border-1">Rp. <%= number_with_delimiter(programKegiatan.my_pagu)  %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

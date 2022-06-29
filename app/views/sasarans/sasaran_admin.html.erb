@@ -37,7 +37,7 @@
           <%= form.select :kode_opd, dropdown ,{include_blank: true},{ class: "form-control", id: 'kode_opd_select',data: {"placeholder": "Pilih Opd"}, required: true }  %>
           <br>
           <%= form.label :nip_asn %>
-          <%= form.select :nip_asn, [''] ,{include_blank: true},{ class: "form-control", id: 'nip_asn_select',data: {"placeholder": "Pilih Opd Dahulu"}, required: true }  %>
+          <%= form.select :nip_asn, [''] ,{include_blank: true},{ class: "form-control", id: 'nip_asn_select',data: {"placeholder": "Pilih ASN"}, required: true }  %>
           <%= form.submit 'filter' %>
         <% end %>
       </div>

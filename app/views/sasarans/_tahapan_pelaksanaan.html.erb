@@ -1,0 +1,46 @@
+<div class="card my-2">
+  <% jumlah_target = sasaran.tahapans.sum :jumlah_target %>
+  <% jumlah_realisasi = sasaran.tahapans.sum :jumlah_realisasi %>
+  <div class="card-header">
+    <h5><%= sasaran.sasaran_kinerja %></h5>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <% if sasaran.tahapans.any? %>
+        <table class="table table-sm align-items-center table-flush">
+          <thead class="thead-light">
+            <tr>
+              <th class="border-bottom border-end border-start" scope="col" rowspan="1">No.</th>
+              <th class="border-bottom border-end" scope="col" rowspan="1">Tahapan Kerja</th>
+              <% (1..12).each do |i| %>
+                <th class="border-bottom border-end text-center" colspan="1" scope="col"><%= i %></th>
+              <% end %>
+              <th class="border-bottom border-end text-center" colspan="1" scope="col">Jumlah</th>
+              <th class="border-bottom border-end" scope="col" rowspan="1">Keterangan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% sasaran.tahapans.order(:created_at).each.with_index(1) do |tahapan, i| %>
+              <% aksi = tahapan.aksis %>
+              <tr class="border-bottom">
+                <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= i %></td>
+                <td class="text-gray-900"><%= tahapan.tahapan_kerja %></td>
+                <!-- Loop Tanggal-->
+                <% (1..12).each do |bulan| %>
+                  <td class="fw-bolder text-gray-500 border text-center">
+                    <%= aksi.find_by(bulan: bulan) ? aksi.find_by(bulan: bulan).target : '-' %>
+                  </td>
+                <% end %>
+                <!-- Sum -->
+                <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.jumlah_target or '-'  %></td>
+                <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.keterangan  %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p class="text-danger">Belum Ada Tahapan</p>
+      <% end %>
+    </div>
+  </div>
+</div>

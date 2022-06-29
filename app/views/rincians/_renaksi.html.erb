@@ -30,7 +30,6 @@
       <div class="col-8">
         <span class="fs-5 fw-bold mb-0">2. Rencana Aksi dan Anggaran</span>
       </div>
-      <%# TODO: Implement this logic to touch renaksi to sync total %>
       <div class="col text-end">
         <%= button_to 'Sync Total', renaksi_update_path, remote: true, method: :post, class: 'btn btn-sm btn-primary', params: {id: sasaran.id} %>
       </div>

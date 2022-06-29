@@ -1,0 +1,18 @@
+<%# TODO: ajax this %>
+<%# TODO: make dropdown value persist %>
+<% url = local_assigns[:url] %>
+<% filter = local_assigns[:filter] %>
+<% dropdown = local_assigns[:dropdown] %>
+<div class="col">
+  <%= form_with url: url, method: :get do |f| %>
+    <div class="row">
+      <div class="col">
+        <%= f.hidden_field :filter_query, value: filter %>
+        <%= f.select :tahun, dropdown, {include_blank: true}, { class: 'select2-waw', data: {"placeholder": "Pilih Tahun"} } %>
+      </div>
+      <div class="col-auto">
+        <%= f.submit 'Filter', class: 'btn btn-primary', name: 'submit' %>
+      </div>
+    </div>
+  <% end %>
+</div>
