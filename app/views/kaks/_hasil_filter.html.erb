@@ -79,8 +79,8 @@
               <% user.program_kegiatan_sasarans.each do |kak| %>
                 <% row_dalam = kak.sasarans.count + 1  %>
                 <td class="text-gray-900 text-wrap" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.nama_subkegiatan %></td>
-                <td class="p-0 m-0"></td>
-                <td class="p-0 m-0"></td>
+                <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
+                <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
                 <td class="fw-bolder text-gray-500 text-center border-start border-end" rowspan="<%= kak.sasarans.count + 1 %>" id="<%= dom_id(kak) %>">
                   <% if kak.sasarans.exists? status: 'draft' %>
                     <button class="btn btn-sm btn-danger" disabled>

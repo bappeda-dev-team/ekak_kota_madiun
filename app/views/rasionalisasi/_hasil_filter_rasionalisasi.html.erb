@@ -39,9 +39,9 @@
               <td class="text-gray-900 fw-bolder border-bottom" rowspan="<%= row_dalam %>"><%= i %></td>
               <td class="text-gray-900 text-wrap" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.nama_subkegiatan %></td>
               <td class="text-gray-900 border-end border-start" rowspan="<%= kak.sasarans.count + 1 %>">Rp. <%= number_with_delimiter(kak.my_pagu) or 0 %></td>
-              <td class="p-0 m-0"></td>
-              <td class="p-0 m-0"></td>
-              <td class="p-0 m-0"></td>
+              <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
+              <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
+              <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
               <% kak.sasarans.each do |show_sasaran| %>
                 <tr class="<%= warna_sasaran(show_sasaran.status_sasaran) %>">
                   <td class="text-wrap border-start border-end" width="450px">

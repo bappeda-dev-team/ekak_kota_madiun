@@ -6,7 +6,7 @@
 <% else %>
   <!-- Form Tambah Program Kegiatan disini / atau lempar ke edit-->
   <p class="alert alert-warning-text-dark">
-    Belum ada Program Kegiatan !!!
+    Belum ada Program Kegiatan pada rincian ini
   </p>
 <% end %>
 <div class="card border-2 shadow mb-3">
@@ -17,11 +17,8 @@
       </div>
     </div>
   </div>
-  <% @program_kegiatan.sasarans.each do |sas_dh|  %>
-    <%= render 'sasarans/dasar_hukum', sasaran: sas_dh %>
-  <% end %>
-  <% @program_kegiatan.sasarans.each do |sas_gambumum|  %>
-    <%= render 'sasarans/gambaran_umum', sasaran: sas_gambumum %>
+  <% @program_kegiatan.sasarans.includes(%i[rincian permasalahans]).each do |sas_dh|  %>
+    <%= render 'sasarans/dasar_hukum_dan_gambaran_umum', sasaran: sas_dh %>
   <% end %>
 </div>
 <div class="card border-2 shadow mb-3 penerima-manfaat">
@@ -32,9 +29,24 @@
       </div>
     </div>
   </div>
-  <% @program_kegiatan.sasarans.each do |manfaat| %>
-    <%= render "sasarans/penerima_manfaat", sasaran: manfaat %>
-  <% end %>
+  <div class="card-body">
+    <table class="table">
+      <thead class="thead-light">
+        <tr class="border">
+          <th>Sasaran Kinerja</th>
+          <th>Penerima Manfaat</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @program_kegiatan.sasarans.each do |manfaat| %>
+          <tr class="border">
+            <td class="text-wrap"><%= manfaat.sasaran_kinerja %></td>
+            <td class="text-wrap"><%= manfaat.penerima_manfaat || '-' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
 <div class="card border-2 shadow mb-3 tahapan_pelaksanaan">
   <div class="card-header">
@@ -44,7 +56,7 @@
       </div>
     </div>
   </div>
-  <% @program_kegiatan.sasarans.each do |strategi| %>
+  <% @program_kegiatan.sasarans.includes(:tahapans).each do |strategi| %>
     <%= render 'sasarans/tahapan_pelaksanaan', sasaran: strategi %>
   <% end %>
 </div>
@@ -56,9 +68,24 @@
       </div>
     </div>
   </div>
-  <% @program_kegiatan.sasarans.each do |kurun_waktu| %>
-    <%= render 'sasarans/kurun_waktu', sasaran: kurun_waktu %>
-  <% end %>
+  <div class="card-body">
+    <table class="table">
+      <thead class="thead-light">
+        <tr class="border">
+          <th>Sasaran Kinerja</th>
+          <th>Waktu Dibutuhkan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @program_kegiatan.sasarans.each do |kurun_waktu| %>
+          <tr class="border">
+            <td class="text-wrap"><%= kurun_waktu.sasaran_kinerja %></td>
+            <td class="text-wrap"><%= kurun_waktu.waktu_total %> Bulan</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
 <div class="card border-2 shadow mb-3 kurun_waktu">
   <div class="card-header">
@@ -68,7 +95,40 @@
       </div>
     </div>
   </div>
-  <% @program_kegiatan.sasarans.each do |tematik| %>
-    <%= render 'sasarans/tematik', sasaran: tematik %>
-  <% end %>
+  <div class="card-body">
+    <ol>
+      <% @program_kegiatan.subkegiatan_tematiks.uniq.each do |tematik| %>
+        <li><%= tematik.nama_tematik %></li>
+      <% end %>
+    </ol>
+  </div>
+</div>
+<div class="card border-2 shadow mb-3 kurun_waktu">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>Usulan</h4>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <thead class="thead-light">
+        <tr class="border">
+          <th>Sasaran Kinerja</th>
+          <th>Usulan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @program_kegiatan.sasarans.includes(:usulans).each do |sasaran| %>
+          <% sasaran.usulans.each do |usulan| %>
+            <tr class="border">
+              <td class="text-wrap"><%= usulan.sasaran.sasaran_kinerja || '-' %></td>
+              <td class="text-wrap"><%= usulan.usulanable_type %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

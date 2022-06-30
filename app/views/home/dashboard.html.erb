@@ -42,7 +42,7 @@
                       <td class="fw-bolder text-left" style="white-space: initial !important;" rowspan="<%= s.indikator_sasarans.count + 1 %>">
                         <%= s.sasaran_kinerja %>
                       </td>
-                      <td class="p-0 m-0" colspan="3"></td>
+                      <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="3"></td>
                     </tr>
                     <% s.indikator_sasarans.each do |indikator| %>
                       <tr class="<%= warna_sasaran(s.status_sasaran) %>">

@@ -48,7 +48,7 @@
                 <tr>
                   <th class="text-gray-900 fw-bolder" scope="row" rowspan="<%= program.sasarans.count + 1 %>"><%= i %></th>
                   <th class="text-gray-900 text-wrap" scope="row" rowspan="<%= program.sasarans.count + 1 %>"><%= program.nama_subkegiatan %></th>
-                  <td class="p-0 m-0" colspan="2"></td>
+                  <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="2"></td>
                   <td class="fw-bolder text-gray-500 text-center" rowspan="<%= program.sasarans.count + 1 %>">
                     <% tahun = Date.today.year + 1 %>
                     <%= link_to "/pdf_rka/#{program.id}/#{tahun}.pdf", class: "m-3" do %>

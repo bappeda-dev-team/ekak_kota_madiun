@@ -53,10 +53,11 @@ class ProgramKegiatan < ApplicationRecord
   # validates :target, presence: true
   # validates :satuan, presence: true
   belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_opd'
-  belongs_to :subkegiatan_tematik, optional: true
+  # belongs_to :subkegiatan_tematik, optional: true
   has_many :kaks
   has_many :sasarans, dependent: :nullify
   has_many :usulans, through: :sasarans
+  has_many :subkegiatan_tematiks, through: :sasarans
 
   scope :with_sasarans, -> { joins(:sasarans) }
 
@@ -76,5 +77,9 @@ class ProgramKegiatan < ApplicationRecord
 
   def count_indikator_sasarans
     sasarans.map { |s| s.indikator_sasarans.count }.inject(:+)
+  end
+
+  def all_anggaran
+    sasarans.map(&:total_anggaran).compact.sum
   end
 end
