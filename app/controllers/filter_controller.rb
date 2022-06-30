@@ -115,11 +115,11 @@ class FilterController < ApplicationController
   end
 
   def filter_kak_dashboard
-    opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
-    @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd }).asn_aktif
-    if OPD_TABLE.key?(opd.to_sym)
-      @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).asn_aktif
-      @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: opd.kode_opd }).with_sasarans
+    if OPD_TABLE.key?(opd.nama_opd.to_sym)
+      @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[opd.nama_opd.to_sym] }).with_sasarans
+      @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[opd.nama_opd.to_sym]) # idk about bidang thing
     end
     @filter_file = 'hasil_filter_dashboard'
     respond_to do |format|

@@ -58,6 +58,8 @@ class ProgramKegiatan < ApplicationRecord
   has_many :sasarans, dependent: :nullify
   has_many :usulans, through: :sasarans
 
+  scope :with_sasarans, -> { joins(:sasarans) }
+
   # default_scope { order(created_at: :desc) }
 
   def my_pagu
@@ -70,5 +72,9 @@ class ProgramKegiatan < ApplicationRecord
 
   def nama_opd_pemilik
     id_sub_unit.nil? ? '-' : Opd.find_by(id_opd_skp: id_sub_unit).nama_opd
+  end
+
+  def count_indikator_sasarans
+    sasarans.map { |s| s.indikator_sasarans.count }.inject(:+)
   end
 end

@@ -9,79 +9,66 @@
     Belum ada Program Kegiatan !!!
   </p>
 <% end %>
-<h4>A. Latar Belakang</h4>
 <div class="card border-2 shadow mb-3">
   <div class="card-header">
-    <h5>1. Dasar Hukum</h5>
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>A. Latar Belakang</h4>
+      </div>
+    </div>
   </div>
   <% @program_kegiatan.sasarans.each do |sas_dh|  %>
-    <div class="card mb-2">
-      <div class="card-header">
-        <strong>Dasar Hukum Sasaran <%= sas_dh.sasaran_kinerja %></strong>
-      </div>
-      <div class="card-body">
-        <table class="table">
-          <thead>
-            <tr class="border">
-              <th>Peraturan terkait</th>
-              <th>Uraian</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% sas_dh.dasar_hukums.order(:updated_at).each do |dashu| %>
-              <tr class="border">
-                <td class="align-middle"><%= dashu.judul %></td>
-                <td class="align-middle"><%= dashu.peraturan %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <%= render 'sasarans/dasar_hukum', sasaran: sas_dh %>
   <% end %>
-  <% current_user.sasarans.includes(:program_kegiatan).where.not(program_kegiatan: {id: nil}).each do |sas_gambumum|  %>
-    <div class="card mb-2">
-      <div class="card-header">
-        <strong>Gambaran Umum Sasaran <%= sas_gambumum.sasaran_kinerja %></strong>
-      </div>
-      <% sas_gambumum.latar_belakangs.order(:updated_at).each do |gambumum| %>
-        <div class="card-body">
-          <div class="card-body">
-            <p><%= gambumum.gambaran_umum %></p>
-          </div>
-        </div>
-        <div class="card-body">
-          <strong>Permasalahan: </strong>
-          <% sas_gambumum.permasalahans.each do |masalah| %>
-            <div class="card-body">
-              <p>JENIS PERMASALAHAN : Permasalahan <%= masalah.jenis %></p>
-              <p>PERMASALAHAN : <%= masalah.permasalahan %></p>
-              <p>PENYEBAB INTERNAL	 : <%= masalah.penyebab_internal %></p>
-              <p>PENYEBAB EXTERNAL	 : <%= masalah.penyebab_external %></p>
-            </div>
-          <% end %>
-        </div>
-        <div class="card-body">
-          <strong>Data Terpilah: </strong>
-          <div class="card-body">
-            <p>DATA TERPILAH : <%= sas_gambumum.rincian.data_terpilah %></p>
-            <p>RESIKO : <%= sas_gambumum.rincian.resiko %></p>
-          </div>
-        </div>
-      <% end %>
-    </div>
+  <% @program_kegiatan.sasarans.each do |sas_gambumum|  %>
+    <%= render 'sasarans/gambaran_umum', sasaran: sas_gambumum %>
   <% end %>
 </div>
+<div class="card border-2 shadow mb-3 penerima-manfaat">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>B. Penerima Manfaat</h4>
+      </div>
+    </div>
+  </div>
+  <% @program_kegiatan.sasarans.each do |manfaat| %>
+    <%= render "sasarans/penerima_manfaat", sasaran: manfaat %>
+  <% end %>
 </div>
-<h4>B. Penerima Manfaat</h4>
-<div class="penerima-manfaat">
-  <%= render "program_kegiatans/kak_detail", programKegiatan: @program_kegiatan %>
+<div class="card border-2 shadow mb-3 tahapan_pelaksanaan">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>C. Strategi Pencapaian Keluaran</h4>
+      </div>
+    </div>
+  </div>
+  <% @program_kegiatan.sasarans.each do |strategi| %>
+    <%= render 'sasarans/tahapan_pelaksanaan', sasaran: strategi %>
+  <% end %>
 </div>
-<h4>C. Strategi Pencapaian Keluaran</h4>
-<div class="tahapan_pelaksanaan">
-  <%= render 'program_kegiatans/kak_renaksi', programKegiatan: @program_kegiatan %>
+<div class="card border-2 shadow mb-3 kurun_waktu">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>D. Kurun Waktu Pencapaian Keluaran</h4>
+      </div>
+    </div>
+  </div>
+  <% @program_kegiatan.sasarans.each do |kurun_waktu| %>
+    <%= render 'sasarans/kurun_waktu', sasaran: kurun_waktu %>
+  <% end %>
 </div>
-<h4>D. Kurun Waktu Pencapaian Keluaran</h4>
-<div class="tahapan_pelaksanaan">
-  <%= render 'program_kegiatans/kak_waktu', programKegiatan: @program_kegiatan %>
+<div class="card border-2 shadow mb-3 kurun_waktu">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>Tematik</h4>
+      </div>
+    </div>
+  </div>
+  <% @program_kegiatan.sasarans.each do |tematik| %>
+    <%= render 'sasarans/tematik', sasaran: tematik %>
+  <% end %>
 </div>
