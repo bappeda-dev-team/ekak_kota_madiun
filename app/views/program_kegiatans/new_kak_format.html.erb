@@ -39,9 +39,6 @@
       </div>
     </div>
   <% end %>
-  <div class="card-header">
-    <h5>2. Gambaran Umum</h5>
-  </div>
   <% current_user.sasarans.includes(:program_kegiatan).where.not(program_kegiatan: {id: nil}).each do |sas_gambumum|  %>
     <div class="card mb-2">
       <div class="card-header">

@@ -1,5 +1,5 @@
 <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
-  <%= render template: "sasarans/laporan_sasaran" %>
+  <%= render template: "kaks/laporan_kak_dashboard" %>
 <% else %>
   <div class="col-12 col-xl-12">
     <div class="row">
