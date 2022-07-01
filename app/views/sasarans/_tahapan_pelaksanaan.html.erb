@@ -24,7 +24,7 @@
               <% aksi = tahapan.aksis %>
               <tr class="border-bottom">
                 <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= i %></td>
-                <td class="text-gray-900"><%= tahapan.tahapan_kerja %></td>
+                <td class="text-gray-900 text-wrap"><%= tahapan.tahapan_kerja %></td>
                 <!-- Loop Tanggal-->
                 <% (1..12).each do |bulan| %>
                   <td class="fw-bolder text-gray-500 border text-center">

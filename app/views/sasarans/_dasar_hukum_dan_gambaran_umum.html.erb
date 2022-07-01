@@ -1,4 +1,32 @@
 <div class="card-body">
+  <div class="card my-2">
+    <div class="card-header">
+      <h5>Dasar Hukum</h5>
+      Sasaran Kinerja:<strong> <%= sasaran.sasaran_kinerja %></strong>
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr class="border">
+            <th>No.</th>
+            <th>Peraturan terkait</th>
+            <th>Uraian</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% sasaran.dasar_hukums.order(:updated_at).each.with_index(1) do |dashu, i| %>
+            <tr class="border">
+              <td class="fw-bolder border-end"><%= i %></td>
+              <td class="text-wrap"><%= dashu.judul %></td>
+              <td class="text-wrap"><%= dashu.peraturan %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="card-body">
   <div class="card mb-2">
     <div class="card-header">
       <h5>Gambaran Umum</h5>
@@ -15,13 +43,13 @@
         <div class="card-body">
           <% sasaran.permasalahans.each do |masalah| %>
             <li><strong>Jenis Permasalahan</strong>:</li>
-            <p class="mx-4 mt-2"><%= masalah.jenis %></p>
+            <p class="mx-4 mt-2"><%= masalah.jenis || '-' %></p>
             <li><strong>Permasalahan</strong>:</li>
-            <p class="mx-4 mt-2"><%= masalah.permasalahan %></p>
+            <p class="mx-4 mt-2"><%= masalah.permasalahan || '-' %></p>
             <li><strong>Penyebab Internal</strong>:</li>
-            <p class="mx-4 mt-2"><%= masalah.penyebab_internal %></p>
+            <p class="mx-4 mt-2"><%= masalah.penyebab_internal || '-' %></p>
             <li><strong>Penyebab External</strong>:</li>
-            <p class="mx-4 mt-2"><%= masalah.penyebab_external %></p>
+            <p class="mx-4 mt-2"><%= masalah.penyebab_external || '-' %></p>
           <% end %>
         </div>
         <hr>

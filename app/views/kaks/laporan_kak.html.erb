@@ -49,7 +49,7 @@
                   <tr>
                     <th class="text-gray-900 fw-bolder" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= i %></th>
                     <th class="text-gray-900 text-wrap" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.nama_subkegiatan %></th>
-                    <td class="p-0 m-0" colspan="2"></td>
+                    <td class="p-0 m-0" colspan="2" style="height: 0px !important; border-color: transparent;"></td>
                     <td class="fw-bolder text-gray-500 text-center" rowspan="<%= kak.sasarans.count + 1 %>">
                       <%= link_to "/acuan_kerja_new/#{kak.id}", class: "m-3" do %>
                         <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>

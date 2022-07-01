@@ -14,10 +14,10 @@
     <% @program_kegiatans.each.with_index(1) do |pk, i| %>
       <tr class="border-bottom">
         <td class="text-gray-900 fw-bolder border-bottom" width="50px" rowspan="<%= pk.usulans.where(usulanable_type: @type).count + 1 %>"><%= i %></td>
-        <td class="p-0 m-0"></td>
+        <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
         <td class="text-gray-900 border-end border-start text-wrap" width="200px" rowspan="<%= pk.usulans.where(usulanable_type: @type).count + 1 %>"><%= pk.nama_subkegiatan %></td>
         <td class="text-gray-900 border-end border-start px-3"  width="150px" rowspan="<%= pk.usulans.where(usulanable_type: @type).count + 1 %>">Rp. <%= number_with_delimiter(pk.my_pagu) %></td>
-        <td class="p-0 m-0"></td>
+        <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
         <% pk.usulans.where(usulanable_type: @type).each do |us| %>
           <% keterangan = us.usulanable.try(:alamat) || us.usulanable.try(:peraturan_terkait) || us.usulanable.try(:manfaat) %>
           <tr>

@@ -53,10 +53,13 @@ class ProgramKegiatan < ApplicationRecord
   # validates :target, presence: true
   # validates :satuan, presence: true
   belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_opd'
-  belongs_to :subkegiatan_tematik, optional: true
+  # belongs_to :subkegiatan_tematik, optional: true
   has_many :kaks
   has_many :sasarans, dependent: :nullify
   has_many :usulans, through: :sasarans
+  has_many :subkegiatan_tematiks, through: :sasarans
+
+  scope :with_sasarans, -> { joins(:sasarans) }
 
   # default_scope { order(created_at: :desc) }
 
@@ -70,5 +73,13 @@ class ProgramKegiatan < ApplicationRecord
 
   def nama_opd_pemilik
     id_sub_unit.nil? ? '-' : Opd.find_by(id_opd_skp: id_sub_unit).nama_opd
+  end
+
+  def count_indikator_sasarans
+    sasarans.map { |s| s.indikator_sasarans.count }.inject(:+)
+  end
+
+  def all_anggaran
+    sasarans.map(&:total_anggaran).compact.sum
   end
 end

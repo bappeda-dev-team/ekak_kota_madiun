@@ -1,0 +1,80 @@
+<div class="card border-0 shadow" id="user_filter">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">Laporan KaK Tahun <%= @tahun %></h2>
+      </div>
+      <div class="col text-end">
+        <span><%= current_user.nama %></span>
+        |
+        <span><%= current_user.nik %></span>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table border-start border-end" id="tabel_laporan_kak">
+        <thead class="thead-light">
+          <tr>
+            <th class="border-bottom" scope="col">No.</th>
+            <th class="border-bottom text-center" scope="col">Sub Kegiatan</th>
+            <th class="border-bottom text-center" scope="col">Indikator</th>
+            <th class="border-bottom text-center border-start border-end" scope="col" colspan="2">Informasi</th>
+            <th class="border-bottom text-center" scope="col">Aksi</th>
+          </tr>
+          <tr>
+            <th colspan="3"></th>
+            <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
+            <th class="border-bottom text-center border-start border-end">Pagu Anggaran</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @program_kegiatans.each.with_index(1) do |program_kegiatan, i| %>
+            <% jumlah_sasaran = program_kegiatan.sasarans.count + 1 %>
+            <% jumlah_indikator = program_kegiatan.count_indikator_sasarans %>
+            <% row_atas = jumlah_sasaran + jumlah_indikator %>
+            <% row_atas = row_atas.zero? ? 1 : row_atas %>
+            <tr class="border-bottom">
+              <td class="text-gray-900 align-items-top fw-bolder border-bottom" rowspan="<%= jumlah_sasaran %>" scope="rowgroup"><%= i %></td>
+              <td class="text-gray-900 align-items-top text-wrap" rowspan="<%= jumlah_sasaran %>"><%= program_kegiatan.nama_subkegiatan %></td>
+              <td class="text-gray-900 align-items-top text-wrap" rowspan="<%= jumlah_sasaran %>"><%= program_kegiatan.indikator_subkegiatan %></td>
+              <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
+              <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
+              <td class="fw-bolder text-gray-500 text-center" style="vertical-align: middle;" rowspan="<%= jumlah_sasaran %>">
+                <%= link_to "/acuan_kerja_new/#{program_kegiatan.id}",
+                      target: "_blank", rel: "nofollow",
+                      class:"btn btn-sm btn-info" do %>
+                  <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
+                  Lihat Detail
+                <% end %>
+                <% @tahun = Date.today.year if @tahun.nil? %>
+                <%= link_to "/pdf_kak/#{program_kegiatan.id}/#{@tahun}.pdf", class: "btn btn-sm btn-secondary" do %>
+                  <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
+                  Cetak KaK
+                <% end %>
+              </td>
+              <% program_kegiatan.sasarans.each do |show_sasaran| %>
+                <tr class="<%= warna_sasaran(show_sasaran.status_sasaran) %>">
+                  <td class="text-wrap align-items-top border-start border-end" width="350px">
+                    <%= show_sasaran.sasaran_kinerja %>
+                  </td>
+                  <td class="border-start align-items-top border-end border-bottom text-center">
+                    Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar) or 0 %>
+                  </td>
+                </tr>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <td colspan="4" class="text-align-left">Total Pagu</td>
+          <td class="border">Rp. <%= number_with_delimiter(@program_kegiatans.map(&:my_pagu).inject(:+)) %></td>
+          <td colspan="1"></td>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <div class="card-body">
+  </div>
+</div>

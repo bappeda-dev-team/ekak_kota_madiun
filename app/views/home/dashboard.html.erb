@@ -1,5 +1,5 @@
 <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
-  <%= render template: "sasarans/laporan_sasaran" %>
+  <%= render template: "kaks/laporan_kak_dashboard" %>
 <% else %>
   <div class="col-12 col-xl-12">
     <div class="row">
@@ -42,7 +42,7 @@
                       <td class="fw-bolder text-left" style="white-space: initial !important;" rowspan="<%= s.indikator_sasarans.count + 1 %>">
                         <%= s.sasaran_kinerja %>
                       </td>
-                      <td class="p-0 m-0" colspan="3"></td>
+                      <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="3"></td>
                     </tr>
                     <% s.indikator_sasarans.each do |indikator| %>
                       <tr class="<%= warna_sasaran(s.status_sasaran) %>">
