@@ -67,9 +67,9 @@ class FilterController < ApplicationController
   # filter subkegiatan
   def filter_program
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
-    @programKegiatans = ProgramKegiatan.includes(%i[opd subkegiatan_tematik]).where(opds: { kode_unik_opd: @kode_opd })
+    @programKegiatans = ProgramKegiatan.includes(%i[opd]).where(opds: { kode_unik_opd: @kode_opd })
     if OPD_TABLE.key?(opd.to_sym)
-      @programKegiatans = ProgramKegiatan.includes(%i[opd subkegiatan_tematik]).where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
+      @programKegiatans = ProgramKegiatan.includes(%i[opd]).where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
     end
     respond_to do |format|
       @render_file = 'program_kegiatans/hasil_filter'
