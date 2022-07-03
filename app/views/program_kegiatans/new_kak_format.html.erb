@@ -97,7 +97,7 @@
   </div>
   <div class="card-body">
     <ol>
-      <% @program_kegiatan.subkegiatan_tematiks.uniq.each do |tematik| %>
+      <% @program_kegiatan.subkegiatan_tematiks.includes([:subkegiatan_tematiks]).uniq.each do |tematik| %>
         <li><%= tematik.nama_tematik %></li>
       <% end %>
     </ol>

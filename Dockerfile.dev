@@ -1,28 +1,34 @@
-FROM ruby:3.0.1-alpine
+ARG RUBY_VERSION
 
-ENV APP_PATH /app
-ENV BUNDLE_VERSION 2.2.15
-ENV BUNDLE_PATH /user/local/bundle/gems
-ENV TMP_PATH /tmp/
-ENV RAILS_LOG_TO_SDOUT true
-ENV RAILS_PORT 3001
+FROM ruby:$RUBY_VERSION
+
+ARG NODE_MAJOR
+ARG BUNDLE_VERSION
 # base install
-RUN apk --update add build-base nodejs tzdata postgresql-dev postgresql-client libxslt-dev libxml2-dev imagemagick yarn
-ENV TZ=Asia/Jakarta
+RUN apt-get update
+RUN apt-get install build-essential -y
+RUN curl -SL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash -
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
-# navigate to app directory
-WORKDIR $APP_PATH
-ADD Gemfile $APP_PATH/Gemfile
-ADD Gemfile.lock $APP_PATH/Gemfile.lock
+RUN apt-get update
+RUN apt-get install nodejs -y 
+RUN apt-get install yarn -y
+#ENV TZ=Asia/Jakarta
 
-RUN gem install bundler
-ADD . $APP_PATH
-RUN if [[ "$RAILS_ENV" == "production" ]]; then bundle install --without development test; else bundle install; fi
-RUN yarn install --check-files
+# copying gemfile and install gem
+COPY Gemfile Gemfile.lock ./
+RUN gem install bundler -v $BUNDLE_VERSION
+RUN bundle install -j $(nproc)
+RUN mkdir -p /app
+WORKDIR /app
+#RUN if [[ "$RAILS_ENV" == "production" ]]; then bundle install -j $(nproc) --without development test; else bundle install -j $(nproc); fi
+#ADD . $APP_PATH
+#RUN yarn install --check-files
 
-ADD ./dev-docker-entrypoint.sh /usr/local/bin/dev-docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/dev-docker-entrypoint.sh
+#ADD ./dev-docker-entrypoint.sh /usr/local/bin/dev-docker-entrypoint.sh
+#RUN chmod +x /usr/local/bin/dev-docker-entrypoint.sh
 
-EXPOSE $RAILS_PORT
-ENTRYPOINT ["sh","/usr/local/bin/dev-docker-entrypoint.sh"]
-CMD ["bundle","exec"]
+#EXPOSE $RAILS_PORT
+#ENTRYPOINT ["sh","/usr/local/bin/dev-docker-entrypoint.sh"]
+#CMD ["bundle","exec"]
