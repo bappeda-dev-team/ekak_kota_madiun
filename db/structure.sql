@@ -834,7 +834,8 @@ CREATE TABLE public.latar_belakangs (
     gambaran_umum text,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    sasaran_id bigint
+    sasaran_id bigint,
+    id_indikator_sasaran character varying
 );
 
 
@@ -2963,6 +2964,13 @@ CREATE INDEX index_koefisiens_on_perhitungan_id ON public.koefisiens USING btree
 
 
 --
+-- Name: index_latar_belakangs_on_id_indikator_sasaran; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_latar_belakangs_on_id_indikator_sasaran ON public.latar_belakangs USING btree (id_indikator_sasaran);
+
+
+--
 -- Name: index_mandatoris_on_sasaran_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3503,6 +3511,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220624060055'),
 ('20220627001747'),
 ('20220627003603'),
-('20220627025154');
+('20220627025154'),
+('20220704014143');
 
 
