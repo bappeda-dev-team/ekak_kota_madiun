@@ -56,9 +56,9 @@
         <strong>Data Terpilah: </strong>
         <div class="card-body">
           <li><strong>Data Terpilah</strong>:</li>
-          <p class="mx-4 mt-2"><%= sasaran.rincian.data_terpilah %></p>
+          <p class="mx-4 mt-2"><%= sasaran.rincian&.data_terpilah || '-' %></p>
           <li><strong>Resiko</strong>:</li>
-          <p class="mx-4 mt-2"><%= sasaran.rincian.resiko %></p>
+          <p class="mx-4 mt-2"><%= sasaran.rincian&.resiko || '-' %></p>
         </div>
       <% end %>
     </div>
