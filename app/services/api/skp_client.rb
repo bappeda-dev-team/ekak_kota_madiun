@@ -135,12 +135,12 @@ module Api
       # opd = Opd.find_by(kode_opd: kode_opd)
       # opd.update(insert_to_opd)
       data_renaksi.reject! { |renaksi| renaksi[:target].zero? }
-      Sasaran.upsert_all(data_sasaran, unique_by: :id_rencana)
+      sasarans = Sasaran.upsert_all(data_sasaran, unique_by: :id_rencana)
       IndikatorSasaran.upsert_all(data_indikator, unique_by: :id_indikator) unless data_indikator.blank?
       Tahapan.upsert_all(data_tahapan, unique_by: :id_rencana_aksi) unless data_tahapan.blank?
       Aksi.upsert_all(data_renaksi, unique_by: :id_aksi_bulan) unless data_renaksi.blank?
-      data_manual_ik.each do |m|
-        sasaran_dari_indikator = IndikatorSasaran.find_by(id_indikator: m[:id_indikator_sasaran]).sasaran.id
+      data_manual_ik.each_with_index do |m, i|
+        sasaran_dari_indikator = sasarans[i]['id']
         m.merge!(sasaran_id: sasaran_dari_indikator)
       end
       LatarBelakang.upsert_all(data_manual_ik, unique_by: :id_indikator_sasaran)
