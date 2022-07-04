@@ -65,22 +65,13 @@ module Api
     end
 
     def update_data_sasaran(response)
-      data_sasaran = ''
-      data_manual_ik = ''
       data = Oj.load(response.body)
       pegawais = data['data']['data_pegawai']
       pegawais.each do |pegawai|
         next unless pegawai['list_rencana_kinerja']
 
-        sasaran = sasaran_items(pegawai)
-        data_sasaran = sasaran[:sasarans]
-        data_manual_ik = sasaran[:indikator][:manual_ik]
+        sasaran_items(pegawai)
       end
-      sasarans_id = Sasaran.upsert_all(data_sasaran, unique_by: :id_rencana)
-      data_manual_ik.each_with_index do |m, i|
-        m.merge!(sasaran_id: sasarans_id[i]['id'])
-      end
-      LatarBelakang.upsert_all(data_manual_ik, unique_by: :id_indikator_sasaran)
     end
 
     def update_data_pegawai(response)
@@ -138,7 +129,6 @@ module Api
 
     def sasaran_items(sasarans)
       data_sasaran = []
-      indikator = ''
       sasarans['list_rencana_kinerja'].each do |rencana|
         id_rencana = rencana['id']
         sasaran_kinerja = rencana['rencana_kerja']
@@ -150,35 +140,41 @@ module Api
                           created_at: Time.now, updated_at: Time.now }
         next unless rencana['list_indikator']
 
-        indikator = indikator_items(rencana)
+        indikator_items(rencana)
         next unless rencana['list_rencana_aksi']
 
         tahapan_items(rencana)
       end
-      { sasarans: data_sasaran, indikator: indikator }
+      Sasaran.upsert_all(data_sasaran, unique_by: :id_rencana)
     end
 
     def indikator_items(rencana)
-      data_indikator = []
-      data_manual_ik = []
+      data_indikator = ''
       rencana['list_indikator'].each do |indikator|
-        data_indikator << { indikator_kinerja: indikator['iki'],
-                            target: indikator['target'], satuan: indikator['satuan'],
-                            aspek: indikator['aspek'], sasaran_id: rencana['id'],
-                            id_indikator: indikator['id'],
-                            created_at: Time.now, updated_at: Time.now }
-        # manual ik
-        data_manual_ik << { gambaran_umum: indikator['list_manual_ik'].first['definisi'],
+        data_indikator = { indikator_kinerja: indikator['iki'],
+                           target: indikator['target'], satuan: indikator['satuan'],
+                           aspek: indikator['aspek'], sasaran_id: rencana['id'],
+                           id_indikator: indikator['id'],
+                           created_at: Time.now, updated_at: Time.now }
+        IndikatorSasaran.upsert(data_indikator, unique_by: :id_indikator, returning: :id)
+        manual_ik_items(indikator)
+      end
+    end
+
+    def manual_ik_items(indikator)
+      data_manual_ik = []
+      indikator['list_manual_ik'].each do |manual_ik|
+        sasaran_id = IndikatorSasaran.find_by(id_indikator: indikator['id']).sasaran.id
+        gambaran_umum = "#{manual_ik['tujuan_rencana_kinerja']}, #{manual_ik['definisi']}"
+        data_manual_ik << { gambaran_umum: gambaran_umum, sasaran_id: sasaran_id,
                             id_indikator_sasaran: indikator['id'],
                             created_at: Time.now, updated_at: Time.now }
       end
-      IndikatorSasaran.upsert_all(data_indikator, unique_by: :id_indikator) unless data_indikator.blank?
-      { indikator: data_indikator, manual_ik: data_manual_ik }
+      LatarBelakang.upsert_all(data_manual_ik, unique_by: :id_indikator_sasaran)
     end
 
     def tahapan_items(rencana)
       data_tahapan = []
-      renaksi = []
       rencana['list_rencana_aksi'].each do |rencana_aksi|
         id_rencana = rencana_aksi['id_rencana_kerja']
         tahapan_kerja = rencana_aksi['tahapan_kerja']
@@ -186,7 +182,7 @@ module Api
         data_tahapan << { tahapan_kerja: tahapan_kerja,
                           id_rencana_aksi: id_rencana_aksi,
                           id_rencana: id_rencana, created_at: Time.now, updated_at: Time.now }
-        renaksi = rencana_aksi_items(rencana_aksi)
+        rencana_aksi_items(rencana_aksi)
       end
       Tahapan.upsert_all(data_tahapan, unique_by: :id_rencana_aksi) unless data_tahapan.blank?
     end
