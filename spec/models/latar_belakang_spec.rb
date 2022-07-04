@@ -2,12 +2,17 @@
 #
 # Table name: latar_belakangs
 #
-#  id            :bigint           not null, primary key
-#  dasar_hukum   :text
-#  gambaran_umum :text
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  sasaran_id    :bigint
+#  id                   :bigint           not null, primary key
+#  dasar_hukum          :text
+#  gambaran_umum        :text
+#  id_indikator_sasaran :string
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  sasaran_id           :bigint
+#
+# Indexes
+#
+#  index_latar_belakangs_on_id_indikator_sasaran  (id_indikator_sasaran) UNIQUE
 #
 # Foreign Keys
 #

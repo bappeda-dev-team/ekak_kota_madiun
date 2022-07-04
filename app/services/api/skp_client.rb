@@ -73,6 +73,7 @@ module Api
       data_indikator = []
       data_tahapan = []
       data_renaksi = []
+      data_manual_ik = []
       pegawais.each do |pegawai|
         next unless pegawai['list_rencana_kinerja']
 
@@ -97,6 +98,10 @@ module Api
                                 target: target, satuan: satuan,
                                 id_indikator: id_indikator,
                                 aspek: aspek, sasaran_id: id_rencana,
+                                created_at: Time.now, updated_at: Time.now }
+            # manual ik
+            data_manual_ik << { gambaran_umum: indikator['list_manual_ik'].first['definisi'],
+                                id_indikator_sasaran: id_indikator,
                                 created_at: Time.now, updated_at: Time.now }
           end
           next unless rencana['list_rencana_aksi']
@@ -134,6 +139,11 @@ module Api
       IndikatorSasaran.upsert_all(data_indikator, unique_by: :id_indikator) unless data_indikator.blank?
       Tahapan.upsert_all(data_tahapan, unique_by: :id_rencana_aksi) unless data_tahapan.blank?
       Aksi.upsert_all(data_renaksi, unique_by: :id_aksi_bulan) unless data_renaksi.blank?
+      data_manual_ik.each do |m|
+        sasaran_dari_indikator = IndikatorSasaran.find_by(id_indikator: m[:id_indikator_sasaran]).sasaran.id
+        m.merge!(sasaran_id: sasaran_dari_indikator)
+      end
+      LatarBelakang.upsert_all(data_manual_ik, unique_by: :id_indikator_sasaran)
     end
 
     def update_data_pegawai(response)
