@@ -38,7 +38,7 @@
               <% row_dalam = kak.sasarans.count + 1  %>
               <td class="text-gray-900 fw-bolder border-bottom" rowspan="<%= row_dalam %>"><%= i %></td>
               <td class="text-gray-900 text-wrap" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.nama_subkegiatan %></td>
-              <td class="text-gray-900 border-end border-start" rowspan="<%= kak.sasarans.count + 1 %>">Rp. <%= number_with_delimiter(kak.my_pagu) or 0 %></td>
+              <td class="text-gray-900 border-end border-start" rowspan="<%= kak.sasarans.count + 1 %>">Rp. <%= number_with_delimiter(kak.all_anggaran) or 0 %></td>
               <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
               <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
               <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
@@ -64,10 +64,10 @@
         <tfoot>
           <td></td>
           <td>Total</td>
-          <td>Rp. <%= number_with_delimiter(@program_kegiatans.sum(&:my_pagu)) or 0 %></td>
+          <td>Rp. <%= number_with_delimiter(@program_kegiatans.sum(&:all_anggaran)) or 0 %></td>
           <td></td>
           <td></td>
-          <td>Rp. <%= number_with_delimiter(@program_kegiatans.map { |s| s.sasarans.sum(&:total_anggaran_dengan_komentar)}.inject(:+)) or 0 %></td>
+          <td></td>
           <td></td>
         </tfoot>
       </table>
