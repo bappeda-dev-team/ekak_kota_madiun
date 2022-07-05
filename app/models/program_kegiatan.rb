@@ -58,6 +58,8 @@ class ProgramKegiatan < ApplicationRecord
   has_many :sasarans, dependent: :nullify
   has_many :usulans, through: :sasarans
   has_many :subkegiatan_tematiks, through: :sasarans
+  has_many :rincians, through: :sasarans
+  has_many :permasalahans, through: :sasarans
 
   scope :with_sasarans, -> { where(id: Sasaran.pluck(:program_kegiatan_id)) }
 
