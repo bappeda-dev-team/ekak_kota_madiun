@@ -30,16 +30,8 @@ prawn_document(filename: @filename, disposition: 'attachment') do |pdf|
     cell_style: { size: 8, border_width: 0 },
     column_widths: { 0 => col_0_subtable_width, 1 => subtable_width })
 
-  tabel_data_pembuka_wawasan = pdf.make_table([
-                                                ['1.', { content: 'Data Pembuka Wawasan'}],
-                                                ['', tabel_pembuka_wawasan]
-                                              ],
-                                              cell_style: { size: 8, border_width: 0 },
-                                              column_widths: { 0 => 20 })
-
   tabel_faktor_kesenjangan = pdf.make_table([
-                                              ['Test Faktor Kesenjangan 1'],
-                                              ['Test Faktor Kesenjangan 2']
+                                              ['-', '-']
                                             ],
                                             cell_style: { size: 8, border_width: 0 })
 
@@ -51,12 +43,14 @@ prawn_document(filename: @filename, disposition: 'attachment') do |pdf|
     cell_style: { size: 8, border_width: 0 },
     column_widths: { 0 => col_0_subtable_width, 1 => subtable_width })
   tabel_kesenjangan = pdf.make_table([
+                                       ['1.', { content: 'Data Pembuka Wawasan'}],
+                                       ['', tabel_pembuka_wawasan],
                                        ['2.', { content: 'Isu dan Faktor Kesenjangan Gender' }],
-                                       ['a.', 'Faktor Kesenjangan'],
+                                       ['', 'a. Faktor Kesenjangan'],
                                        ['', tabel_faktor_kesenjangan],
-                                       ['b.', 'Penyebab Internal'],
+                                       ['', 'b. Penyebab Internal'],
                                        ['', tabel_internal],
-                                       ['c.', 'Penyebab Eksternal'],
+                                       ['', 'c. Penyebab Eksternal'],
                                        ['', tabel_external]
                                      ],
                                      cell_style: { size: 8, border_width: 0 },
@@ -87,8 +81,7 @@ prawn_document(filename: @filename, disposition: 'attachment') do |pdf|
     ['TAHUN ANGGARAN', { content: @program_kegiatan.tahun || 2023.to_s, font_style: :bold }],
     ['PROGRAM', { content: @program_kegiatan.nama_program }],
     ['KODE PROGRAM', { content: @program_kegiatan.kode_program }],
-    [{ content: 'ANALISIS SITUASI', borders: [:top, :left, :right] }, { content: tabel_data_pembuka_wawasan }],
-    ['', tabel_kesenjangan],
+    [{ content: 'ANALISIS SITUASI' }, { content: tabel_kesenjangan }],
     ['CAPAIAN PROGRAM', tabel_capaian_program],
     ['Target', @program_kegiatan.target_program],
     ['Satuan', @program_kegiatan.satuan_target_program],
