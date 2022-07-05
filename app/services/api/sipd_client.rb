@@ -393,6 +393,7 @@ module Api
         indikator_sub = sub['indikator_sub']
         target_sub = sub['target_sub']
         satuan_sub = sub['satuan_sub']
+        pagu = sub['pagu']
         data_subkegiatan << {
           identifier_belanja: identifier_belanja,
           tahun: tahun,
@@ -410,6 +411,7 @@ module Api
           id_giat: id_giat,
           kode_giat: kode_giat,
           nama_kegiatan: nama_kegiatan,
+          pagu: pagu,
           # indikator_kinerja: indikator_keg,
           # target: target_keg,
           # satuan: satuan_keg,
