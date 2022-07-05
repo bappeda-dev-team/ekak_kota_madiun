@@ -83,8 +83,6 @@ prawn_document(filename: @filename, disposition: 'attachment') do |pdf|
     ['KODE PROGRAM', { content: @program_kegiatan.kode_program }],
     [{ content: 'ANALISIS SITUASI' }, { content: tabel_kesenjangan }],
     ['CAPAIAN PROGRAM', tabel_capaian_program],
-    ['Target', @program_kegiatan.target_program],
-    ['Satuan', @program_kegiatan.satuan_target_program],
     ['JUMLAH ANGGARAN SUBKEGIATAN', { content: "Rp. #{number_with_delimiter(@program_kegiatan.pagu)}", font_style: :bold }],
     ['RENCANA AKSI', tabel_rencana_aksi]
   ]
