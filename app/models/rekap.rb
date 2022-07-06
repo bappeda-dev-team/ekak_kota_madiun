@@ -6,23 +6,63 @@ class Rekap
   end
 
   def jumlah_rekap
-    # Musrenbang
-    opd.program_kegiatans.map { |p| p.sasarans.map(&:usulans).compact_blank }.compact_blank
-    # Pokpir
-    # opd.program_kegiatans.map { |p| p.usulans.where(usulanable: 'Pokpir').count }.compact.count
-    # Mandatori
-    # opd.program_kegiatans.map { |p| p.usulans.where(usulanable: 'Mandatori').count }.compact.count
-    # Insisiatif Walikota
-    # opd.program_kegiatans.map { |p| p.usulans.where(usulanable: 'Inisiatif').count }.compact.count
-
-    # Spawn jumlah usulan ( musren, pokpir, mandatori, inovasi )
-    # spawn jumlah sasaran kinerja
-    # spawn jumlah sub kegiatan yang diambil
-    # spawn jumlah kegiatan yang diambil
-    # spawn jumlah program yang diambil
+    # FIXME optimize this
+    {
+      musrenbang: jumlah_usulan('Musrenbang'),
+      pokir: jumlah_usulan('Pokpir'),
+      mandatori: jumlah_usulan('Mandatori'),
+      inisiatif_walikota: jumlah_usulan('Inovasi'),
+      sasaran: jumlah_sasaran,
+      subkegiatan: jumlah_subkegiatan,
+      kegiatan: jumlah_kegiatan,
+      program: jumlah_program,
+      eselon4: jumlah_eselon4,
+      eselon3: jumlah_eselon3,
+      anggaran: jumlah_anggaran
+    }
     # spawn jumlah anggaran
-    # spawn jumlah eselon 4
-    # spawn jumlah eselon 3
+  end
+
+  def jumlah_usulan(jenis)
+    opd.program_kegiatans.map do |program|
+      program.sasarans.map do |s|
+        s.usulans.select do |u|
+          u.usulanable_type == jenis.capitalize
+        end
+      end
+    end.flatten.lazy.count
+  end
+
+  def jumlah_sasaran
+    opd.program_kegiatans.map(&:sasarans).flatten.count
+  end
+
+  def programkegiatan
+    opd.program_kegiatans.with_sasarans
+  end
+
+  def jumlah_program
+    programkegiatan.select(:id_program_sipd).distinct.count
+  end
+
+  def jumlah_kegiatan
+    programkegiatan.select(:id_giat).distinct.count
+  end
+
+  def jumlah_subkegiatan
+    programkegiatan.select(:id_sub_giat).distinct.count
+  end
+
+  def jumlah_eselon4
+    opd.users.asn_aktif.select { |u| u.type == 'User' }.count
+  end
+
+  def jumlah_eselon3
+    opd.users.asn_aktif.select { |u| u.type == 'Atasan' }.count
+  end
+
+  def jumlah_anggaran
+    programkegiatan.map(&:my_pagu).reduce(:+)
   end
 
   def opd
