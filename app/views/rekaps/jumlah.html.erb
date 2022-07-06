@@ -1,0 +1,39 @@
+<div class="card border-0 shadow" id="user_filter">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col-3">
+        <h2 class="fs-5 fw-bold mb-0">Rekap Jumlah</h2>
+      </div>
+      <div class="col text-end">
+        <span>Tahun xxxx</span>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table align-items-center border-start border-end" id="tabel_laporan_kak">
+        <thead class="thead-light">
+          <tr>
+            <th class="border-bottom" scope="col">No.</th>
+            <th class="border-bottom text-center" scope="col">Opd</th>
+            <th class="border-bottom text-center" scope="col">Jumlah Usulan</th>
+            <th class="border-bottom text-center" scope="col">Jumlah Eselon 4</th>
+            <th class="border-bottom text-center" scope="col">Jumlah Sasaran</th>
+            <th class="border-bottom text-center" scope="col">Total Anggaran</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @rekaps.each.with_index(1) do |rekap, i| %>
+            <tr>
+              <td><%= i%></td>
+              <td>Nama Opd</td>
+              <td>Jumlah Usulan</td>
+              <td><%= rekap[:eseslon4] %></td>
+              <td><%= rekap[:sasaran] %></td>
+              <td><%= rekap[:anggaran] %></td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
