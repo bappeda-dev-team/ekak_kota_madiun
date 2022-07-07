@@ -8,6 +8,7 @@ class Rekap
   def jumlah_rekap
     # FIXME optimize this
     {
+      opd: opd.nama_opd,
       musrenbang: jumlah_usulan('Musrenbang'),
       pokir: jumlah_usulan('Pokpir'),
       mandatori: jumlah_usulan('Mandatori'),
@@ -20,21 +21,20 @@ class Rekap
       eselon3: jumlah_eselon3,
       anggaran: jumlah_anggaran
     }
-    # spawn jumlah anggaran
   end
 
   def jumlah_usulan(jenis)
-    opd.program_kegiatans.map do |program|
-      program.sasarans.map do |s|
+    programs.map do |pr|
+      pr.sasarans.map do |s|
         s.usulans.select do |u|
           u.usulanable_type == jenis.capitalize
         end
       end
-    end.flatten.lazy.count
+    end.flatten.count
   end
 
   def jumlah_sasaran
-    opd.program_kegiatans.map(&:sasarans).flatten.count
+    programs.map(&:sasarans).flatten.count
   end
 
   def programkegiatan
@@ -62,10 +62,14 @@ class Rekap
   end
 
   def jumlah_anggaran
-    programkegiatan.map(&:my_pagu).reduce(:+)
+    programs.sum(&:my_pagu)
+  end
+
+  def programs
+    ProgramKegiatan.includes(%i[opd sasarans]).where(opds: { kode_unik_opd: @kode_unik_opd }).with_sasarans
   end
 
   def opd
-    Opd.find_by(kode_unik_opd: kode_unik_opd)
+    Opd.find_by(kode_unik_opd: @kode_unik_opd)
   end
 end

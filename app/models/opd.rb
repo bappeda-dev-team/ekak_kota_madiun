@@ -28,7 +28,7 @@
 class Opd < ApplicationRecord
   validates :nama_opd, presence: true
   validates :kode_opd, presence: true
-  has_many :users,  foreign_key: 'kode_opd', primary_key: 'kode_opd'
+  has_many :users, foreign_key: 'kode_opd', primary_key: 'kode_opd'
   has_many :program_kegiatans, foreign_key: 'kode_opd', primary_key: 'kode_opd'
   belongs_to :lembaga
   has_one :kepala, -> { where(type: 'Kepala') }, class_name: 'Kepala', foreign_key: :kode_opd, primary_key: :kode_opd

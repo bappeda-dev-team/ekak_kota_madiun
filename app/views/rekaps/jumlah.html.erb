@@ -16,8 +16,15 @@
           <tr>
             <th class="border-bottom" scope="col">No.</th>
             <th class="border-bottom text-center" scope="col">Opd</th>
-            <th class="border-bottom text-center" scope="col">Jumlah Usulan</th>
+            <th class="border-bottom text-center" scope="col">Jumlah Musrenbang</th>
+            <th class="border-bottom text-center" scope="col">Jumlah Pokir</th>
+            <th class="border-bottom text-center" scope="col">Jumlah Mandatori</th>
+            <th class="border-bottom text-center" scope="col">Jumlah Inovasi</th>
+            <th class="border-bottom text-center" scope="col">Jumlah Program</th>
+            <th class="border-bottom text-center" scope="col">Jumlah Kegiatan</th>
+            <th class="border-bottom text-center" scope="col">Jumlah Sub Kegiatan</th>
             <th class="border-bottom text-center" scope="col">Jumlah Eselon 4</th>
+            <th class="border-bottom text-center" scope="col">Jumlah Eselon 3</th>
             <th class="border-bottom text-center" scope="col">Jumlah Sasaran</th>
             <th class="border-bottom text-center" scope="col">Total Anggaran</th>
           </tr>
@@ -25,13 +32,21 @@
         <tbody>
           <% @rekaps.each.with_index(1) do |rekap, i| %>
             <tr>
-              <td><%= i%></td>
-              <td>Nama Opd</td>
-              <td>Jumlah Usulan</td>
-              <td><%= rekap[:eseslon4] %></td>
+              <td><%= i %></td>
+              <td><%= rekap[:opd] %></td>
+              <td><%= rekap[:musrenbang] %></td>
+              <td><%= rekap[:pokir] %></td>
+              <td><%= rekap[:mandatori] %></td>
+              <td><%= rekap[:inisiatif_walikota] %></td>
+              <td><%= rekap[:program] %></td>
+              <td><%= rekap[:kegiatan] %></td>
+              <td><%= rekap[:subkegiatan] %></td>
+              <td><%= rekap[:eselon4] %></td>
+              <td><%= rekap[:eselon3] %></td>
               <td><%= rekap[:sasaran] %></td>
-              <td><%= rekap[:anggaran] %></td>
+              <td>Rp. <%= number_with_delimiter(rekap[:anggaran]) %></td>
             </tr>
+          <% end %>
         </tbody>
       </table>
     </div>

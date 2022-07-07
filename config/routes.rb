@@ -122,10 +122,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       get :atasan
     end
   end
-  resources :rekaps do
-    collection do
-      get :jumlah
-    end
+  resources :rekaps, param: :kode_unik_opd do
+    get 'jumlah', on: :collection
   end
 
   # resque

@@ -17,115 +17,20 @@ RSpec.describe "/rekaps", type: :request do
   # This should return the minimal set of attributes required to create a valid
   # Rekap. As you add validations to Rekap, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+  let(:params) {
+    { params: { rekaps: { kode_unik_opd: ' '} } }
   }
+  let(:user) { FactoryBot.create :user }
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  # let(:invalid_attributes) {
+  #   skip("Add a hash of attributes invalid for your model")
+  # }
 
-  describe "GET /index" do
+  describe "GET /rekaps/jumlah" do
     it "renders a successful response" do
-      Rekap.create! valid_attributes
-      get rekaps_url
+      sign_in user
+      get jumlah_rekaps_url, params: { kode_unik_opd: '5.01.5.05.0.00.02.0000' }
       expect(response).to be_successful
-    end
-  end
-
-  describe "GET /show" do
-    it "renders a successful response" do
-      rekap = Rekap.create! valid_attributes
-      get rekap_url(rekap)
-      expect(response).to be_successful
-    end
-  end
-
-  describe "GET /new" do
-    it "renders a successful response" do
-      get new_rekap_url
-      expect(response).to be_successful
-    end
-  end
-
-  describe "GET /edit" do
-    it "renders a successful response" do
-      rekap = Rekap.create! valid_attributes
-      get edit_rekap_url(rekap)
-      expect(response).to be_successful
-    end
-  end
-
-  describe "POST /create" do
-    context "with valid parameters" do
-      it "creates a new Rekap" do
-        expect {
-          post rekaps_url, params: { rekap: valid_attributes }
-        }.to change(Rekap, :count).by(1)
-      end
-
-      it "redirects to the created rekap" do
-        post rekaps_url, params: { rekap: valid_attributes }
-        expect(response).to redirect_to(rekap_url(Rekap.last))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "does not create a new Rekap" do
-        expect {
-          post rekaps_url, params: { rekap: invalid_attributes }
-        }.to change(Rekap, :count).by(0)
-      end
-
-      it "renders a successful response (i.e. to display the 'new' template)" do
-        post rekaps_url, params: { rekap: invalid_attributes }
-        expect(response).to be_successful
-      end
-    end
-  end
-
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
-      it "updates the requested rekap" do
-        rekap = Rekap.create! valid_attributes
-        patch rekap_url(rekap), params: { rekap: new_attributes }
-        rekap.reload
-        skip("Add assertions for updated state")
-      end
-
-      it "redirects to the rekap" do
-        rekap = Rekap.create! valid_attributes
-        patch rekap_url(rekap), params: { rekap: new_attributes }
-        rekap.reload
-        expect(response).to redirect_to(rekap_url(rekap))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
-        rekap = Rekap.create! valid_attributes
-        patch rekap_url(rekap), params: { rekap: invalid_attributes }
-        expect(response).to be_successful
-      end
-    end
-  end
-
-  describe "DELETE /destroy" do
-    it "destroys the requested rekap" do
-      rekap = Rekap.create! valid_attributes
-      expect {
-        delete rekap_url(rekap)
-      }.to change(Rekap, :count).by(-1)
-    end
-
-    it "redirects to the rekaps list" do
-      rekap = Rekap.create! valid_attributes
-      delete rekap_url(rekap)
-      expect(response).to redirect_to(rekaps_url)
     end
   end
 end
