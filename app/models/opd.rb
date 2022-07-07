@@ -28,8 +28,8 @@
 class Opd < ApplicationRecord
   validates :nama_opd, presence: true
   validates :kode_opd, presence: true
-  has_many :users
-  has_many :program_kegiatans
+  has_many :users, foreign_key: 'kode_opd', primary_key: 'kode_opd'
+  has_many :program_kegiatans, foreign_key: 'kode_opd', primary_key: 'kode_opd'
   belongs_to :lembaga
   has_one :kepala, -> { where(type: 'Kepala') }, class_name: 'Kepala', foreign_key: :kode_opd, primary_key: :kode_opd
   def text_urusan
@@ -46,7 +46,7 @@ class Opd < ApplicationRecord
 
   def jabatan_kepala
     User.find_by(nik: nip_kepala.delete(" \t\r\n")).jabatan
-    rescue NoMethodError
-      'Kepala'
+  rescue NoMethodError
+    'Kepala'
   end
 end

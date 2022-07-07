@@ -122,6 +122,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       get :atasan
     end
   end
+  resources :rekaps, param: :kode_unik_opd do
+    get 'jumlah', on: :collection
+  end
 
   # resque
   authenticate :user, ->(u) { u.id == 1 } do
