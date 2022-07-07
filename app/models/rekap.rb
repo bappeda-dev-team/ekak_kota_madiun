@@ -7,11 +7,20 @@ class Rekap
 
   def jumlah_rekap
     # FIXME optimize this
-    musrenbang = jumlah_usulan(jenis: 'Musrenbang')
-    pokir = jumlah_usulan(jenis: 'Pokir')
-    mandatori = jumlah_usulan(jenis: 'Mandatori')
-    inisiatif_walikota = jumlah_usulan(jenis: 'Inovasi')
-    total_usulan = musrenbang + pokir + mandatori + inisiatif_walikota
+    usulans_all = usulans
+    jumlah_programkegiatan = programs.select { |p| p.sasarans.present? }
+    sasaran = jumlah_programkegiatan.map(&:sasarans).flatten.size
+    musrenbang = usulans_all.select { |u| u.usulanable_type == 'Musrenbang' }.size
+    pokir = usulans_all.select { |u| u.usulanable_type == 'Pokpir' }.size
+    mandatori = usulans_all.select { |u| u.usulanable_type == 'Mandatori' }.size
+    inisiatif_walikota = usulans_all.select { |u| u.usulanable_type == 'Inovasi' }.size
+    total_usulan = usulans_all.size
+    jumlah_pegawai = opd.users.asn_aktif
+    pegawai_eselon4 = jumlah_pegawai.select { |u| u.type == 'User' }.size
+    pegawai_eselon3 = jumlah_pegawai.select { |u| u.type == 'Atasan' }.size
+    subkegiatan = jumlah_programkegiatan.select(&:id_sub_giat).uniq.size
+    kegiatan = jumlah_programkegiatan.select(&:id_giat).uniq.size
+    program = jumlah_programkegiatan.select(&:id_program_sipd).uniq.size
     {
       opd: opd.nama_opd,
       musrenbang: musrenbang,
@@ -19,12 +28,12 @@ class Rekap
       mandatori: mandatori,
       inisiatif_walikota: inisiatif_walikota,
       total_usulan: total_usulan,
-      sasaran: jumlah_sasaran,
-      subkegiatan: jumlah_subkegiatan,
-      kegiatan: jumlah_kegiatan,
-      program: jumlah_program,
-      eselon4: jumlah_eselon4,
-      eselon3: jumlah_eselon3,
+      sasaran: sasaran,
+      subkegiatan: subkegiatan,
+      kegiatan: kegiatan,
+      program: program,
+      eselon4: pegawai_eselon4,
+      eselon3: pegawai_eselon3,
       anggaran: jumlah_anggaran
     }
   end
@@ -40,28 +49,8 @@ class Rekap
     programs.map { |pr| pr.sasarans.map(&:usulans) }.flatten.select { |u| u.usulanable_type == jenis }.count
   end
 
-  def jumlah_sasaran
-    programs.map(&:sasarans).flatten.count
-  end
-
-  def jumlah_program
-    programs.select(:id_program_sipd).distinct.count
-  end
-
-  def jumlah_kegiatan
-    programs.select(:id_giat).distinct.count
-  end
-
-  def jumlah_subkegiatan
-    programs.select(:id_sub_giat).distinct.count
-  end
-
-  def jumlah_eselon4
-    @opd.users.asn_aktif.select { |u| u.type == 'User' }.count
-  end
-
-  def jumlah_eselon3
-    @opd.users.asn_aktif.select { |u| u.type == 'Atasan' }.count
+  def usulans
+    programs.map { |pr| pr.sasarans.map(&:usulans) }.flatten
   end
 
   def jumlah_anggaran
@@ -69,7 +58,7 @@ class Rekap
   end
 
   def programs
-    ProgramKegiatan.where(kode_sub_skpd: @kode_unik_opd).with_sasarans
+    ProgramKegiatan.where(kode_sub_skpd: @kode_unik_opd)
   end
 
   def opd
