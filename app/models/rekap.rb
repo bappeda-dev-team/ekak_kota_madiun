@@ -8,9 +8,9 @@ class Rekap
   def jumlah_rekap
     # FIXME optimize this
     musrenbang = jumlah_usulan(jenis: 'Musrenbang')
-    pokir = jumlah_usulan(jenis: 'Musrenbang')
-    mandatori = jumlah_usulan(jenis: 'Musrenbang')
-    inisiatif_walikota = jumlah_usulan(jenis: 'Musrenbang')
+    pokir = jumlah_usulan(jenis: 'Pokir')
+    mandatori = jumlah_usulan(jenis: 'Mandatori')
+    inisiatif_walikota = jumlah_usulan(jenis: 'Inovasi')
     total_usulan = musrenbang + pokir + mandatori + inisiatif_walikota
     {
       opd: opd.nama_opd,
@@ -30,13 +30,14 @@ class Rekap
   end
 
   def jumlah_usulan(jenis: nil)
-    programs.map do |pr|
-      pr.sasarans.map do |s|
-        s.usulans.select do |u|
-          u.usulanable_type == jenis
-        end
-      end
-    end.flatten.count
+    # programs.map do |pr|
+    #   pr.sasarans.map do |s|
+    #     s.usulans.select do |u|
+    #       u.usulanable_type == jenis
+    #     end
+    #   end
+    # end.flatten.count
+    programs.map { |pr| pr.sasarans.map(&:usulans) }.flatten.select { |u| u.usulanable_type == jenis }.count
   end
 
   def jumlah_sasaran
@@ -44,15 +45,15 @@ class Rekap
   end
 
   def jumlah_program
-    @programs.select(:id_program_sipd).distinct.count
+    programs.select(:id_program_sipd).distinct.count
   end
 
   def jumlah_kegiatan
-    @programs.select(:id_giat).distinct.count
+    programs.select(:id_giat).distinct.count
   end
 
   def jumlah_subkegiatan
-    @programs.select(:id_sub_giat).distinct.count
+    programs.select(:id_sub_giat).distinct.count
   end
 
   def jumlah_eselon4
@@ -64,11 +65,11 @@ class Rekap
   end
 
   def jumlah_anggaran
-    @programs.sum(&:my_pagu)
+    programs.sum(&:my_pagu)
   end
 
   def programs
-    @programs ||= ProgramKegiatan.includes(%i[opd sasarans]).where(opds: { kode_unik_opd: @kode_unik_opd }).with_sasarans
+    ProgramKegiatan.where(kode_sub_skpd: @kode_unik_opd).with_sasarans
   end
 
   def opd

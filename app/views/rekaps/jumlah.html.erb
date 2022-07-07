@@ -10,7 +10,7 @@
           <div class="col">
             <select name="opd" id="opd" class="select2-waw">
               <option value="">Kota Madiun</option>
-              <% for opd, nama_opd in (Opd.includes([:program_kegiatans]).where.not(program_kegiatans: { kode_opd: nil }).each.pluck(:kode_unik_opd, :nama_opd)) do %>
+              <% for opd, nama_opd in (Opd.where.not(kode_unik_opd: nil).each.pluck(:kode_unik_opd, :nama_opd)) do %>
                 <option value="<%= opd %>"><%= nama_opd %></option>
               <% end %>
             </select>
