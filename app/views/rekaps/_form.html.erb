@@ -1,0 +1,17 @@
+<%= form_with(model: rekap) do |form| %>
+  <% if rekap.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(rekap.errors.count, "error") %> prohibited this rekap from being saved:</h2>
+
+      <ul>
+        <% rekap.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
