@@ -3,10 +3,13 @@ class RekapsController < ApplicationController
 
   def jumlah
     # dummy kode
-    # kode_opd = '5.01.5.05.0.00.02.0000'
     @rekaps = []
-    Opd.includes([:program_kegiatans]).where.not(program_kegiatans: { kode_opd: nil }).each do |opd|
-      @rekaps << Rekap.new(kode_unik_opd: opd.kode_unik_opd).jumlah_rekap
+    if kode_opd_params.present?
+      @rekaps << Rekap.new(kode_unik_opd: kode_opd_params).jumlah_rekap
+    else
+      Opd.includes([:program_kegiatans]).where.not(program_kegiatans: { kode_opd: nil }).each do |opd|
+        @rekaps << Rekap.new(kode_unik_opd: opd.kode_unik_opd).jumlah_rekap
+      end
     end
     @rekaps
   end

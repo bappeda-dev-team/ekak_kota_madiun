@@ -7,12 +7,18 @@ class Rekap
 
   def jumlah_rekap
     # FIXME optimize this
+    musrenbang = jumlah_usulan(jenis: 'Musrenbang')
+    pokir = jumlah_usulan(jenis: 'Musrenbang')
+    mandatori = jumlah_usulan(jenis: 'Musrenbang')
+    inisiatif_walikota = jumlah_usulan(jenis: 'Musrenbang')
+    total_usulan = musrenbang + pokir + mandatori + inisiatif_walikota
     {
       opd: opd.nama_opd,
-      musrenbang: jumlah_usulan('Musrenbang'),
-      pokir: jumlah_usulan('Pokpir'),
-      mandatori: jumlah_usulan('Mandatori'),
-      inisiatif_walikota: jumlah_usulan('Inovasi'),
+      musrenbang: musrenbang,
+      pokir: pokir,
+      mandatori: mandatori,
+      inisiatif_walikota: inisiatif_walikota,
+      total_usulan: total_usulan,
       sasaran: jumlah_sasaran,
       subkegiatan: jumlah_subkegiatan,
       kegiatan: jumlah_kegiatan,
@@ -23,11 +29,11 @@ class Rekap
     }
   end
 
-  def jumlah_usulan(jenis)
+  def jumlah_usulan(jenis: nil)
     programs.map do |pr|
       pr.sasarans.map do |s|
         s.usulans.select do |u|
-          u.usulanable_type == jenis.capitalize
+          u.usulanable_type == jenis
         end
       end
     end.flatten.count
@@ -37,39 +43,35 @@ class Rekap
     programs.map(&:sasarans).flatten.count
   end
 
-  def programkegiatan
-    opd.program_kegiatans.with_sasarans
-  end
-
   def jumlah_program
-    programkegiatan.select(:id_program_sipd).distinct.count
+    @programs.select(:id_program_sipd).distinct.count
   end
 
   def jumlah_kegiatan
-    programkegiatan.select(:id_giat).distinct.count
+    @programs.select(:id_giat).distinct.count
   end
 
   def jumlah_subkegiatan
-    programkegiatan.select(:id_sub_giat).distinct.count
+    @programs.select(:id_sub_giat).distinct.count
   end
 
   def jumlah_eselon4
-    opd.users.asn_aktif.select { |u| u.type == 'User' }.count
+    @opd.users.asn_aktif.select { |u| u.type == 'User' }.count
   end
 
   def jumlah_eselon3
-    opd.users.asn_aktif.select { |u| u.type == 'Atasan' }.count
+    @opd.users.asn_aktif.select { |u| u.type == 'Atasan' }.count
   end
 
   def jumlah_anggaran
-    programs.sum(&:my_pagu)
+    @programs.sum(&:my_pagu)
   end
 
   def programs
-    ProgramKegiatan.includes(%i[opd sasarans]).where(opds: { kode_unik_opd: @kode_unik_opd }).with_sasarans
+    @programs ||= ProgramKegiatan.includes(%i[opd sasarans]).where(opds: { kode_unik_opd: @kode_unik_opd }).with_sasarans
   end
 
   def opd
-    Opd.find_by(kode_unik_opd: @kode_unik_opd)
+    @opd ||= Opd.find_by(kode_unik_opd: @kode_unik_opd)
   end
 end

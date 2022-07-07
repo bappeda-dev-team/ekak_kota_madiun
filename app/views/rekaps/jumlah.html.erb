@@ -14,37 +14,42 @@
       <table class="table align-items-center border-start border-end" id="tabel_laporan_kak">
         <thead class="thead-light">
           <tr>
-            <th class="border-bottom" scope="col">No.</th>
-            <th class="border-bottom text-center" scope="col">Opd</th>
+            <th class="border-bottom" scope="col" rowspan="2">No.</th>
+            <th class="border-bottom text-center" scope="col" rowspan="2">Opd</th>
+            <th class="border-bottom text-center" scope="col" colspan="5">Jumlah Usulan</th>
+            <th class="border-bottom text-center" scope="col" rowspan="2">Jumlah Sasaran</th>
+            <th class="border-bottom text-center" scope="col" rowspan="2">Jumlah Sub Kegiatan</th>
+            <th class="border-bottom text-center" scope="col" rowspan="2">Jumlah Kegiatan</th>
+            <th class="border-bottom text-center" scope="col" rowspan="2">Jumlah Program</th>
+            <th class="border-bottom text-center" scope="col" rowspan="2">Total Anggaran</th>
+            <th class="border-bottom text-center" scope="col" rowspan="2">Jumlah Eselon 4</th>
+            <th class="border-bottom text-center" scope="col" rowspan="2">Jumlah Eselon 3</th>
+          </tr>
+          <tr>
             <th class="border-bottom text-center" scope="col">Jumlah Musrenbang</th>
             <th class="border-bottom text-center" scope="col">Jumlah Pokir</th>
             <th class="border-bottom text-center" scope="col">Jumlah Mandatori</th>
             <th class="border-bottom text-center" scope="col">Jumlah Inovasi</th>
-            <th class="border-bottom text-center" scope="col">Jumlah Program</th>
-            <th class="border-bottom text-center" scope="col">Jumlah Kegiatan</th>
-            <th class="border-bottom text-center" scope="col">Jumlah Sub Kegiatan</th>
-            <th class="border-bottom text-center" scope="col">Jumlah Eselon 4</th>
-            <th class="border-bottom text-center" scope="col">Jumlah Eselon 3</th>
-            <th class="border-bottom text-center" scope="col">Jumlah Sasaran</th>
-            <th class="border-bottom text-center" scope="col">Total Anggaran</th>
+            <th class="border-bottom text-center" scope="col">Total</th>
           </tr>
         </thead>
         <tbody>
           <% @rekaps.each.with_index(1) do |rekap, i| %>
             <tr>
-              <td><%= i %></td>
-              <td><%= rekap[:opd] %></td>
-              <td><%= rekap[:musrenbang] %></td>
-              <td><%= rekap[:pokir] %></td>
-              <td><%= rekap[:mandatori] %></td>
-              <td><%= rekap[:inisiatif_walikota] %></td>
-              <td><%= rekap[:program] %></td>
-              <td><%= rekap[:kegiatan] %></td>
-              <td><%= rekap[:subkegiatan] %></td>
-              <td><%= rekap[:eselon4] %></td>
-              <td><%= rekap[:eselon3] %></td>
-              <td><%= rekap[:sasaran] %></td>
-              <td>Rp. <%= number_with_delimiter(rekap[:anggaran]) %></td>
+              <td class="text-wrap text-center border-bottom"><%= i %></td>
+              <td class="text-wrap border-bottom"><%= rekap[:opd] %></td>
+              <td class="text-wrap text-center border-bottom"><%= rekap[:musrenbang] %></td>
+              <td class="text-wrap text-center border-bottom"><%= rekap[:pokir] %></td>
+              <td class="text-wrap text-center border-bottom"><%= rekap[:mandatori] %></td>
+              <td class="text-wrap text-center border-bottom"><%= rekap[:inisiatif_walikota] %></td>
+              <td class="text-wrap text-center border-bottom"><%= rekap[:total_usulan] %></td>
+              <td class="text-wrap text-center border-bottom"><%= rekap[:sasaran] %></td>
+              <td class="text-wrap text-center border-bottom"><%= rekap[:subkegiatan] %></td>
+              <td class="text-wrap text-center border-bottom"><%= rekap[:kegiatan] %></td>
+              <td class="text-wrap text-center border-bottom"><%= rekap[:program] %></td>
+              <td class="text-center border-bottom">Rp. <%= number_with_delimiter(rekap[:anggaran]) %></td>
+              <td class="text-wrap text-center border-bottom"><%= rekap[:eselon4] %></td>
+              <td class="text-wrap text-center border-bottom"><%= rekap[:eselon3] %></td>
             </tr>
           <% end %>
         </tbody>
