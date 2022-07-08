@@ -62,12 +62,9 @@
         </tbody>
         <tfoot>
           <tr>
-            <td></td>
-            <td></td>
-            <td>Jumlah</td>
-            <td>Rp. <%= number_with_delimiter(@program_kegiatans.map(&:my_pagu).compact.sum) %></td>
-            <td></td>
-            <td></td>
+            <td colspan="4">Jumlah Pagu</td>
+            <td class="text-gray-900 border-end border-start px-3"  width="150px">Rp. <%= number_with_delimiter(@program_kegiatans.map(&:my_pagu).compact.sum) %></td>
+            <td colspan="3"></td>
           </tr>
         </tfoot>
       </table>
