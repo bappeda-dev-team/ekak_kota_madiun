@@ -28,30 +28,30 @@
             <th class="border-bottom text-center" scope="col" rowspan="2">Jumlah Eselon 3</th>
           </tr>
           <tr>
-            <th class="border-bottom text-center" scope="col">Jumlah Musrenbang</th>
-            <th class="border-bottom text-center" scope="col">Jumlah Pokir</th>
-            <th class="border-bottom text-center" scope="col">Jumlah Mandatori</th>
-            <th class="border-bottom text-center" scope="col">Jumlah Inovasi</th>
+            <th class="border-bottom text-center border" scope="col">Musrenbang</th>
+            <th class="border-bottom text-center border" scope="col">Pokir</th>
+            <th class="border-bottom text-center border" scope="col">Mandatori</th>
+            <th class="border-bottom text-center border" scope="col">Inisiatif Walikota</th>
             <th class="border-bottom text-center" scope="col">Total</th>
           </tr>
         </thead>
         <tbody>
           <% @rekaps.each.with_index(1) do |rekap, i| %>
             <tr>
-              <td class="text-wrap text-center border-bottom"><%= i %></td>
-              <td class="text-wrap border-bottom"><%= rekap[:opd] %></td>
-              <td class="text-wrap text-center border-bottom"><%= rekap[:musrenbang] %></td>
-              <td class="text-wrap text-center border-bottom"><%= rekap[:pokir] %></td>
-              <td class="text-wrap text-center border-bottom"><%= rekap[:mandatori] %></td>
-              <td class="text-wrap text-center border-bottom"><%= rekap[:inisiatif_walikota] %></td>
-              <td class="text-wrap text-center border-bottom"><%= rekap[:total_usulan] %></td>
-              <td class="text-wrap text-center border-bottom"><%= rekap[:sasaran] %></td>
-              <td class="text-wrap text-center border-bottom"><%= rekap[:subkegiatan] %></td>
-              <td class="text-wrap text-center border-bottom"><%= rekap[:kegiatan] %></td>
-              <td class="text-wrap text-center border-bottom"><%= rekap[:program] %></td>
-              <td class="text-center border-bottom">Rp. <%= number_with_delimiter(rekap[:anggaran]) %></td>
-              <td class="text-wrap text-center border-bottom"><%= rekap[:eselon4] %></td>
-              <td class="text-wrap text-center border-bottom"><%= rekap[:eselon3] %></td>
+              <td class="text-wrap text-center border"><%= i %></td>
+              <td class="text-wrap border"><%= rekap[:opd] %></td>
+              <td class="text-wrap text-center border"><%= rekap[:musrenbang] %></td>
+              <td class="text-wrap text-center border"><%= rekap[:pokir] %></td>
+              <td class="text-wrap text-center border"><%= rekap[:mandatori] %></td>
+              <td class="text-wrap text-center border"><%= rekap[:inisiatif_walikota] %></td>
+              <td class="text-wrap text-center border <%= "text-dark bg-secondary" if rekap[:total_usulan] < rekap[:sasaran] %>"><%= rekap[:total_usulan] %></td>
+              <td class="text-wrap text-center border"><%= rekap[:sasaran] %></td>
+              <td class="text-wrap text-center border"><%= rekap[:subkegiatan] %></td>
+              <td class="text-wrap text-center border"><%= rekap[:kegiatan] %></td>
+              <td class="text-wrap text-center border"><%= rekap[:program] %></td>
+              <td class="text-center border">Rp. <%= number_with_delimiter(rekap[:anggaran]) %></td>
+              <td class="text-wrap text-center border"><%= rekap[:eselon4] %></td>
+              <td class="text-wrap text-center border"><%= rekap[:eselon3] %></td>
             </tr>
           <% end %>
         </tbody>
