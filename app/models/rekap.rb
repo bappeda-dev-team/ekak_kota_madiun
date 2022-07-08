@@ -21,7 +21,7 @@ class Rekap
     subkegiatan = jumlah_programkegiatan.select(&:id_sub_giat).uniq.size
     kegiatan = jumlah_programkegiatan.select(&:id_giat).uniq.size
     program = jumlah_programkegiatan.select(&:id_program_sipd).uniq.size
-    {
+    [{
       opd: opd.nama_opd,
       musrenbang: musrenbang,
       pokir: pokir,
@@ -35,17 +35,15 @@ class Rekap
       eselon4: pegawai_eselon4,
       eselon3: pegawai_eselon3,
       anggaran: jumlah_anggaran
-    }
+    }]
+  end
+
+  def all_rekap
+    opds = Opd.where.not(kode_unik_opd: nil).pluck(:kode_unik_opd)
+    opds.map { |opd| Rekap.new(kode_unik_opd: opd).jumlah_rekap }.flatten
   end
 
   def jumlah_usulan(jenis: nil)
-    # programs.map do |pr|
-    #   pr.sasarans.map do |s|
-    #     s.usulans.select do |u|
-    #       u.usulanable_type == jenis
-    #     end
-    #   end
-    # end.flatten.count
     programs.map { |pr| pr.sasarans.map(&:usulans) }.flatten.select { |u| u.usulanable_type == jenis }.count
   end
 

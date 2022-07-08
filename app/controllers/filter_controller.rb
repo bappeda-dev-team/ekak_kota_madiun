@@ -240,6 +240,20 @@ class FilterController < ApplicationController
     end
   end
 
+  def filter_rekap_jumlah
+    if @kode_opd == 'all'
+      @rekaps = Rekap.new(kode_unik_opd: @kode_opd).all_rekap
+      @nama_opd = 'Kota Madiun'
+    else
+      @rekaps = Rekap.new(kode_unik_opd: @kode_opd).jumlah_rekap
+      @nama_opd = nama_opd
+    end
+    @filter_file = params[:filter_file]
+    respond_to do |format|
+      format.js { render 'rekaps/rekap_jumlah' }
+    end
+  end
+
   private
 
   def filter_params
