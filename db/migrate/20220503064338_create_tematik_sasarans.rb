@@ -1,9 +1,9 @@
 class CreateTematikSasarans < ActiveRecord::Migration[6.1]
   def up
     create_table :tematik_sasarans do |t|
-      t.references :sasaran, foreign_key: true
-      t.references :subkegiatan_tematik, foreign_key: true
-      
+      t.references :sasaran, foreign_key: true 
+      t.references :subkegiatan_tematik, foreign_key: false
+
       t.timestamps
     end
     # populate join table with existing data
@@ -27,5 +27,11 @@ class CreateTematikSasarans < ActiveRecord::Migration[6.1]
       Sasaran.find(tematik_sasaran.sasaran_id).update_attribute(subkegiatan_tematik_id: tematik_sasaran.subkegiatan_tematik_id)
     end
     drop_table :tematik_sasarans
+  end
+end
+
+class AddForeignKeyToTematikSasarans < ActiveRecord::Migration[6.1]
+  def change
+    add_foreign_key :tematik_sasarans, :subkegiatan_tematik
   end
 end
