@@ -1,10 +1,43 @@
 # README
+E-KaK is a proposal project management system based on officer performance goals implemented in Madiun City
 
-Proyek Lanjutan SKP / PK
+E-KaK make proposal based on the officer performance plan, and make budget proposal plan
 
-## Kerangka Acuan Kerja ( KAK )
-- Garis besar aplikasi ini adalah membantu ASN eselon 4 ( KaSi ) untuk mengumpulkan bukti pendukung - Rencana aksi pada satu subkegiatan OPD
-- Hasil dari KAK adalah analisa GAP Gender, Detail Aksi subkegiatan
-- KAK dilakukan sebelum perancangan SKP dan PK
-- Implementasi pada tahun 2023
-* to be updated
+E-KaK outputing three proposal, RAK, KAK and Gender Budget Statement
+
+This tools focused for Madiun City Organization planners to handling budget proposal plan
+## Requirements:
+- ruby on rails v 6.1
+- ruby 3.0.1
+- Postgresql 13
+- NodeJS v 14
+- Yarn 1.22
+- redis
+
+## System Dependencies
+- run `bundle install`
+- run `yarn install`
+
+## Database Preparation
+- run `rails db:create`
+- run `rails db:migrate`
+- if having any problem disable online migration, go to `online_migration.rb` and uncomment this line `config.start_after`
+- run `rails db:seed`
+
+# Test suite
+- spec using rspec 3.11.0
+- run `rails spec:models`
+
+# Services
+- Background job: resque
+- redis
+- run `QUEUE=* rake resque:work`
+
+# Docker
+- Warning, this project not based on docker environment
+- docker will have a lot of issue including database env
+- nekad? ok
+- run `docker-compose build && docker-compose up`
+
+# Contributing
+Bug reports and pull requests are welcome on GitHub at https://github.com/RyanB1303/prototype_kak.

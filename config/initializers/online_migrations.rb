@@ -2,7 +2,7 @@
 
 OnlineMigrations.configure do |config|
   # Configure the migration version starting after which checks are performed.
-  # config.start_after = 20220608160352
+  # config.start_after = 20220704014143
 
   # Set the version of the production database so the right checks are run in development.
   # config.target_version = 10
