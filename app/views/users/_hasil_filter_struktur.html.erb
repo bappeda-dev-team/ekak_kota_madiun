@@ -23,10 +23,10 @@
       <% @strukturs.users.group_by(&:atasan).each do |key, value| %>
         <% value.each do |kabid| %>
           <p>&#9492;&nbsp;<%= kabid.jabatan %></p>
-          <p><strong>&nbsp;&nbsp;&nbsp;<%= kabid.nama %></strong></p>
+          <p><strong>&nbsp;&nbsp;&nbsp;<%= kabid.nama %></strong> status: <small><%= kabid.roles.pluck :name %></small></p>
           <% kabid.users.each do |kasi| %>
             <p>&nbsp;&nbsp;&nbsp;&#9492;&nbsp;<%= kasi.jabatan %></p>
-            <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= kasi.nama %></strong></p>
+            <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= kasi.nama %></strong> status: <small><%= kabid.roles.pluck :name %></small></p>
           <% end %>
           <hr>
         <% end %>

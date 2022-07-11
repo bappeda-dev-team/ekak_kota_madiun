@@ -17,7 +17,7 @@ class Rekap
     total_usulan = usulans_all.size
     jumlah_pegawai = opd.users.asn_aktif
     pegawai_eselon4 = jumlah_pegawai.select { |u| u.type == 'User' }.size
-    pegawai_eselon3 = jumlah_pegawai.select { |u| u.type == 'Atasan' }.size
+    pegawai_eselon3 = jumlah_pegawai.select { |u| u.type == 'Atasan' && u.eselon.match(/^(3)/) }.size
     subkegiatan = jumlah_programkegiatan.select(&:id_sub_giat).uniq.size
     kegiatan = jumlah_programkegiatan.select(&:id_giat).uniq.size
     program = jumlah_programkegiatan.select(&:id_program_sipd).uniq.size
@@ -56,7 +56,7 @@ class Rekap
   end
 
   def programs
-    ProgramKegiatan.where(kode_sub_skpd: @kode_unik_opd)
+    @kode_unik_opd == '7.01.0.00.0.00.03.00' ? ProgramKegiatan.where(kode_sub_skpd: '7.01.0.00.0.00.03.0000') : ProgramKegiatan.where(kode_sub_skpd: @kode_unik_opd)
   end
 
   def opd
