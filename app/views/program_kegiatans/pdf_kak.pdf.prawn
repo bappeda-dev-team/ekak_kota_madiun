@@ -1,11 +1,12 @@
 prawn_document(filename: @filename, disposition: "attachment") do |pdf|
-  pdf.font_families.clear
-  pdf.font_families.update("TiroKannada" => {
-                                      normal: "vendor/assets/fonts/TiroKannada-Regular.ttf",
-                                      italic: "vendor/assets/fonts/TiroKannada-Italic.ttf",
-                                      bold: "vendor/assets/fonts/NotoSerif-Bold.ttf"
-                                      })
-  pdf.font "TiroKannada"
+  # pdf.font_families.clear
+  pdf.font_families.update("DejaVuSans" =>
+    {
+      normal: "vendor/assets/fonts/DejaVuSans.ttf",
+      italic: "vendor/assets/fonts/DejaVuSans.ttf",
+      bold: "vendor/assets/fonts/DejaVuSans-Bold.ttf"
+    })
+  pdf.font "DejaVuSans"
   pdf.text 'KERANGKA ACUAN KERJA/ TERM OF REFERENCE', size: 16, align: :center
   pdf.text "KELUARAN (OUTPUT) KEGIATAN TA #{@tahun}", align: :center
   # tabel pertama
