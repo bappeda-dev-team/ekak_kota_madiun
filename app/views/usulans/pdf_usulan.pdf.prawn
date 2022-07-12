@@ -1,13 +1,15 @@
-prawn_document(filename: @filename, page_layout: :landscape, disposition: "attachment") do |pdf|
-  pdf.font_families.clear
-  pdf.font_families.update("TiroKannada" => {
-                                      normal: "vendor/assets/fonts/TiroKannada-Regular.ttf",
-                                      italic: "vendor/assets/fonts/TiroKannada-Italic.ttf",
-                                      bold: "vendor/assets/fonts/NotoSerif-Bold.ttf"
-                                      })
-  pdf.font "TiroKannada"
+# TODO: Fix the undrawn overflow height issue
+prawn_document(filename: @filename, page_layout: :landscape, disposition: "inline") do |pdf|
+  pdf.font_families.update("DejaVuSans" =>
+    {
+      normal: "vendor/assets/fonts/DejaVuSans.ttf",
+      italic: "vendor/assets/fonts/DejaVuSans.ttf",
+      bold: "vendor/assets/fonts/DejaVuSans-Bold.ttf"
+    })
+  pdf.font "DejaVuSans"
   size_cell = 8
-  height_nested = 30
+  height_nested = 100
+  height_row = 50
   width_nested = 150
   rowspan = 0
   pdf.text "DAFTAR SUB KEGIATAN #{@jenis_asli.upcase}", align: :center
@@ -22,7 +24,6 @@ prawn_document(filename: @filename, page_layout: :landscape, disposition: "attac
      { content: 'Program', align: :center }, { content: 'Pagu Anggaran', align: :center }, { content: 'OPD', align: :center },
      { content: 'Uraian', align: :center }, { content: 'Keterangan', align: :center }]
   ]
-  pdf.font "TiroKannada"
 
   @program_kegiatans.each.with_index(1) do |pk, i|
     usulan_arr = []
@@ -34,19 +35,25 @@ prawn_document(filename: @filename, page_layout: :landscape, disposition: "attac
       lokasi_arr << [us.usulanable&.uraian]
       keterangan_arr << [keterangan]
     end
-    usulan_table = pdf.make_table(usulan_arr, cell_style: { size: size_cell, height: height_nested, valign: :center }, width: width_nested)
-    lokasi_table = pdf.make_table(lokasi_arr, cell_style: { size: size_cell, height: height_nested, valign: :center }, width: width_nested)
-    keterangan_table = pdf.make_table(keterangan_arr, cell_style: { size: size_cell, height: height_nested, valign: :center }, width: width_nested)
-    header_tabel_usulan << [
-                              { content: i.to_s, width: 20, align: :center, valign: :center, rowspan: rowspan },
-                              usulan_table, { content: pk.nama_subkegiatan, valign: :center, rowspan: rowspan },
-                              { content: pk.nama_program, valign: :center, rowspan: rowspan },
-                              { content: "Rp. #{number_with_delimiter(pk.my_pagu)}", width: 90, valign: :center, rowspan: rowspan },
-                              { content: pk.opd.nama_opd, valign: :center, rowspan: rowspan },
-                              lokasi_table, keterangan_table
-                            ]
+    usulan_table = pdf.make_table(usulan_arr,
+                                  cell_style: { size: size_cell, height: height_nested, valign: :center },
+                                  width: width_nested)
+    uraian_table = pdf.make_table(lokasi_arr,
+                                  cell_style: { size: size_cell, height: height_nested, valign: :center },
+                                  width: width_nested)
+    keterangan_table = pdf.make_table(keterangan_arr,
+                                      cell_style: { size: size_cell, height: height_nested, valign: :center },
+                                      width: width_nested)
+    header_tabel_usulan << [{ content: i.to_s, width: 20, align: :center, valign: :center, height: height_row, rowspan: rowspan },
+                            usulan_table, { content: pk.nama_subkegiatan, valign: :center, height: height_row, rowspan: rowspan },
+                            { content: pk.nama_program, valign: :center, width: 90, height: height_row, rowspan: rowspan },
+                            { content: "Rp. #{number_with_delimiter(pk.my_pagu)}", width: 90, height: height_row, valign: :center, rowspan: rowspan },
+                            { content: pk.opd.nama_opd, valign: :center, height: height_row, rowspan: rowspan },
+                            uraian_table, keterangan_table]
   end
-  footer_tabel_usulan = ['', '', '', '', 'Jumlah', "Rp. #{number_with_delimiter(@program_kegiatans.map(&:my_pagu).compact.sum)}", '', '']
+  footer_tabel_usulan = [{ content: 'Jumlah', colspan: 4 },
+                         "Rp. #{number_with_delimiter(@program_kegiatans.map(&:my_pagu).compact.sum)}",
+                         { content: '', colspan: 3 }]
   header_tabel_usulan << footer_tabel_usulan
-  pdf.table(header_tabel_usulan, cell_style: { size: size_cell }, width: pdf.bounds.width)
+  pdf.table(header_tabel_usulan, cell_style: { size: size_cell }, width: pdf.bounds.width, header: true)
 end
