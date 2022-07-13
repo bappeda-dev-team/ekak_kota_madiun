@@ -43,6 +43,7 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = false
 
+  DatabaseCleaner.allow_remote_database_url = true
   # database_cleaner
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
