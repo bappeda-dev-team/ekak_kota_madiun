@@ -53,6 +53,7 @@
             <thead class="thead-light">
               <tr>
                 <th class="border-bottom text-gray-700" scope="col">No.</th>
+                <th class="border-bottom text-gray-700" scope="col">Tahun</th>
                 <th class="border-bottom text-gray-700" scope="col">Usulan</th>
                 <th class="border-bottom text-gray-700" scope="col">Alamat</th>
                 <th class="border-bottom text-gray-700" scope="col">Permasalahan</th>
@@ -66,6 +67,7 @@
               <% @pokpirs.each.with_index(1) do |pokpir, i| %>
                 <tr id="<%= dom_id(pokpir) %>">
                   <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
+                  <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.tahun %></td>
                   <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.usulan %></td>
                   <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.alamat %></td>
                   <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.uraian %></td>

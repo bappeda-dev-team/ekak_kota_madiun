@@ -53,6 +53,7 @@
             <thead class="thead-light">
               <tr>
                 <th class="border-bottom text-gray-700" scope="col">No.</th>
+                <th class="border-bottom text-gray-700" scope="col">Tahun</th>
                 <th class="border-bottom text-gray-700" scope="col">Usulan</th>
                 <th class="border-bottom text-gray-700" scope="col">Alamat</th>
                 <th class="border-bottom text-gray-700" scope="col">Permasalahan</th>
@@ -66,6 +67,7 @@
               <% @musrenbangs.each.with_index(1) do |musrenbang, i| %>
                 <tr id="<%= dom_id(musrenbang) %>">
                   <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
+                  <td class="fw-bolder text-gray-500 text-wrap"><%= musrenbang.tahun %></td>
                   <td class="fw-bolder text-gray-500 text-wrap"><%= musrenbang.usulan %></td>
                   <td class="fw-bolder text-gray-500 text-wrap"><%= musrenbang.alamat %></td>
                   <td class="fw-bolder text-gray-500 text-wrap"><%= musrenbang.uraian %></td>

@@ -1,8 +1,16 @@
 <fieldset class="mb-3">
-  <%= f.label :volume, {class: "form-label"} %>
-  <%= f.number_field :volume, {class: "form-control", step: 0.01} %>
-  <%= f.label :satuan_volume, {class: "form-label"} %>
-  <%= f.text_field :satuan_volume, {class: "form-control"} %>
-  <%# <%= f.hidden_field :_destroy %>
+  <div class="field">
+    <%= f.label :volume, {class: "form-label"} %>
+  </div>
+  <div class="field">
+    <%= f.number_field :volume, {class: "form-control", step: 0.01} %>
+  </div>
+  <div class="field">
+    <%= f.label :satuan_volume, {class: "form-label"} %>
+  </div>
+  <div class="field">
+    <%= f.text_field :satuan_volume, {class: "form-control"} %>
+  </div>
+  <%= f.hidden_field :_destroy, {class: "form-control", value: 0} %>
   <%= link_to 'Hapus Koefisien', "#", class: 'remove-field text-danger' %>
 </fieldset>

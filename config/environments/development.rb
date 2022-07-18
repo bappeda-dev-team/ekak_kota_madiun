@@ -5,6 +5,7 @@ Rails.application.configure do
     Bullet.enable        = true
     Bullet.alert         = false
     Bullet.add_footer = true
+    Bullet.bullet_logger = true
   end
 
   # Settings specified here will take precedence over those in config/application.rb.

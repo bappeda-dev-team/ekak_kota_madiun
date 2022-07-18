@@ -1,5 +1,6 @@
 class RemoveOldKakColumn < ActiveRecord::Migration[6.1]
   def change
+   safety_assured { 
     remove_column :kaks, :penerima_manfaat, :string
     remove_column :kaks, :data_terpilah, :text
     remove_column :kaks, :akses, :text
@@ -12,5 +13,6 @@ class RemoveOldKakColumn < ActiveRecord::Migration[6.1]
     remove_column :kaks, :permasalahan_gender, :text
     remove_column :kaks, :resiko, :text
     remove_column :kaks, :lokasi_pelaksanaan, :string
+    }
   end
 end

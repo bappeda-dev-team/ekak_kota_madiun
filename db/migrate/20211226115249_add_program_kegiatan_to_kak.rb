@@ -1,5 +1,7 @@
 class AddProgramKegiatanToKak < ActiveRecord::Migration[6.1]
+  disable_ddl_transaction!
+
   def change
-    add_reference :kaks, :program_kegiatan, null: true, index: true
+    add_reference_concurrently :kaks, :program_kegiatan, null: true, index: true
   end
 end

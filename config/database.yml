@@ -8,27 +8,11 @@ default: &default
   adapter: postgresql
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
-  username: ry
-  password: secret
+  hostname: <%= ENV.fetch("DATABASE_URL") { 'localhost' } %>
 
 development:
   <<: *default
   database: prototype_kak_dev
-
-# local windows ( laptop )
-#development:
-#  <<: *default
-#  username: postgres
-#  password: nsgt88
-#  port: 5433
-#  database: prototype_kak_dev
-
-
-live: &live
-  <<: *default
-  username: ryan
-  password: nsgt88
-  port: 5432
 
 test:
   <<: *default

@@ -1,5 +1,7 @@
 class AddSasaranToTahapans < ActiveRecord::Migration[6.1]
+  disable_ddl_transaction!
+
   def change
-    add_reference :tahapans, :sasaran, index: true, null: true
+    add_reference_concurrently :tahapans, :sasaran, index: true, null: true
   end
 end
