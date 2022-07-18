@@ -49,7 +49,7 @@
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.satuan %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.id_giat %></td>
             <td class="fw-bolder text-gray-500">
-              <%= link_to edit_program_kegiatan_path(prog), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-programkegiatan"}, class: "m-3" do %>
+              <%= link_to giat_edit_program_kegiatan_path(prog, row_num: i), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-programkegiatan"}, class: "m-3" do %>
                 <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
               <% end %>
               <% if current_user.has_role? :super_admin %>

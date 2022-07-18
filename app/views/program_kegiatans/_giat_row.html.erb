@@ -1,0 +1,19 @@
+<tr id="<%= dom_id(prog) %>" class="bg-success text-white">
+  <td class="fw-bolder" scope="row"><%= @row_num %></td>
+  <td class="fw-bolder" style="white-space: initial !important;"><%= prog.nama_kegiatan %></td>
+  <td class="fw-bolder" style="white-space: initial !important;"><%= prog.indikator_kinerja %></td>
+  <td class="fw-bolder" style="white-space: initial !important;"><%= prog.target %></td>
+  <td class="fw-bolder" style="white-space: initial !important;"><%= prog.satuan %></td>
+  <td class="fw-bolder" style="white-space: initial !important;"><%= prog.id_giat %></td>
+  <td class="fw-bolder">
+    <%= link_to giat_edit_program_kegiatan_path(prog, row_num: @row_num), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-programkegiatan"}, class: "m-3" do %>
+      <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+    <% end %>
+    <%= link_to prog, class: "m-3" do %>
+      <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
+    <% end %>
+    <%= link_to prog, method: :delete, data: { 'confirm-swal': "Hapus #{prog.nama_program} ?"}, class: "m-3" do %>
+      <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+    <% end %>
+  </td>
+</tr>
