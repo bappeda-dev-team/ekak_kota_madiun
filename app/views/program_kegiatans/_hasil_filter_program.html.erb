@@ -55,7 +55,7 @@
                 <i class="fas fa-sync me-2"></i>
                 Sync Indikator
               <% end %>
-              <%= link_to edit_program_kegiatan_path(prog), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-programkegiatan"}, class: "m-3" do %>
+              <%= link_to program_edit_program_kegiatan_path(prog, row_num: i), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-programkegiatan"}, class: "m-3" do %>
                 <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
               <% end %>
               <% if current_user.has_role? :super_admin %>
