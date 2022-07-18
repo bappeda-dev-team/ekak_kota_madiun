@@ -45,14 +45,17 @@
     <%= form.number_field :harga, {id: 'harga', class: "form-control"} %>
   </div>
   <div class="actions">
-    <%= form.submit "Tambah Anggaran", data: { disable_with: "Processing..." } %>
+    <%= form.submit "Simpan", data: { disable_with: "Processing..." } %>
   </div>
 <% end %>
 <script>
   $(function() {
     $('form').on('click', '.remove-field', function(event) {
-      $(this).prev('input[type=hidden]').val('1')
-      $(this).closest('fieldset').remove()
+      let element = event.target.parentElement
+      let destroyInput = element.querySelector('[name$="[_destroy]"');
+      $(this).closest('fieldset').empty()
+      destroyInput.value = 1
+      element.insertAdjacentElement('afterbegin', destroyInput);
       return event.preventDefault();
     });
 
