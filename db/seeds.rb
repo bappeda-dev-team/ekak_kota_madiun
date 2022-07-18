@@ -21,6 +21,10 @@ user = User.create(nama: 'Super Admin', nik: 'super_admin', kode_opd: opd.kode_o
   Role.create! name: role_name
 end
 user.add_role :super_admin
+user.add_role :asn
+user.add_role :admin
+user.add_role :reviewer
+user.remove_role :non_aktif
 # Sample seed for anggaran
 # Root category
 # root = Category.create name: 'sport'

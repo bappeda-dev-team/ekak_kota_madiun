@@ -1,0 +1,7 @@
+.git/*
+log/*
+tmp/*
+Dockerfile
+Readme.md
+.env
+./config/database.yml

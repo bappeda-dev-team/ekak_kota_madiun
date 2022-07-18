@@ -1,5 +1,7 @@
 class AddAnggaranToPerhitungans < ActiveRecord::Migration[6.1]
+  disable_ddl_transaction!
+
   def change
-    add_reference :perhitungans, :anggaran, index: true, foreign: true, null: true
+    add_reference_concurrently :perhitungans, :anggaran, index: true, foreign: true, null: true
   end
 end
