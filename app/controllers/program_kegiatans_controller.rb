@@ -125,9 +125,12 @@ class ProgramKegiatansController < ApplicationController
     respond_to do |format|
       @row_num = params[:program_kegiatan][:row_num]
       id_program_sipd = params[:program_kegiatan][:id_program_sipd]
-      ProgramKegiatan.where(id_program_sipd: id_program_sipd).update_all(programKegiatan_params.to_h.except(:row_num, :id_program_sipd))
+      id_giat = params[:program_kegiatan][:id_giat]
+      ProgramKegiatan.where(id_program_sipd: id_program_sipd)
+                     .where(id_giat: id_giat)
+                     .update_all(programKegiatan_params.to_h.except(:row_num, :id_program_sipd, :id_giat))
       set_program_kegiatan
-      format.js { render '_notifikasi_giat', locals: { message: 'Perubahan program disimpan', status_icon: 'success', form_name: 'form-programkegiatan', type: 'update' } }
+      format.js { render '_notifikasi_program', locals: { message: 'Perubahan program disimpan', status_icon: 'success', form_name: 'form-programkegiatan', type: 'update' } }
     end
   end
 

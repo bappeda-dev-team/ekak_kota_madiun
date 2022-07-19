@@ -172,4 +172,8 @@ class User < ApplicationRecord
   def kurang_lengkap
     @kurang_lengkap ||= sasarans.select { |s| s.usulans.exists? && s.belum_ada_sub? }.count
   end
+
+  def nama_atasan
+    User.find_by(nik: self.atasan).nama
+  end
 end
