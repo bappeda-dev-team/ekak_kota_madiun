@@ -9,19 +9,19 @@
   <div class="card-body">
     <table class="table table-bordered">
       <tr>
-        <td><strong>Atasan</strong></td>
+        <td class="w-35"><strong>Atasan</strong></td>
         <td><%= sasaran.user.nama_atasan %></td>
       </tr>
       <tr>
-        <td><strong>Pemilik Sasaran</strong></td>
+        <td class="w-35"><strong>Pemilik Sasaran</strong></td>
         <td><%= sasaran.user.nama %></td>
       </tr>
       <tr>
-        <td><strong>Sasaran Kinerja</strong></td>
+        <td class="w-35"><strong>Sasaran Kinerja</strong></td>
         <td><%= sasaran.sasaran_kinerja %></td>
       </tr>
       <tr>
-        <td><strong>Indikator Kinerja</strong></td>
+        <td class="w-35"><strong>Indikator Kinerja</strong></td>
         <% if sasaran.indikator_sasarans.empty? %>
           <td><%= sasaran.indikator_kinerja %></td>
         <% end %>
@@ -30,11 +30,11 @@
         <% end %>
       </tr>
       <tr>
-        <td><strong>Waktu Yang Dibutuhkan</strong></td>
+        <td class="w-35"><strong>Waktu Yang Dibutuhkan</strong></td>
         <td><%= sasaran.waktu_total %> Bulan</td>
       </tr>
       <tr>
-        <td><strong>Total Anggaran Sasaran : </strong></td>
+        <td class="w-35"><strong>Total Anggaran Sasaran : </strong></td>
         <td>Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
       </tr>
       <tr>
