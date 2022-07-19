@@ -11,15 +11,15 @@
   <div class="card-body program-kegiatan">
     <table class="table table-bordered">
       <tr>
-        <td><strong>Pagu Anggaran ( sasaran hijau )</strong></td>
-        <td class="bg-success text-white">Rp. <%= number_with_delimiter(@programKegiatan.my_pagu) %></td>
+        <td class="w-35"><strong>Pagu Anggaran ( sasaran hijau )</strong></td>
+        <td>Rp. <%= number_with_delimiter(@programKegiatan.my_pagu) %></td>
       </tr>
       <tr>
-        <td><strong>Pagu Anggaran ( dari semua sasaran )</strong></td>
+        <td class="w-35"><strong>Pagu Anggaran ( dari semua sasaran )</strong></td>
         <td>Rp. <%= number_with_delimiter(@programKegiatan.all_anggaran) %></td>
       </tr>
       <tr>
-        <td><strong>Pagu Anggaran ( SIPD )</strong></td>
+        <td class="w-35"><strong>Pagu Anggaran ( SIPD )</strong></td>
         <td>Rp. <%= number_with_delimiter(@programKegiatan.pagu) %></td>
       </tr>
     </table>
