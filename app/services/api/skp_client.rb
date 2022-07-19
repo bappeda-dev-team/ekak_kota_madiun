@@ -130,6 +130,8 @@ module Api
     def sasaran_items(sasarans)
       sasarans['list_rencana_kinerja'].each do |rencana|
         data_sasaran = {
+          sasaran_atasan_id: rencana['id_rekin_atasan'],
+          sasaran_atasan: rencana['rekin_atasan'],
           sasaran_kinerja: rencana['rencana_kerja'], tahun: sasarans['tahun'],
           indikator_kinerja: nil, target: nil, satuan: nil,
           nip_asn: sasarans['nip'], id_rencana: rencana['id'],

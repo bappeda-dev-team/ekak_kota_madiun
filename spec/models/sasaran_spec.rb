@@ -9,6 +9,7 @@
 #  kualitas               :integer
 #  nip_asn                :string
 #  penerima_manfaat       :string
+#  sasaran_atasan         :string
 #  sasaran_kinerja        :string
 #  satuan                 :string
 #  status                 :enum             default("draft")
@@ -18,6 +19,7 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  program_kegiatan_id    :bigint
+#  sasaran_atasan_id      :string
 #  subkegiatan_tematik_id :bigint
 #
 # Indexes
