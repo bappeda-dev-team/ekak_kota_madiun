@@ -1,0 +1,28 @@
+<%= form_with model: programKegiatan, url: program_update_program_kegiatan_path(programKegiatan), local: false, class: "mt-2" do |form| %>
+  <%= form.hidden_field :row_num, value: @row_num %>
+  <%= form.hidden_field :id_program_sipd, value: programKegiatan.id_program_sipd %>
+  <%= form.hidden_field :id_giat, value: programKegiatan.id_giat %>
+  <div class="field">
+    <%= form.label :tahun, class: "form-label" %>
+    <%= form.text_field :tahun , class: "form-control", placeholder: "...", readonly: true %>
+  </div>
+  <div class="field">
+    <%= form.label :program, class: "form-label" %>
+    <%= form.text_field :nama_program , class: "form-control", placeholder: "..." %>
+  </div>
+  <div class="field">
+    <%= form.label :indikator, class: "form-label" %>
+    <%= form.text_field :indikator_program , class: "form-control", placeholder: "..." %>
+  </div>
+  <div class="field">
+    <%= form.label :target, class: "form-label" %>
+    <%= form.text_field :target_program , class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.label :satuan, class: "form-label" %>
+    <%= form.text_field :satuan_target_program , class: "form-control", placeholder: "%" %>
+  </div>
+  <div class="actions mt-5">
+    <%= form.submit class: "btn btn-tertiary w-100"  %>
+  </div>
+<% end %>

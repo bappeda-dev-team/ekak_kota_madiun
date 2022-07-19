@@ -109,7 +109,8 @@ module Api
       pegawais.each do |pegawai|
         nip = pegawai['nip']
         atasan = pegawai['atasan_nip']
-        data_pegawais << { kode_opd: kode_opd, nik: nip, atasan: atasan }
+        atasan_nama = pegawai['atasan_nama']
+        data_pegawais << { kode_opd: kode_opd, nik: nip, atasan: atasan, atasan_nama: atasan_nama }
       end
       kepala = data_pegawais.select { |pegawai| pegawai[:atasan].blank? }.first[:nik]
       data_pegawais.each do |data_p|
@@ -130,6 +131,8 @@ module Api
     def sasaran_items(sasarans)
       sasarans['list_rencana_kinerja'].each do |rencana|
         data_sasaran = {
+          sasaran_atasan_id: rencana['id_rekin_atasan'],
+          sasaran_atasan: rencana['rekin_atasan'],
           sasaran_kinerja: rencana['rencana_kerja'], tahun: sasarans['tahun'],
           indikator_kinerja: nil, target: nil, satuan: nil,
           nip_asn: sasarans['nip'], id_rencana: rencana['id'],

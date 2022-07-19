@@ -1,122 +1,38 @@
 <p id="notice"><%= notice %></p>
-<p>
-  <strong>Nama Lembaga:</strong>
-  <%= @programKegiatan.opd.lembaga.nama_lembaga %>
-</p>
-<p>
-  <strong>Nama OPD:</strong>
-  <%= @programKegiatan.opd.nama_opd %>
-</p>
-<p>
-  <strong>Nama Sub OPD:</strong>
-  <%= @programKegiatan.nama_opd_pemilik %>
-</p>
-<p>
-  <strong>Id Sub OPD:</strong>
-  <%= @programKegiatan.id_sub_unit %>
-</p>
-<p>
-  <strong>Kode Urusan:</strong>
-  <%= @programKegiatan.kode_urusan %>
-</p>
-<p>
-  <strong>Nama Urusan:</strong>
-  <%= @programKegiatan.nama_urusan %>
-</p>
-<p>
-  <strong>Kode Bidang Urusan:</strong>
-  <%= @programKegiatan.kode_bidang_urusan %>
-</p>
-<p>
-  <strong>Nama Bidang Urusan:</strong>
-  <%= @programKegiatan.nama_bidang_urusan %>
-</p>
-<p>
-  <strong>Nama Program:</strong>
-  <%= @programKegiatan.nama_program %>
-</p>
-<p>
-  <strong>Indikator Program:</strong>
-  <%= @programKegiatan.indikator_program %>
-</p>
-<p>
-  <strong>Target Program:</strong>
-  <%= @programKegiatan.target_program %>
-</p>
-<p>
-  <strong>Satuan Indikator Program:</strong>
-  <%= @programKegiatan.satuan_target_program %>
-</p>
-<p>
-  <strong>Nama Kegiatan:</strong>
-  <%= @programKegiatan.nama_kegiatan %>
-</p>
-<p>
-  <strong>Indikator Kegiatan:</strong>
-  <%= @programKegiatan.indikator_kinerja %>
-</p>
-<p>
-  <strong>Target Kegiatan:</strong>
-  <%= @programKegiatan.target %>
-</p>
-<p>
-  <strong>Satuan Indikator Kegiatan:</strong>
-  <%= @programKegiatan.satuan %>
-</p>
-<p>
-  <strong>Nama SubKegiatan:</strong>
-  <%= @programKegiatan.nama_subkegiatan %>
-</p>
-<p>
-  <strong>Indikator SubKegiatan:</strong>
-  <%= @programKegiatan.indikator_subkegiatan %>
-</p>
-<p>
-  <strong>Target SubKegiatan:</strong>
-  <%= @programKegiatan.target_subkegiatan %>
-</p>
-<p>
-  <strong>Satuan SubKegiatan:</strong>
-  <%= @programKegiatan.satuan_target_subkegiatan %>
-</p>
-<p>
-  <strong>Pagu Anggaran ( dari semua sasaran ) : </strong>
-  Rp. <%= number_with_delimiter(@programKegiatan.my_pagu) %>
-</p>
+<%= render 'detail_program_kegiatan', programKegiatan: @programKegiatan %>
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>Pagu Anggaran</h4>
+      </div>
+    </div>
+  </div>
+  <div class="card-body program-kegiatan">
+    <table class="table table-bordered">
+      <tr>
+        <td class="w-35"><strong>Pagu Anggaran ( sasaran hijau )</strong></td>
+        <td>Rp. <%= number_with_delimiter(@programKegiatan.my_pagu) %></td>
+      </tr>
+      <tr>
+        <td class="w-35"><strong>Pagu Anggaran ( dari semua sasaran )</strong></td>
+        <td>Rp. <%= number_with_delimiter(@programKegiatan.all_anggaran) %></td>
+      </tr>
+      <tr>
+        <td class="w-35"><strong>Pagu Anggaran ( SIPD )</strong></td>
+        <td>Rp. <%= number_with_delimiter(@programKegiatan.pagu) %></td>
+      </tr>
+    </table>
+  </div>
+</div>
 <% if @programKegiatan.sasarans.any? %>
-  <hr>
-  <h4><strong>Sasaran Kinerja</strong></h4>
-  <% @programKegiatan.sasarans.each.with_index(1) do |sasaran, index| %>
-    <hr>
-    <p>
-      <strong>Sasaran Kinerja Milik : </strong>
-      <%= sasaran.user.nama %>
-    </p>
-    <p>
-      <strong>Sasaran Kinerja <%= index %> :</strong>
-      <%= sasaran.sasaran_kinerja %>
-    </p>
-    <p>
-      <strong>Indikator Kinerja <%= index %></strong>
-      <%= sasaran.sasaran_kinerja %>
-    </p>
-    <p>
-      <strong>Progress Kinerja : </strong>
-      <%= number_to_percentage(sasaran.progress_total, :precision => 2) %>
-    </p>
-    <p>
-      <strong>Waktu Yang Dibutuhkan : </strong>
-      <%= sasaran.waktu_total %> Bulan
-    </p>
-    <p>
-      <strong>Total Anggaran : </strong>
-      Rp.  <%= number_with_delimiter(sasaran.total_anggaran) %>
-    </p>
-    <p>
-      <strong>Detail :</strong>
-      <%= link_to "Show", sasaran_path(sasaran) %>
-    </p>
+  <% @programKegiatan.sasarans.includes(%i[user indikator_sasarans tahapans]).each.with_index(1) do |sasaran, index| %>
+    <%= render 'sasarans/detail_sasaran', sasaran: sasaran, index: index %>
   <% end %>
 <% end %>
-<%= link_to "Edit", edit_program_kegiatan_path(@programKegiatan) %> |
-<%= link_to "Back", program_kegiatans_path %>
+<div class="my-3">
+  <%= link_to admin_sub_kegiatan_path, class: 'btn btn-info w-100 text-white' do %>
+    <span class="fas fa-arrow-left"></span>
+    <span>Kembali</span>
+  <% end %>
+</div>

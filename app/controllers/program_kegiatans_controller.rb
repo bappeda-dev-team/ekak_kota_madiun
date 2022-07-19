@@ -1,8 +1,8 @@
 class ProgramKegiatansController < ApplicationController
-  before_action :set_programKegiatan,
+  before_action :set_program_kegiatan,
                 only: %i[show edit update destroy
                          show_to_kak kak_detail kak_renaksi kak_waktu
-                         subgiat_edit subgiat_update program_edit kegiatan_edit
+                         subgiat_edit giat_edit program_edit
                          pdf_rka]
   before_action :set_dropdown, only: %i[new edit]
 
@@ -93,12 +93,44 @@ class ProgramKegiatansController < ApplicationController
     @row_num = params[:row_num]
   end
 
+  def giat_edit
+    @row_num = params[:row_num]
+  end
+
+  def program_edit
+    @row_num = params[:row_num]
+  end
+
   def subgiat_update
     respond_to do |format|
       @row_num = params[:program_kegiatan][:row_num]
       id_sub = params[:program_kegiatan][:id_subgiat]
       ProgramKegiatan.where(id_sub_giat: id_sub).update_all(programKegiatan_params.to_h.except(:row_num, :id_subgiat))
+      set_program_kegiatan
       format.js { render '_notifikasi', locals: { message: 'Perubahan sub kegiatan disimpan', status_icon: 'success', form_name: 'form-programkegiatan', type: 'update' } }
+    end
+  end
+
+  def giat_update
+    respond_to do |format|
+      @row_num = params[:program_kegiatan][:row_num]
+      id_giat = params[:program_kegiatan][:id_giat]
+      ProgramKegiatan.where(id_giat: id_giat).update_all(programKegiatan_params.to_h.except(:row_num, :id_giat))
+      set_program_kegiatan
+      format.js { render '_notifikasi_giat', locals: { message: 'Perubahan kegiatan disimpan', status_icon: 'success', form_name: 'form-programkegiatan', type: 'update' } }
+    end
+  end
+
+  def program_update
+    respond_to do |format|
+      @row_num = params[:program_kegiatan][:row_num]
+      id_program_sipd = params[:program_kegiatan][:id_program_sipd]
+      id_giat = params[:program_kegiatan][:id_giat]
+      ProgramKegiatan.where(id_program_sipd: id_program_sipd)
+                     .where(id_giat: id_giat)
+                     .update_all(programKegiatan_params.to_h.except(:row_num, :id_program_sipd, :id_giat))
+      set_program_kegiatan
+      format.js { render '_notifikasi_program', locals: { message: 'Perubahan program disimpan', status_icon: 'success', form_name: 'form-programkegiatan', type: 'update' } }
     end
   end
 
@@ -115,17 +147,6 @@ class ProgramKegiatansController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @programKegiatan.update(programKegiatan_params)
-        format.js { render '_notifikasi_update', locals: { message: 'Program Kegiatan berhasil diupdate', status_icon: 'success', form_name: 'form-programkegiatan', type: 'update' } }
-        format.html { redirect_to program_kegiatans_url, success: 'Program Kegiatan diupdate' }
-      else
-        format.html { render :edit, error: 'Program Kegiatan Gagal diupdate' }
-      end
-    end
-  end
-
-  def update_subgiat
     respond_to do |format|
       if @programKegiatan.update(programKegiatan_params)
         format.js { render '_notifikasi_update', locals: { message: 'Program Kegiatan berhasil diupdate', status_icon: 'success', form_name: 'form-programkegiatan', type: 'update' } }
@@ -153,7 +174,7 @@ class ProgramKegiatansController < ApplicationController
 
   private
 
-  def set_programKegiatan
+  def set_program_kegiatan
     @programKegiatan = ProgramKegiatan.find(params[:id])
   end
 

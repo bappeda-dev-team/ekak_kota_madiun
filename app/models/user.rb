@@ -4,6 +4,7 @@
 #
 #  id                     :bigint           not null, primary key
 #  atasan                 :string
+#  atasan_nama            :string
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  eselon                 :string
@@ -171,5 +172,9 @@ class User < ApplicationRecord
 
   def kurang_lengkap
     @kurang_lengkap ||= sasarans.select { |s| s.usulans.exists? && s.belum_ada_sub? }.count
+  end
+
+  def nama_atasan
+    atasan_nama or '-'
   end
 end

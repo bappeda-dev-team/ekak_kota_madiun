@@ -108,6 +108,10 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     member do
       get :subgiat_edit
       patch :subgiat_update
+      get :giat_edit
+      patch :giat_update
+      get :program_edit
+      patch :program_update
     end
   end
   resources :pajaks
