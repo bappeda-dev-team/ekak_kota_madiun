@@ -4,6 +4,7 @@
 #
 #  id                     :bigint           not null, primary key
 #  atasan                 :string
+#  atasan_nama            :string
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  eselon                 :string
@@ -174,6 +175,6 @@ class User < ApplicationRecord
   end
 
   def nama_atasan
-    User.find_by(nik: self.atasan).nama
+    atasan_nama or '-'
   end
 end

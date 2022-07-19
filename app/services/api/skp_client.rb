@@ -109,7 +109,8 @@ module Api
       pegawais.each do |pegawai|
         nip = pegawai['nip']
         atasan = pegawai['atasan_nip']
-        data_pegawais << { kode_opd: kode_opd, nik: nip, atasan: atasan }
+        atasan_nama = pegawai['atasan_nama']
+        data_pegawais << { kode_opd: kode_opd, nik: nip, atasan: atasan, atasan_nama: atasan_nama }
       end
       kepala = data_pegawais.select { |pegawai| pegawai[:atasan].blank? }.first[:nik]
       data_pegawais.each do |data_p|

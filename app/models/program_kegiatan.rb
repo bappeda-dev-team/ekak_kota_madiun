@@ -84,4 +84,8 @@ class ProgramKegiatan < ApplicationRecord
   def all_anggaran
     sasarans.map(&:total_anggaran).compact.sum
   end
+
+  def jumlah_sasaran
+    sasarans.size
+  end
 end

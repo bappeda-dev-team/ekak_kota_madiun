@@ -2004,7 +2004,8 @@ CREATE TABLE public.users (
     id_bidang bigint,
     nama_bidang character varying,
     type character varying,
-    atasan character varying
+    atasan character varying,
+    atasan_nama character varying
 );
 
 
@@ -3563,6 +3564,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220627003603'),
 ('20220627025154'),
 ('20220704014143'),
-('20220719032829');
+('20220719032829'),
+('20220719071026');
 
 

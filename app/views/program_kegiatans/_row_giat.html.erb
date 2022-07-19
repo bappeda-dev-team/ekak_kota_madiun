@@ -4,7 +4,7 @@
   <td class="fw-bolder" style="white-space: initial !important;"><%= prog.indikator_kinerja %></td>
   <td class="fw-bolder" style="white-space: initial !important;"><%= prog.target %></td>
   <td class="fw-bolder" style="white-space: initial !important;"><%= prog.satuan %></td>
-  <td class="fw-bolder" style="white-space: initial !important;"><%= prog.id_giat %></td>
+  <td class="fw-bolder text-center" style="white-space: initial !important;"><%= prog.jumlah_sasaran %></td>
   <td class="fw-bolder">
     <%= link_to giat_edit_program_kegiatan_path(prog, row_num: @row_num), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-programkegiatan"}, class: "m-3" do %>
       <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>

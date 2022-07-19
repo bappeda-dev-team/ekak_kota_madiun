@@ -26,7 +26,7 @@
   </div>
 </div>
 <% if @programKegiatan.sasarans.any? %>
-  <% @programKegiatan.sasarans.each.with_index(1) do |sasaran, index| %>
+  <% @programKegiatan.sasarans.includes(%i[user indikator_sasarans tahapans]).each.with_index(1) do |sasaran, index| %>
     <%= render 'sasarans/detail_sasaran', sasaran: sasaran, index: index %>
   <% end %>
 <% end %>

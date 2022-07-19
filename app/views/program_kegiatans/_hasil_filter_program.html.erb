@@ -29,22 +29,20 @@
           <th class="border-bottom" scope="col">Indikator Program</th>
           <th class="border-bottom" scope="col">Target</th>
           <th class="border-bottom" scope="col">Satuan</th>
-          <th class="border-bottom" scope="col">id_program</th>
-          <th class="border-bottom" scope="col">id_giat</th>
+          <th class="border-bottom" scope="col">Jumlah Sasaran</th>
           <th class="border-bottom" scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <% @programKegiatans.each.with_index(1) do |prog, i| %>
-          <tr id="<%= dom_id(prog) %>" class="<%= 'bg-warning' if prog.id_program_sipd.nil? or prog.id_giat.nil? %>">
+          <tr id="<%= dom_id(prog) %>" class="<%= 'bg-warning' if prog.jumlah_sasaran.zero? %>">
             <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.nama_program %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.nama_kegiatan %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.indikator_program %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.target_program %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.satuan_target_program %></td>
-            <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.id_program_sipd %></td>
-            <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.id_giat %></td>
+            <td class="fw-bolder text-gray-500 text-center" style="white-space: initial !important;"><%= prog.jumlah_sasaran %></td>
             <td class="fw-bolder text-gray-500">
               <%= link_to sync_indikator_program_path(
                                                       kode_opd: prog.opd.id_opd_skp,
@@ -62,13 +60,11 @@
                   <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
                 <% end %>
               <% end %>
-              <% if current_user.has_role? :super_admin %>
-                <%= link_to prog, class: "m-3" do %>
-                  <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
-                <% end %>
-                <%= link_to prog, method: :delete, data: { 'confirm-swal': "Hapus #{prog.nama_program} ?"}, class: "m-3" do %>
-                  <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
-                <% end %>
+              <%= link_to prog, class: "m-3" do %>
+                <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
+              <% end %>
+              <%= link_to prog, method: :delete, data: { 'confirm-swal': "Hapus #{prog.nama_program} ?"}, class: "m-3" do %>
+                <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
               <% end %>
             </td>
           </tr>
