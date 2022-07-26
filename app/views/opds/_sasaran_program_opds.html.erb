@@ -60,7 +60,7 @@
               <% unless opd.kepala.nil? %>
                 <% opd.kepala.sasarans.order(:id).each do |kepala_sas| %>
                   <% kepala_sas.indikator_sasarans.each do |ind_kepala_sas| %>
-                    -- <%= ind_kepala_sas.indikator_kinerja  %> [ <%= ind_kepala_sas.target %> - <%= ind_kepala_sas.satuan %> ]
+                    <%= ind_kepala_sas.id_indikator %> -- <%= ind_kepala_sas.indikator_kinerja  %> [ <%= ind_kepala_sas.target %> - <%= ind_kepala_sas.satuan %> ]
                   <% end %>
                   <br>
                 <% end %>
