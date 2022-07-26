@@ -137,6 +137,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :sasaran_program_opds do
     collection do
       get :spip
+      get :excel_spip
     end
   end
   mount Sidekiq::Web, at: '/sidekiq'

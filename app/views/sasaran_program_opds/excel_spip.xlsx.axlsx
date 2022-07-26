@@ -1,0 +1,27 @@
+wb = xlsx_package.workbook
+s = wb.styles
+project_heading = s.add_style sz: 12, b: true, alignment: { horizontal: :center }
+wb.add_worksheet(name: "SasaranProgramKegiatanOPD") do |sheet|
+  sheet.add_row ["Nama Pemda"], style: project_heading
+  sheet.add_row ["Nama OPD", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "Satuan", "Nilai", "Atribut"], style: project_heading, offset: 1
+  sheet.add_row ["Sasaran OPD"], style: project_heading, offset: 2
+  sheet.add_row ["Indikator Kinerja Sasaran OPD"], style: project_heading, offset: 3
+  sheet.add_row ["Sasaran Program", nil, nil, nil, nil, nil, "Nama Program"], style: project_heading, offset: 4
+  sheet.add_row ["Indikator Kinerja Program"], style: project_heading, offset: 5
+  sheet.add_row ["Sasaran Kegiatan", nil, nil, nil, nil, "Nama Kegiatan"], style: project_heading, offset: 6
+  sheet.add_row ["Indikator Kinerja Kegiatan (Kumpulan Output)"], style: project_heading, offset: 7
+  sheet.add_row ["Sub Kegiatan (Output)"], style: project_heading, offset: 8
+  sheet.add_row ["Indikator Kinerja Output"], style: project_heading, offset: 9
+  # @program_kegiatans.each do |pk|
+  #   pk.usulans.where(usulanable_type: @jenis).each do |us|
+  #     keterangan = us.usulanable.try(:alamat) || us.usulanable.try(:peraturan_terkait) || us.usulanable.try(:manfaat)
+  #     sheet.add_row ['', us.usulanable&.usulan, pk.nama_subkegiatan, "Rp. #{number_with_delimiter(pk.my_pagu)}",
+  #                    us.usulanable&.uraian, keterangan]
+  #     # pk_cell.cells.each.with_index do |cell, isv|
+  #     #   puts "index #{isv} - #{cell.pos} - #{cell.value} - #{cell.r}"
+  #     # end
+  #     # sheet.merge_cells("#{pk_cell.cells[2].r}:#{pk_cell.cells.last.r}")
+  #   end
+  # end
+  # sheet.add_row ['', '', 'Jumlah', "Rp. #{number_with_delimiter(@program_kegiatans.map(&:my_pagu).compact.sum)}", '', '']
+end

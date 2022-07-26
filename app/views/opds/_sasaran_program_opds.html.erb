@@ -4,16 +4,13 @@
       <div class="col">
         <h2 class="fs-5 fw-bold mb-0">List OPD</h2>
       </div>
+      <div class="col text-end">
+        <%= link_to excel_spip_sasaran_program_opds_path(format: :xlsx), class:"btn btn-sm btn-primary" do %>
+          Download Excel 
+          <i class="fas fa-file-excel ms-2"></i>
+        <% end %>
+      </div>
       <% if current_user.has_role? :super_admin %>
-        <div class="col text-end">
-          <%= link_to sync_data_opd_path(tahun: Date.today.year + 1),
-                remote: true,
-                data: { disable_with: 'Memproses....'},
-                class:"btn btn-sm btn-danger" do %>
-            <i class="fas fa-sync me-2"></i>
-            Sync OPD <%= Date.today.year + 1 %>
-          <% end %>
-        </div>
         <div class="col text-end">
           <%= link_to sync_opd_path(kode_opd: opd.kode_unik_opd, tahun: Date.today.year),
                       remote: true,
