@@ -34,8 +34,5 @@
 #  fk_rails_...  (nip_asn => users.nik)
 #  fk_rails_...  (subkegiatan_tematik_id => subkegiatan_tematiks.id)
 #
-FactoryBot.define do
-  factory :sasaran_opd do
-    
-  end
+class SasaranKota < Sasaran
 end

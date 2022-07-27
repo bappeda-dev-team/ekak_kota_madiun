@@ -867,7 +867,8 @@ CREATE TABLE public.lembagas (
     nama_lembaga character varying,
     tahun character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    kode_lembaga character varying
 );
 
 
@@ -1604,6 +1605,120 @@ ALTER SEQUENCE public.rincians_id_seq OWNED BY public.rincians.id;
 
 
 --
+-- Name: rmp_flamegraphs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.rmp_flamegraphs (
+    id bigint NOT NULL,
+    rmp_profiled_request_id integer NOT NULL,
+    data bytea,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: rmp_flamegraphs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.rmp_flamegraphs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: rmp_flamegraphs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.rmp_flamegraphs_id_seq OWNED BY public.rmp_flamegraphs.id;
+
+
+--
+-- Name: rmp_profiled_requests; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.rmp_profiled_requests (
+    id bigint NOT NULL,
+    user_id character varying,
+    start bigint,
+    finish bigint,
+    duration integer,
+    allocations bigint,
+    request_path character varying,
+    request_query_string character varying,
+    request_method character varying,
+    request_headers json,
+    request_body text,
+    response_status integer,
+    response_body text,
+    response_headers json,
+    response_media_type character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: rmp_profiled_requests_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.rmp_profiled_requests_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: rmp_profiled_requests_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.rmp_profiled_requests_id_seq OWNED BY public.rmp_profiled_requests.id;
+
+
+--
+-- Name: rmp_traces; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.rmp_traces (
+    id bigint NOT NULL,
+    rmp_profiled_request_id integer NOT NULL,
+    name character varying,
+    start bigint,
+    finish bigint,
+    duration integer,
+    allocations bigint,
+    payload json,
+    backtrace json,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: rmp_traces_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.rmp_traces_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: rmp_traces_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.rmp_traces_id_seq OWNED BY public.rmp_traces.id;
+
+
+--
 -- Name: roles; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1658,8 +1773,8 @@ CREATE TABLE public.sasarans (
     subkegiatan_tematik_id bigint,
     tahun character varying,
     status public.sasaran_status DEFAULT 'draft'::public.sasaran_status,
-    sasaran_atasan_id character varying,
     sasaran_atasan character varying,
+    sasaran_atasan_id character varying,
     type character varying,
     sasaran_opd character varying,
     sasaran_kota character varying
@@ -1809,6 +1924,39 @@ CREATE SEQUENCE public.strategi_keluarans_id_seq
 --
 
 ALTER SEQUENCE public.strategi_keluarans_id_seq OWNED BY public.strategi_keluarans.id;
+
+
+--
+-- Name: subkegiatan_priorities; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.subkegiatan_priorities (
+    id bigint NOT NULL,
+    nama_priority character varying,
+    kode_priority character varying,
+    tahun character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: subkegiatan_priorities_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.subkegiatan_priorities_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: subkegiatan_priorities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.subkegiatan_priorities_id_seq OWNED BY public.subkegiatan_priorities.id;
 
 
 --
@@ -2330,6 +2478,27 @@ ALTER TABLE ONLY public.rincians ALTER COLUMN id SET DEFAULT nextval('public.rin
 
 
 --
+-- Name: rmp_flamegraphs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.rmp_flamegraphs ALTER COLUMN id SET DEFAULT nextval('public.rmp_flamegraphs_id_seq'::regclass);
+
+
+--
+-- Name: rmp_profiled_requests id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.rmp_profiled_requests ALTER COLUMN id SET DEFAULT nextval('public.rmp_profiled_requests_id_seq'::regclass);
+
+
+--
+-- Name: rmp_traces id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.rmp_traces ALTER COLUMN id SET DEFAULT nextval('public.rmp_traces_id_seq'::regclass);
+
+
+--
 -- Name: roles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2348,6 +2517,13 @@ ALTER TABLE ONLY public.sasarans ALTER COLUMN id SET DEFAULT nextval('public.sas
 --
 
 ALTER TABLE ONLY public.strategi_keluarans ALTER COLUMN id SET DEFAULT nextval('public.strategi_keluarans_id_seq'::regclass);
+
+
+--
+-- Name: subkegiatan_priorities id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.subkegiatan_priorities ALTER COLUMN id SET DEFAULT nextval('public.subkegiatan_priorities_id_seq'::regclass);
 
 
 --
@@ -2729,6 +2905,30 @@ ALTER TABLE ONLY public.rincians
 
 
 --
+-- Name: rmp_flamegraphs rmp_flamegraphs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.rmp_flamegraphs
+    ADD CONSTRAINT rmp_flamegraphs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: rmp_profiled_requests rmp_profiled_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.rmp_profiled_requests
+    ADD CONSTRAINT rmp_profiled_requests_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: rmp_traces rmp_traces_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.rmp_traces
+    ADD CONSTRAINT rmp_traces_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: roles roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2758,6 +2958,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 ALTER TABLE ONLY public.strategi_keluarans
     ADD CONSTRAINT strategi_keluarans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: subkegiatan_priorities subkegiatan_priorities_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.subkegiatan_priorities
+    ADD CONSTRAINT subkegiatan_priorities_pkey PRIMARY KEY (id);
 
 
 --
@@ -3110,6 +3318,27 @@ CREATE INDEX index_rincians_on_sasaran_id ON public.rincians USING btree (sasara
 
 
 --
+-- Name: index_rmp_flamegraphs_on_rmp_profiled_request_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_rmp_flamegraphs_on_rmp_profiled_request_id ON public.rmp_flamegraphs USING btree (rmp_profiled_request_id);
+
+
+--
+-- Name: index_rmp_profiled_requests_on_created_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_rmp_profiled_requests_on_created_at ON public.rmp_profiled_requests USING btree (created_at);
+
+
+--
+-- Name: index_rmp_traces_on_rmp_profiled_request_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_rmp_traces_on_rmp_profiled_request_id ON public.rmp_traces USING btree (rmp_profiled_request_id);
+
+
+--
 -- Name: index_roles_on_name_and_resource_type_and_resource_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3223,6 +3452,14 @@ ALTER TABLE ONLY public.comments
 
 
 --
+-- Name: rmp_flamegraphs fk_rails_07598b366e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.rmp_flamegraphs
+    ADD CONSTRAINT fk_rails_07598b366e FOREIGN KEY (rmp_profiled_request_id) REFERENCES public.rmp_profiled_requests(id);
+
+
+--
 -- Name: tematik_sasarans fk_rails_09b7ad3d51; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3292,6 +3529,14 @@ ALTER TABLE ONLY public.sasarans
 
 ALTER TABLE ONLY public.kesenjangans
     ADD CONSTRAINT fk_rails_617f862287 FOREIGN KEY (rincian_id) REFERENCES public.rincians(id);
+
+
+--
+-- Name: rmp_traces fk_rails_77c24f2ac3; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.rmp_traces
+    ADD CONSTRAINT fk_rails_77c24f2ac3 FOREIGN KEY (rmp_profiled_request_id) REFERENCES public.rmp_profiled_requests(id);
 
 
 --
@@ -3522,6 +3767,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220719032829'),
 ('20220719071026'),
 ('20220720064452'),
-('20220725112104');
+('20220721065007'),
+('20220725112104'),
+('20220727070419');
 
 

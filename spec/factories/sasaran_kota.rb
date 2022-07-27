@@ -35,7 +35,7 @@
 #  fk_rails_...  (subkegiatan_tematik_id => subkegiatan_tematiks.id)
 #
 FactoryBot.define do
-  factory :sasaran_opd do
+  factory :sasaran_kotum do
     
   end
 end

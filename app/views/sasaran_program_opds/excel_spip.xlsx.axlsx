@@ -1,8 +1,25 @@
 wb = xlsx_package.workbook
 s = wb.styles
 project_heading = s.add_style sz: 12, b: true
+red_line = s.add_style bg_color: "FF0000"
+center_hor = s.add_style sz: 12, b: true, alignment: { horizontal: :center }
+wb.add_worksheet(name: "SasaranOPD") do |sheet|
+  sheet.add_row ["Sasaran Pemda"], style: project_heading
+  sheet.add_row ["Nama OPD"], style: project_heading, offset: 1
+  sheet.add_row ["Sasaran OPD"], style: project_heading, offset: 2
+  sheet.add_row [nil, nil, nil], style: red_line
+  @opd.kepala.sasarans.group_by(&:sasaran_atasan_id).each do |key, sas_kota|
+    # sasaran Pemda
+    sheet.add_row [SasaranKota.find_by(id_rencana: key).sasaran_kinerja]
+    sheet.add_row [@opd.nama_opd], offset: 1
+    sas_kota.each do |sas_opd|
+      sheet.add_row [sas_opd.sasaran_kinerja], offset: 2
+    end
+  end
+end
 wb.add_worksheet(name: "SasaranProgramKegiatanOPD") do |sheet|
-  sheet.add_row ["Nama Pemda"], style: project_heading
+  sheet.add_row ["Nama Pemda", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "Target Kinerja"], style: [project_heading, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, center_hor]
+  sheet.merge_cells "M1:O1"
   sheet.add_row ["Nama OPD", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "Satuan", "Nilai", "Atribut"], style: project_heading, offset: 1
   sheet.add_row ["Sasaran OPD"], style: project_heading, offset: 2
   sheet.add_row ["Indikator Kinerja Sasaran OPD"], style: project_heading, offset: 3
@@ -12,7 +29,7 @@ wb.add_worksheet(name: "SasaranProgramKegiatanOPD") do |sheet|
   sheet.add_row ["Indikator Kinerja Kegiatan (Kumpulan Output)"], style: project_heading, offset: 7
   sheet.add_row ["Sub Kegiatan (Output)"], style: project_heading, offset: 8
   sheet.add_row ["Indikator Kinerja Output"], style: project_heading, offset: 9
-  sheet.add_row [nil]
+  sheet.add_row [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil], style: red_line
   # opd
   sheet.add_row ["Pemerintah Kota Madiun"]
   sheet.add_row ["#{@opd.nama_opd}"], offset: 1

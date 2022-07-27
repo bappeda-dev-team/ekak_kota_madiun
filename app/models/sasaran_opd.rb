@@ -11,6 +11,7 @@
 #  penerima_manfaat       :string
 #  sasaran_atasan         :string
 #  sasaran_kinerja        :string
+#  sasaran_kota           :string
 #  sasaran_opd            :string
 #  satuan                 :string
 #  status                 :enum             default("draft")

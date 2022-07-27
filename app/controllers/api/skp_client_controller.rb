@@ -33,6 +33,12 @@ module Api
       render 'shared/_notifikasi_simple'
     end
 
+    def sync_kota
+      UpdateSasaranKotaJob.perform_async(@kode_opd, @tahun)
+      flash.now[:success] = "Update Sasaran Kota Dikerjakan. Harap menunggu..."
+      render 'shared/_notifikasi_simple'
+    end
+
     private
 
     def verify_kode_opd
