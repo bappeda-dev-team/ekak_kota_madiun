@@ -1,6 +1,6 @@
 wb = xlsx_package.workbook
 s = wb.styles
-project_heading = s.add_style sz: 12, b: true, alignment: { horizontal: :center }
+project_heading = s.add_style sz: 12, b: true
 wb.add_worksheet(name: "SasaranProgramKegiatanOPD") do |sheet|
   sheet.add_row ["Nama Pemda"], style: project_heading
   sheet.add_row ["Nama OPD", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "Satuan", "Nilai", "Atribut"], style: project_heading, offset: 1
