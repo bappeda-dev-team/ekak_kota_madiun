@@ -30,12 +30,12 @@ class Tahapan < ApplicationRecord
 
   validates :tahapan_kerja, presence: true
 
-  # default_scope { order(id_rencana_aksi: :asc) }
+  default_scope { order(id_rencana_aksi: :asc) }
 
   amoeba do
     append id_rencana: '_2022_p'
     append id_rencana_aksi: '_2022_p'
-    exclude_association %i[comments]
+    exclude_association %i[comments aksis]
   end
 
   def sync_total_renaksi

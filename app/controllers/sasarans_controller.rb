@@ -188,9 +188,11 @@ class SasaransController < ApplicationController
       @rowspan = params[:rowspan]
       @dom = params[:dom]
       if duplicate.save
+        sasaran_target.indikator_sasarans.map { |is| is.amoeba_dup.save }
         sasaran_target.dasar_hukums.map { |ds| ds.amoeba_dup.save }
         sasaran_target.tahapans.map do |tahap|
           tahap.amoeba_dup.save
+          tahap.aksis.map { |th| th.amoeba_dup.save }
         end
         flash.now[:success] = ['Berhasil di cloning', 'dicloning']
         @type = 'berhasil'
