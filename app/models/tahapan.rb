@@ -31,7 +31,11 @@ class Tahapan < ApplicationRecord
 
   validates :tahapan_kerja, presence: true
 
-  default_scope { order(id_rencana_aksi: :asc) }
+  # default_scope { order(id_rencana_aksi: :asc) }
+
+  amoeba do
+    append id_rencana_aksi: '_2022_p'
+  end
 
   def sync_total_renaksi
     aksis.each(&:sync_total)

@@ -51,7 +51,7 @@ class Sasaran < ApplicationRecord
   # has_many :inovasis
   has_many :indikator_sasarans, foreign_key: 'sasaran_id', primary_key: 'id_rencana', dependent: :destroy
   has_many :tahapans, foreign_key: 'id_rencana', primary_key: 'id_rencana', dependent: :destroy
-  has_many :anggarans, through: :tahapans
+  # has_many :anggarans, through: :tahapans
   has_one :rincian, dependent: :destroy
   has_many :permasalahans, dependent: :destroy
   has_many :latar_belakangs, dependent: :destroy
@@ -91,6 +91,13 @@ class Sasaran < ApplicationRecord
   # def respond_to_missing?(_method, *_args)
   #   0
   # end
+  amoeba do
+    enable
+    set tahun: '2022_p'
+    append id_rencana: '_2022_p'
+    exclude_association %i[indikator_sasarans latar_belakangs]
+  end
+
   def program_nil?
     program_kegiatan.nil?
   end
