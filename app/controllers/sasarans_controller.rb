@@ -179,6 +179,26 @@ class SasaransController < ApplicationController
     end
   end
 
+  def clone
+    @sasaran = params[:id]
+    target = Sasaran.find(@sasaran)
+    target.amoeba_dup
+    respond_to do |format|
+      @rowspan = params[:rowspan]
+      @dom = params[:dom]
+      if target.save
+        flash.now[:success] = ['Berhasil di cloning', 'dicloning']
+        @type = 'berhasil'
+        @text = 'Berhasil dicloning'
+      else
+        flash.now[:danger] = ['Gagal di cloning', 'gagal']
+        @type = 'gagal'
+        @text = 'gagal dicloning'
+      end
+      format.js { render 'update_kak.js.erb' }
+    end
+  end
+
   # GET /sasarans/new
   def new
     @sasaran = @user.sasarans.build

@@ -6,7 +6,7 @@
         <th class="border-bottom text-center" rowspan="2" scope="col">Pemilik Rencana</th>
         <th class="border-bottom text-center" rowspan="2" scope="col">Status</th>
         <th class="border-bottom text-center border-start border-end" rowspan="2" scope="col">Sub Kegiatan</th>
-        <th class="border-bottom text-center border-start border-end" scope="col" colspan="4">Informasi KaK</th>
+        <th class="border-bottom text-center border-start border-end" scope="col" colspan="5">Informasi KaK</th>
       </tr>
       <tr>
         <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
@@ -56,6 +56,13 @@
                     <% end %>
                   </td>
                   <td class="fw-bolder text-gray-500 text-center border-start border-end" id="<%= dom_id(show_sasaran) %>">
+                    <%= link_to clone_sasaran_path(id: show_sasaran.id, dom: dom_id(show_sasaran), rowspan: 1),
+                      method: :post, remote: true,
+                      data: { disable_with: 'Memproses....'},
+                      class:"btn btn-sm btn-secondary" do %>
+                      <i class="fas fa-clone me-2"></i>
+                      Cloning
+                    <% end %>
                     <% if show_sasaran.status == 'draft' %>
                       <%= link_to setujui_sasaran_path(id: show_sasaran.id, dom: dom_id(show_sasaran), rowspan: 1),
                       method: :post, remote: true,
