@@ -39,6 +39,10 @@ class Perhitungan < ApplicationRecord
 
   BATAS_KENA_PAJAK = 2_000_000
 
+  amoeba do
+    enable
+  end
+
   def hitung_total
     unless destroyed?
       total_akhir = kalkulasi_harga_total

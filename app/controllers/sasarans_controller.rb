@@ -182,11 +182,11 @@ class SasaransController < ApplicationController
   def clone
     @sasaran = params[:id]
     target = Sasaran.find(@sasaran)
-    target.amoeba_dup
+    duplicate = target.amoeba_dup
     respond_to do |format|
       @rowspan = params[:rowspan]
       @dom = params[:dom]
-      if target.save
+      if duplicate.save
         flash.now[:success] = ['Berhasil di cloning', 'dicloning']
         @type = 'berhasil'
         @text = 'Berhasil dicloning'

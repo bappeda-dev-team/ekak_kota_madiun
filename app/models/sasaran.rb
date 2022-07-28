@@ -66,7 +66,7 @@ class Sasaran < ApplicationRecord
   # validates :target, presence: true
   # validates :satuan, presence: true
 
-  default_scope { order(created_at: :asc) }
+  # default_scope { order(created_at: :asc) }
   scope :hangus, -> { left_outer_joins(:usulans).where(usulans: { sasaran_id: nil }).where(program_kegiatan: nil) }
   scope :total_hangus, -> { hangus.count }
   scope :belum_ada_sub, -> { left_outer_joins(:usulans).where.not(usulans: { sasaran_id: nil }).where(program_kegiatan: nil) }
@@ -95,7 +95,7 @@ class Sasaran < ApplicationRecord
     enable
     set tahun: '2022_p'
     append id_rencana: '_2022_p'
-    exclude_association %i[indikator_sasarans latar_belakangs]
+    exclude_association %i[indikator_sasarans latar_belakangs user opd]
   end
 
   def program_nil?

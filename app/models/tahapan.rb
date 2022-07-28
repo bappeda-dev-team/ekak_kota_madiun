@@ -29,12 +29,14 @@ class Tahapan < ApplicationRecord
   has_many :anggarans, dependent: :destroy
   has_many :comments, through: :anggarans
 
-  validates :tahapan_kerja, presence: true
+  # validates :tahapan_kerja, presence: true
 
   # default_scope { order(id_rencana_aksi: :asc) }
 
   amoeba do
+    append id_rencana: '_2022_p'
     append id_rencana_aksi: '_2022_p'
+    exclude_association [:comments]
   end
 
   def sync_total_renaksi
