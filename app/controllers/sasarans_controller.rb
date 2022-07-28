@@ -180,13 +180,18 @@ class SasaransController < ApplicationController
   end
 
   def clone
+    # TODO: CLEAN THIS UP
     @sasaran = params[:id]
-    target = Sasaran.find(@sasaran)
-    duplicate = target.amoeba_dup
+    sasaran_target = Sasaran.find(@sasaran)
+    duplicate = sasaran_target.amoeba_dup
     respond_to do |format|
       @rowspan = params[:rowspan]
       @dom = params[:dom]
       if duplicate.save
+        sasaran_target.dasar_hukums.map { |ds| ds.amoeba_dup.save }
+        sasaran_target.tahapans.map do |tahap|
+          tahap.amoeba_dup.save
+        end
         flash.now[:success] = ['Berhasil di cloning', 'dicloning']
         @type = 'berhasil'
         @text = 'Berhasil dicloning'

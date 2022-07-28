@@ -184,7 +184,7 @@ module Api
           sasaran_atasan_id: rencana['id_referensi'],
           sasaran_atasan: rencana['rekin_atasan'],
           sasaran_kota: rencana['sasaran_kota'],
-          sasaran_kinerja: rencana['rencana_kerja'], tahun: sasarans['tahun'],
+          sasaran_kinerja: rencana['rencana_kerja'],
           indikator_kinerja: nil, target: nil, satuan: nil,
           nip_asn: sasarans['nip'], id_rencana: rencana['id'],
           created_at: Time.now, updated_at: Time.now

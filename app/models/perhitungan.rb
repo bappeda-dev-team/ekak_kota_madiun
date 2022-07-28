@@ -30,7 +30,7 @@ class Perhitungan < ApplicationRecord
 
   belongs_to :anggaran
   belongs_to :pajak, optional: true
-  has_many :koefisiens
+  has_many :koefisiens, inverse_of: :perhitungan
   accepts_nested_attributes_for :koefisiens, allow_destroy: true
 
   validates :deskripsi, presence: true # uraian

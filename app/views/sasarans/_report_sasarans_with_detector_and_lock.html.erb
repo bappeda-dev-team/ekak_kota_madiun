@@ -37,7 +37,7 @@
                   <td class="text-wrap border-start border-end" width="450px">
                     <%= show_sasaran.sasaran_kinerja %>
                   </td>
-                  <td class="text-wrap border-start border-end" width="450px">
+                  <td class="text-wrap border-start border-end" width="50px">
                     <%= show_sasaran.tahun %>
                   </td>
                   <td class="border-start border-end border-bottom text-center">
@@ -54,6 +54,11 @@
                     <% else %>
                       Terbuka
                     <% end %>
+                    <%= button_to 'Sync Total Renaksi', renaksi_update_path,
+                        remote: true, method: :post, class: 'btn btn-sm btn-primary',
+                        params: {id: show_sasaran.id},
+                        data: { disable_with: 'Memproses....'}
+                        %>
                   </td>
                   <td class="fw-bolder text-gray-500 text-center border-start border-end" id="<%= dom_id(show_sasaran) %>">
                     <%= link_to clone_sasaran_path(id: show_sasaran.id, dom: dom_id(show_sasaran), rowspan: 1),

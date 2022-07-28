@@ -2852,13 +2852,6 @@ CREATE UNIQUE INDEX index_aksis_on_id_aksi_bulan ON public.aksis USING btree (id
 
 
 --
--- Name: index_aksis_on_tahapan_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_aksis_on_tahapan_id ON public.aksis USING btree (tahapan_id);
-
-
---
 -- Name: index_anggarans_on_pajak_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3136,13 +3129,6 @@ CREATE UNIQUE INDEX index_sasarans_on_id_rencana ON public.sasarans USING btree 
 --
 
 CREATE UNIQUE INDEX index_tahapans_on_id_rencana_aksi ON public.tahapans USING btree (id_rencana_aksi);
-
-
---
--- Name: index_tahapans_on_sasaran_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_tahapans_on_sasaran_id ON public.tahapans USING btree (sasaran_id);
 
 
 --
@@ -3524,6 +3510,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220719071026'),
 ('20220720064452'),
 ('20220725112104'),
-('20220727070419');
+('20220727070419'),
+('20220728124001'),
+('20220728124341');
 
 

@@ -49,7 +49,7 @@ class Anggaran < ApplicationRecord
 
   amoeba do
     enable
-    exclude_association [:childs, :comments]
+    exclude_association [:childs, :comments, :perhitungans]
   end
 
   def set_default_values

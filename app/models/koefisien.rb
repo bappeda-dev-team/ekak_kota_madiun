@@ -14,6 +14,6 @@
 #  index_koefisiens_on_perhitungan_id  (perhitungan_id)
 #
 class Koefisien < ApplicationRecord
-  belongs_to :perhitungan
+  belongs_to :perhitungan, inverse_of: :koefisiens
   validates :volume, presence: true
 end
