@@ -12,7 +12,7 @@ module Api
     USERNAME = 'bappeda'
     PASSWORD = 'bapp7832KH'
 
-    def initialize(kode_opd, tahun, bulan, nip_asn = '')
+    def initialize(kode_opd, tahun, bulan = '', nip_asn = '')
       # @kode_opd = '2.16.2.20.2.21.04.0000'
       # @tahun = 2022
       # @bulan = 2
@@ -46,13 +46,20 @@ module Api
       update_struktur_pegawai(request)
     end
 
-    private
+    def update_opd
+      request = request_sasaran_opd(kode_opd, tahun)
+      update_sasaran_opd(request)
+    end
+
+    def update_kota
+      request = reqeust_sasaran_kota
+      update_sasaran_kota(request)
+    end
 
     def request_skp(kode_opd, tahun, bulan, nip_asn)
       H.post("#{URL}/sasaran-kinerja-pegawai/#{kode_opd}/#{tahun}/#{bulan}/#{nip_asn}",
              form: { username: USERNAME, password: PASSWORD })
     end
-    # https://skp.madiunkota.go.id/api/sasaran-kinerja-pegawai/1.02.2.14.0.00.03.0000/2022/5/199301212015071003
 
     def request_pegawai(kode_opd, tahun, bulan)
       H.post("#{URL}/data-pegawai-all/#{kode_opd}/#{tahun}/#{bulan}",
@@ -63,6 +70,18 @@ module Api
       H.post("#{URL}/struktur_pegawai/#{kode_opd}/#{tahun}/#{bulan}",
              form: { username: USERNAME, password: PASSWORD })
     end
+
+    def request_sasaran_opd(kode_opd, tahun)
+      H.post("#{URL}/opd-sasaran",
+             form: { username: USERNAME, password: PASSWORD, unit_id: kode_opd, tahun: tahun })
+    end
+
+    def reqeust_sasaran_kota
+      H.post("#{URL}/kota-sasaran",
+             form: { username: USERNAME, password: PASSWORD })
+    end
+
+    private
 
     def update_data_sasaran(response)
       data = Oj.load(response.body)
@@ -128,12 +147,44 @@ module Api
       end
     end
 
+    # TODO: DRY UP THIS, DUPLICATE CODE !!!
+    def update_sasaran_opd(response)
+      data = Oj.load(response.body)
+      sasarans = data['data']
+      sasarans.each do |sasaran|
+        data_sasaran = {
+          id_rencana: sasaran['id'],
+          tahun: sasaran['tahun'],
+          sasaran_kinerja: sasaran['sasaran'],
+          sasaran_opd: sasaran['unit_id'],
+          created_at: Time.now, updated_at: Time.now
+        }
+        SasaranOpd.upsert(data_sasaran, unique_by: :id_rencana)
+      end
+    end
+
+    def update_sasaran_kota(response)
+      data = Oj.load(response.body)
+      sasarans = data['data']
+      sasarans.each do |sasaran|
+        data_sasaran = {
+          id_rencana: sasaran['id'],
+          tahun: "#{sasaran['tahun_awal']}-#{sasaran['tahun_akhir']}",
+          sasaran_kinerja: sasaran['sasaran_teks'],
+          sasaran_kota: '109',
+          created_at: Time.now, updated_at: Time.now
+        }
+        SasaranKota.upsert(data_sasaran, unique_by: :id_rencana)
+      end
+    end
+
     def sasaran_items(sasarans)
       sasarans['list_rencana_kinerja'].each do |rencana|
         data_sasaran = {
-          sasaran_atasan_id: rencana['id_rekin_atasan'],
+          sasaran_atasan_id: rencana['id_referensi'],
           sasaran_atasan: rencana['rekin_atasan'],
-          sasaran_kinerja: rencana['rencana_kerja'], tahun: sasarans['tahun'],
+          sasaran_kota: rencana['sasaran_kota'],
+          sasaran_kinerja: rencana['rencana_kerja'],
           indikator_kinerja: nil, target: nil, satuan: nil,
           nip_asn: sasarans['nip'], id_rencana: rencana['id'],
           created_at: Time.now, updated_at: Time.now

@@ -15,10 +15,9 @@
 # Indexes
 #
 #  index_aksis_on_id_aksi_bulan  (id_aksi_bulan) UNIQUE
-#  index_aksis_on_tahapan_id     (tahapan_id)
 #
 class Aksi < ApplicationRecord
-  belongs_to :tahapan, foreign_key: 'id_rencana_aksi', primary_key: 'id_rencana_aksi'
+  belongs_to :tahapan, foreign_key: 'id_rencana_aksi', primary_key: 'id_rencana_aksi', inverse_of: :aksis
   after_save :update_total_target_bulan
   after_save :update_total_realisasi_bulan
   after_save :update_waktu
@@ -34,8 +33,14 @@ class Aksi < ApplicationRecord
 
   validates :target, presence: true, numericality: { only_integer: true }
   # validates :realisasi, numericality: { only_integer: true }
+  amoeba do
+    append id_aksi_bulan: '_2022_p'
+    append id_rencana_aksi: '_2022_p'
+  end
 
   def sync_total
+    self.id_aksi_bulan = SecureRandom.base36(6) if self.id_aksi_bulan.nil?
+    self.save
     run_callbacks :update do
       puts '- save'
     end

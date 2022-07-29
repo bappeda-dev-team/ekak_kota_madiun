@@ -18,4 +18,13 @@
 #
 class IndikatorSasaran < ApplicationRecord
   belongs_to :sasaran, foreign_key: 'sasaran_id', primary_key: 'id_rencana', optional: true
+
+  amoeba do
+    append sasaran_id: '_2022_p'
+    append id_indikator: '_2022_p'
+  end
+
+  def sasaran_kabid
+    Sasaran.where(sasaran_atasan_id: id_indikator)
+  end
 end

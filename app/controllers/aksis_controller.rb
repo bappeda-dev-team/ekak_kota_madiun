@@ -26,7 +26,7 @@ class AksisController < ApplicationController
   # POST /aksis or /aksis.json
   def create
     @aksi = @tahapan.aksis.build(aksi_params)
-
+    @aksi.id_aksi_bulan = SecureRandom.base36(6)
     respond_to do |format|
       if @aksi.save
         format.html { redirect_to sasaran_path(@sasaran), success: 'Sukses menambah target' }
@@ -40,6 +40,7 @@ class AksisController < ApplicationController
 
   # PATCH/PUT /aksis/1 or /aksis/1.json
   def update
+    @aksi.id_aksi_bulan = SecureRandom.base36(6) if @aksi.id_aksi_bulan.nil?
     respond_to do |format|
       if @aksi.update(aksi_params)
         format.html { redirect_to sasaran_path(@sasaran), success: 'Aksi was successfully updated.' }

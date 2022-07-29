@@ -1,10 +1,8 @@
 #!/bin/sh
 set -e
 
-echo "Environment: $RAILS_ENV"
-
-bundle check || bundle install
-
 rm -f /app/tmp/pids/server.pid
+bundle install
 
-bundle exec ${@}
+bin/rails db:migrate || bin/rails db:setup
+bin/rails yarn:install

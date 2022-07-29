@@ -11,11 +11,14 @@
 #  penerima_manfaat       :string
 #  sasaran_atasan         :string
 #  sasaran_kinerja        :string
+#  sasaran_kota           :string
+#  sasaran_opd            :string
 #  satuan                 :string
 #  status                 :enum             default("draft")
 #  sumber_dana            :string
 #  tahun                  :string
 #  target                 :integer
+#  type                   :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  program_kegiatan_id    :bigint
@@ -47,7 +50,7 @@ class Sasaran < ApplicationRecord
   # has_many :mandatoris
   # has_many :inovasis
   has_many :indikator_sasarans, foreign_key: 'sasaran_id', primary_key: 'id_rencana', dependent: :destroy
-  has_many :tahapans, foreign_key: 'id_rencana', primary_key: 'id_rencana', dependent: :destroy
+  has_many :tahapans, foreign_key: 'id_rencana', primary_key: 'id_rencana', dependent: :destroy, inverse_of: :sasaran
   has_many :anggarans, through: :tahapans
   has_one :rincian, dependent: :destroy
   has_many :permasalahans, dependent: :destroy
@@ -63,7 +66,7 @@ class Sasaran < ApplicationRecord
   # validates :target, presence: true
   # validates :satuan, presence: true
 
-  default_scope { order(created_at: :asc) }
+  # default_scope { order(created_at: :asc) }
   scope :hangus, -> { left_outer_joins(:usulans).where(usulans: { sasaran_id: nil }).where(program_kegiatan: nil) }
   scope :total_hangus, -> { hangus.count }
   scope :belum_ada_sub, -> { left_outer_joins(:usulans).where.not(usulans: { sasaran_id: nil }).where(program_kegiatan: nil) }
@@ -88,6 +91,13 @@ class Sasaran < ApplicationRecord
   # def respond_to_missing?(_method, *_args)
   #   0
   # end
+  amoeba do
+    set tahun: '2022_p'
+    append id_rencana: '_2022_p'
+    include_association %i[rincian tematik_sasarans usulans permasalahans latar_belakangs]
+    # exclude_association %i[indikator_sasarans latar_belakangs dasar_hukums]
+  end
+
   def program_nil?
     program_kegiatan.nil?
   end
@@ -242,10 +252,14 @@ class Sasaran < ApplicationRecord
   end
 
   def rekin_atasan
+    return nil if sasaran_atasan_id.nil?
+
     Sasaran.find_by(id_rencana: sasaran_atasan_id)
   end
 
   def indikator_rekin_atasan
+    return nil if sasaran_atasan_id.nil?
+
     rekin_atasan.indikator_sasarans
   end
 end

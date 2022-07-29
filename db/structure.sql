@@ -867,7 +867,8 @@ CREATE TABLE public.lembagas (
     nama_lembaga character varying,
     tahun character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    kode_lembaga character varying
 );
 
 
@@ -1658,8 +1659,11 @@ CREATE TABLE public.sasarans (
     subkegiatan_tematik_id bigint,
     tahun character varying,
     status public.sasaran_status DEFAULT 'draft'::public.sasaran_status,
+    sasaran_atasan_id character varying,
     sasaran_atasan character varying,
-    sasaran_atasan_id character varying
+    type character varying,
+    sasaran_opd character varying,
+    sasaran_kota character varying
 );
 
 
@@ -1806,39 +1810,6 @@ CREATE SEQUENCE public.strategi_keluarans_id_seq
 --
 
 ALTER SEQUENCE public.strategi_keluarans_id_seq OWNED BY public.strategi_keluarans.id;
-
-
---
--- Name: subkegiatan_priorities; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.subkegiatan_priorities (
-    id bigint NOT NULL,
-    nama_priority character varying,
-    kode_priority character varying,
-    tahun character varying,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: subkegiatan_priorities_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.subkegiatan_priorities_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: subkegiatan_priorities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.subkegiatan_priorities_id_seq OWNED BY public.subkegiatan_priorities.id;
 
 
 --
@@ -2381,13 +2352,6 @@ ALTER TABLE ONLY public.strategi_keluarans ALTER COLUMN id SET DEFAULT nextval('
 
 
 --
--- Name: subkegiatan_priorities id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.subkegiatan_priorities ALTER COLUMN id SET DEFAULT nextval('public.subkegiatan_priorities_id_seq'::regclass);
-
-
---
 -- Name: subkegiatan_tematiks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2798,14 +2762,6 @@ ALTER TABLE ONLY public.strategi_keluarans
 
 
 --
--- Name: subkegiatan_priorities subkegiatan_priorities_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.subkegiatan_priorities
-    ADD CONSTRAINT subkegiatan_priorities_pkey PRIMARY KEY (id);
-
-
---
 -- Name: subkegiatan_tematiks subkegiatan_tematiks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2893,13 +2849,6 @@ CREATE UNIQUE INDEX index_active_storage_variant_records_uniqueness ON public.ac
 --
 
 CREATE UNIQUE INDEX index_aksis_on_id_aksi_bulan ON public.aksis USING btree (id_aksi_bulan);
-
-
---
--- Name: index_aksis_on_tahapan_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_aksis_on_tahapan_id ON public.aksis USING btree (tahapan_id);
 
 
 --
@@ -3180,13 +3129,6 @@ CREATE UNIQUE INDEX index_sasarans_on_id_rencana ON public.sasarans USING btree 
 --
 
 CREATE UNIQUE INDEX index_tahapans_on_id_rencana_aksi ON public.tahapans USING btree (id_rencana_aksi);
-
-
---
--- Name: index_tahapans_on_sasaran_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_tahapans_on_sasaran_id ON public.tahapans USING btree (sasaran_id);
 
 
 --
@@ -3565,6 +3507,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220627025154'),
 ('20220704014143'),
 ('20220719032829'),
-('20220719071026');
+('20220719071026'),
+('20220720064452'),
+('20220725112104'),
+('20220727070419'),
+('20220728124001'),
+('20220728124341');
 
 

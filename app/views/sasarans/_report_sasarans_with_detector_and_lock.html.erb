@@ -6,10 +6,11 @@
         <th class="border-bottom text-center" rowspan="2" scope="col">Pemilik Rencana</th>
         <th class="border-bottom text-center" rowspan="2" scope="col">Status</th>
         <th class="border-bottom text-center border-start border-end" rowspan="2" scope="col">Sub Kegiatan</th>
-        <th class="border-bottom text-center border-start border-end" scope="col" colspan="4">Informasi KaK</th>
+        <th class="border-bottom text-center border-start border-end" scope="col" colspan="5">Informasi KaK</th>
       </tr>
       <tr>
         <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
+        <th class="border-bottom text-center border-start border-end">Tahun</th>
         <th class="border-bottom text-center border-start border-end">Pagu Anggaran</th>
         <th class="border-bottom text-center border-start border-end">Status</th>
         <th class="border-bottom text-center border-start border-end">Aksi</th>
@@ -36,6 +37,9 @@
                   <td class="text-wrap border-start border-end" width="450px">
                     <%= show_sasaran.sasaran_kinerja %>
                   </td>
+                  <td class="text-wrap border-start border-end" width="50px">
+                    <%= show_sasaran.tahun %>
+                  </td>
                   <td class="border-start border-end border-bottom text-center">
                     Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar) or 0 %>
                   </td>
@@ -50,8 +54,20 @@
                     <% else %>
                       Terbuka
                     <% end %>
+                    <%= button_to 'Sync Total Renaksi', renaksi_update_path,
+                        remote: true, method: :post, class: 'btn btn-sm btn-primary',
+                        params: {id: show_sasaran.id},
+                        data: { disable_with: 'Memproses....'}
+                        %>
                   </td>
                   <td class="fw-bolder text-gray-500 text-center border-start border-end" id="<%= dom_id(show_sasaran) %>">
+                    <%= link_to clone_sasaran_path(id: show_sasaran.id, dom: dom_id(show_sasaran), rowspan: 1),
+                      method: :post, remote: true,
+                      data: { disable_with: 'Memproses....'},
+                      class:"btn btn-sm btn-secondary" do %>
+                      <i class="fas fa-clone me-2"></i>
+                      Cloning
+                    <% end %>
                     <% if show_sasaran.status == 'draft' %>
                       <%= link_to setujui_sasaran_path(id: show_sasaran.id, dom: dom_id(show_sasaran), rowspan: 1),
                       method: :post, remote: true,

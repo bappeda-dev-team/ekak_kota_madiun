@@ -36,7 +36,7 @@
             </thead>
             <tbody>
               <% @mandatoris.each.with_index(1) do |mandatori, i| %>
-                <% if mandatori.opd_pemilik == current_user.opd.kode_opd %>
+                <% if mandatori.opd_pemilik == current_user.opd.kode_opd or current_user.has_role? :super_admin %>
                   <tr id="<%= dom_id(mandatori) %>">
                     <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
                     <td class="fw-bolder text-wrap"><%= mandatori.tahun %></td>

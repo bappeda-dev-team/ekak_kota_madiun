@@ -21,17 +21,22 @@
 # Indexes
 #
 #  index_tahapans_on_id_rencana_aksi  (id_rencana_aksi) UNIQUE
-#  index_tahapans_on_sasaran_id       (sasaran_id)
 #
 class Tahapan < ApplicationRecord
-  belongs_to :sasaran, foreign_key: 'id_rencana', primary_key: 'id_rencana', optional: true
-  has_many :aksis, foreign_key: 'id_rencana_aksi', primary_key: 'id_rencana_aksi', dependent: :destroy
+  belongs_to :sasaran, foreign_key: 'id_rencana', primary_key: 'id_rencana', optional: true, inverse_of: :tahapans
+  has_many :aksis, foreign_key: 'id_rencana_aksi', primary_key: 'id_rencana_aksi', dependent: :destroy, inverse_of: :tahapan
   has_many :anggarans, dependent: :destroy
   has_many :comments, through: :anggarans
 
   validates :tahapan_kerja, presence: true
 
   default_scope { order(id_rencana_aksi: :asc) }
+
+  amoeba do
+    append id_rencana: '_2022_p'
+    append id_rencana_aksi: '_2022_p'
+    exclude_association %i[comments aksis]
+  end
 
   def sync_total_renaksi
     aksis.each(&:sync_total)

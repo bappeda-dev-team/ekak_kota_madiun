@@ -15,7 +15,6 @@
 # Indexes
 #
 #  index_aksis_on_id_aksi_bulan  (id_aksi_bulan) UNIQUE
-#  index_aksis_on_tahapan_id     (tahapan_id)
 #
 require 'rails_helper'
 

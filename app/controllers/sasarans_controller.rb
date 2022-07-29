@@ -179,6 +179,33 @@ class SasaransController < ApplicationController
     end
   end
 
+  def clone
+    # TODO: CLEAN THIS UP
+    @sasaran = params[:id]
+    sasaran_target = Sasaran.find(@sasaran)
+    duplicate = sasaran_target.amoeba_dup
+    respond_to do |format|
+      @rowspan = params[:rowspan]
+      @dom = params[:dom]
+      if duplicate.save
+        sasaran_target.indikator_sasarans.map { |is| is.amoeba_dup.save }
+        sasaran_target.dasar_hukums.map { |ds| ds.amoeba_dup.save }
+        sasaran_target.tahapans.map do |tahap|
+          tahap.amoeba_dup.save
+          tahap.aksis.map { |th| th.amoeba_dup.save }
+        end
+        flash.now[:success] = ['Berhasil di cloning', 'dicloning']
+        @type = 'berhasil'
+        @text = 'Berhasil dicloning'
+      else
+        flash.now[:danger] = ['Gagal di cloning', 'gagal']
+        @type = 'gagal'
+        @text = 'gagal dicloning'
+      end
+      format.js { render 'update_kak.js.erb' }
+    end
+  end
+
   # GET /sasarans/new
   def new
     @sasaran = @user.sasarans.build
