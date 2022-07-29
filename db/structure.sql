@@ -618,8 +618,8 @@ CREATE TABLE public.indikator_sasarans (
     target integer,
     satuan character varying,
     aspek character varying,
-    id_indikator bigint,
-    sasaran_id bigint,
+    id_indikator character varying,
+    sasaran_id character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -754,6 +754,39 @@ CREATE SEQUENCE public.kamus_usulans_id_seq
 --
 
 ALTER SEQUENCE public.kamus_usulans_id_seq OWNED BY public.kamus_usulans.id;
+
+
+--
+-- Name: kelompok_anggarans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.kelompok_anggarans (
+    id bigint NOT NULL,
+    kode_kelompok character varying,
+    tahun character varying,
+    kelompok character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: kelompok_anggarans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.kelompok_anggarans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: kelompok_anggarans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.kelompok_anggarans_id_seq OWNED BY public.kelompok_anggarans.id;
 
 
 --
@@ -2177,6 +2210,13 @@ ALTER TABLE ONLY public.kamus_usulans ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
+-- Name: kelompok_anggarans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.kelompok_anggarans ALTER COLUMN id SET DEFAULT nextval('public.kelompok_anggarans_id_seq'::regclass);
+
+
+--
 -- Name: kesenjangans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2551,6 +2591,14 @@ ALTER TABLE ONLY public.kaks
 
 ALTER TABLE ONLY public.kamus_usulans
     ADD CONSTRAINT kamus_usulans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: kelompok_anggarans kelompok_anggarans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.kelompok_anggarans
+    ADD CONSTRAINT kelompok_anggarans_pkey PRIMARY KEY (id);
 
 
 --
@@ -3512,6 +3560,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220725112104'),
 ('20220727070419'),
 ('20220728124001'),
-('20220728124341');
+('20220728124341'),
+('20220729030633');
 
 

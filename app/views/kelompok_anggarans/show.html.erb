@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Kode kelompok:</strong>
+  <%= @kelompok_anggaran.kode_kelompok %>
+</p>
+
+<p>
+  <strong>Tahun:</strong>
+  <%= @kelompok_anggaran.tahun %>
+</p>
+
+<p>
+  <strong>Kelompok:</strong>
+  <%= @kelompok_anggaran.kelompok %>
+</p>
+
+<%= link_to 'Edit', edit_kelompok_anggaran_path(@kelompok_anggaran) %> |
+<%= link_to 'Back', kelompok_anggarans_path %>

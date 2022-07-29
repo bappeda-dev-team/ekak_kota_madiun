@@ -1,0 +1,27 @@
+<%= form_with(model: kelompok_anggaran) do |form| %>
+  <% if kelompok_anggaran.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(kelompok_anggaran.errors.count, "error") %> prohibited this kelompok_anggaran from being saved:</h2>
+      <ul>
+        <% kelompok_anggaran.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :kode_kelompok, class: 'form-label' %>
+    <%= form.text_field :kode_kelompok, class: 'form-control' %>
+  </div>
+  <div class="field">
+    <%= form.label :tahun, class: 'form-label' %>
+    <%= form.text_field :tahun, class: 'form-control' %>
+  </div>
+  <div class="field">
+    <%= form.label :kelompok, class: 'form-label' %>
+    <%= form.text_field :kelompok, class: 'form-control' %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

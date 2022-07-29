@@ -56,7 +56,8 @@ module SidebarItemHelper
         icon: 'fas fa-tasks' },
       { title: 'User', href: adminusers_path, icon: 'fas fa-user-check', identifier: 'adminusers' },
       { title: 'OPD', href: opds_path, icon: 'fas fa-building', identifier: 'opds' },
-      { title: 'Struktur Organisasi', href: struktur_users_path, icon: 'fas fa-sitemap', identifier: 'struktur' }
+      { title: 'Struktur Organisasi', href: struktur_users_path, icon: 'fas fa-sitemap', identifier: 'struktur' },
+      { title: 'Kelompok Anggaran', href: kelompok_anggarans_path, icon: 'fas fa-folder', identifier: 'kelompok_anggaran' }
     ]
   end
 

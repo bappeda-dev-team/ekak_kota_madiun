@@ -1,0 +1,2 @@
+class KelompokAnggaran < ApplicationRecord
+end
