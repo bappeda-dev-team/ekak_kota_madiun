@@ -82,6 +82,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       post :clone
     end
   end
+  resources :kelompok_anggarans
 
   # resources :rincians do
   #   resources :tahapans do
