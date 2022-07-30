@@ -1,0 +1,23 @@
+<%= form_with(model: kelompok_anggaran, local: false) do |form| %>
+  <% if kelompok_anggaran.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(kelompok_anggaran.errors.count, "kesalahan") %> pengisian:</h2>
+      <ul>
+        <% kelompok_anggaran.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :tahun, class: 'form-label' %>
+    <%= form.select(:tahun, (['',2021,2022,2023,2024]), {}, {id: 'dropdown-kelompok-anggaran-tahun',data: {"placeholder": "Pilih Tahun",}}) %>
+  </div>
+  <div class="field">
+    <%= form.label :kelompok, class: 'form-label' %>
+    <%= form.select(:kelompok, (['Awal','Perubahan']), {}, {id: 'dropdown-kelompok-anggaran'}) %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
