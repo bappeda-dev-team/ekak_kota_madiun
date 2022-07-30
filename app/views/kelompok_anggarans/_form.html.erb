@@ -1,4 +1,4 @@
-<%= form_with(model: kelompok_anggaran) do |form| %>
+<%= form_with(model: kelompok_anggaran, local: false) do |form| %>
   <% if kelompok_anggaran.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(kelompok_anggaran.errors.count, "error") %> prohibited this kelompok_anggaran from being saved:</h2>

@@ -17,6 +17,7 @@ class KelompokAnggaransController < ApplicationController
 
   # GET /kelompok_anggarans/1/edit
   def edit
+    respond_to { |f| f.js { render :new } }
   end
 
   # POST /kelompok_anggarans or /kelompok_anggarans.json
@@ -25,10 +26,12 @@ class KelompokAnggaransController < ApplicationController
 
     respond_to do |format|
       if @kelompok_anggaran.save
-        format.html { redirect_to kelompok_anggaran_url(@kelompok_anggaran), notice: "Kelompok anggaran was successfully created." }
+        format.html { redirect_to kelompok_anggarans_url, notice: "Kelompok anggaran telah berhasil dibuat" }
+        format.js { redirect_to kelompok_anggarans_url, notice: "Kelompok anggaran telah berhasil dibuat" }
         format.json { render :show, status: :created, location: @kelompok_anggaran }
       else
         format.html { render :new, status: :unprocessable_entity }
+        format.js { render :new, status: :unprocessable_entity }
         format.json { render json: @kelompok_anggaran.errors, status: :unprocessable_entity }
       end
     end
@@ -38,10 +41,11 @@ class KelompokAnggaransController < ApplicationController
   def update
     respond_to do |format|
       if @kelompok_anggaran.update(kelompok_anggaran_params)
-        format.html { redirect_to kelompok_anggaran_url(@kelompok_anggaran), notice: "Kelompok anggaran was successfully updated." }
+        format.html { redirect_to kelompok_anggarans_url, notice: "Kelompok anggaran #{@kelompok_anggaran.tahun_previously_was} berhasil diupdate" }
         format.json { render :show, status: :ok, location: @kelompok_anggaran }
       else
         format.html { render :edit, status: :unprocessable_entity }
+        format.js { render :new, status: :unprocessable_entity }
         format.json { render json: @kelompok_anggaran.errors, status: :unprocessable_entity }
       end
     end
@@ -52,7 +56,7 @@ class KelompokAnggaransController < ApplicationController
     @kelompok_anggaran.destroy
 
     respond_to do |format|
-      format.html { redirect_to kelompok_anggarans_url, notice: "Kelompok anggaran was successfully destroyed." }
+      format.html { redirect_to kelompok_anggarans_url, notice: "Kelompok anggaran telah berhasil dihapus" }
       format.json { head :no_content }
     end
   end
