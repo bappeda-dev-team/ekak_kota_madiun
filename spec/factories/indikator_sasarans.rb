@@ -4,13 +4,13 @@
 #
 #  id                :bigint           not null, primary key
 #  aspek             :string
-#  id_indikator      :bigint
+#  id_indikator      :string
 #  indikator_kinerja :string
 #  satuan            :string
 #  target            :integer
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
-#  sasaran_id        :bigint
+#  sasaran_id        :string
 #
 # Indexes
 #
