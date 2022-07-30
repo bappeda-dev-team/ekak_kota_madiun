@@ -266,7 +266,19 @@ $(function () {
       $('#satuan').val(data_barang.satuan)
       $('#harga_satuan').val(data_barang.harga)
     });
-  })
+  });
+  $('#form-kelompok-anggaran').on('show', function () {
+    $('#dropdown-kelompok-anggaran-tahun').select2({
+      width: "100%",
+      theme: "bootstrap-5",
+      dropdownParent: $("#form-kelompok-anggaran"),
+    })
+    $('#dropdown-kelompok-anggaran').select2({
+      width: "100%",
+      theme: "bootstrap-5",
+      dropdownParent: $("#form-kelompok-anggaran"),
+    })
+  });
 
   document.addEventListener('vanilla-nested:fields-added', function (e) {
     initailizeSelect2()

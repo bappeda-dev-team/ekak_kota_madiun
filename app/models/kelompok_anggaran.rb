@@ -11,7 +11,7 @@
 #
 class KelompokAnggaran < ApplicationRecord
   validates :kelompok, presence: true,
-                       inclusion: { in: %w[Awal Perubahan], message: 'gunakan (Awal atau Perubahan)' },
+                       inclusion: { in: %w[Awal Perubahan], message: '- gunakan (Awal atau Perubahan)' },
                        uniqueness: { scope: :tahun,
                                      message: 'kelompok sudah ada di tahun yang sama' }
   validates :kode_kelompok, uniqueness: { scope: :tahun,
