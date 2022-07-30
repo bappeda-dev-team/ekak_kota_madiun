@@ -10,12 +10,13 @@
 #  updated_at    :datetime         not null
 #
 class KelompokAnggaran < ApplicationRecord
-  validates :kelompok, inclusion: { in: %w[Awal Perubahan], message: 'gunakan (Awal atau Perubahan)' }
-  validates :kode_kelompok, inclusion: { in: %w[_awal _perubahan],
-                                         message: 'kode tidak sesuai, gunakan ( _awal atau_perubahan)' },
-                            uniqueness: { scope: :tahun,
+  validates :kelompok, presence: true,
+                       inclusion: { in: %w[Awal Perubahan], message: 'gunakan (Awal atau Perubahan)' },
+                       uniqueness: { scope: :tahun,
+                                     message: 'kelompok sudah ada di tahun yang sama' }
+  validates :kode_kelompok, uniqueness: { scope: :tahun,
                                           message: 'kode kelompok sudah ada di tahun yang sama' }
-  validates :tahun, numericality: { only_integer: true, greater_than_or_equal_to: 2020, less_than_or_equal_to: 2050 }
+  validates :tahun, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 2020 }
 
   before_validation :kode_kelompok_maker
 
@@ -27,6 +28,8 @@ class KelompokAnggaran < ApplicationRecord
   end
 
   def kode_kelompok_maker
-    self.kode_kelompok = "_#{kelompok.downcase}"
+    return false if tahun.nil? || kelompok.nil?
+
+    self.kode_kelompok = "_#{tahun}_#{kelompok.downcase}"
   end
 end
