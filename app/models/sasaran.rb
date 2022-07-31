@@ -94,8 +94,12 @@ class Sasaran < ApplicationRecord
   amoeba do
     set tahun: '2022_p'
     append id_rencana: '_2022_p'
-    include_association %i[rincian tematik_sasarans usulans permasalahans latar_belakangs]
+    include_association %i[rincian tematik_sasarans usulans permasalahans]
     # exclude_association %i[indikator_sasarans latar_belakangs dasar_hukums]
+  end
+
+  def aksi_bulan_kosong?
+    tahapans.map { |t| t.aksis.map(&:id_aksi_bulan) }.flatten.include?(nil)
   end
 
   def tahun_clone_preparer

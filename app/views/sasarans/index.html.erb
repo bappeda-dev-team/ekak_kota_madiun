@@ -30,6 +30,7 @@
               <th class="border-bottom" scope="col">Indikator Kinerja</th>
               <th class="border-bottom" scope="col">Target</th>
               <th class="border-bottom" scope="col">Satuan</th>
+              <th class="border-bottom" scope="col">Cloning</th>
               <th class="border-bottom text-center" scope="col">Action</th>
             </tr>
           </thead>
@@ -39,6 +40,24 @@
                 <td class="fw-bolder" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
                 <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
                 <td class="p-0 m-0" colspan="3"></td>
+                <td class="fw-bolder text-gray-500 text-center" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
+                  <% if sasaran.aksi_bulan_kosong? %>
+                    <%= button_to 'Sync Total Renaksi', renaksi_update_path,
+                        remote: true, method: :post, class: 'btn btn-sm btn-primary',
+                        params: {id: sasaran.id},
+                        data: { disable_with: 'Memproses....'}
+                        %>
+                  <% end %>
+                  <% unless sasaran.aksi_bulan_kosong? %>
+                    <%= link_to clone_sasaran_path(id: sasaran.id, kelompok_anggaran: 1),
+                      method: :post, remote: true,
+                      data: { disable_with: 'Memproses....'},
+                      class:"btn btn-sm btn-secondary" do %>
+                      <i class="fas fa-clone me-2"></i>
+                      Cloning
+                    <% end %>
+                  <% end %>
+                </td>
                 <td class="fw-bolder text-gray-500 text-center" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
                   <%= link_to user_sasaran_path(current_user, sasaran), class: "m-3" do %>
                     <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="isi usulan"></i>
