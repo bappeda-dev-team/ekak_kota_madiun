@@ -9,14 +9,14 @@
             <div class="card-header">
               <div class="row align-items-center">
                 <div class="col">
-                  <h2 class="fs-5 fw-bold mb-0">Sasaran Kinerja / Rencana Kinerja Tahun <%= Date.today.year + 1 %></h2>
+                  <h2 class="fs-5 fw-bold mb-0">Sasaran Kinerja / Rencana Kinerja Tahun <span id="tahun_sasaran"><%= Date.today.year + 1 %></span></h2>
                 </div>
                 <div class="col">
                   <%= render 'shared/filter_tahun_sasaran' %>
                 </div>
               </div>
             </div>
-            <div class="table-responsive">
+            <div class="table-responsive" id="tempat-row-sasaran">
               <table class="table table-hover align-items-center">
                 <caption class="px-4">
                   <strong>Jumlah sasaran: </strong> <%= current_user.sasarans.count %>
@@ -40,7 +40,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <% @sasaran.each.with_index(1) do |s, i| %>
+                  <% @sasaran.order(:id).each.with_index(1) do |s, i| %>
                     <tr class="<%= warna_sasaran(s.status_sasaran) %>">
                       <td class="fw-bolder text-left" width="1em" rowspan="<%= s.indikator_sasarans.count + 1 %>"><%= i %></td>
                       <td class="fw-bolder text-left" style="white-space: initial !important;" rowspan="<%= s.indikator_sasarans.count + 1 %>">

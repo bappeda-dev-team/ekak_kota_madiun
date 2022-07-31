@@ -17,7 +17,7 @@
             <h2 class="fs-5 fw-bold mb-0">Sasaran Kinerja </h2>
           </div>
           <div class="col">
-            <%= render 'shared/filter_tahun_sasaran' %>
+            <%= render 'shared/filter_tahun_sasaran', tipe: 'all' %>
           </div>
         </div>
       </div>
@@ -34,12 +34,13 @@
               <th class="border-bottom" scope="col">Indikator Kinerja</th>
               <th class="border-bottom" scope="col">Target</th>
               <th class="border-bottom" scope="col">Satuan</th>
+              <th class="border-bottom text-center" scope="col">Sinkron</th>
               <th class="border-bottom text-center" scope="col">Cloning</th>
               <th class="border-bottom text-center" scope="col">Action</th>
             </tr>
           </thead>
-          <tbody>
-            <% @sasarans.each.with_index(1) do |sasaran, i| %>
+          <tbody id="tempat-row-sasaran">
+            <% @sasarans.order(:id).each.with_index(1) do |sasaran, i| %>
               <tr class="<%= warna_sasaran(sasaran.status_sasaran) %>">
                 <td class="fw-bolder" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
                 <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
@@ -53,10 +54,21 @@
                         data: { disable_with: 'Memproses....'}
                         %>
                   <% end %>
+                  <br>
+                  <% if sasaran.gambaran_umum_indikator_kosong? %>
+                    <%= link_to sync_sasaran_path(kode_opd: sasaran.user.opd.kode_unik_opd, tahun: Date.today.year, bulan: Date.today.month, nip_asn: sasaran.user.nik),
+                      remote: true,
+                      data: { disable_with: 'Memproses....'}, 
+                      class:"btn btn-sm btn-primary" do %>
+                      <i class="fas fa-sync me-2"></i>
+                      Sync Sasaran
+                    <% end %>
+                  <% end %>
+                </td>
+                <td class="fw-bolder text-gray-500 text-center" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
                   <% unless sasaran.aksi_bulan_kosong? %>
-                    <%= link_to clone_sasaran_path(id: sasaran.id, kelompok_anggaran: 1),
-                      method: :post, remote: true,
-                      data: { disable_with: 'Memproses....'},
+                    <%= link_to clone_form_sasaran_path(sasaran),remote: true,
+                      data: { 'bs-toggle': 'modal', 'bs-target': '#form-clone-sasaran'},
                       class:"btn btn-sm btn-secondary" do %>
                       <i class="fas fa-clone me-2"></i>
                       Cloning
@@ -86,3 +98,4 @@
     </div>
   </div>
 </div>
+<%= render 'shared/modal_template', modal_name: 'clone-sasaran' %>

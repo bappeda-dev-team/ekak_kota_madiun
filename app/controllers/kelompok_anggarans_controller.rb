@@ -9,6 +9,10 @@ class KelompokAnggaransController < ApplicationController
     end
   end
 
+  def cloning
+    @kelompok_anggarans = KelompokAnggaran.all
+  end
+
   # GET /kelompok_anggarans/1 or /kelompok_anggarans/1.json
   def show
   end

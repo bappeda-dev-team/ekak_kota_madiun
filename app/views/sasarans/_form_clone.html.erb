@@ -1,0 +1,15 @@
+<%= form_with(url: clone_sasaran_path, model: [@sasaran], method: :post,local: false) do |form| %>
+  <div class="field">
+    <%= form.label :sasaran_kinerja, { class: "form-label" } %>
+    <%= form.text_area :sasaran_kinerja, { class: "form-control", readonly: true } %>
+  </div>
+  <div class="field">
+    <%= form.label :kelompok_anggaran, { class: "form-label" } %>
+    <%= form.select :kelompok_anggaran, [''], {include_blank: true},
+                    { id: "select2-cloning",
+                      data: { placeholder: "Pilih Tahun Cloning" } } %>
+  </div>
+  <div class="actions my-4">
+    <%= form.submit "Clone" %>
+  </div>
+<% end %>
