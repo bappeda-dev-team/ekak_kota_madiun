@@ -147,6 +147,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   namespace :filter do
     post :daftar_resiko
+    get :tahun_sasaran
   end
 
   mount Sidekiq::Web, at: '/sidekiq'

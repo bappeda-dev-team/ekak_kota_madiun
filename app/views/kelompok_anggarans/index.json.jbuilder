@@ -1,1 +1,4 @@
-json.array! @kelompok_anggarans, partial: "kelompok_anggarans/kelompok_anggaran", as: :kelompok_anggaran
+json.results @kelompok_anggarans.each do |kelompok_anggaran|
+  json.id kelompok_anggaran.kode_tahun_sasaran
+  json.text kelompok_anggaran.tahun_kelompok
+end

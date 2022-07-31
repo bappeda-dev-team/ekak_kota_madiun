@@ -1,0 +1,10 @@
+<%= form_with url: user_sasarans_path(current_user), method: :get, remote: true, class: 'row' do |form| %>
+  <div class="col">
+    <%= form.select :tahun_sasaran, [''], {include_blank: true},
+                    { class: "select2-waw",
+                      data: { placeholder: "Pilih Tahun Sasaran", 'ajax--url': kelompok_anggarans_path(:json) } } %>
+  </div>
+  <div class="col-auto">
+    <input type="submit" value="Filter" class="btn btn-primary">
+  </div>
+<% end %>

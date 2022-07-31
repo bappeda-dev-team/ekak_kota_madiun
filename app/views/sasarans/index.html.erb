@@ -16,6 +16,9 @@
           <div class="col">
             <h2 class="fs-5 fw-bold mb-0">Sasaran Kinerja </h2>
           </div>
+          <div class="col">
+            <%= render 'shared/filter_tahun_sasaran' %>
+          </div>
         </div>
       </div>
       <div class="table-responsive">
@@ -27,10 +30,11 @@
             <tr>
               <th class="border-bottom" scope="col">No.</th>
               <th class="border-bottom" scope="col">Sasaran Kinerja Output</th>
+              <th class="border-bottom" scope="col">Tahun Sasaran</th>
               <th class="border-bottom" scope="col">Indikator Kinerja</th>
               <th class="border-bottom" scope="col">Target</th>
               <th class="border-bottom" scope="col">Satuan</th>
-              <th class="border-bottom" scope="col">Cloning</th>
+              <th class="border-bottom text-center" scope="col">Cloning</th>
               <th class="border-bottom text-center" scope="col">Action</th>
             </tr>
           </thead>
@@ -39,6 +43,7 @@
               <tr class="<%= warna_sasaran(sasaran.status_sasaran) %>">
                 <td class="fw-bolder" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
                 <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
+                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.tahun %></td>
                 <td class="p-0 m-0" colspan="3"></td>
                 <td class="fw-bolder text-gray-500 text-center" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
                   <% if sasaran.aksi_bulan_kosong? %>

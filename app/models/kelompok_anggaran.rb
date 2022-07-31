@@ -36,4 +36,8 @@ class KelompokAnggaran < ApplicationRecord
   def kode_tahun_sasaran
     "#{tahun}#{kelompok}".underscore
   end
+
+  def tahun_kelompok
+    "#{tahun} #{kelompok}"
+  end
 end

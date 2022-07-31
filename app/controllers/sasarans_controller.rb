@@ -6,6 +6,12 @@ class SasaransController < ApplicationController
   # GET /sasarans or /sasarans.json
   def index
     @sasarans = @user.sasarans
+    tahun_sasaran = params[:tahun_sasaran]
+    if tahun_sasaran.present?
+      @sasarans = @sasarans.where(tahun: tahun_sasaran)
+    else
+      @sasarans
+    end
   end
 
   # GET /sasarans/1 or /sasarans/1.json
@@ -68,6 +74,7 @@ class SasaransController < ApplicationController
 
   def renaksi_update
     @sasaran.sync_total_renaksi
+    flash.now[:success] = 'Perhitungan Renaksi Berhasil'
   end
 
   def laporan_sasaran
