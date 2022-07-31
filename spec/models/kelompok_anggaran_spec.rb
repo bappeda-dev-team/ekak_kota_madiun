@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: kelompok_anggarans
+#
+#  id            :bigint           not null, primary key
+#  kelompok      :string
+#  kode_kelompok :string
+#  tahun         :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
 require 'rails_helper'
 
 RSpec.describe KelompokAnggaran, type: :model do

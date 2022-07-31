@@ -3,6 +3,7 @@
 # Table name: rincians
 #
 #  id                  :bigint           not null, primary key
+#  dampak              :string
 #  data_terpilah       :string
 #  lokasi_pelaksanaan  :string
 #  penyebab_external   :string

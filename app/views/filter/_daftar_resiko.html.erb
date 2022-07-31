@@ -24,6 +24,7 @@
             <th class="border-bottom text-center border-start border-end">Satuan</th>
             <th class="border-bottom text-center border-start border-end">Pernyataan Resiko</th>
             <th class="border-bottom text-center" scope="col">Dampak</th>
+            <th class="border-bottom text-center" scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -41,10 +42,11 @@
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
                 <td class="text-wrap border-start border-end" rowspan="<%= row_indikator %>"><%= show_sasaran.rincian&.resiko || '-' %></td>
-                <td class="text-wrap border-start border-end" rowspan="<%= row_indikator %>">
+                <td class="text-wrap border-start border-end" rowspan="<%= row_indikator %>"><%= show_sasaran.rincian&.dampak || '-' %></td>
+                <td class="border-start border-end" rowspan="<%= row_indikator %>">
                   <%= link_to sasaran_program_opd_add_dampak_resiko_path(show_sasaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-dampak-daftar-resiko'},class: 'btn btn-tertiary text-light d-inline-flex align-items-center toggle-active' do %>
-                    Dampak
-                    <i class="fas fa-pencil-alt text-success icon icon-xs ms-2"></i>
+                    <i class="fas fa-pencil-alt text-success icon icon-xs me-2"></i>
+                    Edit Dampak
                   <% end %>
                 </td>
                 <% show_sasaran.indikator_sasarans.each do |indikator| %>

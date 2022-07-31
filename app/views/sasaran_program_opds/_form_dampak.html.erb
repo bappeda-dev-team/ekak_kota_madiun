@@ -1,4 +1,4 @@
-<%= form_with(model: [@sasaran, @rincian]) do |form| %>
+<%= form_with(url: sasaran_rincian_path(@sasaran.id, @rincian.id), local: false, method: :patch) do |form| %>
   <% if rincian.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(rincian.errors.count, "error") %> prohibited this rincian from being saved:</h2>
@@ -9,16 +9,23 @@
       </ul>
     </div>
   <% end %>
-  <%= form.hidden_field :sasaran_id, value: @sasaran.id  %>
-  <div class="field">
-    <%= form.label :resiko, { class: "form-label" } %>
-    <%= form.text_area :resiko, { class: "form-control" } %>
-  </div>
-  <div class="field">
-    <%= form.label :dampak, { class: "form-label" } %>
-    <%= form.text_area :resiko, { class: "form-control" } %>
-  </div>
+  <%= form.fields_for :sasaran, @sasaran do |sasaran_fields|  %>
+    <div class="field">
+      <%= sasaran_fields.label :sasaran_kinerja, { class: "form-label" } %>
+      <%= sasaran_fields.text_area :sasaran_kinerja, {class: "form-control", readonly: true} %>
+    </div>
+  <% end %>
+  <%= form.fields_for :rincian, @rincian do |rincian_fields|  %>
+    <div class="field">
+      <%= rincian_fields.label :resiko, { class: "form-label" } %>
+      <%= rincian_fields.text_area :resiko, { class: "form-control" } %>
+    </div>
+    <div class="field">
+      <%= rincian_fields.label :dampak, { class: "form-label" } %>
+      <%= rincian_fields.text_area :dampak, { class: "form-control" } %>
+    </div>
+  <% end %>
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Simpan" %>
   </div>
 <% end %>
