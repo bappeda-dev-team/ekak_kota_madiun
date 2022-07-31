@@ -268,6 +268,11 @@ class FilterController < ApplicationController
     end
   end
 
+  # def tahun_sasaran
+  #   target_tahun_sasaran = params[:tahun_sasaran]
+  #   # result = Sasaran.where(tahun: target_tahun_sasaran)
+  # end
+
   private
 
   def filter_params

@@ -6,6 +6,12 @@ class SasaransController < ApplicationController
   # GET /sasarans or /sasarans.json
   def index
     @sasarans = @user.sasarans
+    @tahun_sasaran = params[:tahun_sasaran]
+    if @tahun_sasaran.present?
+      @sasarans = @sasarans.where(tahun: @tahun_sasaran)
+    else
+      @sasarans
+    end
   end
 
   # GET /sasarans/1 or /sasarans/1.json
@@ -68,6 +74,7 @@ class SasaransController < ApplicationController
 
   def renaksi_update
     @sasaran.sync_total_renaksi
+    flash.now[:success] = 'Perhitungan Renaksi Berhasil'
   end
 
   def laporan_sasaran
@@ -182,17 +189,49 @@ class SasaransController < ApplicationController
   def clone
     # TODO: CLEAN THIS UP
     @sasaran = params[:id]
+    kelompok_anggaran = KelompokAnggaran.find(sasaran_params[:kelompok_anggaran])
     sasaran_target = Sasaran.find(@sasaran)
+    sasaran_target.class.amoeba do
+      set tahun: kelompok_anggaran.kode_tahun_sasaran
+      append id_rencana: kelompok_anggaran.kode_kelompok
+    end
     duplicate = sasaran_target.amoeba_dup
     respond_to do |format|
       @rowspan = params[:rowspan]
       @dom = params[:dom]
       if duplicate.save
-        sasaran_target.indikator_sasarans.map { |is| is.amoeba_dup.save }
-        sasaran_target.dasar_hukums.map { |ds| ds.amoeba_dup.save }
+        sasaran_target.indikator_sasarans.map do |is|
+          is.class.amoeba do
+            append sasaran_id: kelompok_anggaran.kode_kelompok
+            append id_indikator: kelompok_anggaran.kode_kelompok
+          end
+          is.amoeba_dup.save
+        end
+        sasaran_target.dasar_hukums.map do |ds|
+          ds.class.amoeba do
+            append sasaran_id: kelompok_anggaran.kode_kelompok
+          end
+          ds.amoeba_dup.save
+        end
+        sasaran_target.latar_belakangs.map do |lb|
+          lb.class.amoeba do
+            append id_indikator_sasaran: kelompok_anggaran.kode_kelompok
+          end
+          lb.amoeba_dup.save
+        end
         sasaran_target.tahapans.map do |tahap|
+          tahap.class.amoeba do
+            append id_rencana: kelompok_anggaran.kode_kelompok
+            append id_rencana_aksi: kelompok_anggaran.kode_kelompok
+          end
           tahap.amoeba_dup.save
-          tahap.aksis.map { |th| th.amoeba_dup.save }
+          tahap.aksis.map do |th|
+            th.class.amoeba do
+              append id_aksi_bulan: kelompok_anggaran.kode_kelompok
+              append id_rencana_aksi: kelompok_anggaran.kode_kelompok
+            end
+            th.amoeba_dup.save
+          end
         end
         flash.now[:success] = ['Berhasil di cloning', 'dicloning']
         @type = 'berhasil'
@@ -202,10 +241,13 @@ class SasaransController < ApplicationController
         @type = 'gagal'
         @text = 'gagal dicloning'
       end
-      format.js { render 'update_kak.js.erb' }
+      format.js { render 'update_kak' }
     end
   end
 
+  def clone_form
+    @sasaran = Sasaran.find(params[:id])
+  end
   # GET /sasarans/new
   def new
     @sasaran = @user.sasarans.build
@@ -288,7 +330,7 @@ class SasaransController < ApplicationController
   # Only allow a list of trusted parameters through.
   def sasaran_params
     params.require(:sasaran).permit(:sasaran_kinerja, :penerima_manfaat, :nip_asn, :program_kegiatan_id,
-                                    :sumber_dana, :subkegiatan_tematik_id, :tahun, :id_rencana,
+                                    :sumber_dana, :subkegiatan_tematik_id, :tahun, :id_rencana, :kelompok_anggaran,
                                     indikator_sasarans_attributes: %i[id indikator_kinerja aspek target satuan _destroy])
   end
 

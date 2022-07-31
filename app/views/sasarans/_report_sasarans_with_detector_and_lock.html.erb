@@ -61,7 +61,7 @@
                         %>
                   </td>
                   <td class="fw-bolder text-gray-500 text-center border-start border-end" id="<%= dom_id(show_sasaran) %>">
-                    <%= link_to clone_sasaran_path(id: show_sasaran.id, dom: dom_id(show_sasaran), rowspan: 1),
+                    <%= link_to clone_sasaran_path(id: show_sasaran.id, kelompok_anggaran: 1, dom: dom_id(show_sasaran), rowspan: 1),
                       method: :post, remote: true,
                       data: { disable_with: 'Memproses....'},
                       class:"btn btn-sm btn-secondary" do %>

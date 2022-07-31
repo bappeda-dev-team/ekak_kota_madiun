@@ -4,16 +4,19 @@
   <div class="col-12 col-xl-12">
     <div class="row">
       <div class="col-12 mb-4">
-        <div class="card border-0 shadow">
-          <div class="card-header">
-            <div class="row align-items-center">
-              <div class="col">
-                <h2 class="fs-5 fw-bold mb-0">Sasaran Kinerja / Rencana Kinerja Tahun <%= Date.today.year + 1 %></h2>
+        <% unless current_user.has_role? :non_aktif %>
+          <div class="card border-0 shadow">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h2 class="fs-5 fw-bold mb-0">Sasaran Kinerja / Rencana Kinerja Tahun <span id="tahun_sasaran"><%= Date.today.year + 1 %></span></h2>
+                </div>
+                <div class="col">
+                  <%= render 'shared/filter_tahun_sasaran' %>
+                </div>
               </div>
             </div>
-          </div>
-          <% unless current_user.has_role? :non_aktif %>
-            <div class="table-responsive">
+            <div class="table-responsive" id="tempat-row-sasaran">
               <table class="table table-hover align-items-center">
                 <caption class="px-4">
                   <strong>Jumlah sasaran: </strong> <%= current_user.sasarans.count %>
@@ -30,17 +33,21 @@
                   <tr>
                     <th class="border-bottom text-left" scope="col">No</th>
                     <th class="border-bottom text-left" scope="col">Sasaran</th>
+                    <th class="border-bottom text-center" scope="col">Tahun Sasaran</th>
                     <th class="border-bottom text-left" scope="col">Indikator</th>
                     <th class="border-bottom text-center" scope="col">Target</th>
                     <th class="border-bottom text-center" scope="col">Satuan</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <% @sasaran.each.with_index(1) do |s, i| %>
+                  <% @sasaran.order(:id).each.with_index(1) do |s, i| %>
                     <tr class="<%= warna_sasaran(s.status_sasaran) %>">
                       <td class="fw-bolder text-left" width="1em" rowspan="<%= s.indikator_sasarans.count + 1 %>"><%= i %></td>
                       <td class="fw-bolder text-left" style="white-space: initial !important;" rowspan="<%= s.indikator_sasarans.count + 1 %>">
                         <%= s.sasaran_kinerja %>
+                      </td>
+                      <td class="fw-bolder text-left" style="white-space: initial !important;" rowspan="<%= s.indikator_sasarans.count + 1 %>">
+                        <%= s.tahun %>
                       </td>
                       <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="3"></td>
                     </tr>
@@ -55,14 +62,14 @@
                 </tbody>
               </table>
             </div>
-          <% else %>
-            <div class="card-body">
-              <div class="alert alert-warning">
-                <strong>Anda tidak memiliki akses ke aplikasi e-kak.</strong>
-              </div>
+          </div>
+        <% else %>
+          <div class="card-body">
+            <div class="alert alert-warning">
+              <strong>Anda tidak memiliki akses ke aplikasi e-kak.</strong>
             </div>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

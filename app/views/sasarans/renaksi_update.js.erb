@@ -1,8 +1,1 @@
-Swal.fire({
-  title: 'Sukses Update Total',
-  icon: 'success',
-  confirmButtonText: 'Yes',
-})
-setTimeout(() => {
-  Turbolinks.visit(location.href);
-}, 1500);
+$('#notice').html("<%= j render 'shared/flash', flash: flash %>");
