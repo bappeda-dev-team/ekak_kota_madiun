@@ -79,10 +79,15 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       post :tolak
       post :revisi
       get :detail
+      get :clone_form
       post :clone
     end
   end
-  resources :kelompok_anggarans
+  resources :kelompok_anggarans do
+    collection do
+      get :cloning
+    end 
+  end
 
   # resources :rincians do
   #   resources :tahapans do
@@ -140,8 +145,16 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     collection do
       get :spip
       get :excel_spip
+      get :daftar_resiko
     end
+    get :add_dampak_resiko
   end
+
+  namespace :filter do
+    post :daftar_resiko
+    get :tahun_sasaran
+  end
+
   mount Sidekiq::Web, at: '/sidekiq'
 
   # resque

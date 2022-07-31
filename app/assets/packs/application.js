@@ -279,6 +279,18 @@ $(function () {
       dropdownParent: $("#form-kelompok-anggaran"),
     })
   });
+  $('#form-clone-sasaran').on('show', function () {
+    $('#select2-cloning').select2({
+      width: "100%",
+      theme: "bootstrap-5",
+      dropdownParent: $("#form-clone-sasaran"),
+      ajax: {
+        delay: 1000,
+        url: '/kelompok_anggarans/cloning.json',
+        data: (params) => ({ q: params.term })
+      }
+    })
+  });
 
   document.addEventListener('vanilla-nested:fields-added', function (e) {
     initailizeSelect2()

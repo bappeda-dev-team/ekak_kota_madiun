@@ -81,6 +81,9 @@ class Sasaran < ApplicationRecord
   scope :sasaran_tematik, lambda { |tematik|
                             includes(:subkegiatan_tematiks).where(subkegiatan_tematiks: { kode_tematik: tematik })
                           }
+  scope :kurang_lengkap, -> { select { |s| s.usulans.exists? && s.belum_ada_sub? }.size }
+  scope :hijau, -> { select(&:lengkap?).size }
+  scope :biru, -> { select(&:selesai?).reject(&:lengkap?).size }
 
   SUMBERS = { dana_transfer: 'Dana Transfer', dak: 'DAK', dbhcht: 'DBHCHT', bk_provinsi: 'BK Provinsi',
               blud: 'BLUD' }.freeze
@@ -94,8 +97,20 @@ class Sasaran < ApplicationRecord
   amoeba do
     set tahun: '2022_p'
     append id_rencana: '_2022_p'
-    include_association %i[rincian tematik_sasarans usulans permasalahans latar_belakangs]
+    include_association %i[rincian tematik_sasarans usulans permasalahans]
     # exclude_association %i[indikator_sasarans latar_belakangs dasar_hukums]
+  end
+
+  def aksi_bulan_kosong?
+    tahapans.map { |t| t.aksis.map(&:id_aksi_bulan) }.flatten.include?(nil)
+  end
+
+  def gambaran_umum_indikator_kosong?
+    latar_belakangs.map(&:id_indikator_sasaran).include?(nil)
+  end
+
+  def tahun_clone_preparer
+    tahun.to_s.split('_').first
   end
 
   def program_nil?

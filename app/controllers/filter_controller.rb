@@ -254,6 +254,25 @@ class FilterController < ApplicationController
     end
   end
 
+  def daftar_resiko
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: opd.kode_opd }).with_sasarans
+    if OPD_TABLE.key?(opd.nama_opd.to_sym)
+      @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[opd.nama_opd.to_sym] }).with_sasarans
+      @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[opd.nama_opd.to_sym]) # idk about bidang thing
+    end
+    @id_target = 'daftar_resiko'
+    @filter_file = params[:filter_file].empty? ? 'hasil_filter' : params[:filter_file]
+    respond_to do |format|
+      format.js { render 'result_renderer' }
+    end
+  end
+
+  # def tahun_sasaran
+  #   target_tahun_sasaran = params[:tahun_sasaran]
+  #   # result = Sasaran.where(tahun: target_tahun_sasaran)
+  # end
+
   private
 
   def filter_params

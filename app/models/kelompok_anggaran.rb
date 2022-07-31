@@ -32,4 +32,12 @@ class KelompokAnggaran < ApplicationRecord
 
     self.kode_kelompok = "_#{tahun}_#{kelompok.downcase}"
   end
+
+  def kode_tahun_sasaran
+    "#{tahun}#{kelompok}".underscore
+  end
+
+  def tahun_kelompok
+    "#{tahun} #{kelompok}"
+  end
 end

@@ -1614,7 +1614,8 @@ CREATE TABLE public.rincians (
     resiko character varying,
     lokasi_pelaksanaan character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    dampak character varying
 );
 
 
@@ -3561,6 +3562,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220727070419'),
 ('20220728124001'),
 ('20220728124341'),
-('20220729030633');
+('20220729030633'),
+('20220731054048');
 
 
