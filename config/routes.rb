@@ -140,8 +140,15 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     collection do
       get :spip
       get :excel_spip
+      get :daftar_resiko
     end
+    get :add_dampak_resiko
   end
+
+  namespace :filter do
+    post :daftar_resiko
+  end
+
   mount Sidekiq::Web, at: '/sidekiq'
 
   # resque

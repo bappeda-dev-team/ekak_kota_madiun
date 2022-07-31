@@ -1,0 +1,24 @@
+<%= form_with(model: [@sasaran, @rincian]) do |form| %>
+  <% if rincian.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(rincian.errors.count, "error") %> prohibited this rincian from being saved:</h2>
+      <ul>
+        <% rincian.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= form.hidden_field :sasaran_id, value: @sasaran.id  %>
+  <div class="field">
+    <%= form.label :resiko, { class: "form-label" } %>
+    <%= form.text_area :resiko, { class: "form-control" } %>
+  </div>
+  <div class="field">
+    <%= form.label :dampak, { class: "form-label" } %>
+    <%= form.text_area :resiko, { class: "form-control" } %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

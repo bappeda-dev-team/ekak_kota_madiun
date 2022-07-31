@@ -1,0 +1,64 @@
+<div class="card border-0 shadow" id="daftar_resiko">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">Daftar Resiko -  Tahun <%= @tahun %></h2>
+      </div>
+      <div class="col text-end">
+        <span><%= current_user.nama %></span>
+        |
+        <span><%= current_user.nik %></span>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table align-items-center border-start border-end" id="tabel_daftar_resiko">
+        <thead class="thead-light">
+          <tr>
+            <th class="border-bottom" scope="col">No.</th>
+            <th class="border-bottom text-center" scope="col">Sub Kegiatan</th>
+            <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
+            <th class="border-bottom text-center border-start border-end">Indikator</th>
+            <th class="border-bottom text-center border-start border-end">Target</th>
+            <th class="border-bottom text-center border-start border-end">Satuan</th>
+            <th class="border-bottom text-center border-start border-end">Pernyataan Resiko</th>
+            <th class="border-bottom text-center" scope="col">Dampak</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% program_kegiatan_sasarans.order(id: :desc).each.with_index(1) do |kak, i| %>
+            <% row_awal = kak.sasarans.map { |sas| sas.indikator_sasarans.size }.compact %>
+            <% row = row_awal.empty? ? 1 : row_awal.reduce(:+) %>
+            <% row_dalam = kak.sasarans.size + row %>
+            <tr class="border-bottom">
+              <td class="text-gray-900 text-wrap border-start border-end" rowspan="<%= row_dalam %>"><%= i %></td>
+              <td class="text-gray-900 text-wrap border-start border-end" rowspan="<%= row_dalam %>"><%= kak.nama_subkegiatan %></td>
+              <% kak.sasarans.each do |show_sasaran| %>
+                <% row_indikator = show_sasaran.indikator_sasarans.size + 1  %>
+                <td class="text-wrap border-start border-end" rowspan="<%= row_indikator %>"><%= show_sasaran.sasaran_kinerja %></td>
+                <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
+                <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
+                <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
+                <td class="text-wrap border-start border-end" rowspan="<%= row_indikator %>"><%= show_sasaran.rincian&.resiko || '-' %></td>
+                <td class="text-wrap border-start border-end" rowspan="<%= row_indikator %>">
+                  <%= link_to sasaran_program_opd_add_dampak_resiko_path(show_sasaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-dampak-daftar-resiko'},class: 'btn btn-tertiary text-light d-inline-flex align-items-center toggle-active' do %>
+                    Dampak
+                    <i class="fas fa-pencil-alt text-success icon icon-xs ms-2"></i>
+                  <% end %>
+                </td>
+                <% show_sasaran.indikator_sasarans.each do |indikator| %>
+                  <tr>
+                    <td class="text-wrap border-start border-end"><%= indikator.indikator_kinerja %></td>
+                    <td class="text-wrap border-start border-end"><%= indikator.target %></td>
+                    <td class="text-wrap border-start border-end"><%= indikator.satuan %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
