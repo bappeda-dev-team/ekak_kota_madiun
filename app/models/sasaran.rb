@@ -98,6 +98,10 @@ class Sasaran < ApplicationRecord
     # exclude_association %i[indikator_sasarans latar_belakangs dasar_hukums]
   end
 
+  def tahun_clone_preparer
+    tahun.to_s.split('_').first
+  end
+
   def program_nil?
     program_kegiatan.nil?
   end

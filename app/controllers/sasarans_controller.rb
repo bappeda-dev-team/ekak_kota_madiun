@@ -182,17 +182,43 @@ class SasaransController < ApplicationController
   def clone
     # TODO: CLEAN THIS UP
     @sasaran = params[:id]
+    kelompok_anggaran = KelompokAnggaran.find(params[:kelompok_anggaran])
     sasaran_target = Sasaran.find(@sasaran)
+    sasaran_target.class.amoeba do
+      set tahun: kelompok_anggaran.kode_tahun_sasaran
+      append id_rencana: kelompok_anggaran.kode_kelompok
+    end
     duplicate = sasaran_target.amoeba_dup
     respond_to do |format|
       @rowspan = params[:rowspan]
       @dom = params[:dom]
       if duplicate.save
-        sasaran_target.indikator_sasarans.map { |is| is.amoeba_dup.save }
-        sasaran_target.dasar_hukums.map { |ds| ds.amoeba_dup.save }
+        sasaran_target.indikator_sasarans.map do |is|
+          is.class.amoeba do
+            append sasaran_id: kelompok_anggaran.kode_kelompok
+            append id_indikator: kelompok_anggaran.kode_kelompok
+          end
+          is.amoeba_dup.save
+        end
+        sasaran_target.dasar_hukums.map do |ds|
+          ds.class.amoeba do
+            append sasaran_id: kelompok_anggaran.kode_kelompok
+          end
+          ds.amoeba_dup.save
+        end
         sasaran_target.tahapans.map do |tahap|
+          tahap.class.amoeba do
+            append id_rencana: kelompok_anggaran.kode_kelompok
+            append id_rencana_aksi: kelompok_anggaran.kode_kelompok
+          end
           tahap.amoeba_dup.save
-          tahap.aksis.map { |th| th.amoeba_dup.save }
+          tahap.aksis.map do |th|
+            th.class.amoeba do
+              append id_aksi_bulan: kelompok_anggaran.kode_kelompok
+              append id_rencana_aksi: kelompok_anggaran.kode_kelompok
+            end
+            th.amoeba_dup.save
+          end
         end
         flash.now[:success] = ['Berhasil di cloning', 'dicloning']
         @type = 'berhasil'
