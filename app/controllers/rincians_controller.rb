@@ -101,6 +101,6 @@ class RinciansController < ApplicationController
   # Only allow a list of trusted parameters through.
   def rincian_params
     params.require(:rincian).permit(:data_terpilah, :penyebab_internal, :penyebab_external, :permasalahan_umum,
-                                    :permasalahan_gender, :resiko, :lokasi_pelaksanaan, :sasaran_id)
+                                    :permasalahan_gender, :resiko, :lokasi_pelaksanaan, :dampak, :sasaran_id)
   end
 end
