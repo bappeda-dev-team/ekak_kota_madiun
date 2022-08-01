@@ -23,13 +23,6 @@ RSpec.describe KelompokAnggaran, type: :model do
       expect(kp).to be_invalid
     end
 
-    it 'valid dengan kelompok Awal dan Perubahan' do
-      ka = KelompokAnggaran.create(kelompok: 'Awal', tahun: 2022, kode_kelompok: '_awal')
-      kp = KelompokAnggaran.create(kelompok: 'Perubahan', tahun: 2022, kode_kelompok: '_perubahan')
-      expect(ka).to be_valid
-      expect(kp).to be_valid
-    end
-
     it 'tidak valid dengan tahun selain angka' do
       ka = KelompokAnggaran.create(kelompok: 'Awal', tahun: 'zzz', kode_kelompok: '_awal')
       expect(ka).to be_invalid
@@ -39,6 +32,12 @@ RSpec.describe KelompokAnggaran, type: :model do
       KelompokAnggaran.create(kelompok: 'Awal', tahun: 2022, kode_kelompok: '_awal')
       ka2 = KelompokAnggaran.create(kelompok: 'Awal', tahun: 2022, kode_kelompok: '_awal')
       expect(ka2).to be_invalid
+    end
+
+    it 'valid saat menggunakan JENIS_KELOMPOK' do
+      jenis = KelompokAnggaran::JENIS_KELOMPOK
+      ka2 = KelompokAnggaran.create(kelompok: jenis[0], tahun: 2022)
+      expect(ka2).to be_valid
     end
   end
 
