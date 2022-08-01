@@ -213,12 +213,6 @@ class SasaransController < ApplicationController
           end
           ds.amoeba_dup.save
         end
-        sasaran_target.latar_belakangs.map do |lb|
-          lb.class.amoeba do
-            append id_indikator_sasaran: kelompok_anggaran.kode_kelompok
-          end
-          lb.amoeba_dup.save
-        end
         sasaran_target.tahapans.map do |tahap|
           tahap.class.amoeba do
             append id_rencana: kelompok_anggaran.kode_kelompok
