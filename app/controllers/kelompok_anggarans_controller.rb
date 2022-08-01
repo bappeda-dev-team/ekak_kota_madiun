@@ -3,10 +3,7 @@ class KelompokAnggaransController < ApplicationController
 
   # GET /kelompok_anggarans or /kelompok_anggarans.json
   def index
-    @kelompok_anggarans = KelompokAnggaran.all.to_a
-    (2022..2024).each do |tahun|
-      @kelompok_anggarans << OpenStruct.new(kode_tahun_sasaran: tahun, tahun_kelompok: tahun)
-    end
+    @kelompok_anggarans = KelompokAnggaran.all
   end
 
   def cloning
