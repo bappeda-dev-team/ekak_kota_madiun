@@ -15,7 +15,7 @@
   </div>
   <div class="field">
     <%= form.label :kelompok, class: 'form-label' %>
-    <%= form.select(:kelompok, (['Awal','Perubahan']), {}, {id: 'dropdown-kelompok-anggaran'}) %>
+    <%= form.select(:kelompok, (KelompokAnggaran::JENIS_KELOMPOK), {}, {id: 'dropdown-kelompok-anggaran'}) %>
   </div>
   <div class="actions">
     <%= form.submit %>
