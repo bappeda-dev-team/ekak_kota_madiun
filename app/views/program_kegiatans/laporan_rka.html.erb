@@ -14,63 +14,24 @@
       <%= render 'shared/filter_with_tahun_card', filter_url: '/filter_rab', filter_file: 'hasil_filter_rab' %>
     <% end %>
     <div class="card border-0 shadow" id="user_filter">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Laporan RAB</h2>
-          </div>
-          <div class="col text-end">
-            <span><%= current_user.nama %></span>
-            |
-            <span><%= current_user.nik %></span>
+      <% unless current_user.has_role? :admin %>
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2 class="fs-5 fw-bold mb-0">Laporan RKA</h2>
+            </div>
+            <div class="col">
+              <%= render 'shared/filter_tahun_sasaran', filter_file: 'program_kegiatans/laporan_rka_row', filter_target: '#tempat-row-laporan-rab', filter_type: 'kak' %>
+            </div>
+            <div class="col text-end">
+              <span><%= current_user.nama %></span>
+              |
+              <span><%= current_user.nik %></span>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table align-items-center border-start border-end">
-            <thead class="thead-light">
-              <tr>
-                <th class="border-bottom" scope="col">No.</th>
-                <th class="border-bottom text-wrap text-center" scope="col">Sub Kegiatan</th>
-                <th class="border-bottom text-center" scope="col" colspan="2">Informasi RaB</th>
-                <th class="border-bottom text-center" scope="col">Action</th>
-              </tr>
-              <tr>
-                <th colspan="2"></th>
-                <th class="border-bottom text-center">Rencana Kinerja</th>
-                <th class="border-bottom text-center">Pemilik Rencana</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @program_kegiatans.each.with_index(1) do |program, i| %>
-                <tr>
-                  <th class="text-gray-900 fw-bolder" scope="row" rowspan="<%= program.sasarans.count + 1 %>"><%= i %></th>
-                  <th class="text-gray-900 text-wrap" scope="row" rowspan="<%= program.sasarans.count + 1 %>"><%= program.nama_subkegiatan %></th>
-                  <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="2"></td>
-                  <td class="fw-bolder text-gray-500 text-center" rowspan="<%= program.sasarans.count + 1 %>">
-                    <% tahun = Date.today.year + 1 %>
-                    <%= link_to "/pdf_rka/#{program.id}/#{tahun}.pdf", class: "m-3" do %>
-                      <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
-                    <% end %>
-                  </td>
-                </tr>
-                <% program.sasarans.each do |show_sasaran| %>
-                  <tr>
-                    <td class="text-wrap border-start border-end" width="450px">
-                      <%= show_sasaran.sasaran_kinerja %>
-                    </td>
-                    <td class="text-wrap border-start border-end border-bottom text-center">
-                      <%= show_sasaran.user.nama %>
-                    </td>
-                  </tr>
-                <% end %>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-      </div>
+        <%= render 'laporan_rka_row', program_kegiatans: @program_kegiatans, tahun: 2022 %>
+      <% end %>
     </div>
   </div>
 </div>
