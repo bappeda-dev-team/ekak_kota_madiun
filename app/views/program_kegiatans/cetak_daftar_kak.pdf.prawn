@@ -4,7 +4,11 @@ prawn_document(filename: @filename, disposition: "attachment", page_layout: :lan
   height_nested = 50
   height_row = 50
   width_nested = 100
-  width_main = 40
+  width_sub_ket = 20
+  width_sas_array = 140
+  width_ind_sas_array = 120
+  height_ind_sas_array = 100
+  width_sub = 100
   rowspan = 0
   pdf.text "DAFTAR SASARAN KINERJA PER SUB KEGIATAN", align: :center
   pdf.move_down 3
@@ -15,7 +19,7 @@ prawn_document(filename: @filename, disposition: "attachment", page_layout: :lan
 
   pdf.move_down 20
   header_tabel_subkegiatan = [
-    [{ content: "No", align: :center }, { content: "Sub Kegiatan", align: :center },
+    [{ content: "No", align: :center }, { content: "SUB KEGIATAN", align: :center },
      { content: "INDIKATOR", align: :center }, { content: "TARGET", align: :center }, { content: "SATUAN", align: :center },
      { content: "PAGU ANGGARAN", align: :center },
      { content: "SASARAN KINERJA", align: :center },
@@ -30,25 +34,33 @@ prawn_document(filename: @filename, disposition: "attachment", page_layout: :lan
   @program_kegiatans.limit(5).each.with_index(1) do |pk, i|
     sasaran_arr = []
     indikator_sasaran_arr = []
+    target_indikator_sasaran_arr = []
+    satuan_indikator_sasaran_arr = []
     pk.sasarans.where(tahun: @tahun).each.with_index(1) do |s, no|
-      s.indikator_sasarans.each do |is|
-        indikator_sasaran_arr << [{ content: is.indikator_kinerja }, { content: is.target.to_s },
-                                  { content: is.satuan }]
+      # indikator_table = pdf.make_table(indikator_sasaran_arr, cell_style: { size: size_cell, height: height_nested, valign: :center },
+      #                                                         width: width_nested)
+      sasaran_arr << [{ content: no.to_s, align: :center, width: width_sub_ket, height: 100, rowspan: s.indikator_sasarans.size },
+                      { content: s.sasaran_kinerja, align: :left, width: width_sas_array, height: 100,
+                        rowspan: s.indikator_sasarans.size }]
+      s.indikator_sasarans.each do |ind|
+        indikator_sasaran_arr << [{ content: ind.indikator_kinerja, width: width_ind_sas_array }]
+        target_indikator_sasaran_arr << [{ content: ind.target, width: 100 }]
+        satuan_indikator_sasaran_arr << [{ content: ind.satuan, width: 100 }]
       end
-      indikator_table = pdf.make_table(indikator_sasaran_arr, cell_style: { size: size_cell, height: height_nested, valign: :center },
-                                                              width: width_nested)
-      sasaran_arr << [{ content: no.to_s, align: :center }, { content: s.sasaran_kinerja, align: :left }]
     end
     sasaran_table = pdf.make_table(sasaran_arr,
-                                   cell_style: { size: size_cell, valign: :center }, width: width_nested)
-    header_tabel_subkegiatan << [{ content: i.to_s, width: width_main, align: :center, valign: :center },
-                                 { content: pk.nama_subkegiatan, valign: :center },
-                                 { content: pk.indikator_subkegiatan, valign: :center, width: width_main },
-                                 { content: pk.target_subkegiatan, valign: :center, width: width_main },
-                                 { content: pk.satuan_target_subkegiatan, valign: :center, width: width_main },
+                                   cell_style: { size: size_cell, valign: :center }, width: width_sub_ket + width_sas_array)
+    indikator_table = pdf.make_table(indikator_sasaran_arr,
+                                     cell_style: { size: size_cell, valign: :center }, width: width_ind_sas_array)
+
+    header_tabel_subkegiatan << [{ content: i.to_s, width: width_sub_ket, align: :center, valign: :center },
+                                 { content: pk.nama_subkegiatan, valign: :center, width: width_sub },
+                                 { content: pk.indikator_subkegiatan, valign: :center, width: width_sub },
+                                 { content: pk.target_subkegiatan, valign: :center, align: :center, width: width_sub_ket },
+                                 { content: pk.satuan_target_subkegiatan, valign: :center, align: :center, width: width_sub_ket },
                                  {
-                                   content: "Rp. #{number_with_delimiter(pk.sasarans.where(tahun: @tahun).map(&:total_anggaran).compact.sum)}", width: width_main, valign: :center
-                                 }, sasaran_table]
+                                   content: "Rp. #{number_with_delimiter(pk.sasarans.where(tahun: @tahun).map(&:total_anggaran).compact.sum)}", width: width_sub_ket, valign: :center
+                                 }, sasaran_table, indikator_table]
   end
   footer_tabel_subkegiatan = [{ content: "Jumlah", colspan: 5 },
                               "Rp. #{number_with_delimiter(@program_kegiatans.map do |pr|
