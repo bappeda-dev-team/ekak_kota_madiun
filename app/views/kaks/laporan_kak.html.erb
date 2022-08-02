@@ -30,33 +30,36 @@
         </div>
       </div>
       <% unless current_user.has_role? :admin %>
-        <div class="card-body">
-          <div class="table-responsive" id="tempat-row-laporan-kak">
+        <div class="card-body" id="tempat-row-laporan-kak">
+          <div class="table-responsive">
             <table class="table align-items-center border-start border-end">
               <thead class="thead-light">
                 <tr>
                   <th class="border-bottom" scope="col">No.</th>
                   <th class="border-bottom text-center" scope="col">Sub Kegiatan KaK</th>
                   <th class="border-bottom text-center" scope="col">Pagu Anggaran</th>
-                  <th class="border-bottom text-center border-start border-end" scope="col" colspan="3">Informasi KaK</th>
+                  <th class="border-bottom text-center border-start border-end" scope="col" colspan="5">Informasi KaK</th>
                   <th class="border-bottom text-center" scope="col">Action</th>
                 </tr>
                 <tr>
                   <th colspan="3"></th>
                   <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
                   <th class="border-bottom text-center border-start border-end">Pagu Sasaran</th>
+                  <th class="border-bottom text-center border-start border-end">Tahun</th>
                   <th class="border-bottom text-center border-start border-end">Pemilik Rencana</th>
+                  <th class="border-bottom text-center border-start border-end">Status</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 <% @program_kegiatans.each.with_index(1) do |kak, i| %>
+                  <% row_pk = kak.sasarans.count + 1 %>
                   <tr>
-                    <td class="text-gray-900 fw-bolder" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= i %></td>
-                    <td class="text-gray-900 text-wrap" scope="row" rowspan="<%= kak.sasarans.count + 1 %>" width="200px"><%= kak.nama_subkegiatan %></td>
-                    <td class="text-gray-900 text-wrap" scope="row" rowspan="<%= kak.sasarans.count + 1 %>" width="200px">Rp. <%= number_with_delimiter(kak.all_anggaran) or 0 %></td>
-                    <td class="p-0 m-0" colspan="3" style="height: 0px !important; border-color: transparent;"></td>
-                    <td class="fw-bolder text-gray-500 text-center" rowspan="<%= kak.sasarans.count + 1 %>">
+                    <td class="text-gray-900 fw-bolder" scope="row" rowspan="<%= row_pk %>"><%= i %></td>
+                    <td class="text-gray-900 text-wrap" scope="row" rowspan="<%= row_pk %>" width="200px"><%= kak.nama_subkegiatan %></td>
+                    <td class="text-gray-900 text-wrap" scope="row" rowspan="<%= row_pk %>" width="200px">Rp. <%= number_with_delimiter(kak.all_anggaran) or 0 %></td>
+                    <td class="p-0 m-0" colspan="5" style="height: 0px !important; border-color: transparent;"></td>
+                    <td class="fw-bolder text-gray-500 text-center" rowspan="<%= row_pk %>">
                       <%= link_to "/acuan_kerja_new/#{kak.id}", class: "m-3" do %>
                         <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
                       <% end %>
@@ -77,7 +80,13 @@
                         Rp. <%= number_with_delimiter(show_sasaran.total_anggaran) or 0 %>
                       </td>
                       <td class="text-wrap border-start border-end border-bottom text-center">
+                        <%= show_sasaran.tahun %>
+                      </td>
+                      <td class="text-wrap border-start border-end border-bottom text-center">
                         <%= show_sasaran.user.nama %>
+                      </td>
+                      <td class="text-wrap border-start border-end border-bottom text-center">
+                        <%= show_sasaran.status %>
                       </td>
                     </tr>
                   <% end %>
@@ -85,50 +94,48 @@
               </tbody>
             </table>
           </div>
-        </div>
-        <% if @sasarans.any? {|s| s.status == 'pengajuan' or s.status == 'disetujui' } %>
           <div class="card-body">
             <p>Jumlah Sasaran Aktif : <%= @jumlah_sasaran %></p>
             <p>Jumlah SubKegiatan : <%= @jumlah_subkegiatan %></p>
             <p>Total Usulan : <%= @jumlah_usulan %></p>
             <p>Total Pagu Anggaran : Rp. <%= number_with_delimiter @total_pagu %></p>
           </div>
-        <% end %>
-        <% if @program_kegiatans.exists? %>
-          <div class="card-body">
-            <% if @sasarans.all? {|s| s.status == 'pengajuan' } %>
-              <%= button_tag type: 'submit', class: 'btn btn-info w-100 text-white', disabled: true do %>
-                <span><%= @sasarans.first.status.capitalize || 'Diajukan' %></span>
-                <i class="fas fa-check ms-2"></i>
-              <% end %>
-            <% elsif @sasarans.all? { |s| s.status == 'disetujui'} %>
-              <%= button_tag type: 'submit', class: 'btn btn-info w-100 text-white', disabled: true do %>
-                <span><%= @sasarans.first.status.capitalize || 'Diajukan' %></span>
-                <i class="fas fa-check ms-2"></i>
-              <% end %>
-            <% elsif @sasarans.any? { |s| s.status == 'ditolak'} %>
-              <%= form_with url: ajukan_semua_sasaran_path, local: false do |f| %>
-                <% @sasarans.pluck(:id).each do |s| %>
-                  <%= f.hidden_field :sasaran_diajukans, value: s, multiple: true  %>
-                <% end %>
-                <%= button_tag type: 'submit', class: 'btn btn-success w-100 text-white' do %>
-                  <span>Ajukan Verifikasi</span>
+          <% if @program_kegiatans.exists? %>
+            <div class="card-body">
+              <% if @sasarans.all? {|s| s.status == 'pengajuan' } %>
+                <%= button_tag type: 'submit', class: 'btn btn-info w-100 text-white', disabled: true do %>
+                  <span><%= @sasarans.first.status.capitalize || 'Diajukan' %></span>
                   <i class="fas fa-check ms-2"></i>
                 <% end %>
-              <% end %>
-            <% else %>
-              <%= form_with url: ajukan_semua_sasaran_path, local: false do |f| %>
-                <% @sasarans.sudah_lengkap.pluck(:id).each do |s| %>
-                  <%= f.hidden_field :sasaran_diajukans, value: s, multiple: true  %>
-                <% end %>
-                <%= button_tag type: 'submit', class: 'btn btn-success w-100 text-white' do %>
-                  <span>Ajukan Verifikasi</span>
+              <% elsif @sasarans.all? { |s| s.status == 'disetujui'} %>
+                <%= button_tag type: 'submit', class: 'btn btn-info w-100 text-white', disabled: true do %>
+                  <span><%= @sasarans.first.status.capitalize || 'Diajukan' %></span>
                   <i class="fas fa-check ms-2"></i>
                 <% end %>
+              <% elsif @sasarans.any? { |s| s.status == 'ditolak'} %>
+                <%= form_with url: ajukan_semua_sasaran_path, local: false do |f| %>
+                  <% @sasarans.pluck(:id).each do |s| %>
+                    <%= f.hidden_field :sasaran_diajukans, value: s, multiple: true  %>
+                  <% end %>
+                  <%= button_tag type: 'submit', class: 'btn btn-success w-100 text-white' do %>
+                    <span>Ajukan Verifikasi</span>
+                    <i class="fas fa-check ms-2"></i>
+                  <% end %>
+                <% end %>
+              <% else %>
+                <%= form_with url: ajukan_semua_sasaran_path, local: false do |f| %>
+                  <% @sasarans.sudah_lengkap.pluck(:id).each do |s| %>
+                    <%= f.hidden_field :sasaran_diajukans, value: s, multiple: true  %>
+                  <% end %>
+                  <%= button_tag type: 'submit', class: 'btn btn-success w-100 text-white' do %>
+                    <span>Ajukan Verifikasi</span>
+                    <i class="fas fa-check ms-2"></i>
+                  <% end %>
+                <% end %>
               <% end %>
-            <% end %>
-          </div>
-        <% end %>
+            </div>
+          <% end %>
+        </div>
       <% end %>
     </div>
   </div>
