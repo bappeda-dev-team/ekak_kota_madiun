@@ -3,11 +3,11 @@ class KelompokAnggaransController < ApplicationController
 
   # GET /kelompok_anggarans or /kelompok_anggarans.json
   def index
-    @kelompok_anggarans = KelompokAnggaran.all.order(tahun: :desc)
+    @kelompok_anggarans = KelompokAnggaran.all.order(tahun: :asc)
   end
 
   def cloning
-    @kelompok_anggarans = KelompokAnggaran.all.order(tahun: :desc)
+    @kelompok_anggarans = KelompokAnggaran.all.order(tahun: :asc)
   end
 
   # GET /kelompok_anggarans/1 or /kelompok_anggarans/1.json

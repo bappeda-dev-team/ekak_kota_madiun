@@ -19,20 +19,21 @@
             <th class="border-bottom" scope="col">No.</th>
             <th class="border-bottom text-center" scope="col">Sub Kegiatan</th>
             <th class="border-bottom text-center" scope="col">Indikator</th>
-            <th class="border-bottom text-center border-start border-end" scope="col" colspan="2">Informasi</th>
+            <th class="border-bottom text-center border-start border-end" scope="col" colspan="3">Informasi</th>
             <th class="border-bottom text-center" scope="col">Aksi</th>
           </tr>
           <tr>
             <th colspan="3"></th>
             <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
+            <th class="border-bottom text-center border-start border-end">Tahun</th>
             <th class="border-bottom text-center border-start border-end">Pagu Anggaran</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           <% @program_kegiatans.each.with_index(1) do |program_kegiatan, i| %>
-            <% jumlah_sasaran = program_kegiatan.sasarans.count + 1 %>
-            <% jumlah_indikator = program_kegiatan.count_indikator_sasarans %>
+            <% jumlah_sasaran = program_kegiatan.sasarans.where(tahun: @tahun).count + 1 %>
+            <% jumlah_indikator = program_kegiatan.count_indikator_sasarans(tahun: @tahun) || 0 %>
             <% row_atas = jumlah_sasaran + jumlah_indikator %>
             <% row_atas = row_atas.zero? ? 1 : row_atas %>
             <tr class="border-bottom">
@@ -41,8 +42,8 @@
               <td class="text-gray-900 align-items-top text-wrap" rowspan="<%= jumlah_sasaran %>"><%= program_kegiatan.indikator_subkegiatan %></td>
               <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
               <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
+              <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
               <td class="fw-bolder text-gray-500 text-center" style="vertical-align: middle;" rowspan="<%= jumlah_sasaran %>">
-                <% @tahun = Date.today.year if @tahun.nil? %>
                 <%= link_to "/acuan_kerja_new/#{program_kegiatan.id}/#{@tahun}",
                       target: "_blank", rel: "nofollow",
                       class:"btn btn-sm btn-info" do %>
@@ -54,10 +55,13 @@
                   Cetak KaK
                 <% end %>
               </td>
-              <% program_kegiatan.sasarans.each do |show_sasaran| %>
+              <% program_kegiatan.sasarans.where(tahun: @tahun).each do |show_sasaran| %>
                 <tr class="<%= warna_sasaran(show_sasaran.status_sasaran) %>">
                   <td class="text-wrap align-items-top border-start border-end" width="350px">
                     <%= show_sasaran.sasaran_kinerja %>
+                  </td>
+                  <td class="border-start align-items-top border-end border-bottom text-center">
+                    <%= show_sasaran.tahun %>
                   </td>
                   <td class="border-start align-items-top border-end border-bottom text-center">
                     Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar) or 0 %>
@@ -68,8 +72,9 @@
           <% end %>
         </tbody>
         <tfoot>
-          <td colspan="4" class="text-align-left">Total Pagu</td>
-          <td class="border">Rp. <%= number_with_delimiter(@program_kegiatans.map(&:my_pagu).inject(:+)) %></td>
+          <td colspan="5" class="text-align-left">Total Pagu</td>
+          <%# program kegiatan menghitung semua, yang merah juga ikut kehitung %>
+          <td class="border">Rp. <%= number_with_delimiter(@program_kegiatans.map { |pr| pr.sasarans.where(tahun: @tahun).map(&:total_anggaran).compact.sum }.inject(:+)) %></td>
           <td colspan="1"></td>
         </tfoot>
       </table>

@@ -23,12 +23,12 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
               ['Sub Kegiatan', ':', { content: @programKegiatan.nama_subkegiatan, font_style: :bold }],
               ['Indikator', ':', @programKegiatan.indikator_subkegiatan],
               ['Target', ':', "#{@programKegiatan.target_subkegiatan} #{@programKegiatan.satuan}"],
-              ['Pagu Anggaran', ':', "Rp. #{number_with_delimiter(@programKegiatan.my_pagu)}"]
+              ['Pagu Anggaran', ':', "Rp. #{number_with_delimiter(@programKegiatan.sasarans.where(tahun: @tahun).sudah_lengkap.map(&:total_anggaran).compact.sum)}"]
             ], cell_style: { borders: [] }, width: pdf.bounds.width)
   pdf.move_down 20
   pdf.text 'Sumber Dana', style: :bold, indent_paragraphs: 5
   header_sumber_dana = [['No', 'Sasaran', 'Pemilik Sasaran', 'Pagu', 'Sumber Dana']]
-  @programKegiatan.sasarans.each.with_index(1) do |sasaran_sumber_dana, no|
+  @programKegiatan.sasarans.where(tahun: @tahun).each.with_index(1) do |sasaran_sumber_dana, no|
     header_sumber_dana << [no, sasaran_sumber_dana.sasaran_kinerja,
                            sasaran_sumber_dana.user.nama,
                            { content: "Rp. #{number_with_delimiter(sasaran_sumber_dana.total_anggaran)}" },
@@ -41,11 +41,11 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
   pdf.move_down 5
   pdf.font_size 8
   # sasaran_kinerja
-  @programKegiatan.sasarans.each.with_index(1) do |sasaran, nomor|
+  @programKegiatan.sasarans.where(tahun: @tahun).each.with_index(1) do |sasaran, nomor|
     pdf.move_down 20
     pdf.text "#{nomor}. ", size: 8
     pdf.table([
-                ['Sasaran/ Rencana Kinerja', ':', sasaran.sasaran_kinerja],
+                ["Sasaran/ Rencana Kinerja", ':', sasaran.sasaran_kinerja],
                 ['Indikator', ':', sasaran.indikator_kinerja],
                 ['Target', ':', "#{sasaran.target} #{sasaran.satuan}"],
                 ['Pagu Anggaran', ':', "Rp. #{number_with_delimiter(sasaran.total_anggaran)} | Sumber Dana : #{sasaran.sumber_dana}"],
@@ -55,6 +55,7 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
     # tahapan
     sasaran.tahapans.each.with_index(1) do |tahapan, index|
       pdf.move_down 10
+      pdf.start_new_page if (pdf.cursor - 111).negative?
       pdf.text "Tahapan #{index}.  #{tahapan.tahapan_kerja}"
       pdf.move_down 5
       header_anggaran = [

@@ -61,7 +61,7 @@ class ProgramKegiatan < ApplicationRecord
   has_many :rincians, through: :sasarans
   has_many :permasalahans, through: :sasarans
 
-  scope :with_sasarans, -> { where(id: Sasaran.pluck(:program_kegiatan_id)) }
+  scope :with_sasarans, -> (tahun) { where(id: Sasaran.where(tahun: tahun).pluck(:program_kegiatan_id)) }
 
   # default_scope { order(created_at: :desc) }
 
@@ -77,8 +77,8 @@ class ProgramKegiatan < ApplicationRecord
     id_sub_unit.nil? ? '-' : Opd.find_by(id_opd_skp: id_sub_unit).nama_opd
   end
 
-  def count_indikator_sasarans
-    sasarans.map { |s| s.indikator_sasarans.count }.inject(:+)
+  def count_indikator_sasarans(tahun:)
+    sasarans.where(tahun: tahun).map { |s| s.indikator_sasarans.count }.inject(:+)
   end
 
   def all_anggaran
