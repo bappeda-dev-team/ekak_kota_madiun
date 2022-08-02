@@ -12,12 +12,7 @@ class SasaransController < ApplicationController
       @filter_target = params[:filter_target].present? ? params[:filter_target] : '#tempat-row-sasaran'
       @filter_type = params[:filter_type].present? ? params[:filter_type] : false
       if @filter_type == 'kak'
-        @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik, tahun: @tahun_sasaran }).group(:id)
-        @jumlah_sasaran = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik, tahun: @tahun_sasaran }).count(:sasarans)
-        @jumlah_subkegiatan = ProgramKegiatan.includes(:sasarans).where(sasarans: { nip_asn: current_user.nik, tahun: @tahun_sasaran }).count
-        @jumlah_usulan = ProgramKegiatan.includes(:sasarans).where(sasarans: { nip_asn: current_user.nik, tahun: @tahun_sasaran }).map { |program| program.sasarans.where(tahun: @tahun_sasaran).map{ |s| s.usulans.count }.reduce(:+) }.reduce(:+)
-        @total_pagu = @program_kegiatans.map { |program| program.my_pagu }.sum
-        @sasarans = Sasaran.sudah_lengkap.where(nip_asn: current_user.nik).where(tahun: @tahun_sasaran)
+        laporan_kak(tahun: @tahun_sasaran)
       else
         @sasarans = @sasarans.where(tahun: @tahun_sasaran)
       end
