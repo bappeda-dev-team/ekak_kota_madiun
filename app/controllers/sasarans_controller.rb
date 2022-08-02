@@ -30,7 +30,7 @@ class SasaransController < ApplicationController
     @jumlah_sasaran = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik, tahun: tahun }).count(:sasarans)
     @jumlah_subkegiatan = ProgramKegiatan.includes(:sasarans).where(sasarans: { nip_asn: current_user.nik, tahun: tahun }).count
     @jumlah_usulan = ProgramKegiatan.includes(:sasarans).where(sasarans: { nip_asn: current_user.nik, tahun: tahun }).map { |program| program.sasarans.where(tahun: tahun).map{ |s| s.usulans.count }.reduce(:+) }.reduce(:+)
-    @total_pagu = @program_kegiatans.map { |program| program.my_pagu }.sum
+    @total_pagu = @program_kegiatans.map { |program| program.sasarans.where(tahun: tahun).sudah_lengkap.map(&:total_anggaran).compact.sum }.sum
     @sasarans = Sasaran.sudah_lengkap.where(nip_asn: current_user.nik).where(tahun: tahun)
   end
 
