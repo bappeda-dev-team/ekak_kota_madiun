@@ -1,4 +1,7 @@
 <%= form_with url: user_sasarans_path(current_user), method: :get, local: local_assigns[:tipe] == 'all', class: 'row' do |form| %>
+  <%= form.hidden_field :filter_target, value: local_assigns[:filter_target] %>
+  <%= form.hidden_field :filter_file, value: local_assigns[:filter_file] %>
+  <%= form.hidden_field :filter_type, value: local_assigns[:filter_type] %>
   <div class="col">
     <%= form.select :tahun_sasaran, [''], {include_blank: true},
                     { class: "select2-waw",

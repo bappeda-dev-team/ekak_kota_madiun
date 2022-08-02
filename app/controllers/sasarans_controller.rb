@@ -8,7 +8,14 @@ class SasaransController < ApplicationController
     @sasarans = @user.sasarans
     @tahun_sasaran = params[:tahun_sasaran]
     if @tahun_sasaran.present?
-      @sasarans = @sasarans.where(tahun: @tahun_sasaran)
+      @filter_file = params[:filter_file].present? ? params[:filter_file] : 'sasarans/row_sasaran'
+      @filter_target = params[:filter_target].present? ? params[:filter_target] : '#tempat-row-sasaran'
+      @filter_type = params[:filter_type].present? ? params[:filter_type] : false
+      if @filter_type == 'kak'
+        laporan_kak(tahun: @tahun_sasaran)
+      else
+        @sasarans = @sasarans.where(tahun: @tahun_sasaran)
+      end
     else
       @sasarans
     end
@@ -16,6 +23,15 @@ class SasaransController < ApplicationController
 
   # GET /sasarans/1 or /sasarans/1.json
   def show; end
+
+  def laporan_kak(tahun: 2022)
+    @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik, tahun: tahun }).group(:id)
+    @jumlah_sasaran = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik, tahun: tahun }).count(:sasarans)
+    @jumlah_subkegiatan = ProgramKegiatan.includes(:sasarans).where(sasarans: { nip_asn: current_user.nik, tahun: tahun }).count
+    @jumlah_usulan = ProgramKegiatan.includes(:sasarans).where(sasarans: { nip_asn: current_user.nik, tahun: tahun }).map { |program| program.sasarans.where(tahun: tahun).map{ |s| s.usulans.count }.reduce(:+) }.reduce(:+)
+    @total_pagu = @program_kegiatans.map { |program| program.my_pagu }.sum
+    @sasarans = Sasaran.sudah_lengkap.where(nip_asn: current_user.nik).where(tahun: tahun)
+  end
 
   def detail
     @program_kegiatan = @sasaran.program_kegiatan
@@ -324,7 +340,8 @@ class SasaransController < ApplicationController
   # Only allow a list of trusted parameters through.
   def sasaran_params
     params.require(:sasaran).permit(:sasaran_kinerja, :penerima_manfaat, :nip_asn, :program_kegiatan_id,
-                                    :sumber_dana, :subkegiatan_tematik_id, :tahun, :id_rencana, :kelompok_anggaran,
+                                    :sumber_dana, :subkegiatan_tematik_id, :tahun, :id_rencana,
+                                    :kelompok_anggaran, :filter_file, :filter_target, :filter_type,
                                     indikator_sasarans_attributes: %i[id indikator_kinerja aspek target satuan _destroy])
   end
 
