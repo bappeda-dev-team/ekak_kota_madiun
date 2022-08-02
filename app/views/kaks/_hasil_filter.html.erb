@@ -28,6 +28,7 @@
           <tr>
             <th colspan="5"></th>
             <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
+            <th class="border-bottom text-center border-start border-end">Tahun</th>
             <th class="border-bottom text-center border-start border-end">Pagu Anggaran</th>
             <th></th>
             <th></th>
@@ -35,13 +36,13 @@
         </thead>
         <tbody>
           <% @users.each.with_index(1) do |user, i| %>
-            <% row_awal = user.program_kegiatan_sasarans.map { |up| up.sasarans.size }.compact %>
+            <% row_awal = user.program_kegiatan_sasarans(tahun: @tahun_sasaran).map { |up| up.sasarans.size }.compact %>
             <% row = row_awal.empty? ? 1 : row_awal.reduce(:+) %>
-            <% row_atas = user.program_kegiatan_sasarans.count + row %>
+            <% row_atas = user.program_kegiatan_sasarans(tahun: @tahun_sasaran).count + row %>
             <tr class="border-bottom">
-              <td class="text-gray-900 fw-bolder border-bottom" rowspan="<%= user.program_kegiatan_sasarans.count + row %>" scope="rowgroup"><%= i %></td>
-              <td class="<%= 'bg-danger text-white' if row_awal.empty? %> text-wrap border-end border-bottom" rowspan="<%= user.program_kegiatan_sasarans.count + row %>" scope="rowgroup"><%= user.nama %></td>
-              <td class="border-start border-end text-center" rowspan="<%= user.program_kegiatan_sasarans.count + row %>" scope="rowgroup">
+              <td class="text-gray-900 fw-bolder border-bottom" rowspan="<%= row_atas %>" scope="rowgroup"><%= i %></td>
+              <td class="<%= 'bg-danger text-white' if row_awal.empty? %> text-wrap border-end border-bottom" rowspan="<%= row_atas %>" scope="rowgroup"><%= user.nama %></td>
+              <td class="border-start border-end text-center" rowspan="<%= row_atas %>" scope="rowgroup">
                 <table>
                   <tr>
                     <td class="m-0 p-0 text-success">
@@ -77,19 +78,20 @@
                   </tr>
                 </table>
               </td>
-              <% user.program_kegiatan_sasarans.each do |kak| %>
-                <% row_dalam = kak.sasarans.count + 1  %>
-                <td class="text-gray-900 text-wrap" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.nama_subkegiatan %></td>
-                <td class="text-gray-900 text-wrap" rowspan="<%= kak.sasarans.count + 1 %>">Rp. <%= number_with_delimiter(kak.all_anggaran) or 0 %></td>
+              <% user.program_kegiatan_sasarans(tahun: @tahun_sasaran).each do |kak| %>
+                <% row_dalam = kak.sasarans.where(tahun: @tahun).count + 1  %>
+                <td class="text-gray-900 text-wrap" rowspan="<%= row_dalam %>"><%= kak.nama_subkegiatan %></td>
+                <td class="text-gray-900 text-wrap" rowspan="<%= row_dalam %>">Rp. <%= number_with_delimiter(kak.sasarans.where(tahun: @tahun).map(&:total_anggaran).compact.sum) or 0 %></td>
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
-                <td class="fw-bolder text-gray-500 text-center border-start border-end" rowspan="<%= kak.sasarans.count + 1 %>" id="<%= dom_id(kak) %>">
-                  <% if kak.sasarans.exists? status: 'draft' %>
+                <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
+                <td class="fw-bolder text-gray-500 text-center border-start border-end" rowspan="<%= row_dalam %>" id="<%= dom_id(kak) %>">
+                  <% if kak.sasarans.where(tahun: @tahun).exists? status: 'draft' %>
                     <button class="btn btn-sm btn-danger" disabled>
                       <i class="fas fa-times me-2"></i>
                       ! Belum diajukan
                     </button>
-                  <% elsif kak.sasarans.exists? status: 'pengajuan' %>
+                  <% elsif kak.sasarans.where(tahun: @tahun).exists? status: 'pengajuan' %>
                     <%= link_to setujui_semua_sasaran_path(sasaran_diajukans: [kak.sasarans.pluck(:id)], dom: dom_id(kak), rowspan: row_dalam ),
                       method: :post, remote: true,
                       data: { disable_with: 'Memproses....'},
@@ -97,7 +99,7 @@
                       <i class="fas fa-lock me-2"></i>
                       Kunci
                     <% end %>
-                  <% elsif kak.sasarans.exists? status: 'disetujui' %>
+                  <% elsif kak.sasarans.where(tahun: @tahun).exists? status: 'disetujui' %>
                     <%= link_to revisi_semua_sasaran_path(sasaran_diajukans: [kak.sasarans.pluck(:id)], dom: dom_id(kak), rowspan: row_dalam),
                       method: :post, remote: true,
                       data: { disable_with: 'Memproses....'},
@@ -112,19 +114,21 @@
                     </button>
                   <% end %>
                 </td>
-                <td class="fw-bolder text-gray-500 text-center" rowspan="<%= kak.sasarans.count + 1 %>">
-                  <% @tahun = Date.today.year if @tahun.nil? %>
+                <td class="fw-bolder text-gray-500 text-center" rowspan="<%= row_dalam %>">
                   <%= link_to "/acuan_kerja_new/#{kak.id}/#{@tahun}", class: "m-3" do %>
-                    <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
+                    <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
                   <% end %>
                   <%= link_to "/pdf_kak/#{kak.id}/#{@tahun}.pdf", class: "m-3" do %>
                     <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
                   <% end %>
                 </td>
-                <% kak.sasarans.each do |show_sasaran| %>
+                <% kak.sasarans.where(tahun: @tahun).each do |show_sasaran| %>
                   <tr class="<%= warna_sasaran(show_sasaran.status_sasaran) %>">
                     <td class="text-wrap border-start border-end" width="450px">
                       <%= show_sasaran.sasaran_kinerja %>
+                    </td>
+                    <td class="border-start border-end border-bottom text-center">
+                      <%= show_sasaran.tahun %>
                     </td>
                     <td class="border-start border-end border-bottom text-center">
                       Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar) or 0 %>
@@ -140,15 +144,15 @@
   </div>
   <div class="card-body">
     <% jumlah_sasaran = @users.map(&:jumlah_sasaran).compact.reduce(:+) %>
-    <% jumlah_anggaran = @users.map { |n| n.program_kegiatan_sasarans.map { |j| j&.my_pagu } }.flatten.reduce(:+) %>
-    <p>Jumlah SubKegiatan : <%= @users.map {|u| u.program_kegiatan_sasarans.size }.reduce(:+) %></p>
+    <% jumlah_anggaran = @users.map { |n| n.program_kegiatan_sasarans(tahun: @tahun).map { |j| j&.sasarans.where(tahun: @tahun).sudah_lengkap.map(&:total_anggaran).compact.sum } }.flatten.reduce(:+) %>
+    <p>Jumlah SubKegiatan : <%= @users.map {|u| u.program_kegiatan_sasarans(tahun: @tahun).size }.reduce(:+) %></p>
     <p>Jumlah Sasaran Aktif : <%= jumlah_sasaran %></p>
     <p>Jumlah Usulan Terakomodir : </p>
     <ul>
-      <li>Musrenbang: <%= @users.map { |u| u.program_kegiatan_sasarans.map { |n| n.sasarans.map { |s| s.my_usulan.filter { |us| us.instance_of?(Musrenbang) } } } }.flatten.size %></li>
-      <li>Pokok Pikiran: <%= @users.map { |u| u.program_kegiatan_sasarans.map { |n| n.sasarans.map { |s| s.my_usulan.filter { |u| u.instance_of?(Pokpir) } } } }.flatten.size %> </li>
-      <li>Mandatori: <%= @users.map { |u| u.program_kegiatan_sasarans.map { |n| n.sasarans.map { |s| s.my_usulan.filter { |u| u.instance_of?(Mandatori) } } } }.flatten.size %></li>
-      <li>Inisiatif Walikota: <%= @users.map { |u| u.program_kegiatan_sasarans.map { |n| n.sasarans.map { |s| s.my_usulan.filter { |u| u.instance_of?(Pokpir) } } } }.flatten.size %></li>
+      <li>Musrenbang: <%= @users.map { |u| u.program_kegiatan_sasarans(tahun: @tahun).map { |n| n.sasarans.map { |s| s.my_usulan.filter { |us| us.instance_of?(Musrenbang) } } } }.flatten.size %></li>
+      <li>Pokok Pikiran: <%= @users.map { |u| u.program_kegiatan_sasarans(tahun: @tahun).map { |n| n.sasarans.map { |s| s.my_usulan.filter { |u| u.instance_of?(Pokpir) } } } }.flatten.size %> </li>
+      <li>Mandatori: <%= @users.map { |u| u.program_kegiatan_sasarans(tahun: @tahun).map { |n| n.sasarans.map { |s| s.my_usulan.filter { |u| u.instance_of?(Mandatori) } } } }.flatten.size %></li>
+      <li>Inisiatif Walikota: <%= @users.map { |u| u.program_kegiatan_sasarans(tahun: @tahun).map { |n| n.sasarans.map { |s| s.my_usulan.filter { |u| u.instance_of?(Pokpir) } } } }.flatten.size %></li>
     </ul>
     <p>Total Pagu Anggaran : Rp. <%= number_with_delimiter(jumlah_anggaran) or 0 %> </p>
   </div>
