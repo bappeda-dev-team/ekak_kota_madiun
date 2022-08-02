@@ -8,6 +8,7 @@ class SasaransController < ApplicationController
     @sasarans = @user.sasarans
     @tahun_sasaran = params[:tahun_sasaran]
     if @tahun_sasaran.present?
+      @tahun_sasaran = @tahun_sasaran.match(/murni/) ? @tahun_sasaran[/[^_]\d*/, 0] : @tahun_sasaran
       @filter_file = params[:filter_file].present? ? params[:filter_file] : 'sasarans/row_sasaran'
       @filter_target = params[:filter_target].present? ? params[:filter_target] : '#tempat-row-sasaran'
       @filter_type = params[:filter_type].present? ? params[:filter_type] : false
