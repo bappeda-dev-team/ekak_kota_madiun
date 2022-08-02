@@ -113,10 +113,10 @@
                   <% end %>
                 </td>
                 <td class="fw-bolder text-gray-500 text-center" rowspan="<%= kak.sasarans.count + 1 %>">
-                  <%= link_to "/acuan_kerja_new/#{kak.id}", class: "m-3" do %>
+                  <% @tahun = Date.today.year if @tahun.nil? %>
+                  <%= link_to "/acuan_kerja_new/#{kak.id}/#{@tahun}", class: "m-3" do %>
                     <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
                   <% end %>
-                  <% @tahun = Date.today.year if @tahun.nil? %>
                   <%= link_to "/pdf_kak/#{kak.id}/#{@tahun}.pdf", class: "m-3" do %>
                     <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
                   <% end %>

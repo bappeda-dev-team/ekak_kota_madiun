@@ -15,6 +15,7 @@
           <tr>
             <th>no</th>
             <th>Sasaran Kinerja</th>
+            <th>Tahun</th>
             <th>Indikator</th>
             <th>Target</th>
             <th class="text-end">Pagu</th>
@@ -22,10 +23,11 @@
           </tr>
         </thead>
         <tbody class="border">
-          <% programKegiatan.sasarans.includes([:indikator_sasarans]).each.with_index(1) do |sasaran, i| %>
+          <% programKegiatan.sasarans.where(tahun: tahun).includes([:indikator_sasarans]).each.with_index(1) do |sasaran, i| %>
             <tr>
               <td rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
               <td class="text-wrap" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
+              <td class="text-wrap" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.tahun %></td>
               <td class="m-0 p-0" style="height: 0px !important; border-color: transparent;"></td>
               <td class="m-0 p-0" style="height: 0px !important; border-color: transparent;"></td>
               <td class="text-end border-1" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
@@ -41,8 +43,8 @@
           <tr class="border">
             <%# total pagu (my_pagu) menghitung sasaran yang lengkap saja %>
             <%# sedangkan all_anggaran, menghitung seluruh sasaran %>
-            <td colspan="4">Total Pagu</td>
-            <td class="text-end border-1">Rp. <%= number_with_delimiter(programKegiatan.all_anggaran)  %></td>
+            <td colspan="5">Total Pagu</td>
+            <td class="text-end border-1">Rp. <%= number_with_delimiter(programKegiatan.sasarans.where(tahun: tahun).sudah_lengkap.map(&:total_anggaran).compact.sum)  %></td>
             <td></td>
           </tr>
         </tbody>

@@ -182,7 +182,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/program_kegiatans_to_kak_detail/:id', to: 'program_kegiatans#kak_detail'
   get '/program_kegiatans_to_kak_renaksi/:id', to: 'program_kegiatans#kak_renaksi'
   get '/program_kegiatans_to_kak_waktu/:id', to: 'program_kegiatans#kak_waktu'
-  get '/acuan_kerja_new/:id', to: 'program_kegiatans#new_kak_format'
+  get '/acuan_kerja_new/:id/:tahun', to: 'program_kegiatans#new_kak_format'
 
   # musrenbang
   get '/asn_musrenbangs/:nip', to: 'musrenbangs#asn_musrenbang'

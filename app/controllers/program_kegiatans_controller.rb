@@ -51,6 +51,7 @@ class ProgramKegiatansController < ApplicationController
 
   def new_kak_format
     @program_kegiatan = ProgramKegiatan.find(params[:id])
+    @tahun = params[:tahun] || Time.now.year
     render 'new_kak_format'
   end
 
