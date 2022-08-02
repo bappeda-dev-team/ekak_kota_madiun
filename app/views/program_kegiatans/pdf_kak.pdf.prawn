@@ -28,13 +28,13 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
     ['Target', ':', @program_kegiatan.target_subkegiatan.to_s],
     ['Satuan', ':', @program_kegiatan.satuan_target_subkegiatan.to_s],
     ['Jumlah Sasaran/Rencana Kinerja', ':', @program_kegiatan.sasarans.count],
-    ['Pagu Anggaran', ':', "Rp. #{number_with_delimiter(@program_kegiatan.my_pagu)}"]
+    ['Pagu Anggaran', ':', "Rp. #{number_with_delimiter(@program_kegiatan.sasarans.where(tahun: @tahun).sudah_lengkap.map(&:total_anggaran).compact.sum)}"]
   ]
   pdf.table(tabel_program_kegiatan, column_widths: { 0=> 150,1 => 12 }, cell_style: { size: 8, border_width: 0 }, width: pdf.bounds.width)
   # after tabel pertama
   pdf.move_down 30
   # loop sasaran
-  @program_kegiatan.sasarans.where.not(program_kegiatan: nil).each.with_index(1) do |sasaran, index|
+  @program_kegiatan.sasarans.where(tahun: @tahun).where.not(program_kegiatan: nil).each.with_index(1) do |sasaran, index|
     dasar_hukum_arr = []
     permasalahan_arr = []
     indikator_arr = []
