@@ -133,6 +133,8 @@ class FilterController < ApplicationController
 
   def filter_rab
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
+    tahun = params[:tahun]
+    @tahun = tahun.match(/murni/) ? tahun[/[^_]\d*/, 0] : tahun
     @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd }).asn_aktif
     if OPD_TABLE.key?(opd.to_sym)
       @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).asn_aktif

@@ -3,7 +3,7 @@ class KaksController < ApplicationController
 
   # GET /kaks or /kaks.json
   def index
-    @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik }).group(:id)
+    @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik, tahun: 2022 }).group(:id)
   end
 
   # GET /kaks/1 or /kaks/1.json

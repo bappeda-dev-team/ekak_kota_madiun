@@ -78,7 +78,7 @@ class ProgramKegiatansController < ApplicationController
   end
 
   def laporan_rka
-    @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik }).where.not(sasarans: { id: nil, anggaran: nil }).group(:id)
+    @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik, tahun: 2022 }).where.not(sasarans: { id: nil, anggaran: nil }).group(:id)
   end
 
   def pdf_rka
