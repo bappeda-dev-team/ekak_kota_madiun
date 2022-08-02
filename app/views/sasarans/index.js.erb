@@ -1,3 +1,4 @@
 $('#notice').html("<%= j render 'shared/flash', flash: flash %>");
-$("#tempat-row-sasaran").replaceWith("<%= j render 'sasarans/row_sasaran', sasarans: @sasarans, user: @user %>")
+$("<%= @filter_target %>").replaceWith("<%= j render @filter_file, sasarans: @sasarans, user: @user, program_kegiatan: @program_kegiatans %>")
+
 $("#tahun_sasaran").html("<%= @tahun_sasaran %>")

@@ -19,6 +19,9 @@
           <div class="col">
             <h2 class="fs-5 fw-bold mb-0">Laporan KaK</h2>
           </div>
+          <div class="col">
+            <%= render 'shared/filter_tahun_sasaran', filter_file: 'kaks/laporan_kak_row', filter_target: '#tempat-row-laporan-kak', filter_type: 'kak' %>
+          </div>
           <div class="col text-end">
             <span><%= current_user.nama %></span>
             |
@@ -28,7 +31,7 @@
       </div>
       <% unless current_user.has_role? :admin %>
         <div class="card-body">
-          <div class="table-responsive">
+          <div class="table-responsive" id="tempat-row-laporan-kak">
             <table class="table align-items-center border-start border-end">
               <thead class="thead-light">
                 <tr>
