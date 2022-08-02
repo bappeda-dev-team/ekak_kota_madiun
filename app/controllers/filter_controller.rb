@@ -103,8 +103,8 @@ class FilterController < ApplicationController
 
   def filter_kak
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
-    @tahun = params[:tahun]
-    @tahun_sasaran = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    tahun = params[:tahun]
+    @tahun = tahun.match(/murni/) ? tahun[/[^_]\d*/, 0] : tahun
     @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd }).asn_aktif
     if OPD_TABLE.key?(opd.to_sym)
       @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).asn_aktif
@@ -118,9 +118,11 @@ class FilterController < ApplicationController
 
   def filter_kak_dashboard
     opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: opd.kode_opd }).with_sasarans
+    tahun = params[:tahun]
+    @tahun = tahun.match(/murni/) ? tahun[/[^_]\d*/, 0] : tahun
+    @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: opd.kode_opd }).with_sasarans(@tahun)
     if OPD_TABLE.key?(opd.nama_opd.to_sym)
-      @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[opd.nama_opd.to_sym] }).with_sasarans
+      @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[opd.nama_opd.to_sym] }).with_sasarans(@tahun)
       @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[opd.nama_opd.to_sym]) # idk about bidang thing
     end
     @filter_file = 'hasil_filter_dashboard'
@@ -258,9 +260,9 @@ class FilterController < ApplicationController
 
   def daftar_resiko
     opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: opd.kode_opd }).with_sasarans
+    @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: opd.kode_opd }).with_sasarans(@tahun_sasaran)
     if OPD_TABLE.key?(opd.nama_opd.to_sym)
-      @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[opd.nama_opd.to_sym] }).with_sasarans
+      @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[opd.nama_opd.to_sym] }).with_sasarans(@tahun_sasaran)
       @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[opd.nama_opd.to_sym]) # idk about bidang thing
     end
     @id_target = 'daftar_resiko'

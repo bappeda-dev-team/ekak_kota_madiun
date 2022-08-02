@@ -14,22 +14,22 @@
       <%= render 'shared/filter_with_tahun_card', filter_url: '/filter_kak' %>
     <% end %>
     <div class="card border-0 shadow" id="user_filter">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Laporan KaK</h2>
-          </div>
-          <div class="col">
-            <%= render 'shared/filter_tahun_sasaran', filter_file: 'kaks/laporan_kak_row', filter_target: '#tempat-row-laporan-kak', filter_type: 'kak' %>
-          </div>
-          <div class="col text-end">
-            <span><%= current_user.nama %></span>
-            |
-            <span><%= current_user.nik %></span>
+      <% unless current_user.has_role? :admin %>
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2 class="fs-5 fw-bold mb-0">Laporan KaK</h2>
+            </div>
+            <div class="col">
+              <%= render 'shared/filter_tahun_sasaran', filter_file: 'kaks/laporan_kak_row', filter_target: '#tempat-row-laporan-kak', filter_type: 'kak' %>
+            </div>
+            <div class="col text-end">
+              <span><%= current_user.nama %></span>
+              |
+              <span><%= current_user.nik %></span>
+            </div>
           </div>
         </div>
-      </div>
-      <% unless current_user.has_role? :admin %>
         <div class="card-body" id="tempat-row-laporan-kak">
           <div class="table-responsive">
             <table class="table align-items-center border-start border-end">
@@ -136,7 +136,7 @@
             </div>
           <% end %>
         </div>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 </div>
