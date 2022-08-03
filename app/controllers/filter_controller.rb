@@ -119,19 +119,31 @@ class FilterController < ApplicationController
   end
 
   def filter_kak_dashboard
-    # opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    # tahun = params[:tahun]
-    kak = KakServices.new(kode_unik_opd: @kode_opd)
-    @tahun = params[:tahun].match(/murni/) ? params[:tahun][/[^_]\d*/, 0] : params[:tahun]
-    @program_kegiatans = kak.sasaran_kak_tanpa_cloning
-    @total_pagu = kak.total_pagu(@program_kegiatans)
-    # if OPD_TABLE.key?(opd.nama_opd.to_sym)
-    #   @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[opd.nama_opd.to_sym] })
-    #   @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[opd.nama_opd.to_sym]) # idk about bidang thing
-    # end
     @filter_file = "hasil_filter_dashboard"
     respond_to do |format|
-      format.js { render "kaks/kak_filter_dashboard" }
+      kak = KakServices.new(kode_unik_opd: @kode_opd)
+      if params[:tahun].match(/murni/)
+        @tahun = params[:tahun][/[^_]\d*/, 0]
+        @program_kegiatans = kak.sasaran_kak_tanpa_cloning
+        @total_pagu = kak.total_pagu(@program_kegiatans)
+      else
+        @tahun = params[:tahun]
+        @program_kegiatans = kak.sasaran_kak_dengan_cloning(tahun: @tahun)
+        @total_pagu = kak.total_pagu(@program_kegiatans)
+      end
+      # if OPD_TABLE.key?(opd.nama_opd.to_sym)
+      #   @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[opd.nama_opd.to_sym] })
+      #   @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[opd.nama_opd.to_sym]) # idk about bidang thing
+      # end
+
+      if @total_pagu && @program_kegiatans
+        format.js { render "kaks/kak_filter_dashboard" }
+      else
+        format.js do
+          render 'shared/_notifier',
+                 locals: { message: 'Terjadi Keslahan' }
+        end
+      end
     end
   end
 
