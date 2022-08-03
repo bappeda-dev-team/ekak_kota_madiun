@@ -119,18 +119,16 @@ class FilterController < ApplicationController
   end
 
   def filter_kak_dashboard
-    opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    tahun = params[:tahun]
-    @tahun = tahun.match(/murni/) ? tahun[/[^_]\d*/, 0] : tahun
-    @program_kegiatans = if @tahun == '2023'
-                           ProgramKegiatan.joins(:opd).where(opds: { kode_opd: opd.kode_opd }).with_sasarans
-                         else
-                           ProgramKegiatan.joins(:opd).where(opds: { kode_opd: opd.kode_opd }).with_sasarans_tahun(@tahun)
-                         end
-    if OPD_TABLE.key?(opd.nama_opd.to_sym)
-      @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[opd.nama_opd.to_sym] }).with_sasarans_tahun(@tahun)
-      @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[opd.nama_opd.to_sym]) # idk about bidang thing
-    end
+    # opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    # tahun = params[:tahun]
+    kak = KakServices.new(kode_unik_opd: @kode_opd)
+    @tahun = params[:tahun].match(/murni/) ? params[:tahun][/[^_]\d*/, 0] : params[:tahun]
+    @program_kegiatans = kak.sasaran_kak_tanpa_cloning
+    @total_pagu = kak.total_pagu(@program_kegiatans)
+    # if OPD_TABLE.key?(opd.nama_opd.to_sym)
+    #   @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[opd.nama_opd.to_sym] })
+    #   @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[opd.nama_opd.to_sym]) # idk about bidang thing
+    # end
     @filter_file = "hasil_filter_dashboard"
     respond_to do |format|
       format.js { render "kaks/kak_filter_dashboard" }
