@@ -5,7 +5,7 @@ require "sidekiq/web"
 require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
-Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
+Rails.application.routes.draw do
   resources :anggaran_hspks
   resources :anggaran_sbus
   resources :anggaran_sshes
@@ -47,8 +47,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   end
   resources :asn_musrenbangs, path: "asn_usulan"
   devise_for :users, controllers: {
-            registrations: "users/registrations",
-          }
+    registrations: "users/registrations"
+  }
   root to: "home#dashboard"
   resources :users do
     resources :sasarans, path: "sasaran_kerja"
@@ -206,6 +206,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get "/laporan_kak", to: "kaks#laporan_kak"
   get "/pdf_kak/:id/:tahun", to: "program_kegiatans#pdf_kak"
   get "/cetak_daftar_kak/:opd/:tahun", to: "program_kegiatans#cetak_daftar_kak"
+  # daftar resiko
+  get '/cetak_daftar_resiko/:opd/:tahun', to: 'sasaran_program_opds#cetak_daftar_resiko'
   # laporan rka
   get "/laporan_rka", to: "program_kegiatans#laporan_rka"
   get "/pdf_rka/:id/:tahun", to: "program_kegiatans#pdf_rka"

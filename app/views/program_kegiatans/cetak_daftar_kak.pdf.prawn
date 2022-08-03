@@ -1,4 +1,4 @@
-prawn_document(filename: @filename, disposition: "attachment", page_layout: :landscape,
+prawn_document(filename: @filename, disposition: "inline", page_layout: :landscape,
                page_size: [612.0, 1008.0]) do |pdf|
   size_cell = 8
   width_sub_ket = 20
@@ -18,7 +18,7 @@ prawn_document(filename: @filename, disposition: "attachment", page_layout: :lan
 
   pdf.text "DAFTAR SASARAN KINERJA PER SUB KEGIATAN", align: :center
   pdf.move_down 3
-  pdf.text "RENCANA KERJA  BADAN PERENCANAAN, PENELITIAN DAN PENGEMBANGAN DAERAH KOTA MADIUN", align: :center
+  pdf.text "RENCANA KERJA #{@opd.nama_opd.upcase} #{@opd.lembaga.nama_lembaga.upcase}", align: :center
   pdf.move_down 3
   pdf.text "TAHUN #{@tahun}", align: :center
   # pdf.text "#{@nama_opd.upcase}", align: :center
@@ -63,7 +63,9 @@ prawn_document(filename: @filename, disposition: "attachment", page_layout: :lan
                                                              pr.sasarans.sudah_lengkap.map do |s|
                                                                s.total_anggaran
                                                              end.compact.sum
-                                                           end.compact.sum)}"]
+                                                           end.compact.sum)}",
+                              { content: '', colspan: 2 }]
   header_tabel_subkegiatan << footer_tabel_subkegiatan
-  pdf.table(header_tabel_subkegiatan, cell_style: { size: size_cell }, width: pdf.bounds.width, header: true)
+  pdf.table(header_tabel_subkegiatan, cell_style: { size: size_cell }, width: pdf.bounds.width,
+                                      header: true)
 end

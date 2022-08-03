@@ -11,7 +11,7 @@ class FilterController < ApplicationController
     'Bagian Organisasi': "Bagian Organisasi",
     'Bagian Hukum': "Bagian Hukum",
     'Bagian Perekonomian dan Kesejahteraan Rakyat': "Bagian Perekonomian dan Kesejahteraan Rakyat",
-    'Bagian Pemerintahan': "Bagian Pemerintahan",
+    'Bagian Pemerintahan': "Bagian Pemerintahan"
   }.freeze
 
   KODE_OPD_TABLE = {
@@ -23,7 +23,7 @@ class FilterController < ApplicationController
     'Bagian Organisasi': "4.01.0.00.0.00.01.00",
     'Bagian Hukum': "4.01.0.00.0.00.01.00",
     'Bagian Perekonomian dan Kesejahteraan Rakyat': "4.01.0.00.0.00.01.00",
-    'Bagian Pemerintahan': "4.01.0.00.0.00.01.00",
+    'Bagian Pemerintahan': "4.01.0.00.0.00.01.00"
   }.freeze
 
   KODE_OPD_BAGIAN = {
@@ -35,7 +35,7 @@ class FilterController < ApplicationController
     'Bagian Organisasi': "4398",
     'Bagian Hukum': "4399",
     'Bagian Perekonomian dan Kesejahteraan Rakyat': "4401",
-    'Bagian Pemerintahan': "4397",
+    'Bagian Pemerintahan': "4397"
   }.freeze
 
   def filter_sasaran
@@ -238,9 +238,7 @@ class FilterController < ApplicationController
   def filter_struktur
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
     @strukturs = Opd.find_by(kode_unik_opd: @kode_opd).kepala
-    if OPD_TABLE.key?(opd.to_sym)
-      @strukturs = Opd.find_by(kode_unik_opd: KODE_OPD_TABLE[opd.to_sym]).kepala
-    end
+    @strukturs = Opd.find_by(kode_unik_opd: KODE_OPD_TABLE[opd.to_sym]).kepala if OPD_TABLE.key?(opd.to_sym)
     # @filter_file = params[:filter_file]
     @filter_file = "hasil_filter_struktur"
     respond_to do |format|
@@ -263,11 +261,14 @@ class FilterController < ApplicationController
   end
 
   def daftar_resiko
-    opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: opd.kode_opd }).with_sasarans(@tahun_sasaran)
-    if OPD_TABLE.key?(opd.nama_opd.to_sym)
-      @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[opd.nama_opd.to_sym] }).with_sasarans(@tahun_sasaran)
-      @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[opd.nama_opd.to_sym]) # idk about bidang thing
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    tahun = params[:tahun]
+    @tahun_sasaran = tahun.match(/murni/) ? tahun[/[^_]\d*/, 0] : tahun
+    @tahun_murni = tahun
+    @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: @opd.kode_opd }).with_sasarans(@tahun_sasaran)
+    if OPD_TABLE.key?(@opd.nama_opd.to_sym)
+      @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[@opd.nama_opd.to_sym] }).with_sasarans(@tahun_sasaran)
+      @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[@opd.nama_opd.to_sym]) # idk about bidang thing
     end
     @id_target = "daftar_resiko"
     @filter_file = params[:filter_file].empty? ? "hasil_filter" : params[:filter_file]
