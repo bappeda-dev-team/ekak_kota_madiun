@@ -30,10 +30,19 @@
       </div>
     </div>
     <ul class="nav flex-column pt-3 pt-md-0">
-      <li class="nav-item">
-        <%= link_to(root_path, class: "nav-link d-flex align-items-center") do %>
-          <span class="mt-1 ms-1 sidebar-text">E-KAK</span>
-        <% end %>
+      <li class="nav-item mb-3">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <span class="mt-1 ms-1 sidebar-text">E-KAK</span>
+          </div>
+          <div class="w-75 p-3">
+            <%= form_with url: user_sasarans_path(current_user), method: :get, local: local_assigns[:tipe] == 'all' do |form| %>
+              <%= form.select :tahun_sasaran, [''], {include_blank: true},
+                    { id: "select2-global",
+                      data: { placeholder: "Tahun", 'ajax--url': kelompok_anggarans_path(:json) } } %>
+            <% end %>
+          </div>
+        </div>
       </li>
       <li class="nav-item <%= request.path == '/' ? "active" : "" %> ">
         <%= link_to(root_path, class: "nav-link") do %>
