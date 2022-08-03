@@ -64,7 +64,7 @@
     </div>
   </div>
   <div class="card-body">
-    <%= link_to "cetak_daftar_kak/#{@opd}/#{@tahun_murni}.pdf", class: 'btn btn-tertiary w-100', target: :_blank do %>
+    <%= link_to "/cetak_daftar_resiko/#{@opd.id}/#{@tahun_murni}.pdf", class: 'btn btn-tertiary w-100', target: :_blank do %>
       Cetak Daftar KaK Tahun <%= @tahun_murni %>
     <% end %>
   </div>
