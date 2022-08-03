@@ -13,4 +13,12 @@ class SasaranProgramOpdsController < ApplicationController
     @sasaran = Sasaran.find params[:sasaran_program_opd_id]
     @rincian = @sasaran.rincian
   end
+
+  def cetak_daftar_resiko
+    @tahun = params[:tahun] || Time.now.year
+    @opd = Opd.find(params[:opd])
+    @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @program_kegiatans = @opd.program_kegiatans.joins(:sasarans).where(sasarans: { tahun: @tahun }).group(:id)
+    @filename = "LAPORAN_DAFTAR_KAK_#{@opd.nama_opd}_TAHUN_#{@tahun}.pdf"
+  end
 end

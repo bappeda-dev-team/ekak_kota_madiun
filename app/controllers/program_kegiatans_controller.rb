@@ -10,28 +10,32 @@ class ProgramKegiatansController < ApplicationController
 
   def index
     # TODO: refactor untuk json query
-    param = params[:q] || ''
-    # FIXME REFACTOR TOO MUCH LOGIC
-    @programKegiatans = ProgramKegiatan.where('kode_opd ILIKE ?', "%#{current_user.kode_opd}%")
-                                       .where('nama_subkegiatan ILIKE ?', "%#{param}%")
+    param = params[:q] || ""
+    # FIXME: REFACTOR TOO MUCH LOGIC
+    @programKegiatans = ProgramKegiatan.where("kode_opd ILIKE ?", "%#{current_user.kode_opd}%")
+                                       .where("nama_subkegiatan ILIKE ?", "%#{param}%")
     if current_user.pegawai_kelurahan?
-      @programKegiatans = @programKegiatans.select { |program| program.nama_opd_pemilik.upcase.split(/KELURAHAN/, 2).last.strip == current_user.petunjuk_kelurahan }
+      @programKegiatans = @programKegiatans.select do |program|
+        program.nama_opd_pemilik.upcase.split(/KELURAHAN/, 2).last.strip == current_user.petunjuk_kelurahan
+      end
     elsif current_user.pegawai_bagian?
-      @programKegiatans = @programKegiatans.select { |program| program.nama_opd_pemilik.upcase.split(/BAGIAN/, 2).last.strip == current_user.petunjuk_bagian }
+      @programKegiatans = @programKegiatans.select do |program|
+        program.nama_opd_pemilik.upcase.split(/BAGIAN/, 2).last.strip == current_user.petunjuk_bagian
+      end
     end
   end
 
   def admin_program_kegiatan
-    @filter_url = 'filter_program'
+    @filter_url = "filter_program"
   end
 
   def admin_program
-    @filter_url = 'filter_program_saja'
+    @filter_url = "filter_program_saja"
     render :admin_program_kegiatan
   end
 
   def admin_kegiatan
-    @filter_url = 'filter_kegiatan'
+    @filter_url = "filter_kegiatan"
     render :admin_program_kegiatan
   end
 
@@ -52,7 +56,7 @@ class ProgramKegiatansController < ApplicationController
   def new_kak_format
     @program_kegiatan = ProgramKegiatan.find(params[:id])
     @tahun = params[:tahun] || Time.now.year
-    render 'new_kak_format'
+    render "new_kak_format"
   end
 
   def pdf_kak
@@ -78,7 +82,10 @@ class ProgramKegiatansController < ApplicationController
   end
 
   def laporan_rka
-    @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik, tahun: 2022 }).where.not(sasarans: { id: nil, anggaran: nil }).group(:id)
+    @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik,
+                                                                            tahun: 2022 }).where.not(sasarans: {
+                                                                                                       id: nil, anggaran: nil
+                                                                                                     }).group(:id)
   end
 
   def pdf_rka
@@ -86,6 +93,14 @@ class ProgramKegiatansController < ApplicationController
     @tahun = params[:tahun] || Time.now.year
     @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
     @filename = "Laporan_RAB_#{@nama_file}_#{@waktu}.pdf"
+  end
+
+  def cetak_daftar_kak
+    @tahun = params[:tahun] || Time.now.year
+    @opd = Opd.find(params[:opd])
+    @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @program_kegiatans = @opd.program_kegiatans.joins(:sasarans).where(sasarans: { tahun: @tahun }).group(:id)
+    @filename = "LAPORAN_DAFTAR_KAK_#{@opd.nama_opd}_TAHUN_#{@tahun}.pdf"
   end
 
   def edit; end
@@ -108,7 +123,11 @@ class ProgramKegiatansController < ApplicationController
       id_sub = params[:program_kegiatan][:id_subgiat]
       ProgramKegiatan.where(id_sub_giat: id_sub).update_all(programKegiatan_params.to_h.except(:row_num, :id_subgiat))
       set_program_kegiatan
-      format.js { render '_notifikasi', locals: { message: 'Perubahan sub kegiatan disimpan', status_icon: 'success', form_name: 'form-programkegiatan', type: 'update' } }
+      format.js do
+        render "_notifikasi",
+               locals: { message: "Perubahan sub kegiatan disimpan", status_icon: "success", form_name: "form-programkegiatan",
+                         type: "update" }
+      end
     end
   end
 
@@ -118,7 +137,11 @@ class ProgramKegiatansController < ApplicationController
       id_giat = params[:program_kegiatan][:id_giat]
       ProgramKegiatan.where(id_giat: id_giat).update_all(programKegiatan_params.to_h.except(:row_num, :id_giat))
       set_program_kegiatan
-      format.js { render '_notifikasi_giat', locals: { message: 'Perubahan kegiatan disimpan', status_icon: 'success', form_name: 'form-programkegiatan', type: 'update' } }
+      format.js do
+        render "_notifikasi_giat",
+               locals: { message: "Perubahan kegiatan disimpan", status_icon: "success", form_name: "form-programkegiatan",
+                         type: "update" }
+      end
     end
   end
 
@@ -131,7 +154,11 @@ class ProgramKegiatansController < ApplicationController
                      .where(id_giat: id_giat)
                      .update_all(programKegiatan_params.to_h.except(:row_num, :id_program_sipd, :id_giat))
       set_program_kegiatan
-      format.js { render '_notifikasi_program', locals: { message: 'Perubahan program disimpan', status_icon: 'success', form_name: 'form-programkegiatan', type: 'update' } }
+      format.js do
+        render "_notifikasi_program",
+               locals: { message: "Perubahan program disimpan", status_icon: "success", form_name: "form-programkegiatan",
+                         type: "update" }
+      end
     end
   end
 
@@ -139,10 +166,14 @@ class ProgramKegiatansController < ApplicationController
     @programKegiatan = ProgramKegiatan.new(programKegiatan_params)
     respond_to do |format|
       if @programKegiatan.save
-        format.js { render '_notifikasi_update', locals: { message: 'Program Kegiatan berhasil dibuat', status_icon: 'success', form_name: 'form-programkegiatan', type: 'create' } }
-        format.html { redirect_to program_kegiatans_url, success: 'Program Kegiatan Dibuat' }
+        format.js do
+          render "_notifikasi_update",
+                 locals: { message: "Program Kegiatan berhasil dibuat", status_icon: "success", form_name: "form-programkegiatan",
+                           type: "create" }
+        end
+        format.html { redirect_to program_kegiatans_url, success: "Program Kegiatan Dibuat" }
       else
-        format.html { render :new, error: 'Gagal menyimpan Program Kegiatan' }
+        format.html { render :new, error: "Gagal menyimpan Program Kegiatan" }
       end
     end
   end
@@ -150,10 +181,14 @@ class ProgramKegiatansController < ApplicationController
   def update
     respond_to do |format|
       if @programKegiatan.update(programKegiatan_params)
-        format.js { render '_notifikasi_update', locals: { message: 'Program Kegiatan berhasil diupdate', status_icon: 'success', form_name: 'form-programkegiatan', type: 'update' } }
-        format.html { redirect_to program_kegiatans_url, success: 'Program Kegiatan diupdate' }
+        format.js do
+          render "_notifikasi_update",
+                 locals: { message: "Program Kegiatan berhasil diupdate", status_icon: "success", form_name: "form-programkegiatan",
+                           type: "update" }
+        end
+        format.html { redirect_to program_kegiatans_url, success: "Program Kegiatan diupdate" }
       else
-        format.html { render :edit, error: 'Program Kegiatan Gagal diupdate' }
+        format.html { render :edit, error: "Program Kegiatan Gagal diupdate" }
       end
     end
   end
@@ -161,7 +196,7 @@ class ProgramKegiatansController < ApplicationController
   def destroy
     @programKegiatan.destroy
     respond_to do |format|
-      format.html { redirect_to program_kegiatans_url, notice: 'Program dihapus' }
+      format.html { redirect_to program_kegiatans_url, notice: "Program dihapus" }
     end
   end
 
@@ -169,7 +204,7 @@ class ProgramKegiatansController < ApplicationController
     kode_opd = params[:kode_opd]
     ProgramKegiatan.where(id_sub_unit: kode_opd).destroy_all
     respond_to do |format|
-      format.html { redirect_to program_kegiatans_url, notice: 'Program dihapus' }
+      format.html { redirect_to program_kegiatans_url, notice: "Program dihapus" }
     end
   end
 

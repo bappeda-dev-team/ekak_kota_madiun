@@ -1,12 +1,12 @@
 prawn_document(filename: @filename, disposition: "attachment") do |pdf|
-  pdf.font_families.clear
-  pdf.font_families.update("TiroKannada" => {
-                                      normal: "vendor/assets/fonts/TiroKannada-Regular.ttf",
-                                      italic: "vendor/assets/fonts/TiroKannada-Italic.ttf",
-                                      bold: "vendor/assets/fonts/NotoSerif-Bold.ttf"
-                                      })
-  pdf.font "TiroKannada"
-  pdf.font_size 16
+  # pdf.font_families.clear
+  # pdf.font_families.update("TiroKannada" => {
+  #                                     normal: "vendor/assets/fonts/TiroKannada-Regular.ttf",
+  #                                     italic: "vendor/assets/fonts/TiroKannada-Italic.ttf",
+  #                                     bold: "vendor/assets/fonts/NotoSerif-Bold.ttf"
+  #                                     })
+  # pdf.font "TiroKannada"
+  # pdf.font_size 16
   judul_rka = pdf.make_table([["RINCIAN BELANJA"], [@programKegiatan.opd.nama_opd]], width: pdf.bounds.width)
   judul_rka.draw
   pdf.move_down 7
@@ -23,7 +23,8 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
               ['Sub Kegiatan', ':', { content: @programKegiatan.nama_subkegiatan, font_style: :bold }],
               ['Indikator', ':', @programKegiatan.indikator_subkegiatan],
               ['Target', ':', "#{@programKegiatan.target_subkegiatan} #{@programKegiatan.satuan}"],
-              ['Pagu Anggaran', ':', "Rp. #{number_with_delimiter(@programKegiatan.sasarans.where(tahun: @tahun).sudah_lengkap.map(&:total_anggaran).compact.sum)}"]
+              ['Pagu Anggaran', ':',
+               "Rp. #{number_with_delimiter(@programKegiatan.sasarans.where(tahun: @tahun).sudah_lengkap.map(&:total_anggaran).compact.sum)}"]
             ], cell_style: { borders: [] }, width: pdf.bounds.width)
   pdf.move_down 20
   pdf.text 'Sumber Dana', style: :bold, indent_paragraphs: 5
@@ -34,7 +35,8 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
                            { content: "Rp. #{number_with_delimiter(sasaran_sumber_dana.total_anggaran)}" },
                            sasaran_sumber_dana.sumber_dana]
   end
-  pdf.table(header_sumber_dana, cell_style: { size: 8, column_widths: { 0 => 10, 1 => 150, 2 => 50 } }, width: pdf.bounds.width, position: 5)
+  pdf.table(header_sumber_dana, cell_style: { size: 8, column_widths: { 0 => 10, 1 => 150, 2 => 50 } },
+                                width: pdf.bounds.width, position: 5)
   pdf.start_new_page
 
   # new page
@@ -48,8 +50,10 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
                 ["Sasaran/ Rencana Kinerja", ':', sasaran.sasaran_kinerja],
                 ['Indikator', ':', sasaran.indikator_kinerja],
                 ['Target', ':', "#{sasaran.target} #{sasaran.satuan}"],
-                ['Pagu Anggaran', ':', "Rp. #{number_with_delimiter(sasaran.total_anggaran)} | Sumber Dana : #{sasaran.sumber_dana}"],
-                ['Sub Kegiatan', ':', "#{sasaran.program_kegiatan.kode_sub_giat} #{sasaran.program_kegiatan.nama_subkegiatan}" || '-']
+                ['Pagu Anggaran', ':',
+                 "Rp. #{number_with_delimiter(sasaran.total_anggaran)} | Sumber Dana : #{sasaran.sumber_dana}"],
+                ['Sub Kegiatan', ':',
+                 "#{sasaran.program_kegiatan.kode_sub_giat} #{sasaran.program_kegiatan.nama_subkegiatan}" || '-']
               ], cell_style: { borders: [] })
     pdf.move_down 5
     # tahapan
@@ -76,7 +80,7 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
           end
         end
       else
-        header_anggaran << ['-', '-', '-', '-', '-', '-',  { content: "0", align: :right }]
+        header_anggaran << ['-', '-', '-', '-', '-', '-', { content: "0", align: :right }]
       end
       pdf.table(header_anggaran, cell_style: { size: 6 }, width: pdf.bounds.width)
       pdf.move_down 5

@@ -1,12 +1,12 @@
 prawn_document(filename: @filename, page_layout: :landscape, disposition: "attachment") do |pdf|
   # pdf.font_families.clear
-  pdf.font_families.update("DejaVuSans" =>
-    {
-      normal: "vendor/assets/fonts/DejaVuSans.ttf",
-      italic: "vendor/assets/fonts/DejaVuSans.ttf",
-      bold: "vendor/assets/fonts/DejaVuSans-Bold.ttf"
-    })
-  pdf.font "DejaVuSans"
+  # pdf.font_families.update("DejaVuSans" =>
+  #   {
+  #     normal: "vendor/assets/fonts/DejaVuSans.ttf",
+  #     italic: "vendor/assets/fonts/DejaVuSans.ttf",
+  #     bold: "vendor/assets/fonts/DejaVuSans-Bold.ttf"
+  #   })
+  # pdf.font "DejaVuSans"
   size_cell = 8
   height_nested = 80
   pdf.text "DAFTAR TEMATIK #{@nama_file}", align: :center

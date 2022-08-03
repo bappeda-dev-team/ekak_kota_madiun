@@ -1,12 +1,13 @@
 # TODO: Fix the undrawn overflow height issue
-prawn_document(filename: @filename, page_layout: :landscape, disposition: "attachment", page_size: [1247.2, 993.7]) do |pdf|
-  pdf.font_families.update("DejaVuSans" =>
-    {
-      normal: "vendor/assets/fonts/DejaVuSans.ttf",
-      italic: "vendor/assets/fonts/DejaVuSans.ttf",
-      bold: "vendor/assets/fonts/DejaVuSans-Bold.ttf"
-    })
-  pdf.font "DejaVuSans"
+prawn_document(filename: @filename, page_layout: :landscape, disposition: "attachment",
+               page_size: [1247.2, 993.7]) do |pdf|
+  # pdf.font_families.update("DejaVuSans" =>
+  #   {
+  #     normal: "vendor/assets/fonts/DejaVuSans.ttf",
+  #     italic: "vendor/assets/fonts/DejaVuSans.ttf",
+  #     bold: "vendor/assets/fonts/DejaVuSans-Bold.ttf"
+  #   })
+  # pdf.font "DejaVuSans"
   size_cell = 8
   height_nested = 100
   height_row = 50
