@@ -29,7 +29,7 @@ class KakServices
   end
 
   def total_pagu(kak_sasaran_collection)
-    kak_sasaran_collection.each_value.map { |item| item.sum(&:total_anggaran) }.compact.sum
+    kak_sasaran_collection.each_value.map { |item| item.sum(&:total_anggaran) }.sum
   rescue NoMethodError
     false
   end
