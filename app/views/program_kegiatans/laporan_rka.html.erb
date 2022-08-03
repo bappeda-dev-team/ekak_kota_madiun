@@ -27,7 +27,7 @@
             </div>
           </div>
         </div>
-        <%= render 'laporan_rka_row', program_kegiatans: @program_kegiatans, tahun: 2022 %>
+        <%= render 'laporan_rka_row', program_kegiatans: @program_kegiatans, tahun: cookies[:tahun_sasaran] %>
       <% end %>
     </div>
   </div>

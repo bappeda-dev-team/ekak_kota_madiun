@@ -37,7 +37,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <% @sasaran.order(:id).each.with_index(1) do |s, i| %>
+                  <% @sasarans.each.with_index(1) do |s, i| %>
                     <tr class="<%= warna_sasaran(s.status_sasaran) %>">
                       <td class="fw-bolder text-left" width="1em" rowspan="<%= s.indikator_sasarans.count + 1 %>"><%= i %></td>
                       <td class="fw-bolder text-left" style="white-space: initial !important;" rowspan="<%= s.indikator_sasarans.count + 1 %>">

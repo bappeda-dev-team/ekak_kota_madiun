@@ -122,9 +122,13 @@ class FilterController < ApplicationController
     opd = Opd.find_by(kode_unik_opd: @kode_opd)
     tahun = params[:tahun]
     @tahun = tahun.match(/murni/) ? tahun[/[^_]\d*/, 0] : tahun
-    @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: opd.kode_opd }).with_sasarans(@tahun)
+    @program_kegiatans = if @tahun == '2023'
+                           ProgramKegiatan.joins(:opd).where(opds: { kode_opd: opd.kode_opd }).with_sasarans
+                         else
+                           ProgramKegiatan.joins(:opd).where(opds: { kode_opd: opd.kode_opd }).with_sasarans_tahun(@tahun)
+                         end
     if OPD_TABLE.key?(opd.nama_opd.to_sym)
-      @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[opd.nama_opd.to_sym] }).with_sasarans(@tahun)
+      @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[opd.nama_opd.to_sym] }).with_sasarans_tahun(@tahun)
       @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[opd.nama_opd.to_sym]) # idk about bidang thing
     end
     @filter_file = "hasil_filter_dashboard"
@@ -277,10 +281,13 @@ class FilterController < ApplicationController
     end
   end
 
-  # def tahun_sasaran
-  #   target_tahun_sasaran = params[:tahun_sasaran]
-  #   # result = Sasaran.where(tahun: target_tahun_sasaran)
-  # end
+  def tahun_sasaran
+    @tahun_sasaran = params[:tahun_sasaran]
+    @tahun_sasaran = @tahun_sasaran.match(/murni/) ? @tahun_sasaran[/[^_]\d*/, 0] : @tahun_sasaran
+    cookies[:tahun_sasaran] = @tahun_sasaran
+    render 'shared/_notifier_v2',
+           locals: { message: "Tahun Dipilih: #{@tahun_sasaran}", status_icon: 'success', form_name: 'non-exists' }
+  end
 
   private
 

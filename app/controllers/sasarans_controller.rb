@@ -5,32 +5,29 @@ class SasaransController < ApplicationController
 
   # GET /sasarans or /sasarans.json
   def index
-    @sasarans = @user.sasarans
-    @tahun_sasaran = params[:tahun_sasaran]
-    if @tahun_sasaran.present?
-      @tahun_sasaran = @tahun_sasaran.match(/murni/) ? @tahun_sasaran[/[^_]\d*/, 0] : @tahun_sasaran
-      @filter_file = params[:filter_file].present? ? params[:filter_file] : 'sasarans/row_sasaran'
-      @filter_target = params[:filter_target].present? ? params[:filter_target] : '#tempat-row-sasaran'
-      @filter_type = params[:filter_type].present? ? params[:filter_type] : false
-      if @filter_type == 'kak'
-        laporan_kak(tahun: @tahun_sasaran)
-      else
-        @sasarans = @sasarans.where(tahun: @tahun_sasaran)
-      end
-    else
-      @sasarans
-    end
+    @tahun_sasaran = cookies[:tahun_sasaran] || '2023'
+    @sasarans = @user.sasarans.where(tahun: @tahun_sasaran).order(:id)
   end
 
   # GET /sasarans/1 or /sasarans/1.json
   def show; end
 
   def laporan_kak(tahun: 2022)
-    @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik, tahun: tahun }).group(:id)
-    @jumlah_sasaran = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik, tahun: tahun }).count(:sasarans)
-    @jumlah_subkegiatan = ProgramKegiatan.includes(:sasarans).where(sasarans: { nip_asn: current_user.nik, tahun: tahun }).count
-    @jumlah_usulan = ProgramKegiatan.includes(:sasarans).where(sasarans: { nip_asn: current_user.nik, tahun: tahun }).map { |program| program.sasarans.where(tahun: tahun).map{ |s| s.usulans.count }.reduce(:+) }.reduce(:+)
-    @total_pagu = @program_kegiatans.map { |program| program.sasarans.where(tahun: tahun).sudah_lengkap.map(&:total_anggaran).compact.sum }.sum
+    @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik,
+                                                                            tahun: tahun }).group(:id)
+    @jumlah_sasaran = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik,
+                                                                         tahun: tahun }).count(:sasarans)
+    @jumlah_subkegiatan = ProgramKegiatan.includes(:sasarans).where(sasarans: { nip_asn: current_user.nik,
+                                                                                tahun: tahun }).count
+    @jumlah_usulan = ProgramKegiatan.includes(:sasarans).where(sasarans: { nip_asn: current_user.nik,
+                                                                           tahun: tahun }).map do |program|
+      program.sasarans.where(tahun: tahun).map do |s|
+        s.usulans.count
+      end.reduce(:+)
+    end.reduce(:+)
+    @total_pagu = @program_kegiatans.map do |program|
+      program.sasarans.where(tahun: tahun).sudah_lengkap.map(&:total_anggaran).compact.sum
+    end.sum
     @sasarans = Sasaran.sudah_lengkap.where(nip_asn: current_user.nik).where(tahun: tahun)
   end
 
@@ -118,7 +115,8 @@ class SasaransController < ApplicationController
   def ajukan_verifikasi
     @sasaran = Sasaran.find(params[:id])
     @sasaran.update(status: 'pengajuan')
-    render 'shared/_notifier_v2', locals: { message: 'Sasaran berhasil diajukan', status_icon: 'success', form_name: 'non-exists' }
+    render 'shared/_notifier_v2',
+           locals: { message: 'Sasaran berhasil diajukan', status_icon: 'success', form_name: 'non-exists' }
   end
 
   def setujui_semua_sasaran
@@ -259,6 +257,7 @@ class SasaransController < ApplicationController
   def clone_form
     @sasaran = Sasaran.find(params[:id])
   end
+
   # GET /sasarans/new
   def new
     @sasaran = @user.sasarans.build

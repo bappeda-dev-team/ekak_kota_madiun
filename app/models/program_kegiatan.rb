@@ -61,7 +61,8 @@ class ProgramKegiatan < ApplicationRecord
   has_many :rincians, through: :sasarans
   has_many :permasalahans, through: :sasarans
 
-  scope :with_sasarans, -> (tahun) { where(id: Sasaran.where(tahun: tahun).pluck(:program_kegiatan_id)) }
+  scope :with_sasarans, -> { where(id: Sasaran.pluck(:program_kegiatan_id)) }
+  scope :with_sasarans_tahun, ->(tahun) { where(id: Sasaran.where(tahun: tahun).pluck(:program_kegiatan_id)) }
 
   # default_scope { order(created_at: :desc) }
 

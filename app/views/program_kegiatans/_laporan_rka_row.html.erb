@@ -22,7 +22,7 @@
         <% @program_kegiatans.each.with_index(1) do |kak, i| %>
           <% row_pk = kak.sasarans.where(tahun: tahun).count + 1 %>
           <tr>
-            <td class="text-gray-900 fw-bolder border-start border-end" scope="row" rowspan="<%= row_pk %>"><%= i %></td>
+            <td class="text-gray-900 fw-bolder border-start border-end" scope="row" width="50px" rowspan="<%= row_pk %>"><%= i %></td>
             <td class="text-gray-900 text-wrap" scope="row" rowspan="<%= row_pk %>" width="200px"><%= kak.nama_subkegiatan %></td>
             <td class="text-gray-900 text-wrap" scope="row" rowspan="<%= row_pk %>" width="200px">Rp. <%= number_with_delimiter(kak.sasarans.where(tahun: tahun).map(&:total_anggaran).compact.sum) or 0 %></td>
             <td class="p-0 m-0" colspan="4" style="height: 0px !important; border-color: transparent;"></td>
