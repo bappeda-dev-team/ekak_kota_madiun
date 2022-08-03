@@ -17,7 +17,7 @@ prawn_document(filename: @filename, disposition: "attachment", page_layout: :lan
   total_width_sas_array = width_sub_sas + width_sas_array + width_ind_sas_array + width_target_ind_sas_array + width_satuan_ind_sas_array + width_pagu_sas_array
 
   rowspan = @program_kegiatans.map { |up| up.sasarans.where(tahun: @tahun).size }.compact
-  pdf.text "DAFTAR SASARAN KINERJA PER SUB KEGIATAN", align: :center
+  pdf.text "DAFTAR RESIKO RENCANa KINERJA", align: :center
   pdf.move_down 3
   pdf.text "RENCANA KERJA  BADAN PERENCANAAN, PENELITIAN DAN PENGEMBANGAN DAERAH KOTA MADIUN", align: :center
   pdf.move_down 3
@@ -27,8 +27,6 @@ prawn_document(filename: @filename, disposition: "attachment", page_layout: :lan
   pdf.move_down 20
   header_tabel_subkegiatan = [
     [{ content: "No", align: :center }, { content: "SUB KEGIATAN", align: :center },
-     { content: "INDIKATOR", align: :center }, { content: "TARGET", align: :center }, { content: "SATUAN", align: :center },
-     { content: "PAGU ANGGARAN", align: :center },
      { content: "SASARAN KINERJA", align: :center },
      { content: "KETERANGAN", align: :center }]
   ]
