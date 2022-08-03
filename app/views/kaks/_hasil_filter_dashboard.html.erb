@@ -37,12 +37,12 @@
             <% row_atas = jumlah_sasaran + jumlah_indikator %>
             <% row_atas = row_atas.zero? ? 1 : row_atas %>
             <tr class="border-bottom">
-              <td class="text-gray-900 align-items-top fw-bolder border-bottom" rowspan="<%= jumlah_sasaran %>" scope="rowgroup"><%= i %></td>
-              <td class="text-gray-900 align-items-top text-wrap" rowspan="<%= jumlah_sasaran %>"><%= program_kegiatan.nama_subkegiatan %></td>
-              <td class="text-gray-900 align-items-top text-wrap" rowspan="<%= jumlah_sasaran %>"><%= program_kegiatan.indikator_subkegiatan %></td>
-              <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
-              <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
-              <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
+              <td class="text-gray-900 border-start border-end align-items-top fw-bolder border-bottom" rowspan="<%= jumlah_sasaran %>" scope="rowgroup"><%= i %></td>
+              <td class="text-gray-900 border-start border-end align-items-top text-wrap" rowspan="<%= jumlah_sasaran %>"><%= program_kegiatan.nama_subkegiatan %></td>
+              <td class="text-gray-900 border-start border-end align-items-top text-wrap" rowspan="<%= jumlah_sasaran %>"><%= program_kegiatan.indikator_subkegiatan %></td>
+              <td class="p-0 m-0 border-start border-end" style="height: 0px !important;"></td>
+              <td class="p-0 m-0 border-start border-end" style="height: 0px !important;"></td>
+              <td class="p-0 m-0 border-start border-end" style="height: 0px !important;"></td>
               <td class="fw-bolder text-gray-500 text-center" style="vertical-align: middle;" rowspan="<%= jumlah_sasaran %>">
                 <%= link_to "/acuan_kerja_new/#{program_kegiatan.id}/#{@tahun}",
                       target: "_blank", rel: "nofollow",
