@@ -145,10 +145,6 @@ class FilterController < ApplicationController
   end
 
   def filter_rab
-    # if OPD_TABLE.key?(opd.to_sym)
-    #   @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).asn_aktif
-    #   @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])
-    # end
     kak = KakServices.new(kode_unik_opd: @kode_opd)
     if params[:tahun].match(/murni/)
       @tahun = params[:tahun][/[^_]\d*/, 0]

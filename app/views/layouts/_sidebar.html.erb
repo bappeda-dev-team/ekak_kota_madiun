@@ -29,13 +29,13 @@
         </a>
       </div>
     </div>
-    <ul class="nav flex-column pt-3 pt-md-0">
-      <li class="nav-item mb-3">
-        <div class="d-flex align-items-center justify-content-between">
+    <ul class="nav flex-column pt-2 pt-md-0">
+      <li class="nav-item">
+        <%= link_to(root_path, class: "nav-link") do %>
           <span class="mt-1 ms-1 sidebar-text">E-KAK</span>
-        </div>
+        <% end %>
       </li>
-      <li class="nav-item mb-3 px-2">
+      <li class="nav-item p-1 my-2">
         <%= form_with url: filter_tahun_sasaran_path, method: :get, local: false do |form| %>
           <div class="row">
             <div class="col">
@@ -48,7 +48,7 @@
               <% end %>
             </div>
             <div class="col-auto">
-              <input type="submit" value="Pilih" class="btn btn-secondary">
+              <input type="submit" value="P" class="btn btn-secondary">
             </div>
           </div>
         <% end %>

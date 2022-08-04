@@ -19,12 +19,11 @@
             <th class="border-bottom border-start border-end" scope="col" rowspan="2">No.</th>
             <th class="border-bottom text-center border-start border-end" scope="col" rowspan="2">Sub Kegiatan</th>
             <th class="border-bottom text-center border-start border-end" scope="col" rowspan="2">Indikator</th>
-            <th class="border-bottom text-center border-start border-end" scope="col" colspan="3">Informasi</th>
+            <th class="border-bottom text-center border-start border-end" scope="col" colspan="2">Informasi</th>
             <th class="border-bottom text-center" scope="col" rowspan="2">Aksi</th>
           </tr>
           <tr>
             <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
-            <th class="border-bottom text-center border-start border-end">Tahun</th>
             <th class="border-bottom text-center border-start border-end">Pagu Anggaran</th>
           </tr>
         </thead>
@@ -36,7 +35,7 @@
               <td class="<%= td_class %>" scope="rowgroup" rowspan="<%= rowspan %>" width="50px"><%= nomor %></td>
               <td class="<%= td_class %>" rowspan="<%= rowspan %>"><%= program_kegiatan.nama_subkegiatan %></td>
               <td class="<%= td_class %>" rowspan="<%= rowspan %>"><%= program_kegiatan.indikator_subkegiatan %></td>
-              <td class="p-0 m-0 border-start border-end" style="height: 0px !important;" colspan="3"></td>
+              <td class="p-0 m-0 border-start border-end" style="height: 0px !important;" colspan="2"></td>
               <td class="fw-bolder text-gray-500 text-center" style="vertical-align: middle;" rowspan="<%= rowspan %>">
                 <%= link_to "/acuan_kerja_new/#{program_kegiatan.id}/#{@tahun}",
                       target: "_blank", rel: "nofollow",
@@ -55,9 +54,6 @@
                     <%= show_sasaran.sasaran_kinerja %>
                   </td>
                   <td class="border-start align-items-top border-end border-bottom text-center">
-                    <%= show_sasaran.tahun %>
-                  </td>
-                  <td class="border-start align-items-top border-end border-bottom text-center">
                     Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar) or 0 %>
                   </td>
                 </tr>
@@ -66,7 +62,7 @@
           <% end %>
         </tbody>
         <tfoot>
-          <td colspan="5" class="text-align-left">Total Pagu</td>
+          <td colspan="4" class="text-align-left">Total Pagu</td>
           <%# program kegiatan menghitung semua, yang merah juga ikut kehitung %>
           <td class="border">Rp. <%= number_with_delimiter(@total_pagu) %></td>
           <td colspan="1"></td>
