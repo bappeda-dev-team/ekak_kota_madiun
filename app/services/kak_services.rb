@@ -45,7 +45,7 @@ class KakServices
   end
 
   def pk_user_sasaran_tanpa_cloning
-    opd.users.asn_aktif.filter_map { |ss| ss.sasarans.dengan_sub_kegiatan.reject { |s| s.tahun&.match?(/(_)/) } }
+    opd.users.asn_aktif.filter_map { |ss| ss.sasarans.reject { |s| s.tahun&.match?(/(_)/) } }
   end
 
   def pk_user_sasaran_dengan_cloning(tahun: nil)
