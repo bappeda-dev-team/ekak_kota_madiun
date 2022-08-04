@@ -16,6 +16,14 @@ class KakServices
     pk_sasaran_dengan_cloning(tahun: tahun).flatten.group_by(&:program_kegiatan)
   end
 
+  def kak_user_program_kegiatan_sasaran_tanpa_kloning
+    sasaran_kak_by_user_tanpa_cloning.transform_values { |value| value.group_by(&:program_kegiatan) }
+  end
+
+  def sasaran_kak_by_user_tanpa_cloning
+    pk_user_sasaran_tanpa_cloning.flatten.group_by(&:user)
+  end
+
   def program_kegiatans_by_opd
     opd.program_kegiatans
   end
@@ -26,6 +34,10 @@ class KakServices
 
   def pk_sasaran_dengan_cloning(tahun: nil)
     program_kegiatans_by_opd.filter_map { |pk| pk.sasarans.select { |s| s.tahun == tahun } }.compact_blank!
+  end
+
+  def pk_user_sasaran_tanpa_cloning
+    opd.users.asn_aktif.filter_map { |ss| ss.sasarans.dengan_sub_kegiatan.reject { |s| s.tahun&.match?(/(_)/) } }
   end
 
   def total_pagu(kak_sasaran_collection)

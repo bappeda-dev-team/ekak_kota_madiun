@@ -105,7 +105,7 @@ class FilterController < ApplicationController
     kak = KakServices.new(kode_unik_opd: @kode_opd)
     if params[:tahun].match(/murni/)
       @tahun = params[:tahun][/[^_]\d*/, 0]
-      @program_kegiatans = kak.sasaran_kak_tanpa_cloning
+      @program_kegiatans = kak.kak_user_program_kegiatan_sasaran_tanpa_kloning
       @total_pagu = kak.total_pagu(@program_kegiatans)
     else
       @tahun = params[:tahun]
@@ -116,6 +116,7 @@ class FilterController < ApplicationController
     #   @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).asn_aktif
     #   @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])
     # end
+    console
     @filter_file = "hasil_filter" if params[:filter_file].empty?
     render "kaks/kak_filter"
   end

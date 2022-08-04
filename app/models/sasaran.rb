@@ -44,7 +44,8 @@ class Sasaran < ApplicationRecord
   # belongs_to :sumber_dana, foreign_key: 'sumber_dana', primary_key: 'kode_sumber_dana', optional: true
 
   has_many :usulans, dependent: :destroy
-  has_many :dasar_hukums, foreign_key: 'sasaran_id', primary_key: 'id_rencana', class_name: 'DasarHukum', dependent: :destroy
+  has_many :dasar_hukums, foreign_key: 'sasaran_id', primary_key: 'id_rencana', class_name: 'DasarHukum',
+                          dependent: :destroy
   # has_many :musrenbangs
   # has_many :pokpirs
   # has_many :mandatoris
@@ -69,7 +70,9 @@ class Sasaran < ApplicationRecord
   # default_scope { order(created_at: :asc) }
   scope :hangus, -> { left_outer_joins(:usulans).where(usulans: { sasaran_id: nil }).where(program_kegiatan: nil) }
   scope :total_hangus, -> { hangus.count }
-  scope :belum_ada_sub, -> { left_outer_joins(:usulans).where.not(usulans: { sasaran_id: nil }).where(program_kegiatan: nil) }
+  scope :belum_ada_sub, lambda {
+                          left_outer_joins(:usulans).where.not(usulans: { sasaran_id: nil }).where(program_kegiatan: nil)
+                        }
   scope :total_belum_lengkap, -> { belum_ada_sub.count }
   scope :sudah_lengkap, lambda {
                           includes(:usulans).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan: nil)
@@ -84,6 +87,7 @@ class Sasaran < ApplicationRecord
   scope :kurang_lengkap, -> { select { |s| s.usulans.exists? && s.belum_ada_sub? }.size }
   scope :hijau, -> { select(&:lengkap?).size }
   scope :biru, -> { select(&:selesai?).reject(&:lengkap?).size }
+  scope :dengan_sub_kegiatan, -> { where.not(program_kegiatan_id: nil) }
 
   SUMBERS = { dana_transfer: 'Dana Transfer', dak: 'DAK', dbhcht: 'DBHCHT', bk_provinsi: 'BK Provinsi',
               blud: 'BLUD' }.freeze
@@ -227,16 +231,16 @@ class Sasaran < ApplicationRecord
     petunjuk_status.except(:usulan_dan_sub).values.any?(false)
   end
 
-# TODO: try this method to simplify in user
+  # TODO: try this method to simplify in user
   def status_sasaran
     if hangus?
       'hangus' # merah
     elsif belum_ada_sub?
       'blm_lengkap' # kuning
     elsif biru_helper
-      'krg_lengkap'# biru
+      'krg_lengkap' # biru
     elsif lengkap?
-      'digunakan' #hijau
+      'digunakan' # hijau
     end
   end
 

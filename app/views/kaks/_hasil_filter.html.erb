@@ -35,41 +35,41 @@
           </tr>
         </thead>
         <tbody>
-          <% @program_kegiatans.each.with_index(1) do |(program_kegiatan, sasaran_kinerja), nomor|  %>
-            <% rowspan = sasaran_kinerja.size + 1 %>
+          <% @program_kegiatans.each.with_index(1) do |(user, program_kegiatans), nomor|  %>
+            <% rowspan_atas = program_kegiatans.size + program_kegiatans.values.flatten.size %>
+            <% row_class = 'text-gray-900 fw-bolder border-bottom border-start border-end' %>
             <tr class="border-bottom">
-              <td class="text-gray-900 fw-bolder border-bottom" scope="rowgroup" width="50px" rowspan="<%= rowspan %>"><%= nomor %></td>
-              <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
-              <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
-              <td class="text-gray-900 text-wrap" scope="rowgroup" rowspan="<%= rowspan %>"><%= program_kegiatan.nama_subkegiatan %></td>
-              <td class="text-gray-900 text-wrap" scope="rowgroup" rowspan="<%= rowspan %>">Rp. borken</td>
-              <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
-              <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
-              <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
-              <td class="fw-bolder text-gray-500 text-center border-start border-end" scope="rowgroup" rowspan="<%= rowspan %>">
-                broken
+              <td class="<%= row_class %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= nomor %></td>
+              <td class="<%= row_class %>" scope="rowgroup" width="100px" rowspan="<%= rowspan_atas %>"><%= user.nama %></td>
+              <td class="" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>">row_span -> <%= rowspan_atas %>
+                status
               </td>
-              <td class="fw-bolder text-gray-500 text-center" scope="rowgroup" rowspan="<%= rowspan %>">
-                broken
-              </td>
-              <% sasaran_kinerja.each do |show_sasaran| %>
-                <tr class="<%= warna_sasaran(show_sasaran.status_sasaran) %>">
-                  <td class="border-start border-end border-bottom text-center">
-                    <%= show_sasaran.user.nama %>
-                  </td>
-                  <td class="border-start border-end border-bottom text-center">
-                    status table
-                  </td>
-                  <td class="text-wrap border-start border-end" width="450px">
-                    <%= show_sasaran.sasaran_kinerja %>
-                  </td>
-                  <td class="border-start border-end border-bottom text-center">
-                    <%= show_sasaran.tahun %>
-                  </td>
-                  <td class="border-start border-end border-bottom text-center">
-                    Rp. <%= number_with_delimiter(show_sasaran.total_anggaran) or 0 %>
-                  </td>
-                </tr>
+              <% program_kegiatans.each do |(program_kegiatan, sasaran_kinerja)| %>
+                <% rowspan = sasaran_kinerja.size + 1 %>
+                <td class="text-gray-900 text-wrap border-start border-end" width="100px" scope="rowgroup" rowspan="<%= rowspan %>"><%= program_kegiatan&.nama_subkegiatan || '-' %></td>
+                <td class="text-gray-900 text-wrap border-start border-end" width="100px" scope="rowgroup" rowspan="<%= rowspan %>">Rp. borken</td>
+                <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
+                <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
+                <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
+                <td class="fw-bolder text-gray-500 text-center border-start border-end" scope="rowgroup" rowspan="<%= rowspan %>">
+                  broken
+                </td>
+                <td class="fw-bolder text-gray-500 text-center" scope="rowgroup" rowspan="<%= rowspan %>">
+                  broken
+                </td>
+                <% sasaran_kinerja.each do |show_sasaran| %>
+                  <tr class="<%= warna_sasaran(show_sasaran.status_sasaran) %>">
+                    <td class="text-wrap border-start border-end" width="450px">
+                      <%= show_sasaran.sasaran_kinerja %> <%= show_sasaran.user.nama %> -haha
+                    </td>
+                    <td class="border-start border-end border-bottom text-center">
+                      <%= show_sasaran.tahun %>
+                    </td>
+                    <td class="border-start border-end border-bottom text-center">
+                      Rp. <%= number_with_delimiter(show_sasaran.total_anggaran) or 0 %>
+                    </td>
+                  </tr>
+                <% end %>
               <% end %>
             </tr>
           <% end %>
