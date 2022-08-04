@@ -145,18 +145,27 @@ class FilterController < ApplicationController
   end
 
   def filter_rab
-    opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
-    tahun = params[:tahun]
-    @tahun = tahun.match(/murni/) ? tahun[/[^_]\d*/, 0] : tahun
-    @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd }).asn_aktif
-    if OPD_TABLE.key?(opd.to_sym)
-      @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).asn_aktif
-      @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])
+    # if OPD_TABLE.key?(opd.to_sym)
+    #   @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).asn_aktif
+    #   @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])
+    # end
+    kak = KakServices.new(kode_unik_opd: @kode_opd)
+    if params[:tahun].match(/murni/)
+      @tahun = params[:tahun][/[^_]\d*/, 0]
+      @program_kegiatans = kak.kak_user_program_kegiatan_sasaran_tanpa_kloning
+      @total_pagu = kak.total_pagu(@program_kegiatans.values.map { |v| v.flatten })
+    else
+      @tahun = params[:tahun]
+      @program_kegiatans = kak.kak_user_program_kegiatan_sasaran_dengan_kloning(tahun: @tahun)
+      @total_pagu = kak.total_pagu(@program_kegiatans)
     end
+    # if OPD_TABLE.key?(opd.to_sym)
+    #   @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).asn_aktif
+    #   @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])
+    # end
     @filter_file = params[:filter_file].empty? ? "hasil_filter_rab" : params[:filter_file]
-    respond_to do |format|
-      format.js { render "program_kegiatans/rab_filter" }
-    end
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd).id
+    render "program_kegiatans/rab_filter"
   end
 
   def filter_rasionalisasi
