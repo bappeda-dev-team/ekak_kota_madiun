@@ -25,8 +25,24 @@ class KakService
     end.compact_blank!.flatten.group_by(&:program_kegiatan)
   end
 
+  def laporan_rencana_kinerja_users
+    sasarans_by_user.transform_values { |value| value.group_by(&:program_kegiatan) }
+  end
+
+  def sasarans_by_user
+    asn_aktif_by_opd.filter_map do |user_aktif|
+      user_aktif.sasarans.dengan_sub_kegiatan.reject do |s|
+        tahun_sasaran_matcher(s.tahun)
+      end
+    end.flatten.group_by(&:user)
+  end
+
   def program_kegiatans_by_opd
     opd.program_kegiatans
+  end
+
+  def asn_aktif_by_opd
+    opd.users.asn_aktif
   end
 
   def total_pagu(kak_sasaran_collection)

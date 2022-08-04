@@ -43,10 +43,12 @@ class User < ApplicationRecord
   # has_many :program_kegiatans, through: :sasarans
 
   scope :asn_aktif, -> { without_role([:admin]).with_role(:asn) }
-  scope :sasaran_diajukan, -> { asn_aktif.includes(:sasarans, :program_kegiatans).merge(Sasaran.sudah_lengkap) } # depreceated
+  scope :sasaran_diajukan, lambda {
+                             asn_aktif.includes(:sasarans, :program_kegiatans).merge(Sasaran.sudah_lengkap)
+                           } # depreceated
   scope :opd_by_role, ->(kode_opd, role) { where(kode_opd: kode_opd).with_role(role.to_sym) }
 
-  after_update :update_sasaran
+  # after_update :update_sasaran
   after_create :assign_default_role
 
   validates :nama, presence: true
@@ -85,13 +87,13 @@ class User < ApplicationRecord
   end
 
   def aktifkan_user
-    self.remove_role :non_aktif if self.has_role? :non_aktif
-    self.add_role(:asn) unless self.has_role? :asn
+    remove_role :non_aktif if has_role? :non_aktif
+    add_role(:asn) unless has_role? :asn
   end
 
   def nonaktifkan_user
-    self.remove_role(:asn) if self.has_role? :asn
-    self.add_role(:non_aktif) unless self.has_role? :admin
+    remove_role(:asn) if has_role? :asn
+    add_role(:non_aktif) unless has_role? :admin
   end
 
   def sasaran_aktif
@@ -160,7 +162,9 @@ class User < ApplicationRecord
   end
 
   def biru
-    @biru ||= petunjuk_status.select { |s| s[:usulan_dan_sub] }.select { |j| j.except(:usulan_dan_sub).values.any?(false) }.count
+    @biru ||= petunjuk_status.select do |s|
+                s[:usulan_dan_sub]
+              end.select { |j| j.except(:usulan_dan_sub).values.any?(false) }.count
   end
 
   def hijau
