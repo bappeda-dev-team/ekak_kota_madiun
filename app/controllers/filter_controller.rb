@@ -102,7 +102,7 @@ class FilterController < ApplicationController
   end
 
   def filter_kak
-    kak = KakServices.new(kode_unik_opd: @kode_opd)
+    kak = KakService.new(kode_unik_opd: @kode_opd)
     if params[:tahun].match(/murni/)
       @tahun = params[:tahun][/[^_]\d*/, 0]
       @program_kegiatans = kak.kak_user_program_kegiatan_sasaran_tanpa_kloning
@@ -122,30 +122,22 @@ class FilterController < ApplicationController
   end
 
   def filter_kak_dashboard
-    kak = KakServices.new(kode_unik_opd: @kode_opd)
-    if params[:tahun].match(/murni/)
-      @tahun = params[:tahun][/[^_]\d*/, 0]
-      @program_kegiatans = kak.sasaran_kak_tanpa_cloning
-      @total_pagu = kak.total_pagu(@program_kegiatans)
-    else
-      @tahun = params[:tahun]
-      @program_kegiatans = kak.sasaran_kak_dengan_cloning(tahun: @tahun)
-      @total_pagu = kak.total_pagu(@program_kegiatans)
-    end
+    @tahun = params[:tahun]
+    kak = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
+    @program_kegiatans = kak.laporan_rencana_kinerja
+    @total_pagu = kak.total_pagu(@program_kegiatans)
     # if OPD_TABLE.key?(opd.nama_opd.to_sym)
     #   @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[opd.nama_opd.to_sym] })
     #   @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[opd.nama_opd.to_sym]) # idk about bidang thing
     # en
     @filter_file = "hasil_filter_dashboard"
-    if @total_pagu && @program_kegiatans
-      render "kaks/kak_filter_dashboard"
-    else
-      render 'shared/_notifier', locals: { message: 'Terjadi Keslahan' }
-    end
+    @message = @program_kegiatans ? "Berhasil" : "Ada yang salah"
+    @icon = @program_kegiatans ? "success" : "error"
+    render "kaks/kak_filter_dashboard"
   end
 
   def filter_rab
-    kak = KakServices.new(kode_unik_opd: @kode_opd)
+    kak = KakService.new(kode_unik_opd: @kode_opd)
     if params[:tahun].match(/murni/)
       @tahun = params[:tahun][/[^_]\d*/, 0]
       @program_kegiatans = kak.kak_user_program_kegiatan_sasaran_tanpa_kloning

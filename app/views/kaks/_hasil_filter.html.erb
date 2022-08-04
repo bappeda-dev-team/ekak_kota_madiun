@@ -39,8 +39,8 @@
               <td class="" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"></td>
               <% program_kegiatans.each do |(program_kegiatan, sasaran_kinerja)| %>
                 <% rowspan = sasaran_kinerja.size + 1 %>
-                <td class="text-gray-900 text-wrap border-start border-end" width="100px" scope="rowgroup" rowspan="<%= rowspan %>"><%= program_kegiatan&.nama_subkegiatan || '-' %></td>
-                <td class="text-gray-900 text-wrap border-start border-end" width="100px" scope="rowgroup" rowspan="<%= rowspan %>">Rp. <%= number_with_delimiter sasaran_kinerja.flatten.sum(&:total_anggaran)  %></td>
+                <td class="<%= row_class %>" width="100px" scope="rowgroup" rowspan="<%= rowspan %>"><%= program_kegiatan&.nama_subkegiatan || '-' %></td>
+                <td class="<%= row_class %>" width="100px" scope="rowgroup" rowspan="<%= rowspan %>">Rp. broken</td>
                 <td class="p-0 m-0 border-start border-end" style="height: 0px !important; border-color: transparent;"></td>
                 <td class="p-0 m-0 border-start border-end" style="height: 0px !important; border-color: transparent;"></td>
                 <td class="fw-bolder text-gray-500 text-center" scope="rowgroup" rowspan="<%= rowspan %>">
