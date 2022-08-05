@@ -87,7 +87,7 @@ class Sasaran < ApplicationRecord
   scope :kurang_lengkap, -> { select { |s| s.usulans.exists? && s.belum_ada_sub? }.size }
   scope :hijau, -> { select(&:lengkap?).size }
   scope :biru, -> { select(&:selesai?).reject(&:lengkap?).size }
-  scope :dengan_sub_kegiatan, -> { where.not(program_kegiatan_id: nil) }
+  scope :dengan_sub_kegiatan, -> { joins(:program_kegiatan) }
 
   SUMBERS = { dana_transfer: 'Dana Transfer', dak: 'DAK', dbhcht: 'DBHCHT', bk_provinsi: 'BK Provinsi',
               blud: 'BLUD' }.freeze

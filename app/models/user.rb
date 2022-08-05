@@ -107,7 +107,10 @@ class User < ApplicationRecord
 
   def program_kegiatan_sasarans(tahun: 2022)
     # TODO: clean this up
-    @program_kegiatan_sasarans ||= sasarans.where(tahun: tahun).map(&:program_kegiatan).compact.uniq
+    sasarans.where(tahun: tahun)
+            .map(&:program_kegiatan)
+            .compact
+            .uniq
   end
 
   def jumlah_sasaran
