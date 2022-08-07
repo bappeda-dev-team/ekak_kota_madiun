@@ -30,37 +30,34 @@
           </tr>
         </thead>
         <tbody>
-          <% @program_kegiatans.each.with_index(1) do |(user, program_kegiatans), nomor|  %>
-            <% rowspan_atas = program_kegiatans.size + program_kegiatans.values.flatten.size %>
-            <% row_class = 'text-gray-900 fw-bolder border-bottom border-start border-end text-wrap' %>
-            <tr class="border-bottom">
-              <td class="<%= row_class %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= nomor %></td>
-              <td class="<%= row_class %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= user.nama %></td>
-              <td class="" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"></td>
-              <% program_kegiatans.each do |(program_kegiatan, sasaran_kinerja)| %>
-                <% rowspan = sasaran_kinerja.size + 1 %>
-                <td class="text-gray-900 text-wrap border-start border-end" width="100px" scope="rowgroup" rowspan="<%= rowspan %>"><%= program_kegiatan&.nama_subkegiatan || '-' %></td>
-                <td class="text-gray-900 text-wrap border-start border-end" width="100px" scope="rowgroup" rowspan="<%= rowspan %>">Rp. <%= number_with_delimiter sasaran_kinerja.flatten.sum(&:total_anggaran)  %></td>
-                <td class="p-0 m-0 border-start border-end" style="height: 0px !important; border-color: transparent;"></td>
-                <td class="p-0 m-0 border-start border-end" style="height: 0px !important; border-color: transparent;"></td>
-                <td class="fw-bolder text-gray-500 text-center" scope="rowgroup" rowspan="<%= rowspan %>">
-                 <%= link_to "/pdf_rka/#{program_kegiatan&.id}/#{@tahun}.pdf", class: "btn btn-sm btn-secondary" do %>
-                    <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
-                    Cetak RaB
-                  <% end %>
-                </td>
-                <% sasaran_kinerja.each do |show_sasaran| %>
-                  <tr class="<%= warna_sasaran(show_sasaran.status_sasaran) %>">
-                    <td class="text-wrap border-start border-end" width="250px">
-                      <%= show_sasaran.sasaran_kinerja %>
+          <% @program_kegiatans.each.with_index(1) do |collections, nomor|  %>
+            <% collections.each do |user, program_kegiatans|  %>
+              <% rowspan_atas = program_kegiatans.size + 1 %>
+              <% row_class = 'text-gray-900 fw-bolder border-bottom border-start border-end text-wrap' %>
+              <tr class="border-bottom">
+                <td class="<%= row_class %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= nomor %></td>
+                <td class="<%= row_class %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= user.nama %></td>
+                <td class="" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"></td>
+                <% program_kegiatans.each do |(program_kegiatan, sasaran)| %>
+                  <tr>
+                    <td class="text-gray-900 text-wrap border-start border-end" width="100px" scope="rowgroup"><%= program_kegiatan&.nama_subkegiatan || '-' %></td>
+                    <td class="text-gray-900 text-wrap border-start border-end" width="100px" scope="rowgroup">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
+                    <td class="text-wrap border-start border-end <%= warna_sasaran(sasaran.status_sasaran) %>" width="250px">
+                      <%= sasaran.sasaran_kinerja %>
                     </td>
-                    <td class="border-start border-end border-bottom text-center" width="100px">
-                      Rp. <%= number_with_delimiter(show_sasaran.total_anggaran) or 0 %>
+                    <td class="border-start border-end border-bottom text-center <%= warna_sasaran(sasaran.status_sasaran) %>" width="100px">
+                      Rp. <%= number_with_delimiter(sasaran.total_anggaran) or 0 %>
+                    </td>
+                    <td class="fw-bolder text-gray-500 text-center" scope="rowgroup">
+                      <%= link_to "/pdf_rka/#{program_kegiatan&.id}/#{@tahun}.pdf", class: "btn btn-sm btn-secondary" do %>
+                        <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
+                        Cetak RaB
+                      <% end %>
                     </td>
                   </tr>
                 <% end %>
-              <% end %>
-            </tr>
+              </tr>
+            <% end %>
           <% end %>
         </tbody>
       </table>

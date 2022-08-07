@@ -133,7 +133,7 @@ class FilterController < ApplicationController
 
   def filter_rab
     kak = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
-    @program_kegiatans = kak.laporan_rencana_kinerja_users
+    @program_kegiatans = kak.sasarans_by_user
     # if OPD_TABLE.key?(opd.to_sym)
     #   @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).asn_aktif
     #   @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])
