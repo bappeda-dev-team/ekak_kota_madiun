@@ -6,14 +6,13 @@
           <th class="border-bottom" scope="col">No.</th>
           <th class="border-bottom text-center" scope="col">Sub Kegiatan KaK</th>
           <th class="border-bottom text-center" scope="col">Pagu Anggaran</th>
-          <th class="border-bottom text-center border-start border-end" scope="col" colspan="5">Informasi KaK</th>
+          <th class="border-bottom text-center border-start border-end" scope="col" colspan="4">Informasi KaK</th>
           <th class="border-bottom text-center" scope="col">Action</th>
         </tr>
         <tr>
           <th colspan="3"></th>
           <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
           <th class="border-bottom text-center border-start border-end">Pagu Sasaran</th>
-          <th class="border-bottom text-center border-start border-end">Tahun</th>
           <th class="border-bottom text-center border-start border-end">Pemilik Rencana</th>
           <th class="border-bottom text-center border-start border-end">Status</th>
           <th></th>
@@ -23,10 +22,10 @@
         <% @program_kegiatans.each.with_index(1) do |kak, i| %>
           <% row_pk = kak.sasarans.where(tahun: tahun).count + 1 %>
           <tr>
-            <td class="text-gray-900 fw-bolder border-start border-end" scope="row" rowspan="<%= row_pk %>"><%= i %></td>
+            <td class="text-gray-900 fw-bolder border-start border-end" scope="row" width="50px" rowspan="<%= row_pk %>"><%= i %></td>
             <td class="text-gray-900 text-wrap" scope="row" rowspan="<%= row_pk %>" width="200px"><%= kak.nama_subkegiatan %></td>
             <td class="text-gray-900 text-wrap" scope="row" rowspan="<%= row_pk %>" width="200px">Rp. <%= number_with_delimiter(kak.sasarans.where(tahun: tahun).map(&:total_anggaran).compact.sum) or 0 %></td>
-            <td class="p-0 m-0" colspan="5" style="height: 0px !important; border-color: transparent;"></td>
+            <td class="p-0 m-0" colspan="4" style="height: 0px !important; border-color: transparent;"></td>
             <td class="fw-bolder text-gray-500 text-center" rowspan="<%= row_pk %>">
               <%= link_to "/acuan_kerja_new/#{kak.id}/2022", class: "m-3" do %>
                 <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
@@ -43,9 +42,6 @@
               </td>
               <td class="text-wrap border-start border-end" width="200px">
                 Rp. <%= number_with_delimiter(show_sasaran.total_anggaran) or 0 %>
-              </td>
-              <td class="text-wrap border-start border-end border-bottom text-center">
-                <%= show_sasaran.tahun %>
               </td>
               <td class="text-wrap border-start border-end border-bottom text-center">
                 <%= show_sasaran.user.nama %>

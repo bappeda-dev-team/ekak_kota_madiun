@@ -58,6 +58,10 @@ $(function () {
     width: "100%",
     theme: "bootstrap-5",
   });
+  $("#select2-global").select2({
+    width: "100%",
+    theme: "bootstrap-5",
+  });
   $(".select2-sasaran").select2({
     width: "100%",
     theme: "bootstrap-5",
