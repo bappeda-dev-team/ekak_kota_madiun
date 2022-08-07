@@ -87,6 +87,6 @@ class ProgramKegiatan < ApplicationRecord
   end
 
   def jumlah_sasaran
-    sasarans.size
+    sasarans.where(tahun: %w[2022 2023 2024]).size
   end
 end

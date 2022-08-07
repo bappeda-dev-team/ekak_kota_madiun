@@ -101,11 +101,27 @@ class FilterController < ApplicationController
     end
   end
 
+  def filter_kak_dashboard
+    kak = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
+    @program_kegiatans = kak.laporan_rencana_kinerja
+    @total_pagu = kak.total_pagu(@program_kegiatans)
+    # if OPD_TABLE.key?(opd.nama_opd.to_sym)
+    #   @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[opd.nama_opd.to_sym] })
+    #   @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[opd.nama_opd.to_sym])
+    # end
+    @filter_file = "hasil_filter_dashboard"
+    # @message = @program_kegiatans ? "Berhasil" : "Ada yang salah"
+    # @icon = @program_kegiatans ? "success" : "error"
+    render "kaks/kak_filter_dashboard"
+  end
+
   def filter_kak
     kak = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
-    @program_kegiatans = kak.laporan_rencana_kinerja_users
-    @total_pagu = @program_kegiatans.values.map { |val| kak.total_pagu(val) }.sum
-    @jumlah_subkegiatan = @program_kegiatans.values.map { |val| val.keys }.flatten.uniq.size
+    @program_kegiatans = kak.sasarans_by_user
+    @total_pagu = kak.total_pagu
+    @jumlah_subkegiatan = kak.laporan_rencana_kinerja.size
+    @total_sasaran_aktif = kak.total_sasaran_aktif
+    @total_usulans = kak.total_usulan_musrenbang
     # if OPD_TABLE.key?(opd.to_sym)
     #   @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).asn_aktif
     #   @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])
@@ -113,20 +129,6 @@ class FilterController < ApplicationController
     @opd = Opd.find_by(kode_unik_opd: @kode_opd).id
     @filter_file = "hasil_filter" if params[:filter_file].empty?
     render "kaks/kak_filter"
-  end
-
-  def filter_kak_dashboard
-    kak = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
-    @program_kegiatans = kak.laporan_rencana_kinerja
-    @total_pagu = kak.total_pagu(@program_kegiatans)
-    # if OPD_TABLE.key?(opd.nama_opd.to_sym)
-    #   @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[opd.nama_opd.to_sym] })
-    #   @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[opd.nama_opd.to_sym]) # idk about bidang thing
-    # en
-    @filter_file = "hasil_filter_dashboard"
-    @message = @program_kegiatans ? "Berhasil" : "Ada yang salah"
-    @icon = @program_kegiatans ? "success" : "error"
-    render "kaks/kak_filter_dashboard"
   end
 
   def filter_rab

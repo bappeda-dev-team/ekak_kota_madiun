@@ -3,7 +3,8 @@ class KaksController < ApplicationController
 
   # GET /kaks or /kaks.json
   def index
-    @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik, tahun: 2022 }).group(:id)
+    @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik,
+                                                                            tahun: 2022 }).group(:id)
   end
 
   # GET /kaks/1 or /kaks/1.json
@@ -11,14 +12,7 @@ class KaksController < ApplicationController
     render 'new_format'
   end
 
-  def laporan_kak
-    @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik }).group(:id)
-    @jumlah_sasaran = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik }).count(:sasarans)
-    @jumlah_subkegiatan = ProgramKegiatan.includes(:sasarans).where(sasarans: { nip_asn: current_user.nik }).count
-    @jumlah_usulan = ProgramKegiatan.includes(:sasarans).where(sasarans: { nip_asn: current_user.nik }).map { |program| program.sasarans.map{ |s| s.usulans.count }.reduce(:+) }.reduce(:+)
-    @total_pagu = @program_kegiatans.map { |program| program.my_pagu }.sum
-    @sasarans = Sasaran.sudah_lengkap.where(nip_asn: current_user.nik)
-  end
+  def laporan_kak; end
 
   def pdf_kak
     @filename = "laporan_kak.pdf"

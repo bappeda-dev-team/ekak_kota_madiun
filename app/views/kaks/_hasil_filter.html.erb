@@ -30,55 +30,49 @@
           </tr>
         </thead>
         <tbody>
-          <% @program_kegiatans.each.with_index(1) do |(user, program_kegiatans), nomor|  %>
-            <% rowspan_atas = program_kegiatans.size + program_kegiatans.values.flatten.size %>
-            <% row_class = 'text-gray-900 fw-bolder border-bottom border-start border-end text-wrap' %>
-            <tr class="border-bottom">
-              <td class="<%= row_class %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= nomor %></td>
-              <td class="<%= row_class %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= user.nama %></td>
-              <td class="" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"></td>
-              <% program_kegiatans.each do |(program_kegiatan, sasaran_kinerja)| %>
-                <% rowspan = sasaran_kinerja.size + 1 %>
-                <td class="<%= row_class %>" width="100px" scope="rowgroup" rowspan="<%= rowspan %>"><%= program_kegiatan&.nama_subkegiatan or '-' %></td>
-                <td class="<%= row_class %>" width="100px" scope="rowgroup" rowspan="<%= rowspan %>">Rp. <%= number_with_delimiter(sasaran_kinerja.map(&:total_anggaran).compact.sum) or 0 %></td>
-                <td class="p-0 m-0 border-start border-end" style="height: 0px !important; border-color: transparent;"></td>
-                <td class="p-0 m-0 border-start border-end" style="height: 0px !important; border-color: transparent;"></td>
-                <td class="fw-bolder text-gray-500 text-center" scope="rowgroup" rowspan="<%= rowspan %>">
-                  <%= link_to "/acuan_kerja_new/#{program_kegiatan&.id}/#{@tahun}", target: "_blank", rel: "nofollow",
+          <% row_class = 'border-top border-bottom border-start border-end text-wrap' %>
+          <% @program_kegiatans.each.with_index(1) do |collections, nomor|  %>
+            <% collections.each do |user, program_kegiatans|  %>
+              <% rowspan_atas = program_kegiatans.size + 1 %>
+              <tr class="border-bottom">
+                <td class="<%= row_class %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= nomor %></td>
+                <td class="<%= row_class + ' bg-danger text-white' if program_kegiatans.empty? %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= user.nama %></td>
+                <td class="<%= row_class %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= render 'sasarans/table_status_sasaran', user: user %></td>
+                <% program_kegiatans.each.with_index(1) do |(program_kegiatan, sasaran), no_sub| %>
+                  <% status_sasaran = warna_sasaran(sasaran.status_sasaran) %>
+                  <tr>
+                    <td class="<%= row_class %>" width="100px" scope="rowgroup"><%= program_kegiatan&.nama_subkegiatan or '-' %></td>
+                    <td class="<%= row_class %>" width="50px" scope="rowgroup">Rp. <%= number_with_delimiter(sasaran.total_anggaran) or 0 %></td>
+                    <td class="<%= status_sasaran %> text-wrap border-start border-end" width="200px"><%= sasaran.sasaran_kinerja %></td>
+                    <td class="<%= status_sasaran %> text-wrap border-start border-end" width="200px">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
+                    <td class="fw-bolder text-gray-500 text-center" scope="rowgroup">
+                      <%= link_to "/acuan_kerja_new/#{program_kegiatan&.id}/#{@tahun}", target: "_blank", rel: "nofollow",
                       class:"btn btn-sm btn-info" do %>
-                    <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
-                    Lihat Detail
-                  <% end %>
-                  <%= link_to "/pdf_kak/#{program_kegiatan&.id}/#{@tahun}.pdf", class: "btn btn-sm btn-secondary" do %>
-                    <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
-                    Cetak KaK
-                  <% end %>
-                </td>
-                <% sasaran_kinerja.each do |show_sasaran| %>
-                  <tr class="<%= warna_sasaran(show_sasaran.status_sasaran) %>">
-                    <td class="text-wrap border-start border-end" width="250px">
-                      <%= show_sasaran.sasaran_kinerja %>
-                    </td>
-                    <td class="border-start border-end border-bottom text-center" width="100px">
-                      Rp. <%= number_with_delimiter(show_sasaran.total_anggaran) or 0 %>
+                        <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
+                        Lihat Detail
+                      <% end %>
+                      <%= link_to "/pdf_kak/#{program_kegiatan&.id}/#{@tahun}.pdf", class: "btn btn-sm btn-secondary" do %>
+                        <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
+                        Cetak KaK
+                      <% end %>
                     </td>
                   </tr>
                 <% end %>
-              <% end %>
-            </tr>
+              </tr>
+            <% end %>
           <% end %>
         </tbody>
       </table>
     </div>
     <div class="card-body">
-      <p>Jumlah SubKegiatan : <%= @jumlah_subkegiatan %></p>
-      <p>Jumlah Sasaran Aktif : -</p>
+      <p>Jumlah SubKegiatan Aktif : <%= @jumlah_subkegiatan %></p>
+      <p>Jumlah Sasaran Aktif : <%= @total_sasaran_aktif %></p>
       <p>Jumlah Usulan Terakomodir : </p>
       <ul>
-        <li>Musrenbang: -</li>
-        <li>Pokok Pikiran:-</li>
-        <li>Mandatori: -</li>
-        <li>Inisiatif Walikota: -</li>
+        <li>Musrenbang: <%= @total_usulans[:musrenbang] %></li>
+        <li>Pokok Pikiran:<%= @total_usulans[:pokir] %></li>
+        <li>Mandatori: <%= @total_usulans[:mandatori] %></li>
+        <li>Inisiatif Walikota: <%= @total_usulans[:inisiatif_walikota] %></li>
       </ul>
       <p>Total Pagu Anggaran : Rp. <%= number_with_delimiter(@total_pagu) %></p>
     </div>
