@@ -36,7 +36,7 @@
               <% rowspan_atas = program_kegiatans.size + 1 %>
               <tr class="border-bottom">
                 <td class="<%= row_class %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= nomor %></td>
-                <td class="<%= row_class + ' bg-danger text-white' if program_kegiatans.empty? %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= user.nama %></td>
+                <td class="<%= program_kegiatans.empty? ? row_class + ' bg-danger text-white' : row_class  %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= user.nama %></td>
                 <td class="<%= row_class %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= render 'sasarans/table_status_sasaran', user: user %></td>
                 <% program_kegiatans.each.with_index(1) do |(program_kegiatan, sasaran), no_sub| %>
                   <% status_sasaran = warna_sasaran(sasaran.status_sasaran) %>

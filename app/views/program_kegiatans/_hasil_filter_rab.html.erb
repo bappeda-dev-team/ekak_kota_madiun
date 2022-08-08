@@ -33,10 +33,10 @@
           <% @program_kegiatans.each.with_index(1) do |collections, nomor|  %>
             <% collections.each do |user, program_kegiatans|  %>
               <% rowspan_atas = program_kegiatans.size + 1 %>
-              <% row_class = 'text-gray-900 fw-bolder border-bottom border-start border-end text-wrap' %>
+              <% row_class = 'border-bottom border-start border-end text-wrap' %>
               <tr class="border-bottom">
                 <td class="<%= row_class %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= nomor %></td>
-                <td class="<%= row_class %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= user.nama %></td>
+                <td class="<%= program_kegiatans.empty? ? row_class + ' bg-danger text-white' : row_class  %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= user.nama %></td>
                 <td class="border-start border-end text-wrap" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= render 'sasarans/table_status_sasaran', user: user %></td>
                 <% program_kegiatans.each do |(program_kegiatan, sasaran)| %>
                   <tr>
