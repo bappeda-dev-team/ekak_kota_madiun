@@ -60,8 +60,9 @@ class ProgramKegiatan < ApplicationRecord
   has_many :subkegiatan_tematiks, through: :sasarans
   has_many :rincians, through: :sasarans
   has_many :permasalahans, through: :sasarans
+  has_many :users, through: :sasarans
 
-  scope :with_sasarans, -> (tahun) { where(id: Sasaran.where(tahun: tahun).pluck(:program_kegiatan_id)) }
+  scope :with_sasarans, -> { where(id: Sasaran.pluck(:program_kegiatan_id)) }
 
   # default_scope { order(created_at: :desc) }
 
@@ -86,6 +87,6 @@ class ProgramKegiatan < ApplicationRecord
   end
 
   def jumlah_sasaran
-    sasarans.size
+    sasarans.where(tahun: %w[2022 2023 2024]).size
   end
 end

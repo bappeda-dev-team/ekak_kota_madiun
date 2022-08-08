@@ -29,10 +29,28 @@
         </a>
       </div>
     </div>
-    <ul class="nav flex-column pt-3 pt-md-0">
+    <ul class="nav flex-column pt-2 pt-md-0">
       <li class="nav-item">
-        <%= link_to(root_path, class: "nav-link d-flex align-items-center") do %>
+        <%= link_to(root_path, class: "nav-link") do %>
           <span class="mt-1 ms-1 sidebar-text">E-KAK</span>
+        <% end %>
+      </li>
+      <li class="nav-item p-1 my-2">
+        <%= form_with url: filter_tahun_sasaran_path, method: :get, local: false do |form| %>
+          <div class="row">
+            <div class="col">
+              <%= form.select :tahun_sasaran, {},  {include_blank: true},
+                    { id: "select2-global",
+                      data: { placeholder: "Tahun", 'ajax--url': kelompok_anggarans_path(:json) } } do %>
+                <% if cookies[:tahun_sasaran] %>
+                  <option value="<%= cookies[:tahun_sasaran] %>" selected="selected"><%= cookies[:tahun_sasaran] %></option>
+                <% end %>
+              <% end %>
+            </div>
+            <div class="col-auto">
+              <input type="submit" value="P" class="btn btn-secondary">
+            </div>
+          </div>
         <% end %>
       </li>
       <li class="nav-item <%= request.path == '/' ? "active" : "" %> ">

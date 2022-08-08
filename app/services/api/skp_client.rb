@@ -134,13 +134,13 @@ module Api
       kepala = data_pegawais.select { |pegawai| pegawai[:atasan].blank? }.first[:nik]
       data_pegawais.each do |data_p|
         tipe = ''
-        if data_p[:atasan].blank?
-          tipe = 'Kepala'
-        elsif data_p[:atasan].present? && data_p[:atasan] == kepala
-          tipe = 'Atasan'
-        else
-          tipe = 'User'
-        end
+        tipe = if data_p[:atasan].blank?
+                 'Kepala'
+               elsif data_p[:atasan].present? && data_p[:atasan] == kepala
+                 'Atasan'
+               else
+                 'User'
+               end
         data_p.store(:type, tipe)
         u = User.find_by(nik: data_p[:nik])
         u&.update(data_p)
@@ -154,7 +154,6 @@ module Api
       sasarans.each do |sasaran|
         data_sasaran = {
           id_rencana: sasaran['id'],
-          tahun: sasaran['tahun'],
           sasaran_kinerja: sasaran['sasaran'],
           sasaran_opd: sasaran['unit_id'],
           created_at: Time.now, updated_at: Time.now

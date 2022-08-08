@@ -15,7 +15,7 @@
       <%= form.hidden_field :filter_file, value: filter_value %>
       <%= form.hidden_field :jenis, value: filter_jenis %>
       <%= form.label :tahun %>
-      <%= form.select :tahun, [''], {include_blank: true},
+      <%= form.select :tahun, options_for_select( [[cookies[:tahun_sasaran], cookies[:tahun_sasaran]]], selected: cookies[:tahun_sasaran]), {include_blank: true},
                     { class: "form-control select2-waw",
                       data: { placeholder: "Pilih Tahun Sasaran", 'ajax--url': kelompok_anggarans_path(:json) } } %>
       <%= form.label :opd , class: 'mt-3' %>

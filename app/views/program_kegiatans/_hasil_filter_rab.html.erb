@@ -16,96 +16,48 @@
       <table class="table align-items-center border-start border-end" id="tabel_laporan_kak">
         <thead class="thead-light">
           <tr>
-            <th class="border-bottom" scope="col">No.</th>
-            <th class="border-bottom text-center" scope="col">Pemilik Rencana</th>
-            <th class="border-bottom text-center" scope="col">Status</th>
-            <th class="border-bottom text-center" scope="col">Sub Kegiatan KAK</th>
-            <th class="border-bottom text-center" scope="col">Pagu Sub Kegiatan KAK</th>
-            <th class="border-bottom text-center border-start border-end" scope="col" colspan="3">Informasi KaK</th>
-            <th class="border-bottom text-center" scope="col">Verifikasi</th>
+            <th class="border-bottom border-start border-end" scope="col" rowspan="2">No.</th>
+            <th class="border-bottom border-start border-end text-center" scope="col" rowspan="2">Pemilik Rencana</th>
+            <th class="border-bottom border-start border-end text-center" scope="col" rowspan="2">Status</th>
+            <th class="border-bottom border-start border-end text-center" scope="col" rowspan="2">Sub Kegiatan KAK</th>
+            <th class="border-bottom border-start border-end text-center" scope="col" rowspan="2">Pagu Sub Kegiatan KAK</th>
+            <th class="border-bottom text-center border-start border-end" scope="col" colspan="2">Informasi KaK</th>
+            <th class="border-bottom text-center" scope="col" rowspan="2">Action</th>
           </tr>
           <tr>
-            <th colspan="5"></th>
             <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
-            <th class="border-bottom text-center border-start border-end">Tahun</th>
             <th class="border-bottom text-center border-start border-end">Pagu Anggaran</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
-          <% @users.each.with_index(1) do |user, i| %>
-            <% row_awal = user.program_kegiatan_sasarans(tahun: @tahun).map { |up| up.sasarans.where(tahun: @tahun).size }.compact %>
-            <% row = row_awal.empty? ? 1 : row_awal.reduce(:+) %>
-            <% row_atas = user.program_kegiatan_sasarans(tahun: @tahun).count + row %>
-            <tr class="border-bottom">
-              <td class="text-gray-900 fw-bolder border-bottom border-start border-end" rowspan="<%= row_atas %>" scope="rowgroup"><%= i %></td>
-              <td class="<%= 'bg-danger text-white' if row_awal.empty? %> text-wrap border-end border-bottom" rowspan="<%= row_atas %>" scope="rowgroup"><%= user.nama %></td>
-              <td class="border-start border-end text-center" rowspan="<%= row_atas %>" scope="rowgroup">
-                <table>
+          <% @program_kegiatans.each.with_index(1) do |collections, nomor|  %>
+            <% collections.each do |user, program_kegiatans|  %>
+              <% rowspan_atas = program_kegiatans.size + 1 %>
+              <% row_class = 'border-bottom border-start border-end text-wrap' %>
+              <tr class="border-bottom">
+                <td class="<%= row_class %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= nomor %></td>
+                <td class="<%= program_kegiatans.empty? ? row_class + ' bg-danger text-white' : row_class  %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= user.nama %></td>
+                <td class="border-start border-end text-wrap" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= render 'sasarans/table_status_sasaran', user: user %></td>
+                <% program_kegiatans.each do |(program_kegiatan, sasaran)| %>
                   <tr>
-                    <td class="m-0 p-0 text-success">
-                      <i class="fas fa-battery-full"></i>
+                    <td class="text-gray-900 text-wrap border-start border-end" width="100px" scope="rowgroup"><%= program_kegiatan&.nama_subkegiatan || '-' %></td>
+                    <td class="text-gray-900 text-wrap border-start border-end" width="100px" scope="rowgroup">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
+                    <td class="text-wrap border-start border-end <%= warna_sasaran(sasaran.status_sasaran) %>" width="100px">
+                      <%= sasaran.sasaran_kinerja %>
                     </td>
-                    <td class="text-success">
-                      <%= user.petunjuk_sasaran[:hijau] || 0 %>
+                    <td class="border-start border-end border-bottom text-center <%= warna_sasaran(sasaran.status_sasaran) %>" width="100px">
+                      Rp. <%= number_with_delimiter(sasaran.total_anggaran) or 0 %>
                     </td>
-                  </tr>
-                  <tr>
-                    <td class="m-0 p-0 text-info">
-                      <i class="fas fa-battery-half"></i>
-                    </td>
-                    <td class="text-info">
-                      <%= user.petunjuk_sasaran[:biru] %>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="m-0 p-0 text-warning">
-                      <i class="fas fa-battery-quarter"></i>
-                    </td>
-                    <td class="text-warning">
-                      <%= user.petunjuk_sasaran[:kuning] %>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="m-0 p-0 text-danger">
-                      <i class="fas fa-battery-empty"></i>
-                    </td>
-                    <td class="text-danger">
-                      <%= user.petunjuk_sasaran[:merah] %>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-              <% user.program_kegiatan_sasarans(tahun: @tahun).each do |kak| %>
-                <% row_dalam = kak.sasarans.where(tahun: @tahun).count + 1  %>
-                <td class="text-gray-900 text-wrap border-start border-end" rowspan="<%= row_dalam %>"><%= kak.nama_subkegiatan %></td>
-                <td class="text-gray-900 text-wrap border-start border-end" rowspan="<%= row_dalam %>">Rp. <%= number_with_delimiter(kak.sasarans.where(tahun: @tahun).map(&:total_anggaran).compact.sum) or 0 %></td>
-                <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
-                <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
-                <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
-                <td class="fw-bolder text-gray-500 text-center" rowspan="<%= row_dalam %>">
-                  <%= link_to "/acuan_kerja_new/#{kak.id}/#{@tahun}", class: "m-3" do %>
-                    <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
-                  <% end %>
-                  <%= link_to "/pdf_rka/#{kak.id}/#{@tahun}.pdf", class: "m-3" do %>
-                    <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak RaK"></span>
-                  <% end %>
-                </td>
-                <% kak.sasarans.where(tahun: @tahun).each do |show_sasaran| %>
-                  <tr class="<%= warna_sasaran(show_sasaran.status_sasaran) %>">
-                    <td class="text-wrap border-start border-end" width="450px">
-                      <%= show_sasaran.sasaran_kinerja %>
-                    </td>
-                    <td class="border-start border-end border-bottom text-center">
-                      <%= show_sasaran.tahun %>
-                    </td>
-                    <td class="border-start border-end border-bottom text-center">
-                      Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar) or 0 %>
+                    <td class="fw-bolder text-gray-500 text-center" scope="rowgroup">
+                      <%= link_to "/pdf_rka/#{program_kegiatan&.id}/#{@tahun}.pdf", class: "btn btn-sm btn-secondary" do %>
+                        <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
+                        Cetak RaB
+                      <% end %>
                     </td>
                   </tr>
                 <% end %>
-              <% end %>
-            </tr>
+              </tr>
+            <% end %>
           <% end %>
         </tbody>
       </table>

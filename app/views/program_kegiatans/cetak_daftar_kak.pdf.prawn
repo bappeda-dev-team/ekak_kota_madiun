@@ -45,18 +45,19 @@ prawn_document(filename: @filename, disposition: "inline", page_layout: :landsca
                         { content: "Rp. #{number_with_delimiter(s.total_anggaran)}", width: width_pagu_sas_array }]
       end
     end
-    sasaran_table = pdf.make_table(sasaran_arr, cell_style: { size: size_cell, valign: :center },
-                                                width: total_width_sas_array)
+    # sasaran_table = pdf.make_table(sasaran_arr, cell_style: { size: size_cell, valign: :center },
+    #                                             width: total_width_sas_array)
 
     header_tabel_subkegiatan << [{ content: i.to_s, width: width_sub_ket, align: :center, valign: :center },
                                  { content: pk.nama_subkegiatan, valign: :center, width: width_sub },
                                  { content: pk.indikator_subkegiatan, valign: :center, width: width_ind_sub },
-                                 { content: pk.target_subkegiatan, valign: :center, align: :center, width: width_target_sub },
-                                 { content: pk.satuan_target_subkegiatan, valign: :center, align: :center, width: width_satuan_sub },
+                                 { content: pk.target_subkegiatan, valign: :center, align: :center,
+                                   width: width_target_sub },
+                                 { content: pk.satuan_target_subkegiatan, valign: :center, align: :center,
+                                   width: width_satuan_sub },
                                  {
                                    content: "Rp. #{number_with_delimiter(pk.sasarans.where(tahun: @tahun).map(&:total_anggaran).compact.sum)}", width: width_pagu_sub, valign: :center
-                                 }, sasaran_table,
-                                 { content: "", width: width_satuan_sub }]
+                                 }]
   end
   footer_tabel_subkegiatan = [{ content: "Jumlah", colspan: 5 },
                               "Rp. #{number_with_delimiter(@program_kegiatans.map do |pr|
