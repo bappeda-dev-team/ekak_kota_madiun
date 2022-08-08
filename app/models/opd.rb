@@ -46,8 +46,21 @@ class Opd < ApplicationRecord
   end
 
   def jabatan_kepala
-    User.find_by(nik: nip_kepala.delete(" \t\r\n")).jabatan
+    jabatan = User.find_by(nik: nip_kepala.delete(" \t\r\n")).jabatan
+
+    nip_kepala.match?(/(-plt)/)? "plt. #{jabatan}" : jabatan
+
   rescue NoMethodError
     'Kepala'
+  end
+
+  def nip_kepala_fix_plt
+    return if nip_kepala.nil?
+
+    nip_kepala.match?(/(-plt)/) ? nip_kepala.gsub!(/(-plt)/, '') : nip_kepala
+  end
+
+  def jabatan_kepala_tanpa_opd
+    jabatan_kepala.gsub!(/(?<=kepala).+/i, '')
   end
 end

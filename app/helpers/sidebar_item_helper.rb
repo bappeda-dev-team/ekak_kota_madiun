@@ -4,7 +4,7 @@ module SidebarItemHelper
       { title: 'Pengarusutamaan Gender', href: gender_path, icon: 'fas fa-people-carry', identifier: 'gender' },
       { title: 'Laporan Atasan', href: atasan_laporans_path, icon: 'fas fa-chart-line', identifier: 'atasan' },
       { title: 'Laporan KAK', href: laporan_kak_path, icon: 'fas fa-file', identifier: 'laporan_kak' },
-      { title: 'Laporan RAB', href: laporan_rka_path, icon: 'fas fa-money-check', identifier: 'laporan_rka' }
+      { title: 'Rincian Belanja', href: rincian_belanja_path, icon: 'fas fa-money-check', identifier: 'rincian_belanja' }
     ]
   end
 
