@@ -37,12 +37,12 @@
               <tr class="border-bottom">
                 <td class="<%= row_class %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= nomor %></td>
                 <td class="<%= row_class %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= user.nama %></td>
-                <td class="" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"></td>
+                <td class="border-start border-end text-wrap" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= render 'sasarans/table_status_sasaran', user: user %></td>
                 <% program_kegiatans.each do |(program_kegiatan, sasaran)| %>
                   <tr>
                     <td class="text-gray-900 text-wrap border-start border-end" width="100px" scope="rowgroup"><%= program_kegiatan&.nama_subkegiatan || '-' %></td>
                     <td class="text-gray-900 text-wrap border-start border-end" width="100px" scope="rowgroup">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
-                    <td class="text-wrap border-start border-end <%= warna_sasaran(sasaran.status_sasaran) %>" width="250px">
+                    <td class="text-wrap border-start border-end <%= warna_sasaran(sasaran.status_sasaran) %>" width="100px">
                       <%= sasaran.sasaran_kinerja %>
                     </td>
                     <td class="border-start border-end border-bottom text-center <%= warna_sasaran(sasaran.status_sasaran) %>" width="100px">

@@ -14,7 +14,11 @@ class KakService
   end
 
   def sasarans_filter(_tahun_sasaran, sasarans)
-    sasarans.reject { |s| s.tahun&.match?(/(_)/) }
+    if tahun.match(/(_)/)
+      sasarans.select { |s| s.tahun == _tahun_sasaran }
+    else
+      sasarans.reject { |s| s.tahun&.match?(/(_)/) }
+    end
   end
 
   def laporan_rencana_kinerja

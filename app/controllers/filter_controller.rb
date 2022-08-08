@@ -104,7 +104,7 @@ class FilterController < ApplicationController
   def filter_kak_dashboard
     kak = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
     @program_kegiatans = kak.laporan_rencana_kinerja
-    @total_pagu = kak.total_pagu(@program_kegiatans)
+    @total_pagu = kak.total_pagu
     # if OPD_TABLE.key?(opd.nama_opd.to_sym)
     #   @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[opd.nama_opd.to_sym] })
     #   @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[opd.nama_opd.to_sym])
