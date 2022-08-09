@@ -1,13 +1,11 @@
 <div id="header">
   <p>DAFTAR SASARAN KINERJA PER SUB KEGIATAN</p>
   <p>RENCANA KERJA <%= "#{@opd.nama_opd.upcase} #{@opd.lembaga.nama_lembaga.upcase}" %></p>
-  <p>TAHUN <%= @tahun %></p>
+  <p>TAHUN <%= @kak.tahun %></p>
 </div>
-
-
 <table style="border-collapse: collapse;">
   <thead style="display:table-header-group;">
-    <tr style="page-break-inside:avoid; page-break-after:auto;">
+    <tr style="page-break-inside:avoid; page-break-before:auto;">
       <th style="page-break-inside:avoid;border-bottom: 1px solid black;border-top: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;">No</th>
       <th style="page-break-inside:avoid;border-bottom: 1px solid black;border-top: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;">SubKegiatan</th>
       <th style="page-break-inside:avoid;border-bottom: 1px solid black;border-top: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;">Indikator</th>
@@ -26,26 +24,26 @@
     <% @program_kegiatans.each.with_index(1) do |(program_kegiatan, sasarans), nomor| %>
       <% rowspan_bawah = sasarans.map { |s| s.indikator_sasarans.size }.sum %>
       <% rowspan = sasarans.size + rowspan_bawah + 1 %>
-      <tr style="page-break-inside:avoid; page-break-after:always;">
+      <tr style="page-break-inside:avoid; page-break-before:always;">
         <td style="page-break-inside:avoid;border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;text-align: center" rowspan="<%= rowspan %>"><%= nomor %></td>
         <td style="page-break-inside:avoid;border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;width: 150px;padding: 5px;" rowspan="<%= rowspan %>"><%= program_kegiatan.nama_subkegiatan %></td>
         <td style="page-break-inside:avoid;border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;width: 150px;padding: 5px;" rowspan="<%= rowspan %>"><%= program_kegiatan.indikator_subkegiatan %></td>
         <td style="page-break-inside:avoid;border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;text-align: center;padding: 5px;" rowspan="<%= rowspan %>"><%= program_kegiatan.target_subkegiatan %></td>
         <td style="page-break-inside:avoid;border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;text-align: center;padding: 5px;" rowspan="<%= rowspan %>"><%= program_kegiatan.satuan_target_subkegiatan %></td>
-        <td style="page-break-inside:avoid;border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;" rowspan="<%= rowspan %>">Rp. <%= number_with_delimiter(program_kegiatan.my_pagu) or 0 %></td>
+        <td style="page-break-inside:avoid;border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;" rowspan="<%= rowspan %>">Rp. <%= number_with_delimiter(program_kegiatan.all_anggaran) or 0 %></td>
         <% sasarans.each.with_index(1) do |sasaran, no| %>
           <% rowspan_ind = sasaran.indikator_sasarans.size + 1 %>
-          <tr style="page-break-inside:avoid; page-break-after:auto;">
-            <td style="page-break-inside:avoid;border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;" rowspan="<%= rowspan_ind %>"><%= no %></td>
-            <td style="page-break-inside:avoid;border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;" rowspan="<%= rowspan_ind %>"><%= sasaran.sasaran_kinerja %></td>
+          <tr style="page-break-inside:avoid; page-break-before:auto;">
+            <td style="page-break-inside:avoid;border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;width: 150px;padding: 5px;" rowspan="<%= rowspan_ind %>"><%= no %></td>
+            <td style="page-break-inside:avoid;border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;width: 150px;padding: 5px;" rowspan="<%= rowspan_ind %>"><%= sasaran.sasaran_kinerja %></td>
             <td style="padding: 0px; margin: 0px;height: 0px !important;border-right: 1px black;"></td>
             <td style="padding: 0px; margin: 0px;height: 0px !important;border-right: 1px black;"></td>
             <td style="padding: 0px; margin: 0px;height: 0px !important;border-right: 1px black;"></td>
-            <td style="page-break-inside:avoid;border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;" rowspan="<%= rowspan_ind %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) or 0 %></td>
-            <td style="page-break-inside:avoid;border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;" rowspan="<%= rowspan_ind %>"></td>
+            <td style="page-break-inside:avoid;border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;width: 150px;padding: 5px;" rowspan="<%= rowspan_ind %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) or 0 %></td>
+            <td style="page-break-inside:avoid;border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;width: 150px;padding: 5px;" rowspan="<%= rowspan_ind %>"></td>
             <% sasaran.indikator_sasarans.each do |ind_sas| %>
-              <tr style="page-break-inside:avoid; page-break-after:auto;">
-                <td style="page-break-inside:avoid;border-bottom: 1px solid black;border-left: 1px solid black;padding: 5px;"><%= ind_sas.indikator_kinerja %></td>
+              <tr style="page-break-inside:avoid; page-break-before:auto;">
+                <td style="page-break-inside:avoid;border-bottom: 1px solid black;border-left: 1px solid black;width: 150px;padding: 5px;"><%= ind_sas.indikator_kinerja %></td>
                 <td style="page-break-inside:avoid;border-bottom: 1px solid black;border-left: 1px solid black;text-align: center;"><%= ind_sas.target %></td>
                 <td style="page-break-inside:avoid;border-bottom: 1px solid black;border-left: 1px solid black;text-align: center;"><%= ind_sas.satuan %></td>
               </tr>
@@ -56,15 +54,3 @@
     <% end %>
   </tbody>
 </table>
-<br>
-<br>
-<div id="footer">
-      <p>Madiun, Agustus 2022</p>
-      <p><strong>plt. KEPALA</strong></p>
-      <p><strong>Badan Perencanaan, Penelitian, dan Pengembangan Daerah</strong></p>
-      <br>
-      <br>
-      <br>
-      <p>Agus Trijajanto</p>
-      <p>NIP: 196909131997031005</p>
-    </div>
