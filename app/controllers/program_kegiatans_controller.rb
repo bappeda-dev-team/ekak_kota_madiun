@@ -110,7 +110,7 @@ class ProgramKegiatansController < ApplicationController
                footer: {
                 right: 'Hal. [page] / [topage]',
                 left: "#{@opd.nama_opd} tahun #{@kak.tahun}",
-                font_size: 8,
+                font_size: 7,
                 },
                template: 'program_kegiatans/cetak_daftar_kak.html.erb',
                layout: 'pdf',
