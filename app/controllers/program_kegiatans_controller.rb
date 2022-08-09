@@ -113,8 +113,9 @@ class ProgramKegiatansController < ApplicationController
                show_as_html: params.key?('debug'),
                orientation: 'Landscape',
                page_size: nil,
-               page_height: '215mm',
-               page_width: '330mm'
+               page_height: '300mm',
+               page_width: '215mm',
+               page_offset: 10
       end
     end
   end
