@@ -29,8 +29,9 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
   # after tabel pertama
   pdf.move_down 30
   # loop sasaran
-  @program_kegiatan.sasarans.where(tahun: @tahun).where.not(program_kegiatan: nil).each.with_index(1) do |sasaran, index|
+  @program_kegiatan.sasarans.where.not(program_kegiatan: nil).each.with_index(1) do |sasaran, index|
     dasar_hukum_arr = []
+    latar_belakang_arr = []
     permasalahan_arr = []
     indikator_arr = []
     satuan_arr = []
@@ -55,7 +56,16 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
     else
       dasar_hukum_arr = [['-']]
     end
-    if sasaran.permasalahans.any?
+    # Gambaran Umum
+    if sasaran.latar_belakangs.any?
+      sasaran.latar_belakangs.each do |latar_belakang|
+        latar_belakang_arr << [latar_belakang.gambaran_umum]
+      end
+    else
+      latar_belakang_arr = [['-']]
+    end
+    # Permasalahan
+   if sasaran.permasalahans.any?
       sasaran.permasalahans.each do |permasalahan|
         permasalahan_arr << [permasalahan.permasalahan]
         permasalahan_arr << ['Penyebab', '']
@@ -74,24 +84,30 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
         ['-', '']
       ]
     end
-    sasaran_cell = pdf.make_table(sasaran_arr, cell_style: { size: 8, border_width: 0 }, width: 388)
-    indikator_cell = pdf.make_table(indikator_arr, cell_style: { size: 8, border_width: 0 }, width: 388)
-    satuan_cell = pdf.make_table(satuan_arr, cell_style: { size: 8, border_width: 0 }, width: 388)
-    target_cell = pdf.make_table(target_arr, cell_style: { size: 8, border_width: 0 }, width: 388)
-    dasar_hukum_cell = pdf.make_table(dasar_hukum_arr, cell_style: { size: 8, border_width: 0 }, width: 300)
-    permasalahan_cell = pdf.make_table(permasalahan_arr, cell_style: { size: 8, border_width: 0 }, width: 300)
+    # variable for cell below
+    align_cell = :justify
+    cell_style_common = { size: 8, border_width: 0, align: align_cell }
+    common_cell_width = 388
+
+    sasaran_cell = pdf.make_table(sasaran_arr, cell_style: cell_style_common, width: common_cell_width)
+    indikator_cell = pdf.make_table(indikator_arr, cell_style: cell_style_common, width: common_cell_width)
+    satuan_cell = pdf.make_table(satuan_arr, cell_style: cell_style_common, width: common_cell_width)
+    target_cell = pdf.make_table(target_arr, cell_style: cell_style_common, width: common_cell_width)
+    dasar_hukum_cell = pdf.make_table(dasar_hukum_arr, cell_style: cell_style_common, width: common_cell_width)
+    latar_belakang_cell = pdf.make_table(latar_belakang_arr, cell_style: cell_style_common, width: common_cell_width)
+    permasalahan_cell = pdf.make_table(permasalahan_arr, cell_style: cell_style_common, width: common_cell_width)
     sasaran_judul = [
       [{ content: "#{index}.", font_style: :bold }, { content: "Sasaran/Rencana Kinerja", font_style: :bold }, ':',
        sasaran_cell],
       ['', 'Indikator Kinerja (Output)', ':', indikator_cell],
-      ['', 'Target', ':', satuan_cell],
-      ['', 'Satuan', ':', target_cell]
+      ['', 'Target', ':', target_cell],
+      ['', 'Satuan', ':', satuan_cell]
     ]
     dasar_hukum = [
       ['', 'a.', 'Dasar Hukum', ':', dasar_hukum_cell]
     ]
     gambaran_umum = [
-      ['', 'b.', 'Gambaran Umum', ':', { content: sasaran.latar_belakangs.first&.gambaran_umum || '-' }]
+      ['', 'b.', 'Gambaran Umum', ':', latar_belakang_cell]
     ]
     penerima_manfaat = [
       ['', 'c.', 'Penerima Manfaat', ':', { content: sasaran.penerima_manfaat || '-' }]
@@ -108,23 +124,29 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
     rencana_aksi_judul = [
       ['', 'g.', { content: 'Rencana Aksi dan Anggaran' }]
     ]
-    tabel_sasaran = pdf.make_table(sasaran_judul, column_widths: { 0 => 17, 2 => 13 },
-                                                  cell_style: { size: 8, border_width: 0 }, width: pdf.bounds.width)
-    tabel_dasar_hukum = pdf.make_table(dasar_hukum, column_widths: { 0 => 17, 1 => 17, 2 => 88, 3 => 12  },
-                                                    cell_style: { size: 8, border_width: 0, overflow: :expand }, width: pdf.bounds.width)
-    tabel_gambaran_umum = pdf.make_table(gambaran_umum, column_widths: { 0 => 17, 1 => 17, 2 => 88, 3 => 12 },
-                                                        cell_style: { size: 8, border_width: 0, overflow: :expand }, width: pdf.bounds.width)
-    tabel_penerima_manfaat = pdf.make_table(penerima_manfaat, column_widths: { 0 => 17, 1 => 17, 2 => 88, 3 => 12 },
-                                                              cell_style: { size: 8, border_width: 0, overflow: :expand }, width: pdf.bounds.width)
-    tabel_data_terpilah = pdf.make_table(data_terpilah, column_widths: { 0 => 17, 1 => 17, 2 => 88, 3 => 12 },
-                                                        cell_style: { size: 8, border_width: 0, overflow: :expand }, width: pdf.bounds.width)
-    tabel_permasalahan = pdf.make_table(permasalahan, column_widths: { 0 => 17, 1 => 17, 2 => 88, 3 => 12 },
-                                                      cell_style: { size: 8, border_width: 0, overflow: :expand }, width: pdf.bounds.width)
-    tabel_rincian = pdf.make_table(rincian_sasaran, column_widths: { 0 => 17, 1 => 17, 2 => 88, 3 => 12 },
-                                                    cell_style: { size: 8, border_width: 0, overflow: :expand }, width: pdf.bounds.width)
+    
+    # variable for table maker
+    common_widths = { 0 => 17, 1 => 17, 2 => 88, 3 => 12 }
+    common_table_cell_style = { size: 8, border_width: 0, overflow: :expand, align: :justify} 
+    common_table_width = pdf.bounds.width
+
+    tabel_sasaran = pdf.make_table(sasaran_judul, column_widths: { 0 => 17, 2 => 13, 4 => 100 },
+                                                  cell_style: common_table_cell_style, width: common_table_width)
+    tabel_dasar_hukum = pdf.make_table(dasar_hukum, column_widths: common_widths, 
+                                                    cell_style: common_table_cell_style, width: common_table_width)
+    tabel_gambaran_umum = pdf.make_table(gambaran_umum, column_widths: common_widths,
+                                                        cell_style: common_table_cell_style, width: common_table_width)
+    tabel_penerima_manfaat = pdf.make_table(penerima_manfaat, column_widths: common_widths,
+                                                              cell_style: common_table_cell_style, width: common_table_width)
+    tabel_data_terpilah = pdf.make_table(data_terpilah, column_widths: common_widths,
+                                                        cell_style: common_table_cell_style, width: common_table_width)
+    tabel_permasalahan = pdf.make_table(permasalahan, column_widths: common_widths,
+                                                      cell_style: common_table_cell_style, width: common_table_width)
+    tabel_rincian = pdf.make_table(rincian_sasaran, column_widths: common_widths,
+                                                    cell_style: common_table_cell_style, width: common_table_width)
     tabel_rencana_aksi_judul = pdf.make_table(rencana_aksi_judul, column_widths: { 0 => 17, 1 => 17 },
-                                                                  cell_style: { size: 8, border_width: 0 })
-    # pdf.table(tabel_sasaran, column_widths: { 0=> 17, 2=> 13 }, cell_style: { size: 8, border_width: 0 })
+                                                                  cell_style: common_table_cell_style)
+    # pdf.table(tabel_sasaran, column_widths: { 0=> 17, 2=> 13 }, cell_style: common_table_cell_style)
     tabel_sasaran.draw
     tabel_dasar_hukum.draw
     tabel_gambaran_umum.draw
@@ -182,21 +204,21 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
     pdf.move_down 10
     tabel_usulan_terakomodir = pdf.make_table(data_usulan_terakomodir,
                                               column_widths: { 0 => 18, 1 => 50, 2 => 100 },
-                                              cell_style: { size: 6, align: :left }, width: pdf.bounds.width, header: true)
+                                              cell_style: { size: 6, align: :center }, width: pdf.bounds.width, header: true)
     tabel_usulan_terakomodir.draw
     pdf.move_down 30
     pdf.start_new_page if (pdf.cursor - 50).negative?
   end
   pdf.start_new_page if (pdf.cursor - 111).negative?
   pdf.bounding_box([pdf.bounds.width - 300, pdf.cursor - 10], width: pdf.bounds.width - 200) do
-    pdf.text "Madiun, #{I18n.l Date.today}", size: 8, align: :center
+    pdf.text "Madiun,    #{I18n.l Date.today, format: "  %B %Y"}", size: 8, align: :center
     pdf.move_down 5
-    pdf.text "<strong>#{@program_kegiatan.opd.jabatan_kepala}</strong>", size: 8, align: :center, inline_format: true
+    pdf.text "<strong>#{@program_kegiatan.opd.jabatan_kepala_tanpa_opd}</strong>", size: 8, align: :center, inline_format: true
     pdf.text "<strong>#{@program_kegiatan.opd.nama_opd}</strong>", size: 8, align: :center, inline_format: true
     pdf.move_down 50
     pdf.text "<u>#{@program_kegiatan.opd.nama_kepala || '!!belum disetting'}</u>", size: 8, align: :center,
                                                                                    inline_format: true
     pdf.text @program_kegiatan.opd.pangkat_kepala || '!! belum disetting', size: 8, align: :center
-    pdf.text "NIP. #{@program_kegiatan.opd.nip_kepala || '!! belum disetting'}", size: 8, align: :center
+    pdf.text "NIP. #{@program_kegiatan.opd.nip_kepala_fix_plt || '!! belum disetting'}", size: 8, align: :center
   end
 end
