@@ -104,6 +104,19 @@ class ProgramKegiatansController < ApplicationController
     @program_kegiatans = kak.laporan_rencana_kinerja
 
     @filename = "LAPORAN_DAFTAR_KAK_#{@opd.nama_opd}_TAHUN_#{@tahun}.pdf"
+    respond_to do |format|
+      format.html { render 'cetak_daftar_kak', layout: false }
+      format.pdf do
+        render pdf: 'Daftar KAK',
+               template: 'program_kegiatans/cetak_daftar_kak.html.erb',
+               layout: 'pdf',
+               show_as_html: params.key?('debug'),
+               orientation: 'Landscape',
+               page_size: nil,
+               page_height: '215mm',
+               page_width: '330mm'
+      end
+    end
   end
 
   def edit; end

@@ -1,0 +1,63 @@
+<table style="width: 100%;border-collapse: collapse;font-size: 8pt;">
+  <thead>
+  <tr>
+    <th style="border-bottom: 1px solid black;border-top: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;">No</th>
+    <th style="border-bottom: 1px solid black;border-top: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;">SubKegiatan</th>
+    <th style="border-bottom: 1px solid black;border-top: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;">Indikator</th>
+    <th style="border-bottom: 1px solid black;border-top: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;">Target</th>
+    <th style="border-bottom: 1px solid black;border-top: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;">Satuan</th>
+    <th style="border-bottom: 1px solid black;border-top: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;">Pagu Anggaran</th>
+    <th style="border-bottom: 1px solid black;border-top: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;" colspan="2">Sasaran</th>
+    <th style="border-bottom: 1px solid black;border-top: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;">Indikator</th>
+    <th style="border-bottom: 1px solid black;border-top: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;">Target</th>
+    <th style="border-bottom: 1px solid black;border-top: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;">Satuan</th>
+    <th style="border-bottom: 1px solid black;border-top: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;">Pagu</th>
+    <th style="border-bottom: 1px solid black;border-top: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;">Keterangan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @program_kegiatans.each.with_index(1) do |(program_kegiatan, sasarans), nomor| %>
+    <% rowspan_bawah = sasarans.map { |s| s.indikator_sasarans.size }.sum %>
+    <% rowspan = sasarans.size + rowspan_bawah + 1 %>
+      <tr>
+        <td style="border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;text-align: center" rowspan="<%= rowspan %>"><%= nomor %></td>
+        <td style="border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;width: 200px;padding: 5px;" rowspan="<%= rowspan %>"><%= program_kegiatan.nama_subkegiatan %></td>
+        <td style="border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;width: 200px;padding: 5px;" rowspan="<%= rowspan %>"><%= program_kegiatan.indikator_subkegiatan %></td>
+        <td style="border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;text-align: center;padding: 5px;" rowspan="<%= rowspan %>"><%= program_kegiatan.target_subkegiatan %></td>
+        <td style="border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;text-align: center;padding: 5px;" rowspan="<%= rowspan %>"><%= program_kegiatan.satuan_target_subkegiatan %></td>
+        <td style="border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;" rowspan="<%= rowspan %>">Rp. <%= number_with_delimiter(program_kegiatan.my_pagu) or 0 %></td>
+        <% sasarans.each.with_index(1) do |sasaran, no| %>
+        <% rowspan_ind = sasaran.indikator_sasarans.size + 1 %>
+        <tr>
+        <td style="border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;" rowspan="<%= rowspan_ind %>"><%= no %></td>
+        <td style="border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;width: 200px;padding: 5px;" rowspan="<%= rowspan_ind %>"><%= sasaran.sasaran_kinerja %></td>
+        <td style="padding: 0px; margin: 0px;height: 0px !important;border-right: 1px black;"></td>
+        <td style="padding: 0px; margin: 0px;height: 0px !important;border-right: 1px black;"></td>
+        <td style="padding: 0px; margin: 0px;height: 0px !important;border-right: 1px black;"></td>
+        <td style="border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;" rowspan="<%= rowspan_ind %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) or 0 %></td>
+        <td style="border-bottom: 1px solid black;border-left: 1px solid black;border-right: 1px solid black;padding: 5px;" rowspan="<%= rowspan_ind %>"></td>
+        <% sasaran.indikator_sasarans.each do |ind_sas| %>
+        <tr>
+          <td style="border-bottom: 1px solid black;border-left: 1px solid black;width: 200px;padding: 5px;"><%= ind_sas.indikator_kinerja %></td>
+          <td style="border-bottom: 1px solid black;border-left: 1px solid black;"><%= ind_sas.target %></td>
+          <td style="border-bottom: 1px solid black;border-left: 1px solid black;"><%= ind_sas.satuan %></td>
+          </tr>
+        <% end %>
+        </tr>
+      <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<br>
+<div id="footer">
+      <p>Madiun, Agustus 2022</p>
+      <p><strong>plt. KEPALA</strong></p>
+      <p><strong>Badan Perencanaan, Penelitian, dan Pengembangan Daerah</strong></p>
+      <br>
+      <br>
+      <br>
+      <p>Agus Trijajanto</p>
+      <p>NIP: 196909131997031005</p>
+    </div>
