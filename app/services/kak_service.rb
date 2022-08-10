@@ -29,7 +29,7 @@ class KakService
 
   def sasarans_by_user
     asn_aktif_by_opd.map do |user_aktif|
-      { user_aktif => sasarans_filter(@tahun, user_sasarans(user_aktif)).to_h { |ss| [ss.program_kegiatan, ss] } }
+      { user_aktif => sasarans_filter(@tahun, user_sasarans(user_aktif)).group_by(&:program_kegiatan) }
     end
   end
 
