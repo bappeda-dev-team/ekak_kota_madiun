@@ -2,7 +2,7 @@
   <div class="card-header">
     <div class="row align-items-center">
       <div class="col">
-        <h2 class="fs-5 fw-bold mb-0">Daftar Resiko -  Tahun <%= @tahun %></h2>
+        <h2 class="fs-5 fw-bold mb-0">Daftar Resiko -  Tahun <%= @tahun_bener %></h2>
       </div>
       <div class="col text-end">
         <span><%= current_user.nama %></span>
@@ -28,14 +28,14 @@
           </tr>
         </thead>
         <tbody>
-          <% program_kegiatan_sasarans.order(id: :desc).each.with_index(1) do |kak, i| %>
-            <% row_awal = kak.sasarans.map { |sas| sas.indikator_sasarans.size }.compact %>
+          <% @program_kegiatans.each.with_index(1) do |(program_kegiatan, sasarans), i| %>
+            <% row_awal = sasarans.map { |sas| sas.indikator_sasarans.size }.compact %>
             <% row = row_awal.empty? ? 1 : row_awal.reduce(:+) %>
-            <% row_dalam = kak.sasarans.size + row %>
+            <% row_dalam = sasarans.size + row %>
             <tr class="border-bottom">
               <td class="text-gray-900 text-wrap border-start border-end" rowspan="<%= row_dalam %>"><%= i %></td>
-              <td class="text-gray-900 text-wrap border-start border-end" rowspan="<%= row_dalam %>"><%= kak.nama_subkegiatan %></td>
-              <% kak.sasarans.each do |show_sasaran| %>
+              <td class="text-gray-900 text-wrap border-start border-end" rowspan="<%= row_dalam %>"><%= program_kegiatan.nama_subkegiatan %></td>
+              <% sasarans.each do |show_sasaran| %>
                 <% row_indikator = show_sasaran.indikator_sasarans.size + 1  %>
                 <td class="text-wrap border-start border-end" rowspan="<%= row_indikator %>"><%= show_sasaran.sasaran_kinerja %></td>
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
@@ -62,10 +62,5 @@
         </tbody>
       </table>
     </div>
-  </div>
-  <div class="card-body">
-    <%= link_to "/cetak_daftar_resiko/#{@opd.id}/#{@tahun_murni}.pdf", class: 'btn btn-tertiary w-100', target: :_blank do %>
-      Cetak Daftar KaK Tahun <%= @tahun_murni %>
-    <% end %>
   </div>
 </div>
