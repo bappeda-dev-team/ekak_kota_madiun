@@ -256,15 +256,14 @@ class FilterController < ApplicationController
   end
 
   def daftar_resiko
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    tahun = params[:tahun]
-    @tahun_sasaran = tahun.match(/murni/) ? tahun[/[^_]\d*/, 0] : tahun
-    @tahun_murni = tahun
-    @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: @opd.kode_opd }).with_sasarans(@tahun_sasaran)
-    if OPD_TABLE.key?(@opd.nama_opd.to_sym)
-      @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[@opd.nama_opd.to_sym] }).with_sasarans(@tahun_sasaran)
-      @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[@opd.nama_opd.to_sym]) # idk about bidang thing
-    end
+    kak = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
+    @tahun_bener = kak.tahun
+    @program_kegiatans = kak.laporan_rencana_kinerja 
+#    if OPD_TABLE.key?(@opd.nama_opd.to_sym)
+#      @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[@opd.nama_opd.to_sym] }).with_sasarans(@tahun_sasaran)
+#      @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[@opd.nama_opd.to_sym]) # idk about bidang thing
+#    end
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd).id
     @id_target = "daftar_resiko"
     @filter_file = params[:filter_file].empty? ? "hasil_filter" : params[:filter_file]
     respond_to do |format|
@@ -272,6 +271,7 @@ class FilterController < ApplicationController
     end
   end
 
+  # filter tahun yang diaktifkan, dibawah logo E-KAK
   def tahun_sasaran
     @tahun_sasaran = params[:tahun_sasaran]
     @tahun_sasaran = @tahun_sasaran.match(/murni/) ? @tahun_sasaran[/[^_]\d*/, 0] : @tahun_sasaran
