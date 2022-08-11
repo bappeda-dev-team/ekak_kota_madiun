@@ -106,7 +106,8 @@ class ProgramKegiatansController < ApplicationController
     respond_to do |format|
       format.html { render 'cetak_daftar_kak', layout: false }
       format.pdf do
-        render pdf: 'Daftar KAK',
+        render pdf: @filename,
+               disposition: 'attachment',
                footer: {
                 right: 'Hal. [page] / [topage]',
                 left: "#{@opd.nama_opd} tahun #{@kak.tahun}",
