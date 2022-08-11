@@ -29,7 +29,7 @@ class KakService
 
   def sasarans_by_user
     asn_aktif_by_opd.map do |user_aktif|
-      { user_aktif => sasarans_filter(@tahun, user_sasarans(user_aktif)).to_h { |ss| [ss.program_kegiatan, ss] } }
+      { user_aktif => sasarans_filter(@tahun, user_sasarans(user_aktif)).group_by(&:program_kegiatan) }
     end
   end
 
@@ -50,11 +50,12 @@ class KakService
   end
 
   def total_sasaran_aktif
-    sasarans_by_user.map do |user_aktif|
-      user_aktif.each_value.map do |sasarans|
-        sasarans.count
-      end.compact.sum
-    end.inject(:+)
+    sasarans_by_user.map do |collections|
+      collections.values.map do |program_kegiatans|
+        program_kegiatans.values.map(&:size)
+      end
+    end.flatten.inject(:+)
+    #program_kegiatans.map { |collections| collections.map { |user, program_kegiatans| program_kegiatans.map { |k, v| v.size } } }.flatten.inject(:+)
   end
 
   def total_usulan_sasaran(tipe_usulan)
