@@ -395,6 +395,8 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    wicked_pdf (2.6.3)
+      activesupport
     xpath (3.2.0)
       nokogiri (~> 1.8)
     yard (0.9.27)
@@ -456,6 +458,7 @@ DEPENDENCIES
   web-console (>= 4.1.0)
   webdrivers
   webpacker (~> 5.0)
+  wicked_pdf
 
 RUBY VERSION
    ruby 3.0.1p64

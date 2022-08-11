@@ -96,14 +96,33 @@ class ProgramKegiatansController < ApplicationController
   end
 
   def cetak_daftar_kak
-    @tahun = params[:tahun] || Time.now.year
+    @tahun = params[:tahun]
     @opd = Opd.find(params[:opd])
     kode_opd = @opd.kode_unik_opd
-    @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
-    kak = KakService.new(kode_unik_opd: kode_opd, tahun: @tahun)
-    @program_kegiatans = kak.laporan_rencana_kinerja
+    @kak = KakService.new(kode_unik_opd: kode_opd, tahun: @tahun)
+    @program_kegiatans = @kak.laporan_rencana_kinerja
 
     @filename = "LAPORAN_DAFTAR_KAK_#{@opd.nama_opd}_TAHUN_#{@tahun}.pdf"
+    respond_to do |format|
+      format.html { render 'cetak_daftar_kak', layout: false }
+      format.pdf do
+        render pdf: @filename,
+               disposition: 'attachment',
+               footer: {
+                right: 'Hal. [page] / [topage]',
+                left: "#{@opd.nama_opd} tahun #{@kak.tahun}",
+                font_size: 7,
+                },
+               template: 'program_kegiatans/cetak_daftar_kak.html.erb',
+               layout: 'pdf',
+               show_as_html: params.key?('debug'),
+               orientation: 'Landscape',
+               page_size: nil,
+               page_height: '300mm',
+               page_width: '215mm',
+               enable_local_file_access: true
+      end
+    end
   end
 
   def edit; end
