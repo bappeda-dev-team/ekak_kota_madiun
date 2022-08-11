@@ -50,11 +50,12 @@ class KakService
   end
 
   def total_sasaran_aktif
-    sasarans_by_user.map do |user_aktif|
-      user_aktif.each_value.map do |sasarans|
-        sasarans.count
-      end.compact.sum
-    end.inject(:+)
+    sasarans_by_user.map do |collections|
+      collections.values.map do |program_kegiatans|
+        program_kegiatans.values.map(&:size)
+      end
+    end.flatten.inject(:+)
+    #program_kegiatans.map { |collections| collections.map { |user, program_kegiatans| program_kegiatans.map { |k, v| v.size } } }.flatten.inject(:+)
   end
 
   def total_usulan_sasaran(tipe_usulan)

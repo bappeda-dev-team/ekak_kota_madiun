@@ -19,33 +19,39 @@
             <th class="border-bottom border-start border-end" scope="col" rowspan="2">No.</th>
             <th class="border-bottom border-start border-end text-center" scope="col" rowspan="2">Pemilik Rencana</th>
             <th class="border-bottom border-start border-end text-center" scope="col" rowspan="2">Status</th>
-            <th class="border-bottom border-start border-end text-center" scope="col" rowspan="2">Sub Kegiatan KAK</th>
+            <th class="border-bottom border-start border-end text-center" scope="col" rowspan="2" colspan="2">Sub Kegiatan KAK</th>
             <th class="border-bottom border-start border-end text-center" scope="col" rowspan="2">Pagu Sub Kegiatan KAK</th>
-            <th class="border-bottom text-center border-start border-end" scope="col" colspan="2">Informasi KaK</th>
+            <th class="border-bottom text-center border-start border-end" scope="col" colspan="3">Informasi KaK</th>
             <th class="border-bottom text-center" scope="col" rowspan="2">Action</th>
           </tr>
           <tr>
-            <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
+            <th class="border-bottom text-center border-start border-end" colspan="2">Rencana Kinerja</th>
             <th class="border-bottom text-center border-start border-end">Pagu Anggaran</th>
           </tr>
         </thead>
         <tbody>
           <% row_class = 'border-top border-bottom border-start border-end text-wrap' %>
+          <% no_sub = 0 %>
+          <% no_sas = 0 %>
           <% @program_kegiatans.each.with_index(1) do |collections, nomor|  %>
             <% collections.each do |user, program_kegiatans|  %>
-              <% rowspan_sasaran = program_kegiatans.map { |k, v| v.size }.inject(:+) %>
+              <% rowspan_sasaran = program_kegiatans.map { |k, v| v.size }.inject(:+) || 0 %>
               <% rowspan_atas = program_kegiatans.size + rowspan_sasaran + 1 %>
               <tr class="border-bottom">
                 <td class="<%= row_class %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= nomor %></td>
                 <td class="<%= program_kegiatans.empty? ? row_class + ' bg-danger text-white' : row_class  %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= user.nama %></td>
                 <td class="<%= row_class %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= render 'sasarans/table_status_sasaran', user: user %></td>
-                <% program_kegiatans.each.with_index(1) do |(program_kegiatan, sasarans), no_sub| %>
+                <% program_kegiatans.each do |program_kegiatan, sasarans| %>
+                  <% no_sub = no_sub + 1 %>
                   <tr>
+                    <td class="<%= row_class %>" width="20px" scope="rowgroup" rowspan="<%= sasarans.size + 1 %>"><%= no_sub %></td>
                     <td class="<%= row_class %>" width="100px" scope="rowgroup" rowspan="<%= sasarans.size + 1 %>"><%= program_kegiatan&.nama_subkegiatan or '-' %></td>
                     <td class="<%= row_class %>" width="50px" scope="rowgroup" rowspan="<%= sasarans.size + 1 %>">Rp. <%= number_with_delimiter(sasarans.map(&:total_anggaran).inject(:+)) or 0 %></td>
                     <% sasarans.each do |sasaran| %>                    
                       <% status_sasaran = warna_sasaran(sasaran.status_sasaran) %>
+                      <% no_sas = no_sas + 1 %>
                       <tr>
+                        <td class="<%= status_sasaran %> text-wrap border-start border-end" width="20px"><%= no_sas %></td>
                         <td class="<%= status_sasaran %> text-wrap border-start border-end" width="200px"><%= sasaran.sasaran_kinerja %></td>
                         <td class="<%= status_sasaran %> text-wrap border-start border-end" width="200px">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
                         <td class="fw-bolder text-gray-500 text-center" scope="rowgroup">
