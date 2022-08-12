@@ -9,27 +9,7 @@
           Download Excel 
           <i class="fas fa-file-excel ms-2"></i>
         <% end %>
-      </div>
-      <% if current_user.has_role? :super_admin %>
-        <div class="col text-end">
-          <%= link_to sync_opd_path(kode_opd: opd.kode_unik_opd, tahun: Date.today.year),
-                      remote: true,
-                      data: { disable_with: 'Memproses....'}, 
-                      class:"btn btn-sm btn-primary" do %>
-            <i class="fas fa-sync me-2"></i>
-            Sync Sasaran OPD
-          <% end %>
-        </div>
-        <div class="col text-end">
-          <%= link_to sync_kota_path(kode_opd: opd.kode_unik_opd, tahun: Date.today.year),
-                      remote: true,
-                      data: { disable_with: 'Memproses....'}, 
-                      class:"btn btn-sm btn-primary" do %>
-            <i class="fas fa-sync me-2"></i>
-            Sync Sasaran Kota
-          <% end %>
-        </div>
-      <% end %>
+      </div> 
     </div>
   </div>
   <div class="card-body">
@@ -53,9 +33,18 @@
         <tbody>
           <tr>
             <td><%= opd.lembaga.nama_lembaga %></td>
-            <td>Nama kepala <%= opd.kepala&.nama %>
+            <td><strong><%= opd.nama_opd %></strong>
               <br>
-              - <%= opd.nama_opd %></td>
+              - Nama kepala <%= opd.kepala&.nama %>
+              <br>
+                <%= link_to sync_sasaran_path(kode_opd: opd.kode_unik_opd, tahun: Date.today.year, bulan: Date.today.month, nip_asn: opd.kepala&.nik),
+                    remote: true,
+                    data: { disable_with: 'Memproses....'}, 
+                    class:"btn btn-sm btn-primary" do %>
+                  <i class="fas fa-sync me-2"></i>
+                  Sync Sasaran
+                <% end %>
+            </td>
             <td>
               <% unless opd.kepala.nil? %>
                 <% opd.kepala.sasarans.order(:id).each.with_index(1) do |kepala_sas, nom| %>
@@ -81,6 +70,14 @@
               <% unless opd.kepala&.users.nil? %>
                 <% opd.kepala&.users.order(:id).each do |kabid| %>
                   - <%= kabid.nama %> - <%= kabid.jabatan %>
+                  <br>
+                  <%= link_to sync_sasaran_path(kode_opd: opd.kode_unik_opd, tahun: Date.today.year, bulan: Date.today.month, nip_asn: kabid.nik),
+                        remote: true,
+                      data: { disable_with: 'Memproses....'}, 
+                      class:"btn btn-sm btn-primary" do %>
+                    <i class="fas fa-sync me-2"></i>
+                    Sync Sasaran
+                  <% end %>
                   <br>
                   <% kabid.sasarans.order(:id).each.with_index(1) do |kabid_sas, no| %>
                     <%= kabid_sas.sasaran_atasan_id || 'sasaran atasan nil' %> <%= no %>- <%= kabid_sas&.sasaran_kinerja || 'OO' %> -- <%= kabid_sas&.id_rencana || 'xx' %>
@@ -113,6 +110,14 @@
                 <% opd.kepala.users.order(:id).each do |kabid| %>
                   <% kabid.users.each do |kasi| %>
                     - <%= kasi.nama %> - <%= kasi.jabatan %>
+                    <br>
+                    <%= link_to sync_sasaran_path(kode_opd: opd.kode_unik_opd, tahun: Date.today.year, bulan: Date.today.month, nip_asn: kasi.nik),
+                        remote: true,
+                        data: { disable_with: 'Memproses....'}, 
+                        class:"btn btn-sm btn-primary" do %>
+                      <i class="fas fa-sync me-2"></i>
+                      Sync Sasaran
+                    <% end %>
                     <br>
                     <% kasi.sasarans.order(:id).each.with_index(1) do |kasie_sas, no| %>
                       <%= kasie_sas.sasaran_atasan_id || 'sasaran atasan nil' %> <%= no %>- <%= kasie_sas&.sasaran_kinerja || 'OO' %> -- <%= kasie_sas&.id_rencana || 'xx' %>

@@ -3,6 +3,25 @@ s = wb.styles
 project_heading = s.add_style sz: 12, b: true
 red_line = s.add_style bg_color: "FF0000"
 center_hor = s.add_style sz: 12, b: true, alignment: { horizontal: :center }
+wb.add_worksheet(name: "InformasiUmumSasaranPemda") do |sheet_pemda|
+  sheet_pemda.add_row ["NAMA", nil, nil, nil, nil, nil, nil, nil, "Target Kinerja"], style: [project_heading, nil, nil, nil, nil, nil, nil, nil, center_hor]
+  sheet_pemda.merge_cells "I1:K1"
+  sheet_pemda.add_row ["VISI", nil, nil, nil, nil, nil, nil, "Satuan", "Nilai", "Atribut"], style: project_heading, offset: 1
+  sheet_pemda.add_row ["MISI"], style: project_heading, offset: 2
+  sheet_pemda.add_row ["Tujuan Strategis"], style: project_heading, offset: 3
+  sheet_pemda.add_row ["Sasaran Strategis"], style: project_heading, offset: 4
+  sheet_pemda.add_row ["Indikator Kinerja Sasaran"], style: project_heading, offset: 5
+  sheet_pemda.add_row [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil], style: red_line
+  # values
+  sheet_pemda.add_row ["PEMERINTAH KOTA MADIUN"]
+  sheet_pemda.add_row ["TERWUJUDNYA PEMERINTAHAN BERSIH BERWIBAWA MENUJU MASYARAKAT SEJAHTERA"], offset: 1
+  sheet_pemda.add_row ["Mewujudkan Pemerintahan yang Baik (Good Governance)"], offset: 2
+end
+wb.add_worksheet(name: "DaftarOPD") do |sheet_opd|
+  sheet_opd.add_row ["Nama OPD"], style: project_heading
+  sheet_opd.add_row [nil], style: red_line
+  sheet_opd.add_row [@opd.nama_opd]
+end
 wb.add_worksheet(name: "SasaranOPD") do |sheet|
   sheet.add_row ["Sasaran Pemda"], style: project_heading
   sheet.add_row ["Nama OPD"], style: project_heading, offset: 1

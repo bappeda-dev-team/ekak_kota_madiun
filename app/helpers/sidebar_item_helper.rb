@@ -56,6 +56,7 @@ module SidebarItemHelper
         icon: 'fas fa-tasks' },
       { title: 'Subkegiatan', href: admin_sub_kegiatan_path, identifier: 'admin_sub_kegiatan',
         icon: 'fas fa-tasks' },
+      { title: 'Sasaran Kota', href: sasaran_kota_path, icon: 'fas fa-scroll', identifier: 'sasaran_kota' },
       { title: 'User', href: adminusers_path, icon: 'fas fa-user-check', identifier: 'adminusers' },
       { title: 'OPD', href: opds_path, icon: 'fas fa-building', identifier: 'opds' },
       { title: 'Struktur Organisasi', href: struktur_users_path, icon: 'fas fa-sitemap', identifier: 'struktur' },
@@ -66,8 +67,7 @@ module SidebarItemHelper
 
   def super_admin_items
     [
-      { title: 'Role', href: roles_path, icon: 'fas fa-user-tag', identifier: 'roles' },
-      { title: 'Sasaran Kota', href: sasaran_kota_path, icon: 'fas fa-user-tag', identifier: 'sasaran_kota' }
+      { title: 'Role', href: roles_path, icon: 'fas fa-user-tag', identifier: 'roles' }
     ]
   end
 
