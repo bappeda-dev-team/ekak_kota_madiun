@@ -155,7 +155,7 @@ module Api
         data_sasaran = {
           id_rencana: sasaran['id'],
           sasaran_kinerja: sasaran['sasaran'],
-          sasaran_opd: sasaran['unit_id'],
+          sasaran_opd: sasaran['unit_id'], type: 'SasaranOpd',
           created_at: Time.now, updated_at: Time.now
         }
         SasaranOpd.upsert(data_sasaran, unique_by: :id_rencana)
@@ -170,7 +170,7 @@ module Api
           id_rencana: sasaran['id'],
           tahun: "#{sasaran['tahun_awal']}-#{sasaran['tahun_akhir']}",
           sasaran_kinerja: sasaran['sasaran_teks'],
-          sasaran_kota: '109',
+          sasaran_kota: '109', type: 'SasaranKota',
           created_at: Time.now, updated_at: Time.now
         }
         SasaranKota.upsert(data_sasaran, unique_by: :id_rencana)

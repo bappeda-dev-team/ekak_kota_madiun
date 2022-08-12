@@ -4,7 +4,8 @@ module SidebarItemHelper
       { title: 'Pengarusutamaan Gender', href: gender_path, icon: 'fas fa-people-carry', identifier: 'gender' },
       { title: 'Laporan Atasan', href: atasan_laporans_path, icon: 'fas fa-chart-line', identifier: 'atasan' },
       { title: 'Laporan KAK', href: laporan_kak_path, icon: 'fas fa-file', identifier: 'laporan_kak' },
-      { title: 'Rincian Belanja', href: rincian_belanja_path, icon: 'fas fa-money-check', identifier: 'rincian_belanja' }
+      { title: 'Rincian Belanja', href: rincian_belanja_path, icon: 'fas fa-money-check',
+        identifier: 'rincian_belanja' }
     ]
   end
 
@@ -31,7 +32,8 @@ module SidebarItemHelper
       { title: 'Laporan Musrenbang', href: '/laporan_usulan/musrenbang', identifier: 'laporan_usulan\/musrenbang' },
       { title: 'Laporan Pokok Pikiran', href: '/laporan_usulan/pokpir', identifier: 'laporan_usulan\/pokpir' },
       { title: 'Laporan Mandatori', href: '/laporan_usulan/mandatori', identifier: 'laporan_usulan\/mandatori' },
-      { title: 'Laporan Inisiatif Walikota', href: '/laporan_usulan/inisiatif', identifier: 'laporan_usulan\/inisiatif' }
+      { title: 'Laporan Inisiatif Walikota', href: '/laporan_usulan/inisiatif',
+        identifier: 'laporan_usulan\/inisiatif' }
     ]
   end
 
@@ -57,24 +59,29 @@ module SidebarItemHelper
       { title: 'User', href: adminusers_path, icon: 'fas fa-user-check', identifier: 'adminusers' },
       { title: 'OPD', href: opds_path, icon: 'fas fa-building', identifier: 'opds' },
       { title: 'Struktur Organisasi', href: struktur_users_path, icon: 'fas fa-sitemap', identifier: 'struktur' },
-      { title: 'Kelompok Anggaran', href: kelompok_anggarans_path, icon: 'fas fa-folder', identifier: 'kelompok_anggaran' }
+      { title: 'Kelompok Anggaran', href: kelompok_anggarans_path, icon: 'fas fa-folder',
+        identifier: 'kelompok_anggaran' }
     ]
   end
 
   def super_admin_items
     [
-      { title: 'Role', href: roles_path, icon: 'fas fa-user-tag', identifier: 'roles' }
+      { title: 'Role', href: roles_path, icon: 'fas fa-user-tag', identifier: 'roles' },
+      { title: 'Sasaran Kota', href: sasaran_kota_path, icon: 'fas fa-user-tag', identifier: 'sasaran_kota' }
     ]
   end
 
   def master_sipd_items
     [
       { title: 'Master Urusan', href: master_urusan_path, icon: 'fas fa-user-tag', identifier: 'master_urusan' },
-      { title: 'Master Bidang Urusan', href: master_bidang_urusan_path, icon: 'fas fa-user-tag', identifier: 'master_bidang_urusan' },
+      { title: 'Master Bidang Urusan', href: master_bidang_urusan_path, icon: 'fas fa-user-tag',
+        identifier: 'master_bidang_urusan' },
       { title: 'Master Program', href: master_programs_path, icon: 'fas fa-user-tag', identifier: 'master_programs' },
-      { title: 'Master Kegiatan', href: master_kegiatans_path, icon: 'fas fa-user-tag', identifier: 'master_kegiatans' },
+      { title: 'Master Kegiatan', href: master_kegiatans_path, icon: 'fas fa-user-tag',
+        identifier: 'master_kegiatans' },
       { title: 'Master Output', href: master_output_path, icon: 'fas fa-user-tag', identifier: 'master_output' },
-      { title: 'Master Sub Kegiatan', href: master_subkegiatans_path, icon: 'fas fa-user-tag', identifier: 'master_subkegiatans' }
+      { title: 'Master Sub Kegiatan', href: master_subkegiatans_path, icon: 'fas fa-user-tag',
+        identifier: 'master_subkegiatans' }
     ]
   end
 
@@ -88,7 +95,8 @@ module SidebarItemHelper
   def spip_items
     [
       { title: 'SPIP', href: spip_sasaran_program_opds_path, identifier: 'sasaran_program_opds/spip' },
-      { title: 'Daftar Resiko', href: daftar_resiko_sasaran_program_opds_path, identifier: 'sasaran_program_opds/daftar_resiko' }
+      { title: 'Daftar Resiko', href: daftar_resiko_sasaran_program_opds_path,
+        identifier: 'sasaran_program_opds/daftar_resiko' }
     ]
   end
 

@@ -3,7 +3,7 @@ class SasaranProgramOpdsController < ApplicationController
 
   def excel_spip
     @filename = "SPIP.xlsx"
-    @opd = Opd.find 136
+    @opd = Opd.find_by(kode_unik_opd: params[:kode_unik_opd])
     render xlsx: "excel_spip", filename: @filename, disposition: "inline"
   end
 
