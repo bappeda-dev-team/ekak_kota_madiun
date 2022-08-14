@@ -13,9 +13,9 @@ class KakService
     @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
   end
 
-  def sasarans_filter(_tahun_sasaran, sasarans)
+  def sasarans_filter(tahun_sasaran, sasarans)
     if tahun.match(/(_)/)
-      sasarans.select { |s| s.tahun == _tahun_sasaran }
+      sasarans.select { |s| s.tahun == tahun_sasaran }
     else
       sasarans.reject { |s| s.tahun&.match?(/(_)/) }
     end
@@ -55,7 +55,7 @@ class KakService
         program_kegiatans.values.map(&:size)
       end
     end.flatten.inject(:+)
-    #program_kegiatans.map { |collections| collections.map { |user, program_kegiatans| program_kegiatans.map { |k, v| v.size } } }.flatten.inject(:+)
+    # program_kegiatans.map { |collections| collections.map { |user, program_kegiatans| program_kegiatans.map { |k, v| v.size } } }.flatten.inject(:+)
   end
 
   def total_usulan_sasaran(tipe_usulan)
