@@ -16,6 +16,13 @@ wb.add_worksheet(name: "InformasiUmumSasaranPemda") do |sheet_pemda|
   sheet_pemda.add_row ["PEMERINTAH KOTA MADIUN"]
   sheet_pemda.add_row ["TERWUJUDNYA PEMERINTAHAN BERSIH BERWIBAWA MENUJU MASYARAKAT SEJAHTERA"], offset: 1
   sheet_pemda.add_row ["Mewujudkan Pemerintahan yang Baik (Good Governance)"], offset: 2
+  @opd.kepala.sasarans.group_by(&:sasaran_atasan_id).each do |key, sas_kota|
+    sheet_pemda.add_row [SasaranKota.find_by(id_rencana: key).sasaran_atasan], offset: 3
+    sheet_pemda.add_row [SasaranKota.find_by(id_rencana: key).sasaran_kinerja], offset: 4
+    SasaranKota.find_by(id_rencana: key).indikator_sasarans.each do |ind_sas_kota|
+      sheet_pemda.add_row [ind_sas_kota.indikator_kinerja, nil, nil, ind_sas_kota.satuan, ind_sas_kota.target.to_s, ind_sas_kota.satuan], offset: 5
+    end
+  end
 end
 wb.add_worksheet(name: "DaftarOPD") do |sheet_opd|
   sheet_opd.add_row ["Nama OPD"], style: project_heading

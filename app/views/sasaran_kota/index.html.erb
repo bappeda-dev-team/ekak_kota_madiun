@@ -35,6 +35,7 @@
           <thead class="thead-light">
             <tr>
               <th class="border-bottom" scope="col">No.</th>
+              <th class="border-bottom" scope="col">Tujuan</th>
               <th class="border-bottom" scope="col">Sasaran Kinerja Output</th>
               <th class="border-bottom" scope="col">Indikator Kinerja</th>
               <th class="border-bottom" scope="col">Target</th>
@@ -42,9 +43,10 @@
             </tr>
           </thead>
           <tbody id="tempat-row-sasaran">
-            <% @sasaran_kota.each.with_index(1) do |sasaran, i| %>
-              <tr> 
+            <% @sasaran_kota.order(:sasaran_atasan).each.with_index(1) do |sasaran, i| %>
+              <tr>
                 <td class="fw-bolder" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
+                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.tujuan %></td>
                 <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
                 <td class="p-0 m-0" colspan="3"></td>
                 <% sasaran.indikator_sasarans.each do |indikator| %>
@@ -62,4 +64,3 @@
     </div>
   </div>
 </div>
-

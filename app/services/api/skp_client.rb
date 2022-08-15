@@ -171,6 +171,7 @@ module Api
           tahun: "#{sasaran['tahun_awal']}-#{sasaran['tahun_akhir']}",
           sasaran_kinerja: sasaran['sasaran_teks'],
           sasaran_kota: '109', type: 'SasaranKota',
+          sasaran_atasan: sasaran['tujuan_teks'],
           created_at: Time.now, updated_at: Time.now
         }
         SasaranKota.upsert(data_sasaran, unique_by: :id_rencana)
