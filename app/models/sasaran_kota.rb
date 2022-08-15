@@ -35,4 +35,5 @@
 #  fk_rails_...  (subkegiatan_tematik_id => subkegiatan_tematiks.id)
 #
 class SasaranKota < Sasaran
+  has_many :indikator_sasarans_kota
 end

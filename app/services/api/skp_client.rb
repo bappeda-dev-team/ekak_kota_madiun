@@ -174,6 +174,20 @@ module Api
           created_at: Time.now, updated_at: Time.now
         }
         SasaranKota.upsert(data_sasaran, unique_by: :id_rencana)
+        next unless sasaran['indikators']
+
+        sasaran['indikators'].each do |ind_sas_kota|
+          data_indikator = {
+            indikator_kinerja: ind_sas_kota['indikator'],
+            target: ind_sas_kota['target_3'],
+            satuan: ind_sas_kota['satuan_3'],
+            sasaran_id: ind_sas_kota['id_sasaran_lokal'],
+            id_indikator: ind_sas_kota['id'],
+            type: 'IndikatorSasaranKota',
+            created_at: Time.now, updated_at: Time.now
+          }
+          IndikatorSasaran.upsert(data_indikator, unique_by: :id_indikator)
+        end
       end
     end
 

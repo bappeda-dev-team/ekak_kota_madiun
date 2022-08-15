@@ -48,7 +48,7 @@
                 <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
                 <td class="p-0 m-0" colspan="3"></td>
                 <% sasaran.indikator_sasarans.each do |indikator| %>
-                  <tr class="<%= warna_sasaran(sasaran.status_sasaran) %>">
+                  <tr>
                     <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.indikator_kinerja %></td>
                     <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.target %></td>
                     <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.satuan %></td>
