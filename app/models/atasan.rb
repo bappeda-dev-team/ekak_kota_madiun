@@ -31,4 +31,8 @@
 #
 class Atasan < User
   has_many :users, foreign_key: :atasan, primary_key: :nik
+
+  def sasaran_kasi(sasaran_kabid_id)
+    Sasaran.where(sasaran_atasan_id: sasaran_kabid_id)
+  end
 end

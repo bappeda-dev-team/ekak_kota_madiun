@@ -19,15 +19,6 @@
           <tr>
             <th>Lembaga</th>
             <th>Nama OPD</th>
-            <th>Sasaran OPD</th>
-            <th>Indikator Kinerja Sasaran OPD</th>
-            <th>Sasaran Program</th>
-            <th>Indikator Kinerja Program</th>
-            <th>Sasaran Kegiatan</th>
-            <th>Indikator Kinerja Kegiatan</th>
-            <th>Sub Kegiatan ( Output )</th>
-            <th>Indikator Kinerja Output</th>
-            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -35,126 +26,83 @@
             <td><%= opd.lembaga.nama_lembaga %></td>
             <td><strong><%= opd.nama_opd %></strong>
             </td>
-            <td>
-              <% unless opd.kepala.nil? %>
-                - Nama kepala <%= opd.kepala&.nama %>
-              <br>
-              <%= link_to sync_sasaran_path(kode_opd: opd.kode_unik_opd, tahun: Date.today.year, bulan: Date.today.month, nip_asn: opd.kepala&.nik),
-                remote: true,
-                data: { disable_with: 'Memproses....'},
-                class:"btn btn-sm btn-primary" do %>
-                <i class="fas fa-sync me-2"></i>
-                Sync Sasaran
-              <% end %>
-              <% opd.kepala.sasarans.order(:id).each.with_index(1) do |kepala_sas, nom| %>
-                <br>
-                <%= nom %>- <%= kepala_sas&.sasaran_kinerja || 'OO' %>
-              <% end %>
-              <br>
-            <% end %>
-            </td>
-            <td>
-              <% unless opd.kepala.nil? %>
-                <% opd.kepala.sasarans.order(:id).each do |kepala_sas| %>
-                  <% kepala_sas.indikator_sasarans.each do |ind_kepala_sas| %>
-                    <%= ind_kepala_sas.indikator_kinerja %> [ <%= ind_kepala_sas.target %> - <%= ind_kepala_sas.satuan %> ]
-                  <% end %>
-                  <br>
-                <% end %>
-                <br>
-              <% end %>
-            </td>
-            <td>Eselon 3 :
-              <br>
-              <% unless opd.kepala&.users.nil? %>
-                <% opd.kepala&.users.order(:id).each do |kabid| %>
-                  - <%= kabid.nama %> - <%= kabid.jabatan %>
-                <br>
-                <%= link_to sync_sasaran_path(kode_opd: opd.kode_unik_opd, tahun: Date.today.year, bulan: Date.today.month, nip_asn: kabid.nik),
+          </tr>
+          <% unless opd.kepala.nil? %>
+            <tr>
+              <td colspan="2">
+                <strong>Kepala <%= opd.kepala&.nama %></strong>
+
+                - <%= link_to sync_sasaran_path(kode_opd: opd.kode_unik_opd, tahun: Date.today.year, bulan: Date.today.month, nip_asn: opd.kepala&.nik),
                   remote: true,
                   data: { disable_with: 'Memproses....'},
                   class:"btn btn-sm btn-primary" do %>
                   <i class="fas fa-sync me-2"></i>
                   Sync Sasaran
                 <% end %>
-                <br>
-                <% kabid.sasarans.order(:id).each.with_index(1) do |kabid_sas, no| %>
-                  <%= no %>- <%= kabid_sas&.sasaran_kinerja || 'OO' %>
-                  <br>
-                <% end %>
-                <br>
-              <% end %>
-            <% end %>
-            </td>
-            <td>
-              <br>
-              <% unless opd.kepala&.users.nil? %>
-                <% opd.kepala.users.order(:id).each do |kabid| %>
-                  - <%= kabid.nama %> - <%= kabid.jabatan %>
-                <br>
-                <% kabid.sasarans.order(:id).each do |kabid_sas| %>
-                  <% kabid_sas&.indikator_sasarans.order(:sasaran_id).each do |ind| %>
-                    -- <%= ind.indikator_kinerja %> [ <%= ind.target %> - <%= ind.satuan %> ]
-                    <br>
-                  <% end %>
-                  <br>
-                <% end %>
-                <br>
-              <% end %>
-            <% end %>
-            </td>
-            <td>Eselon 4 :
-              <br>
-              <% unless opd.kepala&.users.nil? %>
-                <% opd.kepala.users.order(:id).each do |kabid| %>
-                  <% kabid.users.each do |kasi| %>
-                    - <%= kasi.nama %> - <%= kasi.jabatan %>
-                  <br>
-                  <%= link_to sync_sasaran_path(kode_opd: opd.kode_unik_opd, tahun: Date.today.year, bulan: Date.today.month, nip_asn: kasi.nik),
-                    remote: true,
-                    data: { disable_with: 'Memproses....'},
-                    class:"btn btn-sm btn-primary" do %>
-                    <i class="fas fa-sync me-2"></i>
-                    Sync Sasaran
-                  <% end %>
-                  <br>
-                  <% kasi.sasarans.order(:id).each.with_index(1) do |kasie_sas, no| %>
-                    <%= no %>- <%= kasie_sas&.sasaran_kinerja || 'OO' %>
-                    <br>
-                  <% end %>
-                  <br>
-                <% end %>
-                <br>
-              <% end %>
-            <% end %>
-            </td>
-            <td>Indikator Kinerja Kegiatan SIPD</td>
-            <td>Pilih Sub Kegiatan</td>
-            <td>
-              <br>
-              <% unless opd.kepala&.users.nil? %>
-                <% opd.kepala.users.order(:id).each do |kabid| %>
-                  <% kabid.users.each do |kasi| %>
-                    - <%= kasi.nama %> - <%= kasi.jabatan %>
-                  <br>
-                  <% kasi.sasarans.order(:id).each do |kasie_sas| %>
-                    <%= kasie_sas&.id_rencana %>-
-                    <% kasie_sas&.indikator_sasarans.order(:sasaran_id).each do |ind_kasi| %>
-                      -- <%= ind_kasi.indikator_kinerja %> [ <%= ind_kasi.target %> - <%= ind_kasi.satuan %> ]
-                      <br>
+              </td>
+            </tr>
+            <% opd.kepala.sasarans.order(:id).each.with_index(1) do |kepala_sas, nom| %>
+              <thead class="thead-light">
+                <tr>
+                  <th>Sasaran OPD</th>
+                  <th>Indikator Sasaran OPD</th>
+                </tr>
+              </thead>
+              <tr>
+                <td class="table-primary border-start text-wrap" rowspan="<%= kepala_sas.indikator_sasarans.size + 1 %>"><%= nom %>- <%= kepala_sas&.sasaran_kinerja %></td>
+                <% kepala_sas.indikator_sasarans.order(:id).each do |ind_kepala_sas| %>
+                  <tr>
+                    <td class="table-primary text-wrap"><%= ind_kepala_sas.indikator_kinerja %></td>
+                    <!-- Sasaran Eselon 3 -->
+                    <% ind_kepala_sas.sasaran_kabid.each do |kabid_sas| %>
+                      <thead class="thead-light">
+                        <tr>
+                          <th>Program</th>
+                          <th>Sasaran Kabid</th>
+                          <th>Indikator Sasaran Kabid</th>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <% kabid_sas.sasaran_kasi.map { |s| s.program_kegiatan&.nama_program }.compact.uniq.each do |program_kabid| %>
+                          <tr>
+                            <td class="table-secondary border-start text-wrap" rowspan="<%= kabid_sas.indikator_sasarans.size + 2 %>">
+                              <%= program_kabid %>
+                            </td>
+                          </tr>
+                        <% end %>
+                        <td class="table-secondary border-start text-wrap" rowspan="<%= kabid_sas.indikator_sasarans.size + 1 %>"><%= kabid_sas.sasaran_kinerja %></td>
+                        <% kabid_sas.indikator_sasarans.order(:id).each do |ind_kabid_sas| %>
+                          <tr>
+                            <td class="table-secondary text-wrap"><%= ind_kabid_sas.indikator_kinerja %></td>
+                          </tr>
+                        <% end %>
+                        <thead class="thead-light">
+                          <tr>
+                            <th>Kegiatan</th>
+                            <th>SubKegiatan</th>
+                            <th>Sasaran Kasi</th>
+                            <th>Indikator Sasaran Kasi</th>
+                          </tr>
+                        </thead>
+                        <% kabid_sas.sasaran_kasi.each do |kasi_sas| %>
+                          <tr>
+                            <td class="table-info text-wrap" rowspan="<%= kasi_sas.indikator_sasarans.size + 1 %>"><%= kasi_sas.program_kegiatan&.nama_kegiatan || '-' %></td>
+                            <td class="table-info text-wrap" rowspan="<%= kasi_sas.indikator_sasarans.size + 1 %>"><%= kasi_sas.program_kegiatan&.nama_subkegiatan || '-' %></td>
+                            <td class="table-info text-wrap" rowspan="<%= kasi_sas.indikator_sasarans.size + 1 %>"><%= kasi_sas.sasaran_kinerja %></td>
+                            <% kasi_sas.indikator_sasarans.order(:id).each do |ind_kasi_sas| %>
+                              <tr>
+                                <td class="table-info text-wrap"><%= ind_kasi_sas.indikator_kinerja %></td>
+                              </tr>
+                            <% end %>
+                          </tr>
+                        <% end %>
+                      </tr>
                     <% end %>
-                    <br>
-                  <% end %>
-                  <br>
+                  </tr>
                 <% end %>
-                <br>
-              <% end %>
+              </tr>
             <% end %>
-            </td>
-            <td>
-              Pilih Program | Pilih Kegiatan
-            </td>
-          </tr>
+          <% end %>
         </tbody>
       </table>
     </div>
