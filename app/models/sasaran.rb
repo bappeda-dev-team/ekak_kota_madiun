@@ -281,4 +281,8 @@ class Sasaran < ApplicationRecord
 
     rekin_atasan.indikator_sasarans
   end
+
+  def sasaran_kasi
+    Sasaran.where(sasaran_atasan_id: id_rencana)
+  end
 end

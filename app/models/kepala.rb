@@ -31,5 +31,5 @@
 #
 class Kepala < User
   # has_many :atasans, foreign_key: :atasan, primary_key: :nik
-  has_many :users, foreign_key: :atasan, primary_key: :nik
+  has_many :kabids, foreign_key: :atasan, primary_key: :nik, class_name: 'User'
 end

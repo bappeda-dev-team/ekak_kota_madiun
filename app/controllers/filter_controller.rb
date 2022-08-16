@@ -1,6 +1,8 @@
 class FilterController < ApplicationController
   before_action :filter_params, except: %i[filter_tematiks]
   before_action :nama_opd, only: %i[filter_gender filter_struktur]
+  skip_before_action :verify_authenticity_token, only: %i[filter_program_saja]
+  skip_before_action :authenticate_user!, only: %i[filter_program_saja]
 
   OPD_TABLE = {
     'Dinas Kesehatan, Pengendalian Penduduk dan Keluarga Berencana': "Dinas Kesehatan",
@@ -79,12 +81,17 @@ class FilterController < ApplicationController
 
   def filter_program_saja
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
-    @programKegiatans = ProgramKegiatan.includes(:opd).select("DISTINCT ON(program_kegiatans.kode_giat) program_kegiatans.*").where(opds: { kode_unik_opd: @kode_opd })
+    @programKegiatans = ProgramKegiatan.includes(:opd)
+                                       .select("DISTINCT ON(program_kegiatans.kode_program) program_kegiatans.*")
+                                       .where(opds: { kode_unik_opd: @kode_opd })
     if OPD_TABLE.key?(opd.to_sym)
-      @programKegiatans = ProgramKegiatan.includes(:opd).select("DISTINCT ON(program_kegiatans.kode_giat) program_kegiatans.*").where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
+      @programKegiatans = ProgramKegiatan.includes(:opd)
+                                         .select("DISTINCT ON(program_kegiatans.kode_program) program_kegiatans.*")
+                                         .where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
     end
     respond_to do |format|
       @render_file = "program_kegiatans/hasil_filter_program"
+      format.json { render 'program_kegiatans/filter_program' }
       format.js { render "program_kegiatans/program_kegiatan_filter" }
     end
   end
@@ -258,11 +265,11 @@ class FilterController < ApplicationController
   def daftar_resiko
     kak = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
     @tahun_bener = kak.tahun
-    @program_kegiatans = kak.laporan_rencana_kinerja 
-#    if OPD_TABLE.key?(@opd.nama_opd.to_sym)
-#      @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[@opd.nama_opd.to_sym] }).with_sasarans(@tahun_sasaran)
-#      @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[@opd.nama_opd.to_sym]) # idk about bidang thing
-#    end
+    @program_kegiatans = kak.laporan_rencana_kinerja
+    #    if OPD_TABLE.key?(@opd.nama_opd.to_sym)
+    #      @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[@opd.nama_opd.to_sym] }).with_sasarans(@tahun_sasaran)
+    #      @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[@opd.nama_opd.to_sym]) # idk about bidang thing
+    #    end
     @opd = Opd.find_by(kode_unik_opd: @kode_opd).id
     @id_target = "daftar_resiko"
     @filter_file = params[:filter_file].empty? ? "hasil_filter" : params[:filter_file]
