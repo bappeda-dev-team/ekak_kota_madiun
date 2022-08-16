@@ -155,6 +155,8 @@ Rails.application.routes.draw do
     get :tahun_sasaran
   end
 
+  resources :sasaran_kota
+
   mount Sidekiq::Web, at: "/sidekiq"
 
   # resque

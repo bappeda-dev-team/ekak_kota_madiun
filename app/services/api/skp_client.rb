@@ -155,7 +155,7 @@ module Api
         data_sasaran = {
           id_rencana: sasaran['id'],
           sasaran_kinerja: sasaran['sasaran'],
-          sasaran_opd: sasaran['unit_id'],
+          sasaran_opd: sasaran['unit_id'], type: 'SasaranOpd',
           created_at: Time.now, updated_at: Time.now
         }
         SasaranOpd.upsert(data_sasaran, unique_by: :id_rencana)
@@ -170,10 +170,27 @@ module Api
           id_rencana: sasaran['id'],
           tahun: "#{sasaran['tahun_awal']}-#{sasaran['tahun_akhir']}",
           sasaran_kinerja: sasaran['sasaran_teks'],
-          sasaran_kota: '109',
+          type: 'SasaranKota',
+          sasaran_atasan: sasaran['tujuan_teks'],
+          sasaran_opd: sasaran['misi_teks'],
+          sasaran_kota: sasaran['visi_teks'],
           created_at: Time.now, updated_at: Time.now
         }
         SasaranKota.upsert(data_sasaran, unique_by: :id_rencana)
+        next unless sasaran['indikators']
+
+        sasaran['indikators'].each do |ind_sas_kota|
+          data_indikator = {
+            indikator_kinerja: ind_sas_kota['indikator'],
+            target: ind_sas_kota['target_3'],
+            satuan: ind_sas_kota['satuan_3'],
+            sasaran_id: ind_sas_kota['id_sasaran_lokal'],
+            id_indikator: ind_sas_kota['id'],
+            type: 'IndikatorSasaranKota',
+            created_at: Time.now, updated_at: Time.now
+          }
+          IndikatorSasaran.upsert(data_indikator, unique_by: :id_indikator)
+        end
       end
     end
 

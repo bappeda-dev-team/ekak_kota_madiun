@@ -2,9 +2,9 @@ class SasaranProgramOpdsController < ApplicationController
   def spip; end
 
   def excel_spip
-    @filename = "SPIP.xlsx"
-    @opd = Opd.find 136
-    render xlsx: "excel_spip", filename: @filename, disposition: "inline"
+    @filename = "Template_import_Kota_Madiun 21.xlsx"
+    @opd = Opd.find_by(kode_unik_opd: params[:kode_unik_opd])
+    render xlsx: "excel_spip", filename: @filename, disposition: "attachment"
   end
 
   def daftar_resiko; end
