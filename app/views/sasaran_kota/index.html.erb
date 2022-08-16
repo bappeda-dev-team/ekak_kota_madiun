@@ -1,0 +1,70 @@
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to sasaran_kota_path %></li>
+      </ol>
+    </nav>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Sasaran Kota</h2>
+          </div>
+          <div class="col text-end">
+            <%= link_to sync_kota_path,
+                        remote: true,
+                        data: { disable_with: 'Memproses....'}, 
+                        class:"btn btn-sm btn-primary" do %>
+              <i class="fas fa-sync me-2"></i>
+              Sync Sasaran Kota
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center">
+          <caption class="p-3 mt-3">
+            <%= link_to "Buat sasaran kinerja baru",'#', class: "btn btn-info w-100" %>
+          </caption>
+          <thead class="thead-light">
+            <tr>
+              <th class="border-bottom" scope="col">No.</th>
+              <th class="border-bottom" scope="col">VISI</th>
+              <th class="border-bottom" scope="col">MISI</th>
+              <th class="border-bottom" scope="col">Tujuan</th>
+              <th class="border-bottom" scope="col">Sasaran Kinerja Output</th>
+              <th class="border-bottom" scope="col">Indikator Kinerja</th>
+              <th class="border-bottom" scope="col">Target</th>
+              <th class="border-bottom" scope="col">Satuan</th>
+            </tr>
+          </thead>
+          <tbody id="tempat-row-sasaran">
+            <% @sasaran_kota.order(:sasaran_atasan).each.with_index(1) do |sasaran, i| %>
+              <tr>
+                <td class="fw-bolder" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
+                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.visi %></td>
+                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.misi %></td>
+                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.tujuan %></td>
+                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
+                <td class="p-0 m-0" colspan="3"></td>
+                <% sasaran.indikator_sasarans.each do |indikator| %>
+                  <tr>
+                    <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.indikator_kinerja %></td>
+                    <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.target %></td>
+                    <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.satuan %></td>
+                  </tr>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

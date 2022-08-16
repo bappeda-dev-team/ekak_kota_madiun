@@ -17,7 +17,7 @@
 #
 #  index_indikator_sasarans_on_id_indikator  (id_indikator) UNIQUE
 #
-FactoryBot.define do
-  factory :indikator_sasaran do
-  end
+class IndikatorSasaranKota < IndikatorSasaran
+  # TODO: filter by tahun, dan get semua indikator dari awal - akhir
+  belongs_to :sasaran_kota, foreign_key: 'sasaran_id', primary_key: 'id_rencana', optional: true
 end

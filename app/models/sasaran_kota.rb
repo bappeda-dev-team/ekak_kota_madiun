@@ -35,4 +35,15 @@
 #  fk_rails_...  (subkegiatan_tematik_id => subkegiatan_tematiks.id)
 #
 class SasaranKota < Sasaran
+  def visi
+    sasaran_kota
+  end
+
+  def misi
+    sasaran_opd
+  end
+
+  def tujuan
+    sasaran_atasan
+  end
 end
