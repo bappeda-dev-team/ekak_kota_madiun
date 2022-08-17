@@ -23,6 +23,7 @@ wb.add_worksheet(name: "InformasiUmumSasaranPemda") do |sheet_pemda|
       sheet_pemda.add_row [ind_sas_kota.indikator_kinerja, nil, nil, ind_sas_kota.satuan, ind_sas_kota.target.to_s, ind_sas_kota.satuan], offset: 5
     end
   end
+  sheet_pemda.column_widths 5,5,5,5,5,5
 end
 wb.add_worksheet(name: "DaftarOPD") do |sheet_opd|
   sheet_opd.add_row ["Nama OPD"], style: project_heading
@@ -69,36 +70,35 @@ wb.add_worksheet(name: "SasaranProgramKegiatanOPD") do |sheet|
       
       # sasaran program ( kabid )
       ind_sas_kepala.sasaran_kabid.each do |sas_kabid|
-        sheet.add_row ["#{sas_kabid.sasaran_kinerja}", nil, nil, nil, nil, nil, "#{sas_kabid&.program_kegiatan&.nama_program || 'PROGRAM PENUNJANG URUSAN PEMERINTAHAN DAERAH KABUPATEN/KOTA'}"], offset: 4
+        sheet.add_row ["#{sas_kabid.sasaran_kinerja}", nil, nil, nil, nil, nil, "#{sas_kabid.program_kabid.pop || '-'}"], offset: 4
 
         # indikator sasaran kabid
         sas_kabid.indikator_sasarans.each do |ind_sas_kabid|
           sheet.add_row ["#{ind_sas_kabid.indikator_kinerja}", nil, nil, nil, nil, nil, nil,
                          "#{ind_sas_kabid.satuan}", "#{ind_sas_kabid.target}", "#{ind_sas_kabid.aspek}"], offset: 5
-          
+         end 
           # sasaran kegiatan ( eselon 4 )
-          Sasaran.where(sasaran_atasan_id: ind_sas_kabid.sasaran_id).each do |sas_kasi|
+        sas_kabid.sasaran_kasi.order(:id).each do |sas_kasi|
 
-            sheet.add_row ["#{sas_kasi.sasaran_kinerja}", nil, nil, nil, nil,
-                           "#{sas_kasi&.program_kegiatan&.nama_kegiatan || 'Administrasi Kepegawaian Perangkat Daerah'}"], offset: 6
-            # indikator kegiatan
-            sheet.add_row ["#{sas_kasi&.program_kegiatan&.indikator_kinerja || 'Indeks Reformasi Birokrasi Perangkat Daerah'}", nil, nil, nil, nil,
-                           "#{sas_kasi&.program_kegiatan&.satuan || '%'}", "#{sas_kasi&.program_kegiatan&.target || 100}",
-                           "#{sas_kasi&.program_kegiatan&.satuan || '%'}"], offset: 7
+          sheet.add_row ["#{sas_kasi.sasaran_kinerja}", nil, nil, nil, nil,
+                         "#{sas_kasi&.program_kegiatan&.nama_kegiatan || '-'}"], offset: 6
+          # indikator kegiatan
+          sheet.add_row ["#{sas_kasi&.program_kegiatan&.indikator_kinerja || 'Indeks Reformasi Birokrasi Perangkat Daerah'}", nil, nil, nil, nil,
+                         "#{sas_kasi&.program_kegiatan&.satuan || '%'}", "#{sas_kasi&.program_kegiatan&.target || 100}",
+                         "#{sas_kasi&.program_kegiatan&.satuan || '%'}"], offset: 7
 
-            # nama subkegiatan
-            sheet.add_row ["#{sas_kasi&.program_kegiatan&.nama_subkegiatan || 'Koordinasi Penyusunan Dokumen Perencanaan Pembangunan Daerah Bidang Pemerintahan (RPJPD, RPJMD dan RKPD)'}"], offset: 8
+          # nama subkegiatan
+          sheet.add_row ["#{sas_kasi&.program_kegiatan&.nama_subkegiatan || '-'}"], offset: 8
 
-            # indikator sasaran ( eselon 4 )
-            sas_kasi.indikator_sasarans.each do |ind_sas_kasi|
-              sheet.add_row ["#{ind_sas_kasi.indikator_kinerja}", nil, nil,
-                             "#{ind_sas_kasi.satuan}", "#{ind_sas_kasi.target}", "#{ind_sas_kasi.aspek}"], offset: 9
-            end
+          # indikator sasaran ( eselon 4 )
+          sas_kasi.indikator_sasarans.each do |ind_sas_kasi|
+            sheet.add_row ["#{ind_sas_kasi.indikator_kinerja}", nil, nil,
+                           "#{ind_sas_kasi.satuan}", "#{ind_sas_kasi.target}", "#{ind_sas_kasi.aspek}"], offset: 9
           end
         end
       end
     end
-
+    sheet.column_widths 5,5,5,5,5,5,5,5,5,5,5,5
   end
   # @program_kegiatans.each do |pk|
   #   pk.usulans.where(usulanable_type: @jenis).each do |us|

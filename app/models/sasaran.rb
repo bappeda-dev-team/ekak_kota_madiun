@@ -71,7 +71,9 @@ class Sasaran < ApplicationRecord
   scope :hangus, -> { left_outer_joins(:usulans).where(usulans: { sasaran_id: nil }).where(program_kegiatan: nil) }
   scope :total_hangus, -> { hangus.count }
   scope :belum_ada_sub, lambda {
-                          left_outer_joins(:usulans).where.not(usulans: { sasaran_id: nil }).where(program_kegiatan: nil)
+                          left_outer_joins(:usulans)
+                            .where.not(usulans: { sasaran_id: nil })
+                            .where(program_kegiatan: nil)
                         }
   scope :total_belum_lengkap, -> { belum_ada_sub.count }
   scope :sudah_lengkap, lambda {
@@ -282,7 +284,11 @@ class Sasaran < ApplicationRecord
     rekin_atasan.indikator_sasarans
   end
 
+  def program_kabid
+    sasaran_kasi.map { |s| s.program_kegiatan&.nama_program || '-' }.uniq
+  end
+
   def sasaran_kasi
-    Sasaran.where(sasaran_atasan_id: id_rencana)
+    Sasaran.where(sasaran_atasan_id: id_rencana).dengan_sub_kegiatan
   end
 end
