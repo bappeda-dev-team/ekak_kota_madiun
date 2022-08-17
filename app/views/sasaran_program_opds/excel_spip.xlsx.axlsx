@@ -83,9 +83,9 @@ wb.add_worksheet(name: "SasaranProgramKegiatanOPD") do |sheet|
           sheet.add_row ["#{sas_kasi.sasaran_kinerja}", nil, nil, nil, nil,
                          "#{sas_kasi&.program_kegiatan&.nama_kegiatan || '-'}"], offset: 6
           # indikator kegiatan
-          sheet.add_row ["#{sas_kasi&.program_kegiatan&.indikator_kinerja || 'Indeks Reformasi Birokrasi Perangkat Daerah'}", nil, nil, nil, nil,
-                         "#{sas_kasi&.program_kegiatan&.satuan || '%'}", "#{sas_kasi&.program_kegiatan&.target || 100}",
-                         "#{sas_kasi&.program_kegiatan&.satuan || '%'}"], offset: 7
+          sheet.add_row ["#{sas_kasi.program_kegiatan&.indikator_kinerja}", nil, nil, nil, nil,
+                         "#{sas_kasi.program_kegiatan&.satuan}", "#{sas_kasi.program_kegiatan&.target}",
+                         "#{sas_kasi.program_kegiatan&.satuan}"], offset: 7
 
           # nama subkegiatan
           sheet.add_row ["#{sas_kasi&.program_kegiatan&.nama_subkegiatan || '-'}"], offset: 8
