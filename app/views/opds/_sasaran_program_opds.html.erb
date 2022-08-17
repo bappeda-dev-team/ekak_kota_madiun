@@ -58,22 +58,21 @@
                       <thead class="thead-light">
                         <tr>
                           <th>Program</th>
-                          <th>Sasaran Kabid</th>
+                          <th>Sasaran Kabid - <%= kabid_sas.user.nama %></th>
                           <th>Indikator Sasaran Kabid</th>
                         </tr>
                       </thead>
                       <tr>
-                        <% kabid_sas.sasaran_kasi.map { |s| s.program_kegiatan&.nama_program }.compact.uniq.each do |program_kabid| %>
-                          <tr>
-                            <td class="table-secondary border-start text-wrap" rowspan="<%= kabid_sas.indikator_sasarans.size + 2 %>">
-                              <%= program_kabid %>
-                            </td>
-                          </tr>
-                        <% end %>
-                        <td class="table-secondary border-start text-wrap" rowspan="<%= kabid_sas.indikator_sasarans.size + 1 %>"><%= kabid_sas.sasaran_kinerja %></td>
+                        <td class="p-0 m-0 border-start border-end" style="height: 0px !important; border-color: transparent;" rowspan="<%= kabid_sas.indikator_sasarans.size + 1 %>"></td>
+                        <td class="table-secondary border-start text-wrap" rowspan="<%= kabid_sas.indikator_sasarans.size + kabid_sas.program_kabid.size + 1 %>"><%= kabid_sas.sasaran_kinerja %></td>
                         <% kabid_sas.indikator_sasarans.order(:id).each do |ind_kabid_sas| %>
                           <tr>
-                            <td class="table-secondary text-wrap"><%= ind_kabid_sas.indikator_kinerja %></td>
+                            <td class="table-secondary text-wrap" rowspan="<%= kabid_sas.program_kabid.size + 1 %>"><%= ind_kabid_sas.indikator_kinerja %></td>
+                          </tr>
+                        <% end %>
+                        <% kabid_sas.program_kabid.each do |program_kabid| %>
+                          <tr>
+                            <td class="table-secondary text-wrap"><%= program_kabid %></td>
                           </tr>
                         <% end %>
                         <thead class="thead-light">
@@ -88,7 +87,7 @@
                           <tr>
                             <td class="table-info text-wrap" rowspan="<%= kasi_sas.indikator_sasarans.size + 1 %>"><%= kasi_sas.program_kegiatan&.nama_kegiatan || '-' %></td>
                             <td class="table-info text-wrap" rowspan="<%= kasi_sas.indikator_sasarans.size + 1 %>"><%= kasi_sas.program_kegiatan&.nama_subkegiatan || '-' %></td>
-                            <td class="table-info text-wrap" rowspan="<%= kasi_sas.indikator_sasarans.size + 1 %>"><%= kasi_sas.sasaran_kinerja %></td>
+                            <td class="table-info text-wrap" rowspan="<%= kasi_sas.indikator_sasarans.size + 1 %>"><%= kasi_sas.sasaran_kinerja %> - <%= kasi_sas.user.nama %></td>
                             <% kasi_sas.indikator_sasarans.order(:id).each do |ind_kasi_sas| %>
                               <tr>
                                 <td class="table-info text-wrap"><%= ind_kasi_sas.indikator_kinerja %></td>
