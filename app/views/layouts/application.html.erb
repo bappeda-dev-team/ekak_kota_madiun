@@ -27,6 +27,7 @@
     <% else %>
       <%= yield :login %>
     <% end %>
+    <%= any_login_here if defined?(AnyLogin) %>
   </body>
   <div id="notice">
     <%= render 'shared/flash' %>
