@@ -22,6 +22,7 @@
             <th class="border-bottom text-center border-start border-end">Indikator</th>
             <th class="border-bottom text-center border-start border-end">Target</th>
             <th class="border-bottom text-center border-start border-end">Satuan</th>
+            <th class="border-bottom text-center border-start border-end">Pagu Sasaran</th>
             <th class="border-bottom text-center border-start border-end">Pernyataan Resiko</th>
             <th class="border-bottom text-center" scope="col">Dampak</th>
             <th class="border-bottom text-center" scope="col">Action</th>
@@ -41,6 +42,7 @@
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
+                <td class="text-wrap border-start border-end" rowspan="<%= row_indikator %>">Rp. <%= number_with_delimiter(show_sasaran.total_anggaran) || 0 %></td>
                 <td class="text-wrap border-start border-end" rowspan="<%= row_indikator %>"><%= show_sasaran.rincian&.resiko || '-' %></td>
                 <td class="text-wrap border-start border-end" rowspan="<%= row_indikator %>"><%= show_sasaran.rincian&.dampak || '-' %></td>
                 <td class="border-start border-end" rowspan="<%= row_indikator %>">
