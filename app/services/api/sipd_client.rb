@@ -87,7 +87,8 @@ module Api
     end
 
     private
-# TODO: buat fungsi get datanya
+
+    # TODO: buat fungsi get datanya
     def request_opd_master(tahun:)
       H.get("#{URL}/list_opd_get/109?tahun=#{tahun}")
     end
@@ -103,7 +104,8 @@ module Api
     def request_indikator_kegiatan(id_kegiatan:, id_opd:)
       H.get("#{URL}/indikator_per_kegiatan/109/#{id_opd}/#{id_kegiatan}")
     end
-# TODO Depreceate this thing
+
+    # TODO: Depreceate this thing
     def request_sub_kegiatan_all(tahun, id_sipd)
       H.get("#{URL}/get_komponen_all/109?id_sub_giat=&id_sub_skpd=#{id_sipd}&tahun=#{tahun}")
     end
@@ -180,8 +182,7 @@ module Api
         target_program = program_details.last['target'] # target_1 asumsi tahun 2020, 2021 target_2, 2022 target_3
         satuan_target_program = program_details.last['satuan']
       end
-      ProgramKegiatan.where(id_program_sipd: @id_program)
-                     .where(id_giat: @id_giat)
+      ProgramKegiatan.where(kode_program: @id_program)
                      .update_all(indikator_program: indikator_program,
                                  target_program: target_program,
                                  satuan_target_program: satuan_target_program)
