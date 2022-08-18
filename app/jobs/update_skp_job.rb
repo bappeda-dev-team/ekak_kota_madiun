@@ -4,7 +4,7 @@ class UpdateSkpJob
   include Sidekiq::Job
 
   queue_as :default
-  sidekiq_options lock: :until_executing
+  sidekiq_options lock: :until_executed
 
   def perform(kode_opd, tahun, bulan, nip_asn = '')
     request = Api::SkpClient.new(kode_opd, tahun, bulan, nip_asn)

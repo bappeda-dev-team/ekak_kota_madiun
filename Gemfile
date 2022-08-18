@@ -55,10 +55,12 @@ group :development do
   gem 'solargraph'
   gem 'spring'
   # capistrano thing
+  gem 'any_login'
   gem 'capistrano', '~> 3.11', require: false
   gem 'capistrano-passenger', '~> 0.2.0', require: false
   gem 'capistrano-rails', '~> 1.4', require: false
   gem 'capistrano-rbenv', '~> 2.1', '>= 2.1.4', require: false
+  gem 'rails_db', '>= 2.3.1'
 end
 
 group :test do
@@ -93,5 +95,4 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'vanilla_nested'
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 gem 'wicked_pdf'
-#gem 'wkhtmltopdf-binary'
-
+# gem 'wkhtmltopdf-binary'
