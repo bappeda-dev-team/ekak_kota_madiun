@@ -42,10 +42,10 @@ class FilterController < ApplicationController
 
   def filter_sasaran
     opd = Opd.find_by(kode_opd: @kode_opd).nama_opd
-    @nama_opd ||= Opd.find_by(kode_opd: @kode_opd).nama_opd || "-"
+    @nama_opd ||= opd || "-"
     @sasarans = Sasaran.includes([user: :opd]).where(opds: { kode_opd: @kode_opd }).where(nip_asn: params[:nip_asn])
     if OPD_TABLE.key?(opd.to_sym)
-      @sasarans = Sasaran.includes([user: :opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] })
+      @sasarans = Sasaran.includes([user: :opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).where(nip_asn: params[:nip_asn])
       @sasarans = @sasarans.where(user: { nama_bidang: OPD_TABLE[opd.to_sym] })
     end
     respond_to do |format|
