@@ -31,11 +31,11 @@
             <h2 class="fs-5 fw-bold mb-3">Pilih Usulan </h2>
           </div>
           <div class="pilih-usulan">
-            <%= form_with(model: @musrenbang) do |form| %>
+            <%= form_with(model: @musrenbang), data: {"controller": "dropdown"} do |form| %>
               <div class="field">
                 <%= form.hidden_field :nip_asn, value: current_user.nik   %>
                 <%= form.label :usulan %>
-                <%= form.select :usulan, [], {include_blank: true}, {id: "select2-musrenbang", "data-placeholder": "Pilih Usulan"} %>
+                <%= form.select :usulan, [], {include_blank: true}, {id: "select2-musrenbang", data: {"placeholder": "Pilih Usulan", "dropdown-target": "dropdown_element"}} %>
               </div>
               <div class="field mt-3">
                 <%= form.label :tahun %>

@@ -11,11 +11,11 @@
   <div class="card-body">
     <% filter_value =  local_assigns[:filter_file] || '' %>
     <% filter_jenis = local_assigns[:jenis] || '' %>
-    <%= form_with url: filter_url, local: false do |form| %>
+    <%= form_with url: filter_url, local: false, data: {"controller": "dropdown"} do |form| %>
       <%= form.hidden_field :filter_file, value: filter_value %>
       <%= form.hidden_field :jenis, value: filter_jenis %>
       <%= form.label :kode_opd %>
-      <%= form.select :kode_opd, dropdown_opd ,{include_blank: true},{ class: "form-control select2-waw", data: {"placeholder": "Pilih Opd"}, required: true }  %>
+      <%= form.select :kode_opd, dropdown_opd ,{include_blank: true},{ class: "form-control", data: {"placeholder": "Pilih Opd", "dropdown-target": "dropdown_element", "dropdown_jenis_value": "opd"}, required: true }  %>
       <%= form.submit 'filter' %>
     <% end %>
   </div>
