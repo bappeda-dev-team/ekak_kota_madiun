@@ -328,3 +328,4 @@ function initailizeSelect2() {
     theme: "bootstrap-5",
   });
 }
+import "controllers"
