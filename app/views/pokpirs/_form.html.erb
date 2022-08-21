@@ -23,7 +23,12 @@
   </div>
   <div class="field mt-3">
     <%= form.label :tahun %>
-    <%= form.select(:tahun, (['',2021,2022,2023,2024]), {}, {:id => 'dropdown-tahun',data: {"placeholder": "Pilih Tahun",}}) %>
+    <%= form.select(:tahun, (['',2021,2022,2023,2024]), {},
+                    { 
+                     data: {"placeholder": "Pilih Tahun",
+                            controller: 'dropdown',
+                            dropdown_parent_value: '#form-usulan'
+                     }}) %>
   </div>
   <div class="actions">
     <%= form.submit 'Tambah Pokok Pikiran DPRD ' %>

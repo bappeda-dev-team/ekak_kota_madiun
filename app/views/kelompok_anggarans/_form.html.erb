@@ -11,11 +11,18 @@
   <% end %>
   <div class="field">
     <%= form.label :tahun, class: 'form-label' %>
-    <%= form.select(:tahun, (['',2021,2022,2023,2024]), {}, {id: 'dropdown-kelompok-anggaran-tahun',data: {"placeholder": "Pilih Tahun",}}) %>
+    <%= form.select(:tahun, (['',2021,2022,2023,2024]), {},
+    { data: {"placeholder": "Pilih Tahun",
+              controller: 'dropdown',
+              dropdown_parent_value: '#form-kelompok-anggaran'
+    }}) %>
   </div>
   <div class="field">
     <%= form.label :kelompok, class: 'form-label' %>
-    <%= form.select(:kelompok, (KelompokAnggaran::JENIS_KELOMPOK), {}, {id: 'dropdown-kelompok-anggaran'}) %>
+    <%= form.select(:kelompok, (KelompokAnggaran::JENIS_KELOMPOK), {},
+    { data: { controller: 'dropdown',
+              dropdown_parent_value: '#form-kelompok-anggaran'
+    }}) %>
   </div>
   <div class="actions">
     <%= form.submit %>

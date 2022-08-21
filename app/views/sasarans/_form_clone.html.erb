@@ -6,8 +6,12 @@
   <div class="field">
     <%= form.label :kelompok_anggaran, { class: "form-label" } %>
     <%= form.select :kelompok_anggaran, [''], {include_blank: true},
-                    { id: "select2-cloning",
-                      data: { placeholder: "Pilih Tahun Cloning" } } %>
+                    { data: { placeholder: "Pilih Tahun Cloning",
+                              controller: 'dropdown',
+                              dropdown_jenis_value: 'ajax',
+                              dropdown_parent_value: '#form-clone-sasaran',
+                              dropdown_url_value: '/kelompok_anggarans.json',
+                    } } %>
   </div>
   <div class="actions my-4">
     <%= form.submit "Clone" %>

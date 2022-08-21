@@ -14,8 +14,7 @@
       <%= form_with(url: add_sasaran_tematik_path, local: false) do |f| %>
         <%= f.select(:id_tematik,
           [],
-          {}, { class:'select2-waw',
-          data: {'ajax--url': "/tematiks.json", "ajax--cache": "true", "placeholder": "Pilih Tematik"} } )%>
+          {}, { data: {controller: 'dropdown', 'ajax--url': "/tematiks.json", "ajax--cache": "true", "placeholder": "Pilih Tematik"} } )%>
         <%= f.hidden_field :id_sasaran, value: sasaran.id %>
         <div class="actions">
           <%= f.submit "Tambah Tematik" %>

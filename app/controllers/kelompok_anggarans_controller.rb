@@ -3,7 +3,8 @@ class KelompokAnggaransController < ApplicationController
 
   # GET /kelompok_anggarans or /kelompok_anggarans.json
   def index
-    @kelompok_anggarans = KelompokAnggaran.all.order(tahun: :asc)
+    param = params[:q] || ''
+    @kelompok_anggarans = KelompokAnggaran.where('tahun ILIKE ?', "%#{param}%").order(tahun: :asc)
   end
 
   def cloning

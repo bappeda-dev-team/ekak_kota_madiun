@@ -31,20 +31,27 @@
             <h2 class="fs-5 fw-bold mb-3">Pilih Usulan </h2>
           </div>
           <div class="pilih-usulan">
-            <%= form_with(model: @musrenbang), data: {"controller": "dropdown"} do |form| %>
+            <%= form_with(model: @musrenbang) do |form| %>
               <div class="field">
                 <%= form.hidden_field :nip_asn, value: current_user.nik   %>
                 <%= form.label :usulan %>
-                <%= form.select :usulan, [], {include_blank: true}, {id: "select2-musrenbang", data: {"placeholder": "Pilih Usulan", "dropdown-target": "dropdown_element"}} %>
+                <%= form.select(:usulan, [], {include_blank: true},
+                  {id: "select2-musrenbang",
+                   data: {"placeholder": "Pilih Usulan",
+                          "controller": "dropdown"}}) %>
               </div>
               <div class="field mt-3">
                 <%= form.label :tahun %>
-                <%= form.select(:tahun, (['',2021,2022,2023,2024]), {}, {:id => 'dropdown',data: {"placeholder": "Pilih Tahun",}}) %>
+                <%= form.select(:tahun, (['',2021,2022,2023,2024]), {},
+                                { data: {controller: 'dropdown'}}) %>
               </div>
               <div class="field">
                 <% sasaran = current_user.sasarans.all %>
                 <label for="sasaran_id">Sasaran / Rencana Kinerja ( Output )</label>
-                <%= form.select :sasaran_id, options_for_select(sasaran.collect { | n | [n.sasaran_kinerja, n.id]  }), {include_blank: true}, {class: "select2-sasaran", "data-placeholder": "Pilih Sasaran"} %>
+                <%= form.select :sasaran_id, options_for_select(sasaran.collect { | n | [n.sasaran_kinerja, n.id]  }), {include_blank: true},
+                  {data: { "placeholder": "Pilih Sasaran",
+                           controller: 'dropdown' }
+                  }} %>
               </div>
               <div class="col text-end">
                 <%= link_to "Tambah Data Sasaran",new_user_sasaran_path(current_user), class: "btn btn-sm btn-info" %>

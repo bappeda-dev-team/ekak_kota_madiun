@@ -25,11 +25,12 @@
           <% year = Date.today.year %>
           <%= form.label :tahun %>
           <%= form.select :tahun, [year, year + 1] ,{ include_blank: true },
-          {class: "form-control select2-waw", required: true,  data: {"placeholder": "Tahun"}}  %>
+          {class: "form-control", required: true,  data: {"placeholder": "Tahun", controller: 'dropdown'}}  %>
           <br>
           <% dropdown = options_for_select(SubkegiatanTematik.all.pluck(:nama_tematik, :kode_tematik)) %>
           <%= form.label :tema %>
-          <%= form.select :kode_tematik, dropdown, { include_blank: true }, { class: "form-control select2-waw", data: {"placeholder": "Pilih Tematik"}, required: true }  %>
+          <%= form.select :kode_tematik, dropdown, { include_blank: true },
+          { class: "form-control", data: {"placeholder": "Pilih Tematik", controller: 'dropdown'}, required: true }  %>
           <%= form.submit 'Filter' %>
         <% end %>
       </div>

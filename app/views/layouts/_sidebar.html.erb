@@ -40,8 +40,10 @@
           <div class="row">
             <div class="col">
               <%= form.select :tahun_sasaran, {},  {include_blank: true},
-                    { id: "select2-global",
-                      data: { placeholder: "Tahun", 'ajax--url': kelompok_anggarans_path(:json) } } do %>
+                    { data: { placeholder: "Tahun", 
+                              controller: 'dropdown',
+                              'ajax--url': kelompok_anggarans_path(:json)
+                              } } do %>
                 <% if cookies[:tahun_sasaran] %>
                   <option value="<%= cookies[:tahun_sasaran] %>" selected="selected"><%= cookies[:tahun_sasaran] %></option>
                 <% end %>

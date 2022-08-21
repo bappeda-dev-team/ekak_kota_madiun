@@ -31,7 +31,6 @@
                 <th class="border-bottom text-gray-700" scope="col">Pengusul</th>
                 <th class="border-bottom text-gray-700" scope="col">Opd</th>
                 <th class="border-bottom text-gray-700 text-center" scope="col">Status</th>
-                <th class="border-bottom text-gray-700 text-center" scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -65,14 +64,6 @@
                         <% end %>
                       <% end %>
                     </td>
-                    <td class="fw-bolder text-center align-middle">
-                      <%= link_to edit_mandatori_path(mandatori), remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#form-mandatori'} do %>
-                        <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit usulan mandatori"></i>
-                      <% end %>
-                      <%= link_to mandatori_path(mandatori), method: :delete, remote: true, class: 'mx-3', data: {'confirm-swal': 'Hapus usulan?'} do %>
-                        <i class="fas fa-trash" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus usulan mandatori"></i>
-                      <% end %>
-                    </td>
                   </tr>
                 <% end %>
               <% end %>
@@ -83,4 +74,3 @@
     </div>
   </div>
 </div>
-<%= render 'modal' %>

@@ -11,12 +11,12 @@ class UsersController < ApplicationController
   end
 
   def user_search
-    param = params[:q] || ''
-    param_search = params[:search] || ''
-    @users = User.where(kode_opd: param)
-    unless param_search.empty?
-      param_search.strip!
-      @users = User.where(kode_opd: param).where('nama ILIKE ?', "%#{param_search}%").or(User.where('nik ILIKE ?', "%#{param_search}%"))
+    kode_opd = params[:kode_opd] || ''
+    user_search = params[:q] || ''
+    @users = User.where(kode_opd: kode_opd)
+    unless user_search.empty?
+      user_search.strip!
+      @users = User.where(kode_opd: kode_opd).where('nama ILIKE ?', "%#{user_search}%").or(User.where('nik ILIKE ?', "%#{user_search}%"))
     end
   end
 

@@ -14,7 +14,11 @@
       <%= form.hidden_field :filter_file, value: filter_value %>
       <%= form.label :kode_opd %>
       <% options = options_for_select(Opd.all.pluck(:nama_opd, :kode_unik_opd), current_user.opd.kode_unik_opd ) %>
-      <%= form.select :kode_opd, options ,{include_blank: true},{class: "form-control select2-waw", data: {"placeholder": "Pilih Opd"}}  %>
+      <%= form.select :kode_opd, options ,{include_blank: true},
+      {class: "form-control",
+      data: {"placeholder": "Pilih Opd",
+             controller: 'dropdown'
+      }}  %>
       <%= form.submit 'filter' %>
     <% end %>
   </div>

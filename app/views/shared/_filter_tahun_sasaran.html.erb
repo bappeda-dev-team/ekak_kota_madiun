@@ -4,8 +4,9 @@
   <%= form.hidden_field :filter_type, value: local_assigns[:filter_type] %>
   <div class="col">
     <%= form.select :tahun_sasaran, [''], {include_blank: true},
-                    { class: "select2-waw",
-                      data: { placeholder: "Pilih Tahun Sasaran", 'ajax--url': kelompok_anggarans_path(:json) } } %>
+                    { data: { placeholder: "Pilih Tahun Sasaran",
+                              controller: 'dropdown',
+                    'ajax--url': kelompok_anggarans_path(:json) } } %>
   </div>
   <div class="col-auto">
     <input type="submit" value="Filter" class="btn btn-primary">

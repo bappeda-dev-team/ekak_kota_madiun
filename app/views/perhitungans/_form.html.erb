@@ -18,7 +18,15 @@
   %>
   <div class="field">
     <%= form.label :uraian, {class: "form-label"} %>
-    <%= form.select :deskripsi, raw("<option value='#{perhitungan.deskripsi}' selected='selected'>#{uraian}</option>"), {include_blank: true} , {class: "form-control select2-anggaran-ssh", "data-placeholder": "Pilih Uraian"} %>
+    <%= form.select :deskripsi, raw("<option value='#{perhitungan.deskripsi}' selected='selected'>#{uraian}</option>"), {include_blank: true} ,
+    { class: "form-control",
+      data: { "placeholder": "Pilih Uraian",
+              controller: 'dropdown',
+              dropdown_jenis_value: 'extra',
+              dropdown_url_value: '/anggaran_ssh_search.json',
+              dropdown_parent_value: '#form-perhitungan',
+              action: 'change-select@document->dropdown#fill_spesifikasi_satuan_harga'
+      }} %>
   </div>
   <div class="field">
     <%= form.label :spesifikasi, {class: "form-label"} %>
@@ -27,7 +35,10 @@
   <div class="field">
     <% options = options_from_collection_for_select(Pajak.all, :id, :simple_pajak, perhitungan&.pajak&.id || '') %>
     <%= form.label :pajak_id , {class: "form-label"}%>
-    <%= form.select :pajak_id, options, {}, { :class => "select2-pajak"} %>
+    <%= form.select :pajak_id, options, {},
+    { data: { controller: 'dropdown',
+              dropdown_parent_value: '#form-perhitungan'
+      }} %>
   </div>
   <h4><strong>Koefisiens : </strong></h4>
   <div class="field">

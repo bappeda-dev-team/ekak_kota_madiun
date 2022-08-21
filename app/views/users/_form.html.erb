@@ -27,13 +27,23 @@
   </div>
   <div class="field">
     <%= form.label :opd, class: "form-label" %>
-    <%= form.select :kode_opd, Opd.pluck(:nama_opd, :kode_opd), {include_blank: true}, {class: "form-control select2-opd", "data-placeholder": "Pilih Opd"} %>
+    <%= form.select :kode_opd, Opd.pluck(:nama_opd, :kode_opd), {include_blank: true},
+    {class: "form-control",
+    data: { "placeholder": "Pilih Opd",
+            controller: 'dropdown',
+            dropdown_parent_value: '#form-user'
+    }} %>
   </div>
   <% if current_user.has_role? :super_admin %>
     <div class="field">
       <% data_role = options_from_collection_for_select(Role.all, :name, :name, user.roles.pluck(:name)) %>
       <%= form.label :role, class: "form-label" %>
-      <%= form.select :role, data_role, {include_blank: true}, class: "form-select select2-role", data: { placeholder: 'Pilih Role'} %>
+      <%= form.select :role, data_role, {include_blank: true},
+      { class: "form-select select2-role",
+        data: { placeholder: 'Pilih Role',
+                controller: 'dropdown',
+                dropdown_parent_value: '#form-user'
+        } } %>
     </div>
   <% end %>
   <div class="actions">
