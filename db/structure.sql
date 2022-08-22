@@ -615,7 +615,7 @@ ALTER SEQUENCE public.dasar_hukums_id_seq OWNED BY public.dasar_hukums.id;
 CREATE TABLE public.indikator_sasarans (
     id bigint NOT NULL,
     indikator_kinerja character varying,
-    target integer,
+    target character varying,
     satuan character varying,
     aspek character varying,
     id_indikator character varying,
@@ -1816,6 +1816,41 @@ UNION
 
 
 --
+-- Name: skalas; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.skalas (
+    id bigint NOT NULL,
+    kode_skala character varying,
+    jenis character varying,
+    pilihan character varying,
+    jenis_skor character varying,
+    skor character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: skalas_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.skalas_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: skalas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.skalas_id_seq OWNED BY public.skalas.id;
+
+
+--
 -- Name: strategi_keluarans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2387,6 +2422,13 @@ ALTER TABLE ONLY public.sasarans ALTER COLUMN id SET DEFAULT nextval('public.sas
 
 
 --
+-- Name: skalas id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.skalas ALTER COLUMN id SET DEFAULT nextval('public.skalas_id_seq'::regclass);
+
+
+--
 -- Name: strategi_keluarans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2801,6 +2843,14 @@ ALTER TABLE ONLY public.sasarans
 
 ALTER TABLE ONLY public.schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: skalas skalas_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.skalas
+    ADD CONSTRAINT skalas_pkey PRIMARY KEY (id);
 
 
 --
@@ -3565,6 +3615,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220728124341'),
 ('20220729030633'),
 ('20220731054048'),
-('20220812065723');
+('20220812065723'),
+('20220822023747');
 
 
