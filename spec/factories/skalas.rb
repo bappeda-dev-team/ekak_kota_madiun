@@ -3,13 +3,19 @@
 # Table name: skalas
 #
 #  id         :bigint           not null, primary key
-#  jenis      :string
-#  jenis_skor :string
+#  deskripsi  :string
+#  keterangan :string
 #  kode_skala :string
-#  pilihan    :string
-#  skor       :string
+#  nilai      :string
+#  tipe_nilai :string
+#  type       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  rincian_id :bigint
+#
+# Indexes
+#
+#  index_skalas_on_rincian_id  (rincian_id)
 #
 FactoryBot.define do
   factory :skala do

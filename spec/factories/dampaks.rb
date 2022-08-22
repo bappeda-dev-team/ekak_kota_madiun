@@ -17,8 +17,8 @@
 #
 #  index_skalas_on_rincian_id  (rincian_id)
 #
-require 'rails_helper'
-
-RSpec.describe Skala, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+FactoryBot.define do
+  factory :dampak do
+    
+  end
 end

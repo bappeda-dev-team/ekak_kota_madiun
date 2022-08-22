@@ -3,8 +3,7 @@ class SkalasController < ApplicationController
 
   # GET /skalas or /skalas.json
   def index
-    jenis_skala_param = params[:jenis_skala_param] || ''
-    @skalas = Skala.where('jenis ILIKE ?', "%#{jenis_skala_param}%")
+    @skalas = Skala.all.order(:nilai)
   end
 
   # GET /skalas/1 or /skalas/1.json
@@ -69,6 +68,6 @@ class SkalasController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def skala_params
-    params.require(:skala).permit(:jenis, :pilihan, :jenis_skor, :skor, :kode_skala, :skalable)
+    params.require(:skala).permit(:type, :deskripsi, :kode_skala, :nilai, :tipe_nilai, :keterangan)
   end
 end

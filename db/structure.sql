@@ -615,7 +615,7 @@ ALTER SEQUENCE public.dasar_hukums_id_seq OWNED BY public.dasar_hukums.id;
 CREATE TABLE public.indikator_sasarans (
     id bigint NOT NULL,
     indikator_kinerja character varying,
-    target character varying,
+    target integer,
     satuan character varying,
     aspek character varying,
     id_indikator character varying,
@@ -1822,12 +1822,14 @@ UNION
 CREATE TABLE public.skalas (
     id bigint NOT NULL,
     kode_skala character varying,
-    jenis character varying,
-    pilihan character varying,
-    jenis_skor character varying,
-    skor character varying,
+    deskripsi character varying,
+    nilai character varying,
+    tipe_nilai character varying,
+    keterangan character varying,
+    type character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    rincian_id bigint
 );
 
 
@@ -3225,6 +3227,13 @@ CREATE UNIQUE INDEX index_sasarans_on_id_rencana ON public.sasarans USING btree 
 
 
 --
+-- Name: index_skalas_on_rincian_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_skalas_on_rincian_id ON public.skalas USING btree (rincian_id);
+
+
+--
 -- Name: index_tahapans_on_id_rencana_aksi; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3616,6 +3625,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220729030633'),
 ('20220731054048'),
 ('20220812065723'),
-('20220822023747');
+('20220822023747'),
+('20220822163037');
 
 

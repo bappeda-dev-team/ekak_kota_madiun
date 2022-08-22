@@ -20,20 +20,17 @@
       <%= rincian_fields.label :resiko, { class: "form-label" } %>
       <%= rincian_fields.text_area :resiko, { class: "form-control" } %>
     </div>
-      <%= form.fields_for :skala do |skala_fields| %>
-        <div class="field">
-          <%= skala_fields.label :dampak, { class: 'form-label' } %>
-          <%= skala_fields.select :rincian_id, [], {},
+    <div class="field">
+      <%= rincian_fields.label :dampak, { class: 'form-label' } %>
+          <%= rincian_fields.select :dampak, [], {},
             { class: 'form-control',
               data: { placeholder: 'Skala Resiko',
                       controller: 'dropdown',
                       dropdown_jenis_value: 'ajax',
                       dropdown_url_value: skalas_path(:json)
-                    }
-            } %>
-        </div>
-      <% end %>
-    <% end %>
+                    }} %>
+    </div>
+  <% end %>
   <div class="actions">
     <%= form.submit "Simpan" %>
   </div>

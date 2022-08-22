@@ -34,21 +34,23 @@
                 <th class="border-bottom" scope="col">No.</th>
                 <th class="border-bottom" scope="col">Kode</th>
                 <th class="border-bottom" scope="col">Jenis</th>
-                <th class="border-bottom" scope="col">Pilihan</th>
-                <th class="border-bottom" scope="col">Jenis Skor</th>
-                <th class="border-bottom" scope="col">Skor</th>
+                <th class="border-bottom" scope="col">Deskripsi</th>
+                <th class="border-bottom" scope="col">Nilai</th>
+                <th class="border-bottom" scope="col">Jenis Nilai</th>
+                <th class="border-bottom" scope="col">Keterangan</th>
                 <th class="border-bottom text-center" colspan="3">Action</th>
               </tr>
             </thead>
             <tbody>
-              <% @skalas.order(:jenis).each.with_index(1) do |skala, i| %>
+              <% @skalas.order(:nilai).each.with_index(1) do |skala, i| %>
                 <tr>
                   <td class="fw-bolder" scope="row"><%= i %></td>
                   <td class="fw-bolder"><%= skala.kode_skala %></td>
-                  <td class="fw-bolder"><%= skala.jenis %></td>
-                  <td class="fw-bolder"><%= skala.pilihan %></td>
-                  <td class="fw-bolder"><%= skala.jenis_skor %></td>
-                  <td class="fw-bolder"><%= skala.skor %></td>
+                  <td class="fw-bolder"><%= skala.type.capitalize %></td>
+                  <td class="fw-bolder"><%= skala.deskripsi %></td>
+                  <td class="fw-bolder"><%= skala.nilai %></td>
+                  <td class="fw-bolder"><%= skala.tipe_nilai %></td>
+                  <td class="fw-bolder"><%= skala.keterangan %></td>
                   <td class="fw-bolder"><%= link_to skala do %>
                       <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
                     <% end %>
@@ -57,7 +59,7 @@
                       <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
                     <% end %>
                   </td>
-                  <td class="fw-bolder"><%= link_to skala, method: :delete, data: { confirm_swal: "Hapus skala #{skala.jenis}?" } do %>
+                  <td class="fw-bolder"><%= link_to skala, method: :delete, data: { confirm_swal: "Hapus skala #{skala.type}?" } do %>
                       <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
                     <% end %>
                   </td>
@@ -71,4 +73,3 @@
   </div>
 </div>
 <%= render 'shared/modal_template', modal_name: 'skala-dampak' %>
-

@@ -57,6 +57,8 @@ class RinciansController < ApplicationController
         sasaran.update(penerima_manfaat: penerima_manfaat)
       end
       if @rincian.update(rincian_params)
+        update_dampak = Skala.find(params[:rincian][:dampak])
+        update_dampak.update!(rincian_id: @rincian.id)
         @status = 'success'
         @text = 'Sukses menambah tematik'
         flash[:success] = "Edit rincian sukses"
@@ -101,6 +103,6 @@ class RinciansController < ApplicationController
   # Only allow a list of trusted parameters through.
   def rincian_params
     params.require(:rincian).permit(:data_terpilah, :penyebab_internal, :penyebab_external, :permasalahan_umum,
-                                    :permasalahan_gender, :resiko, :lokasi_pelaksanaan, :dampak, :sasaran_id)
+                                    :permasalahan_gender, :resiko, :lokasi_pelaksanaan, :dampak, :sasaran_id, :dampak_id)
   end
 end

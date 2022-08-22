@@ -15,8 +15,8 @@ export default class extends Controller {
   }
 
   get default_options() {
-    let options = { 
-      width: "100%", 
+    let options = {
+      width: "100%",
       theme: "bootstrap-5",
       dropdownParent: this.parentValue
     }
@@ -30,7 +30,7 @@ export default class extends Controller {
       dropdownParent: this.parentValue,
       ajax: {
         url: this.urlValue,
-        data: (params) => ({ 
+        data: (params) => ({
           kode_opd: this.opd_idValue,
           q: params.term }),
         delay: 1500
@@ -73,7 +73,7 @@ export default class extends Controller {
 // custom_event
   dropdown_with_action(options) {
     return this.dropdown_base(options).on('select2:select', (e) => {
-      const custom_event = new CustomEvent('change-select', 
+      const custom_event = new CustomEvent('change-select',
                               { detail: { data: e.params.data }})
       document.dispatchEvent(custom_event)
     })

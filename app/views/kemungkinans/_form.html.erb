@@ -1,0 +1,17 @@
+<%= form_with(model: kemungkinan) do |form| %>
+  <% if kemungkinan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(kemungkinan.errors.count, "error") %> prohibited this kemungkinan from being saved:</h2>
+
+      <ul>
+        <% kemungkinan.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

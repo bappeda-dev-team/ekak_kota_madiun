@@ -1,0 +1,17 @@
+<%= form_with(model: dampak) do |form| %>
+  <% if dampak.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(dampak.errors.count, "error") %> prohibited this dampak from being saved:</h2>
+
+      <ul>
+        <% dampak.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

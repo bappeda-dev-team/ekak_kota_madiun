@@ -6,7 +6,9 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :kemungkinans
   resources :skalas
+  resources :dampaks
   resources :anggaran_hspks
   resources :anggaran_sbus
   resources :anggaran_sshes

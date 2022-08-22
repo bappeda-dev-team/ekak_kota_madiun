@@ -12,28 +12,33 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :kode_skala, class: 'form-label' %>
+    <%= form.label :kode, class: 'form-label' %>
     <%= form.text_field :kode_skala , class: 'form-control' %>
   </div>
 
   <div class="field">
-    <%= form.label :jenis, class: 'form-label' %>
-    <%= form.text_field :jenis , class: 'form-control' %>
+    <%= form.label :tipe, class: 'form-label' %>
+    <%= form.select :type , [['Dampak', 'Dampak'],['Kemungkinan', 'Kemungkinan']],{},class: 'form-control', data: { controller: 'dropdown' } %>
   </div>
 
   <div class="field">
-    <%= form.label :pilihan, class: 'form-label'  %>
-    <%= form.text_field :pilihan, class: 'form-control'  %>
+    <%= form.label :deskripsi_nilai, class: 'form-label' %>
+    <%= form.text_field :deskripsi , class: 'form-control' %>
   </div>
 
   <div class="field">
-    <%= form.label :jenis_skor, class: 'form-label'  %>
-    <%= form.text_field :jenis_skor, class: 'form-control'  %>
+    <%= form.label :nilai, class: 'form-label'  %>
+    <%= form.number_field :nilai, class: 'form-control'  %>
   </div>
 
   <div class="field">
-    <%= form.label :skor, class: 'form-label' %>
-    <%= form.text_field :skor, class: 'form-control'  %>
+    <%= form.label :tipe_nilai, class: 'form-label'  %>
+    <%= form.text_field :tipe_nilai, class: 'form-control', placeholder: 'skor'  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_field :keterangan, class: 'form-control'  %>
   </div>
 
   <div class="actions">

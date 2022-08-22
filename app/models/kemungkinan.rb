@@ -1,0 +1,2 @@
+class Kemungkinan < Skala
+end
