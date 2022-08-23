@@ -32,4 +32,35 @@ class Rincian < ApplicationRecord
   def lengkap
     data_terpilah.exists? && lokasi_pelaksanaan.exists?
   end
+
+  def peta_resiko
+    # [kemungkinan, dampak], x: kemungkinan, y: dampak
+    matrik = [kemungkinan.nilai.to_i, skala_dampak.nilai.to_i]
+    nilai = matrix_resiko.select { |_nilai, skor| skor.include?(matrik) }
+    nilai.key(nilai.values.flatten(1)).to_s
+  rescue NoMethodError
+    '-'
+  end
+
+  def nilai_peta_resiko
+    case peta_resiko
+    when 'A'
+      'Level Risiko Sangat Rendah'
+    when 'B'
+      'Level Risiko Rendah'
+    when 'C'
+      'Level Risiko Tinggi'
+    when 'D'
+      'Level Risiko Sangat Sangat Tinggi'
+    else
+      '-'
+    end
+  end
+
+  def matrix_resiko
+    { A: [[1, 1]],
+      B: [[1, 2], [2, 1], [2, 2], [3, 1], [1, 3]],
+      C: [[2, 3], [3, 2], [4, 1], [1, 4]],
+      D: [[4, 2], [2, 4], [3, 4]] }
+  end
 end
