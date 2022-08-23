@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to 'Isu dan Permasalahan', isu_dan_permasalahans_index_path %></li>
+      </ol>
+    </nav>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">KaK </h2>
+          </div>
+          <div class="col text-end">
+            <span><%= current_user.nama %></span>
+            |
+            <span><%= current_user.nik %></span>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center">
+          <thead class="thead-light">
+            <tr>
+              <th class="border-bottom" scope="col">No.</th>
+              <th class="border-bottom" scope="col">Program Kegiatan</th>
+              <th class="border-bottom" scope="col">Indikator</th>
+              <th class="border-bottom" scope="col">Target</th>
+              <th class="border-bottom" scope="col">Satuan</th>
+              <th class="border-bottom" scope="col">Permasalahan</th>
+              <th class="border-bottom" scope="col">Isu Strategis</th>
+              <th class="border-bottom text-center" scope="col">Action</th>
+            </tr>
+           </thead>
+          <tbody>
+            <% @program_kegiatans.each.with_index(1) do |kak, i| %>
+              <tr>
+                <td class="text-gray-900 fw-bolder" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= i %></td>
+                <td class="text-gray-900 text-wrap" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.nama_program %></td>
+                <td class="text-gray-900 text-wrap" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.indikator_program %></td>
+                <td class="text-gray-900 text-wrap" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.target_program %></td>
+                <td class="text-gray-900 text-wrap" scope="row" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.satuan_target_program %></td>
+                <td class="p-0 m-0"></td>
+                <td class="text-gray-900 text-wrap" scope="row" rowspan="<%= kak.sasarans.count + 1 %>">-</td>
+                <td class="fw-bolder text-gray-500 text-center" rowspan="<%= kak.sasarans.count + 1 %>">
+                  -
+                </td>
+                <% kak.sasarans.each do |show_sasaran| %>
+                  <tr>
+                    <td class="text-wrap border-bottom" width="450px">
+                      <%= show_sasaran&.permasalahans.first&.permasalahan || '-' %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

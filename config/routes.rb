@@ -6,6 +6,7 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  get 'isu_dan_permasalahans/index'
   resources :kemungkinans
   resources :skalas
   resources :dampaks
