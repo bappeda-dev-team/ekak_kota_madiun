@@ -12,6 +12,7 @@
 #  indikator_kinerja         :string
 #  indikator_program         :string
 #  indikator_subkegiatan     :string
+#  isu_strategis             :string
 #  kode_bidang_urusan        :string
 #  kode_giat                 :string
 #  kode_opd                  :string

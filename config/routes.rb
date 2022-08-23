@@ -128,6 +128,7 @@ Rails.application.routes.draw do
       get :program_edit
       patch :program_update
     end
+    get :add_isu_strategis
   end
   resources :pajaks
   resources :kesenjangans

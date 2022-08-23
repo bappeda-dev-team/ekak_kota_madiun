@@ -1,0 +1,25 @@
+<%= form_with(url: program_kegiatan_path(@program_kegiatan), local: false, method: :patch) do |form| %>
+  <% if @program_kegiatan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(rincian.errors.count, "error") %> prohibited this rincian from being saved:</h2>
+      <ul>
+        <% rincian.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= form.fields_for :program_kegiatan, @program_kegiatan do |program_fields|  %>
+    <div class="field">
+      <%= program_fields.label :nama_program, { class: "form-label" } %>
+      <%= program_fields.text_area :nama_program, { class: "form-control", readonly: true } %>
+    </div>
+    <div class="field">
+      <%= program_fields.label :isu_strategis, { class: "form-label" } %>
+      <%= program_fields.text_area :isu_strategis, { class: "form-control" } %>
+    </div>
+  <% end %>
+  <div class="actions">
+    <%= form.submit "Simpan" %>
+  </div>
+<% end %>
