@@ -3,7 +3,7 @@ class SkalasController < ApplicationController
 
   # GET /skalas or /skalas.json
   def index
-    @skalas = Skala.all.order(:nilai)
+    @skalas = Skala.all
   end
 
   # GET /skalas/1 or /skalas/1.json

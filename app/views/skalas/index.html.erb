@@ -42,7 +42,7 @@
               </tr>
             </thead>
             <tbody>
-              <% @skalas.order(:nilai).each.with_index(1) do |skala, i| %>
+              <% @skalas.order([:type, :nilai]).each.with_index(1) do |skala, i| %>
                 <tr>
                   <td class="fw-bolder" scope="row"><%= i %></td>
                   <td class="fw-bolder"><%= skala.kode_skala %></td>
