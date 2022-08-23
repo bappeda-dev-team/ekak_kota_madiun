@@ -33,6 +33,7 @@
       <thead class="thead-light">
         <tr>
           <th class="border-bottom" scope="col">No.</th>
+          <th class="border-bottom" scope="col">Tahun</th>
           <th class="border-bottom" scope="col">Nama Kegiatan</th>
           <th class="border-bottom" scope="col">Indikator Kegiatan</th>
           <th class="border-bottom" scope="col">Target</th>
@@ -45,6 +46,7 @@
         <% @programKegiatans.each.with_index(1) do |prog, i| %>
           <tr id="<%= dom_id(prog) %>" class="<%= 'bg-warning' if prog.jumlah_sasaran.zero? %>">
             <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
+            <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.tahun %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.nama_kegiatan %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.indikator_kinerja %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.target %></td>

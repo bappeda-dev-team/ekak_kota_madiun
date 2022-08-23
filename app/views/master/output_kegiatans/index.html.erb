@@ -21,7 +21,7 @@
             <form action="/master_output" method="GET" class="row">
               <input type="hidden" name="filter_query" value="opd">
               <div class="col">
-                <select name="opd" id="opd" class="select2-waw">
+                <select name="opd" data-controller="dropdown">
                   <option value="">Pilih Opd</option>
                   <option value="all">Kota Madiun</option>
                   <% for opd in (Master::OutputKegiatan.pluck(:id_skpd).uniq) do %>

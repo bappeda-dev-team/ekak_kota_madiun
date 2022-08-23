@@ -14,11 +14,9 @@
         <% else %>
           var key = "<%= key %>"
         <% end %>
-        console.log(key)
           Swal.fire({
            icon: key,
            title: title,
-           text: text,
            showConfirmButton: false,
            timer: 2000,
           })

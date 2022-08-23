@@ -10,20 +10,11 @@
     </div>
   <% end %>
   <div class="field">
-    <%= form.label :kode_urusan %>
-    <%= form.text_field :kode_urusan, class: "form-control" %>
-  </div>
-  <div class="field">
-    <%= form.label :urusan %>
-    <%= form.text_field :urusan, class: "form-control" %>
-  </div>
-  <div class="field">
-    <%= form.label :kode_bidang_urusan %>
-    <%= form.text_field :kode_bidang_urusan, class: "form-control" %>
-  </div>
-  <div class="field">
-    <%= form.label :bidang_urusan %>
-    <%= form.text_field :bidang_urusan, class: "form-control" %>
+    <%= form.label :lembaga_id %>
+    <%= form.select :lembaga_id, Lembaga.all.collect {|n| [n.nama_lembaga, n.id]}, {include_blank: true},
+    {data: {"placeholder": "Pilih Lembaga",
+            controller: 'dropdown'
+    }, required: true} %>
   </div>
   <div class="field">
     <%= form.label :nama_opd %>
@@ -48,10 +39,6 @@
   <div class="field">
     <%= form.label :nip_kepala %>
     <%= form.text_field :nip_kepala, class: "form-control" %>
-  </div>
-  <div class="field">
-    <%= form.label :lembaga_id %>
-    <%= form.select :lembaga_id, Lembaga.all.collect {|n| [n.nama_lembaga, n.id]}, {include_blank: true}, {class: "select2-waw", "data-placeholder": "Pilih Lembaga", required: true} %>
   </div>
   <div class="actions">
     <%= form.submit %>

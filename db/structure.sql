@@ -615,7 +615,7 @@ ALTER SEQUENCE public.dasar_hukums_id_seq OWNED BY public.dasar_hukums.id;
 CREATE TABLE public.indikator_sasarans (
     id bigint NOT NULL,
     indikator_kinerja character varying,
-    target integer,
+    target character varying,
     satuan character varying,
     aspek character varying,
     id_indikator character varying,
@@ -1816,6 +1816,43 @@ UNION
 
 
 --
+-- Name: skalas; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.skalas (
+    id bigint NOT NULL,
+    kode_skala character varying,
+    deskripsi character varying,
+    nilai character varying,
+    tipe_nilai character varying,
+    keterangan character varying,
+    type character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    rincian_id bigint
+);
+
+
+--
+-- Name: skalas_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.skalas_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: skalas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.skalas_id_seq OWNED BY public.skalas.id;
+
+
+--
 -- Name: strategi_keluarans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2387,6 +2424,13 @@ ALTER TABLE ONLY public.sasarans ALTER COLUMN id SET DEFAULT nextval('public.sas
 
 
 --
+-- Name: skalas id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.skalas ALTER COLUMN id SET DEFAULT nextval('public.skalas_id_seq'::regclass);
+
+
+--
 -- Name: strategi_keluarans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2804,6 +2848,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: skalas skalas_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.skalas
+    ADD CONSTRAINT skalas_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: strategi_keluarans strategi_keluarans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3172,6 +3224,13 @@ CREATE INDEX index_roles_on_resource ON public.roles USING btree (resource_type,
 --
 
 CREATE UNIQUE INDEX index_sasarans_on_id_rencana ON public.sasarans USING btree (id_rencana);
+
+
+--
+-- Name: index_skalas_on_rincian_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_skalas_on_rincian_id ON public.skalas USING btree (rincian_id);
 
 
 --
@@ -3565,6 +3624,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220728124341'),
 ('20220729030633'),
 ('20220731054048'),
-('20220812065723');
+('20220812065723'),
+('20220822023747'),
+('20220822163037');
 
 

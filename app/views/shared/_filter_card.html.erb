@@ -15,7 +15,11 @@
       <%= form.hidden_field :filter_file, value: filter_value %>
       <%= form.hidden_field :jenis, value: filter_jenis %>
       <%= form.label :kode_opd %>
-      <%= form.select :kode_opd, dropdown_opd ,{include_blank: true},{ class: "form-control select2-waw", data: {"placeholder": "Pilih Opd"}, required: true }  %>
+      <%= form.select :kode_opd, dropdown_opd ,{include_blank: true},
+        { class: "form-control", 
+          data: {"placeholder": "Pilih Opd", 
+                 controller: "dropdown",
+                 dropdown_jenis_value: "opd"}, required: true }  %>
       <%= form.submit 'filter' %>
     <% end %>
   </div>

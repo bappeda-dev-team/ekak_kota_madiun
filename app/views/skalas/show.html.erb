@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Jenis:</strong>
+  <%= @skala.jenis %>
+</p>
+
+<p>
+  <strong>Pilihan:</strong>
+  <%= @skala.pilihan %>
+</p>
+
+<p>
+  <strong>Jenis skor:</strong>
+  <%= @skala.jenis_skor %>
+</p>
+
+<p>
+  <strong>Skor:</strong>
+  <%= @skala.skor %>
+</p>
+
+<%= link_to 'Edit', edit_skala_path(@skala) %> |
+<%= link_to 'Back', skalas_path %>

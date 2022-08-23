@@ -29,6 +29,7 @@ class MusrenbangsController < ApplicationController
     end
   end
 
+  # TODO: delete, depreceated
   def asn_musrenbang
     nip_asn = params[:nip]
     @musrenbangs = Musrenbang.where(nip_asn: nip_asn)

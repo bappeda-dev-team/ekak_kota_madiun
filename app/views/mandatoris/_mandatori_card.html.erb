@@ -1,4 +1,4 @@
-<div class="card border-2 shadow mb-3" id="musrenbang-card">
+<div class="card border-2 shadow mb-3" id="mandatori-card">
   <div class="card-header">
     <div class="row align-items-center">
       <div class="row align-items-center">
@@ -14,7 +14,14 @@
         <div class="field">
           <%= form.hidden_field :sasaran_id, value: sasaran.id   %>
           <%= form.hidden_field :usulan_type  %>
-          <%= form.select :usulan_id, [], {include_blank: true}, {id: "select2-mandatori", "data-placeholder": "Pilih Usulan"} %>
+          <%= form.select :usulan_id, [], {include_blank: true}, 
+            {id: 'mandatori_dropdown',
+             data: { "placeholder": "Pilih Usulan",
+                    controller: 'dropdown',
+                    dropdown_jenis_value: 'extra',
+                    dropdown_url_value: '/mandatori_search.json',
+                    action: 'change-select@document->dropdown#fill_usulan_type'
+            }} %>
         </div>
         <div class="actions">
           <%= form.submit %>

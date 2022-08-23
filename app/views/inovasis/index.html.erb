@@ -31,12 +31,11 @@
                 <th class="border-bottom text-gray-700" scope="col">Pengusul</th>
                 <th class="border-bottom text-gray-700" scope="col">Opd</th>
                 <th class="border-bottom text-gray-700 text-center" scope="col">Status</th>
-                <th class="border-bottom text-gray-700 text-center" scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
               <% @inovasis.each.with_index(1) do |inovasi, i| %>
-                <% if inovasi.opd_pemilik == current_user.opd.kode_opd %>
+                <% if inovasi.opd_pemilik == current_user.opd.kode_opd or current_user.has_role? :super_admin %>
                   <tr id="<%= dom_id(inovasi) %>">
                     <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
                     <td class="fw-bolder text-wrap"><%= inovasi.tahun %></td>
@@ -62,15 +61,7 @@
                         <% end %>
                       <% end %>
                     </td>
-                    <td class="fw-bolder align-middle text-center">
-                      <%= link_to edit_inovasi_path(inovasi), remote: true, class: 'mx-3', data: {'bs-toggle': 'modal', 'bs-target': '#form-inovasi'} do %>
-                        <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit usulan inovasi"></i>
-                      <% end %>
-                      <%= link_to inovasi_path(inovasi), method: :delete, remote: true, class: 'mx-3', data: {'confirm-swal': 'Hapus usulan?'} do %>
-                        <i class="fas fa-trash" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus usulan inovasi"></i>
-                      <% end %>
-                    </td>
-                  </tr>
+                 </tr>
                 <% end %>
               <% end %>
             </tbody>
@@ -80,4 +71,3 @@
     </div>
   </div>
 </div>
-<%= render 'modal' %>
