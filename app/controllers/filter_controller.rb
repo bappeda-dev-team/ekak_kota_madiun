@@ -278,6 +278,22 @@ class FilterController < ApplicationController
     end
   end
 
+  def isu_strategis_permasalahan
+    kak = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
+    @tahun_bener = kak.tahun
+    @program_kegiatans = kak.laporan_rencana_kinerja
+    #    if OPD_TABLE.key?(@opd.nama_opd.to_sym)
+    #      @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[@opd.nama_opd.to_sym] }).with_sasarans(@tahun_sasaran)
+    #      @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[@opd.nama_opd.to_sym]) # idk about bidang thing
+    #    end
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd).id
+    @id_target = "isu_dan_permasalahans"
+    @filter_file = params[:filter_file].empty? ? "hasil_filter" : params[:filter_file]
+    respond_to do |format|
+      format.js { render "result_renderer" }
+    end
+  end
+
   # filter tahun yang diaktifkan, dibawah logo E-KAK
   def tahun_sasaran
     @tahun_sasaran = params[:tahun_sasaran]
