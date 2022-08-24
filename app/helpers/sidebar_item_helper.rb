@@ -63,7 +63,7 @@ module SidebarItemHelper
       { title: 'Kelompok Anggaran', href: kelompok_anggarans_path, icon: 'fas fa-folder',
         identifier: 'kelompok_anggaran' },
       { title: 'Skala Dampak Resiko', href: skalas_path, icon: 'fas fa-weight', identifier: 'skala' },
-      { title: 'Isu dan Permasalahan', href: isu_dan_permasalahans_index_path, icon: 'fas fa-map-signs',
+      { title: 'Isu dan Permasalahan', href: isu_dan_permasalahans_path, icon: 'fas fa-map-signs',
         identifier: 'isu_dan_permasalahan' }
     ]
   end
