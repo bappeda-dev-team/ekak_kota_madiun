@@ -57,10 +57,12 @@ class RinciansController < ApplicationController
         sasaran.update(penerima_manfaat: penerima_manfaat)
       end
       if @rincian.update(rincian_params)
-        update_dampak = Skala.find(params[:skala][:dampak])
-        update_dampak.update!(rincian_id: @rincian.id)
-        update_kemungkinan = Skala.find(params[:skala][:kemungkinan])
-        update_kemungkinan.update!(rincian_id: @rincian.id)
+        unless params[:skala][:dampak].empty? && params[:skala][:kemungkinan].empty?
+          update_dampak = Skala.find(params[:skala][:dampak])
+          update_dampak.update!(rincian_id: @rincian.id)
+          update_kemungkinan = Skala.find(params[:skala][:kemungkinan])
+          update_kemungkinan.update!(rincian_id: @rincian.id)
+        end
         @status = 'success'
         @text = 'Sukses menambah tematik'
         flash[:success] = "Edit rincian sukses"
