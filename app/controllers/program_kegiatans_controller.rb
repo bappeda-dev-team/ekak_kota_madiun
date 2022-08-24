@@ -82,10 +82,9 @@ class ProgramKegiatansController < ApplicationController
   end
 
   def laporan_rka
-    @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik,
-                                                                            tahun: 2022 }).where.not(sasarans: {
-                                                                                                       id: nil, anggaran: nil
-                                                                                                     }).group(:id)
+    @program_kegiatans = ProgramKegiatan.joins(:sasarans)
+                                        .where(sasarans: { nip_asn: current_user.nik, tahun: 2022 })
+                                        .where.not(sasarans: { id: nil, anggaran: nil }).group(:id)
   end
 
   def pdf_rka
@@ -109,10 +108,10 @@ class ProgramKegiatansController < ApplicationController
         render pdf: @filename,
                disposition: 'attachment',
                footer: {
-                right: 'Hal. [page] / [topage]',
-                left: "#{@opd.nama_opd} tahun #{@kak.tahun}",
-                font_size: 7,
-                },
+                 right: 'Hal. [page] / [topage]',
+                 left: "#{@opd.nama_opd} tahun #{@kak.tahun}",
+                 font_size: 7
+               },
                template: 'program_kegiatans/cetak_daftar_kak.html.erb',
                layout: 'pdf',
                show_as_html: params.key?('debug'),
@@ -184,13 +183,19 @@ class ProgramKegiatansController < ApplicationController
     end
   end
 
+  def add_isu_strategis
+    @program_kegiatan = ProgramKegiatan.find(params[:id])
+  end
+
   def create
     @programKegiatan = ProgramKegiatan.new(programKegiatan_params)
     respond_to do |format|
       if @programKegiatan.save
         format.js do
           render "_notifikasi_update",
-                 locals: { message: "Program Kegiatan berhasil dibuat", status_icon: "success", form_name: "form-programkegiatan",
+                 locals: { message: "Program Kegiatan berhasil dibuat",
+                           status_icon: "success",
+                           form_name: "form-programkegiatan",
                            type: "create" }
         end
         format.html { redirect_to program_kegiatans_url, success: "Program Kegiatan Dibuat" }
@@ -205,7 +210,9 @@ class ProgramKegiatansController < ApplicationController
       if @programKegiatan.update(programKegiatan_params)
         format.js do
           render "_notifikasi_update",
-                 locals: { message: "Program Kegiatan berhasil diupdate", status_icon: "success", form_name: "form-programkegiatan",
+                 locals: { message: "Program Kegiatan berhasil diupdate",
+                           status_icon: "success",
+                           form_name: "form-programkegiatan",
                            type: "update" }
         end
         format.html { redirect_to program_kegiatans_url, success: "Program Kegiatan diupdate" }

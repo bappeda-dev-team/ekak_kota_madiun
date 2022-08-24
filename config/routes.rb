@@ -6,6 +6,10 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  # get 'isu_dan_permasalahans/index'
+  resources :isu_dan_permasalahans do
+    get :add_isu_strategis
+  end
   resources :kemungkinans
   resources :skalas
   resources :dampaks
@@ -155,6 +159,7 @@ Rails.application.routes.draw do
 
   namespace :filter do
     post :daftar_resiko
+    post :isu_strategis_permasalahan
     get :tahun_sasaran
   end
 

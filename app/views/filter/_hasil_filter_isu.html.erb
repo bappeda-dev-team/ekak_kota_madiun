@@ -1,0 +1,74 @@
+<div class="card border-0 shadow">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">Isu dan Permasalahan </h2>
+      </div>
+      <div class="col text-end">
+        <span><%= current_user.nama %></span>
+        |
+        <span><%= current_user.nik %></span>
+      </div>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table align-items-center">
+      <thead class="thead-light">
+        <tr>
+          <th class="border-bottom" scope="col">No.</th>
+          <th class="border-bottom" scope="col">Program Kegiatan</th>
+          <th class="border-bottom" scope="col">Indikator</th>
+          <th class="border-bottom" scope="col">Target</th>
+          <th class="border-bottom" scope="col">Satuan</th>
+          <th class="border-bottom" scope="col">Kegiatan</th>
+          <th class="border-bottom" scope="col">Indikator</th>
+          <th class="border-bottom" scope="col">Target</th>
+          <th class="border-bottom" scope="col">Satuan</th>
+          <th class="border-bottom" scope="col">Subkegiatan</th>
+          <th class="border-bottom" scope="col">Indikator</th>
+          <th class="border-bottom" scope="col">Target</th>
+          <th class="border-bottom" scope="col">Satuan</th>
+          <th class="border-bottom" scope="col">Permasalahan</th>
+          <th class="border-bottom" scope="col">Isu Strategis</th>
+          <th class="border-bottom text-center" scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @program_kegiatans.each.with_index(1) do |(program_kegiatan, sasarans), i| %>
+          <tr>
+            <td class="text-gray-900 fw-bolder" scope="row" rowspan="<%= sasarans.count + 1 %>"><%= i %></td>
+            <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= sasarans.count + 1 %>"><%= program_kegiatan.nama_program %></td>
+            <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= sasarans.count + 1 %>"><%= program_kegiatan.indikator_program %></td>
+            <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= sasarans.count + 1 %>"><%= program_kegiatan.target_program %></td>
+            <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= sasarans.count + 1 %>"><%= program_kegiatan.satuan_target_program %></td>
+            <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= sasarans.count + 1 %>"><%= program_kegiatan.nama_kegiatan %></td>
+            <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= sasarans.count + 1 %>"><%= program_kegiatan.indikator_kinerja %></td>
+            <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= sasarans.count + 1 %>"><%= program_kegiatan.target %></td>
+            <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= sasarans.count + 1 %>"><%= program_kegiatan.satuan %></td>
+            <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= sasarans.count + 1 %>"><%= program_kegiatan.nama_subkegiatan %></td>
+            <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= sasarans.count + 1 %>"><%= program_kegiatan.indikator_subkegiatan %></td>
+            <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= sasarans.count + 1 %>"><%= program_kegiatan.target_subkegiatan %></td>
+            <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= sasarans.count + 1 %>"><%= program_kegiatan.satuan_target_subkegiatan %></td>
+            <td class="p-0 m-0"></td>
+            <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= sasarans.count + 1 %>"><%= program_kegiatan.isu_strategis || '-' %></td>
+            <td class="fw-bolder text-gray-500 text-center" rowspan="<%= sasarans.count + 1 %>">
+              <%= link_to isu_dan_permasalahan_add_isu_strategis_path(program_kegiatan),
+                { remote: true, class: 'btn btn-tertiary text-light d-inline-flex align-items-center toggle-active',
+                  data: { 'bs-toggle': 'modal', 'bs-target': '#form-isu-strategis'} } do %>
+                <i class="fas fa-pencil-alt text-success icon icon-xs me-2"></i>
+                Edit Isu Strategis
+              <% end %>
+            </td>
+            <% sasarans.each do |show_sasaran| %>
+              <tr>
+                <td class="text-wrap border-bottom border-start border-end" width="450px">
+                  <%= show_sasaran&.permasalahans.first&.permasalahan || '-' %>
+                </td>
+              </tr>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
