@@ -9,39 +9,43 @@
       </ul>
     </div>
   <% end %>
-  <%= form.fields_for :sasaran, @sasaran do |sasaran_fields|  %>
+  <%= form.fields_for :sasaran, @sasaran do |sasaran_fields| %>
     <div class="field">
       <%= sasaran_fields.label :sasaran_kinerja, { class: "form-label" } %>
       <%= sasaran_fields.text_area :sasaran_kinerja, {class: "form-control", readonly: true} %>
     </div>
   <% end %>
-  <%= form.fields_for :rincian, @rincian do |rincian_fields|  %>
+  <%= form.fields_for :rincian, @rincian do |rincian_fields| %>
     <div class="field">
       <%= rincian_fields.label :resiko, { class: "form-label" } %>
       <%= rincian_fields.text_area :resiko, { class: "form-control" } %>
     </div>
-      <%= form.fields_for :skala do |skala_fields| %>
+    <%= form.fields_for :skala do |skala_fields| %>
       <div class="field">
         <%= skala_fields.label :skala_kemungkinan, { class: 'form-label' } %>
-            <%= skala_fields.select :kemungkinan, [], {},
-              { class: 'form-control',
-                data: { placeholder: 'Skala Kemungkinan',
-                        controller: 'dropdown',
-                        dropdown_jenis_value: 'ajax',
-                        dropdown_url_value: kemungkinans_path(:json)
-                      }} %>
-      </div>
-      <div class="field">
-        <%= skala_fields.label :skala_dampak, { class: 'form-label' } %>
-            <%= skala_fields.select :dampak, [], {},
-              { class: 'form-control',
-                data: { placeholder: 'Skala Dampak',
-                        controller: 'dropdown',
-                        dropdown_jenis_value: 'ajax',
-                        dropdown_url_value: dampaks_path(:json)
-                      }} %>
-      </div>
-    <% end %>
+        <%= skala_fields.select :kemungkinan, raw("<option value='#{@rincian.kemungkinan&.id}' selected='selected'>#{@rincian.kemungkinan&.deskripsi}</option>"), {include_blank: true},
+          { class: 'form-control',
+            data: { placeholder: 'Skala Kemungkinan',
+                    controller: 'dropdown',
+                    dropdown_jenis_value: 'ajax',
+                    dropdown_url_value: kemungkinans_path(:json)
+            }} %>
+    </div>
+    <div class="field">
+      <%= rincian_fields.label :dampak, { class: "form-label" } %>
+      <%= rincian_fields.text_area :dampak, { class: "form-control" } %>
+    </div>
+    <div class="field">
+      <%= skala_fields.label :skala_dampak, { class: 'form-label' } %>
+      <%= skala_fields.select :dampak, raw("<option value='#{@rincian.skala_dampak&.id}' selected='selected'>#{@rincian.skala_dampak&.deskripsi}</option>"), {include_blank: true},
+        { class: 'form-control',
+          data: { placeholder: 'Skala Dampak',
+                  controller: 'dropdown',
+                  dropdown_jenis_value: 'ajax',
+                  dropdown_url_value: dampaks_path(:json)
+          }} %>
+  </div>
+<% end %>
   <% end %>
   <div class="actions">
     <%= form.submit "Simpan" %>

@@ -26,6 +26,7 @@
             <th class="border-bottom text-center border-start border-end text-wrap">Pernyataan Resiko</th>
             <th class="border-bottom text-center border-start border-end text-wrap">Skala Kemungkinan</th>
             <th class="border-bottom text-center border-start border-end">Dampak</th>
+            <th class="border-bottom text-center border-start border-end">Skala Dampak</th>
             <th class="border-bottom text-center border-start border-end text-wrap">Peta Resiko</th>
             <th class="border-bottom text-center" scope="col">Action</th>
           </tr>
@@ -46,6 +47,7 @@
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
                 <td class="text-wrap border-start border-end" rowspan="<%= row_indikator %>"><%= show_sasaran.rincian&.resiko || '-' %></td>
                 <td class="text-wrap text-center border-start border-end" rowspan="<%= row_indikator %>"><%= show_sasaran.rincian&.kemungkinan&.deskripsi || '-' %></td>
+                <td class="text-wrap text-center border-start border-end" rowspan="<%= row_indikator %>"><%= show_sasaran.rincian&.dampak || '-' %></td>
                 <td class="text-wrap text-center border-start border-end" rowspan="<%= row_indikator %>"><%= show_sasaran.rincian&.skala_dampak&.deskripsi || '-' %></td>
                 <td class="text-center border-start border-end" rowspan="<%= row_indikator %>"><%= "(#{show_sasaran.rincian&.peta_resiko}) #{show_sasaran.rincian&.nilai_peta_resiko}" %></td>
                 <td class="border-start border-end" rowspan="<%= row_indikator %>">
