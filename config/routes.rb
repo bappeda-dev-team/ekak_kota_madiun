@@ -7,6 +7,7 @@ require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
   # get 'isu_dan_permasalahans/index'
+  resources :renstra
   resources :isu_dan_permasalahans do
     get :add_isu_strategis
   end
