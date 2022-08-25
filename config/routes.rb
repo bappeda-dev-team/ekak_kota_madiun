@@ -161,6 +161,7 @@ Rails.application.routes.draw do
   namespace :filter do
     post :daftar_resiko
     post :isu_strategis_permasalahan
+    post :laporan_renstra
     get :tahun_sasaran
   end
 

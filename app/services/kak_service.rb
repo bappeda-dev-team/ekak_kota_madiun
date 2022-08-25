@@ -1,5 +1,6 @@
-# To get rencana kinerja ( sasaran ) by OPD and program_kegiatan
-# pk = ProgramKegiatan ( subkegitan )
+# KakService(tahun: 2022, kode_unik_opd: '5.01.01.xx', program_kegiatan: optional)
+# used for get pk by opd, sasarans by user on opd selected
+# compatible with tahun kelompok_anggaran
 class KakService
   attr_reader :kode_unik_opd, :program_kegiatan
 

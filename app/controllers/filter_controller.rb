@@ -294,6 +294,16 @@ class FilterController < ApplicationController
     end
   end
 
+  def laporan_renstra
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @program_kegiatans = @opd.program_kegiatans.programs
+    @filter_file = params[:filter_file]
+    @id_target = "laporan_renstra"
+    respond_to do |format|
+      format.js { render "result_renderer" }
+    end
+  end
+
   # filter tahun yang diaktifkan, dibawah logo E-KAK
   def tahun_sasaran
     @tahun_sasaran = params[:tahun_sasaran]

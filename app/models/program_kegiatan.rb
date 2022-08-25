@@ -82,6 +82,30 @@ class ProgramKegiatan < ApplicationRecord
     sasarans.map(&:waktu_total).compact.sum
   end
 
+  def target_program_tahun(tahun)
+    self.tahun == tahun.to_s ? target_program : ""
+  end
+
+  def satuan_program_tahun(tahun)
+    self.tahun == tahun.to_s ? satuan_target_program : ""
+  end
+
+  def target_kegiatan_tahun(tahun)
+    self.tahun == tahun.to_s ? target : ""
+  end
+
+  def satuan_kegiatan_tahun(tahun)
+    self.tahun == tahun.to_s ? satuan : ""
+  end
+
+  def target_subkegiatan_tahun(tahun)
+    self.tahun == tahun.to_s ? target_subkegiatan : ""
+  end
+
+  def satuan_subkegiatan_tahun(tahun)
+    self.tahun == tahun.to_s ? satuan_target_subkegiatan : ""
+  end
+
   def nama_opd_pemilik
     id_sub_unit.nil? ? '-' : Opd.find_by(id_opd_skp: id_sub_unit).nama_opd
   end
