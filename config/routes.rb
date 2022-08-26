@@ -281,6 +281,7 @@ Rails.application.routes.draw do
   get "/sync_data_opd", to: "api/sipd_client#sync_data_opd"
   post "/update_detail_program", to: "api/sipd_client#update_detail_program"
   post "/sync_indikator_program", to: "api/sipd_client#sync_indikator_program"
+  post "/sync_indikator_kegiatan", to: "api/sipd_client#sync_indikator_kegiatan"
   post "/sync_master_program/:tahun", to: "master/program#sync_master_program"
   post "/sync_master_kegiatan/:tahun", to: "master/kegiatan#sync_master_kegiatan"
   post "/sync_master_subkegiatan/:tahun/:id_giat", to: "master/subkegiatan#sync_master_subkegiatan"

@@ -69,9 +69,14 @@ class FilterController < ApplicationController
   # filter subkegiatan
   def filter_program
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
-    @programKegiatans = ProgramKegiatan.order(:id).includes(%i[opd]).where(opds: { kode_unik_opd: @kode_opd })
+    @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @programKegiatans = ProgramKegiatan.order(:id).includes(%i[opd])
+                                       .where(opds: { kode_unik_opd: @kode_opd })
+                                       .where(tahun: @tahun)
     if OPD_TABLE.key?(opd.to_sym)
-      @programKegiatans = ProgramKegiatan.order(:id).includes(%i[opd]).where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
+      @programKegiatans = ProgramKegiatan.order(:id).includes(%i[opd])
+                                         .where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
+                                         .where(tahun: @tahun)
     end
     respond_to do |format|
       @render_file = "program_kegiatans/hasil_filter"
@@ -80,14 +85,18 @@ class FilterController < ApplicationController
   end
 
   def filter_program_saja
+    @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
+
     @programKegiatans = ProgramKegiatan.includes(:opd)
                                        .select("DISTINCT ON(program_kegiatans.kode_program) program_kegiatans.*")
                                        .where(opds: { kode_unik_opd: @kode_opd })
+                                       .where(tahun: @tahun)
     if OPD_TABLE.key?(opd.to_sym)
       @programKegiatans = ProgramKegiatan.includes(:opd)
                                          .select("DISTINCT ON(program_kegiatans.kode_program) program_kegiatans.*")
                                          .where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
+                                         .where(tahun: @tahun)
     end
     respond_to do |format|
       @render_file = "program_kegiatans/hasil_filter_program"
@@ -97,10 +106,17 @@ class FilterController < ApplicationController
   end
 
   def filter_kegiatan
+    @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
-    @programKegiatans = ProgramKegiatan.includes(:opd).select("DISTINCT ON(program_kegiatans.kode_giat) program_kegiatans.*").where(opds: { kode_unik_opd: @kode_opd })
+    @programKegiatans = ProgramKegiatan.includes(:opd)
+                                       .select("DISTINCT ON(program_kegiatans.kode_giat) program_kegiatans.*")
+                                       .where(opds: { kode_unik_opd: @kode_opd })
+                                       .where(tahun: @tahun)
     if OPD_TABLE.key?(opd.to_sym)
-      @programKegiatans = ProgramKegiatan.includes(:opd).select("DISTINCT ON(program_kegiatans.kode_giat) program_kegiatans.*").where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
+      @programKegiatans = ProgramKegiatan.includes(:opd)
+                                         .select("DISTINCT ON(program_kegiatans.kode_giat) program_kegiatans.*")
+                                         .where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
+                                         .where(tahun: @tahun)
     end
     respond_to do |format|
       @render_file = "program_kegiatans/hasil_filter_kegiatan"
