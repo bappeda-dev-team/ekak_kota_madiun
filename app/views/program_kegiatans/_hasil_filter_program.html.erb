@@ -4,19 +4,6 @@
       <% opd = Opd.find_by(kode_unik_opd: @kode_opd) %>
       <h2 class="fs-5 fw-bold mb-0">Daftar Program <%= opd.nama_opd %></h2>
     </div>
-    <% if current_user.has_role? :super_admin %>
-      <div class="col text-end">
-        <%= link_to update_detail_program_path(kode_opd: opd.id_opd_skp, tahun: Date.today.year,
-      remote: true,
-      id_programs: [@programKegiatans.pluck(:id_program_sipd)]),
-      method: :post,
-      data: { disable_with: 'Memproses....'},
-      class:"btn btn-sm btn-primary" do %>
-          <i class="fas fa-sync me-2"></i>
-          Update Detail Program
-        <% end %>
-      <% end %>
-    </div>
   </div>
 </div>
 <div class="card-body">
@@ -27,10 +14,10 @@
           <th class="border-bottom" scope="col">No.</th>
           <th class="border-bottom" scope="col">Tahun</th>
           <th class="border-bottom" scope="col">Nama Program</th>
-          <th class="border-bottom" scope="col">Nama Kegiatan</th>
           <th class="border-bottom" scope="col">Indikator Program</th>
           <th class="border-bottom" scope="col">Target</th>
           <th class="border-bottom" scope="col">Satuan</th>
+          <th class="border-bottom" scope="col">Nama Kegiatan</th>
           <th class="border-bottom" scope="col">Jumlah Sasaran</th>
           <th class="border-bottom" scope="col"></th>
         </tr>
@@ -41,21 +28,21 @@
             <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.tahun %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.nama_program %></td>
-            <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.nama_kegiatan %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.indikator_program %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.target_program %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.satuan_target_program %></td>
+            <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.nama_kegiatan %></td>
             <td class="fw-bolder text-gray-500 text-center" style="white-space: initial !important;"><%= prog.jumlah_sasaran %></td>
             <td class="fw-bolder text-gray-500">
               <%= link_to sync_indikator_program_path(
-                                                      kode_opd: prog.opd.id_opd_skp,
-                                                      id_program: prog.id_program_sipd,
-                                                      id_giat: prog.id_giat,
-                                                      tahun: Date.today.year),
-                                                      method: :post,
-                                                      remote: true,
-                                                      data: { disable_with: 'Memproses....'}, 
-                                                      class:"btn btn-sm btn-primary" do %>
+                kode_opd: prog.opd.id_opd_skp,
+                id_program: prog.id_program_sipd,
+                id_giat: prog.id_giat,
+                tahun: prog.tahun),
+                method: :post,
+                remote: true,
+                data: { disable_with: 'Memproses....'},
+                class:"btn btn-sm btn-primary" do %>
                 <i class="fas fa-sync me-2"></i>
                 Sync Indikator
               <% end %>

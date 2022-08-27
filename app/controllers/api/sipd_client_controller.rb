@@ -30,15 +30,24 @@ module Api
     def sync_indikator_program
       id_program = params[:id_program]
       id_giat = params[:id_giat]
-      Api::SipdClient.new(id_program: id_program, id_giat: id_giat).indikator_program
+      id_sipd = Opd.find_by(id_opd_skp: params[:kode_opd]).id_opd_skp
+      Api::SipdClient.new(id_program: id_program, id_giat: id_giat, id_sipd: id_sipd).indikator_program
       after_job "Program pada #{nama_opd} Berhasil diupdate"
+    end
+
+    def sync_indikator_kegiatan
+      id_giat = params[:id_giat]
+      nama_kegiatan = ProgramKegiatan.find_by(id_giat: id_giat).nama_kegiatan
+      Api::SipdClient.new(id_sipd: @kode_opd, id_giat: id_giat).detail_kegiatan_lama
+      after_job "Kegiatan #{nama_kegiatan} Berhasil diupdate"
     end
 
     def update_detail_kegiatan_lama
       id_programs = @id_programs.flatten.reject { |id_prg| id_prg.empty? }
       unless id_programs.empty?
         id_programs.each do |id_program|
-          Api::SipdClient.new(id_sipd: @kode_opd, tahun: @tahun, id_opd: @id_opd, id_program: id_program).detail_kegiatan_lama
+          Api::SipdClient.new(id_sipd: @kode_opd, tahun: @tahun, id_opd: @id_opd,
+                              id_program: id_program).detail_kegiatan_lama
         end
       end
       after_job "Kegiatan Lama pada #{nama_opd} Berhasil diupdate"

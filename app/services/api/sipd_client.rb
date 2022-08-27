@@ -38,7 +38,7 @@ module Api
     end
 
     def detail_kegiatan_lama
-      request = request_indikator_kegiatan(id_kegiatan: @id_program, id_opd: @id_sipd)
+      request = request_indikator_kegiatan(id_kegiatan: @id_giat, id_opd: @id_sipd)
       proses_detail_kegiatan_lama(request)
     end
 
@@ -182,13 +182,13 @@ module Api
         target_program = program_details.last['target'] # target_1 asumsi tahun 2020, 2021 target_2, 2022 target_3
         satuan_target_program = program_details.last['satuan']
       end
-      ProgramKegiatan.where(kode_program: @id_program)
+      ProgramKegiatan.where(id_program_sipd: @id_program)
                      .update_all(indikator_program: indikator_program,
                                  target_program: target_program,
                                  satuan_target_program: satuan_target_program)
     end
 
-    # Update Kegiatans
+    # Update Kegiatans DRY this
     def proses_detail_kegiatan_lama(response)
       data = Oj.load(response.body)
       kegiatan_details = data['data']
@@ -201,7 +201,7 @@ module Api
         target = kegiatan_details.first['target_keg'] # indikator_per_kegiatan
         satuan = kegiatan_details.first['satuan_keg']
       end
-      ProgramKegiatan.where(id_giat: @id_program)
+      ProgramKegiatan.where(id_giat: @id_giat)
                      .update_all(indikator_kinerja: indikator_kinerja,
                                  target: target,
                                  satuan: satuan)

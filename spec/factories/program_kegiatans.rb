@@ -49,12 +49,29 @@
 #
 FactoryBot.define do
   factory :program_kegiatan do
-    indikator_kinerja { "Indikator Program A" }
+    id_unit { 481 }
+    kode_skpd { '5.01.5.05.0.00.02.0000' }
+    kode_sub_skpd { '5.01.5.05.0.00.02.0000' }
+    tahun { "2022" }
+    # Program
     nama_program { "PROGRAM PERENCANAAN, PENGENDALIAN DAN EVALUASI PEMBANGUNAN DAERAH" }
+    kode_program { "5.01.01" }
+    indikator_program { "Nilai SAKIP" }
+    target_program { "88" }
+    satuan_target_program { "nilai" }
+    # Kegiatan
     nama_kegiatan { "Penyusunan Perencanaan dan Pendanaan" }
-    nama_subkegiatan { "Pelaksanaan Musrenbang Kabupaten/Kota" }
+    kode_giat { '5.01.01.2.08' }
+    indikator_kinerja { "Indikator Kegiatan Program A" }
     target { 100 }
     satuan { "persen" }
+    # Subkegiatan
+    nama_subkegiatan { "Pelaksanaan Musrenbang Kabupaten/Kota" }
+    kode_sub_giat { '5.01.01.2.08.03' }
+    indikator_subkegiatan { "Persentase pemenuhan kebutuhan jasa peralatan dan perlengkapan kantor" }
+    target_subkegiatan { '100' }
+    satuan_target_subkegiatan { '%' }
+    # opd
     association :opd
   end
 end

@@ -62,10 +62,17 @@ class ProgramKegiatan < ApplicationRecord
   has_many :rincians, through: :sasarans
   has_many :permasalahans, through: :sasarans
   has_many :users, through: :sasarans
-
+  has_many :kegiatans, class_name: 'ProgramKegiatan', foreign_key: 'kode_program', primary_key: 'kode_program'
+  has_many :subkegiatans, class_name: 'ProgramKegiatan', foreign_key: 'kode_giat', primary_key: 'kode_giat'
   scope :with_sasarans, -> { where(id: Sasaran.pluck(:program_kegiatan_id)) }
 
+  scope :programs, -> { select("DISTINCT ON(program_kegiatans.kode_program) program_kegiatans.*") }
+  scope :kegiatans_satunya, -> { select("DISTINCT ON(program_kegiatans.kode_giat) program_kegiatans.*") }
+  scope :subkegiatans_satunya, -> { select("DISTINCT ON(program_kegiatans.kode_sub_giat) program_kegiatans.*") }
   # default_scope { order(created_at: :desc) }
+  def kegiatans
+    super.uniq(&:kode_giat)
+  end
 
   def my_pagu
     sasarans.sudah_lengkap.map(&:total_anggaran).compact.sum
@@ -73,6 +80,25 @@ class ProgramKegiatan < ApplicationRecord
 
   def my_waktu
     sasarans.map(&:waktu_total).compact.sum
+  end
+
+  def target_program_tahun(tahun)
+    # find program, within the opd target, with year mathces request
+    # and return their target
+    # ProgramKegiatan.where({kode_program: kode, tahun: tahun})
+    self.tahun == tahun.to_s ? target_program : ""
+  end
+
+  def target_kegiatan_tahun(tahun)
+    self.tahun == tahun.to_s ? target : ""
+  end
+
+  def target_subkegiatan_tahun(tahun)
+    self.tahun == tahun.to_s ? target_subkegiatan : ""
+  end
+
+  def pagu_program_tahun(tahun)
+    subkegiatans.where(tahun: tahun).map { |sub| sub.pagu.to_i }.compact.sum
   end
 
   def nama_opd_pemilik

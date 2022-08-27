@@ -7,30 +7,22 @@
             <i class="fas fa-home"></i>
           <% end %>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Daftar Program Kegiatan</li>
+        <li class="breadcrumb-item active" aria-current="page">Laporan Renstra</li>
       </ol>
     </nav>
-    <% flash.each do |type, msg| %>
-      <% tipe = type == 'error' ? 'danger' : type %>
-      <div class="alert alert-<%= tipe %>">
-        <%= msg %>
-      </div>
-    <% end %>
-    <%= render 'shared/filter_with_tahun_card', filter_url: @filter_url %>
-    <div class="card border-0 shadow" id="program_filter">
+    <%= render 'shared/filter_with_tahun_card', filter_url: filter_laporan_renstra_path, filter_file: 'hasil_filter_renstra' %>
+    <div class="card border-0 shadow" id="laporan_renstra">
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Daftar Program Kegiatan</h2>
+            <h2 class="fs-5 fw-bold mb-0">Laporan Renstra</h2>
           </div>
         </div>
       </div>
       <div class="card-body">
-        <%# hasil filter %>
-        ...
+        <p>Pilih Tahun dan OPD</p>
       </div>
     </div>
   </div>
 </div>
-<%= render 'modal_program' %>
-<%= render 'modal_tematik' %>
+<%= render 'shared/modal_template', modal_name: 'laporan-renstra' %>
