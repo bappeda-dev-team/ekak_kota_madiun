@@ -53,8 +53,8 @@
               <td class="text-gray-900 text-wrap border-start border-end"  ><%= program.indikator_program %></td>
               <% (2020..2024).each do |tahun| %>
                 <td class="text-gray-900 text-wrap border-start border-end"  ><%= program.target_program_tahun(tahun) %></td>
-                <td class="text-gray-900 text-wrap border-start border-end"  ><%= program.satuan_program_tahun(tahun) %></td>
-                <td class="text-gray-900 text-wrap border-start border-end"  >Pagu Indikatif</td>
+                <td class="text-gray-900 text-wrap border-start border-end"  ><%= program.satuan_target_program %></td>
+                <td class="text-gray-900 text-wrap border-start border-end"  ><%= program.pagu_program_tahun(tahun) %></td>
               <% end %>
             </tr>
         </tbody>
@@ -97,8 +97,8 @@
                   <td class="text-gray-900 text-wrap border-start border-end"  ><%= kegiatan.indikator_kinerja %></td>
                   <% (2020..2024).each do |tahun_giat| %>
                     <td class="text-gray-900 text-wrap border-start border-end"  ><%= kegiatan.target_kegiatan_tahun(tahun_giat) %></td>
-                    <td class="text-gray-900 text-wrap border-start border-end"  ><%= kegiatan.satuan_kegiatan_tahun(tahun_giat) %></td>
-                    <td class="text-gray-900 text-wrap border-start border-end"  >Pagu Indikatif</td>
+                    <td class="text-gray-900 text-wrap border-start border-end"  ><%= kegiatan.satuan %></td>
+                    <td class="text-gray-900 text-wrap border-start border-end"  ><%= kegiatan.pagu_program_tahun(tahun_giat) %></td>
                   <% end %>
                 </tr>
             </tbody>
@@ -141,8 +141,8 @@
                       <td class="text-gray-900 text-wrap border-start border-end"  ><%= subgiat.indikator_subkegiatan %></td>
                       <% (2020..2024).each do |tahun_sub| %>
                         <td class="text-gray-900 text-wrap border-start border-end"  ><%= subgiat.target_subkegiatan_tahun(tahun_sub) %></td>
-                        <td class="text-gray-900 text-wrap border-start border-end"  ><%= subgiat.satuan_subkegiatan_tahun(tahun_sub) %></td>
-                        <td class="text-gray-900 text-wrap border-start border-end"  >Pagu Indikatif</td>
+                        <td class="text-gray-900 text-wrap border-start border-end"  ><%= subgiat.satuan_target_subkegiatan %></td>
+                        <td class="text-gray-900 text-wrap border-start border-end"  ><%= subgiat.pagu %> -<%= subgiat.tahun %></td>
                       <% end %>
                     </tr>
                   <% end %>

@@ -83,27 +83,22 @@ class ProgramKegiatan < ApplicationRecord
   end
 
   def target_program_tahun(tahun)
+    # find program, within the opd target, with year mathces request
+    # and return their target
+    # ProgramKegiatan.where({kode_program: kode, tahun: tahun})
     self.tahun == tahun.to_s ? target_program : ""
-  end
-
-  def satuan_program_tahun(tahun)
-    self.tahun == tahun.to_s ? satuan_target_program : ""
   end
 
   def target_kegiatan_tahun(tahun)
     self.tahun == tahun.to_s ? target : ""
   end
 
-  def satuan_kegiatan_tahun(tahun)
-    self.tahun == tahun.to_s ? satuan : ""
-  end
-
   def target_subkegiatan_tahun(tahun)
     self.tahun == tahun.to_s ? target_subkegiatan : ""
   end
 
-  def satuan_subkegiatan_tahun(tahun)
-    self.tahun == tahun.to_s ? satuan_target_subkegiatan : ""
+  def pagu_program_tahun(tahun)
+    subkegiatans.where(tahun: tahun).map { |sub| sub.pagu.to_i }.compact.sum
   end
 
   def nama_opd_pemilik
