@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col-12" data-controller="filter-render">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Admin Renstra</li>
+      </ol>
+    </nav>
+    <% flash.each do |type, msg| %>
+      <% tipe = type == 'error' ? 'danger' : type %>
+      <div class="alert alert-<%= tipe %>">
+        <%= msg %>
+      </div>
+    <% end %>
+    <%= render 'shared/filter_card',filter_file: 'filter/filter_admin_renstra' ,filter_url: filter_renstra_master_path, action: 'ajax:success->filter-render#append' %>
+    <div class="card border-0 shadow" id="admin_renstra" data-filter-render-target="results">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Admin Renstra</h2>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <%# hasil filter %>
+        ...
+      </div>
+    </div>
+  </div>
+</div>

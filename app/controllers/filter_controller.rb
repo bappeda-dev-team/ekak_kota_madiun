@@ -314,10 +314,7 @@ class FilterController < ApplicationController
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @program_kegiatans = @opd.program_kegiatans.programs
     @filter_file = params[:filter_file]
-    @id_target = "laporan_renstra"
-    respond_to do |format|
-      format.js { render "result_renderer" }
-    end
+    render partial: @filter_file
   end
 
   # filter tahun yang diaktifkan, dibawah logo E-KAK
@@ -327,6 +324,15 @@ class FilterController < ApplicationController
     cookies[:tahun_sasaran] = @tahun_sasaran
     render 'shared/_notifier_v2',
            locals: { message: "Tahun Dipilih: #{@tahun_sasaran}", status_icon: 'success', form_name: 'non-exists' }
+  end
+
+  def renstra_master
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @renstras = Renstra.where(kode_skpd: @kode_opd)
+    @filter_file = params[:filter_file]
+    @id_opd = opd.id_opd_skp
+    @nama_opd = nama_opd
+    render partial: 'filter_admin_renstra'
   end
 
   private

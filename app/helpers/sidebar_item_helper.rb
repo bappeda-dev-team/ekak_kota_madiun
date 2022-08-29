@@ -50,6 +50,8 @@ module SidebarItemHelper
     [
       { title: 'Laporan Sasaran', href: laporan_sasarans_path, identifier: 'laporan_sasaran', icon: 'fas fa-copy' },
       { title: 'Tematik', href: subkegiatan_tematiks_path, identifier: 'tematik', icon: 'fas fa-tags' },
+      { title: 'Admin Renstra', href: admin_renstra_renstra_index_path, identifier: 'admin_renstra',
+        icon: 'fas fa-tags' },
       { title: 'Program', href: admin_program_path, identifier: 'admin_program',
         icon: 'fas fa-tasks' },
       { title: 'Kegiatan', href: admin_kegiatan_path, identifier: 'admin_kegiatan',
@@ -92,7 +94,7 @@ module SidebarItemHelper
     [
       { title: 'Rasionalisasi', href: rasionalisasi_path, identifier: 'rasionalisasi', icon: 'fas fa-balance-scale' },
       { title: 'Laporan Renja', href: '#', identifier: 'laporan_renja', icon: 'fas fa-receipt' },
-      { title: 'Laporan Renstra', href: renstra_index_path, identifier: 'laporan_renstra', icon: 'fas fa-receipt' }
+      { title: 'Laporan Renstra', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' }
     ]
   end
 

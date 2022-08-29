@@ -5,6 +5,8 @@ class RenstraController < ApplicationController
     @program_kegiatans = base_data.program_kegiatans_by_opd
   end
 
+  def admin_renstra; end
+
   def set_renstra
     @kode_unik_opd = params[:kode_unik_opd]
     @tahun = params[:tahun]
