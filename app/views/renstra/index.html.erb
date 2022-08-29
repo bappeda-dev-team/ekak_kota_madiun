@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-12">
+  <div class="col-12" data-controller="filter-render">
     <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
       <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
         <li class="breadcrumb-item">
@@ -10,8 +10,8 @@
         <li class="breadcrumb-item active" aria-current="page">Laporan Renstra</li>
       </ol>
     </nav>
-    <%= render 'shared/filter_with_tahun_card', filter_url: filter_laporan_renstra_path, filter_file: 'hasil_filter_renstra' %>
-    <div class="card border-0 shadow" id="laporan_renstra">
+    <%= render 'shared/filter_card', filter_url: filter_laporan_renstra_path, filter_file: 'hasil_filter_renstra', action: 'ajax:success->filter-render#append' %>
+    <div class="card border-0 shadow" id="laporan_renstra" data-filter-render-target="results">
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">
@@ -25,4 +25,5 @@
     </div>
   </div>
 </div>
+<%# buat edit %>
 <%= render 'shared/modal_template', modal_name: 'laporan-renstra' %>

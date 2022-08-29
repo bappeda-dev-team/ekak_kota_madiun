@@ -17,7 +17,7 @@
       </div>
     <% end %>
     <%= render 'shared/filter_card',filter_file: 'filter/filter_admin_renstra' ,filter_url: filter_renstra_master_path, action: 'ajax:success->filter-render#append' %>
-    <div class="card border-0 shadow" id="admin_renstra">
+    <div class="card border-0 shadow" id="admin_renstra" data-filter-render-target="results">
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">
@@ -25,7 +25,7 @@
           </div>
         </div>
       </div>
-      <div class="card-body" data-target="filter-render.filter-results">
+      <div class="card-body">
         <%# hasil filter %>
         ...
       </div>

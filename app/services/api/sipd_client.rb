@@ -492,7 +492,9 @@ module Api
         id_skpd: renstra['id_skpd'],
         kode_skpd: renstra['kode_skpd'],
         nama_skpd: renstra['nama_skpd'],
-        id_renstra: renstra['id_renstra']
+        id_renstra: renstra['id_renstra'],
+        created_at: Time.now,
+        updated_at: Time.now,
       }
       end
       Renstra.upsert_all(data_hash, unique_by: :id_renstra)

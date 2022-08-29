@@ -170,8 +170,10 @@ Rails.application.routes.draw do
     post :renstra_master
   end
 
-  namespace :sipd_client do
-    post :sync_renstra
+  scope module: 'api' do
+    namespace :sipd_client do
+      get :sync_renstra
+    end
   end
 
   resources :sasaran_kota

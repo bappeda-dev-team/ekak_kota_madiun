@@ -94,7 +94,7 @@ module SidebarItemHelper
     [
       { title: 'Rasionalisasi', href: rasionalisasi_path, identifier: 'rasionalisasi', icon: 'fas fa-balance-scale' },
       { title: 'Laporan Renja', href: '#', identifier: 'laporan_renja', icon: 'fas fa-receipt' },
-      { title: 'Laporan Renstra', href: renstra_index_path, identifier: 'laporan_renstra', icon: 'fas fa-receipt' }
+      { title: 'Laporan Renstra', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' }
     ]
   end
 

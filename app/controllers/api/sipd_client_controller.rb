@@ -4,7 +4,8 @@
 # params : kode_opd: opd.id_opd_skp, tahun: Date.today.year
 module Api
   class SipdClientController < ApplicationController
-    before_action :set_program_params, except: %i[sync_musrenbang sync_pokpir sync_kamus_usulan sync_data_opd]
+    before_action :set_program_params,
+                  except: %i[sync_musrenbang sync_pokpir sync_kamus_usulan sync_data_opd sync_renstra]
     def sync_subkegiatan
       UpdateProgramJob.perform_later(@kode_opd, @tahun, @id_opd)
       after_job "Update ProgramKegiatan #{nama_opd} Dikerjakan. Harap menunggu..."
@@ -94,7 +95,7 @@ module Api
     end
 
     def sync_renstra
-      @kode_opd
+      @kode_opd = params[:kode_opd]
       UpdateRenstraJob.perform_async(@kode_opd)
       flash.now[:success] = "Update OPD Tahun #{@tahun} Dikerjakan. Harap menunggu..."
       render 'shared/_notifikasi_simple'
