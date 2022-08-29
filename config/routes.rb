@@ -7,7 +7,11 @@ require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
   # get 'isu_dan_permasalahans/index'
-  resources :renstra
+  resources :renstra do
+    collection do
+      get :admin_renstra
+    end
+  end
   resources :isu_dan_permasalahans do
     get :add_isu_strategis
   end
@@ -163,6 +167,11 @@ Rails.application.routes.draw do
     post :isu_strategis_permasalahan
     post :laporan_renstra
     get :tahun_sasaran
+    post :renstra_master
+  end
+
+  namespace :sipd_client do
+    post :sync_renstra
   end
 
   resources :sasaran_kota

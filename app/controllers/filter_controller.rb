@@ -329,6 +329,13 @@ class FilterController < ApplicationController
            locals: { message: "Tahun Dipilih: #{@tahun_sasaran}", status_icon: 'success', form_name: 'non-exists' }
   end
 
+  def renstra_master
+    @renstras = Renstra.where(id_skpd: @kode_opd)
+    @filter_file = params[:filter_file]
+    @id_target = "renstra_master"
+    render partial: 'filter_admin_renstra'
+  end
+
   private
 
   def filter_params

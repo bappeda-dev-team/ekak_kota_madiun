@@ -86,6 +86,11 @@ module Api
       proses_data_subkegiatan_opd(response)
     end
 
+    def renstra_opd
+      response = request_renstra_data(id_opd: @id_sipd)
+      proses_data_renstra_opd(response)
+    end
+
     private
 
     # TODO: buat fungsi get datanya
@@ -128,6 +133,10 @@ module Api
 
     def request_kamus_usulan_data(tahun)
       H.get("#{URL}/kamus_usulan_musrenbang/109?tahun=#{tahun}")
+    end
+
+    def request_renstra_data(id_opd:, tahun_awal: 2019, tahun_akhir: 2024)
+      H.get("#{URL}/v_renstra/109/#{tahun_awal}/#{tahun_akhir}/#{id_opd}")
     end
 
     def proses_data_master_opd(response)
@@ -429,5 +438,66 @@ module Api
       end
       ProgramKegiatan.upsert_all(data_subkegiatan, unique_by: :identifier_belanja)
     end
+
+    def proses_data_renstra_opd(response)
+      data = Oj.load(response.body)
+      data_renstra = data['data']
+      data_hash = []
+      data_renstra.each do |renstra|
+      data_hash << {
+        visi: renstra['visi_teks'],
+        misi: renstra['misi_teks'],
+        tujuan: renstra['tujuan_teks'],
+        sasaran: renstra['sasaran_teks'],
+        strategi: renstra['strategi_teks'],
+        id_bidang_urusan: renstra['id_bidang_urusan'],
+        kode_bidang_urusan: renstra['kode_bidang_urusan'],
+        nama_bidang_urusan: renstra['nama_bidang_urusan'],
+        id_program_sipd: renstra['id_program'],
+        kode_program: renstra['kode_program'],
+        nama_program: renstra['nama_program'],
+        indikator_program: renstra['outcome'],
+        id_rpjmd_sipd: renstra['id_rpjmd'],
+        id_giat_sipd: renstra['id_giat'],
+        kode_giat: renstra['kode_giat'],
+        nama_giat: renstra['nama_giat'],
+        indikator_kegiatan: renstra['indikator'],
+        target_giat_1: renstra['target_1'],
+        target_giat_2: renstra['target_2'],
+        target_giat_3: renstra['target_3'],
+        target_giat_4: renstra['target_4'],
+        target_giat_5: renstra['target_5'],
+        pagu_giat_1: renstra['pagu_1'],
+        pagu_giat_2: renstra['pagu_2'],
+        pagu_giat_3: renstra['pagu_3'],
+        pagu_giat_4: renstra['pagu_4'],
+        pagu_giat_5: renstra['pagu_5'],
+        satuan_target_giat: renstra['satuan'],
+        id_sub_giat_sipd: renstra['id_sub_giat'],
+        kode_sub_giat: renstra['kode_sub_giat'],
+        nama_sub_giat: renstra['nama_sub_giat'],
+        indikator_sub_giat: renstra['indikator_sub'],
+        target_sub_giat_1: renstra['target_sub_1'],
+        target_sub_giat_2: renstra['target_sub_2'],
+        target_sub_giat_3: renstra['target_sub_3'],
+        target_sub_giat_4: renstra['target_sub_4'],
+        target_sub_giat_5: renstra['target_sub_5'],
+        pagu_sub_giat_1: renstra['pagu_sub_1'],
+        pagu_sub_giat_2: renstra['pagu_sub_2'],
+        pagu_sub_giat_3: renstra['pagu_sub_3'],
+        pagu_sub_giat_4: renstra['pagu_sub_4'],
+        pagu_sub_giat_5: renstra['pagu_sub_5'],
+        satuan_target_sub_giat: renstra['satuan_sub'],
+        id_unit: renstra['id_unit'],
+        id_skpd: renstra['id_skpd'],
+        kode_skpd: renstra['kode_skpd'],
+        nama_skpd: renstra['nama_skpd'],
+        id_renstra: renstra['id_renstra']
+      }
+      end
+      Renstra.upsert_all(data_hash, unique_by: :id_renstra)
+    end
+
+
   end
 end

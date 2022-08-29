@@ -11,7 +11,7 @@
   <div class="card-body">
     <% filter_value =  local_assigns[:filter_file] || '' %>
     <% filter_jenis = local_assigns[:jenis] || '' %>
-    <%= form_with url: filter_url, local: false do |form| %>
+    <%= form_with url: filter_url, local: true, data: { action: local_assigns[:action] } do |form| %>
       <%= form.hidden_field :filter_file, value: filter_value %>
       <%= form.hidden_field :jenis, value: filter_jenis %>
       <%= form.label :kode_opd %>

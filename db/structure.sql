@@ -1602,6 +1602,84 @@ ALTER SEQUENCE public.rekenings_id_seq OWNED BY public.rekenings.id;
 
 
 --
+-- Name: renstras; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.renstras (
+    id bigint NOT NULL,
+    visi character varying,
+    misi character varying,
+    tujuan character varying,
+    sasaran character varying,
+    strategi character varying,
+    id_bidang_urusan character varying,
+    kode_bidang_urusan character varying,
+    nama_bidang_urusan character varying,
+    id_program_sipd character varying,
+    kode_program character varying,
+    nama_program character varying,
+    indikator_program character varying,
+    id_rpjmd_sipd character varying,
+    id_giat_sipd character varying,
+    kode_giat character varying,
+    nama_giat character varying,
+    indikator_kegiatan character varying,
+    target_giat_1 character varying,
+    target_giat_2 character varying,
+    target_giat_3 character varying,
+    target_giat_4 character varying,
+    target_giat_5 character varying,
+    pagu_giat_1 character varying,
+    pagu_giat_2 character varying,
+    pagu_giat_3 character varying,
+    pagu_giat_4 character varying,
+    pagu_giat_5 character varying,
+    satuan_target_giat character varying,
+    id_sub_giat_sipd character varying,
+    kode_sub_giat character varying,
+    nama_sub_giat character varying,
+    indikator_sub_giat character varying,
+    target_sub_giat_1 character varying,
+    target_sub_giat_2 character varying,
+    target_sub_giat_3 character varying,
+    target_sub_giat_4 character varying,
+    target_sub_giat_5 character varying,
+    pagu_sub_giat_1 character varying,
+    pagu_sub_giat_2 character varying,
+    pagu_sub_giat_3 character varying,
+    pagu_sub_giat_4 character varying,
+    pagu_sub_giat_5 character varying,
+    satuan_target_sub_giat character varying,
+    id_unit character varying,
+    id_skpd character varying,
+    kode_skpd character varying,
+    nama_skpd character varying,
+    id_renstra character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: renstras_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.renstras_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: renstras_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.renstras_id_seq OWNED BY public.renstras.id;
+
+
+--
 -- Name: rincians; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2404,6 +2482,13 @@ ALTER TABLE ONLY public.rekenings ALTER COLUMN id SET DEFAULT nextval('public.re
 
 
 --
+-- Name: renstras id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.renstras ALTER COLUMN id SET DEFAULT nextval('public.renstras_id_seq'::regclass);
+
+
+--
 -- Name: rincians id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2817,6 +2902,14 @@ ALTER TABLE ONLY public.rekenings
 
 
 --
+-- Name: renstras renstras_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.renstras
+    ADD CONSTRAINT renstras_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: rincians rincians_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3197,6 +3290,13 @@ CREATE UNIQUE INDEX index_program_kegiatans_on_identifier_belanja ON public.prog
 --
 
 CREATE INDEX index_program_kegiatans_on_subkegiatan_tematik_id ON public.program_kegiatans USING btree (subkegiatan_tematik_id);
+
+
+--
+-- Name: index_renstras_on_id_renstra; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_renstras_on_id_renstra ON public.renstras USING btree (id_renstra);
 
 
 --
@@ -3628,6 +3728,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220812065723'),
 ('20220822023747'),
 ('20220822163037'),
-('20220823171259');
+('20220823171259'),
+('20220829023819');
 
 

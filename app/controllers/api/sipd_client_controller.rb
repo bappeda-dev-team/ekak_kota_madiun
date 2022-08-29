@@ -93,6 +93,13 @@ module Api
       render 'shared/_notifikasi_simple'
     end
 
+    def sync_renstra
+      @kode_opd
+      UpdateRenstraJob.perform_async(@kode_opd)
+      flash.now[:success] = "Update OPD Tahun #{@tahun} Dikerjakan. Harap menunggu..."
+      render 'shared/_notifikasi_simple'
+    end
+
     private
 
     def nama_opd
