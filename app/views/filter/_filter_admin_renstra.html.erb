@@ -2,7 +2,7 @@
   <div class="card-header">
     <div class="row align-items-center">
       <div class="col">
-        <h2 class="fs-5 fw-bold mb-0">Renstra <%= @nama_opd %> Renstra test -> <%= @renstras.first.nama_program %></h2>
+        <h2 class="fs-5 fw-bold mb-0">Renstra <%= @nama_opd %> </h2>
       </div>
       <div class="col text-end">
         <%= link_to sipd_client_sync_renstra_path(kode_opd: @id_opd),
@@ -49,101 +49,101 @@
           </tr>
         </thead>
         <tbody>
-          <% @renstras.each.with_index(1) do |program_renstra, nomor| %>
-            <tr>
-              <td class="text-gray-900 text-wrap border-start border-end"  ><%= program_renstra.kode_program %></td>
-              <td class="text-gray-900 text-wrap border-start border-end"  ><%= nomor %></td>
-              <td class="text-gray-900 text-wrap border-start border-end"  ><%= program_renstra.nama_program %></td>
-              <td class="text-gray-900 text-wrap border-start border-end"  ><%= program_renstra.indikator_program %></td>
-              <% (2020..2024).each do |tahun| %>
-                <td class="text-gray-900 text-wrap border-start border-end"  >progress nanti</td>
-                <td class="text-gray-900 text-wrap border-start border-end"  >progress nanti</td>
-                <td class="text-gray-900 text-wrap border-start border-end"  >progress nanti</td>
-              <% end %>
-            </tr>
-            <thead class="thead-light">
-              <tr class="header-program">
-                <th class="border-bottom" scope="col" rowspan="2">Kode Kegiatan</th>
-                <th class="border-bottom" scope="col" rowspan="2">No.</th>
-                <th class="border-bottom" scope="col" rowspan="2">Kegiatan</th>
-                <th class="border-bottom" scope="col" rowspan="2">Indikator</th>
-                <th class="border-bottom text-center" scope="col" colspan="3">2020</th>
-                <th class="border-bottom text-center" scope="col" colspan="3">2021</th>
-                <th class="border-bottom text-center" scope="col" colspan="3">2022</th>
-                <th class="border-bottom text-center" scope="col" colspan="3">2023</th>
-                <th class="border-bottom text-center" scope="col" colspan="3">2024</th>
-              </tr>
+            <% @renstras.each.with_index(1) do |program_renstra, nomor| %>
               <tr>
-                <th class="border-bottom" scope="col">Target</th>
-                <th class="border-bottom" scope="col">Satuan</th>
-                <th class="border-bottom" scope="col">Pagu Indikatif</th>
-                <th class="border-bottom" scope="col">Target</th>
-                <th class="border-bottom" scope="col">Satuan</th>
-                <th class="border-bottom" scope="col">Pagu Indikatif</th>
-                <th class="border-bottom" scope="col">Target</th>
-                <th class="border-bottom" scope="col">Satuan</th>
-                <th class="border-bottom" scope="col">Pagu Indikatif</th>
-                <th class="border-bottom" scope="col">Target</th>
-                <th class="border-bottom" scope="col">Satuan</th>
-                <th class="border-bottom" scope="col">Pagu Indikatif</th>
-                <th class="border-bottom" scope="col">Target</th>
-                <th class="border-bottom" scope="col">Satuan</th>
-                <th class="border-bottom" scope="col">Pagu Indikatif</th>
+                <td class="text-gray-900 text-wrap border-start border-end"  ><%= program_renstra.kode_program %></td>
+                <td class="text-gray-900 text-wrap border-start border-end"  ><%= nomor %></td>
+                <td class="text-gray-900 text-wrap border-start border-end"  ><%= program_renstra.nama_program %></td>
+                <td class="text-gray-900 text-wrap border-start border-end"  ><%= program_renstra.indikator_program %></td>
+                <% (2020..2024).each do |tahun| %>
+                  <td class="text-gray-900 text-wrap border-start border-end"  >progress nanti</td>
+                  <td class="text-gray-900 text-wrap border-start border-end"  >progress nanti</td>
+                  <td class="text-gray-900 text-wrap border-start border-end"  >progress nanti</td>
+                <% end %>
               </tr>
-            </thead>
-            <tr>
-              <td class="text-gray-900 text-wrap border-start border-end"  ><%= program_renstra.kode_giat %></td>
-              <td class="text-gray-900 text-wrap border-start border-end"  ><%= nomor %></td>
-              <td class="text-gray-900 text-wrap border-start border-end"  ><%= program_renstra.nama_giat %></td>
-              <td class="text-gray-900 text-wrap border-start border-end"  ><%= program_renstra.indikator_kegiatan %></td>
-              <% (2020..2024).each do |tahun| %>
-                <td class="text-gray-900 text-wrap border-start border-end"  >progress nanti</td>
-                <td class="text-gray-900 text-wrap border-start border-end"  >progress nanti</td>
-                <td class="text-gray-900 text-wrap border-start border-end"  >progress nanti</td>
-              <% end %>
-            </tr>
-            <thead class="thead-light">
-              <tr class="header-program">
-                <th class="border-bottom" scope="col" rowspan="2">Kode Subkegiatan</th>
-                <th class="border-bottom" scope="col" rowspan="2">No.</th>
-                <th class="border-bottom" scope="col" rowspan="2">Subkegiatan</th>
-                <th class="border-bottom" scope="col" rowspan="2">Indikator</th>
-                <th class="border-bottom text-center" scope="col" colspan="3">2020</th>
-                <th class="border-bottom text-center" scope="col" colspan="3">2021</th>
-                <th class="border-bottom text-center" scope="col" colspan="3">2022</th>
-                <th class="border-bottom text-center" scope="col" colspan="3">2023</th>
-                <th class="border-bottom text-center" scope="col" colspan="3">2024</th>
-              </tr>
+              <thead class="thead-light">
+                <tr class="header-program">
+                  <th class="border-bottom" scope="col" rowspan="2">Kode Kegiatan</th>
+                  <th class="border-bottom" scope="col" rowspan="2">No.</th>
+                  <th class="border-bottom" scope="col" rowspan="2">Kegiatan</th>
+                  <th class="border-bottom" scope="col" rowspan="2">Indikator</th>
+                  <th class="border-bottom text-center" scope="col" colspan="3">2020</th>
+                  <th class="border-bottom text-center" scope="col" colspan="3">2021</th>
+                  <th class="border-bottom text-center" scope="col" colspan="3">2022</th>
+                  <th class="border-bottom text-center" scope="col" colspan="3">2023</th>
+                  <th class="border-bottom text-center" scope="col" colspan="3">2024</th>
+                </tr>
+                <tr>
+                  <th class="border-bottom" scope="col">Target</th>
+                  <th class="border-bottom" scope="col">Satuan</th>
+                  <th class="border-bottom" scope="col">Pagu Indikatif</th>
+                  <th class="border-bottom" scope="col">Target</th>
+                  <th class="border-bottom" scope="col">Satuan</th>
+                  <th class="border-bottom" scope="col">Pagu Indikatif</th>
+                  <th class="border-bottom" scope="col">Target</th>
+                  <th class="border-bottom" scope="col">Satuan</th>
+                  <th class="border-bottom" scope="col">Pagu Indikatif</th>
+                  <th class="border-bottom" scope="col">Target</th>
+                  <th class="border-bottom" scope="col">Satuan</th>
+                  <th class="border-bottom" scope="col">Pagu Indikatif</th>
+                  <th class="border-bottom" scope="col">Target</th>
+                  <th class="border-bottom" scope="col">Satuan</th>
+                  <th class="border-bottom" scope="col">Pagu Indikatif</th>
+                </tr>
+              </thead>
               <tr>
-                <th class="border-bottom" scope="col">Target</th>
-                <th class="border-bottom" scope="col">Satuan</th>
-                <th class="border-bottom" scope="col">Pagu Indikatif</th>
-                <th class="border-bottom" scope="col">Target</th>
-                <th class="border-bottom" scope="col">Satuan</th>
-                <th class="border-bottom" scope="col">Pagu Indikatif</th>
-                <th class="border-bottom" scope="col">Target</th>
-                <th class="border-bottom" scope="col">Satuan</th>
-                <th class="border-bottom" scope="col">Pagu Indikatif</th>
-                <th class="border-bottom" scope="col">Target</th>
-                <th class="border-bottom" scope="col">Satuan</th>
-                <th class="border-bottom" scope="col">Pagu Indikatif</th>
-                <th class="border-bottom" scope="col">Target</th>
-                <th class="border-bottom" scope="col">Satuan</th>
-                <th class="border-bottom" scope="col">Pagu Indikatif</th>
+                <td class="text-gray-900 text-wrap border-start border-end"  ><%= program_renstra.kode_giat %></td>
+                <td class="text-gray-900 text-wrap border-start border-end"  ><%= nomor %></td>
+                <td class="text-gray-900 text-wrap border-start border-end"  ><%= program_renstra.nama_giat %></td>
+                <td class="text-gray-900 text-wrap border-start border-end"  ><%= program_renstra.indikator_kegiatan %></td>
+                <% (2020..2024).each do |tahun| %>
+                  <td class="text-gray-900 text-wrap border-start border-end"  >progress nanti</td>
+                  <td class="text-gray-900 text-wrap border-start border-end"  >progress nanti</td>
+                  <td class="text-gray-900 text-wrap border-start border-end"  >progress nanti</td>
+                <% end %>
               </tr>
-            </thead>
-            <tr>
-              <td class="text-gray-900 text-wrap border-start border-end"  ><%= program_renstra.kode_sub_giat %></td>
-              <td class="text-gray-900 text-wrap border-start border-end"  ><%= nomor %></td>
-              <td class="text-gray-900 text-wrap border-start border-end"  ><%= program_renstra.nama_sub_giat %></td>
-              <td class="text-gray-900 text-wrap border-start border-end"  ><%= program_renstra.indikator_sub_giat %></td>
-              <% (2020..2024).each do |tahun| %>
-                <td class="text-gray-900 text-wrap border-start border-end"  >progress nanti</td>
-                <td class="text-gray-900 text-wrap border-start border-end"  >progress nanti</td>
-                <td class="text-gray-900 text-wrap border-start border-end"  >progress nanti</td>
-              <% end %>
-            </tr>
-          <% end %>
+              <thead class="thead-light">
+                <tr class="header-program">
+                  <th class="border-bottom" scope="col" rowspan="2">Kode Subkegiatan</th>
+                  <th class="border-bottom" scope="col" rowspan="2">No.</th>
+                  <th class="border-bottom" scope="col" rowspan="2">Subkegiatan</th>
+                  <th class="border-bottom" scope="col" rowspan="2">Indikator</th>
+                  <th class="border-bottom text-center" scope="col" colspan="3">2020</th>
+                  <th class="border-bottom text-center" scope="col" colspan="3">2021</th>
+                  <th class="border-bottom text-center" scope="col" colspan="3">2022</th>
+                  <th class="border-bottom text-center" scope="col" colspan="3">2023</th>
+                  <th class="border-bottom text-center" scope="col" colspan="3">2024</th>
+                </tr>
+                <tr>
+                  <th class="border-bottom" scope="col">Target</th>
+                  <th class="border-bottom" scope="col">Satuan</th>
+                  <th class="border-bottom" scope="col">Pagu Indikatif</th>
+                  <th class="border-bottom" scope="col">Target</th>
+                  <th class="border-bottom" scope="col">Satuan</th>
+                  <th class="border-bottom" scope="col">Pagu Indikatif</th>
+                  <th class="border-bottom" scope="col">Target</th>
+                  <th class="border-bottom" scope="col">Satuan</th>
+                  <th class="border-bottom" scope="col">Pagu Indikatif</th>
+                  <th class="border-bottom" scope="col">Target</th>
+                  <th class="border-bottom" scope="col">Satuan</th>
+                  <th class="border-bottom" scope="col">Pagu Indikatif</th>
+                  <th class="border-bottom" scope="col">Target</th>
+                  <th class="border-bottom" scope="col">Satuan</th>
+                  <th class="border-bottom" scope="col">Pagu Indikatif</th>
+                </tr>
+              </thead>
+              <tr>
+                <td class="text-gray-900 text-wrap border-start border-end"  ><%= program_renstra.kode_sub_giat %></td>
+                <td class="text-gray-900 text-wrap border-start border-end"  ><%= nomor %></td>
+                <td class="text-gray-900 text-wrap border-start border-end"  ><%= program_renstra.nama_sub_giat %></td>
+                <td class="text-gray-900 text-wrap border-start border-end"  ><%= program_renstra.indikator_sub_giat %></td>
+                <% (2020..2024).each do |tahun| %>
+                  <td class="text-gray-900 text-wrap border-start border-end"  >progress nanti</td>
+                  <td class="text-gray-900 text-wrap border-start border-end"  >progress nanti</td>
+                  <td class="text-gray-900 text-wrap border-start border-end"  >progress nanti</td>
+                <% end %>
+              </tr>
+            <% end %>
         </tbody>
       </table>
     </div>
