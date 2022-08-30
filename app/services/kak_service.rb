@@ -65,6 +65,13 @@ class KakService
     all_isu.group_by { |key, _value| key[:kode_program] }
   end
 
+  def hash_by_pluck(collections)
+    collections.each_with_object({}) do |(key1, key2, key3), result|
+      result[key1] ||= {}
+      reulst[key1][key2] = key3
+    end
+  end
+
   def total_pagu
     laporan_rencana_kinerja.each_value.map { |sasarans| sasarans.map(&:total_anggaran).compact.sum }.inject(:+)
   end
@@ -75,7 +82,6 @@ class KakService
         program_kegiatans.values.map(&:size)
       end
     end.flatten.inject(:+)
-    # program_kegiatans.map { |collections| collections.map { |user, program_kegiatans| program_kegiatans.map { |k, v| v.size } } }.flatten.inject(:+)
   end
 
   def total_usulan_sasaran(tipe_usulan)
@@ -94,8 +100,6 @@ class KakService
       inisiatif_walikota: total_usulan_sasaran(Inovasi)
     }
   end
-
-  private
 
   def opd
     @opd ||= Opd.find_by(kode_unik_opd: @kode_unik_opd)

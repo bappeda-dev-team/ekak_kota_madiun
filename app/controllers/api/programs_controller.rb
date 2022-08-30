@@ -47,7 +47,7 @@ module Api
 
     def permasalahans
       @kode_opd = params[:kode_opd]
-      @tahun = 2022
+      @tahun = params[:tahun]
       @program_kegiatans = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun).isu_strategis
       respond_to do |format|
         format.json { render 'program_kegiatans/permasalahans' }
