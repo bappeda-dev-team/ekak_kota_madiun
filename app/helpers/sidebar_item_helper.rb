@@ -53,7 +53,9 @@ module SidebarItemHelper
       { title: 'OPD', href: opds_path, icon: 'fas fa-building', identifier: 'opds' },
       { title: 'Sasaran Kota', href: sasaran_kota_path, icon: 'fas fa-scroll', identifier: 'sasaran_kota' },
       { title: 'Sasaran ASN', href: laporan_sasarans_path, identifier: 'laporan_sasaran', icon: 'fas fa-bullseye' },
-      { title: 'Manajemen ASN', href: adminusers_path, icon: 'fas fa-user-check', identifier: 'adminusers' }
+      { title: 'Manajemen ASN', href: adminusers_path, icon: 'fas fa-user-check', identifier: 'adminusers' },
+      { title: 'Isu dan Permasalahan', href: isu_dan_permasalahans_path, icon: 'fas fa-map-signs',
+        identifier: 'isu_dan_permasalahan' }
     ]
   end
 
@@ -64,9 +66,7 @@ module SidebarItemHelper
       { title: 'Struktur Organisasi', href: struktur_users_path, icon: 'fas fa-sitemap', identifier: 'struktur' },
       { title: 'Kelompok Anggaran', href: kelompok_anggarans_path, icon: 'fas fa-folder',
         identifier: 'kelompok_anggaran' },
-      { title: 'Skala Dampak Resiko', href: skalas_path, icon: 'fas fa-weight', identifier: 'skala' },
-      { title: 'Isu dan Permasalahan', href: isu_dan_permasalahans_path, icon: 'fas fa-map-signs',
-        identifier: 'isu_dan_permasalahan' }
+      { title: 'Skala Dampak Resiko', href: skalas_path, icon: 'fas fa-weight', identifier: 'skala' }
     ]
   end
 

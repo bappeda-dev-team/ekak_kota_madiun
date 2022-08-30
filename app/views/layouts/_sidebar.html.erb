@@ -71,7 +71,7 @@
         <% collapsed_item_sipd_master = collapse_class('(\bmaster_urusan|\bmaster_bidang_urusan|\bmaster_programs|\bmaster_kegiatans|\bmaster_output|\bmaster_subkegiatans)') %>
         <% collapsed_item_spip = collapse_class('(\bsasaran_program_opds/spip|\bsasaran_program_opds/daftar_resiko)') %>
         <% collapsed_item_renstra = collapse_class('(\brenstra/tujuan|\brenstra/sasaran|\brenstra/program|\brenstra/kegiatan)') %>
-        <% collapsed_item_renja = collapse_class('(\brenja/tujuan|\brenja/sasaran|\brenja/program|\brenja/kegiatan)') %>
+        <% collapsed_item_renja = collapse_class('(\brenja/tujuan|\brenja/sasaran|\badmin_program|\badmin_kegiatan|\badmin_sub_kegiatan)') %>
         <% if current_user.has_role? :admin or current_user.has_role? :super_admin or current_user.has_role? :reviewer %>
           <hr>
           <p>Data Master</p>
