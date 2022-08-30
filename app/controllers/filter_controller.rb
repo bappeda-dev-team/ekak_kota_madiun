@@ -299,7 +299,7 @@ class FilterController < ApplicationController
 
   def isu_strategis_permasalahan
     @program_kegiatans = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun).isu_strategis
-    render "filter/hasil_filter_isu"
+    render partial: "filter/hasil_filter_isu"
   end
 
   def laporan_renstra
