@@ -83,6 +83,41 @@
       }
     }
   }
+  .thead-program {
+    th {
+      background-color: $blue-700;
+      color: $white;
+      border-color: #000000;
+
+      a {
+        color: $dark;
+      }
+    }
+  }
+
+  .thead-kegiatan {
+    th {
+      background-color: $green;
+      color: $white;
+      border-color: #000000;
+
+      a {
+        color: $dark;
+      }
+    }
+  }
+
+  .thead-subkegiatan {
+    th {
+      background-color: $soft-green;
+      color: $white;
+      border-color: #000000;
+
+      a {
+        color: $dark;
+      }
+    }
+  }
 }
 
 

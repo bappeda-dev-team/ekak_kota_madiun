@@ -1,154 +1,137 @@
 <div class="card border-0 shadow">
   <div class="card-header">
     <div class="row align-items-center">
-      <div class="col">
-        <h2 class="fs-5 fw-bold mb-0">Renstra OPD X</h2>
-      </div>
-      <div class="col text-end">
-        <span><%= current_user.nama %></span>
-        |
-        <span><%= current_user.nik %></span>
+      <div class="col-8">
+        <h2 class="fs-5 fw-bold mb-0">Renstra <%= @nama_opd %></h2>
       </div>
     </div>
   </div>
   <div class="card-body">
     <div class="table-responsive">
       <table class="table align-items-center">
-      <% @program_kegiatans.each.with_index(1) do |program, nomor| %>
-        <thead class="thead-light">
-          <tr class="header-program">
-            <th class="border-bottom" scope="col" rowspan="2">Kode Program</th>
-            <th class="border-bottom" scope="col" rowspan="2">No.</th>
-            <th class="border-bottom" scope="col" rowspan="2">Program</th>
-            <th class="border-bottom" scope="col" rowspan="2">Indikator</th>
-            <th class="border-bottom text-center" scope="col" colspan="3">2020</th>
-            <th class="border-bottom text-center" scope="col" colspan="3">2021</th>
-            <th class="border-bottom text-center" scope="col" colspan="3">2022</th>
-            <th class="border-bottom text-center" scope="col" colspan="3">2023</th>
-            <th class="border-bottom text-center" scope="col" colspan="3">2024</th>
-          </tr>
-          <tr>
-            <th class="border-bottom" scope="col">Target</th>
-            <th class="border-bottom" scope="col">Satuan</th>
-            <th class="border-bottom" scope="col">Pagu Indikatif</th>
-            <th class="border-bottom" scope="col">Target</th>
-            <th class="border-bottom" scope="col">Satuan</th>
-            <th class="border-bottom" scope="col">Pagu Indikatif</th>
-            <th class="border-bottom" scope="col">Target</th>
-            <th class="border-bottom" scope="col">Satuan</th>
-            <th class="border-bottom" scope="col">Pagu Indikatif</th>
-            <th class="border-bottom" scope="col">Target</th>
-            <th class="border-bottom" scope="col">Satuan</th>
-            <th class="border-bottom" scope="col">Pagu Indikatif</th>
-            <th class="border-bottom" scope="col">Target</th>
-            <th class="border-bottom" scope="col">Satuan</th>
-            <th class="border-bottom" scope="col">Pagu Indikatif</th>
-          </tr>
-        </thead>
-        <tbody>
+        <% @program_kegiatans.each.with_index(1) do |program, nomor| %>
+          <thead class="thead-program">
+            <tr class="header-program">
+              <th class="border" scope="col" rowspan="2">Kode Program</th>
+              <th class="border" scope="col" rowspan="2">No.</th>
+              <th class="border" scope="col" rowspan="2">Program</th>
+              <th class="border" scope="col" rowspan="2">Indikator</th>
+              <th class="border text-center" scope="col" colspan="3">2020</th>
+              <th class="border text-center" scope="col" colspan="3">2021</th>
+              <th class="border text-center" scope="col" colspan="3">2022</th>
+              <th class="border text-center" scope="col" colspan="3">2023</th>
+              <th class="border text-center" scope="col" colspan="3">2024</th>
+            </tr>
             <tr>
-              <td class="text-gray-900 text-wrap border-start border-end"  ><%= program.kode_program %></td>
-              <td class="text-gray-900 text-wrap border-start border-end"  ><%= nomor %></td>
-              <td class="text-gray-900 text-wrap border-start border-end"  ><%= program.nama_program %></td>
-              <td class="text-gray-900 text-wrap border-start border-end"  ><%= program.indikator_program %></td>
+              <th class="border" scope="col">Target</th>
+              <th class="border" scope="col">Satuan</th>
+              <th class="border" scope="col">Pagu Indikatif</th>
+              <th class="border" scope="col">Target</th>
+              <th class="border" scope="col">Satuan</th>
+              <th class="border" scope="col">Pagu Indikatif</th>
+              <th class="border" scope="col">Target</th>
+              <th class="border" scope="col">Satuan</th>
+              <th class="border" scope="col">Pagu Indikatif</th>
+              <th class="border" scope="col">Target</th>
+              <th class="border" scope="col">Satuan</th>
+              <th class="border" scope="col">Pagu Indikatif</th>
+              <th class="border" scope="col">Target</th>
+              <th class="border" scope="col">Satuan</th>
+              <th class="border" scope="col">Pagu Indikatif</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-gray-900 text-wrap border"  ><%= program.kode_program %></td>
+              <td class="text-gray-900 text-wrap border"  ><%= nomor %></td>
+              <td class="text-gray-900 text-wrap border"  ><%= program.nama_program %></td>
+              <td class="text-gray-900 text-wrap border"  ><%= program.indikator_program %></td>
               <% (2020..2024).each do |tahun| %>
-                <td class="text-gray-900 text-wrap border-start border-end"  ><%= program.target_program_tahun(tahun: program.tahun, kode_program: program.kode_program) %></td>
-                <td class="text-gray-900 text-wrap border-start border-end"  ><%= program.satuan_target_program %></td>
-                <td class="text-gray-900 text-wrap border-start border-end"  >Rp. -</td>
+                <td class="text-gray-900 text-wrap border"  ><%= program.target_program_tahun(tahun: program.tahun, kode_program: program.kode_program) %></td>
+                <td class="text-gray-900 text-wrap border"  ><%= program.satuan_target_program %></td>
+                <td class="text-gray-900 text-wrap border"  >Rp. -</td>
               <% end %>
             </tr>
-        </tbody>
-            <% program.kegiatans.each.with_index(1) do |kegiatan, no_giat| %>
-            <thead class="thead-light">
+          </tbody>
+          <% program.kegiatans.each.with_index(1) do |kegiatan, no_giat| %>
+            <thead class="thead-kegiatan">
               <tr>
-                <th class="border-bottom" scope="col" rowspan="2">Kode Kegiatan</th>
-                <th class="border-bottom" scope="col" rowspan="2">No</th>
-                <th class="border-bottom" scope="col" rowspan="2">Nama Kegiatan</th>
-                <th class="border-bottom" scope="col" rowspan="2">Indikator</th>
-                <th class="border-bottom text-center" scope="col" colspan="3">2020</th>
-                <th class="border-bottom text-center" scope="col" colspan="3">2021</th>
-                <th class="border-bottom text-center" scope="col" colspan="3">2022</th>
-                <th class="border-bottom text-center" scope="col" colspan="3">2023</th>
-                <th class="border-bottom text-center" scope="col" colspan="3">2024</th>
+                <th class="border" scope="col" rowspan="2">Kode Kegiatan</th>
+                <th class="border" scope="col" rowspan="2">No</th>
+                <th class="border" scope="col" rowspan="2">Nama Kegiatan</th>
+                <th class="border" scope="col" rowspan="2">Indikator</th>
+                <th class="border text-center" scope="col" colspan="3">2020</th>
+                <th class="border text-center" scope="col" colspan="3">2021</th>
+                <th class="border text-center" scope="col" colspan="3">2022</th>
+                <th class="border text-center" scope="col" colspan="3">2023</th>
+                <th class="border text-center" scope="col" colspan="3">2024</th>
               </tr>
               <tr>
-                <th class="border-bottom" scope="col">Target</th>
-                <th class="border-bottom" scope="col">Satuan</th>
-                <th class="border-bottom" scope="col">Pagu Indikatif</th>
-                <th class="border-bottom" scope="col">Target</th>
-                <th class="border-bottom" scope="col">Satuan</th>
-                <th class="border-bottom" scope="col">Pagu Indikatif</th>
-                <th class="border-bottom" scope="col">Target</th>
-                <th class="border-bottom" scope="col">Satuan</th>
-                <th class="border-bottom" scope="col">Pagu Indikatif</th>
-                <th class="border-bottom" scope="col">Target</th>
-                <th class="border-bottom" scope="col">Satuan</th>
-                <th class="border-bottom" scope="col">Pagu Indikatif</th>
-                <th class="border-bottom" scope="col">Target</th>
-                <th class="border-bottom" scope="col">Satuan</th>
-                <th class="border-bottom" scope="col">Pagu Indikatif</th>
+                <th class="border" scope="col">Target</th>
+                <th class="border" scope="col">Satuan</th>
+                <th class="border" scope="col">Pagu Indikatif</th>
+                <th class="border" scope="col">Target</th>
+                <th class="border" scope="col">Satuan</th>
+                <th class="border" scope="col">Pagu Indikatif</th>
+                <th class="border" scope="col">Target</th>
+                <th class="border" scope="col">Satuan</th>
+                <th class="border" scope="col">Pagu Indikatif</th>
+                <th class="border" scope="col">Target</th>
+                <th class="border" scope="col">Satuan</th>
+                <th class="border" scope="col">Pagu Indikatif</th>
+                <th class="border" scope="col">Target</th>
+                <th class="border" scope="col">Satuan</th>
+                <th class="border" scope="col">Pagu Indikatif</th>
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <td class="text-gray-900 text-wrap border"  ><%= kegiatan.kode_giat %></td>
+                <td class="text-gray-900 text-wrap border"  ><%= no_giat %></td>
+                <td class="text-gray-900 text-wrap border"  ><%= kegiatan.nama_kegiatan %></td>
+                <td class="text-gray-900 text-wrap border"  ><%= kegiatan.indikator_kinerja %></td>
+                <% (2020..2024).each do |tahun_giat| %>
+                  <td class="text-gray-900 text-wrap border"  ><%= kegiatan.target_kegiatan_tahun(tahun: tahun_giat, kode_giat: kegiatan.kode_giat) %></td>
+                  <td class="text-gray-900 text-wrap border"  ><%= kegiatan.satuan %></td>
+                  <td class="text-gray-900 text-wrap border"  >Rp. -</td>
+                <% end %>
+              </tr>
+            </tbody>
+            <thead class="thead-subkegiatan">
+              <tr>
+                <th class="border" scope="col" rowspan="2">Kode Subkegiatan</th>
+                <th class="border-bottom" scope="col" rowspan="2">No</th>
+                <th class="border-bottom" scope="col" rowspan="2">Nama Subkegiatan</th>
+                <th class="border-bottom" scope="col" rowspan="2">Indikator</th>
+                <% (2020..2024).each do |tahun| %>
+                  <th class="border text-center" scope="col" colspan="3"><%= tahun %></th>
+              <% end %>
+              </tr>
+              <tr class="sub-table-subkegiatans">
+                <% (2020..2024).each do %>
+                  <th class="border" scope="col" width="50px">Target</th>
+                  <th class="border" scope="col">Satuan</th>
+                  <th class="border" scope="col">Pagu Indikatif</th>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+              <% kegiatan.subkegiatans.each.with_index(1) do |subgiat, no_subgiat| %>
                 <tr>
-                  <td class="text-gray-900 text-wrap border-start border-end"  ><%= kegiatan.kode_giat %></td>
-                  <td class="text-gray-900 text-wrap border-start border-end"  ><%= no_giat %></td>
-                  <td class="text-gray-900 text-wrap border-start border-end"  ><%= kegiatan.nama_kegiatan %></td>
-                  <td class="text-gray-900 text-wrap border-start border-end"  ><%= kegiatan.indikator_kinerja %></td>
-                  <% (2020..2024).each do |tahun_giat| %>
-                    <td class="text-gray-900 text-wrap border-start border-end"  ><%= kegiatan.target_kegiatan_tahun(tahun: tahun_giat, kode_giat: kegiatan.kode_giat) %></td>
-                    <td class="text-gray-900 text-wrap border-start border-end"  ><%= kegiatan.satuan %></td>
-                    <td class="text-gray-900 text-wrap border-start border-end"  >Rp. -</td>
+                  <td class="text-gray-900 text-wrap border"  ><%= subgiat.kode_sub_giat %></td>
+                  <td class="text-gray-900 text-wrap border"  ><%= no_subgiat %></td>
+                  <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_subkegiatan %></td>
+                  <td class="text-gray-900 text-wrap border"  ><%= subgiat.indikator_subkegiatan %></td>
+                  <% (2020..2024).each do |tahun_sub| %>
+                    <td class="text-gray-900 text-wrap border"  ><%= subgiat.target_subkegiatan_tahun(tahun: tahun_sub, kode_sub_giat: subgiat.kode_sub_giat) %></td>
+                    <td class="text-gray-900 text-wrap border"  ><%= subgiat.satuan_target_subkegiatan %></td>
+                    <td class="text-gray-900 text-wrap border"  >Rp. <%= number_with_delimiter(subgiat.pagu_sub_tahun(tahun: tahun_sub, kode_sub_giat: subgiat.kode_sub_giat)) %></td>
                   <% end %>
                 </tr>
-            </tbody>
-                <thead class="thead-light">
-                  <tr>
-                    <th class="border-bottom" scope="col" rowspan="2">Kode Subkegiatan</th>
-                    <th class="border-bottom" scope="col" rowspan="2">No</th>
-                    <th class="border-bottom" scope="col" rowspan="2">Nama Subkegiatan</th>
-                    <th class="border-bottom" scope="col" rowspan="2">Indikator</th>
-                    <th class="border-bottom text-center" scope="col" colspan="3">2020</th>
-                    <th class="border-bottom text-center" scope="col" colspan="3">2021</th>
-                    <th class="border-bottom text-center" scope="col" colspan="3">2022</th>
-                    <th class="border-bottom text-center" scope="col" colspan="3">2023</th>
-                    <th class="border-bottom text-center" scope="col" colspan="3">2024</th>
-                  </tr>
-                  <tr class="sub-table-subkegiatans">
-                    <th class="border-bottom" scope="col">Target</th>
-                    <th class="border-bottom" scope="col">Satuan</th>
-                    <th class="border-bottom" scope="col">Pagu Indikatif</th>
-                    <th class="border-bottom" scope="col">Target</th>
-                    <th class="border-bottom" scope="col">Satuan</th>
-                    <th class="border-bottom" scope="col">Pagu Indikatif</th>
-                    <th class="border-bottom" scope="col">Target</th>
-                    <th class="border-bottom" scope="col">Satuan</th>
-                    <th class="border-bottom" scope="col">Pagu Indikatif</th>
-                    <th class="border-bottom" scope="col">Target</th>
-                    <th class="border-bottom" scope="col">Satuan</th>
-                    <th class="border-bottom" scope="col">Pagu Indikatif</th>
-                    <th class="border-bottom" scope="col">Target</th>
-                    <th class="border-bottom" scope="col">Satuan</th>
-                    <th class="border-bottom" scope="col">Pagu Indikatif</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% kegiatan.subkegiatans.each.with_index(1) do |subgiat, no_subgiat| %>
-                    <tr>
-                      <td class="text-gray-900 text-wrap border-start border-end"  ><%= subgiat.kode_sub_giat %></td>
-                      <td class="text-gray-900 text-wrap border-start border-end"  ><%= no_subgiat %></td>
-                      <td class="text-gray-900 text-wrap border-start border-end"  ><%= subgiat.nama_subkegiatan %></td>
-                      <td class="text-gray-900 text-wrap border-start border-end"  ><%= subgiat.indikator_subkegiatan %></td>
-                      <% (2020..2024).each do |tahun_sub| %>
-                        <td class="text-gray-900 text-wrap border-start border-end"  ><%= subgiat.target_subkegiatan_tahun(tahun: tahun_sub, kode_sub_giat: subgiat.kode_sub_giat) %></td>
-                        <td class="text-gray-900 text-wrap border-start border-end"  ><%= subgiat.satuan_target_subkegiatan %></td>
-                        <td class="text-gray-900 text-wrap border-start border-end"  ><%= subgiat.pagu_sub_tahun(tahun: tahun_sub, kode_sub_giat: subgiat.kode_sub_giat) %></td>
-                      <% end %>
-                    </tr>
-                  <% end %>
-                </tbody>
               <% end %>
+            </tbody>
           <% end %>
+        <% end %>
       </table>
     </div>
   </div>

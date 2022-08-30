@@ -5,7 +5,9 @@ module SidebarItemHelper
       { title: 'Laporan Atasan', href: atasan_laporans_path, icon: 'fas fa-chart-line', identifier: 'atasan' },
       { title: 'Laporan KAK', href: laporan_kak_path, icon: 'fas fa-file', identifier: 'laporan_kak' },
       { title: 'Rincian Belanja', href: rincian_belanja_path, icon: 'fas fa-money-check',
-        identifier: 'rincian_belanja' }
+        identifier: 'rincian_belanja' },
+      { title: 'Laporan Renstra', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' },
+      { title: 'Laporan Renja', href: '#', identifier: 'laporan_renja', icon: 'fas fa-receipt' }
     ]
   end
 
@@ -48,31 +50,23 @@ module SidebarItemHelper
 
   def master_data_items
     [
-      { title: 'Laporan Sasaran', href: laporan_sasarans_path, identifier: 'laporan_sasaran', icon: 'fas fa-copy' },
-      { title: 'Tematik', href: subkegiatan_tematiks_path, identifier: 'tematik', icon: 'fas fa-tags' },
-      { title: 'Admin Renstra', href: admin_renstra_renstra_index_path, identifier: 'admin_renstra',
-        icon: 'fas fa-tags' },
-      { title: 'Program', href: admin_program_path, identifier: 'admin_program',
-        icon: 'fas fa-tasks' },
-      { title: 'Kegiatan', href: admin_kegiatan_path, identifier: 'admin_kegiatan',
-        icon: 'fas fa-tasks' },
-      { title: 'Subkegiatan', href: admin_sub_kegiatan_path, identifier: 'admin_sub_kegiatan',
-        icon: 'fas fa-tasks' },
-      { title: 'Sasaran Kota', href: sasaran_kota_path, icon: 'fas fa-scroll', identifier: 'sasaran_kota' },
-      { title: 'User', href: adminusers_path, icon: 'fas fa-user-check', identifier: 'adminusers' },
       { title: 'OPD', href: opds_path, icon: 'fas fa-building', identifier: 'opds' },
+      { title: 'Sasaran Kota', href: sasaran_kota_path, icon: 'fas fa-scroll', identifier: 'sasaran_kota' },
+      { title: 'Sasaran ASN', href: laporan_sasarans_path, identifier: 'laporan_sasaran', icon: 'fas fa-bullseye' },
+      { title: 'Manajemen ASN', href: adminusers_path, icon: 'fas fa-user-check', identifier: 'adminusers' }
+    ]
+  end
+
+  def super_admin_items
+    [
+      { title: 'Role', href: roles_path, icon: 'fas fa-user-tag', identifier: 'roles' },
+      { title: 'Tematik', href: subkegiatan_tematiks_path, identifier: 'tematik', icon: 'fas fa-tags' },
       { title: 'Struktur Organisasi', href: struktur_users_path, icon: 'fas fa-sitemap', identifier: 'struktur' },
       { title: 'Kelompok Anggaran', href: kelompok_anggarans_path, icon: 'fas fa-folder',
         identifier: 'kelompok_anggaran' },
       { title: 'Skala Dampak Resiko', href: skalas_path, icon: 'fas fa-weight', identifier: 'skala' },
       { title: 'Isu dan Permasalahan', href: isu_dan_permasalahans_path, icon: 'fas fa-map-signs',
         identifier: 'isu_dan_permasalahan' }
-    ]
-  end
-
-  def super_admin_items
-    [
-      { title: 'Role', href: roles_path, icon: 'fas fa-user-tag', identifier: 'roles' }
     ]
   end
 
@@ -92,9 +86,7 @@ module SidebarItemHelper
 
   def reviewer_items
     [
-      { title: 'Rasionalisasi', href: rasionalisasi_path, identifier: 'rasionalisasi', icon: 'fas fa-balance-scale' },
-      { title: 'Laporan Renja', href: '#', identifier: 'laporan_renja', icon: 'fas fa-receipt' },
-      { title: 'Laporan Renstra', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' }
+      { title: 'Rasionalisasi', href: rasionalisasi_path, identifier: 'rasionalisasi', icon: 'fas fa-balance-scale' }
     ]
   end
 
@@ -103,6 +95,25 @@ module SidebarItemHelper
       { title: 'SPIP', href: spip_sasaran_program_opds_path, identifier: 'sasaran_program_opds/spip' },
       { title: 'Daftar Resiko', href: daftar_resiko_sasaran_program_opds_path,
         identifier: 'sasaran_program_opds/daftar_resiko' }
+    ]
+  end
+
+  def renstra_items
+    [
+      { title: 'Tujuan', href: '#', identifier: 'renstra/tujuan' },
+      { title: 'Sasaran', href: '#', identifier: 'renstra/tujuan' },
+      { title: 'Program', href: '#', identifier: 'renstra/tujuan' },
+      { title: 'Kegiatan', href: '#', identifier: 'renstra/tujuan' }
+    ]
+  end
+
+  def renja_items
+    [
+      { title: 'Tujuan', href: '#', identifier: 'renja/tujuan' },
+      { title: 'Sasaran', href: '#', identifier: 'renja/tujuan' },
+      { title: 'Program', href: admin_program_path, identifier: 'admin_program' },
+      { title: 'Kegiatan', href: admin_kegiatan_path, identifier: 'admin_kegiatan' },
+      { title: 'Subkegiatan', href: admin_sub_kegiatan_path, identifier: 'admin_sub_kegiatan' }
     ]
   end
 

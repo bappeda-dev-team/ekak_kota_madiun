@@ -313,6 +313,7 @@ class FilterController < ApplicationController
   def laporan_renstra
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @program_kegiatans = @opd.program_kegiatans.programs
+    @nama_opd = @opd.nama_opd
     @filter_file = params[:filter_file]
     render partial: @filter_file
   end

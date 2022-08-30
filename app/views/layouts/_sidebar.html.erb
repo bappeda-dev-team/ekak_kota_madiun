@@ -24,7 +24,7 @@
       </div>
       <div class="collapse-close d-md-none">
         <a href="#sidebarMenu" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu"
-            aria-expanded="true" aria-label="Toggle navigation">
+          aria-expanded="true" aria-label="Toggle navigation">
           <i class="fas fa-times icon icon-xs"></i>
         </a>
       </div>
@@ -40,10 +40,10 @@
           <div class="row">
             <div class="col">
               <%= form.select :tahun_sasaran, {},  {include_blank: true},
-                    { data: { placeholder: "Tahun", 
-                              controller: 'dropdown',
-                              'ajax--url': kelompok_anggarans_path(:json)
-                              } } do %>
+                { data: { placeholder: "Tahun",
+                          controller: 'dropdown',
+                          'ajax--url': kelompok_anggarans_path(:json)
+                } } do %>
                 <% if cookies[:tahun_sasaran] %>
                   <option value="<%= cookies[:tahun_sasaran] %>" selected="selected"><%= cookies[:tahun_sasaran] %></option>
                 <% end %>
@@ -70,6 +70,8 @@
         <% collapsed_item_anggaran = collapse_class('(\banggaran_ssh|\banggaran_sbu|\banggaran_hspk|\brekening)') %>
         <% collapsed_item_sipd_master = collapse_class('(\bmaster_urusan|\bmaster_bidang_urusan|\bmaster_programs|\bmaster_kegiatans|\bmaster_output|\bmaster_subkegiatans)') %>
         <% collapsed_item_spip = collapse_class('(\bsasaran_program_opds/spip|\bsasaran_program_opds/daftar_resiko)') %>
+        <% collapsed_item_renstra = collapse_class('(\brenstra/tujuan|\brenstra/sasaran|\brenstra/program|\brenstra/kegiatan)') %>
+        <% collapsed_item_renja = collapse_class('(\brenja/tujuan|\brenja/sasaran|\brenja/program|\brenja/kegiatan)') %>
         <% if current_user.has_role? :admin or current_user.has_role? :super_admin or current_user.has_role? :reviewer %>
           <hr>
           <p>Data Master</p>
@@ -196,6 +198,60 @@
                 <% end %>
               </li>
             <% end %>
+            <%# Renstra %>
+            <li class="nav-item">
+              <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_item_renstra[:menu] %>" data-bs-toggle="collapse" data-bs-target="#renstra-items" aria-expanded="<%= collapsed_item_renstra[:aria] %>">
+                <span>
+                  <span class="sidebar-icon">
+                    <i class="fas fa-layer-group icon icon-xs me-2"></i>
+                  </span>
+                  <span class="sidebar-text">Renstra</span>
+                </span>
+                <span class="link-arrow">
+                  <i class="fas fa-angle-right icon icon-sm"></i>
+                </span>
+              </span>
+              <div class="multi-level <%= collapsed_item_renstra[:sub_menu] %>" role="list" id="renstra-items" aria-expanded="<%= collapsed_item_renstra[:aria] %>">
+                <ul class="flex-column nav">
+                  <% renstra_items.each do |renstra| %>
+                    <li class="nav-item<%= navigation_class(renstra[:identifier]) %>" >
+                      <%= link_to(renstra[:href], class: "nav-link") do %>
+                        <span>
+                          <span class="sidebar-text"><%= renstra[:title] %></span>
+                        </span>
+                      <% end %>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
+            </li>
+            <%# Renja %>
+            <li class="nav-item">
+              <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_item_renja[:menu] %>" data-bs-toggle="collapse" data-bs-target="#renja-items" aria-expanded="<%= collapsed_item_renja[:aria] %>">
+                <span>
+                  <span class="sidebar-icon">
+                    <i class="fas fa-thumbtack icon-xs me-2"></i>
+                  </span>
+                  <span class="sidebar-text">Renja</span>
+                </span>
+                <span class="link-arrow">
+                  <i class="fas fa-angle-right icon icon-sm"></i>
+                </span>
+              </span>
+              <div class="multi-level <%= collapsed_item_renja[:sub_menu] %>" role="list" id="renja-items" aria-expanded="<%= collapsed_item_renja[:aria] %>">
+                <ul class="flex-column nav">
+                  <% renja_items.each do |renja| %>
+                    <li class="nav-item<%= navigation_class(renja[:identifier]) %>" >
+                      <%= link_to(renja[:href], class: "nav-link") do %>
+                        <span>
+                          <span class="sidebar-text"><%= renja[:title] %></span>
+                        </span>
+                      <% end %>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
+            </li>
           <% end %>
           <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
             <% master_data_items.each do |master_item| %>
@@ -278,7 +334,7 @@
             </ul>
           </div>
         </li>
-        <% item_filtered = current_user.instance_of?(Atasan) ? asn_sidebar_items :  asn_sidebar_items.reject! { |i| i[:title] == 'Laporan Atasan' }  %>
+        <% item_filtered = current_user.instance_of?(Atasan) ? asn_sidebar_items :  asn_sidebar_items.reject! { |i| i[:title] == 'Laporan Atasan' } %>
         <% item_filtered.each do |item| %>
           <li class="nav-item<%= navigation_class(item[:identifier]) %>">
             <%= link_to( item[:href], class: "nav-link d-flex justify-content-between #{item[:href] == '#' ? 'text-danger' : ''}") do %>
