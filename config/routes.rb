@@ -12,8 +12,8 @@ Rails.application.routes.draw do
       get :admin_renstra
     end
   end
-  resources :isu_dan_permasalahans do
-    get :add_isu_strategis
+  resources :isu_dan_permasalahans, param: :kode_program do
+    get :add_new, on: :member
   end
   resources :kemungkinans
   resources :skalas

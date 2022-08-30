@@ -1,4 +1,4 @@
-<%= form_with(url: program_kegiatan_path(@program_kegiatan), local: false, method: :patch) do |form| %>
+<%= form_with(url: program_update_program_kegiatan_path(@program_kegiatan), local: false, method: :patch) do |form| %>
   <% if @program_kegiatan.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(rincian.errors.count, "error") %> prohibited this rincian from being saved:</h2>

@@ -8,8 +8,8 @@ class IsuDanPermasalahansController < ApplicationController
     @program_kegiatans = programs
   end
 
-  def add_isu_strategis
-    @program_kegiatan = ProgramKegiatan.find(params[:isu_dan_permasalahan_id])
+  def add_new
+    @program_kegiatan = ProgramKegiatan.find(params[:kode_program])
   end
 
   private
