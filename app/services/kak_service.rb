@@ -46,6 +46,25 @@ class KakService
     opd.users.asn_aktif
   end
 
+  def isu_strategis
+    all_isu = program_kegiatans_by_opd.map do |pk|
+      {
+        nama_program: pk.nama_program,
+        kode_program: pk.kode_program,
+        indikator: pk.indikator_program,
+        target: pk.target_program,
+        satuan: pk.satuan_target_program,
+        subkegiatan: pk.nama_subkegiatan,
+        indikator_sub: pk.indikator_subkegiatan,
+        target_sub: pk.target_subkegiatan,
+        satuan_sub: pk.satuan_target_subkegiatan,
+        isu_strategis: pk.isu_strategis,
+        permasalahans: pk.permasalahans.map(&:permasalahan)
+      }
+    end
+    all_isu.group_by { |key, _value| key[:kode_program] }
+  end
+
   def total_pagu
     laporan_rencana_kinerja.each_value.map { |sasarans| sasarans.map(&:total_anggaran).compact.sum }.inject(:+)
   end

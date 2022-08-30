@@ -176,6 +176,13 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :api do
+    namespace :programs do
+      post :indikators
+      post :permasalahans
+    end
+  end
+
   resources :sasaran_kota
 
   mount Sidekiq::Web, at: "/sidekiq"
@@ -304,7 +311,7 @@ Rails.application.routes.draw do
   post "/filter_sasaran", to: "filter#filter_sasaran"
   post "/filter_user", to: "filter#filter_user"
   post "/filter_program_saja", to: "filter#filter_program_saja"
-  post "/indikator_program_opd_by_kode_program", to: "api/program_kak#indikator_program_opd_by_kode_program"
+  # post "/indikator_program_opd_by_kode_program", to: "api/program_kak#indikator_program_opd_by_kode_program"
   post "/filter_kegiatan", to: "filter#filter_kegiatan"
   post "/filter_program", to: "filter#filter_program"
   post "/filter_kak", to: "filter#filter_kak"
