@@ -1,8 +1,11 @@
 <div class="card-header">
   <div class="row align-items-center">
-    <div class="col">
+    <div class="col-8">
       <% opd = Opd.find_by(kode_unik_opd: @kode_opd) %>
-      <h2 class="fs-5 fw-bold mb-0">Daftar Kegiatan <%= opd.nama_opd %></h2>
+      <h2 class="fs-5 fw-bold mb-0">Renja Kegiatan <%= opd.nama_opd %></h2>
+    </div>
+    <div class="col">
+      <h5 class="fw-bold">Tahun - <%= @tahun %></h5>
     </div>
   </div>
 </div>

@@ -46,6 +46,32 @@ class KakService
     opd.users.asn_aktif
   end
 
+  def isu_strategis
+    all_isu = program_kegiatans_by_opd.order(:kode_program).map do |pk|
+      {
+        nama_program: pk.nama_program,
+        kode_program: pk.kode_program,
+        indikator: pk.indikator_program,
+        target: pk.target_program,
+        satuan: pk.satuan_target_program,
+        subkegiatan: pk.nama_subkegiatan,
+        indikator_sub: pk.indikator_subkegiatan,
+        target_sub: pk.target_subkegiatan,
+        satuan_sub: pk.satuan_target_subkegiatan,
+        isu_strategis: pk.isu_strategis,
+        permasalahans: pk.permasalahans.map(&:permasalahan)
+      }
+    end
+    all_isu.group_by { |key, _value| key[:kode_program] }
+  end
+
+  def hash_by_pluck(collections)
+    collections.each_with_object({}) do |(key1, key2, key3), result|
+      result[key1] ||= {}
+      reulst[key1][key2] = key3
+    end
+  end
+
   def total_pagu
     laporan_rencana_kinerja.each_value.map { |sasarans| sasarans.map(&:total_anggaran).compact.sum }.inject(:+)
   end
@@ -56,7 +82,6 @@ class KakService
         program_kegiatans.values.map(&:size)
       end
     end.flatten.inject(:+)
-    # program_kegiatans.map { |collections| collections.map { |user, program_kegiatans| program_kegiatans.map { |k, v| v.size } } }.flatten.inject(:+)
   end
 
   def total_usulan_sasaran(tipe_usulan)
@@ -75,8 +100,6 @@ class KakService
       inisiatif_walikota: total_usulan_sasaran(Inovasi)
     }
   end
-
-  private
 
   def opd
     @opd ||= Opd.find_by(kode_unik_opd: @kode_unik_opd)

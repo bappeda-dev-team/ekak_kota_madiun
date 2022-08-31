@@ -12,9 +12,14 @@ Rails.application.routes.draw do
       get :admin_renstra
     end
   end
-  resources :isu_dan_permasalahans do
-    get :add_isu_strategis
+
+  resources :isu_dan_permasalahans, param: :kode_program do
+    member do
+      get :add_new
+      post :add_isu_strategis
+    end
   end
+
   resources :kemungkinans
   resources :skalas
   resources :dampaks
@@ -28,6 +33,7 @@ Rails.application.routes.draw do
       get :cetak_pdf
     end
   end
+
   resources :rekenings
   resources :musrenbangs do
     member do
@@ -36,6 +42,7 @@ Rails.application.routes.draw do
       post :setujui_usulan_di_sasaran
     end
   end
+
   resources :pokpirs do
     member do
       post :toggle_is_active
@@ -43,6 +50,7 @@ Rails.application.routes.draw do
       post :setujui_usulan_di_sasaran
     end
   end
+
   resources :inovasis do
     member do
       post :toggle_is_active
@@ -50,6 +58,7 @@ Rails.application.routes.draw do
       post :setujui_usulan_di_sasaran
     end
   end
+
   resources :mandatoris do
     member do
       post :toggle_is_active
@@ -57,6 +66,7 @@ Rails.application.routes.draw do
       post :setujui_usulan_di_sasaran
     end
   end
+
   resources :asn_musrenbangs, path: "asn_usulan"
   devise_for :users, controllers: {
     registrations: "users/registrations"
@@ -67,21 +77,25 @@ Rails.application.routes.draw do
     collection do
       get :struktur
     end
+
     member do
       get :edit_detail
       patch :update_detail
     end
   end
+
   resources :atasans
   resources :kepalas
   resources :sasarans do
     resources :rincians do
       get "subkegiatan", on: :new
     end
+
     resources :tahapans do
       resources :aksis, path: "rencana_aksi"
       resources :anggarans
     end
+
     resources :permasalahans
     resources :dasar_hukums
     resources :latar_belakangs, path: "gambaran_umum"
@@ -95,6 +109,7 @@ Rails.application.routes.draw do
       post :clone
     end
   end
+
   resources :kelompok_anggarans do
     collection do
       get :cloning
@@ -106,6 +121,7 @@ Rails.application.routes.draw do
   #     resources :aksis, :path => "rencana_aksi"
   #     resources :anggarans
   #   end
+
   # end
 
   resources :anggarans do
@@ -113,6 +129,7 @@ Rails.application.routes.draw do
       collection do
         get :new_gaji
       end
+
       member do
         get :edit_gaji
       end
@@ -137,6 +154,7 @@ Rails.application.routes.draw do
       patch :program_update
     end
   end
+
   resources :pajaks
   resources :kesenjangans
   resources :strategi_keluarans, path: "strategi"
@@ -149,6 +167,7 @@ Rails.application.routes.draw do
       get :atasan
     end
   end
+
   resources :rekaps, param: :kode_unik_opd do
     get "jumlah", on: :collection
   end
@@ -159,6 +178,7 @@ Rails.application.routes.draw do
       get :excel_spip
       get :daftar_resiko
     end
+
     get :add_dampak_resiko
   end
 
@@ -176,6 +196,13 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :api do
+    namespace :programs do
+      post :indikators
+      post :permasalahans
+    end
+  end
+
   resources :sasaran_kota
 
   mount Sidekiq::Web, at: "/sidekiq"
@@ -184,6 +211,7 @@ Rails.application.routes.draw do
   # authenticate :user, ->(u) { u.id == 1 } do
   #   get '/sidekiq'
   # end
+
   # sasaran
   get "/verifikasi_sasarans", to: "sasarans#verifikasi_sasaran"
   get "/laporan_sasarans", to: "sasarans#laporan_sasaran"
@@ -304,7 +332,7 @@ Rails.application.routes.draw do
   post "/filter_sasaran", to: "filter#filter_sasaran"
   post "/filter_user", to: "filter#filter_user"
   post "/filter_program_saja", to: "filter#filter_program_saja"
-  post "/indikator_program_opd_by_kode_program", to: "api/program_kak#indikator_program_opd_by_kode_program"
+  # post "/indikator_program_opd_by_kode_program", to: "api/program_kak#indikator_program_opd_by_kode_program"
   post "/filter_kegiatan", to: "filter#filter_kegiatan"
   post "/filter_program", to: "filter#filter_program"
   post "/filter_kak", to: "filter#filter_kak"

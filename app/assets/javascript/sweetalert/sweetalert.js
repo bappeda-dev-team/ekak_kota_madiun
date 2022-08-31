@@ -51,7 +51,6 @@ const showConfirmationDialog = (element) => {
   const text = element.getAttribute('data-text');
   const icon = element.getAttribute('data-icon');
   const alert_only = element.getAttribute('data-alert-only');
-  console.log(alert_only)
   if (alert_only == 'true') {
     Swal.fire({
       title: message || 'Are you sure?',

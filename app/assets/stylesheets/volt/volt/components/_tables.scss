@@ -52,6 +52,12 @@
 
     td,
     th {
+      vertical-align: top !important;
+    }
+  }
+
+  td {
+    .align-items-top {
       vertical-align: top;
     }
   }

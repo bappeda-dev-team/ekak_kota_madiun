@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-12">
+  <div class="col-12" data-controller="filter-render">
     <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
       <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
         <li class="breadcrumb-item">
@@ -10,17 +10,18 @@
         <li class="breadcrumb-item active" aria-current="page">Isu dan Permasalahan</li>
       </ol>
     </nav>
-    <%= render 'shared/filter_with_tahun_card', filter_url: filter_isu_strategis_permasalahan_path, filter_file: 'hasil_filter_isu' %>
-    <div class="card border-0 shadow" id="isu_dan_permasalahans">
+    <%= render 'shared/filter_with_tahun_card_new', filter_url: filter_isu_strategis_permasalahan_path, filter_file: 'hasil_filter_isu', action: 'ajax:success->filter-render#append ajax:error->filter-render#warning' %>
+    <div class="card border-0 shadow" id="isu_dan_permasalahans" data-filter-render-target="results">
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Daftar Resiko</h2>
+            <h2 class="fs-5 fw-bold mb-0">Pilih Tahun dan OPD</h2>
           </div>
         </div>
       </div>
       <div class="card-body">
-        <p>Pilih Tahun dan OPD</p>
+        <%# hasil filter %>
+        ...
       </div>
     </div>
   </div>

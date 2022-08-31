@@ -1,14 +1,8 @@
-<%= form_with(url: program_kegiatan_path(@program_kegiatan), local: false, method: :patch) do |form| %>
-  <% if @program_kegiatan.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(rincian.errors.count, "error") %> prohibited this rincian from being saved:</h2>
-      <ul>
-        <% rincian.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= form_with(url: add_isu_strategis_isu_dan_permasalahan_path(@kode_program), local: false,
+              data: { controller: 'form-ajax',
+                      action: 'ajax:success->form-ajax#successResponse',
+                      form_ajax_modal_param: 'form-isu-strategis' 
+              }) do |form| %>
   <%= form.fields_for :program_kegiatan, @program_kegiatan do |program_fields|  %>
     <div class="field">
       <%= program_fields.label :nama_program, { class: "form-label" } %>
@@ -18,6 +12,7 @@
       <%= program_fields.label :isu_strategis, { class: "form-label" } %>
       <%= program_fields.text_area :isu_strategis, { class: "form-control" } %>
     </div>
+  <%= program_fields.hidden_field :kode_program, readonly: true %>
   <% end %>
   <div class="actions">
     <%= form.submit "Simpan" %>

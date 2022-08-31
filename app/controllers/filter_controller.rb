@@ -78,10 +78,11 @@ class FilterController < ApplicationController
                                          .where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
                                          .where(tahun: @tahun)
     end
-    respond_to do |format|
-      @render_file = "program_kegiatans/hasil_filter"
-      format.js { render "program_kegiatans/program_kegiatan_filter" }
-    end
+    render partial: 'program_kegiatans/hasil_filter_subkegiatan'
+    # respond_to do |format|
+    #   @render_file = "program_kegiatans/hasil_filter"
+    #   format.js { render "program_kegiatans/program_kegiatan_filter" }
+    # end
   end
 
   def filter_program_saja
@@ -98,11 +99,12 @@ class FilterController < ApplicationController
                                          .where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
                                          .where(tahun: @tahun)
     end
-    respond_to do |format|
-      @render_file = "program_kegiatans/hasil_filter_program"
-      format.json { render 'program_kegiatans/filter_program' }
-      format.js { render "program_kegiatans/program_kegiatan_filter" }
-    end
+    render partial: 'program_kegiatans/hasil_filter_program'
+    # respond_to do |format|
+    #   @render_file = "program_kegiatans/hasil_filter_program"
+    #   format.json { render 'program_kegiatans/filter_program' }
+    #   format.js { render "program_kegiatans/program_kegiatan_filter" }
+    # end
   end
 
   def filter_kegiatan
@@ -118,10 +120,11 @@ class FilterController < ApplicationController
                                          .where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
                                          .where(tahun: @tahun)
     end
-    respond_to do |format|
-      @render_file = "program_kegiatans/hasil_filter_kegiatan"
-      format.js { render "program_kegiatans/program_kegiatan_filter" }
-    end
+    render partial: 'program_kegiatans/hasil_filter_kegiatan'
+    # respond_to do |format|
+    #   @render_file = "program_kegiatans/hasil_filter_kegiatan"
+    #   format.js { render "program_kegiatans/program_kegiatan_filter" }
+    # end
   end
 
   def filter_kak_dashboard
@@ -295,19 +298,8 @@ class FilterController < ApplicationController
   end
 
   def isu_strategis_permasalahan
-    kak = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
-    @tahun_bener = kak.tahun
-    @program_kegiatans = kak.laporan_rencana_kinerja
-    #    if OPD_TABLE.key?(@opd.nama_opd.to_sym)
-    #      @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[@opd.nama_opd.to_sym] }).with_sasarans(@tahun_sasaran)
-    #      @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[@opd.nama_opd.to_sym]) # idk about bidang thing
-    #    end
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd).id
-    @id_target = "isu_dan_permasalahans"
-    @filter_file = params[:filter_file].empty? ? "hasil_filter" : params[:filter_file]
-    respond_to do |format|
-      format.js { render "result_renderer" }
-    end
+    @program_kegiatans = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun).isu_strategis
+    render partial: "filter/hasil_filter_isu"
   end
 
   def laporan_renstra
