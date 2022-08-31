@@ -11,18 +11,16 @@ class IsuDanPermasalahansController < ApplicationController
   def add_new
     @kode_program = params[:kode_program]
     @program_kegiatan = ProgramKegiatan.find(@kode_program)
-    @modal_target = ''
     render partial: 'form_isu_strategis'
   end
 
   def add_isu_strategis
     isu_params = isu_strategis_params
-    progrma = ProgramKegiatan.find(params[:kode_program])
-    @dom_id = helpers.dom_id(progrma)
+    @tahun = params[:tahun]
     program = ProgramKegiatan.where(kode_program: isu_strategis_params[:kode_program])
                              .update_all(isu_params.to_h)
-    @isu_strategis = ProgramKegiatan.find_by(kode_program: isu_strategis_params[:kode_program]).isu_strategis
-    render json: [@isu_strategis, @dom_id], status: :accepted if program
+    @isu_strategis = ProgramKegiatan.find(params[:kode_program]).isu_strategis
+    render plain: @isu_strategis, status: :accepted if program
   end
 
   private
@@ -33,6 +31,6 @@ class IsuDanPermasalahansController < ApplicationController
   end
 
   def isu_strategis_params
-    params.require(:program_kegiatan).permit(:isu_strategis, :kode_program, :kode_target, :nama_program)
+    params.require(:program_kegiatan).permit(:isu_strategis, :kode_program, :nama_program)
   end
 end
