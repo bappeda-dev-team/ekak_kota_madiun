@@ -47,7 +47,7 @@ class KakService
   end
 
   def isu_strategis
-    all_isu = program_kegiatans_by_opd.map do |pk|
+    all_isu = program_kegiatans_by_opd.order(:kode_program).map do |pk|
       {
         nama_program: pk.nama_program,
         kode_program: pk.kode_program,

@@ -10,58 +10,63 @@
     <table class="table align-items-center">
       <thead class="thead-light">
         <tr>
-          <th class="border-bottom" scope="col">No.</th>
-          <th class="border-bottom" scope="col">Program Kegiatan</th>
-          <th class="border-bottom" scope="col">Indikator</th>
-          <th class="border-bottom" scope="col">Target</th>
-          <th class="border-bottom" scope="col">Satuan</th>
-          <th class="border-bottom" scope="col">Subkegiatan</th>
-          <th class="border-bottom" scope="col">Indikator</th>
-          <th class="border-bottom" scope="col">Target</th>
-          <th class="border-bottom" scope="col">Satuan</th>
-          <th class="border-bottom" scope="col">Permasalahan</th>
-          <th class="border-bottom" scope="col">Isu Strategis</th>
-          <th class="border-bottom text-center" scope="col">Action</th>
+          <th class="border" scope="col">No.</th>
+          <th class="border" scope="col">Program Kegiatan</th>
+          <th class="border" scope="col">Indikator</th>
+          <th class="border" scope="col">Target</th>
+          <th class="border" scope="col">Satuan</th>
+          <th class="border" scope="col">Subkegiatan</th>
+          <th class="border" scope="col">Indikator</th>
+          <th class="border" scope="col">Target</th>
+          <th class="border" scope="col">Satuan</th>
+          <th class="border" scope="col">Permasalahan</th>
+          <th class="border" scope="col">Isu Strategis</th>
+          <th class="border text-center" scope="col">Action</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody data-controller='form-modal'>
         <% @program_kegiatans.each.with_index(1) do |(kode_program, program_kegiatans), no| %>
           <% rowspan_top = program_kegiatans.map { |pr| pr[:permasalahans].size }.sum %>
           <% rowspan = rowspan_top + program_kegiatans.size + 1 %>
           <% program = ProgramKegiatan.find_by(kode_program: kode_program) %>
           <tr>
-            <td class="text-gray-900 fw-bolder" scope="row" rowspan="<%= rowspan %>"><%= no %></td>
-            <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= rowspan %>">program -<%= program.nama_program %></td>
-            <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= rowspan %>">indikator pro - <%= program.indikator_program %></td>
-            <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= rowspan %>">target pro -<%= program.target_program %></td>
-            <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= rowspan %>">satuan pro -<%= program.satuan_target_program %></td>
+            <td class="fw-bolder border" rowspan="<%= rowspan %>"><%= no %></td>
+            <td class="text-wrap border" rowspan="<%= rowspan %>"><%= program.nama_program %></td>
+            <td class="text-wrap border" rowspan="<%= rowspan %>"><%= program.indikator_program %></td>
+            <td class="text-wrap border" width="100px" rowspan="<%= rowspan %>"><%= program.target_program %></td>
+            <td class="text-wrap border" rowspan="<%= rowspan %>"><%= program.satuan_target_program %></td>
             <td class="p-0 m-0"></td>
             <td class="p-0 m-0"></td>
             <td class="p-0 m-0"></td>
             <td class="p-0 m-0"></td>
             <td class="p-0 m-0"></td>
-            <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= rowspan %>">isu - <%= program.isu_strategis %></td>
-            <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= rowspan %>">
+            <td class="text-wrap border text-top" rowspan="<%= rowspan %>" id="<%= dom_id(program) %>" ><%= program.isu_strategis %></td>
+            <td class="text-wrap border align-items-top" rowspan="<%= rowspan %>">
               <%= link_to add_new_isu_dan_permasalahan_path(program),
-              { remote: true, class: 'btn btn-tertiary text-light d-inline-flex align-items-center toggle-active',
-                data: { 'bs-toggle': 'modal', 'bs-target': '#form-isu-strategis'} } do %>
-                <i class="fas fa-pencil-alt text-success icon icon-xs me-2"></i>
-                Edit Isu Strategis
-              <% end %>
+                { class: 'btn btn-tertiary text-light d-inline-flex align-items-center toggle-active',
+                  data: { 'bs-toggle': 'modal', 'bs-target': '#form-isu-strategis',
+                          action: 'form-modal#appendForm',
+                          form_modal_location_param: 'form-isu-strategis-body',
+                          form_modal_target_param: dom_id(program)
+                  } } do %>
+                  <i class="fas fa-pencil-alt text-success icon icon-xs me-2"></i>
+                  Edit Isu Strategis
+                <% end %>
             </td>
           </tr>
           <% program_kegiatans.each.with_index(1) do |program_kegiatan, i| %>
+            <% rowspan_bot = program_kegiatan[:permasalahans].size + 1 %>
             <tr>
-              <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= program_kegiatan[:permasalahans].size + 1 %>">sub -<%= program_kegiatan[:subkegiatan] %></td>
-              <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= program_kegiatan[:permasalahans].size + 1 %>">indik sub -<%= program_kegiatan[:indikator_sub] %></td>
-              <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= program_kegiatan[:permasalahans].size + 1 %>">target sub -<%= program_kegiatan[:target_sub] %></td>
-              <td class="text-gray-900 text-wrap border-start border-end" scope="row" rowspan="<%= program_kegiatan[:permasalahans].size + 1 %>">satuan sub -<%= program_kegiatan[:satuan_sub] %></td>
+              <td class="text-wrap border" rowspan="<%= rowspan_bot %>"><%= program_kegiatan[:subkegiatan] %></td>
+              <td class="text-wrap border" rowspan="<%= rowspan_bot %>"><%= program_kegiatan[:indikator_sub] %></td>
+              <td class="text-wrap border" rowspan="<%= rowspan_bot %>"><%= program_kegiatan[:target_sub] %></td>
+              <td class="text-wrap border" rowspan="<%= rowspan_bot %>"><%= program_kegiatan[:satuan_sub] %></td>
             </tr>
             <% program_kegiatan[:permasalahans].each do |permasalahan| %>
               <tr>
-                <td class="text-wrap border-bottom border-start border-end" width="450px">
-                  permasalahan - <%= permasalahan || '-' %>
-              </td>
+                <td class="text-wrap border align-top" width="450px">
+                  <%= permasalahan %>
+                </td>
               </tr>
             <% end %>
           <% end %>
