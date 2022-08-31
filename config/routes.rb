@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     collection do
       get :admin_renstra
     end
+    post :update_programs, on: :member
   end
 
   resources :isu_dan_permasalahans, param: :kode_program do

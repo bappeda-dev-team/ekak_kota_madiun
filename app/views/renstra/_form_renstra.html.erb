@@ -1,0 +1,27 @@
+<%= form_with(url: update_programs_renstra_path(@program), local: false,
+              data: { controller: 'form-ajax',
+                      action: 'ajax:success->form-ajax#successResponse',
+                      form_ajax_modal_param: 'form-laporan-renstra'
+              } ) do |form| %>
+              <%= form.fields_for :program_kegiatan, @program do |program_fields| %>
+                <div class="field">
+                  <%= program_fields.label :nama_subkegiatan, class: 'form-label' %>
+                  <%= program_fields.text_field :nama_subkegiatan, class: 'form-control' %>
+                </div>
+                <div class="field">
+                  <%= program_fields.label :indikator_subkegiatan, class: 'form-label' %>
+                  <%= program_fields.text_field :indikator_subkegiatan, class: 'form-control' %>
+                </div>
+                <% (2020..2024).each do |tahun| %>
+                  <div class="field">
+                    <%= form.hidden_field "target", class: 'form-label', value: tahun %>
+                    <%= program_fields.label "target #{tahun}", class: 'form-label' %>
+                    <%= program_fields.text_field :target_subkegiatan, 
+                      class: 'form-control',
+                      value: @program.target_subkegiatan_tahun(tahun: tahun, kode_sub_giat: @kode)
+                    %>
+                  </div>
+                <% end %>
+              <% end %>
+              <%= form.submit "Simpan" %>
+            <% end %>

@@ -14,7 +14,7 @@ import jQuery from "jquery";
 import "@popperjs/core";
 // import Chartist from "chartist";
 import SmoothScroll from "smooth-scroll";
-// import "@fortawesome/fontawesome-free/js/all.js";
+import "@fortawesome/fontawesome-free/css/all";
 import "select2";
 import "vanilla-nested";
 import 'simplebar';
@@ -36,9 +36,4 @@ window.SmoothScroll = SmoothScroll;
 
 require('../javascript/volt/volt');
 
-$(function () {
-  // $(document).on('select2:open', () => {
-  //   document.querySelector('.select2-search__field').focus();
-  // });
-});
 import "controllers"
