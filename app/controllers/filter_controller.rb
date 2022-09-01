@@ -1,8 +1,6 @@
 class FilterController < ApplicationController
   before_action :filter_params, except: %i[filter_tematiks]
   before_action :nama_opd, only: %i[filter_gender filter_struktur]
-  skip_before_action :verify_authenticity_token, only: %i[filter_program_saja]
-  skip_before_action :authenticate_user!, only: %i[filter_program_saja]
 
   OPD_TABLE = {
     'Dinas Kesehatan, Pengendalian Penduduk dan Keluarga Berencana': "Dinas Kesehatan",
@@ -67,7 +65,7 @@ class FilterController < ApplicationController
   end
 
   # filter subkegiatan
-  def filter_program
+  def filter_subkegiatan
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
     @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
     @programKegiatans = ProgramKegiatan.order(:id).includes(%i[opd])
@@ -78,12 +76,10 @@ class FilterController < ApplicationController
                                          .where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
                                          .where(tahun: @tahun)
     end
-    respond_to do |format|
-      format.js { render partial: 'program_kegiatans/hasil_filter_subkegiatan' }
-    end
+    render partial: 'program_kegiatans/hasil_filter_subkegiatan'
   end
 
-  def filter_program_saja
+  def filter_program
     @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
 
@@ -97,11 +93,7 @@ class FilterController < ApplicationController
                                           .where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
                                           .where(tahun: @tahun)
     end
-
-    respond_to do |format|
-      format.json { render 'program_kegiatans/filter_program' }
-      format.js { render partial: 'program_kegiatans/hasil_filter_program' }
-    end
+    render partial: 'program_kegiatans/hasil_filter_program'
   end
 
   def filter_kegiatan
@@ -118,10 +110,6 @@ class FilterController < ApplicationController
                                          .where(tahun: @tahun)
     end
     render partial: 'program_kegiatans/hasil_filter_kegiatan'
-    # respond_to do |format|
-    #   @render_file = "program_kegiatans/hasil_filter_kegiatan"
-    #   format.js { render "program_kegiatans/program_kegiatan_filter" }
-    # end
   end
 
   def filter_kak_dashboard

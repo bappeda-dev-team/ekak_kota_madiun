@@ -25,12 +25,13 @@ class ProgramKegiatansController < ApplicationController
     end
   end
 
-  def admin_program_kegiatan
-    @filter_url = "filter_program"
+  def admin_sub_kegiatan
+    @filter_url = "filter_subkegiatan"
+    render :admin_program_kegiatan
   end
 
   def admin_program
-    @filter_url = "filter_program_saja"
+    @filter_url = "filter_program"
     render :admin_program_kegiatan
   end
 
