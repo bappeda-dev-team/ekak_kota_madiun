@@ -63,7 +63,6 @@ module Api
       @program_kegiatans = ProgramKegiatan.includes(:opd)
                                           .select("DISTINCT ON(program_kegiatans.kode_program) program_kegiatans.*")
                                           .where(opds: { kode_unik_opd: @kode_opd })
-                                          .where(tahun: @tahun)
       if OPD_TABLE.key?(opd.to_sym)
         @program_kegiatans = ProgramKegiatan.includes(:opd)
                                             .select("DISTINCT ON(program_kegiatans.kode_program) program_kegiatans.*")
@@ -109,6 +108,24 @@ module Api
       end
     end
 
+    def opd_test_indikator_program
+      programs = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
+      @program_kegiatans = programs.indikator_programs_opd(jenis: 'program', kode: 'program', nama: 'program')
+      respond_to { |f| f.json { render 'opd_test_indikator' } }
+    end
+
+    def opd_test_indikator_kegiatan
+      programs = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
+      @program_kegiatans = programs.indikator_programs_opd(jenis: 'kegiatan', kode: 'giat', nama: 'kegiatan')
+      respond_to { |f| f.json { render 'opd_test_indikator' } }
+    end
+
+    def opd_test_indikator_subkegiatan
+      programs = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
+      @program_kegiatans = programs.indikator_programs_opd(jenis: 'subkegiatan', kode: 'sub_giat', nama: 'subkegiatan')
+      respond_to { |f| f.json { render 'opd_test_indikator' } }
+    end
+
     def kode_program
       params[:kode_program]
     end
@@ -122,6 +139,11 @@ module Api
     def set_params
       @kode_opd = params[:kode_opd]
       @tahun = params[:tahun]
+      @jenis = params[:jenis]
+    end
+
+    def kak_service
+      @kak_service = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
     end
   end
 end

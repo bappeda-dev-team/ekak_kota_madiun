@@ -65,6 +65,27 @@ class KakService
     all_isu.group_by { |key, _value| key[:kode_program] }
   end
 
+  def indikator_programs_opd(jenis:, kode:, nama:)
+    programs = program_kegiatans_by_opd.map do |program|
+      indikators = indikator_renstra(jenis, program)
+      {
+        opd: opd.nama_opd,
+        kode_opd: program.kode_sub_skpd,
+        nama: program.send("nama_#{nama}"),
+        kode: program.send("kode_#{kode}"),
+        indikator: indikators,
+        tahun: @tahun
+      }
+    end
+    programs.uniq { |item| item[:kode] }
+  end
+
+  def indikator_renstra(jenis, program_kegiatans)
+    program_kegiatans.send("indikator_#{jenis}_renstra")
+                     .select { |pk| pk.tahun == @tahun }
+                     .map { |pk| { indikator: pk.indikator, target: pk.target, satuan: pk.satuan } }
+  end
+
   def hash_by_pluck(collections)
     collections.each_with_object({}) do |(key1, key2, key3), result|
       result[key1] ||= {}

@@ -1,4 +1,5 @@
 json.results @program_kegiatans do |program|
+  json.kode_opd program.kode_sub_skpd
   json.tahun program.tahun
   json.kode_urusan program.kode_urusan
   json.urusan program.nama_urusan
