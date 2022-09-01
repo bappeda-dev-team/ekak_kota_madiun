@@ -126,6 +126,27 @@ module Api
       respond_to { |f| f.json { render 'opd_test_indikator' } }
     end
 
+    def kota_test_indikator_program
+      @jenis = 'program'
+      programs = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
+      @program_kegiatans = programs.program_kota(jenis: 'program', kode: 'program', nama: 'program')
+      respond_to { |f| f.json { render 'kota_test_indikator' } }
+    end
+
+    def kota_test_indikator_kegiatan
+      @jenis = 'kegiatan'
+      programs = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
+      @program_kegiatans = programs.program_kota(jenis: 'kegiatan', kode: 'giat', nama: 'kegiatan')
+      respond_to { |f| f.json { render 'kota_test_indikator' } }
+    end
+
+    def kota_test_indikator_subkegiatan
+      @jenis = 'subkegiatan'
+      programs = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
+      @program_kegiatans = programs.program_kota(jenis: 'subkegiatan', kode: 'sub_giat', nama: 'subkegiatan')
+      respond_to { |f| f.json { render 'kota_test_indikator' } }
+    end
+
     def kode_program
       params[:kode_program]
     end

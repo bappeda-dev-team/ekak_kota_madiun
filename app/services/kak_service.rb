@@ -71,6 +71,10 @@ class KakService
       {
         opd: opd.nama_opd,
         kode_opd: program.kode_sub_skpd,
+        kode_urusan: program.kode_urusan,
+        urusan: program.nama_urusan,
+        kode_bidang_urusan: program.kode_bidang_urusan,
+        bidang_urusan: program.nama_bidang_urusan,
         nama: program.send("nama_#{nama}"),
         kode: program.send("kode_#{kode}"),
         indikator: indikators,
@@ -124,5 +128,40 @@ class KakService
 
   def opd
     @opd ||= Opd.find_by(kode_unik_opd: @kode_unik_opd)
+  end
+
+  def all_opd
+    lembaga = Lembaga.find_by(nama_lembaga: "Kota Madiun")
+    # TODO: beri klausa jika lembaga kosong
+    lembaga.opds.where.not(nama_kepala: nil)
+  end
+
+  def program_kota(jenis:, kode:, nama:)
+    all_opd.map do |opd|
+      programs = indikator_programs_all_try(jenis: jenis, kode: kode, nama: nama,
+                                            program_kegiatans: opd.program_kegiatans)
+      {
+        opd: opd.nama_opd,
+        kode_opd: opd.kode_unik_opd,
+        jenis.to_sym => programs
+      }
+    end
+  end
+
+  def indikator_programs_all_try(jenis:, kode:, nama:, program_kegiatans:)
+    programs = program_kegiatans.map do |program|
+      indikators = indikator_renstra(jenis, program)
+      {
+        kode_urusan: program.kode_urusan,
+        urusan: program.nama_urusan,
+        kode_bidang_urusan: program.kode_bidang_urusan,
+        bidang_urusan: program.nama_bidang_urusan,
+        nama: program.send("nama_#{nama}"),
+        kode: program.send("kode_#{kode}"),
+        indikator: indikators,
+        tahun: @tahun
+      }
+    end
+    programs.uniq { |item| item[:kode] }
   end
 end
