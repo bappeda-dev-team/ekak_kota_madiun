@@ -24,7 +24,7 @@
           <th class="border text-center" scope="col">Action</th>
         </tr>
       </thead>
-      <tbody data-controller='form-modal'>
+      <tbody data-controller='form-modal' data-action='ajax-update@window->form-modal#updateTargetValue'>
         <% @program_kegiatans.each.with_index(1) do |(kode_program, program_kegiatans), no| %>
           <% rowspan_top = program_kegiatans.map { |pr| pr[:permasalahans].size }.sum %>
           <% rowspan = rowspan_top + program_kegiatans.size + 1 %>
@@ -40,9 +40,9 @@
             <td class="p-0 m-0"></td>
             <td class="p-0 m-0"></td>
             <td class="p-0 m-0"></td>
-            <td class="text-wrap border text-top" rowspan="<%= rowspan %>" id="<%= dom_id(program) %>" ><%= program.isu_strategis %></td>
+            <td class="text-wrap border text-top" rowspan="<%= rowspan %>" data-form-modal-target="isu_strategis" ><%= program.isu_strategis %></td>
             <td class="text-wrap border align-items-top" rowspan="<%= rowspan %>">
-              <%= link_to add_new_isu_dan_permasalahan_path(program),
+              <%= link_to add_new_isu_dan_permasalahan_path(program, tahun: @tahun),
                 { class: 'btn btn-tertiary text-light d-inline-flex align-items-center toggle-active',
                   data: { 'bs-toggle': 'modal', 'bs-target': '#form-isu-strategis',
                           action: 'form-modal#appendForm',

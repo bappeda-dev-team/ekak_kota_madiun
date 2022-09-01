@@ -3,6 +3,7 @@
                       action: 'ajax:success->form-ajax#successResponse',
                       form_ajax_modal_param: 'form-isu-strategis' 
               }) do |form| %>
+  <%= form.hidden_field :tahun, readonly: true, value: @tahun %>
   <%= form.fields_for :program_kegiatan, @program_kegiatan do |program_fields|  %>
     <div class="field">
       <%= program_fields.label :nama_program, { class: "form-label" } %>

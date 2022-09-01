@@ -646,6 +646,41 @@ ALTER SEQUENCE public.indikator_sasarans_id_seq OWNED BY public.indikator_sasara
 
 
 --
+-- Name: indikators; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.indikators (
+    id bigint NOT NULL,
+    indikator character varying,
+    target character varying,
+    satuan character varying,
+    tahun character varying,
+    kode character varying,
+    jenis character varying,
+    sub_jenis character varying
+);
+
+
+--
+-- Name: indikators_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.indikators_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: indikators_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.indikators_id_seq OWNED BY public.indikators.id;
+
+
+--
 -- Name: inovasis; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2307,6 +2342,13 @@ ALTER TABLE ONLY public.indikator_sasarans ALTER COLUMN id SET DEFAULT nextval('
 
 
 --
+-- Name: indikators id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.indikators ALTER COLUMN id SET DEFAULT nextval('public.indikators_id_seq'::regclass);
+
+
+--
 -- Name: inovasis id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2699,6 +2741,14 @@ ALTER TABLE ONLY public.dasar_hukums
 
 ALTER TABLE ONLY public.indikator_sasarans
     ADD CONSTRAINT indikator_sasarans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: indikators indikators_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.indikators
+    ADD CONSTRAINT indikators_pkey PRIMARY KEY (id);
 
 
 --
@@ -3729,6 +3779,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220822023747'),
 ('20220822163037'),
 ('20220823171259'),
-('20220829023819');
+('20220829023819'),
+('20220901004124');
 
 

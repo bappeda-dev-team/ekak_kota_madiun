@@ -7,16 +7,13 @@ export default class extends Controller {
   successResponse(event) {
     // event.preventDefault()
     const [message, status, xhr] = event.detail
-    const modal = document.getElementById('form-isu-strategis')    
-    const [pesan,target] = message 
+    const modal_target = event.params.modal 
+    const modal = document.getElementById(modal_target)
+    const ajax_update_event = new CustomEvent("ajax-update", { detail: { data: message  } })
     // event after successResponse
     Modal.getInstance(modal).hide()
     this.sweetalert()
-    this.updateTargetValue(target,pesan)
-  }
-
-  updateTargetValue(target, message) {
-    document.getElementById(target).innerHTML = message
+    window.dispatchEvent(ajax_update_event)
   }
 
   sweetalert() {

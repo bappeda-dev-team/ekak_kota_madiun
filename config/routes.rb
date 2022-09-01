@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     collection do
       get :admin_renstra
     end
+    post :update_programs, on: :member
   end
 
   resources :isu_dan_permasalahans, param: :kode_program do
@@ -200,6 +201,15 @@ Rails.application.routes.draw do
     namespace :programs do
       post :indikators
       post :permasalahans
+      post :opd_program
+      post :opd_kegiatan
+      post :opd_subkegiatan
+      post :opd_test_indikator_program
+      post :opd_test_indikator_kegiatan
+      post :opd_test_indikator_subkegiatan
+      post :kota_test_indikator_program
+      post :kota_test_indikator_kegiatan
+      post :kota_test_indikator_subkegiatan
     end
   end
 
@@ -282,7 +292,7 @@ Rails.application.routes.draw do
   get "/adminusers", to: "users#user_admin"
   get "/admin_program", to: "program_kegiatans#admin_program"
   get "/admin_kegiatan", to: "program_kegiatans#admin_kegiatan"
-  get "/admin_sub_kegiatan", to: "program_kegiatans#admin_program_kegiatan"
+  get "/admin_sub_kegiatan", to: "program_kegiatans#admin_sub_kegiatan"
   get "/laporan_renja", to: "program_kegiatans#laporan_renja" # TODO: implement this
   get "/rasionalisasi", to: "rasionalisasi#rasionalisasi"
   get "/rasional_sasaran/:sasaran", to: "rasionalisasi#rasional_sasaran"
@@ -331,10 +341,10 @@ Rails.application.routes.draw do
   # internal filter
   post "/filter_sasaran", to: "filter#filter_sasaran"
   post "/filter_user", to: "filter#filter_user"
-  post "/filter_program_saja", to: "filter#filter_program_saja"
+  post "/filter_program", to: "filter#filter_program"
   # post "/indikator_program_opd_by_kode_program", to: "api/program_kak#indikator_program_opd_by_kode_program"
   post "/filter_kegiatan", to: "filter#filter_kegiatan"
-  post "/filter_program", to: "filter#filter_program"
+  post "/filter_subkegiatan", to: "filter#filter_subkegiatan"
   post "/filter_kak", to: "filter#filter_kak"
   post "/filter_kak_dashboard", to: "filter#filter_kak_dashboard"
   post "/filter_rab", to: "filter#filter_rab"

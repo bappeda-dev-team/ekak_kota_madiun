@@ -65,6 +65,31 @@ class KakService
     all_isu.group_by { |key, _value| key[:kode_program] }
   end
 
+  def indikator_programs_opd(jenis:, kode:, nama:)
+    programs = program_kegiatans_by_opd.map do |program|
+      indikators = indikator_renstra(jenis, program)
+      {
+        opd: opd.nama_opd,
+        kode_opd: program.kode_sub_skpd,
+        kode_urusan: program.kode_urusan,
+        urusan: program.nama_urusan,
+        kode_bidang_urusan: program.kode_bidang_urusan,
+        bidang_urusan: program.nama_bidang_urusan,
+        nama: program.send("nama_#{nama}"),
+        kode: program.send("kode_#{kode}"),
+        indikator: indikators,
+        tahun: @tahun
+      }
+    end
+    programs.uniq { |item| item[:kode] }
+  end
+
+  def indikator_renstra(jenis, program_kegiatans)
+    program_kegiatans.send("indikator_#{jenis}_renstra")
+                     .select { |pk| pk.tahun == @tahun }
+                     .map { |pk| { indikator: pk.indikator, target: pk.target, satuan: pk.satuan } }
+  end
+
   def hash_by_pluck(collections)
     collections.each_with_object({}) do |(key1, key2, key3), result|
       result[key1] ||= {}
@@ -103,5 +128,40 @@ class KakService
 
   def opd
     @opd ||= Opd.find_by(kode_unik_opd: @kode_unik_opd)
+  end
+
+  def all_opd
+    lembaga = Lembaga.find_by(nama_lembaga: "Kota Madiun")
+    # TODO: beri klausa jika lembaga kosong
+    lembaga.opds.where.not(nama_kepala: nil)
+  end
+
+  def program_kota(jenis:, kode:, nama:)
+    all_opd.map do |opd|
+      programs = indikator_programs_all_try(jenis: jenis, kode: kode, nama: nama,
+                                            program_kegiatans: opd.program_kegiatans)
+      {
+        opd: opd.nama_opd,
+        kode_opd: opd.kode_unik_opd,
+        jenis.to_sym => programs
+      }
+    end
+  end
+
+  def indikator_programs_all_try(jenis:, kode:, nama:, program_kegiatans:)
+    programs = program_kegiatans.map do |program|
+      indikators = indikator_renstra(jenis, program)
+      {
+        kode_urusan: program.kode_urusan,
+        urusan: program.nama_urusan,
+        kode_bidang_urusan: program.kode_bidang_urusan,
+        bidang_urusan: program.nama_bidang_urusan,
+        nama: program.send("nama_#{nama}"),
+        kode: program.send("kode_#{kode}"),
+        indikator: indikators,
+        tahun: @tahun
+      }
+    end
+    programs.uniq { |item| item[:kode] }
   end
 end

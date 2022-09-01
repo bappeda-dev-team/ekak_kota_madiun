@@ -6,7 +6,7 @@ class Rekap
   end
 
   def jumlah_rekap
-    # FIXME optimize this
+    # FIXME: optimize this
     usulans_all = usulans
     jumlah_programkegiatan = programs.select { |p| p.sasarans.present? }
     sasaran = jumlah_programkegiatan.map(&:sasarans).flatten.size
