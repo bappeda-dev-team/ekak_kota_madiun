@@ -67,6 +67,13 @@ class ProgramKegiatan < ApplicationRecord
   has_many :indikator_program_renstra, lambda {
                                          where(jenis: 'Renstra', sub_jenis: 'Program')
                                        }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'kode_program'
+  has_many :indikator_kegiatan_renstra, lambda {
+                                          where(jenis: 'Renstra', sub_jenis: 'Kegiatan')
+                                        }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'kode_giat'
+  has_many :indikator_subkegiatan_renstra, lambda {
+                                             where(jenis: 'Renstra', sub_jenis: 'Subkegiatan')
+                                           }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'kode_sub_giat'
+
   scope :with_sasarans, -> { where(id: Sasaran.pluck(:program_kegiatan_id)) }
 
   scope :programs, -> { select("DISTINCT ON(program_kegiatans.kode_program) program_kegiatans.*") }
@@ -88,15 +95,30 @@ class ProgramKegiatan < ApplicationRecord
   def target_program_tahun(tahun:, kode_program:)
     # find program, within the opd target, with year mathces request
     # and return their target
-    ProgramKegiatan.find_by(kode_program: kode_program, tahun: tahun).target_program
+    indikator_program_renstra.where(tahun: tahun).pluck(:target,
+                                                        :satuan).each_with_object({}) do |(target, satuan), result|
+      result[:target] = target
+      result[:satuan] = satuan
+    end
+    # ProgramKegiatan.find_by(kode_program: kode_program, tahun: tahun).target_program
   end
 
   def target_kegiatan_tahun(tahun:, kode_giat:)
-    ProgramKegiatan.find_by(kode_giat: kode_giat, tahun: tahun)&.target
+    # ProgramKegiatan.find_by(kode_giat: kode_giat, tahun: tahun)&.target
+    indikator_kegiatan_renstra.where(tahun: tahun).pluck(:target,
+                                                         :satuan).each_with_object({}) do |(target, satuan), result|
+      result[:target] = target
+      result[:satuan] = satuan
+    end
   end
 
   def target_subkegiatan_tahun(tahun:, kode_sub_giat:)
-    ProgramKegiatan.find_by(kode_sub_giat: kode_sub_giat, tahun: tahun)&.target_subkegiatan
+    indikator_subkegiatan_renstra.where(tahun: tahun).pluck(:target,
+                                                            :satuan).each_with_object({}) do |(target, satuan), result|
+      result[:target] = target
+      result[:satuan] = satuan
+    end
+    # ProgramKegiatan.find_by(kode_sub_giat: kode_sub_giat, tahun: tahun)&.target_subkegiatan
   end
 
   def pagu_sub_tahun(tahun:, kode_sub_giat:)
