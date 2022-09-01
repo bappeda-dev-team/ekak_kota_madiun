@@ -64,6 +64,9 @@ class ProgramKegiatan < ApplicationRecord
   has_many :users, through: :sasarans
   has_many :kegiatans, class_name: 'ProgramKegiatan', foreign_key: 'kode_program', primary_key: 'kode_program'
   has_many :subkegiatans, class_name: 'ProgramKegiatan', foreign_key: 'kode_giat', primary_key: 'kode_giat'
+  has_many :indikator_program_renstra, lambda {
+                                         where(jenis: 'Renstra', sub_jenis: 'Program')
+                                       }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'kode_program'
   scope :with_sasarans, -> { where(id: Sasaran.pluck(:program_kegiatan_id)) }
 
   scope :programs, -> { select("DISTINCT ON(program_kegiatans.kode_program) program_kegiatans.*") }
