@@ -1,4 +1,4 @@
-json.results @programKegiatans do |program|
+json.results @program_kegiatans do |program|
   json.kode_program program.kode_program
   json.tahun program.tahun
   json.program program.nama_program

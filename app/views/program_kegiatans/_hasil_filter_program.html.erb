@@ -23,7 +23,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @programKegiatans.each.with_index(1) do |prog, i| %>
+        <% @program_kegiatans.each.with_index(1) do |prog, i| %>
           <tr id="<%= dom_id(prog) %>" class="<%= 'bg-warning' if prog.jumlah_sasaran.zero? %>">
             <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.tahun %></td>

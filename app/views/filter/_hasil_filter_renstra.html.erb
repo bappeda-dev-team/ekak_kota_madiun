@@ -52,6 +52,25 @@
                 <td class="text-gray-900 text-wrap border"  ><%= program.satuan_target_program %></td>
                 <td class="text-gray-900 text-wrap border"  >Rp. -</td>
               <% end %>
+              <td class="text-gray-900 text-wrap border">
+                <%= link_to edit_renstra_path(
+                  program,
+                  nama: program.nama_program,
+                  kode: program.kode_program,
+                  indikator: program.indikator_program,
+                  satuan: program.satuan_target_program,
+                  jenis: 'Renstra',
+                  sub_jenis: 'Program'),
+                  remote: true,
+                  class: 'btn btn-green',
+                  data: { controller: 'form-modal',
+                          action: 'form-modal#appendForm',
+                          form_modal_location_param: 'form-laporan-renstra-body',
+                          bs_target: '#form-laporan-renstra',
+                          bs_toggle: 'modal' } do %>
+                          Edit
+                        <% end %>
+              </td>
             </tr>
           </tbody>
           <% program.kegiatans.each.with_index(1) do |kegiatan, no_giat| %>
@@ -97,6 +116,25 @@
                   <td class="text-gray-900 text-wrap border"  ><%= kegiatan.satuan %></td>
                   <td class="text-gray-900 text-wrap border"  >Rp. -</td>
                 <% end %>
+                <td class="text-gray-900 text-wrap border">
+                  <%= link_to edit_renstra_path(
+                    kegiatan,
+                    nama: kegiatan.nama_kegiatan,
+                    kode: kegiatan.kode_giat,
+                    indikator: kegiatan.indikator_kinerja,
+                    satuan: kegiatan.satuan,
+                    jenis: 'Renstra',
+                    sub_jenis: 'Kegiatan'),
+                    remote: true,
+                    class: 'btn btn-green',
+                    data: { controller: 'form-modal',
+                            action: 'form-modal#appendForm',
+                            form_modal_location_param: 'form-laporan-renstra-body',
+                            bs_target: '#form-laporan-renstra',
+                            bs_toggle: 'modal' } do %>
+                            Edit
+                          <% end %>
+                </td>
               </tr>
             </tbody>
             <thead class="thead-subkegiatan">
@@ -131,14 +169,22 @@
                     <td class="text-gray-900 text-wrap border"  >Rp. <%= number_with_delimiter(subgiat.pagu_sub_tahun(tahun: tahun_sub, kode_sub_giat: subgiat.kode_sub_giat)) %></td>
                   <% end %>
                   <td class="text-gray-900 text-wrap border">
-                    <%= link_to edit_renstra_path(subgiat, type: 'subkegiatan'), remote: true, class: 'btn btn-green',
+                    <%= link_to edit_renstra_path(
+                      subgiat,
+                      nama: subgiat.nama_subkegiatan,
+                      kode: subgiat.kode_sub_giat,
+                      indikator: subgiat.indikator_subkegiatan,
+                      satuan: subgiat.satuan_target_subkegiatan,
+                      jenis: 'Renstra',
+                      sub_jenis: 'Subkegiatan'),
+                      remote: true, class: 'btn btn-green',
                       data: { controller: 'form-modal',
                               action: 'form-modal#appendForm',
                               form_modal_location_param: 'form-laporan-renstra-body',
                               bs_target: '#form-laporan-renstra',
                               bs_toggle: 'modal' } do %>
-                      Edit
-                    <% end %>
+                              Edit
+                            <% end %>
                   </td>
                 </tr>
               <% end %>
