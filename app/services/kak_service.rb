@@ -172,6 +172,8 @@ class KakService
                       kode_program: program.kode_program,
                       kegiatan: program.nama_kegiatan,
                       kode_kegiatan: program.kode_giat })
+      else
+        hasil
       end
     end
     programs.uniq { |item| item[:kode] }
