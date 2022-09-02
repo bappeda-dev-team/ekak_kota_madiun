@@ -20,7 +20,7 @@ class IsuDanPermasalahansController < ApplicationController
     program = ProgramKegiatan.where(kode_program: isu_strategis_params[:kode_program])
                              .update_all(isu_params.to_h)
     @isu_strategis = ProgramKegiatan.find(params[:kode_program]).isu_strategis
-    render plain: @isu_strategis, status: :accepted if program
+    render json: { resText: 'Isu Strategis disimpan', result: @isu_strategis }, status: :accepted if program
   end
 
   private

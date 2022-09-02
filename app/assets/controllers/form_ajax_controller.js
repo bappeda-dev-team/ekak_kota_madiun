@@ -9,17 +9,17 @@ export default class extends Controller {
     const [message, status, xhr] = event.detail
     const modal_target = event.params.modal 
     const modal = document.getElementById(modal_target)
-    const ajax_update_event = new CustomEvent("ajax-update", { detail: { data: message  } })
+    const ajax_update_event = new CustomEvent("ajax-update", { detail: { data: message.result  } })
     // event after successResponse
     Modal.getInstance(modal).hide()
-    this.sweetalert()
+    this.sweetalert(message.resText)
     window.dispatchEvent(ajax_update_event)
   }
 
-  sweetalert() {
+  sweetalert(text) {
     Swal.fire({
       title: 'Sukses',
-      text: "Isu Strategis ditambahkan",
+      text: text,
       icon: "success",
       confirmButtonText: 'Ok',
     })

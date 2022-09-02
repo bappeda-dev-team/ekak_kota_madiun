@@ -28,15 +28,15 @@
     <div class="row" %>
     <div class="field col">
       <%= form.label "target #{tahun}", class: 'form-label' %>
-      <%= form.text_field "renstra[indikator][][target]", class: 'form-control', value: @targets[tahun.to_s][:target] %>
+      <%= form.text_field "renstra[indikator][][target]", class: 'form-control', value: @targets[tahun.to_s]&.[](:target) %>
     </div>
     <div class="field col">
       <%= form.label :satuan, class: 'form-label' %>
-      <%= form.text_field "renstra[indikator][][satuan]", class: 'form-control', value: @targets[tahun.to_s][:satuan] %>
+      <%= form.text_field "renstra[indikator][][satuan]", class: 'form-control', value: @targets[tahun.to_s]&.[](:satuan) %>
     </div>
     <div class="field col">
       <%= form.label :pagu, class: 'form-label' %>
-      <%= form.text_field "renstra[indikator][][pagu]", class: 'form-control', value: @targets[tahun.to_s][:pagu] %>
+      <%= form.text_field "renstra[indikator][][pagu]", class: 'form-control', value: @targets[tahun.to_s]&.[](:pagu) %>
     </div>
     </div>
   <% end %>
