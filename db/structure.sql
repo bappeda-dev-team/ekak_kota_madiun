@@ -615,7 +615,7 @@ ALTER SEQUENCE public.dasar_hukums_id_seq OWNED BY public.dasar_hukums.id;
 CREATE TABLE public.indikator_sasarans (
     id bigint NOT NULL,
     indikator_kinerja character varying,
-    target integer,
+    target character varying,
     satuan character varying,
     aspek character varying,
     id_indikator character varying,
@@ -657,7 +657,9 @@ CREATE TABLE public.indikators (
     tahun character varying,
     kode character varying,
     jenis character varying,
-    sub_jenis character varying
+    sub_jenis character varying,
+    pagu character varying DEFAULT '0'::character varying,
+    kode_indikator character varying
 );
 
 
@@ -3780,6 +3782,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220822163037'),
 ('20220823171259'),
 ('20220829023819'),
-('20220901004124');
+('20220901004124'),
+('20220902020642'),
+('20220902032047');
 
 

@@ -6,20 +6,17 @@
           form_ajax_modal_param: 'form-laporan-renstra'
   }) do |form| %>
   <div class="field">
-    <%= form.label @sub_jenis, class: 'form-label' %>
-    <%= form.text_field :nama,
-      class: 'form-control',
-      readonly: true,
-      value: @nama
- %>
-</div>
-<div class="field">
-  <%= form.label "indikator #{@sub_jenis}", class: 'form-label' %>
-  <%= form.text_field :indikator,
+  <%= form.label @sub_jenis, class: 'form-label' %>
+  <%= form.text_field :nama,
     class: 'form-control',
     readonly: true,
-    value: @indikator
- %>
+    value: @nama %>
+</div>
+<div class="field">
+<%= form.label "indikator #{@sub_jenis}", class: 'form-label' %>
+<%= form.text_field :indikator,
+  class: 'form-control',
+  value: @indikator %>
   </div>
   <% (2020..2024).each do |tahun| %>
     <%= form.hidden_field "renstra[indikator][][indikator]", value: @indikator %>
@@ -27,13 +24,20 @@
     <%= form.hidden_field "renstra[indikator][][kode]", value: @kode %>
     <%= form.hidden_field "renstra[indikator][][jenis]", value: @jenis %>
     <%= form.hidden_field "renstra[indikator][][sub_jenis]", value: @sub_jenis %>
-    <div class="field">
+    <%= form.hidden_field "renstra[indikator][][kode_indikator]", value: @kode_indikator %>
+    <div class="row" %>
+    <div class="field col">
       <%= form.label "target #{tahun}", class: 'form-label' %>
-      <%= form.text_field "renstra[indikator][][target]", class: 'form-control' %>
+      <%= form.text_field "renstra[indikator][][target]", class: 'form-control', value: @targets[tahun.to_s][:target] %>
     </div>
-    <div class="field">
-      <%= form.label "satuan target #{tahun}", class: 'form-label' %>
-      <%= form.text_field "renstra[indikator][][satuan]", class: 'form-control', value: @satuan %>
+    <div class="field col">
+      <%= form.label :satuan, class: 'form-label' %>
+      <%= form.text_field "renstra[indikator][][satuan]", class: 'form-control', value: @targets[tahun.to_s][:satuan] %>
+    </div>
+    <div class="field col">
+      <%= form.label :pagu, class: 'form-label' %>
+      <%= form.text_field "renstra[indikator][][pagu]", class: 'form-control', value: @targets[tahun.to_s][:pagu] %>
+    </div>
     </div>
   <% end %>
   <%= form.submit "Simpan" %>

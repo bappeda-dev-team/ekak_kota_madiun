@@ -8,5 +8,5 @@ json.results @program_kegiatans do |kegiatan|
   json.bidang_urusan kegiatan[:bidang_urusan]
   json.kode kegiatan[:kode]
   json.nama kegiatan[:nama]
-  json.indikator kegiatan[:indikator]
+  json.indikators kegiatan[:indikators]
 end

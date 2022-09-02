@@ -48,13 +48,10 @@
               <td class="text-gray-900 text-wrap border"  ><%= program.nama_program %></td>
               <td class="text-gray-900 text-wrap border"  ><%= program.indikator_program %></td>
               <% (2020..2024).each do |tahun| %>
-                <% target_tahun = program.target_program_tahun(tahun: program.tahun, kode_program: program.kode_program) %>
-                <% target = target_tahun[:target] %>
-                <% satuan = target_tahun[:satuan] %>
-
-                <td class="text-gray-900 text-wrap border"  ><%= target %></td>
-                <td class="text-gray-900 text-wrap border"  ><%= satuan %></td>
-                <td class="text-gray-900 text-wrap border"  >Rp. -</td>
+                <% targets = program.target_program_renstra[tahun.to_s] %>
+                <td class="text-gray-900 text-wrap border"  ><%= targets&.[](:target) %></td>
+                <td class="text-gray-900 text-wrap border"  ><%= targets&.[](:satuan) %></td>
+                <td class="text-gray-900 text-wrap border"  >Rp.<%= number_with_delimiter(targets&.[](:pagu)) %></td>
               <% end %>
               <td class="text-gray-900 text-wrap border">
                 <%= link_to edit_renstra_path(
@@ -116,13 +113,10 @@
                 <td class="text-gray-900 text-wrap border"  ><%= kegiatan.nama_kegiatan %></td>
                 <td class="text-gray-900 text-wrap border"  ><%= kegiatan.indikator_kinerja %></td>
                 <% (2020..2024).each do |tahun_giat| %>
-                  <% target_tahun = kegiatan.target_kegiatan_tahun(tahun: kegiatan.tahun, kode_giat: kegiatan.kode_giat) %>
-                  <% target = target_tahun[:target] %>
-                  <% satuan = target_tahun[:satuan] %>
-
-                  <td class="text-gray-900 text-wrap border"  ><%= target %></td>
-                  <td class="text-gray-900 text-wrap border"  ><%= satuan %></td>
-                  <td class="text-gray-900 text-wrap border"  >Rp. -</td>
+                  <% targets = kegiatan.target_kegiatan_renstra[tahun_giat.to_s] %>
+                  <td class="text-gray-900 text-wrap border"  ><%= targets&.[](:target) %></td>
+                  <td class="text-gray-900 text-wrap border"  ><%= targets&.[](:satuan) %></td>
+                  <td class="text-gray-900 text-wrap border"  >Rp.<%= number_with_delimiter(targets&.[](:pagu)) %></td>
                 <% end %>
                 <td class="text-gray-900 text-wrap border">
                   <%= link_to edit_renstra_path(
@@ -172,13 +166,10 @@
                   <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_subkegiatan %></td>
                   <td class="text-gray-900 text-wrap border"  ><%= subgiat.indikator_subkegiatan %></td>
                   <% (2020..2024).each do |tahun_sub| %>
-                    <% target_tahun = subgiat.target_subkegiatan_tahun(tahun: subgiat.tahun, kode_sub_giat: subgiat.kode_sub_giat) %>
-                    <% target = target_tahun[:target] %>
-                    <% satuan = target_tahun[:satuan] %>
-
-                    <td class="text-gray-900 text-wrap border"  ><%= target %></td>
-                    <td class="text-gray-900 text-wrap border"  ><%= satuan %></td>
-                    <td class="text-gray-900 text-wrap border"  >Rp. -</td>
+                    <% targets = subgiat.target_subkegiatan_renstra[tahun_sub.to_s] %>
+                    <td class="text-gray-900 text-wrap border"  ><%= targets&.[](:target) %></td>
+                    <td class="text-gray-900 text-wrap border"  ><%= targets&.[](:satuan) %></td>
+                    <td class="text-gray-900 text-wrap border"  >Rp.<%= number_with_delimiter(targets&.[](:pagu)) %></td>
                   <% end %>
                   <td class="text-gray-900 text-wrap border">
                     <%= link_to edit_renstra_path(
