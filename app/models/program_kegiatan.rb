@@ -99,11 +99,15 @@ class ProgramKegiatan < ApplicationRecord
   end
 
   def target_program_renstra
-    indikator_program_renstra.pluck(:target,
-                                    :satuan,
-                                    :pagu,
-                                    :tahun).each_with_object({}) do |(target, satuan, pagu, tahun), result|
+    indikator_program_renstra.pluck(
+      :indikator,
+      :target,
+      :satuan,
+      :pagu,
+      :tahun
+    ).each_with_object({}) do |(indikator, target, satuan, pagu, tahun), result|
       result[tahun] = {
+        indikator: indikator,
         target: target,
         satuan: satuan,
         pagu: pagu
