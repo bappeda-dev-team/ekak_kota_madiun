@@ -15,9 +15,8 @@ export default class extends Controller {
 
   updateTargetValue(event) {
    const content = event.detail
+    console.log(content)
    this.isu_strategisTarget.innerHTML = content.data
-   console.log(content)
-   console.log(this.isu_strategisTarget)
   }
 
   appendForm(event) {
