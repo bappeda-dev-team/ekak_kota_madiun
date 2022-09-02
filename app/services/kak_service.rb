@@ -77,7 +77,7 @@ class KakService
         bidang_urusan: program.nama_bidang_urusan,
         nama: program.send("nama_#{nama}"),
         kode: program.send("kode_#{kode}"),
-        indikator: indikators,
+        indikators: indikators,
         tahun: @tahun
       }
     end
@@ -87,7 +87,10 @@ class KakService
   def indikator_renstra(jenis, program_kegiatans)
     program_kegiatans.send("indikator_#{jenis}_renstra")
                      .select { |pk| pk.tahun == @tahun }
-                     .map { |pk| { indikator: pk.indikator, target: pk.target, satuan: pk.satuan } }
+                     .map do |pk|
+      { tahun: pk.tahun, kode_indikator: pk.kode_indikator, indikator: pk.indikator, target: pk.target, satuan: pk.satuan,
+        pagu: pk.pagu }
+    end
   end
 
   def hash_by_pluck(collections)
@@ -151,16 +154,25 @@ class KakService
   def indikator_programs_all_try(jenis:, kode:, nama:, program_kegiatans:)
     programs = program_kegiatans.map do |program|
       indikators = indikator_renstra(jenis, program)
-      {
+      hasil = {
         kode_urusan: program.kode_urusan,
         urusan: program.nama_urusan,
         kode_bidang_urusan: program.kode_bidang_urusan,
         bidang_urusan: program.nama_bidang_urusan,
         nama: program.send("nama_#{nama}"),
         kode: program.send("kode_#{kode}"),
-        indikator: indikators,
+        indikators: indikators,
         tahun: @tahun
       }
+      if jenis == 'kegiatan'
+        hasil.merge({ program: program.nama_program,
+                      kode_program: program.kode_program })
+      elsif jenis == 'subkegiatan'
+        hasil.merge({ program: program.nama_program,
+                      kode_program: program.kode_program,
+                      kegiatan: program.nama_kegiatan,
+                      kode_kegiatan: program.kode_giat })
+      end
     end
     programs.uniq { |item| item[:kode] }
   end
