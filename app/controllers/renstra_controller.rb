@@ -17,6 +17,7 @@ class RenstraController < ApplicationController
     @sub_jenis = params[:sub_jenis]
     @id = params[:id]
     @program = ProgramKegiatan.find(@id)
+    @targets = @program.send("target_#{@sub_jenis.downcase}_renstra")
     render partial: 'form_renstra'
   end
 

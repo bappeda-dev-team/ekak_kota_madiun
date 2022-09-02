@@ -50,11 +50,8 @@
 
 class ProgramKegiatan < ApplicationRecord
   validates :nama_program, presence: true
-  # validates :indikator_kinerja, presence: true
-  # validates :target, presence: true
-  # validates :satuan, presence: true
+  validates :kode_program, presence: true
   belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_opd'
-  # belongs_to :subkegiatan_tematik, optional: true
   has_many :kaks
   has_many :sasarans, dependent: :nullify
   has_many :usulans, through: :sasarans
@@ -79,7 +76,6 @@ class ProgramKegiatan < ApplicationRecord
   scope :programs, -> { select("DISTINCT ON(program_kegiatans.kode_program) program_kegiatans.*") }
   scope :kegiatans_satunya, -> { select("DISTINCT ON(program_kegiatans.kode_giat) program_kegiatans.*") }
   scope :subkegiatans_satunya, -> { select("DISTINCT ON(program_kegiatans.kode_sub_giat) program_kegiatans.*") }
-  # default_scope { order(created_at: :desc) }
   def kegiatans
     super.uniq(&:kode_giat)
   end
@@ -93,22 +89,38 @@ class ProgramKegiatan < ApplicationRecord
   end
 
   def target_program_tahun(tahun:, kode_program:)
-    # find program, within the opd target, with year mathces request
-    # and return their target
     indikator_program_renstra.where(tahun: tahun).pluck(:target,
                                                         :satuan).each_with_object({}) do |(target, satuan), result|
       result[:target] = target
       result[:satuan] = satuan
     end
-    # ProgramKegiatan.find_by(kode_program: kode_program, tahun: tahun).target_program
+  end
+
+  def target_program_renstra
+    indikator_program_renstra.pluck(:target,
+                                    :satuan, :tahun).each_with_object({}) do |(target, satuan, tahun), result|
+      result[tahun] = {
+        target: target,
+        satuan: satuan
+      }
+    end
   end
 
   def target_kegiatan_tahun(tahun:, kode_giat:)
-    # ProgramKegiatan.find_by(kode_giat: kode_giat, tahun: tahun)&.target
     indikator_kegiatan_renstra.where(tahun: tahun).pluck(:target,
                                                          :satuan).each_with_object({}) do |(target, satuan), result|
       result[:target] = target
       result[:satuan] = satuan
+    end
+  end
+
+  def target_kegiatan_renstra
+    indikator_kegiatan_renstra.pluck(:target,
+                                     :satuan, :tahun).each_with_object({}) do |(target, satuan, tahun), result|
+      result[tahun] = {
+        target: target,
+        satuan: satuan
+      }
     end
   end
 
@@ -118,11 +130,19 @@ class ProgramKegiatan < ApplicationRecord
       result[:target] = target
       result[:satuan] = satuan
     end
-    # ProgramKegiatan.find_by(kode_sub_giat: kode_sub_giat, tahun: tahun)&.target_subkegiatan
+  end
+
+  def target_subkegiatan_renstra
+    indikator_subkegiatan_renstra.pluck(:target,
+                                        :satuan, :tahun).each_with_object({}) do |(target, satuan, tahun), result|
+      result[tahun] = {
+        target: target,
+        satuan: satuan
+      }
+    end
   end
 
   def pagu_sub_tahun(tahun:, kode_sub_giat:)
-    # subkegiatans.where(tahun: tahun).map { |sub| sub.pagu.to_i }.compact.sum
     ProgramKegiatan.find_by(kode_sub_giat: kode_sub_giat, tahun: tahun)&.pagu || 0
   end
 
