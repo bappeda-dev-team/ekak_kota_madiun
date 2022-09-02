@@ -47,7 +47,6 @@
 #
 #  fk_rails_...  (subkegiatan_tematik_id => subkegiatan_tematiks.id)
 #
-
 class ProgramKegiatan < ApplicationRecord
   validates :nama_program, presence: true
   validates :kode_program, presence: true
@@ -88,56 +87,74 @@ class ProgramKegiatan < ApplicationRecord
     sasarans.map(&:waktu_total).compact.sum
   end
 
-  def target_program_tahun(tahun:, kode_program:)
-    indikator_program_renstra.where(tahun: tahun).pluck(:target,
-                                                        :satuan).each_with_object({}) do |(target, satuan), result|
+  def target_program_tahun(tahun:)
+    indikator_program_renstra.where(tahun: tahun)
+                             .pluck(:target,
+                                    :satuan,
+                                    :pagu).each_with_object({}) do |(target, satuan, pagu), result|
       result[:target] = target
       result[:satuan] = satuan
+      result[:pagu] = pagu
     end
   end
 
   def target_program_renstra
     indikator_program_renstra.pluck(:target,
-                                    :satuan, :tahun).each_with_object({}) do |(target, satuan, tahun), result|
+                                    :satuan,
+                                    :pagu,
+                                    :tahun).each_with_object({}) do |(target, satuan, pagu, tahun), result|
       result[tahun] = {
         target: target,
-        satuan: satuan
+        satuan: satuan,
+        pagu: pagu
       }
     end
   end
 
-  def target_kegiatan_tahun(tahun:, kode_giat:)
-    indikator_kegiatan_renstra.where(tahun: tahun).pluck(:target,
-                                                         :satuan).each_with_object({}) do |(target, satuan), result|
+  def target_kegiatan_tahun(tahun:)
+    indikator_kegiatan_renstra.where(tahun: tahun)
+                              .pluck(:target,
+                                     :satuan,
+                                     :pagu).each_with_object({}) do |(target, satuan, pagu), result|
       result[:target] = target
       result[:satuan] = satuan
+      result[:pagu] = pagu
     end
   end
 
   def target_kegiatan_renstra
     indikator_kegiatan_renstra.pluck(:target,
-                                     :satuan, :tahun).each_with_object({}) do |(target, satuan, tahun), result|
+                                     :satuan,
+                                     :pagu,
+                                     :tahun).each_with_object({}) do |(target, satuan, pagu, tahun), result|
       result[tahun] = {
         target: target,
-        satuan: satuan
+        satuan: satuan,
+        pagu: pagu
       }
     end
   end
 
-  def target_subkegiatan_tahun(tahun:, kode_sub_giat:)
-    indikator_subkegiatan_renstra.where(tahun: tahun).pluck(:target,
-                                                            :satuan).each_with_object({}) do |(target, satuan), result|
+  def target_subkegiatan_tahun(tahun:)
+    indikator_subkegiatan_renstra.where(tahun: tahun)
+                                 .pluck(:target,
+                                        :satuan,
+                                        :pagu).each_with_object({}) do |(target, satuan, pagu), result|
       result[:target] = target
       result[:satuan] = satuan
+      result[:pagu] = pagu
     end
   end
 
   def target_subkegiatan_renstra
     indikator_subkegiatan_renstra.pluck(:target,
-                                        :satuan, :tahun).each_with_object({}) do |(target, satuan, tahun), result|
+                                        :satuan,
+                                        :pagu,
+                                        :tahun).each_with_object({}) do |(target, satuan, pagu, tahun), result|
       result[tahun] = {
         target: target,
-        satuan: satuan
+        satuan: satuan,
+        pagu: pagu
       }
     end
   end

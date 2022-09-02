@@ -24,6 +24,7 @@
     <%= form.hidden_field "renstra[indikator][][kode]", value: @kode %>
     <%= form.hidden_field "renstra[indikator][][jenis]", value: @jenis %>
     <%= form.hidden_field "renstra[indikator][][sub_jenis]", value: @sub_jenis %>
+    <%= form.hidden_field "renstra[indikator][][kode_indikator]", value: @kode_indikator %>
     <div class="row" %>
     <div class="field col">
       <%= form.label "target #{tahun}", class: 'form-label' %>
@@ -32,6 +33,10 @@
     <div class="field col">
       <%= form.label :satuan, class: 'form-label' %>
       <%= form.text_field "renstra[indikator][][satuan]", class: 'form-control', value: @targets[tahun.to_s][:satuan] %>
+    </div>
+    <div class="field col">
+      <%= form.label :pagu, class: 'form-label' %>
+      <%= form.text_field "renstra[indikator][][pagu]", class: 'form-control', value: @targets[tahun.to_s][:pagu] %>
     </div>
     </div>
   <% end %>

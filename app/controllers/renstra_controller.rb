@@ -18,13 +18,14 @@ class RenstraController < ApplicationController
     @id = params[:id]
     @program = ProgramKegiatan.find(@id)
     @targets = @program.send("target_#{@sub_jenis.downcase}_renstra")
+    @kode_indikator = params[:kode_indikator] || KodeService.new(@kode, @jenis, @sub_jenis).call
     render partial: 'form_renstra'
   end
 
   def update_programs
     param_indikator = indikator_params.to_h
     @indikator = param_indikator[:indikator]
-    indikator = Indikator.insert_all(@indikator, returning: %w[indikator])
+    indikator = Indikator.upsert_all(@indikator, returning: %w[indikator])
     render plain: 'A good', status: :accepted if indikator
   end
 
@@ -41,6 +42,7 @@ class RenstraController < ApplicationController
   end
 
   def indikator_params
-    params.require(:renstra).permit(indikator: %i[indikator tahun satuan kode jenis sub_jenis target])
+    params.require(:renstra).permit(indikator: %i[indikator tahun satuan kode jenis sub_jenis target pagu
+                                                  kode_indikator])
   end
 end
