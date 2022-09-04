@@ -17,5 +17,14 @@
 class TujuanOpd < Tujuan
   has_many :indikators, lambda {
                           where(jenis: 'Tujuan', sub_jenis: 'Opd')
-                        }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'kode_unik_opd'
+                        }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id_tujuan'
+
+  def indikator_tujuans
+    tujuan = indikators.group_by(&:indikator).transform_values do |indikator|
+      indikator.group_by(&:tahun)
+    end
+    {
+      indikator_tujuan: tujuan.to_h
+    }
+  end
 end

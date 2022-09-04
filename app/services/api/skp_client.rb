@@ -168,6 +168,25 @@ module Api
           sasaran_opd: sasaran['unit_id'], type: 'SasaranOpd',
           created_at: Time.now, updated_at: Time.now
         }
+
+        sasaran['indikators'].each do |indikator|
+          data_indikator = {
+            indikator: indikator['indikator'],
+            jenis: 'Sasaran',
+            sub_jenis: 'Opd',
+            kode: indikator['id_sasaran']
+          }
+          ranges = (2020..2024).to_a
+          ranges.each.with_index(1) do |tahun, index|
+            data_tahun = {
+              tahun: tahun,
+              target: indikator["target_#{index}"],
+              satuan: indikator["target_#{index}"]
+            }
+            data_input = data_indikator.merge(data_tahun)
+            Indikator.insert(data_input)
+          end
+        end
         SasaranOpd.upsert(data_sasaran, unique_by: :id_rencana)
       end
     end
@@ -189,7 +208,7 @@ module Api
             indikator: indikator['indikator'],
             jenis: 'Tujuan',
             sub_jenis: 'Opd',
-            kode: indikator['unit_id']
+            kode: indikator['id_tujuan']
           }
           ranges = (2020..2024).to_a
           ranges.each.with_index(1) do |tahun, index|

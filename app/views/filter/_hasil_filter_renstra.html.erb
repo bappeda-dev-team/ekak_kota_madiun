@@ -7,9 +7,95 @@
     </div>
   </div>
   <div class="card-body">
+    <div class="table-responsive mb-5">
+      <table class="table align-items-center">
+        <thead class="thead-tujuan">
+          <tr class="header-tujuan">
+            <th class="border" scope="col" rowspan="2" width="20px">No.</th>
+            <th class="border" scope="col" rowspan="2">Tujuan OPD</th>
+            <th class="border" scope="col" rowspan="2">Indikator</th>
+            <% (2020..2024).each do |tahun| %>
+              <th class="border text-center" scope="col" colspan="2"><%= tahun %></th>
+            <% end %>
+            <th class="border" scope="col" rowspan="2">Aksi</th>
+          </tr>
+          <tr>
+            <% (2020..2024).each do %>
+              <th class="border" scope="col" width="50px">Target</th>
+              <th class="border" scope="col">Satuan</th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @opd.tujuan_opds.each.with_index(1) do |tujuan, no_tujuan| %>
+            <tr>
+              <td class="text-gray-900 text-wrap border" width='20px'><%= no_tujuan %></td>
+              <td class="text-gray-900 text-wrap border"  ><%= tujuan.tujuan %></td>
+              <% tujuan.indikator_tujuans[:indikator_tujuan].each do |indikator_tujuan, values| %>
+                <td class="text-gray-900 text-wrap border"  ><%= indikator_tujuan %></td>
+                <% (2020..2024).each do |tahun| %>
+                  <% targets = values[tahun.to_s] %>
+                  <td class="text-gray-900 text-wrap border"  ><%= targets&.last&.target %></td>
+                  <td class="text-gray-900 text-wrap border"  ><%= targets&.last&.satuan %></td>
+                <% end %>
+              <% end %>
+              <td class="text-gray-900 text-wrap border">
+                Edit
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+        <thead class="thead-tujuan">
+          <tr class="header-tujuan">
+            <th class="border" scope="col" rowspan="2" width="20px">No.</th>
+            <th class="border" scope="col" rowspan="2">Sasaran OPD</th>
+            <th class="border" scope="col" rowspan="2">Indikator</th>
+            <% (2020..2024).each do |tahun| %>
+              <th class="border text-center" scope="col" colspan="2"><%= tahun %></th>
+            <% end %>
+            <th class="border" scope="col" rowspan="2">Aksi</th>
+          </tr>
+          <tr>
+            <% (2020..2024).each do %>
+              <th class="border" scope="col" width="50px">Target</th>
+              <th class="border" scope="col">Satuan</th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @opd.sasaran_opds.each.with_index(1) do |sasaran_opd, no_sasaran| %>
+            <tr>
+              <td class="text-gray-900 text-wrap border" width='20px'><%= no_sasaran %></td>
+              <td class="text-gray-900 text-wrap border"  ><%= sasaran_opd.sasaran_kinerja %></td>
+              <% sasaran_opd.indikator_sasarans_new[:indikator_sasaran].each do |indikator_sasaran, values| %>
+                <td class="text-gray-900 text-wrap border"  ><%= indikator_sasaran %></td>
+                <% (2020..2024).each do |tahun| %>
+                  <% targets = values[tahun.to_s] %>
+                  <td class="text-gray-900 text-wrap border"  ><%= targets&.last&.target %></td>
+                  <td class="text-gray-900 text-wrap border"  ><%= targets&.last&.satuan %></td>
+                <% end %>
+              <% end %>
+              <td class="text-gray-900 text-wrap border">
+                Edit
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
     <div class="table-responsive">
       <table class="table align-items-center" data-controller='form-modal' data-action='ajax-update@window->form-modal#updateTargetValue'>
         <% @program_kegiatans.each.with_index(1) do |program, nomor| %>
+          <thead class="thead-bidang-urusan"
+            <tr class="header-bidang-urusan">
+              <th class="border" scope="col" colspan="2">Kode Bidang Urusan</th>
+              <th class="border" scope="col" colspan="18">Nama Bidang Urusan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <td class="border" scope="col" colspan="2"><%= program.kode_bidang_urusan %></td>
+            <td class="border" scope="col" colspan="18"><%= program.nama_bidang_urusan %></td>
+          </tbody>
           <thead class="thead-program">
             <tr class="header-program">
               <th class="border" scope="col" rowspan="2">Kode Program</th>
