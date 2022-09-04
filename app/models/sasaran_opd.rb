@@ -36,4 +36,16 @@
 #
 class SasaranOpd < Sasaran
   has_one :opd_sasaran, foreign_key: 'kode_unik_opd', primary_key: 'sasaran_opd', class_name: 'Opd'
+  has_many :indikators, lambda {
+                          where(jenis: 'Sasaran', sub_jenis: 'Opd')
+                        }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id_rencana'
+
+  def indikator_sasarans_new
+    sasaran = indikators.group_by(&:indikator).transform_values do |indikator|
+      indikator.group_by(&:tahun)
+    end
+    {
+      indikator_sasaran: sasaran.to_h
+    }
+  end
 end

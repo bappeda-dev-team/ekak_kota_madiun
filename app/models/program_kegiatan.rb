@@ -87,6 +87,23 @@ class ProgramKegiatan < ApplicationRecord
     sasarans.map(&:waktu_total).compact.sum
   end
 
+  def indikator_renstras
+    program = indikator_program_renstra.group_by(&:indikator).transform_values do |indikator|
+      indikator.group_by(&:tahun)
+    end
+    kegiatan = indikator_kegiatan_renstra.group_by(&:indikator).transform_values do |indikator|
+      indikator.group_by(&:tahun)
+    end
+    subkegiatan = indikator_subkegiatan_renstra.group_by(&:indikator).transform_values do |indikator|
+      indikator.group_by(&:tahun)
+    end
+    {
+      indikator_program: program.to_h,
+      indikator_kegiatan: kegiatan.to_h,
+      indikator_subkegiatan: subkegiatan.to_h
+    }
+  end
+
   def target_program_tahun(tahun:)
     indikator_program_renstra.where(tahun: tahun)
                              .pluck(:target,
@@ -99,11 +116,15 @@ class ProgramKegiatan < ApplicationRecord
   end
 
   def target_program_renstra
-    indikator_program_renstra.pluck(:target,
-                                    :satuan,
-                                    :pagu,
-                                    :tahun).each_with_object({}) do |(target, satuan, pagu, tahun), result|
+    indikator_program_renstra.pluck(
+      :indikator,
+      :target,
+      :satuan,
+      :pagu,
+      :tahun
+    ).each_with_object({}) do |(indikator, target, satuan, pagu, tahun), result|
       result[tahun] = {
+        indikator: indikator,
         target: target,
         satuan: satuan,
         pagu: pagu

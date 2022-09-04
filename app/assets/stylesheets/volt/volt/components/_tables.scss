@@ -89,6 +89,17 @@
       }
     }
   }
+  .thead-bidang-urusan {
+    th {
+      background-color: $red-700;
+      color: $white;
+      border-color: #000000;
+
+      a {
+        color: $dark;
+      }
+    }
+  }
   .thead-program {
     th {
       background-color: $blue-700;

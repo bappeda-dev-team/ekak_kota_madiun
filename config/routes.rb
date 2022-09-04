@@ -6,6 +6,7 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :tujuans
   # get 'isu_dan_permasalahans/index'
   resources :renstra do
     collection do
@@ -318,6 +319,7 @@ Rails.application.routes.draw do
   get "/sync_pegawai", to: "api/skp_client#sync_pegawai"
   get "/sync_struktur_pegawai", to: "api/skp_client#sync_struktur_pegawai"
   get "/sync_opd", to: "api/skp_client#sync_opd"
+  get "/sync_tujuan_opd", to: "api/skp_client#sync_tujuan_opd"
   get "/sync_kota", to: "api/skp_client#sync_kota"
   get "/sync_subkegiatan", to: "api/sipd_client#sync_subkegiatan"
   get "/sync_subkegiatan_opd", to: "api/sipd_client#sync_subkegiatan_opd"

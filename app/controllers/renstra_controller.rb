@@ -25,6 +25,13 @@ class RenstraController < ApplicationController
   def update_programs
     param_indikator = indikator_params.to_h
     @indikator = param_indikator[:indikator]
+    # kode_ind = params[:_kode_indikator]
+    # indikator = Indikator.where(kode_indikator: kode_ind)
+    # if indikator
+    #   indikator.insert_all(@indikator)
+    # else
+    #   indikator.update_all(@indikator, returning: %w[indikator tahun target satuan pagu])
+    # end
     indikator = Indikator.upsert_all(@indikator, returning: %w[indikator tahun target satuan pagu])
     render json: { resText: 'Data disimpan', result: indikator }, status: :accepted if indikator
   end

@@ -58,33 +58,33 @@ RSpec.describe ProgramKegiatan, type: :model do
     context 'target program tahun x' do
       it 'return target_program for tahun 2022' do
         program = create(:program_kegiatan, tahun: 2022, target_program: '100')
-        prog = program.target_program_tahun(2022)
+        prog = program.target_program_tahun(tahun: 2022)
         expect(prog).to eq('100')
       end
       it 'return target_program for tahun 2024' do
         program = create(:program_kegiatan, tahun: 2024, target_program: '100')
-        prog = program.target_program_tahun(2024)
+        prog = program.target_program_tahun(tahun: 2024)
         expect(prog).to eq('100')
       end
     end
     context 'target kegiatan tahun x' do
       it 'return target_kegiatan for tahun 2022' do
         kegiatan = create(:program_kegiatan, tahun: 2022, target: '200')
-        expect(kegiatan.target_kegiatan_tahun(2022)).to eq('200')
+        expect(kegiatan.target_kegiatan_tahun(tahun: 2022)).to eq('200')
       end
       it 'return target_kegiatan for tahun 2024' do
         kegiatan = create(:program_kegiatan, tahun: 2024, target: '400')
-        expect(kegiatan.target_kegiatan_tahun(2024)).to eq('400')
+        expect(kegiatan.target_kegiatan_tahun(tahun: 2024)).to eq('400')
       end
     end
     context 'target subkegiatan tahun x' do
       it 'return target_subkegiatan tahun 2022' do
         subkegiatan = create(:program_kegiatan, tahun: 2022, target_subkegiatan: '900')
-        expect(subkegiatan.target_subkegiatan_tahun(2022)).to eq('900')
+        expect(subkegiatan.target_subkegiatan_tahun(tahun: 2022)).to eq('900')
       end
       it 'return target_subkegiatan_tahun 2024' do
         subkegiatan = create(:program_kegiatan, tahun: 2024, target_subkegiatan: '500')
-        expect(subkegiatan.target_subkegiatan_tahun(2024)).to eq('500')
+        expect(subkegiatan.target_subkegiatan_tahun(tahun: 2024)).to eq('500')
       end
     end
   end
@@ -98,6 +98,26 @@ RSpec.describe ProgramKegiatan, type: :model do
         sub_kegiatan_2 = create(:program_kegiatan, tahun: 2022, pagu: 5_000_000)
         pagu = program.pagu_program_tahun(2022)
         expect(pagu).to eq(10_000_000)
+      end
+    end
+  end
+
+  describe 'ProgramKegiatan_program#target_renstra_program' do
+    let(:program_renstra) { create(:program_kegiatan, kode_program: 'test_kode_program') }
+    let!(:indikator_program_renstra) { create(:indikator, tahun: '2022', jenis: 'Renstra', sub_jenis: 'Program', indikator: 'indikator_test', kode: 'test_kode_program') }
+
+    context "indikator by jenis Renstra and sub_jenis Program" do
+      it 'should not empty' do
+        expect(program_renstra.target_program_renstra).not_to be_empty
+      end
+      it 'should get indikator' do
+        expect(program_renstra.target_program_renstra["2022"]).to have_key(:indikator)
+      end
+      it 'should get indikator' do
+        expect(program_renstra.target_program_renstra["2022"]).to include(indikator: 'indikator_test')
+      end
+      it 'should return {indikator, pagu, satuan, target} by tahun' do
+        expect(program_renstra.target_program_renstra).to include("2022" => { indikator: 'indikator_test', pagu: "0", satuan: 'MyString', target: 'MyString' })
       end
     end
   end
