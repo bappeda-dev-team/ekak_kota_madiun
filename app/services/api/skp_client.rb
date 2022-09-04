@@ -56,6 +56,11 @@ module Api
       update_sasaran_kota(request)
     end
 
+    def tujuan_opd
+      request = request_tujuan_opd(kode_opd, tahun)
+      update_tujuan_opd(request)
+    end
+
     def request_skp(kode_opd, tahun, bulan, nip_asn)
       H.post("#{URL}/sasaran-kinerja-pegawai/#{kode_opd}/#{tahun}/#{bulan}/#{nip_asn}",
              form: { username: USERNAME, password: PASSWORD })
@@ -73,6 +78,11 @@ module Api
 
     def request_sasaran_opd(kode_opd, tahun)
       H.post("#{URL}/opd-sasaran",
+             form: { username: USERNAME, password: PASSWORD, unit_id: kode_opd, tahun: tahun })
+    end
+
+    def request_tujuan_opd(kode_opd, tahun)
+      H.post("#{URL}/opd-tujuan",
              form: { username: USERNAME, password: PASSWORD, unit_id: kode_opd, tahun: tahun })
     end
 
@@ -159,6 +169,40 @@ module Api
           created_at: Time.now, updated_at: Time.now
         }
         SasaranOpd.upsert(data_sasaran, unique_by: :id_rencana)
+      end
+    end
+
+    def update_tujuan_opd(response)
+      data = Oj.load(response.body)
+      tujuans = data['data']
+      tujuans.each do |tujuan|
+        data_tujuan = {
+          id_tujuan: tujuan['id'],
+          tujuan: tujuan['tujuan'],
+          type: 'TujuanOpd',
+          kode_unik_opd: tujuan['unit_id'],
+          created_at: Time.now, updated_at: Time.now
+        }
+
+        tujuan['indikators'].each do |indikator|
+          data_indikator = {
+            indikator: indikator['indikator'],
+            jenis: 'Tujuan',
+            sub_jenis: 'Opd',
+            kode: indikator['unit_id']
+          }
+          ranges = (2020..2024).to_a
+          ranges.each.with_index(1) do |tahun, index|
+            data_tahun = {
+              tahun: tahun,
+              target: indikator["target_#{index}"],
+              satuan: indikator["target_#{index}"]
+            }
+            data_input = data_indikator.merge(data_tahun)
+            Indikator.insert(data_input)
+          end
+        end
+        TujuanOpd.upsert(data_tujuan, unique_by: :id_tujuan)
       end
     end
 

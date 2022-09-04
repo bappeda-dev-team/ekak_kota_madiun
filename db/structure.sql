@@ -2141,6 +2141,40 @@ ALTER SEQUENCE public.tematik_sasarans_id_seq OWNED BY public.tematik_sasarans.i
 
 
 --
+-- Name: tujuans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.tujuans (
+    id bigint NOT NULL,
+    tujuan character varying,
+    id_tujuan character varying NOT NULL,
+    type character varying,
+    kode_unik_opd character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: tujuans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.tujuans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: tujuans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.tujuans_id_seq OWNED BY public.tujuans.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2596,6 +2630,13 @@ ALTER TABLE ONLY public.tematik_sasarans ALTER COLUMN id SET DEFAULT nextval('pu
 
 
 --
+-- Name: tujuans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tujuans ALTER COLUMN id SET DEFAULT nextval('public.tujuans_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3042,6 +3083,14 @@ ALTER TABLE ONLY public.tematik_sasarans
 
 
 --
+-- Name: tujuans tujuans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tujuans
+    ADD CONSTRAINT tujuans_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3405,6 +3454,13 @@ CREATE INDEX index_tematik_sasarans_on_sasaran_id ON public.tematik_sasarans USI
 --
 
 CREATE INDEX index_tematik_sasarans_on_subkegiatan_tematik_id ON public.tematik_sasarans USING btree (subkegiatan_tematik_id);
+
+
+--
+-- Name: index_tujuans_on_id_tujuan; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_tujuans_on_id_tujuan ON public.tujuans USING btree (id_tujuan);
 
 
 --
@@ -3784,6 +3840,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220829023819'),
 ('20220901004124'),
 ('20220902020642'),
-('20220902032047');
+('20220902032047'),
+('20220904202731');
 
 

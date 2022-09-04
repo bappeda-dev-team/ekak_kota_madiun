@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Tujuan:</strong>
+  <%= @tujuan.tujuan %>
+</p>
+
+<p>
+  <strong>Id tujuan:</strong>
+  <%= @tujuan.id_tujuan %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @tujuan.type %>
+</p>
+
+<%= link_to 'Edit', edit_tujuan_path(@tujuan) %> |
+<%= link_to 'Back', tujuans_path %>

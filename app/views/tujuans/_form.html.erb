@@ -1,0 +1,32 @@
+<%= form_with(model: tujuan) do |form| %>
+  <% if tujuan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(tujuan.errors.count, "error") %> prohibited this tujuan from being saved:</h2>
+
+      <ul>
+        <% tujuan.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :tujuan %>
+    <%= form.text_field :tujuan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :id_tujuan %>
+    <%= form.text_field :id_tujuan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :type %>
+    <%= form.text_field :type %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
