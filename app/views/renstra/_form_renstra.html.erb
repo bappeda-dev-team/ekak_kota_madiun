@@ -25,6 +25,7 @@
     <%= form.hidden_field "renstra[indikator][][jenis]", value: @jenis %>
     <%= form.hidden_field "renstra[indikator][][sub_jenis]", value: @sub_jenis %>
     <%= form.hidden_field "renstra[indikator][][kode_indikator]", value: @kode_indikator %>
+    <%= form.hidden_field :_kode_indikator, value: @kode_indikator %>
     <div class="row" %>
     <div class="field col">
       <%= form.label "target #{tahun}", class: 'form-label' %>
