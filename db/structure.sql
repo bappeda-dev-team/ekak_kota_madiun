@@ -615,7 +615,7 @@ ALTER SEQUENCE public.dasar_hukums_id_seq OWNED BY public.dasar_hukums.id;
 CREATE TABLE public.indikator_sasarans (
     id bigint NOT NULL,
     indikator_kinerja character varying,
-    target character varying,
+    target integer,
     satuan character varying,
     aspek character varying,
     id_indikator character varying,
