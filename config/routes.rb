@@ -145,7 +145,12 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :kaks, path: "acuan_kerja"
   resources :lembagas
-  resources :opds
+  resources :opds do
+    collection do
+      get :tujuan
+      get :sasaran
+    end
+  end
   resources :program_kegiatans do
     member do
       get :subgiat_edit
@@ -190,6 +195,8 @@ Rails.application.routes.draw do
     post :laporan_renstra
     get :tahun_sasaran
     post :renstra_master
+    post :tujuan_opd
+    post :sasaran_opd
   end
 
   scope module: 'api' do

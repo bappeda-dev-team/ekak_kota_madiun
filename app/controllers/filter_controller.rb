@@ -194,6 +194,18 @@ class FilterController < ApplicationController
     end
   end
 
+  def tujuan_opd
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @tujuan_opds = @opd.tujuan_opds
+    render partial: 'opds/tujuan_opd'
+  end
+
+  def sasaran_opd
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @sasaran_opds = @opd.sasaran_opds
+    render partial: 'opds/sasaran_opd'
+  end
+
   def filter_usulan
     @type = params[:jenis].capitalize
     @type_alsi = @type.capitalize
