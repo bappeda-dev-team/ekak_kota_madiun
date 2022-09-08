@@ -23,8 +23,10 @@ class RenstraController < ApplicationController
   end
 
   def update_programs
+    indikator = params[:indikator]
     param_indikator = indikator_params.to_h
     @indikator = param_indikator[:indikator]
+    @indikator.each { |h| h[:indikator] = indikator }
     # kode_ind = params[:_kode_indikator]
     # indikator = Indikator.where(kode_indikator: kode_ind)
     # if indikator
