@@ -120,7 +120,7 @@ module SidebarItemHelper
     [
       { title: 'Tujuan', href: tujuan_opds_path, identifier: 'opds/tujuan' },
       { title: 'Sasaran', href: sasaran_opds_path, identifier: 'opds/sasaran' },
-      { title: 'Sync OPD', href: opds_path, identifier: 'opds' }
+      { title: 'Info OPD', href: opds_path, identifier: 'opds' }
     ]
   end
 

@@ -6,6 +6,7 @@
 #  dasar_hukum          :text
 #  gambaran_umum        :text
 #  id_indikator_sasaran :string
+#  key_activities       :string
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  sasaran_id           :bigint

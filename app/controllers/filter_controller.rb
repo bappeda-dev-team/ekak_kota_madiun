@@ -253,6 +253,16 @@ class FilterController < ApplicationController
     end
   end
 
+  def filter_tematiks_apbd
+    @kode_tematik = params[:kode_tematik]
+    @tahun = params[:tahun]
+    @nama_tematik = SubkegiatanTematik.find_by(kode_tematik: @kode_tematik).nama_tematik
+    @tematiks = Sasaran.sasaran_tematik(@kode_tematik)
+    respond_to do |format|
+      format.js { render "subkegiatan_tematiks/tematik_filter_apbd" }
+    end
+  end
+
   def filter_struktur
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
     @strukturs = Opd.find_by(kode_unik_opd: @kode_opd).kepala

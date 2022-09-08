@@ -7,6 +7,7 @@ class SubkegiatanTematiksController < ApplicationController
   end
 
   def laporan_tematik; end
+  def laporan_tematik_apbd; end
 
   def cetak_pdf
     kode_tematik = params[:id]
@@ -16,6 +17,7 @@ class SubkegiatanTematiksController < ApplicationController
     @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
     @filename = "Laporan_Tematik_#{@nama_file}_#{@waktu}.pdf"
   end
+
   # GET /subkegiatan_tematiks/1 or /subkegiatan_tematiks/1.json
   def show; end
 

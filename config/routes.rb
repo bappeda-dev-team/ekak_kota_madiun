@@ -315,6 +315,7 @@ Rails.application.routes.draw do
   get "/pdf_usulan/:jenis/:opd/:tahun", to: "usulans#pdf_usulan"
   get "/excel_usulan/:jenis/:opd/:tahun", to: "usulans#excel_usulan"
   get "/laporan_tematik", to: "subkegiatan_tematiks#laporan_tematik"
+  get "/laporan_tematik_apbd", to: "subkegiatan_tematiks#laporan_tematik_apbd"
   #
   # user_specific_thing
   get "/usulan_musrenbang", to: "musrenbangs#usulan_musrenbang"
@@ -363,6 +364,7 @@ Rails.application.routes.draw do
   post "/filter_usulan", to: "filter#filter_usulan"
   post "/filter_user_sasarans", to: "filter#filter_user_sasarans"
   post "/filter_tematiks", to: "filter#filter_tematiks"
+  post "/filter_tematiks_apbd", to: "filter#filter_tematiks_apbd"
   post "/filter_struktur", to: "filter#filter_struktur"
   post "/filter_rekap_jumlah", to: "filter#filter_rekap_jumlah"
 

@@ -296,6 +296,7 @@ module Api
         gambaran_umum = "#{manual_ik['tujuan_rencana_kinerja']}, #{manual_ik['definisi']}"
         data_manual_ik = {
           gambaran_umum: gambaran_umum, sasaran_id: sasaran_id,
+          key_activities: manual_ik['key_activities'],
           id_indikator_sasaran: indikator['id'],
           created_at: Time.now, updated_at: Time.now
         }
