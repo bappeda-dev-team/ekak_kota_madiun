@@ -19,7 +19,6 @@
   value: @indikator %>
   </div>
   <% (2020..2024).each do |tahun| %>
-    <%= form.hidden_field "renstra[indikator][][indikator]", value: @indikator %>
     <%= form.hidden_field "renstra[indikator][][tahun]", value: tahun %>
     <%= form.hidden_field "renstra[indikator][][kode]", value: @kode %>
     <%= form.hidden_field "renstra[indikator][][jenis]", value: @jenis %>
