@@ -181,7 +181,7 @@ module Api
             data_tahun = {
               tahun: tahun,
               target: indikator["target_#{index}"],
-              satuan: indikator["target_#{index}"]
+              satuan: indikator["satuan_#{index}"]
             }
             data_input = data_indikator.merge(data_tahun)
             Indikator.insert(data_input)
@@ -215,7 +215,7 @@ module Api
             data_tahun = {
               tahun: tahun,
               target: indikator["target_#{index}"],
-              satuan: indikator["target_#{index}"]
+              satuan: indikator["satuan_#{index}"]
             }
             data_input = data_indikator.merge(data_tahun)
             Indikator.insert(data_input)
