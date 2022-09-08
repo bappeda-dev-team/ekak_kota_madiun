@@ -194,6 +194,18 @@ class FilterController < ApplicationController
     end
   end
 
+  def tujuan_opd
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @tujuan_opds = @opd.tujuan_opds
+    render partial: 'opds/tujuan_opd'
+  end
+
+  def sasaran_opd
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @sasaran_opds = @opd.sasaran_opds
+    render partial: 'opds/sasaran_opd'
+  end
+
   def filter_usulan
     @type = params[:jenis].capitalize
     @type_alsi = @type.capitalize
@@ -238,6 +250,16 @@ class FilterController < ApplicationController
     @tematiks = Sasaran.sasaran_tematik(@kode_tematik)
     respond_to do |format|
       format.js { render "subkegiatan_tematiks/tematik_filter" }
+    end
+  end
+
+  def filter_tematiks_apbd
+    @kode_tematik = params[:kode_tematik]
+    @tahun = params[:tahun]
+    @nama_tematik = SubkegiatanTematik.find_by(kode_tematik: @kode_tematik).nama_tematik
+    @tematiks = Sasaran.sasaran_tematik(@kode_tematik)
+    respond_to do |format|
+      format.js { render "subkegiatan_tematiks/tematik_filter_apbd" }
     end
   end
 

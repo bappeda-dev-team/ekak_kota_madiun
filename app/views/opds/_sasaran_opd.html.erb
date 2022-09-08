@@ -1,0 +1,60 @@
+<div class="card border-0 shadow">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col-10">
+        <h2 class="fs-5 fw-bold mb-0">Sasaran <%= @nama_opd %></h2>
+      </div>
+      <div class="col">
+        <%= link_to sync_opd_path(kode_opd: @opd.kode_unik_opd, tahun: Date.today.year),
+          remote: true,
+          data: { disable_with: 'Memproses....'},
+          class:"btn btn-sm btn-primary" do %>
+          <i class="fas fa-sync me-2"></i>
+          Sync Sasaran OPD
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive mb-5">
+      <table class="table align-items-center">
+        <thead class="thead-sasaran">
+          <tr class="header-sasaran">
+            <th class="border" scope="col" rowspan="2" width="20px">No.</th>
+            <th class="border" scope="col" rowspan="2">Sasaran OPD</th>
+            <th class="border" scope="col" rowspan="2">Indikator</th>
+            <% (2020..2024).each do |tahun| %>
+              <th class="border text-center" scope="col" colspan="2"><%= tahun %></th>
+            <% end %>
+            <th class="border" scope="col" rowspan="2">Aksi</th>
+          </tr>
+          <tr>
+            <% (2020..2024).each do %>
+              <th class="border" scope="col" width="50px">Target</th>
+              <th class="border" scope="col">Satuan</th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @sasaran_opds.each.with_index(1) do |sasaran_opd, no_sasaran| %>
+            <tr>
+              <td class="text-gray-900 text-wrap border" width='20px'><%= no_sasaran %></td>
+              <td class="text-gray-900 text-wrap border"  ><%= sasaran_opd.sasaran_kinerja %></td>
+              <% sasaran_opd.indikator_sasarans_new[:indikator_sasaran].each do |indikator_sasaran, values| %>
+                <td class="text-gray-900 text-wrap border"  ><%= indikator_sasaran %></td>
+                <% (2020..2024).each do |tahun| %>
+                  <% targets = values[tahun.to_s] %>
+                  <td class="text-gray-900 text-wrap border"  ><%= targets&.last&.target %></td>
+                  <td class="text-gray-900 text-wrap border"  ><%= targets&.last&.satuan %></td>
+                <% end %>
+              <% end %>
+              <td class="text-gray-900 text-wrap border">
+                Edit
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

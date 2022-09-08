@@ -1,6 +1,6 @@
 json.results @program_kegiatans do |kode, programs|
-  json.set! kode do
-    json.array!(programs) do |program|
+    json.kode_program kode
+    json.details programs do |program|
       json.program program[:nama_program]
       json.indikator_program program[:indikator]
       json.target_program program[:target]
@@ -11,6 +11,5 @@ json.results @program_kegiatans do |kode, programs|
       json.satuan_sub program[:satuan_sub]
       json.isu_strategis program[:isu_strategis]
       json.permasalahans program[:permasalahans] 
-    end
   end
 end

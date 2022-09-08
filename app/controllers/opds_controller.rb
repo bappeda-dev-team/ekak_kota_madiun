@@ -48,6 +48,10 @@ class OpdsController < ApplicationController
     end
   end
 
+  def tujuan; end
+
+  def sasaran; end
+
   private
 
   def set_opd
