@@ -98,6 +98,7 @@
           </tbody>
           <thead class="thead-program">
             <tr class="header-program">
+              <th class="border" scope="col" rowspan="2">OPD</th>
               <th class="border" scope="col" rowspan="2">Kode Program</th>
               <th class="border" scope="col" rowspan="2">No.</th>
               <th class="border" scope="col" rowspan="2">Program</th>
@@ -118,6 +119,7 @@
           </thead>
           <tbody>
             <tr>
+              <td class="text-gray-900 text-wrap border"  ><%= program.nama_opd_pemilik %></td>
               <td class="text-gray-900 text-wrap border"  ><%= program.kode_program %></td>
               <td class="text-gray-900 text-wrap border"  ><%= nomor %></td>
               <td class="text-gray-900 text-wrap border"  ><%= program.nama_program %></td>
@@ -136,6 +138,7 @@
                   program,
                   nama: program.nama_program,
                   kode: program.kode_program,
+                  kode_opd: @opd.kode_unik_opd,
                   indikator: program.indikator_program,
                   jenis: 'Renstra',
                   sub_jenis: 'Program'),
@@ -153,6 +156,7 @@
           <% program.kegiatans.each.with_index(1) do |kegiatan, no_giat| %>
             <thead class="thead-kegiatan">
               <tr>
+                <th class="border" scope="col" rowspan="2">OPD</th>
                 <th class="border" scope="col" rowspan="2">Kode Kegiatan</th>
                 <th class="border" scope="col" rowspan="2">No</th>
                 <th class="border" scope="col" rowspan="2">Nama Kegiatan</th>
@@ -173,6 +177,7 @@
             </thead>
             <tbody>
               <tr>
+                <td class="text-gray-900 text-wrap border"  ><%= kegiatan.nama_opd_pemilik %></td>
                 <td class="text-gray-900 text-wrap border"  ><%= kegiatan.kode_giat %></td>
                 <td class="text-gray-900 text-wrap border"  ><%= no_giat %></td>
                 <td class="text-gray-900 text-wrap border"  ><%= kegiatan.nama_kegiatan %></td>
@@ -190,6 +195,7 @@
                   <%= link_to edit_renstra_path(
                     kegiatan,
                     nama: kegiatan.nama_kegiatan,
+                    kode_opd: @opd.kode_unik_opd,
                     kode: kegiatan.kode_giat,
                     indikator: kegiatan.indikator_kinerja,
                     jenis: 'Renstra',
@@ -207,6 +213,7 @@
             </tbody>
             <thead class="thead-subkegiatan">
               <tr>
+                <th class="border" scope="col" rowspan="2">OPD</th>
                 <th class="border" scope="col" rowspan="2">Kode Subkegiatan</th>
                 <th class="border" scope="col" rowspan="2">No</th>
                 <th class="border" scope="col" rowspan="2">Nama Subkegiatan</th>
@@ -228,7 +235,8 @@
             <tbody>
               <% kegiatan.subkegiatans.each.with_index(1) do |subgiat, no_subgiat| %>
                 <tr>
-                  <td class="text-gray-900 text-wrap border"  ><%= subgiat.kode_sub_skpd.nil? ? '' : Opd.find_by(kode_unik_opd: subgiat.kode_sub_skpd)&.nama_opd %> <%= subgiat.kode_sub_giat %></td>
+                  <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_opd_pemilik %></td>
+                  <td class="text-gray-900 text-wrap border"  ><%= subgiat.kode_sub_giat %></td>
                   <td class="text-gray-900 text-wrap border"  ><%= no_subgiat %></td>
                   <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_subkegiatan %>
                 </td>
@@ -246,6 +254,7 @@
                     <%= link_to edit_renstra_path(
                       subgiat,
                       nama: subgiat.nama_subkegiatan,
+                      kode_opd: @opd.kode_unik_opd,
                       kode: subgiat.kode_sub_giat,
                       indikator: subgiat.indikator_subkegiatan,
                       jenis: 'Renstra',

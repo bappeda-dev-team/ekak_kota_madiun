@@ -41,6 +41,7 @@ class RenstraController < ApplicationController
   def edit
     @nama = params[:nama]
     @kode = params[:kode]
+    @kode_opd = params[:kode_opd]
     @satuan = params[:satuan]
     @jenis = params[:jenis]
     @sub_jenis = params[:sub_jenis]
@@ -88,6 +89,6 @@ class RenstraController < ApplicationController
 
   def indikator_params
     params.require(:renstra).permit(indikator: %i[indikator tahun satuan kode jenis sub_jenis target pagu keterangan
-                                                  kode_indikator])
+                                                  kode_opd kode_indikator])
   end
 end

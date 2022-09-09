@@ -662,7 +662,8 @@ CREATE TABLE public.indikators (
     kode_indikator character varying,
     version integer DEFAULT 0 NOT NULL,
     keterangan character varying,
-    kotak integer DEFAULT 0 NOT NULL
+    kotak integer DEFAULT 0 NOT NULL,
+    kode_opd character varying
 );
 
 
@@ -3848,6 +3849,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220904202731'),
 ('20220908035548'),
 ('20220908193810'),
-('20220909014123');
+('20220909014123'),
+('20220909075315');
 
 
