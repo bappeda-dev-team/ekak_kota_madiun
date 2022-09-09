@@ -18,15 +18,20 @@ class RenstraController < ApplicationController
     @program = ProgramKegiatan.find(@id)
     @targets = @program.send("target_#{@sub_jenis.downcase}_renstra")
     @indikator = @targets.empty? ? params[:indikator] : @targets.dig("2022")[:indikator]
+    @keterangan = @targets.empty? ? '' : @targets.dig("2022")[:keterangan]
     @kode_indikator = params[:kode_indikator] || KodeService.new(@kode, @jenis, @sub_jenis).call
     render partial: 'form_renstra'
   end
 
   def update_programs
     indikator_input = params[:indikator]
+    keterangan = params[:keterangan]
     param_indikator = indikator_params.to_h
     @indikator = param_indikator[:indikator]
-    @indikator.each { |h| h[:indikator] = indikator_input }
+    @indikator.each do |h|
+      h[:indikator] = indikator_input
+      h[:keterangan] = keterangan
+    end
     kode_ind = params[:_kode_indikator]
     indikator_check = Indikator.where(kode_indikator: kode_ind)
     if indikator_check.any?
@@ -52,7 +57,7 @@ class RenstraController < ApplicationController
   end
 
   def indikator_params
-    params.require(:renstra).permit(indikator: %i[indikator tahun satuan kode jenis sub_jenis target pagu
+    params.require(:renstra).permit(indikator: %i[indikator tahun satuan kode jenis sub_jenis target pagu keterangan
                                                   kode_indikator])
   end
 end

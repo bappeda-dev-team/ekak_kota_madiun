@@ -105,6 +105,7 @@
               <% (2020..2024).each do |tahun| %>
                 <th class="border text-center" scope="col" colspan="3"><%= tahun %></th>
               <% end %>
+              <th class="border" scope="col" rowspan="2">Keterangan</th>
               <th class="border" scope="col" rowspan="2">Aksi</th>
             </tr>
             <tr>
@@ -128,23 +129,24 @@
                   <td class="text-gray-900 text-wrap border"  ><%= targets&.last&.satuan %></td>
                   <td class="text-gray-900 text-wrap border"  >Rp.<%= number_with_delimiter(targets&.last&.pagu) %></td>
                 <% end %>
+                <td class="text-gray-900 text-wrap border"  ><%= values.dig("2022").first.keterangan %></td>
               <% end %>
               <td class="text-gray-900 text-wrap border">
-                  <%= link_to edit_renstra_path(
-                    program,
-                    nama: program.nama_program,
-                    kode: program.kode_program,
-                    indikator: program.indikator_program,
-                    jenis: 'Renstra',
-                    sub_jenis: 'Program'),
-                    remote: true, class: 'btn btn-green',
-                    data: { controller: 'form-modal',
-                            action: 'form-modal#appendForm',
-                            form_modal_location_param: 'form-laporan-renstra-body',
-                            bs_target: '#form-laporan-renstra',
-                            bs_toggle: 'modal' } do %>
-                            Edit
-                          <% end %>
+                <%= link_to edit_renstra_path(
+                  program,
+                  nama: program.nama_program,
+                  kode: program.kode_program,
+                  indikator: program.indikator_program,
+                  jenis: 'Renstra',
+                  sub_jenis: 'Program'),
+                  remote: true, class: 'btn btn-green',
+                  data: { controller: 'form-modal',
+                          action: 'form-modal#appendForm',
+                          form_modal_location_param: 'form-laporan-renstra-body',
+                          bs_target: '#form-laporan-renstra',
+                          bs_toggle: 'modal' } do %>
+                          Edit
+                        <% end %>
               </td>
             </tr>
           </tbody>
@@ -158,6 +160,7 @@
                 <% (2020..2024).each do |tahun| %>
                   <th class="border text-center" scope="col" colspan="3"><%= tahun %></th>
                 <% end %>
+                <th class="border" scope="col" rowspan="2">Keterangan</th>
                 <th class="border" scope="col" rowspan="2">Aksi</th>
               </tr>
               <tr>
@@ -181,6 +184,7 @@
                     <td class="text-gray-900 text-wrap border"  ><%= targets&.last&.satuan %></td>
                     <td class="text-gray-900 text-wrap border"  >Rp.<%= number_with_delimiter(targets&.last&.pagu) %></td>
                   <% end %>
+                  <td class="text-gray-900 text-wrap border"  ><%= values.dig("2022").first.keterangan %></td>
                 <% end %>
                 <td class="text-gray-900 text-wrap border">
                   <%= link_to edit_renstra_path(
@@ -210,6 +214,7 @@
                 <% (2020..2024).each do |tahun| %>
                   <th class="border text-center" scope="col" colspan="3"><%= tahun %></th>
                 <% end %>
+                <th class="border" scope="col" rowspan="2">Keterangan</th>
                 <th class="border" scope="col" rowspan="2">Aksi</th>
               </tr>
               <tr class="sub-table-subkegiatans">
@@ -234,6 +239,7 @@
                       <td class="text-gray-900 text-wrap border"  ><%= targets&.last&.satuan %></td>
                       <td class="text-gray-900 text-wrap border"  >Rp.<%= number_with_delimiter(targets&.last&.pagu) %></td>
                     <% end %>
+                    <td class="text-gray-900 text-wrap border"  ><%= values.dig("2022").first.keterangan %></td>
                   <% end %>
                   <td class="text-gray-900 text-wrap border">
                     <%= link_to edit_renstra_path(
