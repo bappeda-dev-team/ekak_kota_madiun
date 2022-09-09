@@ -34,17 +34,19 @@
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.nama_kegiatan %></td>
             <td class="fw-bolder text-gray-500 text-center" style="white-space: initial !important;"><%= prog.jumlah_sasaran %></td>
             <td class="fw-bolder text-gray-500">
-              <%= link_to sync_indikator_program_path(
-                kode_opd: prog.opd.id_opd_skp,
-                id_program: prog.id_program_sipd,
-                id_giat: prog.id_giat,
-                tahun: prog.tahun),
-                method: :post,
-                remote: true,
-                data: { disable_with: 'Memproses....'},
-                class:"btn btn-sm btn-primary" do %>
-                <i class="fas fa-sync me-2"></i>
-                Sync Indikator
+              <% if current_user.has_role? :super_admin %>
+                <%= link_to sync_indikator_program_path(
+                  kode_opd: prog.opd.id_opd_skp,
+                  id_program: prog.id_program_sipd,
+                  id_giat: prog.id_giat,
+                  tahun: prog.tahun),
+                  method: :post,
+                  remote: true,
+                  data: { disable_with: 'Memproses....'},
+                  class:"btn btn-sm btn-primary" do %>
+                  <i class="fas fa-sync me-2"></i>
+                  Sync Indikator
+                <% end %>
               <% end %>
               <% unless prog.id_program_sipd.nil? or prog.id_giat.nil? %>
                 <%= link_to program_edit_program_kegiatan_path(prog, row_num: i), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-programkegiatan"}, class: "m-3" do %>

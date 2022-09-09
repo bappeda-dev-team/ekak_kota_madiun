@@ -7,7 +7,7 @@
 #  id_indikator      :string
 #  indikator_kinerja :string
 #  satuan            :string
-#  target            :integer
+#  target            :string
 #  type              :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null

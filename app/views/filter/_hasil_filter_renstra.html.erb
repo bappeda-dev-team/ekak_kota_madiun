@@ -228,9 +228,10 @@
             <tbody>
               <% kegiatan.subkegiatans.each.with_index(1) do |subgiat, no_subgiat| %>
                 <tr>
-                  <td class="text-gray-900 text-wrap border"  ><%= subgiat.kode_sub_giat %> <%= subgiat.tahun %></td>
+                  <td class="text-gray-900 text-wrap border"  ><%= subgiat.kode_sub_skpd.nil? ? '' : Opd.find_by(kode_unik_opd: subgiat.kode_sub_skpd)&.nama_opd %> <%= subgiat.kode_sub_giat %></td>
                   <td class="text-gray-900 text-wrap border"  ><%= no_subgiat %></td>
-                  <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_subkegiatan %></td>
+                  <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_subkegiatan %>
+                </td>
                   <% subgiat.indikator_renstras[:indikator_subkegiatan]&.each do |indikator_subkegiatan, values| %>
                     <td class="text-gray-900 text-wrap border"  ><%= indikator_subkegiatan %></td>
                     <% (2020..2024).each do |tahun| %>

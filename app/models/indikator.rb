@@ -8,6 +8,7 @@
 #  keterangan     :string
 #  kode           :string
 #  kode_indikator :string
+#  kotak          :integer          default(0), not null
 #  pagu           :string           default("0")
 #  satuan         :string
 #  sub_jenis      :string

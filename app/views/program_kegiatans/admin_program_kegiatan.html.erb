@@ -16,7 +16,34 @@
         <%= msg %>
       </div>
     <% end %>
-    <%= render 'shared/filter_with_tahun_card_new', filter_url: @filter_url, action: 'ajax:success->filter-render#append' %>
+    <div class="card border-0 shadow mb-4">
+      <div class="card-header">
+        <div class="row">
+          <div class="col">
+            <h2 class="mb-0">
+              Filter
+            </h2>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <%= form_with url: @filter_url,local: false ,data: { action: 'ajax:success->filter-render#append' } do |form| %>
+          <%= form.label :tahun %>
+          <%= form.select(:tahun, (['',2020,2021,2022,2023,2024]), {},
+                          {
+                            data: {"placeholder": "Pilih Tahun",
+                                   controller: 'dropdown',
+                            }}) %>
+                          <%= form.label :opd , class: 'mt-3' %>
+                          <% all_opd = local_assigns[:all] %>
+                          <%= form.select :kode_opd,  dropdown_opd(all: all_opd),{include_blank: true},
+                            {class: "form-control", data: {"placeholder": "Pilih Opd",
+                                                           "controller": "dropdown",
+                            }, required: true } %>
+                          <%= form.submit 'filter' %>
+                        <% end %>
+      </div>
+    </div>
     <div class="card border-0 shadow" id="program_filter" data-filter-render-target="results">
       <div class="card-header">
         <div class="row align-items-center">
