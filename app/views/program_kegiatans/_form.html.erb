@@ -13,10 +13,19 @@
     <% options = options_from_collection_for_select(Opd.all, 'kode_opd', 'nama_opd') %>
     <%= form.label :kode_opd , class: "form-label" %>
     <%= form.select :kode_opd, Opd.pluck(:nama_opd, :kode_opd), {include_blank: true} ,
-    { data: { "placeholder": "Pilih OPD",
-              controller: 'dropdown',
-              dropdown_parent_value: '#form-programkegiatan'
+      { data: { "placeholder": "Pilih OPD",
+                controller: 'dropdown',
+                dropdown_parent_value: '#form-programkegiatan'
       } } %>
+  </div>
+  <div class="field">
+    <%= form.label :tahun, class: "form-label" %>
+    <%= form.select(:tahun, (['',2020,2021,2022,2023,2024]), {},
+                    {
+                     data: {"placeholder": "Pilih Tahun",
+                            controller: 'dropdown',
+                            dropdown_parent_value: '#form-programkegiatan'
+                     }}) %>
   </div>
   <div class="field">
     <%= form.label :kode_urusan, class: "form-label" %>
@@ -35,6 +44,10 @@
     <%= form.text_field :nama_bidang_urusan, class: "form-control", placeholder: "..." %>
   </div>
   <div class="field">
+    <%= form.label :kode_program, class: "form-label" %>
+    <%= form.text_field :kode_program, class: "form-control", placeholder: "..." %>
+  </div>
+  <div class="field">
     <%= form.label :program, class: "form-label" %>
     <%= form.text_field :nama_program, class: "form-control", placeholder: "..." %>
   </div>
@@ -51,8 +64,12 @@
     <%= form.text_field :satuan_target_program, class: "form-control", placeholder: "..." %>
   </div>
   <div class="field">
+    <%= form.label :kode_kegiatan, class: "form-label" %>
+    <%= form.text_field :kode_giat, class: "form-control", placeholder: "..." %>
+  </div>
+  <div class="field">
     <%= form.label :kegiatan, class: "form-label" %>
-    <%= form.text_field :nama_kegiatan, class: "form-control", placeholder: "..."  %>
+    <%= form.text_field :nama_kegiatan, class: "form-control", placeholder: "..." %>
   </div>
   <div class="field">
     <%= form.label :indikator_kinerja_kegiatan, class: "form-label" %>
@@ -65,6 +82,10 @@
   <div class="field">
     <%= form.label "Satuan Ukur Keluaran (Output)", class: "form-label" %>
     <%= form.text_field :satuan , class: "form-control", placeholder: "%" %>
+  </div>
+  <div class="field">
+    <%= form.label :kode_subkegiatan, class: "form-label" %>
+    <%= form.text_field :kode_sub_giat , class: "form-control", placeholder: "..." %>
   </div>
   <div class="field">
     <%= form.label :subkegiatan, class: "form-label" %>
@@ -83,6 +104,6 @@
     <%= form.text_field :satuan_target_subkegiatan , class: "form-control", placeholder: "%" %>
   </div>
   <div class="actions mt-5">
-    <%= form.submit class: "btn btn-tertiary w-100"  %>
+    <%= form.submit class: "btn btn-tertiary w-100" %>
   </div>
 <% end %>

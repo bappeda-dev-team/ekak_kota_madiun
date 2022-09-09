@@ -50,9 +50,8 @@ module SidebarItemHelper
 
   def master_data_items
     [
-      { title: 'Sasaran Kota', href: sasaran_kota_path, icon: 'fas fa-scroll', identifier: 'sasaran_kota' },
+      { title: 'ASN', href: adminusers_path, icon: 'fas fa-user-check', identifier: 'adminusers' },
       { title: 'Sasaran ASN', href: laporan_sasarans_path, identifier: 'laporan_sasaran', icon: 'fas fa-bullseye' },
-      { title: 'Manajemen ASN', href: adminusers_path, icon: 'fas fa-user-check', identifier: 'adminusers' },
       { title: 'Isu dan Permasalahan', href: isu_dan_permasalahans_path, icon: 'fas fa-map-signs',
         identifier: 'isu_dan_permasalahan' }
     ]
@@ -108,8 +107,6 @@ module SidebarItemHelper
 
   def renja_items
     [
-      { title: 'Tujuan', href: '#', identifier: 'renja/tujuan' },
-      { title: 'Sasaran', href: '#', identifier: 'renja/tujuan' },
       { title: 'Program', href: admin_program_path, identifier: 'admin_program' },
       { title: 'Kegiatan', href: admin_kegiatan_path, identifier: 'admin_kegiatan' },
       { title: 'Subkegiatan', href: admin_sub_kegiatan_path, identifier: 'admin_sub_kegiatan' }

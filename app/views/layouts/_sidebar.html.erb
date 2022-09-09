@@ -226,6 +226,8 @@
                 </ul>
               </div>
             </li>
+          <% end %>
+          <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
             <%# Renja %>
             <li class="nav-item">
               <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_item_renja[:menu] %>" data-bs-toggle="collapse" data-bs-target="#renja-items" aria-expanded="<%= collapsed_item_renja[:aria] %>">
@@ -280,8 +282,6 @@
                 </ul>
               </div>
             </li>
-          <% end %>
-          <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
             <% master_data_items.each do |master_item| %>
               <li class="nav-item<%= navigation_class(master_item[:identifier]) %>">
                 <%= link_to( master_item[:href], class: "nav-link d-flex justify-content-between") do %>
