@@ -102,29 +102,17 @@
               <th class="border" scope="col" rowspan="2">No.</th>
               <th class="border" scope="col" rowspan="2">Program</th>
               <th class="border" scope="col" rowspan="2">Indikator</th>
-              <th class="border text-center" scope="col" colspan="3">2020</th>
-              <th class="border text-center" scope="col" colspan="3">2021</th>
-              <th class="border text-center" scope="col" colspan="3">2022</th>
-              <th class="border text-center" scope="col" colspan="3">2023</th>
-              <th class="border text-center" scope="col" colspan="3">2024</th>
+              <% (2020..2024).each do |tahun| %>
+                <th class="border text-center" scope="col" colspan="3"><%= tahun %></th>
+              <% end %>
               <th class="border" scope="col" rowspan="2">Aksi</th>
             </tr>
             <tr>
-              <th class="border" scope="col">Target</th>
-              <th class="border" scope="col">Satuan</th>
-              <th class="border" scope="col">Pagu Indikatif</th>
-              <th class="border" scope="col">Target</th>
-              <th class="border" scope="col">Satuan</th>
-              <th class="border" scope="col">Pagu Indikatif</th>
-              <th class="border" scope="col">Target</th>
-              <th class="border" scope="col">Satuan</th>
-              <th class="border" scope="col">Pagu Indikatif</th>
-              <th class="border" scope="col">Target</th>
-              <th class="border" scope="col">Satuan</th>
-              <th class="border" scope="col">Pagu Indikatif</th>
-              <th class="border" scope="col">Target</th>
-              <th class="border" scope="col">Satuan</th>
-              <th class="border" scope="col">Pagu Indikatif</th>
+              <% (2020..2024).each do %>
+                <th class="border" scope="col" width="50px">Target</th>
+                <th class="border" scope="col">Satuan</th>
+                <th class="border" scope="col">Pagu Indikatif</th>
+              <% end %>
             </tr>
           </thead>
           <tbody>
@@ -132,7 +120,7 @@
               <td class="text-gray-900 text-wrap border"  ><%= program.kode_program %></td>
               <td class="text-gray-900 text-wrap border"  ><%= nomor %></td>
               <td class="text-gray-900 text-wrap border"  ><%= program.nama_program %></td>
-              <% program.indikator_renstras[:indikator_program].each do |indikator_program, values| %>
+              <% program.indikator_renstras[:indikator_program]&.each do |indikator_program, values| %>
                 <td class="text-gray-900 text-wrap border"  ><%= indikator_program %></td>
                 <% (2020..2024).each do |tahun| %>
                   <% targets = values[tahun.to_s] %>
@@ -142,23 +130,21 @@
                 <% end %>
               <% end %>
               <td class="text-gray-900 text-wrap border">
-                <%= link_to edit_renstra_path(
-                  program,
-                  nama: program.nama_program,
-                  kode: program.kode_program,
-                  indikator: program.indikator_program,
-                  satuan: program.satuan_target_program,
-                  jenis: 'Renstra',
-                  sub_jenis: 'Program'),
-                  remote: true,
-                  class: 'btn btn-green',
-                  data: { controller: 'form-modal',
-                          action: 'form-modal#appendForm',
-                          form_modal_location_param: 'form-laporan-renstra-body',
-                          bs_target: '#form-laporan-renstra',
-                          bs_toggle: 'modal' } do %>
-                          Edit
-                        <% end %>
+                  <%= link_to edit_renstra_path(
+                    program,
+                    nama: program.nama_program,
+                    kode: program.kode_program,
+                    indikator: program.indikator_program,
+                    jenis: 'Renstra',
+                    sub_jenis: 'Program'),
+                    remote: true, class: 'btn btn-green',
+                    data: { controller: 'form-modal',
+                            action: 'form-modal#appendForm',
+                            form_modal_location_param: 'form-laporan-renstra-body',
+                            bs_target: '#form-laporan-renstra',
+                            bs_toggle: 'modal' } do %>
+                            Edit
+                          <% end %>
               </td>
             </tr>
           </tbody>
@@ -169,29 +155,17 @@
                 <th class="border" scope="col" rowspan="2">No</th>
                 <th class="border" scope="col" rowspan="2">Nama Kegiatan</th>
                 <th class="border" scope="col" rowspan="2">Indikator</th>
-                <th class="border text-center" scope="col" colspan="3">2020</th>
-                <th class="border text-center" scope="col" colspan="3">2021</th>
-                <th class="border text-center" scope="col" colspan="3">2022</th>
-                <th class="border text-center" scope="col" colspan="3">2023</th>
-                <th class="border text-center" scope="col" colspan="3">2024</th>
+                <% (2020..2024).each do |tahun| %>
+                  <th class="border text-center" scope="col" colspan="3"><%= tahun %></th>
+                <% end %>
                 <th class="border" scope="col" rowspan="2">Aksi</th>
               </tr>
               <tr>
-                <th class="border" scope="col">Target</th>
-                <th class="border" scope="col">Satuan</th>
-                <th class="border" scope="col">Pagu Indikatif</th>
-                <th class="border" scope="col">Target</th>
-                <th class="border" scope="col">Satuan</th>
-                <th class="border" scope="col">Pagu Indikatif</th>
-                <th class="border" scope="col">Target</th>
-                <th class="border" scope="col">Satuan</th>
-                <th class="border" scope="col">Pagu Indikatif</th>
-                <th class="border" scope="col">Target</th>
-                <th class="border" scope="col">Satuan</th>
-                <th class="border" scope="col">Pagu Indikatif</th>
-                <th class="border" scope="col">Target</th>
-                <th class="border" scope="col">Satuan</th>
-                <th class="border" scope="col">Pagu Indikatif</th>
+                <% (2020..2024).each do %>
+                  <th class="border" scope="col" width="50px">Target</th>
+                  <th class="border" scope="col">Satuan</th>
+                  <th class="border" scope="col">Pagu Indikatif</th>
+                <% end %>
               </tr>
             </thead>
             <tbody>
@@ -199,7 +173,7 @@
                 <td class="text-gray-900 text-wrap border"  ><%= kegiatan.kode_giat %></td>
                 <td class="text-gray-900 text-wrap border"  ><%= no_giat %></td>
                 <td class="text-gray-900 text-wrap border"  ><%= kegiatan.nama_kegiatan %></td>
-                <% kegiatan.indikator_renstras[:indikator_kegiatan].each do |indikator_kegiatan, values| %>
+                <% kegiatan.indikator_renstras[:indikator_kegiatan]&.each do |indikator_kegiatan, values| %>
                   <td class="text-gray-900 text-wrap border"  ><%= indikator_kegiatan %></td>
                   <% (2020..2024).each do |tahun| %>
                     <% targets = values[tahun.to_s] %>
@@ -214,11 +188,9 @@
                     nama: kegiatan.nama_kegiatan,
                     kode: kegiatan.kode_giat,
                     indikator: kegiatan.indikator_kinerja,
-                    satuan: kegiatan.satuan,
                     jenis: 'Renstra',
                     sub_jenis: 'Kegiatan'),
-                    remote: true,
-                    class: 'btn btn-green',
+                    remote: true, class: 'btn btn-green',
                     data: { controller: 'form-modal',
                             action: 'form-modal#appendForm',
                             form_modal_location_param: 'form-laporan-renstra-body',
@@ -251,10 +223,10 @@
             <tbody>
               <% kegiatan.subkegiatans.each.with_index(1) do |subgiat, no_subgiat| %>
                 <tr>
-                  <td class="text-gray-900 text-wrap border"  ><%= subgiat.kode_sub_giat %></td>
+                  <td class="text-gray-900 text-wrap border"  ><%= subgiat.kode_sub_giat %> <%= subgiat.tahun %></td>
                   <td class="text-gray-900 text-wrap border"  ><%= no_subgiat %></td>
                   <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_subkegiatan %></td>
-                  <% subgiat.indikator_renstras[:indikator_subkegiatan].each do |indikator_subkegiatan, values| %>
+                  <% subgiat.indikator_renstras[:indikator_subkegiatan]&.each do |indikator_subkegiatan, values| %>
                     <td class="text-gray-900 text-wrap border"  ><%= indikator_subkegiatan %></td>
                     <% (2020..2024).each do |tahun| %>
                       <% targets = values[tahun.to_s] %>
@@ -269,7 +241,6 @@
                       nama: subgiat.nama_subkegiatan,
                       kode: subgiat.kode_sub_giat,
                       indikator: subgiat.indikator_subkegiatan,
-                      satuan: subgiat.satuan_target_subkegiatan,
                       jenis: 'Renstra',
                       sub_jenis: 'Subkegiatan'),
                       remote: true, class: 'btn btn-green',

@@ -10,12 +10,10 @@ export default class extends Controller {
   }
 
   closeModal(event) {
-    console.log('modal closed')
   }
 
   updateTargetValue(event) {
    const content = event.detail
-    console.log(content)
    this.isu_strategisTarget.innerHTML = content.data
   }
 

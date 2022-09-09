@@ -10,7 +10,6 @@ class RenstraController < ApplicationController
 
   def edit
     @nama = params[:nama]
-    @indikator = params[:indikator]
     @kode = params[:kode]
     @satuan = params[:satuan]
     @jenis = params[:jenis]
@@ -18,22 +17,24 @@ class RenstraController < ApplicationController
     @id = params[:id]
     @program = ProgramKegiatan.find(@id)
     @targets = @program.send("target_#{@sub_jenis.downcase}_renstra")
+    @indikator = @targets.empty? ? params[:indikator] : @targets.dig("2022")[:indikator]
     @kode_indikator = params[:kode_indikator] || KodeService.new(@kode, @jenis, @sub_jenis).call
     render partial: 'form_renstra'
   end
 
   def update_programs
-    indikator = params[:indikator]
+    indikator_input = params[:indikator]
     param_indikator = indikator_params.to_h
     @indikator = param_indikator[:indikator]
-    @indikator.each { |h| h[:indikator] = indikator }
-    # kode_ind = params[:_kode_indikator]
-    # indikator = Indikator.where(kode_indikator: kode_ind)
-    # if indikator
-    #   indikator.insert_all(@indikator)
-    # else
-    #   indikator.update_all(@indikator, returning: %w[indikator tahun target satuan pagu])
-    # end
+    @indikator.each { |h| h[:indikator] = indikator_input }
+    kode_ind = params[:_kode_indikator]
+    indikator_check = Indikator.where(kode_indikator: kode_ind)
+    if indikator_check.any?
+      versi = indikator_check.maximum(:version) + 1
+      @indikator.each do |h|
+        h[:version] = versi
+      end
+    end
     indikator = Indikator.upsert_all(@indikator, returning: %w[indikator tahun target satuan pagu])
     render json: { resText: 'Data disimpan', result: indikator }, status: :accepted if indikator
   end
