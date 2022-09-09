@@ -88,19 +88,26 @@ class ProgramKegiatan < ApplicationRecord
   end
 
   def indikator_renstras
-    program = indikator_program_renstra.group_by(&:indikator).transform_values do |indikator|
+    # subkegiatan = indikator_subkegiatan_renstra.group_by(&:kode_indikator).transform_values do |indikator|
+    #   indikator.group_by(&:tahun)
+    # end
+    program = indikator_program_renstra&.group_by(&:version)
+    kegiatan = indikator_kegiatan_renstra&.group_by(&:version)
+    subkegiatan = indikator_subkegiatan_renstra&.group_by(&:version)
+    progs = program[program.keys.max]&.group_by(&:indikator)&.transform_values do |indikator|
       indikator.group_by(&:tahun)
     end
-    kegiatan = indikator_kegiatan_renstra.group_by(&:indikator).transform_values do |indikator|
+    kegs = kegiatan[kegiatan.keys.max]&.group_by(&:indikator)&.transform_values do |indikator|
       indikator.group_by(&:tahun)
     end
-    subkegiatan = indikator_subkegiatan_renstra.group_by(&:indikator).transform_values do |indikator|
+    subs = subkegiatan[subkegiatan.keys.max]&.group_by(&:indikator)&.transform_values do |indikator|
       indikator.group_by(&:tahun)
     end
+
     {
-      indikator_program: program.to_h,
-      indikator_kegiatan: kegiatan.to_h,
-      indikator_subkegiatan: subkegiatan.to_h
+      indikator_program: progs,
+      indikator_kegiatan: kegs,
+      indikator_subkegiatan: subs
     }
   end
 
@@ -116,15 +123,17 @@ class ProgramKegiatan < ApplicationRecord
   end
 
   def target_program_renstra
-    indikator_program_renstra.pluck(
+    indikator_program_renstra.order('version ASC').pluck(
       :indikator,
+      :keterangan,
       :target,
       :satuan,
       :pagu,
       :tahun
-    ).each_with_object({}) do |(indikator, target, satuan, pagu, tahun), result|
+    ).each_with_object({}) do |(indikator, keterangan, target, satuan, pagu, tahun), result|
       result[tahun] = {
         indikator: indikator,
+        keterangan: keterangan,
         target: target,
         satuan: satuan,
         pagu: pagu
@@ -144,11 +153,17 @@ class ProgramKegiatan < ApplicationRecord
   end
 
   def target_kegiatan_renstra
-    indikator_kegiatan_renstra.pluck(:target,
-                                     :satuan,
-                                     :pagu,
-                                     :tahun).each_with_object({}) do |(target, satuan, pagu, tahun), result|
+    indikator_kegiatan_renstra.order('version ASC').pluck(
+      :indikator,
+      :keterangan,
+      :target,
+      :satuan,
+      :pagu,
+      :tahun
+    ).each_with_object({}) do |(indikator, keterangan, target, satuan, pagu, tahun), result|
       result[tahun] = {
+        indikator: indikator,
+        keterangan: keterangan,
         target: target,
         satuan: satuan,
         pagu: pagu
@@ -168,11 +183,17 @@ class ProgramKegiatan < ApplicationRecord
   end
 
   def target_subkegiatan_renstra
-    indikator_subkegiatan_renstra.pluck(:target,
-                                        :satuan,
-                                        :pagu,
-                                        :tahun).each_with_object({}) do |(target, satuan, pagu, tahun), result|
+    indikator_subkegiatan_renstra.order('version ASC').pluck(
+      :indikator,
+      :keterangan,
+      :target,
+      :satuan,
+      :pagu,
+      :tahun
+    ).each_with_object({}) do |(indikator, keterangan, target, satuan, pagu, tahun), result|
       result[tahun] = {
+        indikator: indikator,
+        keterangan: keterangan,
         target: target,
         satuan: satuan,
         pagu: pagu

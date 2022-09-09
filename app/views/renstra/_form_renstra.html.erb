@@ -13,32 +13,38 @@
     value: @nama %>
 </div>
 <div class="field">
-<%= form.label "indikator #{@sub_jenis}", class: 'form-label' %>
-<%= form.text_field :indikator,
-  class: 'form-control',
-  value: @indikator %>
+  <%= form.label "indikator #{@sub_jenis}", class: 'form-label' %>
+  <%= form.text_field :indikator,
+    class: 'form-control',
+    value: @indikator %>
+</div>
+<% (2020..2024).each do |tahun| %>
+  <%= form.hidden_field "renstra[indikator][][tahun]", value: tahun %>
+  <%= form.hidden_field "renstra[indikator][][kode]", value: @kode %>
+  <%= form.hidden_field "renstra[indikator][][jenis]", value: @jenis %>
+  <%= form.hidden_field "renstra[indikator][][sub_jenis]", value: @sub_jenis %>
+  <%= form.hidden_field "renstra[indikator][][kode_indikator]", value: @kode_indikator %>
+  <%= form.hidden_field :_kode_indikator, value: @kode_indikator %>
+  <div class="row" %>
+  <div class="field col">
+    <%= form.label "target #{tahun}", class: 'form-label' %>
+    <%= form.text_field "renstra[indikator][][target]", class: 'form-control', value: @targets[tahun.to_s]&.[](:target) %>
   </div>
-  <% (2020..2024).each do |tahun| %>
-    <%= form.hidden_field "renstra[indikator][][tahun]", value: tahun %>
-    <%= form.hidden_field "renstra[indikator][][kode]", value: @kode %>
-    <%= form.hidden_field "renstra[indikator][][jenis]", value: @jenis %>
-    <%= form.hidden_field "renstra[indikator][][sub_jenis]", value: @sub_jenis %>
-    <%= form.hidden_field "renstra[indikator][][kode_indikator]", value: @kode_indikator %>
-    <%= form.hidden_field :_kode_indikator, value: @kode_indikator %>
-    <div class="row" %>
-    <div class="field col">
-      <%= form.label "target #{tahun}", class: 'form-label' %>
-      <%= form.text_field "renstra[indikator][][target]", class: 'form-control', value: @targets[tahun.to_s]&.[](:target) %>
-    </div>
-    <div class="field col">
-      <%= form.label :satuan, class: 'form-label' %>
-      <%= form.text_field "renstra[indikator][][satuan]", class: 'form-control', value: @targets[tahun.to_s]&.[](:satuan) %>
-    </div>
-    <div class="field col">
-      <%= form.label :pagu, class: 'form-label' %>
-      <%= form.text_field "renstra[indikator][][pagu]", class: 'form-control', value: @targets[tahun.to_s]&.[](:pagu) %>
-    </div>
-    </div>
-  <% end %>
-  <%= form.submit "Simpan" %>
+  <div class="field col">
+    <%= form.label :satuan, class: 'form-label' %>
+    <%= form.text_field "renstra[indikator][][satuan]", class: 'form-control', value: @targets[tahun.to_s]&.[](:satuan) %>
+  </div>
+  <div class="field col">
+    <%= form.label :pagu, class: 'form-label' %>
+    <%= form.text_field "renstra[indikator][][pagu]", class: 'form-control', value: @targets[tahun.to_s]&.[](:pagu) %>
+  </div>
+  </div>
+<% end %>
+<div class="field">
+  <%= form.label :keterangan, class: 'form-label' %>
+  <%= form.text_field :keterangan,
+    class: 'form-control',
+    value: @keterangan %>
+</div>
+<%= form.submit "Simpan" %>
 <% end %>

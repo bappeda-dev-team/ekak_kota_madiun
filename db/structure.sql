@@ -659,7 +659,9 @@ CREATE TABLE public.indikators (
     jenis character varying,
     sub_jenis character varying,
     pagu character varying DEFAULT '0'::character varying,
-    kode_indikator character varying
+    kode_indikator character varying,
+    version integer DEFAULT 0 NOT NULL,
+    keterangan character varying
 );
 
 
@@ -3843,6 +3845,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220902020642'),
 ('20220902032047'),
 ('20220904202731'),
-('20220908035548');
+('20220908035548'),
+('20220908193810');
 
 
