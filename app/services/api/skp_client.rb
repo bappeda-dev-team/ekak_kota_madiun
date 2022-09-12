@@ -61,6 +61,13 @@ module Api
       update_tujuan_opd(request)
     end
 
+    def tujuan_kota
+      request = request_tujuan_kota
+      update_tujuan_kota(request)
+    end
+
+    # REQUEST
+
     def request_skp(kode_opd, tahun, bulan, nip_asn)
       H.post("#{URL}/sasaran-kinerja-pegawai/#{kode_opd}/#{tahun}/#{bulan}/#{nip_asn}",
              form: { username: USERNAME, password: PASSWORD })
@@ -88,6 +95,11 @@ module Api
 
     def reqeust_sasaran_kota
       H.post("#{URL}/kota-sasaran",
+             form: { username: USERNAME, password: PASSWORD })
+    end
+
+    def request_tujuan_kota
+      H.post("#{URL}/kota-tujuan",
              form: { username: USERNAME, password: PASSWORD })
     end
 
@@ -225,35 +237,83 @@ module Api
       end
     end
 
+    def update_tujuan_kota(response)
+      data = Oj.load(response.body)
+      tujuans = data['data']
+      tujuans.each do |tujuan|
+        data_tujuan = {
+          id_tujuan: tujuan['id'],
+          kode_tujuan: tujuan['id_tujuan'],
+          id_misi: tujuan['id_misi'],
+          tujuan: tujuan['tujuan_teks'],
+          tahun_awal: tujuan['tahun_awal'],
+          tahun_akhir: tujuan['tahun_akhir'],
+          type: 'TujuanKota',
+          visi: tujuan['visi_teks'],
+          misi: tujuan['misi_teks'],
+          created_at: Time.now, updated_at: Time.now
+        }
+
+        tujuan['indikators'].each do |indikator|
+          data_indikator = {
+            indikator: indikator['indikator'],
+            jenis: 'Tujuan',
+            sub_jenis: 'Kota',
+            kode: indikator['id_tujuan_api']
+          }
+          ranges = (2020..2024).to_a
+          ranges.each.with_index(1) do |tahun, index|
+            data_tahun = {
+              tahun: tahun,
+              target: indikator["target_#{index}"],
+              satuan: indikator["satuan_#{index}"]
+            }
+            data_input = data_indikator.merge(data_tahun)
+            Indikator.insert(data_input)
+          end
+        end
+        TujuanKota.upsert(data_tujuan, unique_by: :id_tujuan)
+      end
+    end
+
     def update_sasaran_kota(response)
       data = Oj.load(response.body)
       sasarans = data['data']
       sasarans.each do |sasaran|
         data_sasaran = {
-          id_rencana: sasaran['id'],
-          tahun: "#{sasaran['tahun_awal']}-#{sasaran['tahun_akhir']}",
-          sasaran_kinerja: sasaran['sasaran_teks'],
-          type: 'SasaranKota',
-          sasaran_atasan: sasaran['tujuan_teks'],
-          sasaran_opd: sasaran['misi_teks'],
-          sasaran_kota: sasaran['visi_teks'],
+          id_misi: sasaran['id_misi'],
+          id_tujuan: sasaran['id_tujuan'],
+          id_sasaran: sasaran['id_sasaran'],
+          kode_sasaran: sasaran['id'],
+          tahun_awal: sasaran['tahun_awal'],
+          tahun_akhir: sasaran['tahun_akhir'],
+          visi: sasaran['visi_teks'],
+          misi: sasaran['misi_teks'],
+          tujuan: sasaran['tujuan_teks'],
+          sasaran: sasaran['sasaran_teks'],
           created_at: Time.now, updated_at: Time.now
         }
-        SasaranKota.upsert(data_sasaran, unique_by: :id_rencana)
-        next unless sasaran['indikators']
 
-        sasaran['indikators'].each do |ind_sas_kota|
+        sasaran['indikators'].each do |indikator|
           data_indikator = {
-            indikator_kinerja: ind_sas_kota['indikator'],
-            target: ind_sas_kota['target_3'],
-            satuan: ind_sas_kota['satuan_3'],
-            sasaran_id: ind_sas_kota['id_sasaran_lokal'],
-            id_indikator: ind_sas_kota['id'],
-            type: 'IndikatorSasaranKota',
-            created_at: Time.now, updated_at: Time.now
+            indikator: indikator['indikator'],
+            jenis: 'Sasaran',
+            sub_jenis: 'Kota',
+            kode: indikator['id_sasaran_api']
           }
-          IndikatorSasaran.upsert(data_indikator, unique_by: :id_indikator)
+          ranges = (2020..2024).to_a
+          ranges.each.with_index(1) do |tahun, index|
+            data_tahun = {
+              tahun: tahun,
+              target: indikator["target_#{index}"],
+              satuan: indikator["satuan_#{index}"]
+            }
+            data_input = data_indikator.merge(data_tahun)
+            Indikator.insert(data_input)
+          end
         end
+
+        SasaranKotum.upsert(data_sasaran, unique_by: :id_sasaran)
       end
     end
 

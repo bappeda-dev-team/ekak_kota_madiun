@@ -7,22 +7,22 @@
             <i class="fas fa-home"></i>
           <% end %>
         </li>
-        <li class="breadcrumb-item active" aria-current="page"><%= link_to sasaran_kota_path %></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to tujuan_kota_path %></li>
       </ol>
     </nav>
     <div class="card border-0 shadow">
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Sasaran Kota</h2>
+            <h2 class="fs-5 fw-bold mb-0">Tujuan Kota</h2>
           </div>
           <div class="col text-end">
-            <%= link_to sync_kota_path,
+            <%= link_to sync_tujuan_kota_path,
                         remote: true,
                         data: { disable_with: 'Memproses....'}, 
                         class:"btn btn-sm btn-primary" do %>
               <i class="fas fa-sync me-2"></i>
-              Sync Sasaran Kota
+              Sync Tujuan Kota
             <% end %>
           </div>
         </div>
@@ -38,22 +38,20 @@
               <th class="border-bottom" scope="col">VISI</th>
               <th class="border-bottom" scope="col">MISI</th>
               <th class="border-bottom" scope="col">Tujuan</th>
-              <th class="border-bottom" scope="col">Sasaran Kinerja Output</th>
               <th class="border-bottom" scope="col">Indikator Kinerja</th>
               <th class="border-bottom" scope="col">Target</th>
               <th class="border-bottom" scope="col">Satuan</th>
             </tr>
           </thead>
           <tbody id="tempat-row-sasaran">
-            <% @sasaran_kota.each.with_index(1) do |sasaran, i| %>
+            <% @tujuan_kota.each.with_index(1) do |tujuan, i| %>
               <tr>
-                <td class="fw-bolder" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
-                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.visi %></td>
-                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.misi %></td>
-                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.tujuan %></td>
-                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran %></td>
+                <td class="fw-bolder" scope="row" rowspan="<%= tujuan.indikator_tujuans.count + 1 %>"><%= i %></td>
+                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= tujuan.indikator_tujuans.count + 1 %>"><%= tujuan.visi %></td>
+                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= tujuan.indikator_tujuans.count + 1 %>"><%= tujuan.misi %></td>
+                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= tujuan.indikator_tujuans.count + 1 %>"><%= tujuan.tujuan %></td>
                 <td class="p-0 m-0" colspan="3"></td>
-                <% sasaran.indikator_sasarans.each do |indikator| %>
+                <% tujuan.indikator_tujuans.each do |indikator| %>
                   <tr>
                     <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.indikator %></td>
                     <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.target %></td>

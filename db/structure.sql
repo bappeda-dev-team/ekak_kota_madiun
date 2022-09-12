@@ -1794,6 +1794,46 @@ ALTER SEQUENCE public.roles_id_seq OWNED BY public.roles.id;
 
 
 --
+-- Name: sasaran_kota; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.sasaran_kota (
+    id bigint NOT NULL,
+    id_misi character varying,
+    id_tujuan character varying,
+    id_sasaran character varying,
+    tahun_awal character varying,
+    tahun_akhir character varying,
+    visi character varying,
+    misi character varying,
+    tujuan character varying,
+    sasaran character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    kode_sasaran character varying
+);
+
+
+--
+-- Name: sasaran_kota_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.sasaran_kota_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: sasaran_kota_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.sasaran_kota_id_seq OWNED BY public.sasaran_kota.id;
+
+
+--
 -- Name: sasarans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2143,6 +2183,45 @@ CREATE SEQUENCE public.tematik_sasarans_id_seq
 --
 
 ALTER SEQUENCE public.tematik_sasarans_id_seq OWNED BY public.tematik_sasarans.id;
+
+
+--
+-- Name: tujuan_kota; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.tujuan_kota (
+    id bigint NOT NULL,
+    id_misi character varying,
+    tahun_awal character varying,
+    tahun_akhir character varying,
+    id_tujuan character varying,
+    visi character varying,
+    misi character varying,
+    tujuan character varying,
+    type character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    kode_tujuan character varying
+);
+
+
+--
+-- Name: tujuan_kota_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.tujuan_kota_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: tujuan_kota_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.tujuan_kota_id_seq OWNED BY public.tujuan_kota.id;
 
 
 --
@@ -2586,6 +2665,13 @@ ALTER TABLE ONLY public.roles ALTER COLUMN id SET DEFAULT nextval('public.roles_
 
 
 --
+-- Name: sasaran_kota id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sasaran_kota ALTER COLUMN id SET DEFAULT nextval('public.sasaran_kota_id_seq'::regclass);
+
+
+--
 -- Name: sasarans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2632,6 +2718,13 @@ ALTER TABLE ONLY public.tahapans ALTER COLUMN id SET DEFAULT nextval('public.tah
 --
 
 ALTER TABLE ONLY public.tematik_sasarans ALTER COLUMN id SET DEFAULT nextval('public.tematik_sasarans_id_seq'::regclass);
+
+
+--
+-- Name: tujuan_kota id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tujuan_kota ALTER COLUMN id SET DEFAULT nextval('public.tujuan_kota_id_seq'::regclass);
 
 
 --
@@ -3024,6 +3117,14 @@ ALTER TABLE ONLY public.roles
 
 
 --
+-- Name: sasaran_kota sasaran_kota_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sasaran_kota
+    ADD CONSTRAINT sasaran_kota_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: sasarans sasarans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3085,6 +3186,14 @@ ALTER TABLE ONLY public.tahapans
 
 ALTER TABLE ONLY public.tematik_sasarans
     ADD CONSTRAINT tematik_sasarans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tujuan_kota tujuan_kota_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tujuan_kota
+    ADD CONSTRAINT tujuan_kota_pkey PRIMARY KEY (id);
 
 
 --
@@ -3427,6 +3536,13 @@ CREATE INDEX index_roles_on_resource ON public.roles USING btree (resource_type,
 
 
 --
+-- Name: index_sasaran_kota_on_id_sasaran; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_sasaran_kota_on_id_sasaran ON public.sasaran_kota USING btree (id_sasaran);
+
+
+--
 -- Name: index_sasarans_on_id_rencana; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3459,6 +3575,13 @@ CREATE INDEX index_tematik_sasarans_on_sasaran_id ON public.tematik_sasarans USI
 --
 
 CREATE INDEX index_tematik_sasarans_on_subkegiatan_tematik_id ON public.tematik_sasarans USING btree (subkegiatan_tematik_id);
+
+
+--
+-- Name: index_tujuan_kota_on_id_tujuan; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_tujuan_kota_on_id_tujuan ON public.tujuan_kota USING btree (id_tujuan);
 
 
 --
@@ -3850,6 +3973,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220908035548'),
 ('20220908193810'),
 ('20220909014123'),
-('20220909075315');
+('20220909075315'),
+('20220912074109'),
+('20220912095543'),
+('20220912101849'),
+('20220912105503');
 
 

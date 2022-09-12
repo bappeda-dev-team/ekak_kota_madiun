@@ -39,6 +39,12 @@ module Api
       render 'shared/_notifikasi_simple'
     end
 
+    def sync_tujuan_kota
+      UpdateTujuanKotaJob.perform_async(nil, nil)
+      flash.now[:success] = "Update Tujuan Kota Dikerjakan. Harap menunggu..."
+      render 'shared/_notifikasi_simple'
+    end
+
     def sync_tujuan_opd
       UpdateTujuanOpdJob.perform_later(@kode_opd, @tahun)
       flash.now[:success] = "Update Tujuan Opd #{nama_opd} Dikerjakan. Harap menunggu..."

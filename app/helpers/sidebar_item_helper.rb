@@ -53,7 +53,13 @@ module SidebarItemHelper
       { title: 'ASN', href: adminusers_path, icon: 'fas fa-user-check', identifier: 'adminusers' },
       { title: 'Sasaran ASN', href: laporan_sasarans_path, identifier: 'laporan_sasaran', icon: 'fas fa-bullseye' },
       { title: 'Isu dan Permasalahan', href: isu_dan_permasalahans_path, icon: 'fas fa-map-signs',
-        identifier: 'isu_dan_permasalahan' }
+        identifier: 'isu_dan_permasalahan' },
+      { title: 'Tujuan Kota', href: tujuan_kota_path, icon: 'fas fa-map-signs',
+        identifier: 'tujuan_kota' },
+      { title: 'Sasaran Kota', href: sasaran_kota_path, icon: 'fas fa-map-signs',
+        identifier: 'sasaran_kota' },
+      { title: 'Crosscutting Kota', href: crosscutting_kota_sasaran_kota_path, icon: 'fas fa-map-signs',
+        identifier: 'crosscutting_kota' }
     ]
   end
 

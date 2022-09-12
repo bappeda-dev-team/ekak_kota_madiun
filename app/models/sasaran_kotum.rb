@@ -20,16 +20,8 @@
 #
 #  index_sasaran_kota_on_id_sasaran  (id_sasaran) UNIQUE
 #
-FactoryBot.define do
-  factory :sasaran_kotum do
-    id_misi { "MyString" }
-    id_tujuan { "MyString" }
-    id_sasaran { "MyString" }
-    tahun_awal { "MyString" }
-    tahun_akhir { "MyString" }
-    visi { "MyString" }
-    misi { "MyString" }
-    tujuan { "MyString" }
-    sasaran { "MyString" }
-  end
+class SasaranKotum < ApplicationRecord
+  belongs_to :tujuan_kota, class_name: 'TujuanKota', foreign_key: 'id_tujuan', primary_key: 'kode_tujuan'
+  has_many :indikator_sasarans, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id_sasaran'
+  has_many :sasarans_opd, class_name: 'Sasaran', foreign_key: 'sasaran_atasan_id', primary_key: 'kode_sasaran'
 end

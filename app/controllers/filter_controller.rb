@@ -335,6 +335,15 @@ class FilterController < ApplicationController
     render partial: 'filter_admin_renstra'
   end
 
+  def crosscutting_kota
+    if @kode_opd == "all"
+      @sasaran_kota = SasaranKotum.all
+      @nama_opd = "Kota Madiun"
+    end
+    @filter_file = params[:filter_file]
+    render partial: 'filter_crosscutting_kota'
+  end
+
   private
 
   def filter_params
