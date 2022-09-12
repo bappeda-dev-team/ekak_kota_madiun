@@ -12,7 +12,12 @@ class KaksController < ApplicationController
     render 'new_format'
   end
 
-  def laporan_kak; end
+  def laporan_kak
+    @program_kegiatans = ProgramKegiatan.joins(:sasarans)
+                                        .where(sasarans: { nip_asn: current_user.nik, tahun: 2022 })
+                                        .where.not(sasarans: { id: nil, anggaran: nil }).group(:id)
+    @sasarans = current_user.sasarans
+  end
 
   def pdf_kak
     @filename = "laporan_kak.pdf"
