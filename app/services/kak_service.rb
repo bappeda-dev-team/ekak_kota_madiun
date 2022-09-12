@@ -88,8 +88,8 @@ class KakService
     program_kegiatans.send("indikator_#{jenis}_renstra")
                      .select { |pk| pk.tahun == @tahun }
                      .map do |pk|
-      { tahun: pk.tahun, kode_indikator: pk.kode_indikator, indikator: pk.indikator, target: pk.target, satuan: pk.satuan,
-        pagu: pk.pagu }
+      { id: pk.id, tahun: pk.tahun, kode_indikator: pk.kode_indikator, indikator: pk.indikator, target: pk.target, satuan: pk.satuan,
+        pagu: pk.pagu, version: pk.version, kotak: pk.kotak, kode_opd: pk.kode_opd }
     end
   end
 

@@ -58,8 +58,15 @@ class ProgramKegiatan < ApplicationRecord
   has_many :rincians, through: :sasarans
   has_many :permasalahans, through: :sasarans
   has_many :users, through: :sasarans
-  # has_many :kegiatans, class_name: 'ProgramKegiatan', foreign_key: 'kode_program', primary_key: 'kode_program'
-  # has_many :subkegiatans, class_name: 'ProgramKegiatan', foreign_key: 'kode_giat', primary_key: 'kode_giat'
+
+  has_many :kegiatans, lambda { |program_kegiatan|
+                         where(kode_sub_skpd: program_kegiatan.kode_sub_skpd)
+                       }, class_name: 'ProgramKegiatan', foreign_key: 'kode_program', primary_key: 'kode_program'
+
+  has_many :subkegiatans, lambda { |program_kegiatan|
+                            where(kode_sub_skpd: program_kegiatan.kode_sub_skpd)
+                          }, class_name: 'ProgramKegiatan', foreign_key: 'kode_giat', primary_key: 'kode_giat'
+
   has_many :indikator_program_renstra, lambda {
                                          where(jenis: 'Renstra', sub_jenis: 'Program')
                                        }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'kode_program'
@@ -72,17 +79,19 @@ class ProgramKegiatan < ApplicationRecord
 
   scope :with_sasarans, -> { where(id: Sasaran.pluck(:program_kegiatan_id)) }
 
-  scope :programs, -> { select("DISTINCT ON(program_kegiatans.kode_program) program_kegiatans.*") }
+  # scope :programs, -> { select("DISTINCT ON(program_kegiatans.kode_program) program_kegiatans.*") }
   scope :kegiatans_satunya, -> { select("DISTINCT ON(program_kegiatans.kode_giat) program_kegiatans.*") }
   scope :subkegiatans_satunya, -> { select("DISTINCT ON(program_kegiatans.kode_sub_giat) program_kegiatans.*") }
 
-  def kegiatans
+  def kegiatans_opd
     # super.uniq(&:kode_giat)
-    ProgramKegiatan.where("kode_program = ? and kode_opd = ?", kode_program, kode_opd)
+    # ProgramKegiatan.where("kode_program = ? and kode_opd = ?", kode_program, kode_opd)
+    kegiatans.uniq { |keg| keg.kode_giat }.sort_by(&:kode_giat)
   end
 
-  def subkegiatans
-    ProgramKegiatan.where("kode_giat = ? and kode_opd = ?", kode_giat, kode_opd)
+  def subkegiatans_opd
+    # ProgramKegiatan.where("kode_giat = ? and kode_opd = ?", kode_giat, kode_opd)
+    subkegiatans.uniq { |sub| sub.kode_sub_giat }.sort_by(&:kode_sub_giat)
   end
 
   def my_pagu
