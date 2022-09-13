@@ -84,9 +84,54 @@ class KakService
     programs.uniq { |item| item[:kode] }
   end
 
+  def indikator_renstra_programs_opd(jenis:, kode:, nama:)
+    programs = program_kegiatans_by_opd.map do |program|
+      indikators = ind_renstras_new(jenis, program)
+      {
+        opd: opd.nama_opd,
+        kode_opd: program.kode_sub_skpd,
+        kode_urusan: program.kode_urusan,
+        urusan: program.nama_urusan,
+        kode_bidang_urusan: program.kode_bidang_urusan,
+        bidang_urusan: program.nama_bidang_urusan,
+        nama: program.send("nama_#{nama}"),
+        kode: program.send("kode_#{kode}"),
+        indikators: indikators,
+        tahun: @tahun
+      }
+    end
+    programs.uniq { |item| item[:kode] }
+  end
+
+  def ind_renstras_new(jenis, program_kegiatans)
+    indikator_all = program_kegiatans.send("indikator_renstras")
+    indikators = indikator_all["indikator_#{jenis}".to_sym]
+    if indikators
+      indikators.map do |ind, tahun|
+        { indikator: ind,
+          target_2020: tahun["2020"]&.last.target,
+          satuan_2020: tahun["2020"]&.last.satuan,
+          pagu_2020: tahun["2020"]&.last.pagu,
+          target_2021: tahun["2021"]&.last.target,
+          satuan_2021: tahun["2021"]&.last.satuan,
+          pagu_2021: tahun["2021"]&.last.pagu,
+          target_2022: tahun["2022"]&.last.target,
+          satuan_2022: tahun["2022"]&.last.satuan,
+          pagu_2022: tahun["2022"]&.last.pagu,
+          target_2023: tahun["2023"]&.last.target,
+          satuan_2023: tahun["2023"]&.last.satuan,
+          pagu_2023: tahun["2023"]&.last.pagu,
+          target_2024: tahun["2024"]&.last.target,
+          satuan_2024: tahun["2024"]&.last.satuan,
+          pagu_2024: tahun["2024"]&.last.pagu }
+      end
+    else
+      []
+    end
+  end
+
   def indikator_renstra(jenis, program_kegiatans)
     program_kegiatans.send("indikator_#{jenis}_renstra")
-                     .select { |pk| pk.tahun == @tahun }
                      .map do |pk|
       { id: pk.id, tahun: pk.tahun, kode_indikator: pk.kode_indikator, indikator: pk.indikator, target: pk.target, satuan: pk.satuan,
         pagu: pk.pagu, version: pk.version, kotak: pk.kotak, kode_opd: pk.kode_opd }

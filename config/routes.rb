@@ -215,8 +215,11 @@ Rails.application.routes.draw do
       post :opd_kegiatan
       post :opd_subkegiatan
       post :opd_test_indikator_program
+      post :opd_test_renstra_program
       post :opd_test_indikator_kegiatan
+      post :opd_test_renstra_kegiatan
       post :opd_test_indikator_subkegiatan
+      post :opd_test_renstra_subkegiatan
       post :kota_test_indikator_program
       post :kota_test_indikator_kegiatan
       post :kota_test_indikator_subkegiatan

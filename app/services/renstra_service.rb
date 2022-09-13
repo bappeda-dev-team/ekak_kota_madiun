@@ -30,6 +30,16 @@ class RenstraService
     ProgramKegiatan.find_by(kode_program: @kode_program)
   end
 
+  def programs
+    @program_kegiatans = @opd.program_kegiatans.programs
+  end
+
+  def kegiatans
+    programs.map do |prog|
+      prog.kegiatans
+    end
+  end
+
   def opd
     Opd.find_by(kode_unik_opd: @kode_unik_opd)
   end
