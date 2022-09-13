@@ -20,5 +20,7 @@ class SasaranProgramOpdsController < ApplicationController
     @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
     @program_kegiatans = @opd.program_kegiatans.joins(:sasarans).where(sasarans: { tahun: @tahun }).group(:id)
     @filename = "LAPORAN_DAFTAR_KAK_#{@opd.nama_opd}_TAHUN_#{@tahun}.pdf"
+    pdf = DaftarResikoPdf.new(opd: @opd, tahun: @tahun, program_kegiatans: @program_kegiatans)
+    send_data(pdf.render, filename: @filename, type: 'application/pdf', disposition: :inline)
   end
 end

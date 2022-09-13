@@ -12,6 +12,9 @@
     </div>
   </div>
   <div class="card-body">
+    <%= link_to "/cetak_daftar_resiko/#{@opd}/#{@tahun_bener}.pdf", class: 'btn btn-tertiary w-100', target: :_blank do %>
+      Cetak Daftar Resiko Tahun <%= @tahun_bener %> 
+    <% end %>
     <div class="table-responsive">
       <table class="table align-items-center border-start border-end" id="tabel_daftar_resiko">
         <thead class="thead-light">

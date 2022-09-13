@@ -42,6 +42,7 @@ class User < ApplicationRecord
   has_many :sasarans, dependent: :destroy, foreign_key: 'nip_asn', primary_key: 'nik'
   # has_many :program_kegiatans, through: :sasarans
 
+  scope :aktif, -> { without_role([:non_aktif]) }
   scope :asn_aktif, -> { without_role([:admin]).with_role(:asn) }
   scope :sasaran_diajukan, lambda {
                              asn_aktif.includes(:sasarans, :program_kegiatans).merge(Sasaran.sudah_lengkap)
