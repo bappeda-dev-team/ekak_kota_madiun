@@ -53,19 +53,25 @@ module SidebarItemHelper
       { title: 'ASN', href: adminusers_path, icon: 'fas fa-user-check', identifier: 'adminusers' },
       { title: 'Sasaran ASN', href: laporan_sasarans_path, identifier: 'laporan_sasaran', icon: 'fas fa-bullseye' },
       { title: 'Isu dan Permasalahan', href: isu_dan_permasalahans_path, icon: 'fas fa-map-signs',
-        identifier: 'isu_dan_permasalahan' },
-      { title: 'Tujuan Kota', href: tujuan_kota_path, icon: 'fas fa-map-signs',
-        identifier: 'tujuan_kota' },
-      { title: 'Sasaran Kota', href: sasaran_kota_path, icon: 'fas fa-map-signs',
-        identifier: 'sasaran_kota' },
-      { title: 'Crosscutting Kota', href: crosscutting_kota_sasaran_kota_path, icon: 'fas fa-map-signs',
-        identifier: 'crosscutting_kota' }
+        identifier: 'isu_dan_permasalahan' }
     ]
   end
 
   def super_admin_items
     [
       { title: 'Role', href: roles_path, icon: 'fas fa-user-tag', identifier: 'roles' },
+      { title: 'Tematik', href: subkegiatan_tematiks_path, identifier: 'tematik', icon: 'fas fa-tags' },
+      { title: 'Struktur Organisasi', href: struktur_users_path, icon: 'fas fa-sitemap', identifier: 'struktur' },
+      { title: 'Kelompok Anggaran', href: kelompok_anggarans_path, icon: 'fas fa-folder',
+        identifier: 'kelompok_anggaran' },
+      { title: 'Skala Dampak Resiko', href: skalas_path, icon: 'fas fa-weight', identifier: 'skala' },
+      { title: 'Admin Sasaran', href: adminsasarans_path, icon: 'fas fa-archive', identifier: 'adminsasarans' },
+      { title: 'User Khusus', href: khusus_users_path, icon: 'fas fa-user-astronaut', identifier: 'khusus' }
+    ]
+  end
+
+  def admin_items
+    [
       { title: 'Tematik', href: subkegiatan_tematiks_path, identifier: 'tematik', icon: 'fas fa-tags' },
       { title: 'Struktur Organisasi', href: struktur_users_path, icon: 'fas fa-sitemap', identifier: 'struktur' },
       { title: 'Kelompok Anggaran', href: kelompok_anggarans_path, icon: 'fas fa-folder',
@@ -127,8 +133,59 @@ module SidebarItemHelper
     ]
   end
 
+  def kota_items
+    [
+      { title: 'Tujuan Kota', href: tujuan_kota_path,
+        identifier: 'tujuan_kota' },
+      { title: 'Sasaran Kota', href: sasaran_kota_path,
+        identifier: 'sasaran_kota' },
+      { title: 'Crosscutting Kota', href: crosscutting_kota_path,
+        identifier: 'crosscutting_kota' }
+    ]
+  end
+
   def navigation_class(identifier)
     return ' active' if request.path.match(/\b#{identifier}/)
+  end
+
+  def collapsed_item_usulan
+    collapse_class('(\binovasis|\basn_musrenbangs|\bmusrenbangs|\bpokpirs|\bmandatoris)')
+  end
+
+  def collapsed_item_laporan_usulan
+    collapse_class('(\blaporan_usulan\/inisiatif|\blaporan_usulan\/musrenbang|\blaporan_usulan\/pokpir|\blaporan_usulan\/mandatori)')
+  end
+
+  def collapsed_item_usulan_user
+    collapse_class('(\busulan_inisiatif|\busulan_musrenbang|\busulan_pokpir|\busulan_mandatori)')
+  end
+
+  def collapsed_item_anggaran
+    collapse_class('(\banggaran_ssh|\banggaran_sbu|\banggaran_hspk|\brekening)')
+  end
+
+  def collapsed_item_sipd_master
+    collapse_class('(\bmaster_urusan|\bmaster_bidang_urusan|\bmaster_programs|\bmaster_kegiatans|\bmaster_output|\bmaster_subkegiatans)')
+  end
+
+  def collapsed_item_spip
+    collapse_class('(\bsasaran_program_opds/spip|\bsasaran_program_opds/daftar_resiko)')
+  end
+
+  def collapsed_item_renstra
+    collapse_class('(\brenstra/tujuan|\brenstra/sasaran|\brenstra/program|\brenstra/kegiatan)')
+  end
+
+  def collapsed_item_renja
+    collapse_class('(\brenja/tujuan|\brenja/sasaran|\badmin_program|\badmin_kegiatan|\badmin_sub_kegiatan)')
+  end
+
+  def collapsed_item_opd
+    collapse_class('(\bopds/tujuan|\bopds/sasaran|\bopds)')
+  end
+
+  def collapsed_item_kota
+    collapse_class('(\btujuan_kota|\bsasaran_kota|\bcrosscutting_kota)')
   end
 
   def collapse_class(identifier)

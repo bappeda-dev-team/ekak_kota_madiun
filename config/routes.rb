@@ -78,6 +78,7 @@ Rails.application.routes.draw do
     resources :sasarans, path: "sasaran_kerja"
     collection do
       get :struktur
+      get :khusus
     end
 
     member do
@@ -222,12 +223,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :sasaran_kota do
-    collection do
-      get :crosscutting_kota
-    end
-  end
+  resources :sasaran_kota
   resources :tujuan_kota
+  get :crosscutting_kota, to: "sasaran_kota#crosscutting_kota"
 
   mount Sidekiq::Web, at: "/sidekiq"
 
