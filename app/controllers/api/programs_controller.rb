@@ -114,15 +114,34 @@ module Api
       respond_to { |f| f.json { render 'opd_test_indikator' } }
     end
 
+    def opd_test_renstra_program
+      programs = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
+      @program_kegiatans = programs.indikator_renstra_programs_opd(jenis: 'program', kode: 'program', nama: 'program')
+      respond_to { |f| f.json { render 'opd_test_indikator' } }
+    end
+
     def opd_test_indikator_kegiatan
       programs = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
       @program_kegiatans = programs.indikator_programs_opd(jenis: 'kegiatan', kode: 'giat', nama: 'kegiatan')
       respond_to { |f| f.json { render 'opd_test_indikator' } }
     end
 
+    def opd_test_renstra_kegiatan
+      programs = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
+      @program_kegiatans = programs.indikator_renstra_programs_opd(jenis: 'kegiatan', kode: 'giat', nama: 'kegiatan')
+      respond_to { |f| f.json { render 'opd_test_indikator' } }
+    end
+
     def opd_test_indikator_subkegiatan
       programs = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
       @program_kegiatans = programs.indikator_programs_opd(jenis: 'subkegiatan', kode: 'sub_giat', nama: 'subkegiatan')
+      respond_to { |f| f.json { render 'opd_test_indikator' } }
+    end
+
+    def opd_test_renstra_subkegiatan
+      programs = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
+      @program_kegiatans = programs.indikator_renstra_programs_opd(jenis: 'subkegiatan', kode: 'sub_giat',
+                                                                   nama: 'subkegiatan')
       respond_to { |f| f.json { render 'opd_test_indikator' } }
     end
 
