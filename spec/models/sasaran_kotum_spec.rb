@@ -20,16 +20,8 @@
 #
 #  index_sasaran_kota_on_id_sasaran  (id_sasaran) UNIQUE
 #
-FactoryBot.define do
-  factory :sasaran_kotum do
-    id_misi { "MyString" }
-    id_tujuan { "MyString" }
-    id_sasaran { "MyString" }
-    tahun_awal { "MyString" }
-    tahun_akhir { "MyString" }
-    visi { "MyString" }
-    misi { "MyString" }
-    tujuan { "MyString" }
-    sasaran { "MyString" }
-  end
+require 'rails_helper'
+
+RSpec.describe SasaranKotum, type: :model do
+  pending "add some examples to (or delete) #{__FILE__}"
 end

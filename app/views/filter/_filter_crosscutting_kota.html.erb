@@ -1,0 +1,69 @@
+<div class="card border-0 shadow">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">Pohon Kinerja Kota Madiun</h2>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table align-items-center text-white">
+        <tbody class="tdead-light">
+          <% @sasaran_kota.each.with_index(1) do |sas_kota, index_sas_kota| %>
+            <tr class="header-misi bg-tertiary">
+              <td class="border" scope="col" colspan="15">Misi <%= sas_kota.misi %></td>
+            </tr>
+            <tr class="tujuan-kota">
+              <td class="border" scope="col"><%= sas_kota.tujuan_kota&.tujuan %></td>
+            </tr>
+            <tr class="indikators-tujuan-kota">
+              <td class="border" scope="col"><%= sas_kota.tujuan_kota&.indikator_tujuans&.first&.indikator %></td>
+              <% (2020..2024).each do |tahun| %>
+                <td class="border" scope="col"><%= sas_kota.tujuan_kota&.indikator_tujuans&.first&.target %></td>
+              <% end %>
+            </tr>
+            <tr class="sasaran-kota">
+              <td class="border">Sasaran Kota <%= index_sas_kota %> - <%= sas_kota.sasaran %></td>
+            </tr>
+            <tr class="indikators-sasaran-kota">
+              <td class="border" scope="col"><%= sas_kota.indikator_sasarans&.first&.indikator %></td>
+              <% (2020..2024).each do |tahun| %>
+                <td class="border" scope="col"><%= sas_kota.indikator_sasarans&.first&.target %></td>
+              <% end %>
+            </tr>
+            <%# OPD %>
+            <% sas_kota.sasarans_opd.each do |sas_opd| %>
+              <tr class="nama-opd">
+                <td class="border">OPD-<%= sas_opd.opd.nama_opd %></td>
+              </tr>
+              <% sas_opd.opd.tujuan_opds.each do |tujuan_opd| %>
+                <tr class="tujuan-opd">
+                  <td class="border" scope="col"><%= tujuan_opd.tujuan %></td>
+                  <td class="border" scope="col"><%= tujuan_opd.indikators&.first&.indikator %></td>
+                  <% (2020..2024).each do |tahun| %>
+                    <td class="border" scope="col">Target <%= tujuan_opd.indikators&.first&.target %></td>
+                  <% end %>
+                </tr>
+              <% end %>
+              <tr class="sasaran-opd">
+                <td class="border"><%= sas_opd.user.jabatan %></td>
+                <td class="border"><%= sas_opd.sasaran_kinerja %></td>
+                <td class="border" scope="col"><%= sas_opd.indikator_sasarans.first.indikator_kinerja %> sasaran opd</td>
+                <td class="border" scope="col"><%= sas_opd.indikator_sasarans.first.target %></td>
+              </tr>
+              <% sas_opd.indikator_sasarans.first.sasaran_kabid.each do |kabid| %>
+                <tr class="sasaran-kabid">
+                  <td class="border"><%= kabid.user.jabatan %></td>
+                  <td class="border"><%= kabid.sasaran_kinerja %></td>
+                  <td class="border" scope="col"><%= kabid.indikator_sasarans.first.indikator_kinerja %> sasaran kabid</td>
+                  <td class="border" scope="col"><%= kabid.indikator_sasarans.first.target %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

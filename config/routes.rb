@@ -78,6 +78,7 @@ Rails.application.routes.draw do
     resources :sasarans, path: "sasaran_kerja"
     collection do
       get :struktur
+      get :khusus
     end
 
     member do
@@ -197,6 +198,7 @@ Rails.application.routes.draw do
     post :renstra_master
     post :tujuan_opd
     post :sasaran_opd
+    post :crosscutting_kota
   end
 
   scope module: 'api' do
@@ -222,6 +224,8 @@ Rails.application.routes.draw do
   end
 
   resources :sasaran_kota
+  resources :tujuan_kota
+  get :crosscutting_kota, to: "sasaran_kota#crosscutting_kota"
 
   mount Sidekiq::Web, at: "/sidekiq"
 
@@ -329,6 +333,7 @@ Rails.application.routes.draw do
   get "/sync_opd", to: "api/skp_client#sync_opd"
   get "/sync_tujuan_opd", to: "api/skp_client#sync_tujuan_opd"
   get "/sync_kota", to: "api/skp_client#sync_kota"
+  get "/sync_tujuan_kota", to: "api/skp_client#sync_tujuan_kota"
   get "/sync_subkegiatan", to: "api/sipd_client#sync_subkegiatan"
   get "/sync_subkegiatan_opd", to: "api/sipd_client#sync_subkegiatan_opd"
   get "/update_detail_kegiatan_lama", to: "api/sipd_client#update_detail_kegiatan_lama"

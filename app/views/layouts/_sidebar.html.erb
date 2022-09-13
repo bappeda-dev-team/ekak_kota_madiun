@@ -64,17 +64,8 @@
         <% end %>
       </li>
       <% unless current_user.has_role? :non_aktif %>
-        <% collapsed_item_usulan = collapse_class('(\binovasis|\basn_musrenbangs|\bmusrenbangs|\bpokpirs|\bmandatoris)') %>
-        <% collapsed_item_laporan_usulan = collapse_class('(\blaporan_usulan\/inisiatif|\blaporan_usulan\/musrenbang|\blaporan_usulan\/pokpir|\blaporan_usulan\/mandatori)') %>
-        <% collapsed_item_usulan_user = collapse_class('(\busulan_inisiatif|\busulan_musrenbang|\busulan_pokpir|\busulan_mandatori)') %>
-        <% collapsed_item_anggaran = collapse_class('(\banggaran_ssh|\banggaran_sbu|\banggaran_hspk|\brekening)') %>
-        <% collapsed_item_sipd_master = collapse_class('(\bmaster_urusan|\bmaster_bidang_urusan|\bmaster_programs|\bmaster_kegiatans|\bmaster_output|\bmaster_subkegiatans)') %>
-        <% collapsed_item_spip = collapse_class('(\bsasaran_program_opds/spip|\bsasaran_program_opds/daftar_resiko)') %>
-        <% collapsed_item_renstra = collapse_class('(\brenstra/tujuan|\brenstra/sasaran|\brenstra/program|\brenstra/kegiatan)') %>
-        <% collapsed_item_renja = collapse_class('(\brenja/tujuan|\brenja/sasaran|\badmin_program|\badmin_kegiatan|\badmin_sub_kegiatan)') %>
-        <% collapsed_item_opd = collapse_class('(\bopds/tujuan|\bopds/sasaran|\bopds)') %>
         <% if current_user.has_role? :admin or current_user.has_role? :super_admin or current_user.has_role? :reviewer %>
-          <hr>
+      <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
           <p>Data Master</p>
           <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
             <li class="nav-item">
@@ -105,6 +96,7 @@
             </li>
           <% end %>
           <%# khusus superadmin %>
+          <p>Khusus Admin</p>
           <% if current_user.has_role? :super_admin %>
             <li class="nav-item">
               <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_item_anggaran[:menu] %>" data-bs-toggle="collapse" data-bs-target="#anggaran-master" aria-expanded="<%= collapsed_item_anggaran[:aria] %>">
@@ -158,6 +150,18 @@
                 </ul>
               </div>
             </li>
+            <% super_admin_items.each do |super_admin_item| %>
+              <li class="nav-item<%= navigation_class(super_admin_item[:identifier]) %>">
+                <%= link_to(super_admin_item[:href], class: "nav-link d-flex justify-content-between") do %>
+                  <span>
+                    <span class="sidebar-icon">
+                      <i class="<%= super_admin_item[:icon] %> icon icon-xs me-2"></i>
+                    </span>
+                    <span class="sidebar-text"><%= super_admin_item[:title] %></span>
+                  </span>
+                <% end %>
+              </li>
+            <% end %>
           <% end %>
           <%# Anggaran Blud %>
           <% if current_user.nik == 'rsud2022' or current_user.has_role? :super_admin %>
@@ -199,26 +203,29 @@
                 <% end %>
               </li>
             <% end %>
-            <%# Renstra %>
+          <hr>
+          <% end %>
+          <% if current_user.has_role? :admin or current_user.has_role? :special_guest or current_user.has_role? :super_admin %>
+            <%# Kota %>
             <li class="nav-item">
-              <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_item_renstra[:menu] %>" data-bs-toggle="collapse" data-bs-target="#renstra-items" aria-expanded="<%= collapsed_item_renstra[:aria] %>">
+              <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_item_kota[:menu] %>" data-bs-toggle="collapse" data-bs-target="#kota-items" aria-expanded="<%= collapsed_item_kota[:aria] %>">
                 <span>
                   <span class="sidebar-icon">
-                    <i class="fas fa-layer-group icon icon-xs me-2"></i>
+                    <i class="fas fa-university icon-xs me-2"></i>
                   </span>
-                  <span class="sidebar-text">Renstra</span>
+                  <span class="sidebar-text">Kota</span>
                 </span>
                 <span class="link-arrow">
                   <i class="fas fa-angle-right icon icon-sm"></i>
                 </span>
               </span>
-              <div class="multi-level <%= collapsed_item_renstra[:sub_menu] %>" role="list" id="renstra-items" aria-expanded="<%= collapsed_item_renstra[:aria] %>">
+              <div class="multi-level <%= collapsed_item_kota[:sub_menu] %>" role="list" id="kota-items" aria-expanded="<%= collapsed_item_kota[:aria] %>">
                 <ul class="flex-column nav">
-                  <% renstra_items.each do |renstra| %>
-                    <li class="nav-item<%= navigation_class(renstra[:identifier]) %>" >
-                      <%= link_to(renstra[:href], class: "nav-link") do %>
+                  <% kota_items.each do |kota| %>
+                    <li class="nav-item<%= navigation_class(kota[:identifier]) %>" >
+                      <%= link_to(kota[:href], class: "nav-link") do %>
                         <span>
-                          <span class="sidebar-text"><%= renstra[:title] %></span>
+                          <span class="sidebar-text"><%= kota[:title] %></span>
                         </span>
                       <% end %>
                     </li>
@@ -226,8 +233,6 @@
                 </ul>
               </div>
             </li>
-          <% end %>
-          <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
             <%# Renja %>
             <li class="nav-item">
               <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_item_renja[:menu] %>" data-bs-toggle="collapse" data-bs-target="#renja-items" aria-expanded="<%= collapsed_item_renja[:aria] %>">
@@ -295,10 +300,10 @@
               </li>
             <% end %>
           <% end %>
-          <hr>
+      <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
         <% end %>
         <%# usulan user %>
-        <% unless current_user.has_role? :admin or current_user.has_role? :super_admin or current_user.has_role? :reviewer %>
+        <% unless current_user.has_role? :admin or current_user.has_role? :special_guest or current_user.has_role? :super_admin or current_user.has_role? :reviewer %>
           <li class="nav-item">
             <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_item_usulan_user[:menu] %>" data-bs-toggle="collapse" data-bs-target="#usulan-user" aria-expanded="<%= collapsed_item_usulan_user[:aria] %>">
               <span>
@@ -376,7 +381,7 @@
           </li>
         <% end %>
         <%# Laporan Usulan %>
-        <% if current_user.nik == 'bapelitbangda' or current_user.has_role? :super_admin %>
+        <% if current_user.nik == 'bapelitbangda' or current_user.has_role? :special_guest or current_user.has_role? :super_admin %>
           <li class="nav-item">
             <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_item_laporan_usulan[:menu] %>" data-bs-toggle="collapse" data-bs-target="#laporan_usulan" aria-expanded="<%= collapsed_item_laporan_usulan[:aria] %>">
               <span>

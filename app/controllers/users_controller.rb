@@ -6,6 +6,10 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  def khusus
+    @users = User.where(kode_opd: '123456890')
+  end
+
   def struktur
     @users = User.opd_by_role(params[:opd], 'asn')
   end
@@ -16,7 +20,9 @@ class UsersController < ApplicationController
     @users = User.where(kode_opd: kode_opd)
     unless user_search.empty?
       user_search.strip!
-      @users = User.where(kode_opd: kode_opd).where('nama ILIKE ?', "%#{user_search}%").or(User.where('nik ILIKE ?', "%#{user_search}%"))
+      @users = User.where(kode_opd: kode_opd).where('nama ILIKE ?',
+                                                    "%#{user_search}%").or(User.where('nik ILIKE ?',
+                                                                                      "%#{user_search}%"))
     end
   end
 
