@@ -24,12 +24,12 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
               ['Indikator', ':', @programKegiatan.indikator_subkegiatan],
               ['Target', ':', "#{@programKegiatan.target_subkegiatan} #{@programKegiatan.satuan}"],
               ['Pagu Anggaran', ':',
-               "Rp. #{number_with_delimiter(@programKegiatan.sasarans.where(tahun: @tahun).sudah_lengkap.map(&:total_anggaran).compact.sum)}"]
+               "Rp. #{number_with_delimiter(@programKegiatan.sasarans.sudah_lengkap.map(&:total_anggaran).compact.sum)}"]
             ], cell_style: { borders: [] }, width: pdf.bounds.width)
   pdf.move_down 20
   pdf.text 'Sumber Dana', style: :bold, indent_paragraphs: 5
   header_sumber_dana = [['No', 'Sasaran', 'Pemilik Sasaran', 'Pagu', 'Sumber Dana']]
-  @programKegiatan.sasarans.where(tahun: @tahun).each.with_index(1) do |sasaran_sumber_dana, no|
+  @programKegiatan.sasarans.each.with_index(1) do |sasaran_sumber_dana, no|
     header_sumber_dana << [no, sasaran_sumber_dana.sasaran_kinerja,
                            sasaran_sumber_dana.user.nama,
                            { content: "Rp. #{number_with_delimiter(sasaran_sumber_dana.total_anggaran)}" },
@@ -43,7 +43,7 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
   pdf.move_down 5
   pdf.font_size 8
   # sasaran_kinerja
-  @programKegiatan.sasarans.where(tahun: @tahun).each.with_index(1) do |sasaran, nomor|
+  @programKegiatan.sasarans.each.with_index(1) do |sasaran, nomor|
     pdf.move_down 20
     pdf.text "#{nomor}. ", size: 8
     pdf.table([

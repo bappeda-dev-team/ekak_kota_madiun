@@ -22,7 +22,7 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
     ['Satuan', ':', @program_kegiatan.satuan_target_subkegiatan.to_s],
     ['Jumlah Sasaran/Rencana Kinerja', ':', @program_kegiatan.sasarans.count],
     ['Pagu Anggaran', ':',
-     "Rp. #{number_with_delimiter(@program_kegiatan.sasarans.where(tahun: @tahun).sudah_lengkap.map(&:total_anggaran).compact.sum)}"]
+     "Rp. #{number_with_delimiter(@program_kegiatan.sasarans.sudah_lengkap.map(&:total_anggaran).compact.sum)}"]
   ]
   pdf.table(tabel_program_kegiatan, column_widths: { 0 => 150, 1 => 12 }, cell_style: { size: 8, border_width: 0 },
                                     width: pdf.bounds.width)
