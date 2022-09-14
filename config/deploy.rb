@@ -42,19 +42,19 @@ set :keep_releases, 5
 # set :ssh_options, verify_host_key: :secure
 
 # sidekiq
-namespace :sidekiq do
-  task :quiet do
-    on roles(:app) do
-      puts capture("pgrep -f 'sidekiq' | xargs kill -TSTP")
-    end
-  end
-  task :restart do
-    on roles(:app) do
-      execute :systemctl, :restart, :sidekiq
-    end
-  end
-end
+# namespace :sidekiq do
+#   task :quiet do
+#     on roles(:app) do
+#       puts capture("pgrep -f 'sidekiq' | xargs kill -TSTP")
+#     end
+#   end
+#   task :restart do
+#     on roles(:app) do
+#       execute :systemctl, :restart, :sidekiq
+#     end
+#   end
+# end
 
-after 'deploy:starting', 'sidekiq:quiet'
-after 'deploy:reverted', 'sidekiq:restart'
-after 'deploy:published', 'sidekiq:restart'
+# after 'deploy:starting', 'sidekiq:quiet'
+# after 'deploy:reverted', 'sidekiq:restart'
+# after 'deploy:published', 'sidekiq:restart'
