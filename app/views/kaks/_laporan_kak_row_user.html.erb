@@ -69,12 +69,6 @@
       </tbody>
     </table>
   </div>
-  <div class="card-body">
-    <p>Jumlah Sasaran Aktif : <%= @jumlah_sasaran %></p>
-    <p>Jumlah SubKegiatan : <%= @jumlah_subkegiatan %></p>
-    <p>Total Usulan : <%= @jumlah_usulan %></p>
-    <p>Total Pagu Anggaran : Rp. <%= number_with_delimiter @total_pagu %></p>
-  </div>
   <% if @program_kegiatans.exists? %>
     <div class="card-body">
       <% if @sasarans.all? {|s| s.status == 'pengajuan' } %>
