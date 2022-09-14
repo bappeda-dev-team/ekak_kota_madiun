@@ -50,7 +50,7 @@ namespace :sidekiq do
   end
   task :restart do
     on roles(:app) do
-      execute :sudo, :systemctl, :restart, :sidekiq
+      execute :systemctl, :restart, :sidekiq
     end
   end
 end
