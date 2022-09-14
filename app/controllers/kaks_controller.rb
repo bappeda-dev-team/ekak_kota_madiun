@@ -3,8 +3,7 @@ class KaksController < ApplicationController
 
   # GET /kaks or /kaks.json
   def index
-    @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik,
-                                                                            tahun: 2022 }).group(:id)
+    @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik }).group(:id)
   end
 
   # GET /kaks/1 or /kaks/1.json
@@ -14,7 +13,7 @@ class KaksController < ApplicationController
 
   def laporan_kak
     @program_kegiatans = ProgramKegiatan.joins(:sasarans)
-                                        .where(sasarans: { nip_asn: current_user.nik, tahun: 2022 })
+                                        .where(sasarans: { nip_asn: current_user.nik })
                                         .where.not(sasarans: { id: nil, anggaran: nil }).group(:id)
     @sasarans = current_user.sasarans
   end

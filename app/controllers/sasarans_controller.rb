@@ -5,14 +5,15 @@ class SasaransController < ApplicationController
 
   # GET /sasarans or /sasarans.json
   def index
-    @tahun_sasaran = cookies[:tahun_sasaran] || '2023'
+    @tahun_sasaran = cookies[:tahun_sasaran] || nil
     @sasarans = @user.sasarans.where(tahun: @tahun_sasaran).order(:id)
+    @sasarans = @user.sasarans.order(:id) if @sasarans.empty?
   end
 
   # GET /sasarans/1 or /sasarans/1.json
   def show; end
 
-  def laporan_kak(tahun: 2022)
+  def laporan_kak(tahun: '')
     @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik,
                                                                             tahun: tahun }).group(:id)
     @jumlah_sasaran = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik,

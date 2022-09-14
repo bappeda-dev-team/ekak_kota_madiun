@@ -1,0 +1,113 @@
+<div class="card-body" id="tempat-row-laporan-kak">
+  <div class="table-responsive">
+    <table class="table align-items-center border-start border-end">
+      <thead class="thead-light">
+        <tr>
+          <th class="border-bottom" scope="col">No.</th>
+          <th class="border-bottom text-center" scope="col">Sub Kegiatan KaK</th>
+          <th class="border-bottom text-center" scope="col">Pagu Anggaran</th>
+          <th class="border-bottom text-center border-start border-end" scope="col" colspan="5">Informasi KaK</th>
+          <th class="border-bottom text-center" scope="col">Action</th>
+        </tr>
+        <tr>
+          <th colspan="3"></th>
+          <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
+          <th class="border-bottom text-center border-start border-end">Pagu Sasaran</th>
+          <th class="border-bottom text-center border-start border-end">Pemilik Rencana</th>
+          <th class="border-bottom text-center border-start border-end">Status</th>
+          <th class="border-bottom text-center border-start border-end">Edit</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @program_kegiatans.each.with_index(1) do |kak, i| %>
+          <% row_pk = kak.sasarans.size + 1 %>
+          <tr>
+            <td class="text-gray-900 border-start border-end fw-bolder" scope="row" rowspan="<%= row_pk %>"><%= i %></td>
+            <td class="text-gray-900 border-start border-end text-wrap" scope="row" rowspan="<%= row_pk %>" width="200px"><%= kak.nama_subkegiatan %></td>
+            <td class="text-gray-900 border-start border-end text-wrap" scope="row" rowspan="<%= row_pk %>" width="200px">Rp. <%= number_with_delimiter(kak.sasarans.map(&:total_anggaran).compact.sum) or 0 %></td>
+            <td class="p-0 m-0" colspan="5" style="height: 0px !important; border-color: transparent;"></td>
+            <td class="fw-bolder text-gray-500 text-center" rowspan="<%= row_pk %>">
+              <%= link_to "/acuan_kerja_new/#{kak.id}/#{tahun}", class: "m-3" do %>
+                <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
+              <% end %>
+              <% if @sasarans.any? {|s| s.status == 'pengajuan' or s.status == 'disetujui' } %>
+                <%= link_to "/pdf_kak/#{kak.id}/#{tahun}.pdf", class: "m-3" do %>
+                  <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+          <% kak.sasarans.each do |show_sasaran| %>
+            <tr>
+              <td class="text-wrap border-start border-end" width="450px">
+                <%= show_sasaran.sasaran_kinerja %>
+              </td>
+              <td class="text-wrap border-start border-end" width="200px">
+                Rp. <%= number_with_delimiter(show_sasaran.total_anggaran) or 0 %>
+              </td>
+              <td class="text-wrap border-start border-end border-bottom text-center">
+                <%= show_sasaran.user.nama %>
+              </td>
+              <td class="text-wrap border-start border-end border-bottom text-center">
+                <%= show_sasaran.status %>
+              </td>
+              <td class="text-wrap border-start border-end border-bottom text-center">
+                <% if show_sasaran.status == 'draft' %>
+                  <%= link_to user_sasaran_path(current_user, show_sasaran), class: "btn btn-sm btn-info" do %>
+                    <i class="fa fa-pencil-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="isi usulan"></i>
+                  <% end %>
+                <% else %>
+                  <button class="btn btn-sm btn-danger" disabled>
+                    <i class="fa fa-times" data-bs-toggle="tooltip" data-bs-placement="bottom" title="sudah diajukan"></i>
+                  </button>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-body">
+    <p>Jumlah Sasaran Aktif : <%= @jumlah_sasaran %></p>
+    <p>Jumlah SubKegiatan : <%= @jumlah_subkegiatan %></p>
+    <p>Total Usulan : <%= @jumlah_usulan %></p>
+    <p>Total Pagu Anggaran : Rp. <%= number_with_delimiter @total_pagu %></p>
+  </div>
+  <% if @program_kegiatans.exists? %>
+    <div class="card-body">
+      <% if @sasarans.all? {|s| s.status == 'pengajuan' } %>
+        <%= button_tag type: 'submit', class: 'btn btn-info w-100 text-white', disabled: true do %>
+          <span><%= @sasarans.first.status.capitalize || 'Diajukan' %></span>
+          <i class="fas fa-check ms-2"></i>
+        <% end %>
+      <% elsif @sasarans.all? { |s| s.status == 'disetujui'} %>
+        <%= button_tag type: 'submit', class: 'btn btn-info w-100 text-white', disabled: true do %>
+          <span><%= @sasarans.first.status.capitalize || 'Diajukan' %></span>
+          <i class="fas fa-check ms-2"></i>
+        <% end %>
+      <% elsif @sasarans.any? { |s| s.status == 'ditolak'} %>
+        <%= form_with url: ajukan_semua_sasaran_path, local: false do |f| %>
+          <% @sasarans.pluck(:id).each do |s| %>
+            <%= f.hidden_field :sasaran_diajukans, value: s, multiple: true  %>
+          <% end %>
+          <%= button_tag type: 'submit', class: 'btn btn-success w-100 text-white' do %>
+            <span>Ajukan Verifikasi</span>
+            <i class="fas fa-check ms-2"></i>
+          <% end %>
+        <% end %>
+      <% else %>
+        <%= form_with url: ajukan_semua_sasaran_path, local: false do |f| %>
+          <% @sasarans.sudah_lengkap.pluck(:id).each do |s| %>
+            <%= f.hidden_field :sasaran_diajukans, value: s, multiple: true  %>
+          <% end %>
+          <%= button_tag type: 'submit', class: 'btn btn-success w-100 text-white' do %>
+            <span>Ajukan Verifikasi</span>
+            <i class="fas fa-check ms-2"></i>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
