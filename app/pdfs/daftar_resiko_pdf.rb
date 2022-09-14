@@ -26,7 +26,7 @@ class DaftarResikoPdf < Prawn::Document
   end
 
   def tabel_daftar_resiko
-    table(content_tabel) do
+    table(content_tabel, header: true) do
       cells.style(size: 8)
     end
   end
