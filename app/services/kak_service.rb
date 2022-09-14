@@ -16,9 +16,9 @@ class KakService
 
   def sasarans_filter(tahun_sasaran, sasarans)
     if tahun.match(/(_)/)
-      sasarans.select { |s| s.tahun == tahun_sasaran }
+      sasarans.sudah_lengkap.select { |s| s.tahun == tahun_sasaran }
     else
-      sasarans.reject { |s| s.tahun&.match?(/(_)/) }
+      sasarans.sudah_lengkap.reject { |s| s.tahun&.match?(/(_)/) }
     end
   end
 

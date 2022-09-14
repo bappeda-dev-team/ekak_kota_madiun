@@ -46,7 +46,7 @@
                   <tr>
                     <td class="<%= row_class %>" width="20px" scope="rowgroup" rowspan="<%= sasarans.size + 1 %>"><%= no_sub %></td>
                     <td class="<%= row_class %>" width="100px" scope="rowgroup" rowspan="<%= sasarans.size + 1 %>"><%= program_kegiatan&.nama_subkegiatan or '-' %></td>
-                    <td class="<%= row_class %>" width="50px" scope="rowgroup" rowspan="<%= sasarans.size + 1 %>">Rp. <%= number_with_delimiter(sasarans.map(&:total_anggaran)&.inject(:+)) or 0 %></td>
+                    <td class="<%= row_class %>" width="50px" scope="rowgroup" rowspan="<%= sasarans.size + 1 %>">Rp. <%= number_with_delimiter(sasarans.map(&:total_anggaran).inject(:+)) or 0 %></td>
                     <% sasarans.each do |sasaran| %>                    
                       <% status_sasaran = warna_sasaran(sasaran.status_sasaran) %>
                       <% no_sas = no_sas + 1 %>
