@@ -17,10 +17,13 @@ class SasaranProgramOpdsController < ApplicationController
   def cetak_daftar_resiko
     @tahun = params[:tahun] || Time.now.year
     @opd = Opd.find(params[:opd])
-    @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
-    @program_kegiatans = @opd.program_kegiatans.joins(:sasarans).where(sasarans: { tahun: @tahun }).group(:id)
+    kak = KakService.new(kode_unik_opd: @opd.kode_unik_opd, tahun: @tahun)
+    @tahun_bener = kak.tahun
+    @program_kegiatans = kak.laporan_rencana_kinerja
+    # @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    # @program_kegiatans = @opd.program_kegiatans.joins(:sasarans).where(sasarans: { tahun: @tahun }).group(:id)
     @filename = "LAPORAN_DAFTAR_RESIKO_#{@opd.nama_opd}_TAHUN_#{@tahun}.pdf"
-    pdf = DaftarResikoPdf.new(opd: @opd, tahun: @tahun, program_kegiatans: @program_kegiatans)
+    pdf = DaftarResikoPdf.new(opd: @opd, tahun: @tahun_bener, program_kegiatans: @program_kegiatans)
     send_data(pdf.render, filename: @filename, type: 'application/pdf', disposition: :attachment)
   end
 end

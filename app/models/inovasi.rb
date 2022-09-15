@@ -27,7 +27,7 @@ class Inovasi < ApplicationRecord
                  ditolak: 'ditolak', menunggu_persetujuan: 'menunggu_persetujuan' }
 
   belongs_to :sasaran, optional: true
-  has_many :usulans, as: :usulanable
+  has_many :usulans, as: :usulanable, dependent: :destroy
 
   default_scope { order(created_at: :desc) }
 

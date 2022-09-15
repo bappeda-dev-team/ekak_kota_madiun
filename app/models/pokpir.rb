@@ -31,7 +31,7 @@ class Pokpir < ApplicationRecord
 
   belongs_to :sasaran, optional: true
   belongs_to :opd_dituju, class_name: 'Opd', foreign_key: 'opd', primary_key: 'id_opd_skp', optional: true
-  has_many :usulans, as: :usulanable
+  has_many :usulans, as: :usulanable, dependent: :destroy
   has_many :kamus_usulans, foreign_key: 'id_kamus', primary_key: 'id_kamus'
 
   default_scope { order(updated_at: :desc) }
