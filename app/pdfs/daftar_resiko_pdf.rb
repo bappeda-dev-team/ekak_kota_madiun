@@ -71,7 +71,7 @@ class DaftarResikoPdf < Prawn::Document
   def indikators(indikator_sasarans)
     indikators = indikator_sasarans.map do |ind|
       [{ content: ind.indikator_kinerja, width: 75 },
-       { content: ind.target, width: 20 },
+       { content: ind.target.to_s, width: 30 },
        { content: ind.satuan, width: 30 }]
     end
     tabel_maker indikators
