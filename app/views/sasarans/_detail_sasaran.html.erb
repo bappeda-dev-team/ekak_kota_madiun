@@ -11,7 +11,7 @@
       <tbody>
         <tr>
           <td class="w-35"><strong>Atasan</strong></td>
-          <td><%= sasaran.user.nama_atasan %></td>
+          <td><%= sasaran.user&.nama_atasan %></td>
         </tr>
         <tr>
           <td class="w-35"><strong>Sasaran Atasan</strong></td>
@@ -19,7 +19,7 @@
         </tr>
         <tr>
           <td class="w-35"><strong>Pemilik Sasaran</strong></td>
-          <td><%= sasaran.user.nama %></td>
+          <td><%= sasaran.user&.nama %></td>
         </tr>
         <tr>
           <td class="w-35"><strong>Sasaran Kinerja</strong></td>

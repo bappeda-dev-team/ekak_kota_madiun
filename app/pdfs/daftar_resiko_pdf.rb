@@ -1,5 +1,6 @@
 class DaftarResikoPdf < Prawn::Document
   include ActionView::Helpers::NumberHelper
+
   def initialize(opd: '', tahun: '', program_kegiatans: '')
     super page_layout: :landscape, page_size: "LETTER"
     @opd = opd
@@ -13,6 +14,7 @@ class DaftarResikoPdf < Prawn::Document
   def print
     title
     move_down 20
+    # markup_tabel
     tabel_daftar_resiko
   end
 
@@ -32,14 +34,27 @@ class DaftarResikoPdf < Prawn::Document
   end
 
   def header_tabel
-    [{ content: "No" }, { content: "SUB KEGIATAN", align: :center }, { content: "SASARAN" }]
+    [{ content: "No" }, { content: "SUB KEGIATAN", align: :center },
+     tabel_maker(subheader_tabel)]
+  end
+
+  def subheader_tabel
+    [[{ content: "No", width: 20, align: :center },
+      { content: "SASARAN", width: 75 },
+      { content: "INDIKATOR", width: 75, align: :center },
+      { content: "T", width: 30, align: :center },
+      { content: "S", width: 30, align: :center },
+      { content: "PAGU", width: 65, align: :center },
+      { content: "RESIKO", width: 75, align: :center },
+      { content: "KEMUNGKINAN", width: 50 },
+      { content: "DAMPAK", width: 75, align: :center },
+      { content: "SKALA DAMPAK", width: 50, align: :center },
+      { content: "PETA RESIKO", width: 55, align: :center }]]
   end
 
   def content_tabel
     subkegiatan
   end
-
-  # data tabel
 
   def subkegiatan
     tabel_subkegiatan = [header_tabel]
@@ -54,16 +69,20 @@ class DaftarResikoPdf < Prawn::Document
 
   def sasarans(sasarans)
     sasaran_arr = []
+    # warning, not loop indikator
     sasarans.where(tahun: @tahun).each.with_index(1) do |s, no|
       sasaran_arr << [{ content: no.to_s, align: :center, width: 20 },
                       { content: s.sasaran_kinerja, align: :left, width: 75 },
-                      indikators(s.indikator_sasarans),
-                      { content: "Rp. #{number_with_delimiter(s&.total_anggaran || 0)}", width: 50 },
+                      { content: s.indikator_sasarans.first.indikator_kinerja, width: 75 },
+                      { content: s.indikator_sasarans.first.target.to_s, width: 30 },
+                      { content: s.indikator_sasarans.first.satuan, width: 30 },
+                      { content: "Rp. #{number_with_delimiter(s&.total_anggaran || 0)}", width: 65 },
                       { content: s.rincian&.resiko || '-', width: 75 },
-                      { content: s.rincian&.kemungkinan&.deskripsi || '-', width: 30 },
-                      { content: s.rincian&.dampak || '-', width: 75 },
-                      { content: s.rincian&.skala_dampak&.deskripsi || '-', width: 30 },
-                      { content: "(#{s.rincian&.peta_resiko}) #{s.rincian&.nilai_peta_resiko}", width: 75 }]
+                      { content: s.rincian&.kemungkinan&.deskripsi || '-', width: 50, align: :center },
+                      { content: s.rincian&.dampak || '-', width: 75, align: :center },
+                      { content: s.rincian&.skala_dampak&.deskripsi || '-', width: 50, align: :center },
+                      { content: "(#{s.rincian&.peta_resiko}) #{s.rincian&.nilai_peta_resiko}", width: 55,
+                        align: :center }]
     end
     tabel_maker sasaran_arr
   end
@@ -71,7 +90,7 @@ class DaftarResikoPdf < Prawn::Document
   def indikators(indikator_sasarans)
     indikators = indikator_sasarans.map do |ind|
       [{ content: ind.indikator_kinerja, width: 75 },
-       { content: ind.target, width: 20 },
+       { content: ind.target.to_s, width: 30 },
        { content: ind.satuan, width: 30 }]
     end
     tabel_maker indikators

@@ -31,7 +31,7 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
   header_sumber_dana = [['No', 'Sasaran', 'Pemilik Sasaran', 'Pagu', 'Sumber Dana']]
   @programKegiatan.sasarans.each.with_index(1) do |sasaran_sumber_dana, no|
     header_sumber_dana << [no, sasaran_sumber_dana.sasaran_kinerja,
-                           sasaran_sumber_dana.user.nama,
+                           sasaran_sumber_dana.user&.nama,
                            { content: "Rp. #{number_with_delimiter(sasaran_sumber_dana.total_anggaran)}" },
                            sasaran_sumber_dana&.sumber_dana]
   end
@@ -84,7 +84,7 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
       end
       pdf.table(header_anggaran, cell_style: { size: 6 }, width: pdf.bounds.width)
       pdf.move_down 5
-      pdf.text "Pemilik Sasaran : #{sasaran.user.nama}"
+      pdf.text "Pemilik Sasaran : #{sasaran.user&.nama}"
       header_anggaran.clear
     end
   end
