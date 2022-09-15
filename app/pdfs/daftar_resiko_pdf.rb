@@ -14,8 +14,9 @@ class DaftarResikoPdf < Prawn::Document
   def print
     title
     move_down 20
-    # markup_tabel
-    tabel_daftar_resiko
+    tabel_daftar_resiko(subkegiatan)
+    move_down 20
+    ttd
   end
 
   def title
@@ -27,7 +28,23 @@ class DaftarResikoPdf < Prawn::Document
     text "TAHUN #{@tahun}", align: :center
   end
 
-  def tabel_daftar_resiko
+  def ttd
+    start_new_page if (cursor - 111).negative?
+    bounding_box([bounds.width - 370, cursor - 10], width: bounds.width - 200) do
+      text "Madiun,    #{I18n.l Date.today, format: '  %B %Y'}", size: 8, align: :center
+      move_down 5
+      text "<strong>#{@opd.jabatan_kepala_tanpa_opd}</strong>", size: 8, align: :center,
+                                                                inline_format: true
+      text "<strong>#{@opd.nama_opd}</strong>", size: 8, align: :center, inline_format: true
+      move_down 50
+      text "<u>#{@opd.nama_kepala || '!!belum disetting'}</u>", size: 8, align: :center,
+                                                                inline_format: true
+      text @opd.pangkat_kepala || '!! belum disetting', size: 8, align: :center
+      text "NIP. #{@opd.nip_kepala_fix_plt || '!! belum disetting'}", size: 8, align: :center
+    end
+  end
+
+  def tabel_daftar_resiko(content_tabel)
     table(content_tabel, header: true) do
       cells.style(size: 8)
     end
@@ -50,10 +67,6 @@ class DaftarResikoPdf < Prawn::Document
       { content: "DAMPAK", width: 75, align: :center },
       { content: "SKALA DAMPAK", width: 50, align: :center },
       { content: "PETA RESIKO", width: 55, align: :center }]]
-  end
-
-  def content_tabel
-    subkegiatan
   end
 
   def subkegiatan
