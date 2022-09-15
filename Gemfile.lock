@@ -234,6 +234,10 @@ GEM
     prawn (2.4.0)
       pdf-core (~> 0.9.0)
       ttfunk (~> 1.7)
+    prawn-markup (0.3.7)
+      nokogiri
+      prawn
+      prawn-table
     prawn-rails (1.4.2)
       actionview (>= 3.1.0)
       prawn
@@ -467,6 +471,7 @@ DEPENDENCIES
   pagy (~> 5.10)
   pg
   prawn
+  prawn-markup
   prawn-rails (~> 1.4, >= 1.4.2)
   prawn-table
   puma (~> 5.0)
