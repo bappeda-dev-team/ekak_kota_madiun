@@ -43,7 +43,7 @@ class User < ApplicationRecord
   # has_many :program_kegiatans, through: :sasarans
 
   scope :aktif, -> { without_role([:non_aktif]) }
-  scope :asn_aktif, -> { without_role([:admin]).with_role(:asn) }
+  scope :asn_aktif, -> { without_role([:admin]).with_role(:asn).order(:nama) }
   scope :sasaran_diajukan, lambda {
                              asn_aktif.includes(:sasarans, :program_kegiatans).merge(Sasaran.sudah_lengkap)
                            } # depreceated

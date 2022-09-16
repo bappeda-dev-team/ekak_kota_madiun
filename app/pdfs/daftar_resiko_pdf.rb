@@ -14,8 +14,10 @@ class DaftarResikoPdf < Prawn::Document
   def print
     title
     move_down 20
-    # markup_tabel
-    tabel_daftar_resiko
+    tabel_daftar_resiko(subkegiatan)
+    move_down 30
+    move_down 20
+    ttd
   end
 
   def title
@@ -27,7 +29,23 @@ class DaftarResikoPdf < Prawn::Document
     text "TAHUN #{@tahun}", align: :center
   end
 
-  def tabel_daftar_resiko
+  def ttd
+    start_new_page if (cursor - 111).negative?
+    bounding_box([bounds.width - 370, cursor - 5], width: bounds.width - 200) do
+      text "Madiun,    #{I18n.l Date.today, format: '  %B %Y'}", size: 8, align: :center
+      move_down 5
+      text "<strong>#{@opd.jabatan_kepala_tanpa_opd}</strong>", size: 8, align: :center,
+                                                                inline_format: true
+      text "<strong>#{@opd.nama_opd}</strong>", size: 8, align: :center, inline_format: true
+      move_down 50
+      text "<u>#{@opd.nama_kepala || '!!belum disetting'}</u>", size: 8, align: :center,
+                                                                inline_format: true
+      text @opd.pangkat_kepala || '!! belum disetting', size: 8, align: :center
+      text "NIP. #{@opd.nip_kepala_fix_plt || '!! belum disetting'}", size: 8, align: :center
+    end
+  end
+
+  def tabel_daftar_resiko(content_tabel)
     table(content_tabel, header: true) do
       cells.style(size: 8)
     end
@@ -52,17 +70,13 @@ class DaftarResikoPdf < Prawn::Document
       { content: "PETA RESIKO", width: 55, align: :center }]]
   end
 
-  def content_tabel
-    subkegiatan
-  end
-
   def subkegiatan
     tabel_subkegiatan = [header_tabel]
-    @program_kegiatans.each.with_index(1) do |pk, i|
-      row_awal = pk.sasarans.map { |sas| sas.indikator_sasarans.size }.compact.reduce(:+)
-      row_dalam = pk.sasarans.size + row_awal
+    @program_kegiatans.each.with_index(1) do |(pk, sasarans), i|
+      row_awal = sasarans.map { |sas| sas.indikator_sasarans.size }.compact.reduce(:+)
+      row_dalam = sasarans.size + row_awal
       tabel_subkegiatan << [{ content: i.to_s, valign: :top },
-                            { content: pk.nama_subkegiatan, valign: :top, width: 100 }, sasarans(pk.sasarans)]
+                            { content: pk.nama_subkegiatan, valign: :top, width: 100 }, sasarans(sasarans)]
     end
     tabel_subkegiatan
   end
@@ -70,7 +84,7 @@ class DaftarResikoPdf < Prawn::Document
   def sasarans(sasarans)
     sasaran_arr = []
     # warning, not loop indikator
-    sasarans.where(tahun: @tahun).each.with_index(1) do |s, no|
+    sasarans.each.with_index(1) do |s, no|
       sasaran_arr << [{ content: no.to_s, align: :center, width: 20 },
                       { content: s.sasaran_kinerja, align: :left, width: 75 },
                       { content: s.indikator_sasarans.first.indikator_kinerja, width: 75 },

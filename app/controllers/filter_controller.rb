@@ -138,6 +138,7 @@ class FilterController < ApplicationController
     #   @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])
     # end
     @opd = Opd.find_by(kode_unik_opd: @kode_opd).id
+    @tahun = kak.tahun
     @filter_file = "hasil_filter" if params[:filter_file].empty?
     render "kaks/kak_filter"
   end

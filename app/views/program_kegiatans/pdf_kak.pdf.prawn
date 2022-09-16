@@ -199,7 +199,7 @@ prawn_document(filename: @filename, disposition: "attachment") do |pdf|
       count += 1
       keterangan = u.try(:alamat) || u.try(:peraturan_terkait) || u.try(:manfaat)
       tipe = u.class.try(:type) || u.class.name.to_s
-      data_usulan_terakomodir << [count, tipe, u.usulan, u.uraian, keterangan.force_encoding('utf-8')]
+      data_usulan_terakomodir << [count, tipe, u&.usulan, u&.uraian, keterangan&.force_encoding('utf-8')]
     end
     pdf.move_down 10
     tabel_usulan_terakomodir = pdf.make_table(data_usulan_terakomodir,
