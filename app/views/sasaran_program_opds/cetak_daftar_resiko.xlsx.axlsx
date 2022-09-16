@@ -1,0 +1,34 @@
+wb = xlsx_package.workbook
+s = wb.styles
+project_heading = s.add_style sz: 16, b: true, alignment: { horizontal: :center }
+wb.add_worksheet(name: "Daftar Resiko") do |sheet|
+  sheet.add_row ['', "DAFTAR RESIKO RENCANA KINERJA"], style: project_heading
+  sheet.add_row ['', @opd.nama_opd.upcase], style: project_heading
+  sheet.add_row ['', "KOTA MADIUN"], style: project_heading
+  sheet.add_row ['', "TAHUN #{@tahun}"], style: project_heading
+  # program_kegiatans header
+  #
+  sheet.add_row ['No', "SUBKEGIATAN", "NO", "SASARAN", "INDIKATOR", "TARGET", "SATUAN", "PAGU", "RESIKO",
+                 "KEMUNGKINAN", "DAMPAK", "SKALA DAMPAK", "PETA RESIKO"]
+  @program_kegiatans.each.with_index(1) do |(pk, sasarans), i|
+    sheet.add_row [i.to_s, pk.nama_subkegiatan]
+    sasarans.each.with_index(1) do |s, no|
+      sheet.add_row ["", "", no.to_s, s.sasaran_kinerja,
+                     s.indikator_sasarans.first.indikator_kinerja, s.indikator_sasarans.first.target.to_s,
+                     s.indikator_sasarans.first.satuan,
+                     "Rp. #{number_with_delimiter(s&.total_anggaran || 0)}",
+                     s.rincian&.resiko || '-',
+                     s.rincian&.kemungkinan&.deskripsi, s.rincian&.dampak || '-',
+                     s.rincian&.skala_dampak&.deskripsi || '-',
+                     "(#{s.rincian&.peta_resiko}) #{s.rincian&.nilai_peta_resiko}"]
+    end
+  end
+  sheet.add_row ["", "Madiun,    #{I18n.l Date.today, format: '  %B %Y'}"]
+  sheet.add_row ["", "#{@opd.jabatan_kepala_tanpa_opd}"]
+  sheet.add_row ["", "#{@opd.nama_opd}"]
+  sheet.add_row ["", ""]
+  sheet.add_row ["", ""]
+  sheet.add_row ["", "#{@opd.nama_kepala}"]
+  sheet.add_row ["", "#{@opd.pangkat_kepala}"]
+  sheet.add_row ["", "NIP. #{@opd.nip_kepala_fix_plt || '!! belum disetting'}"]
+end
