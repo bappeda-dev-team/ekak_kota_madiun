@@ -36,5 +36,12 @@ FactoryBot.define do
     email { "197609072003121007@madiunkota.go.id" }
     password { "123456" }
     association :opd
+
+    factory :asn do
+      after(:create) do |user|
+        user.add_role :asn
+        user.remove_role :non_aktif
+      end
+    end
   end
 end

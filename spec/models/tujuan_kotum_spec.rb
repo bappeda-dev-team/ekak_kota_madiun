@@ -15,6 +15,6 @@
 #
 require 'rails_helper'
 
-RSpec.describe TujuanKotum, type: :model do
+RSpec.describe TujuanKota, type: :model do
   pending "add some examples to (or delete) #{__FILE__}"
 end
