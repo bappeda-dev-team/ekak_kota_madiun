@@ -16,4 +16,5 @@
 #  index_kamus_usulans_on_id_kamus  (id_kamus) UNIQUE
 #
 class KamusUsulan < ApplicationRecord
+  validates :id_kamus, presence: true
 end

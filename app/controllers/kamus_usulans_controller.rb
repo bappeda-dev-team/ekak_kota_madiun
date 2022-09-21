@@ -64,6 +64,6 @@ class KamusUsulansController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def kamus_usulan_params
-    params.fetch(:kamus_usulan, {})
+    params.require(:kamus_usulan).permit(:bidang_urusan, :id_kamus, :id_program, :id_unit, :usulan)
   end
 end
