@@ -46,21 +46,21 @@
                 <td class="fw-bolder text-gray-500 text-center" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
                   <% if sasaran.aksi_bulan_kosong? %>
                     <%= button_to 'Sync Total Renaksi', renaksi_update_path,
-                        remote: true, method: :post, class: 'btn btn-sm btn-primary',
-                        params: {id: sasaran.id},
-                        data: { disable_with: 'Memproses....'}
-                        %>
+                      remote: true, method: :post, class: 'btn btn-sm btn-primary',
+                      params: {id: sasaran.id},
+                      data: { disable_with: 'Memproses....'}
+ %>
+                <% end %>
+                <br>
+                <% if sasaran.gambaran_umum_indikator_kosong? %>
+                  <%= link_to sync_sasaran_path(kode_opd: sasaran.user.opd.kode_unik_opd, tahun: Date.today.year, bulan: Date.today.month, nip_asn: sasaran.user.nik),
+                    remote: true,
+                    data: { disable_with: 'Memproses....'},
+                    class:"btn btn-sm btn-primary" do %>
+                    <i class="fas fa-sync me-2"></i>
+                    Sync Sasaran
                   <% end %>
-                  <br>
-                  <% if sasaran.gambaran_umum_indikator_kosong? %>
-                    <%= link_to sync_sasaran_path(kode_opd: sasaran.user.opd.kode_unik_opd, tahun: Date.today.year, bulan: Date.today.month, nip_asn: sasaran.user.nik),
-                      remote: true,
-                      data: { disable_with: 'Memproses....'}, 
-                      class:"btn btn-sm btn-primary" do %>
-                      <i class="fas fa-sync me-2"></i>
-                      Sync Sasaran
-                    <% end %>
-                  <% end %>
+                <% end %>
                 </td>
                 <td class="fw-bolder text-gray-500 text-center" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
                   <% unless sasaran.aksi_bulan_kosong? %>
@@ -73,21 +73,21 @@
                   <% end %>
                 </td>
                 <td class="fw-bolder text-gray-500 text-center" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
-                  <%= link_to user_sasaran_path(current_user, sasaran), class: "m-3" do %>
+                  <%= link_to user_sasaran_path(current_user, sasaran), class: "m-3", id: dom_id(current_user, sasaran.id) do %>
                     <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="isi usulan"></i>
                   <% end %>
                   <%= link_to user_sasaran_path(current_user, sasaran), method: :delete, data: { confirm_swal: "Hapus #{sasaran.sasaran_kinerja} ?"}, class: "m-3" do %>
                     <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus rencana kinerja"></i>
                   <% end %>
                 </td>
-                <% sasaran.indikator_sasarans.each do |indikator| %>
-                  <tr class="<%= warna_sasaran(sasaran.status_sasaran) %>">
-                    <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.indikator_kinerja %></td>
-                    <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.target %></td>
-                    <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.satuan %></td>
-                  </tr>
-                <% end %>
               </tr>
+              <% sasaran.indikator_sasarans.each do |indikator| %>
+                <tr class="<%= warna_sasaran(sasaran.status_sasaran) %>">
+                  <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.indikator_kinerja %></td>
+                  <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.target %></td>
+                  <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.satuan %></td>
+                </tr>
+              <% end %>
             <% end %>
           </tbody>
         </table>

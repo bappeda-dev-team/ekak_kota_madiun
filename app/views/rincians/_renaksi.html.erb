@@ -9,7 +9,7 @@
       <div class="col text-end">
         <%= link_to 'Edit Sasaran', edit_sasaran_path(sasaran), class: 'btn btn-sm btn-primary' %>
       </div>
-      <div class="">
+      <div id="<%= dom_id(sasaran) %>">
         <ul class="list mb-0">
           <li>OPD : <%= sasaran.user.opd.nama_opd %></li>
           <li>ASN : <%= sasaran.user.nama %></li>
@@ -35,7 +35,7 @@
       </div>
       <% unless diajukan? %>
         <div class="col text-end">
-          <%= link_to 'Tambah Tahapan', new_sasaran_tahapan_path(sasaran) ,remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'},  class: "btn btn-sm btn-info"  %>
+          <%= link_to 'Tambah Tahapan', new_sasaran_tahapan_path(sasaran) ,remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'},  class: "btn btn-sm btn-info" %>
         </div>
       <% end %>
     </div>
@@ -49,24 +49,24 @@
             <div class="col-4 align-middle">
               <strong>Anggaran yang dibutuhkan :</strong>
               Rp. <%= number_with_delimiter(sasaran.total_anggaran_dengan_komentar) %>
+          </div>
+          <% unless diajukan? %>
+            <div class="col-8 align-middle">
+              <%= form_with(model: [current_user, sasaran], local:false, html: { class: 'd-flex flex gap-3' }) do |f| %>
+                <select name="sasaran[sumber_dana]" data-controller="dropdown" data-placeholder="<%= sasaran.sumber_dana || 'Sumber Dana' %>" data-width="25%">
+                  <option value=""></option>
+                  <% SumberDana.all.each do |sumber_dana| %>
+                    <option value='<%= sumber_dana.sumber_dana %>'><%= sumber_dana.sumber_dana %></option>
+                  <% end %>
+                </select>
+                <input type="submit" value="<%= sasaran.sumber_dana.nil? ? 'Simpan' : 'Ubah' %>" data-disable-with="memproses.." class="btn btn-sm btn-tertiary ml-3">
+              <% end %>
             </div>
-            <% unless diajukan? %>
-              <div class="col-8 align-middle">
-                <%= form_with(model: [current_user, sasaran], local:false, html: { class: 'd-flex flex gap-3' }) do |f| %>
-                  <select name="sasaran[sumber_dana]" data-controller="dropdown" data-placeholder="<%= sasaran.sumber_dana || 'Sumber Dana' %>" data-width="25%">
-                    <option value=""></option>
-                    <% SumberDana.all.each do |sumber_dana| %>
-                      <option value='<%= sumber_dana.sumber_dana %>'><%= sumber_dana.sumber_dana %></option>
-                    <% end %>
-                  </select>
-                  <input type="submit" value="<%= sasaran.sumber_dana.nil? ? 'Simpan' : 'Ubah' %>" data-disable-with="memproses.." class="btn btn-sm btn-tertiary ml-3">
-                <% end %>
-              </div>
-            <% else %>
-              <div class="col-8 align-middle">
-                Sumber Dana: <%= sasaran.sumber_dana %>
-              </div>
-            <% end %>
+          <% else %>
+            <div class="col-8 align-middle">
+              Sumber Dana: <%= sasaran.sumber_dana %>
+          </div>
+        <% end %>
           </div>
         </caption>
         <thead class="thead-light">
@@ -101,22 +101,22 @@
                   <%= aksi_di_bulan(sasaran, tahapan, bulan, disabled: true) %>
                 <% end %>
               <% end %>
-              <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.jumlah_target or '-'  %></td>
+              <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.jumlah_target or '-' %></td>
               <% unless tahapan.anggarans.any? %>
                 <% unless diajukan? %>
                   <td class="fw-bolder text-gray-500 border text-center">
-                    <%= link_to 'Tambah Anggaran', new_sasaran_tahapan_anggaran_path(sasaran, tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 btn btn-sm btn-success text-white animate-up-2"   %>
+                    <%= link_to 'Tambah Anggaran', new_sasaran_tahapan_anggaran_path(sasaran, tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 btn btn-sm btn-success text-white animate-up-2" %>
                   </td>
                 <% end %>
               <% else %>
                 <td class="fw-bolder text-gray-500 border text-end">
                   Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %>
-                  <% unless diajukan? %>
-                    | <%= link_to 'Edit Anggaran', sasaran_tahapan_anggarans_path(sasaran, tahapan), class: 'btn btn-info btn-sm' %>
-                  <% end %>
+                <% unless diajukan? %>
+                  | <%= link_to 'Edit Anggaran', sasaran_tahapan_anggarans_path(sasaran, tahapan), class: 'btn btn-info btn-sm' %>
+              <% end %>
                 </td>
               <% end %>
-              <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.keterangan  %></td>
+              <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.keterangan %></td>
               <% unless diajukan? %>
                 <td class="fw-bolder text-gray-500 text-center border-end">
                   <%= link_to edit_sasaran_tahapan_path(sasaran, tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'}, class: "m-3" do %>

@@ -9,7 +9,9 @@
     </div>
   </div>
   <div class="card-body">
-    <p>Belum Terdapat Rencana Aksi</p>
-    <%= link_to 'Tambahkan Rencana Aksi', new_sasaran_tahapan_path(sasaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'}, class: 'btn btn-danger mb-4' %>
+    <div id="<%= dom_id(sasaran) %>">
+      <p>Rencana Kinerja <b><%= sasaran.sasaran_kinerja %></b> Belum Terdapat Rencana Aksi</p>
+      <%= link_to 'Tambahkan Rencana Aksi', new_sasaran_tahapan_path(sasaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'}, class: 'btn btn-danger mb-4' %>
+    </div>
   </div>
 </div>

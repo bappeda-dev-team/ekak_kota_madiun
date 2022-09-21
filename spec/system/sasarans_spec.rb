@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "CRUD Sasaran", type: :system do
+  include ActionView::RecordIdentifier
+
   let(:user) { FactoryBot.create(:asn) }
   let(:sasaran) { FactoryBot.create(:sasaran) }
 
@@ -25,11 +27,16 @@ RSpec.describe "CRUD Sasaran", type: :system do
       visit user_sasarans_path(user)
       expect(page).to have_content('Test Sasaran')
     end
-    it 'show their sasaran' do
+    scenario 'show their sasaran without rencana aksi' do
       sasaran = user.sasarans.first
       visit user_sasarans_path(user)
-      first(:css, 'i.fas.fa-book-open').click
+      click_link(dom_id(user, sasaran.id))
       expect(page).to have_current_path(user_sasaran_path(user, sasaran))
+      expect(page).to_not have_selector(:id, 'musrenbang_card')
+      within "##{dom_id(sasaran)}" do
+        expect(page).to have_text('Belum Terdapat Rencana Aksi')
+        expect(page).to have_text(sasaran.sasaran_kinerja)
+      end
     end
   end
 end
