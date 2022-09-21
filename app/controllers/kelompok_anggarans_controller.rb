@@ -1,5 +1,5 @@
 class KelompokAnggaransController < ApplicationController
-  before_action :set_kelompok_anggaran, only: %i[ show edit update destroy ]
+  before_action :set_kelompok_anggaran, only: %i[show edit update destroy]
 
   # GET /kelompok_anggarans or /kelompok_anggarans.json
   def index
@@ -12,8 +12,7 @@ class KelompokAnggaransController < ApplicationController
   end
 
   # GET /kelompok_anggarans/1 or /kelompok_anggarans/1.json
-  def show
-  end
+  def show; end
 
   # GET /kelompok_anggarans/new
   def new
@@ -22,7 +21,10 @@ class KelompokAnggaransController < ApplicationController
 
   # GET /kelompok_anggarans/1/edit
   def edit
-    respond_to { |f| f.js { render :new } }
+    respond_to do |f|
+      f.js { render :new }
+      f.html { render :edit }
+    end
   end
 
   # POST /kelompok_anggarans or /kelompok_anggarans.json
@@ -46,7 +48,10 @@ class KelompokAnggaransController < ApplicationController
   def update
     respond_to do |format|
       if @kelompok_anggaran.update(kelompok_anggaran_params)
-        format.html { redirect_to kelompok_anggarans_url, notice: "Kelompok anggaran #{@kelompok_anggaran.tahun_previously_was} berhasil diupdate" }
+        format.html do
+          redirect_to kelompok_anggarans_url,
+                      notice: "Kelompok anggaran #{@kelompok_anggaran.tahun_previously_was} berhasil diupdate"
+        end
         format.json { render :show, status: :ok, location: @kelompok_anggaran }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -67,13 +72,14 @@ class KelompokAnggaransController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_kelompok_anggaran
-      @kelompok_anggaran = KelompokAnggaran.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def kelompok_anggaran_params
-      params.require(:kelompok_anggaran).permit(:kode_kelompok, :tahun, :kelompok)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_kelompok_anggaran
+    @kelompok_anggaran = KelompokAnggaran.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def kelompok_anggaran_params
+    params.require(:kelompok_anggaran).permit(:kode_kelompok, :tahun, :kelompok)
+  end
 end
