@@ -155,11 +155,10 @@ module Api
       end
       kepala = data_pegawais.select { |pegawai| pegawai[:atasan].blank? }.first[:nik]
       data_pegawais.each do |data_p|
-        tipe = ''
         tipe = if data_p[:atasan].blank?
                  'Kepala'
                elsif data_p[:atasan].present? && data_p[:atasan] == kepala
-                 'Atasan'
+                 'Atasan' # Eselon 3 ( Kabid )
                else
                  'User'
                end

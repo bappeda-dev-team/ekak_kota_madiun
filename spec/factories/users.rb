@@ -43,5 +43,12 @@ FactoryBot.define do
         user.remove_role :non_aktif
       end
     end
+    factory :atasan, class: Atasan do
+      after(:create) do |user|
+        user.add_role :asn
+        user.remove_role :non_aktif
+      end
+      type { 'Atasan' }
+    end
   end
 end
