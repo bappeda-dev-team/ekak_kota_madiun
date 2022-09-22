@@ -62,15 +62,11 @@ RSpec.describe 'Sasarans', type: :request do
   context 'add belongs_to relation like tematik and program kegiatan' do
     it 'add tematik to current sasaran' do
       sign_in sasaran.user
-      get user_sasaran_path(sasaran.user, sasaran)
-      expect(response).to have_http_status(200)
-      # TODO update spec ( error )
-      patch sasaran_path(sasaran), params: { sasaran: { subkegiatan_tematik_id: subkegiatan_tematik.id } }
+      # TODO: update spec ( error )
+      post add_sasaran_tematik_path, params: { id_tematik: subkegiatan_tematik.id, id_sasaran: sasaran.id, format: 'js' }
       sasaran.reload
-      expect(response).to redirect_to(user_sasaran_path(sasaran.user, sasaran))
-      follow_redirect!
-      expect(response).to render_template(:show)
-      expect(sasaran.subkegiatan_tematik).to eq(subkegiatan_tematik)
+      expect(response).to have_http_status(:ok)
+      expect(sasaran.subkegiatan_tematiks.last.nama_tematik).to eq('SMART CITY')
     end
 
     it 'add sumber dana to current sasaran' do

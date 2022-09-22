@@ -1,5 +1,5 @@
 class KemungkinansController < ApplicationController
-  before_action :set_kemungkinan, only: %i[ show edit update destroy ]
+  before_action :set_kemungkinan, only: %i[show edit update destroy]
 
   # GET /kemungkinans or /kemungkinans.json
   def index
@@ -7,8 +7,7 @@ class KemungkinansController < ApplicationController
   end
 
   # GET /kemungkinans/1 or /kemungkinans/1.json
-  def show
-  end
+  def show; end
 
   # GET /kemungkinans/new
   def new
@@ -16,8 +15,7 @@ class KemungkinansController < ApplicationController
   end
 
   # GET /kemungkinans/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /kemungkinans or /kemungkinans.json
   def create
@@ -58,13 +56,14 @@ class KemungkinansController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_kemungkinan
-      @kemungkinan = Kemungkinan.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def kemungkinan_params
-      params.fetch(:kemungkinan, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_kemungkinan
+    @kemungkinan = Kemungkinan.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def kemungkinan_params
+    params.fetch(:kemungkinan).permit(:deskripsi, :keterangan, :kode_skala, :nilai, :tipe_nilai, :type)
+  end
 end

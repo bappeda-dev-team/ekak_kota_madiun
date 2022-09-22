@@ -18,4 +18,5 @@
 #  index_skalas_on_rincian_id  (rincian_id)
 #
 class Kemungkinan < Skala
+  validates :kode_skala, presence: true
 end

@@ -30,8 +30,7 @@ RSpec.describe RenstraService, type: :model do
     end
     it 'separate programs from program_kegiatan' do
       program_kegiatan_mock
-      expect(renstra.program_opd).to be_exists
-      expect(renstra.program_opd.size).to eq(1)
+      expect(renstra.program_opd).to_not be_nil
     end
     it 'find program by kode_program' do
       program_kegiatan_mock
