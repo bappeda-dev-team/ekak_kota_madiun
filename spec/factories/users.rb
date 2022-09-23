@@ -50,5 +50,12 @@ FactoryBot.define do
       end
       type { 'Atasan' }
     end
+    factory :kepala, class: Kepala do
+      after(:create) do |user|
+        user.add_role :asn
+        user.remove_role :non_aktif
+      end
+      type { 'Kepala' }
+    end
   end
 end
