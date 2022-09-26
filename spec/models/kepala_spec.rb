@@ -32,5 +32,23 @@
 require 'rails_helper'
 
 RSpec.describe Kepala, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:asn_kepala) { create(:kepala, nama: 'Test Atasan', nik: '123456_789', type: 'Kepala') }
+  let(:asn_bawahan) { create(:user, email: 'test_bawahan_123@email.com', atasan: '123456_789') }
+
+  context 'User with type Kepala' do
+    it 'should be Atasan Class' do
+      atasan = asn_kepala
+      expect(atasan.type).to eq('Kepala')
+      expect(atasan).to be_a(Kepala)
+    end
+  end
+
+  context 'Atasan can see the bawahan' do
+    it 'should know who the bawahans is' do
+      bawahans = asn_kepala.kabids
+      expect(bawahans).to include(asn_bawahan)
+    end
+  end
+
+  it { should have_many(:kabids) }
 end

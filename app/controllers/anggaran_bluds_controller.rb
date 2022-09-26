@@ -1,5 +1,5 @@
 class AnggaranBludsController < ApplicationController
-  before_action :set_anggaran_blud, only: %i[ show edit update destroy ]
+  before_action :set_anggaran_blud, only: %i[show edit update destroy]
 
   # GET /anggaran_bluds or /anggaran_bluds.json
   def index
@@ -7,8 +7,7 @@ class AnggaranBludsController < ApplicationController
   end
 
   # GET /anggaran_bluds/1 or /anggaran_bluds/1.json
-  def show
-  end
+  def show; end
 
   # GET /anggaran_bluds/new
   def new

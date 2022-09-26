@@ -79,7 +79,7 @@ class ProgramKegiatan < ApplicationRecord
 
   scope :with_sasarans, -> { where(id: Sasaran.pluck(:program_kegiatan_id)) }
 
-  # scope :programs, -> { select("DISTINCT ON(program_kegiatans.kode_program) program_kegiatans.*") }
+  scope :programs, -> { select("DISTINCT ON(program_kegiatans.kode_program) program_kegiatans.*") }
   scope :kegiatans_satunya, -> { select("DISTINCT ON(program_kegiatans.kode_giat) program_kegiatans.*") }
   scope :subkegiatans_satunya, -> { select("DISTINCT ON(program_kegiatans.kode_sub_giat) program_kegiatans.*") }
 

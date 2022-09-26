@@ -1,5 +1,5 @@
 class DampaksController < ApplicationController
-  before_action :set_dampak, only: %i[ show edit update destroy ]
+  before_action :set_dampak, only: %i[show edit update destroy]
 
   # GET /dampaks or /dampaks.json
   def index
@@ -7,8 +7,7 @@ class DampaksController < ApplicationController
   end
 
   # GET /dampaks/1 or /dampaks/1.json
-  def show
-  end
+  def show; end
 
   # GET /dampaks/new
   def new
@@ -16,8 +15,7 @@ class DampaksController < ApplicationController
   end
 
   # GET /dampaks/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /dampaks or /dampaks.json
   def create
@@ -58,13 +56,14 @@ class DampaksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_dampak
-      @dampak = Dampak.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def dampak_params
-      params.fetch(:dampak, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_dampak
+    @dampak = Dampak.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def dampak_params
+    params.require(:dampak).permit(:type, :deskripsi, :kode_skala, :nilai, :tipe_nilai, :keterangan)
+  end
 end

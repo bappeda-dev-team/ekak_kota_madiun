@@ -13,17 +13,33 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/kemungkinans", type: :request do
-  
   # This should return the minimal set of attributes required to create a valid
   # Kemungkinan. As you add validations to Kemungkinan, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  before(:each) { sign_in(user) }
+  let(:user) { create(:user) }
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:valid_attributes) do
+    {
+      deskripsi: 'Contoh kemungkinan',
+      keterangan: 'kemungkinan contoh',
+      kode_skala: 'km_01',
+      nilai: '1',
+      tipe_nilai: 'xyz',
+      type: 'Kemungkinan'
+    }
+  end
+
+  let(:invalid_attributes) do
+    {
+      deskripsi: 'Contoh kemungkinan',
+      keterangan: 'kemungkinan contoh',
+      kode_skala: '',
+      nilai: '1',
+      tipe_nilai: 'xyz',
+      type: 'Kemungkinan'
+    }
+  end
 
   describe "GET /index" do
     it "renders a successful response" do
@@ -59,9 +75,9 @@ RSpec.describe "/kemungkinans", type: :request do
   describe "POST /create" do
     context "with valid parameters" do
       it "creates a new Kemungkinan" do
-        expect {
+        expect do
           post kemungkinans_url, params: { kemungkinan: valid_attributes }
-        }.to change(Kemungkinan, :count).by(1)
+        end.to change(Kemungkinan, :count).by(1)
       end
 
       it "redirects to the created kemungkinan" do
@@ -72,29 +88,36 @@ RSpec.describe "/kemungkinans", type: :request do
 
     context "with invalid parameters" do
       it "does not create a new Kemungkinan" do
-        expect {
+        expect do
           post kemungkinans_url, params: { kemungkinan: invalid_attributes }
-        }.to change(Kemungkinan, :count).by(0)
+        end.to change(Kemungkinan, :count).by(0)
       end
 
       it "renders a successful response (i.e. to display the 'new' template)" do
         post kemungkinans_url, params: { kemungkinan: invalid_attributes }
-        expect(response).to be_successful
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
 
   describe "PATCH /update" do
     context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      let(:new_attributes) do
+        {
+          deskripsi: 'Contoh kemungkinan edit',
+          keterangan: 'kemungkinan contoh edit',
+          kode_skala: 'km_02',
+          nilai: '2',
+          tipe_nilai: 'xyz',
+          type: 'Kemungkinan'
+        }
+      end
 
       it "updates the requested kemungkinan" do
         kemungkinan = Kemungkinan.create! valid_attributes
         patch kemungkinan_url(kemungkinan), params: { kemungkinan: new_attributes }
         kemungkinan.reload
-        skip("Add assertions for updated state")
+        expect(Kemungkinan.last.deskripsi).to eq(new_attributes[:deskripsi])
       end
 
       it "redirects to the kemungkinan" do
@@ -109,7 +132,8 @@ RSpec.describe "/kemungkinans", type: :request do
       it "renders a successful response (i.e. to display the 'edit' template)" do
         kemungkinan = Kemungkinan.create! valid_attributes
         patch kemungkinan_url(kemungkinan), params: { kemungkinan: invalid_attributes }
-        expect(response).to be_successful
+        expect(response).to render_template(:edit)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
@@ -117,9 +141,9 @@ RSpec.describe "/kemungkinans", type: :request do
   describe "DELETE /destroy" do
     it "destroys the requested kemungkinan" do
       kemungkinan = Kemungkinan.create! valid_attributes
-      expect {
+      expect do
         delete kemungkinan_url(kemungkinan)
-      }.to change(Kemungkinan, :count).by(-1)
+      end.to change(Kemungkinan, :count).by(-1)
     end
 
     it "redirects to the kemungkinans list" do

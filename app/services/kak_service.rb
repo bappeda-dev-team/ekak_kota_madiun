@@ -201,7 +201,7 @@ class KakService
 
   def indikator_programs_all_try(jenis:, kode:, nama:, program_kegiatans:)
     programs = program_kegiatans.map do |program|
-      indikators = indikator_renstra(jenis, program)
+      indikators = ind_renstras_new(jenis, program)
       hasil = {
         kode_urusan: program.kode_urusan,
         urusan: program.nama_urusan,

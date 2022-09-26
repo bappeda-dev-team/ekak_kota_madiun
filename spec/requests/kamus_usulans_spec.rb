@@ -13,17 +13,34 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/kamus_usulans", type: :request do
-  
   # This should return the minimal set of attributes required to create a valid
   # KamusUsulan. As you add validations to KamusUsulan, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  before(:each) { sign_in(user) }
+
+  let(:opd) { create(:opd) }
+  let(:user) { create(:user) }
+
+  let(:valid_attributes) do
+    {
+      bidang_urusan: 'pemerintahan',
+      id_kamus: 'xyz',
+      id_program: 'abc',
+      id_unit: opd.id_opd_skp,
+      usulan: 'Contoh Usulan Musren'
+    }
+  end
+
+  let(:invalid_attributes) do
+    {
+      bidang_urusan: 'pemerintahan',
+      id_kamus: '',
+      id_program: 'abc',
+      id_unit: opd.id_opd_skp,
+      usulan: 'Contoh Usulan Musren'
+    }
+  end
 
   describe "GET /index" do
     it "renders a successful response" do
@@ -59,9 +76,9 @@ RSpec.describe "/kamus_usulans", type: :request do
   describe "POST /create" do
     context "with valid parameters" do
       it "creates a new KamusUsulan" do
-        expect {
+        expect do
           post kamus_usulans_url, params: { kamus_usulan: valid_attributes }
-        }.to change(KamusUsulan, :count).by(1)
+        end.to change(KamusUsulan, :count).by(1)
       end
 
       it "redirects to the created kamus_usulan" do
@@ -72,29 +89,36 @@ RSpec.describe "/kamus_usulans", type: :request do
 
     context "with invalid parameters" do
       it "does not create a new KamusUsulan" do
-        expect {
+        expect do
           post kamus_usulans_url, params: { kamus_usulan: invalid_attributes }
-        }.to change(KamusUsulan, :count).by(0)
+        end.to change(KamusUsulan, :count).by(0)
       end
 
       it "renders a successful response (i.e. to display the 'new' template)" do
         post kamus_usulans_url, params: { kamus_usulan: invalid_attributes }
-        expect(response).to be_successful
+        expect(response).to render_template(:new)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
 
   describe "PATCH /update" do
     context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      let(:new_attributes) do
+        {
+          bidang_urusan: 'perencanaan dan penelitian',
+          id_kamus: 'xyz',
+          id_program: 'abc',
+          id_unit: opd.id_opd_skp,
+          usulan: 'Contoh Usulan Musren'
+        }
+      end
 
       it "updates the requested kamus_usulan" do
         kamus_usulan = KamusUsulan.create! valid_attributes
         patch kamus_usulan_url(kamus_usulan), params: { kamus_usulan: new_attributes }
         kamus_usulan.reload
-        skip("Add assertions for updated state")
+        expect(response).to redirect_to(kamus_usulan_url(kamus_usulan))
       end
 
       it "redirects to the kamus_usulan" do
@@ -109,7 +133,8 @@ RSpec.describe "/kamus_usulans", type: :request do
       it "renders a successful response (i.e. to display the 'edit' template)" do
         kamus_usulan = KamusUsulan.create! valid_attributes
         patch kamus_usulan_url(kamus_usulan), params: { kamus_usulan: invalid_attributes }
-        expect(response).to be_successful
+        expect(response).to render_template(:edit)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
@@ -117,9 +142,9 @@ RSpec.describe "/kamus_usulans", type: :request do
   describe "DELETE /destroy" do
     it "destroys the requested kamus_usulan" do
       kamus_usulan = KamusUsulan.create! valid_attributes
-      expect {
+      expect do
         delete kamus_usulan_url(kamus_usulan)
-      }.to change(KamusUsulan, :count).by(-1)
+      end.to change(KamusUsulan, :count).by(-1)
     end
 
     it "redirects to the kamus_usulans list" do

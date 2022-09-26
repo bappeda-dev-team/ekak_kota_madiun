@@ -13,17 +13,30 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/kelompok_anggarans", type: :request do
-  
+  before(:each) do
+    sign_in user
+  end
+  let(:user) { create(:user) }
+
   # This should return the minimal set of attributes required to create a valid
   # KelompokAnggaran. As you add validations to KelompokAnggaran, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  let(:valid_attributes) do
+    {
+      kelompok: 'Murni',
+      kode_kelompok: '2022_murni',
+      tahun: '2022'
+    }
+  end
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:invalid_attributes) do
+    {
+      kelompok: '',
+      kode_kelompok: '',
+      tahun: '2022'
+
+    }
+  end
 
   describe "GET /index" do
     it "renders a successful response" do
@@ -52,6 +65,7 @@ RSpec.describe "/kelompok_anggarans", type: :request do
     it "renders a successful response" do
       kelompok_anggaran = KelompokAnggaran.create! valid_attributes
       get edit_kelompok_anggaran_url(kelompok_anggaran)
+      expect(response).to render_template(:edit)
       expect(response).to be_successful
     end
   end
@@ -59,49 +73,56 @@ RSpec.describe "/kelompok_anggarans", type: :request do
   describe "POST /create" do
     context "with valid parameters" do
       it "creates a new KelompokAnggaran" do
-        expect {
+        expect do
           post kelompok_anggarans_url, params: { kelompok_anggaran: valid_attributes }
-        }.to change(KelompokAnggaran, :count).by(1)
+        end.to change(KelompokAnggaran, :count).by(1)
       end
 
-      it "redirects to the created kelompok_anggaran" do
+      it "redirects to the created kelompok_anggarans index" do
         post kelompok_anggarans_url, params: { kelompok_anggaran: valid_attributes }
-        expect(response).to redirect_to(kelompok_anggaran_url(KelompokAnggaran.last))
+        expect(response).to redirect_to(kelompok_anggarans_url)
       end
     end
 
     context "with invalid parameters" do
       it "does not create a new KelompokAnggaran" do
-        expect {
+        expect do
           post kelompok_anggarans_url, params: { kelompok_anggaran: invalid_attributes }
-        }.to change(KelompokAnggaran, :count).by(0)
+        end.to change(KelompokAnggaran, :count).by(0)
       end
 
       it "renders a successful response (i.e. to display the 'new' template)" do
         post kelompok_anggarans_url, params: { kelompok_anggaran: invalid_attributes }
-        expect(response).to be_successful
+        expect(response).to render_template(:new)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
 
   describe "PATCH /update" do
     context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      let(:new_attributes) do
+        {
+          kelompok: 'Murni',
+          kode_kelompok: '2023_murni',
+          tahun: '2023'
+        }
+      end
 
       it "updates the requested kelompok_anggaran" do
         kelompok_anggaran = KelompokAnggaran.create! valid_attributes
         patch kelompok_anggaran_url(kelompok_anggaran), params: { kelompok_anggaran: new_attributes }
         kelompok_anggaran.reload
-        skip("Add assertions for updated state")
+        expect(KelompokAnggaran.last.tahun).to eq('2023')
+        expect(response).to redirect_to(kelompok_anggarans_url)
+        expect(flash[:notice]).to_not be_nil
       end
 
       it "redirects to the kelompok_anggaran" do
         kelompok_anggaran = KelompokAnggaran.create! valid_attributes
         patch kelompok_anggaran_url(kelompok_anggaran), params: { kelompok_anggaran: new_attributes }
         kelompok_anggaran.reload
-        expect(response).to redirect_to(kelompok_anggaran_url(kelompok_anggaran))
+        expect(response).to redirect_to(kelompok_anggarans_url)
       end
     end
 
@@ -109,7 +130,8 @@ RSpec.describe "/kelompok_anggarans", type: :request do
       it "renders a successful response (i.e. to display the 'edit' template)" do
         kelompok_anggaran = KelompokAnggaran.create! valid_attributes
         patch kelompok_anggaran_url(kelompok_anggaran), params: { kelompok_anggaran: invalid_attributes }
-        expect(response).to be_successful
+        expect(response).to render_template(:edit)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
@@ -117,9 +139,9 @@ RSpec.describe "/kelompok_anggarans", type: :request do
   describe "DELETE /destroy" do
     it "destroys the requested kelompok_anggaran" do
       kelompok_anggaran = KelompokAnggaran.create! valid_attributes
-      expect {
+      expect do
         delete kelompok_anggaran_url(kelompok_anggaran)
-      }.to change(KelompokAnggaran, :count).by(-1)
+      end.to change(KelompokAnggaran, :count).by(-1)
     end
 
     it "redirects to the kelompok_anggarans list" do
