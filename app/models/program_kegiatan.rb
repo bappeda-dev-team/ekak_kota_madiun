@@ -102,6 +102,19 @@ class ProgramKegiatan < ApplicationRecord
     sasarans.map(&:waktu_total).compact.sum
   end
 
+  def indikator_renstras_new(type, kode_unit)
+    {
+      "indikator_#{type}": indikator_key_grouper(type, kode_unit)
+    }
+  end
+
+  def indikator_key_grouper(type, kode_unit)
+    ind_programs = send("indikator_#{type}_renstra").select { |k| k.kode_opd == kode_unit }.group_by(&:version)
+    ind_programs[ind_programs.keys.max]&.group_by(&:indikator)&.transform_values do |indikator|
+      indikator.group_by(&:tahun)
+    end
+  end
+
   def indikator_renstras
     # subkegiatan = indikator_subkegiatan_renstra.group_by(&:kode_indikator).transform_values do |indikator|
     #   indikator.group_by(&:tahun)

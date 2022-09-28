@@ -5,7 +5,7 @@ export default class extends Controller {
 
   append(event) {
     const [data, status, xhr] = event.detail;
-    //alert(status)
+    // alert(status)
     this.resultsTarget.innerHTML = xhr.response
   }
 
