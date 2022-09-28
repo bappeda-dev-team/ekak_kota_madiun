@@ -1,0 +1,8 @@
+<td class="text-gray-900 text-wrap border"  ><%= indikator %></td>
+<% (2020..2024).each do |tahun| %>
+  <% targets = values[tahun.to_s] %>
+  <td class="text-gray-900 text-wrap border"  ><%= targets&.last&.target %></td>
+  <td class="text-gray-900 text-wrap border"  ><%= targets&.last&.satuan %></td>
+  <td class="text-gray-900 text-wrap border"  >Rp.<%= number_with_delimiter(targets&.last&.pagu) %></td>
+<% end %>
+<td class="text-gray-900 text-wrap border"  ><%= values.dig("2022").first.keterangan %></td>
