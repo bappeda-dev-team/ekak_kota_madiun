@@ -2,6 +2,41 @@
 # used for get pk by opd, sasarans by user on opd selected
 # compatible with tahun kelompok_anggaran
 class KakService
+  OPD_TABLE = {
+    'Dinas Kesehatan, Pengendalian Penduduk dan Keluarga Berencana': "Dinas Kesehatan",
+    'Rumah Sakit Umum Daerah Kota Madiun': "Rumah Sakit Umum Daerah",
+    'Sekretariat Daerah': "Sekretaris Daerah",
+    'Bagian Umum': "Bagian Umum",
+    'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan': "Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan",
+    'Bagian Organisasi': "Bagian Organisasi",
+    'Bagian Hukum': "Bagian Hukum",
+    'Bagian Perekonomian dan Kesejahteraan Rakyat': "Bagian Perekonomian dan Kesejahteraan Rakyat",
+    'Bagian Pemerintahan': "Bagian Pemerintahan"
+  }.freeze
+
+  KODE_OPD_TABLE = {
+    'Dinas Kesehatan, Pengendalian Penduduk dan Keluarga Berencana': "1.02.2.14.0.00.03.0000",
+    'Rumah Sakit Umum Daerah Kota Madiun': "1.02.2.14.0.00.03.0000",
+    'Sekretariat Daerah': "4.01.0.00.0.00.01.00", # don't change, this still used
+    'Bagian Umum': "4.01.0.00.0.00.01.00",
+    'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan': "4.01.0.00.0.00.01.00",
+    'Bagian Organisasi': "4.01.0.00.0.00.01.00",
+    'Bagian Hukum': "4.01.0.00.0.00.01.00",
+    'Bagian Perekonomian dan Kesejahteraan Rakyat': "4.01.0.00.0.00.01.00",
+    'Bagian Pemerintahan': "4.01.0.00.0.00.01.00"
+  }.freeze
+
+  KODE_OPD_BAGIAN = {
+    'Dinas Kesehatan, Pengendalian Penduduk dan Keluarga Berencana': "448",
+    'Rumah Sakit Umum Daerah Kota Madiun': "3408",
+    'Sekretariat Daerah': "479", # don't change, this still used
+    'Bagian Umum': "4402",
+    'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan': "4400",
+    'Bagian Organisasi': "4398",
+    'Bagian Hukum': "4399",
+    'Bagian Perekonomian dan Kesejahteraan Rakyat': "4401",
+    'Bagian Pemerintahan': "4397"
+  }.freeze
   attr_reader :kode_unik_opd, :program_kegiatan
 
   def initialize(tahun:, kode_unik_opd: nil, program_kegiatan: nil)
@@ -106,27 +141,27 @@ class KakService
     programs.uniq { |item| item[:kode] }
   end
 
-  def ind_renstras_new(jenis, program_kegiatans)
-    indikator_all = program_kegiatans.send("indikator_renstras")
+  def ind_renstras_new(jenis, program_kegiatans, sub_unit: '')
+    indikator_all = program_kegiatans.send("indikator_renstras", sub_unit: sub_unit)
     indikators = indikator_all["indikator_#{jenis}".to_sym]
     if indikators
       indikators.map do |ind, tahun|
         { indikator: ind,
-          target_2020: tahun["2020"]&.last.target,
-          satuan_2020: tahun["2020"]&.last.satuan,
-          pagu_2020: tahun["2020"]&.last.pagu,
-          target_2021: tahun["2021"]&.last.target,
-          satuan_2021: tahun["2021"]&.last.satuan,
-          pagu_2021: tahun["2021"]&.last.pagu,
-          target_2022: tahun["2022"]&.last.target,
-          satuan_2022: tahun["2022"]&.last.satuan,
-          pagu_2022: tahun["2022"]&.last.pagu,
-          target_2023: tahun["2023"]&.last.target,
-          satuan_2023: tahun["2023"]&.last.satuan,
-          pagu_2023: tahun["2023"]&.last.pagu,
-          target_2024: tahun["2024"]&.last.target,
-          satuan_2024: tahun["2024"]&.last.satuan,
-          pagu_2024: tahun["2024"]&.last.pagu }
+          target_2020: tahun["2020"]&.last&.target,
+          satuan_2020: tahun["2020"]&.last&.satuan,
+          pagu_2020: tahun["2020"]&.last&.pagu,
+          target_2021: tahun["2021"]&.last&.target,
+          satuan_2021: tahun["2021"]&.last&.satuan,
+          pagu_2021: tahun["2021"]&.last&.pagu,
+          target_2022: tahun["2022"]&.last&.target,
+          satuan_2022: tahun["2022"]&.last&.satuan,
+          pagu_2022: tahun["2022"]&.last&.pagu,
+          target_2023: tahun["2023"]&.last&.target,
+          satuan_2023: tahun["2023"]&.last&.satuan,
+          pagu_2023: tahun["2023"]&.last&.pagu,
+          target_2024: tahun["2024"]&.last&.target,
+          satuan_2024: tahun["2024"]&.last&.satuan,
+          pagu_2024: tahun["2024"]&.last&.pagu }
       end
     else
       []
@@ -187,10 +222,20 @@ class KakService
     lembaga.opds.where.not(nama_kepala: nil)
   end
 
+  def program_kegiatan_opd_khusus(id_sub_unit:)
+    ProgramKegiatan.includes(:opd)
+                   .where(id_sub_unit: id_sub_unit)
+  end
+
   def program_kota(jenis:, kode:, nama:)
     all_opd.map do |opd|
       programs = indikator_programs_all_try(jenis: jenis, kode: kode, nama: nama,
                                             program_kegiatans: opd.program_kegiatans)
+      if OPD_TABLE.key?(opd.nama_opd.to_sym)
+        programs = indikator_programs_all_try(jenis: jenis, kode: kode, nama: nama,
+                                              program_kegiatans: program_kegiatan_opd_khusus(id_sub_unit: KODE_OPD_BAGIAN[opd.nama_opd.to_sym]),
+                                              sub_unit: KODE_OPD_BAGIAN[opd.nama_opd.to_sym])
+      end
       {
         opd: opd.nama_opd,
         kode_opd: opd.kode_unik_opd,
@@ -199,9 +244,9 @@ class KakService
     end
   end
 
-  def indikator_programs_all_try(jenis:, kode:, nama:, program_kegiatans:)
+  def indikator_programs_all_try(jenis:, kode:, nama:, program_kegiatans:, sub_unit: '')
     programs = program_kegiatans.map do |program|
-      indikators = ind_renstras_new(jenis, program)
+      indikators = ind_renstras_new(jenis, program, sub_unit: sub_unit)
       hasil = {
         kode_urusan: program.kode_urusan,
         urusan: program.nama_urusan,

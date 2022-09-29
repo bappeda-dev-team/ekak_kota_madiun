@@ -115,14 +115,18 @@ class ProgramKegiatan < ApplicationRecord
     end
   end
 
-  def indikator_renstras
+  def indikator_renstras(sub_unit: '')
     # subkegiatan = indikator_subkegiatan_renstra.group_by(&:kode_indikator).transform_values do |indikator|
     #   indikator.group_by(&:tahun)
     # end
     program = indikator_program_renstra&.group_by(&:version)
     kegiatan = indikator_kegiatan_renstra&.group_by(&:version)
     subkegiatan = indikator_subkegiatan_renstra&.group_by(&:version)
-
+    if sub_unit
+      program = indikator_program_renstra.select { |k| k.kode_opd == sub_unit }&.group_by(&:version)
+      kegiatan = indikator_kegiatan_renstra.select { |k| k.kode_opd == sub_unit }&.group_by(&:version)
+      subkegiatan = indikator_subkegiatan_renstra.select { |k| k.kode_opd == sub_unit }&.group_by(&:version)
+    end
     # kotak_subkegiatan = indikator_subkegiatan_renstra&.group_by(&:kotak)
     # subkegiatan = kotak_subkegiatan.transform_values { |ind| ind.group_by(&:version) }
 
