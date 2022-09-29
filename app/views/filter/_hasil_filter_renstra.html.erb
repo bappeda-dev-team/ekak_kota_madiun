@@ -40,7 +40,7 @@
                 <% end %>
               <% end %>
               <td class="text-gray-900 text-wrap border">
-                Edit
+                -
               </td>
             </tr>
           <% end %>
@@ -76,7 +76,7 @@
                 <% end %>
               <% end %>
               <td class="text-gray-900 text-wrap border">
-                Edit
+                -
               </td>
             </tr>
           <% end %>
@@ -123,9 +123,7 @@
               <td class="text-gray-900 text-wrap border"  ><%= program.kode_program %></td>
               <td class="text-gray-900 text-wrap border"  ><%= nomor %></td>
               <td class="text-gray-900 text-wrap border"  ><%= program.nama_program %></td>
-              <% program.indikator_renstras_new('program', @kode_opd)[:indikator_program]&.each do |indikator_program, values| %>
-                <%= render 'row_indikator_renstra', indikator: indikator_program, values: values %> 
-              <% end %>
+              <%= render 'row_indikator_renstra',indikators: program.indikator_renstras_new('program', @kode_opd)[:indikator_program] %>
               <td class="text-gray-900 text-wrap border" >
                 <%= link_to edit_renstra_path(
                   program,
@@ -174,9 +172,7 @@
                 <td class="text-gray-900 text-wrap border"  ><%= kegiatan.kode_giat %></td>
                 <td class="text-gray-900 text-wrap border"  ><%= no_giat %></td>
                 <td class="text-gray-900 text-wrap border"  ><%= kegiatan.nama_kegiatan %></td>
-                <% kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan]&.each do |indikator_kegiatan, values| %>
-                  <%= render 'row_indikator_renstra', indikator: indikator_kegiatan, values: values %>
-                <% end %>
+                <%= render 'row_indikator_renstra',indikators: kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan] %>
                 <td class="text-gray-900 text-wrap border">
                   <%= link_to edit_renstra_path(
                     kegiatan,
@@ -224,10 +220,8 @@
                   <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_opd_pemilik %></td>
                   <td class="text-gray-900 text-wrap border"  ><%= subgiat.kode_sub_giat %></td>
                   <td class="text-gray-900 text-wrap border"  ><%= no_subgiat %></td>
-                  <td class="text-gray-900 text-wrap border" id="<%= dom_id(subgiat) %>"  ><%= subgiat.nama_subkegiatan %></td>
-                  <% subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan]&.each do |indikator_subkegiatan, values| %>
-                    <%= render 'row_indikator_renstra', indikator: indikator_subkegiatan, values: values %> 
-                  <% end %>
+                  <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_subkegiatan %></td>
+                  <%= render 'row_indikator_renstra',indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan] %>
                   <td class="text-gray-900 text-wrap border">
                     <%= link_to edit_renstra_path(
                       subgiat,
