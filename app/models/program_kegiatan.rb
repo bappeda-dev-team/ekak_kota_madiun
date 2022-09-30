@@ -122,7 +122,7 @@ class ProgramKegiatan < ApplicationRecord
     program = indikator_program_renstra&.group_by(&:version)
     kegiatan = indikator_kegiatan_renstra&.group_by(&:version)
     subkegiatan = indikator_subkegiatan_renstra&.group_by(&:version)
-    if sub_unit
+    if sub_unit.present?
       program = indikator_program_renstra.select { |k| k.kode_opd == sub_unit }&.group_by(&:version)
       kegiatan = indikator_kegiatan_renstra.select { |k| k.kode_opd == sub_unit }&.group_by(&:version)
       subkegiatan = indikator_subkegiatan_renstra.select { |k| k.kode_opd == sub_unit }&.group_by(&:version)
