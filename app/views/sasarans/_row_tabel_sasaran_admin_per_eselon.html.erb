@@ -1,20 +1,22 @@
-<tr class="<%= warna_sasaran(sasaran.status_sasaran) %>">
+<tr>
   <td class="fw-bolder" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
   <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_milik %></td>
   <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
   <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.tahun %></td>
   <td class="p-0 m-0" colspan="3"></td>
   <td class="fw-bolder text-gray-500 text-center" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
-    <%= link_to user_sasaran_path(current_user, sasaran), class: "m-3", id: dom_id(current_user, sasaran.id) do %>
-      <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="isi usulan"></i>
+    <%= link_to edit_sasaran_path(sasaran, tipe: sasaran.sasaran_milik), data: {'bs-toggle': "tooltip", 'bs-placement': "bottom"} ,title: "Edit Sasaran" ,class: "btn btn-sm btn-primary", target: :_blank do %>
+      <i class="fa fa-pencil-alt"></i>
+      Edit 
     <% end %>
-    <%= link_to user_sasaran_path(current_user, sasaran), method: :delete, data: { confirm_swal: "Hapus #{sasaran.sasaran_kinerja} ?"}, class: "m-3" do %>
-      <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus rencana kinerja"></i>
+    <%= link_to user_sasaran_path(current_user, sasaran), method: :delete, data: { confirm_swal: "Hapus #{sasaran.sasaran_kinerja} ?", 'bs-toggle': "tooltip", 'bs-placement': "bottom"},title:"Hapus Sasaran", class: "btn btn-sm btn-danger text-white" do %>
+      <i class="fa fa-trash-alt"></i>
+      Hapus
     <% end %>
   </td>
 </tr>
 <% sasaran.indikator_sasarans.each do |indikator| %>
-  <tr class="<%= warna_sasaran(sasaran.status_sasaran) %>">
+  <tr>
     <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.indikator_kinerja %></td>
     <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.target %></td>
     <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.satuan %></td>
