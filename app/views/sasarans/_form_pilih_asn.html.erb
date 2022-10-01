@@ -2,7 +2,7 @@
   <%= token_tag %> 
   <div class="col">
     <select name="sasaran[nip_asn]" data-controller="dropdown" data-dropdown-url-value='/users/dropdown_user.json' data-dropdown-jenis-value='ajax'>
-      <option value="<%= sasaran.nip_asn%>"><%= sasaran.user.nama %></option> 
+      <option value="<%= sasaran.nip_asn%>"><%= "#{sasaran.user.nama} #{sasaran.user.jabatan}" %></option> 
     </select>
   </div>
   <div class="col-auto">
