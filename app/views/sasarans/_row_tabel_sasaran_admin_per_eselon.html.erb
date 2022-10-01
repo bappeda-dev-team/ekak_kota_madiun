@@ -1,18 +1,19 @@
 <tr>
   <td class="fw-bolder" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
-  <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_milik %></td>
   <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
   <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.tahun %></td>
   <td class="p-0 m-0" colspan="3"></td>
-  <td class="fw-bolder text-gray-500 text-center" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
-    <%= link_to edit_sasaran_path(sasaran, tipe: sasaran.sasaran_milik), data: {'bs-toggle': "tooltip", 'bs-placement': "bottom"} ,title: "Edit Sasaran" ,class: "btn btn-sm btn-primary", target: :_blank do %>
+  <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"> 
+    <%= link_to edit_sasaran_path(sasaran, tipe: sasaran.sasaran_milik), data: {'bs-toggle': "tooltip", 'bs-placement': "bottom"} ,title: "Edit Sasaran" ,class: "m-3", target: :_blank do %>
       <i class="fa fa-pencil-alt"></i>
-      Edit 
     <% end %>
-    <%= link_to user_sasaran_path(current_user, sasaran), method: :delete, data: { confirm_swal: "Hapus #{sasaran.sasaran_kinerja} ?", 'bs-toggle': "tooltip", 'bs-placement': "bottom"},title:"Hapus Sasaran", class: "btn btn-sm btn-danger text-white" do %>
+    <br/>
+    <%= link_to user_sasaran_path(current_user, sasaran), method: :delete, data: { confirm_swal: "Hapus #{sasaran.sasaran_kinerja} ?", 'bs-toggle': "tooltip", 'bs-placement': "bottom"},title:"Hapus Sasaran", class: "m-3" do %>
       <i class="fa fa-trash-alt"></i>
-      Hapus
     <% end %>
+  </td>
+  <td class="fw-bolder text-gray-500 text-center" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
+    <%= render 'form_pilih_asn', sasaran: sasaran %>
   </td>
 </tr>
 <% sasaran.indikator_sasarans.each do |indikator| %>

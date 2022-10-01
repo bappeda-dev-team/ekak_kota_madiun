@@ -1,1 +1,4 @@
-json.array! @users, partial: "users/user", as: :user
+json.results @users do |user|
+  json.id user.nik
+  json.text "#{user.nama}"
+end

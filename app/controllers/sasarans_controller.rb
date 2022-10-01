@@ -320,6 +320,33 @@ class SasaransController < ApplicationController
     end
   end
 
+  def pilih_asn
+    @sasaran = Sasaran.find(params[:id])
+    respond_to do |format|
+      if @sasaran.update(sasaran_params)
+        flash[:success] = if sasaran_params[:program_kegiatan_id]
+                            'Sukses menambah subkegiatan'
+                          elsif sasaran_params[:sumber_dana]
+                            'Sumber dana disimpan'
+                          else
+                            'Sukses update sasaran'
+                          end
+        @status = 'success'
+        @text = 'Sukses menambah tematik'
+        format.js { render 'update.js.erb' }
+        # format.html { redirect_to user_sasaran_path(@user, @sasaran) }
+        format.html { redirect_to sasarans_path, success: 'Sasaran diupdate.' }
+        format.json { render :show, status: :ok, location: @sasaran }
+      else
+        flash.now[:error] = 'Sasaran gagal update.'
+        format.js
+        # format.html { redirect_to user_sasaran_path(@user, @sasaran), error: 'Sasaran gagal update.' }
+        format.html { redirect_to sasarans_path, success: 'Sasaran gagal diupdate' }
+        format.json { render json: @sasaran.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # DELETE /sasarans/1 or /sasarans/1.json
   def destroy
     @sasaran.destroy
