@@ -52,6 +52,7 @@ module SidebarItemHelper
     [
       { title: 'ASN', href: adminusers_path, icon: 'fas fa-user-check', identifier: 'adminusers' },
       { title: 'Sasaran ASN', href: laporan_sasarans_path, identifier: 'laporan_sasaran', icon: 'fas fa-bullseye' },
+      { title: 'Sasaran Pohon Kinerja', href: sasarans_path, identifier: 'sasarans', icon: 'fab fa-pagelines' },
       { title: 'Isu dan Permasalahan', href: isu_dan_permasalahans_path, icon: 'fas fa-map-signs',
         identifier: 'isu_dan_permasalahan' }
     ]

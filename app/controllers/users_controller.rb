@@ -6,6 +6,16 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  def dropdown_user
+    if current_user.has_role? :admin
+      param = params[:q] || ""
+      @users = current_user.opd.users.non_admin.where("nama ILIKE ?", "%#{param}%")
+      respond_to do |f|
+        f.json { render :index }
+      end
+    end
+  end
+
   def khusus
     @users = User.where(kode_opd: '123456890')
   end

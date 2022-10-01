@@ -8,6 +8,10 @@ class SasaransController < ApplicationController
     @tahun_sasaran = cookies[:tahun_sasaran] || nil
     @sasarans = @user.sasarans.where(tahun: @tahun_sasaran).order(:id)
     @sasarans = @user.sasarans.order(:id) if @sasarans.empty?
+    if current_user.has_role? :admin
+      @sasarans = @user.opd.sasarans.includes(:indikator_sasarans).order(:id)
+      render 'index_admin'
+    end
   end
 
   # GET /sasarans/1 or /sasarans/1.json
@@ -262,11 +266,14 @@ class SasaransController < ApplicationController
   # GET /sasarans/new
   def new
     @sasaran = @user.sasarans.build
+    @tipe = params[:tipe]
     @sasaran.indikator_sasarans.build
   end
 
   # GET /sasarans/1/edit
-  def edit; end
+  def edit
+    @tipe = params[:tipe]
+  end
 
   # POST /sasarans or /sasarans.json
   def create
@@ -275,7 +282,8 @@ class SasaransController < ApplicationController
     respond_to do |format|
       if @sasaran.save
         # @sasaran.indikator_sasarans.create!(sasaran_params[:indikator_sasarans_attributes].merge!(sasaran_id: sasaran_params[:id_rencana]))
-        format.html { redirect_to user_sasaran_path(@user, @sasaran), success: 'Sasaran berhasil dibuat.' }
+        # format.html { redirect_to user_sasaran_path(@user, @sasaran), success: 'Sasaran berhasil dibuat.' }
+        format.html { redirect_to sasarans_path, success: 'Sasaran berhasil dibuat.' }
         format.json { render :show, status: :created, location: @sasaran }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -286,7 +294,7 @@ class SasaransController < ApplicationController
 
   # PATCH/PUT /sasarans/1 or /sasarans/1.json
   def update
-    @sasaran = @user.sasarans.find(params[:id])
+    # @sasaran = @user.sasarans.find(params[:id])
     respond_to do |format|
       if @sasaran.update(sasaran_params)
         flash[:success] = if sasaran_params[:program_kegiatan_id]
@@ -299,12 +307,41 @@ class SasaransController < ApplicationController
         @status = 'success'
         @text = 'Sukses menambah tematik'
         format.js { render 'update.js.erb' }
-        format.html { redirect_to user_sasaran_path(@user, @sasaran) }
+        # format.html { redirect_to user_sasaran_path(@user, @sasaran) }
+        format.html { redirect_to sasarans_path, success: 'Sasaran diupdate.' }
         format.json { render :show, status: :ok, location: @sasaran }
       else
         flash.now[:error] = 'Sasaran gagal update.'
         format.js
-        format.html { redirect_to user_sasaran_path(@user, @sasaran), error: 'Sasaran gagal update.' }
+        # format.html { redirect_to user_sasaran_path(@user, @sasaran), error: 'Sasaran gagal update.' }
+        format.html { redirect_to sasarans_path, success: 'Sasaran gagal diupdate' }
+        format.json { render json: @sasaran.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def pilih_asn
+    @sasaran = Sasaran.find(params[:id])
+    respond_to do |format|
+      if @sasaran.update(sasaran_params)
+        flash[:success] = if sasaran_params[:program_kegiatan_id]
+                            'Sukses menambah subkegiatan'
+                          elsif sasaran_params[:sumber_dana]
+                            'Sumber dana disimpan'
+                          else
+                            'Sukses update sasaran'
+                          end
+        @status = 'success'
+        @text = 'Sukses menambah tematik'
+        format.js { render 'update.js.erb' }
+        # format.html { redirect_to user_sasaran_path(@user, @sasaran) }
+        format.html { redirect_to sasarans_path, success: 'Sasaran diupdate.' }
+        format.json { render :show, status: :ok, location: @sasaran }
+      else
+        flash.now[:error] = 'Sasaran gagal update.'
+        format.js
+        # format.html { redirect_to user_sasaran_path(@user, @sasaran), error: 'Sasaran gagal update.' }
+        format.html { redirect_to sasarans_path, success: 'Sasaran gagal diupdate' }
         format.json { render json: @sasaran.errors, status: :unprocessable_entity }
       end
     end
@@ -342,7 +379,7 @@ class SasaransController < ApplicationController
   def sasaran_params
     params.require(:sasaran).permit(:sasaran_kinerja, :penerima_manfaat, :nip_asn, :program_kegiatan_id,
                                     :sumber_dana, :subkegiatan_tematik_id, :tahun, :id_rencana,
-                                    :kelompok_anggaran, :filter_file, :filter_target, :filter_type,
+                                    :kelompok_anggaran, :filter_file, :filter_target, :filter_type, :sasaran_milik,
                                     indikator_sasarans_attributes: %i[id indikator_kinerja aspek target satuan _destroy])
   end
 

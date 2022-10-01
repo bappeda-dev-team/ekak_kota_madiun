@@ -79,6 +79,7 @@ Rails.application.routes.draw do
     collection do
       get :struktur
       get :khusus
+      get :dropdown_user
     end
 
     member do
@@ -110,6 +111,7 @@ Rails.application.routes.draw do
       get :detail
       get :clone_form
       post :clone
+      post :pilih_asn
     end
   end
 

@@ -29,6 +29,7 @@ class Opd < ApplicationRecord
   validates :nama_opd, presence: true
   validates :kode_opd, presence: true
   has_many :users, foreign_key: 'kode_opd', primary_key: 'kode_opd'
+  has_many :sasarans, through: :users
   has_many :program_kegiatans, foreign_key: 'kode_opd', primary_key: 'kode_opd' do
     def programs
       uniq(&:kode_program).sort_by(&:kode_program)
