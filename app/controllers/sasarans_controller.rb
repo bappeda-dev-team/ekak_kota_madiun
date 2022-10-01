@@ -8,6 +8,7 @@ class SasaransController < ApplicationController
     @tahun_sasaran = cookies[:tahun_sasaran] || nil
     @sasarans = @user.sasarans.where(tahun: @tahun_sasaran).order(:id)
     @sasarans = @user.sasarans.order(:id) if @sasarans.empty?
+    render 'index_admin' if current_user.has_role? :admin
   end
 
   # GET /sasarans/1 or /sasarans/1.json
@@ -262,6 +263,7 @@ class SasaransController < ApplicationController
   # GET /sasarans/new
   def new
     @sasaran = @user.sasarans.build
+    @tipe = params[:tipe]
     @sasaran.indikator_sasarans.build
   end
 
@@ -275,7 +277,8 @@ class SasaransController < ApplicationController
     respond_to do |format|
       if @sasaran.save
         # @sasaran.indikator_sasarans.create!(sasaran_params[:indikator_sasarans_attributes].merge!(sasaran_id: sasaran_params[:id_rencana]))
-        format.html { redirect_to user_sasaran_path(@user, @sasaran), success: 'Sasaran berhasil dibuat.' }
+        # format.html { redirect_to user_sasaran_path(@user, @sasaran), success: 'Sasaran berhasil dibuat.' }
+        format.html { redirect_to sasarans_path, success: 'Sasaran berhasil dibuat.' }
         format.json { render :show, status: :created, location: @sasaran }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -342,7 +345,7 @@ class SasaransController < ApplicationController
   def sasaran_params
     params.require(:sasaran).permit(:sasaran_kinerja, :penerima_manfaat, :nip_asn, :program_kegiatan_id,
                                     :sumber_dana, :subkegiatan_tematik_id, :tahun, :id_rencana,
-                                    :kelompok_anggaran, :filter_file, :filter_target, :filter_type,
+                                    :kelompok_anggaran, :filter_file, :filter_target, :filter_type, :sasaran_milik,
                                     indikator_sasarans_attributes: %i[id indikator_kinerja aspek target satuan _destroy])
   end
 

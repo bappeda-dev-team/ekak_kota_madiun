@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Sasaran -- Admin</li>
+      </ol>
+    </nav>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Sasaran -- Admin</h2>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center">
+          <%= render 'tabel_sasaran_admin_per_eselon',sasarans: @sasarans.where(sasaran_milik: 'eselon_2'), tipe: 'eselon_2' %>
+          <%= render 'tabel_sasaran_admin_per_eselon',sasarans: @sasarans.where(sasaran_milik: 'eselon_3'), tipe: 'eselon_3' %>
+          <%= render 'tabel_sasaran_admin_per_eselon',sasarans: @sasarans.where(sasaran_milik: 'eselon_4'), tipe: 'eselon_4' %>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render 'shared/modal_template', modal_name: 'clone-sasaran' %>
