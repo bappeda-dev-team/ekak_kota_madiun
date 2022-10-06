@@ -85,6 +85,10 @@ class DaftarResikoPdf < Prawn::Document
     sasaran_arr = []
     # warning, not loop indikator
     sasarans.each.with_index(1) do |s, no|
+      nilai_kemungkinan = s.rincian&.kemungkinan&.nilai
+      nilai_skala_dampak = s.rincian&.skala_dampak&.nilai
+      peta_resiko = ApplicationController.helpers.peta_resiko(nilai_kemungkinan, nilai_skala_dampak)
+      nilai_peta_resiko = ApplicationController.helpers.nilai_peta_resiko(peta_resiko)
       sasaran_arr << [{ content: no.to_s, align: :center, width: 20 },
                       { content: s.sasaran_kinerja, align: :left, width: 75 },
                       { content: s.indikator_sasarans.first.indikator_kinerja, width: 75 },
@@ -95,7 +99,7 @@ class DaftarResikoPdf < Prawn::Document
                       { content: s.rincian&.kemungkinan&.deskripsi || '-', width: 50, align: :center },
                       { content: s.rincian&.dampak || '-', width: 75, align: :center },
                       { content: s.rincian&.skala_dampak&.deskripsi || '-', width: 50, align: :center },
-                      { content: "(#{s.rincian&.peta_resiko}) #{s.rincian&.nilai_peta_resiko}", width: 55,
+                      { content: "(#{peta_resiko}) #{nilai_peta_resiko}", width: 55,
                         align: :center }]
     end
     tabel_maker sasaran_arr
