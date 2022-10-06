@@ -1737,7 +1737,9 @@ CREATE TABLE public.rincians (
     lokasi_pelaksanaan character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    dampak character varying
+    dampak character varying,
+    skala_id bigint,
+    kemungkinan_id integer
 );
 
 
@@ -3523,6 +3525,13 @@ CREATE INDEX index_rincians_on_sasaran_id ON public.rincians USING btree (sasara
 
 
 --
+-- Name: index_rincians_on_skala_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_rincians_on_skala_id ON public.rincians USING btree (skala_id);
+
+
+--
 -- Name: index_roles_on_name_and_resource_type_and_resource_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3548,13 +3557,6 @@ CREATE UNIQUE INDEX index_sasaran_kota_on_id_sasaran ON public.sasaran_kota USIN
 --
 
 CREATE UNIQUE INDEX index_sasarans_on_id_rencana ON public.sasarans USING btree (id_rencana);
-
-
---
--- Name: index_skalas_on_rincian_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_skalas_on_rincian_id ON public.skalas USING btree (rincian_id);
 
 
 --
@@ -3979,6 +3981,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220912095543'),
 ('20220912101849'),
 ('20220912105503'),
-('20221001100003');
+('20221001100003'),
+('20221006070803'),
+('20221006072126');
 
 

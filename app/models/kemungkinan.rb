@@ -13,10 +13,7 @@
 #  updated_at :datetime         not null
 #  rincian_id :bigint
 #
-# Indexes
-#
-#  index_skalas_on_rincian_id  (rincian_id)
-#
 class Kemungkinan < Skala
   validates :kode_skala, presence: true
+  has_one :rincian
 end

@@ -13,11 +13,14 @@
 #  resiko              :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
+#  kemungkinan_id      :integer
 #  sasaran_id          :bigint           not null
+#  skala_id            :bigint
 #
 # Indexes
 #
 #  index_rincians_on_sasaran_id  (sasaran_id)
+#  index_rincians_on_skala_id    (skala_id)
 #
 # Foreign Keys
 #

@@ -13,10 +13,6 @@
 #  updated_at :datetime         not null
 #  rincian_id :bigint
 #
-# Indexes
-#
-#  index_skalas_on_rincian_id  (rincian_id)
-#
 FactoryBot.define do
   factory :skala do
     jenis { "MyString" }
