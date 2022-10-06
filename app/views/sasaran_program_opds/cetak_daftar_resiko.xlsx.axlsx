@@ -13,6 +13,10 @@ wb.add_worksheet(name: "Daftar Resiko") do |sheet|
   @program_kegiatans.each.with_index(1) do |(pk, sasarans), i|
     sheet.add_row [i.to_s, pk.nama_subkegiatan]
     sasarans.each.with_index(1) do |s, no|
+      nilai_kemungkinan = s.rincian&.kemungkinan&.nilai
+      nilai_skala_dampak = s.rincian&.skala_dampak&.nilai
+      peta_resiko = ApplicationController.helpers.peta_resiko(nilai_kemungkinan, nilai_skala_dampak)
+      nilai_peta_resiko = ApplicationController.helpers.nilai_peta_resiko(peta_resiko)
       sheet.add_row ["", "", no.to_s, s.sasaran_kinerja,
                      s.indikator_sasarans.first.indikator_kinerja, s.indikator_sasarans.first.target.to_s,
                      s.indikator_sasarans.first.satuan,
@@ -20,7 +24,7 @@ wb.add_worksheet(name: "Daftar Resiko") do |sheet|
                      s.rincian&.resiko || '-',
                      s.rincian&.kemungkinan&.deskripsi, s.rincian&.dampak || '-',
                      s.rincian&.skala_dampak&.deskripsi || '-',
-                     "(#{s.rincian&.peta_resiko}) #{s.rincian&.nilai_peta_resiko}"]
+                     "(#{peta_resiko}) #{nilai_peta_resiko}"]
     end
   end
   sheet.add_row ["", "Madiun,    #{I18n.l Date.today, format: '  %B %Y'}"]
