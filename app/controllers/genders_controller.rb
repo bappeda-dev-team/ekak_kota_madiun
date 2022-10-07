@@ -4,6 +4,11 @@ class GendersController < ApplicationController
     # open gender html
   end
 
+  def gap_gender
+    @opd = current_user.opd
+    @program_kegiatans = ProgramKegiatan.where(kode_opd: @opd.kode_opd)
+  end
+
   def pdf_gender
     # nama_file = Nama subkegiatan
     @nama_file = ProgramKegiatan.find(params[:id]).nama_subkegiatan

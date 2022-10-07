@@ -367,6 +367,32 @@
             </ul>
           </div>
         </li>
+        <li class="nav-item">
+          <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_item_gender[:menu] %>" data-bs-toggle="collapse" data-bs-target="#pengarusutamaan_gender" aria-expanded="<%= collapsed_item_gender[:aria] %>">
+            <span>
+              <span class="sidebar-icon">
+                <i class="fas fa-people-carry icon icon-xs me-2"></i>
+              </span>
+              <span class="sidebar-text">Gender</span>
+            </span>
+            <span class="link-arrow">
+              <i class="fas fa-angle-right icon icon-sm"></i>
+            </span>
+          </span>
+          <div class="multi-level <%= collapsed_item_gender[:sub_menu] %>" role="list" id="pengarusutamaan_gender" aria-expanded="<%= collapsed_item_gender[:aria] %>">
+            <ul class="flex-column nav">
+              <% gender_items.each do |gender| %>
+                <li class="nav-item<%= navigation_class(gender[:identifier]) %>" >
+                  <%= link_to(gender[:href], class: "nav-link") do %>
+                    <span>
+                      <span class="sidebar-text"><%= gender[:title] %></span>
+                    </span>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </li>
         <% item_filtered = current_user.instance_of?(Atasan) ? asn_sidebar_items :  asn_sidebar_items.reject! { |i| i[:title] == 'Laporan Atasan' } %>
         <% item_filtered.each do |item| %>
           <li class="nav-item<%= navigation_class(item[:identifier]) %>">

@@ -316,6 +316,7 @@ Rails.application.routes.draw do
   get "/rasional_sasaran_anggaran/:sasaran", to: "rasionalisasi#rasional_sasaran_anggaran"
 
   get "/gender", to: "genders#gender"
+  get "/gap_gender", to: "genders#gap_gender"
   get "/laporan_gender", to: "genders#laporan_gender"
   get "/pdf_gender/:id/:tahun", to: "genders#pdf_gender"
 
