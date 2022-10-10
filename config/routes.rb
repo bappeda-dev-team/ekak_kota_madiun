@@ -6,6 +6,18 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  # get "/gender", to: "genders#gender"
+  # get "/gap_gender", to: "genders#gap_gender"
+  # get "/laporan_gender", to: "genders#laporan_gender"
+  # get "/pdf_gender/:id/:tahun", to: "genders#pdf_gender"
+  resources :genders do
+    collection do
+      get :gender
+      get :gap
+      get :laporan_gender
+      get 'pdf_gender/:id/:tahun', to: 'genders#pdf_gender'
+    end
+  end
   resources :tujuans
   # get 'isu_dan_permasalahans/index'
   resources :renstra do
@@ -91,6 +103,9 @@ Rails.application.routes.draw do
   resources :atasans
   resources :kepalas
   resources :sasarans do
+    collection do
+      get :list_sasaran
+    end
     resources :rincians do
       get "subkegiatan", on: :new
     end
@@ -314,11 +329,6 @@ Rails.application.routes.draw do
   get "/rasionalisasi", to: "rasionalisasi#rasionalisasi"
   get "/rasional_sasaran/:sasaran", to: "rasionalisasi#rasional_sasaran"
   get "/rasional_sasaran_anggaran/:sasaran", to: "rasionalisasi#rasional_sasaran_anggaran"
-
-  get "/gender", to: "genders#gender"
-  get "/gap_gender", to: "genders#gap_gender"
-  get "/laporan_gender", to: "genders#laporan_gender"
-  get "/pdf_gender/:id/:tahun", to: "genders#pdf_gender"
 
   get "/laporan_renja", to: "program_kegiatans#laporan_renja"
   get "/laporan_usulan/:jenis", to: "usulans#laporan_usulan"

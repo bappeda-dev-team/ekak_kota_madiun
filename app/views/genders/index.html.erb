@@ -7,10 +7,13 @@
             <i class="fas fa-home"></i>
           <% end %>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">GAP Gender</li>
+        <li class="breadcrumb-item active" aria-current="page">Gender</li>
       </ol>
     </nav>
-    <div class="card border-0 shadow" id="gap_gender_filter">
+    <% if current_user.has_role? :admin or current_user.has_role? :super_admin or current_user.has_role? :reviewer %>
+      <%= render 'shared/filter_with_tahun_card', filter_url: '/filter_gender' %>
+    <% end %>
+    <div class="card border-0 shadow" id="gender_filter">
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">
@@ -23,12 +26,10 @@
           </div>
         </div>
       </div>
+      <% unless current_user.has_role? :admin %>
         <div class="card-body">
           <div class="table-responsive">
             <table class="table align-items-center border-start border-end" id="tabel_gender">
-              <caption class="p-3 mt-3">
-                <%= link_to "Buat Analisis Gender",new_gender_path, class: "btn btn-info w-100" %>
-              </caption>
               <thead class="thead-light">
                 <tr>
                   <th class="border-bottom" scope="col">No.</th>
@@ -48,7 +49,7 @@
               <tbody>
                 <% @program_kegiatans.each.with_index(1) do |kak, i| %>
                   <tr class="border-bottom">
-                    <% row_dalam = kak.sasarans.count + 1  %>
+                    <% row_dalam = kak.sasarans.count + 1 %>
                     <td class="text-gray-900 fw-bolder border-bottom" rowspan="<%= row_dalam %>"><%= i %></td>
                     <td class="text-gray-900 text-wrap" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.nama_subkegiatan %></td>
                     <td class="text-gray-900 border-end border-start" rowspan="<%= kak.sasarans.count + 1 %>">Rp. <%= number_with_delimiter(kak.my_pagu) or 0 %></td>
@@ -80,6 +81,7 @@
             </table>
           </div>
         </div>
+      <% end %>
     </div>
   </div>
 </div>

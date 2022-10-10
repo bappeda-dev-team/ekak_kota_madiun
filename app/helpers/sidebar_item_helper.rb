@@ -146,8 +146,8 @@ module SidebarItemHelper
 
   def gender_items
     [
-      { title: 'GAP', href: gap_gender_path, identifier: 'gap_gender' },
-      { title: 'GBS', href: gender_path, identifier: 'gender' }
+      { title: 'GAP', href: gap_genders_path, identifier: 'gap' },
+      { title: 'GBS', href: genders_path, identifier: 'genders' }
     ]
   end
 

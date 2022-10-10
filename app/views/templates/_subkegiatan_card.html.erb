@@ -1,0 +1,18 @@
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="row align-items-center">
+        <div class="col">
+          <h5>SubKegiatan </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <%= form.select(:program_kegiatan_id, ProgramKegiatan.where(kode_opd: opd.kode_opd).pluck(:nama_subkegiatan, :id), {},
+                    {data: { controller: 'dropdown',
+                             'ajax--url': "/program_kegiatans.json",
+                             "ajax--cache": "true",
+                             "placeholder": "Pilih SubKegiatan"}} ) %>
+</div>
+</div>

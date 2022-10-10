@@ -14,6 +14,12 @@ class SasaransController < ApplicationController
     end
   end
 
+  def list_sasaran
+    param = params[:q] || ""
+    @opd = current_user.opd
+    @sasarans = @opd.sasarans.where("sasaran_kinerja ILIKE ?", "%#{param}").order(:id)
+  end
+
   # GET /sasarans/1 or /sasarans/1.json
   def show; end
 
