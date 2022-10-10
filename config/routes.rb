@@ -106,6 +106,9 @@ Rails.application.routes.draw do
     collection do
       get :list_sasaran
     end
+    member do
+      get :data_detail
+    end
     resources :rincians do
       get "subkegiatan", on: :new
     end
