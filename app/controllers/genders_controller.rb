@@ -25,7 +25,7 @@ class GendersController < ApplicationController
 
     respond_to do |format|
       if @gender.save
-        format.html { redirect_to gap_genders_path, notice: "Data Gender Analysis Berhasil disimpan" }
+        format.html { redirect_to gap_genders_path, success: "Data Gender Analysis Berhasil disimpan" }
         format.json { render :show, status: :created, location: @gender }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class GendersController < ApplicationController
   def update
     respond_to do |format|
       if @gender.update(gender_params)
-        format.html { redirect_to gap_genders_path, notice: "Data Gender Analysis Berhasil diupdate" }
+        format.html { redirect_to gap_genders_path, success: "Data Gender Analysis Berhasil diupdate" }
         format.json { render :show, status: :ok, location: @gender }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -65,6 +65,12 @@ class GendersController < ApplicationController
   def gap
     @genders = Gender.all
     render 'gap_gender'
+  end
+
+  def gbs
+    @genders = Gender.all
+    @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik }).group(:id)
+    render 'gbs_gender'
   end
 
   def pdf_gender
@@ -102,6 +108,7 @@ class GendersController < ApplicationController
                                    :sasaran_id, :program_kegiatan_id,
                                    :penyebab_internal, :penyebab_external,
                                    :indikator, :target, :satuan,
-                                   :reformulasi_tujuan, :data_terpilah)
+                                   :reformulasi_tujuan, :data_terpilah,
+                                   :sasaran_subkegiatan, :penerima_manfaat)
   end
 end

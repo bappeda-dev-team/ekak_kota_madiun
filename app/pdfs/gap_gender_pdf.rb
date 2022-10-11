@@ -44,26 +44,33 @@ class GapGenderPdf < Prawn::Document
   end
 
   def header_tabel
-    [{ content: "KEBIJAKAN / PROGRAM / KEGIATAN / SUBKEGIATAN", rowspan: 2 }, { content: "DATA PEMBUKA WAWASAN", align: :center, rowspan: 2 },
-     { content: "ISU GENDER", colspan: 3, align: :center }, { content: "KEBIJAKAN DAN RENCANA KEDEPAN", colspan: 2, align: :center },
-     { content: "PENGUKURAN HASIL", colspan: 2, align: :center }]
-  end
-
-  def subheader_tabel
-    [[{ content: "No", width: 20, align: :center },
-      { content: "SASARAN", width: 75 },
-      { content: "PETA RESIKO", width: 55, align: :center }]]
+    [[{ content: "KEBIJAKAN / PROGRAM / KEGIATAN / SUBKEGIATAN", rowspan: 2, width: 50 },
+      { content: "DATA PEMBUKA WAWASAN", align: :center, rowspan: 2, width: 50 },
+      { content: "ISU GENDER", colspan: 3, align: :center },
+      { content: "KEBIJAKAN DAN RENCANA KEDEPAN", colspan: 2, align: :center },
+      { content: "PENGUKURAN HASIL", colspan: 2, align: :center }],
+     [{ content: "FAKTOR KESENJANGAN", width: 70, align: :center },
+      { content:  "SEBAB INTERNAL", width: 70, align: :center },
+      { content:  "SEBAB EXTERNAL", width: 70, align: :center },
+      { content:  "REFORMULASI TUJUAN", width: 70, align: :center },
+      { content:  "RENCANA AKSI", width: 70, align: :center },
+      { content:  "BASELINE", width: 70, align: :center },
+      { content:  "INDIKATOR", width: 70, align: :center }]]
   end
 
   def gender
     # main table
-    header = [header_tabel]
-    header << ["FAKTOR KESENJANGAN", "SEBAB INTERNAL", "SEBAB EXTERNAL", "REFORMASI TUJUAN", "RENCANA AKSI",
-               "BASELINE", "INDIKATOR"]
+    data_gender = header_tabel
+    data_gender << [{ content: @program_kegiatan.nama_subkegiatan },
+                    { content: @gender.sasaran.sasaran_kinerja },
+                    { content: @gender.faktor_kesenjangan },
+                    { content: @gender.penyebab_internal },
+                    { content: @gender.penyebab_external },
+                    { content: @gender.reformulasi_tujuan },
+                    { content: @gender.sasaran.tahapans.first.tahapan_kerja },
+                    { content: @gender.data_terpilah },
+                    { content: @gender.indikator }]
     # create cell
-    header << [{ content: @program_kegiatan.nama_subkegiatan },
-               data_pembuka_wawasan,
-               { content: @gender.akses }]
   end
 
   def data_pembuka_wawasan
@@ -72,7 +79,6 @@ class GapGenderPdf < Prawn::Document
       { content: @gender.sasaran.penerima_manfaat },
       { content: @gender.sasaran.rincian.data_terpilah }
     ]
-    tabel_maker(pembuka_wawasan)
   end
 
   private

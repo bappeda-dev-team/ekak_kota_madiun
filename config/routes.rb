@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     collection do
       get :gender
       get :gap
+      get :gbs
       get :laporan_gender
       get 'pdf_gender/:id/:tahun', to: 'genders#pdf_gender'
       get 'pdf_gap_gender/:id/:tahun', to: 'genders#pdf_gap_gender'
