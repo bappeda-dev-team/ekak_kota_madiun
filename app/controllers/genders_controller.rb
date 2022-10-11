@@ -78,6 +78,17 @@ class GendersController < ApplicationController
     # render 'pdf_gap.pdf'
   end
 
+  def pdf_gap_gender
+    @gender = Gender.find(params[:id])
+    @tahun = params[:tahun]
+    @opd = current_user.opd
+    pdf = GapGenderPdf.new(opd: @opd, tahun: @tahun, gender: @gender)
+    @filename = "GAP_#{@opd.nama_opd}_TAHUN_#{@tahun}.pdf"
+    respond_to do |format|
+      format.pdf { send_data(pdf.render, filename: @filename, type: 'application/pdf', disposition: :attachment) }
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

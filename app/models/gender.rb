@@ -31,4 +31,8 @@ class Gender < ApplicationRecord
   validates :sasaran_id, presence: true
   validates :program_kegiatan_id, presence: true
   validates :reformulasi_tujuan, presence: true
+
+  def faktor_kesenjangan
+    "AKSES: #{akses}"
+  end
 end

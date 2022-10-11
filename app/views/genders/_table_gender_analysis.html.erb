@@ -8,31 +8,22 @@
       <th>Data Terpilah</th>
 
       <th>Faktor Kesenjangan</th>
-      <th>Penyebab Internal</th>
-      <th>Penyebab External</th>
-
-      <th>Reformulasi Tujuan</th>
-
-      <th>Indikator</th>
-      <th>Target</th>
-      <th>Satuan</th>
+      <th>Aksi</th>
     </tr>
   </thead>
   <tbody>
     <% @genders.each.with_index(1) do |gender, index| %>
       <tr>
         <td class=" "><%= index %></td>
-        <td class=" "><%= gender.program_kegiatan.nama_subkegiatan %></td>
-        <td class=" "><%= gender.sasaran.sasaran_kinerja %></td>
+        <td class="text-wrap"><%= gender.program_kegiatan.nama_subkegiatan %></td>
+        <td class="text-wrap"><%= gender.sasaran.sasaran_kinerja %></td>
         <td class=" "><%= gender.sasaran.penerima_manfaat %></td>
         <td class=" "><%= gender.data_terpilah %></td>
         <td class="p-0"><%= render 'table_penerima_manfaat', gender: gender %></td>
-        <td class=" "><%= gender.reformulasi_tujuan %></td>
-        <td class=" "><%= gender.penyebab_internal %></td>
-        <td class=" "><%= gender.penyebab_external %></td>
-        <td class=" "><%= gender.indikator %></td>
-        <td class=" "><%= gender.target %></td>
-        <td class=" "><%= gender.satuan %></td>
+        <td class=""><%= link_to "/genders/pdf_gap_gender/#{gender.id}/2022.pdf" do %>
+          <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak GAB"></span>
+        <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
