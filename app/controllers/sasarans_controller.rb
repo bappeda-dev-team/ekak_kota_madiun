@@ -17,11 +17,17 @@ class SasaransController < ApplicationController
   def list_sasaran
     param = params[:q] || ""
     @opd = current_user.opd
-    @sasarans = @opd.sasarans.where("sasaran_kinerja ILIKE ?", "%#{param}")
+    # we do the complex logic for simple thing here
+    @sasarans = @opd.sasarans.dengan_rincian.merge(@opd.users.asn_aktif).limit(50)
   end
 
   def data_detail
     @sasaran = Sasaran.find(params[:id])
+  end
+
+  def rencana_aksi
+    @sasaran = Sasaran.find(params[:id])
+    render partial: 'templates/rencana_aksi_card', locals: { sasaran: @sasaran }
   end
 
   # GET /sasarans/1 or /sasarans/1.json

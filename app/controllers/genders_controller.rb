@@ -63,8 +63,6 @@ class GendersController < ApplicationController
   # end
 
   def gap
-    @opd = current_user.opd
-    @program_kegiatans = ProgramKegiatan.where(kode_opd: @opd.kode_opd)
     render 'gap_gender'
   end
 
@@ -88,6 +86,6 @@ class GendersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def gender_params
-    params.fetch(:gender, {})
+    params.require(:gender).permit(:akses, :partisipasi, :kontrol, :manfaat, :sasaran_id, :program_kegiatan_id)
   end
 end

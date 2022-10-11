@@ -108,6 +108,7 @@ Rails.application.routes.draw do
     end
     member do
       get :data_detail
+      get :rencana_aksi
     end
     resources :rincians do
       get "subkegiatan", on: :new
