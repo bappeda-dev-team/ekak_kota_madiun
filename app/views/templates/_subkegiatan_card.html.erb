@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="card-body">
-    <%= form.select(:program_kegiatan_id, ProgramKegiatan.where(kode_opd: opd.kode_opd).pluck(:nama_subkegiatan, :id), {},
+    <%= form.select(:program_kegiatan_id, [], {},
                     {data: { controller: 'dropdown',
                              'ajax--url': "/program_kegiatans.json",
                              "ajax--cache": "true",

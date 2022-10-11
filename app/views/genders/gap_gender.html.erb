@@ -24,10 +24,11 @@
         </div>
       </div>
       <div class="card-body">
-        <%= link_to "Buat Analisis Gender",new_gender_path, class: "btn btn-info w-100" %>
         <div class="table-responsive">
+          <%= render 'table_gender_analysis', genders: @genders %>
         </div>
       </div>
+      <%= link_to "Buat Analisis Gender",new_gender_path, class: "btn btn-info w-100" %>
     </div>
   </div>
 </div>

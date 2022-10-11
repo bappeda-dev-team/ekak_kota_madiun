@@ -1,0 +1,39 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>SubKegiatan</th>
+      <th>Sasaran SubKegiatan</th>
+      <th>Penerima Manfaat</th>
+      <th>Data Terpilah</th>
+
+      <th>Faktor Kesenjangan</th>
+      <th>Penyebab Internal</th>
+      <th>Penyebab External</th>
+
+      <th>Reformulasi Tujuan</th>
+
+      <th>Indikator</th>
+      <th>Target</th>
+      <th>Satuan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @genders.each.with_index(1) do |gender, index| %>
+      <tr>
+        <td class=" "><%= index %></td>
+        <td class=" "><%= gender.program_kegiatan.nama_subkegiatan %></td>
+        <td class=" "><%= gender.sasaran.sasaran_kinerja %></td>
+        <td class=" "><%= gender.sasaran.penerima_manfaat %></td>
+        <td class=" "><%= gender.data_terpilah %></td>
+        <td class="p-0"><%= render 'table_penerima_manfaat', gender: gender %></td>
+        <td class=" "><%= gender.reformulasi_tujuan %></td>
+        <td class=" "><%= gender.penyebab_internal %></td>
+        <td class=" "><%= gender.penyebab_external %></td>
+        <td class=" "><%= gender.indikator %></td>
+        <td class=" "><%= gender.target %></td>
+        <td class=" "><%= gender.satuan %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

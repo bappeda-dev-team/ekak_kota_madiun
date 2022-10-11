@@ -18,7 +18,7 @@ class SasaransController < ApplicationController
     param = params[:q] || ""
     @opd = current_user.opd
     # we do the complex logic for simple thing here
-    @sasarans = @opd.sasarans.dengan_rincian.merge(@opd.users.asn_aktif).limit(50)
+    @sasarans = @opd.sasarans.dengan_rincian.merge(@opd.users.asn_aktif).where("sasaran_kinerja ILIKE ?", "%#{param}%").limit(50)
   end
 
   def data_detail

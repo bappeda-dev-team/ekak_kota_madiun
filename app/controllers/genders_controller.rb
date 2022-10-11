@@ -25,7 +25,7 @@ class GendersController < ApplicationController
 
     respond_to do |format|
       if @gender.save
-        format.html { redirect_to gender_url(@gender), notice: "Gender was successfully created." }
+        format.html { redirect_to gap_genders_path, notice: "Data Gender Analysis Berhasil disimpan" }
         format.json { render :show, status: :created, location: @gender }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class GendersController < ApplicationController
   def update
     respond_to do |format|
       if @gender.update(gender_params)
-        format.html { redirect_to gender_url(@gender), notice: "Gender was successfully updated." }
+        format.html { redirect_to gap_genders_path, notice: "Data Gender Analysis Berhasil diupdate" }
         format.json { render :show, status: :ok, location: @gender }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +52,7 @@ class GendersController < ApplicationController
     @gender.destroy
 
     respond_to do |format|
-      format.html { redirect_to genders_url, notice: "Gender was successfully destroyed." }
+      format.html { redirect_to gap_genders_path, notice: "Data Gender Analysis dihapus" }
       format.json { head :no_content }
     end
   end
@@ -63,6 +63,7 @@ class GendersController < ApplicationController
   # end
 
   def gap
+    @genders = Gender.all
     render 'gap_gender'
   end
 
@@ -86,6 +87,10 @@ class GendersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def gender_params
-    params.require(:gender).permit(:akses, :partisipasi, :kontrol, :manfaat, :sasaran_id, :program_kegiatan_id)
+    params.require(:gender).permit(:akses, :partisipasi, :kontrol, :manfaat,
+                                   :sasaran_id, :program_kegiatan_id,
+                                   :penyebab_internal, :penyebab_external,
+                                   :indikator, :target, :satuan,
+                                   :reformulasi_tujuan, :data_terpilah)
   end
 end

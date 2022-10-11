@@ -621,7 +621,14 @@ CREATE TABLE public.genders (
     sasaran_id bigint,
     program_kegiatan_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    reformulasi_tujuan character varying,
+    data_terpilah character varying,
+    indikator character varying,
+    target character varying,
+    satuan character varying,
+    penyebab_internal character varying,
+    penyebab_external character varying
 );
 
 
@@ -4049,6 +4056,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20221001100003'),
 ('20221006070803'),
 ('20221006072126'),
-('20221010010305');
+('20221010010305'),
+('20221011022256');
 
 
