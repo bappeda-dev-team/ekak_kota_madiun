@@ -12,7 +12,7 @@
   <% end %>
   <div class="gender_analysis" data-controller="gender-form" data-action='change-select@document->gender-form#fill_data'>
     <div class="field">
-      <%= render 'templates/subkegiatan_card', form: form, opd: opd %>
+      <%= render 'templates/subkegiatan_card', form: form, gender: gender %>
     </div>
     <div class="field">
       <%= render 'templates/sasarans_card', form: form %>
@@ -31,15 +31,15 @@
       <div class="card-body">
         <div class="field">
           <%= form.label :sasaran_subkegiatan, class: 'form-label' %>
-          <%= form.text_field :sasaran_data, class: 'form-control', data: { gender_form_target: "sasaran" } %>
+          <%= form.text_field :sasaran_data, class: 'form-control', data: { gender_form_target: "sasaran", gender_form_target: "sasaran_murni" }, readonly: true %>
         </div>
         <div class="field">
           <%= form.label :penerima_manfaat, class: 'form-label' %>
-          <%= form.text_field :sasaran_penerima_manfaat, class: 'form-control', data: { gender_form_target: "penerima_manfaat" } %>
+          <%= form.text_field :sasaran_penerima_manfaat, class: 'form-control', data: { gender_form_target: "penerima_manfaat" }, readonly: true %>
         </div>
         <div class="field">
           <%= form.label :data_terpilah, class: 'form-label' %>
-          <%= form.text_field :sasaran_data_terpilah, class: 'form-control', data: { gender_form_target: "data_terpilah" } %>
+          <%= form.text_field :sasaran_data_terpilah, class: 'form-control', data: { gender_form_target: "data_terpilah" }, readonly: true %>
         </div>
       </div>
     </div>

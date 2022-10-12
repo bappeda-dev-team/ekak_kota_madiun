@@ -54,7 +54,7 @@ class GendersController < ApplicationController
     @gender.destroy
 
     respond_to do |format|
-      format.html { redirect_to gap_genders_path, notice: "Data Gender Analysis dihapus" }
+      format.html { redirect_to gap_genders_path, success: "Data Gender Analysis dihapus" }
       format.json { head :no_content }
     end
   end

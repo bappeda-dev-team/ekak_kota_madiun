@@ -100,4 +100,10 @@ export default class extends Controller {
     const opd_id = e.detail.data.id
     this.opd_idValue= opd_id
   }
+
+  event_dispatcher(custom_event_name, data) {
+    const custom_event = new CustomEvent(custom_event_name,
+                            { detail: { data: data }})
+    document.dispatchEvent(custom_event)
+  }
 }
