@@ -6,12 +6,13 @@ export default class extends Controller {
   static targets = [ 
                     "sasaran", "penerima_manfaat", "data_terpilah", "penyebab_internal", "penyebab_external",
                     "indikator_sasaran", "target_indikator", "satuan_indikator", "rencana_aksi",
-                    "sasaran_murni",
                     "program_kegiatan_id", "sasaran_id" ]
 
   connect() {
     if(this.hasSasaran_idTarget) {
-      this.fill_default_data(this.sasaran_idTarget.value)
+      if(this.sasaran_idTarget.value != "") {
+        this.fill_default_data(this.sasaran_idTarget.value)
+      }
     }
   }
 
@@ -19,7 +20,7 @@ export default class extends Controller {
     const data_sasaran = fetch(`/sasarans/${id_sasaran}/data_detail.json`)
       .then(response => response.json())
       .then((data) => {
-        this.sasaran_murniTarget.value = data.sasaran_kinerja
+        this.sasaranTarget.value = data.sasaran_kinerja
         this.penerima_manfaatTarget.value = data.penerima_manfaat
         this.data_terpilahTarget.value = data.data_terpilah
       })
