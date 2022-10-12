@@ -8,6 +8,8 @@
       <th>Data Terpilah</th>
 
       <th>Faktor Kesenjangan</th>
+      <th>Penyebab Internal</th>
+      <th>Penyebab External</th>
       <th>Aksi</th>
     </tr>
   </thead>
@@ -17,9 +19,11 @@
         <td class=" "><%= index %></td>
         <td class="text-wrap"><%= gender.program_kegiatan.nama_subkegiatan %></td>
         <td class="text-wrap"><%= gender.sasaran.sasaran_kinerja %></td>
-        <td class=" "><%= gender.sasaran.penerima_manfaat %></td>
+        <td class=" "><%= gender.penerima_manfaat %></td>
         <td class=" "><%= gender.data_terpilah %></td>
         <td class="p-0"><%= render 'table_penerima_manfaat', gender: gender %></td>
+        <td><%= gender.penyebab_internal_gender %></td>
+        <td><%= gender.penyebab_external_gender %></td>
         <td class=""><%= link_to "/genders/pdf_gap_gender/#{gender.id}/2022.pdf" do %>
           <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak GAB"></span>
         <% end %>

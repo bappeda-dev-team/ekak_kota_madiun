@@ -44,8 +44,8 @@ class GapGenderPdf < Prawn::Document
   end
 
   def header_tabel
-    [[{ content: "KEBIJAKAN / PROGRAM / KEGIATAN / SUBKEGIATAN", rowspan: 2, width: 50 },
-      { content: "DATA PEMBUKA WAWASAN", align: :center, rowspan: 2, width: 50 },
+    [[{ content: "KEBIJAKAN / PROGRAM / KEGIATAN / SUBKEGIATAN", rowspan: 2, width: 70 },
+      { content: "DATA PEMBUKA WAWASAN", align: :center, rowspan: 2, width: 70 },
       { content: "ISU GENDER", colspan: 3, align: :center },
       { content: "KEBIJAKAN DAN RENCANA KEDEPAN", colspan: 2, align: :center },
       { content: "PENGUKURAN HASIL", colspan: 2, align: :center }],

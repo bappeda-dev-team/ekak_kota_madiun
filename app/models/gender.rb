@@ -27,6 +27,9 @@ class Gender < ApplicationRecord
   belongs_to :program_kegiatan, optional: true
   belongs_to :sasaran, optional: true
 
+  serialize :penyebab_internal, Array
+  serialize :penyebab_external, Array
+
   validates :sasaran_id, presence: true
   validates :program_kegiatan_id, presence: true
   validates :reformulasi_tujuan, presence: true
@@ -43,5 +46,21 @@ class Gender < ApplicationRecord
      KONTROL: #{kontrol}
      MANFAAT: #{manfaat}
     "
+  end
+
+  def penyebab_internal_gender
+    penyebab_internal.is_a?(Array) ? list_html_style(penyebab_internal) : penyebab_internal
+  end
+
+  def penyebab_external_gender
+    penyebab_external.is_a?(Array) ? list_html_style(penyebab_external) : penyebab_external
+  end
+
+  def list_html_style(list_items)
+    self.class.include ActionView::Helpers
+    self.class.include ActionView::Context
+    content_tag(:ol, class: 'list_items') do
+      list_items.each { |item| concat(content_tag(:li, item)) }
+    end
   end
 end

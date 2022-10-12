@@ -88,12 +88,14 @@
 
         <div class="field">
           <%= form.label :penyebab_internal, class: 'form-label' %>
-          <%= form.text_field :penyebab_internal, class: 'form-control', data: { gender_form_target: 'penyebab_internal' } %>
+          <%= form.text_field :penyebab_internal,multiple: true, class: 'form-control', data: { gender_form_target: 'penyebab_internal' } %>
         </div>
+        <%= add_new_field("Tambah Penyebab Internal", form, :penyebab_internal, gender )  %>
         <div class="field">
           <%= form.label :penyebab_external, class: 'form-label' %>
-          <%= form.text_field :penyebab_external, class: 'form-control', data: { gender_form_target: 'penyebab_external' } %>
+          <%= form.text_field :penyebab_external, class: 'form-control', data: { gender_form_target: 'penyebab_external' }, name: "gender[penyebab_external][]" %>
         </div>
+        <%= add_new_field("Tambah Penyebab External", form, :penyebab_external, gender )  %>
       </div>
     </div>
 
@@ -114,9 +116,10 @@
         </div>
       </div>
     </div>
-    <%# TODO: make ajax call for rencana_aksi %>
+    <%# div for render rencana aksi table from selected sasarans%>
     <div data-gender-form-target="rencana_aksi">
     </div>
+    <%# end %>
     <div class="card border-2 shadow mb-3">
       <div class="card-header">
         <div class="row align-items-center">
@@ -142,7 +145,6 @@
         </div>
       </div>
     </div>
-    <%# TODO: indikator sasarans %>
     <div class="card border-2 shadow mb-3">
       <div class="card-header">
         <div class="row align-items-center">
@@ -174,3 +176,15 @@
     <%= form.submit "Simpan Gender Analysis Pathway" %>
   </div>
 <% end %>
+
+ <script>
+  $(function() {
+    $('form').on('click', '.add_fields_<%= gender.id %>', function(event) {
+      let regexp, time;
+      time = new Date().getTime();
+      regexp = new RegExp($(this).data('id'), 'g')
+      $(this).before($(this).data('fields').replace(regexp, time))
+      return event.preventDefault()
+    });
+  });
+</script>
