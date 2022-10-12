@@ -40,6 +40,17 @@ class Gender < ApplicationRecord
   validates :penyebab_internal, presence: true
   validates :penyebab_external, presence: true
 
+  before_save :remove_blank_penyebab_internal
+  before_save :remove_blank_penyebab_external
+
+  def remove_blank_penyebab_internal
+    penyebab_internal.reject!(&:blank?)
+  end
+
+  def remove_blank_penyebab_external
+    penyebab_external.reject!(&:blank?)
+  end
+
   def faktor_kesenjangan
     "AKSES: #{akses}
      PARTISIPASI: #{partisipasi}

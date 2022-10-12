@@ -17,7 +17,9 @@ class GendersController < ApplicationController
   end
 
   # GET /genders/1/edit
-  def edit; end
+  def edit
+    @opd = current_user.opd
+  end
 
   # POST /genders or /genders.json
   def create
