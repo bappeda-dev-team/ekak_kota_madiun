@@ -609,6 +609,51 @@ ALTER SEQUENCE public.dasar_hukums_id_seq OWNED BY public.dasar_hukums.id;
 
 
 --
+-- Name: genders; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.genders (
+    id bigint NOT NULL,
+    akses character varying,
+    partisipasi character varying,
+    kontrol character varying,
+    manfaat character varying,
+    sasaran_id bigint,
+    program_kegiatan_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    reformulasi_tujuan character varying,
+    data_terpilah character varying,
+    indikator character varying,
+    target character varying,
+    satuan character varying,
+    penyebab_internal character varying,
+    penyebab_external character varying,
+    penerima_manfaat character varying,
+    sasaran_subkegiatan character varying
+);
+
+
+--
+-- Name: genders_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.genders_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: genders_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.genders_id_seq OWNED BY public.genders.id;
+
+
+--
 -- Name: indikator_sasarans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2458,6 +2503,13 @@ ALTER TABLE ONLY public.dasar_hukums ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: genders id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.genders ALTER COLUMN id SET DEFAULT nextval('public.genders_id_seq'::regclass);
+
+
+--
 -- Name: indikator_sasarans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2877,6 +2929,14 @@ ALTER TABLE ONLY public.comments
 
 ALTER TABLE ONLY public.dasar_hukums
     ADD CONSTRAINT dasar_hukums_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: genders genders_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.genders
+    ADD CONSTRAINT genders_pkey PRIMARY KEY (id);
 
 
 --
@@ -3326,6 +3386,20 @@ CREATE INDEX index_comments_on_anggaran_id ON public.comments USING btree (angga
 --
 
 CREATE INDEX index_comments_on_user_id ON public.comments USING btree (user_id);
+
+
+--
+-- Name: index_genders_on_program_kegiatan_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_genders_on_program_kegiatan_id ON public.genders USING btree (program_kegiatan_id);
+
+
+--
+-- Name: index_genders_on_sasaran_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_genders_on_sasaran_id ON public.genders USING btree (sasaran_id);
 
 
 --
@@ -3983,6 +4057,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220912105503'),
 ('20221001100003'),
 ('20221006070803'),
-('20221006072126');
+('20221006072126'),
+('20221010010305'),
+('20221011022256'),
+('20221011193500');
 
 

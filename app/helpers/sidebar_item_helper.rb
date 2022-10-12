@@ -1,7 +1,6 @@
 module SidebarItemHelper
   def asn_sidebar_items
     [
-      { title: 'Pengarusutamaan Gender', href: gender_path, icon: 'fas fa-people-carry', identifier: 'gender' },
       { title: 'Laporan Atasan', href: atasan_laporans_path, icon: 'fas fa-chart-line', identifier: 'atasan' },
       { title: 'Laporan KAK', href: laporan_kak_path, icon: 'fas fa-file', identifier: 'laporan_kak' },
       { title: 'Rincian Belanja', href: rincian_belanja_path, icon: 'fas fa-money-check',
@@ -145,6 +144,13 @@ module SidebarItemHelper
     ]
   end
 
+  def gender_items
+    [
+      { title: 'GAP', href: gap_genders_path, identifier: 'gap' },
+      { title: 'GBS', href: gbs_genders_path, identifier: 'gbs' }
+    ]
+  end
+
   def navigation_class(identifier)
     return ' active' if request.path.match(/\b#{identifier}/)
   end
@@ -187,6 +193,10 @@ module SidebarItemHelper
 
   def collapsed_item_kota
     collapse_class('(\btujuan_kota|\bsasaran_kota|\bcrosscutting_kota)')
+  end
+
+  def collapsed_item_gender
+    collapse_class('(\bgap_gender|\bgender)')
   end
 
   def collapse_class(identifier)

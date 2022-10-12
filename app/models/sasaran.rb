@@ -91,6 +91,7 @@ class Sasaran < ApplicationRecord
   scope :hijau, -> { select(&:lengkap?).size }
   scope :biru, -> { select(&:selesai?).reject(&:lengkap?).size }
   scope :dengan_sub_kegiatan, -> { joins(:program_kegiatan) }
+  scope :dengan_rincian, -> { joins(:rincian) }
 
   SUMBERS = { dana_transfer: 'Dana Transfer', dak: 'DAK', dbhcht: 'DBHCHT', bk_provinsi: 'BK Provinsi',
               blud: 'BLUD' }.freeze

@@ -1,0 +1,41 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th class="text-center">SubKegiatan</th>
+      <th class="text-center">Sasaran SubKegiatan</th>
+      <th class="text-center">Penerima Manfaat</th>
+      <th class="text-center">Data Terpilah</th>
+
+      <th class="text-center">Faktor Kesenjangan</th>
+      <th class="text-center">Penyebab Internal</th>
+      <th class="text-center">Penyebab External</th>
+      <th class="text-center">Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @genders.each.with_index(1) do |gender, index| %>
+      <tr>
+        <td class=" "><%= index %></td>
+        <td class="text-wrap"><%= gender.program_kegiatan.nama_subkegiatan %></td>
+        <td class="text-wrap"><%= gender.sasaran.sasaran_kinerja %></td>
+        <td class=" "><%= gender.penerima_manfaat %></td>
+        <td class=" "><%= gender.data_terpilah %></td>
+        <td class="p-0"><%= render 'table_penerima_manfaat', gender: gender %></td>
+        <td><%= gender.penyebab_internal_gender %></td>
+        <td><%= gender.penyebab_external_gender %></td>
+        <td class="">
+          <%= link_to "/genders/pdf_gap_gender/#{gender.id}/2022.pdf", class: "m-3" do %>
+            <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak GAP"></span>
+          <% end %>
+          <%= link_to edit_gender_path(gender), class: "m-3" do %>
+            <i class="fa fa-pencil-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+          <% end %>
+          <%= link_to gender, method: :delete, data: { confirm_swal: "Hapus Analisis Gender?"}, class: "m-3" do %>
+            <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
