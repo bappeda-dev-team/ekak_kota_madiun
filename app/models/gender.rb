@@ -9,9 +9,12 @@
 #  kontrol             :string
 #  manfaat             :string
 #  partisipasi         :string
+#  penerima_manfaat    :string
 #  penyebab_external   :string
 #  penyebab_internal   :string
-#  reformulasi_tujuan  :string satuan              :string
+#  reformulasi_tujuan  :string
+#  sasaran_subkegiatan :string
+#  satuan              :string
 #  target              :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
@@ -52,11 +55,40 @@ class Gender < ApplicationRecord
   end
 
   def faktor_kesenjangan
-    "AKSES: #{akses}
-     PARTISIPASI: #{partisipasi}
-     KONTROL: #{kontrol}
-     MANFAAT: #{manfaat}
+    "akses: #{akses},
+     partisipasi: #{partisipasi},
+     kontrol: #{kontrol},
+     manfaat: #{manfaat}.
     "
+  end
+
+  def data_pembuka_wawasan
+    "tujuan: #{sasaran.sasaran_kinerja}.
+    penerima manfaat: #{sasaran.penerima_manfaat}.
+    data terpilah: #{sasaran.rincian.data_terpilah}.
+    permasalahan: #{sasaran.permasalahan_sasaran}
+    "
+  end
+
+  def data_baseline
+    "tujuan: #{sasaran_subkegiatan}.
+    penerima manfaat: #{penerima_manfaat}.
+    data terpilah: #{data_terpilah}.
+    "
+  end
+
+  def indikator_gender
+    "indikator: #{indikator}.
+     target: #{target} #{satuan}.
+    "
+  end
+
+  def penyebab_internal_non_html
+    penyebab_internal.is_a?(Array) ? penyebab_internal.join(',') : penyebab_internal
+  end
+
+  def penyebab_external_non_html
+    penyebab_external.is_a?(Array) ? penyebab_external.join(',') : penyebab_external
   end
 
   def penyebab_internal_gender

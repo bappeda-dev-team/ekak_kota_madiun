@@ -293,4 +293,8 @@ class Sasaran < ApplicationRecord
   def sasaran_kasi
     Sasaran.where(sasaran_atasan_id: id_rencana).dengan_sub_kegiatan
   end
+
+  def permasalahan_sasaran
+    permasalahans.map(&:permasalahan).join('.')
+  end
 end
