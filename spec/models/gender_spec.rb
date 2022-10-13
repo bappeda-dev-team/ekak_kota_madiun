@@ -29,5 +29,11 @@
 require 'rails_helper'
 
 RSpec.describe Gender, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should validate_presence_of :akses }
+  it { should validate_presence_of :partisipasi }
+  it { should validate_presence_of :kontrol }
+  it { should validate_presence_of :manfaat }
+  it { should validate_presence_of :sasaran_subkegiatan }
+  it { should validate_presence_of :reformulasi_tujuan }
+  it { should validate_presence_of :penerima_manfaat }
 end

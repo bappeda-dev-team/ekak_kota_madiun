@@ -28,14 +28,17 @@
 #
 class Gender < ApplicationRecord
   belongs_to :program_kegiatan, optional: true
-  belongs_to :sasaran, optional: true
+  # belongs_to :sasaran, optional: true
+  has_many :sasarans, through: :program_kegiatan
 
   serialize :penyebab_internal, Array
   serialize :penyebab_external, Array
   serialize :data_terpilah, Array
 
-  validates :sasaran_id, presence: true
+  # validates :sasaran_id, presence: true
   validates :program_kegiatan_id, presence: true
+  validates :sasaran_subkegiatan, presence: true
+  validates :penerima_manfaat, presence: true
   validates :reformulasi_tujuan, presence: true
   validates :akses, presence: true
   validates :partisipasi, presence: true
