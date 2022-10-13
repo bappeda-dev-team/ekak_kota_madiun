@@ -125,6 +125,8 @@ GEM
     childprocess (4.1.0)
     chronic_duration (0.10.6)
       numerizer (~> 0.1.1)
+    chusaku (0.6.1)
+      railties (>= 3.0)
     concurrent-ruby (1.1.10)
     connection_pool (2.2.5)
     crass (1.0.6)
@@ -459,6 +461,7 @@ DEPENDENCIES
   capybara (>= 3.26)
   caxlsx
   caxlsx_rails
+  chusaku
   database_cleaner
   devise
   factory_bot_rails

@@ -9,9 +9,11 @@
 #  kontrol             :string
 #  manfaat             :string
 #  partisipasi         :string
+#  penerima_manfaat    :string
 #  penyebab_external   :string
 #  penyebab_internal   :string
 #  reformulasi_tujuan  :string
+#  sasaran_subkegiatan :string
 #  satuan              :string
 #  target              :string
 #  created_at          :datetime         not null

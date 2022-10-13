@@ -62,23 +62,15 @@ class GapGenderPdf < Prawn::Document
     # main table
     data_gender = header_tabel
     data_gender << [{ content: @program_kegiatan.nama_subkegiatan },
-                    { content: @gender.sasaran.sasaran_kinerja },
+                    { content: @gender.data_pembuka_wawasan },
                     { content: @gender.faktor_kesenjangan },
-                    { content: @gender.penyebab_internal },
-                    { content: @gender.penyebab_external },
+                    { content: @gender.penyebab_internal_non_html },
+                    { content: @gender.penyebab_external_non_html },
                     { content: @gender.reformulasi_tujuan },
                     { content: @gender.sasaran.tahapans.first.tahapan_kerja },
-                    { content: @gender.data_terpilah },
-                    { content: @gender.indikator }]
+                    { content: @gender.data_baseline },
+                    { content: @gender.indikator_gender }]
     # create cell
-  end
-
-  def data_pembuka_wawasan
-    pembuka_wawasan = [
-      { content: @gender.sasaran.sasaran_kinerja },
-      { content: @gender.sasaran.penerima_manfaat },
-      { content: @gender.sasaran.rincian.data_terpilah }
-    ]
   end
 
   private

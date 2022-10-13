@@ -9,9 +9,12 @@
 #  kontrol             :string
 #  manfaat             :string
 #  partisipasi         :string
+#  penerima_manfaat    :string
 #  penyebab_external   :string
 #  penyebab_internal   :string
-#  reformulasi_tujuan  :string satuan              :string
+#  reformulasi_tujuan  :string
+#  sasaran_subkegiatan :string
+#  satuan              :string
 #  target              :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
@@ -29,6 +32,7 @@ class Gender < ApplicationRecord
 
   serialize :penyebab_internal, Array
   serialize :penyebab_external, Array
+  serialize :data_terpilah, Array
 
   validates :sasaran_id, presence: true
   validates :program_kegiatan_id, presence: true
@@ -42,6 +46,7 @@ class Gender < ApplicationRecord
 
   before_save :remove_blank_penyebab_internal
   before_save :remove_blank_penyebab_external
+  before_save :remove_blank_data_terpilah
 
   def remove_blank_penyebab_internal
     penyebab_internal.reject!(&:blank?)
@@ -51,12 +56,49 @@ class Gender < ApplicationRecord
     penyebab_external.reject!(&:blank?)
   end
 
+  def remove_blank_data_terpilah
+    data_terpilah.reject!(&:blank?)
+  end
+
   def faktor_kesenjangan
-    "AKSES: #{akses}
-     PARTISIPASI: #{partisipasi}
-     KONTROL: #{kontrol}
-     MANFAAT: #{manfaat}
+    "akses: #{akses},
+     partisipasi: #{partisipasi},
+     kontrol: #{kontrol},
+     manfaat: #{manfaat}.
     "
+  end
+
+  def data_pembuka_wawasan
+    "tujuan: #{sasaran.sasaran_kinerja}.
+    penerima manfaat: #{sasaran.penerima_manfaat}.
+    data terpilah: #{sasaran.rincian.data_terpilah}.
+    permasalahan: #{sasaran.permasalahan_sasaran}
+    "
+  end
+
+  def data_baseline
+    "tujuan: #{sasaran_subkegiatan}.
+    penerima manfaat: #{penerima_manfaat}.
+    data terpilah: #{data_terpilah_gender}.
+    "
+  end
+
+  def data_terpilah_gender
+    data_terpilah.is_a?(Array) ? data_terpilah.join(',') : data_terpilah
+  end
+
+  def indikator_gender
+    "indikator: #{indikator}.
+     target: #{target} #{satuan}.
+    "
+  end
+
+  def penyebab_internal_non_html
+    penyebab_internal.is_a?(Array) ? penyebab_internal.join(',') : penyebab_internal
+  end
+
+  def penyebab_external_non_html
+    penyebab_external.is_a?(Array) ? penyebab_external.join(',') : penyebab_external
   end
 
   def penyebab_internal_gender
