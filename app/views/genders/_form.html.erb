@@ -145,8 +145,9 @@
         </div>
         <div class="field">
           <%= form.label :data_terpilah, class: 'form-label' %>
-          <%= form.text_field :data_terpilah, class: 'form-control', data: { gender_form_target: "data_terpilah" } %>
+          <%= form.text_field :data_terpilah,multiple: true, class: 'form-control', data: { gender_form_target: "data_terpilah" } %>
         </div>
+        <%= add_new_field("Tambah Data", form, :data_terpilah, gender )  %>
       </div>
     </div>
     <div class="card border-2 shadow mb-3">

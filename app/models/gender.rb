@@ -32,6 +32,7 @@ class Gender < ApplicationRecord
 
   serialize :penyebab_internal, Array
   serialize :penyebab_external, Array
+  serialize :data_terpilah, Array
 
   validates :sasaran_id, presence: true
   validates :program_kegiatan_id, presence: true
@@ -45,6 +46,7 @@ class Gender < ApplicationRecord
 
   before_save :remove_blank_penyebab_internal
   before_save :remove_blank_penyebab_external
+  before_save :remove_blank_data_terpilah
 
   def remove_blank_penyebab_internal
     penyebab_internal.reject!(&:blank?)
@@ -52,6 +54,10 @@ class Gender < ApplicationRecord
 
   def remove_blank_penyebab_external
     penyebab_external.reject!(&:blank?)
+  end
+
+  def remove_blank_data_terpilah
+    data_terpilah.reject!(&:blank?)
   end
 
   def faktor_kesenjangan
@@ -73,8 +79,12 @@ class Gender < ApplicationRecord
   def data_baseline
     "tujuan: #{sasaran_subkegiatan}.
     penerima manfaat: #{penerima_manfaat}.
-    data terpilah: #{data_terpilah}.
+    data terpilah: #{data_terpilah_gender}.
     "
+  end
+
+  def data_terpilah_gender
+    data_terpilah.is_a?(Array) ? data_terpilah.join(',') : data_terpilah
   end
 
   def indikator_gender
