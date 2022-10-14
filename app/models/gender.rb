@@ -64,36 +64,32 @@ class Gender < ApplicationRecord
   end
 
   def faktor_kesenjangan
-    "akses: #{akses},
-     partisipasi: #{partisipasi},
-     kontrol: #{kontrol},
-     manfaat: #{manfaat}.
-    "
+    "akses: #{akses},\n" +
+      "partisipasi: #{partisipasi},\n" +
+      "kontrol: #{kontrol},\n" +
+      "manfaat: #{manfaat}."
   end
 
   def data_pembuka_wawasan
-    "tujuan: #{sasaran.sasaran_kinerja}.
-    penerima manfaat: #{sasaran.penerima_manfaat}.
-    data terpilah: #{sasaran.rincian.data_terpilah}.
-    permasalahan: #{sasaran.permasalahan_sasaran}
-    "
+    "tujuan: #{sasaran.sasaran_kinerja}.\n" +
+      "penerima manfaat: #{sasaran.penerima_manfaat}.\n" +
+      "data terpilah: #{sasaran.rincian.data_terpilah}.\n" +
+      "permasalahan: #{sasaran.permasalahan_sasaran}"
   end
 
   def data_baseline
-    "tujuan: #{sasaran_subkegiatan}.
-    penerima manfaat: #{penerima_manfaat}.
-    data terpilah: #{data_terpilah_gender}.
-    "
+    "tujuan: #{sasaran_subkegiatan}.\n" +
+      "penerima manfaat: #{penerima_manfaat}.\n" +
+      "data terpilah: #{data_terpilah_gender}."
+  end
+
+  def indikator_gender
+    "indikator: #{indikator}.\n" +
+      "target: #{target} #{satuan}."
   end
 
   def data_terpilah_gender
     data_terpilah.is_a?(Array) ? data_terpilah.join(',') : data_terpilah
-  end
-
-  def indikator_gender
-    "indikator: #{indikator}.
-     target: #{target} #{satuan}.
-    "
   end
 
   def penyebab_internal_non_html

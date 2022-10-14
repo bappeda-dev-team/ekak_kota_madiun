@@ -3,10 +3,8 @@
     <tr>
       <th>No</th>
       <th class="text-center">SubKegiatan</th>
-      <th class="text-center">Sasaran SubKegiatan</th>
       <th class="text-center">Penerima Manfaat</th>
       <th class="text-center">Data Terpilah</th>
-
       <th class="text-center">Faktor Kesenjangan</th>
       <th class="text-center">Penyebab Internal</th>
       <th class="text-center">Penyebab External</th>
@@ -18,7 +16,6 @@
       <tr>
         <td class=" "><%= index %></td>
         <td class="text-wrap"><%= gender.program_kegiatan.nama_subkegiatan %></td>
-        <td class="text-wrap"><%= gender.sasaran.sasaran_kinerja %></td>
         <td class=" "><%= gender.penerima_manfaat %></td>
         <td class=" "><%= gender.data_terpilah %></td>
         <td class="p-0"><%= render 'table_penerima_manfaat', gender: gender %></td>

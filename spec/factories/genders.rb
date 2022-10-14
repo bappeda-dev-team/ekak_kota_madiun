@@ -28,6 +28,19 @@
 #
 FactoryBot.define do
   factory :gender do
-    
+    akses { "Contoh Akses" }
+    kontrol { "Contoh Kontrol" }
+    manfaat { "Contoh Manfaat" }
+    partisipasi { "Contoh Partisipasi" }
+    indikator { "Contoh Indikator A" }
+    target { "Contoh Target A" }
+    satuan { "%" }
+    reformulasi_tujuan { "Contoh Reformulasi Tujuan" }
+    penerima_manfaat { "Contoh Penerima Manfaat" }
+    sasaran_subkegiatan { "Contoh Sasaran Subkegiatan" }
+    penyebab_internal { ["Penyebab Internal 1", "Penyebab Internal 2"] }
+    penyebab_external { ["Penyebab External 1", "Penyebab External 2"] }
+    data_terpilah { ["Data Terpilah 1", "Data Terpilah 2"] }
+    association :program_kegiatan
   end
 end
