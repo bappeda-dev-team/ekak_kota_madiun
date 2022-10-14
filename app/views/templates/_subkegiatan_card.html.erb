@@ -9,12 +9,15 @@
     </div>
   </div>
   <div class="card-body">
+    <%= form.label :subkegiatan, class: 'form-label' %>
+
     <%= form.select(:program_kegiatan_id, options_for_select(ProgramKegiatan.pluck(:nama_subkegiatan, :id), selected: form.object.program_kegiatan_id), {include_blank: true},
-                    {data: { controller: 'dropdown',
-                             'ajax--url': "/program_kegiatans.json",
-                             "ajax--cache": "true",
-                             "placeholder": "Pilih SubKegiatan",
-                             'gender-form-target': 'program_kegiatan_id'
-                    }} ) %>
+                    {
+                      data: { controller: 'dropdown',
+                              'ajax--url': "/program_kegiatans.json",
+                              "ajax--cache": "true",
+                              "placeholder": "Pilih SubKegiatan",
+                              'gender-form-target': 'program_kegiatan_id'
+                      }} ) %>
 </div>
 </div>

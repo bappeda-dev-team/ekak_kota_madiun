@@ -37,6 +37,13 @@ FactoryBot.define do
     password { "123456" }
     association :opd
 
+    factory :admin_opd do
+      after(:create) do |user|
+        user.add_role :admin
+        user.remove_role :non_aktif
+      end
+    end
+
     factory :asn do
       after(:create) do |user|
         user.add_role :asn
