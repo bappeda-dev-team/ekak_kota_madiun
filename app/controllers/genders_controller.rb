@@ -27,8 +27,10 @@ class GendersController < ApplicationController
 
     respond_to do |format|
       if @gender.save
+        format.json do
+          render json: { resText: 'Data Gender Analysis Berhasil disimpan' }, status: :created, location: @gender
+        end
         format.html { redirect_to gap_genders_path, success: "Data Gender Analysis Berhasil disimpan" }
-        format.json { render :show, status: :created, location: @gender }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @gender.errors, status: :unprocessable_entity }
@@ -108,9 +110,12 @@ class GendersController < ApplicationController
   def gender_params
     params.require(:gender).permit(:akses, :partisipasi, :kontrol, :manfaat,
                                    :sasaran_id, :program_kegiatan_id,
-                                   :indikator, :target, :satuan,
-                                   :reformulasi_tujuan,
-                                   :sasaran_subkegiatan, :penerima_manfaat,
-                                   penyebab_internal: [], penyebab_external: [], data_terpilah: [])
+                                   :indikator, :target, :tahun,
+                                   :satuan, :reformulasi_tujuan,
+                                   penyebab_internal: [],
+                                   penyebab_external: [],
+                                   data_terpilah: [],
+                                   sasaran_subkegiatan: [],
+                                   penerima_manfaat: [])
   end
 end

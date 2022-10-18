@@ -1,0 +1,32 @@
+<div class="card border-2 shadow mb-3" data-form-gender-target="data_baseline">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="row align-items-center">
+        <div class="col">
+          <h5>Baseline</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="field">
+      <%= form.label :tahun, class: 'form-label' %>
+      <%= form.text_field :tahun, class: 'form-control', data: { gender_form_target: "tahun" } %>
+    </div>
+    <div class="field">
+      <%= form.label :sasaran_subkegiatan, class: 'form-label' %>
+      <%= form.text_field :sasaran_subkegiatan, multiple: true, class: 'form-control', data: { gender_form_target: "sasaran" } %>
+    </div>
+    <%= add_new_field_gender("tambah sasaran subkegiatan", form, :sasaran_subkegiatan, gender )  %>
+    <div class="field">
+      <%= form.label :penerima_manfaat, class: 'form-label' %>
+      <%= form.text_field :penerima_manfaat, multiple: true, class: 'form-control', data: { gender_form_target: "penerima_manfaat" } %>
+    </div>
+    <%= add_new_field_gender("tambah penerima manfaat", form, :penerima_manfaat, gender )  %>
+    <div class="field">
+      <%= form.label :data_terpilah, class: 'form-label' %>
+      <%= form.text_field :data_terpilah, multiple: true, class: 'form-control', data: { gender_form_target: "data_terpilah" } %>
+    </div>
+    <%= add_new_field_gender("tambah data terpilah", form, :data_terpilah, gender )  %>
+  </div>
+</div>

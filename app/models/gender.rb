@@ -15,6 +15,7 @@
 #  reformulasi_tujuan  :string
 #  sasaran_subkegiatan :string
 #  satuan              :string
+#  tahun               :string
 #  target              :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
@@ -28,14 +29,17 @@
 #
 class Gender < ApplicationRecord
   belongs_to :program_kegiatan, optional: true
-  # belongs_to :sasaran, optional: true
-  has_many :sasarans, through: :program_kegiatan
+  belongs_to :sasaran, optional: true
+  # has_many :sasarans, through: :program_kegiatan
 
+  serialize :sasaran_subkegiatan, Array
   serialize :penyebab_internal, Array
   serialize :penyebab_external, Array
   serialize :data_terpilah, Array
+  serialize :penerima_manfaat, Array
 
-  # validates :sasaran_id, presence: true
+  validates :tahun, presence: true, inclusion: { in: 2015..Date.today.year }
+  validates :sasaran_id, presence: true
   validates :program_kegiatan_id, presence: true
   validates :sasaran_subkegiatan, presence: true
   validates :penerima_manfaat, presence: true
@@ -47,9 +51,15 @@ class Gender < ApplicationRecord
   validates :penyebab_internal, presence: true
   validates :penyebab_external, presence: true
 
+  before_save :remove_blank_sasaran_subkegiatan
   before_save :remove_blank_penyebab_internal
   before_save :remove_blank_penyebab_external
   before_save :remove_blank_data_terpilah
+  before_save :remove_blank_penerima_manfaat
+
+  def remove_blank_sasaran_subkegiatan
+    sasaran_subkegiatan.reject!(&:blank?)
+  end
 
   def remove_blank_penyebab_internal
     penyebab_internal.reject!(&:blank?)
@@ -63,29 +73,33 @@ class Gender < ApplicationRecord
     data_terpilah.reject!(&:blank?)
   end
 
+  def remove_blank_penerima_manfaat
+    penerima_manfaat.reject!(&:blank?)
+  end
+
   def faktor_kesenjangan
-    "akses: #{akses},\n" +
-      "partisipasi: #{partisipasi},\n" +
-      "kontrol: #{kontrol},\n" +
-      "manfaat: #{manfaat}."
+    "<b>AKSES</b>: #{akses}.\n\n" +
+      "<b>PARTISIPASI</b>: #{partisipasi}.\n\n" +
+      "<b>KONTROL</b>: #{kontrol}.\n\n" +
+      "<b>MANFAAT</b>: #{manfaat}."
   end
 
   def data_pembuka_wawasan
-    "tujuan: #{sasaran.sasaran_kinerja}.\n" +
-      "penerima manfaat: #{sasaran.penerima_manfaat}.\n" +
-      "data terpilah: #{sasaran.rincian.data_terpilah}.\n" +
-      "permasalahan: #{sasaran.permasalahan_sasaran}"
+    "<b>TUJUAN</b>: #{sasaran.sasaran_kinerja}.\n\n" +
+      "<b>PENERIMA MANFAAT</b>: #{sasaran.penerima_manfaat}.\n\n" +
+      "<b>DATA TERPILAH</b>: #{sasaran.rincian.data_terpilah}.\n\n" +
+      "<b>PERMASALAHAN</b>: #{sasaran.permasalahan_sasaran}"
   end
 
   def data_baseline
-    "tujuan: #{sasaran_subkegiatan}.\n" +
-      "penerima manfaat: #{penerima_manfaat}.\n" +
-      "data terpilah: #{data_terpilah_gender}."
+    "<b>TUJUAN</b>: #{sasaran_subkegiatan}.\n\n" +
+      "<b>PENERIMA MANFAAT</b>: #{penerima_manfaat}.\n\n" +
+      "<b>DATA TERPILAH</b>: #{data_terpilah_gender}."
   end
 
   def indikator_gender
-    "indikator: #{indikator}.\n" +
-      "target: #{target} #{satuan}."
+    "<b>INDIKATOR</b>: #{indikator}.\n\n" +
+      "<b>TARGET</b>: #{target} #{satuan}."
   end
 
   def data_terpilah_gender
