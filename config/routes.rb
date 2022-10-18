@@ -186,6 +186,11 @@ Rails.application.routes.draw do
       patch :giat_update
       get :program_edit
       patch :program_update
+      get :detail_sasarans
+      get :rencana_aksi
+    end
+    collection do
+      get :list_program_with_sasarans_rincian
     end
   end
 

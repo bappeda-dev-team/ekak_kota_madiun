@@ -9,6 +9,7 @@
     </div>
   </div>
   <div class="card-body">
+    <%= form.label :tujuan_subkegiatan, class: 'form-label' %>
     <%= form.select(:sasaran_id, options_for_select(Sasaran.pluck(:sasaran_kinerja, :id), selected: form.object.sasaran_id), {include_blank: true},
                     {data: { controller: 'dropdown',
                              'ajax--url': "/sasarans/list_sasaran.json",

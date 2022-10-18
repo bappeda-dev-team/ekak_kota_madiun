@@ -1,0 +1,35 @@
+<div class="card border-2 shadow" data-form-gender-target="data_baseline">
+  <div class="card-header">
+    <h5>Faktor Kesenjangan </h5>
+  </div>
+  <div class="card-body">
+    <div class="field">
+      <%= form.label :akses, class: 'form-label' %>
+      <%= form.text_field :akses, class: 'form-control' %>
+    </div>
+    <div class="field">
+      <%= form.label :partisipasi, class: 'form-label' %>
+      <%= form.text_field :partisipasi, class: 'form-control' %>
+    </div>
+    <div class="field">
+      <%= form.label :kontrol, class: 'form-label' %>
+      <%= form.text_field :kontrol, class: 'form-control' %>
+    </div>
+    <div class="field">
+      <%= form.label :manfaat, class: 'form-label' %>
+      <%= form.text_field :manfaat, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="card-body">
+  <div class="field">
+    <%= form.label :penyebab_internal, class: 'form-label' %>
+    <%= form.text_field :penyebab_internal,multiple: true, class: 'form-control', data: { gender_form_target: 'penyebab_internal' }, value: sasaran.rincian.penyebab_internal %>
+  </div>
+  <%= add_new_field_gender("tambah penyebab internal", form, :penyebab_internal, gender )  %>
+  <div class="field">
+    <%= form.label :penyebab_external, class: 'form-label' %>
+    <%= form.text_field :penyebab_external,multiple: true, class: 'form-control', data: { gender_form_target: 'penyebab_external' }, value: sasaran.rincian.penyebab_external %>
+  </div>
+  <%= add_new_field_gender("tambah penyebab external", form, :penyebab_external, gender )  %>
+</div>
+</div>
