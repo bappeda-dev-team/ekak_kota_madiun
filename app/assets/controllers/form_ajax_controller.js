@@ -25,7 +25,6 @@ export default class extends Controller {
 
   errorWithoutModal(event) {
     const [message, status] = event.detail
-    // const form_target = this.element
     const errors = message.errors
     this.errorContainerTargets.forEach((errorContainer) => {
       const errorType = errorContainer.dataset.errorType
@@ -40,9 +39,6 @@ export default class extends Controller {
         errorContainer.style.display = 'inline'
       }
     })
-    // this.tahunTarget.previousElementSibling.classList.add('is-invalid')
-    // this.tahunTarget.innerHTML = errors[0].title
-    // this.tahunTarget.style.display = 'inline'
   }
 
   sweetalert(text) {

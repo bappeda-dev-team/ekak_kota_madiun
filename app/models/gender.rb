@@ -43,6 +43,7 @@ class Gender < ApplicationRecord
   validates :program_kegiatan_id, presence: true
   validates :sasaran_subkegiatan, presence: true
   validates :penerima_manfaat, presence: true
+  validates :data_terpilah, presence: true
   validates :reformulasi_tujuan, presence: true
   validates :akses, presence: true
   validates :partisipasi, presence: true
@@ -51,11 +52,11 @@ class Gender < ApplicationRecord
   validates :penyebab_internal, presence: true
   validates :penyebab_external, presence: true
 
-  before_save :remove_blank_sasaran_subkegiatan
-  before_save :remove_blank_penyebab_internal
-  before_save :remove_blank_penyebab_external
-  before_save :remove_blank_data_terpilah
-  before_save :remove_blank_penerima_manfaat
+  before_validation :remove_blank_sasaran_subkegiatan
+  before_validation :remove_blank_penyebab_internal
+  before_validation :remove_blank_penyebab_external
+  before_validation :remove_blank_data_terpilah
+  before_validation :remove_blank_penerima_manfaat
 
   def remove_blank_sasaran_subkegiatan
     sasaran_subkegiatan.reject!(&:blank?)
