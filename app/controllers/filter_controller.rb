@@ -3,7 +3,7 @@ class FilterController < ApplicationController
   before_action :nama_opd, only: %i[filter_gender filter_struktur]
 
   OPD_TABLE = {
-    'Dinas Kesehatan, Pengendalian Penduduk dan Keluarga Berencana': "Dinas Kesehatan",
+    # 'Dinas Kesehatan, Pengendalian Penduduk dan Keluarga Berencana': "Dinas Kesehatan",
     'Rumah Sakit Umum Daerah Kota Madiun': "Rumah Sakit Umum Daerah",
     'Sekretariat Daerah': "Sekretaris Daerah",
     'Bagian Umum': "Bagian Umum",
