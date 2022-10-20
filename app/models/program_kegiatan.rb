@@ -113,9 +113,7 @@ class ProgramKegiatan < ApplicationRecord
 
   def indikator_key_grouper(type, kode_unit)
     ind_programs = send("indikator_#{type}_renstra").select { |k| k.kode_opd == kode_unit }.group_by(&:version)
-    ind_programs[ind_programs.keys.max]&.group_by(&:indikator)&.transform_values do |indikator|
-      indikator.group_by(&:tahun)
-    end
+    ind_programs[ind_programs.keys.max]
   end
 
   def indikator_renstras(sub_unit: '')
