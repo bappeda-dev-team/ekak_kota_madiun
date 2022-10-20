@@ -34,11 +34,24 @@ class Opd < ApplicationRecord
     def programs
       uniq(&:kode_program).sort_by(&:kode_program)
     end
+
+    def program_kecamatans
+      uniq(&:id_sub_unit).sort_by(&:kode_program)
+    end
   end
   belongs_to :lembaga
   has_many :sasaran_opds, class_name: 'SasaranOpd', foreign_key: 'sasaran_opd', primary_key: 'kode_unik_opd'
   has_many :tujuan_opds, class_name: 'TujuanOpd', foreign_key: 'kode_unik_opd', primary_key: 'kode_unik_opd'
   has_one :kepala, class_name: 'Kepala', foreign_key: :nik, primary_key: :nip_kepala
+
+  def program_renstra(nama_opd)
+    if nama_opd&.upcase&.include?('KECAMATAN')
+      program_kegiatans.program_kecamatans
+    else
+      program_kegiatans.programs
+    end
+  end
+
   def text_urusan
     return nil unless urusan
 
