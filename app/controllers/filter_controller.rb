@@ -312,8 +312,8 @@ class FilterController < ApplicationController
 
   def laporan_renstra
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @program_kegiatans = @opd.program_kegiatans.programs
     @nama_opd = @opd.nama_opd
+    @program_kegiatans = @opd.program_renstra(@nama_opd)
     if OPD_TABLE.key?(@nama_opd.to_sym)
       @program_kegiatans = ProgramKegiatan.includes(:opd)
                                           .where(id_sub_unit: KODE_OPD_BAGIAN[@nama_opd.to_sym])
