@@ -55,12 +55,12 @@ class RenstraController < ApplicationController
   end
 
   def update_programs
-    indikator_input = params[:indikator]
+    # indikator_input = params[:indikator]
     keterangan = params[:keterangan]
     param_indikator = indikator_params.to_h
     @indikator = param_indikator[:indikator]
     @indikator.each do |h|
-      h[:indikator] = indikator_input
+      # h[:indikator] = indikator_input
       h[:keterangan] = keterangan
     end
     kode_ind = params[:_kode_indikator]
