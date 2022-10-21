@@ -36,11 +36,11 @@ class Opd < ApplicationRecord
     end
 
     def program_kecamatans
-      uniq(&:id_sub_unit).sort_by(&:kode_program)
+      uniq { |pk| pk.values_at(:kode_program, :id_sub_unit) }.sort_by(&:kode_program)
     end
 
     def program_puskesmas
-      uniq(&:id_sub_unit).sort_by(&:kode_program)
+      uniq { |pk| pk.values_at(:kode_program, :id_sub_unit) }.sort_by(&:kode_program)
     end
   end
   belongs_to :lembaga
