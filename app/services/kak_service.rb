@@ -147,18 +147,23 @@ class KakService
     if indikators
       indikators.map do |ind, tahun|
         { indikator: ind,
+          indikator_2020: tahun["2020"]&.last&.indikator,
           target_2020: tahun["2020"]&.last&.target,
           satuan_2020: tahun["2020"]&.last&.satuan,
           pagu_2020: tahun["2020"]&.last&.pagu,
+          indikator_2021: tahun["2021"]&.last&.indikator,
           target_2021: tahun["2021"]&.last&.target,
           satuan_2021: tahun["2021"]&.last&.satuan,
           pagu_2021: tahun["2021"]&.last&.pagu,
+          indikator_2022: tahun["2022"]&.last&.indikator,
           target_2022: tahun["2022"]&.last&.target,
           satuan_2022: tahun["2022"]&.last&.satuan,
           pagu_2022: tahun["2022"]&.last&.pagu,
+          indikator_2023: tahun["2023"]&.last&.indikator,
           target_2023: tahun["2023"]&.last&.target,
           satuan_2023: tahun["2023"]&.last&.satuan,
           pagu_2023: tahun["2023"]&.last&.pagu,
+          indikator_2024: tahun["2024"]&.last&.indikator,
           target_2024: tahun["2024"]&.last&.target,
           satuan_2024: tahun["2024"]&.last&.satuan,
           pagu_2024: tahun["2024"]&.last&.pagu }
