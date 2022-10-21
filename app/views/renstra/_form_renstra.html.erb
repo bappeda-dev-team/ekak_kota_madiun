@@ -17,7 +17,7 @@
   <%= form.label "indikator #{@sub_jenis} Tahun #{tahun}", class: 'form-label' %>
     <%= form.text_field "renstra[indikator][][indikator]",
       class: 'form-control',
-      value: @indikator %>
+      value: @targets[tahun.to_s]&.[](:indikator) %>
   </div>
   <%= form.hidden_field "renstra[indikator][][tahun]", value: tahun %>
   <%= form.hidden_field "renstra[indikator][][kode]", value: @kode %>
