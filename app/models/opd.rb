@@ -32,7 +32,7 @@ class Opd < ApplicationRecord
   has_many :sasarans, through: :users
   has_many :program_kegiatans, foreign_key: 'kode_opd', primary_key: 'kode_opd' do
     def programs
-      uniq(&:kode_program).sort_by(&:kode_program)
+      uniq { |pk| pk.values_at(:kode_program, :id_sub_unit) }.sort_by(&:kode_program)
     end
 
     def program_kecamatans

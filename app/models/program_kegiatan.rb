@@ -89,12 +89,12 @@ class ProgramKegiatan < ApplicationRecord
   def kegiatans_opd
     # super.uniq(&:kode_giat)
     # ProgramKegiatan.where("kode_program = ? and kode_opd = ?", kode_program, kode_opd)
-    kegiatans.uniq { |keg| keg.kode_giat }.sort_by(&:kode_giat)
+    kegiatans.uniq { |keg| keg.values_at(:kode_giat) }.sort_by(&:kode_giat)
   end
 
   def subkegiatans_opd
     # ProgramKegiatan.where("kode_giat = ? and kode_opd = ?", kode_giat, kode_opd)
-    subkegiatans.uniq { |sub| sub.kode_sub_giat }.sort_by(&:kode_sub_giat)
+    subkegiatans.uniq { |sub| sub.values_at(:kode_sub_giat) }.sort_by(&:kode_sub_giat)
   end
 
   def my_pagu
