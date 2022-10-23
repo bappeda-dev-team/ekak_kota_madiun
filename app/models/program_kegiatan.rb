@@ -67,14 +67,14 @@ class ProgramKegiatan < ApplicationRecord
                             where(kode_sub_skpd: program_kegiatan.kode_sub_skpd)
                           }, class_name: 'ProgramKegiatan', foreign_key: 'kode_giat', primary_key: 'kode_giat'
 
-  has_many :indikator_program_renstra, lambda {
-                                         where(jenis: 'Renstra', sub_jenis: 'Program')
+  has_many :indikator_program_renstra, lambda { |program_kegiatan|
+                                         where(jenis: 'Renstra', sub_jenis: 'Program', kode_opd: program_kegiatan.kode_sub_skpd)
                                        }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'kode_program'
-  has_many :indikator_kegiatan_renstra, lambda {
-                                          where(jenis: 'Renstra', sub_jenis: 'Kegiatan')
+  has_many :indikator_kegiatan_renstra, lambda { |program_kegiatan|
+                                          where(jenis: 'Renstra', sub_jenis: 'Kegiatan', kode_opd: program_kegiatan.kode_sub_skpd)
                                         }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'kode_giat'
-  has_many :indikator_subkegiatan_renstra, lambda {
-                                             where(jenis: 'Renstra', sub_jenis: 'Subkegiatan')
+  has_many :indikator_subkegiatan_renstra, lambda { |program_kegiatan|
+                                             where(jenis: 'Renstra', sub_jenis: 'Subkegiatan', kode_opd: program_kegiatan.kode_sub_skpd)
                                            }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'kode_sub_giat'
 
   accepts_nested_attributes_for :sasarans
@@ -111,8 +111,8 @@ class ProgramKegiatan < ApplicationRecord
     }
   end
 
-  def indikator_key_grouper(type, kode_unit)
-    ind_programs = send("indikator_#{type}_renstra").select { |k| k.kode_opd == kode_unit }.group_by(&:version)
+  def indikator_key_grouper(type, _kode_unit)
+    ind_programs = send("indikator_#{type}_renstra").select { |k| k.kode_opd == kode_sub_skpd }.group_by(&:version)
     ind_programs[ind_programs.keys.max]
   end
 

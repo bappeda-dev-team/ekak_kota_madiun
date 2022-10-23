@@ -32,15 +32,9 @@ class Opd < ApplicationRecord
   has_many :sasarans, through: :users
   has_many :program_kegiatans, foreign_key: 'kode_opd', primary_key: 'kode_opd' do
     def programs
-      uniq { |pk| pk.values_at(:kode_program, :id_sub_unit) }.sort_by(&:kode_program)
-    end
-
-    def program_kecamatans
-      uniq { |pk| pk.values_at(:kode_program, :id_sub_unit) }.sort_by(&:kode_program)
-    end
-
-    def program_puskesmas
-      uniq { |pk| pk.values_at(:kode_program, :id_sub_unit) }.sort_by(&:kode_program)
+      where.not(kode_skpd: [nil, ""])
+           .uniq { |pk| pk.values_at(:kode_program, :id_sub_unit) }
+           .sort_by { |pk| pk.values_at(:kode_program, :id_sub_unit) }
     end
   end
   belongs_to :lembaga
@@ -48,14 +42,8 @@ class Opd < ApplicationRecord
   has_many :tujuan_opds, class_name: 'TujuanOpd', foreign_key: 'kode_unik_opd', primary_key: 'kode_unik_opd'
   has_one :kepala, class_name: 'Kepala', foreign_key: :nik, primary_key: :nip_kepala
 
-  def program_renstra(nama_opd)
-    if nama_opd&.upcase&.include?('KECAMATAN')
-      program_kegiatans.program_kecamatans
-    elsif nama_opd&.upcase&.include?('KESEHATAN')
-      program_kegiatans.program_puskesmas
-    else
-      program_kegiatans.programs
-    end
+  def program_renstra(_nama_opd)
+    program_kegiatans.programs
   end
 
   def text_urusan
