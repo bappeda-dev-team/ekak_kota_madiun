@@ -42,8 +42,22 @@ class Opd < ApplicationRecord
   has_many :tujuan_opds, class_name: 'TujuanOpd', foreign_key: 'kode_unik_opd', primary_key: 'kode_unik_opd'
   has_one :kepala, class_name: 'Kepala', foreign_key: :nik, primary_key: :nip_kepala
 
-  def program_renstra(_nama_opd)
+  def program_renstra
     program_kegiatans.programs
+  end
+
+  def kegiatans_renstra
+    ProgramKegiatan.where(kode_opd: kode_opd)
+                   .where.not(kode_skpd: [nil, ""])
+                   .uniq { |pk| pk.values_at(:kode_giat, :id_sub_unit) }
+                   .sort_by { |pk| pk.values_at(:kode_giat, :id_sub_unit) }
+  end
+
+  def subkegiatans_renstra
+    ProgramKegiatan.where(kode_opd: kode_opd)
+                   .where.not(kode_skpd: [nil, ""])
+                   .uniq { |pk| pk.values_at(:kode_sub_giat, :id_sub_unit) }
+                   .sort_by { |pk| pk.values_at(:kode_sub_giat, :id_sub_unit) }
   end
 
   def text_urusan
