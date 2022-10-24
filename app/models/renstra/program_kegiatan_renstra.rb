@@ -8,19 +8,37 @@ class Renstra::ProgramKegiatanRenstra
     @tipe = tipe
   end
 
+  def all_opd
+    lembaga = Lembaga.find_by(nama_lembaga: "Kota Madiun")
+    # TODO: beri klausa jika lembaga kosong
+    lembaga.opds.where.not(nama_kepala: nil)
+  end
+
+  def program_kegiatan_opd_khusus(id_sub_unit:)
+    ProgramKegiatan.includes(:opd)
+                   .where(id_sub_unit: id_sub_unit)
+  end
+
   def indikator_programs_opd(opd:, program_kegiatans_by_opd:)
     program_kegiatans_by_opd.map do |program|
       program_renstra_serializer(program: program)
     end
   end
 
-  # def indikator_renstra(program_kegiatans)
-  #   program_kegiatans.send("indikator_#{@jenis}_renstra")
-  #                    .map do |pk|
-  #     { id: pk.id, tahun: pk.tahun, kode_indikator: pk.kode_indikator, indikator: pk.indikator, target: pk.target, satuan: pk.satuan,
-  #       pagu: pk.pagu, version: pk.version, kotak: pk.kotak, kode_opd: pk.kode_opd }
-  #   end
-  # end
+  def program_kota(jenis_program_kegiatan:)
+    all_opd.map do |opd|
+      programs = indikator_programs_opd(opd: opd, program_kegiatans_by_opd: opd.send(jenis_program_kegiatan))
+      if OPD_TABLE.key?(opd.nama_opd.to_sym)
+        programs = indikator_programs_opd(opd: opd,
+                                          program_kegiatans_by_opd: program_kegiatan_opd_khusus(id_sub_unit: KODE_OPD_BAGIAN[opd.nama_opd.to_sym]))
+      end
+      {
+        opd: opd.nama_opd,
+        kode_opd: opd.kode_unik_opd,
+        @jenis.to_sym => programs
+      }
+    end
+  end
 
   def program_renstra_serializer(program:)
     indikators = ind_renstras_new(program: program, sub_unit: program.kode_sub_skpd)

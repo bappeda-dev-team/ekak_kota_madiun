@@ -97,10 +97,14 @@ class Api::ProgramsController < ApplicationController
     respond_to { |f| f.json { render 'opd_test_indikator' } }
   end
 
+  # yang dipakai dibawah
+  # diatas ndak tau, depreceate aja kalo aman
+
   def opd_test_indikator_program
+    @jenis = 'program'
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @programs = @opd.program_renstra
-    @program_kegiatans = Renstra::ProgramKegiatanRenstra.new(jenis: 'program',
+    @program_kegiatans = Renstra::ProgramKegiatanRenstra.new(jenis: @jenis,
                                                              kode: 'program', tipe: 'program',
                                                              tahun: @tahun)
                                                         .indikator_programs_opd(opd: @opd, program_kegiatans_by_opd: @programs)
@@ -108,9 +112,10 @@ class Api::ProgramsController < ApplicationController
   end
 
   def opd_test_indikator_kegiatan
+    @jenis = 'kegiatan'
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @programs = @opd.kegiatans_renstra
-    @program_kegiatans = Renstra::ProgramKegiatanRenstra.new(jenis: 'kegiatan',
+    @program_kegiatans = Renstra::ProgramKegiatanRenstra.new(jenis: @jenis,
                                                              kode: 'giat', tipe: 'kegiatan',
                                                              tahun: @tahun)
                                                         .indikator_programs_opd(opd: @opd, program_kegiatans_by_opd: @programs)
@@ -118,33 +123,41 @@ class Api::ProgramsController < ApplicationController
   end
 
   def opd_test_indikator_subkegiatan
+    @jenis = 'subkegiatan'
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @programs = @opd.subkegiatans_renstra
-    @program_kegiatans = Renstra::ProgramKegiatanRenstra.new(jenis: 'subkegiatan',
+    @program_kegiatans = Renstra::ProgramKegiatanRenstra.new(jenis: @jenis,
                                                              kode: 'sub_giat', tipe: 'subkegiatan',
                                                              tahun: @tahun)
                                                         .indikator_programs_opd(opd: @opd, program_kegiatans_by_opd: @programs)
     respond_to { |f| f.json { render 'opd_test_indikator' } }
   end
 
+  # kota ( all opd )
   def kota_test_indikator_program
     @jenis = 'program'
-    programs = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
-    @program_kegiatans = programs.program_kota(jenis: 'program', kode: 'program', nama: 'program')
+    @program_kegiatans = Renstra::ProgramKegiatanRenstra.new(jenis: @jenis,
+                                                             kode: 'program', tipe: 'program',
+                                                             tahun: @tahun)
+                                                        .program_kota(jenis_program_kegiatan: 'program_renstra')
     respond_to { |f| f.json { render 'kota_test_indikator' } }
   end
 
   def kota_test_indikator_kegiatan
     @jenis = 'kegiatan'
-    programs = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
-    @program_kegiatans = programs.program_kota(jenis: 'kegiatan', kode: 'giat', nama: 'kegiatan')
+    @program_kegiatans = Renstra::ProgramKegiatanRenstra.new(jenis: @jenis,
+                                                             kode: 'giat', tipe: 'kegiatan',
+                                                             tahun: @tahun)
+                                                        .program_kota(jenis_program_kegiatan: 'kegiatans_renstra')
     respond_to { |f| f.json { render 'kota_test_indikator' } }
   end
 
   def kota_test_indikator_subkegiatan
     @jenis = 'subkegiatan'
-    programs = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
-    @program_kegiatans = programs.program_kota(jenis: 'subkegiatan', kode: 'sub_giat', nama: 'subkegiatan')
+    @program_kegiatans = Renstra::ProgramKegiatanRenstra.new(jenis: @jenis,
+                                                             kode: 'sub_giat', tipe: 'subkegiatan',
+                                                             tahun: @tahun)
+                                                        .program_kota(jenis_program_kegiatan: 'subkegiatans_renstra')
     respond_to { |f| f.json { render 'kota_test_indikator' } }
   end
 

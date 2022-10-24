@@ -2,7 +2,7 @@
 # used for get pk by opd, sasarans by user on opd selected
 # compatible with tahun kelompok_anggaran
 class KakService
-  include OpdKhusus
+  include Renstra::OpdKhusus
   attr_reader :kode_unik_opd, :program_kegiatan
 
   def initialize(tahun:, kode_unik_opd: nil, program_kegiatan: nil)
