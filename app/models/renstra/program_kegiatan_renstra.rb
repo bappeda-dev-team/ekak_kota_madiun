@@ -73,35 +73,21 @@ class Renstra::ProgramKegiatanRenstra
     indikator_all = program.send("indikator_renstras", sub_unit: sub_unit)
     indikators = indikator_all["indikator_#{@jenis}".to_sym]
     if indikators
-      indikators.map do |ind, tahun|
-        indikator_serializer(indikator: ind, tahun: tahun)
+      indikators.map do |ind|
+        indikator_serializer(indikator: ind)
       end
     else
       []
     end
   end
 
-  def indikator_serializer(indikator:, tahun:)
-    { indikator: indikator,
-      indikator_2020: tahun["2020"]&.last&.indikator,
-      target_2020: tahun["2020"]&.last&.target,
-      satuan_2020: tahun["2020"]&.last&.satuan,
-      pagu_2020: tahun["2020"]&.last&.pagu,
-      indikator_2021: tahun["2021"]&.last&.indikator,
-      target_2021: tahun["2021"]&.last&.target,
-      satuan_2021: tahun["2021"]&.last&.satuan,
-      pagu_2021: tahun["2021"]&.last&.pagu,
-      indikator_2022: tahun["2022"]&.last&.indikator,
-      target_2022: tahun["2022"]&.last&.target,
-      satuan_2022: tahun["2022"]&.last&.satuan,
-      pagu_2022: tahun["2022"]&.last&.pagu,
-      indikator_2023: tahun["2023"]&.last&.indikator,
-      target_2023: tahun["2023"]&.last&.target,
-      satuan_2023: tahun["2023"]&.last&.satuan,
-      pagu_2023: tahun["2023"]&.last&.pagu,
-      indikator_2024: tahun["2024"]&.last&.indikator,
-      target_2024: tahun["2024"]&.last&.target,
-      satuan_2024: tahun["2024"]&.last&.satuan,
-      pagu_2024: tahun["2024"]&.last&.pagu }
+  def indikator_serializer(indikator:)
+    {
+      tahun: indikator.tahun,
+      indikator: indikator.indikator,
+      target: indikator.target,
+      satuan: indikator.satuan,
+      pagu: indikator.pagu
+    }
   end
 end
