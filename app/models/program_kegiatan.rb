@@ -117,29 +117,9 @@ class ProgramKegiatan < ApplicationRecord
   end
 
   def indikator_renstras(sub_unit: '')
-    # subkegiatan = indikator_subkegiatan_renstra.group_by(&:kode_indikator).transform_values do |indikator|
-    #   indikator.group_by(&:tahun)
-    # end
-    program = indikator_program_renstra&.group_by(&:version)
-    kegiatan = indikator_kegiatan_renstra&.group_by(&:version)
-    subkegiatan = indikator_subkegiatan_renstra&.group_by(&:version)
-    if sub_unit.present?
-      program = indikator_program_renstra.select { |k| k.kode_opd == sub_unit }&.group_by(&:version)
-      kegiatan = indikator_kegiatan_renstra.select { |k| k.kode_opd == sub_unit }&.group_by(&:version)
-      subkegiatan = indikator_subkegiatan_renstra.select { |k| k.kode_opd == sub_unit }&.group_by(&:version)
-    end
-    # kotak_subkegiatan = indikator_subkegiatan_renstra&.group_by(&:kotak)
-    # subkegiatan = kotak_subkegiatan.transform_values { |ind| ind.group_by(&:version) }
-
-    progs = program[program.keys.max]&.group_by(&:indikator)&.transform_values do |indikator|
-      indikator.group_by(&:tahun)
-    end
-    kegs = kegiatan[kegiatan.keys.max]&.group_by(&:indikator)&.transform_values do |indikator|
-      indikator.group_by(&:tahun)
-    end
-    subs = subkegiatan[subkegiatan.keys.max]&.group_by(&:indikator)&.transform_values do |indikator|
-      indikator.group_by(&:tahun)
-    end
+    progs = indikator_renstras_new('program', sub_unit)[:indikator_program]
+    kegs = indikator_renstras_new('kegiatan', sub_unit)[:indikator_kegiatan]
+    subs = indikator_renstras_new('subkegiatan', sub_unit)[:indikator_subkegiatan]
 
     {
       indikator_program: progs,
