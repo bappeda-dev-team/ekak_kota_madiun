@@ -30,6 +30,7 @@
             <th class="border-bottom text-center border-start border-end">Target</th>
             <th class="border-bottom text-center border-start border-end">Satuan</th>
             <th class="border-bottom text-center border-start border-end">Pagu Sasaran</th>
+            <th class="border-bottom text-center border-start border-end">Permasalahan</th>
             <th class="border-bottom text-center border-start border-end text-wrap">Pernyataan Resiko</th>
             <th class="border-bottom text-center border-start border-end text-wrap">Skala Kemungkinan</th>
             <th class="border-bottom text-center border-start border-end">Dampak</th>
@@ -58,6 +59,7 @@
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
                 <td class="text-wrap border-start border-end" rowspan="<%= row_indikator %>">Rp. <%= number_with_delimiter(show_sasaran.total_anggaran || 0) %></td>
+                <td class="text-wrap border-start border-end" rowspan="<%= row_indikator %>"><%= show_sasaran.permasalahan_sasaran %></td>
                 <td class="text-wrap border-start border-end" rowspan="<%= row_indikator %>"><%= rincian&.resiko || '-' %></td>
                 <td class="text-wrap text-center border-start border-end" rowspan="<%= row_indikator %>"><%= rincian&.kemungkinan&.deskripsi || '-' %></td>
                 <td class="text-wrap text-center border-start border-end" rowspan="<%= row_indikator %>"><%= rincian&.dampak || '-' %></td>
