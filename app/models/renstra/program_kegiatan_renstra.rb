@@ -45,6 +45,7 @@ class Renstra::ProgramKegiatanRenstra
     hasil = {
       jenis: @jenis,
       kode_sub_skpd: program.kode_sub_skpd,
+      nama_sub_skpd: program.nama_opd_pemilik,
       kode_urusan: program.kode_urusan,
       urusan: program.nama_urusan,
       kode_bidang_urusan: program.kode_bidang_urusan,
