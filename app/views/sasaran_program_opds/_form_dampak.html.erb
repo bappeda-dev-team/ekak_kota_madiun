@@ -14,6 +14,10 @@
       <%= sasaran_fields.label :sasaran_kinerja, { class: "form-label" } %>
       <%= sasaran_fields.text_area :sasaran_kinerja, {class: "form-control", readonly: true} %>
     </div>
+    <div class="field">
+      <%= sasaran_fields.label :permasalahan, { class: "form-label" } %>
+      <%= sasaran_fields.text_area :permasalahan_sasaran, {class: "form-control", readonly: true, disabled: true} %>
+    </div>
   <% end %>
   <%= form.fields_for :rincian, @rincian do |rincian_fields| %>
     <div class="field">
