@@ -6,29 +6,35 @@
     <div class="field">
       <%= form.label :akses, class: 'form-label' %>
       <%= form.text_field :akses, class: 'form-control' %>
+      <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="akses"></p>
     </div>
     <div class="field">
       <%= form.label :partisipasi, class: 'form-label' %>
       <%= form.text_field :partisipasi, class: 'form-control' %>
+      <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="partisipasi"></p>
     </div>
     <div class="field">
       <%= form.label :kontrol, class: 'form-label' %>
       <%= form.text_field :kontrol, class: 'form-control' %>
+      <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="kontrol"></p>
     </div>
     <div class="field">
       <%= form.label :manfaat, class: 'form-label' %>
       <%= form.text_field :manfaat, class: 'form-control' %>
+      <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="manfaat"></p>
     </div>
   </div>
   <div class="card-body">
   <div class="field">
     <%= form.label :penyebab_internal, class: 'form-label' %>
     <%= form.text_field :penyebab_internal,multiple: true, class: 'form-control', data: { gender_form_target: 'penyebab_internal' }, value: sasaran.rincian.penyebab_internal %>
+    <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="penyebab_internal"></p>
   </div>
   <%= add_new_field_gender("tambah penyebab internal", form, :penyebab_internal, gender )  %>
   <div class="field">
     <%= form.label :penyebab_external, class: 'form-label' %>
     <%= form.text_field :penyebab_external,multiple: true, class: 'form-control', data: { gender_form_target: 'penyebab_external' }, value: sasaran.rincian.penyebab_external %>
+    <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="penyebab_external"></p>
   </div>
   <%= add_new_field_gender("tambah penyebab external", form, :penyebab_external, gender )  %>
 </div>
