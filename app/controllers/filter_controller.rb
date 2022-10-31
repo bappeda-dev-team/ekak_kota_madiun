@@ -1,42 +1,8 @@
-class FilterController < ApplicationController
+class FilterController < ApplicationController 
+  include Renstra::OpdKhusus
+
   before_action :filter_params, except: %i[filter_tematiks]
   before_action :nama_opd, only: %i[filter_gender filter_struktur]
-
-  OPD_TABLE = {
-    'Dinas Kesehatan, Pengendalian Penduduk dan Keluarga Berencana': "Dinas Kesehatan",
-    'Rumah Sakit Umum Daerah Kota Madiun': "Rumah Sakit Umum Daerah",
-    'Sekretariat Daerah': "Sekretaris Daerah",
-    'Bagian Umum': "Bagian Umum",
-    'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan': "Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan",
-    'Bagian Organisasi': "Bagian Organisasi",
-    'Bagian Hukum': "Bagian Hukum",
-    'Bagian Perekonomian dan Kesejahteraan Rakyat': "Bagian Perekonomian dan Kesejahteraan Rakyat",
-    'Bagian Pemerintahan': "Bagian Pemerintahan"
-  }.freeze
-
-  KODE_OPD_TABLE = {
-    'Dinas Kesehatan, Pengendalian Penduduk dan Keluarga Berencana': "1.02.2.14.0.00.03.0000",
-    'Rumah Sakit Umum Daerah Kota Madiun': "1.02.2.14.0.00.03.0000",
-    'Sekretariat Daerah': "4.01.0.00.0.00.01.00", # don't change, this still used
-    'Bagian Umum': "4.01.0.00.0.00.01.00",
-    'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan': "4.01.0.00.0.00.01.00",
-    'Bagian Organisasi': "4.01.0.00.0.00.01.00",
-    'Bagian Hukum': "4.01.0.00.0.00.01.00",
-    'Bagian Perekonomian dan Kesejahteraan Rakyat': "4.01.0.00.0.00.01.00",
-    'Bagian Pemerintahan': "4.01.0.00.0.00.01.00"
-  }.freeze
-
-  KODE_OPD_BAGIAN = {
-    'Dinas Kesehatan, Pengendalian Penduduk dan Keluarga Berencana': "448",
-    'Rumah Sakit Umum Daerah Kota Madiun': "3408",
-    'Sekretariat Daerah': "479", # don't change, this still used
-    'Bagian Umum': "4402",
-    'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan': "4400",
-    'Bagian Organisasi': "4398",
-    'Bagian Hukum': "4399",
-    'Bagian Perekonomian dan Kesejahteraan Rakyat': "4401",
-    'Bagian Pemerintahan': "4397"
-  }.freeze
 
   def filter_sasaran
     opd = Opd.find_by(kode_opd: @kode_opd).nama_opd
@@ -312,8 +278,8 @@ class FilterController < ApplicationController
 
   def laporan_renstra
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @program_kegiatans = @opd.program_kegiatans.programs
     @nama_opd = @opd.nama_opd
+    @program_kegiatans = @opd.program_renstra
     if OPD_TABLE.key?(@nama_opd.to_sym)
       @program_kegiatans = ProgramKegiatan.includes(:opd)
                                           .where(id_sub_unit: KODE_OPD_BAGIAN[@nama_opd.to_sym])

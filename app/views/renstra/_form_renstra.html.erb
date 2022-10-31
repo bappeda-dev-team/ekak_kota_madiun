@@ -12,12 +12,6 @@
     readonly: true,
     value: @nama %>
 </div>
-<div class="field">
-  <%= form.label "indikator #{@sub_jenis}", class: 'form-label' %>
-  <%= form.text_field :indikator,
-    class: 'form-control',
-    value: @indikator %>
-</div>
 <% (2020..2024).each do |tahun| %>
   <%= form.hidden_field "renstra[indikator][][tahun]", value: tahun %>
   <%= form.hidden_field "renstra[indikator][][kode]", value: @kode %>
@@ -26,6 +20,12 @@
   <%= form.hidden_field "renstra[indikator][][sub_jenis]", value: @sub_jenis %>
   <%= form.hidden_field "renstra[indikator][][kode_indikator]", value: @kode_indikator %>
   <%= form.hidden_field :_kode_indikator, value: @kode_indikator %>
+  <div class="field">
+  <%= form.label "indikator #{@sub_jenis} Tahun #{tahun}", class: 'form-label' %>
+    <%= form.text_field "renstra[indikator][][indikator]",
+      class: 'form-control',
+      value: @targets[tahun.to_s]&.[](:indikator) %>
+  </div>
   <div class="row" %>
   <div class="field col">
     <%= form.label "target #{tahun}", class: 'form-label' %>

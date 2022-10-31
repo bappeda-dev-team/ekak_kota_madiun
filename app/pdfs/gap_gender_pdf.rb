@@ -16,6 +16,7 @@ class GapGenderPdf < Prawn::Document
     title
     move_down 20
     tabel_gender(gender)
+    move_down 30
     move_down 10
     ttd
   end

@@ -67,14 +67,14 @@ class ProgramKegiatan < ApplicationRecord
                             where(kode_sub_skpd: program_kegiatan.kode_sub_skpd)
                           }, class_name: 'ProgramKegiatan', foreign_key: 'kode_giat', primary_key: 'kode_giat'
 
-  has_many :indikator_program_renstra, lambda {
-                                         where(jenis: 'Renstra', sub_jenis: 'Program')
+  has_many :indikator_program_renstra, lambda { |program_kegiatan|
+                                         where(jenis: 'Renstra', sub_jenis: 'Program', kode_opd: program_kegiatan.kode_sub_skpd)
                                        }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'kode_program'
-  has_many :indikator_kegiatan_renstra, lambda {
-                                          where(jenis: 'Renstra', sub_jenis: 'Kegiatan')
+  has_many :indikator_kegiatan_renstra, lambda { |program_kegiatan|
+                                          where(jenis: 'Renstra', sub_jenis: 'Kegiatan', kode_opd: program_kegiatan.kode_sub_skpd)
                                         }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'kode_giat'
-  has_many :indikator_subkegiatan_renstra, lambda {
-                                             where(jenis: 'Renstra', sub_jenis: 'Subkegiatan')
+  has_many :indikator_subkegiatan_renstra, lambda { |program_kegiatan|
+                                             where(jenis: 'Renstra', sub_jenis: 'Subkegiatan', kode_opd: program_kegiatan.kode_sub_skpd)
                                            }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'kode_sub_giat'
 
   accepts_nested_attributes_for :sasarans
@@ -89,12 +89,12 @@ class ProgramKegiatan < ApplicationRecord
   def kegiatans_opd
     # super.uniq(&:kode_giat)
     # ProgramKegiatan.where("kode_program = ? and kode_opd = ?", kode_program, kode_opd)
-    kegiatans.uniq { |keg| keg.kode_giat }.sort_by(&:kode_giat)
+    kegiatans.uniq { |keg| keg.values_at(:kode_giat) }.sort_by(&:kode_giat)
   end
 
   def subkegiatans_opd
     # ProgramKegiatan.where("kode_giat = ? and kode_opd = ?", kode_giat, kode_opd)
-    subkegiatans.uniq { |sub| sub.kode_sub_giat }.sort_by(&:kode_sub_giat)
+    subkegiatans.uniq { |sub| sub.values_at(:kode_sub_giat) }.sort_by(&:kode_sub_giat)
   end
 
   def my_pagu
@@ -111,37 +111,15 @@ class ProgramKegiatan < ApplicationRecord
     }
   end
 
-  def indikator_key_grouper(type, kode_unit)
-    ind_programs = send("indikator_#{type}_renstra").select { |k| k.kode_opd == kode_unit }.group_by(&:version)
-    ind_programs[ind_programs.keys.max]&.group_by(&:indikator)&.transform_values do |indikator|
-      indikator.group_by(&:tahun)
-    end
+  def indikator_key_grouper(type, _kode_unit)
+    ind_programs = send("indikator_#{type}_renstra").select { |k| k.kode_opd == kode_sub_skpd }.group_by(&:version)
+    ind_programs[ind_programs.keys.max]
   end
 
   def indikator_renstras(sub_unit: '')
-    # subkegiatan = indikator_subkegiatan_renstra.group_by(&:kode_indikator).transform_values do |indikator|
-    #   indikator.group_by(&:tahun)
-    # end
-    program = indikator_program_renstra&.group_by(&:version)
-    kegiatan = indikator_kegiatan_renstra&.group_by(&:version)
-    subkegiatan = indikator_subkegiatan_renstra&.group_by(&:version)
-    if sub_unit.present?
-      program = indikator_program_renstra.select { |k| k.kode_opd == sub_unit }&.group_by(&:version)
-      kegiatan = indikator_kegiatan_renstra.select { |k| k.kode_opd == sub_unit }&.group_by(&:version)
-      subkegiatan = indikator_subkegiatan_renstra.select { |k| k.kode_opd == sub_unit }&.group_by(&:version)
-    end
-    # kotak_subkegiatan = indikator_subkegiatan_renstra&.group_by(&:kotak)
-    # subkegiatan = kotak_subkegiatan.transform_values { |ind| ind.group_by(&:version) }
-
-    progs = program[program.keys.max]&.group_by(&:indikator)&.transform_values do |indikator|
-      indikator.group_by(&:tahun)
-    end
-    kegs = kegiatan[kegiatan.keys.max]&.group_by(&:indikator)&.transform_values do |indikator|
-      indikator.group_by(&:tahun)
-    end
-    subs = subkegiatan[subkegiatan.keys.max]&.group_by(&:indikator)&.transform_values do |indikator|
-      indikator.group_by(&:tahun)
-    end
+    progs = indikator_renstras_new('program', sub_unit)[:indikator_program]
+    kegs = indikator_renstras_new('kegiatan', sub_unit)[:indikator_kegiatan]
+    subs = indikator_renstras_new('subkegiatan', sub_unit)[:indikator_subkegiatan]
 
     {
       indikator_program: progs,

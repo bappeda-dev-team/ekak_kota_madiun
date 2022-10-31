@@ -41,7 +41,7 @@ class Gender < ApplicationRecord
   serialize :penerima_manfaat, Array
   serialize :rencana_aksi, Array
 
-  validates :tahun, presence: true
+  validates :tahun, presence: true, inclusion: { in: 2015..Date.today.year }
   validates :sasaran_id, presence: true
   validates :program_kegiatan_id, presence: true
   validates :sasaran_subkegiatan, presence: true
