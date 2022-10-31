@@ -1,4 +1,4 @@
-class GapGenderPdf < Prawn::Document
+class GbsGenderPdf < Prawn::Document
   include ActionView::Helpers::NumberHelper
 
   def initialize(opd: '', tahun: '', gender: '')
