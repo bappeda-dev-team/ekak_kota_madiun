@@ -41,7 +41,7 @@ class Gender < ApplicationRecord
   serialize :penerima_manfaat, Array
   serialize :rencana_aksi, Array
 
-  validates :tahun, presence: true, inclusion: { in: 2015..Date.today.year }
+  validates :tahun, presence: true
   validates :sasaran_id, presence: true
   validates :program_kegiatan_id, presence: true
   validates :sasaran_subkegiatan, presence: true
@@ -88,41 +88,49 @@ class Gender < ApplicationRecord
   end
 
   def faktor_kesenjangan
-    "<b>AKSES</b>: #{akses}.\n\n" +
-      "<b>PARTISIPASI</b>: #{partisipasi}.\n\n" +
-      "<b>KONTROL</b>: #{kontrol}.\n\n" +
-      "<b>MANFAAT</b>: #{manfaat}."
+    "<b>AKSES</b>:\n - #{akses}.\n\n" +
+      "<b>PARTISIPASI</b>:\n - #{partisipasi}.\n\n" +
+      "<b>KONTROL</b>:\n - #{kontrol}.\n\n" +
+      "<b>MANFAAT</b>:\n - #{manfaat}."
   end
 
   def data_pembuka_wawasan
-    "<b>SASARAN</b>: #{sasaran.sasaran_kinerja}.\n\n" +
-      "<b>TUJUAN</b>: #{sasaran.sasaran_kinerja}.\n\n" +
-      "<b>PENERIMA MANFAAT</b>: #{sasaran.penerima_manfaat}.\n\n" +
-      "<b>DATA TERPILAH</b>: #{sasaran.rincian.data_terpilah}.\n\n" +
-      "<b>PERMASALAHAN</b>: #{sasaran.permasalahan_sasaran}"
+    "<b>SASARAN</b>:\n - #{sasaran.sasaran_kinerja}.\n\n" +
+      "<b>TUJUAN</b>:\n - #{sasaran.sasaran_kinerja}.\n\n" +
+      "<b>PENERIMA MANFAAT</b>:\n - #{sasaran.penerima_manfaat}.\n\n" +
+      "<b>DATA TERPILAH</b>:\n - #{sasaran.rincian.data_terpilah}.\n\n" +
+      "<b>PERMASALAHAN</b>:\n - #{sasaran.permasalahan_sasaran}"
   end
 
   def data_baseline
-    "<b>TUJUAN</b>: #{sasaran_subkegiatan}.\n\n" +
-      "<b>PENERIMA MANFAAT</b>: #{penerima_manfaat}.\n\n" +
-      "<b>DATA TERPILAH</b>: #{data_terpilah_gender}."
+    "<b>TUJUAN</b>:\n #{sasaran_subkegiatan_gender}.\n\n" +
+      "<b>PENERIMA MANFAAT</b>:\n #{penerima_manfaat_gender}.\n\n" +
+      "<b>DATA TERPILAH</b>:\n #{data_terpilah_gender}."
   end
 
   def indikator_gender
-    "<b>INDIKATOR</b>: #{indikator}.\n\n" +
-      "<b>TARGET</b>: #{target} #{satuan}."
+    "<b>INDIKATOR</b>:\n - #{indikator}.\n\n" +
+      "<b>TARGET</b>:\n #{target} #{satuan}."
   end
 
   def data_terpilah_gender
-    data_terpilah.is_a?(Array) ? data_terpilah.join(',') : data_terpilah
+    data_terpilah.is_a?(Array) ? data_terpilah.each { |ss| ss.prepend("- ") }.join(". \n") : data_terpilah.prepend("- ")
+  end
+
+  def penerima_manfaat_gender
+    penerima_manfaat.is_a?(Array) ? penerima_manfaat.each { |ss| ss.prepend("- ") }.join(". \n") : penerima_manfaat.prepend("- ")
+  end
+
+  def sasaran_subkegiatan_gender
+    sasaran_subkegiatan.is_a?(Array) ? sasaran_subkegiatan.each { |ss| ss.prepend("- ") }.join(". \n") : sasaran_subkegiatan.prepend("- ")
   end
 
   def penyebab_internal_non_html
-    penyebab_internal.is_a?(Array) ? penyebab_internal.join(',') : penyebab_internal
+    penyebab_internal.is_a?(Array) ? penyebab_internal.each { |ss| ss.prepend("- ") }.join(". \n") : penyebab_internal
   end
 
   def penyebab_external_non_html
-    penyebab_external.is_a?(Array) ? penyebab_external.join(',') : penyebab_external
+    penyebab_external.is_a?(Array) ? penyebab_external.each { |ss| ss.prepend("- ") }.join(". \n") : penyebab_external
   end
 
   def penyebab_internal_gender
@@ -145,7 +153,7 @@ class Gender < ApplicationRecord
     if rencana_aksi.nil?
       sasaran.tahapans.first.tahapan_kerja
     else
-      rencana_aksi.is_a?(Array) ? rencana_aksi.join(',') : rencana_aksi
+      rencana_aksi.is_a?(Array) ? rencana_aksi.each { |ss| ss.prepend("- ") }.join(". \n") : rencana_aksi
     end
   end
 
