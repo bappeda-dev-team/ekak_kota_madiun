@@ -11,21 +11,26 @@
   <div class="card-body">
     <div class="field">
       <%= form.label :tahun, class: 'form-label' %>
-      <%= form.text_field :tahun, class: 'form-control', data: { gender_form_target: "tahun" } %>
+      <%= form.select :tahun,[2020, 2021, 2022, 2023, 2024],{},
+        { class: 'form-control',id: form_count, data: { controller: 'dropdown', gender_form_target: "tahun", dropdown_target: "tahun" } }%>
+      <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="tahun"></p>
     </div>
     <div class="field">
       <%= form.label :sasaran_subkegiatan, class: 'form-label' %>
       <%= form.text_field :sasaran_subkegiatan, multiple: true, class: 'form-control', data: { gender_form_target: "sasaran" } %>
+      <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="sasaran_subkegiatan"></p>
     </div>
     <%= add_new_field_gender("tambah sasaran subkegiatan", form, :sasaran_subkegiatan, gender )  %>
     <div class="field">
       <%= form.label :penerima_manfaat, class: 'form-label' %>
       <%= form.text_field :penerima_manfaat, multiple: true, class: 'form-control', data: { gender_form_target: "penerima_manfaat" } %>
+      <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="penerima_manfaat"></p>
     </div>
     <%= add_new_field_gender("tambah penerima manfaat", form, :penerima_manfaat, gender )  %>
     <div class="field">
       <%= form.label :data_terpilah, class: 'form-label' %>
       <%= form.text_field :data_terpilah, multiple: true, class: 'form-control', data: { gender_form_target: "data_terpilah" } %>
+      <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="data_terpilah"></p>
     </div>
     <%= add_new_field_gender("tambah data terpilah", form, :data_terpilah, gender )  %>
   </div>

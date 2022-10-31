@@ -1,4 +1,5 @@
 class GendersController < ApplicationController
+  include ErrorSerializer
   before_action :set_gender, only: %i[show edit update destroy]
 
   # GET /genders or /genders.json
@@ -32,8 +33,8 @@ class GendersController < ApplicationController
         end
         format.html { redirect_to gap_genders_path, success: "Data Gender Analysis Berhasil disimpan" }
       else
+        format.json { render json: ErrorSerializer.serialize(@gender.errors), status: :unprocessable_entity }
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @gender.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -116,6 +117,7 @@ class GendersController < ApplicationController
                                    penyebab_external: [],
                                    data_terpilah: [],
                                    sasaran_subkegiatan: [],
+                                   rencana_aksi: [],
                                    penerima_manfaat: [])
   end
 end

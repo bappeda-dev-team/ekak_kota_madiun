@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 
 
 export default class extends Controller {
+  static targets = ["errorContainer"]
   successResponse(event) {
     // event.preventDefault()
     const [message, status, xhr] = event.detail
@@ -23,9 +24,21 @@ export default class extends Controller {
   }
 
   errorWithoutModal(event) {
-    const [message, status, xhr] = event.detail
-    // this.errorTarget.innerHTML = xhr.response
-    console.log(xhr)
+    const [message, status] = event.detail
+    const errors = message.errors
+    this.errorContainerTargets.forEach((errorContainer) => {
+      const errorType = errorContainer.dataset.errorType
+      const errorMsg = extractError({ errors, type: errorType }) 
+      if(errorMsg === undefined)
+      {
+        errorContainer.style.display = 'none'
+      }
+      else {
+        errorContainer.previousElementSibling.classList.add('is-invalid')
+        errorContainer.innerHTML = errorMsg
+        errorContainer.style.display = 'inline'
+      }
+    })
   }
 
   sweetalert(text) {
@@ -36,4 +49,12 @@ export default class extends Controller {
       confirmButtonText: 'Ok',
     })
   }
+}
+
+function extractError({ errors, type }) {
+  if (!errors || !Array.isArray(errors)) return
+    const foundError = errors.find(
+          (error) => error.id.toLowerCase() === type.toLowerCase()
+        )
+    return foundError?.title
 }

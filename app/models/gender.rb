@@ -13,6 +13,7 @@
 #  penyebab_external   :string
 #  penyebab_internal   :string
 #  reformulasi_tujuan  :string
+#  rencana_aksi        :string
 #  sasaran_subkegiatan :string
 #  satuan              :string
 #  tahun               :string
@@ -20,6 +21,7 @@
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  program_kegiatan_id :bigint
+#  rencana_aksi_id     :string
 #  sasaran_id          :bigint
 #
 # Indexes
@@ -37,12 +39,14 @@ class Gender < ApplicationRecord
   serialize :penyebab_external, Array
   serialize :data_terpilah, Array
   serialize :penerima_manfaat, Array
+  serialize :rencana_aksi, Array
 
   validates :tahun, presence: true, inclusion: { in: 2015..Date.today.year }
   validates :sasaran_id, presence: true
   validates :program_kegiatan_id, presence: true
   validates :sasaran_subkegiatan, presence: true
   validates :penerima_manfaat, presence: true
+  validates :data_terpilah, presence: true
   validates :reformulasi_tujuan, presence: true
   validates :akses, presence: true
   validates :partisipasi, presence: true
@@ -50,12 +54,18 @@ class Gender < ApplicationRecord
   validates :manfaat, presence: true
   validates :penyebab_internal, presence: true
   validates :penyebab_external, presence: true
+  validates :rencana_aksi, presence: true
 
-  before_save :remove_blank_sasaran_subkegiatan
-  before_save :remove_blank_penyebab_internal
-  before_save :remove_blank_penyebab_external
-  before_save :remove_blank_data_terpilah
-  before_save :remove_blank_penerima_manfaat
+  before_validation :remove_blank_sasaran_subkegiatan
+  before_validation :remove_blank_penyebab_internal
+  before_validation :remove_blank_penyebab_external
+  before_validation :remove_blank_data_terpilah
+  before_validation :remove_blank_penerima_manfaat
+  before_validation :remove_blank_rencana_aksi
+
+  def remove_blank_rencana_aksi
+    rencana_aksi.reject!(&:blank?)
+  end
 
   def remove_blank_sasaran_subkegiatan
     sasaran_subkegiatan.reject!(&:blank?)
@@ -85,7 +95,8 @@ class Gender < ApplicationRecord
   end
 
   def data_pembuka_wawasan
-    "<b>TUJUAN</b>: #{sasaran.sasaran_kinerja}.\n\n" +
+    "<b>SASARAN</b>: #{sasaran.sasaran_kinerja}.\n\n" +
+      "<b>TUJUAN</b>: #{sasaran.sasaran_kinerja}.\n\n" +
       "<b>PENERIMA MANFAAT</b>: #{sasaran.penerima_manfaat}.\n\n" +
       "<b>DATA TERPILAH</b>: #{sasaran.rincian.data_terpilah}.\n\n" +
       "<b>PERMASALAHAN</b>: #{sasaran.permasalahan_sasaran}"
@@ -128,5 +139,19 @@ class Gender < ApplicationRecord
     content_tag(:ol, class: 'list_items') do
       list_items.each { |item| concat(content_tag(:li, item)) }
     end
+  end
+
+  def rencana_aksi_tahapan
+    if rencana_aksi.nil?
+      sasaran.tahapans.first.tahapan_kerja
+    else
+      rencana_aksi.is_a?(Array) ? rencana_aksi.join(',') : rencana_aksi
+    end
+  end
+
+  def program_kegiatan_subkegiatan
+    "PROGRAM: #{program_kegiatan.nama_program}.\n\n" +
+      "KEGIATAN: #{program_kegiatan.nama_kegiatan}.\n\n" +
+      "<b>SUBKEGIATAN</b>: #{program_kegiatan.nama_subkegiatan}."
   end
 end

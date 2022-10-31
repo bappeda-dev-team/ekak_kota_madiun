@@ -29,6 +29,7 @@ export default class extends Controller {
     event.preventDefault()
   }
 
+  // depreceated
   fill_default_data(id_sasaran) {
     const data_sasaran = fetch(`/sasarans/${id_sasaran}/data_detail.json`)
       .then(response => response.json())
@@ -55,7 +56,7 @@ export default class extends Controller {
       })
   }
 
-  rencana_aksiTargetConnected() {
+  rencana_aksiTargetConnected(element) {
     this.get_renaksi(this.sasaranValue)
   }
 
