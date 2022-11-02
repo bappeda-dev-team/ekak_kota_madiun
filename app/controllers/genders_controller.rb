@@ -68,6 +68,7 @@ class GendersController < ApplicationController
   # end
 
   def gap
+    @opd = current_user.opd
     @genders = Gender.all
     render 'gap_gender'
   end
