@@ -58,7 +58,7 @@
                     <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
                     <td class="text-gray-900 text-wrap" rowspan="<%= kak.sasarans.count + 1 %>">
                       <% tahun = Date.today.year + 1 %>
-                      <%= link_to "/pdf_gender/#{kak.id}/#{tahun}.pdf", class:"m-3" do %>
+                      <%= link_to "/genders/pdf_gender/#{kak.id}/#{tahun}.pdf", class:"m-3" do %>
                         <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak GAB"></span>
                       <% end %>
                     </td>
