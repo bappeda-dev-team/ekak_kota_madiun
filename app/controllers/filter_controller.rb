@@ -1,4 +1,4 @@
-class FilterController < ApplicationController 
+class FilterController < ApplicationController
   include Renstra::OpdKhusus
 
   before_action :filter_params, except: %i[filter_tematiks]
@@ -256,14 +256,14 @@ class FilterController < ApplicationController
   end
 
   def daftar_resiko
-    kak = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
-    @tahun_bener = kak.tahun
-    @program_kegiatans = kak.laporan_rencana_kinerja
+    @daftar_resiko = DaftarResiko.new(kode_unik_opd: @kode_opd, tahun: @tahun)
+    @tahun_bener = @daftar_resiko.tahun
+    @program_kegiatans = @daftar_resiko.daftar_resiko_opd
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd).id
     #    if OPD_TABLE.key?(@opd.nama_opd.to_sym)
     #      @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[@opd.nama_opd.to_sym] }).with_sasarans(@tahun_sasaran)
     #      @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[@opd.nama_opd.to_sym]) # idk about bidang thing
     #    end
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd).id
     @id_target = "daftar_resiko"
     @filter_file = params[:filter_file].empty? ? "hasil_filter" : params[:filter_file]
     respond_to do |format|

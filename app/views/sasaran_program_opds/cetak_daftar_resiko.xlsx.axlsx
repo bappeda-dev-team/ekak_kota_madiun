@@ -18,8 +18,8 @@ wb.add_worksheet(name: "Daftar Resiko") do |sheet|
       peta_resiko = ApplicationController.helpers.peta_resiko(nilai_kemungkinan, nilai_skala_dampak)
       nilai_peta_resiko = ApplicationController.helpers.nilai_peta_resiko(peta_resiko)
       sheet.add_row ["", "", no.to_s, s.sasaran_kinerja,
-                     s.indikator_sasarans.first.indikator_kinerja, s.indikator_sasarans.first.target.to_s,
-                     s.indikator_sasarans.first.satuan,
+                     s.indikator_sasarans&.first&.indikator_kinerja, s.indikator_sasarans&.first&.target.to_s,
+                     s.indikator_sasarans&.first&.satuan,
                      "Rp. #{number_with_delimiter(s&.total_anggaran || 0)}",
                      s.rincian&.resiko || '-',
                      s.rincian&.kemungkinan&.deskripsi, s.rincian&.dampak || '-',
