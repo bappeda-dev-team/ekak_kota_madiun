@@ -6,7 +6,7 @@ class SasaransController < ApplicationController
   # GET /sasarans or /sasarans.json
   def index
     @tahun_sasaran = cookies[:tahun_sasaran] || nil
-    @sasarans = @user.sasarans.where(tahun: @tahun_sasaran).order(:id)
+    @sasarans = @user.sasarans.where('tahun ILIKE ?', "%#{@tahun_sasaran}%").order(:id)
     @sasarans = @user.sasarans.order(:id) if @sasarans.empty?
     if current_user.has_role? :admin
       @sasarans = @user.opd.sasarans.includes(:indikator_sasarans).order(:id)
@@ -239,7 +239,8 @@ class SasaransController < ApplicationController
     respond_to do |format|
       @rowspan = params[:rowspan]
       @dom = params[:dom]
-      if duplicate.save
+      begin
+       duplicate.save
         sasaran_target.indikator_sasarans.map do |is|
           is.class.amoeba do
             append sasaran_id: kelompok_anggaran.kode_kelompok
@@ -267,13 +268,18 @@ class SasaransController < ApplicationController
             th.amoeba_dup.save
           end
         end
+      rescue ActiveRecord::RecordNotUnique
+        flash.now[:alert] = ["Sasaran Sudah di kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran} ", "Sasaran Sudah di kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran} "]
+        @type = 'gagal'
+        @text = "Sasaran Sudah di kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran} "
+      rescue ActiveRecord::RecordError
+        flash.now[:alert] = ["Terjadi Kesalahan. Gagal Kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran}", 'gagal']
+        @type = 'gagal'
+        @text = 'gagal dicloning'
+      else
         flash.now[:success] = ['Berhasil di cloning', 'dicloning']
         @type = 'berhasil'
         @text = 'Berhasil dicloning'
-      else
-        flash.now[:danger] = ['Gagal di cloning', 'gagal']
-        @type = 'gagal'
-        @text = 'gagal dicloning'
       end
       format.js { render 'update_kak' }
     end
