@@ -5,12 +5,9 @@
   </div>
   <div class="field">
     <%= form.label :kelompok_anggaran, { class: "form-label" } %>
-    <%= form.select :kelompok_anggaran, [''], {include_blank: true},
+    <%= form.select :kelompok_anggaran, options_for_select(KelompokAnggaran.all.collect { |ka| [ka.nama_sederhana_kelompok_tahun, ka.id] } ), {include_blank: true},
                     { data: { placeholder: "Pilih Tahun Cloning",
-                              controller: 'dropdown',
-                              dropdown_jenis_value: 'ajax',
-                              dropdown_parent_value: '#form-clone-sasaran',
-                              dropdown_url_value: '/kelompok_anggarans.json',
+                              controller: 'dropdown'
                     } } %>
   </div>
   <div class="actions my-4">

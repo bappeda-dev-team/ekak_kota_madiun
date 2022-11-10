@@ -18,7 +18,8 @@ class KelompokAnggaran < ApplicationRecord
                                      message: 'kelompok sudah ada di tahun yang sama' }
   validates :kode_kelompok, uniqueness: { scope: :tahun,
                                           message: 'kode kelompok sudah ada di tahun yang sama' }
-  validates :tahun, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 2020, message: 'tahun minimal 2020' }
+  validates :tahun, presence: true,
+                    numericality: { only_integer: true, greater_than_or_equal_to: 2020, message: 'tahun minimal 2020' }
 
   after_validation :kode_kelompok_maker
 
@@ -34,5 +35,9 @@ class KelompokAnggaran < ApplicationRecord
 
   def tahun_kelompok
     "#{tahun} #{kelompok}"
+  end
+
+  def nama_sederhana_kelompok_tahun
+    "#{tahun} #{kelompok if kelompok == 'Perubahan'}"
   end
 end
