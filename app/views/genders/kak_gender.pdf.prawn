@@ -13,12 +13,21 @@ prawn_document(filename: @filename, disposition: 'attachment') do |pdf|
   cell_pembuka_wawasan = []
   cell_penyebab_internal = []
   cell_penyebab_external = []
-  @program_kegiatan.rincians.each do |rincian|
-    cell_pembuka_wawasan << ['-', rincian&.data_terpilah || '-']
+  if @program_kegiatan.rincians.exists?
+    @program_kegiatan.rincians.each do |rincian|
+      cell_pembuka_wawasan << ['-', rincian&.data_terpilah || '-']
+    end
+  else
+    cell_pembuka_wawasan << ['-', '-']
   end
-  @program_kegiatan.permasalahans.each do |masalah|
-    cell_penyebab_internal << ['-', masalah&.penyebab_internal || '-']
-    cell_penyebab_external << ['-', masalah&.penyebab_external || '-']
+  if @program_kegiatan.permasalahans.exists?
+    @program_kegiatan.permasalahans.each do |masalah|
+      cell_penyebab_internal << ['-', masalah&.penyebab_internal || '-']
+      cell_penyebab_external << ['-', masalah&.penyebab_external || '-']
+    end
+  else
+    cell_penyebab_internal << ['-', '-']
+    cell_penyebab_external << ['-', '-']
   end
   # width table, the table_subtable is the first child
   # the subtable is the 2nd child table
@@ -27,8 +36,8 @@ prawn_document(filename: @filename, disposition: 'attachment') do |pdf|
   subtable_width = table_subtable_width - 32
 
   tabel_pembuka_wawasan = pdf.make_table(cell_pembuka_wawasan,
-    cell_style: { size: 8, border_width: 0 },
-    column_widths: { 0 => col_0_subtable_width, 1 => subtable_width })
+                                         cell_style: { size: 8, border_width: 0 },
+                                         column_widths: { 0 => col_0_subtable_width, 1 => subtable_width })
 
   tabel_faktor_kesenjangan = pdf.make_table([
                                               ['-', '-']
@@ -36,14 +45,14 @@ prawn_document(filename: @filename, disposition: 'attachment') do |pdf|
                                             cell_style: { size: 8, border_width: 0 })
 
   tabel_internal = pdf.make_table(cell_penyebab_internal,
-    cell_style: { size: 8, border_width: 0 },
-    column_widths: { 0 => col_0_subtable_width, 1 => subtable_width })
+                                  cell_style: { size: 8, border_width: 0 },
+                                  column_widths: { 0 => col_0_subtable_width, 1 => subtable_width })
 
   tabel_external = pdf.make_table(cell_penyebab_external,
-    cell_style: { size: 8, border_width: 0 },
-    column_widths: { 0 => col_0_subtable_width, 1 => subtable_width })
+                                  cell_style: { size: 8, border_width: 0 },
+                                  column_widths: { 0 => col_0_subtable_width, 1 => subtable_width })
   tabel_kesenjangan = pdf.make_table([
-                                       ['1.', { content: 'Data Pembuka Wawasan'}],
+                                       ['1.', { content: 'Data Pembuka Wawasan' }],
                                        ['', tabel_pembuka_wawasan],
                                        ['2.', { content: 'Isu dan Faktor Kesenjangan Gender' }],
                                        ['', 'a. Faktor Kesenjangan'],
@@ -59,7 +68,8 @@ prawn_document(filename: @filename, disposition: 'attachment') do |pdf|
                                            ['1.', { content: 'Tolok Ukur' }],
                                            ['', 'Tujuan Program'],
                                            ['2.', 'Indikator Kinerja dan Target Kinerja'],
-                                           ['-', "#{@program_kegiatan.indikator_program} #{@program_kegiatan.target_program} #{@program_kegiatan.satuan_target_program}"]
+                                           ['-',
+                                            "#{@program_kegiatan.indikator_program} #{@program_kegiatan.target_program} #{@program_kegiatan.satuan_target_program}"]
                                          ],
                                          cell_style: { size: 8, border_width: 0 },
                                          column_widths: { 0 => 20 }, width: table_subtable_width)
@@ -83,7 +93,8 @@ prawn_document(filename: @filename, disposition: 'attachment') do |pdf|
     ['KODE PROGRAM', { content: @program_kegiatan.kode_program }],
     [{ content: 'ANALISIS SITUASI' }, { content: tabel_kesenjangan }],
     ['CAPAIAN PROGRAM', tabel_capaian_program],
-    ['JUMLAH ANGGARAN SUBKEGIATAN', { content: "Rp. #{number_with_delimiter(@program_kegiatan.pagu)}", font_style: :bold }],
+    ['JUMLAH ANGGARAN SUBKEGIATAN',
+     { content: "Rp. #{number_with_delimiter(@program_kegiatan.pagu)}", font_style: :bold }],
     ['RENCANA AKSI', tabel_rencana_aksi]
   ]
   pdf.table(tabel_program_kegiatan,
@@ -100,7 +111,8 @@ prawn_document(filename: @filename, disposition: 'attachment') do |pdf|
     pdf.text "<strong>Kepala</strong>", size: 8, align: :center, inline_format: true
     pdf.text "<strong>#{@program_kegiatan.opd.nama_opd}</strong>", size: 8, align: :center, inline_format: true
     pdf.move_down 50
-    pdf.text "<u>#{@program_kegiatan.opd.nama_kepala || '!!belum disetting'}</u>", size: 8, align: :center, inline_format: true
+    pdf.text "<u>#{@program_kegiatan.opd.nama_kepala || '!!belum disetting'}</u>", size: 8, align: :center,
+                                                                                   inline_format: true
     pdf.text @program_kegiatan.opd.pangkat_kepala || '!! belum disetting', size: 8, align: :center
     pdf.text "NIP. #{@program_kegiatan.opd.nip_kepala || '!! belum disetting'}", size: 8, align: :center
   end
