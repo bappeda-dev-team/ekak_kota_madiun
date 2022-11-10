@@ -91,9 +91,9 @@ class DaftarResikoPdf < Prawn::Document
       nilai_peta_resiko = ApplicationController.helpers.nilai_peta_resiko(peta_resiko)
       sasaran_arr << [{ content: no.to_s, align: :center, width: 20 },
                       { content: s.sasaran_kinerja, align: :left, width: 75 },
-                      { content: s.indikator_sasarans.first.indikator_kinerja, width: 75 },
-                      { content: s.indikator_sasarans.first.target.to_s, width: 30 },
-                      { content: s.indikator_sasarans.first.satuan, width: 30 },
+                      { content: s.indikator_sasarans&.first&.indikator_kinerja, width: 75 },
+                      { content: s.indikator_sasarans&.first&.target.to_s, width: 30 },
+                      { content: s.indikator_sasarans&.first&.satuan, width: 30 },
                       { content: "Rp. #{number_with_delimiter(s&.total_anggaran || 0)}", width: 65 },
                       { content: s.rincian&.resiko || '-', width: 75 },
                       { content: s.rincian&.kemungkinan&.deskripsi || '-', width: 50, align: :center },
