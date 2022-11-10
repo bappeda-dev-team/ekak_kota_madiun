@@ -6,7 +6,7 @@ class DaftarResiko
   end
 
   def daftar_resiko_asn(nip: '')
-    program_kegiatans_by_opd.with_sasarans_rincian.where(sasarans: { nip_asn: nip, tahun: tahun }).map do |pk|
+    program_kegiatans_by_opd.with_sasarans_rincian.where(sasarans: { nip_asn: nip }).map do |pk|
       sasarans_filter(tahun, pk.sasarans)
     end.compact_blank!.flatten.group_by(&:program_kegiatan)
   end
@@ -20,7 +20,7 @@ class DaftarResiko
   end
 
   def daftar_resiko_opd
-    program_kegiatans_by_opd.with_sasarans_rincian.where(sasarans: { tahun: tahun }).map do |pk|
+    program_kegiatans_by_opd.with_sasarans_rincian.map do |pk|
       sasarans_filter(tahun, pk.sasarans)
     end.compact_blank!.flatten.group_by(&:program_kegiatan)
   end
