@@ -29,9 +29,12 @@ class AksisController < ApplicationController
     @aksi.id_aksi_bulan = SecureRandom.base36(6)
     respond_to do |format|
       if @aksi.save
+        flash[:success] = "Sukses menambah target"
+        format.js { render 'update.js.erb' }
         format.html { redirect_to sasaran_path(@sasaran), success: 'Sukses menambah target' }
         format.json { render :show, status: :created, location: @aksi }
       else
+        flash[:error] = "Terjadi kesalahan"
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @aksi.errors, status: :unprocessable_entity }
       end

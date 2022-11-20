@@ -6,8 +6,7 @@ class SasaransController < ApplicationController
   # GET /sasarans or /sasarans.json
   def index
     @tahun_sasaran = cookies[:tahun_sasaran] || nil
-    @sasarans = @user.sasarans.where('tahun ILIKE ?', "%#{@tahun_sasaran}%").order(:id)
-    @sasarans = @user.sasarans.order(:id) if @sasarans.empty?
+    @sasarans = @user.sasarans.where('tahun ILIKE ?', "%#{@tahun_sasaran}%").or(@user.sasarans.where(sasarans: { tahun: nil})).order(:id)
     if current_user.has_role? :admin
       @sasarans = @user.opd.sasarans.includes(:indikator_sasarans).order(:id)
       render 'index_admin'

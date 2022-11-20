@@ -3,7 +3,7 @@ module SasaranProgramOpdsHelper
     matrix_resiko =
       { A: [[1, 1]],
         B: [[1, 2], [2, 1], [2, 2], [3, 1], [1, 3]],
-        C: [[2, 3], [3, 2], [4, 1], [1, 4]],
+        C: [[2, 3], [3, 2], [4, 1], [1, 4], [3, 3]],
         D: [[4, 2], [2, 4], [3, 4]] }
     matrik = [kemungkinan.to_i, skala_dampak.to_i]
     nilai = matrix_resiko.select { |_nilai, skor| skor.include?(matrik) }
