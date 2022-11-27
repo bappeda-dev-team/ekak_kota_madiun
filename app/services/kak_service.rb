@@ -38,9 +38,15 @@ class KakService
   end
 
   def sasarans_by_user
-    asn_aktif_by_opd.map do |user_aktif|
+    asn_aktif = asn_aktif_by_opd.map do |user_aktif|
       { user_aktif => sasarans_filter(@tahun, user_sasarans(user_aktif)).group_by(&:program_kegiatan) }
     end
+    if OPD_TABLE.key?(opd.nama_opd.to_sym)
+      asn_aktif = asn_aktif_by_opd_khusus.map do |user_aktif|
+        { user_aktif => sasarans_filter(@tahun, user_sasarans(user_aktif)).group_by(&:program_kegiatan) }
+      end
+    end
+    asn_aktif
   end
 
   def user_sasarans(users)
@@ -53,6 +59,12 @@ class KakService
 
   def asn_aktif_by_opd
     opd.users.asn_aktif
+  end
+
+  # bug di kecamatan taman
+  def asn_aktif_by_opd_khusus
+    User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.nama_opd.to_sym] })
+        .where(nama_bidang: OPD_TABLE[opd.nama_opd.to_sym]).asn_aktif
   end
 
   def isu_strategis
