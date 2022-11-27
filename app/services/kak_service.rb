@@ -24,9 +24,17 @@ class KakService
   end
 
   def laporan_rencana_kinerja
-    program_kegiatans_by_opd.map do |pk|
+    programs = program_kegiatans_by_opd.map do |pk|
       sasarans_filter(@tahun, pk.sasarans)
     end.compact_blank!.flatten.group_by(&:program_kegiatan)
+
+    if OPD_TABLE.key?(opd.nama_opd.to_sym)
+      programs = program_kegiatan_opd_khusus(id_sub_unit: KODE_OPD_BAGIAN[opd.nama_opd.to_sym]).map do |pk|
+        sasarans_filter(@tahun, pk.sasarans)
+      end.compact_blank!.flatten.group_by(&:program_kegiatan)
+    end
+
+    programs
   end
 
   def sasarans_by_user
