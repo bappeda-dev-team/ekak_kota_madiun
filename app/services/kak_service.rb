@@ -50,7 +50,7 @@ class KakService
   end
 
   def user_sasarans(users)
-    users.sasarans.dengan_sub_kegiatan
+    users.sasarans.dengan_sub_kegiatan.dengan_tahapan
   end
 
   def program_kegiatans_by_opd
