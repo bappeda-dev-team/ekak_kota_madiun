@@ -93,6 +93,7 @@ class Sasaran < ApplicationRecord
   scope :hijau, -> { select(&:lengkap?).size }
   scope :biru, -> { select(&:selesai?).reject(&:lengkap?).size }
   scope :dengan_sub_kegiatan, -> { joins(:program_kegiatan) }
+  scope :dengan_tahapan, -> { joins(:tahapans) }
   scope :dengan_rincian, -> { joins(:rincian).includes(:tahapans).where.not(tahapans: { id_rencana: nil }) }
   scope :belum_ada_genders, -> { where.missing(:genders) }
 
