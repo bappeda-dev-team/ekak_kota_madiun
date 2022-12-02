@@ -1,4 +1,4 @@
-import { Controller } from 'stimulus'
+import {Controller} from 'stimulus'
 import $ from 'jquery'
 
 
@@ -8,7 +8,8 @@ export default class extends Controller {
     jenis: String,
     parent: String,
     url: String,
-    opd_id: String
+    opd_id: String,
+    uraian: String
   }
 
   get select() {
@@ -33,7 +34,8 @@ export default class extends Controller {
         url: this.urlValue,
         data: (params) => ({
           kode_opd: this.opd_idValue,
-          q: params.term }),
+          q: params.term
+        }),
         delay: 1500
       }
     }
@@ -72,16 +74,33 @@ export default class extends Controller {
     });
   }
 
-// custom_event
+  // custom_event
   dropdown_with_action(options) {
-    return this.dropdown_base(options).on('select2:select', (e) => {
+    const select2ed = this.dropdown_base(options)
+    if (this.hasUraianValue) {
+      $.ajax({
+        type: 'GET',
+        url:  `${this.urlValue}?q=${this.uraianValue}`,
+      }).then(function (data) {
+        const data_first = data.results[0]
+        const options = new Option(data_first.text, data_first.id, true, true)
+        select2ed.append(options)
+        select2ed.trigger({
+          type: 'select2:select',
+          params: {
+            data: data_first
+          }
+        });
+      });
+    }
+    return select2ed.on('select2:select', (e) => {
       const custom_event = new CustomEvent('change-select',
-                              { detail: { data: e.params.data }})
+        {detail: {data: e.params.data}})
       document.dispatchEvent(custom_event)
     })
   }
 
-// action
+  // action
 
   fill_spesifikasi_satuan_harga(e) {
     const data_barang = e.detail.data;
@@ -100,12 +119,12 @@ export default class extends Controller {
 
   chain_value_to_target(e) {
     const opd_id = e.detail.data.id
-    this.opd_idValue= opd_id
+    this.opd_idValue = opd_id
   }
 
   event_dispatcher(custom_event_name, data) {
     const custom_event = new CustomEvent(custom_event_name,
-                            { detail: { data: data }})
+      {detail: {data: data}})
     document.dispatchEvent(custom_event)
   }
 }
