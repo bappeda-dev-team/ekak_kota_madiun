@@ -259,6 +259,10 @@ Rails.application.routes.draw do
       post :kota_test_indikator_kegiatan
       post :kota_test_indikator_subkegiatan
     end
+    namespace :renja do
+      post :opd_subkegiatan
+      post :kota_subkegiatan
+    end
   end
 
   resources :sasaran_kota

@@ -11,20 +11,20 @@
   <% end %>
   <%
   unless perhitungan.deskripsi.blank?
-    selected = Search::AllAnggaran.where('kode_barang ILIKE ?',
-                                                "%#{perhitungan.deskripsi}%").limit(30).includes(:searchable).collect(&:searchable)
-    uraian = selected.first.class.name + '|' + selected.first.uraian_barang + ' | ' + selected.first.spesifikasi
+    selected = Search::AllAnggaran.find_by_kode_barang(perhitungan.deskripsi)
+    uraian = selected.class.name + '|' + selected.uraian_barang + ' | ' + selected.spesifikasi
   end
   %>
   <div class="field">
     <%= form.label :uraian, {class: "form-label"} %>
-    <%= form.select :deskripsi, raw("<option value='#{perhitungan.deskripsi}' selected='selected'>#{uraian}</option>"), {include_blank: true} ,
+    <%= form.select :deskripsi, [], {include_blank: true} ,
     { class: "form-control",
       data: { "placeholder": "Pilih Uraian",
               controller: 'dropdown',
               dropdown_jenis_value: 'extra',
               dropdown_url_value: '/anggaran_ssh_search.json',
               dropdown_parent_value: '#form-perhitungan',
+              dropdown_uraian_value: "#{selected.uraian_barang}",
               action: 'change-select@document->dropdown#fill_spesifikasi_satuan_harga'
       }} %>
   </div>
