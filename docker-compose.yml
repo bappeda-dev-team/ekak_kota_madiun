@@ -17,7 +17,9 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data:delegated
       - shared_data:/var/shared
+
   app:
+    platform: linux/x86_64
     build:
       args:
         RUBY_VERSION: '3.0.1'
@@ -26,6 +28,7 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     container_name: app
+    entrypoint: /usr/local/bin/dev-docker-entrypoint.sh
     environment:
       - REDIS_URL=redis://redis:6379
       - DATABASE_URL=postgres://postgres:postgres@postgres:5432
@@ -37,26 +40,9 @@ services:
       - gem_cache:/usr/local/bundle/gems
     ports:
       - "3001:3000"
-    command: bundle exec rails s -b 0.0.0.0
+    # command: bundle exec rails s -b 0.0.0.0
     depends_on:
       - postgres
-      - redis
-  workers:
-    build:
-      args:
-        RUBY_VERSION: '3.0.1'
-        NODE_MAJOR: '14'
-        BUNDLE_VERSION: '2.2.15'
-      context: .
-      dockerfile: Dockerfile.dev
-    volumes:
-      - .:/app:cached
-    command: bundle exec sidekiq -q default
-    environment:
-      - REDIS_URL=redis://redis:6379
-      - DATABASE_URL=postgres://postgres:postgres@postgres:5432
-    depends_on:
-      - app
       - redis
 
 volumes:

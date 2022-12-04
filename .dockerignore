@@ -5,3 +5,4 @@ Dockerfile
 Readme.md
 .env
 ./config/database.yml
+tmp/cache/webpacker
