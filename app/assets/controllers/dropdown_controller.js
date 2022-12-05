@@ -77,7 +77,7 @@ export default class extends Controller {
   // custom_event
   dropdown_with_action(options) {
     const select2ed = this.dropdown_base(options)
-    if (this.hasUraianValue) {
+    if (this.hasUraianValue && this.uraianValue.length > 0) {
       $.ajax({
         type: 'GET',
         url:  `${this.urlValue}?q=${this.uraianValue}`,
