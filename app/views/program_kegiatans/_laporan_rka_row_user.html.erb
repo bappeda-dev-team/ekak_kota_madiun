@@ -21,16 +21,17 @@
       <tbody>
         <% @program_kegiatans.each.with_index(1) do |kak, i| %>
           <% row_pk = kak.sasarans.count + 1 %>
+          <% tahun_sasaran = tahun || '2023' %>
           <tr>
             <td class="text-gray-900 fw-bolder border-start border-end" scope="row" width="50px" rowspan="<%= row_pk %>"><%= i %></td>
             <td class="text-gray-900 text-wrap" scope="row" rowspan="<%= row_pk %>" width="200px"><%= kak.nama_subkegiatan %></td>
             <td class="text-gray-900 text-wrap" scope="row" rowspan="<%= row_pk %>" width="200px">Rp. <%= number_with_delimiter(kak&.sasarans.map(&:total_anggaran).compact.sum) or 0 %></td>
             <td class="p-0 m-0" colspan="4" style="height: 0px !important; border-color: transparent;"></td>
             <td class="fw-bolder text-gray-500 text-center" rowspan="<%= row_pk %>">
-              <%= link_to "/acuan_kerja_new/#{kak.id}/2022", class: "m-3" do %>
+              <%= link_to "/acuan_kerja_new/#{kak.id}/#{tahun_sasaran}", class: "m-3" do %>
                 <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
               <% end %>
-              <%= link_to "/pdf_rka/#{kak.id}/2022.pdf", class: "m-3" do %>
+              <%= link_to "/pdf_rka/#{kak.id}/#{tahun_sasaran}.pdf", class: "m-3" do %>
                 <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak Rincian Belanja"></span>
               <% end %>
             </td>

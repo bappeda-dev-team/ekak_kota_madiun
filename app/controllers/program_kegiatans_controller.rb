@@ -103,9 +103,9 @@ class ProgramKegiatansController < ApplicationController
   end
 
   def laporan_rka
-    @program_kegiatans = ProgramKegiatan.joins(:sasarans)
-                                        .where(sasarans: { nip_asn: current_user.nik })
-                                        .where.not(sasarans: { id: nil, anggaran: nil }).group(:id)
+    @tahun_sasaran = cookies[:tahun_sasaran] || nil
+    @nip_asn = current_user.nik
+    @program_kegiatans = ProgramKegiatan.with_sasarans_lengkap(@nip_asn, @tahun_sasaran)
   end
 
   def pdf_rka

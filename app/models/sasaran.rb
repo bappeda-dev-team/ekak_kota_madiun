@@ -47,10 +47,10 @@ class Sasaran < ApplicationRecord
   has_many :usulans, dependent: :destroy
   has_many :dasar_hukums, foreign_key: 'sasaran_id', primary_key: 'id_rencana', class_name: 'DasarHukum',
                           dependent: :destroy
-  # has_many :musrenbangs
-  # has_many :pokpirs
-  # has_many :mandatoris
-  # has_many :inovasis
+  has_many :musrenbangs, dependent: :nullify
+  has_many :pokpirs, dependent: :nullify
+  has_many :mandatoris, dependent: :nullify
+  has_many :inovasis, dependent: :nullify
   has_many :indikator_sasarans, foreign_key: 'sasaran_id', primary_key: 'id_rencana', dependent: :destroy
   has_many :tahapans, foreign_key: 'id_rencana', primary_key: 'id_rencana', dependent: :destroy, inverse_of: :sasaran
   has_many :anggarans, through: :tahapans
