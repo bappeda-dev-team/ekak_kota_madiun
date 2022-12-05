@@ -16,11 +16,11 @@
       <tr>
         <td class=" "><%= index %></td>
         <td class="text-wrap"><%= gender.program_kegiatan.nama_subkegiatan %></td>
-        <td class=" "><%= gender.penerima_manfaat_gender %></td>
-        <td class=" "><%= gender.data_terpilah_gender %></td>
+        <td class="text-wrap"><%= gender.penerima_manfaat_gender %></td>
+        <td class="text-wrap"><%= gender.data_terpilah_gender %></td>
         <td class="p-0"><%= render 'table_penerima_manfaat', gender: gender %></td>
-        <td><%= gender.penyebab_internal_gender %></td>
-        <td><%= gender.penyebab_external_gender %></td>
+        <td class="text-wrap"><%= gender.penyebab_internal_gender %></td>
+        <td class="text-wrap"><%= gender.penyebab_external_gender %></td>
         <td class="">
           <%= link_to "/genders/pdf_gap_gender/#{gender.id}/2022.pdf", class: "m-3" do %>
             <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak GAP"></span>

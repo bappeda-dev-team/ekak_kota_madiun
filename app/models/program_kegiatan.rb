@@ -81,6 +81,12 @@ class ProgramKegiatan < ApplicationRecord
 
   scope :with_sasarans, -> { where(id: Sasaran.pluck(:program_kegiatan_id)) }
   scope :with_sasarans_rincian, -> { joins(:sasarans).merge(Sasaran.dengan_rincian) }
+  scope :with_sasarans_lengkap, lambda { |nip_asn, tahun_sasaran|
+                                  joins(%i[sasarans usulans])
+                                    .where(sasarans: { nip_asn: nip_asn })
+                                    .where("sasarans.tahun ILIKE ?", "%#{tahun_sasaran}%")
+                                    .where.not(sasarans: { id: nil }).group(:id)
+                                }
 
   scope :programs, -> { select("DISTINCT ON(program_kegiatans.kode_program) program_kegiatans.*") }
   scope :kegiatans_satunya, -> { select("DISTINCT ON(program_kegiatans.kode_giat) program_kegiatans.*") }
