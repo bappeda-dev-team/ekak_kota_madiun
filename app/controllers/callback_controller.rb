@@ -19,7 +19,9 @@ class CallbackController < ApplicationController
 
     # api user
     username = user_data['username']
-    sign_in(:nik, username)
+    logger.debug "user -> #{username}"
+    user = User.find_by(nik: username)
+    sign_in(user)
 
     # @client ||= OAuth2::Client.new(
     #   "97dd802d-9840-4f0b-98c1-96fb80dc7b92",
