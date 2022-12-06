@@ -1,14 +1,31 @@
 class CallbackController < ApplicationController
-  def index
-    client.auth_code.get_token(params[:code], redirect_uri: 'https://kak.madiunkota.go.id')
-  end
+  require 'http'
+  require 'oj'
+  URL = 'https://manekin.madiunkota.go.id/oauth/token'
+  URL_USER = 'https://manekin.madiunkota.go.id/api/user'
+  H = HTTP.accept(:json)
 
-  def client
-    @client ||= OAuth2::Client.new(
-      "97dd802d-9840-4f0b-98c1-96fb80dc7b92",
-      "X2a71ep0QzpuvEBjjvTQzTv7A7J7Z7CWpunZbTJw",
-      authorize_url: "/oauth/authorize",
-      site: "https://manekin.madiunkota.go.id"
-    )
+  def index
+    response = H.post(URL,
+                      form: { grant_type: 'authorization_code',
+                              client_id: '97dd802d-9840-4f0b-98c1-96fb80dc7b92',
+                              secret_id: 'X2a71ep0QzpuvEBjjvTQzTv7A7J7Z7CWpunZbTJw',
+                              redirect_uri: 'https://kak.madiunkota.go.id/callback',
+                              code: params[:code] })
+    data = Oj.load(response.body)
+    access_token = data['access_token']
+    user_response = HTTP.auth("Bearer #{access_token}").get(URL_USER)
+    user_data = Oj.load(user_response.body)
+
+    # api user
+    username = user_data['username']
+    sign_in(:nik, username)
+
+    # @client ||= OAuth2::Client.new(
+    #   "97dd802d-9840-4f0b-98c1-96fb80dc7b92",
+    #   "X2a71ep0QzpuvEBjjvTQzTv7A7J7Z7CWpunZbTJw",
+    #   site: "https://manekin.madiunkota.go.id/oauth/token"
+    # )
+    # @client.auth_code.authorize_url(redirect_uri: 'https://kak.madiunkota.go.id/callback')
   end
 end
