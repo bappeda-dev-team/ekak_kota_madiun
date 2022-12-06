@@ -8,7 +8,6 @@ set :repo_url, "https://github.com/RyanB1303/prototype_kak.git"
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 set :branch, ENV['BRANCH'] if ENV['BRANCH']
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, "/home/ryan/rails/prototype_kak"
 
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets',
        'vendor/bundle', '.bundle', 'public/system', 'public/uploads'

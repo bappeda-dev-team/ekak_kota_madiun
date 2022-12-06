@@ -8,7 +8,8 @@
 # server "db.example.com", user: "deploy", roles: %w{db}
 server '10.11.15.132', user: 'ryan', roles: %w[app db web]
 
-set :deploy_to, "/home/ryan/rails/prototype_kak"
+set :rails_env, "production"
+set :deploy_to, "/home/ryan/backup_rails/backup_prototype_kak"
 # role-based syntax
 # ==================
 
