@@ -13,24 +13,19 @@ class CallbackController < ApplicationController
                                                client_secret: 'X2a71ep0QzpuvEBjjvTQzTv7A7J7Z7CWpunZbTJw',
                                                redirect_uri: callback_path,
                                                code: params[:code] }, ssl_context: ctx)
-    logger.error "response callback -> #{response.code}"
     data = Oj.load(response.body)
-    logger.error "result -> #{response}"
-    logger.error "response json body-> #{data}"
     access_token = data['access_token']
 
     # api user
     user_response = HTTP.accept(:json).auth("Bearer #{access_token}").get(URL_USER, ssl_context: ctx)
-    logger.error "response callback -> #{user_response.code}"
     user_data = Oj.load(user_response.body)
-    logger.error "response json -> #{user_data}"
     username = user_data['username']
-  rescue OpenSSL::SSL::SSLError
-    redirect_to root_path, alert: 'Terjadi Kesalahan'
     user = User.find_by(nik: username)
     sign_in(user)
     redirect_to root_path, success: 'Login via MANEKIN'
   rescue ActiveRecord::RecordNotFound
     redirect_to root_path, alert: 'User Tidak ditemukan'
+  rescue StandardError
+    redirect_to root_path, alert: 'Terjadi Kesalahan'
   end
 end
