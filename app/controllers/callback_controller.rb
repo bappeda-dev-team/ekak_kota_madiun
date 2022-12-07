@@ -1,17 +1,19 @@
 class CallbackController < ApplicationController
-  require 'http'
-  require 'oj'
+  require 'net/http'
+
   skip_before_action :verify_authenticity_token
   skip_before_action :authenticate_user!
+
   URL = 'https://manekin.madiunkota.go.id/oauth/token'.freeze
   URL_USER = 'https://manekin.madiunkota.go.id/api/user'.freeze
   def index
-    response = HTTP.accept(:json).post(URL,
-                                       form: { grant_type: 'authorization_code',
-                                               client_id: '97dd802d-9840-4f0b-98c1-96fb80dc7b92',
-                                               client_secret: 'X2a71ep0QzpuvEBjjvTQzTv7A7J7Z7CWpunZbTJw',
-                                               redirect_uri: callback_path,
-                                               code: params[:code] })
+    uri = URI(URL)
+    response = Net::HTTP.post_form(uri,
+                                   grant_type: 'authorization_code',
+                                   client_id: '97dd802d-9840-4f0b-98c1-96fb80dc7b92',
+                                   client_secret: 'X2a71ep0QzpuvEBjjvTQzTv7A7J7Z7CWpunZbTJw',
+                                   redirect_uri: callback_path,
+                                   code: params[:code])
     logger.error "response callback -> #{response.code}"
     data = Oj.load(response.body)
     logger.error "result -> #{response}"
