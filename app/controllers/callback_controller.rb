@@ -34,8 +34,5 @@ class CallbackController < ApplicationController
         format.html { redirect_to root_path, alert: 'NIP Tidak ditemukan' }
       end
     end
-  rescue StandardError
-    logger.error "error user"
-    logger.error "username -> #{username}"
   end
 end
