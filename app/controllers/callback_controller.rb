@@ -15,8 +15,7 @@ class CallbackController < ApplicationController
       access_token = data['access_token']
     rescue StandardError
       logger.error "error authorization"
-      logger.debug "params_code -> #{params[:code]}"
-      redirect_to root_path
+      logger.error "params_code -> #{params[:code]}"
     end
 
     # api user
@@ -26,8 +25,7 @@ class CallbackController < ApplicationController
       username = user_data['username']
     rescue StandardError
       logger.error "error user"
-      logger.debug "username -> #{username}"
-      redirect_to root_path
+      logger.error "username -> #{username}"
     end
 
     user = User.find_by(nik: username)
