@@ -21,18 +21,16 @@ class CallbackController < ApplicationController
     logger.debug "params_code -> #{params[:code]}"
     logger.debug "username -> #{username}"
     user = User.find_by(nik: username)
-    sign_in(user)
-    redirect_to root_path
+    respond_to do |format|
+      if sign_in(user)
+        format.html { redirect_to root_path }
+      else
+        format.html { redirect_to root_path, error: 'NIP Tidak ditemukan' }
+      end
+    end
   rescue StandardError
     logger.error "params_code -> #{params[:code]}"
     logger.error "error authorization"
     redirect_to root_path
-
-    # @client ||= OAuth2::Client.new(
-    #   "97dd802d-9840-4f0b-98c1-96fb80dc7b92",
-    #   "X2a71ep0QzpuvEBjjvTQzTv7A7J7Z7CWpunZbTJw",
-    #   site: "https://manekin.madiunkota.go.id/oauth/token"
-    # )
-    # @client.auth_code.authorize_url(redirect_uri: 'https://kak.madiunkota.go.id/callback')
   end
 end
