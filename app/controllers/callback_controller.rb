@@ -1,4 +1,6 @@
 class CallbackController < ApplicationController
+  require 'http'
+  require 'oj'
   skip_before_action :verify_authenticity_token
   skip_before_action :authenticate_user!
   URL = 'https://manekin.madiunkota.go.id/oauth/token'.freeze
