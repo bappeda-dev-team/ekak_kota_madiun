@@ -9,12 +9,12 @@ class CallbackController < ApplicationController
                                          form: { grant_type: 'authorization_code',
                                                  client_id: '97dd802d-9840-4f0b-98c1-96fb80dc7b92',
                                                  client_secret: 'X2a71ep0QzpuvEBjjvTQzTv7A7J7Z7CWpunZbTJw',
-                                                 redirect_uri: 'https://kak.madiunkota.go.id/callback',
+                                                 redirect_uri: callback_path,
                                                  code: params[:code] })
       logger.error "response callback -> #{response.code}"
       data = Oj.load(response.body)
       logger.error "result -> #{response}"
-      logger.warn "response json body-> #{data}"
+      logger.error "response json body-> #{data}"
       access_token = data['access_token']
     rescue StandardError
       logger.error "error authorization"
@@ -27,7 +27,7 @@ class CallbackController < ApplicationController
       user_response = HTTP.accept(:json).auth("Bearer #{access_token}").get(URL_USER)
       logger.error "response callback -> #{user_response.code}"
       user_data = Oj.load(user_response.body)
-      logger.warn "response json -> #{user_data}"
+      logger.error "response json -> #{user_data}"
       username = user_data['username']
     rescue StandardError
       logger.error "error user"
@@ -40,7 +40,7 @@ class CallbackController < ApplicationController
         sign_in(user)
         format.html { redirect_to root_path, success: 'Login Menggunakan MANEKIN' }
       else
-        format.html { redirect_to root_path, error: 'NIP Tidak ditemukan' }
+        format.html { redirect_to root_path, alert: 'NIP Tidak ditemukan' }
       end
     end
   end
