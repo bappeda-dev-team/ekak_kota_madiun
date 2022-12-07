@@ -22,6 +22,8 @@ class CallbackController < ApplicationController
   private
 
   def user_login(access_token)
+    ctx = OpenSSL::SSL::SSLContext.new
+    ctx.verify_mode = OpenSSL::SSL::VERIFY_NONE
     # api user
     user_response = HTTP.accept(:json).auth("Bearer #{access_token}").get(URL_USER, ssl_context: ctx)
     user_data = Oj.load(user_response.body)
