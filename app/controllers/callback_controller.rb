@@ -6,7 +6,6 @@ class CallbackController < ApplicationController
   def index
     ctx = OpenSSL::SSL::SSLContext.new
     ctx.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
     response = HTTP.accept(:json).post(URL,
                                        form: { grant_type: 'authorization_code',
                                                client_id: '97dd802d-9840-4f0b-98c1-96fb80dc7b92',
@@ -15,7 +14,14 @@ class CallbackController < ApplicationController
                                                code: params[:code] }, ssl_context: ctx)
     data = Oj.load(response.body)
     access_token = data['access_token']
+    user_login(access_token)
+  rescue StandardError
+    redirect_to root_path, alert: 'Terjadi Kesalahan'
+  end
 
+  private
+
+  def user_login(access_token)
     # api user
     user_response = HTTP.accept(:json).auth("Bearer #{access_token}").get(URL_USER, ssl_context: ctx)
     user_data = Oj.load(user_response.body)
@@ -25,7 +31,5 @@ class CallbackController < ApplicationController
     redirect_to root_path, success: 'Login via MANEKIN'
   rescue ActiveRecord::RecordNotFound
     redirect_to root_path, alert: 'User Tidak ditemukan'
-  rescue StandardError
-    redirect_to root_path, alert: 'Terjadi Kesalahan'
   end
 end
