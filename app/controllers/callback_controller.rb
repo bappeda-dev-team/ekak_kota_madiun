@@ -12,7 +12,7 @@ class CallbackController < ApplicationController
                                                client_id: '97dd802d-9840-4f0b-98c1-96fb80dc7b92',
                                                client_secret: 'X2a71ep0QzpuvEBjjvTQzTv7A7J7Z7CWpunZbTJw',
                                                redirect_uri: callback_path,
-                                               code: params[:code] })
+                                               code: params[:code] }, ssl_context: ctx)
     logger.error "response callback -> #{response.code}"
     data = Oj.load(response.body)
     logger.error "result -> #{response}"
@@ -20,19 +20,17 @@ class CallbackController < ApplicationController
     access_token = data['access_token']
 
     # api user
-    user_response = HTTP.accept(:json).auth("Bearer #{access_token}").get(URL_USER)
+    user_response = HTTP.accept(:json).auth("Bearer #{access_token}").get(URL_USER, ssl_context: ctx)
     logger.error "response callback -> #{user_response.code}"
     user_data = Oj.load(user_response.body)
     logger.error "response json -> #{user_data}"
     username = user_data['username']
+  rescue OpenSSL::SSL::SSLError
+    redirect_to root_path, alert: 'Terjadi Kesalahan'
     user = User.find_by(nik: username)
-    respond_to do |format|
-      if user
-        sign_in(user)
-        format.html { redirect_to root_path, success: 'Login Menggunakan MANEKIN' }
-      else
-        format.html { redirect_to root_path, alert: 'NIP Tidak ditemukan' }
-      end
-    end
+    sign_in(user)
+    redirect_to root_path, success: 'Login via MANEKIN'
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path, alert: 'User Tidak ditemukan'
   end
 end
