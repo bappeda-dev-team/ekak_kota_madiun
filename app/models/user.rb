@@ -148,7 +148,7 @@ class User < ApplicationRecord
   end
 
   def petunjuk_kelurahan
-    jabatan.split(/KELURAHAN/, 2).last.strip if pegawai_kelurahan?
+    jabatan.upcase.split(/KELURAHAN/, 2).last.strip if pegawai_kelurahan?
   end
 
   def pegawai_rsud?
