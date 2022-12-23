@@ -263,6 +263,9 @@ Rails.application.routes.draw do
       post :opd_subkegiatan
       post :kota_subkegiatan
     end
+    namespace :pecel_tumpang do
+      get :data_anggarans
+    end
   end
 
   resources :sasaran_kota
