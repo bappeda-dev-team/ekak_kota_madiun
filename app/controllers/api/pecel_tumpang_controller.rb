@@ -1,4 +1,7 @@
 class Api::PecelTumpangController < ApplicationController
+  skip_before_action :verify_authenticity_token
+  skip_before_action :authenticate_user!
+
   def data_anggarans
     param = params[:q] || ''
     @data_anggarans = Search::AllAnggaran.where('uraian_barang ILIKE ?',
