@@ -58,7 +58,15 @@ class KakService
   end
 
   def asn_aktif_by_opd
-    opd.users.asn_aktif
+    if opd.nama_opd.upcase&.include?('KELURAHAN')
+      # masih mengikutsertakan lurah
+      # nama_opd = opd.nama_opd.split(/ /, 2)[1]
+
+      # jika langsung seperti dibawah, lurah tidak ikut
+      User.where("users.jabatan ILIKE ?", "%#{opd.nama_opd.downcase}%").asn_aktif
+    else
+      opd.users.asn_aktif
+    end
   end
 
   # bug di kecamatan taman
