@@ -236,12 +236,6 @@ Rails.application.routes.draw do
     post :crosscutting_kota
   end
 
-  scope module: 'api' do
-    namespace :sipd_client do
-      get :sync_renstra
-    end
-  end
-
   namespace :api do
     namespace :programs do
       post :indikators
@@ -259,12 +253,18 @@ Rails.application.routes.draw do
       post :kota_test_indikator_kegiatan
       post :kota_test_indikator_subkegiatan
     end
+    namespace :pecel_tumpang do
+      get :data_anggarans
+    end
     namespace :renja do
       post :opd_subkegiatan
       post :kota_subkegiatan
     end
-    namespace :pecel_tumpang do
-      get :data_anggarans
+    namespace :sipd_client do
+      get :sync_renstra
+    end
+    namespace :skp do
+      post :sasaran_kinerja_pegawai
     end
   end
 

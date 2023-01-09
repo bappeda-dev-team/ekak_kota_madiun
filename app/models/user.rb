@@ -188,4 +188,8 @@ class User < ApplicationRecord
   def nama_atasan
     atasan_nama or '-'
   end
+
+  def sasaran_asn_sync_skp(tahun: nil)
+    sasarans.dengan_rincian.where("sasarans.tahun ILIKE ?", tahun)
+  end
 end
