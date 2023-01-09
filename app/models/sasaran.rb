@@ -305,4 +305,8 @@ class Sasaran < ApplicationRecord
   def in_gender?
     genders.any?
   end
+
+  def gambaran_umum_sasaran
+    latar_belakangs.map(&:gambaran_umum).join('.')
+  end
 end

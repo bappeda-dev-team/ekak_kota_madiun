@@ -7,8 +7,9 @@ module Api
 
     def sasaran_kinerja_pegawai
       @nip = params[:nip]
-      user = User.find_by(nik: @nip)
-      @sasarans = user.sasaran_asn_sync_skp
+      @tahun = params[:tahun]
+      @user = User.find_by(nik: @nip)
+      @sasarans = @user.sasaran_asn_sync_skp(tahun: @tahun)
     end
   end
 end

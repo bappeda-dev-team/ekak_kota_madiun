@@ -46,7 +46,6 @@ class User < ApplicationRecord
   scope :aktif, -> { without_role([:non_aktif]) }
   scope :asn_aktif, -> { without_role([:admin]).with_role(:asn).order(:nama) }
   scope :sasaran_asn_aktif, -> { asn_aktif.joins(:sasarans).merge(Sasaran.dengan_rincian) }
-  scope :sasaran_asn_sync_skp, -> { asn_aktif.joins(:sasarans).merge(Sasaran.sudah_lengkap) }
   scope :sasaran_diajukan, lambda {
                              asn_aktif.includes(:sasarans, :program_kegiatans).merge(Sasaran.sudah_lengkap)
                            } # depreceated
@@ -188,5 +187,9 @@ class User < ApplicationRecord
 
   def nama_atasan
     atasan_nama or '-'
+  end
+
+  def sasaran_asn_sync_skp(tahun: nil)
+    sasarans.dengan_rincian.where("sasarans.tahun ILIKE ?", tahun)
   end
 end
