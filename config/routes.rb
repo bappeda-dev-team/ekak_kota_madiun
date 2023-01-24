@@ -268,6 +268,7 @@ Rails.application.routes.draw do
       post :indikator_sasaran_kinerja_pegawai
       post :rencana_aksi_pegawai
       post :manual_ik_pegawai
+      post :sasaran_pegawai
     end
   end
 

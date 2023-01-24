@@ -40,5 +40,12 @@ module Api
       @indikator_sasaran = IndikatorSasaran.find(id_indikator)
       @sasaran = @indikator_sasaran.sasaran
     end
+
+    def sasaran_pegawai
+      @nip = params[:nip]
+      @tahun = params[:tahun]
+      @user = User.find_by(nik: @nip)
+      @sasarans = @user.sasaran_asn_sync_skp(tahun: @tahun)
+    end
   end
 end
