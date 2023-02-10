@@ -6,9 +6,11 @@ class RenjaController < ApplicationController
     # @program_kegiatans = base_data.program_kegiatans_by_opd
   end
 
-  def ranwal
-    # get renja from renstra
-  end
+  def ranwal; end
+
+  def rankir; end
+
+  def penetapan; end
 
   def new
     @nama = params[:nama]
@@ -16,7 +18,7 @@ class RenjaController < ApplicationController
     @jenis = params[:jenis]
     @sub_jenis = params[:sub_jenis]
     @kode_indikator = params[:kode_indikator] || KodeService.new(@kode, @jenis, @sub_jenis).call
-    render partial: 'form_renstra_new'
+    render partial: "form_renstra_new"
   end
 
   def create
@@ -37,10 +39,10 @@ class RenjaController < ApplicationController
       end
     end
     indikator = Indikator.upsert_all(@indikator, returning: %w[indikator tahun target satuan pagu])
-    render json: { resText: 'Data disimpan', result: indikator }, status: :accepted if indikator
+    render json: { resText: "Data disimpan", result: indikator }, status: :accepted if indikator
   end
 
-  def edit
+  def edit_rankir
     @nama = params[:nama]
     @kode = params[:kode]
     @kode_opd = params[:kode_opd]
@@ -49,13 +51,14 @@ class RenjaController < ApplicationController
     @sub_jenis = params[:sub_jenis]
     @id = params[:id]
     @program = ProgramKegiatan.find(@id)
+    @tahun = params[:tahun]
     @targets = @program.send("target_#{@sub_jenis.downcase}_renstra")
-    @keterangan = @targets.empty? ? '' : @targets.dig("2022")[:keterangan]
+    @keterangan = @targets.empty? ? "" : @targets[@tahun][:keterangan]
     @kode_indikator = params[:kode_indikator] || KodeService.new(@kode, @jenis, @sub_jenis).call
-    render partial: 'form_renstra'
+    render partial: "form_renja"
   end
 
-  def update_programs
+  def update_rankir
     # indikator_input = params[:indikator]
     keterangan = params[:keterangan]
     param_indikator = indikator_params.to_h
@@ -65,7 +68,7 @@ class RenjaController < ApplicationController
       h[:keterangan] = keterangan
     end
     kode_ind = params[:_kode_indikator]
-    indikator_check = Indikator.where(kode_indikator: kode_ind)
+    indikator_check = Indikator.where(kode_indikator: kode_ind, jenis: "Rankir_Renja")
     if indikator_check.any?
       versi = indikator_check.maximum(:version) + 1
       @indikator.each do |h|
@@ -73,7 +76,7 @@ class RenjaController < ApplicationController
       end
     end
     indikator = Indikator.upsert_all(@indikator, returning: %w[indikator tahun target satuan pagu])
-    render json: { resText: 'Data disimpan', result: indikator }, status: :accepted if indikator
+    render json: { resText: "Data disimpan", result: indikator }, status: :accepted if indikator
   end
 
   def set_renja

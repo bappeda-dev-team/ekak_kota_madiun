@@ -235,6 +235,7 @@ Rails.application.routes.draw do
     post :sasaran_opd
     post :crosscutting_kota
     post :ranwal_renja
+    post :rankir_renja
   end
 
   namespace :api do
@@ -281,6 +282,8 @@ Rails.application.routes.draw do
   namespace :renja do
     get :ranwal
     get :rankir
+    get :edit_rankir
+    post :update_rankir
     get :penetapan
   end
 
