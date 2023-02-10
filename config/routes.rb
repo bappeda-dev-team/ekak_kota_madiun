@@ -234,6 +234,7 @@ Rails.application.routes.draw do
     post :tujuan_opd
     post :sasaran_opd
     post :crosscutting_kota
+    post :ranwal_renja
   end
 
   namespace :api do
@@ -275,6 +276,13 @@ Rails.application.routes.draw do
   resources :sasaran_kota
   resources :tujuan_kota
   get :crosscutting_kota, to: "sasaran_kota#crosscutting_kota"
+
+  # renja
+  namespace :renja do
+    get :ranwal
+    get :rankir
+    get :penetapan
+  end
 
   mount Sidekiq::Web, at: "/sidekiq"
 

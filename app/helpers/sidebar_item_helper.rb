@@ -5,8 +5,7 @@ module SidebarItemHelper
       { title: 'Laporan KAK', href: laporan_kak_path, icon: 'fas fa-file', identifier: 'laporan_kak' },
       { title: 'Rincian Belanja', href: rincian_belanja_path, icon: 'fas fa-money-check',
         identifier: 'rincian_belanja' },
-      { title: 'Laporan Renstra', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' },
-      { title: 'Laporan Renja', href: '#', identifier: 'laporan_renja', icon: 'fas fa-receipt' }
+      { title: 'Laporan Renstra', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' }
     ]
   end
 
@@ -108,20 +107,19 @@ module SidebarItemHelper
     ]
   end
 
-  def renstra_items
-    [
-      { title: 'Tujuan', href: '#', identifier: 'renstra/tujuan' },
-      { title: 'Sasaran', href: '#', identifier: 'renstra/tujuan' },
-      { title: 'Program', href: '#', identifier: 'renstra/tujuan' },
-      { title: 'Kegiatan', href: '#', identifier: 'renstra/tujuan' }
-    ]
-  end
+  # def renja_items
+  #   [
+  #     { title: 'Program', href: admin_program_path, identifier: 'admin_program' },
+  #     { title: 'Kegiatan', href: admin_kegiatan_path, identifier: 'admin_kegiatan' },
+  #     { title: 'Subkegiatan', href: admin_sub_kegiatan_path, identifier: 'admin_sub_kegiatan' }
+  #   ]
+  # end
 
   def renja_items
     [
-      { title: 'Program', href: admin_program_path, identifier: 'admin_program' },
-      { title: 'Kegiatan', href: admin_kegiatan_path, identifier: 'admin_kegiatan' },
-      { title: 'Subkegiatan', href: admin_sub_kegiatan_path, identifier: 'admin_sub_kegiatan' }
+      { title: 'Ranwal', href: renja_ranwal_path, identifier: 'renja_ranwal' },
+      { title: 'Rankir', href: renja_rankir_path, identifier: 'renja_rankir' },
+      { title: 'Penetapan', href: renja_penetapan_path, identifier: 'renja_penetapan' }
     ]
   end
 
@@ -184,7 +182,7 @@ module SidebarItemHelper
   end
 
   def collapsed_item_renja
-    collapse_class('(\brenja/tujuan|\brenja/sasaran|\badmin_program|\badmin_kegiatan|\badmin_sub_kegiatan)')
+    collapse_class('(\brenja_ranwal|\brenja_rankir|\brenja_penetapan)')
   end
 
   def collapsed_item_opd

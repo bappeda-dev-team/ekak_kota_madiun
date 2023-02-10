@@ -91,4 +91,15 @@ class Renja
       pagu: indikator.pagu
     }
   end
+
+  def ranwal(kode_unik_opd: '', tahun: Date.today.year)
+    opd = Opd.find_by(kode_unik_opd: kode_unik_opd)
+    renstra_opd = opd.program_kegiatans
+
+    renstra_opd.map do |h|
+      Indikator.where(jenis: "Renstra",
+                      tahun: tahun,
+                      kode_opd: h.kode_sub_skpd)
+    end.flatten
+  end
 end
