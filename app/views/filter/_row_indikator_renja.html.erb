@@ -1,0 +1,14 @@
+<% indikators&.each do |indikator| %>
+  <% if indikator.tahun == tahun.to_s %>
+    <td class="text-gray-900 text-wrap border"  ><%= indikator.indikator %>
+    <% if current_user.has_role? :super_admin %>
+      <br/>
+      <%= "khusus developer!! | th: #{tahun} | tahun indikator: #{indikator.tahun} | id: #{indikator.id} | kode: #{indikator.kode} | kode_opd: #{indikator.kode_opd} "%>
+    <% end %>
+    </td>
+    <td class="text-gray-900 text-wrap border"  ><%= indikator.target %></td>
+    <td class="text-gray-900 text-wrap border"  ><%= indikator.satuan %></td>
+    <td class="text-gray-900 text-wrap border"  >Rp.<%= number_with_delimiter(indikator.pagu) %></td>    
+    <td class="text-gray-900 text-wrap border"  ><%= indikator.keterangan %></td>
+  <% end %>
+<% end %>

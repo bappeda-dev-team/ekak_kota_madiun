@@ -10,8 +10,8 @@
         <li class="breadcrumb-item active" aria-current="page">Ranwal Renja</li>
       </ol>
     </nav>
-    <%= render 'shared/filter_with_tahun_periode_card', filter_url: filter_ranwal_renja_path, filter_file: 'ranwal_renja_filter', action: 'ajax:success->filter-render#append' %>
-    <div class="card border-0 shadow" id="laporan_renstra" data-filter-render-target="results">
+    <%= render 'shared/filter_with_tahun_periode_card', filter_url: filter_ranwal_renja_path, filter_file: 'hasil_filter_ranwal_renja', action: 'ajax:success->filter-render#append' %>
+    <div class="card border-0 shadow" id="ranwal_renja" data-filter-render-target="results">
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">

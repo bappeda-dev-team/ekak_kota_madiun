@@ -292,16 +292,14 @@ class FilterController < ApplicationController
   def ranwal_renja
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
-    @program_kegiatans = @opd.program_kegiatans
+    @program_kegiatans = @opd.program_renstra
     if OPD_TABLE.key?(@nama_opd.to_sym)
       @program_kegiatans = ProgramKegiatan.includes(:opd)
                                           .where(id_sub_unit: KODE_OPD_BAGIAN[@nama_opd.to_sym])
                                           .uniq(&:kode_program).sort_by(&:kode_program)
       @kode_opd = KODE_OPD_BAGIAN[@nama_opd.to_sym]
     end
-    renja = Renja.new(kode: @kode_opd, tahun: params[:tahun], jenis: '-', tipe: '-')
-    @ranwal_renja = renja.ranwal(kode_unik_opd: @kode_opd, tahun: params[:tahun])
-    render 'renja/_ranwal_renja_filter'
+    render partial: 'hasil_filter_ranwal_renja'
   end
 
   # filter tahun yang diaktifkan, dibawah logo E-KAK
