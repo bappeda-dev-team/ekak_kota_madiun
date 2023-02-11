@@ -36,7 +36,7 @@
   </div>
   <div class="field col">
     <%= form.label :pagu, class: 'form-label' %>
-    <%= form.text_field "renstra[indikator][][pagu]", class: 'form-control', value: @targets[@tahun.to_s]&.[](:pagu) %>
+    <%= form.text_field "renstra[indikator][][pagu]", class: 'form-control', readonly: true, value: "Rp. #{number_with_delimiter(@pagu)}"  %>
   </div>
   </div>
 <div class="field">

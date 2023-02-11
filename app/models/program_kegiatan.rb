@@ -127,7 +127,7 @@ class ProgramKegiatan < ApplicationRecord
 
   def indikator_renstras_new(type, kode_unit)
     {
-      "indikator_#{type}": indikator_key_grouper(type, kode_unit)
+      "indikator_#{type}": indikator_key_grouper(type, kode_unit, jenis: "renstra")
     }
   end
 
@@ -137,7 +137,14 @@ class ProgramKegiatan < ApplicationRecord
     }
   end
 
-  def indikator_key_grouper(type, _kode_unit, jenis: "renstra")
+  def indikator_by_tahun(kode_unit:, tahun:)
+    indikator = Indikator.where(tahun: tahun, kode_opd: kode_unit)
+    {
+      indikator: indikator
+    }
+  end
+
+  def indikator_key_grouper(type, _kode_unit, jenis:)
     ind_programs = send("indikator_#{type}_#{jenis}").select { |k| k.kode_opd == kode_sub_skpd }.group_by(&:version)
     ind_programs[ind_programs.keys.max]
   end

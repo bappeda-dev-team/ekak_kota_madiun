@@ -52,6 +52,7 @@ class RenjaController < ApplicationController
     @id = params[:id]
     @program = ProgramKegiatan.find(@id)
     @tahun = params[:tahun]
+    @pagu = params[:pagu]
     @targets = @program.send("target_#{@sub_jenis.downcase}_renstra")
     @keterangan = @targets.empty? ? "" : @targets[@tahun][:keterangan]
     @kode_indikator = params[:kode_indikator] || KodeService.new(@kode, @jenis, @sub_jenis).call
