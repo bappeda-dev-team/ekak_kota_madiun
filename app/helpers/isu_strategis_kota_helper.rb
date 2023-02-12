@@ -1,0 +1,2 @@
+module IsuStrategisKotaHelper
+end

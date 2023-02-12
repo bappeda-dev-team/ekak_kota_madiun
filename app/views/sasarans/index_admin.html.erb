@@ -20,9 +20,9 @@
       </div>
       <div class="table-responsive">
         <table class="table align-items-center">
-          <%= render 'tabel_sasaran_admin_per_eselon',sasarans: @sasarans.where(sasaran_milik: 'eselon_2'), tipe: 'eselon_2' %>
-          <%= render 'tabel_sasaran_admin_per_eselon',sasarans: @sasarans.where(sasaran_milik: 'eselon_3'), tipe: 'eselon_3' %>
-          <%= render 'tabel_sasaran_admin_per_eselon',sasarans: @sasarans.where(sasaran_milik: 'eselon_4'), tipe: 'eselon_4' %>
+          <%= render 'tabel_sasaran_admin_per_eselon',sasarans: @sasarans.where(sasaran_milik: 'eselon_2'), tipe: 'eselon_2', jenis_strategi: 'Strategic Objective' %>
+          <%= render 'tabel_sasaran_admin_per_eselon',sasarans: @sasarans.where(sasaran_milik: 'eselon_3'), tipe: 'eselon_3', jenis_strategi: 'Tactical Objective' %>
+          <%= render 'tabel_sasaran_admin_per_eselon',sasarans: @sasarans.where(sasaran_milik: 'eselon_4'), tipe: 'eselon_4', jenis_strategi: 'Operational Objective' %>
         </table>
       </div>
     </div>

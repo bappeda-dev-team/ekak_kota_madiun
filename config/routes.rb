@@ -9,6 +9,7 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :isu_strategis_kota
   # get "/gender", to: "genders#gender"
   # get "/gap_gender", to: "genders#gap_gender"
   # get "/laporan_gender", to: "genders#laporan_gender"
@@ -19,8 +20,8 @@ Rails.application.routes.draw do
       get :gap
       get :gbs
       get :laporan_gender
-      get 'pdf_gender/:id/:tahun', to: 'genders#pdf_gender'
-      get 'pdf_gap_gender/:id/:tahun', to: 'genders#pdf_gap_gender'
+      get "pdf_gender/:id/:tahun", to: "genders#pdf_gender"
+      get "pdf_gap_gender/:id/:tahun", to: "genders#pdf_gap_gender"
     end
   end
   resources :tujuans
@@ -341,7 +342,7 @@ Rails.application.routes.draw do
   get "/pdf_kak/:id/:tahun", to: "program_kegiatans#pdf_kak"
   get "/cetak_daftar_kak/:opd/:tahun", to: "program_kegiatans#cetak_daftar_kak"
   # daftar resiko
-  get '/cetak_daftar_resiko/:opd/:tahun', to: 'sasaran_program_opds#cetak_daftar_resiko'
+  get "/cetak_daftar_resiko/:opd/:tahun", to: "sasaran_program_opds#cetak_daftar_resiko"
   # laporan rka
   get "/rincian_belanja", to: "program_kegiatans#laporan_rka"
   get "/pdf_rka/:id/:tahun", to: "program_kegiatans#pdf_rka"
