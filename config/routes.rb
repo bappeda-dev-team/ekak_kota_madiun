@@ -9,6 +9,7 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :isu_strategis_opds
   resources :isu_strategis_kota
   # get "/gender", to: "genders#gender"
   # get "/gap_gender", to: "genders#gap_gender"

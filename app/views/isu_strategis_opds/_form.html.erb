@@ -1,10 +1,10 @@
-<%= form_with(model: isu_strategis_kotum) do |form| %>
-  <% if isu_strategis_kotum.errors.any? %>
+<%= form_with(model: isu_strategis_opd) do |form| %>
+  <% if isu_strategis_opd.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(isu_strategis_kotum.errors.count, "error") %> prohibited this isu_strategis_kotum from being saved:</h2>
+      <h2><%= pluralize(isu_strategis_opd.errors.count, "error") %> prohibited this isu_strategis_opd from being saved:</h2>
 
       <ul>
-        <% isu_strategis_kotum.errors.each do |error| %>
+        <% isu_strategis_opd.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
@@ -24,6 +24,16 @@
   <div class="field">
     <%= form.label :tahun %>
     <%= form.text_field :tahun %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kode_opd %>
+    <%= form.text_field :kode_opd %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tujuan %>
+    <%= form.text_field :tujuan %>
   </div>
 
   <div class="actions">

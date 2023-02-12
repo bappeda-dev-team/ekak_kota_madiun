@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Isu Strategis Kota</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Kode</th>
+      <th>Isu strategis</th>
+      <th>Tahun</th>
+      <th>Tujuan</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @isu_strategis.each do |isu_strategis_kota| %>
+      <tr>
+        <td><%= isu_strategis_kota.kode %></td>
+        <td><%= isu_strategis_kota.isu_strategis %></td>
+        <td><%= isu_strategis_kota.tahun %></td>
+        <td><%= link_to 'Edit', edit_isu_strategis_kotum_path(isu_strategis_kota) %></td>
+        <td><%= link_to 'Destroy', isu_strategis_kota, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Isu Strategis Opd', new_isu_strategis_kotum_path %>
