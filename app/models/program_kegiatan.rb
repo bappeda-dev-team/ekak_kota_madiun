@@ -137,11 +137,48 @@ class ProgramKegiatan < ApplicationRecord
     }
   end
 
-  def indikator_by_tahun(kode_unit:, tahun:)
-    indikator = Indikator.where(tahun: tahun, kode_opd: kode_unit)
+  def indikator_penetapan_renja(type, tahun, kode_unit, kode_item)
+    if type == 'program'
+      indikator = ProgramKegiatan.where(kode_sub_skpd: kode_unit, kode_program: kode_item, tahun: tahun).first
+      {
+        indikator_program: {
+          tahun: tahun,
+          indikator: indikator.indikator_program,
+          target: indikator.target_program,
+          satuan: indikator.satuan_target_program
+        }
+      }
+    elsif type == 'kegiatan' 
+      indikator = ProgramKegiatan.where(kode_sub_skpd: kode_unit, kode_giat: kode_item, tahun: tahun).first
     {
-      indikator: indikator
+      indikator_program: {
+        tahun: tahun,
+        indikator: indikator.indikator_kinerja,
+        target: indikator.target,
+        satuan: indikator.satuan
+      }
     }
+    elsif type == 'subkegiatan'
+      indikator = ProgramKegiatan.where(kode_sub_skpd: kode_unit, kode_sub_giat: kode_item, tahun: tahun).first
+    {
+      indikator_program: {
+        tahun: tahun,
+        indikator: indikator.indikator_subkegiatan,
+        target: indikator.target_subkegiatan,
+        satuan: indikator.satuan_target_subkegiatan
+      }
+    }
+    else 
+      indikator = ProgramKegiatan.where(kode_sub_skpd: kode_unit, kode_program: kode_item, tahun: tahun).first
+    {
+      indikator_program: {
+        tahun: tahun,
+        indikator: indikator.indikator_program,
+        target: indikator.target_program,
+        satuan: indikator.satuan_target_program
+      }
+    }
+    end
   end
 
   def indikator_key_grouper(type, _kode_unit, jenis:)

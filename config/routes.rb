@@ -236,6 +236,7 @@ Rails.application.routes.draw do
     post :crosscutting_kota
     post :ranwal_renja
     post :rankir_renja
+    post :penetapan_renja
   end
 
   namespace :api do
