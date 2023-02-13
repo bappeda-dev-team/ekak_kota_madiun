@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Strategi Opds</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Strategi</th>
+      <th>Tahun</th>
+      <th>Sasaran opd</th>
+      <th>Isu strategis opd</th>
+      <th>Opd</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @strategi_opds.each do |strategi_opd| %>
+      <tr>
+        <td><%= strategi_opd.strategi %></td>
+        <td><%= strategi_opd.tahun %></td>
+        <td><%= strategi_opd.sasaran_opd_id %></td>
+        <td><%= strategi_opd.isu_strategis_opd_id %></td>
+        <td><%= strategi_opd.opd_id %></td>
+        <td><%= link_to 'Show', strategi_opd %></td>
+        <td><%= link_to 'Edit', edit_strategi_opd_path(strategi_opd) %></td>
+        <td><%= link_to 'Destroy', strategi_opd, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Strategi Opd', new_strategi_opd_path %>

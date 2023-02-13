@@ -107,13 +107,13 @@ module SidebarItemHelper
     ]
   end
 
-  # def renja_items
-  #   [
-  #     { title: 'Program', href: admin_program_path, identifier: 'admin_program' },
-  #     { title: 'Kegiatan', href: admin_kegiatan_path, identifier: 'admin_kegiatan' },
-  #     { title: 'Subkegiatan', href: admin_sub_kegiatan_path, identifier: 'admin_sub_kegiatan' }
-  #   ]
-  # end
+  def rkpd_items
+    [
+      { title: 'Program', href: admin_program_path, identifier: 'admin_program' },
+      { title: 'Kegiatan', href: admin_kegiatan_path, identifier: 'admin_kegiatan' },
+      { title: 'Subkegiatan', href: admin_sub_kegiatan_path, identifier: 'admin_sub_kegiatan' }
+    ]
+  end
 
   def renja_items
     [
@@ -123,25 +123,27 @@ module SidebarItemHelper
     ]
   end
 
-  def opd_items
+  def kota_items
     [
-      { title: 'Tujuan OPD', href: tujuan_opds_path, identifier: 'opds/tujuan' },
-      { title: 'Isu Strategis OPD', href: isu_strategis_opds_path, identifier: 'isu_opd' },
-      { title: 'Sasaran OPD', href: sasaran_opds_path, identifier: 'opds/sasaran' },
-      { title: 'Info OPD', href: info_opds_path, identifier: 'opds/info' }
+      { title: 'Isu Strategis Kota', href: isu_strategis_kota_path,
+        identifier: 'isu_strategis_kota' },
+      { title: 'Tujuan Kota', href: tujuan_kota_path,
+        identifier: 'tujuan_kota' },
+      { title: 'Strategi Kota', href: strategi_kota_path,
+        identifier: 'strategi_kota' },
+      { title: 'Sasaran Kota', href: sasaran_kota_path,
+        identifier: 'sasaran_kota' }
     ]
   end
 
-  def kota_items
+  def opd_items
     [
-      { title: 'Tujuan Kota', href: tujuan_kota_path,
-        identifier: 'tujuan_kota' },
-      { title: 'Isu Strategis Kota', href: isu_strategis_kota_path,
-        identifier: 'isu_strategis_kota' },
-      { title: 'Sasaran Kota', href: sasaran_kota_path,
-        identifier: 'sasaran_kota' },
-      { title: 'Crosscutting Kota', href: crosscutting_kota_path,
-        identifier: 'crosscutting_kota' }
+      { title: 'Isu Strategis OPD', href: isu_strategis_opds_path, identifier: 'isu_opd' },
+      { title: 'Tujuan OPD', href: tujuan_opds_path, identifier: 'opds/tujuan' },
+      { title: 'Strategi OPD', href: strategi_opds_path, identifier: 'strategi_opds' },
+      { title: 'Sasaran OPD', href: sasaran_opds_path, identifier: 'opds/sasaran' },
+      { title: 'Pohon Kinerja OPD', href: pohon_kinerja_opds_path, identifier: 'opds/pohon_kinerja' },
+      { title: 'Info OPD', href: info_opds_path, identifier: 'opds/info' }
     ]
   end
 
@@ -189,11 +191,11 @@ module SidebarItemHelper
   end
 
   def collapsed_item_opd
-    collapse_class('(\bopds/tujuan|\bopds/sasaran|\bopds/info)')
+    collapse_class('(\bopds/tujuan|\bopds/sasaran|\bopds/pohon_kinerja|\bopds/info|\bstrategi_opds)')
   end
 
   def collapsed_item_kota
-    collapse_class('(\btujuan_kota|\bisu_strategis_kota|\bsasaran_kota|\bcrosscutting_kota)')
+    collapse_class('(\btujuan_kota|\bisu_strategis_kota|\bsasaran_kota|\bstrategi_kota)')
   end
 
   def collapsed_item_gender

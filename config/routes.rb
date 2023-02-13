@@ -9,6 +9,9 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :strategi_opds
+  resources :strategi_kota
+  resources :strategis
   resources :isu_strategis_opds
   resources :isu_strategis_kota
   # get "/gender", to: "genders#gender"
@@ -183,6 +186,7 @@ Rails.application.routes.draw do
       get :tujuan
       get :sasaran
       get :info
+      get :pohon_kinerja
     end
   end
   resources :program_kegiatans do
@@ -240,6 +244,7 @@ Rails.application.routes.draw do
     post :ranwal_renja
     post :rankir_renja
     post :penetapan_renja
+    post :pohon_kinerja_opd
   end
 
   namespace :api do

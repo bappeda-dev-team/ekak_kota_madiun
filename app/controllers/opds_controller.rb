@@ -12,6 +12,8 @@ class OpdsController < ApplicationController
     end
   end
 
+  def pohon_kinerja; end
+
   def all_opd
     @opds = Opd.all.includes([:lembaga])
   end

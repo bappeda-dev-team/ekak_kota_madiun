@@ -1,0 +1,42 @@
+<%= form_with(model: strategi_opd) do |form| %>
+  <% if strategi_opd.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(strategi_opd.errors.count, "error") %> prohibited this strategi_opd from being saved:</h2>
+
+      <ul>
+        <% strategi_opd.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :strategi %>
+    <%= form.text_field :strategi %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tahun %>
+    <%= form.text_field :tahun %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sasaran_opd_id %>
+    <%= form.text_field :sasaran_opd_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :isu_strategis_opd_id %>
+    <%= form.text_field :isu_strategis_opd_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :opd_id %>
+    <%= form.text_field :opd_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

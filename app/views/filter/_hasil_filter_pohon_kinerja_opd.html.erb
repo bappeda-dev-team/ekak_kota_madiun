@@ -1,0 +1,12 @@
+<div class="card border-0 shadow">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col-8">
+        <h2 class="fs-5 fw-bold mb-0">Pohon Kinerja <%= @nama_opd %> <%= "kode_opd: #{@kode_opd}" if current_user.has_role? :super_admin%></h2>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p>Pohon Kinerja image here</p>
+  </div>
+</div>

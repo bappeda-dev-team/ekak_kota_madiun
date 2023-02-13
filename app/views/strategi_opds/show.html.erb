@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Strategi:</strong>
+  <%= @strategi_opd.strategi %>
+</p>
+
+<p>
+  <strong>Tahun:</strong>
+  <%= @strategi_opd.tahun %>
+</p>
+
+<p>
+  <strong>Sasaran opd:</strong>
+  <%= @strategi_opd.sasaran_opd_id %>
+</p>
+
+<p>
+  <strong>Isu strategis opd:</strong>
+  <%= @strategi_opd.isu_strategis_opd_id %>
+</p>
+
+<p>
+  <strong>Opd:</strong>
+  <%= @strategi_opd.opd_id %>
+</p>
+
+<%= link_to 'Edit', edit_strategi_opd_path(@strategi_opd) %> |
+<%= link_to 'Back', strategi_opds_path %>

@@ -1,0 +1,37 @@
+<%= form_with(model: strategi_kotum) do |form| %>
+  <% if strategi_kotum.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(strategi_kotum.errors.count, "error") %> prohibited this strategi_kotum from being saved:</h2>
+
+      <ul>
+        <% strategi_kotum.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :strategi %>
+    <%= form.text_field :strategi %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tahun %>
+    <%= form.text_field :tahun %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sasaran_kota_id %>
+    <%= form.text_field :sasaran_kota_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :isu_strategis_kota_id %>
+    <%= form.text_field :isu_strategis_kota_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

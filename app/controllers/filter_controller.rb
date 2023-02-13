@@ -328,6 +328,12 @@ class FilterController < ApplicationController
     render partial: 'hasil_filter_penetapan_renja'
   end
 
+  def pohon_kinerja_opd
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    render partial: 'hasil_filter_pohon_kinerja_opd'
+  end
+
   # filter tahun yang diaktifkan, dibawah logo E-KAK
   def tahun_sasaran
     @tahun_sasaran = params[:tahun_sasaran]
