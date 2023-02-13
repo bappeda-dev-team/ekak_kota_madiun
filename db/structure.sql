@@ -2539,6 +2539,39 @@ CREATE TABLE public.users_roles (
 
 
 --
+-- Name: usulan_perangkat_daerahs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.usulan_perangkat_daerahs (
+    id bigint NOT NULL,
+    perangkat_daerah_id integer,
+    strategi_kota_id integer,
+    isu_strategis_kota_id integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: usulan_perangkat_daerahs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.usulan_perangkat_daerahs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: usulan_perangkat_daerahs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.usulan_perangkat_daerahs_id_seq OWNED BY public.usulan_perangkat_daerahs.id;
+
+
+--
 -- Name: usulans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3004,6 +3037,13 @@ ALTER TABLE ONLY public.tujuans ALTER COLUMN id SET DEFAULT nextval('public.tuju
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: usulan_perangkat_daerahs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.usulan_perangkat_daerahs ALTER COLUMN id SET DEFAULT nextval('public.usulan_perangkat_daerahs_id_seq'::regclass);
 
 
 --
@@ -3523,6 +3563,14 @@ ALTER TABLE ONLY public.tujuans
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: usulan_perangkat_daerahs usulan_perangkat_daerahs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.usulan_perangkat_daerahs
+    ADD CONSTRAINT usulan_perangkat_daerahs_pkey PRIMARY KEY (id);
 
 
 --
@@ -4317,6 +4365,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230212222643'),
 ('20230213020025'),
 ('20230213061807'),
-('20230213062257');
+('20230213062257'),
+('20230213082516');
 
 

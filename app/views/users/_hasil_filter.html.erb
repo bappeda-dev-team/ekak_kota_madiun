@@ -63,13 +63,6 @@
             <td class="fw-bolder text-gray-500 text-center">
               <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
                 <% unless user.has_role? :admin %>
-                  <%= link_to sync_sasaran_path(kode_opd: user.opd.kode_unik_opd, tahun: Date.today.year, bulan: bulan, nip_asn: user.nik),
-                      remote: true,
-                      data: { disable_with: 'Memproses....'}, 
-                      class:"btn btn-sm btn-primary" do %>
-                    <i class="fas fa-sync me-2"></i>
-                    Sync Sasaran
-                  <% end %>
                   <%= link_to 'Aktifkan',"/aktifkan_user/#{user.nik}", remote: true, method: :post ,class: 'btn btn-sm btn-success', id: "#{dom_id(user)}" %>
                   <%= link_to 'Non Aktifkan',"/nonaktifkan_user/#{user.nik}", remote: true, method: :post ,class: 'btn btn-sm btn-danger', id: "#{dom_id(user)}" %>
                 <% else %>
