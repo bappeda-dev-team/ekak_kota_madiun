@@ -182,6 +182,7 @@ Rails.application.routes.draw do
     collection do
       get :tujuan
       get :sasaran
+      get :info
     end
   end
   resources :program_kegiatans do

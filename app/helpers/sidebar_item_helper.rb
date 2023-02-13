@@ -117,17 +117,18 @@ module SidebarItemHelper
 
   def renja_items
     [
-      { title: 'Ranwal', href: renja_ranwal_path, identifier: 'renja_ranwal' },
-      { title: 'Rankir', href: renja_rankir_path, identifier: 'renja_rankir' },
-      { title: 'Penetapan', href: renja_penetapan_path, identifier: 'renja_penetapan' }
+      { title: 'Ranwal', href: renja_ranwal_path, identifier: 'renja/ranwal' },
+      { title: 'Rankir', href: renja_rankir_path, identifier: 'renja/rankir' },
+      { title: 'Penetapan', href: renja_penetapan_path, identifier: 'renja/penetapan' }
     ]
   end
 
   def opd_items
     [
-      { title: 'Tujuan', href: tujuan_opds_path, identifier: 'opds/tujuan' },
-      { title: 'Sasaran', href: sasaran_opds_path, identifier: 'opds/sasaran' },
-      { title: 'Info OPD', href: opds_path, identifier: 'opds' }
+      { title: 'Tujuan OPD', href: tujuan_opds_path, identifier: 'opds/tujuan' },
+      { title: 'Isu Strategis OPD', href: isu_strategis_opds_path, identifier: 'isu_opd' },
+      { title: 'Sasaran OPD', href: sasaran_opds_path, identifier: 'opds/sasaran' },
+      { title: 'Info OPD', href: info_opds_path, identifier: 'opds/info' }
     ]
   end
 
@@ -135,6 +136,8 @@ module SidebarItemHelper
     [
       { title: 'Tujuan Kota', href: tujuan_kota_path,
         identifier: 'tujuan_kota' },
+      { title: 'Isu Strategis Kota', href: isu_strategis_kota_path,
+        identifier: 'isu_strategis_kota' },
       { title: 'Sasaran Kota', href: sasaran_kota_path,
         identifier: 'sasaran_kota' },
       { title: 'Crosscutting Kota', href: crosscutting_kota_path,
@@ -182,15 +185,15 @@ module SidebarItemHelper
   end
 
   def collapsed_item_renja
-    collapse_class('(\brenja_ranwal|\brenja_rankir|\brenja_penetapan)')
+    collapse_class('(\brenja/ranwal|\brenja/rankir|\brenja/penetapan)')
   end
 
   def collapsed_item_opd
-    collapse_class('(\bopds/tujuan|\bopds/sasaran|\bopds)')
+    collapse_class('(\bopds/tujuan|\bopds/sasaran|\bopds/info)')
   end
 
   def collapsed_item_kota
-    collapse_class('(\btujuan_kota|\bsasaran_kota|\bcrosscutting_kota)')
+    collapse_class('(\btujuan_kota|\bisu_strategis_kota|\bsasaran_kota|\bcrosscutting_kota)')
   end
 
   def collapsed_item_gender
