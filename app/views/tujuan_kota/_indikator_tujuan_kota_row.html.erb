@@ -1,0 +1,16 @@
+ <% if indikator_tujuans.any? %>
+   <td class="p-0 m-0" colspan="4"></td>
+   <% indikator_tujuans.each do |indikator| %>
+     <tr>
+       <td class="fw-bolder" ><%= indikator.indikator %></td>
+       <td class="fw-bolder" ><%= indikator.target %></td>
+       <td class="fw-bolder" ><%= indikator.satuan %></td>
+       <td class="fw-bolder" ><%= indikator.tahun %></td>
+     </tr>
+   <% end %>
+ <% else %>
+       <td class="fw-bolder" >-</td>
+       <td class="fw-bolder" >-</td>
+       <td class="fw-bolder" >-</td>
+       <td class="fw-bolder" >-</td>
+ <% end %>
