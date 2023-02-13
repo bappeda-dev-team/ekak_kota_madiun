@@ -1,0 +1,39 @@
+<%= form_with(
+  url: add_role_user_path(@user.id), 
+  local: false,
+  data: { controller: 'form-ajax',
+          action: 'ajax:success->form-ajax#successResponse',
+          form_ajax_modal_param: 'form-user-role' }
+              ) do |form| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <ul>
+        <% @user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :nip, class: "form-label" %>
+    <%= form.text_field :nik, class: "form-control", value: @user.nik, readonly: true %>
+  </div>
+  <div class="field">
+    <%= form.label :nama, class: "form-label" %>
+    <%= form.text_field :nama, class: "form-control", value: @user.nama, readonly: true %>
+  </div>
+  <div class="field">
+    <% data_role = options_from_collection_for_select(@roles, :name, :name, @user.roles.pluck(:name)) %>
+    <%= form.label :role, class: "form-label" %>
+    <%= form.select :role, data_role, {include_blank: true},
+    { class: "form-select select2-role",
+      data: { placeholder: 'Pilih Role',
+              controller: 'dropdown',
+              dropdown_parent_value: '#form-user-role'
+      } } %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

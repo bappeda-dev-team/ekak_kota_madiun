@@ -107,6 +107,8 @@ Rails.application.routes.draw do
     member do
       get :edit_detail
       patch :update_detail
+      get :set_role
+      post :add_role
     end
   end
 

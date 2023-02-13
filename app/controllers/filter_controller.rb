@@ -17,7 +17,9 @@ class FilterController < ApplicationController
     end
   end
 
-  def filter_user # FIXME: jika tidak ada bidang pada opd table, user tidak akan tampil
+  # FIXME: refactor me to stimulus base render
+  # FIXME: jika tidak ada bidang pada opd table, user tidak akan tampil
+  def filter_user
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
     @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd })
     if OPD_TABLE.key?(opd.to_sym)
