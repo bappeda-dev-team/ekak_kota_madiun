@@ -1,0 +1,18 @@
+<% action_url = local_assigns[:action_url] %>
+<div class="col">
+  <form action="<%= action_url %>" method="GET" class="row">
+    <input type="hidden" name="filter_query" value="tahun">
+    <div class="col">
+      <select name="tahun" id="tahun" data-controller="dropdown" data-placeholder="Pilih Tahun">
+        <option></option>
+        <option value="all">All</option>
+        <% for tahun in (2020..Date.today.year + 1) do %>
+          <option value="<%= tahun %>"><%= tahun %></option>
+        <% end %>
+      </select>
+    </div>
+    <div class="col-auto">
+      <input type="submit" value="Filter" class="btn btn-primary">
+    </div>
+  </form>
+</div>

@@ -2,7 +2,7 @@ class IsuStrategisKotaController < ApplicationController
   before_action :set_isu_strategis_kota, only: %i[ show edit update destroy ]
 
   def index
-    @isu_strategis = IsuStrategisKotum.all
+    handle_filters
   end
 
   def new
@@ -48,5 +48,21 @@ class IsuStrategisKotaController < ApplicationController
 
   def isu_strategis_params
     params.require(:isu_strategis_kotum).permit(:isu_strategis, :kode, :tahun)
+  end
+
+  def tahun_default
+    @tahun_default = cookies[:tahun_sasaran] || Date.today.year
+  end
+
+  # find way to refactor this to global method
+  def handle_filters
+    tahun = params[:tahun]
+    if tahun.nil? || tahun == 'all'
+      @tahun = ''
+      @isu_strategis_kota = IsuStrategisKotum.all
+    else
+      @tahun = "Tahun #{tahun}"
+      @isu_strategis_kota = IsuStrategisKotum.where(tahun: tahun)
+    end
   end
 end
