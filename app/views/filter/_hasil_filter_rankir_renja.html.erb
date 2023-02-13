@@ -81,10 +81,10 @@
                     Renstra belum diisi
                   </td>
                 <% end %>
-                <%= render 'row_indikator_renja',indikators: program.indikator_renstras_new('program', @kode_opd)[:indikator_program], tahun: @tahun, pagu: pagu_program %>
+                <%= render 'row_indikator_rankir_renja',indikators: program.indikator_renstras_new('program', @kode_opd)[:indikator_program], tahun: @tahun, pagu: pagu_program %>
             </tr>
           </tbody>
-          <% program.kegiatans_opd.each.with_index(1) do |kegiatan, no_giat| %>
+          <% program.kegiatans_opd_by_tahun(@tahun).each.with_index(1) do |kegiatan, no_giat| %>
             <thead class="thead-kegiatan">
               <tr>
                 <th class="border" scope="col" rowspan="2">OPD</th>
@@ -143,7 +143,7 @@
                     Renstra belum diisi
                   </td>
                 <% end %>
-                <%= render 'row_indikator_renja',indikators: kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan], tahun: @tahun, pagu: pagu_kegiatan %>
+                <%= render 'row_indikator_rankir_renja',indikators: kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan], tahun: @tahun, pagu: pagu_kegiatan %>
               </tr>
             </tbody>
             <thead class="thead-subkegiatan">
@@ -164,7 +164,7 @@
               </tr>
             </thead>
             <tbody>
-              <% kegiatan.subkegiatans_opd.each.with_index(1) do |subgiat, no_subgiat| %>
+              <% kegiatan.subkegiatans_opd_by_tahun(@tahun).each.with_index(1) do |subgiat, no_subgiat| %>
                 <tr>
                   <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_opd_pemilik %>
                     <% if current_user.has_role? :super_admin %>
@@ -205,7 +205,7 @@
                       Renstra belum diisi
                     </td>
                   <% end %>
-                  <%= render 'row_indikator_renja',indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan], tahun: @tahun, pagu: pagu_subkegiatan %>
+                  <%= render 'row_indikator_rankir_renja',indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan], tahun: @tahun, pagu: pagu_subkegiatan %>
                 </tr>
               <% end %>
             </tbody>

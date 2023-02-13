@@ -53,7 +53,7 @@
               <%= render 'row_indikator_penetapan_renja',indikator: program.indikator_penetapan_renja('program', @tahun, @kode_opd, program.kode_program)[:indikator_program], tahun: @tahun, pagu: 0 %>
             </tr>
           </tbody>
-          <% program.kegiatans_opd.each.with_index(1) do |kegiatan, no_giat| %>
+          <% program.kegiatans_opd_by_tahun(@tahun).each.with_index(1) do |kegiatan, no_giat| %>
             <thead class="thead-kegiatan">
               <tr>
                 <th class="border" scope="col" rowspan="2">OPD</th>
@@ -103,7 +103,7 @@
               </tr>
             </thead>
             <tbody>
-              <% kegiatan.subkegiatans_opd.each.with_index(1) do |subgiat, no_subgiat| %>
+              <% kegiatan.subkegiatans_opd_by_tahun(@tahun).each.with_index(1) do |subgiat, no_subgiat| %>
                 <tr>
                   <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_opd_pemilik %>
                     

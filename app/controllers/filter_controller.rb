@@ -295,7 +295,7 @@ class FilterController < ApplicationController
     @program_kegiatans = @opd.program_renstra
     if OPD_TABLE.key?(@nama_opd.to_sym)
       @program_kegiatans = ProgramKegiatan.includes(:opd)
-                                          .where(id_sub_unit: KODE_OPD_BAGIAN[@nama_opd.to_sym])
+                                          .where(id_sub_unit: KODE_OPD_BAGIAN[@nama_opd.to_sym], tahun: @tahun)
                                           .uniq(&:kode_program).sort_by(&:kode_program)
       @kode_opd = KODE_OPD_BAGIAN[@nama_opd.to_sym]
     end
@@ -308,7 +308,7 @@ class FilterController < ApplicationController
     @program_kegiatans = @opd.program_renstra
     if OPD_TABLE.key?(@nama_opd.to_sym)
       @program_kegiatans = ProgramKegiatan.includes(:opd)
-                                          .where(id_sub_unit: KODE_OPD_BAGIAN[@nama_opd.to_sym])
+                                          .where(id_sub_unit: KODE_OPD_BAGIAN[@nama_opd.to_sym], tahun: @tahun)
                                           .uniq(&:kode_program).sort_by(&:kode_program)
       @kode_opd = KODE_OPD_BAGIAN[@nama_opd.to_sym]
     end
@@ -321,7 +321,7 @@ class FilterController < ApplicationController
     @program_kegiatans = @opd.program_renstra
     if OPD_TABLE.key?(@nama_opd.to_sym)
       @program_kegiatans = ProgramKegiatan.includes(:opd)
-                                          .where(id_sub_unit: KODE_OPD_BAGIAN[@nama_opd.to_sym])
+                                          .where(id_sub_unit: KODE_OPD_BAGIAN[@nama_opd.to_sym], tahun: @tahun)
                                           .uniq(&:kode_program).sort_by(&:kode_program)
       @kode_opd = KODE_OPD_BAGIAN[@nama_opd.to_sym]
     end

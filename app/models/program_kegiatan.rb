@@ -108,9 +108,20 @@ class ProgramKegiatan < ApplicationRecord
     kegiatans.uniq { |keg| keg.values_at(:kode_giat) }.sort_by(&:kode_giat)
   end
 
+  def kegiatans_opd_by_tahun(tahun)
+    # super.uniq(&:kode_giat)
+    # ProgramKegiatan.where("kode_program = ? and kode_opd = ?", kode_program, kode_opd)
+    kegiatans.where(tahun: tahun).uniq { |keg| keg.values_at(:kode_giat) }.sort_by(&:kode_giat)
+  end
+
   def subkegiatans_opd
     # ProgramKegiatan.where("kode_giat = ? and kode_opd = ?", kode_giat, kode_opd)
     subkegiatans.uniq { |sub| sub.values_at(:kode_sub_giat) }.sort_by(&:kode_sub_giat)
+  end
+
+  def subkegiatans_opd_by_tahun(tahun)
+    # ProgramKegiatan.where("kode_giat = ? and kode_opd = ?", kode_giat, kode_opd)
+    subkegiatans.where(tahun: tahun).uniq { |sub| sub.values_at(:kode_sub_giat) }.sort_by(&:kode_sub_giat)
   end
 
   def my_pagu
@@ -148,36 +159,35 @@ class ProgramKegiatan < ApplicationRecord
           satuan: indikator.satuan_target_program
         }
       }
-    elsif type == 'kegiatan' 
+    elsif type == 'kegiatan'
       indikator = ProgramKegiatan.where(kode_sub_skpd: kode_unit, kode_giat: kode_item, tahun: tahun).first
-    {
-      indikator_program: {
-        tahun: tahun,
-        indikator: indikator.indikator_kinerja,
-        target: indikator.target,
-        satuan: indikator.satuan
+      {
+        indikator_program: {
+          tahun: tahun,
+          indikator: indikator.indikator_kinerja,
+          target: indikator.target,
+          satuan: indikator.satuan
+        }
       }
-    }
     elsif type == 'subkegiatan'
       indikator = ProgramKegiatan.where(kode_sub_skpd: kode_unit, kode_sub_giat: kode_item, tahun: tahun).first
-    {
-      indikator_program: {
-        tahun: tahun,
-        indikator: indikator.indikator_subkegiatan,
-        target: indikator.target_subkegiatan,
-        satuan: indikator.satuan_target_subkegiatan
+      {
+        indikator_program: {
+          tahun: tahun,
+          indikator: indikator.indikator_subkegiatan,
+          target: indikator.target_subkegiatan,
+          satuan: indikator.satuan_target_subkegiatan
+        }
       }
-    }
-    else 
-      indikator = ProgramKegiatan.where(kode_sub_skpd: kode_unit, kode_program: kode_item, tahun: tahun).first
-    {
-      indikator_program: {
-        tahun: tahun,
-        indikator: indikator.indikator_program,
-        target: indikator.target_program,
-        satuan: indikator.satuan_target_program
+    else
+      {
+        indikator_program: {
+          tahun: tahun,
+          indikator: "",
+          target: "",
+          satuan: ""
+        }
       }
-    }
     end
   end
 
