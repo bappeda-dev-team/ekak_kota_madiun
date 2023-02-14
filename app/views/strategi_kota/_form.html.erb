@@ -11,27 +11,32 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :strategi %>
-    <%= form.text_field :strategi %>
-  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="field">
+        <%= form.label :strategi, class: "form-label" %>
+        <%= form.text_field :strategi, class: "form-control" %>
+      </div>
 
-  <div class="field">
-    <%= form.label :tahun %>
-    <%= form.text_field :tahun %>
-  </div>
+      <div class="field">
+        <%= form.label :sasaran_kota_id, class: "form-label" %>
+        <%= form.text_field :sasaran_kota_id, class: "form-control" %>
+      </div>
 
-  <div class="field">
-    <%= form.label :sasaran_kota_id %>
-    <%= form.text_field :sasaran_kota_id %>
-  </div>
+      <div class="field">
+        <%= form.label :isu_strategis_kota_id, class: "form-label" %>
+        <%= form.text_field :isu_strategis_kota_id, class: "form-control" %>
+      </div>
 
-  <div class="field">
-    <%= form.label :isu_strategis_kota_id %>
-    <%= form.text_field :isu_strategis_kota_id %>
-  </div>
+      <div class="field">
+        <%= form.label :tahun, class: 'form-label' %>
+        <%= form.select :tahun,[2020, 2021, 2022, 2023, 2024],{selected: Date.today.year},
+          { class: 'form-control', data: { controller: 'dropdown' } }%>
+      </div>
 
-  <div class="actions">
-    <%= form.submit %>
+      <div class="actions">
+        <%= form.submit %>
+      </div>
+    </div>
   </div>
 <% end %>

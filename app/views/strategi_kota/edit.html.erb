@@ -2,5 +2,9 @@
 
 <%= render 'form', strategi_kotum: @strategi_kotum %>
 
-<%= link_to 'Show', @strategi_kotum %> |
-<%= link_to 'Back', strategi_kota_path %>
+<div class="card-body">
+  <%= link_to strategi_kota_path, class: 'btn btn-info w-100 text-white' do %>
+    <span class="fas fa-arrow-left"></span>
+    <span>Kembali</span>
+  <% end %>
+</div>
