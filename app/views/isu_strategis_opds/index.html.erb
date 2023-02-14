@@ -1,35 +1,51 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Isu Strategis Opds</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Kode</th>
-      <th>Isu strategis</th>
-      <th>Tahun</th>
-      <th>Kode opd</th>
-      <th>Tujuan</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @isu_strategis_opds.each do |isu_strategis_opd| %>
-      <tr>
-        <td><%= isu_strategis_opd.kode %></td>
-        <td><%= isu_strategis_opd.isu_strategis %></td>
-        <td><%= isu_strategis_opd.tahun %></td>
-        <td><%= isu_strategis_opd.kode_opd %></td>
-        <td><%= isu_strategis_opd.tujuan %></td>
-        <td><%= link_to 'Show', isu_strategis_opd %></td>
-        <td><%= link_to 'Edit', edit_isu_strategis_opd_path(isu_strategis_opd) %></td>
-        <td><%= link_to 'Destroy', isu_strategis_opd, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Isu Strategis Opd', new_isu_strategis_opd_path %>
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item">
+          OPD
+        </li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to "Isu Strategis OPD", isu_strategis_opds_path %></li>
+      </ol>
+    </nav>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Isu Strategis OPD <%= @tahun %></h2>
+          </div>
+          <%= render "shared/get_tahun_filter", action_url: isu_strategis_opds_path %>
+        </div>
+        <div class="col mt-3">
+          <%= link_to new_isu_strategis_opd_path, class: 'btn btn-sm btn-info text-white' do %>
+            <span>Buat Isu Strategis OPD</span>
+          <% end %>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center">
+          <thead class="thead-light">
+            <tr>
+              <th class="border-bottom" scope="col">No.</th>
+              <th class="border-bottom" scope="col">Isu Strategis</th>
+              <th class="border-bottom" scope="col">Tujuan</th>
+              <th class="border-bottom" scope="col">Tahun</th>
+              <th class="border-bottom text-center" scope="col">OPD</th>
+              <th class="border-bottom text-center" scope="col">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @isu_strategis_opds.order(:tahun).each.with_index(1) do |isu_strategis_opd, i| %>
+              <%= render 'row_isu_strategis_opd', isu_strategis_opd: isu_strategis_opd, i: i %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

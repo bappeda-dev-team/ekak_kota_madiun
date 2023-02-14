@@ -7,6 +7,9 @@
             <i class="fas fa-home"></i>
           <% end %>
         </li>
+        <li class="breadcrumb-item">
+          Kota
+        </li>
         <li class="breadcrumb-item active" aria-current="page">Isu Strategis Kota</li>
       </ol>
     </nav>
@@ -37,25 +40,7 @@
           </thead>
           <tbody>
             <% @isu_strategis_kota.order(:tahun).each.with_index(1) do |isu_strategis, i| %>
-              <tr>
-                <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                <td class="fw-bolder text-gray-500"><%= isu_strategis.kode %></td>
-                <td class="fw-bolder text-gray-500"><%= isu_strategis.isu_strategis %></td>
-                <td class="fw-bolder text-gray-500"><%= isu_strategis.tahun %></td>
-                <td class="fw-bolder text-gray-500 text-center">
-                  <%= link_to edit_isu_strategis_kotum_path(isu_strategis),
-                    remote: true,
-                    data: { bs_toggle: 'modal', bs_target: "#form-programkegiatan"},
-                    class: "m-3" do %>
-                      <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
-                  <% end %>
-                  <%= link_to isu_strategis, method: :delete,
-                    data: { confirm_swal: "Hapus #{isu_strategis.isu_strategis} ?"},
-                    class: "m-3" do %>
-                      <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
-                  <% end %>
-                </td>
-              </tr>
+              <%= render 'row_isu_strategis_kota', isu_strategis: isu_strategis, i: i %>
             <% end %>
           </tbody>
         </table>

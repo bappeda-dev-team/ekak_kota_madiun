@@ -12,4 +12,5 @@
 #  updated_at    :datetime         not null
 #
 class IsuStrategisOpd < ApplicationRecord
+  belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_opd'
 end

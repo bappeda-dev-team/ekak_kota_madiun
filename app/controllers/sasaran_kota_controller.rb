@@ -2,7 +2,7 @@ class SasaranKotaController < ApplicationController
   before_action :set_sasaran_kota, only: %i[show edit update destroy]
 
   def index
-    @sasaran_kota = SasaranKotum.all.includes([:indikator_sasarans])
+    handle_filters
   end
 
   def show; end
