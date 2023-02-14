@@ -1,6 +1,10 @@
-<h1>Editing Strategi Opd</h1>
+<h1>Edit Strategi Opd</h1>
 
 <%= render 'form', strategi_opd: @strategi_opd %>
 
-<%= link_to 'Show', @strategi_opd %> |
-<%= link_to 'Back', strategi_opds_path %>
+<div class="card-body">
+  <%= link_to strategi_opds_path, class: 'btn btn-info w-100 text-white' do %>
+    <span class="fas fa-arrow-left"></span>
+    <span>Kembali</span>
+  <% end %>
+</div>

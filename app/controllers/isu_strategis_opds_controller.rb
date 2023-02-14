@@ -82,7 +82,7 @@ class IsuStrategisOpdsController < ApplicationController
       @isu_strategis_opds = IsuStrategisOpd.all.includes([:opd])
     else
       @tahun = "Tahun #{tahun}"
-    @isu_strategis_opds = IsuStrategisOpd.where(tahun: tahun).includes([:opd])
+      @isu_strategis_opds = IsuStrategisOpd.where(tahun: tahun).includes([:opd])
     end
   end
 end

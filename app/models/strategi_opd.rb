@@ -12,4 +12,5 @@
 #  sasaran_opd_id       :string
 #
 class StrategiOpd < ApplicationRecord
+  belongs_to :opd, foreign_key: 'opd_id', primary_key: 'kode_opd'
 end

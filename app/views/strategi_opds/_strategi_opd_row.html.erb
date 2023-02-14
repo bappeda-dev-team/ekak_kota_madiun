@@ -1,0 +1,19 @@
+<tr>
+  <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
+  <td class="fw-bolder text-gray-500"><%= strategi_opd.strategi %></td>
+  <td class="fw-bolder text-gray-500"><%= strategi_opd.sasaran_opd_id %></td>
+  <td class="fw-bolder text-gray-500"><%= strategi_opd.isu_strategis_opd_id %></td>
+  <td class="fw-bolder text-gray-500"><%= strategi_opd.tahun %></td>
+  <td class="fw-bolder text-gray-500 text-wrap text-center"><%= strategi_opd.opd&.nama_opd %></td>
+  <td class="fw-bolder text-gray-500">
+    <%= link_to edit_strategi_opd_path(strategi_opd),
+        class: "m-3" do %>
+          <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+    <% end %>
+    <%= link_to strategi_opd, method: :delete,
+      data: { confirm_swal: "Hapus #{strategi_opd.strategi} ?"},
+      class: "m-3" do %>
+        <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+    <% end %>
+  </td>
+</tr>
