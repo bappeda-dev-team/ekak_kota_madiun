@@ -3,7 +3,7 @@
   <td class="fw-bolder text-gray-500"><%= isu_strategis_opd.isu_strategis %></td>
   <td class="fw-bolder text-gray-500"><%= isu_strategis_opd.tujuan %></td>
   <td class="fw-bolder text-gray-500"><%= isu_strategis_opd.tahun %></td>
-  <td class="fw-bolder text-gray-500 text-center"><%= isu_strategis_opd.opd.nama_opd %></td>
+  <td class="fw-bolder text-gray-500 text-center"><%= isu_strategis_opd.opd&.nama_opd || "OPD tidak ditemukan" %></td>
   <td class="fw-bolder text-gray-500 text-center">
     <%= link_to edit_isu_strategis_opd_path(isu_strategis_opd),
       class: "m-3" do %>
