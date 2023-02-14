@@ -23,10 +23,10 @@
             <th class="border" scope="col" rowspan="2" width="20px">No.</th>
             <th class="border" scope="col" rowspan="2">Sasaran OPD</th>
             <th class="border" scope="col" rowspan="2">Indikator</th>
+            <th class="border" scope="col" rowspan="2">Aksi</th>
             <% (2020..2024).each do |tahun| %>
               <th class="border text-center" scope="col" colspan="2"><%= tahun %></th>
             <% end %>
-            <th class="border" scope="col" rowspan="2">Aksi</th>
           </tr>
           <tr>
             <% (2020..2024).each do %>
@@ -40,6 +40,9 @@
             <tr>
               <td class="text-gray-900 text-wrap border" width='20px'><%= no_sasaran %></td>
               <td class="text-gray-900 text-wrap border"  ><%= sasaran_opd.sasaran_kinerja %></td>
+              <td class="text-gray-900 text-wrap border">
+                Edit
+              </td>
               <% sasaran_opd.indikator_sasarans_new[:indikator_sasaran].each do |indikator_sasaran, values| %>
                 <td class="text-gray-900 text-wrap border"  ><%= indikator_sasaran %></td>
                 <% (2020..2024).each do |tahun| %>
@@ -48,9 +51,6 @@
                   <td class="text-gray-900 text-wrap border"  ><%= targets&.last&.satuan %></td>
                 <% end %>
               <% end %>
-              <td class="text-gray-900 text-wrap border">
-                Edit
-              </td>
             </tr>
           <% end %>
         </tbody>
