@@ -1,0 +1,6 @@
+<tr>
+  <td class="fw-bolder" scope="row" rowspan="<%= sasaran.indikator_sasarans.size + 1 %>"><%= i %></td>
+  <td class="fw-bolder text-wrap" scope="row" rowspan="<%= sasaran.indikator_sasarans.size + 1 %>"><%= sasaran.sasaran %></td>
+  <td class="fw-bolder" scope="row" rowspan="<%= sasaran.indikator_sasarans.size + 1 %>"><%= sasaran.tahun_awal_akhir %></td>
+  <%= render 'indikator_sasaran_kota_row', indikator_sasarans: sasaran.indikator_sasarans %>
+</tr>

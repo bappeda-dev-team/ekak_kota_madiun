@@ -1,5 +1,5 @@
 class TujuanKotaController < ApplicationController
-  before_action :set_tujuan_kotau, only: %i[show edit update destroy]
+  before_action :set_tujuan_kota, only: %i[show edit update destroy]
 
   def index
     handle_filters

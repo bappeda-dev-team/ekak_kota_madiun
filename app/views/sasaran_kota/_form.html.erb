@@ -1,0 +1,44 @@
+<%= form_for(@sasaran_kota, url: sasaran_kota_path, method: :post) do |form| %>
+  <% if sasaran_kota.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(sasaran_kota.errors.count, "error") %> prohibited this sasaran_kota from being saved:</h2>
+
+      <ul>
+        <% sasaran_kota.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="field">
+        <%= form.label :tujuan_kota, class: 'form-label' %>
+        <%= form.select :id_tujuan, tujuan_kota.collect {|tk| [ tk.tujuan, tk.id] },{ include_blank: true, required: true },
+          { class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih Tujuan Kota' } }%>
+      </div>
+
+      <div class="field">
+        <%= form.label :sasaran, class: 'form-label' %>
+        <%= form.text_field :sasaran, class: 'form-control' %>
+      </div>
+
+      <div class="field">
+        <%= form.label :tahun_awal, class: 'form-label' %>
+        <%= form.select :tahun_awal,[2020, 2021, 2022, 2023, 2024],{selected: Date.today.year},
+          { class: 'form-control', data: { controller: 'dropdown' } }%>
+      </div>
+
+      <div class="field">
+        <%= form.label :tahun_akhir, class: 'form-label' %>
+        <%= form.select :tahun_akhir,[2020, 2021, 2022, 2023, 2024],{selected: Date.today.year},
+          { class: 'form-control', data: { controller: 'dropdown' } }%>
+      </div>
+
+      <div class="actions">
+        <%= form.submit %>
+      </div>
+    </div>
+  </div>
+<% end %>
