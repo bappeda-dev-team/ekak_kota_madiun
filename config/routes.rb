@@ -10,7 +10,12 @@ require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
   resources :strategi_opds
-  resources :strategi_kota
+  resources :strategi_kota do
+    member do
+      get :bagikan_ke_opd
+      post :pilih_opd
+    end
+  end
   resources :strategis
   resources :isu_strategis_opds
   resources :isu_strategis_kota

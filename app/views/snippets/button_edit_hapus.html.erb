@@ -1,0 +1,13 @@
+ <td class="fw-bolder text-gray-500 text-center">
+   <%= link_to edit_strategi_kotum_path(strategi_kotum),
+       class: "m-3 btn btn-outline-info" do %>
+         <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+         <span>Edit</span>
+   <% end %>
+   <%= link_to strategi_kotum_path(strategi_kotum), method: :delete,
+     data: { confirm_swal: "Hapus #{strategi_kotum.strategi} ?"},
+     class: "m-3 btn btn-outline-danger" do %>
+       <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+       <span>Hapus</span>
+   <% end %>
+ </td>

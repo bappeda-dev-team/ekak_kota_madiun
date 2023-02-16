@@ -1,0 +1,50 @@
+# render the base modal
+<%= render 'shared/modal_template', modal_name: 'bagikan-strategi-kota' %>
+
+# append modal_name in remote link
+# all modal_name will be prepended with form-
+# put modal_name to bs_target and form_modal_location_param
+# bs_target: add # to indicate id of modal_name
+# form_modal_location_param: append -body from modal_name
+<%= link_to bagikan_ke_opd_strategi_kotum_path(strategi_kotum),
+  remote: true, class: 'btn btn-info',
+  data: { controller: 'form-modal',
+          action: 'form-modal#appendForm',
+          form_modal_location_param: 'form-bagikan-strategi-kota-body',
+          bs_target: '#form-bagikan-strategi-kota',
+          bs_toggle: 'modal' } do %>
+    <span class="fas fa-arrow-down"></span>
+    <span>Turunkan ke opd</span>
+<% end %>
+
+
+## add routes and controller with data
+-- do it yourself
+# render form partial
+<%= form_with(url: bagikan_ke_opd_strategi_kotum_path(@strategi_kota),
+  local: false,
+  data: { controller: 'form-ajax',
+          action: 'ajax:success->form-ajax#successResponse',
+          form_ajax_modal_param: 'form-bagikan-strategi-kota'
+  }) do |form| %>
+  <div class="field">
+    <%= form.label :strategi_kota, class: "form-label" %>
+    <%= form.text_field :strategi_kota, class: "form-control", readonly: true, value: @strategi_kota.strategi %>
+  </div>
+  <div class="field">
+    <%= form.label :opd, class: "form-label" %>
+    <%= form.select :opd,dropdown_opd,
+      { include_blank: true },
+      data: {
+        controller: 'dropdown',
+        placeholder: 'Pilih OPD'
+      },
+      class: "form-control" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+# the dropdown_opd is a helper in filter_helper

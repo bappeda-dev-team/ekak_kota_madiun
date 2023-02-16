@@ -1,0 +1,27 @@
+<%= form_with(
+  url: pilih_opd_strategi_kotum_path(@strategi_kota),
+  method: :post,
+  local: false,
+  data: { controller: 'form-ajax',
+          action: 'ajax:success->form-ajax#successResponse',
+          form_ajax_modal_param: 'form-bagikan-strategi-kota'
+  }) do |form| %>
+  <div class="field">
+    <%= form.label :strategi_kota, class: "form-label" %>
+    <%= form.text_field :strategi_kota, class: "form-control", readonly: true, value: @strategi_kota.strategi %>
+  </div>
+  <div class="field">
+    <%= form.label :opd, class: "form-label" %>
+    <%= form.select :opd,dropdown_opd,
+      { include_blank: true },
+      data: {
+        controller: 'dropdown',
+        placeholder: 'Pilih OPD'
+      },
+      class: "form-control" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

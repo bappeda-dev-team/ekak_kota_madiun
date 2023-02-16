@@ -55,6 +55,25 @@ class StrategiKotaController < ApplicationController
     end
   end
 
+  def bagikan_ke_opd
+    @strategi_kota = StrategiKotum.find(params[:id])
+    render partial: "form_bagikan_ke_opd"
+  end
+
+  def pilih_opd
+    @strategi_kota = StrategiKotum.find(params[:id])
+    @opd = Opd.find_by(kode_unik_opd: params[:opd])
+    respond_to do |format|
+      if true
+        format.html { redirect_to strategi_kota_path, success: "dibagikan ke #{@opd.nama_opd}" }
+        format.json { render :show, status: :ok, location: @strategi_kotum }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @strategi_kotum.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
