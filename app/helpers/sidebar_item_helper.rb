@@ -125,21 +125,17 @@ module SidebarItemHelper
 
   def kota_items
     [
-      { title: 'Isu Strategis Kota', href: isu_strategis_kota_path,
-        identifier: 'isu_strategis_kota' },
-      { title: 'Tujuan Kota', href: tujuan_kota_path,
-        identifier: 'tujuan_kota' },
-      { title: 'Strategi Kota', href: strategi_kota_path,
-        identifier: 'strategi_kota' },
-      { title: 'Sasaran Kota', href: sasaran_kota_path,
-        identifier: 'sasaran_kota' }
+      { title: 'Tujuan Kota', href: tujuan_kota_path, identifier: 'tujuan_kota' },
+      { title: 'Isu Strategis Kota', href: isu_strategis_kota_path, identifier: 'isu_strategis_kota' },
+      { title: 'Strategi Kota', href: strategi_kota_path, identifier: 'strategi_kota' },
+      { title: 'Sasaran Kota', href: sasaran_kota_path, identifier: 'sasaran_kota' }
     ]
   end
 
   def opd_items
     [
-      { title: 'Isu Strategis OPD', href: isu_strategis_opds_path, identifier: 'isu_strategis_opds' },
       { title: 'Tujuan OPD', href: tujuan_opds_path, identifier: 'opds/tujuan' },
+      { title: 'Isu Strategis OPD', href: isu_strategis_opds_path, identifier: 'isu_strategis_opds' },
       { title: 'Strategi OPD', href: strategi_opds_path, identifier: 'strategi_opds' },
       { title: 'Sasaran OPD', href: sasaran_opds_path, identifier: 'opds/sasaran' },
       { title: 'Pohon Kinerja OPD', href: pohon_kinerja_opds_path, identifier: 'opds/pohon_kinerja' },

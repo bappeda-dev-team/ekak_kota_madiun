@@ -2582,7 +2582,8 @@ CREATE TABLE public.usulans (
     usulanable_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    sasaran_id bigint
+    sasaran_id bigint,
+    opd_id bigint
 );
 
 
@@ -4009,6 +4010,13 @@ CREATE INDEX index_users_roles_on_user_id_and_role_id ON public.users_roles USIN
 
 
 --
+-- Name: index_usulans_on_opd_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_usulans_on_opd_id ON public.usulans USING btree (opd_id);
+
+
+--
 -- Name: index_usulans_on_sasaran_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -4366,6 +4374,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230213020025'),
 ('20230213061807'),
 ('20230213062257'),
-('20230213082516');
+('20230213082516'),
+('20230216071709');
 
 

@@ -42,6 +42,11 @@ class Opd < ApplicationRecord
   has_many :tujuan_opds, class_name: 'TujuanOpd', foreign_key: 'kode_unik_opd', primary_key: 'kode_unik_opd'
   has_one :kepala, class_name: 'Kepala', foreign_key: :nik, primary_key: :nip_kepala
 
+  # kotak usulan opd
+  has_many :usulans, dependent: :destroy
+
+  scope :opd_resmi, -> { where.not(kode_unik_opd: nil) }
+
   def program_renstra
     program_kegiatans.programs
   end
