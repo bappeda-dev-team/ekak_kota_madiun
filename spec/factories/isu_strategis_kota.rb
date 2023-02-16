@@ -11,7 +11,8 @@
 #
 FactoryBot.define do
   factory :isu_strategis_kotum do
-    isu_strategis { "MyString" }
-    tahun { "MyString" }
+    isu_strategis { "isu strategis kota test" }
+    tahun { "2023" }
+    kode { "random kode" }
   end
 end

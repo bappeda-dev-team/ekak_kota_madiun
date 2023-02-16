@@ -12,9 +12,9 @@
 #
 FactoryBot.define do
   factory :strategi_kotum do
-    strategi { "MyString" }
-    tahun { "MyString" }
-    sasaran_kota_id { "MyString" }
-    isu_strategis_kota_id { "MyString" }
+    strategi { "Strategi kota test" }
+    tahun { "2023" }
+    sasaran_kota_id { "" }
+    isu_strategis_kota_id { "1" }
   end
 end

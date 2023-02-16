@@ -22,14 +22,14 @@
 #
 FactoryBot.define do
   factory :sasaran_kotum do
-    id_misi { "MyString" }
-    id_tujuan { "MyString" }
-    id_sasaran { "MyString" }
-    tahun_awal { "MyString" }
-    tahun_akhir { "MyString" }
-    visi { "MyString" }
-    misi { "MyString" }
-    tujuan { "MyString" }
-    sasaran { "MyString" }
+    id_misi { "id_misi" }
+    id_tujuan { "id_tujuan" }
+    id_sasaran { "id_sasaran" }
+    tahun_awal { "2020" }
+    tahun_akhir { "2024" }
+    visi { "visi test" }
+    misi { "misi test" }
+    tujuan { "tujuan test" }
+    sasaran { "sasaran test" }
   end
 end
