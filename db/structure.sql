@@ -774,6 +774,74 @@ ALTER SEQUENCE public.inovasis_id_seq OWNED BY public.inovasis.id;
 
 
 --
+-- Name: isu_strategis_kota; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.isu_strategis_kota (
+    id bigint NOT NULL,
+    kode character varying NOT NULL,
+    isu_strategis character varying NOT NULL,
+    tahun character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: isu_strategis_kota_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.isu_strategis_kota_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: isu_strategis_kota_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.isu_strategis_kota_id_seq OWNED BY public.isu_strategis_kota.id;
+
+
+--
+-- Name: isu_strategis_opds; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.isu_strategis_opds (
+    id bigint NOT NULL,
+    kode character varying NOT NULL,
+    isu_strategis character varying NOT NULL,
+    tahun character varying NOT NULL,
+    kode_opd character varying NOT NULL,
+    tujuan character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: isu_strategis_opds_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.isu_strategis_opds_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: isu_strategis_opds_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.isu_strategis_opds_id_seq OWNED BY public.isu_strategis_opds.id;
+
+
+--
 -- Name: kaks; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2097,6 +2165,110 @@ ALTER SEQUENCE public.strategi_keluarans_id_seq OWNED BY public.strategi_keluara
 
 
 --
+-- Name: strategi_kota; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.strategi_kota (
+    id bigint NOT NULL,
+    strategi character varying,
+    tahun character varying,
+    sasaran_kota_id character varying,
+    isu_strategis_kota_id character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: strategi_kota_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.strategi_kota_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: strategi_kota_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.strategi_kota_id_seq OWNED BY public.strategi_kota.id;
+
+
+--
+-- Name: strategi_opds; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.strategi_opds (
+    id bigint NOT NULL,
+    strategi character varying,
+    tahun character varying,
+    sasaran_opd_id character varying,
+    isu_strategis_opd_id character varying,
+    opd_id character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: strategi_opds_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.strategi_opds_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: strategi_opds_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.strategi_opds_id_seq OWNED BY public.strategi_opds.id;
+
+
+--
+-- Name: strategis; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.strategis (
+    id bigint NOT NULL,
+    strategi character varying,
+    tahun character varying,
+    sasaran_id character varying,
+    strategi_ref_id character varying,
+    nip_asn character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: strategis_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.strategis_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: strategis_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.strategis_id_seq OWNED BY public.strategis.id;
+
+
+--
 -- Name: subkegiatan_tematiks; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2367,6 +2539,39 @@ CREATE TABLE public.users_roles (
 
 
 --
+-- Name: usulan_perangkat_daerahs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.usulan_perangkat_daerahs (
+    id bigint NOT NULL,
+    perangkat_daerah_id integer,
+    strategi_kota_id integer,
+    isu_strategis_kota_id integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: usulan_perangkat_daerahs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.usulan_perangkat_daerahs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: usulan_perangkat_daerahs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.usulan_perangkat_daerahs_id_seq OWNED BY public.usulan_perangkat_daerahs.id;
+
+
+--
 -- Name: usulans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2531,6 +2736,20 @@ ALTER TABLE ONLY public.indikators ALTER COLUMN id SET DEFAULT nextval('public.i
 --
 
 ALTER TABLE ONLY public.inovasis ALTER COLUMN id SET DEFAULT nextval('public.inovasis_id_seq'::regclass);
+
+
+--
+-- Name: isu_strategis_kota id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.isu_strategis_kota ALTER COLUMN id SET DEFAULT nextval('public.isu_strategis_kota_id_seq'::regclass);
+
+
+--
+-- Name: isu_strategis_opds id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.isu_strategis_opds ALTER COLUMN id SET DEFAULT nextval('public.isu_strategis_opds_id_seq'::regclass);
 
 
 --
@@ -2751,6 +2970,27 @@ ALTER TABLE ONLY public.strategi_keluarans ALTER COLUMN id SET DEFAULT nextval('
 
 
 --
+-- Name: strategi_kota id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.strategi_kota ALTER COLUMN id SET DEFAULT nextval('public.strategi_kota_id_seq'::regclass);
+
+
+--
+-- Name: strategi_opds id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.strategi_opds ALTER COLUMN id SET DEFAULT nextval('public.strategi_opds_id_seq'::regclass);
+
+
+--
+-- Name: strategis id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.strategis ALTER COLUMN id SET DEFAULT nextval('public.strategis_id_seq'::regclass);
+
+
+--
 -- Name: subkegiatan_tematiks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2797,6 +3037,13 @@ ALTER TABLE ONLY public.tujuans ALTER COLUMN id SET DEFAULT nextval('public.tuju
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: usulan_perangkat_daerahs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.usulan_perangkat_daerahs ALTER COLUMN id SET DEFAULT nextval('public.usulan_perangkat_daerahs_id_seq'::regclass);
 
 
 --
@@ -2964,6 +3211,22 @@ ALTER TABLE ONLY public.indikators
 
 ALTER TABLE ONLY public.inovasis
     ADD CONSTRAINT inovasis_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: isu_strategis_kota isu_strategis_kota_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.isu_strategis_kota
+    ADD CONSTRAINT isu_strategis_kota_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: isu_strategis_opds isu_strategis_opds_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.isu_strategis_opds
+    ADD CONSTRAINT isu_strategis_opds_pkey PRIMARY KEY (id);
 
 
 --
@@ -3223,6 +3486,30 @@ ALTER TABLE ONLY public.strategi_keluarans
 
 
 --
+-- Name: strategi_kota strategi_kota_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.strategi_kota
+    ADD CONSTRAINT strategi_kota_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: strategi_opds strategi_opds_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.strategi_opds
+    ADD CONSTRAINT strategi_opds_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: strategis strategis_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.strategis
+    ADD CONSTRAINT strategis_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: subkegiatan_tematiks subkegiatan_tematiks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3276,6 +3563,14 @@ ALTER TABLE ONLY public.tujuans
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: usulan_perangkat_daerahs usulan_perangkat_daerahs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.usulan_perangkat_daerahs
+    ADD CONSTRAINT usulan_perangkat_daerahs_pkey PRIMARY KEY (id);
 
 
 --
@@ -4065,6 +4360,12 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20221011022256'),
 ('20221011193500'),
 ('20221018022814'),
-('20221019073357');
+('20221019073357'),
+('20230212162935'),
+('20230212222643'),
+('20230213020025'),
+('20230213061807'),
+('20230213062257'),
+('20230213082516');
 
 

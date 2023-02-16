@@ -146,6 +146,21 @@ class UsersController < ApplicationController
     end
   end
 
+  def set_role
+    @user = User.find(params[:id])
+    @roles = Role.all
+    render partial: "form_peran"
+  end
+
+  def add_role
+    @user = User.find(params[:id])
+    target_role = params[:role]
+
+    @user.add_role target_role.to_sym
+
+    render json: { resText: "Data disimpan", result: @user.roles }, status: :accepted if @user.has_role?(target_role.to_sym)
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

@@ -9,6 +9,11 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :strategi_opds
+  resources :strategi_kota
+  resources :strategis
+  resources :isu_strategis_opds
+  resources :isu_strategis_kota
   # get "/gender", to: "genders#gender"
   # get "/gap_gender", to: "genders#gap_gender"
   # get "/laporan_gender", to: "genders#laporan_gender"
@@ -19,8 +24,8 @@ Rails.application.routes.draw do
       get :gap
       get :gbs
       get :laporan_gender
-      get 'pdf_gender/:id/:tahun', to: 'genders#pdf_gender'
-      get 'pdf_gap_gender/:id/:tahun', to: 'genders#pdf_gap_gender'
+      get "pdf_gender/:id/:tahun", to: "genders#pdf_gender"
+      get "pdf_gap_gender/:id/:tahun", to: "genders#pdf_gap_gender"
     end
   end
   resources :tujuans
@@ -102,6 +107,8 @@ Rails.application.routes.draw do
     member do
       get :edit_detail
       patch :update_detail
+      get :set_role
+      post :add_role
     end
   end
 
@@ -180,6 +187,8 @@ Rails.application.routes.draw do
     collection do
       get :tujuan
       get :sasaran
+      get :info
+      get :pohon_kinerja
     end
   end
   resources :program_kegiatans do
@@ -234,6 +243,10 @@ Rails.application.routes.draw do
     post :tujuan_opd
     post :sasaran_opd
     post :crosscutting_kota
+    post :ranwal_renja
+    post :rankir_renja
+    post :penetapan_renja
+    post :pohon_kinerja_opd
   end
 
   namespace :api do
@@ -275,6 +288,15 @@ Rails.application.routes.draw do
   resources :sasaran_kota
   resources :tujuan_kota
   get :crosscutting_kota, to: "sasaran_kota#crosscutting_kota"
+
+  # renja
+  namespace :renja do
+    get :ranwal
+    get :rankir
+    get :edit_rankir
+    post :update_rankir
+    get :penetapan
+  end
 
   mount Sidekiq::Web, at: "/sidekiq"
 
@@ -329,7 +351,7 @@ Rails.application.routes.draw do
   get "/pdf_kak/:id/:tahun", to: "program_kegiatans#pdf_kak"
   get "/cetak_daftar_kak/:opd/:tahun", to: "program_kegiatans#cetak_daftar_kak"
   # daftar resiko
-  get '/cetak_daftar_resiko/:opd/:tahun', to: 'sasaran_program_opds#cetak_daftar_resiko'
+  get "/cetak_daftar_resiko/:opd/:tahun", to: "sasaran_program_opds#cetak_daftar_resiko"
   # laporan rka
   get "/rincian_belanja", to: "program_kegiatans#laporan_rka"
   get "/pdf_rka/:id/:tahun", to: "program_kegiatans#pdf_rka"

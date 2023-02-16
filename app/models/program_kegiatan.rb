@@ -50,7 +50,7 @@
 class ProgramKegiatan < ApplicationRecord
   validates :nama_program, presence: true
   validates :kode_program, presence: true
-  belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_opd'
+  belongs_to :opd, foreign_key: "kode_opd", primary_key: "kode_opd"
   has_many :kaks
   has_many :sasarans, dependent: :nullify
   has_many :usulans, through: :sasarans
@@ -61,32 +61,42 @@ class ProgramKegiatan < ApplicationRecord
 
   has_many :kegiatans, lambda { |program_kegiatan|
                          where(kode_sub_skpd: program_kegiatan.kode_sub_skpd)
-                       }, class_name: 'ProgramKegiatan', foreign_key: 'kode_program', primary_key: 'kode_program'
+                       }, class_name: "ProgramKegiatan", foreign_key: "kode_program", primary_key: "kode_program"
 
   has_many :subkegiatans, lambda { |program_kegiatan|
                             where(kode_sub_skpd: program_kegiatan.kode_sub_skpd)
-                          }, class_name: 'ProgramKegiatan', foreign_key: 'kode_giat', primary_key: 'kode_giat'
+                          }, class_name: "ProgramKegiatan", foreign_key: "kode_giat", primary_key: "kode_giat"
 
   has_many :indikator_program_renstra, lambda { |program_kegiatan|
-                                         where(jenis: 'Renstra', sub_jenis: 'Program', kode_opd: program_kegiatan.kode_sub_skpd)
-                                       }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'kode_program'
+                                         where(jenis: "Renstra", sub_jenis: "Program", kode_opd: program_kegiatan.kode_sub_skpd)
+                                       }, class_name: "Indikator", foreign_key: "kode", primary_key: "kode_program"
   has_many :indikator_kegiatan_renstra, lambda { |program_kegiatan|
-                                          where(jenis: 'Renstra', sub_jenis: 'Kegiatan', kode_opd: program_kegiatan.kode_sub_skpd)
-                                        }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'kode_giat'
+                                          where(jenis: "Renstra", sub_jenis: "Kegiatan", kode_opd: program_kegiatan.kode_sub_skpd)
+                                        }, class_name: "Indikator", foreign_key: "kode", primary_key: "kode_giat"
   has_many :indikator_subkegiatan_renstra, lambda { |program_kegiatan|
-                                             where(jenis: 'Renstra', sub_jenis: 'Subkegiatan', kode_opd: program_kegiatan.kode_sub_skpd)
-                                           }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'kode_sub_giat'
+                                             where(jenis: "Renstra", sub_jenis: "Subkegiatan", kode_opd: program_kegiatan.kode_sub_skpd)
+                                           }, class_name: "Indikator", foreign_key: "kode", primary_key: "kode_sub_giat"
+
+  has_many :indikator_program_rankir_renja, lambda { |program_kegiatan|
+                                              where(jenis: "Rankir_Renja", sub_jenis: "Program", kode_opd: program_kegiatan.kode_sub_skpd)
+                                            }, class_name: "Indikator", foreign_key: "kode", primary_key: "kode_program"
+  has_many :indikator_kegiatan_rankir_renja, lambda { |program_kegiatan|
+                                               where(jenis: "Rankir_Renja", sub_jenis: "Kegiatan", kode_opd: program_kegiatan.kode_sub_skpd)
+                                             }, class_name: "Indikator", foreign_key: "kode", primary_key: "kode_giat"
+  has_many :indikator_subkegiatan_rankir_renja, lambda { |program_kegiatan|
+                                                  where(jenis: "Rankir_Renja", sub_jenis: "Subkegiatan", kode_opd: program_kegiatan.kode_sub_skpd)
+                                                }, class_name: "Indikator", foreign_key: "kode", primary_key: "kode_sub_giat"
 
   accepts_nested_attributes_for :sasarans
 
   scope :with_sasarans, -> { where(id: Sasaran.pluck(:program_kegiatan_id)) }
   scope :with_sasarans_rincian, -> { joins(:sasarans).merge(Sasaran.dengan_rincian) }
   scope :with_sasarans_lengkap, lambda { |nip_asn, tahun_sasaran|
-                                  joins(%i[sasarans usulans])
-                                    .where(sasarans: { nip_asn: nip_asn })
-                                    .where("sasarans.tahun ILIKE ?", "%#{tahun_sasaran}%")
-                                    .where.not(sasarans: { id: nil }).group(:id)
-                                }
+    joins(%i[sasarans usulans])
+      .where(sasarans: { nip_asn: nip_asn })
+      .where("sasarans.tahun ILIKE ?", "%#{tahun_sasaran}%")
+      .where.not(sasarans: { id: nil }).group(:id)
+  }
 
   scope :programs, -> { select("DISTINCT ON(program_kegiatans.kode_program) program_kegiatans.*") }
   scope :kegiatans_satunya, -> { select("DISTINCT ON(program_kegiatans.kode_giat) program_kegiatans.*") }
@@ -98,13 +108,28 @@ class ProgramKegiatan < ApplicationRecord
     kegiatans.uniq { |keg| keg.values_at(:kode_giat) }.sort_by(&:kode_giat)
   end
 
+  def kegiatans_opd_by_tahun(tahun)
+    # super.uniq(&:kode_giat)
+    # ProgramKegiatan.where("kode_program = ? and kode_opd = ?", kode_program, kode_opd)
+    kegiatans.where(tahun: tahun).uniq { |keg| keg.values_at(:kode_giat) }.sort_by(&:kode_giat)
+  end
+
   def subkegiatans_opd
     # ProgramKegiatan.where("kode_giat = ? and kode_opd = ?", kode_giat, kode_opd)
     subkegiatans.uniq { |sub| sub.values_at(:kode_sub_giat) }.sort_by(&:kode_sub_giat)
   end
 
+  def subkegiatans_opd_by_tahun(tahun)
+    # ProgramKegiatan.where("kode_giat = ? and kode_opd = ?", kode_giat, kode_opd)
+    subkegiatans.where(tahun: tahun).uniq { |sub| sub.values_at(:kode_sub_giat) }.sort_by(&:kode_sub_giat)
+  end
+
   def my_pagu
     sasarans.sudah_lengkap.map(&:total_anggaran).compact.sum
+  end
+
+  def my_pagu_tahun_n(tahun)
+    sasarans.where(tahun: tahun).sudah_lengkap.map(&:total_anggaran).compact.sum
   end
 
   def my_waktu
@@ -113,19 +138,68 @@ class ProgramKegiatan < ApplicationRecord
 
   def indikator_renstras_new(type, kode_unit)
     {
-      "indikator_#{type}": indikator_key_grouper(type, kode_unit)
+      "indikator_#{type}": indikator_key_grouper(type, kode_unit, jenis: "renstra")
     }
   end
 
-  def indikator_key_grouper(type, _kode_unit)
-    ind_programs = send("indikator_#{type}_renstra").select { |k| k.kode_opd == kode_sub_skpd }.group_by(&:version)
+  def indikator_rankir_renja(type, kode_unit)
+    {
+      "indikator_#{type}": indikator_key_grouper(type, kode_unit, jenis: "rankir_renja")
+    }
+  end
+
+  def indikator_penetapan_renja(type, tahun, kode_unit, kode_item)
+    if type == 'program'
+      indikator = ProgramKegiatan.where(kode_sub_skpd: kode_unit, kode_program: kode_item, tahun: tahun).first
+      {
+        indikator_program: {
+          tahun: tahun,
+          indikator: indikator.indikator_program,
+          target: indikator.target_program,
+          satuan: indikator.satuan_target_program
+        }
+      }
+    elsif type == 'kegiatan'
+      indikator = ProgramKegiatan.where(kode_sub_skpd: kode_unit, kode_giat: kode_item, tahun: tahun).first
+      {
+        indikator_program: {
+          tahun: tahun,
+          indikator: indikator.indikator_kinerja,
+          target: indikator.target,
+          satuan: indikator.satuan
+        }
+      }
+    elsif type == 'subkegiatan'
+      indikator = ProgramKegiatan.where(kode_sub_skpd: kode_unit, kode_sub_giat: kode_item, tahun: tahun).first
+      {
+        indikator_program: {
+          tahun: tahun,
+          indikator: indikator.indikator_subkegiatan,
+          target: indikator.target_subkegiatan,
+          satuan: indikator.satuan_target_subkegiatan
+        }
+      }
+    else
+      {
+        indikator_program: {
+          tahun: tahun,
+          indikator: "",
+          target: "",
+          satuan: ""
+        }
+      }
+    end
+  end
+
+  def indikator_key_grouper(type, _kode_unit, jenis:)
+    ind_programs = send("indikator_#{type}_#{jenis}").select { |k| k.kode_opd == kode_sub_skpd }.group_by(&:version)
     ind_programs[ind_programs.keys.max]
   end
 
-  def indikator_renstras(sub_unit: '')
-    progs = indikator_renstras_new('program', sub_unit)[:indikator_program]
-    kegs = indikator_renstras_new('kegiatan', sub_unit)[:indikator_kegiatan]
-    subs = indikator_renstras_new('subkegiatan', sub_unit)[:indikator_subkegiatan]
+  def indikator_renstras(sub_unit: "")
+    progs = indikator_renstras_new("program", sub_unit)[:indikator_program]
+    kegs = indikator_renstras_new("kegiatan", sub_unit)[:indikator_kegiatan]
+    subs = indikator_renstras_new("subkegiatan", sub_unit)[:indikator_subkegiatan]
 
     {
       indikator_program: progs,
@@ -146,7 +220,7 @@ class ProgramKegiatan < ApplicationRecord
   end
 
   def target_program_renstra
-    indikator_program_renstra.order('version ASC').pluck(
+    indikator_program_renstra.order("version ASC").pluck(
       :indikator,
       :keterangan,
       :target,
@@ -176,7 +250,7 @@ class ProgramKegiatan < ApplicationRecord
   end
 
   def target_kegiatan_renstra
-    indikator_kegiatan_renstra.order('version ASC').pluck(
+    indikator_kegiatan_renstra.order("version ASC").pluck(
       :indikator,
       :keterangan,
       :target,
@@ -206,7 +280,7 @@ class ProgramKegiatan < ApplicationRecord
   end
 
   def target_subkegiatan_renstra
-    indikator_subkegiatan_renstra.order('version ASC').pluck(
+    indikator_subkegiatan_renstra.order("version ASC").pluck(
       :indikator,
       :keterangan,
       :target,
@@ -229,7 +303,7 @@ class ProgramKegiatan < ApplicationRecord
   end
 
   def nama_opd_pemilik
-    id_sub_unit.nil? ? '-' : Opd.find_by(id_opd_skp: id_sub_unit).nama_opd
+    id_sub_unit.nil? ? "-" : Opd.find_by(id_opd_skp: id_sub_unit).nama_opd
   end
 
   def count_indikator_sasarans(tahun:)

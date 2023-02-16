@@ -6,6 +6,14 @@ class OpdsController < ApplicationController
     @opds = Opd.all.includes([:lembaga])
   end
 
+  def info
+    respond_to do |f|
+      f.html { render :index }
+    end
+  end
+
+  def pohon_kinerja; end
+
   def all_opd
     @opds = Opd.all.includes([:lembaga])
   end

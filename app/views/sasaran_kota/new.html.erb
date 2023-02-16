@@ -1,0 +1,10 @@
+<h1>Form Sasaran Kota</h1>
+
+<%= render 'form', sasaran_kota: @sasaran_kota, tujuan_kota: @tujuan_kota %>
+
+<div class="card-body">
+  <%= link_to sasaran_kota_path, class: 'btn btn-info w-100 text-white' do %>
+    <span class="fas fa-arrow-left"></span>
+    <span>Kembali</span>
+  <% end %>
+</div>

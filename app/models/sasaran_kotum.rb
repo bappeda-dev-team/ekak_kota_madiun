@@ -24,4 +24,8 @@ class SasaranKotum < ApplicationRecord
   belongs_to :tujuan_kota, class_name: 'TujuanKota', foreign_key: 'id_tujuan', primary_key: 'kode_tujuan'
   has_many :indikator_sasarans, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id_sasaran'
   has_many :sasarans_opd, class_name: 'Sasaran', foreign_key: 'sasaran_atasan_id', primary_key: 'kode_sasaran'
+
+  def tahun_awal_akhir
+    "#{tahun_awal} - #{tahun_akhir}"
+  end
 end

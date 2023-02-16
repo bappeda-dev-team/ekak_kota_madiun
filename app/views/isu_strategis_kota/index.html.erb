@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item">
+          Kota
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Isu Strategis Kota</li>
+      </ol>
+    </nav>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Isu Strategis Kota <%= @tahun %></h2>
+          </div>
+          <%= render "shared/get_tahun_filter", action_url: isu_strategis_kota_path %>
+        </div>
+        <div class="col mt-3">
+          <%= link_to new_isu_strategis_kotum_path, class: 'btn btn-sm btn-info text-white' do %>
+            <span>Buat Isu Strategis Kota</span>
+          <% end %>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center">
+          <thead class="thead-light">
+            <tr>
+              <th class="border-bottom" scope="col">No.</th>
+              <th class="border-bottom" scope="col">Kode Isu Strategis</th>
+              <th class="border-bottom" scope="col">Isu Strategis</th>
+              <th class="border-bottom" scope="col">Tahun</th>
+              <th class="border-bottom text-center" scope="col">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @isu_strategis_kota.order(:tahun).each.with_index(1) do |isu_strategis, i| %>
+              <%= render 'row_isu_strategis_kota', isu_strategis: isu_strategis, i: i %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

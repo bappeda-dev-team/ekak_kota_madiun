@@ -1,0 +1,37 @@
+<%= form_with(model: isu_strategis_kotum) do |form| %>
+  <% if isu_strategis_kotum.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(isu_strategis_kotum.errors.count, "error") %> prohibited this isu_strategis_kotum from being saved:</h2>
+
+      <ul>
+        <% isu_strategis_kotum.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="field">
+        <%= form.label :kode, class: 'form-label' %>
+        <%= form.text_field :kode, class: 'form-control' %>
+      </div>
+
+      <div class="field">
+        <%= form.label :isu_strategis, class: 'form-label' %>
+        <%= form.text_field :isu_strategis, class: 'form-control' %>
+      </div>
+
+      <div class="field">
+        <%= form.label :tahun, class: 'form-label' %>
+        <%= form.select :tahun,[2020, 2021, 2022, 2023, 2024],{selected: Date.today.year},
+          { class: 'form-control', data: { controller: 'dropdown' } }%>
+      </div>
+
+      <div class="actions">
+        <%= form.submit %>
+      </div>
+    </div>
+  </div>
+<% end %>

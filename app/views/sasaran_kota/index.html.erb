@@ -7,7 +7,10 @@
             <i class="fas fa-home"></i>
           <% end %>
         </li>
-        <li class="breadcrumb-item active" aria-current="page"><%= link_to sasaran_kota_path %></li>
+        <li class="breadcrumb-item">
+          Kota
+        </li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to "Sasaran Kota", sasaran_kota_path %></li>
       </ol>
     </nav>
     <div class="card border-0 shadow">
@@ -16,51 +19,37 @@
           <div class="col">
             <h2 class="fs-5 fw-bold mb-0">Sasaran Kota</h2>
           </div>
-          <div class="col text-end">
-            <%= link_to sync_kota_path,
-                        remote: true,
-                        data: { disable_with: 'Memproses....'}, 
-                        class:"btn btn-sm btn-primary" do %>
-              <i class="fas fa-sync me-2"></i>
-              Sync Sasaran Kota
-            <% end %>
-          </div>
+          <%= render "shared/get_tahun_filter", action_url: sasaran_kota_path %>
+        </div>
+        <div class="col mt-3">
+          <%= link_to new_sasaran_kotum_path, class: 'btn btn-sm btn-info text-white' do %>
+            <span>Buat Sasaran Kota Baru</span>
+          <% end %>
+          <%= link_to sync_kota_path,
+                      remote: true,
+                      data: { disable_with: 'Memproses....'}, 
+                      class:"btn btn-sm btn-primary" do %>
+            <i class="fas fa-sync me-2"></i>
+            Sync Sasaran Kota
+          <% end %>
         </div>
       </div>
       <div class="table-responsive">
         <table class="table align-items-center">
-          <caption class="p-3 mt-3">
-            <%= link_to "Buat sasaran kinerja baru",'#', class: "btn btn-info w-100" %>
-          </caption>
           <thead class="thead-light">
             <tr>
               <th class="border-bottom" scope="col">No.</th>
-              <th class="border-bottom" scope="col">VISI</th>
-              <th class="border-bottom" scope="col">MISI</th>
-              <th class="border-bottom" scope="col">Tujuan</th>
-              <th class="border-bottom" scope="col">Sasaran Kinerja Output</th>
-              <th class="border-bottom" scope="col">Indikator Kinerja</th>
+              <th class="border-bottom" scope="col">Sasaran Kota</th>
+              <th class="border-bottom" scope="col">Periode</th>
+              <th class="border-bottom" scope="col">Indikator</th>
               <th class="border-bottom" scope="col">Target</th>
               <th class="border-bottom" scope="col">Satuan</th>
+              <th class="border-bottom" scope="col">Tahun</th>
             </tr>
           </thead>
           <tbody id="tempat-row-sasaran">
             <% @sasaran_kota.each.with_index(1) do |sasaran, i| %>
-              <tr>
-                <td class="fw-bolder" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
-                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.visi %></td>
-                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.misi %></td>
-                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.tujuan %></td>
-                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran %></td>
-                <td class="p-0 m-0" colspan="3"></td>
-                <% sasaran.indikator_sasarans.each do |indikator| %>
-                  <tr>
-                    <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.indikator %></td>
-                    <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.target %></td>
-                    <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.satuan %></td>
-                  </tr>
-                <% end %>
-              </tr>
+              <%= render 'sasaran_kota_row', sasaran: sasaran, i: i %>
             <% end %>
           </tbody>
         </table>

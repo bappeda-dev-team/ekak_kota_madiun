@@ -5,8 +5,7 @@ module SidebarItemHelper
       { title: 'Laporan KAK', href: laporan_kak_path, icon: 'fas fa-file', identifier: 'laporan_kak' },
       { title: 'Rincian Belanja', href: rincian_belanja_path, icon: 'fas fa-money-check',
         identifier: 'rincian_belanja' },
-      { title: 'Laporan Renstra', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' },
-      { title: 'Laporan Renja', href: '#', identifier: 'laporan_renja', icon: 'fas fa-receipt' }
+      { title: 'Laporan Renstra', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' }
     ]
   end
 
@@ -108,16 +107,7 @@ module SidebarItemHelper
     ]
   end
 
-  def renstra_items
-    [
-      { title: 'Tujuan', href: '#', identifier: 'renstra/tujuan' },
-      { title: 'Sasaran', href: '#', identifier: 'renstra/tujuan' },
-      { title: 'Program', href: '#', identifier: 'renstra/tujuan' },
-      { title: 'Kegiatan', href: '#', identifier: 'renstra/tujuan' }
-    ]
-  end
-
-  def renja_items
+  def rkpd_items
     [
       { title: 'Program', href: admin_program_path, identifier: 'admin_program' },
       { title: 'Kegiatan', href: admin_kegiatan_path, identifier: 'admin_kegiatan' },
@@ -125,22 +115,35 @@ module SidebarItemHelper
     ]
   end
 
-  def opd_items
+  def renja_items
     [
-      { title: 'Tujuan', href: tujuan_opds_path, identifier: 'opds/tujuan' },
-      { title: 'Sasaran', href: sasaran_opds_path, identifier: 'opds/sasaran' },
-      { title: 'Info OPD', href: opds_path, identifier: 'opds' }
+      { title: 'Ranwal', href: renja_ranwal_path, identifier: 'renja/ranwal' },
+      { title: 'Rankir', href: renja_rankir_path, identifier: 'renja/rankir' },
+      { title: 'Penetapan', href: renja_penetapan_path, identifier: 'renja/penetapan' }
     ]
   end
 
   def kota_items
     [
+      { title: 'Isu Strategis Kota', href: isu_strategis_kota_path,
+        identifier: 'isu_strategis_kota' },
       { title: 'Tujuan Kota', href: tujuan_kota_path,
         identifier: 'tujuan_kota' },
+      { title: 'Strategi Kota', href: strategi_kota_path,
+        identifier: 'strategi_kota' },
       { title: 'Sasaran Kota', href: sasaran_kota_path,
-        identifier: 'sasaran_kota' },
-      { title: 'Crosscutting Kota', href: crosscutting_kota_path,
-        identifier: 'crosscutting_kota' }
+        identifier: 'sasaran_kota' }
+    ]
+  end
+
+  def opd_items
+    [
+      { title: 'Isu Strategis OPD', href: isu_strategis_opds_path, identifier: 'isu_opd' },
+      { title: 'Tujuan OPD', href: tujuan_opds_path, identifier: 'opds/tujuan' },
+      { title: 'Strategi OPD', href: strategi_opds_path, identifier: 'strategi_opds' },
+      { title: 'Sasaran OPD', href: sasaran_opds_path, identifier: 'opds/sasaran' },
+      { title: 'Pohon Kinerja OPD', href: pohon_kinerja_opds_path, identifier: 'opds/pohon_kinerja' },
+      { title: 'Info OPD', href: info_opds_path, identifier: 'opds/info' }
     ]
   end
 
@@ -184,15 +187,15 @@ module SidebarItemHelper
   end
 
   def collapsed_item_renja
-    collapse_class('(\brenja/tujuan|\brenja/sasaran|\badmin_program|\badmin_kegiatan|\badmin_sub_kegiatan)')
+    collapse_class('(\brenja/ranwal|\brenja/rankir|\brenja/penetapan)')
   end
 
   def collapsed_item_opd
-    collapse_class('(\bopds/tujuan|\bopds/sasaran|\bopds)')
+    collapse_class('(\bopds/tujuan|\bopds/sasaran|\bopds/pohon_kinerja|\bopds/info|\bstrategi_opds)')
   end
 
   def collapsed_item_kota
-    collapse_class('(\btujuan_kota|\bsasaran_kota|\bcrosscutting_kota)')
+    collapse_class('(\btujuan_kota|\bisu_strategis_kota|\bsasaran_kota|\bstrategi_kota)')
   end
 
   def collapsed_item_gender

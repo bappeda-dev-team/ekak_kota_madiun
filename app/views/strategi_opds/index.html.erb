@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item">OPD</li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to "Strategi OPD", strategi_opds_path %></li>
+      </ol>
+    </nav>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Strategi OPD <%= @tahun %></h2>
+          </div>
+          <%= render "shared/get_tahun_filter", action_url: strategi_opds_path %>
+        </div>
+        <div class="col mt-3">
+          <%= link_to new_strategi_opd_path, class: 'btn btn-sm btn-info text-white' do %>
+            <span>Buat Strategi OPD</span>
+          <% end %>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center">
+          <thead class="thead-light">
+            <tr>
+              <th class="border-bottom" scope="col">No.</th>
+              <th class="border-bottom" scope="col">Strategi</th>
+              <th class="border-bottom" scope="col">Sasaran OPD</th>
+              <th class="border-bottom" scope="col">Isu Strategis OPD</th>
+              <th class="border-bottom" scope="col">Tahun</th>
+              <th class="border-bottom text-center" scope="col">OPD</th>
+              <th class="border-bottom text-center" scope="col">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @strategi_opds.order(:tahun).each.with_index(1) do |strategi_opd, i| %>
+              <%= render 'strategi_opd_row', strategi_opd: strategi_opd, i: i %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,2 @@
+module IsuStrategisOpdsHelper
+end

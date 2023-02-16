@@ -1,0 +1,18 @@
+<tr>
+  <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
+  <td class="fw-bolder text-gray-500"><%= strategi_kotum.strategi %></td>
+  <td class="fw-bolder text-gray-500"><%= strategi_kotum.sasaran_kota_id %></td>
+  <td class="fw-bolder text-gray-500"><%= strategi_kotum.isu_strategis_kota_id %></td>
+  <td class="fw-bolder text-gray-500"><%= strategi_kotum.tahun %></td>
+  <td class="fw-bolder text-gray-500">
+    <%= link_to edit_strategi_kotum_path(strategi_kotum),
+        class: "m-3" do %>
+          <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+    <% end %>
+    <%= link_to strategi_kotum_path(strategi_kotum), method: :delete,
+      data: { confirm_swal: "Hapus #{strategi_kotum.strategi} ?"},
+      class: "m-3" do %>
+        <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+    <% end %>
+  </td>
+</tr>

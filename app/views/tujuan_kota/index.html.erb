@@ -7,58 +7,49 @@
             <i class="fas fa-home"></i>
           <% end %>
         </li>
-        <li class="breadcrumb-item active" aria-current="page"><%= link_to tujuan_kota_path %></li>
+        <li class="breadcrumb-item">
+          Kota
+        </li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to "Tujuan Kota", tujuan_kota_path %></li>
       </ol>
     </nav>
     <div class="card border-0 shadow">
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Tujuan Kota</h2>
+            <h2 class="fs-5 fw-bold mb-0">Tujuan Kota <%= @tahun %></h2>
           </div>
-          <div class="col text-end">
-            <%= link_to sync_tujuan_kota_path,
-                        remote: true,
-                        data: { disable_with: 'Memproses....'}, 
-                        class:"btn btn-sm btn-primary" do %>
-              <i class="fas fa-sync me-2"></i>
-              Sync Tujuan Kota
-            <% end %>
-          </div>
+          <%= render "shared/get_tahun_filter", action_url: tujuan_kota_path %>
+        </div>
+        <div class="col mt-3">
+          <%= link_to new_tujuan_kotum_path, class: 'btn btn-sm btn-info text-white' do %>
+            <span>Buat Tujuan Kota Baru</span>
+          <% end %>
+          <%= link_to sync_tujuan_kota_path,
+                      remote: true,
+                      data: { disable_with: 'Memproses....'}, 
+                      class:"btn btn-sm btn-primary" do %>
+            <i class="fas fa-sync me-2"></i>
+            Sync Tujuan Kota
+          <% end %>
         </div>
       </div>
       <div class="table-responsive">
         <table class="table align-items-center">
-          <caption class="p-3 mt-3">
-            <%= link_to "Buat sasaran kinerja baru",'#', class: "btn btn-info w-100" %>
-          </caption>
           <thead class="thead-light">
             <tr>
               <th class="border-bottom" scope="col">No.</th>
-              <th class="border-bottom" scope="col">VISI</th>
-              <th class="border-bottom" scope="col">MISI</th>
-              <th class="border-bottom" scope="col">Tujuan</th>
-              <th class="border-bottom" scope="col">Indikator Kinerja</th>
+              <th class="border-bottom" scope="col">Tujuan Kota</th>
+              <th class="border-bottom" scope="col">Periode</th>
+              <th class="border-bottom" scope="col">Indikator</th>
               <th class="border-bottom" scope="col">Target</th>
               <th class="border-bottom" scope="col">Satuan</th>
+              <th class="border-bottom" scope="col">Tahun</th>
             </tr>
           </thead>
           <tbody id="tempat-row-sasaran">
             <% @tujuan_kota.each.with_index(1) do |tujuan, i| %>
-              <tr>
-                <td class="fw-bolder" scope="row" rowspan="<%= tujuan.indikator_tujuans.count + 1 %>"><%= i %></td>
-                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= tujuan.indikator_tujuans.count + 1 %>"><%= tujuan.visi %></td>
-                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= tujuan.indikator_tujuans.count + 1 %>"><%= tujuan.misi %></td>
-                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= tujuan.indikator_tujuans.count + 1 %>"><%= tujuan.tujuan %></td>
-                <td class="p-0 m-0" colspan="3"></td>
-                <% tujuan.indikator_tujuans.each do |indikator| %>
-                  <tr>
-                    <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.indikator %></td>
-                    <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.target %></td>
-                    <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.satuan %></td>
-                  </tr>
-                <% end %>
-              </tr>
+              <%= render 'tujuan_kota_row', tujuan: tujuan, i: i %>
             <% end %>
           </tbody>
         </table>

@@ -17,7 +17,9 @@ class FilterController < ApplicationController
     end
   end
 
-  def filter_user # FIXME: jika tidak ada bidang pada opd table, user tidak akan tampil
+  # FIXME: refactor me to stimulus base render
+  # FIXME: jika tidak ada bidang pada opd table, user tidak akan tampil
+  def filter_user
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
     @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd })
     if OPD_TABLE.key?(opd.to_sym)
@@ -287,6 +289,51 @@ class FilterController < ApplicationController
       @kode_opd = KODE_OPD_BAGIAN[@nama_opd.to_sym]
     end
     render partial: 'hasil_filter_renstra'
+  end
+
+  def ranwal_renja
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    @program_kegiatans = @opd.program_renstra
+    if OPD_TABLE.key?(@nama_opd.to_sym)
+      @program_kegiatans = ProgramKegiatan.includes(:opd)
+                                          .where(id_sub_unit: KODE_OPD_BAGIAN[@nama_opd.to_sym], tahun: @tahun)
+                                          .uniq(&:kode_program).sort_by(&:kode_program)
+      @kode_opd = KODE_OPD_BAGIAN[@nama_opd.to_sym]
+    end
+    render partial: 'hasil_filter_ranwal_renja'
+  end
+
+  def rankir_renja
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    @program_kegiatans = @opd.program_renstra
+    if OPD_TABLE.key?(@nama_opd.to_sym)
+      @program_kegiatans = ProgramKegiatan.includes(:opd)
+                                          .where(id_sub_unit: KODE_OPD_BAGIAN[@nama_opd.to_sym], tahun: @tahun)
+                                          .uniq(&:kode_program).sort_by(&:kode_program)
+      @kode_opd = KODE_OPD_BAGIAN[@nama_opd.to_sym]
+    end
+    render partial: 'hasil_filter_rankir_renja'
+  end
+
+  def penetapan_renja
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    @program_kegiatans = @opd.program_renstra
+    if OPD_TABLE.key?(@nama_opd.to_sym)
+      @program_kegiatans = ProgramKegiatan.includes(:opd)
+                                          .where(id_sub_unit: KODE_OPD_BAGIAN[@nama_opd.to_sym], tahun: @tahun)
+                                          .uniq(&:kode_program).sort_by(&:kode_program)
+      @kode_opd = KODE_OPD_BAGIAN[@nama_opd.to_sym]
+    end
+    render partial: 'hasil_filter_penetapan_renja'
+  end
+
+  def pohon_kinerja_opd
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    render partial: 'hasil_filter_pohon_kinerja_opd'
   end
 
   # filter tahun yang diaktifkan, dibawah logo E-KAK

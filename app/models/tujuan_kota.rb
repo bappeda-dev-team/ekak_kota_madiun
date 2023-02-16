@@ -20,5 +20,17 @@
 #  index_tujuan_kota_on_id_tujuan  (id_tujuan) UNIQUE
 #
 class TujuanKota < ApplicationRecord
-  has_many :indikator_tujuans, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id_tujuan'
+  has_many :indikator_tujuans, -> { order(:tahun) },
+           class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id_tujuan'
+  has_many :sasaran_kota, foreign_key: 'id_tujuan', primary_key: 'kode_tujuan'
+
+  def tahun_awal_akhir
+    "#{tahun_awal} - #{tahun_akhir}"
+  end
+
+  # need fixing, indikator doubled in indikator_tujuans
+  def indikators
+    indikators = indikator_tujuans.group_by(&:version)
+    indikators[indikators.keys.max]
+  end
 end

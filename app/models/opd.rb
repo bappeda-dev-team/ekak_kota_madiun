@@ -46,6 +46,10 @@ class Opd < ApplicationRecord
     program_kegiatans.programs
   end
 
+  def pagu_program_rankir
+    program_kegiatans.programs.map(&:my_pagu).compact.sum
+  end
+
   def kegiatans_renstra
     ProgramKegiatan.where(kode_opd: kode_opd)
                    .where.not(kode_skpd: [nil, ""])

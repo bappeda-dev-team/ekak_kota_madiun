@@ -1,0 +1,49 @@
+<%= form_with(
+  url: renja_update_rankir_path(@program),
+  local: false,
+  data: { controller: 'form-ajax',
+          action: 'ajax:success->form-ajax#successResponse',
+          form_ajax_modal_param: 'form-laporan-renstra'
+  }) do |form| %>
+  <div class="field">
+  <%= form.label @sub_jenis, class: 'form-label' %>
+  <%= form.text_field :nama,
+    class: 'form-control',
+    readonly: true,
+    value: @nama %>
+  </div>
+  <%= form.hidden_field "renstra[indikator][][tahun]", value: @tahun %>
+  <%= form.hidden_field "renstra[indikator][][kode]", value: @kode %>
+  <%= form.hidden_field "renstra[indikator][][kode_opd]", value: @kode_opd %>
+  <%= form.hidden_field "renstra[indikator][][jenis]", value: @jenis %>
+  <%= form.hidden_field "renstra[indikator][][sub_jenis]", value: @sub_jenis %>
+  <%= form.hidden_field "renstra[indikator][][kode_indikator]", value: @kode_indikator %>
+  <%= form.hidden_field :_kode_indikator, value: @kode_indikator %>
+  <div class="field">
+  <%= form.label "indikator #{@sub_jenis} Tahun #{@tahun}", class: 'form-label' %>
+    <%= form.text_field "renstra[indikator][][indikator]",
+      class: 'form-control',
+      value: @targets[@tahun.to_s]&.[](:indikator) %>
+  </div>
+  <div class="row" %>
+  <div class="field col">
+    <%= form.label "target #{@tahun}", class: 'form-label' %>
+    <%= form.text_field "renstra[indikator][][target]", class: 'form-control', value: @targets[@tahun.to_s]&.[](:target) %>
+  </div>
+  <div class="field col">
+    <%= form.label :satuan, class: 'form-label' %>
+    <%= form.text_field "renstra[indikator][][satuan]", class: 'form-control', value: @targets[@tahun.to_s]&.[](:satuan) %>
+  </div>
+  <div class="field col">
+    <%= form.label :pagu, class: 'form-label' %>
+    <%= form.text_field "renstra[indikator][][pagu]", class: 'form-control', readonly: true, value: "Rp. #{number_with_delimiter(@pagu)}"  %>
+  </div>
+  </div>
+<div class="field">
+  <%= form.label :keterangan, class: 'form-label' %>
+  <%= form.text_field :keterangan,
+    class: 'form-control',
+    value: @keterangan %>
+</div>
+<%= form.submit "Simpan" %>
+<% end %>

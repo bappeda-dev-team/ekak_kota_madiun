@@ -1,0 +1,48 @@
+<%= form_with(model: strategi_opd) do |form| %>
+  <% if strategi_opd.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(strategi_opd.errors.count, "error") %> prohibited this strategi_opd from being saved:</h2>
+
+      <ul>
+        <% strategi_opd.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div class="card">
+  <div class="card-body">
+    <div class="field">
+      <%= form.label :strategi, class: "form-label" %>
+      <%= form.text_field :strategi, class: "form-control" %>
+    </div>
+
+    <div class="field">
+      <%= form.label :sasaran_opd_id, class: "form-label" %>
+      <%= form.text_field :sasaran_opd_id, class: "form-control" %>
+    </div>
+
+    <div class="field">
+      <%= form.label :isu_strategis_opd_id, class: "form-label" %>
+      <%= form.text_field :isu_strategis_opd_id, class: "form-control" %>
+    </div>
+
+    <div class="field">
+      <%= form.label :tahun, class: "form-label" %>
+      <%= form.select :tahun,[2020, 2021, 2022, 2023, 2024],{selected: Date.today.year},
+        { class: 'form-control', data: { controller: 'dropdown' } }%>
+    </div>
+
+    <div class="field">
+      <%= form.label :opd, class: 'form-label' %>
+      <%= form.select :opd_id, Opd.where.not(nama_kepala: nil).collect { |opd| [opd.nama_opd, opd.kode_opd] } ,{include_blank: true},
+        { class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih OPD' } }%>
+    </div>
+
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+  </div>
+</div>
+<% end %>

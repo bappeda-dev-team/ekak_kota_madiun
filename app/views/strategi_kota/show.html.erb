@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Strategi:</strong>
+  <%= @strategi_kotum.strategi %>
+</p>
+
+<p>
+  <strong>Tahun:</strong>
+  <%= @strategi_kotum.tahun %>
+</p>
+
+<p>
+  <strong>Sasaran kota:</strong>
+  <%= @strategi_kotum.sasaran_kota_id %>
+</p>
+
+<p>
+  <strong>Isu strategis kota:</strong>
+  <%= @strategi_kotum.isu_strategis_kota_id %>
+</p>
+
+<%= link_to 'Edit', edit_strategi_kotum_path(@strategi_kotum) %> |
+<%= link_to 'Back', strategi_kota_path %>
