@@ -12,8 +12,6 @@ class OpdsController < ApplicationController
     end
   end
 
-  def pohon_kinerja; end
-
   def all_opd
     @opds = Opd.all.includes([:lembaga])
   end
@@ -59,6 +57,8 @@ class OpdsController < ApplicationController
   def tujuan; end
 
   def sasaran; end
+
+  def kotak_usulan; end
 
   private
 

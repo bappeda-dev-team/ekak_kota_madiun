@@ -17,7 +17,7 @@
         <%= form.label :tujuan_kota, class: 'form-label' %>
         <%= form.select :id_tujuan, tujuan_kota.collect {|tk| [ tk.tujuan, tk.id] },{ include_blank: true, required: true },
           { class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih Tujuan Kota' } }%>
-      </div>
+       </div>
 
       <div class="field">
         <%= form.label :sasaran, class: 'form-label' %>

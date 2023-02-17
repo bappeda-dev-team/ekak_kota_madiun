@@ -30,6 +30,17 @@
       </div>
 
       <div class="field">
+        <%= form.label :sasaran_kota, class: "form-label" %>
+        <%= form.select :sasaran_kota_id, SasaranKotum.all.collect{ |sas| [sas.sasaran, sas.kode_sasaran] },
+          { include_blank: true },
+          data: {
+            controller: 'dropdown',
+            placeholder: 'Pilih Sasaran Kota'
+          },
+          class: "form-control" %>
+      </div>
+
+      <div class="field">
         <%= form.label :tahun, class: 'form-label' %>
         <%= form.select :tahun,[2020, 2021, 2022, 2023, 2024],{selected: Date.today.year},
           { class: 'form-control', data: { controller: 'dropdown' } }%>

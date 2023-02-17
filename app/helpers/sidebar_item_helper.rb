@@ -50,7 +50,6 @@ module SidebarItemHelper
     [
       { title: 'ASN', href: adminusers_path, icon: 'fas fa-user-check', identifier: 'adminusers' },
       { title: 'Sasaran ASN', href: laporan_sasarans_path, identifier: 'laporan_sasaran', icon: 'fas fa-bullseye' },
-      { title: 'Sasaran Pohon Kinerja', href: sasarans_path, identifier: 'sasarans', icon: 'fab fa-pagelines' },
       { title: 'Isu dan Permasalahan', href: isu_dan_permasalahans_path, icon: 'fas fa-map-signs',
         identifier: 'isu_dan_permasalahan' }
     ]
@@ -138,8 +137,16 @@ module SidebarItemHelper
       { title: 'Isu Strategis OPD', href: isu_strategis_opds_path, identifier: 'isu_strategis_opds' },
       { title: 'Strategi OPD', href: strategi_opds_path, identifier: 'strategi_opds' },
       { title: 'Sasaran OPD', href: sasaran_opds_path, identifier: 'opds/sasaran' },
-      { title: 'Pohon Kinerja OPD', href: pohon_kinerja_opds_path, identifier: 'opds/pohon_kinerja' },
+      { title: 'Kotak Usulan OPD', href: kotak_usulan_opds_path, identifier: 'opds/kotak_usulan' },
       { title: 'Info OPD', href: info_opds_path, identifier: 'opds/info' }
+    ]
+  end
+
+  def pohon_kinerja_items
+    [
+      { title: 'Kota', href: pohon_kinerja_kota_path, identifier: 'pohon_kinerja/kota' },
+      { title: 'OPD', href: pohon_kinerja_opd_path, identifier: 'pohon_kinerja/opd' },
+      { title: 'ASN', href: pohon_kinerja_asn_path, identifier: 'pohon_kinerja/asn' },
     ]
   end
 
@@ -187,7 +194,7 @@ module SidebarItemHelper
   end
 
   def collapsed_item_opd
-    collapse_class('(\bopds/tujuan|\bopds/sasaran|\bopds/pohon_kinerja|\bopds/info|\bstrategi_opds|\bisu_strategis_opds)')
+    collapse_class('(\bopds/tujuan|\bopds/sasaran|\bopds/kotak_usulan|\bopds/info|\bstrategi_opds|\bisu_strategis_opds)')
   end
 
   def collapsed_item_kota
@@ -196,6 +203,10 @@ module SidebarItemHelper
 
   def collapsed_item_gender
     collapse_class('(\bgap_gender|\bgender)')
+  end
+
+  def collapsed_item_pohon_kinerja
+    collapse_class('(\bpohon_kinerja/kota|\bpohon_kinerja/opd|\bpohon_kinerja/asn)')
   end
 
   def collapse_class(identifier)

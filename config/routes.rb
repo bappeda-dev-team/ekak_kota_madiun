@@ -9,6 +9,9 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  get 'pohon_kinerja/kota'
+  get 'pohon_kinerja/opd'
+  get 'pohon_kinerja/asn'
   resources :strategi_opds
   resources :strategi_kota do
     member do
@@ -193,7 +196,7 @@ Rails.application.routes.draw do
       get :tujuan
       get :sasaran
       get :info
-      get :pohon_kinerja
+      get :kotak_usulan
     end
   end
   resources :program_kegiatans do

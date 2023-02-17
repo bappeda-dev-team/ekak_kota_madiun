@@ -65,7 +65,7 @@ class StrategiKotaController < ApplicationController
     @opd = Opd.find(params[:opd])
     respond_to do |format|
       if Usulan.create(usulanable_id: @strategi_kota.id, usulanable_type: 'StrategiKotum',
-                       opd_id: @opd.id, keterangan: @opd&.kode_sub_skpd)
+                       opd_id: @opd.id, keterangan: @opd.nama_opd)
         format.html { redirect_to strategi_kota_path, success: "dibagikan ke #{@opd.nama_opd}" }
       else
         format.html { redirect_to strategi_kota_path, status: :unprocessable_entity, alert: 'terjadi kesalahan' }
