@@ -20,6 +20,8 @@ import "vanilla-nested";
 import 'simplebar';
 import 'simplebar/dist/simplebar.css';
 
+// pokin
+import '../javascript/d3/index.js'
 // images
 require.context("../images", true);
 
