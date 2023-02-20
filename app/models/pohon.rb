@@ -5,6 +5,7 @@
 #  id             :bigint           not null, primary key
 #  keterangan     :string
 #  pohonable_type :string
+#  role           :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  opd_id         :bigint

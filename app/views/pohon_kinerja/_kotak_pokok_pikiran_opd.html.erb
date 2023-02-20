@@ -22,25 +22,26 @@
           </tr>
         </thead>
         <tbody>
+          <% Opd.find(136).pokpir_opd.each.with_index(1) do |pokpir, no| %>
             <tr>
-              <td class="text-wrap align-middle">1</td>
-              <td class="text-wrap align-middle">Usulan Musren A</td>
-              <td class="text-wrap align-middle">Kecamatan Taman</td>
-              <td class="text-wrap align-middle">Masalah ABCD</td>
-              <td class="text-wrap align-middle">2023</td>
+              <td class="text-wrap align-middle"><%= no %></td>
+              <td class="text-wrap align-middle"><%= pokpir.usulan %></td>
+              <td class="text-wrap align-middle"><%= pokpir.alamat %></td>
+              <td class="text-wrap align-middle"><%= pokpir.uraian %></td>
+              <td class="text-wrap align-middle"><%= pokpir.tahun %></td>
               <td class="text-center align-middle">
-                <%= link_to '#',
-                  remote: true, class: 'btn btn-outline-gray-900',
-                  data: { controller: 'form-modal',
-                          action: 'form-modal#appendForm',
-                          form_modal_location_param: 'form-bagikan-strategi-kota-body',
-                          bs_target: '#form-bagikan-strategi-kota',
-                          bs_toggle: 'modal' } do %>
+                <%= link_to buat_strategi_opd_path(
+                  @opd.id,
+                  jenis_isu: pokpir.class.name,
+                  id_isu: pokpir.id,
+                  usulan_isu: pokpir.usulan
+                ), class: 'btn btn-outline-gray-900' do %>
                     <span class="fas fa-share"></span>
                     <span>Pilih Usulan</span>
                 <% end %>
               </td>
             </tr>
+            <% end %>
         </tbody>
       </table>
     </div>

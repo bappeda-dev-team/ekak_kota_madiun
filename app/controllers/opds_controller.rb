@@ -87,9 +87,15 @@ class OpdsController < ApplicationController
     @strategi = params[:strategi]
     @tahun = params[:tahun]
     respond_to do |format|
-      Strategi.create(strategi: @strategi, tahun: @tahun)
-      if Pohon.create(pohonable_id: @id_isu.to_i, pohonable_type: @jenis_isu,
-                      opd_id: @opd.id, keterangan: @usulan_isu)
+      pohon = Pohon.where(pohonable_id: @id_isu.to_i, pohonable_type: @jenis_isu, opd_id: @opd.id)
+      if pohon.any?
+        Strategi.create(strategi: @strategi, tahun: @tahun, pohon_id: pohon.first.id)
+      else
+        pohon = Pohon.create(pohonable_id: @id_isu.to_i, pohonable_type: @jenis_isu,
+                             opd_id: @opd.id, keterangan: @usulan_isu)
+        Strategi.create(strategi: @strategi, tahun: @tahun, pohon_id: pohon.id)
+      end
+      if pohon
         format.html { redirect_to kotak_usulan_opds_path, success: "Strategi dibuat" }
       else
         format.html { render :buat_strategi, error: 'Terjadi kesalahan' }

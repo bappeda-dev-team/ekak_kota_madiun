@@ -100,4 +100,12 @@ class Opd < ApplicationRecord
   def jabatan_kepala_tanpa_opd
     jabatan_kepala.gsub!(/(?<=kepala).+/i, '')
   end
+
+  def musrenbang_opd
+    Musrenbang.where(opd: id_opd_skp)
+  end
+
+  def pokpir_opd
+    Pokpir.where(opd: id_opd_skp)
+  end
 end

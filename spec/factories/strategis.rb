@@ -4,6 +4,7 @@
 #
 #  id              :bigint           not null, primary key
 #  nip_asn         :string
+#  role            :string
 #  strategi        :string
 #  tahun           :string
 #  created_at      :datetime         not null

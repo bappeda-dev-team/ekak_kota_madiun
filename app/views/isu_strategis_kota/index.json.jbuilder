@@ -1,6 +1,6 @@
 json.results do
   json.id 0
-  json.name "Pohon Kinerja"
+  json.name "Kota"
   json.type "root"
   json.description "Kota Madiun"
   json.tahun @tahun

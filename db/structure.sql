@@ -1596,7 +1596,8 @@ CREATE TABLE public.pohons (
     updated_at timestamp(6) without time zone NOT NULL,
     opd_id bigint,
     user_id bigint,
-    strategi_id bigint
+    strategi_id bigint,
+    role character varying
 );
 
 
@@ -2282,7 +2283,8 @@ CREATE TABLE public.strategis (
     nip_asn character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    pohon_id bigint
+    pohon_id bigint,
+    role character varying
 );
 
 
@@ -4467,6 +4469,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230220005851'),
 ('20230220010119'),
 ('20230220024159'),
-('20230220025449');
+('20230220025449'),
+('20230220041153'),
+('20230220041911');
 
 
