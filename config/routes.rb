@@ -198,6 +198,10 @@ Rails.application.routes.draw do
       get :info
       get :kotak_usulan
     end
+    member do
+      get :buat_strategi
+      post :simpan_strategi
+    end
   end
   resources :program_kegiatans do
     member do

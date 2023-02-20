@@ -21,4 +21,7 @@ class Usulan < ApplicationRecord
   belongs_to :sasaran, optional: true
   belongs_to :usulanable, polymorphic: true
   belongs_to :opd, optional: true
+  has_many :pohons, lambda {
+                      where(usulanable_type: %w[StrategiKotum Musrenbang Pokpir])
+                    }, as: :pohonable, dependent: :destroy
 end

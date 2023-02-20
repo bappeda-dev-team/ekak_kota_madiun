@@ -28,7 +28,18 @@
               <td class="text-wrap align-middle">Kecamatan Taman</td>
               <td class="text-wrap align-middle">Masalah ABCD</td>
               <td class="text-wrap align-middle">2023</td>
-              <td class="text-center align-middle"><%= button_to 'Terima', '#', class: 'btn btn-success' %></td>
+              <td class="text-center align-middle">
+                <%= link_to '#',
+                  remote: true, class: 'btn btn-outline-gray-900',
+                  data: { controller: 'form-modal',
+                          action: 'form-modal#appendForm',
+                          form_modal_location_param: 'form-bagikan-strategi-kota-body',
+                          bs_target: '#form-bagikan-strategi-kota',
+                          bs_toggle: 'modal' } do %>
+                    <span class="fas fa-share"></span>
+                    <span>Pilih Usulan</span>
+                <% end %>
+              </td>
             </tr>
         </tbody>
       </table>

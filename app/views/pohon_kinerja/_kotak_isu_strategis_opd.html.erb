@@ -20,12 +20,24 @@
           </tr>
         </thead>
         <tbody>
+          <% Opd.find(136).isu_strategis_opds.each.with_index(1) do |isu_strategis, no| %>
             <tr>
-              <td class="text-wrap align-middle">1</td>
-              <td class="text-wrap align-middle">Isu Strategis A</td>
-              <td class="text-wrap align-middle">2023</td>
-              <td class="text-center align-middle"><%= button_to 'Terima', '#', class: 'btn btn-success' %></td>
+              <td class="text-wrap align-middle"><%= no %></td>
+              <td class="text-wrap align-middle"><%= isu_strategis.isu_strategis %></td>
+              <td class="text-wrap align-middle"><%= isu_strategis.tahun %></td>
+              <td class="text-center align-middle">
+                <%= link_to buat_strategi_opd_path(
+                  @opd.id,
+                  jenis_isu: isu_strategis.class.name,
+                  id_isu: isu_strategis.id,
+                  usulan_isu: isu_strategis.isu_strategis
+                ), class: 'btn btn-outline-gray-900' do %>
+                    <span class="fas fa-share"></span>
+                    <span>Pilih Usulan</span>
+                <% end %>
+              </td>
             </tr>
+          <% end %>
         </tbody>
       </table>
     </div>

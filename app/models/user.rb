@@ -41,6 +41,7 @@ class User < ApplicationRecord
   has_many :kaks
   has_many :sasarans, dependent: :destroy, foreign_key: 'nip_asn', primary_key: 'nik'
   # has_many :program_kegiatans, through: :sasarans
+  has_many :pohons, dependent: :destroy
 
   scope :non_admin, -> { without_role(:admin) }
   scope :aktif, -> { without_role([:non_aktif]) }

@@ -37,13 +37,12 @@
               <td class="text-wrap align-middle">%</td>
               <td class="text-wrap align-middle">2023</td>
               <td class="text-center align-middle">
-                <%= link_to '#',
-                  remote: true, class: 'btn btn-outline-gray-900',
-                  data: { controller: 'form-modal',
-                          action: 'form-modal#appendForm',
-                          form_modal_location_param: 'form-bagikan-strategi-kota-body',
-                          bs_target: '#form-bagikan-strategi-kota',
-                          bs_toggle: 'modal' } do %>
+                <%= link_to buat_strategi_opd_path(
+                  @opd.id,
+                  jenis_isu: usulan.usulanable_type,
+                  id_isu: usulan.usulanable_id,
+                  usulan_isu: strategi_kota.isu_strategis_kotum.isu_strategis
+                ), class: 'btn btn-outline-gray-900' do %>
                     <span class="fas fa-share"></span>
                     <span>Pilih Usulan</span>
                 <% end %>

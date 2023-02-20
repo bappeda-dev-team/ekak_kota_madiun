@@ -44,6 +44,8 @@ class Opd < ApplicationRecord
 
   # kotak usulan opd
   has_many :usulans, dependent: :destroy
+  has_many :pohons, dependent: :destroy
+  has_many :isu_strategis_opds, foreign_key: 'kode_opd', primary_key: 'kode_opd'
 
   scope :opd_resmi, -> { where.not(kode_unik_opd: nil) }
 

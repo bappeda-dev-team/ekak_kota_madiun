@@ -1584,6 +1584,42 @@ ALTER SEQUENCE public.permasalahans_id_seq OWNED BY public.permasalahans.id;
 
 
 --
+-- Name: pohons; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.pohons (
+    id bigint NOT NULL,
+    keterangan character varying,
+    pohonable_type character varying,
+    pohonable_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    opd_id bigint,
+    user_id bigint,
+    strategi_id bigint
+);
+
+
+--
+-- Name: pohons_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.pohons_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: pohons_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.pohons_id_seq OWNED BY public.pohons.id;
+
+
+--
 -- Name: pokpirs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2245,7 +2281,8 @@ CREATE TABLE public.strategis (
     strategi_ref_id character varying,
     nip_asn character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    pohon_id bigint
 );
 
 
@@ -2894,6 +2931,13 @@ ALTER TABLE ONLY public.permasalahans ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
+-- Name: pohons id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pohons ALTER COLUMN id SET DEFAULT nextval('public.pohons_id_seq'::regclass);
+
+
+--
 -- Name: pokpirs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3391,6 +3435,14 @@ ALTER TABLE ONLY public.permasalahans
 
 
 --
+-- Name: pohons pohons_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pohons
+    ADD CONSTRAINT pohons_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: pokpirs pokpirs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3849,6 +3901,34 @@ CREATE INDEX index_perhitungans_on_anggaran_id ON public.perhitungans USING btre
 
 
 --
+-- Name: index_pohons_on_opd_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_pohons_on_opd_id ON public.pohons USING btree (opd_id);
+
+
+--
+-- Name: index_pohons_on_pohonable; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_pohons_on_pohonable ON public.pohons USING btree (pohonable_type, pohonable_id);
+
+
+--
+-- Name: index_pohons_on_strategi_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_pohons_on_strategi_id ON public.pohons USING btree (strategi_id);
+
+
+--
+-- Name: index_pohons_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_pohons_on_user_id ON public.pohons USING btree (user_id);
+
+
+--
 -- Name: index_pokpirs_on_id_unik; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3930,6 +4010,13 @@ CREATE UNIQUE INDEX index_sasaran_kota_on_id_sasaran ON public.sasaran_kota USIN
 --
 
 CREATE UNIQUE INDEX index_sasarans_on_id_rencana ON public.sasarans USING btree (id_rencana);
+
+
+--
+-- Name: index_strategis_on_pohon_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_strategis_on_pohon_id ON public.strategis USING btree (pohon_id);
 
 
 --
@@ -4375,6 +4462,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230213061807'),
 ('20230213062257'),
 ('20230213082516'),
-('20230216071709');
+('20230216071709'),
+('20230220005015'),
+('20230220005851'),
+('20230220010119'),
+('20230220024159'),
+('20230220025449');
 
 

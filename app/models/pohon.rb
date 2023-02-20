@@ -1,0 +1,27 @@
+# == Schema Information
+#
+# Table name: pohons
+#
+#  id             :bigint           not null, primary key
+#  keterangan     :string
+#  pohonable_type :string
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  opd_id         :bigint
+#  pohonable_id   :bigint
+#  strategi_id    :bigint
+#  user_id        :bigint
+#
+# Indexes
+#
+#  index_pohons_on_opd_id       (opd_id)
+#  index_pohons_on_pohonable    (pohonable_type,pohonable_id)
+#  index_pohons_on_strategi_id  (strategi_id)
+#  index_pohons_on_user_id      (user_id)
+#
+class Pohon < ApplicationRecord
+  belongs_to :pohonable, polymorphic: true
+  belongs_to :opd, optional: true
+  belongs_to :user, optional: true
+  has_many :strategis
+end
