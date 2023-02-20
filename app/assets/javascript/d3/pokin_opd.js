@@ -10,7 +10,7 @@ function init() {
                         .then(response => response.json())
                         .then((data) => {
                                 const isu_kota = data['results']
-                                new mitchTree.boxedTree()
+                                const treePlugin = new mitchTree.boxedTree()
                                         .setData(isu_kota)
                                         .setElement(targetEl)
                                         .setIdAccessor(function (data) {
@@ -26,6 +26,11 @@ function init() {
                                                 return data.name;
                                         })
                                         .initialize();
+                                var nodes = treePlugin.getNodes();
+                                nodes.forEach(function (node, index, arr) {
+                                        treePlugin.expand(node);
+                                });
+                                treePlugin.update(treePlugin.getRoot());
                         })
         }
 }

@@ -27,8 +27,8 @@ json.results do
             json.description operational.strategi
             json.children operational.strategi_staffs do |staff|
               json.id "#{staff.id}_staff"
-              json.name "Supporting"
-              json.type "supporting"
+              json.name "Operational Objective 2"
+              json.type "operational_2"
               json.description staff.strategi
             end
           end
