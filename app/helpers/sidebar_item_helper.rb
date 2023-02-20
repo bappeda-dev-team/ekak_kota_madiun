@@ -145,8 +145,7 @@ module SidebarItemHelper
   def pohon_kinerja_items
     [
       { title: 'Kota', href: pohon_kinerja_kota_path, identifier: 'pohon_kinerja/kota' },
-      { title: 'OPD', href: pohon_kinerja_opd_path, identifier: 'pohon_kinerja/opd' },
-      { title: 'ASN', href: pohon_kinerja_asn_path, identifier: 'pohon_kinerja/asn' },
+      { title: 'OPD', href: pohon_kinerja_opd_path, identifier: 'pohon_kinerja/opd' }
     ]
   end
 

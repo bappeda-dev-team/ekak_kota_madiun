@@ -21,7 +21,8 @@ import 'simplebar';
 import 'simplebar/dist/simplebar.css';
 
 // pokin
-import '../javascript/d3/index.js'
+import '../javascript/d3/index'
+import '../javascript/d3/pokin_opd'
 // images
 require.context("../images", true);
 

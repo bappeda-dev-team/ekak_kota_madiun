@@ -58,7 +58,13 @@ class OpdsController < ApplicationController
 
   def sasaran; end
 
-  def kotak_usulan; end
+  def kotak_usulan
+    # TODO: change opd id
+    @opd = Opd.find(136)
+    @nama_opd = @opd.nama_opd
+    @tahun = 2023
+    @kotak_usulan = @opd.usulans
+  end
 
   private
 
