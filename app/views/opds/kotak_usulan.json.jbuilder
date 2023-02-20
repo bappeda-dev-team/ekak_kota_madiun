@@ -19,17 +19,17 @@ json.results do
           json.id "#{tactical.id}_tactical"
           json.name "Tactical Objective"
           json.type "tactical_objective"
-          json.description tactical.strategi
+          json.description tactical.strategi || "dibagikan ke #{tactical.nip_asn}"
           json.children tactical.strategi_eselon_empats do |operational|
             json.id "#{operational.id}_operational"
             json.name "Operational Objective"
             json.type "operational_objective"
-            json.description operational.strategi
+            json.description operational.strategi || "dibagikan ke #{operational.nip_asn}"
             json.children operational.strategi_staffs do |staff|
               json.id "#{staff.id}_staff"
               json.name "Operational Objective 2"
               json.type "operational_2"
-              json.description staff.strategi
+              json.description staff.strategi || "dibagikan ke #{staff.nip_asn}"
             end
           end
         end

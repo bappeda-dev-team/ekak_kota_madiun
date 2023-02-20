@@ -51,7 +51,8 @@ class User < ApplicationRecord
                              asn_aktif.includes(:sasarans, :program_kegiatans).merge(Sasaran.sudah_lengkap)
                            } # depreceated
   scope :opd_by_role, ->(kode_opd, role) { where(kode_opd: kode_opd).with_role(role.to_sym) }
-
+  scope :eselon2, -> { with_role(:eselon_2) }
+  scope :eselon3, -> { with_role(:eselon_3) }
   # after_update :update_sasaran
   after_create :assign_default_role
 
@@ -192,5 +193,12 @@ class User < ApplicationRecord
 
   def sasaran_asn_sync_skp(tahun: nil)
     sasarans.dengan_rincian.where("sasarans.tahun ILIKE ?", tahun)
+  end
+
+  def eselon_user
+    eselon = roles.where("roles.name ilike ?", "%eselon%").first
+    return unless eselon.nil?
+
+    roles.where("roles.name ilike ?", "%staff%").first
   end
 end

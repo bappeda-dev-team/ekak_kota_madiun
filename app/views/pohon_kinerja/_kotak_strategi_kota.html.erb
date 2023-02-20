@@ -41,7 +41,9 @@
                   @opd.id,
                   jenis_isu: usulan.usulanable_type,
                   id_isu: usulan.usulanable_id,
-                  usulan_isu: strategi_kota.isu_strategis_kotum.isu_strategis
+                  usulan_isu: strategi_kota.isu_strategis_kotum.isu_strategis,
+                  role: "eselon_2",
+                  nip: @opd.nip_kepala
                 ), class: 'btn btn-outline-gray-900' do %>
                     <span class="fas fa-share"></span>
                     <span>Pilih Usulan</span>

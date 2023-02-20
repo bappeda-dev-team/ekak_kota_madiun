@@ -9,9 +9,13 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
-  get 'pohon_kinerja/kota'
-  get 'pohon_kinerja/opd'
-  get 'pohon_kinerja/asn'
+  resources :pohon_kinerja do
+    collection do
+      get :kota
+      get :opd
+      get :asn
+    end
+  end
   resources :strategi_opds
   resources :strategi_kota do
     member do
@@ -19,7 +23,12 @@ Rails.application.routes.draw do
       post :pilih_opd
     end
   end
-  resources :strategis
+  resources :strategis do
+    member do
+      get :bagikan_pokin
+      post :pilih_asn
+    end
+  end
   resources :isu_strategis_opds
   resources :isu_strategis_kota
   # get "/gender", to: "genders#gender"

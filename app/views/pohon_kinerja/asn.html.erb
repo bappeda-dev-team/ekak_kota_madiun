@@ -1,2 +1,37 @@
-<h1>PohonKinerja#asn</h1>
-<p>Find me in app/views/pohon_kinerja/asn.html.erb</p>
+<div class="row">
+  <div class="col-12" data-controller="filter-render">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Pohon Kinerja</li>
+      </ol>
+    </nav>
+    <div class="card border-0 shadow" id="kotak_usulan" data-filter-render-target="results">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Pohon Kinerja</h2>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div id="pokin-opd" class="pohon-kinerja"></div>
+      </div>
+      <hr/>
+      <div class="card-body">
+        <% if @eselon.name == "eselon_3" %>
+          <%= render 'pohon_kinerja/kotak_usulan_asn_eselon_3', role: @eselon, role_bawahan: "eselon_4" %>
+        <% elsif @eselon.name == "eselon_4" %>
+          <%= render 'pohon_kinerja/kotak_usulan_asn_eselon_4', role: @eselon, role_bawahan: "staff" %>
+        <% else %>
+          <%= render 'pohon_kinerja/kotak_usulan_asn_staff', role: @eselon, role_bawahan: "" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render 'shared/modal_template', modal_name: 'bagikan-strategi-pokin' %>

@@ -19,6 +19,10 @@
 #
 class Strategi < ApplicationRecord
   belongs_to :pohon, dependent: :destroy
+
+  belongs_to :strategi_atasan, class_name: "Strategi",
+                               foreign_key: "strategi_ref_id", optional: true
+
   belongs_to :strategi_eselon_dua, lambda {
     where(role: "eselon_2")
   }, class_name: "Strategi",

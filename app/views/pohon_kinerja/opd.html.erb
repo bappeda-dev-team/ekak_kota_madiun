@@ -1,2 +1,32 @@
-<h1>Pohon Kinerja Perangkat Daerah #nama_perangkat_daerah</h1>
-<div id="pokin-opd" class="mb-5 pohon-kinerja"></div>
+<div class="row">
+  <div class="col-12" data-controller="filter-render">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item">OPD</li>
+        <li class="breadcrumb-item active" aria-current="page">Pohon Kinerja OPD</li>
+      </ol>
+    </nav>
+    <div class="card border-0 shadow" id="kotak_usulan" data-filter-render-target="results">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Pohon Kinerja OPD</h2>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div id="pokin-opd" class="pohon-kinerja"></div>
+      </div>
+      <hr/>
+      <div class="card-body">
+        <%= render 'pohon_kinerja/kotak_usulan_asn', role: "eselon_2", role_bawahan: "eselon_3" %>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render 'shared/modal_template', modal_name: 'bagikan-strategi-pokin' %>

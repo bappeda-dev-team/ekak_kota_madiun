@@ -24,5 +24,5 @@ class Pohon < ApplicationRecord
   belongs_to :pohonable, polymorphic: true
   belongs_to :opd, optional: true
   belongs_to :user, optional: true
-  has_many :strategis
+  has_many :strategis, -> { where(strategis: { role: "eselon_2" }) }
 end

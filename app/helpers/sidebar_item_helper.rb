@@ -1,6 +1,7 @@
 module SidebarItemHelper
   def asn_sidebar_items
     [
+      { title: 'Pohon Kinerja', href: asn_pohon_kinerja_index_path, icon: 'fas fa-tree', identifier: 'pohon_kinerja/asn' },
       { title: 'Laporan Atasan', href: atasan_laporans_path, icon: 'fas fa-chart-line', identifier: 'atasan' },
       { title: 'Laporan KAK', href: laporan_kak_path, icon: 'fas fa-file', identifier: 'laporan_kak' },
       { title: 'Rincian Belanja', href: rincian_belanja_path, icon: 'fas fa-money-check',
@@ -144,8 +145,8 @@ module SidebarItemHelper
 
   def pohon_kinerja_items
     [
-      { title: 'Kota', href: pohon_kinerja_kota_path, identifier: 'pohon_kinerja/kota' },
-      { title: 'OPD', href: pohon_kinerja_opd_path, identifier: 'pohon_kinerja/opd' }
+      { title: 'Kota', href: kota_pohon_kinerja_index_path, identifier: 'pohon_kinerja/kota' },
+      { title: 'OPD', href: opd_pohon_kinerja_index_path, identifier: 'pohon_kinerja/opd' }
     ]
   end
 
