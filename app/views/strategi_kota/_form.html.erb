@@ -14,18 +14,30 @@
   <div class="card">
     <div class="card-body">
       <div class="field">
+        <%= form.label :isu_strategis_kota_id, class: "form-label" %>
+        <%= form.select :isu_strategis_kota_id, IsuStrategisKotum.all.collect{ |isu| ["#{isu.isu_strategis} - Tahun #{isu.tahun}", isu.id] },
+          { include_blank: true },
+          data: {
+            controller: 'dropdown',
+            placeholder: 'Isu Strategis Kota'
+          },
+          class: "form-control" %>
+      </div>
+
+      <div class="field">
         <%= form.label :strategi, class: "form-label" %>
         <%= form.text_field :strategi, class: "form-control" %>
       </div>
 
       <div class="field">
-        <%= form.label :sasaran_kota_id, class: "form-label" %>
-        <%= form.text_field :sasaran_kota_id, class: "form-control" %>
-      </div>
-
-      <div class="field">
-        <%= form.label :isu_strategis_kota_id, class: "form-label" %>
-        <%= form.text_field :isu_strategis_kota_id, class: "form-control" %>
+        <%= form.label :sasaran_kota, class: "form-label" %>
+        <%= form.select :sasaran_kota_id, SasaranKotum.all.collect{ |sas| [sas.sasaran, sas.kode_sasaran] },
+          { include_blank: true },
+          data: {
+            controller: 'dropdown',
+            placeholder: 'Pilih Sasaran Kota'
+          },
+          class: "form-control" %>
       </div>
 
       <div class="field">

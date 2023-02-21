@@ -1,0 +1,30 @@
+<%= form_with(
+  url: pilih_asn_strategi_path(@strategi),
+  method: :post,
+  local: false,
+  data: { controller: 'form-ajax',
+          action: 'ajax:success->form-ajax#successResponse',
+          form_ajax_modal_param: 'form-bagikan-strategi-pokin'
+  }) do |form| %>
+  <div class="field">
+    <%= form.label :strategic_objective, class: "form-label" %>
+    <%= form.text_field :strategic_objective, class: "form-control", readonly: true, value: @strategi.strategi %>
+    <%= form.hidden_field :role, readonly: true, value: @role %>
+    <%= form.hidden_field :pohon_id, readonly: true, value: @pohon_id %>
+  </div>
+  <div class="field">
+    <%= form.label :asn, class: "form-label" %>
+    <%= form.select :nip, @bawahans.collect{ |asn| [asn.nama, asn.nik] },
+      { include_blank: true },
+      data: {
+        controller: 'dropdown',
+        placeholder: 'Pilih ASN',
+        dropdown_parent_value: '#form-bagikan-strategi-pokin'
+      },
+      class: "form-control" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

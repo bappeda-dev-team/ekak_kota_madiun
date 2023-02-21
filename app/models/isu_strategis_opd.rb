@@ -13,4 +13,5 @@
 #
 class IsuStrategisOpd < ApplicationRecord
   belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_opd'
+  has_many :pohons, as: :pohonable, dependent: :destroy
 end

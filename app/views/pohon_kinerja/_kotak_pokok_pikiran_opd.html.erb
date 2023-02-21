@@ -1,0 +1,49 @@
+<div class="card border-2 shadow mb-3" id="musrenbang-card">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="row align-items-center">
+        <div class="col">
+          <h5>Usulan Pokok Pikiran DPRD</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table" id="isu-strategis-kota-table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Usulan</th>
+            <th>Alamat</th>
+            <th>Permasalahan</th>
+            <th>Tahun</th>
+            <th class="text-center align-middle">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% Opd.find(136).pokpir_opd.each.with_index(1) do |pokpir, no| %>
+            <tr>
+              <td class="text-wrap align-middle"><%= no %></td>
+              <td class="text-wrap align-middle"><%= pokpir.usulan %></td>
+              <td class="text-wrap align-middle"><%= pokpir.alamat %></td>
+              <td class="text-wrap align-middle"><%= pokpir.uraian %></td>
+              <td class="text-wrap align-middle"><%= pokpir.tahun %></td>
+              <td class="text-center align-middle">
+                <%= link_to buat_strategi_opd_path(
+                  @opd.id,
+                  jenis_isu: pokpir.class.name,
+                  id_isu: pokpir.id,
+                  usulan_isu: pokpir.usulan
+                ), class: 'btn btn-outline-gray-900' do %>
+                    <span class="fas fa-share"></span>
+                    <span>Pilih Usulan</span>
+                <% end %>
+              </td>
+            </tr>
+            <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

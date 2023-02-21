@@ -1,18 +1,31 @@
 <tr>
   <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
   <td class="fw-bolder text-gray-500"><%= strategi_kotum.strategi %></td>
-  <td class="fw-bolder text-gray-500"><%= strategi_kotum.sasaran_kota_id %></td>
-  <td class="fw-bolder text-gray-500"><%= strategi_kotum.isu_strategis_kota_id %></td>
+  <td class="fw-bolder text-gray-500"><%= strategi_kotum.isu_strategis_kotum&.isu_strategis %></td>
   <td class="fw-bolder text-gray-500"><%= strategi_kotum.tahun %></td>
-  <td class="fw-bolder text-gray-500">
+  <td class="fw-bolder text-gray-500 text-center border-end border-start">
+    <%= link_to bagikan_ke_opd_strategi_kotum_path(strategi_kotum),
+      remote: true, class: 'btn btn-outline-gray-900',
+      data: { controller: 'form-modal',
+              action: 'form-modal#appendForm',
+              form_modal_location_param: 'form-bagikan-strategi-kota-body',
+              bs_target: '#form-bagikan-strategi-kota',
+              bs_toggle: 'modal' } do %>
+        <span class="fas fa-share"></span>
+        <span>Bagikan ke opd</span>
+    <% end %>
+  </td>
+  <td class="fw-bolder text-gray-500 text-center">
     <%= link_to edit_strategi_kotum_path(strategi_kotum),
-        class: "m-3" do %>
+        class: "m-3 btn btn-outline-info" do %>
           <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+          <span>Edit</span>
     <% end %>
     <%= link_to strategi_kotum_path(strategi_kotum), method: :delete,
       data: { confirm_swal: "Hapus #{strategi_kotum.strategi} ?"},
-      class: "m-3" do %>
+      class: "m-3 btn btn-outline-danger" do %>
         <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+        <span>Hapus</span>
     <% end %>
   </td>
 </tr>

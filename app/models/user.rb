@@ -41,6 +41,7 @@ class User < ApplicationRecord
   has_many :kaks
   has_many :sasarans, dependent: :destroy, foreign_key: 'nip_asn', primary_key: 'nik'
   # has_many :program_kegiatans, through: :sasarans
+  has_many :pohons, dependent: :destroy
 
   scope :non_admin, -> { without_role(:admin) }
   scope :aktif, -> { without_role([:non_aktif]) }
@@ -50,7 +51,8 @@ class User < ApplicationRecord
                              asn_aktif.includes(:sasarans, :program_kegiatans).merge(Sasaran.sudah_lengkap)
                            } # depreceated
   scope :opd_by_role, ->(kode_opd, role) { where(kode_opd: kode_opd).with_role(role.to_sym) }
-
+  scope :eselon2, -> { with_role(:eselon_2) }
+  scope :eselon3, -> { with_role(:eselon_3) }
   # after_update :update_sasaran
   after_create :assign_default_role
 
@@ -191,5 +193,13 @@ class User < ApplicationRecord
 
   def sasaran_asn_sync_skp(tahun: nil)
     sasarans.dengan_rincian.where("sasarans.tahun ILIKE ?", tahun)
+  end
+
+  def eselon_user
+    eselon = roles.where("roles.name ilike ?", "%eselon%").first
+    eselon_user = eselon.nil? ? roles.where("roles.name ilike ?", "%staff%").first : eselon
+    # return unless eselon.nil?
+
+    # roles.where("roles.name ilike ?", "%staff%").first
   end
 end

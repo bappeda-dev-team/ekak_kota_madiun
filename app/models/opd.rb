@@ -42,6 +42,13 @@ class Opd < ApplicationRecord
   has_many :tujuan_opds, class_name: 'TujuanOpd', foreign_key: 'kode_unik_opd', primary_key: 'kode_unik_opd'
   has_one :kepala, class_name: 'Kepala', foreign_key: :nik, primary_key: :nip_kepala
 
+  # kotak usulan opd
+  has_many :usulans, dependent: :destroy
+  has_many :pohons, dependent: :destroy
+  has_many :isu_strategis_opds, foreign_key: 'kode_opd', primary_key: 'kode_opd'
+
+  scope :opd_resmi, -> { where.not(kode_unik_opd: nil) }
+
   def program_renstra
     program_kegiatans.programs
   end
@@ -92,5 +99,13 @@ class Opd < ApplicationRecord
 
   def jabatan_kepala_tanpa_opd
     jabatan_kepala.gsub!(/(?<=kepala).+/i, '')
+  end
+
+  def musrenbang_opd
+    Musrenbang.where(opd: id_opd_skp)
+  end
+
+  def pokpir_opd
+    Pokpir.where(opd: id_opd_skp)
   end
 end

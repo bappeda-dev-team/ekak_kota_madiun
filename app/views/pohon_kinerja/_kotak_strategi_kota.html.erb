@@ -1,0 +1,58 @@
+<div class="card border-2 shadow mb-3" id="musrenbang-card">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="row align-items-center">
+        <div class="col">
+          <h5>Strategi Kota</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table" id="isu-strategis-kota-table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Isu Strategis</th>
+            <th>Strategi</th>
+            <th>Sasaran</th>
+            <th>Indikator</th>
+            <th>Target</th>
+            <th>Satuan</th>
+            <th>Tahun</th>
+            <th class="text-center align-middle">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% Opd.find(136).usulans.each.with_index(1) do |usulan, no| %>
+            <% strategi_kota = usulan.usulanable %>
+            <tr>
+              <td class="align-middle"><%= no %></td>
+              <td class="align-middle"><%= strategi_kota.isu_strategis_kotum.isu_strategis %></td>
+              <td class="align-middle"><%= strategi_kota.strategi %></td>
+              <td class="align-middle"><%= strategi_kota.sasaran_kotum&.sasaran %></td>
+              <td class="text-wrap align-middle">Indikator A</td>
+              <td class="text-wrap align-middle">100</td>
+              <td class="text-wrap align-middle">%</td>
+              <td class="text-wrap align-middle">2023</td>
+              <td class="text-center align-middle">
+                <%= link_to buat_strategi_opd_path(
+                  @opd.id,
+                  jenis_isu: usulan.usulanable_type,
+                  id_isu: usulan.usulanable_id,
+                  usulan_isu: strategi_kota.isu_strategis_kotum.isu_strategis,
+                  role: "eselon_2",
+                  nip: @opd.nip_kepala
+                ), class: 'btn btn-outline-gray-900' do %>
+                    <span class="fas fa-share"></span>
+                    <span>Pilih Usulan</span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

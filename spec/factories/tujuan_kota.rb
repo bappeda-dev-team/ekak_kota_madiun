@@ -20,13 +20,14 @@
 #  index_tujuan_kota_on_id_tujuan  (id_tujuan) UNIQUE
 #
 FactoryBot.define do
-  factory :tujuan_kotum do
-    id_misi { "MyString" }
-    tahun_awal { "MyString" }
-    tahun_akhir { "MyString" }
-    id_tujuan { "MyString" }
-    visi { "MyString" }
-    misi { "MyString" }
-    tujuan { "MyString" }
+  factory :tujuan_kota do
+    id_misi { "id_misi_test" }
+    tahun_awal { "2020" }
+    tahun_akhir { "2024" }
+    id_tujuan { "id_tujuan_abc" }
+    visi { "visi test" }
+    misi { "misi test" }
+    tujuan { "Tujuan Kota" }
+    kode_tujuan { "kode_tujuan_kota" }
   end
 end

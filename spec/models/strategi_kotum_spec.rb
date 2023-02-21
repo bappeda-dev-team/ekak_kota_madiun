@@ -13,5 +13,13 @@
 require 'rails_helper'
 
 RSpec.describe StrategiKotum, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'sasaran kota one on one strategi kota' do
+    it 'strategi kota knew sasaran kota' do
+      tujuan_kota = FactoryBot.create(:tujuan_kota)
+      isu_strategis_kota = FactoryBot.create(:isu_strategis_kotum)
+      sasaran_kota = FactoryBot.create(:sasaran_kotum, id_tujuan: tujuan_kota.kode_tujuan, kode_sasaran: 'kode_abc')
+      strategi_kota = FactoryBot.create(:strategi_kotum, sasaran_kota_id: 'kode_abc', isu_strategis_kota_id: isu_strategis_kota.id)
+      expect(strategi_kota.sasaran_kotum.sasaran).to eq(sasaran_kota.sasaran)
+    end
+  end
 end

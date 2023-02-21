@@ -10,4 +10,5 @@
 #  updated_at    :datetime         not null
 #
 class IsuStrategisKotum < ApplicationRecord
+  has_many :strategi_kotums, foreign_key: 'isu_strategis_kota_id', primary_key: 'id'
 end

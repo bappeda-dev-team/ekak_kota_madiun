@@ -1,5 +1,5 @@
 class StrategisController < ApplicationController
-  before_action :set_strategi, only: %i[ show edit update destroy ]
+  before_action :set_strategi, only: %i[show edit update destroy]
 
   # GET /strategis or /strategis.json
   def index
@@ -7,8 +7,7 @@ class StrategisController < ApplicationController
   end
 
   # GET /strategis/1 or /strategis/1.json
-  def show
-  end
+  def show; end
 
   # GET /strategis/new
   def new
@@ -16,8 +15,7 @@ class StrategisController < ApplicationController
   end
 
   # GET /strategis/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /strategis or /strategis.json
   def create
@@ -36,9 +34,15 @@ class StrategisController < ApplicationController
 
   # PATCH/PUT /strategis/1 or /strategis/1.json
   def update
+    @user = User.find_by(nik: current_user.nik)
+    eselon = @user.eselon_user
     respond_to do |format|
       if @strategi.update(strategi_params)
-        format.html { redirect_to strategi_url(@strategi), notice: "Strategi was successfully updated." }
+        if eselon == "eselon_3"
+          format.html { redirect_to opd_pohon_kinerja_index_path, success: "Sukses" }
+        else
+          format.html { redirect_to asn_pohon_kinerja_index_path, success: "Sukses" }
+        end
         format.json { render :show, status: :ok, location: @strategi }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -57,14 +61,49 @@ class StrategisController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_strategi
-      @strategi = Strategi.find(params[:id])
-    end
+  def bagikan_pokin
+    # TODO: guard strategi, jika tidak ketemu, maka abal abal
+    @strategi = Strategi.find(params[:id])
+    @strategi_atasan_id = @strategi.id
+    @role = params[:role]
+    @pohon_id = @strategi.pohon_id
+    @opd = current_user.opd
+    @bawahans = @opd.users.with_role(@role.to_sym)
+    render partial: "form_bagikan_pokin"
+  end
 
-    # Only allow a list of trusted parameters through.
-    def strategi_params
-      params.require(:strategi).permit(:strategi, :tahun, :sasaran_id, :strategi_ref_id, :nip_asn)
+  # membuat strategi kosong dengan nip dan strategi_ref_id
+  def pilih_asn
+    @strategi_atasan_id = params[:id]
+    @role = params[:role]
+    @nip = params[:nip]
+    @pohon_id = params[:pohon_id].to_i
+    @strategi = Strategi.new(strategi_ref_id: @strategi_atasan_id,
+                             nip_asn: @nip,
+                             role: @role,
+                             pohon_id: @pohon_id)
+    respond_to do |format|
+      if @strategi.save
+        if @role == "eselon_3"
+          format.html { redirect_to opd_pohon_kinerja_index_path, success: "Strategi dibagikan" }
+        else
+          format.html { redirect_to asn_pohon_kinerja_index_path, success: "Strategi dibagikan" }
+        end
+      else
+        format.html { redirect_to asn_pohon_kinerja_index_path, error: "Terjadi Kesalahan" }
+      end
     end
+  end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_strategi
+    @strategi = Strategi.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def strategi_params
+    params.require(:strategi).permit(:strategi, :tahun, :sasaran_id, :strategi_ref_id, :nip_asn, :role)
+  end
 end

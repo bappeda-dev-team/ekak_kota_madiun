@@ -55,6 +55,24 @@ class StrategiKotaController < ApplicationController
     end
   end
 
+  def bagikan_ke_opd
+    @strategi_kota = StrategiKotum.find(params[:id])
+    render partial: "form_bagikan_ke_opd"
+  end
+
+  def pilih_opd
+    @strategi_kota = StrategiKotum.find(params[:id])
+    @opd = Opd.find(params[:opd])
+    respond_to do |format|
+      if Usulan.create(usulanable_id: @strategi_kota.id, usulanable_type: 'StrategiKotum',
+                       opd_id: @opd.id, keterangan: @opd.nama_opd)
+        format.html { redirect_to strategi_kota_path, success: "dibagikan ke #{@opd.nama_opd}" }
+      else
+        format.html { redirect_to strategi_kota_path, status: :unprocessable_entity, alert: 'terjadi kesalahan' }
+      end
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

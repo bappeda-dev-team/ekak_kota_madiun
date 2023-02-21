@@ -1,0 +1,29 @@
+<%= form_with(url: simpan_strategi_opd_path) do |form| %>
+  <div class="card">
+    <div class="card-body">
+      <div class="field">
+        <%= form.label :isu_strategis_opd, class: "form-label" %>
+        <%= form.text_field :isu_strategis_opd, class: "form-control", readonly: true, value: @usulan_isu %>
+        <%= form.hidden_field :jenis_isu, readonly: true, value: @jenis_isu %>
+        <%= form.hidden_field :id_isu, readonly: true, value: @id_isu %>
+        <%= form.hidden_field :role, readonly: true, value: @role %>
+        <%= form.hidden_field :nip, readonly: true, value: @nip %>
+      </div>
+
+      <div class="field">
+        <%= form.label :strategi, class: "form-label" %>
+        <%= form.text_field :strategi, class: "form-control" %>
+      </div>
+
+      <div class="field">
+        <%= form.label :tahun, class: 'form-label' %>
+        <%= form.select :tahun,[2020, 2021, 2022, 2023, 2024],{selected: Date.today.year},
+          { class: 'form-control', data: { controller: 'dropdown' } }%>
+      </div>
+
+      <div class="actions">
+        <%= form.submit %>
+      </div>
+    </div>
+  </div>
+<% end %>
