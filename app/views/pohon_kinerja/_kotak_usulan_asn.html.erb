@@ -31,6 +31,10 @@
               <td class="text-wrap align-middle"><%= strategi.nip_asn %></td>
               <td class="text-wrap align-middle"><%= strategi.role %></td>
               <td class="text-center align-middle">
+                <%= link_to edit_strategi_path(strategi), class: "btn btn-outline-info mx-3" do %>
+                  <i class="fas fa-edit me-2"></i>
+                  Edit Strategi
+                <% end %>
                 <%= link_to bagikan_pokin_strategi_path(
                   strategi.id,
                   role: local_assigns[:role_bawahan],

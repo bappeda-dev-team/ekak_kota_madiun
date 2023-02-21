@@ -31,22 +31,20 @@
               <td class="text-wrap align-middle"><%= strategi.nip_asn %></td>
               <td class="text-wrap align-middle"><%= strategi.role %></td>
               <td class="text-center align-middle">
-                <% if strategi.strategi.blank? %>
-                  <%= link_to 'Isi Strategi', edit_strategi_path(strategi) %>
-                <% else %>
-                  <%= link_to bagikan_pokin_strategi_path(
-                    strategi.id,
-                    role: local_assigns[:role_bawahan],
-                    pohon_id: pohon.id
-                  ),
-                    remote: true, class: 'btn btn-outline-gray-900',
+                <%= link_to edit_strategi_path(strategi), class: "btn btn-outline-info mx-3" do %>
+                  <i class="fas fa-edit me-2"></i>
+                  Edit Strategi
+                <% end %>
+                <% unless strategi.strategi.blank? %>
+                  <%= link_to '#',
+                    remote: true, class: 'btn btn-outline-danger',
                     data: { controller: 'form-modal',
                             action: 'form-modal#appendForm',
                             form_modal_location_param: 'form-bagikan-strategi-pokin-body',
                             bs_target: '#form-bagikan-strategi-pokin',
                             bs_toggle: 'modal' } do %>
-                      <span class="fas fa-share"></span>
-                      <span>Bagikan Strategic Objective</span>
+                      <span class="fas fa-lock"></span>
+                      <span>Ajukan Verifikasi Pokin</span>
                   <% end %>
                 <% end %>
               </td>
