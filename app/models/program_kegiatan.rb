@@ -59,6 +59,14 @@ class ProgramKegiatan < ApplicationRecord
   has_many :permasalahans, through: :sasarans
   has_many :users, through: :sasarans
 
+  has_many :bidang_urusans, lambda { |program_kegiatan|
+                         where(kode_sub_skpd: program_kegiatan.kode_sub_skpd)
+                       }, class_name: "ProgramKegiatan", foreign_key: "kode_urusan", primary_key: "kode_urusan"
+
+  has_many :programs_b, lambda { |program_kegiatan|
+                         where(kode_sub_skpd: program_kegiatan.kode_sub_skpd)
+                       }, class_name: "ProgramKegiatan", foreign_key: "kode_bidang_urusan", primary_key: "kode_bidang_urusan"
+
   has_many :kegiatans, lambda { |program_kegiatan|
                          where(kode_sub_skpd: program_kegiatan.kode_sub_skpd)
                        }, class_name: "ProgramKegiatan", foreign_key: "kode_program", primary_key: "kode_program"
@@ -98,9 +106,29 @@ class ProgramKegiatan < ApplicationRecord
       .where.not(sasarans: { id: nil }).group(:id)
   }
 
+  scope :urusans, -> { select("DISTINCT ON(program_kegiatans.kode_urusan) program_kegiatans.*") }
+  scope :bidang_urusans_a, -> { select("DISTINCT ON(program_kegiatans.kode_bidang_urusan) program_kegiatans.*") }
   scope :programs, -> { select("DISTINCT ON(program_kegiatans.kode_program) program_kegiatans.*") }
   scope :kegiatans_satunya, -> { select("DISTINCT ON(program_kegiatans.kode_giat) program_kegiatans.*") }
   scope :subkegiatans_satunya, -> { select("DISTINCT ON(program_kegiatans.kode_sub_giat) program_kegiatans.*") }
+
+  def bidang_urusans_opd
+    # super.uniq(&:kode_giat)
+    # ProgramKegiatan.where("kode_program = ? and kode_opd = ?", kode_program, kode_opd)
+    bidang_urusans.uniq { |bur| bur.values_at(:kode_bidang_urusan) }.sort_by(&:kode_bidang_urusan)
+  end
+
+  def programs_opd_b
+    # super.uniq(&:kode_giat)
+    # ProgramKegiatan.where("kode_program = ? and kode_opd = ?", kode_program, kode_opd)
+    programs_b.uniq { |prg| prg.values_at(:kode_program) }.sort_by(&:kode_program)
+  end
+
+  def programs_opd
+    # super.uniq(&:kode_giat)
+    # ProgramKegiatan.where("kode_program = ? and kode_opd = ?", kode_program, kode_opd)
+    programs.uniq { |prg| prg.values_at(:kode_program) }.sort_by(&:kode_program)
+  end
 
   def kegiatans_opd
     # super.uniq(&:kode_giat)

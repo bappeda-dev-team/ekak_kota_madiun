@@ -8,6 +8,31 @@ class RenjaController < ApplicationController
 
   def ranwal; end
 
+  def ranwal_cetak
+    @title = "Rawnal Renja"
+    @opd = Opd.find_by(kode_unik_opd: params[:kode_opd])
+    @program_kegiatans = @opd.susunan_renja
+    # if OPD_TABLE.key?(@nama_opd.to_sym)
+    #   @program_kegiatans = ProgramKegiatan.includes(:opd)
+    #                                       .where(id_sub_unit: KODE_OPD_BAGIAN[@nama_opd.to_sym], tahun: @tahun)
+    #                                       .uniq(&:kode_program).sort_by(&:kode_program)
+    #   @kode_opd = KODE_OPD_BAGIAN[@nama_opd.to_sym]
+    # end
+    @nama_opd = @opd.nama_opd
+    @tahun = params[:tahun]
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "ranwal_renja_#{@nama_opd}_tahun_#{@tahun}",
+               dispotition: 'attachment',
+               page_size: 'Legal',
+               layout: 'pdf.html.erb',
+               template: 'renja/ranwal_cetak.html.erb',
+               show_as_html: params.key?('debug')
+      end
+    end
+  end
+
   def rankir; end
 
   def penetapan; end
