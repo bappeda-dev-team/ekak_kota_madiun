@@ -1,6 +1,10 @@
-<h1>Editing Strategi</h1>
+<h1>Form Strategi</h1>
 
 <%= render 'form', strategi: @strategi %>
 
-<%= link_to 'Show', @strategi %> |
-<%= link_to 'Back', strategis_path %>
+<div class="card-body">
+  <%= link_to asn_pohon_kinerja_index_path, class: 'btn btn-info w-100 text-white' do %>
+    <span class="fas fa-arrow-left"></span>
+    <span>Kembali</span>
+  <% end %>
+</div>

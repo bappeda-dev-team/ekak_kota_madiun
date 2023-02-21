@@ -34,9 +34,15 @@ class StrategisController < ApplicationController
 
   # PATCH/PUT /strategis/1 or /strategis/1.json
   def update
+    @user = User.find_by(nik: current_user.nik)
+    eselon = @user.eselon_user
     respond_to do |format|
       if @strategi.update(strategi_params)
-        format.html { redirect_to strategi_url(@strategi), notice: "Strategi was successfully updated." }
+        if eselon == "eselon_3"
+          format.html { redirect_to opd_pohon_kinerja_index_path, success: "Sukses" }
+        else
+          format.html { redirect_to asn_pohon_kinerja_index_path, success: "Sukses" }
+        end
         format.json { render :show, status: :ok, location: @strategi }
       else
         format.html { render :edit, status: :unprocessable_entity }

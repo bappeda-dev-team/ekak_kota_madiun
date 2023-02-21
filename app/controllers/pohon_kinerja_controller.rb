@@ -1,6 +1,5 @@
 class PohonKinerjaController < ApplicationController
-  def kota
-  end
+  def kota; end
 
   def opd
     @opd = Opd.find(136)
