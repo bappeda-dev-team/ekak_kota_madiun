@@ -23,7 +23,6 @@ class SasaranKotaController < ApplicationController
       if @sasaran_kota.save
         format.html { redirect_to sasaran_kota_path, success: 'Sasaran ditambahkan' }
       else
-        byebug
         format.html { render :new, status: :unprocessable_entity }
       end
     end
