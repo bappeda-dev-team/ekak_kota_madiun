@@ -49,6 +49,10 @@ class Opd < ApplicationRecord
 
   scope :opd_resmi, -> { where.not(kode_unik_opd: nil) }
 
+  def susunan_renja
+    program_kegiatans.urusans
+  end
+
   def program_renstra
     program_kegiatans.programs
   end
