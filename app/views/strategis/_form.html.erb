@@ -24,7 +24,7 @@
       </div>
 
       <div class="field">
-        <%= form.fields_for :sasaran_attributes, strategi.sasaran do |sasaran_form| %>
+        <%= form.fields_for :sasaran_attributes, @sasaran do |sasaran_form| %>
           <%= sasaran_form.label :sasaran_kinerja, { class: "form-label" } %>
           <%= sasaran_form.text_field :sasaran_kinerja, { class: "form-control" } %>
 
@@ -33,7 +33,7 @@
 
           <%= sasaran_form.hidden_field :tahun, { class: "form-control", value: strategi.tahun } %>
 
-          <%= sasaran_form.fields_for :indikator_sasarans_attributes do |indikator_sas| %>
+          <%= sasaran_form.fields_for :indikator_sasarans, @sasaran.indikator_sasarans do |indikator_sas| %>
               <div class="field">
                 <%= indikator_sas.label :aspek, { class: "form-label" } %>
                 <%= indikator_sas.select(:aspek, (['Kualitas','Kuantitas']), {},

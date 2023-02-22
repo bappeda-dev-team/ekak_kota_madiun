@@ -23,6 +23,7 @@ class StrategisController < ApplicationController
     @nip = params[:nip]
     @role = params[:role]
     @usulan_isu = params[:usulan_isu]
+    @sasaran = @strategi.sasaran
     # disable this to see if the sasaran created is associated
     # @strategi.build_sasaran.indikator_sasarans.build
   end
