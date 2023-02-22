@@ -105,8 +105,9 @@ class OpdsController < ApplicationController
               end
       strategi = Strategi.create(strategi: @strategi, tahun: @tahun, pohon_id: pohon.id, role: @role, nip_asn: @nip)
       if pohon && strategi
-        sasaran = Sasaran.create(sasaran_kinerja: @sasaran, nip_asn: @nip, strategi_id: strategi.id)
+        sasaran = Sasaran.create(sasaran_kinerja: @sasaran, nip_asn: @nip, strategi_id: strategi.id, tahun: @tahun)
         if sasaran
+          strategi.update(sasaran_id: sasaran.id)
           random_number = sasaran.id_rencana.nil? ? (SecureRandom.random_number(9e5) + 1e5).to_i : sasaran.id_rencana
           sasaran.update(id_rencana: random_number)
           indikator_sasaran = IndikatorSasaran.create(indikator_kinerja: params[:indikator_kinerja],

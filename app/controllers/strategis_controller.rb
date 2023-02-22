@@ -12,8 +12,8 @@ class StrategisController < ApplicationController
   # GET /strategis/new
   def new
     @strategi = Strategi.new
-    @nip = params[:nip]
-    @role = params[:role]
+    @nip = params[:nip] || current_user.nik
+    @role = params[:role] || current_user.eselon_user
     @strategi.build_sasaran.indikator_sasarans.build
     @usulan_isu = params[:usulan_isu]
   end
@@ -24,8 +24,6 @@ class StrategisController < ApplicationController
     @role = params[:role]
     @usulan_isu = params[:usulan_isu]
     @sasaran = @strategi.sasaran
-    # disable this to see if the sasaran created is associated
-    # @strategi.build_sasaran.indikator_sasarans.build
   end
 
   # POST /strategis or /strategis.json
@@ -115,6 +113,6 @@ class StrategisController < ApplicationController
   # Only allow a list of trusted parameters through.
   def strategi_params
     params.require(:strategi).permit(:strategi, :tahun, :sasaran_id, :strategi_ref_id, :nip_asn, :role, :pohon_id,
-                                     sasaran_attributes: %i[sasaran_kinerja nip_asn strategi_id tahun id_rencana])
+                                     sasaran_attributes: %i[sasaran_kinerja nip_asn strategi_id tahun])
   end
 end

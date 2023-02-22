@@ -24,7 +24,7 @@
       </div>
 
       <div class="field">
-        <%= form.fields_for :sasaran_attributes, @sasaran do |sasaran_form| %>
+        <%= form.fields_for :sasaran, @sasaran do |sasaran_form| %>
           <%= sasaran_form.label :sasaran_kinerja, { class: "form-label" } %>
           <%= sasaran_form.text_field :sasaran_kinerja, { class: "form-control" } %>
 
@@ -67,4 +67,3 @@
     </div>
   </div>
 <% end %>
-<% console %>

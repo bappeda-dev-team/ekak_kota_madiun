@@ -20,7 +20,7 @@
 class Strategi < ApplicationRecord
   belongs_to :pohon, dependent: :destroy
   has_one :sasaran
-  accepts_nested_attributes_for :sasaran, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :sasaran, update_only: true, allow_destroy: true
 
   belongs_to :strategi_atasan, class_name: "Strategi",
                                foreign_key: "strategi_ref_id", optional: true
