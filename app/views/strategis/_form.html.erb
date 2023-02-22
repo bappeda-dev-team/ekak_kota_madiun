@@ -18,47 +18,39 @@
         <%= form.text_field :isu_strategis_opd, class: "form-control", readonly: true, value: @usulan_isu %>
         <%= form.hidden_field :role, class: "form-control", readonly: true, value: @role %>
       </div>
+
+      <div class="field">
+        <%= form.label :tahun, class: 'form-label' %>
+        <%= form.select :tahun,[2020, 2021, 2022, 2023, 2024],{selected: Date.today.year},
+          { class: 'form-control', data: { controller: 'dropdown' } }%>
+      </div>
+
       <div class="field">
         <%= form.label :strategi, class: "form-label" %>
         <%= form.text_field :strategi, class: "form-control" %>
       </div>
 
       <div class="field">
-        <%= form.fields_for :sasaran, @sasaran do |sasaran_form| %>
+        <%= form.fields_for :sasaran do |sasaran_form| %>
+          <% random_number = @sasaran&.id_rencana.nil? ? (SecureRandom.random_number(9e5) + 1e5).to_i : @sasaran.id_rencana %>
+          <%= sasaran_form.hidden_field :id_rencana, :value => random_number, readonly: true %>
+          <%= sasaran_form.hidden_field :nip_asn, { class: "form-control", value: @nip } %>
+          <%= sasaran_form.hidden_field :strategi_id, { class: "form-control", value: strategi.id } %>
+          <%= sasaran_form.hidden_field :tahun, { class: "form-control", value: strategi.tahun } %>
+
           <%= sasaran_form.label :sasaran_kinerja, { class: "form-label" } %>
           <%= sasaran_form.text_field :sasaran_kinerja, { class: "form-control" } %>
 
-          <%= sasaran_form.hidden_field :nip_asn, { class: "form-control", value: @nip } %>
-          <%= sasaran_form.hidden_field :strategi_id, { class: "form-control", value: strategi.id } %>
-
-          <%= sasaran_form.hidden_field :tahun, { class: "form-control", value: strategi.tahun } %>
-
-          <%= sasaran_form.fields_for :indikator_sasarans, @sasaran.indikator_sasarans do |indikator_sas| %>
-              <div class="field">
-                <%= indikator_sas.label :aspek, { class: "form-label" } %>
-                <%= indikator_sas.select(:aspek, (['Kualitas','Kuantitas']), {},
-                  {data: { controller: 'dropdown' }}) %>
-              </div>
-              <div class="field">
-                <%= indikator_sas.label :indikator_kinerja, { class: "form-label" } %>
-                <%= indikator_sas.text_field :indikator_kinerja, { class: "form-control" } %>
-              </div>
-              <div class="field">
-                <%= indikator_sas.label :target, { class: "form-label" } %>
-                <%= indikator_sas.number_field :target, { class: "form-control" } %>
-              </div>
-              <div class="field">
-                <%= indikator_sas.label :satuan, { class: "form-label" } %>
-                <%= indikator_sas.text_field :satuan, { class: "form-control" } %>
-              </div>
-          <% end %>
+          <div class="field" id="indikator-sasarans">
+            <%= sasaran_form.label :indikator, { class: "form-label" } %>
+            <%= sasaran_form.fields_for :indikator_sasarans do |indikator_sas| %>
+               <%= render 'sasarans/indikator_sasaran_fields', form: indikator_sas %>
+             <% end %>
+           </div>
+          <%= link_to_add_nested(sasaran_form, :indikator_sasarans,
+                                '#indikator-sasarans', link_classes: 'btn btn-outline-primary btn-sm', link_text: 'Tambah Indikator',
+                                partial: 'sasarans/indikator_sasaran_fields') %>
         <% end %>
-      </div>
-
-      <div class="field">
-        <%= form.label :tahun, class: 'form-label' %>
-        <%= form.select :tahun,[2020, 2021, 2022, 2023, 2024],{selected: Date.today.year},
-          { class: 'form-control', data: { controller: 'dropdown' } }%>
       </div>
 
       <div class="actions">

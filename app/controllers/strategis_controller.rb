@@ -23,7 +23,7 @@ class StrategisController < ApplicationController
     @nip = params[:nip]
     @role = params[:role]
     @usulan_isu = params[:usulan_isu]
-    @sasaran = @strategi.sasaran
+    @sasaran = @strategi.sasaran.nil? ? @strategi.build_sasaran : @strategi.sasaran
   end
 
   # POST /strategis or /strategis.json
@@ -112,7 +112,14 @@ class StrategisController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def strategi_params
-    params.require(:strategi).permit(:strategi, :tahun, :sasaran_id, :strategi_ref_id, :nip_asn, :role, :pohon_id,
-                                     sasaran_attributes: %i[sasaran_kinerja nip_asn strategi_id tahun])
+    params.require(:strategi)
+          .permit(:strategi, :tahun, :sasaran_id, :strategi_ref_id,
+                  :nip_asn, :role, :pohon_id,
+                  sasaran_attributes: [:sasaran_kinerja, :nip_asn, :strategi_id, :tahun,
+                                       :id_rencana, indikator_sasarans_params])
+  end
+
+  def indikator_sasarans_params
+    { indikator_sasarans_attributes: %i[id indikator_kinerja aspek target satuan _destroy] }
   end
 end

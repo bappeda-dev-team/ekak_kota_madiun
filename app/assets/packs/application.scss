@@ -33,7 +33,7 @@
 
 input[name="commit"] {
   @extend .btn;
-  @extend .btn-tertiary;
+  @extend .btn-outline-tertiary;
   @extend .w-100;
   @extend .mt-5;
 }
