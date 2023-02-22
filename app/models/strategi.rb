@@ -22,9 +22,6 @@ class Strategi < ApplicationRecord
   has_one :sasaran
   accepts_nested_attributes_for :sasaran, reject_if: :all_blank, allow_destroy: true
 
-  # has_many :indikator_sasarans, foreign_key: 'sasaran_id', primary_key: 'sasaran_id', dependent: :destroy
-  # accepts_nested_attributes_for :indikator_sasarans, reject_if: :all_blank, allow_destroy: true
-
   belongs_to :strategi_atasan, class_name: "Strategi",
                                foreign_key: "strategi_ref_id", optional: true
 

@@ -59,7 +59,8 @@ class Sasaran < ApplicationRecord
   has_many :permasalahans, dependent: :destroy
   has_many :latar_belakangs, dependent: :destroy
   has_many :genders
-  belongs_to :strategi, dependent: :destroy, optional: true
+  # belongs_to :strategi, dependent: :destroy, optional: true
+  has_one :strategi
 
   accepts_nested_attributes_for :rincian, update_only: true
   accepts_nested_attributes_for :tahapans

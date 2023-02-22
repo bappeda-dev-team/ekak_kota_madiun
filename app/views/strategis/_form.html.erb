@@ -24,18 +24,36 @@
       </div>
 
       <div class="field">
-        <%= form.fields_for :sasaran do |sasaran_form| %>
+        <%= form.fields_for :sasaran_attributes, strategi.sasaran do |sasaran_form| %>
           <%= sasaran_form.label :sasaran_kinerja, { class: "form-label" } %>
           <%= sasaran_form.text_field :sasaran_kinerja, { class: "form-control" } %>
+
           <%= sasaran_form.hidden_field :nip_asn, { class: "form-control", value: @nip } %>
-          <%= sasaran_form.hidden_field :id_rencana, { class: "form-control", value: strategi.sasaran_id } %>
           <%= sasaran_form.hidden_field :strategi_id, { class: "form-control", value: strategi.id } %>
-           <%= sasaran_form.fields_for :indikator_sasarans do |indikator_sas| %>
-              <%= render 'sasarans/indikator_sasaran_fields', form: indikator_sas, sasaran_id: @strategi.sasaran_id %>
-           <% end %>
+
+          <%= sasaran_form.hidden_field :tahun, { class: "form-control", value: strategi.tahun } %>
+
+          <%= sasaran_form.fields_for :indikator_sasarans_attributes do |indikator_sas| %>
+              <div class="field">
+                <%= indikator_sas.label :aspek, { class: "form-label" } %>
+                <%= indikator_sas.select(:aspek, (['Kualitas','Kuantitas']), {},
+                  {data: { controller: 'dropdown' }}) %>
+              </div>
+              <div class="field">
+                <%= indikator_sas.label :indikator_kinerja, { class: "form-label" } %>
+                <%= indikator_sas.text_field :indikator_kinerja, { class: "form-control" } %>
+              </div>
+              <div class="field">
+                <%= indikator_sas.label :target, { class: "form-label" } %>
+                <%= indikator_sas.number_field :target, { class: "form-control" } %>
+              </div>
+              <div class="field">
+                <%= indikator_sas.label :satuan, { class: "form-label" } %>
+                <%= indikator_sas.text_field :satuan, { class: "form-control" } %>
+              </div>
+          <% end %>
         <% end %>
       </div>
-
 
       <div class="field">
         <%= form.label :tahun, class: 'form-label' %>
@@ -49,3 +67,4 @@
     </div>
   </div>
 <% end %>
+<% console %>

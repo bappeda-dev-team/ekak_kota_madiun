@@ -23,8 +23,8 @@ class StrategisController < ApplicationController
     @nip = params[:nip]
     @role = params[:role]
     @usulan_isu = params[:usulan_isu]
-    # @sasaran = @strategi.sasaran
-    # @sasaran.indikator_sasarans.build
+    # disable this to see if the sasaran created is associated
+    # @strategi.build_sasaran.indikator_sasarans.build
   end
 
   # POST /strategis or /strategis.json
@@ -109,16 +109,11 @@ class StrategisController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_strategi
     @strategi = Strategi.find(params[:id])
-    # @sasaran = @strategi.build_sasaran.indikator_sasarans.build
   end
 
   # Only allow a list of trusted parameters through.
   def strategi_params
     params.require(:strategi).permit(:strategi, :tahun, :sasaran_id, :strategi_ref_id, :nip_asn, :role, :pohon_id,
-                                     sasaran_attributes: [:sasaran_kinerja, :nip_asn, :strategi_id,
-                                                          { indikator_sasarans_attributes: %i[id indikator_kinerja
-                                                                                              sasaran_id
-                                                                                              aspek target satuan
-                                                                                              _destroy] }])
+                                     sasaran_attributes: %i[sasaran_kinerja nip_asn strategi_id tahun id_rencana])
   end
 end
