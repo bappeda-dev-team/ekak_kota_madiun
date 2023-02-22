@@ -31,7 +31,7 @@
               <td class="text-wrap align-middle"><%= strategi.nip_asn %></td>
               <td class="text-wrap align-middle"><%= strategi.role %></td>
               <td class="text-center align-middle">
-                <%= link_to edit_strategi_path(strategi, nip: strategi.nip_asn), class: "btn btn-outline-info mx-3" do %>
+                <%= link_to edit_strategi_path(strategi, nip: strategi.nip_asn, usulan_isu: pohon.strategi, role: "eselon_4"), class: "btn btn-outline-info mx-3" do %>
                   <i class="fas fa-edit me-2"></i>
                   Edit Strategi
                 <% end %>

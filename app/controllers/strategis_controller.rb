@@ -14,8 +14,8 @@ class StrategisController < ApplicationController
     @strategi = Strategi.new
     @nip = params[:nip] || current_user.nik
     @role = params[:role] || current_user.eselon_user
-    @strategi.build_sasaran.indikator_sasarans.build
     @usulan_isu = params[:usulan_isu]
+    @sasaran = @strategi.build_sasaran
   end
 
   # GET /strategis/1/edit
