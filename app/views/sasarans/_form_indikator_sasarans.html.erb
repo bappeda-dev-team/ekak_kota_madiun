@@ -1,0 +1,6 @@
+ <h4><strong>Indikator Sasaran : </strong></h4>
+ <div class="field" id="indikator-sasarans">
+   <%= form.fields_for :indikator_sasarans do |indikator_sas| %>
+      <%= render 'sasarans/indikator_sasaran_fields', form: indikator_sas %>
+   <% end %>
+ </div>

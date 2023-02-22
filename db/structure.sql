@@ -2015,7 +2015,8 @@ CREATE TABLE public.sasarans (
     type character varying,
     sasaran_opd character varying,
     sasaran_kota character varying,
-    sasaran_milik character varying
+    sasaran_milik character varying,
+    strategi_id character varying
 );
 
 
@@ -4471,6 +4472,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230220024159'),
 ('20230220025449'),
 ('20230220041153'),
-('20230220041911');
+('20230220041911'),
+('20230222034408');
 
 

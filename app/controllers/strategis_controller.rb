@@ -12,10 +12,20 @@ class StrategisController < ApplicationController
   # GET /strategis/new
   def new
     @strategi = Strategi.new
+    @nip = params[:nip]
+    @role = params[:role]
+    @strategi.build_sasaran.indikator_sasarans.build
+    @usulan_isu = params[:usulan_isu]
   end
 
   # GET /strategis/1/edit
-  def edit; end
+  def edit
+    @nip = params[:nip]
+    @role = params[:role]
+    @usulan_isu = params[:usulan_isu]
+    # @sasaran = @strategi.sasaran
+    # @sasaran.indikator_sasarans.build
+  end
 
   # POST /strategis or /strategis.json
   def create
@@ -34,11 +44,10 @@ class StrategisController < ApplicationController
 
   # PATCH/PUT /strategis/1 or /strategis/1.json
   def update
-    @user = User.find_by(nik: current_user.nik)
-    eselon = @user.eselon_user
+    @role = params[:strategi][:role]
     respond_to do |format|
       if @strategi.update(strategi_params)
-        if eselon == "eselon_3"
+        if @role == "eselon_2"
           format.html { redirect_to opd_pohon_kinerja_index_path, success: "Sukses" }
         else
           format.html { redirect_to asn_pohon_kinerja_index_path, success: "Sukses" }
@@ -100,10 +109,16 @@ class StrategisController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_strategi
     @strategi = Strategi.find(params[:id])
+    # @sasaran = @strategi.build_sasaran.indikator_sasarans.build
   end
 
   # Only allow a list of trusted parameters through.
   def strategi_params
-    params.require(:strategi).permit(:strategi, :tahun, :sasaran_id, :strategi_ref_id, :nip_asn, :role)
+    params.require(:strategi).permit(:strategi, :tahun, :sasaran_id, :strategi_ref_id, :nip_asn, :role, :pohon_id,
+                                     sasaran_attributes: [:sasaran_kinerja, :nip_asn, :strategi_id,
+                                                          { indikator_sasarans_attributes: %i[id indikator_kinerja
+                                                                                              sasaran_id
+                                                                                              aspek target satuan
+                                                                                              _destroy] }])
   end
 end

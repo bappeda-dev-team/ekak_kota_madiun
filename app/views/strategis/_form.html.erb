@@ -14,9 +14,28 @@
   <div class="card">
     <div class="card-body">
       <div class="field">
+        <%= form.label :isu_strategis_opd, class: "form-label" %>
+        <%= form.text_field :isu_strategis_opd, class: "form-control", readonly: true, value: @usulan_isu %>
+        <%= form.hidden_field :role, class: "form-control", readonly: true, value: @role %>
+      </div>
+      <div class="field">
         <%= form.label :strategi, class: "form-label" %>
         <%= form.text_field :strategi, class: "form-control" %>
       </div>
+
+      <div class="field">
+        <%= form.fields_for :sasaran do |sasaran_form| %>
+          <%= sasaran_form.label :sasaran_kinerja, { class: "form-label" } %>
+          <%= sasaran_form.text_field :sasaran_kinerja, { class: "form-control" } %>
+          <%= sasaran_form.hidden_field :nip_asn, { class: "form-control", value: @nip } %>
+          <%= sasaran_form.hidden_field :id_rencana, { class: "form-control", value: strategi.sasaran_id } %>
+          <%= sasaran_form.hidden_field :strategi_id, { class: "form-control", value: strategi.id } %>
+           <%= sasaran_form.fields_for :indikator_sasarans do |indikator_sas| %>
+              <%= render 'sasarans/indikator_sasaran_fields', form: indikator_sas, sasaran_id: @strategi.sasaran_id %>
+           <% end %>
+        <% end %>
+      </div>
+
 
       <div class="field">
         <%= form.label :tahun, class: 'form-label' %>

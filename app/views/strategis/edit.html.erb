@@ -3,8 +3,15 @@
 <%= render 'form', strategi: @strategi %>
 
 <div class="card-body">
-  <%= link_to asn_pohon_kinerja_index_path, class: 'btn btn-info w-100 text-white' do %>
-    <span class="fas fa-arrow-left"></span>
-    <span>Kembali</span>
+  <% if @role == 'eselon_2' %>
+    <%= link_to opd_pohon_kinerja_index_path, class: 'btn btn-info w-100 text-white' do %>
+      <span class="fas fa-arrow-left"></span>
+      <span>Kembali</span>
+    <% end %>
+  <% else %>
+    <%= link_to asn_pohon_kinerja_index_path, class: 'btn btn-info w-100 text-white' do %>
+      <span class="fas fa-arrow-left"></span>
+      <span>Kembali</span>
+    <% end %>
   <% end %>
 </div>

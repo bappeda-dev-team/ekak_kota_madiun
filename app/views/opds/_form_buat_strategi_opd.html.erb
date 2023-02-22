@@ -16,6 +16,29 @@
       </div>
 
       <div class="field">
+        <%= form.label :sasaran_kinerja, { class: "form-label" } %>
+        <%= form.text_field :sasaran_kinerja, { class: "form-control" } %>
+      </div>
+
+      <div class="field">
+        <%= form.label :aspek, { class: "form-label" } %>
+        <%= form.select(:aspek, (['Kualitas','Kuantitas']), {},
+          {data: { controller: 'dropdown' }}) %>
+      </div>
+      <div class="field">
+        <%= form.label :indikator_kinerja, { class: "form-label" } %>
+        <%= form.text_field :indikator_kinerja, { class: "form-control" } %>
+      </div>
+      <div class="field">
+        <%= form.label :target, { class: "form-label" } %>
+        <%= form.number_field :target, { class: "form-control" } %>
+      </div>
+      <div class="field">
+        <%= form.label :satuan, { class: "form-label" } %>
+        <%= form.text_field :satuan, { class: "form-control" } %>
+      </div>
+
+      <div class="field">
         <%= form.label :tahun, class: 'form-label' %>
         <%= form.select :tahun,[2020, 2021, 2022, 2023, 2024],{selected: Date.today.year},
           { class: 'form-control', data: { controller: 'dropdown' } }%>
