@@ -16,6 +16,7 @@ class StrategisController < ApplicationController
     @role = params[:role] || current_user.eselon_user
     @usulan_isu = params[:usulan_isu]
     @sasaran = @strategi.build_sasaran
+    @is_new = true
   end
 
   # GET /strategis/1/edit
@@ -24,6 +25,7 @@ class StrategisController < ApplicationController
     @role = params[:role]
     @usulan_isu = params[:usulan_isu]
     @sasaran = @strategi.sasaran.nil? ? @strategi.build_sasaran : @strategi.sasaran
+    @is_new = false
   end
 
   # POST /strategis or /strategis.json
@@ -101,6 +103,11 @@ class StrategisController < ApplicationController
         format.html { redirect_to asn_pohon_kinerja_index_path, error: "Terjadi Kesalahan" }
       end
     end
+  end
+
+  def strategi_asn
+    @nip = params[:nip]
+    @strategis = Strategi.where(nip_asn: @nip)
   end
 
   private
