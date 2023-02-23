@@ -8,11 +8,35 @@
         <%= form.hidden_field :id_isu, readonly: true, value: @id_isu %>
         <%= form.hidden_field :role, readonly: true, value: @role %>
         <%= form.hidden_field :nip, readonly: true, value: @nip %>
+        <%= form.hidden_field :opd_id, readonly: true, value: @opd_id %>
       </div>
 
       <div class="field">
         <%= form.label :strategi, class: "form-label" %>
         <%= form.text_field :strategi, class: "form-control" %>
+      </div>
+
+      <div class="field">
+        <%= form.label :sasaran_kinerja, { class: "form-label" } %>
+        <%= form.text_field :sasaran_kinerja, { class: "form-control" } %>
+      </div>
+
+      <div class="field">
+        <%= form.label :aspek, { class: "form-label" } %>
+        <%= form.select(:aspek, (['Kualitas','Kuantitas']), {},
+          {data: { controller: 'dropdown' }}) %>
+      </div>
+      <div class="field">
+        <%= form.label :indikator_kinerja, { class: "form-label" } %>
+        <%= form.text_field :indikator_kinerja, { class: "form-control" } %>
+      </div>
+      <div class="field">
+        <%= form.label :target, { class: "form-label" } %>
+        <%= form.number_field :target, { class: "form-control" } %>
+      </div>
+      <div class="field">
+        <%= form.label :satuan, { class: "form-label" } %>
+        <%= form.text_field :satuan, { class: "form-control" } %>
       </div>
 
       <div class="field">

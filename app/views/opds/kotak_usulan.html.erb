@@ -7,14 +7,20 @@
             <i class="fas fa-home"></i>
           <% end %>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Kotak Usulan OPD</li>
+        <li class="breadcrumb-item active" aria-current="page">Kotak Usulan</li>
       </ol>
     </nav>
     <div class="card border-0 shadow" id="kotak_usulan" data-filter-render-target="results">
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Kotak Usulan OPD</h2>
+            <h2 class="fs-5 fw-bold mb-0">Kotak Usulan <%= @nama_opd %></h2>
+          </div>
+          <div class="col-3 align-end">
+                  <%= link_to opd_pohon_kinerja_index_path, class: "btn btn-tertiary mx-3" do %>
+                    <i class="fas fa-archive me-2"></i>
+                    Pohon Kinerja OPD
+                  <% end %>
           </div>
         </div>
       </div>
@@ -29,9 +35,6 @@
       </div>
       <div class="card-body">
         <%= render 'pohon_kinerja/kotak_pokok_pikiran_opd' %>
-      </div>
-      <div class="card-body">
-        <%= render 'pohon_kinerja/kotak_mandatori_opd' %>
       </div>
     </div>
   </div>

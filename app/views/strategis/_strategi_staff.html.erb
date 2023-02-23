@@ -1,0 +1,43 @@
+<div class="card border-2 shadow mb-3" id="musrenbang-card">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="row align-items-center">
+        <div class="col">
+          <h5>Strategi Staff</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table" id="strategi-staff">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Strategi</th>
+            <th>Sasaran</th>
+            <th>Indikator</th>
+            <th>Target</th>
+            <th>Satuan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @opd.strategi_staff.each.with_index(1) do |strategi, no| %>
+            <tr class="border">
+              <td class="align-middle" rowspan="<%= strategi.indikator_sasarans.count + 1 %>"><%= no %></td>
+              <td class="align-middle" rowspan="<%= strategi.indikator_sasarans.count + 1 %>"><%= strategi.strategi %></td>
+              <td class="align-middle" rowspan="<%= strategi.indikator_sasarans.count + 1 %>"><%= strategi.sasaran&.sasaran_kinerja || '-' %></td>
+            </tr>
+            <% strategi.indikator_sasarans.each do |ind| %>
+              <tr class="border">
+                <td class="align-middle"><%= ind.indikator_kinerja %></td>
+                <td class="align-middle"><%= ind.target %></td>
+                <td class="align-middle"><%= ind.satuan %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

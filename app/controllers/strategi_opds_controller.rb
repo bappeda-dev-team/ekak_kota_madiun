@@ -69,12 +69,14 @@ class StrategiOpdsController < ApplicationController
 
   def handle_filters
     tahun = params[:tahun]
-    if tahun.nil? || tahun == 'all'
-      @tahun = ''
-      @strategi_opds = StrategiOpd.all.includes([:opd])
-    else
-      @tahun = "Tahun #{tahun}"
-      @strategi_opds = StrategiOpd.where(tahun: tahun).includes([:opd])
-    end
+    # @opd = Opd.find_by(kode_unik_opd: '5.01.5.05.0.00.02.0000')
+    @opd = current_user.opd
+    @tahun = if tahun.nil? || tahun == 'all'
+               ''
+             # @strategi_opds = StrategiOpd.all.includes([:opd])
+             else
+               "Tahun #{tahun}"
+               # @strategi_opds = StrategiOpd.where(tahun: tahun).includes([:opd])
+             end
   end
 end

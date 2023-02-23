@@ -22,7 +22,7 @@
           </tr>
         </thead>
         <tbody>
-          <% Opd.find(136).musrenbang_opd.each.with_index(1) do |musrenbang, no| %>
+          <% @opd.musrenbang_opd.each.with_index(1) do |musrenbang, no| %>
             <tr>
               <td class="text-wrap align-middle"><%= no %></td>
               <td class="text-wrap align-middle"><%= musrenbang.usulan %></td>

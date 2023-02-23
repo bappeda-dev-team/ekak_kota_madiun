@@ -25,7 +25,7 @@
           </tr>
         </thead>
         <tbody>
-          <% Opd.find(136).usulans.each.with_index(1) do |usulan, no| %>
+          <% @opd.usulans.each.with_index(1) do |usulan, no| %>
             <% strategi_kota = usulan.usulanable %>
             <tr>
               <td class="align-middle"><%= no %></td>
@@ -46,7 +46,7 @@
                   nip: @opd.nip_kepala
                 ), class: 'btn btn-outline-gray-900' do %>
                     <span class="fas fa-share"></span>
-                    <span>Pilih Usulan</span>
+                    <span>Pilih Strategi</span>
                 <% end %>
               </td>
             </tr>

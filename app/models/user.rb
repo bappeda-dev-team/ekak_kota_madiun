@@ -198,8 +198,6 @@ class User < ApplicationRecord
   def eselon_user
     eselon = roles.where("roles.name ilike ?", "%eselon%").first
     eselon_user = eselon.nil? ? roles.where("roles.name ilike ?", "%staff%").first : eselon
-    # return unless eselon.nil?
-
-    # roles.where("roles.name ilike ?", "%staff%").first
+    eselon_user.nil? ? "no_eselon" : eselon_user
   end
 end

@@ -5,6 +5,12 @@
         <div class="col">
           <h5>Strategi ASN</h5>
         </div>
+        <div class="col-3">
+                <%= link_to new_strategi_path(nip: current_user.nik, role: "staff"), class: "btn btn-outline-info mx-3" do %>
+                  <i class="fas fa-edit me-2"></i>
+                  Buat Strategi Baru
+                <% end %>
+        </div>
       </div>
     </div>
   </div>
@@ -13,8 +19,8 @@
       <table class="table" id="isu-strategis-kota-table">
         <thead>
           <tr>
-            <th>Opertaional Objective</th>
-            <th>Opertaional Objective 2</th>
+            <th>Operational Objective</th>
+            <th>Operational Objective 2</th>
             <th>Tahun</th>
             <th>NIP</th>
             <th>Role</th>
@@ -31,7 +37,7 @@
               <td class="text-wrap align-middle"><%= strategi.nip_asn %></td>
               <td class="text-wrap align-middle"><%= strategi.role %></td>
               <td class="text-center align-middle">
-                <%= link_to edit_strategi_path(strategi), class: "btn btn-outline-info mx-3" do %>
+                <%= link_to edit_strategi_path(strategi, nip: strategi.nip_asn, usulan_isu: pohon.strategi, role: "staff"), class: "btn btn-outline-info mx-3" do %>
                   <i class="fas fa-edit me-2"></i>
                   Edit Strategi
                 <% end %>

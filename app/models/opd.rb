@@ -30,6 +30,7 @@ class Opd < ApplicationRecord
   validates :kode_opd, presence: true
   has_many :users, foreign_key: 'kode_opd', primary_key: 'kode_opd'
   has_many :sasarans, through: :users
+  has_many :indikator_sasarans, through: :sasarans
   has_many :program_kegiatans, foreign_key: 'kode_opd', primary_key: 'kode_opd' do
     def programs
       where.not(kode_skpd: [nil, ""])
@@ -46,6 +47,9 @@ class Opd < ApplicationRecord
   has_many :usulans, dependent: :destroy
   has_many :pohons, dependent: :destroy
   has_many :isu_strategis_opds, foreign_key: 'kode_opd', primary_key: 'kode_opd'
+  has_many :strategis
+
+  accepts_nested_attributes_for :indikator_sasarans, reject_if: :all_blank, allow_destroy: true
 
   scope :opd_resmi, -> { where.not(kode_unik_opd: nil) }
 
@@ -111,5 +115,21 @@ class Opd < ApplicationRecord
 
   def pokpir_opd
     Pokpir.where(opd: id_opd_skp)
+  end
+
+  def strategi_eselon2
+    strategis.where(role: "eselon_2")
+  end
+
+  def strategi_eselon3
+    strategis.where(role: "eselon_3")
+  end
+
+  def strategi_eselon4
+    strategis.where(role: "eselon_4")
+  end
+
+  def strategi_staff
+    strategis.where(role: "staff")
   end
 end

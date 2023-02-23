@@ -9,6 +9,7 @@
 #  tahun           :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  opd_id          :string
 #  pohon_id        :bigint
 #  sasaran_id      :string
 #  strategi_ref_id :string

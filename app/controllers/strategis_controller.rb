@@ -11,11 +11,26 @@ class StrategisController < ApplicationController
 
   # GET /strategis/new
   def new
+    @opd = current_user.opd
+    @opd_id = @opd.id
     @strategi = Strategi.new
+    @nip = params[:nip] || current_user.nik
+    @role = params[:role] || current_user.eselon_user
+    @usulan_isu = params[:usulan_isu]
+    @sasaran = @strategi.build_sasaran
+    @is_new = true
   end
 
   # GET /strategis/1/edit
-  def edit; end
+  def edit
+    @opd = current_user.opd
+    @opd_id = @opd.id
+    @nip = params[:nip]
+    @role = params[:role]
+    @usulan_isu = params[:usulan_isu]
+    @sasaran = @strategi.sasaran.nil? ? @strategi.build_sasaran : @strategi.sasaran
+    @is_new = false
+  end
 
   # POST /strategis or /strategis.json
   def create
@@ -34,11 +49,10 @@ class StrategisController < ApplicationController
 
   # PATCH/PUT /strategis/1 or /strategis/1.json
   def update
-    @user = User.find_by(nik: current_user.nik)
-    eselon = @user.eselon_user
+    @role = params[:strategi][:role]
     respond_to do |format|
       if @strategi.update(strategi_params)
-        if eselon == "eselon_3"
+        if @role == "eselon_2"
           format.html { redirect_to opd_pohon_kinerja_index_path, success: "Sukses" }
         else
           format.html { redirect_to asn_pohon_kinerja_index_path, success: "Sukses" }
@@ -95,6 +109,11 @@ class StrategisController < ApplicationController
     end
   end
 
+  def strategi_asn
+    @nip = params[:nip]
+    @strategis = Strategi.where(nip_asn: @nip)
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -104,6 +123,14 @@ class StrategisController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def strategi_params
-    params.require(:strategi).permit(:strategi, :tahun, :sasaran_id, :strategi_ref_id, :nip_asn, :role)
+    params.require(:strategi)
+          .permit(:strategi, :tahun, :sasaran_id, :strategi_ref_id,
+                  :nip_asn, :role, :pohon_id, :opd_id,
+                  sasaran_attributes: [:sasaran_kinerja, :nip_asn, :strategi_id, :tahun,
+                                       :id_rencana, indikator_sasarans_params])
+  end
+
+  def indikator_sasarans_params
+    { indikator_sasarans_attributes: %i[id indikator_kinerja aspek target satuan _destroy] }
   end
 end

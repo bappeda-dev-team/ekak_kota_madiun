@@ -20,7 +20,7 @@
           </tr>
         </thead>
         <tbody>
-          <% Opd.find(136).isu_strategis_opds.each.with_index(1) do |isu_strategis, no| %>
+          <% @opd.isu_strategis_opds.each.with_index(1) do |isu_strategis, no| %>
             <tr>
               <td class="text-wrap align-middle"><%= no %></td>
               <td class="text-wrap align-middle"><%= isu_strategis.isu_strategis %></td>
@@ -35,7 +35,7 @@
                   nip: @opd.nip_kepala
                 ), class: 'btn btn-outline-gray-900' do %>
                     <span class="fas fa-share"></span>
-                    <span>Pilih Usulan</span>
+                    <span>Pilih Isu Strategis</span>
                 <% end %>
               </td>
             </tr>

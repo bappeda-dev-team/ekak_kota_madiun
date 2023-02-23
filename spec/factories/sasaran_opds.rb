@@ -24,6 +24,7 @@
 #  updated_at             :datetime         not null
 #  program_kegiatan_id    :bigint
 #  sasaran_atasan_id      :string
+#  strategi_id            :string
 #  subkegiatan_tematik_id :bigint
 #
 # Indexes

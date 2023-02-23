@@ -24,6 +24,9 @@ Rails.application.routes.draw do
     end
   end
   resources :strategis do
+    collection do
+      get :strategi_asn
+    end
     member do
       get :bagikan_pokin
       post :pilih_asn
