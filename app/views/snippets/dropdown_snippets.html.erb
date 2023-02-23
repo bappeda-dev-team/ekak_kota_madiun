@@ -104,3 +104,27 @@
     } }  %>
   <%= form.submit 'filter' %>
 <% end %>
+
+<%= form_with url: '/filter_sasaran', local: false do |form| %>
+  <%= form.hidden_field :filter_file, value: filter_value %>
+  <%= form.hidden_field :jenis, value: filter_jenis %>
+  <%= form.label :kode_opd %>
+  <% dropdown = options_for_select(Opd.where.not(kode_opd: nil).pluck(:nama_opd, :kode_opd), current_user.opd.kode_unik_opd) %>
+  <%= form.select :kode_opd, dropdown ,{include_blank: true},
+    { class: "form-control", required: true,
+      data: { "placeholder": "Pilih Opd",
+              controller: 'dropdown',
+              dropdown_jenis_value: 'chain'
+      } }  %>
+  <br>
+  <%= form.label :nip_asn %>
+  <%= form.select :nip_asn, [''] ,{include_blank: true},
+  { class: "form-control", required: true,
+    data: { "placeholder": "Pilih ASN",
+            controller: 'dropdown',
+            dropdown_jenis_value: 'ajax',
+            dropdown_url_value: '/user_search.json',
+            action: 'change-select@document->dropdown#chain_value_to_target'
+    } }  %>
+  <%= form.submit 'filter' %>
+<% end %>

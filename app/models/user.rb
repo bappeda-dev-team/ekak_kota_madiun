@@ -200,4 +200,8 @@ class User < ApplicationRecord
     eselon_user = eselon.nil? ? roles.where("roles.name ilike ?", "%staff%").first : eselon
     eselon_user.nil? ? "no_eselon" : eselon_user
   end
+
+  def nama_nip
+    "#{nama} - #{nik}"
+  end
 end

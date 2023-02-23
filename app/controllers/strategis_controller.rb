@@ -109,9 +109,19 @@ class StrategisController < ApplicationController
     end
   end
 
-  def strategi_asn
+  def list_strategi_asn
     @nip = params[:nip]
-    @strategis = Strategi.where(nip_asn: @nip)
+    @eselon = params[:role]
+    @strategi = Strategi.find(params[:id])
+    @list_strategi_asn = case @eselon
+                         when 'eselon_2'
+                           @strategi.strategi_eselon_tigas
+                         when 'eselon_3'
+                           @strategi.strategi_eselon_empats
+                         else
+                           @strategi.strategi_eselon_staffs
+                         end
+    render partial: 'list_strategi_asn'
   end
 
   private
