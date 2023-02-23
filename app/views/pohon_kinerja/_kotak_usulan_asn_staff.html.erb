@@ -8,7 +8,7 @@
         <div class="col-3">
                 <%= link_to new_strategi_path(nip: current_user.nik, role: "staff"), class: "btn btn-outline-info mx-3" do %>
                   <i class="fas fa-edit me-2"></i>
-                  Buat Strategi Baru
+                  Buat Strategic Objective 2
                 <% end %>
         </div>
       </div>
@@ -39,23 +39,11 @@
               <td class="text-center align-middle">
                 <%= link_to edit_strategi_path(strategi, nip: strategi.nip_asn, usulan_isu: pohon.strategi, role: "staff"), class: "btn btn-outline-info mx-3" do %>
                   <i class="fas fa-edit me-2"></i>
-                  Edit Strategi
-                <% end %>
-                <% unless strategi.strategi.blank? %>
-                  <%= link_to '#',
-                    remote: true, class: 'btn btn-outline-danger',
-                    data: { controller: 'form-modal',
-                            action: 'form-modal#appendForm',
-                            form_modal_location_param: 'form-bagikan-strategi-pokin-body',
-                            bs_target: '#form-bagikan-strategi-pokin',
-                            bs_toggle: 'modal' } do %>
-                      <span class="fas fa-lock"></span>
-                      <span>Ajukan Verifikasi Pokin</span>
-                  <% end %>
+                  Edit Strategic Objective 2
                 <% end %>
                 <%= link_to strategi, method: :delete, data: { confirm_swal: "Hapus Strategi?"}, class: "btn btn-outline-danger mx-3" do %>
                   <i class="fas fa-edit me-2"></i>
-                  Hapus Strategi
+                  Hapus Strategic Objective 2
                 <% end %>
               </td>
             </tr>

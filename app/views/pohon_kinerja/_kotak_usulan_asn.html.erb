@@ -39,8 +39,23 @@
               <td class="text-center align-middle">
                 <%= link_to edit_strategi_path(strategi, nip: strategi.nip_asn, usulan_isu: pohon.keterangan, role: "eselon_2"), class: "btn btn-outline-info mx-3" do %>
                   <i class="fas fa-edit me-2"></i>
-                  Edit Strategi
+                    Edit Strategic Objective
                 <% end %>
+
+                <%= link_to list_strategi_asn_strategi_path(strategi,nip: strategi.nip_asn, role: "eselon_2"),
+                  remote: true,
+                  data: {
+                    controller: 'form-modal',
+                    action: 'form-modal#appendForm',
+                    form_modal_location_param: 'form-list-bagikan-body',
+                    bs_target: '#form-list-bagikan',
+                    bs_toggle: 'modal'
+                  },
+                  class: "btn btn-outline-gray-700 mx-3" do %>
+                  <i class="fas fa-people-arrows me-2"></i>
+                  Jumlah dibagikan <span class="badge bg-primary"><%= strategi.strategi_eselon_tigas.count %></span>
+                <% end %>
+
                 <%= link_to bagikan_pokin_strategi_path(
                   strategi.id,
                   role: local_assigns[:role_bawahan],
@@ -56,8 +71,8 @@
                     <span>Bagikan Strategic Objective</span>
                 <% end %>
                 <%= link_to strategi, method: :delete, data: { confirm_swal: "Hapus Strategi?"}, class: "btn btn-outline-danger mx-3" do %>
-                  <i class="fas fa-edit me-2"></i>
-                  Hapus Strategi
+                  <i class="fas fa-trash me-2"></i>
+                    Hapus Strategic Objective
                 <% end %>
               </td>
             </tr>

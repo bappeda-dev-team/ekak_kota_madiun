@@ -8,7 +8,7 @@
         <div class="col-3">
                 <%= link_to new_strategi_path(nip: current_user.nik, role: "eselon_4"), class: "btn btn-outline-info mx-3" do %>
                   <i class="fas fa-edit me-2"></i>
-                  Buat Strategi Baru
+                  Buat Operational Objective
                 <% end %>
         </div>
       </div>
@@ -39,8 +39,9 @@
               <td class="text-center align-middle">
                 <%= link_to edit_strategi_path(strategi, nip: strategi.nip_asn, usulan_isu: pohon.strategi, role: "eselon_4"), class: "btn btn-outline-info mx-3" do %>
                   <i class="fas fa-edit me-2"></i>
-                  Edit Strategi
+                  Edit Operational Objective
                 <% end %>
+
                 <% unless strategi.strategi.blank? %>
                   <%= link_to bagikan_pokin_strategi_path(
                     strategi.id,
@@ -54,12 +55,27 @@
                             bs_target: '#form-bagikan-strategi-pokin',
                             bs_toggle: 'modal' } do %>
                       <span class="fas fa-share"></span>
-                      <span>Bagikan Strategic Objective</span>
+                      <span>Bagikan Operational Objective</span>
+                  <% end %>
+
+                  <%= link_to list_strategi_asn_strategi_path(strategi,nip: strategi.nip_asn, role: "eselon_2"),
+                    remote: true,
+                    data: {
+                      controller: 'form-modal',
+                      action: 'form-modal#appendForm',
+                      form_modal_location_param: 'form-list-bagikan-body',
+                      bs_target: '#form-list-bagikan',
+                      bs_toggle: 'modal'
+                    },
+                    class: "btn btn-outline-gray-700 mx-3" do %>
+                    <i class="fas fa-people-arrows me-2"></i>
+                    Jumlah dibagikan <span class="badge bg-primary"><%= strategi.strategi_staffs.count %></span>
                   <% end %>
                 <% end %>
+
                 <%= link_to strategi, method: :delete, data: { confirm_swal: "Hapus Strategi?"}, class: "btn btn-outline-danger mx-3" do %>
                   <i class="fas fa-edit me-2"></i>
-                  Hapus Strategi
+                  Hapus Operational Objective
                 <% end %>
               </td>
             </tr>
