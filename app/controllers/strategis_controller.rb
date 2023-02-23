@@ -11,6 +11,8 @@ class StrategisController < ApplicationController
 
   # GET /strategis/new
   def new
+    @opd = current_user.opd
+    @opd_id = @opd.id
     @strategi = Strategi.new
     @nip = params[:nip] || current_user.nik
     @role = params[:role] || current_user.eselon_user
@@ -21,6 +23,8 @@ class StrategisController < ApplicationController
 
   # GET /strategis/1/edit
   def edit
+    @opd = current_user.opd
+    @opd_id = @opd.id
     @nip = params[:nip]
     @role = params[:role]
     @usulan_isu = params[:usulan_isu]
@@ -121,7 +125,7 @@ class StrategisController < ApplicationController
   def strategi_params
     params.require(:strategi)
           .permit(:strategi, :tahun, :sasaran_id, :strategi_ref_id,
-                  :nip_asn, :role, :pohon_id,
+                  :nip_asn, :role, :pohon_id, :opd_id,
                   sasaran_attributes: [:sasaran_kinerja, :nip_asn, :strategi_id, :tahun,
                                        :id_rencana, indikator_sasarans_params])
   end
