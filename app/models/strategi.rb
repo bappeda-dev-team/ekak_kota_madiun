@@ -9,6 +9,7 @@
 #  tahun           :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  opd_id          :string
 #  pohon_id        :bigint
 #  sasaran_id      :string
 #  strategi_ref_id :string
@@ -19,8 +20,11 @@
 #
 class Strategi < ApplicationRecord
   belongs_to :pohon, dependent: :destroy
+  belongs_to :opd, optional: true
   has_one :sasaran
   accepts_nested_attributes_for :sasaran, update_only: true
+
+  has_many :indikator_sasarans, through: :sasaran
 
   belongs_to :strategi_atasan, class_name: "Strategi",
                                foreign_key: "strategi_ref_id", optional: true
@@ -44,4 +48,8 @@ class Strategi < ApplicationRecord
     where(role: "staff")
   }, class_name: "Strategi",
      foreign_key: "strategi_ref_id"
+
+  def isu_strategis_disasar
+    strategi_atasan.nil? ? pohon.keterangan : strategi_atasan.strategi
+  end
 end

@@ -2285,7 +2285,8 @@ CREATE TABLE public.strategis (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     pohon_id bigint,
-    role character varying
+    role character varying,
+    opd_id character varying
 );
 
 
@@ -4473,6 +4474,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230220025449'),
 ('20230220041153'),
 ('20230220041911'),
-('20230222034408');
+('20230222034408'),
+('20230223012444');
 
 

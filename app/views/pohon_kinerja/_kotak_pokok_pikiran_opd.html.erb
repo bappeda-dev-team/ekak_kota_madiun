@@ -22,7 +22,7 @@
           </tr>
         </thead>
         <tbody>
-          <% Opd.find(136).pokpir_opd.each.with_index(1) do |pokpir, no| %>
+          <% @opd.pokpir_opd.each.with_index(1) do |pokpir, no| %>
             <tr>
               <td class="text-wrap align-middle"><%= no %></td>
               <td class="text-wrap align-middle"><%= pokpir.usulan %></td>

@@ -19,31 +19,18 @@
           </div>
           <%= render "shared/get_tahun_filter", action_url: strategi_opds_path %>
         </div>
-        <div class="col mt-3">
-          <%= link_to new_strategi_opd_path, class: 'btn btn-sm btn-info text-white' do %>
-            <span>Buat Strategi OPD</span>
-          <% end %>
-        </div>
       </div>
-      <div class="table-responsive">
-        <table class="table align-items-center">
-          <thead class="thead-light">
-            <tr>
-              <th class="border-bottom" scope="col">No.</th>
-              <th class="border-bottom" scope="col">Strategi</th>
-              <th class="border-bottom" scope="col">Sasaran OPD</th>
-              <th class="border-bottom" scope="col">Isu Strategis OPD</th>
-              <th class="border-bottom" scope="col">Tahun</th>
-              <th class="border-bottom text-center" scope="col">OPD</th>
-              <th class="border-bottom text-center" scope="col">Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @strategi_opds.order(:tahun).each.with_index(1) do |strategi_opd, i| %>
-              <%= render 'strategi_opd_row', strategi_opd: strategi_opd, i: i %>
-            <% end %>
-          </tbody>
-        </table>
+      <div class="card-body">
+        <%= render 'strategis/strategi_eselon2' %>
+      </div>
+      <div class="card-body">
+        <%= render 'strategis/strategi_eselon3' %>
+      </div>
+      <div class="card-body">
+        <%= render 'strategis/strategi_eselon4' %>
+      </div>
+      <div class="card-body">
+        <%= render 'strategis/strategi_staff' %>
       </div>
     </div>
   </div>

@@ -17,15 +17,15 @@
         <%= form.hidden_field :role, class: "form-control", readonly: true, value: @role %>
         <%= form.hidden_field :nip_asn, class: "form-control", readonly: true, value: @nip %>
 
-        <%= form.label :pohon, class: "form-label" %>
-        <%= form.select :pohon_id, Strategi.where(nip_asn: current_user.nik).collect{ |str| [str.pohon.keterangan, str.pohon_id] } ,
+        <%= form.label :isu_strategis_pohon, class: "form-label" %>
+        <%= form.select :pohon_id, Strategi.where(nip_asn: @nip).collect{ |str| [str.pohon.keterangan, str.pohon_id] } ,
           {include_blank: true},
           { class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih Strategi Atasan' } }%>
       </div>
 
       <div class="field">
-        <%= form.label :isu_strategis_opd, class: "form-label" %>
-        <%= form.select :strategi_ref_id, Strategi.where(nip_asn: current_user.nik).collect{ |str| [str.strategi_atasan.strategi, str.strategi_ref_id] } ,
+        <%= form.label :isu_strategis_atasan, class: "form-label" %>
+        <%= form.select :strategi_ref_id, Strategi.where(nip_asn: @nip).collect{ |str| [str.isu_strategis_disasar, str.strategi_ref_id] } ,
           {include_blank: true},
           { class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih Strategi Atasan' } }%>
       </div>

@@ -20,7 +20,7 @@
           </tr>
         </thead>
         <tbody>
-          <% Opd.find(136).isu_strategis_opds.each.with_index(1) do |isu_strategis, no| %>
+          <% @opd.isu_strategis_opds.each.with_index(1) do |isu_strategis, no| %>
             <tr>
               <td class="text-wrap align-middle"><%= no %></td>
               <td class="text-wrap align-middle"><%= isu_strategis.isu_strategis %></td>
