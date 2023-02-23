@@ -57,6 +57,10 @@
                         <span>Bagikan Strategic Objective</span>
                     <% end %>
                   <% end %>
+                  <%= link_to strategi, method: :delete, data: { confirm_swal: "Hapus Strategi?"}, class: "btn btn-outline-danger mx-3" do %>
+                    <i class="fas fa-edit me-2"></i>
+                    Hapus Strategi
+                  <% end %>
               </td>
             </tr>
             <% end %>

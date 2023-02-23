@@ -19,7 +19,7 @@
 #  index_strategis_on_pohon_id  (pohon_id)
 #
 class Strategi < ApplicationRecord
-  belongs_to :pohon, dependent: :destroy
+  belongs_to :pohon
   belongs_to :opd, optional: true
   has_one :sasaran
   accepts_nested_attributes_for :sasaran, update_only: true
