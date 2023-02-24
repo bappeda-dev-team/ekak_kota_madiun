@@ -43,6 +43,20 @@
                   <% end %>
 
                   <% unless strategi.strategi.blank? %>
+                    <%= link_to list_strategi_asn_strategi_path(strategi,nip: strategi.nip_asn, role: "eselon_3"),
+                      remote: true,
+                      data: {
+                        controller: 'form-modal',
+                        action: 'form-modal#appendForm',
+                        form_modal_location_param: 'form-list-bagikan-body',
+                        bs_target: '#form-list-bagikan',
+                        bs_toggle: 'modal'
+                      },
+                      class: "btn btn-outline-gray-700 mx-3" do %>
+                      <i class="fas fa-people-arrows me-2"></i>
+                      Jumlah dibagikan <span class="badge bg-primary"><%= strategi.strategi_eselon_empats.count %></span>
+                    <% end %>
+
                     <%= link_to bagikan_pokin_strategi_path(
                       strategi.id,
                       role: local_assigns[:role_bawahan],
@@ -56,20 +70,6 @@
                               bs_toggle: 'modal' } do %>
                         <span class="fas fa-share"></span>
                         <span>Bagikan Tactical Objective</span>
-                    <% end %>
-
-                    <%= link_to list_strategi_asn_strategi_path(strategi,nip: strategi.nip_asn, role: "eselon_2"),
-                      remote: true,
-                      data: {
-                        controller: 'form-modal',
-                        action: 'form-modal#appendForm',
-                        form_modal_location_param: 'form-list-bagikan-body',
-                        bs_target: '#form-list-bagikan',
-                        bs_toggle: 'modal'
-                      },
-                      class: "btn btn-outline-gray-700 mx-3" do %>
-                      <i class="fas fa-people-arrows me-2"></i>
-                      Jumlah dibagikan <span class="badge bg-primary"><%= strategi.strategi_eselon_empats.count %></span>
                     <% end %>
                   <% end %>
 

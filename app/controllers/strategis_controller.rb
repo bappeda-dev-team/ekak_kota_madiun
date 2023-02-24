@@ -34,12 +34,18 @@ class StrategisController < ApplicationController
 
   # POST /strategis or /strategis.json
   def create
+    @role = strategi_params[:role]
     @strategi = Strategi.new(strategi_params)
 
     respond_to do |format|
       if @strategi.save
-        format.html { redirect_to strategi_url(@strategi), notice: "Strategi was successfully created." }
-        format.json { render :show, status: :created, location: @strategi }
+        if @role == "eselon_2"
+          format.html { redirect_to opd_pohon_kinerja_index_path, success: "Sukses" }
+        else
+          format.html { redirect_to asn_pohon_kinerja_index_path, success: "Sukses" }
+        end
+        # format.html { redirect_to strategi_url(@strategi), notice: "Strategi was successfully created." }
+        # format.json { render :show, status: :created, location: @strategi }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @strategi.errors, status: :unprocessable_entity }
@@ -67,11 +73,17 @@ class StrategisController < ApplicationController
 
   # DELETE /strategis/1 or /strategis/1.json
   def destroy
+    @role = @strategi.role
     @strategi.destroy
 
     respond_to do |format|
-      format.html { redirect_to strategis_url, notice: "Strategi was successfully destroyed." }
-      format.json { head :no_content }
+      if @role == "eselon_2"
+        format.html { redirect_to opd_pohon_kinerja_index_path, success: "Sukses" }
+      else
+        format.html { redirect_to asn_pohon_kinerja_index_path, success: "Sukses" }
+      end
+      # format.html { redirect_to strategis_url, notice: "Strategi was successfully destroyed." }
+      # format.json { head :no_content }
     end
   end
 
@@ -119,7 +131,7 @@ class StrategisController < ApplicationController
                          when 'eselon_3'
                            @strategi.strategi_eselon_empats
                          else
-                           @strategi.strategi_eselon_staffs
+                           @strategi.strategi_staffs
                          end
     render partial: 'list_strategi_asn'
   end
