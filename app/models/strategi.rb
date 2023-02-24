@@ -38,17 +38,17 @@ class Strategi < ApplicationRecord
   has_many :strategi_eselon_tigas, lambda {
     where(role: "eselon_3")
   }, class_name: "Strategi",
-     foreign_key: "strategi_ref_id"
+  foreign_key: "strategi_ref_id", dependent: :destroy
 
   has_many :strategi_eselon_empats, lambda {
     where(role: "eselon_4")
   }, class_name: "Strategi",
-     foreign_key: "strategi_ref_id"
+     foreign_key: "strategi_ref_id", dependent: :destroy
 
   has_many :strategi_staffs, lambda {
     where(role: "staff")
   }, class_name: "Strategi",
-     foreign_key: "strategi_ref_id"
+     foreign_key: "strategi_ref_id", dependent: :destroy
 
   def isu_strategis_disasar
     strategi_atasan.nil? ? pohon.keterangan : strategi_atasan.strategi
