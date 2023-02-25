@@ -9,7 +9,8 @@ export default class extends Controller {
     parent: String,
     url: String,
     opd_id: String,
-    uraian: String
+    uraian: String,
+    width: String
   }
 
   get select() {
@@ -26,8 +27,10 @@ export default class extends Controller {
   }
         
   get element_options() {
+    let width = this.widthValue || "element"
+        console.log(width)
     let options = {
-      width: "element",
+      width: width,
       theme: "bootstrap-5",
     }
     return options

@@ -337,12 +337,17 @@ class FilterController < ApplicationController
   end
 
   # filter tahun yang diaktifkan, dibawah logo E-KAK
-  def tahun_sasaran
+  def tahun_dan_opd
     @tahun_sasaran = params[:tahun_sasaran]
+    @kode_opd = params[:kode_opd]
     @tahun_sasaran = @tahun_sasaran.match(/murni/) ? @tahun_sasaran[/[^_]\d*/, 0] : @tahun_sasaran
-    cookies[:tahun_sasaran] = @tahun_sasaran
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    cookies[:tahun] = @tahun_sasaran
+    cookies[:opd] = @kode_opd
+    cookies[:nama_opd] = @nama_opd
     render 'shared/_notifier_v2',
-           locals: { message: "Tahun Dipilih: #{@tahun_sasaran}", status_icon: 'success', form_name: 'non-exists' }
+           locals: { message: "Tahun Aktif: #{@tahun_sasaran}, OPD : #{@nama_opd}", status_icon: 'success', form_name: 'non-exists' }
   end
 
   def renstra_master

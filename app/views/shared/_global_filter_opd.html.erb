@@ -1,22 +1,30 @@
  <% filter_value = local_assigns[:filter_file] || '' %>
  <% filter_jenis = local_assigns[:jenis] || '' %>
- <%= form_with url: filter_url, local: false, class: "form-inline" do |form| %>
+ <%= form_with url: filter_url, method: :get,local: false, class: "form-inline" do |form| %>
    <%= form.hidden_field :filter_file, value: filter_value %>
    <%= form.hidden_field :jenis, value: filter_jenis %>
    <% all_opd = local_assigns[:all]  %>
-   <div class="input-group input-group-merge" id="global-filter">
-     <%= form.select :kode_opd,  dropdown_opd(all: all_opd),{include_blank: true},
-       {class: "form-control", data: {"placeholder": "Cari OPD",
+   <div class="input-group input-group-merge">
+     <%= form.select :kode_opd,  dropdown_opd(all: 'Kota'),{include_blank: true},
+       {class: "form-control", data: {"placeholder": "Perangkat Daerah",
                                       controller: "dropdown",
+                  dropdown_width_value: "50%",
                                       dropdown_jenis_value: "element"
-                                      } }  %>
-            <span class="input-group-text" id="topbar-addon">
-              <svg class="icon icon-xs" x-description="Heroicon name: solid/search" xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd"
-                  d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                  clip-rule="evenodd"></path>
-              </svg>
-            </span>
+                                      } } %>
+      <span class="me-3"></span>
+      <%= form.select :tahun_sasaran, {},  {include_blank: true},
+        { class: "form-control", data: { placeholder: "Tahun",
+                  controller: 'dropdown',
+                  dropdown_jenis_value: "element",
+                  dropdown_width_value: "15px",
+                  'ajax--url': kelompok_anggarans_path(:json)
+        }} do %>
+          <% if cookies[:tahun] %>
+            <option value="<%= cookies[:tahun] %>" selected="selected"><%= cookies[:tahun] %></option>
+          <% end %>
+        <% end %>
+     <%= form.button type: :submit, name: "filter", value: "filter", class: "btn btn-sm btn-outline-tertiary" do %>
+       Aktifkan
+     <% end %>
    </div>
  <% end %>
