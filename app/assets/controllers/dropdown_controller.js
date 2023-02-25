@@ -24,6 +24,15 @@ export default class extends Controller {
     }
     return options
   }
+        
+  get element_options() {
+    let options = {
+      width: "element",
+      theme: "bootstrap-5",
+    }
+    return options
+
+  }
 
   get options_with_ajax() {
     let options = {
@@ -62,6 +71,9 @@ export default class extends Controller {
         break
       case 'chain':
         this.dropdown_with_action(this.default_options)
+        break
+      case 'element':
+        this.dropdown_base(this.element_options)
         break
       default:
         this.dropdown_base(this.default_options)
