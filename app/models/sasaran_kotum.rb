@@ -21,6 +21,8 @@
 #  index_sasaran_kota_on_id_sasaran  (id_sasaran) UNIQUE
 #
 class SasaranKotum < ApplicationRecord
+  default_scope { order(:id) }
+
   belongs_to :tujuan_kota, class_name: 'TujuanKota', foreign_key: 'id_tujuan', primary_key: 'kode_tujuan'
 
   has_many :indikator_sasarans, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id_sasaran'

@@ -33,10 +33,10 @@
 
       <div class="field" id="indikator-tujuans">
         <%= form.fields_for :indikator_tujuans do |indikator_tujuan| %>
-          <%= render 'tujuan_kota/indikator_tujuan_fields', form: indikator_tujuan %>
+          <%= render 'tujuan_kota/indikator_tujuan_kota_fields', form: indikator_tujuan %>
         <% end %>
       </div>
-      <%= link_to_add_nested(form, :indikator_tujuans, '#indikator-tujuans', link_classes: 'btn btn-primary btn-sm', link_text: 'Tambah Indikator', partial: 'tujuan_kota/indikator_tujuan_fields') %>
+      <%= link_to_add_nested(form, :indikator_tujuans, '#indikator-tujuans', link_classes: 'btn btn-primary btn-sm', link_text: 'Tambah Indikator', partial: 'tujuan_kota/indikator_tujuan_kota_fields') %>
 
       <div class="actions">
         <%= form.submit %>
