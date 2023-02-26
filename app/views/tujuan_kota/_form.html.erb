@@ -10,6 +10,8 @@
       </ul>
     </div>
   <% end %>
+  <% random_number = tujuan_kota.id_tujuan.nil? ? (SecureRandom.random_number(9e5) + 1e5).to_i : tujuan_kota.id_tujuan %>
+  <%= form.hidden_field :id_tujuan, :value => random_number, readonly: true %>
 
   <div class="card">
     <div class="card-body">
@@ -29,6 +31,13 @@
         <%= form.select :tahun_akhir,[2020, 2021, 2022, 2023, 2024],{selected: Date.today.year},
           { class: 'form-control', data: { controller: 'dropdown' } }%>
       </div>
+
+      <div class="field" id="indikator-tujuans">
+        <%= form.fields_for :indikator_tujuans do |indikator_tujuan| %>
+          <%= render 'tujuan_kota/indikator_tujuan_fields', form: indikator_tujuan %>
+        <% end %>
+      </div>
+      <%= link_to_add_nested(form, :indikator_tujuans, '#indikator-tujuans', link_classes: 'btn btn-primary btn-sm', link_text: 'Tambah Indikator', partial: 'tujuan_kota/indikator_tujuan_fields') %>
 
       <div class="actions">
         <%= form.submit %>

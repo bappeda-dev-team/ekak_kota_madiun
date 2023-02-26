@@ -22,6 +22,8 @@
 class TujuanKota < ApplicationRecord
   has_many :indikator_tujuans, -> { order(:tahun) },
            class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id_tujuan'
+  accepts_nested_attributes_for :indikator_tujuans
+
   has_many :sasaran_kota, foreign_key: 'id_tujuan', primary_key: 'kode_tujuan'
 
   def tahun_awal_akhir

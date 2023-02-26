@@ -49,7 +49,12 @@ class TujuanKotaController < ApplicationController
   end
 
   def tujuan_kota_params
-    params.require(:tujuan_kota).permit(:tujuan, :tahun_awal, :tahun_akhir)
+    params.require(:tujuan_kota).permit(:tujuan, :tahun_awal, :tahun_akhir, :id_tujuan, indikator_tujuans_attributes)
+    # indikator_tujuans_attributes: %i[id kode jenis sub_jenis indikator target satuan tahun _detroy])
+  end
+
+  def indikator_tujuans_attributes
+    { indikator_tujuans_attributes: %i[id kode jenis sub_jenis indikator target satuan tahun _detroy] }
   end
 
   def handle_filters
