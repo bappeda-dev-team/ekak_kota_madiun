@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     member do
       get :bagikan_ke_opd
       post :pilih_opd
+      get :list_strategi_opd
     end
   end
   resources :strategis do
@@ -31,7 +32,11 @@ Rails.application.routes.draw do
     end
   end
   resources :isu_strategis_opds
-  resources :isu_strategis_kota
+  resources :isu_strategis_kota do
+    member do
+      get :list_strategi_kota
+    end
+  end
   # get "/gender", to: "genders#gender"
   # get "/gap_gender", to: "genders#gap_gender"
   # get "/laporan_gender", to: "genders#laporan_gender"

@@ -1,5 +1,10 @@
-<h1>Editing Isu Strategis Kota</h1>
+<h1>Edit Isu Strategis Kota</h1>
 
 <%= render 'form', isu_strategis_kotum: @isu_strategis %>
 
-<%= link_to 'Back', isu_strategis_kota_path %>
+<div class="card-body">
+  <%= link_to isu_strategis_kota_path, class: 'btn btn-info w-100 text-white' do %>
+    <span class="fas fa-arrow-left"></span>
+    <span>Kembali</span>
+  <% end %>
+</div>
