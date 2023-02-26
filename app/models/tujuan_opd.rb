@@ -5,6 +5,8 @@
 #  id            :bigint           not null, primary key
 #  id_tujuan     :string           not null
 #  kode_unik_opd :string
+#  tahun_akhir   :string
+#  tahun_awal    :string
 #  tujuan        :string
 #  type          :string
 #  created_at    :datetime         not null
@@ -18,6 +20,7 @@ class TujuanOpd < Tujuan
   has_many :indikators, lambda {
                           where(jenis: 'Tujuan', sub_jenis: 'Opd')
                         }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id_tujuan'
+  accepts_nested_attributes_for :indikators, reject_if: :all_blank, allow_destroy: true
 
   def indikator_tujuans
     tujuan = indikators.group_by(&:indikator).transform_values do |indikator|

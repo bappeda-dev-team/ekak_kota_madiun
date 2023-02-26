@@ -2499,7 +2499,9 @@ CREATE TABLE public.tujuans (
     type character varying,
     kode_unik_opd character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    tahun_awal character varying,
+    tahun_akhir character varying
 );
 
 
@@ -4475,6 +4477,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230220041153'),
 ('20230220041911'),
 ('20230222034408'),
-('20230223012444');
+('20230223012444'),
+('20230226223959');
 
 

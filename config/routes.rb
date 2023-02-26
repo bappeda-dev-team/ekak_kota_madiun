@@ -9,6 +9,7 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :tujuan_opds
   resources :pohon_kinerja do
     collection do
       get :kota
@@ -208,7 +209,7 @@ Rails.application.routes.draw do
   resources :lembagas
   resources :opds do
     collection do
-      get :tujuan
+      # get :tujuan
       get :sasaran
       get :info
       get :kotak_usulan

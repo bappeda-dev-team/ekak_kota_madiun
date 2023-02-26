@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Tujuan:</strong>
+  <%= @tujuan_opd.tujuan %>
+</p>
+
+<p>
+  <strong>Id tujuan:</strong>
+  <%= @tujuan_opd.id_tujuan %>
+</p>
+
+<p>
+  <strong>Kode unik opd:</strong>
+  <%= @tujuan_opd.kode_unik_opd %>
+</p>
+
+<%= link_to 'Edit', edit_tujuan_opd_path(@tujuan_opd) %> |
+<%= link_to 'Back', tujuan_opds_path %>

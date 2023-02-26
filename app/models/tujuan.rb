@@ -5,6 +5,8 @@
 #  id            :bigint           not null, primary key
 #  id_tujuan     :string           not null
 #  kode_unik_opd :string
+#  tahun_akhir   :string
+#  tahun_awal    :string
 #  tujuan        :string
 #  type          :string
 #  created_at    :datetime         not null
