@@ -13,10 +13,10 @@
                                       } } %>
       <span class="me-3"></span>
       <%= form.select :tahun_sasaran, {},  {include_blank: true},
-        { class: "form-control", data: { placeholder: "Tahun",
+        { class: "form-control tahun_sasaran", data: { placeholder: "Tahun",
                   controller: 'dropdown',
                   dropdown_jenis_value: "element",
-                  dropdown_width_value: "15px",
+                  dropdown_width_value: "resolve",
                   'ajax--url': kelompok_anggarans_path(:json)
         }} do %>
           <% if cookies[:tahun] %>
