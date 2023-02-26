@@ -54,7 +54,7 @@ class TujuanKotaController < ApplicationController
   end
 
   def indikator_tujuans_attributes
-    { indikator_tujuans_attributes: %i[id kode jenis sub_jenis indikator target satuan tahun _detroy] }
+    { indikator_tujuans_attributes: %i[id kode jenis sub_jenis indikator target satuan tahun _destroy] }
   end
 
   def handle_filters
