@@ -1,6 +1,8 @@
 <h1>Form Tujuan Kota</h1>
 
-<%= render 'form', tujuan_kota: @tujuan_kota %>
+<%= form_for(@tujuan_kota, url: tujuan_kota_path, method: :post) do |form| %>
+  <%= render 'form' , form: form, tujuan_kota: @tujuan_kota %>
+<% end %>
 
 <div class="card-body">
   <%= link_to tujuan_kota_path, class: 'btn btn-info w-100 text-white' do %>

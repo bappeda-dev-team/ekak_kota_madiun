@@ -1,4 +1,3 @@
-<%= form_for(@tujuan_kota, url: tujuan_kota_path, method: :post) do |form| %>
   <% if tujuan_kota.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(tujuan_kota.errors.count, "error") %> prohibited this tujuan_kota from being saved:</h2>
@@ -22,13 +21,13 @@
 
       <div class="field">
         <%= form.label :tahun_awal, class: 'form-label' %>
-        <%= form.select :tahun_awal,[2020, 2021, 2022, 2023, 2024],{selected: Date.today.year},
+        <%= form.select :tahun_awal,[2020, 2021, 2022, 2023, 2024],{},
           { class: 'form-control', data: { controller: 'dropdown' } }%>
       </div>
 
       <div class="field">
         <%= form.label :tahun_akhir, class: 'form-label' %>
-        <%= form.select :tahun_akhir,[2020, 2021, 2022, 2023, 2024],{selected: Date.today.year},
+        <%= form.select :tahun_akhir,[2020, 2021, 2022, 2023, 2024],{},
           { class: 'form-control', data: { controller: 'dropdown' } }%>
       </div>
 
@@ -44,4 +43,3 @@
       </div>
     </div>
   </div>
-<% end %>
