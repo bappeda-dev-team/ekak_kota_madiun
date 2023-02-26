@@ -1,4 +1,3 @@
-<%= form_for(@sasaran_kota, url: sasaran_kota_path, method: :post) do |form| %>
   <% if sasaran_kota.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(sasaran_kota.errors.count, "error") %> prohibited this sasaran_kota from being saved:</h2>
@@ -10,12 +9,14 @@
       </ul>
     </div>
   <% end %>
+  <% random_number = sasaran_kota.id_sasaran.nil? ? (SecureRandom.random_number(9e5) + 1e5).to_i : sasaran_kota.id_sasaran %>
+  <%= form.hidden_field :id_sasaran, :value => random_number, readonly: true %>
 
   <div class="card">
     <div class="card-body">
       <div class="field">
         <%= form.label :tujuan_kota, class: 'form-label' %>
-        <%= form.select :id_tujuan, tujuan_kota.collect {|tk| [ tk.tujuan, tk.id] },{ include_blank: true, required: true },
+        <%= form.select :id_tujuan, TujuanKota.all.collect {|tk| [ tk.tujuan, tk.id_tujuan] },{ include_blank: true, required: true },
           { class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih Tujuan Kota' } }%>
        </div>
 
@@ -26,19 +27,25 @@
 
       <div class="field">
         <%= form.label :tahun_awal, class: 'form-label' %>
-        <%= form.select :tahun_awal,[2020, 2021, 2022, 2023, 2024],{selected: Date.today.year},
+        <%= form.select :tahun_awal,[2020, 2021, 2022, 2023, 2024],{},
           { class: 'form-control', data: { controller: 'dropdown' } }%>
       </div>
 
       <div class="field">
         <%= form.label :tahun_akhir, class: 'form-label' %>
-        <%= form.select :tahun_akhir,[2020, 2021, 2022, 2023, 2024],{selected: Date.today.year},
+        <%= form.select :tahun_akhir,[2020, 2021, 2022, 2023, 2024],{},
           { class: 'form-control', data: { controller: 'dropdown' } }%>
       </div>
+
+      <div class="field" id="indikator-sasarans-kota">
+        <%= form.fields_for :indikator_sasarans do |indikator_sasaran| %>
+          <%= render 'sasaran_kota/indikator_sasaran_kota_fields', form: indikator_sasaran %>
+        <% end %>
+      </div>
+      <%= link_to_add_nested(form, :indikator_sasarans, '#indikator-sasarans-kota', link_classes: 'btn btn-primary btn-sm', link_text: 'Tambah Indikator', partial: 'sasaran_kota/indikator_sasaran_kota_fields') %>
 
       <div class="actions">
         <%= form.submit %>
       </div>
     </div>
   </div>
-<% end %>

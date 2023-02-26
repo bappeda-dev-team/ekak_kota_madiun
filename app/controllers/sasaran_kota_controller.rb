@@ -9,16 +9,12 @@ class SasaranKotaController < ApplicationController
 
   def new
     @sasaran_kota = SasaranKotum.new
-    @tujuan_kota = TujuanKota.all
   end
 
   def edit; end
 
   def create
-    @tujuan_kota = TujuanKota.find(sasaran_kota_params[:id_tujuan])
-    updated_params = sasaran_kota_params.merge(tujuan: @tujuan_kota.tujuan)
-    @sasaran_kota = @tujuan_kota.sasaran_kota.build(updated_params)
-
+    @sasaran_kota = SasaranKotum.new(sasaran_kota_params)
     respond_to do |format|
       if @sasaran_kota.save
         format.html { redirect_to sasaran_kota_path, success: 'Sasaran ditambahkan' }
@@ -54,7 +50,11 @@ class SasaranKotaController < ApplicationController
   end
 
   def sasaran_kota_params
-    params.require(:sasaran_kotum).permit(:sasaran, :tahun_awal, :tahun_akhir, :id_tujuan)
+    params.require(:sasaran_kotum).permit(:sasaran, :tahun_awal, :tahun_akhir, :id_tujuan, indikator_sasarans_params)
+  end
+
+  def indikator_sasarans_params
+    { indikator_sasarans_attributes: %i[id kode jenis sub_jenis indikator target satuan tahun _destroy] }
   end
 
   def handle_filters
