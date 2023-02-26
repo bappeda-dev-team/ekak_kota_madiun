@@ -16,7 +16,7 @@
     <div class="card-body">
       <div class="field">
         <%= form.label :tujuan_kota, class: 'form-label' %>
-        <%= form.select :id_tujuan, TujuanKota.all.collect {|tk| [ tk.tujuan, tk.id_tujuan] },{ include_blank: true, required: true },
+        <%= form.select :id_tujuan, TujuanKota.all.collect {|tk| [ tk.tujuan, tk.kode_tujuan] },{ include_blank: true, required: true },
           { class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih Tujuan Kota' } }%>
        </div>
 

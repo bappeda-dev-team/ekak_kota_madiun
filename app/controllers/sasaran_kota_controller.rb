@@ -50,7 +50,8 @@ class SasaranKotaController < ApplicationController
   end
 
   def sasaran_kota_params
-    params.require(:sasaran_kotum).permit(:sasaran, :tahun_awal, :tahun_akhir, :id_tujuan, indikator_sasarans_params)
+    params.require(:sasaran_kotum).permit(:sasaran, :tahun_awal, :tahun_akhir, :id_tujuan, :id_sasaran,
+                                          indikator_sasarans_params)
   end
 
   def indikator_sasarans_params
