@@ -166,7 +166,7 @@ class FilterController < ApplicationController
   def tujuan_opd
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @tujuan_opds = @opd.tujuan_opds
-    render partial: 'opds/tujuan_opd'
+    render partial: 'tujuan_opds/tujuan_opd'
   end
 
   def sasaran_opd

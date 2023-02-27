@@ -1,0 +1,89 @@
+<div class="card border-0 shadow">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">Tujuan <%= @nama_opd %></h2>
+      </div>
+      <div class="col-auto">
+        <%= link_to new_tujuan_opd_path, class: 'btn btn-sm btn-info text-white' do %>
+          <span>Buat Tujuan OPD Baru</span>
+        <% end %>
+        <%= link_to sync_tujuan_opd_path(kode_opd: @opd.kode_unik_opd, tahun: Date.today.year),
+          remote: true,
+          data: { disable_with: 'Memproses....'},
+          class:"btn btn-sm btn-primary" do %>
+          <i class="fas fa-sync me-2"></i>
+          Sync Tujuan OPD
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive mb-5">
+      <table class="table align-items-center">
+        <thead class="thead-tujuan">
+          <tr class="header-tujuan">
+            <th class="border" scope="col" rowspan="2" width="20px">No.</th>
+            <th class="border" scope="col" rowspan="2">Tujuan OPD</th>
+            <th class="border text-center" scope="col" rowspan="2">Aksi</th>
+            <th class="border" scope="col" rowspan="2">Indikator</th>
+            <% (2020..2024).each do |tahun| %>
+              <th class="border text-center" scope="col" colspan="2"><%= tahun %></th>
+            <% end %>
+          </tr>
+          <tr>
+            <% (2020..2024).each do %>
+              <th class="border" scope="col" width="50px">Target</th>
+              <th class="border" scope="col">Satuan</th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tujuan_opds.each.with_index(1) do |tujuan, no_tujuan| %>
+            <% rowsize = tujuan.indikators.uniq(&:kode).size.zero? ? 1 : rowsize %>
+            <tr>
+              <td class="text-gray-900 text-wrap border" width='20px' scope="row" rowspan="<%= rowsize %>"><%= no_tujuan %></td>
+              <td class="text-gray-900 text-wrap border" style="width: 30%;" scope="row" rowspan="<%= rowsize %>" ><%= tujuan.tujuan %></td>
+              <td class="text-gray-900 border px-auto" scope="row" rowspan="<%= rowsize %>">
+                <div class="row justify-content-center w-100">
+                  <div class="col">
+                   <%= link_to edit_tujuan_opd_path(tujuan),
+                       class: "m-3 btn btn-outline-info w-100" do %>
+                         <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+                         <span>Edit</span>
+                   <% end %>
+                  </div>
+                  <div class="col">
+                   <%= link_to tujuan, method: :delete,
+                     data: { confirm_swal: "Hapus #{tujuan.tujuan} ?"},
+                     class: "m-3 btn btn-outline-danger w-100" do %>
+                       <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+                       <span>Hapus</span>
+                   <% end %>
+                  </div>
+                </div>
+              </td>
+              <% if tujuan.indikator_tujuans[:indikator_tujuan] %>
+                <% tujuan.indikator_tujuans[:indikator_tujuan].each do |indikator_tujuan, values| %>
+                  <td class="text-gray-900 text-wrap border"  ><%= indikator_tujuan %></td>
+                  <% (2020..2024).each do |tahun| %>
+                    <% targets = values[tahun.to_s] %>
+                    <td class="text-gray-900 text-wrap border"  ><%= targets&.last&.target %></td>
+                    <td class="text-gray-900 text-wrap border"  ><%= targets&.last&.satuan %></td>
+                  <% end %>
+                <% end %>
+              <% else %>
+                  <td class="text-gray-900 text-wrap border"  >-</td>
+                  <% (2020..2024).each do |tahun| %>
+                    <% targets = values[tahun.to_s] %>
+                    <td class="text-gray-900 text-wrap border"  >-</td>
+                    <td class="text-gray-900 text-wrap border"  >-</td>
+                  <% end %>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
