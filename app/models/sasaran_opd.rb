@@ -12,6 +12,10 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #
+# Indexes
+#
+#  index_sasaran_opds_on_id_sasaran  (id_sasaran) UNIQUE
+#
 class SasaranOpd < ApplicationRecord
   belongs_to :opd, foreign_key: 'kode_unik_opd', primary_key: 'kode_unik_opd'
   has_many :indikators, lambda { |object|

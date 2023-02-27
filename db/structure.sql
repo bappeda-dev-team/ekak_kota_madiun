@@ -4063,6 +4063,13 @@ CREATE UNIQUE INDEX index_sasaran_kota_on_id_sasaran ON public.sasaran_kota USIN
 
 
 --
+-- Name: index_sasaran_opds_on_id_sasaran; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_sasaran_opds_on_id_sasaran ON public.sasaran_opds USING btree (id_sasaran);
+
+
+--
 -- Name: index_sasarans_on_id_rencana; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -4530,6 +4537,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230222034408'),
 ('20230223012444'),
 ('20230226223959'),
-('20230227014728');
+('20230227014728'),
+('20230227030553');
 
 

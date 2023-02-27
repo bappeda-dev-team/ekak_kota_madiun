@@ -40,10 +40,11 @@
         </thead>
         <tbody>
           <% @sasaran_opds.each.with_index(1) do |sasaran_opd, no_sasaran| %>
+            <% rowsize = sasaran_opd.indikators.uniq(&:indikator).size + 1 %>
             <tr>
-              <td class="text-gray-900 text-wrap border" width='20px'><%= no_sasaran %></td>
-              <td class="text-gray-900 text-wrap border"  ><%= sasaran_opd.sasaran %></td>
-              <td class="text-gray-900 border" scope="row">
+              <td class="text-gray-900 text-wrap border" width='20px' rowspan="<%= rowsize %>"><%= no_sasaran %></td>
+              <td class="text-gray-900 text-wrap border" rowspan="<%= rowsize %>" ><%= sasaran_opd.sasaran %></td>
+              <td class="text-gray-900 border" scope="row" rowspan="<%= rowsize %>">
                 <div class="row justify-content-center w-100">
                   <div class="col">
                    <%= link_to edit_sasaran_opd_path(sasaran_opd),
@@ -62,23 +63,18 @@
                   </div>
                 </div>
               </td>
-              <% if sasaran_opd.indikator_sasarans_new[:indikator_sasaran] %>
-                <% sasaran_opd.indikator_sasarans_new[:indikator_sasaran].each do |indikator_sasaran, values| %>
-                  <td class="text-gray-900 text-wrap border"  ><%= indikator_sasaran %></td>
-                  <% (2020..2024).each do |tahun| %>
-                    <% targets = values[tahun.to_s] %>
-                    <td class="text-gray-900 text-wrap border"  ><%= targets&.last&.target %></td>
-                    <td class="text-gray-900 text-wrap border"  ><%= targets&.last&.satuan %></td>
-                  <% end %>
-                <% end %>
-              <% else %>
-                  <td class="text-gray-900 text-wrap border"  >-</td>
-                  <% (2020..2024).each do |tahun| %>
-                    <td class="text-gray-900 text-wrap border"  >-</td>
-                    <td class="text-gray-900 text-wrap border"  >-</td>
-                  <% end %>
-              <% end %>
+              <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="11"></td>
             </tr>
+            <% sasaran_opd.indikator_sasarans_new[:indikator_sasaran].each do |indikator_sasaran, values| %>
+              <tr>
+                <td class="text-gray-900 text-wrap border"  ><%= indikator_sasaran %></td>
+                <% (2020..2024).each do |tahun| %>
+                  <% targets = values[tahun.to_s] %>
+                  <td class="text-gray-900 text-wrap border"  ><%= targets&.last&.target %></td>
+                  <td class="text-gray-900 text-wrap border"  ><%= targets&.last&.satuan %></td>
+                <% end %>
+              </tr>
+            <% end %>
           <% end %>
         </tbody>
       </table>

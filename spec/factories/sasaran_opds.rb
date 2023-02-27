@@ -12,6 +12,10 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #
+# Indexes
+#
+#  index_sasaran_opds_on_id_sasaran  (id_sasaran) UNIQUE
+#
 FactoryBot.define do
   factory :sasaran_opd do
     
