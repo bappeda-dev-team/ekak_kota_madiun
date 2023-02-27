@@ -22,18 +22,22 @@ class ManualIksController < ApplicationController
   end
 
   # GET /manual_iks/1/edit
-  def edit; end
+  def edit
+    @sasaran = @indikator.sasaran
+    @user = @sasaran.user
+  end
 
   # POST /manual_iks or /manual_iks.json
   def create
-    # @manual_ik = ManualIk.new(manual_ik_params)
     @manual_ik = @indikator.build_manual_ik(manual_ik_params)
+    @sasaran = @indikator.sasaran
+    @user = @sasaran.user
 
     respond_to do |format|
       if @manual_ik.save
         format.html do
-          redirect_to indikator_sasaran_manual_ik_path(@indikator, @manual_ik),
-                      notice: "Manual ik was successfully created."
+          redirect_to user_sasaran_path(@user, @sasaran),
+                      success: "Manual IK dibuat"
         end
         format.json { render :show, status: :created, location: @manual_ik }
       else
@@ -45,9 +49,14 @@ class ManualIksController < ApplicationController
 
   # PATCH/PUT /manual_iks/1 or /manual_iks/1.json
   def update
+    @sasaran = @indikator.sasaran
+    @user = @sasaran.user
     respond_to do |format|
       if @manual_ik.update(manual_ik_params)
-        format.html { redirect_to manual_ik_url(@manual_ik), notice: "Manual ik was successfully updated." }
+        format.html do
+          redirect_to user_sasaran_path(@user, @sasaran),
+                      success: "Manual IK dibuat"
+        end
         format.json { render :show, status: :ok, location: @manual_ik }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -58,10 +67,15 @@ class ManualIksController < ApplicationController
 
   # DELETE /manual_iks/1 or /manual_iks/1.json
   def destroy
+    @sasaran = @indikator.sasaran
+    @user = @sasaran.user
     @manual_ik.destroy
 
     respond_to do |format|
-      format.html { redirect_to manual_iks_url, notice: "Manual ik was successfully destroyed." }
+      format.html do
+        redirect_to user_sasaran_path(@user, @sasaran),
+                    success: "Manual IK dibuat"
+      end
       format.json { head :no_content }
     end
   end

@@ -27,4 +27,15 @@
 #
 class ManualIk < ApplicationRecord
   belongs_to :indikator_sasaran
+  PERSPEKTIF = [
+    'Penerima Layanan',
+    'Proses Bisnis',
+    'Penguatan Internal',
+    'Anggaran'
+  ].freeze
+
+  JENIS_INDIKATOR = %w[
+    Outcome
+    Output
+  ].freeze
 end

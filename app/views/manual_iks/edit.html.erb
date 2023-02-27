@@ -1,6 +1,8 @@
-<h1>Editing Manual Ik</h1>
-
 <%= render 'form', manual_ik: @manual_ik %>
 
-<%= link_to 'Show', @manual_ik %> |
-<%= link_to 'Back', manual_iks_path %>
+<div class="card-body">
+  <%= link_to user_sasaran_path(@user, @sasaran), class: 'btn btn-info w-100 text-white' do %>
+    <span class="fas fa-arrow-left"></span>
+    <span>Kembali</span>
+  <% end %>
+</div>
