@@ -5,6 +5,9 @@
         <h2 class="fs-5 fw-bold mb-0">Sasaran <%= @nama_opd %></h2>
       </div>
       <div class="col">
+        <%= link_to new_sasaran_opd_path, class: 'btn btn-sm btn-info text-white' do %>
+          <span>Buat Sasaran OPD Baru</span>
+        <% end %>
         <%= link_to sync_opd_path(kode_opd: @opd.kode_unik_opd, tahun: Date.today.year),
           remote: true,
           data: { disable_with: 'Memproses....'},

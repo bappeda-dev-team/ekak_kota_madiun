@@ -10,5 +10,6 @@
 #  updated_at    :datetime         not null
 #
 class IsuStrategisKotum < ApplicationRecord
+  default_scope { order(:id) }
   has_many :strategi_kotums, foreign_key: 'isu_strategis_kota_id', primary_key: 'id'
 end

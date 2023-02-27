@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Sasaran OPD:</strong>
+  <%= @sasaran_opd.sasaran %>
+</p>
+
+<p>
+  <strong>Tahun:</strong>
+  <%= @sasaran_opd.tahun_awal %> - <%= @sasaran_opd.tahun_akhir %>
+</p>
+
+<%= link_to 'Edit', edit_sasaran_opd_path(@sasaran_opd) %> |
+<%= link_to 'Back', sasaran_opds_path %>

@@ -21,6 +21,7 @@
 #  index_pohons_on_user_id      (user_id)
 #
 class Pohon < ApplicationRecord
+  default_scope { order(:id) }
   belongs_to :pohonable, polymorphic: true
   belongs_to :opd, optional: true
   belongs_to :user, optional: true

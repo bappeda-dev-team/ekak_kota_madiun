@@ -1,5 +1,18 @@
 <tr>
   <td class="fw-bolder" scope="row" rowspan="<%= tujuan.indikator_tujuans.size + 1 %>"><%= i %></td>
+  <td class="fw-bolder" scope="row" rowspan="<%= tujuan.indikator_tujuans.size + 1 %>">
+   <%= link_to edit_tujuan_kotum_path(tujuan),
+       class: "m-3 btn btn-outline-info" do %>
+         <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit Tujuan"></i>
+         <span>Edit</span>
+   <% end %>
+   <%= link_to tujuan_kotum_path(tujuan), method: :delete,
+     data: { confirm_swal: "Hapus #{tujuan.tujuan} ?"},
+     class: "m-3 btn btn-outline-danger" do %>
+       <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus Tujuan"></i>
+       <span>Hapus</span>
+   <% end %>
+  </td>
   <td class="fw-bolder text-wrap" scope="row" rowspan="<%= tujuan.indikator_tujuans.size + 1 %>"><%= tujuan.tujuan %></td>
   <td class="fw-bolder" scope="row" rowspan="<%= tujuan.indikator_tujuans.size + 1 %>"><%= tujuan.tahun_awal_akhir %></td>
   <%= render 'indikator_tujuan_kota_row', indikator_tujuans: tujuan.indikator_tujuans %>

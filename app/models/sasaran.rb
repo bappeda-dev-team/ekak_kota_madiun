@@ -37,6 +37,7 @@
 #  fk_rails_...  (subkegiatan_tematik_id => subkegiatan_tematiks.id)
 #
 class Sasaran < ApplicationRecord
+  default_scope { order(:id) }
   # belongs_to :user
   belongs_to :user, foreign_key: 'nip_asn', primary_key: 'nik'
   has_one :opd, through: :user

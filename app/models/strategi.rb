@@ -19,6 +19,7 @@
 #  index_strategis_on_pohon_id  (pohon_id)
 #
 class Strategi < ApplicationRecord
+  default_scope { order(:id) }
   belongs_to :pohon
   belongs_to :opd, optional: true
   belongs_to :user, foreign_key: 'nip_asn', primary_key: 'nik', optional: true

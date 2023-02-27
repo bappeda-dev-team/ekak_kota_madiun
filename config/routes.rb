@@ -9,6 +9,11 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :indikator_sasarans do
+    resources :manual_iks
+  end
+  resources :sasaran_opds
+  resources :tujuan_opds
   resources :pohon_kinerja do
     collection do
       get :kota
@@ -21,6 +26,7 @@ Rails.application.routes.draw do
     member do
       get :bagikan_ke_opd
       post :pilih_opd
+      get :list_strategi_opd
     end
   end
   resources :strategis do
@@ -31,7 +37,11 @@ Rails.application.routes.draw do
     end
   end
   resources :isu_strategis_opds
-  resources :isu_strategis_kota
+  resources :isu_strategis_kota do
+    member do
+      get :list_strategi_kota
+    end
+  end
   # get "/gender", to: "genders#gender"
   # get "/gap_gender", to: "genders#gap_gender"
   # get "/laporan_gender", to: "genders#laporan_gender"
@@ -203,8 +213,8 @@ Rails.application.routes.draw do
   resources :lembagas
   resources :opds do
     collection do
-      get :tujuan
-      get :sasaran
+      # get :tujuan
+      # get :sasaran
       get :info
       get :kotak_usulan
     end

@@ -73,6 +73,11 @@ class StrategiKotaController < ApplicationController
     end
   end
 
+  def list_strategi_opd
+    @strategi_kota = StrategiKotum.find(params[:id])&.pohons
+    render partial: 'list_strategi_opd'
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

@@ -1,0 +1,55 @@
+<%= form_with(model: sasaran_opd) do |form| %>
+  <% if sasaran_opd.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(sasaran_opd.errors.count, "error") %> prohibited this sasaran_opd from being saved:</h2>
+
+      <ul>
+        <% sasaran_opd.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% random_number = sasaran_opd.id_sasaran.nil? ? (SecureRandom.random_number(9e5) + 1e5).to_i : sasaran_opd.id_sasaran %>
+  <%= form.hidden_field :id_sasaran, :value => random_number, readonly: true %>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="field">
+        <%= form.label :opd, class: 'form-label' %>
+        <%= form.select :kode_unik_opd, Opd.where.not(nama_kepala: nil).collect { |opd| [opd.nama_opd, opd.kode_unik_opd] } ,{include_blank: true},
+          { class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih OPD' } }%>
+      </div>
+
+      <div class="field">
+        <%= form.label :sasaran, class: 'form-label' %>
+        <%= form.text_field :sasaran, class: 'form-control' %>
+      </div>
+
+      <div class="field">
+        <%= form.label :tahun_awal, class: 'form-label' %>
+        <%= form.select :tahun_awal,[2020, 2021, 2022, 2023, 2024],{},
+          { class: 'form-control', data: { controller: 'dropdown' } }%>
+      </div>
+
+      <div class="field">
+        <%= form.label :tahun_akhir, class: 'form-label' %>
+        <%= form.select :tahun_akhir,[2020, 2021, 2022, 2023, 2024],{},
+          { class: 'form-control', data: { controller: 'dropdown' } }%>
+      </div>
+
+      <div class="field" id="indikator-sasarans-opd">
+        <%= form.fields_for :indikators do |indikator_sasaran| %>
+          <%= render 'sasaran_opds/indikator_sasaran_opd_fields', form: indikator_sasaran %>
+        <% end %>
+      </div>
+      <%= link_to_add_nested(form, :indikators, '#indikator-sasarans-opd', link_classes: 'btn btn-primary btn-sm', link_text: 'Tambah Indikator',
+                             partial: 'sasaran_opds/indikator_sasaran_opd_fields') %>
+
+      <div class="actions">
+        <%= form.submit %>
+      </div>
+    </div>
+  </div>
+<% end %>

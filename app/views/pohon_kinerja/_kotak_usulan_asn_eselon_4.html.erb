@@ -1,16 +1,13 @@
 <div class="card border-2 shadow mb-3" id="musrenbang-card">
   <div class="card-header">
     <div class="row align-items-center">
-      <div class="row align-items-center">
-        <div class="col">
-          <h5>Strategi ASN</h5>
-        </div>
-        <div class="col-3">
-                <%= link_to new_strategi_path(nip: current_user.nik, role: "eselon_4"), class: "btn btn-outline-info mx-3" do %>
-                  <i class="fas fa-edit me-2"></i>
-                  Buat Operational Objective
-                <% end %>
-        </div>
+      <div class="col">
+        <h5>Strategi ASN</h5>
+      </div>
+      <div class="col-3">
+        <%= render 'shared/button_cog',
+          link: new_strategi_path(nip: current_user.nik, role: "eselon_4"),
+          name: "Buat Operational Objective" %>
       </div>
     </div>
   </div>

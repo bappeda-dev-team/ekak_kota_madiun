@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Manual Iks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Perspektif</th>
+      <th>Rhk</th>
+      <th>Tujuan rhk</th>
+      <th>Indikator kinerja</th>
+      <th>Target</th>
+      <th>Satuan</th>
+      <th>Definisi</th>
+      <th>Key activities</th>
+      <th>Key milestone</th>
+      <th>Formula</th>
+      <th>Jenis indikator</th>
+      <th>Penanggung jawab</th>
+      <th>Penyedia data</th>
+      <th>Sumber data</th>
+      <th>Mulai</th>
+      <th>Akhir</th>
+      <th>Periode pelaporan</th>
+      <th>Budget</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @manual_iks.each do |manual_ik| %>
+      <tr>
+        <td><%= manual_ik.perspektif %></td>
+        <td><%= manual_ik.rhk %></td>
+        <td><%= manual_ik.tujuan_rhk %></td>
+        <td><%= manual_ik.indikator_kinerja %></td>
+        <td><%= manual_ik.target %></td>
+        <td><%= manual_ik.satuan %></td>
+        <td><%= manual_ik.definisi %></td>
+        <td><%= manual_ik.key_activities %></td>
+        <td><%= manual_ik.key_milestone %></td>
+        <td><%= manual_ik.formula %></td>
+        <td><%= manual_ik.jenis_indikator %></td>
+        <td><%= manual_ik.penanggung_jawab %></td>
+        <td><%= manual_ik.penyedia_data %></td>
+        <td><%= manual_ik.sumber_data %></td>
+        <td><%= manual_ik.mulai %></td>
+        <td><%= manual_ik.akhir %></td>
+        <td><%= manual_ik.periode_pelaporan %></td>
+        <td><%= manual_ik.budget %></td>
+        <td><%= link_to 'Show', manual_ik %></td>
+        <td><%= link_to 'Edit', edit_manual_ik_path(manual_ik) %></td>
+        <td><%= link_to 'Destroy', manual_ik, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Manual Ik', new_manual_ik_path %>

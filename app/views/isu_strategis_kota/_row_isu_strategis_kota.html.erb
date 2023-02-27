@@ -1,19 +1,33 @@
 <tr>
   <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-  <td class="fw-bolder text-gray-500"><%= isu_strategis.kode %></td>
-  <td class="fw-bolder text-gray-500"><%= isu_strategis.isu_strategis %></td>
-  <td class="fw-bolder text-gray-500"><%= isu_strategis.tahun %></td>
   <td class="fw-bolder text-gray-500 text-center">
     <%= link_to edit_isu_strategis_kotum_path(isu_strategis),
-      remote: true,
-      data: { bs_toggle: 'modal', bs_target: "#form-programkegiatan"},
-      class: "m-3" do %>
+      class: "m-3 btn btn-outline-info" do %>
         <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+        <span>Edit</span>
     <% end %>
     <%= link_to isu_strategis, method: :delete,
       data: { confirm_swal: "Hapus #{isu_strategis.isu_strategis} ?"},
-      class: "m-3" do %>
+      class: "m-3 btn btn-outline-danger" do %>
         <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+        <span>Hapus</span>
+    <% end %>
+  </td>
+  <td class="fw-bolder text-gray-500"><%= isu_strategis.isu_strategis %></td>
+  <td class="fw-bolder text-gray-500"><%= isu_strategis.tahun %></td>
+  <td class="fw-bolder text-gray-500 text-center border-end border-start">
+    <%= link_to list_strategi_kota_isu_strategis_kotum_path(isu_strategis),
+      remote: true,
+      data: {
+        controller: 'form-modal',
+        action: 'form-modal#appendForm',
+        form_modal_location_param: 'form-list-strategi-body',
+        bs_target: '#form-list-strategi',
+        bs_toggle: 'modal'
+      },
+      class: "btn btn-outline-gray-700 mx-3" do %>
+      <i class="fas fa-people-arrows me-2"></i>
+      Jumlah Strategi <span class="badge bg-primary"><%= isu_strategis.strategi_kotums.count %></span>
     <% end %>
   </td>
 </tr>

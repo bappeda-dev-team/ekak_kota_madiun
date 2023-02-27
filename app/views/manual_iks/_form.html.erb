@@ -1,0 +1,192 @@
+<div class="card">
+  <div class="card-body">
+    <table class="table table-bordered border-primary">
+      <thead>
+        <tr class="bg-gray-900 text-white">
+          <th colspan="2" class="text-center">MANUAL INDIKATOR KINERJA</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= form_with(model: [@indikator, manual_ik]) do |form| %>
+          <% if manual_ik.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(manual_ik.errors.count, "error") %> prohibited this manual_ik from being saved:</h2>
+              <ul>
+                <% manual_ik.errors.each do |error| %>
+                  <li><%= error.full_message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <tr>
+            <td style="width: 10%;">
+              <%= form.label :perspektif, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.select :perspektif, ManualIk::PERSPEKTIF ,{include_blank: true},class: "form-control", data: {
+                  controller: "dropdown",
+                  placeholder: "Pilih Perspektif"
+                } %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :rencana_hasil_kerja, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_field :rhk, class: "form-control", value: @sasaran.sasaran_kinerja, readonly: true %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :tujuan_rencana_hasil_kerja, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_area :tujuan_rhk, class: "form-control", placeholder: "Menjelaskan manfaat dari rencana hasil kerja" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :indikator_kinerja, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_field :indikator_kinerja, class: "form-control", value: @indikator.indikator_kinerja, readonly: true %>
+              </div>
+              <div class="field">
+                <%= form.label :target, class: "form-label" %>
+                <%= form.text_field :target, class: "form-control", value: "#{@indikator.target} #{@indikator.satuan}", readonly: true %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :deskripsi_indikator_kinerja_individu, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.label :definisi, class: "form-label" %>
+                <%= form.text_area :definisi, class: "form-control",
+                  placeholder: "Menjelaskan penjelasan dari indikator kinerja. Bisa dijelaskan dengan detail atau perintah yang ingin diturunkan ke bawahan" %>
+              </div>
+              <div class="field">
+                <%= form.label :key_activities, class: "form-label" %>
+                <%= form.text_area :key_activities, class: "form-control",
+                  placeholder: "hal yang paling menentukan dalam pencapaian rencana hasil kerja" %>
+              </div>
+              <div class="field">
+                <%= form.label :key_milestone, class: "form-label" %>
+                <%= form.text_field :key_milestone, class: "form-control" %>
+              </div>
+              <div class="field">
+                <%= form.label :formula, class: "form-label" %>
+                <%= form.text_area :formula, class: "form-control",
+                  placeholder: "Menjelaskan bagaimana cara perhitungan target indikator" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :satuan_pengukuran, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_field :satuan, class: "form-control", value: @indikator.satuan, readonly: true %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :jenis_indikator_kinerja, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.select :jenis_indikator, ManualIk::JENIS_INDIKATOR, {include_blank: true},
+                  class: "form-control", data: {
+                    controller: "dropdown",
+                    placeholder: "Output / Outcome"
+                  } %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :unit_penanggung_jawab, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_field :penanggung_jawab, class: "form-control", value: @user.jabatan, readonly: true %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :unit_penyedia_data, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_field :penyedia_data, class: "form-control", placeholder: "Instansi mana yang memproduksi datanya" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :sumber_data, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_field :sumber_data, class: "form-control", placeholder: "Dari dokumen apakah sumber data diambil" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :jangka_waktu, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_field :mulai, class: "form-control" %>
+              </div>
+              <div class="field">
+                <%= form.text_field :akhir, class: "form-control" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :periode_pelaporan, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_field :periode_pelaporan, class: "form-control", readonly: true, value: "Bulanan" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :budget, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_field :budget, class: "form-control", placeholder: "Otomatis setelah menyusun Anggaran", readonly: true %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <div class="actions">
+                <%= form.submit %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

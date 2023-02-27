@@ -40,6 +40,11 @@ class IsuStrategisKotaController < ApplicationController
     end
   end
 
+  def list_strategi_kota
+    @isu_strategis_kota = IsuStrategisKotum.find(params[:id])&.strategi_kotums
+    render partial: 'list_strategi_kota'
+  end
+
   private
 
   def set_isu_strategis_kota

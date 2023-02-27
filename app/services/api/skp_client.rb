@@ -174,9 +174,9 @@ module Api
       sasarans = data['data']
       sasarans.each do |sasaran|
         data_sasaran = {
-          id_rencana: sasaran['id'],
-          sasaran_kinerja: sasaran['sasaran'],
-          sasaran_opd: sasaran['unit_id'], type: 'SasaranOpd',
+          id_sasaran: sasaran['id'],
+          sasaran: sasaran['sasaran'],
+          kode_unik_opd: sasaran['unit_id'],
           created_at: Time.now, updated_at: Time.now
         }
 
@@ -185,7 +185,8 @@ module Api
             indikator: indikator['indikator'],
             jenis: 'Sasaran',
             sub_jenis: 'Opd',
-            kode: indikator['id_sasaran']
+            kode: indikator['id_sasaran'],
+            kode_opd: sasaran['unit_id']
           }
           ranges = (2020..2024).to_a
           ranges.each.with_index(1) do |tahun, index|
@@ -198,7 +199,7 @@ module Api
             Indikator.insert(data_input)
           end
         end
-        SasaranOpd.upsert(data_sasaran, unique_by: :id_rencana)
+        SasaranOpd.upsert(data_sasaran, unique_by: :id_sasaran)
       end
     end
 

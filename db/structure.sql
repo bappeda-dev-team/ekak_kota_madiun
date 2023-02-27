@@ -1123,6 +1123,55 @@ ALTER SEQUENCE public.mandatoris_id_seq OWNED BY public.mandatoris.id;
 
 
 --
+-- Name: manual_iks; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.manual_iks (
+    id bigint NOT NULL,
+    perspektif character varying,
+    rhk character varying,
+    tujuan_rhk character varying,
+    indikator_kinerja character varying,
+    target character varying,
+    satuan character varying,
+    definisi character varying,
+    key_activities character varying,
+    key_milestone character varying,
+    formula character varying,
+    jenis_indikator character varying,
+    penanggung_jawab character varying,
+    penyedia_data character varying,
+    sumber_data character varying,
+    mulai character varying,
+    akhir character varying,
+    periode_pelaporan character varying,
+    budget character varying,
+    indikator_sasaran_id character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: manual_iks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.manual_iks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: manual_iks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.manual_iks_id_seq OWNED BY public.manual_iks.id;
+
+
+--
 -- Name: master_bidang_urusans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1989,6 +2038,42 @@ ALTER SEQUENCE public.sasaran_kota_id_seq OWNED BY public.sasaran_kota.id;
 
 
 --
+-- Name: sasaran_opds; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.sasaran_opds (
+    id bigint NOT NULL,
+    id_tujuan character varying,
+    id_sasaran character varying,
+    tahun_awal character varying,
+    tahun_akhir character varying,
+    sasaran character varying NOT NULL,
+    kode_unik_opd character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: sasaran_opds_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.sasaran_opds_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: sasaran_opds_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.sasaran_opds_id_seq OWNED BY public.sasaran_opds.id;
+
+
+--
 -- Name: sasarans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2499,7 +2584,9 @@ CREATE TABLE public.tujuans (
     type character varying,
     kode_unik_opd character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    tahun_awal character varying,
+    tahun_akhir character varying
 );
 
 
@@ -2851,6 +2938,13 @@ ALTER TABLE ONLY public.mandatoris ALTER COLUMN id SET DEFAULT nextval('public.m
 
 
 --
+-- Name: manual_iks id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.manual_iks ALTER COLUMN id SET DEFAULT nextval('public.manual_iks_id_seq'::regclass);
+
+
+--
 -- Name: master_bidang_urusans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2995,6 +3089,13 @@ ALTER TABLE ONLY public.roles ALTER COLUMN id SET DEFAULT nextval('public.roles_
 --
 
 ALTER TABLE ONLY public.sasaran_kota ALTER COLUMN id SET DEFAULT nextval('public.sasaran_kota_id_seq'::regclass);
+
+
+--
+-- Name: sasaran_opds id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sasaran_opds ALTER COLUMN id SET DEFAULT nextval('public.sasaran_opds_id_seq'::regclass);
 
 
 --
@@ -3343,6 +3444,14 @@ ALTER TABLE ONLY public.mandatoris
 
 
 --
+-- Name: manual_iks manual_iks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.manual_iks
+    ADD CONSTRAINT manual_iks_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: master_bidang_urusans master_bidang_urusans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3508,6 +3617,14 @@ ALTER TABLE ONLY public.roles
 
 ALTER TABLE ONLY public.sasaran_kota
     ADD CONSTRAINT sasaran_kota_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: sasaran_opds sasaran_opds_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sasaran_opds
+    ADD CONSTRAINT sasaran_opds_pkey PRIMARY KEY (id);
 
 
 --
@@ -4010,6 +4127,13 @@ CREATE UNIQUE INDEX index_sasaran_kota_on_id_sasaran ON public.sasaran_kota USIN
 
 
 --
+-- Name: index_sasaran_opds_on_id_sasaran; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_sasaran_opds_on_id_sasaran ON public.sasaran_opds USING btree (id_sasaran);
+
+
+--
 -- Name: index_sasarans_on_id_rencana; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -4475,6 +4599,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230220041153'),
 ('20230220041911'),
 ('20230222034408'),
-('20230223012444');
+('20230223012444'),
+('20230226223959'),
+('20230227014728'),
+('20230227030553'),
+('20230227035240');
 
 

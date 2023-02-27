@@ -39,7 +39,7 @@ class Opd < ApplicationRecord
     end
   end
   belongs_to :lembaga
-  has_many :sasaran_opds, class_name: 'SasaranOpd', foreign_key: 'sasaran_opd', primary_key: 'kode_unik_opd'
+  has_many :sasaran_opds, foreign_key: 'kode_unik_opd', primary_key: 'kode_unik_opd'
   has_many :tujuan_opds, class_name: 'TujuanOpd', foreign_key: 'kode_unik_opd', primary_key: 'kode_unik_opd'
   has_one :kepala, class_name: 'Kepala', foreign_key: :nik, primary_key: :nip_kepala
 
