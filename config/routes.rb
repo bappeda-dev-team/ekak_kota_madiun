@@ -9,6 +9,9 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :indikator_sasarans do
+    resources :manual_iks
+  end
   resources :sasaran_opds
   resources :tujuan_opds
   resources :pohon_kinerja do

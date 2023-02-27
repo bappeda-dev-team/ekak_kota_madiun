@@ -1,0 +1,98 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Perspektif:</strong>
+  <%= @manual_ik.perspektif %>
+</p>
+
+<p>
+  <strong>Rhk:</strong>
+  <%= @manual_ik.rhk %>
+</p>
+
+<p>
+  <strong>Tujuan rhk:</strong>
+  <%= @manual_ik.tujuan_rhk %>
+</p>
+
+<p>
+  <strong>Indikator kinerja:</strong>
+  <%= @manual_ik.indikator_kinerja %>
+</p>
+
+<p>
+  <strong>Target:</strong>
+  <%= @manual_ik.target %>
+</p>
+
+<p>
+  <strong>Satuan:</strong>
+  <%= @manual_ik.satuan %>
+</p>
+
+<p>
+  <strong>Definisi:</strong>
+  <%= @manual_ik.definisi %>
+</p>
+
+<p>
+  <strong>Key activities:</strong>
+  <%= @manual_ik.key_activities %>
+</p>
+
+<p>
+  <strong>Key milestone:</strong>
+  <%= @manual_ik.key_milestone %>
+</p>
+
+<p>
+  <strong>Formula:</strong>
+  <%= @manual_ik.formula %>
+</p>
+
+<p>
+  <strong>Jenis indikator:</strong>
+  <%= @manual_ik.jenis_indikator %>
+</p>
+
+<p>
+  <strong>Penanggung jawab:</strong>
+  <%= @manual_ik.penanggung_jawab %>
+</p>
+
+<p>
+  <strong>Penyedia data:</strong>
+  <%= @manual_ik.penyedia_data %>
+</p>
+
+<p>
+  <strong>Sumber data:</strong>
+  <%= @manual_ik.sumber_data %>
+</p>
+
+<p>
+  <strong>Mulai:</strong>
+  <%= @manual_ik.mulai %>
+</p>
+
+<p>
+  <strong>Akhir:</strong>
+  <%= @manual_ik.akhir %>
+</p>
+
+<p>
+  <strong>Periode pelaporan:</strong>
+  <%= @manual_ik.periode_pelaporan %>
+</p>
+
+<p>
+  <strong>Budget:</strong>
+  <%= @manual_ik.budget %>
+</p>
+
+<div class="card-body">
+  <%= link_to user_sasaran_path(@user, @sasaran), class: 'btn btn-info w-100 text-white' do %>
+    <span class="fas fa-arrow-left"></span>
+    <span>Kembali</span>
+  <% end %>
+</div>

@@ -19,6 +19,18 @@
           <% sasaran.indikator_sasarans.each do |indikator| %>
             <li>Indikator Kinerja : <%= indikator.indikator_kinerja %></li>
             <li>Target Indikator Kinerja: <%= indikator.target %> <%= indikator.satuan %></li>
+            <li>Manual IK: 
+               <%= link_to new_indikator_sasaran_manual_ik_path(indikator),
+                   class: "m-3 btn btn-sm btn-outline-info" do %>
+                     <i class="fa fa-edit me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+                     <span>Edit Manual IK</span>
+               <% end %>
+               <%= link_to indikator_sasaran_manual_ik_path(indikator, indikator.manual_ik),
+                   class: "m-3 btn btn-sm btn-outline-primary" do %>
+                     <i class="fa fa-edit me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+                     <span>Show</span>
+               <% end %>
+            </li>
           <% end %>
         </ul>
       </div>

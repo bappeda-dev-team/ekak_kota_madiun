@@ -1,0 +1,181 @@
+<div class="card">
+  <div class="card-body">
+    <table class="table table-bordered border-primary table-hover">
+      <thead>
+        <tr class="bg-tertiary text-white">
+          <th colspan="2" class="text-center">INDIKATOR KINERJA </th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= form_with(model: [@indikator, manual_ik]) do |form| %>
+          <% if manual_ik.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(manual_ik.errors.count, "error") %> prohibited this manual_ik from being saved:</h2>
+              <ul>
+                <% manual_ik.errors.each do |error| %>
+                  <li><%= error.full_message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <tr>
+            <td style="width: 10%;">
+              <%= form.label :perspektif, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_field :perspektif, class: "form-control" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :rencana_hasil_kerja, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_field :rhk, class: "form-control" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :tujuan_renacan_hasil_kerja, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_field :tujuan_rhk, class: "form-control" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :indikator_kinerja, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_field :indikator_kinerja, class: "form-control" %>
+              </div>
+              <div class="field">
+                <%= form.text_field :target, class: "form-control" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :deskripsi_indikator_kinerja_individu, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.label :definisi, class: "form-label" %>
+                <%= form.text_area :definisi, class: "form-control" %>
+              </div>
+              <div class="field">
+                <%= form.label :key_activities, class: "form-label" %>
+                <%= form.text_field :key_activities, class: "form-control" %>
+              </div>
+              <div class="field">
+                <%= form.label :key_milestone, class: "form-label" %>
+                <%= form.text_field :key_milestone, class: "form-control" %>
+              </div>
+              <div class="field">
+                <%= form.label :formula, class: "form-label" %>
+                <%= form.text_field :formula, class: "form-control" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :satuan_pengukuran, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_field :satuan, class: "form-control" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :jenis_indikator_kinerja, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_field :jenis_indikator, class: "form-control" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :unit_penanggung_jawab, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_field :penanggung_jawab, class: "form-control" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :unit_penyedia_data, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_field :penyedia_data, class: "form-control" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :sumber_data, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_field :sumber_data, class: "form-control" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :jangka_waktu, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_field :mulai, class: "form-control" %>
+              </div>
+              <div class="field">
+                <%= form.text_field :akhir, class: "form-control" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :periode_pelaporan, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_field :periode_pelaporan, class: "form-control" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :budget, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <%= form.text_field :budget, class: "form-control" %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <div class="actions">
+                <%= form.submit %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
