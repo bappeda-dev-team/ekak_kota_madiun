@@ -1989,6 +1989,42 @@ ALTER SEQUENCE public.sasaran_kota_id_seq OWNED BY public.sasaran_kota.id;
 
 
 --
+-- Name: sasaran_opds; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.sasaran_opds (
+    id bigint NOT NULL,
+    id_tujuan character varying,
+    id_sasaran character varying,
+    tahun_awal character varying,
+    tahun_akhir character varying,
+    sasaran character varying NOT NULL,
+    kode_unik_opd character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: sasaran_opds_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.sasaran_opds_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: sasaran_opds_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.sasaran_opds_id_seq OWNED BY public.sasaran_opds.id;
+
+
+--
 -- Name: sasarans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3000,6 +3036,13 @@ ALTER TABLE ONLY public.sasaran_kota ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: sasaran_opds id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sasaran_opds ALTER COLUMN id SET DEFAULT nextval('public.sasaran_opds_id_seq'::regclass);
+
+
+--
 -- Name: sasarans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3510,6 +3553,14 @@ ALTER TABLE ONLY public.roles
 
 ALTER TABLE ONLY public.sasaran_kota
     ADD CONSTRAINT sasaran_kota_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: sasaran_opds sasaran_opds_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sasaran_opds
+    ADD CONSTRAINT sasaran_opds_pkey PRIMARY KEY (id);
 
 
 --
@@ -4478,6 +4529,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230220041911'),
 ('20230222034408'),
 ('20230223012444'),
-('20230226223959');
+('20230226223959'),
+('20230227014728');
 
 

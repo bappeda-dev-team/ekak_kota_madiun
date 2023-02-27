@@ -23,7 +23,7 @@ class TujuanOpdsController < ApplicationController
 
     respond_to do |format|
       if @tujuan_opd.save
-        format.html { redirect_to tujuan_opd_url(@tujuan_opd), notice: "Tujuan opd was successfully created." }
+        format.html { redirect_to tujuan_opds_url, notice: "Sukses" }
         format.json { render :show, status: :created, location: @tujuan_opd }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -36,7 +36,7 @@ class TujuanOpdsController < ApplicationController
   def update
     respond_to do |format|
       if @tujuan_opd.update(tujuan_opd_params)
-        format.html { redirect_to tujuan_opd_url(@tujuan_opd), notice: "Tujuan opd was successfully updated." }
+        format.html { redirect_to tujuan_opds_url, notice: "Sukses" }
         format.json { render :show, status: :ok, location: @tujuan_opd }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -50,7 +50,7 @@ class TujuanOpdsController < ApplicationController
     @tujuan_opd.destroy
 
     respond_to do |format|
-      format.html { redirect_to tujuan_opds_url, notice: "Tujuan opd was successfully destroyed." }
+      format.html { redirect_to tujuan_opds_url, notice: "Tujuan opd dihapus" }
       format.json { head :no_content }
     end
   end
