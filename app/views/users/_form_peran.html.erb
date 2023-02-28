@@ -24,6 +24,10 @@
     <%= form.text_field :nama, class: "form-control", value: @user.nama, readonly: true %>
   </div>
   <div class="field">
+    <%= form.label :jabatan, class: "form-label" %>
+    <%= form.text_field :jabatan, class: "form-control", value: @user.jabatan, readonly: true %>
+  </div>
+  <div class="field">
     <%= form.label :role, class: "form-label" %>
     <ul>
       <% @roles.each do |role| %>

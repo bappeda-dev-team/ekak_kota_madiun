@@ -31,7 +31,7 @@
 
       <div class="field">
         <%= form.label :opd, class: 'form-label' %>
-        <%= form.select :kode_opd, Opd.where.not(nama_kepala: nil).collect { |opd| [opd.nama_opd, opd.kode_opd] } ,{include_blank: true},
+        <%= form.select :kode_opd, options_for_select(@opds, current_user.opd) ,{include_blank: true},
           { class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih OPD' } }%>
       </div>
 
