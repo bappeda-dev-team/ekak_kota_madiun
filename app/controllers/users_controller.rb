@@ -7,12 +7,12 @@ class UsersController < ApplicationController
   end
 
   def dropdown_user
-    if current_user.has_role? :admin
-      param = params[:q] || ""
-      @users = current_user.opd.users.non_admin.where("nama ILIKE ?", "%#{param}%")
-      respond_to do |f|
-        f.json { render :index }
-      end
+    return unless current_user.has_role? :admin
+
+    param = params[:q] || ""
+    @users = current_user.opd.users.non_admin.where("nama ILIKE ?", "%#{param}%")
+    respond_to do |f|
+      f.json { render :index }
     end
   end
 
@@ -28,12 +28,12 @@ class UsersController < ApplicationController
     kode_opd = params[:kode_opd] || ''
     user_search = params[:q] || ''
     @users = User.where(kode_opd: kode_opd)
-    unless user_search.empty?
-      user_search.strip!
-      @users = User.where(kode_opd: kode_opd).where('nama ILIKE ?',
-                                                    "%#{user_search}%").or(User.where('nik ILIKE ?',
-                                                                                      "%#{user_search}%"))
-    end
+    return if user_search.empty?
+
+    user_search.strip!
+    @users = User.where(kode_opd: kode_opd).where('nama ILIKE ?',
+                                                  "%#{user_search}%").or(User.where('nik ILIKE ?',
+                                                                                    "%#{user_search}%"))
   end
 
   # GET /users/1 or /users/1.json
@@ -148,17 +148,32 @@ class UsersController < ApplicationController
 
   def set_role
     @user = User.find(params[:id])
-    @roles = Role.all
+    @opd = @user.opd
+    role_eselon = if @opd.users.eselon2.any?
+                    Role.where(name: %w[eselon_3 eselon_4 staff]).pluck(:name)
+                  else
+                    Role.where(name: %w[eselon_2 eselon_3 eselon_4 staff]).pluck(:name)
+                  end
+    @roles = @user.roles.pluck(:name) | role_eselon
     render partial: "form_peran"
   end
 
   def add_role
     @user = User.find(params[:id])
     target_role = params[:role]
-
-    @user.add_role target_role.to_sym
-
-    render json: { resText: "Data disimpan", result: @user.roles }, status: :accepted if @user.has_role?(target_role.to_sym)
+    remove_role = params[:uncheck] - target_role
+    if remove_role.any?
+      remove_role.each do |rem_role|
+        @user.remove_role rem_role
+      end
+    else
+      the_role = target_role.compact_blank - @user.roles.pluck(:name)
+      the_role.each do |user_role|
+        @user.add_role user_role.to_sym
+      end
+    end
+    render json: { resText: "Data disimpan", result: @user.roles },
+           status: :accepted
   end
 
   private
