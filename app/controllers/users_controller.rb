@@ -149,27 +149,24 @@ class UsersController < ApplicationController
   def set_role
     @user = User.find(params[:id])
     @opd = @user.opd
-    role_eselon = if @opd.users.eselon2.any?
-                    Role.where(name: %w[eselon_3 eselon_4 staff]).pluck(:name)
-                  else
-                    Role.where(name: %w[eselon_2 eselon_3 eselon_4 staff]).pluck(:name)
-                  end
-    @roles = @user.roles.pluck(:name) | role_eselon
+    @roles = Role.where(name: %w[eselon_2 eselon_3 eselon_4 staff]).pluck(:name)
     render partial: "form_peran"
   end
 
   def add_role
     @user = User.find(params[:id])
     target_role = params[:role]
-    remove_role = params[:uncheck] - target_role
-    if remove_role.any?
-      remove_role.each do |rem_role|
-        @user.remove_role rem_role
+    remove_role = params[:uncheck]
+    checked_role = target_role & remove_role
+    unchecked_role = remove_role - target_role
+    if checked_role.any?
+      checked_role.each do |role_add|
+        @user.add_role(role_add)
       end
-    else
-      the_role = target_role.compact_blank - @user.roles.pluck(:name)
-      the_role.each do |user_role|
-        @user.add_role user_role.to_sym
+    end
+    if unchecked_role.any?
+      unchecked_role.each do |role_rem|
+        @user.remove_role(role_rem)
       end
     end
     render json: { resText: "Data disimpan", result: @user.roles },

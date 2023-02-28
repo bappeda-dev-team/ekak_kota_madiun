@@ -11,11 +11,14 @@ class IsuStrategisOpdsController < ApplicationController
 
   # GET /isu_strategis_opds/new
   def new
+    opd_collections
     @isu_strategis_opd = IsuStrategisOpd.new
   end
 
   # GET /isu_strategis_opds/1/edit
-  def edit; end
+  def edit
+    opd_collections
+  end
 
   # POST /isu_strategis_opds or /isu_strategis_opds.json
   def create
@@ -75,14 +78,21 @@ class IsuStrategisOpdsController < ApplicationController
     @opd = Opd.find_by(kode_opd: params[:kode_opd])
   end
 
+  def opd_collections
+    @opds = Opd.where.not(kode_opd: nil)
+               .where(kode_opd: current_user.kode_opd).pluck(:nama_opd,
+                                                             :kode_unik_opd)
+  end
+
   def handle_filters
     tahun = params[:tahun]
+    @opd = current_user.opd
     if tahun.nil? || tahun == 'all'
       @tahun = ''
-      @isu_strategis_opds = IsuStrategisOpd.all.includes([:opd])
+      @isu_strategis_opds = @opd.isu_strategis_opds
     else
       @tahun = "Tahun #{tahun}"
-      @isu_strategis_opds = IsuStrategisOpd.where(tahun: tahun).includes([:opd])
+      @isu_strategis_opds = @opd.isu_strategis_opds.where(tahun: tahun)
     end
   end
 end

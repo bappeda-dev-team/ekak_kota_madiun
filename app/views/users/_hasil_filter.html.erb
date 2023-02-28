@@ -35,9 +35,7 @@
           <th class="border-bottom" scope="col">No.</th>
           <th class="border-bottom" scope="col">Nama / NIP</th>
           <th class="border-bottom" scope="col">Jabatan</th>
-          <th class="border-bottom" scope="col">Atasan</th>
-          <th class="border-bottom" scope="col">Sub OPD</th>
-          <th class="border-bottom" scope="col">Peran</th>
+          <th class="border-bottom text-center" scope="col" colspan="2">Role</th>
           <th class="border-bottom text-center" scope="col">Action</th>
         </tr>
       </thead>
@@ -49,16 +47,23 @@
               <%= user.nik %>
             </td>
             <td class="text-gray-900 text-wrap" scope="row"><%= user.jabatan %></td>
-            <td class="fw-bolder text-gray-500 text-wrap"><%= user.nama_atasan %></td>
-            <td class="fw-bolder text-gray-500 text-wrap"><%= user.nama_bidang %></td>
-            <td class="fw-bolder text-gray-500" id="<%= dom_id(user) %>-roles"><%= user.roles.pluck :name %>
-            <%= link_to "Role", set_role_user_path(user.id),
-                remote: true,
-                data: { controller: 'form-modal', action: 'form-modal#appendForm',
-                        form_modal_location_param: 'form-user-role-body',
-                        bs_target: '#form-user-role', bs_toggle: 'modal' },
-                class: "btn btn-sm btn-info"
-                %>
+            <td class="fw-bolder text-gray-500 border" id="<%= dom_id(user) %>-roles">
+              <ul>
+                <% user.roles.each do |role| %>
+                  <li><%= role.name %></li>
+                 <% end %>
+              </ul>
+            </td>
+            <td class="border">
+              <%= link_to set_role_user_path(user.id, dom_id: dom_id(user)),
+                  remote: true,
+                  data: { controller: 'form-modal', action: 'form-modal#appendForm',
+                          form_modal_location_param: 'form-user-role-body',
+                          bs_target: '#form-user-role', bs_toggle: 'modal' },
+                  class: "btn btn-sm btn-info" do %>
+                  <i class="fa fa-cog me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+                  <span>Role</span>
+                <% end %>
             </td>
             <td class="fw-bolder text-gray-500 text-center">
               <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
