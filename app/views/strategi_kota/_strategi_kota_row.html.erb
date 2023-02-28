@@ -13,8 +13,8 @@
         <span>Hapus</span>
     <% end %>
   </td>
-  <td class="fw-bolder text-gray-500"><%= strategi_kotum.strategi %></td>
-  <td class="fw-bolder text-gray-500"><%= strategi_kotum.isu_strategis_kotum&.isu_strategis %></td>
+  <td class="fw-bolder text-gray-500 text-wrap"><%= strategi_kotum.strategi %></td>
+  <td class="fw-bolder text-gray-500 text-wrap"><%= strategi_kotum.isu_strategis_kotum&.isu_strategis %></td>
   <td class="fw-bolder text-gray-500"><%= strategi_kotum.tahun %></td>
   <td class="fw-bolder text-gray-500 text-center border-end border-start">
     <%= link_to list_strategi_opd_strategi_kotum_path(strategi_kotum),
@@ -28,7 +28,7 @@
       },
       class: "btn btn-outline-gray-700 mx-3" do %>
       <i class="fas fa-people-arrows me-2"></i>
-      Jumlah dibagikan <span class="badge bg-primary"><%= strategi_kotum.pohons.count %></span>
+      Jumlah dibagikan <span class="badge bg-primary"><%= strategi_kotum.usulans.count %></span>
     <% end %>
     <%= link_to bagikan_ke_opd_strategi_kotum_path(strategi_kotum),
       remote: true, class: 'btn btn-outline-gray-900',

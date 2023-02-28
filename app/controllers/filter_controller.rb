@@ -20,12 +20,14 @@ class FilterController < ApplicationController
   # FIXME: refactor me to stimulus base render
   # FIXME: jika tidak ada bidang pada opd table, user tidak akan tampil
   def filter_user
-    opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
-    @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd })
-    if OPD_TABLE.key?(opd.to_sym)
-      @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] })
-                   .where(nama_bidang: OPD_TABLE[opd.to_sym])
-    end
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    nama_opd = opd.nama_opd
+    # @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd })
+    @users = opd.users
+    # if OPD_TABLE.key?(opd.to_sym)
+    #   @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] })
+    #                .where(nama_bidang: OPD_TABLE[opd.to_sym])
+    # end
     @filter_file = "hasil_filter" if params[:filter_file].empty?
     respond_to do |format|
       format.js { render "users/user_filter" }

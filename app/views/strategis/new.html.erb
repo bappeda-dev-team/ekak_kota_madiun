@@ -1,5 +1,17 @@
-<h1>New Strategi</h1>
+<h1>Form Strategi</h1>
 
 <%= render 'form', strategi: @strategi %>
 
-<%= link_to 'Back', strategis_path %>
+<div class="card-body">
+  <% if @role == 'eselon_2' %>
+    <%= link_to opd_pohon_kinerja_index_path, class: 'btn btn-info w-100 text-white' do %>
+      <span class="fas fa-arrow-left"></span>
+      <span>Kembali</span>
+    <% end %>
+  <% else %>
+    <%= link_to asn_pohon_kinerja_index_path, class: 'btn btn-info w-100 text-white' do %>
+      <span class="fas fa-arrow-left"></span>
+      <span>Kembali</span>
+    <% end %>
+  <% end %>
+</div>
