@@ -71,7 +71,7 @@ class OpdsController < ApplicationController
   # form buat strategi eselon 2, tombol klik di kotak usulan opd
   def buat_strategi
     # TODO: change opd id
-    @opd = Opd.find(136)
+    @opd = current_user.opd
     @opd_id = @opd.id
     nip_kepala = @opd.users.eselon2.first.nik
     @jenis_isu = params[:jenis_isu]
