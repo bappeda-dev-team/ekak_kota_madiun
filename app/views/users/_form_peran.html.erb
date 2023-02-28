@@ -28,7 +28,7 @@
     <ul>
       <% @roles.each do |role| %>
           <li>
-            <%= hidden_field_tag 'uncheck[]', @user.roles.pluck(:name) -%>
+            <%= hidden_field_tag 'uncheck[]', role -%>
             <%= check_box_tag 'role[]', role, @user.has_role?(role) -%>
             <%= h role -%>
           </li>
