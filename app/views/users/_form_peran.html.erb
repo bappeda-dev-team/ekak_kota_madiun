@@ -24,14 +24,16 @@
     <%= form.text_field :nama, class: "form-control", value: @user.nama, readonly: true %>
   </div>
   <div class="field">
-    <% data_role = options_from_collection_for_select(@roles, :name, :name, @user.roles.pluck(:name)) %>
     <%= form.label :role, class: "form-label" %>
-    <%= form.select :role, data_role, {include_blank: true},
-    { class: "form-select select2-role",
-      data: { placeholder: 'Pilih Role',
-              controller: 'dropdown',
-              dropdown_parent_value: '#form-user-role'
-      } } %>
+    <ul>
+      <% @roles.each do |role| %>
+          <li>
+            <%= hidden_field_tag 'uncheck[]', role -%>
+            <%= check_box_tag 'role[]', role, @user.has_role?(role) -%>
+            <%= h role -%>
+          </li>
+      <% end %>
+    </ul>
   </div>
   <div class="actions">
     <%= form.submit %>
