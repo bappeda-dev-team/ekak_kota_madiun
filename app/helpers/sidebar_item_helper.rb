@@ -1,13 +1,23 @@
 module SidebarItemHelper
   def asn_sidebar_items
-    [
-      { title: 'Pohon Kinerja', href: asn_pohon_kinerja_index_path, icon: 'fas fa-tree', identifier: 'pohon_kinerja/asn' },
+    items = [
       { title: 'Laporan Atasan', href: atasan_laporans_path, icon: 'fas fa-chart-line', identifier: 'atasan' },
       { title: 'Laporan KAK', href: laporan_kak_path, icon: 'fas fa-file', identifier: 'laporan_kak' },
       { title: 'Rincian Belanja', href: rincian_belanja_path, icon: 'fas fa-money-check',
         identifier: 'rincian_belanja' },
       { title: 'Laporan Renstra', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' }
     ]
+    if current_user.has_role?(:admin)
+      items.prepend(
+        { title: 'Pohon Kinerja', href: opd_pohon_kinerja_index_path, icon: 'fas fa-tree',
+          identifier: 'pohon_kinerja/opd' }
+      )
+    else
+      items.prepend(
+        { title: 'Pohon Kinerja', href: asn_pohon_kinerja_index_path, icon: 'fas fa-tree',
+          identifier: 'pohon_kinerja/asn' }
+      )
+    end
   end
 
   def usulan_items
