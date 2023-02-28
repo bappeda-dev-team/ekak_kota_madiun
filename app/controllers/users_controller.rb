@@ -190,6 +190,12 @@ class UsersController < ApplicationController
   end
 
   def user_detail_params
-    params.require(:user).permit(:nama, :nama_bidang)
+    if params[:kepala]
+      params.require(:kepala).permit(:nama, :nama_bidang, :kode_opd)
+    elsif params[:atasan]
+      params.require(:atasan).permit(:nama, :nama_bidang, :kode_opd)
+    else
+      params.require(:user).permit(:nama, :nama_bidang, :kode_opd)
+    end
   end
 end

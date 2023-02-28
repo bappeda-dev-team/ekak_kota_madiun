@@ -15,7 +15,13 @@
   </div>
   <div class="field">
     <%= form.label :opd, class: "form-label" %>
-    <%= form.text_field :nama_opd, class: "form-control", disabled: true %>
+    <%= form.select :kode_opd, options_for_select(Opd.where.not(kode_opd: nil).pluck(:nama_opd, :kode_opd), user.opd.kode_opd), {include_blank: true},
+      class: "form-control",
+      data: {
+        controller: "dropdown",
+        placeholder: "Pilih OPD",
+        dropdown_parent_value: "#form-user"
+      } %>
   </div>
   <div class="field">
     <%= form.label :nama, class: "form-label" %>
