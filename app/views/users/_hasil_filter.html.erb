@@ -5,6 +5,7 @@
       <h2 class="fs-5 fw-bold mb-0">List ASN <%= opd.nama_opd %> - <%= opd.kode_unik_opd %></h2>
     </div>
     <div class="col-auto text-end">
+      <% if current_user.has_role? :super_admin %>
       <% bulan = Date.today.month %>
       <%= link_to sync_pegawai_path(kode_opd: kode_opd, tahun: '2022', bulan: '12'),
       remote: true,
@@ -20,7 +21,6 @@
         <i class="fas fa-sync me-2"></i>
         Sync Struktur
       <% end %>
-      <% if current_user.has_role? :super_admin %>
         <%= link_to "Tambah User", new_user_path, remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-user"}, class: "btn btn-sm btn-info" %>
         <%= link_to "Non Aktifkan Semua User", "/nonaktifkan_semua_user/#{opd.kode_opd}", remote: true, method: :post, class: "btn btn-sm btn-danger" %>
       <% end %>
