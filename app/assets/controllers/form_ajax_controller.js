@@ -27,15 +27,9 @@ export default class extends Controller {
     Modal.getInstance(modal).hide()
     this.sweetalert(message.resText)
     const {roles, target} = message.result
-    console.log(roles)
-    console.log(target)
     const target_row = document.getElementById(target)
-    console.log(target_row)
-    const html_baru = roles.each(role => `<li>${role}</li>`);
-    target_row.innerHTML = `<ul>${
-      html_baru
-    }</ul>`
-    // window.dispatchEvent(ajax_update_event)
+    target_row.innerHTML = `<ul>${roles.map( n => `<li>${n}</li>`).join('')}</ul>`
+    target_row.style.backgroundColor = 'lime'
   }
 
   successWithoutModal(event) {
