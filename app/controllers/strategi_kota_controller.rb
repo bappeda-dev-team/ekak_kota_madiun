@@ -57,19 +57,23 @@ class StrategiKotaController < ApplicationController
 
   def bagikan_ke_opd
     @strategi_kota = StrategiKotum.find(params[:id])
+    @opd_resmi_choices = Opd.opd_resmi.collect { |opd| [opd.nama_opd, opd.id] }
     render partial: "form_bagikan_ke_opd"
   end
 
   def pilih_opd
     @strategi_kota = StrategiKotum.find(params[:id])
-    @opd = Opd.find(params[:opd])
+    opds = params[:opd].compact_blank
+    usulans = []
+    opds.each do |opd|
+      next if @strategi_kota.usulans.where(opd_id: opd).any?
+
+      nama_opd = Opd.find(opd).nama_opd
+      usulans = Usulan.create(usulanable_id: @strategi_kota.id, usulanable_type: 'StrategiKotum',
+                              opd_id: opd, keterangan: nama_opd)
+    end
     respond_to do |format|
-      if Usulan.create(usulanable_id: @strategi_kota.id, usulanable_type: 'StrategiKotum',
-                       opd_id: @opd.id, keterangan: @opd.nama_opd)
-        format.html { redirect_to strategi_kota_path, success: "dibagikan ke #{@opd.nama_opd}" }
-      else
-        format.html { redirect_to strategi_kota_path, status: :unprocessable_entity, alert: 'terjadi kesalahan' }
-      end
+      format.html { redirect_to strategi_kota_path, success: "Dibagikan" }
     end
   end
 
