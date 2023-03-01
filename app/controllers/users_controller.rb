@@ -148,6 +148,7 @@ class UsersController < ApplicationController
 
   def set_role
     @user = User.find(params[:id])
+    @dom_id = params[:dom_id]
     @opd = @user.opd
     @roles = Role.where(name: %w[eselon_2 eselon_3 eselon_4 staff]).pluck(:name)
     render partial: "form_peran"
@@ -155,6 +156,7 @@ class UsersController < ApplicationController
 
   def add_role
     @user = User.find(params[:id])
+    @dom_id = params[:dom_id]
     target_role = params[:role]
     remove_role = params[:uncheck]
     checked_role = target_role & remove_role
@@ -169,7 +171,7 @@ class UsersController < ApplicationController
         @user.remove_role(role_rem)
       end
     end
-    render json: { resText: "Data disimpan", result: @user.roles },
+    render json: { resText: "Data disimpan", result: { roles: @user.roles.pluck(:name), target: @dom_id } },
            status: :accepted
   end
 

@@ -17,6 +17,27 @@ export default class extends Controller {
     window.dispatchEvent(ajax_update_event)
   }
 
+  successResponseRenderNew(event) {
+    // event.preventDefault()
+    const [message, status, xhr] = event.detail
+    const modal_target = event.params.modal 
+    const modal = document.getElementById(modal_target)
+    const ajax_update_event = new CustomEvent("ajax-update", { detail: { data: message.result  } })
+    // event after successResponse
+    Modal.getInstance(modal).hide()
+    this.sweetalert(message.resText)
+    const {roles, target} = message.result
+    console.log(roles)
+    console.log(target)
+    const target_row = document.getElementById(target)
+    console.log(target_row)
+    const html_baru = roles.each(role => `<li>${role}</li>`);
+    target_row.innerHTML = `<ul>${
+      html_baru
+    }</ul>`
+    // window.dispatchEvent(ajax_update_event)
+  }
+
   successWithoutModal(event) {
     const [message, status, xhr] = event.detail
     // event after successResponse
