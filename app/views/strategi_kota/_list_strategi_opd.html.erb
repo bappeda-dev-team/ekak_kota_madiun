@@ -1,7 +1,12 @@
 <ol>
-<% @strategi_kota.each do |strategi| %>
-<li class="opd_list">
-  <%= strategi.opd.nama_opd %>
-</li>
+<%= form_with(url: hapus_bagikan_ke_opd_strategi_kotum_path(@strategi_kota)) do |form| %>
+  <% @strategi_kota.usulans.each do |strategi| %>
+  <li class="opd_list">
+    <%= strategi.opd.nama_opd %>
+    <%= hidden_field_tag 'uncheck[]', strategi.opd.id -%>
+    <%= check_box_tag 'opd[]', strategi.opd.id, true %>
+  </li>
+  <% end %>
+  <%= form.submit %>
 <% end %>
 </ol>

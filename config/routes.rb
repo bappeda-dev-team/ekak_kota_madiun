@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       get :bagikan_ke_opd
       post :pilih_opd
       get :list_strategi_opd
+      post :hapus_bagikan_ke_opd
     end
   end
   resources :strategis do

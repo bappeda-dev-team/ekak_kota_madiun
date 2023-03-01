@@ -77,8 +77,23 @@ class StrategiKotaController < ApplicationController
     end
   end
 
+  def hapus_bagikan_ke_opd
+    @strategi_kota = StrategiKotum.find(params[:id])
+    opds = params[:opd]
+    remove_opd = params[:uncheck]
+    unchecked_role = opds.nil? ? remove_opd : (remove_opd - opds)
+
+    unchecked_role.each do |opd|
+      @strategi_kota.usulans.find_by(opd_id: opd).delete
+    end
+
+    respond_to do |format|
+      format.html { redirect_to strategi_kota_path, success: "#{unchecked_role.size} dihapus" }
+    end
+  end
+
   def list_strategi_opd
-    @strategi_kota = StrategiKotum.find(params[:id])&.usulans
+    @strategi_kota = StrategiKotum.find(params[:id])
     render partial: 'list_strategi_opd'
   end
 

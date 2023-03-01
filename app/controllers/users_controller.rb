@@ -159,8 +159,8 @@ class UsersController < ApplicationController
     @dom_id = params[:dom_id]
     target_role = params[:role]
     remove_role = params[:uncheck]
-    checked_role = target_role & remove_role
-    unchecked_role = remove_role - target_role
+    checked_role = target_role.nil? ? [] : target_role & remove_role
+    unchecked_role = target_role.nil? ? remove_role : (remove_role - target_role)
     if checked_role.any?
       checked_role.each do |role_add|
         @user.add_role(role_add)
