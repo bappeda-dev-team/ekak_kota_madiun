@@ -1,22 +1,23 @@
 module SidebarItemHelper
   def asn_sidebar_items
-    items = [
-      { title: 'Laporan Atasan', href: atasan_laporans_path, icon: 'fas fa-chart-line', identifier: 'atasan' },
-      { title: 'Laporan KAK', href: laporan_kak_path, icon: 'fas fa-file', identifier: 'laporan_kak' },
-      { title: 'Rincian Belanja', href: rincian_belanja_path, icon: 'fas fa-money-check',
-        identifier: 'rincian_belanja' },
-      { title: 'Laporan Renstra', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' }
-    ]
-    if current_user.has_role?(:admin)
-      items.prepend(
-        { title: 'Pohon Kinerja', href: opd_pohon_kinerja_index_path, icon: 'fas fa-tree',
-          identifier: 'pohon_kinerja/opd' }
-      )
-    else
-      items.prepend(
+    if current_user.has_any_role?(:asn, :eselon_2, :eselon_3, :eselon_4, :staff)
+      [
         { title: 'Pohon Kinerja', href: asn_pohon_kinerja_index_path, icon: 'fas fa-tree',
-          identifier: 'pohon_kinerja/asn' }
-      )
+          identifier: 'pohon_kinerja/asn' },
+        { title: 'Laporan Atasan', href: atasan_laporans_path, icon: 'fas fa-chart-line', identifier: 'atasan' },
+        { title: 'Laporan KAK', href: laporan_kak_path, icon: 'fas fa-file', identifier: 'laporan_kak' },
+        { title: 'Rincian Belanja', href: rincian_belanja_path, icon: 'fas fa-money-check',
+          identifier: 'rincian_belanja' },
+        { title: 'Laporan Renstra', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' }
+      ]
+    else
+      [
+        { title: 'Laporan Atasan', href: atasan_laporans_path, icon: 'fas fa-chart-line', identifier: 'atasan' },
+        { title: 'Laporan KAK', href: laporan_kak_path, icon: 'fas fa-file', identifier: 'laporan_kak' },
+        { title: 'Rincian Belanja', href: rincian_belanja_path, icon: 'fas fa-money-check',
+          identifier: 'rincian_belanja' },
+        { title: 'Laporan Renstra', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' }
+      ]
     end
   end
 
@@ -134,12 +135,18 @@ module SidebarItemHelper
   end
 
   def kota_items
-    [
-      { title: 'Tujuan Kota', href: tujuan_kota_path, identifier: 'tujuan_kota' },
-      { title: 'Isu Strategis Kota', href: isu_strategis_kota_path, identifier: 'isu_strategis_kota' },
-      { title: 'Strategi Kota', href: strategi_kota_path, identifier: 'strategi_kota' },
-      { title: 'Sasaran Kota', href: sasaran_kota_path, identifier: 'sasaran_kota' }
-    ]
+    if current_user.has_role?(:super_admin)
+      [
+        { title: 'Tujuan Kota', href: tujuan_kota_path, identifier: 'tujuan_kota' },
+        { title: 'Isu Strategis Kota', href: isu_strategis_kota_path, identifier: 'isu_strategis_kota' },
+        { title: 'Strategi Kota', href: strategi_kota_path, identifier: 'strategi_kota' },
+        { title: 'Sasaran Kota', href: sasaran_kota_path, identifier: 'sasaran_kota' }
+      ]
+    else
+      [
+        { title: 'Khusus Admin Kota', href: '#', identifier: 'khusus_admin_kota' }
+      ]
+    end
   end
 
   def opd_items
@@ -154,10 +161,16 @@ module SidebarItemHelper
   end
 
   def pohon_kinerja_items
-    [
-      { title: 'Kota', href: kota_pohon_kinerja_index_path, identifier: 'pohon_kinerja/kota' },
-      { title: 'OPD', href: opd_pohon_kinerja_index_path, identifier: 'pohon_kinerja/opd' }
-    ]
+    if current_user.has_role?(:super_admin)
+      [
+        { title: 'Kota', href: kota_pohon_kinerja_index_path, identifier: 'pohon_kinerja/kota' },
+        { title: 'OPD', href: opd_pohon_kinerja_index_path, identifier: 'pohon_kinerja/opd' }
+      ]
+    else
+      [
+        { title: 'OPD', href: opd_pohon_kinerja_index_path, identifier: 'pohon_kinerja/opd' }
+      ]
+    end
   end
 
   def gender_items

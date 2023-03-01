@@ -74,7 +74,7 @@ class StrategiKotaController < ApplicationController
   end
 
   def list_strategi_opd
-    @strategi_kota = StrategiKotum.find(params[:id])&.pohons
+    @strategi_kota = StrategiKotum.find(params[:id])&.usulans
     render partial: 'list_strategi_opd'
   end
 
@@ -94,10 +94,10 @@ class StrategiKotaController < ApplicationController
     tahun = params[:tahun]
     if tahun.nil? || tahun == 'all'
       @tahun = ''
-      @strategi_kota = StrategiKotum.all
+      @strategi_kota = StrategiKotum.all.includes([:isu_strategis_kotum])
     else
       @tahun = "Tahun #{tahun}"
-      @strategi_kota = StrategiKotum.where(tahun: tahun)
+      @strategi_kota = StrategiKotum.where(tahun: tahun).includes([:isu_strategis_kotum])
     end
   end
 end
