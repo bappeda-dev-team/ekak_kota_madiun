@@ -1,0 +1,11 @@
+<li>
+  <div class="row">
+    <span class="col">
+      <%= strategi.opd.nama_opd %>
+    </span>
+    <span class="col-auto">
+      <%= hidden_field_tag 'uncheck[]', strategi.opd.id -%>
+      <%= check_box_tag 'opd[]', strategi.opd.id, true %>
+    </span>
+  </div>
+</li>
