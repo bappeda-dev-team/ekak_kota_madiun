@@ -2,7 +2,7 @@
   url: add_role_user_path(@user.id), 
   local: false,
   data: { controller: 'form-ajax',
-          action: 'ajax:success->form-ajax#successResponse',
+          action: 'ajax:success->form-ajax#successResponseRenderNew',
           form_ajax_modal_param: 'form-user-role' }
               ) do |form| %>
   <% if @user.errors.any? %>
@@ -15,6 +15,7 @@
       </ul>
     </div>
   <% end %>
+  <%= hidden_field_tag 'dom_id', @dom_id -%>
   <div class="field">
     <%= form.label :nip, class: "form-label" %>
     <%= form.text_field :nik, class: "form-control", value: @user.nik, readonly: true %>

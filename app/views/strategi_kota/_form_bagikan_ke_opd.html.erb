@@ -12,12 +12,13 @@
   </div>
   <div class="field">
     <%= form.label :opd, class: "form-label" %>
-    <%= form.select :opd, Opd.opd_resmi.collect{ |opd| [opd.nama_opd, opd.id] },
+    <%= form.select :opd, @opd_resmi_choices,
       { include_blank: true },
+      multiple: true,
       data: {
         controller: 'dropdown',
         placeholder: 'Pilih OPD',
-        dropdown_parent_value: '#form-bagikan-strategi-kota'
+        dropdown_parent_value: '#form-bagikan-strategi-kota',
       },
       class: "form-control" %>
   </div>

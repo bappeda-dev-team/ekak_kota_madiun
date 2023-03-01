@@ -10,24 +10,33 @@
         <li class="breadcrumb-item active" aria-current="page">List User</li>
       </ol>
     </nav>
-    <% flash.each do |type, msg| %>
-      <div class="alert alert-info">
-        <%= msg %>
-      </div>
-    <% end %>
-    <%= render 'shared/filter_card', filter_url: '/filter_user' %>
-    <div class="card border-0 shadow" id="user_filter">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">List User</h2>
+    <% if current_user.has_role?(:super_admin) %>
+      <% flash.each do |type, msg| %>
+        <div class="alert alert-info">
+          <%= msg %>
+        </div>
+      <% end %>
+      <%= render 'shared/filter_card', filter_url: '/filter_user' %>
+      <div class="card border-0 shadow" id="user_filter">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2 class="fs-5 fw-bold mb-0">List User</h2>
+            </div>
           </div>
         </div>
+        <div class="card-body">
+          ...
+        </div>
       </div>
-      <div class="card-body">
-        ...
+    <% else %>
+      <div class="card border-0 shadow" id="user_filter">
+        <div class="card-body">
+          <% @kode_opd = current_user.opd.kode_unik_opd %>
+          <%= render partial: 'users/hasil_filter', locals: { opd: current_user.opd, users: current_user.opd.users, kode_opd: current_user.opd.kode_unik_opd } %>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>
 <%= render 'modal_user' %>

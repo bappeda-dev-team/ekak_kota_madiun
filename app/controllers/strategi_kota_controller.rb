@@ -57,24 +57,43 @@ class StrategiKotaController < ApplicationController
 
   def bagikan_ke_opd
     @strategi_kota = StrategiKotum.find(params[:id])
+    @opd_resmi_choices = Opd.opd_resmi.collect { |opd| [opd.nama_opd, opd.id] }
     render partial: "form_bagikan_ke_opd"
   end
 
   def pilih_opd
     @strategi_kota = StrategiKotum.find(params[:id])
-    @opd = Opd.find(params[:opd])
+    opds = params[:opd].compact_blank
+    usulans = []
+    opds.each do |opd|
+      next if @strategi_kota.usulans.where(opd_id: opd).any?
+
+      nama_opd = Opd.find(opd).nama_opd
+      usulans = Usulan.create(usulanable_id: @strategi_kota.id, usulanable_type: 'StrategiKotum',
+                              opd_id: opd, keterangan: nama_opd)
+    end
     respond_to do |format|
-      if Usulan.create(usulanable_id: @strategi_kota.id, usulanable_type: 'StrategiKotum',
-                       opd_id: @opd.id, keterangan: @opd.nama_opd)
-        format.html { redirect_to strategi_kota_path, success: "dibagikan ke #{@opd.nama_opd}" }
-      else
-        format.html { redirect_to strategi_kota_path, status: :unprocessable_entity, alert: 'terjadi kesalahan' }
-      end
+      format.html { redirect_to strategi_kota_path, success: "Dibagikan" }
+    end
+  end
+
+  def hapus_bagikan_ke_opd
+    @strategi_kota = StrategiKotum.find(params[:id])
+    opds = params[:opd]
+    remove_opd = params[:uncheck]
+    unchecked_role = opds.nil? ? remove_opd : (remove_opd - opds)
+
+    unchecked_role.each do |opd|
+      @strategi_kota.usulans.find_by(opd_id: opd).delete
+    end
+
+    respond_to do |format|
+      format.html { redirect_to strategi_kota_path, success: "#{unchecked_role.size} dihapus" }
     end
   end
 
   def list_strategi_opd
-    @strategi_kota = StrategiKotum.find(params[:id])&.usulans
+    @strategi_kota = StrategiKotum.find(params[:id])
     render partial: 'list_strategi_opd'
   end
 

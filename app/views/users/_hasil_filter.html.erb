@@ -41,13 +41,14 @@
       </thead>
       <tbody>
         <% users.each.with_index(1) do |user, i| %>
+          <% the_dom = "#{dom_id(user)}-roles" %>
           <tr>
             <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
             <td class="fw-bolder text-gray-500 text-wrap"><%= user.nama %> <br>
               <%= user.nik %>
             </td>
             <td class="text-gray-900 text-wrap" scope="row"><%= user.jabatan %></td>
-            <td class="fw-bolder text-gray-500 border" id="<%= dom_id(user) %>-roles">
+            <td class="fw-bolder text-gray-500 border" id="<%= the_dom %>">
               <ul>
                 <% user.roles.each do |role| %>
                   <li><%= role.name %></li>
@@ -55,7 +56,7 @@
               </ul>
             </td>
             <td class="border">
-              <%= link_to set_role_user_path(user.id, dom_id: dom_id(user)),
+              <%= link_to set_role_user_path(user.id, dom_id: the_dom),
                   remote: true,
                   data: { controller: 'form-modal', action: 'form-modal#appendForm',
                           form_modal_location_param: 'form-user-role-body',
