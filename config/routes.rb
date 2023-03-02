@@ -132,6 +132,7 @@ Rails.application.routes.draw do
       get :struktur
       get :khusus
       get :dropdown_user
+      get :list_all
     end
 
     member do

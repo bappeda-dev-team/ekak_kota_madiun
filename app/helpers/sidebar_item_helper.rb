@@ -68,6 +68,7 @@ module SidebarItemHelper
   def super_admin_items
     [
       { title: 'Role', href: roles_path, icon: 'fas fa-user-tag', identifier: 'roles' },
+      { title: 'Master User', href: list_all_users_path, icon: 'fas fa-users', identifier: 'list_all' },
       { title: 'Tematik', href: subkegiatan_tematiks_path, identifier: 'tematik', icon: 'fas fa-tags' },
       { title: 'Struktur Organisasi', href: struktur_users_path, icon: 'fas fa-sitemap', identifier: 'struktur' },
       { title: 'Kelompok Anggaran', href: kelompok_anggarans_path, icon: 'fas fa-folder',

@@ -94,7 +94,9 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit; end
 
-  def edit_detail; end
+  def edit_detail
+    @target_render = params[:target_render]
+  end
 
   # POST /users or /users.json
   def create
@@ -128,9 +130,15 @@ class UsersController < ApplicationController
   end
 
   def update_detail
+    @target_render = params[:target_render]
+    byebug
     respond_to do |format|
       if @user.update(user_detail_params)
-        format.html { redirect_to adminusers_path, success: 'User was successfully updated.' }
+        if @target_render
+          format.html { redirect_to user_detail_params, success: 'User was successfully updated.' }
+        else
+          format.html { redirect_to adminusers_path, success: 'User was successfully updated.' }
+        end
       else
         format.html { render :edit, notice: 'Failed update user' }
       end
@@ -173,6 +181,13 @@ class UsersController < ApplicationController
     end
     render json: { resText: "Data disimpan", result: { roles: @user.roles.pluck(:name), target: @dom_id } },
            status: :accepted
+  end
+
+  def list_all
+    keyword = params[:keyword]
+    @users = User.where("nama ILIKE ?", "%#{keyword}%")
+                 .or(User.where("nik ILIKE ?", "%#{keyword}%"))
+                 .or(User.where("jabatan ILIKE ?", "%#{keyword}%"))
   end
 
   private
