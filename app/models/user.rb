@@ -43,9 +43,10 @@ class User < ApplicationRecord
   # has_many :program_kegiatans, through: :sasarans
   has_many :pohons, dependent: :destroy
 
+  # WARNING: many bug in here because added role
   scope :non_admin, -> { without_role(:admin) }
   scope :aktif, -> { without_role([:non_aktif]) }
-  scope :asn_aktif, -> { without_role([:admin]).with_role(:asn).order(:nama) }
+  scope :asn_aktif, -> { without_role([:admin]).with_role("eselon_4").order(:nama) }
   scope :sasaran_asn_aktif, -> { asn_aktif.joins(:sasarans).merge(Sasaran.dengan_rincian) }
   scope :sasaran_diajukan, lambda {
                              asn_aktif.includes(:sasarans, :program_kegiatans).merge(Sasaran.sudah_lengkap)
