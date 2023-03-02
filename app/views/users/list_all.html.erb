@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">List User</li>
+      </ol>
+    </nav>
+      <div class="card">
+        <div class="card-body border-5 shadow">
+          <%= form_with url: list_all_users_path,method: :get do |form| %>
+            <%= form.label :keyword %>
+            <%= form.text_field :keyword, class: 'form-control', placeholder: 'Nama / NIP / Jabatan'  %>
+            <%= form.button class: "btn btn-tertiary w-100 mt-5", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>  Mencari..." } do %>
+              <i class="fa fa-search me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Cari User"></i>
+              <span>Cari</span>
+            <% end %>
+
+          <% end %>
+        </div>
+        <div class="card-body border-1" id="user_filter">
+          <%= render partial: 'users/all_user_template' %>
+        </div>
+      </div>
+  </div>
+</div>
+<%= render 'modal_user' %>
+<%= render 'shared/modal_template', modal_name: 'user-role' %>
