@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     collection do
       get :kota
       get :opd
+      get :asn
       post :admin_filter
     end
   end
