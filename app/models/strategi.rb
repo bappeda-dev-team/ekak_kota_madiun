@@ -39,7 +39,7 @@ class Strategi < ApplicationRecord
   has_many :strategi_eselon_tigas, lambda {
     where(role: "eselon_3")
   }, class_name: "Strategi",
-  foreign_key: "strategi_ref_id", dependent: :destroy
+     foreign_key: "strategi_ref_id", dependent: :destroy
 
   has_many :strategi_eselon_empats, lambda {
     where(role: "eselon_4")
@@ -53,5 +53,17 @@ class Strategi < ApplicationRecord
 
   def isu_strategis_disasar
     strategi_atasan.nil? ? pohon.keterangan : strategi_atasan.strategi
+  end
+
+  def strategi_bawahans
+    strategi_hasil = case role
+                     when 'eselon_2'
+                       strategi_eselon_tigas
+                     when 'eselon_3'
+                       strategi_eselon_empats
+                     else
+                       strategi_staffs
+                     end
+    strategi_hasil.where.not(nip_asn: "")
   end
 end

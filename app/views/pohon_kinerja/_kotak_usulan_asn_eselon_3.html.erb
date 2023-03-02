@@ -18,9 +18,9 @@
           <tr>
             <th>Strategic Objective</th>
             <th>Tactical Objective</th>
-            <th>Tahun</th>
-            <th>NIP</th>
-            <th>Role</th>
+            <th class="text-center">Tahun</th>
+            <th class="text-center">NIP</th>
+            <th class="text-center">Role</th>
             <th class="text-center align-middle">Aksi</th>
           </tr>
         </thead>
@@ -33,47 +33,50 @@
               <td class="text-wrap align-middle"><%= strategi.tahun %></td>
               <td class="text-wrap align-middle"><%= strategi.nip_asn %></td>
               <td class="text-wrap align-middle"><%= strategi.role %></td>
-              <td class="text-center align-middle">
-                  <%= link_to edit_strategi_path(strategi, nip: strategi.nip_asn, usulan_isu: pohon.strategi, role: "eselon_3"), class: "btn btn-outline-info mx-3" do %>
-                    <i class="fas fa-edit me-2"></i>
-                    Edit Tactical Objective
-                  <% end %>
-
+              <td class="text-center">
+                <div class="row justify-content-center w-100">
                   <% unless strategi.strategi.blank? %>
-                    <%= link_to list_strategi_asn_strategi_path(strategi,nip: strategi.nip_asn, role: "eselon_3"),
-                      remote: true,
-                      data: {
-                        controller: 'form-modal',
-                        action: 'form-modal#appendForm',
-                        form_modal_location_param: 'form-list-bagikan-body',
-                        bs_target: '#form-list-bagikan',
-                        bs_toggle: 'modal'
-                      },
-                      class: "btn btn-outline-gray-700 mx-3" do %>
-                      <i class="fas fa-people-arrows me-2"></i>
-                      Jumlah dibagikan <span class="badge bg-primary"><%= strategi.strategi_eselon_empats.count %></span>
-                    <% end %>
+                    <div class="col mb-2">
 
-                    <%= link_to bagikan_pokin_strategi_path(
-                      strategi.id,
-                      role: local_assigns[:role_bawahan],
-                      pohon_id: pohon.id
-                    ),
-                      remote: true, class: 'btn btn-outline-gray-900',
-                      data: { controller: 'form-modal',
-                              action: 'form-modal#appendForm',
-                              form_modal_location_param: 'form-bagikan-strategi-pokin-body',
-                              bs_target: '#form-bagikan-strategi-pokin',
-                              bs_toggle: 'modal' } do %>
-                        <span class="fas fa-share"></span>
-                        <span>Bagikan Tactical Objective</span>
-                    <% end %>
+                      <%= link_to bagikan_pokin_strategi_path(
+                        strategi.id,
+                        role: local_assigns[:role_bawahan],
+                        pohon_id: pohon.id),
+                        remote: true,
+                        class: 'btn btn-outline-gray-900 d-inline-flex align-items-center mx-3',
+                        data: { controller: 'form-modal',
+                                action: 'form-modal#appendForm',
+                                form_modal_location_param: 'form-bagikan-strategi-pokin-body',
+                                bs_target: '#form-bagikan-strategi-pokin',
+                                bs_toggle: 'modal' } do %>
+                          <span class="fas fa-share me-2"></span>
+                          <span>Bagikan Tactical Objective
+                          <span class="badge bg-primary"><%= strategi.strategi_bawahans.count %></span>
+                          </span>
+                      <% end %>
+                    </div>
                   <% end %>
 
-                  <%= link_to strategi, method: :delete, data: { confirm_swal: "Hapus Strategi?"}, class: "btn btn-outline-danger mx-3" do %>
-                    <i class="fas fa-edit me-2"></i>
-                      Hapus Strategic Objective
-                  <% end %>
+                  <div class="col mb-2">
+                    <%= link_to edit_strategi_path(strategi, nip: strategi.nip_asn,
+                                                 usulan_isu: pohon.strategi,
+                                                 role: "eselon_3"),
+                    class: "btn btn-outline-info d-inline-flex align-items-center mx-3" do %>
+                      <i class="fas fa-edit me-2"></i>
+                      Isi / Edit Tactical Objective
+                    <% end %>
+
+                  </div>
+                  <div class="col">
+                    <%= link_to strategi, method: :delete,
+                      data: { confirm_swal: "Hapus Strategi?"},
+                      class: "btn btn-outline-danger d-inline-flex align-items-center mx-3" do %>
+                      <i class="fas fa-edit me-2"></i>
+                        Hapus Strategic Objective
+                    <% end %>
+                  </div>
+
+                </div>
               </td>
             </tr>
             <% end %>

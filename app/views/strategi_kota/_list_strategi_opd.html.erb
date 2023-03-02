@@ -10,8 +10,8 @@
                 <%= strategi.opd.nama_opd %>
               </span>
               <span class="col-auto">
-                <%= hidden_field_tag 'uncheck[]', strategi.opd.id -%>
-                <%= check_box_tag 'opd[]', strategi.opd.id, true %>
+                <%= hidden_field_tag 'tidak_dibagikan[]', strategi.opd.id -%>
+                <%= check_box_tag 'dibagikan[]', strategi.opd.id, true %>
               </span>
             </div>
           </li>

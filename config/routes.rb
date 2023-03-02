@@ -36,6 +36,7 @@ Rails.application.routes.draw do
       get :bagikan_pokin
       post :pilih_asn
       get :list_strategi_asn
+      post :hapus_bagikan_ke_asn
     end
   end
   resources :isu_strategis_opds
