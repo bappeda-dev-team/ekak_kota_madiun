@@ -131,7 +131,6 @@ class UsersController < ApplicationController
 
   def update_detail
     @target_render = params[:target_render]
-    byebug
     respond_to do |format|
       if @user.update(user_detail_params)
         if @target_render
