@@ -25,9 +25,20 @@ function init() {
                                         .setTitleDisplayTextAccessor(function(data) {
                                                 return data.name;
                                         })
+                                        .setOrientation('topToBottom')
+                                        .setMargins({
+                                                top: 20,
+                                                bottom: 20,
+                                                left: 100,
+                                                right: 100
+                                        })
+                                        .getNodeSettings()
+                                        .setHorizontalSpacing(100)
+                                        .back()
                                         .initialize();
                                 var nodes = treePlugin.getNodes();
                                 nodes.forEach(function (node, index, arr) {
+                                        console.log(node)
                                         treePlugin.expand(node);
                                 });
                                 treePlugin.update(treePlugin.getRoot());
