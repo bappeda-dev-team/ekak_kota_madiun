@@ -4,7 +4,6 @@ module SidebarItemHelper
       [
         { title: 'Pohon Kinerja', href: asn_pohon_kinerja_index_path, icon: 'fas fa-tree',
           identifier: 'pohon_kinerja/asn' },
-        { title: 'Laporan Atasan', href: atasan_laporans_path, icon: 'fas fa-chart-line', identifier: 'atasan' },
         { title: 'Laporan KAK', href: laporan_kak_path, icon: 'fas fa-file', identifier: 'laporan_kak' },
         { title: 'Rincian Belanja', href: rincian_belanja_path, icon: 'fas fa-money-check',
           identifier: 'rincian_belanja' },
@@ -12,7 +11,6 @@ module SidebarItemHelper
       ]
     else
       [
-        { title: 'Laporan Atasan', href: atasan_laporans_path, icon: 'fas fa-chart-line', identifier: 'atasan' },
         { title: 'Laporan KAK', href: laporan_kak_path, icon: 'fas fa-file', identifier: 'laporan_kak' },
         { title: 'Rincian Belanja', href: rincian_belanja_path, icon: 'fas fa-money-check',
           identifier: 'rincian_belanja' },
