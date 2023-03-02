@@ -13,27 +13,23 @@ function init() {
                                 const treePlugin = new mitchTree.boxedTree()
                                         .setData(isu_kota)
                                         .setElement(targetEl)
-                                        .setIdAccessor(function(data) {
+                                        .setIdAccessor(function (data) {
                                                 return data.id;
                                         })
-                                        .setChildrenAccessor(function(data) {
+                                        .setChildrenAccessor(function (data) {
                                                 return data.children;
                                         })
-                                        .setBodyDisplayTextAccessor(function(data) {
+                                        .setBodyDisplayTextAccessor(function (data) {
                                                 return data.description;
                                         })
-                                        .setTitleDisplayTextAccessor(function(data) {
+                                        .setTitleDisplayTextAccessor(function (data) {
                                                 return data.name;
                                         })
                                         .setOrientation('topToBottom')
-                                        .setMargins({
-                                                top: 20,
-                                                bottom: 20,
-                                                left: 100,
-                                                right: 100
-                                        })
                                         .getNodeSettings()
-                                        .setHorizontalSpacing(100)
+                                        .setSizingMode('nodeSize')
+                                        .setHorizontalSpacing(50)
+                                        .setVerticalSpacing(50)
                                         .back()
                                         .initialize();
                                 var nodes = treePlugin.getNodes();

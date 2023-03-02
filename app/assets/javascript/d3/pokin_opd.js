@@ -3,7 +3,7 @@ const mitchTree = require('d3-mitch-tree')
 
 function init() {
         const tahun = 2023
-        const targetEl = document.getElementById('pokin-opd')
+        const targetEl = document.getElementById('-opd')
         const url = `/opds/kotak_usulan.json?tahun=${tahun}`
         if (targetEl) {
                 fetch(url)
