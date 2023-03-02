@@ -185,9 +185,13 @@ class UsersController < ApplicationController
 
   def list_all
     keyword = params[:keyword]
-    @users = User.where("nama ILIKE ?", "%#{keyword}%")
-                 .or(User.where("nik ILIKE ?", "%#{keyword}%"))
-                 .or(User.where("jabatan ILIKE ?", "%#{keyword}%"))
+    @users = if keyword
+               User.where("nama ILIKE ?", "%#{keyword}%")
+                   .or(User.where("nik ILIKE ?", "%#{keyword}%"))
+                   .or(User.where("jabatan ILIKE ?", "%#{keyword}%"))
+             else
+               []
+             end
   end
 
   private
