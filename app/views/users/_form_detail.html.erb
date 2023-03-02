@@ -23,7 +23,7 @@
         dropdown_parent_value: "#form-user"
       } %>
   </div>
-  <%= hidden_field_tag :target_render, local_assigns[:target_render] %>
+  <%= hidden_field_tag :target_render, @target_render %>
   <div class="field">
     <%= form.label :nama, class: "form-label" %>
     <%= form.text_field :nama, class: "form-control" %>

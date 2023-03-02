@@ -134,7 +134,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(user_detail_params)
         if @target_render
-          format.html { redirect_to user_detail_params, success: 'User was successfully updated.' }
+          format.html { redirect_to @target_render, success: 'User was successfully updated.' }
         else
           format.html { redirect_to adminusers_path, success: 'User was successfully updated.' }
         end
@@ -211,11 +211,11 @@ class UsersController < ApplicationController
 
   def user_detail_params
     if params[:kepala]
-      params.require(:kepala).permit(:nama, :nama_bidang, :kode_opd)
+      params.require(:kepala).permit(:nama, :nama_bidang, :kode_opd, :jabatan)
     elsif params[:atasan]
-      params.require(:atasan).permit(:nama, :nama_bidang, :kode_opd)
+      params.require(:atasan).permit(:nama, :nama_bidang, :kode_opd, :jabatan)
     else
-      params.require(:user).permit(:nama, :nama_bidang, :kode_opd)
+      params.require(:user).permit(:nama, :nama_bidang, :kode_opd, :jabatan)
     end
   end
 end
