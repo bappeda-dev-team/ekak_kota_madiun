@@ -3,9 +3,9 @@ class PohonKinerjaController < ApplicationController
 
   def opd
     @opd = current_user.opd
-    nip_kepala = @opd.users.eselon2.first&.nik
+    # nip_kepala = @opd.users.eselon2.first&.nik
     @pohons = @opd.pohons
-    @strategis = Strategi.where(nip_asn: nip_kepala)
+    @strategis = @opd.strategis.where(role: 'eselon_2')
   end
 
   def asn
@@ -14,5 +14,13 @@ class PohonKinerjaController < ApplicationController
     @user = User.find_by(nik: current_user.nik)
     @eselon = @user.eselon_user
     @strategis = Strategi.where(nip_asn: @user.nik)
+  end
+
+  def admin_filter
+    @kode_opd = params[:kode_opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @pohons = @opd.pohons
+    @strategis = @opd.strategis.where(role: 'eselon_2')
+    render partial: 'pohon_kinerja/kotak_usulan_asn', locals: { role: 'eselon_2', role_bawahan: 'eselon_3' }
   end
 end

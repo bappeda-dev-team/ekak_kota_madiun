@@ -61,9 +61,9 @@ class OpdsController < ApplicationController
   def kotak_usulan
     # TODO: change opd id
     # @opd = Opd.find(136)
-    @opd = current_user.opd
+    @opd = Opd.find(params[:kode_opd]) || current_user.opd
     @nama_opd = @opd.nama_opd
-    @tahun = 2023
+    @tahun = params[:tahun] || 2023
     @kotak_usulan = @opd.usulans
     @pohons = @opd.pohons
   end
