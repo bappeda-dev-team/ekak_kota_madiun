@@ -44,6 +44,7 @@ class User < ApplicationRecord
   has_many :pohons, dependent: :destroy
 
   # WARNING: many bug in here because added role
+  scope :admin, -> { with_role(:admin) }
   scope :non_admin, -> { without_role(:admin) }
   scope :aktif, -> { without_role([:non_aktif]) }
   scope :asn_aktif, -> { without_role([:admin]).with_role("eselon_4").order(:nama) }
@@ -206,5 +207,9 @@ class User < ApplicationRecord
 
   def nama_nip
     "#{nama} - #{nik}"
+  end
+
+  def nip
+    nik
   end
 end

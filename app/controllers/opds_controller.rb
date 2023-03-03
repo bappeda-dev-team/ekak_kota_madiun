@@ -59,8 +59,6 @@ class OpdsController < ApplicationController
   def sasaran; end
 
   def kotak_usulan
-    # TODO: change opd id
-    # @opd = Opd.find(136)
     opd_params = params[:kode_opd]
     @opd = if opd_params
              Opd.find(opd_params)

@@ -25,7 +25,9 @@
         <hr/>
         <div class="card-body">
           <% eselon = @eselon&.name %>
-          <% if eselon == "eselon_3" %>
+          <% if eselon == "eselon_2" %>
+            <%= render 'pohon_kinerja/kotak_usulan_asn_eselon_2', role: @eselon, role_bawahan: "eselon_3" %>
+          <% elsif eselon == "eselon_3" %>
             <%= render 'pohon_kinerja/kotak_usulan_asn_eselon_3', role: @eselon, role_bawahan: "eselon_4" %>
           <% elsif eselon == "eselon_4" %>
             <%= render 'pohon_kinerja/kotak_usulan_asn_eselon_4', role: @eselon, role_bawahan: "staff" %>

@@ -36,10 +36,12 @@ class StrategisController < ApplicationController
   def create
     @role = strategi_params[:role]
     @strategi = Strategi.new(strategi_params)
+    @nip = strategi_params[:nip_asn]
+    @opd_id = strategi_params[:opd_id]
 
     respond_to do |format|
       if @strategi.save
-        if @role == "eselon_2"
+        if current_user.has_role?(:admin)
           format.html { redirect_to opd_pohon_kinerja_index_path, success: "Sukses" }
         else
           format.html { redirect_to asn_pohon_kinerja_index_path, success: "Sukses" }
@@ -58,7 +60,7 @@ class StrategisController < ApplicationController
     @role = params[:strategi][:role]
     respond_to do |format|
       if @strategi.update(strategi_params)
-        if @role == "eselon_2"
+        if current_user.has_role?(:admin)
           format.html { redirect_to opd_pohon_kinerja_index_path, success: "Sukses" }
         else
           format.html { redirect_to asn_pohon_kinerja_index_path, success: "Sukses" }
@@ -77,8 +79,7 @@ class StrategisController < ApplicationController
     @strategi.destroy
 
     respond_to do |format|
-      case @role
-      when "eselon_2"
+      if current_user.has_role?(:admin)
         format.html { redirect_to opd_pohon_kinerja_index_path, success: "Sukses" }
       else
         format.html { redirect_to asn_pohon_kinerja_index_path, success: "Sukses" }
