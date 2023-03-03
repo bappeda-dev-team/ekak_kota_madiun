@@ -14,6 +14,7 @@ class PohonKinerjaController < ApplicationController
     @user = User.find_by(nik: current_user.nik)
     @eselon = @user.eselon_user
     @strategis = Strategi.where(nip_asn: @user.nik).select(&:strategi_atasan)
+    @strategi_kepala = @opd.strategis.where(nip_asn: @user.nik, role: 'eselon_2')
   end
 
   def admin_filter
