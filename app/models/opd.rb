@@ -132,4 +132,8 @@ class Opd < ApplicationRecord
   def strategi_staff
     strategis.where(role: "staff")
   end
+
+  def eselon_dua_opd
+    users.with_role("eselon_2").first
+  end
 end

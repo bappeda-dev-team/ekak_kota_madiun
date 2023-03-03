@@ -10,7 +10,7 @@
       </div>
       <div class="col-auto">
         <%= render 'shared/button_cog',
-          link: new_strategi_path(nip: current_user.nik, role: "eselon_2"),
+          link: new_strategi_path(nip: current_user.opd.eselon_dua_opd.nik, role: "eselon_2"),
           name: "Buat Strategic Objective" %>
       </div>
     </div>
@@ -32,49 +32,20 @@
             <% @strategis.each do |strategi| %>
               <% pohon = strategi.pohon %>
             <tr>
-              <td class="text-wrap align-middle"><%= pohon.keterangan %></td>
+              <td class="text-wrap align-middle">
+                <%= render 'nama_pembagi_strategi', pohon: pohon.pohonable %>
+              </td>
               <td class="text-wrap align-middle"><%= strategi.strategi %></td>
               <td class="text-wrap align-middle"><%= strategi.tahun %></td>
               <td class="text-wrap align-middle"><%= strategi.nip_asn %></td>
               <td class="text-wrap align-middle"><%= strategi.role %></td>
               <td class="text-center align-middle">
-                <%= link_to edit_strategi_path(strategi, nip: strategi.nip_asn, usulan_isu: pohon.keterangan, role: "eselon_2"), class: "btn btn-outline-info mx-3" do %>
-                  <i class="fas fa-edit me-2"></i>
-                    Edit Strategic Objective
-                <% end %>
-
-                <%= link_to list_strategi_asn_strategi_path(strategi,nip: strategi.nip_asn, role: "eselon_2"),
-                  remote: true,
-                  data: {
-                    controller: 'form-modal',
-                    action: 'form-modal#appendForm',
-                    form_modal_location_param: 'form-list-bagikan-body',
-                    bs_target: '#form-list-bagikan',
-                    bs_toggle: 'modal'
-                  },
-                  class: "btn btn-outline-gray-700 mx-3" do %>
-                  <i class="fas fa-people-arrows me-2"></i>
-                  Jumlah dibagikan <span class="badge bg-primary"><%= strategi.strategi_eselon_tigas.count %></span>
-                <% end %>
-
-                <%= link_to bagikan_pokin_strategi_path(
-                  strategi.id,
-                  role: local_assigns[:role_bawahan],
-                  pohon_id: pohon.id
-                ),
-                  remote: true, class: 'btn btn-outline-gray-900',
-                  data: { controller: 'form-modal',
-                          action: 'form-modal#appendForm',
-                          form_modal_location_param: 'form-bagikan-strategi-pokin-body',
-                          bs_target: '#form-bagikan-strategi-pokin',
-                          bs_toggle: 'modal' } do %>
-                    <span class="fas fa-share"></span>
-                    <span>Bagikan Strategic Objective</span>
-                <% end %>
-                <%= link_to strategi, method: :delete, data: { confirm_swal: "Hapus Strategi?"}, class: "btn btn-outline-danger mx-3" do %>
-                  <i class="fas fa-trash me-2"></i>
-                    Hapus Strategic Objective
-                <% end %>
+                <%= render 'tombol_aksi_pohon',
+                  strategi: strategi,
+                  pohon: pohon.pohonable,
+                  role: strategi.role,
+                  role_bawahan: local_assigns[:role_bawahan]
+                %>
               </td>
             </tr>
             <% end %>

@@ -21,14 +21,14 @@
         <%= form.label :isu_strategis_pohon, class: "form-label" %>
         <%= form.select :pohon_id, Strategi.where(nip_asn: @nip).uniq(&:pohon_id).collect{ |str| [str.pohon.keterangan, str.pohon_id] } ,
           {include_blank: true},
-          { class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih Strategi Atasan' } }%>
+          { class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih Strategi Atas' } }%>
       </div>
 
       <div class="field">
         <%= form.label :isu_strategis_atasan, class: "form-label" %>
         <%= form.select :strategi_ref_id, Strategi.where(nip_asn: @nip).uniq(&:strategi_ref_id).collect{ |str| [str.isu_strategis_disasar, str.strategi_ref_id] } ,
           {include_blank: true},
-          { class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih Strategi Atasan' } }%>
+          { class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih Strategi Atasan ( kosong jika KA OPD )' } }%>
       </div>
 
       <div class="field">

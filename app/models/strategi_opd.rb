@@ -13,4 +13,8 @@
 #
 class StrategiOpd < ApplicationRecord
   belongs_to :opd, foreign_key: 'opd_id', primary_key: 'kode_opd'
+
+  def nama_pemilik
+    opd&.nama_opd
+  end
 end

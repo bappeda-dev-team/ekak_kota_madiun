@@ -16,4 +16,14 @@ class StrategiKotum < ApplicationRecord
   belongs_to :sasaran_kotum, foreign_key: 'sasaran_kota_id', primary_key: 'kode_sasaran', optional: true
   has_many :usulans, as: :usulanable, dependent: :destroy
   has_many :pohons, as: :pohonable, dependent: :destroy
+
+  has_many :strategis, through: :pohons
+
+  def nama_pemilik
+    "Kota Madiun"
+  end
+
+  def isu_strategis
+    isu_strategis_kotum.isu_strategis
+  end
 end
