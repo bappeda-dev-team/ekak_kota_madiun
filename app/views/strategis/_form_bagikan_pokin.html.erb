@@ -15,13 +15,17 @@
   <div class="field">
     <%= form.label :dibagikan, class: "form-label" %>
     <ol>
-      <% @strategi.strategi_bawahans.each do |strategi_asn| %>
+      <% @strategi.strategi_bawahans.order(:nip_asn).each do |strategi_asn| %>
         <li>
           <div class="row align-items-center">
             <span class="col">
               <span class="fw-bolder"><%= strategi_asn&.user&.nama %></span>
               <small>( role: <%= strategi_asn&.role %> )</small>
             </span>
+              <span class="col border border-success rounded">
+                <small>strategi: </small>
+                <span class="fw-bolder"><%= strategi_asn&.strategi || 'belum diisi' %></span>
+              </span>
             <span class="col-auto">
               <%= hidden_field_tag 'tidak_dibagikan[]', strategi_asn.id -%>
               <%= check_box_tag 'dibagikan[]', strategi_asn.id, true %>

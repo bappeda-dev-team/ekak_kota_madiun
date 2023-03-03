@@ -67,6 +67,10 @@ class Strategi < ApplicationRecord
     strategi_hasil.where.not(nip_asn: "")
   end
 
+  def strategi_dan_nip
+    strategi.nil? ? "dibagikan ke #{nip_asn}" : "#{user&.nama} - #{strategi}"
+  end
+
   def nama_pemilik
     user&.nama
   end

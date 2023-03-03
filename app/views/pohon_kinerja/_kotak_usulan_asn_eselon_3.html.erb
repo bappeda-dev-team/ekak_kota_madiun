@@ -28,7 +28,9 @@
             <% @strategis.each do |strategi| %>
               <% pohon = strategi.strategi_atasan %>
             <tr>
-              <td class="text-wrap align-middle"><%= pohon.strategi %></td>
+              <td class="text-wrap align-middle">
+                <%= render 'nama_pembagi_strategi', pohon: pohon %>
+              </td>
               <td class="text-wrap align-middle"><%= strategi.strategi %></td>
               <td class="text-wrap align-middle"><%= strategi.tahun %></td>
               <td class="text-wrap align-middle"><%= strategi.nip_asn %></td>
