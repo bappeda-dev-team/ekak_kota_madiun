@@ -78,10 +78,10 @@ class StrategisController < ApplicationController
 
     respond_to do |format|
       case @role
-      when "eselon_3" || "eselon_4" || "staff"
-        format.html { redirect_to asn_pohon_kinerja_index_path, success: "Sukses" }
-      else
+      when "eselon_2"
         format.html { redirect_to opd_pohon_kinerja_index_path, success: "Sukses" }
+      else
+        format.html { redirect_to asn_pohon_kinerja_index_path, success: "Sukses" }
       end
       # format.html { redirect_to strategis_url, notice: "Strategi was successfully destroyed." }
       # format.json { head :no_content }

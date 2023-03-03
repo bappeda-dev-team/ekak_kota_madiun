@@ -52,7 +52,7 @@ export default class extends Controller {
                                                 .setHorizontalSpacing(40)
                                                 .setVerticalSpacing(40)
                                                 .setBodyBoxWidth(350)
-                                                .setBodyBoxHeight(100)
+                                                .setBodyBoxHeight(120)
                                                 .setBodyBoxPadding({
                                                         top: 5,
                                                         bottom: 5,
