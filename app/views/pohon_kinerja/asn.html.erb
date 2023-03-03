@@ -18,20 +18,26 @@
           </div>
         </div>
       </div>
-      <div class="card-body" data-controller="pohon-kinerja" data-pohon-kinerja-opd-value="<%= @opd.id %>" data-pohon-kinerja-tahun-value="2023">
-        <div id="pokin-opd" class="pohon-kinerja" data-pohon-kinerja-target="pokin"></div>
-      </div>
-      <hr/>
-      <div class="card-body">
-        <% eselon = @eselon&.name %>
-        <% if eselon == "eselon_3" %>
-          <%= render 'pohon_kinerja/kotak_usulan_asn_eselon_3', role: @eselon, role_bawahan: "eselon_4" %>
-        <% elsif eselon == "eselon_4" %>
-          <%= render 'pohon_kinerja/kotak_usulan_asn_eselon_4', role: @eselon, role_bawahan: "staff" %>
-        <% else %>
-          <%= render 'pohon_kinerja/kotak_usulan_asn_staff', role: @eselon, role_bawahan: "" %>
-        <% end %>
-      </div>
+      <% if @strategis %>
+        <div class="card-body" data-controller="pohon-kinerja" data-pohon-kinerja-opd-value="<%= @opd.id %>" data-pohon-kinerja-tahun-value="2023">
+          <div id="pokin-opd" class="pohon-kinerja" data-pohon-kinerja-target="pokin"></div>
+        </div>
+        <hr/>
+        <div class="card-body">
+          <% eselon = @eselon&.name %>
+          <% if eselon == "eselon_3" %>
+            <%= render 'pohon_kinerja/kotak_usulan_asn_eselon_3', role: @eselon, role_bawahan: "eselon_4" %>
+          <% elsif eselon == "eselon_4" %>
+            <%= render 'pohon_kinerja/kotak_usulan_asn_eselon_4', role: @eselon, role_bawahan: "staff" %>
+          <% else %>
+            <%= render 'pohon_kinerja/kotak_usulan_asn_staff', role: @eselon, role_bawahan: "-" %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="card-body">
+          <p class="alert alert-danger">Pohon Kinerja Belum dibagikan!!</p>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

@@ -102,9 +102,20 @@ class StrategisController < ApplicationController
   # membuat strategi kosong dengan nip dan strategi_ref_id
   def pilih_asn
     @strategi_atasan_id = params[:id]
+    strategi_atasan = Strategi.find(@strategi_atasan_id)
     @role = params[:role]
     @nip = params[:nip]
     @pohon_id = params[:pohon_id].to_i
+
+    dibagikan = params[:dibagikan]
+    tidak = params[:tidak_dibagikan]
+    if dibagikan
+      hapus_bagikan = dibagikan.nil? ? tidak : (tidak - dibagikan)
+      hapus_bagikan.each do |hapus|
+        strategi_atasan.strategi_bawahans.find(hapus).delete
+      end
+    end
+
     strategi_tray = []
     @nip&.each do |nip_asn|
       strategi_tray.push({ strategi_ref_id: @strategi_atasan_id,

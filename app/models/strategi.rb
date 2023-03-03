@@ -37,17 +37,17 @@ class Strategi < ApplicationRecord
      foreign_key: "strategi_ref_id", optional: true
 
   has_many :strategi_eselon_tigas, lambda {
-    where(role: "eselon_3")
+    where(role: "eselon_3").where.not(nip_asn: "")
   }, class_name: "Strategi",
      foreign_key: "strategi_ref_id", dependent: :destroy
 
   has_many :strategi_eselon_empats, lambda {
-    where(role: "eselon_4")
+    where(role: "eselon_4").where.not(nip_asn: "")
   }, class_name: "Strategi",
      foreign_key: "strategi_ref_id", dependent: :destroy
 
   has_many :strategi_staffs, lambda {
-    where(role: "staff")
+    where(role: "staff").where.not(nip_asn: "")
   }, class_name: "Strategi",
      foreign_key: "strategi_ref_id", dependent: :destroy
 
@@ -65,5 +65,9 @@ class Strategi < ApplicationRecord
                        strategi_staffs
                      end
     strategi_hasil.where.not(nip_asn: "")
+  end
+
+  def nama_pemilik
+    user&.nama
   end
 end
