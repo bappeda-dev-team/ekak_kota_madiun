@@ -34,7 +34,6 @@ function init() {
                                         .initialize();
                                 var nodes = treePlugin.getNodes();
                                 nodes.forEach(function (node, index, arr) {
-                                        console.log(node)
                                         treePlugin.expand(node);
                                 });
                                 treePlugin.update(treePlugin.getRoot());

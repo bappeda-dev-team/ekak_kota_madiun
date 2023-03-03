@@ -1,0 +1,19 @@
+<td class="text-gray-900 border" scope="row" rowspan="<%= rowsize %>">
+  <div class="row justify-content-center w-100">
+    <div class="col">
+     <%= link_to edit_sasaran_opd_path(sasaran_opd),
+         class: "m-3 btn btn-outline-info w-100" do %>
+           <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+           <span>Edit</span>
+     <% end %>
+    </div>
+    <div class="col">
+     <%= link_to sasaran_opd, method: :delete,
+       data: { confirm_swal: "Hapus #{sasaran_opd.sasaran} ?"},
+       class: "m-3 btn btn-outline-danger w-100" do %>
+         <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+         <span>Hapus</span>
+     <% end %>
+    </div>
+  </div>
+</td>

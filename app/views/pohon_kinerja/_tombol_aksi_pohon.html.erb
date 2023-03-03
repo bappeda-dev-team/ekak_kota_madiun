@@ -1,0 +1,41 @@
+<div class="row justify-content-center w-100">
+  <% unless strategi.strategi.blank? %>
+    <div class="col mb-2">
+      <%= link_to bagikan_pokin_strategi_path(
+        strategi.id,
+        role: role_bawahan,
+        pohon_id: pohon.id),
+        remote: true,
+        class: 'btn btn-outline-gray-900 d-inline-flex align-items-center mx-3',
+        data: { controller: 'form-modal',
+                action: 'form-modal#appendForm',
+                form_modal_location_param: 'form-bagikan-strategi-pokin-body',
+                bs_target: '#form-bagikan-strategi-pokin',
+                bs_toggle: 'modal' } do %>
+          <span class="fas fa-share me-2"></span>
+          <span>Bagikan Tactical Objective
+          <span class="badge bg-primary"><%= strategi.strategi_bawahans.count %></span>
+          </span>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="col mb-2">
+    <%= link_to edit_strategi_path(strategi, nip: strategi.nip_asn,
+                                 usulan_isu: pohon.strategi,
+                                 role: role),
+    class: "btn btn-outline-info d-inline-flex align-items-center mx-3" do %>
+      <i class="fas fa-edit me-2"></i>
+      Isi / Edit Tactical Objective
+    <% end %>
+  </div>
+
+  <div class="col">
+    <%= link_to strategi, method: :delete,
+      data: { confirm_swal: "Hapus Strategi?"},
+      class: "btn btn-outline-danger d-inline-flex align-items-center mx-3" do %>
+      <i class="fas fa-edit me-2"></i>
+        Hapus Strategic Objective
+    <% end %>
+  </div>
+</div>

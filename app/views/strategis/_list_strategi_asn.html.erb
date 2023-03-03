@@ -1,7 +1,32 @@
-<ol>
-<% @list_strategi_asn.each do |strategi| %>
-<li class="asn_list">
-  <%= strategi.user.nama_nip %>
-</li>
-<% end %>
-</ol>
+<div class='card'>
+  <div class='card-body'>
+  <% if @list_strategi_asn.any? %>
+    <%= form_with(url: hapus_bagikan_ke_asn_strategi_path(@strategi)) do |form| %>
+      <ol>
+        <% @list_strategi_asn.order(:id).each do |strategi_asn| %>
+          <li>
+            <div class="row align-items-center">
+              <span class="col-auto">
+                <%= strategi_asn&.user&.nama %>
+              </span>
+              <span class="col-auto">
+                <%= strategi_asn&.user&.nik %>
+              </span>
+              <span class="col">
+                <%= strategi_asn&.strategi || 'Belum diisi' %>
+              </span>
+              <span class="col-auto">
+                <%= hidden_field_tag 'tidak_dibagikan[]', strategi_asn.id -%>
+                <%= check_box_tag 'dibagikan[]', strategi_asn.id, true %>
+              </span>
+            </div>
+          </li>
+        <% end %>
+      </ol>
+      <%= form.submit %>
+    <% end %>
+  <% else %>
+    <p class="alert alert-danger">Belum dibagikan!!</p>
+  <% end %>
+  </div>
+</div>

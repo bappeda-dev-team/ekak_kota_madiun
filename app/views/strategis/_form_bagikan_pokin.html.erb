@@ -13,9 +13,29 @@
     <%= form.hidden_field :pohon_id, readonly: true, value: @pohon_id %>
   </div>
   <div class="field">
+    <%= form.label :dibagikan, class: "form-label" %>
+    <ol>
+      <% @strategi.strategi_bawahans.each do |strategi_asn| %>
+        <li>
+          <div class="row align-items-center">
+            <span class="col">
+              <span class="fw-bolder"><%= strategi_asn&.user&.nama %></span>
+              <small>( role: <%= strategi_asn&.role %> )</small>
+            </span>
+            <span class="col-auto">
+              <%= hidden_field_tag 'tidak_dibagikan[]', strategi_asn.id -%>
+              <%= check_box_tag 'dibagikan[]', strategi_asn.id, true %>
+            </span>
+          </div>
+        </li>
+      <% end %>
+    </ol>
+  </div>
+  <div class="field">
     <%= form.label :asn, class: "form-label" %>
     <%= form.select :nip, @bawahans.collect{ |asn| [asn.nama, asn.nik] },
       { include_blank: true },
+      multiple: true,
       data: {
         controller: 'dropdown',
         placeholder: 'Pilih ASN',

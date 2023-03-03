@@ -102,24 +102,30 @@ class StrategisController < ApplicationController
   # membuat strategi kosong dengan nip dan strategi_ref_id
   def pilih_asn
     @strategi_atasan_id = params[:id]
+    strategi_atasan = Strategi.find(@strategi_atasan_id)
     @role = params[:role]
     @nip = params[:nip]
     @pohon_id = params[:pohon_id].to_i
-    @strategi = Strategi.new(strategi_ref_id: @strategi_atasan_id,
-                             nip_asn: @nip,
-                             role: @role,
-                             pohon_id: @pohon_id)
-    respond_to do |format|
-      if @strategi.save
-        if @role == "eselon_3"
-          format.html { redirect_to opd_pohon_kinerja_index_path, success: "Strategi dibagikan" }
-        else
-          format.html { redirect_to asn_pohon_kinerja_index_path, success: "Strategi dibagikan" }
-        end
-      else
-        format.html { redirect_to asn_pohon_kinerja_index_path, error: "Terjadi Kesalahan" }
+
+    dibagikan = params[:dibagikan]
+    tidak = params[:tidak_dibagikan]
+    if dibagikan
+      hapus_bagikan = dibagikan.nil? ? tidak : (tidak - dibagikan)
+      hapus_bagikan.each do |hapus|
+        strategi_atasan.strategi_bawahans.find(hapus).delete
       end
     end
+
+    strategi_tray = []
+    @nip&.each do |nip_asn|
+      strategi_tray.push({ strategi_ref_id: @strategi_atasan_id,
+                           nip_asn: nip_asn,
+                           role: @role,
+                           pohon_id: @pohon_id })
+    end
+    @strategi = Strategi.create(strategi_tray)
+    render json: { resText: "Sukses membagikan", result: { data: @strategi } },
+           status: :accepted
   end
 
   def list_strategi_asn
@@ -134,7 +140,18 @@ class StrategisController < ApplicationController
                          else
                            @strategi.strategi_staffs
                          end
+    @list_strategi_asn = @list_strategi_asn.where.not(nip_asn: "")
     render partial: 'list_strategi_asn'
+  end
+
+  def hapus_bagikan_ke_asn
+    @strategi = Strategi.find(params[:id])
+    dibagikan = params[:dibagikan]
+    tidak = params[:tidak_dibagikan]
+    hapus_bagikan = dibagikan.nil? ? tidak : (tidak - dibagikan)
+    hapus_bagikan.each do |hapus|
+      @strategi.strategi_eselon_empats.find(hapus).delete
+    end
   end
 
   private
