@@ -18,12 +18,21 @@ class StrategiKotum < ApplicationRecord
   has_many :pohons, as: :pohonable, dependent: :destroy
 
   has_many :strategis, through: :pohons
+  has_many :opds, through: :pohons
 
   def nama_pemilik
     "Kota Madiun"
   end
 
   def isu_strategis
-    isu_strategis_kotum.isu_strategis
+    isu_strategis_kotum
+  end
+
+  def nama_isu
+    isu_strategis.isu_strategis
+  end
+
+  def strategi_opd(opd_id)
+    pohons.where(opd_id: opd_id)
   end
 end

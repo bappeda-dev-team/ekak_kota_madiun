@@ -29,7 +29,7 @@
               <% pohon = strategi.strategi_atasan %>
             <tr>
               <td class="text-wrap align-middle">
-                <%= render 'nama_pembagi_strategi', pohon: pohon %>
+                <%= render 'nama_pembagi_strategi', strategi: pohon.strategi, nama_pemilik: pohon.nama_pemilik  %>
               </td>
               <td class="text-wrap align-middle"><%= strategi.strategi %></td>
               <td class="text-wrap align-middle"><%= strategi.tahun %></td>

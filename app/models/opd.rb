@@ -136,4 +136,12 @@ class Opd < ApplicationRecord
   def eselon_dua_opd
     users.with_role("eselon_2").first
   end
+
+  def pohon_kota
+    pohons.where(pohons: { pohonable_type: "StrategiKotum" })
+  end
+
+  def isu_strategis_kota
+    pohons.uniq { |aa| aa.pohonable.isu_strategis }.map { |bb| bb.pohonable.isu_strategis }
+  end
 end

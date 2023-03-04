@@ -4,24 +4,24 @@ json.results do
   json.type "root"
   json.description @nama_opd
   json.tahun @tahun
-  if @pohons.any?
-    json.children @pohons do |pohon|
-      json.id pohon.id
+  if @isu_strategis_kota.any?
+    json.children @isu_strategis_kota do |isu_kota|
+      json.id isu_kota.id
       json.name "Isu Strategis"
       json.type "isu_strategis"
-      json.description pohon.keterangan
-      json.children do
-        json.child! do
-          json.id "#{pohon.id}_strategi"
-          json.name "Strategi"
-          json.type "Strategi"
-          json.description pohon.pohonable.strategi
-          json.children pohon.strategis do |strategi|
-            json.id "#{strategi.id}_objective"
+      json.description isu_kota.isu_strategis
+      json.children isu_kota.strategis do |strategi|
+        json.id "#{strategi.id}_strategi"
+        json.name "Strategi Kota"
+        json.type "strategi_kota"
+        json.description strategi.strategi
+        strategi.strategi_opd(@opd_id).each do |pohon|
+          json.children pohon.strategis do |strategic|
+            json.id "#{strategic.id}_strategic"
             json.name "Strategic Objective"
             json.type "strategic_objective"
-            json.description strategi.strategi_dan_nip
-            json.children strategi.strategi_eselon_tigas do |tactical|
+            json.description strategic.strategi_dan_nip
+            json.children strategic.strategi_eselon_tigas do |tactical|
               json.id "#{tactical.id}_tactical"
               json.name "Tactical Objective"
               json.type "tactical_objective"
