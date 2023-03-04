@@ -10,26 +10,34 @@ json.results do
       json.name "Isu Strategis"
       json.type "isu_strategis"
       json.description pohon.keterangan
-      json.children pohon.strategis do |strategi|
-        json.id "#{strategi.id}_objective"
-        json.name "Strategic Objective"
-        json.type "strategic_objective"
-        json.description strategi.strategi_dan_nip
-        json.children strategi.strategi_eselon_tigas do |tactical|
-          json.id "#{tactical.id}_tactical"
-          json.name "Tactical Objective"
-          json.type "tactical_objective"
-          json.description tactical.strategi_dan_nip
-          json.children tactical.strategi_eselon_empats do |operational|
-            json.id "#{operational.id}_operational"
-            json.name "Operational Objective"
-            json.type "operational_objective"
-            json.description operational.strategi_dan_nip
-            json.children operational.strategi_staffs do |staff|
-              json.id "#{staff.id}_staff"
-              json.name "Operational Objective 2"
-              json.type "operational_2"
-              json.description staff.strategi_dan_nip
+      json.children do
+        json.child! do
+          json.id "#{pohon.id}_strategi"
+          json.name "Strategi"
+          json.type "Strategi"
+          json.description pohon.pohonable.strategi
+          json.children pohon.strategis do |strategi|
+            json.id "#{strategi.id}_objective"
+            json.name "Strategic Objective"
+            json.type "strategic_objective"
+            json.description strategi.strategi_dan_nip
+            json.children strategi.strategi_eselon_tigas do |tactical|
+              json.id "#{tactical.id}_tactical"
+              json.name "Tactical Objective"
+              json.type "tactical_objective"
+              json.description tactical.strategi_dan_nip
+              json.children tactical.strategi_eselon_empats do |operational|
+                json.id "#{operational.id}_operational"
+                json.name "Operational Objective"
+                json.type "operational_objective"
+                json.description operational.strategi_dan_nip
+                json.children operational.strategi_staffs do |staff|
+                  json.id "#{staff.id}_staff"
+                  json.name "Operational Objective 2"
+                  json.type "operational_2"
+                  json.description staff.strategi_dan_nip
+                end
+              end
             end
           end
         end
