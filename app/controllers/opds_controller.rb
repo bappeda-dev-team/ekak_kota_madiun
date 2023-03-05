@@ -66,9 +66,10 @@ class OpdsController < ApplicationController
              current_user.opd
            end
     @nama_opd = @opd.nama_opd
+    @opd_id = @opd.id
     @tahun = params[:tahun] || 2023
     @kotak_usulan = @opd.usulans
-    @pohons = @opd.pohons
+    @isu_strategis_pohon = @opd.isu_strategis_pohon
   end
 
   # form buat strategi eselon 2, tombol klik di kotak usulan opd

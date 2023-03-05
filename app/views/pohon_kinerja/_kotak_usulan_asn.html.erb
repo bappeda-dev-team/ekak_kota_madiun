@@ -10,7 +10,7 @@
       </div>
       <div class="col-auto">
         <%= render 'shared/button_cog',
-          link: new_strategi_path(nip: current_user.opd.eselon_dua_opd.nik, role: "eselon_2"),
+          link: new_strategi_path(nip: @opd.eselon_dua_opd.nik, role: "eselon_2"),
           name: "Buat Strategic Objective" %>
       </div>
     </div>
@@ -21,6 +21,7 @@
         <thead>
           <tr>
             <th>Isu Strategis</th>
+            <th>Strategi Kota</th>
             <th>Strategic Objective</th>
             <th>Tahun</th>
             <th>NIP</th>
@@ -33,7 +34,10 @@
               <% pohon = strategi.pohon %>
             <tr>
               <td class="text-wrap align-middle">
-                <%= render 'nama_pembagi_strategi', pohon: pohon.pohonable %>
+                <%= render 'nama_pembagi_strategi', strategi: pohon.pohonable.nama_isu, nama_pemilik: "Kota Madiun"  %>
+              </td>
+              <td class="text-wrap align-middle">
+                <%= render 'nama_pembagi_strategi', strategi: pohon.pohonable.strategi, nama_pemilik: pohon.pohonable.nama_pemilik  %>
               </td>
               <td class="text-wrap align-middle"><%= strategi.strategi %></td>
               <td class="text-wrap align-middle"><%= strategi.tahun %></td>

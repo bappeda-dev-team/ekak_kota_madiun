@@ -22,4 +22,20 @@ class IsuStrategisOpd < ApplicationRecord
   def nama_pemilik
     opd&.nama_opd
   end
+
+  def isu
+    self
+  end
+
+  def startegis
+    pohons
+  end
+
+  def nama_isu
+    isu.isu_strategis
+  end
+
+  def strategis
+    pohons
+  end
 end

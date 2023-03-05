@@ -12,4 +12,10 @@
 class IsuStrategisKotum < ApplicationRecord
   default_scope { order(:id) }
   has_many :strategi_kotums, foreign_key: 'isu_strategis_kota_id', primary_key: 'id'
+
+  has_many :opds, through: :strategi_kotums
+
+  def strategis
+    strategi_kotums
+  end
 end
