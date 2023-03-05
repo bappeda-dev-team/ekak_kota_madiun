@@ -7,16 +7,16 @@ json.results do
   if @isu_strategis_pohon.any?
     json.children @isu_strategis_pohon do |isu_kota|
       json.id isu_kota.id
-      json.name "Isu Strategis"
-      json.type "isu_strategis"
+      json.name isu_kota.instance_of?(IsuStrategisOpd) ? "Isu Strategis OPD" : "Isu Strategis Kota"
+      json.type isu_kota.instance_of?(IsuStrategisOpd) ? "isu_strategis_opd" : "isu_strategis_kota"
       json.description isu_kota.isu_strategis
 
       isu_asli = isu_kota.instance_of?(IsuStrategisOpd) ? isu_kota.pohons : isu_kota.strategis
 
       json.children isu_asli do |strategi|
         json.id "#{strategi.id}_strategi"
-        json.name "Strategi Kota"
-        json.type "strategi_kota"
+        json.name strategi.instance_of?(Pohon) ? "Strategi OPD" : "Strategi Kota"
+        json.type strategi.instance_of?(Pohon) ? "strategi_opd" : "strategi_kota"
 
         strategi_deskripsi = strategi.instance_of?(Pohon) ? strategi.pohonable.strategi : strategi.strategi
 
