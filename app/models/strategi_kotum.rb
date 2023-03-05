@@ -24,12 +24,12 @@ class StrategiKotum < ApplicationRecord
     "Kota Madiun"
   end
 
-  def isu_strategis
+  def isu
     isu_strategis_kotum
   end
 
   def nama_isu
-    isu_strategis.isu_strategis
+    isu.isu_strategis
   end
 
   def strategi_opd(opd_id)

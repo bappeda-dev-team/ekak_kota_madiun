@@ -74,4 +74,8 @@ class Strategi < ApplicationRecord
   def nama_pemilik
     user&.nama
   end
+
+  def strategis
+    self
+  end
 end

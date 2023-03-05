@@ -137,11 +137,11 @@ class Opd < ApplicationRecord
     users.with_role("eselon_2").first
   end
 
-  def pohon_kota
-    pohons.where(pohons: { pohonable_type: "StrategiKotum" })
+  def pohon_opd
+    pohons.where(pohons: { pohonable_type: %w[StrategiKotum IsuStrategisOpd] })
   end
 
-  def isu_strategis_kota
-    pohons.uniq { |aa| aa.pohonable.isu_strategis }.map { |bb| bb.pohonable.isu_strategis }
+  def isu_strategis_pohon
+    pohon_opd.uniq { |aa| aa.pohonable.isu }.map { |bb| bb.pohonable.isu }
   end
 end
