@@ -19,7 +19,7 @@
       <% end %>
     </div>
   <% end %>
-
+  <% unless current_user.has_role?(:super_admin) %>
   <div class="col mb-2">
     <%= link_to edit_strategi_path(strategi, nip: strategi.nip_asn,
                                  usulan_isu: pohon.strategi,
@@ -38,4 +38,5 @@
         Hapus Strategic Objective
     <% end %>
   </div>
+  <% end %>
 </div>
