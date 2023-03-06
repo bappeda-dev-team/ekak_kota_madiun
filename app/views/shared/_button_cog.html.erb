@@ -1,4 +1,6 @@
-<%= link_to local_assigns[:link], class: "btn btn-primary d-block" do %>
-  <i class="fas fa-cog me-2"></i>
-  <%= local_assigns[:name] %>
+<% unless current_user.has_role?(:super_admin) %>
+  <%= link_to local_assigns[:link], class: "btn btn-primary d-block" do %>
+    <i class="fas fa-cog me-2"></i>
+    <%= local_assigns[:name] %>
+  <% end %>
 <% end %>

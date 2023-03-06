@@ -62,11 +62,11 @@ export default class extends Controller {
                                                 .back()
                                                 .initialize();
                                         // auto expand
-                                        // var nodes = treePlugin.getNodes();
-                                        // nodes.forEach(function(node, index, arr) {
-                                        //         treePlugin.expand(node);
-                                        // });
-                                        // treePlugin.update(treePlugin.getRoot());
+                                        var nodes = treePlugin.getNodes();
+                                        nodes.forEach(function(node, index, arr) {
+                                                treePlugin.expand(node);
+                                        });
+                                        treePlugin.update(treePlugin.getRoot());
                                 })
                 }
                 // window.addEventListener('DOMContentLoaded', init);
