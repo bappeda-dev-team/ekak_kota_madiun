@@ -15,7 +15,7 @@ class IsuStrategisKotum < ApplicationRecord
 
   has_many :opds, through: :strategi_kotums
 
-  def strategis
-    strategi_kotums
+  def strategis(opd_id)
+    strategi_kotums.includes(:pohons).where(pohons: { opd_id: opd_id})
   end
 end

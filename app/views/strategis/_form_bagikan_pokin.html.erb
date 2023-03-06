@@ -26,29 +26,33 @@
                 <small>strategi: </small>
                 <span class="fw-bolder"><%= strategi_asn&.strategi || 'belum diisi' %></span>
               </span>
+  <% unless current_user.has_role?(:super_admin) %>
             <span class="col-auto">
               <%= hidden_field_tag 'tidak_dibagikan[]', strategi_asn.id -%>
               <%= check_box_tag 'dibagikan[]', strategi_asn.id, true %>
             </span>
+  <% end %>
           </div>
         </li>
       <% end %>
     </ol>
   </div>
-  <div class="field">
-    <%= form.label :asn, class: "form-label" %>
-    <%= form.select :nip, @bawahans.collect{ |asn| [asn.nama, asn.nik] },
-      { include_blank: true },
-      multiple: true,
-      data: {
-        controller: 'dropdown',
-        placeholder: 'Pilih ASN',
-        dropdown_parent_value: '#form-bagikan-strategi-pokin'
-      },
-      class: "form-control" %>
-  </div>
+  <% unless current_user.has_role?(:super_admin) %>
+    <div class="field">
+      <%= form.label :asn, class: "form-label" %>
+      <%= form.select :nip, @bawahans.collect{ |asn| [asn.nama, asn.nik] },
+        { include_blank: true },
+        multiple: true,
+        data: {
+          controller: 'dropdown',
+          placeholder: 'Pilih ASN',
+          dropdown_parent_value: '#form-bagikan-strategi-pokin'
+        },
+        class: "form-control" %>
+    </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+  <% end %>
 <% end %>
