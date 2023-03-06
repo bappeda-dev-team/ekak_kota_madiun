@@ -96,7 +96,13 @@ class StrategisController < ApplicationController
     @role = params[:role]
     @pohon_id = @strategi.pohon_id
     @opd = current_user.opd
-    @bawahans = @opd.users.with_role(@role.to_sym)
+    @bawahans = if [145,
+                    122].include?(@opd.id) && @role == 'eselon_3'
+                  @opd.users.with_any_role(@role.to_sym,
+                                       :eselon_2b)
+                else
+                  @opd.users.with_role(@role.to_sym)
+                end
     render partial: "form_bagikan_pokin"
   end
 

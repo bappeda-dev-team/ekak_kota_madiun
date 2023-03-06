@@ -36,8 +36,13 @@ class Strategi < ApplicationRecord
   }, class_name: "Strategi",
      foreign_key: "strategi_ref_id", optional: true
 
+  has_many :strategi_eselon_dua_bs, lambda {
+    where(role: "eselon_2b").where.not(nip_asn: "")
+  }, class_name: "Strategi",
+     foreign_key: "strategi_ref_id", dependent: :destroy
+
   has_many :strategi_eselon_tigas, lambda {
-    where(role: "eselon_3").where.not(nip_asn: "")
+    where(role: "eselon_3").or(where(role: "eselon_2b")).where.not(nip_asn: "")
   }, class_name: "Strategi",
      foreign_key: "strategi_ref_id", dependent: :destroy
 

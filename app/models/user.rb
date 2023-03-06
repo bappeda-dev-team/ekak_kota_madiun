@@ -201,7 +201,11 @@ class User < ApplicationRecord
   end
 
   def sasaran_pohon_kinerja(tahun: nil)
-    sasarans.includes(:strategi).where("sasarans.tahun ILIKE ?", tahun).dengan_strategi
+    sasarans.includes(%i[strategi indikator_sasarans])
+            .where("sasarans.tahun ILIKE ?", tahun)
+            .dengan_tahapan
+            .dengan_manual_ik
+            .select { |s| s.strategi.present? }
   end
 
   def eselon_user
