@@ -68,7 +68,7 @@ class Strategi < ApplicationRecord
   end
 
   def strategi_dan_nip
-    strategi.nil? ? "dibagikan ke #{nip_asn}" : "#{user&.nama} - #{strategi}"
+    strategi.nil? ? "dibagikan ke #{nip_asn}" : "#{user&.nama} - #{strategi} - Indikator #{indikator_sasarans.pluck(:indikator_kinerja)}"
   end
 
   def nama_pemilik

@@ -60,8 +60,9 @@ class Sasaran < ApplicationRecord
   has_many :permasalahans, dependent: :destroy
   has_many :latar_belakangs, dependent: :destroy
   has_many :genders
-  # belongs_to :strategi, dependent: :destroy, optional: true
-  has_one :strategi
+  belongs_to :strategi, dependent: :destroy, optional: true
+  # has_one :strategi
+  has_many :manual_iks, through: :indikator_sasarans
 
   accepts_nested_attributes_for :rincian, update_only: true
   accepts_nested_attributes_for :tahapans
@@ -100,6 +101,7 @@ class Sasaran < ApplicationRecord
   scope :dengan_tahapan, -> { joins(:tahapans) }
   scope :dengan_rincian, -> { joins(:rincian).includes(:tahapans).where.not(tahapans: { id_rencana: nil }) }
   scope :belum_ada_genders, -> { where.missing(:genders) }
+  scope :dengan_strategi, -> { select { |s| s.strategi.present? } }
 
   SUMBERS = { dana_transfer: 'Dana Transfer', dak: 'DAK', dbhcht: 'DBHCHT', bk_provinsi: 'BK Provinsi',
               blud: 'BLUD' }.freeze

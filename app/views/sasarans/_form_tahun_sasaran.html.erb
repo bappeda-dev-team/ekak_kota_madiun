@@ -1,0 +1,12 @@
+<%= form_with(model: [@user, sasaran], local: false) do |form| %>
+  <div class="field mt-3">
+    <%= form.label :tahun_sasaran, { class: "form-label" } %>
+    <%= form.select(:tahun, (['',2021,2022,2023,2024]), {},
+    {data: {"placeholder": "Pilih Tahun",
+            controller: 'dropdown'
+    }}) %>
+  </div>
+  <div class="actions my-4">
+    <%= form.submit "Simpan", :class => "btn btn-tertiary" %>
+  </div>
+<% end %>
