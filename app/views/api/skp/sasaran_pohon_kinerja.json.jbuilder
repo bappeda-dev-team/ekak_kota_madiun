@@ -20,12 +20,7 @@ json.data do
       json.target indikator_sasaran.target
       json.satuan indikator_sasaran.satuan
       json.manual_ik do
-        json.id_manual_ik indikator_sasaran.id
-        json.rencana_hasil_kerja sasaran.sasaran_kinerja
-        json.tujuan_rencana_hasil_kerja sasaran.gambaran_umum_sasaran
-        json.indikator_kinerja "#{indikator_sasaran.indikator_kinerja} | #{indikator_sasaran.target} #{indikator_sasaran.satuan}"
-        json.satuan_pengukuran indikator_sasaran.satuan
-        json.jenis_indikator_kinerja 'Output'
+        json.partial! partial: 'manual_ik_item', locals: {manual_ik: indikator_sasaran.manual_ik}
       end
     end
     json.rencana_aksi sasaran.tahapans do |renaksi|
