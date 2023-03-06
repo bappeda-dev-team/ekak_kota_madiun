@@ -3,6 +3,8 @@ module PohonKinerjaHelper
     case eselon
     when 'eselon_2'
       'level_1'
+    when 'eselon_2b'
+      'level_1b'
     when 'eselon_3'
       'level_2'
     when 'eselon_4'
