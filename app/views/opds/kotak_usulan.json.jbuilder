@@ -11,7 +11,7 @@ json.results do
       json.type isu_kota.instance_of?(IsuStrategisOpd) ? "isu_strategis_opd" : "isu_strategis_kota"
       json.description isu_kota.isu_strategis
 
-      isu_asli = isu_kota.instance_of?(IsuStrategisOpd) ? isu_kota.pohons : isu_kota.strategis
+      isu_asli = isu_kota.instance_of?(IsuStrategisOpd) ? isu_kota.pohons : isu_kota.strategis(@opd_id)
 
       json.children isu_asli do |strategi|
         json.id "#{strategi.id}_strategi"
