@@ -40,6 +40,7 @@ class User < ApplicationRecord
   belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_opd'
   has_many :kaks
   has_many :sasarans, dependent: :destroy, foreign_key: 'nip_asn', primary_key: 'nik'
+  has_many :strategis, dependent: :destroy, foreign_key: 'nip_asn', primary_key: 'nik'
   # has_many :program_kegiatans, through: :sasarans
   has_many :pohons, dependent: :destroy
 

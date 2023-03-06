@@ -6,18 +6,33 @@ class SasaransController < ApplicationController
   # GET /sasarans or /sasarans.json
   def index
     @tahun_sasaran = cookies[:tahun_sasaran] || nil
-    @sasarans = @user.sasarans.where('tahun ILIKE ?', "%#{@tahun_sasaran}%").or(@user.sasarans.where(sasarans: { tahun: nil})).order(:id)
-    if current_user.has_role? :admin
-      @sasarans = @user.opd.sasarans.includes(:indikator_sasarans).order(:id)
-      render 'index_admin'
+    @status_sasaran = params[:status_sasaran] || nil
+    @sasarans = @user.sasarans.where('tahun ILIKE ?',
+                                     "%#{@tahun_sasaran}%").or(@user.sasarans.where(sasarans: { tahun: nil })).order(:id)
+
+    case @status_sasaran
+    when 'dengan_strategi'
+      @sasarans = @sasarans.dengan_strategi
+    when 'belum_lengkap'
+      @sasarans = @sasarans.kurang_lengkap
+    when 'sudah_lengkap'
+      @sasarans = @sasarans.sudah_lengkap
+    else
+      @sasarans
     end
+
+    return unless current_user.has_role? :admin
+
+    @sasarans = @user.opd.sasarans.includes(:indikator_sasarans).order(:id)
+    render 'index_admin'
   end
 
   def list_sasaran
     param = params[:q] || ""
     @opd = current_user.opd
     # we do the complex logic for simple thing here
-    @sasarans = @opd.sasarans.dengan_rincian.merge(@opd.users.asn_aktif).where("sasaran_kinerja ILIKE ?", "%#{param}%").limit(50)
+    @sasarans = @opd.sasarans.dengan_rincian.merge(@opd.users.asn_aktif).where("sasaran_kinerja ILIKE ?",
+                                                                               "%#{param}%").limit(50)
   end
 
   def data_detail
@@ -239,7 +254,7 @@ class SasaransController < ApplicationController
       @rowspan = params[:rowspan]
       @dom = params[:dom]
       begin
-       duplicate.save
+        duplicate.save
         sasaran_target.indikator_sasarans.map do |is|
           is.class.amoeba do
             append sasaran_id: kelompok_anggaran.kode_kelompok
@@ -268,11 +283,14 @@ class SasaransController < ApplicationController
           end
         end
       rescue ActiveRecord::RecordNotUnique
-        flash.now[:alert] = ["Sasaran Sudah di kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran} ", "Sasaran Sudah di kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran} "]
+        flash.now[:alert] =
+["Sasaran Sudah di kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran} ",
+ "Sasaran Sudah di kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran} "]
         @type = 'gagal'
         @text = "Sasaran Sudah di kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran} "
       rescue ActiveRecord::RecordError
-        flash.now[:alert] = ["Terjadi Kesalahan. Gagal Kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran}", 'gagal']
+        flash.now[:alert] =
+["Terjadi Kesalahan. Gagal Kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran}", 'gagal']
         @type = 'gagal'
         @text = 'gagal dicloning'
       else
