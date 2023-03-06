@@ -200,6 +200,10 @@ class User < ApplicationRecord
     sasarans.dengan_rincian.where("sasarans.tahun ILIKE ?", tahun)
   end
 
+  def sasaran_pohon_kinerja(tahun: nil)
+    sasarans.includes(:strategi).where("sasarans.tahun ILIKE ?", tahun).dengan_strategi
+  end
+
   def eselon_user
     eselon = roles.where("roles.name ilike ?", "%eselon%").first
     eselon_user = eselon.nil? ? roles.where("roles.name ilike ?", "%staff%").first : eselon

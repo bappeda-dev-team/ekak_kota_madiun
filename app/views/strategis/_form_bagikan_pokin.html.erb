@@ -19,7 +19,7 @@
         <li>
           <div class="row align-items-center">
             <span class="col">
-              <span class="fw-bolder"><%= strategi_asn&.user&.nama %></span>
+              <span class="fw-bolder"><%= strategi_asn&.user&.nama_nip %></span>
               <small>( role: <%= strategi_asn&.role %> )</small>
             </span>
               <span class="col border border-success rounded">
@@ -40,7 +40,7 @@
   <% unless current_user.has_role?(:super_admin) %>
     <div class="field">
       <%= form.label :asn, class: "form-label" %>
-      <%= form.select :nip, @bawahans.collect{ |asn| [asn.nama, asn.nik] },
+      <%= form.select :nip, @bawahans.collect{ |asn| [asn.nama_nip, asn.nik] },
         { include_blank: true },
         multiple: true,
         data: {

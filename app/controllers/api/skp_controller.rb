@@ -9,7 +9,15 @@ module Api
       @nip = params[:nip]
       @tahun = params[:tahun]
       @user = User.find_by(nik: @nip)
+      # @sasarans = @user.sasaran_asn_sync_skp(tahun: @tahun)
       @sasarans = @user.sasaran_asn_sync_skp(tahun: @tahun)
+    end
+
+    def sasaran_pohon_kinerja
+      @nip = params[:nip]
+      @tahun = params[:tahun]
+      @user = User.find_by(nik: @nip)
+      @sasarans = @user.sasaran_pohon_kinerja(tahun: @tahun)
     end
 
     def indikator_sasaran_kinerja_pegawai
@@ -46,6 +54,13 @@ module Api
       @tahun = params[:tahun]
       @user = User.find_by(nik: @nip)
       @sasarans = @user.sasaran_asn_sync_skp(tahun: @tahun)
+    end
+
+    def sasaran_pohon_kinerja_pegawai
+      @nip = params[:nip]
+      @tahun = params[:tahun]
+      @user = User.find_by(nik: @nip)
+      @sasarans = @user.sasaran_pohon_kinerja(tahun: @tahun)
     end
   end
 end
