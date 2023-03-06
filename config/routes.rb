@@ -318,6 +318,8 @@ Rails.application.routes.draw do
       post :rencana_aksi_pegawai
       post :manual_ik_pegawai
       post :sasaran_pegawai
+      post :sasaran_pohon_kinerja
+      post :sasaran_pohon_kinerja_pegawai
     end
   end
 
