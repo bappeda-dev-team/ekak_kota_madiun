@@ -27,6 +27,8 @@
           <% eselon = @eselon&.name %>
           <% if eselon == "eselon_2" %>
             <%= render 'pohon_kinerja/kotak_usulan_asn_eselon_2', role: @eselon, role_bawahan: "eselon_3" %>
+          <% elsif eselon == "eselon_2b" %>
+            <%= render 'pohon_kinerja/kotak_usulan_asn_eselon_2b', role: @eselon, role_bawahan: "eselon_3" %>
           <% elsif eselon == "eselon_3" %>
             <%= render 'pohon_kinerja/kotak_usulan_asn_eselon_3', role: @eselon, role_bawahan: "eselon_4" %>
           <% elsif eselon == "eselon_4" %>
