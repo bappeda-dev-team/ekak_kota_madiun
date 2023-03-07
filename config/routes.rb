@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       get :opd
       get :asn
       post :admin_filter
+      get :print
     end
   end
   resources :strategi_opds
