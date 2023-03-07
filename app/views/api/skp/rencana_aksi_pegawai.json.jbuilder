@@ -1,5 +1,7 @@
 json.message "Data Rencana Aksi Sasaran Kinerja ASN - KAK"
 json.data do
+  json.status_rencana_aksi @status_rencana_aksi
+  json.eselon @eselon
   json.nama_asn @user.nama
   json.nip @nip
   json.tahun @tahun
