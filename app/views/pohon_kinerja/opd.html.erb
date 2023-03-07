@@ -40,7 +40,11 @@
           </div>
         </div>
         <div class="card-body">
-          <%= render 'pohon_kinerja/kotak_usulan_asn', role: "eselon_2", role_bawahan: "eselon_3" %>
+          <% if @opd.id == 145 %>
+            <%= render 'pohon_kinerja/kotak_usulan_asn', role: "eselon_2", role_bawahan: "eselon_2b" %>
+          <% else %>
+            <%= render 'pohon_kinerja/kotak_usulan_asn', role: "eselon_2", role_bawahan: "eselon_3" %>
+          <% end %>
         </div>
       </div>
     <% end %>

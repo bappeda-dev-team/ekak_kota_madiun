@@ -41,6 +41,11 @@ class Strategi < ApplicationRecord
   }, class_name: "Strategi",
      foreign_key: "strategi_ref_id", dependent: :destroy
 
+  has_many :strategi_eselon_tiga_setda, lambda {
+    where(role: "eselon_3").where.not(nip_asn: "")
+  }, class_name: "Strategi",
+     foreign_key: "strategi_ref_id", dependent: :destroy
+
   has_many :strategi_eselon_tigas, lambda {
     where(role: "eselon_3").or(where(role: "eselon_2b")).where.not(nip_asn: "")
   }, class_name: "Strategi",
@@ -61,10 +66,11 @@ class Strategi < ApplicationRecord
   end
 
   def strategi_bawahans
-    strategi_hasil = case role
-                     when 'eselon_2'
+    strategi_hasil = if role == 'eselon_2' && opd_id == '145'
+                       strategi_eselon_dua_bs
+                     elsif role == 'eselon_2' || (role == 'eselon_2b' && opd_id == '145')
                        strategi_eselon_tigas
-                     when 'eselon_3'
+                     elsif role == 'eselon_3'
                        strategi_eselon_empats
                      else
                        strategi_staffs

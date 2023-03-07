@@ -70,6 +70,9 @@ class OpdsController < ApplicationController
     @tahun = params[:tahun] || 2023
     @kotak_usulan = @opd.usulans
     @isu_strategis_pohon = @opd.isu_strategis_pohon
+    return unless @opd_id == 145
+
+    render 'kotak_usulan_setda'
   end
 
   # form buat strategi eselon 2, tombol klik di kotak usulan opd
