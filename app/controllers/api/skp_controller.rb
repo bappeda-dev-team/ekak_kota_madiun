@@ -62,5 +62,24 @@ module Api
       @user = User.find_by(nik: @nip)
       @sasarans = @user.sasaran_pohon_kinerja(tahun: @tahun)
     end
+
+    def tujuan_opd
+      @tahun = params[:tahun]
+      @kode_opd = params[:kode_opd]
+      @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+      @tujuan_opds = @opd.tujuan_opds
+    end
+
+    def sasaran_opd
+      @tahun = params[:tahun]
+      @kode_opd = params[:kode_opd]
+      @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+      @kepala_opd = @opd.eselon_dua_opd
+
+      @sasaran_opds = @kepala_opd.sasarans
+                                 .where("sasarans.tahun ILIKE ?", @tahun)
+                                 .dengan_manual_ik
+                                 .select { |s| s.strategi.present? }
+    end
   end
 end

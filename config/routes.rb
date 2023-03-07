@@ -320,6 +320,8 @@ Rails.application.routes.draw do
       post :sasaran_pegawai
       post :sasaran_pohon_kinerja
       post :sasaran_pohon_kinerja_pegawai
+      post :tujuan_opd
+      post :sasaran_opd
     end
   end
 
