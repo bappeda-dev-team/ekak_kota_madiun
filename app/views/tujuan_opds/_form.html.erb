@@ -18,8 +18,14 @@
     <div class="card-body">
       <div class="field">
         <%= form.label :opd, class: 'form-label' %>
-        <%= form.select :kode_unik_opd, Opd.where.not(nama_kepala: nil).collect { |opd| [opd.nama_opd, opd.kode_unik_opd] } ,{include_blank: true},
-          { class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih OPD' } }%>
+        <%= form.select :kode_unik_opd, options_for_select(@opds, current_user.opd) ,{},
+          { class: 'form-control', data: { controller: 'dropdown' } }%>
+      </div>
+
+      <div class="field">
+        <%= form.label :urusan, class: 'form-label' %>
+        <%= form.select :urusan_id, Master::Urusan.where(tahun: '2023').collect { |urusan| [urusan.nama_urusan, urusan.id] } ,{include_blank: true},
+          { class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih Urusan' } }%>
       </div>
 
       <div class="field">

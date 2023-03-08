@@ -6,6 +6,9 @@ json.data do
   json.jumlah_tujuan @tujuan_opds.size
   json.tujuan_opds @tujuan_opds do |tujuan_opd|
     json.id_tujuan tujuan_opd.id
+    json.id_urusan tujuan_opd.urusan&.id
+    json.kode_urusan tujuan_opd.urusan&.kode_urusan
+    json.urusan tujuan_opd.urusan&.nama_urusan
     json.tujuan_opd tujuan_opd.tujuan
     json.tahun_awal tujuan_opd.tahun_awal
     json.tahun_akhir tujuan_opd.tahun_akhir

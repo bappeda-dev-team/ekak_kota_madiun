@@ -16,4 +16,5 @@
 #  index_master_urusans_on_id_unik_sipd  (id_unik_sipd) UNIQUE
 #
 class Master::Urusan < ApplicationRecord
+  has_many :tujuan_opds
 end
