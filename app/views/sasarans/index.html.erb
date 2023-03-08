@@ -60,8 +60,15 @@
                 <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.strategi&.strategi %></td>
                 <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
                 <td class="fw-bolder border" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.tahun %></td>
+                <% if sasaran.indikator_sasarans.any? %>
                 <td class="p-0 m-0" colspan="3"></td>
+              <% else %>
+                <td class="fw-bolder border" colspan="3">
+        <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
+                </td>
+              <% end%>
                 <td class="fw-bolder text-gray-500 px-auto" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
+                <% if sasaran.indikator_sasarans.any? %>
                   <div class="row justify-content-center w-100">
                     <div class="col">
                       <%= link_to user_sasaran_path(current_user, sasaran), class: "m-3 btn btn-sm btn-outline-info w-100", id: dom_id(current_user, sasaran.id) do %>
@@ -77,6 +84,9 @@
                       <% end %>
                     </div>
                   </div>
+                <% else %>
+                    HARAP ISI INDIKATOR SASARAN
+              <% end%>
                 </td>
               </tr>
               <% sasaran.indikator_sasarans.each do |indikator| %>
