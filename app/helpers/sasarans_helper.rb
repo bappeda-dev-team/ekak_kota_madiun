@@ -55,11 +55,11 @@ module SasaransHelper
     end
   end
 
-  def status_sasaran_pokin(sasaran)
-    if !sasaran.indikator_sasarans.any? { |ss| ss.manual_ik }
-      'BELUM SIAP'
+  def status_sasaran_pokin(status_sasaran)
+    if status_sasaran == 'siap_ditarik'
+      'SIAP DITARIK SKP'
     else
-      'SIAP DITARIK'
+      'BELUM SIAP DITARIK SKP'
     end
   end
 end

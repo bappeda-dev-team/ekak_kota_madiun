@@ -27,7 +27,7 @@ module Api
       @nip = params[:nip]
       @tahun = params[:tahun]
       @user = User.find_by(nik: @nip)
-      @eselon = @user.eselon_user.name
+      @eselon = @user.eselon_user
       @status_rencana_aksi = case @eselon
                              when 'eselon_4' || 'staff'
                                true
