@@ -27,6 +27,21 @@
 #
 class ManualIk < ApplicationRecord
   belongs_to :indikator_sasaran
+
+  validates :perspektif, presence: true
+  validates :rhk, presence: true
+  validates :tujuan_rhk, presence: true
+  validates :indikator_kinerja, presence: true
+  validates :target, presence: true
+  validates :satuan, presence: true
+  validates :definisi, presence: true
+  validates :key_activities, presence: true
+  validates :formula, presence: true
+  validates :jenis_indikator, presence: true
+  validates :penanggung_jawab, presence: true
+  validates :penyedia_data, presence: true
+  validates :sumber_data, presence: true
+
   PERSPEKTIF = [
     'Penerima Layanan',
     'Proses Bisnis',

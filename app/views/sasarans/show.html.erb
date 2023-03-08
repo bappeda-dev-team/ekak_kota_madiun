@@ -21,17 +21,17 @@
   <%= render 'rencana_aksi_card', sasaran: @sasaran %>
 <% else %>
   <!-- SECTION - musrenbang -->
-  <%# <%= render 'musrenbang_card', sasaran: @sasaran %1> %>
-  <%# <%= render 'pokpirs/pokpir_card', sasaran: @sasaran %1> %>
-  <%# <%= render 'mandatoris/mandatori_card', sasaran: @sasaran %1> %>
-  <%# <%= render 'inovasis/inovasi_card', sasaran: @sasaran %1> %>
-  <%# <%= render 'subkegiatan_card', sasaran: @sasaran %1> %>
+  <%= render 'musrenbang_card', sasaran: @sasaran %>
+  <%= render 'pokpirs/pokpir_card', sasaran: @sasaran %>
+  <%= render 'mandatoris/mandatori_card', sasaran: @sasaran %>
+  <%= render 'inovasis/inovasi_card', sasaran: @sasaran %>
+  <%= render 'subkegiatan_card', sasaran: @sasaran %>
   <%= render 'rincians/renaksi', sasaran: @sasaran %>
-  <%# <%= render 'rincians/rincian_card', sasaran: @sasaran %1> %>
-  <%# <%= render 'permasalahans/permasalahan_card', sasaran: @sasaran %1> %>
-  <%# <%= render 'dasar_hukums/dasar_hukum_card', sasaran: @sasaran %1> %>
-  <%# <%= render 'latar_belakangs/gambaran_umum_card', sasaran: @sasaran %1> %>
-  <%# <%= render 'subkegiatan_tematiks/tematik_card', sasaran: @sasaran %1> %>
+  <%= render 'rincians/rincian_card', sasaran: @sasaran %>
+  <%= render 'permasalahans/permasalahan_card', sasaran: @sasaran %>
+  <%= render 'dasar_hukums/dasar_hukum_card', sasaran: @sasaran %>
+  <%= render 'latar_belakangs/gambaran_umum_card', sasaran: @sasaran %>
+  <%= render 'subkegiatan_tematiks/tematik_card', sasaran: @sasaran %>
 <% end %>
 <!-- SECTION - Modal-->
 <!-- TODO - DRY-->

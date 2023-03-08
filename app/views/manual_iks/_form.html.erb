@@ -10,7 +10,7 @@
         <%= form_with(model: [@indikator, manual_ik]) do |form| %>
           <% if manual_ik.errors.any? %>
             <div id="error_explanation">
-              <h2><%= pluralize(manual_ik.errors.count, "error") %> prohibited this manual_ik from being saved:</h2>
+              <h2><%= pluralize(manual_ik.errors.count, "error") %> harap isi form berikut:</h2>
               <ul>
                 <% manual_ik.errors.each do |error| %>
                   <li><%= error.full_message %></li>
@@ -28,6 +28,25 @@
                   controller: "dropdown",
                   placeholder: "Pilih Perspektif"
                 } %>
+              </div>
+              <div class="row align-items-center border border-primary border-collapse">
+                <div class="col-auto">
+                  <i class="far fa-lightbulb"></i>
+                </div>
+                <div class="col text-wrap border-start border-primary p-3">
+                  <div class="row pb-2">
+                    1). Apabila bermanfaat secara internal, membantu tercapainya tujuan jangka panjang, dan lebih berfokus pada intangible assets maka masuk penguatan internal (learn & growth perspective).
+                  </div>
+                  <div class="row pb-2">
+                    2). Apabila bermanfaat secara internal, membantu tercapainya tujuan jangka panjang, dan lebih berfokus pada strategy maka masuk proses bisnis (internal Process Perspective).
+                  </div>
+                  <div class="row pb-2">
+                    3). Apabila bermanfaat secara internal dan eksternal, membantu tercapainya tujuan jangka pendek, dan lebih berfokus pada output & outcome yg dihasilkan maka masuk perspektif penerima layanan (stakeholder/customer perspective).
+                  </div>
+                  <div class="row">
+                    4). Apabila menggambarkan kinerja dalam rangka efektifitas dan efisien penggunaan anggaran maka masuk dalam perspektif anggaran.
+                  </div>
+                </div>
               </div>
             </td>
           </tr>
@@ -80,10 +99,10 @@
                 <%= form.text_area :key_activities, class: "form-control",
                   placeholder: "hal yang paling menentukan dalam pencapaian rencana hasil kerja" %>
               </div>
-              <div class="field">
-                <%= form.label :key_milestone, class: "form-label" %>
-                <%= form.text_field :key_milestone, class: "form-control" %>
-              </div>
+              <%# <div class="field"> %>
+              <%#   <%= form.label :key_milestone, class: "form-label" %1> %>
+              <%#   <%= form.text_field :key_milestone, class: "form-control" %1> %>
+              <%# </div> %>
               <div class="field">
                 <%= form.label :formula, class: "form-label" %>
                 <%= form.text_area :formula, class: "form-control",
