@@ -39,7 +39,9 @@
     <div class="card-body">
       <div id="<%= dom_id(sasaran) %>">
         <p>Rencana Kinerja <b><%= sasaran.sasaran_kinerja %></b> Belum Terdapat Rencana Aksi</p>
+      <% if current_user.eselon == 'eselon_3' or current_user.eselon == 'eselon_2' or current_user.eselon == 'eselon_2b' %>
         <%= link_to 'Otomatis', otomatis_sasaran_tahapan_path(sasaran), method: :post, remote: true, class: 'btn btn-danger mb-4' %>
+      <% end %>
         <%= link_to 'Manual', new_sasaran_tahapan_path(sasaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'}, class: 'btn btn-danger mb-4' %>
       </div>
     </div>
