@@ -248,7 +248,9 @@ class Sasaran < ApplicationRecord
 
   # TODO: try this method to simplify in user
   def status_sasaran
-    if hangus?
+    if siap_ditarik?
+      'siap_ditarik'
+    elsif hangus?
       'hangus' # merah
     elsif belum_ada_sub?
       'blm_lengkap' # kuning
@@ -315,5 +317,21 @@ class Sasaran < ApplicationRecord
 
   def gambaran_umum_sasaran
     latar_belakangs.map(&:gambaran_umum).join('.')
+  end
+
+  def strategi?
+    strategi.present?
+  end
+
+  def tahapan?
+    tahapans.exists?
+  end
+
+  def manual_ik?
+    indikator_sasarans.any?(&:manual_ik)
+  end
+
+  def siap_ditarik?
+    strategi? && tahapan? && manual_ik?
   end
 end

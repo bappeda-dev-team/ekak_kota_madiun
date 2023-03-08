@@ -11,6 +11,7 @@ json.data do
   json.indikator_sasaran @indikators do |indikator_sasaran|
     json.id_indikator indikator_sasaran.id
     json.id_sasaran indikator_sasaran.sasaran_id
+    json.aspek indikator_sasaran.aspek
     json.indikator indikator_sasaran.indikator_kinerja
     json.target indikator_sasaran.target
     json.satuan indikator_sasaran.satuan
