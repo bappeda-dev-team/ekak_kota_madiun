@@ -144,4 +144,10 @@ class Opd < ApplicationRecord
   def isu_strategis_pohon
     pohon_opd.uniq { |aa| aa.pohonable.isu }.map { |bb| bb.pohonable.isu }
   end
+
+  def strategi_kepala_by_strategi_kota(pohon_id)
+    strategis.where(pohon_id: pohon_id, role: "eselon_2").pluck(:strategi).map.with_index(1) do |ss, no|
+      "#{no}. #{ss}\n"
+    end
+  end
 end

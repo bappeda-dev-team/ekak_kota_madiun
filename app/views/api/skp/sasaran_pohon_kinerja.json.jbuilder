@@ -1,4 +1,4 @@
-json.message "Data Sasaran Kinerja ASN - KAK"
+json.message "Data Sasaran Kinerja ASN Pohon Kinerja - KAK"
 json.data do
   json.nama_asn @user.nama
   json.nip @nip
@@ -16,6 +16,7 @@ json.data do
     json.indikator_sasaran sasaran.indikator_sasarans do |indikator_sasaran|
       json.id_indikator indikator_sasaran.id
       json.id_sasaran indikator_sasaran.sasaran_id
+      json.aspek indikator_sasaran.aspek
       json.indikator indikator_sasaran.indikator_kinerja
       json.target indikator_sasaran.target
       json.satuan indikator_sasaran.satuan
@@ -35,11 +36,6 @@ json.data do
         json.bulan aksi.bulan
         json.target aksi.target
       end
-    end
-    json.tematik_sasaran sasaran.tematik_sasarans do |tematik|
-      json.id_sasaran sasaran.id_rencana
-      json.kode_tematik tematik.subkegiatan_tematik.kode_tematik
-      json.nama_tematik tematik.subkegiatan_tematik.nama_tematik
     end
   end
 end

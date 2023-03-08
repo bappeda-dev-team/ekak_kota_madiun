@@ -8,6 +8,9 @@ json.data do
   json.sasaran @sasaran.sasaran_kinerja
   json.id_indikator @indikator_sasaran.id
   json.indikator @indikator_sasaran.indikator_kinerja
+  json.aspek @indikator_sasaran.aspek
+  json.target @indikator_sasaran.target
+  json.satuan @indikator_sasaran.satuan
   json.manual_ik do
     json.partial! partial: 'manual_ik_item', locals: {manual_ik: @indikator_sasaran.manual_ik}
   end

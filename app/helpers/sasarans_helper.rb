@@ -54,4 +54,12 @@ module SasaransHelper
       </button>`.html_safe
     end
   end
+
+  def status_sasaran_pokin(sasaran)
+    if !sasaran.indikator_sasarans.any? { |ss| ss.manual_ik }
+      'BELUM SIAP'
+    else
+      'SIAP DITARIK'
+    end
+  end
 end
