@@ -164,6 +164,9 @@ Rails.application.routes.draw do
     end
 
     resources :tahapans do
+      member do
+        post :otomatis
+      end
       resources :aksis, path: "rencana_aksi"
       resources :anggarans
     end

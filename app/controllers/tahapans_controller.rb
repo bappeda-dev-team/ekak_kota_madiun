@@ -64,6 +64,27 @@ class TahapansController < ApplicationController
     end
   end
 
+  def otomatis
+    @sasaran = Sasaran.find(params[:sasaran_id])
+    manual_ik = @sasaran.indikator_sasarans.first.manual_ik.key_activities
+    @tahapan = @sasaran.tahapans.build
+    @tahapan.tahapan_kerja = manual_ik
+    @tahapan.id_rencana = @sasaran.id_rencana
+    @tahapan.id_rencana_aksi = SecureRandom.base36(6)
+    respond_to do |format|
+      if @tahapan.save
+        flash[:success] = "Sukses menambahkan tahapan"
+        format.js { render 'update.js.erb' }
+        format.html { redirect_to sasaran_path(@sasaran) }
+        format.json { render :show, status: :created, location: @tahapan }
+      else
+        flash[:error] = "Terjadi kesalahan"
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @tahapan.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
