@@ -79,6 +79,7 @@ module Api
       @nip = params[:nip]
       @tahun = params[:tahun]
       @user = User.find_by(nik: @nip)
+      @eselo_user = @user.eselon_user
       @sasarans = @user.sasaran_pohon_kinerja(tahun: @tahun)
     end
 

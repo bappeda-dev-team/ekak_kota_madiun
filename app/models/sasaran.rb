@@ -334,4 +334,26 @@ class Sasaran < ApplicationRecord
   def siap_ditarik?
     strategi? && tahapan? && manual_ik?
   end
+
+  def sasaran_kota
+    pohon = strategi.pohon
+    return unless pohon.pohonable_type == 'StrategiKotum'
+
+    pohon_kota = pohon.pohonable
+    {
+      strategi_kota: pohon_kota.strategi,
+      sasaran_kota_id: pohon_kota&.sasaran_kotum&.id,
+      sasaran_kota: pohon_kota&.sasaran_kotum&.sasaran
+    }
+  end
+
+  def sasaran_atasan_pohon
+    strategi_atasan_now = strategi&.strategi_atasan
+    sasaran_atasan_now = strategi_atasan_now&.sasaran
+    {
+      strategi_atasan: strategi_atasan_now&.strategi,
+      sasaran_atasan_id: sasaran_atasan_now&.id_rencana,
+      sasaran_atasan: sasaran_atasan_now&.sasaran_kinerja,
+    }
+  end
 end

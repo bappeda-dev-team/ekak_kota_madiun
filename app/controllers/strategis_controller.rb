@@ -35,7 +35,11 @@ class StrategisController < ApplicationController
   # POST /strategis or /strategis.json
   def create
     @role = strategi_params[:role]
+    # new_params = strategi_params
+    # sasaran_params = new_params[:sasaran_attributes]
+    # sasaran_params[:tahun] = strategi_params[:tahun]
     @strategi = Strategi.new(strategi_params)
+    @strategi.sasaran.tahun = strategi_params[:tahun]
     @nip = strategi_params[:nip_asn]
     @opd_id = strategi_params[:opd_id]
 
