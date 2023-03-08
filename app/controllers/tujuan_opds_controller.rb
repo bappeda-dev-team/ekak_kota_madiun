@@ -3,7 +3,9 @@ class TujuanOpdsController < ApplicationController
 
   # GET /tujuan_opds or /tujuan_opds.json
   def index
-    @tujuan_opds = TujuanOpd.all
+    @opd = current_user.opd
+    @nama_opd = @opd.nama_opd
+    @tujuan_opds = @opd.tujuan_opds.includes(%i[indikators urusan])
   end
 
   # GET /tujuan_opds/1 or /tujuan_opds/1.json
@@ -11,11 +13,14 @@ class TujuanOpdsController < ApplicationController
 
   # GET /tujuan_opds/new
   def new
+    opd_collections
     @tujuan_opd = TujuanOpd.new
   end
 
   # GET /tujuan_opds/1/edit
-  def edit; end
+  def edit
+    opd_collections
+  end
 
   # POST /tujuan_opds or /tujuan_opds.json
   def create
@@ -55,6 +60,14 @@ class TujuanOpdsController < ApplicationController
     end
   end
 
+  def admin_filter
+    @kode_opd = params[:kode_opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    @tujuan_opds = @opd.tujuan_opds
+    render partial: 'tujuan_opds/tujuan_opd'
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -62,9 +75,15 @@ class TujuanOpdsController < ApplicationController
     @tujuan_opd = TujuanOpd.find(params[:id])
   end
 
+  def opd_collections
+    @opds = Opd.where.not(kode_opd: nil)
+               .where(kode_opd: current_user.kode_opd).pluck(:nama_opd,
+                                                             :kode_opd)
+  end
+
   # Only allow a list of trusted parameters through.
   def tujuan_opd_params
-    params.require(:tujuan_opd).permit(:tujuan, :id_tujuan, :kode_unik_opd, :tahun_awal, :tahun_akhir,
+    params.require(:tujuan_opd).permit(:tujuan, :id_tujuan, :kode_unik_opd, :tahun_awal, :tahun_akhir, :urusan_id,
                                        indikators_attributes)
   end
 

@@ -13,7 +13,11 @@ Rails.application.routes.draw do
     resources :manual_iks
   end
   resources :sasaran_opds
-  resources :tujuan_opds
+  resources :tujuan_opds do
+    collection do
+      post :admin_filter
+    end
+  end
   resources :pohon_kinerja do
     collection do
       get :kota
@@ -280,7 +284,7 @@ Rails.application.routes.draw do
     post :laporan_renstra
     get :tahun_sasaran
     post :renstra_master
-    post :tujuan_opd
+    # post :tujuan_opd
     post :sasaran_opd
     post :crosscutting_kota
     post :ranwal_renja

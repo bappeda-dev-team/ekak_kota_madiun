@@ -10,10 +10,9 @@
         <li class="breadcrumb-item active" aria-current="page">Tujuan OPD</li>
       </ol>
     </nav>
-    <% if current_user.has_role? :admin %>
-      <%= render 'shared/filter_card', filter_url: '/filter/tujuan_opd',
+    <% if current_user.has_role? :super_admin %>
+      <%= render 'shared/filter_card', filter_url: admin_filter_tujuan_opds_path,
         action: 'ajax:success->filter-render#append'%>
-    <% end %>
     <div class="card border-0 shadow" id="hasil_filter_opd" data-filter-render-target="results">
       <div class="card-header">
         <div class="row align-items-center">
@@ -26,5 +25,8 @@
         ...
       </div>
     </div>
+  <% else %>
+      <%= render 'tujuan_opds/tujuan_opd' %>
+  <% end %>
   </div>
 </div>

@@ -11,6 +11,7 @@
 #  type          :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  urusan_id     :bigint
 #
 # Indexes
 #
@@ -21,6 +22,7 @@ class TujuanOpd < Tujuan
                           where(jenis: 'Tujuan', sub_jenis: 'Opd')
                         }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id_tujuan'
   accepts_nested_attributes_for :indikators, reject_if: :all_blank, allow_destroy: true
+  belongs_to :urusan, class_name: 'Master::Urusan', foreign_key: 'urusan_id'
 
   def indikator_tujuans
     tujuan = indikators.group_by(&:indikator).transform_values do |indikator|
@@ -29,5 +31,9 @@ class TujuanOpd < Tujuan
     {
       indikator_tujuan: tujuan.to_h
     }
+  end
+
+  def urusan_opd
+    "#{urusan&.kode_urusan} - #{urusan&.nama_urusan}"
   end
 end
