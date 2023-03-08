@@ -15,11 +15,11 @@ json.results do
         json.name "Strategi"
         json.type "strategi_kota"
         json.description strategi_kota.strategi
-        json.children strategi_kota.usulans do |opd|
-          json.id opd.id
-          json.name "Perangkat Daerah"
+        json.children strategi_kota.pohons do |pohon|
+          json.id pohon.opd.id
+          json.name pohon.opd.nama_opd
           json.type "perangkat_daerah"
-          json.description opd.keterangan
+          json.description pohon.opd.strategi_kepala_by_strategi_kota(pohon.pohonable_id)
         end
       end
     end

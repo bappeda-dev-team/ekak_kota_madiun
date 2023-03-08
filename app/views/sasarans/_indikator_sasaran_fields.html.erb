@@ -1,7 +1,7 @@
 <fieldset class="mb-5">
   <div class="field">
     <%= form.label :aspek, { class: "form-label" } %>
-    <%= form.select(:aspek, (['Kualitas','Kuantitas']), {},
+    <%= form.select(:aspek, (['Kualitas','Kuantitas', 'Waktu', 'Biaya']), {},
       {data: { controller: 'dropdown' }}) %>
   </div>
   <div class="field">

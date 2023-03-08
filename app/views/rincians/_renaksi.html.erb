@@ -60,29 +60,28 @@
           <strong>Waktu yang dibutuhkan :</strong>
           <%= waktu = sasaran.waktu_total == 0 ? "-" : sasaran.waktu_total %> bulan
           <hr>
-          <div class="row">
-            <div class="col-4 align-middle">
-              <strong>Anggaran yang dibutuhkan :</strong>
-              Rp. <%= number_with_delimiter(sasaran.total_anggaran_dengan_komentar) %>
-          </div>
-          <% unless diajukan? %>
-            <div class="col-8 align-middle">
-              <%= form_with(model: [current_user, sasaran], local:false, html: { class: 'd-flex flex gap-3' }) do |f| %>
-                <select name="sasaran[sumber_dana]" data-controller="dropdown" data-placeholder="<%= sasaran.sumber_dana || 'Sumber Dana' %>" data-width="25%">
-                  <option value=""></option>
-                  <% SumberDana.all.each do |sumber_dana| %>
-                    <option value='<%= sumber_dana.sumber_dana %>'><%= sumber_dana.sumber_dana %></option>
-                  <% end %>
-                </select>
-                <input type="submit" value="<%= sasaran.sumber_dana.nil? ? 'Simpan' : 'Ubah' %>" data-disable-with="memproses.." class="btn btn-sm btn-tertiary ml-3">
-              <% end %>
-            </div>
-          <% else %>
-            <div class="col-8 align-middle">
-              Sumber Dana: <%= sasaran.sumber_dana %>
-          </div>
-        <% end %>
-          </div>
+          <%# <div class="row"> %>
+          <%#   <div class="col-4 align-middle"> %>
+          <%#     <strong>Anggaran yang dibutuhkan :</strong> %>
+          <%#     Rp. <%= number_with_delimiter(sasaran.total_anggaran_dengan_komentar) %1> %>
+          <%# </div> %>
+          <%# <% unless diajukan? %1> %>
+          <%#   <div class="col-8 align-middle"> %>
+          <%#     <%= form_with(model: [current_user, sasaran], local:false, html: { class: 'd-flex flex gap-3' }) do |f| %1> %>
+          <%#       <select name="sasaran[sumber_dana]" data-controller="dropdown" data-placeholder="<%= sasaran.sumber_dana || 'Sumber Dana' %1>" data-width="25%"> %>
+          <%#         <option value=""></option> %>
+          <%#         <% SumberDana.all.each do |sumber_dana| %1> %>
+          <%#           <option value='<%= sumber_dana.sumber_dana %1>'><%= sumber_dana.sumber_dana %1></option> %>
+          <%#         <% end %1> %>
+          <%#       </select> %>
+          <%#       <input type="submit" value="<%= sasaran.sumber_dana.nil? ? 'Simpan' : 'Ubah' %1>" data-disable-with="memproses.." class="btn btn-sm btn-tertiary ml-3"> %>
+          <%#     <% end %1> %>
+          <%#   </div> %>
+          <%# <% else %1> %>
+          <%#   <div class="col-8 align-middle"> %>
+          <%#     Sumber Dana: <%= sasaran.sumber_dana %1> %>
+          <%# </div> %>
+        <%# <% end %1> %>
         </caption>
         <thead class="thead-light">
           <tr>
@@ -92,7 +91,7 @@
               <th class="border-bottom border-end text-center" scope="col"><%= i %></th>
             <% end %>
             <th class="border-bottom border-end text-center" scope="col">Jumlah</th>
-            <th class="border-bottom border-end text-center" scope="col" rowspan="2">Anggaran</th>
+            <%# <th class="border-bottom border-end text-center" scope="col" rowspan="2">Anggaran</th> %>
             <th class="border-bottom border-end" scope="col" rowspan="2">Keterangan</th>
             <% unless diajukan? %>
               <th class="border-bottom border-end text-center" scope="col" rowspan="2">Action</th>
@@ -117,20 +116,20 @@
                 <% end %>
               <% end %>
               <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.jumlah_target or '-' %></td>
-              <% unless tahapan.anggarans.any? %>
-                <% unless diajukan? %>
-                  <td class="fw-bolder text-gray-500 border text-center">
-                    <%= link_to 'Tambah Anggaran', new_sasaran_tahapan_anggaran_path(sasaran, tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 btn btn-sm btn-success text-white animate-up-2" %>
-                  </td>
-                <% end %>
-              <% else %>
-                <td class="fw-bolder text-gray-500 border text-end">
-                  Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %>
-                <% unless diajukan? %>
-                  | <%= link_to 'Edit Anggaran', sasaran_tahapan_anggarans_path(sasaran, tahapan), class: 'btn btn-info btn-sm' %>
-              <% end %>
-                </td>
-              <% end %>
+              <%# <% unless tahapan.anggarans.any? %1> %>
+              <%#   <% unless diajukan? %1> %>
+              <%#     <td class="fw-bolder text-gray-500 border text-center"> %>
+              <%#       <%= link_to 'Tambah Anggaran', new_sasaran_tahapan_anggaran_path(sasaran, tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 btn btn-sm btn-success text-white animate-up-2" %1> %>
+              <%#     </td> %>
+              <%#   <% end %1> %>
+              <%# <% else %1> %>
+              <%#   <td class="fw-bolder text-gray-500 border text-end"> %>
+              <%#     Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %1> %>
+              <%#   <% unless diajukan? %1> %>
+              <%#     | <%= link_to 'Edit Anggaran', sasaran_tahapan_anggarans_path(sasaran, tahapan), class: 'btn btn-info btn-sm' %1> %>
+              <%# <% end %1> %>
+              <%#   </td> %>
+              <%# <% end %1> %>
               <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.keterangan %></td>
               <% unless diajukan? %>
                 <td class="fw-bolder text-gray-500 text-center border-end">
@@ -152,7 +151,7 @@
               <td class="border-bottom border-end text-center"><%= sasaran.total_target_aksi_bulan[i] %></td>
             <% end %>
             <td class="border-bottom border-end text-center"><%= sasaran.jumlah_target %></td>
-            <td class="border-bottom border-end text-end">Rp. <%= number_with_delimiter(sasaran.total_anggaran_dengan_komentar) %></td>
+            <%# <td class="border-bottom border-end text-end">Rp. <%= number_with_delimiter(sasaran.total_anggaran_dengan_komentar) %1></td> %>
             <td class="border-bottom border-end" colspan="2"></td>
           </tr>
         </tfoot>

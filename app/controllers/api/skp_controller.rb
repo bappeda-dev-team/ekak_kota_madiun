@@ -13,13 +13,6 @@ module Api
       @sasarans = @user.sasaran_asn_sync_skp(tahun: @tahun)
     end
 
-    def sasaran_pohon_kinerja
-      @nip = params[:nip]
-      @tahun = params[:tahun]
-      @user = User.find_by(nik: @nip)
-      @sasarans = @user.sasaran_pohon_kinerja(tahun: @tahun)
-    end
-
     def indikator_sasaran_kinerja_pegawai
       id_sasaran = params[:id_sasaran]
       @nip = params[:nip]
@@ -63,13 +56,6 @@ module Api
       @sasarans = @user.sasaran_asn_sync_skp(tahun: @tahun)
     end
 
-    def sasaran_pohon_kinerja_pegawai
-      @nip = params[:nip]
-      @tahun = params[:tahun]
-      @user = User.find_by(nik: @nip)
-      @sasarans = @user.sasaran_pohon_kinerja(tahun: @tahun)
-    end
-
     def tujuan_opd
       @tahun = params[:tahun]
       @kode_opd = params[:kode_opd]
@@ -87,6 +73,20 @@ module Api
                                  .where("sasarans.tahun ILIKE ?", @tahun)
                                  .dengan_manual_ik
                                  .select { |s| s.strategi.present? }
+    end
+
+    def sasaran_pohon_kinerja
+      @nip = params[:nip]
+      @tahun = params[:tahun]
+      @user = User.find_by(nik: @nip)
+      @sasarans = @user.sasaran_pohon_kinerja(tahun: @tahun)
+    end
+
+    def sasaran_pohon_kinerja_pegawai
+      @nip = params[:nip]
+      @tahun = params[:tahun]
+      @user = User.find_by(nik: @nip)
+      @sasarans = @user.sasaran_pohon_kinerja(tahun: @tahun)
     end
   end
 end

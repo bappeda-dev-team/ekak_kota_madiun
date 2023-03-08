@@ -1,4 +1,4 @@
-json.message "Data Sasaran Kinerja ASN - KAK"
+json.message "Data Sasaran Kinerja ASN Pohon Kinerja - KAK"
 json.data do
   json.nama_asn @user.nama
   json.nip @nip
