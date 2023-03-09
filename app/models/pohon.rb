@@ -29,4 +29,8 @@ class Pohon < ApplicationRecord
 
   scope :pohon_opd, -> { where(pohonable_type: "IsuStrategisOpd") }
   scope :pohon_kota, -> { where(pohonable_type: "StrategiKotum") }
+
+  def strategi_kota_isu_strategis
+    "Isu Strategis: #{keterangan} - Strategi Kota: #{pohonable.strategi}"
+  end
 end
