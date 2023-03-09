@@ -78,7 +78,7 @@ class TujuanOpdsController < ApplicationController
   def opd_collections
     @opds = Opd.where.not(kode_opd: nil)
                .where(kode_opd: current_user.kode_opd).pluck(:nama_opd,
-                                                             :kode_opd)
+                                                             :kode_unik_opd)
   end
 
   # Only allow a list of trusted parameters through.
