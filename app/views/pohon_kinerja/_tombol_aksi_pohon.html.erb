@@ -13,7 +13,7 @@
                 bs_target: '#form-bagikan-strategi-pokin',
                 bs_toggle: 'modal' } do %>
           <span class="fas fa-share me-2"></span>
-          <span>Bagikan Tactical Objective
+          <span>Bagikan <%= local_assigns[:judul_tombol] %></span>
           <span class="badge bg-primary"><%= strategi.strategi_bawahans.count %></span>
           </span>
       <% end %>
@@ -26,7 +26,7 @@
                                  role: role),
     class: "btn btn-outline-info d-inline-flex align-items-center mx-3" do %>
       <i class="fas fa-edit me-2"></i>
-      Isi / Edit Tactical Objective
+      Isi / Edit <%= local_assigns[:judul_tombol] %> 
     <% end %>
   </div>
 
@@ -35,7 +35,7 @@
       data: { confirm_swal: "Hapus Strategi?"},
       class: "btn btn-outline-danger d-inline-flex align-items-center mx-3" do %>
       <i class="fas fa-edit me-2"></i>
-        Hapus Strategic Objective
+      Hapus <%= local_assigns[:judul_tombol] %>
     <% end %>
   </div>
   <% end %>

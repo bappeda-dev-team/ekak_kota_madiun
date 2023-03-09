@@ -89,6 +89,36 @@
               <%= form.label :deskripsi_indikator_kinerja_individu, class: "form-label" %>
             </td>
             <td>
+              <% sasaran_atasan = Sasaran.find_by(id_rencana: @sasaran.sasaran_atasan_pohon[:sasaran_atasan_id]) %>
+              <% unless sasaran_atasan.nil? %>
+                <div class="row align-items-center border border-primary border-collapse">
+                  <div class="col-auto">
+                    <i class="far fa-lightbulb"></i>
+                  </div>
+                  <div class="col text-wrap border-start border-primary">
+                    <div class="row pb-2 border-bottom border-primary p-2">
+                      Definisi Indikator Atasan
+                    </div>
+                    <div class="row pb-2 border-bottom border-primary p-2">
+                      <%= @sasaran.sasaran_atasan_pohon[:nama_atasan] %>
+                    </div>
+                    <div class="row pb-2 border-bottom border-primary p-2">
+                     Sasaran Kinerja :
+                      <%= @sasaran.sasaran_atasan_pohon[:sasaran_atasan] %>
+                    </div>
+                    <% sasaran_atasan&.indikator_sasarans&.each do |indikator| %>
+                      <div class="row pb-2 p-2">
+                        Indikator Sasaran Atasan :
+                        <%= indikator.indikator_kinerja %>
+                      </div>
+                      <div class="row pb-2 p-2">
+                        Definisi Atasan :
+                        <%= indikator.manual_ik.definisi %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
               <div class="field">
                 <%= form.label :definisi, class: "form-label" %>
                 <%= form.text_area :definisi, class: "form-control",

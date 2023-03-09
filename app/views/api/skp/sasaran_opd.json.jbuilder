@@ -8,6 +8,14 @@ json.data do
   json.jumlah_sasaran @sasaran_opds.size
   json.sasaran_opds @sasaran_opds do |sasaran_opd|
     json.id_sasaran sasaran_opd.id
+
+    json.id_sasaran_kota sasaran_opd.sasaran_kota[:sasaran_kota_id]
+    json.sasaran_kota sasaran_opd.sasaran_kota[:sasaran_kota]
+    json.strategi_kota sasaran_opd.sasaran_kota[:strategi_kota]
+
+    json.id_sasaran_atasan sasaran_opd.sasaran_atasan_pohon[:sasaran_atasan_id]
+    json.sasaran_atasan sasaran_opd.sasaran_atasan_pohon[:sasaran_atasan]
+
     json.sasaran_opd sasaran_opd.sasaran_kinerja
     json.tahun sasaran_opd.tahun
     json.indikator_sasaran sasaran_opd.indikator_sasarans do |indikator|
