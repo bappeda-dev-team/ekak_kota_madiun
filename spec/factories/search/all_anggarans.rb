@@ -7,6 +7,7 @@
 #  satuan          :string
 #  searchable_type :text
 #  spesifikasi     :string
+#  tahun           :string
 #  uraian_barang   :string
 #  searchable_id   :bigint
 #

@@ -2143,6 +2143,7 @@ CREATE VIEW public.search_all_anggarans AS
     anggaran_sshes.spesifikasi,
     anggaran_sshes.satuan,
     anggaran_sshes.harga_satuan,
+    anggaran_sshes.tahun,
     'AnggaranSsh'::text AS searchable_type,
     anggaran_sshes.id AS searchable_id
    FROM public.anggaran_sshes
@@ -2152,6 +2153,7 @@ UNION
     anggaran_sbus.spesifikasi,
     anggaran_sbus.satuan,
     anggaran_sbus.harga_satuan,
+    anggaran_sbus.tahun,
     'AnggaranSbu'::text AS searchable_type,
     anggaran_sbus.id AS searchable_id
    FROM public.anggaran_sbus
@@ -2161,6 +2163,7 @@ UNION
     anggaran_hspks.spesifikasi,
     anggaran_hspks.satuan,
     anggaran_hspks.harga_satuan,
+    anggaran_hspks.tahun,
     'AnggaranHspk'::text AS searchable_type,
     anggaran_hspks.id AS searchable_id
    FROM public.anggaran_hspks
@@ -2170,6 +2173,7 @@ UNION
     anggaran_bluds.spesifikasi,
     anggaran_bluds.satuan,
     anggaran_bluds.harga_satuan,
+    anggaran_bluds.tahun,
     'AnggaranBlud'::text AS searchable_type,
     anggaran_bluds.id AS searchable_id
    FROM public.anggaran_bluds
@@ -2179,6 +2183,7 @@ UNION
     anggaran_hspk_umums.spesifikasi,
     anggaran_hspk_umums.satuan,
     anggaran_hspk_umums.harga_satuan,
+    anggaran_hspk_umums.tahun,
     'AnggaranHspkUmum'::text AS searchable_type,
     anggaran_hspk_umums.id AS searchable_id
    FROM public.anggaran_hspk_umums;
@@ -4607,6 +4612,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230227030553'),
 ('20230227035240'),
 ('20230308220522'),
-('20230309040126');
+('20230309040126'),
+('20230309043648');
 
 

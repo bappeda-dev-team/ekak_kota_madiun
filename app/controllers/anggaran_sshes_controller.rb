@@ -10,8 +10,9 @@ class AnggaranSshesController < ApplicationController
     param = params[:q] || ''
     @anggaran_sshes = Search::AllAnggaran.where('uraian_barang ILIKE ?',
                                                 "%#{param}%")
-                                                .or(Search::AllAnggaran.where('spesifikasi ILIKE ?', "%#{param}%"))
-                                                .limit(80).includes(:searchable).collect(&:searchable)
+                                         .or(Search::AllAnggaran.where('spesifikasi ILIKE ?', "%#{param}%"))
+                                         .where('tahun = ?', '2023')
+                                         .limit(80).includes(:searchable).collect(&:searchable)
   end
 
   def anggaran_spesifikasi_search
