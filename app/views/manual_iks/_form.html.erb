@@ -109,11 +109,11 @@
                     <% sasaran_atasan&.indikator_sasarans&.each do |indikator| %>
                       <div class="row pb-2 p-2">
                         Indikator Sasaran Atasan :
-                        <%= indikator.indikator_kinerja %>
+                        <%= indikator&.indikator_kinerja %>
                       </div>
                       <div class="row pb-2 p-2">
                         Definisi Atasan :
-                        <%= indikator.manual_ik.definisi %>
+                        <%= indikator&.manual_ik&.definisi %>
                       </div>
                     <% end %>
                   </div>
