@@ -153,7 +153,7 @@ module SidebarItemHelper
       { title: 'Tujuan OPD', href: tujuan_opds_path, identifier: 'opds/tujuan' },
       { title: 'Isu Strategis OPD', href: isu_strategis_opds_path, identifier: 'isu_strategis_opds' },
       { title: 'Strategi OPD', href: strategi_opds_path, identifier: 'strategi_opds' },
-      { title: 'Sasaran OPD', href: sasaran_opds_path, identifier: 'opds/sasaran' },
+      # { title: 'Sasaran OPD', href: sasaran_opds_path, identifier: 'opds/sasaran' },
       { title: 'Kotak Usulan OPD', href: kotak_usulan_opds_path, identifier: 'opds/kotak_usulan' },
       { title: 'Info OPD', href: info_opds_path, identifier: 'opds/info' }
     ]
