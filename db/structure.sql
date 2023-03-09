@@ -2479,7 +2479,8 @@ CREATE TABLE public.tahapans (
     updated_at timestamp(6) without time zone NOT NULL,
     sasaran_id bigint,
     id_rencana_aksi character varying,
-    id_rencana character varying
+    id_rencana character varying,
+    urutan character varying
 );
 
 
@@ -4605,6 +4606,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230227014728'),
 ('20230227030553'),
 ('20230227035240'),
-('20230308220522');
+('20230308220522'),
+('20230309040126');
 
 
