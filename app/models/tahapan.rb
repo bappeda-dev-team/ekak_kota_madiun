@@ -13,6 +13,7 @@
 #  realisasi        :integer
 #  tahapan_kerja    :string
 #  target           :integer
+#  urutan           :string
 #  waktu            :integer
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
