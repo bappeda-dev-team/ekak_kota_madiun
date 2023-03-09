@@ -150,4 +150,8 @@ class Opd < ApplicationRecord
       "#{no}. #{ss}\n"
     end
   end
+
+  def sasaran_opds_pohon
+    strategis.where(role: 'eselon_2').map(&:sasaran)
+  end
 end
