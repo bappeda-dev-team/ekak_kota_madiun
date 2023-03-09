@@ -251,7 +251,8 @@ class Sasaran < ApplicationRecord
     if siap_ditarik?
       'siap_ditarik'
     elsif hangus?
-      'hangus' # merah
+      # 'hangus' # merah
+      'belum_selesai'
     elsif belum_ada_sub?
       'blm_lengkap' # kuning
     elsif biru_helper

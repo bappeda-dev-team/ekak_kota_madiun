@@ -1,7 +1,8 @@
 module HomeHelper
   def warna_sasaran(status_sasaran)
     row_color = {
-      hangus: 'text-danger',
+      # hangus: 'text-danger',
+      belum_selesai: 'text-danger',
       blm_lengkap: 'text-warning',
       krg_lengkap: 'text-info',
       digunakan: 'text-success',
@@ -12,7 +13,8 @@ module HomeHelper
 
   def bg_sasaran(status_sasaran)
     row_color = {
-      hangus: 'bg-danger',
+      # hangus: 'bg-danger',
+      belum_selesai: 'bg-danger',
       blm_lengkap: 'bg-warning',
       digunakan: 'bg-success',
       siap_ditarik: 'bg-success',
