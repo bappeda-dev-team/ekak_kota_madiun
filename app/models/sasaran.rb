@@ -354,6 +354,7 @@ class Sasaran < ApplicationRecord
       strategi_atasan: strategi_atasan_now&.strategi,
       sasaran_atasan_id: sasaran_atasan_now&.id_rencana,
       sasaran_atasan: sasaran_atasan_now&.sasaran_kinerja,
+      nama_atasan: sasaran_atasan_now&.user&.nama_nip
     }
   end
 end

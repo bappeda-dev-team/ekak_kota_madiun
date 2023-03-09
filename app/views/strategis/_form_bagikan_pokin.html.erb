@@ -26,12 +26,14 @@
                 <small>strategi: </small>
                 <span class="fw-bolder"><%= strategi_asn&.strategi || 'belum diisi' %></span>
               </span>
-  <% unless current_user.has_role?(:super_admin) %>
-            <span class="col-auto">
-              <%= hidden_field_tag 'tidak_dibagikan[]', strategi_asn.id -%>
-              <%= check_box_tag 'dibagikan[]', strategi_asn.id, true %>
-            </span>
-  <% end %>
+              <% unless current_user.has_role?(:super_admin) %>
+                <% unless strategi_asn.strategi %>
+                <span class="col-auto">
+                  <%= hidden_field_tag 'tidak_dibagikan[]', strategi_asn.id -%>
+                  <%= check_box_tag 'dibagikan[]', strategi_asn.id, true %>
+                </span>
+                <% end %>
+              <% end %>
           </div>
         </li>
       <% end %>

@@ -1,5 +1,5 @@
-<div class="modal fade " id="form-<%= local_assigns[:modal_name] %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+<div class="modal fade" id="form-<%= local_assigns[:modal_name] %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="form-<%= local_assigns[:modal_name] %>-title"><%= local_assigns[:modal_name].titleize %></h5>
@@ -9,7 +9,7 @@
         ...
       </div>
       <div class="modal-body">
-        <button type="button" class="btn btn-danger w-100" data-bs-dismiss="modal" aria-label="Close">Batal</button>
+        <button type="button" class="btn btn-danger w-100 mb-3" data-bs-dismiss="modal" aria-label="Close">Batal</button>
       </div>
     </div>
   </div>
