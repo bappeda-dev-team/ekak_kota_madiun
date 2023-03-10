@@ -21,7 +21,7 @@
   <%= render 'rencana_aksi_card', sasaran: @sasaran %>
 <% else %>
   <!-- SECTION - musrenbang -->
-  <% if current_user.eselon_user == 'eselon_4' %>
+  <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
     <%= render 'musrenbang_card', sasaran: @sasaran %>
     <%= render 'pokpirs/pokpir_card', sasaran: @sasaran %>
     <%= render 'mandatoris/mandatori_card', sasaran: @sasaran %>
