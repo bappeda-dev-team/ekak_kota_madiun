@@ -43,7 +43,7 @@
   <div class="card-body">
     <div class="row align-items-center mb-3">
       <div class="col-8">
-        <span class="fs-5 fw-bold mb-0">2. Rencana Aksi <%= current_user.eselon_user == 'eselon_4' ? 'dan Anggaran' : '' %></span>
+        <span class="fs-5 fw-bold mb-0">2. Rencana Aksi <%= current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') ? 'dan Anggaran' : '' %></span>
       </div>
       <div class="col text-end">
         <%= button_to 'Sync Total', renaksi_update_path, remote: true, method: :post, class: 'btn btn-sm btn-primary', params: {id: sasaran.id} %>
@@ -60,14 +60,14 @@
           <strong>Waktu yang dibutuhkan :</strong>
           <%= waktu = sasaran.waktu_total == 0 ? "-" : sasaran.waktu_total %> bulan
           <hr>
-        <% if current_user.eselon_user == 'eselon_4' %>
+        <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
           <div class="row">
             <div class="col-4 align-middle">
               <strong>Anggaran yang dibutuhkan :</strong>
               Rp. <%= number_with_delimiter(sasaran.total_anggaran_dengan_komentar) %>
           </div>
         <% end %>
-        <% if current_user.eselon_user == 'eselon_4' %>
+        <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
           <% unless diajukan? %>
             <div class="col-8 align-middle">
               <%= form_with(model: [current_user, sasaran], local:false, html: { class: 'd-flex flex gap-3' }) do |f| %>
@@ -95,7 +95,7 @@
               <th class="border-bottom border-end text-center" scope="col"><%= i %></th>
             <% end %>
             <th class="border-bottom border-end text-center" scope="col">Jumlah</th>
-          <% if current_user.eselon_user == 'eselon_4' %>
+          <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
             <th class="border-bottom border-end text-center" scope="col" rowspan="2">Anggaran</th>
           <% end %>
             <th class="border-bottom border-end" scope="col" rowspan="2">Keterangan</th>
@@ -122,7 +122,7 @@
                 <% end %>
               <% end %>
               <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.jumlah_target or '-' %></td>
-          <% if current_user.eselon_user == 'eselon_4' %>
+          <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
               <% unless tahapan.anggarans.any? %>
                 <% unless diajukan? %>
                   <td class="fw-bolder text-gray-500 border text-center">
@@ -159,7 +159,7 @@
               <td class="border-bottom border-end text-center"><%= sasaran.total_target_aksi_bulan[i] %></td>
             <% end %>
             <td class="border-bottom border-end text-center"><%= sasaran.jumlah_target %></td>
-          <% if current_user.eselon_user == 'eselon_4' %>
+          <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
             <td class="border-bottom border-end text-end">Rp. <%= number_with_delimiter(sasaran.total_anggaran_dengan_komentar) %></td>
           <% end %>
             <td class="border-bottom border-end" colspan="2"></td>
