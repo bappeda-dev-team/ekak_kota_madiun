@@ -188,6 +188,10 @@ class Sasaran < ApplicationRecord
   rescue TypeError
     '-'
   end
+  
+  def anggaran_sub
+    program_kegiatan&.pagu_tanpa_lengkap(tahun) || 0
+  end
 
   def jumlah_target
     tahapans.sum(:jumlah_target).nonzero? || '-'
@@ -269,14 +273,31 @@ class Sasaran < ApplicationRecord
     dasar_hukum = dasar_hukums.any?
     gambaran_umum = latar_belakangs.any?
     tematik_saaran = subkegiatan_tematiks.any?
+    manual_ik = manual_ik?
+    tahapan = tahapan?
     {
       usulan_dan_sub: usulan_dan_sub,
       rincian_sasaran: rincian_sasaran,
       permasalahan: permasalahan_rencan,
       dasar_hukum: dasar_hukum,
       gambaran_umum: gambaran_umum,
-      tematik: tematik_saaran
+      tematik: tematik_saaran,
+      manual_ik: manual_ik,
+      tahapan: tahapan
     }
+  end
+
+  def petunjuk_tarik
+    manual_ik = manual_ik?
+    tahapan = tahapan?
+    {
+      manual_ik: manual_ik,
+      tahapan: tahapan
+    }
+  end
+
+  def status_badge(petunjuk)
+    petunjuk.reject {|_key, val| val }
   end
 
   def add_tematik(sasaran:, tematik:)
@@ -357,5 +378,9 @@ class Sasaran < ApplicationRecord
       sasaran_atasan: sasaran_atasan_now&.sasaran_kinerja,
       nama_atasan: sasaran_atasan_now&.user&.nama_nip
     }
+  end
+
+  def subkegiatan
+    program_kegiatan.present? ? program_kegiatan.nama_subkegiatan : 'belum ada subkegiatan'
   end
 end

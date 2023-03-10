@@ -42,6 +42,7 @@ Rails.application.routes.draw do
       post :pilih_asn
       get :list_strategi_asn
       post :hapus_bagikan_ke_asn
+      get :ganti_nip
     end
   end
   resources :isu_strategis_opds
@@ -162,6 +163,7 @@ Rails.application.routes.draw do
     member do
       get :data_detail
       get :rencana_aksi
+      get :subkegiatan
     end
     resources :rincians do
       get "subkegiatan", on: :new

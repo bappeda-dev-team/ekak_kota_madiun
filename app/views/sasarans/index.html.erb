@@ -49,6 +49,7 @@
               <th class="border-bottom" scope="col">Indikator Kinerja</th>
               <th class="border-bottom" scope="col">Target</th>
               <th class="border-bottom" scope="col">Satuan</th>
+              <th class="border-bottom text-center" scope="col">Anggaran</th>
               <th class="border-bottom text-center" scope="col">Action</th>
             </tr>
           </thead>
@@ -56,8 +57,29 @@
             <% @sasarans.each.with_index(1) do |sasaran, i| %>
               <tr class="<%= warna_sasaran(sasaran.status_sasaran) %>">
                 <td class="fw-bolder" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
-                <td class="fw-bolder" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.status_sasaran.titleize %></td>
-                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.strategi&.strategi %></td>
+                <td class="fw-bolder" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.status_sasaran.titleize %>
+                <div class="row gy-2">
+                  <% sasaran.status_badge(sasaran.petunjuk_tarik).each do |status, value| %>
+                      <div class="col">
+                        <span class="badge bg-danger p-2"><%= status %></span>
+                      </div>
+                  <% end %>
+                </div>
+                </td>
+                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
+                  <% if sasaran.strategi %>
+                    <%= sasaran.strategi.strategi %>
+                  <% else %>
+                    <div class="row gy-2">
+                      <div class="col">
+                        <span class="badge bg-danger p-2">TIDAK ADA STRATEGI</span>
+                      </div>
+                      <div class="col">
+                        <span class="badge bg-danger p-2">TIDAK DITARIK</span>
+                      </div>
+                    </div>
+                  <% end %>
+                </td>
                 <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
                 <td class="fw-bolder border" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.tahun %></td>
                 <% if sasaran.indikator_sasarans.any? %>
@@ -67,6 +89,24 @@
         <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
                 </td>
               <% end%>
+                <td class="fw-bolder text-gray-500 px-auto border text-center" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
+                  <div class="row gy-2">
+                    <div class="col">
+                      Rp. <%= sasaran.total_anggaran %>
+                    </div>
+                    <hr/>
+                    <div class="col">
+                      <%= link_to subkegiatan_sasaran_path(sasaran), remote: true, class: "btn btn-sm btn-outline-info",
+                          data: { controller: 'form-modal',
+                                  action: 'form-modal#appendForm',
+                                  form_modal_location_param: 'form-info-subkegiatan-body',
+                                  bs_target: '#form-info-subkegiatan',
+                                  bs_toggle: 'modal' } do %>
+                                  Info Subkegiatan
+                    <% end %>
+                    </div>
+                  </div>
+                </td>
                 <td class="fw-bolder text-gray-500 px-auto" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
                 <% if sasaran.indikator_sasarans.any? %>
                   <div class="row justify-content-center w-100">
@@ -104,3 +144,4 @@
   </div>
 </div>
 <%= render 'shared/modal_template', modal_name: 'clone-sasaran' %>
+<%= render 'shared/modal_template', modal_name: 'info-subkegiatan' %>
