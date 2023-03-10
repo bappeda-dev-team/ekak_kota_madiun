@@ -204,8 +204,7 @@ class User < ApplicationRecord
     sasarans.includes(%i[strategi indikator_sasarans])
             .where("sasarans.tahun ILIKE ?", tahun)
             .dengan_tahapan
-            .dengan_manual_ik
-            .select { |s| s.strategi.present? }
+            .select { |s| s.indikator_sasarans.any?(&:manual_ik) && s.strategi.present? }
   end
 
   def eselon_user
