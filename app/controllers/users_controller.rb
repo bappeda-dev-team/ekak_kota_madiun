@@ -116,7 +116,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1 or /users/1.json
   def update
     respond_to do |format|
-      @user.nulify_sasaran(@user.nik)
+      # @user.nulify_sasaran(@user.nik)
       if @user.update(user_params)
         @user.add_role(params[:user][:role].to_sym) if params[:user][:role].present?
 
