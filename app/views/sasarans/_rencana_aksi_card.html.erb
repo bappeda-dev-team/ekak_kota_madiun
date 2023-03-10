@@ -12,7 +12,7 @@
     <div class="card-body">
       <%= render 'form_tahun_sasaran', sasaran: sasaran %>
     </div>
-  <% elsif !sasaran.indikator_sasarans.any? { |ss| ss.manual_ik } %>
+  <% elsif !sasaran.indikator_sasarans.all? { |ss| ss.manual_ik } %>
     <span class="badge bg-danger p-2">Belum Terisi</span>
     <ul>
     <li>Sasaran Kinerja : <%= sasaran.sasaran_kinerja %></li>
