@@ -160,6 +160,10 @@ class ProgramKegiatan < ApplicationRecord
     sasarans.where(tahun: tahun).sudah_lengkap.map(&:total_anggaran).compact.sum
   end
 
+  def pagu_tanpa_lengkap(tahun)
+    sasarans.where(tahun: tahun).map(&:total_anggaran).compact.sum
+  end
+
   def my_waktu
     sasarans.map(&:waktu_total).compact.sum
   end

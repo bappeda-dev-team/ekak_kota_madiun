@@ -1,0 +1,22 @@
+<div class="row border">
+  <div class="col">
+    Sasaran
+  </div>
+  <div class="col">
+    Subkegiatan
+  </div>
+  <div class="col">
+    Anggaran Sasaran
+  </div>
+</div>
+<div class="row border">
+  <div class="col">
+    <%= @nama_sasaran %>
+  </div>
+  <div class="col">
+    <%= @subkegiatan %>
+  </div>
+  <div class="col">
+    Rp. <%= number_with_delimiter(@anggaran_sasaran) %>
+  </div>
+</div>

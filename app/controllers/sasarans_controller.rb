@@ -8,7 +8,7 @@ class SasaransController < ApplicationController
     @tahun_sasaran = cookies[:tahun_sasaran] || nil
     @status_sasaran = params[:status_sasaran] || nil
     @sasarans = @user.sasarans.where('tahun ILIKE ?',
-                                     "%#{@tahun_sasaran}%").or(@user.sasarans.where(sasarans: { tahun: nil })).order(:id)
+                                     "%#{@tahun_sasaran}%").or(@user.sasarans.where(sasarans: { tahun: "" })).order(:id)
 
     case @status_sasaran
     when 'dengan_strategi'
@@ -397,6 +397,14 @@ class SasaransController < ApplicationController
       format.html { redirect_to sasarans_path, success: 'Sasaran berhasil dihapus' }
       format.json { head :no_content }
     end
+  end
+
+  def subkegiatan
+    sasaran = Sasaran.find(params[:id])
+    @nama_sasaran = sasaran.sasaran_kinerja
+    @subkegiatan = sasaran.subkegiatan
+    @anggaran_sasaran = sasaran.total_anggaran || 0
+    render partial: "subkegiatan_sasaran"
   end
 
   private
