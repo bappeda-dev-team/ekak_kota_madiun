@@ -8,6 +8,7 @@
 #  indikator_kinerja      :string
 #  kualitas               :integer
 #  nip_asn                :string
+#  nip_asn_sebelumnya     :string
 #  penerima_manfaat       :string
 #  sasaran_atasan         :string
 #  sasaran_kinerja        :string

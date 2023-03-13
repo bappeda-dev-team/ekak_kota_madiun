@@ -15,6 +15,7 @@
 #  nama_bidang            :string
 #  nama_pangkat           :string
 #  nik                    :string
+#  nip_sebelum            :string
 #  pangkat                :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime

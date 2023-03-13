@@ -92,7 +92,7 @@
                 <td class="fw-bolder text-gray-500 px-auto border text-center" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
                   <div class="row gy-2">
                     <div class="col">
-                      Rp. <%= sasaran.total_anggaran %>
+                      Rp. <%= number_with_delimiter(sasaran.total_anggaran) %>
                     </div>
                     <hr/>
                     <div class="col">
