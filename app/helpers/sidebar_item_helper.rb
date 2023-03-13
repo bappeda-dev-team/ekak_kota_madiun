@@ -150,7 +150,7 @@ module SidebarItemHelper
 
   def opd_items
     [
-      { title: 'Tujuan OPD', href: tujuan_opds_path, identifier: 'opds/tujuan' },
+      { title: 'Tujuan OPD', href: tujuan_opds_path, identifier: 'tujuan_opds' },
       { title: 'Isu Strategis OPD', href: isu_strategis_opds_path, identifier: 'isu_strategis_opds' },
       { title: 'Strategi OPD', href: strategi_opds_path, identifier: 'strategi_opds' },
       # { title: 'Sasaran OPD', href: sasaran_opds_path, identifier: 'opds/sasaran' },
@@ -216,7 +216,7 @@ module SidebarItemHelper
   end
 
   def collapsed_item_opd
-    collapse_class('(\bopds/tujuan|\bopds/sasaran|\bopds/kotak_usulan|\bopds/info|\bstrategi_opds|\bisu_strategis_opds)')
+    collapse_class('(\btujuan_opds|\bopds/sasaran|\bopds/kotak_usulan|\bopds/info|\bstrategi_opds|\bisu_strategis_opds)')
   end
 
   def collapsed_item_kota
