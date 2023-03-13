@@ -1,5 +1,6 @@
 class StrategisController < ApplicationController
   before_action :set_strategi, only: %i[show edit update destroy]
+  # before_action :strategi_pohon_atasan, only: %i[new edit]
 
   # GET /strategis or /strategis.json
   def index
@@ -19,6 +20,7 @@ class StrategisController < ApplicationController
     @usulan_isu = params[:usulan_isu]
     @sasaran = @strategi.build_sasaran
     @is_new = true
+    strategi_pohon_atasan(@nip)
   end
 
   # GET /strategis/1/edit
@@ -30,6 +32,7 @@ class StrategisController < ApplicationController
     @usulan_isu = params[:usulan_isu]
     @sasaran = @strategi.sasaran.nil? ? @strategi.build_sasaran : @strategi.sasaran
     @is_new = false
+    strategi_pohon_atasan(@nip)
   end
 
   # POST /strategis or /strategis.json
@@ -103,7 +106,7 @@ class StrategisController < ApplicationController
     @bawahans = if [145,
                     122].include?(@opd.id) && @role == 'eselon_3'
                   @opd.users.with_any_role(@role.to_sym,
-                                       :eselon_2b)
+                                           :eselon_2b)
                 else
                   @opd.users.with_role(@role.to_sym)
                 end
@@ -162,6 +165,15 @@ class StrategisController < ApplicationController
     hapus_bagikan = dibagikan.nil? ? tidak : (tidak - dibagikan)
     hapus_bagikan.each do |hapus|
       @strategi.strategi_eselon_empats.find(hapus).delete
+    end
+  end
+
+  def strategi_pohon_atasan(nip)
+    @isu_strategis_atasan = Strategi.where(nip_asn: nip).uniq(&:strategi_ref_id).collect do |str|
+      [str.isu_strategis_disasar, str.strategi_ref_id]
+    end
+    @isu_strategis_pohon = Strategi.where(nip_asn: nip).uniq(&:pohon_id).collect do |str|
+      [str.pohon.strategi_kota_isu_strategis, str.pohon_id]
     end
   end
 

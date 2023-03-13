@@ -19,16 +19,24 @@
         <%= form.hidden_field :opd_id, class: "form-control", readonly: true, value: @opd_id %>
 
         <%= form.label :isu_strategis_pohon, class: "form-label" %>
-        <%= form.select :pohon_id, Strategi.where(nip_asn: @nip).uniq(&:pohon_id).collect{ |str| [str.pohon.strategi_kota_isu_strategis, str.pohon_id] } ,
+        <%= form.select :pohon_id, @isu_strategis_pohon ,
           {include_blank: true},
-          { class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih Strategi Atas' }, required: true }%>
+          { class: 'form-control',
+            data: { controller: 'dropdown',
+                    placeholder: 'Pilih Strategi Atas',
+                    dropdown_jenis_value: 'chain'
+          }, required: true }%>
       </div>
 
       <div class="field">
         <%= form.label :isu_strategis_atasan, class: "form-label" %>
-        <%= form.select :strategi_ref_id, Strategi.where(nip_asn: @nip).uniq(&:strategi_ref_id).collect{ |str| [str.isu_strategis_disasar, str.strategi_ref_id] } ,
+        <%= form.select :strategi_ref_id, @isu_strategis_atasan ,
           {include_blank: true},
-          { class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih Strategi Atasan ( kosong jika KA OPD )' } }%>
+          { class: 'form-control',
+            data: { controller: 'dropdown',
+                    placeholder: 'Pilih Strategi Atasan ( kosong jika KA OPD )',
+                    action: 'change-select@document->dropdown#chain_value_to_target'
+            } }%>
       </div>
 
       <div class="field">
