@@ -15,6 +15,7 @@
 #  nama_bidang            :string
 #  nama_pangkat           :string
 #  nik                    :string
+#  nip_sebelum            :string
 #  pangkat                :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
@@ -89,11 +90,19 @@ class User < ApplicationRecord
   end
 
   def nulify_sasaran(nip)
-    Sasaran.where(nip_asn: nip).update_all(nip_asn: nil)
+    Sasaran.where(nip_asn: nip).update_all(nip_asn_sebelumnya: nip, nip_asn: nil)
+  end
+
+  def nulify_strategi(nip)
+    Strategi.where(nip_asn: nip).update_all(nip_asn_sebelumnya: nip, nip_asn: nil)
   end
 
   def update_sasaran
-    Sasaran.where(nip_asn: nil).update_all(nip_asn: nik)
+    Sasaran.where(nip_asn_sebelumnya: nip_sebelum).update_all(nip_asn: nik)
+  end
+
+  def update_strategi
+    Strategi.where(nip_asn_sebelumnya: nip_sebelum).update_all(nip_asn: nik)
   end
 
   def aktifkan_user

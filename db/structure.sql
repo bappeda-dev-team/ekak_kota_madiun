@@ -2101,7 +2101,8 @@ CREATE TABLE public.sasarans (
     sasaran_opd character varying,
     sasaran_kota character varying,
     sasaran_milik character varying,
-    strategi_id character varying
+    strategi_id character varying,
+    nip_asn_sebelumnya character varying
 );
 
 
@@ -2376,7 +2377,8 @@ CREATE TABLE public.strategis (
     updated_at timestamp(6) without time zone NOT NULL,
     pohon_id bigint,
     role character varying,
-    opd_id character varying
+    opd_id character varying,
+    nip_asn_sebelumnya character varying
 );
 
 
@@ -2640,7 +2642,8 @@ CREATE TABLE public.users (
     nama_bidang character varying,
     type character varying,
     atasan character varying,
-    atasan_nama character varying
+    atasan_nama character varying,
+    nip_sebelum character varying
 );
 
 
@@ -4613,6 +4616,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230227035240'),
 ('20230308220522'),
 ('20230309040126'),
-('20230309043648');
+('20230309043648'),
+('20230313033000'),
+('20230313033100'),
+('20230313043326');
 
 

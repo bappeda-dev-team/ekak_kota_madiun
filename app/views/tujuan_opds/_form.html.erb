@@ -18,14 +18,15 @@
     <div class="card-body">
       <div class="field">
         <%= form.label :opd, class: 'form-label' %>
-        <%= form.select :kode_unik_opd, options_for_select(@opds, current_user.opd) ,{},
-          { class: 'form-control', data: { controller: 'dropdown' } }%>
+        <%= form.select :kode_unik_opd, options_for_select(@opds, current_user.opd),
+          {include_blank: true}, 
+          { required: true, class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih OPD' } }%>
       </div>
 
       <div class="field">
         <%= form.label :urusan, class: 'form-label' %>
         <%= form.select :urusan_id, Master::Urusan.where(tahun: '2023').collect { |urusan| [urusan.nama_urusan, urusan.id] } ,{include_blank: true},
-          { class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih Urusan' } }%>
+          { required: true, class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih Urusan' } }%>
       </div>
 
       <div class="field">
@@ -36,13 +37,13 @@
       <div class="field">
         <%= form.label :tahun_awal, class: 'form-label' %>
         <%= form.select :tahun_awal,[2020, 2021, 2022, 2023, 2024],{},
-          { class: 'form-control', data: { controller: 'dropdown' } }%>
+          { required: true, class: 'form-control', data: { controller: 'dropdown' } }%>
       </div>
 
       <div class="field">
         <%= form.label :tahun_akhir, class: 'form-label' %>
         <%= form.select :tahun_akhir,[2020, 2021, 2022, 2023, 2024],{},
-          { class: 'form-control', data: { controller: 'dropdown' } }%>
+          { required: true, class: 'form-control', data: { controller: 'dropdown' } }%>
       </div>
 
       <div class="field" id="indikator-tujuans-opd">

@@ -115,12 +115,13 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
+    @user.nip_sebelum = @user.nik
     respond_to do |format|
-      # @user.nulify_sasaran(@user.nik)
+      @user.nulify_sasaran(@user.nik)
       if @user.update(user_params)
         @user.add_role(params[:user][:role].to_sym) if params[:user][:role].present?
 
-        format.html { redirect_to adminusers_path, success: 'User was successfully updated.' }
+        format.html { redirect_to user_path(@user), success: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, notice: 'Failed update user' }
@@ -194,6 +195,26 @@ class UsersController < ApplicationController
              end
   end
 
+  def edit_nip
+    @user = User.find(params[:id])
+    @nip = @user.nik
+    render partial: "form_nip"
+  end
+ 
+  def update_nip
+    @user = User.find(params[:id])
+    @nip = params[:nip]
+    @user.nip_sebelum = @user.nik
+    @user.nulify_sasaran(@user.nik)
+    @user.nulify_strategi(@user.nik)
+    @user.nik = @nip
+    @user.save
+    @user.update_sasaran
+    @user.update_strategi
+    render json: { resText: "Data disimpan", result: { data: @nip } },
+           status: :accepted
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -207,7 +228,7 @@ class UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:nama, :nik, :password, :kode_opd, :email)
+    params.require(:user).permit(:nama, :password, :kode_opd, :email)
   end
 
   def user_detail_params

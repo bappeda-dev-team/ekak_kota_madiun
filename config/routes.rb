@@ -147,6 +147,8 @@ Rails.application.routes.draw do
       patch :update_detail
       get :set_role
       post :add_role
+      get :edit_nip
+      post :update_nip
     end
   end
 
