@@ -7,7 +7,7 @@ class SasaransController < ApplicationController
   def index
     @tahun_sasaran = cookies[:tahun_sasaran] || nil
     @status_sasaran = params[:status_sasaran] || nil
-    @sasarans = @user.sasarans.where('tahun ILIKE ?',
+    @sasarans = @user.sasarans.includes([:strategi, :usulans, :program_kegiatan, :rincian, :permasalahans, :dasar_hukums, :latar_belakangs, :indikator_sasarans]).where('tahun ILIKE ?',
                                      "%#{@tahun_sasaran}%").or(@user.sasarans.where(sasarans: { tahun: "" })).order(:id)
 
     case @status_sasaran

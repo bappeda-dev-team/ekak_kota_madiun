@@ -62,7 +62,7 @@ class Strategi < ApplicationRecord
      foreign_key: "strategi_ref_id", dependent: :destroy
 
   def isu_strategis_disasar
-    strategi_atasan.nil? ? pohon.keterangan : strategi_atasan.strategi
+    strategi_atasan.nil? ? pohon.keterangan : "#{strategi_atasan.strategi} - #{strategi_atasan.user&.nama}"
   end
 
   def strategi_bawahans
@@ -84,6 +84,10 @@ class Strategi < ApplicationRecord
 
   def nama_pemilik
     user&.nama
+  end
+
+  def nip_pemilik
+    user&.nik
   end
 
   def strategis
