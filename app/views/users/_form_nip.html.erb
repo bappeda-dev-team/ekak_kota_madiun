@@ -5,6 +5,7 @@
           action: 'ajax:success->form-ajax#successResponse',
           form_ajax_modal_param: 'form-user-role' }
               ) do |form| %>
+  <%= hidden_field_tag 'dom_id', @dom_id -%>
   <div class="field">
     <%= form.label :nip, class: "form-label" %>
     <%= form.text_field :nip, class: "form-control", value: @nip %>

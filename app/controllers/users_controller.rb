@@ -211,7 +211,7 @@ class UsersController < ApplicationController
     @user.save
     @user.update_sasaran
     @user.update_strategi
-    render json: { resText: "Data disimpan", result: { nip: @nip } },
+    render json: { resText: "Data disimpan", result: { data: @nip } },
            status: :accepted
   end
 
