@@ -59,7 +59,7 @@ module Api
     def tujuan_opd
       @tahun = params[:tahun]
       @kode_opd = params[:kode_opd]
-      @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+      @opd = @kode_opd == '4.01.0.00.0.00.01.0000' ? Opd.find_by(kode_unik_opd: '4.01.0.00.0.00.01.00') : Opd.find_by(kode_unik_opd: @kode_opd)
       @tujuan_opds = @opd.tujuan_opds
     end
 

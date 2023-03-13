@@ -116,6 +116,7 @@
                         <span>Edit</span>
                      <% end %>
                     </div>
+                    <% if sasaran.strategi.nil? %>
                     <div class="col">
                       <%= link_to user_sasaran_path(current_user, sasaran), method: :delete, data: { confirm_swal: "Hapus #{sasaran.sasaran_kinerja} ?"},
                         class: "m-3 btn btn-sm btn-outline-danger w-100" do %>
@@ -123,6 +124,7 @@
                         <span>Hapus</span>
                       <% end %>
                     </div>
+                    <% end %>
                   </div>
                 <% else %>
                     HARAP ISI INDIKATOR SASARAN

@@ -30,13 +30,15 @@
     <% end %>
   </div>
 
-  <div class="p-2">
-    <%= link_to strategi, method: :delete,
-      data: { confirm_swal: "Hapus Strategi?"},
-      class: "btn btn-outline-danger d-inline-flex align-items-center mx-3" do %>
-      <i class="fas fa-trash-alt me-2"></i>
-      Hapus <%= local_assigns[:judul_tombol] %>
-    <% end %>
-  </div>
+  <% unless strategi.strategi_bawahans.count > 0 %>
+    <div class="p-2">
+      <%= link_to strategi, method: :delete,
+        data: { confirm_swal: "Hapus Strategi?"},
+        class: "btn btn-outline-danger d-inline-flex align-items-center mx-3" do %>
+        <i class="fas fa-trash-alt me-2"></i>
+        Hapus <%= local_assigns[:judul_tombol] %>
+      <% end %>
+    </div>
+  <% end %>
   <% end %>
 </div>
