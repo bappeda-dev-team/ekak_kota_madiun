@@ -29,7 +29,7 @@ module Api
       @user = User.find_by(nik: @nip)
       @eselon = @user.eselon_user
       @status_rencana_aksi = case @eselon
-                             when 'eselon_4' || 'staff'
+                             when 'eselon_4', 'staff'
                                true
                              else
                                false
