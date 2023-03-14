@@ -15,11 +15,11 @@ module PohonKinerjaHelper
   end
 
   def opd_khusus?(opd_id)
-    [145, 122].include?(opd_id)
+    [145, 122, 123].include?(opd_id)
   end
 
   def role_opd_khusus(opd_id)
-    if [145, 122].include?(opd_id)
+    if [145, 122, 123].include?(opd_id)
       %w[eselon_2b eselon_3]
     else
       'eselon_3'

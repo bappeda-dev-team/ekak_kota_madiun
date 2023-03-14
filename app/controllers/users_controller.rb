@@ -159,7 +159,7 @@ class UsersController < ApplicationController
     @dom_id = params[:dom_id]
     @opd = @user.opd
     @roles = Role.where(name: %w[eselon_2 eselon_3 eselon_4 staff]).pluck(:name)
-    @roles.insert(1, 'eselon_2b') if [145, 122].include?(@opd.id)
+    @roles.insert(1, 'eselon_2b') if [145, 122, 123].include?(@opd.id)
     render partial: "form_peran"
   end
 
