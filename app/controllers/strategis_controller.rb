@@ -101,7 +101,7 @@ class StrategisController < ApplicationController
     @pohon_id = @strategi.pohon_id
     @opd = current_user.opd
     @bawahans = if [145,
-                    122].include?(@opd.id) && @role == 'eselon_3'
+                    122, 123].include?(@opd.id) && @role == 'eselon_3'
                   @opd.users.with_any_role(@role.to_sym,
                                            :eselon_2b)
                 else
