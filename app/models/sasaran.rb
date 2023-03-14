@@ -189,7 +189,7 @@ class Sasaran < ApplicationRecord
   rescue TypeError
     '-'
   end
-  
+
   def anggaran_sub
     program_kegiatan&.pagu_tanpa_lengkap(tahun) || 0
   end
@@ -298,7 +298,7 @@ class Sasaran < ApplicationRecord
   end
 
   def status_badge(petunjuk)
-    petunjuk.reject {|_key, val| val }
+    petunjuk.reject { |_key, val| val }
   end
 
   def add_tematik(sasaran:, tematik:)
@@ -360,13 +360,13 @@ class Sasaran < ApplicationRecord
 
   def sasaran_kota
     pohon = strategi.pohon
-    return unless pohon.pohonable_type == 'StrategiKotum'
+    # return unless pohon.pohonable_type == 'StrategiKotum'
 
     pohon_kota = pohon.pohonable
     {
       strategi_kota: pohon_kota.strategi,
-      sasaran_kota_id: pohon_kota&.sasaran_kotum&.id,
-      sasaran_kota: pohon_kota&.sasaran_kotum&.sasaran
+      sasaran_kota_id: pohon_kota&.sasaran_kotum_id,
+      sasaran_kota: pohon_kota&.sasaran_kotum_sasaran
     }
   end
 
