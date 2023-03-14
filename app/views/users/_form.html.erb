@@ -13,10 +13,12 @@
     <%= form.label :nama, class: "form-label" %>
     <%= form.text_field :nama, class: "form-control" %>
   </div>
+  <% if current_user.has_role?(:super_admin) %>
   <div class="field">
     <%= form.label :nip, class: "form-label" %>
-    <%= form.text_field :nik, class: "form-control", readonly: true %>
+    <%= form.text_field :nik, class: "form-control" %>
   </div>
+  <% end %>
   <div class="field">
     <%= form.label :email, class: "form-label" %>
     <%= form.email_field :email, class: "form-control" %>
