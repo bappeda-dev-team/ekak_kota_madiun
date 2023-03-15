@@ -1,5 +1,3 @@
-<% jumlah_target = sasaran.tahapans.sum :jumlah_target %>
-<% jumlah_realisasi = sasaran.tahapans.sum :jumlah_realisasi %>
 <div class="card border-2 shadow mb-3">
   <div class="card-body">
     <div class="row align-items-center">
@@ -44,6 +42,7 @@
     <div class="row align-items-center mb-3">
       <div class="col-8">
         <span class="fs-5 fw-bold mb-0">2. Rencana Aksi <%= current_user.eselon_user == 'eselon_4' and current_user.has_any_role?('eselon_4') ? 'dan Anggaran' : '' %></span>
+        <span><%= sesuai?(sasaran.target_sesuai?) %></span>
       </div>
       <div class="col text-end">
         <%= button_to 'Sync Total', renaksi_update_path, remote: true, method: :post, class: 'btn btn-sm btn-primary', params: {id: sasaran.id} %>
@@ -90,7 +89,7 @@
         <thead class="thead-light">
           <tr>
             <th class="border-bottom border-end border-start" scope="col" rowspan="2">No.</th>
-            <th class="border-bottom border-end border-start" scope="col" rowspan="2">Urutan</th>
+            <th class="border-bottom border-end border-start text-center" scope="col" rowspan="2">Urutan</th>
             <th class="border-bottom border-end" scope="col" rowspan="2">Tahapan Kerja</th>
             <% (1..12).each do |i| %>
               <th class="border-bottom border-end text-center" scope="col"><%= i %></th>
@@ -99,7 +98,7 @@
           <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
             <th class="border-bottom border-end text-center" scope="col" rowspan="2">Anggaran</th>
           <% end %>
-            <th class="border-bottom border-end" scope="col" rowspan="2">Keterangan</th>
+            <th class="border-bottom border-end text-center" scope="col" rowspan="2">Keterangan</th>
             <% unless diajukan? %>
               <th class="border-bottom border-end text-center" scope="col" rowspan="2">Action</th>
             <% end %>
@@ -114,7 +113,15 @@
           <% sasaran.tahapan_renaksi.each.with_index(1) do |tahapan, index| %>
             <tr class="<%= tahapan.ada_komentar? ? 'higlighted' : 'clean' %>">
               <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= index %></td>
-              <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= tahapan.urutan %></td>
+              <td class="text-gray-900 fw-bolder border-start border-end" scope="row">
+                <span class="me-2"><%= tahapan&.urutan || '-' %></span>
+                <%= link_to edit_sasaran_tahapan_path(sasaran, tahapan),remote: true,
+                  data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'},
+                  class: "btn btn-sm btn-outline-info" do %>
+                    <i class="fa fa-pencil-alt me-2"></i>
+                    <span class="">Edit</span>
+                  <% end %>
+              </td>
               <td class="text-gray-900"><%= tahapan.tahapan_kerja %></td>
               <% (1..12).each do |bulan| %>
                 <% unless diajukan? %>
@@ -143,9 +150,6 @@
               <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.keterangan %></td>
               <% unless diajukan? %>
                 <td class="fw-bolder text-gray-500 text-center border-end">
-                  <%= link_to edit_sasaran_tahapan_path(sasaran, tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'}, class: "m-3" do %>
-                    <i class="fa fa-pencil-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
-                  <% end %>
                   <%= link_to sasaran_tahapan_path(sasaran, tahapan), method: :delete, data: { confirm_swal: "Hapus Tahapan #{tahapan.tahapan_kerja}?"}, class: "m-3" do %>
                     <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
                   <% end %>
@@ -156,7 +160,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <td class="border-bottom border-start border-end" colspan="2">Total</td>
+            <td class="border-bottom border-start border-end" colspan="3">Total</td>
             <% (1..12).each do |i| %>
               <td class="border-bottom border-end text-center"><%= sasaran.total_target_aksi_bulan[i] %></td>
             <% end %>

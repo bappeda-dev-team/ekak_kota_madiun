@@ -198,6 +198,12 @@ class Sasaran < ApplicationRecord
     tahapans.sum(:jumlah_target).nonzero? || '-'
   end
 
+  def target_sesuai?
+    jumlah_target.to_i == 100
+  rescue NoMethodError
+    '-'
+  end
+
   def my_usulan
     usulans.map(&:usulanable)
   end
@@ -385,6 +391,7 @@ class Sasaran < ApplicationRecord
     program_kegiatan.present? ? program_kegiatan.nama_subkegiatan : 'belum ada subkegiatan'
   end
 
+  # @doc get tahapan rencana aksi sasaran with correct sort
   def tahapan_renaksi
     tahapans.includes([:anggarans]).sort_by do |thp|
       thp.urutan.to_i

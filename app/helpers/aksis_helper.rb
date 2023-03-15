@@ -59,4 +59,12 @@ module AksisHelper
                 remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-aksi-realisasi' })}
     </td>".html_safe
   end
+
+  def sesuai?(checker)
+    if checker
+      "<i class='fa fa-check text-success'></i>".html_safe
+    else
+      "<i class='fa fa-times text-danger'></i>".html_safe
+    end
+  end
 end

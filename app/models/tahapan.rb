@@ -31,7 +31,7 @@ class Tahapan < ApplicationRecord
 
   validates :tahapan_kerja, presence: true
 
-  default_scope { order(urutan: :asc) }
+  default_scope { order(created_at: :asc) }
 
   amoeba do
     append id_rencana: '_2022_p'
