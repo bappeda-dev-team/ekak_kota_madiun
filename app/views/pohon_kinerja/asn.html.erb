@@ -19,10 +19,7 @@
         </div>
       </div>
       <% if @strategis %>
-        <div class="card-body" data-controller="pohon-kinerja" data-pohon-kinerja-opd-value="<%= @opd.id %>" data-pohon-kinerja-tahun-value="2023">
-          <div id="pokin-opd" class="pohon-kinerja" data-pohon-kinerja-target="pokin"></div>
-        </div>
-        <hr/>
+        <%= render 'pohon_kinerja/pohon_kinerja_box', opd_id: @opd.id, tahun: '2023' %>
         <div class="card-body">
           <% eselon = @eselon %>
           <% if eselon == "eselon_2" %>

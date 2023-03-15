@@ -1,0 +1,11 @@
+<div class="card-body"
+     data-controller="pohon-kinerja"
+     data-pohon-kinerja-opd-value="<%= local_assigns[:opd_id] %>"
+     data-pohon-kinerja-tahun-value="<%= local_assigns[:tahun] %>"
+     data-pohon-kinerja-render-value="false">
+        <div id="pokin-opd" class="pohon-kinerja mb-4" data-pohon-kinerja-target="pokin"></div>
+        <button class='btn btn-sm btn-outline-success'
+          data-pohon-kinerja-target='buttonToggle'
+          data-action="click->pohon-kinerja#togglePokin" >Tampilkan Pohon</button>
+</div>
+<hr/>
