@@ -43,7 +43,7 @@
   <div class="card-body">
     <div class="row align-items-center mb-3">
       <div class="col-8">
-        <span class="fs-5 fw-bold mb-0">2. Rencana Aksi <%= current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') ? 'dan Anggaran' : '' %></span>
+        <span class="fs-5 fw-bold mb-0">2. Rencana Aksi <%= current_user.eselon_user == 'eselon_4' and current_user.has_any_role?('eselon_4') ? 'dan Anggaran' : '' %></span>
       </div>
       <div class="col text-end">
         <%= button_to 'Sync Total', renaksi_update_path, remote: true, method: :post, class: 'btn btn-sm btn-primary', params: {id: sasaran.id} %>
@@ -90,6 +90,7 @@
         <thead class="thead-light">
           <tr>
             <th class="border-bottom border-end border-start" scope="col" rowspan="2">No.</th>
+            <th class="border-bottom border-end border-start" scope="col" rowspan="2">Urutan</th>
             <th class="border-bottom border-end" scope="col" rowspan="2">Tahapan Kerja</th>
             <% (1..12).each do |i| %>
               <th class="border-bottom border-end text-center" scope="col"><%= i %></th>
@@ -110,9 +111,10 @@
           </tr>
         </thead>
         <tbody>
-          <% sasaran.tahapans.includes([:anggarans]).each.with_index(1) do |tahapan, index| %>
+          <% sasaran.tahapan_renaksi.each.with_index(1) do |tahapan, index| %>
             <tr class="<%= tahapan.ada_komentar? ? 'higlighted' : 'clean' %>">
               <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= index %></td>
+              <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= tahapan.urutan %></td>
               <td class="text-gray-900"><%= tahapan.tahapan_kerja %></td>
               <% (1..12).each do |bulan| %>
                 <% unless diajukan? %>

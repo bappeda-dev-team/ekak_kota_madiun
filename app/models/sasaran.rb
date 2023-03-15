@@ -384,4 +384,10 @@ class Sasaran < ApplicationRecord
   def subkegiatan
     program_kegiatan.present? ? program_kegiatan.nama_subkegiatan : 'belum ada subkegiatan'
   end
+
+  def tahapan_renaksi
+    tahapans.includes([:anggarans]).sort_by do |thp|
+      thp.urutan.to_i
+    end
+  end
 end

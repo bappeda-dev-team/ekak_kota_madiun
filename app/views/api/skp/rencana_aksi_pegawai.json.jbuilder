@@ -13,6 +13,7 @@ json.data do
   json.rencana_aksi @tahapans do |renaksi|
     json.id_tahapan renaksi.id_rencana_aksi
     json.id_sasaran renaksi.id_rencana
+    json.urutan renaksi&.urutan
     json.tahapan_kerja renaksi.tahapan_kerja
     json.anggaran_tahapan renaksi.anggaran_tahapan
     json.created_at renaksi.created_at

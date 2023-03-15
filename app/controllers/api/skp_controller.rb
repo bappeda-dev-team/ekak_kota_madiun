@@ -35,7 +35,7 @@ module Api
                                false
                              end
       @sasaran = Sasaran.find_by(id_rencana: id_sasaran)
-      @tahapans = @sasaran.tahapans
+      @tahapans = @sasaran.tahapan_renaksi
     end
 
     def manual_ik_pegawai
