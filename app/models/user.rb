@@ -221,6 +221,16 @@ class User < ApplicationRecord
     eselon_user.nil? ? "no_eselon" : eselon_user.name
   end
 
+  def role_asn
+    roles.where("roles.name ilike ?", "%eselon%")
+         .or(roles.where("roles.name ilike ?", "%staff%"))
+         .pluck(:name)
+  end
+
+  def status_renaksi_user
+    role_asn.any? { |es| %w[eselon_4 staff].include?(es) }
+  end
+
   def nama_nip
     "#{nama} - #{nik}"
   end

@@ -27,13 +27,8 @@ module Api
       @nip = params[:nip]
       @tahun = params[:tahun]
       @user = User.find_by(nik: @nip)
-      @eselon = @user.eselon_user
-      @status_rencana_aksi = case @eselon
-                             when 'eselon_4', 'staff'
-                               true
-                             else
-                               false
-                             end
+      @eselon = @user.role_asn
+      @status_rencana_aksi = @eselon.any? { |es| %w[eselon_4 staff].include?(es) }
       @sasaran = Sasaran.find_by(id_rencana: id_sasaran)
       @tahapans = @sasaran.tahapan_renaksi
     end
