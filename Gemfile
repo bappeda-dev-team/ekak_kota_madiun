@@ -55,6 +55,7 @@ group :development do
   gem 'letter_opener'
   gem 'solargraph'
   gem 'spring'
+  gem 'table_print'
   # capistrano thing
   gem 'capistrano', '~> 3.11', require: false
   gem 'capistrano-passenger', '~> 0.2.0', require: false

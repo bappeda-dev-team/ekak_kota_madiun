@@ -227,7 +227,7 @@ class User < ApplicationRecord
          .pluck(:name)
   end
 
-  def status_renaksi_user
+  def isi_renaksi?
     role_asn.any? { |es| %w[eselon_4 staff].include?(es) }
   end
 
