@@ -41,10 +41,8 @@
         </div>
         <div class="card-body">
           <% if @opd.id == 145 %>
-            <%= render 'pohon_kinerja/pohon_kinerja_box', opd_id: @opd.id, tahun: '2023' %>
             <%= render 'pohon_kinerja/kotak_usulan_asn', role: "eselon_2", role_bawahan: "eselon_2b" %>
           <% else %>
-            <%= render 'pohon_kinerja/pohon_kinerja_box', opd_id: @opd.id, tahun: '2023' %>
             <%= render 'pohon_kinerja/kotak_usulan_asn', role: "eselon_2", role_bawahan: "eselon_3" %>
           <% end %>
         </div>
