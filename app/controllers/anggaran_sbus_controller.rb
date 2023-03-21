@@ -64,6 +64,7 @@ class AnggaranSbusController < ApplicationController
   # Only allow a list of trusted parameters through.
   def anggaran_sbus_params
     params.require(:anggaran_sbus).permit(:kode_kelompok_barang, :uraian_kelompok_barang, :kode_barang,
+                                          :tahun, :id_standar_harga,
                                           :uraian_barang, :spesifikasi, :satuan, :harga_satuan)
   end
 end

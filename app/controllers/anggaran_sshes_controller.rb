@@ -77,7 +77,8 @@ class AnggaranSshesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def anggaran_ssh_params
-    params.require(:anggaran_ssh).permit(:kode_kelompok_barang, :uraian_kelompok_barang, :kode_barang, :uraian_barang,
-                                         :spesifikasi, :satuan, :harga_satuan)
+    params.require(:anggaran_ssh).permit(:kode_kelompok_barang, :uraian_kelompok_barang, :kode_barang,
+                                         :tahun, :id_standar_harga,
+                                         :uraian_barang, :spesifikasi, :satuan, :harga_satuan)
   end
 end
