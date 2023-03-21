@@ -120,7 +120,7 @@ class StrategisController < ApplicationController
 
     dibagikan = params[:dibagikan]
     tidak = params[:tidak_dibagikan]
-    if dibagikan
+    if tidak
       hapus_bagikan = dibagikan.nil? ? tidak : (tidak - dibagikan)
       hapus_bagikan.each do |hapus|
         strategi_atasan.strategi_bawahans.find(hapus).delete
@@ -135,7 +135,8 @@ class StrategisController < ApplicationController
                            pohon_id: @pohon_id })
     end
     @strategi = Strategi.create(strategi_tray)
-    render json: { resText: "Sukses membagikan", result: { data: @strategi } },
+    @jumlah_strategi = strategi_atasan.strategi_bawahans.count
+    render json: { resText: "Sukses membagikan", result: { data: { jumlah_strategi: @jumlah_strategi } } },
            status: :accepted
   end
 
