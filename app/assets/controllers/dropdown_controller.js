@@ -9,7 +9,8 @@ export default class extends Controller {
     parent: String,
     url: String,
     opd_id: String,
-    uraian: String
+    uraian: String,
+    width: String
   }
 
   get select() {
@@ -23,6 +24,17 @@ export default class extends Controller {
       dropdownParent: this.parentValue
     }
     return options
+  }
+        
+  get element_options() {
+    let width = this.widthValue || "element"
+        console.log(width)
+    let options = {
+      width: width,
+      theme: "bootstrap-5",
+    }
+    return options
+
   }
 
   get options_with_ajax() {
@@ -62,6 +74,9 @@ export default class extends Controller {
         break
       case 'chain':
         this.dropdown_with_action(this.default_options)
+        break
+      case 'element':
+        this.dropdown_base(this.element_options)
         break
       default:
         this.dropdown_base(this.default_options)

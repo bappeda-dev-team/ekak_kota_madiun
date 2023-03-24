@@ -286,7 +286,7 @@ Rails.application.routes.draw do
     post :daftar_resiko
     post :isu_strategis_permasalahan
     post :laporan_renstra
-    get :tahun_sasaran
+    get :tahun_dan_opd
     post :renstra_master
     # post :tujuan_opd
     post :sasaran_opd
