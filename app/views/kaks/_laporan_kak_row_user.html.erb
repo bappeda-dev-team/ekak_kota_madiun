@@ -26,16 +26,13 @@
           <tr>
             <td class="text-gray-900 border-start border-end fw-bolder" scope="row" rowspan="<%= row_pk %>"><%= i %></td>
             <td class="text-gray-900 border-start border-end text-wrap" scope="row" rowspan="<%= row_pk %>" width="200px"><%= kak.nama_subkegiatan %></td>
-            <td class="text-gray-900 border-start border-end text-wrap" scope="row" rowspan="<%= row_pk %>" width="200px">Rp. <%= number_with_delimiter(kak.sasarans.map(&:total_anggaran).compact.sum) or 0 %></td>
+            <td class="text-gray-900 border-start border-end text-wrap" scope="row" rowspan="<%= row_pk %>" width="200px">Rp. <%= anggaran_subkegiatan_kak(kak.sasarans) %></td>
             <td class="p-0 m-0" colspan="5" style="height: 0px !important; border-color: transparent;"></td>
             <td class="fw-bolder text-gray-500 text-center" rowspan="<%= row_pk %>">
-              <%= link_to "/acuan_kerja_new/#{kak.id}/#{tahun_sasaran}", class: "m-3" do %>
-                <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
-              <% end %>
+              <%= link_show_kak(kak.id, tahun_sasaran) %>
+
               <% if @sasarans.any? {|s| s.status == 'pengajuan' or s.status == 'disetujui' } %>
-                <%= link_to "/pdf_kak/#{kak.id}/#{tahun_sasaran}.pdf", class: "m-3" do %>
-                  <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
-                <% end %>
+                <%= link_pdf_kak(kak.id, tahun_sasaran) %>
               <% end %>
             </td>
           </tr>
@@ -53,16 +50,8 @@
               <td class="text-wrap border-start border-end border-bottom text-center">
                 <%= show_sasaran.status %>
               </td>
-              <td class="text-wrap border-start border-end border-bottom text-center">
-                <% if show_sasaran.status == 'draft' %>
-                  <%= link_to user_sasaran_path(current_user, show_sasaran), class: "btn btn-sm btn-info" do %>
-                    <i class="fa fa-pencil-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="isi usulan"></i>
-                  <% end %>
-                <% else %>
-                  <button class="btn btn-sm btn-danger" disabled>
-                    <i class="fa fa-times" data-bs-toggle="tooltip" data-bs-placement="bottom" title="sudah diajukan"></i>
-                  </button>
-                <% end %>
+              <td class="border-start border-end border-bottom text-center">
+                <%= button_edit(show_sasaran.status, current_user, show_sasaran) %>
               </td>
             </tr>
           <% end %>

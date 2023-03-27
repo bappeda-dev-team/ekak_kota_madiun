@@ -98,12 +98,13 @@ class ProgramKegiatan < ApplicationRecord
   accepts_nested_attributes_for :sasarans
 
   scope :with_sasarans, -> { where(id: Sasaran.pluck(:program_kegiatan_id)) }
-  scope :with_sasarans_rincian, -> { joins(:sasarans).merge(Sasaran.dengan_rincian) }
+  scope :with_sasarans_rincian, -> { includes(:sasarans).merge(Sasaran.dengan_rincian) }
   scope :with_sasarans_lengkap, lambda { |nip_asn, tahun_sasaran|
-    joins(%i[sasarans usulans])
+    includes(%i[sasarans usulans])
       .where(sasarans: { nip_asn: nip_asn })
       .where("sasarans.tahun ILIKE ?", "%#{tahun_sasaran}%")
-      .where.not(sasarans: { id: nil }).group(:id)
+      .where.not(sasarans: { id: nil })
+      .where.not(usulans: { id: nil })
   }
 
   scope :urusans, -> { select("DISTINCT ON(program_kegiatans.kode_urusan) program_kegiatans.*") }

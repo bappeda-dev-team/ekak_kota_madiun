@@ -15,7 +15,7 @@ class KaksController < ApplicationController
     @tahun_sasaran = cookies[:tahun_sasaran] || nil
     @nip_asn = current_user.nik
     @program_kegiatans = ProgramKegiatan.with_sasarans_lengkap(@nip_asn, @tahun_sasaran)
-    @sasarans = current_user.sasarans
+    @sasarans = current_user.sasarans.where("sasarans.tahun ILIKE ?", "%#{@tahun_sasaran}%")
   end
 
   def pdf_kak
