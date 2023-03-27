@@ -1,0 +1,25 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+strategic_color = s.add_style bg_color: "FFF000"
+red_border_title = s.add_style(border: { style: :thick, color: 'FFFF0000', edges: [:top, :bottom] }, outline: true, alignment: {vertical: :center})
+red_border = s.add_style(border: { style: :thick, color: 'FFFF0000', edges: [:top, :bottom] }, outline: true)
+
+
+tactical_color = s.add_style bg_color: "FFF000"
+operational_color = s.add_style bg_color: "FFF000"
+operational_two_color = s.add_style bg_color: "FFF000"
+
+project_heading = s.add_style sz: 12, b: true
+red_line = s.add_style bg_color: "FF0000"
+center_hor = s.add_style sz: 12, b: true, alignment: { horizontal: :center }
+wb.add_worksheet(name: "PohonKinerja") do |sheet|
+  sheet.add_row [nil, nil, nil, nil, nil, nil,"POHON KINERJA KOTA MADIUN"]
+  sheet.add_row [nil]
+  sheet.add_row ["Strategic Objective",""], style: red_border, offset: 6, style: red_border_title
+  sheet.add_row ["Strategi", "Strategic Objective OO"], offset: 6, style: red_border
+  sheet.add_row ["Indikator", "Indikator 00"], offset: 6, style: red_border
+  sheet.add_row ["Target", "Target 00"], offset: 6, style: red_border
+
+  sheet.merge_cells('G3:H3')
+end

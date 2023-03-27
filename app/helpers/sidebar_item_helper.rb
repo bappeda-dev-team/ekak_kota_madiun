@@ -111,7 +111,6 @@ module SidebarItemHelper
 
   def spip_items
     [
-      { title: 'SPIP', href: spip_sasaran_program_opds_path, identifier: 'sasaran_program_opds/spip' },
       { title: 'Daftar Resiko', href: daftar_resiko_sasaran_program_opds_path,
         identifier: 'sasaran_program_opds/daftar_resiko' }
     ]

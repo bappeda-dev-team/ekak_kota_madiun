@@ -11,7 +11,7 @@ class PohonKinerjaController < ApplicationController
   def asn
     @opd = current_user.opd
     @pohons = @opd.pohons
-    @user = User.find_by(nik: current_user.nik)
+    @user = current_user
     @eselon = @user.eselon_user
     @strategis = Strategi.where(nip_asn: @user.nik).select(&:strategi_atasan)
     @strategi_kepala = @opd.strategis.where(nip_asn: @user.nik, role: 'eselon_2')
@@ -30,5 +30,14 @@ class PohonKinerjaController < ApplicationController
     # nip_kepala = @opd.users.eselon2.first&.nik
     @pohons = @opd.pohons
     @strategis = @opd.strategis.where(role: 'eselon_2')
+  end
+
+  def excel
+    opd_id = params[:pohon_kinerja_id]
+    @opd = Opd.find(opd_id)
+    @pohons = @opd.pohons
+    @strategis = @opd.strategis.where(role: 'eselon_2')
+    @filename = "Pohon Kinerja #{@opd.nama_opd}.xlsx"
+    render xlsx: "excel", filename: @filename, disposition: "inline"
   end
 end
