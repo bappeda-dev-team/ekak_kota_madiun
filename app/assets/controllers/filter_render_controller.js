@@ -1,18 +1,19 @@
 import { Controller } from 'stimulus'
 
 export default class extends Controller {
-  static targets = ['results']
+        static targets = ['results']
 
-  append(event) {
-    const [data, status, xhr] = event.detail;
-    // alert(status)
-    this.resultsTarget.innerHTML = xhr.response
-  }
+        append(event) {
+                console.log('appended')
+                const [_data, _status, xhr] = event.detail;
+                // alert(status)
+                this.resultsTarget.innerHTML = xhr.response
+        }
 
-  warning(event) {
-    const [data, status, xhr] = event.detail;
-    //alert(status)
-  }
-} 
+        warning(event) {
+                const [_data, status, _xhr] = event.detail;
+                alert(status)
+        }
+}
 
 

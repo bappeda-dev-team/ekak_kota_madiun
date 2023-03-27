@@ -1,5 +1,6 @@
 class FilterController < ApplicationController
   include Renstra::OpdKhusus
+  skip_before_action :verify_authenticity_token
 
   before_action :filter_params, except: %i[filter_tematiks]
   before_action :nama_opd, only: %i[filter_gender filter_struktur]
@@ -82,7 +83,7 @@ class FilterController < ApplicationController
     render partial: 'program_kegiatans/hasil_filter_kegiatan'
   end
 
-  def filter_kak_dashboard
+  def kak_dashboard
     kak = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
     @program_kegiatans = kak.laporan_rencana_kinerja
     @total_pagu = kak.total_pagu
@@ -93,7 +94,7 @@ class FilterController < ApplicationController
     @filter_file = "hasil_filter_dashboard"
     # @message = @program_kegiatans ? "Berhasil" : "Ada yang salah"
     # @icon = @program_kegiatans ? "success" : "error"
-    render "kaks/kak_filter_dashboard"
+    render partial: "kaks/hasil_filter_dashboard"
   end
 
   def filter_kak
@@ -343,7 +344,8 @@ class FilterController < ApplicationController
     cookies[:opd] = @kode_opd
     cookies[:nama_opd] = @nama_opd
     render 'shared/_notifier_v2',
-           locals: { message: "Tahun Aktif: #{@tahun_sasaran}, OPD : #{@nama_opd}", status_icon: 'success', form_name: 'non-exists' }
+           locals: { message: "Tahun Aktif: #{@tahun_sasaran}, OPD : #{@nama_opd}", status_icon: 'success',
+                     form_name: 'non-exists' }
   end
 
   def renstra_master
@@ -379,9 +381,9 @@ class FilterController < ApplicationController
   def bidang_checker(models)
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
     @results = models.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd })
-    if OPD_TABLE.key?(opd.to_sym)
-      @results = models.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] })
-      @results = @results.where(nama_bidang: OPD_TABLE[opd.to_sym])
-    end
+    return unless OPD_TABLE.key?(opd.to_sym)
+
+    @results = models.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] })
+    @results = @results.where(nama_bidang: OPD_TABLE[opd.to_sym])
   end
 end

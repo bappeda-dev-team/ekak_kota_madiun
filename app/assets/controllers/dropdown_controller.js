@@ -28,7 +28,6 @@ export default class extends Controller {
         
   get element_options() {
     let width = this.widthValue || "element"
-        console.log(width)
     let options = {
       width: width,
       theme: "bootstrap-5",
