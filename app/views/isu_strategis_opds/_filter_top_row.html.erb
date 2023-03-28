@@ -1,7 +1,7 @@
 <% action_url = local_assigns[:action_url] %>
 <% kode_opd = local_assigns[:kode_opd] || '' %>
 <div class="col">
-  <form action="<%= action_url %>" method="GET" class="row">
+  <form action="<%= action_url %>" method="POST" class="row" data-controller="page-ajax">
     <input type="hidden" name="filter_query" value="tahun">
     <input type="hidden" name="kode_opd" value="<%= kode_opd %>">
     <div class="col">

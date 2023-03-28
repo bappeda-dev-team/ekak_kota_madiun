@@ -10,23 +10,51 @@
         <li class="breadcrumb-item active" aria-current="page">Tujuan OPD</li>
       </ol>
     </nav>
-    <% if current_user.has_role? :super_admin %>
-      <%= render 'shared/filter_card', filter_url: admin_filter_tujuan_opds_path,
-        action: 'ajax:success->filter-render#append'%>
-    <div class="card border-0 shadow" id="hasil_filter_opd" data-filter-render-target="results">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Tujuan OPD</h2>
+    <% if cookies[:tahun] && cookies[:opd] %>
+      <% if current_user.has_role?(:super_admin) %>
+      <div class="card border-0 shadow" id="user_filter" data-controller="page-ajax"
+             data-page-ajax-opd-value="<%= cookies[:opd] %>"
+             data-page-ajax-url-value="<%= admin_filter_tujuan_opds_path %>"
+             data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >
+        <div data-page-ajax-target="results">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2 class="fs-5 fw-bold mb-0">Tujuan OPD</h2>
+            </div>
+          </div>
+        </div>
+          <div class="loader text-center">
+            <div class="lds-roller">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <p>memuat data..</p>
           </div>
         </div>
       </div>
-      <div class="card-body">
-        ...
+      <% else %>
+        <%= render 'tujuan_opds/tujuan_opd' %>
+      <% end %>
+    <% else %>
+      <div class="card border-0 shadow" id="user_filter">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2 class="fs-5 fw-bold mb-0">Tujuan OPD</h2>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="alert alert-info">Pilih Tahun dan OPD</p>
+        </div>
       </div>
-    </div>
-  <% else %>
-      <%= render 'tujuan_opds/tujuan_opd' %>
-  <% end %>
+    <% end %>
   </div>
 </div>

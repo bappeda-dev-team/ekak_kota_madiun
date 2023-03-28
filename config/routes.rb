@@ -45,7 +45,11 @@ Rails.application.routes.draw do
       get :ganti_nip
     end
   end
-  resources :isu_strategis_opds
+  resources :isu_strategis_opds do
+    collection do
+      post :admin_filter
+    end
+  end
   resources :isu_strategis_kota do
     member do
       get :list_strategi_kota

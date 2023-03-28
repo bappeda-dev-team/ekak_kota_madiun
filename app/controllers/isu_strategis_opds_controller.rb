@@ -1,4 +1,5 @@
 class IsuStrategisOpdsController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :set_isu_strategis_opd, only: %i[show edit update destroy]
 
   # GET /isu_strategis_opds or /isu_strategis_opds.json
@@ -62,6 +63,16 @@ class IsuStrategisOpdsController < ApplicationController
     end
   end
 
+  def admin_filter
+    @kode_opd = params[:kode_opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    tahun = params[:tahun]
+    @tahun = "Tahun #{tahun}"
+    @isu_strategis_opds = @opd.isu_strategis_opds.where(tahun: tahun)
+    render partial: 'isu_strategis_opds/isu_strategis_opd'
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -86,7 +97,9 @@ class IsuStrategisOpdsController < ApplicationController
 
   def handle_filters
     tahun = params[:tahun]
-    @opd = current_user.opd
+    kode_opd = params[:kode_opd]
+    @opd = kode_opd.blank? ? current_user.opd : Opd.find_by(kode_unik_opd: kode_opd)
+    @nama_opd = @opd.nama_opd
     if tahun.nil? || tahun == 'all'
       @tahun = ''
       @isu_strategis_opds = @opd.isu_strategis_opds
