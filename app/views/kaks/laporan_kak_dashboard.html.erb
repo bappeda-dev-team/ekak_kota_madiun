@@ -13,6 +13,7 @@
     <% if cookies[:tahun] && cookies[:opd] %>
       <div class="card border-0 shadow" id="user_filter" data-controller="page-ajax"
              data-page-ajax-opd-value="<%= cookies[:opd] %>"
+             data-page-ajax-url-value="/filter/kak_dashboard"
              data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >
         <div class="card-header">
           <div class="row align-items-center">

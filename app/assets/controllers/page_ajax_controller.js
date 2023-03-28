@@ -13,15 +13,18 @@ export default class extends Controller {
         static targets = ['results']
         static values = {
                 opd: String,
-                tahun: Number
+                tahun: Number,
+                url: String,
+                jenisUsulan: String
         }
 
         connect() {
-                const url = "/filter/kak_dashboard"
+                const url = this.urlValue
                 // Build formData object.
                 let formData = new FormData();
                 formData.append('kode_opd', this.opdValue);
                 formData.append('tahun', this.tahunValue);
+                formData.append('jenis', this.jenisUsulanValue);
 
                 fetch(url,
                         {
@@ -29,13 +32,18 @@ export default class extends Controller {
                                 method: "post"
                         })
                         .then(
-                                response => response.text() 
+                                response => response.text()
                         )
                         .then(
                                 text => {
                                         this.resultsTarget.innerHTML = text
                                 }
-                        );
+                        ).catch(
+                                e => {
+                                        this.resultsTarget.innerHTML = "Terjadi Kesalahan"
+                                }
+
+                        )
         }
 }
 

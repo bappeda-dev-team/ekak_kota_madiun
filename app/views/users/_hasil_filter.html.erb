@@ -1,29 +1,7 @@
 <div class="card-header">
   <div class="row align-items-center">
     <div class="col">
-      <% opd = Opd.find_by(kode_unik_opd: @kode_opd) %>
-      <h2 class="fs-5 fw-bold mb-0">List ASN <%= opd.nama_opd %> - <%= opd.kode_unik_opd %></h2>
-    </div>
-    <div class="col-auto text-end">
-      <% if current_user.has_role? :super_admin %>
-      <% bulan = Date.today.month %>
-      <%= link_to sync_pegawai_path(kode_opd: kode_opd, tahun: '2022', bulan: '12'),
-      remote: true,
-      data: { disable_with: 'Memproses....'}, 
-      class:"btn btn-sm btn-primary" do %>
-        <i class="fas fa-sync me-2"></i>
-        Sync User
-      <% end %>
-      <%= link_to sync_struktur_pegawai_path(kode_opd: kode_opd, tahun: '2022', bulan: '12'),
-      remote: true,
-      data: { disable_with: 'Memproses....'}, 
-      class:"btn btn-sm btn-primary" do %>
-        <i class="fas fa-sync me-2"></i>
-        Sync Struktur
-      <% end %>
-        <%= link_to "Tambah User", new_user_path, remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-user"}, class: "btn btn-sm btn-info" %>
-        <%= link_to "Non Aktifkan Semua User", "/nonaktifkan_semua_user/#{opd.kode_opd}", remote: true, method: :post, class: "btn btn-sm btn-danger" %>
-      <% end %>
+      <h2 class="fs-5 fw-bold mb-0">List ASN <%= @nama_opd %></h2>
     </div>
   </div>
 </div>
@@ -40,7 +18,7 @@
         </tr>
       </thead>
       <tbody>
-        <% users.each.with_index(1) do |user, i| %>
+        <% @users.each.with_index(1) do |user, i| %>
           <% the_dom = "#{dom_id(user)}-roles" %>
           <tr>
             <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>

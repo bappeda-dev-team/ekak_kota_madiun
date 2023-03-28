@@ -9,11 +9,46 @@
   <li class="breadcrumb-item active" aria-current="page">Laporan Renstra</li>
 <% end %>
 <% content_for :view_utama do %>
-  <div class="card border-0 shadow" id="laporan_renstra" data-filter-render-target="results">
     <% if cookies[:tahun] && cookies[:opd] %>
-      <%= laporan_renstra %>
+      <div class="card border-0 shadow" id="user_filter" data-controller="page-ajax"
+             data-page-ajax-opd-value="<%= cookies[:opd] %>"
+             data-page-ajax-url-value="<%= filter_laporan_renstra_path %>"
+             data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >
+        <div data-page-ajax-target="results">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2 class="fs-5 fw-bold mb-0">Laporan Renstra</h2>
+            </div>
+          </div>
+        </div>
+          <div class="loader text-center">
+            <div class="lds-roller">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <p>memuat data..</p>
+          </div>
+        </div>
+      </div>
     <% else %>
-      <%= render 'shared/card_content', title: 'Laporan Renstra' %>
+      <div class="card border-0 shadow" id="user_filter">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2 class="fs-5 fw-bold mb-0">Laporan Renstra</h2>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="alert alert-info">Pilih Tahun dan OPD</p>
+        </div>
+      </div>
     <% end %>
-  </div>
 <% end %>
