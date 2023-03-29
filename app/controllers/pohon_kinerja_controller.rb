@@ -36,8 +36,10 @@ class PohonKinerjaController < ApplicationController
     opd_id = params[:pohon_kinerja_id]
     @opd = Opd.find(opd_id)
     @pohons = @opd.pohons
-    @strategis = @opd.strategis.where(role: 'eselon_2')
+    @kotak_usulan = @opd.usulans
+    @isu_strategis_pohon = @opd.isu_strategis_pohon
     @filename = "Pohon Kinerja #{@opd.nama_opd}.xlsx"
+    @isu_strategis_kota = IsuStrategisKotum.where(tahun: "2023")
     render xlsx: "excel", filename: @filename, disposition: "inline"
   end
 end
