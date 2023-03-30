@@ -1,0 +1,78 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+project_heading = s.add_style sz: 12, b: true
+
+style_nama_kota = s.add_style(border: { style: :thin, color: '00000000', edges: %i[left right bottom top] },
+                              outline: true)
+
+style_isu_strategis_kota = s.add_style(bg_color: 'EFBFC7',
+                                       border: { style: :thin, color: '00000000', edges: %i[left right bottom top] },
+                                       outline: true, alignment: { horizontal: :left }, b: true)
+
+style_header_strategi_kota = s.add_style(bg_color: 'E2F8D6',
+                                         border: { style: :thin, color: '00000000', edges: %i[left right bottom top] },
+                                         outline: true, alignment: { horizontal: :left }, b: true)
+
+style_strategi_kota = s.add_style(bg_color: 'E2F8D6',
+                                  border: { style: :thin, color: '00000000', edges: %i[left right bottom top] },
+                                  outline: true, alignment: { horizontal: :left })
+
+style_strategi_pohon = s.add_style(bg_color: 'D6EAF8',
+                                   border: { style: :thin, color: '00000000', edges: %i[left right bottom top] },
+                                   outline: true, alignment: { horizontal: :left })
+
+style_strategi_pohon_kosong = s.add_style(bg_color: 'EEF33A',
+                                          border: { style: :thin, color: '00000000', edges: %i[left right bottom top] },
+                                          outline: true)
+
+border_pohon_title = s.add_style(border: { style: :thin, color: '00000000', edges: %i[top left right bottom] }, outline: true,
+                                 alignment: { vertical: :center }, b: true)
+# isu strategis opd / kota
+if @isu_strategis_kota.any?
+  wb.add_worksheet(name: "PohonKinerja") do |sheet| # rubocop:disable Metrics/BlockLength
+    sheet.add_row ["POHON KINERJA KOTA MADIUN"], style: project_heading
+    sheet.add_row [nil]
+    sheet.add_row ["Kota Madiun"], style: style_nama_kota
+    # ISU STRATEGIS
+    @isu_strategis_kota.each do |isu_kota| # rubocop:disable Metrics/BlockLength
+      sheet.add_row ["Isu Strategis", isu_kota.isu_strategis], offset: 1, style: style_isu_strategis_kota
+      sheet.add_row [nil]
+      # STRATEGI KOTA
+      isu_kota.strategi_kotums.each do |kotum| # rubocop:disable Metrics/BlockLength
+        sheet.add_row ["Strategi", kotum.strategi], offset: 2, style: style_header_strategi_kota
+        indikator = kotum.indikator_tahun(@tahun)
+        # INDIKATOR STRATEGI KOTA
+        if indikator.present?
+          sheet.add_row ["- Indikator", indikator.indikator], offset: 2, style: style_strategi_kota
+          sheet.add_row ["- Target", indikator.target], offset: 2, style: style_strategi_kota
+          sheet.add_row ["- Satuan", indikator.satuan], offset: 2, style: style_strategi_kota
+          sheet.add_row [nil]
+        else
+          sheet.add_row ["INDIKATOR MASIH KOSONG", ""], offset: 3, style: style_strategi_pohon_kosong
+        end
+        # STRATEGI OPD
+        kotum.pohons.each do |opd_pohon|
+          sheet.add_row [opd_pohon.opd.nama_opd, ""], offset: 3, style: border_pohon_title
+          if opd_pohon.opd.strategi_kepala_by_strategi_kota_untuk_excel(opd_pohon.pohonable_id).any?
+            opd_pohon.opd.strategi_kepala_by_strategi_kota_untuk_excel(opd_pohon.pohonable_id).each.with_index(1) do |strategi, no|
+              sheet.add_row ["#{no}. Strategi", strategi.strategi], offset: 3, style: style_strategi_pohon
+              # INDIKATOR STRATEGI OPD
+              strategi.indikators.each do |indikator_strategi|
+                sheet.add_row ["- Indikator", indikator_strategi.indikator_kinerja], offset: 3,
+                                                                                     style: style_strategi_pohon
+                sheet.add_row ["- Target", indikator_strategi.target], offset: 3, style: style_strategi_pohon
+                sheet.add_row ["- Satuan", indikator_strategi.satuan], offset: 3, style: style_strategi_pohon
+              end
+              sheet.add_row [nil]
+            end
+          else
+            sheet.add_row ["KOSONG", ""], offset: 3, style: style_strategi_pohon_kosong
+          end
+          sheet.add_row [nil]
+        end
+      end
+    end
+    sheet.sheet_view.zoom_scale = 60
+  end
+end

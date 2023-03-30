@@ -1,0 +1,45 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+red_border_title = s.add_style(border: { style: :thin, color: '00000000', edges: %i[top left right] }, outline: true,
+                               alignment: { vertical: :center })
+red_border = s.add_style(border: { style: :thin, color: '00000000', edges: %i[left right bottom] }, outline: true)
+red_border_alpha = s.add_style(border: { style: :thin, color: 'FF0000', edges: %i[left right bottom top] }, outline: true)
+
+# isu strategis opd / kota
+if @isu_strategis_kota.any?
+  project_heading = s.add_style sz: 12, b: true
+  wb.add_worksheet(name: "PohonKinerja") do |sheet|
+    sheet.add_row ["POHON KINERJA KOTA MADIUN"], style: project_heading
+    sheet.add_row [nil]
+    # kotak satu
+    sheet.add_row ["Kota"], style: red_border_title
+    sheet.add_row ["Kota Madiun"], style: red_border
+    # spacer 2
+    @isu_strategis_kota.each do |isu_kota|
+      sheet.add_row ["Isu Strategis"], offset: 1, style: red_border_title
+      sheet.add_row [isu_kota.isu_strategis], offset: 1, style: red_border
+      # spacer 2
+      isu_kota.strategi_kotums.each do |kotum|
+        sheet.add_row ["Strategi"], offset: 2, style: red_border_title
+        sheet.add_row [kotum.strategi], offset: 2, style: red_border
+        # spacer 2
+        kotum.pohons.each do |opd_pohon|
+          # kotak dua
+          sheet.add_row [opd_pohon.opd.nama_opd], offset: 3, style: red_border_title
+          if opd_pohon.opd.strategi_kepala_by_strategi_kota_untuk_excel(opd_pohon.pohonable_id).any?
+            opd_pohon.opd.strategi_kepala_by_strategi_kota_untuk_excel(opd_pohon.pohonable_id).each do |strategi|
+              sheet.add_row [strategi], offset: 3, style: red_border_alpha
+            end
+          else
+            sheet.add_row ["KOSONG"], offset: 3, style: red_border_alpha
+          end
+          sheet.add_row [nil]
+        end
+      end
+      # kotak dua
+    end
+    # width
+    sheet.sheet_view.zoom_scale = 60
+  end
+end

@@ -151,6 +151,10 @@ class Opd < ApplicationRecord
     end
   end
 
+  def strategi_kepala_by_strategi_kota_untuk_excel(pohon_id)
+    strategis.where(pohon_id: pohon_id, role: "eselon_2")
+  end
+
   def sasaran_opds_pohon
     strategis.where(role: 'eselon_2').map(&:sasaran)
   end
