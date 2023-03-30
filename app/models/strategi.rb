@@ -83,6 +83,18 @@ class Strategi < ApplicationRecord
     strategi.nil? ? "dibagikan ke #{nip_asn}" : "#{user&.nama} - #{strategi} - Indikator #{indikator_sasarans.pluck(:indikator_kinerja)}"
   end
 
+  def indikators
+    indikator_sasarans
+  end
+
+  def indikator_strategi
+    indikator_sasarans.pluck(:indikator_kinerja)
+  end
+
+  def target_satuan_strategi
+    indikator_sasarans.pluck(:target, :satuan)
+  end
+
   def nama_pemilik
     user&.nama
   end

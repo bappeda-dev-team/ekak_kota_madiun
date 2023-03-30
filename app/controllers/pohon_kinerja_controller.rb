@@ -42,4 +42,11 @@ class PohonKinerjaController < ApplicationController
     @isu_strategis_kota = IsuStrategisKotum.where(tahun: "2023")
     render xlsx: "excel", filename: @filename, disposition: "inline"
   end
+
+  def excel_kota
+    @tahun = cookies[:tahun] || '2023'
+    @filename = "Pohon Kinerja Kota.xlsx"
+    @isu_strategis_kota = IsuStrategisKotum.where(tahun: @tahun)
+    render xlsx: "pohon_kota_excel", filename: @filename, disposition: "inline"
+  end
 end

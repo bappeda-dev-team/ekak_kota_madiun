@@ -29,4 +29,8 @@ class IndikatorSasaran < ApplicationRecord
   def sasaran_kabid
     Sasaran.where(sasaran_atasan_id: id_indikator)
   end
+
+  def target_dan_satuan
+    "#{target} #{satuan}"
+  end
 end

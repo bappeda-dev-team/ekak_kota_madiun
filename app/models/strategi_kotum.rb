@@ -14,6 +14,7 @@ class StrategiKotum < ApplicationRecord
   default_scope { order(:id) }
   belongs_to :isu_strategis_kotum, foreign_key: 'isu_strategis_kota_id', primary_key: 'id'
   belongs_to :sasaran_kotum, foreign_key: 'sasaran_kota_id', primary_key: 'kode_sasaran', optional: true
+
   has_many :usulans, as: :usulanable, dependent: :destroy
   has_many :pohons, as: :pohonable, dependent: :destroy
 
@@ -42,5 +43,13 @@ class StrategiKotum < ApplicationRecord
 
   def sasaran_kotum_sasaran
     sasaran_kotum.sasaran
+  end
+
+  def indikators
+    sasaran_kotum.indikator_sasarans
+  end
+
+  def indikator_tahun(tahun)
+    sasaran_kotum.indikator_sasarans.where(tahun: tahun).order(id: :desc).first
   end
 end
