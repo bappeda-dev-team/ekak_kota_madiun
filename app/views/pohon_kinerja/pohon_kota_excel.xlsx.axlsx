@@ -42,6 +42,7 @@ if @isu_strategis_kota.any?
       isu_kota.strategi_kotums.each do |kotum| # rubocop:disable Metrics/BlockLength
         sheet.add_row ["Strategi", kotum.strategi], offset: 2, style: style_header_strategi_kota
         indikator = kotum.indikator_tahun(@tahun)
+        # INDIKATOR STRATEGI KOTA
         if indikator.present?
           sheet.add_row ["- Indikator", indikator.indikator], offset: 2, style: style_strategi_kota
           sheet.add_row ["- Target", indikator.target], offset: 2, style: style_strategi_kota
@@ -52,10 +53,11 @@ if @isu_strategis_kota.any?
         end
         # STRATEGI OPD
         kotum.pohons.each do |opd_pohon|
-          sheet.add_row [opd_pohon.opd.nama_opd, ""], offset: 3, style: border_pohon_title # add outline border
+          sheet.add_row [opd_pohon.opd.nama_opd, ""], offset: 3, style: border_pohon_title
           if opd_pohon.opd.strategi_kepala_by_strategi_kota_untuk_excel(opd_pohon.pohonable_id).any?
             opd_pohon.opd.strategi_kepala_by_strategi_kota_untuk_excel(opd_pohon.pohonable_id).each.with_index(1) do |strategi, no|
               sheet.add_row ["#{no}. Strategi", strategi.strategi], offset: 3, style: style_strategi_pohon
+              # INDIKATOR STRATEGI OPD
               strategi.indikators.each do |indikator_strategi|
                 sheet.add_row ["- Indikator", indikator_strategi.indikator_kinerja], offset: 3,
                                                                                      style: style_strategi_pohon

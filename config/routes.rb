@@ -26,8 +26,8 @@ Rails.application.routes.draw do
       post :admin_filter
       get :print
       get :excel_kota
+      get :excel_opd
     end
-    get :excel
   end
   resources :strategi_opds
   resources :strategi_kota do

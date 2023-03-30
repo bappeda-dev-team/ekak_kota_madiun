@@ -32,20 +32,22 @@ class PohonKinerjaController < ApplicationController
     @strategis = @opd.strategis.where(role: 'eselon_2')
   end
 
-  def excel
-    opd_id = params[:pohon_kinerja_id]
-    @opd = Opd.find(opd_id)
+  def excel_opd
+    @tahun = cookies[:tahun] || '2023'
+    kode_opd = cookies[:opd]
+    @timestamp = Time.now.to_formatted_s(:number)
+    @opd = Opd.find_by(kode_unik_opd: kode_opd)
     @pohons = @opd.pohons
     @kotak_usulan = @opd.usulans
     @isu_strategis_pohon = @opd.isu_strategis_pohon
-    @filename = "Pohon Kinerja #{@opd.nama_opd}.xlsx"
-    @isu_strategis_kota = IsuStrategisKotum.where(tahun: "2023")
-    render xlsx: "excel", filename: @filename, disposition: "inline"
+    @filename = "Pohon Kinerja #{@opd.nama_opd} #{@tahun} - #{@timestamp}.xlsx"
+    render xlsx: "pohon_opd_excel", filename: @filename, disposition: "inline"
   end
 
   def excel_kota
     @tahun = cookies[:tahun] || '2023'
-    @filename = "Pohon Kinerja Kota.xlsx"
+    @timestamp = Time.now.to_formatted_s(:number)
+    @filename = "Pohon Kinerja Kota #{@tahun} - #{@timestamp}.xlsx"
     @isu_strategis_kota = IsuStrategisKotum.where(tahun: @tahun)
     render xlsx: "pohon_kota_excel", filename: @filename, disposition: "inline"
   end
