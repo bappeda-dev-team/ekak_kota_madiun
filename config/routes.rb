@@ -25,6 +25,8 @@ Rails.application.routes.draw do
       get :asn
       post :admin_filter
       get :print
+      get :excel_kota
+      get :excel_opd
     end
   end
   resources :strategi_opds
@@ -45,7 +47,11 @@ Rails.application.routes.draw do
       get :ganti_nip
     end
   end
-  resources :isu_strategis_opds
+  resources :isu_strategis_opds do
+    collection do
+      post :admin_filter
+    end
+  end
   resources :isu_strategis_kota do
     member do
       get :list_strategi_kota
@@ -286,7 +292,7 @@ Rails.application.routes.draw do
     post :daftar_resiko
     post :isu_strategis_permasalahan
     post :laporan_renstra
-    get :tahun_sasaran
+    get :tahun_dan_opd
     post :renstra_master
     # post :tujuan_opd
     post :sasaran_opd
@@ -295,6 +301,7 @@ Rails.application.routes.draw do
     post :rankir_renja
     post :penetapan_renja
     post :pohon_kinerja_opd
+    post :kak_dashboard
   end
 
   namespace :api do
@@ -481,7 +488,7 @@ Rails.application.routes.draw do
   post "/filter_kegiatan", to: "filter#filter_kegiatan"
   post "/filter_subkegiatan", to: "filter#filter_subkegiatan"
   post "/filter_kak", to: "filter#filter_kak"
-  post "/filter_kak_dashboard", to: "filter#filter_kak_dashboard"
+  # post "/filter_kak_dashboard", to: "filter#filter_kak_dashboard"
   post "/filter_rab", to: "filter#filter_rab"
   post "/filter_rasionalisasi", to: "filter#filter_rasionalisasi"
   post "/filter_gender", to: "filter#filter_gender"

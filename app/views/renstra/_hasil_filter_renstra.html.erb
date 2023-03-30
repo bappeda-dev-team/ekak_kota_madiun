@@ -8,7 +8,7 @@
   </div>
   <div class="card-body">
     <%# tabel_tujuan_sasaran_opd %>
-  <%# <%= render 'opds/tabel_tujuan_sasaran_opd' %1> %>
+  <%= render 'opds/tabel_tujuan_sasaran_opd' %>
     <div class="table-responsive">
       <table class="table align-items-center" data-controller='form-modal' data-action='ajax-update@window->form-modal#updateTargetValue'>
         <% @program_kegiatans.each.with_index(1) do |program, nomor| %>

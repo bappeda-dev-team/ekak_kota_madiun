@@ -13,38 +13,51 @@
         <li class="breadcrumb-item active" aria-current="page"><%= link_to "Isu Strategis OPD", isu_strategis_opds_path %></li>
       </ol>
     </nav>
-    <div class="card border-0 shadow">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Isu Strategis OPD <%= @tahun %></h2>
+    <% if cookies[:tahun] && cookies[:opd] %>
+      <% if current_user.has_role?(:super_admin) %>
+      <div class="card border-0 shadow" id="user_filter" data-controller="page-ajax"
+             data-page-ajax-opd-value="<%= cookies[:opd] %>"
+             data-page-ajax-url-value="<%= admin_filter_isu_strategis_opds_path %>"
+             data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >
+        <div data-page-ajax-target="results">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2 class="fs-5 fw-bold mb-0">Isu Strategis OPD</h2>
+            </div>
           </div>
-          <%= render "shared/get_tahun_filter", action_url: isu_strategis_opds_path %>
         </div>
-        <div class="col mt-3">
-          <%= link_to new_isu_strategis_opd_path, class: 'btn btn-sm btn-info text-white' do %>
-            <span>Buat Isu Strategis OPD</span>
-          <% end %>
+          <div class="loader text-center">
+            <div class="lds-roller">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <p>memuat data..</p>
+          </div>
         </div>
       </div>
-      <div class="table-responsive">
-        <table class="table align-items-center">
-          <thead class="thead-light">
-            <tr>
-              <th class="border-bottom" scope="col">No.</th>
-              <th class="border-bottom text-center" scope="col">Aksi</th>
-              <th class="border-bottom" scope="col">Isu Strategis</th>
-              <th class="border-bottom" scope="col">Tahun</th>
-              <th class="border-bottom text-center" scope="col">OPD</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @isu_strategis_opds.order(:tahun).each.with_index(1) do |isu_strategis_opd, i| %>
-              <%= render 'row_isu_strategis_opd', isu_strategis_opd: isu_strategis_opd, i: i %>
-            <% end %>
-          </tbody>
-        </table>
+      <% else %>
+        <%= render 'isu_strategis_opds/isu_strategis_opd' %>
+      <% end %>
+    <% else %>
+      <div class="card border-0 shadow" id="user_filter">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2 class="fs-5 fw-bold mb-0">Isu Strategis OPD</h2>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="alert alert-info">Pilih Tahun dan OPD</p>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>

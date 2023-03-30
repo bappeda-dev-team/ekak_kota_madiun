@@ -22,6 +22,10 @@
       <div class="card-body">
         <div id="pokin" class="pohon-kinerja"></div>
       </div>
+      <%= link_to excel_kota_pohon_kinerja_index_path(format: :xlsx), class: "m-3 btn btn-outline-info w-100" do %>
+        <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+        <span>Cetak Pohon Kinerja</span>
+      <% end %>
     </div>
   </div>
 </div>

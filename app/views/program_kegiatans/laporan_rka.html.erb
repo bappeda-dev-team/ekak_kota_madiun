@@ -10,25 +10,53 @@
         <li class="breadcrumb-item active" aria-current="page">Rincian Belanja</li>
       </ol>
     </nav>
-    <% if current_user.has_role? :admin %>
-      <%= render 'shared/filter_with_tahun_card', filter_url: '/filter_rab', filter_file: 'hasil_filter_rab' %>
-    <% end %>
-    <div class="card border-0 shadow" id="user_filter">
+    <% if cookies[:tahun] && cookies[:opd] %>
       <% unless current_user.has_role? :admin %>
-        <div class="card-header">
-          <div class="row align-items-center">
-            <div class="col">
-              <h2 class="fs-5 fw-bold mb-0">Laporan RKA</h2>
+        <div class="card border-0 shadow" id="user_filter">
+          <%= render 'laporan_rka_row_user', program_kegiatans: @program_kegiatans, tahun: cookies[:tahun] %>
+        </div>
+      <% else %>
+        <div class="card border-0 shadow" id="user_filter" data-controller="page-ajax"
+             data-page-ajax-opd-value="<%= cookies[:opd] %>"
+             data-page-ajax-url-value="/filter_rab"
+             data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >
+          <div data-page-ajax-target="results">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h2 class="fs-5 fw-bold mb-0">Rincian Belanja</h2>
+                </div>
+              </div>
             </div>
-            <div class="col text-end">
-              <span><%= current_user.nama %></span>
-              |
-              <span><%= current_user.nik %></span>
+            <div class="loader text-center">
+              <div class="lds-roller">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+              <p>memuat data..</p>
             </div>
           </div>
         </div>
-        <%= render 'laporan_rka_row_user', program_kegiatans: @program_kegiatans, tahun: cookies[:tahun_sasaran] %>
       <% end %>
-    </div>
+    <% else %>
+      <div class="card border-0 shadow" id="user_filter">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2 class="fs-5 fw-bold mb-0">Rincian Belanja</h2>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="alert alert-info">Pilih Tahun dan OPD</p>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

@@ -1,5 +1,6 @@
 class FilterController < ApplicationController
   include Renstra::OpdKhusus
+  skip_before_action :verify_authenticity_token
 
   before_action :filter_params, except: %i[filter_tematiks]
   before_action :nama_opd, only: %i[filter_gender filter_struktur]
@@ -21,17 +22,19 @@ class FilterController < ApplicationController
   # FIXME: jika tidak ada bidang pada opd table, user tidak akan tampil
   def filter_user
     opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    nama_opd = opd.nama_opd
+    @nama_opd = opd.nama_opd
+    @tahun = tahun_asli
     # @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd })
     @users = opd.users
     # if OPD_TABLE.key?(opd.to_sym)
     #   @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] })
     #                .where(nama_bidang: OPD_TABLE[opd.to_sym])
     # end
-    @filter_file = "hasil_filter" if params[:filter_file].empty?
-    respond_to do |format|
-      format.js { render "users/user_filter" }
-    end
+    # @filter_file = "hasil_filter" if params[:filter_file].empty?
+    render partial: "users/hasil_filter"
+    # respond_to do |format|
+    #   format.js { render "users/user_filter" }
+    # end
   end
 
   # filter subkegiatan
@@ -82,7 +85,7 @@ class FilterController < ApplicationController
     render partial: 'program_kegiatans/hasil_filter_kegiatan'
   end
 
-  def filter_kak_dashboard
+  def kak_dashboard
     kak = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
     @program_kegiatans = kak.laporan_rencana_kinerja
     @total_pagu = kak.total_pagu
@@ -90,10 +93,10 @@ class FilterController < ApplicationController
     #   @program_kegiatans = ProgramKegiatan.joins(:opd).where(opds: { kode_opd: KODE_OPD_TABLE[opd.nama_opd.to_sym] })
     #   @program_kegiatans = @program_kegiatans.where(nama_bidang: OPD_TABLE[opd.nama_opd.to_sym])
     # end
-    @filter_file = "hasil_filter_dashboard"
+    # @filter_file = "hasil_filter_dashboard"
     # @message = @program_kegiatans ? "Berhasil" : "Ada yang salah"
     # @icon = @program_kegiatans ? "success" : "error"
-    render "kaks/kak_filter_dashboard"
+    render partial: "kaks/hasil_filter_dashboard"
   end
 
   def filter_kak
@@ -107,10 +110,12 @@ class FilterController < ApplicationController
     #   @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).asn_aktif
     #   @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])
     # end
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd).id
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @opd_id = opd.id
+    @nama_opd = opd.nama_opd
     @tahun = kak.tahun
-    @filter_file = "hasil_filter" if params[:filter_file].empty?
-    render "kaks/kak_filter"
+    # @filter_file = "hasil_filter" if params[:filter_file].empty?
+    render partial: "kaks/hasil_filter"
   end
 
   def filter_rab
@@ -120,9 +125,12 @@ class FilterController < ApplicationController
     #   @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] }).asn_aktif
     #   @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])
     # end
-    @filter_file = params[:filter_file].empty? ? "hasil_filter_rab" : params[:filter_file]
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd).id
-    render "program_kegiatans/rab_filter"
+    # @filter_file = params[:filter_file].empty? ? "hasil_filter_rab" : params[:filter_file]
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @opd_id = opd.id
+    @nama_opd = opd.nama_opd
+    @tahun = kak.tahun
+    render partial: "program_kegiatans/hasil_filter_rab"
   end
 
   def filter_rasionalisasi
@@ -189,9 +197,10 @@ class FilterController < ApplicationController
                                           .select { |p| p.sasarans.exists? }
       @nama_opd = nama_opd
     end
-    respond_to do |format|
-      format.js { render "usulans/usulan_filter" }
-    end
+    render partial: 'usulans/hasil_filter_usulan', usulans: @usulans
+    # respond_to do |format|
+    #   format.js { render "usulans/usulan_filter" }
+    # end
   end
 
   def filter_user_sasarans
@@ -202,10 +211,11 @@ class FilterController < ApplicationController
       @users = @users.where(nama_bidang: OPD_TABLE[opd.to_sym])
     end
     nama_opd
-    @filter_file = params[:filter_file].empty? ? "hasil_filter" : params[:filter_file]
-    respond_to do |format|
-      format.js { render "sasarans/user_sasarans" }
-    end
+    # @filter_file = params[:filter_file].empty? ? "hasil_filter" : params[:filter_file]
+    render partial: 'sasarans/filter_sasaran'
+    # respond_to do |format|
+    #   format.js { render "sasarans/user_sasarans" }
+    # end
   end
 
   def filter_tematiks
@@ -248,9 +258,10 @@ class FilterController < ApplicationController
       @nama_opd = nama_opd
     end
     @filter_file = params[:filter_file]
-    respond_to do |format|
-      format.js { render "rekaps/rekap_jumlah" }
-    end
+    render partial: 'rekaps/hasil_filter_rekap', kode_opd: @kode_opd, tahun: @tahun
+    # respond_to do |format|
+    #   format.js { render "rekaps/rekap_jumlah" }
+    # end
   end
 
   def daftar_resiko
@@ -271,6 +282,7 @@ class FilterController < ApplicationController
 
   def isu_strategis_permasalahan
     @program_kegiatans = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun).isu_strategis
+    nama_opd
     render partial: "filter/hasil_filter_isu"
   end
 
@@ -333,12 +345,18 @@ class FilterController < ApplicationController
   end
 
   # filter tahun yang diaktifkan, dibawah logo E-KAK
-  def tahun_sasaran
+  def tahun_dan_opd
     @tahun_sasaran = params[:tahun_sasaran]
+    @kode_opd = params[:kode_opd]
     @tahun_sasaran = @tahun_sasaran.match(/murni/) ? @tahun_sasaran[/[^_]\d*/, 0] : @tahun_sasaran
-    cookies[:tahun_sasaran] = @tahun_sasaran
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    cookies[:tahun] = @tahun_sasaran
+    cookies[:opd] = @kode_opd
+    cookies[:nama_opd] = @nama_opd
     render 'shared/_notifier_v2',
-           locals: { message: "Tahun Dipilih: #{@tahun_sasaran}", status_icon: 'success', form_name: 'non-exists' }
+           locals: { message: "Tahun Aktif: #{@tahun_sasaran}, OPD : #{@nama_opd}", status_icon: 'success',
+                     form_name: 'non-exists' }
   end
 
   def renstra_master
@@ -367,6 +385,10 @@ class FilterController < ApplicationController
     @bulan = params[:bulan]
   end
 
+  def tahun_asli
+    @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
+  end
+
   def nama_opd
     @nama_opd ||= Opd.find_by(kode_unik_opd: @kode_opd).nama_opd || "-"
   end
@@ -374,9 +396,9 @@ class FilterController < ApplicationController
   def bidang_checker(models)
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
     @results = models.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd })
-    if OPD_TABLE.key?(opd.to_sym)
-      @results = models.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] })
-      @results = @results.where(nama_bidang: OPD_TABLE[opd.to_sym])
-    end
+    return unless OPD_TABLE.key?(opd.to_sym)
+
+    @results = models.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] })
+    @results = @results.where(nama_bidang: OPD_TABLE[opd.to_sym])
   end
 end

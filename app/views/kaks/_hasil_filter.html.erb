@@ -5,9 +5,7 @@
         <h2 class="fs-5 fw-bold mb-0">Laporan KaK Tahun <%= @tahun %></h2>
       </div>
       <div class="col text-end">
-        <span><%= current_user.nama %></span>
-        |
-        <span><%= current_user.nik %></span>
+        <span><%= @nama_opd %></span>
       </div>
     </div>
   </div>
@@ -91,7 +89,7 @@
       <p>Total Pagu Anggaran : Rp. <%= number_with_delimiter(@total_pagu) %></p>
     </div>
     <div class="card-body">
-      <%= link_to "/cetak_daftar_kak/#{@opd}/#{@tahun}.pdf", class: 'btn btn-tertiary w-100', target: :_blank do %>
+      <%= link_to "/cetak_daftar_kak/#{@opd_id}/#{@tahun}.pdf", class: 'btn btn-tertiary w-100', target: :_blank do %>
         Cetak Daftar KaK Tahun <%= @tahun %>
     <% end %>
     </div>

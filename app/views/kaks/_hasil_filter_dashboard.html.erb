@@ -1,75 +1,57 @@
-<div class="card border-0 shadow" id="user_filter">
-  <div class="card-header">
-    <div class="row align-items-center">
-      <div class="col">
-        <h2 class="fs-5 fw-bold mb-0">Laporan KaK Tahun <%= @tahun %></h2>
-      </div>
-      <div class="col text-end">
-        <span><%= current_user.nama %></span>
-        |
-        <span><%= current_user.nik %></span>
-      </div>
-    </div>
-  </div>
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table border-start border-end align-items-center" id="tabel_laporan_kak">
-        <thead class="thead-light">
-          <tr>
-            <th class="border-bottom border-start border-end" scope="col" rowspan="2">No.</th>
-            <th class="border-bottom text-center border-start border-end" scope="col" rowspan="2">Sub Kegiatan</th>
-            <th class="border-bottom text-center border-start border-end" scope="col" rowspan="2">Indikator</th>
-            <th class="border-bottom text-center border-start border-end" scope="col" colspan="2">Informasi</th>
-            <th class="border-bottom text-center" scope="col" rowspan="2">Aksi</th>
-          </tr>
-          <tr>
-            <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
-            <th class="border-bottom text-center border-start border-end">Pagu Anggaran</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @program_kegiatans.each.with_index(1) do |(program_kegiatan, sasaran_kinerja), nomor| %>
-            <% td_class= 'text-gray-900 border-start border-end align-items-top text-wrap' %>
-            <% rowspan = sasaran_kinerja.size + 1 %>
-            <tr class="border-bottom">
-              <td class="<%= td_class %>" scope="rowgroup" rowspan="<%= rowspan %>" width="50px"><%= nomor %></td>
-              <td class="<%= td_class %>" rowspan="<%= rowspan %>"><%= program_kegiatan.nama_subkegiatan %></td>
-              <td class="<%= td_class %>" rowspan="<%= rowspan %>"><%= program_kegiatan.indikator_subkegiatan %></td>
-              <td class="p-0 m-0 border-start border-end" style="height: 0px !important;" colspan="2"></td>
-              <td class="fw-bolder text-gray-500 text-center" style="vertical-align: middle;" rowspan="<%= rowspan %>">
-                <%= link_to "/acuan_kerja_new/#{program_kegiatan.id}/#{@tahun}",
+<div class="table-responsive">
+  <table class="table border-start border-end align-items-center" id="tabel_laporan_kak">
+    <thead class="thead-light">
+      <tr>
+        <th class="border-bottom border-start border-end" scope="col" rowspan="2">No.</th>
+        <th class="border-bottom text-center border-start border-end" scope="col" rowspan="2">Sub Kegiatan</th>
+        <th class="border-bottom text-center border-start border-end" scope="col" rowspan="2">Indikator</th>
+        <th class="border-bottom text-center border-start border-end" scope="col" colspan="2">Informasi</th>
+        <th class="border-bottom text-center" scope="col" rowspan="2">Aksi</th>
+      </tr>
+      <tr>
+        <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
+        <th class="border-bottom text-center border-start border-end">Pagu Anggaran</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @program_kegiatans.each.with_index(1) do |(program_kegiatan, sasaran_kinerja), nomor| %>
+        <% td_class= 'text-gray-900 border-start border-end align-items-top text-wrap' %>
+        <% rowspan = sasaran_kinerja.size + 1 %>
+        <tr class="border-bottom">
+          <td class="<%= td_class %>" scope="rowgroup" rowspan="<%= rowspan %>" width="50px"><%= nomor %></td>
+          <td class="<%= td_class %>" rowspan="<%= rowspan %>"><%= program_kegiatan.nama_subkegiatan %></td>
+          <td class="<%= td_class %>" rowspan="<%= rowspan %>"><%= program_kegiatan.indikator_subkegiatan %></td>
+          <td class="p-0 m-0 border-start border-end" style="height: 0px !important;" colspan="2"></td>
+          <td class="fw-bolder text-gray-500 text-center" style="vertical-align: middle;" rowspan="<%= rowspan %>">
+            <%= link_to "/acuan_kerja_new/#{program_kegiatan.id}/#{@tahun}",
                       target: "_blank", rel: "nofollow",
                       class:"btn btn-sm btn-info" do %>
-                  <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
-                  Lihat Detail
-                <% end %>
-                <%= link_to "/pdf_kak/#{program_kegiatan.id}/#{@tahun}.pdf", class: "btn btn-sm btn-secondary" do %>
-                  <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
-                  Cetak KaK
-                <% end %>
+              <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
+              Lihat Detail
+            <% end %>
+            <%= link_to "/pdf_kak/#{program_kegiatan.id}/#{@tahun}.pdf", class: "btn btn-sm btn-secondary" do %>
+              <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
+              Cetak KaK
+            <% end %>
+          </td>
+          <% sasaran_kinerja.each do |show_sasaran| %>
+            <tr class="<%= warna_sasaran(show_sasaran.status_sasaran) %>">
+              <td class="text-wrap align-items-top border-start border-end" width="350px">
+                <%= show_sasaran.sasaran_kinerja %>
               </td>
-              <% sasaran_kinerja.each do |show_sasaran| %>
-                <tr class="<%= warna_sasaran(show_sasaran.status_sasaran) %>">
-                  <td class="text-wrap align-items-top border-start border-end" width="350px">
-                    <%= show_sasaran.sasaran_kinerja %>
-                  </td>
-                  <td class="border-start align-items-top border-end border-bottom text-center">
-                    Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar) or 0 %>
-                  </td>
-                </tr>
-              <% end %>
+              <td class="border-start align-items-top border-end border-bottom text-center">
+                Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar) or 0 %>
+              </td>
             </tr>
           <% end %>
-        </tbody>
-        <tfoot>
-          <td colspan="4" class="text-align-left">Total Pagu</td>
-          <%# program kegiatan menghitung semua, yang merah juga ikut kehitung %>
-          <td class="border">Rp. <%= number_with_delimiter(@total_pagu) %></td>
-          <td colspan="1"></td>
-        </tfoot>
-      </table>
-    </div>
-  </div>
-  <div class="card-body">
-  </div>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <td colspan="4" class="text-align-left">Total Pagu</td>
+      <%# program kegiatan menghitung semua, yang merah juga ikut kehitung %>
+      <td class="border">Rp. <%= number_with_delimiter(@total_pagu) %></td>
+      <td colspan="1"></td>
+    </tfoot>
+  </table>
 </div>

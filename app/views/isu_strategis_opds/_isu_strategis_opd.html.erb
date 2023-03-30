@@ -1,0 +1,33 @@
+<div class="card border-0 shadow" id="user_filter">
+<div class="card-header">
+  <div class="row align-items-center">
+    <div class="col">
+      <h2 class="fs-5 fw-bold mb-0">Isu Strategis <%= @nama_opd %> <%= @tahun %></h2>
+    </div>
+    <%= render "shared/get_tahun_filter", action_url: isu_strategis_opds_path %>
+  </div>
+  <div class="col mt-3">
+    <%= link_to new_isu_strategis_opd_path, class: 'btn btn-sm btn-info text-white' do %>
+      <span>Buat Isu Strategis OPD</span>
+    <% end %>
+  </div>
+</div>
+<div class="table-responsive">
+  <table class="table align-items-center">
+    <thead class="thead-light">
+      <tr>
+        <th class="border-bottom" scope="col">No.</th>
+        <th class="border-bottom text-center" scope="col">Aksi</th>
+        <th class="border-bottom" scope="col">Isu Strategis</th>
+        <th class="border-bottom" scope="col">Tahun</th>
+        <th class="border-bottom text-center" scope="col">OPD</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @isu_strategis_opds.order(:tahun).each.with_index(1) do |isu_strategis_opd, i| %>
+        <%= render 'row_isu_strategis_opd', isu_strategis_opd: isu_strategis_opd, i: i %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>
