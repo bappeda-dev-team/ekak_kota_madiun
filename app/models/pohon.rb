@@ -33,4 +33,10 @@ class Pohon < ApplicationRecord
   def strategi_kota_isu_strategis
     "Isu Strategis: #{keterangan} - Strategi Kota: #{pohonable.strategi}"
   end
+
+  def strategi_kepala_by_opd
+    strategis.pluck(:strategi).map.with_index(1) do |ss, no|
+      "#{no}. #{ss}\n"
+    end
+  end
 end
