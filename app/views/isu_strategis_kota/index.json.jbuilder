@@ -19,7 +19,7 @@ json.results do
           json.id pohon.opd.id
           json.name pohon.opd.nama_opd
           json.type "perangkat_daerah"
-          json.description pohon.opd.strategi_kepala_by_strategi_kota(pohon.pohonable_id)
+          json.description pohon.strategi_kepala_by_opd
         end
       end
     end

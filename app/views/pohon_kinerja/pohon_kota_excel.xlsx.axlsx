@@ -54,8 +54,8 @@ if @isu_strategis_kota.any?
         # STRATEGI OPD
         kotum.pohons.each do |opd_pohon|
           sheet.add_row [opd_pohon.opd.nama_opd, ""], offset: 3, style: border_pohon_title
-          if opd_pohon.opd.strategi_kepala_by_strategi_kota_untuk_excel(opd_pohon.pohonable_id).any?
-            opd_pohon.opd.strategi_kepala_by_strategi_kota_untuk_excel(opd_pohon.pohonable_id).each.with_index(1) do |strategi, no|
+          if opd_pohon.strategis.any?
+            opd_pohon.strategis.each.with_index(1) do |strategi, no|
               sheet.add_row ["#{no}. Strategi", strategi.strategi], offset: 3, style: style_strategi_pohon
               # INDIKATOR STRATEGI OPD
               strategi.indikators.each do |indikator_strategi|

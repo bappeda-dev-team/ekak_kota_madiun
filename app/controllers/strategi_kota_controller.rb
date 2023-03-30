@@ -79,16 +79,17 @@ class StrategiKotaController < ApplicationController
 
   def hapus_bagikan_ke_opd
     @strategi_kota = StrategiKotum.find(params[:id])
-    opds = params[:opd]
-    remove_opd = params[:uncheck]
-    unchecked_role = opds.nil? ? remove_opd : (remove_opd - opds)
+    dibagikan = params[:dibagikan]
+    tidak = params[:tidak_dibagikan]
+    hapus_bagikan = dibagikan.nil? ? tidak : (tidak - dibagikan)
 
-    unchecked_role.each do |opd|
-      @strategi_kota.usulans.find_by(opd_id: opd).delete
+    hapus_bagikan.each do |opd_id|
+      @strategi_kota.usulans.find_by(opd_id: opd_id).delete
+      @strategi_kota.pohons.find_by(opd_id: opd_id).delete
     end
 
     respond_to do |format|
-      format.html { redirect_to strategi_kota_path, success: "#{unchecked_role.size} dihapus" }
+      format.html { redirect_to strategi_kota_path, success: "#{hapus_bagikan.size} dihapus" }
     end
   end
 
