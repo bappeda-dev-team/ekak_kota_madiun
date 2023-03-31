@@ -1,0 +1,84 @@
+<div data-controller="pohon-kinerja" class="mb-5">
+<button id="cetak" class="btn btn-tertiary w-100" data-action="click->pohon-kinerja#cetak">DOWNLOAD POHON KINERJA</button>
+</div>
+<div class="tf-tree" style="font-size: 5px;" id='pokin-kota'>
+<h1>POHON KINERJA KOTA MADIUN 2023</h1>
+  <ul>
+    <li>
+      <span class="tf-nc">Kota Madiun</span>
+      <ul>
+        <% @isu_strategis_kota.each do |isu_kota| %>
+          <li>
+            <div class="tf-nc">
+              <p class="text-center"><strong>ISU STRATEGIS</strong></p>
+              <hr/>
+              <span class="text-center"><%= isu_kota.isu_strategis %></span>
+            </div>
+            <ul>
+              <% isu_kota.strategi_kotums.each do |kotum| %>
+                <li>
+                  <div class="tf-nc">
+                    <p class="text-center"><strong>STRATEGI</strong></p>
+                    <hr/>
+                    <span class="text-center"><%= kotum.strategi %></span>
+                    <% ind_kota = kotum.indikator_tahun(@tahun) %>
+                    <% if ind_kota.present? %>
+                      <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
+                    <hr/>
+                    <span><%= ind_kota.indikator %></span>
+                    <p class="bg-info text-white px-2"<strong>TARGET</strong></p>
+                  <hr/>
+                  <span><%= ind_kota.target %></span>
+                  <p class="bg-info text-white px-2"<strong>SATUAN</strong></p>
+                <hr/>
+                <span><%= ind_kota.satuan %></span>
+              <% else %>
+                <p class="text-danger"><strong>INDIKATOR KOSONG</strong></p>
+              <% end %>
+            </div>
+            <ul>
+              <% kotum.pohons.each do |opd_pohon| %>
+                <li>
+                  <div class="tf-nc">
+                    <p class="text-center"><strong><%= opd_pohon.opd.nama_opd %></strong></p>
+                  </div>
+                  <ul>
+                    <% opd_pohon.strategis.each do |strategi| %>
+                      <li>
+                        <% if opd_pohon.strategis.any? %>
+                          <div class="tf-nc">
+                            <p class="text-center"><strong>STRATEGI</strong></p>
+                            <hr/>
+                            <span><%= strategi.strategi %></span>
+                            <% strategi.indikators.each do |ind_strategi| %>
+                              <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
+                            <hr/>
+                            <span><%= ind_strategi.indikator_kinerja %></span>
+                            <p class="bg-info text-white px-2"<strong>TARGET</strong></p>
+                          <hr/>
+                          <span><%= ind_strategi.target %></span>
+                          <p class="bg-info text-white px-2"<strong>SATUAN</strong></p>
+                        <hr/>
+                        <span><%= ind_strategi.satuan %></span>
+                      <% end %>
+                    </div>
+                  <% else %>
+                    <div class="tf-nc bg-danger text-white">
+                      <p><strong>KOSONG</strong></p>
+                    </div>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+      </ul>
+    </li>
+  <% end %>
+</ul>
+</li>
+<% end %>
+</ul>
+</li>
+</ul>
+</div>

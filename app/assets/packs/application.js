@@ -23,9 +23,10 @@ import 'simplebar/dist/simplebar.css';
 // pokin
 import '../javascript/d3/index'
 import '../javascript/d3/pokin_opd'
+import 'treeflex/dist/css/treeflex.css'
+
 // images
 require.context("../images", true);
-
 
 Rails.start();
 Turbolinks.start();

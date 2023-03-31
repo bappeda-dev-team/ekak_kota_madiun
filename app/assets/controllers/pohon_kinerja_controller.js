@@ -8,15 +8,19 @@
 // </div>
 
 import { Controller } from "stimulus"
+import { saveAs } from "file-saver"
+import html2canvas from "html2canvas"
 
 import 'd3-mitch-tree/dist/css/d3-mitch-tree-theme-default.min.css'
+
 export default class extends Controller {
-        static targets = ["pokin", "buttonToggle"]
+        static targets = ["pokin", "buttonToggle", "pokinKota"]
 
         static values = {
                 opd: Number,
                 tahun: Number,
-                render: Boolean
+                render: Boolean,
+                url: String
         }
 
         togglePokin() {
@@ -43,6 +47,10 @@ export default class extends Controller {
 
         pokinTargetConnected() {
                 this.pokinTarget.style.display = 'none'
+        }
+
+        pokinKotaTargetConnected() {
+                this.pokinKotaRender()
         }
 
         mithTreeRender(data, targetEl) {
@@ -86,7 +94,6 @@ export default class extends Controller {
         }
 
         pokinRender() {
-
                 const targetEl = this.pokinTarget
                 const url = `/opds/kotak_usulan.json?kode_opd=${this.opdValue}&tahun=${this.tahunValue}`
                 fetch(url)
@@ -94,6 +101,74 @@ export default class extends Controller {
                         .then((data) => {
                                 const treePlugin = this.mithTreeRender(data, targetEl)
                         })
+        }
+
+        pokinKotaRender() {
+                const targetEl = this.pokinKotaTarget
+                const url = this.urlValue
+                fetch(url)
+                        .then(response => response.json())
+                        .then((data) => {
+                                const treePlugin = this.mithTreeKotaRender(data, targetEl)
+                        })
+        }
+
+        async cetak() {
+                const node = document.getElementById('pokin-kota')
+                await html2canvas(node, {
+                        windowWidth: node.scrollWidth + 50,
+                        windowHeight: node.scrollHeight
+                })
+                        .then(canvas => {
+                                canvas.toBlob((blob) => {
+                                        saveAs(blob, "POHON_KINERJA_KOTA.png")
+                                })
+                        })
+                        .catch(function(error) {
+                                console.error('oops, something went wrong!', error);
+                        });
+        }
+
+        mithTreeKotaRender(data, targetEl) {
+                const mitchTree = require('d3-mitch-tree')
+                const isu_kota = data['results']
+                const treePlugin = new mitchTree.boxedTree()
+                        .setData(isu_kota)
+                        .setElement(targetEl)
+                        .setIdAccessor(function(data) {
+                                return data.id;
+                        })
+                        .setChildrenAccessor(function(data) {
+                                return data.children;
+                        })
+                        .setBodyDisplayTextAccessor(function(data) {
+                                return data.description;
+                        })
+                        .setTitleDisplayTextAccessor(function(data) {
+                                return data.name;
+                        })
+                        .setOrientation('topToBottom')
+                        .setAllowNodeCentering(true)
+                        .setNodeDepthMultiplier(250)
+                        .getNodeSettings()
+                        .setSizingMode('nodeSize')
+                        .setHorizontalSpacing(40)
+                        .setVerticalSpacing(20)
+                        .setBodyBoxWidth(350)
+                        .setBodyBoxHeight(100)
+                        .setBodyBoxPadding({
+                                top: 5,
+                                bottom: 5,
+                                right: 5,
+                                left: 5
+                        })
+                        .back()
+                        .initialize();
+                var nodes = treePlugin.getNodes();
+                nodes.forEach(function(node, index, arr) {
+                        treePlugin.expand(node);
+                });
+                treePlugin.update(treePlugin.getRoot());
         }
 
         expandAllTree(treePlugin) {
