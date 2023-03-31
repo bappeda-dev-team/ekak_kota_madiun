@@ -51,4 +51,26 @@ class PohonKinerjaController < ApplicationController
     @isu_strategis_kota = IsuStrategisKotum.where(tahun: @tahun)
     render xlsx: "pohon_kota_excel", filename: @filename, disposition: "inline"
   end
+
+  def pdf_kota
+    @tahun = cookies[:tahun] || '2023'
+    @timestamp = Time.now.to_formatted_s(:number)
+    @filename = "Pohon Kinerja Kota #{@tahun} - #{@timestamp}"
+    @isu_strategis_kota = IsuStrategisKotum.where(tahun: @tahun)
+    respond_to do |format|
+      format.html { render layout: 'blank' }
+      format.pdf do
+        render pdf: @filename,
+               disposition: 'attachment',
+               template: 'pohon_kinerja/pdf_kota.html.erb',
+               layout: 'blank',
+               show_as_html: params.key?('debug'),
+               orientation: 'Landscape',
+               image_quality: 100,
+               background: true,
+               disable_smart_shrinking: true,
+               title: "POHON KINERJA KOTA"
+      end
+    end
+  end
 end
