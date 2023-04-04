@@ -8,10 +8,11 @@ class AnggaranSshesController < ApplicationController
 
   def anggaran_ssh_search
     param = params[:q] || ''
+    tahun = cookies[:tahun]
     @anggaran_sshes = Search::AllAnggaran.where('uraian_barang ILIKE ?',
                                                 "%#{param}%")
                                          .or(Search::AllAnggaran.where('spesifikasi ILIKE ?', "%#{param}%"))
-                                         .where('tahun = ?', '2023')
+                                         .where('tahun = ?', tahun)
                                          .limit(80).includes(:searchable).collect(&:searchable)
   end
 

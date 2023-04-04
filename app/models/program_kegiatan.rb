@@ -60,12 +60,12 @@ class ProgramKegiatan < ApplicationRecord
   has_many :users, through: :sasarans
 
   has_many :bidang_urusans, lambda { |program_kegiatan|
-                         where(kode_sub_skpd: program_kegiatan.kode_sub_skpd)
-                       }, class_name: "ProgramKegiatan", foreign_key: "kode_urusan", primary_key: "kode_urusan"
+                              where(kode_sub_skpd: program_kegiatan.kode_sub_skpd)
+                            }, class_name: "ProgramKegiatan", foreign_key: "kode_urusan", primary_key: "kode_urusan"
 
   has_many :programs_b, lambda { |program_kegiatan|
-                         where(kode_sub_skpd: program_kegiatan.kode_sub_skpd)
-                       }, class_name: "ProgramKegiatan", foreign_key: "kode_bidang_urusan", primary_key: "kode_bidang_urusan"
+                          where(kode_sub_skpd: program_kegiatan.kode_sub_skpd)
+                        }, class_name: "ProgramKegiatan", foreign_key: "kode_bidang_urusan", primary_key: "kode_bidang_urusan"
 
   has_many :kegiatans, lambda { |program_kegiatan|
                          where(kode_sub_skpd: program_kegiatan.kode_sub_skpd)
@@ -349,5 +349,11 @@ class ProgramKegiatan < ApplicationRecord
 
   def jumlah_sasaran
     sasarans.where(tahun: %w[2022 2023 2024]).size
+  end
+
+  def pagu_sub_rankir_tahun(tahun)
+    ProgramKegiatan.where(kode_sub_giat: kode_sub_giat).map do |sub|
+      sub.sasarans.sudah_lengkap.where(tahun: tahun).map(&:total_anggaran).compact.sum
+    end.sum
   end
 end
