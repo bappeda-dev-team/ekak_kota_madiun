@@ -55,7 +55,7 @@
                 <td class="text-gray-900 text-wrap border" >
                   <% pagu_program = program.kegiatans_opd
                     .reject{ |keg| keg.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan]&.any? { |ii| ii.indikator.blank? } }
-                    .map { |keg| keg.subkegiatans_opd.map(&:my_pagu).compact.sum }.compact.sum %>
+                    .map { |keg| keg.subkegiatans_opd.map{|pp| pp.pagu_sub_rankir_tahun(@tahun) }.compact.sum }.compact.sum %>
                     <%= link_to renja_edit_rankir_path(
                       id: program.id,
                       nama: program.nama_program,
@@ -116,7 +116,7 @@
                 <td class="text-gray-900 text-wrap border"  ><%= no_giat %></td>
                 <td class="text-gray-900 text-wrap border"  ><%= kegiatan.nama_kegiatan %></td>
                 <% unless kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan]&.any? { |ii| ii.indikator.blank? } %>
-                  <% pagu_kegiatan = kegiatan.subkegiatans_opd.map(&:my_pagu).compact.sum %>
+                  <% pagu_kegiatan = kegiatan.subkegiatans_opd.map{|pp| pp.pagu_sub_rankir_tahun(@tahun) }.compact.sum %>
                   <td class="text-gray-900 text-wrap border" >
                     <%= link_to renja_edit_rankir_path(
                       id: kegiatan.id,
@@ -178,7 +178,7 @@
                   <td class="text-gray-900 text-wrap border"  ><%= no_subgiat %></td>
                   <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_subkegiatan %></td>
                   <% if subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan] %>
-                    <% pagu_subkegiatan = subgiat.my_pagu %>
+                    <% pagu_subkegiatan = subgiat.pagu_sub_rankir_tahun(@tahun) %>
                     <td class="text-gray-900 text-wrap border" >
                       <%= link_to renja_edit_rankir_path(
                         id: subgiat.id,

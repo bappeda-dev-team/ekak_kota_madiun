@@ -25,8 +25,7 @@
         <table class="table table-flush datatable" data-datatable>
           <thead>
             <tr>
-              <th>Kode kelompok barang</th>
-              <th>Uraian kelompok barang</th>
+              <th>Tahun</th>
               <th>Kode barang</th>
               <th>Uraian barang</th>
               <th>Spesifikasi</th>
@@ -37,8 +36,7 @@
           <tbody>
             <% @anggaran_hspks.each do |anggaran_hspk| %>
               <tr>
-                <td><%= anggaran_hspk.kode_kelompok_barang %></td>
-                <td><%= anggaran_hspk.uraian_kelompok_barang %></td>
+                <td><%= anggaran_hspk.tahun %></td>
                 <td><%= anggaran_hspk.kode_barang %></td>
                 <td><%= anggaran_hspk.uraian_barang %></td>
                 <td><%= anggaran_hspk.spesifikasi %></td>

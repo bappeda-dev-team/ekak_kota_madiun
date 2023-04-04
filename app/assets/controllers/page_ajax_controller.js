@@ -41,6 +41,7 @@ export default class extends Controller {
                         ).catch(
                                 e => {
                                         this.resultsTarget.innerHTML = "Terjadi Kesalahan"
+                                        console.log(e)
                                 }
 
                         )
