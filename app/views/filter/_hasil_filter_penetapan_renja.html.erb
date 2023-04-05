@@ -2,7 +2,7 @@
   <div class="card-header">
     <div class="row align-items-center">
       <div class="col-8">
-        <h2 class="fs-5 fw-bold mb-0">Penetapan Renja <%= @nama_opd %> <%= "kode_opd: #{@kode_opd}" if current_user.has_role? :super_admin%></h2>
+        <h2 class="fs-5 fw-bold mb-0">Renja Penetapan <%= @nama_opd %> <%= "kode_opd: #{@kode_opd}" if current_user.has_role? :super_admin%> <%= @tahun %></h2>
       </div>
     </div>
   </div>
@@ -27,6 +27,7 @@
               <th class="border" scope="col" rowspan="2">Kode Program</th>
               <th class="border" scope="col" rowspan="2">No.</th>
               <th class="border" scope="col" rowspan="2">Program</th>
+              <th class="border text-center" scope="col" rowspan="2">Aksi</th>
               <th class="border text-center" scope="col" colspan="5"><%= @tahun %></th>
             </tr>
             <tr>
@@ -50,6 +51,36 @@
               <td class="text-gray-900 text-wrap border"  ><%= program.kode_program %></td>
               <td class="text-gray-900 text-wrap border"  ><%= nomor %></td>
               <td class="text-gray-900 text-wrap border"  ><%= program.nama_program %></td>
+              <% unless program.indikator_renstras_new('program', @kode_opd)[:indikator_program].blank? %>
+                <td class="text-gray-900 text-wrap border" >
+                  <% pagu_program = program.kegiatans_opd
+                    .reject{ |keg| keg.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan]&.any? { |ii| ii.indikator.blank? } }
+                    .map { |keg| keg.subkegiatans_opd.map{|pp| pp.pagu_sub_rankir_tahun(@tahun) }.compact.sum }.compact.sum %>
+                    <%= link_to renja_edit_rankir_path(
+                      id: program.id,
+                      nama: program.nama_program,
+                      kode: program.kode_program,
+                      kode_opd: program.kode_sub_skpd,
+                      tahun: @tahun,
+                      indikator: program.indikator_program,
+                      pagu: pagu_program,
+                      jenis: 'Rankir_Renja',
+                      sub_jenis: 'Program'),
+                      remote: true, class: 'btn btn-green',
+                      data: { controller: 'form-modal',
+                              action: 'form-modal#appendForm',
+                              form_modal_location_param: 'form-penetapan-renja-body',
+                              bs_target: '#form-penetapan-renja',
+                              bs_toggle: 'modal' } do %>
+                              Edit
+                            <% end %>
+                </td>
+                <% else %>
+                  <% pagu_program = 0 %>
+                  <td class="text-gray-900 text-wrap border" >
+                    Renstra belum diisi
+                  </td>
+                <% end %>
               <%= render 'row_indikator_penetapan_renja',indikator: program.indikator_penetapan_renja('program', @tahun, @kode_opd, program.kode_program)[:indikator_program], tahun: @tahun, pagu: 0 %>
             </tr>
           </tbody>
@@ -60,6 +91,7 @@
                 <th class="border" scope="col" rowspan="2">Kode Kegiatan</th>
                 <th class="border" scope="col" rowspan="2">No</th>
                 <th class="border" scope="col" rowspan="2">Nama Kegiatan</th>
+                <th class="border text-center" scope="col" rowspan="2">Aksi</th>
                 <th class="border text-center" scope="col" colspan="5"><%= @tahun %></th>
               </tr>
               <tr>
@@ -83,6 +115,34 @@
                 <td class="text-gray-900 text-wrap border"  ><%= kegiatan.kode_giat %></td>
                 <td class="text-gray-900 text-wrap border"  ><%= no_giat %></td>
                 <td class="text-gray-900 text-wrap border"  ><%= kegiatan.nama_kegiatan %></td>
+                <% unless kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan]&.any? { |ii| ii.indikator.blank? } %>
+                  <% pagu_kegiatan = kegiatan.subkegiatans_opd.map{|pp| pp.pagu_sub_rankir_tahun(@tahun) }.compact.sum %>
+                  <td class="text-gray-900 text-wrap border" >
+                    <%= link_to renja_edit_rankir_path(
+                      id: kegiatan.id,
+                      nama: kegiatan.nama_kegiatan,
+                      kode: kegiatan.kode_giat,
+                      kode_opd: kegiatan.kode_sub_skpd,
+                      tahun: @tahun,
+                      indikator: kegiatan.indikator_kinerja,
+                      pagu: pagu_kegiatan,
+                      jenis: 'Rankir_Renja',
+                      sub_jenis: 'Kegiatan'),
+                      remote: true, class: 'btn btn-green',
+                      data: { controller: 'form-modal',
+                              action: 'form-modal#appendForm',
+                              form_modal_location_param: 'form-penetapan-renja-body',
+                              bs_target: '#form-penetapan-renja',
+                              bs_toggle: 'modal' } do %>
+                              Edit
+                            <% end %>
+                  </td>
+                <% else %>
+                  <% pagu_kegiatan = 0 %>
+                  <td class="text-gray-900 text-wrap border">
+                    Renstra belum diisi
+                  </td>
+                <% end %>
               <%= render 'row_indikator_penetapan_renja',indikator: kegiatan.indikator_penetapan_renja('kegiatan', @tahun, @kode_opd, kegiatan.kode_giat)[:indikator_program], tahun: @tahun, pagu: 0 %>
               </tr>
             </tbody>
@@ -92,6 +152,7 @@
                 <th class="border" scope="col" rowspan="2">Kode Subkegiatan</th>
                 <th class="border" scope="col" rowspan="2">No</th>
                 <th class="border" scope="col" rowspan="2">Nama Subkegiatan</th>
+                <th class="border text-center" scope="col" rowspan="2">Aksi</th>
                 <th class="border text-center" scope="col" colspan="5"><%= @tahun %></th>
               </tr>
               <tr class="sub-table-subkegiatans">
@@ -117,6 +178,35 @@
                   <td class="text-gray-900 text-wrap border"  ><%= subgiat.kode_sub_giat %></td>
                   <td class="text-gray-900 text-wrap border"  ><%= no_subgiat %></td>
                   <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_subkegiatan %></td>
+                  <% if subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan] %>
+                    <% pagu_subkegiatan = subgiat.pagu_sub_rankir_tahun(@tahun) %>
+                    <td class="text-gray-900 text-wrap border" >
+                      <%= link_to renja_edit_rankir_path(
+                        id: subgiat.id,
+                        nama: subgiat.nama_kegiatan,
+                        kode: subgiat.kode_giat,
+                        kode_opd: subgiat.kode_sub_skpd,
+                        tahun: @tahun,
+                        indikator: subgiat.indikator_kinerja,
+                        pagu: pagu_subkegiatan,
+                        jenis: 'Rankir_Renja',
+                        sub_jenis: 'Subkegiatan'),
+                        remote: true, class: 'btn btn-green',
+                        data: { controller: 'form-modal',
+                                action: 'form-modal#appendForm',
+                                form_modal_location_param: 'form-penetapan-renja-body',
+                                bs_target: '#form-penetapan-renja',
+                                bs_toggle: 'modal' } do %>
+                                Edit
+                              <% end %>
+                    </td>
+                  <% else %>
+                    <% pagu_subkegiatan = 0 %>
+                    <td class="text-gray-900 text-wrap border">
+                      Renstra belum diisi
+                    </td>
+                  <% end %>
+
               <%= render 'row_indikator_penetapan_renja',indikator: subgiat.indikator_penetapan_renja('subkegiatan', @tahun, @kode_opd, subgiat.kode_sub_giat)[:indikator_program], tahun: @tahun, pagu: 0 %>
                 </tr>
               <% end %>
