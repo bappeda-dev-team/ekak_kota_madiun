@@ -407,6 +407,10 @@ class SasaransController < ApplicationController
     render partial: "subkegiatan_sasaran"
   end
 
+  def anggaran_belanja
+    @sasaran = Sasaran.find(params[:id])
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

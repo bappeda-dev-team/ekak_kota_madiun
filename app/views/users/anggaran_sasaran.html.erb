@@ -1,0 +1,124 @@
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Anggaran</li>
+      </ol>
+    </nav>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Anggaran</h2>
+          </div>
+        </div>
+      <div class="col">
+        <form action="<%= user_sasarans_path(current_user) %>" method="GET" class="row">
+          <input type="hidden" name="filter_query" value="tahun">
+          <div class="col">
+            <select name="status_sasaran" id="status_sasaran" data-controller="dropdown">
+              <option value="">All</option>
+              <option value="dengan_strategi">Dengan Strategi</option>
+              <option value="belum_lengkap">Belum Lengkap</option>
+              <option value="sudah_lengkap">Sudah Lengkap</option>
+            </select>
+          </div>
+          <div class="col-auto">
+            <input type="submit" value="Filter" class="btn btn-primary">
+          </div>
+        </form>
+      </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center">
+          <thead class="thead-light">
+            <tr>
+              <th class="border-bottom" scope="col">No.</th>
+              <th class="text-center border-bottom" scope="col">Status</th>
+              <th class="border-bottom" scope="col">Strategi</th>
+              <th class="border-bottom" scope="col">Sasaran Kinerja Output</th>
+              <th class="border-bottom" scope="col">Tahun</th>
+              <th class="border-bottom" scope="col">Indikator Kinerja</th>
+              <th class="border-bottom" scope="col">Target</th>
+              <th class="border-bottom" scope="col">Satuan</th>
+              <th class="border-bottom text-center" scope="col">Anggaran</th>
+              <th class="border-bottom text-center" scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody id="tempat-row-sasaran">
+            <% @sasarans.each.with_index(1) do |sasaran, i| %>
+              <tr class="<%= warna_sasaran(sasaran.status_sasaran) %>">
+                <td class="fw-bolder" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
+                <td class="fw-bolder" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.status_sasaran.titleize %>
+                <div class="row gy-2">
+                  <% sasaran.status_badge(sasaran.petunjuk_tarik).each do |status, value| %>
+                      <div class="col">
+                        <span class="badge bg-danger p-2"><%= status %></span>
+                      </div>
+                  <% end %>
+                </div>
+                </td>
+                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
+                  <% if sasaran.strategi %>
+                    <%= sasaran.strategi.strategi %>
+                  <% else %>
+                    <div class="row gy-2">
+                      <div class="col">
+                        <span class="badge bg-danger p-2">TIDAK ADA STRATEGI</span>
+                      </div>
+                      <div class="col">
+                        <span class="badge bg-danger p-2">TIDAK DITARIK</span>
+                      </div>
+                    </div>
+                  <% end %>
+                </td>
+                <td class="fw-bolder" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
+                <td class="fw-bolder border" scope="row" style="white-space: initial !important;" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.tahun %></td>
+                <% if sasaran.indikator_sasarans.any? %>
+                <td class="p-0 m-0" colspan="3"></td>
+              <% else %>
+                <td class="fw-bolder border" colspan="3">
+        <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
+                </td>
+              <% end%>
+                <td class="fw-bolder text-gray-500 px-auto border text-center" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
+                  <div class="row gy-2">
+                    <div class="col">
+                      Rp. <%= number_with_delimiter(sasaran.total_anggaran) %>
+                    </div>
+                    <hr/>
+                    <div class="col">
+                      <%= sasaran.program_kegiatan.nama_subkegiatan %>
+                    </div>
+                  </div>
+                </td>
+                <td class="fw-bolder text-gray-500 px-auto" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
+                  <div class="row justify-content-center w-100">
+                    <div class="col">
+                      <%= link_to anggaran_belanja_sasaran_path(sasaran), class: "m-3 btn btn-sm btn-outline-info w-100" do %>
+                        <i class="fas fa-book-open me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="isi usulan"></i>
+                        <span>Edit Anggaran</span>
+                     <% end %>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <% sasaran.indikator_sasarans.each do |indikator| %>
+                <tr class="<%= warna_sasaran(sasaran.status_sasaran) %>">
+                  <td class="fw-bolder border" style="white-space: initial !important;"><%= indikator.indikator_kinerja %></td>
+                  <td class="fw-bolder border" style="white-space: initial !important;"><%= indikator.target %></td>
+                  <td class="fw-bolder border text-center" style="white-space: initial !important;"><%= indikator.satuan %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

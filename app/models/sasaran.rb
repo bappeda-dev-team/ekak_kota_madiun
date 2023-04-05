@@ -86,7 +86,7 @@ class Sasaran < ApplicationRecord
                         }
   scope :total_belum_lengkap, -> { belum_ada_sub.count }
   scope :sudah_lengkap, lambda {
-                          includes(:usulans).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan: nil)
+                          includes(:usulans, :program_kegiatan).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan: nil)
                         }
   scope :total_sudah_lengkap, -> { sudah_lengkap.count }
   scope :digunakan, -> { where(status: 'disetujui') }

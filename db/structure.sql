@@ -1490,6 +1490,45 @@ ALTER SEQUENCE public.opds_id_seq OWNED BY public.opds.id;
 
 
 --
+-- Name: pagu_anggarans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.pagu_anggarans (
+    id bigint NOT NULL,
+    tahun character varying,
+    kode character varying,
+    kode_opd character varying,
+    jenis character varying,
+    sub_jenis character varying,
+    anggaran numeric,
+    kode_belanja character varying,
+    kode_sub_belanja character varying,
+    keterangan character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: pagu_anggarans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.pagu_anggarans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: pagu_anggarans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.pagu_anggarans_id_seq OWNED BY public.pagu_anggarans.id;
+
+
+--
 -- Name: pagus; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3011,6 +3050,13 @@ ALTER TABLE ONLY public.opds ALTER COLUMN id SET DEFAULT nextval('public.opds_id
 
 
 --
+-- Name: pagu_anggarans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pagu_anggarans ALTER COLUMN id SET DEFAULT nextval('public.pagu_anggarans_id_seq'::regclass);
+
+
+--
 -- Name: pagus id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3523,6 +3569,14 @@ ALTER TABLE ONLY public.musrenbangs
 
 ALTER TABLE ONLY public.opds
     ADD CONSTRAINT opds_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: pagu_anggarans pagu_anggarans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pagu_anggarans
+    ADD CONSTRAINT pagu_anggarans_pkey PRIMARY KEY (id);
 
 
 --
@@ -4619,6 +4673,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230309043648'),
 ('20230313033000'),
 ('20230313033100'),
-('20230313043326');
+('20230313043326'),
+('20230405073638');
 
 

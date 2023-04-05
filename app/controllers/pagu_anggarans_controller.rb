@@ -1,0 +1,2 @@
+class PaguAnggaransController < ApplicationController
+end
