@@ -299,8 +299,6 @@ Rails.application.routes.draw do
     post :sasaran_opd
     post :crosscutting_kota
     post :ranwal_renja
-    post :rankir_renja
-    post :penetapan_renja
     post :pohon_kinerja_opd
     post :kak_dashboard
   end
@@ -357,6 +355,8 @@ Rails.application.routes.draw do
     get :edit_rankir
     post :update_rankir
     get :penetapan
+    post :rankir_renja
+    post :penetapan_renja
   end
 
   mount Sidekiq::Web, at: "/sidekiq"
