@@ -72,6 +72,7 @@ class AnggaranHspksController < ApplicationController
   # Only allow a list of trusted parameters through.
   def anggaran_hspk_params
     params.require(:anggaran_hspk).permit(:kode_kelompok_barang, :uraian_kelompok_barang, :kode_barang,
+                                          :tahun, :id_standar_harga,
                                           :uraian_barang, :spesifikasi, :satuan, :harga_satuan)
   end
 end
