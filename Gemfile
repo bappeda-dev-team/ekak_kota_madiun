@@ -53,6 +53,7 @@ group :development do
   gem "chusaku", require: false
   gem 'htmlbeautifier'
   gem 'letter_opener'
+  gem 'rubocop-rails', require: false
   gem 'solargraph'
   gem 'spring'
   gem 'table_print'

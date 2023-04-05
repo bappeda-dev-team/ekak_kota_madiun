@@ -11,40 +11,46 @@
         <li class="breadcrumb-item active" aria-current="page">OPD</li>
       </ol>
     </nav>
-    <% if current_user.has_role?(:super_admin) %>
-      <% flash.each do |type, msg| %>
-        <div class="alert alert-info">
-          <%= msg %>
-        </div>
-      <% end %>
-      <%= render 'shared/filter_card', filter_url: admin_filter_pohon_kinerja_index_path, action: 'ajax:success->filter-render#append' %>
-      <div class="card border-0 shadow" id="kotak_usulan" data-filter-render-target="results">
-        <div class="card-header">
-          <div class="row align-items-center">
-            <div class="col">
-              <h2 class="fs-5 fw-bold mb-0">Pohon Kinerja OPD</h2>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          ...
-        </div>
-      </div>
-    <% else %>
-      <div class="card border-0 shadow" id="kotak_usulan" data-filter-render-target="results">
-        <div class="card-header">
-          <div class="row align-items-center">
-            <div class="col">
-              <h2 class="fs-5 fw-bold mb-0">Pohon Kinerja OPD</h2>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
+    <% if cookies[:tahun] && cookies[:opd] %>
+      <% unless current_user.has_role? :admin %>
+        <div class="card border-0 shadow" id="user_filter">
           <% if @opd.id == 145 %>
             <%= render 'pohon_kinerja/kotak_usulan_asn', role: "eselon_2", role_bawahan: "eselon_2b" %>
           <% else %>
             <%= render 'pohon_kinerja/kotak_usulan_asn', role: "eselon_2", role_bawahan: "eselon_3" %>
           <% end %>
+        </div>
+      <% else %>
+        <div class="card border-0 shadow" id="user_filter" data-controller="page-ajax"
+               data-page-ajax-opd-value="<%= cookies[:opd] %>"
+               data-page-ajax-url-value="<%= admin_filter_pohon_kinerja_index_path %>"
+               data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >
+          <div class="card-body" data-page-ajax-target="results">
+          <div class="card-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h2 class="fs-5 fw-bold mb-0">Pohon Kinerja</h2>
+              </div>
+            </div>
+          </div>
+            <div class="loader text-center">
+              <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+              <p>memuat data..</p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="card border-0 shadow" id="user_filter">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2 class="fs-5 fw-bold mb-0">Pohon Kinerja</h2>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="alert alert-info">Pilih Tahun dan OPD</p>
         </div>
       </div>
     <% end %>

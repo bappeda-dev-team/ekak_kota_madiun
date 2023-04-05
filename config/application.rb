@@ -40,5 +40,8 @@ module PrototypeKak
         routing_specs: false
       )
     end
+    config.generators.after_generate do |files|
+      system("bundle exec rubocop -A --fail-level=E #{files.shelljoin}", exception: true)
+    end
   end
 end
