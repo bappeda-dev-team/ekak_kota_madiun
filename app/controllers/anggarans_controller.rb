@@ -86,7 +86,7 @@ class AnggaransController < ApplicationController
   def edit_penetapan
     @sasaran = Sasaran.find(params[:sasaran_id])
     @tahapan = @sasaran.tahapans.find(params[:tahapan_id])
-    @anggarans = @tahapan.anggarans.includes(%i[perhitungans pajak])
+    @anggarans = @tahapan.grand_parent_anggaran
   end
 
   private

@@ -37,7 +37,14 @@
           </tr>
         </thead>
         <tbody>
-          <% @anggarans.includes([:comments]).order(:created_at).each do |anggaran| %>
+          <% @anggarans.each do |rekening, anggarans| %>
+            <tr class="level-0 bg-gray-700 text-white">
+              <td class="text-white"><%= rekening %></td>
+              <td><%= find_rekening(rekening).jenis_rekening %></td>
+              <td class="uang text-end pe-2">Rp. <%= number_with_delimiter(@tahapan.jumlah_grand_parent(rekening)) %></td>
+              <td></td>
+            </tr>
+            <% anggarans.each do |anggaran| %>
             <tr class="level-0 <%= 'higlighted' if anggaran.comments.any? %>">
               <td><%= rekening_anggaran(anggaran.kode_rek) %> </td>
               <td class="mx-auto">
@@ -54,17 +61,26 @@
                       <%= link_to 'Lihat Komentar',anchor: 'komentar' %>
                     <% end %>
                   <% end %>
-                  <%= link_to "Edit Anggaran", edit_sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: 'btn btn-outline-info me-2 ms-2'  %>
+                  <%= link_to new_pagu_anggaran_path(anggaran: anggaran.jumlah),
+                    remote: true, class: 'btn btn-outline-info',
+                    data: { controller: 'form-modal',
+                            action: 'form-modal#appendForm',
+                            form_modal_location_param: 'form-anggaran-body',
+                            bs_target: '#form-anggaran',
+                            bs_toggle: 'modal' } do %>
+                      <span class="fas fa-pencil"></span>
+                      <span>Edit Anggaran</span>
+                  <% end %>
                   <%= link_to "Hapus Anggaran", sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran), method: :delete, data: {confirm_swal: "Hapus Anggaran #{anggaran.uraian}"}, class: "btn btn-outline-danger me-2"  %>
-                  <%= link_to 'Tambah Rincian', new_anggaran_perhitungan_path(anggaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "btn btn-outline-success me-2" %>
               </td>
             </tr>
+            <% end %>
           <% end %>
         </tbody>
         <tfoot>
           <tr>
             <td colspan="2">Jumlah Anggaran Tahapan :</td>
-            <td class="text-end">Rp. <%= number_with_delimiter(@anggarans.compact.sum(&:jumlah)) %></td>
+            <td class="text-end">Rp. --</td>
             <td></td>
           </tr>
         </tfoot>
@@ -72,9 +88,9 @@
     </div>
   </div>
   <div class="card-body">
-    <%= link_to sasaran_path(@sasaran), class: 'btn btn-info w-100 text-white' do %>
-      <span class="fas fa-arrow-left"></span>
-      <span>Kembali</span>
+    <%= link_to "#", class: 'btn btn-info w-100 text-white' do %>
+      <span class="fas fa-save"></span>
+      <span>Simpan Pagu Penetapan</span>
     <% end %>
   </div>
 </div>
@@ -94,5 +110,6 @@
 <% end %>
 <!-- SECTION - Table Anggaran -->
 <!-- !SECTION - End Table Anggaran -->
+<%= render 'shared/modal_template', modal_name: 'anggaran' %>
 <%= render 'modal_perhitungans' %>
 <%= render 'comments/modal' %>

@@ -69,4 +69,69 @@ RSpec.describe Tahapan, type: :model do
       end
     end
   end
+
+  context 'Tahapan#grand_parent_anggaran' do
+    it 'group anggaran by their grand_parent kode rekening' do
+      tahapan = Tahapan.create(tahapan_kerja: 'tahapan 1', sasaran_id: 1)
+      Anggaran.create!(tahapan_id: tahapan.id, jumlah: 100, uraian: 'Test Uraian', kode_rek: '23')
+      Anggaran.create!(tahapan_id: tahapan.id, jumlah: 200, uraian: 'Test Uraian 2', kode_rek: '23')
+      Anggaran.create!(tahapan_id: tahapan.id, jumlah: 300, uraian: 'Test Uraian 3', kode_rek: '23')
+      Anggaran.create!(tahapan_id: tahapan.id, jumlah: 300, uraian: 'Test Uraian 3', kode_rek: '24')
+      Rekening.create!(
+        id: 23,
+        kode_rekening: "5.1.02",
+        jenis_rekening: "Parent Level 1"
+      )
+      Rekening.create!(
+        id: 24,
+        kode_rekening: "5.1.03",
+        jenis_rekening: "Parent Level 1 lainnya"
+      )
+      grand_parent_anggaran = tahapan.grand_parent_anggaran
+      jumlah_jenis_rekening = grand_parent_anggaran.size
+      jumlah_rekening_pertama = grand_parent_anggaran["5.1.02"].size
+      jumlah_rekening_kedua = grand_parent_anggaran["5.1.03"].size
+      expect(jumlah_jenis_rekening).to eq(2)
+      expect(jumlah_rekening_pertama).to eq(3)
+      expect(jumlah_rekening_kedua).to eq(1)
+    end
+  end
+
+  context 'Tahapan#jumlah_anggaran_grand_parent' do
+    it 'array jumlah from same rekening' do
+      tahapan = Tahapan.create(tahapan_kerja: 'tahapan 1', sasaran_id: 1)
+      anggaran1 = Anggaran.create!(tahapan_id: tahapan.id, uraian: 'Test Uraian', kode_rek: '23')
+      anggaran1.update!(jumlah: 200)
+      anggaran2 = Anggaran.create!(tahapan_id: tahapan.id, uraian: 'Test Uraian 2', kode_rek: '23')
+      anggaran2.update!(jumlah: 200)
+      anggaran3 = Anggaran.create!(tahapan_id: tahapan.id, uraian: 'Test Uraian 3', kode_rek: '23')
+      anggaran3.update!(jumlah: 200)
+      Rekening.create!(
+        id: 23,
+        kode_rekening: "5.1.02",
+        jenis_rekening: "Parent Level 1"
+      )
+      jumlah_anggaran = tahapan.jumlah_anggaran_grand_parent
+      expect(jumlah_anggaran).to eq("5.1.02" => [200, 200, 200])
+    end
+  end
+
+  context 'Tahapan#total_anggaran_grand_parent' do
+    it 'sum array of jumlah_anggaran_grand_parent' do
+      tahapan = Tahapan.create(tahapan_kerja: 'tahapan 1', sasaran_id: 1)
+      anggaran1 = Anggaran.create!(tahapan_id: tahapan.id, uraian: 'Test Uraian', kode_rek: '23')
+      anggaran1.update!(jumlah: 200)
+      anggaran2 = Anggaran.create!(tahapan_id: tahapan.id, uraian: 'Test Uraian 2', kode_rek: '23')
+      anggaran2.update!(jumlah: 200)
+      anggaran3 = Anggaran.create!(tahapan_id: tahapan.id, uraian: 'Test Uraian 3', kode_rek: '23')
+      anggaran3.update!(jumlah: 200)
+      Rekening.create!(
+        id: 23,
+        kode_rekening: "5.1.02",
+        jenis_rekening: "Parent Level 1"
+      )
+      jumlah_anggaran = tahapan.total_anggaran_grand_parent
+      expect(jumlah_anggaran).to eq("5.1.02" => 600)
+    end
+  end
 end

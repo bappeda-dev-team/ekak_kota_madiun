@@ -74,4 +74,26 @@ class Tahapan < ApplicationRecord
   def ada_komentar?
     anggarans.map(&:comments).any?(&:present?)
   end
+
+  def grand_parent_anggaran
+    anggarans.includes([:comments]).order(:created_at).group_by do |angg|
+      angg.rekening.grand_parent.kode_rekening
+    end
+  end
+
+  def jumlah_anggaran_grand_parent
+    grand_parent_anggaran.transform_values do |val|
+      val.map { |ss| ss.jumlah.to_i }
+    end
+  end
+
+  def total_anggaran_grand_parent
+    jumlah_anggaran_grand_parent.transform_values do |val|
+      val.inject(:+)
+    end
+  end
+
+  def jumlah_grand_parent(kode_rekening)
+    grand_parent_anggaran[kode_rekening].sum(&:jumlah)
+  end
 end

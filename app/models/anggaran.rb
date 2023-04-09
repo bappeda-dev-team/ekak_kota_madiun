@@ -30,7 +30,7 @@
 class Anggaran < ApplicationRecord
   # TODO: Tes method penting
   # TODO: Single Responsibility Principle, rekening_level violates this
-  after_initialize :set_default_values
+  after_initialize :set_default_values # handling error after create, default value setted to nil
   # after_update :update_perhitungan
 
   belongs_to :tahapan
@@ -49,7 +49,7 @@ class Anggaran < ApplicationRecord
 
   amoeba do
     enable
-    exclude_association [:childs, :comments, :perhitungans]
+    exclude_association %i[childs comments perhitungans]
   end
 
   def set_default_values
@@ -82,6 +82,10 @@ class Anggaran < ApplicationRecord
     rek_level1 = kode_rek[0..-12]
     rek_level0 = kode_rek[0..-15]
     { 'level_3' => rek_level3, 'level_2' => rek_level2, 'level_1' => rek_level1, 'level_0' => rek_level0 }
+  end
+
+  def rekening
+    Rekening.find_by_id(kode_rek)
   end
 
   def plus_pajak
