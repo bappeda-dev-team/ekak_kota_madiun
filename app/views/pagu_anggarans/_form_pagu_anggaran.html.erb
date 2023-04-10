@@ -1,16 +1,4 @@
 <%= form_with(model: @pagu_anggaran) do |form| %>
-  <% if @pagu_anggaran.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@pagu_anggaran.errors.count, "error") %>, harap isi form berikut:</h2>
-      <ul>
-        <% @pagu_anggaran.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-
       <%= form.hidden_field :id_anggaran, value: @anggaran.id %>
       <%= form.hidden_field :kode_opd, value: @kode_opd %>
       <%= form.hidden_field :kode, value: @kode %>
@@ -19,13 +7,5 @@
       <%= form.hidden_field :jenis, value: @jenis %>
       <%= form.hidden_field :sub_jenis, value: @sub_jenis %>
       <%= form.hidden_field :tahun, value: @tahun %>
-      <div class="field">
-        <%= form.label :anggaran, class: "form-label" %>
-        <%= form.number_field :anggaran, class: "form-control", step: 0.0000001, value: @anggaran.jumlah %>
-      </div>
-
-      <div class="actions">
-        <%= form.submit %>
-      </div>
-
+      <%= form.number_field :anggaran, class: "form-control text-end", step: 0.0000001, value: @jumlah %>
 <% end %>

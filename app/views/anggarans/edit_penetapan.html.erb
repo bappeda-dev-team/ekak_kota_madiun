@@ -45,14 +45,14 @@
               <td></td>
             </tr>
             <% anggarans.each do |anggaran| %>
-            <tr class="level-0 <%= 'higlighted' if anggaran.comments.any? %>">
+            <tr class="level-0 <%= 'higlighted' if anggaran.comments.any? %>" data-controller="editable-table" >
               <td><%= rekening_anggaran(anggaran.kode_rek) %> </td>
               <td class="mx-auto">
                 <div class="row">
                   <div class="text-wrap inline col"><%= anggaran.uraian %></div>
                 </div>
               </td>
-              <td class="uang text-end pe-2">Rp. <%= number_with_delimiter(anggaran.jumlah) %></td>
+              <td class="uang text-end pe-2" data-editable-table-target="row">Rp. <%= number_with_delimiter(anggaran.jumlah) %></td>
               <td class="text-center">
                   <% if current_user.has_any_role? :reviewer, :admin %>
                     <% unless anggaran.comments.any? %>
@@ -71,14 +71,14 @@
                     tahun: @sasaran.tahun
                   ),
                     remote: true, class: 'btn btn-outline-info',
-                    data: { controller: 'form-modal',
-                            action: 'form-modal#appendForm',
-                            form_modal_location_param: 'form-anggaran-body',
-                            bs_target: '#form-anggaran',
-                            bs_toggle: 'modal' } do %>
+                    data: { action: 'editable-table#appendForm',
+                            editable_table_target: 'edit'
+                          } do %>
                       <span class="fas fa-pencil"></span>
                       <span>Edit Anggaran</span>
                   <% end %>
+                  <button class="d-none btn btn-tertiary" data-editable-table-target="simpan" data-action="editable-table#simpan">Simpan</button>
+                  <button class="d-none btn btn-outline-danger" data-editable-table-target="cancel" data-action="editable-table#cancelForm">Batal</button>
                   <%= link_to "Hapus Anggaran", sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran), method: :delete, data: {confirm_swal: "Hapus Anggaran #{anggaran.uraian}"}, class: "btn btn-outline-danger me-2"  %>
               </td>
             </tr>

@@ -38,6 +38,7 @@ class PaguAnggaransController < ApplicationController
 
   def params_from_link
     @anggaran = Anggaran.find_by_id(params[:anggaran])
+    @jumlah = @anggaran.jumlah
     @kode = params[:kode]
     @kode_belanja = params[:kode_belanja]
     @kode_sub_belanja = params[:kode_sub_belanja]
