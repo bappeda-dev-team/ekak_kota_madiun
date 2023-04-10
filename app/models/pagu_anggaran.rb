@@ -16,4 +16,7 @@
 #  updated_at       :datetime         not null
 #
 class PaguAnggaran < ApplicationRecord
+  # kode -> kode_sub_kegiatan
+  # kode_belanja -> kode_parent_belanja
+  # kode_sub_bealanja -> kode_rek_belanja
 end

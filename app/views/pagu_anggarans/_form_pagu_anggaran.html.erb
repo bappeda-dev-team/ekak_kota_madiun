@@ -11,17 +11,21 @@
   <% end %>
 
 
-  <div class="card">
-    <div class="card-body">
+      <%= form.hidden_field :id_anggaran, value: @anggaran.id %>
+      <%= form.hidden_field :kode_opd, value: @kode_opd %>
+      <%= form.hidden_field :kode, value: @kode %>
+      <%= form.hidden_field :kode_belanja, value: @kode_belanja %>
+      <%= form.hidden_field :kode_sub_belanja, value: @kode_sub_belanja %>
+      <%= form.hidden_field :jenis, value: @jenis %>
+      <%= form.hidden_field :sub_jenis, value: @sub_jenis %>
+      <%= form.hidden_field :tahun, value: @tahun %>
       <div class="field">
         <%= form.label :anggaran, class: "form-label" %>
-        <%= form.number_field :anggaran, class: "form-control", step: 0.0000001, value: @anggaran %>
+        <%= form.number_field :anggaran, class: "form-control", step: 0.0000001, value: @anggaran.jumlah %>
       </div>
 
       <div class="actions">
         <%= form.submit %>
       </div>
 
-    </div>
-  </div>
 <% end %>

@@ -61,7 +61,15 @@
                       <%= link_to 'Lihat Komentar',anchor: 'komentar' %>
                     <% end %>
                   <% end %>
-                  <%= link_to new_pagu_anggaran_path(anggaran: anggaran.jumlah),
+                  <%= link_to new_pagu_anggaran_path(
+                    anggaran: anggaran.id,
+                    kode: @sasaran.program_kegiatan.kode_sub_giat,
+                    kode_belanja: rekening,
+                    kode_sub_belanja: rekening_anggaran(anggaran.kode_rek),
+                    jenis: "Penetapan",
+                    sub_jenis: "SubBelanja",
+                    tahun: @sasaran.tahun
+                  ),
                     remote: true, class: 'btn btn-outline-info',
                     data: { controller: 'form-modal',
                             action: 'form-modal#appendForm',
