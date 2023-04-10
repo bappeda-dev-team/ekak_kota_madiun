@@ -157,7 +157,7 @@
                 <td class="text-gray-900 text-wrap border"  ><%= no_subgiat %></td>
                 <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_subkegiatan %></td>
                 <% if subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan] %>
-                  <% pagu_subkegiatan = subgiat.pagu_sub_rankir_tahun(@tahun) %>
+                  <% pagu_subkegiatan = subgiat.pagu_sub_penetapan_tahun(@tahun) %>
                   <td class="text-gray-900 text-wrap border" >
                     <%= link_to renja_edit_rankir_path(
                         id: subgiat.id,
@@ -184,7 +184,7 @@
                     Renstra belum diisi
                   </td>
                 <% end %>
-                <%= render 'row_indikator_penetapan',indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan], tahun: @tahun, pagu: 0 %>
+                <%= render 'row_indikator_penetapan',indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan], tahun: @tahun, pagu: pagu_subkegiatan %>
               </tr>
             <% end %>
           </tbody>

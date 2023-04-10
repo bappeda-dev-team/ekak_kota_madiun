@@ -370,4 +370,10 @@ class ProgramKegiatan < ApplicationRecord
       sub.sasarans.sudah_lengkap.where(tahun: tahun).map(&:total_anggaran).compact.sum
     end.sum
   end
+
+  def pagu_sub_penetapan_tahun(tahun)
+    ProgramKegiatan.where(kode_sub_giat: kode_sub_giat).map do |sub|
+      sub.sasarans.sudah_lengkap.where(tahun: tahun).map(&:total_anggaran_penetapan).compact.sum
+    end.sum
+  end
 end

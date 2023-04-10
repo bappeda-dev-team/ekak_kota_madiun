@@ -40,6 +40,7 @@ class Anggaran < ApplicationRecord
   belongs_to :parent, class_name: 'Anggaran', optional: true
   belongs_to :pajak, optional: true
   has_many :comments, dependent: :destroy
+  has_one :pagu_anggaran, class_name: 'PaguAnggaran', foreign_key: 'kode', primary_key: 'id'
 
   scope :tanpa_pajak, -> { where(pajak_id: nil) }
   scope :ujung_anggaran, -> { where(level: 0) }
@@ -106,5 +107,9 @@ class Anggaran < ApplicationRecord
 
   def sync_total_perhitungan
     perhitungans.each(&:sync_total)
+  end
+
+  def anggaran_penetapan
+    pagu_anggaran&.anggaran || 0.0
   end
 end

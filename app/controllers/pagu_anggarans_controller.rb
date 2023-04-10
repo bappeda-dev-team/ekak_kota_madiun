@@ -24,10 +24,11 @@ class PaguAnggaransController < ApplicationController
       if @pagu_anggaran.save
         format.html { redirect_to edit_penetapan_sasaran_tahapan_anggarans_path(@sasaran, @tahapan) }
       else
-        format.html { redirect_to edit_penetapan_sasaran_tahapan_anggarans_path(@sasaran, @tahapan), status: :unprocessable_entity}
+        format.html do
+          redirect_to edit_penetapan_sasaran_tahapan_anggarans_path(@sasaran, @tahapan), status: :unprocessable_entity
+        end
       end
     end
-
   end
 
   private
@@ -39,7 +40,7 @@ class PaguAnggaransController < ApplicationController
   def params_from_link
     @anggaran = Anggaran.find_by_id(params[:anggaran])
     @jumlah = @anggaran.jumlah
-    @kode = params[:kode]
+    @kode = @anggaran.id
     @kode_belanja = params[:kode_belanja]
     @kode_sub_belanja = params[:kode_sub_belanja]
     @jenis = params[:jenis]
