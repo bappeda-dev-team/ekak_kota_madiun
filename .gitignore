@@ -43,3 +43,4 @@ yarn-debug.log*
 .yarn-integrity
 /config/credentials.yml.enc
 .vscode/launch.json
+Procfile.dev

@@ -86,7 +86,7 @@ class Sasaran < ApplicationRecord
                         }
   scope :total_belum_lengkap, -> { belum_ada_sub.count }
   scope :sudah_lengkap, lambda {
-                          includes(:usulans).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan: nil)
+                          includes(:usulans, :program_kegiatan).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan: nil)
                         }
   scope :total_sudah_lengkap, -> { sudah_lengkap.count }
   scope :digunakan, -> { where(status: 'disetujui') }
@@ -186,6 +186,12 @@ class Sasaran < ApplicationRecord
 
   def total_anggaran_dengan_komentar
     tahapans.map { |t| t.anggarans.where.missing(:comments).compact.sum(&:jumlah) }.inject(:+)
+  rescue TypeError
+    '-'
+  end
+
+  def total_anggaran_penetapan
+    tahapans.map(&:anggaran_tahapan_penetapan).inject(:+)
   rescue TypeError
     '-'
   end
@@ -389,6 +395,10 @@ class Sasaran < ApplicationRecord
 
   def subkegiatan
     program_kegiatan.present? ? program_kegiatan.nama_subkegiatan : 'belum ada subkegiatan'
+  end
+
+  def kode_subkegiatan_sasaran
+    program_kegiatan.kode_sub_giat
   end
 
   # @doc get tahapan rencana aksi sasaran with correct sort

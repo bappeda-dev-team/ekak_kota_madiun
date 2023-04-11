@@ -25,7 +25,8 @@
 #
 class Tahapan < ApplicationRecord
   belongs_to :sasaran, foreign_key: 'id_rencana', primary_key: 'id_rencana', optional: true, inverse_of: :tahapans
-  has_many :aksis, foreign_key: 'id_rencana_aksi', primary_key: 'id_rencana_aksi', dependent: :destroy, inverse_of: :tahapan
+  has_many :aksis, foreign_key: 'id_rencana_aksi', primary_key: 'id_rencana_aksi', dependent: :destroy,
+                   inverse_of: :tahapan
   has_many :anggarans, dependent: :destroy
   has_many :comments, through: :anggarans
 
@@ -59,6 +60,12 @@ class Tahapan < ApplicationRecord
     '0'
   end
 
+  def anggaran_tahapan_penetapan
+    anggarans.compact.sum(&:anggaran_penetapan)
+  rescue NoMethodError
+    '0'
+  end
+
   def total_anggaran_tahapan_setelah_komentar
     anggarans.where.missing(:comments).compact.sum(&:jumlah)
   rescue NoMethodError
@@ -66,12 +73,38 @@ class Tahapan < ApplicationRecord
   end
 
   def anggaran_tahapan_dengan_komentar
-    anggarans.select { |a| a.comments.any? }.map { |an| an.jumlah}
+    anggarans.select { |a| a.comments.any? }.map(&:jumlah)
   rescue NoMethodError
     '0'
   end
 
   def ada_komentar?
     anggarans.map(&:comments).any?(&:present?)
+  end
+
+  def grand_parent_anggaran
+    anggarans.order(:created_at).group_by do |angg|
+      angg.rekening.grand_parent.kode_rekening
+    end
+  end
+
+  def jumlah_anggaran_grand_parent
+    grand_parent_anggaran.transform_values do |val|
+      val.map { |ss| ss.jumlah.to_i }
+    end
+  end
+
+  def total_anggaran_grand_parent
+    jumlah_anggaran_grand_parent.transform_values do |val|
+      val.inject(:+)
+    end
+  end
+
+  def jumlah_grand_parent(kode_rekening)
+    grand_parent_anggaran[kode_rekening].sum(&:jumlah)
+  end
+
+  def jumlah_grand_parent_penetapan(kode_rekening)
+    grand_parent_anggaran[kode_rekening].sum(&:anggaran_penetapan)
   end
 end

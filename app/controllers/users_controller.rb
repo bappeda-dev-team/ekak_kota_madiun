@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show edit update destroy edit_detail update_detail]
+  before_action :set_user, only: %i[show edit update destroy edit_detail update_detail anggaran_sasaran]
   before_action :set_dropdown, only: %i[new edit]
   # GET /users or /users.json
   def index
@@ -200,7 +200,7 @@ class UsersController < ApplicationController
     @nip = @user.nik
     render partial: "form_nip"
   end
- 
+
   def update_nip
     @user = User.find(params[:id])
     @nip = params[:nip]
@@ -213,6 +213,11 @@ class UsersController < ApplicationController
     @user.update_strategi
     render json: { resText: "Data disimpan", result: { data: @nip } },
            status: :accepted
+  end
+
+  def anggaran_sasaran
+    @tahun = cookies[:tahun] || Date.today.year
+    @sasarans = @user.subkegiatan_sudah_lengkap(@tahun)
   end
 
   private
@@ -228,7 +233,7 @@ class UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:nama,:nik, :password, :kode_opd, :email)
+    params.require(:user).permit(:nama, :nik, :password, :kode_opd, :email)
   end
 
   def user_detail_params

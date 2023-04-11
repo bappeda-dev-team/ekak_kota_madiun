@@ -30,7 +30,7 @@
 class Anggaran < ApplicationRecord
   # TODO: Tes method penting
   # TODO: Single Responsibility Principle, rekening_level violates this
-  after_initialize :set_default_values
+  after_initialize :set_default_values # handling error after create, default value setted to nil
   # after_update :update_perhitungan
 
   belongs_to :tahapan
@@ -40,6 +40,7 @@ class Anggaran < ApplicationRecord
   belongs_to :parent, class_name: 'Anggaran', optional: true
   belongs_to :pajak, optional: true
   has_many :comments, dependent: :destroy
+  has_one :pagu_anggaran, class_name: 'PaguAnggaran', foreign_key: 'kode', primary_key: 'id'
 
   scope :tanpa_pajak, -> { where(pajak_id: nil) }
   scope :ujung_anggaran, -> { where(level: 0) }
@@ -49,7 +50,7 @@ class Anggaran < ApplicationRecord
 
   amoeba do
     enable
-    exclude_association [:childs, :comments, :perhitungans]
+    exclude_association %i[childs comments perhitungans]
   end
 
   def set_default_values
@@ -84,6 +85,10 @@ class Anggaran < ApplicationRecord
     { 'level_3' => rek_level3, 'level_2' => rek_level2, 'level_1' => rek_level1, 'level_0' => rek_level0 }
   end
 
+  def rekening
+    Rekening.find_by_id(kode_rek)
+  end
+
   def plus_pajak
     pajak.potongan * 100
   end
@@ -102,5 +107,18 @@ class Anggaran < ApplicationRecord
 
   def sync_total_perhitungan
     perhitungans.each(&:sync_total)
+  end
+
+  def anggaran_penetapan
+    pagu_anggaran&.anggaran || 0.0
+  end
+
+  def total_anggaran_penetapan
+    kode_rekening = rekening.grand_parent.kode_rekening
+    tahapan.jumlah_grand_parent_penetapan(kode_rekening)
+  end
+
+  def kode_rekening_gp
+    rekening.grand_parent.kode_rekening
   end
 end

@@ -50,7 +50,9 @@
 class ProgramKegiatan < ApplicationRecord
   validates :nama_program, presence: true
   validates :kode_program, presence: true
+
   belongs_to :opd, foreign_key: "kode_opd", primary_key: "kode_opd"
+
   has_many :kaks
   has_many :sasarans, dependent: :nullify
   has_many :usulans, through: :sasarans
@@ -94,6 +96,18 @@ class ProgramKegiatan < ApplicationRecord
   has_many :indikator_subkegiatan_rankir_renja, lambda { |program_kegiatan|
                                                   where(jenis: "Rankir_Renja", sub_jenis: "Subkegiatan", kode_opd: program_kegiatan.kode_sub_skpd)
                                                 }, class_name: "Indikator", foreign_key: "kode", primary_key: "kode_sub_giat"
+
+  has_many :pagu_program, lambda { |program_kegiatan, jenis|
+    where(jenis: jenis, sub_jenis: "Program", kode_opd: program_kegiatan.kode_sub_skpd)
+  }, class_name: "PaguAnggaran", foreign_key: "kode", primary_key: "kode_program"
+
+  has_many :pagu_kegiatan, lambda { |program_kegiatan, jenis|
+    where(jenis: jenis, sub_jenis: "Kegiatan", kode_opd: program_kegiatan.kode_sub_skpd)
+  }, class_name: "PaguAnggaran", foreign_key: "kode", primary_key: "kode_giat"
+
+  has_many :pagu_subkegiatan, lambda { |program_kegiatan, jenis|
+    where(jenis: jenis, sub_jenis: "Subkegiatan", kode_opd: program_kegiatan.kode_sub_skpd)
+  }, class_name: "PaguAnggaran", foreign_key: "kode", primary_key: "kode_sub_giat"
 
   accepts_nested_attributes_for :sasarans
 
@@ -354,6 +368,12 @@ class ProgramKegiatan < ApplicationRecord
   def pagu_sub_rankir_tahun(tahun)
     ProgramKegiatan.where(kode_sub_giat: kode_sub_giat).map do |sub|
       sub.sasarans.sudah_lengkap.where(tahun: tahun).map(&:total_anggaran).compact.sum
+    end.sum
+  end
+
+  def pagu_sub_penetapan_tahun(tahun)
+    ProgramKegiatan.where(kode_sub_giat: kode_sub_giat).map do |sub|
+      sub.sasarans.sudah_lengkap.where(tahun: tahun).map(&:total_anggaran_penetapan).compact.sum
     end.sum
   end
 end

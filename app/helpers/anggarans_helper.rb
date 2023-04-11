@@ -50,4 +50,8 @@ module AnggaransHelper
   rescue NoMethodError
     'Tidak Ditemukan'
   end
+
+  def find_rekening(kode_rekening)
+    Rekening.find_by(kode_rekening: kode_rekening)
+  end
 end

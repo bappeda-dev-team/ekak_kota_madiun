@@ -9,6 +9,7 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :pagu_anggarans
   resources :indikator_sasarans do
     resources :manual_iks
   end
@@ -150,6 +151,7 @@ Rails.application.routes.draw do
     end
 
     member do
+      get :anggaran_sasaran
       get :edit_detail
       patch :update_detail
       get :set_role
@@ -173,6 +175,7 @@ Rails.application.routes.draw do
       get :data_detail
       get :rencana_aksi
       get :subkegiatan
+      get :anggaran_belanja
     end
     resources :rincians do
       get "subkegiatan", on: :new
@@ -183,7 +186,11 @@ Rails.application.routes.draw do
         post :otomatis
       end
       resources :aksis, path: "rencana_aksi"
-      resources :anggarans
+      resources :anggarans do
+        collection do
+          get :edit_penetapan
+        end
+      end
     end
 
     resources :permasalahans
@@ -299,8 +306,6 @@ Rails.application.routes.draw do
     post :sasaran_opd
     post :crosscutting_kota
     post :ranwal_renja
-    post :rankir_renja
-    post :penetapan_renja
     post :pohon_kinerja_opd
     post :kak_dashboard
   end
@@ -357,6 +362,8 @@ Rails.application.routes.draw do
     get :edit_rankir
     post :update_rankir
     get :penetapan
+    post :rankir_renja
+    post :penetapan_renja
   end
 
   mount Sidekiq::Web, at: "/sidekiq"

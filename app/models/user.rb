@@ -238,4 +238,34 @@ class User < ApplicationRecord
   def nip
     nik
   end
+
+  def subkegiatan
+    sasarans.joins(:program_kegiatan).group_by(&:kode_subkegiatan_sasaran)
+  end
+
+  def subkegiatan_by_sasaran_tahun(tahun)
+    subkegiatan.transform_values do |val|
+      val.select { |sas| sas.tahun == tahun }
+    end
+  end
+
+  def subkegiatan_sudah_lengkap(tahun)
+    sasarans.sudah_lengkap
+            .where(tahun: tahun,
+                   program_kegiatan: { kode_opd: opd.kode_opd })
+            .group_by(&:kode_subkegiatan_sasaran)
+  end
+
+  def subkegiatan_sasaran_lengkap_tahun(tahun)
+    subkegiatan_sudah_lengkap.transform_values do |val|
+      val.select { |sas| sas.tahun == tahun }
+    end
+  end
+
+  def subkegiatan_lengkap_by_tahun(tahun)
+    sasarans
+      .sudah_lengkap
+      .where('sasarans.tahun ILIKE ?',
+             "%#{tahun}%").order(:id)
+  end
 end

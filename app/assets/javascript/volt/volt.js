@@ -126,24 +126,24 @@ d.addEventListener("DOMContentLoaded", function (event) {
             }
         });
 
-        sidebar.addEventListener('mouseenter', function () {
-            if (localStorage.getItem('sidebar') === 'contracted') {
-                if (sidebar.classList.contains('contracted')) {
-                    sidebar.classList.remove('contracted');
-                } else {
-                    sidebar.classList.add('contracted');
-                }
-            }
-        });
+        // sidebar.addEventListener('mouseenter', function () {
+        //     if (localStorage.getItem('sidebar') === 'contracted') {
+        //         if (sidebar.classList.contains('contracted')) {
+        //             sidebar.classList.remove('contracted');
+        //         } else {
+        //             sidebar.classList.add('contracted');
+        //         }
+        //     }
+        // });
 
-        sidebar.addEventListener('mouseleave', function () {
-            if (localStorage.getItem('sidebar') === 'contracted') {
-                if (sidebar.classList.contains('contracted')) {
-                    sidebar.classList.remove('contracted');
-                } else {
-                    sidebar.classList.add('contracted');
-                }
-            }
-        });
+        // sidebar.addEventListener('mouseleave', function () {
+        //     if (localStorage.getItem('sidebar') === 'contracted') {
+        //         if (sidebar.classList.contains('contracted')) {
+        //             sidebar.classList.remove('contracted');
+        //         } else {
+        //             sidebar.classList.add('contracted');
+        //         }
+        //     }
+        // });
     }
 });

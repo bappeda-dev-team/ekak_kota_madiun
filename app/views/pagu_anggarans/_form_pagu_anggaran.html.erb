@@ -1,0 +1,11 @@
+<%= form_with(model: @pagu_anggaran, local: false ,html: { data: { action: "ajax:success->editable-table#onPostSuccess", type: "json"  } }) do |form| %>
+      <%= form.hidden_field :id_anggaran, value: @anggaran.id %>
+      <%= form.hidden_field :kode_opd, value: @kode_opd %>
+      <%= form.hidden_field :kode, value: @kode %>
+      <%= form.hidden_field :kode_belanja, value: @kode_belanja %>
+      <%= form.hidden_field :kode_sub_belanja, value: @kode_sub_belanja %>
+      <%= form.hidden_field :jenis, value: @jenis %>
+      <%= form.hidden_field :sub_jenis, value: @sub_jenis %>
+      <%= form.hidden_field :tahun, value: @tahun %>
+      <%= form.number_field :anggaran, class: "form-control text-end", value: @jumlah %>
+<% end %>

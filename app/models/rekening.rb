@@ -10,9 +10,14 @@
 #  updated_at     :datetime         not null
 #
 class Rekening < ApplicationRecord
-  def grand_parent
+  def grand_grand_parent
     kode_rekening = self.kode_rekening
     Rekening.find_by(kode_rekening: kode_rekening[0..2])
+  end
+
+  def grand_parent
+    kode_rekening = self.kode_rekening
+    Rekening.find_by(kode_rekening: kode_rekening[0..5])
   end
 
   def parent

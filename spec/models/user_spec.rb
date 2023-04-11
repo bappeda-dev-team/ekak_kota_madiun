@@ -111,4 +111,35 @@ RSpec.describe User, type: :model do
       expect(petunjuk[:hijau]).to eq(1)
     end
   end
+
+  context 'subkegiatan user by opd' do
+    before(:each) do
+      @user = FactoryBot.create(:user)
+      @mandatori = FactoryBot.create(:mandatori)
+      @program_kegiatan = FactoryBot.create(:program_kegiatan, kode_sub_giat: '1.2.3.4.5')
+    end
+
+    it 'return group of kode subkegiatan with sasarans as value' do
+      sasaran = @user.sasarans.create!(sasaran_kinerja: "Sasaran Kinerja", nip_asn: @user, tahun: '2023')
+      sasaran2 = @user.sasarans.create!(sasaran_kinerja: "Sasaran Kinerja", nip_asn: @user, tahun: '2024')
+      sasaran.update!(program_kegiatan: @program_kegiatan)
+      sasaran2.update!(program_kegiatan: @program_kegiatan)
+
+      expect(@user.subkegiatan).to have_key('1.2.3.4.5')
+
+      expect(@user.subkegiatan.fetch('1.2.3.4.5').size).to eq(2)
+    end
+
+    it 'fetch only subkegiatan sasaran 2023' do
+      sasaran = @user.sasarans.create!(sasaran_kinerja: "Sasaran Kinerja", nip_asn: @user, tahun: '2023')
+      sasaran2 = @user.sasarans.create!(sasaran_kinerja: "Sasaran Kinerja", nip_asn: @user, tahun: '2023')
+      sasaran3 = @user.sasarans.create!(sasaran_kinerja: "Sasaran Kinerja", nip_asn: @user, tahun: '2024')
+      sasaran.update!(program_kegiatan: @program_kegiatan)
+      sasaran2.update!(program_kegiatan: @program_kegiatan)
+      sasaran3.update!(program_kegiatan: @program_kegiatan)
+
+      sasaran_by_tahun = @user.subkegiatan_by_sasaran_tahun('2023')
+      expect(sasaran_by_tahun.fetch('1.2.3.4.5').size).to eq(2)
+    end
+  end
 end

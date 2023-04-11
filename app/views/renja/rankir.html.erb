@@ -13,7 +13,7 @@
     <% if cookies[:tahun] && cookies[:opd] %>
       <div class="card border-0 shadow" id="user_filter" data-controller="page-ajax"
              data-page-ajax-opd-value="<%= cookies[:opd] %>"
-             data-page-ajax-url-value="<%= filter_rankir_renja_path %>"
+             data-page-ajax-url-value="<%= renja_rankir_renja_path %>"
              data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >
         <div data-page-ajax-target="results">
         <div class="card-header">

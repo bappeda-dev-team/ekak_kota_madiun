@@ -32,5 +32,6 @@ FactoryBot.define do
     level { 4 }
     association :tahapan
     association :pajak
+    jumlah { 0 }
   end
 end

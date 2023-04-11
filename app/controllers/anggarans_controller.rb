@@ -83,6 +83,12 @@ class AnggaransController < ApplicationController
     @anggaran.sync_total_perhitungan
   end
 
+  def edit_penetapan
+    @sasaran = Sasaran.find(params[:sasaran_id])
+    @tahapan = @sasaran.tahapans.find(params[:tahapan_id])
+    @anggarans = @tahapan.grand_parent_anggaran
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
