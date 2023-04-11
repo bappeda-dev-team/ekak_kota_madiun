@@ -216,11 +216,8 @@ class UsersController < ApplicationController
   end
 
   def anggaran_sasaran
-    @tahun_sasaran = cookies[:tahun] || Date.today.year
-    @sasarans = @user.sasarans
-                     .sudah_lengkap
-                     .where('sasarans.tahun ILIKE ?',
-                            "%#{@tahun_sasaran}%").order(:id)
+    @tahun = cookies[:tahun] || Date.today.year
+    @sasarans = @user.subkegiatan_sudah_lengkap(@tahun)
   end
 
   private

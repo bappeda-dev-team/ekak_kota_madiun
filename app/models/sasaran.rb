@@ -397,6 +397,10 @@ class Sasaran < ApplicationRecord
     program_kegiatan.present? ? program_kegiatan.nama_subkegiatan : 'belum ada subkegiatan'
   end
 
+  def kode_subkegiatan_sasaran
+    program_kegiatan.kode_sub_giat
+  end
+
   # @doc get tahapan rencana aksi sasaran with correct sort
   def tahapan_renaksi
     tahapans.includes([:anggarans]).sort_by do |thp|

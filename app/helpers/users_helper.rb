@@ -11,4 +11,8 @@ module UsersHelper
                          user.opd.kode_opd)
     end
   end
+
+  def subkegiatan_data(kode_sub_giat)
+    ProgramKegiatan.find_by(kode_sub_giat: kode_sub_giat)
+  end
 end
