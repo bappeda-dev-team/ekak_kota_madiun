@@ -42,29 +42,22 @@
             <tr class="level-0 bg-gray-700 text-white">
               <td class="text-white"><%= rekening %></td>
               <td><%= find_rekening(rekening).jenis_rekening %></td>
-              <td class="uang text-end pe-2">Rp. <%= number_with_delimiter(@tahapan.jumlah_grand_parent_penetapan(rekening)) %></td>
+              <td class="uang text-end pe-2" id="<%= rekening %>" >Rp. <%= number_with_delimiter(@tahapan.jumlah_grand_parent_penetapan(rekening)) %></td>
               <td class="uang text-end pe-2">Rp. <%= number_with_delimiter(@tahapan.jumlah_grand_parent(rekening)) %></td>
               <td></td>
             </tr>
             <% anggarans.each do |anggaran| %>
-            <tr class="level-0 <%= 'higlighted' if anggaran.pagu_anggaran.present? %>" data-controller="editable-table" >
-              <td><%= rekening_anggaran(anggaran.kode_rek) %> </td>
-              <td class="mx-auto">
-                <div class="row">
-                  <div class="text-wrap inline col"><%= anggaran.uraian %></div>
-                </div>
-              </td>
-              <td class="uang text-end pe-2" data-editable-table-target="penetapan">Rp. <%= number_with_delimiter(anggaran.anggaran_penetapan) %></td>
-              <td class="d-none" data-editable-table-target="form"></td>
-              <td class="uang text-end pe-2" data-editable-table-target="anggaran">Rp. <%= number_with_delimiter(anggaran.jumlah) %></td>
-              <td class="text-center bg-white">
-                  <% if current_user.has_any_role? :reviewer, :admin %>
-                    <% unless anggaran.comments.any? %>
-                      <%= link_to 'Review Anggaran', new_comment_path(anggaran_id: anggaran.id, user_id: current_user.id ),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-comment" }, class: "btn btn-outline-secondary" %>
-                    <% else %>
-                      <%= link_to 'Lihat Komentar',anchor: 'komentar' %>
-                    <% end %>
-                  <% end %>
+              <tr class="level-0 <%= 'higlighted' if anggaran.pagu_anggaran.present? %>" data-controller="editable-table" >
+                <td><%= rekening_anggaran(anggaran.kode_rek) %> </td>
+                <td class="mx-auto">
+                  <div class="row">
+                    <div class="text-wrap inline col"><%= anggaran.uraian %></div>
+                  </div>
+                </td>
+                <td class="text-end pe-2" data-editable-table-target="penetapan" width="170">Rp. <%= number_with_delimiter(anggaran.anggaran_penetapan) %></td>
+                <td class="d-none text-end pe-2" data-editable-table-target="form" width="170"></td>
+                <td class="text-end pe-2" data-editable-table-target="anggaran">Rp. <%= number_with_delimiter(anggaran.jumlah) %></td>
+                <td class="text-center bg-white">
                   <%= link_to new_pagu_anggaran_path(
                     anggaran: anggaran.id,
                     kode_belanja: rekening,
@@ -77,14 +70,14 @@
                     data: { action: 'editable-table#appendForm',
                             editable_table_target: 'edit'
                           } do %>
-                      <span class="fas fa-pencil"></span>
-                      <span>Edit Anggaran</span>
+                    <span class="fas fa-pencil"></span>
+                    <span>Edit Anggaran</span>
                   <% end %>
                   <button class="d-none btn btn-tertiary" data-editable-table-target="simpan" data-action="editable-table#simpan">Simpan</button>
                   <button class="d-none btn btn-outline-danger" data-editable-table-target="cancel" data-action="editable-table#cancelForm">Batal</button>
                   <%= link_to "Hapus Anggaran", sasaran_tahapan_anggaran_path(@sasaran, @tahapan, anggaran), method: :delete, data: {confirm_swal: "Hapus Anggaran #{anggaran.uraian}", editable_table_target: 'hapus'}, class: "btn btn-outline-danger me-2"  %>
-              </td>
-            </tr>
+                </td>
+              </tr>
             <% end %>
           <% end %>
         </tbody>

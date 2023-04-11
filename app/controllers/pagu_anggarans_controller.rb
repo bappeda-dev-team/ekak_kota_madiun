@@ -1,4 +1,5 @@
 class PaguAnggaransController < ApplicationController
+  include ActionView::Helpers::NumberHelper
   before_action :params_from_link, only: %i[new edit]
   before_action :set_pagu, only: %i[edit]
 
@@ -17,16 +18,20 @@ class PaguAnggaransController < ApplicationController
   def create
     id_anggaran = params[:pagu_anggaran]["id_anggaran"]
     @anggaran = Anggaran.find_by_id(id_anggaran)
-    @tahapan = @anggaran.tahapan
-    @sasaran = @tahapan.sasaran
-    @pagu_anggaran = PaguAnggaran.new(pagu_anggarans_params)
+    @pagu_anggaran = @anggaran.create_pagu_anggaran(pagu_anggarans_params)
     respond_to do |format|
       if @pagu_anggaran.save
-        format.html { redirect_to edit_penetapan_sasaran_tahapan_anggarans_path(@sasaran, @tahapan) }
-      else
-        format.html do
-          redirect_to edit_penetapan_sasaran_tahapan_anggarans_path(@sasaran, @tahapan), status: :unprocessable_entity
+        format.json do
+          render json: { results: {
+                           anggaran: "Rp. #{number_with_delimiter(@pagu_anggaran.anggaran)}",
+                           total: "Rp. #{number_with_delimiter(@anggaran.total_anggaran_penetapan)}",
+                           parent: @anggaran.kode_rekening_gp
+                         },
+                         message: 'Tersimpan' },
+                 status: :accepted
         end
+      else
+        format.json { render json: { results: '', message: 'Tidak Tersimpan' }, status: :unprocessable_entity }
       end
     end
   end
@@ -37,10 +42,18 @@ class PaguAnggaransController < ApplicationController
     @pagu_anggaran = PaguAnggaran.find(params[:id])
   end
 
-  def params_from_link
+  def set_anggaran
     @anggaran = Anggaran.find_by_id(params[:anggaran])
-    @jumlah = @anggaran.jumlah
+    @jumlah = if @anggaran.pagu_anggaran.present?
+                @anggaran.anggaran_penetapan
+              else
+                @anggaran.jumlah
+              end
     @kode = @anggaran.id
+  end
+
+  def params_from_link
+    set_anggaran
     @kode_belanja = params[:kode_belanja]
     @kode_sub_belanja = params[:kode_sub_belanja]
     @jenis = params[:jenis]

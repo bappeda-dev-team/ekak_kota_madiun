@@ -1,7 +1,8 @@
+import Rails from "@rails/ujs";
 import { Controller } from 'stimulus'
 
 export default class extends Controller {
-        static targets = ['table', 'anggaran', 'penetapan', 'cancel', 'simpan', 'edit', 'hapus', 'form']
+        static targets = ['table', 'anggaran', 'penetapan', 'totalPenetapan', 'cancel', 'simpan', 'edit', 'hapus', 'form']
         static values = {
                 anggaran: Number
         }
@@ -30,11 +31,13 @@ export default class extends Controller {
         simpan() {
                 this.toggleButton()
                 const form = this.formTarget.querySelector('form')
-                form.submit()
+                Rails.fire(form, 'submit')
+                this.formTarget.innerHTML = ''
         }
 
         cancelForm() {
                 this.toggleButton()
+                this.formTarget.innerHTML = ''
         }
 
         toggleButton() {
@@ -44,6 +47,16 @@ export default class extends Controller {
                 this.hapusTarget.classList.remove('d-none')
                 this.penetapanTarget.classList.remove('d-none')
                 this.formTarget.classList.add('d-none')
+        }
+
+        onPostSuccess(event) {
+                const result = event.detail
+                const [data, _status, _request] = result
+
+                const { anggaran, total, parent } = data.results
+                this.penetapanTarget.innerHTML = anggaran
+                const totalPenetapan = document.getElementById(parent)
+                totalPenetapan.innerHTML = total
         }
 }
 

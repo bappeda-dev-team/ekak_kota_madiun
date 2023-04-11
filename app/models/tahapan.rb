@@ -73,7 +73,7 @@ class Tahapan < ApplicationRecord
   end
 
   def anggaran_tahapan_dengan_komentar
-    anggarans.select { |a| a.comments.any? }.map { |an| an.jumlah }
+    anggarans.select { |a| a.comments.any? }.map(&:jumlah)
   rescue NoMethodError
     '0'
   end

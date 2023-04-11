@@ -112,4 +112,13 @@ class Anggaran < ApplicationRecord
   def anggaran_penetapan
     pagu_anggaran&.anggaran || 0.0
   end
+
+  def total_anggaran_penetapan
+    kode_rekening = rekening.grand_parent.kode_rekening
+    tahapan.jumlah_grand_parent_penetapan(kode_rekening)
+  end
+
+  def kode_rekening_gp
+    rekening.grand_parent.kode_rekening
+  end
 end
