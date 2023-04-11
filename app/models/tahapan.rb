@@ -83,7 +83,7 @@ class Tahapan < ApplicationRecord
   end
 
   def grand_parent_anggaran
-    anggarans.includes([:comments]).order(:created_at).group_by do |angg|
+    anggarans.order(:created_at).group_by do |angg|
       angg.rekening.grand_parent.kode_rekening
     end
   end

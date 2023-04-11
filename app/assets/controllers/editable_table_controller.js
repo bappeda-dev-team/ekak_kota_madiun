@@ -2,7 +2,7 @@ import Rails from "@rails/ujs";
 import { Controller } from 'stimulus'
 
 export default class extends Controller {
-        static targets = ['table', 'anggaran', 'penetapan', 'totalPenetapan', 'cancel', 'simpan', 'edit', 'hapus', 'form']
+        static targets = ['table', 'anggaran', 'penetapan', 'cancel', 'simpan', 'edit', 'hapus', 'form']
         static values = {
                 anggaran: Number
         }
@@ -32,7 +32,6 @@ export default class extends Controller {
                 this.toggleButton()
                 const form = this.formTarget.querySelector('form')
                 Rails.fire(form, 'submit')
-                this.formTarget.innerHTML = ''
         }
 
         cancelForm() {
@@ -53,10 +52,14 @@ export default class extends Controller {
                 const result = event.detail
                 const [data, _status, _request] = result
 
-                const { anggaran, total, parent } = data.results
+                const { anggaran, total, parent, jumlah } = data.results
                 this.penetapanTarget.innerHTML = anggaran
                 const totalPenetapan = document.getElementById(parent)
+                const jumlahPenetapan = document.getElementById("totalPenetapan")
                 totalPenetapan.innerHTML = total
+                jumlahPenetapan.innerHTML = jumlah
+                this.formTarget.innerHTML = ''
+                this.element.classList.add('higlighted')
         }
 }
 

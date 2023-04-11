@@ -84,8 +84,8 @@
         <tfoot>
           <tr>
             <td colspan="2">Jumlah Anggaran Tahapan :</td>
-            <td class="text-end">Rp. --</td>
-            <td class="text-end">Rp. --</td>
+            <td class="text-end" id="totalPenetapan">Rp. <%= number_with_delimiter(@tahapan.anggaran_tahapan_penetapan) %></td>
+            <td class="text-end">Rp. <%= number_with_delimiter(@tahapan.anggaran_tahapan) %></td>
             <td></td>
           </tr>
         </tfoot>
@@ -99,22 +99,7 @@
     <% end %>
   </div>
 </div>
-<% if @tahapan.comments.any? %>
-  <div class="card" id="komentar">
-    <div class="card-header d-flex align-items-center">
-      <h2 class="fs-5 fw-bold mb-0">Daftar Review</h2>
-    </div>
-    <div class="card-body">
-      <div class="list-group list-group-flush list-group-timeline">
-        <% @anggarans.includes([:comments]).order(created_at: :asc).each do |anggComm| %>
-          <%= render anggComm.comments %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-<% end %>
 <!-- SECTION - Table Anggaran -->
 <!-- !SECTION - End Table Anggaran -->
 <%= render 'shared/modal_template', modal_name: 'anggaran' %>
 <%= render 'modal_perhitungans' %>
-<%= render 'comments/modal' %>
