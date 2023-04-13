@@ -8,6 +8,7 @@
 #  tahun         :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  lembaga_id    :bigint           default(1)
 #
 require "rails_helper"
 

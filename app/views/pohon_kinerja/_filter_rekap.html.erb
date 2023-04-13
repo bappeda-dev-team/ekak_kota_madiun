@@ -1,0 +1,83 @@
+<div class="card border-0 shadow">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col-8">
+        <h2 class="fs-5 fw-bold mb-0">Rekap Pohon Kinerja</h2>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row gy-4">
+      <div class="card pb-3 shadow border-tertiary table-responsive">
+        <div class="card-header border-bottom d-flex align-items-center justify-content-between">
+          <h2 class="fs-5 fw-bold mb-0">Pohon Kinerja Kota - Tahun <%= @tahun %></h2>
+          <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-print me-2"></i>Cetak</a>
+        </div>
+        <table class="table table-bordered border-primary rounded">
+          <thead>
+            <tr>
+              <th class="fw-bolder">No</th>
+              <th class="fw-bolder">Strategi</th>
+              <th class="fw-bolder">Indikator</th>
+              <th class="fw-bolder">Target / Satuan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @isu_kota.each do |isu_kota, strategis| %>
+              <tr>
+                <th colspan="4">Isu Strategis Kota: <%= isu_kota.isu_strategis %></th>
+              </tr>
+              <% strategis.each.with_index(1) do |(strategi, pohons), no_str| %>
+                <tr style="background-color: #E5FDD1;">
+                  <th rowspan="<%= strategi.indikators_tahun(@tahun).size + 1 %>" class="align-middle" width="15" ><%= no_str %></th>
+                  <th rowspan="<%= strategi.indikators_tahun(@tahun).size + 1 %>" class="align-middle"><%= strategi.strategi %></th>
+                </tr>
+                <% strategi.indikators_tahun(@tahun).each do |ind_kota| %>
+                  <tr style="background-color: #E5FDD1;">
+                    <td class="text-wrap"><%= ind_kota.indikator %></td>
+                    <td class=""><%= "#{ind_kota.target} #{ind_kota.satuan}" %></td>
+                  </tr>
+                <% end %>
+                <% pohons.each do |pohon| %>
+                  <tr class="bg-gray-300">
+                    <th colspan="4">Perangkat Daerah: <%= pohon.opd.nama_opd %></th>
+                  </tr>
+                  <% pohon.strategis.each.with_index(1) do |stra, no| %>
+                    <tr>
+                      <td rowspan="<%= stra.indikator_strategi.size + 1 %>"><%= no %></td>
+                      <td class="text-wrap" rowspan="<%= stra.indikator_strategi.size + 1 %>"><%= stra.strategi %></td>
+                    </tr>
+                    <% stra.indikator_sasarans.each do |ind| %>
+                      <tr>
+                        <td class="text-wrap"><%= ind.indikator_kinerja %></td>
+                        <td class=""><%= "#{ind.target} #{ind.satuan}" %></td>
+                      </tr>
+                    <% end %>
+                  <% end %>
+                <% end%>
+                <tr style=" background: repeating-linear-gradient(
+  -55deg,
+  #222,
+  #222 10px,
+  #333 10px,
+  #333 20px
+);border: 0px" >
+                  <td colspan="4"></td>
+                </tr>
+              <% end%>
+                <tr style=" background: repeating-linear-gradient(
+  -55deg,
+  #222,
+  #222 10px,
+  #333 10px,
+  #333 20px
+);border: 0px" >
+                  <td colspan="4"></td>
+                </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

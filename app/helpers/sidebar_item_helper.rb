@@ -1,6 +1,6 @@
 module SidebarItemHelper
   def asn_sidebar_items
-    if current_user.has_any_role?(:eselon_2,:eselon_2b, :eselon_3, :eselon_4, :staff)
+    if current_user.has_any_role?(:eselon_2, :eselon_2b, :eselon_3, :eselon_4, :staff)
       [
         { title: 'Pohon Kinerja', href: asn_pohon_kinerja_index_path, icon: 'fas fa-tree',
           identifier: 'pohon_kinerja/asn' },

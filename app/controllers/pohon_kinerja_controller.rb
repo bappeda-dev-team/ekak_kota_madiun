@@ -1,5 +1,5 @@
 class PohonKinerjaController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: %i[admin_filter]
+  skip_before_action :verify_authenticity_token, only: %i[admin_filter filter_rekap]
 
   def kota; end
 
@@ -76,5 +76,17 @@ class PohonKinerjaController < ApplicationController
                title: "POHON KINERJA KOTA"
       end
     end
+  end
+
+  def rekap; end
+
+  def filter_rekap
+    @tahun = cookies[:tahun] || '2023'
+    @isu_kota = IsuStrategisKotum.where(tahun: @tahun).to_h do |isu_kota|
+      [isu_kota, isu_kota.strategi_kotums.to_h do |str_kota|
+        [str_kota, str_kota.pohons]
+      end]
+    end
+    render partial: 'pohon_kinerja/filter_rekap'
   end
 end

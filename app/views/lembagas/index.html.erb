@@ -4,6 +4,7 @@
   <thead>
     <tr>
       <th>Nama Lembaga</th>
+      <th>Kode Lembaga</th>
       <th>Tahun</th>
       <th colspan="3"></th>
     </tr>
@@ -13,6 +14,7 @@
     <% @lembagas.each do |lembaga| %>
       <tr>
         <td><%= lembaga.nama_lembaga %></td>
+        <td><%= lembaga.kode_lembaga %></td>
         <td><%= lembaga.tahun %></td>
         <td><%= link_to "Show", lembaga %></td>
         <td><%= link_to "Edit", edit_lembaga_path(lembaga) %></td>
