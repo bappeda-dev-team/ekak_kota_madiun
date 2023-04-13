@@ -19,4 +19,8 @@ class IsuStrategisKotum < ApplicationRecord
   def strategis(opd_id)
     strategi_kotums.includes(:pohons).where(pohons: { opd_id: opd_id })
   end
+
+  def strategis_opd(opd_id)
+    strategis(opd_id)
+  end
 end

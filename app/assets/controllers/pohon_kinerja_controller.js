@@ -39,6 +39,7 @@ export default class extends Controller {
                 }
                 else {
                         this.pokinTarget.style.display = 'none'
+                        this.pokinTarget.innerHTML = ''
                         this.buttonToggleTarget.classList.remove('btn-outline-danger')
                         this.buttonToggleTarget.classList.add('btn-outline-success')
                         this.buttonToggleTarget.innerText = 'Tampilkan Pohon'

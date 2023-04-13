@@ -31,6 +31,8 @@ Rails.application.routes.draw do
       get :excel_opd
       get :rekap
       post :filter_rekap
+      get :rekap_opd
+      post :filter_rekap_opd
     end
   end
   resources :strategi_opds

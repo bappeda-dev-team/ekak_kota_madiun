@@ -39,4 +39,16 @@ class Pohon < ApplicationRecord
       "#{no}. #{ss}\n"
     end
   end
+
+  def strategi_opd
+    pohonable.strategi
+  end
+
+  def strategis_opd(opd_id)
+    strategis
+  end
+
+  def strategi
+    keterangan
+  end
 end

@@ -1,0 +1,66 @@
+<div class="card border-0 shadow">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col-8">
+        <h2 class="fs-5 fw-bold mb-0">Rekap Pohon Kinerja</h2>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row gy-4">
+      <div class="card pb-3 shadow border-tertiary table-responsive">
+        <div class="card-header border-bottom d-flex align-items-center justify-content-between">
+          <h2 class="fs-5 fw-bold mb-0">Pohon Kinerja <%= @nama_opd %> - Tahun <%= @tahun %></h2>
+          <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-print me-2"></i>Cetak</a>
+        </div>
+        <table class="table table-bordered border-primary rounded">
+          <thead>
+            <tr>
+              <th class="fw-bolder">No</th>
+              <th class="fw-bolder">Strategi</th>
+              <th class="fw-bolder">Indikator</th>
+              <th class="fw-bolder">Target / Satuan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @isu_opd.each do |isu, strategis| %>
+              <tr>
+                <th colspan="4"><%= isu.class.name.pluralize.underscore.titleize %>: <%= isu.isu_strategis %></th>
+              </tr>
+              <% strategis.each.with_index(1) do |(strategi, strategi_kaopds), no_str| %>
+                <tr style="background-color: #E5FDD1;">
+                  <th class="align-middle" width="15" ><%= no_str %></th>
+                  <th class="align-middle"><%= strategi.strategi %></th>
+                </tr>
+                <% strategi_kaopds.each do |pohon, strategi| %>
+                    <tr style="background-color: #C8B6A6">
+                      <td>Kepala</td>
+                      <td class="text-wrap"><%= pohon.strategi %></td>
+                    </tr>
+                    <% strategi.each do |str_kabid, str_kasis| %>
+                      <tr style="background-color: #CCD5AE">
+                        <td>Kabid</td>
+                        <td class="text-wrap"><%= str_kabid.strategi %></td>
+                      </tr>
+                      <% str_kasis.each do |str_kasi, str_staffs| %>
+                        <tr style="background-color: #E7AB9A">
+                          <td>Kasi</td>
+                          <td class="text-wrap"><%= str_kasi.strategi %></td>
+                        </tr>
+                        <% str_staffs.each do |str_staff| %>
+                          <tr style="background-color: #FFF1DC">
+                            <td>Staff</td>
+                            <td class="text-wrap"><%= str_staff.strategi %></td>
+                          </tr>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                <% end%>
+            <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

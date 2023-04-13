@@ -42,4 +42,8 @@ class IsuStrategisOpd < ApplicationRecord
   def sasaran_kotum_id; end
 
   def sasaran_kotum_sasaran; end
+
+  def strategis_opd(_opd_id)
+    pohons
+  end
 end

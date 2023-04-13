@@ -37,6 +37,10 @@ class StrategiKotum < ApplicationRecord
     pohons.where(opd_id: opd_id)
   end
 
+  def strategis_opd(opd_id)
+    strategis.where(opd_id: opd_id)
+  end
+
   def sasaran_kotum_id
     sasaran_kotum.id
   end
