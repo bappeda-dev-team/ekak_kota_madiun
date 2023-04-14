@@ -70,6 +70,7 @@ group :test do
   gem 'capybara', '>= 3.26'
   gem 'capybara-select-2'
   gem "capybara-wsl"
+  gem 'fuubar'
   gem 'selenium-webdriver'
 
   # Easy installation and use of web drivers to run system tests with browsers

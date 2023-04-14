@@ -178,6 +178,7 @@ module SidebarItemHelper
     ]
   end
 
+  # depreceated
   def navigation_class(identifier)
     return ' active' if request.path.match(/\b#{identifier}/)
   end

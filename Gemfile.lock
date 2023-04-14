@@ -167,6 +167,9 @@ GEM
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
+    fuubar (2.5.1)
+      rspec-core (~> 3.0)
+      ruby-progressbar (~> 1.4)
     globalid (1.0.0)
       activesupport (>= 5.0)
     hashie (5.0.0)
@@ -510,6 +513,7 @@ DEPENDENCIES
   database_cleaner
   devise
   factory_bot_rails
+  fuubar
   htmlbeautifier
   http
   jbuilder (~> 2.7)
