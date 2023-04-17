@@ -60,6 +60,11 @@
                           NIP: <%= str_kabid.nip_pemilik %> | 
                           Jabatan: <%= str_kabid.jabatan_pemilik %> </th>
                       </tr>
+                      <% str_kabid.programs_strategi.each do |program, subkegiatans| %>
+                        <tr class="program">
+                          <th colspan="4">Program: <%= program %></th>
+                        </tr>
+                      <% end %>
                       <tr style="background-color: #CCD5AE">
                         <td rowspan="<%= str_kabid.indikators.size + 1 %>">Strategic</td>
                         <td rowspan="<%= str_kabid.indikators.size + 1 %>" class="text-wrap"><%= str_kabid.strategi %></td>
@@ -75,6 +80,9 @@
                           <th colspan="4">Nama: <%= str_kasi.nama_pemilik %> | 
                             NIP: <%= str_kasi.nip_pemilik %> | 
                             Jabatan: <%= str_kasi.jabatan_pemilik %> </th>
+                        </tr>
+                        <tr class="subkegiatan">
+                          <th colspan="4">Subkegiatan: <%= str_kasi.subkegiatan_strategi %></th>
                         </tr>
                         <tr style="background-color: #E7AB9A">
                           <td rowspan="<%= str_kasi.indikators.size + 1 %>">Operational</td>
