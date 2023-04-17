@@ -84,7 +84,7 @@ class Strategi < ApplicationRecord
   end
 
   def indikators
-    indikator_sasarans
+    indikator_sasarans.compact_blank
   end
 
   def indikator_strategi
@@ -103,19 +103,23 @@ class Strategi < ApplicationRecord
     user&.nik
   end
 
+  def jabatan_pemilik
+    user&.jabatan
+  end
+
   def strategis
     self
   end
 
   def tactical_objectives
-    strategi_eselon_tigas.where.not(strategi: "")
+    strategi_eselon_tigas.includes(:indikator_sasarans).where.not(strategi: "")
   end
 
   def operational_objectives
-    strategi_eselon_empats.where.not(strategi: "")
+    strategi_eselon_empats.includes(:indikator_sasarans).where.not(strategi: "")
   end
 
   def operational_2_objectives
-    strategi_staffs.where.not(strategi: "")
+    strategi_staffs.includes(:indikator_sasarans).where.not(strategi: "")
   end
 end

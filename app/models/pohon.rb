@@ -52,7 +52,7 @@ class Pohon < ApplicationRecord
     keterangan
   end
 
-  def indikators_tahun(tahun)
-    strategis.map { |str| str.indikator_sasarans.where(tahun: tahun) }
+  def indikators_tahun(_tahun)
+    strategis.map(&:indikator_sasarans).flatten 
   end
 end

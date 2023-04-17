@@ -25,20 +25,25 @@
           <tbody>
             <% @isu_opd.each do |isu, strategis| %>
               <tr>
-                <th colspan="4"><%= isu.class.name.pluralize.underscore.titleize %>: <%= isu.isu_strategis %></th>
+                <th colspan="4" class="text-wrap"><%= isu.class.name.pluralize.underscore.titleize %>: <%= isu.isu_strategis %></th>
               </tr>
               <% strategis.each.with_index(1) do |(strategi, strategi_kaopds), no_str| %>
                 <tr style="background-color: #E5FDD1;">
-                  <th rowspan="<%= strategi.indikators_tahun(@tahun).size + 1 %>" class="align-middle" width="15" ><%= no_str %></th>
-                  <th rowspan="<%= strategi.indikators_tahun(@tahun).size + 1 %>" class="align-middle"><%= strategi.strategi %></th>
+                  <th rowspan="<%= strategi.indikators_tahun(@tahun).size + 1 %>" class="align-middle"><%= no_str %></th>
+                  <th rowspan="<%= strategi.indikators_tahun(@tahun).size + 1 %>" class="align-middle text-wrap"><%= strategi.strategi %></th>
                 </tr>
                 <% strategi.indikators_tahun(@tahun).each do |ind_kota| %>
                   <tr style="background-color: #E5FDD1;">
                     <td class="text-wrap"><%= ind_kota.indikator %></td>
-                    <td class=""><%= "#{ind_kota.target} #{ind_kota.satuan}" %></td>
+                    <td class="text-wrap"><%= "#{ind_kota.target} #{ind_kota.satuan}" %></td>
                   </tr>
                 <% end %>
                 <% strategi_kaopds.each do |str_kaopd, strategi| %>
+                    <tr class="">
+                      <th colspan="4">Nama: <%= str_kaopd.nama_pemilik %> | 
+                        NIP: <%= str_kaopd.nip_pemilik %> | 
+                        Jabatan: <%= str_kaopd.jabatan_pemilik %> </th>
+                    </tr>
                     <tr style="background-color: #C8B6A6">
                       <td rowspan="<%= str_kaopd.indikators.size + 1%>">Tactical</td>
                       <td rowspan="<%= str_kaopd.indikators.size + 1%>" class="text-wrap"><%= str_kaopd.strategi %></td>
@@ -50,6 +55,11 @@
                       </tr>
                     <% end %>
                     <% strategi.each do |str_kabid, str_kasis| %>
+                      <tr class="">
+                        <th colspan="4">Nama: <%= str_kabid.nama_pemilik %> | 
+                          NIP: <%= str_kabid.nip_pemilik %> | 
+                          Jabatan: <%= str_kabid.jabatan_pemilik %> </th>
+                      </tr>
                       <tr style="background-color: #CCD5AE">
                         <td rowspan="<%= str_kabid.indikators.size + 1 %>">Strategic</td>
                         <td rowspan="<%= str_kabid.indikators.size + 1 %>" class="text-wrap"><%= str_kabid.strategi %></td>
@@ -61,6 +71,11 @@
                         </tr>
                       <% end %>
                       <% str_kasis.each do |str_kasi, str_staffs| %>
+                        <tr class="">
+                          <th colspan="4">Nama: <%= str_kasi.nama_pemilik %> | 
+                            NIP: <%= str_kasi.nip_pemilik %> | 
+                            Jabatan: <%= str_kasi.jabatan_pemilik %> </th>
+                        </tr>
                         <tr style="background-color: #E7AB9A">
                           <td rowspan="<%= str_kasi.indikators.size + 1 %>">Operational</td>
                           <td rowspan="<%= str_kasi.indikators.size + 1 %>"class="text-wrap"><%= str_kasi.strategi %></td>
@@ -72,6 +87,11 @@
                           </tr>
                         <% end %>
                         <% str_staffs.each do |str_staff| %>
+                          <tr class="">
+                            <th colspan="4">Nama: <%= str_staff.nama_pemilik %> | 
+                              NIP: <%= str_staff.nip_pemilik %> | 
+                              Jabatan: <%= str_staff.jabatan_pemilik %> </th>
+                          </tr>
                           <tr style="background-color: #FFF1DC">
                             <td rowspan="<%= str_staff.indikators.size + 1 %>" class="">Opertional 2</td>
                             <td rowspan="<%= str_staff.indikators.size + 1 %>" class="text-wrap"><%= str_staff.strategi %></td>
@@ -85,6 +105,15 @@
                         <% end %>
                       <% end %>
                     <% end %>
+                <tr style=" background: repeating-linear-gradient(
+  -55deg,
+  #222,
+  #222 10px,
+  #333 10px,
+  #333 20px
+);border: 0px" >
+                  <td colspan="4"></td>
+                </tr>
                 <% end%>
             <% end %>
             <% end %>
