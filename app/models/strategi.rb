@@ -122,4 +122,30 @@ class Strategi < ApplicationRecord
   def operational_2_objectives
     strategi_staffs.includes(:indikator_sasarans).where.not(strategi: "")
   end
+
+  def program_kegiatan_strategi
+    sasaran&.program_kegiatan
+  end
+
+  def indikator_subkegiatan_strategi(_tahun, kode_opd)
+    sasaran.program_kegiatan.indikator_renstras_new('subekegiatan', kode_opd)
+  # rescue NoMethodError
+  #   { indikator_subkegiatan: {} }
+  end
+
+  def subkegiatan_strategi
+    sasaran.program_kegiatan.nama_subkegiatan
+  rescue NoMethodError
+    'Kosong'
+  end
+
+  def programs_strategi
+    operational_objectives.map(&:program_kegiatan_strategi).group_by(&:nama_program)
+  rescue NoMethodError
+    { Kosong: [] }
+  end
+
+  def rekap_program_opd
+    tactical_objectives.map { |aa| aa.programs_strategi.keys }.flatten
+  end
 end
