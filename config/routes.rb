@@ -29,6 +29,10 @@ Rails.application.routes.draw do
       get :excel_kota
       get :pdf_kota
       get :excel_opd
+      get :rekap
+      post :filter_rekap
+      get :rekap_opd
+      post :filter_rekap_opd
     end
   end
   resources :strategi_opds

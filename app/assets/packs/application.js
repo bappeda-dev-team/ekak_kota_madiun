@@ -19,6 +19,8 @@ import "select2";
 import "vanilla-nested";
 import 'simplebar';
 import 'simplebar/dist/simplebar.css';
+// stimulus controllers
+import "controllers"
 
 // pokin
 import '../javascript/d3/index'
@@ -39,5 +41,3 @@ window.bootstrap = require('bootstrap');
 window.SmoothScroll = SmoothScroll;
 
 require('../javascript/volt/volt');
-
-import "controllers"

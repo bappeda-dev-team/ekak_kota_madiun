@@ -783,7 +783,8 @@ CREATE TABLE public.isu_strategis_kota (
     isu_strategis character varying NOT NULL,
     tahun character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    lembaga_id bigint DEFAULT 1
 );
 
 
@@ -4674,6 +4675,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230313033000'),
 ('20230313033100'),
 ('20230313043326'),
-('20230405073638');
+('20230405073638'),
+('20230413030428');
 
 

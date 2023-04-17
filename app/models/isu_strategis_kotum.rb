@@ -8,6 +8,7 @@
 #  tahun         :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  lembaga_id    :bigint           default(1)
 #
 class IsuStrategisKotum < ApplicationRecord
   default_scope { order(:id) }
@@ -16,6 +17,10 @@ class IsuStrategisKotum < ApplicationRecord
   has_many :opds, through: :strategi_kotums
 
   def strategis(opd_id)
-    strategi_kotums.includes(:pohons).where(pohons: { opd_id: opd_id})
+    strategi_kotums.includes(:pohons).where(pohons: { opd_id: opd_id })
+  end
+
+  def strategis_opd(opd_id)
+    strategis(opd_id)
   end
 end

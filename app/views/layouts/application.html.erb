@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for?(:html_title) ? yield(:html_title) : "E-Kak" %></title>
+    <title><%= content_for?(:html_title) ? yield(:html_title) : "E-KAK" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= favicon_link_tag asset_pack_path("media/images/favicon/favicon.ico") %>
@@ -13,17 +13,19 @@
   </head>
   <body>
     <% if user_signed_in? %>
-      <!-- edit top -->
       <%= render "layouts/sidebar" %>
       <main class="content d-flex flex-column min-vh-100">
         <%= render 'layouts/navbar' %>
-        <%# !ANCHOR WARNING %>
-        <div class="row p-2">
-          <%= yield %>
-          <%= render 'layouts/head_content' %>
+        <div class="row">
+          <% if content_for?(:navigation) %>
+            <div class="col-12">
+              <%= render 'layouts/head_content' %>
+              <%= yield :view_utama %>
+            </div>
+          <% else %>
+            <%= yield %>
+          <% end %>
         </div>
-        <%# ANCHOR %>
-        <!-- ANCHOR footer -->
       </main>
     <% else %>
       <%= yield :login %>

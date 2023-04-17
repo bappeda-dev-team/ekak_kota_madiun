@@ -37,6 +37,10 @@ class StrategiKotum < ApplicationRecord
     pohons.where(opd_id: opd_id)
   end
 
+  def strategis_opd(opd_id)
+    strategis.where(opd_id: opd_id).compact_blank
+  end
+
   def sasaran_kotum_id
     sasaran_kotum.id
   end
@@ -51,5 +55,9 @@ class StrategiKotum < ApplicationRecord
 
   def indikator_tahun(tahun)
     sasaran_kotum.indikator_sasarans.where(tahun: tahun).order(id: :desc).first
+  end
+
+  def indikators_tahun(tahun)
+    sasaran_kotum.indikator_sasarans.where(tahun: tahun)
   end
 end

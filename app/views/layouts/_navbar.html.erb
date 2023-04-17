@@ -10,18 +10,11 @@
         <div class="global_filter">
           <span class="opd text-wrap"><%= cookies[:nama_opd] %></span>
           <br/>
-          <span class="tahun">Tahun: <%= cookies[:tahun] %></span>
+          <span class="tahun"><%= cookies[:tahun] %></span>
         </div>
       </div>
-      <!-- Navbar links -->
-      <ul class="navbar-nav align-items-center">
-        <li class="nav-item filter-form">
-          <%= render 'shared/global_filter_opd', filter_url: filter_tahun_dan_opd_path %>
-        </li>
-        <li class="nav-item dropdown ms-lg-3 mt-2">
-          <%= render 'shared/user_profile'%>
-        </li>
-      </ul>
+      <!-- Filter OPD dan Tahun -->
+      <%= render 'shared/filter_tahun_dan_opd_profile' %>
     </div>
   </div>
 </nav>

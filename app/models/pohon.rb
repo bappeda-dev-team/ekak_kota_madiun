@@ -39,4 +39,20 @@ class Pohon < ApplicationRecord
       "#{no}. #{ss}\n"
     end
   end
+
+  def strategi_opd
+    pohonable.strategi
+  end
+
+  def strategis_opd(_opd_id)
+    strategis
+  end
+
+  def strategi
+    keterangan
+  end
+
+  def indikators_tahun(_tahun)
+    strategis.map(&:indikator_sasarans).flatten 
+  end
 end
