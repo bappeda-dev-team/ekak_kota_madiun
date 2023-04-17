@@ -38,7 +38,7 @@ class StrategiKotum < ApplicationRecord
   end
 
   def strategis_opd(opd_id)
-    strategis.where(opd_id: opd_id)
+    strategis.where(opd_id: opd_id).compact_blank
   end
 
   def sasaran_kotum_id

@@ -109,17 +109,7 @@ class PohonKinerjaController < ApplicationController
              current_user.opd
            end
     @nama_opd = @opd.nama_opd
-    @isu_opd = @opd.isu_strategis_pohon.to_h do |isu_kota|
-      [isu_kota, isu_kota.strategis_opd(@opd.id).to_h do |str_kota_opd|
-        [str_kota_opd, str_kota_opd.strategis_opd(@opd.id).to_h do |str_opd|
-          [str_opd, str_opd.strategi_eselon_tigas.to_h do |str_kabid|
-            [str_kabid, str_kabid.strategi_eselon_empats.to_h do |str_kasi|
-              [str_kasi, str_kasi.strategi_staffs]
-            end]
-          end]
-        end]
-      end]
-    end
+    @isu_opd = @opd.pohon_kinerja_opd
     render partial: 'pohon_kinerja/filter_rekap_opd'
   end
 end

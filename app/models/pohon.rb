@@ -44,11 +44,15 @@ class Pohon < ApplicationRecord
     pohonable.strategi
   end
 
-  def strategis_opd(opd_id)
+  def strategis_opd(_opd_id)
     strategis
   end
 
   def strategi
     keterangan
+  end
+
+  def indikators_tahun(tahun)
+    strategis.map { |str| str.indikator_sasarans.where(tahun: tahun) }
   end
 end

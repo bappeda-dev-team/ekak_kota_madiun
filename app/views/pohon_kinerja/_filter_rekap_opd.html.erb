@@ -29,29 +29,59 @@
               </tr>
               <% strategis.each.with_index(1) do |(strategi, strategi_kaopds), no_str| %>
                 <tr style="background-color: #E5FDD1;">
-                  <th class="align-middle" width="15" ><%= no_str %></th>
-                  <th class="align-middle"><%= strategi.strategi %></th>
+                  <th rowspan="<%= strategi.indikators_tahun(@tahun).size + 1 %>" class="align-middle" width="15" ><%= no_str %></th>
+                  <th rowspan="<%= strategi.indikators_tahun(@tahun).size + 1 %>" class="align-middle"><%= strategi.strategi %></th>
                 </tr>
-                <% strategi_kaopds.each do |pohon, strategi| %>
+                <% strategi.indikators_tahun(@tahun).each do |ind_kota| %>
+                  <tr style="background-color: #E5FDD1;">
+                    <td class="text-wrap"><%= ind_kota.indikator %></td>
+                    <td class=""><%= "#{ind_kota.target} #{ind_kota.satuan}" %></td>
+                  </tr>
+                <% end %>
+                <% strategi_kaopds.each do |str_kaopd, strategi| %>
                     <tr style="background-color: #C8B6A6">
-                      <td>Kepala</td>
-                      <td class="text-wrap"><%= pohon.strategi %></td>
+                      <td rowspan="<%= str_kaopd.indikators.size + 1%>">Tactical</td>
+                      <td rowspan="<%= str_kaopd.indikators.size + 1%>" class="text-wrap"><%= str_kaopd.strategi %></td>
                     </tr>
+                    <% str_kaopd.indikators.each do |ind_kaopd| %>
+                      <tr style="background-color: #C8B6A6">
+                        <td class="text-wrap"><%= ind_kaopd.indikator_kinerja %></td>
+                        <td class="text-wrap"><%= "#{ind_kaopd.target} #{ind_kaopd.satuan}" %></td>
+                      </tr>
+                    <% end %>
                     <% strategi.each do |str_kabid, str_kasis| %>
                       <tr style="background-color: #CCD5AE">
-                        <td>Kabid</td>
-                        <td class="text-wrap"><%= str_kabid.strategi %></td>
+                        <td rowspan="<%= str_kabid.indikators.size + 1 %>">Strategic</td>
+                        <td rowspan="<%= str_kabid.indikators.size + 1 %>" class="text-wrap"><%= str_kabid.strategi %></td>
                       </tr>
+                      <% str_kabid.indikators.each do |ind_kabid| %>
+                        <tr style="background-color: #CCD5AE">
+                          <td class="text-wrap"><%= ind_kabid.indikator_kinerja %></td>
+                          <td class="text-wrap"><%= "#{ind_kabid.target} #{ind_kabid.satuan}" %></td>
+                        </tr>
+                      <% end %>
                       <% str_kasis.each do |str_kasi, str_staffs| %>
                         <tr style="background-color: #E7AB9A">
-                          <td>Kasi</td>
-                          <td class="text-wrap"><%= str_kasi.strategi %></td>
+                          <td rowspan="<%= str_kasi.indikators.size + 1 %>">Operational</td>
+                          <td rowspan="<%= str_kasi.indikators.size + 1 %>"class="text-wrap"><%= str_kasi.strategi %></td>
                         </tr>
+                        <% str_kasi.indikators.each do |ind_kasi| %>
+                          <tr style="background-color: #E7AB9A">
+                            <td class="text-wrap"><%= ind_kasi.indikator_kinerja %></td>
+                            <td class="text-wrap"><%= "#{ind_kasi.target} #{ind_kasi.satuan}" %></td>
+                          </tr>
+                        <% end %>
                         <% str_staffs.each do |str_staff| %>
                           <tr style="background-color: #FFF1DC">
-                            <td>Staff</td>
-                            <td class="text-wrap"><%= str_staff.strategi %></td>
+                            <td rowspan="<%= str_staff.indikators.size + 1 %>" class="">Opertional 2</td>
+                            <td rowspan="<%= str_staff.indikators.size + 1 %>" class="text-wrap"><%= str_staff.strategi %></td>
                           </tr>
+                          <% str_staff.indikators.each do |ind_staff| %>
+                            <tr style="background-color: #FFF1DC">
+                              <td class="text-wrap"><%= ind_staff.indikator_kinerja %></td>
+                              <td class="text-wrap"><%= "#{ind_staff.target} #{ind_staff.satuan}" %></td>
+                            </tr>
+                          <% end %>
                         <% end %>
                       <% end %>
                     <% end %>

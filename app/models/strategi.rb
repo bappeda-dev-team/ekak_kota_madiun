@@ -106,4 +106,16 @@ class Strategi < ApplicationRecord
   def strategis
     self
   end
+
+  def tactical_objectives
+    strategi_eselon_tigas.where.not(strategi: "")
+  end
+
+  def operational_objectives
+    strategi_eselon_empats.where.not(strategi: "")
+  end
+
+  def operational_2_objectives
+    strategi_staffs.where.not(strategi: "")
+  end
 end
