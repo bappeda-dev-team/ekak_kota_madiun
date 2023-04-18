@@ -109,7 +109,7 @@ class PohonKinerjaController < ApplicationController
              current_user.opd
            end
     @nama_opd = @opd.nama_opd
-    @isu_opd = @opd.pohon_kinerja_opd
+    @isu_opd = @opd.pohon_kinerja_opd(@tahun)
     render partial: 'pohon_kinerja/filter_rekap_opd'
   end
 end

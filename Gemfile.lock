@@ -132,6 +132,7 @@ GEM
       numerizer (~> 0.1.1)
     chusaku (0.6.1)
       railties (>= 3.0)
+    clowne (1.4.0)
     concurrent-ruby (1.1.10)
     connection_pool (2.2.5)
     crass (1.0.6)
@@ -510,6 +511,7 @@ DEPENDENCIES
   caxlsx
   caxlsx_rails
   chusaku
+  clowne
   database_cleaner
   devise
   factory_bot_rails

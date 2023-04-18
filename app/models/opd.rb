@@ -159,8 +159,8 @@ class Opd < ApplicationRecord
     strategis.where(role: 'eselon_2').map(&:sasaran)
   end
 
-  def pohon_kinerja_opd
-    isu_strategis_pohon.to_h do |isu_kota|
+  def pohon_kinerja_opd(tahun)
+    isu_strategis_pohon.select { |isu| isu.tahun == tahun }.to_h do |isu_kota|
       [isu_kota, isu_kota.strategis_opd(id).to_h do |str_kota_opd|
         [str_kota_opd, str_kota_opd.strategis_opd(id).to_h do |str_kaopd|
           [str_kaopd, str_kaopd.tactical_objectives.to_h do |str_kabid|

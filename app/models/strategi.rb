@@ -21,7 +21,7 @@
 #
 class Strategi < ApplicationRecord
   default_scope { order(:id) }
-  belongs_to :pohon
+  belongs_to :pohon, optional: true
   belongs_to :opd, optional: true
   belongs_to :user, foreign_key: 'nip_asn', primary_key: 'nik', optional: true
   has_one :sasaran
