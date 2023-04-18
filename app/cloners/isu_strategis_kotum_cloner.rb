@@ -12,9 +12,9 @@ class IsuStrategisKotumCloner < Clowne::Cloner
 
   include_association :strategi_kotums, params: true
 
-  finalize do |source, record, **params|
-    record.kode = "#{source.kode}_#{params[:tahun]}"
-    record.tahun = params[:tahun]
+  finalize do |source, record, tahun:, **|
+    record.kode = "#{source.kode}_#{tahun}"
+    record.tahun = tahun
     record.created_at = Time.current
     record.updated_at = Time.current
   end

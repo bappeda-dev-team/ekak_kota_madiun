@@ -11,10 +11,10 @@
 class StrategiKotumCloner < Clowne::Cloner
   adapter :active_record
 
-  include_association :pohons, params: true
+  include_association :pohons, params: true, traits: :with_strategi
 
-  finalize do |_source, record, **params|
-    record.tahun = params[:tahun]
+  finalize do |_source, record, tahun:, **|
+    record.tahun = tahun
     record.created_at = Time.current
     record.updated_at = Time.current
   end

@@ -1,11 +1,13 @@
 class StrategiCloner < Clowne::Cloner
   adapter :active_record
 
-  # include_association :sasaran, params: true
-  include_associations :strategi_eselon_tigas, :strategi_eselon_empats, :strategi_staffs
+  include_association :sasaran, params: true
+  include_association :strategi_eselon_tigas, params: true
+  include_association :strategi_eselon_empats, params: true
+  include_association :strategi_staffs, params: true
 
-  finalize do |_source, record, **params|
-    record.tahun = params[:tahun]
+  finalize do |_source, record, tahun:, **|
+    record.tahun = tahun
     record.created_at = Time.current
     record.updated_at = Time.current
   end
