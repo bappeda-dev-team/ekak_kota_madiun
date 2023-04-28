@@ -112,4 +112,20 @@ class PohonKinerjaController < ApplicationController
     @isu_opd = @opd.pohon_kinerja_opd(@tahun)
     render partial: 'pohon_kinerja/filter_rekap_opd'
   end
+
+  def clone_list_opd
+    @tahun = '2024'
+    @isu_strategis = params[:isu_strategis]
+    @opd_id = params[:opd_id]
+    render partial: 'pohon_kinerja/form_clone'
+  end
+
+  def clone_pokin_opd
+    opd_id = params[:opd_id]
+    tahun_anggaran = KelompokAnggaran.find(params[:kelompok_anggaran]).kode_kelompok
+    isu_strategis = IsuStrategisKotum.find(params[:isu_strategis_id])
+    clone = IsuStrategisKotumCloner.call(isu_strategis, tahun: tahun_anggaran, opd_id: opd_id)
+    clone.persist!
+    redirect_to rekap_opd_pohon_kinerja_index_path, success: "Berhasil Cloning"
+  end
 end

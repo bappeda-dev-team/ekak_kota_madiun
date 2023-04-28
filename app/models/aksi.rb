@@ -19,17 +19,17 @@
 class Aksi < ApplicationRecord
   belongs_to :tahapan, foreign_key: 'id_rencana_aksi', primary_key: 'id_rencana_aksi', inverse_of: :aksis
   after_save :update_total_target_bulan
-  after_save :update_total_realisasi_bulan
+  # after_save :update_total_realisasi_bulan
   after_save :update_waktu
-  after_save :update_progress
+  # after_save :update_progress
   after_update :update_total_target_bulan
-  after_update :update_total_realisasi_bulan
+  # after_update :update_total_realisasi_bulan
   after_update :update_waktu
-  after_update :update_progress
+  # after_update :update_progress
   after_destroy  :update_total_target_bulan
-  after_destroy  :update_total_realisasi_bulan
+  # after_destroy  :update_total_realisasi_bulan
   after_destroy  :update_waktu
-  after_destroy  :update_progress
+  # after_destroy  :update_progress
 
   validates :target, presence: true, numericality: { only_integer: true }
   # validates :realisasi, numericality: { only_integer: true }

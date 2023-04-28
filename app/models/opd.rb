@@ -160,7 +160,7 @@ class Opd < ApplicationRecord
   end
 
   def pohon_kinerja_opd(tahun)
-    isu_strategis_pohon.select { |isu| isu.tahun == tahun }.to_h do |isu_kota|
+    isu_strategis_pohon.select { |isu| isu.tahun.match(/#{tahun}(\S*|\b)/) }.to_h do |isu_kota|
       [isu_kota, isu_kota.strategis_opd(id).to_h do |str_kota_opd|
         [str_kota_opd, str_kota_opd.strategis_opd(id).to_h do |str_kaopd|
           [str_kaopd, str_kaopd.tactical_objectives.to_h do |str_kabid|

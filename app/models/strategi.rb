@@ -62,6 +62,11 @@ class Strategi < ApplicationRecord
   }, class_name: "Strategi",
      foreign_key: "strategi_ref_id", dependent: :destroy
 
+  amoeba do
+    set tahun: '2022_p'
+    include_association %i[strategi_eselon_dua_bs strategi_eselon_tigas strategi_eselon_empats strategi_staffs]
+  end
+
   def isu_strategis_disasar
     strategi_atasan.nil? ? pohon.keterangan : "#{strategi_atasan.strategi} - #{strategi_atasan.user&.nama}"
   end
@@ -129,8 +134,8 @@ class Strategi < ApplicationRecord
 
   def indikator_subkegiatan_strategi(_tahun, kode_opd)
     sasaran.program_kegiatan.indikator_renstras_new('subekegiatan', kode_opd)
-  # rescue NoMethodError
-  #   { indikator_subkegiatan: {} }
+    # rescue NoMethodError
+    #   { indikator_subkegiatan: {} }
   end
 
   def subkegiatan_strategi

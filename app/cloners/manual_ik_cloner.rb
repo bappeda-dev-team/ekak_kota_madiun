@@ -1,9 +1,5 @@
-class IndikatorSasaranCloner < Clowne::Cloner
+class ManualIkCloner < Clowne::Cloner
   adapter :active_record
-
-  trait :with_manual do
-    include_association :manual_ik
-  end
 
   finalize do |_source, record, **|
     record.created_at = Time.current

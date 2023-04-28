@@ -11,7 +11,7 @@
 class StrategiKotumCloner < Clowne::Cloner
   adapter :active_record
 
-  include_association :pohons, params: true, traits: :with_strategi
+  include_association :pohons, ->(params) { where(opd_id: params[:opd_id]) }, params: true, traits: %i[with_strategi_sasaran]
 
   finalize do |_source, record, tahun:, **|
     record.tahun = tahun
