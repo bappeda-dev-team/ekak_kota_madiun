@@ -169,21 +169,25 @@ class Opd < ApplicationRecord
 
   def strategi_kota_opd(isu_kota)
     isu_kota.strategis_opd(id).to_h do |str_kota_opd|
-      strategi_opd(str_kota_opd)
+      [str_kota_opd, strategi_opd(str_kota_opd)]
     end
   end
 
   def strategi_opd(str_kota_opd)
-    [str_kota_opd, str_kota_opd.strategis_opd(id).to_h do |str_kaopd|
-      strategic_objective_opd(str_kaopd)
-    end]
+    str_kota_opd.strategis_opd(id).to_h do |str_kaopd|
+      [str_kaopd, tactical_opd(str_kaopd)]
+    end
   end
 
-  def strategic_objective_opd(str_kaopd)
-    [str_kaopd, str_kaopd.tactical_objectives.to_h do |str_kabid|
-      [str_kabid, str_kabid.operational_objectives.to_h do |str_kasi|
-        [str_kasi, str_kasi.operational_2_objectives]
-      end]
-    end]
+  def tactical_opd(str_kaopd)
+    str_kaopd.tactical_objectives.to_h do |str_kabid|
+      [str_kabid, operational_opd(str_kabid)]
+    end
+  end
+
+  def operational_opd(str_kabid)
+    str_kabid.operational_objectives.to_h do |str_kasi|
+      [str_kasi, str_kasi.operational_2_objectives]
+    end
   end
 end
