@@ -145,7 +145,7 @@ class Strategi < ApplicationRecord
   end
 
   def programs_strategi
-    operational_objectives.map(&:program_kegiatan_strategi).group_by(&:nama_program)
+    operational_objectives.map(&:program_kegiatan_strategi).compact_blank.group_by(&:nama_program)
   rescue NoMethodError
     { Kosong: [] }
   end

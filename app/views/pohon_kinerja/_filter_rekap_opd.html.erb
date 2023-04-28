@@ -13,6 +13,22 @@
           <h2 class="fs-5 fw-bold mb-0">Pohon Kinerja <%= @nama_opd %> - Tahun <%= @tahun %></h2>
           <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-print me-2"></i>Cetak</a>
         </div>
+        <div class="card-header border-bottom d-flex align-items-center justify-content-between">
+          <ul>
+            <li>Jumlah Isu Strategis: <%= @isu_opd.size %></li>
+            <li>Jumlah Strategi Kota: <%= @isu_opd.map { |_, strategis| strategis.count }.inject(:+) %></li>
+            <li>Jumlah Tactical Objective: <%= @isu_opd.map { |_, strategis| strategis.map {|_, str_opds| str_opds.count}.inject(:+) }.inject(:+) %></li>
+            <li>Jumlah Strategic Objective: <%= @isu_opd.map { |_, strategis| strategis.map {|_, str_opds| 
+              str_opds.map { |_, str_kabids| str_kabids.count }.inject(:+) }.inject(:+) }.inject(:+) %></li>
+            <li>Jumlah Operational Objective: <%= @isu_opd.map { |_, strategis| strategis.map {|_, str_opds| 
+              str_opds.map { |_, str_kabids| str_kabids.map { |_, str_kasis| str_kasis.count }.inject(:+) }.inject(:+) }.inject(:+) }.inject(:+) %></li>
+            <li>Jumlah Operational Objective 2: <%= @isu_opd.map { |_, strategis| strategis.map {|_, str_opds| 
+              str_opds.map { |_, str_kabids| 
+                str_kabids.map { |_, str_kasis| 
+                  str_kasis.map { |_, str_staffs| 
+                    str_staffs&.count }.inject(:+) }.inject(:+) }.inject(:+) }.inject(:+) }.inject(:+) %></li>
+          </ul>
+        </div>
         <table class="table table-bordered border-primary rounded">
           <thead>
             <tr>
