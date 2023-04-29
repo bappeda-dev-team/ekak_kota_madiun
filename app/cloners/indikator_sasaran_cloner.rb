@@ -6,6 +6,7 @@ class IndikatorSasaranCloner < Clowne::Cloner
   end
 
   finalize do |_source, record, **|
+    record.keterangan = "cloned"
     record.created_at = Time.current
     record.updated_at = Time.current
   end

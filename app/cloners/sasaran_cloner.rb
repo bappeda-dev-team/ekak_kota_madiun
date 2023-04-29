@@ -17,11 +17,12 @@ class SasaranCloner < Clowne::Cloner
 
   after_clone do |origin, cloned, tahun:, **|
     cloned.id_rencana = "clone_#{origin.id_rencana}_#{tahun}"
-    cloned.indikator_sasarans.first.update(sasaran_id: origin.id_rencana)
   end
 
   after_persist do |origin, cloned, **|
-    cloned.indikator_sasarans.first.update(sasaran_id: origin.id_rencana)
+    cloned.indikator_sasarans.each do |indikator|
+      indikator.update(sasaran_id: origin.id_rencana) if indikator.keterangan == "cloned"
+    end
   end
 
   finalize do |_source, record, tahun:, **|

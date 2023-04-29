@@ -141,10 +141,13 @@ class Opd < ApplicationRecord
     pohons.where(pohons: { pohonable_type: %w[StrategiKotum IsuStrategisOpd] })
   end
 
+  def unique_isu_pohon_opd
+    pohon_opd.uniq { |pohon| pohon.pohonable.isu }.map { |bb| bb.pohonable.isu }
+  end
+
   def isu_strategis_pohon(tahun)
-    pohon_opd.uniq do |aa|
-      aa.pohonable.isu
-    end.map { |bb| bb.pohonable.isu }.select { |isu| isu.tahun.match(/#{tahun}(\S*|\b)/) }
+    unique_isu_pohon_opd
+      .select { |isu| isu.tahun.match(/#{tahun}(\S*|\b)/) }
   end
 
   def strategi_kepala_by_strategi_kota(pohon_id)
@@ -189,5 +192,50 @@ class Opd < ApplicationRecord
     str_kabid.operational_objectives.to_h do |str_kasi|
       [str_kasi, str_kasi.operational_2_objectives]
     end
+  end
+
+  def tactical_tahun(tahun)
+    strategi_eselon2.select { |isu| isu.tahun.match(/#{tahun}(\S*|\b)/) }
+  end
+
+  def strategic_tahun(tahun)
+    strategi_eselon3.select { |isu| isu.tahun.match(/#{tahun}(\S*|\b)/) }
+  end
+
+  def operational_tahun(tahun)
+    strategi_eselon4.select { |isu| isu.tahun.match(/#{tahun}(\S*|\b)/) }
+  end
+
+  def operational_2_tahun(tahun)
+    strategi_staff.select { |isu| isu.tahun.match(/#{tahun}(\S*|\b)/) }
+  end
+
+  def indikator_tactical_tahun(tahun)
+    tactical_tahun(tahun).map(&:indikator_sasarans).flatten
+  end
+
+  def indikator_strategic_tahun(tahun)
+    strategic_tahun(tahun).map(&:indikator_sasarans).flatten
+  end
+
+  def indikator_operational_tahun(tahun)
+    operational_tahun(tahun).map(&:indikator_sasarans).flatten
+  end
+
+  def indikator_operational_2_tahun(tahun)
+    operational_2_tahun(tahun).map(&:indikator_sasarans).flatten
+  end
+
+  def data_total_pokin(tahun)
+    {
+      tactical: tactical_tahun(tahun).count,
+      indikator_tactical: indikator_tactical_tahun(tahun).count,
+      strategic: strategic_tahun(tahun).count,
+      indikator_strategic: indikator_strategic_tahun(tahun).count,
+      operational: operational_tahun(tahun).count,
+      indikator_operational: indikator_operational_tahun(tahun).count,
+      operational_staff: operational_2_tahun(tahun).count,
+      indikator_staff: indikator_operational_2_tahun(tahun).count
+    }
   end
 end

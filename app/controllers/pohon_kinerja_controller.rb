@@ -110,6 +110,7 @@ class PohonKinerjaController < ApplicationController
            end
     @nama_opd = @opd.nama_opd
     @isu_opd = @opd.pohon_kinerja_opd(@tahun)
+    @rekap_jumlah = @opd.data_total_pokin(@tahun)
     render partial: 'pohon_kinerja/filter_rekap_opd'
   end
 

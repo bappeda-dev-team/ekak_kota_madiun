@@ -6,6 +6,7 @@
 #  aspek             :string
 #  id_indikator      :string
 #  indikator_kinerja :string
+#  keterangan        :string
 #  satuan            :string
 #  target            :string
 #  type              :string

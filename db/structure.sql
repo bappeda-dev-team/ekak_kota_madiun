@@ -670,7 +670,8 @@ CREATE TABLE public.indikator_sasarans (
     sasaran_id character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    type character varying
+    type character varying,
+    keterangan character varying
 );
 
 
@@ -4676,6 +4677,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230313033100'),
 ('20230313043326'),
 ('20230405073638'),
-('20230413030428');
+('20230413030428'),
+('20230429111203');
 
 
