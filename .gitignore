@@ -44,3 +44,4 @@ yarn-debug.log*
 /config/credentials.yml.enc
 .vscode/launch.json
 Procfile.dev
+.dump.rdb
