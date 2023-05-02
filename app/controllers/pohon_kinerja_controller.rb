@@ -39,13 +39,17 @@ class PohonKinerjaController < ApplicationController
 
   def excel_opd
     @tahun = cookies[:tahun] || '2023'
-    kode_opd = cookies[:opd]
+    opd_params = cookies[:opd]
     @timestamp = Time.now.to_formatted_s(:number)
-    @opd = Opd.find_by(kode_unik_opd: kode_opd)
-    @pohons = @opd.pohons
-    @kotak_usulan = @opd.usulans
-    @isu_strategis_pohon = @opd.isu_strategis_pohon
-    @filename = "Pohon Kinerja #{@opd.nama_opd} #{@tahun} - #{@timestamp}.xlsx"
+    @opd = if opd_params
+             Opd.find_by(kode_unik_opd: opd_params)
+           else
+             current_user.opd
+           end
+    @nama_opd = @opd.nama_opd
+    @isu_opd = @opd.pohon_kinerja_opd(@tahun)
+    # @rekap_jumlah = @opd.data_total_pokin(@tahun)
+    @filename = "Pohon Kinerja #{@nama_opd} #{@tahun} - #{@timestamp}.xlsx"
     render xlsx: "pohon_opd_excel", filename: @filename
   end
 
