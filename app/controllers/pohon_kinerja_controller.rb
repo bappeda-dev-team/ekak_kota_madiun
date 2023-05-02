@@ -1,5 +1,6 @@
 class PohonKinerjaController < ApplicationController
   skip_before_action :verify_authenticity_token, only: %i[admin_filter filter_rekap filter_rekap_opd]
+  before_action :clone_params, only: %i[clone_pokin_opd]
 
   def kota; end
 
@@ -82,7 +83,7 @@ class PohonKinerjaController < ApplicationController
 
   def filter_rekap
     @tahun = cookies[:tahun] || '2023'
-    @isu_kota = IsuStrategisKotum.where(tahun: @tahun).to_h do |isu_kota|
+    @isu_kota = IsuStrategisKotum.where('tahun ILIKE ?', "%#{@tahun}%").to_h do |isu_kota|
       [isu_kota, isu_kota.strategi_kotums.to_h do |str_kota|
         [str_kota, str_kota.pohons]
       end]
@@ -115,18 +116,43 @@ class PohonKinerjaController < ApplicationController
   end
 
   def clone_list_opd
-    @tahun = '2024'
+    @tahun = cookies[:tahun]
     @isu_strategis = params[:isu_strategis]
     @opd_id = params[:opd_id]
     render partial: 'pohon_kinerja/form_clone'
   end
 
   def clone_pokin_opd
-    opd_id = params[:opd_id]
-    tahun_anggaran = KelompokAnggaran.find(params[:kelompok_anggaran]).kode_kelompok
-    isu_strategis = IsuStrategisKotum.find(params[:isu_strategis_id])
-    clone = IsuStrategisKotumCloner.call(isu_strategis, tahun: tahun_anggaran, opd_id: opd_id)
+    if isu_straegis_cloned?
+      redirect_to rekap_opd_pohon_kinerja_index_path, warning: "sudah dicloning"
+    else
+      cloner(@isu_strategis_id, @kelompok_anggaran_id, @opd_id, @tahun_asal)
+      redirect_to rekap_opd_pohon_kinerja_index_path, success: "Cloned"
+    end
+  end
+
+  private
+
+  def clone_params
+    @opd_id = params[:opd_id]
+    @isu_strategis_id = params[:isu_strategis_id]
+    @kelompok_anggaran_id = params[:kelompok_anggaran]
+    @tahun_asal = params[:tahun_asal]
+  end
+
+  def isu_straegis_cloned?
+    isu_asli = IsuStrategisKotum.find(@isu_strategis_id).isu_strategis
+    IsuStrategisKotum.where('kode ILIKE ?', "%#{isu_asli}%").where('keterangan ILIKE ?', '%clone%').any?
+  end
+
+  def cloner(isu_strategis_id, kelompok_anggaran_id, opd_id, tahun_asal)
+    tahun_anggaran = KelompokAnggaran.find(kelompok_anggaran_id).kode_kelompok
+    isu_strategis = IsuStrategisKotum.find(isu_strategis_id)
+    clone = IsuStrategisKotumCloner.call(isu_strategis,
+                                         tahun: tahun_anggaran,
+                                         tahun_asal: tahun_asal,
+                                         opd_id: opd_id,
+                                         traits: [:per_opd])
     clone.persist!
-    redirect_to rekap_opd_pohon_kinerja_index_path, success: "Berhasil Cloning"
   end
 end

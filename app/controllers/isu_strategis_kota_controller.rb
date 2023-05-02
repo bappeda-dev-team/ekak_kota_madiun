@@ -1,5 +1,5 @@
 class IsuStrategisKotaController < ApplicationController
-  before_action :set_isu_strategis_kota, only: %i[ show edit update destroy ]
+  before_action :set_isu_strategis_kota, only: %i[show edit update destroy]
 
   def index
     handle_filters
@@ -9,8 +9,7 @@ class IsuStrategisKotaController < ApplicationController
     @isu_strategis = IsuStrategisKotum.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @isu_strategis = IsuStrategisKotum.new(isu_strategis_params)
@@ -67,7 +66,7 @@ class IsuStrategisKotaController < ApplicationController
       @isu_strategis_kota = IsuStrategisKotum.all
     else
       @tahun = "Tahun #{tahun}"
-      @isu_strategis_kota = IsuStrategisKotum.where(tahun: tahun)
+      @isu_strategis_kota = IsuStrategisKotum.where('tahun ILIKE ?', "%#{tahun}%")
     end
   end
 end

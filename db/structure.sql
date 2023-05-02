@@ -785,7 +785,8 @@ CREATE TABLE public.isu_strategis_kota (
     tahun character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    lembaga_id bigint DEFAULT 1
+    lembaga_id bigint DEFAULT 1,
+    keterangan character varying
 );
 
 
@@ -820,7 +821,8 @@ CREATE TABLE public.isu_strategis_opds (
     kode_opd character varying NOT NULL,
     tujuan character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    keterangan character varying
 );
 
 
@@ -2345,7 +2347,8 @@ CREATE TABLE public.strategi_kota (
     sasaran_kota_id character varying,
     isu_strategis_kota_id character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    keterangan character varying
 );
 
 
@@ -2380,7 +2383,8 @@ CREATE TABLE public.strategi_opds (
     isu_strategis_opd_id character varying,
     opd_id character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    keterangan character varying
 );
 
 
@@ -4678,6 +4682,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230313043326'),
 ('20230405073638'),
 ('20230413030428'),
-('20230429111203');
+('20230429111203'),
+('20230502010013');
 
 

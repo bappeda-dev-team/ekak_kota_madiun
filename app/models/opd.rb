@@ -199,15 +199,15 @@ class Opd < ApplicationRecord
   end
 
   def strategic_tahun(tahun)
-    strategi_eselon3.select { |isu| isu.tahun.match(/#{tahun}(\S*|\b)/) }
+    strategi_eselon3.where.not(strategi_ref_id: "").select { |isu| isu.tahun.match(/#{tahun}(\S*|\b)/) }
   end
 
   def operational_tahun(tahun)
-    strategi_eselon4.select { |isu| isu.tahun.match(/#{tahun}(\S*|\b)/) }
+    strategi_eselon4.where.not(strategi_ref_id: "").select { |isu| isu.tahun.match(/#{tahun}(\S*|\b)/) }
   end
 
   def operational_2_tahun(tahun)
-    strategi_staff.select { |isu| isu.tahun.match(/#{tahun}(\S*|\b)/) }
+    strategi_staff.where.not(strategi_ref_id: "").select { |isu| isu.tahun.match(/#{tahun}(\S*|\b)/) }
   end
 
   def indikator_tactical_tahun(tahun)
