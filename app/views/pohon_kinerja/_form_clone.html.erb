@@ -1,0 +1,18 @@
+<%= form_with(url: @url, method: :post,local: false) do |form| %>
+  <%= form.hidden_field :isu_strategis_id, { readonly: true, value: @isu_strategis } %>
+  <%= form.hidden_field :opd_id, { readonly: true, value: @opd_id } %>
+  <div class="field">
+    <%= form.label :tahun_sekarang, { class: "form-label" } %>
+    <%= form.text_field :tahun_asal, { class: "form-control", readonly: true, value: @tahun_sekarang } %>
+  </div>
+  <div class="field">
+    <%= form.label :tahun_clone, { class: "form-label" } %>
+    <%= form.select :kelompok_anggaran, options_for_select(KelompokAnggaran.all.collect { |ka| [ka.nama_sederhana_kelompok_tahun, ka.id] } ), {include_blank: true},
+                    { data: { placeholder: "Pilih Tahun Cloning",
+                              controller: 'dropdown'
+                    } } %>
+  </div>
+  <div class="actions my-4">
+    <%= form.submit "Clone" %>
+  </div>
+<% end %>

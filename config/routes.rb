@@ -33,6 +33,9 @@ Rails.application.routes.draw do
       post :filter_rekap
       get :rekap_opd
       post :filter_rekap_opd
+      get :clone_list_opd
+      post :clone_pokin_opd
+      post :clone_pokin_kota
     end
   end
   resources :strategi_opds

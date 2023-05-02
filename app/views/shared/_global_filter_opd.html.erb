@@ -5,7 +5,7 @@
    <%= form.hidden_field :jenis, value: filter_jenis %>
    <% all_opd = local_assigns[:all]  %>
    <div class="input-group input-group-merge">
-     <%= form.select :kode_opd,  dropdown_opd(all: 'Kota'),{include_blank: true},
+     <%= form.select :kode_opd,  dropdown_opd,{include_blank: true},
        {class: "form-control", data: {"placeholder": "Perangkat Daerah",
                                       controller: "dropdown",
                   dropdown_width_value: "50%",

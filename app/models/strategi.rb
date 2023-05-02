@@ -21,7 +21,7 @@
 #
 class Strategi < ApplicationRecord
   default_scope { order(:id) }
-  belongs_to :pohon
+  belongs_to :pohon, optional: true
   belongs_to :opd, optional: true
   belongs_to :user, foreign_key: 'nip_asn', primary_key: 'nik', optional: true
   has_one :sasaran
@@ -61,6 +61,11 @@ class Strategi < ApplicationRecord
     where(role: "staff").where.not(nip_asn: "")
   }, class_name: "Strategi",
      foreign_key: "strategi_ref_id", dependent: :destroy
+
+  amoeba do
+    set tahun: '2022_p'
+    include_association %i[strategi_eselon_dua_bs strategi_eselon_tigas strategi_eselon_empats strategi_staffs]
+  end
 
   def isu_strategis_disasar
     strategi_atasan.nil? ? pohon.keterangan : "#{strategi_atasan.strategi} - #{strategi_atasan.user&.nama}"
@@ -129,8 +134,8 @@ class Strategi < ApplicationRecord
 
   def indikator_subkegiatan_strategi(_tahun, kode_opd)
     sasaran.program_kegiatan.indikator_renstras_new('subekegiatan', kode_opd)
-  # rescue NoMethodError
-  #   { indikator_subkegiatan: {} }
+    # rescue NoMethodError
+    #   { indikator_subkegiatan: {} }
   end
 
   def subkegiatan_strategi
@@ -140,7 +145,7 @@ class Strategi < ApplicationRecord
   end
 
   def programs_strategi
-    operational_objectives.map(&:program_kegiatan_strategi).group_by(&:nama_program)
+    operational_objectives.map(&:program_kegiatan_strategi).compact_blank.group_by(&:nama_program)
   rescue NoMethodError
     { Kosong: [] }
   end

@@ -4,6 +4,7 @@
 #
 #  id            :bigint           not null, primary key
 #  isu_strategis :string           not null
+#  keterangan    :string
 #  kode          :string           not null
 #  tahun         :string           not null
 #  created_at    :datetime         not null
@@ -22,5 +23,9 @@ class IsuStrategisKotum < ApplicationRecord
 
   def strategis_opd(opd_id)
     strategis(opd_id)
+  end
+
+  def clone_mapper
+    IsuStrategisKotum.where('kode ILIKE ?', "%#{kode}%")
   end
 end

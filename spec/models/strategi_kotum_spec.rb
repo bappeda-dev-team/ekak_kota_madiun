@@ -3,6 +3,7 @@
 # Table name: strategi_kota
 #
 #  id                    :bigint           not null, primary key
+#  keterangan            :string
 #  strategi              :string
 #  tahun                 :string
 #  created_at            :datetime         not null

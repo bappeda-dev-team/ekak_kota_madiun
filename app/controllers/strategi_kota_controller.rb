@@ -117,7 +117,7 @@ class StrategiKotaController < ApplicationController
       @strategi_kota = StrategiKotum.all.includes([:isu_strategis_kotum])
     else
       @tahun = "Tahun #{tahun}"
-      @strategi_kota = StrategiKotum.where(tahun: tahun).includes([:isu_strategis_kotum])
+      @strategi_kota = StrategiKotum.where('tahun ILIKE ?', "%#{tahun}%").includes([:isu_strategis_kotum])
     end
   end
 end

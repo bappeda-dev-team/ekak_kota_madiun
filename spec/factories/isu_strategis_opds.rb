@@ -4,6 +4,7 @@
 #
 #  id            :bigint           not null, primary key
 #  isu_strategis :string           not null
+#  keterangan    :string
 #  kode          :string           not null
 #  kode_opd      :string           not null
 #  tahun         :string           not null
