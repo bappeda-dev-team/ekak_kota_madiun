@@ -46,15 +46,19 @@ class PohonKinerjaController < ApplicationController
     @kotak_usulan = @opd.usulans
     @isu_strategis_pohon = @opd.isu_strategis_pohon
     @filename = "Pohon Kinerja #{@opd.nama_opd} #{@tahun} - #{@timestamp}.xlsx"
-    render xlsx: "pohon_opd_excel", filename: @filename, disposition: "inline"
+    render xlsx: "pohon_opd_excel", filename: @filename
   end
 
   def excel_kota
     @tahun = cookies[:tahun] || '2023'
     @timestamp = Time.now.to_formatted_s(:number)
     @filename = "Pohon Kinerja Kota #{@tahun} - #{@timestamp}.xlsx"
-    @isu_strategis_kota = IsuStrategisKotum.where(tahun: @tahun)
-    render xlsx: "pohon_kota_excel", filename: @filename, disposition: "inline"
+    @isu_kota = IsuStrategisKotum.where('tahun ILIKE ?', "%#{@tahun}%").to_h do |isu_kota|
+      [isu_kota, isu_kota.strategi_kotums.to_h do |str_kota|
+        [str_kota, str_kota.pohons]
+      end]
+    end
+    render xlsx: "pohon_kota_excel", filename: @filename
   end
 
   def pdf_kota
@@ -93,12 +97,7 @@ class PohonKinerjaController < ApplicationController
 
   def rekap_opd
     @kode_opd = cookies[:opd]
-    @opd = case @kode_opd
-           when 'all'
-             'all'
-           else
-             Opd.find_by(kode_opd: @kode_opd)
-           end
+    @opd = Opd.find_by(kode_opd: @kode_opd)
   end
 
   def filter_rekap_opd
