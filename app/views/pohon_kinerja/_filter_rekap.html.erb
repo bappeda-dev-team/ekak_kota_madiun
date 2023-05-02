@@ -23,9 +23,24 @@
             </tr>
           </thead>
           <tbody>
-            <% @isu_kota.each do |isu_kota, strategis| %>
+            <% @isu_kota.each.with_index(1) do |(isu_kota, strategis), no_isu| %>
               <tr>
-                <th colspan="4">Isu Strategis Kota: <%= isu_kota.isu_strategis %></th>
+                <th colspan="4">Isu Strategis Kota <%= no_isu %>: <%= isu_kota.isu_strategis %>
+                &nbsp;
+                <%= link_to clone_list_opd_pohon_kinerja_index_path(isu_strategis: isu_kota.id,
+                                                                    tahun_sekarang: @tahun,
+                                                                    jenis: 'kota'), remote: true, 
+                    data: { 
+                      controller: 'form-modal',
+                      action: 'form-modal#appendForm',
+                      form_modal_location_param: 'form-clone-body',
+                      bs_toggle: 'modal',
+                      bs_target: '#form-clone'
+                    },
+                    class: "btn btn-sm btn-primary" do %>
+                    <i class="fa fa-clone me-2"></i>Clone
+                  <% end %>
+                </th>
               </tr>
               <% strategis.each.with_index(1) do |(strategi, pohons), no_str| %>
                 <tr style="background-color: #E5FDD1;">
@@ -55,23 +70,11 @@
                     <% end %>
                   <% end %>
                 <% end%>
-                <tr style=" background: repeating-linear-gradient(
-  -55deg,
-  #222,
-  #222 10px,
-  #333 10px,
-  #333 20px
-);border: 0px" >
+                <tr class="rekap_pokin_separator" >
                   <td colspan="4"></td>
                 </tr>
               <% end%>
-                <tr style=" background: repeating-linear-gradient(
-  -55deg,
-  #222,
-  #222 10px,
-  #333 10px,
-  #333 20px
-);border: 0px" >
+                <tr class="rekap_pokin_separator" >
                   <td colspan="4"></td>
                 </tr>
             <% end %>

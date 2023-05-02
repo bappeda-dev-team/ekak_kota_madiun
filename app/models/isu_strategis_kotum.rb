@@ -24,4 +24,8 @@ class IsuStrategisKotum < ApplicationRecord
   def strategis_opd(opd_id)
     strategis(opd_id)
   end
+
+  def clone_mapper
+    IsuStrategisKotum.where('kode ILIKE ?', "%#{kode}%")
+  end
 end

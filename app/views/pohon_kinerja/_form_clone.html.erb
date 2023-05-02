@@ -1,9 +1,9 @@
-<%= form_with(url: clone_pokin_opd_pohon_kinerja_index_path, method: :post,local: false) do |form| %>
+<%= form_with(url: @url, method: :post,local: false) do |form| %>
   <%= form.hidden_field :isu_strategis_id, { readonly: true, value: @isu_strategis } %>
   <%= form.hidden_field :opd_id, { readonly: true, value: @opd_id } %>
   <div class="field">
     <%= form.label :tahun_sekarang, { class: "form-label" } %>
-    <%= form.text_field :tahun_asal, { class: "form-control", readonly: true, value: @tahun } %>
+    <%= form.text_field :tahun_asal, { class: "form-control", readonly: true, value: @tahun_sekarang } %>
   </div>
   <div class="field">
     <%= form.label :tahun_clone, { class: "form-label" } %>

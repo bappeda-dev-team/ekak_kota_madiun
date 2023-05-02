@@ -41,7 +41,10 @@
               <tr>
                 <th colspan="4" class="text-wrap"><%= isu.class.name.pluralize.underscore.titleize %>: <%= isu.isu_strategis %>
                 &nbsp;
-                  <%= link_to clone_list_opd_pohon_kinerja_index_path(isu_strategis: isu.id, opd_id: @opd.id), remote: true, 
+                <%= link_to clone_list_opd_pohon_kinerja_index_path(isu_strategis: isu.id,
+                                                                    opd_id: @opd.id,
+                                                                    tahun_sekarang: @tahun,
+                                                                    jenis: 'opd'), remote: true, 
                     data: { 
                       controller: 'form-modal',
                       action: 'form-modal#appendForm',
