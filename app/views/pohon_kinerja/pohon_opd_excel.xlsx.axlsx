@@ -19,34 +19,34 @@ style_separator = s.add_style(bg_color: 'F0F0F0')
 wb.add_worksheet(name: "Pohon Kinerja OPD") do |sheet| # rubocop:disable Metrics/BlockLength
         sheet.add_row ["", "POHON KINERJA #{@nama_opd} TAHUN #{@tahun}"], style: project_heading
         sheet.add_row [nil]
-        sheet.add_row ["No", "Strategi", "Indikator", "Target / Satuan"], style: style_nama_kota
+        sheet.add_row ["Jenis", "Strategi", "Indikator", "Target", "Satuan"], style: style_nama_kota
 # ISU STRATEGIS
-        @isu_opd.each.with_index(1) do |(isu, strategis), no_isu| # rubocop:disable Metrics/BlockLength
-          sheet.add_row ["", "#{isu.class.name.pluralize.underscore.titleize} #{no_isu}: #{isu.isu_strategis}", "", ""], style: style_isu_strategis_kota
-          strategis.each.with_index(1) do |(strategi, strategi_kaopds), no_str|
-               sheet.add_row [no_str.to_s, strategi.strategi] 
+        @isu_opd.each do |isu, strategis| # rubocop:disable Metrics/BlockLength
+          sheet.add_row [isu.class.name.pluralize.underscore.titleize, isu.isu_strategis, "", "", ""], style: style_isu_strategis_kota
+          strategis.each do |strategi, strategi_kaopds|
+               sheet.add_row ["Strategi Kota", strategi.strategi, "", "", ""] 
                strategi.indikators_tahun(@tahun).each do |ind_kota|
-                        sheet.add_row ["", "", ind_kota.indikator, "#{ind_kota.target} #{ind_kota.satuan}"]
+                        sheet.add_row ["", "", ind_kota.indikator, ind_kota.target, ind_kota.satuan]
                end
                 strategi_kaopds.each do |str_kaopd, strategi|
-                        sheet.add_row ["Tactical", str_kaopd.strategi]
+                        sheet.add_row ["Tactical", str_kaopd.strategi, "", "", ""]
                         str_kaopd.indikators.each do |ind_kaopd|
-                                sheet.add_row ["", "", ind_kaopd.indikator, "#{ind_kaopd.target} #{ind_kaopd.satuan}"]
+                                sheet.add_row ["", "", ind_kaopd.indikator, ind_kaopd.target, ind_kaopd.satuan]
                         end
                         strategi.each do |str_kabid, str_kasis|
-                                sheet.add_row ["Strategic", str_kaopd.strategi]
+                                sheet.add_row ["Strategic", str_kaopd.strategi, "", "", ""]
                                 str_kabid.indikators.each do |ind_kabid|
-                                        sheet.add_row ["", "", ind_kabid.indikator, "#{ind_kabid.target} #{ind_kabid.satuan}"]
+                                        sheet.add_row ["", "", ind_kabid.indikator, ind_kabid.target, ind_kabid.satuan]
                                 end
                                 str_kasis.each do |str_kasi, str_staffs|
-                                        sheet.add_row ["Operational", str_kasi.strategi]
+                                        sheet.add_row ["Operational", str_kasi.strategi, "", "", ""]
                                         str_kasi.indikators.each do |ind_kasi|
-                                                sheet.add_row ["", "", ind_kasi.indikator, "#{ind_kasi.target} #{ind_kasi.satuan}"]
+                                                sheet.add_row ["", "", ind_kasi.indikator, ind_kasi.target, ind_kasi.satuan]
                                         end
                                         str_staffs.each do |str_staff|
                                                 sheet.add_row ["Operational 2", str_staff.strategi]
                                                 str_staff.indikators.each do |ind_staff|
-                                                        sheet.add_row ["", "", ind_staff.indikator, "#{ind_staff.target} #{ind_staff.satuan}"]
+                                                        sheet.add_row ["", "", ind_staff.indikator, ind_staff.target, ind_staff.satuan]
                                                 end
                                         end
                                 end

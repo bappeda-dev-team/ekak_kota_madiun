@@ -153,4 +153,8 @@ class Strategi < ApplicationRecord
   def rekap_program_opd
     tactical_objectives.map { |aa| aa.programs_strategi.keys }.flatten
   end
+
+  def renaksi
+    sasaran.tahapans.pluck(:tahapan_kerja)
+  end
 end
