@@ -50,7 +50,12 @@ class PohonKinerjaController < ApplicationController
     @isu_opd = @opd.pohon_kinerja_opd(@tahun)
     # @rekap_jumlah = @opd.data_total_pokin(@tahun)
     @filename = "Pohon Kinerja #{@nama_opd} #{@tahun} - #{@timestamp}.xlsx"
-    render xlsx: "pohon_opd_excel", filename: @filename
+    if @opd.id == 145
+      render xlsx: "pohon_setda_excel", filename: @filename
+    else
+
+      render xlsx: "pohon_opd_excel", filename: @filename
+    end
   end
 
   def excel_kota
