@@ -11,6 +11,7 @@ class StrategiCloner < Clowne::Cloner
     include_association :strategi_staffs, params: true, traits: :just_strategi
   end
 
+  # include_association :strategi_eselon_dua_bs, params: true, traits: :with_sasaran
   include_association :strategi_eselon_tigas, params: true, traits: :with_sasaran
   include_association :strategi_eselon_empats, params: true, traits: :with_sasaran
   include_association :strategi_staffs, params: true, traits: :with_sasaran

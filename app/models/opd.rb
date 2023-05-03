@@ -177,8 +177,20 @@ class Opd < ApplicationRecord
   end
 
   def strategi_opd(str_kota_opd)
-    str_kota_opd.strategis_opd(id).to_h do |str_kaopd|
-      [str_kaopd, tactical_opd(str_kaopd)]
+    if id == 145 || kode_opd == '1260'
+      str_kota_opd.strategis_opd(id).to_h do |str_kaopd|
+        [str_kaopd, tactical_setda(str_kaopd)]
+      end
+    else
+      str_kota_opd.strategis_opd(id).to_h do |str_kaopd|
+        [str_kaopd, tactical_opd(str_kaopd)]
+      end
+    end
+  end
+
+  def tactical_setda(str_kaopd)
+    str_kaopd.tactical_2b_objectives.to_h do |str_2b|
+      [str_2b, tactical_opd(str_2b)]
     end
   end
 
