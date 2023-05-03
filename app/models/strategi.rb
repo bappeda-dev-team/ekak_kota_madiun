@@ -116,6 +116,10 @@ class Strategi < ApplicationRecord
     self
   end
 
+  def tactical_2b_objectives
+    strategi_eselon_dua_bs.includes(:indikator_sasarans).where.not(strategi: "")
+  end
+
   def tactical_objectives
     strategi_eselon_tigas.includes(:indikator_sasarans).where.not(strategi: "")
   end

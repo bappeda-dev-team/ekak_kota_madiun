@@ -73,12 +73,15 @@
                 <% end %>
                 <% strategi_kaopds.each do |str_kaopd, strategi| %>
                   <%= render 'row_strategi', strategi: str_kaopd, jenis: "Tactical", style: "background-color: #C8B6A6" %>
-                  <% strategi.each do |str_kabid, str_kasis| %>
-                    <%= render 'row_strategi', strategi: str_kabid, jenis: "Strategic", style: "background-color: #CCD5AE", show_program: true %>
-                    <% str_kasis.each do |str_kasi, str_staffs| %>
-                      <%= render 'row_strategi', strategi: str_kasi, jenis: "Operational", style: "background-color: #E7AB9A", show_sub: true %>
-                      <% str_staffs.each do |str_staff| %>
-                        <%= render 'row_strategi', strategi: str_staff, jenis: "Operational 2", style: "background-color: #FFF1DC" %>
+                  <% strategi.each do |str_kabid, str_2bs| %>
+                    <%= render 'row_strategi', strategi: str_kabid, jenis: "Strategic", style: "background-color: #CCD5AE" %>
+                    <% str_2bs.each do |str_2b, str_kasis| %>
+                      <%= render 'row_strategi', strategi: str_2b, jenis: "Strategic 2", style: "background-color: #CCD5AE", show_program: true %>
+                      <% str_kasis.each do |str_kasi, str_staffs| %>
+                        <%= render 'row_strategi', strategi: str_kasi, jenis: "Operational", style: "background-color: #E7AB9A", show_sub: true %>
+                        <% str_staffs.each do |str_staff| %>
+                          <%= render 'row_strategi', strategi: str_staff, jenis: "Operational 2", style: "background-color: #FFF1DC" %>
+                        <% end %>
                       <% end %>
                     <% end %>
                   <% end %>
