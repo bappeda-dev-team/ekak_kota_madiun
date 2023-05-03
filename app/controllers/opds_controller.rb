@@ -69,7 +69,7 @@ class OpdsController < ApplicationController
     @opd_id = @opd.id
     @tahun = params[:tahun] || 2023
     @kotak_usulan = @opd.usulans
-    @isu_strategis_pohon = @opd.isu_strategis_pohon
+    @isu_strategis_pohon = @opd.isu_strategis_pohon(@tahun)
     return unless @opd_id == 145
 
     render 'kotak_usulan_setda'
