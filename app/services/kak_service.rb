@@ -24,29 +24,35 @@ class KakService
   end
 
   def laporan_rencana_kinerja
-    programs = program_kegiatans_by_opd.map do |pk|
+    # programs = program_kegiatans_by_opd.map do |pk|
+    #   sasarans_filter(@tahun, pk.sasarans)
+    # end.compact_blank!.flatten.group_by(&:program_kegiatan)
+    #
+    # if OPD_TABLE.key?(opd.nama_opd.to_sym)
+    #   programs = program_kegiatan_opd_khusus(id_sub_unit: KODE_OPD_BAGIAN[opd.nama_opd.to_sym]).map do |pk|
+    #     sasarans_filter(@tahun, pk.sasarans)
+    #   end.compact_blank!.flatten.group_by(&:program_kegiatan)
+    # end
+
+    # programs
+    program_kegiatans_by_opd.map do |pk|
       sasarans_filter(@tahun, pk.sasarans)
     end.compact_blank!.flatten.group_by(&:program_kegiatan)
-
-    if OPD_TABLE.key?(opd.nama_opd.to_sym)
-      programs = program_kegiatan_opd_khusus(id_sub_unit: KODE_OPD_BAGIAN[opd.nama_opd.to_sym]).map do |pk|
-        sasarans_filter(@tahun, pk.sasarans)
-      end.compact_blank!.flatten.group_by(&:program_kegiatan)
-    end
-
-    programs
   end
 
   def sasarans_by_user
-    asn_aktif = asn_aktif_by_opd.map do |user_aktif|
+    # asn_aktif = asn_aktif_by_opd.map do |user_aktif|
+    #   { user_aktif => sasarans_filter(@tahun, user_sasarans(user_aktif)).group_by(&:program_kegiatan) }
+    # end
+    # if OPD_TABLE.key?(opd.nama_opd.to_sym)
+    #   asn_aktif = asn_aktif_by_opd_khusus.map do |user_aktif|
+    #     { user_aktif => sasarans_filter(@tahun, user_sasarans(user_aktif)).group_by(&:program_kegiatan) }
+    #   end
+    # end
+    # asn_aktif
+    asn_aktif_by_opd.map do |user_aktif|
       { user_aktif => sasarans_filter(@tahun, user_sasarans(user_aktif)).group_by(&:program_kegiatan) }
     end
-    if OPD_TABLE.key?(opd.nama_opd.to_sym)
-      asn_aktif = asn_aktif_by_opd_khusus.map do |user_aktif|
-        { user_aktif => sasarans_filter(@tahun, user_sasarans(user_aktif)).group_by(&:program_kegiatan) }
-      end
-    end
-    asn_aktif
   end
 
   def user_sasarans(users)
@@ -135,6 +141,7 @@ class KakService
     programs.uniq { |item| item[:kode] }
   end
 
+  # TODO: refactor this, bad method
   def ind_renstras_new(jenis, program_kegiatans, sub_unit: '')
     indikator_all = program_kegiatans.send("indikator_renstras", sub_unit: sub_unit)
     indikators = indikator_all["indikator_#{jenis}".to_sym]
