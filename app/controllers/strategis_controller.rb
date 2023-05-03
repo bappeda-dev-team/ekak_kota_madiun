@@ -1,5 +1,5 @@
 class StrategisController < ApplicationController
-  before_action :set_strategi, only: %i[show edit update destroy]
+  before_action :set_strategi, only: %i[show edit update destroy renaksi]
   # before_action :strategi_pohon_atasan, only: %i[new edit]
 
   # GET /strategis or /strategis.json
@@ -173,6 +173,12 @@ class StrategisController < ApplicationController
     @isu_strategis_pohon = Strategi.where(nip_asn: nip).uniq(&:pohon_id).collect do |str|
       [str.pohon.strategi_kota_isu_strategis, str.pohon_id]
     end
+  end
+
+  def renaksi
+    sasaran = @strategi.sasaran
+    @renaksi = sasaran.tahapans.pluck(:tahapan_kerja)
+    render partial: 'strategis/renaksi'
   end
 
   private

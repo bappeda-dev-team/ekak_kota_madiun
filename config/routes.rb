@@ -54,6 +54,7 @@ Rails.application.routes.draw do
       get :list_strategi_asn
       post :hapus_bagikan_ke_asn
       get :ganti_nip
+      get :renaksi
     end
   end
   resources :isu_strategis_opds do

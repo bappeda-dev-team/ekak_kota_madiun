@@ -33,7 +33,7 @@
         <table class="table table-bordered border-primary rounded">
           <thead>
             <tr>
-              <th class="fw-bolder">No</th>
+              <th class="fw-bolder">Jenis</th>
               <th class="fw-bolder">Strategi</th>
               <th class="fw-bolder">Indikator</th>
               <th class="fw-bolder">Target / Satuan</th>
@@ -60,9 +60,9 @@
                   <% end %>
                 </th>
               </tr>
-              <% strategis.each.with_index(1) do |(strategi, strategi_kaopds), no_str| %>
+              <% strategis.each do |strategi, strategi_kaopds| %>
                 <tr style="background-color: #E5FDD1;">
-                  <th rowspan="<%= strategi.indikators_tahun(@tahun).size + 1 %>" class="align-middle"><%= no_str %></th>
+                  <th rowspan="<%= strategi.indikators_tahun(@tahun).size + 1 %>" class="align-middle">Strategi Kota</th>
                   <th rowspan="<%= strategi.indikators_tahun(@tahun).size + 1 %>" class="align-middle text-wrap"><%= strategi.strategi %> </th>
                 </tr>
                 <% strategi.indikators_tahun(@tahun).each do |ind_kota| %>
@@ -79,12 +79,17 @@
                     </tr>
                     <tr style="background-color: #C8B6A6">
                       <td rowspan="<%= str_kaopd.indikators.size + 1%>">Tactical</td>
-                      <td rowspan="<%= str_kaopd.indikators.size + 1%>" class="text-wrap"><%= str_kaopd.strategi %></td>
+                      <td rowspan="<%= str_kaopd.indikators.size + 1%>" class="text-wrap"><%= str_kaopd.strategi %> </td>
                     </tr>
                     <% str_kaopd.indikators.each do |ind_kaopd| %>
                       <tr style="background-color: #C8B6A6">
                         <td class="text-wrap"><%= ind_kaopd.indikator_kinerja %></td>
                         <td class="text-wrap"><%= "#{ind_kaopd.target} #{ind_kaopd.satuan}" %></td>
+                      </tr>
+                    <% end %>
+                    <% str_kaopd.renaksi.each.with_index(1) do |renaksi_kaopd, no_aksi_kaopd| %>
+                      <tr style="background-color: #C8B6A6">
+                        <th colspan="4">Renaksi <%= no_aksi_kaopd %>: <%= renaksi_kaopd %></th>
                       </tr>
                     <% end %>
                     <% strategi.each do |str_kabid, str_kasis| %>
@@ -100,12 +105,17 @@
                       <% end %>
                       <tr style="background-color: #CCD5AE">
                         <td rowspan="<%= str_kabid.indikators.size + 1 %>">Strategic</td>
-                        <td rowspan="<%= str_kabid.indikators.size + 1 %>" class="text-wrap"><%= str_kabid.strategi %></td>
+                        <td rowspan="<%= str_kabid.indikators.size + 1 %>" class="text-wrap"><%= str_kabid.strategi %> </td>
                       </tr>
                       <% str_kabid.indikators.each do |ind_kabid| %>
                         <tr style="background-color: #CCD5AE">
                           <td class="text-wrap"><%= ind_kabid.indikator_kinerja %></td>
                           <td class="text-wrap"><%= "#{ind_kabid.target} #{ind_kabid.satuan}" %></td>
+                        </tr>
+                      <% end %>
+                      <% str_kabid.renaksi.each.with_index(1) do |renaksi_kabid, no_aksi_kabid| %>
+                        <tr style="background-color: #CCD5AE">
+                          <th colspan="4">Renaksi <%= no_aksi_kabid %>: <%= renaksi_kabid %></th>
                         </tr>
                       <% end %>
                       <% str_kasis.each do |str_kasi, str_staffs| %>
@@ -119,12 +129,17 @@
                         </tr>
                         <tr style="background-color: #E7AB9A">
                           <td rowspan="<%= str_kasi.indikators.size + 1 %>">Operational</td>
-                          <td rowspan="<%= str_kasi.indikators.size + 1 %>"class="text-wrap"><%= str_kasi.strategi %></td>
+                          <td rowspan="<%= str_kasi.indikators.size + 1 %>"class="text-wrap"><%= str_kasi.strategi %> </td>
                         </tr>
                         <% str_kasi.indikators.each do |ind_kasi| %>
                           <tr style="background-color: #E7AB9A">
                             <td class="text-wrap"><%= ind_kasi.indikator_kinerja %></td>
                             <td class="text-wrap"><%= "#{ind_kasi.target} #{ind_kasi.satuan}" %></td>
+                          </tr>
+                        <% end %>
+                        <% str_kasi.renaksi.each.with_index(1) do |renaksi_kasi, no_aksi_kasi| %>
+                          <tr style="background-color: #E7AB9A">
+                            <th colspan="4">Renaksi <%= no_aksi_kasi %>: <%= renaksi_kasi %></th>
                           </tr>
                         <% end %>
                         <% str_staffs.each do |str_staff| %>
@@ -135,12 +150,17 @@
                           </tr>
                           <tr style="background-color: #FFF1DC">
                             <td rowspan="<%= str_staff.indikators.size + 1 %>" class="">Opertional 2</td>
-                            <td rowspan="<%= str_staff.indikators.size + 1 %>" class="text-wrap"><%= str_staff.strategi %></td>
+                            <td rowspan="<%= str_staff.indikators.size + 1 %>" class="text-wrap"><%= str_staff.strategi %> </td>
                           </tr>
                           <% str_staff.indikators.each do |ind_staff| %>
                             <tr style="background-color: #FFF1DC">
                               <td class="text-wrap"><%= ind_staff.indikator_kinerja %></td>
                               <td class="text-wrap"><%= "#{ind_staff.target} #{ind_staff.satuan}" %></td>
+                            </tr>
+                          <% end %>
+                          <% str_staff.renaksi.each.with_index(1) do |renaksi, no_aksi_staff| %>
+                            <tr style="background-color: #FFF1DC">
+                              <th colspan="4">Renaksi <%= no_aksi_staff %>: <%= renaksi %></th>
                             </tr>
                           <% end %>
                         <% end %>
