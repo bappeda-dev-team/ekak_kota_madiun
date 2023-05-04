@@ -4,6 +4,13 @@
      data-pohon-kinerja-tahun-value="<%= local_assigns[:tahun] %>"
      data-pohon-kinerja-render-value="false">
         <div id="pokin-opd" class="pohon-kinerja mb-4" data-pohon-kinerja-target="pokin"></div>
+        <%= link_to pdf_opd_pohon_kinerja_index_path,
+          class: "btn btn-outline-warning w-100 mb-4",
+          target: "blank",
+          data: { pohon_kinerja_target: 'cetak' } do %>
+          <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom"></i>
+          <span>Cetak GAMBAR Pohon Kinerja</span>
+        <% end %>
         <button class='btn btn-sm btn-outline-success'
           data-pohon-kinerja-target='buttonToggle'
           data-action="click->pohon-kinerja#togglePokin" >Tampilkan Pohon</button>

@@ -77,18 +77,21 @@ class PohonKinerjaController < ApplicationController
     @isu_strategis_kota = IsuStrategisKotum.where(tahun: @tahun)
     respond_to do |format|
       format.html { render layout: 'blank' }
-      format.pdf do
-        render pdf: @filename,
-               disposition: 'attachment',
-               template: 'pohon_kinerja/pdf_kota.html.erb',
-               layout: 'blank',
-               show_as_html: params.key?('debug'),
-               orientation: 'Landscape',
-               image_quality: 100,
-               background: true,
-               disable_smart_shrinking: true,
-               title: "POHON KINERJA KOTA"
-      end
+    end
+  end
+
+  def pdf_opd
+    @tahun = cookies[:tahun] || '2023'
+    opd_params = cookies[:opd]
+    @opd = if opd_params
+             Opd.find_by(kode_unik_opd: opd_params)
+           else
+             current_user.opd
+           end
+    @isu_opd = @opd.pohon_kinerja_opd(@tahun)
+    @nama_opd = @opd.nama_opd
+    respond_to do |format|
+      format.html { render layout: 'blank' }
     end
   end
 

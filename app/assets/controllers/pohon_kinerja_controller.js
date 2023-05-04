@@ -14,7 +14,7 @@ import html2canvas from "html2canvas"
 import 'd3-mitch-tree/dist/css/d3-mitch-tree-theme-default.min.css'
 
 export default class extends Controller {
-        static targets = ["pokin", "buttonToggle", "pokinKota"]
+        static targets = ["pokin", "buttonToggle", "pokinKota", "cetak"]
 
         static values = {
                 opd: Number,
@@ -32,6 +32,7 @@ export default class extends Controller {
         showPokin(isShow) {
                 if (isShow) {
                         this.pokinTarget.style.display = 'block'
+                        this.cetakTarget.style.display = 'block'
                         this.pokinRender()
                         this.buttonToggleTarget.classList.remove('btn-outline-success')
                         this.buttonToggleTarget.classList.add('btn-outline-danger')
@@ -39,6 +40,7 @@ export default class extends Controller {
                 }
                 else {
                         this.pokinTarget.style.display = 'none'
+                        this.cetakTarget.style.display = 'none'
                         this.pokinTarget.innerHTML = ''
                         this.buttonToggleTarget.classList.remove('btn-outline-danger')
                         this.buttonToggleTarget.classList.add('btn-outline-success')
@@ -48,6 +50,7 @@ export default class extends Controller {
 
         pokinTargetConnected() {
                 this.pokinTarget.style.display = 'none'
+                this.cetakTarget.style.display = 'none'
         }
 
         pokinKotaTargetConnected() {
