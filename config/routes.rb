@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       get :print
       get :excel_kota
       get :pdf_kota
+      get :pdf_opd
       get :excel_opd
       get :rekap
       post :filter_rekap
