@@ -4,7 +4,7 @@ class MandatorisController < ApplicationController
   # GET /mandatoris or /mandatoris.json
   def index
     tahun = cookies[:tahun]
-    @mandatoris = Mandatori.all
+    @mandatoris = Mandatori.where(tahun: tahun)
   end
 
   def usulan_mandatori

@@ -44,6 +44,11 @@ class User < ApplicationRecord
   has_many :strategis, dependent: :destroy, foreign_key: 'nip_asn', primary_key: 'nik'
   # has_many :program_kegiatans, through: :sasarans
   has_many :pohons, dependent: :destroy
+  # usulan user
+  has_many :musrenbangs, foreign_key: 'nip_asn', primary_key: 'nik'
+  has_many :pokpirs, foreign_key: 'nip_asn', primary_key: 'nik'
+  has_many :mandatoris, foreign_key: 'nip_asn', primary_key: 'nik'
+  has_many :inovasis, foreign_key: 'nip_asn', primary_key: 'nik'
 
   # WARNING: many bug in here because added role
   scope :admin, -> { with_role(:admin) }
@@ -59,6 +64,9 @@ class User < ApplicationRecord
   scope :eselon3, -> { with_role("eselon_3") }
   scope :eselon4, -> { with_role("eselon_4") }
   scope :staff, -> { with_role("staff") }
+  scope :mandatori_setuju, lambda {
+    mandatoris.where(status: 'aktif')
+  }
   # after_update :update_sasaran
   after_create :assign_default_role
 
@@ -281,5 +289,9 @@ class User < ApplicationRecord
       .sudah_lengkap
       .where('sasarans.tahun ILIKE ?',
              "%#{tahun}%").order(:id)
+  end
+
+  def usulans_user
+    opd.usulans
   end
 end

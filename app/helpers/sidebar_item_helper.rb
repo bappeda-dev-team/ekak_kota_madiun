@@ -21,7 +21,7 @@ module SidebarItemHelper
 
   def perencanaan_items
     [
-      { title: 'Usulan', href: asn_pohon_kinerja_index_path, icon: 'fas fa-tree',
+      { title: 'Usulan', href: usulans_path, icon: 'fas fa-tree',
         identifier: 'pohon_kinerja/asn' },
       { title: 'Pohon Kinerja', href: asn_pohon_kinerja_index_path,
         icon: 'fas fa-file', identifier: 'pohon_kinerja/asn' },

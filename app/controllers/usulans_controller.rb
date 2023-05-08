@@ -1,6 +1,16 @@
 class UsulansController < ApplicationController
   before_action :check_params, only: %i[update_sasaran_asn hapus_usulan_dari_sasaran]
 
+  def index
+    if current_user.has_role?(:admin)
+      render 'usulans/admin'
+    else
+      @usulans = current_user.usulans_user
+      @musrenbangs = current_user.opd.musrenbang_opd
+      @mandatoris = current_user.mandatoris
+    end
+  end
+
   def update_sasaran_asn
     sasaran = params[:sasaran_id]
     usulan = params[:usulan_id].to_i

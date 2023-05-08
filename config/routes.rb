@@ -286,6 +286,7 @@ Rails.application.routes.draw do
       get :atasan
     end
   end
+  resources :usulans
 
   resources :rekaps, param: :kode_unik_opd do
     get "jumlah", on: :collection

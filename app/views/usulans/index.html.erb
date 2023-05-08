@@ -1,0 +1,13 @@
+Usulan User
+<div>
+-- <%= link_to "Mandatori", mandatoris_path %>
+</div>
+<div class="ml-5">
+<ol>
+<% @mandatoris.each do |usulan| %>
+    <li><%= usulan.usulan %> <span><%= usulan.tahun %></span></li>
+    <p>--<%= usulan.uraian %></p>
+<% end %>
+</ol>
+
+</div>
