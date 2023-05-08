@@ -1,38 +1,22 @@
 class SasaransController < ApplicationController
-  before_action :get_user, only: %i[index new create update destroy]
+  before_action :set_user, only: %i[index new create update destroy]
   before_action :set_sasaran, only: %i[show edit update destroy update_program_kegiatan renaksi_update detail]
   before_action :set_dropdown, only: %i[new edit]
 
   # GET /sasarans or /sasarans.json
   def index
-    @tahun_sasaran = cookies[:tahun] || nil
-    @status_sasaran = params[:status_sasaran] || nil
-    @sasarans = @user.sasarans.includes([:strategi, :usulans, :program_kegiatan, :rincian, :permasalahans, :dasar_hukums, :latar_belakangs, :indikator_sasarans]).where('tahun ILIKE ?',
-                                     "%#{@tahun_sasaran}%").or(@user.sasarans.where(sasarans: { tahun: "" })).order(:id)
-
-    case @status_sasaran
-    when 'dengan_strategi'
-      @sasarans = @sasarans.dengan_strategi
-    when 'belum_lengkap'
-      @sasarans = @sasarans.kurang_lengkap
-    when 'sudah_lengkap'
-      @sasarans = @sasarans.sudah_lengkap
-    else
-      @sasarans
-    end
-
-    return unless current_user.has_role? :admin
-
-    @sasarans = @user.opd.sasarans.includes(:indikator_sasarans).order(:id)
-    render 'index_admin'
+    @tahun = cookies[:tahun] || nil
+    @sasarans = @user.sasarans_tahun(@tahun)
   end
 
   def list_sasaran
     param = params[:q] || ""
     @opd = current_user.opd
-    # we do the complex logic for simple thing here
-    @sasarans = @opd.sasarans.dengan_rincian.merge(@opd.users.asn_aktif).where("sasaran_kinerja ILIKE ?",
-                                                                               "%#{param}%").limit(50)
+    # TODO: simplify method
+    @sasarans = @opd.sasarans
+                    .dengan_rincian
+                    .merge(@opd.users.asn_aktif)
+                    .where("sasaran_kinerja ILIKE ?", "%#{param}%").limit(50)
   end
 
   def data_detail
@@ -51,6 +35,7 @@ class SasaransController < ApplicationController
   # GET /sasarans/1 or /sasarans/1.json
   def show; end
 
+  # TODO: refactor and simplify
   def laporan_kak(tahun: '')
     @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik,
                                                                             tahun: tahun }).group(:id)
@@ -284,13 +269,13 @@ class SasaransController < ApplicationController
         end
       rescue ActiveRecord::RecordNotUnique
         flash.now[:alert] =
-["Sasaran Sudah di kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran} ",
- "Sasaran Sudah di kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran} "]
+          ["Sasaran Sudah di kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran} ",
+           "Sasaran Sudah di kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran} "]
         @type = 'gagal'
         @text = "Sasaran Sudah di kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran} "
       rescue ActiveRecord::RecordError
         flash.now[:alert] =
-["Terjadi Kesalahan. Gagal Kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran}", 'gagal']
+          ["Terjadi Kesalahan. Gagal Kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran}", 'gagal']
         @type = 'gagal'
         @text = 'gagal dicloning'
       else
@@ -414,11 +399,11 @@ class SasaransController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def get_user
+  def set_user
     @user = current_user
   end
 
-  def get_program_kegiatan
+  def set_program_kegiatan
     @program_kegiatan = ProgramKegiatan.find(params[:program_kegiatan_id])
   end
 
@@ -428,6 +413,19 @@ class SasaransController < ApplicationController
 
   def set_dropdown
     @users = User.all
+  end
+
+  def filter_sasaran(query)
+    case query
+    when 'dengan_strategi'
+      @sasarans.dengan_strategi
+    when 'belum_lengkap'
+      @sasarans.kurang_lengkap
+    when 'sudah_lengkap'
+      @sasarans.sudah_lengkap
+    else
+      @sasarans
+    end
   end
 
   # Only allow a list of trusted parameters through.

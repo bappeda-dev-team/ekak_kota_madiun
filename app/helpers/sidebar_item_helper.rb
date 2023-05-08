@@ -19,6 +19,34 @@ module SidebarItemHelper
     end
   end
 
+  def perencanaan_items
+    [
+      { title: 'Usulan', href: asn_pohon_kinerja_index_path, icon: 'fas fa-tree',
+        identifier: 'pohon_kinerja/asn' },
+      { title: 'Pohon Kinerja', href: asn_pohon_kinerja_index_path,
+        icon: 'fas fa-file', identifier: 'pohon_kinerja/asn' },
+      { title: 'Rencana Kinerja', href: rincian_belanja_path, icon: 'fas fa-money-check',
+        identifier: 'rincian_belanja' },
+      { title: 'Rincian Belanja', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' },
+      { title: 'Manajemen Resiko', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' },
+      { title: 'Gender', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' }
+    ]
+  end
+
+  def laporan_items
+    [
+      { title: 'Usulan', href: asn_pohon_kinerja_index_path, icon: 'fas fa-tree',
+        identifier: 'pohon_kinerja/asn' },
+      { title: 'Pohon Kinerja', href: asn_pohon_kinerja_index_path,
+        icon: 'fas fa-file', identifier: 'pohon_kinerja/asn' },
+      { title: 'Rencana Kinerja', href: rincian_belanja_path, icon: 'fas fa-money-check',
+        identifier: 'rincian_belanja' },
+      { title: 'Rincian Belanja', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' },
+      { title: 'Manajemen Resiko', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' },
+      { title: 'Gender', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' }
+    ]
+  end
+
   def usulan_items
     [
       { title: 'Musrenbang', href: musrenbangs_path, identifier: 'musrenbang' },
@@ -245,6 +273,18 @@ module SidebarItemHelper
       content_tag(:i, '', class: 'fas fa-check text-success')
     else
       content_tag(:i, '', class: 'fas fa-times text-danger')
+    end
+  end
+
+  def sidebar_items
+    if current_user.has_role?(:super_admin)
+      render partial: 'layouts/sidebar_super_admin'
+    elsif current_user.has_role?(:admin)
+      render partial: 'layouts/sidebar_admin'
+    elsif current_user.has_role?(:asn)
+      render partial: 'layouts/sidebar_asn'
+    else
+      render partial: 'layouts/nonaktif'
     end
   end
 end

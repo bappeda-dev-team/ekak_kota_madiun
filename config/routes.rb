@@ -151,7 +151,6 @@ Rails.application.routes.draw do
   }
   root to: "home#dashboard"
   resources :users do
-    resources :sasarans, path: "sasaran_kerja"
     collection do
       get :struktur
       get :khusus
@@ -170,13 +169,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :atasans do
-    resources :sasarans, path: "sasaran_kerja"
-  end
-  resources :kepalas do
-    resources :sasarans, path: "sasaran_kerja"
-  end
-  resources :sasarans do
+  resources :atasans
+  resources :kepalas
+
+  resources :sasarans, path: "rencana_kerja" do
     collection do
       get :list_sasaran
     end

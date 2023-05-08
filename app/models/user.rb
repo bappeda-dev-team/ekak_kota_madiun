@@ -124,6 +124,16 @@ class User < ApplicationRecord
     }
   end
 
+  def sasarans_tahun(tahun)
+    sasarans
+      .includes(%i[strategi
+                   usulans
+                   program_kegiatan
+                   indikator_sasarans])
+      .where("COALESCE(tahun, '') ILIKE ?", "%#{tahun}%")
+      .dengan_strategi
+  end
+
   def program_kegiatan_sasarans(tahun: 2022)
     # TODO: clean this up
     sasarans.where(tahun: tahun)
@@ -168,11 +178,11 @@ class User < ApplicationRecord
   end
 
   def pegawai_rsud?
-    nama_bidang&.upcase&.include?('RUMAH SAKIT') unless nama_bidang.nil?
+    nama_bidang&.upcase&.include?('RUMAH SAKIT')
   end
 
   def pegawai_bagian?
-    nama_bidang&.upcase&.include?('BAGIAN') unless nama_bidang.nil?
+    nama_bidang&.upcase&.include?('BAGIAN')
   end
 
   def petunjuk_bagian
@@ -184,9 +194,9 @@ class User < ApplicationRecord
   end
 
   def biru
-    @biru ||= petunjuk_status.select do |s|
-                s[:usulan_dan_sub]
-              end.select { |j| j.except(:usulan_dan_sub).values.any?(false) }.count
+    @biru ||= petunjuk_status.select { |s| s[:usulan_dan_sub] }
+                             .select { |j| j.except(:usulan_dan_sub).values.any?(false) }
+                             .count
   end
 
   def hijau
@@ -225,6 +235,10 @@ class User < ApplicationRecord
     roles.where("roles.name ilike ?", "%eselon%")
          .or(roles.where("roles.name ilike ?", "%staff%"))
          .pluck(:name)
+  end
+
+  def role_name
+    roles.pluck(:name)
   end
 
   def isi_renaksi?
