@@ -5,9 +5,9 @@ class UsulansController < ApplicationController
     if current_user.has_role?(:admin)
       render 'usulans/admin'
     else
-      @usulans = current_user.usulans_user
       @musrenbangs = current_user.opd.musrenbang_opd
       @mandatoris = current_user.mandatoris
+      @pokpirs = current_user.pokpirs
     end
   end
 

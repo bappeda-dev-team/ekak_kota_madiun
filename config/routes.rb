@@ -120,6 +120,11 @@ Rails.application.routes.draw do
       post :setujui_usulan_di_sasaran
     end
   end
+  # user_specific_thing
+  get "/usulan_musrenbang", to: "musrenbangs#usulan_musrenbang"
+  get "/usulan_pokpir", to: "pokpirs#usulan_pokpir"
+  get "/usulan_mandatori", to: "mandatoris#usulan_mandatori"
+  get "/usulan_inisiatif", to: "inovasis#usulan_inisiatif"
 
   resources :pokpirs do
     member do
@@ -172,7 +177,7 @@ Rails.application.routes.draw do
   resources :atasans
   resources :kepalas
 
-  resources :sasarans, path: "rencana_kerja" do
+  resources :sasarans, path: "rencana_kinerja" do
     collection do
       get :list_sasaran
     end
@@ -462,11 +467,6 @@ Rails.application.routes.draw do
   get "/laporan_tematik", to: "subkegiatan_tematiks#laporan_tematik"
   get "/laporan_tematik_apbd", to: "subkegiatan_tematiks#laporan_tematik_apbd"
   #
-  # user_specific_thing
-  get "/usulan_musrenbang", to: "musrenbangs#usulan_musrenbang"
-  get "/usulan_pokpir", to: "pokpirs#usulan_pokpir"
-  get "/usulan_mandatori", to: "mandatoris#usulan_mandatori"
-  get "/usulan_inisiatif", to: "inovasis#usulan_inisiatif"
   # third party Api
   get "/sync_sasaran", to: "api/skp_client#sync_sasaran"
   get "/sync_pegawai", to: "api/skp_client#sync_pegawai"

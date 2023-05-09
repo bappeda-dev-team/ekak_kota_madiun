@@ -27,3 +27,4 @@
 - For perencanaan / input:
   - make sure "tahun" is inputted
   -
+** IDEA
