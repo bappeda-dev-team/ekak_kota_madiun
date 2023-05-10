@@ -1,0 +1,17 @@
+<div class="row justify-content-center w-100">
+  <div class="col">
+    <%= link_to sasaran_path(current_user, sasaran), class: "m-3 btn btn-sm btn-outline-info w-100", id: dom_id(current_user, sasaran.id) do %>
+      <i class="fas fa-book-open me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="isi usulan"></i>
+      <span>Edit</span>
+   <% end %>
+  </div>
+  <% if sasaran.strategi.nil? %>
+  <div class="col">
+    <%= link_to sasaran_path(current_user, sasaran), method: :delete, data: { confirm_swal: "Hapus #{sasaran.sasaran_kinerja} ?"},
+      class: "m-3 btn btn-sm btn-outline-danger w-100" do %>
+      <i class="fa fa-trash-alt me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus rencana kinerja"></i>
+      <span>Hapus</span>
+    <% end %>
+  </div>
+  <% end %>
+</div>

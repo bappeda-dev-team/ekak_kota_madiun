@@ -180,6 +180,7 @@ Rails.application.routes.draw do
   resources :sasarans, path: "rencana_kinerja" do
     collection do
       get :list_sasaran
+      get :anggaran, path: "rincian_anggaran"
     end
     member do
       get :data_detail

@@ -179,6 +179,11 @@ class ProgramKegiatan < ApplicationRecord
     sasarans.where(tahun: tahun).map(&:total_anggaran).compact.sum
   end
 
+  def pagu_rankir_tahun(tahun)
+    sasarans.where("tahun ILIKE ?", "#{tahun}").dengan_strategi
+      .map(&:total_anggaran).compact.sum
+  end
+
   def my_waktu
     sasarans.map(&:waktu_total).compact.sum
   end

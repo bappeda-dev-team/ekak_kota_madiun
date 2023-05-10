@@ -1,12 +1,17 @@
 class SasaransController < ApplicationController
-  before_action :set_user, only: %i[index new create update destroy]
+  before_action :set_user, only: %i[index new create update destroy anggaran]
   before_action :set_sasaran, only: %i[show edit update destroy update_program_kegiatan renaksi_update detail]
   before_action :set_dropdown, only: %i[new edit]
 
   # GET /sasarans or /sasarans.json
   def index
-    @tahun = cookies[:tahun] || nil
+    @tahun = cookies[:tahun] || Date.current.year
     @sasarans = @user.sasarans_tahun(@tahun)
+  end
+
+  def anggaran
+    @tahun = cookies[:tahun] || Date.current.year
+    @subkegiatan_sasarans = @user.subkegiatan_sasarans_tahun(@tahun)
   end
 
   def list_sasaran

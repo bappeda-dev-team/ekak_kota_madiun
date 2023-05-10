@@ -19,8 +19,8 @@ module SidebarItemHelper
         icon: 'fas fa-tree', identifier: 'pohon_kinerja/asn' },
       { title: 'Rencana Kinerja', href: sasarans_path,
         icon: 'fas fa-bullseye', identifier: 'rencana_kinerja' },
-      { title: 'Rincian Belanja', href: rincian_belanja_path,
-        icon: 'fas fa-money-check', identifier: 'rincian_belanja' },
+      { title: 'Rincian Belanja', href: anggaran_sasarans_path,
+        icon: 'fas fa-money-check', identifier: 'rincian_anggaran' },
       { title: 'Manajemen Resiko', href: daftar_resiko_sasaran_program_opds_path,
         icon: 'fas fa-chart-line', identifier: 'sasaran_program_opds/daftar_resiko' },
       { title: 'GAP', href: gap_genders_path,
@@ -84,6 +84,64 @@ module SidebarItemHelper
       { title: 'GAP', href: gap_genders_path, identifier: 'gap' },
       { title: 'GBS', href: gbs_genders_path, identifier: 'gbs' }
     ]
+  end
+
+  def usulan_items
+    [
+      { title: 'Musrenbang', href: musrenbangs_path, identifier: 'musrenbang' },
+      { title: 'Pokok Pikiran', href: pokpirs_path, identifier: 'pokpir' },
+      { title: 'Mandatori', href: mandatoris_path, identifier: 'mandatori' },
+      { title: 'Inisiatif Walikota', href: inovasis_path, identifier: 'inovasi' }
+    ]
+  end
+
+  def super_admin_items
+    [
+      { title: 'Role', href: roles_path, icon: 'fas fa-user-tag', identifier: 'roles' },
+      { title: 'Master User', href: list_all_users_path, icon: 'fas fa-users', identifier: 'list_all' },
+      { title: 'Tematik', href: subkegiatan_tematiks_path, identifier: 'tematik', icon: 'fas fa-tags' },
+      { title: 'Struktur Organisasi', href: struktur_users_path, icon: 'fas fa-sitemap', identifier: 'struktur' },
+      { title: 'Kelompok Anggaran', href: kelompok_anggarans_path, icon: 'fas fa-folder',
+        identifier: 'kelompok_anggaran' },
+      { title: 'Skala Dampak Resiko', href: skalas_path, icon: 'fas fa-weight', identifier: 'skala' },
+      { title: 'Admin Sasaran', href: adminsasarans_path, icon: 'fas fa-archive', identifier: 'adminsasarans' },
+      { title: 'User Khusus', href: khusus_users_path, icon: 'fas fa-user-astronaut', identifier: 'khusus' }
+    ]
+  end
+
+  def master_sipd_items
+    [
+      { title: 'Master Urusan', href: master_urusan_path, icon: 'fas fa-user-tag', identifier: 'master_urusan' },
+      { title: 'Master Bidang Urusan', href: master_bidang_urusan_path, icon: 'fas fa-user-tag',
+        identifier: 'master_bidang_urusan' },
+      { title: 'Master Program', href: master_programs_path, icon: 'fas fa-user-tag', identifier: 'master_programs' },
+      { title: 'Master Kegiatan', href: master_kegiatans_path, icon: 'fas fa-user-tag',
+        identifier: 'master_kegiatans' },
+      { title: 'Master Output', href: master_output_path, icon: 'fas fa-user-tag', identifier: 'master_output' },
+      { title: 'Master Sub Kegiatan', href: master_subkegiatans_path, icon: 'fas fa-user-tag',
+        identifier: 'master_subkegiatans' }
+    ]
+  end
+
+  def collapsed_item_sipd_master
+    collapse_class('(\bmaster_urusan|\bmaster_bidang_urusan|\bmaster_programs|\bmaster_kegiatans|\bmaster_output|\bmaster_subkegiatans)')
+  end
+
+  def anggaran_items
+    [
+      { title: 'SSH', href: anggaran_sshes_path, identifier: 'anggaran_ssh' },
+      { title: 'SBU', href: anggaran_sbus_index_path, identifier: 'anggaran_sbu' },
+      { title: 'HSPK', href: anggaran_hspks_path, identifier: 'anggaran_hspks' },
+      { title: 'Kode Rekening', href: rekenings_path, identifier: 'rekening' }
+    ]
+  end
+
+  def collapsed_item_anggaran
+    collapse_class('(\banggaran_ssh|\banggaran_sbu|\banggaran_hspk|\brekening)')
+  end
+
+  def collapsed_item_usulan
+    collapse_class('(\binovasis|\basn_musrenbangs|\bmusrenbangs|\bpokpirs|\bmandatoris)')
   end
 
   def collapse_class(identifier)

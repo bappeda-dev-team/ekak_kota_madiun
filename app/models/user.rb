@@ -142,6 +142,14 @@ class User < ApplicationRecord
       .dengan_strategi
   end
 
+  def subkegiatan_sasarans_tahun(tahun)
+    sasarans_tahun(tahun).group_by { |s| s.program_kegiatan }
+  end
+
+  def mandatoris_tahun(tahun)
+    mandatoris.where("COALESCE(tahun, '') ILIKE ?", "#{tahun}")
+  end
+
   def program_kegiatan_sasarans(tahun: 2022)
     # TODO: clean this up
     sasarans.where(tahun: tahun)
