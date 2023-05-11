@@ -14,6 +14,11 @@ class SasaransController < ApplicationController
     @subkegiatan_sasarans = @user.subkegiatan_sasarans_tahun(@tahun)
   end
 
+  def anggaran_belanja
+    @tahun = cookies[:tahun] || Date.current.year
+    @sasaran = Sasaran.find(params[:id])
+  end
+
   def list_sasaran
     param = params[:q] || ""
     @opd = current_user.opd
@@ -38,7 +43,9 @@ class SasaransController < ApplicationController
   end
 
   # GET /sasarans/1 or /sasarans/1.json
-  def show; end
+  def show
+    @tahun = cookies[:tahun] || Date.current.year
+  end
 
   # TODO: refactor and simplify
   def laporan_kak(tahun: '')
@@ -395,10 +402,6 @@ class SasaransController < ApplicationController
     @subkegiatan = sasaran.subkegiatan
     @anggaran_sasaran = sasaran.total_anggaran || 0
     render partial: "subkegiatan_sasaran"
-  end
-
-  def anggaran_belanja
-    @sasaran = Sasaran.find(params[:id])
   end
 
   private

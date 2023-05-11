@@ -231,6 +231,10 @@ class Sasaran < ApplicationRecord
     usulans.exists? && program_kegiatan.present?
   end
 
+  def subkegiatan?
+    program_kegiatan.present?
+  end
+
   def lengkap?
     selesai? && rincian? && permasalahan? && dasar_hukum? && gambaran_umum? && tematik?
   end

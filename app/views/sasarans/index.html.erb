@@ -47,7 +47,7 @@
               <% end%>
                 <td class="fw-bolder border" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.tahun %></td>
                 <td class="fw-bolder text-gray-500 px-auto" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
-                  <%= render 'tombol_action_sasaran', sasaran: sasaran %>
+                  <%= render 'sasarans/tombol_action_sasaran', sasaran: sasaran %>
                 </td>
               </tr>
               <% sasaran.indikator_sasarans.each do |indikator| %>

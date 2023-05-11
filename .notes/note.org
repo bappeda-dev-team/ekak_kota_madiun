@@ -27,4 +27,7 @@
 - For perencanaan / input:
   - make sure "tahun" is inputted
   -
-** IDEA
+** STRT <2023-05-11 Thu>
+- [X] tombol action anggaran sasaran
+- [ ] renstra user
+- [ ] renja user

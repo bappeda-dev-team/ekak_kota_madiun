@@ -37,7 +37,7 @@
             <% @subkegiatan_sasarans.each do |subkegiatan,sasarans| %>
                 <% pagu = sasarans.map(&:total_anggaran).compact.sum %>
               <tr>
-                <td class="fw-bolder border" scope="row" colspan="5">Subkegiatan: <%= subkegiatan.nama_subkegiatan %></td>
+                <td class="fw-bolder border text-wrap" scope="row" colspan="5">Subkegiatan: <%= subkegiatan.nama_subkegiatan %></td>
                 <td class="fw-bolder border" scope="row">Rp. <%= number_with_delimiter(pagu) %></td>
                 <td class="fw-bolder"></td>
               </tr>
@@ -45,16 +45,17 @@
               <tr class="<%= warna_sasaran(sasaran.status_sasaran) %>">
                 <td class="fw-bolder border" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
                 <td class="fw-bolder text-wrap" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
-                <% if sasaran.indikator_sasarans.any? %>
                 <td class="p-0 m-0" colspan="3"></td>
-              <% else %>
-                <td class="fw-bolder border" colspan="3">
-                  <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
-                </td>
-              <% end%>
                 <td class="fw-bolder border" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
                 <td class="fw-bolder text-gray-500 px-auto" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
-                  <%= render 'tombol_action_sasaran', sasaran: sasaran %>
+                  <div class="row justify-content-center w-100">
+                    <div class="col">
+                      <%= link_to anggaran_belanja_sasaran_path(sasaran), class: "m-3 btn btn-sm btn-outline-info w-100" do %>
+                        <i class="fas fa-book-open me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="isi usulan"></i>
+                        <span>Edit Anggaran</span>
+                      <% end %>
+                    </div>
+                  </div>
                 </td>
               </tr>
               <% sasaran.indikator_sasarans.each do |indikator| %>
