@@ -7,6 +7,7 @@
             <i class="fas fa-home"></i>
           <% end %>
         </li>
+        <li class="breadcrumb-item">Perencanaan</li>
         <li class="breadcrumb-item active" aria-current="page">Rencana Kinerja</li>
       </ol>
     </nav>
@@ -16,55 +17,58 @@
           <div class="col">
             <h2 class="fs-5 fw-bold mb-0">Rencana Kinerja Tahun <%= @tahun %></h2>
           </div>
+          <div class="col text-end">
+            <span><%= current_user.nama %></span>
+            |
+            <span><%= current_user.nik %></span>
+          </div>
         </div>
-      <div class="col">
       </div>
-      </div>
+      <div class="card-body">
       <div class="table-responsive">
         <table class="table align-items-center">
           <thead class="thead-light">
             <tr>
-              <th class="border-bottom" scope="col">No.</th>
-              <th class="border-bottom" scope="col">Sasaran Kinerja Output</th>
-              <th class="border-bottom" scope="col">Indikator Kinerja</th>
-              <th class="border-bottom" scope="col">Target</th>
-              <th class="border-bottom" scope="col">Satuan</th>
-              <th class="border-bottom" scope="col">Tahun</th>
-              <th class="border-bottom text-center" scope="col">Action</th>
+              <th class="border text-center" scope="col">No</th>
+              <th class="border text-center" scope="col">Rencana Kinerja</th>
+              <th class="border text-center" scope="col">Indikator Kinerja</th>
+              <th class="border text-center" scope="col">Target</th>
+              <th class="border text-center" scope="col">Satuan</th>
+              <th class="border text-center" scope="col">Action</th>
             </tr>
           </thead>
-          <tbody id="tempat-row-sasaran">
+          <tbody>
             <% @sasarans.each.with_index(1) do |sasaran, i| %>
-              <tr class="<%= warna_sasaran(sasaran.status_sasaran) %>">
-                <td class="fw-bolder border" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
-                <td class="fw-bolder text-wrap" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
+              <tr>
+                <td class="border" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
+                <td class="border text-wrap" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
                 <% if sasaran.indikator_sasarans.any? %>
-                <td class="p-0 m-0" colspan="3"></td>
-              <% else %>
-                <td class="fw-bolder border" colspan="3">
-                  <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
-                </td>
-              <% end%>
-                <td class="fw-bolder border" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.tahun %></td>
-                <td class="fw-bolder text-gray-500 px-auto" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
+                  <td class="p-0 m-0" colspan="3"></td>
+                <% else %>
+                  <td class="border" colspan="3">
+                    <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
+                  </td>
+                <% end%>
+                <td class="border" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
                   <%= render 'sasarans/tombol_action_sasaran', sasaran: sasaran %>
                 </td>
               </tr>
               <% sasaran.indikator_sasarans.each do |indikator| %>
-                <tr class="<%= warna_sasaran(sasaran.status_sasaran) %>">
-                  <td class="fw-bolder border text-wrap"><%= indikator.indikator_kinerja %></td>
-                  <td class="fw-bolder border"><%= indikator.target %></td>
-                  <td class="fw-bolder border"><%= indikator.satuan %></td>
+                <tr>
+                  <td class="border text-wrap"><%= indikator.indikator_kinerja %></td>
+                  <td class="border text-center"><%= indikator.target %></td>
+                  <td class="border text-center"><%= indikator.satuan %></td>
                 </tr>
               <% end %>
               <% sasaran.tahapans.each.with_index(1) do |tahapan, no_tah| %>
-                <tr class="<%= warna_sasaran(sasaran.status_sasaran) %>">
-                  <td class="fw-bolder" colspan="7" >Renaksi <%= no_tah %>: <%= tahapan.tahapan_kerja %></td>
+                <tr>
+                  <td class="border text-wrap" colspan="7" >Renaksi <%= no_tah %>: <%= tahapan.tahapan_kerja %></td>
                 </tr>
               <% end %>
             <% end %>
           </tbody>
         </table>
+      </div>
       </div>
     </div>
   </div>

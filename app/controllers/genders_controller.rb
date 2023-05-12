@@ -69,7 +69,8 @@ class GendersController < ApplicationController
 
   def gap
     @opd = current_user.opd
-    @genders = Gender.all
+    @tahun = cookies[:tahun] || Date.current.year
+    @genders = current_user.subkegiatan_sasarans_tahun(@tahun)
     render 'gap_gender'
   end
 

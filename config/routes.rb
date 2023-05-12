@@ -219,6 +219,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :rincian_belanja
+
   resources :kelompok_anggarans do
     collection do
       get :cloning

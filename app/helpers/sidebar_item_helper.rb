@@ -19,14 +19,12 @@ module SidebarItemHelper
         icon: 'fas fa-tree', identifier: 'pohon_kinerja/asn' },
       { title: 'Rencana Kinerja', href: sasarans_path,
         icon: 'fas fa-bullseye', identifier: 'rencana_kinerja' },
-      { title: 'Rincian Belanja', href: anggaran_sasarans_path,
+      { title: 'Rincian Belanja', href: rincian_belanja_index_path,
         icon: 'fas fa-money-check', identifier: 'rincian_anggaran' },
       { title: 'Manajemen Resiko', href: daftar_resiko_sasaran_program_opds_path,
         icon: 'fas fa-chart-line', identifier: 'sasaran_program_opds/daftar_resiko' },
-      { title: 'GAP', href: gap_genders_path,
-        icon: 'fas fa-people-carry', identifier: 'gap' },
-      { title: 'GBS', href: gbs_genders_path,
-        icon: 'fas fa-people-carry', identifier: 'gbs' }
+      { title: 'Gender', href: gap_genders_path,
+        icon: 'fas fa-people-carry', identifier: 'gap' }
     ]
   end
 
@@ -44,7 +42,7 @@ module SidebarItemHelper
         identifier: 'pohon_kinerja/asn' },
       { title: 'Pohon Kinerja', href: asn_pohon_kinerja_index_path,
         icon: 'fas fa-file', identifier: 'pohon_kinerja/asn' },
-      { title: 'Rencana Kinerja', href: rincian_belanja_path, icon: 'fas fa-money-check',
+      { title: 'Rencana Kinerja', href: rincian_belanja_index_path, icon: 'fas fa-money-check',
         identifier: 'rincian_belanja' },
       { title: 'Rincian Belanja', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' },
       { title: 'Manajemen Resiko', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' },

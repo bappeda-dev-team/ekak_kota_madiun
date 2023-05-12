@@ -411,4 +411,8 @@ class Sasaran < ApplicationRecord
       thp.urutan.to_i
     end
   end
+
+  def nama_pemilik
+    user.nama
+  end
 end
