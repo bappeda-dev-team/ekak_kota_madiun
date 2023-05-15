@@ -8,7 +8,7 @@ class SasaranCloner < Clowne::Cloner
         id_indikator: params[:tahun],
         sasaran_id: sasaran.id_rencana
       }
-    }, trait: :with_manual
+    }
   end
 
   trait :with_tahapans do

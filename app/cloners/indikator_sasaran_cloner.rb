@@ -1,9 +1,7 @@
 class IndikatorSasaranCloner < Clowne::Cloner
   adapter :active_record
 
-  trait :with_manual do
-    include_association :manual_ik
-  end
+  include_association :manual_ik, trait: :no_budget, clone_with: ManualIkCloner
 
   finalize do |_source, record, **|
     record.keterangan = "cloned"
