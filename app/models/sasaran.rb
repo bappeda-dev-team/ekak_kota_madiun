@@ -231,6 +231,10 @@ class Sasaran < ApplicationRecord
     usulans.exists? && program_kegiatan.present?
   end
 
+  def subkegiatan?
+    program_kegiatan.present?
+  end
+
   def lengkap?
     selesai? && rincian? && permasalahan? && dasar_hukum? && gambaran_umum? && tematik?
   end
@@ -394,7 +398,11 @@ class Sasaran < ApplicationRecord
   end
 
   def subkegiatan
-    program_kegiatan.present? ? program_kegiatan.nama_subkegiatan : 'belum ada subkegiatan'
+    program_kegiatan.present? ? program_kegiatan.nama_subkegiatan : 'Belum diisi'
+  end
+
+  def kode_subkegiatan
+    program_kegiatan.present? ? program_kegiatan.kode_sub_giat : '-'
   end
 
   def kode_subkegiatan_sasaran
@@ -406,5 +414,9 @@ class Sasaran < ApplicationRecord
     tahapans.includes([:anggarans]).sort_by do |thp|
       thp.urutan.to_i
     end
+  end
+
+  def nama_pemilik
+    user.nama
   end
 end

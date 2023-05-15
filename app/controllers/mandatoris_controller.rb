@@ -4,9 +4,10 @@ class MandatorisController < ApplicationController
   # GET /mandatoris or /mandatoris.json
   def index
     tahun = cookies[:tahun]
-    @mandatoris = Mandatori.all
+    @mandatoris = Mandatori.where(tahun: tahun)
   end
 
+  # TODO: refactor, violating rails principle
   def usulan_mandatori
     @mandatoris = Mandatori.where(nip_asn: current_user.nik).order(:created_at)
     render 'user_mandatori'
