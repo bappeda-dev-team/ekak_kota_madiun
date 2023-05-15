@@ -16,7 +16,7 @@
         <% @subkegiatan_sasarans.each do |subkegiatan, sasarans| %>
           <% pagu = sasarans.map(&:total_anggaran).compact.sum %>
           <tr>
-            <td class="border text-wrap fw-bolder text-gray-900" scope="row" colspan="5">Subkegiatan: <%= subkegiatan.nama_subkegiatan %></td>
+            <td class="border text-wrap fw-bolder text-gray-900" scope="row" colspan="5">Subkegiatan: <%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %></td>
             <td class="border" scope="row">Rp. <%= number_with_delimiter(pagu) %></td>
             <td class="border"></td>
           </tr>

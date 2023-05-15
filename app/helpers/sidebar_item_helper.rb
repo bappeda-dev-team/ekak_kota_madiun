@@ -20,7 +20,7 @@ module SidebarItemHelper
       { title: 'Rencana Kinerja', href: sasarans_path,
         icon: 'fas fa-bullseye', identifier: 'rencana_kinerja' },
       { title: 'Rincian Belanja', href: rincian_belanja_index_path,
-        icon: 'fas fa-money-check', identifier: 'rincian_anggaran' },
+        icon: 'fas fa-money-check', identifier: 'rincian_belanja' },
       { title: 'Manajemen Resiko', href: daftar_resiko_sasaran_program_opds_path,
         icon: 'fas fa-chart-line', identifier: 'sasaran_program_opds/daftar_resiko' },
       { title: 'Gender', href: gap_genders_path,
@@ -33,7 +33,7 @@ module SidebarItemHelper
                    '\busulans|\bpohon_kinerja/asn|' \
                    '\brencana_kinerja|\brincian_belanja|' \
                    '\bsasaran_program_opds/daftar_resiko|' \
-                   '\bgap|\bgbs)')
+                   '\bgap|\brenja|\brenstra)')
   end
 
   def laporan_items
@@ -46,7 +46,12 @@ module SidebarItemHelper
         identifier: 'rincian_belanja' },
       { title: 'Rincian Belanja', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' },
       { title: 'Manajemen Resiko', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' },
-      { title: 'Gender', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' }
+      { title: 'Gender', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' },
+      { title: 'Renja', href: "#",
+        icon: 'fas fa-tasks', identifier: 'renja',
+        multi: true, collections: renja_items },
+      { title: 'Renstra', href: renstra_index_path,
+        icon: 'fas fa-stream', identifier: 'renstra' },
     ]
   end
 
@@ -57,6 +62,15 @@ module SidebarItemHelper
                    '\bsasaran_program_opds/daftar_resiko|' \
                    '\bgap|\bgbs)')
   end
+
+  def renja_items
+    [
+      { title: 'Ranwal', href: renja_ranwal_path, identifier: 'renja/ranwal' },
+      { title: 'Rankir', href: renja_rankir_path, identifier: 'renja/rankir' },
+      { title: 'Penetapan', href: renja_penetapan_path, identifier: 'renja/penetapan' }
+    ]
+  end
+
 
   def usulan_users
     [

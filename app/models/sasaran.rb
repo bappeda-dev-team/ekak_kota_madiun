@@ -398,7 +398,11 @@ class Sasaran < ApplicationRecord
   end
 
   def subkegiatan
-    program_kegiatan.present? ? program_kegiatan.nama_subkegiatan : 'belum ada subkegiatan'
+    program_kegiatan.present? ? program_kegiatan.nama_subkegiatan : 'Belum diisi'
+  end
+
+  def kode_subkegiatan
+    program_kegiatan.present? ? program_kegiatan.kode_sub_giat : '-'
   end
 
   def kode_subkegiatan_sasaran
