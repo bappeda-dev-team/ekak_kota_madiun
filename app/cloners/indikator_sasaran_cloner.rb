@@ -3,8 +3,8 @@ class IndikatorSasaranCloner < Clowne::Cloner
 
   include_association :manual_ik, trait: :no_budget, clone_with: ManualIkCloner
 
-  finalize do |_source, record, **|
-    record.keterangan = "cloned"
+  finalize do |_source, record, tahun:, **|
+    record.keterangan = "cloned_#{tahun}"
     record.created_at = Time.current
     record.updated_at = Time.current
   end

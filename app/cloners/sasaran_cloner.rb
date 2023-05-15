@@ -6,7 +6,8 @@ class SasaranCloner < Clowne::Cloner
     include_association :indikator_sasarans, params: proc { |params, sasaran|
       {
         id_indikator: params[:tahun],
-        sasaran_id: sasaran.id_rencana
+        sasaran_id: sasaran.id_rencana,
+        tahun: params[:tahun]
       }
     }
   end
@@ -21,7 +22,7 @@ class SasaranCloner < Clowne::Cloner
 
   after_persist do |origin, cloned, **|
     cloned.indikator_sasarans.each do |indikator|
-      indikator.update(sasaran_id: origin.id_rencana) if indikator.keterangan == "cloned"
+      indikator.update(sasaran_id: origin.id_rencana) if indikator.keterangan == "cloned_#{cloned.tahun}"
     end
   end
 
