@@ -13,8 +13,10 @@ module SidebarItemHelper
 
   def perencanaan_items
     [
-      { title: 'Usulan', href: usulans_path,
-        icon: 'fas fa-book', identifier: 'usulans' },
+      { title: 'Usulan', href: "#",
+        icon: 'fas fa-book', identifier: 'usulans', id_target: "perencanaan-usulan",
+        multi: true, collections: usulan_users, collapse_items: collapsed_item_usulan_user
+      },
       { title: 'Pohon Kinerja', href: asn_pohon_kinerja_index_path,
         icon: 'fas fa-tree', identifier: 'pohon_kinerja/asn' },
       { title: 'Rencana Kinerja', href: sasarans_path,
@@ -30,7 +32,9 @@ module SidebarItemHelper
 
   def collapsed_perencanaan_items
     collapse_class('(' \
-                   '\busulans|\bpohon_kinerja/asn|' \
+                   '\busulan_inisiatif|\busulan_musrenbang|' \
+                   '\busulan_pokpir|\busulan_mandatori|' \
+                   '\bpohon_kinerja/asn|' \
                    '\brencana_kinerja|\brincian_belanja|' \
                    '\bsasaran_program_opds/daftar_resiko|' \
                    '\bgap|\brenja|\brenstra)')
@@ -79,6 +83,10 @@ module SidebarItemHelper
       { title: 'Mandatori', href: usulan_mandatori_path, identifier: 'usulan_mandatori' },
       { title: 'Inisiatif Walikota', href: usulan_inisiatif_path, identifier: 'usulan_inisiatif' }
     ]
+  end
+
+  def collapsed_item_usulan_user
+    collapse_class('(\busulan_inisiatif|\busulan_musrenbang|\busulan_pokpir|\busulan_mandatori)')
   end
 
   def laporan_usulans

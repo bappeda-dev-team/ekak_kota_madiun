@@ -7,7 +7,9 @@
   <% end %>
 </li>
 <li class="nav-item">
-  <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_perencanaan_items[:menu] %>"
+  <span class="nav-link d-flex
+        justify-content-between align-items-center
+        <%= collapsed_perencanaan_items[:menu] %>"
         aria-expanded="<%= collapsed_perencanaan_items[:aria] %>"
         data-bs-toggle="collapse" data-bs-target="#perencanaan-items">
     <span>
@@ -17,13 +19,18 @@
       <i class="fas fa-angle-right icon icon-sm"></i>
     </span>
   </span>
-  <div class="multi-level <%= collapsed_perencanaan_items[:sub_menu] %>" role="list" id="perencanaan-items" aria-expanded="<%= collapsed_perencanaan_items[:aria] %>">
+  <div class="multi-level <%= collapsed_perencanaan_items[:sub_menu] %>"
+       aria-expanded="<%= collapsed_perencanaan_items[:aria] %>"
+       role="list" id="perencanaan-items">
     <ul class="flex-column nav">
       <% perencanaan_items.each do |item| %>
         <% if item[:multi] %>
         <li class="nav-item" >
-          <span class="nav-link d-flex justify-content-between align-items-center"
-                  data-bs-toggle="collapse" data-bs-target="#renja-items">
+          <span class="nav-link d-flex
+                justify-content-between align-items-center
+                <%= item[:collapse_items][:menu] %>"
+                aria-expanded="<%= item[:collapse_items][:aria] %>"
+                data-bs-toggle="collapse" data-bs-target="#<%= item[:id_target] %>">
             <span>
               <span class="sidebar-icon">
                 <i class="<%= item[:icon] %> icon icon-xs me-2"></i>
@@ -34,7 +41,9 @@
               <i class="fas fa-angle-right icon icon-sm"></i>
             </span>
           </span>
-          <div class="multi-level ms-3 collapse" role="list" id="renja-items" aria-expanded="false">
+          <div class="multi-level ms-3 <%= item[:collapse_items][:sub_menu] %>"
+               aria-expanded="<%= item[:collapse_items][:aria] %>"
+               role="list" id="<%= item[:id_target] %>">
             <ul class="flex-column nav">
               <% item[:collections].each do |sub_item| %>
                 <li class="nav-item" >
