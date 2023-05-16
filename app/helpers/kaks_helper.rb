@@ -15,9 +15,9 @@ module KaksHelper
     number_with_delimiter(sasarans.map(&:total_anggaran).compact.sum) || 0
   end
 
-  def button_edit(status, current_user, show_sasaran)
+  def button_edit(status, show_sasaran)
     if status == 'draft'
-      link_to user_sasaran_path(current_user, show_sasaran), class: "btn btn-sm btn-info" do
+      link_to sasaran_path(show_sasaran), class: "btn btn-sm btn-info" do
         '<i class="fa fa-pencil-alt me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="isi usulan"></i>
                     Isi Usulan'.html_safe
       end
