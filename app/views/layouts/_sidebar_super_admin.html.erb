@@ -6,97 +6,204 @@
     <span class="sidebar-text">Dashboard</span>
   <% end %>
 </li>
-<li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
 <li class="nav-item">
-  <span class="sidebar-text">Data Master</span>
-</li>
-<li class="nav-item">
-  <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_item_usulan[:menu] %>" data-bs-toggle="collapse">
+  <span class="nav-link d-flex
+        justify-content-between align-items-center
+        <%= collapsed_super_admin_items[:menu] %>"
+        aria-expanded="<%= collapsed_super_admin_items[:aria] %>"
+        data-bs-toggle="collapse" data-bs-target="#data-master-items">
     <span>
-      <span class="sidebar-icon">
-        <i class="fas fa-book-open icon icon-xs me-2"></i>
-      </span>
-      <span class="sidebar-text">Usulan</span>
+      <span class="sidebar-text">Data Master</span>
     </span>
     <span class="link-arrow">
       <i class="fas fa-angle-right icon icon-sm"></i>
     </span>
   </span>
-  <div class="multi-level <%= collapsed_item_usulan[:sub_menu] %>" role="list" id="usulan-master" aria-expanded="<%= collapsed_item_usulan[:aria] %>">
+  <div class="multi-level <%= collapsed_super_admin_items[:sub_menu] %>"
+       aria-expanded="<%= collapsed_super_admin_items[:aria] %>"
+       role="list" id="data-master-items">
     <ul class="flex-column nav">
-      <% usulan_items.each do |usulan| %>
-        <li class="nav-item" >
-          <%= active_link_to(usulan[:href], wrap_tag: :li, wrap_class: 'nav-item',class: "nav-link") do %>
-            <span>
-              <span class="sidebar-text"><%= usulan[:title] %></span>
+      <% super_admin_items.each do |item| %>
+        <% if item[:multi] %>
+          <li class="nav-item" >
+            <span class="nav-link d-flex
+                justify-content-between align-items-center
+                <%= item[:collapse_items][:menu] %>"
+                aria-expanded="<%= item[:collapse_items][:aria] %>"
+                data-bs-toggle="collapse" data-bs-target="#<%= item[:id_target] %>">
+              <span>
+                <span class="sidebar-icon">
+                  <i class="<%= item[:icon] %> icon icon-xs me-2"></i>
+                </span>
+                <span class="sidebar-text"><%= item[:title] %></span>
+              </span>
+              <span class="link-arrow">
+                <i class="fas fa-angle-right icon icon-sm"></i>
+              </span>
             </span>
-          <% end %>
-        </li>
+            <div class="multi-level ms-3 <%= item[:collapse_items][:sub_menu] %>"
+               aria-expanded="<%= item[:collapse_items][:aria] %>"
+               role="list" id="<%= item[:id_target] %>">
+              <ul class="flex-column nav">
+                <% item[:collections].each do |sub_item| %>
+                  <li class="nav-item" >
+                    <%= active_link_to(sub_item[:href], wrap_tag: :li, wrap_class: 'nav-item',class: "nav-link") do %>
+                      <span>
+                        <span class="sidebar-text"><%= sub_item[:title] %></span>
+                      </span>
+                    <% end %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          </li>
+        <% else %>
+          <li class="nav-item" >
+            <%= active_link_to(item[:href], wrap_tag: :li, wrap_class: 'nav-item',class: "nav-link") do %>
+              <span class="sidebar-icon">
+                <i class="<%= item[:icon] %> icon icon-xs me-2"></i>
+              </span>
+              <span>
+                <span class="sidebar-text"><%= item[:title] %></span>
+              </span>
+            <% end %>
+          </li>
+        <% end %>
       <% end %>
     </ul>
   </div>
 </li>
 <li class="nav-item">
-  <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_item_anggaran[:menu] %>" data-bs-toggle="collapse" data-bs-target="#anggaran-master" aria-expanded="<%= collapsed_item_anggaran[:aria] %>">
+  <span class="nav-link d-flex
+        justify-content-between align-items-center
+        <%= collapsed_perencanaan_kota_items[:menu] %>"
+        aria-expanded="<%= collapsed_perencanaan_kota_items[:aria] %>"
+        data-bs-toggle="collapse" data-bs-target="#data-perencanaan-kota-items">
     <span>
-      <span class="sidebar-icon">
-        <i class="fas fa-coins icon icon-xs me-2"></i>
-      </span>
-      <span class="sidebar-text">Anggaran</span>
+      <span class="sidebar-text">Perencanaan Kota</span>
     </span>
     <span class="link-arrow">
       <i class="fas fa-angle-right icon icon-sm"></i>
     </span>
   </span>
-  <div class="multi-level <%= collapsed_item_anggaran[:sub_menu] %>" role="list" id="anggaran-master" aria-expanded="<%= collapsed_item_anggaran[:aria] %>">
+  <div class="multi-level <%= collapsed_perencanaan_kota_items[:sub_menu] %>"
+       aria-expanded="<%= collapsed_perencanaan_kota_items[:aria] %>"
+       role="list" id="data-perencanaan-kota-items">
     <ul class="flex-column nav">
-      <% anggaran_items.each do |anggaran| %>
-        <li class="nav-item" >
-          <%= active_link_to(anggaran[:href], wrap_tag: :li, wrap_class: 'nav-item',class: "nav-link") do %>
-            <span>
-              <span class="sidebar-text"><%= anggaran[:title] %></span>
+      <% perencanaan_kota_items.each do |item| %>
+        <% if item[:multi] %>
+          <li class="nav-item" >
+            <span class="nav-link d-flex
+                justify-content-between align-items-center
+                <%= item[:collapse_items][:menu] %>"
+                aria-expanded="<%= item[:collapse_items][:aria] %>"
+                data-bs-toggle="collapse" data-bs-target="#<%= item[:id_target] %>">
+              <span>
+                <span class="sidebar-icon">
+                  <i class="<%= item[:icon] %> icon icon-xs me-2"></i>
+                </span>
+                <span class="sidebar-text"><%= item[:title] %></span>
+              </span>
+              <span class="link-arrow">
+                <i class="fas fa-angle-right icon icon-sm"></i>
+              </span>
             </span>
-          <% end %>
-        </li>
+            <div class="multi-level ms-3 <%= item[:collapse_items][:sub_menu] %>"
+               aria-expanded="<%= item[:collapse_items][:aria] %>"
+               role="list" id="<%= item[:id_target] %>">
+              <ul class="flex-column nav">
+                <% item[:collections].each do |sub_item| %>
+                  <li class="nav-item" >
+                    <%= active_link_to(sub_item[:href], wrap_tag: :li, wrap_class: 'nav-item',class: "nav-link") do %>
+                      <span>
+                        <span class="sidebar-text"><%= sub_item[:title] %></span>
+                      </span>
+                    <% end %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          </li>
+        <% else %>
+          <li class="nav-item" >
+            <%= active_link_to(item[:href], wrap_tag: :li, wrap_class: 'nav-item',class: "nav-link") do %>
+              <span class="sidebar-icon">
+                <i class="<%= item[:icon] %> icon icon-xs me-2"></i>
+              </span>
+              <span>
+                <span class="sidebar-text"><%= item[:title] %></span>
+              </span>
+            <% end %>
+          </li>
+        <% end %>
       <% end %>
     </ul>
   </div>
 </li>
 <li class="nav-item">
-  <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_item_sipd_master[:menu] %>" data-bs-toggle="collapse" data-bs-target="#sipd-item-master" aria-expanded="<%= collapsed_item_sipd_master[:aria] %>">
+  <span class="nav-link d-flex
+        justify-content-between align-items-center
+        <%= collapsed_perencanaan_kota_items[:menu] %>"
+        aria-expanded="<%= collapsed_perencanaan_kota_items[:aria] %>"
+        data-bs-toggle="collapse" data-bs-target="#data-perencanaan-opd-items">
     <span>
-      <span class="sidebar-icon">
-        <i class="fas fa-coins icon icon-xs me-2"></i>
-      </span>
-      <span class="sidebar-text">Master SIPD</span>
+      <span class="sidebar-text">Perencanaan OPD</span>
     </span>
     <span class="link-arrow">
       <i class="fas fa-angle-right icon icon-sm"></i>
     </span>
   </span>
-  <div class="multi-level <%= collapsed_item_sipd_master[:sub_menu] %>" role="list" id="sipd-item-master" aria-expanded="<%= collapsed_item_sipd_master[:aria] %>">
+  <div class="multi-level <%= collapsed_perencanaan_opd_items[:sub_menu] %>"
+       aria-expanded="<%= collapsed_perencanaan_opd_items[:aria] %>"
+       role="list" id="data-perencanaan-opd-items">
     <ul class="flex-column nav">
-      <% master_sipd_items.each do |sipd| %>
-        <li class="nav-item" >
-          <%= active_link_to(sipd[:href], wrap_tag: :li, wrap_class: 'nav-item',class: "nav-link") do %>
-            <span>
-              <span class="sidebar-text"><%= sipd[:title] %></span>
+      <% perencanaan_opd_items.each do |item| %>
+        <% if item[:multi] %>
+          <li class="nav-item" >
+            <span class="nav-link d-flex
+                justify-content-between align-items-center
+                <%= item[:collapse_items][:menu] %>"
+                aria-expanded="<%= item[:collapse_items][:aria] %>"
+                data-bs-toggle="collapse" data-bs-target="#<%= item[:id_target] %>">
+              <span>
+                <span class="sidebar-icon">
+                  <i class="<%= item[:icon] %> icon icon-xs me-2"></i>
+                </span>
+                <span class="sidebar-text"><%= item[:title] %></span>
+              </span>
+              <span class="link-arrow">
+                <i class="fas fa-angle-right icon icon-sm"></i>
+              </span>
             </span>
-          <% end %>
-        </li>
+            <div class="multi-level ms-3 <%= item[:collapse_items][:sub_menu] %>"
+               aria-expanded="<%= item[:collapse_items][:aria] %>"
+               role="list" id="<%= item[:id_target] %>">
+              <ul class="flex-column nav">
+                <% item[:collections].each do |sub_item| %>
+                  <li class="nav-item" >
+                    <%= active_link_to(sub_item[:href], wrap_tag: :li, wrap_class: 'nav-item',class: "nav-link") do %>
+                      <span>
+                        <span class="sidebar-text"><%= sub_item[:title] %></span>
+                      </span>
+                    <% end %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          </li>
+        <% else %>
+          <li class="nav-item" >
+            <%= active_link_to(item[:href], wrap_tag: :li, wrap_class: 'nav-item',class: "nav-link") do %>
+              <span class="sidebar-icon">
+                <i class="<%= item[:icon] %> icon icon-xs me-2"></i>
+              </span>
+              <span>
+                <span class="sidebar-text"><%= item[:title] %></span>
+              </span>
+            <% end %>
+          </li>
+        <% end %>
       <% end %>
     </ul>
   </div>
 </li>
-<% super_admin_items.each do |super_admin_item| %>
-  <li class="nav-item">
-    <%= active_link_to(super_admin_item[:href], wrap_tag: :li, wrap_class: 'nav-item',class: "nav-link d-flex justify-content-between") do %>
-      <span>
-        <span class="sidebar-icon">
-          <i class="<%= super_admin_item[:icon] %> icon icon-xs me-2"></i>
-        </span>
-        <span class="sidebar-text"><%= super_admin_item[:title] %></span>
-      </span>
-    <% end %>
-  </li>
-<% end %>
