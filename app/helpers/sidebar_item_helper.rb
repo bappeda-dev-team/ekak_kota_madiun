@@ -50,13 +50,13 @@ module SidebarItemHelper
       { title: 'Isu Strategis', href: isu_strategis_kota_path,
         icon: 'fas fa-tree', identifier: 'isu_strategis_kota' },
       { title: 'Strategi', href: strategi_kota_path,
-        icon: 'fas fa-tree', identifier: 'strategi_kota' },
+        icon: 'fas fa-bullseye', identifier: 'strategi_kota' },
       { title: 'Sasaran', href: sasaran_kota_path,
         icon: 'fas fa-bullseye', identifier: 'sasaran_kota' },
       { title: 'Pohon Kinerja', href: kota_pohon_kinerja_index_path,
         icon: 'fas fa-bullseye', identifier: 'pohon_kinerja/kota' },
       { title: 'Rekap Pohon Kinerja', href: rekap_pohon_kinerja_index_path,
-        icon: 'fas fa-bullseye', identifier: 'pohon_kinerja/rekap' },
+        icon: 'fas fa-bullseye', identifier: 'pohon_kinerja/rekap' }
     ]
   end
 
@@ -66,6 +66,32 @@ module SidebarItemHelper
                    '\bstrategi_kota|\bsasaran_kota|' \
                    '\bpohon_kinerja/kota|' \
                    '\bpohon_kinerja/rekap|)')
+  end
+
+  def perencanaan_opd_items
+    [
+      { title: 'Tujuan OPD', href: tujuan_opds_path,
+        icon: 'fas fa-city', identifier: 'tujuan_opds' },
+      { title: 'Isu Strategis OPD', href: isu_strategis_opds_path,
+        icon: 'fas fa-bullseye', identifier: 'isu_strategis_opds' },
+      { title: 'Pohon Kinerja OPD', href: opd_pohon_kinerja_index_path,
+        icon: 'fas fa-tree', identifier: 'pohon_kinerja/opd' },
+      # { title: 'Sasaran OPD', href: sasaran_opds_path, identifier: 'opds/sasaran' },
+      # { title: 'Kotak Usulan OPD', href: kotak_usulan_opds_path,
+      #   identifier: 'opds/kotak_usulan' },
+      { title: 'Rekap Pohon Kinerja', href: rekap_opd_pohon_kinerja_index_path,
+        icon: 'fas fa-bullseye', identifier: 'pohon_kinerja/rekap_opd' },
+      { title: 'Info OPD', href: info_opds_path,
+        icon: 'fas fa-building', identifier: 'opds/info' }
+    ]
+  end
+
+  def collapsed_perencanaan_opd_items
+    collapse_class('(' \
+                   '\btujuan_opds|\bisu_strategis_opds|' \
+                   '\bstrategi_opds|\bsasaran_opds|' \
+                   '\bpohon_kinerja/opd|' \
+                   '\bpohon_kinerja/rekap_opd|\bopds/info)')
   end
 
   def perencanaan_items
@@ -94,13 +120,6 @@ module SidebarItemHelper
                    '\brencana_kinerja|\brincian_belanja|' \
                    '\bsasaran_program_opds/daftar_resiko|' \
                    '\bgap|\brenja|\brenstra)')
-  end
-
-  def collapse_perencanaan_kota_items
-    the = perencanaan_kota_items.map do |item|
-      "#{item[:identifier]}|"
-    end.join("\\b")
-    "(\\b#{the})"
   end
 
   def laporan_items
