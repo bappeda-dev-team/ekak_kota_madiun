@@ -1,4 +1,4 @@
-module SidebarItemHelper
+module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
   def sidebar_items
     if current_user.has_role?(:super_admin)
       render partial: 'layouts/sidebar_super_admin'
@@ -11,24 +11,38 @@ module SidebarItemHelper
     end
   end
 
-  def super_admin_items
+  def super_admin_items # rubocop:disable Metrics/MethodLength
     [
-      { title: 'Master Usulan', href: "#",
-        icon: 'fas fa-book-open', identifier: 'usulans',
-        id_target: "master-usulan", multi: true,
-        collections: usulan_items, collapse_items: collapsed_item_usulan },
-      { title: 'Master Anggaran', href: "#",
-        icon: 'fas fa-coins', identifier: 'anggaran',
-        id_target: "master-anggaran", multi: true,
-        collections: anggaran_items, collapse_items: collapsed_item_anggaran },
-      { title: 'Master User', href: list_all_users_path,
-        icon: 'fas fa-users', identifier: 'list_all' },
-      { title: 'Tematik', href: subkegiatan_tematiks_path,
-        icon: 'fas fa-tags', identifier: 'tematik' },
-      { title: 'Kelompok Anggaran', href: kelompok_anggarans_path,
-        icon: 'fas fa-folder', identifier: 'kelompok_anggaran' },
-      { title: 'Admin Sasaran', href: adminsasarans_path,
-        icon: 'fas fa-archive', identifier: 'adminsasarans' },
+      {
+        title: 'Master Usulan', href: "#",
+        multi: true, collections: usulan_items,
+        id_target: "master-usulan",
+        collapse_items: collapsed_item_usulan,
+        icon: 'fas fa-book-open', identifier: 'usulans'
+      },
+      {
+        title: 'Master Anggaran', href: "#",
+        multi: true, collections: anggaran_items,
+        id_target: "master-anggaran",
+        collapse_items: collapsed_item_anggaran,
+        icon: 'fas fa-coins', identifier: 'anggaran'
+      },
+      {
+        title: 'Master User', href: list_all_users_path,
+        icon: 'fas fa-users', identifier: 'list_all'
+      },
+      {
+        title: 'Tematik', href: subkegiatan_tematiks_path,
+        icon: 'fas fa-tags', identifier: 'tematik'
+      },
+      {
+        title: 'Kelompok Anggaran', href: kelompok_anggarans_path,
+        icon: 'fas fa-folder', identifier: 'kelompok_anggaran'
+      },
+      {
+        title: 'Admin Sasaran', href: adminsasarans_path,
+        icon: 'fas fa-archive', identifier: 'adminsasarans'
+      }
     ]
   end
 
@@ -43,20 +57,32 @@ module SidebarItemHelper
                    '\badminsasarans)')
   end
 
-  def perencanaan_kota_items
+  def perencanaan_kota_items # rubocop:disable Metrics/MethodLength
     [
-      { title: 'Tujuan', href: tujuan_kota_path,
-        icon: 'fas fa-city', identifier: 'tujuan_kota' },
-      { title: 'Isu Strategis', href: isu_strategis_kota_path,
-        icon: 'fas fa-tree', identifier: 'isu_strategis_kota' },
-      { title: 'Strategi', href: strategi_kota_path,
-        icon: 'fas fa-bullseye', identifier: 'strategi_kota' },
-      { title: 'Sasaran', href: sasaran_kota_path,
-        icon: 'fas fa-bullseye', identifier: 'sasaran_kota' },
-      { title: 'Pohon Kinerja', href: kota_pohon_kinerja_index_path,
-        icon: 'fas fa-bullseye', identifier: 'pohon_kinerja/kota' },
-      { title: 'Rekap Pohon Kinerja', href: rekap_pohon_kinerja_index_path,
-        icon: 'fas fa-bullseye', identifier: 'pohon_kinerja/rekap' }
+      {
+        title: 'Tujuan', href: tujuan_kota_path,
+        icon: 'fas fa-city', identifier: 'tujuan_kota'
+      },
+      {
+        title: 'Isu Strategis', href: isu_strategis_kota_path,
+        icon: 'fas fa-tree', identifier: 'isu_strategis_kota'
+      },
+      {
+        title: 'Strategi', href: strategi_kota_path,
+        icon: 'fas fa-bullseye', identifier: 'strategi_kota'
+      },
+      {
+        title: 'Sasaran', href: sasaran_kota_path,
+        icon: 'fas fa-bullseye', identifier: 'sasaran_kota'
+      },
+      {
+        title: 'Pohon Kinerja', href: kota_pohon_kinerja_index_path,
+        icon: 'fas fa-bullseye', identifier: 'pohon_kinerja/kota'
+      },
+      {
+        title: 'Rekap Pohon Kinerja', href: rekap_pohon_kinerja_index_path,
+        icon: 'fas fa-bullseye', identifier: 'pohon_kinerja/rekap'
+      }
     ]
   end
 
@@ -68,21 +94,27 @@ module SidebarItemHelper
                    '\bpohon_kinerja/rekap|)')
   end
 
-  def perencanaan_opd_items
+  def perencanaan_opd_items # rubocop:disable Metrics/MethodLength
     [
-      { title: 'Tujuan OPD', href: tujuan_opds_path,
-        icon: 'fas fa-city', identifier: 'tujuan_opds' },
-      { title: 'Isu Strategis OPD', href: isu_strategis_opds_path,
-        icon: 'fas fa-bullseye', identifier: 'isu_strategis_opds' },
-      { title: 'Pohon Kinerja OPD', href: opd_pohon_kinerja_index_path,
-        icon: 'fas fa-tree', identifier: 'pohon_kinerja/opd' },
+      {
+        title: 'Tujuan OPD', href: tujuan_opds_path,
+        icon: 'fas fa-city', identifier: 'tujuan_opds'
+      },
+      {
+        title: 'Isu Strategis OPD', href: isu_strategis_opds_path,
+        icon: 'fas fa-bullseye', identifier: 'isu_strategis_opds'
+      },
+      {
+        title: 'Pohon Kinerja OPD', href: opd_pohon_kinerja_index_path,
+        icon: 'fas fa-tree', identifier: 'pohon_kinerja/opd'
+      },
       # { title: 'Sasaran OPD', href: sasaran_opds_path, identifier: 'opds/sasaran' },
       # { title: 'Kotak Usulan OPD', href: kotak_usulan_opds_path,
       #   identifier: 'opds/kotak_usulan' },
-      { title: 'Rekap Pohon Kinerja', href: rekap_opd_pohon_kinerja_index_path,
-        icon: 'fas fa-bullseye', identifier: 'pohon_kinerja/rekap_opd' },
-      { title: 'Info OPD', href: info_opds_path,
-        icon: 'fas fa-building', identifier: 'opds/info' }
+      {
+        title: 'Info OPD', href: info_opds_path,
+        icon: 'fas fa-building', identifier: 'opds/info'
+      }
     ]
   end
 
@@ -94,21 +126,35 @@ module SidebarItemHelper
                    '\bpohon_kinerja/rekap_opd|\bopds/info)')
   end
 
-  def perencanaan_items
+  def perencanaan_items # rubocop:disable Metrics/MethodLength
     [
-      { title: 'Usulan', href: "#",
-        icon: 'fas fa-book', identifier: 'usulans', id_target: "perencanaan-usulan",
-        multi: true, collections: usulan_users, collapse_items: collapsed_item_usulan_user },
-      { title: 'Pohon Kinerja', href: asn_pohon_kinerja_index_path,
-        icon: 'fas fa-tree', identifier: 'pohon_kinerja/asn' },
-      { title: 'Rencana Kinerja', href: sasarans_path,
-        icon: 'fas fa-bullseye', identifier: 'rencana_kinerja' },
-      { title: 'Rincian Belanja', href: rincian_belanja_index_path,
-        icon: 'fas fa-money-check', identifier: 'rincian_belanja' },
-      { title: 'Manajemen Resiko', href: daftar_resiko_sasaran_program_opds_path,
-        icon: 'fas fa-chart-line', identifier: 'sasaran_program_opds/daftar_resiko' },
-      { title: 'Gender', href: gap_genders_path,
-        icon: 'fas fa-people-carry', identifier: 'gap' }
+      {
+        title: 'Usulan', href: "#",
+        multi: true, collections: usulan_users,
+        id_target: 'perencanaan-usulan',
+        collapse_items: collapsed_item_usulan_user,
+        icon: 'fas fa-book', identifier: 'usulans'
+      },
+      {
+        title: 'Pohon Kinerja', href: asn_pohon_kinerja_index_path,
+        icon: 'fas fa-tree', identifier: 'pohon_kinerja/asn'
+      },
+      {
+        title: 'Rencana Kinerja', href: sasarans_path,
+        icon: 'fas fa-bullseye', identifier: 'rencana_kinerja'
+      },
+      {
+        title: 'Rincian Belanja', href: rincian_belanja_index_path,
+        icon: 'fas fa-money-check', identifier: 'rincian_belanja'
+      },
+      {
+        title: 'Manajemen Resiko', href: daftar_resiko_sasaran_program_opds_path,
+        icon: 'fas fa-chart-line', identifier: 'sasaran_program_opds/daftar_resiko'
+      },
+      {
+        title: 'Gender', href: gap_genders_path,
+        icon: 'fas fa-people-carry', identifier: 'gap'
+      }
     ]
   end
 
@@ -118,35 +164,50 @@ module SidebarItemHelper
                    '\busulan_pokpir|\busulan_mandatori|' \
                    '\bpohon_kinerja/asn|' \
                    '\brencana_kinerja|\brincian_belanja|' \
-                   '\bsasaran_program_opds/daftar_resiko|' \
-                   '\bgap|\brenja|\brenstra)')
+                   '\bsasaran_program_opds/daftar_resiko|)')
   end
 
-  def laporan_items
+  def laporan_items # rubocop:disable Metrics/MethodLength
     [
-      { title: 'Usulan', href: asn_pohon_kinerja_index_path, icon: 'fas fa-tree',
-        identifier: 'pohon_kinerja/asn' },
-      { title: 'Pohon Kinerja', href: asn_pohon_kinerja_index_path,
-        icon: 'fas fa-file', identifier: 'pohon_kinerja/asn' },
-      { title: 'Rencana Kinerja', href: rincian_belanja_index_path, icon: 'fas fa-money-check',
-        identifier: 'rincian_belanja' },
-      { title: 'Rincian Belanja', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' },
-      { title: 'Manajemen Resiko', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' },
-      { title: 'Gender', href: renstra_index_path, identifier: 'renstra', icon: 'fas fa-receipt' },
-      { title: 'Renja', href: "#",
-        icon: 'fas fa-tasks', identifier: 'renja',
-        multi: true, collections: renja_items },
-      { title: 'Renstra', href: renstra_index_path,
-        icon: 'fas fa-stream', identifier: 'renstra' }
+      {
+        title: 'Usulan', href: "#",
+        multi: true, collections: laporan_usulans,
+        id_target: 'laporan-usulans',
+        collapse_items: collapsed_laporan_usulan_items,
+        icon: 'fas fa-book', identifier: 'usulans'
+      },
+      {
+        title: 'Rekap Pohon Kinerja', href: rekap_opd_pohon_kinerja_index_path,
+        icon: 'fas fa-bullseye', identifier: 'pohon_kinerja/rekap'
+      },
+      {
+        title: 'Rencana Kinerja (KAK)', href: laporan_kak_path,
+        icon: 'fas fa-bullseye', identifier: 'laporan_kak'
+      },
+      {
+        title: 'Rincian Belanja', href: laporan_rka_path,
+        icon: 'fas fa-money-check', identifier: 'laporan_rka'
+      },
+      {
+        title: 'Renstra', href: renstra_index_path,
+        icon: 'fas fa-stream', identifier: 'renstra'
+      },
+      {
+        title: 'Renja', href: "#",
+        multi: true, collections: renja_items,
+        id_target: 'renja-items',
+        collapse_items: collapsed_renja_items,
+        icon: 'fas fa-tasks', identifier: 'renja'
+      }
     ]
   end
 
   def collapsed_laporan_items
     collapse_class('(' \
-                   '\busulans|\bpohon_kinerja/asn|' \
-                   '\brencana_kinerja|\brincian_belanja|' \
-                   '\bsasaran_program_opds/daftar_resiko|' \
-                   '\bgap|\bgbs)')
+                   '\blaporan_usulan|\blaporan_pohon|' \
+                   '\blaporan_kak|\blaporan_rka|' \
+                   '\brenstra|\brenja/ranwal|' \
+                   '\brenja/rankir|\brenja/penetapan)')
   end
 
   def renja_items
@@ -155,6 +216,10 @@ module SidebarItemHelper
       { title: 'Rankir', href: renja_rankir_path, identifier: 'renja/rankir' },
       { title: 'Penetapan', href: renja_penetapan_path, identifier: 'renja/penetapan' }
     ]
+  end
+
+  def collapsed_renja_items
+    collapse_class('(\brenja/ranwal|\brenja/rankir|\brenja/penetapan)')
   end
 
   def usulan_users
@@ -172,19 +237,16 @@ module SidebarItemHelper
 
   def laporan_usulans
     [
-      { title: 'Laporan Musrenbang', href: '/laporan_usulan/musrenbang', identifier: 'laporan_usulan\/musrenbang' },
-      { title: 'Laporan Pokok Pikiran', href: '/laporan_usulan/pokpir', identifier: 'laporan_usulan\/pokpir' },
-      { title: 'Laporan Mandatori', href: '/laporan_usulan/mandatori', identifier: 'laporan_usulan\/mandatori' },
-      { title: 'Laporan Inisiatif Walikota', href: '/laporan_usulan/inisiatif',
+      { title: 'Musrenbang', href: '/laporan_usulan/musrenbang', identifier: 'laporan_usulan\/musrenbang' },
+      { title: 'Pokok Pikiran', href: '/laporan_usulan/pokpir', identifier: 'laporan_usulan\/pokpir' },
+      { title: 'Mandatori', href: '/laporan_usulan/mandatori', identifier: 'laporan_usulan\/mandatori' },
+      { title: 'Inisiatif Walikota', href: '/laporan_usulan/inisiatif',
         identifier: 'laporan_usulan\/inisiatif' }
     ]
   end
 
-  def gender_items
-    [
-      { title: 'GAP', href: gap_genders_path, identifier: 'gap' },
-      { title: 'GBS', href: gbs_genders_path, identifier: 'gbs' }
-    ]
+  def collapsed_laporan_usulan_items
+    collapse_class('(\blaporan_usulan)')
   end
 
   def usulan_items
@@ -194,24 +256,6 @@ module SidebarItemHelper
       { title: 'Mandatori', href: mandatoris_path, identifier: 'mandatori' },
       { title: 'Inisiatif Walikota', href: inovasis_path, identifier: 'inovasi' }
     ]
-  end
-
-  def master_sipd_items
-    [
-      { title: 'Master Urusan', href: master_urusan_path, icon: 'fas fa-user-tag', identifier: 'master_urusan' },
-      { title: 'Master Bidang Urusan', href: master_bidang_urusan_path, icon: 'fas fa-user-tag',
-        identifier: 'master_bidang_urusan' },
-      { title: 'Master Program', href: master_programs_path, icon: 'fas fa-user-tag', identifier: 'master_programs' },
-      { title: 'Master Kegiatan', href: master_kegiatans_path, icon: 'fas fa-user-tag',
-        identifier: 'master_kegiatans' },
-      { title: 'Master Output', href: master_output_path, icon: 'fas fa-user-tag', identifier: 'master_output' },
-      { title: 'Master Sub Kegiatan', href: master_subkegiatans_path, icon: 'fas fa-user-tag',
-        identifier: 'master_subkegiatans' }
-    ]
-  end
-
-  def collapsed_item_sipd_master
-    collapse_class('(\bmaster_urusan|\bmaster_bidang_urusan|\bmaster_programs|\bmaster_kegiatans|\bmaster_output|\bmaster_subkegiatans)')
   end
 
   def anggaran_items
@@ -233,8 +277,7 @@ module SidebarItemHelper
 
   def collapse_class(identifier)
     if request.path.match(/\b#{identifier}/)
-      { aria: 'true', sub_menu: 'show',
-        menu: '' }
+      { aria: 'true', sub_menu: 'show', menu: '' }
     else
       { aria: 'false', sub_menu: 'collapse', menu: 'collapsed' }
     end

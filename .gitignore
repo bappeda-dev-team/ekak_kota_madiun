@@ -46,3 +46,4 @@ yarn-debug.log*
 Procfile.dev
 .dump.rdb
 dump.rdb
+/app/views/.DS_Store
