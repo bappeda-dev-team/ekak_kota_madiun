@@ -9,10 +9,6 @@ class SasaranProgramOpdsController < ApplicationController
 
   def daftar_resiko
     @user = current_user
-    # @tahun_sasaran = cookies[:tahun_sasaran] || '2023'
-    # @program_kegiatans = @daftar_resiko.daftar_resiko_opd_user(nip: current_user.nik)
-    # @daftar_resiko = DaftarResiko.new(kode_unik_opd: @kode_opd, tahun: @tahun_sasaran)
-    # @tahun_bener = @daftar_resiko.tahun
     @tahun = cookies[:tahun] || Date.current.year
     @subkegiatan_sasarans = @user.subkegiatan_sasarans_tahun(@tahun)
   end

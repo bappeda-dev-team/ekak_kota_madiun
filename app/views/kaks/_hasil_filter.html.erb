@@ -15,7 +15,6 @@
         <thead class="thead-light">
           <tr>
             <th class="border-bottom border-start border-end" scope="col" rowspan="2">No.</th>
-            <th class="border-bottom border-start border-end text-center" scope="col" rowspan="2">Pemilik Rencana</th>
             <th class="border-bottom border-start border-end text-center" scope="col" rowspan="2">Status</th>
             <th class="border-bottom border-start border-end text-center" scope="col" rowspan="2" colspan="2">Sub Kegiatan KAK</th>
             <th class="border-bottom border-start border-end text-center" scope="col" rowspan="2">Pagu Sub Kegiatan KAK</th>
@@ -38,7 +37,6 @@
               <tr class="border-bottom">
                 <td class="<%= row_class %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= nomor %></td>
                 <td class="<%= program_kegiatans.empty? ? row_class + ' bg-danger text-white' : row_class %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= user.nama %></td>
-                <td class="<%= row_class %>" scope="rowgroup" width="50px" rowspan="<%= rowspan_atas %>"><%= render 'sasarans/table_status_sasaran', user: user %></td>
               </tr>
               <% program_kegiatans.each do |program_kegiatan, sasarans| %>
                 <% no_sub = no_sub + 1 %>

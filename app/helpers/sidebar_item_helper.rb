@@ -112,10 +112,6 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
       # { title: 'Kotak Usulan OPD', href: kotak_usulan_opds_path,
       #   identifier: 'opds/kotak_usulan' },
       {
-        title: 'Rekap Pohon Kinerja', href: rekap_opd_pohon_kinerja_index_path,
-        icon: 'fas fa-bullseye', identifier: 'pohon_kinerja/rekap_opd'
-      },
-      {
         title: 'Info OPD', href: info_opds_path,
         icon: 'fas fa-building', identifier: 'opds/info'
       }
@@ -181,24 +177,16 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
         icon: 'fas fa-book', identifier: 'usulans'
       },
       {
-        title: 'Pohon Kinerja', href: asn_pohon_kinerja_index_path,
-        icon: 'fas fa-tree', identifier: 'pohon_kinerja/asn'
+        title: 'Rekap Pohon Kinerja', href: rekap_opd_pohon_kinerja_index_path,
+        icon: 'fas fa-bullseye', identifier: 'pohon_kinerja/rekap'
       },
       {
-        title: 'Rencana Kinerja (KAK)', href: rincian_belanja_index_path,
+        title: 'Rencana Kinerja (KAK)', href: laporan_kak_path,
         icon: 'fas fa-bullseye', identifier: 'laporan_kak'
       },
       {
-        title: 'Rincian Belanja', href: rincian_belanja_index_path,
-        icon: 'fas fa-money-check', identifier: 'rincian_belanja'
-      },
-      {
-        title: 'Manajemen Resiko', href: daftar_resiko_sasaran_program_opds_path,
-        icon: 'fas fa-chart-line', identifier: 'daftar_resiko'
-      },
-      {
-        title: 'Gender', href: gap_genders_path,
-        icon: 'fas fa-people-carry', identifier: 'gap'
+        title: 'Rincian Belanja', href: laporan_rka_path,
+        icon: 'fas fa-money-check', identifier: 'laporan_rka'
       },
       {
         title: 'Renstra', href: renstra_index_path,
@@ -209,7 +197,7 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
         multi: true, collections: renja_items,
         id_target: 'renja-items',
         collapse_items: collapsed_renja_items,
-        icon: 'fas fa-tasks', identifier: 'renja',
+        icon: 'fas fa-tasks', identifier: 'renja'
       }
     ]
   end
@@ -217,8 +205,8 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
   def collapsed_laporan_items
     collapse_class('(' \
                    '\blaporan_usulan|\blaporan_pohon|' \
-                   '\blaporan_rencana_kinerja|\blaporan_rincian_belanja|' \
-                   '\blaporan_gender|\brenja/ranwal' \
+                   '\blaporan_kak|\blaporan_rka|' \
+                   '\brenstra|\brenja/ranwal|' \
                    '\brenja/rankir|\brenja/penetapan)')
   end
 
