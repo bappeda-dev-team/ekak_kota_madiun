@@ -253,6 +253,16 @@ Rails.application.routes.draw do
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :kaks, path: "acuan_kerja"
+  get "/acuan_kerja_new/:id/:tahun", to: "program_kegiatans#new_kak_format"
+
+  # get "/laporan_kak", to: "kaks#laporan_kak"
+  # get "/laporan_rka", to: "program_kegiatans#laporan_rka"
+
+  namespace :laporans do
+    get "laporan_kak"
+    get "laporan_rka"
+  end
+
   resources :lembagas
   resources :opds do
     collection do
@@ -408,7 +418,6 @@ Rails.application.routes.draw do
   get "/program_kegiatans_to_kak_detail/:id", to: "program_kegiatans#kak_detail"
   get "/program_kegiatans_to_kak_renaksi/:id", to: "program_kegiatans#kak_renaksi"
   get "/program_kegiatans_to_kak_waktu/:id", to: "program_kegiatans#kak_waktu"
-  get "/acuan_kerja_new/:id/:tahun", to: "program_kegiatans#new_kak_format"
 
   # musrenbang
   get "/asn_musrenbangs/:nip", to: "musrenbangs#asn_musrenbang"
@@ -429,13 +438,11 @@ Rails.application.routes.draw do
   patch "/aktifkan_pokpir/:id", to: "pokpirs#aktifkan_pokpir"
   patch "/non_aktifkan_pokpir/:id", to: "pokpirs#non_aktifkan_pokpir"
   # laporan kak
-  get "/laporan_kak", to: "kaks#laporan_kak"
   get "/pdf_kak/:id/:tahun", to: "program_kegiatans#pdf_kak"
   get "/cetak_daftar_kak/:opd/:tahun", to: "program_kegiatans#cetak_daftar_kak"
   # daftar resiko
   get "/cetak_daftar_resiko/:opd/:tahun", to: "sasaran_program_opds#cetak_daftar_resiko"
   # laporan rka
-  get "/laporan_rka", to: "program_kegiatans#laporan_rka"
   get "/pdf_rka/:id/:tahun", to: "program_kegiatans#pdf_rka"
   #  Sasaran
   get "/daftar_subkegiatan", to: "sasarans#daftar_subkegiatan"

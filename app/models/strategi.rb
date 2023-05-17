@@ -161,4 +161,10 @@ class Strategi < ApplicationRecord
   def renaksi
     sasaran.tahapans.pluck(:tahapan_kerja)
   end
+
+  def tahun_asli
+    tahun.match(/murni/) ? tahun[/[^_]\d*/, 0] : tahun
+  rescue NoMethodError
+    nil
+  end
 end
