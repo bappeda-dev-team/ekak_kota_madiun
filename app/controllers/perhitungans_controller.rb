@@ -66,6 +66,7 @@ class PerhitungansController < ApplicationController
   def destroy
     @perhitungan.destroy
     respond_to do |format|
+      format.js { render :create }
       format.html do
         redirect_to sasaran_tahapan_anggarans_path(@anggaran.tahapan.sasaran, @anggaran.tahapan),
                     notice: 'Rincian Anggaran dihapus'

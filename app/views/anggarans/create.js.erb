@@ -6,14 +6,13 @@ $('#form-perhitungan').on('ajax:success', (event) => {
 }).toggle();
 Swal.fire(
   'Sukses',
-  'Rincian Anggaran Ditambahkan',
+  'Rekening Ditambahkan',
   'success'
 )
 $('#form-perhitungan').on('ajax:failed', (event) => {
   Swal.fire(
     'Gagal',
-    'Data Anggaran Gagal Ditambahkan',
+    'Rekening Gagal Ditambahkan',
     'error'
   )
 });
-

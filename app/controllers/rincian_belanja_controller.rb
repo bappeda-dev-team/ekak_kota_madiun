@@ -6,6 +6,12 @@ class RincianBelanjaController < ApplicationController
     @subkegiatan_sasarans = @user.subkegiatan_sasarans_tahun(@tahun)
   end
 
+  def show
+    @sasaran = Sasaran.find(params[:id])
+    @tahapan = @sasaran.tahapans
+    @kode_opd = cookies[:opd]
+  end
+
   private
 
   def set_user

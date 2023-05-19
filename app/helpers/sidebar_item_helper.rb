@@ -181,11 +181,11 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
         icon: 'fas fa-bullseye', identifier: 'pohon_kinerja/rekap'
       },
       {
-        title: 'Rencana Kinerja (KAK)', href: laporan_kak_path,
+        title: 'Rencana Kinerja (KAK)', href: laporans_laporan_kak_path,
         icon: 'fas fa-bullseye', identifier: 'laporan_kak'
       },
       {
-        title: 'Rincian Belanja', href: laporan_rka_path,
+        title: 'Rincian Belanja', href: laporans_laporan_rka_path,
         icon: 'fas fa-money-check', identifier: 'laporan_rka'
       },
       {

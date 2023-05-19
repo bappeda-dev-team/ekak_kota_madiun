@@ -17,7 +17,8 @@
           <%= render 'laporan_kak_row_user', program_kegiatans: @program_kegiatans, tahun: cookies[:tahun] %>
         </div>
       <% else %>
-        <div class="card border-0 shadow" id="user_filter" data-controller="page-ajax"
+        <div class="card border-0 shadow" id="user_filter"
+             data-controller="page-ajax"
              data-page-ajax-opd-value="<%= cookies[:opd] %>"
              data-page-ajax-url-value="/filter_kak"
              data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >

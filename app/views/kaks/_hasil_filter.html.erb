@@ -74,22 +74,6 @@
         </tbody>
       </table>
     </div>
-    <div class="card-body">
-      <p>Jumlah SubKegiatan Aktif : <%= @jumlah_subkegiatan %></p>
-      <p>Jumlah Sasaran Aktif : <%= @total_sasaran_aktif %></p>
-      <p>Jumlah Usulan Terakomodir : </p>
-      <ul>
-        <li>Musrenbang: <%= @total_usulans[:musrenbang] %></li>
-        <li>Pokok Pikiran:<%= @total_usulans[:pokir] %></li>
-        <li>Mandatori: <%= @total_usulans[:mandatori] %></li>
-        <li>Inisiatif Walikota: <%= @total_usulans[:inisiatif_walikota] %></li>
-      </ul>
-      <p>Total Pagu Anggaran : Rp. <%= number_with_delimiter(@total_pagu) %></p>
-    </div>
-    <div class="card-body">
-      <%= link_to "/cetak_daftar_kak/#{@opd_id}/#{@tahun}.pdf", class: 'btn btn-tertiary w-100', target: :_blank do %>
-        Cetak Daftar KaK Tahun <%= @tahun %>
-    <% end %>
     </div>
   </div>
 </div>

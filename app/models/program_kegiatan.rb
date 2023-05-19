@@ -390,4 +390,15 @@ class ProgramKegiatan < ApplicationRecord
       sub.sasarans.sudah_lengkap.where(tahun: tahun).map(&:total_anggaran_penetapan).compact.sum
     end.sum
   end
+
+  def indikator_subkegiatan_tahun(tahun, kode_opd)
+    indikators = indikator_renstras_new('subkegiatan', kode_opd)
+    indikator = indikators[:indikator_subkegiatan].find { |ind| ind.tahun == tahun }
+
+    {
+      indikator: indikator.indikator,
+      target: indikator.target,
+      satuan: indikator.satuan
+    }
+  end
 end

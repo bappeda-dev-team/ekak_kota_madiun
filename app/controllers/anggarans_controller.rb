@@ -34,8 +34,8 @@ class AnggaransController < ApplicationController
       if @anggaran.save
         format.js
         format.html do
-          redirect_to sasaran_tahapan_anggarans_path(@sasaran, @tahapan),
-                      success: 'Sukses Membuat Anggaran.'
+          redirect_to rincian_belanja_path(@sasaran),
+                      success: 'Rekening ditambahkan'
         end
         format.json { render :show, status: :created, location: @anggaran }
       else
@@ -56,6 +56,7 @@ class AnggaransController < ApplicationController
     @anggaran.level = helpers.anggaran_level kode_rekening
     respond_to do |format|
       if @anggaran.update(anggaran_params)
+        format.js
         format.html do
           redirect_to sasaran_tahapan_anggarans_path(@sasaran, @tahapan),
                       success: 'Anggaran was successfully updated.'
@@ -72,6 +73,7 @@ class AnggaransController < ApplicationController
   def destroy
     @anggaran.destroy
     respond_to do |format|
+      format.js { render :create }
       format.html do
         redirect_to sasaran_tahapan_anggarans_path(@sasaran, @tahapan), notice: 'Anggaran was successfully destroyed.'
       end

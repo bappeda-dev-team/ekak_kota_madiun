@@ -12,10 +12,11 @@ class KaksController < ApplicationController
   end
 
   def laporan_kak
-    @tahun_sasaran = cookies[:tahun_sasaran] || nil
-    @nip_asn = current_user.nik
-    @program_kegiatans = ProgramKegiatan.with_sasarans_lengkap(@nip_asn, @tahun_sasaran)
-    @sasarans = current_user.sasarans.where("sasarans.tahun ILIKE ?", "%#{@tahun_sasaran}%")
+    @kode_opd = cookies[:opd]
+    @user = current_user
+    @tahun = cookies[:tahun] || Date.current.year
+    @nip_asn = @user.nik
+    @program_kegiatans = @user.subkegiatan_sasarans_tahun(@tahun)
   end
 
   def pdf_kak
