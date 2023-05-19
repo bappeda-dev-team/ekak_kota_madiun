@@ -42,7 +42,7 @@
   <div class="card-body">
     <div class="row align-items-center mb-3">
       <div class="col-8">
-        <span class="fs-5 fw-bold mb-0">2. Rencana Aksi <%= current_user.eselon_user == 'eselon_4' and current_user.has_any_role?('eselon_4') ? 'dan Anggaran' : '' %></span>
+        <span class="fs-5 fw-bold mb-0">2. Rencana Aksi</span>
         <span class="ms-2"><%= sesuai?(sasaran.target_sesuai?) %></span>
       </div>
       <% unless diajukan? %>
@@ -57,13 +57,11 @@
           <strong>Waktu yang dibutuhkan :</strong>
           <%= waktu = sasaran.waktu_total == 0 ? "-" : sasaran.waktu_total %> bulan
           <hr>
-        <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
           <div class="row">
             <div class="col-4 align-middle">
               <strong>Anggaran yang dibutuhkan :</strong>
               Rp. <%= number_with_delimiter(sasaran.total_anggaran_dengan_komentar) %>
           </div>
-        <% end %>
         <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
           <% unless diajukan? %>
             <div class="col-8 align-middle">
@@ -93,9 +91,7 @@
               <th class="border-bottom border-end text-center" scope="col"><%= i %></th>
             <% end %>
             <th class="border-bottom border-end text-center" scope="col">Jumlah</th>
-          <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
             <th class="border-bottom border-end text-center" scope="col" rowspan="2">Anggaran</th>
-          <% end %>
             <th class="border-bottom border-end text-center" scope="col" rowspan="2">Keterangan</th>
             <% unless diajukan? %>
               <th class="border-bottom border-end text-center" scope="col" rowspan="2">Action</th>
@@ -129,23 +125,9 @@
                 <% end %>
               <% end %>
               <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.jumlah_target or '-' %></td>
-          <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
-              <% unless tahapan.anggarans.any? %>
-                <% unless diajukan? %>
-                  <td class="fw-bolder text-gray-500 border text-center">
-                    <%= link_to 'Tambah Anggaran', new_sasaran_tahapan_anggaran_path(sasaran, tahapan),remote: true,
-                     data: { bs_toggle: 'modal', bs_target: "#form-perhitungan"}, class: "ml-5 btn btn-sm btn-success text-white animate-up-2" %>
-                  </td>
-                <% end %>
-              <% else %>
                 <td class="fw-bolder text-gray-500 border text-end">
                   Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %>
-                <% unless diajukan? %>
-                  | <%= link_to 'Edit Anggaran', sasaran_tahapan_anggarans_path(sasaran, tahapan), class: 'btn btn-info btn-sm' %>
-              <% end %>
                 </td>
-            <% end %>
-          <% end %>
               <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.keterangan %></td>
               <% unless diajukan? %>
                 <td class="fw-bolder text-gray-500 text-center border-end">
@@ -166,9 +148,7 @@
               <td class="border-bottom border-end text-center"><%= sasaran.total_target_aksi_bulan[i] %></td>
             <% end %>
             <td class="border-bottom border-end text-center"><%= sasaran.jumlah_target %></td>
-          <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
             <td class="border-bottom border-end text-end">Rp. <%= number_with_delimiter(sasaran.total_anggaran_dengan_komentar) %></td>
-          <% end %>
             <td class="border-bottom border-end" colspan="2"></td>
           </tr>
         </tfoot>
