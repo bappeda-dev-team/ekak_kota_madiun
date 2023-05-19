@@ -261,6 +261,7 @@ Rails.application.routes.draw do
   namespace :laporans do
     get "laporan_kak"
     get "laporan_rka"
+    post "laporan_kak_admin"
   end
 
   resources :lembagas
