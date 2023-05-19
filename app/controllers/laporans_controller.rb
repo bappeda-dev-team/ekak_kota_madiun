@@ -1,10 +1,15 @@
 class LaporansController < ApplicationController
-  before_action :set_default, only: [:laporan_rka]
+  before_action :set_default, only: %i[laporan_rka laporan_kak]
 
   def atasan
     # current_user == atasan
     # @users = User.asn_aktif
     @atasans = current_user.users.asn_aktif.includes([:sasarans])
+  end
+
+  def laporan_kak
+    @nip_asn = @user.nik
+    @program_kegiatans = @user.subkegiatan_sasarans_tahun(@tahun)
   end
 
   def laporan_rka
@@ -16,6 +21,7 @@ class LaporansController < ApplicationController
 
   def set_default
     @user = current_user
-    @tahun = cookies[:tahun] || nil
+    @kode_opd = cookies[:opd]
+    @tahun = cookies[:tahun] || Date.current.year
   end
 end
