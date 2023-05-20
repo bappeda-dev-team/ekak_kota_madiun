@@ -48,7 +48,7 @@
                   <td class="border" colspan="3">
                     <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
                   </td>
-                <% end%>
+                <% end %>
                 <td class="border" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
                   <%= render 'sasarans/tombol_action_sasaran', sasaran: sasaran %>
                 </td>
@@ -62,7 +62,7 @@
               <% end %>
               <% sasaran.tahapans.each.with_index(1) do |tahapan, no_tah| %>
                 <tr>
-                  <td class="border text-wrap" colspan="7" >Renaksi <%= no_tah %>: <%= tahapan.tahapan_kerja %></td>
+                  <td class="border text-wrap" colspan="7">Renaksi <%= no_tah %>: <%= tahapan.tahapan_kerja %></td>
                 </tr>
               <% end %>
             <% end %>

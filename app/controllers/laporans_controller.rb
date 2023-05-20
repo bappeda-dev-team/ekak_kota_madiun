@@ -13,15 +13,14 @@ class LaporansController < ApplicationController
   end
 
   def laporan_kak_admin
-    # kak = KakService.new(kode_unik_opd: @kode_opd, tahun: @tahun)
-    # @program_kegiatans = kak.sasarans_by_user
-    # @total_pagu = kak.total_pagu
-    # @jumlah_subkegiatan = kak.laporan_rencana_kinerja.size
-    # @total_sasaran_aktif = kak.total_sasaran_aktif
-    # @total_usulans = kak.total_usulan_musrenbang
     opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = opd.nama_opd
-    @operational_obj = opd.operational_tahun(@tahun)
+
+    @program_kegiatans = opd.strategis
+                            .where("role = ? and tahun ILIKE ?", "eselon_4", "%#{@tahun}%")
+                            .map(&:sasaran)
+                            .group_by(&:program_kegiatan)
+
     render partial: "laporans/kak_admin"
   end
 
