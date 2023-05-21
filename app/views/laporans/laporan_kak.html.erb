@@ -17,10 +17,10 @@
           <%= render 'laporan_kak_row_user', program_kegiatans: @program_kegiatans, tahun: cookies[:tahun] %>
         </div>
       <% else %>
-        <div class="card border-0 shadow" id="user_filter"
+        <div class="card border-0 shadow" id="laporan-kak-admin"
              data-controller="page-ajax"
              data-page-ajax-opd-value="<%= cookies[:opd] %>"
-             data-page-ajax-url-value="/filter_kak"
+             data-page-ajax-url-value="<%= laporans_laporan_kak_admin_path %>"
              data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >
           <div data-page-ajax-target="results">
             <div class="card-header">

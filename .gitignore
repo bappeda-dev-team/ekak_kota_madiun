@@ -47,3 +47,4 @@ Procfile.dev
 .dump.rdb
 dump.rdb
 /app/views/.DS_Store
+/.DS_Store

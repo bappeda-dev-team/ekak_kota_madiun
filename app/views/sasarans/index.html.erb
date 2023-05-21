@@ -30,6 +30,7 @@
           <thead class="thead-light">
             <tr>
               <th class="border text-center" scope="col">No</th>
+              <th class="border text-center" scope="col">Pemilik Rencana</th>
               <th class="border text-center" scope="col">Rencana Kinerja</th>
               <th class="border text-center" scope="col">Indikator Kinerja</th>
               <th class="border text-center" scope="col">Target</th>
@@ -40,30 +41,25 @@
           <tbody>
             <% @sasarans.each.with_index(1) do |sasaran, i| %>
               <tr>
-                <td class="border" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
-                <td class="border text-wrap" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
+                <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= i %></td>
+                <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
+                <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
                 <% if sasaran.indikator_sasarans.any? %>
-                  <td class="p-0 m-0" colspan="3"></td>
+                  <%= indikator_sasaran(sasaran) %>
                 <% else %>
                   <td class="border" colspan="3">
                     <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
                   </td>
-                <% end%>
-                <td class="border" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
+                <% end %>
+                <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">
                   <%= render 'sasarans/tombol_action_sasaran', sasaran: sasaran %>
                 </td>
               </tr>
-              <% sasaran.indikator_sasarans.each do |indikator| %>
-                <tr>
-                  <td class="border text-wrap"><%= indikator.indikator_kinerja %></td>
-                  <td class="border text-center"><%= indikator.target %></td>
-                  <td class="border text-center"><%= indikator.satuan %></td>
-                </tr>
+              <% row_indikator_sasaran(sasaran).each do |indikator| %>
+                <%= indikator %>
               <% end %>
-              <% sasaran.tahapans.each.with_index(1) do |tahapan, no_tah| %>
-                <tr>
-                  <td class="border text-wrap" colspan="7" >Renaksi <%= no_tah %>: <%= tahapan.tahapan_kerja %></td>
-                </tr>
+              <% row_tahapan_sasaran(sasaran).each do |tahapan| %>
+                <%= tahapan %>
               <% end %>
             <% end %>
           </tbody>
@@ -73,4 +69,3 @@
     </div>
   </div>
 </div>
-<%= render 'shared/modal_template', modal_name: 'clone-sasaran' %>

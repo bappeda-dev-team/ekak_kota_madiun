@@ -20,11 +20,14 @@ export default class extends Controller {
 
         connect() {
                 const url = this.urlValue
+                const token = document.head.querySelector('meta[name="csrf-token"]').content
+
                 // Build formData object.
                 let formData = new FormData();
                 formData.append('kode_opd', this.opdValue);
                 formData.append('tahun', this.tahunValue);
                 formData.append('jenis', this.jenisUsulanValue);
+                formData.append('authenticity_token', token);
 
                 fetch(url,
                         {

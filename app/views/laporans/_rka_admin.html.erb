@@ -5,9 +5,7 @@
         <h2 class="fs-5 fw-bold mb-0">Rincian Belanja Tahun <%= @tahun %></h2>
       </div>
       <div class="col text-end">
-        <span><%= @nama_user %></span>
-        |
-        <span><%= @nip_user %></span>
+        <span><%= @nama_opd %></span>
       </div>
     </div>
   </div>
@@ -36,15 +34,10 @@
               <td class="border">
                 <% if subkegiatan %>
                   <div class="d-grid gap-2">
-                    <%= link_to "/acuan_kerja_new/#{subkegiatan.id}/#{@tahun}", target: "_blank", rel: "nofollow",
-                    class: "btn btn-sm btn-info" do %>
-                      <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
-                      Tampilkan
-                    <% end %>
                     <%= link_to "/pdf_rka/#{subkegiatan.id}/#{@tahun}.pdf",
-                   class: "btn btn-sm btn-secondary" do %>
-                      <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
-                      Cetak
+                     class: "btn btn-sm btn-secondary" do %>
+                      <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak Rincian Belanja"></span>
+                      Cetak Rincian Belanja
                     <% end %>
                   </div>
                 <% end %>
@@ -64,19 +57,11 @@
                   </div>
                 </td>
               </tr>
-              <% sasaran.indikator_sasarans.drop(1).each do |indikator_s| %>
-                <tr>
-                  <td class="border text-wrap"><%= indikator_s.indikator_kinerja %></td>
-                  <td class="border text-wrap"><%= indikator_s.target %></td>
-                  <td class="border text-wrap"><%= indikator_s.satuan %></td>
-                </tr>
+              <% row_indikator_sasaran(sasaran).each do |indikator| %>
+                <%= indikator %>
               <% end %>
-              <% sasaran.tahapans.each.with_index(1) do |tahapan, no_tah| %>
-                <tr>
-                  <td class="border text-wrap" colspan="6" >Renaksi <%= no_tah %>: <%= tahapan.tahapan_kerja %></td>
-                  <td class="border">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %></td>
-                  <td class="border"></td>
-                </tr>
+              <% row_tahapan_anggaran_sasaran(sasaran).each do |tahapan| %>
+                <%= tahapan %>
               <% end %>
             <% end %>
           <% end %>
