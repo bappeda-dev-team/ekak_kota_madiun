@@ -7,6 +7,7 @@
             <i class="fas fa-home"></i>
           <% end %>
         </li>
+        <li class="breadcrumb-item" aria-current="page">Laporan</li>
         <li class="breadcrumb-item active" aria-current="page">Rincian Belanja</li>
       </ol>
     </nav>
@@ -16,9 +17,10 @@
           <%= render 'laporan_rka_row_user', program_kegiatans: @program_kegiatans, tahun: cookies[:tahun] %>
         </div>
       <% else %>
-        <div class="card border-0 shadow" id="user_filter" data-controller="page-ajax"
+        <div class="card border-0 shadow" id="laporan-rka-admin"
+             data-controller="page-ajax"
              data-page-ajax-opd-value="<%= cookies[:opd] %>"
-             data-page-ajax-url-value="/filter_rab"
+             data-page-ajax-url-value="<%= laporans_laporan_rka_admin_path %>"
              data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >
           <div data-page-ajax-target="results">
             <div class="card-header">

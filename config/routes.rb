@@ -262,6 +262,7 @@ Rails.application.routes.draw do
     get "laporan_kak"
     get "laporan_rka"
     post "laporan_kak_admin"
+    post "laporan_rka_admin"
   end
 
   resources :lembagas
