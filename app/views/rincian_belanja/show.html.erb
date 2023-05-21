@@ -89,9 +89,21 @@
                     <td class="uang text-end">Rp. <%= number_with_delimiter(anggaran.jumlah) %></td>
                     <td>
                       <div class="d-grid gap-3 p-3">
-                        <%= link_to 'Tambah Rincian', new_anggaran_perhitungan_path(anggaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"},
+                        <%= link_to 'Tambah Rincian', new_anggaran_perhitungan_path(anggaran), remote: true,
+                         data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"},
                          class: "btn btn-sm btn-outline-success" %>
-                        <%= link_to "Ganti Rekening", edit_sasaran_tahapan_anggaran_path(@sasaran, tahapan, anggaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"},
+                        <% if anggaran.uraian.downcase.include? "gaji" %>
+                          <%= link_to 'Tambah Gaji', new_gaji_anggaran_perhitungans_path(anggaran), remote: true,
+                           data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan" },
+                          class: "btn btn-sm btn-warning" %>
+                        <% end %>
+                        <% if anggaran.uraian.downcase.include? "rekening lain-lain" %>
+                          <%= link_to 'Lain-Lain', new_lain_lain_anggaran_perhitungans_path(anggaran), remote: true,
+                           data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan" },
+                          class: "btn btn-sm btn-primary" %>
+                        <% end %>
+                        <%= link_to "Ganti Rekening", edit_sasaran_tahapan_anggaran_path(@sasaran, tahapan, anggaran), remote: true,
+                         data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"},
                          class: 'btn btn-sm btn-outline-info'  %>
                         <%= link_to "Hapus Rekening", sasaran_tahapan_anggaran_path(@sasaran, tahapan, anggaran),
                          method: :delete, remote: true,
@@ -103,15 +115,8 @@
                   <% if anggaran.perhitungans.any? %>
                     <% anggaran.perhitungans.includes([:koefisiens]).order(:created_at).each do |hitung| %>
                       <tr class="rincian-anggaran">
-                        <% edit_hitung = hitung.spesifikasi&.include?('Belanja Gaji') ? edit_gaji_anggaran_perhitungan_path(anggaran, hitung) : edit_anggaran_perhitungan_path(anggaran, hitung) %>
-                        <% nama_anggaran = hitung.spesifikasi&.include?('Belanja Gaji') ? hitung.deskripsi : uraian_kode(hitung.deskripsi) %>
                         <td></td>
-                        <td><%= hitung.spesifikasi&.include?('Belanja Gaji') ? hitung.deskripsi : uraian_kode(hitung.deskripsi)  %>
-                          <br>
-                          <%= hitung.spesifikasi&.include?('Belanja Gaji') ? hitung.spesifikasi : spesifikasi(hitung.deskripsi) %>
-                          <br>
-                          - <%= hitung.spesifikasi&.include?('Belanja Gaji') ? hitung.tahun : tahun_kode(hitung.deskripsi) %>
-                        </td>
+                        <td><%= uraian_rincian_anggaran(hitung) %></td>
                         <td class="text-center"><% hitung.koefisiens.each.with_index(1) do |koef, index|%>
                             <%= koef.volume %> <%= koef.satuan_volume %> <%= 'x' if index < hitung.koefisiens.length %>
                           <% end %>
@@ -123,12 +128,12 @@
                         <td class="uang text-end">Rp. <%= number_with_delimiter((hitung.total)) %></td>
                         <td>
                           <div class="d-grid gap-3 p-3">
-                            <%= link_to "Edit Rincian", edit_hitung, remote: true,
+                            <%= link_to "Edit Rincian", link_edit_anggaran(anggaran, hitung), remote: true,
                              data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan" },
                              class: "btn btn-outline-info" %>
                             <%= link_to "Hapus Rincian", anggaran_perhitungan_path(anggaran, hitung),
                              method: :delete, remote: true,
-                             data: { confirm_swal: "Hapus #{nama_anggaran} ?" },
+                             data: { confirm_swal: "Hapus Rincian ?" },
                              class: "btn btn-outline-danger" %>
                           </div>
                         </td>
