@@ -73,6 +73,8 @@
       <% else %>
         <%= link_to 'Manual', new_sasaran_tahapan_path(sasaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'}, class: 'btn btn-danger mb-4' %>
       <% end %>
+      <%= button_to 'Clone Renaksi', clone_tahapan_sebelum_sasaran_path(sasaran),
+                    class: 'btn btn-primary' %>
       </div>
     </div>
   <% end %>

@@ -12,9 +12,9 @@ class SasaranCloner < Clowne::Cloner
     }
   end
 
-  trait :with_tahapans do
-    include_association :tahapans, params: true, trait: :normal
-  end
+  # trait :with_tahapans do
+  #   include_association :tahapans, params: true, trait: :normal
+  # end
 
   after_clone do |origin, cloned, tahun:, **|
     cloned.id_rencana = "clone_#{origin.id_rencana}_#{tahun}"

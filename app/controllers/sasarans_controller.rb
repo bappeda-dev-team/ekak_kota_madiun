@@ -237,72 +237,6 @@ class SasaransController < ApplicationController
     end
   end
 
-  def clone
-    # TODO: CLEAN THIS UP
-    @sasaran = params[:id]
-    kelompok_anggaran = KelompokAnggaran.find(sasaran_params[:kelompok_anggaran])
-    sasaran_target = Sasaran.find(@sasaran)
-    sasaran_target.class.amoeba do
-      set tahun: kelompok_anggaran.kode_tahun_sasaran
-      append id_rencana: kelompok_anggaran.kode_kelompok
-    end
-    duplicate = sasaran_target.amoeba_dup
-    respond_to do |format|
-      @rowspan = params[:rowspan]
-      @dom = params[:dom]
-      begin
-        duplicate.save
-        sasaran_target.indikator_sasarans.map do |is|
-          is.class.amoeba do
-            append sasaran_id: kelompok_anggaran.kode_kelompok
-            append id_indikator: kelompok_anggaran.kode_kelompok
-          end
-          is.amoeba_dup.save
-        end
-        sasaran_target.dasar_hukums.map do |ds|
-          ds.class.amoeba do
-            append sasaran_id: kelompok_anggaran.kode_kelompok
-          end
-          ds.amoeba_dup.save
-        end
-        sasaran_target.tahapans.map do |tahap|
-          tahap.class.amoeba do
-            append id_rencana: kelompok_anggaran.kode_kelompok
-            append id_rencana_aksi: kelompok_anggaran.kode_kelompok
-          end
-          tahap.amoeba_dup.save
-          tahap.aksis.map do |th|
-            th.class.amoeba do
-              append id_aksi_bulan: kelompok_anggaran.kode_kelompok
-              append id_rencana_aksi: kelompok_anggaran.kode_kelompok
-            end
-            th.amoeba_dup.save
-          end
-        end
-      rescue ActiveRecord::RecordNotUnique
-        flash.now[:alert] =
-          ["Sasaran Sudah di kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran} ",
-           "Sasaran Sudah di kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran} "]
-        @type = 'gagal'
-        @text = "Sasaran Sudah di kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran} "
-      rescue ActiveRecord::RecordError
-        flash.now[:alert] =
-          ["Terjadi Kesalahan. Gagal Kloning ke tahun #{kelompok_anggaran.kode_tahun_sasaran}", 'gagal']
-        @type = 'gagal'
-        @text = 'gagal dicloning'
-      else
-        flash.now[:success] = ['Berhasil di cloning', 'dicloning']
-        @type = 'berhasil'
-        @text = 'Berhasil dicloning'
-      end
-      format.js { render 'update_kak' }
-    end
-  end
-
-  def clone_form
-    @sasaran = Sasaran.find(params[:id])
-  end
-
   # GET /sasarans/new
   def new
     @sasaran = @user.sasarans.build
@@ -402,6 +336,19 @@ class SasaransController < ApplicationController
     @subkegiatan = sasaran.subkegiatan
     @anggaran_sasaran = sasaran.total_anggaran || 0
     render partial: "subkegiatan_sasaran"
+  end
+
+  def clone_tahapan_sebelum
+    sasaran = Sasaran.find(params[:id])
+    sas_target = sasaran.clone_dari
+    respond_to do |format|
+      if sasaran.renaksi_cloner
+        format.html { redirect_to sasaran_path(sasaran), success: 'Renaksi diclone' }
+      else
+        flash.now[:error] = 'Sasaran tidak punya renaksi'
+        format.html { redirect_to sasaran_path(sasaran), success: 'Gagal Clone' }
+      end
+    end
   end
 
   private
