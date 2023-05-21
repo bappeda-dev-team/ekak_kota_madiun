@@ -26,15 +26,11 @@
         </thead>
         <tbody>
           <% @program_kegiatans.each.with_index(1) do |(subkegiatan, sasarans), i| %>
-            <% pagu = sasarans.map(&:total_anggaran).compact.sum %>
-            <% indikator_sub = subkegiatan&.indikator_subkegiatan_tahun(@tahun, @kode_opd) %>
             <tr>
               <td class="border text-wrap fw-bolder text-gray-900"><%= i %></td>
               <td class="border text-wrap fw-bolder text-gray-900" colspan="2">Subkegiatan: <%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %></td>
-              <td class="border text-wrap"><%= indikator_sub&.dig(:indikator) %></td>
-              <td class="border text-wrap"><%= indikator_sub&.dig(:target) %></td>
-              <td class="border"><%= indikator_sub&.dig(:satuan) %></td>
-              <td class="border">Rp. <%= number_with_delimiter(pagu) %></td>
+              <%= indikator_sub(subkegiatan, @tahun, @kode_opd) %>
+              <%= pagu_sub(sasarans) %>
               <td class="border">
                 <% if subkegiatan %>
                   <div class="d-grid gap-2">
@@ -53,29 +49,24 @@
               </td>
             </tr>
             <% sasarans.each.with_index(1) do |sasaran, index| %>
-              <% indikator = sasaran.indikator_sasarans.first %>
-              <% rowspan = sasaran.indikator_sasarans.count.zero? ? 1 : sasaran.indikator_sasarans.count  %>
               <tr>
-                <td class="border" rowspan="<%= rowspan  %>"><%= "#{i}.#{index}" %></td>
-                <td class="border text-wrap" rowspan="<%= rowspan  %>"><%= sasaran.nama_pemilik %></td>
-                <td class="border text-wrap" rowspan="<%= rowspan  %>"><%= sasaran.sasaran_kinerja %></td>
-                <td class="border text-wrap"><%= indikator&.indikator_kinerja %></td>
-                <td class="border text-wrap"><%= indikator&.target %></td>
-                <td class="border text-wrap"><%= indikator&.satuan %></td>
-                <td class="border" rowspan="<%= rowspan  %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
-                <td class="border" rowspan="<%= rowspan  %>">
+                <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= "#{i}.#{index}" %></td>
+                <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
+                <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
+                <%= indikator_sasaran(sasaran) %>
+                <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
+                <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">
                   <div class="row justify-content-center w-100">
                     <div class="col">
                     </div>
                   </div>
                 </td>
               </tr>
-              <% sasaran.indikator_sasarans.drop(1).each do |indikator_s| %>
-                <tr>
-                  <td class="border text-wrap"><%= indikator_s.indikator_kinerja %></td>
-                  <td class="border text-wrap"><%= indikator_s.target %></td>
-                  <td class="border text-wrap"><%= indikator_s.satuan %></td>
-                </tr>
+              <% row_indikator_sasaran(sasaran).each do |indikator| %>
+                <%= indikator %>
+              <% end %>
+              <% row_tahapan_anggaran_sasaran(sasaran).each do |tahapan| %>
+                <%= tahapan %>
               <% end %>
             <% end %>
           <% end %>

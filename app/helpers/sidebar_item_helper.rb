@@ -178,7 +178,7 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
       },
       {
         title: 'Rekap Pohon Kinerja', href: rekap_opd_pohon_kinerja_index_path,
-        icon: 'fas fa-bullseye', identifier: 'pohon_kinerja/rekap'
+        icon: 'fas fa-tree', identifier: 'pohon_kinerja/rekap'
       },
       {
         title: 'Rencana Kinerja (KAK)', href: laporans_laporan_kak_path,

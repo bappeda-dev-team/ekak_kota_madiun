@@ -30,6 +30,7 @@
             <thead class="thead-light">
               <tr>
                 <th class="border text-center" scope="col">No</th>
+                <th class="border text-center" scope="col">Pemilik Rencana</th>
                 <th class="border text-center" scope="col">Rencana Kinerja</th>
                 <th class="border text-center" scope="col">Indikator Kinerja</th>
                 <th class="border text-center" scope="col">Target</th>
@@ -42,17 +43,24 @@
               <% @subkegiatan_sasarans.each do |subkegiatan,sasarans| %>
                 <% pagu = sasarans.map(&:total_anggaran).compact.sum %>
                 <tr>
-                  <td class="border text-wrap fw-bolder text-gray-900" scope="row" colspan="5">Subkegiatan: <%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %></td>
-                  <td class="border" scope="row">Rp. <%= number_with_delimiter(pagu) %></td>
+                  <td class="border text-wrap fw-bolder text-gray-900" colspan="6">Subkegiatan: <%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %></td>
+                  <td class="border">Rp. <%= number_with_delimiter(pagu) %></td>
                   <td class="border"></td>
                 </tr>
                 <% sasarans.each.with_index(1) do |sasaran, i| %>
                   <tr>
-                    <td class="border" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
-                    <td class="border text-wrap" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
-                    <td class="p-0 m-0" colspan="3"></td>
-                    <td class="border" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
-                    <td class="border" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
+                    <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= i %></td>
+                    <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
+                    <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
+                    <% if sasaran.indikator_sasarans.any? %>
+                      <%= indikator_sasaran(sasaran) %>
+                    <% else %>
+                      <td class="border" colspan="3">
+                        <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
+                      </td>
+                    <% end %>
+                    <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
+                    <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">
                       <div class="row justify-content-center w-100">
                         <div class="col">
                           <%= link_to rincian_belanja_path(sasaran), class: "m-3 btn btn-sm btn-outline-info w-100" do %>
@@ -62,19 +70,11 @@
                       </div>
                     </td>
                   </tr>
-                  <% sasaran.indikator_sasarans.each do |indikator| %>
-                    <tr>
-                      <td class="border text-wrap"><%= indikator.indikator_kinerja %></td>
-                      <td class="border text-center"><%= indikator.target %></td>
-                      <td class="border"><%= indikator.satuan %></td>
-                    </tr>
+                  <% row_indikator_sasaran(sasaran).each do |indikator| %>
+                    <%= indikator %>
                   <% end %>
-                  <% sasaran.tahapans.each.with_index(1) do |tahapan, no_tah| %>
-                    <tr>
-                      <td class="border text-wrap" colspan="5" >Renaksi <%= no_tah %>: <%= tahapan.tahapan_kerja %></td>
-                      <td class="border">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %></td>
-                      <td class="border"></td>
-                    </tr>
+                  <% row_tahapan_anggaran_sasaran(sasaran).each do |tahapan| %>
+                    <%= tahapan %>
                   <% end %>
                 <% end %>
               <% end %>

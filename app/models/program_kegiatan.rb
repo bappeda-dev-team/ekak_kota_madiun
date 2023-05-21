@@ -400,5 +400,11 @@ class ProgramKegiatan < ApplicationRecord
       target: indikator.target,
       satuan: indikator.satuan
     }
+  rescue NoMethodError
+    {
+      indikator: nil,
+      target: nil,
+      satuan: nil
+    }
   end
 end

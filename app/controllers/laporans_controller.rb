@@ -8,7 +8,8 @@ class LaporansController < ApplicationController
   end
 
   def laporan_kak
-    @nip_asn = @user.nik
+    @nip_user = @user.nik
+    @nama_user = @user.nama
     @program_kegiatans = @user.subkegiatan_sasarans_tahun(@tahun)
   end
 
@@ -25,7 +26,8 @@ class LaporansController < ApplicationController
   end
 
   def laporan_rka
-    @nip_asn = current_user.nik
+    @nip_user = @user.nik
+    @nama_user = @user.nama
     @program_kegiatans = @user.subkegiatan_sasarans_tahun(@tahun)
   end
 

@@ -48,8 +48,8 @@
               <td class="border text-wrap" rowspan="<%= sasaran.indikator_sasarans.count  %>"><%= sasaran.nama_pemilik %></td>
               <td class="border text-wrap" rowspan="<%= sasaran.indikator_sasarans.count  %>"><%= sasaran.sasaran_kinerja %></td>
               <td class="border text-wrap"><%= indikator&.indikator_kinerja %></td>
-              <td class="border text-wrap"><%= indikator&.target %></td>
-              <td class="border text-wrap"><%= indikator&.satuan %></td>
+              <td class="border text-center"><%= indikator&.target %></td>
+              <td class="border"><%= indikator&.satuan %></td>
               <td class="border" rowspan="<%= sasaran.indikator_sasarans.count  %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
               <td class="border" rowspan="<%= sasaran.indikator_sasarans.count  %>">
                 <div class="row justify-content-center w-100">
@@ -61,8 +61,8 @@
             <% sasaran.indikator_sasarans.drop(1).each do |indikator_s| %>
               <tr>
                 <td class="border text-wrap"><%= indikator_s.indikator_kinerja %></td>
-                <td class="border text-wrap"><%= indikator_s.target %></td>
-                <td class="border text-wrap"><%= indikator_s.satuan %></td>
+                <td class="border text-center"><%= indikator_s.target %></td>
+                <td class="border"><%= indikator_s.satuan %></td>
               </tr>
             <% end %>
             <% sasaran.tahapans.each.with_index(1) do |tahapan, no_tah| %>

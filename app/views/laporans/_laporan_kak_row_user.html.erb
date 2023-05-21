@@ -1,80 +1,87 @@
-<div class="card-body">
-  <div class="table-responsive">
-    <table class="table align-items-center table-bordered">
-      <thead class="thead-light">
-        <tr>
-          <th class="border text-center" scope="col">No</th>
-          <th class="border text-center" scope="col">Pemilik Rencana</th>
-          <th class="border text-center" scope="col">Rencana Kinerja</th>
-          <th class="border text-center" scope="col">Indikator</th>
-          <th class="border text-center" scope="col">Target</th>
-          <th class="border text-center" scope="col">Satuan</th>
-          <th class="border text-center" scope="col">Anggaran</th>
-          <th class="border text-center" scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @program_kegiatans.each.with_index(1) do |(subkegiatan, sasarans), i| %>
-          <% pagu = sasarans.map(&:total_anggaran).compact.sum %>
-          <% indikator_sub = subkegiatan&.indikator_subkegiatan_tahun(@tahun, @kode_opd) %>
+<div class="card border-0 shadow" id="user_filter">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">Laporan KAK Tahun <%= @tahun %></h2>
+      </div>
+      <div class="col text-end">
+        <span><%= @nama_user %></span>
+        |
+        <span><%= @nip_user %></span>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table align-items-center table-bordered">
+        <thead class="thead-light">
           <tr>
-            <td class="border text-wrap fw-bolder text-gray-900"><%= i %></td>
-            <td class="border text-wrap fw-bolder text-gray-900" colspan="2">Subkegiatan: <%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %></td>
-            <td class="border text-wrap"><%= indikator_sub&.dig(:indikator) %></td>
-            <td class="border text-center"><%= indikator_sub&.dig(:target) %></td>
-            <td class="border"><%= indikator_sub&.dig(:satuan) %></td>
-            <td class="border">Rp. <%= number_with_delimiter(pagu) %></td>
-            <td class="border">
-            <% if subkegiatan %>
-              <div class="d-grid gap-2">
-                  <%= link_to "/acuan_kerja_new/#{subkegiatan.id}/#{@tahun}", target: "_blank", rel: "nofollow",
-                    class: "btn btn-sm btn-info" do %>
-                    <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
-                    Tampilkan
-                  <% end %>
-                  <%= link_to "/pdf_kak/#{subkegiatan.id}/#{@tahun}.pdf",
-                   class: "btn btn-sm btn-secondary" do %>
-                    <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
-                    Cetak
-                  <% end %>
-              </div>
-              <% end %>
-            </td>
+            <th class="border text-center" scope="col">No</th>
+            <th class="border text-center" scope="col">Pemilik Rencana</th>
+            <th class="border text-center" scope="col">Rencana Kinerja</th>
+            <th class="border text-center" scope="col">Indikator</th>
+            <th class="border text-center" scope="col">Target</th>
+            <th class="border text-center" scope="col">Satuan</th>
+            <th class="border text-center" scope="col">Anggaran</th>
+            <th class="border text-center" scope="col">Action</th>
           </tr>
-          <% sasarans.each.with_index(1) do |sasaran, index| %>
-            <% indikator = sasaran.indikator_sasarans.first %>
+        </thead>
+        <tbody>
+          <% @program_kegiatans.each.with_index(1) do |(subkegiatan, sasarans), i| %>
             <tr>
-              <td class="border" rowspan="<%= sasaran.indikator_sasarans.count  %>"><%= "#{i}.#{index}" %></td>
-              <td class="border text-wrap" rowspan="<%= sasaran.indikator_sasarans.count  %>"><%= sasaran.nama_pemilik %></td>
-              <td class="border text-wrap" rowspan="<%= sasaran.indikator_sasarans.count  %>"><%= sasaran.sasaran_kinerja %></td>
-              <td class="border text-wrap"><%= indikator&.indikator_kinerja %></td>
-              <td class="border text-wrap"><%= indikator&.target %></td>
-              <td class="border text-wrap"><%= indikator&.satuan %></td>
-              <td class="border" rowspan="<%= sasaran.indikator_sasarans.count  %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
-              <td class="border" rowspan="<%= sasaran.indikator_sasarans.count  %>">
-                <div class="row justify-content-center w-100">
-                  <div class="col">
+              <td class="border text-wrap fw-bolder text-gray-900"><%= i %></td>
+              <td class="border text-wrap fw-bolder text-gray-900" colspan="2">Subkegiatan: <%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %></td>
+              <%= indikator_sub(subkegiatan, @tahun, @kode_opd) %>
+              <%= pagu_sub(sasarans) %>
+              <td class="border">
+                <% if subkegiatan %>
+                  <div class="d-grid gap-2">
+                    <%= link_to "/acuan_kerja_new/#{subkegiatan.id}/#{@tahun}", target: "_blank", rel: "nofollow",
+                    class: "btn btn-sm btn-info" do %>
+                      <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
+                      Tampilkan
+                    <% end %>
+                    <%= link_to "/pdf_kak/#{subkegiatan.id}/#{@tahun}.pdf",
+                   class: "btn btn-sm btn-secondary" do %>
+                      <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
+                      Cetak
+                    <% end %>
                   </div>
-                </div>
+                <% end %>
               </td>
             </tr>
-            <% sasaran.indikator_sasarans.drop(1).each do |indikator_s| %>
+            <% sasarans.each.with_index(1) do |sasaran, index| %>
               <tr>
-                <td class="border text-wrap"><%= indikator_s.indikator_kinerja %></td>
-                <td class="border text-wrap"><%= indikator_s.target %></td>
-                <td class="border text-wrap"><%= indikator_s.satuan %></td>
+                <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= "#{i}.#{index}" %></td>
+                <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
+                <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
+                <%= indikator_sasaran(sasaran) %>
+                <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
+                <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">
+                  <div class="row justify-content-center w-100">
+                    <div class="col">
+                    </div>
+                  </div>
+                </td>
               </tr>
-            <% end %>
-            <% sasaran.tahapans.each.with_index(1) do |tahapan, no_tah| %>
-              <tr>
-                <td class="border text-wrap" colspan="6" >Renaksi <%= no_tah %>: <%= tahapan.tahapan_kerja %></td>
-                <td class="border">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %></td>
-                <td class="border"></td>
-              </tr>
+              <% sasaran.indikator_sasarans.drop(1).each do |indikator_s| %>
+                <tr>
+                  <td class="border text-wrap"><%= indikator_s.indikator_kinerja %></td>
+                  <td class="border text-wrap"><%= indikator_s.target %></td>
+                  <td class="border text-wrap"><%= indikator_s.satuan %></td>
+                </tr>
+              <% end %>
+              <% sasaran.tahapans.each.with_index(1) do |tahapan, no_tah| %>
+                <tr>
+                  <td class="border text-wrap" colspan="6" >Renaksi <%= no_tah %>: <%= tahapan.tahapan_kerja %></td>
+                  <td class="border">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %></td>
+                  <td class="border"></td>
+                </tr>
+              <% end %>
             <% end %>
           <% end %>
-        <% end %>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
