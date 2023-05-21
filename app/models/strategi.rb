@@ -62,13 +62,25 @@ class Strategi < ApplicationRecord
   }, class_name: "Strategi",
      foreign_key: "strategi_ref_id", dependent: :destroy
 
+  validates :strategi_ref_id, presence: true, if: :milik_non_kepala
+  validates :strategi, presence: true
+  validates :tahun, presence: true
+
   amoeba do
     set tahun: '2022_p'
     include_association %i[strategi_eselon_dua_bs strategi_eselon_tigas strategi_eselon_empats strategi_staffs]
   end
 
+  def milik_non_kepala
+    role != 'eselon_2'
+  end
+
   def isu_strategis_disasar
-    strategi_atasan.nil? ? pohon.keterangan : "#{strategi_atasan.strategi} - #{strategi_atasan.user&.nama}"
+    if strategi_atasan.nil?
+      pohon.keterangan
+    else
+      "#{strategi_atasan.strategi} - #{strategi_atasan.user&.nama} - #{strategi_atasan&.tahun}"
+    end
   end
 
   def strategi_bawahans

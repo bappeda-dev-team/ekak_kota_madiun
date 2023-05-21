@@ -1,6 +1,6 @@
 class PerhitungansController < ApplicationController
   before_action :set_anggaran
-  before_action :set_perhitungan, only: %i[show edit update destroy edit_gaji]
+  before_action :set_perhitungan, only: %i[show edit update destroy edit_gaji edit_lain_lain]
 
   # GET /perhitungans or /perhitungans.json
   def index
@@ -81,6 +81,13 @@ class PerhitungansController < ApplicationController
   end
 
   def edit_gaji; end
+
+  def new_lain_lain
+    @perhitungan = Perhitungan.new
+    @perhitungan.koefisiens.build
+  end
+
+  def edit_lain_lain; end
 
   private
 

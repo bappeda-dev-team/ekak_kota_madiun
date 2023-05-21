@@ -239,10 +239,12 @@ Rails.application.routes.draw do
     resources :perhitungans do
       collection do
         get :new_gaji
+        get :new_lain_lain
       end
 
       member do
         get :edit_gaji
+        get :edit_lain_lain
       end
     end
   end

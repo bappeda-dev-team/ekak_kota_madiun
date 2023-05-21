@@ -18,6 +18,7 @@ class PohonKinerjaController < ApplicationController
     @user = current_user
     @eselon = @user.eselon_user
     @strategis = current_user.strategis.where('tahun ILIKE ?', "%#{@tahun}%")
+                   .reject { |str| str.strategi_atasan.nil? }
   end
 
   def admin_filter
