@@ -419,4 +419,23 @@ class Sasaran < ApplicationRecord
   def nama_pemilik
     user.nama
   end
+
+  def clone_dari
+    return unless id_rencana.include?('clone')
+
+    split_id = id_rencana.partition('_')
+    clone_target = split_id.last.partition('_').first
+    Sasaran.find_by_id_rencana(clone_target)
+  end
+
+  def renaksi_cloner
+    clone_asal = clone_dari
+
+    return unless clone_asal.tahapans.any?
+
+    clone_asal.tahapans.each do |tahap|
+      clone = TahapanCloner.call(tahap, id_rencana_sas: self.id_rencana, traits: :normal)
+      clone.persist!
+    end
+  end
 end

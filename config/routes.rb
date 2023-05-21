@@ -187,6 +187,7 @@ Rails.application.routes.draw do
       get :rencana_aksi
       get :subkegiatan
       get :anggaran_belanja
+      post :clone_tahapan_sebelum
     end
     resources :rincians do
       get "subkegiatan", on: :new
