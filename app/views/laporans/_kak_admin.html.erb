@@ -26,14 +26,15 @@
         </thead>
         <tbody>
           <% @program_kegiatans.each.with_index(1) do |(subkegiatan, sasarans), i| %>
+            <% pagu = sasarans.map(&:total_anggaran).compact.sum %>
             <% indikator_sub = subkegiatan&.indikator_subkegiatan_tahun(@tahun, @kode_opd) %>
             <tr>
               <td class="border text-wrap fw-bolder text-gray-900"><%= i %></td>
               <td class="border text-wrap fw-bolder text-gray-900" colspan="2">Subkegiatan: <%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %></td>
               <td class="border text-wrap"><%= indikator_sub&.dig(:indikator) %></td>
-              <td class="border text-center"><%= indikator_sub&.dig(:target) %></td>
+              <td class="border text-wrap"><%= indikator_sub&.dig(:target) %></td>
               <td class="border"><%= indikator_sub&.dig(:satuan) %></td>
-              <td class="border">Rp. 123</td>
+              <td class="border">Rp. <%= number_with_delimiter(pagu) %></td>
               <td class="border">
                 <% if subkegiatan %>
                   <div class="d-grid gap-2">
