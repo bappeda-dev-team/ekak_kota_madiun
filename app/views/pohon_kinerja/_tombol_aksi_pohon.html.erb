@@ -4,7 +4,7 @@
       <%= link_to bagikan_pokin_strategi_path(
         strategi.id,
         role: role_bawahan,
-        pohon_id: pohon.id),
+        pohon_id: pohon&.id),
         remote: true,
         class: 'btn btn-outline-gray-900 d-inline-flex align-items-center mx-3',
         data: { controller: 'form-modal',
@@ -22,7 +22,7 @@
   <% unless current_user.has_role?(:super_admin) %>
   <div class="p-2">
     <%= link_to edit_strategi_path(strategi, nip: strategi.nip_asn,
-                                 usulan_isu: pohon.strategi,
+                                 usulan_isu: pohon&.strategi,
                                  role: role),
     class: "btn btn-outline-info d-inline-flex align-items-center mx-3" do %>
       <i class="fas fa-edit me-2"></i>

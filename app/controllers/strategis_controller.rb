@@ -12,6 +12,7 @@ class StrategisController < ApplicationController
 
   # GET /strategis/new
   def new
+    @tahun = cookies[:tahun] || Date.current.year
     @opd = current_user.opd
     @opd_id = @opd.id
     @strategi = Strategi.new
@@ -25,6 +26,7 @@ class StrategisController < ApplicationController
 
   # GET /strategis/1/edit
   def edit
+    @tahun = cookies[:tahun] || Date.current.year
     @opd = current_user.opd
     @opd_id = @opd.id
     @nip = params[:nip]
@@ -53,6 +55,8 @@ class StrategisController < ApplicationController
         # format.html { redirect_to strategi_url(@strategi), notice: "Strategi was successfully created." }
         # format.json { render :show, status: :created, location: @strategi }
       else
+        @tahun = cookies[:tahun] || Date.current.year
+        strategi_pohon_atasan(@nip)
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @strategi.errors, status: :unprocessable_entity }
       end
@@ -62,6 +66,9 @@ class StrategisController < ApplicationController
   # PATCH/PUT /strategis/1 or /strategis/1.json
   def update
     @role = params[:strategi][:role]
+    @strategi.sasaran.tahun = strategi_params[:tahun]
+    @nip = strategi_params[:nip_asn]
+    @opd_id = strategi_params[:opd_id]
     respond_to do |format|
       if @strategi.update(strategi_params)
         if current_user.has_role?(:admin)
@@ -71,6 +78,8 @@ class StrategisController < ApplicationController
         end
         format.json { render :show, status: :ok, location: @strategi }
       else
+        @tahun = cookies[:tahun] || Date.current.year
+        strategi_pohon_atasan(@nip)
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @strategi.errors, status: :unprocessable_entity }
       end
@@ -100,6 +109,7 @@ class StrategisController < ApplicationController
     @role = params[:role]
     @pohon_id = @strategi.pohon_id
     @opd = current_user.opd
+    # opd khusus dimana terdapat eselon_2b (dinkes, sekda, pendidikan)
     @bawahans = if [145,
                     122, 123].include?(@opd.id) && @role == 'eselon_3'
                   @opd.users.with_any_role(@role.to_sym,
@@ -167,10 +177,16 @@ class StrategisController < ApplicationController
   end
 
   def strategi_pohon_atasan(nip)
-    @isu_strategis_atasan = Strategi.where(nip_asn: nip).uniq(&:strategi_ref_id).collect do |str|
+    @isu_strategis_atasan = Strategi
+                            .where("nip_asn = ? and tahun ILIKE ?", nip, "%#{@tahun}%")
+                            .uniq(&:strategi_ref_id)
+                            .collect do |str|
       [str.isu_strategis_disasar, str.strategi_ref_id]
     end
-    @isu_strategis_pohon = Strategi.where(nip_asn: nip).uniq(&:pohon_id).collect do |str|
+    @isu_strategis_pohon = Strategi
+                           .where("nip_asn = ? and tahun ILIKE ?", nip, "%#{@tahun}%")
+                           .uniq(&:pohon_id)
+                           .collect do |str|
       [str.pohon.strategi_kota_isu_strategis, str.pohon_id]
     end
   end
