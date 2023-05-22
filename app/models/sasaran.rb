@@ -105,6 +105,12 @@ class Sasaran < ApplicationRecord
   scope :dengan_strategi, -> { select { |s| s.strategi.present? } }
   scope :dengan_manual_ik, -> { select { |s| s.indikator_sasarans.any?(&:manual_ik) } }
 
+  scope :lengkap_strategi_tahun, lambda { |tahun|
+                                   includes(%i[strategi usulans program_kegiatan indikator_sasarans])
+                                     .where("COALESCE(tahun, '')  ILIKE ?", "%#{tahun}%")
+                                     .select { |s| s.strategi.present? }
+                                 }
+
   SUMBERS = { dana_transfer: 'Dana Transfer', dak: 'DAK', dbhcht: 'DBHCHT', bk_provinsi: 'BK Provinsi',
               blud: 'BLUD' }.freeze
 
@@ -434,7 +440,7 @@ class Sasaran < ApplicationRecord
     return unless clone_asal.tahapans.any?
 
     clone_asal.tahapans.each do |tahap|
-      clone = TahapanCloner.call(tahap, id_rencana_sas: self.id_rencana, traits: :normal)
+      clone = TahapanCloner.call(tahap, id_rencana_sas: id_rencana, traits: :normal)
       clone.persist!
     end
   end

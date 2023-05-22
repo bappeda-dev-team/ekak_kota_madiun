@@ -154,7 +154,7 @@ class ProgramKegiatan < ApplicationRecord
   def kegiatans_opd_by_tahun(tahun)
     # super.uniq(&:kode_giat)
     # ProgramKegiatan.where("kode_program = ? and kode_opd = ?", kode_program, kode_opd)
-    kegiatans.where(tahun: tahun).uniq { |keg| keg.values_at(:kode_giat) }.sort_by(&:kode_giat)
+    kegiatans.uniq { |keg| keg.values_at(:kode_giat) }.sort_by(&:kode_giat)
   end
 
   def subkegiatans_opd
@@ -164,7 +164,7 @@ class ProgramKegiatan < ApplicationRecord
 
   def subkegiatans_opd_by_tahun(tahun)
     # ProgramKegiatan.where("kode_giat = ? and kode_opd = ?", kode_giat, kode_opd)
-    subkegiatans.where(tahun: tahun).uniq { |sub| sub.values_at(:kode_sub_giat) }.sort_by(&:kode_sub_giat)
+    subkegiatans.uniq { |sub| sub.values_at(:kode_sub_giat) }.sort_by(&:kode_sub_giat)
   end
 
   def my_pagu
@@ -381,13 +381,13 @@ class ProgramKegiatan < ApplicationRecord
 
   def pagu_sub_rankir_tahun(tahun)
     ProgramKegiatan.where(kode_sub_giat: kode_sub_giat).map do |sub|
-      sub.sasarans.sudah_lengkap.where(tahun: tahun).map(&:total_anggaran).compact.sum
+      sub.sasarans.lengkap_strategi_tahun(tahun).map(&:total_anggaran).compact.sum
     end.sum
   end
 
   def pagu_sub_penetapan_tahun(tahun)
     ProgramKegiatan.where(kode_sub_giat: kode_sub_giat).map do |sub|
-      sub.sasarans.sudah_lengkap.where(tahun: tahun).map(&:total_anggaran_penetapan).compact.sum
+      sub.sasarans.lengkap_strategi_tahun(tahun).map(&:total_anggaran_penetapan).compact.sum
     end.sum
   end
 
