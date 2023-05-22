@@ -62,9 +62,9 @@ class Strategi < ApplicationRecord
   }, class_name: "Strategi",
      foreign_key: "strategi_ref_id", dependent: :destroy
 
-  validates :strategi_ref_id, presence: true, if: :milik_non_kepala
-  validates :strategi, presence: true
-  validates :tahun, presence: true
+  # validates :strategi_ref_id, presence: true, if: :milik_non_kepala
+  # validates :strategi, presence: true
+  # validates :tahun, presence: true
 
   amoeba do
     set tahun: '2022_p'

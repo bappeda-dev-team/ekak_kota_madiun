@@ -1,6 +1,6 @@
 class PohonKinerjaController < ApplicationController
   skip_before_action :verify_authenticity_token, only: %i[admin_filter filter_rekap filter_rekap_opd]
-  before_action :clone_params, only: %i[clone_pokin_opd clone_pokin_kota]
+  before_action :clone_params, only: %i[clone_pokin_opd clone_pokin_kota clone_pokin_isu_strategis_opd]
 
   def kota; end
 
@@ -18,7 +18,7 @@ class PohonKinerjaController < ApplicationController
     @user = current_user
     @eselon = @user.eselon_user
     @strategis = current_user.strategis.where('tahun ILIKE ?', "%#{@tahun}%")
-                   .reject { |str| str.strategi_atasan.nil? }
+                             .reject { |str| str.strategi_atasan.nil? }
   end
 
   def admin_filter
@@ -136,8 +136,11 @@ class PohonKinerjaController < ApplicationController
     @opd_id = params[:opd_id]
     @tahun_sekarang = params[:tahun_sekarang]
     jenis = params[:jenis]
-    @url = if jenis == 'opd'
+    tipe_isu = params[:tipe_isu]
+    @url = if jenis == 'opd' && tipe_isu == 'IsuStrategisKotum'
              clone_pokin_opd_pohon_kinerja_index_path
+           elsif jenis == 'opd' && tipe_isu == 'IsuStrategisOpd'
+             clone_pokin_isu_strategis_opd_pohon_kinerja_index_path
            else
              clone_pokin_kota_pohon_kinerja_index_path
            end
@@ -162,6 +165,15 @@ class PohonKinerjaController < ApplicationController
     end
   end
 
+  def clone_pokin_isu_strategis_opd
+    if isu_straegis_opd_cloned?
+      redirect_to rekap_opd_pohon_kinerja_index_path, warning: "sudah dicloning"
+    else
+      cloner_isu_opd(@isu_strategis_id, @kelompok_anggaran_id, @opd_id, @tahun_asal)
+      redirect_to rekap_opd_pohon_kinerja_index_path, success: "Cloned"
+    end
+  end
+
   private
 
   def clone_params
@@ -174,6 +186,11 @@ class PohonKinerjaController < ApplicationController
   def isu_straegis_cloned?
     isu_asli = IsuStrategisKotum.find(@isu_strategis_id).isu_strategis
     IsuStrategisKotum.where('kode ILIKE ?', "%#{isu_asli}%").where('keterangan ILIKE ?', '%clone%').any?
+  end
+
+  def isu_straegis_opd_cloned?
+    isu_asli = IsuStrategisOpd.find(@isu_strategis_id).isu_strategis
+    IsuStrategisOpd.where('kode ILIKE ?', "%#{isu_asli}%").where('keterangan ILIKE ?', '%clone%').any?
   end
 
   def cloner_opd(isu_strategis_id, kelompok_anggaran_id, opd_id, tahun_asal)
@@ -194,6 +211,17 @@ class PohonKinerjaController < ApplicationController
                                          tahun: tahun_anggaran,
                                          tahun_asal: tahun_asal,
                                          traits: [:all_opd])
+    clone.persist!
+  end
+
+  def cloner_isu_opd(isu_strategis_id, kelompok_anggaran_id, opd_id, tahun_asal)
+    tahun_anggaran = KelompokAnggaran.find(kelompok_anggaran_id).kode_kelompok
+    isu_strategis = IsuStrategisOpd.find(isu_strategis_id)
+    clone = IsuStrategisOpdCloner.call(isu_strategis,
+                                       tahun: tahun_anggaran,
+                                       tahun_asal: tahun_asal,
+                                       opd_id: opd_id,
+                                       traits: [:per_opd])
     clone.persist!
   end
 end

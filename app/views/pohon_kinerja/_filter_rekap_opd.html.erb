@@ -48,6 +48,7 @@
                     <%= link_to clone_list_opd_pohon_kinerja_index_path(isu_strategis: isu.id,
                                                                       opd_id: @opd.id,
                                                                       tahun_sekarang: @tahun,
+                                                                      tipe_isu: isu.class.name,
                                                                       jenis: 'opd'), remote: true,
                       data: {
                         controller: 'form-modal',
