@@ -32,7 +32,7 @@ class Tahapan < ApplicationRecord
 
   validates :tahapan_kerja, presence: true
 
-  default_scope { order(created_at: :asc) }
+  default_scope { order(Arel.sql("nullif(regexp_replace(urutan, '[^0-9]', '', 'g'),'')::int")) }
 
   amoeba do
     append id_rencana: '_2022_p'
