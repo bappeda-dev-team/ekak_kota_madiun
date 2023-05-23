@@ -92,7 +92,7 @@
                         <%= link_to 'Tambah Rincian', new_anggaran_perhitungan_path(anggaran), remote: true,
                          data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"},
                          class: "btn btn-sm btn-outline-success" %>
-                        <% if anggaran.uraian.downcase.include? "gaji" %>
+                        <% if anggaran.uraian.downcase.include?("gaji") or anggaran.uraian.downcase.include?("tunjangan") %>
                           <%= link_to 'Tambah Gaji', new_gaji_anggaran_perhitungans_path(anggaran), remote: true,
                            data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan" },
                           class: "btn btn-sm btn-warning" %>
