@@ -28,4 +28,8 @@ module RincianBelanjaHelper
   rescue NoMethodError
     'Tidak Ditemukan'
   end
+
+  def anggaran_gaji?(anggaran)
+    anggaran.include?("gaji") or anggaran.include?("tunjangan") or anggaran.include?("penghasilan") or anggaran.include?("honor")
+  end
 end
