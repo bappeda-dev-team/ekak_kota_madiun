@@ -182,6 +182,7 @@ Rails.application.routes.draw do
     collection do
       get :list_sasaran
       get :anggaran, path: "rincian_anggaran"
+      get :sasaran_admin
     end
     member do
       get :data_detail
@@ -189,6 +190,8 @@ Rails.application.routes.draw do
       get :subkegiatan
       get :anggaran_belanja
       post :clone_tahapan_sebelum
+      get :edit_nip
+      post :update_nip
     end
     resources :rincians do
       get "subkegiatan", on: :new
@@ -466,7 +469,7 @@ Rails.application.routes.draw do
   get "/rekening_search", to: "rekenings#rekening_search"
 
   # admin thing
-  get "/adminsasarans", to: "sasarans#sasaran_admin"
+  # get "/adminsasarans", to: "sasarans#sasaran_admin"
   get "/adminusers", to: "users#user_admin"
   get "/admin_program", to: "program_kegiatans#admin_program"
   get "/admin_kegiatan", to: "program_kegiatans#admin_kegiatan"

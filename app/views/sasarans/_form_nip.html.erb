@@ -1,0 +1,16 @@
+<%= form_with(url: update_nip_sasaran_path(@sasaran), local: false) do |form| %>
+  <div class="field">
+    <strong>Sasran Kinerja: AWD</p>
+  </div>
+  <div class="field">
+    <%= form.label :nip_lama, class: "form-label" %>
+    <%= form.text_field :nip_lama, class: "form-control", value: @nip, readonly: true %>
+  </div>
+  <div class="field">
+    <%= form.label :nip_baru, class: "form-label" %>
+    <%= form.text_field :nip_baru, class: "form-control", required: true %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
