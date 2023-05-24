@@ -45,7 +45,15 @@
                 <tr>
                   <td class="border text-wrap fw-bolder text-gray-900" colspan="6">Subkegiatan: <%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %></td>
                   <td class="border">Rp. <%= number_with_delimiter(pagu) %></td>
-                  <td class="border"></td>
+                  <td class="border">
+                    <div class="col">
+                      <%= link_to(show_subkegiatan_rincian_belanja_path(subkegiatan),
+                                  target: "_blank",
+                                  class: "btn btn-sm btn-outline-success w-100") do %>
+                        <span>Tampilkan</span>
+                      <% end %>
+                    </div>
+                  </td>
                 </tr>
                 <% sasarans.each.with_index(1) do |sasaran, i| %>
                   <tr>

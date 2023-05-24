@@ -151,7 +151,7 @@ class ProgramKegiatan < ApplicationRecord
     kegiatans.uniq { |keg| keg.values_at(:kode_giat) }.sort_by(&:kode_giat)
   end
 
-  def kegiatans_opd_by_tahun(tahun)
+  def kegiatans_opd_by_tahun(_tahun)
     # super.uniq(&:kode_giat)
     # ProgramKegiatan.where("kode_program = ? and kode_opd = ?", kode_program, kode_opd)
     kegiatans.uniq { |keg| keg.values_at(:kode_giat) }.sort_by(&:kode_giat)
@@ -162,7 +162,7 @@ class ProgramKegiatan < ApplicationRecord
     subkegiatans.uniq { |sub| sub.values_at(:kode_sub_giat) }.sort_by(&:kode_sub_giat)
   end
 
-  def subkegiatans_opd_by_tahun(tahun)
+  def subkegiatans_opd_by_tahun(_tahun)
     # ProgramKegiatan.where("kode_giat = ? and kode_opd = ?", kode_giat, kode_opd)
     subkegiatans.uniq { |sub| sub.values_at(:kode_sub_giat) }.sort_by(&:kode_sub_giat)
   end
@@ -406,5 +406,17 @@ class ProgramKegiatan < ApplicationRecord
       target: nil,
       satuan: nil
     }
+  end
+
+  def sasarans_subkegiatan(tahun)
+    sasarans.includes(%i[strategi]).where("tahun ILIKE ?", "%#{tahun}%").dengan_strategi
+  end
+
+  def rekening_belanja(tahun)
+    anggarans = sasarans_subkegiatan(tahun).map do |sasaran|
+      sasaran.tahapans.map(&:anggarans)
+    end
+
+    anggarans.flatten.group_by { |angg| [angg.kode_rek, angg.uraian] }
   end
 end

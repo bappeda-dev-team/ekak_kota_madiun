@@ -224,7 +224,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :rincian_belanja
+  resources :rincian_belanja do
+    member do
+      get :show_subkegiatan
+    end
+  end
 
   resources :kelompok_anggarans do
     collection do

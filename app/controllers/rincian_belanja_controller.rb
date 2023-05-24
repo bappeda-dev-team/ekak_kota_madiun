@@ -8,8 +8,12 @@ class RincianBelanjaController < ApplicationController
 
   def show
     @sasaran = Sasaran.find(params[:id])
-    @tahapan = @sasaran.tahapans
-    @kode_opd = cookies[:opd]
+  end
+
+  def show_subkegiatan
+    @subkegiatan = ProgramKegiatan.find(params[:id])
+    @sasarans = @subkegiatan.sasarans_subkegiatan(@tahun)
+    @rekening_sub = @subkegiatan.rekening_belanja(@tahun)
   end
 
   private
