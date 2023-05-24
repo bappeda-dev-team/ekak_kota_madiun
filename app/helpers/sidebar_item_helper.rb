@@ -32,16 +32,16 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
         icon: 'fas fa-users', identifier: 'list_all'
       },
       {
+        title: 'Master Rencana Kinerja', href: sasaran_admin_sasarans_path,
+        icon: 'fas fa-archive', identifier: 'adminsasarans'
+      },
+      {
         title: 'Tematik', href: subkegiatan_tematiks_path,
         icon: 'fas fa-tags', identifier: 'tematik'
       },
       {
         title: 'Kelompok Anggaran', href: kelompok_anggarans_path,
         icon: 'fas fa-folder', identifier: 'kelompok_anggaran'
-      },
-      {
-        title: 'Admin Sasaran', href: adminsasarans_path,
-        icon: 'fas fa-archive', identifier: 'adminsasarans'
       }
     ]
   end
@@ -94,7 +94,7 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
                    '\bpohon_kinerja/rekap|)')
   end
 
-  def perencanaan_opd_items # rubocop:disable Metrics/MethodLength
+  def perencanaan_opd_items
     [
       {
         title: 'Tujuan OPD', href: tujuan_opds_path,

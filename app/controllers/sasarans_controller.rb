@@ -71,7 +71,44 @@ class SasaransController < ApplicationController
     @program_kegiatan = @sasaran.program_kegiatan
   end
 
-  def sasaran_admin; end
+  def sasaran_admin
+    action = params[:button]
+    keyword = params[:keyword]
+    @sasarans = if keyword && action == 'cari'
+                  # Sasaran.where("nip_asn ILIKE ?", "%#{keyword}%").dengan_strategi
+                  Sasaran.where("nip_asn ILIKE ?", "%#{keyword}%").dengan_strategi
+                else
+                  []
+                end
+  end
+
+  def edit_nip
+    @sasaran = Sasaran.find(params[:id])
+    @nip = @sasaran.nip_asn
+    render partial: "form_nip"
+  end
+
+  def update_nip
+    @sasaran = Sasaran.find(params[:id])
+
+    return unless @sasaran
+
+    @strategi = @sasaran.strategi
+
+    @nip_lama = params[:nip_lama]
+    @nip_baru = params[:nip_baru]
+
+    @sasaran.nip_asn_sebelumnya = @nip_lama
+    @strategi.nip_asn_sebelumnya = @nip_lama
+    @sasaran.nip_asn = @nip_baru
+    @strategi.nip_asn = @nip_baru
+
+    return unless @sasaran.save && @strategi.save
+
+    respond_to do |f|
+      f.js
+    end
+  end
 
   def daftar_subkegiatan
     @sasarans = Sasaran.includes(:program_kegiatan).where.not(program_kegiatan: { id: nil })
@@ -349,6 +386,15 @@ class SasaransController < ApplicationController
         format.html { redirect_to sasaran_path(sasaran), success: 'Gagal Clone' }
       end
     end
+  end
+
+  def list_all
+    keyword = params[:keyword]
+    @users = if keyword
+               Sasaran.where("nik ILIKE ?", "%#{keyword}%")
+             else
+               []
+             end
   end
 
   private

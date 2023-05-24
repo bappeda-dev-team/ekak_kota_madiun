@@ -7,7 +7,7 @@
             <i class="fas fa-home"></i>
           <% end %>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Rencana Kinerja</li>
+        <li class="breadcrumb-item active" aria-current="page">Master Rencana Kinerja</li>
       </ol>
     </nav>
     <% flash.each do |type, msg| %>
@@ -16,55 +16,20 @@
         <%= msg %>
       </div>
     <% end %>
-    <div class="card border-0 shadow mb-4">
-      <div class="card-header">
-        <div class="row">
-          <div class="col">
-            <h2 class="mb-0">
-              Filter
-            </h2>
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <% filter_value =  '' if local_assigns[:filter_file].nil? %>
-        <% filter_jenis = local_assigns[:jenis] || '' %>
-        <%= form_with url: '/filter_sasaran', local: false do |form| %>
-          <%= form.hidden_field :filter_file, value: filter_value %>
-          <%= form.hidden_field :jenis, value: filter_jenis %>
-          <%= form.label :kode_opd %>
-          <% dropdown = options_for_select(Opd.where.not(kode_opd: nil).pluck(:nama_opd, :kode_opd), current_user.opd.kode_unik_opd) %>
-          <%= form.select :kode_opd, dropdown ,{include_blank: true},
-            { class: "form-control", required: true,
-              data: { "placeholder": "Pilih Opd",
-                      controller: 'dropdown',
-                      dropdown_jenis_value: 'chain'
-              } }  %>
-          <br>
-          <%= form.label :nip_asn %>
-          <%= form.select :nip_asn, [''] ,{include_blank: true},
-          { class: "form-control", required: true,
-            data: { "placeholder": "Pilih ASN",
-                    controller: 'dropdown',
-                    dropdown_jenis_value: 'ajax',
-                    dropdown_url_value: '/user_search.json',
-                    action: 'change-select@document->dropdown#chain_value_to_target'
-            } }  %>
-          <%= form.submit 'filter' %>
+    <div class="card">
+      <div class="card-body border-5 shadow">
+        <%= form_with url: sasaran_admin_sasarans_path,method: :get do |form| %>
+          <%= form.label :keyword %>
+          <%= form.text_field :keyword, class: 'form-control', placeholder: 'Nama / NIP / Jabatan', required: true, minlength: 3  %>
+          <%= form.button class: "btn btn-tertiary w-100 mt-5", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>  Mencari..." }, value: "cari", name: 'button' do %>
+            <i class="fa fa-search me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Cari User"></i>
+            <span>Cari</span>
+          <% end %>
         <% end %>
       </div>
-    </div>
-    <div class="card border-0 shadow" id="sasaran_filter">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Sasaran Kinerja</h2>
-          </div>
-        </div>
-      </div>
-      <div class="table-responsive">
-        ...
+      <div class="card border-0 shadow" id="sasaran_filter">
+        <%= render partial: 'sasarans/hasil_filter' %>
       </div>
     </div>
   </div>
-</div>
+<%= render 'shared/modal_template', modal_name: 'sasaran-nip' %>
