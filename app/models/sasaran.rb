@@ -448,6 +448,6 @@ class Sasaran < ApplicationRecord
   end
 
   def anggaran_sasaran
-    tahapans.includes(%i[anggarans]).map(&:anggarans)
+    tahapans.includes(%i[anggarans]).map(&:rekening_anggaran)
   end
 end

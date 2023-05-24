@@ -40,8 +40,8 @@
                 <tr>
                   <th class="border fw-bolder text-gray-900"><%= no_sas %></th>
                   <th class="border text-wrap fw-bolder text-gray-900"><%= sasaran.nama_pemilik %> <br/>
- <%= sasaran.nip_asn %></th>
-                  <td class="border text-wrap" rowspan="<%= sasaran.indikator_sasarans.count  %>"><%= sasaran.sasaran_kinerja %></td>
+                    <%= sasaran.nip_asn %></th>
+                  <td class="border text-wrap" rowspan="<%= sasaran.indikator_sasarans.length  %>"><%= sasaran.sasaran_kinerja %></td>
                   <td class="border text-wrap"><%= indikator&.indikator_kinerja %></td>
                   <td class="border text-wrap"><%= indikator&.target %></td>
                   <td class="border text-wrap"><%= indikator&.satuan %></td>
@@ -59,62 +59,62 @@
           </table>
         </div>
       </div>
-        <div class="card-body">
-          <p>Rincian Anggaran </p>
-          <div class="anggaran table-responsive">
-            <table id="detail-anggaran">
-              <thead>
-                <tr>
-                  <th rowspan="2" class="text-center">Kode Rekening</th>
-                  <th rowspan="2" class="text-center">Uraian</th>
-                  <th colspan="3" class="text-center">Rincian Perhitungan</th>
-                  <th rowspan="2" class="text-center">Pajak</th>
-                  <th rowspan="2" class="text-center">Nilai Pajak</th>
-                  <th rowspan="2" class="text-center">Jumlah</th>
+      <div class="card-body">
+        <p>Rincian Anggaran </p>
+        <div class="anggaran table-responsive">
+          <table id="detail-anggaran">
+            <thead>
+              <tr>
+                <th rowspan="2" class="text-center">Kode Rekening</th>
+                <th rowspan="2" class="text-center">Uraian</th>
+                <th colspan="3" class="text-center">Rincian Perhitungan</th>
+                <th rowspan="2" class="text-center">Pajak</th>
+                <th rowspan="2" class="text-center">Nilai Pajak</th>
+                <th rowspan="2" class="text-center">Jumlah</th>
+              </tr>
+              <tr>
+                <th class="text-center">Koefisien</th>
+                <th class="text-center">Satuan</th>
+                <th class="text-center">Harga</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @rekening_sub.each do |(kode_rekening, rekening), anggarans| %>
+                <% anggaran_rek = anggarans.sum(&:jumlah) %>
+                <tr class="level-0" data-controller="editable-table" >
+                  <td class="px-3"><%= kode_rekening %> </td>
+                  <td class="text-wrap" colspan="6"><%= rekening %></td>
+                  <td class="text-end" data-editable-table-target="anggaran">Rp. <%= number_with_delimiter(anggaran_rek) %></td>
                 </tr>
-                <tr>
-                  <th class="text-center">Koefisien</th>
-                  <th class="text-center">Satuan</th>
-                  <th class="text-center">Harga</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% @rekening_sub.each do |rekening, anggarans| %>
-                  <% anggaran_rek = anggarans.sum(&:jumlah) %>
-                    <tr class="level-0" data-controller="editable-table" >
-                      <td class="px-3"><%= rekening_anggaran(rekening.first) %> </td>
-                      <td class="text-wrap" colspan="6"><%= rekening.last %></td>
-                      <td class="text-end" data-editable-table-target="anggaran">Rp. <%= number_with_delimiter(anggaran_rek) %></td>
+                <% anggarans.each do |anggaran| %>
+                  <% anggaran.koefisien_perhitungan.each do |hitung| %>
+                    <tr class="rincian-anggaran">
+                      <td></td>
+                      <td><%= uraian_rincian_anggaran(hitung) %></td>
+                      <td class="text-center"><% hitung.koefisiens.each.with_index(1) do |koef, index|%>
+                          <%= koef.volume %> <%= koef.satuan_volume %> <%= 'x' if index < hitung.koefisiens.length %>
+                        <% end %>
+                      </td>
+                      <td class="text-center"><%= hitung.satuan %></td>
+                      <td class="me-1 text-end">Rp. <%= number_with_delimiter(hitung.harga) %></td>
+                      <td class="text-end"><%= (hitung.pajak.nil? ? 0 : hitung.pajak.potongan * 100).to_i %> %</td>
+                      <td class="text-end">Rp. <%= number_with_delimiter(hitung.harga_plus_pajak.nil? ? 0 : hitung.harga_plus_pajak) %></td>
+                      <td class="uang text-end">Rp. <%= number_with_delimiter((hitung.total)) %></td>
                     </tr>
-                    <% anggarans.each do |anggaran| %>
-                      <% anggaran.koefisien_perhitungan.each do |hitung| %>
-                      <tr class="rincian-anggaran">
-                        <td></td>
-                        <td><%= uraian_rincian_anggaran(hitung) %></td>
-                        <td class="text-center"><% hitung.koefisiens.each.with_index(1) do |koef, index|%>
-                            <%= koef.volume %> <%= koef.satuan_volume %> <%= 'x' if index < hitung.koefisiens.length %>
-                          <% end %>
-                        </td>
-                        <td class="text-center"><%= hitung.satuan %></td>
-                        <td class="me-1 text-end">Rp. <%= number_with_delimiter(hitung.harga) %></td>
-                        <td class="text-end"><%= (hitung.pajak.nil? ? 0 : hitung.pajak.potongan * 100).to_i %> %</td>
-                        <td class="text-end">Rp. <%= number_with_delimiter(hitung.harga_plus_pajak.nil? ? 0 : hitung.harga_plus_pajak) %></td>
-                        <td class="uang text-end">Rp. <%= number_with_delimiter((hitung.total)) %></td>
-                      </tr>
-                    <% end %>
-                    <% end %>
+                  <% end %>
                 <% end %>
-              </tbody>
-              <tfoot>
-                <% total_anggaran = @rekening_sub.values.flatten.sum(&:jumlah) %>
-                <tr>
-                  <td colspan="7">Jumlah Anggaran Tahapan :</td>
-                  <td class="text-end" id="totalPenetapan">Rp. <%= number_with_delimiter(total_anggaran) %></td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
+              <% end %>
+            </tbody>
+            <tfoot>
+              <% total_anggaran = @rekening_sub.values.flatten.sum(&:jumlah) %>
+              <tr>
+                <td colspan="7">Jumlah Anggaran Tahapan :</td>
+                <td class="text-end" id="totalPenetapan">Rp. <%= number_with_delimiter(total_anggaran) %></td>
+              </tr>
+            </tfoot>
+          </table>
         </div>
+      </div>
     </div>
   </div>
   <%= render 'modal_perhitungans' %>
