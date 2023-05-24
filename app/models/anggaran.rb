@@ -41,10 +41,12 @@ class Anggaran < ApplicationRecord
   belongs_to :pajak, optional: true
   has_many :comments, dependent: :destroy
   has_one :pagu_anggaran, class_name: 'PaguAnggaran', foreign_key: 'kode', primary_key: 'id'
+  has_one :rekening, foreign_key: 'id', primary_key: 'kode_rek'
 
   scope :tanpa_pajak, -> { where(pajak_id: nil) }
   scope :ujung_anggaran, -> { where(level: 0) }
   scope :pangkal_anggaran, -> { where(level: 5) }
+  scope :with_rekening, -> { includes(:rekening) }
 
   validates :uraian, presence: true
 
@@ -85,8 +87,8 @@ class Anggaran < ApplicationRecord
     { 'level_3' => rek_level3, 'level_2' => rek_level2, 'level_1' => rek_level1, 'level_0' => rek_level0 }
   end
 
-  def rekening
-    Rekening.find_by_id(kode_rek)
+  def kode_rekening
+    rekening.kode_rekening
   end
 
   def plus_pajak
@@ -120,5 +122,9 @@ class Anggaran < ApplicationRecord
 
   def kode_rekening_gp
     rekening.grand_parent.kode_rekening
+  end
+
+  def koefisien_perhitungan
+    perhitungans.includes(%i[koefisiens pajak])
   end
 end

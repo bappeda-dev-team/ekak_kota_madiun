@@ -107,4 +107,8 @@ class Tahapan < ApplicationRecord
   def jumlah_grand_parent_penetapan(kode_rekening)
     grand_parent_anggaran[kode_rekening].sum(&:anggaran_penetapan)
   end
+
+  def rekening_anggaran
+    anggarans.includes(:rekening)
+  end
 end
