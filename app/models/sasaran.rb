@@ -437,6 +437,8 @@ class Sasaran < ApplicationRecord
   def renaksi_cloner
     clone_asal = clone_dari
 
+    return unless clone_asal
+
     return unless clone_asal.tahapans.any?
 
     clone_asal.tahapans.each do |tahap|
