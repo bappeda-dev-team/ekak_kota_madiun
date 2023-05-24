@@ -34,6 +34,11 @@
               <td class="border">
                 <% if subkegiatan %>
                   <div class="d-grid gap-2">
+                    <%= link_to show_subkegiatan_rincian_belanja_path(subkegiatan), target: "_blank", rel: "nofollow",
+                    class: "btn btn-sm btn-info" do %>
+                      <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
+                      Tampilkan
+                    <% end %>
                     <%= link_to "/pdf_rka/#{subkegiatan.id}/#{@tahun}.pdf",
                      class: "btn btn-sm btn-secondary" do %>
                       <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak Rincian Belanja"></span>
