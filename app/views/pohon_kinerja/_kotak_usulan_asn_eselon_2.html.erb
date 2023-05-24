@@ -30,10 +30,10 @@
               <% pohon = strategi.pohon %>
             <tr>
               <td class="text-wrap align-middle">
-                <%= render 'nama_pembagi_strategi', strategi: pohon.pohonable.nama_isu, nama_pemilik: "Kota Madiun"  %>
+                <%= render 'nama_pembagi_strategi', strategi: pohon&.pohonable&.nama_isu, nama_pemilik: "Kota Madiun"  %>
               </td>
               <td class="text-wrap align-middle">
-                <%= render 'nama_pembagi_strategi', strategi: pohon.pohonable.strategi, nama_pemilik: pohon.pohonable.nama_pemilik  %>
+                <%= render 'nama_pembagi_strategi', strategi: pohon&.pohonable&.strategi, nama_pemilik: pohon&.pohonable&.nama_pemilik  %>
               </td>
               <td class="text-wrap align-middle"><%= strategi.strategi %></td>
               <td class="text-wrap align-middle"><%= strategi.tahun %></td>

@@ -25,4 +25,14 @@ module PohonKinerjaHelper
       'eselon_3'
     end
   end
+
+  def pembagi_strategi(pohon)
+    strategi = pohon&.strategi
+    pemilik = pohon&.nama_pemilik
+    "
+      <span>#{strategi}</span>
+        <hr/>
+      <span class='fw-bolder'>#{pemilik}</span>
+    ".html_safe
+  end
 end
