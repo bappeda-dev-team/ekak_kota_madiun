@@ -409,12 +409,13 @@ class ProgramKegiatan < ApplicationRecord
   end
 
   def sasarans_subkegiatan(tahun)
-    sasarans.includes(%i[strategi]).where("tahun ILIKE ?", "%#{tahun}%").dengan_strategi
+    sasarans.includes(%i[indikator_sasarans strategi user])
+            .where("tahun ILIKE ?", "%#{tahun}%").dengan_strategi
   end
 
   def rekening_belanja(tahun)
     anggarans = sasarans_subkegiatan(tahun).map do |sasaran|
-      sasaran.tahapans.map(&:anggarans)
+      sasaran.anggaran_sasaran
     end
 
     anggarans.flatten.group_by { |angg| [angg.kode_rek, angg.uraian] }

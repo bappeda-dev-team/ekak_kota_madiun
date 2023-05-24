@@ -446,4 +446,8 @@ class Sasaran < ApplicationRecord
       clone.persist!
     end
   end
+
+  def anggaran_sasaran
+    tahapans.includes(%i[anggarans]).map(&:anggarans)
+  end
 end

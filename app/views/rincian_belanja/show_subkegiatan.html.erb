@@ -13,7 +13,7 @@
   <div class="px-3">
     <div class="card border-2 shadow mb-1">
       <div class="card-header">
-        <div class="row align-items-center">
+        <div class="row align-items-center table-responsive">
           <table class="table align-items-center">
             <thead>
               <tr>
@@ -61,38 +61,55 @@
       </div>
         <div class="card-body">
           <p>Rincian Anggaran </p>
-          <div class="anggaran">
+          <div class="anggaran table-responsive">
             <table id="detail-anggaran">
               <thead>
                 <tr>
-                  <th class="text-center">Kode Rekening</th>
-                  <th class="text-center">Uraian</th>
-                  <th class="text-center">Anggaran</th>
-                  <th class="text-center">Aksi</th>
+                  <th rowspan="2" class="text-center">Kode Rekening</th>
+                  <th rowspan="2" class="text-center">Uraian</th>
+                  <th colspan="3" class="text-center">Rincian Perhitungan</th>
+                  <th rowspan="2" class="text-center">Pajak</th>
+                  <th rowspan="2" class="text-center">Nilai Pajak</th>
+                  <th rowspan="2" class="text-center">Jumlah</th>
+                </tr>
+                <tr>
+                  <th class="text-center">Koefisien</th>
+                  <th class="text-center">Satuan</th>
+                  <th class="text-center">Harga</th>
                 </tr>
               </thead>
               <tbody>
                 <% @rekening_sub.each do |rekening, anggarans| %>
                   <% anggaran_rek = anggarans.sum(&:jumlah) %>
                     <tr class="level-0" data-controller="editable-table" >
-                      <td><%= rekening_anggaran(rekening.first) %> </td>
-                      <td class="mx-auto">
-                        <div class="row">
-                          <div class="text-wrap inline col"><%= rekening.last %></div>
-                        </div>
-                      </td>
+                      <td class="px-3"><%= rekening_anggaran(rekening.first) %> </td>
+                      <td class="text-wrap" colspan="6"><%= rekening.last %></td>
                       <td class="text-end" data-editable-table-target="anggaran">Rp. <%= number_with_delimiter(anggaran_rek) %></td>
-                      <td class="text-center bg-white">
-                      </td>
                     </tr>
+                    <% anggarans.each do |anggaran| %>
+                      <% anggaran.koefisien_perhitungan.each do |hitung| %>
+                      <tr class="rincian-anggaran">
+                        <td></td>
+                        <td><%= uraian_rincian_anggaran(hitung) %></td>
+                        <td class="text-center"><% hitung.koefisiens.each.with_index(1) do |koef, index|%>
+                            <%= koef.volume %> <%= koef.satuan_volume %> <%= 'x' if index < hitung.koefisiens.length %>
+                          <% end %>
+                        </td>
+                        <td class="text-center"><%= hitung.satuan %></td>
+                        <td class="me-1 text-end">Rp. <%= number_with_delimiter(hitung.harga) %></td>
+                        <td class="text-end"><%= (hitung.pajak.nil? ? 0 : hitung.pajak.potongan * 100).to_i %> %</td>
+                        <td class="text-end">Rp. <%= number_with_delimiter(hitung.harga_plus_pajak.nil? ? 0 : hitung.harga_plus_pajak) %></td>
+                        <td class="uang text-end">Rp. <%= number_with_delimiter((hitung.total)) %></td>
+                      </tr>
+                    <% end %>
+                    <% end %>
                 <% end %>
               </tbody>
               <tfoot>
                 <% total_anggaran = @rekening_sub.values.flatten.sum(&:jumlah) %>
                 <tr>
-                  <td colspan="2">Jumlah Anggaran Tahapan :</td>
+                  <td colspan="7">Jumlah Anggaran Tahapan :</td>
                   <td class="text-end" id="totalPenetapan">Rp. <%= number_with_delimiter(total_anggaran) %></td>
-                  <td class="text-end"></td>
                 </tr>
               </tfoot>
             </table>

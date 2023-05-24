@@ -121,4 +121,8 @@ class Anggaran < ApplicationRecord
   def kode_rekening_gp
     rekening.grand_parent.kode_rekening
   end
+
+  def koefisien_perhitungan
+    perhitungans.includes(%i[koefisiens pajak])
+  end
 end
