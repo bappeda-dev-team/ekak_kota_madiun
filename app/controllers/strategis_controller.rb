@@ -66,7 +66,7 @@ class StrategisController < ApplicationController
   # PATCH/PUT /strategis/1 or /strategis/1.json
   def update
     @role = params[:strategi][:role]
-    @strategi.sasaran.tahun = strategi_params[:tahun]
+    # @strategi.sasaran.tahun = strategi_params[:tahun]
     @nip = strategi_params[:nip_asn]
     @opd_id = strategi_params[:opd_id]
     respond_to do |format|
