@@ -127,6 +127,7 @@ class StrategisController < ApplicationController
     @role = params[:role]
     @nip = params[:nip]
     @pohon_id = params[:pohon_id].to_i
+    @tahun = cookies[:tahun]
 
     dibagikan = params[:dibagikan]
     tidak = params[:tidak_dibagikan]
@@ -141,6 +142,7 @@ class StrategisController < ApplicationController
     @nip&.each do |nip_asn|
       strategi_tray.push({ strategi_ref_id: @strategi_atasan_id,
                            nip_asn: nip_asn,
+                           tahun: @tahun,
                            role: @role,
                            pohon_id: @pohon_id })
     end

@@ -41,20 +41,20 @@ module LaporansHelper
   end
 
   def row_tahapan_sasaran(sasaran)
-    sasaran.tahapans.map.with_index(1) do |tahapan, no_tah|
+    sasaran.tahapans.map do |tahapan|
       "
         <tr>
-          <td class='border text-wrap' colspan='7'>Renaksi #{no_tah}: #{tahapan.tahapan_kerja}</td>
+          <td class='border text-wrap' colspan='7'>Renaksi #{tahapan.urutan}: #{tahapan.tahapan_kerja}</td>
         </tr>
       ".html_safe
     end
   end
 
   def row_tahapan_anggaran_sasaran(sasaran)
-    sasaran.tahapans.map.with_index(1) do |tahapan, no_tah|
+    sasaran.tahapans.map do |tahapan|
       "
         <tr>
-          <td class='border text-wrap' colspan='6'>Renaksi #{no_tah}: #{tahapan.tahapan_kerja}</td>
+          <td class='border text-wrap' colspan='6'>Renaksi #{tahapan.urutan}: #{tahapan.tahapan_kerja}</td>
           <td class='border'>Rp. #{number_with_delimiter(tahapan.anggaran_tahapan)}</td>
           <td class='border'></td>
         </tr>
