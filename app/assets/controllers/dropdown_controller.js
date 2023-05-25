@@ -6,6 +6,7 @@ export default class extends Controller {
   static targets = ["tahun"]
   static values = {
     jenis: String,
+    rekening: String,
     parent: String,
     url: String,
     opd_id: String,
@@ -45,6 +46,7 @@ export default class extends Controller {
         url: this.urlValue,
         data: (params) => ({
           kode_opd: this.opd_idValue,
+          jenis_rekening: this.rekeningValue,
           q: params.term
         }),
         delay: 1500
@@ -60,7 +62,6 @@ export default class extends Controller {
   disconnect() {
     this.select.select2('destroy');
   }
-
 
   jenis_dropdown_generator() {
     let jenis = this.jenisValue
@@ -134,6 +135,16 @@ export default class extends Controller {
   chain_value_to_target(e) {
     const opd_id = e.detail.data.id
     this.opd_idValue = opd_id
+  }
+
+  chain_jenis_rekening_to_target(e) {
+    const {data} = e.detail
+    const jenis_rek = data.id
+    this.rekeningValue = jenis_rek
+    this.select.select2('open')
+    this.select.on('select2:close', (er) => {
+      this.rekeningValue = ''
+    })
   }
 
   event_dispatcher(custom_event_name, data) {
