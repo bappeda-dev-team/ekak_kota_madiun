@@ -396,11 +396,13 @@ Rails.application.routes.draw do
   namespace :renja do
     get :ranwal
     get :ranwal_cetak
+    get :rankir_1
     get :rankir
     get :edit_rankir
     post :update_rankir
     get :penetapan
     post :rankir_renja
+    post :rankir_renja_1
     post :penetapan_renja
   end
 

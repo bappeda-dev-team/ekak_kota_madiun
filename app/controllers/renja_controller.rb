@@ -1,5 +1,5 @@
 class RenjaController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: %i[rankir_renja penetapan_renja]
+  skip_before_action :verify_authenticity_token, only: %i[rankir_renja rankir_renja_1 penetapan_renja]
   before_action :set_renja
 
   def index
@@ -34,7 +34,17 @@ class RenjaController < ApplicationController
     end
   end
 
+  def rankir_1; end
   def rankir; end
+
+  def rankir_renja_1
+    @kode_opd = params[:kode_opd]
+    @tahun = params[:tahun]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    @program_kegiatans = @opd.program_renstra
+    render partial: 'rankir_renja_1'
+  end
 
   def rankir_renja
     @kode_opd = params[:kode_opd]

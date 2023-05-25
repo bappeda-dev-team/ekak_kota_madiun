@@ -190,6 +190,12 @@ class Sasaran < ApplicationRecord
     '-'
   end
 
+  def total_anggaran_rankir_1
+    tahapans.includes([:anggarans]).map { |t| t.anggarans.compact.sum(&:anggaran_rankir_1) }.inject(:+)
+  rescue TypeError
+    '-'
+  end
+
   def total_anggaran_dengan_komentar
     tahapans.map { |t| t.anggarans.where.missing(:comments).compact.sum(&:jumlah) }.inject(:+)
   rescue TypeError

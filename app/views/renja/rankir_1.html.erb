@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-12" data-controller="filter-render">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Rankir Renja 1</li>
+      </ol>
+    </nav>
+    <% if cookies[:tahun] && cookies[:opd] %>
+      <div class="card border-0 shadow" id="user_filter" data-controller="page-ajax"
+             data-page-ajax-opd-value="<%= cookies[:opd] %>"
+             data-page-ajax-url-value="<%= renja_rankir_renja_1_path %>"
+             data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >
+        <div data-page-ajax-target="results">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2 class="fs-5 fw-bold mb-0">Rankir Renja 1</h2>
+            </div>
+          </div>
+        </div>
+          <div class="loader text-center">
+            <div class="lds-roller">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <p>memuat data..</p>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <div class="card border-0 shadow" id="user_filter">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2 class="fs-5 fw-bold mb-0">Rankir Renja 1</h2>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="alert alert-info">Pilih Tahun dan OPD</p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<%# buat edit %>
+<%= render 'shared/modal_template', modal_name: 'rankir-renja' %>
