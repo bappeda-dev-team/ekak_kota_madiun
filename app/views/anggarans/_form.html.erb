@@ -25,17 +25,33 @@
       <%= form.hidden_field :parent_id %>
     </div>
   <% end %>
-  <div class="field">
-    <%= form.label :kode_rek, "Kode Rekening" , {class: "form-label"}%>
-    <%= parent_rek || '' %>
-    <%= form.select :kode_rek, Rekening.where(id: anggaran.kode_rek).pluck(:jenis_rekening, :id), {include_blank: true},
+  <div>
+    <div class="field">
+      <%= form.label :jenis_rekening, "Rekening" , {class: "form-label"}%>
+      <%= parent_rek || '' %>
+      <%= form.select :jenis_rekening,
+       ["","Belanja Modal", "Belanja Operasional", "Belanja Tidak Terduga", "Belanja Transfer"],
+       {},
+    {class: "form-control",
+    data: {"placeholder": "Jenis Rekening",
+            controller: 'dropdown',
+            dropdown_parent_value: '#form-perhitungan',
+            dropdown_jenis_value: 'chain',
+          }}  %>
+    </div>
+    <div class="field">
+      <%= form.label :kode_rek, "Kode Rekening" , {class: "form-label"}%>
+      <%= parent_rek || '' %>
+      <%= form.select :kode_rek, Rekening.where(id: anggaran.kode_rek).pluck(:jenis_rekening, :id), {include_blank: true},
     {class: "form-control",
     data: {"placeholder": "Pilih Kode Rekening",
             controller: 'dropdown',
             dropdown_jenis_value: 'ajax',
             dropdown_url_value: '/rekening_search.json',
-            dropdown_parent_value: '#form-perhitungan'  
+            dropdown_parent_value: '#form-perhitungan',
+            action: 'change-select@document->dropdown#chain_jenis_rekening_to_target'
           }}  %>
+    </div>
   </div>
   <div class="actions">
     <%= form.submit %>

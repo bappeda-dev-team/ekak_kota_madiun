@@ -8,7 +8,13 @@ class RekeningsController < ApplicationController
 
   def rekening_search
     param = params[:q] || ''
-    @rekenings = Rekening.where(set_input: 1).where('jenis_rekening ILIKE ?', "%#{param}%").limit(50)
+    jenis_rekening = params[:jenis_rekening]
+
+    @rekenings = Rekening
+                 .where(set_input: 1)
+                 .where('jenis_rekening ILIKE ?', "%#{jenis_rekening}%")
+                 .where('jenis_rekening ILIKE ?', "%#{param}%")
+                 .limit(50)
   end
 
   # GET /rekenings/1 or /rekenings/1.json
