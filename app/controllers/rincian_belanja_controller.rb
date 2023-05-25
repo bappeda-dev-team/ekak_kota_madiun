@@ -16,6 +16,11 @@ class RincianBelanjaController < ApplicationController
     @rekening_sub = @subkegiatan.rekening_belanja(@tahun)
   end
 
+  def edit_rankir_gelondong
+    @sasaran = Sasaran.find(params[:id])
+    @tahapans = @sasaran.tahapans.includes(%i[anggarans])
+  end
+
   private
 
   def set_user
@@ -23,6 +28,6 @@ class RincianBelanjaController < ApplicationController
   end
 
   def set_tahun
-    @tahun = cookies[:tahun] || Date.current.year
+    @tahun = cookies[:tahun]
   end
 end

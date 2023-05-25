@@ -41,6 +41,9 @@ class Anggaran < ApplicationRecord
   belongs_to :pajak, optional: true
   has_many :comments, dependent: :destroy
   has_one :pagu_anggaran, class_name: 'PaguAnggaran', foreign_key: 'kode', primary_key: 'id'
+  has_one :pagu_rankir_1, lambda {
+                            pagu_rankir_gelondong
+                          }, class_name: 'PaguAnggaran', foreign_key: 'kode', primary_key: 'id'
   has_one :rekening, foreign_key: 'id', primary_key: 'kode_rek'
 
   scope :tanpa_pajak, -> { where(pajak_id: nil) }
@@ -113,6 +116,10 @@ class Anggaran < ApplicationRecord
 
   def anggaran_penetapan
     pagu_anggaran&.anggaran || 0.0
+  end
+
+  def anggaran_rankir_1
+    pagu_rankir_1&.anggaran || 0.0
   end
 
   def total_anggaran_penetapan

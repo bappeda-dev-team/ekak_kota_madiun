@@ -66,6 +66,12 @@ class Tahapan < ApplicationRecord
     '0'
   end
 
+  def anggaran_tahapan_rankir_1
+    anggarans.compact.sum(&:anggaran_rankir_1)
+  rescue NoMethodError
+    '0'
+  end
+
   def total_anggaran_tahapan_setelah_komentar
     anggarans.where.missing(:comments).compact.sum(&:jumlah)
   rescue NoMethodError
@@ -83,7 +89,7 @@ class Tahapan < ApplicationRecord
   end
 
   def grand_parent_anggaran
-    anggarans.order(:created_at).group_by do |angg|
+    anggarans.includes(%i[rekening pagu_anggaran]).order(:created_at).group_by do |angg|
       angg.rekening.grand_parent.kode_rekening
     end
   end
