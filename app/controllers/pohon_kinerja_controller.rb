@@ -12,7 +12,7 @@ class PohonKinerjaController < ApplicationController
   end
 
   def asn
-    @tahun = cookies[:tahun] || '2023'
+    @tahun = cookies[:tahun]
     @opd = current_user.opd
     @pohons = @opd.pohons
     @user = current_user
