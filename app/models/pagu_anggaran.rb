@@ -19,4 +19,10 @@ class PaguAnggaran < ApplicationRecord
   # kode -> kode_sub_kegiatan
   # kode_belanja -> kode_parent_belanja
   # kode_sub_bealanja -> kode_rek_belanja
+  scope :pagu_rankir_gelondong, lambda {
+                                  where(jenis: "RankirGelondong", sub_jenis: "SubBelanja")
+                                }
+  scope :pagu_rankir_gelondong_tahun, lambda { |tahun|
+                                        pagu_rankir_gelondong.where("tahun ILIKE ?", "%#{tahun}%")
+                                      }
 end
