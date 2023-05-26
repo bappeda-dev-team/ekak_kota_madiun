@@ -191,8 +191,16 @@ class User < ApplicationRecord
     jabatan&.upcase&.include?('KELURAHAN')
   end
 
+  def pegawai_puskesmas?
+    nama_bidang&.upcase&.include?('PUSKESMAS')
+  end
+
   def petunjuk_kelurahan
     jabatan.upcase.split(/KELURAHAN/, 2).last.strip if pegawai_kelurahan?
+  end
+
+  def petunjuk_puskesmas
+    nama_bidang&.upcase&.split(/PUSKESMAS/, 2)&.last&.strip if pegawai_puskesmas?
   end
 
   def pegawai_rsud?
