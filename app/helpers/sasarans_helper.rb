@@ -62,4 +62,9 @@ module SasaransHelper
       'BELUM SIAP DITARIK SKP'
     end
   end
+
+  def isi_subkegiatan?(user)
+    user.eselon_user == 'eselon_4' || current_user.has_any_role?('eselon_4') ||
+      user.nama_bidang&.upcase&.include?("PUSKESMAS") || user.opd.nama_opd&.upcase&.include?("BENCANA")
+  end
 end

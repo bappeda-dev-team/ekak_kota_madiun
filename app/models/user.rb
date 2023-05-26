@@ -135,19 +135,21 @@ class User < ApplicationRecord
   def sasarans_tahun(tahun)
     sasarans
       .includes(%i[strategi
-                   usulans
+                   user
+                   tahapans
                    program_kegiatan
                    indikator_sasarans])
       .where("COALESCE(tahun, '') ILIKE ?", "%#{tahun}%")
+      .order(nip_asn: :asc)
       .dengan_strategi
   end
 
   def subkegiatan_sasarans_tahun(tahun)
-    sasarans_tahun(tahun).group_by { |s| s.program_kegiatan }
+    sasarans_tahun(tahun).group_by(&:program_kegiatan)
   end
 
   def mandatoris_tahun(tahun)
-    mandatoris.where("COALESCE(tahun, '') ILIKE ?", "#{tahun}")
+    mandatoris.where("COALESCE(tahun, '') ILIKE ?", "%#{tahun}%")
   end
 
   def program_kegiatan_sasarans(tahun: 2022)

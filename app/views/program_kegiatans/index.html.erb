@@ -36,7 +36,7 @@
             </tr>
           </thead>
           <tbody>
-            <% @programKegiatans.order(:created_at).each.with_index(1) do |prog, i| %>
+            <% @program_kegiatans.order(:created_at).each.with_index(1) do |prog, i| %>
               <tr>
                 <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
                 <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.nama_subkegiatan %></td>
