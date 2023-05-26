@@ -12,14 +12,15 @@ class ProgramKegiatansController < ApplicationController
     # TODO: refactor untuk json query
     param = params[:q] || ""
     # FIXME: REFACTOR TOO MUCH LOGIC
-    @programKegiatans = ProgramKegiatan.where("kode_opd ILIKE ?", "%#{current_user.kode_opd}%")
-                                       .where("nama_subkegiatan ILIKE ?", "%#{param}%")
+    @program_kegiatans = ProgramKegiatan.where("kode_opd ILIKE ?", "%#{current_user.kode_opd}%")
+                                        .where("nama_subkegiatan ILIKE ?", "%#{param}%")
+                                        .uniq(&:kode_sub_giat)
     if current_user.pegawai_kelurahan?
-      @programKegiatans = @programKegiatans.select do |program|
+      @program_kegiatans = @programKegiatans.select do |program|
         program.nama_opd_pemilik.upcase.split(/KELURAHAN/, 2).last.strip == current_user.petunjuk_kelurahan
       end
     elsif current_user.pegawai_bagian?
-      @programKegiatans = @programKegiatans.select do |program|
+      @program_kegiatans = @programKegiatans.select do |program|
         program.nama_opd_pemilik.upcase.split(/BAGIAN/, 2).last.strip == current_user.petunjuk_bagian
       end
     end
