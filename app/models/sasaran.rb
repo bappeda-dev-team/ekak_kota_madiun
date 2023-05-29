@@ -413,6 +413,10 @@ class Sasaran < ApplicationRecord
     program_kegiatan.present? ? program_kegiatan.nama_subkegiatan : 'Belum diisi'
   end
 
+  def kode_program
+    program_kegiatan.present? ? program_kegiatan.kode_program : '-'
+  end
+
   def kode_subkegiatan
     program_kegiatan.present? ? program_kegiatan.kode_sub_giat : '-'
   end
@@ -455,5 +459,9 @@ class Sasaran < ApplicationRecord
 
   def anggaran_sasaran
     tahapans.includes(%i[anggarans]).map(&:rekening_anggaran)
+  end
+
+  def operational_objectives
+    strategi.operational_objectives
   end
 end

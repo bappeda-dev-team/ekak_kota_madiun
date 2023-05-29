@@ -3,7 +3,15 @@ class RincianBelanjaController < ApplicationController
   before_action :set_tahun
 
   def index
-    @subkegiatan_sasarans = @user.subkegiatan_sasarans_tahun(@tahun)
+    if current_user.eselon_atas?
+      redirect_to index_atasan_rincian_belanja_index_path
+    else
+      @subkegiatan_sasarans = @user.subkegiatan_sasarans_tahun(@tahun)
+    end
+  end
+
+  def index_atasan
+    @subkegiatan_sasarans = @user.program_sasarans_tahun(@tahun)
   end
 
   def show

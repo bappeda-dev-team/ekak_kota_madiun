@@ -225,6 +225,9 @@ Rails.application.routes.draw do
   end
 
   resources :rincian_belanja do
+    collection do
+      get :index_atasan
+    end
     member do
       get :show_subkegiatan
       get :edit_rankir_gelondong
