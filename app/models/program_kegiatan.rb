@@ -397,6 +397,40 @@ class ProgramKegiatan < ApplicationRecord
     end.sum
   end
 
+  def indikator_program_tahun(tahun, kode_opd)
+    indikators = indikator_renstras_new('program', kode_opd)
+    indikator = indikators[:indikator_program].find { |ind| ind.tahun == tahun }
+
+    {
+      indikator: indikator.indikator,
+      target: indikator.target,
+      satuan: indikator.satuan
+    }
+  rescue NoMethodError
+    {
+      indikator: nil,
+      target: nil,
+      satuan: nil
+    }
+  end
+
+  def indikator_kegiatan_tahun(tahun, kode_opd)
+    indikators = indikator_renstras_new('kegiatan', kode_opd)
+    indikator = indikators[:indikator_kegiatan].find { |ind| ind.tahun == tahun }
+
+    {
+      indikator: indikator.indikator,
+      target: indikator.target,
+      satuan: indikator.satuan
+    }
+  rescue NoMethodError
+    {
+      indikator: nil,
+      target: nil,
+      satuan: nil
+    }
+  end
+
   def indikator_subkegiatan_tahun(tahun, kode_opd)
     indikators = indikator_renstras_new('subkegiatan', kode_opd)
     indikator = indikators[:indikator_subkegiatan].find { |ind| ind.tahun == tahun }
@@ -416,7 +450,9 @@ class ProgramKegiatan < ApplicationRecord
 
   def sasarans_subkegiatan(tahun)
     sasarans.includes(%i[indikator_sasarans strategi user])
-            .where("tahun ILIKE ?", "%#{tahun}%").dengan_strategi
+            .where("tahun ILIKE ?", "%#{tahun}%")
+            .order(nip_asn: :asc)
+            .dengan_strategi
   end
 
   def detail_anggaran(tahun)

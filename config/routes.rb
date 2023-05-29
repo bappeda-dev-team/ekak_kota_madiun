@@ -267,15 +267,23 @@ Rails.application.routes.draw do
   resources :kaks, path: "acuan_kerja"
   get "/acuan_kerja_new/:id/:tahun", to: "program_kegiatans#new_kak_format"
 
-  # get "/laporan_kak", to: "kaks#laporan_kak"
-  # get "/laporan_rka", to: "program_kegiatans#laporan_rka"
+  resources :laporans, only: [:index] do
+    collection do
+      get :atasan
+      get :laporan_kak
+      get :laporan_rka
+      post :laporan_kak_admin
+      post :laporan_rka_admin
+    end
 
-  namespace :laporans do
-    get "laporan_kak"
-    get "laporan_rka"
-    post "laporan_kak_admin"
-    post "laporan_rka_admin"
+    member do
+      get :pdf_kak
+      get :pdf_rka
+    end
   end
+  # laporan rka
+  # get "/pdf_rka/:id/:tahun", to: "program_kegiatans#pdf_rka"
+  # get "/pdf_kak/:id/:tahun", to: "program_kegiatans#pdf_kak"
 
   resources :lembagas
   resources :opds do
@@ -313,13 +321,7 @@ Rails.application.routes.draw do
   resources :roles
   resources :sumber_danas, except: %i[show]
   resources :kamus_usulans
-  resources :laporans, only: %i[index] do
-    collection do
-      get :atasan
-    end
-  end
   resources :usulans
-
   resources :rekaps, param: :kode_unik_opd do
     get "jumlah", on: :collection
   end
@@ -454,12 +456,9 @@ Rails.application.routes.draw do
   patch "/aktifkan_pokpir/:id", to: "pokpirs#aktifkan_pokpir"
   patch "/non_aktifkan_pokpir/:id", to: "pokpirs#non_aktifkan_pokpir"
   # laporan kak
-  get "/pdf_kak/:id/:tahun", to: "program_kegiatans#pdf_kak"
   get "/cetak_daftar_kak/:opd/:tahun", to: "program_kegiatans#cetak_daftar_kak"
   # daftar resiko
   get "/cetak_daftar_resiko/:opd/:tahun", to: "sasaran_program_opds#cetak_daftar_resiko"
-  # laporan rka
-  get "/pdf_rka/:id/:tahun", to: "program_kegiatans#pdf_rka"
   #  Sasaran
   get "/daftar_subkegiatan", to: "sasarans#daftar_subkegiatan"
   get "/pdf_daftar_subkegiatan", to: "sasarans#pdf_daftar_subkegiatan"

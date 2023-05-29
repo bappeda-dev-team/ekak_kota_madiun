@@ -39,7 +39,7 @@
                       <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
                       Tampilkan
                     <% end %>
-                    <%= link_to "/pdf_rka/#{subkegiatan.id}/#{@tahun}.pdf",
+                    <%= link_to pdf_rka_laporan_path(subkegiatan, format: :pdf),
                      class: "btn btn-sm btn-secondary" do %>
                       <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak Rincian Belanja"></span>
                       Cetak Rincian Belanja

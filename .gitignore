@@ -48,3 +48,4 @@ Procfile.dev
 dump.rdb
 /app/views/.DS_Store
 /.DS_Store
+*.DS_Store
