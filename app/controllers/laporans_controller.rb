@@ -1,5 +1,5 @@
 class LaporansController < ApplicationController
-  before_action :set_default, only: %i[laporan_rka laporan_kak laporan_kak_admin laporan_rka_admin]
+  before_action :set_default_attr
 
   def atasan
     # current_user == atasan
@@ -25,6 +25,20 @@ class LaporansController < ApplicationController
     render partial: "laporans/kak_admin"
   end
 
+  def pdf_kak
+    @program_kegiatan = ProgramKegiatan.find(params[:id])
+    @sasarans = @program_kegiatan.sasarans_subkegiatan(@tahun)
+    opd = @program_kegiatan.opd
+    pdf = LaporanKakPdf.new(opd: opd, tahun: @tahun, program_kegiatan: @program_kegiatan, sasarans: @sasarans)
+
+    waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
+    nama_file = @program_kegiatan.nama_subkegiatan
+    @filename = "Laporan_KAK_#{nama_file}_#{waktu}.pdf"
+    respond_to do |format|
+      format.pdf { send_data(pdf.render, filename: @filename, type: 'application/pdf', dispotition: :attachment) }
+    end
+  end
+
   def laporan_rka
     @nip_user = @user.nik
     @nama_user = @user.nama
@@ -43,9 +57,17 @@ class LaporansController < ApplicationController
     render partial: "laporans/rka_admin"
   end
 
+  def pdf_rka
+    @nama_file = ProgramKegiatan.find(params[:id]).nama_subkegiatan
+    @tahun = params[:tahun] || Time.now.year
+    @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
+    @filename = "Laporan_RAB_#{@nama_file}_#{@waktu}.pdf"
+  end
+
   private
 
-  def set_default
+  def set_default_attr
     @user = current_user
     @kode_opd = cookies[:opd]
     @tahun = cookies[:tahun] || Date.current.year

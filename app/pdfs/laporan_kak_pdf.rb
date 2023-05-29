@@ -1,12 +1,26 @@
 class LaporanKakPdf < Prawn::Document
   include ActionView::Helpers::NumberHelper
-  def initialize(opd: '', tahun: '', program_kegiatans: '')
+  def initialize(opd: '', tahun: '', program_kegiatan: '', sasarans: '')
     super page_size: "LETTER"
     @opd = opd
     @tahun = tahun
     @nama_opd = @opd.nama_opd
     @kota = @opd.lembaga.nama_lembaga
-    @program_kegiatans = program_kegiatans
+    @program_kegiatan = program_kegiatan
+    @sasarans = sasarans
+    @pagu = sasarans.map(&:total_anggaran).compact.sum
+    kode_opd = @opd.kode_opd
+    @indikator_prg = program_kegiatan&.indikator_program_tahun(tahun, kode_opd)
+    @indikator_keg = program_kegiatan&.indikator_kegiatan_tahun(tahun, kode_opd)
+    @indikator_sub = program_kegiatan&.indikator_subkegiatan_tahun(tahun, kode_opd)
+
+    # table & cell style
+    align_cell = :justify
+    @cell_style_common = { size: 8, border_width: 0, align: align_cell }
+    @common_cell_width = 388
+    @common_widths = { 0 => 17, 1 => 17, 2 => 88, 3 => 12 }
+    @common_table_cell_style = { size: 8, border_width: 0, overflow: :expand, align: :justify }
+    @common_table_width = bounds.width
     print
   end
 
@@ -50,209 +64,232 @@ class LaporanKakPdf < Prawn::Document
 
   def tabel_informasi_subkegiatan
     informasi_subkegiatan = [
-      ['Perangkat Daerah', ':', { content: @program_kegiatans.opd.nama_opd, font_style: :bold }],
-      ['Program', ':', { content: @program_kegiatans.nama_program, font_style: :bold }],
-      ['Indikator Kinerja Program', ':', @program_kegiatans.indikator_program],
-      ['Target', ':', @program_kegiatans.target_program],
-      ['Satuan', ':', @program_kegiatans.satuan_target_program],
+      ['Perangkat Daerah', ':', { content: @nama_opd, font_style: :bold }],
+      ['Program', ':', { content: @program_kegiatan.nama_program, font_style: :bold }],
+      ['Indikator Kinerja Program', ':', @indikator_prg&.dig(:indikator)],
+      ['Target', ':', @indikator_prg&.dig(:target)],
+      ['Satuan', ':', @indikator_prg&.dig(:satuan)],
       ['', '', ''],
-      ['Kegiatan', ':', { content: @program_kegiatans.nama_kegiatan, font_style: :bold }],
-      ['Indikator Kinerja Kegiatan (Output)', ':', @program_kegiatans.indikator_kinerja],
-      ['Target', ':', @program_kegiatans.target],
-      ['Satuan', ':', @program_kegiatans.satuan],
+      ['Kegiatan', ':', { content: @program_kegiatan.nama_kegiatan, font_style: :bold }],
+      ['Indikator Kinerja Kegiatan (Output)', ':', @indikator_keg&.dig(:indikator)],
+      ['Target', ':', @indikator_keg&.dig(:target)],
+      ['Satuan', ':', @indikator_keg&.dig(:satuan)],
       ['', '', ''],
-      ['Sub Kegiatan', ':', { content: @program_kegiatans.nama_subkegiatan, font_style: :bold }],
-      ['Indikator Kinerja Sub Kegiatan (Output)', ':', @program_kegiatans.indikator_subkegiatan],
-      ['Target', ':', @program_kegiatans.target_subkegiatan.to_s],
-      ['Satuan', ':', @program_kegiatans.satuan_target_subkegiatan.to_s],
-      ['Jumlah Sasaran/Rencana Kinerja', ':', @program_kegiatans.sasarans.count],
+      ['Sub Kegiatan', ':', { content: @program_kegiatan.nama_subkegiatan, font_style: :bold }],
+      ['Indikator Kinerja Sub Kegiatan (Output)', ':', @indikator_sub&.dig(:indikator)],
+      ['Target', ':', @indikator_sub&.dig(:target)],
+      ['Satuan', ':', @indikator_sub&.dig(:satuan)],
+      ['Jumlah Sasaran/Rencana Kinerja', ':', @sasarans.size],
       ['Pagu Anggaran', ':',
-       "Rp. #{number_with_delimiter(@program_kegiatans.sasarans.sudah_lengkap.map(&:total_anggaran).compact.sum)}"]
+       "Rp. #{number_with_delimiter(@pagu)}"]
     ]
     tabel_content informasi_subkegiatan
   end
 
   def kak_content
-    @program_kegiatans.sasarans.where.not(program_kegiatan: nil).each.with_index(1) do |sasaran, index|
-      dasar_hukum_arr = []
-      latar_belakang_arr = []
-      permasalahan_arr = []
-      indikator_arr = []
-      satuan_arr = []
-      target_arr = []
-      sasaran_arr = [[sasaran.sasaran_kinerja]]
-      if sasaran.indikator_sasarans.any?
-        sasaran.indikator_sasarans.each do |indikator|
-          indikator_arr << [indikator.indikator_kinerja]
-          satuan_arr << [indikator.satuan]
-          target_arr << [indikator.target]
-        end
-      else
-        indikator_arr = [['-']]
-        satuan_arr = [['-']]
-        target_arr = [['-']]
-      end
-      # DasarHukum
-      if sasaran.dasar_hukums.any?
-        sasaran.dasar_hukums.each do |dasar_hukum|
-          dasar_hukum_arr << [dasar_hukum.judul]
-        end
-      else
-        dasar_hukum_arr = [['-']]
-      end
-      # Gambaran Umum
-      if sasaran.latar_belakangs.any?
-        sasaran.latar_belakangs.each do |latar_belakang|
-          latar_belakang_arr << [latar_belakang.gambaran_umum]
-        end
-      else
-        latar_belakang_arr = [['-']]
-      end
-      # Permasalahan
-      if sasaran.permasalahans.any?
-        sasaran.permasalahans.each do |permasalahan|
-          permasalahan_arr << [permasalahan.permasalahan]
-          permasalahan_arr << ['Penyebab', '']
-          permasalahan_arr << ['1. Internal']
-          permasalahan_arr << [permasalahan.penyebab_internal || '-']
-          permasalahan_arr << ['2. External']
-          permasalahan_arr << [permasalahan.penyebab_external || '-']
-        end
-      else
-        permasalahan_arr = [
-          ['-', ''],
-          ['Penyebab', ''],
-          ['1. Internal'],
-          ['-', ''],
-          ['2. External'],
-          ['-', '']
-        ]
-      end
-      # variable for cell below
-      align_cell = :justify
-      cell_style_common = { size: 8, border_width: 0, align: align_cell }
-      common_cell_width = 388
-
-      sasaran_cell = make_table(sasaran_arr, cell_style: cell_style_common, width: common_cell_width)
-      indikator_cell = make_table(indikator_arr, cell_style: cell_style_common, width: common_cell_width)
-      satuan_cell = make_table(satuan_arr, cell_style: cell_style_common, width: common_cell_width)
-      target_cell = make_table(target_arr, cell_style: cell_style_common, width: common_cell_width)
-      dasar_hukum_cell = make_table(dasar_hukum_arr, cell_style: cell_style_common, width: common_cell_width)
-      latar_belakang_cell = make_table(latar_belakang_arr, cell_style: cell_style_common, width: common_cell_width)
-      permasalahan_cell = make_table(permasalahan_arr, cell_style: cell_style_common, width: common_cell_width)
-      sasaran_judul = [
-        [{ content: "#{index}.", font_style: :bold }, { content: "Sasaran/Rencana Kinerja", font_style: :bold }, ':',
-         sasaran_cell],
-        ['', 'Indikator Kinerja (Output)', ':', indikator_cell],
-        ['', 'Target', ':', target_cell],
-        ['', 'Satuan', ':', satuan_cell]
-      ]
-      dasar_hukum = [
-        ['', 'a.', 'Dasar Hukum', ':', dasar_hukum_cell]
-      ]
-      gambaran_umum = [
-        ['', 'b.', 'Gambaran Umum', ':', latar_belakang_cell]
-      ]
-      penerima_manfaat = [
-        ['', 'c.', 'Penerima Manfaat', ':', { content: sasaran.penerima_manfaat || '-' }]
-      ]
-      data_terpilah = [
-        ['', 'd.', 'Data Terpilah', ':', { content: sasaran.rincian&.data_terpilah || '-' }]
-      ]
-      permasalahan = [
-        ['', 'e.', 'Permasalahan', ':', permasalahan_cell]
-      ]
-      rincian_sasaran = [
-        ['', 'f.', 'Resiko', ':', { content: sasaran.rincian&.resiko || '-', inline_format: true }]
-      ]
-      rencana_aksi_judul = [
-        ['', 'g.', { content: 'Rencana Aksi dan Anggaran' }]
-      ]
-
-      # variable for table maker
-      common_widths = { 0 => 17, 1 => 17, 2 => 88, 3 => 12 }
-      common_table_cell_style = { size: 8, border_width: 0, overflow: :expand, align: :justify }
-      common_table_width = bounds.width
-
-      tabel_sasaran = make_table(sasaran_judul, column_widths: { 0 => 17, 2 => 13, 4 => 100 },
-                                                cell_style: common_table_cell_style, width: common_table_width)
-      tabel_dasar_hukum = make_table(dasar_hukum, column_widths: common_widths,
-                                                  cell_style: common_table_cell_style, width: common_table_width)
-      tabel_gambaran_umum = make_table(gambaran_umum, column_widths: common_widths,
-                                                      cell_style: common_table_cell_style, width: common_table_width)
-      tabel_penerima_manfaat = make_table(penerima_manfaat, column_widths: common_widths,
-                                                            cell_style: common_table_cell_style, width: common_table_width)
-      tabel_data_terpilah = make_table(data_terpilah, column_widths: common_widths,
-                                                      cell_style: common_table_cell_style, width: common_table_width)
-      tabel_permasalahan = make_table(permasalahan, column_widths: common_widths,
-                                                    cell_style: common_table_cell_style, width: common_table_width)
-      tabel_rincian = make_table(rincian_sasaran, column_widths: common_widths,
-                                                  cell_style: common_table_cell_style, width: common_table_width)
-      tabel_rencana_aksi_judul = make_table(rencana_aksi_judul, column_widths: { 0 => 17, 1 => 17 },
-                                                                cell_style: common_table_cell_style)
-      # pdf.table(tabel_sasaran, column_widths: { 0=> 17, 2=> 13 }, cell_style: common_table_cell_style)
-      tabel_sasaran.draw
-      tabel_dasar_hukum.draw
-      tabel_gambaran_umum.draw
-      tabel_penerima_manfaat.draw
-      tabel_data_terpilah.draw
-      tabel_permasalahan.draw
-      tabel_rincian.draw
-      tabel_rencana_aksi_judul.draw
-      move_down 10
-      data_rencana_aksi = [[{ content: 'No', rowspan: 2 }, { content: 'Tahapan Kerja', rowspan: 2 },
-                            { content: 'Target pada bulan', colspan: 12 }, { content: 'Jumlah', rowspan: 2 },
-                            { content: 'Pagu Anggaran', rowspan: 2 }, { content: 'Keterangan', rowspan: 2 }], %w[1 2 3 4 5 6 7 8 9 20 11 12]]
-
-      sasaran.tahapans.each.with_index(1) do |tahapan, i|
-        data_rencana_aksi << [i, tahapan.tahapan_kerja,
-                              tahapan.find_target_bulan(1),
-                              tahapan.find_target_bulan(2),
-                              tahapan.find_target_bulan(3),
-                              tahapan.find_target_bulan(4),
-                              tahapan.find_target_bulan(5),
-                              tahapan.find_target_bulan(6),
-                              tahapan.find_target_bulan(7),
-                              tahapan.find_target_bulan(8),
-                              tahapan.find_target_bulan(9),
-                              tahapan.find_target_bulan(10),
-                              tahapan.find_target_bulan(11),
-                              tahapan.find_target_bulan(12),
-                              tahapan.target_total,
-                              "Rp. #{number_with_delimiter(tahapan.anggaran_tahapan)}",
-                              tahapan.keterangan]
-      end
-      data_rencana_aksi << [{ content: "Total sasaran ini adalah #{sasaran.waktu_total} bulan", colspan: 14 },
-                            sasaran.jumlah_target, "Rp. #{number_with_delimiter(sasaran.total_anggaran)}", '']
-
-      tabel_renaksi = make_table(data_rencana_aksi, column_widths: { 0 => 18, 1 => 130, 14 => 30 },
-                                                    cell_style: { size: 6, align: :left }, width: bounds.width)
-      start_new_page if (cursor - tabel_renaksi.height).negative?
-      tabel_renaksi.draw
-      data_rencana_aksi.clear
-
-      # Usulan
-      move_down 10
-      tabel_usulan = [
-        ['', 'h.', 'Usulan yang terakomodir']
-      ]
-      table(tabel_usulan, column_widths: { 0 => 18, 1 => 17 }, cell_style: { size: 8, border_width: 0 })
-      data_usulan_terakomodir = [['No', 'Jenis Usulan', 'Usulan', 'Permasalahan/ Uraian', 'Keterangan']]
-      count = 0
-      sasaran.my_usulan.each do |u|
-        count += 1
-        keterangan = u.try(:alamat) || u.try(:peraturan_terkait) || u.try(:manfaat)
-        tipe = u.class.try(:type) || u.class.name.to_s
-        data_usulan_terakomodir << [count, tipe, u&.usulan, u&.uraian, keterangan&.force_encoding('utf-8')]
-      end
-      move_down 10
-      tabel_usulan_terakomodir = make_table(data_usulan_terakomodir,
-                                            column_widths: { 0 => 18, 1 => 50, 2 => 100 },
-                                            cell_style: { size: 6, align: :center }, width: bounds.width, header: true)
-      tabel_usulan_terakomodir.draw
-      move_down 30
-      start_new_page if (cursor - 50).negative?
+    @sasarans.each.with_index(1) do |sasaran, index|
+      sasaran_kinerja(sasaran, index)
+      dasara_hukum(sasaran)
+      gambaran_umum(sasaran)
+      penerima_manfaat(sasaran)
+      data_terpilah(sasaran)
+      permasalahan(sasaran)
+      resiko(sasaran)
+      rencana_aksi(sasaran)
+      usulan(sasaran)
     end
+  end
+
+  def sasaran_kinerja(sasaran, index)
+    sasaran_arr = [[sasaran.sasaran_kinerja]]
+    indikator_arr = []
+    satuan_arr = []
+    target_arr = []
+    if sasaran.indikator_sasarans.any?
+      sasaran.indikator_sasarans.each do |indikator|
+        indikator_arr << [indikator.indikator_kinerja]
+        satuan_arr << [indikator.satuan]
+        target_arr << [indikator.target]
+      end
+    else
+      indikator_arr = [['-']]
+      satuan_arr = [['-']]
+      target_arr = [['-']]
+    end
+    sasaran_cell = make_table(sasaran_arr, cell_style: @cell_style_common, width: @common_cell_width)
+    indikator_cell = make_table(indikator_arr, cell_style: @cell_style_common, width: @common_cell_width)
+    satuan_cell = make_table(satuan_arr, cell_style: @cell_style_common, width: @common_cell_width)
+    target_cell = make_table(target_arr, cell_style: @cell_style_common, width: @common_cell_width)
+    sasaran_judul = [
+      [{ content: "#{index}.", font_style: :bold }, { content: "Sasaran/Rencana Kinerja", font_style: :bold }, ':',
+       sasaran_cell],
+      ['', 'Indikator Kinerja (Output)', ':', indikator_cell],
+      ['', 'Target', ':', target_cell],
+      ['', 'Satuan', ':', satuan_cell]
+    ]
+    tabel_sasaran = make_table(sasaran_judul, column_widths: { 0 => 17, 2 => 13, 4 => 100 },
+                                              cell_style: @common_table_cell_style, width: @common_table_width)
+    tabel_sasaran.draw
+  end
+
+  def dasara_hukum(sasaran)
+    dasar_hukum_arr = []
+    if sasaran.dasar_hukums.any?
+      sasaran.dasar_hukums.each do |dasar_hukum|
+        dasar_hukum_arr << [dasar_hukum.judul]
+      end
+    else
+      dasar_hukum_arr = [['-']]
+    end
+    dasar_hukum_cell = make_table(dasar_hukum_arr, cell_style: @cell_style_common, width: @common_cell_width)
+    dasar_hukum = [
+      ['', 'a.', 'Dasar Hukum', ':', dasar_hukum_cell]
+    ]
+    tabel_dasar_hukum = make_table(dasar_hukum, column_widths: @common_widths,
+                                                cell_style: @common_table_cell_style, width: @common_table_width)
+    tabel_dasar_hukum.draw
+  end
+
+  def gambaran_umum(sasaran)
+    latar_belakang_arr = []
+    if sasaran.latar_belakangs.any?
+      sasaran.latar_belakangs.each do |latar_belakang|
+        latar_belakang_arr << [latar_belakang.gambaran_umum]
+      end
+    else
+      latar_belakang_arr = [['-']]
+    end
+    latar_belakang_cell = make_table(latar_belakang_arr, cell_style: @cell_style_common, width: @common_cell_width)
+    gambaran_umum = [
+      ['', 'b.', 'Gambaran Umum', ':', latar_belakang_cell]
+    ]
+    tabel_gambaran_umum = make_table(gambaran_umum, column_widths: @common_widths,
+                                                    cell_style: @common_table_cell_style, width: @common_table_width)
+    tabel_gambaran_umum.draw
+  end
+
+  def penerima_manfaat(sasaran)
+    penerima_manfaat = [
+      ['', 'c.', 'Penerima Manfaat', ':', { content: sasaran.penerima_manfaat || '-' }]
+    ]
+    tabel_penerima_manfaat = make_table(penerima_manfaat, column_widths: @common_widths,
+                                                          cell_style: @common_table_cell_style, width: @common_table_width)
+    tabel_penerima_manfaat.draw
+  end
+
+  def data_terpilah(sasaran)
+    data_terpilah = [
+      ['', 'd.', 'Data Terpilah', ':', { content: sasaran.rincian&.data_terpilah || '-' }]
+    ]
+    tabel_data_terpilah = make_table(data_terpilah, column_widths: @common_widths,
+                                                    cell_style: @common_table_cell_style, width: @common_table_width)
+    tabel_data_terpilah.draw
+  end
+
+  def permasalahan(sasaran)
+    permasalahan_arr = []
+    if sasaran.permasalahans.any?
+      sasaran.permasalahans.each do |permasalahan|
+        permasalahan_arr << [permasalahan.permasalahan]
+        permasalahan_arr << ['Penyebab', '']
+        permasalahan_arr << ['1. Internal']
+        permasalahan_arr << [permasalahan.penyebab_internal || '-']
+        permasalahan_arr << ['2. External']
+        permasalahan_arr << [permasalahan.penyebab_external || '-']
+      end
+    else
+      permasalahan_arr = [
+        ['-', ''],
+        ['Penyebab', ''],
+        ['1. Internal'],
+        ['-', ''],
+        ['2. External'],
+        ['-', '']
+      ]
+    end
+    permasalahan_cell = make_table(permasalahan_arr, cell_style: @cell_style_common, width: @common_cell_width)
+    permasalahan = [
+      ['', 'e.', 'Permasalahan', ':', permasalahan_cell]
+    ]
+    tabel_permasalahan = make_table(permasalahan, column_widths: @common_widths,
+                                                  cell_style: @common_table_cell_style, width: @common_table_width)
+    tabel_permasalahan.draw
+  end
+
+  def resiko(sasaran)
+    resiko_sasaran = [
+      ['', 'f.', 'Resiko', ':', { content: sasaran.rincian&.resiko || '-', inline_format: true }]
+    ]
+    tabel_resiko = make_table(resiko_sasaran, column_widths: @common_widths,
+                                              cell_style: @common_table_cell_style, width: @common_table_width)
+    tabel_resiko.draw
+  end
+
+  def rencana_aksi(sasaran)
+    rencana_aksi_judul = [
+      ['', 'g.', { content: 'Rencana Aksi dan Anggaran' }]
+    ]
+    tabel_rencana_aksi_judul = make_table(rencana_aksi_judul, column_widths: { 0 => 17, 1 => 17 },
+                                                              cell_style: @common_table_cell_style)
+    tabel_rencana_aksi_judul.draw
+    move_down 10
+    data_rencana_aksi = [[{ content: 'No', rowspan: 2 },
+                          { content: 'Tahapan Kerja', rowspan: 2 },
+                          { content: 'Target pada bulan', colspan: 12 },
+                          { content: 'Jumlah', rowspan: 2 },
+                          { content: 'Pagu Anggaran', rowspan: 2 },
+                          { content: 'Keterangan', rowspan: 2 }],
+                         %w[1 2 3 4 5 6 7 8 9 10 11 12]]
+
+    sasaran.tahapans.each.with_index(1) do |tahapan, i|
+      data_rencana_aksi << [i, tahapan.tahapan_kerja,
+                            tahapan.find_target_bulan(1),
+                            tahapan.find_target_bulan(2),
+                            tahapan.find_target_bulan(3),
+                            tahapan.find_target_bulan(4),
+                            tahapan.find_target_bulan(5),
+                            tahapan.find_target_bulan(6),
+                            tahapan.find_target_bulan(7),
+                            tahapan.find_target_bulan(8),
+                            tahapan.find_target_bulan(9),
+                            tahapan.find_target_bulan(10),
+                            tahapan.find_target_bulan(11),
+                            tahapan.find_target_bulan(12),
+                            tahapan.target_total,
+                            "Rp. #{number_with_delimiter(tahapan.anggaran_tahapan)}",
+                            tahapan.keterangan]
+    end
+    data_rencana_aksi << [{ content: "Total sasaran ini adalah #{sasaran.waktu_total} bulan", colspan: 14 },
+                          sasaran.jumlah_target, "Rp. #{number_with_delimiter(sasaran.total_anggaran)}", '']
+
+    tabel_renaksi = make_table(data_rencana_aksi, column_widths: { 0 => 18, 1 => 130, 14 => 30 },
+                                                  cell_style: { size: 6, align: :left }, width: bounds.width)
+    start_new_page if (cursor - tabel_renaksi.height).negative?
+    tabel_renaksi.draw
+    data_rencana_aksi.clear
+  end
+
+  def usulan(sasaran)
+    move_down 10
+    tabel_usulan = [
+      ['', 'h.', 'Usulan yang terakomodir']
+    ]
+    table(tabel_usulan, column_widths: { 0 => 18, 1 => 17 }, cell_style: { size: 8, border_width: 0 })
+    data_usulan_terakomodir = [['No', 'Jenis Usulan', 'Usulan', 'Permasalahan/ Uraian', 'Keterangan']]
+    count = 0
+    sasaran.my_usulan.each do |u|
+      count += 1
+      keterangan = u.try(:alamat) || u.try(:peraturan_terkait) || u.try(:manfaat)
+      tipe = u.class.try(:type) || u.class.name.to_s
+      data_usulan_terakomodir << [count, tipe, u&.usulan, u&.uraian, keterangan&.force_encoding('utf-8')]
+    end
+    move_down 10
+    tabel_usulan_terakomodir = make_table(data_usulan_terakomodir,
+                                          column_widths: { 0 => 18, 1 => 50, 2 => 100 },
+                                          cell_style: { size: 6, align: :center }, width: bounds.width, header: true)
+    tabel_usulan_terakomodir.draw
+    move_down 30
+    start_new_page if (cursor - 50).negative?
   end
 
   private
