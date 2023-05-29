@@ -58,11 +58,17 @@ class LaporansController < ApplicationController
   end
 
   def pdf_rka
-    @nama_file = ProgramKegiatan.find(params[:id]).nama_subkegiatan
-    @tahun = params[:tahun] || Time.now.year
-    @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
-    @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
-    @filename = "Laporan_RAB_#{@nama_file}_#{@waktu}.pdf"
+    @program_kegiatan = ProgramKegiatan.find(params[:id])
+    @sasarans = @program_kegiatan.sasarans_subkegiatan(@tahun)
+    opd = @program_kegiatan.opd
+    pdf = LaporanRkaPdf.new(opd: opd, tahun: @tahun, program_kegiatan: @program_kegiatan, sasarans: @sasarans)
+
+    waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
+    nama_file = @program_kegiatan.nama_subkegiatan
+    @filename = "Laporan_RAB_#{nama_file}_#{waktu}.pdf"
+    respond_to do |format|
+      format.pdf { send_data(pdf.render, filename: @filename, type: 'application/pdf', dispotition: :attachment) }
+    end
   end
 
   private

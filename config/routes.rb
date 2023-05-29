@@ -278,8 +278,11 @@ Rails.application.routes.draw do
 
     member do
       get :pdf_kak
+      get :pdf_rka
     end
   end
+  # laporan rka
+  # get "/pdf_rka/:id/:tahun", to: "program_kegiatans#pdf_rka"
   # get "/pdf_kak/:id/:tahun", to: "program_kegiatans#pdf_kak"
 
   resources :lembagas
@@ -456,8 +459,6 @@ Rails.application.routes.draw do
   get "/cetak_daftar_kak/:opd/:tahun", to: "program_kegiatans#cetak_daftar_kak"
   # daftar resiko
   get "/cetak_daftar_resiko/:opd/:tahun", to: "sasaran_program_opds#cetak_daftar_resiko"
-  # laporan rka
-  get "/pdf_rka/:id/:tahun", to: "program_kegiatans#pdf_rka"
   #  Sasaran
   get "/daftar_subkegiatan", to: "sasarans#daftar_subkegiatan"
   get "/pdf_daftar_subkegiatan", to: "sasarans#pdf_daftar_subkegiatan"
