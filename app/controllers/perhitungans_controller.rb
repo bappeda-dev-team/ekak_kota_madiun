@@ -17,7 +17,9 @@ class PerhitungansController < ApplicationController
   end
 
   # GET /perhitungans/1/edit
-  def edit; end
+  def edit
+    @selected = Search::AllAnggaran.find_by_kode_barang(@perhitungan.deskripsi)
+  end
 
   # POST /perhitungans or /perhitungans.json
   def create

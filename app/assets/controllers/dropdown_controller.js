@@ -6,12 +6,15 @@ export default class extends Controller {
   static targets = ["tahun"]
   static values = {
     jenis: String,
+    eventName: { type: String, default: 'change-select' },
+    tipe: String,
+    tahun: String,
     rekening: String,
     parent: String,
     url: String,
     opd_id: String,
     uraian: String,
-    width: String
+    width: { type: String, default: 'element' }
   }
 
   get select() {
@@ -28,7 +31,7 @@ export default class extends Controller {
   }
         
   get element_options() {
-    let width = this.widthValue || "element"
+    let width = this.widthValue
     let options = {
       width: width,
       theme: "bootstrap-5",
@@ -47,10 +50,13 @@ export default class extends Controller {
         data: (params) => ({
           kode_opd: this.opd_idValue,
           jenis_rekening: this.rekeningValue,
+          tahun: this.tahunValue,
+          jenisUraian: this.tipeValue,
           q: params.term
         }),
-        delay: 1500
-      }
+        delay: 800
+      },
+      cache: true
     }
     return options
   }
@@ -72,6 +78,15 @@ export default class extends Controller {
       case 'extra':
         this.dropdown_with_action(this.options_with_ajax)
         break
+      case 'tahun_anggaran':
+        this.dropdown_tahun_anggaran(this.default_options)
+        break
+      case 'jenis_anggaran':
+        this.dropdown_jenis_anggaran(this.options_with_ajax)
+        break
+      case 'uraian_anggaran':
+        this.dropdown_uraian_anggaran(this.options_with_ajax)
+        break
       case 'chain':
         this.dropdown_with_action(this.default_options)
         break
@@ -89,13 +104,28 @@ export default class extends Controller {
     });
   }
 
-  // custom_event
-  dropdown_with_action(options) {
+  dropdown_tahun_anggaran(options) {
     const select2ed = this.dropdown_base(options)
-    if (this.hasUraianValue && this.uraianValue.length > 0) {
+    if(this.tahunValue.length > 0) {
+      const text = this.tahunValue
+      const id = this.tahunValue
+      const options = new Option(text, id, true, true)
+      select2ed.append(options)
+    }
+    const custom_name = this.eventNameValue
+    return select2ed.on('select2:select', (e) => {
+      const custom_event = new CustomEvent(custom_name,
+        {detail: {data: e.params.data}})
+      document.dispatchEvent(custom_event)
+    })
+  }
+
+  dropdown_uraian_anggaran(options) {
+    const select2ed = this.dropdown_base(options)
+    if(this.uraianValue.length > 0) {
       $.ajax({
         type: 'GET',
-        url:  `${this.urlValue}?q=${this.uraianValue}`,
+        url:  `${this.urlValue}?q=${this.uraianValue}&tahun=${this.tahunValue}&jenisUraian=${this.tipeValue}`,
       }).then(function (data) {
         const data_first = data.results[0]
         const options = new Option(data_first.text, data_first.id, true, true)
@@ -108,8 +138,46 @@ export default class extends Controller {
         });
       });
     }
+    const custom_name = this.eventNameValue
     return select2ed.on('select2:select', (e) => {
-      const custom_event = new CustomEvent('change-select',
+      const custom_event = new CustomEvent(custom_name,
+        {detail: {data: e.params.data}})
+      document.dispatchEvent(custom_event)
+    })
+  }
+
+  dropdown_jenis_anggaran(options) {
+    const select2ed = this.dropdown_base(options)
+    if(this.tipeValue.length > 0) {
+      $.ajax({
+        type: 'GET',
+        url:  `${this.urlValue}?q=${this.tipeValue}`,
+      }).then(function (data) {
+        const data_first = data.results[0]
+        const options = new Option(data_first.text, data_first.id, true, true)
+        select2ed.append(options)
+        select2ed.trigger({
+          type: 'select2:select',
+          params: {
+            data: data_first
+          }
+        });
+      });
+    }
+    const custom_name = this.eventNameValue
+    return select2ed.on('select2:select', (e) => {
+      const custom_event = new CustomEvent(custom_name,
+        {detail: {data: e.params.data}})
+      document.dispatchEvent(custom_event)
+    })
+  }
+
+  // custom_event
+  dropdown_with_action(options) {
+    const select2ed = this.dropdown_base(options)
+    const custom_name = this.eventNameValue
+    return select2ed.on('select2:select', (e) => {
+      const custom_event = new CustomEvent(custom_name,
         {detail: {data: e.params.data}})
       document.dispatchEvent(custom_event)
     })
@@ -147,6 +215,13 @@ export default class extends Controller {
   fill_tahun(e) {
     const {data} = e.detail
     const tahun = data.id
+    this.tahunValue = tahun
+  }
+
+  fill_jenis_uraian(e) {
+    const {data} = e.detail
+    const jenisUraian = data.id
+    this.tipeValue = jenisUraian
   }
 
   event_dispatcher(custom_event_name, data) {

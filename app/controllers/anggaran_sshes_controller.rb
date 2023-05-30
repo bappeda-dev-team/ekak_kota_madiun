@@ -8,17 +8,25 @@ class AnggaranSshesController < ApplicationController
 
   def anggaran_ssh_search
     param = params[:q] || ''
-    tahun = cookies[:tahun]
-    @anggaran_sshes = Search::AllAnggaran.where('uraian_barang ILIKE ?',
-                                                "%#{param}%")
-                                         .or(Search::AllAnggaran.where('spesifikasi ILIKE ?', "%#{param}%"))
-                                         .where('tahun = ?', tahun)
-                                         .limit(80).includes(:searchable).collect(&:searchable)
+    tahun = params[:tahun]
+    jenis_uraian = params[:jenisUraian]
+    @anggaran_sshes = Search::AllAnggaran
+                      .where('uraian_barang ILIKE ? or spesifikasi ILIKE ?',
+                             "%#{param}%", "%#{param}%")
+                      .where('tahun = ?', tahun)
+                      .where(searchable_type: jenis_uraian)
+                      .limit(80)
+                      .includes(:searchable)
+                      .collect(&:searchable)
   end
 
   def anggaran_spesifikasi_search
     param = params[:q] || ''
     @anggaran_sshes = AnggaranSsh.where('kode_barang ILIKE ?', "%#{param}%").limit(30)
+  end
+
+  def anggaran_jenis_search
+    @jenis_anggarans = Search::AllAnggaran.distinct.pluck(:searchable_type)
   end
 
   # GET /anggaran_sshes/1 or /anggaran_sshes/1.json
