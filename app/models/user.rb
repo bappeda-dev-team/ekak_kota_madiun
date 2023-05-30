@@ -150,10 +150,7 @@ class User < ApplicationRecord
 
   def program_sasarans_tahun(tahun)
     strategis.where('tahun ILIKE ?', "%#{tahun}%")
-             .map { |str| str.operational_objectives.map(&:sasaran) }
-             .flatten
-             .group_by(&:program_kegiatan)
-             .group_by { |key, _value| key&.nama_program }
+             .to_h { |str| [str.sasaran, str.subkegiatans_sasarans] }
   end
 
   def mandatoris_tahun(tahun)
@@ -266,7 +263,7 @@ class User < ApplicationRecord
   end
 
   def eselon_atas?
-    eselon_user == 'eselon_3' || 'eselon_2b'
+    eselon_user == 'eselon_3' || eselon_user == 'eselon_2b'
   end
 
   def role_asn

@@ -166,6 +166,10 @@ class Strategi < ApplicationRecord
     { Kosong: [] }
   end
 
+  def subkegiatans_sasarans
+    operational_objectives.map(&:sasaran).group_by(&:program_kegiatan)
+  end
+
   def rekap_program_opd
     tactical_objectives.map { |aa| aa.programs_strategi.keys }.flatten
   end
