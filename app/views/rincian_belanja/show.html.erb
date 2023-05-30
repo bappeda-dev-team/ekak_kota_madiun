@@ -81,7 +81,7 @@
               </thead>
               <tbody>
                 <% anggarans = tahapan.anggarans %>
-                <% anggarans.includes([:comments]).order(:created_at).each do |anggaran| %>
+                <% anggarans.includes([:comments, :perhitungans]).order(:created_at).each do |anggaran| %>
                   <tr class="level-0 <%= 'higlighted' if anggaran.comments.any? %>">
                     <td class="px-3"><%= rekening_anggaran(anggaran.kode_rek) %></td>
                     <td class="text-wrap" colspan="6"><%= anggaran.uraian %></td>
@@ -112,7 +112,7 @@
                     </td>
                   </tr>
                   <% if anggaran.perhitungans.any? %>
-                    <% anggaran.perhitungans.includes([:koefisiens]).order(:created_at).each do |hitung| %>
+                    <% anggaran.perhitungans.includes([:koefisiens, :pajak]).order(:created_at).each do |hitung| %>
                       <tr class="rincian-anggaran">
                         <td></td>
                         <td><%= uraian_rincian_anggaran(hitung) %></td>
