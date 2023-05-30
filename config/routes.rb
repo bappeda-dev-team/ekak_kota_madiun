@@ -225,6 +225,9 @@ Rails.application.routes.draw do
   end
 
   resources :rincian_belanja do
+    collection do
+      get :index_atasan
+    end
     member do
       get :show_subkegiatan
       get :edit_rankir_gelondong
@@ -467,12 +470,14 @@ Rails.application.routes.draw do
   # Tahapan
   # Anggaran
   get "/anggaran_ssh_search", to: "anggaran_sshes#anggaran_ssh_search"
+  get "/anggaran_jenis_search", to: "anggaran_sshes#anggaran_jenis_search"
   get "/anggaran_spesifikasi_search", to: "anggaran_sshes#anggaran_spesifikasi_search"
   get "/anggaran_hspk_search", to: "anggaran_hspks#anggaran_hspk_search"
   post "/perhitungan_update", to: "anggarans#perhitungan_update"
 
   # Reknening
   get "/rekening_search", to: "rekenings#rekening_search"
+  get "/jenis_rekening_search", to: "rekenings#jenis_rekening_search"
 
   # admin thing
   # get "/adminsasarans", to: "sasarans#sasaran_admin"

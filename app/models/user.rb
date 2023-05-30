@@ -148,6 +148,14 @@ class User < ApplicationRecord
     sasarans_tahun(tahun).group_by(&:program_kegiatan)
   end
 
+  def program_sasarans_tahun(tahun)
+    strategis.where('tahun ILIKE ?', "%#{tahun}%")
+             .map { |str| str.operational_objectives.map(&:sasaran) }
+             .flatten
+             .group_by(&:program_kegiatan)
+             .group_by { |key, _value| key&.nama_program }
+  end
+
   def mandatoris_tahun(tahun)
     mandatoris.where("COALESCE(tahun, '') ILIKE ?", "%#{tahun}%")
   end
@@ -255,6 +263,10 @@ class User < ApplicationRecord
     eselon = roles.where("roles.name ilike ?", "%eselon%").first
     eselon_user = eselon.nil? ? roles.where("roles.name ilike ?", "%staff%").first : eselon
     eselon_user.nil? ? "no_eselon" : eselon_user.name
+  end
+
+  def eselon_atas?
+    eselon_user == 'eselon_3' || 'eselon_2b'
   end
 
   def role_asn

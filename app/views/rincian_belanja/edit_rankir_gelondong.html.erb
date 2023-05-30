@@ -76,7 +76,7 @@
                 <% tahapan.grand_parent_anggaran.each do |rekening, anggarans| %>
                   <tr class="level-0 bg-gray-700 text-white">
                     <td class="text-white"><%= rekening %></td>
-                    <td><%= find_rekening(rekening).jenis_rekening %></td>
+                    <td><%= find_rekening(rekening)&.jenis_rekening %></td>
                     <td class="uang text-end pe-2" id="<%= rekening %>" >Rp. <%= number_with_delimiter(tahapan.jumlah_grand_parent_penetapan(rekening)) %></td>
                     <td class="uang text-end pe-2">Rp. <%= number_with_delimiter(tahapan.jumlah_grand_parent(rekening)) %></td>
                     <td></td>

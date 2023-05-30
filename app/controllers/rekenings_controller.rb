@@ -12,9 +12,13 @@ class RekeningsController < ApplicationController
 
     @rekenings = Rekening
                  .where(set_input: 1)
-                 .where('jenis_rekening ILIKE ?', "%#{jenis_rekening}%")
+                 .where('kode_rekening ILIKE ?', "%#{jenis_rekening}%")
                  .where('jenis_rekening ILIKE ?', "%#{param}%")
                  .limit(50)
+  end
+
+  def jenis_rekening_search
+    @rekenings = Rekening.where('LENGTH(kode_rekening) = ?', '3')
   end
 
   # GET /rekenings/1 or /rekenings/1.json

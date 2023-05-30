@@ -9,23 +9,47 @@
       </ul>
     </div>
   <% end %>
-  <%
-  unless perhitungan.deskripsi.blank?
-    selected = Search::AllAnggaran.find_by_kode_barang(perhitungan.deskripsi)
-    uraian = selected.class.name + '|' + selected.uraian_barang + ' | ' + selected.spesifikasi
-  end
-  %>
+  <% tahun_options = Search::AllAnggaran.distinct.order(tahun: :asc).pluck(:tahun).compact %>
+  <div class="field">
+    <%= form.label :tahun, {class: "form-label"} %>
+    <%= form.select :tahun, tahun_options, {include_blank: true} ,
+    { class: "form-control",
+      data: { "placeholder": "Tahun Anggaran",
+              controller: 'dropdown',
+              dropdown_jenis_value: 'tahun_anggaran',
+              dropdown_parent_value: '#form-perhitungan',
+              dropdown_tahun_value: "#{@selected&.tahun}",
+              dropdown_event_name_value: 'tahun-ssh',
+      }} %>
+  </div>
+  <div class="field">
+    <%= form.label :jenis, {class: "form-label"} %>
+    <%= form.select :jenis, [], {include_blank: true} ,
+    { class: "form-control",
+      data: { "placeholder": "Jenis Standar Harga",
+              controller: 'dropdown',
+              dropdown_jenis_value: 'jenis_anggaran',
+              dropdown_url_value: '/anggaran_jenis_search.json',
+              dropdown_parent_value: '#form-perhitungan',
+              dropdown_event_name_value: 'jenis-ssh',
+              dropdown_tipe_value: "#{@selected&.searchable_type}",
+      }} %>
+  </div>
   <div class="field">
     <%= form.label :uraian, {class: "form-label"} %>
     <%= form.select :deskripsi, [], {include_blank: true} ,
     { class: "form-control",
       data: { "placeholder": "Pilih Uraian",
               controller: 'dropdown',
-              dropdown_jenis_value: 'extra',
+              dropdown_jenis_value: 'uraian_anggaran',
               dropdown_url_value: '/anggaran_ssh_search.json',
               dropdown_parent_value: '#form-perhitungan',
-              dropdown_uraian_value: "#{selected&.uraian_barang}",
-              action: 'change-select@document->dropdown#fill_spesifikasi_satuan_harga'
+              dropdown_uraian_value: "#{@selected&.uraian_barang}",
+              dropdown_tahun_value: "#{@selected&.tahun}",
+              dropdown_tipe_value: "#{@selected&.searchable_type}",
+              action: 'change-select@document->dropdown#fill_spesifikasi_satuan_harga
+tahun-ssh@document->dropdown#fill_tahun
+jenis-ssh@document->dropdown#fill_jenis_uraian'
       }} %>
   </div>
   <div class="field">
