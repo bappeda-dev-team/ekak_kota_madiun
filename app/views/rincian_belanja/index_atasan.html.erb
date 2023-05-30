@@ -42,7 +42,7 @@
             <tbody>
               <% @subkegiatan_sasarans.each.with_index(1) do |(sasaran_kabid, subkegiatans), index| %>
                 <tr>
-                  <td class="border" rowspan="<%= rowspan_sasaran(sasaran_kabid) %>"><%= "#{index}"%></td>
+                  <td class="border" rowspan="<%= rowspan_sasaran(sasaran_kabid) %>"><%= index %></td>
                   <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran_kabid) %>"><%= sasaran_kabid.nama_pemilik %></td>
                   <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran_kabid) %>"><%= sasaran_kabid.sasaran_kinerja %></td>
                   <% if sasaran_kabid.indikator_sasarans.any? %>
@@ -52,9 +52,8 @@
                       <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran_kabid), class: 'btn btn-outline-danger w-100' %>
                     </td>
                   <% end %>
-                  <td class="border" rowspan="<%= rowspan_sasaran(sasaran_kabid) %>">Rp. 0</td>
-                  <td class="border" rowspan="<%= rowspan_sasaran(sasaran_kabid) %>">
-                  </td>
+                  <td class="border" rowspan="<%= rowspan_sasaran(sasaran_kabid) %>">Rp. <%= number_with_delimiter(0) %></td>
+                  <td class="border" rowspan="<%= rowspan_sasaran(sasaran_kabid) %>"></td>
                 </tr>
                 <% row_indikator_sasaran(sasaran_kabid).each do |indikator| %>
                   <%= indikator %>
@@ -63,10 +62,11 @@
                   <%= tahapan %>
                 <% end %>
                 <% subkegiatans.each.with_index(1) do |(subkegiatan,sasarans), i_sub| %>
+                  <% pagu = sasarans.map(&:total_anggaran).compact.sum %>
                   <tr>
                     <td class="border"><%= "#{index}.#{i_sub}" %></td>
                     <td class="border text-wrap fw-bolder text-gray-900" colspan="5">Subkegiatan: <%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %></td>
-                    <td class="border">Rp. <%= number_with_delimiter(0) %></td>
+                    <td class="border">Rp. <%= number_with_delimiter(pagu) %></td>
                     <td class="border">
                       <div class="col">
                         <% if subkegiatan %>
@@ -92,15 +92,7 @@
                         </td>
                       <% end %>
                       <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
-                      <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">
-                        <div class="d-grid gap-3">
-                          <%= link_to rincian_belanja_path(sasaran),
-                           target: "_blank",
-                           class: "btn btn-sm btn-outline-info" do %>
-                            <span>Edit</span>
-                          <% end %>
-                        </div>
-                      </td>
+                      <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"></td>
                     </tr>
                     <% row_indikator_sasaran(sasaran).each do |indikator| %>
                       <%= indikator %>
