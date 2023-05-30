@@ -142,9 +142,11 @@ export default class extends Controller {
     const jenis_rek = data.id
     this.rekeningValue = jenis_rek
     this.select.select2('open')
-    this.select.on('select2:close', (er) => {
-      this.rekeningValue = ''
-    })
+  }
+
+  fill_tahun(e) {
+    const {data} = e.detail
+    const tahun = data.id
   }
 
   event_dispatcher(custom_event_name, data) {
