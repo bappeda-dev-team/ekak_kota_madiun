@@ -337,9 +337,5 @@ class User < ApplicationRecord
       'eselon_4' => User.eselon4.limit(10),
       'staff' => User.staff.limit(10)
     }
-    # scope :eselon2, -> { with_role("eselon_2") }
-    # scope :eselon3, -> { with_role("eselon_3") }
-    # scope :eselon4, -> { with_role("eselon_4") }
-    # scope :staff, -> { with_role("staff") }
   end
 end

@@ -203,7 +203,7 @@ class Sasaran < ApplicationRecord
   end
 
   def total_anggaran_penetapan
-    tahapans.map(&:anggaran_tahapan_penetapan).inject(:+)
+    tahapans.includes([:anggarans]).map(&:anggaran_tahapan_penetapan).inject(:+)
   rescue TypeError
     '-'
   end

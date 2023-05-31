@@ -2,7 +2,7 @@ module LaporansHelper
   def pagu_sub(sasarans)
     pagu = sasarans.map(&:total_anggaran).compact.sum
     "
-      <td class='border'>Rp. #{number_with_delimiter(pagu)}</td>
+      <td class='border rankir-2'>Rp. #{number_with_delimiter(pagu)}</td>
     ".html_safe
   end
 
