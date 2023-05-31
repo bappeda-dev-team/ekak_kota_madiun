@@ -22,17 +22,28 @@
             <th class="border text-center" scope="col">Indikator</th>
             <th class="border text-center" scope="col">Target</th>
             <th class="border text-center" scope="col">Satuan</th>
-            <th class="border text-center" scope="col">Anggaran</th>
+            <th class="border text-center" scope="col" colspan="3">Anggaran</th>
             <th class="border text-center" scope="col">Action</th>
+          </tr>
+          <tr>
+            <th class="border text-center" scope="col" colspan="6"></th>
+            <th class="border text-center" scope="col">Rankir-1</th>
+            <th class="border text-center" scope="col">Rankir-2</th>
+            <th class="border text-center" scope="col">Penetapan</th>
+            <th class="border text-center" scope="col"></th>
           </tr>
         </thead>
         <tbody>
           <% @program_kegiatans.each.with_index(1) do |(subkegiatan, sasarans), i| %>
+            <% pagu_rankir_1 = sasarans.map(&:total_anggaran_rankir_1).compact.sum %>
+            <% pagu_penetapan = sasarans.map(&:total_anggaran_penetapan).compact.sum %>
             <tr>
               <td class="border text-wrap fw-bolder text-gray-900"><%= i %></td>
               <td class="border text-wrap fw-bolder text-gray-900" colspan="2">Subkegiatan: <%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %></td>
               <%= indikator_sub(subkegiatan, @tahun, @kode_opd) %>
+              <td class='border rankir-1'>Rp. <%= number_with_delimiter(pagu_rankir_1) %></td>
               <%= pagu_sub(sasarans) %>
+              <td class='border penetapan'>Rp. <%= number_with_delimiter(pagu_penetapan) %></td>
               <td class="border">
                 <% if subkegiatan %>
                   <div class="d-grid gap-2">
@@ -56,7 +67,9 @@
                 <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
                 <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
                 <%= indikator_sasaran(sasaran) %>
-                <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
+                <td class="border rankir-1" rowspan="<%= rowspan_sasaran(sasaran) %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran_rankir_1) %></td>
+                <td class="border rankir-2" rowspan="<%= rowspan_sasaran(sasaran) %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
+                <td class="border penetapan" rowspan="<%= rowspan_sasaran(sasaran) %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran_penetapan) %></td>
                 <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">
                   <div class="row justify-content-center w-100">
                     <div class="col">
@@ -74,7 +87,9 @@
               <% sasaran.tahapans.each.with_index(1) do |tahapan, no_tah| %>
                 <tr>
                   <td class="border text-wrap" colspan="6" >Renaksi <%= no_tah %>: <%= tahapan.tahapan_kerja %></td>
-                  <td class="border">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %></td>
+                  <td class="border rankir-1">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan_rankir_1) %></td>
+                  <td class="border rankir-2">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %></td>
+                  <td class="border penetapan">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan_penetapan) %></td>
                   <td class="border"></td>
                 </tr>
               <% end %>

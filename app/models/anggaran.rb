@@ -40,9 +40,11 @@ class Anggaran < ApplicationRecord
   belongs_to :parent, class_name: 'Anggaran', optional: true
   belongs_to :pajak, optional: true
   has_many :comments, dependent: :destroy
-  has_one :pagu_anggaran, class_name: 'PaguAnggaran', foreign_key: 'kode', primary_key: 'id'
+  has_one :pagu_anggaran, lambda {
+                            where(jenis: 'Penetapan')
+                          }, class_name: 'PaguAnggaran', foreign_key: 'kode', primary_key: 'id'
   has_one :pagu_rankir_1, lambda {
-                            pagu_rankir_gelondong
+                            where(jenis: 'RankirGelondong')
                           }, class_name: 'PaguAnggaran', foreign_key: 'kode', primary_key: 'id'
   has_one :rekening, foreign_key: 'id', primary_key: 'kode_rek'
 
