@@ -200,6 +200,10 @@ class User < ApplicationRecord
     nama_bidang&.upcase&.include?('PUSKESMAS')
   end
 
+  def pegawai_bpbd?
+    opd.nama_opd&.upcase&.include?('BENCANA')
+  end
+
   def petunjuk_kelurahan
     jabatan.upcase.split(/KELURAHAN/, 2).last.strip if pegawai_kelurahan?
   end
@@ -263,7 +267,7 @@ class User < ApplicationRecord
   end
 
   def eselon_atas?
-    if pegawai_puskesmas? || pegawai_rsud?
+    if pegawai_puskesmas? || pegawai_bpbd? || pegawai_rsud?
       eselon_user == 'eselon_2b'
     else
       eselon_user == 'eselon_3' || eselon_user == 'eselon_2b'
