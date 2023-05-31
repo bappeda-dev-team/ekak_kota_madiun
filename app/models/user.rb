@@ -263,7 +263,11 @@ class User < ApplicationRecord
   end
 
   def eselon_atas?
-    eselon_user == 'eselon_3' || eselon_user == 'eselon_2b'
+    if pegawai_puskesmas? || pegawai_rsud?
+      eselon_user == 'eselon_2b'
+    else
+      eselon_user == 'eselon_3' || eselon_user == 'eselon_2b'
+    end
   end
 
   def role_asn
