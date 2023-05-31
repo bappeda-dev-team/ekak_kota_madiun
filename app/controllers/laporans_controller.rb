@@ -39,6 +39,11 @@ class LaporansController < ApplicationController
     end
   end
 
+  def show_kak
+    @program_kegiatan = ProgramKegiatan.find(params[:id])
+    @sasarans = @program_kegiatan.sasarans_subkegiatan(@tahun)
+  end
+
   def laporan_rka
     @nip_user = @user.nik
     @nama_user = @user.nama

@@ -1,0 +1,84 @@
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>Program Kegiatan</h4>
+      </div>
+    </div>
+  </div>
+  <% indikator_prg = program_kegiatan&.indikator_program_tahun(@tahun, @kode_opd) %>
+  <% indikator_keg = program_kegiatan&.indikator_kegiatan_tahun(@tahun, @kode_opd) %>
+  <% indikator_sub = program_kegiatan&.indikator_subkegiatan_tahun(@tahun, @kode_opd) %>
+  <div class="card-body program-kegiatan">
+    <table class="table table-bordered">
+      <tr>
+        <td class="w-35"><strong>Lembaga</strong></td>
+        <td><%= program_kegiatan.opd.lembaga.nama_lembaga %></td>
+      </tr>
+      <tr>
+        <td class="w-35"><strong>Unit Eselon I/II</strong></td>
+        <td><%= program_kegiatan.opd.nama_opd %></td>
+      </tr>
+      <tr>
+        <td class="w-35"><strong>Tahun</strong></td>
+        <td><%= program_kegiatan.tahun || @tahun %></td>
+      </tr>
+      <tr>
+        <td class="w-35"><strong>Urusan</strong></td>
+        <td><%= program_kegiatan.nama_urusan %></td>
+      </tr>
+      <tr>
+        <td class="w-35"><strong>Bidang Urusan</strong></td>
+        <td><%= program_kegiatan.nama_bidang_urusan %></td>
+      </tr>
+      <tr>
+        <td class="w-35"><strong>Program</strong></td>
+        <td><%= program_kegiatan.nama_program %></td>
+      </tr>
+      <tr>
+        <td class="w-35"><strong>Indikator Program (Outcome)</strong></td>
+        <td><%= indikator_prg&.dig(:indikator) %></td>
+      </tr>
+      <tr>
+        <td class="w-35"><strong>Target</strong></td>
+        <td><%= indikator_prg&.dig(:target) %></td>
+      </tr>
+      <tr>
+        <td class="w-35"><strong>Satuan</strong></td>
+        <td><%= indikator_prg&.dig(:satuan) %></td>
+      </tr>
+      <tr>
+        <td class="w-35"><strong>Kegiatan</strong></td>
+        <td><%= program_kegiatan.nama_kegiatan %></td>
+      </tr>
+      <tr>
+        <td class="w-35"><strong>Indikator Kinerja Kegiatan (Output)</strong></td>
+        <td><%= indikator_keg&.dig(:indikator) %></td>
+      </tr>
+      <tr>
+        <td class="w-35"><strong>Volume Keluaran (target)</strong></td>
+        <td><%= indikator_keg&.dig(:target) %></td>
+      </tr>
+      <tr>
+        <td class="w-35"><strong>Satuan Ukur Keluaran (Output)</strong></td>
+        <td><%= indikator_keg&.dig(:satuan) %></td>
+      </tr>
+      <tr>
+        <td class="w-35"><strong>Sub Kegiatan</strong></td>
+        <td><%= program_kegiatan.nama_subkegiatan %></td>
+      </tr>
+      <tr>
+        <td class="w-35"><strong>Indikator Sub Kegiatan (Output)</strong></td>
+        <td><%= indikator_sub&.dig(:indikator) %></td>
+      </tr>
+      <tr>
+        <td class="w-35"><strong>Target</strong></td>
+        <td><%= indikator_sub&.dig(:target) %></td>
+      </tr>
+      <tr>
+        <td class="w-35"><strong>Satuan</strong></td>
+        <td><%= indikator_sub&.dig(:satuan) %></td>
+      </tr>
+    </table>
+  </div>
+</div>
