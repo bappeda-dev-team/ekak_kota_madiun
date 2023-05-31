@@ -329,4 +329,17 @@ class User < ApplicationRecord
   def usulans_user
     opd.usulans
   end
+
+  def self.grouped_collection_by_role
+    {
+      'eselon_2' => User.eselon2.limit(10),
+      'eselon_3' => User.eselon3.limit(10),
+      'eselon_4' => User.eselon4.limit(10),
+      'staff' => User.staff.limit(10)
+    }
+    # scope :eselon2, -> { with_role("eselon_2") }
+    # scope :eselon3, -> { with_role("eselon_3") }
+    # scope :eselon4, -> { with_role("eselon_4") }
+    # scope :staff, -> { with_role("staff") }
+  end
 end

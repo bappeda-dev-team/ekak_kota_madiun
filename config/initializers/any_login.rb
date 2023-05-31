@@ -9,7 +9,7 @@ AnyLogin.setup do |config|
   # config.klass_name = 'User'
 
   #  # .all, .active, .admins, .groped_collection, etc ... need to return an array (or hash with arrays) of users
-  config.collection_method = :aktif
+  config.collection_method = :grouped_collection_by_role
 
   # # to format user name in dropdown list
   config.name_method = proc { |e| [e.nama, e.id] }
