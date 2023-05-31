@@ -1,0 +1,137 @@
+<nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+  <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+    <li class="breadcrumb-item">
+      <i class="fas fa-home"></i>
+    </li>
+    <li class="breadcrumb-item">Perencanaan</li>
+    <li class="breadcrumb-item">Rincian Belanja</li>
+    <li class="breadcrumb-item">Rencana Kinerja - Gelondong</li>
+    <li class="breadcrumb-item active" aria-current="page"><%= @sasaran.sasaran_kinerja %></li>
+  </ol>
+</nav>
+<div class="px-3">
+  <div class="card border-2 shadow mb-1">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <table class="table align-items-center">
+          <thead>
+            <tr>
+              <th class="border text-center" scope="col" colspan="2"></th>
+              <th class="border text-center" scope="col">Indikator</th>
+              <th class="border text-center" scope="col">Target</th>
+              <th class="border text-center" scope="col">Satuan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% indikator_sub = @sasaran.program_kegiatan&.indikator_subkegiatan_tahun(@tahun, @kode_opd) %>
+            <tr class="table-info">
+              <th class="border fw-bolder text-gray-900">Subkegiatan:</th>
+              <td class="border text-wrap"><%= @sasaran.subkegiatan %></td>
+              <td class="border text-wrap"><%= indikator_sub&.dig(:indikator) %></td>
+              <td class="border text-wrap"><%= indikator_sub&.dig(:target) %></td>
+              <td class="border text-wrap"><%= indikator_sub&.dig(:satuan) %></td>
+            </tr>
+            <% indikator = @sasaran.indikator_sasarans.first %>
+            <tr>
+              <th class="border fw-bolder text-gray-900">Rencana Kinerja</th>
+              <td class="border text-wrap" rowspan="<%= @sasaran.indikator_sasarans.count  %>"><%= @sasaran.sasaran_kinerja %></td>
+              <td class="border text-wrap"><%= indikator&.indikator_kinerja %></td>
+              <td class="border text-wrap"><%= indikator&.target %></td>
+              <td class="border text-wrap"><%= indikator&.satuan %></td>
+            </tr>
+            <% @sasaran.indikator_sasarans.drop(1).each do |indikator_s| %>
+              <tr>
+                <td class="border text-wrap"><%= indikator_s.indikator_kinerja %></td>
+                <td class="border text-wrap"><%= indikator_s.target %></td>
+                <td class="border text-wrap"><%= indikator_s.satuan %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <% @tahapans.each do |tahapan| %>
+      <div class="card border-2 shadow mb-1">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <p>Tahapan <%= ": #{tahapan.urutan} #{tahapan.tahapan_kerja}" %></p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="anggaran">
+            <%= link_to 'Tambah Rekening', new_sasaran_tahapan_anggaran_path(@sasaran, tahapan),
+           remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"},
+           class: "ml-5 mb-3 btn btn-outline-success" %>
+            <table id="detail-anggaran">
+              <thead>
+                <tr>
+                  <th class="text-center">Kode Rekening</th>
+                  <th class="text-center">Uraian</th>
+                  <th class="text-center">Penetapan</th>
+                  <th class="text-center">Rankir-2</th>
+                  <th class="text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% tahapan.grand_parent_anggaran.each do |rekening, anggarans| %>
+                  <tr class="level-0 bg-gray-700 text-white">
+                    <td class="text-white"><%= rekening %></td>
+                    <td><%= find_rekening(rekening)&.jenis_rekening %></td>
+                    <td class="uang text-end pe-2" id="<%= rekening %>" >Rp. <%= number_with_delimiter(tahapan.jumlah_grand_parent_penetapan(rekening)) %></td>
+                    <td class="uang text-end pe-2">Rp. <%= number_with_delimiter(tahapan.jumlah_grand_parent(rekening)) %></td>
+                    <td></td>
+                  </tr>
+                  <% anggarans.each do |anggaran| %>
+                    <tr class="level-0 <%= 'higlighted' if anggaran.pagu_rankir_1.present? %>" data-controller="editable-table" >
+                      <td><%= rekening_anggaran(anggaran.kode_rek) %> </td>
+                      <td class="mx-auto">
+                        <div class="row">
+                          <div class="text-wrap inline col"><%= anggaran.uraian %></div>
+                        </div>
+                      </td>
+                      <td class="text-end pe-2" data-editable-table-target="penetapan" width="170">Rp. <%= number_with_delimiter(anggaran.anggaran_penetapan) %></td>
+                      <td class="d-none text-end pe-2" data-editable-table-target="form" width="170"></td>
+                      <td class="text-end pe-2" data-editable-table-target="anggaran">Rp. <%= number_with_delimiter(anggaran.jumlah) %></td>
+                      <td class="text-center bg-white">
+                        <%= link_to new_pagu_anggaran_path(
+                    anggaran: anggaran.id,
+                    kode_belanja: rekening,
+                    kode_sub_belanja: rekening_anggaran(anggaran.kode_rek),
+                    jenis: "Penetapan",
+                    sub_jenis: "SubBelanja",
+                    tahun: @sasaran.tahun
+                  ),
+                    remote: true, class: 'btn btn-outline-info',
+                    data: { action: 'editable-table#appendForm',
+                            editable_table_target: 'edit'
+                          } do %>
+                          <span class="fas fa-pencil"></span>
+                          <span>Edit Anggaran</span>
+                        <% end %>
+                        <button class="d-none btn btn-tertiary" data-editable-table-target="simpan" data-action="editable-table#simpan">Simpan</button>
+                        <button class="d-none btn btn-outline-danger" data-editable-table-target="cancel" data-action="editable-table#cancelForm">Batal</button>
+                        <%= link_to "Hapus Anggaran", sasaran_tahapan_anggaran_path(@sasaran, tahapan, anggaran), method: :delete, data: {confirm_swal: "Hapus Anggaran #{anggaran.uraian}", editable_table_target: 'hapus'}, class: "btn btn-outline-danger me-2"  %>
+                      </td>
+                    </tr>
+                  <% end %>
+                <% end %>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="2">Jumlah Anggaran Tahapan :</td>
+                  <td class="text-end" id="totalPenetapan">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan_penetapan) %></td>
+                  <td class="text-end">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %></td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<!-- SECTION - Table Anggaran -->
+<!-- !SECTION - End Table Anggaran -->
+<%= render 'shared/modal_template', modal_name: 'anggaran' %>
+<%= render 'modal_perhitungans' %>

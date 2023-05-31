@@ -202,11 +202,7 @@ Rails.application.routes.draw do
         post :otomatis
       end
       resources :aksis, path: "rencana_aksi"
-      resources :anggarans do
-        collection do
-          get :edit_penetapan
-        end
-      end
+      resources :anggarans
     end
 
     resources :permasalahans
@@ -231,6 +227,7 @@ Rails.application.routes.draw do
     member do
       get :show_subkegiatan
       get :edit_rankir_gelondong
+      get :edit_penetapan
     end
   end
 

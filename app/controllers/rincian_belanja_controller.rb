@@ -29,6 +29,11 @@ class RincianBelanjaController < ApplicationController
     @tahapans = @sasaran.tahapans.includes(%i[anggarans])
   end
 
+  def edit_penetapan
+    @sasaran = Sasaran.find(params[:id])
+    @tahapans = @sasaran.tahapans.includes(%i[anggarans])
+  end
+
   private
 
   def set_user
