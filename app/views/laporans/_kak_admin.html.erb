@@ -34,8 +34,8 @@
               <td class="border">
                 <% if subkegiatan %>
                   <div class="d-grid gap-2">
-                    <%= link_to "/acuan_kerja_new/#{subkegiatan.id}/#{@tahun}", target: "_blank", rel: "nofollow",
-                                            class: "btn btn-sm btn-info" do %>
+                    <%= link_to show_kak_laporan_path(subkegiatan), target: "_blank", rel: "nofollow",
+                    class: "btn btn-sm btn-info" do %>
                       <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
                       Tampilkan
                     <% end %>

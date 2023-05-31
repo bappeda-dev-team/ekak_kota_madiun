@@ -268,7 +268,7 @@ Rails.application.routes.draw do
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :kaks, path: "acuan_kerja"
-  get "/acuan_kerja_new/:id/:tahun", to: "program_kegiatans#new_kak_format"
+  # get "/acuan_kerja_new/:id/:tahun", to: "program_kegiatans#new_kak_format"
 
   resources :laporans, only: [:index] do
     collection do
@@ -282,6 +282,7 @@ Rails.application.routes.draw do
     member do
       get :pdf_kak
       get :pdf_rka
+      get :show_kak
     end
   end
   # laporan rka

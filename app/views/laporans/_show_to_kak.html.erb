@@ -1,0 +1,51 @@
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>Rincian Anggaran</h4>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="border">
+          <tr>
+            <th>no</th>
+            <th>Sasaran Kinerja</th>
+            <th>Tahun</th>
+            <th>Indikator</th>
+            <th>Target</th>
+            <th class="text-end">Pagu</th>
+            <th class="text-center">Sumber Dana</th>
+          </tr>
+        </thead>
+        <tbody class="border">
+          <% @sasarans.each.with_index(1) do |sasaran, i| %>
+            <tr>
+              <td rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
+              <td class="text-wrap" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
+              <td class="text-wrap" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.tahun %></td>
+              <td class="m-0 p-0" style="height: 0px !important; border-color: transparent;"></td>
+              <td class="m-0 p-0" style="height: 0px !important; border-color: transparent;"></td>
+              <td class="text-end border-1" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
+              <td class="text-wrap" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sumber_dana || '-' %></td>
+              <% sasaran.indikator_sasarans.each do |indikator| %>
+                <tr>
+                  <td class="text-wrap"><%= indikator.indikator_kinerja %></td>
+                  <td><%= "#{indikator.target} #{indikator.satuan}" %></td>
+                </tr>
+              <% end %>
+            </tr>
+          <% end %>
+          <tr class="border">
+            <% pagu = @sasarans.map(&:total_anggaran).compact.sum %>
+            <td colspan="5">Total Pagu</td>
+            <td class="text-end border-1">Rp. <%= number_with_delimiter(pagu) %></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

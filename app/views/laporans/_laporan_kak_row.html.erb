@@ -28,7 +28,7 @@
             <td class="text-gray-900 border-start border-end text-wrap" scope="row" rowspan="<%= row_pk %>" width="200px">Rp. <%= number_with_delimiter(kak.sasarans.where(tahun: tahun).map(&:total_anggaran).compact.sum) or 0 %></td>
             <td class="p-0 m-0" colspan="5" style="height: 0px !important; border-color: transparent;"></td>
             <td class="fw-bolder text-gray-500 text-center" rowspan="<%= row_pk %>">
-              <%= link_to "/acuan_kerja_new/#{kak.id}/#{tahun}", class: "m-3" do %>
+              <%= link_to show_kak_laporan_path(kak), class: "m-3" do %>
                 <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
               <% end %>
               <% if @sasarans.any? {|s| s.status == 'pengajuan' or s.status == 'disetujui' } %>

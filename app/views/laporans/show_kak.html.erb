@@ -1,0 +1,138 @@
+<h1>Kerangka Acuan Kerja</h1>
+<% unless @program_kegiatan.nil? %>
+  <div class="program-kegiatan">
+    <%= render 'detail_program_kegiatan', program_kegiatan: @program_kegiatan, tahun: @tahun %>
+    <hr>
+    <%= render 'show_to_kak' %>
+  </div>
+<% else %>
+  <!-- Form Tambah Program Kegiatan disini / atau lempar ke edit-->
+  <p class="alert alert-warning-text-dark">
+    Belum ada Program Kegiatan pada rincian ini
+  </p>
+<% end %>
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>A. Latar Belakang</h4>
+      </div>
+    </div>
+  </div>
+  <% @sasarans.each do |sas_dh|  %>
+    <%= render 'sasarans/dasar_hukum_dan_gambaran_umum', sasaran: sas_dh %>
+  <% end %>
+</div>
+<div class="card border-2 shadow mb-3 penerima-manfaat">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>B. Penerima Manfaat</h4>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <thead class="thead-light">
+        <tr class="border">
+          <th>Sasaran Kinerja</th>
+          <th>Penerima Manfaat</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @sasarans.each do |manfaat| %>
+          <tr class="border">
+            <td class="text-wrap"><%= manfaat.sasaran_kinerja %></td>
+            <td class="text-wrap"><%= manfaat.penerima_manfaat || '-' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="card border-2 shadow mb-3 tahapan_pelaksanaan">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>C. Strategi Pencapaian Keluaran</h4>
+      </div>
+    </div>
+  </div>
+  <% @sasarans.each do |strategi| %>
+    <%= render 'sasarans/tahapan_pelaksanaan', sasaran: strategi %>
+  <% end %>
+</div>
+<div class="card border-2 shadow mb-3 kurun_waktu">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>D. Kurun Waktu Pencapaian Keluaran</h4>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <thead class="thead-light">
+        <tr class="border">
+          <th>Sasaran Kinerja</th>
+          <th>Waktu Dibutuhkan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @sasarans.each do |kurun_waktu| %>
+          <tr class="border">
+            <td class="text-wrap"><%= kurun_waktu.sasaran_kinerja %></td>
+            <td class="text-wrap"><%= kurun_waktu.waktu_total %> Bulan</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="card border-2 shadow mb-3 kurun_waktu">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>Tematik</h4>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <ol>
+      <% @sasarans.each.each do |sasaran| %>
+        <% sasaran.subkegiatan_tematiks.each do |tematik| %>
+        <li><%= tematik.nama_tematik %></li>
+      <% end %>
+    <% end %>
+  </ol>
+</div>
+</div>
+<div class="card border-2 shadow mb-3 kurun_waktu">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4>Usulan</h4>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <thead class="thead-light">
+        <tr class="border">
+          <th>Sasaran Kinerja</th>
+          <th>Usulan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @sasarans.each do |sasaran| %>
+          <% sasaran.usulans.each do |usulan| %>
+            <tr class="border">
+              <td class="text-wrap"><%= usulan.sasaran.sasaran_kinerja || '-' %></td>
+              <td class="text-wrap"><%= usulan.usulanable_type %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
