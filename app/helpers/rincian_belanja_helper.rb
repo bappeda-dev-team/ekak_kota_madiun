@@ -30,6 +30,6 @@ module RincianBelanjaHelper
   end
 
   def anggaran_gaji?(anggaran)
-    anggaran.include?("gaji") or anggaran.include?("tunjangan") or anggaran.include?("penghasilan") or anggaran.include?("honor")
+    anggaran.include?("gaji") or anggaran.include?("tunjangan") or anggaran.include?("penghasilan") or anggaran.include?("honor") or anggaran.include?("iuran")
   end
 end
