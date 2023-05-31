@@ -149,8 +149,8 @@ class User < ApplicationRecord
   end
 
   def program_sasarans_tahun(tahun)
-    strategis.where('tahun ILIKE ?', "%#{tahun}%")
-             .to_h { |str| [str.sasaran, str.subkegiatans_sasarans] }
+    sasarans_tahun(tahun)
+      .to_h { |str| [str, str.strategi.subkegiatans_sasarans] }
   end
 
   def mandatoris_tahun(tahun)
@@ -263,7 +263,11 @@ class User < ApplicationRecord
   end
 
   def eselon_atas?
-    eselon_user == 'eselon_3' || eselon_user == 'eselon_2b'
+    if pegawai_puskesmas? || pegawai_rsud?
+      eselon_user == 'eselon_2b'
+    else
+      eselon_user == 'eselon_3' || eselon_user == 'eselon_2b'
+    end
   end
 
   def role_asn

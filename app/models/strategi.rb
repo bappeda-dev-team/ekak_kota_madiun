@@ -170,6 +170,10 @@ class Strategi < ApplicationRecord
     operational_objectives.map(&:sasaran).group_by(&:program_kegiatan)
   end
 
+  def sasaran_strategi
+    operational_objectives.map(&:sasaran)
+  end
+
   def rekap_program_opd
     tactical_objectives.map { |aa| aa.programs_strategi.keys }.flatten
   end
