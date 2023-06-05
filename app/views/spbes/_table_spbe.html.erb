@@ -30,11 +30,10 @@
         </thead>
         <tbody>
           <% @spbes.each.with_index(1) do |(program, spbes), i| %>
-            <% rowspan_spbe = spbes.map { |spb| spb.sasaran.operational_objectives.map{ |ss| rowspan_sasaran(ss) } }.flatten.inject(:+) + 4 %>
+            <% rowspan_spbe = rowspan_spbe(spbes) %>
             <tr>
               <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_spbe %>"><%= i %></td>
               <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_spbe %>"><%= program.nama_program %></td>
-              <td class="p-0 m-0" colspan="5"></td>
             </tr>
             <% spbes.each do |spbe| %>
               <% sasaran = spbe.sasaran %>
@@ -47,7 +46,6 @@
                   <%= spbe.nama_aplikasi %>
                 </td>
                 <td class="border text-wrap" rowspan="<%= rowspan_sas %>"><%= sasaran.sasaran_kinerja %></td>
-                <td class="p-0 m-0" colspan="5"></td>
               </tr>
               <% sasaran.operational_objectives.map(&:sasaran).each do |sas_kasi| %>
                 <tr>
