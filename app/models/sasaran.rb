@@ -464,4 +464,8 @@ class Sasaran < ApplicationRecord
   def operational_objectives
     strategi.operational_objectives
   end
+
+  def map_sasaran_atasan
+    strategi.strategi_eselon_tiga.sasaran
+  end
 end

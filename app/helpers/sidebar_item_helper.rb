@@ -198,6 +198,13 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
         id_target: 'renja-items',
         collapse_items: collapsed_renja_items,
         icon: 'fas fa-tasks', identifier: 'renja'
+      },
+      {
+        title: 'Tematik', href: "#",
+        multi: true, collections: tematik_items,
+        id_target: 'tematik-items',
+        collapse_items: collapsed_tematik_items,
+        icon: 'fas fa-tasks', identifier: 'tematik'
       }
     ]
   end
@@ -221,6 +228,16 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
 
   def collapsed_renja_items
     collapse_class('(\brenja/ranwal|\brenja/rankir|\brenja/penetapan)')
+  end
+
+  def tematik_items
+    [
+      { title: 'SPBE', href: spbe_laporans_path, identifier: 'laporans/spbe' }
+    ]
+  end
+
+  def collapsed_tematik_items
+    collapse_class('(\blaporans/spbe)')
   end
 
   def usulan_users

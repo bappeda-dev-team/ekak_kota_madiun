@@ -76,6 +76,12 @@ class LaporansController < ApplicationController
     end
   end
 
+  def spbe
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_tema = 'SPBE'
+    @spbe = opd.programs_with_strategi_tahun(@tahun)
+  end
+
   private
 
   def set_default_attr

@@ -250,4 +250,10 @@ class Opd < ApplicationRecord
       indikator_staff: indikator_operational_2_tahun(tahun).count
     }
   end
+
+  def programs_with_strategi_tahun(tahun)
+    program_kegiatans
+      .programs
+      .map { |program| { program => program.sasarans_program(tahun) } }
+  end
 end
