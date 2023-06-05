@@ -12,8 +12,7 @@
         <thead class="thead-light">
           <tr>
             <th class="border text-center" scope="col">No</th>
-            <th class="border text-center" scope="col">Pemilik Rencana</th>
-            <th class="border text-center" scope="col">Rencana Kinerja</th>
+            <th class="border text-center" scope="col" colspan="2">Program / Rencana Kinerja</th>
             <th class="border text-center" scope="col">Indikator</th>
             <th class="border text-center" scope="col">Target</th>
             <th class="border text-center" scope="col">Satuan</th>
@@ -25,37 +24,33 @@
           <% @spbe.each.with_index(1) do |programs, i| %>
             <% programs.each do |program, sasarans| %>
               <tr>
-                <td class="border text-wrap fw-bolder text-gray-900" colspan="8">
-                  KODE PROGRAM: <%= program&.kode_program || 'Belum terisi' %>
-                  |
-                  NAMA PROGRAM: <%= program&.nama_program || 'Belum terisi' %>
-                  |
-                  KODE SUB: <%= program&.kode_sub_giat || 'Belum terisi' %>
-                </td>
-              </tr>
-              <tr>
-                <td class="border text-wrap fw-bolder text-gray-900"><%= i %></td>
+                <td class="border text-wrap fw-bolder text-gray-900 text-center"><%= i %></td>
                 <td class="border text-wrap fw-bolder text-gray-900" colspan="2">Program: <%= program.nama_program %></td>
-                <%= indikator_sub(program, @tahun, @kode_opd) %>
+                <%= indikator_prg(program, @tahun, @kode_opd) %>
                 <td class="border text-wrap fw-bolder text-gray-900">Rp. -</td>
                 <td class="border">
-                  ACTION
-                </td>
-              </tr>
-              <tr>
-                <td class="border text-wrap fw-bolder text-gray-900" colspan="8">
-                  Jenis Pelayanan: XXX
+                  <div class="d-grid gap-2">
+                    <%= link_to new_spbe_path(program_id: program.id), target: "_blank", rel: "nofollow",
+                    class: "btn btn-sm btn-outline-info" do %>
+                      <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
+                      Buat SPBE
+                    <% end %>
+                  </div>
                 </td>
               </tr>
               <% sasarans.each.with_index(1) do |(sasaran, operationals), ii| %>
                 <tr>
                   <td class="border text-wrap fw-bolder text-gray-900" colspan="8">
-                    SASARAN TACTICAL
+                    Jenis Pelayanan: Konsultasi Pelayanan P
                   </td>
                 </tr>
                 <tr>
-                  <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= "#{i}.#{ii}" %></td>
-                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
+                  <td class="border fw-bolder" rowspan="<%= rowspan_sasaran(sasaran) %>">
+                     Aplikasi:
+                  </td>
+                  <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sasaran(sasaran) %>">
+                     E-KAK
+                  </td>
                   <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
                   <%= indikator_sasaran(sasaran) %>
                   <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
@@ -73,15 +68,14 @@
                     <td class="border text-wrap"><%= indikator_s.satuan %></td>
                   </tr>
                 <% end %>
-                <tr>
-                  <td class="border text-wrap fw-bolder text-gray-900" colspan="8">
-                    SASARAN KINERJA
-                  </td>
-                </tr>
                 <% operationals.each.with_index(1) do |operational, iii| %>
                   <tr>
-                    <td class="border" rowspan="<%= rowspan_sasaran(operational) %>"><%= "#{i}.#{ii}.#{iii}" %></td>
-                    <td class="border text-wrap" rowspan="<%= rowspan_sasaran(operational) %>"><%= operational.nama_pemilik %></td>
+                    <td class="border fw-bolder" rowspan="<%= rowspan_sasaran(operational) %>">
+                      Kebutuhan SPBE:
+                    </td>
+                    <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sasaran(operational) %>">
+                      <%= ["Rancangan Aplikasi", "Sarpras", "SDM", "Jaringan"].sample %>
+                    </td>
                     <td class="border text-wrap" rowspan="<%= rowspan_sasaran(operational) %>"><%= operational.sasaran_kinerja %></td>
                     <%= indikator_sasaran(operational) %>
                     <td class="border" rowspan="<%= rowspan_sasaran(operational) %>">Rp. <%= number_with_delimiter(operational.total_anggaran) %></td>
@@ -101,7 +95,12 @@
                   <% end %>
                   <tr>
                     <td class="border text-wrap fw-bolder text-gray-900" colspan="8">
-                      KEBUTUHAN SPBE: Sarpras
+                      Detail Kebutuhan: .......
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="border text-wrap fw-bolder text-gray-900" colspan="8">
+                      Detail Sasaran Kinerja SPBE: .......
                     </td>
                   </tr>
                 <% end %>

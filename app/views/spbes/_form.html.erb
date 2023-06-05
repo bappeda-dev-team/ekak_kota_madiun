@@ -1,0 +1,35 @@
+<%= form_with(model: [@spbe], local: false) do |form| %>
+  <% if spbe.errors.any? %>
+    <div id="error_explanation">
+      <h2>Tidak dapat menyimpan <%= pluralize(spbe.errors.count, "error") %></h2>
+      <ul>
+        <% spbe.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="card">
+    <%= form.hidden_field :kode_opd, readonly: true, value: @kode_opd %>
+    <%= form.hidden_field :kode_program, readonly: true, value: @program.kode_program %>
+    <%= form.hidden_field :program_kegiatan_id, readonly: true, value: @program.id %>
+      <div class="card-body">
+          <%= form.select(:strategi_ref_id, @sasaran_eselon3.pluck(:sasaran_kinerja, :id), {},
+        {data: { controller: 'dropdown',
+                "placeholder": "Pilih Sasaran Tactical"}} )%>
+      </div>
+    <div class="card-body">
+      <div class="field">
+        <%= form.label :jenis_pelayanan, {class: "form-label"} %>
+        <%= form.text_area :jenis_pelayanan, {class: "form-control "}%>
+      </div>
+      <div class="field">
+        <%= form.label :nama_aplikasi, {class: "form-label"} %>
+        <%= form.text_field :nama_aplikasi, {class: "form-control "}%>
+      </div>
+      <div class="actions">
+        <%= form.submit %>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -9,9 +9,18 @@ module LaporansHelper
   def indikator_sub(subkegiatan, tahun, kode_opd)
     indikator = subkegiatan&.indikator_subkegiatan_tahun(tahun, kode_opd)
     "
-      <td class='border text-wrap'>#{indikator&.dig(:indikator)}</td>
-      <td class='border text-wrap'>#{indikator&.dig(:target)}</td>
-      <td class='border text-wrap'>#{indikator&.dig(:satuan)}</td>
+      <td class='border text-wrap fw-bolder'>#{indikator&.dig(:indikator)}</td>
+      <td class='border text-wrap fw-bolder'>#{indikator&.dig(:target)}</td>
+      <td class='border text-wrap fw-bolder'>#{indikator&.dig(:satuan)}</td>
+    ".html_safe
+  end
+
+  def indikator_prg(program, tahun, kode_opd)
+    indikator = program&.indikator_program_tahun(tahun, kode_opd)
+    "
+      <td class='border text-wrap fw-bolder'>#{indikator&.dig(:indikator)}</td>
+      <td class='border text-wrap fw-bolder'>#{indikator&.dig(:target)}</td>
+      <td class='border text-wrap fw-bolder'>#{indikator&.dig(:satuan)}</td>
     ".html_safe
   end
 

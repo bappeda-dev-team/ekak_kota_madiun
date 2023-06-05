@@ -1,0 +1,87 @@
+<div class="card border-0 shadow" id="user_filter">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">Laporan SPBE Tahun <%= @tahun %></h2>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table align-items-center table-bordered">
+        <thead class="thead-light">
+          <tr>
+            <th class="border text-center" scope="col">No</th>
+            <th class="border text-center" scope="col">Program</th>
+            <th class="border text-center" scope="col">Jenis Pelayanan</th>
+            <th class="border text-center" scope="col">Aplikasi</th>
+            <th class="border text-center" scope="col">Sasaran Kinerja Tactical</th>
+            <th class="border text-center" scope="col">Kebutuhan SPBE</th>
+            <th class="border text-center" scope="col">Detail Kebutuhan</th>
+            <th class="border text-center" scope="col">Sasaran Kinerja</th>
+            <th class="border text-center" scope="col">Detail Sasaran Kinerja</th>
+            <th class="border text-center" scope="col">Indikator</th>
+            <th class="border text-center" scope="col">Target</th>
+            <th class="border text-center" scope="col">Satuan</th>
+            <th class="border text-center" scope="col">Anggaran</th>
+            <th class="border text-center" scope="col">Keterangan</th>
+            <th class="border text-center" scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @spbes.each.with_index(1) do |(program, spbes), i| %>
+            <% rowspan_spbe = spbes.map { |spb| spb.sasaran.operational_objectives.map{ |ss| rowspan_sasaran(ss) } }.flatten.inject(:+) + 4 %>
+            <tr>
+              <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_spbe %>"><%= i %></td>
+              <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_spbe %>"><%= program.nama_program %></td>
+              <td class="p-0 m-0" colspan="5"></td>
+            </tr>
+            <% spbes.each do |spbe| %>
+              <% sasaran = spbe.sasaran %>
+              <% rowspan_sas = sasaran.operational_objectives.size + 1 %>
+              <tr>
+                <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
+                  <%= spbe.jenis_pelayanan %>
+                </td>
+                <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
+                  <%= spbe.nama_aplikasi %>
+                </td>
+                <td class="border text-wrap" rowspan="<%= rowspan_sas %>"><%= sasaran.sasaran_kinerja %></td>
+                <td class="p-0 m-0" colspan="5"></td>
+              </tr>
+              <% sasaran.operational_objectives.map(&:sasaran).each do |sas_kasi| %>
+                <tr>
+                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>">KEBUTUHAN</td>
+                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>">DETAIL KEBUTUHAN</td>
+                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= sas_kasi.sasaran_kinerja %></td>
+                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>">DETAIL SASARAN KINERJA</td>
+                  <%= indikator_sasaran(sasaran) %>
+                  <td class="border" rowspan="<%= rowspan_sasaran(sas_kasi) %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
+                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>">KETERANGAN</td>
+                  <td class="border" rowspan="<%= rowspan_sasaran(sas_kasi) %>">
+                    <div class="row justify-content-center w-100">
+                      <div class="d-grid gap-2">
+                        <%= link_to edit_spbe_path(spbe,program_id: program.id), target: "_blank", rel: "nofollow",
+                    class: "btn btn-sm btn-outline-info" do %>
+                          <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
+                          Edit SPBE
+                        <% end %>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <% sas_kasi.indikator_sasarans.drop(1).each do |indikator_s| %>
+                  <tr>
+                    <td class="border text-wrap"><%= indikator_s.indikator_kinerja %></td>
+                    <td class="border text-wrap"><%= indikator_s.target %></td>
+                    <td class="border text-wrap"><%= indikator_s.satuan %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
