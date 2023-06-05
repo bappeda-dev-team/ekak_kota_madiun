@@ -1,0 +1,2 @@
+class SpbeRinciansController < ApplicationController
+end

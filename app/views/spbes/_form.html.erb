@@ -13,11 +13,12 @@
     <%= form.hidden_field :kode_opd, readonly: true, value: @kode_opd %>
     <%= form.hidden_field :kode_program, readonly: true, value: @program.kode_program %>
     <%= form.hidden_field :program_kegiatan_id, readonly: true, value: @program.id %>
-      <div class="card-body">
-          <%= form.select(:strategi_ref_id, @sasaran_eselon3.pluck(:sasaran_kinerja, :id), {},
+    <div class="card-body">
+      <%= form.label :sasaran_tactical, {class: "form-label"} %>
+      <%= form.select(:strategi_ref_id, @sasaran_eselon3.pluck(:sasaran_kinerja, :id), {},
         {data: { controller: 'dropdown',
                 "placeholder": "Pilih Sasaran Tactical"}} )%>
-      </div>
+    </div>
     <div class="card-body">
       <div class="field">
         <%= form.label :jenis_pelayanan, {class: "form-label"} %>
@@ -27,6 +28,14 @@
         <%= form.label :nama_aplikasi, {class: "form-label"} %>
         <%= form.text_field :nama_aplikasi, {class: "form-control "}%>
       </div>
+      <h5>Kebutuhan SPBE:</h5>
+      <hr/>
+      <div class="field" id="spbe-rincians">
+        <%= form.fields_for :spbe_rincians do |rincian| %>
+          <%= render 'spbe_rincian_fields', form: rincian %>
+        <% end %>
+      </div>
+      <%= link_to_add_nested(form, :spbe_rincians, '#spbe-rincians', link_classes: 'btn btn-primary btn-sm', link_text: 'Tambah Rincian') %>
       <div class="actions">
         <%= form.submit %>
       </div>

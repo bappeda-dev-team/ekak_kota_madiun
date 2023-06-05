@@ -17,6 +17,9 @@ class Spbe < ApplicationRecord
 
   has_one :sasaran, primary_key: :strategi_ref_id, foreign_key: :id
 
+  has_many :spbe_rincians
+  accepts_nested_attributes_for :spbe_rincians, reject_if: :all_blank, allow_destroy: true
+
   def nama_program
     program_kegiatan.nama_program
   end

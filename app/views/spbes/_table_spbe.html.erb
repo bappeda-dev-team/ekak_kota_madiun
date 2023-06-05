@@ -30,14 +30,12 @@
         </thead>
         <tbody>
           <% @spbes.each.with_index(1) do |(program, spbes), i| %>
-            <% rowspan_spbe = rowspan_spbe(spbes) %>
             <tr>
-              <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_spbe %>"><%= i %></td>
-              <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_spbe %>"><%= program.nama_program %></td>
+              <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_spbe(spbes) %>"><%= i %></td>
+              <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_spbe(spbes) %>"><%= program.nama_program %></td>
             </tr>
             <% spbes.each do |spbe| %>
-              <% sasaran = spbe.sasaran %>
-              <% rowspan_sas = sasaran.operational_objectives.size + 1 %>
+              <% rowspan_sas = spbe.spbe_rincians.length + 1 %>
               <tr>
                 <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
                   <%= spbe.jenis_pelayanan %>
@@ -45,26 +43,25 @@
                 <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
                   <%= spbe.nama_aplikasi %>
                 </td>
-                <td class="border text-wrap" rowspan="<%= rowspan_sas %>"><%= sasaran.sasaran_kinerja %></td>
+                <td class="border text-wrap" rowspan="<%= rowspan_sas %>"><%= spbe.sasaran.sasaran_kinerja %></td>
               </tr>
-              <% sasaran.operational_objectives.map(&:sasaran).each do |sas_kasi| %>
+              <% spbe.spbe_rincians.drop(1).each do |rincian| %>
+                <% sas_kasi = rincian.sasaran %>
                 <tr>
-                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>">KEBUTUHAN</td>
-                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>">DETAIL KEBUTUHAN</td>
+                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.kebutuhan_spbe %></td>
+                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.detail_kebutuhan %></td>
                   <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= sas_kasi.sasaran_kinerja %></td>
-                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>">DETAIL SASARAN KINERJA</td>
-                  <%= indikator_sasaran(sasaran) %>
-                  <td class="border" rowspan="<%= rowspan_sasaran(sas_kasi) %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
-                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>">KETERANGAN</td>
+                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.detail_sasaran_kinerja %></td>
+                  <%= indikator_sasaran(sas_kasi) %>
+                  <td class="border" rowspan="<%= rowspan_sasaran(sas_kasi) %>">Rp. <%= number_with_delimiter(sas_kasi.total_anggaran) %></td>
+                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.keterangan %></td>
                   <td class="border" rowspan="<%= rowspan_sasaran(sas_kasi) %>">
-                    <div class="row justify-content-center w-100">
-                      <div class="d-grid gap-2">
-                        <%= link_to edit_spbe_path(spbe,program_id: program.id), target: "_blank", rel: "nofollow",
-                    class: "btn btn-sm btn-outline-info" do %>
-                          <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
-                          Edit SPBE
-                        <% end %>
-                      </div>
+                    <div class="d-grid gap-2">
+                      <%= link_to edit_spbe_path(spbe,program_id: program.id), target: "_blank", rel: "nofollow",
+                class: "btn btn-sm btn-outline-info" do %>
+                        <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
+                        Edit SPBE
+                      <% end %>
                     </div>
                   </td>
                 </tr>

@@ -10,10 +10,12 @@ class SpbesController < ApplicationController
   def new
     @spbe = Spbe.new
     @sasaran_eselon3 = @program.program_sasaran(@tahun).map { |s| s.map_sasaran_atasan }.uniq
+    @sasaran_kinerja = @sasaran_eselon3.map { |s| s.strategi.operational_objectives.map(&:sasaran) }.flatten
   end
 
   def edit
     @sasaran_eselon3 = @program.program_sasaran(@tahun).map { |s| s.map_sasaran_atasan }.uniq
+    @sasaran_kinerja = @sasaran_eselon3.map { |s| s.strategi.operational_objectives.map(&:sasaran) }.flatten
   end
 
   def create
@@ -21,7 +23,17 @@ class SpbesController < ApplicationController
 
     respond_to do |format|
       if @spbe.save
-        format.html { redirect_to spbe_laporans_path, notice: "Spbe dibuat" }
+        format.html { redirect_to spbes_path, notice: "Spbe dibuat" }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update
+    respond_to do |format|
+      if @spbe.update(spbe_params)
+        format.html { redirect_to spbes_path, notice: "Spbe dibuat" }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -45,7 +57,15 @@ class SpbesController < ApplicationController
   end
 
   def spbe_params
-    params.require(:spbe).permit(:jenis_pelayanan, :nama_aplikasi, :strategi_ref_id,
-                                 :kode_program, :kode_opd, :program_kegiatan_id)
+    params.require(:spbe).permit(:jenis_pelayanan, :nama_aplikasi,
+                                 :strategi_ref_id, :kode_program,
+                                 :kode_opd, :program_kegiatan_id,
+                                 spbe_rincians_attributes: spbe_rincians_params)
+  end
+
+  def spbe_rincians_params
+    %i[detail_kebutuhan detail_sasaran_kinerja
+       keterangan id_rencana kebutuhan_spbe
+       kode_opd kode_program _destroy]
   end
 end
