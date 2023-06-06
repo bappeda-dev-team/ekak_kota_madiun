@@ -133,6 +133,22 @@ class Opd < ApplicationRecord
     strategis.where(role: "staff")
   end
 
+  def sasaran_eselon2
+    strategi_eselon2.map(&:sasaran)
+  end
+
+  def sasaran_eselon3
+    strategi_eselon3
+      .joins("INNER JOIN sasarans ON cast (sasarans.strategi_id as INT) = strategis.id")
+      .map(&:sasaran)
+  end
+
+  def sasaran_eselon4
+    strategi_eselon4.
+      .joins("INNER JOIN sasarans ON cast (sasarans.strategi_id as INT) = strategis.id")
+      .map(&:sasaran)
+  end
+
   def eselon_dua_opd
     users.with_role("eselon_2").first
   end

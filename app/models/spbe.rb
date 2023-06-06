@@ -13,11 +13,11 @@
 #  strategi_ref_id     :string
 #
 class Spbe < ApplicationRecord
-  belongs_to :program_kegiatan
+  belongs_to :program_kegiatan, -> { order "kode_program" }
 
-  has_one :sasaran, primary_key: :strategi_ref_id, foreign_key: :id
+  has_one :sasaran, -> { order "nip_asn ASC" }, primary_key: :strategi_ref_id, foreign_key: :id
 
-  has_many :spbe_rincians
+  has_many :spbe_rincians, -> { order "id ASC" }
   accepts_nested_attributes_for :spbe_rincians, reject_if: :all_blank, allow_destroy: true
 
   def nama_program

@@ -468,4 +468,8 @@ class Sasaran < ApplicationRecord
   def map_sasaran_atasan
     strategi.strategi_eselon_tiga.sasaran
   end
+
+  def sasaran_dan_indikator
+    "#{sasaran_kinerja} - indikator: #{indikator_sasarans.pluck(:indikator_kinerja).flatten}"
+  end
 end

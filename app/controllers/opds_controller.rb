@@ -16,6 +16,11 @@ class OpdsController < ApplicationController
     @opds = Opd.all.includes([:lembaga])
   end
 
+  def legit_opd
+    nama_opd = params[:q]
+    @opds = Opd.where.not(kode_unik_opd: nil).where("nama_opd ILIKE ?", "%#{nama_opd}%")
+  end
+
   def show; end
 
   def new
@@ -132,6 +137,26 @@ class OpdsController < ApplicationController
         format.html { render :buat_strategi, error: 'Terjadi kesalahan' }
       end
     end
+  end
+
+  def sasaran_tactical
+    opd = Opd.find(params[:id])
+    sasaran_kinerja = params[:q]
+    @sasarans = opd.strategi_eselon3
+                   .joins("INNER JOIN sasarans ON cast (sasarans.strategi_id as INT) = strategis.id")
+                   .where("sasarans.sasaran_kinerja ILIKE ?", "%#{sasaran_kinerja}%")
+                   .map(&:sasaran)
+                   .uniq!(&:sasaran_kinerja)
+  end
+
+  def sasaran_operational
+    opd = Opd.find(params[:id])
+    nama_opd = params[:q]
+    @sasarans = opd.strategi_eselon4
+                   .joins("INNER JOIN sasarans ON cast (sasarans.strategi_id as INT) = strategis.id")
+                   .where("sasarans.sasaran_kinerja ILIKE ?", "%#{sasaran_kinerja}%")
+                   .map(&:sasaran)
+                   .uniq!(&:sasaran_kinerja)
   end
 
   private
