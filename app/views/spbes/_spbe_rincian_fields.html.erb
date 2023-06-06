@@ -1,5 +1,4 @@
 <fieldset class="mb-5">
-  <%= form.hidden_field :kode_opd, readonly: true, value: @kode_opd %>
   <%= form.hidden_field :kode_program, readonly: true, value: @program.kode_program %>
   <div class="field">
     <%= form.label :kebutuhan_spbe, { class: "form-label" } %>
@@ -11,11 +10,25 @@
     <%= form.text_area :detail_kebutuhan, { class: "form-control" } %>
   </div>
   <div class="field">
+    <%= form.label :opd, { class: "form-label" } %>
+    <%= form.select :kode_opd, [], {include_blank: true},
+        { data: { placeholder: "Pilih Sasaran Operational",
+                  controller: 'dropdown',
+                  dropdown_jenis_value: 'extra',
+                  dropdown_url_value: legit_opd_opds_path(@opd, :json),
+                }
+        } %>
+  </div>
+  <div class="field">
     <%= form.label :sasaran_kinerja, { class: "form-label" } %>
-    <%= form.select(:id_rencana, @sasaran_kinerja.pluck(:sasaran_kinerja, :id),
-        {include_blank: true},
-        {data: { controller: 'dropdown',
-                "placeholder": "Pilih Sasaran Kinerja"}} )%>
+    <%= form.select :id_rencana, [], {include_blank: true},
+        { data: { placeholder: "Pilih Sasaran Operational",
+                  controller: 'dropdown',
+                  dropdown_jenis_value: 'ajax',
+                  dropdown_url_value: sasaran_operational_opds_path(format: :json),
+                  action: 'change-select@document->dropdown#chain_value_to_target'
+                }
+        } %>
   </div>
   <div class="field">
     <%= form.label :detail_sasaran_kinerja, { class: "form-label" } %>

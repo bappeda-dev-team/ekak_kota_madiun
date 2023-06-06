@@ -144,7 +144,7 @@ class Opd < ApplicationRecord
   end
 
   def sasaran_eselon4
-    strategi_eselon4.
+    strategi_eselon4
       .joins("INNER JOIN sasarans ON cast (sasarans.strategi_id as INT) = strategis.id")
       .map(&:sasaran)
   end

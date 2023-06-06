@@ -297,12 +297,12 @@ Rails.application.routes.draw do
       get :info
       get :kotak_usulan
       get :legit_opd
+      get :sasaran_tactical
+      get :sasaran_operational
     end
     member do
       get :buat_strategi
       post :simpan_strategi
-      get :sasaran_tactical
-      get :sasaran_operational
     end
   end
   resources :program_kegiatans do

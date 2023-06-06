@@ -19,7 +19,8 @@
         { data: { placeholder: "Pilih Sasaran Tactical",
                   controller: 'dropdown',
                   dropdown_jenis_value: 'ajax',
-                  dropdown_url_value: sasaran_tactical_opd_path(@opd, :json),
+                  dropdown_kode_opd_value: @kode_opd,
+                  dropdown_url_value: sasaran_tactical_opds_path(format: :json),
                 }
         } %>
     </div>
