@@ -2305,6 +2305,81 @@ ALTER SEQUENCE public.skalas_id_seq OWNED BY public.skalas.id;
 
 
 --
+-- Name: spbe_rincians; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.spbe_rincians (
+    id bigint NOT NULL,
+    kebutuhan_spbe character varying,
+    detail_kebutuhan character varying,
+    detail_sasaran_kinerja character varying,
+    keterangan character varying,
+    kode_opd character varying,
+    kode_program character varying,
+    id_rencana character varying,
+    strategi_ref_id character varying,
+    spbe_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: spbe_rincians_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.spbe_rincians_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: spbe_rincians_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.spbe_rincians_id_seq OWNED BY public.spbe_rincians.id;
+
+
+--
+-- Name: spbes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.spbes (
+    id bigint NOT NULL,
+    jenis_pelayanan character varying,
+    nama_aplikasi character varying,
+    kode_program character varying,
+    kode_opd character varying,
+    strategi_ref_id character varying,
+    program_kegiatan_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: spbes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.spbes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: spbes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.spbes_id_seq OWNED BY public.spbes.id;
+
+
+--
 -- Name: strategi_keluarans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3175,6 +3250,20 @@ ALTER TABLE ONLY public.skalas ALTER COLUMN id SET DEFAULT nextval('public.skala
 
 
 --
+-- Name: spbe_rincians id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.spbe_rincians ALTER COLUMN id SET DEFAULT nextval('public.spbe_rincians_id_seq'::regclass);
+
+
+--
+-- Name: spbes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.spbes ALTER COLUMN id SET DEFAULT nextval('public.spbes_id_seq'::regclass);
+
+
+--
 -- Name: strategi_keluarans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3719,6 +3808,22 @@ ALTER TABLE ONLY public.schema_migrations
 
 ALTER TABLE ONLY public.skalas
     ADD CONSTRAINT skalas_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: spbe_rincians spbe_rincians_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.spbe_rincians
+    ADD CONSTRAINT spbe_rincians_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: spbes spbes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.spbes
+    ADD CONSTRAINT spbes_pkey PRIMARY KEY (id);
 
 
 --
@@ -4683,6 +4788,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230405073638'),
 ('20230413030428'),
 ('20230429111203'),
-('20230502010013');
+('20230502010013'),
+('20230605061438'),
+('20230605223850');
 
 

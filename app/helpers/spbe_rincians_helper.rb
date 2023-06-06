@@ -1,0 +1,2 @@
+module SpbeRinciansHelper
+end

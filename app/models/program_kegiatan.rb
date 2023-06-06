@@ -455,13 +455,17 @@ class ProgramKegiatan < ApplicationRecord
             .dengan_strategi
   end
 
-  def sasarans_program(tahun)
+  def program_sasaran(tahun)
     Sasaran.includes(%i[indikator_sasarans strategi user])
            .joins(:program_kegiatan)
            .where("sasarans.tahun ILIKE ?", "%#{tahun}%")
            .where(program_kegiatan: { kode_program: kode_program })
            .dengan_strategi
-           .group_by(&:map_sasaran_atasan)
+  end
+
+  def sasarans_program(tahun)
+    program_sasaran(tahun)
+      .group_by(&:map_sasaran_atasan)
   end
 
   def detail_anggaran(tahun)

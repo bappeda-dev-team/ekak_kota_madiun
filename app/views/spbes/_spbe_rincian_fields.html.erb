@@ -1,0 +1,29 @@
+<fieldset class="mb-5">
+  <%= form.hidden_field :kode_opd, readonly: true, value: @kode_opd %>
+  <%= form.hidden_field :kode_program, readonly: true, value: @program.kode_program %>
+  <div class="field">
+    <%= form.label :kebutuhan_spbe, { class: "form-label" } %>
+    <%= form.select(:kebutuhan_spbe, (['Rancangan Aplikasi','Sarpras', 'Jaringan', 'SDM']), {},
+      {data: { controller: 'dropdown' }}) %>
+  </div>
+  <div class="field">
+    <%= form.label :detail_kebutuhan, { class: "form-label" } %>
+    <%= form.text_area :detail_kebutuhan, { class: "form-control" } %>
+  </div>
+  <div class="field">
+    <%= form.label :sasaran_kinerja, { class: "form-label" } %>
+    <%= form.select(:id_rencana, @sasaran_kinerja.pluck(:sasaran_kinerja, :id),
+        {include_blank: true},
+        {data: { controller: 'dropdown',
+                "placeholder": "Pilih Sasaran Kinerja"}} )%>
+  </div>
+  <div class="field">
+    <%= form.label :detail_sasaran_kinerja, { class: "form-label" } %>
+    <%= form.text_area :detail_sasaran_kinerja, { class: "form-control" } %>
+  </div>
+  <div class="field">
+    <%= form.label :keterangan, { class: "form-label" } %>
+    <%= form.text_field :keterangan, { class: "form-control" } %>
+  </div>
+  <%= link_to_remove_nested(form, link_text: 'Hapus Rincian', link_classes: 'btn btn-outline-danger') %>
+</fieldset>

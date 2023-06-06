@@ -42,6 +42,10 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
       {
         title: 'Kelompok Anggaran', href: kelompok_anggarans_path,
         icon: 'fas fa-folder', identifier: 'kelompok_anggaran'
+      },
+      {
+        title: 'SPBE', href: spbes_path,
+        icon: 'fas fa-tablet-alt', identifier: 'spbe'
       }
     ]
   end
@@ -54,6 +58,7 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
                    '\banggaran_hspks|\brekenings|' \
                    '\blist_all|\btematiks|' \
                    '\bkelompok_anggarans|' \
+                   '\bspbes|' \
                    '\badminsasarans)')
   end
 
@@ -198,13 +203,6 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
         id_target: 'renja-items',
         collapse_items: collapsed_renja_items,
         icon: 'fas fa-tasks', identifier: 'renja'
-      },
-      {
-        title: 'Tematik', href: "#",
-        multi: true, collections: tematik_items,
-        id_target: 'tematik-items',
-        collapse_items: collapsed_tematik_items,
-        icon: 'fas fa-tasks', identifier: 'tematik'
       }
     ]
   end
