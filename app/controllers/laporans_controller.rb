@@ -77,9 +77,8 @@ class LaporansController < ApplicationController
   end
 
   def spbe
-    opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @nama_tema = 'SPBE'
-    @spbe = opd.programs_with_strategi_tahun(@tahun)
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @spbe = @opd.program_kegiatans.programs
   end
 
   private
