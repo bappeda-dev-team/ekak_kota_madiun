@@ -10,33 +10,24 @@
     <%= form.text_area :detail_kebutuhan, { class: "form-control" } %>
   </div>
   <div class="field">
-    <%= form.label :opd, { class: "form-label" } %>
-    <%= form.select :kode_opd, [], {include_blank: true},
-        { data: { placeholder: "Pilih Sasaran Operational",
+    <%= form.label :internal_external, { class: "form-label" } %>
+    <%= form.select :internal_external, ['Internal', 'External'], {},
+        { data: {
                   controller: 'dropdown',
-                  dropdown_jenis_value: 'extra',
+                  dropdown_jenis_value: 'chain',
+                  dropdown_event_name_value: 'change-opd',
+                }
+        } %>
+  </div>
+  <div class="field">
+    <%= form.label :opd_pelaksana, { class: "form-label" } %>
+    <%= form.select :kode_opd, [], {include_blank: true},
+        { data: { placeholder: "OPD Pelaksana",
+                  controller: 'dropdown',
+                  dropdown_jenis_value: 'ajax',
                   dropdown_url_value: legit_opd_opds_path(@opd, :json),
                 }
         } %>
-  </div>
-  <div class="field">
-    <%= form.label :sasaran_kinerja, { class: "form-label" } %>
-    <%= form.select :id_rencana, [], {include_blank: true},
-        { data: { placeholder: "Pilih Sasaran Operational",
-                  controller: 'dropdown',
-                  dropdown_jenis_value: 'ajax',
-                  dropdown_url_value: sasaran_operational_opds_path(format: :json),
-                  action: 'change-select@document->dropdown#chain_value_to_target'
-                }
-        } %>
-  </div>
-  <div class="field">
-    <%= form.label :detail_sasaran_kinerja, { class: "form-label" } %>
-    <%= form.text_area :detail_sasaran_kinerja, { class: "form-control" } %>
-  </div>
-  <div class="field">
-    <%= form.label :keterangan, { class: "form-label" } %>
-    <%= form.text_field :keterangan, { class: "form-control" } %>
   </div>
   <%= link_to_remove_nested(form, link_text: 'Hapus Rincian', link_classes: 'btn btn-outline-danger') %>
 </fieldset>

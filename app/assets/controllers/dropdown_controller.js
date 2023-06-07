@@ -205,6 +205,10 @@ export default class extends Controller {
     this.kodeOpdValue = opd_id
   }
 
+  chain_internal_or_external_opd_target(e) {
+    console.log('hello')
+  }
+
   chain_jenis_rekening_to_target(e) {
     const {data} = e.detail
     const jenis_rek = data.id

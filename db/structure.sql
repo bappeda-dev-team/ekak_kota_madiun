@@ -2320,7 +2320,11 @@ CREATE TABLE public.spbe_rincians (
     strategi_ref_id character varying,
     spbe_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    internal_external character varying,
+    tahun_pelaksanaan character varying,
+    tahun_awal character varying,
+    tahun_akhir character varying
 );
 
 
@@ -4790,6 +4794,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230429111203'),
 ('20230502010013'),
 ('20230605061438'),
-('20230605223850');
+('20230605223850'),
+('20230607004201');
 
 

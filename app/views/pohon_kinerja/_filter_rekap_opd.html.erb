@@ -15,6 +15,13 @@
             <i class="fa fa-print me-2" data-bs-toggle="tooltip" data-bs-placement="bottom"></i>
             <span>Cetak Excel</span>
           <% end %>
+          <%= link_to pdf_opd_pohon_kinerja_index_path,
+          class: "btn btn-sm btn-outline-warning",
+          target: "blank",
+          data: { pohon_kinerja_target: 'cetak' } do %>
+            <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom"></i>
+            <span>Cetak GAMBAR Pohon Kinerja</span>
+          <% end %>
         </div>
         <div class="card-header border-bottom d-flex align-items-center justify-content-between">
           <ul>

@@ -1,8 +1,11 @@
-<div data-controller="pohon-kinerja" class="mb-5">
-<button id="cetak" class="btn btn-tertiary w-100" data-action="click->pohon-kinerja#cetak">DOWNLOAD POHON KINERJA</button>
+<div class="mb-5">
+<button id="cetak" class="btn btn-tertiary w-100"
+        data-controller="pohon-kinerja"
+        data-pohon-kinerja-tahun-value="<%= @tahun %>"
+        data-action="click->pohon-kinerja#cetak">DOWNLOAD POHON KINERJA</button>
 </div>
 <div class="tf-tree" style="font-size: 5px;" id='pokin-kota'>
-<h1>POHON KINERJA KOTA MADIUN 2023</h1>
+<h1>POHON KINERJA KOTA MADIUN TAHUN <%= @tahun %></h1>
   <ul>
     <li>
       <span class="tf-nc">Kota Madiun</span>
