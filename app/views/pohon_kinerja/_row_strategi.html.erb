@@ -1,8 +1,8 @@
 <% milik_opd = true if local_assigns[:milik_opd].nil? %>
 <% if milik_opd %>
   <tr class="">
-    <th colspan="4">Nama: <%= strategi.nama_pemilik %> | 
-      NIP: <%= strategi.nip_pemilik %> | 
+    <th colspan="4">Nama: <%= strategi.nama_pemilik %> |
+      NIP: <%= strategi.nip_pemilik %> |
       Jabatan: <%= strategi.jabatan_pemilik %> </th>
   </tr>
   <% if local_assigns[:show_program] %>
@@ -18,19 +18,19 @@
     </tr>
   <% end %>
 <% end %>
-<tr style="<%= style %>">
+<tr class="<%= class_style %>">
   <td rowspan="<%= strategi.indikators.size + 1 %>"><%= jenis %></td>
   <td rowspan="<%= strategi.indikators.size + 1 %>" class="text-wrap"><%= strategi.strategi %> </td>
 </tr>
 <% if milik_opd %>
-<% strategi.indikators.each do |ind_kabid| %>
-  <tr style="<%= style %>">
-    <td class="text-wrap"><%= ind_kabid.indikator_kinerja %></td>
-    <td class="text-wrap"><%= "#{ind_kabid.target} #{ind_kabid.satuan}" %></td>
-  </tr>
-<% end %>
+  <% strategi.indikators.each do |ind_kabid| %>
+    <tr class="<%= class_style %>">
+      <td class="text-wrap"><%= ind_kabid.indikator_kinerja %></td>
+      <td class="text-wrap"><%= "#{ind_kabid.target} #{ind_kabid.satuan}" %></td>
+    </tr>
+  <% end %>
   <% strategi.renaksi.each.with_index(1) do |renaksi_kabid, no_aksi_kabid| %>
-    <tr style="<%= style %>">
+    <tr class="<%= class_style %>">
       <th colspan="4">Renaksi <%= no_aksi_kabid %>: <%= renaksi_kabid %></th>
     </tr>
   <% end %>
