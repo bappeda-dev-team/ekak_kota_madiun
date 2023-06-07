@@ -90,8 +90,13 @@ class PohonKinerjaController < ApplicationController
            end
     @isu_opd = @opd.pohon_kinerja_opd(@tahun)
     @nama_opd = @opd.nama_opd
+
     respond_to do |format|
-      format.html { render layout: 'blank' }
+      if @opd.id == 145 || @opd.kode_opd == '1260'
+        format.html { render "pohon_kinerja/pdf_setda", layout: 'blank' }
+      else
+        format.html { render layout: 'blank' }
+      end
     end
   end
 
@@ -122,10 +127,11 @@ class PohonKinerjaController < ApplicationController
            end
     @nama_opd = @opd.nama_opd
     @isu_opd = @opd.pohon_kinerja_opd(@tahun)
-    @rekap_jumlah = @opd.data_total_pokin(@tahun)
     if @opd.id == 145
+      @rekap_jumlah = @opd.data_total_pokin_setda(@tahun)
       render partial: 'pohon_kinerja/filter_rekap_setda'
     else
+      @rekap_jumlah = @opd.data_total_pokin(@tahun)
       render partial: 'pohon_kinerja/filter_rekap_opd'
     end
   end

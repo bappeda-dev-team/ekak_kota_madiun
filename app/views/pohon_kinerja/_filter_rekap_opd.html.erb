@@ -27,10 +27,10 @@
           <ul>
             <li>Jumlah Isu Strategis: <%= @isu_opd.size %></li>
             <li>Jumlah Strategi Kota: <%= @isu_opd.map { |_, strategis| strategis.count }.inject(:+) %></li>
-            <li>Jumlah Strategic Objective : <%= @rekap_jumlah[:tactical] %></li>
-            <li>Jumlah Indikator : <%= @rekap_jumlah[:indikator_tactical] %></li>
-            <li>Jumlah Tactical Objective : <%= @rekap_jumlah[:strategic] %></li>
+            <li>Jumlah Strategic Objective : <%= @rekap_jumlah[:strategic] %></li>
             <li>Jumlah Indikator : <%= @rekap_jumlah[:indikator_strategic] %></li>
+            <li>Jumlah Tactical Objective : <%= @rekap_jumlah[:tactical] %></li>
+            <li>Jumlah Indikator : <%= @rekap_jumlah[:indikator_tactical] %></li>
             <li>Jumlah Operational Objective : <%= @rekap_jumlah[:operational] %></li>
             <li>Jumlah Indikator : <%= @rekap_jumlah[:indikator_operational] %></li>
             <li>Jumlah Operational Objective 2 : <%= @rekap_jumlah[:operational_staff] %></li>
