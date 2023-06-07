@@ -1,5 +1,4 @@
 <fieldset class="mb-5">
-  <%= form.hidden_field :kode_opd, readonly: true, value: @kode_opd %>
   <%= form.hidden_field :kode_program, readonly: true, value: @program.kode_program %>
   <div class="field">
     <%= form.label :kebutuhan_spbe, { class: "form-label" } %>
@@ -11,19 +10,24 @@
     <%= form.text_area :detail_kebutuhan, { class: "form-control" } %>
   </div>
   <div class="field">
-    <%= form.label :sasaran_kinerja, { class: "form-label" } %>
-    <%= form.select(:id_rencana, @sasaran_kinerja.pluck(:sasaran_kinerja, :id),
-        {include_blank: true},
-        {data: { controller: 'dropdown',
-                "placeholder": "Pilih Sasaran Kinerja"}} )%>
+    <%= form.label :internal_external, { class: "form-label" } %>
+    <%= form.select :internal_external, ['Internal', 'External'], {},
+        { data: {
+                  controller: 'dropdown',
+                  dropdown_jenis_value: 'chain',
+                  dropdown_event_name_value: 'change-opd',
+                }
+        } %>
   </div>
   <div class="field">
-    <%= form.label :detail_sasaran_kinerja, { class: "form-label" } %>
-    <%= form.text_area :detail_sasaran_kinerja, { class: "form-control" } %>
-  </div>
-  <div class="field">
-    <%= form.label :keterangan, { class: "form-label" } %>
-    <%= form.text_field :keterangan, { class: "form-control" } %>
+    <%= form.label :opd_pelaksana, { class: "form-label" } %>
+    <%= form.select :kode_opd, [], {include_blank: true},
+        { data: { placeholder: "OPD Pelaksana",
+                  controller: 'dropdown',
+                  dropdown_jenis_value: 'ajax',
+                  dropdown_url_value: legit_opd_opds_path(@opd, :json),
+                }
+        } %>
   </div>
   <%= link_to_remove_nested(form, link_text: 'Hapus Rincian', link_classes: 'btn btn-outline-danger') %>
 </fieldset>

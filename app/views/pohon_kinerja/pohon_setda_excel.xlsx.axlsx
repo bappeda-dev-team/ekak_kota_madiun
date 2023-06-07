@@ -3,18 +3,31 @@ s = wb.styles
 
 project_heading = s.add_style sz: 12, b: true
 
-style_nama_kota = s.add_style(border: { style: :thin, color: '00000000', edges: %i[left right bottom top] },
+style_nama_kota = s.add_style(border: { style: :thin, color: '000000', edges: %i[left right bottom top] },
                               outline: true)
-
 style_isu_strategis_kota = s.add_style(bg_color: '6DA9E4',
-                                       border: { style: :thin, color: '00000000', edges: %i[left right bottom top] },
+                                       border: { style: :thin, color: '000000', edges: %i[left right bottom top] },
                                        outline: true, alignment: { horizontal: :left }, b: true)
-
-style_strategi_opd = s.add_style(bg_color: 'EFBFC7',
-                                 border: { style: :thin, color: '00000000', edges: %i[left right bottom top] },
+style_strategi_kota = s.add_style(bg_color: '00FFF6',
+                                  border: { style: :thin, color: '000000', edges: %i[left right bottom top] },
+                                  outline: true, alignment: { horizontal: :left }, b: true)
+style_strategic_opd = s.add_style(bg_color: 'B73239', fg_color: 'EEE2DE',
+                                  border: { style: :thin, color: '000000', edges: %i[left right bottom top] },
+                                  outline: true, alignment: { horizontal: :left }, b: true)
+style_tactical_opd = s.add_style(bg_color: '0B5394', fg_color: 'EEE2DE',
+                                 border: { style: :thin, color: '000000', edges: %i[left right bottom top] },
                                  outline: true, alignment: { horizontal: :left }, b: true)
+style_tactical_2_opd = s.add_style(bg_color: '6391BA', fg_color: 'EEE2DE',
+                                   border: { style: :thin, color: '000000', edges: %i[left right bottom top] },
+                                   outline: true, alignment: { horizontal: :left }, b: true)
+style_operational_opd = s.add_style(bg_color: '93C47D',
+                                    border: { style: :thin, color: '000000', edges: %i[left right bottom top] },
+                                    outline: true, alignment: { horizontal: :left }, b: true)
+style_operational_2_opd = s.add_style(bg_color: 'FFFF00',
+                                      border: { style: :thin, color: '000000', edges: %i[left right bottom top] },
+                                      outline: true, alignment: { horizontal: :left }, b: true)
 
-style_separator = s.add_style(bg_color: 'F0F0F0')
+style_separator = s.add_style(bg_color: '444444')
 # isu strategis opd / kota
 wb.add_worksheet(name: "Pohon Kinerja OPD") do |sheet| # rubocop:disable Metrics/BlockLength
   sheet.add_row ["", "POHON KINERJA #{@nama_opd} TAHUN #{@tahun}"], style: project_heading
@@ -25,43 +38,48 @@ wb.add_worksheet(name: "Pohon Kinerja OPD") do |sheet| # rubocop:disable Metrics
     sheet.add_row [isu.class.name.pluralize.underscore.titleize, isu.isu_strategis, "", "", ""],
                   style: style_isu_strategis_kota
     strategis.each do |strategi, strategi_kaopds|
-      sheet.add_row ["Strategi Kota", strategi.strategi, "", "", ""]
+      sheet.add_row ["Strategi Kota", strategi.strategi, "", "", ""], style: style_strategi_kota
       strategi.indikators_tahun(@tahun).each do |ind_kota|
-        sheet.add_row ["", "", ind_kota.indikator, ind_kota.target, ind_kota.satuan]
+        sheet.add_row ["", "", ind_kota.indikator, ind_kota.target, ind_kota.satuan],
+                      style: style_strategi_kota
       end
       strategi_kaopds.each do |str_kaopd, str_kabids|
-        sheet.add_row ["Tactical", str_kaopd.strategi, "", "", ""]
+        sheet.add_row ["Strategic", str_kaopd.strategi, "", "", ""], style: style_strategic_opd
         str_kaopd.indikators.each do |ind_kaopd|
-          sheet.add_row ["", "", ind_kaopd.indikator, ind_kaopd.target, ind_kaopd.satuan]
+          sheet.add_row ["", "", ind_kaopd.indikator, ind_kaopd.target, ind_kaopd.satuan],
+                        style: style_strategic_opd
         end
         str_kabids.each do |str_kabid, str_dua_bs|
-          sheet.add_row ["Strategic", str_kaopd.strategi, "", "", ""]
+          sheet.add_row ["Tactical", str_kaopd.strategi, "", "", ""], style: style_tactical_opd
           str_kabid.indikators.each do |ind_kabid|
-            sheet.add_row ["", "", ind_kabid.indikator, ind_kabid.target, ind_kabid.satuan]
+            sheet.add_row ["", "", ind_kabid.indikator, ind_kabid.target, ind_kabid.satuan],
+                          style: style_tactical_opd
           end
           str_dua_bs.each do |str_dua_b, str_kasis|
-            sheet.add_row ["Strategic 2", str_dua_b.strategi, "", "", ""]
+            sheet.add_row ["Tactical 2", str_dua_b.strategi, "", "", ""], style: style_tactical_2_opd
             str_dua_b.indikators.each do |ind_dua_b|
-              sheet.add_row ["", "", ind_dua_b.indikator, ind_dua_b.target, ind_dua_b.satuan]
+              sheet.add_row ["", "", ind_dua_b.indikator, ind_dua_b.target, ind_dua_b.satuan],
+                            style: style_tactical_2_opd
             end
             str_kasis.each do |str_kasi, str_staffs|
-              sheet.add_row ["Operational", str_kasi.strategi, "", "", ""]
+              sheet.add_row ["Operational", str_kasi.strategi, "", "", ""], style: style_operational_opd
               str_kasi.indikators.each do |ind_kasi|
-                sheet.add_row ["", "", ind_kasi.indikator, ind_kasi.target,
-                               ind_kasi.satuan]
+                sheet.add_row ["", "", ind_kasi.indikator, ind_kasi.target, ind_kasi.satuan],
+                              style: style_operational_opd
               end
               str_staffs.each do |str_staff|
-                sheet.add_row ["Operational 2", str_staff.strategi]
+                sheet.add_row ["Operational 2", str_staff.strategi, "", "", ""], style: style_operational_2_opd
                 str_staff.indikators.each do |ind_staff|
-                  sheet.add_row ["", "", ind_staff.indikator, ind_staff.target,
-                                 ind_staff.satuan]
+                  sheet.add_row ["", "", ind_staff.indikator, ind_staff.target, ind_staff.satuan],
+                                style: style_operational_2_opd
                 end
               end
             end
           end
         end
       end
-      sheet.add_row ["", "", "", ""], style: style_separator
+      sheet.add_row ["", "", "", "", ""], style: style_separator
+      sheet.add_row ["", "", "", "", ""], style: style_separator
     end
   end
 end

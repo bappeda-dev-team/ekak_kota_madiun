@@ -121,6 +121,10 @@ class Opd < ApplicationRecord
     strategis.where(role: "eselon_2")
   end
 
+  def strategi_eselon2b
+    strategis.where(role: "eselon_2b")
+  end
+
   def strategi_eselon3
     strategis.where(role: "eselon_3")
   end
@@ -131,6 +135,22 @@ class Opd < ApplicationRecord
 
   def strategi_staff
     strategis.where(role: "staff")
+  end
+
+  def sasaran_eselon2
+    strategi_eselon2.map(&:sasaran)
+  end
+
+  def sasaran_eselon3
+    strategi_eselon3
+      .joins("INNER JOIN sasarans ON cast (sasarans.strategi_id as INT) = strategis.id")
+      .map(&:sasaran)
+  end
+
+  def sasaran_eselon4
+    strategi_eselon4
+      .joins("INNER JOIN sasarans ON cast (sasarans.strategi_id as INT) = strategis.id")
+      .map(&:sasaran)
   end
 
   def eselon_dua_opd
@@ -210,6 +230,10 @@ class Opd < ApplicationRecord
     strategi_eselon2.select { |isu| isu.tahun.match(/#{tahun}(\S*|\b)/) }
   end
 
+  def tactical2_tahun(tahun)
+    strategi_eselon2b.where.not(strategi_ref_id: "").select { |isu| isu.tahun.match(/#{tahun}(\S*|\b)/) }
+  end
+
   def tactical_tahun(tahun)
     strategi_eselon3.where.not(strategi_ref_id: "").select { |isu| isu.tahun.match(/#{tahun}(\S*|\b)/) }
   end
@@ -224,6 +248,10 @@ class Opd < ApplicationRecord
 
   def indikator_strategic_tahun(tahun)
     strategic_tahun(tahun).map(&:indikator_sasarans).flatten
+  end
+
+  def indikator_tactical2_tahun(tahun)
+    tactical2_tahun(tahun).map(&:indikator_sasarans).flatten
   end
 
   def indikator_tactical_tahun(tahun)
@@ -244,6 +272,21 @@ class Opd < ApplicationRecord
       indikator_strategic: indikator_strategic_tahun(tahun).count,
       tactical: tactical_tahun(tahun).count,
       indikator_tactical: indikator_tactical_tahun(tahun).count,
+      operational: operational_tahun(tahun).count,
+      indikator_operational: indikator_operational_tahun(tahun).count,
+      operational_staff: operational_2_tahun(tahun).count,
+      indikator_staff: indikator_operational_2_tahun(tahun).count
+    }
+  end
+
+  def data_total_pokin_setda(tahun)
+    {
+      strategic: strategic_tahun(tahun).count,
+      indikator_strategic: indikator_strategic_tahun(tahun).count,
+      tactical: tactical2_tahun(tahun).count,
+      indikator_tactical: indikator_tactical2_tahun(tahun).count,
+      tactical2: tactical_tahun(tahun).count,
+      indikator_tactical2: indikator_tactical_tahun(tahun).count,
       operational: operational_tahun(tahun).count,
       indikator_operational: indikator_operational_tahun(tahun).count,
       operational_staff: operational_2_tahun(tahun).count,

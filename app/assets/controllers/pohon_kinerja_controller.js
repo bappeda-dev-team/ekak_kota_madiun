@@ -20,7 +20,9 @@ export default class extends Controller {
                 opd: Number,
                 tahun: Number,
                 render: Boolean,
-                url: String
+                url: String,
+                namaOpd: String,
+                tahun: String
         }
 
         togglePokin() {
@@ -119,17 +121,43 @@ export default class extends Controller {
 
         async cetak() {
                 const node = document.getElementById('pokin-kota')
+                const tahun = this.tahunValue
+                const judul = `POHON_KINERJA_KOTA_${tahun}.png`
+                const width = node.scrollWidth > 32000 ? 20000 : node.scrollWidth;
+                const height = node.scrollHeight;
                 await html2canvas(node, {
-                        windowWidth: node.scrollWidth + 50,
-                        windowHeight: node.scrollHeight
+                        windowWidth: width + 50,
+                        windowHeight: height
                 })
                         .then(canvas => {
                                 canvas.toBlob((blob) => {
-                                        saveAs(blob, "POHON_KINERJA_KOTA.png")
+                                        saveAs(blob, judul)
                                 })
                         })
                         .catch(function(error) {
                                 console.error('oops, something went wrong!', error);
+                        });
+        }
+
+        async cetakOpd() {
+                const node = document.getElementById('pokin-opd')
+                const nama_opd = this.namaOpdValue
+                const tahun = this.tahunValue
+                const judul = `POHON_KINERJA_${nama_opd}_${tahun}.png`
+                const width = node.scrollWidth > 32000 ? 20000 : node.scrollWidth;
+                const height = node.scrollHeight;
+                await html2canvas(node, {
+                        windowWidth: width + 50,
+                        windowHeight: height,
+                })
+                        .then(canvas => {
+                                canvas.toBlob((blob) => {
+                                        saveAs(blob, judul)
+                                })
+                        })
+                        .catch(function(error) {
+                                console.error('oops, something went wrong!', error);
+                                alert('terjadi kesalahan ..')
                         });
         }
 

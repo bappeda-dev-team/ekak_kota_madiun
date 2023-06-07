@@ -6,10 +6,14 @@
 #  detail_kebutuhan       :string
 #  detail_sasaran_kinerja :string
 #  id_rencana             :string
+#  internal_external      :string
 #  kebutuhan_spbe         :string
 #  keterangan             :string
 #  kode_opd               :string
 #  kode_program           :string
+#  tahun_akhir            :string
+#  tahun_awal             :string
+#  tahun_pelaksanaan      :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  spbe_id                :bigint
@@ -18,5 +22,5 @@
 class SpbeRincian < ApplicationRecord
   belongs_to :spbe
 
-  belongs_to :sasaran, primary_key: :id, foreign_key: :id_rencana
+  belongs_to :sasaran, -> { order "nip_asn ASC" }, primary_key: :id, foreign_key: :id_rencana
 end

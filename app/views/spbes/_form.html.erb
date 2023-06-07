@@ -15,9 +15,14 @@
     <%= form.hidden_field :program_kegiatan_id, readonly: true, value: @program.id %>
     <div class="card-body">
       <%= form.label :sasaran_tactical, {class: "form-label"} %>
-      <%= form.select(:strategi_ref_id, @sasaran_eselon3.pluck(:sasaran_kinerja, :id), {},
-        {data: { controller: 'dropdown',
-                "placeholder": "Pilih Sasaran Tactical"}} )%>
+      <%= form.select :strategi_ref_id, [], {include_blank: true},
+        { data: { placeholder: "Pilih Sasaran Tactical",
+                  controller: 'dropdown',
+                  dropdown_jenis_value: 'ajax',
+                  dropdown_kode_opd_value: @kode_opd,
+                  dropdown_url_value: sasaran_tactical_opds_path(format: :json),
+                }
+        } %>
     </div>
     <div class="card-body">
       <div class="field">

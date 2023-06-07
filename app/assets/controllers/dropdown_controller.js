@@ -12,7 +12,7 @@ export default class extends Controller {
     rekening: String,
     parent: String,
     url: String,
-    opd_id: String,
+    kodeOpd: String,
     uraian: String,
     width: { type: String, default: 'element' }
   }
@@ -48,7 +48,7 @@ export default class extends Controller {
       ajax: {
         url: this.urlValue,
         data: (params) => ({
-          kode_opd: this.opd_idValue,
+          kode_opd: this.kodeOpdValue,
           jenis_rekening: this.rekeningValue,
           tahun: this.tahunValue,
           jenisUraian: this.tipeValue,
@@ -202,7 +202,11 @@ export default class extends Controller {
 
   chain_value_to_target(e) {
     const opd_id = e.detail.data.id
-    this.opd_idValue = opd_id
+    this.kodeOpdValue = opd_id
+  }
+
+  chain_internal_or_external_opd_target(e) {
+    console.log('hello')
   }
 
   chain_jenis_rekening_to_target(e) {

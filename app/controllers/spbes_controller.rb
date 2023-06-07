@@ -9,17 +9,20 @@ class SpbesController < ApplicationController
   end
 
   def new
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @spbe = Spbe.new
     @sasaran_eselon3 = @program.program_sasaran(@tahun).map(&:map_sasaran_atasan).uniq
     @sasaran_kinerja = @sasaran_eselon3.map { |s| s.strategi.operational_objectives.map(&:sasaran) }.flatten.uniq
   end
 
   def edit
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @sasaran_eselon3 = @program.program_sasaran(@tahun).map(&:map_sasaran_atasan).uniq
     @sasaran_kinerja = @sasaran_eselon3.map { |s| s.strategi.operational_objectives.map(&:sasaran) }.flatten.uniq
   end
 
   def create
+    @program = ProgramKegiatan.find(spbe_params[:program_kegiatan_id])
     @spbe = Spbe.new(spbe_params)
 
     respond_to do |format|
@@ -75,6 +78,7 @@ class SpbesController < ApplicationController
   def spbe_rincians_params
     { spbe_rincians_attributes: %i[id detail_kebutuhan detail_sasaran_kinerja
                                    keterangan id_rencana kebutuhan_spbe
+                                   internal_external tahun_awal tahun_akhir
                                    kode_opd kode_program _destroy] }
   end
 end

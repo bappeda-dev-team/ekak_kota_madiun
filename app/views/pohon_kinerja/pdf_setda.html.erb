@@ -83,7 +83,7 @@
                           <% str_kasis.each do |str_kasi, str_staffs| %>
                             <li>
                               <div class="tf-nc">
-                                <p class="text-center"><strong>OPERATIONAL OBJECTIVE</strong></p>
+                                <p class="text-center"><strong>TACTICAL OBJECTIVE 2</strong></p>
                                 <hr/>
                                 <span class="text-center"><%= str_kasi.strategi %></span>
                                 <%# INDIKATOR %>
@@ -99,10 +99,10 @@
                               <% end %>
                             </div>
                             <ul>
-                              <% str_staffs.each do |str_staff| %>
+                              <% str_staffs.each do |str_staff, str_staff_2s| %>
                                 <li>
                                   <div class="tf-nc">
-                                    <p class="text-center"><strong>OPERATIONAL OBJECTIVE 2</strong></p>
+                                    <p class="text-center"><strong>OPERATIONAL OBJECTIVE</strong></p>
                                     <hr/>
                                     <span class="text-center"><%= str_staff.strategi %></span>
                                     <%# INDIKATOR %>
@@ -117,7 +117,28 @@
                                     <hr/>
                                   <% end %>
                                 </div>
-                              </li>
+                                <ul>
+                                  <% str_staff_2s.each do |str_staff_2| %>
+                                    <li>
+                                      <div class="tf-nc">
+                                        <p class="text-center"><strong>OPERATIONAL OBJECTIVE 2</strong></p>
+                                        <hr/>
+                                        <span class="text-center"><%= str_staff_2.strategi %></span>
+                                        <%# INDIKATOR %>
+                                        <% str_staff_2.indikators.each do |ind_staff_2| %>
+                                          <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
+                                        <hr/>
+                                        <p>
+                                          <%= ind_staff_2.indikator_kinerja %>
+                                          <span>[ <%= ind_staff_2.target %>
+                                            <%= ind_staff_2.satuan %> ]</span>
+                                        </p>
+                                        <hr/>
+                                      <% end %>
+                                    </div>
+                                  </li>
+                                <% end %>
+                              </ul>
                             <% end %>
                           </ul>
                         </li>
