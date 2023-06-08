@@ -11,14 +11,10 @@ class SpbesController < ApplicationController
   def new
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @spbe = Spbe.new
-    @sasaran_eselon3 = @program.program_sasaran(@tahun).map(&:map_sasaran_atasan).uniq
-    @sasaran_kinerja = @sasaran_eselon3.map { |s| s.strategi.operational_objectives.map(&:sasaran) }.flatten.uniq
   end
 
   def edit
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @sasaran_eselon3 = @program.program_sasaran(@tahun).map(&:map_sasaran_atasan).uniq
-    @sasaran_kinerja = @sasaran_eselon3.map { |s| s.strategi.operational_objectives.map(&:sasaran) }.flatten.uniq
   end
 
   def create
