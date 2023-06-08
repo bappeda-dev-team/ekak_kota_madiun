@@ -10,7 +10,7 @@
     <%= form.text_area :detail_kebutuhan, { class: "form-control" } %>
   </div>
   <div class="field">
-    <%= form.label :internal_external, { class: "form-label" } %>
+    <%= form.label :opd_pelaksana, { class: "form-label" } %>
     <%= form.select :internal_external, ['Internal', 'External'], {},
         { data: {
                   controller: 'dropdown',
@@ -19,13 +19,14 @@
                 }
         } %>
   </div>
-  <div class="field">
-    <%= form.label :opd_pelaksana, { class: "form-label" } %>
+  <div class="field mb-5">
     <%= form.select :kode_opd, [], {include_blank: true},
         { data: { placeholder: "OPD Pelaksana",
                   controller: 'dropdown',
                   dropdown_jenis_value: 'ajax',
+                  dropdown_display_value: false,
                   dropdown_url_value: legit_opd_opds_path(@opd, :json),
+                  action: 'change-opd@document->dropdown#chain_internal_or_external_opd_target'
                 }
         } %>
   </div>

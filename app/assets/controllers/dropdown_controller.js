@@ -14,6 +14,7 @@ export default class extends Controller {
     url: String,
     kodeOpd: String,
     uraian: String,
+    display: { type: Boolean, default: true },
     width: { type: String, default: 'element' }
   }
 
@@ -62,7 +63,12 @@ export default class extends Controller {
   }
 
   connect() {
-    this.jenis_dropdown_generator()
+    if(this.displayValue) {
+      this.jenis_dropdown_generator()
+    }
+    else {
+      this.element.style.display = 'none'
+    }
   }
 
   disconnect() {
@@ -206,7 +212,12 @@ export default class extends Controller {
   }
 
   chain_internal_or_external_opd_target(e) {
-    console.log('hello')
+    const {data} = e.detail
+    if(data.id == 'External') {
+      this.element.style.display = 'block'
+      this.displayValue = true;
+      this.jenis_dropdown_generator()
+    }
   }
 
   chain_jenis_rekening_to_target(e) {
