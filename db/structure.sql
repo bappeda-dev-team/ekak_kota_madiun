@@ -1020,6 +1020,41 @@ ALTER SEQUENCE public.koefisiens_id_seq OWNED BY public.koefisiens.id;
 
 
 --
+-- Name: komentars; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.komentars (
+    id bigint NOT NULL,
+    judul character varying,
+    komentar character varying,
+    kode_opd character varying,
+    user_id bigint NOT NULL,
+    item bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: komentars_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.komentars_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: komentars_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.komentars_id_seq OWNED BY public.komentars.id;
+
+
+--
 -- Name: latar_belakangs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3051,6 +3086,13 @@ ALTER TABLE ONLY public.koefisiens ALTER COLUMN id SET DEFAULT nextval('public.k
 
 
 --
+-- Name: komentars id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.komentars ALTER COLUMN id SET DEFAULT nextval('public.komentars_id_seq'::regclass);
+
+
+--
 -- Name: latar_belakangs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3572,6 +3614,14 @@ ALTER TABLE ONLY public.kesenjangans
 
 ALTER TABLE ONLY public.koefisiens
     ADD CONSTRAINT koefisiens_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: komentars komentars_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.komentars
+    ADD CONSTRAINT komentars_pkey PRIMARY KEY (id);
 
 
 --
@@ -4103,6 +4153,13 @@ CREATE INDEX index_koefisiens_on_perhitungan_id ON public.koefisiens USING btree
 
 
 --
+-- Name: index_komentars_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_komentars_on_user_id ON public.komentars USING btree (user_id);
+
+
+--
 -- Name: index_latar_belakangs_on_id_indikator_sasaran; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -4529,6 +4586,14 @@ ALTER TABLE ONLY public.active_storage_variant_records
 
 
 --
+-- Name: komentars fk_rails_9c85741b05; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.komentars
+    ADD CONSTRAINT fk_rails_9c85741b05 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: latar_belakangs fk_rails_b420bec91b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4795,6 +4860,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230502010013'),
 ('20230605061438'),
 ('20230605223850'),
-('20230607004201');
+('20230607004201'),
+('20230609010527');
 
 

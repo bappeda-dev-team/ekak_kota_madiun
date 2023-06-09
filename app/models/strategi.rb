@@ -25,6 +25,7 @@ class Strategi < ApplicationRecord
   belongs_to :opd, optional: true
   belongs_to :user, foreign_key: 'nip_asn', primary_key: 'nik', optional: true
   has_one :sasaran
+  has_many :komentars, primary_key: :id, foreign_key: :item
   accepts_nested_attributes_for :sasaran, update_only: true
 
   has_many :indikator_sasarans, through: :sasaran

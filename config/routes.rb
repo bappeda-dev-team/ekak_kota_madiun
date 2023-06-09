@@ -9,6 +9,11 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :komentars do
+    collection do
+      get :komentar_pokin
+    end
+  end
   resources :spbe_rincians
   resources :spbes
   resources :pagu_anggarans

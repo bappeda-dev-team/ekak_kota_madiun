@@ -1,0 +1,33 @@
+<%= form_with(model: @komentar, local: false,
+              data: { controller: 'form-ajax',
+                      action: 'ajax:success->form-ajax#successResponse'
+}) do |form| %>
+  <% if @komentar.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@komentar.errors.count, "error") %> prohibited this komentar from being saved:</h2>
+
+      <ul>
+        <% @komentar.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.hidden_field :user_id, readonly: true, value: current_user.id %>
+  <%= form.hidden_field :item, readonly: true, value: @strategi_id %>
+  <%= form.hidden_field :kode_opd, readonly: true, value: @kode_opd %>
+  <div class="field">
+    <%= form.label :judul, class: 'form-label' %>
+    <%= form.text_field :judul, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :komentar, class: 'form-label' %>
+    <%= form.text_field :komentar, class: 'form-control' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

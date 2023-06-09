@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Judul:</strong>
+  <%= @komentar.judul %>
+</p>
+
+<p>
+  <strong>Komentar:</strong>
+  <%= @komentar.komentar %>
+</p>
+
+<p>
+  <strong>Strategi:</strong>
+  <%= @komentar.strategi.strategi %>
+</p>
+
+<p>
+  <strong>OPD Tujuan:</strong>
+  <%= @komentar.opd.nama_opd %>
+</p>
+
+<p>
+  <strong>Komentator:</strong>
+  <%= @komentar.user.nama %>
+</p>
+
+<p>
+  <strong>Item:</strong>
+  <%= @komentar.item %>
+</p>
+
+<%= link_to 'Edit', edit_komentar_path(@komentar) %> |
+<%= link_to 'Back', komentars_path %>

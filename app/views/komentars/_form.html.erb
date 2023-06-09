@@ -1,0 +1,47 @@
+<%= form_with(model: komentar) do |form| %>
+  <% if komentar.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(komentar.errors.count, "error") %> prohibited this komentar from being saved:</h2>
+
+      <ul>
+        <% komentar.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :judul %>
+    <%= form.text_field :judul %>
+  </div>
+
+  <div class="field">
+    <%= form.label :komentar %>
+    <%= form.text_field :komentar %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kode_opd %>
+    <%= form.text_field :kode_opd %>
+  </div>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :pohon_id %>
+    <%= form.text_field :pohon_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :item %>
+    <%= form.text_field :item %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

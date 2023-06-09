@@ -1,0 +1,18 @@
+$('#form-komentar').on('ajax:success', (event) => {
+  $(this).hide
+  setTimeout(() => {
+    location.reload(true);
+  }, 1500);
+}).toggle();
+Swal.fire(
+  'Sukses',
+  'Review Disimpan',
+  'success'
+)
+$('#form-perhitungan').on('ajax:failed', (event) => {
+  Swal.fire(
+    'Gagal',
+    'Terjadi Kesalahan. Review Gagal',
+    'error'
+  )
+});
