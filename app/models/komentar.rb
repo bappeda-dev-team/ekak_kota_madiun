@@ -26,4 +26,8 @@ class Komentar < ApplicationRecord
   def strategi
     Strategi.find(item)
   end
+
+  def komentator
+    user.nama
+  end
 end
