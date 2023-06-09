@@ -1,0 +1,12 @@
+
+<div class="komentar">
+  <%= link_to "Tambah Komentar",
+                                komentar_pokin_komentars_path(kode_opd: kode_opd, strategi_id: strategi_id),
+                                remote: true,
+                                class: 'btn btn-sm btn-outline-gray-900',
+                                data: { controller: 'form-modal',
+                                        action: 'form-modal#appendForm',
+                                        form_modal_location_param: 'form-komentar-body',
+                                        bs_target: '#form-komentar',
+                                        bs_toggle: 'modal' } %>
+</div>

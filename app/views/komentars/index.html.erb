@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Komentars</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Judul</th>
+      <th>Komentar</th>
+      <th>Kode opd</th>
+      <th>User</th>
+      <th>Item</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @komentars.each do |komentar| %>
+      <tr>
+        <td><%= komentar.judul %></td>
+        <td><%= komentar.komentar %></td>
+        <td><%= komentar.kode_opd %></td>
+        <td><%= komentar.user_id %></td>
+        <td><%= komentar.item %></td>
+        <td><%= link_to 'Show', komentar %></td>
+        <td><%= link_to 'Edit', edit_komentar_path(komentar) %></td>
+        <td><%= link_to 'Destroy', komentar, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Komentar', new_komentar_path %>

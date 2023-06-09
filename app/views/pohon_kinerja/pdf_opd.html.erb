@@ -108,14 +108,31 @@
                                     <%# INDIKATOR %>
                                     <% str_staff.indikators.each do |ind_staff| %>
                                       <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
-                                    <hr/>
-                                    <p>
-                                      <%= ind_staff.indikator_kinerja %>
-                                      <span>[ <%= ind_staff.target %>
-                                        <%= ind_staff.satuan %> ]</span>
-                                    </p>
-                                    <hr/>
+                                      <hr/>
+                                      <p>
+                                        <%= ind_staff.indikator_kinerja %>
+                                        <span>[ <%= ind_staff.target %>
+                                          <%= ind_staff.satuan %> ]</span>
+                                      </p>
+                                      <hr/>
                                   <% end %>
+                                <% str_staff.komentars.each do |kom| %>
+                                  <p class="higlighted px-2"<strong>REVIEW</strong></p>
+                                  <hr/>
+                                  <span><%= kom.komentar %></span>
+                                <% end %>
+                                <div class='my-3'></div>
+                                <div class="komentar">
+                                  <%= link_to "Tambah Komentar",
+                                          komentar_pokin_komentars_path(kode_opd: str_staff.opd.kode_unik_opd, strategi_id: str_staff.id),
+                                          remote: true,
+                                          class: 'btn btn-sm btn-outline-gray-900',
+                                          data: { controller: 'form-modal',
+                                                  action: 'form-modal#appendForm',
+                                                  form_modal_location_param: 'form-komentar-body',
+                                                  bs_target: '#form-komentar',
+                                                  bs_toggle: 'modal' } %>
+                                </div>
                                 </div>
                               </li>
                             <% end %>
@@ -138,3 +155,4 @@
 </li>
 </ul>
 </div>
+<%= render 'shared/modal_template', modal_name: 'komentar' %>

@@ -1,11 +1,11 @@
 <div class="mb-5">
-<button id="cetak" class="btn btn-tertiary w-100"
+  <button id="cetak" class="btn btn-tertiary w-100"
         data-controller="pohon-kinerja"
         data-pohon-kinerja-tahun-value="<%= @tahun %>"
         data-action="click->pohon-kinerja#cetak">DOWNLOAD POHON KINERJA</button>
 </div>
 <div class="tf-tree" style="font-size: 5px;" id='pokin-kota'>
-<h1>POHON KINERJA KOTA MADIUN TAHUN <%= @tahun %></h1>
+  <h1>POHON KINERJA KOTA MADIUN TAHUN <%= @tahun %></h1>
   <ul>
     <li>
       <span class="tf-nc">Kota Madiun</span>
@@ -55,15 +55,32 @@
                             <span><%= strategi.strategi %></span>
                             <% strategi.indikators.each do |ind_strategi| %>
                               <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
-                            <hr/>
-                            <span><%= ind_strategi.indikator_kinerja %></span>
-                            <p class="bg-info text-white px-2"<strong>TARGET</strong></p>
-                          <hr/>
-                          <span><%= ind_strategi.target %></span>
-                          <p class="bg-info text-white px-2"<strong>SATUAN</strong></p>
-                        <hr/>
-                        <span><%= ind_strategi.satuan %></span>
-                      <% end %>
+                              <hr/>
+                              <span><%= ind_strategi.indikator_kinerja %></span>
+                              <p class="bg-info text-white px-2"<strong>TARGET</strong></p>
+                              <hr/>
+                              <span><%= ind_strategi.target %></span>
+                              <p class="bg-info text-white px-2"<strong>SATUAN</strong></p>
+                              <hr/>
+                              <span><%= ind_strategi.satuan %></span>
+                            <% end %>
+                            <% strategi.komentars.each do |kom| %>
+                              <p class="higlighted px-2"<strong>REVIEW</strong></p>
+                              <hr/>
+                              <span><%= kom.komentar %></span>
+                            <% end %>
+                            <div class='my-3'></div>
+                      <div class="komentar">
+                        <%= link_to "Tambah Komentar",
+                                komentar_pokin_komentars_path(kode_opd: strategi.opd.kode_unik_opd, strategi_id: strategi.id),
+                                remote: true,
+                                class: 'btn btn-sm btn-outline-gray-900',
+                                data: { controller: 'form-modal',
+                                        action: 'form-modal#appendForm',
+                                        form_modal_location_param: 'form-komentar-body',
+                                        bs_target: '#form-komentar',
+                                        bs_toggle: 'modal' } %>
+                      </div>
                     </div>
                   <% else %>
                     <div class="tf-nc bg-danger text-white">
@@ -85,3 +102,4 @@
 </li>
 </ul>
 </div>
+<%= render 'shared/modal_template', modal_name: 'komentar' %>

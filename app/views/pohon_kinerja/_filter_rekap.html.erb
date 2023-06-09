@@ -15,6 +15,11 @@
             <i class="fa fa-print me-2" data-bs-toggle="tooltip" data-bs-placement="bottom"></i>
             <span>Cetak Excel</span>
           <% end %>
+          <%= link_to pdf_kota_pohon_kinerja_index_path,
+           class: "btn btn-warning", target: "blank" do %>
+            <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom"></i>
+            <span>Cetak GAMBAR Pohon Kinerja</span>
+          <% end %>
         </div>
         <table class="table table-bordered border-primary rounded">
           <thead>
@@ -69,6 +74,20 @@
                       <tr>
                         <td class="text-wrap"><%= ind.indikator_kinerja %></td>
                         <td class=""><%= "#{ind.target} #{ind.satuan}" %></td>
+                      </tr>
+                    <% end %>
+                    <% stra.komentars.each do |kom| %>
+                      <tr class="higlighted">
+                        <td class="text-wrap"></td>
+                        <td class="text-wrap" colspan="3">
+                          <strong>Review</strong>
+                          <br/>
+                          Pengomentar: <%= kom.user.nama %>
+                          <br/>
+                          Judul: <%= kom.judul %>
+                          <br/>
+                          Komentar: <%= kom.komentar %>
+                        </td>
                       </tr>
                     <% end %>
                   <% end %>
