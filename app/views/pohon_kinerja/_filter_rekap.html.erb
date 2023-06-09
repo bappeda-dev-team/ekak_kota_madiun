@@ -34,11 +34,11 @@
             <% @isu_kota.each.with_index(1) do |(isu_kota, strategis), no_isu| %>
               <tr>
                 <th colspan="4">Isu Strategis Kota <%= no_isu %>: <%= isu_kota.isu_strategis %>
-                &nbsp;
-                <%= link_to clone_list_opd_pohon_kinerja_index_path(isu_strategis: isu_kota.id,
+                  &nbsp;
+                  <%= link_to clone_list_opd_pohon_kinerja_index_path(isu_strategis: isu_kota.id,
                                                                     tahun_sekarang: @tahun,
-                                                                    jenis: 'kota'), remote: true, 
-                    data: { 
+                                                                    jenis: 'kota'), remote: true,
+                    data: {
                       controller: 'form-modal',
                       action: 'form-modal#appendForm',
                       form_modal_location_param: 'form-clone-body',
@@ -82,7 +82,7 @@
                         <td class="text-wrap" colspan="3">
                           <strong>Review</strong>
                           <br/>
-                          Pengomentar: <%= kom.user.nama %>
+                          Reviewer: <%= kom.user.nama %>
                           <br/>
                           Judul: <%= kom.judul %>
                           <br/>
@@ -96,9 +96,9 @@
                   <td colspan="4"></td>
                 </tr>
               <% end%>
-                <tr class="rekap_pokin_separator" >
-                  <td colspan="4"></td>
-                </tr>
+              <tr class="rekap_pokin_separator" >
+                <td colspan="4"></td>
+              </tr>
             <% end %>
           </tbody>
         </table>

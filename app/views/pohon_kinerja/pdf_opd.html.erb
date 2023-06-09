@@ -59,72 +59,17 @@
                         </p>
                         <hr/>
                       <% end %>
-                    </div>
-                    <ul>
-                      <% str_kabids.each do |str_kabid, str_kasis| %>
-                        <li>
-                          <div class="tf-nc">
-                            <p class="text-center"><strong>TACTICAL OBJECTIVE</strong></p>
-                            <hr/>
-                            <span class="text-center"><%= str_kabid.strategi %></span>
-                            <%# INDIKATOR %>
-                            <% str_kabid.indikators.each do |ind_kabid| %>
-                              <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
-                            <hr/>
-                            <p>
-                              <%= ind_kabid.indikator_kinerja %>
-                              <span>[ <%= ind_kabid.target %>
-                                <%= ind_kabid.satuan %> ]</span>
-                            </p>
-                            <hr/>
-                          <% end %>
-                        </div>
-                        <ul>
-                          <% str_kasis.each do |str_kasi, str_staffs| %>
-                            <li>
-                              <div class="tf-nc">
-                                <p class="text-center"><strong>OPERATIONAL OBJECTIVE</strong></p>
-                                <hr/>
-                                <span class="text-center"><%= str_kasi.strategi %></span>
-                                <%# INDIKATOR %>
-                                <% str_kasi.indikators.each do |ind_kasi| %>
-                                  <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
-                                <hr/>
-                                <p>
-                                  <%= ind_kasi.indikator_kinerja %>
-                                  <span>[ <%= ind_kasi.target %>
-                                    <%= ind_kasi.satuan %> ]</span>
-                                </p>
-                                <hr/>
-                              <% end %>
-                            </div>
-                            <ul>
-                              <% str_staffs.each do |str_staff| %>
-                                <li>
-                                  <div class="tf-nc">
-                                    <p class="text-center"><strong>OPERATIONAL OBJECTIVE 2</strong></p>
-                                    <hr/>
-                                    <span class="text-center"><%= str_staff.strategi %></span>
-                                    <%# INDIKATOR %>
-                                    <% str_staff.indikators.each do |ind_staff| %>
-                                      <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
-                                      <hr/>
-                                      <p>
-                                        <%= ind_staff.indikator_kinerja %>
-                                        <span>[ <%= ind_staff.target %>
-                                          <%= ind_staff.satuan %> ]</span>
-                                      </p>
-                                      <hr/>
-                                  <% end %>
-                                <% str_staff.komentars.each do |kom| %>
-                                  <p class="higlighted px-2"<strong>REVIEW</strong></p>
-                                  <hr/>
-                                  <span><%= kom.komentar %></span>
-                                <% end %>
-                                <div class='my-3'></div>
-                                <div class="komentar">
-                                  <%= link_to "Tambah Komentar",
-                                          komentar_pokin_komentars_path(kode_opd: str_staff.opd.kode_unik_opd, strategi_id: str_staff.id),
+                      <% str_opd.komentars.each do |kom_opd| %>
+                        <p class="higlighted px-2"<strong>REVIEW</strong></p>
+                      <hr/>
+                      <span>Review: <%= kom_opd.komentar %></span>
+                      <hr/>
+                      <span>Reviewer: <%= kom_opd.komentator %></span>
+                    <% end %>
+                    <p class="komentar">
+                      <%= link_to "Tambah Komentar",
+                                          komentar_pokin_komentars_path(kode_opd: str_opd.opd.kode_unik_opd,
+                                                                        strategi_id: str_opd.id),
                                           remote: true,
                                           class: 'btn btn-sm btn-outline-gray-900',
                                           data: { controller: 'form-modal',
@@ -132,23 +77,135 @@
                                                   form_modal_location_param: 'form-komentar-body',
                                                   bs_target: '#form-komentar',
                                                   bs_toggle: 'modal' } %>
-                                </div>
-                                </div>
-                              </li>
-                            <% end %>
-                          </ul>
-                        </li>
+                    </p>
+                  </div>
+                  <ul>
+                    <% str_kabids.each do |str_kabid, str_kasis| %>
+                      <li>
+                        <div class="tf-nc">
+                          <p class="text-center"><strong>TACTICAL OBJECTIVE</strong></p>
+                          <hr/>
+                          <span class="text-center"><%= str_kabid.strategi %></span>
+                          <%# INDIKATOR %>
+                          <% str_kabid.indikators.each do |ind_kabid| %>
+                            <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
+                          <hr/>
+                          <p>
+                            <%= ind_kabid.indikator_kinerja %>
+                            <span>[ <%= ind_kabid.target %>
+                              <%= ind_kabid.satuan %> ]</span>
+                          </p>
+                          <hr/>
+                        <% end %>
+                        <% str_kabid.komentars.each do |kom_kabid| %>
+                          <p class="higlighted px-2"<strong>REVIEW</strong></p>
+                        <hr/>
+                        <span>Review: <%= kom_kabid.komentar %></span>
+                        <hr/>
+                        <span>Reviewer: <%= kom_kabid.komentator %></span>
                       <% end %>
-                    </ul>
-                  </li>
-                <% end %>
-              </ul>
-            </li>
-          <% end %>
-        </ul>
-      </li>
-    <% end %>
-  </ul>
+                      <p class="komentar">
+                        <%= link_to "Tambah Komentar",
+                                          komentar_pokin_komentars_path(kode_opd: str_kabid.opd.kode_unik_opd,
+                                                                        strategi_id: str_kabid.id),
+                                          remote: true,
+                                          class: 'btn btn-sm btn-outline-gray-900',
+                                          data: { controller: 'form-modal',
+                                                  action: 'form-modal#appendForm',
+                                                  form_modal_location_param: 'form-komentar-body',
+                                                  bs_target: '#form-komentar',
+                                                  bs_toggle: 'modal' } %>
+                      </p>
+                    </div>
+                    <ul>
+                      <% str_kasis.each do |str_kasi, str_staffs| %>
+                        <li>
+                          <div class="tf-nc">
+                            <p class="text-center"><strong>OPERATIONAL OBJECTIVE</strong></p>
+                            <hr/>
+                            <span class="text-center"><%= str_kasi.strategi %></span>
+                            <%# INDIKATOR %>
+                            <% str_kasi.indikators.each do |ind_kasi| %>
+                              <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
+                            <hr/>
+                            <p>
+                              <%= ind_kasi.indikator_kinerja %>
+                              <span>[ <%= ind_kasi.target %>
+                                <%= ind_kasi.satuan %> ]</span>
+                            </p>
+                            <hr/>
+                          <% end %>
+                          <% str_kasi.komentars.each do |kom_kasi| %>
+                            <p class="higlighted px-2"<strong>REVIEW</strong></p>
+                          <hr/>
+                          <span>Review: <%= kom_kasi.komentar %></span>
+                          <span>Reviewer: <%= kom_kasi.komentator %></span>
+                        <% end %>
+                        <p class="komentar">
+                          <%= link_to "Tambah Komentar",
+                                          komentar_pokin_komentars_path(kode_opd: str_kasi.opd.kode_unik_opd,
+                                                                        strategi_id: str_kasi.id),
+                                          remote: true,
+                                          class: 'btn btn-sm btn-outline-gray-900',
+                                          data: { controller: 'form-modal',
+                                                  action: 'form-modal#appendForm',
+                                                  form_modal_location_param: 'form-komentar-body',
+                                                  bs_target: '#form-komentar',
+                                                  bs_toggle: 'modal' } %>
+                        </p>
+                      </div>
+                      <ul>
+                        <% str_staffs.each do |str_staff| %>
+                          <li>
+                            <div class="tf-nc">
+                              <p class="text-center"><strong>OPERATIONAL OBJECTIVE 2</strong></p>
+                              <hr/>
+                              <span class="text-center"><%= str_staff.strategi %></span>
+                              <%# INDIKATOR %>
+                              <% str_staff.indikators.each do |ind_staff| %>
+                                <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
+                              <hr/>
+                              <p>
+                                <%= ind_staff.indikator_kinerja %>
+                                <span>[ <%= ind_staff.target %>
+                                  <%= ind_staff.satuan %> ]</span>
+                              </p>
+                              <hr/>
+                            <% end %>
+                            <% str_staff.komentars.each do |kom| %>
+                              <p class="higlighted px-2"<strong>REVIEW</strong></p>
+                            <hr/>
+                            <span>Review: <%= kom.komentar %></span>
+                            <span>Reviewer:<%= kom.komentator %></span>
+                          <% end %>
+                          <p class="komentar">
+                            <%= link_to "Tambah Komentar",
+                                          komentar_pokin_komentars_path(kode_opd: str_staff.opd.kode_unik_opd,
+                                                                        strategi_id: str_staff.id),
+                                          remote: true,
+                                          class: 'btn btn-sm btn-outline-gray-900',
+                                          data: { controller: 'form-modal',
+                                                  action: 'form-modal#appendForm',
+                                                  form_modal_location_param: 'form-komentar-body',
+                                                  bs_target: '#form-komentar',
+                                                  bs_toggle: 'modal' } %>
+                          </p>
+                        </div>
+                      </li>
+                    <% end %>
+                  </ul>
+                </li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+      </ul>
+    </li>
+  <% end %>
+</ul>
+</li>
+<% end %>
+</ul>
 </li>
 <% end %>
 </ul>

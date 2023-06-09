@@ -35,3 +35,17 @@
     </tr>
   <% end %>
 <% end %>
+<% strategi.komentars.each do |kom| %>
+  <tr class="higlighted">
+    <td class="text-wrap"></td>
+    <td class="text-wrap" colspan="3">
+      <strong>Review</strong>
+      <br/>
+      Reviewer: <%= kom.user.nama %>
+      <br/>
+      Judul: <%= kom.judul %>
+      <br/>
+      Komentar: <%= kom.komentar %>
+    </td>
+  </tr>
+<% end %>
