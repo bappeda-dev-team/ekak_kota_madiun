@@ -163,6 +163,14 @@ class UsersController < ApplicationController
     render partial: "form_peran"
   end
 
+  def set_role_khusus
+    @user = User.find(params[:id])
+    @dom_id = params[:dom_id]
+    @opd = @user.opd
+    @roles = Role.pluck(:name)
+    render partial: "form_peran"
+  end
+
   def add_role
     @user = User.find(params[:id])
     @dom_id = params[:dom_id]

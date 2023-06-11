@@ -40,6 +40,25 @@
                     </p>
                     <hr/>
                   <% end %>
+                  <% str_kota.komentars.each do |kom_kota| %>
+                    <p class="higlighted px-2"<strong>REVIEW</strong></p>
+                  <hr/>
+                  <span>Review: <%= kom_kota.komentar %></span>
+                  <hr/>
+                  <span>Reviewer: <%= kom_kota.komentator %></span>
+                <% end %>
+                <p class="komentar">
+                  <%= link_to "Tambah Komentar",
+                                      komentar_pokin_komentars_path(kode_opd: 'kota_madiun',
+                                                                    strategi_id: str_kota.id),
+                                      remote: true,
+                                      class: 'btn btn-sm btn-outline-gray-900',
+                                      data: { controller: 'form-modal',
+                                              action: 'form-modal#appendForm',
+                                              form_modal_location_param: 'form-komentar-body',
+                                              bs_target: '#form-komentar',
+                                              bs_toggle: 'modal' } %>
+                </p>
                 </div>
                 <ul>
                   <% str_opds.each do |str_opd, str_kabids| %>

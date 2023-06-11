@@ -16,8 +16,10 @@
       </div>
     <% end %>
     <div class="card border-0 shadow" id="user_khusus">
-      <%= render 'hasil_filter', { users: @users, kode_opd: '0' } %>
+      <%= render 'all_user_template', { users: @users, kode_opd: '0' } %>
     </div>
   </div>
 </div>
 <%= render 'modal_user' %>
+<%= render 'shared/modal_template', modal_name: 'user-role' %>
+<%= render 'shared/modal_template', modal_name: 'user-nip' %>

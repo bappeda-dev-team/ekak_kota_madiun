@@ -4,6 +4,8 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
       render partial: 'layouts/sidebar_super_admin'
     elsif current_user.has_role?(:admin)
       render partial: 'layouts/sidebar_admin'
+    elsif current_user.has_role?(:reviewer)
+      render partial: 'layouts/sidebar_reviewer'
     elsif current_user.has_role?(:asn)
       render partial: 'layouts/sidebar_asn'
     else
@@ -30,6 +32,10 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
       {
         title: 'Master User', href: list_all_users_path,
         icon: 'fas fa-users', identifier: 'list_all'
+      },
+      {
+        title: 'User Khusus', href: khusus_users_path,
+        icon: 'fas fa-user-tie', identifier: 'khusus_users'
       },
       {
         title: 'Master Rencana Kinerja', href: sasaran_admin_sasarans_path,
@@ -59,7 +65,7 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
                    '\blist_all|\btematiks|' \
                    '\bkelompok_anggarans|' \
                    '\bspbes|' \
-                   '\badminsasarans)')
+                   '\badminsasarans|\busers\/khusus)')
   end
 
   def perencanaan_kota_items # rubocop:disable Metrics/MethodLength
@@ -289,6 +295,23 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
 
   def collapsed_item_usulan
     collapse_class('(\binovasis|\basn_musrenbangs|\bmusrenbangs|\bpokpirs|\bmandatoris)')
+  end
+
+  def reviewer_items
+    [
+      {
+        title: 'Rekap Pohon Kinerja Kota', href: rekap_pohon_kinerja_index_path,
+        icon: 'fas fa-solar-panel', identifier: 'pohon_kinerja/rekap'
+      },
+      {
+        title: 'Rekap Pohon Kinerja OPD', href: rekap_opd_pohon_kinerja_index_path,
+        icon: 'fas fa-tree', identifier: 'pohon_kinerja/rekap'
+      }
+    ]
+  end
+
+  def collapsed_reviewer_items
+    collapse_class('(\bpohon_kinerja\/opd|\bpohon_kinerja\/kota)')
   end
 
   def collapse_class(identifier)
