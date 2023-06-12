@@ -52,7 +52,7 @@
               </tr>
               <% strategis.each.with_index(1) do |(strategi, pohons), no_str| %>
                 <tr style="background-color: #E5FDD1;">
-                  <th rowspan="<%= strategi.indikators_tahun(@tahun).size + 1 %>" class="align-middle" width="15" ><%= no_str %></th>
+                  <th rowspan="<%= strategi.indikators_tahun(@tahun).size + 1 %>" class="align-middle" width="15" >STRATEGI KOTA <%= no_str %></th>
                   <th rowspan="<%= strategi.indikators_tahun(@tahun).size + 1 %>" class="align-middle"><%= strategi.strategi %></th>
                 </tr>
                 <% strategi.indikators_tahun(@tahun).each do |ind_kota| %>
@@ -80,14 +80,33 @@
                     <th colspan="4">Perangkat Daerah: <%= pohon.opd.nama_opd %></th>
                   </tr>
                   <% pohon.strategis.each.with_index(1) do |stra, no| %>
-                    <tr>
-                      <td rowspan="<%= stra.indikator_strategi.size + 1 %>"><%= no %></td>
+                    <tr class="strategic-objective">
+                      <td rowspan="<%= stra.indikator_strategi.size + 1 %>">STRATEGIC <%= no %></td>
                       <td class="text-wrap" rowspan="<%= stra.indikator_strategi.size + 1 %>"><%= stra.strategi %></td>
                     </tr>
                     <% stra.indikator_sasarans.each do |ind| %>
-                      <tr>
-                        <td class="text-wrap"><%= ind.indikator_kinerja %></td>
+                      <tr class="strategic-objective">
+                        <td class="text-wrap">
+                          <%= ind.indikator_kinerja %>
+                          <% if ind.manual_ik.present? %>
+                            <p class="manual-ik my-3">
+                              <%= link_to "Manual IK", overview_indikator_sasaran_manual_ik_path(ind, ind.manual_ik),
+                                    remote: true,
+                                    class: 'btn btn-sm btn-gray-900',
+                                    data: { controller: 'form-modal',
+                                    action: 'form-modal#appendForm',
+                                    form_modal_location_param: 'form-manual-ik-body',
+                                    bs_target: '#form-manual-ik',
+                                    bs_toggle: 'modal' } %>
+                            </p>
+                          <% end %>
+                        </td>
                         <td class=""><%= "#{ind.target} #{ind.satuan}" %></td>
+                      </tr>
+                    <% end %>
+                    <% stra.renaksi.each.with_index(1) do |renaksi_kabid, no_aksi_kabid| %>
+                      <tr class="strategic-objective">
+                        <th colspan="4" class="text-wrap">Renaksi <%= no_aksi_kabid %>: <%= renaksi_kabid %></th>
                       </tr>
                     <% end %>
                     <% stra.komentars.each do |kom| %>
