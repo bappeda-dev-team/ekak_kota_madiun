@@ -10,7 +10,14 @@ class ManualIksController < ApplicationController
   # GET /manual_iks/1 or /manual_iks/1.json
   def show
     @sasaran = @indikator.sasaran
-    @user = @sasaran.user
+  end
+
+  def overview
+    @indikator = IndikatorSasaran.find(params[:indikator_sasaran_id])
+    @sasaran = @indikator.sasaran
+    @manual_ik = ManualIk.find(params[:id])
+
+    render partial: 'manual_ik'
   end
 
   # GET /manual_iks/new

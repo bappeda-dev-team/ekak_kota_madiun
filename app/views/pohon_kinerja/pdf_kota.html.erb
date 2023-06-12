@@ -21,115 +21,38 @@
               </div>
               <% if isu_kota&.strategi_kotums.any? %>
                 <ul>
-                  <% isu_kota.strategi_kotums.each do |kotum| %>
+                  <% isu_kota.strategi_kota_tahun(@tahun).each do |kotum| %>
                     <li>
-                      <div class="tf-nc">
-                        <p class="text-center"><strong>STRATEGI</strong></p>
-                        <hr/>
-                        <span class="text-center"><%= kotum.strategi %></span>
-                        <% ind_kota = kotum.indikator_tahun(@tahun) %>
-                        <% if ind_kota.present? %>
-                          <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
-                        <hr/>
-                        <span><%= ind_kota.indikator %></span>
-                        <p class="bg-info text-white px-2"<strong>TARGET</strong></p>
-                      <hr/>
-                      <span><%= ind_kota.target %></span>
-                      <p class="bg-info text-white px-2"<strong>SATUAN</strong></p>
-                    <hr/>
-                    <span><%= ind_kota.satuan %></span>
-                    <hr/>
-                    <% kotum.komentars.each do |kom| %>
-                      <p class="higlighted px-2"<strong>REVIEW</strong></p>
-                    <hr/>
-                    <span>Review: <%= kom.komentar %></span>
-                    <hr/>
-                    <span>Reviewer:<%= kom.komentator %></span>
-                  <% end %>
-                  <p class="komentar">
-                    <%= link_to "Tambah Review",
-                                komentar_pokin_komentars_path(kode_opd: 'kota_madiun',
-                                                              strategi_id: kotum.id),
-                                remote: true,
-                                class: 'btn btn-sm btn-outline-gray-900',
-                                data: { controller: 'form-modal',
-                                        action: 'form-modal#appendForm',
-                                        form_modal_location_param: 'form-komentar-body',
-                                        bs_target: '#form-komentar',
-                                        bs_toggle: 'modal' } %>
-                  </p>
-                <% else %>
-                  <p class="text-danger"><strong>INDIKATOR KOSONG</strong></p>
-                <% end %>
-              </div>
-              <% if kotum&.pohons.any? %>
-                <ul>
-                  <% kotum.pohons.each do |opd_pohon| %>
-                    <li>
-                      <div class="tf-nc">
-                        <p class="text-center"><strong><%= opd_pohon.opd.nama_opd %></strong></p>
-                      </div>
-                      <% if opd_pohon&.strategis.any? %>
+                      <%= render 'item_pokin', judul: "STRATEGI KOTA", strategi: kotum, tipe: 'kota' %>
+                      <% if kotum&.pohons.any? %>
                         <ul>
-                          <% opd_pohon.strategis.each do |strategi| %>
+                          <% kotum.pohons.each do |opd_pohon| %>
                             <li>
-                              <% if opd_pohon.strategis.any? %>
-                                <div class="tf-nc">
-                                  <p class="text-center"><strong>STRATEGI</strong></p>
-                                  <hr/>
-                                  <span><%= strategi.strategi %></span>
-                                  <% strategi.indikators.each do |ind_strategi| %>
-                                    <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
-                                  <hr/>
-                                  <span><%= ind_strategi.indikator_kinerja %></span>
-                                  <p class="bg-info text-white px-2"<strong>TARGET</strong></p>
-                                <hr/>
-                                <span><%= ind_strategi.target %></span>
-                                <p class="bg-info text-white px-2"<strong>SATUAN</strong></p>
-                              <hr/>
-                              <span><%= ind_strategi.satuan %></span>
-                            <% end %>
-                            <hr/>
-                            <% strategi.komentars.each do |kom| %>
-                              <p class="higlighted px-2"<strong>REVIEW</strong></p>
-                            <hr/>
-                            <span>Review: <%= kom.komentar %></span>
-                            <hr/>
-                            <span>Reviewer:<%= kom.komentator %></span>
+                              <div class="tf-nc">
+                                <p class="text-center"><strong><%= opd_pohon.opd.nama_opd %></strong></p>
+                              </div>
+                              <% if opd_pohon&.strategis.any? %>
+                                <ul>
+                                  <% opd_pohon.strategis.each do |strategi| %>
+                                    <li>
+                                      <%= render 'item_pokin', judul: "STRATEGIC", strategi: strategi %>
+                                    </li>
+                                  <% end %>
+                                </ul>
+                              <% end %>
+                            </li>
                           <% end %>
-                          <p class="komentar">
-                            <%= link_to "Tambah Review",
-                                komentar_pokin_komentars_path(kode_opd: strategi.opd.kode_unik_opd, strategi_id: strategi.id),
-                                remote: true,
-                                class: 'btn btn-sm btn-outline-gray-900',
-                                data: { controller: 'form-modal',
-                                        action: 'form-modal#appendForm',
-                                        form_modal_location_param: 'form-komentar-body',
-                                        bs_target: '#form-komentar',
-                                        bs_toggle: 'modal' } %>
-                          </p>
-                        <% else %>
-                          <div class="tf-nc bg-danger text-white">
-                            <p><strong>KOSONG</strong></p>
-                          </div>
-                        <% end %>
-                      </li>
-                    <% end %>
-                  </ul>
-                <% end %>
-              </li>
-            <% end %>
-          </ul>
-        <% end %>
-      </li>
-    <% end %>
+                        </ul>
+                      <% end %>
+                    </li>
+                  <% end %>
+                </ul>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </li>
   </ul>
-<% end %>
-</li>
-<% end %>
-</ul>
-<% end %>
-</li>
-</ul>
 </div>
 <%= render 'shared/modal_template', modal_name: 'komentar' %>

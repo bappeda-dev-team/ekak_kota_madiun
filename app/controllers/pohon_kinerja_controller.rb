@@ -5,16 +5,17 @@ class PohonKinerjaController < ApplicationController
   def kota; end
 
   def opd
+    @tahun = cookies[:tahun]
     @opd = current_user.opd
     # nip_kepala = @opd.users.eselon2.first&.nik
-    @pohons = @opd.pohons
-    @strategis = @opd.strategis.where(role: 'eselon_2')
+    # @pohons = @opd.pohons
+    @strategis = @opd.strategis.where(role: 'eselon_2').where('tahun ILIKE ?', "%#{@tahun}%")
   end
 
   def asn
     @tahun = cookies[:tahun]
     @opd = current_user.opd
-    @pohons = @opd.pohons
+    # @pohons = @opd.pohons
     @user = current_user
     @eselon = @user.eselon_user
     @strategis = current_user.strategis.where('tahun ILIKE ?', "%#{@tahun}%")
@@ -24,8 +25,8 @@ class PohonKinerjaController < ApplicationController
     @kode_opd = params[:kode_opd]
     @tahun = cookies[:tahun]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @pohons = @opd.pohons
-    @strategis = @opd.strategis.where(role: 'eselon_2')
+    # @pohons = @opd.pohons
+    @strategis = @opd.strategis.where(role: 'eselon_2').where('tahun ILIKE ?', "%#{@tahun}%")
     @nama_opd = @opd.nama_opd
     render partial: 'pohon_kinerja/kotak_usulan_asn', locals: { role: 'eselon_2', role_bawahan: 'eselon_3' }
   end
@@ -59,7 +60,7 @@ class PohonKinerjaController < ApplicationController
   end
 
   def excel_kota
-    @tahun = cookies[:tahun] || '2023'
+    @tahun = cookies[:tahun]
     @timestamp = Time.now.to_formatted_s(:number)
     @filename = "Pohon Kinerja Kota #{@tahun} - #{@timestamp}.xlsx"
     @isu_kota = IsuStrategisKotum.where('tahun ILIKE ?', "%#{@tahun}%").to_h do |isu_kota|
@@ -71,17 +72,17 @@ class PohonKinerjaController < ApplicationController
   end
 
   def pdf_kota
-    @tahun = cookies[:tahun] || '2023'
+    @tahun = cookies[:tahun]
     @timestamp = Time.now.to_formatted_s(:number)
     @filename = "Pohon Kinerja Kota #{@tahun} - #{@timestamp}"
-    @isu_strategis_kota = IsuStrategisKotum.where(tahun: @tahun)
+    @isu_strategis_kota = IsuStrategisKotum.where('tahun ILIKE ?', "%#{@tahun}%")
     respond_to do |format|
       format.html { render layout: 'blank' }
     end
   end
 
   def pdf_opd
-    @tahun = cookies[:tahun] || '2023'
+    @tahun = cookies[:tahun]
     opd_params = cookies[:opd]
     @opd = if opd_params
              Opd.find_by(kode_unik_opd: opd_params)
@@ -105,7 +106,7 @@ class PohonKinerjaController < ApplicationController
   def filter_rekap
     @tahun = cookies[:tahun] || '2023'
     @isu_kota = IsuStrategisKotum.where('tahun ILIKE ?', "%#{@tahun}%").to_h do |isu_kota|
-      [isu_kota, isu_kota.strategi_kotums.to_h do |str_kota|
+      [isu_kota, isu_kota.strategi_kota_tahun(@tahun).to_h do |str_kota|
         [str_kota, str_kota.pohons]
       end]
     end

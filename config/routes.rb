@@ -18,7 +18,11 @@ Rails.application.routes.draw do
   resources :spbes
   resources :pagu_anggarans
   resources :indikator_sasarans do
-    resources :manual_iks
+    resources :manual_iks do
+      member do
+        get :overview
+      end
+    end
   end
   resources :sasaran_opds
   resources :tujuan_opds do

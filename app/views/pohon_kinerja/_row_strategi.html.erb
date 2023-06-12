@@ -25,7 +25,21 @@
 <% if milik_opd %>
   <% strategi.indikators.each do |ind_kabid| %>
     <tr class="<%= class_style %>">
-      <td class="text-wrap"><%= ind_kabid.indikator_kinerja %></td>
+      <td class="text-wrap">
+        <%= ind_kabid.indikator_kinerja %>
+        <% if ind_kabid.manual_ik.present? %>
+          <p class="manual-ik my-3">
+            <%= link_to "Manual IK", overview_indikator_sasaran_manual_ik_path(ind_kabid, ind_kabid.manual_ik),
+                                    remote: true,
+                                    class: 'btn btn-sm btn-gray-900',
+                                    data: { controller: 'form-modal',
+                                    action: 'form-modal#appendForm',
+                                    form_modal_location_param: 'form-manual-ik-body',
+                                    bs_target: '#form-manual-ik',
+                                    bs_toggle: 'modal' } %>
+          </p>
+        <% end %>
+      </td>
       <td class="text-wrap"><%= "#{ind_kabid.target} #{ind_kabid.satuan}" %></td>
     </tr>
   <% end %>
