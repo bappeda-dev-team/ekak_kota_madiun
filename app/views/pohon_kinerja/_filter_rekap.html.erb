@@ -61,6 +61,20 @@
                     <td class=""><%= "#{ind_kota.target} #{ind_kota.satuan}" %></td>
                   </tr>
                 <% end %>
+                <% strategi.komentars.each do |kom_kota| %>
+                  <tr class="higlighted">
+                    <td class="text-wrap"></td>
+                    <td class="text-wrap" colspan="3">
+                      <strong>Review</strong>
+                      <br/>
+                      Reviewer: <%= kom_kota.user.nama %>
+                      <br/>
+                      Judul: <%= kom_kota.judul %>
+                      <br/>
+                      Komentar: <%= kom_kota.komentar %>
+                    </td>
+                  </tr>
+                <% end %>
                 <% pohons.each do |pohon| %>
                   <tr class="bg-gray-300">
                     <th colspan="4">Perangkat Daerah: <%= pohon.opd.nama_opd %></th>

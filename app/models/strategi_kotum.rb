@@ -21,7 +21,7 @@ class StrategiKotum < ApplicationRecord
 
   has_many :strategis, through: :pohons
   has_many :opds, through: :pohons
-  has_many :komentars, primary_key: :id, foreign_key: :item
+  has_many :komentars, -> { where(kode_opd: 'kota_madiun') }, primary_key: :id, foreign_key: :item
 
   def nama_pemilik
     "Kota Madiun"

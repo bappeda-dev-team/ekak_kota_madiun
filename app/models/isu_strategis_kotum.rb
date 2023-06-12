@@ -17,6 +17,10 @@ class IsuStrategisKotum < ApplicationRecord
 
   has_many :opds, through: :strategi_kotums
 
+  def strategi_kota_tahun(tahun)
+    strategi_kotums.where('tahun ILIKE ?', "%#{tahun}%")
+  end
+
   def strategis(opd_id)
     strategi_kotums.includes(:pohons).where(pohons: { opd_id: opd_id })
   end

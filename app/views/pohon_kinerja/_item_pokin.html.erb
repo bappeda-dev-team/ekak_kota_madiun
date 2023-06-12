@@ -1,0 +1,72 @@
+<div class="tf-nc">
+  <p class="text-center"><strong><%= local_assigns[:judul] %></strong></p>
+  <hr/>
+  <span class="text-center"><%= strategi.strategi %></span>
+  <%# INDIKATOR %>
+  <% if local_assigns[:tipe] == 'kota' %>
+    <% strategi.indikators_tahun(@tahun).each do |ind| %>
+      <p class="bg-info text-white px-2"><strong>INDIKATOR</strong></p>
+      <hr/>
+      <p>
+        <span><%= ind.indikator %></span>
+        <span>[ <%= ind.target %> <%= ind.satuan %> ]</span>
+      </p>
+      <hr/>
+    <% end %>
+    <% strategi.komentars.each do |kom| %>
+      <p class="higlighted px-2"><strong>REVIEW</strong></p>
+      <hr/>
+      <span>Review: <%= kom.komentar %></span>
+      <span>Reviewer:<%= kom.komentator %></span>
+    <% end %>
+    <p class="komentar mt-3">
+      <%= link_to "Tambah Komentar", komentar_pokin_komentars_path(kode_opd: 'kota_madiun', strategi_id: strategi.id),
+                                  remote: true,
+                                  class: 'btn btn-sm btn-outline-gray-900',
+                                  data: { controller: 'form-modal',
+                                  action: 'form-modal#appendForm',
+                                  form_modal_location_param: 'form-komentar-body',
+                                  bs_target: '#form-komentar',
+                                  bs_toggle: 'modal' } %>
+    </p>
+  <% else %>
+    <% strategi.indikators.each do |ind| %>
+      <p class="bg-info text-white px-2"><strong>INDIKATOR</strong></p>
+      <hr/>
+      <p>
+        <span><%= ind.indikator_kinerja %></span>
+        <span>[ <%= ind.target %> <%= ind.satuan %> ]</span>
+      </p>
+      <hr/>
+      <% if ind.manual_ik.present? %>
+        <p class="manual-ik my-3">
+          <%= link_to "Manual IK", overview_indikator_sasaran_manual_ik_path(ind, ind.manual_ik),
+                                    remote: true,
+                                    class: 'btn btn-sm btn-outline-gray-900',
+                                    data: { controller: 'form-modal',
+                                    action: 'form-modal#appendForm',
+                                    form_modal_location_param: 'form-manual-ik-body',
+                                    bs_target: '#form-manual-ik',
+                                    bs_toggle: 'modal' } %>
+        </p>
+      <% end %>
+    <% end %>
+    <hr/>
+    <% strategi.komentars.each do |kom| %>
+      <p class="higlighted px-2"><strong>REVIEW</strong></p>
+      <hr/>
+      <p>Review: <%= kom.komentar %></p>
+      <p>Reviewer:<%= kom.komentator %></p>
+    <% end %>
+    <p class="komentar mt-3">
+      <%= link_to "Tambah Komentar", komentar_pokin_komentars_path(kode_opd: strategi.opd.kode_unik_opd, strategi_id: strategi.id),
+                                  remote: true,
+                                  class: 'btn btn-sm btn-outline-gray-900',
+                                  data: { controller: 'form-modal',
+                                  action: 'form-modal#appendForm',
+                                  form_modal_location_param: 'form-komentar-body',
+                                  bs_target: '#form-komentar',
+                                  bs_toggle: 'modal' } %>
+    </p>
+  <% end %>
+</div>
