@@ -391,6 +391,18 @@ class ProgramKegiatan < ApplicationRecord
     end.sum
   end
 
+  def pagu_program_penetapan_tahun(tahun)
+    ProgramKegiatan.where(kode_program: kode_program).map do |sub|
+      sub.sasarans.lengkap_strategi_tahun(tahun).map(&:total_anggaran_penetapan).compact.sum
+    end.sum
+  end
+
+  def pagu_kegiatan_penetapan_tahun(tahun)
+    ProgramKegiatan.where(kode_giat: kode_giat).map do |sub|
+      sub.sasarans.lengkap_strategi_tahun(tahun).map(&:total_anggaran_penetapan).compact.sum
+    end.sum
+  end
+
   def pagu_sub_penetapan_tahun(tahun)
     ProgramKegiatan.where(kode_sub_giat: kode_sub_giat).map do |sub|
       sub.sasarans.lengkap_strategi_tahun(tahun).map(&:total_anggaran_penetapan).compact.sum

@@ -44,11 +44,9 @@
             <td class="text-gray-900 text-wrap border"  ><%= program.kode_program %></td>
             <td class="text-gray-900 text-wrap border"  ><%= nomor %></td>
             <td class="text-gray-900 text-wrap border"  ><%= program.nama_program %></td>
-            <% unless program.indikator_renstras_new('program', @kode_opd)[:indikator_program].blank? %>
+            <% if program.indikator_renstras_new('program', @kode_opd)[:indikator_program] %>
               <td class="text-gray-900 text-wrap border" >
-                <% pagu_program = program.kegiatans_opd
-                    .reject{ |keg| keg.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan]&.any? { |ii| ii.indikator.blank? } }
-                    .map { |keg| keg.subkegiatans_opd.map{|pp| pp.pagu_sub_rankir_tahun(@tahun) }.compact.sum }.compact.sum %>
+                <% pagu_program = program.pagu_program_penetapan_tahun(@tahun) %>
                 <%= link_to renja_edit_rankir_path(
                       id: program.id,
                       nama: program.nama_program,
@@ -74,7 +72,7 @@
                 Renstra belum diisi
               </td>
             <% end %>
-            <%= render 'row_indikator_penetapan',indikators: program.indikator_renstras_new('program', @kode_opd)[:indikator_program], tahun: @tahun, pagu: 0 %>
+            <%= render 'row_indikator_penetapan',indikators: program.indikator_renstras_new('program', @kode_opd)[:indikator_program], tahun: @tahun, pagu: pagu_program %>
           </tr>
         </tbody>
         <% program.kegiatans_opd_by_tahun(@tahun).each.with_index(1) do |kegiatan, no_giat| %>
@@ -101,8 +99,8 @@
               <td class="text-gray-900 text-wrap border"  ><%= kegiatan.kode_giat %></td>
               <td class="text-gray-900 text-wrap border"  ><%= no_giat %></td>
               <td class="text-gray-900 text-wrap border"  ><%= kegiatan.nama_kegiatan %></td>
-              <% unless kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan]&.any? { |ii| ii.indikator.blank? } %>
-                <% pagu_kegiatan = kegiatan.subkegiatans_opd.map{|pp| pp.pagu_sub_rankir_tahun(@tahun) }.compact.sum %>
+              <% if kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan] %>
+                <% pagu_kegiatan = kegiatan.pagu_kegiatan_penetapan_tahun(@tahun) %>
                 <td class="text-gray-900 text-wrap border" >
                   <%= link_to renja_edit_rankir_path(
                       id: kegiatan.id,
@@ -129,7 +127,7 @@
                   Renstra belum diisi
                 </td>
               <% end %>
-              <%= render 'row_indikator_penetapan',indikators: kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan], tahun: @tahun, pagu: 0 %>
+              <%= render 'row_indikator_penetapan',indikators: kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan], tahun: @tahun, pagu: pagu_kegiatan %>
             </tr>
           </tbody>
           <thead class="thead-subkegiatan">
