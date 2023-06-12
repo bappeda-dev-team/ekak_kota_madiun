@@ -23,4 +23,6 @@ class SpbeRincian < ApplicationRecord
   belongs_to :spbe
 
   belongs_to :sasaran, -> { order "nip_asn ASC" }, primary_key: :id, foreign_key: :id_rencana
+
+  has_one :opd, primary_key: :kode_opd, foreign_key: :kode_unik_opd
 end

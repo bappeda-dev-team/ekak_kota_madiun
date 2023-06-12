@@ -253,3 +253,12 @@ background: repeating-linear-gradient(
 .operational-objective-2 {
   background-color: #FFFF00;
 }
+
+td[data-subkegiatan="belum diisi"] {
+  background-color: #B73239;
+  color: #EEE2DE;
+}
+
+td[data-tahun-pelaksanaan*="success"] {
+  border: 5px solid #38E54D !important;
+}
