@@ -25,15 +25,17 @@ module LaporansHelper
   end
 
   def rowspan_sasaran(sasaran)
+    return 1 if sasaran.nil?
+
     sasaran.indikator_sasarans.empty? ? 1 : sasaran.indikator_sasarans.length
   end
 
   def indikator_sasaran(sasaran)
-    indikator = sasaran.indikator_sasarans.first
+    indikator = sasaran&.indikator_sasarans&.first
     "
-      <td class='border text-wrap'>#{indikator&.indikator_kinerja}</td>
-      <td class='border text-wrap'>#{indikator&.target}</td>
-      <td class='border text-wrap'>#{indikator&.satuan}</td>
+      <td class='border text-wrap spbe-kebutuhan'>#{indikator&.indikator_kinerja}</td>
+      <td class='border text-wrap spbe-kebutuhan'>#{indikator&.target}</td>
+      <td class='border text-wrap spbe-kebutuhan'>#{indikator&.satuan}</td>
     ".html_safe
   end
 
