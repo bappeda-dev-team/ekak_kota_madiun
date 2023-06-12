@@ -5,16 +5,17 @@ class PohonKinerjaController < ApplicationController
   def kota; end
 
   def opd
+    @tahun = cookies[:tahun]
     @opd = current_user.opd
     # nip_kepala = @opd.users.eselon2.first&.nik
-    @pohons = @opd.pohons
-    @strategis = @opd.strategis.where(role: 'eselon_2')
+    # @pohons = @opd.pohons
+    @strategis = @opd.strategis.where(role: 'eselon_2').where('tahun ILIKE ?', "%#{@tahun}%")
   end
 
   def asn
     @tahun = cookies[:tahun]
     @opd = current_user.opd
-    @pohons = @opd.pohons
+    # @pohons = @opd.pohons
     @user = current_user
     @eselon = @user.eselon_user
     @strategis = current_user.strategis.where('tahun ILIKE ?', "%#{@tahun}%")
@@ -24,8 +25,8 @@ class PohonKinerjaController < ApplicationController
     @kode_opd = params[:kode_opd]
     @tahun = cookies[:tahun]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @pohons = @opd.pohons
-    @strategis = @opd.strategis.where(role: 'eselon_2')
+    # @pohons = @opd.pohons
+    @strategis = @opd.strategis.where(role: 'eselon_2').where('tahun ILIKE ?', "%#{@tahun}%")
     @nama_opd = @opd.nama_opd
     render partial: 'pohon_kinerja/kotak_usulan_asn', locals: { role: 'eselon_2', role_bawahan: 'eselon_3' }
   end
