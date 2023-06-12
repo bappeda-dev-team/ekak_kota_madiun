@@ -1,50 +1,53 @@
+<%= content_for :html_title, "POHON KINERJA KOTA" %>
 <div class="mb-5">
   <button id="cetak" class="btn btn-tertiary w-100"
         data-controller="pohon-kinerja"
         data-pohon-kinerja-tahun-value="<%= @tahun %>"
         data-action="click->pohon-kinerja#cetak">DOWNLOAD POHON KINERJA</button>
 </div>
-<div class="tf-tree" style="font-size: 5px;" id='pokin-kota'>
+<div class="tf-tree tf-gap-lg" style="font-size: 5px;" id='pokin-kota'>
   <h1>POHON KINERJA KOTA MADIUN TAHUN <%= @tahun %></h1>
   <ul>
     <li>
       <span class="tf-nc">Kota Madiun</span>
-      <ul>
-        <% @isu_strategis_kota.each do |isu_kota| %>
-          <li>
-            <div class="tf-nc">
-              <p class="text-center"><strong>ISU STRATEGIS</strong></p>
-              <hr/>
-              <span class="text-center"><%= isu_kota.isu_strategis %></span>
-            </div>
-            <ul>
-              <% isu_kota.strategi_kotums.each do |kotum| %>
-                <li>
-                  <div class="tf-nc">
-                    <p class="text-center"><strong>STRATEGI</strong></p>
+      <% if @isu_strategis_kota.any? %>
+        <ul>
+          <% @isu_strategis_kota.each do |isu_kota| %>
+            <li>
+              <div class="tf-nc">
+                <p class="text-center"><strong>ISU STRATEGIS</strong></p>
+                <hr/>
+                <span class="text-center"><%= isu_kota.isu_strategis %></span>
+              </div>
+              <% if isu_kota&.strategi_kotums.any? %>
+                <ul>
+                  <% isu_kota.strategi_kotums.each do |kotum| %>
+                    <li>
+                      <div class="tf-nc">
+                        <p class="text-center"><strong>STRATEGI</strong></p>
+                        <hr/>
+                        <span class="text-center"><%= kotum.strategi %></span>
+                        <% ind_kota = kotum.indikator_tahun(@tahun) %>
+                        <% if ind_kota.present? %>
+                          <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
+                        <hr/>
+                        <span><%= ind_kota.indikator %></span>
+                        <p class="bg-info text-white px-2"<strong>TARGET</strong></p>
+                      <hr/>
+                      <span><%= ind_kota.target %></span>
+                      <p class="bg-info text-white px-2"<strong>SATUAN</strong></p>
                     <hr/>
-                    <span class="text-center"><%= kotum.strategi %></span>
-                    <% ind_kota = kotum.indikator_tahun(@tahun) %>
-                    <% if ind_kota.present? %>
-                      <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
+                    <span><%= ind_kota.satuan %></span>
                     <hr/>
-                    <span><%= ind_kota.indikator %></span>
-                    <p class="bg-info text-white px-2"<strong>TARGET</strong></p>
-                  <hr/>
-                  <span><%= ind_kota.target %></span>
-                  <p class="bg-info text-white px-2"<strong>SATUAN</strong></p>
-                <hr/>
-                <span><%= ind_kota.satuan %></span>
-                <hr/>
-                <% kotum.komentars.each do |kom| %>
-                  <p class="higlighted px-2"<strong>REVIEW</strong></p>
-                <hr/>
-                <span>Review: <%= kom.komentar %></span>
-                <hr/>
-                <span>Reviewer:<%= kom.komentator %></span>
-              <% end %>
-              <p class="komentar">
-                <%= link_to "Tambah Review",
+                    <% kotum.komentars.each do |kom| %>
+                      <p class="higlighted px-2"<strong>REVIEW</strong></p>
+                    <hr/>
+                    <span>Review: <%= kom.komentar %></span>
+                    <hr/>
+                    <span>Reviewer:<%= kom.komentator %></span>
+                  <% end %>
+                  <p class="komentar">
+                    <%= link_to "Tambah Review",
                                 komentar_pokin_komentars_path(kode_opd: 'kota_madiun',
                                                               strategi_id: kotum.id),
                                 remote: true,
@@ -54,46 +57,48 @@
                                         form_modal_location_param: 'form-komentar-body',
                                         bs_target: '#form-komentar',
                                         bs_toggle: 'modal' } %>
-              </p>
-            <% else %>
-              <p class="text-danger"><strong>INDIKATOR KOSONG</strong></p>
-            <% end %>
-          </div>
-          <ul>
-            <% kotum.pohons.each do |opd_pohon| %>
-              <li>
-                <div class="tf-nc">
-                  <p class="text-center"><strong><%= opd_pohon.opd.nama_opd %></strong></p>
-                </div>
+                  </p>
+                <% else %>
+                  <p class="text-danger"><strong>INDIKATOR KOSONG</strong></p>
+                <% end %>
+              </div>
+              <% if kotum&.pohons.any? %>
                 <ul>
-                  <% opd_pohon.strategis.each do |strategi| %>
+                  <% kotum.pohons.each do |opd_pohon| %>
                     <li>
-                      <% if opd_pohon.strategis.any? %>
-                        <div class="tf-nc">
-                          <p class="text-center"><strong>STRATEGI</strong></p>
-                          <hr/>
-                          <span><%= strategi.strategi %></span>
-                          <% strategi.indikators.each do |ind_strategi| %>
-                            <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
-                          <hr/>
-                          <span><%= ind_strategi.indikator_kinerja %></span>
-                          <p class="bg-info text-white px-2"<strong>TARGET</strong></p>
-                        <hr/>
-                        <span><%= ind_strategi.target %></span>
-                        <p class="bg-info text-white px-2"<strong>SATUAN</strong></p>
-                      <hr/>
-                      <span><%= ind_strategi.satuan %></span>
-                    <% end %>
-                    <hr/>
-                    <% strategi.komentars.each do |kom| %>
-                      <p class="higlighted px-2"<strong>REVIEW</strong></p>
-                    <hr/>
-                    <span>Review: <%= kom.komentar %></span>
-                    <hr/>
-                    <span>Reviewer:<%= kom.komentator %></span>
-                  <% end %>
-                  <p class="komentar">
-                    <%= link_to "Tambah Review",
+                      <div class="tf-nc">
+                        <p class="text-center"><strong><%= opd_pohon.opd.nama_opd %></strong></p>
+                      </div>
+                      <% if opd_pohon&.strategis.any? %>
+                        <ul>
+                          <% opd_pohon.strategis.each do |strategi| %>
+                            <li>
+                              <% if opd_pohon.strategis.any? %>
+                                <div class="tf-nc">
+                                  <p class="text-center"><strong>STRATEGI</strong></p>
+                                  <hr/>
+                                  <span><%= strategi.strategi %></span>
+                                  <% strategi.indikators.each do |ind_strategi| %>
+                                    <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
+                                  <hr/>
+                                  <span><%= ind_strategi.indikator_kinerja %></span>
+                                  <p class="bg-info text-white px-2"<strong>TARGET</strong></p>
+                                <hr/>
+                                <span><%= ind_strategi.target %></span>
+                                <p class="bg-info text-white px-2"<strong>SATUAN</strong></p>
+                              <hr/>
+                              <span><%= ind_strategi.satuan %></span>
+                            <% end %>
+                            <hr/>
+                            <% strategi.komentars.each do |kom| %>
+                              <p class="higlighted px-2"<strong>REVIEW</strong></p>
+                            <hr/>
+                            <span>Review: <%= kom.komentar %></span>
+                            <hr/>
+                            <span>Reviewer:<%= kom.komentator %></span>
+                          <% end %>
+                          <p class="komentar">
+                            <%= link_to "Tambah Review",
                                 komentar_pokin_komentars_path(kode_opd: strategi.opd.kode_unik_opd, strategi_id: strategi.id),
                                 remote: true,
                                 class: 'btn btn-sm btn-outline-gray-900',
@@ -102,24 +107,28 @@
                                         form_modal_location_param: 'form-komentar-body',
                                         bs_target: '#form-komentar',
                                         bs_toggle: 'modal' } %>
-                  </p>
-                <% else %>
-                  <div class="tf-nc bg-danger text-white">
-                    <p><strong>KOSONG</strong></p>
-                  </div>
+                          </p>
+                        <% else %>
+                          <div class="tf-nc bg-danger text-white">
+                            <p><strong>KOSONG</strong></p>
+                          </div>
+                        <% end %>
+                      </li>
+                    <% end %>
+                  </ul>
                 <% end %>
               </li>
             <% end %>
           </ul>
-        </li>
-      <% end %>
-    </ul>
-  </li>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
 <% end %>
-</ul>
 </li>
 <% end %>
 </ul>
+<% end %>
 </li>
 </ul>
 </div>
