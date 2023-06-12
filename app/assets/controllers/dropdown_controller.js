@@ -14,6 +14,7 @@ export default class extends Controller {
     url: String,
     kodeOpd: String,
     uraian: String,
+    item: String,
     display: { type: Boolean, default: true },
     width: { type: String, default: 'element' }
   }
@@ -99,6 +100,9 @@ export default class extends Controller {
       case 'element':
         this.dropdown_base(this.element_options)
         break
+      case 'ajax_preselect':
+        this.dropdown_ajax_preselect(this.options_with_ajax)
+        break
       default:
         this.dropdown_base(this.default_options)
     }
@@ -178,6 +182,25 @@ export default class extends Controller {
     })
   }
 
+  dropdown_ajax_preselect(options) {
+    const select2ed = this.dropdown_base(options)
+    if(this.itemValue.length > 0) {
+      $.ajax({
+        type: 'GET',
+        url:  `${this.urlValue}?item=${this.itemValue}`,
+      }).then(function (data) {
+        const data_first = data.results[0]
+        const options = new Option(data_first.text, data_first.id, true, true)
+        select2ed.append(options).trigger({
+          type: 'select2:select',
+          params: {
+            data: data
+          }
+        });
+      });
+    }
+  }
+
   // custom_event
   dropdown_with_action(options) {
     const select2ed = this.dropdown_base(options)
@@ -214,9 +237,22 @@ export default class extends Controller {
   chain_internal_or_external_opd_target(e) {
     const {data} = e.detail
     if(data.id == 'External') {
-      this.element.style.display = 'block'
-      this.displayValue = true;
-      this.jenis_dropdown_generator()
+      this.element.disabled = false
+    }
+    else {
+      const select2ed = this.select;
+      if(this.kodeOpdValue.length > 0) {
+        $.ajax({
+          type: 'GET',
+          url:  `${this.urlValue}?item=${this.kodeOpdValue}`,
+        }).then(function (data) {
+          const data_first = data.results[0]
+          const options = new Option(data_first.text, data_first.id, true, true)
+          select2ed.append(options).trigger('change.select2');
+        });
+      }
+      this.element.readonly = true
+      this.element.value = this.kodeOpdValue
     }
   }
 

@@ -20,6 +20,7 @@ class StrategisController < ApplicationController
     @role = params[:role] || current_user.eselon_user
     @usulan_isu = params[:usulan_isu]
     @sasaran = @strategi.build_sasaran
+    @sasaran.indikator_sasarans.build
     @is_new = true
     strategi_pohon_atasan(@nip)
   end

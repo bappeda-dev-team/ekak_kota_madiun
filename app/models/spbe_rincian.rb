@@ -20,7 +20,7 @@
 #  strategi_ref_id        :string
 #
 class SpbeRincian < ApplicationRecord
-  belongs_to :spbe
+  belongs_to :spbe, inverse_of: :spbe_rincians
 
   belongs_to :sasaran, -> { order "nip_asn ASC" }, primary_key: :id, foreign_key: :id_rencana
 

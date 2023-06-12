@@ -87,7 +87,7 @@
                       <% tah = rincian.tahun_awal == th.to_s || rincian.tahun_akhir == th.to_s ? "<i class='fa fa-check text-success'></i>".html_safe : '' %>
                       <td class="text-center" rowspan="<%= rowspan_sasaran(sas_kasi) %>" data-tahun-pelaksanaan="<%= tah %>"><%= tah %></td>
                     <% end %>
-                    <td class="border" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.opd.nama_opd %></td>
+                    <td class="border" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.opd&.nama_opd %></td>
                     <td class="border" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.keterangan %></td>
                   </tr>
                   <% sas_kasi.indikator_sasarans.drop(1).each do |indikator_s| %>

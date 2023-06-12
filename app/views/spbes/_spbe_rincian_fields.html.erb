@@ -11,8 +11,8 @@
   </div>
   <div class="field">
     <%= form.label :opd_pelaksana, { class: "form-label" } %>
-    <%= form.select :internal_external, ['Internal', 'External'], {},
-        { data: {
+    <%= form.select :internal_external, ['Internal', 'External'], {include_blank: true},
+        { data: { placeholder: 'Lokasi',
                   controller: 'dropdown',
                   dropdown_jenis_value: 'chain',
                   dropdown_event_name_value: 'change-opd',
@@ -20,15 +20,47 @@
         } %>
   </div>
   <div class="field mb-5">
-    <%= form.select :kode_opd, [], {include_blank: true},
-        { data: { placeholder: "OPD Pelaksana",
+    <%= form.select :kode_opd, [], {include_blank: true,},
+        { disabled: form.object.internal_external.eql?('Internal'),
+          data: { placeholder: "OPD Pelaksana",
                   controller: 'dropdown',
-                  dropdown_jenis_value: 'ajax',
-                  dropdown_display_value: false,
+                  dropdown_jenis_value: 'ajax_preselect',
                   dropdown_url_value: legit_opd_opds_path(@opd, :json),
+                  dropdown_item_value: form.object.kode_opd,
+                  dropdown_kode_opd_value: @kode_opd,
                   action: 'change-opd@document->dropdown#chain_internal_or_external_opd_target'
                 }
         } %>
+  </div>
+  <div class="field">
+    <%= form.label :sasaran_operasional, {class: "form-label"} %>
+    <%= form.select :id_rencana, [], {include_blank: true},
+    { data: { placeholder: "Pilih Sasaran Operasional",
+              controller: 'dropdown',
+              dropdown_jenis_value: 'ajax_preselect',
+              dropdown_kode_opd_value: @kode_opd,
+              dropdown_item_value: form.object.id_rencana,
+              dropdown_url_value: sasaran_operational_opds_path(format: :json),
+            }
+    } %>
+  </div>
+  <div class="field">
+    <%= form.label :tahun_awal, class: 'form-label' %>
+    <%= form.select(:tahun_awal, (['',2021,2022,2023,2024]), {},
+    { data: {"placeholder": "Tahun Awal",
+              controller: 'dropdown',
+    }}) %>
+  </div>
+  <div class="field">
+    <%= form.label :tahun_akhir, class: 'form-label' %>
+    <%= form.select(:tahun_akhir, (['',2021,2022,2023,2024]), {},
+    { data: {"placeholder": "Tahun Akhir",
+              controller: 'dropdown',
+    }}) %>
+  </div>
+  <div class="field">
+    <%= form.label :keterangan, { class: "form-label" } %>
+    <%= form.text_area :keterangan, { class: "form-control" } %>
   </div>
   <%= link_to_remove_nested(form, link_text: 'Hapus Rincian', link_classes: 'btn btn-outline-danger') %>
 </fieldset>
