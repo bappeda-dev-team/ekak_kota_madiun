@@ -19,6 +19,9 @@ class OpdsController < ApplicationController
   def legit_opd
     nama_opd = params[:q]
     @opds = Opd.where.not(kode_unik_opd: nil).where("nama_opd ILIKE ?", "%#{nama_opd}%")
+    return unless params[:item]
+
+    @opds = Opd.where(kode_unik_opd: params[:item])
   end
 
   def show; end
@@ -147,6 +150,9 @@ class OpdsController < ApplicationController
                    .where("sasarans.sasaran_kinerja ILIKE ?", "%#{sasaran_kinerja}%")
                    .map(&:sasaran)
                    .uniq!(&:sasaran_kinerja)
+    return unless params[:item]
+
+    @sasarans = Sasaran.where(id: params[:item])
   end
 
   def sasaran_operational
@@ -157,6 +163,9 @@ class OpdsController < ApplicationController
                    .where("sasarans.sasaran_kinerja ILIKE ?", "%#{sasaran_kinerja}%")
                    .map(&:sasaran)
                    .uniq!(&:sasaran_kinerja)
+    return unless params[:item]
+
+    @sasarans = Sasaran.where(id: params[:item])
   end
 
   private

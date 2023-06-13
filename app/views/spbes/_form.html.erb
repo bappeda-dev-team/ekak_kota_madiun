@@ -1,4 +1,4 @@
-<%= form_with(model: [@spbe], local: false) do |form| %>
+<%= form_with(model: [@spbe], local: true) do |form| %>
   <% if spbe.errors.any? %>
     <div id="error_explanation">
       <h2>Tidak dapat menyimpan <%= pluralize(spbe.errors.count, "error") %></h2>
@@ -14,24 +14,33 @@
     <%= form.hidden_field :kode_program, readonly: true, value: @program.kode_program %>
     <%= form.hidden_field :program_kegiatan_id, readonly: true, value: @program.id %>
     <div class="card-body">
-      <%= form.label :sasaran_tactical, {class: "form-label"} %>
-      <%= form.select :strategi_ref_id, [], {include_blank: true},
+      <div class="field">
+        <%= form.label :sasaran_tactical, {class: "form-label"} %>
+        <%= form.select :strategi_ref_id, [], {include_blank: true},
         { data: { placeholder: "Pilih Sasaran Tactical",
                   controller: 'dropdown',
-                  dropdown_jenis_value: 'ajax',
+                  dropdown_jenis_value: 'ajax_preselect',
                   dropdown_kode_opd_value: @kode_opd,
+                  dropdown_item_value: form.object.strategi_ref_id,
                   dropdown_url_value: sasaran_tactical_opds_path(format: :json),
                 }
         } %>
-    </div>
-    <div class="card-body">
+      </div>
       <div class="field">
         <%= form.label :jenis_pelayanan, {class: "form-label"} %>
-        <%= form.text_area :jenis_pelayanan, {class: "form-control "}%>
+        <%= form.text_area :jenis_pelayanan, {class: "form-control", placeholder: 'jenis pelayanan apa yang ditangani aplikasi'}%>
       </div>
       <div class="field">
         <%= form.label :nama_aplikasi, {class: "form-label"} %>
-        <%= form.text_field :nama_aplikasi, {class: "form-control "}%>
+        <%= form.text_field :nama_aplikasi, {class: "form-control"}%>
+      </div>
+      <div class="field">
+        <%= form.label :output_aplikasi, {class: "form-label"} %>
+        <%= form.text_field :output_aplikasi, {class: "form-control", placeholder: "keluaran aplikasi"}%>
+      </div>
+      <div class="field">
+        <%= form.label :terintegrasi_dengan, {class: "form-label"} %>
+        <%= form.text_field :terintegrasi_dengan, {class: "form-control", placeholder: "apakah aplikasi tersebut terhubung dengan aplikasi lainnya ?"}%>
       </div>
       <h5>Kebutuhan SPBE:</h5>
       <hr/>
@@ -45,5 +54,4 @@
         <%= form.submit %>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>

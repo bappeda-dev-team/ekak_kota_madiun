@@ -470,6 +470,6 @@ class Sasaran < ApplicationRecord
   end
 
   def sasaran_dan_indikator
-    "#{sasaran_kinerja} - indikator: #{indikator_sasarans.pluck(:indikator_kinerja).flatten}"
+    "#{opd.nama_opd} - #{sasaran_kinerja} - indikator: #{indikator_sasarans.pluck(:indikator_kinerja).flatten}"
   end
 end

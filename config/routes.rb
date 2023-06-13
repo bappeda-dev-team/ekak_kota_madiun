@@ -15,7 +15,14 @@ Rails.application.routes.draw do
     end
   end
   resources :spbe_rincians
-  resources :spbes
+  resources :spbes do
+    collection do
+      get :index_opd
+    end
+    member do
+      get :edit_operational_opd
+    end
+  end
   resources :pagu_anggarans
   resources :indikator_sasarans do
     resources :manual_iks do
