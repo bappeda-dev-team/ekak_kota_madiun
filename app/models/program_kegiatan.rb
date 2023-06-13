@@ -60,6 +60,7 @@ class ProgramKegiatan < ApplicationRecord
   has_many :rincians, through: :sasarans
   has_many :permasalahans, through: :sasarans
   has_many :users, through: :sasarans
+  has_many :spbes
 
   has_many :bidang_urusans, lambda { |program_kegiatan|
                               where(kode_sub_skpd: program_kegiatan.kode_sub_skpd)

@@ -4,11 +4,6 @@
       <div class="col">
         <h2 class="fs-5 fw-bold mb-0">Rekap SPBE - Tahun <%= @tahun %></h2>
       </div>
-      <div class="col text-end">
-        <%= link_to spbe_laporans_path, class: "btn btn-sm btn-info" do %>
-          Buat SPBE
-        <% end %>
-      </div>
     </div>
   </div>
   <div class="card-body">
@@ -19,6 +14,7 @@
             <th class="border text-center" rowspan="2" scope="col">No</th>
             <th class="border text-center" rowspan="2" scope="col">Urusan</th>
             <th class="border text-center" rowspan="2" scope="col">Program</th>
+            <th class="border text-center" rowspan="2" scope="col">Action</th>
             <th class="border text-center" rowspan="2" scope="col">OPD Pengusul</th>
             <th class="border text-center" rowspan="2" scope="col">Jenis Pelayanan</th>
             <th class="border text-center" rowspan="2" scope="col">Aplikasi</th>
@@ -51,6 +47,12 @@
               <td class="border fw-bolder" rowspan="<%= rowspan_spbe(spbes) %>"><%= i %></td>
               <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_spbe(spbes) %>"><%= program.nama_urusan %></td>
               <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_spbe(spbes) %>"><%= program.nama_program %></td>
+              <td class="border fw-bolder" rowspan="<%= rowspan_spbe(spbes) %>">
+                <%= link_to new_spbe_path(program_id: program.id), target: "_blank", rel: "nofollow",
+                      class: "btn btn-sm btn-info" do %>
+                    Buat SPBE Baru
+                  <% end %>
+              </td>
             </tr>
             <% spbes.each do |spbe| %>
               <% rowspan_sas = spbe.spbe_rincians.length + 1 %>
