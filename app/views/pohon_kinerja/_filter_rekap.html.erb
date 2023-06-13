@@ -57,7 +57,19 @@
                 </tr>
                 <% strategi.indikators_tahun(@tahun).each do |ind_kota| %>
                   <tr style="background-color: #E5FDD1;">
-                    <td class="text-wrap"><%= ind_kota.indikator %></td>
+                    <td class="text-wrap">
+                      <%= ind_kota.indikator %>
+                      <p class="komentar mt-3">
+                        <%= link_to "Tambah Komentar", komentar_pokin_komentars_path(kode_opd: 'kota_madiun', strategi_id: strategi.id),
+                                                    remote: true,
+                                                    class: 'btn btn-sm btn-warning',
+                                                    data: { controller: 'form-modal',
+                                                    action: 'form-modal#appendForm',
+                                                    form_modal_location_param: 'form-komentar-body',
+                                                    bs_target: '#form-komentar',
+                                                    bs_toggle: 'modal' } %>
+                      </p>
+                    </td>
                     <td class=""><%= "#{ind_kota.target} #{ind_kota.satuan}" %></td>
                   </tr>
                 <% end %>
@@ -100,6 +112,16 @@
                                     bs_toggle: 'modal' } %>
                             </p>
                           <% end %>
+                        <p class="komentar mt-3">
+                          <%= link_to "Tambah Komentar", komentar_pokin_komentars_path(kode_opd: stra.opd.kode_unik_opd, strategi_id: stra.id),
+                                                      remote: true,
+                                                      class: 'btn btn-sm btn-warning',
+                                                      data: { controller: 'form-modal',
+                                                      action: 'form-modal#appendForm',
+                                                      form_modal_location_param: 'form-komentar-body',
+                                                      bs_target: '#form-komentar',
+                                                      bs_toggle: 'modal' } %>
+                        </p>
                         </td>
                         <td class=""><%= "#{ind.target} #{ind.satuan}" %></td>
                       </tr>
