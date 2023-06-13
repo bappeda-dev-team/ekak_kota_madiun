@@ -39,6 +39,16 @@
                                     bs_toggle: 'modal' } %>
           </p>
         <% end %>
+        <p class="komentar mt-3">
+          <%= link_to "Tambah Komentar", komentar_pokin_komentars_path(kode_opd: strategi.opd.kode_unik_opd, strategi_id: strategi.id),
+                                      remote: true,
+                                      class: 'btn btn-sm btn-warning',
+                                      data: { controller: 'form-modal',
+                                      action: 'form-modal#appendForm',
+                                      form_modal_location_param: 'form-komentar-body',
+                                      bs_target: '#form-komentar',
+                                      bs_toggle: 'modal' } %>
+        </p>
       </td>
       <td class="text-wrap"><%= "#{ind_kabid.target} #{ind_kabid.satuan}" %></td>
     </tr>
