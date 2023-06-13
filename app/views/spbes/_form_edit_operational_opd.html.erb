@@ -1,0 +1,34 @@
+<%= form_with(model: [@spbe], local: true) do |form| %>
+  <% if @spbe.errors.any? %>
+    <div id="error_explanation">
+      <h2>Tidak dapat menyimpan <%= pluralize(@spbe.errors.count, "error") %></h2>
+      <ul>
+        <% @spbe.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="card">
+    <div class="card-body">
+      <div class="field">
+        <%= form.label :jenis_pelayanan, {class: "form-label"} %>
+        <%= form.text_area :jenis_pelayanan, {class: "form-control", readonly: true}%>
+      </div>
+      <div class="field">
+        <%= form.label :nama_aplikasi, {class: "form-label"} %>
+        <%= form.text_field :nama_aplikasi, {class: "form-control", readonly: true}%>
+      </div>
+      <h5>Kebutuhan SPBE:</h5>
+      <hr/>
+      <div class="field" id="spbe-rincians">
+        <%= form.fields_for :spbe_rincians do |rincian| %>
+          <%= render 'spbe_operational_field', form: rincian %>
+        <% end %>
+      </div>
+      <%= link_to_add_nested(form, :spbe_rincians, '#spbe-rincians', link_classes: 'btn btn-primary btn-sm', link_text: 'Tambah Rincian') %>
+      <div class="actions">
+        <%= form.submit %>
+      </div>
+    </div>
+  <% end %>

@@ -21,6 +21,15 @@ class Spbe < ApplicationRecord
   has_many :spbe_rincians, -> { order "id ASC" }, inverse_of: :spbe
   accepts_nested_attributes_for :spbe_rincians, reject_if: :all_blank, allow_destroy: true
 
+  scope :by_opd, lambda { |kode_opd|
+    includes(:spbe_rincians)
+      .where(kode_opd: kode_opd)
+  }
+  scope :by_opd_tujuan, lambda { |kode_opd|
+    includes(:spbe_rincians)
+      .where(spbe_rincians: { kode_opd: kode_opd })
+  }
+
   def nama_program
     program_kegiatan.nama_program
   end

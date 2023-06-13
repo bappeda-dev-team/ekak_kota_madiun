@@ -5,7 +5,7 @@ class SpbesController < ApplicationController
 
   def index
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @spbes = Spbe.all.group_by(&:program_kegiatan)
+    @spbes = Spbe.by_opd_tujuan(@kode_opd).group_by(&:program_kegiatan)
   end
 
   def new
@@ -16,6 +16,13 @@ class SpbesController < ApplicationController
 
   def edit
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+  end
+
+  def edit_operational_opd
+    @program = ProgramKegiatan.find(params[:program_id])
+    @spbe = Spbe.find(params[:id])
+    @opd = @spbe.spbe_rincians.find_by(kode_opd: @kode_opd).opd
+    render partial: 'form_edit_operational_opd'
   end
 
   def create
