@@ -16,6 +16,9 @@ Rails.application.routes.draw do
   end
   resources :spbe_rincians
   resources :spbes do
+    collection do
+      get :index_opd
+    end
     member do
       get :edit_operational_opd
     end

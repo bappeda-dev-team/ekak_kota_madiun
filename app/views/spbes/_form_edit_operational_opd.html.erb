@@ -1,9 +1,9 @@
-<%= form_with(model: [@spbe], local: true) do |form| %>
-  <% if @spbe.errors.any? %>
+<%= form_with(model: [spbe], local: true) do |form| %>
+  <% if spbe.errors.any? %>
     <div id="error_explanation">
-      <h2>Tidak dapat menyimpan <%= pluralize(@spbe.errors.count, "error") %></h2>
+      <h2>Tidak dapat menyimpan <%= pluralize(spbe.errors.count, "error") %></h2>
       <ul>
-        <% @spbe.errors.each do |error| %>
+        <% spbe.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>

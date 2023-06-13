@@ -127,8 +127,8 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
         icon: 'fas fa-building', identifier: 'opds/info'
       },
       {
-        title: 'SPBE', href: spbes_path,
-        icon: 'fas fa-tablet-alt', identifier: 'spbe'
+        title: 'SPBE', href: index_opd_spbes_path,
+        icon: 'fas fa-tablet-alt', identifier: 'spbe_opd'
       }
     ]
   end
@@ -138,7 +138,7 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
                    '\btujuan_opds|\bisu_strategis_opds|' \
                    '\bstrategi_opds|\bsasaran_opds|' \
                    '\bpohon_kinerja/opd|' \
-                   '\bspbes|' \
+                   '\bspbes\/index_opd|' \
                    '\bpohon_kinerja/rekap_opd|\bopds/info)')
   end
 
