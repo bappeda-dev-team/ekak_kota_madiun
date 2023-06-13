@@ -5,12 +5,16 @@ class SpbesController < ApplicationController
 
   def index
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @spbes = Spbe.all.group_by(&:program_kegiatan)
+    # @spbes = Spbe.all.group_by(&:program_kegiatan)
+    @programs = @opd.program_kegiatans.programs
+    @spbes = @programs.to_h { |prg| [prg, prg.spbes] }
   end
 
   def index_opd
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @spbes = Spbe.by_opd_tujuan(@kode_opd).group_by(&:program_kegiatan)
+    # @spbes = Spbe.by_opd_tujuan(@kode_opd).group_by(&:program_kegiatan)
+    @programs = @opd.program_kegiatans.programs
+    @spbes = @programs.to_h { |prg| [prg, prg.spbes.by_opd_tujuan(@kode_opd)] }
   end
 
   def new
