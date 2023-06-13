@@ -28,11 +28,19 @@
       </div>
       <div class="field">
         <%= form.label :jenis_pelayanan, {class: "form-label"} %>
-        <%= form.text_area :jenis_pelayanan, {class: "form-control "}%>
+        <%= form.text_area :jenis_pelayanan, {class: "form-control", placeholder: 'jenis pelayanan apa yang ditangani aplikasi'}%>
       </div>
       <div class="field">
         <%= form.label :nama_aplikasi, {class: "form-label"} %>
-        <%= form.text_field :nama_aplikasi, {class: "form-control "}%>
+        <%= form.text_field :nama_aplikasi, {class: "form-control"}%>
+      </div>
+      <div class="field">
+        <%= form.label :output_aplikasi, {class: "form-label"} %>
+        <%= form.text_field :output_aplikasi, {class: "form-control", placeholder: "keluaran aplikasi"}%>
+      </div>
+      <div class="field">
+        <%= form.label :terintegrasi_dengan, {class: "form-label"} %>
+        <%= form.text_field :terintegrasi_dengan, {class: "form-control", placeholder: "apakah aplikasi tersebut terhubung dengan aplikasi lainnya ?"}%>
       </div>
       <h5>Kebutuhan SPBE:</h5>
       <hr/>

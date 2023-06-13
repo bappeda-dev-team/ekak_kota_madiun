@@ -269,3 +269,8 @@ td.spbe-kebutuhan:empty {
 td.spbe-kebutuhan:empty::after {
   content: 'Belum diisi';
 }
+::placeholder {
+  font-weight: lighter;
+  opacity: 0.5;
+  color: red;
+}

@@ -19,8 +19,11 @@
             <th class="border text-center" rowspan="2" scope="col">No</th>
             <th class="border text-center" rowspan="2" scope="col">Urusan</th>
             <th class="border text-center" rowspan="2" scope="col">Program</th>
+            <th class="border text-center" rowspan="2" scope="col">OPD Pengusul</th>
             <th class="border text-center" rowspan="2" scope="col">Jenis Pelayanan</th>
             <th class="border text-center" rowspan="2" scope="col">Aplikasi</th>
+            <th class="border text-center" rowspan="2" scope="col">Output Aplikasi</th>
+            <th class="border text-center" rowspan="2" scope="col">Terintegrasi Dengan</th>
             <th class="border text-center" rowspan="2" scope="col">Sasaran Kinerja Tactical</th>
             <th class="border text-center" rowspan="2" scope="col">Kebutuhan SPBE</th>
             <th class="border text-center" rowspan="2" scope="col">Detail Kebutuhan</th>
@@ -52,13 +55,24 @@
             <% spbes.each do |spbe| %>
               <% rowspan_sas = spbe.spbe_rincians.length + 1 %>
               <tr>
+                <td class="border fw-bolder" rowspan="<%= rowspan_sas %>">
+                  <%= spbe.opd.nama_opd %>
+                </td>
                 <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
                   <%= spbe.jenis_pelayanan %>
                 </td>
                 <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
                   <%= spbe.nama_aplikasi %>
                 </td>
-                <td class="border text-wrap" rowspan="<%= rowspan_sas %>"><%= spbe.sasaran.sasaran_kinerja %></td>
+                <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
+                  <%= spbe.output_aplikasi %>
+                </td>
+                <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
+                  <%= spbe.terintegrasi_dengan %>
+                </td>
+                <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
+                  <%= spbe.sasaran.sasaran_kinerja %>
+                </td>
                 <td class="p-0 m-0" colspan="16"></td>
                 <td class="border" rowspan="<%= rowspan_sas %>">
                   <div class="d-grid gap-2">

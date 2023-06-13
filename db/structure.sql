@@ -2395,7 +2395,9 @@ CREATE TABLE public.spbes (
     strategi_ref_id character varying,
     program_kegiatan_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    output_aplikasi character varying,
+    terintegrasi_dengan character varying
 );
 
 
@@ -4861,6 +4863,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230605061438'),
 ('20230605223850'),
 ('20230607004201'),
-('20230609010527');
+('20230609010527'),
+('20230613011150');
 
 
