@@ -5,11 +5,11 @@
         <i class="fas fa-home"></i>
       <% end %>
     </li>
-    <li class="breadcrumb-item"><%= link_to 'Sasarans', user_sasarans_path(current_user) %></li>
+    <li class="breadcrumb-item">Sasaran</li>
     <li class="breadcrumb-item active" aria-current="page">Tambah Sasaran</li>
   </ol>
 </nav>
 <div class="form-field-container">
   <h1>Tambah Sasaran Kinerja Baru</h1>
-  <%= render "form", sasaran: @sasaran, users: @users %>
+  <%= render "form", sasaran: @sasaran %>
 </div>

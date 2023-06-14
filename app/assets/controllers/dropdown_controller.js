@@ -275,6 +275,25 @@ export default class extends Controller {
     this.tipeValue = jenisUraian
   }
 
+  set_new_sasaran(e) {
+    const {data} = e.detail
+    const sasaran_id = data.id
+    const select2ed = this.select;
+    this.itemValue = sasaran_id
+    if(this.itemValue.length > 0) {
+      $.ajax({
+        type: 'GET',
+        url:  `${this.urlValue}?item=${this.itemValue}`,
+      }).then(function (data) {
+        const data_first = data.results[0]
+        const options = new Option(data_first.text, data_first.id, true, true)
+        select2ed.append(options).trigger('change.select2');
+      });
+    }
+    this.element.value = sasaran_id
+    this.element.readonly = true
+  }
+
   event_dispatcher(custom_event_name, data) {
     const custom_event = new CustomEvent(custom_event_name,
       {detail: {data: data}})

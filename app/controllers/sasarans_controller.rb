@@ -281,6 +281,13 @@ class SasaransController < ApplicationController
     @sasaran.indikator_sasarans.build
   end
 
+  def new_spbe
+    @sasaran = Sasaran.new
+    @sasaran.indikator_sasarans.build
+    @tipe = 'spbe'
+    render partial: 'form_sasaran_spbe', locals: { sasaran: @sasaran }
+  end
+
   # GET /sasarans/1/edit
   def edit
     @tipe = params[:tipe]
@@ -294,8 +301,8 @@ class SasaransController < ApplicationController
       if @sasaran.save
         # @sasaran.indikator_sasarans.create!(sasaran_params[:indikator_sasarans_attributes].merge!(sasaran_id: sasaran_params[:id_rencana]))
         # format.html { redirect_to user_sasaran_path(@user, @sasaran), success: 'Sasaran berhasil dibuat.' }
-        format.html { redirect_to sasarans_path, success: 'Sasaran berhasil dibuat.' }
         format.json { render :show, status: :created, location: @sasaran }
+        format.html { redirect_to sasarans_path, success: 'Sasaran berhasil dibuat.' }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @sasaran.errors, status: :unprocessable_entity }

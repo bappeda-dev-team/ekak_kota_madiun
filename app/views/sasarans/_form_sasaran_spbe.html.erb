@@ -1,4 +1,9 @@
-<%= form_with(model: [sasaran], local: false) do |form| %>
+<%= form_with(model: [sasaran], local: false,
+              data: { controller: 'form-ajax',
+                action: 'ajax:success->form-ajax#successResponseSpbe',
+                form_ajax_modal_param: 'form-sasaran'
+              }
+) do |form| %>
   <% if sasaran.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(sasaran.errors.count, "error") %> prohibited this sasaran from being saved:</h2>
