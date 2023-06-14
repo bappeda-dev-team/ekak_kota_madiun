@@ -38,14 +38,14 @@
               <% @sasarans.each.with_index(1) do |sasaran, no_sas| %>
                 <% indikator = sasaran.indikator_sasarans.first %>
                 <tr>
-                  <th class="border fw-bolder text-gray-900"><%= no_sas %></th>
-                  <th class="border text-wrap fw-bolder text-gray-900"><%= sasaran.nama_pemilik %> <br/>
+                  <th class="border fw-bolder text-gray-900" rowspan="<%= sasaran.indikator_sasarans.length %>"><%= no_sas %></th>
+                  <th class="border text-wrap fw-bolder text-gray-900" rowspan="<%= sasaran.indikator_sasarans.length %>" ><%= sasaran.nama_pemilik %> <br/>
                     <%= sasaran.nip_asn %></th>
-                  <td class="border text-wrap" rowspan="<%= sasaran.indikator_sasarans.length  %>"><%= sasaran.sasaran_kinerja %></td>
+                  <td class="border text-wrap" rowspan="<%= sasaran.indikator_sasarans.length %>"><%= sasaran.sasaran_kinerja %></td>
                   <td class="border text-wrap"><%= indikator&.indikator_kinerja %></td>
                   <td class="border text-wrap"><%= indikator&.target %></td>
                   <td class="border text-wrap"><%= indikator&.satuan %></td>
-                  <td class="border">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
+                  <td class="border" rowspan="<%= sasaran.indikator_sasarans.length %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
                 </tr>
                 <% sasaran.indikator_sasarans.drop(1).each do |indikator_s| %>
                   <tr>
