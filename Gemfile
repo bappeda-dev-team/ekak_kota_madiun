@@ -35,6 +35,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'pry-rails'
+  gem 'query_diet'
   gem 'rails-controller-testing'
   gem 'rspec-core'
   gem 'rspec-rails'
