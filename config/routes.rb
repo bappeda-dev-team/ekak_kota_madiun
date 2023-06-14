@@ -202,6 +202,7 @@ Rails.application.routes.draw do
       get :list_sasaran
       get :anggaran, path: "rincian_anggaran"
       get :sasaran_admin
+      get :new_spbe
     end
     member do
       get :data_detail

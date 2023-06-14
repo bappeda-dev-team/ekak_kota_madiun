@@ -38,9 +38,11 @@ class SpbesController < ApplicationController
     @program = ProgramKegiatan.find(spbe_params[:program_kegiatan_id])
     @spbe = Spbe.new(spbe_params)
 
+    redirect_routes = current_user.has_role?(:super_admin) ? spbes_path : index_opd_spbes_path
+
     respond_to do |format|
       if @spbe.save
-        format.html { redirect_to spbes_path, success: "Sukses Mengentri SPBE Baru" }
+        format.html { redirect_to redirect_routes, success: "Entri SPBE tersimpan" }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -48,9 +50,10 @@ class SpbesController < ApplicationController
   end
 
   def update
+    redirect_routes = current_user.has_role?(:super_admin) ? spbes_path : index_opd_spbes_path
     respond_to do |format|
       if @spbe.update(spbe_params)
-        format.html { redirect_to spbes_path, success: "Entri SPBE Diperbarui" }
+        format.html { redirect_to redirect_routes, success: "Entri SPBE diperbarui" }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -58,10 +61,11 @@ class SpbesController < ApplicationController
   end
 
   def destroy
+    redirect_routes = current_user.has_role?(:super_admin) ? spbes_path : index_opd_spbes_path
     jenis_pelayanan = @spbe.jenis_pelayanan
     @spbe.destroy
     respond_to do |format|
-      format.html { redirect_to spbes_path, success: "Entri SPBE '#{jenis_pelayanan}' Dihapus" }
+      format.html { redirect_to redirect_routes, success: "Entri SPBE '#{jenis_pelayanan}' Dihapus" }
     end
   end
 
@@ -85,6 +89,7 @@ class SpbesController < ApplicationController
     params.require(:spbe).permit(:jenis_pelayanan, :nama_aplikasi,
                                  :strategi_ref_id, :kode_program,
                                  :kode_opd, :program_kegiatan_id,
+                                 :terintegrasi_dengan, :output_aplikasi,
                                  spbe_rincians_attributes: %i[id detail_kebutuhan detail_sasaran_kinerja
                                                               keterangan id_rencana kebutuhan_spbe
                                                               internal_external tahun_awal tahun_akhir
