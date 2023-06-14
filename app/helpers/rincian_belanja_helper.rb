@@ -36,6 +36,8 @@ module RincianBelanjaHelper
       anggaran.include?("honor") or
       anggaran.include?("iuran") or
       anggaran.include?("jaminan") or
-      anggaran.include?("retribusi")
+      anggaran.include?("retribusi") or
+      anggaran.include?("pengelolaan") or
+      anggaran.include?("terduga")
   end
 end
