@@ -263,28 +263,29 @@ td[data-subkegiatan="belum diisi"] {
 
 td[data-tahun-pelaksanaan*="success"] {
   background-color: #38E54D;
-}
-td[data-tahun-pelaksanaan*="success"]::before {
+  &:before {
     @extend %fa-icon;
     @extend .fas;
     content: fa-content($fa-var-check)
+  }
 }
 td[data-tahun-pelaksanaan*="success"] ~ td[data-tahun-pelaksanaan] {
   background-color: #38E54D;
-}
-td[data-tahun-pelaksanaan*="success"] ~ td[data-tahun-pelaksanaan]::before {
+  &:before {
     @extend %fa-icon;
     @extend .fas;
     content: fa-content($fa-var-check)
+  }
 }
 td.spbe-kebutuhan:empty {
   background-color: #B73239;
   color: #EEE2DE;
+
+  &:after {
+    content: 'Belum diisi';
+  }
 }
-td.spbe-kebutuhan:empty::after {
-  content: 'Belum diisi';
-}
-::placeholder {
+input::placeholder {
   font-weight: lighter;
   opacity: 0.5;
   color: red;
