@@ -50,9 +50,10 @@ class SpbesController < ApplicationController
   end
 
   def update
+    redirect_routes = current_user.has_role?(:super_admin) ? spbes_path : index_opd_spbes_path
     respond_to do |format|
       if @spbe.update(spbe_params)
-        format.html { redirect_to spbes_path, success: "Entri SPBE diperbarui" }
+        format.html { redirect_to redirect_routes, success: "Entri SPBE diperbarui" }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -60,10 +61,11 @@ class SpbesController < ApplicationController
   end
 
   def destroy
+    redirect_routes = current_user.has_role?(:super_admin) ? spbes_path : index_opd_spbes_path
     jenis_pelayanan = @spbe.jenis_pelayanan
     @spbe.destroy
     respond_to do |format|
-      format.html { redirect_to spbes_path, success: "Entri SPBE '#{jenis_pelayanan}' Dihapus" }
+      format.html { redirect_to redirect_routes, success: "Entri SPBE '#{jenis_pelayanan}' Dihapus" }
     end
   end
 

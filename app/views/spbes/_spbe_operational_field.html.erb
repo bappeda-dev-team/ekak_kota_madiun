@@ -18,7 +18,6 @@
                   dropdown_url_value: legit_opd_opds_path(@opd, :json),
                   dropdown_item_value: form.object.kode_opd,
                   dropdown_kode_opd_value: @kode_opd,
-                  dropdown_parent_value: '#form-operational-opd'
                 }
         } %>
   </div>
@@ -31,9 +30,18 @@
               dropdown_kode_opd_value: @kode_opd,
               dropdown_item_value: form.object.id_rencana,
               dropdown_url_value: sasaran_operational_opds_path(format: :json),
-              dropdown_parent_value: '#form-operational-opd'
+              action: 'sasaran-new@document->dropdown#set_new_sasaran'
             }
     } %>
+  </div>
+  <div class="field">
+    <%= link_to 'Sasaran Baru', new_spbe_sasarans_path, remote: true, class: 'btn btn-sm btn-primary',
+        data: { controller: 'form-modal',
+                form_modal_location_param: 'form-sasaran-body',
+                action: 'form-modal#appendForm',
+                bs_toggle: 'modal',
+                bs_target: '#form-sasaran',
+        }%>
   </div>
   <div class="field">
     <%= form.label :detail_sasaran_kinerja, { class: "form-label" } %>
@@ -47,7 +55,6 @@
     <%= form.select(:tahun_awal, (['',2021,2022,2023,2024]), {},
     { data: {"placeholder": "Tahun Awal",
               controller: 'dropdown',
-              dropdown_parent_value: '#form-operational-opd'
     }}) %>
   </div>
   <div class="field">
@@ -55,7 +62,6 @@
     <%= form.select(:tahun_akhir, (['',2021,2022,2023,2024]), {},
     { data: {"placeholder": "Tahun Akhir",
               controller: 'dropdown',
-              dropdown_parent_value: '#form-operational-opd'
     }}) %>
   </div>
   <div class="field">

@@ -1,7 +1,9 @@
-// $fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
-// @import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
-// @import "~@fortawesome/fontawesome-free/scss/solid.scss";
-// @import "~@fortawesome/fontawesome-free/scss/regular.scss";
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/_mixins.scss";
+@import "~@fortawesome/fontawesome-free/scss/_variables.scss";
+@import "~@fortawesome/fontawesome-free/scss/regular.scss";
 // @import "~@fortawesome/fontawesome-free/scss/brands.scss";
 // @import "~@fortawesome/fontawesome-free/scss/v4-shims.scss";
 // volt
@@ -260,7 +262,20 @@ td[data-subkegiatan="belum diisi"] {
 }
 
 td[data-tahun-pelaksanaan*="success"] {
-  border: 5px solid #38E54D !important;
+  background-color: #38E54D;
+}
+td[data-tahun-pelaksanaan*="success"]::before {
+    @extend %fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-check)
+}
+td[data-tahun-pelaksanaan*="success"] ~ td[data-tahun-pelaksanaan] {
+  background-color: #38E54D;
+}
+td[data-tahun-pelaksanaan*="success"] ~ td[data-tahun-pelaksanaan]::before {
+    @extend %fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-check)
 }
 td.spbe-kebutuhan:empty {
   background-color: #B73239;
