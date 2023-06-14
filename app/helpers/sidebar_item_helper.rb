@@ -170,6 +170,10 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
       {
         title: 'Gender', href: gap_genders_path,
         icon: 'fas fa-people-carry', identifier: 'gap'
+      },
+      {
+        title: 'SPBE', href: index_opd_spbes_path,
+        icon: 'fas fa-tablet-alt', identifier: 'spbe_opd'
       }
     ]
   end
