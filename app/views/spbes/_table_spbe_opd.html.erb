@@ -50,8 +50,8 @@
               <td class="border fw-bolder" rowspan="<%= rowspan_spbe(spbes) %>">
                 <%= link_to new_spbe_path(program_id: program.id), target: "_blank", rel: "nofollow",
                       class: "btn btn-sm btn-info" do %>
-                    Buat SPBE Baru
-                  <% end %>
+                  Buat SPBE Baru
+                <% end %>
               </td>
             </tr>
             <% spbes.each do |spbe| %>
@@ -95,9 +95,11 @@
                   <td class="border" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.keterangan %></td>
                   <td class="border" rowspan="<%= rowspan_sasaran(sas_kasi) %>">
                     <div class="d-grid gap-2">
-                      <%= link_to edit_operational_opd_spbe_path(rincian,program_id: program.id), target: "_blank", rel: "nofollow",
+                      <% if rincian.kode_opd == @kode_opd %>
+                        <%= link_to edit_operational_opd_spbe_path(rincian,program_id: program.id), target: "_blank", rel: "nofollow",
                       class: "btn btn-sm btn-outline-primary" do %>
-                        Edit Rincian SPBE
+                          Edit Rincian SPBE
+                        <% end %>
                       <% end %>
                       <% if spbe.kode_opd == @kode_opd %>
                         <hr/>

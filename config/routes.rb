@@ -337,6 +337,7 @@ Rails.application.routes.draw do
     end
     collection do
       get :list_program_with_sasarans_rincian
+      get :subkegiatans
     end
   end
 

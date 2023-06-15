@@ -236,8 +236,10 @@ export default class extends Controller {
 
   chain_internal_or_external_opd_target(e) {
     const {data} = e.detail
+    const sasaranOpd = document.getElementById('sasaran-opd');
     if(data.id == 'External') {
       this.element.disabled = false
+      sasaranOpd.style.display = 'none'
     }
     else {
       const select2ed = this.select;
@@ -251,6 +253,7 @@ export default class extends Controller {
           select2ed.append(options).trigger('change.select2');
         });
       }
+      sasaranOpd.style.display = 'block'
       this.element.readonly = true
       this.element.value = this.kodeOpdValue
     }
@@ -291,7 +294,6 @@ export default class extends Controller {
       });
     }
     this.element.value = sasaran_id
-    this.element.readonly = true
   }
 
   event_dispatcher(custom_event_name, data) {

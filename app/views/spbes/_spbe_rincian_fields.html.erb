@@ -8,7 +8,8 @@
   <div class="field">
     <%= form.label :detail_kebutuhan, { class: "form-label" } %>
     <%= form.text_area :detail_kebutuhan, { class: "form-control", placeholder: 'jabarkan kebutuhan spbe dari pilihan diatas' } %>
-  </div> <div class="field">
+  </div>
+  <div class="field">
     <%= form.label :opd_pelaksana, { class: "form-label" } %>
     <%= form.select :internal_external, ['Internal', 'External'], {include_blank: true},
         { data: { placeholder: 'Lokasi',
@@ -31,49 +32,9 @@
                 }
         } %>
   </div>
-  <div class="field">
-    <%= form.label :sasaran_operasional, {class: "form-label"} %>
-    <%= form.select :id_rencana, [], {include_blank: true},
-    { data: { placeholder: "Pilih Sasaran Operasional",
-              controller: 'dropdown',
-              dropdown_jenis_value: 'ajax_preselect',
-              dropdown_kode_opd_value: @kode_opd,
-              dropdown_item_value: form.object.id_rencana,
-              dropdown_url_value: sasaran_operational_opds_path(format: :json),
-              action: 'sasaran-new@document->dropdown#set_new_sasaran'
-            }
-    } %>
-  </div>
-  <div class="field">
-    <%= link_to 'Sasaran Baru', new_spbe_sasarans_path, remote: true, class: 'btn btn-sm btn-primary',
-        data: { controller: 'form-modal',
-                form_modal_location_param: 'form-sasaran-body',
-                action: 'form-modal#appendForm',
-                bs_toggle: 'modal',
-                bs_target: '#form-sasaran',
-        }%>
-  </div>
-  <div class="field">
-    <%= form.label :detail_sasaran_kinerja, { class: "form-label" } %>
-    <%= form.text_area :detail_sasaran_kinerja, { class: "form-control", placeholder: "jabarkan sasaran kinerja yang dipilih" } %>
-  </div>
-  <div class="field">
-    <%= form.label :tahun_awal, class: 'form-label' %>
-    <%= form.select(:tahun_awal, (['',2020,2021,2022,2023,2024]), {},
-    { data: {"placeholder": "Tahun Awal",
-              controller: 'dropdown',
-    }}) %>
-  </div>
-  <div class="field">
-    <%= form.label :tahun_akhir, class: 'form-label' %>
-    <%= form.select(:tahun_akhir, (['',2020,2021,2022,2023,2024]), {},
-    { data: {"placeholder": "Tahun Akhir",
-              controller: 'dropdown',
-    }}) %>
-  </div>
-  <div class="field">
-    <%= form.label :keterangan, { class: "form-label" } %>
-    <%= form.text_area :keterangan, { class: "form-control", placeholder: "keterangan tambahan"} %>
-  </div>
+  <% if form.object.internal_external == 'External' || @spbe.new_record? %>
+    <% disabled = @kode_opd == @spbe.kode_opd %>
+    <%= render 'sasaran_spbe_opd', form: form, disabled: disabled %>
+  <% end %>
   <%= link_to_remove_nested(form, link_text: 'Hapus Rincian', link_classes: 'btn btn-outline-danger') %>
 </fieldset>
