@@ -1,5 +1,5 @@
 class SasaransController < ApplicationController
-  before_action :set_user, only: %i[index new create update destroy anggaran]
+  before_action :set_user, only: %i[index new anggaran]
   before_action :set_sasaran, only: %i[show edit update destroy update_program_kegiatan renaksi_update detail]
   before_action :set_dropdown, only: %i[new edit]
 
@@ -285,6 +285,7 @@ class SasaransController < ApplicationController
     @sasaran = Sasaran.new
     @sasaran.indikator_sasarans.build
     @tipe = 'spbe'
+    @kode_opd = params[:kode_opd]
     render partial: 'form_sasaran_spbe', locals: { sasaran: @sasaran }
   end
 
@@ -300,10 +301,11 @@ class SasaransController < ApplicationController
 
   # POST /sasarans or /sasarans.json
   def create
-    @sasaran = if @user
-                 @user.sasarans.build(sasaran_params)
-               else
+    @user = current_user
+    @sasaran = if (@user.roles & %i[admin super_admin]).present?
                  Sasaran.new(sasaran_params)
+               else
+                 @user.sasarans.build(sasaran_params)
                end
     # @sasaran.id_rencana = (SecureRandom.random_number(9e5) + 1e5).to_i # This method will bites back, look up in here
     respond_to do |format|

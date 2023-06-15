@@ -10,9 +10,11 @@
     </div>
   <% end %>
   <div class="card">
-    <%= form.hidden_field :kode_opd, readonly: true, value: @kode_opd %>
-    <%= form.hidden_field :kode_program, readonly: true, value: @program.kode_program %>
-    <%= form.hidden_field :program_kegiatan_id, readonly: true, value: @program.id %>
+    <% if @spbe.new_record? %>
+      <%= form.hidden_field :kode_opd, readonly: true, value: @kode_opd %>
+      <%= form.hidden_field :kode_program, readonly: true, value: @program.kode_program %>
+      <%= form.hidden_field :program_kegiatan_id, readonly: true, value: @program.id %>
+    <% end %>
     <div class="card-body">
       <div class="field">
         <%= form.label :sasaran_tactical, {class: "form-label"} %>

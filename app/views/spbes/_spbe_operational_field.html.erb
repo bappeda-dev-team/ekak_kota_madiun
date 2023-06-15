@@ -35,7 +35,7 @@
     } %>
   </div>
   <div class="field">
-    <%= link_to 'Sasaran Baru', new_spbe_sasarans_path, remote: true, class: 'btn btn-sm btn-primary',
+    <%= link_to 'Sasaran Baru', new_spbe_sasarans_path(kode_opd: @kode_opd), remote: true, class: 'btn btn-sm btn-primary',
         data: { controller: 'form-modal',
                 form_modal_location_param: 'form-sasaran-body',
                 action: 'form-modal#appendForm',

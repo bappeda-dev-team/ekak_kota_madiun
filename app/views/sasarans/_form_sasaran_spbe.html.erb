@@ -32,7 +32,8 @@
     <%= form.label :tahun, { class: "form-label" } %>
     <%= form.select(:tahun, (['',2020,2021,2022,2023,2024]), { :selected => form.object.tahun || cookies[:tahun] },
     {data: {"placeholder": "Pilih Tahun",
-            controller: 'dropdown'
+            controller: 'dropdown',
+            dropdown_parent_value: '#form-sasaran',
     }}) %>
   </div>
   <div class="fields">
@@ -42,13 +43,14 @@
              controller: 'dropdown',
             dropdown_jenis_value: 'ajax_preselect',
             dropdown_kode_opd_value: @kode_opd,
+            dropdown_parent_value: '#form-sasaran-body',
             dropdown_item_value: form.object.program_kegiatan_id,
-            dropdown_url_value: program_kegiatans_path(format: :json),
+            dropdown_url_value: subkegiatans_program_kegiatans_path(format: :json),
             }
     }%>
   </div>
   <div class="field">
-    <%= form.label :anggarn, {class: "form-label"} %>
+    <%= form.label :anggaran, {class: "form-label"} %>
     <%= form.number_field :anggaran, {id: 'harga', class: "form-control"} %>
   </div>
   <div class="actions my-4">

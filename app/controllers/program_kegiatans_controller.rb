@@ -31,6 +31,17 @@ class ProgramKegiatansController < ApplicationController
     @program_kegiatans = ProgramKegiatan.where(id: params[:item])
   end
 
+  def subkegiatans
+    param = params[:q] || ""
+    kode_opd = params[:kode_opd]
+    @program_kegiatans = ProgramKegiatan.subkegiatans_satunya
+                                        .where("kode_sub_skpd ILIKE ?", "%#{kode_opd}%")
+                                        .where("nama_subkegiatan ILIKE ?", "%#{param}%")
+    return unless params[:item]
+
+    @program_kegiatans = ProgramKegiatan.where(id: params[:item])
+  end
+
   def list_program_with_sasarans_rincian
     param = params[:q] || ""
     @program_kegiatans = ProgramKegiatan.with_sasarans_rincian.where("kode_opd ILIKE ?", "%#{current_user.kode_opd}%")
