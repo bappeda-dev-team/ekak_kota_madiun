@@ -97,11 +97,12 @@
                   <td class="border text-wrap spbe-kebutuhan" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= sas_kasi&.sasaran_kinerja %></td>
                   <td class="border text-wrap spbe-kebutuhan" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.detail_sasaran_kinerja %></td>
                   <%= indikator_sasaran(sas_kasi) %>
-                  <td class="border text-wrap spbe-kebutuhan" rowspan="<%= rowspan_sasaran(sas_kasi) %>">Rp. <%= number_with_delimiter(sas_kasi&.total_anggaran) %></td>
+                  <td class="border spbe-kebutuhan" rowspan="<%= rowspan_sasaran(sas_kasi) %>">Rp. <%= number_with_delimiter(sas_kasi&.anggaran_spbe) %></td>
                   <td class="border text-wrap spbe-kebutuhan" rowspan="<%= rowspan_sasaran(sas_kasi) %>" data-subkegiatan="<%= sas_kasi&.subkegiatan&.downcase %>"><%= sas_kasi&.subkegiatan %></td>
                   <% (2020..2024).each do |th| %>
-                    <% tah = rincian.tahun_awal == th.to_s || rincian.tahun_akhir == th.to_s ? "<i class='fa fa-check text-success'></i>".html_safe : '' %>
-                    <td class="text-center" rowspan="<%= rowspan_sasaran(sas_kasi) %>" data-tahun-pelaksanaan="<%= tah %>"><%= tah %></td>
+                    <% tah = rincian.tahun_awal == th.to_s ? "success" : '' %>
+                    <% tah_ak = rincian.tahun_akhir == th.to_s ? "success" : '' %>
+                    <td class="text-center" rowspan="<%= rowspan_sasaran(sas_kasi) %>" data-tahun-pelaksanaan="<%= tah %>"  data-tahun-akhir-pelaksanaan="<%= tah_ak %>"></td>
                   <% end %>
                   <td class="border" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.opd&.nama_opd %></td>
                   <td class="border" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.keterangan %></td>
