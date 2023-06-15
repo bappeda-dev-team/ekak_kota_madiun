@@ -261,7 +261,7 @@ td[data-subkegiatan="belum diisi"] {
   color: #EEE2DE;
 }
 
-td[data-tahun-pelaksanaan*="success"] {
+td[data-tahun-pelaksanaan="success"] {
   background-color: #38E54D;
   &:before {
     @extend %fa-icon;
@@ -269,7 +269,15 @@ td[data-tahun-pelaksanaan*="success"] {
     content: fa-content($fa-var-check)
   }
 }
-td[data-tahun-pelaksanaan*="success"] ~ td[data-tahun-pelaksanaan] {
+td[data-tahun-pelaksanaan="success"] + td[data-tahun-pelaksanaan] {
+  background-color: #38E54D;
+  &:before {
+    @extend %fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-check)
+  }
+}
+td[data-tahun-akhir-pelaksanaan="success"] {
   background-color: #38E54D;
   &:before {
     @extend %fa-icon;

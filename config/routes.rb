@@ -212,6 +212,7 @@ Rails.application.routes.draw do
       post :clone_tahapan_sebelum
       get :edit_nip
       post :update_nip
+      get :subkegiatan_spbe
     end
     resources :rincians do
       get "subkegiatan", on: :new
