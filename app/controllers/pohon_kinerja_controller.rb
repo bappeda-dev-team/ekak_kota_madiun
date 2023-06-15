@@ -39,8 +39,8 @@ class PohonKinerjaController < ApplicationController
   end
 
   def excel_opd
-    @tahun = cookies[:tahun] || '2023'
-    opd_params = cookies[:opd]
+    @tahun = params[:tahun] || cookies[:tahun]
+    opd_params = params[:kode_opd] || cookies[:opd]
     @timestamp = Time.now.to_formatted_s(:number)
     @opd = if opd_params
              Opd.find_by(kode_unik_opd: opd_params)
@@ -82,8 +82,8 @@ class PohonKinerjaController < ApplicationController
   end
 
   def pdf_opd
-    @tahun = cookies[:tahun]
-    opd_params = cookies[:opd]
+    @tahun = params[:tahun] || cookies[:tahun]
+    opd_params = params[:kode_opd] || cookies[:opd]
     @opd = if opd_params
              Opd.find_by(kode_unik_opd: opd_params)
            else
@@ -116,6 +116,32 @@ class PohonKinerjaController < ApplicationController
   def rekap_opd
     @kode_opd = cookies[:opd]
     @opd = Opd.find_by(kode_opd: @kode_opd)
+  end
+
+  def review_kota
+    @tahun = params[:tahun]
+    return unless @tahun
+
+    @isu_kota = IsuStrategisKotum.where('tahun ILIKE ?', "%#{@tahun}%").to_h do |isu_kota|
+      [isu_kota, isu_kota.strategi_kota_tahun(@tahun).to_h do |str_kota|
+        [str_kota, str_kota.pohons]
+      end]
+    end
+  end
+
+  def review_opd
+    @opd_params = params[:kode_opd]
+    return unless @opd_params
+
+    @tahun = params[:tahun]
+    @opd = Opd.find_by(kode_unik_opd: @opd_params)
+    @nama_opd = @opd.nama_opd
+    @isu_opd = @opd.pohon_kinerja_opd(@tahun)
+    @rekap_jumlah = if @opd.id == 145
+                      @opd.data_total_pokin_setda(@tahun)
+                    else
+                      @opd.data_total_pokin(@tahun)
+                    end
   end
 
   def filter_rekap_opd

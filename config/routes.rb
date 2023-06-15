@@ -56,6 +56,8 @@ Rails.application.routes.draw do
       post :clone_pokin_opd
       post :clone_pokin_isu_strategis_opd
       post :clone_pokin_kota
+      get :review_opd
+      get :review_kota
     end
   end
   resources :strategi_opds

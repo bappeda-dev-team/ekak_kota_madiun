@@ -1,0 +1,205 @@
+<%= content_for :html_title, "Rekap Pohon Kinerja OPD" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item active" aria-current="page">Rekap Pohon Kinerja OPD</li>
+<% end %>
+<% content_for :view_utama do %>
+  <% if current_user.has_role?(:reviewer) %>
+    <div class="card border-0 shadow mb-4">
+      <div class="card-header">
+        <div class="row">
+          <div class="col">
+            <h2 class="mb-0">
+              Filter
+            </h2>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <%= form_with url: review_kota_pohon_kinerja_index_path,
+         method: :get,
+         data: {
+                      controller: 'form-ajax',
+                      action: 'ajax:success->form-ajax#changeOpd'
+         } do |form| %>
+          <div class="field mt-3">
+            <%= form.label :tahun, { class: "form-label" } %>
+            <%= form.select(:tahun, (['',2020,2021,2022,2023,2024]), {},
+    {data: {"placeholder": "Pilih Tahun",
+            controller: 'dropdown',
+    }}) %>
+          </div>
+          <%= form.submit 'filter' %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  <% if @tahun %>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col-8">
+            <h2 class="fs-5 fw-bold mb-0">Rekap Pohon Kinerja</h2>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row gy-4">
+          <div class="card pb-3 shadow border-tertiary table-responsive">
+            <div class="card-header border-bottom d-flex align-items-center justify-content-between">
+              <h2 class="fs-5 fw-bold mb-0">Pohon Kinerja Kota - Tahun <%= @tahun %></h2>
+              <%= link_to excel_kota_pohon_kinerja_index_path(format: :xlsx), class: "btn btn-sm btn-primary" do %>
+                <i class="fa fa-print me-2" data-bs-toggle="tooltip" data-bs-placement="bottom"></i>
+                <span>Cetak Excel</span>
+              <% end %>
+              <%= link_to pdf_kota_pohon_kinerja_index_path,
+           class: "btn btn-warning", target: "blank" do %>
+                <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom"></i>
+                <span>Cetak GAMBAR Pohon Kinerja</span>
+              <% end %>
+            </div>
+            <table class="table table-bordered border-primary rounded">
+              <thead>
+                <tr>
+                  <th class="fw-bolder">No</th>
+                  <th class="fw-bolder">Strategi</th>
+                  <th class="fw-bolder">Indikator</th>
+                  <th class="fw-bolder">Target / Satuan</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @isu_kota.each.with_index(1) do |(isu_kota, strategis), no_isu| %>
+                  <tr>
+                    <th colspan="4">Isu Strategis Kota <%= no_isu %>: <%= isu_kota.isu_strategis %>
+                      &nbsp;
+                      <%= link_to clone_list_opd_pohon_kinerja_index_path(isu_strategis: isu_kota.id,
+                                                                    tahun_sekarang: @tahun,
+                                                                    jenis: 'kota'), remote: true,
+                    data: {
+                      controller: 'form-modal',
+                      action: 'form-modal#appendForm',
+                      form_modal_location_param: 'form-clone-body',
+                      bs_toggle: 'modal',
+                      bs_target: '#form-clone'
+                    },
+                    class: "btn btn-sm btn-primary" do %>
+                        <i class="fa fa-clone me-2"></i>Clone
+                      <% end %>
+                    </th>
+                  </tr>
+                  <% strategis.each.with_index(1) do |(strategi, pohons), no_str| %>
+                    <tr style="background-color: #E5FDD1;">
+                      <th rowspan="<%= strategi.indikators_tahun(@tahun).size + 1 %>" class="align-middle" width="15" >STRATEGI KOTA <%= no_str %></th>
+                      <th rowspan="<%= strategi.indikators_tahun(@tahun).size + 1 %>" class="align-middle"><%= strategi.strategi %></th>
+                    </tr>
+                    <% strategi.indikators_tahun(@tahun).each do |ind_kota| %>
+                      <tr style="background-color: #E5FDD1;">
+                        <td class="text-wrap">
+                          <%= ind_kota.indikator %>
+                          <p class="komentar mt-3">
+                            <%= link_to "Tambah Komentar", komentar_pokin_komentars_path(kode_opd: 'kota_madiun', strategi_id: strategi.id),
+                                                    remote: true,
+                                                    class: 'btn btn-sm btn-warning',
+                                                    data: { controller: 'form-modal',
+                                                    action: 'form-modal#appendForm',
+                                                    form_modal_location_param: 'form-komentar-body',
+                                                    bs_target: '#form-komentar',
+                                                    bs_toggle: 'modal' } %>
+                          </p>
+                        </td>
+                        <td class=""><%= "#{ind_kota.target} #{ind_kota.satuan}" %></td>
+                      </tr>
+                    <% end %>
+                    <% strategi.komentars.each do |kom_kota| %>
+                      <tr class="higlighted">
+                        <td class="text-wrap"></td>
+                        <td class="text-wrap" colspan="3">
+                          <strong>Review</strong>
+                          <br/>
+                          Reviewer: <%= kom_kota.user.nama %>
+                          <br/>
+                          Judul: <%= kom_kota.judul %>
+                          <br/>
+                          Komentar: <%= kom_kota.komentar %>
+                        </td>
+                      </tr>
+                    <% end %>
+                    <% pohons.each do |pohon| %>
+                      <tr class="bg-gray-300">
+                        <th colspan="4">Perangkat Daerah: <%= pohon.opd.nama_opd %></th>
+                      </tr>
+                      <% pohon.strategis.each.with_index(1) do |stra, no| %>
+                        <tr class="strategic-objective">
+                          <td rowspan="<%= stra.indikator_strategi.size + 1 %>">STRATEGIC <%= no %></td>
+                          <td class="text-wrap" rowspan="<%= stra.indikator_strategi.size + 1 %>"><%= stra.strategi %></td>
+                        </tr>
+                        <% stra.indikator_sasarans.each do |ind| %>
+                          <tr class="strategic-objective">
+                            <td class="text-wrap">
+                              <%= ind.indikator_kinerja %>
+                              <% if ind.manual_ik.present? %>
+                                <p class="manual-ik my-3">
+                                  <%= link_to "Manual IK", overview_indikator_sasaran_manual_ik_path(ind, ind.manual_ik),
+                                    remote: true,
+                                    class: 'btn btn-sm btn-gray-900',
+                                    data: { controller: 'form-modal',
+                                    action: 'form-modal#appendForm',
+                                    form_modal_location_param: 'form-manual-ik-body',
+                                    bs_target: '#form-manual-ik',
+                                    bs_toggle: 'modal' } %>
+                                </p>
+                              <% end %>
+                              <p class="komentar mt-3">
+                                <%= link_to "Tambah Komentar", komentar_pokin_komentars_path(kode_opd: stra.opd.kode_unik_opd, strategi_id: stra.id),
+                                                      remote: true,
+                                                      class: 'btn btn-sm btn-warning',
+                                                      data: { controller: 'form-modal',
+                                                      action: 'form-modal#appendForm',
+                                                      form_modal_location_param: 'form-komentar-body',
+                                                      bs_target: '#form-komentar',
+                                                      bs_toggle: 'modal' } %>
+                              </p>
+                            </td>
+                            <td class=""><%= "#{ind.target} #{ind.satuan}" %></td>
+                          </tr>
+                        <% end %>
+                        <% stra.renaksi.each.with_index(1) do |renaksi_kabid, no_aksi_kabid| %>
+                          <tr class="strategic-objective">
+                            <th colspan="4" class="text-wrap">Renaksi <%= no_aksi_kabid %>: <%= renaksi_kabid %></th>
+                          </tr>
+                        <% end %>
+                        <% stra.komentars.each do |kom| %>
+                          <tr class="higlighted">
+                            <td class="text-wrap"></td>
+                            <td class="text-wrap" colspan="3">
+                              <strong>Review</strong>
+                              <br/>
+                              Reviewer: <%= kom.user.nama %>
+                              <br/>
+                              Judul: <%= kom.judul %>
+                              <br/>
+                              Komentar: <%= kom.komentar %>
+                            </td>
+                          </tr>
+                        <% end %>
+                      <% end %>
+                    <% end%>
+                    <tr class="rekap_pokin_separator" >
+                      <td colspan="4"></td>
+                    </tr>
+                  <% end%>
+                  <tr class="rekap_pokin_separator" >
+                    <td colspan="4"></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <%= render 'shared/modal_template', modal_name: 'clone' %>
+  <%= render 'shared/modal_template', modal_name: 'renaksi' %>
+  <%= render 'shared/modal_template', modal_name: 'komentar' %>
+  <%= render 'shared/modal_xl_template', modal_name: 'manual-ik' %>
+<% end %>

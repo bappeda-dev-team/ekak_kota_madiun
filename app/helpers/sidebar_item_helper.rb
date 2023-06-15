@@ -309,12 +309,12 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
   def reviewer_items
     [
       {
-        title: 'Pohon Kinerja Kota', href: rekap_pohon_kinerja_index_path,
-        icon: 'fas fa-solar-panel', identifier: 'pohon_kinerja/rekap'
+        title: 'Pohon Kinerja Kota', href: review_kota_pohon_kinerja_index_path,
+        icon: 'fas fa-solar-panel', identifier: 'pohon_kinerja/review_kota'
       },
       {
-        title: 'Pohon Kinerja OPD', href: rekap_opd_pohon_kinerja_index_path,
-        icon: 'fas fa-tree', identifier: 'pohon_kinerja/rekap'
+        title: 'Pohon Kinerja OPD', href: review_opd_pohon_kinerja_index_path,
+        icon: 'fas fa-tree', identifier: 'pohon_kinerja/review_opd'
       }
     ]
   end
@@ -324,11 +324,11 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
   end
 
   def collapsed_reviewer_items
-    collapse_class('(\bpohon_kinerja\/opd|\bpohon_kinerja\/kota)')
+    collapse_class('(\bpohon_kinerja\/review_opd|\bpohon_kinerja\/review_kota)')
   end
 
   def collapsed_laporan_reviewer_items
-    collapse_class('(\bpohon_kinerja\/opd|\bpohon_kinerja\/kota)')
+    collapse_class('(\bpohon_kinerja\/review_opd|\bpohon_kinerja\/review_kota)')
   end
 
   def collapse_class(identifier)
