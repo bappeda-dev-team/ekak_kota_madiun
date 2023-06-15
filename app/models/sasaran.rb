@@ -40,7 +40,7 @@
 class Sasaran < ApplicationRecord
   default_scope { order(:id) }
   # belongs_to :user
-  belongs_to :user, foreign_key: 'nip_asn', primary_key: 'nik'
+  belongs_to :user, foreign_key: 'nip_asn', primary_key: 'nik', optional: true
   has_one :opd, through: :user
   belongs_to :program_kegiatan, optional: true
   has_many :tematik_sasarans, dependent: :destroy

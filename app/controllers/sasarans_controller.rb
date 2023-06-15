@@ -300,7 +300,11 @@ class SasaransController < ApplicationController
 
   # POST /sasarans or /sasarans.json
   def create
-    @sasaran = @user.sasarans.build(sasaran_params)
+    @sasaran = if @user
+                 @user.sasarans.build(sasaran_params)
+               else
+                 Sasaran.new(sasaran_params)
+               end
     # @sasaran.id_rencana = (SecureRandom.random_number(9e5) + 1e5).to_i # This method will bites back, look up in here
     respond_to do |format|
       if @sasaran.save
