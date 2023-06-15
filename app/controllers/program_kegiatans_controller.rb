@@ -9,7 +9,6 @@ class ProgramKegiatansController < ApplicationController
   layout false, only: %i[show_to_kak kak_detail kak_renaksi kak_waktu]
 
   def index
-    # TODO: refactor untuk json query
     param = params[:q] || ""
     # FIXME: REFACTOR TOO MUCH LOGIC
     @program_kegiatans = ProgramKegiatan.where("kode_opd ILIKE ?", "%#{current_user.kode_opd}%")
@@ -27,6 +26,9 @@ class ProgramKegiatansController < ApplicationController
         program.nama_opd_pemilik.upcase.split(/BAGIAN/, 2).last.strip == current_user.petunjuk_bagian
       end
     end
+    return unless params[:item]
+
+    @program_kegiatans = ProgramKegiatan.where(id: params[:item])
   end
 
   def list_program_with_sasarans_rincian

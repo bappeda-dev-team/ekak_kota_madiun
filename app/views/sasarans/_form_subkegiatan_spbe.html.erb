@@ -1,7 +1,7 @@
 <%= form_with(model: [sasaran], local: false,
               data: { controller: 'form-ajax',
                 action: 'ajax:success->form-ajax#successResponseSpbe',
-                form_ajax_modal_param: 'form-sasaran'
+                form_ajax_modal_param: 'form-subkegiatan'
               }
 ) do |form| %>
   <% if sasaran.errors.any? %>
@@ -30,26 +30,10 @@
   <%= link_to_add_nested(form, :indikator_sasarans, '#indikator-sasarans', link_classes: 'btn btn-primary btn-sm', link_text: 'Tambah Indikator') %>
   <div class="field mt-3">
     <%= form.label :tahun, { class: "form-label" } %>
-    <%= form.select(:tahun, (['',2020,2021,2022,2023,2024]), { :selected => form.object.tahun || cookies[:tahun] },
+    <%= form.select(:tahun, (['',2021,2022,2023,2024]), { :selected => form.object.tahun || cookies[:tahun] },
     {data: {"placeholder": "Pilih Tahun",
             controller: 'dropdown'
     }}) %>
-  </div>
-  <div class="fields">
-    <%= form.label :subkegiatan, { class: "form-label" } %>
-    <%= form.select :program_kegiatan_id, [], {include_blank: true},
-    {data: { placeholder: 'Pilih Subkegiatan Sasaran',
-             controller: 'dropdown',
-            dropdown_jenis_value: 'ajax_preselect',
-            dropdown_kode_opd_value: @kode_opd,
-            dropdown_item_value: form.object.program_kegiatan_id,
-            dropdown_url_value: program_kegiatans_path(format: :json),
-            }
-    }%>
-  </div>
-  <div class="field">
-    <%= form.label :anggarn, {class: "form-label"} %>
-    <%= form.number_field :anggaran, {id: 'harga', class: "form-control"} %>
   </div>
   <div class="actions my-4">
     <%= form.submit "Simpan", :class => "btn btn-tertiary" %>

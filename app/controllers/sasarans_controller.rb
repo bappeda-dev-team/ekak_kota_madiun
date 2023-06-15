@@ -288,6 +288,11 @@ class SasaransController < ApplicationController
     render partial: 'form_sasaran_spbe', locals: { sasaran: @sasaran }
   end
 
+  def subkegiatan_spbe
+    @sasaran = Sasaran.find(params[:id])
+    render partial: 'form_subkegiatan_spbe', locals: { sasaran: @sasaran }
+  end
+
   # GET /sasarans/1/edit
   def edit
     @tipe = params[:tipe]
@@ -440,6 +445,7 @@ class SasaransController < ApplicationController
   def sasaran_params
     params.require(:sasaran).permit(:sasaran_kinerja, :penerima_manfaat, :nip_asn, :program_kegiatan_id,
                                     :sumber_dana, :subkegiatan_tematik_id, :tahun, :id_rencana,
+                                    :anggaran,
                                     :kelompok_anggaran, :filter_file, :filter_target, :filter_type, :sasaran_milik,
                                     indikator_sasarans_attributes: %i[id indikator_kinerja aspek target satuan _destroy])
   end
