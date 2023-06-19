@@ -62,4 +62,16 @@ class StrategiKotum < ApplicationRecord
   def indikators_tahun(tahun)
     sasaran_kotum.indikator_sasarans.where(tahun: tahun)
   end
+
+  def indikator(tahun)
+    indikators_tahun(tahun).first.indikator
+  end
+
+  def target(tahun)
+    indikators_tahun(tahun).first.target
+  end
+
+  def satuan(tahun)
+    indikators_tahun(tahun).first.satuan
+  end
 end

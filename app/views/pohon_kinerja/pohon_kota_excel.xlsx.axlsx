@@ -7,38 +7,68 @@ style_nama_kota = s.add_style(border: { style: :thin, color: '00000000', edges: 
                               outline: true)
 
 style_isu_strategis_kota = s.add_style(bg_color: '6DA9E4',
-                                       border: { style: :thin, color: '00000000', edges: %i[left right bottom top] },
+                                       border: { style: :thin, color: '000000', edges: %i[left right bottom top] },
                                        outline: true, alignment: { horizontal: :left }, b: true)
+style_strategi_kota = s.add_style(bg_color: '00FFF6',
+                                  border: { style: :thin, color: '000000', edges: %i[left right bottom top] },
+                                  outline: true, alignment: { horizontal: :left }, b: true)
+style_strategic_opd = s.add_style(bg_color: 'B73239', fg_color: 'EEE2DE',
+                                  border: { style: :thin, color: '000000', edges: %i[left right bottom top] },
+                                  outline: true, alignment: { horizontal: :left }, b: true)
+style_komentar = s.add_style(bg_color: 'FF55BB',
+                             border: { style: :thin, color: '00000000', edges: %i[left right bottom top] },
+                             outline: true, alignment: { horizontal: :left }, b: true)
 
-style_strategi_opd = s.add_style(bg_color: 'EFBFC7',
-                                       border: { style: :thin, color: '00000000', edges: %i[left right bottom top] },
-                                       outline: true, alignment: { horizontal: :left }, b: true)
-
-style_separator = s.add_style(bg_color: 'F0F0F0')
+style_separator = s.add_style(bg_color: '444444')
 # isu strategis opd / kota
 wb.add_worksheet(name: "Pohon Kinerja Kota Madiun") do |sheet| # rubocop:disable Metrics/BlockLength
-        sheet.add_row ["", "POHON KINERJA KOTA MADIUN TAHUN #{@tahun}"], style: project_heading
-        sheet.add_row [nil]
-        sheet.add_row ["No", "Strategi", "Indikator", "Target / Satuan"], style: style_nama_kota
-# ISU STRATEGIS
-        @isu_kota.each.with_index(1) do |(isu_kota, strategis), no_isu| # rubocop:disable Metrics/BlockLength
-          sheet.add_row ["", "Isu Strategis Kota #{no_isu}: #{isu_kota.isu_strategis}", "", ""], style: style_isu_strategis_kota
-          strategis.each.with_index(1) do |(strategi, pohons), no_str|
-               sheet.add_row ["", "Strategi Kota #{no_str}: #{strategi.strategi}"] 
-               strategi.indikators_tahun(@tahun).each do |ind_kota|
-                        sheet.add_row ["", "", ind_kota.indikator, "#{ind_kota.target} #{ind_kota.satuan}"]
-               end
-                pohons.each do |pohon|
-                        sheet.add_row ["", "Strategi #{pohon.opd.nama_opd}", "", ""], style: style_strategi_opd
-                        pohon.strategis.each.with_index(1) do |stra, no|
-                                sheet.add_row [no.to_s, stra.strategi]
-                                stra.indikator_sasarans.each do |ind| 
-                                        sheet.add_row ["", "", ind.indikator_kinerja, "#{ind.target} #{ind.satuan}"]
-                                end
-                        end
-                end
-                sheet.add_row ["","","",""], style: style_separator
+  sheet.add_row ["", "POHON KINERJA KOTA MADIUN TAHUN #{@tahun}"], style: project_heading
+  sheet.add_row [nil]
+  sheet.add_row ["No", "Strategi", "Indikator", "Target / Satuan"], style: style_nama_kota
+  # ISU STRATEGIS
+  @isu_kota.each.with_index(1) do |(isu_kota, strategis), no_isu| # rubocop:disable Metrics/BlockLength
+    sheet.add_row ["", "Isu Strategis Kota #{no_isu}: #{isu_kota.isu_strategis}", "", ""],
+                  style: style_isu_strategis_kota
+    strategis.each.with_index(1) do |(strategi, pohons), no_strategi|
+      sheet.add_row ["Strategi Kota #{no_strategi}", strategi.strategi,
+                     strategi.indikator(@tahun),
+                     strategi.target(@tahun),
+                     strategi.satuan(@tahun)], style: style_strategi_kota
+      strategi.indikators_tahun(@tahun).drop(1).each do |ind_kota|
+        sheet.add_row ["", "",
+                       ind_kota.indikator,
+                       ind_kota.target,
+                       ind_kota.satuan],
+                      style: style_strategi_kota
+      end
+      strategi.komentars.each do |kom|
+        sheet.add_row ["", "Reviewer: #{kom.user.nama}", "", "", ""], style: style_komentar
+        sheet.add_row ["", "Judul: #{kom.judul}", "", "", ""], style: style_komentar
+        sheet.add_row ["", "Review: #{kom.komentar}", "", "", ""], style: style_komentar
+      end
+      pohons.each.with_index(1) do |pohon, no_pohon|
+        sheet.add_row ["Perangkat Daerah #{no_pohon}", pohon.opd.nama_opd, "", ""]
+        pohon.strategis.each.with_index(1) do |str_kaopd, no_opd|
+          sheet.add_row ["Strategic #{no_opd}", str_kaopd.strategi,
+                         str_kaopd.indikator,
+                         str_kaopd.target,
+                         str_kaopd.satuan], style: style_strategic_opd
+          str_kaopd.indikators.drop(1).each do |ind_kaopd|
+            sheet.add_row ["", "",
+                           ind_kaopd.indikator,
+                           ind_kaopd.target,
+                           ind_kaopd.satuan],
+                          style: style_strategic_opd
           end
-        sheet.add_row ["","","",""], style: style_separator
+          str_kaopd.komentars.each do |kom_ka|
+            sheet.add_row ["", "Reviewer: #{kom_ka.user.nama}", "", "", ""], style: style_komentar
+            sheet.add_row ["", "Judul: #{kom_ka.judul}", "", "", ""], style: style_komentar
+            sheet.add_row ["", "Review: #{kom_ka.komentar}", "", "", ""], style: style_komentar
+          end
         end
+      end
+      sheet.add_row ["", "", "", ""], style: style_separator
+    end
+    sheet.add_row ["", "", "", ""], style: style_separator
+  end
 end

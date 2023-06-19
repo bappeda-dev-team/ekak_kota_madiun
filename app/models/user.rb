@@ -51,6 +51,7 @@ class User < ApplicationRecord
   has_many :inovasis, foreign_key: 'nip_asn', primary_key: 'nik'
 
   # WARNING: many bug in here because added role
+  scope :khusus, -> { with_any_role(:admin, :super_admin, :reviewer, :guest) }
   scope :admin, -> { with_role(:admin) }
   scope :non_admin, -> { without_role(:admin) }
   scope :aktif, -> { without_role([:non_aktif]) }
