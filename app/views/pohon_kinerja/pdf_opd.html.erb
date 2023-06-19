@@ -28,7 +28,8 @@
                 <ul>
                   <% strategi_kotums.each do |str_kota, str_opds| %>
                     <li>
-                      <%= render 'item_pokin', judul: "STRATEGI KOTA", strategi: str_kota, tipe: 'kota' %>
+                      <% judul = str_kota.to_s %>
+                      <%= render 'item_pokin', judul: judul, strategi: str_kota, tipe: 'kota' %>
                       <% if str_opds.any? %>
                         <ul>
                           <% str_opds.each do |str_opd, str_kabids| %>

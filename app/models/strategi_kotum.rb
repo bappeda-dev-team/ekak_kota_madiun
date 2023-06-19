@@ -23,6 +23,10 @@ class StrategiKotum < ApplicationRecord
   has_many :opds, through: :pohons
   has_many :komentars, -> { where(kode_opd: 'kota_madiun') }, primary_key: :id, foreign_key: :item
 
+  def to_s
+    self.class.name.pluralize.underscore.titleize
+  end
+
   def nama_pemilik
     "Kota Madiun"
   end
