@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   end
 
   def khusus
-    @users = User.where(kode_opd: '123456890')
+    @users = User.khusus
   end
 
   def struktur
@@ -194,7 +194,7 @@ class UsersController < ApplicationController
 
   def list_all
     keyword = params[:keyword]
-    @users = if keyword
+    @users = if keyword && keyword.length > 3
                User.where("nama ILIKE ?", "%#{keyword}%")
                    .or(User.where("nik ILIKE ?", "%#{keyword}%"))
                    .or(User.where("jabatan ILIKE ?", "%#{keyword}%"))

@@ -26,9 +26,14 @@ class Pohon < ApplicationRecord
   belongs_to :opd, optional: true
   belongs_to :user, optional: true
   has_many :strategis, -> { where(strategis: { role: "eselon_2" }) }
+  has_many :komentars, through: :strategis
 
   scope :pohon_opd, -> { where(pohonable_type: "IsuStrategisOpd") }
   scope :pohon_kota, -> { where(pohonable_type: "StrategiKotum") }
+
+  def to_s
+    pohonable.class.name.underscore.titleize
+  end
 
   def strategi_kota_isu_strategis
     "Isu Strategis: #{keterangan} - Strategi Kota: #{pohonable.strategi}"

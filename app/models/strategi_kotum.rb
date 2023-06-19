@@ -23,6 +23,10 @@ class StrategiKotum < ApplicationRecord
   has_many :opds, through: :pohons
   has_many :komentars, -> { where(kode_opd: 'kota_madiun') }, primary_key: :id, foreign_key: :item
 
+  def to_s
+    self.class.name.pluralize.underscore.titleize
+  end
+
   def nama_pemilik
     "Kota Madiun"
   end
@@ -61,5 +65,17 @@ class StrategiKotum < ApplicationRecord
 
   def indikators_tahun(tahun)
     sasaran_kotum.indikator_sasarans.where(tahun: tahun)
+  end
+
+  def indikator(tahun)
+    indikators_tahun(tahun).first.indikator
+  end
+
+  def target(tahun)
+    indikators_tahun(tahun).first.target
+  end
+
+  def satuan(tahun)
+    indikators_tahun(tahun).first.satuan
   end
 end

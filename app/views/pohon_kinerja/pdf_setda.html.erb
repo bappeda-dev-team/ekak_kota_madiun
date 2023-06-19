@@ -1,3 +1,4 @@
+<%= content_for :html_title, "POHON KINERJA OPD" %>
 <div  class="mb-5">
   <button id="cetak" class="btn btn-tertiary w-100"
           data-controller="pohon-kinerja"
@@ -12,150 +13,78 @@
       <div class="tf-nc">
         <p class="text-center"><strong>Perangkat Daerah</strong></p>
         <hr/>
-        <span class="tf-nc"><%= @nama_opd %></span>
+        <p class="text-center"><strong><%= @nama_opd %></strong></p>
       </div>
-      <ul>
-        <% @isu_opd.each do |isu_kota, strategi_kotums| %>
-          <li>
-            <div class="tf-nc">
-              <p class="text-center"><strong>ISU STRATEGIS</strong></p>
-              <hr/>
-              <span class="text-center"><%= isu_kota.isu_strategis %></span>
-            </div>
-            <ul>
-              <% strategi_kotums.each do |str_kota, str_opds| %>
-                <li>
-                  <div class="tf-nc">
-                    <p class="text-center"><strong>STRATEGI KOTA</strong></p>
-                    <hr/>
-                    <span class="text-center"><%= str_kota.strategi %></span>
-                    <%# INDIKATOR %>
-                    <% str_kota.indikators_tahun(@tahun).each do |ind_kota| %>
-                      <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
-                    <hr/>
-                    <p>
-                      <%= ind_kota.indikator %>
-                      <span>[ <%= ind_kota.target %>
-                        <%= ind_kota.satuan %> ]</span>
-                    </p>
-                    <hr/>
-                  <% end %>
-                </div>
+      <% if @isu_opd.any? %>
+        <ul>
+          <% @isu_opd.each do |isu_kota, strategi_kotums| %>
+            <li>
+              <div class="tf-nc">
+                <p class="text-center"><strong>ISU STRATEGIS</strong></p>
+                <hr/>
+                <span class="text-center"><%= isu_kota.isu_strategis %></span>
+              </div>
+              <% if strategi_kotums.any? %>
                 <ul>
-                  <% str_opds.each do |str_opd, str_kabids| %>
+                  <% strategi_kotums.each do |str_kota, str_opds| %>
                     <li>
-                      <div class="tf-nc">
-                        <p class="text-center"><strong>STRATEGIC OBJECTIVE</strong></p>
-                        <hr/>
-                        <span class="text-center"><%= str_opd.strategi %></span>
-                        <%# INDIKATOR %>
-                        <% str_opd.indikators.each do |ind_opd| %>
-                          <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
-                        <hr/>
-                        <p>
-                          <%= ind_opd.indikator_kinerja %>
-                          <span>[ <%= ind_opd.target %>
-                            <%= ind_opd.satuan %> ]</span>
-                        </p>
-                        <hr/>
-                      <% end %>
-                    </div>
-                    <ul>
-                      <% str_kabids.each do |str_kabid, str_kasis| %>
-                        <li>
-                          <div class="tf-nc">
-                            <p class="text-center"><strong>TACTICAL OBJECTIVE</strong></p>
-                            <hr/>
-                            <span class="text-center"><%= str_kabid.strategi %></span>
-                            <%# INDIKATOR %>
-                            <% str_kabid.indikators.each do |ind_kabid| %>
-                              <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
-                            <hr/>
-                            <p>
-                              <%= ind_kabid.indikator_kinerja %>
-                              <span>[ <%= ind_kabid.target %>
-                                <%= ind_kabid.satuan %> ]</span>
-                            </p>
-                            <hr/>
-                          <% end %>
-                        </div>
+                      <% judul = str_kota.to_s %>
+                      <%= render 'item_pokin', judul: judul, strategi: str_kota, tipe: 'kota' %>
+                      <% if str_opds.any? %>
                         <ul>
-                          <% str_kasis.each do |str_kasi, str_staffs| %>
+                          <% str_opds.each do |str_opd, str_kabids| %>
                             <li>
-                              <div class="tf-nc">
-                                <p class="text-center"><strong>TACTICAL OBJECTIVE 2</strong></p>
-                                <hr/>
-                                <span class="text-center"><%= str_kasi.strategi %></span>
-                                <%# INDIKATOR %>
-                                <% str_kasi.indikators.each do |ind_kasi| %>
-                                  <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
-                                <hr/>
-                                <p>
-                                  <%= ind_kasi.indikator_kinerja %>
-                                  <span>[ <%= ind_kasi.target %>
-                                    <%= ind_kasi.satuan %> ]</span>
-                                </p>
-                                <hr/>
-                              <% end %>
-                            </div>
-                            <ul>
-                              <% str_staffs.each do |str_staff, str_staff_2s| %>
-                                <li>
-                                  <div class="tf-nc">
-                                    <p class="text-center"><strong>OPERATIONAL OBJECTIVE</strong></p>
-                                    <hr/>
-                                    <span class="text-center"><%= str_staff.strategi %></span>
-                                    <%# INDIKATOR %>
-                                    <% str_staff.indikators.each do |ind_staff| %>
-                                      <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
-                                    <hr/>
-                                    <p>
-                                      <%= ind_staff.indikator_kinerja %>
-                                      <span>[ <%= ind_staff.target %>
-                                        <%= ind_staff.satuan %> ]</span>
-                                    </p>
-                                    <hr/>
-                                  <% end %>
-                                </div>
+                              <%= render 'item_pokin', judul: "STRATEGIC OBJECTIVE", strategi: str_opd %>
+                              <% if str_kabids.any? %>
                                 <ul>
-                                  <% str_staff_2s.each do |str_staff_2| %>
+                                  <% str_kabids.each do |str_kabid, str_kabid_2s| %>
                                     <li>
-                                      <div class="tf-nc">
-                                        <p class="text-center"><strong>OPERATIONAL OBJECTIVE 2</strong></p>
-                                        <hr/>
-                                        <span class="text-center"><%= str_staff_2.strategi %></span>
-                                        <%# INDIKATOR %>
-                                        <% str_staff_2.indikators.each do |ind_staff_2| %>
-                                          <p class="bg-info text-white px-2"<strong>INDIKATOR</strong></p>
-                                        <hr/>
-                                        <p>
-                                          <%= ind_staff_2.indikator_kinerja %>
-                                          <span>[ <%= ind_staff_2.target %>
-                                            <%= ind_staff_2.satuan %> ]</span>
-                                        </p>
-                                        <hr/>
+                                      <%= render 'item_pokin', judul: "TACTICAL OBJECTIVE", strategi: str_kabid %>
+                                      <% if str_kabid_2s.any? %>
+                                        <ul>
+                                          <% str_kabid_2s.each do |str_kabid_2, str_kasis| %>
+                                            <li>
+                                              <%= render 'item_pokin', judul: "TACTICAL OBJECTIVE 2", strategi: str_kabid_2 %>
+                                              <% if str_kasis.any? %>
+                                                <ul>
+                                                  <% str_kasis.each do |str_kasi, str_staffs| %>
+                                                    <li>
+                                                      <%= render 'item_pokin', judul: "OPERATIONAL OBJECTIVE", strategi: str_kasi %>
+                                                      <% if str_staffs.any? %>
+                                                        <ul>
+                                                          <% str_staffs.each do |str_staff| %>
+                                                            <li>
+                                                              <%= render 'item_pokin', judul: "OPERATIONAL OBJECTIVE 2", strategi: str_staff %>
+                                                            </li>
+                                                          <% end %>
+                                                        </ul>
+                                                      <% end %>
+                                                    </li>
+                                                  <% end %>
+                                                </ul>
+                                              <% end %>
+                                            </li>
+                                          <% end %>
+                                        </ul>
                                       <% end %>
-                                    </div>
-                                  </li>
-                                <% end %>
-                              </ul>
-                            <% end %>
-                          </ul>
-                        </li>
+                                    </li>
+                                  <% end %>
+                                </ul>
+                              <% end %>
+                            </li>
+                          <% end %>
+                        </ul>
                       <% end %>
-                    </ul>
-                  </li>
-                <% end %>
-              </ul>
+                    </li>
+                  <% end %>
+                </ul>
+              <% end %>
             </li>
           <% end %>
         </ul>
-      </li>
-    <% end %>
+      <% end %>
+    </li>
   </ul>
-</li>
-<% end %>
-</ul>
-</li>
-</ul>
 </div>
+<%= render 'shared/modal_template', modal_name: 'komentar' %>
+<%= render 'shared/modal_xl_template', modal_name: 'manual-ik' %>

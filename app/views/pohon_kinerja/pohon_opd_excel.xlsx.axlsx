@@ -23,7 +23,9 @@ style_operational_opd = s.add_style(bg_color: '93C47D',
 style_operational_2_opd = s.add_style(bg_color: 'FFFF00',
                                       border: { style: :thin, color: '000000', edges: %i[left right bottom top] },
                                       outline: true, alignment: { horizontal: :left }, b: true)
-
+style_komentar = s.add_style(bg_color: 'FF55BB',
+                             border: { style: :thin, color: '00000000', edges: %i[left right bottom top] },
+                             outline: true, alignment: { horizontal: :left }, b: true)
 style_separator = s.add_style(bg_color: '444444')
 # isu strategis opd / kota
 wb.add_worksheet(name: "Pohon Kinerja OPD") do |sheet| # rubocop:disable Metrics/BlockLength
@@ -31,40 +33,98 @@ wb.add_worksheet(name: "Pohon Kinerja OPD") do |sheet| # rubocop:disable Metrics
   sheet.add_row [nil]
   sheet.add_row %w[Jenis Strategi Indikator Target Satuan], style: style_nama_kota
   # ISU STRATEGIS
-  @isu_opd.each do |isu, strategis|
-    sheet.add_row [isu.class.name.pluralize.underscore.titleize, isu.isu_strategis, "", "", ""],
+  @isu_opd.each do |isu, strategis| # rubocop:disable Metrics/BlockLength
+    sheet.add_row [isu.to_s, isu.isu_strategis, "", "", ""],
                   style: style_isu_strategis_kota
     strategis.each do |strategi, strategi_kaopds|
-      sheet.add_row ["Strategi Kota", strategi.strategi, "", "", ""], style: style_strategi_kota
-      strategi.indikators_tahun(@tahun).each do |ind_kota|
-        sheet.add_row ["", "", ind_kota.indikator, ind_kota.target, ind_kota.satuan], style: style_strategi_kota
+      sheet.add_row ["Strategi Kota", strategi.strategi,
+                     strategi.indikator(@tahun),
+                     strategi.target(@tahun),
+                     strategi.satuan(@tahun)], style: style_strategi_kota
+      strategi.indikators_tahun(@tahun).drop(1).each do |ind_kota|
+        sheet.add_row ["", "",
+                       ind_kota.indikator,
+                       ind_kota.target,
+                       ind_kota.satuan],
+                      style: style_strategi_kota
+      end
+      strategi.komentars.each do |kom|
+        sheet.add_row ["", "Reviewer: #{kom.user.nama}", "", "", ""], style: style_komentar
+        sheet.add_row ["", "Judul: #{kom.judul}", "", "", ""], style: style_komentar
+        sheet.add_row ["", "Review: #{kom.komentar}", "", "", ""], style: style_komentar
       end
       strategi_kaopds.each do |str_kaopd, str_kabids|
-        sheet.add_row ["Strategic", str_kaopd.strategi, "", "", ""], style: style_strategic_opd
-
-        str_kaopd.indikators.each do |ind_kaopd|
-          sheet.add_row ["", "", ind_kaopd.indikator, ind_kaopd.target, ind_kaopd.satuan], style: style_strategic_opd
+        sheet.add_row ["Strategic", str_kaopd.strategi,
+                       str_kaopd.indikator,
+                       str_kaopd.target,
+                       str_kaopd.satuan], style: style_strategic_opd
+        str_kaopd.indikators.drop(1).each do |ind_kaopd|
+          sheet.add_row ["", "",
+                         ind_kaopd.indikator,
+                         ind_kaopd.target,
+                         ind_kaopd.satuan],
+                        style: style_strategic_opd
+        end
+        str_kaopd.komentars.each do |kom_ka|
+          sheet.add_row ["", "Reviewer: #{kom_ka.user.nama}", "", "", ""], style: style_komentar
+          sheet.add_row ["", "Judul: #{kom_ka.judul}", "", "", ""], style: style_komentar
+          sheet.add_row ["", "Review: #{kom_ka.komentar}", "", "", ""], style: style_komentar
         end
         str_kabids.each do |str_kabid, str_kasis|
-          sheet.add_row ["Tactical", str_kaopd.strategi, "", "", ""], style: style_tactical_opd
-          str_kabid.indikators.each do |ind_kabid|
-            sheet.add_row ["", "", ind_kabid.indikator, ind_kabid.target, ind_kabid.satuan], style: style_tactical_opd
+          sheet.add_row ["Tactical", str_kabid.strategi,
+                         str_kabid.indikator,
+                         str_kabid.target,
+                         str_kabid.satuan], style: style_tactical_opd
+          str_kabid.indikators.drop(1).each do |ind_kabid|
+            sheet.add_row ["", "",
+                           ind_kabid.indikator,
+                           ind_kabid.target,
+                           ind_kabid.satuan],
+                          style: style_tactical_opd
+          end
+          str_kabid.komentars.each do |kom_kabid|
+            sheet.add_row ["", "Reviewer: #{kom_kabid.user.nama}", "", "", ""], style: style_komentar
+            sheet.add_row ["", "Judul: #{kom_kabid.judul}", "", "", ""], style: style_komentar
+            sheet.add_row ["", "Review: #{kom_kabid.komentar}", "", "", ""], style: style_komentar
           end
           str_kasis.each do |str_kasi, str_staffs|
-            sheet.add_row ["Operational", str_kasi.strategi, "", "", ""], style: style_operational_opd
-            str_kasi.indikators.each do |ind_kasi|
-              sheet.add_row ["", "", ind_kasi.indikator, ind_kasi.target, ind_kasi.satuan], style: style_operational_opd
+            sheet.add_row ["Operational", str_kasi.strategi,
+                           str_kasi.indikator,
+                           str_kasi.target,
+                           str_kasi.satuan],
+                          style: style_operational_opd
+            str_kasi.indikators.drop(1).each do |ind_kasi|
+              sheet.add_row ["", "",
+                             ind_kasi.indikator,
+                             ind_kasi.target,
+                             ind_kasi.satuan],
+                            style: style_operational_opd
+            end
+            str_kasi.komentars.each do |kom_kasi|
+              sheet.add_row ["", "Reviewer: #{kom_kasi.user.nama}", "", "", ""], style: style_komentar
+              sheet.add_row ["", "Judul: #{kom_kasi.judul}", "", "", ""], style: style_komentar
+              sheet.add_row ["", "Review: #{kom_kasi.komentar}", "", "", ""], style: style_komentar
             end
             str_staffs.each do |str_staff|
-              sheet.add_row ["Operational 2", str_staff.strategi, "", "", ""], style: style_operational_2_opd
-              str_staff.indikators.each do |ind_staff|
-                sheet.add_row ["", "", ind_staff.indikator, ind_staff.target, ind_staff.satuan], style: style_operational_2_opd
+              sheet.add_row ["Operational 2", str_staff.strategi,
+                             str_staff.indikator,
+                             str_staff.target,
+                             str_staff.satuan],
+                            style: style_operational_2_opd
+              str_staff.indikators.drop(1).each do |ind_staff|
+                sheet.add_row ["", "", ind_staff.indikator, ind_staff.target, ind_staff.satuan],
+                              style: style_operational_2_opd
+              end
+              str_staff.komentars.each do |kom_staff|
+                sheet.add_row ["", "Reviewer: #{kom_staff.user.nama}", "", "", ""], style: style_komentar
+                sheet.add_row ["", "Judul: #{kom_staff.judul}", "", "", ""], style: style_komentar
+                sheet.add_row ["", "Review: #{kom_staff.komentar}", "", "", ""], style: style_komentar
               end
             end
           end
         end
+        sheet.add_row ["", "", "", "", ""], style: style_separator
       end
-      sheet.add_row ["", "", "", "", ""], style: style_separator
       sheet.add_row ["", "", "", "", ""], style: style_separator
     end
   end

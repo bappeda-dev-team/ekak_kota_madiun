@@ -118,6 +118,18 @@ class Strategi < ApplicationRecord
     indikator_sasarans.pluck(:target, :satuan)
   end
 
+  def indikator
+    indikator_sasarans.first.indikator_kinerja
+  end
+
+  def target
+    indikator_sasarans.first.target
+  end
+
+  def satuan
+    indikator_sasarans.first.satuan
+  end
+
   def nama_pemilik
     user&.nama
   end

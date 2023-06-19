@@ -17,6 +17,10 @@ class IsuStrategisKotum < ApplicationRecord
 
   has_many :opds, through: :strategi_kotums
 
+  def to_s
+    self.class.name.pluralize.underscore.titleize
+  end
+
   def strategi_kota_tahun(tahun)
     strategi_kotums.where('tahun ILIKE ?', "%#{tahun}%")
   end
