@@ -1,0 +1,408 @@
+<nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+  <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+    <li class="breadcrumb-item">
+      <%= link_to root_path do %>
+        <i class="fas fa-home"></i>
+      <% end %>
+    </li>
+    <li class="breadcrumb-item" aria-current="page">Rincian Rencana Kinerja</li>
+    <li class="breadcrumb-item active" aria-current="page"><%= @sasaran.sasaran_kinerja %></li>
+  </ol>
+</nav>
+<div class="px-3">
+  <!-- SECTION - render anggaran here -->
+  <% unless @sasaran.tahapans.any? %>
+    <%= render 'rencana_aksi_card', sasaran: @sasaran %>
+  <% else %>
+    <!-- SECTION - musrenbang -->
+    <div class="card border-2 shadow mb-3">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h5 class="card-title">
+              SubKegiatan
+            </h5>
+          </div>
+        </div>
+      </div>
+      <% if @sasaran.program_kegiatan.nil? %>
+        <div class="card-body bg-danger">
+          <div class="table-responsive">
+            <h5 class="card-title">
+              KOSONG
+            </h5>
+          </div>
+        </div>
+      <% else %>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table border">
+              <thead>
+                <tr>
+                  <th>SubKegiatan</th>
+                  <th>Indikator</th>
+                  <th>Pagu Ranwal <%= @tahun %></th>
+                  <th>Pagu Rankir <%= @tahun %></th>
+                  <th>Pagu Penetapan <%= @tahun %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="align-middle text-wrap"><%= @sasaran.program_kegiatan.nama_subkegiatan %></td>
+                  <td class="align-middle text-wrap"><%= @sasaran.program_kegiatan.indikator_subkegiatan %></td>
+                  <td class="align-middle">
+                    Rp.  <%= number_with_delimiter(@sasaran.program_kegiatan.pagu_ranwal_tahun(@tahun)) %>
+                  </td>
+                  <td class="align-middle">
+                    Rp.  <%= number_with_delimiter(@sasaran.program_kegiatan.pagu_rankir_tahun(@tahun)) %>
+                  </td>
+                  <td class="align-middle">
+                    Rp.  <%= number_with_delimiter(@sasaran.program_kegiatan.pagu_penetapan_tahun(@tahun)) %>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="card border-2 shadow mb-3">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h5 class="card-title">
+              Sasaran Kinerja
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="table-responsive">
+            <table class="table table-sm align-items-center">
+              <thead>
+                <tr>
+                  <th>OPD</th>
+                  <th>Nama / NIP</th>
+                  <th>Sasaran Kinerja</th>
+                  <th>Indikator</th>
+                  <th>Target</th>
+                  <th>Satuan</th>
+                  <th>Manual IK</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(@sasaran) %>"><%= @sasaran.user.opd.nama_opd %></td>
+                  <td rowspan="<%= rowspan_sasaran(@sasaran) %>"><%= @sasaran.user.nama_nip %></td>
+                  <td class="border" rowspan="<%= rowspan_sasaran(@sasaran) %>"><%= @sasaran.sasaran_kinerja %></td>
+                  <td class="border"><%= @sasaran.indikator_sasarans.first.indikator %></td>
+                  <td class="border"><%= @sasaran.indikator_sasarans.first.target %></td>
+                  <td class="border"><%= @sasaran.indikator_sasarans.first.satuan %></td>
+                  <% if @sasaran.indikator_sasarans.first.manual_ik.present? %>
+                    <td >
+                      <%= link_to "Manual IK", overview_indikator_sasaran_manual_ik_path(@sasaran.indikator_sasarans.first, @sasaran.indikator_sasarans.first.manual_ik),
+                                    remote: true,
+                                    class: 'btn btn-sm btn-outline-gray-900',
+                                    data: { controller: 'form-modal',
+                                    action: 'form-modal#appendForm',
+                                    form_modal_location_param: 'form-manual-ik-body',
+                                    bs_target: '#form-manual-ik',
+                                    bs_toggle: 'modal' } %>
+                    </td>
+                  <% end %>
+                </tr>
+                <% @sasaran.indikator_sasarans.drop(1).each do |indikator| %>
+                  <tr>
+                    <td class='border text-wrap'><%= indikator.indikator_kinerja %></td>
+                    <td class='border text-wrap'><%= indikator.target %></td>
+                    <td class='border text-wrap'><%= indikator.satuan %></td>
+                    <% if indikator.manual_ik.present? %>
+                      <td>
+                        <%= link_to "Manual IK", overview_indikator_sasaran_manual_ik_path(indikator, indikator.manual_ik),
+                                    remote: true,
+                                    class: 'btn btn-sm btn-outline-gray-900',
+                                    data: { controller: 'form-modal',
+                                    action: 'form-modal#appendForm',
+                                    form_modal_location_param: 'form-manual-ik-body',
+                                    bs_target: '#form-manual-ik',
+                                    bs_toggle: 'modal' } %>
+                      </td>
+                    <% end %>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card border-2 shadow mb-3">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h5 class="card-title">
+              Rencana Aksi
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row align-items-center mb-3">
+          <div class="table-responsive">
+            <table class="table table-sm align-items-center">
+              <caption class="waktu-renaksi">
+                <strong>Waktu yang dibutuhkan :</strong>
+                <%= waktu = @sasaran.waktu_total == 0 ? "-" : @sasaran.waktu_total %> bulan
+                <hr>
+                <div class="row">
+                  <div class="col-4 align-middle">
+                    <strong>Anggaran yang dibutuhkan :</strong>
+                    Rp. <%= number_with_delimiter(@sasaran.total_anggaran_dengan_komentar) %>
+                  </div>
+                  <div class="col-8 align-middle">
+                    Sumber Dana: <%= @sasaran.sumber_dana %>
+                  </div>
+                </div>
+              </caption>
+              <thead class="thead-light">
+                <tr>
+                  <th class="border-bottom border-end border-start" scope="col" rowspan="2">No.</th>
+                  <th class="border-bottom border-end border-start text-center" scope="col" rowspan="2">Urutan</th>
+                  <th class="border-bottom border-end" scope="col" rowspan="2">Tahapan Kerja</th>
+                  <% (1..12).each do |i| %>
+                    <th class="border-bottom border-end text-center" scope="col"><%= i %></th>
+                  <% end %>
+                  <th class="border-bottom border-end text-center" scope="col">Jumlah</th>
+                  <th class="border-bottom border-end text-center" scope="col" rowspan="2">Anggaran</th>
+                  <th class="border-bottom border-end text-center" scope="col" rowspan="2">Keterangan</th>
+                  <% unless diajukan? %>
+                    <th class="border-bottom border-end text-center" scope="col" rowspan="2">Action</th>
+                  <% end %>
+                </tr>
+                <tr>
+                  <% (1..13).each do |item| %>
+                    <td class="border border-gray-900 bg-tertiary text-center text-gray-300" scope="col">T</td>
+                  <% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <% @sasaran.tahapan_renaksi.each.with_index(1) do |tahapan, index| %>
+                  <tr class="<%= tahapan.ada_komentar? ? 'higlighted' : 'clean' %>">
+                    <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= index %></td>
+                    <td class="text-gray-900 fw-bolder border-start border-end" scope="row">
+                      <span class="me-2"><%= tahapan&.urutan || '-' %></span>
+                    </td>
+                    <td class="text-gray-900"><%= tahapan.tahapan_kerja %></td>
+                    <% (1..12).each do |bulan| %>
+                      <% unless diajukan? %>
+                        <%= aksi_di_bulan(@sasaran, tahapan, bulan) %>
+                      <% else %>
+                        <%= aksi_di_bulan(@sasaran, tahapan, bulan, disabled: true) %>
+                      <% end %>
+                    <% end %>
+                    <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.jumlah_target or '-' %></td>
+                    <td class="fw-bolder text-gray-500 border text-end">
+                      Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %>
+                    </td>
+                    <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.keterangan %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+              <tr>
+                <td class="border-bottom border-start border-end" colspan="3">Total</td>
+                <% (1..12).each do |i| %>
+                  <td class="border-bottom border-end text-center"><%= @sasaran.total_target_aksi_bulan[i] %></td>
+                <% end %>
+                <td class="border-bottom border-end text-center"><%= @sasaran.jumlah_target %></td>
+                <td class="border-bottom border-end text-end">Rp. <%= number_with_delimiter(@sasaran.total_anggaran_dengan_komentar) %></td>
+                <td class="border-bottom border-end" colspan="2"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="px-3">
+    <div class="card border-2 shadow mb-3">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h5 class="card-title">
+              Rincian Sasaran
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row align-items-center mb-3">
+          <div class="table-responsive">
+            <table class="table align-items-center">
+              <thead>
+                <tr>
+                  <th>Penerima Manfaat</th>
+                  <th>Data Terpilah</th>
+                  <th>Resiko</th>
+                  <th>Lokasi Pelaksanaan</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if @sasaran.rincian? %>
+                  <tr>
+                    <td class='border '><%= @sasaran.penerima_manfaat %></td>
+                    <td class='border '><%= @sasaran.rincian.data_terpilah %></td>
+                    <td class='border '><%= @sasaran.rincian.resiko %></td>
+                    <td class='border '><%= @sasaran.rincian.lokasi_pelaksanaan %></td>
+                  </tr>
+                <% else %>
+                  <tr>
+                    <td class='border text-wrap'>-</td>
+                    <td class='border text-wrap'>-</td>
+                    <td class='border text-wrap'>-</td>
+                    <td class='border text-wrap'>-</td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card border-2 shadow mb-3">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h5 class="card-title">
+              Permasalahan
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row align-items-center mb-3">
+          <div class="table-responsive">
+            <table class="table align-items-center">
+              <thead>
+                <tr>
+                  <th>Jenis</th>
+                  <th>Permasalahan</th>
+                  <th>Penyebab Internal</th>
+                  <th>Penyebab External</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @sasaran.permasalahans.order(:updated_at).each do |permasalahan| %>
+                  <tr>
+                    <td class="align-middle text-wrap"><%= permasalahan.jenis %></td>
+                    <td class="align-middle text-wrap"><%= permasalahan.permasalahan %></td>
+                    <td class="align-middle text-wrap"><%= permasalahan.penyebab_internal %></td>
+                    <td class="align-middle text-wrap"><%= permasalahan.penyebab_external %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card border-2 shadow mb-3">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h5 class="card-title">
+              Dasar Hukum
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row align-items-center mb-3">
+          <div class="table-responsive">
+            <table class="table align-items-center">
+              <thead>
+                <tr>
+                  <th>Peraturan terkait</th>
+                  <th>Uraian</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @sasaran.dasar_hukums.order(:updated_at).each do |dashu| %>
+                  <tr>
+                    <td class="align-middle text-wrap"><%= dashu.judul %></td>
+                    <td class="align-middle text-wrap"><%= dashu.peraturan %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card border-2 shadow mb-3">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h5 class="card-title">
+              Gambaran Umum
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row align-items-center mb-3">
+          <div class="table-responsive">
+            <table class="table align-items-center">
+              <thead>
+                <tr>
+                  <th>Gambaran Umum</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @sasaran.latar_belakangs.order(:updated_at).each do |latarbelakang| %>
+                  <tr>
+                    <td class="align-middle text-wrap"><%= latarbelakang.gambaran_umum %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card border-2 shadow mb-3">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h5 class="card-title">
+              Tematik
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row align-items-center mb-3">
+          <div class="table-responsive">
+            <table class="table align-items-center">
+              <thead>
+                <tr>
+                  <th>Tematik</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @sasaran.subkegiatan_tematiks.each do |tematik| %>
+                  <tr>
+                    <td class="align-middle text-wrap"><%= tematik.nama_tematik %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<!-- SECTION - Modal-->
+<!-- TODO - DRY-->
+</div>
