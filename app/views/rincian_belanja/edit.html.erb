@@ -59,6 +59,9 @@
         <div class="card-body">
           <p>Rincian Anggaran </p>
           <div class="anggaran">
+            <%= link_to 'Tambah Rekening', new_sasaran_tahapan_anggaran_path(@sasaran, tahapan),remote: true,
+             data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"},
+             class: "ml-5 mb-3 btn btn-outline-success" %>
             <table>
               <thead>
                 <tr>
@@ -85,6 +88,26 @@
                     <td class="uang text-end">Rp. <%= number_with_delimiter(anggaran.jumlah) %></td>
                     <td>
                       <div class="d-grid gap-3 p-3">
+                        <%= link_to 'Tambah Rincian', new_anggaran_perhitungan_path(anggaran), remote: true,
+                         data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"},
+                         class: "btn btn-sm btn-outline-success" %>
+                        <% if anggaran_gaji?(anggaran.uraian.downcase) %>
+                          <%= link_to 'Tambah Gaji', new_gaji_anggaran_perhitungans_path(anggaran), remote: true,
+                           data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan" },
+                          class: "btn btn-sm btn-warning" %>
+                        <% end %>
+                        <% if anggaran.uraian.downcase.include? "rekening lain-lain" %>
+                          <%= link_to 'Lain-Lain', new_lain_lain_anggaran_perhitungans_path(anggaran), remote: true,
+                           data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan" },
+                          class: "btn btn-sm btn-primary" %>
+                        <% end %>
+                        <%= link_to "Ganti Rekening", edit_sasaran_tahapan_anggaran_path(@sasaran, tahapan, anggaran), remote: true,
+                         data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"},
+                         class: 'btn btn-sm btn-outline-info'  %>
+                        <%= link_to "Hapus Rekening", sasaran_tahapan_anggaran_path(@sasaran, tahapan, anggaran),
+                         method: :delete, remote: true,
+                         data: {confirm_swal: "Hapus Rekening - #{anggaran.uraian}"},
+                         class: "btn btn-sm btn-outline-danger"  %>
                       </div>
                     </td>
                   </tr>
@@ -104,6 +127,13 @@
                         <td class="uang text-end">Rp. <%= number_with_delimiter((hitung.total)) %></td>
                         <td>
                           <div class="d-grid gap-3 p-3">
+                            <%= link_to "Edit Rincian", link_edit_anggaran(anggaran, hitung), remote: true,
+                             data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan" },
+                             class: "btn btn-outline-info" %>
+                            <%= link_to "Hapus Rincian", anggaran_perhitungan_path(anggaran, hitung),
+                             method: :delete, remote: true,
+                             data: { confirm_swal: "Hapus Rincian ?" },
+                             class: "btn btn-outline-danger" %>
                           </div>
                         </td>
                       </tr>
@@ -126,3 +156,4 @@
     <% end %>
   </div>
 </div>
+<%= render 'modal_perhitungans' %>
