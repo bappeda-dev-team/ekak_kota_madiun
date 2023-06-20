@@ -56,9 +56,12 @@
                 <%= indikator_sasaran(sasaran) %>
                 <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
                 <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">
-                  <div class="row justify-content-center w-100">
-                    <div class="col">
-                    </div>
+                  <div class="d-grid gap-2">
+                    <%= link_to rincian_sasaran_path(sasaran), target: "_blank", rel: "nofollow",
+                     class: "btn btn-sm btn-success text-white" do %>
+                      <i class="fas fa-journal-whills me-2"></i>
+                      <span>Rincian</span>
+                    <% end %>
                   </div>
                 </td>
               </tr>

@@ -215,6 +215,7 @@ Rails.application.routes.draw do
       get :edit_nip
       post :update_nip
       get :subkegiatan_spbe
+      get :rincian
     end
     resources :rincians do
       get "subkegiatan", on: :new
@@ -298,6 +299,11 @@ Rails.application.routes.draw do
       post :laporan_kak_admin
       post :laporan_rka_admin
       get :spbe
+      get :renstra
+      get :ranwal
+      get :rankir1
+      get :rankir2
+      get :penetapan
     end
 
     member do

@@ -18,6 +18,10 @@ class RincianBelanjaController < ApplicationController
     @sasaran = Sasaran.find(params[:id])
   end
 
+  def edit
+    @sasaran = Sasaran.find(params[:id])
+  end
+
   def show_subkegiatan
     @subkegiatan = ProgramKegiatan.find(params[:id])
     @sasarans = @subkegiatan.sasarans_subkegiatan(@tahun)
