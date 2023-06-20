@@ -101,8 +101,8 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
     collapse_class('(' \
                    '\btujuan_kota|\bisu_strategis_kota|' \
                    '\bstrategi_kota|\bsasaran_kota|' \
-                   '\bpohon_kinerja/kota|' \
-                   '\bpohon_kinerja/rekap|)')
+                   '\bpohon_kinerja\/kota|' \
+                   '\bpohon_kinerja\/rekap|)')
   end
 
   def perencanaan_opd_items
@@ -224,10 +224,10 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
 
   def collapsed_laporan_items
     collapse_class('(' \
-                   '\blaporan_usulan|\blaporan_pohon|' \
-                   '\blaporan_kak|\blaporan_rka|' \
-                   '\brenstra|\brenja/ranwal|' \
-                   '\brenja/rankir|\brenja/penetapan)')
+                   '\blaporans\/laporan_usulan|\blaporans\/laporan_pohon|' \
+                   '\blaporans\/laporan_kak|\blaporans\/laporan_rka|' \
+                   '\brenstra|\brenja\/ranwal|' \
+                   '\brenja\/rankir|\brenja\/penetapan|)')
   end
 
   def renja_items
