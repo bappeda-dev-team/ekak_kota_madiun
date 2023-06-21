@@ -1031,7 +1031,8 @@ CREATE TABLE public.komentars (
     user_id bigint NOT NULL,
     item bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    jenis character varying
 );
 
 
@@ -4864,6 +4865,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230605223850'),
 ('20230607004201'),
 ('20230609010527'),
-('20230613011150');
+('20230613011150'),
+('20230621231710');
 
 

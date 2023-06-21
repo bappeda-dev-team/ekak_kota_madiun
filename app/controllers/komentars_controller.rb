@@ -18,6 +18,7 @@ class KomentarsController < ApplicationController
     @komentar = Komentar.new
     @kode_opd = params[:kode_opd]
     @strategi_id = params[:strategi_id]
+    @jenis = params[:jenis]
     render partial: "form_komentar_pokin"
   end
 
@@ -73,6 +74,6 @@ class KomentarsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def komentar_params
-    params.require(:komentar).permit(:judul, :komentar, :kode_opd, :user_id, :item)
+    params.require(:komentar).permit(:judul, :komentar, :kode_opd, :user_id, :item, :jenis)
   end
 end

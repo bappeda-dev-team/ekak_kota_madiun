@@ -48,6 +48,9 @@ class Opd < ApplicationRecord
   has_many :pohons, dependent: :destroy
   has_many :isu_strategis_opds, foreign_key: 'kode_opd', primary_key: 'kode_opd'
   has_many :strategis
+  has_many :komentars, lambda {
+    where(jenis: "OPD")
+  }, primary_key: :id, foreign_key: :item
 
   accepts_nested_attributes_for :indikator_sasarans, reject_if: :all_blank, allow_destroy: true
 
