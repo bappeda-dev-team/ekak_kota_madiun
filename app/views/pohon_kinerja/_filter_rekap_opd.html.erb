@@ -37,6 +37,16 @@
             <li>Jumlah Indikator : <%= @rekap_jumlah[:indikator_staff] %></li>
           </ul>
         </div>
+        <div class="card-header border-bottom">
+          <%= render 'pohon_kinerja/komentar_card', komentars: @opd.komentars %>
+          <div class="row">
+            <%= render 'shared/komentar_button',
+           link: komentar_pokin_komentars_path(kode_opd: @opd.kode_unik_opd,
+                                               strategi_id: @opd.id,
+                                               jenis: "OPD"),
+           form_name: 'form-komentar' %>
+          </div>
+        </div>
         <table class="table table-bordered border-primary rounded">
           <thead>
             <tr>
