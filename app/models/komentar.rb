@@ -4,6 +4,7 @@
 #
 #  id         :bigint           not null, primary key
 #  item       :bigint
+#  jenis      :string
 #  judul      :string
 #  kode_opd   :string
 #  komentar   :string

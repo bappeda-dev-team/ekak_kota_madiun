@@ -17,6 +17,7 @@
   <%= form.hidden_field :user_id, readonly: true, value: current_user.id %>
   <%= form.hidden_field :item, readonly: true, value: @strategi_id %>
   <%= form.hidden_field :kode_opd, readonly: true, value: @kode_opd %>
+  <%= form.hidden_field :jenis, readonly: true, value: @jenis %>
   <div class="field">
     <%= form.label :judul, class: 'form-label' %>
     <%= form.text_field :judul, class: 'form-control' %>

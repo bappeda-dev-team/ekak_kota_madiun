@@ -39,6 +39,16 @@
             <li>Jumlah Indikator : <%= @rekap_jumlah[:indikator_staff] %></li>
           </ul>
         </div>
+        <div class="card-header border-bottom">
+          <%= render 'pohon_kinerja/komentar_card', komentars: @opd.komentars %>
+          <div class="row">
+            <%= render 'shared/komentar_button',
+           link: komentar_pokin_komentars_path(kode_opd: @opd.kode_unik_opd,
+                                               strategi_id: @opd.id,
+                                               jenis: "OPD"),
+           form_name: 'form-komentar' %>
+          </div>
+        </div>
         <table class="table table-bordered border-primary rounded">
           <thead>
             <tr>
@@ -56,8 +66,8 @@
                   <%= link_to clone_list_opd_pohon_kinerja_index_path(isu_strategis: isu.id,
                                                                     opd_id: @opd.id,
                                                                     tahun_sekarang: @tahun,
-                                                                    jenis: 'opd'), remote: true, 
-                    data: { 
+                                                                    jenis: 'opd'), remote: true,
+                    data: {
                       controller: 'form-modal',
                       action: 'form-modal#appendForm',
                       form_modal_location_param: 'form-clone-body',

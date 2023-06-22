@@ -42,7 +42,7 @@
         <p class="manual-ik my-3">
           <%= link_to "Manual IK", overview_indikator_sasaran_manual_ik_path(ind, ind.manual_ik),
                                     remote: true,
-                                    class: 'btn btn-sm btn-outline-gray-900',
+                                    class: 'btn btn-sm btn-outline-gray-900 w-100',
                                     data: { controller: 'form-modal',
                                     action: 'form-modal#appendForm',
                                     form_modal_location_param: 'form-manual-ik-body',
@@ -59,14 +59,11 @@
       <p>Reviewer:<%= kom.komentator %></p>
     <% end %>
     <p class="komentar mt-3">
-      <%= link_to "Tambah Komentar", komentar_pokin_komentars_path(kode_opd: strategi.opd.kode_unik_opd, strategi_id: strategi.id),
-                                  remote: true,
-                                  class: 'btn btn-sm btn-outline-gray-900',
-                                  data: { controller: 'form-modal',
-                                  action: 'form-modal#appendForm',
-                                  form_modal_location_param: 'form-komentar-body',
-                                  bs_target: '#form-komentar',
-                                  bs_toggle: 'modal' } %>
+      <%= render 'shared/komentar_button',
+           link: komentar_pokin_komentars_path(kode_opd: strategi.opd.kode_unik_opd,
+                                               strategi_id: strategi.id,
+                                               jenis: local_assigns[:tipe]),
+           form_name: 'form-komentar' %>
     </p>
   <% end %>
 </div>

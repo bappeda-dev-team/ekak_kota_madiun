@@ -1,0 +1,13 @@
+<div class="row justify-content-arround mb-3">
+  <% komentars.each do |kom| %>
+    <div class="card border border-3 border-primary shadow col-2 mb-2 me-2">
+      <div class="card-header highlighted text-center">
+        <h3>REVIEW</h3>
+      </div>
+      <div class="card-body">
+        <p>Review: <%= kom.komentar %></p>
+        <strong>Reviewer:<%= kom.komentator %></strong>
+      </div>
+    </div>
+  <% end %>
+</div>
