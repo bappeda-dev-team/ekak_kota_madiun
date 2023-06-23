@@ -138,12 +138,7 @@
               <td class="border fw-bolder" rowspan="<%= rowspan_spbe(spbes) %>"><%= i %></td>
               <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_spbe(spbes) %>"><%= program.nama_urusan %></td>
               <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_spbe(spbes) %>"><%= program.nama_program %></td>
-              <td class="border fw-bolder" rowspan="<%= rowspan_spbe(spbes) %>">
-                <%= link_to new_spbe_path(program_id: program.id), target: "_blank", rel: "nofollow",
-                      class: "btn btn-sm btn-info" do %>
-                  Buat SPBE Baru
-                <% end %>
-              </td>
+              <td class="border fw-bolder" rowspan="<%= rowspan_spbe(spbes) %>"></td>
             </tr>
             <% spbes.each do |spbe| %>
               <% rowspan_sas = spbe.spbe_rincians.length + 1 %>
