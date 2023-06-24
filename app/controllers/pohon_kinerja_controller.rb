@@ -2,6 +2,122 @@ class PohonKinerjaController < ApplicationController
   skip_before_action :verify_authenticity_token, only: %i[admin_filter filter_rekap filter_rekap_opd]
   before_action :clone_params, only: %i[clone_pokin_opd clone_pokin_kota clone_pokin_isu_strategis_opd]
 
+  def index
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @eselon = 'eselon_2'
+    @strategis = Strategi.where('tahun ILIKE ?', "%#{@tahun}%")
+                         .where(opd_id: @opd.id.to_s, role: @eselon)
+    @strategis_pohon = StrategiPohon.where('tahun ILIKE ?', "%#{@tahun}%")
+                                    .where(opd_id: @opd.id.to_s, role: @eselon)
+  end
+
+  def show
+    @tahun = params[:tahun] || cookies[:tahun]
+    opd_params = params[:kode_opd] || cookies[:opd]
+    @opd = if opd_params
+             Opd.find_by(kode_unik_opd: opd_params)
+           else
+             current_user.opd
+           end
+    @strategi = StrategiPohon.find(params[:id])
+    @strategi_kota = @strategi.pohon.pohonable
+    @isu_opd = @strategi_kota.isu_strategis_kotum
+    @nama_opd = @opd.nama_opd
+
+    respond_to do |format|
+      if @opd.id == 145 || @opd.kode_opd == '1260'
+        format.html { render "pohon_kinerja/pdf_setda", layout: 'blank' }
+      else
+        format.html { render layout: 'blank' }
+      end
+    end
+  end
+
+  def transfer_pohon
+    @tahun = cookies[:tahun]
+    @tahun_sekarang = @tahun
+    @strategi = Strategi.find(params[:id])
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @opd_id = @opd.id
+    @url = transfer_pohon_kinerja_path(@strategi)
+    render partial: 'pohon_kinerja/form_clone'
+  end
+
+  def transfer
+    strategi = Strategi.find(params[:id])
+    id_strategi = strategi.id
+    opd_id = strategi.opd_id
+    tahun = strategi.tahun
+    type = params[:type]
+    # type = "StrategiPohon"
+    clone = StrategiCloner.call(strategi, tahun: tahun,
+                                          type: type,
+                                          nip: '',
+                                          opd_id: opd_id,
+                                          strategi_cascade_link: id_strategi,
+                                          traits: [:just_strategi])
+    clone.persist!
+  end
+
+  def panggil_teman
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    @strategi = StrategiPohon.find(params[:id])
+    @dibagikan = @strategi.pohon_shareds.order(:user_id)
+    @role = params[:eselon]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @temans = @opd.users.with_role(@role.to_sym)
+    render partial: 'form_teman'
+  end
+
+  def simpan_teman
+    # i want to store this to pohon model
+    # with pohonable_type strategi_pohon
+    # opd_id same as current_opd / strategi opd
+    # user_id, is called user
+    # strategi_id is strategi.id
+    # role match with called user ( no split )
+    strategi = StrategiPohon.find(params[:id])
+    @tahun = strategi.tahun
+    @role = params[:role]
+    @nip = params[:nip].compact_blank
+
+    dibagikan = params[:dibagikan]
+    tidak = params[:tidak_dibagikan]
+    if tidak
+      hapus_bagikan = dibagikan.nil? ? tidak : (tidak - dibagikan)
+      hapus_bagikan.each do |hapus|
+        Pohon.find(hapus).delete
+      end
+    end
+
+    return unless @nip.length > 0
+
+    list_pohon_baru = []
+    @nip.each do |nip_asn|
+      user = User.find_by(nik: nip_asn)
+      list_pohon_baru.push({ user_id: user.id,
+                             tahun: @tahun,
+                             role: @role,
+                             pohonable_id: strategi.id,
+                             pohonable_type: 'StrategiPohon',
+                             opd_id: strategi.opd_id.to_i,
+                             keterangan: strategi.strategi,
+                             strategi_id: strategi.id })
+    end
+    @pohon = Pohon.create(list_pohon_baru)
+    if @pohon
+      render json: { resText: "Sukses membagikan" },
+             status: :accepted
+    else
+      render json: { resText: "Terjadi Kesalahan" },
+             status: :unprocessable_entity
+    end
+  end
+
   def kota; end
 
   def opd

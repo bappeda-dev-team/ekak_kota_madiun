@@ -1,44 +1,43 @@
-<div class="d-flex flex-column align-items-start">
+<div class="d-grid gap-2">
   <% unless strategi.strategi.blank? %>
-    <div class="p-2">
-      <%= link_to bagikan_pokin_strategi_path(
+    <%= link_to bagikan_pokin_strategi_path(
         strategi.id,
         role: role_bawahan,
         pohon_id: pohon&.id),
         remote: true,
-        class: 'btn btn-outline-gray-900 d-inline-flex align-items-center mx-3',
+        class: 'btn btn-outline-gray-900 d-inline-flex align-items-center w-100',
         data: { controller: 'form-modal',
                 action: 'form-modal#appendForm',
                 form_modal_location_param: 'form-bagikan-strategi-pokin-body',
                 bs_target: '#form-bagikan-strategi-pokin',
                 bs_toggle: 'modal' } do %>
-          <span class="fas fa-share me-2"></span>
-          <span>Bagikan <%= local_assigns[:judul_tombol] %></span>
-          <span class="badge bg-primary ms-2"><%= strategi.strategi_bawahans.count %></span>
-          </span>
-      <% end %>
-    </div>
+      <span class="fas fa-share me-2"></span>
+      <span>Bagikan <%= local_assigns[:judul_tombol] %></span>
+      <span class="badge bg-primary ms-2"><%= strategi.strategi_bawahans.count %></span>
+    </span>
   <% end %>
-  <% unless current_user.has_role?(:super_admin) %>
-  <div class="p-2">
-    <%= link_to edit_strategi_path(strategi, nip: strategi.nip_asn,
+<% end %>
+<% unless current_user.has_role?(:super_admin) %>
+  <%= link_to edit_strategi_path(strategi, nip: strategi.nip_asn,
                                  usulan_isu: pohon&.strategi,
                                  role: role),
     class: "btn btn-outline-info d-inline-flex align-items-center mx-3" do %>
-      <i class="fas fa-edit me-2"></i>
-      Isi / Edit <%= local_assigns[:judul_tombol] %> 
-    <% end %>
-  </div>
-
+    <i class="fas fa-edit me-2"></i>
+    Isi / Edit <%= local_assigns[:judul_tombol] %>
+  <% end %>
   <% unless strategi.strategi_bawahans.count > 0 %>
-    <div class="p-2">
-      <%= link_to strategi, method: :delete,
-        data: { confirm_swal: "Hapus Strategi?"},
-        class: "btn btn-outline-danger d-inline-flex align-items-center mx-3" do %>
-        <i class="fas fa-trash-alt me-2"></i>
-        Hapus <%= local_assigns[:judul_tombol] %>
-      <% end %>
-    </div>
+    <%= link_to strategi, method: :delete,
+        data: { confirm_swal: "hapus strategi?"},
+        class: "btn btn-outline-danger w-100" do %>
+      <i class="fas fa-trash-alt me-2"></i>
+      Hapus <%= local_assigns[:judul_tombol] %>
+    <% end %>
   <% end %>
-  <% end %>
+<% end %>
+<%= button_to transfer_pohon_kinerja_path(strategi, type: "StrategiPohon"),
+              class: "btn btn-sm btn-primary w-100",
+              data: { turbolink: false, confirm_swal: "Transfer Pohon #{strategi.strategi}?"} do %>
+  <i class="fa fa-clone me-2"></i>
+  <span>Transfer Pohon</span>
+<% end %>
 </div>

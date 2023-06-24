@@ -1,0 +1,43 @@
+<%= form_with url: simpan_teman_pohon_kinerja_path(@strategi, role: @role), method: :post,
+              local: false,
+              data: { controller: 'form-ajax',
+                      action: 'ajax:success->form-ajax#successResponse'
+               } do |form| %>
+  <div class="field">
+    <h5><%= @strategi.strategi %></h5>
+  </div>
+  <div class="field">
+    <%= form.label :dibagikan, class: "form-label" %>
+    <ol>
+      <% @dibagikan.each do |strategi_asn| %>
+        <li>
+          <div class="row align-items-center">
+            <span class="col">
+              <span class="fw-bolder"><%= strategi_asn&.user&.nama_nip %></span>
+              <small>( role: <%= strategi_asn&.role %> )</small>
+            </span>
+            <span class="col-auto">
+              <%= hidden_field_tag 'tidak_dibagikan[]', strategi_asn.id -%>
+              <%= check_box_tag 'dibagikan[]', strategi_asn.id, true %>
+            </span>
+          </div>
+        </li>
+      <% end %>
+    </ol>
+  </div>
+  <div class="field">
+    <%= form.label :asn, class: "form-label" %>
+    <%= form.select :nip, @temans.collect{ |asn| [asn.nama_nip, asn.nik] },
+      { include_blank: true },
+      multiple: true,
+      data: {
+        controller: 'dropdown',
+        placeholder: 'Pilih ASN',
+        dropdown_parent_value: '#form-panggil-teman'
+      },
+      class: "form-control" %>
+  </div>
+  <div class="actions my-4">
+    <%= form.submit "Simpan Teman" %>
+  </div>
+<% end %>

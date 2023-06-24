@@ -1,5 +1,6 @@
 <div class="tf-nc">
   <p class="text-center"><strong><%= local_assigns[:judul] %></strong></p>
+  <p class="text-center"><strong><%= strategi.class.name %></strong></p>
   <hr/>
   <span class="text-center"><%= strategi.strategi %></span>
   <%# INDIKATOR %>
@@ -24,10 +25,10 @@
                                   remote: true,
                                   class: 'btn btn-sm btn-outline-gray-900',
                                   data: { controller: 'form-modal',
-                                  action: 'form-modal#appendForm',
-                                  form_modal_location_param: 'form-komentar-body',
-                                  bs_target: '#form-komentar',
-                                  bs_toggle: 'modal' } %>
+                                          action: 'form-modal#appendForm',
+                                          form_modal_location_param: 'form-komentar-body',
+                                          bs_target: '#form-komentar',
+                                          bs_toggle: 'modal' } %>
     </p>
   <% else %>
     <% strategi.indikators.each do |ind| %>
@@ -44,10 +45,10 @@
                                     remote: true,
                                     class: 'btn btn-sm btn-outline-gray-900 w-100',
                                     data: { controller: 'form-modal',
-                                    action: 'form-modal#appendForm',
-                                    form_modal_location_param: 'form-manual-ik-body',
-                                    bs_target: '#form-manual-ik',
-                                    bs_toggle: 'modal' } %>
+                                            action: 'form-modal#appendForm',
+                                            form_modal_location_param: 'form-manual-ik-body',
+                                            bs_target: '#form-manual-ik',
+                                            bs_toggle: 'modal' } %>
         </p>
       <% end %>
     <% end %>
@@ -64,6 +65,26 @@
                                                strategi_id: strategi.id,
                                                jenis: local_assigns[:tipe]),
            form_name: 'form-komentar' %>
+    <% end %>
+  </p>
+  <% if local_assigns[:panggil_teman] %>
+    <p class="mt-3">
+      <b>Dilaksanakan Oleh:</b>
+      <% strategi.pohon_shareds.each do |teman| %>
+        <p><%= teman.user.nama %></p>
+      <% end %>
+    </p>
+    <p class="mt-3">
+      <%= link_to panggil_teman_pohon_kinerja_path(strategi, eselon: 'eselon_3'), remote: true,
+                    class: 'btn btn-outline-gray-900 align-items-center w-100',
+                    data: { controller: 'form-modal',
+                            action: 'form-modal#appendForm',
+                            form_modal_location_param: 'form-panggil-teman-body',
+                            bs_target: '#form-panggil-teman',
+                            bs_toggle: 'modal' } do %>
+        <span class="fas fa-user-plus me-2"></span>
+        <span>Panggil Teman</span>
+      <% end %>
     </p>
   <% end %>
 </div>

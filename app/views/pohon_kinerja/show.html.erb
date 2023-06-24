@@ -1,0 +1,82 @@
+<%= content_for :html_title, "POHON KINERJA OPD" %>
+<div  class="mb-5">
+  <button id="cetak" class="btn btn-tertiary w-100"
+          data-controller="pohon-kinerja"
+          data-pohon-kinerja-nama-opd-value="<%= @nama_opd %>"
+          data-pohon-kinerja-tahun-value="<%= @tahun %>"
+          data-action="click->pohon-kinerja#cetakOpd">DOWNLOAD POHON KINERJA</button>
+</div>
+<div class="mb-3">
+  <%= render 'pohon_kinerja/komentar_card', komentars: @opd.komentars %>
+</div>
+<%= render 'shared/komentar_button',
+           link: komentar_pokin_komentars_path(kode_opd: @opd.kode_unik_opd,
+                                               strategi_id: @opd.id,
+                                               jenis: "OPD"),
+           form_name: 'form-komentar' %>
+<div class="tf-tree mt-2" style="font-size: 5px;" id='pokin-opd'>
+  <h1>Pohon Kinerja <%= @nama_opd %> Tahun <%= @tahun %></h1>
+  <ul>
+    <li>
+      <div class="tf-nc">
+        <p class="text-center"><strong>Perangkat Daerah</strong></p>
+        <hr/>
+        <p class="text-center"><strong><%= @nama_opd %></strong></p>
+      </div>
+      <ul>
+        <li>
+          <div class="tf-nc">
+            <p class="text-center"><strong>ISU STRATEGIS</strong></p>
+            <hr/>
+            <span class="text-center"><%= @isu_opd.isu_strategis %></span>
+          </div>
+          <ul>
+            <li>
+              <% str_kota = @strategi_kota  %>
+              <% judul = str_kota.to_s %>
+              <%= render 'item_pokin', judul: judul, strategi: str_kota, tipe: 'kota' %>
+              <ul>
+                <li>
+                  <%= render 'item_pokin', judul: "STRATEGIC OBJECTIVE", strategi: @strategi %>
+                <% str_kabids = @strategi.strategi_eselon_tiga_pohons %>
+                  <% if str_kabids.any? %>
+                    <ul>
+                      <% str_kabids.each do |str_kabid| %>
+                        <li>
+                          <%= render 'item_pokin', judul: "TACTICAL OBJECTIVE", strategi: str_kabid, panggil_teman: true, role: 'eselon_3' %>
+                          <% str_kasis = str_kabid.strategi_eselon_empats %>
+                          <% if str_kasis.any? %>
+                            <ul>
+                              <% str_kasis.each do |str_kasi| %>
+                                <li>
+                                  <%= render 'item_pokin', judul: "OPERATIONAL OBJECTIVE", strategi: str_kasi, panggil_teman: true, role: 'eselon_4' %>
+                                  <% str_staffs = str_kasi.strategi_staffs %>
+                                  <% if str_staffs.any? %>
+                                    <ul>
+                                      <% str_staffs.each do |str_staff| %>
+                                        <li>
+                                          <%= render 'item_pokin', judul: "OPERATIONAL OBJECTIVE 2", strategi: str_staff, panggil_teman: true, role: 'staff' %>
+                                        </li>
+                                      <% end %>
+                                    </ul>
+                                  <% end %>
+                                </li>
+                              <% end %>
+                            </ul>
+                          <% end %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  <% end %>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<%= render 'shared/modal_template', modal_name: 'komentar' %>
+<%= render 'shared/modal_xl_template', modal_name: 'manual-ik' %>
+<%= render 'shared/modal_xl_template', modal_name: 'panggil-teman' %>

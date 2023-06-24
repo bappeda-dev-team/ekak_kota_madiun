@@ -38,6 +38,12 @@ Rails.application.routes.draw do
     end
   end
   resources :pohon_kinerja do
+    member do
+      get :transfer_pohon
+      post :transfer
+      get :panggil_teman
+      post :simpan_teman
+    end
     collection do
       get :kota
       get :opd

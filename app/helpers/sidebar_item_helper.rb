@@ -116,7 +116,11 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
         icon: 'fas fa-bullseye', identifier: 'isu_strategis_opds'
       },
       {
-        title: 'Pohon Kinerja OPD', href: opd_pohon_kinerja_index_path,
+        title: 'Pohon Kinerja', href: pohon_kinerja_index_path,
+        icon: 'fas fa-tree', identifier: 'pohon_kinerja'
+      },
+      {
+        title: 'Cascading', href: opd_pohon_kinerja_index_path,
         icon: 'fas fa-tree', identifier: 'pohon_kinerja/opd'
       },
       # { title: 'Sasaran OPD', href: sasaran_opds_path, identifier: 'opds/sasaran' },
@@ -137,9 +141,10 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
     collapse_class('(' \
                    '\btujuan_opds|\bisu_strategis_opds|' \
                    '\bstrategi_opds|\bsasaran_opds|' \
-                   '\bpohon_kinerja/opd|' \
+                   '\bpohon_kinerja|' \
+                   '\bpohon_kinerja\/opd|' \
                    '\bspbes\/index_opd|' \
-                   '\bpohon_kinerja/rekap_opd|\bopds/info)')
+                   '\bpohon_kinerja\/rekap_opd|\bopds\/info)')
   end
 
   def perencanaan_items # rubocop:disable Metrics/MethodLength
