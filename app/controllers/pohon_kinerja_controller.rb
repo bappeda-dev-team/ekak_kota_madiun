@@ -6,7 +6,7 @@ class PohonKinerjaController < ApplicationController
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @eselon = 'eselon_2'
+    @eselon = current_user.has_role?(:admin) ? 'eselon_2' : current_user.eselon_user
     @strategis = Strategi.where('tahun ILIKE ?', "%#{@tahun}%")
                          .where(opd_id: @opd.id.to_s, role: @eselon)
     @strategis_pohon = StrategiPohon.where('tahun ILIKE ?', "%#{@tahun}%")
@@ -58,7 +58,7 @@ class PohonKinerjaController < ApplicationController
                                           nip: '',
                                           opd_id: opd_id,
                                           strategi_cascade_link: id_strategi,
-                                          traits: [:just_strategi])
+                                          traits: [:with_sasaran])
     clone.persist!
   end
 
@@ -115,6 +115,14 @@ class PohonKinerjaController < ApplicationController
     id_strategi = params[:id]
     @temans = Pohon.where(strategi_id: id_strategi, pohonable_type: 'StrategiPohon')
     render partial: 'daftar_temans', locals: { temans: @temans }
+  end
+
+  def daftar_strategi
+    @nip = params[:nip]
+    @tahun = cookies[:tahun]
+    @user = User.find_by(nik: @nip)
+    @strategis = @user.strategis.where('tahun ILIKE ?', "%#{@tahun}%")
+    render partial: 'daftar_strategi', locals: { strategis: @strategis }
   end
 
   def kota; end

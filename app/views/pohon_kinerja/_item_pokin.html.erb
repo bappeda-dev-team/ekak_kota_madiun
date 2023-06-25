@@ -52,13 +52,12 @@
         </p>
       <% end %>
     <% end %>
-    <hr/>
-    <% strategi.komentars.each do |kom| %>
-      <p class="higlighted px-2"><strong>REVIEW</strong></p>
-      <hr/>
-      <p>Review: <%= kom.komentar %></p>
-      <p>Reviewer:<%= kom.komentator %></p>
-    <% end %>
+    <div class="mt-3">
+      <b >Komentar Reviewer:</b>
+    </div>
+    <div id="<%= dom_id(strategi, :komentar) %>">
+      <%= render 'pohon_kinerja/daftar_komentars', komentars: strategi.komentars %>
+    </div>
     <p class="komentar mt-3">
       <%= render 'shared/komentar_button',
            link: komentar_pokin_komentars_path(kode_opd: strategi.opd.kode_unik_opd,

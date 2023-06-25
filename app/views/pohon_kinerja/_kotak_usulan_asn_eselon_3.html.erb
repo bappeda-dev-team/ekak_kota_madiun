@@ -25,8 +25,8 @@
           </tr>
         </thead>
         <tbody>
-            <% @strategis.each do |strategi| %>
-              <% pohon = strategi.strategi_atasan %>
+          <% @strategis.each do |strategi| %>
+            <% pohon = strategi.strategi_atasan %>
             <tr>
               <td class="text-wrap align-middle">
                 <%= pembagi_strategi(pohon) %>
@@ -45,7 +45,7 @@
                 %>
               </td>
             </tr>
-            <% end %>
+          <% end %>
         </tbody>
       </table>
     </div>

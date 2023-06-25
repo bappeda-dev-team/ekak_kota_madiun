@@ -157,7 +157,11 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
         icon: 'fas fa-book', identifier: 'usulans'
       },
       {
-        title: 'Pohon Kinerja', href: asn_pohon_kinerja_index_path,
+        title: 'Pohon Kinerja', href: pohon_kinerja_index_path,
+        icon: 'fas fa-tree', identifier: 'pohon_kinerja/asn'
+      },
+      {
+        title: 'Cascading', href: asn_pohon_kinerja_index_path,
         icon: 'fas fa-tree', identifier: 'pohon_kinerja/asn'
       },
       {

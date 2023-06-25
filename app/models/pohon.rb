@@ -65,4 +65,12 @@ class Pohon < ApplicationRecord
   def nama_pemilik
     user.nama
   end
+
+  def nip_asn
+    user.nik
+  end
+
+  def strategi_cascade
+    Strategi.find(strategi_id)
+  end
 end

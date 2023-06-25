@@ -44,6 +44,8 @@ Rails.application.routes.draw do
       get :panggil_teman
       post :simpan_teman
       get :daftar_temans
+      get :daftar_strategi
+      post :pasangkan
     end
     collection do
       get :kota
