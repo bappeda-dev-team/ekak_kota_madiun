@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :spbes do
     collection do
       get :index_opd
+      get :excel_opd
     end
     member do
       get :edit_operational_opd

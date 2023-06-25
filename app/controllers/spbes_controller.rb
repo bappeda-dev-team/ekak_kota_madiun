@@ -69,6 +69,28 @@ class SpbesController < ApplicationController
     end
   end
 
+  def excel_opd
+    @tahun = params[:tahun] || cookies[:tahun]
+    @kode_opd = params[:kode_opd] || cookies[:opd]
+    @timestamp = Time.now.to_formatted_s(:number)
+    @opd = if @kode_opd
+             Opd.find_by(kode_unik_opd: @kode_opd)
+           else
+             current_user.opd
+           end
+    @nama_opd = @opd.nama_opd
+    @spbes_external = Spbe.by_opd_tujuan(@kode_opd).group_by(&:program_kegiatan)
+    @programs = @opd.program_kegiatans.programs
+    @spbes = @programs.to_h { |prg| [prg, prg.spbes.by_opd_tujuan(@kode_opd)] }
+    @filename = "SPBE #{@nama_opd} #{@tahun} - #{@timestamp}.xlsx"
+    if @opd.id == 145
+      render xlsx: "spbe_setda_excel", filename: @filename
+    else
+
+      render xlsx: "spbe_excel_opd", filename: @filename
+    end
+  end
+
   private
 
   def set_spbe
