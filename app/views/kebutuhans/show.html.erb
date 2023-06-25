@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Kebutuhan:</strong>
+  <%= @kebutuhan.kebutuhan %>
+</p>
+
+<p>
+  <strong>Tahun:</strong>
+  <%= @kebutuhan.tahun %>
+</p>
+
+<p>
+  <strong>Keterangan:</strong>
+  <%= @kebutuhan.keterangan %>
+</p>
+
+<%= link_to 'Edit', edit_kebutuhan_path(@kebutuhan) %> |
+<%= link_to 'Back', kebutuhans_path %>

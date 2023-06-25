@@ -919,6 +919,39 @@ ALTER SEQUENCE public.kamus_usulans_id_seq OWNED BY public.kamus_usulans.id;
 
 
 --
+-- Name: kebutuhans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.kebutuhans (
+    id bigint NOT NULL,
+    kebutuhan character varying,
+    tahun character varying,
+    keterangan character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: kebutuhans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.kebutuhans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: kebutuhans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.kebutuhans_id_seq OWNED BY public.kebutuhans.id;
+
+
+--
 -- Name: kelompok_anggarans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2399,7 +2432,8 @@ CREATE TABLE public.spbes (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     output_aplikasi character varying,
-    terintegrasi_dengan character varying
+    terintegrasi_dengan character varying,
+    pemilik_aplikasi character varying
 );
 
 
@@ -3071,6 +3105,13 @@ ALTER TABLE ONLY public.kamus_usulans ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
+-- Name: kebutuhans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.kebutuhans ALTER COLUMN id SET DEFAULT nextval('public.kebutuhans_id_seq'::regclass);
+
+
+--
 -- Name: kelompok_anggarans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3596,6 +3637,14 @@ ALTER TABLE ONLY public.kaks
 
 ALTER TABLE ONLY public.kamus_usulans
     ADD CONSTRAINT kamus_usulans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: kebutuhans kebutuhans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.kebutuhans
+    ADD CONSTRAINT kebutuhans_pkey PRIMARY KEY (id);
 
 
 --
@@ -4872,6 +4921,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230621231710'),
 ('20230622051541'),
 ('20230622052131'),
-('20230624173432');
+('20230624173432'),
+('20230625200655'),
+('20230625201240');
 
 

@@ -37,6 +37,12 @@
         <%= form.text_field :nama_aplikasi, {class: "form-control"}%>
       </div>
       <div class="field">
+        <%= form.label :pemilik_aplikasi, {class: "form-label"} %>
+        <%= form.select :pemilik_aplikasi, ['Pusat/Nasional', 'Provinsi/Jawa Timur', 'Kota Madiun'],
+         {},
+         {data: { controller: 'dropdown' }}%>
+      </div>
+      <div class="field">
         <%= form.label :output_aplikasi, {class: "form-label"} %>
         <%= form.text_field :output_aplikasi, {class: "form-control", placeholder: "keluaran aplikasi"}%>
       </div>

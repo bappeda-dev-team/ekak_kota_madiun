@@ -2,7 +2,7 @@
   <%= form.hidden_field :kode_program, readonly: true, value: @program.kode_program %>
   <div class="field">
     <%= form.label :kebutuhan_spbe, { class: "form-label" } %>
-    <%= form.select(:kebutuhan_spbe, (['Rancangan Aplikasi','Sarpras', 'Jaringan', 'SDM']), {},
+    <%= form.select(:kebutuhan_spbe, (Kebutuhan.pluck(:kebutuhan)), {},
       {data: { controller: 'dropdown' }}) %>
   </div>
   <div class="field">
