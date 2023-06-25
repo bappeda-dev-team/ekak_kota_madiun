@@ -1725,7 +1725,8 @@ CREATE TABLE public.pohons (
     opd_id bigint,
     user_id bigint,
     strategi_id bigint,
-    role character varying
+    role character varying,
+    tahun character varying
 );
 
 
@@ -2540,7 +2541,9 @@ CREATE TABLE public.strategis (
     pohon_id bigint,
     role character varying,
     opd_id character varying,
-    nip_asn_sebelumnya character varying
+    nip_asn_sebelumnya character varying,
+    type character varying,
+    strategi_cascade_link bigint
 );
 
 
@@ -4866,6 +4869,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230607004201'),
 ('20230609010527'),
 ('20230613011150'),
-('20230621231710');
+('20230621231710'),
+('20230622051541'),
+('20230622052131'),
+('20230624173432');
 
 

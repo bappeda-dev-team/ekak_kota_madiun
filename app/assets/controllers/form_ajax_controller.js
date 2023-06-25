@@ -17,6 +17,38 @@ export default class extends Controller {
     window.dispatchEvent(ajax_update_event)
   }
 
+  successResponseNew(event) {
+    // event.preventDefault()
+    const [message, status, xhr] = event.detail
+    const modal_target = event.params.modal
+    const modal = document.getElementById(modal_target)
+    const id_strategi = `strategi_pohon_${message.result}`
+    const target_element = document.getElementById(id_strategi)
+    const url = `/pohon_kinerja/${message.result}/daftar_temans`
+    // event after successResponse
+    Modal.getInstance(modal).hide()
+    fetch(url,
+            {
+                    method: "get"
+            })
+            .then(
+                    response => response.text()
+
+            )
+            .then(
+                    text => {
+                      this.sweetalertStatus(message.resText, status)
+                      target_element.innerHTML = text
+                    }
+            ).catch(
+                    e => {
+                      this.sweetalertStatus('terjadi kesalahan', 'error')
+                    }
+
+            )
+
+  }
+
   successResponseSpbe(event) {
     // event.preventDefault()
     const [message, status, xhr] = event.detail
@@ -37,7 +69,7 @@ export default class extends Controller {
     const ajax_update_event = new CustomEvent("ajax-update", { detail: { data: message.result  } })
     // event after successResponse
     Modal.getInstance(modal).hide()
-    this.sweetalert(message.resText)
+    this.sweetalertStatus(message.resText, status)
     window.dispatchEvent(ajax_update_event)
   }
 
@@ -87,6 +119,35 @@ export default class extends Controller {
       icon: "success",
       confirmButtonText: 'Ok',
     })
+  }
+
+  sweetalertStatus(text, status) {
+    console.log(status)
+    if(status == 'Accepted')
+      {
+    Swal.fire({
+      title: 'Sukses',
+      text: text,
+      icon: "success",
+      confirmButtonText: 'Ok',
+    })
+      }
+    else if(status == 'OK') {
+    Swal.fire({
+      title: 'Tidak ada perubahan',
+      text: text,
+      icon: "info",
+      confirmButtonText: 'Ok',
+    })
+    }
+    else {
+    Swal.fire({
+      title: 'Gagal',
+      text: text,
+      icon: "error",
+      confirmButtonText: 'Ok',
+    })
+      }
   }
 }
 

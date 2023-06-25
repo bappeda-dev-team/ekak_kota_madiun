@@ -2,18 +2,20 @@
 #
 # Table name: strategis
 #
-#  id                 :bigint           not null, primary key
-#  nip_asn            :string
-#  nip_asn_sebelumnya :string
-#  role               :string
-#  strategi           :string
-#  tahun              :string
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
-#  opd_id             :string
-#  pohon_id           :bigint
-#  sasaran_id         :string
-#  strategi_ref_id    :string
+#  id                    :bigint           not null, primary key
+#  nip_asn               :string
+#  nip_asn_sebelumnya    :string
+#  role                  :string
+#  strategi              :string
+#  strategi_cascade_link :bigint
+#  tahun                 :string
+#  type                  :string
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  opd_id                :string
+#  pohon_id              :bigint
+#  sasaran_id            :string
+#  strategi_ref_id       :string
 #
 # Indexes
 #

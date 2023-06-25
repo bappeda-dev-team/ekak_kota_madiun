@@ -1,5 +1,6 @@
 <div class="tf-nc">
   <p class="text-center"><strong><%= local_assigns[:judul] %></strong></p>
+  <p class="text-center"><strong><%= strategi.class.name %></strong></p>
   <hr/>
   <span class="text-center"><%= strategi.strategi %></span>
   <%# INDIKATOR %>
@@ -24,10 +25,10 @@
                                   remote: true,
                                   class: 'btn btn-sm btn-outline-gray-900',
                                   data: { controller: 'form-modal',
-                                  action: 'form-modal#appendForm',
-                                  form_modal_location_param: 'form-komentar-body',
-                                  bs_target: '#form-komentar',
-                                  bs_toggle: 'modal' } %>
+                                          action: 'form-modal#appendForm',
+                                          form_modal_location_param: 'form-komentar-body',
+                                          bs_target: '#form-komentar',
+                                          bs_toggle: 'modal' } %>
     </p>
   <% else %>
     <% strategi.indikators.each do |ind| %>
@@ -44,26 +45,45 @@
                                     remote: true,
                                     class: 'btn btn-sm btn-outline-gray-900 w-100',
                                     data: { controller: 'form-modal',
-                                    action: 'form-modal#appendForm',
-                                    form_modal_location_param: 'form-manual-ik-body',
-                                    bs_target: '#form-manual-ik',
-                                    bs_toggle: 'modal' } %>
+                                            action: 'form-modal#appendForm',
+                                            form_modal_location_param: 'form-manual-ik-body',
+                                            bs_target: '#form-manual-ik',
+                                            bs_toggle: 'modal' } %>
         </p>
       <% end %>
     <% end %>
-    <hr/>
-    <% strategi.komentars.each do |kom| %>
-      <p class="higlighted px-2"><strong>REVIEW</strong></p>
-      <hr/>
-      <p>Review: <%= kom.komentar %></p>
-      <p>Reviewer:<%= kom.komentator %></p>
-    <% end %>
+    <div class="mt-3">
+      <b >Komentar Reviewer:</b>
+    </div>
+    <div id="<%= dom_id(strategi, :komentar) %>">
+      <%= render 'pohon_kinerja/daftar_komentars', komentars: strategi.komentars %>
+    </div>
     <p class="komentar mt-3">
       <%= render 'shared/komentar_button',
            link: komentar_pokin_komentars_path(kode_opd: strategi.opd.kode_unik_opd,
                                                strategi_id: strategi.id,
                                                jenis: local_assigns[:tipe]),
            form_name: 'form-komentar' %>
+    <% end %>
+  </p>
+  <% if local_assigns[:panggil_teman] %>
+    <div class="mt-3">
+      <b >Dilaksanakan Oleh:</b>
+    </div>
+    <div id="<%= dom_id(strategi) %>">
+      <%= render 'pohon_kinerja/daftar_temans', temans: strategi.pohon_shareds %>
+    </div>
+    <p class="mt-3">
+      <%= link_to panggil_teman_pohon_kinerja_path(strategi, role: local_assigns[:role]), remote: true,
+                    class: 'btn btn-outline-gray-900 align-items-center w-100',
+                    data: { controller: 'form-modal',
+                            action: 'form-modal#appendForm',
+                            form_modal_location_param: 'form-panggil-teman-body',
+                            bs_target: '#form-panggil-teman',
+                            bs_toggle: 'modal' } do %>
+        <span class="fas fa-user-plus me-2"></span>
+        <span>Panggil Teman</span>
+      <% end %>
     </p>
   <% end %>
 </div>

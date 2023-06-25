@@ -6,6 +6,7 @@
 #  keterangan     :string
 #  pohonable_type :string
 #  role           :string
+#  tahun          :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  opd_id         :bigint

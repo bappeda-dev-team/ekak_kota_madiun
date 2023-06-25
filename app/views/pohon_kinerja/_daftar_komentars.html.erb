@@ -1,0 +1,5 @@
+<% komentars.each.with_index(1) do |kom, no| %>
+  <p class="higlighted px-2"><strong>Komentar <%= no %></strong></p>
+  <p>Review: <%= kom.komentar %></p>
+  <p class="fw-bolder">Reviewer:<%= kom.komentator %></p>
+<% end %>

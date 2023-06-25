@@ -80,6 +80,10 @@ class User < ApplicationRecord
     @login || nik || email
   end
 
+  def strategi_pohons(strategi_id)
+    pohons.where(strategi_id: strategi_id)
+  end
+
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     if (login = conditions.delete(:login))

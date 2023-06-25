@@ -1,0 +1,95 @@
+<div class="card border-2 shadow mb-3" id="musrenbang-card">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h5>Pohon Kinerja <%= @nama_opd %> Tahun <%= @tahun %></h5>
+      </div>
+      <div class="col-auto">
+        <%= render 'shared/button_cog',
+          link: new_strategi_path(nip: @opd.eselon_dua_opd.nik, role: "eselon_2"),
+          name: "Buat Strategic Objective" %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table" id="isu-strategis-kota-table">
+        <thead>
+          <tr>
+            <th>Isu Strategis</th>
+            <th>Strategi Kota</th>
+            <th>Strategic Objective</th>
+            <th class="text-center">Pelaksana</th>
+            <th class="text-center">Tahun</th>
+            <th class="text-center">Role</th>
+            <th class="text-center">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @strategis_pohon.each do |strategi| %>
+            <% pohon = strategi.pohon %>
+            <tr>
+              <td class="text-wrap align-middle">
+                <%= render 'nama_pembagi_strategi', strategi: pohon.pohonable.nama_isu, nama_pemilik: "Kota Madiun"  %>
+              </td>
+              <td class="text-wrap align-middle">
+                <%= render 'nama_pembagi_strategi', strategi: pohon.pohonable.strategi, nama_pemilik: pohon.pohonable.nama_pemilik  %>
+              </td>
+              <td class="text-wrap align-middle"><%= strategi.strategi %></td>
+              <td class="fw-bolder">
+                <div id="<%= dom_id(strategi) %>">
+                  <%= render 'daftar_temans', temans: strategi.pohon_shareds %>
+                </div>
+              </td>
+              <td class="text-wrap align-middle"><%= strategi.tahun %></td>
+              <td class="text-wrap align-middle"><%= nama_eselon(strategi.role) %></td>
+              <td class="text-center align-middle">
+                <div class="d-grid gap-2">
+                  <div>
+                    <%= link_to panggil_teman_pohon_kinerja_path(strategi, role: @eselon), remote: true,
+                    class: 'btn btn-outline-gray-900 align-items-center w-100',
+                    data: { controller: 'form-modal',
+                            action: 'form-modal#appendForm',
+                            form_modal_location_param: 'form-panggil-teman-body',
+                            bs_target: '#form-panggil-teman',
+                            bs_toggle: 'modal' } do %>
+                      <span class="fas fa-user-plus me-2"></span>
+                      <span>Panggil Teman</span>
+                    <% end %>
+                  </div>
+                  <% if strategi.pohon_shareds.any? && strategi.pohon_shareds.map{|s| s.user.nama}.include?(current_user.nama) %>
+                    <div>
+                      <%= link_to daftar_strategi_pohon_kinerja_path(strategi),
+                      remote: true,
+                      class: 'btn btn-outline-info align-items-center w-100',
+                      data: { controller: 'form-modal',
+                              action: 'form-modal#appendForm',
+                              form_modal_location_param: 'form-pasangkan-pohon-body',
+                              bs_target: '#form-pasangkan-pohon',
+                              bs_toggle: 'modal' } do %>
+                        <i class="fas fa-edit me-2"></i>
+                        <span>Pasangkan Pohon</span>
+                      <% end %>
+                    </div>
+                  <% end %>
+                  <div>
+                    <%= link_to pohon_kinerja_path(strategi),
+                    class: "btn btn-sm btn-warning w-100",
+                    target: "blank",
+                    data: { pohon_kinerja_target: 'cetak' } do %>
+                      <i class="far fa-eye me-2"></i>
+                      <span>View Pohon</span>
+                    <% end %>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<%= render 'shared/modal_xl_template', modal_name: 'pasangkan-pohon' %>
+<%= render 'shared/modal_xl_template', modal_name: 'panggil-teman' %>
+<%= render 'shared/modal_xl_template', modal_name: 'strategi-cascading' %>

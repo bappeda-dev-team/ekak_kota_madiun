@@ -6,6 +6,7 @@
 #  keterangan     :string
 #  pohonable_type :string
 #  role           :string
+#  tahun          :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  opd_id         :bigint
@@ -59,5 +60,17 @@ class Pohon < ApplicationRecord
 
   def indikators_tahun(_tahun)
     strategis.map(&:indikator_sasarans).flatten
+  end
+
+  def nama_pemilik
+    user.nama
+  end
+
+  def nip_asn
+    user.nik
+  end
+
+  def linked_strategis
+    Pohon.where(pohonable_type: 'Strategi', strategi_id: strategi_id, user_id: user_id)
   end
 end

@@ -90,3 +90,4 @@ function handleConfirm(element) {
 
 Rails.delegate(document, 'a[data-confirm-swal]', 'click', handleConfirm);
 Rails.delegate(document, 'input[data-confirm-swal]', 'click', handleConfirm);
+Rails.delegate(document, 'button[data-confirm-swal]', 'click', handleConfirm);

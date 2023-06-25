@@ -2,6 +2,161 @@ class PohonKinerjaController < ApplicationController
   skip_before_action :verify_authenticity_token, only: %i[admin_filter filter_rekap filter_rekap_opd]
   before_action :clone_params, only: %i[clone_pokin_opd clone_pokin_kota clone_pokin_isu_strategis_opd]
 
+  def index
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @eselon = current_user.has_role?(:admin) ? 'eselon_2' : current_user.eselon_user
+    @strategis = Strategi.where('tahun ILIKE ?', "%#{@tahun}%")
+                         .where(opd_id: @opd.id.to_s, role: @eselon)
+    @strategis_pohon = StrategiPohon.where('tahun ILIKE ?', "%#{@tahun}%")
+                                    .where(opd_id: @opd.id.to_s, role: @eselon)
+  end
+
+  def show
+    @tahun = params[:tahun] || cookies[:tahun]
+    opd_params = params[:kode_opd] || cookies[:opd]
+    @opd = if opd_params
+             Opd.find_by(kode_unik_opd: opd_params)
+           else
+             current_user.opd
+           end
+    @strategi = StrategiPohon.find(params[:id])
+    @strategi_kota = @strategi.pohon.pohonable
+    @isu_opd = @strategi_kota.isu_strategis_kotum
+    @nama_opd = @opd.nama_opd
+
+    respond_to do |format|
+      if @opd.id == 145 || @opd.kode_opd == '1260'
+        format.html { render "pohon_kinerja/pdf_setda", layout: 'blank' }
+      else
+        format.html { render layout: 'blank' }
+      end
+    end
+  end
+
+  def transfer_pohon
+    @tahun = cookies[:tahun]
+    @tahun_sekarang = @tahun
+    @strategi = Strategi.find(params[:id])
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @opd_id = @opd.id
+    @url = transfer_pohon_kinerja_path(@strategi)
+    render partial: 'pohon_kinerja/form_clone'
+  end
+
+  def transfer
+    strategi = Strategi.find(params[:id])
+    id_strategi = strategi.id
+    opd_id = strategi.opd_id
+    tahun = strategi.tahun
+    type = params[:type]
+    # type = "StrategiPohon"
+    clone = StrategiCloner.call(strategi, tahun: tahun,
+                                          type: type,
+                                          nip: '',
+                                          opd_id: opd_id,
+                                          strategi_cascade_link: id_strategi,
+                                          traits: [:with_sasaran])
+    clone.persist!
+  end
+
+  def panggil_teman
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    @strategi = StrategiPohon.find(params[:id])
+    @dibagikan = @strategi.pohon_shareds.order(:user_id)
+    @role = params[:role]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @temans = @opd.users.with_role(@role.to_sym).reject { |u| u.strategi_pohons(@strategi.id).any? }
+    render partial: 'form_teman'
+  end
+
+  def simpan_teman
+    strategi = StrategiPohon.find(params[:id])
+    @tahun = strategi.tahun
+    @role = params[:role]
+    @nip = params[:nip].compact_blank
+
+    dibagikan = params[:dibagikan]
+    tidak = params[:tidak_dibagikan]
+
+    if tidak
+      hapus_bagikan = dibagikan.nil? ? tidak : (tidak - dibagikan)
+      hapus_bagikan.each do |hapus|
+        Pohon.find(hapus).delete
+      end
+    end
+
+    list_pohon_baru = []
+    @nip.each do |nip_asn|
+      user = User.find_by(nik: nip_asn)
+      list_pohon_baru.push({ user_id: user.id,
+                             tahun: @tahun,
+                             role: @role,
+                             pohonable_id: strategi.id,
+                             pohonable_type: 'StrategiPohon',
+                             opd_id: strategi.opd_id.to_i,
+                             keterangan: strategi.strategi,
+                             strategi_id: strategi.id })
+    end
+    @pohon = Pohon.create(list_pohon_baru)
+    if @pohon
+      render json: { resText: "Pembagian Disimpan", result: strategi.id },
+             status: :accepted
+    else
+      render json: { resText: "Terjadi Kesalahan" },
+             status: :unprocessable_entity
+    end
+  end
+
+  def daftar_temans
+    id_strategi = params[:id]
+    @temans = Pohon.where(strategi_id: id_strategi, pohonable_type: 'StrategiPohon')
+    render partial: 'daftar_temans', locals: { temans: @temans }
+  end
+
+  def daftar_strategi
+    @user = current_user
+    @pohon = Pohon.find_by(user_id: @user.id, pohonable_id: params[:id], pohonable_type: 'StrategiPohon')
+    @tahun = cookies[:tahun]
+    @strategis = @user.strategis.where('tahun ILIKE ?', "%#{@tahun}%")
+    render partial: 'daftar_strategi', locals: { strategis: @strategis }
+  end
+
+  def pasangkan
+    @pohon = Pohon.find(params[:id])
+    @strategis = params[:strategi].compact_blank
+
+    list_pohon_baru = []
+    @strategis.each do |str|
+      strategi = Strategi.find(str)
+      list_pohon_baru.push({ user_id: @pohon.user_id,
+                             tahun: @pohon.tahun,
+                             role: @pohon.role,
+                             pohonable_id: strategi.id,
+                             pohonable_type: 'Strategi',
+                             opd_id: @pohon.opd_id,
+                             keterangan: strategi.strategi,
+                             strategi_id: @pohon.strategi_id })
+    end
+    @pohons = Pohon.create(list_pohon_baru)
+    if @pohons
+      render json: { resText: "Pemasangan Disimpan", result: @pohon.id },
+             status: :accepted
+    else
+      render json: { resText: "Terjadi Kesalahan" },
+             status: :unprocessable_entity
+    end
+  end
+
+  def daftar_linked_strategi
+    @pohon = Pohon.find(params[:id])
+    @strategis = @pohon.linked_strategis
+    render partial: 'daftar_linked_strategi', locals: { strategis: @strategis }
+  end
+
   def kota; end
 
   def opd
