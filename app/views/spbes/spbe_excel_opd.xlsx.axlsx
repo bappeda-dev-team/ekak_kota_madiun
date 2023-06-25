@@ -1,37 +1,43 @@
 wb = xlsx_package.workbook
 s = wb.styles
 
-project_heading = s.add_style sz: 12, b: true
+project_heading = s.add_style sz: 15, b: true, alignment: { horizontal: :center, vertical: :center }
 
+style_heading = s.add_style(border: { style: :thin, color: '000000', edges: %i[left right bottom top] },
+                            outline: true, alignment: { horizontal: :center, vertical: :center })
 style_nama_kota = s.add_style(border: { style: :thin, color: '000000', edges: %i[left right bottom top] },
-                              outline: true)
-style_separator = s.add_style(bg_color: '444444')
+                              outline: true, alignment: { horizontal: :left, vertical: :center })
 # isu strategis opd / kota
 wb.add_worksheet(name: "SPBE OPD") do |sheet|
-  sheet.add_row [nil, "PETA RENCANA SPBE"], style: project_heading
-  sheet.add_row [nil, "#{@nama_opd} TAHUN #{@tahun}"], style: project_heading
+  sheet.add_row [nil, nil, nil, nil, nil, nil, "PETA RENCANA SPBE"], style: project_heading
+  sheet.add_row [nil, nil, nil, nil, nil, nil, "#{@nama_opd} TAHUN #{@tahun}"], style: project_heading
+  # merge judul
+  sheet.merge_cells "B1:R1"
+  sheet.merge_cells "B2:R2"
+  # heading
   sheet.add_row [nil, "No", "Program", "Jenis Pelayanan (dok standar pelayanan)", "Sasaran Kinerja Tactical",
                  "Aplikasi", "Kebutuhan SPBE", "Sasaran Kinerja Operasional", "Detail Sasaran Kinerja",
                  "Pagu Anggaran", "Sub Kegiatan", "Tahun Pelaksanaan", "", "", "", "",
                  "Perangkat Daerah Pelaksana",
-                 "Keterangan"], style: style_nama_kota
+                 "Keterangan"], style: style_heading
   sheet.add_row ["", "", "", "", "",
                  "", "", "", "",
                  "", "", "2020", "2021", "2022", "2023", "2024", "",
                  ""], style: style_nama_kota
   sheet.add_row ["", "1", "2", "3", "4",
                  "5", "6", "7", "8",
-                 "9", "10", "11", "", "", "", "", "12",
-                 "13"], style: style_nama_kota
+                 "9", "10", "11",
+                 "", "", "", "",
+                 "12", "13"], style: style_heading
   # SPBE
   @spbes.each.with_index(1) do |(program, spbes), i|
     program_row = sheet.add_row [nil, i.to_s,
                                  program.nama_program,
                                  spbes.first&.jenis_pelayanan,
-                                 spbes.first&.sasaran&.sasaran_kinerja,
+                                 "Sasaran: #{spbes.first&.sasaran&.sasaran_kinerja}",
                                  spbes.first&.nama_aplikasi,
                                  spbes.first&.spbe_rincians&.first&.kebutuhan_spbe,
-                                 spbes.first&.spbe_rincians&.first&.sasaran&.sasaran_kinerja,
+                                 "Sasaran #{spbes.first&.spbe_rincians&.first&.sasaran&.sasaran_kinerja}",
                                  spbes.first&.spbe_rincians&.first&.detail_sasaran_kinerja,
                                  spbes.first&.spbe_rincians&.first&.sasaran&.anggaran_spbe,
                                  spbes.first&.spbe_rincians&.first&.sasaran&.subkegiatan,
@@ -47,9 +53,9 @@ wb.add_worksheet(name: "SPBE OPD") do |sheet|
                      nil,
                      nil,
                      "Indikator: #{indikator.indikator_kinerja}",
-                     nil,
-                     nil,
-                     nil,
+                     "Output aplikasi: #{spbes.first&.output_aplikasi}",
+                     "Detail kebutuhan: #{spbes.first&.spbe_rincians&.first&.detail_kebutuhan}",
+                     "Indikator: #{spbes.first&.spbe_rincians&.first&.sasaran&.indikator_sasarans&.first&.indikator_kinerja}",
                      nil,
                      nil,
                      nil,
@@ -66,7 +72,7 @@ wb.add_worksheet(name: "SPBE OPD") do |sheet|
                      "Target: #{indikator.target}",
                      nil,
                      nil,
-                     nil,
+                     "Target: #{spbes.first&.spbe_rincians&.first&.sasaran&.indikator_sasarans&.first&.target}",
                      nil,
                      nil,
                      nil,
@@ -81,9 +87,9 @@ wb.add_worksheet(name: "SPBE OPD") do |sheet|
                      nil,
                      nil,
                      "Satuan: #{indikator.satuan}",
+                     "Terintegrasi dengan: #{spbes.first&.terintegrasi_dengan}",
                      nil,
-                     nil,
-                     nil,
+                     "Satuan: #{spbes.first&.spbe_rincians&.first&.sasaran&.indikator_sasarans&.first&.satuan}",
                      nil,
                      nil,
                      nil,
@@ -99,10 +105,10 @@ wb.add_worksheet(name: "SPBE OPD") do |sheet|
       spbes_row = sheet.add_row [nil, nil,
                                  nil,
                                  spbe&.jenis_pelayanan,
-                                 spbe&.sasaran&.sasaran_kinerja,
+                                 "Sasaran: #{spbe&.sasaran&.sasaran_kinerja}",
                                  spbe&.nama_aplikasi,
                                  spbe&.spbe_rincians&.first&.kebutuhan_spbe,
-                                 spbe&.spbe_rincians&.first&.sasaran&.sasaran_kinerja,
+                                 "Sasaran: #{spbe&.spbe_rincians&.first&.sasaran&.sasaran_kinerja}",
                                  spbe&.spbe_rincians&.first&.detail_sasaran_kinerja,
                                  spbe&.spbe_rincians&.first&.sasaran&.anggaran_spbe,
                                  spbe&.spbe_rincians&.first&.sasaran&.subkegiatan,
@@ -113,13 +119,13 @@ wb.add_worksheet(name: "SPBE OPD") do |sheet|
                                  "",
                                  spbe&.spbe_rincians&.first&.opd&.nama_opd,
                                  spbe&.spbe_rincians&.first&.keterangan], style: style_nama_kota
-      spbe&.sasaran&.indikator_sasarans&.each do |indikator|
+      spbe&.sasaran&.indikator_sasarans&.drop(1)&.each do |indikator|
         sheet.add_row [nil, nil,
                        nil,
                        nil,
                        "Indikator: #{indikator.indikator_kinerja}",
-                       nil,
-                       nil,
+                       "Output aplikasi: #{spbe&.output_aplikasi}",
+                       "Detail kebutuhan: #{spbe&.spbe_rincians&.first&.detail_kebutuhan}",
                        nil,
                        nil,
                        nil,
@@ -152,7 +158,7 @@ wb.add_worksheet(name: "SPBE OPD") do |sheet|
                        nil,
                        nil,
                        "Satuan: #{indikator.satuan}",
-                       nil,
+                       "Terintegrasi dengan: #{spbe&.terintegrasi_dengan}",
                        nil,
                        nil,
                        nil,
@@ -173,7 +179,7 @@ wb.add_worksheet(name: "SPBE OPD") do |sheet|
                        nil,
                        nil,
                        spbe_rincian&.kebutuhan_spbe,
-                       spbe_rincian&.sasaran&.sasaran_kinerja,
+                       "Sasaran: #{spbe_rincian&.sasaran&.sasaran_kinerja}",
                        spbe_rincian&.detail_sasaran_kinerja,
                        spbe_rincian&.sasaran&.anggaran_spbe,
                        spbe_rincian&.sasaran&.subkegiatan,
@@ -184,6 +190,23 @@ wb.add_worksheet(name: "SPBE OPD") do |sheet|
                        "",
                        spbe_rincian&.opd&.nama_opd,
                        spbe_rincian&.keterangan], style: style_nama_kota
+        sheet.add_row [nil, nil,
+                       nil,
+                       nil,
+                       nil,
+                       nil,
+                       "Detail kebutuhan: #{spbe_rincian&.detail_kebutuhan}",
+                       nil,
+                       nil,
+                       nil,
+                       nil,
+                       "",
+                       "",
+                       "",
+                       "",
+                       "",
+                       nil,
+                       nil], style: style_nama_kota
       end
       sheet.merge_cells("#{program_row.cells[1].r}:#{spbes_row.cells[1].r}") if spbes.length > 1
       sheet.merge_cells("#{program_row.cells[2].r}:#{spbes_row.cells[2].r}") if spbes.length > 1
