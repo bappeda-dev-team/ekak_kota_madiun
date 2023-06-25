@@ -21,7 +21,7 @@
   <%= link_to edit_strategi_path(strategi, nip: strategi.nip_asn,
                                  usulan_isu: pohon&.strategi,
                                  role: role),
-    class: "btn btn-outline-info d-inline-flex align-items-center mx-3" do %>
+    class: "btn btn-outline-info d-inline-flex align-items-center w-100" do %>
     <i class="fas fa-edit me-2"></i>
     Isi / Edit <%= local_assigns[:judul_tombol] %>
   <% end %>
@@ -35,9 +35,10 @@
   <% end %>
 <% end %>
 <%= button_to transfer_pohon_kinerja_path(strategi, type: "StrategiPohon"),
+              remote: true,
               class: "btn btn-sm btn-primary w-100",
-              data: { turbolink: false, confirm_swal: "Transfer Pohon #{strategi.strategi}?"} do %>
+              data: { confirm_swal: "Transfer Strategi #{strategi.strategi}?", disable_with: "memproses..."} do %>
   <i class="fa fa-clone me-2"></i>
-  <span>Transfer Pohon</span>
+  <span>Transfer ke Pohon Kinerja</span>
 <% end %>
 </div>

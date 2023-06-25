@@ -118,11 +118,43 @@ class PohonKinerjaController < ApplicationController
   end
 
   def daftar_strategi
-    @nip = params[:nip]
+    @user = current_user
+    @pohon = Pohon.find_by(user_id: @user.id, pohonable_id: params[:id], pohonable_type: 'StrategiPohon')
     @tahun = cookies[:tahun]
-    @user = User.find_by(nik: @nip)
     @strategis = @user.strategis.where('tahun ILIKE ?', "%#{@tahun}%")
     render partial: 'daftar_strategi', locals: { strategis: @strategis }
+  end
+
+  def pasangkan
+    @pohon = Pohon.find(params[:id])
+    @strategis = params[:strategi].compact_blank
+
+    list_pohon_baru = []
+    @strategis.each do |str|
+      strategi = Strategi.find(str)
+      list_pohon_baru.push({ user_id: @pohon.user_id,
+                             tahun: @pohon.tahun,
+                             role: @pohon.role,
+                             pohonable_id: strategi.id,
+                             pohonable_type: 'Strategi',
+                             opd_id: @pohon.opd_id,
+                             keterangan: strategi.strategi,
+                             strategi_id: @pohon.strategi_id })
+    end
+    @pohons = Pohon.create(list_pohon_baru)
+    if @pohons
+      render json: { resText: "Pemasangan Disimpan", result: @pohon.id },
+             status: :accepted
+    else
+      render json: { resText: "Terjadi Kesalahan" },
+             status: :unprocessable_entity
+    end
+  end
+
+  def daftar_linked_strategi
+    @pohon = Pohon.find(params[:id])
+    @strategis = @pohon.linked_strategis
+    render partial: 'daftar_linked_strategi', locals: { strategis: @strategis }
   end
 
   def kota; end

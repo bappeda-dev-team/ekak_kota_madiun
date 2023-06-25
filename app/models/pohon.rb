@@ -70,7 +70,7 @@ class Pohon < ApplicationRecord
     user.nik
   end
 
-  def strategi_cascade
-    Strategi.find(strategi_id)
+  def linked_strategis
+    Pohon.where(pohonable_type: 'Strategi', strategi_id: strategi_id, user_id: user_id)
   end
 end

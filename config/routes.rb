@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       get :daftar_temans
       get :daftar_strategi
       post :pasangkan
+      get :daftar_linked_strategi
     end
     collection do
       get :kota

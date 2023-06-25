@@ -57,16 +57,21 @@
                       <span>Panggil Teman</span>
                     <% end %>
                   </div>
-                  <div>
-                    <%= link_to pasangkan_pohon_kinerja_path(
-                                strategi,
-                                nip: strategi.nip_asn,
-                                role: @role),
-                    class: "btn btn-outline-info w-100" do %>
-                      <i class="fas fa-edit me-2"></i>
-                      <span>Pasangkan Pohon</span>
-                    <% end %>
-                  </div>
+                  <% if strategi.pohon_shareds.any? && strategi.pohon_shareds.map{|s| s.user.nama}.include?(current_user.nama) %>
+                    <div>
+                      <%= link_to daftar_strategi_pohon_kinerja_path(strategi),
+                      remote: true,
+                      class: 'btn btn-outline-info align-items-center w-100',
+                      data: { controller: 'form-modal',
+                              action: 'form-modal#appendForm',
+                              form_modal_location_param: 'form-pasangkan-pohon-body',
+                              bs_target: '#form-pasangkan-pohon',
+                              bs_toggle: 'modal' } do %>
+                        <i class="fas fa-edit me-2"></i>
+                        <span>Pasangkan Pohon</span>
+                      <% end %>
+                    </div>
+                  <% end %>
                   <div>
                     <%= link_to pohon_kinerja_path(strategi),
                     class: "btn btn-sm btn-warning w-100",
@@ -85,6 +90,6 @@
     </div>
   </div>
 </div>
-<%= render 'shared/modal_template', modal_name: 'clone' %>
-<%= render 'shared/modal_xl_template', modal_name: 'bagikan-strategi-pokin' %>
+<%= render 'shared/modal_xl_template', modal_name: 'pasangkan-pohon' %>
 <%= render 'shared/modal_xl_template', modal_name: 'panggil-teman' %>
+<%= render 'shared/modal_xl_template', modal_name: 'strategi-cascading' %>
