@@ -90,6 +90,7 @@ class SpbesController < ApplicationController
                                  :strategi_ref_id, :kode_program,
                                  :kode_opd, :program_kegiatan_id,
                                  :terintegrasi_dengan, :output_aplikasi,
+                                 :pemilik_aplikasi,
                                  spbe_rincians_attributes: %i[id detail_kebutuhan detail_sasaran_kinerja
                                                               keterangan id_rencana kebutuhan_spbe
                                                               internal_external tahun_awal tahun_akhir

@@ -1,0 +1,32 @@
+<%= form_with(model: kebutuhan) do |form| %>
+  <% if kebutuhan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(kebutuhan.errors.count, "error") %> prohibited this kebutuhan from being saved:</h2>
+
+      <ul>
+        <% kebutuhan.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :kebutuhan %>
+    <%= form.text_field :kebutuhan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tahun %>
+    <%= form.text_field :tahun %>
+  </div>
+
+  <div class="field">
+    <%= form.label :keterangan %>
+    <%= form.text_field :keterangan %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

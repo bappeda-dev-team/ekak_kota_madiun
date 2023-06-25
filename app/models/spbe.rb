@@ -8,6 +8,7 @@
 #  kode_program        :string
 #  nama_aplikasi       :string
 #  output_aplikasi     :string
+#  pemilik_aplikasi    :string
 #  terintegrasi_dengan :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
