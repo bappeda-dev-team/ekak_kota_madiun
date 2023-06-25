@@ -43,6 +43,7 @@ Rails.application.routes.draw do
       post :transfer
       get :panggil_teman
       post :simpan_teman
+      get :daftar_temans
     end
     collection do
       get :kota

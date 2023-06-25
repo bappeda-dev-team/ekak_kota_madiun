@@ -61,4 +61,8 @@ class Pohon < ApplicationRecord
   def indikators_tahun(_tahun)
     strategis.map(&:indikator_sasarans).flatten
   end
+
+  def nama_pemilik
+    user.nama
+  end
 end

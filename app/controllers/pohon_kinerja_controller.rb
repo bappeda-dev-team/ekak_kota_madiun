@@ -67,19 +67,13 @@ class PohonKinerjaController < ApplicationController
     @kode_opd = cookies[:opd]
     @strategi = StrategiPohon.find(params[:id])
     @dibagikan = @strategi.pohon_shareds.order(:user_id)
-    @role = params[:eselon]
+    @role = params[:role]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @temans = @opd.users.with_role(@role.to_sym)
+    @temans = @opd.users.with_role(@role.to_sym).reject { |u| u.strategi_pohons(@strategi.id).any? }
     render partial: 'form_teman'
   end
 
   def simpan_teman
-    # i want to store this to pohon model
-    # with pohonable_type strategi_pohon
-    # opd_id same as current_opd / strategi opd
-    # user_id, is called user
-    # strategi_id is strategi.id
-    # role match with called user ( no split )
     strategi = StrategiPohon.find(params[:id])
     @tahun = strategi.tahun
     @role = params[:role]
@@ -87,14 +81,13 @@ class PohonKinerjaController < ApplicationController
 
     dibagikan = params[:dibagikan]
     tidak = params[:tidak_dibagikan]
+
     if tidak
       hapus_bagikan = dibagikan.nil? ? tidak : (tidak - dibagikan)
       hapus_bagikan.each do |hapus|
         Pohon.find(hapus).delete
       end
     end
-
-    return unless @nip.length > 0
 
     list_pohon_baru = []
     @nip.each do |nip_asn|
@@ -110,12 +103,18 @@ class PohonKinerjaController < ApplicationController
     end
     @pohon = Pohon.create(list_pohon_baru)
     if @pohon
-      render json: { resText: "Sukses membagikan" },
+      render json: { resText: "Pembagian Disimpan", result: strategi.id },
              status: :accepted
     else
       render json: { resText: "Terjadi Kesalahan" },
              status: :unprocessable_entity
     end
+  end
+
+  def daftar_temans
+    id_strategi = params[:id]
+    @temans = Pohon.where(strategi_id: id_strategi, pohonable_type: 'StrategiPohon')
+    render partial: 'daftar_temans', locals: { temans: @temans }
   end
 
   def kota; end

@@ -1,7 +1,8 @@
 <%= form_with url: simpan_teman_pohon_kinerja_path(@strategi, role: @role), method: :post,
               local: false,
               data: { controller: 'form-ajax',
-                      action: 'ajax:success->form-ajax#successResponse'
+                      form_ajax_modal_param: 'form-panggil-teman',
+                      action: 'ajax:success->form-ajax#successResponseNew'
                } do |form| %>
   <div class="field">
     <h5><%= @strategi.strategi %></h5>
