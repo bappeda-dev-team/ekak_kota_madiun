@@ -13,6 +13,10 @@ class PohonKinerjaController < ApplicationController
                                     .where(opd_id: @opd.id.to_s, role: @eselon)
   end
 
+  def edit
+    @pohon = Pohon.find(params[:id])
+  end
+
   def show
     @tahun = params[:tahun] || cookies[:tahun]
     opd_params = params[:kode_opd] || cookies[:opd]

@@ -1,15 +1,5 @@
 <div>
   <% temans.each.with_index(1) do |teman, no| %>
     <p><%= "#{no}. #{teman.user.nama}" %></p>
-    <% if teman.linked_strategis.any? %>
-      <%= link_to "Strategi Cascading", daftar_linked_strategi_pohon_kinerja_path(teman),
-                                    remote: true,
-                                    class: 'btn btn-sm btn-outline-gray-900 w-100 mb-3',
-                                    data: { controller: 'form-modal',
-                                            action: 'form-modal#appendForm',
-                                            form_modal_location_param: 'form-strategi-cascading-body',
-                                            bs_target: '#form-strategi-cascading',
-                                            bs_toggle: 'modal' } %>
-    <% end %>
   <% end %>
 </div>

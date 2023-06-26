@@ -44,44 +44,7 @@
               <td class="text-wrap align-middle"><%= strategi.tahun %></td>
               <td class="text-wrap align-middle"><%= nama_eselon(strategi.role) %></td>
               <td class="text-center align-middle">
-                <div class="d-grid gap-2">
-                  <div>
-                    <%= link_to panggil_teman_pohon_kinerja_path(strategi, role: @eselon), remote: true,
-                    class: 'btn btn-outline-gray-900 align-items-center w-100',
-                    data: { controller: 'form-modal',
-                            action: 'form-modal#appendForm',
-                            form_modal_location_param: 'form-panggil-teman-body',
-                            bs_target: '#form-panggil-teman',
-                            bs_toggle: 'modal' } do %>
-                      <span class="fas fa-user-plus me-2"></span>
-                      <span>Panggil Teman</span>
-                    <% end %>
-                  </div>
-                  <% if strategi.pohon_shareds.any? && strategi.pohon_shareds.map{|s| s.user.nama}.include?(current_user.nama) %>
-                    <div>
-                      <%= link_to daftar_strategi_pohon_kinerja_path(strategi),
-                      remote: true,
-                      class: 'btn btn-outline-info align-items-center w-100',
-                      data: { controller: 'form-modal',
-                              action: 'form-modal#appendForm',
-                              form_modal_location_param: 'form-pasangkan-pohon-body',
-                              bs_target: '#form-pasangkan-pohon',
-                              bs_toggle: 'modal' } do %>
-                        <i class="fas fa-edit me-2"></i>
-                        <span>Pasangkan Pohon</span>
-                      <% end %>
-                    </div>
-                  <% end %>
-                  <div>
-                    <%= link_to pohon_kinerja_path(strategi),
-                    class: "btn btn-sm btn-warning w-100",
-                    target: "blank",
-                    data: { pohon_kinerja_target: 'cetak' } do %>
-                      <i class="far fa-eye me-2"></i>
-                      <span>View Pohon</span>
-                    <% end %>
-                  </div>
-                </div>
+                <%= render 'tombol_pohon_new', strategi: strategi, role: @eselon %>
               </td>
             </tr>
           <% end %>
