@@ -609,6 +609,40 @@ ALTER SEQUENCE public.dasar_hukums_id_seq OWNED BY public.dasar_hukums.id;
 
 
 --
+-- Name: domains; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.domains (
+    id bigint NOT NULL,
+    domain character varying,
+    kode_domain character varying,
+    keterangan character varying,
+    tahun character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: domains_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.domains_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: domains_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.domains_id_seq OWNED BY public.domains.id;
+
+
+--
 -- Name: genders; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2394,7 +2428,8 @@ CREATE TABLE public.spbe_rincians (
     internal_external character varying,
     tahun_pelaksanaan character varying,
     tahun_awal character varying,
-    tahun_akhir character varying
+    tahun_akhir character varying,
+    domain_spbe character varying
 );
 
 
@@ -3049,6 +3084,13 @@ ALTER TABLE ONLY public.dasar_hukums ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: domains id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.domains ALTER COLUMN id SET DEFAULT nextval('public.domains_id_seq'::regclass);
+
+
+--
 -- Name: genders id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3573,6 +3615,14 @@ ALTER TABLE ONLY public.comments
 
 ALTER TABLE ONLY public.dasar_hukums
     ADD CONSTRAINT dasar_hukums_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: domains domains_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.domains
+    ADD CONSTRAINT domains_pkey PRIMARY KEY (id);
 
 
 --
@@ -4923,6 +4973,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230622052131'),
 ('20230624173432'),
 ('20230625200655'),
-('20230625201240');
+('20230625201240'),
+('20230626073842'),
+('20230626073956');
 
 

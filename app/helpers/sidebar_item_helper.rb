@@ -54,6 +54,10 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
         icon: 'fas fa-tablet-alt', identifier: 'spbe'
       },
       {
+        title: 'Domain SPBE', href: domains_path,
+        icon: 'fas fa-project-diagram', identifier: 'domain'
+      },
+      {
         title: 'Kebutuhan SPBE', href: kebutuhans_path,
         icon: 'fas fa-list', identifier: 'kebutuhan'
       }

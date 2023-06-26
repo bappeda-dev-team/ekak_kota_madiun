@@ -5,6 +5,7 @@
 #  id                     :bigint           not null, primary key
 #  detail_kebutuhan       :string
 #  detail_sasaran_kinerja :string
+#  domain_spbe            :string
 #  id_rencana             :string
 #  internal_external      :string
 #  kebutuhan_spbe         :string
