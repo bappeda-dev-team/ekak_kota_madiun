@@ -5,6 +5,13 @@ class StrategiCloner < Clowne::Cloner
     include_association :sasaran, params: true, traits: %i[with_indikators]
   end
 
+  trait :with_sasarans_new do
+    include_association :sasaran, params: true, traits: %i[with_indikators]
+    include_association :strategi_eselon_tigas, params: true, traits: :with_sasarans_new
+    include_association :strategi_eselon_empats, params: true, traits: :with_sasarans_new
+    include_association :strategi_staffs, params: true, traits: :with_sasarans_new
+  end
+
   trait :just_strategi do
     include_association :strategi_eselon_tigas, params: true, traits: :just_strategi
     include_association :strategi_eselon_empats, params: true, traits: :just_strategi

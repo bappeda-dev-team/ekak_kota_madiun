@@ -114,6 +114,7 @@ class SpbesController < ApplicationController
                                  :terintegrasi_dengan, :output_aplikasi,
                                  :pemilik_aplikasi,
                                  spbe_rincians_attributes: %i[id detail_kebutuhan detail_sasaran_kinerja
+                                                              domain_spbe
                                                               keterangan id_rencana kebutuhan_spbe
                                                               internal_external tahun_awal tahun_akhir
                                                               kode_opd kode_program _destroy])

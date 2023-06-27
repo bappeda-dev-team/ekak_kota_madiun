@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 
 
 export default class extends Controller {
-  static targets = ["errorContainer"]
+  static targets = ["errorContainer", "button"]
   successResponse(event) {
     // event.preventDefault()
     const [message, status, xhr] = event.detail
@@ -25,6 +25,46 @@ export default class extends Controller {
     const id_strategi = `strategi_pohon_${message.result}`
     const target_element = document.getElementById(id_strategi)
     const url = `/pohon_kinerja/${message.result}/daftar_temans`
+    // event after successResponse
+    Modal.getInstance(modal).hide()
+    fetch(url,
+            {
+                    method: "get"
+            })
+            .then(
+                    response => response.text()
+
+            )
+            .then(
+                    text => {
+                      this.sweetalertStatus(message.resText, status)
+                      target_element.innerHTML = text
+                    }
+            ).catch(
+                    e => {
+                      this.sweetalertStatus('terjadi kesalahan', 'error')
+                    }
+
+            )
+
+  }
+
+  successResponseTransferPohon(event) {
+    // event.preventDefault()
+    const [message, status, xhr] = event.detail
+    this.sweetalertStatus(message.resText, status)
+    const target_element = this.buttonTarget
+    target_element.innerHTML = message.result
+  }
+
+  successResponseStrategiPohon(event) {
+    // event.preventDefault()
+    const [message, status, xhr] = event.detail
+    const modal_target = event.params.modal
+    const modal = document.getElementById(modal_target)
+    const id_strategi = `strategi_pohon_${message.result}`
+    const target_element = document.getElementById(id_strategi)
+    const url = `/strategis/${message.result}`
     // event after successResponse
     Modal.getInstance(modal).hide()
     fetch(url,
@@ -122,7 +162,6 @@ export default class extends Controller {
   }
 
   sweetalertStatus(text, status) {
-    console.log(status)
     if(status == 'Accepted')
       {
     Swal.fire({

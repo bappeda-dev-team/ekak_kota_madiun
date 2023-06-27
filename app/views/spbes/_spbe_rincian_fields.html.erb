@@ -1,9 +1,14 @@
 <fieldset class="mb-5">
   <%= form.hidden_field :kode_program, readonly: true, value: @program.kode_program %>
   <div class="field">
+    <%= form.label :domain_spbe, { class: "form-label" } %>
+    <%= form.select(:domain_spbe, (Domain.pluck(:domain)), {include_blank: true},
+      {data: { controller: 'dropdown', placeholder: 'Pilih Domain SPBE' }}) %>
+  </div>
+  <div class="field">
     <%= form.label :kebutuhan_spbe, { class: "form-label" } %>
-    <%= form.select(:kebutuhan_spbe, (Kebutuhan.pluck(:kebutuhan)), {},
-      {data: { controller: 'dropdown' }}) %>
+    <%= form.select(:kebutuhan_spbe, (Kebutuhan.pluck(:kebutuhan)), {include_blank: true},
+      {data: { controller: 'dropdown', placeholder: 'Pilih Kebutuhan SPBE' }}) %>
   </div>
   <div class="field">
     <%= form.label :detail_kebutuhan, { class: "form-label" } %>

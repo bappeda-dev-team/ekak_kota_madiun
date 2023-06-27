@@ -1,18 +1,47 @@
 <div class="tf-nc">
-  <p class="text-center"><strong><%= local_assigns[:judul] %></strong></p>
+  <div class="text-center"><strong><%= local_assigns[:judul] %></strong>
+    <div class="tombol-edit container py-3">
+      <div class="row gx-3">
+        <div class="edit-pohon col">
+          <%= link_to edit_pohon_kinerja_path(strategi),
+                      remote: true,
+                      class: 'btn btn-outline-info',
+                      data: { controller: 'form-modal',
+                              action: 'form-modal#appendForm',
+                              form_modal_location_param: 'form-edit-pohon-body',
+                              bs_target: '#form-edit-pohon',
+                              bs_toggle: 'modal' } do %>
+            <i class="fas fa-edit me-2"></i>
+            <span>Edit Pohon</span>
+          <% end %>
+        </div>
+        <div class="hapus-pohon col">
+          <%= link_to pohon_kinerja_path(strategi),
+                      remote: true, method: :delete,
+                      class: 'btn btn-outline-danger',
+                      data: { confirm_swal: 'Hapus pohon kinerja?' } do %>
+            <i class="fas fa-trash me-2"></i>
+            <span>Hapus Pohon</span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
   <hr/>
-  <span class="text-center"><%= strategi.strategi %></span>
   <%# INDIKATOR %>
   <% if local_assigns[:tipe] == 'kota' %>
-    <% strategi.indikators_tahun(@tahun).each do |ind| %>
-      <p class="bg-info text-white px-2"><strong>INDIKATOR</strong></p>
-      <hr/>
-      <p>
-        <span><%= ind.indikator %></span>
-        <span>[ <%= ind.target %> <%= ind.satuan %> ]</span>
-      </p>
-      <hr/>
-    <% end %>
+    <div class="strategi-indikator" id="<%= dom_id(strategi) %>">
+      <span class="text-center"><%= strategi.strategi %></span>
+      <% strategi.indikators_tahun(@tahun).each do |ind| %>
+        <p class="bg-info text-white px-2"><strong>INDIKATOR</strong></p>
+        <hr/>
+        <p>
+          <span><%= ind.indikator %></span>
+          <span>[ <%= ind.target %> <%= ind.satuan %> ]</span>
+        </p>
+        <hr/>
+      <% end %>
+    </div>
     <% strategi.komentars.each do |kom| %>
       <p class="higlighted px-2"><strong>REVIEW</strong></p>
       <hr/>
@@ -30,17 +59,19 @@
                                           bs_toggle: 'modal' } %>
     </p>
   <% else %>
-    <% strategi.indikators.each do |ind| %>
-      <p class="bg-info text-white px-2"><strong>INDIKATOR</strong></p>
-      <hr/>
-      <p>
-        <span><%= ind.indikator_kinerja %></span>
-        <span>[ <%= ind.target %> <%= ind.satuan %> ]</span>
-      </p>
-      <hr/>
-      <% if ind.manual_ik.present? %>
-        <p class="manual-ik my-3">
-          <%= link_to "Manual IK", overview_indikator_sasaran_manual_ik_path(ind, ind.manual_ik),
+    <div class="strategi-indikator" id="<%= dom_id(strategi) %>">
+      <span class="text-center"><%= strategi.strategi %></span>
+      <% strategi.indikators.each do |ind| %>
+        <p class="bg-info text-white px-2"><strong>INDIKATOR</strong></p>
+        <hr/>
+        <p>
+          <span><%= ind.indikator_kinerja %></span>
+          <span>[ <%= ind.target %> <%= ind.satuan %> ]</span>
+        </p>
+        <hr/>
+        <% if ind.manual_ik.present? %>
+          <p class="manual-ik my-3">
+            <%= link_to "Manual IK", overview_indikator_sasaran_manual_ik_path(ind, ind.manual_ik),
                                     remote: true,
                                     class: 'btn btn-sm btn-outline-gray-900 w-100',
                                     data: { controller: 'form-modal',
@@ -48,9 +79,10 @@
                                             form_modal_location_param: 'form-manual-ik-body',
                                             bs_target: '#form-manual-ik',
                                             bs_toggle: 'modal' } %>
-        </p>
+          </p>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
     <div class="mt-3">
       <b >Komentar Reviewer:</b>
     </div>

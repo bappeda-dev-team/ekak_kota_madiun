@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Domain:</strong>
+  <%= @domain.domain %>
+</p>
+
+<p>
+  <strong>Kode domain:</strong>
+  <%= @domain.kode_domain %>
+</p>
+
+<p>
+  <strong>Keterangan:</strong>
+  <%= @domain.keterangan %>
+</p>
+
+<p>
+  <strong>Tahun:</strong>
+  <%= @domain.tahun %>
+</p>
+
+<%= link_to 'Edit', edit_domain_path(@domain) %> |
+<%= link_to 'Back', domains_path %>

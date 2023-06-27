@@ -207,4 +207,8 @@ class Strategi < ApplicationRecord
   rescue NoMethodError
     nil
   end
+
+  def transfered?
+    StrategiPohon.find_by(strategi_cascade_link: id).nil?
+  end
 end

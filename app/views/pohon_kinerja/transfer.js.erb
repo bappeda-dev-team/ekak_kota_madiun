@@ -1,0 +1,7 @@
+Swal.fire({
+  title: 'Berhasil ditransfer',
+  icon: 'success',
+  confirmButtonText: 'Yes',
+}).then(() => {
+  Turbolinks.visit(window.location, { action: "replace" })
+})
