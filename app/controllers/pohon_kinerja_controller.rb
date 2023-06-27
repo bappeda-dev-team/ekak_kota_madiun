@@ -329,11 +329,12 @@ class PohonKinerjaController < ApplicationController
     @opd = Opd.find_by(kode_unik_opd: @opd_params)
     @nama_opd = @opd.nama_opd
     @isu_opd = @opd.pohon_kinerja_opd(@tahun)
-    @rekap_jumlah = if @opd.id == 145
-                      @opd.data_total_pokin_setda(@tahun)
-                    else
-                      @opd.data_total_pokin(@tahun)
-                    end
+    if @opd.id == 145
+      @rekap_jumlah = @opd.data_total_pokin_setda(@tahun)
+      render 'review_setda'
+    else
+      @rekap_jumlah = @opd.data_total_pokin(@tahun)
+    end
   end
 
   def filter_rekap_opd
