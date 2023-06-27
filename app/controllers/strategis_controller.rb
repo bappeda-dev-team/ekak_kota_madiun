@@ -8,7 +8,9 @@ class StrategisController < ApplicationController
   end
 
   # GET /strategis/1 or /strategis/1.json
-  def show; end
+  def show
+    render partial: 'show_update', locals: { strategi: @strategi }
+  end
 
   # GET /strategis/new
   def new

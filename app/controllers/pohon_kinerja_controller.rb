@@ -6,6 +6,7 @@ class PohonKinerjaController < ApplicationController
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
     @eselon = current_user.has_role?(:admin) ? 'eselon_2' : current_user.eselon_user
     @strategis = Strategi.where('tahun ILIKE ?', "%#{@tahun}%")
                          .where(opd_id: @opd.id.to_s, role: @eselon)
@@ -14,7 +15,32 @@ class PohonKinerjaController < ApplicationController
   end
 
   def edit
-    @pohon = Pohon.find(params[:id])
+    # @pohon = Pohon.find_by(pohonable_id: params[:id]).pohonable
+    @pohon = StrategiPohon.find(params[:id])
+    render partial: 'form', locals: { pohon: @pohon }
+  end
+
+  def update
+    @pohon = StrategiPohon.find(params[:id])
+    # type = @pohon.pohonable_type.underscore
+    # model = @pohon.pohonable
+    pohon_params = params.require(:strategi_pohon).permit(:strategi,
+                                                          sasaran_attributes: [indikator_sasarans_attributes: %i[id
+                                                                                                                 indikator_kinerja aspek target satuan _destroy]])
+    if @pohon.update(pohon_params)
+      render json: { resText: "Perubahan tersimpan", result: @pohon.id },
+             status: :accepted
+    else
+      render json: { resText: "Terjadi Kesalahan" },
+             status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @pohon = StrategiPohon.find(params[:id])
+    @pohon.destroy
+    render json: { resText: "Pohon Dihapus", result: true },
+           status: :accepted
   end
 
   def show
@@ -57,13 +83,26 @@ class PohonKinerjaController < ApplicationController
     tahun = strategi.tahun
     type = params[:type]
     # type = "StrategiPohon"
+    html_btn = "
+    <button class='btn btn-sm btn-primary' disabled>
+      <i class='fa fa-clone me-2'></i>
+      <span>Sudah ditransfer</span>
+    </button>
+    ".html_safe
     clone = StrategiCloner.call(strategi, tahun: tahun,
                                           type: type,
                                           nip: '',
                                           opd_id: opd_id,
                                           strategi_cascade_link: id_strategi,
-                                          traits: [:with_sasaran])
-    clone.persist!
+                                          traits: [:with_sasarans_new])
+    respond_to do |format|
+      if clone.persist!
+        format.js { render "transfer", locals: { id_strategi: id_strategi, html_btn: html_btn } }
+      else
+        render json: { resText: "Terjadi Kesalahan" },
+               status: :unprocessable_entity
+      end
+    end
   end
 
   def panggil_teman
@@ -82,17 +121,14 @@ class PohonKinerjaController < ApplicationController
     @tahun = strategi.tahun
     @role = params[:role]
     @nip = params[:nip].compact_blank
-
     dibagikan = params[:dibagikan]
     tidak = params[:tidak_dibagikan]
-
     if tidak
       hapus_bagikan = dibagikan.nil? ? tidak : (tidak - dibagikan)
       hapus_bagikan.each do |hapus|
         Pohon.find(hapus).delete
       end
     end
-
     list_pohon_baru = []
     @nip.each do |nip_asn|
       user = User.find_by(nik: nip_asn)
@@ -132,7 +168,6 @@ class PohonKinerjaController < ApplicationController
   def pasangkan
     @pohon = Pohon.find(params[:id])
     @strategis = params[:strategi].compact_blank
-
     list_pohon_baru = []
     @strategis.each do |str|
       strategi = Strategi.find(str)
@@ -213,7 +248,6 @@ class PohonKinerjaController < ApplicationController
     if @opd.id == 145
       render xlsx: "pohon_setda_excel", filename: @filename
     else
-
       render xlsx: "pohon_opd_excel", filename: @filename
     end
   end
@@ -250,7 +284,6 @@ class PohonKinerjaController < ApplicationController
            end
     @isu_opd = @opd.pohon_kinerja_opd(@tahun)
     @nama_opd = @opd.nama_opd
-
     respond_to do |format|
       if @opd.id == 145 || @opd.kode_opd == '1260'
         format.html { render "pohon_kinerja/pdf_setda", layout: 'blank' }
