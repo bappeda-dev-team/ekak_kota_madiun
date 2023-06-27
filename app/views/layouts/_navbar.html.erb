@@ -14,7 +14,9 @@
         </div>
       </div>
       <!-- Filter OPD dan Tahun -->
-      <%= render 'shared/filter_tahun_dan_opd_profile' %>
+      <% unless current_user.has_role?(:reviewer) %>
+        <%= render 'shared/filter_tahun_dan_opd_profile' %>
+      <% end %>
     </div>
   </div>
 </nav>
