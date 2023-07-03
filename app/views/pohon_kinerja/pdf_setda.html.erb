@@ -14,9 +14,9 @@
                                                strategi_id: @opd.id,
                                                jenis: "OPD"),
            form_name: 'form-komentar' %>
-<div class="tf-tree mt-2" style="zoom: 0.5" id='pokin-opd'>
+<div class="tf-tree mt-2" style="zoom: 0.7;cursor: col-resize;" id='pokin-opd' data-controller="pohon-kinerja" data-pohon-kinerja-target="field">
   <h1>Pohon Kinerja <%= @nama_opd %> Tahun <%= @tahun %></h1>
-  <ul>
+  <ul data-pohon-kinerja-target="content">
     <li>
       <div class="tf-nc">
         <p class="text-center"><strong>Perangkat Daerah</strong></p>

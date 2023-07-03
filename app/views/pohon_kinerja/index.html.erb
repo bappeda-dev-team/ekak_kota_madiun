@@ -18,9 +18,9 @@
           data-pohon-kinerja-tahun-value="<%= @tahun %>"
           data-action="click->pohon-kinerja#cetakOpd">DOWNLOAD POHON KINERJA</button>
   </div>
-  <div class="card-body" style="zoom: 0.5;">
-    <div class="tf-tree tf-gap-lg mt-2">
-      <ul id="center-pokin">
+  <div class="card-body" style="zoom: 0.7;cursor: col-resize;" data-controller="pohon-kinerja" data-pohon-kinerja-target="field" >
+    <div class="tf-tree tf-gap-lg mt-2 show">
+      <ul id="center-pokin" data-pohon-kinerja-target="content">
         <li>
           <div class="tf-nc" >
             <p class="text-center"><strong>Perangkat Daerah</strong></p>
