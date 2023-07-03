@@ -132,8 +132,12 @@ class Strategi < ApplicationRecord
     indikator_sasarans.first.satuan
   end
 
-  def nama_pemilik
+  def nama
     user&.nama
+  end
+
+  def nama_pemilik
+    "#{nama} (#{nip_pemilik})"
   end
 
   def nip_pemilik
