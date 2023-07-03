@@ -182,6 +182,9 @@ Rails.application.routes.draw do
       post :diambil_asn
       post :setujui_usulan_di_sasaran
     end
+    collection do
+      get :spbe
+    end
   end
 
   resources :asn_musrenbangs, path: "asn_usulan"

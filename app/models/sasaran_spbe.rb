@@ -38,16 +38,22 @@
 #  fk_rails_...  (nip_asn => users.nik)
 #  fk_rails_...  (subkegiatan_tematik_id => subkegiatan_tematiks.id)
 #
-class SasaranKota < Sasaran
-  def visi
-    sasaran_kota
+class SasaranSpbe < Sasaran
+  has_one :spbe_rincian, primary_key: :id, foreign_key: :id_rencana
+
+  def detail_kebutuhan
+    spbe_rincian.detail_kebutuhan
   end
 
-  def misi
-    sasaran_opd
+  def uraian
+    spbe_rincian.detail_sasaran_kinerja
   end
 
-  def tujuan
-    sasaran_atasan
+  def asn_pengusul
+    user.nama
+  end
+
+  def opd_asn
+    opd.nama_opd
   end
 end

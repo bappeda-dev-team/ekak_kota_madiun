@@ -13,6 +13,11 @@ class MandatorisController < ApplicationController
     render 'user_mandatori'
   end
 
+  def spbe
+    tahun = cookies[:tahun]
+    @mandatoris = SasaranSpbe.all
+  end
+
   # GET /mandatoris/1 or /mandatoris/1.json
   def show; end
 
