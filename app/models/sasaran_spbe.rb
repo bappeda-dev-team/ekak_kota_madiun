@@ -1,0 +1,2 @@
+class SasaranSpbe < Sasaran
+end

@@ -16,6 +16,7 @@
   <% end %>
   <% random_number = sasaran.id_rencana.nil? ? (SecureRandom.random_number(9e5) + 1e5).to_i : sasaran.id_rencana %>
   <%= form.hidden_field :id_rencana, :value => random_number, readonly: true %>
+  <%= form.hidden_field :type, value: "SasaranSpbe", readonly: true %>
   <%= form.hidden_field :sasaran_milik, :value => @tipe, readonly: true %>
   <div class="field">
     <%= form.label :sasaran_kinerja, { class: "form-label" } %>

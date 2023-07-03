@@ -307,12 +307,9 @@ class SasaransController < ApplicationController
                else
                  @user.sasarans.build(sasaran_params)
                end
-    # @sasaran.id_rencana = (SecureRandom.random_number(9e5) + 1e5).to_i # This method will bites back, look up in here
     respond_to do |format|
       if @sasaran.save
-        # @sasaran.indikator_sasarans.create!(sasaran_params[:indikator_sasarans_attributes].merge!(sasaran_id: sasaran_params[:id_rencana]))
-        # format.html { redirect_to user_sasaran_path(@user, @sasaran), success: 'Sasaran berhasil dibuat.' }
-        format.json { render :show, status: :created, location: @sasaran }
+        format.json { render json: { resText: "Sasaran tersimpan", id: @sasaran.id }.to_json, status: :created }
         format.html { redirect_to sasarans_path, success: 'Sasaran berhasil dibuat.' }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -336,7 +333,6 @@ class SasaransController < ApplicationController
         @status = 'success'
         @text = 'Sukses menambah tematik'
         format.js { render 'update.js.erb' }
-        # format.html { redirect_to user_sasaran_path(@user, @sasaran) }
         format.html { redirect_to sasarans_path, success: 'Sasaran diupdate.' }
         format.json { render :show, status: :ok, location: @sasaran }
       else
@@ -455,7 +451,7 @@ class SasaransController < ApplicationController
   def sasaran_params
     params.require(:sasaran).permit(:sasaran_kinerja, :penerima_manfaat, :nip_asn, :program_kegiatan_id,
                                     :sumber_dana, :subkegiatan_tematik_id, :tahun, :id_rencana,
-                                    :anggaran,
+                                    :anggaran, :type,
                                     :kelompok_anggaran, :filter_file, :filter_target, :filter_type, :sasaran_milik,
                                     indikator_sasarans_attributes: %i[id indikator_kinerja aspek target satuan _destroy])
   end
