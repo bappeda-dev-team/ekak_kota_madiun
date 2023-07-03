@@ -302,6 +302,7 @@ module SidebarItemHelper # rubocop:disable Metrics/ModuleLength
       { title: 'Musrenbang', href: musrenbangs_path, identifier: 'musrenbang' },
       { title: 'Pokok Pikiran', href: pokpirs_path, identifier: 'pokpir' },
       { title: 'Mandatori', href: mandatoris_path, identifier: 'mandatori' },
+      { title: 'Mandatori SPBE', href: spbe_mandatoris_path, identifier: 'spbe_mandatori' },
       { title: 'Inisiatif Walikota', href: inovasis_path, identifier: 'inovasi' }
     ]
   end

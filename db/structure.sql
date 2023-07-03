@@ -2249,7 +2249,8 @@ CREATE TABLE public.sasarans (
     sasaran_kota character varying,
     sasaran_milik character varying,
     strategi_id character varying,
-    nip_asn_sebelumnya character varying
+    nip_asn_sebelumnya character varying,
+    opd_id bigint
 );
 
 
@@ -4975,6 +4976,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230625200655'),
 ('20230625201240'),
 ('20230626073842'),
-('20230626073956');
+('20230626073956'),
+('20230703014757');
 
 
