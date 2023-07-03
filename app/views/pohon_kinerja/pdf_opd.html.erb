@@ -47,12 +47,12 @@
                                 <ul>
                                   <% str_kabids.each do |str_kabid, str_kasis| %>
                                     <li>
-                                      <%= render 'item_pokin', judul: "TACTICAL OBJECTIVE", strategi: str_kabid %>
+                                      <%= render 'item_pokin', judul: "TACTICAL OBJECTIVE", strategi: str_kabid, show_program: true %>
                                       <% if str_kasis.any? %>
                                         <ul>
                                           <% str_kasis.each do |str_kasi, str_staffs| %>
                                             <li>
-                                              <%= render 'item_pokin', judul: "OPERATIONAL OBJECTIVE", strategi: str_kasi %>
+                                              <%= render 'item_pokin', judul: "OPERATIONAL OBJECTIVE", strategi: str_kasi, show_sub: true %>
                                               <% if str_staffs.any? %>
                                                 <ul>
                                                   <% str_staffs.each do |str_staff| %>
