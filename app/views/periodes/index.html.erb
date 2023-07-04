@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Periodes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tahun awal</th>
+      <th>Tahun akhir</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @periodes.each do |periode| %>
+      <tr>
+        <td><%= periode.tahun_awal %></td>
+        <td><%= periode.tahun_akhir %></td>
+        <td><%= link_to 'Show', periode %></td>
+        <td><%= link_to 'Edit', edit_periode_path(periode) %></td>
+        <td><%= link_to 'Destroy', periode, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Periode', new_periode_path %>

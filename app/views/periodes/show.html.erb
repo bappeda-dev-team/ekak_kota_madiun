@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Tahun awal:</strong>
+  <%= @periode.tahun_awal %>
+</p>
+
+<p>
+  <strong>Tahun akhir:</strong>
+  <%= @periode.tahun_akhir %>
+</p>
+
+<%= link_to 'Edit', edit_periode_path(@periode) %> |
+<%= link_to 'Back', periodes_path %>
