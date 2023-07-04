@@ -1,90 +1,27 @@
-<div class="card border-2 shadow mb-3">
-  <div class="card-header">
-    <div class="row align-items-center">
-      <div class="col">
-        <h5>Pohon Kinerja <%= @nama_opd %> Tahun <%= @tahun %></h5>
-      </div>
-      <div class="col-auto">
-        <%= render 'shared/button_cog',
-                   link: new_strategi_path(nip: @opd.eselon_dua_opd.nik, role: "eselon_2"),
-                   name: "Buat Strategic Objective" %>
-      </div>
-    </div>
-  </div>
-  <div  class="mb-5">
-    <button id="cetak" class="btn btn-tertiary w-100"
-          data-controller="pohon-kinerja"
-          data-pohon-kinerja-nama-opd-value="<%= @nama_opd %>"
-          data-pohon-kinerja-tahun-value="<%= @tahun %>"
-          data-action="click->pohon-kinerja#cetakOpd">DOWNLOAD POHON KINERJA</button>
-  </div>
-  <div class="card-body" style="zoom: 0.7;cursor: col-resize;" data-controller="pohon-kinerja" data-pohon-kinerja-target="field" >
-    <div class="tf-tree tf-gap-lg mt-2 show">
-      <ul id="center-pokin" data-pohon-kinerja-target="content">
-        <li>
-          <div class="tf-nc" >
-            <p class="text-center"><strong>Perangkat Daerah</strong></p>
-            <hr/>
-            <p class="text-center"><strong><%= @nama_opd %></strong></p>
+<%= content_for :html_title, "Pohon Kinerja" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item active" aria-current="page">Pohon Kinerja</li>
+<% end %>
+<% content_for :view_utama do %>
+  <% if cookies[:tahun] && cookies[:opd] %>
+    <%= render 'pohon_kinerja/index_content' %>
+  <% else %>
+    <div class="card border-0 shadow" id="user_filter">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h5>Pohon Kinerja</h5>
           </div>
-          <ul>
-            <% @strategis_pohon.each do |strategi| %>
-              <li>
-                <div class="tf-nc">
-                  <p class="text-center"><strong>ISU STRATEGIS</strong></p>
-                  <hr/>
-                  <span class="text-center"><%= strategi.pohon.pohonable.nama_isu %></span>
-                </div>
-                <ul>
-                  <li>
-                    <%= render 'item_pokin_edit', judul: 'STRATEGI KOTA', strategi: strategi.pohon.pohonable, tipe: 'kota' %>
-                    <ul>
-                      <li>
-                        <%= render 'item_pokin_edit', judul: "STRATEGIC OBJECTIVE", strategi: strategi %>
-                        <% str_kabids = strategi.strategi_eselon_tiga_pohons %>
-                        <% if str_kabids.any? %>
-                          <ul>
-                            <% str_kabids.each do |str_kabid| %>
-                              <li>
-                                <%= render 'item_pokin_edit', judul: "TACTICAL OBJECTIVE", strategi: str_kabid, panggil_teman: true, role: 'eselon_3' %>
-                                <% str_kasis = str_kabid.strategi_eselon_empats %>
-                                <% if str_kasis.any? %>
-                                  <ul>
-                                    <% str_kasis.each do |str_kasi| %>
-                                      <li>
-                                        <%= render 'item_pokin_edit', judul: "OPERATIONAL OBJECTIVE", strategi: str_kasi, panggil_teman: true, role: 'eselon_4' %>
-                                        <% str_staffs = str_kasi.strategi_staffs %>
-                                        <% if str_staffs.any? %>
-                                          <ul>
-                                            <% str_staffs.each do |str_staff| %>
-                                              <li>
-                                                <%= render 'item_pokin_edit', judul: "OPERATIONAL OBJECTIVE 2", strategi: str_staff, panggil_teman: true, role: 'staff' %>
-                                              </li>
-                                            <% end %>
-                                          </ul>
-                                        <% end %>
-                                      </li>
-                                    <% end %>
-                                  </ul>
-                                <% end %>
-                              </li>
-                            <% end %>
-                          </ul>
-                        <% end %>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-            <% end %>
-          </ul>
-        </li>
-      </ul>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="alert alert-info">Pilih Tahun dan OPD</p>
+      </div>
     </div>
-  </div>
-</div>
-<%= render 'shared/modal_xl_template', modal_name: 'edit-pohon' %>
-<%= render 'shared/modal_xl_template', modal_name: 'panggil-teman' %>
-<%= render 'shared/modal_xl_template', modal_name: 'strategi-cascading' %>
-<%= render 'shared/modal_template', modal_name: 'komentar' %>
-<%= render 'shared/modal_xl_template', modal_name: 'manual-ik' %>
+  <% end %>
+  <%= render 'shared/modal_xl_template', modal_name: 'edit-pohon' %>
+  <%= render 'shared/modal_xl_template', modal_name: 'panggil-teman' %>
+  <%= render 'shared/modal_xl_template', modal_name: 'strategi-cascading' %>
+  <%= render 'shared/modal_template', modal_name: 'komentar' %>
+  <%= render 'shared/modal_xl_template', modal_name: 'manual-ik' %>
+<% end %>

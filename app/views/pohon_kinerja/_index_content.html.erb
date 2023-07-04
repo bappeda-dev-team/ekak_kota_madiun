@@ -1,0 +1,26 @@
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h5>Pohon Kinerja <%= @nama_opd %> Tahun <%= @tahun %></h5>
+      </div>
+      <div class="col-auto">
+        <%= render 'shared/button_cog',
+                           link: new_strategi_path(nip: @opd.eselon_dua_opd.nik, role: "eselon_2"),
+                           name: "Buat Strategic Objective" %>
+      </div>
+    </div>
+  </div>
+  <div  class="mb-5">
+    <button id="cetak" class="btn btn-tertiary w-100"
+                data-controller="pohon-kinerja"
+                data-pohon-kinerja-nama-opd-value="<%= @nama_opd %>"
+                data-pohon-kinerja-tahun-value="<%= @tahun %>"
+                data-action="click->pohon-kinerja#cetakOpd">DOWNLOAD POHON KINERJA</button>
+  </div>
+  <div class="card-body" style="zoom: 0.7;cursor: col-resize;" data-controller="pohon-kinerja" data-pohon-kinerja-target="field" >
+    <div class="tf-tree tf-gap-lg mt-2 show">
+        <%= render 'pohon_kinerja/pohon' %>
+    </div>
+  </div>
+</div>
