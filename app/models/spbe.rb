@@ -30,8 +30,8 @@ class Spbe < ApplicationRecord
   }
   scope :by_opd_tujuan, lambda { |kode_opd|
     includes(:spbe_rincians)
-      .where(kode_opd: kode_opd)
-      .or(where(spbe_rincians: { kode_opd: kode_opd }))
+      .where(spbe_rincians: { kode_opd: kode_opd })
+      .where.not(kode_opd: kode_opd)
   }
 
   def nama_program
