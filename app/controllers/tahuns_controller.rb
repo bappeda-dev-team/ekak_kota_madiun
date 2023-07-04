@@ -15,7 +15,12 @@ class TahunsController < ApplicationController
   end
 
   # GET /tahuns/1/edit
-  def edit; end
+  def edit
+    respond_to do |f|
+      f.js { render :new }
+      f.html { render :edit }
+    end
+  end
 
   # POST /tahuns or /tahuns.json
   def create

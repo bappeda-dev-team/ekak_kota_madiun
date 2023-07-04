@@ -12,7 +12,6 @@
         </div>
         <div class="col text-end">
           <%= link_to new_periode_path,
-              xhr: true,
               remote: true, class: 'btn btn-sm btn-primary',
               data: { controller: 'form-modal',
                       form_modal_location_param: 'form-periode-body',
@@ -48,7 +47,9 @@
                     <i class="fas fa-eye me-2"></i>
                     <span>View Periode</span>
                   <% end %>
-                  <%= link_to edit_periode_path(periode), class: 'btn btn-outline-info' do %>
+                  <%= link_to edit_periode_path(periode), remote: true,
+                   data: { bs_toggle: 'modal', bs_target: '#form-periode' },
+                   class: 'btn btn-outline-info' do %>
                     <i class="fa fa-edit me-2"></i>
                     <span>Edit Periode</span>
                   <% end %>

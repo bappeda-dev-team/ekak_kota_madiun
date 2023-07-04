@@ -1,6 +1,5 @@
 class PeriodesController < ApplicationController
   before_action :set_periode, only: %i[show edit update destroy]
-  protect_from_forgery except: :new
 
   # GET /periodes or /periodes.json
   def index
@@ -13,13 +12,15 @@ class PeriodesController < ApplicationController
   # GET /periodes/new
   def new
     @periode = Periode.new
-    respond_to do |format|
-      format.js { render partial: 'form', locals: { periode: @periode } }
-    end
   end
 
   # GET /periodes/1/edit
-  def edit; end
+  def edit
+    respond_to do |f|
+      f.js { render :new }
+      f.html { render :edit }
+    end
+  end
 
   # POST /periodes or /periodes.json
   def create
