@@ -1,5 +1,6 @@
 class PeriodesController < ApplicationController
-  before_action :set_periode, only: %i[ show edit update destroy ]
+  before_action :set_periode, only: %i[show edit update destroy]
+  protect_from_forgery except: :new
 
   # GET /periodes or /periodes.json
   def index
@@ -7,17 +8,18 @@ class PeriodesController < ApplicationController
   end
 
   # GET /periodes/1 or /periodes/1.json
-  def show
-  end
+  def show; end
 
   # GET /periodes/new
   def new
     @periode = Periode.new
+    respond_to do |format|
+      format.js { render partial: 'form', locals: { periode: @periode } }
+    end
   end
 
   # GET /periodes/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /periodes or /periodes.json
   def create
@@ -58,13 +60,14 @@ class PeriodesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_periode
-      @periode = Periode.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def periode_params
-      params.require(:periode).permit(:tahun_awal, :tahun_akhir)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_periode
+    @periode = Periode.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def periode_params
+    params.require(:periode).permit(:tahun_awal, :tahun_akhir)
+  end
 end
