@@ -1,0 +1,125 @@
+<div class="tab-pane fade" id="spbe-external" role="tabpanel" aria-labelledby="spbe-external" tabindex="0">
+  <table class="table align-items-center table-bordered">
+    <thead class="thead-light">
+      <tr>
+        <th class="border text-center" rowspan="2" scope="col">No</th>
+        <th class="border text-center" rowspan="2" scope="col">Urusan</th>
+        <th class="border text-center" rowspan="2" scope="col">Program</th>
+        <th class="border text-center" rowspan="2" scope="col">OPD Pengusul</th>
+        <th class="border text-center" rowspan="2" scope="col">Jenis Pelayanan</th>
+        <th class="border text-center" rowspan="2" scope="col">Pemillik Aplikasi</th>
+        <th class="border text-center" rowspan="2" scope="col">Aplikasi</th>
+        <th class="border text-center" rowspan="2" scope="col">Output Aplikasi</th>
+        <th class="border text-center" rowspan="2" scope="col">Terintegrasi Dengan</th>
+        <th class="border text-center" rowspan="2" scope="col">Sasaran Kinerja Tactical</th>
+        <th class="border text-center" rowspan="2" scope="col">Domain SPBE</th>
+        <th class="border text-center" rowspan="2" scope="col">Kebutuhan SPBE</th>
+        <th class="border text-center" rowspan="2" scope="col">Detail Kebutuhan</th>
+        <th class="border text-center" rowspan="2" scope="col">Sasaran Kinerja Operasional</th>
+        <th class="border text-center" rowspan="2" scope="col">Detail Sasaran Kinerja</th>
+        <th class="border text-center" rowspan="2" scope="col">Indikator</th>
+        <th class="border text-center" rowspan="2" scope="col">Target</th>
+        <th class="border text-center" rowspan="2" scope="col">Satuan</th>
+        <th class="border text-center" rowspan="2" scope="col">Anggaran</th>
+        <th class="border text-center" rowspan="2" scope="col">SubKegiatan</th>
+        <th class="border text-center" colspan= "5" scope="col">Tahun Pelaksanaan</th>
+        <th class="border text-center" rowspan="2" scope="col">OPD Pelaksana</th>
+        <th class="border text-center" rowspan="2" scope="col">Keterangan</th>
+        <th class="border text-center" rowspan="2" scope="col">Action</th>
+      </tr>
+      <tr>
+        <% (2020..2024).each do |tahun| %>
+          <th class="border text-center" scope="col"><%= tahun %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="border fw-bolder" colspan="27">External</td>
+      </tr>
+      <% @spbes_external.each.with_index(1) do |(program, spbes), i| %>
+        <tr>
+          <td class="border fw-bolder" rowspan="<%= rowspan_spbe(spbes) %>"><%= i %></td>
+          <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_spbe(spbes) %>"><%= program.nama_urusan %></td>
+          <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_spbe(spbes) %>"><%= program.nama_program %></td>
+        </tr>
+        <% spbes.each do |spbe| %>
+          <% rowspan_sas = spbe.spbe_rincians.length + 1 %>
+          <tr>
+            <td class="border fw-bolder" rowspan="<%= rowspan_sas %>">
+              <%= spbe.opd.nama_opd %>
+            </td>
+            <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
+              <%= spbe.jenis_pelayanan %>
+            </td>
+            <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
+              <%= spbe.pemilik_aplikasi %>
+            </td>
+            <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
+              <%= spbe.nama_aplikasi %>
+            </td>
+            <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
+              <%= spbe.output_aplikasi %>
+            </td>
+            <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
+              <%= spbe.terintegrasi_dengan %>
+            </td>
+            <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
+              <%= spbe.sasaran.sasaran_kinerja %>
+            </td>
+          </tr>
+          <% spbe.spbe_rincians.each do |rincian| %>
+            <% sas_kasi = rincian.sasaran %>
+            <tr class="spbe">
+              <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.domain_spbe %></td>
+              <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.kebutuhan_spbe %></td>
+              <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.detail_kebutuhan %></td>
+              <td class="border text-wrap spbe-kebutuhan" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= sas_kasi&.sasaran_kinerja %></td>
+              <td class="border text-wrap spbe-kebutuhan" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.detail_sasaran_kinerja %></td>
+              <%= indikator_sasaran(sas_kasi) %>
+              <td class="border spbe-kebutuhan" rowspan="<%= rowspan_sasaran(sas_kasi) %>">Rp. <%= number_with_delimiter(sas_kasi&.anggaran_spbe) %></td>
+              <td class="border text-wrap spbe-kebutuhan" rowspan="<%= rowspan_sasaran(sas_kasi) %>" data-subkegiatan="<%= sas_kasi&.subkegiatan&.downcase %>"><%= sas_kasi&.subkegiatan %></td>
+              <% (2020..2024).each do |th| %>
+                <% tah = rincian.tahun_awal == th.to_s ? "success" : '' %>
+                <% tah_ak = rincian.tahun_akhir == th.to_s ? "success" : '' %>
+                <td class="text-center" rowspan="<%= rowspan_sasaran(sas_kasi) %>" data-tahun-pelaksanaan="<%= tah %>"  data-tahun-akhir-pelaksanaan="<%= tah_ak %>"></td>
+              <% end %>
+              <td class="border" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.opd&.nama_opd %></td>
+              <td class="border" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.keterangan %></td>
+              <td class="border" rowspan="<%= rowspan_sasaran(sas_kasi) %>">
+                <div class="d-grid gap-2">
+                  <% if rincian.kode_opd == @kode_opd %>
+                    <%= link_to edit_operational_opd_spbe_path(rincian,program_id: program.id), target: "_blank", rel: "nofollow",
+                                         class: "btn btn-sm btn-outline-primary" do %>
+                      Edit Rincian SPBE
+                    <% end %>
+                  <% end %>
+                  <% if spbe.kode_opd == @kode_opd %>
+                    <hr/>
+                    <%= link_to edit_spbe_path(spbe,program_id: program.id), target: "_blank", rel: "nofollow",
+                                         class: "btn btn-sm btn-outline-info" do %>
+                      Edit SPBE
+                    <% end %>
+                    <%= link_to spbe_path(spbe), method: :delete, data: {confirm_swal: "Hapus SPBE Layanan '#{spbe.jenis_pelayanan}' ?"},
+                                         class: "btn btn-sm btn-outline-danger" do %>
+                      Hapus SPBE
+                    <% end %>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+            <% unless sas_kasi.nil? %>
+              <% sas_kasi.indikator_sasarans.drop(1).each do |indikator_s| %>
+                <tr>
+                  <td class="border text-wrap"><%= indikator_s.indikator_kinerja %></td>
+                  <td class="border text-wrap"><%= indikator_s.target %></td>
+                  <td class="border text-wrap"><%= indikator_s.satuan %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
