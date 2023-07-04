@@ -1,0 +1,72 @@
+<%= content_for :html_title, "Master Tahun" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Data Master</li>
+  <li class="breadcrumb-item active" aria-current="page">Master Tahun</li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="card border-0 shadow">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h2 class="fs-5 fw-bold mb-0">Master Tahun</h2>
+        </div>
+        <div class="col text-end">
+          <%= link_to new_tahun_path,
+              remote: true, class: 'btn btn-sm btn-primary',
+              data: { controller: 'form-modal',
+                      form_modal_location_param: 'form-tahun-body',
+                      action: 'form-modal#appendForm',
+                      bs_toggle: 'modal',
+                      bs_target: '#form-tahun',
+              } do %>
+            <i class="fas fa-plus me-2"></i>
+            <span>Tambah Tahun Baru</span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table datatable" data-datatable>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Tahun</th>
+              <th>Periode</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @tahuns.each.with_index(1) do |tahun, i| %>
+              <tr>
+                <td><%= i %></td>
+                <td><%= tahun.tahun %></td>
+                <td><%= tahun.periode %></td>
+                <td class="text-center">
+                    <%= link_to tahun, class: 'btn btn-outline-success' do %>
+                      <i class="fas fa-eye me-2"></i>
+                      <span>View Tahun</span>
+                    <% end %>
+                    <%= link_to edit_tahun_path(tahun), remote: true,
+                     data: { bs_toggle: 'modal', bs_target: '#form-tahun' },
+                     class: 'btn btn-outline-info' do %>
+                      <i class="fa fa-edit me-2"></i>
+                      <span>Edit Tahun</span>
+                    <% end %>
+                    <%= link_to tahun,
+                      method: :delete,
+                      class: 'btn btn-outline-danger',
+                      data: { confirm_swal: "Hapus tahun #{tahun}?" } do %>
+                      <i class="fa fa-trash-alt me-2"></i>
+                      <span>Hapus Tahun</span>
+                    <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <%= render 'shared/modal_template', modal_name: 'tahun' %>
+<% end %>

@@ -1744,6 +1744,38 @@ ALTER SEQUENCE public.perhitungans_id_seq OWNED BY public.perhitungans.id;
 
 
 --
+-- Name: periodes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.periodes (
+    id bigint NOT NULL,
+    tahun_awal character varying,
+    tahun_akhir character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: periodes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.periodes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: periodes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.periodes_id_seq OWNED BY public.periodes.id;
+
+
+--
 -- Name: permasalahans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2746,6 +2778,38 @@ ALTER SEQUENCE public.tahapans_id_seq OWNED BY public.tahapans.id;
 
 
 --
+-- Name: tahuns; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.tahuns (
+    id bigint NOT NULL,
+    tahun character varying,
+    periode_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: tahuns_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.tahuns_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: tahuns_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.tahuns_id_seq OWNED BY public.tahuns.id;
+
+
+--
 -- Name: tematik_sasarans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3295,6 +3359,13 @@ ALTER TABLE ONLY public.perhitungans ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: periodes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.periodes ALTER COLUMN id SET DEFAULT nextval('public.periodes_id_seq'::regclass);
+
+
+--
 -- Name: permasalahans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3446,6 +3517,13 @@ ALTER TABLE ONLY public.sumber_danas ALTER COLUMN id SET DEFAULT nextval('public
 --
 
 ALTER TABLE ONLY public.tahapans ALTER COLUMN id SET DEFAULT nextval('public.tahapans_id_seq'::regclass);
+
+
+--
+-- Name: tahuns id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tahuns ALTER COLUMN id SET DEFAULT nextval('public.tahuns_id_seq'::regclass);
 
 
 --
@@ -3859,6 +3937,14 @@ ALTER TABLE ONLY public.perhitungans
 
 
 --
+-- Name: periodes periodes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.periodes
+    ADD CONSTRAINT periodes_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: permasalahans permasalahans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4040,6 +4126,14 @@ ALTER TABLE ONLY public.sumber_danas
 
 ALTER TABLE ONLY public.tahapans
     ADD CONSTRAINT tahapans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tahuns tahuns_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tahuns
+    ADD CONSTRAINT tahuns_pkey PRIMARY KEY (id);
 
 
 --
@@ -4977,6 +5071,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230625201240'),
 ('20230626073842'),
 ('20230626073956'),
-('20230703014757');
+('20230703014757'),
+('20230704044308'),
+('20230704044536');
 
 

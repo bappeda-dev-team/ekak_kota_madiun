@@ -1,0 +1,72 @@
+<%= content_for :html_title, "Master Tahun" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Data Master</li>
+  <li class="breadcrumb-item active" aria-current="page">Master Periode</li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="card border-0 shadow">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h2 class="fs-5 fw-bold mb-0">Master Periode</h2>
+        </div>
+        <div class="col text-end">
+          <%= link_to new_periode_path,
+              remote: true, class: 'btn btn-sm btn-primary',
+              data: { controller: 'form-modal',
+                      form_modal_location_param: 'form-periode-body',
+                      action: 'form-modal#appendForm',
+                      bs_toggle: 'modal',
+                      bs_target: '#form-periode',
+              } do %>
+            <i class="fas fa-plus me-2"></i>
+            <span>Tambah Periode Baru</span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table datatable" data-datatable>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Tahun awal</th>
+              <th>Tahun akhir</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @periodes.each.with_index(1) do |periode, i| %>
+              <tr>
+                <td><%= i %></td>
+                <td><%= periode.tahun_awal %></td>
+                <td><%= periode.tahun_akhir %></td>
+                <td class="text-center">
+                  <%= link_to periode, class: 'btn btn-outline-success' do %>
+                    <i class="fas fa-eye me-2"></i>
+                    <span>View Periode</span>
+                  <% end %>
+                  <%= link_to edit_periode_path(periode), remote: true,
+                   data: { bs_toggle: 'modal', bs_target: '#form-periode' },
+                   class: 'btn btn-outline-info' do %>
+                    <i class="fa fa-edit me-2"></i>
+                    <span>Edit Periode</span>
+                  <% end %>
+                  <%= link_to periode,
+                      method: :delete,
+                      class: 'btn btn-outline-danger',
+                      data: { confirm_swal: "Hapus periode #{periode}?" } do %>
+                    <i class="fa fa-trash-alt me-2"></i>
+                    <span>Hapus Periode</span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <%= render 'shared/modal_template', modal_name: 'periode' %>
+<% end %>
