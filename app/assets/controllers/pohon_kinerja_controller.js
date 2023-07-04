@@ -10,11 +10,13 @@
 import { Controller } from "stimulus"
 import { saveAs } from "file-saver"
 import html2canvas from "html2canvas"
+import ScrollBooster from 'scrollbooster';
+
 
 import 'd3-mitch-tree/dist/css/d3-mitch-tree-theme-default.min.css'
 
 export default class extends Controller {
-        static targets = ["pokin", "buttonToggle", "pokinKota", "cetak"]
+        static targets = ["pokin", "buttonToggle", "pokinKota", "cetak", "field", "content"]
 
         static values = {
                 opd: Number,
@@ -23,6 +25,16 @@ export default class extends Controller {
                 url: String,
                 namaOpd: String,
                 tahun: String
+        }
+
+        fieldTargetConnected(element) {
+                new ScrollBooster({
+                        viewport: element,
+                        content: this.contentTarget,
+                        textSelection: true,
+                        direction: 'horizontal',
+                        scrollMode: 'transform'
+                        });
         }
 
         togglePokin() {
