@@ -14,7 +14,7 @@ class SpbesController < ApplicationController
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @spbes_external = Spbe.by_opd_tujuan(@kode_opd).group_by(&:program_kegiatan)
     @programs = @opd.program_kegiatans.programs
-    @spbes = @programs.to_h { |prg| [prg, prg.spbes.by_opd_tujuan(@kode_opd)] }
+    @spbes = @programs.to_h { |prg| [prg, prg.spbes.by_opd(@kode_opd)] }
   end
 
   def new
