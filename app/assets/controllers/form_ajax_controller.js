@@ -1,10 +1,39 @@
 import { Controller } from 'stimulus'
 import { Modal } from 'bootstrap'
 import Swal from "sweetalert2";
-
+import Turbolinks from "turbolinks";
 
 export default class extends Controller {
   static targets = ["errorContainer", "button"]
+
+  afterSubmitRefresh(event) {
+    const [xhr, status] = event.detail
+    if(status == 'OK' || status == 'Created' ) {
+      Swal.fire({
+        title: 'Sukses',
+        text: status,
+        icon: "success",
+        confirmButtonText: 'Ok',
+      }).then(() => {
+      Turbolinks.visit(window.location, { action: "replace" })
+      })
+    }
+    else {
+      const errors = JSON.parse(xhr.response)
+      this.errorContainerTargets.forEach((errorContainer) => {
+        const errorType = errorContainer.dataset.errorType
+        if(errors.hasOwnProperty(errorType)) {
+          errorContainer.previousElementSibling.classList.add('is-invalid')
+          errorContainer.innerHTML = errors[errorType]
+          errorContainer.style.display = 'inline'
+        } else {
+          errorContainer.style.display = 'none'
+        }
+      })
+      this.sweetalertStatus('terjadi kesalahan', 'error')
+    }
+  }
+
   successResponse(event) {
     // event.preventDefault()
     const [message, status, xhr] = event.detail

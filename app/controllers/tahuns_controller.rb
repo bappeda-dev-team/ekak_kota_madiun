@@ -3,7 +3,7 @@ class TahunsController < ApplicationController
 
   # GET /tahuns or /tahuns.json
   def index
-    @tahuns = Tahun.all
+    @tahuns = Tahun.all.order(:tahun)
   end
 
   # GET /tahuns/1 or /tahuns/1.json
@@ -26,27 +26,19 @@ class TahunsController < ApplicationController
   def create
     @tahun = Tahun.new(tahun_params)
 
-    respond_to do |format|
-      if @tahun.save
-        format.html { redirect_to tahun_url(@tahun), notice: "Tahun was successfully created." }
-        format.json { render :show, status: :created, location: @tahun }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @tahun.errors, status: :unprocessable_entity }
-      end
+    if @tahun.save
+      render json: @tahun, status: :created
+    else
+      render json: @tahun.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /tahuns/1 or /tahuns/1.json
   def update
-    respond_to do |format|
-      if @tahun.update(tahun_params)
-        format.html { redirect_to tahun_url(@tahun), notice: "Tahun was successfully updated." }
-        format.json { render :show, status: :ok, location: @tahun }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @tahun.errors, status: :unprocessable_entity }
-      end
+    if @tahun.update(tahun_params)
+      render json: @tahun, status: :ok
+    else
+      render json: @tahun.errors, status: :unprocessable_entity
     end
   end
 
@@ -55,7 +47,7 @@ class TahunsController < ApplicationController
     @tahun.destroy
 
     respond_to do |format|
-      format.html { redirect_to tahuns_url, notice: "Tahun dihapus." }
+      format.html { redirect_to tahuns_url, warning: "Tahun dihapus." }
       format.json { head :no_content }
     end
   end
