@@ -11,7 +11,7 @@
 class Tahun < ApplicationRecord
   belongs_to :periode
 
-  validates :tahun, presence: true, inclusion: { in: 2019..2055 }
+  validates :tahun, presence: true, inclusion: { in: (2019..2055).map(&:to_s) }
   validates_uniqueness_of :tahun
 
   def to_s

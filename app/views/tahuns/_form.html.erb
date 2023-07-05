@@ -1,4 +1,6 @@
-<%= form_with(model: tahun) do |form| %>
+<%= form_with(model: tahun, local: false,
+             data: { controller: 'form-ajax',
+                    action: 'ajax:complete->form-ajax#afterSubmitRefresh'}) do |form| %>
   <% if tahun.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(tahun.errors.count, "error") %> prohibited this tahun from being saved:</h2>
@@ -19,14 +21,16 @@
          controller: 'dropdown',
          dropdown_jenis_value: 'ajax_preselect',
          dropdown_item_value: form.object.periode_id,
-         dropdown_url_value: periodes_path(format: :json),
+         dropdown_url_value: periodes_path(format: :json)
        }
      } %>
+    <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="periode"></p>
   </div>
 
   <div class="field">
     <%= form.label :tahun, class: 'form-label' %>
     <%= form.text_field :tahun, class: 'form-control' %>
+    <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="tahun"></p>
   </div>
 
   <div class="actions">
