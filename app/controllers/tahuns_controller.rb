@@ -4,6 +4,9 @@ class TahunsController < ApplicationController
   # GET /tahuns or /tahuns.json
   def index
     @tahuns = Tahun.all.order(:tahun)
+    return unless params[:item]
+
+    @tahuns = Tahun.where(tahun: params[:item])
   end
 
   # GET /tahuns/1 or /tahuns/1.json
