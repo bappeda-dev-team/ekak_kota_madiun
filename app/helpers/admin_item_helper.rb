@@ -117,7 +117,7 @@ module AdminItemHelper
         icon: 'fas fa-building', identifier: 'opds/info'
       },
       {
-        title: 'SPBE', href: index_opd_spbes_path,
+        title: 'Peta Rencana SPBE', href: index_opd_spbes_path,
         icon: 'fas fa-tablet-alt', identifier: 'spbe_opd'
       }
     ]

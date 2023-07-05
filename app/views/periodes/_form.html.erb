@@ -1,4 +1,6 @@
-<%= form_with(model: periode) do |form| %>
+<%= form_with(model: periode, local: false,
+              data: { controller: 'form-ajax',
+                      action: 'ajax:complete->form-ajax#afterSubmitRefresh'}) do |form| %>
   <% if periode.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(periode.errors.count, "error") %> prohibited this periode from being saved:</h2>
@@ -14,11 +16,13 @@
   <div class="field">
     <%= form.label :tahun_awal, class: 'form-label' %>
     <%= form.text_field :tahun_awal, class: 'form-control' %>
+    <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="tahun_awal"></p>
   </div>
 
   <div class="field">
     <%= form.label :tahun_akhir, class: 'form-label' %>
     <%= form.text_field :tahun_akhir, class: 'form-control' %>
+    <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="tahun_akhir"></p>
   </div>
 
   <div class="actions">
