@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nama bidang:</strong>
+  <%= @opd_bidang.nama_bidang %>
+</p>
+
+<p>
+  <strong>Opd:</strong>
+  <%= @opd_bidang.opd_id %>
+</p>
+
+<p>
+  <strong>Kode unik opd:</strong>
+  <%= @opd_bidang.kode_unik_opd %>
+</p>
+
+<p>
+  <strong>Kode unik bidang:</strong>
+  <%= @opd_bidang.kode_unik_bidang %>
+</p>
+
+<p>
+  <strong>Tahun:</strong>
+  <%= @opd_bidang.tahun %>
+</p>
+
+<p>
+  <strong>Nip kepala:</strong>
+  <%= @opd_bidang.nip_kepala %>
+</p>
+
+<p>
+  <strong>Pangkat kepala:</strong>
+  <%= @opd_bidang.pangkat_kepala %>
+</p>
+
+<p>
+  <strong>Id daerah:</strong>
+  <%= @opd_bidang.id_daerah %>
+</p>
+
+<p>
+  <strong>Lembaga:</strong>
+  <%= @opd_bidang.lembaga_id %>
+</p>
+
+<%= link_to 'Edit', edit_opd_bidang_path(@opd_bidang) %> |
+<%= link_to 'Back', opd_bidangs_path %>

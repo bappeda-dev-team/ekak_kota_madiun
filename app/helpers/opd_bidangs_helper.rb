@@ -1,0 +1,2 @@
+module OpdBidangsHelper
+end

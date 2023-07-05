@@ -1,0 +1,76 @@
+<%= form_with(model: opd_bidang, local: false,
+             data: { controller: 'form-ajax',
+                    action: 'ajax:complete->form-ajax#afterSubmitRefresh'}) do |form| %>
+  <% if opd_bidang.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(opd_bidang.errors.count, "error") %> prohibited this opd_bidang from being saved:</h2>
+      <ul>
+        <% opd_bidang.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :nama_bidang, class: 'form-label' %>
+    <%= form.text_field :nama_bidang, class: 'form-control' %>
+    <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="nama_bidang"></p>
+  </div>
+  <div class="field">
+    <%= form.label :opd_id, class: 'form-label' %>
+    <%= form.select :opd_id, [], {include_blank: true},
+     { class: 'form-control',
+       data: { placeholder: "OPD",
+               controller: 'dropdown',
+               dropdown_jenis_value: 'ajax_preselect',
+               dropdown_parent_value: '#form-bidang-body',
+               dropdown_url_value: opds_path(:json),
+               dropdown_item_value: form.object.opd_id
+             }
+     } %>
+    <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="opd"></p>
+  </div>
+  <div class="field">
+    <%= form.label :kode_unik_opd, class: 'form-label' %>
+    <%= form.text_field :kode_unik_opd, class: 'form-control' %>
+    <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="kode_unik_opd"></p>
+  </div>
+  <div class="field">
+    <%= form.label :kode_unik_bidang, class: 'form-label' %>
+    <%= form.text_field :kode_unik_bidang, class: 'form-control' %>
+    <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="kode_unik_bidang"></p>
+  </div>
+  <div class="field">
+    <%= form.label :tahun, class: 'form-label' %>
+    <%= form.select :tahun, [], {include_blank: true},
+     { class: 'form-control',
+       data: {
+        placeholder: "Tahun",
+        controller: 'dropdown',
+        dropdown_jenis_value: 'ajax_preselect',
+        dropdown_parent_value: '#form-bidang-body',
+        dropdown_item_value: form.object.tahun,
+        dropdown_url_value: tahuns_path(format: :json)
+       }
+     } %>
+    <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="tahun"></p>
+  </div>
+  <div class="field">
+    <%= form.label :nip_kepala, class: 'form-label' %>
+    <%= form.text_field :nip_kepala, class: 'form-control' %>
+    <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="nip_kepala"></p>
+  </div>
+  <div class="field">
+    <%= form.label :pangkat_kepala, class: 'form-label' %>
+    <%= form.text_field :pangkat_kepala, class: 'form-control' %>
+    <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="pangkat_kepala"></p>
+  </div>
+  <div class="field">
+    <%= form.label :lembaga_id, class: 'form-label' %>
+    <%= form.text_field :lembaga_id, class: 'form-control' %>
+    <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="lembaga"></p>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

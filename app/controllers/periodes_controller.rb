@@ -35,14 +35,10 @@ class PeriodesController < ApplicationController
 
   # PATCH/PUT /periodes/1 or /periodes/1.json
   def update
-    respond_to do |format|
-      if @periode.update(periode_params)
-        format.html { redirect_to periode_url(@periode), notice: "Periode was successfully updated." }
-        format.json { render :show, status: :ok, location: @periode }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @periode.errors, status: :unprocessable_entity }
-      end
+    if @periode.update(periode_params)
+      render json: @periode, status: :ok
+    else
+      render json: @periode.errors, status: :unprocessable_entity
     end
   end
 
@@ -51,7 +47,7 @@ class PeriodesController < ApplicationController
     @periode.destroy
 
     respond_to do |format|
-      format.html { redirect_to periodes_url, notice: "Periode was successfully destroyed." }
+      format.html { redirect_to periodes_url, warning: "Periode was successfully destroyed." }
       format.json { head :no_content }
     end
   end

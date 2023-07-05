@@ -1,0 +1,86 @@
+<%= content_for :html_title, "Master Bidang OPD" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Data Master</li>
+  <li class="breadcrumb-item active" aria-current="page">Master Bidang OPD</li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="card border-0 shadow">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h2 class="fs-5 fw-bold mb-0">Master Bidang OPD</h2>
+        </div>
+        <div class="col text-end">
+          <%= link_to new_opd_bidang_path,
+              remote: true, class: 'btn btn-sm btn-primary',
+              data: { controller: 'form-modal',
+                      form_modal_location_param: 'form-bidang-body',
+                      action: 'form-modal#appendForm',
+                      bs_toggle: 'modal',
+                      bs_target: '#form-bidang',
+              } do %>
+            <i class="fas fa-plus me-2"></i>
+            <span>Tambah Bidang Baru</span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table datatable" data-datatable>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama bidang</th>
+              <th>Opd</th>
+              <th>Kode unik opd</th>
+              <th>Kode unik bidang</th>
+              <th>Tahun</th>
+              <th>Nip kepala</th>
+              <th>Pangkat kepala</th>
+              <th>Id daerah</th>
+              <th>Lembaga</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @opd_bidangs.each.with_index(1) do |opd_bidang, i| %>
+              <tr>
+                <td><%= i %></td>
+                <td><%= opd_bidang.nama_bidang %></td>
+                <td><%= opd_bidang.opd_id %></td>
+                <td><%= opd_bidang.kode_unik_opd %></td>
+                <td><%= opd_bidang.kode_unik_bidang %></td>
+                <td><%= opd_bidang.tahun %></td>
+                <td><%= opd_bidang.nip_kepala %></td>
+                <td><%= opd_bidang.pangkat_kepala %></td>
+                <td><%= opd_bidang.id_daerah %></td>
+                <td><%= opd_bidang.lembaga_id %></td>
+                <td class="text-center">
+                  <%= link_to opd_bidang, class: 'btn btn-outline-success' do %>
+                    <i class="fas fa-eye me-2"></i>
+                    <span>View Bidang</span>
+                  <% end %>
+                  <%= link_to edit_opd_bidang_path(opd_bidang), remote: true,
+                     data: { bs_toggle: 'modal', bs_target: '#form-tahun' },
+                     class: 'btn btn-outline-info' do %>
+                    <i class="fa fa-edit me-2"></i>
+                    <span>Edit Bidang</span>
+                  <% end %>
+                  <%= link_to opd_bidang,
+                      method: :delete,
+                      class: 'btn btn-outline-danger',
+                      data: { confirm_swal: "Hapus Bidang #{opd_bidang}?" } do %>
+                    <i class="fa fa-trash-alt me-2"></i>
+                    <span>Hapus Tahun</span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <%= render 'shared/modal_template', modal_name: 'bidang' %>
+<% end %>

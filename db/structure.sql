@@ -1552,6 +1552,45 @@ ALTER SEQUENCE public.musrenbangs_id_seq OWNED BY public.musrenbangs.id;
 
 
 --
+-- Name: opd_bidangs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.opd_bidangs (
+    id bigint NOT NULL,
+    nama_bidang character varying,
+    opd_id bigint,
+    kode_unik_opd character varying,
+    kode_unik_bidang character varying,
+    tahun character varying,
+    nip_kepala character varying,
+    pangkat_kepala character varying,
+    id_daerah character varying,
+    lembaga_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: opd_bidangs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.opd_bidangs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: opd_bidangs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.opd_bidangs_id_seq OWNED BY public.opd_bidangs.id;
+
+
+--
 -- Name: opds; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1573,7 +1612,8 @@ CREATE TABLE public.opds (
     status_kepala character varying,
     tahun character varying,
     id_daerah character varying,
-    pangkat_kepala character varying
+    pangkat_kepala character varying,
+    id_bidang integer
 );
 
 
@@ -3324,6 +3364,13 @@ ALTER TABLE ONLY public.musrenbangs ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: opd_bidangs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.opd_bidangs ALTER COLUMN id SET DEFAULT nextval('public.opd_bidangs_id_seq'::regclass);
+
+
+--
 -- Name: opds id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3894,6 +3941,14 @@ ALTER TABLE ONLY public.master_urusans
 
 ALTER TABLE ONLY public.musrenbangs
     ADD CONSTRAINT musrenbangs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: opd_bidangs opd_bidangs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.opd_bidangs
+    ADD CONSTRAINT opd_bidangs_pkey PRIMARY KEY (id);
 
 
 --
@@ -5073,6 +5128,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230626073956'),
 ('20230703014757'),
 ('20230704044308'),
-('20230704044536');
+('20230704044536'),
+('20230705022225'),
+('20230705022937');
 
 
