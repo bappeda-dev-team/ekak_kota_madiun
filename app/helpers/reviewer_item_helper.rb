@@ -45,6 +45,6 @@ module ReviewerItemHelper
                    '\blaporans\/laporan_usulan|' \
                    '\blaporans\/laporan_kak|\blaporans\/laporan_rka|' \
                    '\blaporans\/renstra|\blaporans\/ranwal|' \
-                   '\blaporans\/rankir1|\blaporans\/rankir2|\blaporans\/penetapan|)')
+                   '\blaporans\/rankir1|\blaporans\/rankir2|\blaporans\/penetapan)')
   end
 end

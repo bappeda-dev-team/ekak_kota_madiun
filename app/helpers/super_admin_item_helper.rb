@@ -105,6 +105,6 @@ module SuperAdminItemHelper
                    '\btujuan_kota|\bisu_strategis_kota|' \
                    '\bstrategi_kota|\bsasaran_kota|' \
                    '\bpohon_kinerja\/kota|' \
-                   '\bpohon_kinerja\/rekap|)')
+                   '\bpohon_kinerja\/rekap)')
   end
 end
