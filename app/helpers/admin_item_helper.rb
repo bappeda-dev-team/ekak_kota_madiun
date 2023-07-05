@@ -45,7 +45,7 @@ module AdminItemHelper
                    '\busulan_pokpir|\busulan_mandatori|' \
                    '\bpohon_kinerja/asn|' \
                    '\brencana_kinerja|\brincian_belanja|' \
-                   '\bsasaran_program_opds/daftar_resiko|)')
+                   '\bsasaran_program_opds/daftar_resiko)')
   end
 
   def laporan_items # rubocop:disable Metrics/MethodLength
@@ -88,7 +88,7 @@ module AdminItemHelper
                    '\blaporans\/laporan_usulan|\blaporans\/laporan_pohon|' \
                    '\blaporans\/laporan_kak|\blaporans\/laporan_rka|' \
                    '\brenstra|\brenja\/ranwal|' \
-                   '\brenja\/rankir|\brenja\/penetapan|)')
+                   '\brenja\/rankir|\brenja\/penetapan)')
   end
 
   def perencanaan_opd_items
