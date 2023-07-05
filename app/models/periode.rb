@@ -11,6 +11,9 @@
 class Periode < ApplicationRecord
   has_many :tahuns
 
+  validates_uniqueness_of :tahun_awal
+  validates_uniqueness_of :tahun_akhir
+
   def to_s
     "#{tahun_awal}-#{tahun_akhir}"
   end

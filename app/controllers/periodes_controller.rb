@@ -26,14 +26,10 @@ class PeriodesController < ApplicationController
   def create
     @periode = Periode.new(periode_params)
 
-    respond_to do |format|
-      if @periode.save
-        format.html { redirect_to periode_url(@periode), notice: "Periode was successfully created." }
-        format.json { render :show, status: :created, location: @periode }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @periode.errors, status: :unprocessable_entity }
-      end
+    if @periode.save
+      render json: @periode, status: :created
+    else
+      render json: @periode.errors, status: :unprocessable_entity
     end
   end
 

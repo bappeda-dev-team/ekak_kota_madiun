@@ -67,7 +67,6 @@ module SuperAdminItemHelper
                    '\blist_all|\btematiks|' \
                    '\bperiodes|\btahuns|' \
                    '\bkelompok_anggarans|' \
-                   '\bspbes|' \
                    '\badminsasarans|\busers\/khusus)')
   end
 
