@@ -4,6 +4,7 @@
 #
 #  id                 :bigint           not null, primary key
 #  bidang_urusan      :string
+#  id_bidang          :integer
 #  id_daerah          :string
 #  id_opd_skp         :integer
 #  kode_bidang_urusan :string

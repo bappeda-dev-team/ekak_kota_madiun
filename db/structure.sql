@@ -1552,6 +1552,45 @@ ALTER SEQUENCE public.musrenbangs_id_seq OWNED BY public.musrenbangs.id;
 
 
 --
+-- Name: opd_bidangs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.opd_bidangs (
+    id bigint NOT NULL,
+    nama_bidang character varying,
+    opd_id bigint,
+    kode_unik_opd character varying,
+    kode_unik_bidang character varying,
+    tahun character varying,
+    nip_kepala character varying,
+    pangkat_kepala character varying,
+    id_daerah character varying,
+    lembaga_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: opd_bidangs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.opd_bidangs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: opd_bidangs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.opd_bidangs_id_seq OWNED BY public.opd_bidangs.id;
+
+
+--
 -- Name: opds; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1573,7 +1612,8 @@ CREATE TABLE public.opds (
     status_kepala character varying,
     tahun character varying,
     id_daerah character varying,
-    pangkat_kepala character varying
+    pangkat_kepala character varying,
+    id_bidang integer
 );
 
 
@@ -2462,7 +2502,8 @@ CREATE TABLE public.spbe_rincians (
     tahun_pelaksanaan character varying,
     tahun_awal character varying,
     tahun_akhir character varying,
-    domain_spbe character varying
+    domain_spbe character varying,
+    subdomain_spbe character varying
 );
 
 
@@ -2501,7 +2542,10 @@ CREATE TABLE public.spbes (
     updated_at timestamp(6) without time zone NOT NULL,
     output_aplikasi character varying,
     terintegrasi_dengan character varying,
-    pemilik_aplikasi character varying
+    pemilik_aplikasi character varying,
+    output_data character varying,
+    output_informasi character varying,
+    output_cetak character varying
 );
 
 
@@ -2666,6 +2710,41 @@ CREATE SEQUENCE public.strategis_id_seq
 --
 
 ALTER SEQUENCE public.strategis_id_seq OWNED BY public.strategis.id;
+
+
+--
+-- Name: subdomains; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.subdomains (
+    id bigint NOT NULL,
+    subdomain character varying,
+    domain_id bigint,
+    kode_subdomain character varying,
+    keterangan character varying,
+    tahun character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: subdomains_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.subdomains_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: subdomains_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.subdomains_id_seq OWNED BY public.subdomains.id;
 
 
 --
@@ -3324,6 +3403,13 @@ ALTER TABLE ONLY public.musrenbangs ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: opd_bidangs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.opd_bidangs ALTER COLUMN id SET DEFAULT nextval('public.opd_bidangs_id_seq'::regclass);
+
+
+--
 -- Name: opds id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3496,6 +3582,13 @@ ALTER TABLE ONLY public.strategi_opds ALTER COLUMN id SET DEFAULT nextval('publi
 --
 
 ALTER TABLE ONLY public.strategis ALTER COLUMN id SET DEFAULT nextval('public.strategis_id_seq'::regclass);
+
+
+--
+-- Name: subdomains id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.subdomains ALTER COLUMN id SET DEFAULT nextval('public.subdomains_id_seq'::regclass);
 
 
 --
@@ -3897,6 +3990,14 @@ ALTER TABLE ONLY public.musrenbangs
 
 
 --
+-- Name: opd_bidangs opd_bidangs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.opd_bidangs
+    ADD CONSTRAINT opd_bidangs_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: opds opds_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4102,6 +4203,14 @@ ALTER TABLE ONLY public.strategi_opds
 
 ALTER TABLE ONLY public.strategis
     ADD CONSTRAINT strategis_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: subdomains subdomains_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.subdomains
+    ADD CONSTRAINT subdomains_pkey PRIMARY KEY (id);
 
 
 --
@@ -4584,6 +4693,13 @@ CREATE INDEX index_strategis_on_pohon_id ON public.strategis USING btree (pohon_
 
 
 --
+-- Name: index_subdomains_on_domain_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_subdomains_on_domain_id ON public.subdomains USING btree (domain_id);
+
+
+--
 -- Name: index_tahapans_on_id_rencana_aksi; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -4783,6 +4899,14 @@ ALTER TABLE ONLY public.dasar_hukums
 
 ALTER TABLE ONLY public.active_storage_variant_records
     ADD CONSTRAINT fk_rails_993965df05 FOREIGN KEY (blob_id) REFERENCES public.active_storage_blobs(id);
+
+
+--
+-- Name: subdomains fk_rails_9961ecd07c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.subdomains
+    ADD CONSTRAINT fk_rails_9961ecd07c FOREIGN KEY (domain_id) REFERENCES public.domains(id);
 
 
 --
@@ -5073,6 +5197,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230626073956'),
 ('20230703014757'),
 ('20230704044308'),
-('20230704044536');
+('20230704044536'),
+('20230705022225'),
+('20230705022937'),
+('20230706005016'),
+('20230706010916'),
+('20230706011239');
 
 

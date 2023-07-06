@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Subdomain:</strong>
+  <%= @subdomain.subdomain %>
+</p>
+
+<p>
+  <strong>Domain:</strong>
+  <%= @subdomain.domain_id %>
+</p>
+
+<p>
+  <strong>Kode subdomain:</strong>
+  <%= @subdomain.kode_subdomain %>
+</p>
+
+<p>
+  <strong>Keterangan:</strong>
+  <%= @subdomain.keterangan %>
+</p>
+
+<p>
+  <strong>Tahun:</strong>
+  <%= @subdomain.tahun %>
+</p>
+
+<%= link_to 'Edit', edit_subdomain_path(@subdomain) %> |
+<%= link_to 'Back', subdomains_path %>

@@ -3,7 +3,12 @@ class OpdsController < ApplicationController
   before_action :set_dropdown, only: %i[new edit]
 
   def index
-    @opds = Opd.all.includes([:lembaga])
+    param = params[:q] || ""
+
+    @opds = Opd.where("nama_opd ILIKE ?", "%#{param}%")
+    return unless params[:item]
+
+    @opds = Opd.where(id: params[:item])
   end
 
   def info

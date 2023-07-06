@@ -9,6 +9,8 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :subdomains
+  resources :opd_bidangs
   resources :periodes
   resources :tahuns
   resources :domains

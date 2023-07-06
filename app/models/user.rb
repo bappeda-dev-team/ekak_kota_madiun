@@ -343,4 +343,8 @@ class User < ApplicationRecord
       'staff' => User.staff.limit(10)
     }
   end
+
+  def opd_bidang_user
+    Opd.find_by(kode_opd: kode_opd, id_bidang: id_bidang)
+  end
 end

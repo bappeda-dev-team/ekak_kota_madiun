@@ -36,6 +36,10 @@ en:
         body: "komentar"
     errors:
       models:
+        spbe:
+          attributes:
+            strategi_ref_id:
+              format: "Sasaran Tactical %{message}"
         comment:
           attributes:
             body:
@@ -45,6 +49,9 @@ en:
     submit:
       create: "Simpan %{model}"
       update: "Simpan Perubahan %{model}"
+  errors:
+    messages:
+      blank: "tidak boleh kosong"
   date:
     abbr_day_names:
     - Min

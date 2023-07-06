@@ -12,6 +12,7 @@
 #  keterangan             :string
 #  kode_opd               :string
 #  kode_program           :string
+#  subdomain_spbe         :string
 #  tahun_akhir            :string
 #  tahun_awal             :string
 #  tahun_pelaksanaan      :string
