@@ -1,0 +1,42 @@
+<%= form_with(model: subdomain) do |form| %>
+  <% if subdomain.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(subdomain.errors.count, "error") %> prohibited this subdomain from being saved:</h2>
+
+      <ul>
+        <% subdomain.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :subdomain %>
+    <%= form.text_field :subdomain %>
+  </div>
+
+  <div class="field">
+    <%= form.label :domain_id %>
+    <%= form.text_field :domain_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kode_subdomain %>
+    <%= form.text_field :kode_subdomain %>
+  </div>
+
+  <div class="field">
+    <%= form.label :keterangan %>
+    <%= form.text_field :keterangan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tahun %>
+    <%= form.text_field :tahun %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

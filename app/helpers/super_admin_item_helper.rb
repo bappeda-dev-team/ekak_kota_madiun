@@ -52,6 +52,10 @@ module SuperAdminItemHelper
         icon: 'fas fa-project-diagram', identifier: 'domain'
       },
       {
+        title: 'Sub-domain SPBE', href: subdomains_path,
+        icon: 'fas fa-project-diagram', identifier: 'domain'
+      },
+      {
         title: 'Kebutuhan SPBE', href: kebutuhans_path,
         icon: 'fas fa-list', identifier: 'kebutuhan'
       }
