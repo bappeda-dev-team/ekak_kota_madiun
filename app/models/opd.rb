@@ -303,4 +303,20 @@ class Opd < ApplicationRecord
       .programs
       .map { |program| { program => program.sasarans_program(tahun) } }
   end
+
+  def find_sasaran_eselon3(sasaran_kinerja)
+    strategi_eselon3
+      .joins("INNER JOIN sasarans ON cast (sasarans.strategi_id as INT) = strategis.id")
+      .where("sasarans.sasaran_kinerja ILIKE ?", "%#{sasaran_kinerja}%")
+      .where.not(sasarans: { nip_asn: nil })
+      .map(&:sasaran)
+  end
+
+  def find_sasaran_eselon4(sasaran_kinerja)
+    strategi_eselon4
+      .joins("INNER JOIN sasarans ON cast (sasarans.strategi_id as INT) = strategis.id")
+      .where("sasarans.sasaran_kinerja ILIKE ?", "%#{sasaran_kinerja}%")
+      .where.not(sasarans: { nip_asn: nil })
+      .map(&:sasaran)
+  end
 end
