@@ -150,11 +150,7 @@ class OpdsController < ApplicationController
   def sasaran_tactical
     opd = Opd.find_by(kode_unik_opd: params[:kode_opd])
     sasaran_kinerja = params[:q]
-    @sasarans = opd.strategi_eselon3
-                   .joins("INNER JOIN sasarans ON cast (sasarans.strategi_id as INT) = strategis.id")
-                   .where("sasarans.sasaran_kinerja ILIKE ?", "%#{sasaran_kinerja}%")
-                   .map(&:sasaran)
-                   .uniq!(&:sasaran_kinerja)
+    @sasarans = opd.find_sasaran_eselon3(sasaran_kinerja)
     return unless params[:item]
 
     @sasarans = Sasaran.where(id: params[:item])
@@ -163,11 +159,7 @@ class OpdsController < ApplicationController
   def sasaran_operational
     opd = Opd.find_by(kode_unik_opd: params[:kode_opd])
     sasaran_kinerja = params[:q]
-    @sasarans = opd.strategi_eselon4
-                   .joins("INNER JOIN sasarans ON cast (sasarans.strategi_id as INT) = strategis.id")
-                   .where("sasarans.sasaran_kinerja ILIKE ?", "%#{sasaran_kinerja}%")
-                   .map(&:sasaran)
-                   .uniq!(&:sasaran_kinerja)
+    @sasarans = opd.find_sasaran_eselon4(sasaran_kinerja)
     return unless params[:item]
 
     @sasarans = Sasaran.where(id: params[:item])

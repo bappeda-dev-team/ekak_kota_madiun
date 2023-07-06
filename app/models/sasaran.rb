@@ -471,11 +471,11 @@ class Sasaran < ApplicationRecord
   end
 
   def sasaran_dan_indikator
-    "#{opd&.nama_opd} - #{sasaran_kinerja} - indikator: #{indikator_sasarans.pluck(:indikator_kinerja).flatten}"
+    "#{opd.nama_opd} - #{sasaran_kinerja} - indikator: #{indikator_sasarans.pluck(:indikator_kinerja).flatten}"
   end
 
   def sasaran_dan_indikator_dan_subkegiatan
-    "#{opd&.nama_opd} - #{sasaran_kinerja} - indikator: #{indikator_sasarans.pluck(:indikator_kinerja).flatten} - subkegiatan: #{subkegiatan}"
+    "#{opd.nama_opd} - #{sasaran_kinerja} - indikator: #{indikator_sasarans.pluck(:indikator_kinerja).flatten} - subkegiatan: #{subkegiatan}"
   end
 
   def anggaran_spbe
