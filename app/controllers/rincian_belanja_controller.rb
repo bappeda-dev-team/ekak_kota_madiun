@@ -3,7 +3,7 @@ class RincianBelanjaController < ApplicationController
   before_action :set_tahun
 
   def index
-    if current_user.eselon_atas?
+    if current_user.eselon_atas? && current_user.nik != '198011182011011003'
       redirect_to index_atasan_rincian_belanja_index_path
     else
       @subkegiatan_sasarans = @user.subkegiatan_sasarans_tahun(@tahun)
