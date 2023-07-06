@@ -117,8 +117,10 @@ class SpbesController < ApplicationController
                                  :output_informasi,
                                  :output_cetak,
                                  :pemilik_aplikasi,
-                                 spbe_rincians_attributes: %i[id detail_kebutuhan detail_sasaran_kinerja
+                                 spbe_rincians_attributes: %i[id detail_sasaran_kinerja
+                                                              detail_kebutuhan
                                                               domain_spbe
+                                                              subdomain_spbe
                                                               keterangan id_rencana kebutuhan_spbe
                                                               internal_external tahun_awal tahun_akhir
                                                               kode_opd kode_program _destroy])
