@@ -13,6 +13,7 @@
         <th class="border text-center" rowspan="2" scope="col">Terintegrasi Dengan</th>
         <th class="border text-center" rowspan="2" scope="col">Sasaran Kinerja Tactical</th>
         <th class="border text-center" rowspan="2" scope="col">Domain SPBE</th>
+        <th class="border text-center" rowspan="2" scope="col">Subdomain SPBE</th>
         <th class="border text-center" rowspan="2" scope="col">Kebutuhan SPBE</th>
         <th class="border text-center" rowspan="2" scope="col">Detail Kebutuhan</th>
         <th class="border text-center" rowspan="2" scope="col">Sasaran Kinerja Operasional</th>
@@ -83,6 +84,7 @@
             <% sas_kasi = rincian.sasaran %>
             <tr class="spbe">
               <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.domain_spbe %></td>
+              <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.subdomain_spbe %></td>
               <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.kebutuhan_spbe %></td>
               <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.detail_kebutuhan %></td>
               <td class="border text-wrap spbe-kebutuhan" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= sas_kasi&.sasaran_kinerja %></td>
