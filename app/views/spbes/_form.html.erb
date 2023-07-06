@@ -44,7 +44,19 @@
       </div>
       <div class="field">
         <%= form.label :output_aplikasi, {class: "form-label"} %>
-        <%= form.text_field :output_aplikasi, {class: "form-control", placeholder: "keluaran aplikasi"}%>
+        <%= form.text_field :output_aplikasi, {class: "form-control", placeholder: "keluaran aplikasi umum"}%>
+      </div>
+      <div class="field">
+        <%= form.label :output_data, {class: "form-label"} %>
+        <%= form.text_field :output_data, {class: "form-control", placeholder: "data yang dihasilkan aplikasi"}%>
+      </div>
+      <div class="field">
+        <%= form.label :output_informasi, {class: "form-label"} %>
+        <%= form.text_field :output_informasi, {class: "form-control", placeholder: "informasi yang dihasilkan aplikasi"}%>
+      </div>
+      <div class="field">
+        <%= form.label :output_cetak, {class: "form-label"} %>
+        <%= form.text_field :output_cetak, {class: "form-control", placeholder: "keluaran dokumen dari aplikasi"}%>
       </div>
       <div class="field">
         <%= form.label :terintegrasi_dengan, {class: "form-label"} %>

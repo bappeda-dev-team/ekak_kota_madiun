@@ -8,6 +8,9 @@
 #  kode_program        :string
 #  nama_aplikasi       :string
 #  output_aplikasi     :string
+#  output_cetak        :string
+#  output_data         :string
+#  output_informasi    :string
 #  pemilik_aplikasi    :string
 #  terintegrasi_dengan :string
 #  created_at          :datetime         not null
@@ -16,6 +19,8 @@
 #  strategi_ref_id     :string
 #
 class Spbe < ApplicationRecord
+  validates_presence_of :strategi_ref_id, :nama_aplikasi, :program_kegiatan_id
+
   belongs_to :program_kegiatan, -> { order "kode_program" }
 
   has_one :sasaran, -> { order "nip_asn ASC" }, primary_key: :strategi_ref_id, foreign_key: :id

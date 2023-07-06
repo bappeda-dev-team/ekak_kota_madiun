@@ -2541,7 +2541,10 @@ CREATE TABLE public.spbes (
     updated_at timestamp(6) without time zone NOT NULL,
     output_aplikasi character varying,
     terintegrasi_dengan character varying,
-    pemilik_aplikasi character varying
+    pemilik_aplikasi character varying,
+    output_data character varying,
+    output_informasi character varying,
+    output_cetak character varying
 );
 
 
@@ -5130,6 +5133,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230704044308'),
 ('20230704044536'),
 ('20230705022225'),
-('20230705022937');
+('20230705022937'),
+('20230706005016');
 
 

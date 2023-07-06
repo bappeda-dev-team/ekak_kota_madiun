@@ -58,8 +58,13 @@
             <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
               <%= spbe.nama_aplikasi %>
             </td>
-            <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
-              <%= spbe.output_aplikasi %>
+            <td class="border fw-bolder" rowspan="<%= rowspan_sas %>">
+              <div class="d-grid gap-2">
+                <p>Umum: <strong><%= spbe.output_aplikasi %></strong></p>
+                <p>Data: <strong><%= spbe.output_data %></strong></p>
+                <p>Informasi: <strong><%= spbe.output_informasi %></strong></p>
+                <p>Cetak: <strong><%= spbe.output_cetak %></strong></p>
+              </div>
             </td>
             <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
               <%= spbe.terintegrasi_dengan %>
