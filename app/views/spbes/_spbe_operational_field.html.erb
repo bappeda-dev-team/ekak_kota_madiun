@@ -82,6 +82,6 @@
     <%= form.label :keterangan, { class: "form-label" } %>
     <%= form.text_area :keterangan, { class: "form-control", disabled: disabled } %>
   </div>
-  <% display_class = disabled || form.object.id_rencana.empty? ? 'd-none' : '' %>
+  <% display_class = disabled || form.object.id_rencana.blank? ? 'd-none' : '' %>
   <%= link_to_remove_nested(form, link_text: 'Hapus kebutuhan spbe', link_classes: "btn btn-outline-danger #{display_class}") %>
 </fieldset>
