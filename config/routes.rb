@@ -381,10 +381,14 @@ Rails.application.routes.draw do
     get "jumlah", on: :collection
   end
 
+  resources :spip, param: :kode_opd do
+    member do
+      get :cetak_excel
+    end
+  end
+
   resources :sasaran_program_opds do
     collection do
-      get :spip
-      get :excel_spip
       get :daftar_resiko
     end
 

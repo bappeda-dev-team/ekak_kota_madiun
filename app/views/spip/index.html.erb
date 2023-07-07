@@ -1,0 +1,31 @@
+<%= content_for :html_title, "SPIP" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Perencanaan Kota</li>
+  <li class="breadcrumb-item active" aria-current="page">SPIP</li>
+<% end %>
+<% content_for :view_utama do %>
+  <% if cookies[:tahun] && cookies[:opd] %>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col-10">
+            <h5>SPIP - <%= @nama_opd %></h5>
+          </div>
+          <div class="col">
+            <%= link_to cetak_excel_spip_path(@kode_opd,format: :xlsx), class: "btn btn-sm btn-primary" do %>
+              <i class="fa fa-print me-2"></i>
+              <span>Cetak Excel</span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <%= render partial: 'spip/spip_table', tujuan: @tujuan_kota %>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <%= render 'shared/pilih_tahun_dan_opd' %>
+  <% end %>
+<% end %>
