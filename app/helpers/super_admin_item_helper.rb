@@ -99,6 +99,10 @@ module SuperAdminItemHelper
       {
         title: 'Rekap Pohon Kinerja', href: rekap_pohon_kinerja_index_path,
         icon: 'fas fa-bullseye', identifier: 'pohon_kinerja/rekap'
+      },
+      {
+        title: 'SPIP', href: spip_index_path,
+        icon: 'fas fa-chalkboard', identifier: 'spip'
       }
     ]
   end
