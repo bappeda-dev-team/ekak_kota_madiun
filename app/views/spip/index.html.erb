@@ -9,10 +9,10 @@
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col-10">
-            <h5>SPIP - Nama OPD</h5>
+            <h5>SPIP - <%= @nama_opd %></h5>
           </div>
           <div class="col">
-            <%= link_to cetak_excel_spip_path('kode_opd',format: :xlsx), class: "btn btn-sm btn-primary" do %>
+            <%= link_to cetak_excel_spip_path(@kode_opd,format: :xlsx), class: "btn btn-sm btn-primary" do %>
               <i class="fa fa-print me-2"></i>
               <span>Cetak Excel</span>
             <% end %>
@@ -21,7 +21,7 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <%= render partial: 'spip/spip_table', spips: @spip %>
+          <%= render partial: 'spip/spip_table', tujuan: @tujuan_kota %>
         </div>
       </div>
     </div>
