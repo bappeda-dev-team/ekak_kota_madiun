@@ -20,8 +20,19 @@
         </div>
       </div>
       <div class="card-body">
-        <div class="table-responsive">
-          <%= render partial: 'spip/spip_table', tujuan: @tujuan_kota %>
+        <nav class="mb-3">
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#informasi-umum" type="button" role="tab" aria-controls="informasi-umum" aria-selected="true">Infomrasi Umum Sasaran Pemda</button>
+            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#daftar-opd" type="button" role="tab" aria-controls="daftar-opd" aria-selected="false">Daftar OPD</button>
+          </div>
+        </nav>
+        <div class="table-responsive tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="informasi-umum" role="tabpanel" aria-labelledby="informasi-umum" tabindex="0">
+            <%= render partial: 'spip/spip_table', locals: { informasi_umum: @informasi_umum } %>
+          </div>
+          <div class="tab-pane fade show active" id="daftar-opd" role="tabpanel" aria-labelledby="daftar-opd" tabindex="0">
+            <%= render partial: 'spip/daftar_opd_table', locals: { daftar_opd: @daftar_opd } %>
+          </div>
         </div>
       </div>
     </div>

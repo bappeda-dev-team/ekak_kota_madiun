@@ -1,8 +1,9 @@
 class SpipController < ApplicationController
   before_action :opd_params, :tahun_params
   def index
-    @tujuan_kota = TujuanKota.joins(%i[indikator_tujuans sasaran_kota]).where.not(visi: nil).group_by(&:visi)
-                             .map { |visi, tujuans| [visi, tujuans.group_by(&:misi)] }.to_h
+    spip = SpipQueries.new(TujuanKota, opds: @opd)
+    @informasi_umum = spip.informasi_umum_sasaran_kota
+    @daftar_opd = spip.daftar_opd
   end
 
   def cetak_excel

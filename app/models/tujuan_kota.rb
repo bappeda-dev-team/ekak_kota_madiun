@@ -22,6 +22,8 @@
 class TujuanKota < ApplicationRecord
   default_scope { order(:id) }
 
+  scope :visis, -> { joins(%i[indikator_tujuans sasaran_kota]).where.not(visi: nil) }
+
   has_many :indikator_tujuans, -> { order(:tahun) },
            class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id_tujuan'
   accepts_nested_attributes_for :indikator_tujuans, reject_if: :all_blank, allow_destroy: true
