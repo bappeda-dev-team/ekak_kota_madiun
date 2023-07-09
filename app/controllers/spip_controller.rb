@@ -1,9 +1,10 @@
 class SpipController < ApplicationController
   before_action :opd_params, :tahun_params
   def index
-    spip = SpipQueries.new(TujuanKota, opds: @opd)
+    spip = SpipQueries.new(TujuanKota, tahun: @tahun)
     @informasi_umum = spip.informasi_umum_sasaran_kota
     @daftar_opd = spip.daftar_opd
+    @sasaran_opd = spip.sasaran_opd
   end
 
   def cetak_excel

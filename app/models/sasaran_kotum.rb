@@ -28,7 +28,7 @@ class SasaranKotum < ApplicationRecord
   has_many :indikator_sasarans, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id_sasaran'
   accepts_nested_attributes_for :indikator_sasarans, reject_if: :all_blank, allow_destroy: true
 
-  has_many :sasarans_opd, class_name: 'Sasaran', foreign_key: 'sasaran_atasan_id', primary_key: 'kode_sasaran'
+  # has_many :sasarans_opd, class_name: 'Sasaran', foreign_key: 'sasaran_atasan_id', primary_key: 'kode_sasaran'
   has_one :strategi_kotum, foreign_key: 'sasaran_kota_id', primary_key: 'kode_sasaran'
 
   def tahun_awal_akhir

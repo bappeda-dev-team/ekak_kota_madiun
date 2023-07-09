@@ -1,0 +1,29 @@
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th>Sasaran Pemda</th>
+      <th>Nama OPD</th>
+      <th>Sasaran OPD</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% sasaran_opd.each do |sasaran_pemda, opds| %>
+      <tr>
+        <td colspan="3" class="border"><%= sasaran_pemda %></td>
+      </tr>
+      <% opds.each do |opd, sasaran_opd| %>
+        <tr>
+          <td class="border"></td>
+          <td colspan="2" class="border"><%= opd %></td>
+        </tr>
+        <% sasaran_opd.each do |sasaran_opd| %>
+          <tr>
+            <td class="border"></td>
+            <td class="border"></td>
+            <td class="border"><%= sasaran_opd %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

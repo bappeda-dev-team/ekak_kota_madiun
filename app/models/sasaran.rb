@@ -128,6 +128,10 @@ class Sasaran < ApplicationRecord
     # exclude_association %i[indikator_sasarans latar_belakangs dasar_hukums]
   end
 
+  def to_s
+    sasaran_kinerja
+  end
+
   def aksi_bulan_kosong?
     tahapans.map { |t| t.aksis.map(&:id_aksi_bulan) }.flatten.include?(nil)
   end

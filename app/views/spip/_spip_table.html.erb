@@ -30,35 +30,35 @@
           <td class="border"></td>
           <td colspan="7" class="border"><%= misi %></td>
         </tr>
-        <% tujuans.each do |t_kota| %>
+        <% tujuans.each do |t_kota, sasaran_kota| %>
           <tr>
             <td class="border"></td>
             <td class="border"></td>
             <td class="border"></td>
             <td colspan="6" class="border"><%= t_kota.tujuan %></td>
           </tr>
-        <% t_kota.sasaran_kota.each do |s_kota| %>
-          <tr>
-            <td class="border"></td>
-            <td class="border"></td>
-            <td class="border"></td>
-            <td class="border"></td>
-            <td colspan="5" class="border"><%= s_kota.sasaran %></td>
-          </tr>
-        <% s_kota.indikator_sasarans.where(tahun: "2023").each do |indikator| %>
-          <tr>
-            <td class="border"></td>
-            <td class="border"></td>
-            <td class="border"></td>
-            <td class="border"></td>
-            <td class="border"></td>
-            <td class="border"><%= indikator.indikator %></td>
-            <td class="border"><%= indikator.satuan %></td>
-            <td class="border"><%= indikator.target %></td>
-            <td class="border"><%= indikator.satuan %></td>
-          </tr>
-        <% end %>
-        <% end %>
+          <% sasaran_kota.each do |s_kota| %>
+            <tr>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td colspan="5" class="border"><%= s_kota.sasaran %></td>
+            </tr>
+            <% s_kota.indikator_sasarans.where(tahun: "2023").each do |indikator| %>
+              <tr>
+                <td class="border"></td>
+                <td class="border"></td>
+                <td class="border"></td>
+                <td class="border"></td>
+                <td class="border"></td>
+                <td class="border"><%= indikator.indikator %></td>
+                <td class="border"><%= indikator.satuan %></td>
+                <td class="border"><%= indikator.target %></td>
+                <td class="border"><%= indikator.satuan %></td>
+              </tr>
+            <% end %>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>
