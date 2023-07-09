@@ -1,10 +1,12 @@
 class SpipQueries
-  attr_accessor :tujuan_kota, :tahun, :opd_id
+  extend Memoist
 
-  def initialize(tujuan_kota, tahun: '', opd_id: '')
+  attr_accessor :tujuan_kota, :tahun, :opd
+
+  def initialize(tujuan_kota, tahun: '', opd: '')
     @tujuan_kota = tujuan_kota
     @tahun = tahun
-    @opd_id = opd_id
+    @opd = opd
   end
 
   def visi_kota
@@ -41,15 +43,12 @@ class SpipQueries
   end
 
   def spip_sasaran_opd
-    strategi_kotas.select { |sk| sk.tahun.include?(@tahun) }.to_h do |strategi_kota|
-      sasaran_opds = strategi_kota.opds.to_h do |opd|
-        [opd.nama_opd, opd.strategi_eselon2.map(&:sasaran)]
-      end
-      [strategi_kota.sasaran_kotum_sasaran, sasaran_opds]
-    end
+    @opd.strategi_eselon2.where(tahun: @tahun).group_by(&:opd)
   end
 
   def strategi_kotas
-    @strategi_kotas ||= @tujuan_kota.sasarans.map(&:strategi_kota).flatten!
+    @tujuan_kota.sasarans.map(&:strategi_kota).flatten!
   end
+
+  memoize :strategi_kotas
 end
