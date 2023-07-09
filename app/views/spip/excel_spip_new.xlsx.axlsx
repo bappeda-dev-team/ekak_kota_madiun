@@ -57,7 +57,7 @@ wb.add_worksheet(name: "SasaranOPD") do |sheet|
     end
   end
 end
-wb.add_worksheet(name: "sasaran_spip") do |sheet|
+wb.add_worksheet(name: "#{@opd.nama_opd.truncate(20)}") do |sheet|
   sheet.add_row ["Nama Pemda", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "Target Kinerja"],
                 style: [project_heading, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, center_hor]
   sheet.merge_cells "M1:O1"
