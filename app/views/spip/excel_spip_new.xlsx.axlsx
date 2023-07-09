@@ -15,7 +15,7 @@ wb.add_worksheet(name: "InformasiUmumSasaranPemda") do |sheet_pemda|
   sheet_pemda.add_row [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
   # values
   sheet_pemda.add_row ["PEMERINTAH KOTA MADIUN"]
-  @infomrais_umum.each do |visi, misis|
+  @informasi_umum.each do |visi, misis|
     sheet_pemda.add_row [visi], offset: 1
     misis.each do |misi, tujuans|
       sheet_pemda.add_row [misi], offset: 2
@@ -84,7 +84,7 @@ wb.add_worksheet(name: "OPD") do |sheet|
                       offset: 3
       end
       strategi.strategi_eselon_tigas.each do |strategi_program|
-        strategi_proram.programs_strategi.keys.each do |program|
+        strategi_program.programs_strategi.keys.each do |program|
           sheet.add_row [strategi_program.sasaran, nil, nil, nil, nil, nil,
                          program],
                         offset: 4
@@ -96,16 +96,16 @@ wb.add_worksheet(name: "OPD") do |sheet|
         strategi_program.strategi_eselon_empats.each do |strategi_kegiatan|
           sheet.add_row [strategi_kegiatan.sasaran, nil, nil, nil, nil,
                          strategi_kegiatan.program_kegiatan_strategi&.nama_kegiatan], offset: 6
+          strategi_kegiatan.indikator_sasarans.each do |indikator_keg|
+            sheet.add_row [indikator_keg.indikator_kinerja, nil, nil, nil, nil,
+                           indikator_keg.satuan, indikator_keg.target,
+                           indikator_keg.satuan], offset: 7
+          end
+          sheet.add_row [strategi_kegiatan.program_kegiatan_strategi&.nama_subkegiatan], offset: 8
+          indikator_sub = strategi_kegiatan.program_kegiatan_strategi&.indikator_subkegiatan_tahun(@tahun, @opd.kode_unik_opd)
+          sheet.add_row [indikator_sub&.dig(:indikator), nil, nil,
+                         indikator_sub&.dig(:satuan), indikator_sub&.dig(:target), indikator_sub&.dig(:satuan)], offset: 9
         end
-        strategi_kegiatan.indikator_sasarans.each do |indikator_keg|
-          sheet.add_row [indikator_keg.indikator_kinerja, nil, nil, nil, nil,
-                         indikator_keg.satuan, indikator_keg.target,
-                         indikator_keg.satuan], offset: 7
-        end
-        sheet.add_row [strategi_kegiatan.program_kegiatan_strategi&.nama_subkegiatan], offset: 8
-        indikator_sub = strategi_kegiatan.program_kegiatan_strategi&.indikator_subkegiatan_tahun(@tahun, @opd.kode_unik_opd)
-        sheet.add_row [indikator_sub&.dig(:indikator), nil, nil,
-                       indikator_sub&.dig(:satuan), indikator_sub&.dig(:target), indikator_sub&.dig(:satuan)], offset: 9
       end
     end
     sheet.column_widths 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5
