@@ -23,10 +23,10 @@
 #
 FactoryBot.define do
   factory :strategi do
-    strategi { "MyString" }
-    tahun { "MyString" }
-    sasaran_id { "MyString" }
+    associaton :sasaran
+    associaton :user
+    strategi { "Test strategi" }
+    tahun { "2023" }
     strategi_ref_id { "MyString" }
-    nip_asn { "MyString" }
   end
 end
