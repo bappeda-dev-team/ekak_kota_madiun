@@ -1,0 +1,136 @@
+<table class="table">
+  <thead class="thead-light">
+    <tr style="background-color: #636f83;color:#e3e5e8">
+      <th rowspan="2" width="5%">Nama Pemda</th>
+      <th rowspan="2" width="5%">Nama OPD</th>
+      <th rowspan="2" width="5%">Sasaran OPD</th>
+      <th rowspan="2" width="5%">Indikator Kinerja Sasaran OPD</th>
+      <th rowspan="2" width="5%">Sasaran Program</th>
+      <th rowspan="2" width="5%">Indikator Kinerja Program</th>
+      <th rowspan="2" width="5%">Sasaran kegiatan</th>
+      <th rowspan="2" width="5%">Indikator Kinerja Kegiatan</th>
+      <th rowspan="2" width="5%">Sub Kegiatan</th>
+      <th rowspan="2" width="5%">Indikator Kinerja Sub Kegiatan</th>
+      <th colspan="3" style="text-align:center">Tarket Kinerja</th>
+    </tr>
+    <tr style="background-color: #636f83;color:#e3e5e8">
+      <th width="5%">Satuan</th>
+      <th width="5%">Nilai</th>
+      <th width="5%">Atribut</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="13" class="border">Kota Madiun</td>
+    </tr>
+    <% sasaran_opd_spip.each do |opd, strategis| %>
+      <tr>
+        <td class="border"></td>
+        <td colspan="12" class="border"><%= opd.nama_opd %></td>
+      </tr>
+      <% strategis.each do |strategi| %>
+        <tr>
+          <td class="border"></td>
+          <td class="border"></td>
+          <td colspan="11" class="border"><%= strategi.sasaran %></td>
+        </tr>
+        <% strategi.indikator_sasarans.each do |indikator_opd| %>
+          <tr>
+            <td class="border"></td>
+            <td class="border"></td>
+            <td class="border"></td>
+            <td colspan="7" class="border"><%= indikator_opd.indikator_kinerja %></td>
+            <td class="border"><%= indikator_opd.satuan %></td>
+            <td class="border"><%= indikator_opd.target %></td>
+            <td class="border"><%= indikator_opd.satuan %></td>
+          </tr>
+        <% end %>
+        <% strategi.strategi_eselon_tigas.each do |strategi_program| %>
+          <tr>
+            <td class="border"></td>
+            <td class="border"></td>
+            <td class="border"></td>
+            <td class="border"></td>
+            <td colspan="9" class="border">
+              <% strategi_program.programs_strategi.keys.each do |program| %>
+                <p class="program">Nama Program: <%= program %></p>
+              <% end %>
+              <p>Sasaran Program: <%= strategi_program.sasaran %></p>
+            </td>
+          </tr>
+          <% strategi_program.indikator_sasarans.each do |indikator_pro| %>
+            <tr>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td colspan="5" class="border"><%= indikator_pro.indikator_kinerja %></td>
+              <td class="border"><%= indikator_pro.satuan %></td>
+              <td class="border"><%= indikator_pro.target %></td>
+              <td class="border"><%= indikator_pro.satuan %></td>
+            </tr>
+          <% end %>
+          <% strategi_program.strategi_eselon_empats.each do |strategi_kegiatan| %>
+            <tr>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td colspan="7" class="border">
+                <p class="program">Nama Kegiatan: <%= strategi_kegiatan.program_kegiatan_strategi&.nama_kegiatan %></p>
+                <p>Sasaran Kegiatan: <%= strategi_kegiatan.sasaran %></p>
+              </td>
+            </tr>
+            <% strategi_kegiatan.indikator_sasarans.each do |indikator_keg| %>
+              <tr>
+                <td class="border"></td>
+                <td class="border"></td>
+                <td class="border"></td>
+                <td class="border"></td>
+                <td class="border"></td>
+                <td class="border"></td>
+                <td class="border"></td>
+                <td colspan="3" class="border"><%= indikator_keg.indikator_kinerja %></td>
+                <td class="border"><%= indikator_keg.satuan %></td>
+                <td class="border"><%= indikator_keg.target %></td>
+                <td class="border"><%= indikator_keg.satuan %></td>
+              </tr>
+            <% end %>
+            <tr>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td colspan="5" class="border">
+                <p class="program">Nama Subkegiatan: <%= strategi_kegiatan.program_kegiatan_strategi&.nama_subkegiatan %></p>
+              </td>
+            </tr>
+            <% indikator_sub = strategi_kegiatan.program_kegiatan_strategi&.indikator_subkegiatan_tahun(@tahun, @opd.kode_unik_opd) %>
+              <tr>
+                <td class="border"></td>
+                <td class="border"></td>
+                <td class="border"></td>
+                <td class="border"></td>
+                <td class="border"></td>
+                <td class="border"></td>
+                <td class="border"></td>
+                <td class="border"></td>
+                <td class="border"></td>
+                <td class="border"><%= indikator_sub&.dig(:indikator) %></td>
+                <td class="border"><%= indikator_sub&.dig(:satuan) %></td>
+                <td class="border"><%= indikator_sub&.dig(:target) %></td>
+                <td class="border"><%= indikator_sub&.dig(:satuan) %></td>
+              </tr>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

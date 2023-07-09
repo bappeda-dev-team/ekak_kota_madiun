@@ -12,7 +12,7 @@
             <h5>SPIP - <%= @nama_opd %></h5>
           </div>
           <div class="col">
-            <%= link_to cetak_excel_spip_path(@kode_opd,format: :xlsx), class: "btn btn-sm btn-primary" do %>
+            <%= link_to cetak_excel_spip_index_path(format: :xlsx), class: "btn btn-sm btn-primary" do %>
               <i class="fa fa-print me-2"></i>
               <span>Cetak Excel</span>
             <% end %>
@@ -20,8 +20,27 @@
         </div>
       </div>
       <div class="card-body">
-        <div class="table-responsive">
-          <%= render partial: 'spip/spip_table', tujuan: @tujuan_kota %>
+        <nav class="mb-3">
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-informasi-umum-tab" data-bs-toggle="tab" data-bs-target="#informasi-umum" type="button" role="tab" aria-controls="informasi-umum" aria-selected="true">Infomrasi Umum Sasaran Pemda</button>
+            <button class="nav-link" id="nav-daftar-opd-tab" data-bs-toggle="tab" data-bs-target="#daftar-opd" type="button" role="tab" aria-controls="daftar-opd" aria-selected="false">Daftar OPD</button>
+            <button class="nav-link" id="nav-sasaran-opd-tab" data-bs-toggle="tab" data-bs-target="#sasaran-opd" type="button" role="tab" aria-controls="sasaran-opd" aria-selected="false">Sasaran OPD</button>
+            <button class="nav-link" id="nav-opd-tab" data-bs-toggle="tab" data-bs-target="#opd" type="button" role="tab" aria-controls="opd" aria-selected="false">SPIP OPD</button>
+          </div>
+        </nav>
+        <div class="table-responsive tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="informasi-umum" role="tabpanel" aria-labelledby="informasi-umum" tabindex="0">
+            <%= render partial: 'spip/spip_table', locals: { informasi_umum: @informasi_umum } %>
+          </div>
+          <div class="tab-pane fade" id="daftar-opd" role="tabpanel" aria-labelledby="daftar-opd" tabindex="1">
+            <%= render partial: 'spip/daftar_opd_table', locals: { daftar_opd: @daftar_opd } %>
+          </div>
+          <div class="tab-pane fade" id="sasaran-opd" role="tabpanel" aria-labelledby="sasaran-opd" tabindex="2">
+            <%= render partial: 'spip/sasaran_opd_table', locals: { sasaran_opd: @sasaran_opd } %>
+          </div>
+          <div class="tab-pane fade" id="opd" role="tabpanel" aria-labelledby="opd" tabindex="3">
+            <%= render partial: 'spip/sasaran_opd_spip_table', locals: { sasaran_opd_spip: @sasaran_opd_spip } %>
+          </div>
         </div>
       </div>
     </div>

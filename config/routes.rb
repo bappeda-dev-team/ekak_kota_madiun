@@ -382,7 +382,7 @@ Rails.application.routes.draw do
   end
 
   resources :spip, param: :kode_opd do
-    member do
+    collection do
       get :cetak_excel
     end
   end

@@ -1,0 +1,14 @@
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th>Nama OPD</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% daftar_opd.each do |opd| %>
+      <tr>
+        <td class="border"><%= opd.nama_opd %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
