@@ -6,6 +6,10 @@
       {data: { controller: 'dropdown', placeholder: 'Pilih Domain SPBE' }}) %>
   </div>
   <div class="field">
+    <%= form.label :aspek_spbe, { class: "form-label" } %>
+    <%= form.text_field :aspek_spbe, {class: "form-control"}%>
+  </div>
+  <div class="field">
     <%= form.label :subdomain_spbe, { class: "form-label" } %>
     <%= form.select(:subdomain_spbe, (Subdomain.pluck(:subdomain)), {include_blank: true},
       {data: { controller: 'dropdown', placeholder: 'Pilih Domain SPBE' }}) %>

@@ -120,6 +120,7 @@ class SpbesController < ApplicationController
                                  spbe_rincians_attributes: %i[id detail_sasaran_kinerja
                                                               detail_kebutuhan
                                                               domain_spbe
+                                                              aspek_spbe
                                                               subdomain_spbe
                                                               keterangan id_rencana kebutuhan_spbe
                                                               internal_external tahun_awal tahun_akhir

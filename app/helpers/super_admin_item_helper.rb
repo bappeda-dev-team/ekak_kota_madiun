@@ -44,20 +44,11 @@ module SuperAdminItemHelper
         icon: 'fas fa-folder', identifier: 'kelompok_anggaran'
       },
       {
-        title: 'SPBE', href: spbes_path,
-        icon: 'fas fa-tablet-alt', identifier: 'spbe'
-      },
-      {
-        title: 'Domain SPBE', href: domains_path,
-        icon: 'fas fa-project-diagram', identifier: 'domain'
-      },
-      {
-        title: 'Sub-domain SPBE', href: subdomains_path,
-        icon: 'fas fa-project-diagram', identifier: 'domain'
-      },
-      {
-        title: 'Kebutuhan SPBE', href: kebutuhans_path,
-        icon: 'fas fa-list', identifier: 'kebutuhan'
+        title: 'SPBE', href: "#",
+        multi: true, collections: spbe_items,
+        id_target: "spbe-item",
+        collapse_items: collapsed_item_spbe,
+        icon: 'fas fa-tablet-alt', identifier: 'spbes'
       }
     ]
   end
@@ -71,6 +62,9 @@ module SuperAdminItemHelper
                    '\blist_all|\btematiks|' \
                    '\bperiodes|\btahuns|' \
                    '\bkelompok_anggarans|' \
+                   '\bdomains|' \
+                   '\bsubdomains|' \
+                   '\bkebutuhans|' \
                    '\badminsasarans|\busers\/khusus)')
   end
 
@@ -114,5 +108,23 @@ module SuperAdminItemHelper
                    '\bpohon_kinerja\/kota|' \
                    '\bpohon_kinerja\/rekap|' \
                    '\bspip)')
+  end
+
+  def spbe_items
+    [
+      {
+        title: 'Domain SPBE', href: domains_path, identifier: 'domain'
+      },
+      {
+        title: 'Sub-domain SPBE', href: subdomains_path, identifier: 'domain'
+      },
+      {
+        title: 'Kebutuhan SPBE', href: kebutuhans_path, identifier: 'kebutuhan'
+      }
+    ]
+  end
+
+  def collapsed_item_spbe
+    collapse_class('(\bdomains|\bsubdomains|\bkebutuhans)')
   end
 end

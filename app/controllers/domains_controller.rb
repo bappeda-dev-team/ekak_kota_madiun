@@ -1,5 +1,6 @@
 class DomainsController < ApplicationController
-  before_action :set_domain, only: %i[ show edit update destroy ]
+  before_action :set_domain, only: %i[show edit update destroy]
+  layout false, only: %i[new edit]
 
   # GET /domains or /domains.json
   def index
@@ -7,8 +8,7 @@ class DomainsController < ApplicationController
   end
 
   # GET /domains/1 or /domains/1.json
-  def show
-  end
+  def show; end
 
   # GET /domains/new
   def new
@@ -16,8 +16,7 @@ class DomainsController < ApplicationController
   end
 
   # GET /domains/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /domains or /domains.json
   def create
@@ -58,13 +57,14 @@ class DomainsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_domain
-      @domain = Domain.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def domain_params
-      params.require(:domain).permit(:domain, :kode_domain, :keterangan, :tahun)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_domain
+    @domain = Domain.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def domain_params
+    params.require(:domain).permit(:domain, :kode_domain, :keterangan, :tahun)
+  end
 end

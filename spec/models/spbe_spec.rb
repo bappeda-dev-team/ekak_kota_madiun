@@ -33,4 +33,9 @@ RSpec.describe Spbe, type: :model do
     spbe = FactoryBot.create :spbe
     expect(spbe.nama_program).to eq('Test program')
   end
+
+  it 'should display sasaran tactical' do
+    spbe = FactoryBot.create :spbe
+    expect(spbe.sasaran.sasaran_kinerja).to eq('Test sasaran')
+  end
 end
