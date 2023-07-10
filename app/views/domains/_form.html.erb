@@ -1,4 +1,6 @@
-<%= form_with(model: domain) do |form| %>
+<%= form_with(model: domain, local: false,
+             data: { controller: 'form-ajax',
+                    action: 'ajax:complete->form-ajax#afterSubmitRefresh'}) do |form| %>
   <% if domain.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(domain.errors.count, "error") %> prohibited this domain from being saved:</h2>
@@ -12,23 +14,23 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :domain %>
-    <%= form.text_field :domain %>
+    <%= form.label :domain, class: 'form-label'%>
+    <%= form.text_field :domain, class: 'form-control'%>
   </div>
 
   <div class="field">
-    <%= form.label :kode_domain %>
-    <%= form.text_field :kode_domain %>
+    <%= form.label :kode_domain, class: 'form-label' %>
+    <%= form.text_field :kode_domain, class: 'form-control' %>
   </div>
 
   <div class="field">
-    <%= form.label :keterangan %>
-    <%= form.text_field :keterangan %>
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_field :keterangan, class: 'form-control' %>
   </div>
 
   <div class="field">
-    <%= form.label :tahun %>
-    <%= form.text_field :tahun %>
+    <%= form.label :tahun, class: 'form-label' %>
+    <%= form.text_field :tahun, class: 'form-control' %>
   </div>
 
   <div class="actions">

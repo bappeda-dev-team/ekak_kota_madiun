@@ -1,5 +1,6 @@
 class DomainsController < ApplicationController
-  before_action :set_domain, only: %i[ show edit update destroy ]
+  before_action :set_domain, only: %i[show edit update destroy]
+  layout false, only: %i[new edit]
 
   # GET /domains or /domains.json
   def index
@@ -7,8 +8,7 @@ class DomainsController < ApplicationController
   end
 
   # GET /domains/1 or /domains/1.json
-  def show
-  end
+  def show; end
 
   # GET /domains/new
   def new
@@ -16,34 +16,25 @@ class DomainsController < ApplicationController
   end
 
   # GET /domains/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /domains or /domains.json
   def create
     @domain = Domain.new(domain_params)
 
-    respond_to do |format|
-      if @domain.save
-        format.html { redirect_to domain_url(@domain), notice: "Domain was successfully created." }
-        format.json { render :show, status: :created, location: @domain }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @domain.errors, status: :unprocessable_entity }
-      end
+    if @domain.save
+      render json: @domain, status: :created
+    else
+      render json: @domain.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /domains/1 or /domains/1.json
   def update
-    respond_to do |format|
-      if @domain.update(domain_params)
-        format.html { redirect_to domain_url(@domain), notice: "Domain was successfully updated." }
-        format.json { render :show, status: :ok, location: @domain }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @domain.errors, status: :unprocessable_entity }
-      end
+    if @domain.update(domain_params)
+      render json: @domain, status: :ok
+    else
+      render json: @domain.errors, status: :unprocessable_entity
     end
   end
 
@@ -52,19 +43,20 @@ class DomainsController < ApplicationController
     @domain.destroy
 
     respond_to do |format|
-      format.html { redirect_to domains_url, notice: "Domain was successfully destroyed." }
+      format.html { redirect_to domains_url, warning: "Domain dihapus" }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_domain
-      @domain = Domain.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def domain_params
-      params.require(:domain).permit(:domain, :kode_domain, :keterangan, :tahun)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_domain
+    @domain = Domain.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def domain_params
+    params.require(:domain).permit(:domain, :kode_domain, :keterangan, :tahun)
+  end
 end

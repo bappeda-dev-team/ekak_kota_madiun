@@ -1,4 +1,6 @@
-<%= form_with(model: subdomain) do |form| %>
+<%= form_with(model: subdomain, local: false,
+             data: { controller: 'form-ajax',
+                    action: 'ajax:complete->form-ajax#afterSubmitRefresh'}) do |form| %>
   <% if subdomain.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(subdomain.errors.count, "error") %> prohibited this subdomain from being saved:</h2>
@@ -12,28 +14,28 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :subdomain %>
-    <%= form.text_field :subdomain %>
+    <%= form.label :subdomain, class: 'form-label' %>
+    <%= form.text_field :subdomain, class: 'form-control' %>
   </div>
 
   <div class="field">
-    <%= form.label :domain_id %>
-    <%= form.text_field :domain_id %>
+    <%= form.label :domain_id, class: 'form-label' %>
+    <%= form.text_field :domain_id, class: 'form-control' %>
   </div>
 
   <div class="field">
-    <%= form.label :kode_subdomain %>
-    <%= form.text_field :kode_subdomain %>
+    <%= form.label :kode_subdomain, class: 'form-label' %>
+    <%= form.text_field :kode_subdomain, class: 'form-control' %>
   </div>
 
   <div class="field">
-    <%= form.label :keterangan %>
-    <%= form.text_field :keterangan %>
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_field :keterangan, class: 'form-control' %>
   </div>
 
   <div class="field">
-    <%= form.label :tahun %>
-    <%= form.text_field :tahun %>
+    <%= form.label :tahun, class: 'form-label' %>
+    <%= form.text_field :tahun, class: 'form-control' %>
   </div>
 
   <div class="actions">

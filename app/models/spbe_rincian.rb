@@ -3,6 +3,7 @@
 # Table name: spbe_rincians
 #
 #  id                     :bigint           not null, primary key
+#  aspek_spbe             :string
 #  detail_kebutuhan       :string
 #  detail_sasaran_kinerja :string
 #  domain_spbe            :string
@@ -22,7 +23,7 @@
 #  strategi_ref_id        :string
 #
 class SpbeRincian < ApplicationRecord
-  validates_presence_of :domain_spbe, :subdomain_spbe, :kebutuhan_spbe, :detail_kebutuhan
+  validates_presence_of :domain_spbe, :subdomain_spbe, :kebutuhan_spbe, :detail_kebutuhan, :aspek_spbe
 
   belongs_to :spbe, inverse_of: :spbe_rincians
 

@@ -1,4 +1,6 @@
-<%= form_with(model: kebutuhan) do |form| %>
+<%= form_with(model: kebutuhan, local: false,
+             data: { controller: 'form-ajax',
+                    action: 'ajax:complete->form-ajax#afterSubmitRefresh'}) do |form| %>
   <% if kebutuhan.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(kebutuhan.errors.count, "error") %> prohibited this kebutuhan from being saved:</h2>
@@ -12,18 +14,18 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :kebutuhan %>
-    <%= form.text_field :kebutuhan %>
+    <%= form.label :kebutuhan, class: 'form-label' %>
+    <%= form.text_field :kebutuhan, class: 'form-control' %>
   </div>
 
   <div class="field">
-    <%= form.label :tahun %>
-    <%= form.text_field :tahun %>
+    <%= form.label :tahun, class: 'form-label' %>
+    <%= form.text_field :tahun, class: 'form-control' %>
   </div>
 
   <div class="field">
-    <%= form.label :keterangan %>
-    <%= form.text_field :keterangan %>
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_field :keterangan, class: 'form-control' %>
   </div>
 
   <div class="actions">

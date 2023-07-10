@@ -20,5 +20,11 @@
 #
 FactoryBot.define do
   factory :spbe do
+    strategi_ref_id { 'test' }
+    association :sasaran, factory: :sasaran, sasaran_kinerja: 'Test sasaran'
+    association :opd
+    association :program_kegiatan, nama_program: 'Test program'
+    jenis_pelayanan { "Test Pelayanan" }
+    nama_aplikasi { "Test nama aplikasi" }
   end
 end

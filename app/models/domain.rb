@@ -11,4 +11,7 @@
 #  updated_at  :datetime         not null
 #
 class Domain < ApplicationRecord
+  def to_s
+    domain
+  end
 end

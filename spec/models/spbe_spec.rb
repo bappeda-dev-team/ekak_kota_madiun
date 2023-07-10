@@ -21,5 +21,21 @@
 require 'rails_helper'
 
 RSpec.describe Spbe, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should validate_presence_of :strategi_ref_id }
+  it { should validate_presence_of :nama_aplikasi }
+  it { should validate_presence_of :program_kegiatan_id }
+  it { should belong_to :program_kegiatan }
+  it { should have_one :opd }
+  it { should have_one :sasaran }
+  it { should have_many :spbe_rincians }
+
+  it 'should display nama_program' do
+    spbe = FactoryBot.create :spbe
+    expect(spbe.nama_program).to eq('Test program')
+  end
+
+  it 'should display sasaran tactical' do
+    spbe = FactoryBot.create :spbe
+    expect(spbe.sasaran.sasaran_kinerja).to eq('Test sasaran')
+  end
 end
