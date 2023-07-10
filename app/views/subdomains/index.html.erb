@@ -1,35 +1,80 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Subdomains</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Subdomain</th>
-      <th>Domain</th>
-      <th>Kode subdomain</th>
-      <th>Keterangan</th>
-      <th>Tahun</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @subdomains.each do |subdomain| %>
-      <tr>
-        <td><%= subdomain.subdomain %></td>
-        <td><%= subdomain.domain_id %></td>
-        <td><%= subdomain.kode_subdomain %></td>
-        <td><%= subdomain.keterangan %></td>
-        <td><%= subdomain.tahun %></td>
-        <td><%= link_to 'Show', subdomain %></td>
-        <td><%= link_to 'Edit', edit_subdomain_path(subdomain) %></td>
-        <td><%= link_to 'Destroy', subdomain, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Subdomain', new_subdomain_path %>
+<%= content_for :html_title, "Subdomain SPBE" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">SPBE</li>
+  <li class="breadcrumb-item active" aria-current="page">Subdomain</li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="card border-0 shadow">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h2 class="fs-5 fw-bold mb-0">Subdomain SPBE</h2>
+        </div>
+        <div class="col text-end">
+          <%= link_to new_subdomain_path,
+              remote: true, class: 'btn btn-sm btn-primary',
+              data: { controller: 'form-modal',
+                      form_modal_location_param: 'form-domain-body',
+                      action: 'form-modal#appendForm',
+                      bs_toggle: 'modal',
+                      bs_target: '#form-domain',
+              } do %>
+            <i class="fas fa-plus me-2"></i>
+            <span>Tambah Subdomain Baru</span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table datatable" data-datatable>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Domain</th>
+              <th>Subdomain</th>
+              <th>Tahun</th>
+              <th>Keterangan</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @subdomains.each.with_index(1) do |subdomain, i| %>
+              <tr>
+                <td><%= i %></td>
+                <td><%= subdomain.domain %></td>
+                <td><%= subdomain %></td>
+                <td><%= subdomain.tahun %></td>
+                <td><%= subdomain.keterangan %></td>
+                <td class="text-center">
+                  <%= link_to subdomain, class: 'btn btn-outline-success' do %>
+                    <i class="fas fa-eye me-2"></i>
+                    <span>View Subdomain SPBE</span>
+                  <% end %>
+                  <%= link_to edit_subdomain_path(subdomain), remote: true,
+                      data: { controller: 'form-modal',
+                              form_modal_location_param: 'form-domain-body',
+                              action: 'form-modal#appendForm',
+                              bs_toggle: 'modal',
+                              bs_target: '#form-domain' },
+                            class: 'btn btn-outline-info' do %>
+                    <i class="fa fa-edit me-2"></i>
+                    <span>Edit Subdomain SPBE</span>
+                  <% end %>
+                  <%= link_to subdomain,
+                      method: :delete,
+                      class: 'btn btn-outline-danger',
+                      data: { confirm_swal: "Hapus subdomain #{subdomain}?" } do %>
+                    <i class="fa fa-trash-alt me-2"></i>
+                    <span>Hapus Subdomain SPBE</span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <%= render 'shared/modal_template', modal_name: 'domain' %>
+<% end %>

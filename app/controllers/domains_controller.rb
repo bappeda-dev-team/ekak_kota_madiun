@@ -22,27 +22,19 @@ class DomainsController < ApplicationController
   def create
     @domain = Domain.new(domain_params)
 
-    respond_to do |format|
-      if @domain.save
-        format.html { redirect_to domain_url(@domain), notice: "Domain was successfully created." }
-        format.json { render :show, status: :created, location: @domain }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @domain.errors, status: :unprocessable_entity }
-      end
+    if @domain.save
+      render json: @domain, status: :created
+    else
+      render json: @domain.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /domains/1 or /domains/1.json
   def update
-    respond_to do |format|
-      if @domain.update(domain_params)
-        format.html { redirect_to domain_url(@domain), notice: "Domain was successfully updated." }
-        format.json { render :show, status: :ok, location: @domain }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @domain.errors, status: :unprocessable_entity }
-      end
+    if @domain.update(domain_params)
+      render json: @domain, status: :ok
+    else
+      render json: @domain.errors, status: :unprocessable_entity
     end
   end
 
@@ -51,7 +43,7 @@ class DomainsController < ApplicationController
     @domain.destroy
 
     respond_to do |format|
-      format.html { redirect_to domains_url, notice: "Domain was successfully destroyed." }
+      format.html { redirect_to domains_url, warning: "Domain dihapus" }
       format.json { head :no_content }
     end
   end

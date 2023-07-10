@@ -21,4 +21,8 @@
 #
 class Subdomain < ApplicationRecord
   belongs_to :domain, optional: true
+
+  def to_s
+    subdomain
+  end
 end
