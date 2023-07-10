@@ -1,6 +1,8 @@
 class SpipController < ApplicationController
   before_action :opd_params, :tahun_params
   def index
+    return if @kode_opd.nil?
+
     spip = SpipQueries.new(TujuanKota, tahun: @tahun, opd: @opd)
     @informasi_umum = spip.informasi_umum_sasaran_kota
     @daftar_opd = spip.daftar_opd
