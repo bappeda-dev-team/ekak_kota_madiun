@@ -10,4 +10,7 @@
 #  updated_at :datetime         not null
 #
 class Kebutuhan < ApplicationRecord
+  def to_s
+    kebutuhan
+  end
 end

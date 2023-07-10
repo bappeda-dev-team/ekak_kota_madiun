@@ -1,5 +1,6 @@
 class KebutuhansController < ApplicationController
-  before_action :set_kebutuhan, only: %i[ show edit update destroy ]
+  before_action :set_kebutuhan, only: %i[show edit update destroy]
+  layout false, only: %i[new edit]
 
   # GET /kebutuhans or /kebutuhans.json
   def index
@@ -7,8 +8,7 @@ class KebutuhansController < ApplicationController
   end
 
   # GET /kebutuhans/1 or /kebutuhans/1.json
-  def show
-  end
+  def show; end
 
   # GET /kebutuhans/new
   def new
@@ -16,8 +16,7 @@ class KebutuhansController < ApplicationController
   end
 
   # GET /kebutuhans/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /kebutuhans or /kebutuhans.json
   def create
@@ -25,11 +24,11 @@ class KebutuhansController < ApplicationController
 
     respond_to do |format|
       if @kebutuhan.save
-        format.html { redirect_to kebutuhan_url(@kebutuhan), notice: "Kebutuhan was successfully created." }
         format.json { render :show, status: :created, location: @kebutuhan }
+        format.html { redirect_to kebutuhan_url(@kebutuhan), notice: "Kebutuhan was successfully created." }
       else
-        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @kebutuhan.errors, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
   end
@@ -52,19 +51,20 @@ class KebutuhansController < ApplicationController
     @kebutuhan.destroy
 
     respond_to do |format|
-      format.html { redirect_to kebutuhans_url, notice: "Kebutuhan was successfully destroyed." }
+      format.html { redirect_to kebutuhans_url, warning: "Kebutuhan was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_kebutuhan
-      @kebutuhan = Kebutuhan.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def kebutuhan_params
-      params.require(:kebutuhan).permit(:kebutuhan, :tahun, :keterangan)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_kebutuhan
+    @kebutuhan = Kebutuhan.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def kebutuhan_params
+    params.require(:kebutuhan).permit(:kebutuhan, :tahun, :keterangan)
+  end
 end
