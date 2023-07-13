@@ -1,69 +1,50 @@
-<div class="row">
-  <div class="col-12" data-controller="filter-render">
-    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
-      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
-        <li class="breadcrumb-item">
-          <%= link_to root_path do %>
-            <i class="fas fa-home"></i>
-          <% end %>
-        </li>
-        <li class="breadcrumb-item">Pohon Kinerja</li>
-        <li class="breadcrumb-item active" aria-current="page">OPD</li>
-      </ol>
-    </nav>
-    <% if cookies[:tahun] && cookies[:opd] %>
-      <% unless current_user.has_role? :admin %>
-        <div class="card border-0 shadow" id="user_filter">
-          <% if @opd.id == 145 %>
-            <%= render 'pohon_kinerja/kotak_usulan_asn', role: "eselon_2", role_bawahan: "eselon_2b" %>
-          <% else %>
-            <%= render 'pohon_kinerja/kotak_usulan_asn', role: "eselon_2", role_bawahan: "eselon_3" %>
-          <% end %>
-        </div>
-      <% else %>
-        <div class="card border-0 shadow" id="user_filter" data-controller="page-ajax"
+<%= content_for :html_title, "Cascading" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Perencanaan OPD</li>
+  <li class="breadcrumb-item active" aria-current="page">Cascading</li>
+<% end %>
+<% content_for :view_utama do %>
+  <% if cookies[:tahun] && cookies[:opd] %>
+    <% unless current_user.has_role? :admin %>
+      <div class="card border-0 shadow" id="user_filter">
+        <% if @opd.id == 145 %>
+          <%= render 'pohon_kinerja/kotak_usulan_asn', role: "eselon_2", role_bawahan: "eselon_2b" %>
+        <% else %>
+          <%= render 'pohon_kinerja/kotak_usulan_asn', role: "eselon_2", role_bawahan: "eselon_3" %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="card border-0 shadow" id="user_filter" data-controller="page-ajax"
                data-page-ajax-opd-value="<%= cookies[:opd] %>"
                data-page-ajax-url-value="<%= admin_filter_pohon_kinerja_index_path %>"
                data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >
-          <div class="card-body" data-page-ajax-target="results">
-            <div class="card-header">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h2 class="fs-5 fw-bold mb-0">Pohon Kinerja</h2>
-                </div>
+        <div class="card-body" data-page-ajax-target="results">
+          <div class="card-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h2 class="fs-5 fw-bold mb-0">Pohon Kinerja</h2>
               </div>
             </div>
-            <div class="loader text-center">
-              <div class="lds-roller">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-              <p>memuat data..</p>
-            </div>
           </div>
-        </div>
-      <% end %>
-    <% else %>
-      <div class="card border-0 shadow" id="user_filter">
-        <div class="card-header">
-          <div class="row align-items-center">
-            <div class="col">
-              <h2 class="fs-5 fw-bold mb-0">Pohon Kinerja</h2>
+          <div class="loader text-center">
+            <div class="lds-roller">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
             </div>
+            <p>memuat data..</p>
           </div>
-        </div>
-        <div class="card-body">
-          <p class="alert alert-info">Pilih Tahun dan OPD</p>
         </div>
       </div>
     <% end %>
-  </div>
-</div>
-<%= render 'shared/modal_xl_template', modal_name: 'bagikan-strategi-pokin' %>
-<%= render 'shared/modal_xl_template', modal_name: 'list-bagikan' %>
+  <% else %>
+    <%= render 'shared/pilih_tahun_dan_opd' %>
+  <% end %>
+  <%= render 'shared/modal_xl_template', modal_name: 'bagikan-strategi-pokin' %>
+  <%= render 'shared/modal_xl_template', modal_name: 'list-bagikan' %>
+<% end %>
