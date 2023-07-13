@@ -18,5 +18,11 @@
 require 'rails_helper'
 
 RSpec.describe OpdBidang, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'opd bidang belongs to opd' do
+    it { should belong_to :opd }
+  end
+
+  context 'opd bidang has many users' do
+    it { should have_many :users }
+  end
 end

@@ -21,4 +21,6 @@ class OpdBidang < ApplicationRecord
 
   belongs_to :opd
   belongs_to :lembaga
+
+  has_many :users, foreign_key: 'kode_opd', primary_key: 'kode_unik_bidang'
 end
