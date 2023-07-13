@@ -13,12 +13,10 @@ class DaftarResiko
 
   def sasarans_filter(tahun_sasaran, sasarans)
     sasarans.where("tahun ILIKE ?", "%#{tahun_sasaran}%")
-            .dengan_strategi
   end
 
   def user_sasarans_filter(tahun_sasaran, sasarans, nip)
     sasarans.where("nip_asn = ? AND tahun ILIKE ?", nip, "%#{tahun_sasaran}%")
-            .dengan_strategi
   end
 
   def daftar_resiko_opd

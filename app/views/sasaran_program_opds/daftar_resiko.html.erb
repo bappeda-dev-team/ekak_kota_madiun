@@ -18,13 +18,11 @@
             <h2 class="fs-5 fw-bold mb-0">Manajemen Resiko Tahun <%= @tahun %></h2>
           </div>
           <div class="col text-end">
-            <span><%= current_user.nama %></span>
-            |
-            <span><%= current_user.nik %></span>
+            <span><%= @opd.nama_opd %></span>
           </div>
         </div>
       </div>
-      <%= render 'table_daftar_resiko'  %>
+      <%= render 'filter/daftar_resiko' %>
     </div>
   </div>
 </div>

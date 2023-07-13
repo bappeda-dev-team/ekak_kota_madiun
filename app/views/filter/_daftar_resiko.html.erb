@@ -1,17 +1,14 @@
 <div class="card border-0 shadow" id="daftar_resiko">
   <div class="card-header">
-    <div class="row align-items-center">
-      <div class="col">
-        <h2 class="fs-5 fw-bold mb-0">Daftar Resiko -  Tahun <%= @tahun_bener %></h2>
-      </div>
-      <div class="col text-end">
-        <%= link_to "/cetak_daftar_resiko/#{@opd}/#{@tahun_bener}.pdf", class: 'btn btn-sm btn-primary', target: :_blank do %>
+    <div class="row align-items-start">
+      <div class="col-6 text-end">
+        <%= link_to "/cetak_daftar_resiko/#{@opd.id}/#{@tahun_bener}.pdf", class: 'btn btn-sm btn-primary', target: :_blank do %>
           PDF Daftar Resiko
           <i class="fas fa-file-pdf ms-2"></i>
         <% end %>
       </div>
-      <div class="col text-end">
-        <%= link_to "/cetak_daftar_resiko/#{@opd}/#{@tahun_bener}.xlsx", class: 'btn btn-sm btn-primary', target: :_blank do %>
+      <div class="col-6 text-end">
+        <%= link_to "/cetak_daftar_resiko/#{@opd.id}/#{@tahun_bener}.xlsx", class: 'btn btn-sm btn-primary', target: :_blank do %>
           Excel Daftar Resiko
           <i class="fas fa-file-excel ms-2"></i>
         <% end %>
@@ -41,7 +38,7 @@
         <tbody>
           <% @program_kegiatans.each.with_index(1) do |(program_kegiatan, sasarans), i| %>
             <tr>
-              <td class="text-gray-900 text-wrap" colspan="12"><%= program_kegiatan.nama_subkegiatan %></td>
+              <td class="text-gray-900 text-wrap fw-bolder" colspan="13">Subkegiatan: <%= program_kegiatan.nama_subkegiatan %></td>
             </tr>
             <tr class="border-bottom">
               <% sasarans.each do |show_sasaran| %>
@@ -52,6 +49,7 @@
                 <% peta_resiko_ha = peta_resiko(nilai_kemungkinan, nilai_skala_dampak) %>
                 <% nilai_peta_resiko_ha = nilai_peta_resiko(peta_resiko_ha) %>
 
+                <td class="text-wrap border-start border-end" rowspan="<%= row_indikator %>"><%= i %></td>
                 <td class="text-wrap border-start border-end" rowspan="<%= row_indikator %>"><%= show_sasaran.sasaran_kinerja %></td>
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>

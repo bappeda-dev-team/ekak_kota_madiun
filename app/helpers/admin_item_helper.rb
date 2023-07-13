@@ -27,7 +27,12 @@ module AdminItemHelper
       {
         title: 'Peta Rencana SPBE', href: index_opd_spbes_path,
         icon: 'fas fa-tablet-alt', identifier: 'spbe_opd'
+      },
+      {
+        title: 'Manajemen Resiko', href: daftar_resiko_sasaran_program_opds_path,
+        icon: 'fas fa-chart-line', identifier: 'sasaran_program_opds/daftar_resiko'
       }
+
     ]
   end
 
@@ -38,6 +43,7 @@ module AdminItemHelper
                    '\bpohon_kinerja\/manual|' \
                    '\bpohon_kinerja\/opd|' \
                    '\bspbes\/index_opd|' \
+                   '\bsasaran_program_opds/daftar_resiko|' \
                    '\bopds\/info)')
   end
 end

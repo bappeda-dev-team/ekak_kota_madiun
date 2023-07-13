@@ -309,7 +309,11 @@ Rails.application.routes.draw do
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  resources :kaks, path: "acuan_kerja"
+  resources :kaks, path: "acuan_kerja" do
+    collection do
+      get :laporan_kak
+    end
+  end
   # get "/acuan_kerja_new/:id/:tahun", to: "program_kegiatans#new_kak_format"
 
   resources :laporans, only: [:index] do
