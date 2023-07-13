@@ -15,4 +15,12 @@ module UsersHelper
   def subkegiatan_data(kode_sub_giat)
     ProgramKegiatan.find_by(kode_sub_giat: kode_sub_giat)
   end
+
+  def komentator?
+    current_user.has_any_role?(:super_admin, :reviewer)
+  end
+
+  def super_admin?
+    current_user.has_role?(:super_admin)
+  end
 end

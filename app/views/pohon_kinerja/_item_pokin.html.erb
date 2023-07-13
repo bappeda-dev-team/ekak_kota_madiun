@@ -19,8 +19,9 @@
       <span>Review: <%= kom.komentar %></span>
       <span>Reviewer:<%= kom.komentator %></span>
     <% end %>
-    <p class="komentar mt-3">
-      <%= link_to "Tambah Komentar", komentar_pokin_komentars_path(kode_opd: 'kota_madiun', strategi_id: strategi.id),
+    <% if komentator? %>
+      <p class="komentar mt-3">
+        <%= link_to "Tambah Komentar", komentar_pokin_komentars_path(kode_opd: 'kota_madiun', strategi_id: strategi.id),
                                   remote: true,
                                   class: 'btn btn-sm btn-outline-gray-900',
                                   data: { controller: 'form-modal',
@@ -28,7 +29,8 @@
                                           form_modal_location_param: 'form-komentar-body',
                                           bs_target: '#form-komentar',
                                           bs_toggle: 'modal' } %>
-    </p>
+      </p>
+    <% end %>
   <% else %>
     <% strategi.indikators.each do |ind| %>
       <p class="bg-info text-white px-2"><strong>INDIKATOR</strong></p>
@@ -57,17 +59,21 @@
     <div id="<%= dom_id(strategi, :komentar) %>">
       <%= render 'pohon_kinerja/daftar_komentars', komentars: strategi.komentars %>
     </div>
-    <p class="komentar mt-3">
-      <%= render 'shared/komentar_button',
+    <% if komentator? %>
+      <p class="komentar mt-3">
+        <%= render 'shared/komentar_button',
            link: komentar_pokin_komentars_path(kode_opd: strategi.opd.kode_unik_opd,
                                                strategi_id: strategi.id,
                                                jenis: local_assigns[:tipe]),
            form_name: 'form-komentar' %>
-    <% end %>
-  </p>
+      <% end %>
+    </p>
+  <% end %>
+  <hr>
   <div class="mt-3">
     <b >Dilaksanakan Oleh:</b>
   </div>
+  <hr>
   <div>
     <p><%= strategi.nama_pemilik %></p>
   </div>

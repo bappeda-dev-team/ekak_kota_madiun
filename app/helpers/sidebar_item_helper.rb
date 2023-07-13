@@ -23,7 +23,15 @@ module SidebarItemHelper
         icon: 'fas fa-book', identifier: 'usulans'
       },
       {
-        title: 'Rekap Pohon Kinerja', href: rekap_opd_pohon_kinerja_index_path,
+        title: 'SPIP', href: spip_index_path,
+        icon: 'fas fa-chalkboard', identifier: 'spip'
+      },
+      {
+        title: 'Pohon Kinerja Kota', href: rekap_pohon_kinerja_index_path,
+        icon: 'fas fa-bullseye', identifier: 'pohon_kinerja/rekap'
+      },
+      {
+        title: 'Pohon Kinerja OPD', href: rekap_opd_pohon_kinerja_index_path,
         icon: 'fas fa-tree', identifier: 'pohon_kinerja/rekap'
       },
       {
@@ -53,7 +61,9 @@ module SidebarItemHelper
                    '\blaporans\/laporan_usulan|\blaporans\/laporan_pohon|' \
                    '\blaporans\/laporan_kak|\blaporans\/laporan_rka|' \
                    '\brenstra|\brenja\/ranwal|' \
+                   '\bpohon_kinerja\/rekap|' \
                    '\bpohon_kinerja\/rekap_opd|' \
+                   '\bspip|' \
                    '\brenja\/rankir|\brenja\/penetapan)')
   end
 

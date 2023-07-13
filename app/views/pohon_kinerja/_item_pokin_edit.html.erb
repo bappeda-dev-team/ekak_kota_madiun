@@ -48,8 +48,9 @@
       <span>Review: <%= kom.komentar %></span>
       <span>Reviewer:<%= kom.komentator %></span>
     <% end %>
-    <p class="komentar mt-3">
-      <%= link_to "Tambah Komentar", komentar_pokin_komentars_path(kode_opd: 'kota_madiun', strategi_id: strategi.id),
+    <% if komentator? %>
+      <p class="komentar mt-3">
+        <%= link_to "Tambah Komentar", komentar_pokin_komentars_path(kode_opd: 'kota_madiun', strategi_id: strategi.id),
                                   remote: true,
                                   class: 'btn btn-sm btn-outline-gray-900',
                                   data: { controller: 'form-modal',
@@ -57,7 +58,8 @@
                                           form_modal_location_param: 'form-komentar-body',
                                           bs_target: '#form-komentar',
                                           bs_toggle: 'modal' } %>
-    </p>
+      </p>
+    <% end %>
   <% else %>
     <div class="strategi-indikator" id="<%= dom_id(strategi) %>">
       <span class="text-center"><%= strategi.strategi %></span>

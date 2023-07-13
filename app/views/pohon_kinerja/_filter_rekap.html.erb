@@ -34,8 +34,9 @@
             <% @isu_kota.each.with_index(1) do |(isu_kota, strategis), no_isu| %>
               <tr>
                 <th colspan="4">Isu Strategis Kota <%= no_isu %>: <%= isu_kota.isu_strategis %>
-                  &nbsp;
-                  <%= link_to clone_list_opd_pohon_kinerja_index_path(isu_strategis: isu_kota.id,
+                  <% if super_admin? %>
+                    &nbsp;
+                    <%= link_to clone_list_opd_pohon_kinerja_index_path(isu_strategis: isu_kota.id,
                                                                     tahun_sekarang: @tahun,
                                                                     jenis: 'kota'), remote: true,
                     data: {
@@ -46,7 +47,8 @@
                       bs_target: '#form-clone'
                     },
                     class: "btn btn-sm btn-primary" do %>
-                    <i class="fa fa-clone me-2"></i>Clone
+                      <i class="fa fa-clone me-2"></i>Clone
+                    <% end %>
                   <% end %>
                 </th>
               </tr>
@@ -59,8 +61,9 @@
                   <tr style="background-color: #E5FDD1;">
                     <td class="text-wrap">
                       <%= ind_kota.indikator %>
-                      <p class="komentar mt-3">
-                        <%= link_to "Tambah Komentar", komentar_pokin_komentars_path(kode_opd: 'kota_madiun', strategi_id: strategi.id),
+                      <% if komentator? %>
+                        <p class="komentar mt-3">
+                          <%= link_to "Tambah Komentar", komentar_pokin_komentars_path(kode_opd: 'kota_madiun', strategi_id: strategi.id),
                                                     remote: true,
                                                     class: 'btn btn-sm btn-warning',
                                                     data: { controller: 'form-modal',
@@ -68,7 +71,8 @@
                                                     form_modal_location_param: 'form-komentar-body',
                                                     bs_target: '#form-komentar',
                                                     bs_toggle: 'modal' } %>
-                      </p>
+                        </p>
+                      <% end %>
                     </td>
                     <td class=""><%= "#{ind_kota.target} #{ind_kota.satuan}" %></td>
                   </tr>
@@ -112,8 +116,9 @@
                                     bs_toggle: 'modal' } %>
                             </p>
                           <% end %>
-                        <p class="komentar mt-3">
-                          <%= link_to "Tambah Komentar", komentar_pokin_komentars_path(kode_opd: stra.opd.kode_unik_opd, strategi_id: stra.id),
+                          <% if komentator? %>
+                            <p class="komentar mt-3">
+                              <%= link_to "Tambah Komentar", komentar_pokin_komentars_path(kode_opd: stra.opd.kode_unik_opd, strategi_id: stra.id),
                                                       remote: true,
                                                       class: 'btn btn-sm btn-warning',
                                                       data: { controller: 'form-modal',
@@ -121,7 +126,8 @@
                                                       form_modal_location_param: 'form-komentar-body',
                                                       bs_target: '#form-komentar',
                                                       bs_toggle: 'modal' } %>
-                        </p>
+                            </p>
+                          <% end %>
                         </td>
                         <td class=""><%= "#{ind.target} #{ind.satuan}" %></td>
                       </tr>

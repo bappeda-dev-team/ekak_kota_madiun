@@ -10,7 +10,7 @@ module AdminItemHelper
         icon: 'fas fa-bullseye', identifier: 'isu_strategis_opds'
       },
       {
-        title: 'Pohon Kinerja', href: pohon_kinerja_index_path,
+        title: 'Pohon Kinerja', href: manual_pohon_kinerja_index_path,
         icon: 'fas fa-tree', identifier: 'pohon_kinerja'
       },
       {
@@ -27,10 +27,6 @@ module AdminItemHelper
       {
         title: 'Peta Rencana SPBE', href: index_opd_spbes_path,
         icon: 'fas fa-tablet-alt', identifier: 'spbe_opd'
-      },
-      {
-        title: 'SPIP', href: spip_index_path,
-        icon: 'fas fa-chalkboard', identifier: 'spip'
       }
     ]
   end
@@ -39,9 +35,9 @@ module AdminItemHelper
     collapse_class('(' \
                    '\btujuan_opds|\bisu_strategis_opds|' \
                    '\bstrategi_opds|\bsasaran_opds|' \
-                   '\bpohon_kinerja|' \
+                   '\bpohon_kinerja\/manual|' \
                    '\bpohon_kinerja\/opd|' \
                    '\bspbes\/index_opd|' \
-                   '\bpohon_kinerja\/rekap_opd|\bopds\/info)')
+                   '\bopds\/info)')
   end
 end

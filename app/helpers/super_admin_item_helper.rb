@@ -89,14 +89,6 @@ module SuperAdminItemHelper
       {
         title: 'Pohon Kinerja', href: kota_pohon_kinerja_index_path,
         icon: 'fas fa-bullseye', identifier: 'pohon_kinerja/kota'
-      },
-      {
-        title: 'Rekap Pohon Kinerja', href: rekap_pohon_kinerja_index_path,
-        icon: 'fas fa-bullseye', identifier: 'pohon_kinerja/rekap'
-      },
-      {
-        title: 'SPIP', href: spip_index_path,
-        icon: 'fas fa-chalkboard', identifier: 'spip'
       }
     ]
   end
@@ -105,9 +97,7 @@ module SuperAdminItemHelper
     collapse_class('(' \
                    '\btujuan_kota|\bisu_strategis_kota|' \
                    '\bstrategi_kota|\bsasaran_kota|' \
-                   '\bpohon_kinerja\/kota|' \
-                   '\bpohon_kinerja\/rekap|' \
-                   '\bspip)')
+                   '\bpohon_kinerja\/kota)')
   end
 
   def spbe_items

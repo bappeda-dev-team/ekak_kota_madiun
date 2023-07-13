@@ -39,6 +39,7 @@
                                     bs_toggle: 'modal' } %>
           </p>
         <% end %>
+        <% if current_user.has_any_role?(:super_admin, :reviewer) %>
         <p class="komentar mt-3">
           <%= link_to "Tambah Komentar", komentar_pokin_komentars_path(kode_opd: strategi.opd.kode_unik_opd, strategi_id: strategi.id),
                                       remote: true,
@@ -49,6 +50,7 @@
                                       bs_target: '#form-komentar',
                                       bs_toggle: 'modal' } %>
         </p>
+        <% end %>
       </td>
       <td class="text-wrap"><%= "#{ind_kabid.target} #{ind_kabid.satuan}" %></td>
     </tr>
