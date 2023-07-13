@@ -51,7 +51,7 @@
           </li>
         <% else %>
           <li class="nav-item" >
-            <%= active_link_to(item[:href], wrap_tag: :li, wrap_class: 'nav-item',class: "nav-link") do %>
+            <%= active_link_to(item[:href], active: :exact, wrap_tag: :li, wrap_class: 'nav-item',class: "nav-link") do %>
               <span class="sidebar-icon">
                 <i class="<%= item[:icon] %> icon icon-xs me-2"></i>
               </span>
