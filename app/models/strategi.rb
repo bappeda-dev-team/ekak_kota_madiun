@@ -178,16 +178,22 @@ class Strategi < ApplicationRecord
     #   { indikator_subkegiatan: {} }
   end
 
-  def subkegiatan_strategi
-    sasaran.program_kegiatan.nama_subkegiatan
+  def programs_strategi
+    operational_objectives.map(&:program_kegiatan_strategi).group_by(&:nama_program)
+  rescue NoMethodError
+    { Kosong: [] }
+  end
+
+  def kegiatan_strategi
+    sasaran.program_kegiatan.nama_kegiatan
   rescue NoMethodError
     'Kosong'
   end
 
-  def programs_strategi
-    operational_objectives.map(&:program_kegiatan_strategi).compact_blank.group_by(&:nama_program)
+  def subkegiatan_strategi
+    sasaran.program_kegiatan.nama_subkegiatan
   rescue NoMethodError
-    { Kosong: [] }
+    'Kosong'
   end
 
   def subkegiatans_sasarans

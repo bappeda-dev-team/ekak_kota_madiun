@@ -71,7 +71,6 @@ wb.add_worksheet(name: "#{@opd.nama_opd.truncate(20)}") do |sheet|
   sheet.add_row ["Indikator Kinerja Kegiatan (Kumpulan Output)"], style: project_heading, offset: 7
   sheet.add_row ["Sub Kegiatan (Output)"], style: project_heading, offset: 8
   sheet.add_row ["Indikator Kinerja Output"], style: project_heading, offset: 9
-  sheet.add_row [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
   # opd
   sheet.add_row ["Pemerintah Kota Madiun"]
   @sasaran_opd_spip.each do |opd, strategis|
@@ -84,7 +83,7 @@ wb.add_worksheet(name: "#{@opd.nama_opd.truncate(20)}") do |sheet|
                       offset: 3
       end
       strategi.strategi_eselon_tigas.each do |strategi_program|
-        strategi_program.programs_strategi.keys.each do |program|
+        strategi_program.programs_strategi.each_key do |program|
           sheet.add_row [strategi_program.sasaran, nil, nil, nil, nil, nil,
                          program],
                         offset: 4
@@ -95,13 +94,13 @@ wb.add_worksheet(name: "#{@opd.nama_opd.truncate(20)}") do |sheet|
         end
         strategi_program.strategi_eselon_empats.each do |strategi_kegiatan|
           sheet.add_row [strategi_kegiatan.sasaran, nil, nil, nil, nil,
-                         strategi_kegiatan.program_kegiatan_strategi&.nama_kegiatan], offset: 6
+                         strategi_kegiatan.kegiatan_strategi], offset: 6
           strategi_kegiatan.indikator_sasarans.each do |indikator_keg|
             sheet.add_row [indikator_keg.indikator_kinerja, nil, nil, nil, nil,
                            indikator_keg.satuan, indikator_keg.target,
                            indikator_keg.satuan], offset: 7
           end
-          sheet.add_row [strategi_kegiatan.program_kegiatan_strategi&.nama_subkegiatan], offset: 8
+          sheet.add_row [strategi_kegiatan.subkegiatan_strategi], offset: 8
           indikator_sub = strategi_kegiatan.program_kegiatan_strategi&.indikator_subkegiatan_tahun(@tahun, @opd.kode_unik_opd)
           sheet.add_row [indikator_sub&.dig(:indikator), nil, nil,
                          indikator_sub&.dig(:satuan), indikator_sub&.dig(:target), indikator_sub&.dig(:satuan)], offset: 9

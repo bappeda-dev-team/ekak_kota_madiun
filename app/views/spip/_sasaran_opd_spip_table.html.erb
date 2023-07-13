@@ -52,7 +52,7 @@
             <td class="border"></td>
             <td class="border"></td>
             <td colspan="9" class="border">
-              <% strategi_program.programs_strategi.keys.each do |program| %>
+              <% strategi_program.programs_strategi.each_key do |program| %>
                 <p class="program">Nama Program: <%= program %></p>
               <% end %>
               <p>Sasaran Program: <%= strategi_program.sasaran %></p>
@@ -80,7 +80,7 @@
               <td class="border"></td>
               <td class="border"></td>
               <td colspan="7" class="border">
-                <p class="program">Nama Kegiatan: <%= strategi_kegiatan.program_kegiatan_strategi&.nama_kegiatan %></p>
+                <p class="program">Nama Kegiatan: <%= strategi_kegiatan.kegiatan_strategi %></p>
                 <p>Sasaran Kegiatan: <%= strategi_kegiatan.sasaran %></p>
               </td>
             </tr>
@@ -109,7 +109,7 @@
               <td class="border"></td>
               <td class="border"></td>
               <td colspan="5" class="border">
-                <p class="program">Nama Subkegiatan: <%= strategi_kegiatan.program_kegiatan_strategi&.nama_subkegiatan %></p>
+                <p class="program">Nama Subkegiatan: <%= strategi_kegiatan.subkegiatan_strategi %></p>
               </td>
             </tr>
             <% indikator_sub = strategi_kegiatan.program_kegiatan_strategi&.indikator_subkegiatan_tahun(@tahun, @opd.kode_unik_opd) %>
