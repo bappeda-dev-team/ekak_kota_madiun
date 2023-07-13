@@ -43,11 +43,19 @@ class SpipQueries
   end
 
   def spip_sasaran_opd
-    @opd.strategi_eselon2.where(tahun: @tahun).group_by(&:opd)
+    if @opd.id.in?(opd_khusus)
+      @opd.strategi_eselon2b.where(tahun: @tahun).group_by(&:opd)
+    else
+      @opd.strategi_eselon2.where(tahun: @tahun).group_by(&:opd)
+    end
   end
 
   def strategi_kotas
     @tujuan_kota.sasarans.map(&:strategi_kota).flatten!
+  end
+
+  def opd_khusus
+    [145, 122, 123]
   end
 
   memoize :strategi_kotas

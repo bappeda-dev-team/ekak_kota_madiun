@@ -35,6 +35,10 @@ module AdminItemHelper
       {
         title: 'SPBE', href: index_opd_spbes_path,
         icon: 'fas fa-tablet-alt', identifier: 'spbe_opd'
+      },
+      {
+        title: 'SPIP', href: spip_index_path,
+        icon: 'fas fa-chalkboard', identifier: 'spip'
       }
     ]
   end
