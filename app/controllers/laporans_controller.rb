@@ -88,30 +88,28 @@ class LaporansController < ApplicationController
   end
 
   def ranwal
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @nama_opd = @opd.nama_opd
-    @program_kegiatans = @opd.program_renstra
+    set_program_kegiatans
   end
 
   def rankir1
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @nama_opd = @opd.nama_opd
-    @program_kegiatans = @opd.program_renstra
+    set_program_kegiatans
   end
 
   def rankir2
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @nama_opd = @opd.nama_opd
-    @program_kegiatans = @opd.program_renstra
+    set_program_kegiatans
   end
 
   def penetapan
+    set_program_kegiatans
+  end
+
+  private
+
+  def set_program_kegiatans
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
     @program_kegiatans = @opd.program_renstra
   end
-
-  private
 
   def set_default_attr
     @user = current_user
