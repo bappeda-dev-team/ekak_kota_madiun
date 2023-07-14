@@ -19,7 +19,6 @@ module SidebarItemHelper
         title: 'Usulan', href: "#",
         multi: true, collections: laporan_usulans,
         id_target: 'laporan-usulans',
-        collapse_items: collapsed_laporan_usulan_items,
         icon: 'fas fa-book', identifier: 'usulans'
       },
       {
@@ -50,7 +49,6 @@ module SidebarItemHelper
         title: 'Renja', href: "#",
         multi: true, collections: renja_items,
         id_target: 'renja-items',
-        collapse_items: collapsed_renja_items,
         icon: 'fas fa-tasks', identifier: 'renja'
       },
       {
@@ -58,26 +56,6 @@ module SidebarItemHelper
         icon: 'fas fa-archive', identifier: 'rekap_sasaran'
       }
     ]
-  end
-
-  def collapsed_laporan_items
-    collapse_class('(' \
-                   '\blaporans\/laporan_usulan|\blaporans\/laporan_pohon|' \
-                   '\blaporans\/laporan_kak|\blaporans\/laporan_rka|' \
-                   '\brenstra|\brenja\/ranwal|' \
-                   '\bpohon_kinerja\/rekap|' \
-                   '\bpohon_kinerja\/rekap_opd|' \
-                   '\bspip|' \
-                   '\brenja\/rankir|\brenja\/penetapan|' \
-                   '\brencana_kinerja\/rekap_sasaran)')
-  end
-
-  def collapse_class(identifier)
-    if request.path.match(/\b#{identifier}/)
-      { aria: 'true', sub_menu: 'show', menu: '' }
-    else
-      { aria: 'false', sub_menu: 'collapse', menu: 'collapsed' }
-    end
   end
 
   def status_icon(status)

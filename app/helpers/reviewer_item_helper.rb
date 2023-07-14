@@ -28,23 +28,11 @@ module ReviewerItemHelper
       },
       {
         title: 'Renja', href: "#",
-        multi: true, collections: laporan_renja_items,
+        multi: true,
+        collections: laporan_renja_items,
         id_target: 'renja-items',
-        collapse_items: collapsed_laporan_renja_items,
         icon: 'fas fa-tasks', identifier: 'renja'
       }
     ]
-  end
-
-  def collapsed_reviewer_items
-    collapse_class('(\bpohon_kinerja\/review_opd|\bpohon_kinerja\/review_kota)')
-  end
-
-  def collapsed_laporan_reviewer_items
-    collapse_class('(' \
-                   '\blaporans\/laporan_usulan|' \
-                   '\blaporans\/laporan_kak|\blaporans\/laporan_rka|' \
-                   '\blaporans\/renstra|\blaporans\/ranwal|' \
-                   '\blaporans\/rankir1|\blaporans\/rankir2|\blaporans\/penetapan)')
   end
 end

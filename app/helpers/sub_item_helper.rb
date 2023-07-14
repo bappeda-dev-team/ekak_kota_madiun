@@ -9,10 +9,6 @@ module SubItemHelper
     ]
   end
 
-  def collapsed_item_usulan
-    collapse_class('(\binovasis|\basn_musrenbangs|\bmusrenbangs|\bpokpirs|\bmandatoris)')
-  end
-
   def anggaran_items
     [
       { title: 'SSH', href: anggaran_sshes_path, identifier: 'anggaran_ssh' },
@@ -35,10 +31,6 @@ module SubItemHelper
     ]
   end
 
-  def collapsed_laporan_renja_items
-    collapse_class('(\blaporans\/ranwal|\blaporans\/rankir1|\blaporans\/rankir2|\blaporans\/penetapan)')
-  end
-
   def renja_items
     [
       { title: 'Ranwal', href: renja_ranwal_path, identifier: 'renja/ranwal' },
@@ -46,9 +38,5 @@ module SubItemHelper
       { title: 'Rankir - 2', href: renja_rankir_path, identifier: 'renja/rankir' },
       { title: 'Penetapan', href: renja_penetapan_path, identifier: 'renja/penetapan' }
     ]
-  end
-
-  def collapsed_renja_items
-    collapse_class('(\brenja/ranwal|\brenja/rankir|\brenja/penetapan)')
   end
 end

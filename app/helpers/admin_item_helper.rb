@@ -32,18 +32,6 @@ module AdminItemHelper
         title: 'Manajemen Resiko', href: daftar_resiko_sasaran_program_opds_path,
         icon: 'fas fa-chart-line', identifier: 'sasaran_program_opds/daftar_resiko'
       }
-
     ]
-  end
-
-  def collapsed_perencanaan_opd_items
-    collapse_class('(' \
-                   '\btujuan_opds|\bisu_strategis_opds|' \
-                   '\bstrategi_opds|\bsasaran_opds|' \
-                   '\bpohon_kinerja\/manual|' \
-                   '\bpohon_kinerja\/opd|' \
-                   '\bspbes\/index_opd|' \
-                   '\bsasaran_program_opds/daftar_resiko|' \
-                   '\bopds\/info)')
   end
 end

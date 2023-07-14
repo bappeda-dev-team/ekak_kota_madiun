@@ -5,7 +5,6 @@ module UserItemHelper
         title: 'Usulan', href: "#",
         multi: true, collections: usulan_users,
         id_target: 'perencanaan-usulan',
-        collapse_items: collapsed_item_usulan_user,
         icon: 'fas fa-book', identifier: 'usulans'
       },
       {
@@ -35,17 +34,6 @@ module UserItemHelper
     ]
   end
 
-  def collapsed_perencanaan_items
-    collapse_class('(' \
-                   '\busulan_inisiatif|\busulan_musrenbang|' \
-                   '\busulan_pokpir|\busulan_mandatori|' \
-                   '\bpohon_kinerja|' \
-                   '\bpohon_kinerja/asn|' \
-                   '\bgenders/gap|' \
-                   '\brencana_kinerja\b/|\brincian_belanja|' \
-                   '\bsasaran_program_opds/daftar_resiko)')
-  end
-
   def usulan_users
     [
       { title: 'Musrenbang', href: usulan_musrenbang_path, identifier: 'usulan_musrenbang' },
@@ -53,10 +41,6 @@ module UserItemHelper
       { title: 'Mandatori', href: usulan_mandatori_path, identifier: 'usulan_mandatori' },
       { title: 'Inisiatif Walikota', href: usulan_inisiatif_path, identifier: 'usulan_inisiatif' }
     ]
-  end
-
-  def collapsed_item_usulan_user
-    collapse_class('(\busulan_inisiatif|\busulan_musrenbang|\busulan_pokpir|\busulan_mandatori)')
   end
 
   def laporan_usulans
@@ -67,9 +51,5 @@ module UserItemHelper
       { title: 'Inisiatif Walikota', href: '/laporan_usulan/inisiatif',
         identifier: 'laporan_usulan\/inisiatif' }
     ]
-  end
-
-  def collapsed_laporan_usulan_items
-    collapse_class('(\blaporan_usulan)')
   end
 end
