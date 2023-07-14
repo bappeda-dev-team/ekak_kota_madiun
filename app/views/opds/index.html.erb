@@ -1,30 +1,13 @@
-<div class="row">
-  <div class="col-12">
-    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
-      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
-        <li class="breadcrumb-item">
-          <%= link_to root_path do %>
-            <i class="fas fa-home"></i>
-          <% end %>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">List OPD</li>
-      </ol>
-    </nav>
-    <% if current_user.has_role? :admin %>
-      <%= render 'shared/filter_card', filter_url: '/filter_opd' %>
-    <% end %>
-    <div class="card border-0 shadow"  id="hasil_filter_opd">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">List OPD</h2>
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        ...
-      </div>
-    </div>
-  </div>
-</div>
-<%= render 'modal' %>
+<%= content_for :html_title, "SPIP" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Perencanaan OPD</li>
+  <li class="breadcrumb-item active" aria-current="page">Info OPD</li>
+<% end %>
+<% content_for :view_utama do %>
+  <% if cookies[:tahun] && cookies[:opd] %>
+    <%= render partial: 'hasil_filter_opd', locals: { opds: @opds } %>
+  <% else %>
+    <%= render 'shared/pilih_tahun_dan_opd' %>
+  <% end %>
+  <%= render 'modal' %>
+<% end %>

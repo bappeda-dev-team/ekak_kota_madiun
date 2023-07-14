@@ -12,6 +12,8 @@ class OpdsController < ApplicationController
   end
 
   def info
+    @kode_opd = cookies[:opd]
+    @opds = Opd.where(kode_unik_opd: @kode_opd)
     respond_to do |f|
       f.html { render :index }
     end
