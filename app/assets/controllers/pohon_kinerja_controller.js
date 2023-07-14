@@ -34,7 +34,7 @@ export default class extends Controller {
                         textSelection: true,
                         direction: 'horizontal',
                         scrollMode: 'transform'
-                        });
+                });
         }
 
         togglePokin() {
@@ -77,16 +77,16 @@ export default class extends Controller {
                 const treePlugin = new mitchTree.boxedTree()
                         .setData(isu_kota)
                         .setElement(targetEl)
-                        .setIdAccessor(function(data) {
+                        .setIdAccessor(function (data) {
                                 return data.id;
                         })
-                        .setChildrenAccessor(function(data) {
+                        .setChildrenAccessor(function (data) {
                                 return data.children;
                         })
-                        .setBodyDisplayTextAccessor(function(data) {
+                        .setBodyDisplayTextAccessor(function (data) {
                                 return data.description;
                         })
-                        .setTitleDisplayTextAccessor(function(data) {
+                        .setTitleDisplayTextAccessor(function (data) {
                                 return data.name;
                         })
                         .setOrientation('topToBottom')
@@ -146,8 +146,9 @@ export default class extends Controller {
                                         saveAs(blob, judul)
                                 })
                         })
-                        .catch(function(error) {
+                        .catch(function (error) {
                                 console.error('oops, something went wrong!', error);
+                                alert('terjadi kesalahan ..')
                         });
         }
 
@@ -167,7 +168,7 @@ export default class extends Controller {
                                         saveAs(blob, judul)
                                 })
                         })
-                        .catch(function(error) {
+                        .catch(function (error) {
                                 console.error('oops, something went wrong!', error);
                                 alert('terjadi kesalahan ..')
                         });
@@ -179,16 +180,16 @@ export default class extends Controller {
                 const treePlugin = new mitchTree.boxedTree()
                         .setData(isu_kota)
                         .setElement(targetEl)
-                        .setIdAccessor(function(data) {
+                        .setIdAccessor(function (data) {
                                 return data.id;
                         })
-                        .setChildrenAccessor(function(data) {
+                        .setChildrenAccessor(function (data) {
                                 return data.children;
                         })
-                        .setBodyDisplayTextAccessor(function(data) {
+                        .setBodyDisplayTextAccessor(function (data) {
                                 return data.description;
                         })
-                        .setTitleDisplayTextAccessor(function(data) {
+                        .setTitleDisplayTextAccessor(function (data) {
                                 return data.name;
                         })
                         .setOrientation('topToBottom')
@@ -209,7 +210,7 @@ export default class extends Controller {
                         .back()
                         .initialize();
                 var nodes = treePlugin.getNodes();
-                nodes.forEach(function(node, index, arr) {
+                nodes.forEach(function (node, index, arr) {
                         treePlugin.expand(node);
                 });
                 treePlugin.update(treePlugin.getRoot());
@@ -217,7 +218,7 @@ export default class extends Controller {
 
         expandAllTree(treePlugin) {
                 var nodes = treePlugin.getNodes();
-                nodes.forEach(function(node, index, arr) {
+                nodes.forEach(function (node, index, arr) {
                         treePlugin.expand(node);
                 });
                 treePlugin.update(treePlugin.getRoot());
