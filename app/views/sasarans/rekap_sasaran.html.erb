@@ -6,16 +6,25 @@
 <% content_for :view_utama do %>
   <div class="card border-0 shadow">
     <div class="card-header">
-      <div class="row align-items-center">
+      <div class="row">
         <div class="col">
-          <h2 class="fs-5 fw-bold mb-0">Rencana Kinerja Tahun <%= @tahun %></h2>
+          <h2 class="fs-5 fw-bold mb-0">Rekap Rencana Kinerja Tahun <%= @tahun %></h2>
         </div>
-        <div class="col text-end">
-          <span><%= current_user.nama %></span>
-          |
-          <span><%= current_user.nik %></span>
+        <div class="col-auto">
+          <div class="text-end">
+            <strong><%= @opd.nama_opd %></strong>
+          </div>
+          <div class="text-end">
+            <span><%= @user.nama %></span>
+            |
+            <span><%= @user.nik %></span>
+          </div>
         </div>
       </div>
+      <hr>
+      <%# filter tahun %>
+      <%= render partial: 'shared/filter_user_tahun', locals: { user: @user, tahun: @tahun } %>
+      <%# end %>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -24,7 +33,9 @@
             <tr>
               <th class="border text-center" scope="col">No</th>
               <th class="border text-center" scope="col">Pemilik Rencana</th>
+              <th class="border text-center" scope="col">Strategi</th>
               <th class="border text-center" scope="col">Rencana Kinerja</th>
+              <th class="border text-center" scope="col">Tahun</th>
               <th class="border text-center" scope="col">Indikator Kinerja</th>
               <th class="border text-center" scope="col">Target</th>
               <th class="border text-center" scope="col">Satuan</th>
@@ -34,9 +45,14 @@
           <tbody>
             <% @sasarans.each.with_index(1) do |sasaran, i| %>
               <tr>
+                <td class="border fw-bolder text-wrap" colspan="9">Subkegiatan: <%= sasaran.subkegiatan %></td>
+              </tr>
+              <tr>
                 <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= i %></td>
                 <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
+                <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.strategi_sasaran %></td>
                 <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
+                <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.tahun %></td>
                 <% if sasaran.indikator_sasarans.any? %>
                   <%= indikator_sasaran(sasaran) %>
                 <% else %>
@@ -45,13 +61,21 @@
                   </td>
                 <% end %>
                 <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">
-                  <%= render 'sasarans/tombol_action_sasaran', sasaran: sasaran %>
+                  <div class="row justify-content-center w-100">
+                    <div class="col">
+                      <%= link_to detail_sasaran_path(sasaran), target: "_blank", rel: "nofollow",
+                                class: "m-3 btn btn-sm btn-info w-100" do %>
+                        <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
+                        KAK
+                      <% end %>
+                    </div>
+                  </div>
                 </td>
               </tr>
               <% row_indikator_sasaran(sasaran).each do |indikator| %>
                 <%= indikator %>
               <% end %>
-              <% row_tahapan_sasaran(sasaran).each do |tahapan| %>
+              <% row_tahapan_sasaran(sasaran, colspan: 9).each do |tahapan| %>
                 <%= tahapan %>
               <% end %>
             <% end %>

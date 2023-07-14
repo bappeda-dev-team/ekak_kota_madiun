@@ -1,20 +1,24 @@
 <% action_url = local_assigns[:action_url] %>
 <% kode_opd = local_assigns[:kode_opd] || '' %>
+<% extra = local_assigns[:extra] || true %>
 <div class="col">
-  <form action="<%= action_url %>" method="GET" class="row">
-    <input type="hidden" name="filter_query" value="tahun">
-    <input type="hidden" name="kode_opd" value="<%= kode_opd %>">
+  <%= form_with(url: action_url, local: true, method: :get, class: 'row') do |form| %>
+    <% if extra %>
+      <%= form.hidden_field :filter_query, readonly: true, value: "tahun" %>
+      <%= form.hidden_field :kode_opd, readonly: true, value: kode_opd %>
+    <% end %>
     <div class="col">
-      <select name="tahun" id="tahun" data-controller="dropdown" data-placeholder="Pilih Tahun">
-        <option></option>
-        <option value="all">All</option>
-        <% for tahun in (2020..Date.today.year + 1) do %>
-          <option value="<%= tahun %>"><%= tahun %></option>
-        <% end %>
-      </select>
+      <%= form.select :tahun, [], {include_blank: true},
+       { data: {
+                  placeholder: "Filter Tahun",
+                  controller: 'dropdown',
+                  dropdown_jenis_value: 'ajax',
+                  dropdown_url_value: tahuns_path(format: :json)
+               }
+       } %>
     </div>
     <div class="col-auto">
-      <input type="submit" value="Filter" class="btn btn-primary">
+      <%= form.submit 'Filter', name: 'filter', class: 'btn btn-primary' %>
     </div>
-  </form>
+  <% end %>
 </div>

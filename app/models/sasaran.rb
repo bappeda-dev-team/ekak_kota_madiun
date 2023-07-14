@@ -485,4 +485,10 @@ class Sasaran < ApplicationRecord
   def anggaran_spbe
     sasaran_milik == 'spbe' ? anggaran : total_anggaran
   end
+
+  def strategi_sasaran
+    strategi.strategi
+  rescue NoMethodError
+    'Kosong'
+  end
 end

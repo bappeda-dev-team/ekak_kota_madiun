@@ -203,6 +203,7 @@ Rails.application.routes.draw do
       get :khusus
       get :dropdown_user
       get :list_all
+      get :user_opd
     end
 
     member do
@@ -226,6 +227,7 @@ Rails.application.routes.draw do
       get :anggaran, path: "rincian_anggaran"
       get :sasaran_admin
       get :new_spbe
+      get :rekap_sasaran
     end
     member do
       get :data_detail

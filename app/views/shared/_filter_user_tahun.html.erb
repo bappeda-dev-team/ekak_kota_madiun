@@ -1,0 +1,31 @@
+<div class="row align-items-center">
+  <div class="label">
+    <p class="fs-5 fw-bold mb-2">Filter</p>
+  </div>
+  <div class="col">
+    <%= form_with(url: rekap_sasaran_sasarans_path, local: true, method: :get, class: 'row') do |form| %>
+      <div class="col-5">
+        <%= form.select :nip_asn, selected_user(user) ,{include_blank: true},
+                 { required: true,
+                     data: { "placeholder": "Pilih ASN",
+                         controller: 'dropdown',
+                         dropdown_jenis_value: 'ajax',
+                         dropdown_url_value: user_opd_users_path(format: :json)
+                     } }  %>
+      </div>
+      <div class="col">
+        <%= form.select :tahun, selected_tahun(tahun), {include_blank: true},
+                 { data: {
+                     placeholder: "Tahun",
+                     controller: 'dropdown',
+                     dropdown_jenis_value: 'ajax',
+                     dropdown_url_value: tahuns_path(format: :json)
+                 }
+                 } %>
+      </div>
+      <div class="col">
+        <%= form.submit 'Filter', name: 'filter', class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+</div>

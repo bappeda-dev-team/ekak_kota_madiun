@@ -9,6 +9,15 @@ class SasaransController < ApplicationController
     @sasarans = @user.sasarans_tahun(@tahun)
   end
 
+  def rekap_sasaran
+    @tahun = params[:tahun]
+    @nip_asn = params[:nip_asn]
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd) || current_user.opd
+    @user = User.find_by(nik: @nip_asn) || current_user
+    @sasarans = @user.sasarans.where('tahun ILIKE ?', "%#{@tahun}%")
+  end
+
   def anggaran
     @tahun = cookies[:tahun] || Date.current.year
     @subkegiatan_sasarans = @user.subkegiatan_sasarans_tahun(@tahun)

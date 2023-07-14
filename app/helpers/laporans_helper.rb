@@ -51,11 +51,11 @@ module LaporansHelper
     end
   end
 
-  def row_tahapan_sasaran(sasaran)
+  def row_tahapan_sasaran(sasaran, colspan: 7)
     sasaran.tahapans.map do |tahapan|
       "
         <tr>
-          <td class='border text-wrap' colspan='7'>Renaksi #{tahapan.urutan}: #{tahapan.tahapan_kerja}</td>
+          <td class='border text-wrap' colspan='#{colspan}'>Renaksi #{tahapan.urutan}: #{tahapan.tahapan_kerja}</td>
         </tr>
       ".html_safe
     end

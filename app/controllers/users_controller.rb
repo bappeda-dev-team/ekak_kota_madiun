@@ -24,6 +24,15 @@ class UsersController < ApplicationController
     @users = User.opd_by_role(params[:opd], 'asn')
   end
 
+  def user_opd
+    kode_opd = cookies[:opd] || ''
+    opd = Opd.find_by(kode_unik_opd: kode_opd)
+    return if opd.nil?
+
+    user_search = params[:q] || ''
+    @users = opd.users.non_admin.aktif.where('users.nama ILIKE ?', "%#{user_search}%")
+  end
+
   def user_search
     kode_opd = params[:kode_opd] || ''
     user_search = params[:q] || ''

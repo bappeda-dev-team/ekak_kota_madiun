@@ -23,4 +23,8 @@ module UsersHelper
   def super_admin?
     current_user.has_role?(:super_admin)
   end
+
+  def selected_user(user)
+    options_for_select([[user.nama, user.nik]], selected: user.nik)
+  end
 end
