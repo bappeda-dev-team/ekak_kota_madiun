@@ -19,7 +19,7 @@
         <div class="row">
           <% if content_for?(:navigation) %>
             <div class="col-12">
-              <%= render 'layouts/head_content' %>
+              <%= render partial: 'layouts/head_content', cached: true %>
               <%= yield :view_utama %>
             </div>
           <% else %>

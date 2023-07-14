@@ -6,6 +6,5 @@
     <span class="sidebar-text">Dashboard</span>
   <% end %>
 </li>
-<%= render 'shared/item_perencanaan_opd' %>
-<%= render partial: 'shared/sidebar_item', locals: { title: "Perencanaan OPD", items: perencanaan_opd_items , target: 'perencanaan-opd-items' } %>
-<%= render partial: 'shared/sidebar_item', locals: { title: "Laporan", items: laporan_items , target: 'laporan-items' } %>
+<%= render partial: 'shared/sidebar_item', locals: { title: "Perencanaan OPD", items: perencanaan_opd_items , target: 'perencanaan-opd-items' }, cached: true %>
+<%= render partial: 'shared/sidebar_item', locals: { title: "Laporan", items: laporan_items , target: 'laporan-items' }, cached: true %>
