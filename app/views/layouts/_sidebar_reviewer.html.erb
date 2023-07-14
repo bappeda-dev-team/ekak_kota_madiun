@@ -1,2 +1,2 @@
-<%= render 'shared/item_reviewer' %>
-<%= render 'shared/item_laporan_reviewer' %>
+<%= render partial: 'shared/sidebar_item', locals: { title: "Review", items: reviewer_items , target: 'reviewer-items' } %>
+<%= render partial: 'shared/sidebar_item', locals: { title: "Laporan Review", items: laporan_reviewer_items , target: 'laporan-reviewer-items' } %>

@@ -5,14 +5,12 @@ module SuperAdminItemHelper
         title: 'Master Usulan', href: "#",
         multi: true, collections: usulan_items,
         id_target: "master-usulan",
-        collapse_items: collapsed_item_usulan,
         icon: 'fas fa-book-open', identifier: 'usulans'
       },
       {
         title: 'Master Anggaran', href: "#",
         multi: true, collections: anggaran_items,
         id_target: "master-anggaran",
-        collapse_items: collapsed_item_anggaran,
         icon: 'fas fa-coins', identifier: 'anggaran'
       },
       {
@@ -47,25 +45,9 @@ module SuperAdminItemHelper
         title: 'SPBE', href: "#",
         multi: true, collections: spbe_items,
         id_target: "spbe-item",
-        collapse_items: collapsed_item_spbe,
         icon: 'fas fa-tablet-alt', identifier: 'spbes'
       }
     ]
-  end
-
-  def collapsed_super_admin_items
-    collapse_class('(' \
-                   '\bmusrenbangs|\bpokpirs|' \
-                   '\bmandatoris|\binovasis|' \
-                   '\banggaran_sshes|\banggaran_sbus|' \
-                   '\banggaran_hspks|\brekenings|' \
-                   '\blist_all|\btematiks|' \
-                   '\bperiodes|\btahuns|' \
-                   '\bkelompok_anggarans|' \
-                   '\bdomains|' \
-                   '\bsubdomains|' \
-                   '\bkebutuhans|' \
-                   '\badminsasarans|\busers\/khusus)')
   end
 
   def perencanaan_kota_items # rubocop:disable Metrics/MethodLength
@@ -93,13 +75,6 @@ module SuperAdminItemHelper
     ]
   end
 
-  def collapsed_perencanaan_kota_items
-    collapse_class('(' \
-                   '\btujuan_kota|\bisu_strategis_kota|' \
-                   '\bstrategi_kota|\bsasaran_kota|' \
-                   '\bpohon_kinerja\/kota)')
-  end
-
   def spbe_items
     [
       {
@@ -112,9 +87,5 @@ module SuperAdminItemHelper
         title: 'Kebutuhan SPBE', href: kebutuhans_path, identifier: 'kebutuhan'
       }
     ]
-  end
-
-  def collapsed_item_spbe
-    collapse_class('(\bdomains|\bsubdomains|\bkebutuhans)')
   end
 end

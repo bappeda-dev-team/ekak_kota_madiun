@@ -7,4 +7,5 @@
   <% end %>
 </li>
 <%= render 'shared/item_perencanaan_opd' %>
-<%= render 'shared/item_laporan' %>
+<%= render partial: 'shared/sidebar_item', locals: { title: "Perencanaan OPD", items: perencanaan_opd_items , target: 'perencanaan-opd-items' } %>
+<%= render partial: 'shared/sidebar_item', locals: { title: "Laporan", items: laporan_items , target: 'laporan-items' } %>
