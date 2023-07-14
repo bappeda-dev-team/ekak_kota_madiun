@@ -12,10 +12,10 @@ class SasaranProgramOpdsController < ApplicationController
     @tahun = cookies[:tahun] || Date.current.year
     @kode_opd = cookies[:opd]
     # @subkegiatan_sasarans = @user.subkegiatan_sasarans_tahun(@tahun)
-    @daftar_resiko = DaftarResiko.new(kode_unik_opd: @kode_opd, tahun: @tahun)
+    daftar_resiko = DaftarResiko.new(kode_unik_opd: @kode_opd, tahun: @tahun)
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @tahun_bener = @daftar_resiko.tahun
-    @program_kegiatans = @daftar_resiko.daftar_resiko_opd
+    @tahun_bener = daftar_resiko.tahun
+    @program_kegiatans = daftar_resiko.daftar_resiko_opd
   end
 
   def add_dampak_resiko

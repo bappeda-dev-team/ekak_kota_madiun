@@ -17,31 +17,35 @@
   </div>
   <div class="card-body">
     <div class="table-responsive">
-      <table class="table align-items-center border-start border-end" id="tabel_daftar_resiko">
+      <table class="table align-items-center border" id="tabel_daftar_resiko">
         <thead class="thead-light">
           <tr>
             <th class="border-bottom" scope="col">No.</th>
-            <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
-            <th class="border-bottom text-center border-start border-end">Indikator</th>
-            <th class="border-bottom text-center border-start border-end">Target</th>
-            <th class="border-bottom text-center border-start border-end">Satuan</th>
-            <th class="border-bottom text-center border-start border-end">Pagu Sasaran</th>
-            <th class="border-bottom text-center border-start border-end">Permasalahan</th>
-            <th class="border-bottom text-center border-start border-end text-wrap">Pernyataan Resiko</th>
-            <th class="border-bottom text-center border-start border-end text-wrap">Skala Kemungkinan</th>
-            <th class="border-bottom text-center border-start border-end">Dampak</th>
-            <th class="border-bottom text-center border-start border-end">Skala Dampak</th>
-            <th class="border-bottom text-center border-start border-end text-wrap">Peta Resiko</th>
+            <th class="border-bottom text-center border">Rencana Kinerja</th>
+            <th class="border-bottom text-center border">Indikator</th>
+            <th class="border-bottom text-center border">Target</th>
+            <th class="border-bottom text-center border">Satuan</th>
+            <th class="border-bottom text-center border">Pagu Sasaran</th>
+            <th class="border-bottom text-center border">Permasalahan</th>
+            <th class="border-bottom text-center border text-wrap">Pernyataan Resiko</th>
+            <th class="border-bottom text-center border text-wrap">Skala Kemungkinan</th>
+            <th class="border-bottom text-center border">Dampak</th>
+            <th class="border-bottom text-center border">Skala Dampak</th>
+            <th class="border-bottom text-center border text-wrap">Peta Resiko</th>
             <th class="border-bottom text-center" scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
           <% @program_kegiatans.each.with_index(1) do |(program_kegiatan, sasarans), i| %>
             <tr>
-              <td class="text-gray-900 text-wrap fw-bolder" colspan="13">Subkegiatan: <%= program_kegiatan.nama_subkegiatan %></td>
+              <td class="text-gray-900 text-wrap fw-bolder"><%= i %></td>
+              <td class="text-gray-900 text-wrap fw-bolder">Subkegiatan: <%= program_kegiatan.nama_subkegiatan %></td>
+              <td class="text-gray-900 text-wrap fw-bolder"><%= program_kegiatan.indikator_program_tahun(@tahun, @opd.kode_unik_opd)[:indikator] %></td>
+              <td class="text-gray-900 text-wrap fw-bolder"><%= program_kegiatan.indikator_program_tahun(@tahun, @opd.kode_unik_opd)[:target] %></td>
+              <td class="text-gray-900 text-wrap fw-bolder"><%= program_kegiatan.indikator_program_tahun(@tahun, @opd.kode_unik_opd)[:satuan] %></td>
             </tr>
             <tr class="border-bottom">
-              <% sasarans.each do |show_sasaran| %>
+              <% sasarans.each.with_index(1) do |show_sasaran, no| %>
                 <% row_indikator = show_sasaran.indikator_sasarans.size + 1 %>
                 <% rincian = show_sasaran.rincian %>
                 <% nilai_kemungkinan =  rincian&.kemungkinan&.nilai || 0 %>
@@ -49,19 +53,19 @@
                 <% peta_resiko_ha = peta_resiko(nilai_kemungkinan, nilai_skala_dampak) %>
                 <% nilai_peta_resiko_ha = nilai_peta_resiko(peta_resiko_ha) %>
 
-                <td class="text-wrap border-start border-end" rowspan="<%= row_indikator %>"><%= i %></td>
-                <td class="text-wrap border-start border-end" rowspan="<%= row_indikator %>"><%= show_sasaran.sasaran_kinerja %></td>
+                <td class="text-wrap border" rowspan="<%= row_indikator %>"><%= "#{i}.#{no}" %></td>
+                <td class="text-wrap border" rowspan="<%= row_indikator %>"><%= show_sasaran.sasaran_kinerja %></td>
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
-                <td class="text-wrap border-start border-end" rowspan="<%= row_indikator %>">Rp. <%= number_with_delimiter(show_sasaran.total_anggaran || 0) %></td>
-                <td class="text-wrap border-start border-end" rowspan="<%= row_indikator %>"><%= show_sasaran.permasalahan_sasaran %></td>
-                <td class="text-wrap border-start border-end" rowspan="<%= row_indikator %>"><%= rincian&.resiko || '-' %></td>
-                <td class="text-wrap text-center border-start border-end" rowspan="<%= row_indikator %>"><%= rincian&.kemungkinan&.deskripsi || '-' %></td>
-                <td class="text-wrap text-center border-start border-end" rowspan="<%= row_indikator %>"><%= rincian&.dampak || '-' %></td>
-                <td class="text-wrap text-center border-start border-end" rowspan="<%= row_indikator %>"><%= rincian&.skala_dampak&.deskripsi || '-' %></td>
-                <td class="text-center border-start border-end" rowspan="<%= row_indikator %>"><%= "(#{peta_resiko_ha}) #{nilai_peta_resiko_ha}"  %></td>
-                <td class="border-start border-end" rowspan="<%= row_indikator %>">
+                <td class="text-wrap border" rowspan="<%= row_indikator %>">Rp. <%= number_with_delimiter(show_sasaran.total_anggaran || 0) %></td>
+                <td class="text-wrap border" rowspan="<%= row_indikator %>"><%= show_sasaran.permasalahan_sasaran %></td>
+                <td class="text-wrap border" rowspan="<%= row_indikator %>"><%= rincian&.resiko || '-' %></td>
+                <td class="text-wrap text-center border" rowspan="<%= row_indikator %>"><%= rincian&.kemungkinan&.deskripsi || '-' %></td>
+                <td class="text-wrap text-center border" rowspan="<%= row_indikator %>"><%= rincian&.dampak || '-' %></td>
+                <td class="text-wrap text-center border" rowspan="<%= row_indikator %>"><%= rincian&.skala_dampak&.deskripsi || '-' %></td>
+                <td class="text-center border" rowspan="<%= row_indikator %>"><%= "(#{peta_resiko_ha}) #{nilai_peta_resiko_ha}"  %></td>
+                <td class="border" rowspan="<%= row_indikator %>">
                   <%= link_to sasaran_program_opd_add_dampak_resiko_path(show_sasaran),
                     { remote: true, class: 'btn btn-tertiary text-light d-inline-flex align-items-center toggle-active',
                       data: { 'bs-toggle': 'modal', 'bs-target': '#form-dampak-daftar-resiko'}, } do %>
@@ -72,9 +76,9 @@
             </tr>
             <% show_sasaran.indikator_sasarans.each do |indikator| %>
               <tr>
-                <td class="text-wrap border-start border-end"><%= indikator.indikator_kinerja %></td>
-                <td class="text-wrap border-start border-end"><%= indikator.target %></td>
-                <td class="text-wrap border-start border-end"><%= indikator.satuan %></td>
+                <td class="text-wrap border"><%= indikator.indikator_kinerja %></td>
+                <td class="text-wrap border"><%= indikator.target %></td>
+                <td class="text-wrap border"><%= indikator.satuan %></td>
               </tr>
             <% end %>
           <% end %>
