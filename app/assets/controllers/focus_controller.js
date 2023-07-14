@@ -11,14 +11,12 @@ import { Controller } from "stimulus"
 
 
 export default class extends Controller {
-  static targets = [ "goto" ]
+  static targets = ["goto"]
 
   connect() {
-    console.log('connected')
   }
 
   gotoTargetConnected(e) {
-    console.log(e)
     e.scrollIntoView()
   }
 

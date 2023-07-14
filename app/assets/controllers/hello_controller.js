@@ -12,16 +12,14 @@ import { FetchRequest } from '@rails/request.js'
 
 
 export default class extends Controller {
-  static targets = [ "output" ]
+  static targets = ["output"]
   static values = {
     url: String
   }
 
   async refetch() {
     const url = this.urlValue
-    console.log(this.element)
-    console.log(this.urlValue)
-    const request = new FetchRequest('get',url)
+    const request = new FetchRequest('get', url)
     const response = await request.perform()
     if (response.ok) {
       const body = await response.text
