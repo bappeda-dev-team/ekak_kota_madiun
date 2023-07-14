@@ -1,8 +1,6 @@
 <li class="nav-item">
-  <span class="nav-link d-flex
-                 justify-content-between align-items-center
-                 <%= collapsed_perencanaan_items[:menu] %>"
-          aria-expanded="<%= collapsed_perencanaan_items[:aria] %>"
+  <span class="nav-link d-flex justify-content-between align-items-center collapsed"
+          aria-expanded="false"
           data-bs-toggle="collapse" data-bs-target="#perencanaan-items">
     <span>
       <span class="sidebar-text">Perencanaan</span>
@@ -11,9 +9,10 @@
       <i class="fas fa-angle-right icon icon-sm"></i>
     </span>
   </span>
-  <div class="multi-level <%= collapsed_perencanaan_items[:sub_menu] %>"
-         aria-expanded="<%= collapsed_perencanaan_items[:aria] %>"
-         role="list" id="perencanaan-items">
+  <div class="multi-level collapse"
+      data-sidebar-target="item"
+      aria-expanded="false"
+      role="list" id="perencanaan-items">
     <ul class="flex-column nav">
       <% perencanaan_items.each do |item| %>
         <% if item[:multi] %>
@@ -50,7 +49,7 @@
             </div>
           </li>
         <% else %>
-          <li class="nav-item" >
+          <li class="nav-item">
             <%= active_link_to(item[:href], active: :exact, wrap_tag: :li, wrap_class: 'nav-item',class: "nav-link") do %>
               <span class="sidebar-icon">
                 <i class="<%= item[:icon] %> icon icon-xs me-2"></i>

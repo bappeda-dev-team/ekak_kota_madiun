@@ -52,6 +52,10 @@ module SidebarItemHelper
         id_target: 'renja-items',
         collapse_items: collapsed_renja_items,
         icon: 'fas fa-tasks', identifier: 'renja'
+      },
+      {
+        title: 'Rekap Rencana Kinerja', href: rekap_sasaran_sasarans_path,
+        icon: 'fas fa-archive', identifier: 'rekap_sasaran'
       }
     ]
   end
@@ -64,7 +68,8 @@ module SidebarItemHelper
                    '\bpohon_kinerja\/rekap|' \
                    '\bpohon_kinerja\/rekap_opd|' \
                    '\bspip|' \
-                   '\brenja\/rankir|\brenja\/penetapan)')
+                   '\brenja\/rankir|\brenja\/penetapan|' \
+                   '\brencana_kinerja\/rekap_sasaran)')
   end
 
   def collapse_class(identifier)

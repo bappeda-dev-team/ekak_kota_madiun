@@ -42,7 +42,7 @@ module UserItemHelper
                    '\bpohon_kinerja|' \
                    '\bpohon_kinerja/asn|' \
                    '\bgenders/gap|' \
-                   '\brencana_kinerja|\brincian_belanja|' \
+                   '\brencana_kinerja\b/|\brincian_belanja|' \
                    '\bsasaran_program_opds/daftar_resiko)')
   end
 
