@@ -43,40 +43,43 @@
             </tr>
           </thead>
           <tbody>
-            <% @sasarans.each.with_index(1) do |sasaran, i| %>
+            <% @sasarans.each.with_index(1) do |(subkegiatan, sasarans), i| %>
               <tr>
-                <td class="border fw-bolder text-wrap" colspan="9">Subkegiatan: <%= sasaran.subkegiatan %></td>
+                <td class="border fw-bolder text-wrap"><%= i %></td>
+                <td class="border fw-bolder text-wrap" colspan="8">Subkegiatan: <%= subkegiatan %></td>
               </tr>
-              <tr>
-                <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= i %></td>
-                <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
-                <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.strategi_sasaran %></td>
-                <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
-                <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.tahun %></td>
-                <% if sasaran.indikator_sasarans.any? %>
-                  <%= indikator_sasaran(sasaran) %>
-                <% else %>
-                  <td class="border" colspan="3">
-                    <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
-                  </td>
-                <% end %>
-                <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">
-                  <div class="row justify-content-center w-100">
-                    <div class="col">
-                      <%= link_to detail_sasaran_path(sasaran), target: "_blank", rel: "nofollow",
+              <% sasarans.each.with_index(1) do |sasaran, no| %>
+                <tr>
+                  <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= "#{i}.#{no}" %></td>
+                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
+                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.strategi_sasaran %></td>
+                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
+                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.tahun %></td>
+                  <% if sasaran.indikator_sasarans.any? %>
+                    <%= indikator_sasaran(sasaran) %>
+                  <% else %>
+                    <td class="border" colspan="3">
+                      <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
+                    </td>
+                  <% end %>
+                  <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">
+                    <div class="row justify-content-center w-100">
+                      <div class="col">
+                        <%= link_to detail_sasaran_path(sasaran), target: "_blank", rel: "nofollow",
                                 class: "m-3 btn btn-sm btn-info w-100" do %>
-                        <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
-                        KAK
-                      <% end %>
+                          <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
+                          KAK
+                        <% end %>
+                      </div>
                     </div>
-                  </div>
-                </td>
-              </tr>
-              <% row_indikator_sasaran(sasaran).each do |indikator| %>
-                <%= indikator %>
-              <% end %>
-              <% row_tahapan_sasaran(sasaran, colspan: 9).each do |tahapan| %>
-                <%= tahapan %>
+                  </td>
+                </tr>
+                <% row_indikator_sasaran(sasaran).each do |indikator| %>
+                  <%= indikator %>
+                <% end %>
+                <% row_tahapan_sasaran(sasaran, colspan: 9).each do |tahapan| %>
+                  <%= tahapan %>
+                <% end %>
               <% end %>
             <% end %>
           </tbody>

@@ -158,6 +158,20 @@ class User < ApplicationRecord
       .to_h { |str| [str, str.strategi.subkegiatans_sasarans] }
   end
 
+  def sasarans_all_tahun(tahun)
+    sasarans
+      .includes(%i[strategi
+                   user
+                   tahapans
+                   program_kegiatan
+                   indikator_sasarans])
+      .where("COALESCE(tahun, '') ILIKE ?", "%#{tahun}%")
+  end
+
+  def subkegiatan_sasarans_all_tahun(tahun)
+    sasarans_all_tahun(tahun).group_by(&:subkegiatan)
+  end
+
   def mandatoris_tahun(tahun)
     mandatoris.where("COALESCE(tahun, '') ILIKE ?", "%#{tahun}%")
   end
