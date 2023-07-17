@@ -93,9 +93,9 @@
                   <%= render 'row_strategi', strategi: strategic, jenis: "Strategic", class_style: "strategic-objective" %>
                   <% if @tactical2.any? %>
                     <% @tactical2.select{ |tactical2| tactical2.strategi_ref_id.to_i == strategic.id  }.each do |tactical2| %>
-                      <%= render 'row_strategi', strategi: tactical2, jenis: "Tactical", class_style: "tactical-objective", show_program: true %>
+                      <%= render 'row_strategi', strategi: tactical2, jenis: "Tactical", class_style: "tactical-objective" %>
                       <% @tactical.select{ |tactical| tactical.strategi_ref_id.to_i == tactical2.id  }.each do |tactical| %>
-                        <%= render 'row_strategi', strategi: tactical, jenis: "Tactical", class_style: "tactical-objective", show_program: true %>
+                        <%= render 'row_strategi', strategi: tactical, jenis: "Tactical 2", class_style: "tactical-objective-2", show_program: true %>
                         <% @operational.select{ |operational| operational.strategi_ref_id.to_i == tactical.id  }.each do |operational| %>
                           <%= render 'row_strategi', strategi: operational, jenis: "Operational", class_style: "operational-objective", show_sub: true %>
                           <% @operational2.select{ |operational2| operational2.strategi_ref_id.to_i == operational.id  }.each do |operational2| %>
