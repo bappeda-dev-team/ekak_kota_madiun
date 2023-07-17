@@ -35,4 +35,28 @@ module PohonKinerjaHelper
       <span class='fw-bolder'>#{pemilik}</span>
     ".html_safe
   end
+
+  def data_jumlah_strategi(rekap_jumlah)
+    "<ul>
+            <li>Jumlah Strategic Objective : #{rekap_jumlah[:strategic]}</li>
+            <li>Jumlah Indikator : #{rekap_jumlah[:strategic_indikator]}</li>
+            <li>Jumlah Tactical Objective : #{rekap_jumlah[:tactical]}</li>
+            <li>Jumlah Indikator : #{rekap_jumlah[:tactical_indikator]}</li>
+            <li>Jumlah Operational Objective : #{rekap_jumlah[:operational]}</li>
+            <li>Jumlah Indikator : #{rekap_jumlah[:operational_indikator]}</li>
+            <li>Jumlah Operational Objective 2 : #{rekap_jumlah[:operational2]} </li>
+            <li>Jumlah Indikator : #{rekap_jumlah[:operational2_indikator]}</li>
+          </ul>".html_safe
+  end
+
+  def strategi_matcher(strategis, parent_id)
+    strategis.select do |strategi|
+      parent = if strategi.strategi_ref_id.blank?
+                 strategi.pohon.pohonable_id.to_i
+               else
+                 strategi.strategi_ref_id.to_i
+               end
+      parent == parent_id
+    end
+  end
 end

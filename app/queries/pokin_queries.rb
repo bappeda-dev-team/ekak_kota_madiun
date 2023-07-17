@@ -166,11 +166,6 @@ class PokinQueries
   end
 
   def isu_strategis
-    # if opd_induk
-    #   # opd_induk.isu_strategis_pohon(@tahun)
-    # else
-    #   # strategi_kota.flatten.map { |pohon| pohon.pohonable.isu }.uniq!
-    # end
     strategi_kota.map(&:isu)
   end
 end

@@ -353,13 +353,8 @@ class PohonKinerjaController < ApplicationController
     @tactical2 = pokin.tactical2_susun
     @operational = pokin.operational_susun
     @operational2 = pokin.operational2_susun
-    if @opd.id == 145
-      @rekap_jumlah = @opd.data_total_pokin_setda(@tahun)
-      render partial: 'pohon_kinerja/filter_rekap_setda'
-    else
-      @rekap_jumlah = pokin.data_total_pokin
-      render partial: 'pohon_kinerja/filter_rekap_opd'
-    end
+    @rekap_jumlah = pokin.data_total_pokin
+    render partial: 'pohon_kinerja/filter_rekap_opd'
   end
 
   def clone_list_opd

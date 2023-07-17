@@ -24,16 +24,7 @@
           <% end %>
         </div>
         <div class="card-header border-bottom d-flex align-items-center justify-content-between">
-          <ul>
-            <li>Jumlah Strategic Objective : <%= @rekap_jumlah[:strategic] %></li>
-            <li>Jumlah Indikator : <%= @rekap_jumlah[:strategic_indikator] %></li>
-            <li>Jumlah Tactical Objective : <%= @rekap_jumlah[:tactical] %></li>
-            <li>Jumlah Indikator : <%= @rekap_jumlah[:tactical_indikator] %></li>
-            <li>Jumlah Operational Objective : <%= @rekap_jumlah[:operational] %></li>
-            <li>Jumlah Indikator : <%= @rekap_jumlah[:operational_indikator] %></li>
-            <li>Jumlah Operational Objective 2 : <%= @rekap_jumlah[:operational2] %></li>
-            <li>Jumlah Indikator : <%= @rekap_jumlah[:operational2_indikator] %></li>
-          </ul>
+          <%= data_jumlah_strategi(@rekap_jumlah) %>
         </div>
         <div class="card-header border-bottom">
           <%= render 'pohon_kinerja/komentar_card', komentars: @opd.komentars %>
@@ -58,7 +49,7 @@
             <% @isu_opd.each do |isu| %>
               <tr class="isu-strategis-kota">
                 <th colspan="4" class="text-wrap"><%= isu.class.name.pluralize.underscore.titleize %>: <%= isu.isu_strategis %>
-                  <% if current_user.nik == 'super_admin' %>
+                  <% if super_admin? %>
                     &nbsp;
                     <%= link_to clone_list_opd_pohon_kinerja_index_path(isu_strategis: isu.id,
                                                                       opd_id: @opd.id,
@@ -89,27 +80,27 @@
                     <td class="text-wrap"><%= "#{ind_kota.target} #{ind_kota.satuan}" %></td>
                   </tr>
                 <% end %>
-                <% @strategic.select { |strategic| strategic.pohon.pohonable_id == strategi.id }.each do |strategic| %>
+                <% strategi_matcher(@strategic, strategi.id).each do |strategic| %>
                   <%= render 'row_strategi', strategi: strategic, jenis: "Strategic", class_style: "strategic-objective" %>
                   <% if @tactical2.any? %>
-                    <% @tactical2.select{ |tactical2| tactical2.strategi_ref_id.to_i == strategic.id  }.each do |tactical2| %>
+                    <% strategi_matcher(@tactical2, strategic.id).each do |tactical2| %>
                       <%= render 'row_strategi', strategi: tactical2, jenis: "Tactical", class_style: "tactical-objective" %>
-                      <% @tactical.select{ |tactical| tactical.strategi_ref_id.to_i == tactical2.id  }.each do |tactical| %>
+                      <% strategi_matcher(@tactical, tactical2.id).each do |tactical| %>
                         <%= render 'row_strategi', strategi: tactical, jenis: "Tactical 2", class_style: "tactical-objective-2", show_program: true %>
-                        <% @operational.select{ |operational| operational.strategi_ref_id.to_i == tactical.id  }.each do |operational| %>
+                        <% strategi_matcher(@operational, tactical.id).each do |operational| %>
                           <%= render 'row_strategi', strategi: operational, jenis: "Operational", class_style: "operational-objective", show_sub: true %>
-                          <% @operational2.select{ |operational2| operational2.strategi_ref_id.to_i == operational.id  }.each do |operational2| %>
+                          <% strategi_matcher(@operational2, operational.id).each do |operational2| %>
                             <%= render 'row_strategi', strategi: operational2, jenis: "Operational 2", class_style: "operational-objective-2" %>
                           <% end %>
                         <% end %>
                       <% end %>
                     <% end %>
                   <% else %>
-                    <% @tactical.select{ |tactical| tactical.strategi_ref_id.to_i == strategic.id  }.each do |tactical| %>
+                    <% strategi_matcher(@tactical, strategic.id).each do |tactical| %>
                       <%= render 'row_strategi', strategi: tactical, jenis: "Tactical", class_style: "tactical-objective", show_program: true %>
-                      <% @operational.select{ |operational| operational.strategi_ref_id.to_i == tactical.id  }.each do |operational| %>
+                      <% strategi_matcher(@operational, tactical.id).each do |operational| %>
                         <%= render 'row_strategi', strategi: operational, jenis: "Operational", class_style: "operational-objective", show_sub: true %>
-                        <% @operational2.select{ |operational2| operational2.strategi_ref_id.to_i == operational.id  }.each do |operational2| %>
+                        <% strategi_matcher(@operational2, operational.id).each do |operational2| %>
                           <%= render 'row_strategi', strategi: operational2, jenis: "Operational 2", class_style: "operational-objective-2" %>
                         <% end %>
                       <% end %>
