@@ -53,6 +53,8 @@ class User < ApplicationRecord
   # WARNING: many bug in here because added role
   scope :khusus, -> { with_any_role(:admin, :super_admin, :reviewer, :guest) }
   scope :admin, -> { with_role(:admin) }
+  scope :reviewer, -> { with_role(:reviewer) }
+  scope :guest, -> { with_role(:guest) }
   scope :non_admin, -> { without_role(:admin) }
   scope :aktif, -> { without_role([:non_aktif]) }
   scope :asn_aktif, -> { without_role([:admin]).with_role("eselon_4").order(:nama) }
@@ -354,7 +356,10 @@ class User < ApplicationRecord
       'eselon_2' => User.eselon2.limit(10),
       'eselon_3' => User.eselon3.limit(10),
       'eselon_4' => User.eselon4.limit(10),
-      'staff' => User.staff.limit(10)
+      'staff' => User.staff.limit(10),
+      'admin' => User.admin.limit(10),
+      'reviewer' => User.reviewer.limit(10),
+      'guest' => User.guest.limit(10)
     }
   end
 
