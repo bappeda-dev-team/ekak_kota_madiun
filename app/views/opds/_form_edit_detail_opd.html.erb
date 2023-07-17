@@ -1,15 +1,27 @@
 <%= form_with(model: opd, local: false) do |form| %>
   <div class="field">
-    <%= form.label :nama_kepala %>
+    <%= form.label :nama_kepala, class: 'form-label' %>
     <%= form.text_field :nama_kepala, class: "form-control" %>
   </div>
   <div class="field">
-    <%= form.label :pangkat_kepala %>
+    <%= form.label :pangkat_kepala, class: 'form-label' %>
     <%= form.text_field :pangkat_kepala, class: "form-control" %>
   </div>
   <div class="field">
-    <%= form.label :nip_kepala %>
+    <%= form.label :nip_kepala, class: 'form-label' %>
     <%= form.text_field :nip_kepala, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.label :punya_bidang, class: 'form-label' %>
+    <%= form.check_box :has_bidang %>
+  </div>
+  <div class="field">
+    <%= form.label :opd_induk %>
+    <%= form.select :kode_opd_induk, Opd.with_bidang.collect {|n| [n.nama_opd, n.kode_unik_opd]}, {include_blank: true},
+    {data: {"placeholder": "OPD Induk",
+            controller: 'dropdown',
+            dropdown_parent_value: '#form-opd'
+    }} %>
   </div>
   <div class="actions">
     <%= form.submit "Update Opd" %>

@@ -4,11 +4,13 @@
 #
 #  id                 :bigint           not null, primary key
 #  bidang_urusan      :string
+#  has_bidang         :boolean          default(FALSE)
 #  id_bidang          :integer
 #  id_daerah          :string
 #  id_opd_skp         :integer
 #  kode_bidang_urusan :string
 #  kode_opd           :string
+#  kode_opd_induk     :string
 #  kode_unik_opd      :string
 #  kode_urusan        :string
 #  nama_kepala        :string
@@ -52,10 +54,17 @@ class Opd < ApplicationRecord
   has_many :komentars, lambda {
     where(jenis: "OPD")
   }, primary_key: :id, foreign_key: :item
+  belongs_to :opd_induk, class_name: 'Opd', primary_key: 'kode_unik_opd', foreign_key: 'kode_opd_induk'
+  has_many :bidangs, class_name: 'Opd', foreign_key: 'kode_opd_induk', primary_key: 'kode_unik_opd'
 
   accepts_nested_attributes_for :indikator_sasarans, reject_if: :all_blank, allow_destroy: true
 
   scope :opd_resmi, -> { where.not(kode_unik_opd: nil) }
+  scope :with_bidang, -> { where(has_bidang: true) }
+
+  def to_s
+    nama_opd
+  end
 
   def susunan_renja
     program_kegiatans.urusans

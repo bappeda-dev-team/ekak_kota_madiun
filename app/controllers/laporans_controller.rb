@@ -17,10 +17,8 @@ class LaporansController < ApplicationController
     opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = opd.nama_opd
 
-    @program_kegiatans = opd.strategis
-                            .where("role = ? and tahun ILIKE ?", "eselon_4", "%#{@tahun}%")
-                            .map(&:sasaran)
-                            .group_by(&:program_kegiatan)
+    kak = KakQueries.new(opd: opd, tahun: @tahun)
+    @program_kegiatans = kak.program_kegiatans
 
     render partial: "laporans/kak_admin"
   end
@@ -54,10 +52,8 @@ class LaporansController < ApplicationController
     opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = opd.nama_opd
 
-    @program_kegiatans = opd.strategis
-                            .where("role = ? and tahun ILIKE ?", "eselon_4", "%#{@tahun}%")
-                            .map(&:sasaran)
-                            .group_by(&:program_kegiatan)
+    kak = KakQueries.new(opd: opd, tahun: @tahun)
+    @program_kegiatans = kak.program_kegiatans
 
     render partial: "laporans/rka_admin"
   end

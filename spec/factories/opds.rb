@@ -4,11 +4,13 @@
 #
 #  id                 :bigint           not null, primary key
 #  bidang_urusan      :string
+#  has_bidang         :boolean          default(FALSE)
 #  id_bidang          :integer
 #  id_daerah          :string
 #  id_opd_skp         :integer
 #  kode_bidang_urusan :string
 #  kode_opd           :string
+#  kode_opd_induk     :string
 #  kode_unik_opd      :string
 #  kode_urusan        :string
 #  nama_kepala        :string

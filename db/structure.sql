@@ -1613,7 +1613,9 @@ CREATE TABLE public.opds (
     tahun character varying,
     id_daerah character varying,
     pangkat_kepala character varying,
-    id_bidang integer
+    id_bidang integer,
+    has_bidang boolean DEFAULT false,
+    kode_opd_induk character varying
 );
 
 
@@ -5204,6 +5206,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230706005016'),
 ('20230706010916'),
 ('20230706011239'),
-('20230709161232');
+('20230709161232'),
+('20230717011850'),
+('20230717012001');
 
 
