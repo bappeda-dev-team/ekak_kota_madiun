@@ -25,16 +25,14 @@
         </div>
         <div class="card-header border-bottom d-flex align-items-center justify-content-between">
           <ul>
-            <li>Jumlah Isu Strategis: <%= @isu_opd.size %></li>
-            <li>Jumlah Strategi Kota: <%= @isu_opd.map { |_, strategis| strategis.count }.inject(:+) %></li>
             <li>Jumlah Strategic Objective : <%= @rekap_jumlah[:strategic] %></li>
-            <li>Jumlah Indikator : <%= @rekap_jumlah[:indikator_strategic] %></li>
+            <li>Jumlah Indikator : <%= @rekap_jumlah[:strategic_indikator] %></li>
             <li>Jumlah Tactical Objective : <%= @rekap_jumlah[:tactical] %></li>
-            <li>Jumlah Indikator : <%= @rekap_jumlah[:indikator_tactical] %></li>
+            <li>Jumlah Indikator : <%= @rekap_jumlah[:tactical_indikator] %></li>
             <li>Jumlah Operational Objective : <%= @rekap_jumlah[:operational] %></li>
-            <li>Jumlah Indikator : <%= @rekap_jumlah[:indikator_operational] %></li>
-            <li>Jumlah Operational Objective 2 : <%= @rekap_jumlah[:operational_staff] %></li>
-            <li>Jumlah Indikator : <%= @rekap_jumlah[:indikator_staff] %></li>
+            <li>Jumlah Indikator : <%= @rekap_jumlah[:operational_indikator] %></li>
+            <li>Jumlah Operational Objective 2 : <%= @rekap_jumlah[:operational2] %></li>
+            <li>Jumlah Indikator : <%= @rekap_jumlah[:operational2_indikator] %></li>
           </ul>
         </div>
         <div class="card-header border-bottom">
@@ -57,7 +55,7 @@
             </tr>
           </thead>
           <tbody>
-            <% @isu_opd.each do |isu, strategis| %>
+            <% @isu_opd.each do |isu| %>
               <tr class="isu-strategis-kota">
                 <th colspan="4" class="text-wrap"><%= isu.class.name.pluralize.underscore.titleize %>: <%= isu.isu_strategis %>
                   <% if current_user.nik == 'super_admin' %>
@@ -80,10 +78,10 @@
                   <% end %>
                 </th>
               </tr>
-              <% strategis.each do |strategi, strategi_kaopds| %>
+              <% isu.strategi_kotums.each do |strategi| %>
                 <tr class="strategi-kota">
                   <th rowspan="<%= strategi.indikators_tahun(@tahun).size + 1 %>" class="align-middle">Strategi Kota</th>
-                  <th rowspan="<%= strategi.indikators_tahun(@tahun).size + 1 %>" class="align-middle text-wrap"><%= strategi.strategi %> </th>
+                  <th rowspan="<%= strategi.indikators_tahun(@tahun).size + 1 %>" class="align-middle text-wrap"><%= strategi.strategi %></th>
                 </tr>
                 <% strategi.indikators_tahun(@tahun).each do |ind_kota| %>
                   <tr class="strategi-kota">
@@ -91,21 +89,33 @@
                     <td class="text-wrap"><%= "#{ind_kota.target} #{ind_kota.satuan}" %></td>
                   </tr>
                 <% end %>
-                <% strategi_kaopds.each do |str_kaopd, strategi| %>
-                  <%= render 'row_strategi', strategi: str_kaopd, jenis: "Strategic", class_style: "strategic-objective" %>
-                  <% strategi.each do |str_kabid, str_kasis| %>
-                    <%= render 'row_strategi', strategi: str_kabid, jenis: "Tactical", class_style: "tactical-objective", show_program: true %>
-                    <% str_kasis.each do |str_kasi, str_staffs| %>
-                      <%= render 'row_strategi', strategi: str_kasi, jenis: "Operational", class_style: "operational-objective", show_sub: true %>
-                      <% str_staffs.each do |str_staff| %>
-                        <%= render 'row_strategi', strategi: str_staff, jenis: "Operational 2", class_style: "operational-objective-2" %>
+                <% @strategic.select { |strategic| strategic.pohon.pohonable_id == strategi.id }.each do |strategic| %>
+                  <%= render 'row_strategi', strategi: strategic, jenis: "Strategic", class_style: "strategic-objective" %>
+                  <% if @tactical2.any? %>
+                    <% @tactical2.select{ |tactical2| tactical2.strategi_ref_id.to_i == strategic.id  }.each do |tactical2| %>
+                      <%= render 'row_strategi', strategi: tactical2, jenis: "Tactical", class_style: "tactical-objective", show_program: true %>
+                      <% @tactical.select{ |tactical| tactical.strategi_ref_id.to_i == tactical2.id  }.each do |tactical| %>
+                        <%= render 'row_strategi', strategi: tactical, jenis: "Tactical", class_style: "tactical-objective", show_program: true %>
+                        <% @operational.select{ |operational| operational.strategi_ref_id.to_i == tactical.id  }.each do |operational| %>
+                          <%= render 'row_strategi', strategi: operational, jenis: "Operational", class_style: "operational-objective", show_sub: true %>
+                          <% @operational2.select{ |operational2| operational2.strategi_ref_id.to_i == operational.id  }.each do |operational2| %>
+                            <%= render 'row_strategi', strategi: operational2, jenis: "Operational 2", class_style: "operational-objective-2" %>
+                          <% end %>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  <% else %>
+                    <% @tactical.select{ |tactical| tactical.strategi_ref_id.to_i == strategic.id  }.each do |tactical| %>
+                      <%= render 'row_strategi', strategi: tactical, jenis: "Tactical", class_style: "tactical-objective", show_program: true %>
+                      <% @operational.select{ |operational| operational.strategi_ref_id.to_i == tactical.id  }.each do |operational| %>
+                        <%= render 'row_strategi', strategi: operational, jenis: "Operational", class_style: "operational-objective", show_sub: true %>
+                        <% @operational2.select{ |operational2| operational2.strategi_ref_id.to_i == operational.id  }.each do |operational2| %>
+                          <%= render 'row_strategi', strategi: operational2, jenis: "Operational 2", class_style: "operational-objective-2" %>
+                        <% end %>
                       <% end %>
                     <% end %>
                   <% end %>
-                  <tr class="rekap_pokin_separator">
-                    <td colspan="4"></td>
-                  </tr>
-                <% end%>
+                <% end %>
               <% end %>
             <% end %>
           </tbody>

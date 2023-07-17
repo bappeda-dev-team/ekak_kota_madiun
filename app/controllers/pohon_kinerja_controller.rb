@@ -346,12 +346,18 @@ class PohonKinerjaController < ApplicationController
              current_user.opd
            end
     @nama_opd = @opd.nama_opd
-    @isu_opd = @opd.pohon_kinerja_opd(@tahun)
+    pokin = PokinQueries.new(opd: @opd, tahun: @tahun)
+    @isu_opd = pokin.isu_strategis
+    @strategic = pokin.strategic
+    @tactical = pokin.tactical
+    @tactical2 = pokin.tactical2
+    @operational = pokin.operational
+    @operational2 = pokin.operational2
     if @opd.id == 145
       @rekap_jumlah = @opd.data_total_pokin_setda(@tahun)
       render partial: 'pohon_kinerja/filter_rekap_setda'
     else
-      @rekap_jumlah = @opd.data_total_pokin(@tahun)
+      @rekap_jumlah = pokin.data_total_pokin
       render partial: 'pohon_kinerja/filter_rekap_opd'
     end
   end

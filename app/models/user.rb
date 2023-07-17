@@ -64,6 +64,7 @@ class User < ApplicationRecord
                            } # depreceated
   scope :opd_by_role, ->(kode_opd, role) { where(kode_opd: kode_opd).with_role(role.to_sym) }
   scope :eselon2, -> { with_role("eselon_2") }
+  scope :eselon2b, -> { with_role("eselon_2b") }
   scope :eselon3, -> { with_role("eselon_3") }
   scope :eselon4, -> { with_role("eselon_4") }
   scope :staff, -> { with_role("staff") }

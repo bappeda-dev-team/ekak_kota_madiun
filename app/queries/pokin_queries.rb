@@ -9,19 +9,47 @@ class PokinQueries
   end
 
   def users
-    opd.users
+    opd.users.includes(:strategis)
+  end
+
+  def opd_induk
+    opd.opd_induk
   end
 
   def user_strategic
-    users.includes(:strategis).eselon2
+    if opd_induk
+      opd_induk.users.eselon2
+    else
+      users.eselon2
+    end
   end
 
   def strategic
-    user_strategic.map { |user| strategi_user(user) }
+    user_strategic.map { |user| strategi_user(user) }.flatten
   end
 
   def strategic_indikator
     strategic.flatten.map(&:indikator_sasarans)
+  end
+
+  def strategic_list_id
+    strategic.pluck(:id)
+  end
+
+  def user_tactical2
+    if opd_induk
+      opd_induk.users.eselon2b
+    else
+      users.eselon2b
+    end
+  end
+
+  def tactical2
+    user_tactical2.map { |user| strategi_user(user) }.flatten
+  end
+
+  def tactical_indikator2
+    tactical2.flatten.map(&:indikator_sasarans)
   end
 
   def user_tactical
@@ -29,11 +57,21 @@ class PokinQueries
   end
 
   def tactical
-    user_tactical.map { |user| strategi_user(user) }
+    user_tactical.map { |user| strategi_user(user) }.flatten
+  end
+
+  def tactical_susun
+    tactical.select do |tact|
+      strategic_list_id.include?(tact.strategi_ref_id.to_i)
+    end
   end
 
   def tactical_indikator
     tactical.flatten.map(&:indikator_sasarans)
+  end
+
+  def tactical_list_id
+    tactical.pluck(:id)
   end
 
   def user_operational
@@ -41,11 +79,21 @@ class PokinQueries
   end
 
   def operational
-    user_operational.map { |user| strategi_user(user) }
+    user_operational.map { |user| strategi_user(user) }.flatten
   end
 
   def operational_indikator
     operational.flatten.map(&:indikator_sasarans)
+  end
+
+  def operational_susun
+    operational.select do |oper|
+      tactical_list_id.include?(oper.strategic_ref_id.to_i)
+    end
+  end
+
+  def operational_list_id
+    operational.pluck(:id)
   end
 
   def user_operational2
@@ -53,11 +101,17 @@ class PokinQueries
   end
 
   def operational2
-    user_operational2.map { |user| strategi_user(user) }
+    user_operational2.map { |user| strategi_user(user) }.flatten
   end
 
   def operational2_indikator
     operational2.flatten.map(&:indikator_sasarans)
+  end
+
+  def operational2_susun
+    operational2.select do |oper2|
+      operational_list_id.include?(oper2.strategic_ref_id.to_i)
+    end
   end
 
   def data_total_pokin
@@ -81,10 +135,19 @@ class PokinQueries
   end
 
   def strategi_kota
-    strategic.flatten.map(&:pohon)
+    # broken
+    if opd_induk
+      opd_induk.strategic.uniq!
+    else
+      strategic.flatten.map(&:pohon)
+    end
   end
 
   def isu_strategis
-    strategi_kota.flatten.map { |pohon| pohon.pohonable.isu }.uniq!
+    if opd_induk
+      opd_induk.isu_strategis_pohon(@tahun)
+    else
+      strategi_kota.flatten.map { |pohon| pohon.pohonable.isu }.uniq!
+    end
   end
 end
