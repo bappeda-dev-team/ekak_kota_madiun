@@ -9,11 +9,11 @@ class PokinQueries
   end
 
   def users
-    opd.users.includes(:strategis)
+    @opd.users.includes(:strategis)
   end
 
   def opd_induk
-    opd.opd_induk
+    @opd.opd_induk
   end
 
   def user_strategic
@@ -22,6 +22,26 @@ class PokinQueries
     else
       users.eselon2
     end
+  end
+
+  def user_tactical2
+    if opd_induk
+      opd_induk.users.eselon2b
+    else
+      users.eselon2b
+    end
+  end
+
+  def user_tactical
+    users.eselon3
+  end
+
+  def user_operational
+    users.eselon4
+  end
+
+  def user_operational2
+    users.staff
   end
 
   def strategic
@@ -36,14 +56,6 @@ class PokinQueries
     strategic.pluck(:id)
   end
 
-  def user_tactical2
-    if opd_induk
-      opd_induk.users.eselon2b
-    else
-      users.eselon2b
-    end
-  end
-
   def tactical2
     user_tactical2.map { |user| strategi_user(user) }.flatten
   end
@@ -52,18 +64,18 @@ class PokinQueries
     tactical2.flatten.map(&:indikator_sasarans)
   end
 
-  def user_tactical
-    users.eselon3
+  def tactical2_list_id
+    tactical2.pluck(:id)
+  end
+
+  def tactical2_susun
+    tactical2.select do |tact2|
+      strategic_list_id.include?(tact2.strategi_ref_id.to_i)
+    end
   end
 
   def tactical
     user_tactical.map { |user| strategi_user(user) }.flatten
-  end
-
-  def tactical_susun
-    tactical.select do |tact|
-      strategic_list_id.include?(tact.strategi_ref_id.to_i)
-    end
   end
 
   def tactical_indikator
@@ -74,8 +86,15 @@ class PokinQueries
     tactical.pluck(:id)
   end
 
-  def user_operational
-    users.eselon4
+  def tactical_susun
+    strategic_list = if opd_induk
+                       tactical2_list_id
+                     else
+                       strategic_list_id
+                     end
+    tactical.select do |tact|
+      strategic_list.include?(tact.strategi_ref_id.to_i)
+    end
   end
 
   def operational
@@ -86,18 +105,14 @@ class PokinQueries
     operational.flatten.map(&:indikator_sasarans)
   end
 
-  def operational_susun
-    operational.select do |oper|
-      tactical_list_id.include?(oper.strategic_ref_id.to_i)
-    end
-  end
-
   def operational_list_id
     operational.pluck(:id)
   end
 
-  def user_operational2
-    users.staff
+  def operational_susun
+    operational.select do |oper|
+      tactical_list_id.include?(oper.strategi_ref_id.to_i)
+    end
   end
 
   def operational2
@@ -110,8 +125,12 @@ class PokinQueries
 
   def operational2_susun
     operational2.select do |oper2|
-      operational_list_id.include?(oper2.strategic_ref_id.to_i)
+      operational_list_id.include?(oper2.strategi_ref_id.to_i)
     end
+  end
+
+  def operational2_list_id
+    operational2.pluck(:id)
   end
 
   def data_total_pokin
@@ -135,19 +154,23 @@ class PokinQueries
   end
 
   def strategi_kota
-    # broken
-    if opd_induk
-      opd_induk.strategic.uniq!
-    else
-      strategic.flatten.map(&:pohon)
+    opd_id = if opd_induk
+               opd_induk.id
+             else
+               @opd.id
+             end
+    pohons = Pohon.where(opd_id: opd_id)
+    pohons.map(&:pohonable).filter do |pohon|
+      pohon.tahun.match(/#{@tahun}(\S*|\b)/)
     end
   end
 
   def isu_strategis
-    if opd_induk
-      opd_induk.isu_strategis_pohon(@tahun)
-    else
-      strategi_kota.flatten.map { |pohon| pohon.pohonable.isu }.uniq!
-    end
+    # if opd_induk
+    #   # opd_induk.isu_strategis_pohon(@tahun)
+    # else
+    #   # strategi_kota.flatten.map { |pohon| pohon.pohonable.isu }.uniq!
+    # end
+    strategi_kota.map(&:isu)
   end
 end
