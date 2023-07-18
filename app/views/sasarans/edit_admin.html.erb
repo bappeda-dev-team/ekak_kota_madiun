@@ -1,0 +1,38 @@
+<%= content_for :html_title, "Edit Sasaran Admin" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item active" aria-current="page">Edit Sasaran Admin</li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="px-3">
+    <div class="card border-2 shadow mb-3">
+      <div class="card-body">
+        <h5>Status Sasaran: <span class="badge badge-lg bg-warning text-dark"><%= status_sasaran_pokin(@sasaran&.status_sasaran) %></span></h5>
+      </div>
+    </div>
+    <!-- SECTION - render anggaran here -->
+    <% unless @sasaran.tahapans.any? %>
+      <%= render 'rencana_aksi_card', sasaran: @sasaran %>
+    <% else %>
+      <!-- SECTION - musrenbang -->
+      <%= render 'subkegiatan_card', sasaran: @sasaran, tahun: @tahun %>
+      <%= render 'rincians/renaksi', sasaran: @sasaran %>
+      <%= render 'rincians/rincian_card', sasaran: @sasaran %>
+      <%= render 'permasalahans/permasalahan_card', sasaran: @sasaran %>
+      <%= render 'dasar_hukums/dasar_hukum_card', sasaran: @sasaran %>
+      <%= render 'latar_belakangs/gambaran_umum_card', sasaran: @sasaran %>
+      <%= render 'subkegiatan_tematiks/tematik_card', sasaran: @sasaran %>
+    <% end %>
+    <!-- SECTION - Modal-->
+    <!-- TODO - DRY-->
+    <% unless diajukan? %>
+      <%= render 'modal' %>
+      <%= render 'modal_perhitungans' %>
+      <%= render 'aksis/modal_target' %>
+      <%= render 'aksis/modal_realisasi' %>
+      <%= render 'rincians/modal_rincian' %>
+      <%= render 'permasalahans/modal_permasalahan' %>
+      <%= render 'dasar_hukums/modal_dasar_hukum' %>
+      <%= render 'latar_belakangs/modal_gambaran_umum' %>
+    <% end %>
+  </div>
+<% end %>

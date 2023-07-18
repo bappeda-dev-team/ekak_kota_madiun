@@ -3,6 +3,8 @@ class HomeController < ApplicationController
     @tahun = cookies[:tahun]
     if current_user.has_any_role?(:asn, :admin)
       @sasarans = current_user.sasarans_tahun(@tahun)
+      @kelompok_anggarans = KelompokAnggaran.all.order(:tahun, :kelompok)
+      @opds = Opd.opd_resmi
     else
       render partial: 'home/nonaktif'
     end

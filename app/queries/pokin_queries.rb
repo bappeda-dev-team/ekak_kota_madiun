@@ -166,7 +166,7 @@ class PokinQueries
   end
 
   def isu_strategis
-    strategi_kota.map(&:isu)
+    strategic.map { |str| str.pohon.pohonable.isu }
   end
 
   def id_opd_induk

@@ -3,6 +3,9 @@ class StrategiCloner < Clowne::Cloner
 
   trait :with_sasaran do
     include_association :sasaran, params: true, traits: %i[with_indikators]
+    include_association :strategi_eselon_tigas, params: true, traits: :with_sasaran
+    include_association :strategi_eselon_empats, params: true, traits: :with_sasaran
+    include_association :strategi_staffs, params: true, traits: :with_sasaran
   end
 
   trait :with_sasarans_new do
@@ -23,13 +26,9 @@ class StrategiCloner < Clowne::Cloner
   include_association :strategi_eselon_empats, params: true, traits: :with_sasaran
   include_association :strategi_staffs, params: true, traits: :with_sasaran
 
-  finalize do |_source, record, tahun:, **params|
+  finalize do |_source, record, tahun:, **|
     record.tahun = tahun
     record.created_at = Time.current
     record.updated_at = Time.current
-    record.type = params[:type]
-    record.nip_asn = params[:nip]
-    record.strategi_cascade_link = params[:strategi_cascade_link]
-    record.opd_id = params[:opd_id]
   end
 end

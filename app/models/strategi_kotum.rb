@@ -69,7 +69,7 @@ class StrategiKotum < ApplicationRecord
   end
 
   def indikators_tahun(tahun)
-    sasaran_kotum.indikator_sasarans.where(tahun: tahun)
+    sasaran_kotum.indikator_sasarans.where('tahun ILIKE ?', "%#{tahun}%")
   end
 
   def indikator(tahun)

@@ -27,7 +27,7 @@ class LaporanRkaPdf < Prawn::Document
   end
 
   def title
-    judul_rka = make_table([["RINCIAN BELANJA"], [@nama_opd]], width: bounds.width)
+    judul_rka = make_table([["RINCIAN BELANJA"], [@nama_opd], ["Tahun: #{@tahun}"]], width: bounds.width)
     judul_rka.draw
   end
 

@@ -1,0 +1,49 @@
+<%= content_for :html_title, "E-KAK" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+<% end %>
+<% content_for :view_utama do %>
+  <% if cookies[:tahun] && cookies[:opd] %>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Jumlah Strategi OPD</h2>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table" data-datatable>
+            <thead class="thead-light">
+              <tr>
+                <th class="border-bottom border-start border-end" scope="col" rowspan="2">No.</th>
+                <th class="border-bottom text-center border-start border-end" scope="col" rowspan="2">OPD</th>
+                <th class="border-bottom text-center border-start border-end" scope="col" colspan="<%= @kelompok_anggarans.size %>">Tahun Strategi</th>
+              </tr>
+              <tr>
+                <% @kelompok_anggarans.each do |kla| %>
+                  <th class="border-bottom text-center border-start border-end" scope="col"><%= kla.tahun_kelompok %></th>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+              <% @opds.each.with_index(1) do |opd, i| %>
+                <tr>
+                  <td><%= i %></td>
+                  <td><%= opd.nama_opd %></td>
+                  <% @kelompok_anggarans.each do |kla| %>
+                    <% ttahun = kla.kode_kelompok.match(/murni/) ? @tahun[/[^_]\d*/, 0] : kla.kode_kelompok %>
+                    <td><%= opd.strategis.where(tahun: ttahun).size %></td>
+                  <% end %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <%= render 'shared/pilih_tahun_dan_opd' %>
+  <% end %>
+<% end %>

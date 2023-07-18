@@ -1,0 +1,12 @@
+<%= content_for :html_title, "Laporan KAK" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Laporan</li>
+  <li class="breadcrumb-item active" aria-current="page">Rencana Kinerja (KAK)</li>
+<% end %>
+<% content_for :view_utama do %>
+  <% if cookies[:tahun] && cookies[:opd] %>
+      <%= render partial: 'laporans/kak_admin' %>
+  <% else %>
+    <%= render 'shared/pilih_tahun_dan_opd' %>
+  <% end %>
+<% end %>

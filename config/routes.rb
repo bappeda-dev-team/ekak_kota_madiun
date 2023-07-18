@@ -54,6 +54,7 @@ Rails.application.routes.draw do
       get :daftar_strategi
       post :pasangkan
       get :daftar_linked_strategi
+      post :set_clone
     end
     collection do
       get :kota
@@ -76,6 +77,7 @@ Rails.application.routes.draw do
       get :review_opd
       get :review_kota
       get :manual
+      get :clone
     end
   end
   resources :strategi_opds
@@ -239,6 +241,8 @@ Rails.application.routes.draw do
       post :update_nip
       get :subkegiatan_spbe
       get :rincian
+      get :edit_sasaran_spip
+      get :edit_admin
     end
     resources :rincians do
       get "subkegiatan", on: :new
@@ -337,6 +341,7 @@ Rails.application.routes.draw do
       get :pdf_kak
       get :pdf_rka
       get :show_kak
+      get :buka_kak
     end
   end
   # laporan rka

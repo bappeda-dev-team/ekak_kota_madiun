@@ -24,10 +24,10 @@
   <h4><strong>Indikator Sasaran : </strong></h4>
   <div class="field" id="indikator-sasarans">
     <%= form.fields_for :indikator_sasarans do |indikator_sas| %>
-      <%= render 'indikator_sasaran_fields', form: indikator_sas %>
+      <%= render 'sasarans/indikator_sasaran_fields', form: indikator_sas %>
     <% end %>
   </div>
-  <%= link_to_add_nested(form, :indikator_sasarans, '#indikator-sasarans', link_classes: 'btn btn-primary btn-sm', link_text: 'Tambah Indikator') %>
+  <%= link_to_add_nested(form, :indikator_sasarans, '#indikator-sasarans', link_classes: 'btn btn-primary btn-sm', link_text: 'Tambah Indikator', partial: 'sasarans/indikator_sasaran_fields') %>
   <div class="field mt-3">
     <%= form.label :tahun, { class: "form-label" } %>
     <%= form.select(:tahun, (['',2021,2022,2023,2024]), { :selected => form.object.tahun || cookies[:tahun] },

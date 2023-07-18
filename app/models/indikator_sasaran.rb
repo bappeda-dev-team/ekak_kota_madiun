@@ -22,9 +22,9 @@ class IndikatorSasaran < ApplicationRecord
   belongs_to :sasaran, foreign_key: 'sasaran_id', primary_key: 'id_rencana', optional: true
   has_one :manual_ik
 
-  validates :indikator_kinerja, presence: true
-  validates :target, presence: true
-  validates :satuan, presence: true
+  # validates :indikator_kinerja, presence: true
+  # validates :target, presence: true
+  # validates :satuan, presence: true
 
   amoeba do
     append sasaran_id: '_2022_p'

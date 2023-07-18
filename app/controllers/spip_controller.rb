@@ -1,5 +1,6 @@
 class SpipController < ApplicationController
   before_action :opd_params, :tahun_params
+  skip_before_action :opd_params, only: [:edit_sasaran]
   def index
     return if @kode_opd.nil?
 

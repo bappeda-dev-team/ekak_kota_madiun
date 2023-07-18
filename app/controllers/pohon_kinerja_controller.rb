@@ -373,6 +373,27 @@ class PohonKinerjaController < ApplicationController
     render partial: 'pohon_kinerja/form_clone'
   end
 
+  def clone
+    @strategi = Strategi.find params[:strategi]
+    @tahun_sekarang = @strategi.tahun
+    @pohon = @strategi.pohon
+    render partial: 'pohon_kinerja/form_clone_new'
+  end
+
+  def set_clone
+    @strategi = Strategi.find params[:id]
+    pohon = @strategi.pohon
+    # tahun clone
+    @kelompok_anggaran_id = params[:kelompok_anggaran]
+    tahun_asal = @strategi.tahun
+    tahun_anggaran = KelompokAnggaran.find(@kelompok_anggaran_id).kode_kelompok
+    clone = PohonCloner.call(pohon,
+                             tahun: tahun_anggaran,
+                             tahun_asal: tahun_asal,
+                             traits: [:with_strategi_sasaran])
+    clone.persist!
+  end
+
   def clone_pokin_opd
     if isu_straegis_cloned?
       redirect_to rekap_opd_pohon_kinerja_index_path, warning: "sudah dicloning"

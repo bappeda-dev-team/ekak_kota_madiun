@@ -23,6 +23,16 @@ class LaporansController < ApplicationController
     render partial: "laporans/kak_admin"
   end
 
+  def buka_kak
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = opd.nama_opd
+
+    @program_kegiatans = opd.strategis
+                            .where(id: params[:id])
+                            .map(&:sasaran)
+                            .group_by(&:program_kegiatan)
+  end
+
   def pdf_kak
     @program_kegiatan = ProgramKegiatan.find(params[:id])
     @sasarans = @program_kegiatan.sasarans_subkegiatan(@tahun)
