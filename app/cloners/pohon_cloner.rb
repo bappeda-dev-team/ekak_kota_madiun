@@ -9,8 +9,9 @@ class PohonCloner < Clowne::Cloner
     include_association :strategis, params: true, traits: %i[with_sasaran]
   end
 
-  finalize do |_source, record, **|
+  finalize do |_source, record, tahun:, **|
     record.created_at = Time.current
     record.updated_at = Time.current
+    record.tahun = tahun
   end
 end

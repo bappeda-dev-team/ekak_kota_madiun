@@ -38,10 +38,24 @@
                                     bs_target: '#form-manual-ik',
                                     bs_toggle: 'modal' } %>
           </p>
+          <% if super_admin? %>
+            &nbsp;
+            <%= link_to clone_pohon_kinerja_index_path(strategi: strategi), remote: true,
+                      data: {
+                        controller: 'form-modal',
+                        action: 'form-modal#appendForm',
+                        form_modal_location_param: 'form-clone-body',
+                        bs_toggle: 'modal',
+                        bs_target: '#form-clone'
+                      },
+                      class: "btn btn-sm btn-primary" do %>
+              <i class="fa fa-clone me-2"></i>Clone
+            <% end %>
+          <% end %>
         <% end %>
         <% if current_user.has_any_role?(:super_admin, :reviewer) %>
-        <p class="komentar mt-3">
-          <%= link_to "Tambah Komentar", komentar_pokin_komentars_path(kode_opd: strategi.opd.kode_unik_opd, strategi_id: strategi.id),
+          <p class="komentar mt-3">
+            <%= link_to "Tambah Komentar", komentar_pokin_komentars_path(kode_opd: strategi.opd.kode_unik_opd, strategi_id: strategi.id),
                                       remote: true,
                                       class: 'btn btn-sm btn-warning',
                                       data: { controller: 'form-modal',
@@ -49,7 +63,7 @@
                                       form_modal_location_param: 'form-komentar-body',
                                       bs_target: '#form-komentar',
                                       bs_toggle: 'modal' } %>
-        </p>
+          </p>
         <% end %>
       </td>
       <td class="text-wrap"><%= "#{ind_kabid.target} #{ind_kabid.satuan}" %></td>

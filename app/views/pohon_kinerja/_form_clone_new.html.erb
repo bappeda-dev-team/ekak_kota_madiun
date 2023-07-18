@@ -1,0 +1,17 @@
+<%= form_with(url: set_clone_pohon_kinerja_path(@strategi), method: :post,local: false) do |form| %>
+  <%= form.hidden_field :strategi_id, { readonly: true, value: @pohon } %>
+  <div class="field">
+    <%= form.label :tahun_sekarang, { class: "form-label" } %>
+    <%= form.text_field :tahun_asal, { class: "form-control", readonly: true, value: @tahun_sekarang } %>
+  </div>
+  <div class="field">
+    <%= form.label :tahun_clone, { class: "form-label" } %>
+    <%= form.select :kelompok_anggaran, options_for_select(KelompokAnggaran.all.collect { |ka| [ka.nama_sederhana_kelompok_tahun, ka.id] } ), {include_blank: true},
+                    { data: { placeholder: "Pilih Tahun Cloning",
+                              controller: 'dropdown'
+                    } } %>
+  </div>
+  <div class="actions my-4">
+    <%= form.submit "Clone" %>
+  </div>
+<% end %>

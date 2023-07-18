@@ -54,6 +54,7 @@ Rails.application.routes.draw do
       get :daftar_strategi
       post :pasangkan
       get :daftar_linked_strategi
+      post :set_clone
     end
     collection do
       get :kota
@@ -76,6 +77,7 @@ Rails.application.routes.draw do
       get :review_opd
       get :review_kota
       get :manual
+      get :clone
     end
   end
   resources :strategi_opds
