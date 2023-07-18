@@ -239,6 +239,8 @@ Rails.application.routes.draw do
       post :update_nip
       get :subkegiatan_spbe
       get :rincian
+      get :edit_sasaran_spip
+      get :edit_admin
     end
     resources :rincians do
       get "subkegiatan", on: :new
@@ -337,6 +339,7 @@ Rails.application.routes.draw do
       get :pdf_kak
       get :pdf_rka
       get :show_kak
+      get :buka_kak
     end
   end
   # laporan rka

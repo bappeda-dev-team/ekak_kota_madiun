@@ -82,6 +82,31 @@
               <td colspan="7" class="border">
                 <p class="program">Nama Kegiatan: <%= strategi_kegiatan.kegiatan_strategi %></p>
                 <p>Sasaran Kegiatan: <%= strategi_kegiatan.sasaran %></p>
+                <% if strategi_kegiatan.sasaran.present? %>
+                  <div class="tombol-edit">
+                    <%= link_to edit_sasaran_spip_sasaran_path(strategi_kegiatan.sasaran),
+                        remote: true, class: 'btn btn-sm btn-outline-info',
+                        data: { controller: 'form-modal',
+                                form_modal_location_param: 'form-spip-body',
+                                action: 'form-modal#appendForm',
+                                bs_toggle: 'modal',
+                                bs_target: '#form-spip',
+                        } do %>
+                        <i class="fas fa-plus me-2"></i>
+                        <span>Edit</span>
+                    <% end %>
+                    <%= link_to buka_kak_laporan_path(strategi_kegiatan),
+                        target: "_blank",
+                        class: 'btn btn-sm btn-outline-primary' do %>
+                          <i class="fas fa-plus me-2"></i>
+                          <span>Buka KAK</span>
+                    <% end %>
+                  </div>
+                <% else %>
+                  <p class="alert alert-danger">Sasaran Kosong</p>
+                  <b>Pemilik:</b>
+                  <p class="alert alert-danger"><%= strategi_kegiatan.user.nama %></p>
+                <% end %>
               </td>
             </tr>
             <% strategi_kegiatan.indikator_sasarans.each do |indikator_keg| %>
@@ -113,21 +138,21 @@
               </td>
             </tr>
             <% indikator_sub = strategi_kegiatan.program_kegiatan_strategi&.indikator_subkegiatan_tahun(@tahun, @opd.kode_unik_opd) %>
-              <tr>
-                <td class="border"></td>
-                <td class="border"></td>
-                <td class="border"></td>
-                <td class="border"></td>
-                <td class="border"></td>
-                <td class="border"></td>
-                <td class="border"></td>
-                <td class="border"></td>
-                <td class="border"></td>
-                <td class="border"><%= indikator_sub&.dig(:indikator) %></td>
-                <td class="border"><%= indikator_sub&.dig(:satuan) %></td>
-                <td class="border"><%= indikator_sub&.dig(:target) %></td>
-                <td class="border"><%= indikator_sub&.dig(:satuan) %></td>
-              </tr>
+            <tr>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"></td>
+              <td class="border"><%= indikator_sub&.dig(:indikator) %></td>
+              <td class="border"><%= indikator_sub&.dig(:satuan) %></td>
+              <td class="border"><%= indikator_sub&.dig(:target) %></td>
+              <td class="border"><%= indikator_sub&.dig(:satuan) %></td>
+            </tr>
           <% end %>
         <% end %>
       <% end %>

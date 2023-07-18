@@ -298,6 +298,18 @@ class SasaransController < ApplicationController
     render partial: 'form_sasaran_spbe', locals: { sasaran: @sasaran }
   end
 
+  def edit_sasaran_spip
+    @sasaran = Sasaran.find(params[:id])
+    @kode_opd = params[:kode_opd]
+    render partial: 'form_sasaran_spbe', locals: { sasaran: @sasaran }
+  end
+
+  def edit_admin
+    @sasaran = Sasaran.find(params[:id])
+    @user = @sasaran.user
+    @tahun = cookies[:tahun] || Date.current.year
+  end
+
   def subkegiatan_spbe
     @sasaran = Sasaran.find(params[:id])
     render partial: 'form_subkegiatan_spbe', locals: { sasaran: @sasaran }
