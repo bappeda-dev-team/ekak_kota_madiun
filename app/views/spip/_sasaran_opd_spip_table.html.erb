@@ -84,21 +84,10 @@
                 <p>Sasaran Kegiatan: <%= strategi_kegiatan.sasaran %></p>
                 <% if strategi_kegiatan.sasaran.present? %>
                   <div class="tombol-edit">
-                    <%= link_to edit_sasaran_spip_sasaran_path(strategi_kegiatan.sasaran),
-                        remote: true, class: 'btn btn-sm btn-outline-info',
-                        data: { controller: 'form-modal',
-                                form_modal_location_param: 'form-spip-body',
-                                action: 'form-modal#appendForm',
-                                bs_toggle: 'modal',
-                                bs_target: '#form-spip',
-                        } do %>
-                        <i class="fas fa-plus me-2"></i>
-                        <span>Edit</span>
-                    <% end %>
                     <%= link_to buka_kak_laporan_path(strategi_kegiatan),
                         target: "_blank",
-                        class: 'btn btn-sm btn-outline-primary' do %>
-                          <i class="fas fa-plus me-2"></i>
+                        class: 'btn btn-sm btn-info' do %>
+                          <i class="fas fa-book-open me-2"></i>
                           <span>Buka KAK</span>
                     <% end %>
                   </div>
