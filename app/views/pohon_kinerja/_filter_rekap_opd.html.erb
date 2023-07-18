@@ -59,26 +59,7 @@
           <tbody>
             <% @isu_opd.each do |isu, strategis| %>
               <tr class="isu-strategis-kota">
-                <th colspan="4" class="text-wrap"><%= isu.class.name.pluralize.underscore.titleize %>: <%= isu.isu_strategis %>
-                  <% if super_admin? %>
-                    &nbsp;
-                    <%= link_to clone_list_opd_pohon_kinerja_index_path(isu_strategis: isu.id,
-                                                                      opd_id: @opd.id,
-                                                                      tahun_sekarang: @tahun,
-                                                                      tipe_isu: isu.class.name,
-                                                                      jenis: 'opd'), remote: true,
-                      data: {
-                        controller: 'form-modal',
-                        action: 'form-modal#appendForm',
-                        form_modal_location_param: 'form-clone-body',
-                        bs_toggle: 'modal',
-                        bs_target: '#form-clone'
-                      },
-                      class: "btn btn-sm btn-primary" do %>
-                      <i class="fa fa-clone me-2"></i>Clone
-                    <% end %>
-                  <% end %>
-                </th>
+                <th colspan="4" class="text-wrap"><%= isu.class.name.pluralize.underscore.titleize %>: <%= isu.isu_strategis %> </th>
               </tr>
               <% strategis.each do |strategi, strategi_kaopds| %>
                 <tr class="strategi-kota">
