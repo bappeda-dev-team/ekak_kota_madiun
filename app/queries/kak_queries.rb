@@ -18,7 +18,7 @@ class KakQueries
 
   def sasarans
     users_eselon4.map do |user|
-      user.sasarans.where('tahun ILIKE ?', "%#{@tahun}%")
+      user.sasarans.where(tahun: @tahun)
     end
   end
 

@@ -387,6 +387,7 @@ class PohonKinerjaController < ApplicationController
                              tahun: tahun_anggaran,
                              tahun_asal: tahun_asal,
                              traits: [:with_strategi_sasaran])
+    # redirect_to rekap_opd_pohon_kinerja_index_path, error: "Terjadi keslahan cloning"
     clone.persist!
   end
 

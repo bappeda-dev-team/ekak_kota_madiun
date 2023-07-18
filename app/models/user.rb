@@ -147,7 +147,7 @@ class User < ApplicationRecord
                    tahapans
                    program_kegiatan
                    indikator_sasarans])
-      .where("COALESCE(tahun, '') ILIKE ?", "%#{tahun}%")
+      .where(tahun: tahun)
       .order(nip_asn: :asc)
       .dengan_strategi
   end
