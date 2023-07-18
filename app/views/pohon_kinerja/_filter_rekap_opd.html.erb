@@ -46,65 +46,14 @@
             </tr>
           </thead>
           <tbody>
-            <% @isu_opd.each do |isu| %>
-              <tr class="isu-strategis-kota">
-                <th colspan="4" class="text-wrap"><%= isu.class.name.pluralize.underscore.titleize %>: <%= isu.isu_strategis %>
-                  <% if current_user.nik == 'super_admin' %>
-                    &nbsp;
-                    <%= link_to clone_list_opd_pohon_kinerja_index_path(isu_strategis: isu.id,
-                                                                      opd_id: @opd.id,
-                                                                      tahun_sekarang: @tahun,
-                                                                      tipe_isu: isu.class.name,
-                                                                      jenis: 'opd'), remote: true,
-                      data: {
-                        controller: 'form-modal',
-                        action: 'form-modal#appendForm',
-                        form_modal_location_param: 'form-clone-body',
-                        bs_toggle: 'modal',
-                        bs_target: '#form-clone'
-                      },
-                      class: "btn btn-sm btn-primary" do %>
-                      <i class="fa fa-clone me-2"></i>Clone
-                    <% end %>
-                  <% end %>
-                </th>
-              </tr>
-              <% isu.strategi_kotums.each do |strategi| %>
-                <tr class="strategi-kota">
-                  <th rowspan="<%= strategi.indikators_tahun(@tahun).size + 1 %>" class="align-middle">Strategi Kota</th>
-                  <th rowspan="<%= strategi.indikators_tahun(@tahun).size + 1 %>" class="align-middle text-wrap"><%= strategi.strategi %> id: <%= strategi.id %></th>
-                </tr>
-                <% strategi.indikators_tahun(@tahun).each do |ind_kota| %>
-                  <tr class="strategi-kota">
-                    <td class="text-wrap"><%= ind_kota.indikator %></td>
-                    <td class="text-wrap"><%= "#{ind_kota.target} #{ind_kota.satuan}" %></td>
-                  </tr>
-                <% end %>
-                <% strategi_matcher(@strategic, strategi.id).each do |strategic| %>
-                  <%= render 'row_strategi', strategi: strategic, jenis: "Strategic", class_style: "strategic-objective" %>
-                  <% if @tactical2.any? %>
-                    <% strategi_matcher(@tactical2, strategic.id).each do |tactical2| %>
-                      <%= render 'row_strategi', strategi: tactical2, jenis: "Tactical", class_style: "tactical-objective" %>
-                      <% strategi_matcher(@tactical, tactical2.id).each do |tactical| %>
-                        <%= render 'row_strategi', strategi: tactical, jenis: "Tactical 2", class_style: "tactical-objective-2", show_program: true %>
-                        <% strategi_matcher(@operational, tactical.id).each do |operational| %>
-                          <%= render 'row_strategi', strategi: operational, jenis: "Operational", class_style: "operational-objective", show_sub: true %>
-                          <% strategi_matcher(@operational2, operational.id).each do |operational2| %>
-                            <%= render 'row_strategi', strategi: operational2, jenis: "Operational 2", class_style: "operational-objective-2" %>
-                          <% end %>
-                        <% end %>
-                      <% end %>
-                    <% end %>
-                  <% else %>
-                    <% strategi_matcher(@tactical, strategic.id).each do |tactical| %>
-                      <%= render 'row_strategi', strategi: tactical, jenis: "Tactical", class_style: "tactical-objective", show_program: true %>
-                      <% strategi_matcher(@operational, tactical.id).each do |operational| %>
-                        <%= render 'row_strategi', strategi: operational, jenis: "Operational", class_style: "operational-objective", show_sub: true %>
-                        <% strategi_matcher(@operational2, operational.id).each do |operational2| %>
-                          <%= render 'row_strategi', strategi: operational2, jenis: "Operational 2", class_style: "operational-objective-2" %>
-                        <% end %>
-                      <% end %>
-                    <% end %>
+            <% @strategic.each do |strategic| %>
+              <%= render 'row_strategi', strategi: strategic, jenis: "Strategic", class_style: "strategic-objective" %>
+              <% strategi_matcher(@strategis['eselon_3'], strategic.id ).each do |tactical| %>
+                <%= render 'row_strategi', strategi: tactical, jenis: "Tactical", class_style: "tactical-objective", show_program: true %>
+                <% strategi_matcher(@strategis['eselon_4'], tactical.id ).each do |operational| %>
+                  <%= render 'row_strategi', strategi: operational, jenis: "Operational", class_style: "operational-objective", show_subkegiatan: true %>
+                  <% strategi_matcher(@strategis['staff'], operational.id ).each do |operational2| %>
+                    <%= render 'row_strategi', strategi: operational2, jenis: "Operational 2", class_style: "operational-objective-2" %>
                   <% end %>
                 <% end %>
               <% end %>

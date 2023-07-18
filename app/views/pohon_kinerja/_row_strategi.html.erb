@@ -12,14 +12,14 @@
       </tr>
     <% end %>
   <% end %>
-  <% if local_assigns[:show_sub] %>
+  <% if local_assigns[:show_subkegiatan] %>
     <tr class="subkegiatan">
       <th colspan="4">Subkegiatan: <%= strategi.subkegiatan_strategi %></th>
     </tr>
   <% end %>
 <% end %>
 <tr class="<%= class_style %>">
-  <td rowspan="<%= strategi.indikators.size + 1 %>"><%= jenis %></td>
+  <td rowspan="<%= strategi.indikators.size + 1 %>"><%= jenis %> id: <%= strategi.id %> - tahun: <%= strategi.tahun %></td>
   <td rowspan="<%= strategi.indikators.size + 1 %>" class="text-wrap"><%= strategi.strategi %> pohon: <%= strategi.pohon_id %></td>
 </tr>
 <% if milik_opd %>

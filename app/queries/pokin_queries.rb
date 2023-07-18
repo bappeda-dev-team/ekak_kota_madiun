@@ -135,16 +135,16 @@ class PokinQueries
 
   def data_total_pokin
     {
-      strategic: strategic.count,
+      strategic: list_strategis['eselon_2'].count,
       strategic_indikator: strategic_indikator.count,
 
-      tactical: tactical.count,
+      tactical: list_strategis['eselon_3'].count,
       tactical_indikator: tactical_indikator.count,
 
-      operational: operational.count,
+      operational: list_strategis['eselon_4'].count,
       operational_indikator: operational_indikator.count,
 
-      operational2: operational2.count,
+      operational2: list_strategis['staff'].count,
       operational2_indikator: operational2_indikator.count
     }
   end
@@ -178,7 +178,8 @@ class PokinQueries
   end
 
   def strategi_in_opd
-    Strategi.where(opd_id: id_opd_induk.to_s).where('tahun ILIKE ?', "%#{@tahun}%")
+    # Strategi.where(opd_id: id_opd_induk.to_s).where('tahun ILIKE ?', "%#{@tahun}%")
+    Strategi.where(opd_id: id_opd_induk.to_s).where(tahun: @tahun)
   end
 
   def nip_list
@@ -191,5 +192,9 @@ class PokinQueries
 
   def strategi_by_role(strategis)
     strategis.group_by(&:role)
+  end
+
+  def list_strategis
+    strategi_by_role(strategi_in_specific_opd)
   end
 end

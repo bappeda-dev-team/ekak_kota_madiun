@@ -347,12 +347,8 @@ class PohonKinerjaController < ApplicationController
            end
     @nama_opd = @opd.nama_opd
     pokin = PokinQueries.new(opd: @opd, tahun: @tahun)
-    @isu_opd = pokin.isu_strategis
-    @strategic = pokin.strategic
-    @tactical = pokin.tactical
-    @tactical2 = pokin.tactical2
-    @operational = pokin.operational
-    @operational2 = pokin.operational2
+    @strategis = pokin.strategi_by_role(pokin.strategi_in_specific_opd)
+    @strategic = @strategis['eselon_2']
     @rekap_jumlah = pokin.data_total_pokin
     render partial: 'pohon_kinerja/filter_rekap_opd'
   end
@@ -386,7 +382,7 @@ class PohonKinerjaController < ApplicationController
     # tahun clone
     @kelompok_anggaran_id = params[:kelompok_anggaran]
     tahun_asal = @strategi.tahun
-    tahun_anggaran = KelompokAnggaran.find(@kelompok_anggaran_id).kode_kelompok
+    tahun_anggaran = KelompokAnggaran.find(@kelompok_anggaran_id).kode_tahun_sasaran
     clone = PohonCloner.call(pohon,
                              tahun: tahun_anggaran,
                              tahun_asal: tahun_asal,
