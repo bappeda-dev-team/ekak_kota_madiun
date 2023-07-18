@@ -9,7 +9,7 @@ class PokinQueries
   end
 
   def users
-    @opd.users.includes(:strategis)
+    @opd.users
   end
 
   def opd_induk
@@ -167,5 +167,29 @@ class PokinQueries
 
   def isu_strategis
     strategi_kota.map(&:isu)
+  end
+
+  def id_opd_induk
+    if opd_induk
+      opd_induk.id
+    else
+      @opd.id
+    end
+  end
+
+  def strategi_in_opd
+    Strategi.where(opd_id: id_opd_induk.to_s).where('tahun ILIKE ?', "%#{@tahun}%")
+  end
+
+  def nip_list
+    users.pluck(:nik)
+  end
+
+  def strategi_in_specific_opd
+    strategi_in_opd.where(nip_asn: nip_list)
+  end
+
+  def strategi_by_role(strategis)
+    strategis.group_by(&:role)
   end
 end

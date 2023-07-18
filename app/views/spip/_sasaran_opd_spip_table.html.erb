@@ -32,7 +32,7 @@
         <tr>
           <td class="border"></td>
           <td class="border"></td>
-          <td colspan="11" class="border"><%= strategi.sasaran %></td>
+          <td colspan="11" class="border"><%= strategi.sasaran %> <%= strategi.user.nama %></td>
         </tr>
         <% strategi.indikator_sasarans.each do |indikator_opd| %>
           <tr>
@@ -55,7 +55,7 @@
               <% strategi_program.programs_strategi.each_key do |program| %>
                 <p class="program">Nama Program: <%= program %></p>
               <% end %>
-              <p>Sasaran Program: <%= strategi_program.sasaran %></p>
+              <p>Sasaran Program: <%= strategi_program.sasaran %> <%= strategi_program.user.nama %></p>
             </td>
           </tr>
           <% strategi_program.indikator_sasarans.each do |indikator_pro| %>
@@ -81,7 +81,7 @@
               <td class="border"></td>
               <td colspan="7" class="border">
                 <p class="program">Nama Kegiatan: <%= strategi_kegiatan.kegiatan_strategi %></p>
-                <p>Sasaran Kegiatan: <%= strategi_kegiatan.sasaran %></p>
+                <p>Sasaran Kegiatan: <%= strategi_kegiatan.sasaran %> <%= strategi_kegiatan.user.nama %></p>
               </td>
             </tr>
             <% strategi_kegiatan.indikator_sasarans.each do |indikator_keg| %>

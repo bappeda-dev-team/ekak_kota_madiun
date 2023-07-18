@@ -29,15 +29,6 @@
           </div>
         </nav>
         <div class="table-responsive tab-content" id="nav-tabContent">
-          <div class="tab-pane fade show active" id="informasi-umum" role="tabpanel" aria-labelledby="informasi-umum" tabindex="0">
-            <%= render partial: 'spip/spip_table', locals: { informasi_umum: @informasi_umum } %>
-          </div>
-          <div class="tab-pane fade" id="daftar-opd" role="tabpanel" aria-labelledby="daftar-opd" tabindex="1">
-            <%= render partial: 'spip/daftar_opd_table', locals: { daftar_opd: @daftar_opd } %>
-          </div>
-          <div class="tab-pane fade" id="sasaran-opd" role="tabpanel" aria-labelledby="sasaran-opd" tabindex="2">
-            <%= render partial: 'spip/sasaran_opd_table', locals: { sasaran_opd: @sasaran_opd } %>
-          </div>
           <div class="tab-pane fade" id="opd" role="tabpanel" aria-labelledby="opd" tabindex="3">
             <%= render partial: 'spip/sasaran_opd_spip_table', locals: { sasaran_opd_spip: @sasaran_opd_spip } %>
           </div>
