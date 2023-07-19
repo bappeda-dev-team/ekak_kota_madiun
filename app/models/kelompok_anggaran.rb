@@ -26,7 +26,7 @@ class KelompokAnggaran < ApplicationRecord
   def kode_kelompok_maker
     return false if tahun.nil? || kelompok.nil?
 
-    self.kode_kelompok = "_#{tahun}_#{kelompok.downcase}"
+    self.kode_kelompok = "#{tahun}_#{kelompok.downcase}"
   end
 
   def kode_tahun_sasaran
@@ -39,5 +39,9 @@ class KelompokAnggaran < ApplicationRecord
 
   def nama_sederhana_kelompok_tahun
     "#{tahun} #{kelompok if kelompok == 'Perubahan'}"
+  end
+
+  def murni_perubahan
+    kode_kelompok.match(/murni/) ? tahun : kode_kelompok
   end
 end
