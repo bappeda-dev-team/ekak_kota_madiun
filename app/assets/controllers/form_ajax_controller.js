@@ -8,21 +8,21 @@ export default class extends Controller {
 
   afterSubmitRefresh(event) {
     const [xhr, status] = event.detail
-    if(status == 'OK' || status == 'Created' ) {
+    if (status == 'OK' || status == 'Created') {
       Swal.fire({
         title: 'Sukses',
         text: status,
         icon: "success",
         confirmButtonText: 'Ok',
       }).then(() => {
-      Turbolinks.visit(window.location, { action: "replace" })
+        Turbolinks.visit(window.location, { action: "replace" })
       })
     }
     else {
       const errors = JSON.parse(xhr.response)
       this.errorContainerTargets.forEach((errorContainer) => {
         const errorType = errorContainer.dataset.errorType
-        if(errors.hasOwnProperty(errorType)) {
+        if (errors.hasOwnProperty(errorType)) {
           errorContainer.previousElementSibling.classList.add('is-invalid')
           errorContainer.innerHTML = errors[errorType]
           errorContainer.style.display = 'inline'
@@ -39,7 +39,7 @@ export default class extends Controller {
     const [message, status, xhr] = event.detail
     const modal_target = event.params.modal
     const modal = document.getElementById(modal_target)
-    const ajax_update_event = new CustomEvent("ajax-update", { detail: { data: message.result  } })
+    const ajax_update_event = new CustomEvent("ajax-update", { detail: { data: message.result } })
     // event after successResponse
     Modal.getInstance(modal).hide()
     this.sweetalert(message.resText)
@@ -57,24 +57,24 @@ export default class extends Controller {
     // event after successResponse
     Modal.getInstance(modal).hide()
     fetch(url,
-            {
-                    method: "get"
-            })
-            .then(
-                    response => response.text()
+      {
+        method: "get"
+      })
+      .then(
+        response => response.text()
 
-            )
-            .then(
-                    text => {
-                      this.sweetalertStatus(message.resText, status)
-                      target_element.innerHTML = text
-                    }
-            ).catch(
-                    e => {
-                      this.sweetalertStatus('terjadi kesalahan', 'error')
-                    }
+      )
+      .then(
+        text => {
+          this.sweetalertStatus(message.resText, status)
+          target_element.innerHTML = text
+        }
+      ).catch(
+        e => {
+          this.sweetalertStatus('terjadi kesalahan', 'error')
+        }
 
-            )
+      )
 
   }
 
@@ -97,24 +97,24 @@ export default class extends Controller {
     // event after successResponse
     Modal.getInstance(modal).hide()
     fetch(url,
-            {
-                    method: "get"
-            })
-            .then(
-                    response => response.text()
+      {
+        method: "get"
+      })
+      .then(
+        response => response.text()
 
-            )
-            .then(
-                    text => {
-                      this.sweetalertStatus(message.resText, status)
-                      target_element.innerHTML = text
-                    }
-            ).catch(
-                    e => {
-                      this.sweetalertStatus('terjadi kesalahan', 'error')
-                    }
+      )
+      .then(
+        text => {
+          this.sweetalertStatus(message.resText, status)
+          target_element.innerHTML = text
+        }
+      ).catch(
+        e => {
+          this.sweetalertStatus('terjadi kesalahan', 'error')
+        }
 
-            )
+      )
 
   }
 
@@ -123,7 +123,7 @@ export default class extends Controller {
     const [message, status, xhr] = event.detail
     const modal_target = event.params.modal
     const modal = document.getElementById(modal_target)
-    const ajax_update_event = new CustomEvent("sasaran-new", { detail: { data: message  } })
+    const ajax_update_event = new CustomEvent("sasaran-new", { detail: { data: message } })
     // event after successResponse
     Modal.getInstance(modal).hide()
     this.sweetalert(message.resText)
@@ -133,9 +133,9 @@ export default class extends Controller {
   successResponseBagikan(event) {
     // event.preventDefault()
     const [message, status, xhr] = event.detail
-    const modal_target = event.params.modal 
+    const modal_target = event.params.modal
     const modal = document.getElementById(modal_target)
-    const ajax_update_event = new CustomEvent("ajax-update", { detail: { data: message.result  } })
+    const ajax_update_event = new CustomEvent("ajax-update", { detail: { data: message.result } })
     // event after successResponse
     Modal.getInstance(modal).hide()
     this.sweetalertStatus(message.resText, status)
@@ -145,15 +145,15 @@ export default class extends Controller {
   successResponseRenderNew(event) {
     // event.preventDefault()
     const [message, status, xhr] = event.detail
-    const modal_target = event.params.modal 
+    const modal_target = event.params.modal
     const modal = document.getElementById(modal_target)
-    const ajax_update_event = new CustomEvent("ajax-update", { detail: { data: message.result  } })
+    const ajax_update_event = new CustomEvent("ajax-update", { detail: { data: message.result } })
     // event after successResponse
     Modal.getInstance(modal).hide()
     this.sweetalert(message.resText)
-    const {roles, target} = message.result
+    const { roles, target } = message.result
     const target_row = document.getElementById(target)
-    target_row.innerHTML = `<ul>${roles.map( n => `<li>${n}</li>`).join('')}</ul>`
+    target_row.innerHTML = `<ul>${roles.map(n => `<li>${n}</li>`).join('')}</ul>`
     target_row.style.backgroundColor = 'lime'
   }
 
@@ -168,9 +168,8 @@ export default class extends Controller {
     const errors = message.errors
     this.errorContainerTargets.forEach((errorContainer) => {
       const errorType = errorContainer.dataset.errorType
-      const errorMsg = extractError({ errors, type: errorType }) 
-      if(errorMsg === undefined)
-      {
+      const errorMsg = extractError({ errors, type: errorType })
+      if (errorMsg === undefined) {
         errorContainer.style.display = 'none'
       }
       else {
@@ -179,6 +178,16 @@ export default class extends Controller {
         errorContainer.style.display = 'inline'
       }
     })
+  }
+
+  responseAfter(event) {
+    // event.preventDefault()
+    const [message, status, xhr] = event.detail
+    const modal = event.parentElement.parentElement.parentElement.parentElement
+    console.log(event)
+    this.sweetalertStatus(message.resText, status)
+    // event after successResponse
+    Modal.getInstance(modal).hide()
   }
 
   sweetalert(text) {
@@ -191,38 +200,37 @@ export default class extends Controller {
   }
 
   sweetalertStatus(text, status) {
-    if(status == 'Accepted')
-      {
-    Swal.fire({
-      title: 'Sukses',
-      text: text,
-      icon: "success",
-      confirmButtonText: 'Ok',
-    })
-      }
-    else if(status == 'OK') {
-    Swal.fire({
-      title: 'Tidak ada perubahan',
-      text: text,
-      icon: "info",
-      confirmButtonText: 'Ok',
-    })
+    if (status == 'Accepted') {
+      Swal.fire({
+        title: 'Sukses',
+        text: text,
+        icon: "success",
+        confirmButtonText: 'Ok',
+      })
+    }
+    else if (status == 'OK') {
+      Swal.fire({
+        title: 'Tidak ada perubahan',
+        text: text,
+        icon: "info",
+        confirmButtonText: 'Ok',
+      })
     }
     else {
-    Swal.fire({
-      title: 'Gagal',
-      text: text,
-      icon: "error",
-      confirmButtonText: 'Ok',
-    })
-      }
+      Swal.fire({
+        title: 'Gagal',
+        text: text,
+        icon: "error",
+        confirmButtonText: 'Ok',
+      })
+    }
   }
 }
 
 function extractError({ errors, type }) {
   if (!errors || !Array.isArray(errors)) return
-    const foundError = errors.find(
-          (error) => error.id.toLowerCase() === type.toLowerCase()
-        )
-    return foundError?.title
+  const foundError = errors.find(
+    (error) => error.id.toLowerCase() === type.toLowerCase()
+  )
+  return foundError?.title
 }

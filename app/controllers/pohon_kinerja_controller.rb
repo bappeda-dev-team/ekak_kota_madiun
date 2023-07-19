@@ -282,6 +282,8 @@ class PohonKinerjaController < ApplicationController
            else
              current_user.opd
            end
+    pokin = PokinQueries.new(opd: @opd, tahun: @tahun)
+    # TODO: fix queries in here and in view using pokinqueries
     @isu_opd = @opd.pohon_kinerja_opd(@tahun)
     @nama_opd = @opd.nama_opd
     respond_to do |format|
@@ -388,7 +390,11 @@ class PohonKinerjaController < ApplicationController
                              tahun_asal: tahun_asal,
                              traits: [:with_strategi_sasaran])
     # redirect_to rekap_opd_pohon_kinerja_index_path, error: "Terjadi keslahan cloning"
-    clone.persist!
+    if clone.persist!
+      render json: { resText: 'Sukses Cloning' }, status: :created
+    else
+      render json: { resText: 'Gagal Cloning' }, status: :unprocessable_entity
+    end
   end
 
   def clone_pokin_opd

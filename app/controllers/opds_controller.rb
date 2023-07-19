@@ -83,8 +83,10 @@ class OpdsController < ApplicationController
     @nama_opd = @opd.nama_opd
     @opd_id = @opd.id
     @tahun = params[:tahun] || 2023
+    pokin = PokinQueries.new(opd: @opd, tahun: @tahun)
     @kotak_usulan = @opd.usulans
-    @isu_strategis_pohon = @opd.isu_strategis_pohon(@tahun)
+    # @isu_strategis_pohon = @opd.isu_strategis_pohon(@tahun)
+    @isu_strategis_pohon = pokin.isu_strategis
     return unless @opd_id == 145
 
     render 'kotak_usulan_setda'

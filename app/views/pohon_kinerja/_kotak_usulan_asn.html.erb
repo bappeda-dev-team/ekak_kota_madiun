@@ -27,8 +27,8 @@
           </tr>
         </thead>
         <tbody>
-            <% @strategis.each do |strategi| %>
-              <% pohon = strategi.pohon %>
+          <% @strategis.each do |strategi| %>
+            <% pohon = strategi.pohon %>
             <tr>
               <td class="text-wrap align-middle">
                 <%= render 'nama_pembagi_strategi', strategi: pohon.pohonable.nama_isu, nama_pemilik: "Kota Madiun"  %>
@@ -50,9 +50,10 @@
                 %>
               </td>
             </tr>
-            <% end %>
+          <% end %>
         </tbody>
       </table>
     </div>
   </div>
 </div>
+<%= render 'shared/modal_template', modal_name: 'clone' %>

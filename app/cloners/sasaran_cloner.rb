@@ -2,7 +2,6 @@ class SasaranCloner < Clowne::Cloner
   adapter :active_record
 
   trait :with_indikators do
-    nullify :id_rencana
     include_association :indikator_sasarans, params: proc { |params, sasaran|
       {
         id_indikator: params[:tahun],
@@ -16,6 +15,8 @@ class SasaranCloner < Clowne::Cloner
         tahun: params[:tahun]
       }
     }
+
+    nullify :id_rencana
   end
 
   # trait :with_tahapans do

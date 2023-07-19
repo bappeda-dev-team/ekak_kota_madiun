@@ -1,4 +1,8 @@
-<%= form_with(url: set_clone_pohon_kinerja_path(@strategi), method: :post,local: false) do |form| %>
+<%= form_with(url: set_clone_pohon_kinerja_path(@strategi),
+              method: :post,
+              local: false,
+              data: { controller: 'form-ajax', action: 'ajax:complete->form-ajax#responseAfter' }
+) do |form| %>
   <%= form.hidden_field :strategi_id, { readonly: true, value: @pohon } %>
   <div class="field">
     <%= form.label :tahun_sekarang, { class: "form-label" } %>
