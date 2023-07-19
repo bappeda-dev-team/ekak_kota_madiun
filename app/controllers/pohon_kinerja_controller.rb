@@ -282,9 +282,9 @@ class PohonKinerjaController < ApplicationController
            else
              current_user.opd
            end
-    pokin = PokinQueries.new(opd: @opd, tahun: @tahun)
-    # TODO: fix queries in here and in view using pokinqueries
+    # pokin = PokinQueries.new(opd: @opd, tahun: @tahun)
     @isu_opd = @opd.pohon_kinerja_opd(@tahun)
+    # TODO: fix queries in here and in view
     @nama_opd = @opd.nama_opd
     respond_to do |format|
       if @opd.id == 145 || @opd.kode_opd == '1260'
