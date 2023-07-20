@@ -23,12 +23,16 @@ class KakQueries
 
   def sasarans
     users_eselon4.map do |user|
-      user.sasarans.where(tahun: @tahun).where.not(strategi_id: "")
+      user.sasarans.where(tahun: @tahun, keterangan: nil)
     end.flatten
   end
 
+  def filter_sasaran
+    sasarans.select(&:strategi)
+  end
+
   def sasaran_strategis
-    sasarans.reject { |s| s.strategi.type == 'StrategiPohon' }
+    filter_sasaran.reject { |s| s.strategi.type == 'StrategiPohon' }
   end
 
   def program_kegiatans
