@@ -7,6 +7,7 @@ class SpipQueries
     @tujuan_kota = tujuan_kota
     @tahun = tahun
     @opd = opd
+    # example of dependency injection (PokinQueries)
     @pokin = PokinQueries.new(opd: opd, tahun: tahun)
   end
 
@@ -44,18 +45,19 @@ class SpipQueries
   end
 
   def spip_sasaran_opd
-    # if @opd.id.in?(opd_khusus)
-    #   # @opd.strategi_eselon2b.where(tahun: @tahun).group_by(&:opd)
-    #   @pokin.tactical2.group_by(&:opd)
-    # else
-    #   # @opd.strategi_eselon2.where(tahun: @tahun).group_by(&:opd)
-    #   @pokin.strategic.group_by(&:opd)
-    # end
-    strategis = @pokin.strategi_in_specific_opd
-    grouping = @pokin.strategi_by_role(strategis)
-    eselon3 = grouping["eselon_3"]
-    tactical2 = eselon3.map(&:strategi_atasan)
-    @pokin.tactical2.group_by(&:opd)
+    # example of dependency injection (PokinQueries)
+    if @opd.id.in?(opd_khusus)
+      # @opd.strategi_eselon2b.where(tahun: @tahun).group_by(&:opd)
+      @pokin.tactical2.group_by(&:opd)
+    else
+      # @opd.strategi_eselon2.where(tahun: @tahun).group_by(&:opd)
+      @pokin.strategic.group_by(&:opd)
+    end
+    # strategis = @pokin.strategi_in_specific_opd
+    # grouping = @pokin.strategi_by_role(strategis)
+    # eselon3 = grouping["eselon_3"]
+    # tactical2 = eselon3.map(&:strategi_atasan)
+    # @pokin.tactical2.group_by(&:opd)
   end
 
   def strategi_kotas
