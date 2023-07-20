@@ -35,7 +35,7 @@
           <td colspan="11" class="border"><%= strategi.sasaran %> <%= strategi.user.nama %></td>
         </tr>
         <% strategi.indikator_sasarans.each do |indikator_opd| %>
-          <tr>
+          <tr class="<%= kosong_class(indikator_opd.target == '0') %>">
             <td class="border"></td>
             <td class="border"></td>
             <td class="border"></td>
@@ -46,7 +46,7 @@
           </tr>
         <% end %>
         <% strategi.strategi_eselon_tigas.each do |strategi_program| %>
-          <tr>
+          <tr class="<%= kosong_class(strategi_program.programs_strategi.keys.include?(:Kosong)) %>">
             <td class="border"></td>
             <td class="border"></td>
             <td class="border"></td>
@@ -59,7 +59,7 @@
             </td>
           </tr>
           <% strategi_program.indikator_sasarans.each do |indikator_pro| %>
-            <tr>
+            <tr class="<%= kosong_class(indikator_pro.target == '0') %>">
               <td class="border"></td>
               <td class="border"></td>
               <td class="border"></td>
@@ -72,7 +72,7 @@
             </tr>
           <% end %>
           <% strategi_program.strategi_eselon_empats.each do |strategi_kegiatan| %>
-            <tr>
+            <tr class="<%= kosong_class(strategi_kegiatan.kegiatan_strategi.include?('Kosong')) %>">
               <td class="border"></td>
               <td class="border"></td>
               <td class="border"></td>
@@ -87,8 +87,8 @@
                     <%= link_to buka_kak_laporan_path(strategi_kegiatan),
                         target: "_blank",
                         class: 'btn btn-sm btn-info' do %>
-                          <i class="fas fa-book-open me-2"></i>
-                          <span>Buka KAK</span>
+                      <i class="fas fa-book-open me-2"></i>
+                      <span>Buka KAK</span>
                     <% end %>
                   </div>
                 <% else %>
@@ -99,7 +99,7 @@
               </td>
             </tr>
             <% strategi_kegiatan.indikator_sasarans.each do |indikator_keg| %>
-              <tr>
+              <tr class="<%= kosong_class(indikator_keg.target == '0') %>">
                 <td class="border"></td>
                 <td class="border"></td>
                 <td class="border"></td>
