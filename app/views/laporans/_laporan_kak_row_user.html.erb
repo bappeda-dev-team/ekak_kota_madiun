@@ -19,6 +19,7 @@
             <th class="border text-center" scope="col">No</th>
             <th class="border text-center" scope="col">Pemilik Rencana</th>
             <th class="border text-center" scope="col">Rencana Kinerja</th>
+            <th class="border text-center" scope="col">Tahun</th>
             <th class="border text-center" scope="col">Indikator</th>
             <th class="border text-center" scope="col">Target</th>
             <th class="border text-center" scope="col">Satuan</th>
@@ -55,6 +56,7 @@
                 <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= "#{i}.#{index}" %></td>
                 <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
                 <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
+                <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.tahun %></td>
                 <%= indikator_sasaran(sasaran) %>
                 <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
                 <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">

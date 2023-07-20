@@ -10,7 +10,8 @@ class LaporansController < ApplicationController
   def laporan_kak
     @nip_user = @user.nik
     @nama_user = @user.nama
-    @program_kegiatans = @user.subkegiatan_sasarans_tahun(@tahun)
+    kak = KakQueries.new(opd: @user.opd, tahun: @tahun, user: @user)
+    @program_kegiatans = kak.program_kegiatans
   end
 
   def laporan_kak_admin
@@ -55,7 +56,8 @@ class LaporansController < ApplicationController
   def laporan_rka
     @nip_user = @user.nik
     @nama_user = @user.nama
-    @program_kegiatans = @user.subkegiatan_sasarans_tahun(@tahun)
+    kak = KakQueries.new(opd: @user.opd, tahun: @tahun, user: @user)
+    @program_kegiatans = kak.program_kegiatans
   end
 
   def laporan_rka_admin

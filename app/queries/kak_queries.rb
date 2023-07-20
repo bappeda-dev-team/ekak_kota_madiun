@@ -1,15 +1,20 @@
 class KakQueries
   extend Memoist
 
-  attr_accessor :tahun, :opd
+  attr_accessor :tahun, :opd, :user
 
-  def initialize(tahun: '', opd: nil)
+  def initialize(tahun: '', opd: nil, user: nil)
     @tahun = tahun
     @opd = opd
+    @user = user
   end
 
   def users_eselon4
-    @opd.users.eselon4
+    if user.nil?
+      @opd.users.eselon4
+    else
+      @opd.users.where(id: user.id)
+    end
   end
 
   def nama_opd
