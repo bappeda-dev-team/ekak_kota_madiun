@@ -19,6 +19,25 @@ class SasaranCloner < Clowne::Cloner
     nullify :id_rencana
   end
 
+  trait :pokin do
+    include_association :indikator_sasarans, params: proc { |params, sasaran|
+      {
+        id_indikator: params[:tahun],
+        sasaran_id: sasaran.id_rencana,
+        tahun: params[:tahun]
+      }
+    }
+    nullify :id_rencana
+    nullify :nip_asn
+
+    finalize do |_source, record, tahun:, **|
+      record.tahun = "#{tahun}_pokin"
+      record.keterangan = "#{tahun}_pokin"
+      record.created_at = Time.current
+      record.updated_at = Time.current
+    end
+  end
+
   # trait :with_tahapans do
   #   include_association :tahapans, params: true, trait: :normal
   # end

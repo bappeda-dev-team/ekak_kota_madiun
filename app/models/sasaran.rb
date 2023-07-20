@@ -6,6 +6,7 @@
 #  anggaran               :integer
 #  id_rencana             :string
 #  indikator_kinerja      :string
+#  keterangan             :string
 #  kualitas               :integer
 #  nip_asn                :string
 #  nip_asn_sebelumnya     :string
