@@ -20,7 +20,7 @@
 <% end %>
 <tr class="<%= class_style %>">
   <td rowspan="<%= strategi.indikators.size + 1 %>"><%= jenis %> id: <%= strategi.id %> - tahun: <%= strategi.tahun %></td>
-  <td rowspan="<%= strategi.indikators.size + 1 %>" class="text-wrap"><%= strategi.strategi %> pohon: <%= strategi.pohon_id %></td>
+  <td rowspan="<%= strategi.indikators.size + 1 %>" class="text-wrap"><%= strategi.strategi %></td>
 </tr>
 <% if milik_opd %>
   <% strategi.indikators.each do |ind_kabid| %>

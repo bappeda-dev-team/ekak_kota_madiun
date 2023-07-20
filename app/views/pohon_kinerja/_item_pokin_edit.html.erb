@@ -32,21 +32,25 @@
   <% if local_assigns[:tipe] == 'kota' %>
     <div class="strategi-indikator" id="<%= dom_id(strategi) %>">
       <span class="text-center"><%= strategi.strategi %></span>
-      <% strategi.indikators_tahun(@tahun).each do |ind| %>
-        <p class="bg-info text-white px-2"><strong>INDIKATOR</strong></p>
-        <hr/>
-        <p>
-          <span><%= ind.indikator %></span>
-          <span>[ <%= ind.target %> <%= ind.satuan %> ]</span>
-        </p>
-        <hr/>
+      <% if strategi.class.name == 'IsuStrategisKotum' %>
+        <% strategi.indikators_tahun(@tahun).each do |ind| %>
+          <p class="bg-info text-white px-2"><strong>INDIKATOR</strong></p>
+          <hr/>
+          <p>
+            <span><%= ind.indikator %></span>
+            <span>[ <%= ind.target %> <%= ind.satuan %> ]</span>
+          </p>
+          <hr/>
+        <% end %>
       <% end %>
     </div>
-    <% strategi.komentars.each do |kom| %>
-      <p class="higlighted px-2"><strong>REVIEW</strong></p>
-      <hr/>
-      <span>Review: <%= kom.komentar %></span>
-      <span>Reviewer:<%= kom.komentator %></span>
+    <% if strategi.class.name == 'IsuStrategisKotum' %>
+      <% strategi.komentars.each do |kom| %>
+        <p class="higlighted px-2"><strong>REVIEW</strong></p>
+        <hr/>
+        <span>Review: <%= kom.komentar %></span>
+        <span>Reviewer:<%= kom.komentator %></span>
+      <% end %>
     <% end %>
     <% if komentator? %>
       <p class="komentar mt-3">
@@ -82,6 +86,21 @@
                                             bs_target: '#form-manual-ik',
                                             bs_toggle: 'modal' } %>
           </p>
+        <% end %>
+        <%= link_to new_pohon_kinerja_path(
+          ref_id: strategi.strategi_ref_id,
+          pohon_id: strategi.pohon_id,
+          opd_id: strategi.opd_id,
+          jenis: strategi.role),
+                      remote: true,
+                      class: 'btn btn-outline-info',
+                      data: { controller: 'form-modal',
+                              action: 'form-modal#appendForm',
+                              form_modal_location_param: 'form-edit-pohon-body',
+                              bs_target: '#form-edit-pohon',
+                              bs_toggle: 'modal' } do %>
+          <i class="fas fa-edit me-2"></i>
+          <span>Tambah Pohon</span>
         <% end %>
       <% end %>
     </div>
