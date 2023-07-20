@@ -5,8 +5,9 @@ class SasaransController < ApplicationController
 
   # GET /sasarans or /sasarans.json
   def index
-    @tahun = cookies[:tahun] || Date.current.year
-    @sasarans = @user.sasarans_tahun(@tahun)
+    @tahun = cookies[:tahun]
+    kak = KakQueries.new(opd: @user.opd, tahun: @tahun, user: @user)
+    @sasarans = kak.sasarans
   end
 
   def rekap_sasaran
@@ -19,12 +20,12 @@ class SasaransController < ApplicationController
   end
 
   def anggaran
-    @tahun = cookies[:tahun] || Date.current.year
+    @tahun = cookies[:tahun]
     @subkegiatan_sasarans = @user.subkegiatan_sasarans_tahun(@tahun)
   end
 
   def anggaran_belanja
-    @tahun = cookies[:tahun] || Date.current.year
+    @tahun = cookies[:tahun]
     @sasaran = Sasaran.find(params[:id])
   end
 

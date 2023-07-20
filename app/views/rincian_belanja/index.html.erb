@@ -41,9 +41,10 @@
               </tr>
             </thead>
             <tbody>
-              <% @subkegiatan_sasarans.each do |subkegiatan,sasarans| %>
+              <% @subkegiatan_sasarans.each.with_index(1) do |(subkegiatan,sasarans), i| %>
                 <% pagu = sasarans.map(&:total_anggaran).compact.sum %>
                 <tr>
+                  <td class="border text-wrap fw-bolder text-gray-900"><%= i %></td>
                   <td class="border text-wrap fw-bolder text-gray-900" colspan="6">Subkegiatan: <%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %></td>
                   <td class="border">Rp. <%= number_with_delimiter(pagu) %></td>
                   <td class="border">
@@ -58,9 +59,9 @@
                     </div>
                   </td>
                 </tr>
-                <% sasarans.each.with_index(1) do |sasaran, i| %>
+                <% sasarans.each.with_index(1) do |sasaran, no| %>
                   <tr>
-                    <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= i %></td>
+                    <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= "#{i}.#{no}" %></td>
                     <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
                     <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
                     <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.tahun %></td>
@@ -95,7 +96,7 @@
                   <% row_indikator_sasaran(sasaran).each do |indikator| %>
                     <%= indikator %>
                   <% end %>
-                  <% row_tahapan_anggaran_sasaran(sasaran).each do |tahapan| %>
+                  <% row_tahapan_anggaran_sasaran(sasaran, colspan: 7).each do |tahapan| %>
                     <%= tahapan %>
                   <% end %>
                 <% end %>

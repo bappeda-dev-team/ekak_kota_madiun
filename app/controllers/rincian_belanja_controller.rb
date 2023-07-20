@@ -6,7 +6,8 @@ class RincianBelanjaController < ApplicationController
     if current_user.eselon_atas? && current_user.nik != '198011182011011003'
       redirect_to index_atasan_rincian_belanja_index_path
     else
-      @subkegiatan_sasarans = @user.subkegiatan_sasarans_tahun(@tahun)
+      kak = KakQueries.new(opd: @user.opd, tahun: @tahun, user: @user)
+      @subkegiatan_sasarans = kak.program_kegiatans
     end
   end
 
