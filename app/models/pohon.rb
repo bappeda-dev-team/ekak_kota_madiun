@@ -63,7 +63,7 @@ class Pohon < ApplicationRecord
   end
 
   def nama_pemilik
-    user.nama
+    user&.nama
   end
 
   def nip_asn
