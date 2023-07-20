@@ -24,10 +24,10 @@ class KakQueries
   def sasarans
     users_eselon4.map do |user|
       user.sasarans.where(tahun: @tahun)
-    end
+    end.flatten
   end
 
   def program_kegiatans
-    sasarans.flatten.group_by(&:program_kegiatan)
+    sasarans.group_by(&:program_kegiatan)
   end
 end
