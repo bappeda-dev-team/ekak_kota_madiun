@@ -28,6 +28,8 @@ class SasaranCloner < Clowne::Cloner
       }
     }
     nullify :id_rencana
+    nullify :nip_asn
+
     finalize do |_source, record, tahun:, **|
       record.tahun = "#{tahun}_pokin"
       record.keterangan = "#{tahun}_pokin"
