@@ -65,7 +65,7 @@ class SpipQueries
   end
 
   def opd_khusus
-    [145, 122, 123]
+    [145]
   end
 
   memoize :strategi_kotas
