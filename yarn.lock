@@ -7392,9 +7392,9 @@ v8-compile-cache@^2.1.1:
   integrity sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==
 
 vanilla-nested@^1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/vanilla-nested/-/vanilla-nested-1.6.1.tgz#aa7a63f0015f4ff85210aa5ef43670b3192232da"
-  integrity sha512-bx91Dretf9lttfIrnw32HbMJYUhiYyCAiT4NvvIR8U8/wAp2IHFo72PpFnYMxzoVNeo2wA8XooVBVaAVBPv6kw==
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/vanilla-nested/-/vanilla-nested-1.7.1.tgz#e7a00723ffd6396d10e15053cd58b54f5bac8be6"
+  integrity sha512-z8nOa5n3bczhSno27TCABMc9qKjPcMP4iW6THqWxmtPZ8ZsFtoOl6XJGsqTvemkjSRpyFq4Zgqe7wZgCH9GHLw==
 
 vary@~1.1.2:
   version "1.1.2"
