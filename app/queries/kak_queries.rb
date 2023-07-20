@@ -23,11 +23,19 @@ class KakQueries
 
   def sasarans
     users_eselon4.map do |user|
-      user.sasarans.where(tahun: @tahun)
+      user.sasarans.where(tahun: @tahun).where.not(strategi_id: "")
     end.flatten
   end
 
+  def sasaran_strategis
+    sasarans.reject { |s| s.strategi.type == 'StrategiPohon' }
+  end
+
   def program_kegiatans
+    sasaran_strategis.group_by(&:program_kegiatan)
+  end
+
+  def by_subkegiatan(sasarans)
     sasarans.group_by(&:program_kegiatan)
   end
 end

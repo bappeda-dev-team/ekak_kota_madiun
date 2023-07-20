@@ -7,7 +7,7 @@ class SasaransController < ApplicationController
   def index
     @tahun = cookies[:tahun]
     kak = KakQueries.new(opd: @user.opd, tahun: @tahun, user: @user)
-    @sasarans = kak.sasarans
+    @sasarans = kak.sasaran_strategis
   end
 
   def rekap_sasaran
