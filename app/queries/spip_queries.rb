@@ -11,6 +11,15 @@ class SpipQueries
     @pokin = PokinQueries.new(opd: opd, tahun: tahun)
   end
 
+  def strategi_kotas
+    @tujuan_kota.sasarans.map(&:strategi_kota).flatten!
+  end
+  memoize :strategi_kotas
+
+  def opd_khusus
+    [145]
+  end
+
   def visi_kota
     @tujuan_kota.visis.group_by(&:visi)
   end
@@ -35,10 +44,16 @@ class SpipQueries
     end.flatten.uniq(&:nama_opd)
   end
 
+  def mapper_strategi_kota_opd(strategi_kota, opd)
+    opd.strategi_eselon2.where(tahun: @tahun).select do |strategi|
+      strategi.pohon.pohonable == strategi_kota
+    end
+  end
+
   def sasaran_opd
     strategi_kotas.select { |sk| sk.tahun.include?(@tahun) }.to_h do |strategi_kota|
       sasaran_opds = strategi_kota.opds.to_h do |opd|
-        [opd.nama_opd, opd.strategi_eselon2.map(&:sasaran)]
+        [opd.nama_opd, mapper_strategi_kota_opd(strategi_kota, opd).map(&:sasaran)]
       end
       [strategi_kota.sasaran_kotum_sasaran, sasaran_opds]
     end
@@ -59,14 +74,4 @@ class SpipQueries
     # tactical2 = eselon3.map(&:strategi_atasan)
     # @pokin.tactical2.group_by(&:opd)
   end
-
-  def strategi_kotas
-    @tujuan_kota.sasarans.map(&:strategi_kota).flatten!
-  end
-
-  def opd_khusus
-    [145]
-  end
-
-  memoize :strategi_kotas
 end
