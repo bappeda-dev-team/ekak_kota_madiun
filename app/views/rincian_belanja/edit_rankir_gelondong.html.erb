@@ -96,7 +96,9 @@
                       <td class="d-none text-end pe-2" data-editable-table-target="form" width="170"></td>
                       <td class="text-end pe-2" data-editable-table-target="anggaran">Rp. <%= number_with_delimiter(anggaran.jumlah) %></td>
                       <td class="text-center bg-white">
-                        <%= link_to new_pagu_anggaran_path(
+                        <% if anggaran.pagu_rankir_1.present? %>
+                          <%= link_to edit_pagu_anggaran_path(
+                            anggaran.pagu_rankir_1,
                     anggaran: anggaran.id,
                     kode_belanja: rekening,
                     kode_sub_belanja: rekening_anggaran(anggaran.kode_rek),
@@ -108,8 +110,25 @@
                     data: { action: 'editable-table#appendForm',
                             editable_table_target: 'edit'
                           } do %>
-                          <span class="fas fa-pencil"></span>
-                          <span>Edit Anggaran</span>
+                            <span class="fas fa-pencil"></span>
+                            <span>Edit Anggarans</span>
+                          <% end %>
+                        <% else %>
+                          <%= link_to new_pagu_anggaran_path(
+                    anggaran: anggaran.id,
+                    kode_belanja: rekening,
+                    kode_sub_belanja: rekening_anggaran(anggaran.kode_rek),
+                    jenis: "RankirGelondong",
+                    sub_jenis: "SubBelanja",
+                    tahun: @sasaran.tahun
+                  ),
+                    remote: true, class: 'btn btn-outline-info',
+                    data: { action: 'editable-table#appendForm',
+                            editable_table_target: 'edit'
+                          } do %>
+                            <span class="fas fa-pencil"></span>
+                            <span>Edit Anggaran</span>
+                          <% end %>
                         <% end %>
                         <button class="d-none btn btn-tertiary" data-editable-table-target="simpan" data-action="editable-table#simpan">Simpan</button>
                         <button class="d-none btn btn-outline-danger" data-editable-table-target="cancel" data-action="editable-table#cancelForm">Batal</button>

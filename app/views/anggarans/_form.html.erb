@@ -19,7 +19,7 @@
     <% parent_rek = Anggaran.find(@parent).kode_rek %>
   <% else %>
     <div class="field">
-      <%= form.hidden_field :level, value: @level.to_i %>
+      <%= form.hidden_field :level %>
     </div>
     <div class="field">
       <%= form.hidden_field :parent_id %>

@@ -12,7 +12,7 @@ class PaguAnggaransController < ApplicationController
 
   def edit
     @kode_opd = current_user.opd.kode_opd
-    render partial: 'form_pagu_anggaran'
+    render partial: 'form_edit_pagu_anggaran'
   end
 
   def create
@@ -21,6 +21,28 @@ class PaguAnggaransController < ApplicationController
     @pagu_anggaran = @anggaran.create_pagu_anggaran(pagu_anggarans_params)
     respond_to do |format|
       if @pagu_anggaran.save
+        format.json do
+          render json: { results: {
+                           anggaran: "Rp. #{number_with_delimiter(@pagu_anggaran.anggaran)}",
+                           total: "Rp. #{number_with_delimiter(@anggaran.total_anggaran_penetapan)}",
+                           jumlah: "Rp. #{number_with_delimiter(@anggaran.tahapan.anggaran_tahapan_penetapan)}",
+                           parent: @anggaran.kode_rekening_gp
+                         },
+                         message: 'Tersimpan' },
+                 status: :accepted
+        end
+      else
+        format.json { render json: { results: '', message: 'Tidak Tersimpan' }, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update
+    id_anggaran = params[:pagu_anggaran]["id_anggaran"]
+    @anggaran = Anggaran.find_by_id(id_anggaran)
+    @pagu_anggaran = PaguAnggaran.find(params[:id])
+    respond_to do |format|
+      if @pagu_anggaran.update(pagu_anggarans_params)
         format.json do
           render json: { results: {
                            anggaran: "Rp. #{number_with_delimiter(@pagu_anggaran.anggaran)}",

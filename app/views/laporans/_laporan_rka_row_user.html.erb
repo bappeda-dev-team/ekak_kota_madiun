@@ -40,7 +40,7 @@
             <% pagu_penetapan = sasarans.map(&:total_anggaran_penetapan).compact.sum %>
             <tr>
               <td class="border text-wrap fw-bolder text-gray-900"><%= i %></td>
-              <td class="border text-wrap fw-bolder text-gray-900" colspan="2">Subkegiatan: <%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %></td>
+              <td class="border text-wrap fw-bolder text-gray-900" colspan="3">Subkegiatan: <%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %></td>
               <%= indikator_sub(subkegiatan, @tahun, @kode_opd) %>
               <td class='border rankir-1'>Rp. <%= number_with_delimiter(pagu_rankir_1) %></td>
               <%= pagu_sub(sasarans) %>
@@ -98,7 +98,7 @@
               <% end %>
               <% sasaran.tahapans.each.with_index(1) do |tahapan, no_tah| %>
                 <tr>
-                  <td class="border text-wrap" colspan="6" >Renaksi <%= no_tah %>: <%= tahapan.tahapan_kerja %></td>
+                  <td class="border text-wrap" colspan="7" >Renaksi <%= no_tah %>: <%= tahapan.tahapan_kerja %></td>
                   <td class="border rankir-1">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan_rankir_1) %></td>
                   <td class="border rankir-2">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %></td>
                   <td class="border penetapan">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan_penetapan) %></td>
