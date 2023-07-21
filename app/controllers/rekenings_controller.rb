@@ -18,7 +18,15 @@ class RekeningsController < ApplicationController
   end
 
   def jenis_rekening_search
+    param = params[:q] || ''
     @rekenings = Rekening.where('LENGTH(kode_rekening) = ?', '3')
+                         .where('jenis_rekening ILIKE ?', "%#{param}%")
+  end
+
+  def khusus_rekening_search
+    param = params[:q] || ''
+    @rekenings = Rekening.where('LENGTH(kode_rekening) = ?', '6')
+                         .where('jenis_rekening ILIKE ?', "%#{param}%")
   end
 
   # GET /rekenings/1 or /rekenings/1.json

@@ -546,6 +546,7 @@ Rails.application.routes.draw do
   # Reknening
   get "/rekening_search", to: "rekenings#rekening_search"
   get "/jenis_rekening_search", to: "rekenings#jenis_rekening_search"
+  get "/khusus_rekening_search", to: "rekenings#khusus_rekening_search"
 
   # admin thing
   # get "/adminsasarans", to: "sasarans#sasaran_admin"
