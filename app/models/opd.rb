@@ -120,6 +120,8 @@ class Opd < ApplicationRecord
 
   def jabatan_kepala_tanpa_opd
     jabatan_kepala.gsub!(/(?<=kepala).+/i, '')
+  rescue NoMethodError
+    'Kepala'
   end
 
   def musrenbang_opd

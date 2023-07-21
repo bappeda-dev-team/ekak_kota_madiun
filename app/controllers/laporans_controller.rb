@@ -50,6 +50,11 @@ class LaporansController < ApplicationController
 
   def show_kak
     @program_kegiatan = ProgramKegiatan.find(params[:id])
+    indikators_pks = IndikatorQueries.new(tahun: @tahun, opd: @program_kegiatan.opd,
+                                          program_kegiatan: @program_kegiatan)
+    @indikator_program = indikators_pks.indikator_program
+    @indikator_kegiatan = indikators_pks.indikator_kegiatan
+    @indikator_subkegiatan = indikators_pks.indikator_subkegiatan
     @sasarans = @program_kegiatan.sasarans_subkegiatan(@tahun)
   end
 

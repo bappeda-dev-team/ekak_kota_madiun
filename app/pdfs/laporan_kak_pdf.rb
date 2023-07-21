@@ -9,10 +9,14 @@ class LaporanKakPdf < Prawn::Document
     @program_kegiatan = program_kegiatan
     @sasarans = sasarans
     @pagu = sasarans.map(&:total_anggaran).compact.sum
-    kode_opd = @opd.kode_opd
-    @indikator_prg = program_kegiatan&.indikator_program_tahun(tahun, kode_opd)
-    @indikator_keg = program_kegiatan&.indikator_kegiatan_tahun(tahun, kode_opd)
-    @indikator_sub = program_kegiatan&.indikator_subkegiatan_tahun(tahun, kode_opd)
+    indikators_pks = IndikatorQueries.new(tahun: @tahun, opd: @program_kegiatan.opd,
+                                          program_kegiatan: @program_kegiatan)
+    @indikator_prg = indikators_pks.indikator_program
+    @indikator_keg = indikators_pks.indikator_kegiatan
+    @indikator_sub = indikators_pks.indikator_subkegiatan
+    # @indikator_prg = program_kegiatan&.indikator_program_tahun(tahun, kode_opd)
+    # @indikator_keg = program_kegiatan&.indikator_kegiatan_tahun(tahun, kode_opd)
+    # @indikator_sub = program_kegiatan&.indikator_subkegiatan_tahun(tahun, kode_opd)
 
     # table & cell style
     align_cell = :justify
@@ -60,6 +64,10 @@ class LaporanKakPdf < Prawn::Document
                          width: bounds.width) do
       cells.style(size: 8)
     end
+  end
+
+  def tahun_bener
+    @tahun.include?('perubahan') ? @tahun[/[^_]\d*/, 0] : @tahun
   end
 
   def tabel_informasi_subkegiatan

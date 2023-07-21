@@ -6,9 +6,9 @@
       </div>
     </div>
   </div>
-  <% indikator_prg = program_kegiatan&.indikator_program_tahun(@tahun, @kode_opd) %>
-  <% indikator_keg = program_kegiatan&.indikator_kegiatan_tahun(@tahun, @kode_opd) %>
-  <% indikator_sub = program_kegiatan&.indikator_subkegiatan_tahun(@tahun, @kode_opd) %>
+  <% indikator_prg = @indikator_program %>
+  <% indikator_keg =  @indikator_kegiatan %>
+  <% indikator_sub =  @indikator_subkegiatan %>
   <div class="card-body program-kegiatan">
     <table class="table table-bordered">
       <tr>
