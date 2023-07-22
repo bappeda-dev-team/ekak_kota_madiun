@@ -54,7 +54,7 @@ class Opd < ApplicationRecord
   has_many :komentars, lambda {
     where(jenis: "OPD")
   }, primary_key: :id, foreign_key: :item
-  belongs_to :opd_induk, class_name: 'Opd', primary_key: 'kode_unik_opd', foreign_key: 'kode_opd_induk'
+  belongs_to :opd_induk, class_name: 'Opd', primary_key: 'kode_unik_opd', foreign_key: 'kode_opd_induk', optional: true
   has_many :bidangs, class_name: 'Opd', foreign_key: 'kode_opd_induk', primary_key: 'kode_unik_opd'
 
   accepts_nested_attributes_for :indikator_sasarans, reject_if: :all_blank, allow_destroy: true
