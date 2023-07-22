@@ -31,7 +31,7 @@
       <% strategis.each do |strategi| %>
         <tr>
           <td class="border"></td>
-          <td class="border"></td>
+          <td class="border">Tahun: <%= strategi.tahun %></td>
           <td colspan="11" class="border"><%= strategi.sasaran %> <%= strategi.user.nama %></td>
         </tr>
         <% strategi.indikator_sasarans.each do |indikator_opd| %>
@@ -50,12 +50,12 @@
             <td class="border"></td>
             <td class="border"></td>
             <td class="border"></td>
-            <td class="border"></td>
+            <td class="border">Tahun : <%= strategi_program.tahun %></td>
             <td colspan="9" class="border">
               <% strategi_program.programs_strategi.each_key do |program| %>
                 <p class="program">Nama Program: <%= program %></p>
               <% end %>
-              <p>Sasaran Program: <%= strategi_program.sasaran %> <%= strategi_program.user.nama %> - <%= strategi_program.id %></p>
+              <p>Sasaran Program: <%= strategi_program.sasaran %> <%= strategi_program.user.nama %></p>
             </td>
           </tr>
           <% strategi_program.indikator_sasarans.each do |indikator_pro| %>
@@ -121,7 +121,7 @@
               <td class="border"></td>
               <td class="border"></td>
               <td class="border"></td>
-              <td class="border"></td>
+              <td class="border">Tahun: <%= strategi_kegiatan.tahun %></td>
               <td colspan="5" class="border">
                 <p class="program">Nama Subkegiatan: <%= strategi_kegiatan.subkegiatan_strategi %></p>
               </td>
