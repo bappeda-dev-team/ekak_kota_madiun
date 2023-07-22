@@ -150,7 +150,7 @@ class PokinQueries
   end
 
   def strategi_user(user)
-    user.strategis.where("COALESCE(tahun, '') ILIKE ?", "%#{@tahun}%")
+    user.strategis.where(tahun: @tahun)
   end
 
   def strategi_kota
