@@ -45,7 +45,7 @@
             <td class="border"><%= indikator_opd.satuan %></td>
           </tr>
         <% end %>
-        <% strategi.strategi_eselon_tigas.each do |strategi_program| %>
+        <% strategi.strategi_eselon_tigas.where(tahun: @tahun).each do |strategi_program| %>
           <tr class="<%= kosong_class(strategi_program.programs_strategi.keys.include?(:Kosong)) %>">
             <td class="border"></td>
             <td class="border"></td>
@@ -55,7 +55,7 @@
               <% strategi_program.programs_strategi.each_key do |program| %>
                 <p class="program">Nama Program: <%= program %></p>
               <% end %>
-              <p>Sasaran Program: <%= strategi_program.sasaran %> <%= strategi_program.user.nama %></p>
+              <p>Sasaran Program: <%= strategi_program.sasaran %> <%= strategi_program.user.nama %> - <%= strategi_program.id %></p>
             </td>
           </tr>
           <% strategi_program.indikator_sasarans.each do |indikator_pro| %>
@@ -71,7 +71,7 @@
               <td class="border"><%= indikator_pro.satuan %></td>
             </tr>
           <% end %>
-          <% strategi_program.strategi_eselon_empats.each do |strategi_kegiatan| %>
+          <% strategi_program.strategi_eselon_empats.where(tahun: @tahun).each do |strategi_kegiatan| %>
             <tr class="<%= kosong_class(strategi_kegiatan.kegiatan_strategi.include?('Kosong')) %>">
               <td class="border"></td>
               <td class="border"></td>
