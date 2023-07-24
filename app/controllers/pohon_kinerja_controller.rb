@@ -15,6 +15,7 @@ class PohonKinerjaController < ApplicationController
   end
 
   def pindah
+    @tahun = cookies[:tahun]
     @pohon = StrategiPohon.find(params[:id])
     url = pohon_kinerja_path(@pohon)
     method = :patch
