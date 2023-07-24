@@ -34,6 +34,28 @@ export default class extends Controller {
     }
   }
 
+  successResponseRefresh(event) {
+    // event.preventDefault()
+    const [message, status, xhr] = event.detail
+    const modal_target = event.params.modal
+    const modal = document.getElementById(modal_target)
+    // event after successResponse
+    Modal.getInstance(modal).hide()
+    if (status == 'OK' || status == 'Created') {
+      Swal.fire({
+        title: 'Sukses',
+        text: status,
+        icon: "success",
+        confirmButtonText: 'Ok',
+      }).then(() => {
+        Turbolinks.visit(window.location, { action: "replace" })
+      })
+    }
+    else {
+      this.sweetalertStatus('terjadi kesalahan', 'error')
+    }
+  }
+
   successResponse(event) {
     // event.preventDefault()
     const [message, status, xhr] = event.detail
@@ -184,7 +206,6 @@ export default class extends Controller {
     // event.preventDefault()
     const [message, status, xhr] = event.detail
     const modal = event.parentElement.parentElement.parentElement.parentElement
-    console.log(event)
     this.sweetalertStatus(message.resText, status)
     // event after successResponse
     Modal.getInstance(modal).hide()

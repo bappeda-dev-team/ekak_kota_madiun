@@ -47,7 +47,7 @@ class PohonKinerjaController < ApplicationController
     @pohon.build_sasaran.indikator_sasarans.build
     url = pohon_kinerja_index_path
     method = :post
-    render partial: 'form', locals: { pohon: @pohon, url: url, new_strategi: true, method: method }
+    render partial: 'form_new_strategi_pohon', locals: { pohon: @pohon, url: url, new_strategi: true, method: method }
   end
 
   def edit
@@ -65,8 +65,8 @@ class PohonKinerjaController < ApplicationController
     pohon_parameter[:tahun] = tahun_bener
     @pohon = StrategiPohon.new(pohon_params)
     if @pohon.save
-      render json: { resText: "Perubahan tersimpan", result: @pohon.id },
-             status: :accepted
+      render json: { resText: "Perubahan tersimpan", result: 'Berhasil' },
+             status: :created
     else
       render json: { resText: "Terjadi Kesalahan" },
              status: :unprocessable_entity
