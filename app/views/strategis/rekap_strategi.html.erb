@@ -1,0 +1,80 @@
+<%= content_for :html_title, "Rekap Strategi" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Laporan</li>
+  <li class="breadcrumb-item active" aria-current="page">Rekap Strategi</li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="card border-0 shadow">
+    <div class="card-header">
+      <div class="row">
+        <div class="col">
+          <h2 class="fs-5 fw-bold mb-0">Rekap Strategi Tahun <%= @tahun %></h2>
+        </div>
+        <div class="col-auto">
+          <div class="text-end">
+            <strong><%= @opd.nama_opd %></strong>
+          </div>
+          <div class="text-end">
+            <span><%= @user.nama %></span>
+            |
+            <span><%= @user.nik %></span>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <%# filter tahun %>
+      <%= render partial: 'shared/filter_user_tahun', locals: { user: @user, tahun: @tahun, url: rekap_strategi_strategis_path } %>
+      <%# end %>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table align-items-center">
+          <thead class="thead-light">
+            <tr>
+              <th class="border text-center" scope="col">No</th>
+              <th class="border text-center" scope="col">Pemilik Strategi</th>
+              <th class="border text-center" scope="col">Strategi</th>
+              <th class="border text-center" scope="col">Rencana Kinerja</th>
+              <th class="border text-center" scope="col">Tipe</th>
+              <th class="border text-center" scope="col">Tahun Strategi</th>
+              <th class="border text-center" scope="col">Tahun Sasaran</th>
+              <th class="border text-center" scope="col">Atasan</th>
+              <th class="border text-center" scope="col">Strategi Atasan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @strategis.each.with_index(1) do |strategi, i| %>
+              <tr>
+                <td class="border"><%= i %></td>
+                <td class="border text-wrap"><%= strategi.nama_pemilik %></td>
+                <td class="border text-wrap"><%= strategi.strategi %></td>
+                <td class="border text-wrap"><%= strategi.sasaran_kinerja %></td>
+                <td class="border text-wrap"><%= strategi.role %></td>
+                <td class="border text-wrap"><%= strategi.tahun %></td>
+                <td class="border text-wrap"><%= strategi.tahun_sasaran %></td>
+                <td class="border"><%= strategi.pemilik_strategi_atasnya %></td>
+                <td class="border"><%= strategi.strategi_atasnya %></td>
+              </tr>
+              <% if strategi.indikator_sasarans.any? %>
+                <% strategi.indikator_sasarans.each do |indikator| %>
+                  <tr>
+                    <td class="border"></td>
+                    <td class='border text-wrap' colspan="9">
+                      <b>Indikator:</b> <%= indikator.indikator %> <%= indikator.target %> <%= indikator.satuan %>
+                    </td>
+                  </tr>
+                <% end %>
+              <% else %>
+                <tr>
+                  <td class="border" colspan="9">
+                    -
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% end %>

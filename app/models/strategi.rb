@@ -221,4 +221,28 @@ class Strategi < ApplicationRecord
   def transfered?
     StrategiPohon.find_by(strategi_cascade_link: id).nil?
   end
+
+  def sasaran_kinerja
+    sasaran.sasaran_kinerja
+  rescue StandardError
+    'Kosong'
+  end
+
+  def tahun_sasaran
+    sasaran.tahun
+  rescue StandardError
+    '-'
+  end
+
+  def strategi_atasnya
+    strategi_atasan.strategi
+  rescue StandardError
+    'Tidak ada strategi atasan'
+  end
+
+  def pemilik_strategi_atasnya
+    strategi_atasan.nama_pemilik
+  rescue StandardError
+    'Tidak ada pemilik'
+  end
 end

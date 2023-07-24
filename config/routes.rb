@@ -98,6 +98,9 @@ Rails.application.routes.draw do
       get :ganti_nip
       get :renaksi
     end
+    collection do
+      get :rekap_strategi
+    end
   end
   resources :isu_strategis_opds do
     collection do

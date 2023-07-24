@@ -54,6 +54,10 @@ module SidebarItemHelper
       {
         title: 'Rekap Rencana Kinerja', href: rekap_sasaran_sasarans_path,
         icon: 'fas fa-archive', identifier: 'rekap_sasaran'
+      },
+      {
+        title: 'Rekap Strategi', href: rekap_strategi_strategis_path,
+        icon: 'fas fa-archive', identifier: 'rekap_strategi'
       }
     ]
   end

@@ -3,7 +3,7 @@
     <p class="fs-5 fw-bold mb-2">Filter</p>
   </div>
   <div class="col">
-    <%= form_with(url: rekap_sasaran_sasarans_path, local: true, method: :get, class: 'row') do |form| %>
+    <%= form_with(url: url, local: true, method: :get, class: 'row') do |form| %>
       <div class="col-5">
         <%= form.select :nip_asn, selected_user(user) ,{include_blank: true},
                  { required: true,

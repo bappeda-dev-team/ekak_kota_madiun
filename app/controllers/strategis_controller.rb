@@ -7,6 +7,15 @@ class StrategisController < ApplicationController
     @strategis = Strategi.all
   end
 
+  def rekap_strategi
+    @tahun = params[:tahun]
+    @nip_asn = params[:nip_asn]
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd) || current_user.opd
+    @user = User.find_by(nik: @nip_asn) || current_user
+    @strategis = @user.strategis.where('tahun ILIKE ?', "%#{@tahun}%")
+  end
+
   # GET /strategis/1 or /strategis/1.json
   def show
     render partial: 'show_update', locals: { strategi: @strategi }
