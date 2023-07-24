@@ -8,16 +8,65 @@ class PohonKinerjaController < ApplicationController
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
     @eselon = current_user.has_role?(:admin) ? 'eselon_2' : current_user.eselon_user
-    @strategis = Strategi.where('tahun ILIKE ?', "%#{@tahun}%")
-                         .where(opd_id: @opd.id.to_s, role: @eselon)
+    # @strategis = Strategi.where('tahun ILIKE ?', "%#{@tahun}%")
+    #                      .where(opd_id: @opd.id.to_s, role: @eselon)
     @strategis_pohon = StrategiPohon.where('tahun ILIKE ?', "%#{@tahun}%")
                                     .where(opd_id: @opd.id.to_s, role: @eselon)
+  end
+
+  def new
+    # NOTE: this is correct way
+    # to always spawn indikator
+    # at first open form
+    @pohon = StrategiPohon.new
+    @opd = Opd.find(params[:opd_id])
+    @opd_id = @opd.id
+    @role = params[:role]
+    @isu_pohon = params[:isu_pohon]
+    isu = StrategiPohon.find(@isu_pohon)
+    @isu_strategis_pohon = [isu.pohon.strategi_kota_isu_strategis, isu.pohon_id]
+    @isu_strategis_atasan = [isu.strategi, isu.id]
+    @pohon.build_sasaran.indikator_sasarans.build
+    url = pohon_kinerja_index_path
+    method = :post
+    render partial: 'form', locals: { pohon: @pohon, url: url, new_strategi: true, method: method }
   end
 
   def edit
     # @pohon = Pohon.find_by(pohonable_id: params[:id]).pohonable
     @pohon = StrategiPohon.find(params[:id])
-    render partial: 'form', locals: { pohon: @pohon }
+    url = pohon_kinerja_path(@pohon)
+    method = :patch
+    render partial: 'form', locals: { pohon: @pohon, url: url, new_strategi: false, method: method }
+  end
+
+  def create
+    pohon_params = params.require(:strategi_pohon).permit(:strategi,
+                                                          :role,
+                                                          :pohon_id,
+                                                          :tahun,
+                                                          :nip_asn,
+                                                          :opd_id,
+                                                          :strategi_ref_id,
+                                                          sasaran_attributes: [:sasaran_kinerja,
+                                                                               :id_rencana,
+                                                                               { indikator_sasarans_attributes: %i[id
+                                                                                                                   indikator_kinerja
+                                                                                                                   aspek
+                                                                                                                   target
+                                                                                                                   satuan
+                                                                                                                   _destroy] }])
+    tahun = pohon_params[:tahun]
+    tahun_bener = tahun.include?('murni') ? tahun[/[^_]\d*/, 0] : tahun
+    pohon_params[:tahun] = tahun_bener
+    @pohon = StrategiPohon.new(pohon_params)
+    if @pohon.save
+      render json: { resText: "Perubahan tersimpan", result: @pohon.id },
+             status: :accepted
+    else
+      render json: { resText: "Terjadi Kesalahan" },
+             status: :unprocessable_entity
+    end
   end
 
   def update

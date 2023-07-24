@@ -1,9 +1,23 @@
 <div class="tf-nc">
   <div class="text-center"><strong><%= local_assigns[:judul] %></strong>
-    <div class="tombol-edit container py-3">
-      <div class="row gx-3">
-        <div class="edit-pohon col">
-          <%= link_to edit_pohon_kinerja_path(strategi),
+    <% if local_assigns[:tipe] != 'kota' %>
+      <div class="tombol-edit container py-3">
+        <div class="row gx-3">
+          <div class="tambah-pohon col">
+            <%= link_to new_pohon_kinerja_path(role: strategi.role, isu_pohon: strategi_atasan, opd_id: strategi.opd_id),
+                      remote: true,
+                      class: 'btn btn-outline-success',
+                      data: { controller: 'form-modal',
+                              action: 'form-modal#appendForm',
+                              form_modal_location_param: 'form-edit-pohon-body',
+                              bs_target: '#form-edit-pohon',
+                              bs_toggle: 'modal' } do %>
+              <i class="fas fa-plus me-2"></i>
+              <span>Tambah Pohon <%= strategi.role %></span>
+            <% end %>
+          </div>
+          <div class="edit-pohon col">
+            <%= link_to edit_pohon_kinerja_path(strategi),
                       remote: true,
                       class: 'btn btn-outline-info',
                       data: { controller: 'form-modal',
@@ -11,21 +25,22 @@
                               form_modal_location_param: 'form-edit-pohon-body',
                               bs_target: '#form-edit-pohon',
                               bs_toggle: 'modal' } do %>
-            <i class="fas fa-edit me-2"></i>
-            <span>Edit Pohon</span>
-          <% end %>
-        </div>
-        <div class="hapus-pohon col">
-          <%= link_to pohon_kinerja_path(strategi),
+              <i class="fas fa-edit me-2"></i>
+              <span>Edit Pohon</span>
+            <% end %>
+          </div>
+          <div class="hapus-pohon col">
+            <%= link_to pohon_kinerja_path(strategi),
                       remote: true, method: :delete,
                       class: 'btn btn-outline-danger',
                       data: { confirm_swal: 'Hapus pohon kinerja?' } do %>
-            <i class="fas fa-trash me-2"></i>
-            <span>Hapus Pohon</span>
-          <% end %>
+              <i class="fas fa-trash me-2"></i>
+              <span>Hapus Pohon</span>
+            <% end %>
+          </div>
         </div>
       </div>
-    </div>
+    <% end %>
   </div>
   <hr/>
   <%# INDIKATOR %>
@@ -87,35 +102,22 @@
                                             bs_toggle: 'modal' } %>
           </p>
         <% end %>
-        <%= link_to new_pohon_kinerja_path(
-          ref_id: strategi.strategi_ref_id,
-          pohon_id: strategi.pohon_id,
-          opd_id: strategi.opd_id,
-          jenis: strategi.role),
-                      remote: true,
-                      class: 'btn btn-outline-info',
-                      data: { controller: 'form-modal',
-                              action: 'form-modal#appendForm',
-                              form_modal_location_param: 'form-edit-pohon-body',
-                              bs_target: '#form-edit-pohon',
-                              bs_toggle: 'modal' } do %>
-          <i class="fas fa-edit me-2"></i>
-          <span>Tambah Pohon</span>
-        <% end %>
       <% end %>
     </div>
-    <div class="mt-3">
-      <b >Komentar Reviewer:</b>
-    </div>
-    <div id="<%= dom_id(strategi, :komentar) %>">
-      <%= render 'pohon_kinerja/daftar_komentars', komentars: strategi.komentars %>
-    </div>
-    <p class="komentar mt-3">
-      <%= render 'shared/komentar_button',
+    <% if strategi.strategi_asli.present? %>
+      <div class="mt-3">
+        <b >Komentar Reviewer:</b>
+      </div>
+      <div id="<%= dom_id(strategi, :komentar) %>">
+        <%= render 'pohon_kinerja/daftar_komentars', komentars: strategi.komentars %>
+      </div>
+      <p class="komentar mt-3">
+        <%= render 'shared/komentar_button',
            link: komentar_pokin_komentars_path(kode_opd: strategi.opd.kode_unik_opd,
                                                strategi_id: strategi.id,
                                                jenis: local_assigns[:tipe]),
            form_name: 'form-komentar' %>
+      <% end %>
     <% end %>
   </p>
   <% if local_assigns[:panggil_teman] %>
