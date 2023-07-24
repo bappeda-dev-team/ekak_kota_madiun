@@ -55,6 +55,7 @@ Rails.application.routes.draw do
       post :pasangkan
       get :daftar_linked_strategi
       post :set_clone
+      get :pindah
     end
     collection do
       get :kota

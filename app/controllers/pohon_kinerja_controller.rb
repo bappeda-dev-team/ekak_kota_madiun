@@ -14,6 +14,24 @@ class PohonKinerjaController < ApplicationController
                                     .where(opd_id: @opd.id.to_s, role: @eselon)
   end
 
+  def pindah
+    @pohon = StrategiPohon.find(params[:id])
+    url = pohon_kinerja_path(@pohon)
+    method = :patch
+    @opd = Opd.find(params[:opd_id])
+    @opd_id = @opd.id
+    role_atasan = params[:role_atasan]
+    @strategis_pohon = StrategiPohon.where('tahun ILIKE ?', "%#{@tahun}%")
+                                    .where(opd_id: @opd.id.to_s, role: role_atasan)
+    # @isu_strategis_pohon = @strategis_pohon
+    #                        .uniq(&:pohon_id)
+    #                        .collect do |str|
+    #   [str.pohon.strategi_kota_isu_strategis, str.pohon_id]
+    # end
+    @isu_strategis_atasan = @strategis_pohon.pluck(:strategi, :id)
+    render partial: 'form_pindah_jalur', locals: { pohon: @pohon, url: url, new_strategi: false, method: method }
+  end
+
   def new
     # NOTE: this is correct way
     # to always spawn indikator
@@ -41,21 +59,6 @@ class PohonKinerjaController < ApplicationController
   end
 
   def create
-    pohon_params = params.require(:strategi_pohon).permit(:strategi,
-                                                          :role,
-                                                          :pohon_id,
-                                                          :tahun,
-                                                          :nip_asn,
-                                                          :opd_id,
-                                                          :strategi_ref_id,
-                                                          sasaran_attributes: [:sasaran_kinerja,
-                                                                               :id_rencana,
-                                                                               { indikator_sasarans_attributes: %i[id
-                                                                                                                   indikator_kinerja
-                                                                                                                   aspek
-                                                                                                                   target
-                                                                                                                   satuan
-                                                                                                                   _destroy] }])
     tahun = pohon_params[:tahun]
     tahun_bener = tahun.include?('murni') ? tahun[/[^_]\d*/, 0] : tahun
     pohon_params[:tahun] = tahun_bener
@@ -71,11 +74,6 @@ class PohonKinerjaController < ApplicationController
 
   def update
     @pohon = StrategiPohon.find(params[:id])
-    # type = @pohon.pohonable_type.underscore
-    # model = @pohon.pohonable
-    pohon_params = params.require(:strategi_pohon).permit(:strategi,
-                                                          sasaran_attributes: [indikator_sasarans_attributes: %i[id
-                                                                                                                 indikator_kinerja aspek target satuan _destroy]])
     if @pohon.update(pohon_params)
       render json: { resText: "Perubahan tersimpan", result: @pohon.id },
              status: :accepted
@@ -522,5 +520,26 @@ class PohonKinerjaController < ApplicationController
                                        opd_id: opd_id,
                                        traits: [:per_opd])
     clone.persist!
+  end
+
+  def pohon_params
+    params.require(:strategi_pohon).permit(:strategi,
+                                           :role,
+                                           :pohon_id,
+                                           :tahun,
+                                           :nip_asn,
+                                           :opd_id,
+                                           :strategi_ref_id,
+                                           sasaran_attributes: [:sasaran_kinerja, :id_rencana,
+                                                                indikator_sasarans_params])
+  end
+
+  def indikator_sasarans_params
+    { indikator_sasarans_attributes: %i[id
+                                        indikator_kinerja
+                                        aspek
+                                        target
+                                        satuan
+                                        _destroy] }
   end
 end

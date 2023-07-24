@@ -63,4 +63,8 @@ module PohonKinerjaHelper
   def selected_pohon(pohon, pohon_id)
     options_for_select([[pohon, pohon_id]], selected: pohon_id)
   end
+
+  def list_pohon(pohons, selected)
+    options_for_select(pohons, selected: selected)
+  end
 end

@@ -3,6 +3,19 @@
     <% if local_assigns[:tipe] != 'kota' %>
       <div class="tombol-edit container py-3">
         <div class="row gx-3">
+          <div class="pindah-pohon col">
+            <%= link_to pindah_pohon_kinerja_path(strategi, opd_id: strategi.opd_id, role_atasan: role_atasan),
+             remote: true,
+             class: 'btn btn-outline-primary',
+             data: { controller: 'form-modal',
+               action: 'form-modal#appendForm',
+               form_modal_location_param: 'form-edit-pohon-body',
+               bs_target: '#form-edit-pohon',
+               bs_toggle: 'modal' } do %>
+              <i class="fas fa-exchange-alt me-2"></i>
+              <span>Pindah Pohon</span>
+            <% end %>
+          </div>
           <div class="tambah-pohon col">
             <%= link_to new_pohon_kinerja_path(role: strategi.role, isu_pohon: strategi_atasan, opd_id: strategi.opd_id),
                       remote: true,

@@ -1,0 +1,53 @@
+<%= form_with(url: url, model: pohon,
+              method: method, local: false,
+              data: { controller: 'form-ajax',
+                      form_ajax_modal_param: 'form-edit-pohon',
+                      action: 'ajax:success->form-ajax#successResponseStrategiPohon'
+              }) do |form| %>
+  <% if pohon.strategi_asli.present? %>
+    <div class="field komentars">
+      <div class="mt-3">
+        <b >Komentar Reviewer:</b>
+      </div>
+      <div>
+        <%= render 'pohon_kinerja/daftar_komentars', komentars: pohon.komentars %>
+      </div>
+    </div>
+  <% end %>
+  <hr>
+  <div class="field">
+    <%= form.label :pindah_pohon, class: "form-label" %>
+  </div>
+  <div class="field">
+    <%= form.label :isu_strategis_atasan, class: "form-label" %>
+    <%= form.select :strategi_ref_id, list_pohon(@isu_strategis_atasan, pohon.strategi_ref_id.to_i),
+          {include_blank: true},
+          { class: 'form-control',
+            data: { controller: 'dropdown',
+                    placeholder: 'Pilih Strategi Atasan ( kosong jika KA OPD )',
+                dropdown_parent_value: '#form-edit-pohon'
+            } }%>
+  </div>
+  <div class="field">
+    <%= form.label :strategi, class: "form-label" %>
+    <%= form.text_field :strategi, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.fields_for :sasaran do |sasaran_form| %>
+      <%= sasaran_form.label :sasaran_kinerja, { class: "form-label" } %>
+      <%= sasaran_form.text_field :sasaran_kinerja, { class: "form-control" } %>
+      <div class="field" id="indikator-sasarans">
+        <%= sasaran_form.label :indikator, { class: "form-label" } %>
+        <%= sasaran_form.fields_for :indikator_sasarans do |indikator_sas| %>
+          <%= render 'sasarans/indikator_sasaran_fields', form: indikator_sas %>
+        <% end %>
+      </div>
+      <%= link_to_add_nested(sasaran_form, :indikator_sasarans,
+                                '#indikator-sasarans', link_classes: 'btn btn-outline-primary btn-sm', link_text: 'Tambah Indikator',
+                                partial: 'sasarans/indikator_sasaran_fields') %>
+    <% end %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
