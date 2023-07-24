@@ -10,7 +10,7 @@ class PohonKinerjaController < ApplicationController
     @eselon = current_user.has_role?(:admin) ? 'eselon_2' : current_user.eselon_user
     # @strategis = Strategi.where('tahun ILIKE ?', "%#{@tahun}%")
     #                      .where(opd_id: @opd.id.to_s, role: @eselon)
-    @strategis_pohon = StrategiPohon.where('tahun ILIKE ?', "%#{@tahun}%")
+    @strategis_pohon = StrategiPohon.where(tahun: @tahun)
                                     .where(opd_id: @opd.id.to_s, role: @eselon)
   end
 
@@ -21,7 +21,7 @@ class PohonKinerjaController < ApplicationController
     @opd = Opd.find(params[:opd_id])
     @opd_id = @opd.id
     role_atasan = params[:role_atasan]
-    @strategis_pohon = StrategiPohon.where('tahun ILIKE ?', "%#{@tahun}%")
+    @strategis_pohon = StrategiPohon.where(tahun: @tahun)
                                     .where(opd_id: @opd.id.to_s, role: role_atasan)
     # @isu_strategis_pohon = @strategis_pohon
     #                        .uniq(&:pohon_id)
