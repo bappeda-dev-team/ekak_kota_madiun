@@ -25,8 +25,13 @@
 
       <div class="field">
         <%= form.label :tahun, class: 'form-label' %>
-        <%= form.select :tahun,[2020, 2021, 2022, 2023, 2024],{selected: Date.today.year},
-          { class: 'form-control', data: { controller: 'dropdown' } }%>
+        <%= form.select :tahun, selected_tahun(form.object.tahun),
+                    {include_blank: true},
+                    { class: "form-control",
+                      data: { placeholder: "Pilih Tahun Sasaran",
+                              controller: 'dropdown',
+                              dropdown_jenis_value: 'ajax',
+                              dropdown_url_value: kelompok_anggarans_path(:json) } } %>
       </div>
 
       <div class="field">
