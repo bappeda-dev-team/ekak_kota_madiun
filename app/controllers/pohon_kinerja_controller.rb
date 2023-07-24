@@ -59,9 +59,10 @@ class PohonKinerjaController < ApplicationController
   end
 
   def create
-    tahun = pohon_params[:tahun]
+    pohon_parameter = pohon_params
+    tahun = pohon_parameter[:tahun]
     tahun_bener = tahun.include?('murni') ? tahun[/[^_]\d*/, 0] : tahun
-    pohon_params[:tahun] = tahun_bener
+    pohon_parameter[:tahun] = tahun_bener
     @pohon = StrategiPohon.new(pohon_params)
     if @pohon.save
       render json: { resText: "Perubahan tersimpan", result: @pohon.id },
