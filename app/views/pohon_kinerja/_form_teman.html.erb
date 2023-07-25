@@ -27,6 +27,32 @@
     </ol>
   </div>
   <div class="field">
+    <%= form.label :opd_pelaksana, { class: "form-label" } %>
+    <%= form.select :internal_external, ['Internal', 'External'], {include_blank: true},
+        { data: { placeholder: 'Lokasi',
+                  controller: 'dropdown',
+                  dropdown_jenis_value: 'chain',
+                  dropdown_event_name_value: 'change-opd',
+                  dropdown_parent_value: '#form-panggil-teman-body'
+                }
+        } %>
+  </div>
+  <div class="field mb-5">
+    <%= form.label :opd, { class: "form-label" } %>
+    <%= form.select :opd_list, [], {include_blank: true},
+     {
+       multiple: true,
+       data: { placeholder: "OPD Pelaksana",
+         controller: 'dropdown',
+         dropdown_jenis_value: 'ajax_preselect',
+         dropdown_url_value: legit_opd_opds_path(:json),
+         dropdown_kode_opd_value: @kode_opd,
+         dropdown_parent_value: '#form-panggil-teman-body',
+         action: 'change-opd@document->dropdown#chain_internal_or_external_opd_target'
+       }
+     } %>
+  </div>
+  <div class="field">
     <%= form.label :asn, class: "form-label" %>
     <%= form.select :nip, @temans.collect{ |asn| [asn.nama_nip, asn.nik] },
       { include_blank: true },
@@ -37,6 +63,10 @@
         dropdown_parent_value: '#form-panggil-teman'
       },
       class: "form-control" %>
+  </div>
+  <div class="field mb-5">
+    <%= form.label :keterangan, { class: "form-label" } %>
+    <%= form.text_area :keterangan, { class: "form-control" } %>
   </div>
   <div class="actions my-4">
     <%= form.submit "Simpan Teman" %>

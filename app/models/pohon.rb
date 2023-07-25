@@ -73,4 +73,12 @@ class Pohon < ApplicationRecord
   def linked_strategis
     Pohon.where(pohonable_type: 'Strategi', strategi_id: strategi_id, user_id: user_id)
   end
+
+  def dibagikan_ke
+    if user.present?
+      user.nama
+    else
+      opd.nama_opd
+    end
+  end
 end

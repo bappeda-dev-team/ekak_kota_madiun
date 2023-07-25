@@ -169,9 +169,11 @@ class PohonKinerjaController < ApplicationController
     strategi = StrategiPohon.find(params[:id])
     @tahun = strategi.tahun
     @role = params[:role]
-    @nip = params[:nip].compact_blank
+    nip = params[:nip].compact_blank
+    opd_list = params[:opd_list].compact_blank
     dibagikan = params[:dibagikan]
     tidak = params[:tidak_dibagikan]
+    keterangan = params[:keterangan]
     if tidak
       hapus_bagikan = dibagikan.nil? ? tidak : (tidak - dibagikan)
       hapus_bagikan.each do |hapus|
@@ -179,7 +181,7 @@ class PohonKinerjaController < ApplicationController
       end
     end
     list_pohon_baru = []
-    @nip.each do |nip_asn|
+    nip.each do |nip_asn|
       user = User.find_by(nik: nip_asn)
       list_pohon_baru.push({ user_id: user.id,
                              tahun: @tahun,
@@ -187,7 +189,16 @@ class PohonKinerjaController < ApplicationController
                              pohonable_id: strategi.id,
                              pohonable_type: 'StrategiPohon',
                              opd_id: strategi.opd_id.to_i,
-                             keterangan: strategi.strategi,
+                             keterangan: keterangan,
+                             strategi_id: strategi.id })
+    end
+    opd_list.each do |kode_opd|
+      opd = Opd.find_by(kode_unik_opd: kode_opd)
+      list_pohon_baru.push({ opd_id: opd.id,
+                             tahun: @tahun,
+                             pohonable_id: strategi.id,
+                             pohonable_type: 'StrategiPohon',
+                             keterangan: keterangan,
                              strategi_id: strategi.id })
     end
     @pohon = Pohon.create(list_pohon_baru)
