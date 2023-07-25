@@ -8,7 +8,7 @@ class SpipQueries
     @tahun = tahun
     @opd = opd
     # example of dependency injection (PokinQueries)
-    @pokin = PokinQueries.new(opd: opd, tahun: tahun)
+    @pokin = PokinQueries.new(opd: opd, tahun: tahun_bener)
   end
 
   def strategi_kotas
@@ -18,6 +18,10 @@ class SpipQueries
 
   def opd_khusus
     [145]
+  end
+
+  def tahun_bener
+    @tahun.include?('perubahan') ? @tahun[/[^_]\d*/, 0] : @tahun
   end
 
   def visi_kota
