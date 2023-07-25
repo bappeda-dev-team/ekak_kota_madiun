@@ -349,7 +349,13 @@ class PohonKinerjaController < ApplicationController
              current_user.opd
            end
     # pokin = PokinQueries.new(opd: @opd, tahun: @tahun)
-    @isu_opd = @opd.pohon_kinerja_opd(@tahun)
+    pokin = PokinQueries.new(opd: @opd, tahun: @tahun)
+    @itungan = pokin.strategi_in_opd
+    @strategis = pokin.strategi_by_role(pokin.strategi_in_specific_opd)
+    @strategic = @strategis['eselon_2'].group_by(&:pohon)
+    @tactical = @strategis['eselon_3']
+    @operational = @strategis['eselon_4']
+    @staff = @strategis['staff']
     # TODO: fix queries in here and in view
     @nama_opd = @opd.nama_opd
     respond_to do |format|

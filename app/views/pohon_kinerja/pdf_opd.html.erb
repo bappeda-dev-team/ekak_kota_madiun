@@ -14,76 +14,96 @@
                                                strategi_id: @opd.id,
                                                jenis: "OPD"),
            form_name: 'form-komentar' %>
-<div class="tf-tree mt-2" style="zoom: 0.7;" id='pokin-opd'>
+<div class="table-responsive">
   <h1>Pohon Kinerja <%= @nama_opd %> Tahun <%= @tahun %></h1>
-  <ul data-pohon-kinerja-target="content">
-    <li>
-      <div class="tf-nc">
-        <p class="text-center"><strong>Perangkat Daerah</strong></p>
-        <hr/>
-        <p class="text-center"><strong><%= @nama_opd %></strong></p>
-      </div>
-      <% if @isu_opd.any? %>
-        <ul>
-          <% @isu_opd.each do |isu_kota, strategi_kotums| %>
-            <li>
-              <div class="tf-nc">
-                <p class="text-center"><strong>ISU STRATEGIS</strong></p>
-                <hr/>
-                <span class="text-center"><%= isu_kota.isu_strategis %></span>
-              </div>
-              <% if strategi_kotums.any? %>
-                <ul>
-                  <% strategi_kotums.each do |str_kota, str_opds| %>
-                    <li>
-                      <% judul = str_kota.to_s %>
-                      <%= render 'item_pokin', judul: judul, strategi: str_kota, tipe: 'kota' %>
-                      <% if str_opds.any? %>
-                        <ul>
-                          <% str_opds.each do |str_opd, str_kabids| %>
-                            <li>
-                              <%= render 'item_pokin', judul: "STRATEGIC OBJECTIVE", strategi: str_opd %>
-                              <% if str_kabids.any? %>
-                                <ul>
-                                  <% str_kabids.each do |str_kabid, str_kasis| %>
-                                    <li>
-                                      <%= render 'item_pokin', judul: "TACTICAL OBJECTIVE", strategi: str_kabid, show_program: true %>
-                                      <% if str_kasis.any? %>
-                                        <ul>
-                                          <% str_kasis.each do |str_kasi, str_staffs| %>
-                                            <li>
-                                              <%= render 'item_pokin', judul: "OPERATIONAL OBJECTIVE", strategi: str_kasi, show_sub: true %>
-                                              <% if str_staffs.any? %>
-                                                <ul>
-                                                  <% str_staffs.each do |str_staff| %>
-                                                    <li>
-                                                      <%= render 'item_pokin', judul: "OPERATIONAL OBJECTIVE 2", strategi: str_staff %>
-                                                    </li>
-                                                  <% end %>
-                                                </ul>
-                                              <% end %>
-                                            </li>
-                                          <% end %>
-                                        </ul>
-                                      <% end %>
-                                    </li>
-                                  <% end %>
-                                </ul>
-                              <% end %>
-                            </li>
-                          <% end %>
-                        </ul>
-                      <% end %>
-                    </li>
-                  <% end %>
-                </ul>
-              <% end %>
-            </li>
+  <p><%= @itungan.size %></p>
+  <table class="table">
+    <thead>
+      <tr>
+        <td>No.</td>
+        <td>Strategi</td>
+        <td>Tahun</td>
+        <td>ISU KOTA</td>
+        <td>Nama POHON</td>
+        <td>Pohon</td>
+        <td>Pohon ID</td>
+        <td>Role</td>
+        <td>ID</td>
+        <td>Ref ID</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @strategic.each.with_index(1) do |(pohon, strategics), i| %>
+          <tr class="bg-primary text-white">
+            <td><%= pohon %></td>
+            <td class="text-wrap"><%= pohon.pohonable.nama_isu %></td>
+            <td><%= pohon.pohonable.isu.tahun %></td>
+            <td class="text-wrap">-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+            <td><%= pohon.pohonable.isu.id %></td>
+            <td>--</td>
+          </tr>
+          <tr class="bg-success text-white">
+            <td><%= i %></td>
+            <td class="text-wrap"><%= pohon.strategi %></td>
+            <td><%= pohon.tahun %></td>
+            <td class="text-wrap">-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+            <td><%= pohon.id %></td>
+            <td><%= pohon.pohonable.isu_strategis_kota_id %></td>
+          </tr>
+        <% strategics.each do |strategic| %>
+          <tr class="bg-danger text-white">
+            <td><%= i %></td>
+            <td class="text-wrap"><%= strategic.strategi.truncate(70) %></td>
+            <td><%= strategic.tahun %></td>
+            <td class="text-wrap"><%= strategic.pohon.pohonable.nama_isu %></td>
+            <td><%= strategic.pohon.strategi_opd %></td>
+            <td><%= strategic.pohon_id %></td>
+            <td><%= strategic.pohon %></td>
+            <td><%= strategic.role %></td>
+            <td><%= strategic.id %></td>
+            <td><%= strategic.strategi_ref_id %></td>
+          </tr>
+          <% @tactical.select { |key| key.strategi_ref_id.to_i == strategic.id }.each do |tactical| %>
+            <tr class="bg-info text-white">
+              <td><%= i %></td>
+              <td class="text-wrap"><%= tactical.strategi.truncate(70) %></td>
+              <td><%= tactical.tahun %></td>
+              <td class="text-wrap"><%= tactical.pohon.pohonable.nama_isu %></td>
+              <td><%= tactical.pohon.strategi_opd %></td>
+              <td><%= tactical.pohon_id %></td>
+              <td><%= tactical.pohon %></td>
+              <td><%= tactical.role %></td>
+              <td><%= tactical.id %></td>
+              <td><%= tactical.strategi_ref_id %></td>
+            </tr>
+            <% @operational.select { |key| key.strategi_ref_id.to_i == tactical.id }.each do |operational| %>
+              <tr>
+                <td><%= i %></td>
+                <td class="text-wrap"><%= operational.strategi.truncate(70) %></td>
+                <td><%= operational.tahun %></td>
+                <td class="text-wrap"><%= operational.pohon.pohonable.nama_isu %></td>
+                <td><%= operational.pohon.strategi_opd %></td>
+                <td><%= operational.pohon_id %></td>
+                <td><%= operational.pohon %></td>
+                <td><%= operational.role %></td>
+                <td><%= operational.id %></td>
+                <td><%= operational.strategi_ref_id %></td>
+              </tr>
+            <% end %>
           <% end %>
-        </ul>
+        <% end %>
       <% end %>
-    </li>
-  </ul>
+    </tbody>
+  </table>
+</ul>
 </div>
 </div>
 <%= render 'shared/modal_template', modal_name: 'komentar' %>
