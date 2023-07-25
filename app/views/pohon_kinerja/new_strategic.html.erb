@@ -1,0 +1,68 @@
+<%= form_with(url: pohon_kinerja_index_path,
+              model: @pohon,
+              local: false,
+              data: { controller: 'form-ajax',
+                      form_ajax_modal_param: 'form-edit-pohon',
+                      action: 'ajax:success->form-ajax#successResponseRefresh'
+              }) do |form| %>
+  <%= form.hidden_field :opd_id, class: "form-control", readonly: true, value: @opd_id %>
+  <%= form.hidden_field :nip_asn, class: "form-control", readonly: true %>
+  <div class="field">
+    <%= form.label :isu_strategis_pohon, class: "form-label" %>
+    <%= form.select :pohon_id, [],
+          {include_blank: true},
+          { class: 'form-control',
+            data: { controller: 'dropdown',
+                    disabled:  true,
+                    placeholder: 'Pilih Strategi Atas',
+          }, required: true }%>
+  </div>
+  <div class="field">
+    <%= form.label :isu_strategis_atasan, class: "form-label" %>
+    <%= form.select :strategi_ref_id, [],
+          {include_blank: true},
+          { class: 'form-control',
+            data: { controller: 'dropdown',
+                    disabled:  true,
+                    placeholder: 'Pilih Strategi Atasan ( kosong jika KA OPD )',
+            } }%>
+  </div>
+  <div class="field">
+    <%= form.label :tahun, class: 'form-label' %>
+    <%= form.select :tahun, selected_tahun(form.object.tahun),
+                    {include_blank: true},
+                    { class: "form-control",
+                      data: { placeholder: "Pilih Tahun Sasaran",
+                              controller: 'dropdown',
+                              dropdown_jenis_value: 'ajax',
+                              dropdown_url_value: kelompok_anggarans_path(:json) } } %>
+  </div>
+  <div class="field">
+    <%= form.label :strategi, class: "form-label" %>
+    <%= form.text_field :strategi, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.label :role, class: "form-label" %>
+    <%= form.text_field :role, class: "form-control", value: @role, readonly: true %>
+  </div>
+  <div class="field">
+    <%= form.fields_for :sasaran do |sasaran_form| %>
+      <% random_number = @sasaran&.id_rencana.nil? ? (SecureRandom.random_number(9e5) + 1e5).to_i : @sasaran.id_rencana %>
+      <%= sasaran_form.hidden_field :id_rencana, :value => random_number, readonly: true %>
+      <%= sasaran_form.label :sasaran_kinerja, { class: "form-label" } %>
+      <%= sasaran_form.text_field :sasaran_kinerja, { class: "form-control" } %>
+      <div class="field" id="indikator-sasarans">
+        <%= sasaran_form.label :indikator, { class: "form-label" } %>
+        <%= sasaran_form.fields_for :indikator_sasarans do |indikator_sas| %>
+          <%= render 'sasarans/indikator_sasaran_fields', form: indikator_sas %>
+        <% end %>
+      </div>
+      <%= link_to_add_nested(sasaran_form, :indikator_sasarans,
+                                '#indikator-sasarans', link_classes: 'btn btn-outline-primary btn-sm', link_text: 'Tambah Indikator',
+                                partial: 'sasarans/indikator_sasaran_fields') %>
+    <% end %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -51,6 +51,11 @@ class PohonKinerjaController < ApplicationController
     render partial: 'form_new_strategi_pohon', locals: { pohon: @pohon, url: url, new_strategi: true, method: method }
   end
 
+  def new_strategic
+    @pohon = StrategiPohon.new
+    render layout: false
+  end
+
   def edit
     # @pohon = Pohon.find_by(pohonable_id: params[:id]).pohonable
     @pohon = StrategiPohon.find(params[:id])
