@@ -194,15 +194,21 @@ class PohonKinerjaController < ApplicationController
     end
     opd_list.each do |kode_opd|
       opd = Opd.find_by(kode_unik_opd: kode_opd)
+      next if opd.id == strategi.opd_id.to_i
+
       list_pohon_baru.push({ opd_id: opd.id,
                              tahun: @tahun,
+                             role: 'opd',
                              pohonable_id: strategi.id,
                              pohonable_type: 'StrategiPohon',
                              keterangan: keterangan,
                              strategi_id: strategi.id })
     end
     @pohon = Pohon.create(list_pohon_baru)
-    if @pohon
+    if @pohon.empty?
+      render json: { resText: "Pilih ASN jika internal" },
+             status: :unprocessable_entity
+    elsif @pohon
       render json: { resText: "Pembagian Disimpan", result: strategi.id },
              status: :accepted
     else
