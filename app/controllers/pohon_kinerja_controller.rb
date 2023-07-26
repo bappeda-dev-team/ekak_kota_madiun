@@ -22,14 +22,14 @@ class PohonKinerjaController < ApplicationController
     @opd = Opd.find(params[:opd_id])
     @opd_id = @opd.id
     role_atasan = params[:role_atasan]
-    @strategis_pohon = StrategiPohon.where(tahun: @tahun)
-                                    .where(opd_id: @opd.id.to_s, role: role_atasan)
-    # @isu_strategis_pohon = @strategis_pohon
-    #                        .uniq(&:pohon_id)
-    #                        .collect do |str|
-    #   [str.pohon.strategi_kota_isu_strategis, str.pohon_id]
-    # end
-    @isu_strategis_atasan = @strategis_pohon.pluck(:strategi, :id)
+    @isu_strategis_atasan = if role_atasan.blank?
+                              Pohon.where(opd_id: @opd_id, pohonable_type: %w[StrategiKotum IsuStrategisOpd])
+                                   .pluck(:keterangan, :id)
+                            else
+                              StrategiPohon.where(tahun: @tahun)
+                                           .where(opd_id: @opd.id.to_s, role: role_atasan)
+                                           .pluck(:strategi, :id)
+                            end
     render partial: 'form_pindah_jalur', locals: { pohon: @pohon, url: url, new_strategi: false, method: method }
   end
 
