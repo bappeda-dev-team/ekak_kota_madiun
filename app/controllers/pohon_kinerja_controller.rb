@@ -53,6 +53,12 @@ class PohonKinerjaController < ApplicationController
 
   def new_strategic
     @pohon = StrategiPohon.new
+    @pohon.build_sasaran.indikator_sasarans.build
+    @opd_id = params[:opd_id]
+    @isu_id = params[:isu_pohon]
+    @role = params[:role]
+    pohon = Pohon.find_by(pohonable_id: @isu_id, opd_id: @opd_id)
+    @isu_strategis_pohon = [pohon.strategi_kota_isu_strategis, pohon.id]
     render layout: false
   end
 
@@ -67,9 +73,9 @@ class PohonKinerjaController < ApplicationController
   def create
     pohon_parameter = pohon_params
     tahun = pohon_parameter[:tahun]
-    tahun_bener = tahun.include?('murni') ? tahun[/[^_]\d*/, 0] : tahun
+    tahun_bener = tahun.match(/murni/) ? tahun[/[^_]\d*/, 0] : tahun
     pohon_parameter[:tahun] = tahun_bener
-    @pohon = StrategiPohon.new(pohon_params)
+    @pohon = StrategiPohon.new(pohon_parameter)
     if @pohon.save
       render json: { resText: "Perubahan tersimpan", result: 'Berhasil' },
              status: :created

@@ -9,23 +9,13 @@
   <%= form.hidden_field :nip_asn, class: "form-control", readonly: true %>
   <div class="field">
     <%= form.label :isu_strategis_pohon, class: "form-label" %>
-    <%= form.select :pohon_id, [],
+    <%= form.select :pohon_id, selected_pohon(@isu_strategis_pohon.first, @isu_strategis_pohon.last),
           {include_blank: true},
           { class: 'form-control',
             data: { controller: 'dropdown',
                     disabled:  true,
                     placeholder: 'Pilih Strategi Atas',
           }, required: true }%>
-  </div>
-  <div class="field">
-    <%= form.label :isu_strategis_atasan, class: "form-label" %>
-    <%= form.select :strategi_ref_id, [],
-          {include_blank: true},
-          { class: 'form-control',
-            data: { controller: 'dropdown',
-                    disabled:  true,
-                    placeholder: 'Pilih Strategi Atasan ( kosong jika KA OPD )',
-            } }%>
   </div>
   <div class="field">
     <%= form.label :tahun, class: 'form-label' %>
