@@ -79,6 +79,7 @@ Rails.application.routes.draw do
       get :review_kota
       get :manual
       get :clone
+      get :new_strategic
     end
   end
   resources :strategi_opds
