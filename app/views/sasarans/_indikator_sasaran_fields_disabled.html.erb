@@ -1,0 +1,19 @@
+<fieldset class="mb-5">
+  <div class="field">
+    <%= form.label :aspek, { class: "form-label" } %>
+    <%= form.select(:aspek, (['Kualitas','Kuantitas', 'Waktu', 'Biaya']), {},
+                    { disabled: true, data: {  controller: 'dropdown' }}) %>
+  </div>
+  <div class="field">
+    <%= form.label :indikator_kinerja, { class: "form-label" } %>
+    <%= form.text_field :indikator_kinerja, { class: "form-control", readonly: true } %>
+  </div>
+  <div class="field">
+    <%= form.label :target, { class: "form-label" } %>
+    <%= form.number_field :target, { class: "form-control", step: 0.000001, readonly: true } %>
+  </div>
+  <div class="field">
+    <%= form.label :satuan, { class: "form-label" } %>
+    <%= form.text_field :satuan, { class: "form-control", readonly: true } %>
+  </div>
+</fieldset>

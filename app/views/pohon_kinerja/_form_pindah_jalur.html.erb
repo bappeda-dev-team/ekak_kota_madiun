@@ -30,21 +30,18 @@
   </div>
   <div class="field">
     <%= form.label :strategi, class: "form-label" %>
-    <%= form.text_field :strategi, class: "form-control" %>
+    <%= form.text_field :strategi, class: "form-control", readonly: true %>
   </div>
   <div class="field">
     <%= form.fields_for :sasaran do |sasaran_form| %>
       <%= sasaran_form.label :sasaran_kinerja, { class: "form-label" } %>
-      <%= sasaran_form.text_field :sasaran_kinerja, { class: "form-control" } %>
+      <%= sasaran_form.text_field :sasaran_kinerja, { class: "form-control", readonly: true } %>
       <div class="field" id="indikator-sasarans">
         <%= sasaran_form.label :indikator, { class: "form-label" } %>
         <%= sasaran_form.fields_for :indikator_sasarans do |indikator_sas| %>
-          <%= render 'sasarans/indikator_sasaran_fields', form: indikator_sas %>
+          <%= render 'sasarans/indikator_sasaran_fields_disabled', form: indikator_sas %>
         <% end %>
       </div>
-      <%= link_to_add_nested(sasaran_form, :indikator_sasarans,
-                                '#indikator-sasarans', link_classes: 'btn btn-outline-primary btn-sm', link_text: 'Tambah Indikator',
-                                partial: 'sasarans/indikator_sasaran_fields') %>
     <% end %>
   </div>
   <div class="actions">
