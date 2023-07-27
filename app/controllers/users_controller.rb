@@ -53,7 +53,12 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def user_admin; end
+  def user_admin
+    @kode_unik_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_unik_opd)
+    @tahun = cookies[:tahun]
+    @users = @opd.users.non_admin
+  end
 
   def aktifkan_user
     @user = User.find_by(nik: params[:id])

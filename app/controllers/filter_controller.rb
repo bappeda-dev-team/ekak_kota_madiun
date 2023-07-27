@@ -25,7 +25,7 @@ class FilterController < ApplicationController
     @nama_opd = opd.nama_opd
     @tahun = tahun_asli
     # @users = User.includes([:opd]).where(opds: { kode_unik_opd: @kode_opd })
-    @users = opd.users
+    @users = User.where(kode_opd: opd.kode_opd)
     # if OPD_TABLE.key?(opd.to_sym)
     #   @users = User.includes([:opd]).where(opds: { kode_unik_opd: KODE_OPD_TABLE[opd.to_sym] })
     #                .where(nama_bidang: OPD_TABLE[opd.to_sym])

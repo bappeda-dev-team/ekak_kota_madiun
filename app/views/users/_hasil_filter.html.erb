@@ -1,7 +1,7 @@
 <div class="card-header">
   <div class="row align-items-center">
     <div class="col">
-      <h2 class="fs-5 fw-bold mb-0">List ASN <%= @nama_opd %></h2>
+      <h2 class="fs-5 fw-bold mb-0">List ASN <%= opd.nama_opd %></h2>
     </div>
   </div>
 </div>
@@ -13,12 +13,12 @@
           <th class="border-bottom" scope="col">No.</th>
           <th class="border-bottom" scope="col">Nama / NIP</th>
           <th class="border-bottom" scope="col">Jabatan</th>
-          <th class="border-bottom text-center" scope="col" colspan="2">Role</th>
+          <th class="border-bottom text-center" scope="col">Role</th>
           <th class="border-bottom text-center" scope="col">Action</th>
         </tr>
       </thead>
       <tbody>
-        <% @users.each.with_index(1) do |user, i| %>
+        <% users.each.with_index(1) do |user, i| %>
           <% the_dom = "#{dom_id(user)}-roles" %>
           <tr>
             <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
@@ -30,34 +30,18 @@
               <ul>
                 <% user.roles.each do |role| %>
                   <li><%= role.name %></li>
-                 <% end %>
+                <% end %>
               </ul>
             </td>
-            <td class="border">
+            <td class="fw-bolder text-gray-500 text-center">
               <%= link_to set_role_user_path(user.id, dom_id: the_dom),
                   remote: true,
                   data: { controller: 'form-modal', action: 'form-modal#appendForm',
                           form_modal_location_param: 'form-user-role-body',
                           bs_target: '#form-user-role', bs_toggle: 'modal' },
                   class: "btn btn-sm btn-info" do %>
-                  <i class="fa fa-cog me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
-                  <span>Role</span>
-                <% end %>
-            </td>
-            <td class="fw-bolder text-gray-500 text-center">
-              <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
-                <% unless user.has_role? :admin %>
-                  <%= link_to 'Aktifkan',"/aktifkan_user/#{user.nik}", remote: true, method: :post ,class: 'btn btn-sm btn-success', id: "#{dom_id(user)}" %>
-                  <%= link_to 'Non Aktifkan',"/nonaktifkan_user/#{user.nik}", remote: true, method: :post ,class: 'btn btn-sm btn-danger', id: "#{dom_id(user)}" %>
-                <% else %>
-                  <% if user.has_role? :asn %>
-                    <%= link_to 'Hapus ASN',"/hapus_asn/#{user.nik}", remote: true, method: :post ,class: 'btn btn-sm btn-warning text-dark', id: "#{dom_id(user)}" %>
-                  <% end %>
-                <% end %>
-              <% end %>
-              <% if current_user.has_role? :super_admin %>
-                <%= link_to 'Edit User', edit_detail_user_path(user),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-user"}, class: "btn btn-sm btn-info" %>
-                <%= link_to 'Hapus User', user, method: :delete, data: { confirm_swal: "Hapus #{user.nama}?" }, class: 'btn btn-outline-danger btn-sm' %>
+                <i class="fa fa-cog me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+                <span>Role</span>
               <% end %>
             </td>
           </tr>

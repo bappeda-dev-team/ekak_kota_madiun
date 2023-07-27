@@ -29,6 +29,10 @@ module AdminItemHelper
         icon: 'fas fa-building', identifier: 'opds/info'
       },
       {
+        title: 'Daftar ASN', href: adminusers_path,
+        icon: 'fas fa-user', identifier: 'admin_user'
+      },
+      {
         title: 'Peta Rencana SPBE', href: index_opd_spbes_path,
         icon: 'fas fa-tablet-alt', identifier: 'spbe_opd'
       },

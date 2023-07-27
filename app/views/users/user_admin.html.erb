@@ -44,9 +44,9 @@
           <div class="card-body">
             <% @kode_opd = current_user.opd.kode_unik_opd %>
             <%= render partial: 'users/hasil_filter',
-              locals: { opd: current_user.opd,
-                        users: current_user.opd.users,
-                        kode_opd: current_user.opd.kode_unik_opd } %>
+              locals: { opd: @opd,
+                        users: @users,
+                        kode_opd: @kode_unik_opd } %>
           </div>
         </div>
       <% end %>
