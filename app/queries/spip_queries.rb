@@ -8,7 +8,7 @@ class SpipQueries
     @tahun = tahun
     @opd = opd
     # example of dependency injection (PokinQueries)
-    @pokin = PokinQueries.new(opd: opd, tahun: tahun_bener)
+    @pokin = PokinQueries.new(opd: opd, tahun: tahun_murni)
   end
 
   def strategi_kotas
@@ -20,7 +20,11 @@ class SpipQueries
     [145]
   end
 
-  def tahun_bener
+  def tahun_murni
+    @tahun.include?('murni') ? @tahun[/[^_]\d*/, 0] : @tahun
+  end
+
+  def tahun_perubahan
     @tahun.include?('perubahan') ? @tahun[/[^_]\d*/, 0] : @tahun
   end
 
@@ -55,7 +59,7 @@ class SpipQueries
   end
 
   def sasaran_opd
-    strategi_kotas.select { |sk| sk.tahun.include?(@tahun) }.to_h do |strategi_kota|
+    strategi_kotas.select { |sk| sk.tahun.include?(tahun_perubahan) }.to_h do |strategi_kota|
       sasaran_opds = strategi_kota.opds.to_h do |opd|
         [opd.nama_opd, mapper_strategi_kota_opd(strategi_kota, opd).map(&:sasaran)]
       end
