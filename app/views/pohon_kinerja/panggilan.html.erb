@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="card-body" style="zoom: 0.5" data-controller="pohon-kinerja">
-        <div class="tf-tree tf-gap-lg mt-2 show">
+        <div class="tf-tree tf-gap-lg mt-2">
           <ul data-pohon-kinerja-target="content">
             <li>
               <div class="tf-nc" >
@@ -22,42 +22,70 @@
                 <hr>
                 <p class="text-center"><strong><%= @nama_opd %></strong></p>
               </div>
-              <ul>
-                <% @strategis_pohon.each do |opd, strategis| %>
+              <% if @strategis_pohon.any? %>
+                <ul>
+                  <% @strategis_pohon.each do |opd, strategis| %>
+                    <li>
+                      <div class="tf-nc">
+                        <div class="mb-2">
+                          <div class="text-center"><strong>Dipanggil oleh</strong></div>
+                          <hr>
+                          <div class="text-left"><%= opd %></div>
+                        </div>
+                      </div>
+                      <ul>
+                        <% strategis.each do |strategi| %>
+                          <li>
+                            <div class="tf-nc pokin-box px-3">
+                              <div class="strategi mb-2">
+                                <div class="text-center"><strong><%= map_eselon_strategi(strategi.pohonable.role) %> Objective</strong></div>
+                                <div class="text-center"><%= strategi.pohonable.strategi %></div>
+                              </div>
+                              <div class="strategi-indikator mb-2">
+                                <div class="text-center bg-info text-white"><strong>Indikator</strong></div>
+                                <% strategi.pohonable.indikators.each do |indikator| %>
+                                  <div class="text-left">- <%= indikator.indikator_kinerja %></div>
+                                <% end %>
+                              </div>
+                              <hr>
+                              <div class="keterangan">
+                                <div class="text-left"><strong>Keterangan:</strong></div>
+                                <div class="text-left"><%= strategi.keterangan %></div>
+                              </div>
+                            </div>
+                            <ul>
+                              <li>
+                                <div class="tf-nc">
+                                  <div class="mb-2">
+                                    <div class="text-center">Respon</div>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="tf-nc">
+                                  <div class="mb-2">
+                                    <div class="text-center">Respon</div>
+                                  </div>
+                                </div>
+                              </li>
+                            </ul>
+                          </li>
+                        <% end %>
+                      </ul>
+                    </li>
+                  <% end %>
+                </ul>
+              <% else %>
+                <ul>
                   <li>
                     <div class="tf-nc">
                       <div class="mb-2">
-                        <div class="text-center"><strong>Dipanggil oleh</strong></div>
-                        <hr>
-                        <div class="text-left"><%= opd %></div>
+                        <div class="text-center"><strong>Kosong</strong></div>
                       </div>
                     </div>
-                    <ul>
-                      <% strategis.each do |strategi| %>
-                        <li>
-                          <div class="tf-nc">
-                            <div class="mb-2">
-                              <div class="text-center"><strong><%= map_eselon_strategi(strategi.pohonable.role) %> Objective</strong></div>
-                              <div class="text-center"><%= strategi.pohonable.strategi %></div>
-                            </div>
-                            <div class="strategi-indikator mb-2">
-                              <div class="text-center bg-info text-white"><strong>Indikator</strong></div>
-                              <% strategi.pohonable.indikators.each do |indikator| %>
-                                <div class="text-left">- <%= indikator.indikator_kinerja %></div>
-                              <% end %>
-                            </div>
-                            <hr>
-                            <div class="mb-2">
-                              <div class="text-left"><strong>Keterangan:</strong></div>
-                              <div class="text-left"><%= strategi.keterangan %></div>
-                            </div>
-                          </div>
-                        </li>
-                      <% end %>
-                    </ul>
                   </li>
-                <% end %>
-              </ul>
+                </ul>
+              <% end %>
             </li>
           </ul>
         </div>
