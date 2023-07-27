@@ -7,11 +7,12 @@ class PohonKinerjaController < ApplicationController
     @kode_opd = cookies[:opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
-    @eselon = current_user.has_role?(:admin) ? 'eselon_2' : current_user.eselon_user
-    # @strategis = Strategi.where('tahun ILIKE ?', "%#{@tahun}%")
-    #                      .where(opd_id: @opd.id.to_s, role: @eselon)
-    @strategis_pohon = StrategiPohon.where(tahun: @tahun)
-                                    .where(opd_id: @opd.id.to_s, role: @eselon)
+    pohons = Pohon.where(tahun: @tahun, role: 'opd',
+                         opd_id: @opd.id,
+                         pohonable_type: 'StrategiPohon')
+    @strategis_pohon = pohons.group_by do |pohon|
+      pohon.pohonable.opd.nama_opd
+    end
   end
 
   def manual
@@ -22,8 +23,8 @@ class PohonKinerjaController < ApplicationController
     @eselon = current_user.has_role?(:admin) ? 'eselon_2' : current_user.eselon_user
     # @strategis = Strategi.where('tahun ILIKE ?', "%#{@tahun}%")
     #                      .where(opd_id: @opd.id.to_s, role: @eselon)
-    @strategis_pohon = StrategiPohon.where(tahun: @tahun)
-                                    .where(opd_id: @opd.id.to_s, role: @eselon)
+    @strategis_pohon = StrategiPohon.where(tahun: @tahun,
+                                           opd_id: @opd.id.to_s, role: @eselon)
   end
 
   def pindah

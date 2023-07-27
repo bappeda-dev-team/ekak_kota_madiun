@@ -67,4 +67,19 @@ module PohonKinerjaHelper
   def list_pohon(pohons, selected)
     options_for_select(pohons, selected: selected)
   end
+
+  def map_eselon_strategi(eselon)
+    case eselon
+    when 'eselon_2'
+      'Strategic'
+    when 'eselon_2b'
+      'Strategic 2'
+    when 'eselon_3'
+      'Tactical'
+    when 'eselon_4'
+      'Operational'
+    else
+      'Operational 2'
+    end
+  end
 end
