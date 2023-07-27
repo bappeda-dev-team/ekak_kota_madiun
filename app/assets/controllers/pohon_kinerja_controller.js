@@ -16,7 +16,7 @@ import ScrollBooster from 'scrollbooster';
 import 'd3-mitch-tree/dist/css/d3-mitch-tree-theme-default.min.css'
 
 export default class extends Controller {
-        static targets = ["pokin", "buttonToggle", "pokinKota", "cetak", "field", "content"]
+        static targets = ["pokin", "buttonToggle", "pokinKota", "cetak", "field", "content", "opd"]
 
         static values = {
                 opd: Number,
@@ -35,6 +35,12 @@ export default class extends Controller {
                         direction: 'horizontal',
                         scrollMode: 'transform'
                 });
+        }
+
+        connect() {
+                if (this.hasOpdTarget) {
+                        this.opdTarget.scrollIntoView();
+                }
         }
 
         togglePokin() {

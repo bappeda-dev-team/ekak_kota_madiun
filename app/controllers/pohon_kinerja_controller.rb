@@ -2,6 +2,18 @@ class PohonKinerjaController < ApplicationController
   skip_before_action :verify_authenticity_token, only: %i[admin_filter filter_rekap filter_rekap_opd]
   before_action :clone_params, only: %i[clone_pokin_opd clone_pokin_kota clone_pokin_isu_strategis_opd]
 
+  def panggilan
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    @eselon = current_user.has_role?(:admin) ? 'eselon_2' : current_user.eselon_user
+    # @strategis = Strategi.where('tahun ILIKE ?', "%#{@tahun}%")
+    #                      .where(opd_id: @opd.id.to_s, role: @eselon)
+    @strategis_pohon = StrategiPohon.where(tahun: @tahun)
+                                    .where(opd_id: @opd.id.to_s, role: @eselon)
+  end
+
   def manual
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]

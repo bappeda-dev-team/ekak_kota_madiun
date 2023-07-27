@@ -1,0 +1,30 @@
+<%= content_for :html_title, "Panggilan Pokin" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Perencanaan OPD</li>
+  <li class="breadcrumb-item active" aria-current="page">Panggilan Pokin</li>
+<% end %>
+<% content_for :view_utama do %>
+  <% if cookies[:tahun] && cookies[:opd] %>
+    <div class='card border-0 shadow mb-3'>
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h5>Panggilan Pokin <%= @nama_opd %> Tahun <%= @tahun %></h5>
+          </div>
+        </div>
+      </div>
+      <div class="card-body" style="zoom: 0.5" data-controller="pohon-kinerja">
+        <div class="tf-tree tf-gap-lg mt-2 show">
+          <%= render 'pohon_kinerja/pohon' %>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <%= render 'shared/pilih_tahun_dan_opd' %>
+  <% end %>
+  <%= render 'shared/modal_xl_template', modal_name: 'edit-pohon' %>
+  <%= render 'shared/modal_xl_template', modal_name: 'panggil-teman' %>
+  <%= render 'shared/modal_xl_template', modal_name: 'strategi-cascading' %>
+  <%= render 'shared/modal_template', modal_name: 'komentar' %>
+  <%= render 'shared/modal_xl_template', modal_name: 'manual-ik' %>
+<% end %>

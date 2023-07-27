@@ -80,6 +80,7 @@ Rails.application.routes.draw do
       get :manual
       get :clone
       get :new_strategic
+      get :panggilan
     end
   end
   resources :strategi_opds
