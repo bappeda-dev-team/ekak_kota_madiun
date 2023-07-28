@@ -7,11 +7,17 @@ class CallbackController < ApplicationController
     ctx = OpenSSL::SSL::SSLContext.new
     ctx.verify_mode = OpenSSL::SSL::VERIFY_NONE
     response = HTTP.accept(:json).post(URL,
-                                       form: { grant_type: 'authorization_code',
-                                               client_id: '97dd802d-9840-4f0b-98c1-96fb80dc7b92',
-                                               client_secret: 'X2a71ep0QzpuvEBjjvTQzTv7A7J7Z7CWpunZbTJw',
-                                               redirect_uri: callback_path,
-                                               code: params[:code] }, ssl_context: ctx)
+                                       json: {
+                                         'form-data' => {
+                                           grant_type: 'authorization_code',
+                                           client_id: '97dd802d-9840-4f0b-98c1-96fb80dc7b92',
+                                           client_secret: 'X2a71ep0QzpuvEBjjvTQzTv7A7J7Z7CWpunZbTJw',
+                                           redirect_uri: callback_path,
+                                           code: params[:code],
+                                           scope: '*'
+                                         }
+                                       },
+                                       ssl_context: ctx)
     data = Oj.load(response.body)
     access_token = data['access_token']
     user_login(access_token)
