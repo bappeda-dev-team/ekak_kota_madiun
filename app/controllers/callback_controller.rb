@@ -12,14 +12,14 @@ class CallbackController < ApplicationController
       grant_type: 'authorization_code',
       client_id: '97dd802d-9840-4f0b-98c1-96fb80dc7b92',
       client_secret: 'X2a71ep0QzpuvEBjjvTQzTv7A7J7Z7CWpunZbTJw',
-      redirect_uri: 'http://kak.madiunkota.go.id/callback',
+      redirect_uri: 'https://kak.madiunkota.go.id/callback',
       code: code,
       scope: '*'
     }
-    logger = Logger.new(STDOUT)
-    http = HTTP.use(logging: { logger: logger })
+    # logger = Logger.new(STDOUT)
+    # http = HTTP.use(logging: { logger: logger })
 
-    response = http.post(URL, form: param_sso, ssl_context: ctx)
+    response = HTTP.post(URL, form: param_sso, ssl_context: ctx)
 
     data = JSON.parse response.body.to_s
     access_token = data['access_token']
@@ -31,10 +31,12 @@ class CallbackController < ApplicationController
   def user_login(access_token)
     ctx = OpenSSL::SSL::SSLContext.new
     ctx.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    logger = Logger.new(STDOUT)
-    http = HTTP.use(logging: { logger: logger })
+
+    # logger = Logger.new(STDOUT)
+    # http = HTTP.use(logging: { logger: logger })
     # api user
-    response = http.auth("Bearer #{access_token}").get(URL_USER, form: {}, ssl_context: ctx)
+    response = HTTP.auth("Bearer #{access_token}").get(URL_USER, form: {}, ssl_context: ctx)
+
     user_data = JSON.parse response.body.to_s
     username = user_data['username']
     user = User.find_by(nik: username)
