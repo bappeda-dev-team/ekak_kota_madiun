@@ -19,12 +19,12 @@
     <%= form.label :pindah_pohon, class: "form-label" %>
   </div>
   <div class="field">
-    <%= form.label :isu_strategis_atasan, class: "form-label" %>
+    <%= form.label :strategi_atasan, class: "form-label" %>
     <%= form.select :strategi_ref_id, list_pohon(@isu_strategis_atasan, pohon.strategi_ref_id.to_i),
           {include_blank: true},
           { class: 'form-control',
             data: { controller: 'dropdown',
-                    placeholder: 'Pilih Jalur',
+                    placeholder: 'Pilih Strategi Atasan',
                 dropdown_parent_value: '#form-edit-pohon'
             } }%>
   </div>
