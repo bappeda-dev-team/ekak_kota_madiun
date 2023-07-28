@@ -11,45 +11,14 @@
       </ol>
     </nav>
     <% if cookies[:tahun] && cookies[:opd] %>
-      <% if current_user.has_role?(:super_admin) %>
-        <div class="card border-0 shadow" id="user_filter" data-controller="page-ajax"
-             data-page-ajax-opd-value="<%= cookies[:opd] %>"
-             data-page-ajax-url-value="/filter_user"
-             data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >
-          <div data-page-ajax-target="results">
-            <div class="card-header">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h2 class="fs-5 fw-bold mb-0">List ASN</h2>
-                </div>
-              </div>
-            </div>
-            <div class="loader text-center">
-              <div class="lds-roller">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-              <p>memuat data..</p>
-            </div>
-          </div>
-        </div>
-      <% else %>
-        <div class="card border-0 shadow" id="user_filter">
-          <div class="card-body">
-            <% @kode_opd = current_user.opd.kode_unik_opd %>
-            <%= render partial: 'users/hasil_filter',
+      <div class="card border-0 shadow" id="user_filter">
+        <div class="card-body">
+          <%= render partial: 'users/hasil_filter',
               locals: { opd: @opd,
                         users: @users,
                         kode_opd: @kode_unik_opd } %>
-          </div>
         </div>
-      <% end %>
+      </div>
     <% else %>
       <div class="card border-0 shadow" id="user_filter">
         <div class="card-header">
