@@ -52,22 +52,35 @@
                                 <div class="text-left"><strong>Keterangan:</strong></div>
                                 <div class="text-left"><%= strategi.keterangan %></div>
                               </div>
+                              <hr>
+                              <div class="tombol-panggil">
+                                <div class="text-left my-3">
+                                  <%= link_to panggil_teman_pohon_kinerja_path(strategi.pohonable, role: 'eselon_3'), remote: true,
+                    class: 'btn btn-outline-gray-900 align-items-center w-100',
+                    data: { controller: 'form-modal',
+                            action: 'form-modal#appendForm',
+                            form_modal_location_param: 'form-panggil-teman-body',
+                            bs_target: '#form-panggil-teman',
+                            bs_toggle: 'modal' } do %>
+                                    <span class="fas fa-user-plus me-2"></span>
+                                    <span>Pilih Pelaksana</span>
+                                  <% end %>
+                                </div>
+                              </div>
                             </div>
                             <ul>
-                              <li>
-                                <div class="tf-nc">
-                                  <div class="mb-2">
-                                    <div class="text-center">Respon</div>
+                              <% strategi.pohonable.pohon_shareds.where.not(role: 'opd').each.with_index(1) do |teman, no| %>
+                                <li>
+                                  <div class="tf-nc pokin-user-box px-3">
+                                    <div class="mb-2">
+                                      <div class="text-left"><strong>Dilaksanakan Oleh:</strong></div>
+                                      <div class="text-left">
+                                        <p><%= "#{no}. #{teman.dibagikan_ke}" %></p>
+                                      </div>
+                                    </div>
                                   </div>
-                                </div>
-                              </li>
-                              <li>
-                                <div class="tf-nc">
-                                  <div class="mb-2">
-                                    <div class="text-center">Respon</div>
-                                  </div>
-                                </div>
-                              </li>
+                                </li>
+                              <% end %>
                             </ul>
                           </li>
                         <% end %>
