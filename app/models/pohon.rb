@@ -36,6 +36,14 @@ class Pohon < ApplicationRecord
     pohonable.class.name.underscore.titleize
   end
 
+  def isu_strategis_disasar
+    if pohonable_type == 'StrategiKotum'
+      pohonable.isu_strategis_kotum
+    else
+      pohonable.isu_strategis
+    end
+  end
+
   def strategi_kota_isu_strategis
     "Isu Strategis: #{keterangan} - Strategi Kota: #{pohonable.strategi}"
   end

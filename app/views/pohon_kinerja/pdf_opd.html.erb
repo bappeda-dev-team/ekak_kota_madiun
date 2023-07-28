@@ -35,7 +35,7 @@
     <tbody>
       <% @strategic.each.with_index(1) do |(pohon, strategics), i| %>
           <tr class="bg-primary text-white">
-            <td><%= pohon %></td>
+            <td>Isu Strategis Kota</td>
             <td class="text-wrap"><%= pohon.pohonable.nama_isu %></td>
             <td><%= pohon.pohonable.isu.tahun %></td>
             <td class="text-wrap">-</td>
@@ -46,9 +46,9 @@
             <td><%= pohon.pohonable.isu.id %></td>
             <td>--</td>
           </tr>
-          <tr class="bg-success text-white">
-            <td><%= i %></td>
-            <td class="text-wrap"><%= pohon.strategi %></td>
+          <tr class="bg-tertiary text-white">
+            <td><%= i %> <%= pohon %></td>
+            <td class="text-wrap"><%= pohon.strategi_opd %></td>
             <td><%= pohon.tahun %></td>
             <td class="text-wrap">-</td>
             <td>-</td>

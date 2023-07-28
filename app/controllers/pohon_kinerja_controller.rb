@@ -10,8 +10,14 @@ class PohonKinerjaController < ApplicationController
     @eselon = current_user.has_role?(:admin) ? 'eselon_2' : current_user.eselon_user
     # @strategis = Strategi.where('tahun ILIKE ?', "%#{@tahun}%")
     #                      .where(opd_id: @opd.id.to_s, role: @eselon)
-    @strategis_pohon = StrategiPohon.where(tahun: @tahun)
-                                    .where(opd_id: @opd.id.to_s, role: @eselon)
+    # @strategis_pohon = StrategiPohon.where(tahun: @tahun)
+    #                                 .where(opd_id: @opd.id.to_s, role: @eselon)
+    pokin = PokinManual.new(tahun: @tahun, opd: @opd)
+    strategis = pokin.strategi_by_role
+    @strategic = strategis['eselon_2']
+    @tactical = strategis['eselon_3']
+    @operational = strategis['eselon_4']
+    @strategis_pohon = @strategic.map(&:pohon).group_by(&:isu_strategis_disasar)
   end
 
   def pindah
