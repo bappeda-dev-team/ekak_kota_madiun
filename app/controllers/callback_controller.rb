@@ -12,7 +12,7 @@ class CallbackController < ApplicationController
       grant_type: 'authorization_code',
       client_id: '97dd802d-9840-4f0b-98c1-96fb80dc7b92',
       client_secret: 'X2a71ep0QzpuvEBjjvTQzTv7A7J7Z7CWpunZbTJw',
-      redirect_uri: callback_path,
+      redirect_uri: 'http://kak.madiunkota.go.id/callback',
       code: code,
       scope: '*'
     }
