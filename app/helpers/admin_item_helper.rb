@@ -2,6 +2,12 @@ module AdminItemHelper
   def perencanaan_opd_items
     [
       {
+        title: 'Master Usulan', href: "#",
+        multi: true, collections: usulan_items,
+        id_target: "master-usulan",
+        icon: 'fas fa-book-open', identifier: 'usulans'
+      },
+      {
         title: 'Tujuan OPD', href: tujuan_opds_path,
         icon: 'fas fa-city', identifier: 'tujuan_opds'
       },

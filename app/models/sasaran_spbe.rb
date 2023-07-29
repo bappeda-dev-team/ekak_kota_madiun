@@ -44,10 +44,14 @@ class SasaranSpbe < Sasaran
 
   def detail_kebutuhan
     spbe_rincian.detail_kebutuhan
+  rescue StandardError
+    'Kosong'
   end
 
   def uraian
     spbe_rincian.detail_sasaran_kinerja
+  rescue StandardError
+    'Kosong'
   end
 
   def asn_pengusul

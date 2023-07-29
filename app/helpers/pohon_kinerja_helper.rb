@@ -82,4 +82,12 @@ module PohonKinerjaHelper
       'Operational 2'
     end
   end
+
+  def komentar_param(strategi)
+    if strategi.instance_of?(::IsuStrategisOpd)
+      { kode_opd: strategi.opd.kode_unik_opd, strategi_id: strategi.id, jenis: 'IsuOpd' }
+    else
+      { kode_opd: 'kota_madiun', strategi_id: strategi.id }
+    end
+  end
 end

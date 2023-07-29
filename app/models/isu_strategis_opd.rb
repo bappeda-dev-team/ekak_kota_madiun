@@ -15,9 +15,10 @@
 class IsuStrategisOpd < ApplicationRecord
   belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_opd'
   has_many :pohons, as: :pohonable, dependent: :destroy
+  has_many :komentars, -> { where(jenis: 'IsuOpd') }, primary_key: :id, foreign_key: :item
 
   def to_s
-    self.class.name.pluralize.underscore.titleize
+    self.class.name.underscore.titleize
   end
 
   def strategi

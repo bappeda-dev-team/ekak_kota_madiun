@@ -6,13 +6,6 @@
       </div>
     </div>
   </div>
-  <div  class="mb-5">
-    <button id="cetak" class="btn btn-tertiary w-100"
-                data-controller="pohon-kinerja"
-                data-pohon-kinerja-nama-opd-value="<%= @nama_opd %>"
-                data-pohon-kinerja-tahun-value="<%= @tahun %>"
-                data-action="click->pohon-kinerja#cetakOpd">DOWNLOAD POHON KINERJA</button>
-  </div>
   <div class="card-body" style="zoom: 0.5" data-controller="pohon-kinerja">
     <div class="tf-tree tf-gap-lg mt-2 show">
       <%= render 'pohon_kinerja/pohon' %>

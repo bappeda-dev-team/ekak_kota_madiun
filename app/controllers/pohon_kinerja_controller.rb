@@ -20,11 +20,13 @@ class PohonKinerjaController < ApplicationController
     @kode_opd = cookies[:opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
-    @eselon = current_user.has_role?(:admin) ? 'eselon_2' : current_user.eselon_user
-    # @strategis = Strategi.where('tahun ILIKE ?', "%#{@tahun}%")
-    #                      .where(opd_id: @opd.id.to_s, role: @eselon)
-    @strategis_pohon = StrategiPohon.where(tahun: @tahun,
-                                           opd_id: @opd.id.to_s, role: @eselon)
+    pokin = PokinManual.new(tahun: @tahun, opd: @opd)
+
+    strategis = pokin.strategi_by_role
+    @strategis_pohon = pokin.strategis_pohon
+    @strategic = strategis['eselon_2']
+    @tactical = strategis['eselon_3']
+    @operational = strategis['eselon_4']
   end
 
   def pindah
@@ -372,8 +374,14 @@ class PohonKinerjaController < ApplicationController
            else
              current_user.opd
            end
-    # pokin = PokinQueries.new(opd: @opd, tahun: @tahun)
     @isu_opd = @opd.pohon_kinerja_opd(@tahun)
+    # pokin = PokinQueries.new(opd: @opd, tahun: @tahun)
+    # @itungan = pokin.strategi_in_opd
+    # @strategis = pokin.strategi_by_role(pokin.strategi_in_specific_opd)
+    # @strategic = @strategis['eselon_2'].group_by(&:pohon)
+    # @tactical = @strategis['eselon_3']
+    # @operational = @strategis['eselon_4']
+    # @staff = @strategis['staff']
     # TODO: fix queries in here and in view
     @nama_opd = @opd.nama_opd
     respond_to do |format|

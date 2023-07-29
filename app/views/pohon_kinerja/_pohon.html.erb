@@ -6,52 +6,40 @@
       <p class="text-center"><strong><%= @nama_opd %></strong></p>
     </div>
     <ul>
-      <% @strategis_pohon.each do |strategi| %>
+      <% @strategis_pohon.each do |isu, strategi_kotas| %>
         <li>
           <div class="tf-nc">
             <p class="text-center"><strong>ISU STRATEGIS</strong></p>
             <hr/>
-            <span class="text-center"><%= strategi.pohon.pohonable.nama_isu %></span>
+            <span class="text-center"><%= isu %></span>
           </div>
           <ul>
-            <li>
-              <%= render 'item_pokin_kota_edit', judul: 'STRATEGI KOTA', strategi: strategi.pohon.pohonable, tipe: 'kota' %>
-              <ul>
-                <li>
-                  <%= render 'item_pokin_edit', judul: "STRATEGIC OBJECTIVE", strategi: strategi, role_atasan: '', strategi_atasan: '', role_bawahan: 'eselon_3' %>
-                  <% str_kabids = strategi.strategi_eselon_tiga_pohons %>
-                  <% if str_kabids.any? %>
-                    <ul>
-                      <% str_kabids.each do |str_kabid| %>
-                        <li>
-                          <%= render 'item_pokin_edit', judul: "TACTICAL OBJECTIVE", strategi: str_kabid, panggil_teman: true, role: 'eselon_3', role_atasan: 'eselon_2', role_bawahan: 'eselon_4', strategi_atasan: strategi.id %>
-                          <% str_kasis = str_kabid.strategi_eselon_empats %>
-                          <% if str_kasis.any? %>
+            <% strategi_kotas.each do |pohon| %>
+              <li>
+                <%= render 'item_pokin_kota_edit', judul: 'STRATEGI KOTA', strategi: pohon.pohonable, tipe: 'kota' %>
+                <ul>
+                  <% @strategic.select { |key| key.pohon_id.to_i == pohon.id }.each do |strategi| %>
+                    <li>
+                      <%= render 'item_pokin_edit', judul: "STRATEGIC OBJECTIVE", strategi: strategi, role_atasan: '', strategi_atasan: '', role_bawahan: 'eselon_3' %>
+                      <ul>
+                        <% @tactical.select { |key| key.strategi_ref_id.to_i == strategi.id }.each do |str_kabid| %>
+                          <li>
+                            <%= render 'item_pokin_edit', judul: "TACTICAL OBJECTIVE", strategi: str_kabid, panggil_teman: true, role: 'eselon_3', role_atasan: 'eselon_2', role_bawahan: 'eselon_4', strategi_atasan: strategi.id %>
                             <ul>
-                              <% str_kasis.each do |str_kasi| %>
+                              <% @operational.select { |key| key.strategi_ref_id.to_i == str_kabid.id }.each do |str_kasi| %>
                                 <li>
                                   <%= render 'item_pokin_edit', judul: "OPERATIONAL OBJECTIVE", strategi: str_kasi, panggil_teman: true, role: 'eselon_4', role_atasan: 'eselon_3', role_bawahan: 'staff', strategi_atasan: str_kabid.id %>
-                                  <% str_staffs = str_kasi.strategi_staffs %>
-                                  <% if str_staffs.any? %>
-                                    <ul>
-                                      <% str_staffs.each do |str_staff| %>
-                                        <li>
-                                          <%= render 'item_pokin_edit', judul: "OPERATIONAL OBJECTIVE 2", strategi: str_staff, panggil_teman: true, role: 'staff', role_atasan: 'eselon_4', role_bawahan: '', strategi_atasan: str_kasi.id %>
-                                        </li>
-                                      <% end %>
-                                    </ul>
-                                  <% end %>
                                 </li>
                               <% end %>
                             </ul>
-                          <% end %>
-                        </li>
-                      <% end %>
-                    </ul>
+                          </li>
+                        <% end %>
+                      </ul>
+                    </li>
                   <% end %>
-                </li>
-              </ul>
-            </li>
+                </ul>
+              </li>
+            <% end %>
           </ul>
         </li>
       <% end %>
