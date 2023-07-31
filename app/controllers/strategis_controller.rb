@@ -52,10 +52,15 @@ class StrategisController < ApplicationController
   # POST /strategis or /strategis.json
   def create
     @role = strategi_params[:role]
-    @strategi = Strategi.new(strategi_params)
-    @strategi.sasaran.tahun = strategi_params[:tahun]
+    strategi_parameter = strategi_params
+    tahun = strategi_parameter[:tahun]
+    tahun_bener = tahun.match(/murni/) ? tahun[/[^_]\d*/, 0] : tahun
+    strategi_parameter[:tahun] = tahun_bener
     @nip = strategi_params[:nip_asn]
     @opd_id = strategi_params[:opd_id]
+
+    @strategi = Strategi.new(strategi_parameter)
+    @strategi.sasaran.tahun = strategi_parameter[:tahun]
 
     respond_to do |format|
       if @strategi.save
@@ -78,11 +83,15 @@ class StrategisController < ApplicationController
   # PATCH/PUT /strategis/1 or /strategis/1.json
   def update
     @role = params[:strategi][:role]
-    # @strategi.sasaran.tahun = strategi_params[:tahun]
+    # @strategi.sasaran.tahun = strategi_parameter[:tahun]
     @nip = strategi_params[:nip_asn]
     @opd_id = strategi_params[:opd_id]
+    strategi_parameter = strategi_params
+    tahun = strategi_parameter[:tahun]
+    tahun_bener = tahun.match(/murni/) ? tahun[/[^_]\d*/, 0] : tahun
+    strategi_parameter[:tahun] = tahun_bener
     respond_to do |format|
-      if @strategi.update(strategi_params)
+      if @strategi.update(strategi_parameter)
         if current_user.has_role?(:admin)
           format.html { redirect_to opd_pohon_kinerja_index_path, success: "Sukses" }
         else
