@@ -1,0 +1,23 @@
+<%= form_with(model: tematik) do |form| %>
+  <% if tematik.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(tematik.errors.count, "error") %> prohibited this tematik from being saved:</h2>
+      <ul>
+        <% tematik.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :tema, class: 'form-label' %>
+    <%= form.text_field :tema, class: 'form-control' %>
+  </div>
+  <div class="field">
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_area :keterangan, class: 'form-control' %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

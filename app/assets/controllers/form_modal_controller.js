@@ -13,8 +13,8 @@ export default class extends Controller {
   }
 
   updateTargetValue(event) {
-   const content = event.detail
-   this.isu_strategisTarget.innerHTML = content.data
+    const content = event.detail
+    this.isu_strategisTarget.innerHTML = content.data
   }
 
   appendForm(event) {
@@ -24,11 +24,26 @@ export default class extends Controller {
     this.formFetcher(target.href, location)
   }
 
-  formFetcher(url,target) {
+  formFetcher(url, target) {
     fetch(url)
-            .then((res) => res.text())
-            .then((html) => {
-                        document.getElementById(target).innerHTML = html
-                    });
+      .then((res) => res.text())
+      .then((html) => {
+        document.getElementById(target).innerHTML = html
+      });
+  }
+
+  success(event) {
+    const [xhr, status] = event.detail
+    const target = 'form-modal-body'
+    const element = document.getElementById(target)
+
+    if (status == 'OK') {
+      const html = xhr.response
+      element.innerHTML = html
+    }
+    else {
+      const html = '<div class="alert alert-danger" role="alert">Terjadi Kesalahan</div>'
+      element.innerHTML = html
+    }
   }
 }

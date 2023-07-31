@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Tema:</strong>
+  <%= @tematik.tema %>
+</p>
+
+<p>
+  <strong>Keterangan:</strong>
+  <%= @tematik.keterangan %>
+</p>
+
+<p>
+  <strong>Tematik ref:</strong>
+  <%= @tematik.tematik_ref_id %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @tematik.type %>
+</p>
+
+<%= link_to 'Edit', edit_tematik_path(@tematik) %> |
+<%= link_to 'Back', tematiks_path %>
