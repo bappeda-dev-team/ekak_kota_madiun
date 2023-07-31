@@ -29,6 +29,7 @@
         <td colspan="12" class="border"><%= opd.nama_opd %></td>
       </tr>
       <% strategis.each do |strategi| %>
+        <% next unless strategi.strategi_eselon_tigas.where(tahun: @tahun).any? %>
         <tr>
           <td class="border"></td>
           <td class="border">Tahun: <%= strategi.tahun %></td>
@@ -46,15 +47,15 @@
           </tr>
         <% end %>
         <% strategi.strategi_eselon_tigas.where(tahun: @tahun).each do |strategi_program| %>
+          <% next unless strategi_program.strategi_eselon_empats.where(tahun: @tahun).any? %>
           <tr class="<%= kosong_class(strategi_program.programs_strategi.keys.include?(:Kosong)) %>">
             <td class="border"></td>
             <td class="border"></td>
             <td class="border"></td>
             <td class="border">Tahun : <%= strategi_program.tahun %></td>
             <td colspan="9" class="border">
-              <% strategi_program.programs_strategi.each_key do |program| %>
-                <p class="program">Nama Program: <%= program %></p>
-              <% end %>
+              <% program = strategi_program.programs_strategi.each_key.first %>
+              <p class="program">Nama Program: <%= program %></p>
               <p>Sasaran Program: <%= strategi_program.sasaran %> <%= strategi_program.user.nama %></p>
             </td>
           </tr>

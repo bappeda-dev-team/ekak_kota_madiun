@@ -76,6 +76,8 @@ wb.add_worksheet(name: "#{@opd.nama_opd.truncate(20)}") do |sheet|
   @sasaran_opd_spip.each do |opd, strategis|
     sheet.add_row [opd.nama_opd], offset: 1
     strategis.each do |strategi|
+      next unless strategi.strategi_eselon_tigas.where(tahun: @tahun).any?
+
       sheet.add_row [strategi.sasaran], offset: 2
       strategi.indikator_sasarans.each do |indikator_opd|
         sheet.add_row [indikator_opd.indikator_kinerja, nil, nil, nil, nil, nil, nil, nil, nil,
@@ -83,11 +85,12 @@ wb.add_worksheet(name: "#{@opd.nama_opd.truncate(20)}") do |sheet|
                       offset: 3
       end
       strategi.strategi_eselon_tigas.where(tahun: @tahun).each do |strategi_program|
-        strategi_program.programs_strategi.each_key do |program|
-          sheet.add_row [strategi_program.sasaran, nil, nil, nil, nil, nil,
-                         program],
-                        offset: 4
-        end
+        next unless strategi_program.strategi_eselon_empats.where(tahun: @tahun).any?
+
+        program = strategi_program.programs_strategi.each_key.first
+        sheet.add_row [strategi_program.sasaran, nil, nil, nil, nil, nil,
+                       program],
+                      offset: 4
         strategi_program.indikator_sasarans.each do |indikator_pro|
           sheet.add_row [indikator_pro.indikator, nil, nil, nil, nil, nil, nil,
                          indikator_pro.satuan, indikator_pro.target, indikator_pro.satuan], offset: 5
