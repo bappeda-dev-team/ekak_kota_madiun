@@ -35,7 +35,7 @@
           <td colspan="11" class="border"><%= strategi.sasaran %> <%= strategi.user.nama %></td>
         </tr>
         <% strategi.indikator_sasarans.each do |indikator_opd| %>
-          <tr class="<%= kosong_class(indikator_opd.target == '0') %>">
+          <tr class="<%= kosong_class(indikator_opd.target == '0' || indikator_opd.target.empty?) %>">
             <td class="border"></td>
             <td class="border"></td>
             <td class="border"></td>
@@ -59,7 +59,7 @@
             </td>
           </tr>
           <% strategi_program.indikator_sasarans.each do |indikator_pro| %>
-            <tr class="<%= kosong_class(indikator_pro.target == '0') %>">
+            <tr class="<%= kosong_class(indikator_pro.target == '0' || indikator_pro.target.blank?) %>">
               <td class="border"></td>
               <td class="border"></td>
               <td class="border"></td>
@@ -99,7 +99,7 @@
               </td>
             </tr>
             <% strategi_kegiatan.indikator_sasarans.each do |indikator_keg| %>
-              <tr class="<%= kosong_class(indikator_keg.target == '0') %>">
+              <tr class="<%= kosong_class(indikator_keg.target == '0' || indikator_keg.target.blank?) %>">
                 <td class="border"></td>
                 <td class="border"></td>
                 <td class="border"></td>
@@ -127,7 +127,7 @@
               </td>
             </tr>
             <% indikator_sub = strategi_kegiatan.program_kegiatan_strategi&.indikator_subkegiatan_tahun(@tahun, @opd.kode_unik_opd) %>
-            <tr>
+            <tr class="<%= kosong_class(indikator_sub[:target] == '0' || indikator_sub[:target].blank?) %>">
               <td class="border"></td>
               <td class="border"></td>
               <td class="border"></td>
