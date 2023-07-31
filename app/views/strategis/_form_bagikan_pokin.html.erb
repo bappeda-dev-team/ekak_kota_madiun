@@ -25,6 +25,12 @@
               <span class="col border border-success rounded">
                 <small>strategi: </small>
                 <span class="fw-bolder"><%= strategi_asn&.strategi || 'belum diisi' %></span>
+                <br>
+                <small>sasaran: </small>
+                <span class="fw-bolder"><%= strategi_asn&.sasaran_kinerja || 'belum diisi' %></span>
+                <br>
+                <small>tahun: </small>
+                <span class="fw-bolder"><%= strategi_asn&.tahun || 'belum diisi' %></span>
               </span>
               <% unless current_user.has_role?(:super_admin) %>
                 <% unless strategi_asn.strategi %>
