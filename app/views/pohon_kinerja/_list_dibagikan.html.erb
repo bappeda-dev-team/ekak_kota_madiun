@@ -1,0 +1,21 @@
+<ol>
+  <% @strategi_bawahans.sort_by(&:nama_pemilik).each do |strategi_asn| %>
+    <li>
+      <div class="row align-items-center">
+        <p class="col-4">
+          <span class="fw-bolder"><%= strategi_asn&.nama_pemilik %></span>
+        </p>
+        <p class="col border border-success rounded">
+          <small>strategi: </small>
+          <span class="fw-bolder"><%= strategi_asn&.strategi || 'belum diisi' %></span>
+          <br>
+          <small>sasaran: </small>
+          <span class="fw-bolder"><%= strategi_asn&.sasaran_kinerja || 'belum diisi' %></span>
+          <br>
+          <small>tahun: </small>
+          <span class="fw-bolder"><%= strategi_asn&.tahun || 'belum diisi' %></span>
+        </p>
+      </div>
+    </li>
+  <% end %>
+</ol>

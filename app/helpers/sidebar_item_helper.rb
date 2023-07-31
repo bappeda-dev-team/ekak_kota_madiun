@@ -58,6 +58,10 @@ module SidebarItemHelper
       {
         title: 'Rekap Strategi', href: rekap_strategi_strategis_path,
         icon: 'fas fa-archive', identifier: 'rekap_strategi'
+      },
+      {
+        title: 'Rekap Cascading', href: list_pohon_pohon_kinerja_index_path,
+        icon: 'fas fa-archive', identifier: 'rekap_cascading'
       }
     ]
   end

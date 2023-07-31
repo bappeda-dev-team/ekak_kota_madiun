@@ -139,6 +139,8 @@ class Strategi < ApplicationRecord
 
   def nama_pemilik
     "#{nama} (#{nip_pemilik})"
+  rescue StandardError
+    "Kosong"
   end
 
   def nip_pemilik

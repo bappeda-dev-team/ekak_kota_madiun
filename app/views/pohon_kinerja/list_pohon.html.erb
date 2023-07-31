@@ -1,0 +1,46 @@
+<%= content_for :html_title, "Rekap Cascading" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Laporan</li>
+  <li class="breadcrumb-item active" aria-current="page">Rekap Cascading</li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="card border-0 shadow" id="kotak_usulan" data-filter-render-target="results">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h2 class="fs-5 fw-bold mb-0">Rekap Cascading</h2>
+        </div>
+      </div>
+    </div>
+    <% if @strategis.any? %>
+      <% @strategis.each do |eselon, strategis| %>
+        <% if eselon == "eselon_2" %>
+          <div class="card-body mb-3">
+            <%= render 'pohon_kinerja/card_pohon', role: eselon, strategis: strategis %>
+          </div>
+        <% elsif eselon == "eselon_2b" %>
+          <div class="card-body mb-3">
+            <%= render 'pohon_kinerja/card_pohon', role: eselon, strategis: strategis %>
+          </div>
+        <% elsif eselon == "eselon_3" %>
+          <div class="card-body mb-3">
+            <%= render 'pohon_kinerja/card_pohon', role: eselon, strategis: strategis %>
+          </div>
+        <% elsif eselon == "eselon_4" %>
+          <div class="card-body mb-3">
+            <%= render 'pohon_kinerja/card_pohon', role: eselon, strategis: strategis %>
+          </div>
+        <% else %>
+          <div class="card-body">
+            <%= render 'pohon_kinerja/card_pohon', role: eselon, strategis: strategis %>
+          </div>
+        <% end %>
+      <% end %>
+    <% else %>
+      <div class="card-body">
+        <%= render 'shared/pilih_tahun_dan_opd' %>
+      </div>
+    <% end %>
+  </div>
+  <%= render 'shared/modal_xl_template', modal_name: 'list-bagikan' %>
+<% end %>

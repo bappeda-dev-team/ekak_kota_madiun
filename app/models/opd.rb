@@ -330,4 +330,8 @@ class Opd < ApplicationRecord
       .where.not(sasarans: { nip_asn: nil })
       .map(&:sasaran)
   end
+
+  def list_strategi_opd(tahun: '')
+    strategis.includes(%i[user strategi_atasan sasaran]).where(tahun: tahun).group_by(&:role).sort
+  end
 end

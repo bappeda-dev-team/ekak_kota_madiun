@@ -56,6 +56,7 @@ Rails.application.routes.draw do
       get :daftar_linked_strategi
       post :set_clone
       get :pindah
+      get :list_dibagikan
     end
     collection do
       get :kota
@@ -81,6 +82,7 @@ Rails.application.routes.draw do
       get :clone
       get :new_strategic
       get :panggilan
+      get :list_pohon
     end
   end
   resources :strategi_opds

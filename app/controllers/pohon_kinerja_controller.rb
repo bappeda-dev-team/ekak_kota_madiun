@@ -29,6 +29,19 @@ class PohonKinerjaController < ApplicationController
     @operational = strategis['eselon_4']
   end
 
+  def list_pohon
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @strategis = @opd.list_strategi_opd(tahun: @tahun)
+  end
+
+  def list_dibagikan
+    strategi = Strategi.find(params[:id])
+    @strategi_bawahans = strategi.strategi_bawahans.sort_by(&:nama_pemilik)
+    render partial: "list_dibagikan"
+  end
+
   def pindah
     @tahun = cookies[:tahun]
     @pohon = StrategiPohon.find(params[:id])
