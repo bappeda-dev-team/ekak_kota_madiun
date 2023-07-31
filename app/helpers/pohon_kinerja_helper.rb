@@ -29,8 +29,11 @@ module PohonKinerjaHelper
   def pembagi_strategi(pohon)
     strategi = pohon&.strategi
     pemilik = pohon&.nama_pemilik
+    tahun = pohon&.tahun
     "
       <span>#{strategi}</span>
+        <hr/>
+      <span class='fw-bolder'>Tahun #{tahun}</span>
         <hr/>
       <span class='fw-bolder'>#{pemilik}</span>
     ".html_safe
