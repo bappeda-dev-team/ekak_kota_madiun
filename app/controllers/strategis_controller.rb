@@ -52,15 +52,11 @@ class StrategisController < ApplicationController
   # POST /strategis or /strategis.json
   def create
     @role = strategi_params[:role]
-    strategi_parameter = strategi_params
-    tahun = strategi_parameter[:tahun]
-    tahun_bener = tahun.match(/murni/) ? tahun[/[^_]\d*/, 0] : tahun
-    strategi_parameter[:tahun] = tahun_bener
     @nip = strategi_params[:nip_asn]
     @opd_id = strategi_params[:opd_id]
 
-    @strategi = Strategi.new(strategi_parameter)
-    @strategi.sasaran.tahun = strategi_parameter[:tahun]
+    @strategi = Strategi.new(strategi_params)
+    @strategi.sasaran.tahun = strategi_params[:tahun]
 
     respond_to do |format|
       if @strategi.save
@@ -86,12 +82,8 @@ class StrategisController < ApplicationController
     # @strategi.sasaran.tahun = strategi_parameter[:tahun]
     @nip = strategi_params[:nip_asn]
     @opd_id = strategi_params[:opd_id]
-    strategi_parameter = strategi_params
-    tahun = strategi_parameter[:tahun]
-    tahun_bener = tahun.match(/murni/) ? tahun[/[^_]\d*/, 0] : tahun
-    strategi_parameter[:tahun] = tahun_bener
     respond_to do |format|
-      if @strategi.update(strategi_parameter)
+      if @strategi.update(strategi_params)
         if current_user.has_role?(:admin)
           format.html { redirect_to opd_pohon_kinerja_index_path, success: "Sukses" }
         else
@@ -229,11 +221,16 @@ class StrategisController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def strategi_params
-    params.require(:strategi)
-          .permit(:strategi, :tahun, :sasaran_id, :strategi_ref_id,
-                  :nip_asn, :role, :pohon_id, :opd_id,
-                  sasaran_attributes: [:sasaran_kinerja, :nip_asn, :strategi_id, :tahun,
-                                       :id_rencana, indikator_sasarans_params])
+    strategi_parameter = params.require(:strategi)
+                               .permit(:strategi, :tahun, :sasaran_id, :strategi_ref_id,
+                                       :nip_asn, :role, :pohon_id, :opd_id,
+                                       sasaran_attributes: [:sasaran_kinerja, :nip_asn, :strategi_id, :tahun,
+                                                            :id_rencana, indikator_sasarans_params])
+    tahun = strategi_parameter[:tahun]
+    tahun_bener = tahun.match(/murni/) ? tahun[/[^_]\d*/, 0] : tahun
+    strategi_parameter[:tahun] = tahun_bener
+    strategi_parameter[:sasaran_attributes][:tahun] = strategi_parameter[:tahun]
+    strategi_parameter
   end
 
   def indikator_sasarans_params
