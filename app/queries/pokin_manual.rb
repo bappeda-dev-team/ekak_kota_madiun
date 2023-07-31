@@ -34,9 +34,16 @@ class PokinManual
     strategi_by_role(strategi_in_specific_opd)
   end
 
+  def pohon_opd
+    Pohon.where(opd_id: id_opd_induk)
+  end
+
   def strategis_pohon
-    strategi_kepala = strategi_by_role['eselon_2']
-    strategi_kepala.map(&:pohon).uniq.group_by(&:isu_strategis_disasar)
+    # strategi_kepala = strategi_by_role['eselon_2']
+    # strategi_kepala.filter { |ss| ss.pohon.pohonable.tahun == @tahun }.map(&:pohon).group_by(&:isu_strategis_disasar)
+    pohon_opd.filter do |pohon|
+      pohon.strategis.where(type: 'StrategiPohon', tahun: @tahun).any?
+    end.group_by(&:isu_strategis_disasar)
   rescue StandardError
     { "Belum Terisi" => [] }
   end
