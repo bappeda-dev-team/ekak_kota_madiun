@@ -127,7 +127,7 @@
               </td>
             </tr>
             <% indikator_sub = strategi_kegiatan.program_kegiatan_strategi&.indikator_subkegiatan_tahun(@tahun, @opd.kode_unik_opd) %>
-            <tr class="<%= kosong_class(indikator_sub[:target] == '0' || indikator_sub[:target].blank?) %>">
+            <tr class="<%= kosong_class(indikator_sub&.dig(:target) == '0' || indikator_sub&.dig(:target).blank?) %>">
               <td class="border"></td>
               <td class="border"></td>
               <td class="border"></td>
