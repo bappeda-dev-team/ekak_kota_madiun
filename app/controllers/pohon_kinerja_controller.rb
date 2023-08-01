@@ -288,7 +288,16 @@ class PohonKinerjaController < ApplicationController
     render partial: 'daftar_linked_strategi', locals: { strategis: @strategis }
   end
 
-  def kota; end
+  def kota
+    @tahun = cookies[:tahun]
+    # pokin = PokinManual.new(tahun: @tahun, opd: @opd)
+
+    # strategis = pokin.strategi_by_role
+    # @strategis_pohon = pokin.strategis_pohon
+    # @strategic = strategis['eselon_2']
+    # @tactical = strategis['eselon_3']
+    # @operational = strategis['eselon_4']
+  end
 
   def opd
     @tahun = cookies[:tahun]

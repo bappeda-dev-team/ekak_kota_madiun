@@ -1,0 +1,35 @@
+<%= form_with(model: pohon, url: '/pohon_tematik', local: false,
+              data: {
+                  controller: 'pohon-tematik',
+                  action: 'ajax:success->pohon-tematik#ajaxSuccess'
+              }
+) do |form| %>
+    <% if pohon.errors.any? %>
+        <div id="error_explanation">
+            <h2><%= pluralize(pohon.errors.count, "error") %> prohibited this tematik from being saved:</h2>
+            <ul>
+                <% pohon.errors.each do |error| %>
+                    <li><%= error.full_message %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+    <div class="field">
+        <%= form.label :tematik_kota, class: 'form-label' %>
+        <%= form.select :pohon_id, select_tematik(@tematiks),
+         {include_blank: true},
+         { class: 'form-control',
+             data: { controller: 'dropdown',
+                 dropdown_jenis_value: 'action',
+                 dropdown_event_name_value: 'change-tema',
+                 placeholder: 'Pilih Tematik Kota',
+             }, required: true }%>
+    </div>
+    <div class="field">
+        <%= form.label :keterangan, class: 'form-label' %>
+        <%= form.text_field :keterangan, class: 'form-control', required: true %>
+    </div>
+    <div class="actions">
+        <%= form.submit 'Simpan' %>
+    </div>
+<% end %>

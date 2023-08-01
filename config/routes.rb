@@ -9,6 +9,7 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :pohon_tematik
   resources :tematiks
   resources :subdomains
   resources :opd_bidangs
