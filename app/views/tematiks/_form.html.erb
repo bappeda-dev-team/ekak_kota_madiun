@@ -2,7 +2,7 @@
               data: {
                 controller: 'form-ajax',
                 form_ajax_element_id_value: 'tematik',
-                action: 'ajax:success->form-ajax#ajaxSuccess:prevent ajax:error->form-ajax#ajaxError:prevent'
+                action: 'ajax:success->pohon-tematik#ajaxSuccess:prevent ajax:error->form-ajax#ajaxError:prevent'
               }
 ) do |form| %>
   <% if tematik.errors.any? %>

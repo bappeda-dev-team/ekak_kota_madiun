@@ -1,4 +1,6 @@
 class PohonTematikController < ApplicationController
+  include ActionView::RecordIdentifier
+
   layout false, only: %i[new edit]
 
   def new
