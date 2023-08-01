@@ -4,7 +4,7 @@ class TematiksController < ApplicationController
 
   # GET /tematiks or /tematiks.json
   def index
-    @tematiks = Tematik.all
+    @tematiks = Tematik.all.order(updated_at: :desc)
   end
 
   # GET /tematiks/1 or /tematiks/1.json
@@ -24,9 +24,21 @@ class TematiksController < ApplicationController
 
     respond_to do |format|
       if @tematik.save
-        format.json { render :show, status: :created, location: @tematik }
+        html_content = render_to_string(partial: 'tematiks/tematik',
+                                        formats: 'html',
+                                        layout: false,
+                                        locals: { tematiks: index })
+        format.json do
+          render json: { resText: "Tematik tersimpan", attachmentPartial: html_content }.to_json, status: :created
+        end
       else
-        format.json { render json: @tematik.errors, status: :unprocessable_entity }
+        error_content = render_to_string(partial: 'tematiks/form',
+                                         formats: 'html',
+                                         layout: false,
+                                         locals: { tematik: @tematik })
+        format.json do
+          render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -35,9 +47,11 @@ class TematiksController < ApplicationController
   def update
     respond_to do |format|
       if @tematik.update(tematik_params)
-        format.json { render :show, status: :ok, location: @tematik }
+        format.json { render json: { resText: "Tematik diperbarui", res: @tematik }.to_json, status: :ok }
       else
-        format.json { render json: @tematik.errors, status: :unprocessable_entity }
+        format.json do
+          render json: { resText: "Gagal memperbarui", res: @tematik.errors }.to_json, status: :unprocessable_entity
+        end
       end
     end
   end

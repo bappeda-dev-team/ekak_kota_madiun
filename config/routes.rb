@@ -154,7 +154,7 @@ Rails.application.routes.draw do
   resources :anggaran_sshes
   resources :anggaran_bluds
   resources :anggaran_hspk_umums
-  resources :subkegiatan_tematiks, path: "tematiks" do
+  resources :subkegiatan_tematiks do
     member do
       get :cetak_pdf
     end

@@ -11,4 +11,10 @@
 #  tematik_ref_id :bigint
 #
 class Tematik < ApplicationRecord
+  validates_presence_of :tema
+  validates_length_of :tema, minimum: 5
+
+  def to_s
+    tema
+  end
 end

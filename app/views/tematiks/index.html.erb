@@ -31,40 +31,13 @@
         <table class="table datatable" data-datatable>
           <thead>
             <tr>
-              <th>No</th>
               <th>Tema</th>
               <th>Keterangan</th>
               <th class="text-center">Action</th>
             </tr>
           </thead>
-          <tbody>
-            <% @tematiks.each.with_index(1) do |tema, i| %>
-              <tr>
-                <td><%= i %></td>
-                <td><%= tahun %></td>
-                <td><%= tahun.keterangan %></td>
-                <td class="text-center">
-                  <%= link_to edit_tematik_path(tema), remote: true,
-                     data: {
-                       controller: 'form-modal',
-                       action: 'ajax:complete->form-modal#success:prevent',
-                       bs_toggle: 'modal',
-                       bs_target: '#form-modal'
-                     },
-                     class: 'btn btn-outline-info' do %>
-                    <i class="fa fa-edit me-2"></i>
-                    <span>Edit Tema</span>
-                  <% end %>
-                  <%= link_to tema,
-                      method: :delete,
-                      class: 'btn btn-outline-danger',
-                      data: { confirm_swal: "Hapus #{tema}?" } do %>
-                    <i class="fa fa-trash-alt me-2"></i>
-                    <span>Hapus Tema</span>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
+          <tbody id="tematik">
+            <%= render 'tematiks/tematik', tematiks: @tematiks %>
           </tbody>
         </table>
       </div>

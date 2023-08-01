@@ -1,4 +1,10 @@
-<%= form_with(model: tematik) do |form| %>
+<%= form_with(model: tematik, local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_element_id_value: 'tematik',
+                action: 'ajax:success->form-ajax#ajaxSuccess:prevent ajax:error->form-ajax#ajaxError:prevent'
+              }
+) do |form| %>
   <% if tematik.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(tematik.errors.count, "error") %> prohibited this tematik from being saved:</h2>
