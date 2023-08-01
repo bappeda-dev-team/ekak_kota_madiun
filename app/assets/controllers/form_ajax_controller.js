@@ -11,17 +11,20 @@ export default class extends Controller {
 
   ajaxSuccess(e) {
     const [xhr] = e.detail
-    this.sweetAlertSuccess(xhr.resText)
-    const target = document.getElementById(this.elementIdValue)
-    target.innerHTML = xhr.attachmentPartial
     this.modalHider()
+    this.sweetAlertSuccess(xhr.resText)
+    this.partialAttacher(this.elementIdValue, xhr.attachmentPartial)
   }
 
   ajaxError(e) {
     const [xhr] = e.detail
     this.sweetAlertFailed(xhr.resText)
-    const target = document.getElementById('form-modal-body')
-    target.innerHTML = xhr.errors
+    this.partialAttacher('form-modal-body', xhr.errors)
+  }
+
+  partialAttacher(targetName, html_element) {
+    const target = document.getElementById(targetName)
+    target.innerHTML = html_element
   }
 
   // modalName is standardize in layout/application.html.erb
