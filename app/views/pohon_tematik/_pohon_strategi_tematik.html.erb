@@ -8,6 +8,28 @@
   </div>
   <div class="pohon-foot">
     <div class="row gx-3">
+      <%= link_to new_tactical_tematik_pohon_tematik_path(pohon),
+                        remote: true,
+                        data: {
+                                controller: 'pohon-tematik',
+                                pohon_tematik_id_param: "tactical_tematik_#{pohon.object_id}",
+                                action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
+                              },
+                        class: 'btn btn-primary w-100' do %>
+        <i class="fas fa-plus me-2"></i>
+        <span>Tactical Tematik</span>
+      <% end %>
+      <%= link_to new_tactical_pohon_tematik_path(pohon),
+                        remote: true,
+                        data: {
+                                controller: 'pohon-tematik',
+                                pohon_tematik_id_param: "tactical_tematik_#{pohon.object_id}",
+                                action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
+                              },
+                        class: 'btn btn-primary w-100' do %>
+        <i class="fas fa-plus me-2"></i>
+        <span>Tactical Tematik Baru</span>
+      <% end %>
     </div>
   </div>
 </div>

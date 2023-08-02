@@ -15,12 +15,16 @@ Rails.application.routes.draw do
       get :new_opd_tematik
       get :new_strategi_tematik
       get :new_strategi
+      get :new_tactical_tematik
+      get :new_tactical
     end
     collection do
       post :create_sub_tema
       post :create_opd_tematik
       post :create_strategi_tematik
       post :create_strategi_tematik_baru
+      post :create_tactical_tematik
+      post :create_tactical_tematik_baru
     end
   end
   resources :tematiks do
