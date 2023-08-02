@@ -14,7 +14,7 @@ class PohonTematikController < ApplicationController
     @tematik = parent_pohon.pohonable
     @sub_tematiks = @tematik.sub_tematiks.order(updated_at: :desc)
     @pohon = Pohon.new(pohonable_type: 'SubTematik', role: 'sub_pohon_kota', tahun: parent_pohon.tahun,
-                       pohon_ref_id: parent_pohon)
+                       pohon_ref_id: parent_pohon.id)
   end
 
   def create
@@ -34,9 +34,30 @@ class PohonTematikController < ApplicationController
     end
   end
 
+  def create_sub_tema
+    @pohon = Pohon.new(pohon_sub_tema_params)
+    if @pohon.save
+      html_content = render_to_string(partial: 'pohon_tematik/pohon_sub_tematik',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { pohon: @pohon })
+      render json: { resText: "Pohon Sub-Tematik Dibuat", attachmentPartial: html_content }.to_json, status: :created
+    else
+      error_content = render_to_string(partial: 'pohon_tematik/form_sub_tematik',
+                                       formats: 'html',
+                                       layout: false,
+                                       locals: { pohon: @pohon })
+      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def pohon_params
     params.require(:pohon).permit(:pohonable_id, :pohonable_type, :role, :tahun, :keterangan)
+  end
+
+  def pohon_sub_tema_params
+    params.require(:pohon).permit(:pohonable_id, :pohonable_type, :role, :tahun, :keterangan, :pohon_ref_id)
   end
 end

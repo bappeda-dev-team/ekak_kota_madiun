@@ -13,6 +13,9 @@ Rails.application.routes.draw do
     member do
       get :new_sub
     end
+    collection do
+      post :create_sub_tema
+    end
   end
   resources :tematiks do
     collection do
