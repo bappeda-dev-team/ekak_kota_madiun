@@ -1867,7 +1867,8 @@ CREATE TABLE public.pohons (
     user_id bigint,
     strategi_id bigint,
     role character varying,
-    tahun character varying
+    tahun character varying,
+    pohon_ref_id bigint
 );
 
 
@@ -2925,6 +2926,40 @@ ALTER SEQUENCE public.tematik_sasarans_id_seq OWNED BY public.tematik_sasarans.i
 
 
 --
+-- Name: tematiks; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.tematiks (
+    id bigint NOT NULL,
+    tema character varying,
+    keterangan character varying,
+    tematik_ref_id bigint,
+    type character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: tematiks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.tematiks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: tematiks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.tematiks_id_seq OWNED BY public.tematiks.id;
+
+
+--
 -- Name: tujuan_kota; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3631,6 +3666,13 @@ ALTER TABLE ONLY public.tematik_sasarans ALTER COLUMN id SET DEFAULT nextval('pu
 
 
 --
+-- Name: tematiks id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tematiks ALTER COLUMN id SET DEFAULT nextval('public.tematiks_id_seq'::regclass);
+
+
+--
 -- Name: tujuan_kota id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4255,6 +4297,14 @@ ALTER TABLE ONLY public.tahuns
 
 ALTER TABLE ONLY public.tematik_sasarans
     ADD CONSTRAINT tematik_sasarans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tematiks tematiks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tematiks
+    ADD CONSTRAINT tematiks_pkey PRIMARY KEY (id);
 
 
 --
@@ -5210,6 +5260,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230709161232'),
 ('20230717011850'),
 ('20230717012001'),
-('20230720075944');
+('20230720075944'),
+('20230731071626'),
+('20230802004938');
 
 

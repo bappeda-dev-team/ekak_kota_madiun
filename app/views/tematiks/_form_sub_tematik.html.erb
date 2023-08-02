@@ -1,0 +1,41 @@
+<%= form_with(model: sub_tematik, local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_element_id_value: 'sub-tematik',
+                action: 'ajax:success->form-ajax#ajaxSuccess:prevent ajax:error->form-ajax#ajaxError:prevent'
+              }
+) do |form| %>
+  <% if sub_tematik.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(sub_tematik.errors.count, "error") %> prohibited this tematik from being saved:</h2>
+      <ul>
+        <% sub_tematik.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :tematik, class: 'form-label' %>
+    <%= form.select :tematik_ref_id, select_tematik(@tematiks),
+         {include_blank: true},
+         { class: 'form-control',
+           data: {
+               controller: 'dropdown',
+               dropdown_jenis_value: 'action',
+               placeholder: 'Pilih Tematik Kota',
+           },
+           required: true }%>
+  </div>
+  <div class="field">
+    <%= form.label :sub_tema, class: 'form-label' %>
+    <%= form.text_field :tema, class: 'form-control' %>
+  </div>
+  <div class="field">
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_area :keterangan, class: 'form-control' %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

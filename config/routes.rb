@@ -9,6 +9,30 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :pohon_tematik do
+    member do
+      get :new_sub
+      get :new_opd_tematik
+      get :new_strategi_tematik
+    end
+    collection do
+      post :create_sub_tema
+      post :create_opd_tematik
+      post :create_strategi_tematik
+    end
+  end
+  resources :tematiks do
+    collection do
+      get :sub_tematiks
+      post :sub
+      get :new_sub
+    end
+
+    member do
+      patch :sub
+      delete :sub
+    end
+  end
   resources :subdomains
   resources :opd_bidangs
   resources :periodes
@@ -155,7 +179,7 @@ Rails.application.routes.draw do
   resources :anggaran_sshes
   resources :anggaran_bluds
   resources :anggaran_hspk_umums
-  resources :subkegiatan_tematiks, path: "tematiks" do
+  resources :subkegiatan_tematiks do
     member do
       get :cetak_pdf
     end

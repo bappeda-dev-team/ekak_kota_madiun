@@ -1,4 +1,4 @@
-import {Controller} from 'stimulus'
+import { Controller } from 'stimulus'
 import $ from 'jquery'
 
 
@@ -31,7 +31,7 @@ export default class extends Controller {
     }
     return options
   }
-        
+
   get element_options() {
     let width = this.widthValue
     let options = {
@@ -64,7 +64,7 @@ export default class extends Controller {
   }
 
   connect() {
-    if(this.displayValue) {
+    if (this.displayValue) {
       this.jenis_dropdown_generator()
     }
     else {
@@ -116,7 +116,7 @@ export default class extends Controller {
 
   dropdown_tahun_anggaran(options) {
     const select2ed = this.dropdown_base(options)
-    if(this.tahunValue.length > 0) {
+    if (this.tahunValue.length > 0) {
       const text = this.tahunValue
       const id = this.tahunValue
       const options = new Option(text, id, true, true)
@@ -125,17 +125,17 @@ export default class extends Controller {
     const custom_name = this.eventNameValue
     return select2ed.on('select2:select', (e) => {
       const custom_event = new CustomEvent(custom_name,
-        {detail: {data: e.params.data}})
+        { detail: { data: e.params.data } })
       document.dispatchEvent(custom_event)
     })
   }
 
   dropdown_uraian_anggaran(options) {
     const select2ed = this.dropdown_base(options)
-    if(this.uraianValue.length > 0) {
+    if (this.uraianValue.length > 0) {
       $.ajax({
         type: 'GET',
-        url:  `${this.urlValue}?q=${this.uraianValue}&tahun=${this.tahunValue}&jenisUraian=${this.tipeValue}`,
+        url: `${this.urlValue}?q=${this.uraianValue}&tahun=${this.tahunValue}&jenisUraian=${this.tipeValue}`,
       }).then(function (data) {
         const data_first = data.results[0]
         const options = new Option(data_first.text, data_first.id, true, true)
@@ -151,17 +151,17 @@ export default class extends Controller {
     const custom_name = this.eventNameValue
     return select2ed.on('select2:select', (e) => {
       const custom_event = new CustomEvent(custom_name,
-        {detail: {data: e.params.data}})
+        { detail: { data: e.params.data } })
       document.dispatchEvent(custom_event)
     })
   }
 
   dropdown_jenis_anggaran(options) {
     const select2ed = this.dropdown_base(options)
-    if(this.tipeValue.length > 0) {
+    if (this.tipeValue.length > 0) {
       $.ajax({
         type: 'GET',
-        url:  `${this.urlValue}?q=${this.tipeValue}`,
+        url: `${this.urlValue}?q=${this.tipeValue}`,
       }).then(function (data) {
         const data_first = data.results[0]
         const options = new Option(data_first.text, data_first.id, true, true)
@@ -177,17 +177,17 @@ export default class extends Controller {
     const custom_name = this.eventNameValue
     return select2ed.on('select2:select', (e) => {
       const custom_event = new CustomEvent(custom_name,
-        {detail: {data: e.params.data}})
+        { detail: { data: e.params.data } })
       document.dispatchEvent(custom_event)
     })
   }
 
   dropdown_ajax_preselect(options) {
     const select2ed = this.dropdown_base(options)
-    if(this.itemValue.length > 0) {
+    if (this.itemValue.length > 0) {
       $.ajax({
         type: 'GET',
-        url:  `${this.urlValue}?item=${this.itemValue}`,
+        url: `${this.urlValue}?item=${this.itemValue}`,
       }).then(function (data) {
         const data_first = data.results[0]
         const options = new Option(data_first.text, data_first.id, true, true)
@@ -206,8 +206,9 @@ export default class extends Controller {
     const select2ed = this.dropdown_base(options)
     const custom_name = this.eventNameValue
     return select2ed.on('select2:select', (e) => {
+      console.log(e)
       const custom_event = new CustomEvent(custom_name,
-        {detail: {data: e.params.data}})
+        { detail: { data: e.params.data } })
       document.dispatchEvent(custom_event)
     })
   }
@@ -235,18 +236,18 @@ export default class extends Controller {
   }
 
   chain_internal_or_external_opd_target(e) {
-    const {data} = e.detail
+    const { data } = e.detail
     const sasaranOpd = document.getElementById('sasaran-opd');
-    if(data.id == 'External') {
+    if (data.id == 'External') {
       this.element.disabled = false
       sasaranOpd.style.display = 'none'
     }
     else {
       const select2ed = this.select;
-      if(this.kodeOpdValue.length > 0) {
+      if (this.kodeOpdValue.length > 0) {
         $.ajax({
           type: 'GET',
-          url:  `${this.urlValue}?item=${this.kodeOpdValue}`,
+          url: `${this.urlValue}?item=${this.kodeOpdValue}`,
         }).then(function (data) {
           const data_first = data.results[0]
           const options = new Option(data_first.text, data_first.id, true, true)
@@ -260,33 +261,33 @@ export default class extends Controller {
   }
 
   chain_jenis_rekening_to_target(e) {
-    const {data} = e.detail
+    const { data } = e.detail
     const jenis_rek = data.id
     this.rekeningValue = jenis_rek
     this.select.select2('open')
   }
 
   fill_tahun(e) {
-    const {data} = e.detail
+    const { data } = e.detail
     const tahun = data.id
     this.tahunValue = tahun
   }
 
   fill_jenis_uraian(e) {
-    const {data} = e.detail
+    const { data } = e.detail
     const jenisUraian = data.id
     this.tipeValue = jenisUraian
   }
 
   set_new_sasaran(e) {
-    const {data} = e.detail
+    const { data } = e.detail
     const sasaran_id = data.id
     const select2ed = this.select;
     this.itemValue = sasaran_id
-    if(this.itemValue.length > 0) {
+    if (this.itemValue.length > 0) {
       $.ajax({
         type: 'GET',
-        url:  `${this.urlValue}?item=${this.itemValue}`,
+        url: `${this.urlValue}?item=${this.itemValue}`,
       }).then(function (data) {
         const data_first = data.results[0]
         const options = new Option(data_first.text, data_first.id, true, true)
@@ -298,7 +299,7 @@ export default class extends Controller {
 
   event_dispatcher(custom_event_name, data) {
     const custom_event = new CustomEvent(custom_event_name,
-      {detail: {data: data}})
+      { detail: { data: data } })
     document.dispatchEvent(custom_event)
   }
 }

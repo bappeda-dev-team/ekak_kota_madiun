@@ -1,0 +1,24 @@
+<div class="tf-nc" style="width: 450px;">
+  <div class="pohon-title">
+    <h5 class="text-center"><strong>Sub-Tematik Kota</strong></h5>
+  </div>
+  <div class="pohon-body">
+    <p class="text-center">Sub-Tema: <%= pohon.pohonable.tema %></p>
+    <p class="text-center">Keterangan: <%= pohon.keterangan %></p>
+  </div>
+  <div class="pohon-foot">
+    <div class="row gx-3">
+      <%= link_to new_opd_tematik_pohon_tematik_path(pohon),
+                        remote: true,
+                        data: {
+                                controller: 'pohon-tematik',
+                                pohon_tematik_id_param: "opd_tematik_#{pohon.object_id}",
+                                action: 'ajax:complete->pohon-tematik#addOpdTematik:prevent',
+                              },
+                        class: 'btn btn-primary w-100' do %>
+        <i class="fas fa-plus me-2"></i>
+        <span>OPD Tematik</span>
+      <% end %>
+    </div>
+  </div>
+</div>

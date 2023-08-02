@@ -1,31 +1,77 @@
-<div class="row">
-  <div class="col-12" data-controller="filter-render">
-    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
-      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
-        <li class="breadcrumb-item">
-          <%= link_to root_path do %>
-            <i class="fas fa-home"></i>
-          <% end %>
-        </li>
-        <li class="breadcrumb-item">Pohon Kinerja</li>
-        <li class="breadcrumb-item active" aria-current="page">Kota</li>
-      </ol>
-    </nav>
-    <div class="card border-0 shadow" id="kotak_usulan" data-filter-render-target="results">
+<%= content_for :html_title, "Pohon Kinerja Kota" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Perencanaan Kota</li>
+  <li class="breadcrumb-item active" aria-current="page">Pohon Kinerja Kota</li>
+<% end %>
+<% content_for :view_utama do %>
+  <% if cookies[:tahun] && cookies[:opd] %>
+    <div class="card border-2 shadow mb-3">
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Pohon Kinerja Kota</h2>
+            <h5>Pohon Kinerja Kota Tahun <%= @tahun %></h5>
           </div>
         </div>
       </div>
       <div class="card-body">
-        <div id="pokin" class="pohon-kinerja"></div>
-        <%= link_to pdf_kota_pohon_kinerja_index_path, class: "m-3 btn btn-warning w-100", target: "blank" do %>
-          <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom"></i>
-          <span>Cetak GAMBAR Pohon Kinerja</span>
-        <% end %>
+        <div class="tf-tree tf-gap-lg mt-2 show text-center" data-controller="pohon-tematik">
+          <ul>
+            <li>
+              <div class="tf-nc">
+                <div class="pohon-title">
+                  <h5 class="text-center"><strong>Pohon Kinerja Kota</strong></h5>
+                </div>
+                <div class="pohon-body">
+                  <p class="text-center">Kota Madiun</p>
+                </div>
+                <div class="pohon-foot">
+                  <div class="row gx-3">
+                    <%= link_to new_pohon_tematik_path,
+                        remote: true,
+                        data: {
+                                action: 'ajax:complete->pohon-tematik#addPohon:prevent',
+                              },
+                        class: 'btn btn-primary w-100' do %>
+                      <i class="fas fa-plus me-2"></i>
+                      <span>Tematik Kota</span>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <ul data-pohon-tematik-target='dahan'>
+                <% @tematik_kota.each do |pohon| %>
+                  <li class="<%= dom_class(pohon) %>">
+                    <%= render partial: 'pohon_tematik/pohon_tematik', locals: { pohon: pohon } %>
+                    <ul id="<%= "tematik_#{pohon.object_id}" %>">
+                      <% @sub_tematik_kota.select { |sub| sub.pohon_ref_id == pohon.id }.each do |sub_pohon| %>
+                        <li class="<%= dom_class(sub_pohon) %>">
+                          <%= render partial: 'pohon_tematik/pohon_sub_tematik', locals: { pohon: sub_pohon } %>
+                          <ul id="<%= "opd_tematik_#{sub_pohon.object_id}" %>">
+                            <% @opd_tematiks.select { |opd| opd.pohon_ref_id == sub_pohon.id }.each do |opd_pohon| %>
+                              <li class="<%= dom_class(opd_pohon) %>">
+                                <%= render partial: 'pohon_tematik/pohon_opd_tematik', locals: { pohon: opd_pohon } %>
+                                <ul id="<%= "strategi_tematik_#{opd_pohon.object_id}" %>">
+                                  <% @strategi_tematiks.select { |str| str.pohon_ref_id == opd_pohon.id }.each do |str_pohon| %>
+                                    <li class="<%= dom_class(str_pohon) %>">
+                                      <%= render partial: 'pohon_tematik/pohon_strategi_tematik', locals: { pohon: str_pohon } %>
+                                    </li>
+                                  <% end %>
+                                </ul>
+                              </li>
+                            <% end %>
+                          </ul>
+                        </li>
+                      <% end %>
+                    </ul>
+                  </li>
+                <% end %>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+  <% else %>
+    <%= render 'shared/pilih_tahun_dan_opd' %>
+  <% end %>
+<% end %>

@@ -301,7 +301,24 @@ class PohonKinerjaController < ApplicationController
     render partial: 'daftar_linked_strategi', locals: { strategis: @strategis }
   end
 
-  def kota; end
+  def kota
+    @tahun = cookies[:tahun]
+    @tematik_kota = Pohon.where(pohonable_type: 'Tematik', role: 'pohon_kota', tahun: @tahun)
+                         .includes(:pohonable)
+    @sub_tematik_kota = Pohon.where(pohonable_type: 'SubTematik', role: 'sub_pohon_kota', tahun: @tahun)
+                             .includes(:pohonable)
+    @opd_tematiks = Pohon.where(pohonable_type: 'Opd', role: 'opd_pohon_kota', tahun: @tahun)
+                         .includes(:pohonable)
+    @strategi_tematiks = Pohon.where(pohonable_type: 'Strategi', role: 'strategi_pohon_kota', tahun: @tahun)
+                              .includes(:pohonable)
+    # pokin = PokinManual.new(tahun: @tahun, opd: @opd)
+
+    # strategis = pokin.strategi_by_role
+    # @strategis_pohon = pokin.strategis_pohon
+    # @strategic = strategis['eselon_2']
+    # @tactical = strategis['eselon_3']
+    # @operational = strategis['eselon_4']
+  end
 
   def opd
     @tahun = cookies[:tahun]

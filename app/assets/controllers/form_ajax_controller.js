@@ -5,6 +5,51 @@ import Turbolinks from "turbolinks";
 
 export default class extends Controller {
   static targets = ["errorContainer", "button"]
+  static values = {
+    elementId: String
+  }
+
+  ajaxSuccess(e) {
+    const [xhr] = e.detail
+    this.modalHider()
+    this.sweetAlertSuccess(xhr.resText)
+    this.partialAttacher(this.elementIdValue, xhr.attachmentPartial)
+  }
+
+  ajaxError(e) {
+    const [xhr] = e.detail
+    this.sweetAlertFailed(xhr.resText)
+    this.partialAttacher('form-modal-body', xhr.errors)
+  }
+
+  partialAttacher(targetName, html_element) {
+    const target = document.getElementById(targetName)
+    target.innerHTML = html_element
+  }
+
+  // modalName is standardize in layout/application.html.erb
+  modalHider(modalName = 'form-modal') {
+    const modal = document.getElementById(modalName)
+    Modal.getInstance(modal).hide()
+  }
+
+  sweetAlertSuccess(text) {
+    Swal.fire({
+      title: 'Sukses',
+      text: text,
+      icon: "success",
+      confirmButtonText: 'Ok',
+    })
+  }
+
+  sweetAlertFailed(text) {
+    Swal.fire({
+      title: 'Gagal',
+      text: text,
+      icon: "error",
+      confirmButtonText: 'Ok',
+    })
+  }
 
   afterSubmitRefresh(event) {
     const [xhr, status] = event.detail
@@ -234,6 +279,14 @@ export default class extends Controller {
         title: 'Tidak ada perubahan',
         text: text,
         icon: "info",
+        confirmButtonText: 'Ok',
+      })
+    }
+    else if (status == 'Created') {
+      Swal.fire({
+        title: 'Sukses',
+        text: text,
+        icon: "success",
         confirmButtonText: 'Ok',
       })
     }

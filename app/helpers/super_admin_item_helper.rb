@@ -57,24 +57,28 @@ module SuperAdminItemHelper
   def perencanaan_kota_items # rubocop:disable Metrics/MethodLength
     [
       {
-        title: 'Tujuan', href: tujuan_kota_path,
-        icon: 'fas fa-city', identifier: 'tujuan_kota'
+        title: 'Tujuan Kota', href: tujuan_kota_path,
+        icon: 'fas fa-landmark', identifier: 'tujuan_kota'
       },
       {
         title: 'Isu Strategis', href: isu_strategis_kota_path,
-        icon: 'fas fa-tree', identifier: 'isu_strategis_kota'
+        icon: 'fas fa-tasks', identifier: 'isu_strategis_kota'
       },
       {
-        title: 'Strategi', href: strategi_kota_path,
-        icon: 'fas fa-bullseye', identifier: 'strategi_kota'
+        title: 'Strategi Kota', href: strategi_kota_path,
+        icon: 'far fa-clipboard', identifier: 'strategi_kota'
       },
       {
-        title: 'Sasaran', href: sasaran_kota_path,
+        title: 'Sasaran Kota', href: sasaran_kota_path,
         icon: 'fas fa-bullseye', identifier: 'sasaran_kota'
       },
       {
-        title: 'Pohon Kinerja', href: kota_pohon_kinerja_index_path,
-        icon: 'fas fa-bullseye', identifier: 'pohon_kinerja/kota'
+        title: 'Tematik Kota', href: tematiks_path,
+        icon: 'fas fa-folder-plus', identifier: 'tematik_kota'
+      },
+      {
+        title: 'Pohon Kinerja Kota', href: kota_pohon_kinerja_index_path,
+        icon: 'fas fa-tree', identifier: 'pohon_kinerja/kota'
       }
     ]
   end
