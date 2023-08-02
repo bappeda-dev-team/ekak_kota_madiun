@@ -290,6 +290,7 @@ class PohonKinerjaController < ApplicationController
 
   def kota
     @tahun = cookies[:tahun]
+    @tematik_kota = Pohon.where(pohonable_type: 'Tematik', role: 'pohon_kota', tahun: @tahun).includes(:pohonable)
     # pokin = PokinManual.new(tahun: @tahun, opd: @opd)
 
     # strategis = pokin.strategi_by_role

@@ -36,7 +36,10 @@
                   </div>
                 </div>
               </div>
-              <ul data-pohon-tematik-target='dahan'>
+              <ul data-pohon-tematik-target='dahan' id="dahan">
+                <% @tematik_kota.each do |pohon| %>
+                  <%= render partial: 'pohon_tematik/pohon_tematik', locals: { pohon: pohon } %>
+                <% end %>
               </ul>
             </li>
           </ul>

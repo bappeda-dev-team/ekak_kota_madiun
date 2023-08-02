@@ -26,6 +26,9 @@ export default class extends Controller {
   ajaxSuccess(e) {
     const [xhr] = e.detail
     this.sweetAlertSuccess(xhr.resText)
+    const target = e.currentTarget.parentElement.parentElement.parentElement
+    const html = xhr.attachmentPartial
+    target.innerHTML = html
   }
 
   ajaxError(e) {

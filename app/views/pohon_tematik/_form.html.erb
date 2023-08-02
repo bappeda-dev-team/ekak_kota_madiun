@@ -15,8 +15,13 @@
     </div>
   <% end %>
   <div class="field">
+      <%= form.hidden_field :pohonable_type %>
+      <%= form.hidden_field :role %>
+      <%= form.hidden_field :tahun %>
+  </div>
+  <div class="field">
     <%= form.label :tematik_kota, class: 'form-label' %>
-    <%= form.select :pohon_id, select_tematik(@tematiks),
+    <%= form.select :pohonable_id, select_tematik(@tematiks),
          {include_blank: true},
          { class: 'form-control',
            data: {
