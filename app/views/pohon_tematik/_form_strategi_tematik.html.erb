@@ -39,6 +39,10 @@
            required: true }%>
   </div>
   <div class="field">
+      <%= form.fields_for :strategis do |str_form| %>
+      <% end %>
+  </div>
+  <div class="field">
     <%= form.label :keterangan, class: 'form-label' %>
     <%= form.text_field :keterangan, class: 'form-control', required: true, id: "pohon_keterangan_#{form.object_id.to_s}" %>
   </div>
