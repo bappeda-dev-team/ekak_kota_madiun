@@ -85,7 +85,7 @@ class PohonTematikController < ApplicationController
   end
 
   def create_strategi_tematik
-    @pohon = Pohon.new(pohon_sub_tema_params)
+    @pohon = Pohon.new(pohon_strategi_tema_params)
     if @pohon.save
       html_content = render_to_string(partial: 'pohon_tematik/pohon_strategi_tematik',
                                       formats: 'html',
@@ -109,5 +109,11 @@ class PohonTematikController < ApplicationController
 
   def pohon_sub_tema_params
     params.require(:pohon).permit(:pohonable_id, :pohonable_type, :role, :tahun, :keterangan, :pohon_ref_id)
+  end
+
+  def pohon_strategi_tema_params
+    params.require(:pohon).permit(:pohonable_id, :pohonable_type, :role, :tahun,
+                                  :keterangan,
+                                  :pohon_ref_id, strategis_attributes: %i[strategi tahun role type])
   end
 end
