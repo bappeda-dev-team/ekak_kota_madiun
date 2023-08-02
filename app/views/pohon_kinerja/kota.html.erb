@@ -18,10 +18,13 @@
           <ul>
             <li>
               <div class="tf-nc">
-                <div class="pohon-content">
-                  <p class="text-center"><strong>Kota Madiun</strong></p>
+                <div class="pohon-title">
+                  <h5 class="text-center"><strong>Pohon Kinerja Kota</strong></h5>
                 </div>
-                <div class="pohon-tombol">
+                <div class="pohon-body">
+                  <p class="text-center">Kota Madiun</p>
+                </div>
+                <div class="pohon-foot">
                   <div class="row gx-3">
                     <%= link_to new_pohon_tematik_path,
                         remote: true,
@@ -43,6 +46,13 @@
                       <% @sub_tematik_kota.select { |sub| sub.pohon_ref_id == pohon.id }.each do |sub_pohon| %>
                         <li class="<%= dom_class(sub_pohon) %>">
                           <%= render partial: 'pohon_tematik/pohon_sub_tematik', locals: { pohon: sub_pohon } %>
+                          <ul id="<%= "opd_tematik_#{sub_pohon.object_id}" %>">
+                            <% @opd_tematiks.select { |opd| opd.pohon_ref_id == sub_pohon.id }.each do |opd_pohon| %>
+                              <li class="<%= dom_class(opd_pohon) %>">
+                                <%= render partial: 'pohon_tematik/pohon_opd_tematik', locals: { pohon: opd_pohon } %>
+                              </li>
+                            <% end %>
+                          </ul>
                         </li>
                       <% end %>
                     </ul>

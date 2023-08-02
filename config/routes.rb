@@ -12,9 +12,11 @@ Rails.application.routes.draw do
   resources :pohon_tematik do
     member do
       get :new_sub
+      get :new_opd_tematik
     end
     collection do
       post :create_sub_tema
+      post :create_opd_tematik
     end
   end
   resources :tematiks do
