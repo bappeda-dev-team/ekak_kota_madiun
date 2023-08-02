@@ -15,10 +15,10 @@
     </div>
   <% end %>
   <div class="field">
-      <%= form.hidden_field :pohon_ref_id %>
-      <%= form.hidden_field :pohonable_type %>
-      <%= form.hidden_field :role %>
-      <%= form.hidden_field :tahun %>
+    <%= form.hidden_field :pohon_ref_id %>
+    <%= form.hidden_field :pohonable_type %>
+    <%= form.hidden_field :role %>
+    <%= form.hidden_field :tahun %>
   </div>
   <div class="field">
     <%= form.label :opd, class: 'form-label' %>
@@ -35,12 +35,9 @@
                dropdown_event_name_value: 'change-tema',
                placeholder: 'Pilih Strategi Tematik',
            },
-            id: "pohon_#{form.object_id}",
-           required: true }%>
-  </div>
-  <div class="field">
-      <%= form.fields_for :strategis do |str_form| %>
-      <% end %>
+           id: "pohon_#{form.object_id}",
+           required: true
+          }%>
   </div>
   <div class="field">
     <%= form.label :keterangan, class: 'form-label' %>

@@ -29,6 +29,7 @@ class Strategi < ApplicationRecord
   has_one :sasaran
   has_many :komentars, primary_key: :id, foreign_key: :item
   accepts_nested_attributes_for :sasaran, update_only: true
+  accepts_nested_attributes_for :pohon, update_only: true
 
   has_many :indikator_sasarans, through: :sasaran
 
