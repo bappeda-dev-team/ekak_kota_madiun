@@ -1,7 +1,7 @@
 class PohonTematikController < ApplicationController
   include ActionView::RecordIdentifier
 
-  layout false, only: %i[new new_sub new_opd_tematik edit]
+  layout false, only: %i[new new_sub new_opd_tematik new_strategi_tematik edit]
 
   def new
     tahun = cookies[:tahun]
@@ -22,6 +22,14 @@ class PohonTematikController < ApplicationController
     @sub_tematik = parent_pohon.pohonable
     @opds = Opd.opd_resmi
     @pohon = Pohon.new(pohonable_type: 'Opd', role: 'opd_pohon_kota', tahun: parent_pohon.tahun,
+                       pohon_ref_id: parent_pohon.id)
+  end
+
+  def new_strategi_tematik
+    parent_pohon = Pohon.find(params[:id])
+    @opd = parent_pohon.pohonable
+    @strategis = @opd.strategis.where(tahun: parent_pohon.tahun, role: 'eselon_2')
+    @pohon = Pohon.new(pohonable_type: 'Strategi', role: 'strategi_pohon_kota', tahun: parent_pohon.tahun,
                        pohon_ref_id: parent_pohon.id)
   end
 
@@ -69,6 +77,23 @@ class PohonTematikController < ApplicationController
       render json: { resText: "OPD Tematik Ditambahkan", attachmentPartial: html_content }.to_json, status: :created
     else
       error_content = render_to_string(partial: 'pohon_tematik/form_opd_tematik',
+                                       formats: 'html',
+                                       layout: false,
+                                       locals: { pohon: @pohon })
+      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
+    end
+  end
+
+  def create_strategi_tematik
+    @pohon = Pohon.new(pohon_sub_tema_params)
+    if @pohon.save
+      html_content = render_to_string(partial: 'pohon_tematik/pohon_strategi_tematik',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { pohon: @pohon })
+      render json: { resText: "OPD Tematik Ditambahkan", attachmentPartial: html_content }.to_json, status: :created
+    else
+      error_content = render_to_string(partial: 'pohon_tematik/form_strategi_tematik',
                                        formats: 'html',
                                        layout: false,
                                        locals: { pohon: @pohon })

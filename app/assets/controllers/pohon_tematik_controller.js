@@ -51,6 +51,20 @@ export default class extends Controller {
     }
   }
 
+  addStrategiTematik(e) {
+    const [xhr, status] = e.detail
+    const target = document.getElementById(e.params.id)
+
+    if (status == 'OK') {
+      const html = xhr.response
+      target.insertAdjacentHTML('beforeend', html)
+    }
+    else {
+      const html = '<div class="alert alert-danger" role="alert">Terjadi Kesalahan</div>'
+      target.insertAdjacentHTML('beforeend', html)
+    }
+  }
+
   ajaxSuccess(e) {
     const [xhr] = e.detail
     this.sweetAlertSuccess(xhr.resText)

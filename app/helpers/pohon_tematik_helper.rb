@@ -7,6 +7,10 @@ module PohonTematikHelper
     options_for_select(opds.pluck(:nama_opd, :id))
   end
 
+  def select_strategi(strategis)
+    options_for_select(strategis.pluck(:strategi, :id))
+  end
+
   def sub_pohon(collections, parent_id)
     collections.select do |coll|
       coll.pohon_ref_id == parent_id

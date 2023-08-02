@@ -50,6 +50,13 @@
                             <% @opd_tematiks.select { |opd| opd.pohon_ref_id == sub_pohon.id }.each do |opd_pohon| %>
                               <li class="<%= dom_class(opd_pohon) %>">
                                 <%= render partial: 'pohon_tematik/pohon_opd_tematik', locals: { pohon: opd_pohon } %>
+                                <ul id="<%= "strategi_tematik_#{opd_pohon.object_id}" %>">
+                                  <% @strategi_tematiks.select { |str| str.pohon_ref_id == opd_pohon.id }.each do |str_pohon| %>
+                                    <li class="<%= dom_class(str_pohon) %>">
+                                      <%= render partial: 'pohon_tematik/pohon_strategi_tematik', locals: { pohon: str_pohon } %>
+                                    </li>
+                                  <% end %>
+                                </ul>
                               </li>
                             <% end %>
                           </ul>

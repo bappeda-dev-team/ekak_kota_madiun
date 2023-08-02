@@ -13,10 +13,12 @@ Rails.application.routes.draw do
     member do
       get :new_sub
       get :new_opd_tematik
+      get :new_strategi_tematik
     end
     collection do
       post :create_sub_tema
       post :create_opd_tematik
+      post :create_strategi_tematik
     end
   end
   resources :tematiks do

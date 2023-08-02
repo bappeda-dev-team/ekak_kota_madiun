@@ -296,6 +296,8 @@ class PohonKinerjaController < ApplicationController
                              .includes(:pohonable)
     @opd_tematiks = Pohon.where(pohonable_type: 'Opd', role: 'opd_pohon_kota', tahun: @tahun)
                          .includes(:pohonable)
+    @strategi_tematiks = Pohon.where(pohonable_type: 'Strategi', role: 'strategi_pohon_kota', tahun: @tahun)
+                              .includes(:pohonable)
     # pokin = PokinManual.new(tahun: @tahun, opd: @opd)
 
     # strategis = pokin.strategi_by_role
