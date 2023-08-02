@@ -40,6 +40,11 @@
                   <li class="<%= dom_class(pohon) %>">
                     <%= render partial: 'pohon_tematik/pohon_tematik', locals: { pohon: pohon } %>
                     <ul id="<%= "tematik_#{pohon.object_id}" %>">
+                      <% @sub_tematik_kota.select { |sub| sub.pohon_ref_id == pohon.id }.each do |sub_pohon| %>
+                        <li class="<%= dom_class(sub_pohon) %>">
+                          <%= render partial: 'pohon_tematik/pohon_sub_tematik', locals: { pohon: sub_pohon } %>
+                        </li>
+                      <% end %>
                     </ul>
                   </li>
                 <% end %>
