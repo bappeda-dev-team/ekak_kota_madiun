@@ -4,7 +4,11 @@ class TematiksController < ApplicationController
 
   # GET /tematiks or /tematiks.json
   def index
-    @tematiks = Tematik.all.order(updated_at: :desc)
+    @tematiks = Tematik.all.where(type: nil).order(updated_at: :desc)
+  end
+
+  def sub_tematiks
+    @sub_tematiks = SubTematik.all.order(updated_at: :desc)
   end
 
   # GET /tematiks/1 or /tematiks/1.json
@@ -13,6 +17,12 @@ class TematiksController < ApplicationController
   # GET /tematiks/new
   def new
     @tematik = Tematik.new
+  end
+
+  def new_sub
+    @tematiks = index
+    @sub_tematik = SubTematik.new
+    render partial: 'form_sub_tematik', locals: { sub_tematik: @sub_tematik }, layout: false
   end
 
   # GET /tematiks/1/edit
@@ -40,6 +50,25 @@ class TematiksController < ApplicationController
           render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
         end
       end
+    end
+  end
+
+  def sub
+    @sub_tematik = SubTematik.new(sub_tematik_params)
+
+    if @sub_tematik.save
+      html_content = render_to_string(partial: 'tematiks/tematik',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { tematiks: sub_tematiks })
+
+      render json: { resText: "Tematik tersimpan", attachmentPartial: html_content }.to_json, status: :created
+    else
+      error_content = render_to_string(partial: 'tematiks/form_sub_tematik',
+                                       formats: 'html',
+                                       layout: false,
+                                       locals: { sub_tematik: @sub_tematik })
+      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
     end
   end
 
@@ -75,6 +104,10 @@ class TematiksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def tematik_params
-    params.require(:tematik).permit(:tema, :keterangan, :tematik_ref_id, :type)
+    params.require(:tematik).permit(:tema, :keterangan)
+  end
+
+  def sub_tematik_params
+    params.require(:sub_tematik).permit(:tema, :keterangan, :tematik_ref_id, :type)
   end
 end

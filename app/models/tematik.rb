@@ -14,6 +14,8 @@ class Tematik < ApplicationRecord
   validates_presence_of :tema
   validates_length_of :tema, minimum: 5
 
+  has_many :sub_tematiks, primary_key: :id, foreign_key: :tematik_ref_id
+
   def to_s
     tema
   end

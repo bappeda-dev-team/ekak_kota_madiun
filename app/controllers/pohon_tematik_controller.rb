@@ -5,13 +5,14 @@ class PohonTematikController < ApplicationController
 
   def new
     tahun = cookies[:tahun]
-    @tematiks = Tematik.all
+    @tematiks = Tematik.all.where(type: nil).order(updated_at: :desc)
     @pohon = Pohon.new(pohonable_type: 'Tematik', role: 'pohon_kota', tahun: tahun)
   end
 
   def new_sub
     parent_pohon = Pohon.find(params[:id])
-    @tematiks = SubTematik.all
+    @tematik = parent_pohon.pohonable
+    @sub_tematiks = @tematik.sub_tematiks.order(updated_at: :desc)
     @pohon = Pohon.new(pohonable_type: 'SubTematik', role: 'sub_pohon_kota', tahun: parent_pohon.tahun,
                        pohon_ref_id: parent_pohon)
   end

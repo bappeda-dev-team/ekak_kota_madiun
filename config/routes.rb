@@ -14,7 +14,18 @@ Rails.application.routes.draw do
       get :new_sub
     end
   end
-  resources :tematiks
+  resources :tematiks do
+    collection do
+      get :sub_tematiks
+      post :sub
+      get :new_sub
+    end
+
+    member do
+      patch :sub
+      delete :sub
+    end
+  end
   resources :subdomains
   resources :opd_bidangs
   resources :periodes
