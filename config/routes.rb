@@ -17,6 +17,8 @@ Rails.application.routes.draw do
       get :new_strategi
       get :new_tactical_tematik
       get :new_tactical
+      get :new_operational_tematik
+      get :new_operational
     end
     collection do
       post :create_sub_tema
@@ -25,6 +27,8 @@ Rails.application.routes.draw do
       post :create_strategi_tematik_baru
       post :create_tactical_tematik
       post :create_tactical_tematik_baru
+      post :create_operational_tematik
+      post :create_operational_tematik_baru
     end
   end
   resources :tematiks do

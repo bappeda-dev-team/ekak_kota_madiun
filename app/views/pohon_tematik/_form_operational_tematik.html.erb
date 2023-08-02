@@ -1,4 +1,4 @@
-<%= form_with(model: pohon, url: '/pohon_tematik/create_tactical_tematik', local: false,
+<%= form_with(model: pohon, url: '/pohon_tematik/create_operational_tematik', local: false,
               data: {
                   controller: 'pohon-tematik',
                   action: 'ajax:success->pohon-tematik#ajaxSuccess'
@@ -26,7 +26,7 @@
     <%= form.text_field :opd, class: 'form-control text-center', value: @opd.nama_opd, readonly: true %>
   </div>
   <div class="field">
-    <%= form.label :tactical_tematik, class: 'form-label' %>
+    <%= form.label :operational_tematik, class: 'form-label' %>
     <%= form.select :pohonable_id, select_strategi(@strategis),
          {include_blank: true},
          { class: 'form-control',

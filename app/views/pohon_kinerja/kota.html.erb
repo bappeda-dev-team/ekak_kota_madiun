@@ -58,6 +58,13 @@
                                         <% @tactical_tematiks.select { |tact| tact.pohon_ref_id == str_pohon.id }.each do |tact_pohon| %>
                                           <li class="<%= dom_class(tact_pohon) %>">
                                             <%= render partial: 'pohon_tematik/pohon_tactical_tematik', locals: { pohon: tact_pohon } %>
+                                            <ul id="<%= "operational_tematik_#{tact_pohon.object_id}" %>">
+                                              <% @operational_tematiks.select { |oper| oper.pohon_ref_id == tact_pohon.id }.each do |oper_pohon| %>
+                                                <li class="<%= dom_class(oper_pohon) %>">
+                                                  <%= render partial: 'pohon_tematik/pohon_operational_tematik', locals: { pohon: oper_pohon } %>
+                                                </li>
+                                              <% end %>
+                                            </ul>
                                           </li>
                                         <% end %>
                                       </ul>

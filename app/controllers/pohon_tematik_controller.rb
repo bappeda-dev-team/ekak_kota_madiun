@@ -30,6 +30,7 @@ class PohonTematikController < ApplicationController
     @opd = parent_pohon.pohonable
     @strategis = @opd.strategis.where(tahun: parent_pohon.tahun, role: 'eselon_2')
     @pohon = Pohon.new(pohonable_type: 'Strategi', role: 'strategi_pohon_kota', tahun: parent_pohon.tahun,
+                       opd_id: @opd.id,
                        pohon_ref_id: parent_pohon.id)
   end
 
@@ -46,6 +47,7 @@ class PohonTematikController < ApplicationController
     @opd = parent_pohon.opd
     @strategis = @opd.strategis.where(tahun: parent_pohon.tahun, role: 'eselon_3')
     @pohon = Pohon.new(pohonable_type: 'Strategi', role: 'tactical_pohon_kota', tahun: parent_pohon.tahun,
+                       opd_id: @opd.id,
                        pohon_ref_id: parent_pohon.id)
   end
 
@@ -55,6 +57,23 @@ class PohonTematikController < ApplicationController
     @opd = parent_pohon.opd
     @tactical = Strategi.new(role: 'tactical_pohon_kota', tahun: parent_pohon.tahun,
                              opd_id: @opd.id)
+  end
+
+  def new_operational_tematik
+    parent_pohon = Pohon.find(params[:id])
+    @opd = parent_pohon.opd
+    @strategis = @opd.strategis.where(tahun: parent_pohon.tahun, role: 'eselon_4')
+    @pohon = Pohon.new(pohonable_type: 'Strategi', role: 'operational_pohon_kota', tahun: parent_pohon.tahun,
+                       opd_id: @opd.id,
+                       pohon_ref_id: parent_pohon.id)
+  end
+
+  def new_operational
+    parent_pohon = Pohon.find(params[:id])
+    @pohon_ref_id = params[:id]
+    @opd = parent_pohon.opd
+    @operational = Strategi.new(role: 'operational_pohon_kota', tahun: parent_pohon.tahun,
+                                opd_id: @opd.id)
   end
 
   def create
@@ -152,7 +171,7 @@ class PohonTematikController < ApplicationController
                                       formats: 'html',
                                       layout: false,
                                       locals: { pohon: @pohon })
-      render json: { resText: "Strategi Tematik Ditambahkan", attachmentPartial: html_content }.to_json,
+      render json: { resText: "Tactical Tematik Ditambahkan", attachmentPartial: html_content }.to_json,
              status: :created
     else
       error_content = render_to_string(partial: 'pohon_tematik/form_tactical_tematik',
@@ -171,10 +190,47 @@ class PohonTematikController < ApplicationController
                                       formats: 'html',
                                       layout: false,
                                       locals: { pohon: @pohon })
-      render json: { resText: "Strategi Tematik Ditambahkan", attachmentPartial: html_content }.to_json,
+      render json: { resText: "Tactical Tematik Ditambahkan", attachmentPartial: html_content }.to_json,
              status: :created
     else
       error_content = render_to_string(partial: 'pohon_tematik/form_tactical_tematik_baru',
+                                       formats: 'html',
+                                       layout: false,
+                                       locals: { strategi: @strategi })
+      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
+    end
+  end
+
+  def create_operational_tematik
+    @pohon = Pohon.new(pohon_strategi_tema_params)
+    if @pohon.save
+      html_content = render_to_string(partial: 'pohon_tematik/pohon_operational_tematik',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { pohon: @pohon })
+      render json: { resText: "Operational Tematik Ditambahkan", attachmentPartial: html_content }.to_json,
+             status: :created
+    else
+      error_content = render_to_string(partial: 'pohon_tematik/form_operational_tematik',
+                                       formats: 'html',
+                                       layout: false,
+                                       locals: { pohon: @pohon })
+      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
+    end
+  end
+
+  def create_operational_tematik_baru
+    @strategi = Strategi.new(strategi_params)
+    if @strategi.save
+      @pohon = new_pohon!
+      html_content = render_to_string(partial: 'pohon_tematik/pohon_operational_tematik',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { pohon: @pohon })
+      render json: { resText: "Operational Tematik Ditambahkan", attachmentPartial: html_content }.to_json,
+             status: :created
+    else
+      error_content = render_to_string(partial: 'pohon_tematik/form_operational_tematik_baru',
                                        formats: 'html',
                                        layout: false,
                                        locals: { strategi: @strategi })
@@ -210,6 +266,7 @@ class PohonTematikController < ApplicationController
 
   def pohon_strategi_tema_params
     params.require(:pohon).permit(:pohonable_id, :pohonable_type, :role, :tahun,
+                                  :opd_id,
                                   :keterangan, :pohon_ref_id)
   end
 
