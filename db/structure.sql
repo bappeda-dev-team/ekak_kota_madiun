@@ -1867,7 +1867,8 @@ CREATE TABLE public.pohons (
     user_id bigint,
     strategi_id bigint,
     role character varying,
-    tahun character varying
+    tahun character varying,
+    pohon_ref_id bigint
 );
 
 
@@ -5260,6 +5261,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230717011850'),
 ('20230717012001'),
 ('20230720075944'),
-('20230731071626');
+('20230731071626'),
+('20230802004938');
 
 

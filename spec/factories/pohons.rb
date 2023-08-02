@@ -10,6 +10,7 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  opd_id         :bigint
+#  pohon_ref_id   :bigint
 #  pohonable_id   :bigint
 #  strategi_id    :bigint
 #  user_id        :bigint

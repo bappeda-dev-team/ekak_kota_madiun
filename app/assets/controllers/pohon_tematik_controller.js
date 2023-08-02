@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 // import Turbolinks from "turbolinks";
 
 export default class extends Controller {
-  static targets = ["dahan"]
+  static targets = ["dahan", "tematik"]
   static values = {
     elementId: String
   }
@@ -12,6 +12,20 @@ export default class extends Controller {
   addPohon(e) {
     const [xhr, status] = e.detail
     const target = this.dahanTarget
+
+    if (status == 'OK') {
+      const html = xhr.response
+      target.insertAdjacentHTML('beforeend', html)
+    }
+    else {
+      const html = '<div class="alert alert-danger" role="alert">Terjadi Kesalahan</div>'
+      target.insertAdjacentHTML('beforeend', html)
+    }
+  }
+
+  addSubTematik(e) {
+    const [xhr, status] = e.detail
+    const target = document.getElementById(e.params.id)
 
     if (status == 'OK') {
       const html = xhr.response

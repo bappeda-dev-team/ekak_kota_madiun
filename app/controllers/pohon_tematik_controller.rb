@@ -1,12 +1,19 @@
 class PohonTematikController < ApplicationController
   include ActionView::RecordIdentifier
 
-  layout false, only: %i[new edit create]
+  layout false, only: %i[new new_sub edit]
 
   def new
     tahun = cookies[:tahun]
     @tematiks = Tematik.all
     @pohon = Pohon.new(pohonable_type: 'Tematik', role: 'pohon_kota', tahun: tahun)
+  end
+
+  def new_sub
+    parent_pohon = Pohon.find(params[:id])
+    @tematiks = SubTematik.all
+    @pohon = Pohon.new(pohonable_type: 'SubTematik', role: 'sub_pohon_kota', tahun: parent_pohon.tahun,
+                       pohon_ref_id: parent_pohon)
   end
 
   def create
