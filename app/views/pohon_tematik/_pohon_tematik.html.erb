@@ -1,3 +1,4 @@
+<li>
   <div class="tf-nc" style="width: 450px;">
     <div class="pohon-title">
       <h5 class="text-center"><strong>Tematik Kota</strong></h5>
@@ -7,7 +8,7 @@
       <p class="text-center">Keterangan: <%= pohon.keterangan %></p>
     </div>
     <div class="pohon-foot">
-      <div class="row gx-3">
+      <div class="d-grid gap-3">
         <%= link_to new_sub_pohon_tematik_path(pohon),
                         remote: true,
                         data: {
@@ -15,10 +16,24 @@
                                 pohon_tematik_id_param: "tematik_#{pohon.object_id}",
                                 action: 'ajax:complete->pohon-tematik#addSubTematik:prevent',
                               },
-                        class: 'btn btn-primary w-100' do %>
+                        class: 'btn btn-info w-100' do %>
           <i class="fas fa-plus me-2"></i>
           <span>Sub-Tematik Kota</span>
         <% end %>
       </div>
     </div>
   </div>
+  <ul id="<%= "tematik_#{pohon.object_id}" %>">
+    <% if local_assigns[:sub_tematiks] %>
+      <% sub_tematiks.each do |sub_tema| %>
+        <%= render partial: 'pohon_tematik/pohon_sub_tematik', locals: {
+          pohon: sub_tema,
+          opds: opds.select { |opd| opd.pohon_ref_id == sub_tema.id },
+          strategics: strategics,
+          tacticals: tacticals,
+          operationals: operationals
+        } %>
+      <% end %>
+    <% end %>
+  </ul>
+</li>

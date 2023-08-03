@@ -1,7 +1,7 @@
 class PohonTematikController < ApplicationController
   include ActionView::RecordIdentifier
 
-  layout false, only: %i[new new_sub new_opd_tematik new_strategi_tematik edit]
+  layout false
 
   def new
     tahun = cookies[:tahun]
@@ -30,7 +30,50 @@ class PohonTematikController < ApplicationController
     @opd = parent_pohon.pohonable
     @strategis = @opd.strategis.where(tahun: parent_pohon.tahun, role: 'eselon_2')
     @pohon = Pohon.new(pohonable_type: 'Strategi', role: 'strategi_pohon_kota', tahun: parent_pohon.tahun,
+                       opd_id: @opd.id,
                        pohon_ref_id: parent_pohon.id)
+  end
+
+  def new_strategi
+    parent_pohon = Pohon.find(params[:id])
+    @pohon_ref_id = params[:id]
+    @opd = parent_pohon.pohonable
+    @strategi = Strategi.new(role: 'strategi_pohon_kota', tahun: parent_pohon.tahun,
+                             opd_id: @opd.id)
+  end
+
+  def new_tactical_tematik
+    parent_pohon = Pohon.find(params[:id])
+    @opd = parent_pohon.opd
+    @strategis = @opd.strategis.where(tahun: parent_pohon.tahun, role: 'eselon_3')
+    @pohon = Pohon.new(pohonable_type: 'Strategi', role: 'tactical_pohon_kota', tahun: parent_pohon.tahun,
+                       opd_id: @opd.id,
+                       pohon_ref_id: parent_pohon.id)
+  end
+
+  def new_tactical
+    parent_pohon = Pohon.find(params[:id])
+    @pohon_ref_id = params[:id]
+    @opd = parent_pohon.opd
+    @tactical = Strategi.new(role: 'tactical_pohon_kota', tahun: parent_pohon.tahun,
+                             opd_id: @opd.id)
+  end
+
+  def new_operational_tematik
+    parent_pohon = Pohon.find(params[:id])
+    @opd = parent_pohon.opd
+    @strategis = @opd.strategis.where(tahun: parent_pohon.tahun, role: 'eselon_4')
+    @pohon = Pohon.new(pohonable_type: 'Strategi', role: 'operational_pohon_kota', tahun: parent_pohon.tahun,
+                       opd_id: @opd.id,
+                       pohon_ref_id: parent_pohon.id)
+  end
+
+  def new_operational
+    parent_pohon = Pohon.find(params[:id])
+    @pohon_ref_id = params[:id]
+    @opd = parent_pohon.opd
+    @operational = Strategi.new(role: 'operational_pohon_kota', tahun: parent_pohon.tahun,
+                                opd_id: @opd.id)
   end
 
   def create
@@ -91,7 +134,8 @@ class PohonTematikController < ApplicationController
                                       formats: 'html',
                                       layout: false,
                                       locals: { pohon: @pohon })
-      render json: { resText: "OPD Tematik Ditambahkan", attachmentPartial: html_content }.to_json, status: :created
+      render json: { resText: "Strategi Tematik Ditambahkan", attachmentPartial: html_content }.to_json,
+             status: :created
     else
       error_content = render_to_string(partial: 'pohon_tematik/form_strategi_tematik',
                                        formats: 'html',
@@ -101,7 +145,116 @@ class PohonTematikController < ApplicationController
     end
   end
 
+  def create_strategi_tematik_baru
+    @strategi = Strategi.new(strategi_params)
+    if @strategi.save
+      @pohon = new_pohon!
+      html_content = render_to_string(partial: 'pohon_tematik/pohon_strategi_tematik',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { pohon: @pohon })
+      render json: { resText: "Strategi Tematik Ditambahkan", attachmentPartial: html_content }.to_json,
+             status: :created
+    else
+      error_content = render_to_string(partial: 'pohon_tematik/form_strategi_tematik_baru',
+                                       formats: 'html',
+                                       layout: false,
+                                       locals: { strategi: @strategi })
+      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
+    end
+  end
+
+  def create_tactical_tematik
+    @pohon = Pohon.new(pohon_strategi_tema_params)
+    if @pohon.save
+      html_content = render_to_string(partial: 'pohon_tematik/pohon_tactical_tematik',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { pohon: @pohon })
+      render json: { resText: "Tactical Tematik Ditambahkan", attachmentPartial: html_content }.to_json,
+             status: :created
+    else
+      error_content = render_to_string(partial: 'pohon_tematik/form_tactical_tematik',
+                                       formats: 'html',
+                                       layout: false,
+                                       locals: { pohon: @pohon })
+      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
+    end
+  end
+
+  def create_tactical_tematik_baru
+    @strategi = Strategi.new(strategi_params)
+    if @strategi.save
+      @pohon = new_pohon!
+      html_content = render_to_string(partial: 'pohon_tematik/pohon_tactical_tematik',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { pohon: @pohon })
+      render json: { resText: "Tactical Tematik Ditambahkan", attachmentPartial: html_content }.to_json,
+             status: :created
+    else
+      error_content = render_to_string(partial: 'pohon_tematik/form_tactical_tematik_baru',
+                                       formats: 'html',
+                                       layout: false,
+                                       locals: { strategi: @strategi })
+      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
+    end
+  end
+
+  def create_operational_tematik
+    @pohon = Pohon.new(pohon_strategi_tema_params)
+    if @pohon.save
+      html_content = render_to_string(partial: 'pohon_tematik/pohon_operational_tematik',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { pohon: @pohon })
+      render json: { resText: "Operational Tematik Ditambahkan", attachmentPartial: html_content }.to_json,
+             status: :created
+    else
+      error_content = render_to_string(partial: 'pohon_tematik/form_operational_tematik',
+                                       formats: 'html',
+                                       layout: false,
+                                       locals: { pohon: @pohon })
+      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
+    end
+  end
+
+  def create_operational_tematik_baru
+    @strategi = Strategi.new(strategi_params)
+    if @strategi.save
+      @pohon = new_pohon!
+      html_content = render_to_string(partial: 'pohon_tematik/pohon_operational_tematik',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { pohon: @pohon })
+      render json: { resText: "Operational Tematik Ditambahkan", attachmentPartial: html_content }.to_json,
+             status: :created
+    else
+      error_content = render_to_string(partial: 'pohon_tematik/form_operational_tematik_baru',
+                                       formats: 'html',
+                                       layout: false,
+                                       locals: { strategi: @strategi })
+      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
+    end
+  end
+
   private
+
+  def new_pohon_params
+    @tahun = params[:strategi][:tahun]
+    @role = params[:strategi][:role]
+    @pohon_ref_id = params[:strategi][:pohon_ref_id]
+    @opd_id = params[:strategi][:opd_id]
+    @keterangan = params[:strategi][:keterangan]
+  end
+
+  def new_pohon!
+    new_pohon_params
+    Pohon.create!(pohonable_type: 'Strategi', pohonable_id: @strategi.id,
+                  role: @role, tahun: @tahun,
+                  keterangan: @keterangan,
+                  pohon_ref_id: @pohon_ref_id, opd_id: @opd_id)
+  end
 
   def pohon_params
     params.require(:pohon).permit(:pohonable_id, :pohonable_type, :role, :tahun, :keterangan)
@@ -113,7 +266,12 @@ class PohonTematikController < ApplicationController
 
   def pohon_strategi_tema_params
     params.require(:pohon).permit(:pohonable_id, :pohonable_type, :role, :tahun,
-                                  :keterangan,
-                                  :pohon_ref_id, strategis_attributes: %i[strategi tahun role type])
+                                  :opd_id,
+                                  :keterangan, :pohon_ref_id)
+  end
+
+  def strategi_params
+    params.require(:strategi).permit(:role, :tahun,
+                                     :strategi, :opd_id)
   end
 end

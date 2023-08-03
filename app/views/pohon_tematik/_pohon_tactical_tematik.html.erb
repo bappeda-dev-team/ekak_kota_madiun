@@ -1,46 +1,43 @@
 <li>
   <div class="tf-nc" style="width: 450px;">
     <div class="pohon-title">
-      <h5 class="text-center"><strong>OPD Tematik</strong></h5>
+      <h5 class="text-center"><strong>Tactical Tematik</strong></h5>
     </div>
     <div class="pohon-body">
-      <p class="text-center">Nama OPD: <%= pohon.pohonable.nama_opd %></p>
+      <p class="text-center">Tactical Tematik: <%= pohon.pohonable.strategi %></p>
       <p class="text-center">Keterangan: <%= pohon.keterangan %></p>
     </div>
     <div class="pohon-foot">
       <div class="d-grid gap-3">
-        <%= link_to new_strategi_tematik_pohon_tematik_path(pohon),
+        <%= link_to new_operational_tematik_pohon_tematik_path(pohon),
                         remote: true,
                         data: {
                                 controller: 'pohon-tematik',
-                                pohon_tematik_id_param: "strategi_tematik_#{pohon.object_id}",
+                                pohon_tematik_id_param: "operational_tematik_#{pohon.object_id}",
                                 action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
                               },
-                        class: 'btn btn-primary w-100' do %>
+                        class: 'btn btn-info w-100' do %>
           <i class="fas fa-plus me-2"></i>
-          <span>Strategi Tematik</span>
+          <span>Operational Tematik</span>
         <% end %>
-        <%= link_to new_strategi_pohon_tematik_path(pohon),
+        <%= link_to new_operational_pohon_tematik_path(pohon),
                         remote: true,
                         data: {
                                 controller: 'pohon-tematik',
-                                pohon_tematik_id_param: "strategi_tematik_#{pohon.object_id}",
+                                pohon_tematik_id_param: "operational_tematik_#{pohon.object_id}",
                                 action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
                               },
                         class: 'btn btn-primary w-100' do %>
           <i class="fas fa-plus me-2"></i>
-          <span>Strategi Tematik Baru</span>
+          <span>Operational Tematik Baru</span>
         <% end %>
       </div>
     </div>
   </div>
-  <ul id="<%= "strategi_tematik_#{pohon.object_id}" %>">
-    <% if local_assigns[:strategics] %>
-      <% strategics.each do |str| %>
-        <%= render partial: 'pohon_tematik/pohon_strategi_tematik', locals: {
-          pohon: str,
-          tacticals: tacticals.select { |tact| tact.pohon_ref_id == str.id },
-          operationals: operationals } %>
+  <ul id="<%= "operational_tematik_#{pohon.object_id}" %>">
+    <% if local_assigns[:operationals] %>
+      <% operationals.each do |operational| %>
+        <%= render partial: 'pohon_tematik/pohon_operational_tematik', locals: { pohon: operational } %>
       <% end %>
     <% end %>
   </ul>
