@@ -40,44 +40,12 @@
               </div>
               <ul data-pohon-tematik-target='dahan'>
                 <% @tematik_kota.each do |pohon| %>
-                  <li class="<%= dom_class(pohon) %>">
-                    <%= render partial: 'pohon_tematik/pohon_tematik', locals: { pohon: pohon } %>
-                    <ul id="<%= "tematik_#{pohon.object_id}" %>">
-                      <% @sub_tematik_kota.select { |sub| sub.pohon_ref_id == pohon.id }.each do |sub_pohon| %>
-                        <li class="<%= dom_class(sub_pohon) %>">
-                          <%= render partial: 'pohon_tematik/pohon_sub_tematik', locals: { pohon: sub_pohon } %>
-                          <ul id="<%= "opd_tematik_#{sub_pohon.object_id}" %>">
-                            <% @opd_tematiks.select { |opd| opd.pohon_ref_id == sub_pohon.id }.each do |opd_pohon| %>
-                              <li class="<%= dom_class(opd_pohon) %>">
-                                <%= render partial: 'pohon_tematik/pohon_opd_tematik', locals: { pohon: opd_pohon } %>
-                                <ul id="<%= "strategi_tematik_#{opd_pohon.object_id}" %>">
-                                  <% @strategi_tematiks.select { |str| str.pohon_ref_id == opd_pohon.id }.each do |str_pohon| %>
-                                    <li class="<%= dom_class(str_pohon) %>">
-                                      <%= render partial: 'pohon_tematik/pohon_strategi_tematik', locals: { pohon: str_pohon } %>
-                                      <ul id="<%= "tactical_tematik_#{str_pohon.object_id}" %>">
-                                        <% @tactical_tematiks.select { |tact| tact.pohon_ref_id == str_pohon.id }.each do |tact_pohon| %>
-                                          <li class="<%= dom_class(tact_pohon) %>">
-                                            <%= render partial: 'pohon_tematik/pohon_tactical_tematik', locals: { pohon: tact_pohon } %>
-                                            <ul id="<%= "operational_tematik_#{tact_pohon.object_id}" %>">
-                                              <% @operational_tematiks.select { |oper| oper.pohon_ref_id == tact_pohon.id }.each do |oper_pohon| %>
-                                                <li class="<%= dom_class(oper_pohon) %>">
-                                                  <%= render partial: 'pohon_tematik/pohon_operational_tematik', locals: { pohon: oper_pohon } %>
-                                                </li>
-                                              <% end %>
-                                            </ul>
-                                          </li>
-                                        <% end %>
-                                      </ul>
-                                    </li>
-                                  <% end %>
-                                </ul>
-                              </li>
-                            <% end %>
-                          </ul>
-                        </li>
-                      <% end %>
-                    </ul>
-                  </li>
+                  <%= render partial: 'pohon_tematik/pohon_tematik', locals: { pohon: pohon,
+                    sub_tematiks: @sub_tematik_kota.select { |sub| sub.pohon_ref_id == pohon.id  },
+                    opds: @opd_tematiks,
+                    strategics: @strategi_tematiks,
+                    tacticals: @tactical_tematiks,
+                    operationals: @operational_tematiks } %>
                 <% end %>
               </ul>
             </li>
