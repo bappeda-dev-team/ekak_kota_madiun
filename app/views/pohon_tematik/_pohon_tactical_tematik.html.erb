@@ -7,6 +7,26 @@
       <p class="text-center">Tactical Tematik: <%= pohon.pohonable.strategi %></p>
       <p class="text-center">Keterangan: <%= pohon.keterangan %></p>
     </div>
+    <div class="pohon-tombol row mb-3">
+      <div class="col">
+        <button class="btn btn-outline-primary">
+          <i class="fas fa-exchange-alt me-2"></i>
+          <span>Pindah</span>
+        </button>
+      </div>
+      <div class="col">
+        <button class="btn btn-outline-info">
+          <i class="fas fa-edit me-2"></i>
+          <span>Edit</span>
+        </button>
+      </div>
+      <div class="col">
+        <button class="btn btn-outline-danger">
+          <i class="fas fa-trash me-2"></i>
+          <span>Hapus</span>
+        </button>
+      </div>
+    </div>
     <div class="pohon-foot">
       <div class="d-grid gap-3">
         <%= link_to new_operational_tematik_pohon_tematik_path(pohon),
