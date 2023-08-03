@@ -1,0 +1,39 @@
+<%= form_with(model: pohon, url: pindah_pohon_pohon_tematik_path, method: :patch,
+              local: false,
+              data: {
+                  controller: 'pohon-tematik',
+                  action: 'ajax:success->pohon-tematik#ajaxSuccess'
+              }
+) do |form| %>
+  <% if pohon.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(pohon.errors.count, "error") %> prohibited this tematik from being saved:</h2>
+      <ul>
+        <% pohon.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :pindah_pohon, class: "form-label" %>
+  </div>
+  <div class="field">
+    <%= form.label :sub_tematik_kota, class: 'form-label' %>
+    <%= form.select :pohon_ref_id, dahan_atas,
+         {include_blank: true},
+         { class: 'form-control',
+           data: {
+               controller: 'dropdown',
+               dropdown_jenis_value: 'action',
+               dropdown_event_name_value: 'change-tema',
+               dropdown_parent_value: '#form-modal-body',
+               placeholder: 'Pilih Tematik Kota',
+           },
+            id: "pohon_#{form.object_id}",
+           required: true }%>
+  </div>
+  <div class="actions">
+    <%= form.submit 'Simpan' %>
+  </div>
+<% end %>

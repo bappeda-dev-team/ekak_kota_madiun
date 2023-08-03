@@ -9,10 +9,18 @@
     </div>
     <div class="pohon-tombol row mb-3">
       <div class="col">
-        <button class="btn btn-outline-primary">
+        <%= link_to pindah_opd_tematik_pohon_tematik_path(pohon),
+         remote: true,
+         data: {
+                 controller: 'form-modal',
+                 action: 'ajax:complete->form-modal#success:prevent',
+                 bs_target: '#form-modal',
+                 bs_toggle: 'modal'
+               },
+         class: 'btn btn-outline-primary' do %>
           <i class="fas fa-exchange-alt me-2"></i>
           <span>Pindah</span>
-        </button>
+        <% end %>
       </div>
       <div class="col">
         <button class="btn btn-outline-info">

@@ -13,12 +13,14 @@ Rails.application.routes.draw do
     member do
       get :new_sub
       get :new_opd_tematik
+      get :pindah_opd_tematik
       get :new_strategi_tematik
       get :new_strategi
       get :new_tactical_tematik
       get :new_tactical
       get :new_operational_tematik
       get :new_operational
+      patch :pindah_pohon
     end
     collection do
       post :create_sub_tema
