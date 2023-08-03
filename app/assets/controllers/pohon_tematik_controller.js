@@ -65,6 +65,11 @@ export default class extends Controller {
     }
   }
 
+  closeForm(e) {
+    const element = e.target.closest('li')
+    element.remove()
+  }
+
   ajaxSuccess(e) {
     const [xhr] = e.detail
     this.sweetAlertSuccess(xhr.resText)
