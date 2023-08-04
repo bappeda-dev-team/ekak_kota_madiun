@@ -206,7 +206,6 @@ export default class extends Controller {
     const select2ed = this.dropdown_base(options)
     const custom_name = this.eventNameValue
     return select2ed.on('select2:select', (e) => {
-      console.log(e)
       const custom_event = new CustomEvent(custom_name,
         { detail: { data: e.params.data } })
       document.dispatchEvent(custom_event)

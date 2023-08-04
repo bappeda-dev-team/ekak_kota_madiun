@@ -1,64 +1,64 @@
 <li>
   <div class="tf-nc" style="width: 450px;">
-    <div class="pohon-title">
-      <h5 class="text-center"><strong>OPD Tematik</strong></h5>
-    </div>
-    <div class="pohon-body">
-      <p class="text-center">Nama OPD: <%= pohon.pohonable.nama_opd %></p>
-      <p class="text-center">Keterangan: <%= pohon.keterangan %></p>
-    </div>
-    <div class="pohon-tombol row mb-3">
-      <div class="col">
-        <%= link_to pindah_opd_tematik_pohon_tematik_path(pohon),
+    <div class="pohon">
+      <div class="pohon-title">
+        <h5 class="text-center"><strong>OPD Tematik</strong></h5>
+      </div>
+      <div class="pohon-body">
+        <p class="text-center">Nama OPD: <%= pohon.pohonable.nama_opd %></p>
+        <p class="text-center">Keterangan: <%= pohon.keterangan %></p>
+      </div>
+      <div class="pohon-tombol row mb-3">
+        <div class="col">
+          <%= link_to pindah_opd_tematik_pohon_tematik_path(pohon),
          remote: true,
          data: {
-                 controller: 'form-modal',
-                 action: 'ajax:complete->form-modal#success:prevent',
-                 bs_target: '#form-modal',
-                 bs_toggle: 'modal'
-               },
+           controller: 'pohon-tematik',
+           action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
+         },
          class: 'btn btn-outline-primary' do %>
-          <i class="fas fa-exchange-alt me-2"></i>
-          <span>Pindah</span>
-        <% end %>
+            <i class="fas fa-exchange-alt me-2"></i>
+            <span>Pindah</span>
+          <% end %>
+        </div>
+        <div class="col">
+          <button class="btn btn-outline-info">
+            <i class="fas fa-edit me-2"></i>
+            <span>Edit</span>
+          </button>
+        </div>
+        <div class="col">
+          <button class="btn btn-outline-danger">
+            <i class="fas fa-trash me-2"></i>
+            <span>Hapus</span>
+          </button>
+        </div>
       </div>
-      <div class="col">
-        <button class="btn btn-outline-info">
-          <i class="fas fa-edit me-2"></i>
-          <span>Edit</span>
-        </button>
-      </div>
-      <div class="col">
-        <button class="btn btn-outline-danger">
-          <i class="fas fa-trash me-2"></i>
-          <span>Hapus</span>
-        </button>
-      </div>
-    </div>
-    <div class="pohon-foot">
-      <div class="d-grid gap-3">
-        <%= link_to new_strategi_tematik_pohon_tematik_path(pohon),
+      <div class="pohon-foot">
+        <div class="d-grid gap-3">
+          <%= link_to new_strategi_tematik_pohon_tematik_path(pohon),
                         remote: true,
                         data: {
-                                controller: 'pohon-tematik',
-                                pohon_tematik_id_param: "strategi_tematik_#{pohon.object_id}",
-                                action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
-                              },
+                          controller: 'pohon-tematik',
+                          pohon_tematik_id_param: "strategi_tematik_#{pohon.object_id}",
+                          action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
+                        },
                         class: 'btn btn-info w-100' do %>
-          <i class="fas fa-plus me-2"></i>
-          <span>Strategi Tematik</span>
-        <% end %>
-        <%= link_to new_strategi_pohon_tematik_path(pohon),
+            <i class="fas fa-plus me-2"></i>
+            <span>Strategi Tematik</span>
+          <% end %>
+          <%= link_to new_strategi_pohon_tematik_path(pohon),
                         remote: true,
                         data: {
-                                controller: 'pohon-tematik',
-                                pohon_tematik_id_param: "strategi_tematik_#{pohon.object_id}",
-                                action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
-                              },
+                          controller: 'pohon-tematik',
+                          pohon_tematik_id_param: "strategi_tematik_#{pohon.object_id}",
+                          action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
+                        },
                         class: 'btn btn-primary w-100' do %>
-          <i class="fas fa-plus me-2"></i>
-          <span>Strategi Tematik Baru</span>
-        <% end %>
+            <i class="fas fa-plus me-2"></i>
+            <span>Strategi Tematik Baru</span>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

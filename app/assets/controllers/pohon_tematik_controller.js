@@ -1,7 +1,7 @@
 import { Controller } from 'stimulus'
 import { Modal } from 'bootstrap'
 import Swal from "sweetalert2";
-// import Turbolinks from "turbolinks";
+import Turbolinks from "turbolinks";
 
 export default class extends Controller {
   static targets = ["dahan", "tematik"]
@@ -18,10 +18,52 @@ export default class extends Controller {
       target.insertAdjacentHTML('beforeend', html)
     }
     else {
-      const html = '<div class="alert alert-danger" role="alert">Terjadi Kesalahan</div>'
+      const html = `
+      <div class="tf-nc" style="width: 450px;">
+        <div class="alert alert-danger" role="alert">Terjadi Kesalahan</div>
+      </div>
+      `
       target.insertAdjacentHTML('beforeend', html)
     }
   }
+
+  pindahPohon(e) {
+    const [xhr, status] = e.detail
+    const target = e.target.closest('.tf-nc')
+    const prevHtml = target.querySelector('.pohon')
+    prevHtml.classList.add('d-none')
+
+    if (status == 'OK') {
+      const html = xhr.response
+      target.insertAdjacentHTML('beforeend', html)
+    }
+    else {
+      const html = `
+      <div class="tf-nc" style="width: 450px;">
+        <div class="alert alert-danger" role="alert">Terjadi Kesalahan</div>
+      </div>
+      `
+      target.insertAdjacentHTML('beforeend', html)
+    }
+  }
+
+  pindahSuccess(e) {
+    const [xhr] = e.detail
+    this.sweetAlertSuccess(xhr.resText)
+    setTimeout(() => {
+      Turbolinks.visit(window.location, { action: "replace" })
+    }, 700)
+
+  }
+
+  closeInlineForm(e) {
+    const target = e.target.closest('.tf-nc')
+    const prevHtml = target.querySelector('.pohon')
+    prevHtml.classList.remove('d-none')
+    const element = target.querySelector('.pohon-form')
+    element.remove()
+  }
+
 
   addSubTematik(e) {
     const [xhr, status] = e.detail

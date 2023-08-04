@@ -28,27 +28,17 @@ class PohonTematikController < ApplicationController
   def pindah_opd_tematik
     @pohon = Pohon.find(params[:id])
     @tahun = @pohon.tahun
-    dahan_atas = Pohon.where(pohonable_type: 'SubTematik', role: 'sub_pohon_kota', tahun: @tahun)
-    pohon_atas = dahan_atas.collect { |dahan| ["#{dahan.pohonable.tema}-#{dahan.id}", dahan.id] }
-    render partial: 'form_pindah_opd_tematik', locals: { pohon: @pohon, dahan_atas: pohon_atas }
+    @dahan_atas = Pohon.where(pohonable_type: 'SubTematik', role: 'sub_pohon_kota', tahun: @tahun)
+                       .collect { |dahan| [dahan.pohonable.tema, dahan.id] }
   end
 
   def pindah_pohon
     @pohon = Pohon.find(params[:id])
     if @pohon.update(pohon_sub_tema_params)
-      html_content = render_to_string(partial: 'pohon_tematik/pohon_opd_tematik',
-                                      formats: 'html',
-                                      layout: false,
-                                      locals: { pohon: @pohon })
-      render json: { resText: "Jalur di-ubah", attachmentPartial: html_content }.to_json,
+      render json: { resText: "Jalur di-ubah" }.to_json,
              status: :created
     else
-
-      error_content = render_to_string(partial: 'pohon_tematik/form_opd_tematik',
-                                       formats: 'html',
-                                       layout: false,
-                                       locals: { pohon: @pohon })
-      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
+      render json: { resText: "Gagal Menyimpan" }.to_json, status: :unprocessable_entity
     end
   end
 
