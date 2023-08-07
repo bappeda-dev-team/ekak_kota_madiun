@@ -1,36 +1,54 @@
 <div class="pohon">
-    <div class="pohon-title">
-        <h5 class="text-center"><strong>Tactical Tematik</strong></h5>
-    </div>
-    <div class="pohon-body">
-        <p class="text-center">Tactical Tematik: <%= pohon.pohonable.strategi %></p>
-        <p class="text-center">Keterangan: <%= pohon.keterangan %></p>
-    </div>
-    <div class="pohon-tombol row mb-3">
-        <div class="col">
-            <%= link_to edit_tactical_pohon_tematik_path(pohon),
+  <div class="pohon-title">
+    <h5 class="text-center"><strong>Tactical Tematik</strong></h5>
+  </div>
+  <div class="pohon-body">
+    <table class="table table-bordered">
+      <tr>
+        <td class="text-start" width="30px">Tactical Tematik</td>
+        <td class="text-wrap text-start"><%= pohon.pohonable.strategi %></td>
+      </tr>
+      <% pohon.pohonable.indikator_sasarans.each.with_index(1) do |indikator, i| %>
+        <tr>
+          <td class="text-start" width="30px">Indikator <%= i %></td>
+          <td class="text-wrap text-start"><%= indikator %></td>
+        </tr>
+        <tr>
+          <td class="text-start" width="30px">Target / Satuan</td>
+          <td class="text-wrap text-start"><%= indikator.target %> <%= indikator.satuan %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td class="text-start" width="30px">Keterangan</td>
+        <td class="text-wrap text-start"><%= pohon.keterangan %></td>
+      </tr>
+    </table>
+  </div>
+  <div class="pohon-tombol row mb-3">
+    <div class="col">
+      <%= link_to edit_tactical_pohon_tematik_path(pohon),
              remote: true,
              data: {controller: 'pohon-tematik',
                  action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
              },
              class: 'btn btn-outline-info' do %>
-                <i class="fas fa-edit me-2"></i>
-                <span>Edit</span>
-            <% end %>
-        </div>
-        <div class="col">
-            <%= link_to pohon_tematik_path(pohon),
+        <i class="fas fa-edit me-2"></i>
+        <span>Edit</span>
+      <% end %>
+    </div>
+    <div class="col">
+      <%= link_to pohon_tematik_path(pohon),
              method: :delete,
              class: 'btn btn-outline-danger',
              data: { confirm_swal: "Hapus Tactical Tematik #{pohon.pohonable.strategi}?" } do %>
-                <i class="fa fa-trash-alt me-2"></i>
-                <span>Hapus</span>
-            <% end %>
-        </div>
+        <i class="fa fa-trash-alt me-2"></i>
+        <span>Hapus</span>
+      <% end %>
     </div>
-    <div class="pohon-foot">
-        <div class="d-grid gap-3">
-            <%= link_to new_operational_tematik_pohon_tematik_path(pohon),
+  </div>
+  <div class="pohon-foot">
+    <div class="d-grid gap-3">
+      <%= link_to new_operational_tematik_pohon_tematik_path(pohon),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
@@ -38,10 +56,10 @@
                  action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
              },
              class: 'btn btn-info w-100' do %>
-                <i class="fas fa-plus me-2"></i>
-                <span>Operational Tematik</span>
-            <% end %>
-            <%= link_to new_operational_pohon_tematik_path(pohon),
+        <i class="fas fa-plus me-2"></i>
+        <span>Operational Tematik</span>
+      <% end %>
+      <%= link_to new_operational_pohon_tematik_path(pohon),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
@@ -49,9 +67,9 @@
                  action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
              },
              class: 'btn btn-primary w-100' do %>
-                <i class="fas fa-plus me-2"></i>
-                <span>Operational Tematik Baru</span>
-            <% end %>
-        </div>
+        <i class="fas fa-plus me-2"></i>
+        <span>Operational Tematik Baru</span>
+      <% end %>
     </div>
+  </div>
 </div>

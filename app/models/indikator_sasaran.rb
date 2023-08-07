@@ -31,6 +31,10 @@ class IndikatorSasaran < ApplicationRecord
     append id_indikator: '_2022_p'
   end
 
+  def to_s
+    indikator_kinerja
+  end
+
   def sasaran_kabid
     Sasaran.where(sasaran_atasan_id: id_indikator)
   end
