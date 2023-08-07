@@ -11,4 +11,5 @@
 #  tematik_ref_id :bigint
 #
 class SubTematik < Tematik
+  belongs_to :tematik, primary_key: :id, foreign_key: :tematik_ref_id
 end

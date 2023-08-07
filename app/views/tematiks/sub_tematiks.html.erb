@@ -31,13 +31,14 @@
         <table class="table datatable" data-datatable>
           <thead>
             <tr>
+              <th>Tema</th>
               <th>Sub-Tema</th>
               <th>Keterangan</th>
               <th class="text-center">Action</th>
             </tr>
           </thead>
           <tbody id="sub-tematik">
-            <%= render 'tematiks/tematik', tematiks: @sub_tematiks %>
+            <%= render 'tematiks/sub_tematik', sub_tematiks: @sub_tematiks %>
           </tbody>
         </table>
       </div>

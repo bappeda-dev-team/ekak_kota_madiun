@@ -1,9 +1,10 @@
 <% sub_tematiks.each do |tema| %>
   <tr>
+    <td><%= tema.tematik %></td>
     <td><%= tema %></td>
     <td><%= tema.keterangan %></td>
     <td class="text-center">
-      <%= link_to edit_tematik_path(tema), remote: true,
+      <%= link_to edit_sub_tematik_path(tema), remote: true,
          data: {
              controller: 'form-modal',
              action: 'ajax:complete->form-modal#success:prevent',
@@ -12,7 +13,7 @@
          },
          class: 'btn btn-outline-info' do %>
         <i class="fa fa-edit me-2"></i>
-        <span>Edit Tema</span>
+        <span>Edit Sub-Tema</span>
       <% end %>
       <%= link_to tema,
            method: :delete,

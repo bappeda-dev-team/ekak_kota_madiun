@@ -1,6 +1,6 @@
 class TematiksController < ApplicationController
   before_action :set_tematik, only: %i[show edit update destroy]
-  layout false, only: %i[new edit]
+  layout false, only: %i[new edit edit_sub]
 
   # GET /tematiks or /tematiks.json
   def index
@@ -20,7 +20,7 @@ class TematiksController < ApplicationController
   end
 
   def new_sub
-    @tematiks = index
+    @tematiks = index.collect { |tema| [tema, tema.id] }
     @sub_tematik = SubTematik.new
     render partial: 'form_sub_tematik', locals: { sub_tematik: @sub_tematik }, layout: false
   end
@@ -51,6 +51,11 @@ class TematiksController < ApplicationController
         end
       end
     end
+  end
+
+  def edit_sub
+    @sub_tematik = SubTematik.find(params[:id])
+    @tematiks = index.collect { |tema| [tema, tema.id] }
   end
 
   def sub
