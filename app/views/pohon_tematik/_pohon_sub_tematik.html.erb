@@ -22,10 +22,16 @@
           <% end %>
         </div>
         <div class="col">
-          <button class="btn btn-outline-info">
+          <%= link_to edit_sub_tematik_pohon_tematik_path(pohon),
+         remote: true,
+         data: {
+           controller: 'pohon-tematik',
+           action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
+         },
+         class: 'btn btn-outline-info' do %>
             <i class="fas fa-edit me-2"></i>
             <span>Edit</span>
-          </button>
+          <% end %>
         </div>
         <div class="col">
           <%= link_to pohon_tematik_path(pohon),
