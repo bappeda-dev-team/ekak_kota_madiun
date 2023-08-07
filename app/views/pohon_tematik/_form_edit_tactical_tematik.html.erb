@@ -1,0 +1,52 @@
+<%= form_with(model: pohon, url: update_tactical_pohon_tematik_path,
+              local: false,
+              method: :patch,
+              data: {
+                  controller: 'pohon-tematik',
+                  action: 'ajax:success->pohon-tematik#updateSuccess'
+              }
+) do |form| %>
+  <% if pohon.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(pohon.errors.count, "error") %> prohibited this tematik from being saved:</h2>
+      <ul>
+        <% pohon.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.hidden_field :pohon_ref_id %>
+    <%= form.hidden_field :pohonable_type %>
+    <%= form.hidden_field :role %>
+    <%= form.hidden_field :opd_id %>
+    <%= form.hidden_field :tahun %>
+  </div>
+  <div class="field">
+    <%= form.label :opd, class: 'form-label' %>
+    <%= form.text_field :opd, class: 'form-control text-center', value: @opd.nama_opd, readonly: true %>
+  </div>
+  <div class="field">
+    <%= form.label :tactical_tematik, class: 'form-label' %>
+    <%= form.select :pohonable_id, @strategis,
+         {include_blank: true},
+         { class: 'form-control',
+           data: {
+               controller: 'dropdown',
+               dropdown_jenis_value: 'action',
+               dropdown_event_name_value: 'change-tema',
+               placeholder: 'Pilih Strategi Tematik',
+           },
+           id: "pohon_#{form.object_id}",
+           required: true
+          }%>
+  </div>
+  <div class="field">
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_field :keterangan, class: 'form-control', required: true, id: "pohon_keterangan_#{form.object_id.to_s}" %>
+  </div>
+  <div class="actions">
+    <%= form.submit 'Simpan' %>
+  </div>
+<% end %>

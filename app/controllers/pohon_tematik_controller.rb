@@ -135,7 +135,7 @@ class PohonTematikController < ApplicationController
   def edit_strategi
     @pohon = Pohon.find(params[:id])
     @opd = @pohon.opd
-    @strategis = @opd.strategis.where(tahun: @pohon.tahun)
+    @strategis = @opd.strategis.where(tahun: @pohon.tahun, role: %w[eselon_2 strategi_pohon_kota])
                      .collect { |str| [str.strategi, str.id] }
   end
 
@@ -209,6 +209,31 @@ class PohonTematikController < ApplicationController
     @opd = parent_pohon.opd
     @tactical = Strategi.new(role: 'tactical_pohon_kota', tahun: parent_pohon.tahun,
                              opd_id: @opd.id)
+  end
+
+  def edit_tactical
+    @pohon = Pohon.find(params[:id])
+    @opd = @pohon.opd
+    @strategis = @opd.strategis.where(tahun: @pohon.tahun, role: %w[eselon_3 tactical_pohon_kota])
+                     .collect { |str| [str.strategi, str.id] }
+  end
+
+  def update_tactical
+    @pohon = Pohon.find(params[:id])
+    if @pohon.update(pohon_strategi_tema_params)
+      html_content = render_to_string(partial: 'pohon_tematik/item_pohon_tactical',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { pohon: @pohon })
+      render json: { resText: "Tactical Tematik Diupdate", attachmentPartial: html_content }.to_json,
+             status: :created
+    else
+      error_content = render_to_string(partial: 'pohon_tematik/form_strategi_tematik',
+                                       formats: 'html',
+                                       layout: false,
+                                       locals: { pohon: @pohon })
+      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
+    end
   end
 
   def new_operational_tematik
