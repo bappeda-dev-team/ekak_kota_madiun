@@ -1,0 +1,43 @@
+<%= form_with(model: pohon, url: update_sub_tematik_pohon_tematik_path,
+              local: false,
+              method: :patch,
+              data: {
+                  controller: 'pohon-tematik',
+                  action: 'ajax:success->pohon-tematik#pindahSuccess'
+              }
+) do |form| %>
+  <% if pohon.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(pohon.errors.count, "error") %> prohibited this tematik from being saved:</h2>
+      <ul>
+        <% pohon.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :tematik_kota, class: 'form-label' %>
+    <%= form.select :pohon_ref_id, dahan_atas,
+         {include_blank: true},
+         { class: 'form-control',
+           data: {
+               controller: 'dropdown',
+               dropdown_jenis_value: 'action',
+               placeholder: 'Pilih Tematik Kota',
+           },
+            id: "pohon_#{form.object_id}",
+           required: true }%>
+  </div>
+  <div class="field">
+    <%= form.label :sub_tematik_kota, class: 'form-label' %>
+    <%= form.text_field :sub_tematik_kota, class: 'form-control text-center', value: @pohon.pohonable.tema, readonly: true %>
+  </div>
+  <div class="field">
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_field :keterangan, class: 'form-control text-center', readonly: true %>
+  </div>
+  <div class="actions">
+    <%= form.submit 'Simpan' %>
+  </div>
+<% end %>

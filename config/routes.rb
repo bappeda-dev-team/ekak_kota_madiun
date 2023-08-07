@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   resources :pohon_tematik do
     member do
       get :new_sub
+      get :pindah_sub_tematik
+      patch :update_sub_tematik
       get :new_opd_tematik
       get :edit_opd_tematik
       patch :update_opd_tematik

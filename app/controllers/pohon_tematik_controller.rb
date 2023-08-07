@@ -17,6 +17,23 @@ class PohonTematikController < ApplicationController
                        pohon_ref_id: parent_pohon.id)
   end
 
+  def pindah_sub_tematik
+    @pohon = Pohon.find(params[:id])
+    @tahun = @pohon.tahun
+    @dahan_atas = Pohon.where(pohonable_type: 'Tematik', role: 'pohon_kota', tahun: @tahun)
+                       .collect { |dahan| [dahan.pohonable.tema, dahan.id] }
+  end
+
+  def update_sub_tematik
+    @pohon = Pohon.find(params[:id])
+    if @pohon.update(pohon_sub_tema_params)
+      render json: { resText: "Jalur di-ubah" }.to_json,
+             status: :created
+    else
+      render json: { resText: "Gagal Menyimpan" }.to_json, status: :unprocessable_entity
+    end
+  end
+
   def new_opd_tematik
     parent_pohon = Pohon.find(params[:id])
     @sub_tematik = parent_pohon.pohonable
