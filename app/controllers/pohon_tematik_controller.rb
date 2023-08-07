@@ -6,7 +6,14 @@ class PohonTematikController < ApplicationController
   def new
     tahun = cookies[:tahun]
     @tematiks = Tematik.all.where(type: nil).order(updated_at: :desc)
+                       .collect { |tema| [tema.tema, tema.id] }
     @pohon = Pohon.new(pohonable_type: 'Tematik', role: 'pohon_kota', tahun: tahun)
+  end
+
+  def edit
+    @pohon = Pohon.find(params[:id])
+    @tematiks = Tematik.all.where(type: nil).order(updated_at: :desc)
+                       .collect { |tema| [tema.tema, tema.id] }
   end
 
   def new_sub
@@ -167,6 +174,23 @@ class PohonTematikController < ApplicationController
                                       layout: false,
                                       locals: { pohon: @pohon })
       render json: { resText: "Pohon Tematik Dibuat", attachmentPartial: html_content }.to_json, status: :created
+    else
+      error_content = render_to_string(partial: 'pohon_tematik/form',
+                                       formats: 'html',
+                                       layout: false,
+                                       locals: { pohon: @pohon })
+      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    @pohon = Pohon.find(params[:id])
+    if @pohon.update(pohon_params)
+      html_content = render_to_string(partial: 'pohon_tematik/pohon_tematik',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { pohon: @pohon })
+      render json: { resText: "Pohon Tematik Diupdate", attachmentPartial: html_content }.to_json, status: :created
     else
       error_content = render_to_string(partial: 'pohon_tematik/form',
                                        formats: 'html',

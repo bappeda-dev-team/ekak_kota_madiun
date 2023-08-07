@@ -1,4 +1,5 @@
-<%= form_with(model: pohon, url: pohon_tematik_index_path,
+<%= form_with(model: pohon, url: pohon_tematik_path,
+              method: :patch,
               local: false,
               data: {
                   controller: 'pohon-tematik',
@@ -16,9 +17,9 @@
     </div>
   <% end %>
   <div class="field">
-      <%= form.hidden_field :pohonable_type %>
-      <%= form.hidden_field :role %>
-      <%= form.hidden_field :tahun %>
+    <%= form.hidden_field :pohonable_type %>
+    <%= form.hidden_field :role %>
+    <%= form.hidden_field :tahun %>
   </div>
   <div class="field">
     <%= form.label :tematik_kota, class: 'form-label' %>
