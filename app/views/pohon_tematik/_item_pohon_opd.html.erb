@@ -8,18 +8,6 @@
     </div>
     <div class="pohon-tombol row mb-3">
         <div class="col">
-            <%= link_to pindah_opd_tematik_pohon_tematik_path(pohon),
-             remote: true,
-             data: {
-                 controller: 'pohon-tematik',
-                 action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
-             },
-             class: 'btn btn-outline-primary' do %>
-                <i class="fas fa-exchange-alt me-2"></i>
-                <span>Pindah</span>
-            <% end %>
-        </div>
-        <div class="col">
             <%= link_to edit_opd_tematik_pohon_tematik_path(pohon),
              remote: true,
              data: {
