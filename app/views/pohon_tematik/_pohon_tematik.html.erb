@@ -1,35 +1,33 @@
 <li>
   <div class="tf-nc" style="width: 450px;">
-    <div class="pohon-title">
-      <h5 class="text-center"><strong>Tematik Kota</strong></h5>
-    </div>
-    <div class="pohon-body">
-      <p class="text-center">Tema: <%= pohon.pohonable.tema %></p>
-      <p class="text-center">Keterangan: <%= pohon.keterangan %></p>
-    </div>
-    <div class="pohon-tombol row mb-3">
-      <div class="col">
-        <button class="btn btn-outline-primary">
-          <i class="fas fa-exchange-alt me-2"></i>
-          <span>Pindah</span>
-        </button>
+    <div class="pohon">
+      <div class="pohon-title">
+        <h5 class="text-center"><strong>Tematik Kota</strong></h5>
       </div>
-      <div class="col">
-        <button class="btn btn-outline-info">
-          <i class="fas fa-edit me-2"></i>
-          <span>Edit</span>
-        </button>
+      <div class="pohon-body">
+        <p class="text-center">Tema: <%= pohon.pohonable.tema %></p>
+        <p class="text-center">Keterangan: <%= pohon.keterangan %></p>
       </div>
-      <div class="col">
-        <button class="btn btn-outline-danger">
-          <i class="fas fa-trash me-2"></i>
-          <span>Hapus</span>
-        </button>
+      <div class="pohon-tombol row mb-3">
+        <div class="col">
+          <button class="btn btn-outline-info">
+            <i class="fas fa-edit me-2"></i>
+            <span>Edit</span>
+          </button>
+        </div>
+        <div class="col">
+          <%= link_to pohon_tematik_path(pohon),
+                      method: :delete,
+                      class: 'btn btn-outline-danger',
+                      data: { confirm_swal: "Hapus Tema #{pohon.pohonable.tema}?" } do %>
+            <i class="fa fa-trash-alt me-2"></i>
+            <span>Hapus</span>
+          <% end %>
+        </div>
       </div>
-    </div>
-    <div class="pohon-foot">
-      <div class="d-grid gap-3">
-        <%= link_to new_sub_pohon_tematik_path(pohon),
+      <div class="pohon-foot">
+        <div class="d-grid gap-3">
+          <%= link_to new_sub_pohon_tematik_path(pohon),
                         remote: true,
                         data: {
                                 controller: 'pohon-tematik',
@@ -37,9 +35,10 @@
                                 action: 'ajax:complete->pohon-tematik#addSubTematik:prevent',
                               },
                         class: 'btn btn-info w-100' do %>
-          <i class="fas fa-plus me-2"></i>
-          <span>Sub-Tematik Kota</span>
-        <% end %>
+            <i class="fas fa-plus me-2"></i>
+            <span>Sub-Tematik Kota</span>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
