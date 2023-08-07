@@ -1,0 +1,41 @@
+<div class="pohon">
+    <div class="pohon-title">
+        <h5 class="text-center"><strong>Operational Tematik</strong></h5>
+    </div>
+    <div class="pohon-body">
+        <p class="text-center">Operational Tematik: <%= pohon.pohonable.strategi %></p>
+        <p class="text-center">Keterangan: <%= pohon.keterangan %></p>
+    </div>
+    <div class="pohon-tombol row mb-3">
+        <div class="col">
+            <button class="btn btn-outline-primary">
+                <i class="fas fa-exchange-alt me-2"></i>
+                <span>Pindah</span>
+            </button>
+        </div>
+        <div class="col">
+            <%= link_to edit_operational_pohon_tematik_path(pohon),
+             remote: true,
+             data: {controller: 'pohon-tematik',
+                 action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
+             },
+             class: 'btn btn-outline-info' do %>
+                <i class="fas fa-edit me-2"></i>
+                <span>Edit</span>
+            <% end %>
+        </div>
+        <div class="col">
+            <%= link_to pohon_tematik_path(pohon),
+             method: :delete,
+             class: 'btn btn-outline-danger',
+             data: { confirm_swal: "Hapus Operational Tematik #{pohon.pohonable.strategi}?" } do %>
+                <i class="fa fa-trash-alt me-2"></i>
+                <span>Hapus</span>
+            <% end %>
+        </div>
+    </div>
+    <div class="pohon-foot">
+        <div class="row gx-3">
+        </div>
+    </div>
+</div>

@@ -29,6 +29,8 @@ Rails.application.routes.draw do
       patch :update_tactical
       get :new_operational_tematik
       get :new_operational
+      get :edit_operational
+      patch :update_operational
       patch :pindah_pohon
     end
     collection do

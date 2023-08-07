@@ -253,6 +253,31 @@ class PohonTematikController < ApplicationController
                                 opd_id: @opd.id)
   end
 
+  def edit_operational
+    @pohon = Pohon.find(params[:id])
+    @opd = @pohon.opd
+    @strategis = @opd.strategis.where(tahun: @pohon.tahun, role: %w[eselon_4 operational_pohon_kota])
+                     .collect { |str| [str.strategi, str.id] }
+  end
+
+  def update_operational
+    @pohon = Pohon.find(params[:id])
+    if @pohon.update(pohon_strategi_tema_params)
+      html_content = render_to_string(partial: 'pohon_tematik/item_pohon_operational',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { pohon: @pohon })
+      render json: { resText: "Operational Tematik Diupdate", attachmentPartial: html_content }.to_json,
+             status: :created
+    else
+      error_content = render_to_string(partial: 'pohon_tematik/form_strategi_tematik',
+                                       formats: 'html',
+                                       layout: false,
+                                       locals: { pohon: @pohon })
+      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
+    end
+  end
+
   def create
     @pohon = Pohon.new(pohon_params)
     if @pohon.save

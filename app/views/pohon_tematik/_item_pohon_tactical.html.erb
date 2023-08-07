@@ -16,8 +16,7 @@
         <div class="col">
             <%= link_to edit_tactical_pohon_tematik_path(pohon),
              remote: true,
-             data: {
-                 controller: 'pohon-tematik',
+             data: {controller: 'pohon-tematik',
                  action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
              },
              class: 'btn btn-outline-info' do %>

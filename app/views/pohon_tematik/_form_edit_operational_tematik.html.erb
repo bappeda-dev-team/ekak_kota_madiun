@@ -1,4 +1,4 @@
-<%= form_with(model: pohon, url: update_tactical_pohon_tematik_path,
+<%= form_with(model: pohon, url: update_operational_pohon_tematik_path,
               local: false,
               method: :patch,
               data: {
@@ -28,7 +28,7 @@
     <%= form.text_field :opd, class: 'form-control text-center', value: @opd.nama_opd, readonly: true %>
   </div>
   <div class="field">
-    <%= form.label :tactical_tematik, class: 'form-label' %>
+    <%= form.label :strategi_tematik, class: 'form-label' %>
     <%= form.select :pohonable_id, @strategis,
          {include_blank: true},
          { class: 'form-control',
@@ -36,7 +36,7 @@
                controller: 'dropdown',
                dropdown_jenis_value: 'action',
                dropdown_event_name_value: 'change-tema',
-               placeholder: 'Pilih Tactical Tematik',
+               placeholder: 'Pilih Strategi Tematik',
            },
            id: "pohon_#{form.object_id}",
            required: true
