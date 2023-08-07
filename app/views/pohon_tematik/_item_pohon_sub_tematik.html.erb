@@ -1,49 +1,57 @@
 <div class="pohon">
-    <div class="pohon-title">
-        <h5 class="text-center"><strong>Sub-Tematik Kota</strong></h5>
-    </div>
-    <div class="pohon-body">
-        <p class="text-center">Sub-Tema: <%= pohon.pohonable.tema %></p>
-        <p class="text-center">Keterangan: <%= pohon.keterangan %></p>
-    </div>
-    <div class="pohon-tombol row mb-3">
-        <div class="col">
-            <%= link_to pindah_sub_tematik_pohon_tematik_path(pohon),
+  <div class="pohon-title">
+    <h5 class="text-center"><strong>Sub-Tematik Kota</strong></h5>
+  </div>
+  <div class="pohon-body">
+    <table class="table table-bordered">
+      <tr>
+        <td class="text-start" width="30px">Sub-Tema</td>
+        <td class="text-wrap text-start"><%= pohon.pohonable.tema %></td>
+      </tr>
+      <tr>
+        <td class="text-start" width="30px">Keterangan</td>
+        <td class="text-wrap text-start"><%= pohon.keterangan %></td>
+      </tr>
+    </table>
+  </div>
+  <div class="pohon-tombol row mb-3">
+    <div class="col">
+      <%= link_to pindah_sub_tematik_pohon_tematik_path(pohon),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
                  action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
              },
              class: 'btn btn-outline-primary' do %>
-                <i class="fas fa-exchange-alt me-2"></i>
-                <span>Pindah</span>
-            <% end %>
-        </div>
-        <div class="col">
-            <%= link_to edit_sub_tematik_pohon_tematik_path(pohon),
+        <i class="fas fa-exchange-alt me-2"></i>
+        <span>Pindah</span>
+      <% end %>
+    </div>
+    <div class="col">
+      <%= link_to edit_sub_tematik_pohon_tematik_path(pohon),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
                  action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
              },
              class: 'btn btn-outline-info' do %>
-                <i class="fas fa-edit me-2"></i>
-                <span>Edit</span>
-            <% end %>
-        </div>
-        <div class="col">
-            <%= link_to pohon_tematik_path(pohon),
+        <i class="fas fa-edit me-2"></i>
+        <span>Edit</span>
+      <% end %>
+    </div>
+    <div class="col">
+      <%= link_to pohon_tematik_path(pohon),
              method: :delete,
              class: 'btn btn-outline-danger',
              data: { confirm_swal: "Hapus Sub-Tema #{pohon.pohonable.tema}?" } do %>
-                <i class="fa fa-trash-alt me-2"></i>
-                <span>Hapus</span>
-            <% end %>
-        </div>
+        <i class="fa fa-trash-alt me-2"></i>
+        <span>Hapus</span>
+      <% end %>
     </div>
-    <div class="pohon-foot">
-        <div class="d-grid gap-3">
-            <%= link_to new_opd_tematik_pohon_tematik_path(pohon),
+  </div>
+  <div class="pohon-foot">
+    <div class="d-grid gap-3">
+      <%= link_to new_opd_tematik_pohon_tematik_path(pohon),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
@@ -51,9 +59,9 @@
                  action: 'ajax:complete->pohon-tematik#addOpdTematik:prevent',
              },
              class: 'btn btn-info w-100' do %>
-                <i class="fas fa-plus me-2"></i>
-                <span>OPD Tematik</span>
-            <% end %>
-        </div>
+        <i class="fas fa-plus me-2"></i>
+        <span>OPD Tematik</span>
+      <% end %>
     </div>
+  </div>
 </div>

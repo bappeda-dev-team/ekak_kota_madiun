@@ -17,24 +17,35 @@
         <div class="tf-tree tf-gap-lg mt-2 show text-center" data-controller="pohon-tematik">
           <ul>
             <li>
-              <div class="tf-nc">
-                <div class="pohon-title">
-                  <h5 class="text-center"><strong>Pohon Kinerja Kota</strong></h5>
-                </div>
-                <div class="pohon-body">
-                  <p class="text-center">Kota Madiun</p>
-                </div>
-                <div class="pohon-foot">
-                  <div class="row gx-3">
-                    <%= link_to new_pohon_tematik_path,
+              <div class="tf-nc" style="width: 450px;">
+                <div class="pohon">
+                  <div class="pohon-title">
+                    <h5 class="text-center"><strong>Pohon Kinerja Kota</strong></h5>
+                  </div>
+                  <div class="pohon-body">
+                    <table class="table table-bordered">
+                      <tr>
+                        <td class="text-start" width="30px">Kota</td>
+                        <td class="text-start fw-bolder">Kota Madiun</td>
+                      </tr>
+                      <tr>
+                        <td class="text-start" width="30px">Tahun</td>
+                        <td class="text-start fw-bolder"><%= @tahun %></td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="pohon-foot">
+                    <div class="row gx-3">
+                      <%= link_to new_pohon_tematik_path,
                         remote: true,
                         data: {
                                 action: 'ajax:complete->pohon-tematik#addPohon:prevent',
                               },
                         class: 'btn btn-primary w-100' do %>
-                      <i class="fas fa-plus me-2"></i>
-                      <span>Tematik Kota</span>
-                    <% end %>
+                        <i class="fas fa-plus me-2"></i>
+                        <span>Tematik Kota</span>
+                      <% end %>
+                    </div>
                   </div>
                 </div>
               </div>
