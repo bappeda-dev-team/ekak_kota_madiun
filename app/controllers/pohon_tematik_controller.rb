@@ -40,7 +40,7 @@ class PohonTematikController < ApplicationController
   def update_sub_tematik
     @pohon = Pohon.find(params[:id])
     if @pohon.update(pohon_sub_tema_params)
-      html_content = render_to_string(partial: 'pohon_tematik/pohon_sub_tematik',
+      html_content = render_to_string(partial: 'pohon_tematik/item_pohon_sub_tematik',
                                       formats: 'html',
                                       layout: false,
                                       locals: { pohon: @pohon })
@@ -91,7 +91,7 @@ class PohonTematikController < ApplicationController
   def update_opd_tematik
     @pohon = Pohon.find(params[:id])
     if @pohon.update(pohon_sub_tema_params)
-      html_content = render_to_string(partial: 'pohon_tematik/pohon_opd_tematik',
+      html_content = render_to_string(partial: 'pohon_tematik/item_pohon_opd',
                                       formats: 'html',
                                       layout: false,
                                       locals: { pohon: @pohon })
@@ -298,7 +298,7 @@ class PohonTematikController < ApplicationController
   def update
     @pohon = Pohon.find(params[:id])
     if @pohon.update(pohon_params)
-      html_content = render_to_string(partial: 'pohon_tematik/pohon_tematik',
+      html_content = render_to_string(partial: 'pohon_tematik/item_pohon_tematik',
                                       formats: 'html',
                                       layout: false,
                                       locals: { pohon: @pohon })

@@ -3,7 +3,7 @@
               local: false,
               data: {
                   controller: 'pohon-tematik',
-                  action: 'ajax:success->pohon-tematik#ajaxSuccess'
+                  action: 'ajax:success->pohon-tematik#updateSuccess'
               }
 ) do |form| %>
   <% if pohon.errors.any? %>
