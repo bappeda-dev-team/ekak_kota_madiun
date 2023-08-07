@@ -1,4 +1,6 @@
-<%= form_with(model: pohon, url: '/pohon_tematik/create_opd_tematik', local: false,
+<%= form_with(model: pohon, url: update_opd_tematik_pohon_tematik_path,
+              local: false,
+              method: :patch,
               data: {
                   controller: 'pohon-tematik',
                   action: 'ajax:success->pohon-tematik#ajaxSuccess'

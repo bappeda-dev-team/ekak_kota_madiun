@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     member do
       get :new_sub
       get :new_opd_tematik
+      get :edit_opd_tematik
+      patch :update_opd_tematik
       get :pindah_opd_tematik
       get :new_strategi_tematik
       get :new_strategi

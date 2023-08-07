@@ -22,16 +22,25 @@
           <% end %>
         </div>
         <div class="col">
-          <button class="btn btn-outline-info">
+          <%= link_to edit_opd_tematik_pohon_tematik_path(pohon),
+         remote: true,
+         data: {
+           controller: 'pohon-tematik',
+           action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
+         },
+         class: 'btn btn-outline-info' do %>
             <i class="fas fa-edit me-2"></i>
             <span>Edit</span>
-          </button>
+          <% end %>
         </div>
         <div class="col">
-          <button class="btn btn-outline-danger">
-            <i class="fas fa-trash me-2"></i>
+          <%= link_to pohon_kinerja_path(pohon),
+                      method: :delete,
+                      class: 'btn btn-outline-danger',
+                      data: { confirm_swal: "Hapus pohon #{pohon}?" } do %>
+            <i class="fa fa-trash-alt me-2"></i>
             <span>Hapus</span>
-          </button>
+          <% end %>
         </div>
       </div>
       <div class="pohon-foot">
