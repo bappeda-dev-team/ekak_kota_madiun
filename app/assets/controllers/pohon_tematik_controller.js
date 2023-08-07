@@ -120,6 +120,15 @@ export default class extends Controller {
     target.innerHTML = html
   }
 
+  updateSuccess(e) {
+    const [xhr] = e.detail
+    this.sweetAlertSuccess(xhr.resText)
+    const target = e.currentTarget.closest('.tf-nc')
+    console.log(target)
+    const html = xhr.attachmentPartial
+    target.innerHTML = html
+  }
+
   ajaxError(e) {
     const [xhr] = e.detail
     this.sweetAlertFailed(xhr.resText)

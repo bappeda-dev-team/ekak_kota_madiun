@@ -132,6 +132,68 @@ class PohonTematikController < ApplicationController
                              opd_id: @opd.id)
   end
 
+  def edit_strategi
+    @pohon = Pohon.find(params[:id])
+    @opd = @pohon.opd
+    @strategis = @opd.strategis.where(tahun: @pohon.tahun)
+                     .collect { |str| [str.strategi, str.id] }
+  end
+
+  def create_strategi_tematik
+    @pohon = Pohon.new(pohon_strategi_tema_params)
+    if @pohon.save
+      html_content = render_to_string(partial: 'pohon_tematik/pohon_strategi_tematik',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { pohon: @pohon })
+      render json: { resText: "Strategi Tematik Ditambahkan", attachmentPartial: html_content }.to_json,
+             status: :created
+    else
+      error_content = render_to_string(partial: 'pohon_tematik/form_strategi_tematik',
+                                       formats: 'html',
+                                       layout: false,
+                                       locals: { pohon: @pohon })
+      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
+    end
+  end
+
+  def update_strategi
+    @pohon = Pohon.find(params[:id])
+    if @pohon.update(pohon_strategi_tema_params)
+      html_content = render_to_string(partial: 'pohon_tematik/item_pohon_strategi',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { pohon: @pohon })
+      render json: { resText: "Strategi Tematik Diupdate", attachmentPartial: html_content }.to_json,
+             status: :created
+    else
+      error_content = render_to_string(partial: 'pohon_tematik/form_strategi_tematik',
+                                       formats: 'html',
+                                       layout: false,
+                                       locals: { pohon: @pohon })
+      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
+    end
+  end
+
+  def create_strategi_tematik_baru
+    @strategi = Strategi.new(strategi_params)
+    if @strategi.save
+      @pohon = new_pohon!
+      html_content = render_to_string(partial: 'pohon_tematik/pohon_strategi_tematik',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { pohon: @pohon })
+      render json: { resText: "Strategi Tematik Ditambahkan", attachmentPartial: html_content }.to_json,
+             status: :created
+    else
+      error_content = render_to_string(partial: 'pohon_tematik/form_strategi_tematik_baru',
+                                       formats: 'html',
+                                       layout: false,
+                                       locals: { strategi: @strategi })
+      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
+    end
+  end
+
   def new_tactical_tematik
     parent_pohon = Pohon.find(params[:id])
     @opd = parent_pohon.opd
@@ -213,43 +275,6 @@ class PohonTematikController < ApplicationController
                                        formats: 'html',
                                        layout: false,
                                        locals: { pohon: @pohon })
-      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
-    end
-  end
-
-  def create_strategi_tematik
-    @pohon = Pohon.new(pohon_strategi_tema_params)
-    if @pohon.save
-      html_content = render_to_string(partial: 'pohon_tematik/pohon_strategi_tematik',
-                                      formats: 'html',
-                                      layout: false,
-                                      locals: { pohon: @pohon })
-      render json: { resText: "Strategi Tematik Ditambahkan", attachmentPartial: html_content }.to_json,
-             status: :created
-    else
-      error_content = render_to_string(partial: 'pohon_tematik/form_strategi_tematik',
-                                       formats: 'html',
-                                       layout: false,
-                                       locals: { pohon: @pohon })
-      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
-    end
-  end
-
-  def create_strategi_tematik_baru
-    @strategi = Strategi.new(strategi_params)
-    if @strategi.save
-      @pohon = new_pohon!
-      html_content = render_to_string(partial: 'pohon_tematik/pohon_strategi_tematik',
-                                      formats: 'html',
-                                      layout: false,
-                                      locals: { pohon: @pohon })
-      render json: { resText: "Strategi Tematik Ditambahkan", attachmentPartial: html_content }.to_json,
-             status: :created
-    else
-      error_content = render_to_string(partial: 'pohon_tematik/form_strategi_tematik_baru',
-                                       formats: 'html',
-                                       layout: false,
-                                       locals: { strategi: @strategi })
       render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
     end
   end

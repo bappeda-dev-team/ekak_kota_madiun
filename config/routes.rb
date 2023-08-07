@@ -21,6 +21,8 @@ Rails.application.routes.draw do
       get :pindah_opd_tematik
       get :new_strategi_tematik
       get :new_strategi
+      get :edit_strategi
+      patch :update_strategi
       get :new_tactical_tematik
       get :new_tactical
       get :new_operational_tematik
