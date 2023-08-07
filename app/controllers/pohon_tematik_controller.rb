@@ -278,6 +278,16 @@ class PohonTematikController < ApplicationController
     end
   end
 
+  def destroy
+    @pohon = Pohon.find(params[:id])
+    @pohon.destroy
+
+    respond_to do |format|
+      format.html { redirect_to kota_pohon_kinerja_index_url, warning: "Pohon dihapus" }
+      format.json { head :no_content }
+    end
+  end
+
   private
 
   def new_pohon_params
