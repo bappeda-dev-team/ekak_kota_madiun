@@ -1,35 +1,39 @@
 <li>
   <div class="tf-nc" style="width: 450px;">
-    <div class="pohon-title">
-      <h5 class="text-center"><strong>Tactical Tematik</strong></h5>
-    </div>
-    <div class="pohon-body">
-      <p class="text-center">Tactical Tematik: <%= pohon.pohonable.strategi %></p>
-      <p class="text-center">Keterangan: <%= pohon.keterangan %></p>
-    </div>
-    <div class="pohon-tombol row mb-3">
-      <div class="col">
-        <button class="btn btn-outline-primary">
-          <i class="fas fa-exchange-alt me-2"></i>
-          <span>Pindah</span>
-        </button>
+    <div class="pohon">
+      <div class="pohon-title">
+        <h5 class="text-center"><strong>Tactical Tematik</strong></h5>
       </div>
-      <div class="col">
-        <button class="btn btn-outline-info">
-          <i class="fas fa-edit me-2"></i>
-          <span>Edit</span>
-        </button>
+      <div class="pohon-body">
+        <p class="text-center">Tactical Tematik: <%= pohon.pohonable.strategi %></p>
+        <p class="text-center">Keterangan: <%= pohon.keterangan %></p>
       </div>
-      <div class="col">
-        <button class="btn btn-outline-danger">
-          <i class="fas fa-trash me-2"></i>
-          <span>Hapus</span>
-        </button>
+      <div class="pohon-tombol row mb-3">
+        <div class="col">
+          <button class="btn btn-outline-primary">
+            <i class="fas fa-exchange-alt me-2"></i>
+            <span>Pindah</span>
+          </button>
+        </div>
+        <div class="col">
+          <button class="btn btn-outline-info">
+            <i class="fas fa-edit me-2"></i>
+            <span>Edit</span>
+          </button>
+        </div>
+        <div class="col">
+          <%= link_to pohon_tematik_path(pohon),
+                      method: :delete,
+                      class: 'btn btn-outline-danger',
+                      data: { confirm_swal: "Hapus Tactical Tematik #{pohon.pohonable.strategi}?" } do %>
+            <i class="fa fa-trash-alt me-2"></i>
+            <span>Hapus</span>
+          <% end %>
+        </div>
       </div>
-    </div>
-    <div class="pohon-foot">
-      <div class="d-grid gap-3">
-        <%= link_to new_operational_tematik_pohon_tematik_path(pohon),
+      <div class="pohon-foot">
+        <div class="d-grid gap-3">
+          <%= link_to new_operational_tematik_pohon_tematik_path(pohon),
                         remote: true,
                         data: {
                                 controller: 'pohon-tematik',
@@ -37,10 +41,10 @@
                                 action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
                               },
                         class: 'btn btn-info w-100' do %>
-          <i class="fas fa-plus me-2"></i>
-          <span>Operational Tematik</span>
-        <% end %>
-        <%= link_to new_operational_pohon_tematik_path(pohon),
+            <i class="fas fa-plus me-2"></i>
+            <span>Operational Tematik</span>
+          <% end %>
+          <%= link_to new_operational_pohon_tematik_path(pohon),
                         remote: true,
                         data: {
                                 controller: 'pohon-tematik',
@@ -48,9 +52,10 @@
                                 action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
                               },
                         class: 'btn btn-primary w-100' do %>
-          <i class="fas fa-plus me-2"></i>
-          <span>Operational Tematik Baru</span>
-        <% end %>
+            <i class="fas fa-plus me-2"></i>
+            <span>Operational Tematik Baru</span>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
