@@ -408,6 +408,8 @@ class PohonTematikController < ApplicationController
 
   def destroy
     @pohon = Pohon.find(params[:id])
+    childs = Pohon.where(pohon_ref_id: @pohon.id)
+    childs.destroy_all
     @pohon.destroy
 
     respond_to do |format|
