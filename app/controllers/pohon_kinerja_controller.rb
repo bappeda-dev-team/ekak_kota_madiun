@@ -312,11 +312,11 @@ class PohonKinerjaController < ApplicationController
     @opd_tematiks = Pohon.where(pohonable_type: 'Opd', role: 'opd_pohon_kota', tahun: @tahun)
                          .includes(:pohonable)
     @strategi_tematiks = Pohon.where(pohonable_type: 'Strategi', role: 'strategi_pohon_kota', tahun: @tahun)
-                              .includes(:pohonable)
+                              .includes(:pohonable, pohonable: [:indikator_sasarans])
     @tactical_tematiks = Pohon.where(pohonable_type: 'Strategi', role: 'tactical_pohon_kota', tahun: @tahun)
-                              .includes(:pohonable)
+                              .includes(:pohonable, pohonable: [:indikator_sasarans])
     @operational_tematiks = Pohon.where(pohonable_type: 'Strategi', role: 'operational_pohon_kota', tahun: @tahun)
-                                 .includes(:pohonable)
+                                 .includes(:pohonable, pohonable: [:indikator_sasarans])
   end
 
   def opd
