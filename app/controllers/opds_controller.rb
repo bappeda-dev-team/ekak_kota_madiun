@@ -69,6 +69,10 @@ class OpdsController < ApplicationController
     end
   end
 
+  def bidang
+    @opds = Opd.with_bidang
+  end
+
   def tujuan; end
 
   def sasaran; end

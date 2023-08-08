@@ -127,15 +127,6 @@ class StrategisController < ApplicationController
                     122, 123].include?(@opd.id) && @role == 'eselon_3'
                   @opd.users.with_any_role(@role.to_sym,
                                            :eselon_2b)
-                  # make this simpler,
-                  # opd pendidikan can get from bidangs
-                  # opd dinkes can get from bidangs
-                  # opd setda can get from bidangs
-                  # opd kecamatan can get from bidangs
-                  # deteremine wether opd has eselon_2b or not
-                elsif @opd.bidangs.any?
-                  kode_map = @opd.bidangs.map(&:kode_opd)
-                  User.where(kode_opd: kode_map).with_role(@role.to_sym)
                 else
                   @opd.users.with_role(@role.to_sym)
                 end

@@ -26,6 +26,10 @@ module SuperAdminItemHelper
         icon: 'fas fa-building', identifier: 'list_opd'
       },
       {
+        title: 'Master Bidang', href: bidang_opds_path,
+        icon: 'fas fa-building', identifier: 'list_opd'
+      },
+      {
         title: 'Master Rencana Kinerja', href: sasaran_admin_sasarans_path,
         icon: 'fas fa-archive', identifier: 'adminsasarans'
       },
