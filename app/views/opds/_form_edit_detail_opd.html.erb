@@ -1,5 +1,9 @@
 <%= form_with(model: opd, local: false) do |form| %>
   <div class="field">
+    <%= form.label :nama_opd, class: 'form-label' %>
+    <%= form.text_field :nama_opd, class: "form-control", readonly: true %>
+  </div>
+  <div class="field">
     <%= form.label :nama_kepala, class: 'form-label' %>
     <%= form.text_field :nama_kepala, class: "form-control" %>
   </div>

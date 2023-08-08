@@ -414,6 +414,7 @@ Rails.application.routes.draw do
       get :legit_opd
       get :sasaran_tactical
       get :sasaran_operational
+      get :bidang
     end
     member do
       get :buat_strategi

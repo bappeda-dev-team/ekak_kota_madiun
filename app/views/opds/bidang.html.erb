@@ -22,11 +22,21 @@
           </tr>
         </thead>
         <tbody>
-          <% opds.each do |opd| %>
+          <% @opds.each do |opd| %>
+            <tr class="bg-info text-white">
+              <td colspan="6">Utama:</td>
+            </tr>
             <%= render 'opds/row_table_opd', opd: opd %>
+            <tr class="bg-primary text-white">
+              <td colspan="6">Bidang: <%= opd.bidangs.size %></td>
+            </tr>
+            <% opd.bidangs.order(:kode_unik_opd).each do |bidang| %>
+              <%= render 'opds/row_table_opd', opd: bidang %>
+            <% end %>
           <% end %>
         </tbody>
       </table>
     </div>
   </div>
 </div>
+<%= render 'modal' %>
