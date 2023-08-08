@@ -18,11 +18,7 @@ export default class extends Controller {
       target.insertAdjacentHTML('beforeend', html)
     }
     else {
-      const html = `
-      <div class="tf-nc" style="width: 450px;">
-        <div class="alert alert-danger" role="alert">Terjadi Kesalahan</div>
-      </div>
-      `
+      const html = this.errorHtml()
       target.insertAdjacentHTML('beforeend', html)
     }
   }
@@ -38,11 +34,7 @@ export default class extends Controller {
       target.insertAdjacentHTML('beforeend', html)
     }
     else {
-      const html = `
-      <div class="tf-nc" style="width: 450px;">
-        <div class="alert alert-danger" role="alert">Terjadi Kesalahan</div>
-      </div>
-      `
+      const html = this.errorHtml()
       target.insertAdjacentHTML('beforeend', html)
     }
   }
@@ -74,7 +66,7 @@ export default class extends Controller {
       target.insertAdjacentHTML('beforeend', html)
     }
     else {
-      const html = '<div class="alert alert-danger" role="alert">Terjadi Kesalahan</div>'
+      const html = this.errorHtml()
       target.insertAdjacentHTML('beforeend', html)
     }
   }
@@ -88,23 +80,45 @@ export default class extends Controller {
       target.insertAdjacentHTML('beforeend', html)
     }
     else {
-      const html = '<div class="alert alert-danger" role="alert">Terjadi Kesalahan</div>'
+      const html = this.errorHtml()
       target.insertAdjacentHTML('beforeend', html)
     }
   }
 
   addStrategiTematik(e) {
     const [xhr, status] = e.detail
-    const target = document.getElementById(e.params.id)
+    const parent = e.currentTarget.closest('li')
+    const target = parent.querySelector('ul')
 
     if (status == 'OK') {
       const html = xhr.response
       target.insertAdjacentHTML('beforeend', html)
     }
     else {
-      const html = '<div class="alert alert-danger" role="alert">Terjadi Kesalahan</div>'
+      const html = this.errorHtml()
       target.insertAdjacentHTML('beforeend', html)
     }
+  }
+
+  errorHtml() {
+    return `
+    <li>
+      <div class="tf-nc" style="width: 450px;">
+        <div class="pohon-title">
+          <h5 class="text-center"><strong>Error</strong></h5>
+        </div>
+        <div class="pohon-body">
+          <div class="alert alert-danger" role="alert">
+            Terjadi Kesalahan
+            <br>
+            Klik Batal untuk menutup
+          </div>
+        </div>
+        <div class="pohon-foot">
+          <button type="button" class="btn btn-danger w-100" aria-label="Close" data-action="pohon-tematik#closeForm">Batal</button>
+        </div>
+      </div>
+    </li>`
   }
 
   closeForm(e) {
@@ -124,7 +138,6 @@ export default class extends Controller {
     const [xhr] = e.detail
     this.sweetAlertSuccess(xhr.resText)
     const target = e.currentTarget.closest('.tf-nc')
-    console.log(target)
     const html = xhr.attachmentPartial
     target.innerHTML = html
   }
