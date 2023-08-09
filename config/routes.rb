@@ -9,6 +9,7 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  # TODO: Refactor controller to resources
   resources :pohon_tematik do
     member do
       get :new_sub
