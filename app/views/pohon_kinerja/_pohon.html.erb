@@ -6,16 +6,17 @@
       <p class="text-center"><strong><%= @nama_opd %></strong></p>
     </div>
     <ul>
-      <% @strategis_pohon.each do |isu, strategi_kotas| %>
+      <% @isu_strategis_pohon.each do |isu| %>
         <li>
           <div class="tf-nc">
             <p class="text-center"><strong>ISU STRATEGIS</strong></p>
             <hr/>
-            <span class="text-center"><%= isu %></span>
+            <span class="text-center"><%= isu.isu_strategis %></span>
           </div>
           <ul>
-            <% strategi_kotas.each do |pohon| %>
+            <% @strategi_kotas.select { |sk| sk.pohonable.isu_strategis_kota_id.to_i == isu.id }.each do |pohon| %>
               <li>
+                pohon id:<%= pohon.id %>
                 <%= render 'item_pokin_kota_edit', judul: 'STRATEGI KOTA', strategi: pohon.pohonable, tipe: 'kota' %>
                 <ul>
                   <% @strategic.select { |key| key.pohon_id.to_i == pohon.id }.each do |strategi| %>

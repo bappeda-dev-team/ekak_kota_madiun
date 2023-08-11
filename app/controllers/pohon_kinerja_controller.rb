@@ -20,13 +20,23 @@ class PohonKinerjaController < ApplicationController
     @kode_opd = cookies[:opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
-    pokin = PokinManual.new(tahun: @tahun, opd: @opd)
-
-    strategis = pokin.strategi_by_role
-    @strategis_pohon = pokin.strategis_pohon
-    @strategic = strategis['eselon_2']
-    @tactical = strategis['eselon_3']
-    @operational = strategis['eselon_4']
+    pohons = Pohon.includes([:pohonable, { pohonable: %i[isu_strategis_kotum sasaran_kotum komentars] }])
+                  .where(opd_id: @opd.id,
+                         tahun: @tahun,
+                         pohonable_type: 'StrategiKotum')
+    @isu_strategis_pohon = pohons.map { |pohon| pohon.pohonable.isu }.uniq!
+    @strategi_kotas = pohons
+    strategis = StrategiPohon.includes([:indikator_sasarans,
+                                        { indikator_sasarans: [:manual_ik] },
+                                        :strategi_asli,
+                                        { strategi_asli: [:komentars,
+                                                          { komentars: [:user] }] }])
+                             .where(opd_id: @opd.id.to_s,
+                                    role: 'eselon_2',
+                                    tahun: @tahun)
+    @strategic = strategis
+    @tactical = strategis.rewhere(role: 'eselon_3').includes(:pohon_shareds)
+    @operational = strategis.rewhere(role: 'eselon_4').includes(:pohon_shareds)
   end
 
   def list_pohon
