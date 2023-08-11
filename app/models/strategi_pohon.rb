@@ -61,11 +61,9 @@ class StrategiPohon < Strategi
   }, class_name: "StrategiPohon",
      foreign_key: "strategi_ref_id", dependent: :destroy
 
-  has_one :strategi_asli, class_name: "Strategi",
-                          primary_key: "strategi_cascade_link",
-                          foreign_key: "id"
-
-  def komentars
-    strategi_asli.komentars
-  end
+  belongs_to :strategi_asli, class_name: 'Strategi',
+                             foreign_key: :strategi_cascade_link,
+                             primary_key: :id
+  has_many :komentars, primary_key: :strategi_cascade_link,
+                       foreign_key: :item
 end

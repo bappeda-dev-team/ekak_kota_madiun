@@ -14,9 +14,8 @@
             <span class="text-center"><%= isu.isu_strategis %></span>
           </div>
           <ul>
-            <% @strategi_kotas.select { |sk| sk.pohonable.isu_strategis_kota_id.to_i == isu.id }.each do |pohon| %>
+            <% @strategi_kotas.select { |sk| sk.isu_strategis_id == isu.id }.each do |pohon| %>
               <li>
-                pohon id:<%= pohon.id %>
                 <%= render 'item_pokin_kota_edit', judul: 'STRATEGI KOTA', strategi: pohon.pohonable, tipe: 'kota' %>
                 <ul>
                   <% @strategic.select { |key| key.pohon_id.to_i == pohon.id }.each do |strategi| %>
