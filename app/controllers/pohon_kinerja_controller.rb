@@ -22,12 +22,11 @@ class PohonKinerjaController < ApplicationController
     @nama_opd = @opd.nama_opd
     strategis = StrategiPohon.includes([:indikator_sasarans,
                                         { indikator_sasarans: [:manual_ik] },
-                                        :pohon,
                                         :opd])
                              .where(opd_id: @opd.id.to_s,
                                     role: 'eselon_2',
                                     tahun: @tahun)
-    @strategi_kotas = strategis.map(&:pohon)
+    @strategi_kotas = strategis.includes(:pohon, { pohon: [:pohonable] }).map(&:pohon)
     @isu_strategis_pohon = @strategi_kotas.map { |pohon| pohon.pohonable.isu }.uniq
     @strategic = strategis
     @tactical = strategis.rewhere(role: 'eselon_3')
