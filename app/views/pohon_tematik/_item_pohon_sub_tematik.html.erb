@@ -1,12 +1,12 @@
 <div class="pohon">
-  <div class="pohon-title">
+  <div class="pohon-title <%= pohon.pohonable.blank? ? 'bg-danger text-white' : '' %>">
     <h5 class="text-center"><strong>Sub-Tematik Kota</strong></h5>
   </div>
   <div class="pohon-body">
-    <table class="table table-bordered">
+    <table class="table table-bordered <%= pohon.pohonable.blank? ? 'bg-danger text-white' : '' %>">
       <tr>
         <td class="text-start" width="30px">Sub-Tema</td>
-        <td class="text-wrap text-start"><%= pohon.pohonable.tema %></td>
+        <td class="text-wrap text-start"><%= pohon.sub_tema %></td>
       </tr>
       <tr>
         <td class="text-start" width="30px">Keterangan</td>
@@ -43,7 +43,7 @@
       <%= link_to pohon_tematik_path(pohon),
              method: :delete,
              class: 'btn btn-outline-danger',
-             data: { confirm_swal: "Hapus Sub-Tema #{pohon.pohonable.tema}?" } do %>
+             data: { confirm_swal: "Hapus Sub-Tema #{pohon.sub_tema}?" } do %>
         <i class="fa fa-trash-alt me-2"></i>
         <span>Hapus</span>
       <% end %>

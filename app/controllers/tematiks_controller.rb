@@ -62,12 +62,12 @@ class TematiksController < ApplicationController
     @sub_tematik = SubTematik.new(sub_tematik_params)
 
     if @sub_tematik.save
-      html_content = render_to_string(partial: 'tematiks/tematik',
+      html_content = render_to_string(partial: 'tematiks/sub_tematik',
                                       formats: 'html',
                                       layout: false,
-                                      locals: { tematiks: sub_tematiks })
+                                      locals: { sub_tematiks: sub_tematiks })
 
-      render json: { resText: "Tematik tersimpan", attachmentPartial: html_content }.to_json, status: :created
+      render json: { resText: "Sub Tematik tersimpan", attachmentPartial: html_content }.to_json, status: :created
     else
       error_content = render_to_string(partial: 'tematiks/form_sub_tematik',
                                        formats: 'html',
@@ -81,10 +81,39 @@ class TematiksController < ApplicationController
   def update
     respond_to do |format|
       if @tematik.update(tematik_params)
-        format.json { render json: { resText: "Tematik diperbarui", res: @tematik }.to_json, status: :ok }
+        html_content = render_to_string(partial: 'tematiks/tematik',
+                                        formats: 'html',
+                                        layout: false,
+                                        locals: { tematiks: index })
+        format.json do
+          render json: { resText: "Tematik diperbarui", res: @tematik, attachmentPartial: html_content }.to_json,
+                 status: :ok
+        end
       else
         format.json do
           render json: { resText: "Gagal memperbarui", res: @tematik.errors }.to_json, status: :unprocessable_entity
+        end
+      end
+    end
+  end
+
+  #
+  # PATCH/PUT /tematiks/1 or /tematiks/1.json
+  def update_sub
+    @sub_tematik = SubTematik.find(params[:id])
+    respond_to do |format|
+      if @sub_tematik.update(sub_tematik_params)
+        html_content = render_to_string(partial: 'tematiks/sub_tematik',
+                                        formats: 'html',
+                                        layout: false,
+                                        locals: { sub_tematiks: sub_tematiks })
+        format.json do
+          render json: { resText: "Sub Tematik diperbarui", res: @sub_tematik, attachmentPartial: html_content }.to_json,
+                 status: :ok
+        end
+      else
+        format.json do
+          render json: { resText: "Gagal memperbarui", res: @sub_tematik.errors }.to_json, status: :unprocessable_entity
         end
       end
     end
