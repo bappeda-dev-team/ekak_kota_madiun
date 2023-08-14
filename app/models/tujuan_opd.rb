@@ -34,7 +34,7 @@ class TujuanOpd < Tujuan
   end
 
   def indikators_tujuan
-    indikators.uniq(&:tahun).sort_by(&:tahun)
+    indikators.uniq(&:indikator)
   end
 
   def urusan_opd
