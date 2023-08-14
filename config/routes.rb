@@ -54,7 +54,8 @@ Rails.application.routes.draw do
 
     member do
       get :edit_sub
-      patch :sub
+      post :sub
+      patch :update_sub
       delete :sub
     end
   end

@@ -98,4 +98,12 @@ class Pohon < ApplicationRecord
       opd.nama_opd
     end
   end
+
+  def sub_tema
+    if pohonable.present?
+      pohonable.tema
+    else
+      'Tidak Ditemukan'
+    end
+  end
 end

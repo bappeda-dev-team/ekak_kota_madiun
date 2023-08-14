@@ -21,6 +21,7 @@ class TujuanOpdsController < ApplicationController
   # GET /tujuan_opds/1/edit
   def edit
     opd_collections
+    render layout: false
   end
 
   # POST /tujuan_opds or /tujuan_opds.json
@@ -77,9 +78,12 @@ class TujuanOpdsController < ApplicationController
   end
 
   def opd_collections
+    @tahun = cookies[:tahun]
     @opds = Opd.where.not(kode_opd: nil)
-               .where(kode_opd: current_user.kode_opd).pluck(:nama_opd,
-                                                             :kode_unik_opd)
+               .pluck(:nama_opd,
+                      :kode_unik_opd)
+    @urusans = Master::Urusan.where(tahun: @tahun).collect { |urusan| [urusan.nama_urusan, urusan.id] }
+    @indikators = @tujuan_opd.indikators_tujuan
   end
 
   # Only allow a list of trusted parameters through.
@@ -89,6 +93,8 @@ class TujuanOpdsController < ApplicationController
   end
 
   def indikators_attributes
-    { indikators_attributes: %i[id kode kode_opd indikator target satuan tahun _destroy] }
+    { indikators_attributes: [:id, :kode, :kode_opd, :indikator, :_destroy, {
+      targets_attributes: %i[id target satuan tahun indikator_id opd_id jenis _destroy]
+    }] }
   end
 end

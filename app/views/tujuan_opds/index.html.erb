@@ -1,29 +1,23 @@
-<div class="row">
-  <div class="col-12" data-controller="filter-render">
-    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
-      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
-        <li class="breadcrumb-item">
-          <%= link_to root_path do %>
-            <i class="fas fa-home"></i>
-          <% end %>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">Tujuan OPD</li>
-      </ol>
-    </nav>
-    <% if cookies[:tahun] && cookies[:opd] %>
-      <% if current_user.has_role?(:super_admin) %>
+<%= content_for :html_title, "Tujuan OPD" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Perencanaan OPD</li>
+  <li class="breadcrumb-item active" aria-current="page">Tujuan OPD</li>
+<% end %>
+<% content_for :view_utama do %>
+  <% if cookies[:tahun] && cookies[:opd] %>
+    <% if current_user.has_role?(:super_admin) %>
       <div class="card border-0 shadow" id="user_filter" data-controller="page-ajax"
              data-page-ajax-opd-value="<%= cookies[:opd] %>"
              data-page-ajax-url-value="<%= admin_filter_tujuan_opds_path %>"
              data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >
         <div data-page-ajax-target="results">
-        <div class="card-header">
-          <div class="row align-items-center">
-            <div class="col">
-              <h2 class="fs-5 fw-bold mb-0">Tujuan OPD</h2>
+          <div class="card-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h2 class="fs-5 fw-bold mb-0">Tujuan OPD</h2>
+              </div>
             </div>
           </div>
-        </div>
           <div class="loader text-center">
             <div class="lds-roller">
               <div></div>
@@ -39,22 +33,10 @@
           </div>
         </div>
       </div>
-      <% else %>
-        <%= render 'tujuan_opds/tujuan_opd' %>
-      <% end %>
     <% else %>
-      <div class="card border-0 shadow" id="user_filter">
-        <div class="card-header">
-          <div class="row align-items-center">
-            <div class="col">
-              <h2 class="fs-5 fw-bold mb-0">Tujuan OPD</h2>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="alert alert-info">Pilih Tahun dan OPD</p>
-        </div>
-      </div>
+      <%= render 'tujuan_opds/tujuan_opd' %>
     <% end %>
-  </div>
-</div>
+  <% else %>
+    <%= render 'shared/pilih_tahun_dan_opd' %>
+  <% end %>
+<% end %>

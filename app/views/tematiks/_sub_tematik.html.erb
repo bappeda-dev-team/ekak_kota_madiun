@@ -1,10 +1,10 @@
-<% sub_tematiks.each do |tema| %>
+<% sub_tematiks.each do |sub_tema| %>
   <tr>
-    <td><%= tema.tematik %></td>
-    <td><%= tema %></td>
-    <td><%= tema.keterangan %></td>
+    <td><%= sub_tema.tematik %></td>
+    <td><%= sub_tema %></td>
+    <td><%= sub_tema.keterangan %></td>
     <td class="text-center">
-      <%= link_to edit_sub_tematik_path(tema), remote: true,
+      <%= link_to edit_sub_tematik_path(sub_tema), remote: true,
          data: {
              controller: 'form-modal',
              action: 'ajax:complete->form-modal#success:prevent',
@@ -15,10 +15,15 @@
         <i class="fa fa-edit me-2"></i>
         <span>Edit Sub-Tema</span>
       <% end %>
-      <%= link_to tema,
+      <%= link_to tematik_path(sub_tema),
            method: :delete,
+            remote: true,
            class: 'btn btn-outline-danger',
-           data: { confirm_swal: "Hapus #{tema}?" } do %>
+           data: {
+               confirm_swal: "Hapus #{sub_tema}?",
+               controller: 'form-modal',
+               action: 'ajax:complete->form-modal#success:prevent',
+           } do %>
         <i class="fa fa-trash-alt me-2"></i>
         <span>Hapus Tema</span>
       <% end %>

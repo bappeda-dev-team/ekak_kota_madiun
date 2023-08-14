@@ -33,6 +33,10 @@ class TujuanOpd < Tujuan
     }
   end
 
+  def indikators_tujuan
+    indikators.uniq(&:indikator)
+  end
+
   def urusan_opd
     "#{urusan&.kode_urusan} - #{urusan&.nama_urusan}"
   end

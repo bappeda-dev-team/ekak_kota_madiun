@@ -2894,6 +2894,42 @@ ALTER SEQUENCE public.tahuns_id_seq OWNED BY public.tahuns.id;
 
 
 --
+-- Name: targets; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.targets (
+    id bigint NOT NULL,
+    target character varying,
+    satuan character varying,
+    tahun character varying,
+    jenis character varying,
+    indikator_id bigint,
+    opd_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: targets_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.targets_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: targets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.targets_id_seq OWNED BY public.targets.id;
+
+
+--
 -- Name: tematik_sasarans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3659,6 +3695,13 @@ ALTER TABLE ONLY public.tahuns ALTER COLUMN id SET DEFAULT nextval('public.tahun
 
 
 --
+-- Name: targets id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.targets ALTER COLUMN id SET DEFAULT nextval('public.targets_id_seq'::regclass);
+
+
+--
 -- Name: tematik_sasarans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4292,6 +4335,14 @@ ALTER TABLE ONLY public.tahuns
 
 
 --
+-- Name: targets targets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.targets
+    ADD CONSTRAINT targets_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: tematik_sasarans tematik_sasarans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4758,6 +4809,20 @@ CREATE INDEX index_subdomains_on_domain_id ON public.subdomains USING btree (dom
 --
 
 CREATE UNIQUE INDEX index_tahapans_on_id_rencana_aksi ON public.tahapans USING btree (id_rencana_aksi);
+
+
+--
+-- Name: index_targets_on_indikator_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_targets_on_indikator_id ON public.targets USING btree (indikator_id);
+
+
+--
+-- Name: index_targets_on_opd_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_targets_on_opd_id ON public.targets USING btree (opd_id);
 
 
 --
@@ -5262,6 +5327,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230717012001'),
 ('20230720075944'),
 ('20230731071626'),
-('20230802004938');
+('20230802004938'),
+('20230814035509');
 
 
