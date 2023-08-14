@@ -19,14 +19,14 @@
   <%= form.hidden_field :id_tujuan, :value => random_number, readonly: true %>
   <div class="field">
     <%= form.label :opd, class: 'form-label' %>
-    <%= form.select :kode_unik_opd, options_for_select(@opds, current_user.opd),
+    <%= form.select :kode_unik_opd, @opds,
           {include_blank: true},
-          { required: true, class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih OPD' } }%>
+          { required: true, class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih OPD', dropdown_parent_value: '#form-modal' } }%>
   </div>
   <div class="field">
     <%= form.label :urusan, class: 'form-label' %>
     <%= form.select :urusan_id, @urusans ,{include_blank: true},
-          { required: true, class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih Urusan' } }%>
+          { required: true, class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih Urusan', dropdown_parent_value: '#form-modal' } }%>
   </div>
   <div class="field">
     <%= form.label :tujuan, class: 'form-label' %>
@@ -35,12 +35,12 @@
   <div class="field">
     <%= form.label :tahun_awal, class: 'form-label' %>
     <%= form.select :tahun_awal,[2020, 2021, 2022, 2023, 2024],{},
-          { required: true, class: 'form-control', data: { controller: 'dropdown' } }%>
+          { required: true, class: 'form-control', data: { controller: 'dropdown', dropdown_parent_value: '#form-modal' } }%>
   </div>
   <div class="field">
     <%= form.label :tahun_akhir, class: 'form-label' %>
     <%= form.select :tahun_akhir,[2020, 2021, 2022, 2023, 2024],{},
-          { required: true, class: 'form-control', data: { controller: 'dropdown' } }%>
+          { required: true, class: 'form-control', data: { controller: 'dropdown', dropdown_parent_value: '#form-modal' } }%>
   </div>
   <hr>
   <div class="field row" id="indikator-tujuans-opd">

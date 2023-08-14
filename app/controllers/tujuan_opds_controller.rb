@@ -80,8 +80,8 @@ class TujuanOpdsController < ApplicationController
   def opd_collections
     @tahun = cookies[:tahun]
     @opds = Opd.where.not(kode_opd: nil)
-               .where(kode_opd: current_user.kode_opd).pluck(:nama_opd,
-                                                             :kode_unik_opd)
+               .pluck(:nama_opd,
+                      :kode_unik_opd)
     @urusans = Master::Urusan.where(tahun: @tahun).collect { |urusan| [urusan.nama_urusan, urusan.id] }
     @indikators = @tujuan_opd.indikators_tujuan
   end
