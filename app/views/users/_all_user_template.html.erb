@@ -64,12 +64,12 @@
               </div>
               <div class="row gy-2">
                 <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
-                  <% unless user.has_role? :admin %>
-                    <%= link_to "/aktifkan_user/#{user.nik}", remote: true, method: :post ,
+                  <%= link_to "/aktifkan_user/#{user.nik}", remote: true, method: :post ,
                       class: 'btn btn-sm btn-outline-success d-inline-flex align-items-center', id: "#{dom_id(user)}" do %>
-                      <i class="fa fa-check me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Aktifkan"></i>
-                      <span>Aktifkan</span>
-                    <% end %>
+                    <i class="fa fa-check me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Aktifkan"></i>
+                    <span>Aktifkan</span>
+                  <% end %>
+                  <% unless user.has_role? :admin %>
                     <%= link_to "/nonaktifkan_user/#{user.nik}", remote: true, method: :post ,
                   class: 'btn btn-sm btn-outline-danger d-inline-flex align-items-center', id: "#{dom_id(user)}" do %>
                       <i class="fa fa-times-circle me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Non Aktifkan"></i>
