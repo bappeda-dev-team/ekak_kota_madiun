@@ -43,8 +43,7 @@
           { required: true, class: 'form-control', data: { controller: 'dropdown', dropdown_parent_value: '#form-modal' } }%>
   </div>
   <hr>
-  <div class="field row" id="indikator-tujuans-opd">
-    <h5>Indikator Tujuan</h5>
+  <div class="field mt-0" id="indikator-tujuans-opd">
     <%= form.fields_for :indikators, @indikators do |indikator_tujuan| %>
       <%= render 'tujuan_opds/indikator_tujuan_opd_fields', form: indikator_tujuan %>
     <% end %>

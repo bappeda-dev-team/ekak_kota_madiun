@@ -1,23 +1,24 @@
-<fieldset class="mb-5 col">
-  <div class="field ">
-    <%= form.label :tahun, class: 'form-label' %>
-    <%= form.select :tahun, [2020, 2021, 2022, 2023, 2024], {},
-                { class: 'form-control',
-                  data: { controller: 'dropdown', dropdown_parent_value: '#form-modal' }
-                } %>
-  </div>
-  <div class="field ">
+<fieldset class="mb-5 row">
+  <div class="field mt-0">
     <%= form.label :indikator, { class: "form-label" } %>
     <%= form.text_area :indikator, { class: "form-control" } %>
   </div>
-  <div class="field ">
-    <%= form.label :target, { class: "form-label" } %>
-    <%= form.number_field :target, { class: "form-control", step: 0.01 } %>
-  </div>
-  <div class="field ">
-    <%= form.label :satuan, { class: "form-label" } %>
-    <%= form.text_field :satuan, { class: "form-control" } %>
-  </div>
+  <% (2020..2024).each do |tahun| %>
+    <div class="tahun col">
+      <div class="field mt-0">
+        <%= form.label :tahun, class: 'form-label' %>
+        <%= form.text_field :tahun, { class: 'form-control', value: tahun, readonly: true } %>
+      </div>
+      <div class="field ">
+        <%= form.label :target, { class: "form-label" } %>
+        <%= form.number_field :target, { class: "form-control", step: 0.01 } %>
+      </div>
+      <div class="field ">
+        <%= form.label :satuan, { class: "form-label" } %>
+        <%= form.text_field :satuan, { class: "form-control" } %>
+      </div>
+    </div>
+  <% end %>
   <%= link_to_remove_nested(form, link_text: 'Hapus Indikator',
                             link_classes: 'btn btn-outline-danger') %>
 </fieldset>
