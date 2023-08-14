@@ -17,9 +17,9 @@
         <thead class="thead-tujuan">
           <tr class="header-tujuan">
             <th class="border" scope="col" rowspan="2" width="20px">No.</th>
+            <th class="border text-center" scope="col" rowspan="2">Aksi</th>
             <th class="border" scope="col" rowspan="2">Urusan</th>
             <th class="border" scope="col" rowspan="2">Tujuan OPD</th>
-            <th class="border text-center" scope="col" rowspan="2">Aksi</th>
             <th class="border" scope="col" rowspan="2">Indikator</th>
             <% (2020..2024).each do |tahun| %>
               <th class="border text-center" scope="col" colspan="2"><%= tahun %></th>
@@ -37,29 +37,33 @@
             <% rowsize = tujuan.indikators.uniq(&:indikator).size + 1 %>
             <tr>
               <td class="text-gray-900 text-wrap border" width='20px' scope="row" rowspan="<%= rowsize %>"><%= no_tujuan %></td>
-              <td class="text-gray-900 text-wrap border" scope="row" rowspan="<%= rowsize %>" ><%= tujuan.urusan_opd %></td>
-              <td class="text-gray-900 text-wrap border" style="width: 30%;" scope="row" rowspan="<%= rowsize %>" ><%= tujuan.tujuan %></td>
               <td class="text-gray-900 border px-auto" scope="row" rowspan="<%= rowsize %>">
-                <% unless current_user.has_role?(:super_admin) %>
-                  <div class="row justify-content-center w-100">
-                    <div class="col">
-                      <%= link_to edit_tujuan_opd_path(tujuan),
-                       class: "m-3 btn btn-outline-info w-100" do %>
-                        <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
-                        <span>Edit</span>
-                      <% end %>
-                    </div>
-                    <div class="col">
-                      <%= link_to tujuan, method: :delete,
+                <div class="row justify-content-center w-100">
+                  <div class="col">
+                    <%= link_to edit_tujuan_opd_path(tujuan),
+                        remote: true,
+                        class: "m-3 btn btn-outline-info w-100",
+                        data: {
+                          controller: 'form-modal',
+                          action: 'ajax:complete->form-modal#success:prevent',
+                          bs_toggle: 'modal',
+                          bs_target: '#form-modal' } do %>
+                      <i class="fa fa-edit"></i>
+                      <span>Edit</span>
+                    <% end %>
+                  </div>
+                  <div class="col">
+                    <%= link_to tujuan, method: :delete,
                      data: { confirm_swal: "Hapus #{tujuan.tujuan} ?"},
                      class: "m-3 btn btn-outline-danger w-100" do %>
-                        <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
-                        <span>Hapus</span>
-                      <% end %>
-                    </div>
+                      <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+                      <span>Hapus</span>
+                    <% end %>
                   </div>
-                <% end %>
+                </div>
               </td>
+              <td class="text-gray-900 text-wrap border" scope="row" rowspan="<%= rowsize %>" ><%= tujuan.urusan_opd %></td>
+              <td class="text-gray-900 text-wrap border" style="width: 30%;" scope="row" rowspan="<%= rowsize %>" ><%= tujuan.tujuan %></td>
               <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="11"></td>
             </tr>
             <% tujuan.indikator_tujuans[:indikator_tujuan].each do |indikator_tujuan, values| %>
