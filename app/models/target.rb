@@ -20,4 +20,8 @@
 class Target < ApplicationRecord
   belongs_to :indikator
   belongs_to :opd, optional: true
+
+  def to_s
+    target
+  end
 end

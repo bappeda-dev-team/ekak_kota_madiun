@@ -14,13 +14,23 @@ class TujuanOpdsController < ApplicationController
 
   # GET /tujuan_opds/new
   def new
-    opd_collections
+    @tahun = cookies[:tahun]
+    @opds = Opd.where.not(kode_opd: nil)
+               .pluck(:nama_opd,
+                      :kode_unik_opd)
+    @urusans = Master::Urusan.where(tahun: @tahun).collect { |urusan| [urusan.nama_urusan, urusan.id] }
     @tujuan_opd = TujuanOpd.new
+    @tujuan_opd.indikators.build.targets.build
+    render layout: false
   end
 
   # GET /tujuan_opds/1/edit
   def edit
-    opd_collections
+    @tahun = cookies[:tahun]
+    @opds = Opd.where.not(kode_opd: nil)
+               .pluck(:nama_opd,
+                      :kode_unik_opd)
+    @urusans = Master::Urusan.where(tahun: @tahun).collect { |urusan| [urusan.nama_urusan, urusan.id] }
     render layout: false
   end
 

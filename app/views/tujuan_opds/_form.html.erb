@@ -44,12 +44,12 @@
   </div>
   <hr>
   <div class="field mt-0" id="indikator-tujuans-opd">
-    <%= form.fields_for :indikators, @indikators do |indikator_tujuan| %>
+    <%= form.fields_for :indikators do |indikator_tujuan| %>
       <%= render 'tujuan_opds/indikator_tujuan_opd_fields', form: indikator_tujuan %>
     <% end %>
   </div>
   <%= link_to_add_nested(form, :indikators, "#indikator-tujuans-opd",
-                             link_classes: 'btn btn-primary btn-sm',
+                             link_classes: 'btn btn-primary w-100',
                              link_text: 'Tambah Indikator',
                              partial: 'tujuan_opds/indikator_tujuan_opd_fields') %>
   <div class="actions">

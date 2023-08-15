@@ -21,7 +21,11 @@ class TujuanOpd < Tujuan
   has_many :indikators, lambda {
                           where(jenis: 'Tujuan', sub_jenis: 'Opd')
                         }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id_tujuan'
+  has_many :targets, through: :indikators
+
   accepts_nested_attributes_for :indikators, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :targets, reject_if: :all_blank, allow_destroy: true
+
   belongs_to :urusan, class_name: 'Master::Urusan', foreign_key: 'urusan_id'
 
   def indikator_tujuans
