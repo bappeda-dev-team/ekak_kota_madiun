@@ -1,26 +1,17 @@
-<fieldset class="mb-5 row">
+<fieldset class="mb-3">
   <div class="field mt-0">
     <%= form.label :indikator, { class: "form-label" } %>
     <%= form.text_area :indikator, { class: "form-control" } %>
   </div>
-  <% (2020..2024).each do |tahun| %>
-    <%= form.fields_for :targets, form.object.targets.build do |f_target| %>
-      <div class="tahun col">
-        <div class="field mt-0">
-          <%= f_target.label :tahun, class: 'form-label' %>
-          <%= f_target.text_field :tahun, { class: 'form-control', value: tahun, readonly: true } %>
-        </div>
-        <div class="field ">
-          <%= f_target.label :target, { class: "form-label" } %>
-          <%= f_target.number_field :target, { class: "form-control", step: 0.01 } %>
-        </div>
-        <div class="field ">
-          <%= f_target.label :satuan, { class: "form-label" } %>
-          <%= f_target.text_field :satuan, { class: "form-control" } %>
-        </div>
-      </div>
+  <div class="field row mt-0" id="target-indikator">
+    <%= form.fields_for :targets do |f_target| %>
+      <%= render 'tujuan_opds/target_fields', form: f_target %>
     <% end %>
-  <% end %>
+  </div>
+  <%= link_to_add_nested(form, :targets, "#target-indikator",
+                             link_classes: 'btn btn-primary',
+                             link_text: 'Tambah Target',
+                             partial: 'tujuan_opds/target_fields') %>
   <%= link_to_remove_nested(form, link_text: 'Hapus Indikator',
-                            link_classes: 'btn btn-outline-danger') %>
+                            link_classes: 'btn btn-outline-danger w-100 mt-2') %>
 </fieldset>
