@@ -35,6 +35,10 @@ module AdminItemHelper
         icon: 'fas fa-building', identifier: 'opds/info'
       },
       {
+        title: 'Program/Kegiatan', href: pks_opd_program_kegiatans_path,
+        icon: 'fas fa-building', identifier: 'opds/info'
+      },
+      {
         title: 'Daftar ASN', href: adminusers_path,
         icon: 'fas fa-user', identifier: 'admin_user'
       },

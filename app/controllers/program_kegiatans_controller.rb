@@ -276,6 +276,18 @@ class ProgramKegiatansController < ApplicationController
     end
   end
 
+  def pks_opd; end
+
+  def content_pks_opd
+    @tahun_asli = params[:tahun]
+    @tahun = @tahun_asli.gsub("_perubahan", "")
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    @program_kegiatans = @opd.program_renstra
+    render layout: false
+  end
+
   private
 
   def set_program_kegiatan
