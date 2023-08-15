@@ -29,4 +29,10 @@
       <% end %>
     </td>
   </tr>
+  <% sub_tema.indikators.each do |ind| %>
+  <tr>
+    <td><%= ind.indikator %></td>
+    <td><%= ind.target_satuan %></td>
+  </tr>
+    <% end %>
 <% end %>

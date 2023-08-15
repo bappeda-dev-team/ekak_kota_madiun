@@ -34,6 +34,15 @@
     <%= form.label :sub_tema, class: 'form-label' %>
     <%= form.text_field :tema, class: 'form-control' %>
   </div>
+  <div class="field mt-0" id="indikator-subtematik">
+    <%= form.fields_for :indikators do |indikator_subtematik| %>
+      <%= render 'tematiks/indikator_sub_tematik_fields', form: indikator_subtematik %>
+    <% end %>
+  </div>
+  <%= link_to_add_nested(form, :indikators, "#indikator-subtematik",
+                             link_classes: 'btn btn-primary btn-sm',
+                             link_text: 'Tambah Indikator',
+                             partial: 'tematiks/indikator_sub_tematik_fields') %>
   <div class="field">
     <%= form.label :keterangan, class: 'form-label' %>
     <%= form.text_area :keterangan, class: 'form-control' %>

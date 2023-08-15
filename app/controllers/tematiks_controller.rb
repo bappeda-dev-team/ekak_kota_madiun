@@ -22,6 +22,7 @@ class TematiksController < ApplicationController
   def new_sub
     @tematiks = index.collect { |tema| [tema, tema.id] }
     @sub_tematik = SubTematik.new
+    @sub_tematik.indikators.build
     render partial: 'form_sub_tematik', locals: { sub_tematik: @sub_tematik }, layout: false
   end
 
@@ -142,6 +143,10 @@ class TematiksController < ApplicationController
   end
 
   def sub_tematik_params
-    params.require(:sub_tematik).permit(:tema, :keterangan, :tematik_ref_id, :type)
+    params.require(:sub_tematik).permit(:tema, :keterangan, :tematik_ref_id, :type, indikators_attributes)
+  end
+
+  def indikators_attributes
+    { indikators_attributes: %i[id kode kode_opd indikator target satuan _destroy] }
   end
 end

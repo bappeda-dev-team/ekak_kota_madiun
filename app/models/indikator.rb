@@ -20,4 +20,8 @@
 class Indikator < ApplicationRecord
   has_many :targets
   accepts_nested_attributes_for :targets, reject_if: :all_blank, allow_destroy: true
+
+  def target_satuan
+    "#{target} #{satuan}"
+  end
 end
