@@ -77,13 +77,10 @@
             <% tujuan.indikators.each do |indikator_tujuan| %>
               <tr>
                 <td class="text-gray-900 text-wrap border"  ><%= indikator_tujuan || '-' %></td>
-                <% indikator_tujuan.targets.each do |target| %>
                 <% (2020..2024).each do |tahun| %>
-                  <% if target.tahun == tahun.to_s %>
-                    <td class="text-gray-900 text-wrap border"  ><%= target %></td>
-                    <td class="text-gray-900 text-wrap border"  ><%= target.satuan %></td>
-                  <% end %>
-                <% end %>
+                  <% target = indikator_tujuan.targets.find_by(tahun: tahun) %>
+                  <td class="text-gray-900 text-wrap border"><%= target %></td>
+                  <td class="text-gray-900 text-wrap border"><%= target&.satuan %></td>
                 <% end %>
               </tr>
             <% end %>
