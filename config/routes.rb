@@ -536,6 +536,8 @@ Rails.application.routes.draw do
     post :rankir_renja
     post :rankir_renja_1
     post :penetapan_renja
+    get :perubahan
+    post :perubahan_renja
   end
 
   mount Sidekiq::Web, at: "/sidekiq"

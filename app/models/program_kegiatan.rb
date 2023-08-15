@@ -388,7 +388,7 @@ class ProgramKegiatan < ApplicationRecord
 
   def pagu_sub_rankir_1_tahun(tahun)
     ProgramKegiatan.where(kode_sub_giat: kode_sub_giat).map do |sub|
-      sub.sasarans.lengkap_strategi_tahun(tahun).map(&:total_anggaran_rankir_1).compact.sum
+      ss = sub.sasarans.lengkap_strategi_tahun(tahun).map(&:total_anggaran_rankir_1).compact.sum
     end.sum
   end
 

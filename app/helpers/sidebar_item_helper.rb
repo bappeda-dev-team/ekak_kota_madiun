@@ -54,6 +54,10 @@ module SidebarItemHelper
         icon: 'fas fa-tasks', identifier: 'renja'
       },
       {
+        title: 'Renja Perubahan', href: renja_perubahan_path,
+        icon: 'fas fa-archive', identifier: 'perubahan_renja'
+      },
+      {
         title: 'Rekap Rencana Kinerja', href: rekap_sasaran_sasarans_path,
         icon: 'fas fa-archive', identifier: 'rekap_sasaran'
       },

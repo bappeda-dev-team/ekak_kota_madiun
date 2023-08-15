@@ -1,0 +1,194 @@
+<div class="card border-0 shadow">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col-8">
+        <h2 class="fs-5 fw-bold mb-0">Renja Perubahan <%= @nama_opd %> <%= @tahun %></h2>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <%# tabel_tujuan_sasaran_opd %>
+    <div class="table-responsive">
+      <table class="table align-items-center" data-controller='form-modal' data-action='ajax-update@window->form-modal#updateTargetValue'>
+        <% @program_kegiatans.each.with_index(1) do |program, nomor| %>
+          <thead class="thead-bidang-urusan"
+            <tr class="header-bidang-urusan">
+            <th class="border" scope="col" colspan="2">Kode Bidang Urusan</th>
+            <th class="border" scope="col" colspan="28">Nama Bidang Urusan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <td class="border" scope="col" colspan="2"><%= program.kode_bidang_urusan %></td>
+          <td class="border" scope="col" colspan="28"><%= program.nama_bidang_urusan %></td>
+        </tbody>
+        <thead class="thead-program">
+          <tr class="header-program">
+            <th class="border" scope="col" rowspan="2">OPD</th>
+            <th class="border" scope="col" rowspan="2">Kode Program</th>
+            <th class="border" scope="col" rowspan="2">No.</th>
+            <th class="border" scope="col" rowspan="2">Program</th>
+            <th class="border text-center" scope="col" rowspan="2">Aksi</th>
+            <th class="border text-center" scope="col" colspan="5"><%= @tahun %></th>
+          </tr>
+          <tr>
+            <th class="border" scope="col">Indikator</th>
+            <th class="border" scope="col" width="50px">Target</th>
+            <th class="border" scope="col">Satuan</th>
+            <th class="border" scope="col">Pagu Indikatif</th>
+            <th class="border" scope="col">Keterangan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-gray-900 text-wrap border"  ><%= program.nama_opd_pemilik %></td>
+            <td class="text-gray-900 text-wrap border"  ><%= program.kode_program %></td>
+            <td class="text-gray-900 text-wrap border"  ><%= nomor %></td>
+            <td class="text-gray-900 text-wrap border"  ><%= program.nama_program %></td>
+            <% if program.indikator_renstras_new('program', @kode_opd)[:indikator_program] %>
+              <td class="text-gray-900 text-wrap border" >
+                <% pagu_program = program.pagu_program_penetapan_tahun(@tahun) %>
+                <%= link_to renja_edit_rankir_path(
+                      id: program.id,
+                      nama: program.nama_program,
+                      kode: program.kode_program,
+                      kode_opd: program.kode_sub_skpd,
+                      tahun: @tahun,
+                      indikator: program.indikator_program,
+                      pagu: pagu_program,
+                      jenis: 'Penetapan_Renja',
+                      sub_jenis: 'Program'),
+                      remote: true, class: 'btn btn-green',
+                      data: { controller: 'form-modal',
+                              action: 'form-modal#appendForm',
+                              form_modal_location_param: 'form-penetapan-renja-body',
+                              bs_target: '#form-penetapan-renja',
+                              bs_toggle: 'modal' } do %>
+                  Edit
+                <% end %>
+              </td>
+            <% else %>
+              <% pagu_program = 0 %>
+              <td class="text-gray-900 text-wrap border" >
+                Renstra belum diisi
+              </td>
+            <% end %>
+            <%= render 'row_indikator_penetapan',indikators: program.indikator_renstras_new('program', @kode_opd)[:indikator_program], tahun: @tahun, pagu: pagu_program %>
+          </tr>
+        </tbody>
+        <% program.kegiatans_opd_by_tahun(@tahun).each.with_index(1) do |kegiatan, no_giat| %>
+          <thead class="thead-kegiatan">
+            <tr>
+              <th class="border" scope="col" rowspan="2">OPD</th>
+              <th class="border" scope="col" rowspan="2">Kode Kegiatan</th>
+              <th class="border" scope="col" rowspan="2">No</th>
+              <th class="border" scope="col" rowspan="2">Nama Kegiatan</th>
+              <th class="border text-center" scope="col" rowspan="2">Aksi</th>
+              <th class="border text-center" scope="col" colspan="5"><%= @tahun %></th>
+            </tr>
+            <tr>
+              <th class="border" scope="col">Indikator</th>
+              <th class="border" scope="col" width="50px">Target</th>
+              <th class="border" scope="col">Satuan</th>
+              <th class="border" scope="col">Pagu Indikatif</th>
+              <th class="border" scope="col">Keterangan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-gray-900 text-wrap border"  ><%= kegiatan.nama_opd_pemilik %></td>
+              <td class="text-gray-900 text-wrap border"  ><%= kegiatan.kode_giat %></td>
+              <td class="text-gray-900 text-wrap border"  ><%= no_giat %></td>
+              <td class="text-gray-900 text-wrap border"  ><%= kegiatan.nama_kegiatan %></td>
+              <% if kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan] %>
+                <% pagu_kegiatan = kegiatan.pagu_kegiatan_penetapan_tahun(@tahun) %>
+                <td class="text-gray-900 text-wrap border" >
+                  <%= link_to renja_edit_rankir_path(
+                      id: kegiatan.id,
+                      nama: kegiatan.nama_kegiatan,
+                      kode: kegiatan.kode_giat,
+                      kode_opd: kegiatan.kode_sub_skpd,
+                      tahun: @tahun,
+                      indikator: kegiatan.indikator_kinerja,
+                      pagu: pagu_kegiatan,
+                      jenis: 'Penetapan_Renja',
+                      sub_jenis: 'Kegiatan'),
+                      remote: true, class: 'btn btn-green',
+                      data: { controller: 'form-modal',
+                              action: 'form-modal#appendForm',
+                              form_modal_location_param: 'form-penetapan-renja-body',
+                              bs_target: '#form-penetapan-renja',
+                              bs_toggle: 'modal' } do %>
+                    Edit
+                  <% end %>
+                </td>
+              <% else %>
+                <% pagu_kegiatan = 0 %>
+                <td class="text-gray-900 text-wrap border">
+                  Renstra belum diisi
+                </td>
+              <% end %>
+              <%= render 'row_indikator_penetapan',indikators: kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan], tahun: @tahun, pagu: pagu_kegiatan %>
+            </tr>
+          </tbody>
+          <thead class="thead-subkegiatan">
+            <tr>
+              <th class="border" scope="col" rowspan="2">OPD</th>
+              <th class="border" scope="col" rowspan="2">Kode Subkegiatan</th>
+              <th class="border" scope="col" rowspan="2">No</th>
+              <th class="border" scope="col" rowspan="2">Nama Subkegiatan</th>
+              <th class="border text-center" scope="col" rowspan="2">Aksi</th>
+              <th class="border text-center" scope="col" colspan="5"><%= @tahun %></th>
+            </tr>
+            <tr class="sub-table-subkegiatans">
+              <th class="border" scope="col">Indikator</th>
+              <th class="border" scope="col" width="50px">Target</th>
+              <th class="border" scope="col">Satuan</th>
+              <th class="border" scope="col">Pagu Indikatif</th>
+              <th class="border" scope="col">Keterangan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% kegiatan.subkegiatans_opd_by_tahun(@tahun).each.with_index(1) do |subgiat, no_subgiat| %>
+              <tr>
+                <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_opd_pemilik %></td>
+                <td class="text-gray-900 text-wrap border"  ><%= subgiat.kode_sub_giat %></td>
+                <td class="text-gray-900 text-wrap border"  ><%= no_subgiat %></td>
+                <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_subkegiatan %></td>
+                <% if subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan] %>
+                  <% pagu_subkegiatan = subgiat.pagu_sub_penetapan_tahun(@tahun) %>
+                  <td class="text-gray-900 text-wrap border" >
+                    <%= link_to renja_edit_rankir_path(
+                        id: subgiat.id,
+                        nama: subgiat.nama_kegiatan,
+                        kode: subgiat.kode_giat,
+                        kode_opd: subgiat.kode_sub_skpd,
+                        tahun: @tahun,
+                        indikator: subgiat.indikator_kinerja,
+                        pagu: pagu_subkegiatan,
+                        jenis: 'Penetapan_Renja',
+                        sub_jenis: 'Subkegiatan'),
+                        remote: true, class: 'btn btn-green',
+                        data: { controller: 'form-modal',
+                                action: 'form-modal#appendForm',
+                                form_modal_location_param: 'form-penetapan-renja-body',
+                                bs_target: '#form-penetapan-renja',
+                                bs_toggle: 'modal' } do %>
+                      Edit
+                    <% end %>
+                  </td>
+                <% else %>
+                  <% pagu_subkegiatan = 0 %>
+                  <td class="text-gray-900 text-wrap border">
+                    Renstra belum diisi
+                  </td>
+                <% end %>
+                <%= render 'row_indikator_penetapan',indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan], tahun: @tahun, pagu: pagu_subkegiatan %>
+              </tr>
+            <% end %>
+          </tbody>
+        <% end %>
+      <% end %>
+    </table>
+  </div>
+</div>
+</div>

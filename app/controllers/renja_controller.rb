@@ -39,7 +39,8 @@ class RenjaController < ApplicationController
 
   def rankir_renja_1
     @kode_opd = params[:kode_opd]
-    @tahun = params[:tahun]
+    @tahun_asli = params[:tahun]
+    @tahun = @tahun_asli.gsub("_perubahan", "")
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
     @program_kegiatans = @opd.program_renstra
@@ -48,7 +49,8 @@ class RenjaController < ApplicationController
 
   def rankir_renja
     @kode_opd = params[:kode_opd]
-    @tahun = params[:tahun]
+    @tahun_asli = params[:tahun]
+    @tahun = @tahun_asli.gsub("_perubahan", "")
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
     @program_kegiatans = @opd.program_renstra
@@ -64,6 +66,17 @@ class RenjaController < ApplicationController
     @nama_opd = @opd.nama_opd
     @program_kegiatans = @opd.program_renstra
     render partial: 'penetapan_renja'
+  end
+
+  def perubahan; end
+
+  def perubahan_renja
+    @kode_opd = params[:kode_opd]
+    @tahun = params[:tahun]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    @program_kegiatans = @opd.program_renstra
+    render partial: 'perubahan_renja'
   end
 
   def new

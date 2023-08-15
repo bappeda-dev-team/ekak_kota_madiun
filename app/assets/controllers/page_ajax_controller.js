@@ -13,7 +13,7 @@ export default class extends Controller {
         static targets = ['results']
         static values = {
                 opd: String,
-                tahun: Number,
+                tahun: String,
                 url: String,
                 jenisUsulan: String
         }

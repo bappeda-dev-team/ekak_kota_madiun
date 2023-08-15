@@ -109,7 +109,7 @@ class Sasaran < ApplicationRecord
 
   scope :lengkap_strategi_tahun, lambda { |tahun|
                                    includes(%i[strategi usulans program_kegiatan indikator_sasarans])
-                                     .where("COALESCE(tahun, '')  ILIKE ?", "%#{tahun}%")
+                                     .where(tahun: tahun)
                                      .select { |s| s.strategi.present? }
                                  }
 

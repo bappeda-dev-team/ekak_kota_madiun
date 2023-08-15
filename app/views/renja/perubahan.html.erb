@@ -1,0 +1,38 @@
+<%= content_for :html_title, "Renja Perubahan" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Laporan</li>
+  <li class="breadcrumb-item active" aria-current="page">Renja Perubahan</li>
+<% end %>
+<% content_for :view_utama do %>
+  <% if cookies[:tahun] && cookies[:opd] %>
+    <div class="card border-0 shadow" id="user_filter" data-controller="page-ajax"
+             data-page-ajax-opd-value="<%= cookies[:opd] %>"
+             data-page-ajax-url-value="<%= renja_perubahan_renja_path %>"
+             data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >
+      <div data-page-ajax-target="results">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2 class="fs-5 fw-bold mb-0">Renja Perubahan</h2>
+            </div>
+          </div>
+        </div>
+        <div class="loader text-center">
+          <div class="lds-roller">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <p>memuat data..</p>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <%= render 'shared/pilih_tahun_dan_opd' %>
+  <% end %>
+<% end %>
