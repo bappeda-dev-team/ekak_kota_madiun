@@ -439,6 +439,7 @@ Rails.application.routes.draw do
       get :subkegiatans
       get :pks_opd
       post :content_pks_opd
+      get :daftar_pagu
     end
   end
 
