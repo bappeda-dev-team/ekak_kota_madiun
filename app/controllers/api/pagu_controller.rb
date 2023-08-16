@@ -9,7 +9,7 @@ module Api
       @kode_unik_opd = @opd.kode_unik_opd
       @kode_opd = @opd.kode_opd
 
-      SyncPenetapanJob.perform_async(@kode_unik_opd, @tahun, @bulan)
+      SyncPenetapanJob.perform_async(@kode_unik_opd, @tahun, @bulan, @kode_opd, @tahun_asli)
 
       flash.now[:success] = "Sinkronisasi Pagu Penetapan Dikerjakan."
       render 'shared/_notifikasi_simple'

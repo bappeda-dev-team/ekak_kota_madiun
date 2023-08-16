@@ -6,12 +6,14 @@ module Api
     require 'oj'
     URL = 'https://sipkd2.madiunkota.go.id/data'
     H = HTTP.accept(:json)
-    attr_accessor :kode_unik_opd, :tahun, :bulan
+    attr_accessor :kode_unik_opd, :tahun, :bulan, :kode_opd, :tahun_asli
 
-    def initialize(kode_unik_opd, tahun, bulan)
+    def initialize(kode_unik_opd, tahun, bulan, kode_opd, tahun_asli)
       @kode_unik_opd = kode_unik_opd
       @tahun = tahun
       @bulan = bulan
+      @kode_opd = kode_opd
+      @tahun_asli = tahun_asli
     end
 
     def sync_penetapan
@@ -33,6 +35,9 @@ module Api
         data_pagu = {
           jenis: 'Penetapan',
           sub_jenis: 'Renja',
+          kode_opd: @kode_opd,
+          tahun_asli: @tahun_asli,
+          kode: pagu['unit_kode'],
           anggaran: pagu['pagu'],
           kode_belanja: pagu['sub_kegiatan_kode'],
           kode_sub_belanja: pagu['sub_rincian_obyek_kode'],
