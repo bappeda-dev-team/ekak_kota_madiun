@@ -1,7 +1,7 @@
-<%= content_for :html_title, "Daftar Pagu" %>
+<%= content_for :html_title, "Daftar Renstra" %>
 <%= content_for :navigation do %>
   <li class="breadcrumb-item" aria-current="page">Perencanaan OPD</li>
-  <li class="breadcrumb-item active" aria-current="page">Daftar Pagu</li>
+  <li class="breadcrumb-item active" aria-current="page">Daftar Renstra</li>
 <% end %>
 <% content_for :view_utama do %>
   <div class="card border-0 shadow">
@@ -9,7 +9,7 @@
       <div class="row align-items-center">
         <div class="col">
           <div class="row">
-            <h2 class="fs-5 fw-bold">Daftar Pagu Program / Kegiatan / Subkegiatan</h2>
+            <h2 class="fs-5 fw-bold">Daftar Renstra</h2>
           </div>
           <div class="row">
             <h2 class="fs-5 fw-bold"><%= @nama_opd %></h2>
@@ -45,35 +45,18 @@
             </tr>
           </thead>
           <tbody>
-            <% @pagus.each.with_index(1) do |(kode_subkegiatan, pagus), nomor| %>
+            <% @program_kegiatans.each.with_index(1) do |subkegiatan, nomor| %>
+                <% sum_pagu = 0 %>
               <tr class="bg-success text-white">
-                <% subkegiatan = ProgramKegiatan.find_by(kode_sub_giat: kode_subkegiatan) %>
-                <% sum_pagu = pagus.map(&:anggaran).compact.sum %>
                 <td class="text-wrap border"><%= nomor %></td>
-                <td class="text-wrap border"><%= kode_subkegiatan %></td>
+                <td class="text-wrap border"><%= subkegiatan.kode_sub_giat %></td>
                 <td class="text-wrap border"><%= subkegiatan.nama_subkegiatan %></td>
                 <td class="text-wrap border">Rp. <%= number_with_delimiter(sum_pagu) %></td>
-              </tr>
-              <tr class="header-program bg-primary text-white">
-                <th class="border" scope="col">No.</th>
-                <th class="border" scope="col">Kode Rekening</th>
-                <th class="border" scope="col" colspan="3">Belanja</th>
-              </tr>
-              <% pagus.each.with_index(1) do |pagu, no| %>
-                <tr>
-                  <td class="text-wrap border"  ><%= "#{nomor}.#{no}" %></td>
-                  <td class="text-wrap border"  ><%= pagu.kode_sub_belanja %></td>
-                  <td class="text-wrap border"  ><%= pagu.keterangan %></td>
-                  <td class="text-wrap border"  >Rp. <%= number_with_delimiter(pagu.anggaran) %></td>
-                </tr>
-              <% end %>
-              <tr class="rekap_pokin_separator">
-                <td colspan="5"></td>
               </tr>
             <% end %>
           </tbody>
           <tfoot>
-            <% pagu_total = @pagus.values.flatten.map(&:anggaran).compact.sum %>
+            <% pagu_total = 0 %>
             <tr class="border">
               <td colspan="3">Total: </td>
               <td class="border">Rp. <%= number_with_delimiter(pagu_total) %></td>

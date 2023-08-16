@@ -296,7 +296,18 @@ class ProgramKegiatansController < ApplicationController
     @pagus = PaguAnggaran.where(kode_opd: @opd.kode_opd,
                                 sub_jenis: 'Renja',
                                 tahun: @tahun_asli)
+                         .order(:kode_belanja)
                          .group_by(&:kode_belanja)
+  end
+
+  def daftar_renstra
+    @tahun_asli = cookies[:tahun]
+    @tahun = @tahun_asli.gsub("_perubahan", "")
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @program_kegiatans = ProgramKegiatan.where(kode_sub_skpd: @opd.kode_unik_opd,
+                                               tahun: @tahun)
+                                        .order(:kode_sub_giat)
   end
 
   private

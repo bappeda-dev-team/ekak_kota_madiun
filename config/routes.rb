@@ -440,6 +440,7 @@ Rails.application.routes.draw do
       get :pks_opd
       post :content_pks_opd
       get :daftar_pagu
+      get :daftar_renstra
     end
   end
 
