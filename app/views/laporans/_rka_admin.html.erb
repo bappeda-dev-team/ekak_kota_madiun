@@ -102,7 +102,7 @@
         </tbody>
         <tfoot>
           <% pagu_rankir_1 = @program_kegiatans.values.flatten.map(&:total_anggaran_rankir_1).compact.sum %>
-          <% pagu_total = @program_kegiatans.values.flatten.map(&:total_anggaran).compact.sum %>
+          <% pagu_total = @program_kegiatans.map { |k,v| v.map(&:total_anggaran).compact.sum }.sum %>
           <% pagu_penetapan = 0 %>
           <td colspan="6">Total: </td>
           <td class="border">Rp. <%= number_with_delimiter(pagu_rankir_1) %></td>
