@@ -421,6 +421,7 @@ Rails.application.routes.draw do
     member do
       get :buat_strategi
       post :simpan_strategi
+      get :edit_full
     end
   end
   resources :program_kegiatans do

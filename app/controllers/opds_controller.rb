@@ -173,6 +173,11 @@ class OpdsController < ApplicationController
     @sasarans = Sasaran.where(id: params[:item])
   end
 
+  def edit_full
+    @opd = Opd.find(params[:id])
+    render partial: 'form_edit_full', locals: { opd: @opd }
+  end
+
   private
 
   def set_opd
