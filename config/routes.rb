@@ -264,6 +264,7 @@ Rails.application.routes.draw do
       get :dropdown_user
       get :list_all
       get :user_opd
+      resources :reviewers
     end
 
     member do
