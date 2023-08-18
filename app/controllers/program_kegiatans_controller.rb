@@ -308,6 +308,9 @@ class ProgramKegiatansController < ApplicationController
     @program_kegiatans = ProgramKegiatan.where(kode_sub_skpd: @opd.kode_unik_opd,
                                                tahun: @tahun)
                                         .order(:kode_sub_giat)
+    program_id = @program_kegiatans.map(&:id).flatten
+    sasarans = Sasaran.where(tahun: @tahun, program_kegiatan_id: program_id)
+    @anggarans = sasarans.map(&:anggarans).compact.flatten
   end
 
   private

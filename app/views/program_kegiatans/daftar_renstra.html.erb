@@ -46,17 +46,35 @@
           </thead>
           <tbody>
             <% @program_kegiatans.each.with_index(1) do |subkegiatan, nomor| %>
-                <% sum_pagu = 0 %>
+              <% anggarans = @anggarans.select { |ang| ang.sasaran.program_kegiatan_id == subkegiatan.id } %>
+              <% sum_pagu = anggarans.map(&:jumlah).compact.sum %>
               <tr class="bg-success text-white">
                 <td class="text-wrap border"><%= nomor %></td>
                 <td class="text-wrap border"><%= subkegiatan.kode_sub_giat %></td>
                 <td class="text-wrap border"><%= subkegiatan.nama_subkegiatan %></td>
                 <td class="text-wrap border">Rp. <%= number_with_delimiter(sum_pagu) %></td>
               </tr>
+              <tr class="header-program bg-primary text-white">
+                <th class="border" scope="col">No.</th>
+                <th class="border" scope="col">Kode Rekening</th>
+                <th class="border" scope="col" colspan="3">Belanja</th>
+              </tr>
+              <% anggarans.each.with_index(1) do |pagu, no| %>
+                <tr>
+                  <td class="text-wrap border"  ><%= "#{nomor}.#{no}" %></td>
+                  <td class="text-wrap border"  ><%= pagu.kode_sub_belanja %></td>
+                  <td class="text-wrap border"  ><%= pagu.keterangan %></td>
+                  <td class="text-wrap border"  >Rp. <%= number_with_delimiter(pagu.jumlah) %></td>
+                </tr>
+              <% end %>
+              <tr class="rekap_pokin_separator">
+                <td colspan="5"></td>
+              </tr>
             <% end %>
           </tbody>
           <tfoot>
-            <% pagu_total = 0 %>
+            <% subkegiatans = @anggarans %>
+            <% pagu_total = subkegiatans.flatten.map(&:jumlah).compact.sum %>
             <tr class="border">
               <td colspan="3">Total: </td>
               <td class="border">Rp. <%= number_with_delimiter(pagu_total) %></td>

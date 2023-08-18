@@ -34,6 +34,7 @@ class Anggaran < ApplicationRecord
   # after_update :update_perhitungan
 
   belongs_to :tahapan
+  has_one :sasaran, through: :tahapan
   has_many :perhitungans, dependent: :destroy
   # child untuk memanggil id isian bawahnya
   has_many :childs, class_name: 'Anggaran', foreign_key: 'parent_id'
@@ -135,5 +136,13 @@ class Anggaran < ApplicationRecord
 
   def koefisien_perhitungan
     perhitungans.includes(%i[koefisiens pajak])
+  end
+
+  def kode_sub_belanja
+    rekening.kode_rekening
+  end
+
+  def keterangan
+    rekening.jenis_rekening
   end
 end
