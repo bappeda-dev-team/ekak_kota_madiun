@@ -13,7 +13,9 @@ export default class extends Controller {
     const [xhr] = e.detail
     this.modalHider()
     this.sweetAlertSuccess(xhr.resText)
-    this.partialAttacher(this.elementIdValue, xhr.attachmentPartial)
+    if (this.hasElementIdValue) {
+      this.partialAttacher(this.elementIdValue, xhr.attachmentPartial)
+    }
   }
 
   ajaxError(e) {

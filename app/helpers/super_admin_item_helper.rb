@@ -22,7 +22,7 @@ module SuperAdminItemHelper
         icon: 'fas fa-user-tie', identifier: 'khusus_users'
       },
       {
-        title: 'Master OPD', href: opds_path,
+        title: 'Master OPD', href: all_opd_path,
         icon: 'fas fa-building', identifier: 'list_opd'
       },
       {

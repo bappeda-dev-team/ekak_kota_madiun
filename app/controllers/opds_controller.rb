@@ -20,7 +20,8 @@ class OpdsController < ApplicationController
   end
 
   def all_opd
-    @opds = Opd.all.includes([:lembaga])
+    @opds = Opd.all.includes([:opd_induk])
+               .where.not(kode_unik_opd: nil).order(:kode_unik_opd)
   end
 
   def legit_opd
@@ -51,13 +52,16 @@ class OpdsController < ApplicationController
   end
 
   def update
-    respond_to do |f|
+    respond_to do |format|
       if @opd.update(opd_params)
-        flash.now[:success] = 'Opd berhasil diupdate.'
-        f.js
-        f.html { redirect_to @opd, notice: 'Opd berhasil diupdate.' }
+        format.json do
+          render json: { resText: "OPD diperbarui", res: @opd }.to_json,
+                 status: :ok
+        end
       else
-        f.html { render :edit, notice: 'Opd gagal diupdate.' }
+        format.json do
+          render json: { resText: "Gagal memperbarui", res: @opd.errors }.to_json, status: :unprocessable_entity
+        end
       end
     end
   end
