@@ -23,7 +23,7 @@ class KakQueries
 
   def sasarans
     users_eselon4.map do |user|
-      user.sasarans.where(tahun: @tahun, keterangan: nil)
+      user.sasarans.includes(:strategi).where(tahun: @tahun, keterangan: nil)
     end.flatten
   end
 
@@ -36,7 +36,7 @@ class KakQueries
   end
 
   def program_kegiatans
-    sasaran_strategis.group_by(&:program_kegiatan)
+    sasaran_strategis.group_by(&:program_kegiatan).sort_by { |key, _val| key.kode_sub_giat }.to_h
   end
 
   def by_subkegiatan(sasarans)
