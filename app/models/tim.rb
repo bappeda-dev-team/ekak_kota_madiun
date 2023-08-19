@@ -24,6 +24,9 @@ class Tim < ApplicationRecord
                       primary_key: :id,
                       foreign_key: :team_ref_id,
                       optional: true
+  has_many :sub_teams, class_name: 'Tim',
+                       primary_key: :id,
+                       foreign_key: :team_ref_id
   validates_presence_of :nama_tim
   validates :tahun, presence: true, format: { with: /(20)\d{2}\z/i, message: 'harus diatas tahun 2000' }
 
@@ -38,6 +41,6 @@ class Tim < ApplicationRecord
   end
 
   def sub_tims
-    Tim.where(team_ref_id: id)
+    sub_teams
   end
 end
