@@ -20,11 +20,20 @@
 #
 class Tim < ApplicationRecord
   belongs_to :opd, optional: true
-  validates_presence_of :tahun
+  belongs_to :parent, class_name: 'Tim',
+                      primary_key: :id,
+                      foreign_key: :team_ref_id,
+                      optional: true
+  validates_presence_of :nama_tim
+  validates :tahun, presence: true, format: { with: /(20)\d{2}\z/i, message: 'harus diatas tahun 2000' }
 
   scope :tim_kota, -> { where(jenis: 'Kota') }
 
   def tim_kota?
     jenis == 'Kota'
+  end
+
+  def parent_tim
+    parent
   end
 end
