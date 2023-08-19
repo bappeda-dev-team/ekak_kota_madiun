@@ -36,4 +36,8 @@ class Tim < ApplicationRecord
   def parent_tim
     parent
   end
+
+  def sub_tims
+    Tim.where(team_ref_id: id)
+  end
 end

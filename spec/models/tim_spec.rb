@@ -26,7 +26,10 @@ RSpec.describe Tim, type: :model do
   it { should_not allow_value('1995').for(:tahun) }
 
   let(:tim_kota) { create(:tim, nama_tim: 'Tim Contoh', jenis: 'Kota', tahun: '2023') }
-  let(:sub_tim) { create(:tim, nama_tim: 'Sub Tim Contoh', jenis: 'SubTeam', tahun: '2023') }
+  let(:sub_tim) do
+    create(:tim, nama_tim: 'Sub Tim Contoh', jenis: 'SubTeam', tahun: '2023',
+                 team_ref_id: tim_kota.id)
+  end
 
   describe "Tim Kota" do
     it "can create tim kota, tim without opd " do
@@ -43,8 +46,11 @@ RSpec.describe Tim, type: :model do
   end
 
   describe "Sub Tim" do
+    it 'show collection of SubTeam' do
+      sub_teams = tim_kota.sub_tims
+      expect(sub_teams).to include(sub_tim)
+    end
     it 'have tim kota as parent tim' do
-      sub_tim = create(:tim, nama_tim: 'Sub Team', jenis: 'SubTeam', team_ref_id: tim_kota.id, tahun: '2023')
       expect(sub_tim.parent_tim).to eq(tim_kota)
     end
 
