@@ -32,11 +32,19 @@
 #
 FactoryBot.define do
   factory :user do
-    nama { "NOOR AFLAH" }
-    nik { "197609072003121007" }
-    email { "197609072003121007@madiunkota.go.id" }
+    nama { "Sample User" }
+    nik { "123456789123456789" }
+    email { "123456789123456789@test.com" }
     password { "123456" }
     association :opd
+
+    factory :super_admin do
+      after(:create) do |user|
+        user.add_role :super_admin
+        user.add_role :asn
+        user.remove_role :non_aktif
+      end
+    end
 
     factory :admin_opd do
       after(:create) do |user|
