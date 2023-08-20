@@ -10,6 +10,19 @@
         <div class="col">
           <h2 class="fs-5 fw-bold mb-0">Daftar Tim</h2>
         </div>
+        <div class="col">
+          <%= link_to new_tim_path, remote: true,
+            class: 'btn btn-sm btn-primary',
+            data: {
+              controller: 'form-modal',
+              action: 'ajax:complete->form-modal#success:prevent',
+              bs_toggle: 'modal',
+              bs_target: '#form-modal'
+            } do %>
+            <i class="fas fa-plus me-2"></i>
+            <span>Tambah Tim</span>
+          <% end %>
+        </div>
       </div>
     </div>
     <div class="card-body">
