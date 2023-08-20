@@ -1,0 +1,36 @@
+<%= content_for :html_title, "Daftar Tim" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Data Master</li>
+  <li class="breadcrumb-item active" aria-current="page">Daftar Tim</li>
+<% end %>
+<%= content_for :view_utama do %>
+  <div class="card border-0 shadow">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h2 class="fs-5 fw-bold mb-0">Daftar Tim</h2>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table datatable" data-datatable>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama Tim</th>
+              <th>Jenis Tim</th>
+              <th>Tahun</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody id="tim">
+            <% @tims.each.with_index(1) do |tim, no| %>
+              <%= render partial: 'tim', locals: { tim: tim, no: no } %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% end %>
