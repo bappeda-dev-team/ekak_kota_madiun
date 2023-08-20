@@ -23,7 +23,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :feature, js: true) do
-    Capybara.current_driver = :selenium
+    Capybara.current_driver = :selenium_headless
   end
 
   # config.before(:each) { DatabaseCleaner.start }
