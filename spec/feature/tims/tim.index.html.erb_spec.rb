@@ -22,9 +22,13 @@ RSpec.describe 'Tim View', type: :feature do
       expect(page).to have_selector('a[data-remote="true"]')
     end
 
-    it "spawn modal form on new button click" do
+    it "spawn modal form on new button click", :js do
+      expect(page).to have_link('Tambah Tim', href: new_tim_path)
       find_link('Tambah Tim').click
-      page.should have_content('Form')
+      within('#form-modal') do
+        expect(page).to have_content('Form')
+        expect(page).to have_selector('form[data-controller="form-ajax"][data-remote="true"]')
+      end
     end
   end
 end

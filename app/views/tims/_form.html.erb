@@ -1,0 +1,36 @@
+<%= form_with(model: tim, local: false,
+              data: {
+                controller: 'form-ajax',
+                action: 'ajax:success->form-ajax#ajaxSuccess:prevent ajax:error->form-ajax#ajaxError:prevent'
+              }
+) do |form| %>
+  <% if tim.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(tim.errors.count, "error") %> prohibited this tim from being saved:</h2>
+      <ul>
+        <% tim.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :nama_tim, class: 'form-label' %>
+    <%= form.text_field :nama_tim, class: 'form-control' %>
+  </div>
+  <div class="field">
+    <%= form.label :jenis, class: 'form-label' %>
+    <%= form.text_area :jenis, class: 'form-control' %>
+  </div>
+  <div class="field">
+    <%= form.label :tahun, class: 'form-label' %>
+    <%= form.text_area :tahun, class: 'form-control' %>
+  </div>
+  <div class="field">
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_area :keterangan, class: 'form-control' %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

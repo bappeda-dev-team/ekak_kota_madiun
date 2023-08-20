@@ -4,7 +4,7 @@ class TimsController < ApplicationController
   end
 
   def new
-    # @tim = Tim.new
-    # render layout: false
+    @tim = Tim.new
+    render layout: false
   end
 end
