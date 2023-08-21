@@ -1,11 +1,11 @@
-import {Controller} from 'stimulus'
+import { Controller } from 'stimulus'
 
 
 export default class extends Controller {
   static targets = [
     "sasaran", "penerima_manfaat", "data_terpilah", "permasalahan",
     "penyebab_internal", "penyebab_external", "sasaran_subkegiatan",
-    "data_pembuka_wawasan","indikator_sasaran", "data_baseline",
+    "data_pembuka_wawasan", "indikator_sasaran", "data_baseline",
     "target_indikator", "satuan_indikator", "rencana_aksi",
     "program_kegiatan_id", "sasaran_id", "indikator_data"]
 
@@ -31,7 +31,7 @@ export default class extends Controller {
 
   // depreceated
   fill_default_data(id_sasaran) {
-    const data_sasaran = fetch(`/sasarans/${id_sasaran}/data_detail.json`)
+    const data_sasaran = fetch(`/rencana_kinerja/${id_sasaran}/data_detail.json`)
       .then(response => response.json())
       .then((data) => {
         this.sasaranTarget.value = data.sasaran_kinerja
@@ -40,7 +40,7 @@ export default class extends Controller {
         this.permasalahanTarget.value = data.permasalahan
       })
     // data rencana aksi
-    const data_rencana_aksi = fetch(`/sasarans/${id_sasaran}/rencana_aksi`)
+    const data_rencana_aksi = fetch(`/rencana_kinerja/${id_sasaran}/rencana_aksi`)
       .then((res) => res.text())
       .then((html) => {
         this.rencana_aksiTarget.innerHTML = html
@@ -69,7 +69,7 @@ export default class extends Controller {
   }
 
   get_renaksi(id_sasaran) {
-    fetch(`/sasarans/${id_sasaran}/rencana_aksi`)
+    fetch(`/rencana_kinerja/${id_sasaran}/rencana_aksi`)
       .then((res) => res.text())
       .then((html) => {
         this.rencana_aksiTarget.innerHTML = html
@@ -77,7 +77,7 @@ export default class extends Controller {
   }
 
   get_data_sasaran(id_sasaran) {
-    fetch(`/sasarans/${id_sasaran}/data_detail.json`)
+    fetch(`/rencana_kinerja/${id_sasaran}/data_detail.json`)
       .then(response => response.json())
       .then((data) => {
         this.sasaranTarget.value = data.sasaran_kinerja
@@ -87,7 +87,7 @@ export default class extends Controller {
   }
 
   get_data_indikator(id_sasaran) {
-    fetch(`/sasarans/${id_sasaran}/data_detail.json`)
+    fetch(`/rencana_kinerja/${id_sasaran}/data_detail.json`)
       .then(response => response.json())
       .then((data) => {
         const indikator_sasaran = data.indikators

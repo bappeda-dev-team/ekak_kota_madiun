@@ -22,6 +22,13 @@
             |
             <span><%= current_user.nik %></span>
           </div>
+          <div class="col text-end">
+            <%= link_to new_gender_path,
+           class: 'btn btn-sm btn-primary' do %>
+              <i class="fas fa-plus me-2"></i>
+              <span>GAP Baru</span>
+            <% end %>
+          </div>
         </div>
       </div>
       <%= render 'table_gender_analysis', genders: @genders %>
