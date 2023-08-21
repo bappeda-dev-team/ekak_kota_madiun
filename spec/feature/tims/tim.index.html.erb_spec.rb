@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# TODO: change test to check class rather than content
 RSpec.describe 'Tim View', type: :feature do
   before(:each) do
     create(:tim, nama_tim: 'Tim Kota', jenis: 'Kota', tahun: '2023')
