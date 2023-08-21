@@ -276,6 +276,43 @@ class ProgramKegiatansController < ApplicationController
     end
   end
 
+  def pks_opd; end
+
+  def content_pks_opd
+    @tahun_asli = params[:tahun]
+    @tahun = @tahun_asli.gsub("_perubahan", "")
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    @program_kegiatans = @opd.program_renstra
+    render layout: false
+  end
+
+  def daftar_pagu
+    @tahun_asli = cookies[:tahun]
+    @tahun = @tahun_asli.gsub("_perubahan", "")
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @pagus = PaguAnggaran.where(kode_opd: @opd.kode_opd,
+                                sub_jenis: 'Renja',
+                                tahun: @tahun_asli)
+                         .order(:kode_belanja)
+                         .group_by(&:kode_belanja)
+  end
+
+  def daftar_renstra
+    @tahun_asli = cookies[:tahun]
+    @tahun = @tahun_asli.gsub("_perubahan", "")
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @program_kegiatans = ProgramKegiatan.where(kode_sub_skpd: @opd.kode_unik_opd,
+                                               tahun: @tahun)
+                                        .order(:kode_sub_giat)
+    program_id = @program_kegiatans.map(&:id).flatten
+    sasarans = Sasaran.where(tahun: @tahun, program_kegiatan_id: program_id)
+    @anggarans = sasarans.map(&:anggarans).compact.flatten
+  end
+
   private
 
   def set_program_kegiatan

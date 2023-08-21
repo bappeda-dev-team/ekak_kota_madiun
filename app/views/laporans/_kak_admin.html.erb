@@ -79,6 +79,12 @@
             <% end %>
           <% end %>
         </tbody>
+        <tfoot>
+          <% pagu_total = @program_kegiatans.values.flatten.map(&:total_anggaran).compact.sum %>
+          <td colspan="6">Total: </td>
+          <td class="border">Rp. <%= number_with_delimiter(pagu_total) %></td>
+          <td></td>
+        </tfoot>
       </table>
     </div>
   </div>

@@ -438,6 +438,10 @@ Rails.application.routes.draw do
     collection do
       get :list_program_with_sasarans_rincian
       get :subkegiatans
+      get :pks_opd
+      post :content_pks_opd
+      get :daftar_pagu
+      get :daftar_renstra
     end
   end
 
@@ -518,6 +522,9 @@ Rails.application.routes.draw do
       post :sasaran_pohon_kinerja_pegawai
       post :tujuan_opd
       post :sasaran_opd
+    end
+    namespace :pagu do
+      post :sync_penetapan
     end
   end
 
