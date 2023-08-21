@@ -9,16 +9,16 @@
         <td class="text-wrap text-start"><%= pohon.sub_tema %></td>
       </tr>
       <% unless pohon.pohonable.blank? %>
-      <% pohon.pohonable.indikators.each.with_index(1) do |indikator, i| %>
-      <tr>
-        <td class="text-start" width="30px">Indikator <%= i %></td>
-        <td class="text-wrap text-start"><%= indikator %></td>
-      </tr>
-      <tr>
-        <td class="text-start" width="30px">Target / Satuan</td>
-        <td class="text-wrap text-start"><%= indikator.target %> <%= indikator.satuan %></td>
-      </tr>
-      <% end %>
+        <% pohon.pohonable.indikators.each.with_index(1) do |indikator, i| %>
+          <tr>
+            <td class="text-start" width="30px">Indikator <%= i %></td>
+            <td class="text-wrap text-start"><%= indikator %></td>
+          </tr>
+          <tr>
+            <td class="text-start" width="30px">Target / Satuan</td>
+            <td class="text-wrap text-start"><%= indikator.target %> <%= indikator.satuan %></td>
+          </tr>
+        <% end %>
       <% end %>
       <tr>
         <td class="text-start" width="30px">Keterangan</td>

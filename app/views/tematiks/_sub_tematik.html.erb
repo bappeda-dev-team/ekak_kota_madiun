@@ -1,9 +1,11 @@
 <% sub_tematiks.each do |sub_tema| %>
+  <% rowspan = sub_tema.indikators.size + 1 %>
   <tr>
-    <td><%= sub_tema.tematik %></td>
-    <td><%= sub_tema %></td>
-    <td><%= sub_tema.keterangan %></td>
-    <td class="text-center">
+    <td rowspan="<%= rowspan %>"><%= sub_tema.tematik %></td>
+    <td rowspan="<%= rowspan %>"><%= sub_tema %></td>
+    <td colspan="3" class="p-0 m-0 border-0"></td>
+    <td rowspan="<%= rowspan %>"><%= sub_tema.keterangan %></td>
+    <td class="text-center" rowspan="<%= rowspan %>">
       <%= link_to edit_sub_tematik_path(sub_tema), remote: true,
          data: {
              controller: 'form-modal',
@@ -29,10 +31,11 @@
       <% end %>
     </td>
   </tr>
-  <% sub_tema.indikators.each do |ind| %>
-  <tr>
-    <td><%= ind.indikator %></td>
-    <td><%= ind.target_satuan %></td>
-  </tr>
-    <% end %>
+  <% sub_tema.indikators.each do |indikator| %>
+    <tr>
+      <td><%= indikator %></td>
+      <td><%= indikator.target %></td>
+      <td><%= indikator.satuan %></td>
+    </tr>
+  <% end %>
 <% end %>
