@@ -17,6 +17,7 @@ class TematiksController < ApplicationController
   # GET /tematiks/new
   def new
     @tematik = Tematik.new
+    @tematik.indikators.build
   end
 
   def new_sub
