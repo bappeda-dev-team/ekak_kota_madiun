@@ -1,16 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe 'Tim View', type: :feature do
+  before(:each) do
+    create(:tim, nama_tim: 'Tim Kota', jenis: 'Kota', tahun: '2023')
+    create(:tim, nama_tim: 'Tim Kota 2', jenis: 'Kota', tahun: '2023')
+
+    user = create(:super_admin)
+    login_as user
+  end
+
   context "index" do
     before(:each) do
-      create(:tim, nama_tim: 'Tim Kota', jenis: 'Kota', tahun: '2023')
-      create(:tim, nama_tim: 'Tim Kota 2', jenis: 'Kota', tahun: '2023')
-
-      user = create(:super_admin)
-      login_as user
       visit tims_path
     end
-
     it "render list of tims" do
       expect(page).to have_title('Daftar Tim')
       expect(page).to have_content('Tim Kota')
@@ -29,6 +31,29 @@ RSpec.describe 'Tim View', type: :feature do
         expect(page).to have_content('Form')
         expect(page).to have_selector('form[data-controller="form-ajax"][data-remote="true"]')
       end
+    end
+  end
+
+  context "form" do
+    it "save with new form" do
+      visit new_tim_path
+      fill_in "Nama tim", with: "Tim Contoh"
+      fill_in "Jenis", with: "Kota"
+      fill_in "Tahun", with: "2023"
+      fill_in "Keterangan", with: "Keterangan Contoh"
+      click_on "Simpan Tim"
+
+      visit tims_path
+      expect(page).to have_content('Tim Contoh')
+    end
+
+    it "can edit existing data" do
+      visit edit_tim_path(Tim.first)
+      fill_in "Nama tim", with: "Tim Contoh Edit"
+      click_on "Simpan Perubahan Tim"
+
+      visit tims_path
+      expect(page).to have_content('Tim Contoh Edit')
     end
   end
 end
