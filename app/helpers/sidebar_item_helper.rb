@@ -28,6 +28,10 @@ module SidebarItemHelper
         icon: 'fas fa-chalkboard', identifier: 'spip'
       },
       {
+        title: 'Gender', href: genders_path,
+        icon: 'fas fa-people-carry', identifier: 'gap'
+      },
+      {
         title: 'Pohon Kinerja Kota', href: rekap_pohon_kinerja_index_path,
         icon: 'fas fa-bullseye', identifier: 'pohon_kinerja/rekap'
       },
