@@ -32,4 +32,10 @@ class TimsController < ApplicationController
       render json: { resText: "Gagal Menyimpan" }, status: :unprocessable_entity
     end
   end
+
+  def destroy
+    @tim = Tim.find(params[:id])
+    @tim.destroy
+    redirect_to tims_url, warning: "Tim dihapus"
+  end
 end
