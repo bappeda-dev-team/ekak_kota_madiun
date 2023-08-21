@@ -32,6 +32,10 @@ class Tim < ApplicationRecord
 
   scope :tim_kota, -> { where(jenis: 'Kota') }
 
+  def to_s
+    nama_tim
+  end
+
   def tim_kota?
     jenis == 'Kota'
   end

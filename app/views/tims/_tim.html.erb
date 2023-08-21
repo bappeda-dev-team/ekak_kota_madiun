@@ -3,5 +3,24 @@
     <td><%= tim.nama_tim %></td>
     <td><%= tim.jenis %></td>
     <td><%= tim.tahun %></td>
-    <td>-</td>
+    <td class="text-center">
+      <%= link_to edit_tim_path(tim), remote: true,
+         data: {
+             controller: 'form-modal',
+             action: 'ajax:complete->form-modal#success:prevent',
+             bs_toggle: 'modal',
+             bs_target: '#form-modal'
+         },
+         class: 'btn btn-outline-info' do %>
+        <i class="fa fa-edit me-2"></i>
+        <span>Edit Tim</span>
+      <% end %>
+      <%= link_to tim,
+           method: :delete,
+           class: 'btn btn-outline-danger',
+           data: { confirm_swal: "Hapus #{tim}?" } do %>
+        <i class="fa fa-trash-alt me-2"></i>
+        <span>Hapus Tim</span>
+      <% end %>
+    </td>
 </tr>
