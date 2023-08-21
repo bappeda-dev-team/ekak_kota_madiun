@@ -9,6 +9,7 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :tims
   # TODO: Refactor controller to resources
   resources :pohon_tematik do
     member do
@@ -264,6 +265,7 @@ Rails.application.routes.draw do
       get :dropdown_user
       get :list_all
       get :user_opd
+      resources :reviewers
     end
 
     member do

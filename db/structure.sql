@@ -2996,6 +2996,44 @@ ALTER SEQUENCE public.tematiks_id_seq OWNED BY public.tematiks.id;
 
 
 --
+-- Name: tims; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.tims (
+    id bigint NOT NULL,
+    nama_tim character varying,
+    nip character varying,
+    jabatan character varying,
+    jenis character varying,
+    team_ref_id bigint,
+    tahun character varying,
+    keterangan character varying,
+    opd_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: tims_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.tims_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: tims_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.tims_id_seq OWNED BY public.tims.id;
+
+
+--
 -- Name: tujuan_kota; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3716,6 +3754,13 @@ ALTER TABLE ONLY public.tematiks ALTER COLUMN id SET DEFAULT nextval('public.tem
 
 
 --
+-- Name: tims id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tims ALTER COLUMN id SET DEFAULT nextval('public.tims_id_seq'::regclass);
+
+
+--
 -- Name: tujuan_kota id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4359,6 +4404,14 @@ ALTER TABLE ONLY public.tematiks
 
 
 --
+-- Name: tims tims_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tims
+    ADD CONSTRAINT tims_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: tujuan_kota tujuan_kota_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4837,6 +4890,13 @@ CREATE INDEX index_tematik_sasarans_on_sasaran_id ON public.tematik_sasarans USI
 --
 
 CREATE INDEX index_tematik_sasarans_on_subkegiatan_tematik_id ON public.tematik_sasarans USING btree (subkegiatan_tematik_id);
+
+
+--
+-- Name: index_tims_on_opd_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_tims_on_opd_id ON public.tims USING btree (opd_id);
 
 
 --
@@ -5328,6 +5388,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230720075944'),
 ('20230731071626'),
 ('20230802004938'),
-('20230814035509');
+('20230814035509'),
+('20230818074432');
 
 

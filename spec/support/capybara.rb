@@ -1,82 +1,32 @@
-Capybara.register_driver :remote_selenium do |app|
-  options = Selenium::WebDriver::Chrome::Options.new
-  options.add_argument("--window-size=1400,1400")
-  options.add_argument("--no-sandbox")
-  options.add_argument("--disable-dev-shm-usage")
+require "capybara/rspec"
 
-  Capybara::Selenium::Driver.new(
-    app,
-    browser: :chrome,
-    url: "http://#{ENV.fetch('SELENIUM_HOST', nil)}:4444/wd/hub",
-    options: options
-  )
+RSpec.configure do |config|
+  # config.use_transactional_fixtures = false
+
+  # config.before(:suite) do
+  #   DatabaseCleaner.clean_with(:truncation)
+  # end
+
+  # config.before(:each) { DatabaseCleaner.strategy = :transaction }
+
+  config.before(:each, type: :feature) do
+    # :rack_test driver's Rack app under test shares database connection
+    # with the specs, so continue to use transaction strategy for speed.
+    driver_shares_db_connection_with_specs = Capybara.current_driver == :rack_test
+
+    unless driver_shares_db_connection_with_specs
+      # Driver is probably for an external browser with an app
+      # under test that does *not* share a database connection with the
+      # specs, so use truncation strategy.
+      DatabaseCleaner.strategy = :truncation
+    end
+  end
+
+  config.before(:each, type: :feature, js: true) do
+    Capybara.current_driver = :selenium_headless
+  end
+
+  # config.before(:each) { DatabaseCleaner.start }
+
+  # config.append_after(:each) { DatabaseCleaner.clean }
 end
-
-Capybara.register_driver :remote_selenium_headless do |app|
-  options = Selenium::WebDriver::Chrome::Options.new
-  options.add_argument("--headless")
-  options.add_argument("--window-size=1400,1400")
-  options.add_argument("--no-sandbox")
-  options.add_argument("--disable-dev-shm-usage")
-
-  Capybara::Selenium::Driver.new(
-    app,
-    browser: :chrome,
-    url: "http://#{ENV.fetch('SELENIUM_HOST', nil)}:4444/wd/hub",
-    options: options
-  )
-end
-
-Capybara.register_driver :local_selenium do |app|
-  options = Selenium::WebDriver::Chrome::Options.new
-  options.add_argument("--window-size=1400,1400")
-
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
-end
-
-Capybara.register_driver :local_selenium_headless do |app|
-  options = Selenium::WebDriver::Chrome::Options.new
-  options.add_argument("--headless")
-  options.add_argument("--window-size=1400,1400")
-
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
-end
-
-selenium_app_host = ENV.fetch("SELENIUM_APP_HOST") do
-  Socket.ip_address_list
-        .find(&:ipv4_private?)
-        .ip_address
-end
-
-Capybara.register_driver :headless_chrome do |app|
-  Capybara::Selenium::Driver.new app,
-                                 browser: :chrome
-end
-
-Capybara.configure do |config|
-  config.server = :puma, { Silent: true }
-  config.server_host = selenium_app_host
-  config.server_port = 4000
-end
-Capybara.javascript_driver = :local_selenium_headless
-# RSpec.configure do |config|
-#  config.before(:each, type: :system) do |example|
-#    # `Capybara.app_host` is reset in the RSpec before_setup callback defined
-#    #     # in `ActionDispatch::SystemTesting::TestHelpers::SetupAndTeardown`, which
-#    #         # is annoying as hell, but not easy to "fix". Just set it manually every
-#    #             # test run.
-#    #                 Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
-#    #
-#    #                     # Allow Capybara and WebDrivers to access network if necessary
-#    driver = if example.metadata[:js]
-#               locality = ENV["SELENIUM_HOST"].present? ? :remote : :local
-#               headless = "_headless" if ENV["DISABLE_HEADLESS"].blank?
-
-#               "#{locality}_selenium#{headless}".to_sym
-#             else
-#               :rack_test
-#             end
-
-#    driven_by driver
-#  end
-# end
