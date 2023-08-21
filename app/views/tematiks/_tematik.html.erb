@@ -1,8 +1,10 @@
 <% tematiks.each do |tema| %>
+  <% rowspan = tema.indikators.size + 1 %>
   <tr>
-    <td><%= tema %></td>
-    <td><%= tema.keterangan %></td>
-    <td class="text-center">
+    <td rowspan="<%= rowspan %>"><%= tema %></td>
+    <td colspan="3" class="p-0 m-0 border-0"></td>
+    <td rowspan="<%= rowspan %>"><%= tema.keterangan %></td>
+    <td class="text-center" rowspan="<%= rowspan %>">
       <%= link_to edit_tematik_path(tema), remote: true,
          data: {
              controller: 'form-modal',
@@ -23,4 +25,11 @@
       <% end %>
     </td>
   </tr>
+  <% tema.indikators.each do |indikator| %>
+    <tr>
+      <td><%= indikator %></td>
+      <td><%= indikator.target %></td>
+      <td><%= indikator.satuan %></td>
+    </tr>
+  <% end %>
 <% end %>
