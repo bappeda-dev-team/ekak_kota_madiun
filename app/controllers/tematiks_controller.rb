@@ -140,7 +140,7 @@ class TematiksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def tematik_params
-    params.require(:tematik).permit(:tema, :keterangan)
+    params.require(:tematik).permit(:tema, :keterangan, indikators_attributes)
   end
 
   def sub_tematik_params
