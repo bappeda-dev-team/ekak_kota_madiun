@@ -29,21 +29,13 @@
     </div>
     <div id="render-results">
       <% if @show_result %>
-        <div class="card border-2 shadow mb-3">
-          <div class="card-header">
-            <div class="row align-items-center">
-              <div class="col">
-                <h5>Terpilih </h5>
-              </div>
-            </div>
-          </div>
-        </div>
+        <%= render 'pohon_kinerja/index_content' %>
       <% else %>
         <div class="card border-2 shadow mb-3">
           <div class="card-header">
             <div class="row align-items-center">
               <div class="col">
-                <h5>Pilih Strategi OPD terlebih dahulu</h5>
+                <h5>Pilih Strategi OPD</h5>
               </div>
             </div>
           </div>
