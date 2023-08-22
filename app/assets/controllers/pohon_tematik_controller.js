@@ -44,11 +44,32 @@ export default class extends Controller {
   updateStrategi(e) {
     const opd_id = e.detail.opd_id
     const target = $(this.strategiTarget)
-    const options = target.find('option').filter('[data-opd-id="' + opd_id + '"]')
 
-    target.select2(this.default_options).empty()
-    console.log(options)
-    target.append(options).trigger('change.select2')
+    const defaultMatcher = $.fn.select2.defaults.defaults.matcher;
+
+    target.select2({
+      width: "100%",
+      theme: "bootstrap-5",
+      matcher: function (params, data) {
+        if ($.trim(params.term) === '') {
+          if (data.element.dataset.opdId == opd_id) {
+            return data;
+          }
+        }
+        // Do not display the item if there is no 'text' property
+        if (typeof data.text === 'undefined') {
+          return null;
+        }
+        // Check if the data occurs
+        if (params.term) {
+          if (data.element.dataset.opdId == opd_id) {
+            return defaultMatcher(params, data)
+          }
+        }
+
+        return null;
+      }
+    })
   }
 
   addPohon(e) {
