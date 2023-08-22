@@ -2,13 +2,12 @@
   <div class="tf-nc" style="width: 450px;">
     <%= render 'pohon_tematik/item_pohon_sub_tematik', pohon: pohon %>
   </div>
-  <ul id="<%= "opd_tematik_#{pohon.object_id}" %>">
-    <% if local_assigns[:opds] %>
-      <% opds.each do |opd| %>
-        <%= render partial: 'pohon_tematik/pohon_opd_tematik', locals: {
-          pohon: opd,
-          strategics: strategics.select { |str| str.pohon_ref_id == opd.id },
-          tacticals: tacticals,
+  <ul id="<%= "strategi_tematik_#{pohon.object_id}" %>">
+    <% if local_assigns[:strategics] %>
+      <% strategics.each do |str| %>
+        <%= render partial: 'pohon_tematik/pohon_strategi_tematik', locals: {
+          pohon: str,
+          tacticals: tacticals.select { |tact| tact.pohon_ref_id == str.id },
           operationals: operationals } %>
       <% end %>
     <% end %>
