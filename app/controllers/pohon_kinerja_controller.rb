@@ -16,6 +16,7 @@ class PohonKinerjaController < ApplicationController
   end
 
   def manual
+    strategi_id = params[:strategi]
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
@@ -26,6 +27,12 @@ class PohonKinerjaController < ApplicationController
                              .where(opd_id: @opd.id.to_s,
                                     role: 'eselon_2',
                                     tahun: @tahun)
+    @strategic = strategis
+
+    return if strategi_id.nil?
+
+    @show_result = true
+
     @strategi_kotas = strategis.includes(:pohon, { pohon: [:pohonable] }).map(&:pohon)
     @isu_strategis_pohon = @strategi_kotas.map { |pohon| pohon.pohonable.isu }.uniq
     @strategic = strategis
