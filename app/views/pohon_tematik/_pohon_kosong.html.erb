@@ -1,0 +1,16 @@
+<li>
+  <div class="tf-nc" style="width: 450px;">
+    <%= render 'pohon_tematik/item_pohon_kosong', pohon: pohon %>
+  </div>
+  <ul id="<%= "tematik_#{pohon.object_id}" %>">
+    <% if local_assigns[:sub_tematiks] %>
+      <% sub_tematiks.each do |sub_tema| %>
+        <%= render partial: 'pohon_tematik/pohon_sub_tematik', locals: {
+          pohon: sub_tema,
+          strategics: strategics.select { |str| str.pohon_ref_id == sub_tema.id },
+          tacticals: tacticals,
+          operationals: operationals } %>
+      <% end %>
+    <% end %>
+  </ul>
+</li>

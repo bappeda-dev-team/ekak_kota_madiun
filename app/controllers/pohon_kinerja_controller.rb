@@ -307,20 +307,7 @@ class PohonKinerjaController < ApplicationController
 
   def kota
     @tahun = cookies[:tahun]
-    @tematik_kota = Pohon.where(pohonable_type: 'Tematik', role: 'pohon_kota', tahun: @tahun)
-                         .includes(:pohonable)
-    @sub_tematik_kota = Pohon.where(pohonable_type: %w[SubTematik Opd],
-                                    role: %w[sub_pohon_kota opd_pohon_kota],
-                                    tahun: @tahun)
-                             .includes(:pohonable)
-    @opd_tematiks = Pohon.where(pohonable_type: 'Opd', role: 'opd_pohon_kota', tahun: @tahun)
-                         .includes(:pohonable)
-    @strategi_tematiks = Pohon.where(pohonable_type: 'Strategi', role: 'strategi_pohon_kota', tahun: @tahun)
-                              .includes(:pohonable, pohonable: [:indikator_sasarans])
-    @tactical_tematiks = Pohon.where(pohonable_type: 'Strategi', role: 'tactical_pohon_kota', tahun: @tahun)
-                              .includes(:pohonable, pohonable: [:indikator_sasarans])
-    @operational_tematiks = Pohon.where(pohonable_type: 'Strategi', role: 'operational_pohon_kota', tahun: @tahun)
-                                 .includes(:pohonable, pohonable: [:indikator_sasarans])
+    @tematiks = Tematik.where(type: nil)
   end
 
   def opd

@@ -5,6 +5,7 @@ export default class extends Controller {
 
         append(event) {
                 const [_data, _status, xhr] = event.detail;
+                console.log(xhr)
                 // alert(status)
                 this.resultsTarget.innerHTML = xhr.response
         }
@@ -13,6 +14,19 @@ export default class extends Controller {
                 const [_data, status, _xhr] = event.detail;
                 alert(status)
         }
+
+        success(event) {
+                const [xhr, status] = event.detail
+                const target = 'render-results'
+                const element = document.getElementById(target)
+
+                if (status == 'OK') {
+                        const html = xhr.response
+                        element.innerHTML = html
+                }
+                else {
+                        const html = '<div class="alert alert-danger" role="alert">Terjadi Kesalahan</div>'
+                        element.innerHTML = html
+                }
+        }
 }
-
-

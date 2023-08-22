@@ -1,0 +1,26 @@
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h5>Tema - <%= @tematik %></h5>
+      </div>
+    </div>
+  </div>
+  <div class="card-body p-3">
+    <div class="tf-tree tf-gap-lg mt-2 show text-center" data-controller="pohon-tematik">
+      <ul data-pohon-tematik-target='dahan'>
+        <% if @tematik_kota.any? %>
+          <% @tematik_kota.each do |pohon| %>
+            <%= render partial: 'pohon_tematik/pohon_tematik', locals: { pohon: pohon,
+                    sub_tematiks: @sub_tematik_kota.select { |sub| sub.pohon_ref_id == pohon.id  },
+                    strategics: @strategi_tematiks,
+                    tacticals: @tactical_tematiks,
+                    operationals: @operational_tematiks } %>
+          <% end %>
+        <% else %>
+          <%= render partial: 'pohon_tematik/pohon_kosong', locals: { pohon: @tematik } %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

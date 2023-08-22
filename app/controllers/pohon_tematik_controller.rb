@@ -3,6 +3,33 @@ class PohonTematikController < ApplicationController
 
   layout false
 
+  def index
+    @tahun = cookies[:tahun]
+    tematik_id = params[:tematik]
+
+    @tematik = Tematik.find(tematik_id)
+
+    @tematik_kota = Pohon.where(pohonable_type: 'Tematik',
+                                pohonable_id: tematik_id,
+                                role: 'pohon_kota',
+                                tahun: @tahun)
+                         .includes(:pohonable)
+    # return if @tematik_kota.empty?
+
+    @sub_tematik_kota = Pohon.where(pohonable_type: %w[SubTematik Opd],
+                                    role: %w[sub_pohon_kota opd_pohon_kota],
+                                    tahun: @tahun)
+                             .includes(:pohonable)
+    @opd_tematiks = Pohon.where(pohonable_type: 'Opd', role: 'opd_pohon_kota', tahun: @tahun)
+                         .includes(:pohonable)
+    @strategi_tematiks = Pohon.where(pohonable_type: 'Strategi', role: 'strategi_pohon_kota', tahun: @tahun)
+                              .includes(:pohonable, pohonable: [:indikator_sasarans])
+    @tactical_tematiks = Pohon.where(pohonable_type: 'Strategi', role: 'tactical_pohon_kota', tahun: @tahun)
+                              .includes(:pohonable, pohonable: [:indikator_sasarans])
+    @operational_tematiks = Pohon.where(pohonable_type: 'Strategi', role: 'operational_pohon_kota', tahun: @tahun)
+                                 .includes(:pohonable, pohonable: [:indikator_sasarans])
+  end
+
   def new
     tahun = cookies[:tahun]
     @tematiks = Tematik.all.where(type: nil).order(updated_at: :desc)
@@ -44,7 +71,7 @@ class PohonTematikController < ApplicationController
                                       formats: 'html',
                                       layout: false,
                                       locals: { pohon: @pohon })
-      render json: { resText: "Sub-Tematik Diupdate", attachmentPartial: html_content }.to_json, status: :ok
+      render json: { restext: "sub-tematik diupdate", attachmentpartial: html_content }.to_json, status: :ok
     else
       render json: { resText: "Gagal Menyimpan" }.to_json, status: :unprocessable_entity
     end

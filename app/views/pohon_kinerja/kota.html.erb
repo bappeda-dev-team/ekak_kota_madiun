@@ -6,60 +6,38 @@
 <% content_for :view_utama do %>
   <% if cookies[:tahun] && cookies[:opd] %>
     <div class="card border-2 shadow mb-3">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col">
-            <h5>Pohon Kinerja Kota Tahun <%= @tahun %></h5>
-          </div>
-        </div>
+      <div class="card-body border-5 shadow">
+        <h5 class="mb-2">Pohon Kinerja Kota Tahun <%= @tahun %></h5>
+        <%= form_with url: pohon_tematik_index_path, method: :get,
+            local: false,
+            data: {
+              controller: 'filter-render',
+              action: 'ajax:complete->filter-render#success:prevent',
+            } do |form| %>
+          <%= form.select :tematik,
+              select_tematik(@tematiks),
+              {include_blank: true},
+              { data: {
+                  controller: 'dropdown',
+                  placeholder: 'Tema Pohon Kinerja'
+                },
+                class: 'form-control'
+              } %>
+          <%= form.button class: "btn btn-tertiary w-100 mt-5", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>  Mencari..." } do %>
+            <i class="fa fa-search me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Cari User"></i>
+            <span>Filter</span>
+          <% end %>
+        <% end %>
       </div>
-      <div class="card-body">
-        <div class="tf-tree tf-gap-lg mt-2 show text-center" data-controller="pohon-tematik">
-          <ul>
-            <li>
-              <div class="tf-nc" style="width: 450px;">
-                <div class="pohon">
-                  <div class="pohon-title">
-                    <h5 class="text-center"><strong>Pohon Kinerja Kota</strong></h5>
-                  </div>
-                  <div class="pohon-body">
-                    <table class="table table-bordered">
-                      <tr>
-                        <td class="text-start" width="30px">Kota</td>
-                        <td class="text-start fw-bolder">Kota Madiun</td>
-                      </tr>
-                      <tr>
-                        <td class="text-start" width="30px">Tahun</td>
-                        <td class="text-start fw-bolder"><%= @tahun %></td>
-                      </tr>
-                    </table>
-                  </div>
-                  <div class="pohon-foot">
-                    <div class="row gx-3">
-                      <%= link_to new_pohon_tematik_path,
-                        remote: true,
-                        data: {
-                                action: 'ajax:complete->pohon-tematik#addPohon:prevent',
-                              },
-                        class: 'btn btn-primary w-100' do %>
-                        <i class="fas fa-plus me-2"></i>
-                        <span>Tematik Kota</span>
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <ul data-pohon-tematik-target='dahan'>
-                <% @tematik_kota.each do |pohon| %>
-                  <%= render partial: 'pohon_tematik/pohon_tematik', locals: { pohon: pohon,
-                    sub_tematiks: @sub_tematik_kota.select { |sub| sub.pohon_ref_id == pohon.id  },
-                    strategics: @strategi_tematiks,
-                    tacticals: @tactical_tematiks,
-                    operationals: @operational_tematiks } %>
-                <% end %>
-              </ul>
-            </li>
-          </ul>
+    </div>
+    <div id="render-results">
+      <div class="card border-2 shadow mb-3">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h5>Pilih Tema terlebih dahulu</h5>
+            </div>
+          </div>
         </div>
       </div>
     </div>
