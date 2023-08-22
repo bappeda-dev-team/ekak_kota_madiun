@@ -128,9 +128,8 @@ class PohonTematikController < ApplicationController
   def new_strategi
     parent_pohon = Pohon.find(params[:id])
     @pohon_ref_id = params[:id]
-    @opd = parent_pohon.pohonable
-    @strategi = Strategi.new(role: 'strategi_pohon_kota', tahun: parent_pohon.tahun,
-                             opd_id: @opd.id)
+    @opds = Opd.opd_resmi
+    @strategi = Strategi.new(role: 'strategi_pohon_kota', tahun: parent_pohon.tahun)
     @strategi.build_sasaran.indikator_sasarans.build
   end
 
