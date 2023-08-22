@@ -1,13 +1,13 @@
-<%= content_for :html_title, "Pohon Kinerja" %>
+<%= content_for :html_title, "Pohon Kinerja OPD" %>
 <%= content_for :navigation do %>
   <li class="breadcrumb-item" aria-current="page">Perencanaan OPD</li>
-  <li class="breadcrumb-item active" aria-current="page">Pohon Kinerja</li>
+  <li class="breadcrumb-item active" aria-current="page">Pohon Kinerja OPD</li>
 <% end %>
 <% content_for :view_utama do %>
   <% if cookies[:tahun] && cookies[:opd] %>
     <div class="card border-2 shadow mb-3">
       <div class="card-body border-5 shadow">
-        <h5 class="mb-2">Pohon Kinerja <%= @nama_opd %> Tahun <%= @tahun %></h5>
+        <h5 class="mb-2">Pohon Kinerja OPD Tahun <%= @tahun %></h5>
         <%= form_with url: manual_pohon_kinerja_index_path, method: :get do |form| %>
           <%= form.select :strategi,
               select_strategi(@strategis),
