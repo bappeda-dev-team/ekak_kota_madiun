@@ -30,6 +30,7 @@
               placeholder: 'Pilih OPD',
               action: 'change->pohon-tematik#updateStrategi'
           },
+          id: "opd_#{form.object_id}",
           required: true
         } %>
   </div>
@@ -42,6 +43,7 @@
                pohon_tematik_target: 'strategi',
                placeholder: 'Pilih Strategi Tematik',
            },
+           id: "strategi_#{form.object_id}",
            required: true
           }%>
   </div>
