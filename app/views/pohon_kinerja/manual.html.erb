@@ -10,7 +10,7 @@
         <h5 class="mb-2">Pohon Kinerja <%= @nama_opd %> Tahun <%= @tahun %></h5>
         <%= form_with url: manual_pohon_kinerja_index_path, method: :get do |form| %>
           <%= form.select :strategi,
-              select_strategi(@strategic),
+              select_strategi(@strategis),
               {},
               { data: {
                   controller: 'dropdown',
@@ -29,7 +29,7 @@
     </div>
     <div id="render-results">
       <% if @show_result %>
-        <%= render 'pohon_kinerja/index_content' %>
+        <%= render 'pohon_kinerja/pokin_opd' %>
       <% else %>
         <div class="card border-2 shadow mb-3">
           <div class="card-header">
