@@ -47,12 +47,16 @@ export default class extends Controller {
 
     const defaultMatcher = $.fn.select2.defaults.defaults.matcher;
 
+    function opd_matcher(opdId) {
+      return opdId == opd_id
+    }
+
     target.select2({
       width: "100%",
       theme: "bootstrap-5",
       matcher: function (params, data) {
         if ($.trim(params.term) === '') {
-          if (data.element.dataset.opdId == opd_id) {
+          if (opd_matcher(data.element.dataset.opdId)) {
             return data;
           }
         }
@@ -62,7 +66,7 @@ export default class extends Controller {
         }
         // Check if the data occurs
         if (params.term) {
-          if (data.element.dataset.opdId == opd_id) {
+          if (opd_matcher(data.element.dataset.opdId)) {
             return defaultMatcher(params, data)
           }
         }
