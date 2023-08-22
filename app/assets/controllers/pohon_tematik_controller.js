@@ -2,11 +2,53 @@ import { Controller } from 'stimulus'
 import { Modal } from 'bootstrap'
 import Swal from "sweetalert2";
 import Turbolinks from "turbolinks";
+import $ from 'jquery'
 
 export default class extends Controller {
-  static targets = ["dahan", "tematik"]
+  static targets = ["dahan", "tematik", "dropdown", "strategi"]
   static values = {
     elementId: String
+  }
+
+  get select() {
+    return $(this.element);
+  }
+
+  get default_options() {
+    let options = {
+      width: "100%",
+      theme: "bootstrap-5",
+      // dropdownParent: this.parentValue
+    }
+    return options
+  }
+
+  dropdownTargetConnected(el) {
+    const select = $(el).select2(this.default_options)
+    select.on('select2:open', () => {
+      document.querySelector('.select2-search__field').focus()
+    })
+    select.on('select2:select', () => {
+      const event = new CustomEvent('change', { bubbles: true, detail: { opd_id: this.dropdownTarget.value } })
+      el.dispatchEvent(event)
+    })
+  }
+
+  strategiTargetConnected(el) {
+    const select = $(el).select2(this.default_options)
+    select.on('select2:open', () => {
+      document.querySelector('.select2-search__field').focus()
+    })
+  }
+
+  updateStrategi(e) {
+    const opd_id = e.detail.opd_id
+    const target = $(this.strategiTarget)
+    const options = target.find('option').filter('[data-opd-id="' + opd_id + '"]')
+
+    target.select2(this.default_options).empty()
+    console.log(options)
+    target.append(options).trigger('change.select2')
   }
 
   addPohon(e) {

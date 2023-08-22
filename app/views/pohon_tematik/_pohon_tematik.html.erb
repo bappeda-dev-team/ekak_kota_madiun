@@ -5,20 +5,11 @@
   <ul id="<%= "tematik_#{pohon.object_id}" %>">
     <% if local_assigns[:sub_tematiks] %>
       <% sub_tematiks.each do |sub_tema| %>
-        <% if sub_tema.pohonable_type == 'SubTematik' %>
-          <%= render partial: 'pohon_tematik/pohon_sub_tematik', locals: {
-          pohon: sub_tema,
-          opds: opds.select { |opd| opd.pohon_ref_id == sub_tema.id },
-          strategics: strategics,
-          tacticals: tacticals,
-          operationals: operationals } %>
-        <% else %>
-          <%= render partial: 'pohon_tematik/pohon_opd_tematik', locals: {
+        <%= render partial: 'pohon_tematik/pohon_sub_tematik', locals: {
           pohon: sub_tema,
           strategics: strategics.select { |str| str.pohon_ref_id == sub_tema.id },
           tacticals: tacticals,
           operationals: operationals } %>
-        <% end %>
       <% end %>
     <% end %>
   </ul>

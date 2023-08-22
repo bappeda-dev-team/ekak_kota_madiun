@@ -117,10 +117,11 @@ class PohonTematikController < ApplicationController
 
   def new_strategi_tematik
     parent_pohon = Pohon.find(params[:id])
-    @opd = parent_pohon.pohonable
-    @strategis = @opd.strategis.where(tahun: parent_pohon.tahun, role: 'eselon_2')
-    @pohon = Pohon.new(pohonable_type: 'Strategi', role: 'strategi_pohon_kota', tahun: parent_pohon.tahun,
-                       opd_id: @opd.id,
+    @opds = Opd.opd_resmi
+    @strategis = Strategi.where(tahun: parent_pohon.tahun, role: 'eselon_2')
+    @pohon = Pohon.new(pohonable_type: 'Strategi',
+                       role: 'strategi_pohon_kota',
+                       tahun: parent_pohon.tahun,
                        pohon_ref_id: parent_pohon.id)
   end
 

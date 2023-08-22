@@ -63,16 +63,27 @@
   </div>
   <div class="pohon-foot">
     <div class="d-grid gap-3">
-      <%= link_to new_opd_tematik_pohon_tematik_path(pohon),
+      <%= link_to new_strategi_tematik_pohon_tematik_path(pohon),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
-                 pohon_tematik_id_param: "opd_tematik_#{pohon.object_id}",
-                 action: 'ajax:complete->pohon-tematik#addOpdTematik:prevent',
+                 pohon_tematik_id_param: "strategi_tematik_#{pohon.object_id}",
+                 action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
              },
              class: 'btn btn-info w-100' do %>
         <i class="fas fa-plus me-2"></i>
-        <span>OPD Tematik</span>
+        <span>Strategi Tematik</span>
+      <% end %>
+      <%= link_to new_strategi_pohon_tematik_path(pohon),
+             remote: true,
+             data: {
+                 controller: 'pohon-tematik',
+                 pohon_tematik_id_param: "strategi_tematik_#{pohon.object_id}",
+                 action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
+             },
+             class: 'btn btn-primary w-100' do %>
+        <i class="fas fa-plus me-2"></i>
+        <span>Strategi Tematik Baru</span>
       <% end %>
     </div>
   </div>
