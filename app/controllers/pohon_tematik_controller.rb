@@ -16,12 +16,10 @@ class PohonTematikController < ApplicationController
                          .includes(:pohonable)
     return if @tematik_kota.empty?
 
-    @sub_tematik_kota = Pohon.where(pohonable_type: %w[SubTematik Opd],
-                                    role: %w[sub_pohon_kota opd_pohon_kota],
+    @sub_tematik_kota = Pohon.where(pohonable_type: 'SubTematik',
+                                    role: 'sub_pohon_kota',
                                     tahun: @tahun)
                              .includes(:pohonable)
-    @opd_tematiks = Pohon.where(pohonable_type: 'Opd', role: 'opd_pohon_kota', tahun: @tahun)
-                         .includes(:pohonable)
     @strategi_tematiks = Pohon.where(pohonable_type: 'Strategi', role: 'strategi_pohon_kota', tahun: @tahun)
                               .includes(:pohonable, pohonable: [:indikator_sasarans])
     @tactical_tematiks = Pohon.where(pohonable_type: 'Strategi', role: 'tactical_pohon_kota', tahun: @tahun)
