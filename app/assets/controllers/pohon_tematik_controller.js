@@ -7,7 +7,8 @@ import $ from 'jquery'
 export default class extends Controller {
   static targets = ["dahan", "tematik", "dropdown", "strategi"]
   static values = {
-    elementId: String
+    elementId: String,
+    display: Boolean
   }
 
   get select() {
@@ -191,6 +192,28 @@ export default class extends Controller {
   closeForm(e) {
     const element = e.target.closest('li')
     element.remove()
+  }
+
+  toggleChild(e) {
+    const button = e.target
+    const child = button.closest('li').querySelector('ul')
+    const display = !e.params.show
+    this.showChild(display, button)
+    child.classList.toggle('d-none')
+    button.dataset.pohonTematikShowParam = display
+  }
+
+  showChild(display, button) {
+    if (display) {
+      button.classList.remove('btn-tertiary')
+      button.classList.add('btn-danger')
+      button.innerText = 'Sembunyikan'
+    }
+    else {
+      button.classList.remove('btn-danger')
+      button.classList.add('btn-tertiary')
+      button.innerText = 'Tampilkan'
+    }
   }
 
   ajaxSuccess(e) {
