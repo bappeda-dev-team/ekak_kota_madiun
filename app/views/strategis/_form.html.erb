@@ -46,7 +46,12 @@
       </div>
       <div class="field">
         <%= form.label :strategi, class: "form-label" %>
-        <%= form.text_field :strategi, class: "form-control" %>
+        <%= form.select :strategi, strategi_garis(@strategis, form.object.strategi),
+                    {include_blank: true},
+                    { class: "form-control",
+                      data: { placeholder: "Pilih Strategi",
+                              controller: 'dropdown',
+                            } } %>
       </div>
       <div class="field">
         <%= form.fields_for :sasaran do |sasaran_form| %>

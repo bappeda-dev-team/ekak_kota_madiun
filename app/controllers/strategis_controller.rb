@@ -44,6 +44,7 @@ class StrategisController < ApplicationController
     @nip = params[:nip]
     @role = params[:role]
     @usulan_isu = params[:usulan_isu]
+    @strategis = Strategi.where(tahun: @tahun, role: @role, type: nil)
     @sasaran = @strategi.sasaran.nil? ? @strategi.build_sasaran : @strategi.sasaran
     @is_new = false
     strategi_pohon_atasan(@nip)

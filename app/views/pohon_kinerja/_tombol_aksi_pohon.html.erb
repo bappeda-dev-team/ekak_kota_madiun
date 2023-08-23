@@ -34,24 +34,6 @@
     <% end %>
   <% end %>
 <% end %>
-<% if strategi.transfered? %>
-  <div id="<%= dom_id(strategi) %>" data-controller="form-ajax" data-form-ajax-target="button">
-    <%= button_to transfer_pohon_kinerja_path(strategi, type: "StrategiPohon"),
-                remote: true,
-                class: "btn btn-sm btn-primary w-100",
-                data: { confirm_swal: "Transfer Strategi #{strategi.strategi}?",
-                        disable_with: "memproses..."
-                } do %>
-      <i class="fa fa-copy me-2"></i>
-      <span>Transfer ke Pohon Kinerja</span>
-    <% end %>
-  </div>
-<% else %>
-  <button class="btn btn-sm btn-primary" disabled>
-    <i class="fa fa-copy me-2"></i>
-    <span>Sudah ditransfer</span>
-  </button>
-<% end %>
 <% if super_admin? %>
   <%= link_to clone_pohon_kinerja_index_path(strategi: strategi), remote: true,
                       data: {
