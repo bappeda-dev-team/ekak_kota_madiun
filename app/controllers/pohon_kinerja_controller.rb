@@ -16,20 +16,13 @@ class PohonKinerjaController < ApplicationController
   end
 
   def manual
-    strategi_id = params[:strategi]
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
-    @strategis = Strategi.where(opd_id: @opd.id.to_s,
-                                role: 'eselon_2',
-                                tahun: @tahun)
 
-    return if strategi_id.nil?
-
-    @show_result = true
-
-    @pohon_opd = Pohon.where(pohonable_type: 'Strategi', pohonable_id: strategi_id)
+    @pohon_opd = Pohon.where(pohonable_type: 'Strategi', role: 'strategi_pohon_kota',
+                             tahun: @tahun, opd_id: @opd.id.to_s)
                       .includes(:pohonable, pohonable: [:indikator_sasarans])
 
     @tacticals = Pohon.where(pohonable_type: 'Strategi', role: 'tactical_pohon_kota', tahun: @tahun)

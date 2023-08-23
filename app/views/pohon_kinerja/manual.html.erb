@@ -5,43 +5,7 @@
 <% end %>
 <% content_for :view_utama do %>
   <% if cookies[:tahun] && cookies[:opd] %>
-    <div class="card border-2 shadow mb-3">
-      <div class="card-body border-5 shadow">
-        <h5 class="mb-2">Pohon Kinerja OPD Tahun <%= @tahun %></h5>
-        <%= form_with url: manual_pohon_kinerja_index_path, method: :get do |form| %>
-          <%= form.select :strategi,
-              select_strategi(@strategis),
-              {},
-              { data: {
-                  controller: 'dropdown',
-                  placeholder: 'Strategi OPD'
-                },
-                class: 'form-control',
-                required: true
-              } %>
-          <%= button_tag type: 'submit', class: "btn btn-tertiary w-100 mt-5",
-             data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>  Mencari..." } do %>
-            <i class="fa fa-search me-2"></i>
-            <span>Filter</span>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
-    <div id="render-results">
-      <% if @show_result %>
-        <%= render 'pohon_kinerja/pokin_opd' %>
-      <% else %>
-        <div class="card border-2 shadow mb-3">
-          <div class="card-header">
-            <div class="row align-items-center">
-              <div class="col">
-                <h5>Pilih Strategi OPD</h5>
-              </div>
-            </div>
-          </div>
-        </div>
-      <% end %>
-    </div>
+    <%= render 'pohon_kinerja/pokin_opd' %>
   <% else %>
     <%= render 'shared/pilih_tahun_dan_opd' %>
   <% end %>
