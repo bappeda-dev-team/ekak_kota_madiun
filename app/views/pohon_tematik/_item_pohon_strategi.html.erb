@@ -44,8 +44,11 @@
     <div class="col">
       <%= link_to pohon_tematik_path(pohon),
              method: :delete,
+             remote: true,
              class: 'btn btn-outline-danger',
-             data: { confirm_swal: "Hapus Strategi Tematik #{pohon.pohonable.strategi}?" } do %>
+             data: { confirm_swal: "Hapus Strategi Tematik #{pohon.pohonable.strategi}?",
+                  action: 'ajax:success->pohon-tematik#ajaxDelete'
+             } do %>
         <i class="fa fa-trash-alt me-2"></i>
         <span>Hapus</span>
       <% end %>

@@ -9,7 +9,7 @@ window.Swal = Swal;
 const confirmed = (element, result) => {
   // If result `success`
   if (result.value) {
-    if (!!element.getAttribute('data-remote')) {
+    if (!element.getAttribute('data-remote')) {
       let reloadAfterSuccess = true;
       let token = $('meta[name="csrf-token"]').attr('content');
       $.ajax({

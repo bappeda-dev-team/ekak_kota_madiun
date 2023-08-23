@@ -437,10 +437,7 @@ class PohonTematikController < ApplicationController
     childs.destroy_all
     @pohon.destroy
 
-    respond_to do |format|
-      format.html { redirect_to kota_pohon_kinerja_index_url, warning: "Pohon dihapus" }
-      format.json { head :no_content }
-    end
+    render json: { resText: "Dihapus" }.to_json, status: :accepted
   end
 
   private

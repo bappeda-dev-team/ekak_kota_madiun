@@ -224,6 +224,13 @@ export default class extends Controller {
     target.innerHTML = html
   }
 
+  ajaxDelete(e) {
+    const [xhr] = e.detail
+    this.sweetAlertSuccess(xhr.resText)
+    const target = e.target.closest('li')
+    target.remove()
+  }
+
   updateSuccess(e) {
     const [xhr] = e.detail
     this.sweetAlertSuccess(xhr.resText)

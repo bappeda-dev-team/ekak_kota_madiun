@@ -39,15 +39,6 @@
         <span>Edit</span>
       <% end %>
     </div>
-    <div class="col">
-      <%= link_to pohon_tematik_path(pohon),
-             method: :delete,
-             class: 'btn btn-outline-danger',
-             data: { confirm_swal: "Hapus Tema #{pohon.pohonable.tema}?" } do %>
-        <i class="fa fa-trash-alt me-2"></i>
-        <span>Hapus</span>
-      <% end %>
-    </div>
   </div>
   <div class="pohon-foot">
     <div class="d-grid gap-3">
