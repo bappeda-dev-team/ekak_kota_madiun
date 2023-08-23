@@ -1,24 +1,13 @@
-<%= content_for :html_title, "Pohon Kinerja" %>
+<%= content_for :html_title, "Pohon Kinerja OPD" %>
 <%= content_for :navigation do %>
   <li class="breadcrumb-item" aria-current="page">Perencanaan OPD</li>
-  <li class="breadcrumb-item active" aria-current="page">Pohon Kinerja</li>
+  <li class="breadcrumb-item active" aria-current="page">Pohon Kinerja OPD</li>
 <% end %>
 <% content_for :view_utama do %>
   <% if cookies[:tahun] && cookies[:opd] %>
-    <%= render 'pohon_kinerja/index_content' %>
+    <%= render 'pohon_kinerja/pokin_opd' %>
   <% else %>
-    <div class="card border-0 shadow">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col">
-            <h5>Pohon Kinerja</h5>
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="alert alert-info">Pilih Tahun dan OPD</p>
-      </div>
-    </div>
+    <%= render 'shared/pilih_tahun_dan_opd' %>
   <% end %>
   <%= render 'shared/modal_xl_template', modal_name: 'edit-pohon' %>
   <%= render 'shared/modal_xl_template', modal_name: 'panggil-teman' %>
