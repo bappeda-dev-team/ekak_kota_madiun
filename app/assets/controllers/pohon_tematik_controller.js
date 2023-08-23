@@ -204,6 +204,28 @@ export default class extends Controller {
     button.nextElementSibling.classList.toggle('d-none')
   }
 
+  toggleDetail(e) {
+    const button = e.target
+    const details = button.previousElementSibling.querySelectorAll('.detail')
+    const display = !e.params.show
+    this.showDetail(display, button)
+    details.forEach(e => e.classList.toggle('d-none'))
+    button.dataset.pohonTematikShowParam = display
+  }
+
+  showDetail(display, button) {
+    if (display) {
+      button.classList.remove('btn-outline-primary')
+      button.classList.add('btn-outline-danger')
+      button.innerText = 'Sembunyikan'
+    }
+    else {
+      button.classList.remove('btn-outline-danger')
+      button.classList.add('btn-outline-primary')
+      button.innerText = 'Detail'
+    }
+  }
+
   showChild(display, button) {
     if (display) {
       button.classList.remove('btn-tertiary')

@@ -1,0 +1,27 @@
+<div class="pohon-body">
+  <table class="table table-bordered mb-3">
+    <tr>
+      <td class="text-start" width="30px"><%= title %></td>
+      <td class="text-wrap text-start"><%= pohon.pohonable.strategi %></td>
+    </tr>
+    <% pohon.pohonable.indikator_sasarans.each.with_index(1) do |indikator, i| %>
+      <tr class="detail d-none">
+        <td class="text-start" width="30px">Indikator <%= i %></td>
+        <td class="text-wrap text-start"><%= indikator %></td>
+      </tr>
+      <tr class="detail d-none">
+        <td class="text-start" width="30px">Target / Satuan</td>
+        <td class="text-wrap text-start"><%= indikator.target %> <%= indikator.satuan %></td>
+      </tr>
+    <% end %>
+    <tr class="detail d-none">
+      <td class="text-start" width="30px">Keterangan</td>
+      <td class="text-wrap text-start"><%= pohon.keterangan %></td>
+    </tr>
+    <tr class="detail d-none">
+      <td class="text-start" width="30px">Perangkat Daerah</td>
+      <td class="text-wrap text-start"><%= pohon.pohonable.opd %></td>
+    </tr>
+  </table>
+  <button type="button" class="btn btn-outline-primary w-100" data-action="pohon-tematik#toggleDetail" data-pohon-tematik-show-param="false">Detail</button>
+</div>

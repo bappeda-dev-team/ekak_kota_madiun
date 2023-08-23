@@ -2,32 +2,7 @@
   <div class="pohon-title">
     <h5 class="text-center"><strong>Strategic</strong></h5>
   </div>
-  <div class="pohon-body">
-    <table class="table table-bordered">
-      <tr>
-        <td class="text-start" width="30px">Strategi Tematik</td>
-        <td class="text-wrap text-start"><%= pohon.pohonable.strategi %></td>
-      </tr>
-      <% pohon.pohonable.indikator_sasarans.each.with_index(1) do |indikator, i| %>
-      <tr>
-        <td class="text-start" width="30px">Indikator <%= i %></td>
-        <td class="text-wrap text-start"><%= indikator %></td>
-      </tr>
-      <tr>
-        <td class="text-start" width="30px">Target / Satuan</td>
-        <td class="text-wrap text-start"><%= indikator.target %> <%= indikator.satuan %></td>
-      </tr>
-      <% end %>
-      <tr>
-        <td class="text-start" width="30px">Keterangan</td>
-        <td class="text-wrap text-start"><%= pohon.keterangan %></td>
-      </tr>
-      <tr>
-        <td class="text-start" width="30px">Perangkat Daerah</td>
-        <td class="text-wrap text-start"><%= pohon.pohonable.opd %></td>
-      </tr>
-    </table>
-  </div>
+  <%= render partial: 'pohon_tematik/inner_table', locals: { pohon: pohon, title: 'Strategic' } %>
   <div class="pohon-tombol row mb-3">
     <div class="col">
       <%= link_to edit_strategi_pohon_tematik_path(pohon),
