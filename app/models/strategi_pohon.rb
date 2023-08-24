@@ -63,7 +63,9 @@ class StrategiPohon < Strategi
 
   belongs_to :strategi_asli, class_name: 'Strategi',
                              foreign_key: :strategi_cascade_link,
-                             primary_key: :id
+                             primary_key: :id,
+                             optional: true
+
   has_many :komentars, primary_key: :strategi_cascade_link,
                        foreign_key: :item
 end

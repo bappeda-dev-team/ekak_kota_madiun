@@ -24,6 +24,7 @@ class PohonKinerjaController < ApplicationController
     @pohon_opd = Pohon.where(pohonable_type: 'Strategi', role: 'strategi_pohon_kota',
                              tahun: @tahun, opd_id: @opd.id.to_s)
                       .includes(:pohonable, pohonable: [:indikator_sasarans])
+    @strategi_opd = StrategiPohon.where(opd_id: @opd.id, tahun: @tahun, role: 'eselon_2')
 
     @tacticals = Pohon.where(pohonable_type: 'Strategi', role: 'tactical_pohon_kota', tahun: @tahun)
                       .includes(:pohonable, pohonable: [:indikator_sasarans])
@@ -84,34 +85,40 @@ class PohonKinerjaController < ApplicationController
   def new_strategic
     @pohon = StrategiPohon.new
     @pohon.build_sasaran.indikator_sasarans.build
-    @opd_id = params[:opd_id]
-    @isu_id = params[:isu_pohon]
-    @role = params[:role]
-    pohon = Pohon.find_by(pohonable_id: @isu_id, opd_id: @opd_id)
-    @isu_strategis_pohon = [pohon.strategi_kota_isu_strategis, pohon.id]
+    @opd = Opd.find_by(kode_unik_opd: cookies[:opd])
+    @opd_id = @opd.id
+    @role = 'eselon_2'
     render layout: false
   end
 
   def edit
     # @pohon = Pohon.find_by(pohonable_id: params[:id]).pohonable
     @pohon = StrategiPohon.find(params[:id])
-    url = pohon_kinerja_path(@pohon)
-    method = :patch
-    render partial: 'form', locals: { pohon: @pohon, url: url, new_strategi: false, method: method }
+    @url = pohon_kinerja_path(@pohon)
+    @method = :patch
+    render layout: false
+    # render partial: 'form', locals: { pohon: @pohon, url: url, new_strategi: false, method: method }
   end
 
   def create
     pohon_parameter = pohon_params
-    tahun = pohon_parameter[:tahun]
+    tahun = cookies[:tahun]
     tahun_bener = tahun.match(/murni/) ? tahun[/[^_]\d*/, 0] : tahun
     pohon_parameter[:tahun] = tahun_bener
     @pohon = StrategiPohon.new(pohon_parameter)
     if @pohon.save
-      render json: { resText: "Perubahan tersimpan", result: 'Berhasil' },
+      html_content = render_to_string(partial: 'pohon_kinerja/pohon_strategi',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { pohon: @pohon, jenis: 'Strategi' })
+      render json: { resText: "Strategi berhasil dibuat", attachmentPartial: html_content }.to_json,
              status: :created
     else
-      render json: { resText: "Terjadi Kesalahan" },
-             status: :unprocessable_entity
+      error_content = render_to_string(partial: 'pohon_kinerja/form',
+                                       formats: 'html',
+                                       layout: false,
+                                       locals: { model: @pohon, url: pohon_kinerja_index_path, method: :post })
+      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
     end
   end
 
