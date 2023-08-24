@@ -1868,7 +1868,9 @@ CREATE TABLE public.pohons (
     strategi_id bigint,
     role character varying,
     tahun character varying,
-    pohon_ref_id bigint
+    pohon_ref_id bigint,
+    status character varying,
+    metadata jsonb
 );
 
 
@@ -5389,6 +5391,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230731071626'),
 ('20230802004938'),
 ('20230814035509'),
-('20230818074432');
+('20230818074432'),
+('20230824180057');
 
 

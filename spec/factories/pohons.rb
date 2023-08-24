@@ -4,8 +4,10 @@
 #
 #  id             :bigint           not null, primary key
 #  keterangan     :string
+#  metadata       :jsonb
 #  pohonable_type :string
 #  role           :string
+#  status         :string
 #  tahun          :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
