@@ -111,19 +111,29 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
     expect(page).not_to have_content("test 1")
   end
 
-  scenario "setujui pohon kota", :js do
-    strategi_pohon_test
-    visit manual_pohon_kinerja_index_path
+  context "setujui pohon kota", :js do
+    before(:each) do
+      strategi_pohon_test
+      visit manual_pohon_kinerja_index_path
 
-    expect(page).to have_content('Strategi - Kota')
-    expect(page).to have_content('test pohon 1')
+      expect(page).to have_content('Strategi - Kota')
+      expect(page).to have_content('test pohon 1')
 
-    click_on "Terima"
-    click_button "Ya"
+      click_on "Terima"
+      click_button "Ya"
+    end
 
-    # sweetalert
-    click_button "Ok"
+    scenario "success" do
+      # sweetalert
+      click_button "Ok"
 
-    expect(page).to have_css(".pohon-accepted")
+      expect(page).to have_css(".pohon-accepted")
+    end
+
+    scenario "gagal" do
+      raise "i don't know how to make this failed from spec"
+
+      expect(page).to have_content("Terjadi kesalahan")
+    end
   end
 end

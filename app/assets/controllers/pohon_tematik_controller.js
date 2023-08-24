@@ -281,7 +281,7 @@ export default class extends Controller {
       target.innerHTML = html
     }
     else {
-      this.sweetAlertFailed(xhr.resText)
+      this.sweetAlertFailed(text)
       // const html = this.errorHtml()
       // target.insertAdjacentHTML('beforeend', html)
     }
