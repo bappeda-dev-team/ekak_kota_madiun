@@ -22,7 +22,7 @@ class PohonKinerjaPresenter
   def status
     if @pohon.instance_of?(Pohon)
       if @pohon.status?
-        @pohon.status == 'diterima' ? 'border border-success pohon-accepted' : 'border border-danger pohon-rejected'
+        @pohon.status == 'diterima' ? 'pohon-accepted' : 'border border-danger pohon-rejected'
       else
         ''
       end

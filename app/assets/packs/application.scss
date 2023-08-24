@@ -329,3 +329,15 @@ input::placeholder {
   border-bottom: 1px solid black;
   padding: 1rem 0.5rem;
 }
+
+.pohon-accepted {
+  @extend .border;
+  @extend .border-success;
+  h5:after {
+    @extend .mx-3;
+    @extend %fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-check);
+    color: #38E54D;
+  }
+}
