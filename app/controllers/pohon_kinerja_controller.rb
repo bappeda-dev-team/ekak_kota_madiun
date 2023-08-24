@@ -125,10 +125,18 @@ class PohonKinerjaController < ApplicationController
   def update
     @pohon = StrategiPohon.find(params[:id])
     if @pohon.update(pohon_params)
-      render json: { resText: "Perubahan tersimpan", result: @pohon.id },
-             status: :accepted
+      html_content = render_to_string(partial: 'pohon_kinerja/item_pohon',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { pohon: @pohon, jenis: 'Strategi' })
+      render json: { resText: "Strategi diupdate", attachmentPartial: html_content }.to_json,
+             status: :ok
     else
-      render json: { resText: "Terjadi Kesalahan" },
+      error_content = render_to_string(partial: 'pohon_kinerja/form_edit',
+                                       formats: 'html',
+                                       layout: false,
+                                       locals: { pohon: @pohon })
+      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json,
              status: :unprocessable_entity
     end
   end

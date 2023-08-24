@@ -2,22 +2,14 @@
               method: method, local: false,
               data: {
                   controller: 'pohon-tematik',
-                  action: 'ajax:success->pohon-tematik#ajaxSuccess'
+                  action: 'ajax:success->pohon-tematik#updateSuccess'
               }) do |form| %>
   <div class="field">
     <%= form.label :strategi, class: "form-label" %>
     <%= form.text_field :strategi, class: "form-control" %>
   </div>
-  <% if model.new_record? %>
-    <%= form.hidden_field :role, class: "form-control", value: @role %>
-    <%= form.hidden_field :opd_id, class: "form-control", value: @opd_id %>
-  <% end %>
   <div class="field">
     <%= form.fields_for :sasaran do |sasaran_form| %>
-      <% if model.new_record? %>
-        <% random_number = @sasaran&.id_rencana.nil? ? (SecureRandom.random_number(9e5) + 1e5).to_i : @sasaran.id_rencana %>
-        <%= sasaran_form.hidden_field :id_rencana, :value => random_number, readonly: true %>
-      <% end %>
       <%= sasaran_form.label :sasaran_kinerja, { class: "form-label" } %>
       <%= sasaran_form.text_field :sasaran_kinerja, { class: "form-control" } %>
       <div class="field" id="indikator-sasarans">

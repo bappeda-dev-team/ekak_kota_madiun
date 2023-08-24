@@ -1,9 +1,10 @@
 <div class="pohon">
+  <% presenter = PohonKinerjaPresenter.new(pohon) %>
   <div class="pohon-title">
     <h5 class="text-center"><strong><%= jenis %></strong></h5>
   </div>
-  <%= render partial: 'pohon_kinerja/item_pohon_body', locals: { pohon: pohon, title: jenis } %>
-  <%= tombol %>
+  <%= render partial: 'pohon_kinerja/item_pohon_body', locals: { pohon: presenter, title: jenis } %>
+  <%= render partial: presenter.tombol_partial, locals: { pohon: presenter } %>
   <div class="pohon-foot">
     <button type="button" class="btn btn-tertiary w-100" data-action="pohon-tematik#toggleChild" data-pohon-tematik-show-param="false">Tampilkan</button>
     <div class="d-grid gap-3 mt-3 d-none">

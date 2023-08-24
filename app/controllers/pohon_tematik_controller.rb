@@ -191,7 +191,7 @@ class PohonTematikController < ApplicationController
                                       layout: false,
                                       locals: { pohon: @pohon })
       render json: { resText: "Strategi Tematik Diupdate", attachmentPartial: html_content }.to_json,
-             status: :created
+             status: :ok
     else
       error_content = render_to_string(partial: 'pohon_tematik/form_strategi_tematik',
                                        formats: 'html',
