@@ -33,7 +33,7 @@ RSpec.describe 'Tim View', type: :feature do
       expect(page).to have_link('Hapus Tim', href: tim_path(Tim.first))
     end
 
-    it 'can delete item', :js do
+    it 'can delete item', :js, :headless do
       tim_contoh = Tim.last
       click_link('Hapus Tim', href: tim_path(tim_contoh))
       expect(page).to have_selector('div.swal2-container')
@@ -45,7 +45,7 @@ RSpec.describe 'Tim View', type: :feature do
       expect(page).not_to have_content(tim_contoh)
     end
 
-    it "spawn modal form on new button click", :js do
+    it "spawn modal form on new button click", :js, :headless do
       expect(page).to have_link('Tambah Tim', href: new_tim_path)
       find_link('Tambah Tim').click
       within('#form-modal') do
