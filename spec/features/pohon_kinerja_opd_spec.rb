@@ -1,9 +1,23 @@
 require 'rails_helper'
 
 RSpec.feature "PohonKinerjaOpds", type: :feature do
-  before(:each) do
-    user = create(:super_admin)
+  let(:user) { create(:super_admin) }
 
+  def strategi_test
+    strategi = create(:strategi,
+                      type: 'StrategiPohon',
+                      strategi: 'test 1',
+                      opd_id: user.opd.id,
+                      tahun: '2023',
+                      nip_asn: '',
+                      role: 'eselon_2')
+    sasaran = create(:sasaran, user: nil, strategi_id: strategi.id, id_rencana: 'xx1', tahun: '2023')
+    create(:indikator_sasaran, indikator_kinerja: 'test ind',
+                               target: '100', satuan: '%',
+                               sasaran_id: sasaran.id_rencana)
+  end
+
+  before(:each) do
     login_as user
 
     # setup cookies
@@ -36,22 +50,10 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
   end
 
   scenario "edit pokin opd", :js do
+    strategi_test
     visit manual_pohon_kinerja_index_path
-    click_on "Strategi Baru"
-    # form
-    within('.strategi_pohon') do
-      within('.pohon-body') do
-        fill_in "Strategi", with: "contoh strategi"
-        fill_in "Sasaran", with: "contoh sasaran"
-        fill_in "Indikator kinerja", with: "Indikator strategi"
-        fill_in "Target", with: "100"
-        fill_in "Satuan", with: "%"
-        click_on "Simpan Strategi pohon"
-      end
-    end
 
-    # sweetalert
-    click_button "Ok"
+    expect(page).to have_content('test 1')
 
     within('.strategic-pohon') do
       within('.pohon-tombol') do
@@ -72,5 +74,24 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
 
     expect(page).to have_content("edit contoh strategi")
     expect(page).to have_css(".strategic-pohon")
+  end
+
+  scenario "delete pokin opd", :js do
+    strategi_test
+    visit manual_pohon_kinerja_index_path
+
+    expect(page).to have_content('test 1')
+
+    within('.strategic-pohon') do
+      within('.pohon-tombol') do
+        click_on "Hapus"
+      end
+    end
+    click_button "Ya"
+
+    # sweetalert
+    click_button "Ok"
+
+    expect(page).not_to have_content("test 1")
   end
 end

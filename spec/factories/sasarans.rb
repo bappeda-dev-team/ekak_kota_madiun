@@ -43,7 +43,7 @@ FactoryBot.define do
   factory :sasaran do
     sasaran_kinerja { " Terlaksananya monitoring dan evaluasi pelaksanaan kegiatan program smart city kota madiun " }
     status { "draft" }
-    tahun { "2022" }
+    tahun { "" }
     association :user
   end
 end
