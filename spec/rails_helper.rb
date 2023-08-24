@@ -72,6 +72,8 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   # Capybara
   config.include Capybara::DSL
+  config.include CapybaraSelect2
+  config.include CapybaraSelect2::Helpers # if need specific helpers
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
 
