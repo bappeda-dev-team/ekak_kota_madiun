@@ -101,3 +101,9 @@ en:
     - Oktober
     - November
     - Desember
+  time:
+    formats:
+      hari_jam: "%A, %d %B %Y, %H:%M"
+      default: "%d %B %Y"
+      long: "%A, %d %B %Y"
+      short: "%d.%m.%Y"
