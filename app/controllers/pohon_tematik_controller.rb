@@ -203,7 +203,7 @@ class PohonTematikController < ApplicationController
 
   def terima
     @pohon = Pohon.find(params[:id])
-    if @pohon.update(status: 'diterima', metadata: { procesed_by: current_user.id, processd_at: DateTime.current })
+    if @pohon.update(status: 'diterima', metadata: { processed_by: current_user.id, processed_at: DateTime.current })
       html_content = render_to_string(partial: 'pohon_kinerja/item_pohon',
                                       formats: 'html',
                                       layout: false,
