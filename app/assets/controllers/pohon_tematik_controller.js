@@ -268,6 +268,25 @@ export default class extends Controller {
     this.partialAttacher('form-modal-body', xhr.errors)
   }
 
+  terimaPohon(e) {
+    const [xhr, status] = e.detail
+    // const target = e.target.closest('.tf-nc')
+    // const prevHtml = target.querySelector('.pohon')
+    // prevHtml.classList.add('d-none')
+
+    if (status == 'OK') {
+      this.sweetAlertSuccess(xhr.resText)
+      // const html = xhr.response
+      // target.insertAdjacentHTML('beforeend', html)
+    }
+    else {
+      this.sweetAlertFailed(xhr.resText)
+      // const html = this.errorHtml()
+      // target.insertAdjacentHTML('beforeend', html)
+    }
+  }
+
+
   partialAttacher(targetName, html_element) {
     const target = document.getElementById(targetName)
     target.innerHTML = html_element

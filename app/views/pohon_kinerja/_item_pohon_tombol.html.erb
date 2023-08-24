@@ -1,26 +1,29 @@
 <div class="pohon-tombol row mb-3">
-    <div class="col">
-        <%= link_to edit_strategi_pohon_tematik_path(pohon),
+  <div class="col">
+    <%= link_to terima_pohon_tematik_path(pohon),
          remote: true,
+         method: :patch,
+         class: 'btn btn-outline-info',
          data: {
+             confirm_swal: "Terima strategi ?",
+             method: 'PATCH',
              controller: 'pohon-tematik',
-             action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
-         },
-         class: 'btn btn-outline-info' do %>
-            <i class="fas fa-edit me-2"></i>
-            <span>Terima</span>
-        <% end %>
-    </div>
-    <div class="col">
-        <%= link_to pohon_tematik_path(pohon),
+             action: 'ajax:complete->pohon-tematik#terimaPohon:prevent'
+         } do %>
+      <i class="fas fa-edit me-2"></i>
+      <span>Terima</span>
+    <% end %>
+  </div>
+  <div class="col">
+    <%= link_to tolak_pohon_tematik_path(pohon),
          method: :delete,
          remote: true,
          class: 'btn btn-outline-danger',
          data: { confirm_swal: "Hapus Strategi Tematik #{pohon.pohonable.strategi}?",
              action: 'ajax:success->pohon-tematik#ajaxDelete'
          } do %>
-            <i class="fa fa-trash-alt me-2"></i>
-            <span>Tolak</span>
-        <% end %>
-    </div>
+      <i class="fa fa-trash-alt me-2"></i>
+      <span>Tolak</span>
+    <% end %>
+  </div>
 </div>

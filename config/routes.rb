@@ -34,6 +34,8 @@ Rails.application.routes.draw do
       get :edit_operational
       patch :update_operational
       patch :pindah_pohon
+      patch :terima
+      patch :tolak
     end
     collection do
       post :create_sub_tema

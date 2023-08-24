@@ -17,6 +17,22 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
                                sasaran_id: sasaran.id_rencana)
   end
 
+  def strategi_pohon_test
+    strategi = create(:strategi,
+                      type: 'StrategiPohon',
+                      strategi: 'test pohon 1',
+                      opd_id: user.opd.id,
+                      tahun: '2023',
+                      nip_asn: '',
+                      role: 'eselon_2')
+    sasaran = create(:sasaran, user: nil, strategi_id: strategi.id, id_rencana: 'xx1', tahun: '2023')
+    create(:indikator_sasaran, indikator_kinerja: 'test ind',
+                               target: '100', satuan: '%',
+                               sasaran_id: sasaran.id_rencana)
+    create(:pohon, keterangan: 'test pohon', opd_id: user.opd.id, tahun: '2023',
+                   pohonable_type: 'Strategi', pohonable_id: strategi.id, role: 'strategi_pohon_kota')
+  end
+
   before(:each) do
     login_as user
 
@@ -93,5 +109,21 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
     click_button "Ok"
 
     expect(page).not_to have_content("test 1")
+  end
+
+  scenario "setujui pohon kota", :js do
+    strategi_pohon_test
+    visit manual_pohon_kinerja_index_path
+
+    expect(page).to have_content('Strategi - Kota')
+    expect(page).to have_content('test pohon 1')
+
+    click_on "Terima"
+    click_button "Ya"
+
+    # sweetalert
+    click_button "Ok"
+
+    expect(page).to have_css("pohon-accepted")
   end
 end
