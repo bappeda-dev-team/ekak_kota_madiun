@@ -1,7 +1,7 @@
 class PohonKinerjaPresenter
   attr_accessor :pohon
 
-  delegate :id, :to_param,
+  delegate :id, :to_param, :metadata,
            to: :pohon
   def initialize(pohon)
     @pohon = pohon
@@ -29,6 +29,20 @@ class PohonKinerjaPresenter
     else
       ''
     end
+  end
+
+  def processed?
+    return unless @pohon.instance_of?(Pohon)
+
+    @pohon.status? && @pohon.metadata.key?("processed_by")
+  end
+
+  def diproses_oleh
+    User.find(@pohon.metadata["processed_by"])
+  end
+
+  def diproses_pada
+    @pohon.metadata["processed_at"].to_datetime
   end
 
   def role

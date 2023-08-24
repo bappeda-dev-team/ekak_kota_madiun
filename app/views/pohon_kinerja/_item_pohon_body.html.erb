@@ -22,6 +22,16 @@
       <td class="text-start" width="30px">Perangkat Daerah</td>
       <td class="text-wrap text-start"><%= pohon.pohonable.opd %></td>
     </tr>
+    <% if pohon.processed? %>
+      <tr class="detail d-none">
+        <td class="text-start" width="30px">Diterima oleh</td>
+        <td class="text-wrap text-start"><%= pohon.diproses_oleh %></td>
+      </tr>
+      <tr class="detail d-none">
+        <td class="text-start" width="30px">Diterima pada</td>
+        <td class="text-wrap text-start"><%= time_tag(pohon.diproses_pada, format: :hari_jam) %></td>
+      </tr>
+    <% end %>
   </table>
   <button type="button" class="btn btn-outline-primary w-100" data-action="pohon-tematik#toggleDetail" data-pohon-tematik-show-param="false">Detail</button>
 </div>
