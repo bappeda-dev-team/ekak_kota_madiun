@@ -19,6 +19,18 @@ class PohonKinerjaPresenter
     @pohon.instance_of?(Pohon) ? 'pohon_kinerja/item_pohon_tombol' : 'pohon_kinerja/item_pohon_tombol_opd'
   end
 
+  def status
+    if @pohon.instance_of?(Pohon)
+      if @pohon.status?
+        @pohon.status == 'diterima' ? 'border border-success pohon-accepted' : 'border border-danger pohon-rejected'
+      else
+        ''
+      end
+    else
+      ''
+    end
+  end
+
   def role
     @pohon.role
   end

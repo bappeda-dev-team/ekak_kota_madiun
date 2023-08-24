@@ -270,14 +270,15 @@ export default class extends Controller {
 
   terimaPohon(e) {
     const [xhr, status] = e.detail
-    // const target = e.target.closest('.tf-nc')
-    // const prevHtml = target.querySelector('.pohon')
-    // prevHtml.classList.add('d-none')
+    const target = e.currentTarget.closest('.tf-nc')
+    const response = xhr.response
+    const results = JSON.parse(response)
+    const text = results.resText
+    const html = results.attachmentPartial
 
     if (status == 'OK') {
-      this.sweetAlertSuccess(xhr.resText)
-      // const html = xhr.response
-      // target.insertAdjacentHTML('beforeend', html)
+      this.sweetAlertSuccess(text)
+      target.innerHTML = html
     }
     else {
       this.sweetAlertFailed(xhr.resText)

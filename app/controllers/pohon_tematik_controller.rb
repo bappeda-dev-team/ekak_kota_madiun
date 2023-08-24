@@ -204,18 +204,14 @@ class PohonTematikController < ApplicationController
   def terima
     @pohon = Pohon.find(params[:id])
     if @pohon.update(status: 'diterima', metadata: { procesed_by: current_user.id, processd_at: DateTime.current })
-      html_content = render_to_string(partial: 'pohon_tematik/item_pohon_strategi',
+      html_content = render_to_string(partial: 'pohon_kinerja/item_pohon',
                                       formats: 'html',
                                       layout: false,
-                                      locals: { pohon: @pohon })
+                                      locals: { pohon: @pohon, jenis: 'Strategi - Kota' })
       render json: { resText: "Strategi diterima", attachmentPartial: html_content }.to_json,
              status: :ok
     else
-      error_content = render_to_string(partial: 'pohon_tematik/form_strategi_tematik',
-                                       formats: 'html',
-                                       layout: false,
-                                       locals: { pohon: @pohon })
-      render json: { resText: "Terjadi kesalahan", errors: error_content }.to_json,
+      render json: { resText: "Terjadi kesalahan" }.to_json,
              status: :unprocessable_entity
     end
   end

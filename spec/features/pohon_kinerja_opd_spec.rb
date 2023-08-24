@@ -124,6 +124,6 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
     # sweetalert
     click_button "Ok"
 
-    expect(page).to have_css("pohon-accepted")
+    expect(page).to have_css(".pohon-accepted")
   end
 end
