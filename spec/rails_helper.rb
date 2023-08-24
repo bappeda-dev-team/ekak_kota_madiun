@@ -96,6 +96,7 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :request
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+  config.include ShowMeTheCookies, type: :feature
 end
 
 Shoulda::Matchers.configure do |conf|

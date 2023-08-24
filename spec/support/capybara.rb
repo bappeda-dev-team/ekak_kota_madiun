@@ -23,6 +23,10 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :feature, js: true) do
+    Capybara.current_driver = :selenium
+  end
+
+  config.before(:each, type: :feature, js: true, headless: true) do
     Capybara.current_driver = :selenium_headless
   end
 

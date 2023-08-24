@@ -386,6 +386,8 @@ GEM
     semantic_range (3.0.0)
     shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)
+    show_me_the_cookies (6.0.0)
+      capybara (>= 2, < 4)
     sidekiq (6.5.1)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
@@ -535,6 +537,7 @@ DEPENDENCIES
   scenic
   selenium-webdriver
   shoulda-matchers (~> 5.0)
+  show_me_the_cookies
   sidekiq
   sidekiq-status
   sidekiq-unique-jobs
