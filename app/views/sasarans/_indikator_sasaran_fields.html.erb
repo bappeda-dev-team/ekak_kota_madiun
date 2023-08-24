@@ -2,7 +2,9 @@
   <div class="field">
     <%= form.label :aspek, { class: "form-label" } %>
     <%= form.select(:aspek, (['Kualitas','Kuantitas', 'Waktu', 'Biaya']), {},
-      {data: { controller: 'dropdown' }}) %>
+      {data: { controller: 'dropdown' },
+       id: "indikator_#{form.object_id}"
+    }) %>
   </div>
   <div class="field">
     <%= form.label :indikator_kinerja, { class: "form-label" } %>
