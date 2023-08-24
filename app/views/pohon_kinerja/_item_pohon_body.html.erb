@@ -24,11 +24,11 @@
     </tr>
     <% if pohon.processed? %>
       <tr class="detail d-none">
-        <td class="text-start" width="30px">Diterima oleh</td>
+        <td class="text-start" width="30px"><%= pohon.status_ket %> oleh</td>
         <td class="text-wrap text-start"><%= pohon.diproses_oleh %></td>
       </tr>
       <tr class="detail d-none">
-        <td class="text-start" width="30px">Diterima pada</td>
+        <td class="text-start" width="30px"><%= pohon.status_ket %> pada</td>
         <td class="text-wrap text-start"><%= time_tag(pohon.diproses_pada, format: :hari_jam) %></td>
       </tr>
     <% end %>

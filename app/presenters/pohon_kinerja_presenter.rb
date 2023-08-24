@@ -45,6 +45,10 @@ class PohonKinerjaPresenter
     @pohon.metadata["processed_at"].to_datetime
   end
 
+  def status_ket
+    @pohon.status.titleize
+  end
+
   def role
     @pohon.role
   end
