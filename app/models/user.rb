@@ -79,6 +79,10 @@ class User < ApplicationRecord
 
   attr_writer :login
 
+  def to_s
+    nama
+  end
+
   def login
     @login || nik || email
   end
