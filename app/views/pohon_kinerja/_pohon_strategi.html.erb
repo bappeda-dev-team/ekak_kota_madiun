@@ -1,8 +1,9 @@
 <li>
+  <% presenter = PohonKinerjaPresenter.new(pohon) %>
   <div class="tf-nc" style="width: 450px;">
-    <%= render partial: 'pohon_kinerja/item_pohon', locals: { pohon: pohon, jenis: 'Strategic dari Kota',
+    <%= render partial: 'pohon_kinerja/item_pohon', locals: { pohon: presenter, jenis: jenis,
         tombol: capture { %>
-    <%= render 'pohon_kinerja/item_pohon_tombol', pohon: pohon %>
+    <%= render presenter.tombol_partial, pohon: presenter %>
     <% } } %>
   </div>
   <ul class='d-none' id='<%= "tactical_tematik_#{pohon.object_id}" %>'>
