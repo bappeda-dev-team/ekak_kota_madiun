@@ -27,12 +27,12 @@ class PohonKinerjaController < ApplicationController
     @strategi_opd = StrategiPohon.where(opd_id: @opd.id, tahun: @tahun, role: 'eselon_2')
 
     @tacticals = Pohon.where(pohonable_type: 'Strategi', role: 'tactical_pohon_kota', tahun: @tahun)
-                      .includes(:pohonable, pohonable: [:indikator_sasarans])
 
     @tactical_opd = @strategi_opd.rewhere(role: 'eselon_3')
 
     @operationals = Pohon.where(pohonable_type: 'Strategi', role: 'operational_pohon_kota', tahun: @tahun)
-                         .includes(:pohonable, pohonable: [:indikator_sasarans])
+
+    @operational_opd = @strategi_opd.rewhere(role: 'eselon_4')
   end
 
   def list_pohon

@@ -45,7 +45,8 @@
           </div>
           <ul data-pohon-tematik-target='dahan'>
             <% @pohon_opd.each do |pohon| %>
-              <%= render partial: 'pohon_kinerja/pohon_strategi', locals: { pohon: pohon, jenis: 'Strategi - Kota'} %>
+              <%= render partial: 'pohon_kinerja/pohon_strategi', locals: { pohon: pohon, jenis: 'Strategi - Kota',
+                tacticals: @tacticals.select { |tact| tact.pohon_ref_id == pohon.id }} %>
             <% end %>
             <% @strategi_opd.each do |str_opd| %>
               <%= render partial: 'pohon_kinerja/pohon_strategi', locals: { pohon: str_opd, jenis: 'Strategi',

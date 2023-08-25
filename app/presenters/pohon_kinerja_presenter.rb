@@ -19,6 +19,10 @@ class PohonKinerjaPresenter
     @pohon.instance_of?(Pohon) ? 'pohon_kinerja/item_pohon_tombol' : 'pohon_kinerja/item_pohon_tombol_opd'
   end
 
+  def tombol_foot
+    @pohon.instance_of?(Pohon) ? 'pohon_kinerja/item_pohon_foot' : 'pohon_kinerja/item_pohon_foot_opd'
+  end
+
   def status
     if @pohon.instance_of?(Pohon)
       if @pohon.status?

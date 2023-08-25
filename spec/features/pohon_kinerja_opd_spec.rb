@@ -59,6 +59,36 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
                    pohonable_type: 'Strategi', pohonable_id: strategi.id, role: 'strategi_pohon_kota')
   end
 
+  def tactical_pohon_test
+    strategi = create(:strategi,
+                      type: 'StrategiPohon',
+                      strategi: 'test pohon 1',
+                      opd_id: user.opd.id,
+                      tahun: '2023',
+                      nip_asn: '',
+                      role: 'eselon_2')
+    sasaran = create(:sasaran, user: nil, strategi_id: strategi.id, id_rencana: 'xx1', tahun: '2023')
+    create(:indikator_sasaran, indikator_kinerja: 'test ind',
+                               target: '100', satuan: '%',
+                               sasaran_id: sasaran.id_rencana)
+    pohon_strategi = create(:pohon, keterangan: 'test pohon', opd_id: user.opd.id, tahun: '2023',
+                                    pohonable_type: 'Strategi', pohonable_id: strategi.id, role: 'strategi_pohon_kota')
+    tactical = create(:strategi,
+                      type: 'StrategiPohon',
+                      strategi: 'test tactical',
+                      opd_id: user.opd.id,
+                      tahun: '2023',
+                      nip_asn: '',
+                      role: 'eselon_3',
+                      strategi_ref_id: '')
+    sasaran = create(:sasaran, user: nil, strategi_id: tactical.id, id_rencana: 'xx2', tahun: '2023')
+    create(:indikator_sasaran, indikator_kinerja: 'test ind',
+                               target: '100', satuan: '%',
+                               sasaran_id: sasaran.id_rencana)
+    create(:pohon, keterangan: 'test tactical pohon', opd_id: user.opd.id, tahun: '2023',
+                   pohonable_type: 'Strategi', pohonable_id: tactical.id, role: 'tactical_pohon_kota')
+  end
+
   before(:each) do
     login_as user
 
@@ -171,6 +201,45 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
 
     scenario "muncul dibawah strategic" do
       click_on "Tampilkan"
+
+      expect(page).to have_css(".tactical-pohon")
+      expect(page).to have_content("test tactical")
+    end
+
+    scenario "add new" do
+      click_on "Tampilkan"
+
+      click_on "Tactical"
+
+      within('.strategi_pohon') do
+        within('.pohon-body') do
+          fill_in "Strategi", with: "contoh tactical"
+          fill_in "Sasaran", with: "contoh sasaran"
+          fill_in "Indikator kinerja", with: "Indikator strategi"
+          fill_in "Target", with: "100"
+          fill_in "Satuan", with: "%"
+          click_on "Simpan Strategi pohon"
+        end
+      end
+
+      # sweetalert
+      click_button "Ok"
+
+      expect(page).to have_content("contoh tactical")
+      expect(page).to have_css(".strategic-pohon")
+    end
+  end
+
+  context "tactical pohon", :js do
+    before(:each) do
+      tactical_pohon_test
+      visit manual_pohon_kinerja_index_path
+    end
+
+    scenario "muncul dibawah strategic" do
+      within(".pohon-tactical") do
+        click_on "Tampilkan"
+      end
 
       expect(page).to have_css(".tactical-pohon")
       expect(page).to have_content("test tactical")

@@ -4,21 +4,6 @@
     <h5 class="text-center"><strong><%= jenis %></strong></h5>
   </div>
   <%= render partial: 'pohon_kinerja/item_pohon_body', locals: { pohon: presenter, title: jenis } %>
-  <%= render partial: presenter.tombol_partial, locals: { pohon: presenter } %>
-  <div class="pohon-foot">
-    <button type="button" class="btn btn-tertiary w-100" data-action="pohon-tematik#toggleChild" data-pohon-tematik-show-param="false">Tampilkan</button>
-    <div class="d-grid gap-3 mt-3 d-none">
-      <%= link_to new_tactical_pohon_kinerja_path(pohon),
-             remote: true,
-             data: {
-                 controller: 'pohon-tematik',
-                 pohon_tematik_id_param: "tactical_tematik_#{pohon.object_id}",
-                 action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
-             },
-             class: 'btn btn-info w-100' do %>
-        <i class="fas fa-plus me-2"></i>
-        <span>Tactical Tematik</span>
-      <% end %>
-    </div>
-  </div>
+  <%= render partial: presenter.tombol_partial, locals: { pohon: presenter, title: bawah } %>
+  <%= render partial: presenter.tombol_foot, locals: { pohon: pohon, title: bawah } %>
 </div>
