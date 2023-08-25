@@ -3,7 +3,12 @@
   <div class="pohon-title <%= presenter.status %>">
     <h5 class="text-center"><strong><%= jenis %></strong></h5>
   </div>
-  <%= render partial: 'pohon_kinerja/item_pohon_body', locals: { pohon: presenter, title: jenis } %>
-  <%= render partial: presenter.tombol_partial, locals: { pohon: presenter, title: bawah } %>
-  <%= render partial: presenter.tombol_foot, locals: { pohon: pohon, title: bawah } %>
+  <%= render partial: 'pohon_kinerja/item_pohon_body',
+             locals: { pohon: presenter, title: jenis } %>
+
+  <%= render partial: presenter.tombol_partial,
+             locals: { pohon: presenter } %>
+
+  <%= render partial: presenter.tombol_foot,
+             locals: { pohon: pohon, title: bawah } %>
 </div>
