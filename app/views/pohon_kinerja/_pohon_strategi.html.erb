@@ -5,9 +5,8 @@
   <ul class='d-none' id='<%= "tactical_tematik_#{pohon.object_id}" %>'>
     <% if local_assigns[:tacticals] %>
       <% tacticals.each do |tactical| %>
-        <%= render partial: 'pohon_tematik/pohon_tactical_tematik', locals: {
-          pohon: tactical,
-          operationals: operationals.select { |op| op.pohon_ref_id == tactical.id} } %>
+        <%= render partial: 'pohon_kinerja/pohon_tactical', locals: {
+          pohon: tactical, jenis: 'Tactical' } %>
       <% end %>
     <% end %>
   </ul>

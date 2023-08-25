@@ -1,0 +1,13 @@
+<li>
+  <div class="tf-nc tactical-pohon" style="width: 450px;">
+    <%= render partial: 'pohon_kinerja/item_pohon', locals: { pohon: pohon, jenis: jenis } %>
+  </div>
+  <ul class='d-none' id='<%= "operational_tematik_#{pohon.object_id}" %>'>
+    <% if local_assigns[:operationals] %>
+      <% operationals.each do |operational| %>
+        <%= render partial: 'pohon_tematik/pohon_tactical_tematik', locals: {
+          pohon: operational } %>
+      <% end %>
+    <% end %>
+  </ul>
+</li>

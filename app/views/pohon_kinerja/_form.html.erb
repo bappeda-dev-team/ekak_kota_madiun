@@ -9,8 +9,9 @@
     <%= form.text_field :strategi, class: "form-control" %>
   </div>
   <% if model.new_record? %>
-    <%= form.hidden_field :role, class: "form-control", value: @role %>
-    <%= form.hidden_field :opd_id, class: "form-control", value: @opd_id %>
+    <%= form.hidden_field :role, class: "form-control" %>
+    <%= form.hidden_field :opd_id, class: "form-control" %>
+    <%= form.hidden_field :strategi_ref_id, class: "form-control" %>
   <% end %>
   <div class="field">
     <%= form.fields_for :sasaran do |sasaran_form| %>

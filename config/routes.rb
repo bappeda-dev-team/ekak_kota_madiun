@@ -110,6 +110,7 @@ Rails.application.routes.draw do
       post :set_clone
       get :pindah
       get :list_dibagikan
+      get :new_tactical
     end
     collection do
       get :kota

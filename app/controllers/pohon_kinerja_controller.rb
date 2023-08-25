@@ -28,6 +28,9 @@ class PohonKinerjaController < ApplicationController
 
     @tacticals = Pohon.where(pohonable_type: 'Strategi', role: 'tactical_pohon_kota', tahun: @tahun)
                       .includes(:pohonable, pohonable: [:indikator_sasarans])
+
+    @tactical_opd = @strategi_opd.rewhere(role: 'eselon_3')
+
     @operationals = Pohon.where(pohonable_type: 'Strategi', role: 'operational_pohon_kota', tahun: @tahun)
                          .includes(:pohonable, pohonable: [:indikator_sasarans])
   end
@@ -83,11 +86,16 @@ class PohonKinerjaController < ApplicationController
   end
 
   def new_strategic
-    @pohon = StrategiPohon.new
-    @pohon.build_sasaran.indikator_sasarans.build
     @opd = Opd.find_by(kode_unik_opd: cookies[:opd])
-    @opd_id = @opd.id
-    @role = 'eselon_2'
+    @pohon = StrategiPohon.new(role: 'eselon_2', opd_id: @opd.id)
+    @pohon.build_sasaran.indikator_sasarans.build
+    render layout: false
+  end
+
+  def new_tactical
+    @pohon_atasan = StrategiPohon.find(params[:id])
+    @pohon = StrategiPohon.new(role: 'eselon_3', opd_id: @pohon_atasan.opd_id, strategi_ref_id: @pohon_atasan.id)
+    @pohon.build_sasaran.indikator_sasarans.build
     render layout: false
   end
 
