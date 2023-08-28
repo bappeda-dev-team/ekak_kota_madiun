@@ -56,4 +56,28 @@ class PohonKinerjaPresenter
   def role
     @pohon.role
   end
+
+  def element_class_name
+    @pohon.role.dasherize
+  end
+
+  def title
+    # suffix = @pohon.instance_of?(Pohon) ? '- Kota' : ''
+    prefix = @pohon.role.chomp("_pohon_kota")
+    if prefix.include?('eselon')
+      to_real_name(prefix)
+    else
+      "#{to_real_name(prefix).capitalize} - Kota"
+    end
+  end
+
+  private
+
+  def to_real_name(role)
+    if %w[strategi eselon_2].include?(role)
+      'Tactical'
+    else
+      'Operational'
+    end
+  end
 end

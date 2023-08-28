@@ -32,7 +32,7 @@
                   <%= link_to new_strategic_pohon_kinerja_index_path,
                    remote: true,
                    class: 'btn btn-outline-success align-items-center w-100',
-                   data: { 
+                   data: {
                      controller: 'pohon-tematik',
                      action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
                    } do %>
@@ -45,12 +45,18 @@
           </div>
           <ul data-pohon-tematik-target='dahan'>
             <% @pohon_opd.each do |pohon| %>
-              <%= render partial: 'pohon_kinerja/pohon_strategi', locals: { pohon: pohon, jenis: 'Strategi - Kota',
-                tacticals: @tacticals.select { |tact| tact.pohon_ref_id == pohon.id }} %>
+              <%= render partial: 'pohon_kinerja/pohon_strategi',
+                         locals: {
+                           pohon: pohon,
+                           tacticals: @tacticals.select { |tact| tact.pohon_ref_id == pohon.id }
+                         } %>
             <% end %>
             <% @strategi_opd.each do |str_opd| %>
-              <%= render partial: 'pohon_kinerja/pohon_strategi', locals: { pohon: str_opd, jenis: 'Strategi',
-                tacticals: @tactical_opd.select { |tact| tact.strategi_ref_id.to_i == str_opd.id } } %>
+              <%= render partial: 'pohon_kinerja/pohon_strategi',
+                         locals: {
+                           pohon: str_opd,
+                           tacticals: @tactical_opd.select { |tact| tact.strategi_ref_id.to_i == str_opd.id }
+                         } %>
             <% end %>
           </ul>
         </li>

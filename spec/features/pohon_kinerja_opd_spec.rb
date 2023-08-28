@@ -246,18 +246,21 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
     end
 
     scenario "add new" do
-      click_on "Tampilkan"
+      within(".strategi-pohon-kota") do
+        click_on "Tampilkan"
+      end
 
-      click_on "Tactical Tematik"
+      click_on "Tactical - Kota"
 
-      within('.strategi_pohon') do
+      within('.tactical-tematik') do
         within('.pohon-body') do
-          fill_in "Strategi", with: "contoh tactical"
+          fill_in "strategi_strategi", with: "contoh tactical"
           fill_in "Sasaran", with: "contoh sasaran"
           fill_in "Indikator kinerja", with: "Indikator strategi"
           fill_in "Target", with: "100"
           fill_in "Satuan", with: "%"
-          click_on "Simpan Strategi pohon"
+          fill_in "Keterangan", with: "contoh keterangan"
+          click_on "Simpan"
         end
       end
 
@@ -265,7 +268,7 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
       click_button "Ok"
 
       expect(page).to have_content("contoh tactical")
-      expect(page).to have_css(".strategic-pohon")
+      expect(page).to have_css(".tactical-tematik")
     end
   end
 end
