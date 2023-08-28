@@ -46,7 +46,7 @@
   </div>
   <div class="field">
     <%= form.label :keterangan, class: 'form-label' %>
-    <%= form.text_field :keterangan, class: 'form-control', required: true, id: "pohon_keterangan_#{form.object_id.to_s}" %>
+    <%= form.text_field :keterangan, class: 'form-control', required: true %>
     <%= form.hidden_field :pohon_ref_id, value: @pohon_ref_id %>
   </div>
   <div class="actions">

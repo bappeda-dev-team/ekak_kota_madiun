@@ -359,4 +359,102 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
       expect(page).to have_css(".operational-pohon")
     end
   end
+
+  def operational_pohon_test
+    strategi = create(:strategi,
+                      type: 'StrategiPohon',
+                      strategi: 'test pohon 1',
+                      opd_id: user.opd.id,
+                      tahun: '2023',
+                      nip_asn: '',
+                      role: 'eselon_2')
+    sasaran_strategi = create(:sasaran, user: nil, strategi_id: strategi.id, id_rencana: 'xx1', tahun: '2023')
+    create(:indikator_sasaran, indikator_kinerja: 'test ind',
+                               target: '100', satuan: '%',
+                               sasaran_id: sasaran_strategi.id_rencana)
+    pohon_strategi = create(:pohon, keterangan: 'test pohon', opd_id: user.opd.id, tahun: '2023',
+                                    pohonable_type: 'Strategi', pohonable_id: strategi.id, role: 'strategi_pohon_kota')
+    tactical = create(:strategi,
+                      type: 'StrategiPohon',
+                      strategi: 'test tactical',
+                      opd_id: user.opd.id,
+                      tahun: '2023',
+                      nip_asn: '',
+                      role: 'eselon_3',
+                      strategi_ref_id: '')
+    sasaran_tactical = create(:sasaran, user: nil, strategi_id: tactical.id, id_rencana: 'xx2', tahun: '2023')
+    create(:indikator_sasaran, indikator_kinerja: 'test ind',
+                               target: '100', satuan: '%',
+                               sasaran_id: sasaran_tactical.id_rencana)
+    pohon_tactical = create(:pohon, keterangan: 'test tactical pohon', opd_id: user.opd.id, tahun: '2023',
+                                    pohonable_type: 'Strategi', pohonable_id: tactical.id, role: 'tactical_pohon_kota',
+                                    pohon_ref_id: pohon_strategi.id)
+    operational = create(:strategi,
+                         type: 'StrategiPohon',
+                         strategi: 'test operational',
+                         opd_id: user.opd.id,
+                         tahun: '2023',
+                         nip_asn: '',
+                         role: 'eselon_4',
+                         strategi_ref_id: '')
+    sasaran_operational = create(:sasaran, user: nil, strategi_id: operational.id, id_rencana: 'xx3', tahun: '2023')
+    create(:indikator_sasaran, indikator_kinerja: 'test ind',
+                               target: '100', satuan: '%',
+                               sasaran_id: sasaran_operational.id_rencana)
+    create(:pohon, keterangan: 'test operational pohon', opd_id: user.opd.id, tahun: '2023',
+                   pohonable_type: 'Strategi', pohonable_id: operational.id, role: 'operational_pohon_kota',
+                   pohon_ref_id: pohon_tactical.id)
+  end
+
+  context "operational pohon", :js do
+    before(:each) do
+      operational_pohon_test
+      visit manual_pohon_kinerja_index_path
+    end
+
+    scenario "muncul dibawah tactical" do
+      within(".strategi-pohon-kota") do
+        click_on "Tampilkan"
+      end
+      within('.tactical-pohon-kota') do
+        click_on "Tampilkan"
+      end
+
+      expect(page).to have_css(".operational-pohon")
+      expect(page).to have_content("Operational - Kota")
+      expect(page).to have_content("test operational")
+    end
+
+    scenario "add new" do
+      within(".strategi-pohon-kota") do
+        click_on "Tampilkan"
+      end
+      within('.tactical-pohon-kota') do
+        click_on "Tampilkan"
+      end
+
+      click_on "Operational - Kota"
+
+      expect(page).to have_content("Operational Tematik Baru")
+
+      within('.operational-tematik') do
+        within('.pohon-body') do
+          fill_in "strategi_strategi", with: "contoh operational"
+          fill_in "Sasaran", with: "contoh sasaran"
+          fill_in "Indikator kinerja", with: "Indikator strategi"
+          fill_in "Target", with: "100"
+          fill_in "Satuan", with: "%"
+          fill_in "Keterangan", with: "contoh keterangan"
+          click_on "Simpan"
+        end
+      end
+
+      # sweetalert
+      click_button "Ok"
+
+      expect(page).to have_content("Operational - Kota")
+      expect(page).to have_content("contoh operational")
+      expect(page).to have_css(".operational-tematik")
+    end
+  end
 end
