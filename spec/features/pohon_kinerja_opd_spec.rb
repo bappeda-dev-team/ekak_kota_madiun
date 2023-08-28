@@ -274,4 +274,61 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
       expect(page).to have_css(".tactical-tematik")
     end
   end
+
+  def operational_test
+    strategi = create(:strategi,
+                      type: 'StrategiPohon',
+                      strategi: 'test 1',
+                      opd_id: user.opd.id,
+                      tahun: '2023',
+                      nip_asn: '',
+                      role: 'eselon_2')
+    sasaran = create(:sasaran, user: nil, strategi_id: strategi.id, id_rencana: 'xx1', tahun: '2023')
+    create(:indikator_sasaran, indikator_kinerja: 'test ind',
+                               target: '100', satuan: '%',
+                               sasaran_id: sasaran.id_rencana)
+    tactical = create(:strategi,
+                      type: 'StrategiPohon',
+                      strategi: 'test tactical',
+                      opd_id: user.opd.id,
+                      tahun: '2023',
+                      nip_asn: '',
+                      role: 'eselon_3',
+                      strategi_ref_id: strategi.id)
+    sasaran_tactical = create(:sasaran, user: nil, strategi_id: tactical.id, id_rencana: 'xx2', tahun: '2023')
+    create(:indikator_sasaran, indikator_kinerja: 'test ind',
+                               target: '100', satuan: '%',
+                               sasaran_id: sasaran_tactical.id_rencana)
+    operational = create(:strategi,
+                         type: 'StrategiPohon',
+                         strategi: 'test operational',
+                         opd_id: user.opd.id,
+                         tahun: '2023',
+                         nip_asn: '',
+                         role: 'eselon_4',
+                         strategi_ref_id: tactical.id)
+    sasaran_operational = create(:sasaran, user: nil, strategi_id: operational.id, id_rencana: 'xx3', tahun: '2023')
+    create(:indikator_sasaran, indikator_kinerja: 'test ind',
+                               target: '100', satuan: '%',
+                               sasaran_id: sasaran_operational.id_rencana)
+  end
+
+  context "operational", :js do
+    before(:each) do
+      operational_test
+      visit manual_pohon_kinerja_index_path
+    end
+
+    scenario "muncul dibawah tactical" do
+      within(".strategic-pohon") do
+        click_on "Tampilkan"
+      end
+      within('.tactical-pohon') do
+        click_on "Tampilkan"
+      end
+
+      expect(page).to have_css(".operational-pohon")
+      expect(page).to have_content("test operational")
+    end
+  end
 end

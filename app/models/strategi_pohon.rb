@@ -68,4 +68,8 @@ class StrategiPohon < Strategi
 
   has_many :komentars, primary_key: :strategi_cascade_link,
                        foreign_key: :item
+
+  def pohon_ref_id
+    strategi_ref_id
+  end
 end

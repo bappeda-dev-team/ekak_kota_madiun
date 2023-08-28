@@ -8,7 +8,7 @@
   <ul class='d-none' id='<%= "operational_tematik_#{pohon.object_id}" %>'>
     <% if local_assigns[:operationals] %>
       <% operationals.each do |operational| %>
-        <%= render partial: 'pohon_tematik/pohon_tactical_tematik', locals: {
+        <%= render partial: 'pohon_kinerja/pohon_operational', locals: {
           pohon: operational } %>
       <% end %>
     <% end %>

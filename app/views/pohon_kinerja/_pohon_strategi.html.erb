@@ -10,7 +10,8 @@
       <% tacticals.each do |tactical| %>
         <%= render partial: 'pohon_kinerja/pohon_tactical',
                    locals: {
-                     pohon: tactical
+                       pohon: tactical,
+                       operationals: operationals.select { |op| op.pohon_ref_id.to_i == tactical.id }
                    } %>
       <% end %>
     <% end %>
