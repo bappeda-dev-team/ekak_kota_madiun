@@ -1,7 +1,7 @@
 <div class="pohon">
   <% presenter = PohonKinerjaPresenter.new(pohon) %>
   <div class="pohon-title <%= presenter.status %>">
-    <h5 class="text-center"><strong><%= presenter.title %></strong></h5>
+    <h5 class="text-center"><strong><%= presenter.title_up %></strong></h5>
   </div>
   <%= render partial: 'pohon_kinerja/item_pohon_body',
              locals: { pohon: presenter } %>

@@ -86,7 +86,7 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
                                target: '100', satuan: '%',
                                sasaran_id: sasaran.id_rencana)
     create(:pohon, keterangan: 'test tactical pohon', opd_id: user.opd.id, tahun: '2023',
-                   pohonable_type: 'Strategi', pohonable_id: tactical.id, role: 'tactical_pohon_kota')
+                   pohonable_type: 'Strategi', pohonable_id: tactical.id, role: 'tactical_pohon_kota', pohon_ref_id: pohon_strategi.id)
   end
 
   before(:each) do
@@ -117,7 +117,9 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
     # sweetalert
     click_button "Ok"
 
+    expect(page).to have_content("Strategic")
     expect(page).to have_content("contoh strategi")
+
     expect(page).to have_css(".strategic-pohon")
   end
 
@@ -237,11 +239,12 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
     end
 
     scenario "muncul dibawah strategic" do
-      within(".pohon-tactical") do
+      within(".strategi-pohon-kota") do
         click_on "Tampilkan"
       end
 
       expect(page).to have_css(".tactical-pohon")
+      expect(page).to have_content("Tactical - Kota")
       expect(page).to have_content("test tactical")
     end
 
