@@ -341,6 +341,8 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
 
       click_on "Operational"
 
+      expect(page).to have_content("Operational Baru")
+
       within('.strategi_pohon') do
         within('.pohon-body') do
           fill_in "Strategi", with: "contoh operational"

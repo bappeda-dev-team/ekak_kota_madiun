@@ -99,6 +99,13 @@ class PohonKinerjaController < ApplicationController
     render layout: false
   end
 
+  def new_operational
+    @pohon_atasan = StrategiPohon.find(params[:id])
+    @pohon = StrategiPohon.new(role: 'eselon_4', opd_id: @pohon_atasan.opd_id, strategi_ref_id: @pohon_atasan.id)
+    @pohon.build_sasaran.indikator_sasarans.build
+    render layout: false
+  end
+
   def edit
     # @pohon = Pohon.find_by(pohonable_id: params[:id]).pohonable
     @pohon = StrategiPohon.find(params[:id])

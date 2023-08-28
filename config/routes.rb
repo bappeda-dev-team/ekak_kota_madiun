@@ -111,6 +111,7 @@ Rails.application.routes.draw do
       get :pindah
       get :list_dibagikan
       get :new_tactical
+      get :new_operational
     end
     collection do
       get :kota
