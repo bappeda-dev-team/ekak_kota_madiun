@@ -330,5 +330,33 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
       expect(page).to have_css(".operational-pohon")
       expect(page).to have_content("test operational")
     end
+
+    scenario "add new" do
+      within(".strategic-pohon") do
+        click_on "Tampilkan"
+      end
+      within('.tactical-pohon') do
+        click_on "Tampilkan"
+      end
+
+      click_on "Operational"
+
+      within('.strategi_pohon') do
+        within('.pohon-body') do
+          fill_in "Strategi", with: "contoh operational"
+          fill_in "Sasaran", with: "contoh sasaran"
+          fill_in "Indikator kinerja", with: "Indikator operational"
+          fill_in "Target", with: "100"
+          fill_in "Satuan", with: "%"
+          click_on "Simpan Strategi pohon"
+        end
+      end
+
+      # sweetalert
+      click_button "Ok"
+
+      expect(page).to have_content("contoh operational")
+      expect(page).to have_css(".operational-pohon")
+    end
   end
 end
