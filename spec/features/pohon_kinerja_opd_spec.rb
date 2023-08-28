@@ -174,7 +174,7 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
       strategi_pohon_test
       visit manual_pohon_kinerja_index_path
 
-      expect(page).to have_content('Strategi - Kota')
+      expect(page).to have_content('Strategic - Kota')
       expect(page).to have_content('test pohon 1')
 
       click_on "Terima"
