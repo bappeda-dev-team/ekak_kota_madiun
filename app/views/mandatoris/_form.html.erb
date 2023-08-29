@@ -1,14 +1,24 @@
-<%= form_with(model: mandatori, local: false) do |form| %>
+<%= form_with(model: mandatori,
+              local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_element_id_value: 'mandatori',
+                action: 'ajax:success->form-ajax#ajaxSuccessAttach:prevent ajax:error->form-ajax#ajaxError:prevent'
+              }) do |form| %>
   <% if mandatori.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(mandatori.errors.count, "error") %> prohibited this mandatori from being saved:</h2>
-      <ul>
+      <h2>Terdapat <%= mandatori.errors.count %> kesalahan :</h2>
+      <ol>
         <% mandatori.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
-      </ul>
+      </ol>
     </div>
   <% end %>
+  <div class="field">
+    <%= form.label :opd, class: 'form-label' %>
+    <%= form.text_field :opd, class: 'form-control', readonly: true %>
+  </div>
   <div class="field">
     <%= form.label :nip, class: 'form-label' %>
     <%= form.text_field :nip_asn, class: 'form-control', readonly: true %>

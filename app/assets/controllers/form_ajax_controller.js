@@ -23,8 +23,9 @@ export default class extends Controller {
     this.modalHider()
     this.sweetAlertSuccess(xhr.resText)
     if (this.hasElementIdValue) {
-      const target = document.getElementById(targetName)
-      target.innerHTML = target.innerHTML + html_element
+      const target = document.getElementById(this.elementIdValue)
+      const html_element = xhr.attachmentPartial
+      target.innerHTML = html_element + target.innerHTML
     }
   }
 
