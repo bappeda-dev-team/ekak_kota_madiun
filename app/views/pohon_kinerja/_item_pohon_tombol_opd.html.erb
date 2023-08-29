@@ -1,37 +1,42 @@
 <div class="pohon-tombol row mb-3">
   <div class="col">
-    <%= link_to panggil_teman_pohon_kinerja_path(pohon, role: pohon.role), remote: true,
-                    class: 'btn btn-outline-gray-900 align-items-center w-100',
-                    data: { controller: 'form-modal',
-                            action: 'form-modal#appendForm',
-                            form_modal_location_param: 'form-panggil-teman-body',
-                            bs_target: '#form-panggil-teman',
-                            bs_toggle: 'modal' } do %>
+    <%= link_to panggil_teman_pohon_kinerja_path(pohon, role: pohon.role),
+     remote: true,
+     class: 'btn btn-outline-gray-900',
+     data: {
+         controller: 'form-modal',
+         action: 'form-modal#appendForm',
+         form_modal_location_param: 'form-panggil-teman-body',
+         bs_target: '#form-panggil-teman',
+         bs_toggle: 'modal'
+     } do %>
       <span class="fas fa-user-plus me-2"></span>
-      <span>Panggil Teman</span>
+      <span>Teman</span>
     <% end %>
   </div>
   <div class="col">
     <%= link_to edit_pohon_kinerja_path(pohon),
-         remote: true,
-         data: {
-             controller: 'pohon-tematik',
-             action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
-         },
-         class: 'btn btn-outline-info' do %>
+     remote: true,
+     class: 'btn btn-outline-info',
+     data: {
+         controller: 'pohon-tematik',
+         action: 'ajax:complete->pohon-tematik#pindahPohon:prevent'
+     } do %>
       <i class="fas fa-edit me-2"></i>
       <span>Edit</span>
     <% end %>
   </div>
   <div class="col">
     <%= link_to pohon_kinerja_path(pohon),
-         remote: true, method: :delete,
-         class: 'btn btn-outline-danger align-items-center w-100',
-         data: { confirm_swal: 'Hapus pohon kinerja?',
-             action: 'ajax:success->pohon-tematik#ajaxDelete'
-         } do %>
+     remote: true,
+     method: :delete,
+     class: 'btn btn-outline-danger',
+     data: {
+         confirm_swal: 'Hapus pohon kinerja?',
+         action: 'ajax:success->pohon-tematik#ajaxDelete'
+     } do %>
       <i class="fas fa-trash me-2"></i>
-      <span>Hapus Pohon</span>
+      <span>Hapus</span>
     <% end %>
   </div>
 </div>
