@@ -25,17 +25,26 @@
   <td class="fw-bolder align-middle text-center">
     <%= link_to edit_inovasi_path(inovasi),
          remote: true,
-         class: 'mx-3',
+         class: 'btn btn-outline-info',
          data: {
              controller: 'form-modal',
              action: 'ajax:complete->form-modal#success:prevent',
              bs_toggle: 'modal',
              bs_target: '#form-modal'
          } do %>
-      <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit usulan inovasi"></i>
+      <i class="fas fa-edit"></i>
+      <span>Edit</span>
     <% end %>
-    <%= link_to inovasi_path(inovasi), method: :delete, remote: true, class: 'mx-3', data: {'confirm-swal': 'Hapus usulan?'} do %>
-      <i class="fas fa-trash" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus usulan inovasi"></i>
+    <%= link_to inovasi_path(inovasi),
+     method: :delete,
+     remote: true,
+     class: 'btn btn-outline-danger',
+     data: {
+         confirm_swal: 'Hapus usulan inisiatif?',
+         action: 'ajax:success->pohon-tematik#ajaxDelete'
+     } do %>
+      <i class="fas fa-trash"></i>
+      <span>Hapus</span>
     <% end %>
   </td>
 </tr>

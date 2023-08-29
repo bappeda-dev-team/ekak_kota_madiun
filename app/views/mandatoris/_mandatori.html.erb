@@ -23,11 +23,28 @@
     <% end %>
   </td>
   <td class="fw-bolder text-center align-middle">
-    <%= link_to edit_mandatori_path(mandatori), remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#form-mandatori'} do %>
-      <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit usulan mandatori"></i>
+    <%= link_to edit_mandatori_path(mandatori),
+     remote: true,
+     class: 'btn btn-outline-info',
+     data: {
+         controller: 'form-modal',
+         action: 'ajax:complete->form-modal#success:prevent',
+         bs_toggle: 'modal',
+         bs_target: '#form-modal'
+     } do %>
+      <i class="fas fa-edit"></i>
+      <span>Edit</span>
     <% end %>
-    <%= link_to mandatori_path(mandatori), method: :delete, remote: true, class: 'mx-3', data: {'confirm-swal': 'Hapus usulan?'} do %>
-      <i class="fas fa-trash" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus usulan mandatori"></i>
+    <%= link_to mandatori_path(mandatori),
+     method: :delete,
+     remote: true,
+     class: 'btn btn-outline-danger',
+     data: {
+         confirm_swal: 'Hapus usulan mandatori?',
+         action: 'ajax:success->pohon-tematik#ajaxDelete'
+     } do %>
+      <i class="fas fa-trash"></i>
+      <span>Hapus</span>
     <% end %>
   </td>
 </tr>
