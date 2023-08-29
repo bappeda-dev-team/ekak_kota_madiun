@@ -85,6 +85,11 @@ class PohonKinerjaPresenter
     end
   end
 
+  def jenis
+    prefix = @pohon.role.chomp("_pohon_kota")
+    to_real_name_up(prefix)
+  end
+
   private
 
   def to_real_name(role)

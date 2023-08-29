@@ -4,14 +4,14 @@
       <%= link_to terima_pohon_tematik_path(pohon),
          remote: true,
          method: :patch,
-         class: 'btn btn-outline-info',
+         class: 'btn btn-outline-success',
          data: {
              confirm_swal: "Terima strategi ?",
              method: 'PATCH',
              controller: 'pohon-tematik',
              action: 'ajax:complete->pohon-tematik#terimaPohon:prevent'
          } do %>
-        <i class="fas fa-edit me-2"></i>
+        <i class="fas fa-check me-2"></i>
         <span>Terima</span>
       <% end %>
     </div>
@@ -25,7 +25,7 @@
              bs_toggle: 'modal',
              bs_target: '#form-modal'
          } do %>
-        <i class="fa fa-trash-alt me-2"></i>
+        <i class="fa fa-times me-2"></i>
         <span>Tolak</span>
       <% end %>
     </div>
