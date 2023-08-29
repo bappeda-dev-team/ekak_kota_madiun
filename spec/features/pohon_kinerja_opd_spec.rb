@@ -195,6 +195,31 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
     end
   end
 
+  context "tolak pohon kota", :js do
+    before(:each) do
+      strategi_pohon_test
+      visit manual_pohon_kinerja_index_path
+
+      expect(page).to have_content('Strategic - Kota')
+      expect(page).to have_content('test pohon 1')
+    end
+
+    scenario "success" do
+      click_on "Tolak"
+
+      within("#form-modal-body") do
+        fill_in "pohon[keterangan_tolak]", with: "keterangan ditolak"
+        click_on "Tolak"
+      end
+
+      # click_button "Ya"
+      # sweetalert
+      click_button "Ok"
+
+      expect(page).to have_css(".pohon-rejected")
+    end
+  end
+
   context "tactical", :js do
     before(:each) do
       tactical_test

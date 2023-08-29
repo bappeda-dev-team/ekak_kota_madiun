@@ -216,6 +216,31 @@ class PohonTematikController < ApplicationController
     end
   end
 
+  def tolak_strategi
+    @pohon = Pohon.find(params[:id])
+  end
+
+  def tolak
+    keterangan_tolak = params[:pohon][:keterangan_tolak]
+    @pohon = Pohon.find(params[:id])
+    if @pohon.update(status: 'ditolak',
+                     metadata: {
+                       processed_by: current_user.id,
+                       processed_at: DateTime.current,
+                       keterangan: keterangan_tolak
+                     })
+      html_content = render_to_string(partial: 'pohon_kinerja/item_pohon',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { pohon: @pohon, jenis: 'Strategi - Kota' })
+      render json: { resText: "Usulan ditolak", attachmentPartial: html_content }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan" }.to_json,
+             status: :unprocessable_entity
+    end
+  end
+
   def create_strategi_tematik_baru
     @strategi = Strategi.new(strategi_params)
     if @strategi.save

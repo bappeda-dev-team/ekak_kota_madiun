@@ -1,0 +1,27 @@
+<%= form_with(model: pohon, url: tolak_pohon_tematik_path,
+              method: :patch,
+              local: false,
+              data: {
+                  controller: 'pohon-tematik',
+                  pohon_tematik_target_param: dom_id(pohon),
+                  action: 'ajax:complete->pohon-tematik#tolakPohon:prevent'
+              }
+) do |form| %>
+  <% if pohon.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(pohon.errors.count, "error") %> prohibited this tematik from being saved:</h2>
+      <ul>
+        <% pohon.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_field :keterangan_tolak, class: 'form-control', required: true %>
+  </div>
+  <div class="actions">
+    <%= form.submit 'Tolak', class: 'btn btn-danger' %>
+  </div>
+<% end %>

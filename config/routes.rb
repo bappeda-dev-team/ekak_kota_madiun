@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       patch :update_operational
       patch :pindah_pohon
       patch :terima
+      get :tolak_strategi
       patch :tolak
     end
     collection do

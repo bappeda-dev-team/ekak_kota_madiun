@@ -287,6 +287,26 @@ export default class extends Controller {
     }
   }
 
+  tolakPohon(e) {
+    const [xhr, status] = e.detail
+    const target = document.getElementById(e.params.target)
+    const response = xhr.response
+    const results = JSON.parse(response)
+    const text = results.resText
+    const html = results.attachmentPartial
+    this.modalHider()
+
+    if (status == 'OK') {
+      this.sweetAlertSuccess(text)
+      target.innerHTML = html
+    }
+    else {
+      this.sweetAlertFailed(text)
+      // const html = this.errorHtml()
+      // target.insertAdjacentHTML('beforeend', html)
+    }
+  }
+
 
   partialAttacher(targetName, html_element) {
     const target = document.getElementById(targetName)

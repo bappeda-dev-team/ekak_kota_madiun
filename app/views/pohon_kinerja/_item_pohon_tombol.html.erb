@@ -16,12 +16,14 @@
       <% end %>
     </div>
     <div class="col">
-      <%= link_to tolak_pohon_tematik_path(pohon),
-         method: :delete,
+      <%= link_to tolak_strategi_pohon_tematik_path(pohon),
          remote: true,
          class: 'btn btn-outline-danger',
-         data: { confirm_swal: "Hapus Strategi Tematik #{pohon.pohonable.strategi}?",
-             action: 'ajax:success->pohon-tematik#ajaxDelete'
+         data: {
+             controller: 'form-modal',
+             action: 'ajax:complete->form-modal#success:prevent',
+             bs_toggle: 'modal',
+             bs_target: '#form-modal'
          } do %>
         <i class="fa fa-trash-alt me-2"></i>
         <span>Tolak</span>
