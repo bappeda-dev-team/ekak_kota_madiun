@@ -18,6 +18,16 @@ export default class extends Controller {
     }
   }
 
+  ajaxSuccessAttach(e) {
+    const [xhr] = e.detail
+    this.modalHider()
+    this.sweetAlertSuccess(xhr.resText)
+    if (this.hasElementIdValue) {
+      const target = document.getElementById(targetName)
+      target.innerHTML = target.innerHTML + html_element
+    }
+  }
+
   ajaxError(e) {
     const [xhr] = e.detail
     this.sweetAlertFailed(xhr.resText)
