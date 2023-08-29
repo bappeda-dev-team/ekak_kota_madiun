@@ -169,42 +169,25 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
     expect(page).not_to have_content("test 1")
   end
 
-  context "setujui pohon kota", :js do
+  context "tombol pohon kota", :js do
     before(:each) do
       strategi_pohon_test
       visit manual_pohon_kinerja_index_path
 
       expect(page).to have_content('Strategic - Kota')
       expect(page).to have_content('test pohon 1')
-
-      click_on "Terima"
-      click_button "Ya"
     end
 
-    scenario "success" do
+    scenario "terima" do
+      click_on "Terima"
+      click_button "Ya"
       # sweetalert
       click_button "Ok"
 
       expect(page).to have_css(".pohon-accepted")
     end
 
-    scenario "gagal" do
-      raise "i don't know how to make this failed from spec"
-
-      expect(page).to have_content("Terjadi kesalahan")
-    end
-  end
-
-  context "tolak pohon kota", :js do
-    before(:each) do
-      strategi_pohon_test
-      visit manual_pohon_kinerja_index_path
-
-      expect(page).to have_content('Strategic - Kota')
-      expect(page).to have_content('test pohon 1')
-    end
-
-    scenario "success" do
+    scenario "tolak" do
       click_on "Tolak"
 
       within("#form-modal-body") do
@@ -217,6 +200,15 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
       click_button "Ok"
 
       expect(page).to have_css(".pohon-rejected")
+    end
+
+    scenario "error on terima", skip: "i don't know how to make this failed from spec" do
+      click_on "Terima"
+      click_button "Ya"
+      # sweetalert
+      click_button "Ok"
+
+      expect(page).to have_content("Terjadi kesalahan")
     end
   end
 
