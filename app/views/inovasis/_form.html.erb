@@ -1,16 +1,31 @@
-<%= form_with(model: inovasi, local: false) do |form| %>
+<%= form_with(model: inovasi,
+              local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_element_id_value: 'inovasi',
+                action: 'ajax:success->form-ajax#ajaxSuccessAttach:prevent ajax:error->form-ajax#ajaxError:prevent'
+              }) do |form| %>
   <% if inovasi.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(inovasi.errors.count, "error") %> prohibited this inovasi from being saved:</h2>
-      <ul>
+      <h2>Terdapat <%= inovasi.errors.count %> kesalahan :</h2>
+      <ol>
         <% inovasi.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
-      </ul>
+      </ol>
     </div>
   <% end %>
   <div class="field">
-    <%= form.hidden_field :nip_asn, value: current_user.nik %>
+    <%= form.label :opd, class: 'form-label' %>
+    <%= form.text_field :opd, class: 'form-control', readonly: true %>
+  </div>
+  <div class="field">
+    <%= form.label :nip, class: 'form-label' %>
+    <%= form.text_field :nip_asn, class: 'form-control', readonly: true %>
+  </div>
+  <div class="field">
+    <%= form.label :tahun, class: 'form-label' %>
+    <%= form.text_field :tahun, class: 'form-control', readonly: true %>
   </div>
   <div class="field">
     <%= form.label :usulan, class: 'form-label' %>
@@ -25,6 +40,6 @@
     <%= form.text_area :uraian, class: 'form-control' %>
   </div>
   <div class="actions">
-    <%= form.submit "Buat inisiatif baru" %>
+    <%= form.submit "Simpan Inisiatif Walikota baru" %>
   </div>
 <% end %>

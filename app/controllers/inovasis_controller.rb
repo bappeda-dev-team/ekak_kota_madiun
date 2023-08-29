@@ -3,7 +3,8 @@ class InovasisController < ApplicationController
 
   # GET /inovasis or /inovasis.json
   def index
-    @inovasis = Inovasi.all
+    kode_opd = Opd.find_by(kode_unik_opd: cookies[:opd]).kode_opd
+    @inovasis = Inovasi.includes(:user).where(user: { kode_opd: kode_opd })
   end
 
   def usulan_inisiatif
@@ -16,11 +17,17 @@ class InovasisController < ApplicationController
 
   # GET /inovasis/new
   def new
-    @inovasi = Inovasi.new
+    user = current_user.nik
+    opd = Opd.find_by_kode_unik_opd(cookies[:opd])
+    tahun = cookies[:tahun]
+    @inovasi = Inovasi.new(tahun: tahun, nip_asn: user, opd: opd)
+    render layout: false
   end
 
   # GET /inovasis/1/edit
-  def edit; end
+  def edit
+    render layout: false
+  end
 
   # POST /inovasis or /inovasis.json
   def create
@@ -28,12 +35,22 @@ class InovasisController < ApplicationController
 
     respond_to do |format|
       if @inovasi.save
-        format.js
-        format.html { redirect_to @inovasi, notice: 'Inovasi was successfully created.' }
-        format.json { render :show, status: :created, location: @inovasi }
+        html_content = render_to_string(partial: 'inovasis/inovasi',
+                                        formats: 'html',
+                                        layout: false,
+                                        locals: { inovasi: @inovasi })
+        format.json do
+          render json: { resText: "Inisiatif walikota tersimpan", attachmentPartial: html_content }.to_json,
+                 status: :created
+        end
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @inovasi.errors, status: :unprocessable_entity }
+        error_content = render_to_string(partial: 'inovasis/form',
+                                         formats: 'html',
+                                         layout: false,
+                                         locals: { inovasi: @inovasi })
+        format.json do
+          render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
+        end
       end
     end
   end
