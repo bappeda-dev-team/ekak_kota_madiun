@@ -353,3 +353,17 @@ input::placeholder {
     color: #B73239;
   }
 }
+
+table.counter {
+  counter-reset: rowNumber;
+
+  tbody {
+    tr {
+      counter-increment: rowNumber;
+    }
+
+    tr td:first-child::before {
+      content: counter(rowNumber);
+    }
+  }
+}
