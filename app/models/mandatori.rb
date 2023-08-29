@@ -31,6 +31,7 @@ class Mandatori < ApplicationRecord
 
   belongs_to :sasaran, optional: true
   belongs_to :user, optional: true, foreign_key: 'nip_asn', primary_key: 'nik'
+  belongs_to :opd, optional: true, foreign_key: 'opd', primary_key: 'kode_unik_opd'
   has_many :usulans, as: :usulanable, dependent: :destroy
 
   default_scope { order(created_at: :desc) }

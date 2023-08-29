@@ -22,6 +22,10 @@
 <% else %>
   <!-- SECTION - musrenbang -->
   <% if isi_subkegiatan?(current_user) %>
+    <%= render 'musrenbang_card', sasaran: @sasaran %>
+    <%= render 'pokpirs/pokpir_card', sasaran: @sasaran %>
+    <%= render 'mandatoris/mandatori_card', sasaran: @sasaran %>
+    <%= render 'inovasis/inovasi_card', sasaran: @sasaran %>
     <%= render 'subkegiatan_card', sasaran: @sasaran, tahun: @tahun %>
     <%= render 'rincians/renaksi', sasaran: @sasaran %>
     <%= render 'rincians/rincian_card', sasaran: @sasaran %>

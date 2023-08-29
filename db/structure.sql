@@ -3214,7 +3214,8 @@ CREATE TABLE public.usulans (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     sasaran_id bigint,
-    opd_id bigint
+    opd_id bigint,
+    tahun character varying
 );
 
 
@@ -5392,6 +5393,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230802004938'),
 ('20230814035509'),
 ('20230818074432'),
-('20230824180057');
+('20230824180057'),
+('20230829061912');
 
 

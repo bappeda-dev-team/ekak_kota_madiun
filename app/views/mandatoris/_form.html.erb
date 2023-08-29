@@ -10,19 +10,24 @@
     </div>
   <% end %>
   <div class="field">
-    <%= form.hidden_field :nip_asn, value: current_user.nik %>
+    <%= form.label :nip, class: 'form-label' %>
+    <%= form.text_field :nip_asn, class: 'form-control', readonly: true %>
+  </div>
+  <div class="field">
+    <%= form.label :tahun, class: 'form-label' %>
+    <%= form.text_field :tahun, class: 'form-control', readonly: true %>
   </div>
   <div class="field">
     <%= form.label :usulan, class: 'form-label' %>
-    <%= form.text_area :usulan, class: 'form-control' %>
+    <%= form.text_area :usulan, class: 'form-control', placeholder: 'isikan usulan mandatori' %>
   </div>
   <div class="field">
     <%= form.label :peraturan_terkait, class: 'form-label' %>
-    <%= form.text_area :peraturan_terkait, class: 'form-control' %>
+    <%= form.text_area :peraturan_terkait, class: 'form-control', placeholder: 'isikan peraturan mandatori' %>
   </div>
   <div class="field">
     <%= form.label :uraian, class: 'form-label' %>
-    <%= form.text_area :uraian, class: 'form-control' %>
+    <%= form.text_area :uraian, class: 'form-control', placeholder: 'isikan uraian / penjabaran peraturan' %>
   </div>
   <div class="actions">
     <%= form.submit %>

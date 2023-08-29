@@ -3,8 +3,8 @@ class MandatorisController < ApplicationController
 
   # GET /mandatoris or /mandatoris.json
   def index
-    tahun = cookies[:tahun]
-    @mandatoris = Mandatori.where(tahun: tahun)
+    kode_opd = Opd.find_by(kode_unik_opd: cookies[:opd]).kode_opd
+    @mandatoris = Mandatori.includes(:user).where(user: { kode_opd: kode_opd })
   end
 
   # TODO: refactor, violating rails principle
@@ -23,7 +23,11 @@ class MandatorisController < ApplicationController
 
   # GET /mandatoris/new
   def new
-    @mandatori = Mandatori.new
+    user = current_user.nik
+    opd = Opd.find_by_kode_unik_opd cookies[:opd]
+    tahun = cookies[:tahun]
+    @mandatori = Mandatori.new(tahun: tahun, nip_asn: user, opd: opd)
+    render layout: false
   end
 
   # GET /mandatoris/1/edit
