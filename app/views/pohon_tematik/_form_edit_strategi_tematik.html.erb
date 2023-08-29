@@ -28,7 +28,7 @@
     <%= form.text_field :opd, class: 'form-control text-center', value: @opd.nama_opd, readonly: true %>
   </div>
   <div class="field">
-    <%= form.label :strategi_tematik, class: 'form-label' %>
+    <%= form.label :strategic, class: 'form-label' %>
     <%= form.select :pohonable_id, @strategis,
          {include_blank: true},
          { class: 'form-control',
@@ -36,7 +36,7 @@
                controller: 'dropdown',
                dropdown_jenis_value: 'action',
                dropdown_event_name_value: 'change-tema',
-               placeholder: 'Pilih Strategi Tematik',
+               placeholder: 'Pilih Strategic',
            },
            id: "pohon_#{form.object_id}",
            required: true
