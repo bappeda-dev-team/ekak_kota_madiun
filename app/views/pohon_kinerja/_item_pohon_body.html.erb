@@ -23,14 +23,22 @@
       <td class="text-wrap text-start"><%= pohon.pohonable.opd %></td>
     </tr>
     <% if pohon.processed? %>
-      <tr class="detail d-none">
+      <tr class="detail <%= pohon.status %> d-none">
+      </tr>
+      <tr class="detail <%= pohon.status %> d-none">
         <td class="text-start" width="30px"><%= pohon.status_ket %> oleh</td>
         <td class="text-wrap text-start"><%= pohon.diproses_oleh %></td>
       </tr>
-      <tr class="detail d-none">
+      <tr class="detail <%= pohon.status %> d-none">
         <td class="text-start" width="30px"><%= pohon.status_ket %> pada</td>
         <td class="text-wrap text-start"><%= time_tag(pohon.diproses_pada, format: :hari_jam) %></td>
       </tr>
+      <% if pohon.status_ket == 'Ditolak' %>
+        <tr class="detail <%= pohon.status %> d-none">
+          <td class="text-start" width="30px">Keterangan</td>
+          <td class="text-wrap text-start"><%= pohon.keterangan_proses %></td>
+        </tr>
+      <% end %>
     <% end %>
   </table>
   <button type="button" class="btn btn-outline-primary w-100" data-action="pohon-tematik#toggleDetail" data-pohon-tematik-show-param="false">Detail</button>

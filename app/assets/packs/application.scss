@@ -341,3 +341,15 @@ input::placeholder {
     color: #38E54D;
   }
 }
+
+.pohon-rejected {
+  @extend .border;
+  @extend .border-danger;
+  h5:after {
+    @extend .mx-3;
+    @extend %fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-times);
+    color: #B73239;
+  }
+}
