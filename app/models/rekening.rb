@@ -49,7 +49,13 @@ class Rekening < ApplicationRecord
     end
   end
 
-  def blacklisted?
-    # kode_rekening.include
+  def not_blacklisted?
+    blacklist_rek = ['5.1.02.01.04.001',
+                     '5.1.02.01.04.002',
+                     '5.1.02.01.04.003',
+                     '5.1.02.01.04.004',
+                     '5.1.02.01.04.005',
+                     '5.1.02.01.01.001']
+    !kode_rekening.in? blacklist_rek
   end
 end
