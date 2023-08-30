@@ -8,6 +8,7 @@
 #  indikator_kinerja      :string
 #  keterangan             :string
 #  kualitas               :integer
+#  metadata               :jsonb
 #  nip_asn                :string
 #  nip_asn_sebelumnya     :string
 #  penerima_manfaat       :string

@@ -437,6 +437,18 @@ class SasaransController < ApplicationController
     @sasaran = Sasaran.find(params[:id])
   end
 
+  def hasil_output
+    @sasaran = Sasaran.find(params[:id])
+    hasil_output = sasaran_params[:hasil_output]
+    if @sasaran.update(metadata: { hasil_output: hasil_output, processed_at: DateTime.current })
+      render json: { resText: "Sasaran diupdate" }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan" }.to_json,
+             status: :unprocessable_entity
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -474,6 +486,7 @@ class SasaransController < ApplicationController
     params.require(:sasaran).permit(:sasaran_kinerja, :penerima_manfaat, :nip_asn, :program_kegiatan_id,
                                     :sumber_dana, :subkegiatan_tematik_id, :tahun, :id_rencana,
                                     :anggaran, :type,
+                                    :hasil_output,
                                     :kelompok_anggaran, :filter_file, :filter_target, :filter_type, :sasaran_milik,
                                     indikator_sasarans_attributes: %i[id indikator_kinerja aspek target satuan _destroy])
   end

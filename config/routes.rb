@@ -308,6 +308,7 @@ Rails.application.routes.draw do
       get :rincian
       get :edit_sasaran_spip
       get :edit_admin
+      patch :hasil_output
     end
     resources :rincians do
       get "subkegiatan", on: :new

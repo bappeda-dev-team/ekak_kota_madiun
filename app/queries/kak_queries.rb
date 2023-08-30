@@ -36,7 +36,7 @@ class KakQueries
   end
 
   def program_kegiatans
-    sasaran_strategis.group_by(&:program_kegiatan).sort_by { |key, _val| key.kode_sub_giat }.to_h
+    sasaran_strategis.group_by(&:program_kegiatan).to_h
   end
 
   def by_subkegiatan(sasarans)
