@@ -48,4 +48,8 @@ class Rekening < ApplicationRecord
       4
     end
   end
+
+  def blacklisted?
+    # kode_rekening.include
+  end
 end

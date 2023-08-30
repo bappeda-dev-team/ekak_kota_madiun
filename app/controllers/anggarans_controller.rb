@@ -25,7 +25,10 @@ class AnggaransController < ApplicationController
   def create
     # @anggaran = Anggaran.new(anggaran_params)
     @anggaran = @tahapan.anggarans.build(anggaran_params)
+    sasaran = @tahapan.sasaran
+    hasil_output_sasaran = sasaran.metadata.dig("hasil_output")
     rekening = Rekening.find(anggaran_params[:kode_rek])
+    binding.pry if hasil_output_sasaran != 'Raperda' && rekening.blacklisted?
     uraian = rekening.jenis_rekening
     kode_rekening = rekening.kode_rekening
     @anggaran.uraian = uraian
