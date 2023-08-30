@@ -1,0 +1,26 @@
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="row align-items-center">
+        <div class="col">
+          <h4 class="card-title">
+            Hasil Output Sasaran
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% unless diajukan? %>
+    <div class="card-body">
+      <p>Tambah Tematik</p>
+      <%= form_with(url: hasil_output_sasaran_path, local: false, model: sasaran) do |f| %>
+        <%= f.select(:hasil_output,
+          ['Raperda', 'Bukan Raperda'],
+          {}, { data: {controller: 'dropdown'} } )%>
+        <div class="actions">
+          <%= f.submit %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
