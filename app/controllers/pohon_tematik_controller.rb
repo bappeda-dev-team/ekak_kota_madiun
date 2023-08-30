@@ -20,6 +20,10 @@ class PohonTematikController < ApplicationController
                                     role: 'sub_pohon_kota',
                                     tahun: @tahun)
                              .includes(:pohonable)
+    @sub_sub_tematik_kota = Pohon.where(pohonable_type: 'SubTematik',
+                                        role: 'sub_sub_pohon_kota',
+                                        tahun: @tahun)
+                                 .includes(:pohonable)
     @strategi_tematiks = Pohon.where(pohonable_type: 'Strategi', role: 'strategi_pohon_kota', tahun: @tahun)
                               .includes(:pohonable, pohonable: [:indikator_sasarans])
     @tactical_tematiks = Pohon.where(pohonable_type: 'Strategi', role: 'tactical_pohon_kota', tahun: @tahun)
@@ -388,6 +392,31 @@ class PohonTematikController < ApplicationController
                                       layout: false,
                                       locals: { pohon: @pohon })
       render json: { resText: "Pohon Sub-Tematik Dibuat", attachmentPartial: html_content }.to_json, status: :created
+    else
+      error_content = render_to_string(partial: 'pohon_tematik/form_sub_tematik',
+                                       formats: 'html',
+                                       layout: false,
+                                       locals: { pohon: @pohon })
+      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
+    end
+  end
+
+  def new_sub_sub
+    parent_pohon = Pohon.find(params[:id])
+    @sub_tematik = parent_pohon.pohonable
+    @pohon = Pohon.new(pohonable_type: 'SubTematik', role: 'sub_sub_pohon_kota', tahun: parent_pohon.tahun,
+                       pohon_ref_id: parent_pohon.id)
+  end
+
+  def create_sub_sub_tema
+    @pohon = Pohon.new(pohon_sub_tema_params)
+    if @pohon.save
+      html_content = render_to_string(partial: 'pohon_tematik/pohon_sub_sub_tematik',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { pohon: @pohon })
+      render json: { resText: "Pohon Sub Sub-Tematik Dibuat", attachmentPartial: html_content }.to_json,
+             status: :created
     else
       error_content = render_to_string(partial: 'pohon_tematik/form_sub_tematik',
                                        formats: 'html',
