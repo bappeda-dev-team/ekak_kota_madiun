@@ -59,12 +59,22 @@ class InovasisController < ApplicationController
   def update
     respond_to do |format|
       if @inovasi.update(inovasi_params)
-        format.js
-        format.html { redirect_to @inovasi, notice: 'Inovasi was successfully updated.' }
-        format.json { render :show, status: :ok, location: @inovasi }
+        html_content = render_to_string(partial: 'inovasis/inovasi',
+                                        formats: 'html',
+                                        layout: false,
+                                        locals: { inovasi: @inovasi })
+        format.json do
+          render json: { resText: "Perubahan tersimpan", attachmentPartial: html_content, update: true }.to_json,
+                 status: :ok
+        end
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @inovasi.errors, status: :unprocessable_entity }
+        error_content = render_to_string(partial: 'inovasis/form',
+                                         formats: 'html',
+                                         layout: false,
+                                         locals: { inovasi: @inovasi })
+        format.json do
+          render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -72,10 +82,7 @@ class InovasisController < ApplicationController
   # DELETE /inovasis/1 or /inovasis/1.json
   def destroy
     @inovasi.destroy
-    respond_to do |format|
-      format.html { redirect_to inovasis_url, notice: 'Inovasi was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    render json: { resText: "Usulan inisiatif Dihapus", result: true }
   end
 
   def toggle_is_active

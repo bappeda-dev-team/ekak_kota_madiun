@@ -29,6 +29,16 @@ export default class extends Controller {
     }
   }
 
+  ajaxDelete(e) {
+    console.log('deleted')
+    const [xhr] = e.detail
+    this.sweetAlertSuccess(xhr.resText)
+    if (this.hasElementIdValue) {
+      const target = document.getElementById(this.elementIdValue)
+      target.remove()
+    }
+  }
+
   ajaxError(e) {
     const [xhr] = e.detail
     this.sweetAlertFailed(xhr.resText)

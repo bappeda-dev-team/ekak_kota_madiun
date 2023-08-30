@@ -40,8 +40,10 @@
      remote: true,
      class: 'btn btn-outline-danger',
      data: {
+         controller: 'form-ajax',
+         form_ajax_element_id_value: dom_id(mandatori),
          confirm_swal: 'Hapus usulan mandatori?',
-         action: 'ajax:success->pohon-tematik#ajaxDelete'
+         action: 'ajax:success->form-ajax#ajaxDelete'
      } do %>
       <i class="fas fa-trash"></i>
       <span>Hapus</span>

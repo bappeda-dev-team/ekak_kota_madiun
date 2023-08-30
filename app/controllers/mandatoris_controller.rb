@@ -90,10 +90,7 @@ class MandatorisController < ApplicationController
   # DELETE /mandatoris/1 or /mandatoris/1.json
   def destroy
     @mandatori.destroy
-    respond_to do |format|
-      format.html { redirect_to usulan_mandatori_path, notice: 'Usulan dihapus' }
-      format.json { head :no_content }
-    end
+    render json: { resText: "Usulan mandatori Dihapus", result: true }
   end
 
   def toggle_is_active
