@@ -33,9 +33,12 @@ class TematiksController < ApplicationController
   # POST /tematiks or /tematiks.json
   def create
     @tematik = Tematik.new(tematik_params)
+    tahun = cookies[:tahun]
 
     respond_to do |format|
       if @tematik.save
+        Pohon.create(pohonable_id: @tematik.id, pohonable_type: @tematik.class.name, role: 'pohon_kota', tahun: tahun,
+                     keterangan: '-')
         html_content = render_to_string(partial: 'tematiks/tematik',
                                         formats: 'html',
                                         layout: false,
