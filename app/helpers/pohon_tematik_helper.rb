@@ -3,6 +3,10 @@ module PohonTematikHelper
     options_for_select(tematiks.pluck(:tema, :id))
   end
 
+  def select_pohon_tematik(tematiks)
+    options_for_select(tematiks.collect { |tema| [tema.pohonable.tema, tema.pohonable_id] })
+  end
+
   def select_opd(opds)
     options_for_select(opds.pluck(:nama_opd, :id))
   end

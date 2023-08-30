@@ -15,7 +15,7 @@
               action: 'ajax:complete->filter-render#success:prevent',
             } do |form| %>
           <%= form.select :tematik,
-              select_tematik(@tematiks),
+              select_pohon_tematik(@tematiks),
               {},
               { data: {
                   controller: 'dropdown',

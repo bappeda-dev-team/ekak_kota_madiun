@@ -335,7 +335,7 @@ class PohonKinerjaController < ApplicationController
 
   def kota
     @tahun = cookies[:tahun]
-    @tematiks = Tematik.where(type: nil)
+    @tematiks = Pohon.where(pohonable_type: 'Tematik')
   end
 
   def opd

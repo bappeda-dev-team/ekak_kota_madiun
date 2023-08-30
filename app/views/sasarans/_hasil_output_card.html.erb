@@ -12,11 +12,10 @@
   </div>
   <% unless diajukan? %>
     <div class="card-body">
-      <p>Tambah Tematik</p>
       <%= form_with(url: hasil_output_sasaran_path, local: false, model: sasaran) do |f| %>
         <%= f.select(:hasil_output,
-          ['Raperda', 'Bukan Raperda'],
-          {}, { data: {controller: 'dropdown'} } )%>
+                     ['Bukan Raperda', 'Raperda',],
+                     {}, { data: {controller: 'dropdown'} } )%>
         <div class="actions">
           <%= f.submit %>
         </div>
