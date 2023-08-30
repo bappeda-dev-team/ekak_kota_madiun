@@ -6,31 +6,20 @@ class PohonTematikController < ApplicationController
   def index
     @tahun = cookies[:tahun]
     tematik_id = params[:tematik]
-    # @pohon = PohonTematikQueries.new(tahun: @tahun)
+
+    @pohon = PohonTematikQueries.new(tahun: @tahun)
 
     @tematik = Tematik.find(tematik_id)
 
-    @tematik_kota = Pohon.where(pohonable_type: 'Tematik',
-                                pohonable_id: tematik_id,
-                                role: 'pohon_kota',
-                                tahun: @tahun)
-                         .includes(:pohonable)
+    @tematik_kota = @pohon.tematiks
+
     return if @tematik_kota.empty?
 
-    @sub_tematik_kota = Pohon.where(pohonable_type: 'SubTematik',
-                                    role: 'sub_pohon_kota',
-                                    tahun: @tahun)
-                             .includes(:pohonable)
-    @sub_sub_tematik_kota = Pohon.where(pohonable_type: 'SubSubTematik',
-                                        role: 'sub_sub_pohon_kota',
-                                        tahun: @tahun)
-                                 .includes(:pohonable)
-    @strategi_tematiks = Pohon.where(pohonable_type: 'Strategi', role: 'strategi_pohon_kota', tahun: @tahun)
-                              .includes(:pohonable, pohonable: [:indikator_sasarans])
-    @tactical_tematiks = Pohon.where(pohonable_type: 'Strategi', role: 'tactical_pohon_kota', tahun: @tahun)
-                              .includes(:pohonable, pohonable: [:indikator_sasarans])
-    @operational_tematiks = Pohon.where(pohonable_type: 'Strategi', role: 'operational_pohon_kota', tahun: @tahun)
-                                 .includes(:pohonable, pohonable: [:indikator_sasarans])
+    @sub_tematik_kota = @pohon.sub_tematiks
+    @sub_sub_tematik_kota = @pohon.sub_sub_tematiks
+    @strategi_tematiks = @pohon.strategi_tematiks
+    @tactical_tematiks = @pohon.tactical_tematiks
+    @operational_tematiks = @pohon.operational_tematiks
   end
 
   def new

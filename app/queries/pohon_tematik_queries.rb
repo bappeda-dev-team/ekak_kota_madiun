@@ -16,6 +16,10 @@ class PohonTematikQueries
     pohon(role: 'sub_pohon_kota', type: 'SubTematik')
   end
 
+  def sub_sub_tematiks
+    pohon(role: 'sub_sub_pohon_kota', type: 'SubSubTematik')
+  end
+
   def strategi_tematiks
     pohon(role: 'strategi_pohon_kota', type: 'Strategi')
   end
