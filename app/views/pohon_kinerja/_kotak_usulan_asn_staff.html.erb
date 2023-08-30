@@ -16,7 +16,6 @@
       <table class="table" id="isu-strategis-kota-table">
         <thead>
           <tr>
-            <th>Operational Objective</th>
             <th>Operational Objective 2</th>
             <th class="text-center">Tahun</th>
             <th class="text-center">NIP</th>
@@ -25,12 +24,9 @@
           </tr>
         </thead>
         <tbody>
-            <% @strategis.each do |strategi| %>
-              <% pohon = strategi.strategi_atasan %>
+          <% @strategis.each do |strategi| %>
+            <% pohon = strategi.strategi_atasan %>
             <tr>
-              <td class="text-wrap align-middle">
-                <%= pembagi_strategi(pohon) %>
-              </td>
               <td class="text-wrap align-middle"><%= strategi.strategi %></td>
               <td class="text-wrap align-middle"><%= strategi.tahun %></td>
               <td class="text-wrap align-middle"><%= strategi.nip_asn %></td>
@@ -45,7 +41,7 @@
                 %>
               </td>
             </tr>
-            <% end %>
+          <% end %>
         </tbody>
       </table>
     </div>

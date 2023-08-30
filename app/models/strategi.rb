@@ -3,6 +3,7 @@
 # Table name: strategis
 #
 #  id                    :bigint           not null, primary key
+#  linked_with           :bigint
 #  nip_asn               :string
 #  nip_asn_sebelumnya    :string
 #  role                  :string
@@ -34,6 +35,8 @@ class Strategi < ApplicationRecord
 
   belongs_to :strategi_atasan, class_name: "Strategi",
                                foreign_key: "strategi_ref_id", optional: true
+  belongs_to :strategi_pokin, class_name: "StrategiPohon",
+                              foreign_key: 'linked_with', optional: true
 
   belongs_to :strategi_eselon_dua, lambda {
     where(role: "eselon_2")

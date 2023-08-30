@@ -15,24 +15,6 @@
         <%= form.hidden_field :role, class: "form-control", readonly: true, value: @role %>
         <%= form.hidden_field :nip_asn, class: "form-control", readonly: true, value: @nip %>
         <%= form.hidden_field :opd_id, class: "form-control", readonly: true, value: @opd_id %>
-        <%= form.label :isu_strategis_pohon, class: "form-label" %>
-        <%= form.select :pohon_id, @isu_strategis_pohon ,
-          {include_blank: true},
-          { class: 'form-control',
-            data: { controller: 'dropdown',
-                    placeholder: 'Pilih Strategi Atas',
-                    dropdown_jenis_value: 'chain'
-          }, required: true }%>
-      </div>
-      <div class="field">
-        <%= form.label :isu_strategis_atasan, class: "form-label" %>
-        <%= form.select :strategi_ref_id, @isu_strategis_atasan ,
-          {include_blank: true},
-          { class: 'form-control',
-            data: { controller: 'dropdown',
-                    placeholder: 'Pilih Strategi Atasan ( kosong jika KA OPD )',
-                    action: 'change-select@document->dropdown#chain_value_to_target'
-            } }%>
       </div>
       <div class="field">
         <%= form.label :tahun, class: 'form-label' %>
@@ -46,7 +28,7 @@
       </div>
       <div class="field">
         <%= form.label :strategi, class: "form-label" %>
-        <%= form.select :strategi, strategi_garis(@strategis, form.object.strategi),
+        <%= form.select :linked_with, strategi_garis(@strategis, form.object.linked_with),
                     {include_blank: true},
                     { class: "form-control",
                       data: { placeholder: "Pilih Strategi",

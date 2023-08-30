@@ -3,6 +3,7 @@
 # Table name: strategis
 #
 #  id                    :bigint           not null, primary key
+#  linked_with           :bigint
 #  nip_asn               :string
 #  nip_asn_sebelumnya    :string
 #  role                  :string
@@ -25,6 +26,8 @@ class StrategiPohon < Strategi
   has_many :pohon_shareds, lambda {
                              where(pohonable_type: 'StrategiPohon')
                            }, foreign_key: 'pohonable_id', primary_key: 'id', class_name: 'Pohon'
+  has_many :pohon_sasarans, class_name: 'Strategi', primary_key: 'id',
+                            foreign_key: 'linked_with'
   belongs_to :strategi_eselon_dua, lambda {
     where(role: "eselon_2")
   }, class_name: "StrategiPohon",

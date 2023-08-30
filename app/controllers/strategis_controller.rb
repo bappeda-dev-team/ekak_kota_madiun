@@ -30,10 +30,11 @@ class StrategisController < ApplicationController
     @nip = params[:nip] || current_user.nik
     @role = params[:role] || current_user.eselon_user
     @usulan_isu = params[:usulan_isu]
+    @strategis = StrategiPohon.where(tahun: @tahun, role: @role)
     @sasaran = @strategi.build_sasaran
     @sasaran.indikator_sasarans.build
     @is_new = true
-    strategi_pohon_atasan(@nip)
+    # strategi_pohon_atasan(@nip)
   end
 
   # GET /strategis/1/edit
@@ -44,10 +45,10 @@ class StrategisController < ApplicationController
     @nip = params[:nip]
     @role = params[:role]
     @usulan_isu = params[:usulan_isu]
-    @strategis = Strategi.where(tahun: @tahun, role: @role, type: nil)
+    @strategis = StrategiPohon.where(tahun: @tahun, role: @role)
     @sasaran = @strategi.sasaran.nil? ? @strategi.build_sasaran : @strategi.sasaran
     @is_new = false
-    strategi_pohon_atasan(@nip)
+    # strategi_pohon_atasan(@nip)
   end
 
   # POST /strategis or /strategis.json
@@ -55,8 +56,10 @@ class StrategisController < ApplicationController
     @role = strategi_params[:role]
     @nip = strategi_params[:nip_asn]
     @opd_id = strategi_params[:opd_id]
-
-    @strategi = Strategi.new(strategi_params)
+    @strategi_tulisan = StrategiPohon.find(strategi_params[:linked_with])
+    strategi_parameter = strategi_params
+    strategi_parameter[:strategi] = @strategi_tulisan.strategi
+    @strategi = Strategi.new(strategi_parameter)
     @strategi.sasaran.tahun = strategi_params[:tahun]
 
     respond_to do |format|
@@ -225,6 +228,7 @@ class StrategisController < ApplicationController
     strategi_parameter = params.require(:strategi)
                                .permit(:strategi, :tahun, :sasaran_id, :strategi_ref_id,
                                        :nip_asn, :role, :pohon_id, :opd_id,
+                                       :linked_with,
                                        sasaran_attributes: [:sasaran_kinerja, :nip_asn, :strategi_id, :tahun,
                                                             :id_rencana, indikator_sasarans_params])
     tahun = strategi_parameter[:tahun]

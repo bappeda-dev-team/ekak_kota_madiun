@@ -2696,7 +2696,8 @@ CREATE TABLE public.strategis (
     opd_id character varying,
     nip_asn_sebelumnya character varying,
     type character varying,
-    strategi_cascade_link bigint
+    strategi_cascade_link bigint,
+    linked_with bigint
 );
 
 
@@ -5394,6 +5395,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230814035509'),
 ('20230818074432'),
 ('20230824180057'),
-('20230829061912');
+('20230829061912'),
+('20230830024501');
 
 

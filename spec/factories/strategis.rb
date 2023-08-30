@@ -3,6 +3,7 @@
 # Table name: strategis
 #
 #  id                    :bigint           not null, primary key
+#  linked_with           :bigint
 #  nip_asn               :string
 #  nip_asn_sebelumnya    :string
 #  role                  :string
