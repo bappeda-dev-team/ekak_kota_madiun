@@ -1,6 +1,7 @@
 <% tematiks.each do |tema| %>
   <% rowspan = tema.indikators.size + 1 %>
   <tr>
+    <td rowspan="<%= rowspan %>"></td>
     <td rowspan="<%= rowspan %>"><%= tema %></td>
     <td colspan="3" class="p-0 m-0 border-0"></td>
     <td rowspan="<%= rowspan %>"><%= tema.keterangan %></td>
@@ -26,8 +27,8 @@
     </td>
   </tr>
   <% tema.indikators.each do |indikator| %>
-    <tr>
-      <td><%= indikator %></td>
+    <tr class="skip">
+      <td class="text-wrap"><%= indikator %></td>
       <td><%= indikator.target %></td>
       <td><%= indikator.satuan %></td>
     </tr>

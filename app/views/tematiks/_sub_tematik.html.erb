@@ -1,8 +1,9 @@
 <% sub_tematiks.each do |sub_tema| %>
   <% rowspan = sub_tema.indikators.size + 1 %>
   <tr>
+    <td rowspan="<%= rowspan %>"></td>
     <td rowspan="<%= rowspan %>"><%= sub_tema.tematik %></td>
-    <td rowspan="<%= rowspan %>"><%= sub_tema %></td>
+    <td rowspan="<%= rowspan %>" class="text-wrap"><%= sub_tema %></td>
     <td colspan="3" class="p-0 m-0 border-0"></td>
     <td rowspan="<%= rowspan %>"><%= sub_tema.keterangan %></td>
     <td class="text-center" rowspan="<%= rowspan %>">
@@ -32,8 +33,8 @@
     </td>
   </tr>
   <% sub_tema.indikators.each do |indikator| %>
-    <tr>
-      <td><%= indikator %></td>
+    <tr class="skip">
+      <td class="text-wrap"><%= indikator %></td>
       <td><%= indikator.target %></td>
       <td><%= indikator.satuan %></td>
     </tr>
