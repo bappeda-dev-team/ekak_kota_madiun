@@ -26,8 +26,8 @@ class StrategiPohon < Strategi
   has_many :pohon_shareds, lambda {
                              where(pohonable_type: 'StrategiPohon')
                            }, foreign_key: 'pohonable_id', primary_key: 'id', class_name: 'Pohon'
-  has_many :pohon_sasarans, class_name: 'Strategi', primary_key: 'id',
-                            foreign_key: 'linked_with'
+  has_many :takens, class_name: 'Strategi', primary_key: 'id',
+                    foreign_key: 'linked_with'
   belongs_to :strategi_eselon_dua, lambda {
     where(role: "eselon_2")
   }, class_name: "StrategiPohon",

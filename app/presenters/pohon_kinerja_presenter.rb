@@ -41,6 +41,18 @@ class PohonKinerjaPresenter
     @pohon.status? && @pohon.metadata.key?("processed_by")
   end
 
+  def taken?
+    return unless @pohon.instance_of?(StrategiPohon)
+
+    @pohon.takens.any?
+  end
+
+  def takens
+    return unless @pohon.instance_of?(StrategiPohon)
+
+    @pohon.takens
+  end
+
   def diproses_oleh
     User.find(@pohon.metadata["processed_by"])
   end
