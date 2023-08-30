@@ -14,6 +14,7 @@
               controller: 'filter-render',
               action: 'ajax:complete->filter-render#success:prevent',
             } do |form| %>
+          <%= content_tag(:label, "Tematik", class: 'form-label') %>
           <%= form.select :tematik,
               select_pohon_tematik(@tematiks),
               {},

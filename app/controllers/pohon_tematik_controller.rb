@@ -6,6 +6,7 @@ class PohonTematikController < ApplicationController
   def index
     @tahun = cookies[:tahun]
     tematik_id = params[:tematik]
+    # @pohon = PohonTematikQueries.new(tahun: @tahun)
 
     @tematik = Tematik.find(tematik_id)
 
@@ -20,7 +21,7 @@ class PohonTematikController < ApplicationController
                                     role: 'sub_pohon_kota',
                                     tahun: @tahun)
                              .includes(:pohonable)
-    @sub_sub_tematik_kota = Pohon.where(pohonable_type: 'SubTematik',
+    @sub_sub_tematik_kota = Pohon.where(pohonable_type: 'SubSubTematik',
                                         role: 'sub_sub_pohon_kota',
                                         tahun: @tahun)
                                  .includes(:pohonable)
