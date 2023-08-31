@@ -25,18 +25,17 @@ class SubSubTematiksController < TematiksController
 
   # PATCH/PUT /tematiks/1 or /tematiks/1.json
   def update
-    respond_to do |format|
-      if @tematik.update(tematik_params)
-        format.json do
-          render json: { resText: "Tematik diperbarui",
-                         attachmentPartial: html_content('pohon_tematik/pohon_sub_sub_tematik') }.to_json,
-                 status: :ok
-        end
-      else
-        format.json do
-          render json: { resText: "Gagal memperbarui", res: @tematik.errors }.to_json, status: :unprocessable_entity
-        end
-      end
+    @sub_sub_tematik = SubSubTematik.find(params[:id])
+    @pohon_sub = Pohon.find_by(pohonable_id: params[:id], pohonable_type: 'SubSubTematik')
+
+    if @sub_sub_tematik.update(sub_sub_tematik_params)
+      @pohon_sub.update(keterangan: @sub_sub_tematik.keterangan)
+      @pohon = @pohon_sub
+      render json: { resText: "Pohon Sub Sub-Tematik diperbarui",
+                     attachmentPartial: html_content('pohon_tematik/pohon_sub_sub_tematik') }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Gagal memperbarui", res: @tematik.errors }.to_json, status: :unprocessable_entity
     end
   end
 
