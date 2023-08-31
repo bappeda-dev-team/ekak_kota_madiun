@@ -2,12 +2,12 @@ module ReviewerItemHelper
   def reviewer_items
     [
       {
-        title: 'Pohon Kinerja Kota', href: review_kota_pohon_kinerja_index_path,
-        icon: 'fas fa-solar-panel', identifier: 'pohon_kinerja/review_kota'
+        title: 'Pohon Kinerja Kota', href: kota_pohon_kinerja_index_path,
+        icon: 'fas fa-tree', identifier: 'pohon_kinerja/kota'
       },
       {
-        title: 'Pohon Kinerja OPD', href: review_opd_pohon_kinerja_index_path,
-        icon: 'fas fa-tree', identifier: 'pohon_kinerja/review_opd'
+        title: 'Pohon Kinerja OPD', href: manual_pohon_kinerja_index_path,
+        icon: 'fas fa-tree', identifier: 'pohon_kinerja'
       }
     ]
   end

@@ -28,4 +28,8 @@ module ApplicationHelper
     link_to(name, '#', class: "add_fields_#{dc.id}",
                        data: { id: new_obj, fields: fields, action: 'click->gender-form#new_field' })
   end
+
+  def reviewer?
+    current_user.has_role?(:reviewer)
+  end
 end

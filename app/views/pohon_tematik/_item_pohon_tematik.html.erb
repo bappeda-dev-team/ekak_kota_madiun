@@ -26,23 +26,24 @@
       </tr>
     </table>
   </div>
-  <div class="pohon-tombol row mb-3">
-    <div class="col">
-      <%= link_to edit_pohon_tematik_path(pohon),
+  <% unless reviewer? %>
+    <div class="pohon-tombol row mb-3">
+      <div class="col">
+        <%= link_to edit_pohon_tematik_path(pohon),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
                  action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
              },
              class: 'btn btn-outline-info' do %>
-        <i class="fas fa-edit me-2"></i>
-        <span>Edit</span>
-      <% end %>
+          <i class="fas fa-edit me-2"></i>
+          <span>Edit</span>
+        <% end %>
+      </div>
     </div>
-  </div>
-  <div class="pohon-foot">
-    <div class="d-grid gap-3">
-      <%= link_to new_sub_pohon_tematik_path(pohon),
+    <div class="pohon-foot">
+      <div class="d-grid gap-3">
+        <%= link_to new_sub_pohon_tematik_path(pohon),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
@@ -50,10 +51,10 @@
                  action: 'ajax:complete->pohon-tematik#addSubTematik:prevent',
              },
              class: 'btn btn-success w-100 text-white' do %>
-        <i class="fas fa-plus me-2"></i>
-        <span>Sub-Tematik Kota</span>
-      <% end %>
-      <%= link_to new_strategi_tematik_pohon_tematik_path(pohon),
+          <i class="fas fa-plus me-2"></i>
+          <span>Sub-Tematik Kota</span>
+        <% end %>
+        <%= link_to new_strategi_tematik_pohon_tematik_path(pohon),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
@@ -61,10 +62,10 @@
                  action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
              },
              class: 'btn btn-info w-100' do %>
-        <i class="fas fa-plus me-2"></i>
-        <span>Strategi Tematik</span>
-      <% end %>
-      <%= link_to new_strategi_pohon_tematik_path(pohon),
+          <i class="fas fa-plus me-2"></i>
+          <span>Strategi Tematik</span>
+        <% end %>
+        <%= link_to new_strategi_pohon_tematik_path(pohon),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
@@ -72,9 +73,10 @@
                  action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
              },
              class: 'btn btn-primary w-100' do %>
-        <i class="fas fa-plus me-2"></i>
-        <span>Strategi Tematik Baru</span>
-      <% end %>
+          <i class="fas fa-plus me-2"></i>
+          <span>Strategi Tematik Baru</span>
+        <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>

@@ -3,6 +3,7 @@
     <h5 class="text-center"><strong>Operational</strong></h5>
   </div>
   <%= render partial: 'pohon_tematik/inner_table', locals: { pohon: pohon, title: 'Operational' } %>
+  <% unless reviewer? %>
   <div class="pohon-tombol row mb-3">
     <div class="col">
       <%= link_to edit_operational_pohon_tematik_path(pohon),
@@ -32,4 +33,5 @@
     <div class="row gx-3">
     </div>
   </div>
+  <% end %>
 </div>

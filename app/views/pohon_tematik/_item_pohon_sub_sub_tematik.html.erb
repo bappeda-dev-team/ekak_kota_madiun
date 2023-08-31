@@ -26,6 +26,7 @@
       </tr>
     </table>
   </div>
+  <% unless reviewer? %>
   <div class="pohon-tombol row mb-3 action-sub-sub-tematik">
     <div class="col">
       <%= link_to pindah_sub_tematik_pohon_tematik_path(pohon),
@@ -64,8 +65,10 @@
       <% end %>
     </div>
   </div>
+  <% end %>
   <div class="pohon-foot">
     <button type="button" class="btn btn-tertiary w-100" data-action="pohon-tematik#toggleChild" data-pohon-tematik-show-param="false">Tampilkan</button>
+    <% unless reviewer? %>
     <div class="d-grid gap-3 mt-3 d-none">
       <%= link_to new_strategi_tematik_pohon_tematik_path(pohon),
              remote: true,
@@ -90,5 +93,6 @@
         <span>Strategi Tematik Baru</span>
       <% end %>
     </div>
+  <% end %>
   </div>
 </div>
