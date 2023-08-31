@@ -1,46 +1,39 @@
-<%= form_with(model: pohon, url: '/pohon_tematik/create_sub_sub_tema', local: false,
+<%= form_with(model: sub_sub_tematik,
+              local: false,
               data: {
                   controller: 'pohon-tematik',
                   action: 'ajax:success->pohon-tematik#ajaxSuccess'
               }
 ) do |form| %>
-  <% if pohon.errors.any? %>
+  <% if sub_sub_tematik.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(pohon.errors.count, "error") %> prohibited this tematik from being saved:</h2>
+      <h2>Terdapat <%= sub_sub_tematik.errors.count %> kesalahan:</h2>
       <ul>
-        <% pohon.errors.each do |error| %>
+        <% sub_sub_tematik.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
   <div class="field">
-    <%= form.hidden_field :pohon_ref_id %>
-    <%= form.hidden_field :pohonable_type %>
-    <%= form.hidden_field :role %>
-    <%= form.hidden_field :tahun %>
+    <%= form.hidden_field :tematik_ref_id %>
   </div>
   <div class="field">
-    <%= form.label :tematik_kota, class: 'form-label' %>
-    <%= form.text_field :tematik, class: 'form-control text-center', value: @subtematik.tema, readonly: true %>
+    <%= form.label :sub_sub_tematik, class: 'form-label' %>
+    <%= form.text_field :tema, class: 'form-control' %>
   </div>
-  <div class="field">
-    <%= form.label :sub_tematik_kota, class: 'form-label' %>
-    <%= form.select :pohonable_id, select_tematik(@sub_tematiks),
-         {include_blank: true},
-         { class: 'form-control',
-           data: {
-               controller: 'dropdown',
-               dropdown_jenis_value: 'action',
-               dropdown_event_name_value: 'change-tema',
-               placeholder: 'Pilih Sub-Tematik Kota',
-           },
-            id: "pohon_#{form.object_id}",
-           required: true }%>
+  <div class="field mt-0" id="indikator-subtematik">
+    <%= form.fields_for :indikators do |indikator_subtematik| %>
+      <%= render 'tematiks/indikator_sub_tematik_fields', form: indikator_subtematik %>
+    <% end %>
   </div>
+  <%= link_to_add_nested(form, :indikators, "#indikator-subtematik",
+                             link_classes: 'btn btn-primary btn-sm',
+                             link_text: 'Tambah Indikator',
+                             partial: 'tematiks/indikator_sub_tematik_fields') %>
   <div class="field">
     <%= form.label :keterangan, class: 'form-label' %>
-    <%= form.text_field :keterangan, class: 'form-control', required: true, id: "pohon_keterangan_#{form.object_id.to_s}" %>
+    <%= form.text_area :keterangan, class: 'form-control', required: true %>
   </div>
   <div class="actions">
     <%= form.submit 'Simpan' %>

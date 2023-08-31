@@ -394,8 +394,8 @@ class PohonTematikController < ApplicationController
   def new_sub_sub
     parent_pohon = Pohon.find(params[:id])
     @sub_tematik = parent_pohon.pohonable
-    @pohon = Pohon.new(pohonable_type: 'SubTematik', role: 'sub_sub_pohon_kota', tahun: parent_pohon.tahun,
-                       pohon_ref_id: parent_pohon.id)
+    @sub_sub_tematik = SubSubTematik.new(tematik_ref_id: parent_pohon.id)
+    @sub_sub_tematik.indikators.build
   end
 
   def create_sub_sub_tema
@@ -408,7 +408,7 @@ class PohonTematikController < ApplicationController
       render json: { resText: "Pohon Sub Sub-Tematik Dibuat", attachmentPartial: html_content }.to_json,
              status: :created
     else
-      error_content = render_to_string(partial: 'pohon_tematik/form_sub_tematik',
+      error_content = render_to_string(partial: 'pohon_tematik/form_sub_sub_tematik',
                                        formats: 'html',
                                        layout: false,
                                        locals: { pohon: @pohon })

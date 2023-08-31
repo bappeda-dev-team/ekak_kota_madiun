@@ -37,6 +37,7 @@ Rails.application.routes.draw do
       patch :terima
       get :tolak_strategi
       patch :tolak
+      get :new_sub_sub
     end
     collection do
       post :create_sub_tema
@@ -47,6 +48,7 @@ Rails.application.routes.draw do
       post :create_tactical_tematik_baru
       post :create_operational_tematik
       post :create_operational_tematik_baru
+      post :create_sub_sub_tema
     end
   end
   resources :tematiks do
@@ -63,6 +65,7 @@ Rails.application.routes.draw do
       delete :sub
     end
   end
+  resources :sub_sub_tematiks
   resources :subdomains
   resources :opd_bidangs
   resources :periodes
