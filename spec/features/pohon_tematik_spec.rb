@@ -164,5 +164,27 @@ RSpec.feature "PohonTematiks", type: :feature do
       expect(page).to have_content 'ind a'
       expect(page).to have_content 'ket sub sub'
     end
+
+    scenario 'strategic dibawah', :js do
+      within all('.pohon-foot').last do
+        click_on "Tampilkan"
+        click_on "Strategi Tematik Baru"
+      end
+
+      within('.form-strategi-tematik') do
+        select2 'Komunikasi', from: 'Opd', search: 'komunikasi'
+        fill_in 'strategi[strategi]', with: 'strategi a'
+        fill_in 'Sasaran kinerja', with: 'sasaran a'
+        fill_in 'Indikator kinerja', with: 'ind as'
+        fill_in 'Target', with: '100'
+        fill_in 'Satuan', with: '%'
+        fill_in 'strategi[keterangan]', with: 'kk'
+        click_on 'Simpan'
+      end
+
+      click_button "Ok"
+
+      expect(page).to have_content 'strategi a'
+    end
   end
 end
