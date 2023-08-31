@@ -8,6 +8,7 @@
         <%= render partial: 'pohon_tematik/pohon_sub_tematik', locals: {
           pohon: sub_tema,
           sub_sub_tematiks: sub_sub_tematiks.select { |sub| sub.pohon_ref_id == sub_tema.id },
+          strategic_no_filter: strategics,
           strategics: strategics.select { |str| str.pohon_ref_id == sub_tema.id },
           tacticals: tacticals,
           operationals: operationals } %>

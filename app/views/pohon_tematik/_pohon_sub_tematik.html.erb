@@ -15,7 +15,7 @@
       <% sub_sub_tematiks.each do |sub| %>
         <%= render partial: 'pohon_tematik/pohon_sub_sub_tematik', locals: {
           pohon: sub,
-          strategics: strategics.select { |str| str.pohon_ref_id == sub.id },
+          strategics: strategic_no_filter.select { |str| str.pohon_ref_id == sub.id },
           tacticals: tacticals,
           operationals: operationals } %>
       <% end %>
