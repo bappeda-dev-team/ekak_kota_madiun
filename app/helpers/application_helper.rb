@@ -30,6 +30,6 @@ module ApplicationHelper
   end
 
   def reviewer?
-    current_user.has_role?(:reviewer)
+    current_user.has_role?(:reviewer_kak)
   end
 end

@@ -6,7 +6,7 @@ module SidebarItemHelper
       render partial: 'layouts/sidebar_admin_saja'
     elsif current_user.has_role?(:admin)
       render partial: 'layouts/sidebar_admin'
-    elsif current_user.has_role?(:reviewer)
+    elsif current_user.has_any_role?(:reviewer, :reviewer_kak)
       render partial: 'layouts/sidebar_reviewer'
     elsif current_user.has_role?(:asn)
       render partial: 'layouts/sidebar_asn'
