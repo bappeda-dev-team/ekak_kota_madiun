@@ -1,8 +1,9 @@
 <div class="pohon-foot <%=pohon.element_class_name %>">
   <button type="button" class="btn btn-tertiary w-100" data-action="pohon-tematik#toggleChild" data-pohon-tematik-show-param="false">Tampilkan</button>
-  <div class="d-grid gap-3 mt-3 d-none">
-    <% if pohon.title.downcase.include?('tactical') %>
-      <%= link_to new_tactical_pohon_tematik_path(pohon),
+  <% unless reviewer? %>
+    <div class="d-grid gap-3 mt-3 d-none">
+      <% if pohon.title.downcase.include?('tactical') %>
+        <%= link_to new_tactical_pohon_tematik_path(pohon),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
@@ -10,11 +11,11 @@
                  action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
              },
              class: 'btn btn-info w-100' do %>
-        <i class="fas fa-plus me-2"></i>
-        <span><%= pohon.title %></span>
-      <% end %>
-    <% else %>
-      <%= link_to new_operational_pohon_tematik_path(pohon),
+          <i class="fas fa-plus me-2"></i>
+          <span><%= pohon.title %></span>
+        <% end %>
+      <% else %>
+        <%= link_to new_operational_pohon_tematik_path(pohon),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
@@ -22,9 +23,10 @@
                  action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
              },
              class: 'btn btn-info w-100' do %>
-        <i class="fas fa-plus me-2"></i>
-        <span><%= pohon.title %></span>
+          <i class="fas fa-plus me-2"></i>
+          <span><%= pohon.title %></span>
+        <% end %>
       <% end %>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </div>
