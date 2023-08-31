@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       get :tolak_strategi
       patch :tolak
       get :new_sub_sub
+      get :edit_sub_sub
     end
     collection do
       post :create_sub_tema
@@ -65,7 +66,7 @@ Rails.application.routes.draw do
       delete :sub
     end
   end
-  resources :sub_sub_tematiks
+  resources :sub_sub_tematiks, only: %i[create update]
   resources :subdomains
   resources :opd_bidangs
   resources :periodes

@@ -1,5 +1,6 @@
 class SubSubTematiksController < TematiksController
   def create
+    pohon_sub = params[:sub_sub_tematik][:pohon_sub]
     @sub_sub_tematik = SubSubTematik.new(sub_sub_tematik_params)
     tahun = cookies[:tahun]
 
@@ -8,6 +9,7 @@ class SubSubTematiksController < TematiksController
                             pohonable_type: @sub_sub_tematik.class.name,
                             role: 'sub_sub_pohon_kota',
                             tahun: tahun,
+                            pohon_ref_id: pohon_sub,
                             keterangan: @sub_sub_tematik.keterangan)
       render json: { resText: "Pohon Sub Sub-Tematik Dibuat",
                      attachmentPartial: html_content('pohon_tematik/pohon_sub_sub_tematik') }.to_json,
@@ -16,7 +18,7 @@ class SubSubTematiksController < TematiksController
       error_content = render_to_string(partial: 'pohon_tematik/form_sub_sub_tematik',
                                        formats: 'html',
                                        layout: false,
-                                       locals: { pohon: @pohon })
+                                       locals: { sub_sub_tematik: @sub_sub_tematik })
       render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
     end
   end
@@ -25,12 +27,9 @@ class SubSubTematiksController < TematiksController
   def update
     respond_to do |format|
       if @tematik.update(tematik_params)
-        html_content = render_to_string(partial: 'tematiks/tematik',
-                                        formats: 'html',
-                                        layout: false,
-                                        locals: { tematiks: index })
         format.json do
-          render json: { resText: "Tematik diperbarui", res: @tematik, attachmentPartial: html_content }.to_json,
+          render json: { resText: "Tematik diperbarui",
+                         attachmentPartial: html_content('pohon_tematik/pohon_sub_sub_tematik') }.to_json,
                  status: :ok
         end
       else

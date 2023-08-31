@@ -131,5 +131,38 @@ RSpec.feature "PohonTematiks", type: :feature do
       expect(page).to have_content('Test sub sub-tematik')
       expect(page).to have_content('keterangan sub sub')
     end
+
+    scenario 'edit sub sub tematik', :js do
+      click_on "Sub Sub-Tematik"
+      within('.form-sub-sub-tematik') do
+        fill_in 'sub_sub_tematik[tema]', with: 'Test sub sub-tematik'
+        fill_in 'Indikator', with: 'Indikator a'
+        fill_in 'Target', with: '100'
+        fill_in 'Satuan', with: '%'
+        fill_in 'Keterangan', with: 'keterangan sub sub'
+        click_on 'Simpan'
+      end
+
+      click_button "Ok"
+
+      within all('.action-sub-sub-tematik').last do
+        click_on 'Edit'
+      end
+
+      within('.form-sub-sub-tematik') do
+        fill_in 'sub_sub_tematik[tema]', with: 'update sub sub-tematik'
+        fill_in 'Indikator', with: 'ind a'
+        fill_in 'Target', with: '100'
+        fill_in 'Satuan', with: '%'
+        fill_in 'Keterangan', with: 'ket sub sub'
+        click_on 'Simpan'
+      end
+
+      click_button "Ok"
+
+      expect(page).to have_content 'update sub sub-tematik'
+      expect(page).to have_content 'ind a'
+      expect(page).to have_content 'ket sub sub'
+    end
   end
 end

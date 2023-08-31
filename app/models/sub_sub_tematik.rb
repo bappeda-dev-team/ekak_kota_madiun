@@ -12,7 +12,7 @@
 #
 class SubSubTematik < Tematik
   belongs_to :sub_tematik, class_name: 'SubTematik',
-                           primary_key: :id, foreign_key: :tematik_ref_id
+                           primary_key: :id, foreign_key: :tematik_ref_id, optional: true
 
   has_many :indikators, lambda {
                           where(jenis: 'Tematik', sub_jenis: 'SubSubTematik')

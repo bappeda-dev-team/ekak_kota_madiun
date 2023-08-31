@@ -11,8 +11,10 @@ class PohonTematikController < ApplicationController
 
     @tematik = Tematik.find(tematik_id)
 
-    @tematik_kota = @pohon.tematiks
-
+    @tematik_kota = Pohon.where(pohonable_type: 'Tematik',
+                                pohonable_id: tematik_id,
+                                role: 'pohon_kota')
+                         .includes(:pohonable)
     return if @tematik_kota.empty?
 
     @sub_tematik_kota = @pohon.sub_tematiks
@@ -392,10 +394,17 @@ class PohonTematikController < ApplicationController
   end
 
   def new_sub_sub
-    parent_pohon = Pohon.find(params[:id])
-    @sub_tematik = parent_pohon.pohonable
-    @sub_sub_tematik = SubSubTematik.new(tematik_ref_id: parent_pohon.id)
+    @pohon_sub = params[:id]
+    pohon = Pohon.find(params[:id])
+    @sub_tematik = pohon.pohonable_id
+    @sub_sub_tematik = SubSubTematik.new(tematik_ref_id: @sub_tematik)
     @sub_sub_tematik.indikators.build
+  end
+
+  def edit_sub_sub
+    pohon_sub_sub = Pohon.find(params[:id])
+    @pohon_sub = pohon_sub_sub.pohon_ref_id
+    @sub_sub_tematik = pohon_sub_sub.pohonable
   end
 
   def create_sub_sub_tema
