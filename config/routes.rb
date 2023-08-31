@@ -120,6 +120,7 @@ Rails.application.routes.draw do
     end
     collection do
       get :kota
+      get :cascading
       get :opd
       get :asn
       post :admin_filter

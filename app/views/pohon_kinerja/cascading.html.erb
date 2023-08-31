@@ -1,0 +1,17 @@
+<%= content_for :html_title, "Pohon Kinerja Cascading" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Perencanaan OPD</li>
+  <li class="breadcrumb-item active" aria-current="page">Pohon Kinerja Cascading</li>
+<% end %>
+<% content_for :view_utama do %>
+  <% if cookies[:tahun] && cookies[:opd] %>
+    <%= render 'pohon_kinerja/index_content' %>
+  <% else %>
+    <%= render 'shared/pilih_tahun_dan_opd' %>
+  <% end %>
+  <%= render 'shared/modal_xl_template', modal_name: 'edit-pohon' %>
+  <%= render 'shared/modal_xl_template', modal_name: 'panggil-teman' %>
+  <%= render 'shared/modal_xl_template', modal_name: 'strategi-cascading' %>
+  <%= render 'shared/modal_template', modal_name: 'komentar' %>
+  <%= render 'shared/modal_xl_template', modal_name: 'manual-ik' %>
+<% end %>

@@ -8,6 +8,10 @@ module ReviewerItemHelper
       {
         title: 'Pohon Kinerja OPD', href: manual_pohon_kinerja_index_path,
         icon: 'fas fa-tree', identifier: 'pohon_kinerja'
+      },
+      {
+        title: 'Pohon Kinerja Cascading', href: cascading_pohon_kinerja_index_path,
+        icon: 'fas fa-tree', identifier: 'pohon_kinerja'
       }
     ]
   end
