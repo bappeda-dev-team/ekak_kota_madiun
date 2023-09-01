@@ -484,6 +484,12 @@ Rails.application.routes.draw do
     get :add_dampak_resiko
   end
 
+  resources :clone do
+    member do
+      post :pohon_tematik
+    end
+  end
+
   namespace :filter do
     post :daftar_resiko
     post :isu_strategis_permasalahan

@@ -13,6 +13,7 @@ class PohonTematikController < ApplicationController
 
     @tematik_kota = Pohon.where(pohonable_type: 'Tematik',
                                 pohonable_id: tematik_id,
+                                tahun: @tahun,
                                 role: 'pohon_kota')
                          .includes(:pohonable)
     return if @tematik_kota.empty?
