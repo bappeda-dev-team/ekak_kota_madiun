@@ -118,6 +118,7 @@ RSpec.describe "Clones", type: :request do
       pohon_count = Pohon.count
 
       expect(pohon_count).to eq(jumlah_setelah_clone)
+      expect(response.body).to include("Pohon di clone")
     end
   end
 end
