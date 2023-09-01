@@ -279,6 +279,18 @@ export default class extends Controller {
     Modal.getInstance(modal).hide()
   }
 
+  afterClone(event) {
+    const [message, status, _xhr] = event.detail
+    this.modalHider()
+    const text = JSON.parse(message.response)
+    this.sweetalertStatus(text.resText, status)
+  }
+
+  modalHider(modalName = 'form-modal') {
+    const modal = document.getElementById(modalName)
+    Modal.getInstance(modal).hide()
+  }
+
   sweetalert(text) {
     Swal.fire({
       title: 'Sukses',
