@@ -277,12 +277,12 @@ class User < ApplicationRecord
   end
 
   def sasaran_asn_sync_skp(tahun: nil)
-    sasarans.dengan_rincian.where("sasarans.tahun ILIKE ?", tahun)
+    sasarans.dengan_rincian.where("sasarans.tahun ILIKE ?", "%#{tahun}%")
   end
 
   def sasaran_pohon_kinerja(tahun: nil)
     sasarans.includes(%i[strategi indikator_sasarans])
-            .where("sasarans.tahun ILIKE ?", tahun)
+            .where("sasarans.tahun ILIKE ?", "%#{tahun}%")
             .select { |s| s.tahapan? && s.manual_ik? && s.strategi? }
   end
 
