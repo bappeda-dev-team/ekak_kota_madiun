@@ -9,12 +9,12 @@ json.data do
   json.sasaran_asn @sasarans do |sasaran|
     json.id_sasaran sasaran.id_rencana
 
-    # json.id_sasaran_kota sasaran.sasaran_kota[:sasaran_kota_id]
-    # json.sasaran_kota sasaran.sasaran_kota[:sasaran_kota]
-    # json.strategi_kota sasaran.sasaran_kota[:strategi_kota]
+    json.id_sasaran_kota sasaran.sasaran_kota[:sasaran_kota_id]
+    json.sasaran_kota sasaran.sasaran_kota[:sasaran_kota]
+    json.strategi_kota sasaran.sasaran_kota[:strategi_kota]
 
-    # json.id_sasaran_atasan sasaran.sasaran_atasan_pohon[:sasaran_atasan_id]
-    # json.sasaran_atasan sasaran.sasaran_atasan_pohon[:sasaran_atasan]
+    json.id_sasaran_atasan sasaran.sasaran_atasan_pohon[:sasaran_atasan_id]
+    json.sasaran_atasan sasaran.sasaran_atasan_pohon[:sasaran_atasan]
 
     json.tahun_sasaran sasaran.tahun
     json.nip_asn sasaran.nip_asn

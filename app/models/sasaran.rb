@@ -403,6 +403,12 @@ class Sasaran < ApplicationRecord
       sasaran_kota_id: pohon_kota&.sasaran_kotum_id,
       sasaran_kota: pohon_kota&.sasaran_kotum_sasaran
     }
+  rescue NoMethodError
+    {
+      strategi_kota: nil,
+      sasaran_kota_id: nil,
+      sasaran_kota: nil
+    }
   end
 
   def sasaran_atasan_pohon
