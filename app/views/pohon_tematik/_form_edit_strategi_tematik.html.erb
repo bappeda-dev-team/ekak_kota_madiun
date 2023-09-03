@@ -25,7 +25,16 @@
   </div>
   <div class="field">
     <%= form.label :opd, class: 'form-label' %>
-    <%= form.text_field :opd, class: 'form-control text-center', value: @opd.nama_opd, readonly: true %>
+    <%= form.select :opd, selected_opd(@opds, form.object.opd),
+        { include_blank: true },
+        { class: 'form-control text-center',
+          data: {
+              pohon_tematik_target: 'dropdown',
+              placeholder: 'Pilih OPD',
+          },
+          id: "opd_#{form.object_id}",
+          required: true
+        } %>
   </div>
   <div class="field">
     <%= form.label :strategic, class: 'form-label' %>
