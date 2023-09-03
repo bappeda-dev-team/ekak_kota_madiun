@@ -255,7 +255,7 @@ RSpec.feature "PohonTematiks", type: :feature do
       end
 
       within('.form-strategi-tematik') do
-        fill_in 'sub_sub_tematik[tema]', with: 'Test edit strategic'
+        fill_in 'strategi[strategi]', with: 'Test edit strategic'
         fill_in 'Indikator', with: 'Indikator a'
         fill_in 'Target', with: '100'
         fill_in 'Satuan', with: '%'
