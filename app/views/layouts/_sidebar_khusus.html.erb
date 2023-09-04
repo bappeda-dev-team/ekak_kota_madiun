@@ -1,0 +1,10 @@
+<li class="nav-item">
+  <%= active_link_to(root_path, wrap_tag: :li, wrap_class: 'nav-item', active: :exact, class: "nav-link") do %>
+    <span class="sidebar-icon">
+      <i class="fas fa-chart-pie icon icon-xs me-2"></i>
+    </span>
+    <span class="sidebar-text">Dashboard</span>
+  <% end %>
+</li>
+<%= render partial: 'shared/sidebar_item', locals: { title: "Review", items: reviewer_items , target: 'reviewer-items' }, cached: true %>
+<%= render partial: 'shared/sidebar_item', locals: { title: "Laporan Review", items: laporan_reviewer_items , target: 'laporan-reviewer-items' }, cached: true %>
