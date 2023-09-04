@@ -4,10 +4,23 @@
     <td rowspan="<%= rowspan %>"></td>
     <td rowspan="<%= rowspan %>"><%= sub_tema.tematik %></td>
     <td rowspan="<%= rowspan %>" class="text-wrap"><%= sub_tema %></td>
-    <td colspan="3" class="p-0 m-0 border-0"></td>
-    <td rowspan="<%= rowspan %>"><%= sub_tema.keterangan %></td>
+    <td colspan="4" class="p-0 m-0 border-0"></td>
+    <td class="text-wrap" rowspan="<%= rowspan %>"><%= sub_tema.keterangan %></td>
+    <td rowspan="<%= rowspan %>">
+      <ul style="list-style: none;">
+        <% sub_tema.pohon_list.each do |pohon, tahun| %>
+          <li>
+            <%= link_to pohon_tematik_index_path(tematik: sub_tema.id),
+                 class: 'btn btn-outline-primary' do%>
+              <%= tahun %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </td>
     <td class="text-center" rowspan="<%= rowspan %>">
-      <%= link_to edit_sub_tematik_path(sub_tema), remote: true,
+      <div class="d-grid gap-3">
+        <%= link_to edit_sub_tematik_path(sub_tema), remote: true,
          data: {
              controller: 'form-modal',
              action: 'ajax:complete->form-modal#success:prevent',
@@ -15,10 +28,10 @@
              bs_target: '#form-modal'
          },
          class: 'btn btn-outline-info' do %>
-        <i class="fa fa-edit me-2"></i>
-        <span>Edit Sub-Tema</span>
-      <% end %>
-      <%= link_to tematik_path(sub_tema),
+          <i class="fa fa-edit me-2"></i>
+          <span>Edit Sub-Tema</span>
+        <% end %>
+        <%= link_to tematik_path(sub_tema),
            method: :delete,
             remote: true,
            class: 'btn btn-outline-danger',
@@ -27,9 +40,10 @@
                controller: 'form-modal',
                action: 'ajax:complete->form-modal#success:prevent',
            } do %>
-        <i class="fa fa-trash-alt me-2"></i>
-        <span>Hapus Tema</span>
-      <% end %>
+          <i class="fa fa-trash-alt me-2"></i>
+          <span>Hapus Tema</span>
+        <% end %>
+      </div>
     </td>
   </tr>
   <% sub_tema.indikators.each do |indikator| %>
@@ -37,6 +51,7 @@
       <td class="text-wrap"><%= indikator %></td>
       <td><%= indikator.target %></td>
       <td><%= indikator.satuan %></td>
+      <td><%= indikator.tahun %></td>
     </tr>
   <% end %>
 <% end %>
