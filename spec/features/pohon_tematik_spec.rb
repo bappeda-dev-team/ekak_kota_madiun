@@ -185,6 +185,25 @@ RSpec.feature "PohonTematiks", type: :feature do
       click_button "Ok"
 
       expect(page).to have_content 'strategi a'
+
+      within all('.pohon-tombol').last do
+        click_on "Edit"
+      end
+
+      within('.form-strategi-tematik') do
+        # select2 'Komunikasi', from: 'Opd', search: 'komunikasi'
+        fill_in 'strategi[strategi]', with: 'strategi edit'
+        fill_in 'Sasaran kinerja', with: 'sasaran a'
+        fill_in 'Indikator kinerja', with: 'ind edit'
+        fill_in 'Target', with: '100'
+        fill_in 'Satuan', with: '%'
+        fill_in 'strategi[keterangan]', with: 'kk'
+        click_on 'Simpan'
+      end
+
+      click_button "Ok"
+
+      expect(page).to have_content 'strategi edit'
     end
   end
 end

@@ -1,4 +1,4 @@
-<%= form_with(model: pohon, url: update_strategi_pohon_tematik_path,
+<%= form_with(model: strategi, url: update_strategi_pohon_tematik_path,
               local: false,
               method: :patch,
               data: {
@@ -6,41 +6,52 @@
                   action: 'ajax:success->pohon-tematik#updateSuccess'
               }
 ) do |form| %>
-  <% if pohon.errors.any? %>
+  <% if strategi.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(pohon.errors.count, "error") %> prohibited this tematik from being saved:</h2>
+      <h2>Terdapat <%= strategi.errors.count %> kesalahan:</h2>
       <ul>
-        <% pohon.errors.each do |error| %>
+        <% strategi.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
   <div class="field">
-    <%= form.hidden_field :pohon_ref_id %>
-    <%= form.hidden_field :pohonable_type %>
-    <%= form.hidden_field :role %>
-    <%= form.hidden_field :opd_id %>
-    <%= form.hidden_field :tahun %>
-  </div>
-  <div class="field">
     <%= form.label :opd, class: 'form-label' %>
-    <%= form.text_field :opd, class: 'form-control text-center', value: @opd.nama_opd, readonly: true %>
+    <%= form.select :opd_id, options_for_select(@opds.pluck(:nama_opd, :id), form.object.opd_id),
+        { include_blank: true },
+        { class: 'form-control text-center',
+          data: {
+              pohon_tematik_target: 'dropdown',
+              placeholder: 'Pilih OPD',
+          },
+          id: "opd_#{form.object_id}",
+          required: true
+        } %>
   </div>
   <div class="field">
     <%= form.label :strategic, class: 'form-label' %>
-    <%= form.select :pohonable_id, @strategis,
-         {include_blank: true},
-         { class: 'form-control',
-           data: {
-               controller: 'dropdown',
-               dropdown_jenis_value: 'action',
-               dropdown_event_name_value: 'change-tema',
-               placeholder: 'Pilih Strategic',
-           },
-           id: "pohon_#{form.object_id}",
-           required: true
-          }%>
+    <%= form.text_field :strategi, class: 'form-control', required: true %>
+    <%= form.hidden_field :role %>
+  </div>
+  <div class="field">
+    <%= form.fields_for :sasaran do |sasaran_form| %>
+      <% if strategi.new_record? %>
+        <% random_number = @sasaran&.id_rencana.nil? ? (SecureRandom.random_number(9e5) + 1e5).to_i : @sasaran.id_rencana %>
+        <%= sasaran_form.hidden_field :id_rencana, :value => random_number, readonly: true %>
+      <% end %>
+      <%= sasaran_form.label :sasaran_kinerja, { class: "form-label" } %>
+      <%= sasaran_form.text_field :sasaran_kinerja, { class: "form-control" } %>
+      <div class="field" id="indikator-sasarans">
+        <%= sasaran_form.label :indikator, { class: "form-label" } %>
+        <%= sasaran_form.fields_for :indikator_sasarans do |indikator_sas| %>
+          <%= render 'sasarans/indikator_sasaran_fields', form: indikator_sas %>
+        <% end %>
+      </div>
+      <%= link_to_add_nested(sasaran_form, :indikator_sasarans,
+                                '#indikator-sasarans', link_classes: 'btn btn-outline-primary btn-sm', link_text: 'Tambah Indikator',
+                                partial: 'sasarans/indikator_sasaran_fields') %>
+    <% end %>
   </div>
   <div class="field">
     <%= form.label :keterangan, class: 'form-label' %>
