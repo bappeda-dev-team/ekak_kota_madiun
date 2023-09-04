@@ -16,7 +16,9 @@ module PohonTematikHelper
   end
 
   def select_strategi(strategis)
-    options_for_select(strategis.map { |str| [str.strategi, str.id, { 'data-opd-id': str.opd_id }] })
+    options_for_select(strategis.map do |str|
+                         ["#{str.strategi} - #{str.tahun}", str.id, { 'data-opd-id': str.opd_id }]
+                       end)
   end
 
   def sub_pohon(collections, parent_id)
