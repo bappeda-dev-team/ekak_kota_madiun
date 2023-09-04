@@ -72,61 +72,6 @@ class PohonTematikController < ApplicationController
     end
   end
 
-  def new_opd_tematik
-    parent_pohon = Pohon.find(params[:id])
-    @sub_tematik = parent_pohon.pohonable
-    @opds = Opd.opd_resmi.collect { |opd| [opd.nama_opd, opd.id] }
-    @pohon = Pohon.new(pohonable_type: 'Opd', role: 'opd_pohon_kota', tahun: parent_pohon.tahun,
-                       pohon_ref_id: parent_pohon.id)
-  end
-
-  def edit_opd_tematik
-    @pohon = Pohon.find(params[:id])
-    @sub_tematik = Pohon.find(@pohon.pohon_ref_id).pohonable
-    @opds = Opd.opd_resmi.collect { |opd| [opd.nama_opd, opd.id] }
-  end
-
-  def pindah_opd_tematik
-    @pohon = Pohon.find(params[:id])
-    @tahun = @pohon.tahun
-    @dahan_atas = Pohon.where(pohonable_type: 'SubTematik', role: 'sub_pohon_kota', tahun: @tahun)
-                       .collect { |dahan| [dahan.pohonable.tema, dahan.id] }
-  end
-
-  def create_opd_tematik
-    @pohon = Pohon.new(pohon_sub_tema_params)
-    if @pohon.save
-      html_content = render_to_string(partial: 'pohon_tematik/pohon_opd_tematik',
-                                      formats: 'html',
-                                      layout: false,
-                                      locals: { pohon: @pohon })
-      render json: { resText: "OPD Tematik Ditambahkan", attachmentPartial: html_content }.to_json, status: :created
-    else
-      error_content = render_to_string(partial: 'pohon_tematik/form_opd_tematik',
-                                       formats: 'html',
-                                       layout: false,
-                                       locals: { pohon: @pohon })
-      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
-    end
-  end
-
-  def update_opd_tematik
-    @pohon = Pohon.find(params[:id])
-    if @pohon.update(pohon_sub_tema_params)
-      html_content = render_to_string(partial: 'pohon_tematik/item_pohon_opd',
-                                      formats: 'html',
-                                      layout: false,
-                                      locals: { pohon: @pohon })
-      render json: { resText: "OPD Tematik Diupdate", attachmentPartial: html_content }.to_json, status: :ok
-    else
-      error_content = render_to_string(partial: 'pohon_tematik/form_opd_tematik',
-                                       formats: 'html',
-                                       layout: false,
-                                       locals: { pohon: @pohon })
-      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
-    end
-  end
-
   def pindah_pohon
     @pohon = Pohon.find(params[:id])
     if @pohon.update(pohon_sub_tema_params)
@@ -163,7 +108,9 @@ class PohonTematikController < ApplicationController
   end
 
   def create_strategi_tematik
-    @pohon = Pohon.new(pohon_strategi_tema_params)
+    new_params = pohon_strategi_tema_params.merge(metadata: { submitted_by: current_user.id,
+                                                              submitted_at: DateTime.current })
+    @pohon = Pohon.new(new_params)
     if @pohon.save
       html_content = render_to_string(partial: 'pohon_tematik/pohon_strategi_tematik',
                                       formats: 'html',
@@ -344,7 +291,8 @@ class PohonTematikController < ApplicationController
   end
 
   def create
-    @pohon = Pohon.new(pohon_params)
+    new_params = pohon_params.merge(metadata: { submitted_by: current_user.id, submitted_at: DateTime.current })
+    @pohon = Pohon.new(new_params)
     if @pohon.save
       html_content = render_to_string(partial: 'pohon_tematik/pohon_tematik',
                                       formats: 'html',
@@ -378,7 +326,9 @@ class PohonTematikController < ApplicationController
   end
 
   def create_sub_tema
-    @pohon = Pohon.new(pohon_sub_tema_params)
+    new_params = pohon_sub_tema_params.merge(metadata: { submitted_by: current_user.id,
+                                                         submitted_at: DateTime.current })
+    @pohon = Pohon.new(new_params)
     if @pohon.save
       html_content = render_to_string(partial: 'pohon_tematik/pohon_sub_tematik',
                                       formats: 'html',
@@ -409,7 +359,9 @@ class PohonTematikController < ApplicationController
   end
 
   def create_sub_sub_tema
-    @pohon = Pohon.new(pohon_sub_tema_params)
+    new_params = pohon_sub_tema_params.merge(metadata: { submitted_by: current_user.id,
+                                                         submitted_at: DateTime.current })
+    @pohon = Pohon.new(new_params)
     if @pohon.save
       html_content = render_to_string(partial: 'pohon_tematik/pohon_sub_sub_tematik',
                                       formats: 'html',
@@ -427,6 +379,8 @@ class PohonTematikController < ApplicationController
   end
 
   def create_tactical_tematik
+    new_params = pohon_strategi_tema_params.merge(metadata: { submitted_by: current_user.id,
+                                                              submitted_at: DateTime.current })
     @pohon = Pohon.new(pohon_strategi_tema_params)
     if @pohon.save
       html_content = render_to_string(partial: 'pohon_tematik/pohon_tactical_tematik',
@@ -464,6 +418,8 @@ class PohonTematikController < ApplicationController
   end
 
   def create_operational_tematik
+    new_params = pohon_strategi_tema_params.merge(metadata: { submitted_by: current_user.id,
+                                                              submitted_at: DateTime.current })
     @pohon = Pohon.new(pohon_strategi_tema_params)
     if @pohon.save
       html_content = render_to_string(partial: 'pohon_tematik/pohon_operational_tematik',
@@ -524,7 +480,9 @@ class PohonTematikController < ApplicationController
     Pohon.create!(pohonable_type: 'Strategi', pohonable_id: @strategi.id,
                   role: @role, tahun: @tahun,
                   keterangan: @keterangan,
-                  pohon_ref_id: @pohon_ref_id, opd_id: @opd_id)
+                  pohon_ref_id: @pohon_ref_id, opd_id: @opd_id,
+                  metadata: { submitted_by: current_user.id,
+                              submitted_at: DateTime.current })
   end
 
   def pohon_params
