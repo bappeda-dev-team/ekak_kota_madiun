@@ -11,6 +11,10 @@ module PohonTematikHelper
     options_for_select(opds.pluck(:nama_opd, :id))
   end
 
+  def selected_opd(opds, selected)
+    options_for_select(opds.pluck(:nama_opd, :id), selected: selected)
+  end
+
   def select_strategi(strategis)
     options_for_select(strategis.map { |str| [str.strategi, str.id, { 'data-opd-id': str.opd_id }] })
   end
