@@ -9,7 +9,7 @@
 ) do |form| %>
   <% if sub_tematik.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(sub_tematik.errors.count, "error") %> prohibited this tematik from being saved:</h2>
+      <h2>Terdapat <%= sub_sub_tematik.errors.count %> kesalahan:</h2>
       <ul>
         <% sub_tematik.errors.each do |error| %>
           <li><%= error.full_message %></li>

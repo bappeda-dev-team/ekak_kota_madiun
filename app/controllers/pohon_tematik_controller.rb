@@ -49,6 +49,8 @@ class PohonTematikController < ApplicationController
   def edit_sub_tematik
     @pohon = Pohon.find(params[:id])
     @tematik = Pohon.find(@pohon.pohon_ref_id).pohonable
+    @tematiks = [@tematik.id, @tematik.tema]
+    @sub_tematik = @pohon.pohonable
     @sub_tematiks = @tematik.sub_tematiks.order(updated_at: :desc).collect { |sub_tema| [sub_tema.tema, sub_tema.id] }
   end
 
@@ -61,12 +63,13 @@ class PohonTematikController < ApplicationController
 
   def update_sub_tematik
     @pohon = Pohon.find(params[:id])
-    if @pohon.update(pohon_sub_tema_params)
+    @sub_tematik = @pohon.pohonable
+    if @sub_tematik.update(sub_tematik_params)
       html_content = render_to_string(partial: 'pohon_tematik/item_pohon_sub_tematik',
                                       formats: 'html',
                                       layout: false,
                                       locals: { pohon: @pohon })
-      render json: { restext: "sub-tematik diupdate", attachmentpartial: html_content }.to_json, status: :ok
+      render json: { restext: "sub-tematik diupdate", attachmentPartial: html_content }.to_json, status: :ok
     else
       render json: { resText: "Gagal Menyimpan" }.to_json, status: :unprocessable_entity
     end
@@ -555,5 +558,13 @@ class PohonTematikController < ApplicationController
                                         target
                                         satuan
                                         _destroy] }
+  end
+
+  def sub_tematik_params
+    params.require(:sub_tematik).permit(:tema, :keterangan, :tematik_ref_id, :type, indikators_attributes)
+  end
+
+  def indikators_attributes
+    { indikators_attributes: %i[id kode kode_opd indikator target satuan tahun _destroy] }
   end
 end

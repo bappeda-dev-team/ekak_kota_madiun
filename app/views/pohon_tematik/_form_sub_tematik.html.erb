@@ -1,14 +1,15 @@
-<%= form_with(model: pohon, url: '/pohon_tematik/create_sub_tema', local: false,
+<%= form_with(model: sub_tematik,
+              local: false,
               data: {
                   controller: 'pohon-tematik',
                   action: 'ajax:success->pohon-tematik#ajaxSuccess'
               }
 ) do |form| %>
-  <% if pohon.errors.any? %>
+  <% if sub_tematik.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(pohon.errors.count, "error") %> prohibited this tematik from being saved:</h2>
+      <h2>Terdapat <%= sub_sub_tematik.errors.count %> kesalahan:</h2>
       <ul>
-        <% pohon.errors.each do |error| %>
+        <% sub_tematik.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
