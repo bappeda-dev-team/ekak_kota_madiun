@@ -128,7 +128,6 @@ class PohonTematikController < ApplicationController
     @pohon = Pohon.find(params[:id])
     @strategi = @pohon.pohonable
     if @strategi.update(strategi_params)
-      @pohon = @strategi.pohon
       html_content = render_to_string(partial: 'pohon_tematik/item_pohon_strategi',
                                       formats: 'html',
                                       layout: false,
