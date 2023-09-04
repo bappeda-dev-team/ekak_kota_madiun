@@ -24,4 +24,11 @@ class Tematik < ApplicationRecord
   def to_s
     tema
   end
+
+  def pohon_list
+    Pohon.where(pohonable_id: id,
+                pohonable_type: 'Tematik',
+                role: 'pohon_kota')
+         .pluck(:id, :tahun)
+  end
 end

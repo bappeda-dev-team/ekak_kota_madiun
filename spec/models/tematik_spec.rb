@@ -28,4 +28,24 @@ RSpec.describe Tematik, type: :model do
       expect(tematik.indikators).to include(indikator)
     end
   end
+
+  context 'pohon_list' do
+    it 'should show pohon tematik and the year' do
+      tematik = create(:tematik, tema: 'contoh 1', keterangan: 'keterangan')
+      create(:indikator, indikator: 'Indikator Contoh',
+                         jenis: 'Tematik',
+                         sub_jenis: 'Tematik',
+                         target: '100',
+                         satuan: '%',
+                         tahun: '2023',
+                         kode: tematik.id)
+      pohon = create(:pohon,
+                     pohonable_type: 'Tematik',
+                     pohonable_id: tematik.id,
+                     keterangan: 'contoh tematik',
+                     tahun: '2023',
+                     role: 'pohon_kota')
+      expect(tematik.pohon_list).to eq([[pohon.id, pohon.tahun]])
+    end
+  end
 end
