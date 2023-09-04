@@ -86,9 +86,10 @@ class PohonTematikController < ApplicationController
   end
 
   def new_strategi_tematik
+    tahun = cookies[:tahun]
     parent_pohon = Pohon.find(params[:id])
     @opds = Opd.opd_resmi
-    @strategis = Strategi.where(role: 'eselon_2')
+    @strategis = Strategi.where(tahun: tahun, role: 'eselon_2')
     @pohon = Pohon.new(pohonable_type: 'Strategi',
                        role: 'strategi_pohon_kota',
                        tahun: parent_pohon.tahun,

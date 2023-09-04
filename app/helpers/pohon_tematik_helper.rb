@@ -17,7 +17,7 @@ module PohonTematikHelper
 
   def select_strategi(strategis)
     options_for_select(strategis.map do |str|
-                         ["#{str.strategi} - #{str.tahun}", str.id, { 'data-opd-id': str.opd_id }]
+                         [str.strategi, str.id, { 'data-opd-id': str.opd_id }]
                        end)
   end
 
