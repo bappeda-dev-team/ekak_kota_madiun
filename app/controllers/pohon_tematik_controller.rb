@@ -102,18 +102,8 @@ class PohonTematikController < ApplicationController
 
   def edit_strategi
     @pohon = Pohon.find(params[:id])
-<<<<<<< HEAD
     @strategi = @pohon.pohonable
-    # @opd = @pohon.opd
     @opds = Opd.opd_resmi
-    # @strategis = @opd.strategis.where(tahun: @pohon.tahun, role: %w[eselon_2 strategi_pohon_kota])
-    #                  .collect { |str| [str.strategi, str.id] }
-=======
-    @opds = Opd.opd_resmi
-    @opd = @pohon.opd
-    @strategis = @opd.strategis.where(tahun: @pohon.tahun, role: %w[eselon_2 strategi_pohon_kota])
-                     .collect { |str| [str.strategi, str.id] }
->>>>>>> pindah_opd
   end
 
   def create_strategi_tematik
@@ -135,7 +125,8 @@ class PohonTematikController < ApplicationController
   end
 
   def update_strategi
-    @strategi = StrategiPohon.find(params[:id])
+    @pohon = Pohon.find(params[:id])
+    @strategi = @pohon.pohonable
     if @strategi.update(strategi_params)
       @pohon = @strategi.pohon
       html_content = render_to_string(partial: 'pohon_tematik/item_pohon_strategi',
