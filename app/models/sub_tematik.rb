@@ -18,4 +18,11 @@ class SubTematik < Tematik
                         }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id'
 
   accepts_nested_attributes_for :indikators, reject_if: :all_blank, allow_destroy: true
+
+  def pohon_list
+    Pohon.where(pohonable_id: id,
+                pohonable_type: 'SubTematik',
+                role: 'sub_pohon_kota')
+         .pluck(:id, :tahun)
+  end
 end

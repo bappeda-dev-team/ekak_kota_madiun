@@ -151,6 +151,6 @@ class TematiksController < ApplicationController
   end
 
   def indikators_attributes
-    { indikators_attributes: %i[id kode kode_opd indikator target satuan _destroy] }
+    { indikators_attributes: %i[id kode kode_opd indikator target satuan tahun _destroy] }
   end
 end
