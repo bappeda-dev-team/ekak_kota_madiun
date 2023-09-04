@@ -4,6 +4,18 @@
     <td rowspan="<%= rowspan %>"></td>
     <td rowspan="<%= rowspan %>"><%= tema %></td>
     <td colspan="3" class="p-0 m-0 border-0"></td>
+    <td rowspan="<%= rowspan %>">
+        <ul>
+        <% tema.pohon_list.each do |pohon, tahun| %>
+            <li>
+                <%= link_to pohon_tematik_index_path(tematik: tema.id),
+                 class: 'btn btn-success' do%>
+                    <%= tahun %>
+                <% end %>
+            </li>
+        <% end %>
+        </ul>
+    </td>
     <td rowspan="<%= rowspan %>"><%= tema.keterangan %></td>
     <td class="text-center" rowspan="<%= rowspan %>">
       <%= link_to edit_tematik_path(tema), remote: true,
