@@ -4,37 +4,39 @@
   </div>
   <%= render partial: 'pohon_tematik/inner_table', locals: { pohon: pohon, title: 'Tactical' } %>
   <% unless reviewer? %>
-  <div class="pohon-tombol row mb-3">
-    <div class="col">
-      <%= link_to edit_tactical_pohon_tematik_path(pohon),
+    <div class="pohon-tombol mb-3">
+      <div class="row">
+        <div class="col">
+          <%= link_to edit_tactical_pohon_tematik_path(pohon),
              remote: true,
              data: {controller: 'pohon-tematik',
                  action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
              },
              class: 'btn btn-outline-info' do %>
-        <i class="fas fa-edit me-2"></i>
-        <span>Edit</span>
-      <% end %>
-    </div>
-    <div class="col">
-      <%= link_to pohon_tematik_path(pohon),
+            <i class="fas fa-edit me-2"></i>
+            <span>Edit</span>
+          <% end %>
+        </div>
+        <div class="col">
+          <%= link_to pohon_tematik_path(pohon),
              method: :delete,
              remote: true,
              class: 'btn btn-outline-danger',
              data: { confirm_swal: "Hapus Tactical Tematik #{pohon.pohonable.strategi}?",
                   action: 'ajax:success->pohon-tematik#ajaxDelete'
              } do %>
-        <i class="fa fa-trash-alt me-2"></i>
-        <span>Hapus</span>
-      <% end %>
+            <i class="fa fa-trash-alt me-2"></i>
+            <span>Hapus</span>
+          <% end %>
+        </div>
+      </div>
     </div>
-  </div>
   <% end %>
   <div class="pohon-foot">
     <button type="button" class="btn btn-tertiary w-100" data-action="pohon-tematik#toggleChild" data-pohon-tematik-show-param="false">Tampilkan</button>
     <% unless reviewer? %>
-    <div class="d-grid gap-3 mt-3 d-none">
-      <%= link_to new_operational_tematik_pohon_tematik_path(pohon),
+      <div class="d-grid gap-3 mt-3 d-none">
+        <%= link_to new_operational_tematik_pohon_tematik_path(pohon),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
@@ -42,10 +44,10 @@
                  action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
              },
              class: 'btn btn-info w-100' do %>
-        <i class="fas fa-plus me-2"></i>
-        <span>Operational Tematik</span>
-      <% end %>
-      <%= link_to new_operational_pohon_tematik_path(pohon),
+          <i class="fas fa-plus me-2"></i>
+          <span>Operational Tematik</span>
+        <% end %>
+        <%= link_to new_operational_pohon_tematik_path(pohon),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
@@ -53,10 +55,10 @@
                  action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
              },
              class: 'btn btn-primary w-100' do %>
-        <i class="fas fa-plus me-2"></i>
-        <span>Operational Tematik Baru</span>
-      <% end %>
-    </div>
+          <i class="fas fa-plus me-2"></i>
+          <span>Operational Tematik Baru</span>
+        <% end %>
+      </div>
     <% end %>
   </div>
 </div>

@@ -421,28 +421,34 @@ table.counter {
         border-color: #EEE2DE;
       }
     }
+    .pohon-tombol {
+      background-color: whitesmoke;
+    }
   }
 }
 .operational-pohon {
   background-color: #93C47D;
   .pohon {
-    color: #EEE2DE;
+        color: black;
     .pohon-title {
-      border-color: #EEE2DE;
+      border-color: black;
       h5 {
-      color: #EEE2DE;
+        color: black;
       }
     }
     .pohon-body {
       table {
-        color: #EEE2DE;
+        color: black;
       }
       button {
-        color: #EEE2DE;
+        color: black;
       }
       .btn-outline-primary {
-        border-color: #EEE2DE;
+        border-color: black;
       }
+    }
+    .pohon-tombol {
+      background-color: whitesmoke;
     }
   }
 }
