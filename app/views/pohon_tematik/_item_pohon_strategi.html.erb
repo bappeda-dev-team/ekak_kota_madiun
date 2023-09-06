@@ -4,30 +4,32 @@
   </div>
   <%= render partial: 'pohon_tematik/inner_table', locals: { pohon: pohon, title: 'Strategic' } %>
   <% unless reviewer? %>
-    <div class="pohon-tombol row mb-3">
-      <div class="col">
-        <%= link_to edit_strategi_pohon_tematik_path(pohon),
+    <div class="pohon-tombol mb-3">
+      <div class="row">
+        <div class="col">
+          <%= link_to edit_strategi_pohon_tematik_path(pohon),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
                  action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
              },
              class: 'btn btn-outline-info' do %>
-          <i class="fas fa-edit me-2"></i>
-          <span>Edit</span>
-        <% end %>
-      </div>
-      <div class="col">
-        <%= link_to pohon_tematik_path(pohon),
+            <i class="fas fa-edit me-2"></i>
+            <span>Edit</span>
+          <% end %>
+        </div>
+        <div class="col">
+          <%= link_to pohon_tematik_path(pohon),
              method: :delete,
              remote: true,
              class: 'btn btn-outline-danger',
              data: { confirm_swal: "Hapus Strategi Tematik #{pohon.pohonable.strategi}?",
                   action: 'ajax:success->pohon-tematik#ajaxDelete'
              } do %>
-          <i class="fa fa-trash-alt me-2"></i>
-          <span>Hapus</span>
-        <% end %>
+            <i class="fa fa-trash-alt me-2"></i>
+            <span>Hapus</span>
+          <% end %>
+        </div>
       </div>
     </div>
   <% end %>
