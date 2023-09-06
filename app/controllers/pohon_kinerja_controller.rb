@@ -22,15 +22,22 @@ class PohonKinerjaController < ApplicationController
     @nama_opd = @opd.nama_opd
 
     @pohon_opd = Pohon.where(pohonable_type: 'Strategi', role: 'strategi_pohon_kota',
-                             tahun: @tahun, opd_id: @opd.id.to_s)
+                             tahun: @tahun, opd_id: @opd.id.to_s, status: nil)
+                      .where.not("COALESCE(status, '') = ?", "ditolak")
                       .includes(:pohonable, pohonable: [:indikator_sasarans])
+
     @strategi_opd = StrategiPohon.where(opd_id: @opd.id, tahun: @tahun, role: 'eselon_2')
+                                 .includes(:sasaran, :indikator_sasarans, :opd, :takens)
 
     @tacticals = Pohon.where(pohonable_type: 'Strategi', role: 'tactical_pohon_kota', tahun: @tahun)
+                      .where.not("COALESCE(status, '') = ?", "ditolak")
+                      .includes(:pohonable, pohonable: [:indikator_sasarans])
 
     @tactical_opd = @strategi_opd.rewhere(role: 'eselon_3')
 
     @operationals = Pohon.where(pohonable_type: 'Strategi', role: 'operational_pohon_kota', tahun: @tahun)
+                         .where.not("COALESCE(status, '') = ?", "ditolak")
+                         .includes(:pohonable, pohonable: [:indikator_sasarans])
 
     @operational_opd = @strategi_opd.rewhere(role: 'eselon_4')
   end
