@@ -212,7 +212,7 @@ class PohonTematikController < ApplicationController
     tahun = cookies[:tahun]
     parent_pohon = Pohon.find(params[:id])
     @opd = parent_pohon.opd
-    @strategis = StrategiPohon.where(tahun: tahun, role: 'eselon_3')
+    @strategis = StrategiPohon.where(tahun: tahun, role: 'eselon_3', opd_id: @opd.id)
     # @strategis = @opd.strategis.where(tahun: parent_pohon.tahun, role: 'eselon_3', type: nil)
     @pohon = Pohon.new(pohonable_type: 'Strategi', role: 'tactical_pohon_kota', tahun: parent_pohon.tahun,
                        opd_id: @opd.id,
@@ -257,7 +257,7 @@ class PohonTematikController < ApplicationController
     tahun = cookies[:tahun]
     parent_pohon = Pohon.find(params[:id])
     @opd = parent_pohon.opd
-    @strategis = StrategiPohon.where(tahun: tahun, role: 'eselon_4')
+    @strategis = StrategiPohon.where(tahun: tahun, role: 'eselon_4', opd_id: @opd.id)
     # @strategis = @opd.strategis.where(tahun: parent_pohon.tahun, role: 'eselon_4', type: nil)
     @pohon = Pohon.new(pohonable_type: 'Strategi', role: 'operational_pohon_kota', tahun: parent_pohon.tahun,
                        opd_id: @opd.id,
