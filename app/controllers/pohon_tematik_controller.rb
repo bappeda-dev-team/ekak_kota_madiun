@@ -279,14 +279,16 @@ class PohonTematikController < ApplicationController
 
   def edit_operational
     @pohon = Pohon.find(params[:id])
-    @opd = @pohon.opd
-    @strategis = @opd.strategis.where(tahun: @pohon.tahun, role: %w[eselon_4 operational_pohon_kota])
-                     .collect { |str| [str.strategi, str.id] }
+    @strategi = @pohon.pohonable
+    @opds = Opd.opd_resmi
   end
 
   def update_operational
     @pohon = Pohon.find(params[:id])
-    if @pohon.update(pohon_strategi_tema_params)
+    keterangan = params[:strategi][:keterangan]
+    @strategi = @pohon.pohonable
+    if @strategi.update(strategi_params)
+      @pohon.update(keterangan: keterangan)
       html_content = render_to_string(partial: 'pohon_tematik/item_pohon_operational',
                                       formats: 'html',
                                       layout: false,
@@ -393,7 +395,7 @@ class PohonTematikController < ApplicationController
   def create_tactical_tematik
     new_params = pohon_strategi_tema_params.merge(metadata: { submitted_by: current_user.id,
                                                               submitted_at: DateTime.current })
-    @pohon = Pohon.new(pohon_strategi_tema_params)
+    @pohon = Pohon.new(new_params)
     if @pohon.save
       html_content = render_to_string(partial: 'pohon_tematik/pohon_tactical_tematik',
                                       formats: 'html',
@@ -432,7 +434,7 @@ class PohonTematikController < ApplicationController
   def create_operational_tematik
     new_params = pohon_strategi_tema_params.merge(metadata: { submitted_by: current_user.id,
                                                               submitted_at: DateTime.current })
-    @pohon = Pohon.new(pohon_strategi_tema_params)
+    @pohon = Pohon.new(new_params)
     if @pohon.save
       html_content = render_to_string(partial: 'pohon_tematik/pohon_operational_tematik',
                                       formats: 'html',
