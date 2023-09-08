@@ -34,15 +34,17 @@
               <td class="text-wrap align-middle"><%= strategi.tahun %></td>
               <td class="text-wrap align-middle"><%= strategi.nip_asn %></td>
               <td class="text-wrap align-middle"><%= nama_eselon(strategi.role) %></td>
-              <td class="text-center align-middle">
-                <%= render 'tombol_aksi_pohon',
+              <% unless pohon.nil? %>
+                <td class="text-center align-middle">
+                  <%= render 'tombol_aksi_pohon',
                   strategi: strategi,
                   pohon: pohon.pohonable,
                   judul_tombol: 'Strategic Objective',
                   role: strategi.role,
                   role_bawahan: local_assigns[:role_bawahan]
                 %>
-              </td>
+                </td>
+              <% end %>
             </tr>
           <% end %>
         </tbody>
