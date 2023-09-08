@@ -1,19 +1,21 @@
 <li>
-  <div class="tf-nc strategic-pohon" style="width: 450px;" id="<%= dom_id(pohon) %>">
-    <%= render partial: 'pohon_kinerja/item_pohon',
+  <% unless pohon.pohonable.nil? %>
+    <div class="tf-nc strategic-pohon" style="width: 450px;" id="<%= dom_id(pohon) %>">
+      <%= render partial: 'pohon_kinerja/item_pohon',
                locals: {
                  pohon: pohon
                } %>
-  </div>
-  <ul class='d-none' id='<%= "tactical_tematik_#{pohon.object_id}" %>'>
-    <% if local_assigns[:tacticals] %>
-      <% tacticals.each do |tactical| %>
-        <%= render partial: 'pohon_kinerja/pohon_tactical',
+    </div>
+    <ul class='d-none' id='<%= "tactical_tematik_#{pohon.object_id}" %>'>
+      <% if local_assigns[:tacticals] %>
+        <% tacticals.each do |tactical| %>
+          <%= render partial: 'pohon_kinerja/pohon_tactical',
                    locals: {
                        pohon: tactical,
                        operationals: operationals.select { |op| op.pohon_ref_id.to_i == tactical.id }
                    } %>
+        <% end %>
       <% end %>
-    <% end %>
-  </ul>
+    </ul>
+  <% end %>
 </li>

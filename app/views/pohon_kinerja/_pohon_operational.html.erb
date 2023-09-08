@@ -1,8 +1,10 @@
 <li>
-  <div class="tf-nc operational-pohon" style="width: 450px;" id="<%= dom_id(pohon) %>">
-    <%= render partial: 'pohon_kinerja/item_pohon',
+  <% unless pohon.pohonable.nil? %>
+    <div class="tf-nc operational-pohon" style="width: 450px;" id="<%= dom_id(pohon) %>">
+      <%= render partial: 'pohon_kinerja/item_pohon',
                locals: {
                  pohon: pohon
                } %>
-  </div>
+    </div>
+  <% end %>
 </li>
