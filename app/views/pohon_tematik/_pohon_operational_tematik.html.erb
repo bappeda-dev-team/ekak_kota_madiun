@@ -1,5 +1,7 @@
 <li>
-  <div class="tf-nc operational-pohon" style="width: 450px;">
-    <%= render 'pohon_tematik/item_pohon_operational', pohon: pohon %>
-  </div>
+  <% unless pohon.pohonable.nil? %>
+    <div class="tf-nc operational-pohon" style="width: 450px;">
+      <%= render 'pohon_tematik/item_pohon_operational', pohon: pohon %>
+    </div>
+  <% end %>
 </li>

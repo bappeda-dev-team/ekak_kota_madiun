@@ -1,4 +1,5 @@
 <li>
+  <% unless pohon.pohonable.nil? %>
   <div class="tf-nc tactical-pohon" style="width: 450px;">
     <%= render 'pohon_tematik/item_pohon_tactical', pohon: pohon %>
   </div>
@@ -9,4 +10,5 @@
       <% end %>
     <% end %>
   </ul>
+  <% end %>
 </li>
