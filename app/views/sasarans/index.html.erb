@@ -15,6 +15,15 @@
           |
           <span><%= current_user.nik %></span>
         </div>
+        <div class="row align-items-center mt-3 float-end">
+          <div class="col-auto">
+            <%= link_to new_sasaran_path(tipe: @role),
+                              class: "btn btn-sm btn-primary" do %>
+              <i class="fas fa-plus me-2"></i>
+              <span>Rencana Kinerja baru</span>
+            <% end %>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
