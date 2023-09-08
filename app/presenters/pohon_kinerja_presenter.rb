@@ -11,6 +11,10 @@ class PohonKinerjaPresenter
     @pohon.instance_of?(Pohon) ? @pohon.pohonable : @pohon
   end
 
+  def exists?
+    pohonable.nil?
+  end
+
   def keterangan
     @pohon.instance_of?(Pohon) ? @pohon.keterangan : ''
   end

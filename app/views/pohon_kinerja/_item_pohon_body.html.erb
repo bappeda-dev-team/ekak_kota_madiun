@@ -1,51 +1,53 @@
 <div class="pohon-body">
   <table class="table table-bordered mb-3">
-    <tr>
-      <td class="text-start" width="30px"><%= pohon.title_up %></td>
-      <td class="text-wrap text-start"><%= pohon.pohonable.strategi %></td>
-    </tr>
-    <% pohon.pohonable.indikator_sasarans.each.with_index(1) do |indikator, i| %>
-      <tr class="detail d-none">
-        <td class="text-start" width="30px">Indikator <%= i %></td>
-        <td class="text-wrap text-start"><%= indikator %></td>
+    <% unless pohon.exists? %>
+      <tr>
+        <td class="text-start" width="30px"><%= pohon.title_up %></td>
+        <td class="text-wrap text-start"><%= pohon.pohonable.strategi %></td>
       </tr>
-      <tr class="detail d-none">
-        <td class="text-start" width="30px">Target / Satuan</td>
-        <td class="text-wrap text-start"><%= indikator.target %> <%= indikator.satuan %></td>
-      </tr>
-    <% end %>
-    <tr class="detail d-none">
-      <td class="text-start" width="30px">Keterangan</td>
-      <td class="text-wrap text-start"><%= pohon.keterangan %></td>
-    </tr>
-    <tr class="detail d-none">
-      <td class="text-start" width="30px">Perangkat Daerah</td>
-      <td class="text-wrap text-start"><%= pohon.pohonable.opd %></td>
-    </tr>
-    <% if pohon.taken? %>
-      <% pohon.takens.each.with_index(1) do |pelaksana, no| %>
+      <% pohon.pohonable.indikator_sasarans.each.with_index(1) do |indikator, i| %>
         <tr class="detail d-none">
-          <td class="text-start" width="30px">Pelaksana <%= no %></td>
-          <td class="text-wrap text-start"><%= pelaksana.nama_pemilik %></td>
+          <td class="text-start" width="30px">Indikator <%= i %></td>
+          <td class="text-wrap text-start"><%= indikator %></td>
+        </tr>
+        <tr class="detail d-none">
+          <td class="text-start" width="30px">Target / Satuan</td>
+          <td class="text-wrap text-start"><%= indikator.target %> <%= indikator.satuan %></td>
         </tr>
       <% end %>
-    <% end %>
-    <% if pohon.processed? %>
-      <tr class="detail <%= pohon.status %> d-none">
+      <tr class="detail d-none">
+        <td class="text-start" width="30px">Keterangan</td>
+        <td class="text-wrap text-start"><%= pohon.keterangan %></td>
       </tr>
-      <tr class="detail <%= pohon.status %> d-none">
-        <td class="text-start" width="30px"><%= pohon.status_ket %> oleh</td>
-        <td class="text-wrap text-start"><%= pohon.diproses_oleh %></td>
+      <tr class="detail d-none">
+        <td class="text-start" width="30px">Perangkat Daerah</td>
+        <td class="text-wrap text-start"><%= pohon.pohonable.opd %></td>
       </tr>
-      <tr class="detail <%= pohon.status %> d-none">
-        <td class="text-start" width="30px"><%= pohon.status_ket %> pada</td>
-        <td class="text-wrap text-start"><%= time_tag(pohon.diproses_pada, format: :hari_jam) %></td>
-      </tr>
-      <% if pohon.status_ket == 'Ditolak' %>
+      <% if pohon.taken? %>
+        <% pohon.takens.each.with_index(1) do |pelaksana, no| %>
+          <tr class="detail d-none">
+            <td class="text-start" width="30px">Pelaksana <%= no %></td>
+            <td class="text-wrap text-start"><%= pelaksana.nama_pemilik %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      <% if pohon.processed? %>
         <tr class="detail <%= pohon.status %> d-none">
-          <td class="text-start" width="30px">Keterangan</td>
-          <td class="text-wrap text-start"><%= pohon.keterangan_proses %></td>
         </tr>
+        <tr class="detail <%= pohon.status %> d-none">
+          <td class="text-start" width="30px"><%= pohon.status_ket %> oleh</td>
+          <td class="text-wrap text-start"><%= pohon.diproses_oleh %></td>
+        </tr>
+        <tr class="detail <%= pohon.status %> d-none">
+          <td class="text-start" width="30px"><%= pohon.status_ket %> pada</td>
+          <td class="text-wrap text-start"><%= time_tag(pohon.diproses_pada, format: :hari_jam) %></td>
+        </tr>
+        <% if pohon.status_ket == 'Ditolak' %>
+          <tr class="detail <%= pohon.status %> d-none">
+            <td class="text-start" width="30px">Keterangan</td>
+            <td class="text-wrap text-start"><%= pohon.keterangan_proses %></td>
+          </tr>
+        <% end %>
       <% end %>
     <% end %>
   </table>
