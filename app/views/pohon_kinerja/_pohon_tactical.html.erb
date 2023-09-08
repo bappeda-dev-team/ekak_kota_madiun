@@ -1,5 +1,5 @@
 <li>
-  <% unless pohon.pohonable.nil? %>
+  <% unless pohon.nil? %>
     <div class="tf-nc tactical-pohon" style="width: 450px;" id="<%= dom_id(pohon) %>">
       <%= render partial: 'pohon_kinerja/item_pohon',
                locals: {
