@@ -106,7 +106,6 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
     within('.strategi_pohon') do
       within('.pohon-body') do
         fill_in "Strategi", with: "contoh strategi"
-        fill_in "Sasaran", with: "contoh sasaran"
         fill_in "Indikator kinerja", with: "Indikator strategi"
         fill_in "Target", with: "100"
         fill_in "Satuan", with: "%"
@@ -135,7 +134,6 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
       end
       within('.pohon-body') do
         fill_in "Strategi", with: "edit contoh strategi"
-        fill_in "Sasaran", with: "edit contoh sasaran"
         fill_in "Indikator kinerja", with: "edit Indikator strategi"
         fill_in "Target", with: "1100"
         fill_in "Satuan", with: "%"
@@ -233,7 +231,6 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
       within('.strategi_pohon') do
         within('.pohon-body') do
           fill_in "Strategi", with: "contoh tactical"
-          fill_in "Sasaran", with: "contoh sasaran"
           fill_in "Indikator kinerja", with: "Indikator strategi"
           fill_in "Target", with: "100"
           fill_in "Satuan", with: "%"
@@ -275,7 +272,6 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
       within('.tactical-tematik') do
         within('.pohon-body') do
           fill_in "strategi_strategi", with: "contoh tactical"
-          fill_in "Sasaran", with: "contoh sasaran"
           fill_in "Indikator kinerja", with: "Indikator strategi"
           fill_in "Target", with: "100"
           fill_in "Satuan", with: "%"
@@ -363,7 +359,6 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
       within('.strategi_pohon') do
         within('.pohon-body') do
           fill_in "Strategi", with: "contoh operational"
-          fill_in "Sasaran", with: "contoh sasaran"
           fill_in "Indikator kinerja", with: "Indikator operational"
           fill_in "Target", with: "100"
           fill_in "Satuan", with: "%"
@@ -459,7 +454,6 @@ RSpec.feature "PohonKinerjaOpds", type: :feature do
       within('.operational-tematik') do
         within('.pohon-body') do
           fill_in "strategi_strategi", with: "contoh operational"
-          fill_in "Sasaran", with: "contoh sasaran"
           fill_in "Indikator kinerja", with: "Indikator strategi"
           fill_in "Target", with: "100"
           fill_in "Satuan", with: "%"
