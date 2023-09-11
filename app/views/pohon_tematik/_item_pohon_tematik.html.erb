@@ -38,7 +38,7 @@
       </tr>
     </table>
   </div>
-  <% unless reviewer? %>
+  <% if super_admin? %>
     <div class="pohon-tombol row mb-3">
       <div class="col">
         <%= link_to edit_pohon_tematik_path(pohon),

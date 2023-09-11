@@ -3,7 +3,7 @@
     <h5 class="text-center"><strong>Operational</strong></h5>
   </div>
   <%= render partial: 'pohon_tematik/inner_table', locals: { pohon: pohon, title: 'Operational' } %>
-  <% unless reviewer? %>
+  <% if super_admin? %>
     <div class="pohon-tombol mb-3">
       <div class="row">
         <div class="col">

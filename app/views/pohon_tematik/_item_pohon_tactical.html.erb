@@ -3,7 +3,7 @@
     <h5 class="text-center"><strong>Tactical</strong></h5>
   </div>
   <%= render partial: 'pohon_tematik/inner_table', locals: { pohon: pohon, title: 'Tactical' } %>
-  <% unless reviewer? %>
+  <% if super_admin? %>
     <div class="pohon-tombol mb-3">
       <div class="row">
         <div class="col">
@@ -34,7 +34,7 @@
   <% end %>
   <div class="pohon-foot">
     <button type="button" class="btn btn-tertiary w-100" data-action="pohon-tematik#toggleChild" data-pohon-tematik-show-param="false">Tampilkan</button>
-    <% unless reviewer? %>
+    <% if super_admin? %>
       <div class="d-grid gap-3 mt-3 d-none">
         <%= link_to new_operational_tematik_pohon_tematik_path(pohon),
              remote: true,

@@ -28,6 +28,10 @@ module UsersHelper
     current_user.has_role?(:reviewer_kak)
   end
 
+  def admin_opd?
+    current_user.kode_opd != "1234567890"
+  end
+
   def selected_user(user)
     options_for_select([[user.nama, user.nik]], selected: user.nik)
   end

@@ -26,51 +26,51 @@
       </tr>
     </table>
   </div>
-  <% unless reviewer? %>
-  <div class="pohon-tombol row mb-3 action-sub-sub-tematik">
-    <div class="col">
-      <%= link_to pindah_sub_tematik_pohon_tematik_path(pohon),
+  <% if super_admin? %>
+    <div class="pohon-tombol row mb-3 action-sub-sub-tematik">
+      <div class="col">
+        <%= link_to pindah_sub_tematik_pohon_tematik_path(pohon),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
                  action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
              },
              class: 'btn btn-outline-primary' do %>
-        <i class="fas fa-exchange-alt me-2"></i>
-        <span>Pindah</span>
-      <% end %>
-    </div>
-    <div class="col">
-      <%= link_to edit_sub_sub_pohon_tematik_path(pohon),
+          <i class="fas fa-exchange-alt me-2"></i>
+          <span>Pindah</span>
+        <% end %>
+      </div>
+      <div class="col">
+        <%= link_to edit_sub_sub_pohon_tematik_path(pohon),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
                  action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
              },
              class: 'btn btn-outline-info' do %>
-        <i class="fas fa-edit me-2"></i>
-        <span>Edit</span>
-      <% end %>
-    </div>
-    <div class="col">
-      <%= link_to pohon_tematik_path(pohon),
+          <i class="fas fa-edit me-2"></i>
+          <span>Edit</span>
+        <% end %>
+      </div>
+      <div class="col">
+        <%= link_to pohon_tematik_path(pohon),
              method: :delete,
              remote: true,
              class: 'btn btn-outline-danger',
              data: { confirm_swal: "Hapus Sub Sub-Tema #{pohon.sub_tema}?",
                   action: 'ajax:success->pohon-tematik#ajaxDelete'
              } do %>
-        <i class="fa fa-trash-alt me-2"></i>
-        <span>Hapus</span>
-      <% end %>
+          <i class="fa fa-trash-alt me-2"></i>
+          <span>Hapus</span>
+        <% end %>
+      </div>
     </div>
-  </div>
   <% end %>
   <div class="pohon-foot">
     <button type="button" class="btn btn-tertiary w-100" data-action="pohon-tematik#toggleChild" data-pohon-tematik-show-param="false">Tampilkan</button>
-    <% unless reviewer? %>
-    <div class="d-grid gap-3 mt-3 d-none">
-      <%= link_to new_strategi_tematik_pohon_tematik_path(pohon),
+    <% if super_admin? %>
+      <div class="d-grid gap-3 mt-3 d-none">
+        <%= link_to new_strategi_tematik_pohon_tematik_path(pohon),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
@@ -78,10 +78,10 @@
                  action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
              },
              class: 'btn btn-info w-100' do %>
-        <i class="fas fa-plus me-2"></i>
-        <span>Strategi Tematik</span>
-      <% end %>
-      <%= link_to new_strategi_pohon_tematik_path(pohon),
+          <i class="fas fa-plus me-2"></i>
+          <span>Strategi Tematik</span>
+        <% end %>
+        <%= link_to new_strategi_pohon_tematik_path(pohon),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
@@ -89,10 +89,10 @@
                  action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
              },
              class: 'btn btn-primary w-100' do %>
-        <i class="fas fa-plus me-2"></i>
-        <span>Strategi Tematik Baru</span>
-      <% end %>
-    </div>
-  <% end %>
+          <i class="fas fa-plus me-2"></i>
+          <span>Strategi Tematik Baru</span>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>
