@@ -1,4 +1,4 @@
-<%= form_with(model: [sasaran], local: false) do |form| %>
+<%= form_with(model: sasaran) do |form| %>
   <% if sasaran.errors.any? %>
     <div id="error_explanation">
       <h2>Terdapat <%= sasaran.errors.count %> kesalahan:</h2>
@@ -18,7 +18,7 @@
       </div>
       <div class="field">
         <%= form.label :tahun, class: 'form-label' %>
-        <%= form.text_field :tahun, { class: "form-control", placeholder: @tahun, readonly: true } %>
+        <%= form.text_field :tahun, { class: "form-control", placeholder: @tahun, readonly: true, value: @tahun } %>
       </div>
       <div class="field">
         <%= form.label :strategi, class: "form-label" %>

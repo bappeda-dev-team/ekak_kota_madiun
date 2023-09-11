@@ -289,6 +289,7 @@ class SasaransController < ApplicationController
     @sasaran = @user.sasarans.build
     @tipe = params[:tipe]
     @sasaran.indikator_sasarans.build
+    @tahun = cookies[:tahun]
   end
 
   def new_spbe
@@ -332,7 +333,7 @@ class SasaransController < ApplicationController
     respond_to do |format|
       if @sasaran.save
         format.json { render json: { resText: "Sasaran tersimpan", id: @sasaran.id }.to_json, status: :created }
-        format.html { redirect_to sasarans_path, success: 'Sasaran berhasil dibuat.' }
+        format.html { redirect_to sasaran_path(@sasaran), success: 'Sasaran berhasil dibuat.' }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @sasaran.errors, status: :unprocessable_entity }
