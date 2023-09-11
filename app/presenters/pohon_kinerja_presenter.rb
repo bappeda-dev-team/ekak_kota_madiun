@@ -106,6 +106,12 @@ class PohonKinerjaPresenter
     to_real_name_up(prefix)
   end
 
+  def dibagikans
+    return unless @pohon.instance_of?(StrategiPohon)
+
+    @pohon.pohon_shareds
+  end
+
   private
 
   def to_real_name(role)

@@ -5,6 +5,12 @@
         <td class="text-start" width="30px"><%= pohon.title_up %></td>
         <td class="text-wrap text-start"><%= pohon.pohonable.strategi %></td>
       </tr>
+      <% pohon.dibagikans.each.with_index(1) do |dibagikan, no| %>
+        <tr>
+          <td class="text-start" width="30px">Pelaksana <%= no %></td>
+          <td class="text-wrap text-start"><%= dibagikan.dibagikan_ke %></td>
+        </tr>
+      <% end %>
       <% pohon.pohonable.indikator_sasarans.each.with_index(1) do |indikator, i| %>
         <tr class="detail d-none">
           <td class="text-start" width="30px">Indikator <%= i %></td>
@@ -23,14 +29,6 @@
         <td class="text-start" width="30px">Perangkat Daerah</td>
         <td class="text-wrap text-start"><%= pohon.pohonable.opd %></td>
       </tr>
-      <% if pohon.taken? %>
-        <% pohon.takens.each.with_index(1) do |pelaksana, no| %>
-          <tr class="detail d-none">
-            <td class="text-start" width="30px">Pelaksana <%= no %></td>
-            <td class="text-wrap text-start"><%= pelaksana.nama_pemilik %></td>
-          </tr>
-        <% end %>
-      <% end %>
       <% if pohon.processed? %>
         <tr class="detail <%= pohon.status %> d-none">
         </tr>

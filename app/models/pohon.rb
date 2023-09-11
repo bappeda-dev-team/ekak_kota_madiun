@@ -99,7 +99,7 @@ class Pohon < ApplicationRecord
     if user.present?
       user.nama
     else
-      opd.nama_opd
+      "#{opd.nama_opd} (External)"
     end
   end
 
