@@ -258,7 +258,7 @@ class PohonKinerjaController < ApplicationController
     @role = params[:role]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @temans = @opd.users.with_role(@role.to_sym).reject { |u| u.strategi_pohons(@strategi.id).any? }
-    render partial: 'form_teman'
+    render layout: false
   end
 
   def simpan_teman
