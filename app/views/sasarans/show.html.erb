@@ -1,53 +1,49 @@
-<nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
-  <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
-    <li class="breadcrumb-item">
-      <%= link_to root_path do %>
-        <i class="fas fa-home"></i>
+<%= content_for :html_title, "Rencana Kinerja" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Rencana Kinerja</li>
+  <li class="breadcrumb-item" aria-current="page"><%= @sasaran.user %></li>
+  <li class="breadcrumb-item active" aria-current="page"><%= @sasaran %></li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="px-3">
+    <div class="card border-2 shadow mb-3">
+      <div class="card-body">
+        <h5>Status Sasaran: <span class="badge badge-lg bg-warning text-dark"><%= status_sasaran_pokin(@sasaran&.status_sasaran) %></span></h5>
+      </div>
+    </div>
+    <!-- SECTION - render anggaran here -->
+    <% unless @sasaran.tahapans.any? %>
+      <%= render 'rencana_aksi_card', sasaran: @sasaran %>
+    <% else %>
+      <!-- SECTION - musrenbang -->
+      <% if isi_subkegiatan?(current_user) %>
+        <%= render 'musrenbang_card', sasaran: @sasaran %>
+        <%= render 'pokpirs/pokpir_card', sasaran: @sasaran %>
+        <%= render 'mandatoris/mandatori_card', sasaran: @sasaran %>
+        <%= render 'inovasis/inovasi_card', sasaran: @sasaran %>
+        <%= render 'subkegiatan_card', sasaran: @sasaran, tahun: @tahun %>
+        <%= render 'rincians/renaksi', sasaran: @sasaran %>
+        <%= render 'rincians/rincian_card', sasaran: @sasaran %>
+        <%= render 'permasalahans/permasalahan_card', sasaran: @sasaran %>
+        <%= render 'dasar_hukums/dasar_hukum_card', sasaran: @sasaran %>
+        <%= render 'latar_belakangs/gambaran_umum_card', sasaran: @sasaran %>
+        <%= render 'subkegiatan_tematiks/tematik_card', sasaran: @sasaran %>
+        <%= render 'hasil_output_card', sasaran: @sasaran %>
+      <% else %>
+        <%= render 'rincians/renaksi', sasaran: @sasaran %>
       <% end %>
-    </li>
-    <li class="breadcrumb-item" aria-current="page">Rencana Kinerja</li>
-    <li class="breadcrumb-item active" aria-current="page"><%= @sasaran.sasaran_kinerja %></li>
-  </ol>
-</nav>
-<div class="px-3">
-
-<div class="card border-2 shadow mb-3">
-  <div class="card-body">
-    <h5>Status Sasaran: <span class="badge badge-lg bg-warning text-dark"><%= status_sasaran_pokin(@sasaran&.status_sasaran) %></span></h5>
+    <% end %>
+    <!-- SECTION - Modal-->
+    <!-- TODO - DRY-->
+    <% unless diajukan? %>
+      <%= render 'modal' %>
+      <%= render 'modal_perhitungans' %>
+      <%= render 'aksis/modal_target' %>
+      <%= render 'aksis/modal_realisasi' %>
+      <%= render 'rincians/modal_rincian' %>
+      <%= render 'permasalahans/modal_permasalahan' %>
+      <%= render 'dasar_hukums/modal_dasar_hukum' %>
+      <%= render 'latar_belakangs/modal_gambaran_umum' %>
+    <% end %>
   </div>
-</div>
-<!-- SECTION - render anggaran here -->
-<% unless @sasaran.tahapans.any? %>
-  <%= render 'rencana_aksi_card', sasaran: @sasaran %>
-<% else %>
-  <!-- SECTION - musrenbang -->
-  <% if isi_subkegiatan?(current_user) %>
-    <%= render 'musrenbang_card', sasaran: @sasaran %>
-    <%= render 'pokpirs/pokpir_card', sasaran: @sasaran %>
-    <%= render 'mandatoris/mandatori_card', sasaran: @sasaran %>
-    <%= render 'inovasis/inovasi_card', sasaran: @sasaran %>
-    <%= render 'subkegiatan_card', sasaran: @sasaran, tahun: @tahun %>
-    <%= render 'rincians/renaksi', sasaran: @sasaran %>
-    <%= render 'rincians/rincian_card', sasaran: @sasaran %>
-    <%= render 'permasalahans/permasalahan_card', sasaran: @sasaran %>
-    <%= render 'dasar_hukums/dasar_hukum_card', sasaran: @sasaran %>
-    <%= render 'latar_belakangs/gambaran_umum_card', sasaran: @sasaran %>
-    <%= render 'subkegiatan_tematiks/tematik_card', sasaran: @sasaran %>
-    <%= render 'hasil_output_card', sasaran: @sasaran %>
-  <% else %>
-    <%= render 'rincians/renaksi', sasaran: @sasaran %>
-  <% end %>
 <% end %>
-<!-- SECTION - Modal-->
-<!-- TODO - DRY-->
-<% unless diajukan? %>
-  <%= render 'modal' %>
-  <%= render 'modal_perhitungans' %>
-  <%= render 'aksis/modal_target' %>
-  <%= render 'aksis/modal_realisasi' %>
-  <%= render 'rincians/modal_rincian' %>
-  <%= render 'permasalahans/modal_permasalahan' %>
-  <%= render 'dasar_hukums/modal_dasar_hukum' %>
-  <%= render 'latar_belakangs/modal_gambaran_umum' %>
-<% end %>
-</div>

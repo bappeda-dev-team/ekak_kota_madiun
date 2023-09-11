@@ -11,11 +11,10 @@ module AksisHelper
   def realisasi_di_bulan(sasaran, tahapan, bulan)
     aksi = tahapan.aksis.find_by(bulan: bulan)
     if aksi
-      if aksi.realisasi
-        return realisasi_dengan_isi(sasaran, tahapan, aksi, bulan)
-      else
-        return realisasi_tanpa_isi(sasaran, tahapan, aksi, bulan)
-      end
+      return realisasi_dengan_isi(sasaran, tahapan, aksi, bulan) if aksi.realisasi
+
+      return realisasi_tanpa_isi(sasaran, tahapan, aksi, bulan)
+
     end
     "<td class='fw-bolder text-gray-500 border'></td>".html_safe
   end
@@ -64,7 +63,7 @@ module AksisHelper
     if checker
       "<i class='fa fa-check text-success'></i>".html_safe
     else
-      "<i class='fa fa-times text-danger'></i>".html_safe
+      "<span class='badge bg-danger'><i class='fa fa-times'></i> Rencana aksi belum 100%</span>".html_safe
     end
   end
 end
