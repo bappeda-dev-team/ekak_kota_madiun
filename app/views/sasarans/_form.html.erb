@@ -27,8 +27,9 @@
                     { class: "form-control",
                       data: { placeholder: "Pilih Strategi (Pokin)",
                               controller: 'dropdown',
-                              dropdown_jenis_value: 'ajax',
-                              dropdown_url_value: pokin_list_strategis_path(:json)
+                              dropdown_jenis_value: 'ajax_preselect',
+                              dropdown_url_value: pokin_list_strategis_path(:json),
+                              dropdown_item_value: form.object.strategi_id
                             } } %>
       </div>
       <div class="field">

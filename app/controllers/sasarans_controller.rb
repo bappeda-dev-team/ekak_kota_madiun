@@ -319,6 +319,7 @@ class SasaransController < ApplicationController
 
   # GET /sasarans/1/edit
   def edit
+    @tahun = cookies[:tahun]
     @tipe = params[:tipe]
   end
 
