@@ -39,13 +39,12 @@
     <%= form.hidden_field :role %>
   </div>
   <div class="field">
-    <%= form.fields_for :sasaran do |sasaran_form| %>
+    <%= form.fields_for :sasarans do |sasaran_form| %>
       <% if strategi.new_record? %>
         <% random_number = @sasaran&.id_rencana.nil? ? (SecureRandom.random_number(9e5) + 1e5).to_i : @sasaran.id_rencana %>
         <%= sasaran_form.hidden_field :id_rencana, :value => random_number, readonly: true %>
       <% end %>
-      <%= sasaran_form.label :sasaran_kinerja, { class: "form-label" } %>
-      <%= sasaran_form.text_field :sasaran_kinerja, { class: "form-control" } %>
+      <%= sasaran_form.hidden_field :sasaran_kinerja, { class: "form-control", value: '-' } %>
       <div class="field" id="indikator-sasarans">
         <%= sasaran_form.label :indikator, { class: "form-label" } %>
         <%= sasaran_form.fields_for :indikator_sasarans do |indikator_sas| %>

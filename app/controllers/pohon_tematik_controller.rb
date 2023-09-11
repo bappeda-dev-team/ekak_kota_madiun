@@ -101,7 +101,7 @@ class PohonTematikController < ApplicationController
     @pohon_ref_id = params[:id]
     @opds = Opd.opd_resmi
     @strategi = Strategi.new(role: 'strategi_pohon_kota', tahun: parent_pohon.tahun, type: nil)
-    @strategi.build_sasaran.indikator_sasarans.build
+    @strategi.sasarans.build.indikator_sasarans.build
   end
 
   def edit_strategi
@@ -227,7 +227,7 @@ class PohonTematikController < ApplicationController
     @opd = parent_pohon.opd
     @tactical = Strategi.new(role: 'tactical_pohon_kota', tahun: parent_pohon.tahun,
                              opd_id: @opd.id)
-    @tactical.build_sasaran.indikator_sasarans.build
+    @tactical.sasarans.build.indikator_sasarans.build
   end
 
   def edit_tactical
@@ -274,7 +274,7 @@ class PohonTematikController < ApplicationController
     @opd = parent_pohon.opd
     @operational = Strategi.new(role: 'operational_pohon_kota', tahun: parent_pohon.tahun,
                                 opd_id: @opd.id)
-    @operational.build_sasaran.indikator_sasarans.build
+    @operational.sasarans.build.indikator_sasarans.build
   end
 
   def edit_operational
@@ -516,8 +516,8 @@ class PohonTematikController < ApplicationController
   def strategi_params
     params.require(:strategi).permit(:role, :tahun,
                                      :strategi, :opd_id,
-                                     sasaran_attributes: [:sasaran_kinerja, :id_rencana,
-                                                          indikator_sasarans_params])
+                                     sasarans_attributes: [:id, :sasaran_kinerja, :id_rencana,
+                                                           indikator_sasarans_params])
   end
 
   def indikator_sasarans_params
