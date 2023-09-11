@@ -16,6 +16,10 @@ module AdminItemHelper
         icon: 'fas fa-bullseye', identifier: 'isu_strategis_opds'
       },
       {
+        title: 'Pohon Kinerja Kota', href: kota_pohon_kinerja_index_path,
+        icon: 'fas fa-sitemap', identifier: 'pohon_kinerja/kota'
+      },
+      {
         title: 'Pohon Kinerja', href: manual_pohon_kinerja_index_path,
         icon: 'fas fa-tree', identifier: 'pohon_kinerja'
       },
