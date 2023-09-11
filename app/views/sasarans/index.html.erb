@@ -55,7 +55,7 @@
                     <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
                   </td>
                 <% end %>
-                <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">
+                <td class="border text-center" rowspan="<%= rowspan_sasaran(sasaran) %>">
                   <%= render 'sasarans/tombol_action_sasaran', sasaran: sasaran %>
                 </td>
               </tr>

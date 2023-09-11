@@ -1,21 +1,19 @@
-<div class="row justify-content-center w-100">
-  <div class="col">
-    <%= link_to sasaran_path(sasaran), class: "m-3 btn btn-sm btn-outline-primary w-100" do %>
-      <i class="fa fa-edit me-2"></i>
-      <span>Input KAK</span>
-    <% end %>
-  </div>
-  <div class="col">
-    <%= link_to edit_sasaran_path(sasaran), class: "m-3 btn btn-sm btn-outline-info w-100" do %>
-      <i class="fa fa-edit me-2"></i>
-      <span>Edit</span>
-    <% end %>
-  </div>
-  <div class="col">
-    <%= link_to sasaran_path(sasaran), method: :delete, data: { confirm_swal: "Hapus #{sasaran.sasaran_kinerja} ?"},
-      class: "m-3 btn btn-sm btn-outline-danger w-100" do %>
-      <i class="fa fa-trash-alt me-2"></i>
-      <span>Hapus</span>
-    <% end %>
-  </div>
+<div class="d-grid gap-3">
+  <%= link_to sasaran_path(sasaran),
+   class: "btn btn-sm btn-outline-primary" do %>
+    <i class="fa fa-book-open me-2"></i>
+    <span>Input KAK</span>
+  <% end %>
+  <%= link_to edit_sasaran_path(sasaran),
+   class: "btn btn-sm btn-outline-info" do %>
+    <i class="fa fa-edit me-2"></i>
+    <span>Edit</span>
+  <% end %>
+  <%= link_to sasaran_path(sasaran),
+   method: :delete,
+   data: { confirm_swal: "Hapus #{sasaran.sasaran_kinerja} ?"},
+   class: "btn btn-sm btn-outline-danger" do %>
+    <i class="fa fa-trash-alt me-2"></i>
+    <span>Hapus</span>
+  <% end %>
 </div>
