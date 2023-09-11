@@ -83,6 +83,10 @@ class Strategi < ApplicationRecord
     include_association %i[strategi_eselon_dua_bs strategi_eselon_tigas strategi_eselon_empats strategi_staffs]
   end
 
+  def to_s
+    strategi
+  end
+
   def strategi_asn
     linked_with.present? ? Strategi.find(linked_with).strategi : strategi
   end

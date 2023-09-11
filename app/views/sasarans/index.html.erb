@@ -32,20 +32,20 @@
           <thead class="thead-light">
             <tr>
               <th class="border text-center" scope="col">No</th>
-              <th class="border text-center" scope="col">Pemilik Rencana</th>
+              <th class="border text-center" scope="col">Pohon Kinerja</th>
               <th class="border text-center" scope="col">Rencana Kinerja</th>
               <th class="border text-center" scope="col">Tahun</th>
-              <th class="border text-center" scope="col">Indikator Kinerja</th>
+              <th class="border text-center" scope="col">Indikator Rencana Kinerja</th>
               <th class="border text-center" scope="col">Target</th>
               <th class="border text-center" scope="col">Satuan</th>
-              <th class="border text-center" scope="col">Action</th>
+              <th class="border text-center" scope="col">Aksi</th>
             </tr>
           </thead>
           <tbody>
             <% @sasarans.each.with_index(1) do |sasaran, i| %>
               <tr>
                 <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= i %></td>
-                <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
+                <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.strategi %></td>
                 <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
                 <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.tahun %></td>
                 <% if sasaran.indikator_sasarans.any? %>
