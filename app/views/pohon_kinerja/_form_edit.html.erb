@@ -9,9 +9,7 @@
     <%= form.text_field :strategi, class: "form-control" %>
   </div>
   <div class="field">
-    <%= form.fields_for :sasaran do |sasaran_form| %>
-      <%= sasaran_form.label :sasaran_kinerja, { class: "form-label" } %>
-      <%= sasaran_form.text_field :sasaran_kinerja, { class: "form-control" } %>
+    <%= form.fields_for :sasarans do |sasaran_form| %>
       <div class="field" id="indikator-sasarans">
         <%= sasaran_form.label :indikator, { class: "form-label" } %>
         <%= sasaran_form.fields_for :indikator_sasarans do |indikator_sas| %>

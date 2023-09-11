@@ -655,8 +655,8 @@ class PohonKinerjaController < ApplicationController
                                            :nip_asn,
                                            :opd_id,
                                            :strategi_ref_id,
-                                           sasaran_attributes: [:sasaran_kinerja, :id_rencana,
-                                                                indikator_sasarans_params])
+                                           sasarans_attributes: [:id, :sasaran_kinerja, :id_rencana,
+                                                                 indikator_sasarans_params])
   end
 
   def indikator_sasarans_params
