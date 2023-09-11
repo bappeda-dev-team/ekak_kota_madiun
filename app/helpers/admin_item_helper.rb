@@ -20,17 +20,6 @@ module AdminItemHelper
         icon: 'fas fa-tree', identifier: 'pohon_kinerja'
       },
       {
-        title: 'Cascading', href: opd_pohon_kinerja_index_path,
-        icon: 'fas fa-tree', identifier: 'pohon_kinerja/opd'
-      },
-      {
-        title: 'Panggilan Pokin', href: panggilan_pohon_kinerja_index_path,
-        icon: 'fas fa-tree', identifier: 'pohon_kinerja'
-      },
-      # { title: 'Sasaran OPD', href: sasaran_opds_path, identifier: 'opds/sasaran' },
-      # { title: 'Kotak Usulan OPD', href: kotak_usulan_opds_path,
-      #   identifier: 'opds/kotak_usulan' },
-      {
         title: 'Info OPD', href: info_opds_path,
         icon: 'fas fa-building', identifier: 'opds/info'
       },
