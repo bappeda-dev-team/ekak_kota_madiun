@@ -236,10 +236,9 @@ export default class extends Controller {
 
   chain_internal_or_external_opd_target(e) {
     const { data } = e.detail
-    const sasaranOpd = document.getElementById('sasaran-opd');
+    const sasaranOpd = document.getElementById('strategi_pohon_nip');
     if (data.id == 'External') {
-      this.element.disabled = false
-      sasaranOpd.style.display = 'none'
+      sasaranOpd.setAttribute('disabled', '')
     }
     else {
       const select2ed = this.select;
@@ -253,8 +252,7 @@ export default class extends Controller {
           select2ed.append(options).trigger('change.select2');
         });
       }
-      sasaranOpd.style.display = 'block'
-      this.element.readonly = true
+      sasaranOpd.removeAttribute('disabled', '')
       this.element.value = this.kodeOpdValue
     }
   }

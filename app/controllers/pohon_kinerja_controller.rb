@@ -263,13 +263,14 @@ class PohonKinerjaController < ApplicationController
 
   def simpan_teman
     strategi = StrategiPohon.find(params[:id])
+    params_strategi = params[:strategi_pohon]
     @tahun = strategi.tahun
     @role = params[:role]
-    nip = params[:nip].compact_blank
-    opd_list = params[:opd_list].compact_blank
-    dibagikan = params[:dibagikan]
-    tidak = params[:tidak_dibagikan]
-    keterangan = params[:keterangan]
+    nip = params_strategi[:nip].compact_blank
+    opd_list = params_strategi[:opd_list].compact_blank
+    dibagikan = params_strategi[:dibagikan]
+    tidak = params_strategi[:tidak_dibagikan]
+    keterangan = params_strategi[:keterangan]
     if tidak
       hapus_bagikan = dibagikan.nil? ? tidak : (tidak - dibagikan)
       hapus_bagikan.each do |hapus|
