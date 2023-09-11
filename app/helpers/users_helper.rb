@@ -25,7 +25,7 @@ module UsersHelper
   end
 
   def reviewer?
-    current_user.has_role?(:reviewer_kak) || !super_admin?
+    current_user.has_role?(:reviewer_kak)
   end
 
   def selected_user(user)

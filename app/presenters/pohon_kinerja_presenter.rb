@@ -107,9 +107,11 @@ class PohonKinerjaPresenter
   end
 
   def dibagikans
-    return unless @pohon.instance_of?(StrategiPohon)
+    # return unless @pohon.instance_of?(StrategiPohon)
 
     @pohon.pohon_shareds
+  rescue NoMethodError
+    []
   end
 
   private
