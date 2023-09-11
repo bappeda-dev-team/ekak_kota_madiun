@@ -27,7 +27,7 @@ class PohonKinerjaController < ApplicationController
                       .includes(:pohonable, pohonable: [:indikator_sasarans])
 
     @strategi_opd = StrategiPohon.where(opd_id: @opd.id, tahun: @tahun, role: 'eselon_2')
-                                 .includes(:sasaran, :indikator_sasarans, :opd, :takens)
+                                 .includes(:indikator_sasarans, :opd, :takens)
 
     @tacticals = Pohon.where(pohonable_type: 'Strategi', role: 'tactical_pohon_kota', tahun: @tahun)
                       .where.not("COALESCE(status, '') = ?", "ditolak")

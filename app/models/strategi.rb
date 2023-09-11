@@ -27,11 +27,11 @@ class Strategi < ApplicationRecord
   belongs_to :pohon, optional: true
   belongs_to :opd, optional: true
   belongs_to :user, foreign_key: 'nip_asn', primary_key: 'nik', optional: true
-  has_one :sasaran
+  has_many :sasarans
   has_many :komentars, primary_key: :id, foreign_key: :item
-  accepts_nested_attributes_for :sasaran, update_only: true
+  accepts_nested_attributes_for :sasarans, update_only: true
 
-  has_many :indikator_sasarans, through: :sasaran
+  has_many :indikator_sasarans, through: :sasarans
 
   belongs_to :strategi_atasan, class_name: "Strategi",
                                foreign_key: "strategi_ref_id", optional: true
