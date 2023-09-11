@@ -1,4 +1,4 @@
-json.results @strategis do |str|
-  json.id str.id
-  json.text "#{str.strategi} - #{str.type}"
+json.results @pohons do |pohon|
+  json.id pohon.pohonable_id
+  json.text "#{pohon.nama_strategi} - #{pohon.keterangan}"
 end

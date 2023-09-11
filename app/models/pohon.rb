@@ -79,6 +79,10 @@ class Pohon < ApplicationRecord
     keterangan
   end
 
+  def nama_strategi
+    pohonable.strategi.nil? ? 'tidak ditemukan' : pohonable.strategi
+  end
+
   def indikators_tahun(_tahun)
     strategis.map(&:indikator_sasarans).flatten
   end

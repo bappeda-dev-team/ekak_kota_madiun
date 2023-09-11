@@ -216,6 +216,17 @@ class StrategisController < ApplicationController
     render partial: 'strategis/renaksi'
   end
 
+  def pokin_list
+    tahun = cookies[:tahun]
+    # kode_unik_opd = cookies[:opd]
+    # opd = Opd.find_by_kode_unik_opd(kode_unik_opd)
+    role = current_user.role_asn
+    @pohons = Pohon.where(tahun: tahun,
+                          user_id: current_user.id,
+                          pohonable_type: 'StrategiPohon',
+                          role: role)
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

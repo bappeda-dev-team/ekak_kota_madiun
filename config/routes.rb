@@ -166,6 +166,7 @@ Rails.application.routes.draw do
     end
     collection do
       get :rekap_strategi
+      get :pokin_list
     end
   end
   resources :isu_strategis_opds do
