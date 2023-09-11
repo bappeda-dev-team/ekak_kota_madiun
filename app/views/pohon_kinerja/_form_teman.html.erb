@@ -2,7 +2,7 @@
               local: false,
               data: { controller: 'form-ajax',
                       form_ajax_modal_param: 'form-panggil-teman',
-                      action: 'ajax:success->form-ajax#successResponseNew'
+                      action: 'ajax:complete->form-ajax#afterSubmitRefresh'
                } do |form| %>
   <div class="field">
     <%= form.label :strategi, { class: "form-label" } %>

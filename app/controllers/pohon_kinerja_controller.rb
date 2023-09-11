@@ -307,7 +307,7 @@ class PohonKinerjaController < ApplicationController
              status: :unprocessable_entity
     elsif @pohon
       render json: { resText: "Pembagian Disimpan", result: strategi.id },
-             status: :accepted
+             status: :ok
     else
       render json: { resText: "Terjadi Kesalahan" },
              status: :unprocessable_entity
