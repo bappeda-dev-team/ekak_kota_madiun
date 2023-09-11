@@ -413,12 +413,12 @@ class Sasaran < ApplicationRecord
 
   def sasaran_atasan_pohon
     strategi_atasan_now = strategi&.strategi_atasan
-    sasaran_atasan_now = strategi_atasan_now&.sasaran
+    sasaran_atasan_now = strategi_atasan_now&.sasarans
     {
       strategi_atasan: strategi_atasan_now&.strategi,
-      sasaran_atasan_id: sasaran_atasan_now&.id_rencana,
-      sasaran_atasan: sasaran_atasan_now&.sasaran_kinerja,
-      nama_atasan: sasaran_atasan_now&.user&.nama_nip
+      sasaran_atasan_id: sasaran_atasan_now&.first&.id_rencana,
+      sasaran_atasan: sasaran_atasan_now&.first&.sasaran_kinerja,
+      nama_atasan: sasaran_atasan_now&.first&.user&.nama_nip
     }
   end
 
