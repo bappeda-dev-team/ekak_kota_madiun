@@ -18,7 +18,14 @@
               <span class="fw-bolder"><%= strategi_asn.dibagikan_ke %></span>
               <small>( role: <%= strategi_asn&.role %> )</small>
             </span>
-            <% unless strategi_asn.pohonable.sasarans.select { |s| s.nip_asn == strategi_asn.user.nik }.any? %>
+            <% if strategi_asn.user.present? %>
+              <% unless strategi_asn.pohonable.sasarans.select { |s| s.nip_asn == strategi_asn.user.nik }.any? %>
+                <span class="col-auto">
+                  <%= hidden_field_tag 'tidak_dibagikan[]', strategi_asn.id -%>
+                  <%= check_box_tag 'dibagikan[]', strategi_asn.id, true %>
+                </span>
+              <% end %>
+            <% else %>
               <span class="col-auto">
                 <%= hidden_field_tag 'tidak_dibagikan[]', strategi_asn.id -%>
                 <%= check_box_tag 'dibagikan[]', strategi_asn.id, true %>
