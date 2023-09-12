@@ -224,7 +224,7 @@ class StrategisController < ApplicationController
     @pohons = Pohon.where(tahun: tahun,
                           user_id: current_user.id,
                           pohonable_type: 'StrategiPohon',
-                          role: role)
+                          role: role).reject { |p| p.pohonable.nil? }
   end
 
   private
