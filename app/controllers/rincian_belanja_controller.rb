@@ -7,7 +7,7 @@ class RincianBelanjaController < ApplicationController
       redirect_to index_atasan_rincian_belanja_index_path
     else
       kak = KakQueries.new(opd: @user.opd, tahun: @tahun, user: @user)
-      @subkegiatan_sasarans = kak.program_kegiatans
+      @subkegiatan_sasarans = kak.pk_sasarans
     end
   end
 

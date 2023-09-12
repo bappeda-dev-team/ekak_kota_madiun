@@ -39,6 +39,10 @@ class KakQueries
     sasaran_strategis.group_by(&:program_kegiatan).to_h
   end
 
+  def pk_sasarans
+    sasarans.group_by(&:program_kegiatan).to_h
+  end
+
   def by_subkegiatan(sasarans)
     sasarans.group_by(&:program_kegiatan)
   end
