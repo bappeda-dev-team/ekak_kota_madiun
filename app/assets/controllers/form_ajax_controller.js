@@ -77,9 +77,10 @@ export default class extends Controller {
   afterSubmitRefresh(event) {
     const [xhr, status] = event.detail
     if (status == 'OK' || status == 'Created') {
+      const success = JSON.parse(xhr.response)
       Swal.fire({
         title: 'Sukses',
-        text: status,
+        text: success.resText,
         icon: "success",
         confirmButtonText: 'Ok',
       }).then(() => {
@@ -98,7 +99,7 @@ export default class extends Controller {
           errorContainer.style.display = 'none'
         }
       })
-      this.sweetalertStatus('terjadi kesalahan', 'error')
+      this.sweetalertStatus(errors.resText, 'error')
     }
   }
 

@@ -268,8 +268,8 @@ class PohonKinerjaController < ApplicationController
     @role = params[:role]
     nip = params_strategi[:nip].compact_blank
     opd_list = params_strategi[:opd_list].compact_blank
-    dibagikan = params_strategi[:dibagikan]
-    tidak = params_strategi[:tidak_dibagikan]
+    dibagikan = params[:dibagikan]
+    tidak = params[:tidak_dibagikan]
     keterangan = params_strategi[:keterangan]
     if tidak
       hapus_bagikan = dibagikan.nil? ? tidak : (tidak - dibagikan)
@@ -301,12 +301,12 @@ class PohonKinerjaController < ApplicationController
                              keterangan: keterangan,
                              strategi_id: strategi.id })
     end
-    @pohon = Pohon.create(list_pohon_baru)
-    if @pohon.empty?
+    if list_pohon_baru.empty? && tidak.empty?
       render json: { resText: "Pilih ASN jika internal" },
              status: :unprocessable_entity
-    elsif @pohon
-      render json: { resText: "Pembagian Disimpan", result: strategi.id },
+    elsif list_pohon_baru.any? || tidak.any?
+      @pohon = Pohon.create(list_pohon_baru)
+      render json: { resText: "Pelaksana diperbarui", result: strategi.id },
              status: :ok
     else
       render json: { resText: "Terjadi Kesalahan" },
