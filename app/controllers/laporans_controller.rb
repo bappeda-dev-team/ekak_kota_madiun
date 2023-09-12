@@ -11,7 +11,7 @@ class LaporansController < ApplicationController
     @nip_user = @user.nik
     @nama_user = @user.nama
     kak = KakQueries.new(opd: @user.opd, tahun: @tahun, user: @user)
-    @program_kegiatans = kak.program_kegiatans
+    @program_kegiatans = kak.pk_sasarans
   end
 
   def laporan_kak_admin
@@ -19,7 +19,7 @@ class LaporansController < ApplicationController
     @nama_opd = opd.nama_opd
 
     kak = KakQueries.new(opd: opd, tahun: @tahun)
-    @program_kegiatans = kak.program_kegiatans
+    @program_kegiatans = kak.pk_sasarans
 
     render partial: "laporans/kak_admin"
   end
@@ -62,7 +62,7 @@ class LaporansController < ApplicationController
     @nip_user = @user.nik
     @nama_user = @user.nama
     kak = KakQueries.new(opd: @user.opd, tahun: @tahun, user: @user)
-    @program_kegiatans = kak.program_kegiatans
+    @program_kegiatans = kak.pk_sasarans
   end
 
   def laporan_rka_admin
@@ -70,7 +70,7 @@ class LaporansController < ApplicationController
     @nama_opd = opd.nama_opd
 
     kak = KakQueries.new(opd: opd, tahun: @tahun)
-    @program_kegiatans = kak.program_kegiatans
+    @program_kegiatans = kak.pk_sasarans
 
     render partial: "laporans/rka_admin"
   end
