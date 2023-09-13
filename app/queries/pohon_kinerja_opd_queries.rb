@@ -13,9 +13,10 @@ class PohonKinerjaOpdQueries
   end
 
   def pohon_opd
-    StrategiPohon.where(oopd_id: opd.id, tahun: @tahun)
-                 .includes(:indikator_sasarans, :opd, :takens)
+    StrategiPohon.where(opd_id: opd.id, tahun: @tahun)
+                 .includes(:indikator_sasarans, :opd, :pohon_shareds)
   end
+  memoize :pohon_opd
 
   def pohon_kota
     Pohon.where(pohonable_type: 'Strategi',
@@ -24,6 +25,7 @@ class PohonKinerjaOpdQueries
          .where.not("COALESCE(status, '') = ?", "ditolak")
          .includes(:pohonable, pohonable: [:indikator_sasarans])
   end
+  memoize :pohon_kota
 
   def strategi_kota
     pohon_kota.rewhere(role: 'strategi_pohon_kota')
