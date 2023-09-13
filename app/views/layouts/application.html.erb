@@ -20,7 +20,11 @@
           <% if content_for?(:navigation) %>
             <div class="col-12">
               <%= render partial: 'layouts/head_content', cached: true %>
-              <%= yield :view_utama %>
+              <% if cookies[:tahun] && cookies[:opd] %>
+                <%= yield :view_utama %>
+              <% else %>
+                <%= render 'shared/pilih_tahun_dan_opd' %>
+              <% end %>
             </div>
           <% else %>
             <%= yield %>
