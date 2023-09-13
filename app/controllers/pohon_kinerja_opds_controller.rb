@@ -1,15 +1,25 @@
 class PohonKinerjaOpdsController < ApplicationController
   before_action :set_tahun_opd
-  before_action :set_strategi_pohon, only: %i[edit update]
+  before_action :set_strategi_pohon, only: %i[edit update destroy]
 
-  layout false, only: %i[new edit]
+  layout false, only: %i[new edit show]
 
   def index
-    pohons
+    @opd = queries.opd
+    @nama_opd = @opd.nama_opd
+
+    @strategi_kota = queries.strategi_kota
+    @tactical_kota = queries.tactical_kota
+    @operational_kota = queries.operational_kota
+
+    @strategi_opd = queries.strategi_opd
+    @tactical_opd = queries.tactical_opd
+    @operational_opd = queries.operational_opd
   end
 
+  def show; end
+
   def new
-    @pohon_atasan = StrategiPohon.find(params[:id])
     @pohon = StrategiPohon.new(role: 'eselon_2', opd_id: @opd.id)
     @pohon.sasarans.build.indikator_sasarans.build
   end
@@ -21,21 +31,13 @@ class PohonKinerjaOpdsController < ApplicationController
     @pohon.sasarans.build.indikator_sasarans.build
   end
 
-  def edit
-    @url = pohon_kinerja_path(@pohon)
-    @method = :patch
-    render layout: false
-  end
+  def edit; end
 
   def create
     @pohon = StrategiPohon.new(pohon_parameter)
     @pohon.tahun = tahun_fixer
     if @pohon.save
-      html_content = render_to_string(partial: 'pohon_kinerja/pohon_strategi',
-                                      formats: 'html',
-                                      layout: false,
-                                      locals: { pohon: @pohon, jenis: 'Strategi' })
-      render json: { resText: "Strategi berhasil dibuat", attachmentPartial: html_content }.to_json,
+      render json: { resText: "Strategi berhasil dibuat", attachmentPartial: html_content },
              status: :created
     else
       error_content = render_to_string(partial: 'pohon_kinerja/form',
@@ -46,8 +48,14 @@ class PohonKinerjaOpdsController < ApplicationController
     end
   end
 
+  def html_content(pohon)
+    render_to_string(partial: 'pohon_kinerja/pohon_strategi',
+                     formats: 'html',
+                     layout: false,
+                     locals: { pohon: pohon, jenis: 'Strategi' })
+  end
+
   def update
-    @pohon = StrategiPohon.find(params[:id])
     if @pohon.update(pohon_params)
       html_content = render_to_string(partial: 'pohon_kinerja/item_pohon',
                                       formats: 'html',
@@ -66,7 +74,6 @@ class PohonKinerjaOpdsController < ApplicationController
   end
 
   def destroy
-    @pohon = StrategiPohon.find(params[:id])
     @pohon.destroy
     render json: { resText: "Pohon Dihapus", result: true },
            status: :accepted

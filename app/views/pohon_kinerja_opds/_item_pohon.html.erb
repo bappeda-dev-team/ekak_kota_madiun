@@ -1,0 +1,11 @@
+<div class="pohon">
+  <% presenter = PohonKinerjaPresenter.new(pohon) %>
+  <div class="pohon-title <%= presenter.status %>">
+    <h5 class="text-center"><strong><%= presenter.title_up %></strong></h5>
+  </div>
+  <%= render partial: 'item_pohon_body', locals: { pohon: presenter } %>
+  <%= render partial: presenter.tombol_partial, locals: { pohon: presenter } %>
+  <% unless presenter.jenis.include?('Operational') %>
+    <%= render partial: presenter.tombol_foot, locals: { pohon: presenter } %>
+  <% end %>
+</div>

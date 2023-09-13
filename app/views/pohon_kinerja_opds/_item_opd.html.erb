@@ -1,0 +1,35 @@
+<div class="tf-nc" style="width: 450px;">
+  <div class="pohon">
+    <div class="pohon-title">
+      <h5 class="text-center"><strong>Pohon Kinerja OPD</strong></h5>
+    </div>
+    <div class="pohon-body">
+      <table class="table table-bordered">
+        <tr>
+          <td class="text-start" width="30px">Nama OPD</td>
+          <td class="text-wrap text-start fw-bolder"><%= @nama_opd %></td>
+        </tr>
+        <tr>
+          <td class="text-start" width="30px">Tahun</td>
+          <td class="text-wrap text-start"><%= @tahun %></td>
+        </tr>
+      </table>
+    </div>
+    <div class="pohon-foot">
+      <% unless reviewer? %>
+        <div class="d-grid gap-3">
+          <%= link_to new_pohon_kinerja_opd_path,
+                          remote: true,
+                          class: 'btn btn-outline-success align-items-center w-100',
+                          data: {
+                              controller: 'pohon-tematik',
+                              action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
+                          } do %>
+            <i class="fas fa-plus me-2"></i>
+            <span>Strategi Baru</span>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
