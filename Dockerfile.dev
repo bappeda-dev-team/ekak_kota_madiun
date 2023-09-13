@@ -12,7 +12,7 @@ RUN curl -sS https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | tee  /etc/apt/sources.list.d/pgdg.list
 
 RUN apt-get update
-RUN apt-get install build-essential nodejs postgresql-client-12 tmux -y
+RUN apt-get install build-essential nodejs postgresql-client-12 -y
 
 RUN npm install --global yarn
 #ENV TZ=Asia/Jakarta
@@ -27,9 +27,9 @@ RUN bundle install -j $(nproc)
 #ADD . $APP_PATH
 RUN yarn install --check-files
 
-ADD ./dev-docker-entrypoint.sh /usr/local/bin/dev-docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/dev-docker-entrypoint.sh
+# ADD ./dev-docker-entrypoint.sh /usr/local/bin/dev-docker-entrypoint.sh
+# RUN chmod +x /usr/local/bin/dev-docker-entrypoint.sh
 
-EXPOSE $RAILS_PORT
+EXPOSE 3001
 # ENTRYPOINT ["sh","/usr/local/bin/dev-docker-entrypoint.sh"]
-CMD ["bin/bash"]
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
