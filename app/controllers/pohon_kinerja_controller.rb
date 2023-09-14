@@ -274,7 +274,12 @@ class PohonKinerjaController < ApplicationController
     if tidak
       hapus_bagikan = dibagikan.nil? ? tidak : (tidak - dibagikan)
       hapus_bagikan.each do |hapus|
-        Pohon.find(hapus).delete
+        pohon = Pohon.find(hapus)
+        if pohon.user&.nik?
+          strategi.sasarans.where(nip_asn: pohon.user.nik)
+                  .update_all(strategi_id: '')
+        end
+        pohon.delete
       end
     end
     list_pohon_baru = []
