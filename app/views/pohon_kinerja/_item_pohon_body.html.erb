@@ -22,7 +22,11 @@
       <% end %>
       <% pohon.pohonable.indikator_sasarans.each.with_index(1) do |indikator, i| %>
         <tr class="detail d-none">
-          <td class="text-start" width="30px">Indikator <%= i %></td>
+          <td class="text-start" width="30px">Indikator
+            <% if pohon.pohonable.indikator_sasarans.size > 1 %>
+              <%= i %>
+            <% end %>
+          </td>
           <td class="text-wrap text-start" colspan="2"><%= indikator %></td>
         </tr>
         <tr class="detail d-none">
