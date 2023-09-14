@@ -7,6 +7,10 @@ class PohonKinerjaPresenter
     @pohon = pohon
   end
 
+  def real
+    @pohon
+  end
+
   def pohonable
     @pohon.instance_of?(Pohon) ? @pohon.pohonable : @pohon
   end

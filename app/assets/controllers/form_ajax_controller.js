@@ -140,16 +140,13 @@ export default class extends Controller {
   successResponseNew(event) {
     // event.preventDefault()
     const [message, status, xhr] = event.detail
-    const modal_target = event.params.modal
-    const modal = document.getElementById(modal_target)
-    const id_strategi = `strategi_pohon_${message.result}`
-    const target_element = document.getElementById(id_strategi)
-    console.log(message)
-    console.log(id_strategi)
-    console.log(target_element)
-    // event after successResponse
+    const modal = document.getElementById(event.params.modal)
+    const target = document.getElementById(event.params.pohon)
+    const { resText, html_content } = JSON.parse(message.response)
+
     Modal.getInstance(modal).hide()
-    this.sweetalertStatus(message.resText, status)
+    target.innerHTML = html_content
+    this.sweetalertStatus(resText, status)
   }
 
   successResponseTransferPohon(event) {
@@ -294,9 +291,9 @@ export default class extends Controller {
     }
     else if (status == 'OK') {
       Swal.fire({
-        title: 'Tidak ada perubahan',
+        title: 'Sukses',
         text: text,
-        icon: "info",
+        icon: "success",
         confirmButtonText: 'Ok',
       })
     }

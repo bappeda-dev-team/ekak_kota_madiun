@@ -311,7 +311,11 @@ class PohonKinerjaController < ApplicationController
              status: :unprocessable_entity
     elsif list_pohon_baru.any? || tidak.any?
       @pohon = Pohon.create(list_pohon_baru)
-      render json: { resText: "Pelaksana diperbarui", result: strategi.id },
+      html_content = render_to_string(partial: 'pohon_kinerja/item_pohon',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { pohon: strategi })
+      render json: { resText: "Pelaksana diperbarui", html_content: html_content },
              status: :ok
     else
       render json: { resText: "Terjadi Kesalahan" },
