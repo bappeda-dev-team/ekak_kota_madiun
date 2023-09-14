@@ -144,29 +144,12 @@ export default class extends Controller {
     const modal = document.getElementById(modal_target)
     const id_strategi = `strategi_pohon_${message.result}`
     const target_element = document.getElementById(id_strategi)
-    const url = `/pohon_kinerja/${message.result}/daftar_temans`
+    console.log(message)
+    console.log(id_strategi)
+    console.log(target_element)
     // event after successResponse
     Modal.getInstance(modal).hide()
-    fetch(url,
-      {
-        method: "get"
-      })
-      .then(
-        response => response.text()
-
-      )
-      .then(
-        text => {
-          this.sweetalertStatus(message.resText, status)
-          target_element.innerHTML = text
-        }
-      ).catch(
-        e => {
-          this.sweetalertStatus('terjadi kesalahan', 'error')
-        }
-
-      )
-
+    this.sweetalertStatus(message.resText, status)
   }
 
   successResponseTransferPohon(event) {
@@ -241,7 +224,6 @@ export default class extends Controller {
     const ajax_update_event = new CustomEvent("ajax-update", { detail: { data: message.result } })
     // event after successResponse
     Modal.getInstance(modal).hide()
-    this.sweetalert(message.resText)
     const { roles, target } = message.result
     const target_row = document.getElementById(target)
     target_row.innerHTML = `<ul>${roles.map(n => `<li>${n}</li>`).join('')}</ul>`
