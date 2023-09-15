@@ -64,7 +64,7 @@ class Sasaran < ApplicationRecord
   has_many :permasalahans, dependent: :destroy
   has_many :latar_belakangs, dependent: :destroy
   has_many :genders
-  belongs_to :strategi, dependent: :destroy, optional: true
+  belongs_to :strategi, optional: true
   # has_one :strategi
   # has_many :manual_iks, through: :indikator_sasarans
 
