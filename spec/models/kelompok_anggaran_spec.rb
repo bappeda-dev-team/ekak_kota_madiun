@@ -42,14 +42,14 @@ RSpec.describe KelompokAnggaran, type: :model do
   end
 
   describe 'pembuat kode' do
-    it 'membuat kode kelompok dengan pola _awal' do
+    it 'membuat kode kelompok dengan pola awal' do
       ka = KelompokAnggaran.create(kelompok: 'Awal', tahun: 2022)
-      expect(ka.kode_kelompok).to eq('_2022_awal')
+      expect(ka.kode_kelompok).to eq('2022_awal')
     end
 
-    it 'membuat kode kelompok dengan pola _perubahan' do
+    it 'membuat kode kelompok dengan pola perubahan' do
       ka = KelompokAnggaran.create(kelompok: 'Perubahan', tahun: 2022)
-      expect(ka.kode_kelompok).to eq('_2022_perubahan')
+      expect(ka.kode_kelompok).to eq('2022_perubahan')
     end
 
     context 'lewat validasi' do
@@ -63,7 +63,7 @@ RSpec.describe KelompokAnggaran, type: :model do
   describe 'pembuat kode untuk kloning sasaran' do
     it 'membuat kode kelompok dengan pola _tahun_kelompok' do
       ka = KelompokAnggaran.create(kelompok: 'Perubahan', tahun: 2022)
-      expect(ka.kode_kelompok).to eq('_2022_perubahan')
+      expect(ka.kode_kelompok).to eq('2022_perubahan')
     end
   end
 end
