@@ -32,4 +32,4 @@ RUN yarn install --check-files
 
 EXPOSE 3001
 # ENTRYPOINT ["sh","/usr/local/bin/dev-docker-entrypoint.sh"]
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+CMD ["/bin/sh"]
