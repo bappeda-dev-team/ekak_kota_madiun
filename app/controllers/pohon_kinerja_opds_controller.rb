@@ -15,6 +15,7 @@ class PohonKinerjaOpdsController < ApplicationController
     @strategi_opd = queries.strategi_opd
     @tactical_opd = queries.tactical_opd
     @operational_opd = queries.operational_opd
+    @staff_opd = queries.staff_opd
   end
 
   def show; end
