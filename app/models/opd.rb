@@ -332,6 +332,6 @@ class Opd < ApplicationRecord
   end
 
   def list_strategi_opd(tahun: '')
-    strategis.includes(%i[user strategi_atasan sasaran]).where(tahun: tahun).group_by(&:role).sort
+    strategis.includes(%i[user strategi_atasan]).where(tahun: tahun).group_by(&:role).sort
   end
 end

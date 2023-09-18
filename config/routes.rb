@@ -489,6 +489,10 @@ Rails.application.routes.draw do
     member do
       post :pohon_tematik
     end
+    collection do
+      get :tahun_clone
+      post :transfer_ke_pohon_kinerja
+    end
   end
 
   namespace :filter do

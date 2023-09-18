@@ -44,4 +44,8 @@ class KelompokAnggaran < ApplicationRecord
   def murni_perubahan
     kode_kelompok.match(/murni/) ? tahun : kode_kelompok
   end
+
+  def tahun_asli
+    kode_kelompok.match(/murni/) ? kode_kelompok[/[^_]\d*/, 0] : kode_kelompok
+  end
 end

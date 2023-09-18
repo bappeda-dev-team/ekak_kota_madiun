@@ -2,7 +2,8 @@ class CloneController < ApplicationController
   def show
     pohon = Pohon.find params[:id]
     tahun = cookies[:tahun]
-    render partial: 'clone/form_clone', locals: { pohon: pohon, tahun_asal: tahun }, layout: false
+    url = pohon_tematik_clone_path(pohon)
+    render partial: 'clone/form_clone', locals: { pohon: pohon, tahun_asal: tahun, url: url }, layout: false
   end
 
   def pohon_tematik
@@ -20,6 +21,33 @@ class CloneController < ApplicationController
     if operation.persist!
       clone_pohon = operation.to_record
       render json: { resText: "Pohon di clone ke #{clone_pohon.tahun}" }, status: :created
+    else
+      render json: { resText: 'Gagal, terdapat kesalahan di server' }, status: :unprocessable_entity
+    end
+  end
+
+  def tahun_clone
+    tahun_asal = cookies[:tahun]
+    url = params[:url]
+    render partial: 'clone/form_tahun_clone', locals: { judul: params[:judul], tahun_asal: tahun_asal, url: url },
+           layout: false
+  end
+
+  def transfer_ke_pohon_kinerja
+    strategis = Strategi.where(tahun: params[:tahun], role: params[:role], opd_id: params[:opd])
+    tahun_tujuan = params[:tahun_tujuan]
+    return unless strategis.any?
+
+    results = strategis.map do |strategi|
+      operation = StrategiCloner.call(strategi, tahun: tahun_tujuan,
+                                                opd_id: params[:opd],
+                                                strategi_cascade_link: strategi.id,
+                                                traits: [:no_bawahan])
+      operation.to_record
+      operation.persist!
+    end
+    if results.any?
+      render json: { resText: "Berhasil clone ke #{tahun_tujuan}" }, status: :created
     else
       render json: { resText: 'Gagal, terdapat kesalahan di server' }, status: :unprocessable_entity
     end
