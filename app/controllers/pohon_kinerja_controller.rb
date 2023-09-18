@@ -40,6 +40,7 @@ class PohonKinerjaController < ApplicationController
                          .includes(:pohonable, pohonable: [:indikator_sasarans])
 
     @operational_opd = @strategi_opd.rewhere(role: 'eselon_4')
+    @staff_opd = @strategi_opd.rewhere("role ILIKE ?", "%staff%")
   end
 
   def cascading
