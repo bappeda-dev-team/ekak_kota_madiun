@@ -1,0 +1,15 @@
+<% presenter = PohonKinerjaPresenter.new(pohon_kinerja_opd) %>
+<li>
+  <div class="tf-nc pokin <%= presenter.warna_pohon %>">
+    <div class="pohon">
+      <%= render partial: 'item_pohon_title', locals: { pohon: presenter } %>
+      <%= render partial: 'item_pohon_body', locals: { pohon: presenter } %>
+      <%= render partial: 'item_pohon_tombol', locals: { pohon: presenter } %>
+      <%= render partial: 'item_pohon_foot', locals: { pohon: presenter } %>
+    </div>
+  </div>
+  <%# self-render childs in helper %>
+  <ul class='d-none'>
+    <%= render partial: 'pohon_kinerja_opd', collection: childs(pohon_kinerja_opd) %>
+  </ul>
+</li>

@@ -50,4 +50,8 @@ class PohonKinerjaOpdQueries
   def operational_opd
     pohon_opd.rewhere(role: 'eselon_4')
   end
+
+  def staff_opd
+    pohon_opd.rewhere(role: 'staff')
+  end
 end

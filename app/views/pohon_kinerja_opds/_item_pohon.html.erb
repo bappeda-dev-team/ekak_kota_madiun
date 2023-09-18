@@ -5,7 +5,5 @@
   </div>
   <%= render partial: 'item_pohon_body', locals: { pohon: presenter } %>
   <%= render partial: 'item_pohon_tombol', locals: { pohon: presenter } %>
-  <% unless presenter.jenis.include?('Operational') %>
-    <%= render partial: presenter.tombol_foot, locals: { pohon: presenter } %>
-  <% end %>
+  <%= render partial: 'item_pohon_foot', locals: { pohon: presenter } %>
 </div>

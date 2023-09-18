@@ -118,6 +118,23 @@ class PohonKinerjaPresenter
     []
   end
 
+  def warna_pohon
+    case @pohon.role
+    when 'eselon_2'
+      'strategic-pohon'
+    when 'eselon_3'
+      'tactical-pohon'
+    when 'eselon_4'
+      'operational-pohon'
+    else
+      'staff-pohon'
+    end
+  end
+
+  def indikators
+    pohonable.indikator_sasarans.reject { |ind| ind.sasaran.nip_asn.present? }
+  end
+
   private
 
   def to_real_name(role)
