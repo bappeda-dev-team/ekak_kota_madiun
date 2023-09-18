@@ -1,8 +1,9 @@
 <%= form_with(model: sub_tematik,
+              url: create_sub_tema_pohon_tematik_index_path,
               local: false,
               data: {
-                  controller: 'pohon-tematik',
-                  action: 'ajax:success->pohon-tematik#ajaxSuccess'
+                controller: 'pohon-tematik',
+                action: 'ajax:success->pohon-tematik#ajaxSuccess'
               }
 ) do |form| %>
   <% if sub_tematik.errors.any? %>
