@@ -463,7 +463,7 @@ class ProgramKegiatan < ApplicationRecord
 
   def sasarans_subkegiatan(tahun)
     sasarans.includes(%i[indikator_sasarans strategi user])
-            .where("tahun ILIKE ?", "%#{tahun}%")
+            .where(tahun: tahun)
             .order(nip_asn: :asc)
             .dengan_strategi
   end
