@@ -9,6 +9,7 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :pohon_kinerja_opds
   resources :tims
   # TODO: Refactor controller to resources
   resources :pohon_tematik do
@@ -142,7 +143,6 @@ Rails.application.routes.draw do
       get :manual
       get :clone
       get :new_strategic
-      get :panggilan
       get :list_pohon
     end
   end

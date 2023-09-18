@@ -1,0 +1,12 @@
+<li>
+  <div class="tf-nc pokin tactical-pohon" id="<%= dom_id(tactical) %>">
+    <%= render partial: 'item_pohon',
+               locals: {
+                 pohon: tactical
+               } %>
+  </div>
+  <ul class='d-none' id='<%= "operational_tematik_#{tactical.object_id}" %>'>
+    <% operationals = @operational_opd.select { |opr| opr.pohon_ref_id.to_i == tactical.id } %>
+    <%= render partial: 'operational', collection: operationals %>
+  </ul>
+</li>

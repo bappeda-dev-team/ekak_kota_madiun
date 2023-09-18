@@ -23,7 +23,7 @@ class KakQueries
 
   def sasarans
     users_eselon4.map do |user|
-      user.sasarans.includes(:strategi).where(tahun: @tahun, keterangan: nil)
+      user.sasarans.includes(%i[strategi indikator_sasarans]).where(tahun: @tahun, keterangan: nil)
     end.flatten
   end
 

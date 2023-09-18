@@ -1,0 +1,37 @@
+<%= form_with(url: url, model: model,
+              method: method, local: false,
+              data: {
+                  controller: 'pohon-tematik',
+                  action: 'ajax:success->pohon-tematik#ajaxSuccess'
+              }) do |form| %>
+  <div class="field">
+    <%= form.label :strategi, class: "form-label" %>
+    <%= form.text_field :strategi, class: "form-control" %>
+  </div>
+  <% if model.new_record? %>
+    <%= form.hidden_field :role, class: "form-control" %>
+    <%= form.hidden_field :opd_id, class: "form-control" %>
+    <%= form.hidden_field :strategi_ref_id, class: "form-control" %>
+  <% end %>
+  <div class="field">
+    <%= form.fields_for :sasarans do |sasaran_form| %>
+      <% if model.new_record? %>
+        <% random_number = @sasaran&.id_rencana.nil? ? (SecureRandom.random_number(9e5) + 1e5).to_i : @sasaran.id_rencana %>
+        <%= sasaran_form.hidden_field :id_rencana, :value => random_number, readonly: true %>
+      <% end %>
+      <%= sasaran_form.hidden_field :sasaran_kinerja, { class: "form-control", value: '-' } %>
+      <div class="field" id="indikator-sasarans">
+        <%= sasaran_form.label :indikator, { class: "form-label" } %>
+        <%= sasaran_form.fields_for :indikator_sasarans do |indikator_sas| %>
+          <%= render 'sasarans/indikator_sasaran_fields', form: indikator_sas %>
+        <% end %>
+      </div>
+      <%= link_to_add_nested(sasaran_form, :indikator_sasarans,
+                                '#indikator-sasarans', link_classes: 'btn btn-outline-primary btn-sm', link_text: 'Tambah Indikator',
+                                partial: 'sasarans/indikator_sasaran_fields') %>
+    <% end %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
