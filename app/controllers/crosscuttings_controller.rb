@@ -12,50 +12,70 @@ class CrosscuttingsController < ApplicationController
     @crosscuttings = @crosscutting.external
   end
 
-  # GET /crosscuttings/new
-  def new
-    @crosscutting = Crosscutting.new
-  end
-
   # GET /crosscuttings/1/edit
   def edit; end
 
-  # POST /crosscuttings or /crosscuttings.json
-  def create
-    @crosscutting = Crosscutting.new(crosscutting_params)
-
-    respond_to do |format|
-      if @crosscutting.save
-        format.html { redirect_to crosscutting_url(@crosscutting), notice: "Crosscutting was successfully created." }
-        format.json { render :show, status: :created, location: @crosscutting }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @crosscutting.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # PATCH/PUT /crosscuttings/1 or /crosscuttings/1.json
   def update
-    respond_to do |format|
-      if @crosscutting.update(crosscutting_params)
-        format.html { redirect_to crosscutting_url(@crosscutting), notice: "Crosscutting was successfully updated." }
-        format.json { render :show, status: :ok, location: @crosscutting }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @crosscutting.errors, status: :unprocessable_entity }
-      end
+    check = params[:check]
+    uncheck = params[:uncheck]
+    keterangan = params[:keterangan]
+    hapus_cross = check.nil? ? uncheck : (uncheck - check)
+    pohons = Pohon.where(id: hapus_cross)
+
+    pohons.update_all(
+      strategi_id: '',
+      role: 'opd-batal',
+      keterangan: keterangan,
+      status: 'batal-crosscutting',
+      metadata: {
+        dibatalkan_by: current_user.id,
+        dibatalkan_at: DateTime.current
+      }
+    )
+    list_pohon_baru = []
+    opd_list = params[:opd_list].compact_blank
+    opd_list.each do |kode_opd|
+      opd = Opd.find_by(kode_unik_opd: kode_opd)
+      list_pohon_baru.push({ opd_id: opd.id,
+                             tahun: @tahun,
+                             role: 'opd',
+                             pohonable_id: @crosscutting.id,
+                             pohonable_type: 'StrategiPohon',
+                             keterangan: keterangan,
+                             status: 'crosscutting',
+                             strategi_id: @crosscutting.id,
+                             metadata: {
+                               dibagikan_by: current_user.id,
+                               dibagikan_at: DateTime.current
+                             } })
+    end
+
+    cross_baru = Pohon.create(list_pohon_baru) if list_pohon_baru.any?
+
+    if pohons.any? || cross_baru
+      strategi = @crosscutting.strategi
+      render json: { resText: "Crosscutting berhasil diperbarui",
+                     html_content: html_content(strategi) }.to_json,
+             status: :ok
+    else
+      render json: { resText: "terjadi kesalahan", errors: error_content }.to_json,
+             status: :unprocessable_entity
     end
   end
 
-  # DELETE /crosscuttings/1 or /crosscuttings/1.json
-  def destroy
-    @crosscutting.destroy
+  def html_content(pohon)
+    render_to_string(partial: 'pohon_kinerja_opds/item_pohon',
+                     formats: 'html',
+                     layout: false,
+                     locals: { pohon: pohon })
+  end
 
-    respond_to do |format|
-      format.html { redirect_to crosscuttings_url, notice: "Crosscutting was successfully destroyed." }
-      format.json { head :no_content }
-    end
+  def error_content
+    render_to_string(partial: 'form',
+                     formats: 'html',
+                     layout: false,
+                     locals: { crosscutting: @crosscutting })
   end
 
   private
