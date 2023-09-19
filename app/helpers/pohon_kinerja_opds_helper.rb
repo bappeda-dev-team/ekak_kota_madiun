@@ -1,6 +1,8 @@
 module PohonKinerjaOpdsHelper
   def child_strategi(parent, childs)
     childs.select { |str| str.pohon_ref_id.to_i == parent.id }
+  rescue NoMethodError
+    []
   end
 
   def childs(pohon_kinerja_opd)
