@@ -1,8 +1,10 @@
-<%= form_with url: crosscutting_path(crosscutting),
+<%= form_with url: crosscutting_path(crosscutting.id),
               local: false,
+              method: :patch,
               data: {
                 controller: 'form-ajax',
-                form_aajx_modal_param: 'form-corsscutting',
+                form_ajax_modal_param: 'form-crosscutting',
+                form_ajax_pohon_param: dom_id(crosscutting.strategi),
                 action: 'ajax:complete->form-ajax#successResponseNew'
               } do |form| %>
   <div class="field">
