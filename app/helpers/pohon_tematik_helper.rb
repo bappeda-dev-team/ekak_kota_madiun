@@ -4,6 +4,7 @@ module PohonTematikHelper
   end
 
   def select_pohon_tematik(tematiks)
+    tematiks = tematiks.reject { |tema| tema.pohonable.nil? }
     options_for_select(tematiks.collect { |tema| [tema.pohonable.tema, tema.pohonable_id] })
   end
 
