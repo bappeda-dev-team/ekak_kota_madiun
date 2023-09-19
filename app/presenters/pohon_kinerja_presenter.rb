@@ -81,6 +81,28 @@ class PohonKinerjaPresenter
     @pohon.role
   end
 
+  def role_bawahan
+    case role
+    when 'eselon_2'
+      'eselon_3'
+    when 'eselon_3'
+      'eselon_4'
+    else
+      'staff'
+    end
+  end
+
+  def judul_form
+    case role_bawahan
+    when 'eselon_3'
+      'Tactical'
+    when 'eselon_4'
+      'Operational'
+    else
+      'Operational - n'
+    end
+  end
+
   def element_class_name
     @pohon.role.dasherize
   end
@@ -88,7 +110,7 @@ class PohonKinerjaPresenter
   def title
     # suffix = @pohon.instance_of?(Pohon) ? '- Kota' : ''
     prefix = @pohon.role.chomp("_pohon_kota")
-    if prefix.include?('eselon')
+    if prefix.include?('eselon') || prefix.include?('staff')
       to_real_name(prefix)
     else
       "#{to_real_name(prefix).capitalize} - Kota"
@@ -98,7 +120,7 @@ class PohonKinerjaPresenter
   def title_up
     # suffix = @pohon.instance_of?(Pohon) ? '- Kota' : ''
     prefix = @pohon.role.chomp("_pohon_kota")
-    if prefix.include?('eselon')
+    if prefix.include?('eselon') || prefix.include?('staff')
       to_real_name_up(prefix)
     else
       "#{to_real_name_up(prefix).capitalize} - Kota"
@@ -116,6 +138,23 @@ class PohonKinerjaPresenter
     @pohon.pohon_shareds
   rescue NoMethodError
     []
+  end
+
+  def warna_pohon
+    case @pohon.role
+    when 'eselon_2'
+      'strategic-pohon'
+    when 'eselon_3'
+      'tactical-pohon'
+    when 'eselon_4'
+      'operational-pohon'
+    else
+      'staff-pohon'
+    end
+  end
+
+  def indikators
+    pohonable.indikators
   end
 
   private

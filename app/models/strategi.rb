@@ -29,59 +29,21 @@ class Strategi < ApplicationRecord
   belongs_to :user, foreign_key: 'nip_asn', primary_key: 'nik', optional: true
   has_many :sasarans
   has_many :komentars, primary_key: :id, foreign_key: :item
-  accepts_nested_attributes_for :sasarans, update_only: true
 
-  has_many :indikator_sasarans, through: :sasarans
+  # has_many :indikator_sasarans, through: :sasarans
+  has_many :indikators, lambda {
+                          where(jenis: 'Strategi', sub_jenis: 'StrategiPohon')
+                        }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id'
+
+  accepts_nested_attributes_for :indikators, reject_if: :all_blank, allow_destroy: true
+
+  has_many :strategi_bawahans, class_name: 'Strategi',
+                               primary_key: :id, foreign_key: :strategi_ref_id
 
   belongs_to :strategi_atasan, class_name: "Strategi",
                                foreign_key: "strategi_ref_id", optional: true
   belongs_to :strategi_pokin, class_name: "StrategiPohon",
                               foreign_key: 'linked_with', optional: true
-
-  belongs_to :strategi_eselon_dua, lambda {
-    where(role: "eselon_2")
-  }, class_name: "Strategi",
-     foreign_key: "strategi_ref_id", optional: true
-
-  belongs_to :strategi_eselon_tiga, lambda {
-    where(role: "eselon_3").or(where(role: "eselon_2b")).where.not(nip_asn: "")
-  }, class_name: "Strategi",
-     foreign_key: "strategi_ref_id", dependent: :destroy, optional: true
-
-  has_many :strategi_eselon_dua_bs, lambda {
-    where(role: "eselon_2b").where.not(nip_asn: "")
-  }, class_name: "Strategi",
-     foreign_key: "strategi_ref_id", dependent: :destroy
-
-  has_many :strategi_eselon_tiga_setda, lambda {
-    where(role: "eselon_3").where.not(nip_asn: "")
-  }, class_name: "Strategi",
-     foreign_key: "strategi_ref_id", dependent: :destroy
-
-  has_many :strategi_eselon_tigas, lambda {
-    where(role: "eselon_3").or(where(role: "eselon_2b")).where.not(nip_asn: "")
-  }, class_name: "Strategi",
-     foreign_key: "strategi_ref_id", dependent: :destroy
-
-  has_many :strategi_eselon_empats, lambda {
-    where(role: "eselon_4").where.not(nip_asn: "")
-  }, class_name: "Strategi",
-     foreign_key: "strategi_ref_id", dependent: :destroy
-
-  has_many :strategi_staffs, lambda {
-    where(role: "staff").where.not(nip_asn: "")
-  }, class_name: "Strategi",
-     foreign_key: "strategi_ref_id", dependent: :destroy
-
-  # validates :strategi_ref_id, presence: true, if: :milik_non_kepala
-  # validates :strategi, presence: true
-  # validates :tahun, presence: true
-  # validates :sasaran, presence: true
-
-  amoeba do
-    set tahun: '2022_p'
-    include_association %i[strategi_eselon_dua_bs strategi_eselon_tigas strategi_eselon_empats strategi_staffs]
-  end
 
   def to_s
     strategi
@@ -103,46 +65,46 @@ class Strategi < ApplicationRecord
     end
   end
 
-  def strategi_bawahans
-    strategi_hasil = if role == 'eselon_2' && opd_id == '145'
-                       strategi_eselon_dua_bs
-                     elsif role == 'eselon_2' || (role == 'eselon_2b' && opd_id == '145')
-                       strategi_eselon_tigas
-                     elsif role == 'eselon_3'
-                       strategi_eselon_empats
-                     else
-                       strategi_staffs
-                     end
-    strategi_hasil.where.not(nip_asn: "")
-  end
+  # def strategi_bawahans
+  #   strategi_hasil = if role == 'eselon_2' && opd_id == '145'
+  #                      strategi_eselon_dua_bs
+  #                    elsif role == 'eselon_2' || (role == 'eselon_2b' && opd_id == '145')
+  #                      strategi_eselon_tigas
+  #                    elsif role == 'eselon_3'
+  #                      strategi_eselon_empats
+  #                    else
+  #                      strategi_staffs
+  #                    end
+  #   strategi_hasil.where.not(nip_asn: "")
+  # end
 
   def strategi_dan_nip
-    strategi.nil? ? "dibagikan ke #{nip_asn}" : "#{user&.nama} - #{strategi} - Indikator #{indikator_sasarans.pluck(:indikator_kinerja)}"
+    strategi.nil? ? "dibagikan ke #{nip_asn}" : "#{user&.nama} - #{strategi} - Indikator #{indikators.pluck(:indikator_kinerja)}"
   end
 
-  def indikators
-    indikator_sasarans.compact_blank
-  end
+  # def indikators
+  #   indikator_sasarans.compact_blank
+  # end
 
-  def indikator_strategi
-    indikator_sasarans.pluck(:indikator_kinerja)
-  end
+  # def indikator_strategi
+  #   indikator_sasarans.pluck(:indikator_kinerja)
+  # end
 
-  def target_satuan_strategi
-    indikator_sasarans.pluck(:target, :satuan)
-  end
+  # def target_satuan_strategi
+  #   indikator_sasarans.pluck(:target, :satuan)
+  # end
 
-  def indikator
-    indikator_sasarans.first.indikator_kinerja
-  end
+  # def indikator
+  #   indikator_sasarans.first.indikator_kinerja
+  # end
 
-  def target
-    indikator_sasarans.first.target
-  end
+  # def target
+  #   indikator_sasarans.first.target
+  # end
 
-  def satuan
-    indikator_sasarans.first.satuan
-  end
+  # def satuan
+  #   indikator_sasarans.first.satuan
+  # end
 
   def nama
     user&.nama
@@ -166,21 +128,21 @@ class Strategi < ApplicationRecord
     self
   end
 
-  def tactical_2b_objectives
-    strategi_eselon_dua_bs.includes(:indikator_sasarans).where.not(strategi: "")
-  end
+  # def tactical_2b_objectives
+  #   strategi_eselon_dua_bs.includes(:indikator_sasarans).where.not(strategi: "")
+  # end
 
-  def tactical_objectives
-    strategi_eselon_tigas.includes(:indikator_sasarans).where.not(strategi: "")
-  end
+  # def tactical_objectives
+  #   strategi_eselon_tigas.includes(:indikator_sasarans).where.not(strategi: "")
+  # end
 
-  def operational_objectives
-    strategi_eselon_empats.includes(:indikator_sasarans).where.not(strategi: "")
-  end
+  # def operational_objectives
+  #   strategi_eselon_empats.includes(:indikator_sasarans).where.not(strategi: "")
+  # end
 
-  def operational_2_objectives
-    strategi_staffs.includes(:indikator_sasarans).where.not(strategi: "")
-  end
+  # def operational_2_objectives
+  #   strategi_staffs.includes(:indikator_sasarans).where.not(strategi: "")
+  # end
 
   def program_kegiatan_strategi
     sasaran&.program_kegiatan

@@ -1,0 +1,17 @@
+<%= content_for :html_title, "Pohon Kinerja OPD" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Perencanaan OPD</li>
+  <li class="breadcrumb-item active" aria-current="page">Pohon Kinerja OPD</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout', title: "Pohon Kinerja #{@nama_opd} - Tahun #{@tahun}" do %>
+    <%= render 'shared/pohon' do %>
+      <%= render 'item_opd' %>
+      <ul data-pohon-tematik-target='dahan'>
+        <%= render partial: 'pohon_kinerja_opd', collection: @strategi_kota, as: :pohon %>
+        <%= render partial: 'pohon_kinerja_opd', collection: @strategi_opd, as: :pohon %>
+      </ul>
+    <% end %>
+  <% end %>
+  <%= render 'shared/modal_xl_template', modal_name: 'pelaksana' %>
+<% end %>
