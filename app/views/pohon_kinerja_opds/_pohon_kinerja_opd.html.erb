@@ -1,4 +1,4 @@
-<% presenter = PohonKinerjaPresenter.new(pohon_kinerja_opd) %>
+<% presenter = PohonKinerjaPresenter.new(pohon) %>
 <li>
   <div class="tf-nc pokin <%= presenter.warna_pohon %>">
     <div class="pohon">
@@ -10,6 +10,6 @@
   </div>
   <%# self-render childs in helper %>
   <ul class='d-none'>
-    <%= render partial: 'pohon_kinerja_opd', collection: childs(pohon_kinerja_opd) %>
+    <%= render partial: 'pohon_kinerja_opd', collection: childs(pohon), as: :pohon %>
   </ul>
 </li>

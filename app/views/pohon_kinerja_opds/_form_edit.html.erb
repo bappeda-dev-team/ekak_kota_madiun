@@ -1,5 +1,5 @@
 <%= form_with(url: url, model: model,
-              method: :patch, local: false,
+              method: method, local: false,
               data: {
                   controller: 'pohon-tematik',
                   action: 'ajax:success->pohon-tematik#updateSuccess'
@@ -8,19 +8,15 @@
     <%= form.label :strategi, class: "form-label" %>
     <%= form.text_field :strategi, class: "form-control" %>
   </div>
-  <div class="field">
-    <%= form.fields_for :sasarans do |sasaran_form| %>
-      <div class="field" id="indikator-sasarans">
-        <%= sasaran_form.label :indikator, { class: "form-label" } %>
-        <%= sasaran_form.fields_for :indikator_sasarans do |indikator_sas| %>
-          <%= render 'sasarans/indikator_sasaran_fields', form: indikator_sas %>
-        <% end %>
-      </div>
-      <%= link_to_add_nested(sasaran_form, :indikator_sasarans,
-                                '#indikator-sasarans', link_classes: 'btn btn-outline-primary btn-sm', link_text: 'Tambah Indikator',
-                                partial: 'sasarans/indikator_sasaran_fields') %>
+  <div class="field" id="indikator-pohon">
+    <%= form.fields_for :indikators do |indikator_form| %>
+      <%= render 'indikators/indikator_fields', form: indikator_form %>
     <% end %>
   </div>
+  <%= link_to_add_nested(form, :indikators, '#indikator-pohon',
+                          link_classes: 'btn btn-outline-primary btn-sm',
+                          link_text: 'Tambah Indikator',
+                          partial: 'indikators/indikator_fields') %>
   <div class="actions">
     <%= form.submit %>
   </div>

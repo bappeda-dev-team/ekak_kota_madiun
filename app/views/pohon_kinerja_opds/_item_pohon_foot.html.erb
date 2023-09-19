@@ -3,7 +3,7 @@
   <% unless reviewer? %>
     <div class="d-grid gap-3 mt-3 d-none">
       <% if pohon.title.downcase.include?('tactical') %>
-        <%= link_to new_tactical_pohon_kinerja_path(pohon),
+        <%= link_to new_child_pohon_kinerja_opd_path(pohon, role: pohon.role_bawahan),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
