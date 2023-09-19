@@ -1,4 +1,13 @@
-<h5>Crosscutting dengan: </h5>
-<ul>
-  <%= render partial: 'crosscutting', collection: @crosscuttings, as: :crosscutting || 'Tidak ada crosscutting' %>
-</ul>
+<div>
+  <h4>OPD : <%= @crosscutting.opd_pemilik %></h4>
+  <div>
+    <h5>Pohon Kinerja: <%= @crosscutting.strategi %></h5>
+  </div>
+</div>
+<hr>
+<div>
+  <h5>Crosscutting dengan: </h5>
+  <ul>
+    <%= render partial: 'crosscutting', collection: @crosscuttings, as: :crosscutting || 'Tidak ada crosscutting' %>
+  </ul>
+</div>

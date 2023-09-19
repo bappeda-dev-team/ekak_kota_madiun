@@ -1,9 +1,3 @@
 <li>
-  <div class="form-check">
-    <%= hidden_field_tag 'uncheck[]', crosscutting.id %>
-    <%= check_box_tag 'check[]', crosscutting.id, true, class: 'form-check-input' %>
-    <%= label_tag 'check', class: 'form-check-label' do %>
-      <span class="fw-bolder"><%= crosscutting.opd.nama_opd %></span>
-    <% end %>
-  </div>
+  <h5 class="fw-bolder"><%= crosscutting.opd.nama_opd %></h5>
 </li>
