@@ -21,4 +21,8 @@ class Crosscutting
   def external
     @strategi.pohon_shareds.where(role: 'opd').order(:opd_id)
   end
+
+  def daftar_terpilih
+    @strategi.pohon_shareds.where(role: 'opd').pluck(:opd_id)
+  end
 end
