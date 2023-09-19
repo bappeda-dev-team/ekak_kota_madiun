@@ -13,6 +13,7 @@ export default class extends Controller {
     parent: String,
     url: String,
     kodeOpd: String,
+    kodeOpdTerpilih: Array,
     uraian: String,
     item: String,
     display: { type: Boolean, default: true },
@@ -51,6 +52,7 @@ export default class extends Controller {
         url: this.urlValue,
         data: (params) => ({
           kode_opd: this.kodeOpdValue,
+          kode_opd_terpilih: this.kodeOpdTerpilihValue,
           jenis_rekening: this.rekeningValue,
           tahun: this.tahunValue,
           jenisUraian: this.tipeValue,
