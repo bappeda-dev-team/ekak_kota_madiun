@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Crosscuttings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Internal external</th>
+      <th>Opd list</th>
+      <th>Keterangan</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @crosscuttings.each do |crosscutting| %>
+      <tr>
+        <td><%= crosscutting.internal_external %></td>
+        <td><%= crosscutting.opd_list %></td>
+        <td><%= crosscutting.keterangan %></td>
+        <td><%= link_to 'Show', crosscutting %></td>
+        <td><%= link_to 'Edit', edit_crosscutting_path(crosscutting) %></td>
+        <td><%= link_to 'Destroy', crosscutting, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Crosscutting', new_crosscutting_path %>

@@ -3,14 +3,14 @@
     <% if pohon.real.instance_of?(StrategiPohon) %>
       <div class="row">
         <div class="col">
-          <%= link_to panggil_teman_pohon_kinerja_path(pohon, role: pohon.role),
+          <%= link_to crosscutting_path(pohon),
      remote: true,
      class: 'btn btn-sm btn-outline-gray-900',
      data: {
          controller: 'form-modal',
          action: 'form-modal#appendForm',
-         form_modal_location_param: 'form-pelaksana-body',
-         bs_target: '#form-pelaksana',
+         form_modal_location_param: 'form-crosscutting-body',
+         bs_target: '#form-crosscutting',
          bs_toggle: 'modal'
      } do %>
             <span class="fas fa-link me-2"></span>

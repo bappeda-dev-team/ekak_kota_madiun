@@ -9,6 +9,7 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :crosscuttings
   resources :pohon_kinerja_opds do
     member do
       get :new_child
