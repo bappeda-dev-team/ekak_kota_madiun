@@ -1,8 +1,9 @@
 <% unless pohon.exists? %>
   <div class="pohon-tombol mb-3">
-    <div class="row">
-      <div class="col">
-        <%= link_to panggil_teman_pohon_kinerja_path(pohon, role: pohon.role),
+    <% if pohon.real.instance_of?(StrategiPohon) %>
+      <div class="row">
+        <div class="col">
+          <%= link_to panggil_teman_pohon_kinerja_path(pohon, role: pohon.role),
      remote: true,
      class: 'btn btn-outline-gray-900',
      data: {
@@ -12,24 +13,24 @@
          bs_target: '#form-pelaksana',
          bs_toggle: 'modal'
      } do %>
-          <span class="fas fa-user-plus me-2"></span>
-          <span>Crosscutting</span>
-        <% end %>
-      </div>
-      <div class="col">
-        <%= link_to edit_pohon_kinerja_opd_path(pohon),
+            <span class="fas fa-user-plus me-2"></span>
+            <span>Crosscutting</span>
+          <% end %>
+        </div>
+        <div class="col">
+          <%= link_to edit_pohon_kinerja_opd_path(pohon),
      remote: true,
      class: 'btn btn-outline-info',
      data: {
          controller: 'pohon-tematik',
          action: 'ajax:complete->pohon-tematik#pindahPohon:prevent'
      } do %>
-          <i class="fas fa-edit me-2"></i>
-          <span>Edit</span>
-        <% end %>
-      </div>
-      <div class="col">
-        <%= link_to pohon_kinerja_opd_path(pohon),
+            <i class="fas fa-edit me-2"></i>
+            <span>Edit</span>
+          <% end %>
+        </div>
+        <div class="col">
+          <%= link_to pohon_kinerja_opd_path(pohon),
      remote: true,
      method: :delete,
      class: 'btn btn-outline-danger',
@@ -37,10 +38,43 @@
          confirm_swal: 'Hapus pohon kinerja?',
          action: 'ajax:success->pohon-tematik#ajaxDelete'
      } do %>
-          <i class="fas fa-trash me-2"></i>
-          <span>Hapus</span>
-        <% end %>
+            <i class="fas fa-trash me-2"></i>
+            <span>Hapus</span>
+          <% end %>
+        </div>
       </div>
-    </div>
+    <% else %>
+      <div class="row">
+        <div class="col">
+          <%= link_to terima_pohon_tematik_path(pohon),
+         remote: true,
+         method: :patch,
+         class: 'btn btn-outline-success',
+         data: {
+             confirm_swal: "Terima strategi ?",
+             method: 'PATCH',
+             controller: 'pohon-tematik',
+             action: 'ajax:complete->pohon-tematik#terimaPohon:prevent'
+         } do %>
+            <i class="fas fa-check me-2"></i>
+            <span>Terima</span>
+          <% end %>
+        </div>
+        <div class="col">
+          <%= link_to tolak_strategi_pohon_tematik_path(pohon),
+         remote: true,
+         class: 'btn btn-outline-danger',
+         data: {
+             controller: 'form-modal',
+             action: 'ajax:complete->form-modal#success:prevent',
+             bs_toggle: 'modal',
+             bs_target: '#form-modal'
+         } do %>
+            <i class="fa fa-times me-2"></i>
+            <span>Tolak</span>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
 <% end %>
