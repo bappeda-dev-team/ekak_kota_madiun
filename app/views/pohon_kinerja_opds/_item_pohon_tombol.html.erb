@@ -5,7 +5,7 @@
         <div class="col">
           <%= link_to panggil_teman_pohon_kinerja_path(pohon, role: pohon.role),
      remote: true,
-     class: 'btn btn-outline-gray-900',
+     class: 'btn btn-sm btn-outline-gray-900',
      data: {
          controller: 'form-modal',
          action: 'form-modal#appendForm',
@@ -13,14 +13,14 @@
          bs_target: '#form-pelaksana',
          bs_toggle: 'modal'
      } do %>
-            <span class="fas fa-user-plus me-2"></span>
+            <span class="fas fa-link me-2"></span>
             <span>Crosscutting</span>
           <% end %>
         </div>
         <div class="col">
           <%= link_to edit_pohon_kinerja_opd_path(pohon),
      remote: true,
-     class: 'btn btn-outline-info',
+     class: 'btn btn-sm btn-outline-info',
      data: {
          controller: 'pohon-tematik',
          action: 'ajax:complete->pohon-tematik#pindahPohon:prevent'
@@ -33,7 +33,7 @@
           <%= link_to pohon_kinerja_opd_path(pohon),
      remote: true,
      method: :delete,
-     class: 'btn btn-outline-danger',
+     class: 'btn btn-sm btn-outline-danger',
      data: {
          confirm_swal: 'Hapus pohon kinerja?',
          action: 'ajax:success->pohon-tematik#ajaxDelete'
