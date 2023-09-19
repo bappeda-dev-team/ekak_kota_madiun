@@ -2,7 +2,7 @@ class PohonKinerjaOpdsController < ApplicationController
   before_action :set_tahun_opd
   before_action :set_strategi_pohon, only: %i[edit update destroy]
 
-  layout false, only: %i[new edit show]
+  layout false, only: %i[new new_child edit show]
 
   def index
     @opd = queries.opd
@@ -22,26 +22,27 @@ class PohonKinerjaOpdsController < ApplicationController
 
   def new
     @pohon = StrategiPohon.new(role: 'eselon_2', opd_id: @opd.id)
-    @pohon.sasarans.build.indikator_sasarans.build
+    @pohon.indikators.build(kode_opd: @opd.kode_unik_opd)
   end
 
   def new_child
     @parent = StrategiPohon.find(params[:id])
-    @pohon = StrategiPohon.new(role: 'eselon_3', opd_id: @opd.id,
+    @pohon = StrategiPohon.new(role: params[:role], opd_id: @opd.id,
                                strategi_ref_id: @parent.id)
-    @pohon.sasarans.build.indikator_sasarans.build
+    @pohon.indikators.build(kode_opd: @opd.kode_unik_opd)
   end
 
   def edit; end
 
   def create
-    @pohon = StrategiPohon.new(pohon_parameter)
+    @pohon = StrategiPohon.new(pohon_params)
     @pohon.tahun = tahun_fixer
     if @pohon.save
-      render json: { resText: "Strategi berhasil dibuat", attachmentPartial: html_content },
+      render json: { resText: "Strategi berhasil dibuat",
+                     attachmentPartial: html_content(@pohon, 'pohon_kinerja_opd') },
              status: :created
     else
-      error_content = render_to_string(partial: 'pohon_kinerja/form',
+      error_content = render_to_string(partial: 'form',
                                        formats: 'html',
                                        layout: false,
                                        locals: { model: @pohon, url: pohon_kinerja_index_path, method: :post })
@@ -49,23 +50,13 @@ class PohonKinerjaOpdsController < ApplicationController
     end
   end
 
-  def html_content(pohon)
-    render_to_string(partial: 'pohon_kinerja/pohon_strategi',
-                     formats: 'html',
-                     layout: false,
-                     locals: { pohon: pohon, jenis: 'Strategi' })
-  end
-
   def update
     if @pohon.update(pohon_params)
-      html_content = render_to_string(partial: 'pohon_kinerja/item_pohon',
-                                      formats: 'html',
-                                      layout: false,
-                                      locals: { pohon: @pohon, jenis: 'Strategi' })
-      render json: { resText: "Strategi diupdate", attachmentPartial: html_content }.to_json,
+      render json: { resText: "Strategi diupdate",
+                     attachmentPartial: html_content(@pohon, 'item_pohon') }.to_json,
              status: :ok
     else
-      error_content = render_to_string(partial: 'pohon_kinerja/form_edit',
+      error_content = render_to_string(partial: 'form_edit',
                                        formats: 'html',
                                        layout: false,
                                        locals: { pohon: @pohon })
@@ -81,6 +72,13 @@ class PohonKinerjaOpdsController < ApplicationController
   end
 
   private
+
+  def html_content(pohon, partial)
+    render_to_string(partial: partial,
+                     formats: 'html',
+                     layout: false,
+                     locals: { pohon: pohon })
+  end
 
   def set_tahun_opd
     @tahun = cookies[:tahun]
@@ -112,12 +110,11 @@ class PohonKinerjaOpdsController < ApplicationController
   def pohon_params
     params.require(:strategi_pohon).permit(:strategi, :role, :pohon_id, :tahun, :nip_asn,
                                            :opd_id, :strategi_ref_id,
-                                           sasarans_attributes: [:id, :sasaran_kinerja, :id_rencana,
-                                                                 indikator_sasarans_params])
+                                           indikators_attributes)
   end
 
-  def indikator_sasarans_params
-    { indikator_sasarans_attributes: %i[id indikator_kinerja aspek target satuan _destroy] }
+  def indikators_attributes
+    { indikators_attributes: %i[id kode kode_opd indikator target satuan tahun _destroy] }
   end
 
   def tahun_fixer

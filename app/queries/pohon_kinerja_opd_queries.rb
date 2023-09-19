@@ -14,7 +14,7 @@ class PohonKinerjaOpdQueries
 
   def pohon_opd
     StrategiPohon.where(opd_id: opd.id, tahun: @tahun)
-                 .includes(:indikator_sasarans, :opd, :pohon_shareds)
+                 .includes(:indikators, :opd, :pohon_shareds)
   end
   memoize :pohon_opd
 

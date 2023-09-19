@@ -81,6 +81,17 @@ class PohonKinerjaPresenter
     @pohon.role
   end
 
+  def role_bawahan
+    case role
+    when 'eselon_2'
+      'eselon_3'
+    when 'eselon_3'
+      'eselon_4'
+    else
+      'staff'
+    end
+  end
+
   def element_class_name
     @pohon.role.dasherize
   end
@@ -132,7 +143,7 @@ class PohonKinerjaPresenter
   end
 
   def indikators
-    pohonable.indikator_sasarans.reject { |ind| ind.sasaran.nip_asn.present? }
+    pohonable.indikators
   end
 
   private

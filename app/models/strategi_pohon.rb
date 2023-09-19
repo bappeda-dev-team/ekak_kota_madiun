@@ -26,43 +26,21 @@ class StrategiPohon < Strategi
   has_many :pohon_shareds, lambda {
                              where(pohonable_type: 'StrategiPohon')
                            }, foreign_key: 'pohonable_id', primary_key: 'id', class_name: 'Pohon'
+
   has_many :takens, class_name: 'Strategi', primary_key: 'id',
                     foreign_key: 'linked_with'
-  belongs_to :strategi_eselon_dua, lambda {
-    where(role: "eselon_2")
-  }, class_name: "StrategiPohon",
-     foreign_key: "strategi_ref_id", optional: true
 
-  belongs_to :strategi_eselon_tiga, lambda {
-    where(role: "eselon_3").or(where(role: "eselon_2b")).where.not(nip_asn: "")
-  }, class_name: "StrategiPohon",
-     foreign_key: "strategi_ref_id", dependent: :destroy, optional: true
+  has_many :indikators, lambda {
+                          where(jenis: 'StrategiPohon', sub_jenis: 'StrategiPohon')
+                        }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id'
 
-  has_many :strategi_eselon_dua_bs, lambda {
-    where(role: "eselon_2b").where.not(nip_asn: "")
-  }, class_name: "StrategiPohon",
-     foreign_key: "strategi_ref_id", dependent: :destroy
+  accepts_nested_attributes_for :indikators, reject_if: :all_blank, allow_destroy: true
 
-  has_many :strategi_eselon_tiga_setda, lambda {
-    where(role: "eselon_3").where.not(nip_asn: "")
-  }, class_name: "StrategiPohon",
-     foreign_key: "strategi_ref_id", dependent: :destroy
+  has_many :strategi_bawahans, class_name: 'StrategiPohon',
+                               primary_key: :id, foreign_key: :strategi_ref_id
 
-  has_many :strategi_eselon_tiga_pohons, lambda {
-    where(role: "eselon_3", type: "StrategiPohon").or(where(role: "eselon_2b")).where(nip_asn: "")
-  }, class_name: "StrategiPohon",
-     foreign_key: "strategi_ref_id",
-     dependent: :destroy
-
-  has_many :strategi_eselon_empats, lambda {
-    where(role: "eselon_4").where(nip_asn: "")
-  }, class_name: "StrategiPohon",
-     foreign_key: "strategi_ref_id", dependent: :destroy
-
-  has_many :strategi_staffs, lambda {
-    where(role: "staff").where(nip_asn: "")
-  }, class_name: "StrategiPohon",
-     foreign_key: "strategi_ref_id", dependent: :destroy
+  belongs_to :strategi_atasan, class_name: "StrategiPohon",
+                               foreign_key: "strategi_ref_id", optional: true
 
   belongs_to :strategi_asli, class_name: 'Strategi',
                              foreign_key: :strategi_cascade_link,
