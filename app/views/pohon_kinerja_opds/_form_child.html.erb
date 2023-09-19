@@ -1,0 +1,32 @@
+<%= form_with(url: url, model: model,
+              method: method, local: false,
+              data: {
+                  controller: 'pohon-tematik',
+                  action: 'ajax:success->pohon-tematik#ajaxSuccess'
+              }) do |form| %>
+  <div class="field">
+    <%= form.hidden_field :role, class: "form-control" %>
+    <%= form.hidden_field :strategi_ref_id, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.label :strategi, class: "form-label" %>
+    <%= form.text_field :strategi, class: "form-control" %>
+  </div>
+  <% if model.new_record? %>
+    <%= form.hidden_field :role, class: "form-control" %>
+    <%= form.hidden_field :opd_id, class: "form-control" %>
+    <%= form.hidden_field :strategi_ref_id, class: "form-control" %>
+  <% end %>
+  <div class="field" id="indikator-pohon">
+    <%= form.fields_for :indikators do |indikator_form| %>
+      <%= render 'indikators/indikator_fields', form: indikator_form %>
+    <% end %>
+  </div>
+  <%= link_to_add_nested(form, :indikators, '#indikator-pohon',
+                          link_classes: 'btn btn-outline-primary btn-sm',
+                          link_text: 'Tambah Indikator',
+                          partial: 'indikators/indikator_fields') %>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

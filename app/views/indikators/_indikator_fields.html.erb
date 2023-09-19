@@ -1,0 +1,19 @@
+<fieldset class="mb-5">
+  <div class="field">
+    <%= form.label :tahun, { class: "form-label" } %>
+    <%= form.text_field :tahun, { class: "form-control", value: cookies[:tahun], readonly: true } %>
+  </div>
+  <div class="field">
+    <%= form.label :indikator, { class: "form-label" } %>
+    <%= form.text_field :indikator, { class: "form-control" } %>
+  </div>
+  <div class="field">
+    <%= form.label :target, { class: "form-label" } %>
+    <%= form.number_field :target, { class: "form-control", step: 0.000001 } %>
+  </div>
+  <div class="field">
+    <%= form.label :satuan, { class: "form-label" } %>
+    <%= form.text_field :satuan, { class: "form-control" } %>
+  </div>
+  <%= link_to_remove_nested(form, link_text: 'Hapus Indikator', link_classes: 'btn btn-outline-danger') %>
+</fieldset>
