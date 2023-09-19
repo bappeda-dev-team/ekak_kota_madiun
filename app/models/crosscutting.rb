@@ -6,8 +6,16 @@ class Crosscutting
     @strategi = StrategiPohon.find(strategi_id)
   end
 
+  def id
+    @strategi.id
+  end
+
   def opd_pemilik
     @strategi.opd
+  end
+
+  def kode_opd_pemilik
+    opd_pemilik.kode_unik_opd
   end
 
   def external

@@ -1,32 +1,41 @@
-<%= form_with(model: crosscutting) do |form| %>
-  <% if crosscutting.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(crosscutting.errors.count, "error") %> prohibited this crosscutting from being saved:</h2>
-
-      <ul>
-        <% crosscutting.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+<%= form_with url: crosscutting_path(crosscutting),
+              local: false,
+              data: {
+                controller: 'form-ajax',
+                form_aajx_modal_param: 'form-corsscutting',
+                action: 'ajax:complete->form-ajax#successResponseNew'
+              } do |form| %>
+  <div class="field">
+    <%= form.label :crosscutting, class: "form-label" %>
+    <% crosscutting.external.each do |cross| %>
+      <div class="form-check">
+        <%= hidden_field_tag 'uncheck[]', cross.id %>
+        <%= check_box_tag 'check[]', cross.id, true, class: 'form-check-input' %>
+        <%= label_tag 'check', class: 'form-check-label' do %>
+          <span class="fw-bolder"><%= cross.opd.nama_opd %></span>
         <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :internal_external %>
-    <%= form.text_field :internal_external %>
+      </div>
+    <% end %>
   </div>
-
-  <div class="field">
-    <%= form.label :opd_list %>
-    <%= form.text_field :opd_list %>
+  <div class="field mb-5">
+    <%= form.label :opd, { class: "form-label" } %>
+    <%= form.select :opd_list, [], {include_blank: true},
+     {
+       multiple: true,
+       data: { placeholder: "Daftar OPD",
+         controller: 'dropdown',
+         dropdown_jenis_value: 'ajax_preselect',
+         dropdown_url_value: legit_opd_opds_path(:json),
+         dropdown_kode_opd_value: crosscutting.kode_opd_pemilik,
+         dropdown_parent_value: '#form-crosscutting-body',
+       }
+     } %>
   </div>
-
   <div class="field">
-    <%= form.label :keterangan %>
-    <%= form.text_field :keterangan %>
+    <%= form.label :keterangan, { class: "form-label" } %>
+    <%= form.text_area :keterangan, { class: "form-control", required: true } %>
   </div>
-
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Simpan perubahan" %>
   </div>
 <% end %>
