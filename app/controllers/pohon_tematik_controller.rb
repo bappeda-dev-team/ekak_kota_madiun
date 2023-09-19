@@ -101,7 +101,7 @@ class PohonTematikController < ApplicationController
     @pohon_ref_id = params[:id]
     @opds = Opd.opd_resmi
     @strategi = Strategi.new(role: 'strategi_pohon_kota', tahun: parent_pohon.tahun, type: nil)
-    @strategi.sasarans.build.indikator_sasarans.build
+    @strategi.indikators.build
   end
 
   def edit_strategi
@@ -227,7 +227,7 @@ class PohonTematikController < ApplicationController
     @opd = parent_pohon.opd
     @tactical = Strategi.new(role: 'tactical_pohon_kota', tahun: parent_pohon.tahun,
                              opd_id: @opd.id)
-    @tactical.sasarans.build.indikator_sasarans.build
+    @tactical.indikators.build(kode_opd: @opd.kode_unik_opd)
   end
 
   def edit_tactical
@@ -274,7 +274,7 @@ class PohonTematikController < ApplicationController
     @opd = parent_pohon.opd
     @operational = Strategi.new(role: 'operational_pohon_kota', tahun: parent_pohon.tahun,
                                 opd_id: @opd.id)
-    @operational.sasarans.build.indikator_sasarans.build
+    @operational.indikators.build(kode_opd: @opd.kode_unik_opd)
   end
 
   def edit_operational
@@ -516,17 +516,7 @@ class PohonTematikController < ApplicationController
   def strategi_params
     params.require(:strategi).permit(:role, :tahun,
                                      :strategi, :opd_id,
-                                     sasarans_attributes: [:id, :sasaran_kinerja, :id_rencana,
-                                                           indikator_sasarans_params])
-  end
-
-  def indikator_sasarans_params
-    { indikator_sasarans_attributes: %i[id
-                                        indikator_kinerja
-                                        aspek
-                                        target
-                                        satuan
-                                        _destroy] }
+                                     indikators_attributes)
   end
 
   def sub_tematik_params
