@@ -14,6 +14,9 @@ Rails.application.routes.draw do
     member do
       get :new_child
     end
+    collection do
+      get :cascading
+    end
   end
   resources :tims
   # TODO: Refactor controller to resources

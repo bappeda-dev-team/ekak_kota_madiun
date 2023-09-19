@@ -24,6 +24,10 @@ module AdminItemHelper
         icon: 'fas fa-tree', identifier: 'pohon_kinerja'
       },
       {
+        title: 'Pohon Cascading', href: cascading_pohon_kinerja_opds_path,
+        icon: 'fas fa-tree', identifier: 'pohon_kinerja'
+      },
+      {
         title: 'Info OPD', href: info_opds_path,
         icon: 'fas fa-building', identifier: 'opds/info'
       },
