@@ -11,10 +11,8 @@ module PohonKinerjaOpdsHelper
       child_strategi(pohon_kinerja_opd, @tactical_opd)
     when 'eselon_3'
       child_strategi(pohon_kinerja_opd, @operational_opd)
-    when 'eselon_4'
-      child_strategi(pohon_kinerja_opd, @staff_opd)
     else
-      []
+      child_strategi(pohon_kinerja_opd, @staff_opd)
     end
   end
 end

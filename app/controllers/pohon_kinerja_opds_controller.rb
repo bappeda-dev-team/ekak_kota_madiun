@@ -26,6 +26,7 @@ class PohonKinerjaOpdsController < ApplicationController
   end
 
   def new_child
+    @title = params[:title]
     @parent = StrategiPohon.find(params[:id])
     @pohon = StrategiPohon.new(role: params[:role], opd_id: @opd.id,
                                strategi_ref_id: @parent.id)
