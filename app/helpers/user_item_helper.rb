@@ -8,7 +8,7 @@ module UserItemHelper
         icon: 'fas fa-book', identifier: 'usulans'
       },
       {
-        title: 'Pohon Kinerja', href: manual_pohon_kinerja_index_path,
+        title: 'Pohon Kinerja', href: pohon_kinerja_opds_path,
         icon: 'fas fa-tree', identifier: 'pohon_kinerja'
       },
       {
