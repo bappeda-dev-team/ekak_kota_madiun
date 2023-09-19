@@ -24,7 +24,8 @@ class CrosscuttingsController < ApplicationController
     pohons = Pohon.where(id: hapus_cross)
 
     pohons.update_all(
-      strategi_id: '',
+      pohonable_id: '',
+      pohonable_type: '',
       role: 'opd-batal',
       keterangan: keterangan,
       status: 'batal-crosscutting',
