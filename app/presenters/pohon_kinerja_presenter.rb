@@ -141,6 +141,10 @@ class PohonKinerjaPresenter
     []
   end
 
+  def pelaksana
+    @pohon.pohon_shareds.where.not(role: %w[opd opd-batal], user_id: nil).order(:user_id)
+  end
+
   def dibagikans
     # return unless @pohon.instance_of?(StrategiPohon)
 
