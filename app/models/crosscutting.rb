@@ -1,17 +1,19 @@
 # Get opd with shared strategi pohon
 class Crosscutting
-  attr_accessor :strategi
-
   def initialize(strategi_id)
-    @strategi = StrategiPohon.find(strategi_id)
+    @strategi_id = strategi_id
+  end
+
+  def strategi
+    @strategi = StrategiPohon.find(@strategi_id)
   end
 
   def id
-    @strategi.id
+    strategi.id
   end
 
   def opd_pemilik
-    @strategi.opd
+    strategi.opd
   end
 
   def kode_opd_pemilik
@@ -19,10 +21,10 @@ class Crosscutting
   end
 
   def external
-    @strategi.pohon_shareds.where(role: 'opd').order(:opd_id)
+    strategi.pohon_shareds.where(role: 'opd').order(:opd_id)
   end
 
   def daftar_terpilih
-    @strategi.pohon_shareds.where(role: 'opd').pluck(:opd_id)
+    strategi.pohon_shareds.where(role: 'opd').pluck(:opd_id)
   end
 end

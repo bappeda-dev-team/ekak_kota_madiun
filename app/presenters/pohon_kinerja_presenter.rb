@@ -133,6 +133,8 @@ class PohonKinerjaPresenter
   end
 
   def crosscuttings
+    return [] if @pohon.instance_of?(Pohon)
+
     ctx = Crosscutting.new(@pohon.id)
     ctx.external
   rescue NoMethodError
