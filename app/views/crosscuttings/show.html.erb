@@ -1,0 +1,34 @@
+<div class="crosscutting-title">
+  <h4>OPD : <%= @crosscutting.opd_pemilik %></h4>
+  <div>
+    <h5>Pohon Kinerja: <%= @crosscutting.strategi %></h5>
+  </div>
+</div>
+<hr>
+<div class="crosscutting-body" data-controller="form-modal">
+  <div class="crosscutting" data-form-modal-target="prevHtml">
+    <caption>Crosscutting dengan: </caption>
+    <table class="table table-bordered mb-3">
+      <thead>
+        <th class="text-start">OPD</th>
+        <th class="text-wrap text-start">Keterangan</th>
+      </thead>
+      <tbody>
+        <%= render partial: 'crosscutting', collection: @crosscuttings, as: :crosscutting || 'Tidak ada crosscutting' %>
+      </tbody>
+    </table>
+    <div class="col mt-5 border-top border-dark pt-3">
+      <%= link_to edit_crosscutting_path(@crosscutting.strategi.id),
+     remote: true,
+     class: 'btn btn-info w-100',
+     data: {
+         action: 'ajax:complete->form-modal#remoteForm:prevent'
+     } do %>
+        <i class="fas fa-edit me-2"></i>
+        <span>Edit</span>
+      <% end %>
+    </div>
+  </div>
+  <div class="form-remote" data-form-modal-target="formRemote">
+  </div>
+</div>

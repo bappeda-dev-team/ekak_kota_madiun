@@ -23,32 +23,24 @@
 #  index_strategis_on_pohon_id  (pohon_id)
 #
 class StrategiPohon < Strategi
-  has_many :pohon_shareds, lambda {
-                             where(pohonable_type: 'StrategiPohon')
-                           }, foreign_key: 'pohonable_id', primary_key: 'id', class_name: 'Pohon'
+  has_many :komentars, primary_key: :strategi_cascade_link, foreign_key: :item
 
-  has_many :takens, class_name: 'Strategi', primary_key: 'id',
-                    foreign_key: 'linked_with'
+  has_many :pohon_shareds, -> { where(pohonable_type: 'StrategiPohon') },
+           class_name: 'Pohon', primary_key: 'id', foreign_key: 'pohonable_id'
 
-  has_many :indikators, lambda {
-                          where(jenis: 'StrategiPohon', sub_jenis: 'StrategiPohon')
-                        }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id'
+  has_many :takens, class_name: 'Strategi', primary_key: 'id', foreign_key: 'linked_with'
+
+  has_many :indikators, -> { where(jenis: 'StrategiPohon', sub_jenis: 'StrategiPohon') },
+           class_name: 'Indikator', primary_key: 'id', foreign_key: 'kode'
 
   accepts_nested_attributes_for :indikators, reject_if: :all_blank, allow_destroy: true
 
-  has_many :strategi_bawahans, class_name: 'StrategiPohon',
-                               primary_key: :id, foreign_key: :strategi_ref_id
+  has_many :strategi_bawahans, class_name: 'StrategiPohon', primary_key: :id, foreign_key: :strategi_ref_id
 
-  belongs_to :strategi_atasan, class_name: "StrategiPohon",
-                               foreign_key: "strategi_ref_id", optional: true
+  belongs_to :strategi_atasan, class_name: "StrategiPohon", foreign_key: "strategi_ref_id", optional: true
 
-  belongs_to :strategi_asli, class_name: 'Strategi',
-                             foreign_key: :strategi_cascade_link,
-                             primary_key: :id,
+  belongs_to :strategi_asli, class_name: 'Strategi', foreign_key: :strategi_cascade_link, primary_key: :id,
                              optional: true
-
-  has_many :komentars, primary_key: :strategi_cascade_link,
-                       foreign_key: :item
 
   def pohon_ref_id
     strategi_ref_id

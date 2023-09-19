@@ -3,13 +3,10 @@ import { Controller } from 'stimulus'
 //need sweet alert import
 
 export default class extends Controller {
-  static targets = ['isu_strategis']
+  static targets = ['isu_strategis', 'prevHtml', 'formRemote']
 
   static values = {
     target: String
-  }
-
-  closeModal(event) {
   }
 
   updateTargetValue(event) {
@@ -22,6 +19,23 @@ export default class extends Controller {
     let location = event.params.location
     let result_target = event.params.target
     this.formFetcher(target.href, location)
+  }
+
+  remoteForm(e) {
+    const [xhr, status] = e.detail
+    const target = this.formRemoteTarget
+    const prevHtml = this.prevHtmlTarget
+    prevHtml.classList.add('d-none')
+
+    if (status == 'OK') {
+      const html = xhr.response
+      target.insertAdjacentHTML('beforeend', html)
+    }
+    else {
+      // const html = this.errorHtml()
+      const html = xhr.response
+      target.insertAdjacentHTML('beforeend', html)
+    }
   }
 
   formFetcher(url, target) {
@@ -45,5 +59,15 @@ export default class extends Controller {
       const html = '<div class="alert alert-danger" role="alert">Terjadi Kesalahan</div>'
       element.innerHTML = html
     }
+  }
+
+  errorHtml() {
+    return `
+        <div class="alert alert-danger" role="alert">
+          Terjadi Kesalahan
+          <br>
+          Klik Batal untuk menutup
+        </div>
+        `
   }
 }

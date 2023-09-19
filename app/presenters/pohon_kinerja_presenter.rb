@@ -132,6 +132,15 @@ class PohonKinerjaPresenter
     to_real_name_up(prefix)
   end
 
+  def crosscuttings
+    return [] if @pohon.instance_of?(Pohon)
+
+    ctx = Crosscutting.new(@pohon.id)
+    ctx.external
+  rescue NoMethodError
+    []
+  end
+
   def dibagikans
     # return unless @pohon.instance_of?(StrategiPohon)
 

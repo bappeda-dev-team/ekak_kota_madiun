@@ -1,0 +1,44 @@
+<%= form_with url: crosscutting_path(crosscutting.id),
+              local: false,
+              method: :patch,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_modal_param: 'form-crosscutting',
+                form_ajax_pohon_param: dom_id(crosscutting.strategi),
+                action: 'ajax:complete->form-ajax#successResponseNew'
+              } do |form| %>
+  <div class="field">
+    <%= form.label :crosscutting, class: "form-label" %>
+    <% crosscutting.external.each do |cross| %>
+      <div class="form-check">
+        <%= hidden_field_tag 'uncheck[]', cross.id %>
+        <%= check_box_tag 'check[]', cross.id, true, class: 'form-check-input' %>
+        <%= label_tag 'check', class: 'form-check-label' do %>
+          <span class="fw-bolder"><%= cross.opd.nama_opd %></span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="field mb-5">
+    <%= form.label :opd, { class: "form-label" } %>
+    <%= form.select :opd_list, [], {include_blank: true},
+     {
+       multiple: true,
+       data: { placeholder: "Daftar OPD",
+         controller: 'dropdown',
+         dropdown_jenis_value: 'ajax_preselect',
+         dropdown_url_value: legit_opd_opds_path(:json),
+         dropdown_kode_opd_value: crosscutting.kode_opd_pemilik,
+         dropdown_kode_opd_terpilih_value: crosscutting.daftar_terpilih,
+         dropdown_parent_value: '#form-crosscutting-body',
+       }
+     } %>
+  </div>
+  <div class="field">
+    <%= form.label :keterangan, { class: "form-label" } %>
+    <%= form.text_area :keterangan, { class: "form-control", required: true } %>
+  </div>
+  <div class="actions">
+    <%= form.submit "Simpan perubahan" %>
+  </div>
+<% end %>
