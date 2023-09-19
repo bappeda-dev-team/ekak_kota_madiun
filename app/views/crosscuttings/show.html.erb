@@ -7,10 +7,16 @@
 <hr>
 <div class="crosscutting-body" data-controller="form-modal">
   <div class="crosscutting" data-form-modal-target="prevHtml">
-    <h5>Crosscutting dengan: </h5>
-    <ul>
-      <%= render partial: 'crosscutting', collection: @crosscuttings, as: :crosscutting || 'Tidak ada crosscutting' %>
-    </ul>
+    <caption>Crosscutting dengan: </caption>
+    <table class="table table-bordered mb-3">
+      <thead>
+        <th class="text-start">OPD</th>
+        <th class="text-wrap text-start">Keterangan</th>
+      </thead>
+      <tbody>
+        <%= render partial: 'crosscutting', collection: @crosscuttings, as: :crosscutting || 'Tidak ada crosscutting' %>
+      </tbody>
+    </table>
     <div class="col mt-5 border-top border-dark pt-3">
       <%= link_to edit_crosscutting_path(@crosscutting.strategi.id),
      remote: true,
