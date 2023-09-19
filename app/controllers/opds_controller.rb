@@ -27,6 +27,7 @@ class OpdsController < ApplicationController
   def legit_opd
     nama_opd = params[:q]
     @opds = Opd.where.not(kode_unik_opd: nil).where("nama_opd ILIKE ?", "%#{nama_opd}%")
+    @opds = @opds.where.not(kode_unik_opd: params[:kode_opd]) if params[:kode_opd]
     return unless params[:item]
 
     @opds = Opd.where(kode_unik_opd: params[:item])
