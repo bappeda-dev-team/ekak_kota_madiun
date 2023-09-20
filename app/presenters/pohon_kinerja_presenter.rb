@@ -44,13 +44,13 @@ class PohonKinerjaPresenter
   end
 
   def processed?
-    return unless @pohon.instance_of?(Pohon)
+    return false unless @pohon.instance_of?(Pohon)
 
     @pohon.status? && @pohon.metadata.key?("processed_by")
   end
 
   def taken?
-    return unless @pohon.instance_of?(StrategiPohon)
+    return false unless @pohon.instance_of?(StrategiPohon)
 
     @pohon.takens.any?
   end
