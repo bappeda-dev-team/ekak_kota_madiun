@@ -389,8 +389,18 @@ class Sasaran < ApplicationRecord
     indikator_sasarans.any?(&:manual_ik)
   end
 
+  def output_terisi?
+    metadata.key?(:hasil_output)
+  rescue NoMethodError
+    false
+  end
+
+  def sasaran_sesuai?
+    indikator_sasarans.any? && manual_ik?
+  end
+
   def siap_ditarik?
-    strategi? && tahapan? && manual_ik?
+    strategi? && tahapan? && manual_ik? && target_sesuai?
   end
 
   def sasaran_kota

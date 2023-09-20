@@ -3,7 +3,7 @@
     <div class="row align-items-center">
       <div class="col mb-3">
         <span class="fs-5 fw-bold mb-0">1. Sasaran Kinerja </span>
-        <span class="ms-2"><%= sesuai?(sasaran.target_sesuai?) %></span>
+        <span class="ms-2"><%= sasaran_check(sasaran.sasaran_sesuai?) %></span>
       </div>
       <div class="col text-end">
         <%= link_to 'Edit Sasaran', edit_sasaran_path(sasaran), class: 'btn btn-sm btn-primary' %>
@@ -44,7 +44,7 @@
     <div class="row align-items-center mb-3">
       <div class="col-8">
         <span class="fs-5 fw-bold mb-0">2. Rencana Aksi</span>
-        <span class="ms-2"><%= sesuai?(sasaran.target_sesuai?) %></span>
+        <span class="ms-2"><%= target_sesuai?(sasaran.target_sesuai?) %></span>
       </div>
       <% unless diajukan? %>
         <div class="col text-end">

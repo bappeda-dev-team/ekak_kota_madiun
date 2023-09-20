@@ -231,11 +231,11 @@ class User < ApplicationRecord
   end
 
   def petunjuk_kelurahan
-    jabatan.upcase.split(/KELURAHAN/, 2).last.strip if pegawai_kelurahan?
+    jabatan.upcase.split("KELURAHAN", 2).last.strip if pegawai_kelurahan?
   end
 
   def petunjuk_puskesmas
-    nama_bidang&.upcase&.split(/PUSKESMAS/, 2)&.last&.strip if pegawai_puskesmas?
+    nama_bidang&.upcase&.split("PUSKESMAS", 2)&.last&.strip if pegawai_puskesmas?
   end
 
   def pegawai_rsud?
@@ -247,7 +247,7 @@ class User < ApplicationRecord
   end
 
   def petunjuk_bagian
-    nama_bidang.upcase.split(/BAGIAN/, 2).last.strip if pegawai_bagian?
+    nama_bidang.upcase.split("BAGIAN", 2).last.strip if pegawai_bagian?
   end
 
   def petunjuk_status
@@ -283,7 +283,7 @@ class User < ApplicationRecord
   def sasaran_pohon_kinerja(tahun: nil)
     sasarans.includes(%i[strategi indikator_sasarans])
             .where("sasarans.tahun ILIKE ?", "%#{tahun}%")
-            .select { |s| s.tahapan? && s.manual_ik? && s.strategi? }
+            .select { |s| s.tahapan? && s.manual_ik? && s.strategi? && s.target_sesuai? }
   end
 
   def eselon_user

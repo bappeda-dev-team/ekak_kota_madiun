@@ -67,4 +67,12 @@ module SasaransHelper
     user.eselon_user == 'eselon_4' || current_user.has_any_role?('eselon_4') ||
       user.nama_bidang&.upcase&.include?("PUSKESMAS") || user.opd.nama_opd&.upcase&.include?("BENCANA")
   end
+
+  def sasaran_check(checker)
+    if checker
+      "<i class='fa fa-check text-success'></i>".html_safe
+    else
+      "<span class='badge bg-danger'><i class='fa fa-times'></i> Manual IK atau Indikator Belum terisi</span>".html_safe
+    end
+  end
 end

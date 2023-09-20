@@ -63,6 +63,14 @@ module AksisHelper
     if checker
       "<i class='fa fa-check text-success'></i>".html_safe
     else
+      "<span class='badge bg-danger'><i class='fa fa-times'></i> Belum terisi</span>".html_safe
+    end
+  end
+
+  def target_sesuai?(checker)
+    if checker
+      "<i class='fa fa-check text-success'></i>".html_safe
+    else
       "<span class='badge bg-danger'><i class='fa fa-times'></i> Rencana aksi belum 100%</span>".html_safe
     end
   end
