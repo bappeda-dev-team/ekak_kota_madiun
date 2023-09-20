@@ -39,6 +39,7 @@
               <th class="border text-center" scope="col">Target</th>
               <th class="border text-center" scope="col">Satuan</th>
               <th class="border text-center" scope="col">Aksi</th>
+              <th class="border text-center" scope="col">Status</th>
             </tr>
           </thead>
           <tbody>
@@ -57,6 +58,9 @@
                 <% end %>
                 <td class="border text-center" rowspan="<%= rowspan_sasaran(sasaran) %>">
                   <%= render 'sasarans/tombol_action_sasaran', sasaran: sasaran %>
+                </td>
+                <td class="border text-center" rowspan="<%= rowspan_sasaran(sasaran) %>">
+                  <%= status_sasaran_pokin(sasaran&.status_sasaran) %>
                 </td>
               </tr>
               <% row_indikator_sasaran(sasaran).each do |indikator| %>

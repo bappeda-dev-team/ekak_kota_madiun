@@ -57,9 +57,9 @@ module SasaransHelper
 
   def status_sasaran_pokin(status_sasaran)
     if status_sasaran == 'siap_ditarik'
-      'SIAP DITARIK SKP'
+      '<span class="badge badge-lg bg-success text-dark">SIAP DITARIK SKP</span>'.html_safe
     else
-      'BELUM SIAP DITARIK SKP'
+      '<span class="badge badge-lg bg-warning text-dark">BELUM SIAP DITARIK SKP</span>'.html_safe
     end
   end
 
