@@ -7,7 +7,18 @@ module LaporansHelper
   end
 
   def indikator_sub(subkegiatan, tahun, kode_opd)
-    indikator = subkegiatan&.indikator_subkegiatan_tahun(tahun, kode_opd)
+    tahun_n = tahun_fix(tahun)
+    indikator = subkegiatan&.indikator_subkegiatan_tahun(tahun_n, kode_opd)
+    "
+      <td class='border text-wrap fw-bolder'>#{indikator&.dig(:indikator)}</td>
+      <td class='border text-wrap fw-bolder'>#{indikator&.dig(:target)}</td>
+      <td class='border text-wrap fw-bolder'>#{indikator&.dig(:satuan)}</td>
+    ".html_safe
+  end
+
+  def indikator_keg(kegiatan, tahun, kode_opd)
+    tahun_n = tahun_fix(tahun)
+    indikator = kegiatan&.indikator_kegiatan_tahun(tahun_n, kode_opd)
     "
       <td class='border text-wrap fw-bolder'>#{indikator&.dig(:indikator)}</td>
       <td class='border text-wrap fw-bolder'>#{indikator&.dig(:target)}</td>
@@ -16,7 +27,8 @@ module LaporansHelper
   end
 
   def indikator_prg(program, tahun, kode_opd)
-    indikator = program&.indikator_program_tahun(tahun, kode_opd)
+    tahun_n = tahun_fix(tahun)
+    indikator = program&.indikator_program_tahun(tahun_n, kode_opd)
     "
       <td class='border text-wrap fw-bolder'>#{indikator&.dig(:indikator)}</td>
       <td class='border text-wrap fw-bolder'>#{indikator&.dig(:target)}</td>
@@ -71,5 +83,9 @@ module LaporansHelper
         </tr>
       ".html_safe
     end
+  end
+
+  def tahun_fix(tahun)
+    tahun.match(/murni|perubahan/) ? tahun[/[^_]\d*/, 0] : tahun
   end
 end
