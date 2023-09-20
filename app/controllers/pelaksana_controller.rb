@@ -12,9 +12,15 @@ class PelaksanaController < ApplicationController
 
   def edit
     @role = params[:role]
-    role_tambahan = 'eselon_2b' if @role == 'eselon_3'
-    @temans = @opd.users.with_any_role(@role.to_sym, role_tambahan.to_sym).reject do |u|
-      u.strategi_pohons(@pelaksana.id).any?
+    if @role == 'eselon_3'
+      role_tambahan = :eselon_2b
+      @temans = @opd.users.with_any_role(@role.to_sym, role_tambahan).reject do |u|
+        u.strategi_pohons(@pelaksana.id).any?
+      end
+    else
+      @temans = @opd.users.with_any_role(@role.to_sym).reject do |u|
+        u.strategi_pohons(@pelaksana.id).any?
+      end
     end
   end
 
