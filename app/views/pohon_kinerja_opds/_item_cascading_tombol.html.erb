@@ -44,9 +44,10 @@
         </div>
       </div>
     <% else %>
-      <div class="row">
-        <div class="col">
-          <%= link_to terima_pohon_tematik_path(pohon),
+      <% unless pohon.processed? %>
+        <div class="row">
+          <div class="col">
+            <%= link_to terima_pohon_tematik_path(pohon),
          remote: true,
          method: :patch,
          class: 'btn btn-outline-success',
@@ -56,12 +57,12 @@
              controller: 'pohon-tematik',
              action: 'ajax:complete->pohon-tematik#terimaPohon:prevent'
          } do %>
-            <i class="fas fa-check me-2"></i>
-            <span>Terima</span>
-          <% end %>
-        </div>
-        <div class="col">
-          <%= link_to tolak_strategi_pohon_tematik_path(pohon),
+              <i class="fas fa-check me-2"></i>
+              <span>Terima</span>
+            <% end %>
+          </div>
+          <div class="col">
+            <%= link_to tolak_strategi_pohon_tematik_path(pohon),
          remote: true,
          class: 'btn btn-outline-danger',
          data: {
@@ -70,11 +71,12 @@
              bs_toggle: 'modal',
              bs_target: '#form-modal'
          } do %>
-            <i class="fa fa-times me-2"></i>
-            <span>Tolak</span>
-          <% end %>
+              <i class="fa fa-times me-2"></i>
+              <span>Tolak</span>
+            <% end %>
+          </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
   </div>
 <% end %>

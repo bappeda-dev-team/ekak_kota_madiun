@@ -154,10 +154,10 @@ class PohonTematikController < ApplicationController
   def terima
     @pohon = Pohon.find(params[:id])
     if @pohon.update(status: 'diterima', metadata: { processed_by: current_user.id, processed_at: DateTime.current })
-      html_content = render_to_string(partial: 'pohon_kinerja/item_pohon',
+      html_content = render_to_string(partial: 'pohon_kinerja_opds/item_pohon',
                                       formats: 'html',
                                       layout: false,
-                                      locals: { pohon: @pohon, jenis: 'Strategi - Kota' })
+                                      locals: { pohon: @pohon })
       render json: { resText: "Strategi diterima", attachmentPartial: html_content }.to_json,
              status: :ok
     else
@@ -179,10 +179,10 @@ class PohonTematikController < ApplicationController
                        processed_at: DateTime.current,
                        keterangan: keterangan_tolak
                      })
-      html_content = render_to_string(partial: 'pohon_kinerja/item_pohon',
+      html_content = render_to_string(partial: 'pohon_kinerja_opds/item_pohon',
                                       formats: 'html',
                                       layout: false,
-                                      locals: { pohon: @pohon, jenis: 'Strategi - Kota' })
+                                      locals: { pohon: @pohon })
       render json: { resText: "Usulan ditolak", attachmentPartial: html_content }.to_json,
              status: :ok
     else
