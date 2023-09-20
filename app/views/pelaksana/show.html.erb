@@ -1,0 +1,33 @@
+<div class="pelaksana-title">
+  <div>
+    <h5>Pohon Kinerja: <%= @pelaksana.strategi %></h5>
+  </div>
+</div>
+<hr>
+<div class="pelaksana-body" data-controller="form-modal">
+  <div class="pelaksana" data-form-modal-target="prevHtml">
+    <caption>Cascading: </caption>
+    <table class="table table-bordered mb-3">
+      <thead>
+        <th class="text-start">Pelaksana</th>
+        <th class="text-wrap text-start">Keterangan</th>
+      </thead>
+      <tbody>
+        <%= render partial: 'pelaksana', collection: @pelaksanas, as: :pelaksana || 'Tidak ada pelaksana' %>
+      </tbody>
+    </table>
+    <div class="col mt-5 border-top border-dark pt-3">
+      <%= link_to edit_pelaksana_path(@pelaksana.strategi.id, role: @pelaksana.role),
+     remote: true,
+     class: 'btn btn-info w-100',
+     data: {
+         action: 'ajax:complete->form-modal#remoteForm:prevent'
+     } do %>
+        <i class="fas fa-edit me-2"></i>
+        <span>Edit</span>
+      <% end %>
+    </div>
+  </div>
+  <div class="form-remote" data-form-modal-target="formRemote">
+  </div>
+</div>

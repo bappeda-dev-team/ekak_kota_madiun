@@ -1,0 +1,49 @@
+<%= form_with url: pelaksana_path(pelaksana.id),
+              local: false,
+              method: :patch,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_modal_param: 'form-pelaksana',
+                form_ajax_pohon_param: dom_id(pelaksana.strategi),
+                action: 'ajax:complete->form-ajax#successResponseNew'
+              } do |form| %>
+  <div class="field">
+    <%= form.label :pelaksana, class: "form-label" %>
+    <% pelaksana.cascading.each do |cross| %>
+      <div class="form-check">
+        <%= hidden_field_tag 'uncheck[]', cross.id %>
+        <% if cross.pohonable.sasarans.select { |s| s.nip_asn == cross.user.nik }.any? %>
+          <span class="badge bg-success">Rencana Kinerja sudah terisi</span>
+        <% else %>
+          <%= check_box_tag 'check[]', cross.id, true, class: 'form-check-input' %>
+        <% end %>
+        <%= label_tag 'check', class: 'form-check-label' do %>
+          <span class="fw-bolder"><%= cross.user.nama %></span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="field">
+    <%= form.label :role, { class: "form-label" } %>
+    <%= form.text_field :role, { class: "form-control", required: true, readonly: true, value: @role } %>
+  </div>
+  <div class="field">
+    <%= form.label :asn, class: "form-label" %>
+    <%= form.select :asn_list, temans.collect{ |asn| [asn.nama_nip, asn.nik] },
+      { include_blank: true },
+      multiple: true,
+      data: {
+        controller: 'dropdown',
+        placeholder: 'Pilih ASN',
+        dropdown_parent_value: '#form-pelaksana'
+      },
+      class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.label :keterangan, { class: "form-label" } %>
+    <%= form.text_area :keterangan, { class: "form-control", required: true } %>
+  </div>
+  <div class="actions">
+    <%= form.submit "Simpan perubahan" %>
+  </div>
+<% end %>
