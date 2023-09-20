@@ -11,6 +11,7 @@ json.data do
   json.sasaran @sasaran.sasaran_kinerja
   json.anggaran @sasaran.total_anggaran
   json.rencana_aksi @tahapans do |renaksi|
+    json.id_renaksi renaksi.id
     json.id_tahapan renaksi.id_rencana_aksi
     json.id_sasaran renaksi.id_rencana
     json.urutan renaksi&.urutan
