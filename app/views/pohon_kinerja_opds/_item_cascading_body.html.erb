@@ -7,7 +7,11 @@
       </tr>
       <% pohon.pelaksana.each.with_index(1) do |dibagikan, no| %>
         <tr>
-          <td class="text-start" width="30px">Pelaksana <%= no %></td>
+          <td class="text-start" width="30px">Pelaksana
+            <% if pohon.pelaksana.size > 1 %>
+              <%= no %>
+            <% end %>
+          </td>
           <td class="text-wrap text-start"><%= dibagikan.dibagikan_ke %></td>
           <td class="text-wrap text-start">
             <% if dibagikan.pohonable.sasarans.select { |s| s.nip_asn == dibagikan.nip_asn }.any? %>

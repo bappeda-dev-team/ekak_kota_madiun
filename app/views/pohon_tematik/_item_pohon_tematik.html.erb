@@ -1,7 +1,7 @@
 <div class="pohon">
   <div class="pohon-title">
     <h5 class="text-center"><strong>Tematik Kota</strong></h5>
-  <%= link_to clone_path(pohon), remote: true,
+    <%= link_to clone_path(pohon), remote: true,
                       data: {
                         controller: 'form-modal',
                         action: 'form-modal#appendForm',
@@ -10,9 +10,9 @@
                         bs_target: '#form-modal'
                       },
                       class: "btn btn-sm btn-primary w-100 mt-3" do %>
-    <i class="fa fa-clone me-2"></i>
-    <span>Clone</span>
-  <% end %>
+      <i class="fa fa-clone me-2"></i>
+      <span>Clone</span>
+    <% end %>
   </div>
   <div class="pohon-body">
     <table class="table table-bordered">
@@ -23,7 +23,11 @@
       <% unless pohon.pohonable.blank? %>
         <% pohon.pohonable.indikators.each.with_index(1) do |indikator, i| %>
           <tr>
-            <td class="text-start" width="30px">Indikator <%= i %></td>
+            <td class="text-start" width="30px">Indikator
+              <% if pohon.pohonable.indikators.size > 1  %>
+                <%= i %>
+              <% end %>
+            </td>
             <td class="text-wrap text-start"><%= indikator %></td>
           </tr>
           <tr>

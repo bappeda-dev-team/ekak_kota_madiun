@@ -11,7 +11,11 @@
       <% unless pohon.pohonable.blank? %>
         <% pohon.pohonable.indikators.each.with_index(1) do |indikator, i| %>
           <tr>
-            <td class="text-start" width="30px">Indikator <%= i %></td>
+            <td class="text-start" width="30px">Indikator
+              <% if pohon.pohonable.indikators.size > 1  %>
+                <%= i %>
+              <% end %>
+            </td>
             <td class="text-wrap text-start"><%= indikator %></td>
           </tr>
           <tr>
