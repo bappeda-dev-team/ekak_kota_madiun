@@ -1,7 +1,9 @@
 module AksisHelper
   def aksi_di_bulan(sasaran, tahapan, bulan, disabled: false)
     aksi = tahapan.aksis.find_by(bulan: bulan)
-    if aksi
+    if bulan <= Date.current.month
+      target_disabled
+    elsif aksi
       target_dengan_bulan(sasaran, tahapan, aksi, bulan, disabled)
     else
       target_tanpa_bulan(sasaran, tahapan, bulan, disabled)
@@ -20,6 +22,12 @@ module AksisHelper
   end
 
   private
+
+  def target_disabled
+    "<td class='fw-bolder text-gray-500 border'>
+      -
+    </td>".html_safe
+  end
 
   def target_tanpa_bulan(sasaran, tahapan, bulan, disabled)
     "<td class='fw-bolder text-gray-500 border'>
