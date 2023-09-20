@@ -4,7 +4,7 @@
       <h5 class="text-center"><strong><%= @title %> Baru</strong></h5>
     </div>
     <div class="pohon-body">
-      <%= render 'form',  { model: @pohon, url: pohon_kinerja_opds_path, method: :post  } %>
+      <%= render 'form',  { model: @pohon, url: pohon_kinerja_opds_path(from: @from), method: :post } %>
     </div>
     <div class="pohon-foot">
       <button type="button" class="btn btn-danger w-100" data-action="pohon-tematik#closeForm">Batal</button>

@@ -6,7 +6,7 @@
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout', title: "Pohon Cascading #{@nama_opd} - Tahun #{@tahun}" do %>
     <%= render 'shared/pohon' do %>
-      <%= render 'item_opd' %>
+      <%= render 'item_opd', from: 'cascading' %>
       <ul data-pohon-tematik-target='dahan'>
         <%= render partial: 'pohon_cascading', collection: @strategi_kota, as: :pohon %>
         <%= render partial: 'pohon_cascading', collection: @strategi_opd, as: :pohon %>

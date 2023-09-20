@@ -3,7 +3,7 @@
   <% unless reviewer? %>
     <% if pohon.real.instance_of?(StrategiPohon) %>
       <div class="d-grid gap-3 mt-3 d-none">
-        <%= link_to new_child_pohon_kinerja_opd_path(pohon, role: pohon.role_bawahan, title: pohon.judul_form),
+        <%= link_to new_child_pohon_kinerja_opd_path(pohon, role: pohon.role_bawahan, title: pohon.judul_form, from: from),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
