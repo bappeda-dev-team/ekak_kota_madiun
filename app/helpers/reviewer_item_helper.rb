@@ -6,11 +6,11 @@ module ReviewerItemHelper
         icon: 'fas fa-tree', identifier: 'pohon_kinerja/kota'
       },
       {
-        title: 'Pohon Kinerja OPD', href: manual_pohon_kinerja_index_path,
+        title: 'Pohon Kinerja OPD', href: pohon_kinerja_opds_path,
         icon: 'fas fa-tree', identifier: 'pohon_kinerja'
       },
       {
-        title: 'Pohon Kinerja Cascading', href: cascading_pohon_kinerja_index_path,
+        title: 'Pohon Cascading', href: cascading_pohon_kinerja_opds_path,
         icon: 'fas fa-tree', identifier: 'pohon_kinerja'
       }
     ]
