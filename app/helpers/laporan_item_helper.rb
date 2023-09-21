@@ -16,6 +16,10 @@ module LaporanItemHelper
         icon: 'fas fa-people-carry', identifier: 'gap'
       },
       {
+        title: 'Hasil Cascading', href: hasil_cascading_laporans_path,
+        icon: 'fas fa-people-arrows', identifier: 'hasil_cascading'
+      },
+      {
         title: 'Rencana Kinerja (KAK)', href: laporan_kak_laporans_path,
         icon: 'fas fa-bullseye', identifier: 'laporan_kak'
       },

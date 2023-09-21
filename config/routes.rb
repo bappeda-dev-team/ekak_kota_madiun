@@ -416,6 +416,8 @@ Rails.application.routes.draw do
       get :rankir1
       get :rankir2
       get :penetapan
+      get :hasil_cascading
+      post :cascading_opd
     end
 
     member do

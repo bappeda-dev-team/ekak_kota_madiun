@@ -116,6 +116,24 @@ class LaporansController < ApplicationController
     set_program_kegiatans
   end
 
+  def hasil_cascading; end
+
+  def cascading_opd
+    queries = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
+
+    @opd = queries.opd
+    @nama_opd = @opd.nama_opd
+
+    @strategi_kota = queries.strategi_kota
+    @tactical_kota = queries.tactical_kota
+    @operational_kota = queries.operational_kota
+
+    @strategi_opd = queries.strategi_opd
+    @tactical_opd = queries.tactical_opd
+    @operational_opd = queries.operational_opd
+    @staff_opd = queries.staff_opd
+  end
+
   private
 
   def set_program_kegiatans
