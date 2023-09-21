@@ -174,6 +174,12 @@ class PohonKinerjaPresenter
     pohonable.indikators
   end
 
+  def rencana_kinerjas
+    return false if @pohon.instance_of?(Pohon)
+
+    @pohon.sasarans.where.not(nip_asn: nil)
+  end
+
   private
 
   def to_real_name(role)
