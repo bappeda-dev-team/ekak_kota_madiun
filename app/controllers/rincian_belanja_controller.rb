@@ -3,12 +3,8 @@ class RincianBelanjaController < ApplicationController
   before_action :set_tahun
 
   def index
-    if current_user.eselon_atas? && current_user.nik != '198011182011011003'
-      redirect_to index_atasan_rincian_belanja_index_path
-    else
-      kak = KakQueries.new(opd: @user.opd, tahun: @tahun, user: @user)
-      @subkegiatan_sasarans = kak.pk_sasarans
-    end
+    kak = KakQueries.new(opd: @user.opd, tahun: @tahun, user: @user)
+    @subkegiatan_sasarans = kak.pk_sasarans
   end
 
   def index_atasan
