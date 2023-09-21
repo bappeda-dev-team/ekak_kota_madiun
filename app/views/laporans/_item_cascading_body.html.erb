@@ -13,53 +13,12 @@
             <% end %>
           </td>
           <td class="text-wrap text-start" colspan="2"><%= dibagikan.dibagikan_ke %></td>
-          <% if pohon.role == 'eselon_4' %>
-            <% rekins = rekin_user(pohon.rencana_kinerjas, dibagikan.user_id)  %>
-            <% rekins.each do |subkegiatan, sasarans| %>
-              <% unless dibagikan.user.has_role?(:staff) %>
-                <tr>
-                  <td class="text-start">Subkegiatan</td>
-                  <td class="text-wrap text-start" colspan="2"><%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %></td>
-                </tr>
-                <tr>
-                  <td class="text-start">Pagu</td>
-                  <td class="text-wrap text-start">Rp. <%=  number_with_delimiter(pagu_sub_rekin(sasarans)) %></td>
-                </tr>
-                <tr>
-                  <% indikator_sub = indikator_sub_rekin(@tahun, @opd, subkegiatan) %>
-                  <td class="text-wrap text-start">Indikator</td>
-                  <td class="text-wrap text-start" colspan="2"><%= indikator_sub.dig(:indikator) %></td>
-                </tr>
-                <tr>
-                  <td class="text-wrap text-start">Target / Satuan</td>
-                  <td class="text-wrap text-start" colspan="2"><%= indikator_sub.dig(:target) %> <%= indikator_sub.dig(:satuan) %></td>
-                </tr>
-              <% end %>
-              <% sasarans.each.with_index(1) do |sasaran, no_s| %>
-                <tr>
-                  <td class="text-start">Rencana Kinerja
-                    <% if sasarans.size > 1 %>
-                      - <%= no_s %>
-                    <% end %>
-                  </td>
-                  <td class="text-wrap text-start"><%= sasaran %> <%= sasaran.user %></td>
-                </tr>
-                <tr>
-                  <td class="text-start">Anggaran</td>
-                  <td class="rankir-2 text-start" colspan="2">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
-                </tr>
-                <% sasaran.indikator_sasarans.each do |ind| %>
-                  <tr>
-                    <td class="text-wrap text-start">Indikator</td>
-                    <td class="text-wrap text-start" colspan="2"><%= ind %></td>
-                  </tr>
-                  <tr>
-                    <td class="text-wrap text-start">Target / Satuan</td>
-                    <td class="text-wrap text-start" colspan="2"><%= ind.target_dan_satuan %></td>
-                  </tr>
-                <% end %>
-              <% end %>
-            <% end %>
+          <% if pohon.role == 'eselon_3' %>
+            <%= render 'laporans/tactical_item', pohon: pohon, dibagikan: dibagikan %>
+          <% elsif pohon.role == 'eselon_4' %>
+            <%= render 'laporans/operational_item', pohon: pohon, dibagikan: dibagikan %>
+          <% else %>
+            <%= render 'laporans/sasarans_item', pohon: pohon, dibagikan: dibagikan %>
           <% end %>
         </tr>
       <% end %>

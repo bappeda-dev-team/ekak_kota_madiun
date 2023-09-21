@@ -177,7 +177,11 @@ class PohonKinerjaPresenter
   def rencana_kinerjas
     return false if @pohon.instance_of?(Pohon)
 
-    @pohon.sasarans.where.not(nip_asn: nil).group_by(&:program_kegiatan)
+    @pohon.sasarans.where.not(nip_asn: nil)
+  end
+
+  def rencana_kinerja_subkegiatans
+    rencana_kinerjas.group_by(&:program_kegiatan)
   end
 
   private

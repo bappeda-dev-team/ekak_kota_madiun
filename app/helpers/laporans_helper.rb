@@ -89,6 +89,10 @@ module LaporansHelper
     tahun.match(/murni|perubahan/) ? tahun[/[^_]\d*/, 0] : tahun
   end
 
+  def rekins_s(rekin_user, user_id)
+    rekin_user.select { |rk| rk.user.id == user_id }
+  end
+
   def rekin_user(rekins, user_id)
     rekins.select { |_, v| v.any? { |rk| rk.user.id == user_id } }
   end

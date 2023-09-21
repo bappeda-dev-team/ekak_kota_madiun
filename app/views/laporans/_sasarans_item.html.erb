@@ -1,0 +1,22 @@
+<% bawah = childs(pohon) %>
+<% rekins = rekins_s(pohon.rencana_kinerjas, dibagikan.user_id) %>
+<% rekins.each.with_index(1) do |sasaran, no_s| %>
+  <tr>
+    <td class="text-start">Rencana Kinerja
+      <% if rekins.size > 1 %>
+        - <%= no_s %>
+      <% end %>
+    </td>
+    <td class="text-wrap text-start"><%= sasaran %> <%= sasaran.user %></td>
+  </tr>
+  <% sasaran.indikator_sasarans.each do |ind| %>
+    <tr>
+      <td class="text-wrap text-start">Indikator</td>
+      <td class="text-wrap text-start" colspan="2"><%= ind %></td>
+    </tr>
+    <tr>
+      <td class="text-wrap text-start">Target / Satuan</td>
+      <td class="text-wrap text-start" colspan="2"><%= ind.target_dan_satuan %></td>
+    </tr>
+  <% end %>
+<% end %>
