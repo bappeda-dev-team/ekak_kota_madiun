@@ -13,22 +13,30 @@
             <% end %>
           </td>
           <td class="text-wrap text-start" colspan="2"><%= dibagikan.dibagikan_ke %></td>
-          <% rekins = rekin_user(pohon.rencana_kinerjas, dibagikan.user_id)  %>
-          <% rekins.each.with_index(1) do |sasaran, no_s| %>
-            <tr>
-              <td class="text-start" width="30px">Rencana Kinerja
-                <% if rekins.size > 1 %>
-                  - <%= no_s %>
-                <% end %>
-              </td>
-              <td class="text-wrap text-start" colspan="2"><%= sasaran %></td>
-            </tr>
-            <% sasaran.indikator_sasarans.each do |ind| %>
+          <% if pohon.role == 'eselon_4' %>
+            <% rekins = rekin_user(pohon.rencana_kinerjas, dibagikan.user_id)  %>
+            <% rekins.each do |subkegiatan, sasarans| %>
               <tr>
-                <td class="text-start" width="30px">Indikator</td>
-                <td class="text-wrap text-start"><%= ind %></td>
-                <td class="text-wrap text-start"><%= ind.target_dan_satuan %></td>
+                <td class="text-wrap text-start">Subkegiatan</td>
+                <td class="text-wrap text-start" colspan="2"><%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %></td>
               </tr>
+              <% sasarans.each.with_index(1) do |sasaran, no_s| %>
+                <tr>
+                  <td class="text-start" width="30px">Rencana Kinerja
+                    <% if rekins.size > 1 %>
+                      - <%= no_s %>
+                    <% end %>
+                  </td>
+                  <td class="text-wrap text-start" colspan="2"><%= sasaran %></td>
+                </tr>
+                <% sasaran.indikator_sasarans.each do |ind| %>
+                  <tr>
+                    <td class="text-start" width="30px">Indikator</td>
+                    <td class="text-wrap text-start"><%= ind %></td>
+                    <td class="text-wrap text-start"><%= ind.target_dan_satuan %></td>
+                  </tr>
+                <% end %>
+              <% end %>
             <% end %>
           <% end %>
         </tr>

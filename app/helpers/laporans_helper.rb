@@ -90,6 +90,6 @@ module LaporansHelper
   end
 
   def rekin_user(rekins, user_id)
-    rekins.select { |rk| rk.user.id == user_id }
+    rekins.filter { |_sub, rks| rks.select { |rk| rk.user.id == user_id } }
   end
 end
