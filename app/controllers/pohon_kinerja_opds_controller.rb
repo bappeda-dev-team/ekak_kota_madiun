@@ -35,11 +35,13 @@ class PohonKinerjaOpdsController < ApplicationController
   def show; end
 
   def new
+    @partial = params[:partial]
     @pohon = StrategiPohon.new(role: 'eselon_2', opd_id: @opd.id)
     @pohon.indikators.build(kode_opd: @opd.kode_unik_opd)
   end
 
   def new_child
+    @partial = params[:partial]
     @title = params[:title]
     @parent = StrategiPohon.find(params[:id])
     @pohon = StrategiPohon.new(role: params[:role], opd_id: @opd.id,
@@ -52,11 +54,12 @@ class PohonKinerjaOpdsController < ApplicationController
   end
 
   def create
+    partial = params[:partial]
     @pohon = StrategiPohon.new(pohon_params)
     @pohon.tahun = tahun_fixer
     if @pohon.save
       render json: { resText: "Strategi berhasil dibuat",
-                     attachmentPartial: html_content(@pohon, 'pohon_kinerja_opd') },
+                     attachmentPartial: html_content(@pohon, partial) },
              status: :created
     else
       error_content = render_to_string(partial: 'form',
