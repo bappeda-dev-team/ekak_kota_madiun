@@ -1,8 +1,12 @@
-<%= link_to "Tambah Komentar", local_assigns[:link],
-                            remote: true,
-                            class: 'btn btn-sm btn-outline-gray-900 w-100',
-                            data: { controller: 'form-modal',
-                            action: 'form-modal#appendForm',
-                            form_modal_location_param: "#{local_assigns[:form_name]}-body",
-                            bs_target: "##{local_assigns[:form_name]}",
-                            bs_toggle: 'modal' } %>
+<%= link_to local_assigns[:link],
+ remote: true,
+ class: 'btn btn-sm btn-outline-gray-900 w-100',
+ data: {
+     controller: 'form-modal',
+     action: 'form-modal#appendForm',
+     form_modal_location_param: "#{local_assigns[:form_name]}-body",
+     bs_target: "##{local_assigns[:form_name]}",
+     bs_toggle: 'modal'
+ } do %>
+  <%= yield %>
+<% end %>
