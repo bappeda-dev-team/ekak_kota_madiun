@@ -30,12 +30,10 @@
       <% end %>
     </div>
   <% end %>
-  <% if sasaran.output_terisi? %>
-    <div class="card-body">
-      <div class="table-responsive" id="sasaran-raperda">
-        <%= render 'sasarans/hasil_output', sasaran: sasaran %>
-      </div>
+  <div class="card-body">
+    <div class="table-responsive" id="sasaran-raperda">
+      <%= render 'sasarans/hasil_output', sasaran: sasaran %>
     </div>
-    <hr>
-  <% end %>
+  </div>
+  <hr>
 </div>
