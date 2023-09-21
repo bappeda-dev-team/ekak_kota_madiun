@@ -47,7 +47,9 @@ class PohonKinerjaOpdsController < ApplicationController
     @pohon.indikators.build(kode_opd: @opd.kode_unik_opd)
   end
 
-  def edit; end
+  def edit
+    @partial = params[:partial]
+  end
 
   def create
     @pohon = StrategiPohon.new(pohon_params)
@@ -66,10 +68,10 @@ class PohonKinerjaOpdsController < ApplicationController
   end
 
   def update
-    @from = params[:from]
+    partial = params[:partial]
     if @pohon.update(pohon_params)
       render json: { resText: "Strategi diupdate",
-                     attachmentPartial: html_content(@pohon, 'item_pohon') }.to_json,
+                     attachmentPartial: html_content(@pohon, partial) }.to_json,
              status: :ok
     else
       error_content = render_to_string(partial: 'form_edit',
