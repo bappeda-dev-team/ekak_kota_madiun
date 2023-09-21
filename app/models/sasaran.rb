@@ -396,7 +396,7 @@ class Sasaran < ApplicationRecord
   end
 
   def output_sasaran
-    metadata.dig("hasil_output")
+    metadata&.dig("hasil_output")
   end
 
   def sasaran_sesuai?
