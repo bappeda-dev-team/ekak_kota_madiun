@@ -50,6 +50,20 @@ export default class extends Controller {
     target.innerHTML = html_element
   }
 
+  processAjax(event) {
+    // event.preventDefault()
+    const [message, status, xhr] = event.detail
+    const modal = document.getElementById(event.params.modal)
+    const target = document.getElementById(event.params.target)
+    const { resText, html_content } = JSON.parse(message.response)
+
+    if (modal != null && typeof (modal) != 'undefined') {
+      Modal.getInstance(modal).hide()
+    }
+    target.innerHTML = html_content
+    this.sweetalertStatus(resText, status)
+  }
+
   // modalName is standardize in layout/application.html.erb
   modalHider(modalName = 'form-modal') {
     const modal = document.getElementById(modalName)

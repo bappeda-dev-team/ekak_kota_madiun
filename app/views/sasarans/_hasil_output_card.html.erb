@@ -13,14 +13,29 @@
   </div>
   <% unless diajukan? %>
     <div class="card-body">
-      <%= form_with(url: hasil_output_sasaran_path, local: false, model: sasaran) do |f| %>
+      <%= form_with(model: sasaran,url: hasil_output_sasaran_path,
+                    local: false,
+                    data: {
+                      controller: 'form-ajax',
+                      form_ajax_target_param: 'sasaran-raperda',
+                      action: 'ajax:complete->form-ajax#processAjax'
+                    }
+      ) do |f| %>
         <%= f.select(:hasil_output,
-                     ['Bukan Raperda', 'Raperda',],
-                     {}, { data: {controller: 'dropdown'} } )%>
+                     ['Bukan Raperda', 'Raperda'],
+                     {selected: f.object.output_sasaran}, { data: {controller: 'dropdown'} } )%>
         <div class="actions">
           <%= f.submit %>
         </div>
       <% end %>
     </div>
+  <% end %>
+  <% if sasaran.output_terisi? %>
+    <div class="card-body">
+      <div class="table-responsive" id="sasaran-raperda">
+        <%= render 'sasarans/hasil_output', sasaran: sasaran %>
+      </div>
+    </div>
+    <hr>
   <% end %>
 </div>

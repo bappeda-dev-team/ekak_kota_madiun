@@ -390,9 +390,13 @@ class Sasaran < ApplicationRecord
   end
 
   def output_terisi?
-    metadata.key?(:hasil_output)
+    metadata.key?("hasil_output")
   rescue NoMethodError
     false
+  end
+
+  def output_sasaran
+    metadata.dig("hasil_output")
   end
 
   def sasaran_sesuai?

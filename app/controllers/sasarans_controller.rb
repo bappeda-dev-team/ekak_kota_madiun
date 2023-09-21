@@ -443,15 +443,29 @@ class SasaransController < ApplicationController
     @sasaran = Sasaran.find(params[:id])
     hasil_output = sasaran_params[:hasil_output]
     if @sasaran.update(metadata: { hasil_output: hasil_output, processed_at: DateTime.current })
-      render json: { resText: "Sasaran diupdate" }.to_json,
+      render json: { resText: "Sasaran diupdate", html_content: html_content(@sasaran) }.to_json,
              status: :ok
     else
-      render json: { resText: "Terjadi kesalahan" }.to_json,
+      render json: { resText: "Terjadi kesalahan", html_content: error_content(@sasaran) }.to_json,
              status: :unprocessable_entity
     end
   end
 
   private
+
+  def html_content(sasaran)
+    render_to_string(partial: 'hasil_output',
+                     formats: 'html',
+                     layout: false,
+                     locals: { sasaran: sasaran })
+  end
+
+  def error_content(sasaran)
+    render_to_string(partial: 'error',
+                     formats: 'html',
+                     layout: false,
+                     locals: { sasaran: sasaran })
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_user
