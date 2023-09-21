@@ -35,13 +35,11 @@ class PohonKinerjaOpdsController < ApplicationController
   def show; end
 
   def new
-    @from = params[:from]
     @pohon = StrategiPohon.new(role: 'eselon_2', opd_id: @opd.id)
     @pohon.indikators.build(kode_opd: @opd.kode_unik_opd)
   end
 
   def new_child
-    @from = params[:from]
     @title = params[:title]
     @parent = StrategiPohon.find(params[:id])
     @pohon = StrategiPohon.new(role: params[:role], opd_id: @opd.id,
@@ -49,17 +47,14 @@ class PohonKinerjaOpdsController < ApplicationController
     @pohon.indikators.build(kode_opd: @opd.kode_unik_opd)
   end
 
-  def edit
-    @from = params[:from]
-  end
+  def edit; end
 
   def create
-    @from = params[:from]
     @pohon = StrategiPohon.new(pohon_params)
     @pohon.tahun = tahun_fixer
     if @pohon.save
       render json: { resText: "Strategi berhasil dibuat",
-                     attachmentPartial: html_content(@pohon, @from) },
+                     attachmentPartial: html_content(@pohon, 'pohon_kinerja_opd') },
              status: :created
     else
       error_content = render_to_string(partial: 'form',
@@ -74,7 +69,7 @@ class PohonKinerjaOpdsController < ApplicationController
     @from = params[:from]
     if @pohon.update(pohon_params)
       render json: { resText: "Strategi diupdate",
-                     attachmentPartial: html_content(@pohon, @from) }.to_json,
+                     attachmentPartial: html_content(@pohon, 'item_pohon') }.to_json,
              status: :ok
     else
       error_content = render_to_string(partial: 'form_edit',
@@ -94,18 +89,7 @@ class PohonKinerjaOpdsController < ApplicationController
 
   private
 
-  def html_content(pohon, from)
-    partial = if from == 'cascading'
-                if request.method == "POST"
-                  'pohon_cascading'
-                else
-                  'item_cascading'
-                end
-              elsif request.method == "POST"
-                'pohon_kinerja_opd'
-              else
-                'item_pohon'
-              end
+  def html_content(pohon, partial)
     render_to_string(partial: partial,
                      formats: 'html',
                      layout: false,
