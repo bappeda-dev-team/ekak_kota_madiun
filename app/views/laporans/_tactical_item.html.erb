@@ -1,26 +1,28 @@
 <% bawah = childs(pohon) %>
-<% rekins = rekins_s(pohon.rencana_kinerjas, dibagikan.user_id) %>
-<% rekins.each.with_index(1) do |sasaran, no_s| %>
+<% programs = program_pokins(bawah) %>
+<% programs.each.with_index(1) do |program, i| %>
   <tr>
-    <td class="text-start">Rencana Kinerja
-      <% if rekins.size > 1 %>
-        - <%= no_s %>
+    <td class="text-start">Program
+      <% if programs.size > 1 %>
+        - <%= i %>
       <% end %>
     </td>
-    <td class="text-wrap text-start"><%= sasaran %> <%= sasaran.user %></td>
+    <td class="text-wrap text-start">
+        <%= program&.nama_program || '-' %>
+        (<%= program&.kode_program || '-' %>)
+    </td>
   </tr>
   <tr>
-    <td class="text-start">Anggaran</td>
-    <td class="rankir-2 text-start" colspan="2">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
+    <td class="text-start">Pagu</td>
+    <td class="text-wrap text-start">Rp. <%=  number_with_delimiter(pagu_program_pokins(bawah, program)) %></td>
   </tr>
-  <% sasaran.indikator_sasarans.each do |ind| %>
-    <tr>
-      <td class="text-wrap text-start">Indikator</td>
-      <td class="text-wrap text-start" colspan="2"><%= ind %></td>
-    </tr>
-    <tr>
-      <td class="text-wrap text-start">Target / Satuan</td>
-      <td class="text-wrap text-start" colspan="2"><%= ind.target_dan_satuan %></td>
-    </tr>
-  <% end %>
+  <tr>
+    <% indikator_prg = indikator_prg_rekin(@tahun, @opd, program) %>
+    <td class="text-wrap text-start">Indikator</td>
+    <td class="text-wrap text-start" colspan="2"><%= indikator_prg.dig(:indikator) %></td>
+  </tr>
+  <tr>
+    <td class="text-wrap text-start">Target / Satuan</td>
+    <td class="text-wrap text-start" colspan="2"><%= indikator_prg.dig(:target) %> <%= indikator_prg.dig(:satuan) %></td>
+  </tr>
 <% end %>

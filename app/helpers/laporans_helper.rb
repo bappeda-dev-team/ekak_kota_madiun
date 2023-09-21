@@ -105,4 +105,25 @@ module LaporansHelper
     indikators = IndikatorQueries.new(tahun: tahun, opd: opd, program_kegiatan: subkegiatan)
     indikators.indikator_subkegiatan
   end
+
+  def indikator_prg_rekin(tahun, opd, subkegiatan)
+    indikators = IndikatorQueries.new(tahun: tahun, opd: opd, program_kegiatan: subkegiatan)
+    indikators.indikator_program
+  end
+
+  def program_pokins(strategi_pohons)
+    strategi_pohons.map do |strategi|
+      strategi.sasarans.where(tahun: @tahun).select { |ss| ss.program_kegiatan.present? }
+              .map(&:program_kegiatan)
+    end.flatten.uniq { |pk| pk.kode_program }.compact_blank
+  end
+
+  def pagu_program_pokins(strategi_pohons, program)
+    strategi_pohons.map do |strategi|
+      strategi.sasarans.select do |s|
+        s.program_kegiatan.present? && s.program_kegiatan.kode_sub_giat == program.kode_sub_giat
+      end
+              .map(&:total_anggaran)
+    end.flatten.compact_blank.sum
+  end
 end
