@@ -132,6 +132,8 @@ class LaporansController < ApplicationController
     @tactical_opd = queries.tactical_opd
     @operational_opd = queries.operational_opd
     @staff_opd = queries.staff_opd
+
+    render partial: 'cascading_opd'
   end
 
   private

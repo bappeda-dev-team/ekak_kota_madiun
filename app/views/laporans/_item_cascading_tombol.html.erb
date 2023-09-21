@@ -1,0 +1,20 @@
+<% unless pohon.exists? %>
+  <% if eselon_x?('reviewer', 'khusus', 'super_admin') %>
+    <div class="pohon-tombol mb-3">
+      <div class="row">
+        <div class="col">
+          <%= link_to edit_pohon_kinerja_opd_path(pohon, partial: 'item_cascading'),
+     remote: true,
+     class: 'btn btn-sm btn-outline-info',
+     data: {
+         controller: 'pohon-tematik',
+         action: 'ajax:complete->pohon-tematik#pindahPohon:prevent'
+     } do %>
+            <i class="fas fa-edit me-2"></i>
+            <span>Edit</span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

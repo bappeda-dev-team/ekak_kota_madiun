@@ -1,0 +1,8 @@
+<%= render 'shared/card_layout', title: "Pohon Cascading #{@nama_opd} - Tahun #{@tahun}" do %>
+  <%= render 'shared/pohon' do %>
+    <%= render 'laporans/parent' %>
+    <ul data-pohon-tematik-target='dahan'>
+      <%= render partial: 'laporans/cascading', collection: @strategi_opd, as: :pohon %>
+    </ul>
+  <% end %>
+<% end %>

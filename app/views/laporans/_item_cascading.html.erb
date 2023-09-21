@@ -1,0 +1,7 @@
+<% presenter = PohonKinerjaPresenter.new(pohon) %>
+<div class="pohon">
+  <%= render partial: 'laporans/item_cascading_title', locals: { pohon: presenter } %>
+  <%= render partial: 'laporans/item_cascading_body', locals: { pohon: presenter } %>
+  <%= render partial: 'laporans/item_cascading_tombol', locals: { pohon: presenter } %>
+  <%= render partial: 'laporans/item_cascading_foot', locals: { pohon: presenter } %>
+</div>
