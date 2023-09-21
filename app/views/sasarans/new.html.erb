@@ -12,4 +12,8 @@
 <div class="form-field-container">
   <h1>Tambah Sasaran Kinerja Baru</h1>
   <%= render "form", sasaran: @sasaran %>
+  <%= link_to sasarans_path, class: 'btn btn-info w-100 text-white mt-3' do %>
+    <span class="fas fa-arrow-left"></span>
+    <span>Kembali</span>
+  <% end %>
 </div>
