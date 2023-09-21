@@ -316,8 +316,13 @@ input::placeholder {
 }
 
 .pohon-body {
-  border-bottom: 1px solid black;
+  // border-bottom: 1px solid black;
   padding: 1rem 0;
+  table {
+    background-color: white;
+    border: black;
+    color: black;
+  }
 }
 
 .pohon-foot {
@@ -326,7 +331,7 @@ input::placeholder {
 }
 
 .pohon-tombol {
-  border-bottom: 1px solid black;
+  border: 1px solid black;
   padding: 1rem 0.5rem;
 }
 

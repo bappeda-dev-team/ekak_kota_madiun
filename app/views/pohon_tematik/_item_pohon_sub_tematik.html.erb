@@ -31,42 +31,44 @@
     </table>
   </div>
   <% if super_admin? %>
-    <div class="pohon-tombol row mb-3">
-      <div class="col">
-        <%= link_to pindah_sub_tematik_pohon_tematik_path(pohon),
+    <div class="pohon-tombol mb-3">
+      <div class="row">
+        <div class="col">
+          <%= link_to pindah_sub_tematik_pohon_tematik_path(pohon),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
                  action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
              },
              class: 'btn btn-outline-primary' do %>
-          <i class="fas fa-exchange-alt me-2"></i>
-          <span>Pindah</span>
-        <% end %>
-      </div>
-      <div class="col">
-        <%= link_to edit_sub_tematik_pohon_tematik_path(pohon),
+            <i class="fas fa-exchange-alt me-2"></i>
+            <span>Pindah</span>
+          <% end %>
+        </div>
+        <div class="col">
+          <%= link_to edit_sub_tematik_pohon_tematik_path(pohon),
              remote: true,
              data: {
                  controller: 'pohon-tematik',
                  action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
              },
              class: 'btn btn-outline-info' do %>
-          <i class="fas fa-edit me-2"></i>
-          <span>Edit</span>
-        <% end %>
-      </div>
-      <div class="col">
-        <%= link_to pohon_tematik_path(pohon),
+            <i class="fas fa-edit me-2"></i>
+            <span>Edit</span>
+          <% end %>
+        </div>
+        <div class="col">
+          <%= link_to pohon_tematik_path(pohon),
              method: :delete,
              remote: true,
              class: 'btn btn-outline-danger',
              data: { confirm_swal: "Hapus Sub-Tema #{pohon.sub_tema}?",
                   action: 'ajax:success->pohon-tematik#ajaxDelete'
              } do %>
-          <i class="fa fa-trash-alt me-2"></i>
-          <span>Hapus</span>
-        <% end %>
+            <i class="fa fa-trash-alt me-2"></i>
+            <span>Hapus</span>
+          <% end %>
+        </div>
       </div>
     </div>
   <% end %>
