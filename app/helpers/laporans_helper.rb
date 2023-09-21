@@ -90,6 +90,15 @@ module LaporansHelper
   end
 
   def rekin_user(rekins, user_id)
-    rekins.filter { |_sub, rks| rks.select { |rk| rk.user.id == user_id } }
+    rekins.select { |_, v| v.any? { |rk| rk.user.id == user_id } }
+  end
+
+  def pagu_sub_rekin(sasarans)
+    sasarans.map(&:total_anggaran).compact.sum
+  end
+
+  def indikator_sub_rekin(tahun, opd, subkegiatan)
+    indikators = IndikatorQueries.new(tahun: tahun, opd: opd, program_kegiatan: subkegiatan)
+    indikators.indikator_subkegiatan
   end
 end
