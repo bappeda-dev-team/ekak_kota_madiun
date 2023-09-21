@@ -32,6 +32,10 @@ module UsersHelper
     current_user.kode_opd != "1234567890"
   end
 
+  def eselon_x?(*roles)
+    current_user.roles.map(&:name).any? { |role| roles.include?(role) }
+  end
+
   def selected_user(user)
     options_for_select([[user.nama, user.nik]], selected: user.nik)
   end
