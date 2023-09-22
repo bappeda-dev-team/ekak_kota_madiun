@@ -22,17 +22,14 @@ class PohonTematikQueries
 
   def strategi_tematiks
     pohon(role: 'strategi_pohon_kota', type: 'Strategi')
-      .where.not(status: 'ditolak')
   end
 
   def tactical_tematiks
     pohon(role: 'tactical_pohon_kota', type: 'Strategi')
-      .where.not(status: 'ditolak')
   end
 
   def operational_tematiks
     pohon(role: 'operational_pohon_kota', type: 'Strategi')
-      .where.not(status: 'ditolak')
   end
 
   private
