@@ -118,6 +118,7 @@ class Sasaran < ApplicationRecord
               blud: 'BLUD' }.freeze
 
   enum status: { draft: 'draft', pengajuan: 'pengajuan', disetujui: 'disetujui', ditolak: 'ditolak' }
+  store_accessor :metadata, :hasil_output, :processed_at, :deleted_at, :deleted_by, :keterangan_hapus
 
   # DANGER, maybe broke something, uncomment this
   # def respond_to_missing?(_method, *_args)
