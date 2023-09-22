@@ -13,15 +13,15 @@
     <div class="card-body">
       <div class="field">
         <%= form.label :urutan, {class: "form-label"} %>
-        <%= form.number_field :urutan, {class: "form-control "}%>
+        <%= form.number_field :urutan, {class: "form-control", required: true}%>
       </div>
       <div class="field">
         <%= form.label :tahapan_kerja, {class: "form-label"} %>
-        <%= form.text_field :tahapan_kerja, {class: "form-control "}%>
+        <%= form.text_field :tahapan_kerja, {class: "form-control", required: true}%>
       </div>
       <div class="field">
         <%= form.label :keterangan, {class: "form-label"} %>
-        <%= form.text_field :keterangan, {class: "form-control "} %>
+        <%= form.text_field :keterangan, {class: "form-control"} %>
       </div>
       <div class="actions">
         <%= form.submit %>
