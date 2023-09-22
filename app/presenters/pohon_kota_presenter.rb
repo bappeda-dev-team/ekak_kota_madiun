@@ -1,4 +1,4 @@
-class PohonKinerjaPresenter
+class PohonKotaPresenter
   attr_accessor :pohon
 
   delegate :id, :to_param, :metadata,
@@ -11,8 +11,24 @@ class PohonKinerjaPresenter
     @pohon
   end
 
+  def parent
+    @pohon.pohon_ref_id
+  end
+
   def pohonable
     @pohon.instance_of?(Pohon) ? @pohon.pohonable : @pohon
+  end
+
+  def strategi
+    pohonable.strategi
+  rescue NoMethodError
+    '-'
+  end
+
+  def type
+    pohonable.type
+  rescue NoMethodError
+    "- #{@pohon.pohonable_type}"
   end
 
   def exists?
@@ -20,15 +36,11 @@ class PohonKinerjaPresenter
   end
 
   def keterangan
-    @pohon.instance_of?(Pohon) ? @pohon.keterangan : ''
+    @pohon.instance_of?(Pohon) ? @pohon.keterangan : @pohon.pohonable.keterangan
   end
 
-  def tombol_partial
-    @pohon.instance_of?(Pohon) ? 'pohon_kinerja/item_pohon_tombol' : 'pohon_kinerja/item_pohon_tombol_opd'
-  end
-
-  def tombol_foot
-    @pohon.instance_of?(Pohon) ? 'pohon_kinerja/item_pohon_foot' : 'pohon_kinerja/item_pohon_foot_opd'
+  def opd
+    @pohon.opd.nama_opd
   end
 
   def status
@@ -132,31 +144,6 @@ class PohonKinerjaPresenter
     to_real_name_up(prefix)
   end
 
-  def crosscuttings
-    return [] if @pohon.instance_of?(Pohon)
-
-    ctx = Crosscutting.new(@pohon.id)
-    ctx.external
-  rescue NoMethodError
-    []
-  end
-
-  def pelaksana
-    return [] if @pohon.instance_of?(Pohon)
-
-    @pohon.pohon_shareds.where.not(role: %w[opd opd-batal], user_id: nil).order(:user_id)
-  rescue NoMethodError
-    []
-  end
-
-  def dibagikans
-    # return unless @pohon.instance_of?(StrategiPohon)
-
-    @pohon.pohon_shareds
-  rescue NoMethodError
-    []
-  end
-
   def warna_pohon
     case @pohon.role
     when 'eselon_2'
@@ -172,16 +159,6 @@ class PohonKinerjaPresenter
 
   def indikators
     pohonable.indikators
-  end
-
-  def rencana_kinerjas
-    return false if @pohon.instance_of?(Pohon)
-
-    @pohon.sasarans.where.not(nip_asn: nil)
-  end
-
-  def rencana_kinerja_subkegiatans
-    rencana_kinerjas.group_by(&:program_kegiatan)
   end
 
   private

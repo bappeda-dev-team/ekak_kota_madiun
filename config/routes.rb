@@ -566,6 +566,7 @@ Rails.application.routes.draw do
       post :find_opd
     end
     namespace :pohon_kinerja do
+      post :pohon_kinerja_kota
       post :pohon_kinerja_opd
     end
   end
