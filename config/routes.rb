@@ -561,6 +561,10 @@ Rails.application.routes.draw do
     namespace :pagu do
       post :sync_penetapan
     end
+    namespace :opd do
+      post :daftar_opd
+      post :find_opd
+    end
     namespace :pohon_kinerja do
       post :pohon_kinerja_opd
     end
