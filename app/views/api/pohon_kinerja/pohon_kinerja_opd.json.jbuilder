@@ -7,7 +7,7 @@ json.results do
       pohon = PohonKinerjaPresenter.new(strategic)
       json.id strategic.id
       json.parent strategic.pohon_ref_id
-      json.strategic pohon.pohonable.strategi
+      json.strategi pohon.pohonable.strategi
       json.keterangan pohon.keterangan
       json.perangkat_daerah pohon.pohonable.opd
       json.indikators pohon.indikators do |indikator|
@@ -20,7 +20,7 @@ json.results do
       pohon = PohonKinerjaPresenter.new(tactical)
       json.id tactical.id
       json.parent tactical.pohon_ref_id
-      json.strategic pohon.pohonable.strategi
+      json.strategi pohon.pohonable.strategi
       json.keterangan pohon.keterangan
       json.perangkat_daerah pohon.pohonable.opd
       json.indikators pohon.indikators do |indikator|
@@ -33,7 +33,7 @@ json.results do
       pohon = PohonKinerjaPresenter.new(operational)
       json.id operational.id
       json.parent operational.pohon_ref_id
-      json.strategic pohon.pohonable.strategi
+      json.strategi pohon.pohonable.strategi
       json.keterangan pohon.keterangan
       json.perangkat_daerah pohon.pohonable.opd
       json.indikators pohon.indikators do |indikator|
@@ -46,7 +46,7 @@ json.results do
       pohon = PohonKinerjaPresenter.new(staff)
       json.id staff.id
       json.parent staff.pohon_ref_id
-      json.strategic pohon.pohonable.strategi
+      json.strategi pohon.pohonable.strategi
       json.keterangan pohon.keterangan
       json.perangkat_daerah pohon.pohonable.opd
       json.indikators pohon.indikators do |indikator|
