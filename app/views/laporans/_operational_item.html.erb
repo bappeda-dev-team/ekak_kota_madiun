@@ -2,10 +2,11 @@
 <% rekins.each.with_index(1) do |(subkegiatan, sasarans), ii| %>
   <% unless dibagikan.user.has_role?(:staff) %>
     <tr>
-      <td class="text-start">Subkegiatan</td>
-      <% if rekins.size > 1 %>
-        - <%= ii %>
-      <% end %>
+      <td class="text-start">Subkegiatan
+        <% if rekins.size > 1 %>
+          - <%= ii %>
+        <% end %>
+      </td>
       <td class="text-wrap text-start" colspan="2">
         <%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %>
         (<%= subkegiatan&.kode_sub_giat || '' %>)
