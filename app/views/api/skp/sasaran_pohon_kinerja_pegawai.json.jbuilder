@@ -19,5 +19,6 @@ json.data do
     json.tahun_sasaran sasaran.tahun
     json.nip_asn sasaran.nip_asn
     json.sasaran sasaran.sasaran_kinerja
+    json.status sasaran.status_ekak
   end
 end

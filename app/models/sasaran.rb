@@ -514,4 +514,13 @@ class Sasaran < ApplicationRecord
   rescue NoMethodError
     'Kosong'
   end
+
+  def status_ekak
+    tahun_bener = tahun.match(/murni/) ? tahun[/[^_]\d*/, 0] : tahun
+    if tahun_bener.match(/perubahan/)
+      'E-KAK Perubahan'
+    else
+      'E-KAK'
+    end
+  end
 end
