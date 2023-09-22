@@ -26,6 +26,10 @@
                           link_classes: 'btn btn-outline-primary btn-sm',
                           link_text: 'Tambah Indikator',
                           partial: 'indikators/indikator_fields') %>
+  <div class="field">
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_field :keterangan, class: 'form-control', required: true, id: "pohon_keterangan_#{form.object_id.to_s}" %>
+  </div>
   <div class="actions">
     <%= form.submit %>
   </div>

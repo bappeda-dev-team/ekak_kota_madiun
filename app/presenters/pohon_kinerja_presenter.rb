@@ -20,7 +20,7 @@ class PohonKinerjaPresenter
   end
 
   def keterangan
-    @pohon.instance_of?(Pohon) ? @pohon.keterangan : ''
+    @pohon.keterangan
   end
 
   def tombol_partial

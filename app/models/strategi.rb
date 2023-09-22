@@ -4,6 +4,7 @@
 #
 #  id                    :bigint           not null, primary key
 #  linked_with           :bigint
+#  metadata              :jsonb
 #  nip_asn               :string
 #  nip_asn_sebelumnya    :string
 #  role                  :string
@@ -44,6 +45,8 @@ class Strategi < ApplicationRecord
                                foreign_key: "strategi_ref_id", optional: true
   belongs_to :strategi_pokin, class_name: "StrategiPohon",
                               foreign_key: 'linked_with', optional: true
+
+  store :metadata, accessors: %w[keterangan updated_by updated_at deleted_at deleted_by prev_role]
 
   def to_s
     strategi

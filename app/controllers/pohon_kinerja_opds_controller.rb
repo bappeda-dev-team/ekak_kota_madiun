@@ -72,7 +72,7 @@ class PohonKinerjaOpdsController < ApplicationController
 
   def update
     partial = params[:partial]
-    if @pohon.update(pohon_params)
+    if @pohon.update(pohon_params.merge(updated_by: current_user.id, updated_at: DateTime.current))
       render json: { resText: "Strategi diupdate",
                      attachmentPartial: html_content(@pohon, partial) }.to_json,
              status: :ok
@@ -87,7 +87,11 @@ class PohonKinerjaOpdsController < ApplicationController
   end
 
   def destroy
-    @pohon.destroy
+    role = @pohon.role
+    @pohon.update(role: 'deleted',
+                  prev_role: role,
+                  deleted_by: current_user.id,
+                  deleted_at: DateTime.current)
     render json: { resText: "Pohon Dihapus", result: true },
            status: :accepted
   end
@@ -130,7 +134,7 @@ class PohonKinerjaOpdsController < ApplicationController
 
   def pohon_params
     params.require(:strategi_pohon).permit(:strategi, :role, :pohon_id, :tahun, :nip_asn,
-                                           :opd_id, :strategi_ref_id,
+                                           :opd_id, :strategi_ref_id, :keterangan,
                                            indikators_attributes)
   end
 

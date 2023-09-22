@@ -4,6 +4,7 @@
 #
 #  id                    :bigint           not null, primary key
 #  linked_with           :bigint
+#  metadata              :jsonb
 #  nip_asn               :string
 #  nip_asn_sebelumnya    :string
 #  role                  :string
