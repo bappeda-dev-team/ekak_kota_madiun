@@ -1,0 +1,28 @@
+<table class="table table-bordered mb-3">
+  <tr>
+    <td class="text-start">Rencana Kinerja
+      <% if size > 1 %>
+        - <%= no %>
+      <% end %>
+    </td>
+    <td class="text-wrap text-start" colspan="2"><%= sasaran %></td>
+  </tr>
+  <% sasaran.indikator_sasarans.each do |ind| %>
+    <tr>
+      <td class="text-wrap text-start">Indikator</td>
+      <td class="text-wrap text-start" colspan="2"><%= ind %></td>
+    </tr>
+    <tr>
+      <td class="text-wrap text-start">Target / Satuan</td>
+      <td class="text-wrap text-start" colspan="2"><%= ind.target_dan_satuan %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td class="text-start">Anggaran</td>
+    <td class="rankir-2 text-start" colspan="2">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
+  </tr>
+  <tr>
+    <td class="text-start">Pelaksana</td>
+    <td class="text-wrap text-start" colspan="2"><%= sasaran.user %></td>
+  </tr>
+</table>

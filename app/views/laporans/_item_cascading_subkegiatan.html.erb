@@ -1,26 +1,9 @@
 <% unless pohon.exists? %>
-  <% if pohon.pelaksana.any? %>
+  <% if pohon.rencana_kinerjas.any? %>
     <div class="pohon-body">
-      <table class="table table-bordered mb-3">
-        <% if pohon.role == 'eselon_3' %>
-          <%= render 'laporans/tactical_item', pohon: pohon %>
-        <% end %>
-        <% pohon.pelaksana.each.with_index(1) do |dibagikan, no| %>
-          <tr>
-            <td class="text-start">Pelaksana
-              <% if pohon.pelaksana.size > 1 %>
-                - <%= no %>
-              <% end %>
-            </td>
-            <td class="text-wrap text-start" colspan="2"><%= dibagikan.dibagikan_ke %></td>
-            <% if pohon.role == 'eselon_4' %>
-              <%= render 'laporans/operational_item', pohon: pohon, dibagikan: dibagikan %>
-            <% else %>
-              <%= render 'laporans/sasarans_item', pohon: pohon, dibagikan: dibagikan %>
-            <% end %>
-          </tr>
-        <% end %>
-      </table>
+      <% pohon.rencana_kinerjas.each.with_index(1) do |sasaran, no| %>
+        <%= render 'laporans/tabel_sasaran_cascading', sasaran: sasaran, no: no, size: pohon.rencana_kinerjas.size %>
+      <% end %>
     </div>
   <% end %>
 <% end %>
