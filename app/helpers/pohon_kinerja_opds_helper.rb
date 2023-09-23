@@ -19,4 +19,17 @@ module PohonKinerjaOpdsHelper
       child_strategi(pohon_kinerja_opd, @staff_opd)
     end
   end
+
+  def pagu_pohon(sasaran, role)
+    strategi = case role
+               when 'eselon_2'
+                 AnggaranPohon::Strategic.new(sasaran)
+               when 'eselon_3'
+                 AnggaranPohon::Tactical.new(sasaran)
+               else
+                 AnggaranPohon::Operational.new(sasaran)
+               end
+    anggaran = AnggaranSasaran.new(strategi)
+    anggaran.anggaran
+  end
 end

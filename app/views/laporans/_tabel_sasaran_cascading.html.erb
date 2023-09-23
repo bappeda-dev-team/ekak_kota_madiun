@@ -18,8 +18,8 @@
     </tr>
   <% end %>
   <tr>
-    <td class="text-start">Anggaran</td>
-    <td class="rankir-2 text-start" colspan="2">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
+    <td class="text-start">Anggaran <%= role %></td>
+    <td class="rankir-2 text-start" colspan="2">Rp. <%= pagu_pohon(sasaran, role) %></td>
   </tr>
   <tr>
     <td class="text-start">Pelaksana</td>

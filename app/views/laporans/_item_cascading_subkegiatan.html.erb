@@ -2,7 +2,11 @@
   <% if pohon.rencana_kinerjas.any? %>
     <div class="pohon-body">
       <% pohon.rencana_kinerjas.each.with_index(1) do |sasaran, no| %>
-        <%= render 'laporans/tabel_sasaran_cascading', sasaran: sasaran, no: no, size: pohon.rencana_kinerjas.size %>
+        <%= render 'laporans/tabel_sasaran_cascading',
+                   sasaran: sasaran,
+                   role: pohon.role,
+                   no: no,
+                   size: pohon.rencana_kinerjas.size %>
       <% end %>
     </div>
   <% end %>
