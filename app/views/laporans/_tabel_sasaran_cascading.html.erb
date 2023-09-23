@@ -1,6 +1,6 @@
 <table class="table table-bordered mb-3">
   <tr>
-    <td class="text-start">Rencana Kinerja
+    <td class="text-start" style="width: 30px;">Rencana Kinerja
       <% if size > 1 %>
         - <%= no %>
       <% end %>
@@ -17,10 +17,12 @@
       <td class="text-wrap text-start" colspan="2"><%= ind.target_dan_satuan %></td>
     </tr>
   <% end %>
-  <tr>
-    <td class="text-start">Anggaran <%= role %></td>
-    <td class="rankir-2 text-start" colspan="2">Rp. <%= pagu_pohon(sasaran, role) %></td>
-  </tr>
+  <% if role == 'eselon_4' %>
+    <tr>
+      <td class="text-start">Anggaran</td>
+      <td class="rankir-2 text-start" colspan="2">Rp. <%= pagu_pohon(sasaran, role) %></td>
+    </tr>
+  <% end %>
   <tr>
     <td class="text-start">Pelaksana</td>
     <td class="text-wrap text-start" colspan="2"><%= sasaran.user %></td>

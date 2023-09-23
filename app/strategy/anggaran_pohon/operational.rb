@@ -5,7 +5,7 @@ module AnggaranPohon
     end
 
     def hitung_anggaran
-      "Hello, from operational sasaran #{@sasaran.class}"
+      @sasaran.total_anggaran
     end
   end
 end

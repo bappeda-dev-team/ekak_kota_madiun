@@ -1,4 +1,14 @@
 <% unless pohon.exists? %>
+  <% if pohon.role == 'eselon_2' || pohon.role == 'eselon_3' %>
+    <div class="pohon-body">
+      <table class="table table-bordered mb-3">
+        <tr>
+          <td class="text-start">Pagu</td>
+          <td class="rankir-2 text-start" colspan="2">Rp. <%= pagu_pohon(pohon.real, pohon.role) %></td>
+        </tr>
+      </table>
+    </div>
+  <% end %>
   <% if pohon.rencana_kinerjas.any? %>
     <div class="pohon-body">
       <% pohon.rencana_kinerjas.each.with_index(1) do |sasaran, no| %>

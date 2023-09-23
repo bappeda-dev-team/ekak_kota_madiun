@@ -30,6 +30,6 @@ module PohonKinerjaOpdsHelper
                  AnggaranPohon::Operational.new(sasaran)
                end
     anggaran = AnggaranSasaran.new(strategi)
-    anggaran.anggaran
+    number_with_delimiter(anggaran.anggaran)
   end
 end
