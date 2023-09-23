@@ -1,0 +1,25 @@
+<% unless pohon.exists? %>
+  <% if pohon.pelaksana.any? %>
+    <div class="pohon-body">
+      <table class="table table-bordered mb-3">
+        <% pohon.pelaksana.each.with_index(1) do |dibagikan, no| %>
+          <tr>
+            <td class="text-start" width="20px">Pelaksana
+              <% if pohon.pelaksana.size > 1 %>
+                <%= no %>
+              <% end %>
+            </td>
+            <td class="text-wrap text-start"><%= dibagikan.dibagikan_ke %></td>
+            <td class="text-wrap text-center align-middle" style="font-size: 11px;">
+              <% if dibagikan.pohonable.sasarans.select { |s| s.nip_asn == dibagikan.nip_asn }.any? %>
+                <span class="badge bg-success">Rencana Kinerja terisi</span>
+              <% else %>
+                <span class="badge bg-danger">Rencana Kinerja belum terisi</span>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  <% end %>
+<% end %>

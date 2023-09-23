@@ -5,16 +5,6 @@
         <td class="text-start" width="30px"><%= pohon.title_up %></td>
         <td class="text-wrap text-start" colspan="2"><%= pohon.pohonable.strategi %></td>
       </tr>
-      <% pohon.crosscuttings.each.with_index(1) do |dibagikan, no| %>
-        <tr>
-          <td class="text-start" width="30px">Crosscutting
-            <% if pohon.crosscuttings.size > 1 %>
-              <%= no %>
-            <% end %>
-          </td>
-          <td class="text-wrap text-start"><%= dibagikan.opd.nama_opd %></td>
-        </tr>
-      <% end %>
       <% pohon.indikators.each.with_index(1) do |indikator, i| %>
         <tr class="detail d-none">
           <td class="text-start" width="30px">Indikator

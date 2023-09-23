@@ -1,19 +1,20 @@
 <% unless pohon.exists? %>
   <% if eselon_x?('eselon_2', 'eselon_3', 'admin', 'super_admin') %>
-    <div class="pohon-tombol mb-3">
-      <% if pohon.real.instance_of?(StrategiPohon) %>
+    <% if pohon.real.instance_of?(StrategiPohon) %>
+      <div class="pohon-tombol mb-3">
         <div class="row">
           <div class="col">
             <%= link_to crosscutting_path(pohon),
-     remote: true,
-     class: 'btn btn-sm btn-outline-gray-900',
-     data: {
-         controller: 'form-modal',
-         action: 'form-modal#appendForm',
-         form_modal_location_param: 'form-crosscutting-body',
-         bs_target: '#form-crosscutting',
-         bs_toggle: 'modal'
-     } do %>
+             remote: true,
+             class: 'btn btn-sm btn-outline-gray-900',
+             data: {
+                controller: 'form-modal',
+                action: 'form-modal#appendForm',
+                form_modal_location_param: 'form-crosscutting-body',
+                bs_target: '#form-crosscutting',
+                bs_toggle: 'modal'
+             },
+             style: 'font-size: 0.8em;' do %>
               <span class="fas fa-link me-2"></span>
               <span>Crosscutting</span>
             <% end %>
@@ -44,8 +45,10 @@
             <% end %>
           </div>
         </div>
-      <% else %>
-        <% unless pohon.processed? %>
+      </div>
+    <% else %>
+      <% unless pohon.processed? %>
+        <div class="pohon-tombol mb-3">
           <div class="row">
             <div class="col">
               <%= link_to terima_pohon_tematik_path(pohon),
@@ -77,8 +80,8 @@
               <% end %>
             </div>
           </div>
-        <% end %>
+        </div>
       <% end %>
-    </div>
+    <% end %>
   <% end %>
 <% end %>

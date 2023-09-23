@@ -1,0 +1,18 @@
+<% unless pohon.exists? %>
+  <% if pohon.crosscuttings.any? %>
+    <div class="pohon-body">
+      <table class="table table-bordered mb-3">
+        <% pohon.crosscuttings.each.with_index(1) do |dibagikan, no| %>
+          <tr>
+            <td class="text-start" width="30px">Crosscutting
+              <% if pohon.crosscuttings.size > 1 %>
+                <%= no %>
+              <% end %>
+            </td>
+            <td class="text-wrap text-start"><%= dibagikan.opd.nama_opd %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  <% end %>
+<% end %>

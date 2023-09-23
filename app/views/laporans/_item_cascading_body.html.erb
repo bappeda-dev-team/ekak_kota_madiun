@@ -5,24 +5,6 @@
         <td class="text-start"><%= pohon.title_up %></td>
         <td class="text-wrap text-start" colspan="2"><%= pohon.pohonable.strategi %></td>
       </tr>
-      <% if pohon.role == 'eselon_3' %>
-        <%= render 'laporans/tactical_item', pohon: pohon %>
-      <% end %>
-      <% pohon.pelaksana.each.with_index(1) do |dibagikan, no| %>
-        <tr>
-          <td class="text-start">Pelaksana
-            <% if pohon.pelaksana.size > 1 %>
-              - <%= no %>
-            <% end %>
-          </td>
-          <td class="text-wrap text-start" colspan="2"><%= dibagikan.dibagikan_ke %></td>
-          <% if pohon.role == 'eselon_4' %>
-            <%= render 'laporans/operational_item', pohon: pohon, dibagikan: dibagikan %>
-          <% else %>
-            <%= render 'laporans/sasarans_item', pohon: pohon, dibagikan: dibagikan %>
-          <% end %>
-        </tr>
-      <% end %>
       <% pohon.indikators.each.with_index(1) do |indikator, i| %>
         <tr class="detail d-none">
           <td class="text-start">Indikator
