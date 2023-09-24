@@ -132,11 +132,7 @@ class PohonKotaPresenter
   def title_up
     # suffix = @pohon.instance_of?(Pohon) ? '- Kota' : ''
     prefix = @pohon.role.chomp("_pohon_kota")
-    if prefix.include?('eselon') || prefix.include?('staff')
-      to_real_name_up(prefix)
-    else
-      "#{to_real_name_up(prefix).capitalize} - Kota"
-    end
+    prefix.capitalize
   end
 
   def jenis

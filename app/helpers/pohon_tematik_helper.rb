@@ -27,4 +27,20 @@ module PohonTematikHelper
       coll.pohon_ref_id == parent_id
     end
   end
+
+  def childs_tematik_kota(parent, childs)
+    childs.select do |str|
+      str.pohon_ref_id == parent.id
+    end
+  rescue NoMethodError
+    []
+  end
+
+  def childs_tematik(pohon_tematik)
+    case pohon_tematik.role
+    when 'pohon_kota'
+      merge_role = @sub_tematik_kota.or(@strategi_tematiks)
+      childs_tematik_kota(pohon_tematik, merge_role)
+    end
+  end
 end

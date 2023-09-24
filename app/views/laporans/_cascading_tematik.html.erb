@@ -1,0 +1,10 @@
+<% presenter = PohonKotaPresenter.new(pohon) %>
+<li>
+  <div class="tf-nc pokin <%= presenter.warna_pohon %>" id="<%= dom_id(pohon) %>">
+    <%= render partial: 'laporans/item_cascading_tematik', locals: { pohon: pohon } %>
+  </div>
+  <%# self-render childs in helper %>
+  <ul class='d-none'>
+    <%= render partial: 'laporans/cascading_tematik', collection: childs_tematik(pohon), as: :pohon %>
+  </ul>
+</li>

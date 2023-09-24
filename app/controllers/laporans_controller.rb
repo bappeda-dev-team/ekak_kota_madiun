@@ -136,6 +136,31 @@ class LaporansController < ApplicationController
     render partial: 'cascading_opd'
   end
 
+  def hasil_cascading_kota
+    @tahun = cookies[:tahun]
+    @tematiks = Pohon.where(pohonable_type: 'Tematik', tahun: @tahun)
+  end
+
+  def cascading_kota
+    tematik_id = params[:tematik]
+    @pohon = PohonTematikQueries.new(tahun: @tahun)
+    @tematik = Tematik.find(tematik_id)
+    @tematik_kota = Pohon.where(pohonable_type: 'Tematik',
+                                pohonable_id: tematik_id,
+                                tahun: @tahun,
+                                role: 'pohon_kota')
+                         .includes(:pohonable)
+    return if @tematik_kota.empty?
+
+    @sub_tematik_kota = @pohon.sub_tematiks
+    @sub_sub_tematik_kota = @pohon.sub_sub_tematiks
+    @strategi_tematiks = @pohon.strategi_tematiks
+    @tactical_tematiks = @pohon.tactical_tematiks
+    @operational_tematiks = @pohon.operational_tematiks
+
+    render partial: 'cascading_kota'
+  end
+
   private
 
   def set_program_kegiatans

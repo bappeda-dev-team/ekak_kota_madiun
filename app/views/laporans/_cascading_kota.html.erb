@@ -1,0 +1,12 @@
+<%= render 'shared/card_layout', title: "Pohon Tematik #{@tema} - Tahun #{@tahun}" do %>
+  <%= render 'shared/pohon' do %>
+    <% if @tematik_kota.any? %>
+      <%= render 'laporans/parent_tematik' %>
+      <ul data-pohon-tematik-target='dahan'>
+        <%= render partial: 'laporans/cascading_tematik', collection: @tematik_kota, as: :pohon %>
+      </ul>
+    <% else %>
+      <%= render partial: 'pohon_tematik/pohon_kosong', locals: { pohon: @tematik } %>
+    <% end %>
+  <% end %>
+<% end %>
