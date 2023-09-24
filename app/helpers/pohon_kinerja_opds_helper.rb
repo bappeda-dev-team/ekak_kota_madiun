@@ -22,6 +22,8 @@ module PohonKinerjaOpdsHelper
 
   def pagu_pohon(sasaran, role)
     strategi = case role
+               when 'sub_pohon_kota'
+                 AnggaranPohon::SubTematik.new(sasaran, @tahun)
                when 'sub_sub_pohon_kota'
                  AnggaranPohon::SubSubTematik.new(sasaran, @tahun)
                when 'eselon_2'
@@ -37,6 +39,8 @@ module PohonKinerjaOpdsHelper
 
   def program_pohon(sasaran, role)
     strategi = case role
+               when 'sub_pohon_kota'
+                 AnggaranPohon::SubTematik.new(sasaran, @tahun)
                when 'sub_sub_pohon_kota'
                  AnggaranPohon::SubSubTematik.new(sasaran, @tahun)
                when 'eselon_2'
