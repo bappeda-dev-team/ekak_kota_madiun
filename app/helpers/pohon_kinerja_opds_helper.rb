@@ -32,4 +32,15 @@ module PohonKinerjaOpdsHelper
     anggaran = AnggaranSasaran.new(strategi)
     number_with_delimiter(anggaran.anggaran)
   end
+
+  def program_pohon(sasaran, role)
+    strategi = case role
+               when 'eselon_2'
+                 AnggaranPohon::Strategic.new(sasaran)
+               when 'eselon_3'
+                 AnggaranPohon::Tactical.new(sasaran)
+               end
+    context = AnggaranSasaran.new(strategi)
+    context.programs
+  end
 end

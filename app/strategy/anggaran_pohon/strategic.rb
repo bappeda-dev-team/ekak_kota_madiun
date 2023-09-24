@@ -5,13 +5,25 @@ module AnggaranPohon
     end
 
     def hitung_anggaran
-      anggaran_childs
+      anggaran_total
+    end
+
+    def programs
+      child_pohons.map(&:programs).flatten.uniq.compact_blank
     end
 
     private
 
     def child_pohons
-      childs = @strategi.strategi_bawahans.map do |tact|
+      @strategi.strategi_bawahans.map do |tact|
+        AnggaranPohon::Tactical.new(tact)
+      end
+    rescue NoMethodError
+      []
+    end
+
+    def anggaran_childs
+      @strategi.strategi_bawahans.map do |tact|
         anggarans = AnggaranPohon::Tactical.new(tact)
         anggarans.hitung_anggaran
       end
@@ -19,10 +31,10 @@ module AnggaranPohon
       false
     end
 
-    def anggaran_childs
-      return unless child_pohons
+    def anggaran_total
+      return unless anggaran_childs
 
-      child_pohons
+      anggaran_childs
         .flatten
         .compact_blank.sum
     end

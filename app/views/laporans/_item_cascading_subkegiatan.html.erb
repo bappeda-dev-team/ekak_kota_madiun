@@ -2,6 +2,12 @@
   <% if pohon.role == 'eselon_2' || pohon.role == 'eselon_3' %>
     <div class="pohon-body">
       <table class="table table-bordered mb-3">
+        <% program_pohon(pohon.real, pohon.role).each do |program| %>
+          <tr>
+            <td class="text-start">Program</td>
+            <td class="text-wrap text-start" colspan="2"><%= program %></td>
+          </tr>
+        <% end %>
         <tr>
           <td class="text-start">Pagu</td>
           <td class="rankir-2 text-start" colspan="2">Rp. <%= pagu_pohon(pohon.real, pohon.role) %></td>

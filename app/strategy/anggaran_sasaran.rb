@@ -12,9 +12,17 @@ class AnggaranSasaran
     pagu_anggaran
   end
 
+  def programs
+    program_anggaran
+  end
+
   private
 
   def pagu_anggaran
     @anggaran_strat.hitung_anggaran
+  end
+
+  def program_anggaran
+    @anggaran_strat.programs
   end
 end
