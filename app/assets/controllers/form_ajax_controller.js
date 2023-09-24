@@ -52,18 +52,15 @@ export default class extends Controller {
 
   processAjax(event) {
     // event.preventDefault()
-    const [message, status, xhr] = event.detail
-    const modal = document.getElementById(event.params.modal)
+    const [message, status] = event.detail
     const target = document.getElementById(event.params.target)
     const { resText, html_content } = JSON.parse(message.response)
 
-    if (modal != null && typeof (modal) != 'undefined') {
-      Modal.getInstance(modal).hide()
-    }
     if (target != null && typeof (target) != 'undefined') {
       target.innerHTML = html_content
     }
     this.sweetalertStatus(resText, status)
+    this.modalHider()
   }
 
   // modalName is standardize in layout/application.html.erb

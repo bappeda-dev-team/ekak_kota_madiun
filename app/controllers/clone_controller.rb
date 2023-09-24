@@ -45,13 +45,19 @@ class CloneController < ApplicationController
                                    clone_tahun_asal: tahun_asal,
                                    clone_oleh: current_user.id,
                                    clone_asli: sasaran.id)
-    operation.to_record
-    if operation.persist!
-      clone_sasaran = operation.to_record
-      render json: { resText: "Sasaran #{clone_sasaran} di clone ke #{clone_sasaran.tahun}" },
+    begin
+      operation.to_record
+      operation.persist!
+      render json: { resText: "Berhasil di clone ke #{@tahun}" },
              status: :created
-    else
-      render json: { resText: 'Gagal, terdapat kesalahan di server' },
+    rescue ActiveRecord::RecordNotUnique
+      render json: { resText: "Rencana kinerja sudah dikloning di-tahun #{@tahun}" },
+             status: :unprocessable_entity
+    rescue ActiveRecord::RecordInvalid
+      render json: { resText: "terdapat kekurangan isian" },
+             status: :unprocessable_entity
+    rescue StandardError
+      render json: { resText: "Terjadi kesalahan" },
              status: :unprocessable_entity
     end
   end
