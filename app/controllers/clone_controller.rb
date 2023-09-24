@@ -26,6 +26,35 @@ class CloneController < ApplicationController
     end
   end
 
+  def clone_sasaran
+    sasaran = Sasaran.find params[:id]
+    tahun = cookies[:tahun]
+    url = rencana_kinerja_clone_path(sasaran)
+    render partial: 'clone/form_clone_sasaran', locals: { sasaran: sasaran, tahun_asal: tahun, url: url }, layout: false
+  end
+
+  def rencana_kinerja
+    tahun_asal = params[:tahun_asal]
+    tahun_anggaran = KelompokAnggaran.find(params[:tahun_tujuan]).kode_kelompok
+    @tahun = tahun_anggaran.match(/murni/) ? tahun_anggaran[/[^_]\d*/, 0] : tahun_anggaran
+    sasaran = Sasaran.find(params[:id])
+
+    ket = "clone_#{tahun_asal}"
+
+    operation = SasaranCloner.call(sasaran,
+                                   traits: :with_indikators,
+                                   tahun: @tahun)
+    operation.to_record
+    if operation.persist!
+      clone_sasaran = operation.to_record
+      render json: { resText: "Sasaran #{clone_sasaran} di clone ke #{clone_sasaran.tahun}" },
+             status: :created
+    else
+      render json: { resText: 'Gagal, terdapat kesalahan di server' },
+             status: :unprocessable_entity
+    end
+  end
+
   def tahun_clone
     tahun_asal = cookies[:tahun]
     url = params[:url]

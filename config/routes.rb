@@ -499,6 +499,8 @@ Rails.application.routes.draw do
   resources :clone do
     member do
       post :pohon_tematik
+      get :clone_sasaran
+      post :rencana_kinerja
     end
     collection do
       get :tahun_clone

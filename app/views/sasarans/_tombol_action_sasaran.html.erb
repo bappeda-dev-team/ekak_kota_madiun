@@ -16,4 +16,16 @@
     <i class="fa fa-trash-alt me-2"></i>
     <span>Hapus</span>
   <% end %>
+  <%= link_to clone_sasaran_clone_path(sasaran), remote: true,
+                      data: {
+                        controller: 'form-modal',
+                        action: 'form-modal#appendForm',
+                        form_modal_location_param: 'form-modal-body',
+                        bs_toggle: 'modal',
+                        bs_target: '#form-modal'
+                      },
+                      class: "btn btn-sm btn-primary w-100 mt-3" do %>
+    <i class="fa fa-clone me-2"></i>
+    <span>Clone</span>
+  <% end %>
 </div>

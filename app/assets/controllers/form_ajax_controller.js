@@ -60,7 +60,9 @@ export default class extends Controller {
     if (modal != null && typeof (modal) != 'undefined') {
       Modal.getInstance(modal).hide()
     }
-    target.innerHTML = html_content
+    if (target != null && typeof (target) != 'undefined') {
+      target.innerHTML = html_content
+    }
     this.sweetalertStatus(resText, status)
   }
 

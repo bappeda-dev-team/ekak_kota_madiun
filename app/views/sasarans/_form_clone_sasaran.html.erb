@@ -1,0 +1,17 @@
+<%= form_with(url: clone_sasaran_path,
+              model: [@sasaran], method: :post,local: false) do |form| %>
+  <div class="field">
+    <%= form.label :sasaran_kinerja, { class: "form-label" } %>
+    <%= form.text_area :sasaran_kinerja, { class: "form-control", readonly: true } %>
+  </div>
+  <div class="field">
+    <%= form.label :kelompok_anggaran, { class: "form-label" } %>
+    <%= form.select :kelompok_anggaran, options_for_select(KelompokAnggaran.all.collect { |ka| [ka.nama_sederhana_kelompok_tahun, ka.id] } ), {include_blank: true},
+                    { data: { placeholder: "Pilih Tahun Cloning",
+                              controller: 'dropdown'
+                    } } %>
+  </div>
+  <div class="actions my-4">
+    <%= form.submit "Clone" %>
+  </div>
+<% end %>

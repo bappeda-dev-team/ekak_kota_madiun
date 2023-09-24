@@ -386,8 +386,20 @@ class Sasaran < ApplicationRecord
     tahapans.exists?
   end
 
+  def renaksi?
+    tahapans.any? { |th| th.aksis.any? }
+  end
+
   def manual_ik?
     indikator_sasarans.any?(&:manual_ik)
+  end
+
+  def indikator?
+    indikator_sasarans.any? { |ind| ind&.target&.present? && ind&.satuan&.present? && ind&.indikator_kinerja&.present? }
+  end
+
+  def anggaran?
+    tahapans.any? { |th| th.anggarans.any? }
   end
 
   def output_terisi?
@@ -522,5 +534,16 @@ class Sasaran < ApplicationRecord
     else
       'E-KAK'
     end
+  end
+
+  def status_terisi
+    {
+      indikator_sasaran: indikator?,
+      manual_ik: manual_ik?,
+      tahapan: tahapan?,
+      renaksi: renaksi?,
+      anggaran: anggaran?,
+      total: total_anggaran
+    }
   end
 end

@@ -1,0 +1,42 @@
+<%= form_with url: url,
+              method: :post,
+              local: false,
+              data: {
+                  controller: 'form-ajax',
+                  form_ajax_modal_params: 'form-modal',
+                  action: 'ajax:complete->form-ajax#processAjax'
+              } do |form| %>
+  <div class="field">
+    <%= form.label :rencana_kinerja, { class: "form-label" } %>
+    <%= form.text_field :rencana_kinerja, { class: "form-control", readonly: true, value: sasaran } %>
+  </div>
+  <div class="field">
+    <%= form.label :terisi, class: "form-label" %>
+    <% sasaran.status_terisi.each do |key, value| %>
+      <div class="form-check">
+        <%= hidden_field_tag 'uncheck[]', key %>
+        <%= check_box_tag 'check[]', key, value, class: 'form-check-input', disabled: true %>
+        <%= label_tag 'check', class: 'form-check-label' do %>
+          <span class="fw-bolder"><%= key.to_s.titleize %></span>
+          <% if key == :total %>
+            <span class="fw-bolder">: Rp. <%= number_with_delimiter(value) %></span>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="field">
+    <%= form.label :tahun_sekarang, { class: "form-label" } %>
+    <%= form.text_field :tahun_asal, { class: "form-control", readonly: true, value: tahun_asal } %>
+  </div>
+  <div class="field">
+    <%= form.label :tahun_tujuan, { class: "form-label" } %>
+    <%= form.select :tahun_tujuan, options_for_select(KelompokAnggaran.all.collect { |ka| [ka.nama_sederhana_kelompok_tahun, ka.id] } ), {include_blank: true},
+                    { data: { placeholder: "Pilih Tahun Cloning",
+                              controller: 'dropdown'
+                    } } %>
+  </div>
+  <div class="actions my-4">
+    <%= form.submit "Clone" %>
+  </div>
+<% end %>
