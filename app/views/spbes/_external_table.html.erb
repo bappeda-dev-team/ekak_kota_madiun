@@ -41,7 +41,7 @@
           <% rowspan_sas = spbe.spbe_rincians.length + 1 %>
           <tr>
             <td class="border fw-bolder" rowspan="<%= rowspan_sas %>">
-              <%= spbe.opd.nama_opd %>
+              <%= spbe.opd&.nama_opd %>
             </td>
             <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
               <%= spbe.jenis_pelayanan %>
