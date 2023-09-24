@@ -1,5 +1,5 @@
 <% unless pohon.exists? %>
-  <% if pohon.role == 'eselon_2' || pohon.role == 'eselon_3' %>
+  <% if pohon.role == 'eselon_2' || pohon.role == 'eselon_3' || pohon.role == 'sub_sub_pohon_kota' %>
     <div class="pohon-body">
       <table class="table table-bordered mb-3">
         <% program_pohon(pohon.pohonable, pohon.role).each do |program| %>
