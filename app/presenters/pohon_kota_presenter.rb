@@ -19,6 +19,18 @@ class PohonKotaPresenter
     @pohon.instance_of?(Pohon) ? @pohon.pohonable : @pohon
   end
 
+  def nama
+    @pohon.pohonable_type.downcase.include?('tematik') ? @pohon.pohonable.tema : @pohon.pohonable
+  end
+
+  def strategi?
+    @pohon.pohonable.instance_of?(Strategi) || @pohon.pohonable.instance_of?(StrategiPohon)
+  end
+
+  def hide_detail?
+    strategi? ? 'detail d-none' : ''
+  end
+
   def strategi
     pohonable.strategi
   rescue NoMethodError
@@ -36,7 +48,12 @@ class PohonKotaPresenter
   end
 
   def keterangan
-    @pohon.instance_of?(Pohon) ? @pohon.keterangan : @pohon.pohonable.keterangan
+    if @pohon.pohonable_type == 'SubTematik' || @pohon.pohonable_type == 'SubSubTematik'
+      @pohon.pohonable.keterangan
+    else
+      @pohon.keterangan
+
+    end
   end
 
   def opd
