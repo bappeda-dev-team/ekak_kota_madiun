@@ -39,11 +39,12 @@ class CloneController < ApplicationController
     @tahun = tahun_anggaran.match(/murni/) ? tahun_anggaran[/[^_]\d*/, 0] : tahun_anggaran
     sasaran = Sasaran.find(params[:id])
 
-    ket = "clone_#{tahun_asal}"
-
     operation = SasaranCloner.call(sasaran,
                                    traits: :with_indikators,
-                                   tahun: @tahun)
+                                   tahun: @tahun,
+                                   clone_tahun_asal: tahun_asal,
+                                   clone_oleh: current_user.id,
+                                   clone_asli: sasaran.id)
     operation.to_record
     if operation.persist!
       clone_sasaran = operation.to_record

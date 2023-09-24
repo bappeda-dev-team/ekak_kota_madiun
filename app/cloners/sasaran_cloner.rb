@@ -55,9 +55,12 @@ class SasaranCloner < Clowne::Cloner
     end
   end
 
-  finalize do |_source, record, tahun:, **|
+  finalize do |_source, record, tahun:, clone_tahun_asal:, clone_oleh:, clone_asli:, **|
     record.tahun = tahun
     record.created_at = Time.current
     record.updated_at = Time.current
+    record.clone_tahun_asal = clone_tahun_asal
+    record.clone_oleh = clone_oleh
+    record.clone_asli = clone_asli
   end
 end
