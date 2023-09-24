@@ -10,10 +10,10 @@ module AnggaranPohon
 
     def programs
       child_pohons.flatten.map do |child|
-        child.program_kegiatan.nama_program
+        child.program_kegiatan
       rescue NoMethodError
         ''
-      end.uniq.compact_blank
+      end.compact_blank.uniq(&:nama_program)
     end
 
     private

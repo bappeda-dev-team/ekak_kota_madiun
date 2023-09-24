@@ -9,7 +9,7 @@ module AnggaranPohon
     end
 
     def programs
-      child_pohons.map(&:programs).flatten.uniq.compact_blank
+      child_pohons.map(&:programs).flatten.compact_blank.uniq(&:nama_program)
     end
 
     private

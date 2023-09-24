@@ -5,7 +5,19 @@
         <% program_pohon(pohon.real, pohon.role).each do |program| %>
           <tr>
             <td class="text-start">Program</td>
-            <td class="text-wrap text-start" colspan="2"><%= program %></td>
+            <td class="text-wrap text-start" colspan="2">
+              <%= program&.nama_program || '-' %>
+              (<%= program&.kode_program || '-' %>)
+            </td>
+          </tr>
+          <tr>
+            <% indikator_prg = indikator_prg_rekin(@tahun, @opd, program) %>
+            <td class="text-wrap text-start">Indikator</td>
+            <td class="text-wrap text-start" colspan="2"><%= indikator_prg.dig(:indikator) %></td>
+          </tr>
+          <tr>
+            <td class="text-wrap text-start">Target / Satuan</td>
+            <td class="text-wrap text-start" colspan="2"><%= indikator_prg.dig(:target) %> <%= indikator_prg.dig(:satuan) %></td>
           </tr>
         <% end %>
         <tr>
