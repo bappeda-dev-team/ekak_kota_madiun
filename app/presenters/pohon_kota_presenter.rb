@@ -131,8 +131,19 @@ class PohonKotaPresenter
 
   def title_up
     # suffix = @pohon.instance_of?(Pohon) ? '- Kota' : ''
-    prefix = @pohon.role.chomp("_pohon_kota")
-    prefix.capitalize
+    prefix = case @pohon.role
+             when 'pohon_kota'
+               'Tematik Kota'
+             when 'sub_pohon_kota'
+               'Sub-Tematik Kota'
+             when 'sub_sub_pohon_kota'
+               'Sub Sub-Tematik Kota'
+             when 'strategi_pohon_kota'
+               'Strategic'
+             else
+               @pohon.role.chomp("_pohon_kota")
+             end
+    prefix.titleize
   end
 
   def jenis
@@ -141,16 +152,8 @@ class PohonKotaPresenter
   end
 
   def warna_pohon
-    case @pohon.role
-    when 'eselon_2'
-      'strategic-pohon'
-    when 'eselon_3'
-      'tactical-pohon'
-    when 'eselon_4'
-      'operational-pohon'
-    else
-      'staff-pohon'
-    end
+    role_asli = @pohon.role.chomp("_kota")
+    role_asli.dasherize
   end
 
   def indikators
