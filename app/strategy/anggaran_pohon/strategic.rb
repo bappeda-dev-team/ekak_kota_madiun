@@ -28,7 +28,7 @@ module AnggaranPohon
         anggarans.hitung_anggaran
       end
     rescue NoMethodError
-      false
+      []
     end
 
     def anggaran_total

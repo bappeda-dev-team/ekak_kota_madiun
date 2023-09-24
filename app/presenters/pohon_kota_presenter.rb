@@ -107,7 +107,16 @@ class PohonKotaPresenter
   end
 
   def role
-    @pohon.role
+    case @pohon.role
+    when 'strategi_pohon_kota'
+      'eselon_2'
+    when 'tactical_pohon_kota'
+      'eselon_3'
+    when 'operational_pohon_kota'
+      'eselon_4'
+    else
+      @pohon.role
+    end
   end
 
   def role_bawahan
@@ -175,6 +184,16 @@ class PohonKotaPresenter
 
   def indikators
     pohonable.indikators
+  end
+
+  def rencana_kinerjas
+    return unless strategi?
+
+    if @pohon.pohonable.instance_of?(StrategiPohon)
+      @pohon.pohonable.sasarans
+    else
+      @pohon.pohonable.strategi_pokin
+    end
   end
 
   private

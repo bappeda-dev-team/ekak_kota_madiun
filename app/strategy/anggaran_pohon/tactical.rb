@@ -22,7 +22,7 @@ module AnggaranPohon
       childs = @strategi.strategi_bawahans
       childs.map(&:sasarans)
     rescue NoMethodError
-      false
+      []
     end
 
     def anggaran_childs
