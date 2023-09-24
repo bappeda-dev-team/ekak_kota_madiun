@@ -16,6 +16,10 @@ module LaporanItemHelper
         icon: 'fas fa-people-carry', identifier: 'gap'
       },
       {
+        title: 'Cascading Kota', href: hasil_cascading_kota_laporans_path,
+        icon: 'fas fa-people-arrows', identifier: 'hasil_cascading_kota'
+      },
+      {
         title: 'Hasil Cascading', href: hasil_cascading_laporans_path,
         icon: 'fas fa-people-arrows', identifier: 'hasil_cascading'
       },

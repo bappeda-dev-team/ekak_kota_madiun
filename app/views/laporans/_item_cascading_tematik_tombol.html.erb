@@ -1,0 +1,17 @@
+<% unless pohon.exists? %>
+  <% if eselon_x?('reviewer', 'khusus', 'super_admin') %>
+    <div class="pohon-tombol mb-3">
+      <div class="row">
+        <div class="col">
+          <%= render 'shared/komentar_button',
+           link: komentar_pokin_komentars_path(strategi_id: pohon.id,
+                                               jenis: "CASCADING-KOTA"),
+           form_name: 'form-komentar' do %>
+            <i class="far fa-comment me-2"></i>
+            <span>Review</span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

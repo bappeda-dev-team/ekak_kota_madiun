@@ -1,7 +1,8 @@
 module AnggaranPohon
-  class Strategic
-    def initialize(strategi)
-      @strategi = strategi
+  class SubSubTematik
+    def initialize(subtema, tahun)
+      @subtema = subtema
+      @tahun = tahun
     end
 
     def hitung_anggaran
@@ -15,18 +16,18 @@ module AnggaranPohon
     private
 
     def child_pohons
-      @strategi.strategi_bawahans.map do |tact|
-        AnggaranPohon::Tactical.new(tact)
+      pohon = Pohon.find_by(pohonable_id: @subtema.id, pohonable_type: @subtema.class.name, tahun: @tahun)
+      pohons = Pohon.where(pohon_ref_id: pohon.id)
+      pohons.map do |str|
+        strategic = str.pohonable
+        AnggaranPohon::Strategic.new(strategic)
       end
     rescue NoMethodError
       []
     end
 
     def anggaran_childs
-      @strategi.strategi_bawahans.map do |tact|
-        anggarans = AnggaranPohon::Tactical.new(tact)
-        anggarans.hitung_anggaran
-      end
+      child_pohons.map(&:hitung_anggaran)
     rescue NoMethodError
       []
     end
