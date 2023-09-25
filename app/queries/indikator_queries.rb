@@ -20,7 +20,7 @@ class IndikatorQueries
   end
 
   def kode_opd
-    @program_kegiatan.kode_sub_skpd
+    @program_kegiatan&.opd&.kode_unik_opd || @program_kegiatan.kode_sub_skpd
   end
 
   def tahun_bener
