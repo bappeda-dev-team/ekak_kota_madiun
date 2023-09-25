@@ -19,6 +19,14 @@ module ReviewerItemHelper
   def laporan_reviewer_items
     [
       {
+        title: 'Cascading Kota', href: hasil_cascading_kota_laporans_path,
+        icon: 'fas fa-people-arrows', identifier: 'hasil_cascading_kota'
+      },
+      {
+        title: 'Hasil Cascading', href: hasil_cascading_laporans_path,
+        icon: 'fas fa-people-arrows', identifier: 'hasil_cascading'
+      },
+      {
         title: 'Rencana Kinerja (KAK)', href: laporan_kak_laporans_path,
         icon: 'fas fa-bullseye', identifier: 'laporan_kak'
       },
