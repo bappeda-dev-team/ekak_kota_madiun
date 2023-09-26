@@ -1,0 +1,58 @@
+<%= form_with(model: tujuan_opd, local: false,
+              class: 'px-2',
+              data: {
+                controller: 'form-ajax',
+                action: 'ajax:success->form-ajax#ajaxSuccess:prevent ajax:error->form-ajax#ajaxError:prevent'
+              }
+) do |form| %>
+  <% if tujuan_opd.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(tujuan_opd.errors.count, "error") %> prohibited this tujuan_opd from being saved:</h2>
+      <ul>
+        <% tujuan_opd.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <% random_number = tujuan_opd.id_tujuan.nil? ? (SecureRandom.random_number(9e5) + 1e5).to_i : tujuan_opd.id_tujuan %>
+  <%= form.hidden_field :id_tujuan, :value => random_number, readonly: true %>
+  <div class="field">
+    <%= form.label :opd, class: 'form-label' %>
+    <%= form.select :kode_unik_opd, @opds,
+          {include_blank: true},
+          { required: true, class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih OPD', dropdown_parent_value: '#form-modal' } }%>
+  </div>
+  <div class="field">
+    <%= form.label :urusan, class: 'form-label' %>
+    <%= form.select :urusan_id, @urusans ,{include_blank: true},
+          { required: true, class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih Urusan', dropdown_parent_value: '#form-modal' } }%>
+  </div>
+  <div class="field">
+    <%= form.label :tujuan, class: 'form-label' %>
+    <%= form.text_field :tujuan, class: 'form-control' %>
+  </div>
+  <div class="field">
+    <%= form.label :tahun_awal, class: 'form-label' %>
+    <%= form.select :tahun_awal,[2020, 2021, 2022, 2023, 2024],{},
+          { required: true, class: 'form-control', data: { controller: 'dropdown', dropdown_parent_value: '#form-modal', placeholder: 'Pilih Tahun' } }%>
+  </div>
+  <div class="field">
+    <%= form.label :tahun_akhir, class: 'form-label' %>
+    <%= form.select :tahun_akhir,[2020, 2021, 2022, 2023, 2024],{},
+          { required: true, class: 'form-control', data: { controller: 'dropdown', dropdown_parent_value: '#form-modal', placeholder: 'Pilih Tahun' } }%>
+  </div>
+  <hr>
+  <div class="field mt-0" id="indikator-tujuans-opd">
+    <%= form.fields_for :indikators do |indikator_tujuan| %>
+      <%= render 'tujuan_opds/indikator_edits', form: indikator_tujuan %>
+    <% end %>
+  </div>
+  <%= link_to_add_nested(form, :indikators, "#indikator-tujuans-opd",
+                             link_classes: 'btn btn-primary w-100',
+                             link_text: 'Tambah Indikator',
+                             partial: 'tujuan_opds/indikator_tujuan_opd_fields') %>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
