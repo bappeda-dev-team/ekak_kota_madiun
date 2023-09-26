@@ -18,7 +18,8 @@ class TujuanOpdsController < ApplicationController
     @opds = Opd.where.not(kode_opd: nil)
                .pluck(:nama_opd,
                       :kode_unik_opd)
-    @urusans = Master::Urusan.where(tahun: @tahun).collect { |urusan| [urusan.nama_urusan, urusan.id] }
+    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @urusans = Master::Urusan.where(tahun: tahun_bener).collect { |urusan| [urusan.nama_urusan, urusan.id] }
     @tujuan_opd = TujuanOpd.new
     @tujuan_opd.indikators.build.targets.build
     render layout: false
