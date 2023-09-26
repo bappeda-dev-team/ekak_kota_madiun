@@ -104,8 +104,10 @@ class TujuanOpdsController < ApplicationController
   end
 
   def indikators_attributes
-    { indikators_attributes: [:id, :kode, :kode_opd, :indikator, :_destroy, {
-      targets_attributes: %i[id target satuan tahun indikator_id opd_id jenis _destroy]
-    }] }
+    { indikators_attributes: [:id, :kode, :kode_opd, :indikator, :_destroy, targets_attributes] }
+  end
+
+  def targets_attributes
+    { targets_attributes: %i[id target satuan tahun indikator_id opd_id jenis _destroy] }
   end
 end
