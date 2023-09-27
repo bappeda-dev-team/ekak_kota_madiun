@@ -103,7 +103,7 @@
                       <%= @sasaran.sasaran_atasan_pohon[:nama_atasan] %>
                     </div>
                     <div class="row pb-2 border-bottom border-primary p-2">
-                     Sasaran Kinerja :
+                      Sasaran Kinerja :
                       <%= @sasaran.sasaran_atasan_pohon[:sasaran_atasan] %>
                     </div>
                     <% sasaran_atasan&.indikator_sasarans&.each do |indikator| %>
@@ -171,10 +171,10 @@
             <td>
               <div class="field">
                 <% if manual_ik.penanggung_jawab.blank? %>
-                <%= form.text_field :penanggung_jawab, class: "form-control", value: @user.jabatan %>
-              <% else %>
-                <%= form.text_field :penanggung_jawab, class: "form-control" %>
-              <% end %>
+                  <%= form.text_field :penanggung_jawab, class: "form-control", value: @user.jabatan %>
+                <% else %>
+                  <%= form.text_field :penanggung_jawab, class: "form-control" %>
+                <% end %>
               </div>
             </td>
           </tr>
@@ -217,7 +217,11 @@
             </td>
             <td>
               <div class="field">
-                <%= form.text_field :periode_pelaporan, class: "form-control", readonly: true, value: "Bulanan" %>
+                <%= form.select :periode_pelaporan, ManualIk::PERIODE_PELAPORAN ,{include_blank: true},class: "form-control",
+                 data: {
+                  controller: "dropdown",
+                  placeholder: "Pilih Periode Pelaporan"
+                } %>
               </div>
             </td>
           </tr>

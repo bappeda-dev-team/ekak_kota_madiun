@@ -53,4 +53,10 @@ class ManualIk < ApplicationRecord
     Outcome
     Output
   ].freeze
+
+  PERIODE_PELAPORAN = %w[
+    Bulanan
+    Triwulan
+    Tahunan
+  ].freeze
 end
