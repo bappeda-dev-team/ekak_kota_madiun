@@ -12,15 +12,11 @@ json.data do
     json.tujuan_opd tujuan_opd.tujuan
     json.tahun_awal tujuan_opd.tahun_awal
     json.tahun_akhir tujuan_opd.tahun_akhir
-    tahun_range = (2020..2024).to_a
-    json.indikator_tujuan tujuan_opd.indikator_tujuans[:indikator_tujuan] do |indikator, values|
-      json.array! tahun_range do |tahun|
-        targets = values[tahun.to_s]
-        json.indikator indikator
-        json.tahun tahun
-        json.target targets&.last.target
-        json.satuan targets&.last.satuan
-      end
+    json.indikator_tujuan tujuan_opd.targets do |target|
+      json.indikator target.indikator.indikator
+      json.tahun target.tahun
+      json.target target.target
+      json.satuan target.satuan
     end
   end
 end
