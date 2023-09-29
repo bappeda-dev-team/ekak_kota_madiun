@@ -1123,6 +1123,44 @@ ALTER SEQUENCE public.komentars_id_seq OWNED BY public.komentars.id;
 
 
 --
+-- Name: kriteria; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.kriteria (
+    id bigint NOT NULL,
+    kriteria character varying,
+    poin integer,
+    poin_max integer,
+    poin_min integer,
+    keterangan character varying,
+    type character varying,
+    tipe_kriteria character varying,
+    kriteria_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: kriteria_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.kriteria_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: kriteria_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.kriteria_id_seq OWNED BY public.kriteria.id;
+
+
+--
 -- Name: latar_belakangs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3445,6 +3483,13 @@ ALTER TABLE ONLY public.komentars ALTER COLUMN id SET DEFAULT nextval('public.ko
 
 
 --
+-- Name: kriteria id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.kriteria ALTER COLUMN id SET DEFAULT nextval('public.kriteria_id_seq'::regclass);
+
+
+--
 -- Name: latar_belakangs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4039,6 +4084,14 @@ ALTER TABLE ONLY public.koefisiens
 
 ALTER TABLE ONLY public.komentars
     ADD CONSTRAINT komentars_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: kriteria kriteria_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.kriteria
+    ADD CONSTRAINT kriteria_pkey PRIMARY KEY (id);
 
 
 --
@@ -5400,6 +5453,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230829061912'),
 ('20230830024501'),
 ('20230830040036'),
-('20230922104355');
+('20230922104355'),
+('20230929084519');
 
 

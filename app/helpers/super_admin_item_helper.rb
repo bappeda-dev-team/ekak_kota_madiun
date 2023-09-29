@@ -54,6 +54,10 @@ module SuperAdminItemHelper
         multi: true, collections: spbe_items,
         id_target: "spbe-item",
         icon: 'fas fa-tablet-alt', identifier: 'spbes'
+      },
+      {
+        title: 'Kriteria Verifikasi', href: kriteria_path,
+        icon: 'fas fa-calendar-alt', identifier: 'kriteria'
       }
     ]
   end

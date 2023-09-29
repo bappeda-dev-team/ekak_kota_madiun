@@ -1,0 +1,47 @@
+<%= form_with(model: kriterium, url: kriterium_path) do |form| %>
+  <% if kriterium.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(kriterium.errors.count, "error") %> prohibited this kriterium from being saved:</h2>
+
+      <ul>
+        <% kriterium.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :kriteria %>
+    <%= form.text_field :kriteria %>
+  </div>
+
+  <div class="field">
+    <%= form.label :poin %>
+    <%= form.number_field :poin %>
+  </div>
+
+  <div class="field">
+    <%= form.label :poin_max %>
+    <%= form.number_field :poin_max %>
+  </div>
+
+  <div class="field">
+    <%= form.label :poin_min %>
+    <%= form.number_field :poin_min %>
+  </div>
+
+  <div class="field">
+    <%= form.label :keterangan %>
+    <%= form.text_field :keterangan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tipe_kriteria %>
+    <%= form.text_field :tipe_kriteria %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
