@@ -399,8 +399,10 @@ class SasaransController < ApplicationController
   # DELETE /sasarans/1 or /sasarans/1.json
   def destroy
     nip_sebelum = current_user.nik
+    id_rencana_sebelum = @sasaran.id_rencana
     @sasaran.update(nip_asn_sebelumnya: nip_sebelum, nip_asn: nil, strategi_id: nil, deleted_at: DateTime.current,
-                    keterangan_hapus: 'dihapus user', deleted_by: current_user.id)
+                    keterangan_hapus: 'dihapus user', deleted_by: current_user.id,
+                    id_rencana_sebelum: id_rencana_sebelum, id_rencana: nil)
     respond_to do |format|
       format.html { redirect_to sasarans_path, success: 'Sasaran berhasil dihapus' }
       format.json { head :no_content }
