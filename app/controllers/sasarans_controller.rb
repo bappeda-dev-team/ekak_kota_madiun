@@ -419,7 +419,6 @@ class SasaransController < ApplicationController
 
   def clone_tahapan_sebelum
     sasaran = Sasaran.find(params[:id])
-    sas_target = sasaran.clone_dari
     respond_to do |format|
       if sasaran.renaksi_cloner
         format.html { redirect_to sasaran_path(sasaran), success: 'Renaksi diclone' }

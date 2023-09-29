@@ -480,9 +480,7 @@ class Sasaran < ApplicationRecord
   def clone_dari
     return unless id_rencana.include?('clone')
 
-    split_id = id_rencana.partition('_')
-    clone_target = split_id.last.partition('_').first
-    Sasaran.find_by_id_rencana(clone_target)
+    Sasaran.find(clone_asli)
   end
 
   def renaksi_cloner
@@ -493,7 +491,7 @@ class Sasaran < ApplicationRecord
     return unless clone_asal.tahapans.any?
 
     clone_asal.tahapans.each do |tahap|
-      clone = TahapanCloner.call(tahap, id_rencana_sas: id_rencana, traits: :normal)
+      clone = TahapanCloner.call(tahap, id_rencana_sas: id_rencana, tahun: clone_asal.tahun, traits: :normal)
       clone.persist!
     end
   end
