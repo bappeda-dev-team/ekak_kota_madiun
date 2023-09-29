@@ -48,6 +48,9 @@
       </div>
       <% unless diajukan? %>
         <div class="col text-end">
+          <%= button_to 'Fix Jumlah Target', renaksi_update_path, remote: true, method: :post, class: 'btn btn-sm btn-primary', params: {id: sasaran.id} %>
+        </div>
+        <div class="col text-end">
           <%= link_to 'Tambah Tahapan', new_sasaran_tahapan_path(sasaran) ,remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'},  class: "btn btn-sm btn-info" %>
         </div>
       <% end %>

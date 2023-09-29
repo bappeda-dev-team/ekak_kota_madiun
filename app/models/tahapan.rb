@@ -41,6 +41,9 @@ class Tahapan < ApplicationRecord
   end
 
   def sync_total_renaksi
+    self.jumlah_target = 0 if id_rencana_aksi.nil?
+    self.id_rencana_aksi = SecureRandom.base36(6) if id_rencana_aksi.nil?
+    save
     aksis.each(&:sync_total)
   end
 

@@ -1,1 +1,2 @@
 $('#notice').html("<%= j render 'shared/flash', flash: flash %>");
+Turbolinks.visit(window.location, { action: "replace" })

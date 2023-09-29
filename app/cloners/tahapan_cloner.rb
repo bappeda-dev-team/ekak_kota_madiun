@@ -5,6 +5,8 @@ class TahapanCloner < Clowne::Cloner
   exclude_association :aksis
 
   nullify :id_rencana_aksi
+  nullify :jumlah_target
+  nullify :waktu
 
   finalize do |_source, record, tahun:, **|
     record.keterangan = "cloned_#{tahun}"

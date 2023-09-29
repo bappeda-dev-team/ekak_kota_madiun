@@ -39,9 +39,9 @@ class Aksi < ApplicationRecord
   end
 
   def sync_total
-    self.id_aksi_bulan = SecureRandom.base36(6) if self.id_aksi_bulan.nil?
-    self.save
-    run_callbacks :update do
+    self.id_aksi_bulan = SecureRandom.base36(6) if id_aksi_bulan.nil?
+    save
+    run_callbacks :update_total_target_bulan do
       puts '- save'
     end
   end
