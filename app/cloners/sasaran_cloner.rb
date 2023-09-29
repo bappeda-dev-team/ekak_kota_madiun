@@ -9,12 +9,8 @@ class SasaranCloner < Clowne::Cloner
         tahun: params[:tahun]
       }
     }
-    include_association :tahapans, params: proc { |params, sasaran|
-      {
-        id_rencana: sasaran.id_rencana,
-        tahun: params[:tahun]
-      }
-    }
+    # include_association :tahapans, params: proc { |params, sasaran|
+    # }
 
     nullify :id_rencana
   end
