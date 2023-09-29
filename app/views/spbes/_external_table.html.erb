@@ -38,7 +38,7 @@
           <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_spbe(spbes) %>"><%= program.nama_program %></td>
         </tr>
         <% spbes.each do |spbe| %>
-          <% rowspan_sas = spbe.spbe_rincians.length + 1 %>
+          <% rowspan_sas = rowspan_rincian_spbe(spbe.spbe_rincians) %>
           <tr>
             <td class="border fw-bolder" rowspan="<%= rowspan_sas %>">
               <%= spbe.opd&.nama_opd %>
@@ -46,13 +46,13 @@
             <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
               <%= spbe.jenis_pelayanan %>
             </td>
-            <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
+            <td class="border text-wrap fw-bolder pemilik-aplikasi" rowspan="<%= rowspan_sas %>">
               <%= spbe.pemilik_aplikasi %>
             </td>
-            <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
+            <td class="border text-wrap fw-bolder nama-aplikasi" rowspan="<%= rowspan_sas %>">
               <%= spbe.nama_aplikasi %>
             </td>
-            <td class="border fw-bolder" rowspan="<%= rowspan_sas %>">
+            <td class="border fw-bolder umum-data text-wrap" rowspan="<%= rowspan_sas %>">
               <div class="d-grid gap-2">
                 <p>Umum: <strong><%= spbe.output_aplikasi %></strong></p>
                 <p>Data: <strong><%= spbe.output_data %></strong></p>
@@ -60,27 +60,27 @@
                 <p>Cetak: <strong><%= spbe.output_cetak %></strong></p>
               </div>
             </td>
-            <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
+            <td class="border text-wrap fw-bolder terintegrasi" rowspan="<%= rowspan_sas %>">
               <%= spbe.terintegrasi_dengan %>
             </td>
-            <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
+            <td class="border text-wrap fw-bolder sasaran-program" rowspan="<%= rowspan_sas %>">
               <%= spbe.sasaran.sasaran_kinerja %>
             </td>
           </tr>
           <% spbe.spbe_rincians.each do |rincian| %>
             <% sas_kasi = rincian.sasaran %>
-            <tr class="spbe">
-              <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.domain_spbe %></td>
-              <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.subdomain_spbe %></td>
-              <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.kebutuhan_spbe %></td>
-              <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.detail_kebutuhan %></td>
-              <td class="border text-wrap spbe-kebutuhan" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= sas_kasi&.sasaran_kinerja %></td>
-              <td class="border text-wrap spbe-kebutuhan" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.detail_sasaran_kinerja %></td>
-              <%= indikator_sasaran(sas_kasi) %>
-              <td class="border text-wrap spbe-kebutuhan" rowspan="<%= rowspan_sasaran(sas_kasi) %>" data-subkegiatan="<%= sas_kasi&.subkegiatan&.downcase %>"><%= sas_kasi&.subkegiatan %></td>
-              <td class="border" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.opd&.nama_opd %></td>
-              <td class="border" rowspan="<%= rowspan_sasaran(sas_kasi) %>"><%= rincian.keterangan %></td>
-              <td class="border" rowspan="<%= rowspan_sasaran(sas_kasi) %>">
+            <tr class="spbe rincian-sasaran">
+              <td class="border text-wrap domain" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.domain_spbe %></td>
+              <td class="border text-wrap subdomain" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.subdomain_spbe %></td>
+              <td class="border text-wrap kebutuhan" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.kebutuhan_spbe %></td>
+              <td class="border text-wrap detail-kebutuhan" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.detail_kebutuhan %></td>
+              <td class="border text-wrap spbe-kebutuhan sasaran-kinerja" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= sas_kasi&.sasaran_kinerja %></td>
+              <td class="border text-wrap spbe-kebutuhan detail-sasaran-kinerja" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.detail_sasaran_kinerja %></td>
+              <td class="p-0 m-0" colspan="3"></td>
+              <td class="border text-wrap spbe-kebutuhan subkegiatan" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>" data-subkegiatan="<%= sas_kasi&.subkegiatan&.downcase %>"><%= sas_kasi&.subkegiatan %></td>
+              <td class="border" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.opd&.nama_opd %></td>
+              <td class="border" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.keterangan %></td>
+              <td class="border" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>">
                 <div class="d-grid gap-2">
                   <% if rincian.kode_opd == @kode_opd %>
                     <%= link_to edit_operational_opd_spbe_path(rincian,program_id: program.id), target: "_blank", rel: "nofollow",
@@ -103,8 +103,8 @@
               </td>
             </tr>
             <% unless sas_kasi.nil? %>
-              <% sas_kasi.indikator_sasarans.drop(1).each do |indikator_s| %>
-                <tr>
+              <% sas_kasi.indikator_sasarans.each do |indikator_s| %>
+                <tr class="indikator-sasaran">
                   <td class="border text-wrap"><%= indikator_s.indikator_kinerja %></td>
                   <td class="border text-wrap"><%= indikator_s.target %></td>
                   <td class="border text-wrap"><%= indikator_s.satuan %></td>
