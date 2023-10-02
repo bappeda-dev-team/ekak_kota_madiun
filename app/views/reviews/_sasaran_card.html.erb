@@ -1,0 +1,53 @@
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h5 class="card-title">
+          Sasaran Kinerja
+        </h5>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row align-items-center">
+      <div class="table-responsive">
+        <table class="table table-sm align-items-center">
+          <thead>
+            <tr class="border">
+              <th>Nama / NIP</th>
+              <th>Sasaran Kinerja</th>
+              <th>Indikator</th>
+              <th>Target</th>
+              <th>Satuan</th>
+              <th>Manual IK</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border" rowspan="<%= rowspan_sasaran_x(sasaran) %>"><%= sasaran.user.nama_nip %></td>
+              <td class="text-wrap border" rowspan="<%= rowspan_sasaran_x(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
+            </tr>
+            <% sasaran.indikator_sasarans.each do |indikator| %>
+              <tr>
+                <td class="text-wrap"><%= indikator.indikator_kinerja %></td>
+                <td class="text-wrap"><%= indikator.target %></td>
+                <td class="text-wrap"><%= indikator.satuan %></td>
+                <% if indikator.manual_ik.present? %>
+                  <td class="border-end">
+                    <%= link_to "Manual IK", overview_indikator_sasaran_manual_ik_path(indikator, indikator.manual_ik),
+                                         remote: true,
+                                         class: 'btn btn-sm btn-outline-gray-900',
+                                         data: { controller: 'form-modal',
+                                             action: 'form-modal#appendForm',
+                                             bs_target: '#form-modal',
+                                             bs_toggle: 'modal' } %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

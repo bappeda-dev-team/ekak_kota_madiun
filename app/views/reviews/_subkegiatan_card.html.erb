@@ -1,0 +1,43 @@
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <h5 class="card-title">
+      SUBKEGIATAN
+    </h5>
+  </div>
+  <% if sasaran.program_kegiatan.nil? %>
+    <div class="card-body bg-danger">
+      <h5 class="card-title">
+        KOSONG
+      </h5>
+    </div>
+  <% else %>
+    <div class="card-body table-responsive">
+      <table class="table border">
+        <thead>
+          <tr>
+            <th>SubKegiatan</th>
+            <th>Indikator</th>
+            <th>Pagu Ranwal <%= tahun %></th>
+            <th>Pagu Rankir <%= tahun %></th>
+            <th>Pagu Penetapan <%= tahun %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="align-middle text-wrap"><%= sasaran.program_kegiatan.nama_subkegiatan %></td>
+            <td class="align-middle text-wrap"><%= sasaran.program_kegiatan.indikator_subkegiatan %></td>
+            <td class="align-middle">
+              Rp.  <%= number_with_delimiter(sasaran.program_kegiatan.pagu_ranwal_tahun(tahun)) %>
+            </td>
+            <td class="align-middle">
+              Rp.  <%= number_with_delimiter(sasaran.program_kegiatan.pagu_rankir_tahun(tahun)) %>
+            </td>
+            <td class="align-middle">
+              Rp.  <%= number_with_delimiter(sasaran.program_kegiatan.pagu_penetapan_tahun(tahun)) %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+</div>
