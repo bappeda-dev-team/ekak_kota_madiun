@@ -63,6 +63,30 @@ module LaporansHelper
     end
   end
 
+  def reviewer_button(item, kriteria: '')
+    return unless reviewer?
+
+    kriteria = case item.class.name
+               when 'Sasaran'
+                 'SasaranKinerja'
+               else
+                 kriteria
+               end
+
+    link_to(new_review_path(type: item.class.name, id: item, kriteria: kriteria),
+            remote: true,
+            class: "btn btn-sm btn-outline-info",
+            data: {
+              controller: 'form-modal',
+              action: 'ajax:complete->form-modal#success:prevent',
+              bs_toggle: 'modal',
+              bs_target: '#form-modal'
+            }) do
+      content_tag(:i, "", class: "fas fa-pencil-alt me-2").html_safe + ' ' +
+        + content_tag(:span, "Review")
+    end
+  end
+
   def row_tahapan_sasaran(sasaran, colspan: 7)
     sasaran.tahapans.map do |tahapan|
       "
@@ -79,7 +103,7 @@ module LaporansHelper
         <tr>
           <td class='border text-wrap' colspan='#{colspan}'>Renaksi #{tahapan.urutan}: #{tahapan.tahapan_kerja}</td>
           <td class='border'>Rp. #{number_with_delimiter(tahapan.anggaran_tahapan)}</td>
-          <td class='border'></td>
+          <td class='border'>#{reviewer_button(tahapan)}</td>
         </tr>
       ".html_safe
     end
