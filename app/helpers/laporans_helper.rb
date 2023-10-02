@@ -103,7 +103,11 @@ module LaporansHelper
         <tr>
           <td class='border text-wrap' colspan='#{colspan}'>Renaksi #{tahapan.urutan}: #{tahapan.tahapan_kerja}</td>
           <td class='border'>Rp. #{number_with_delimiter(tahapan.anggaran_tahapan)}</td>
-          <td class='border'>#{reviewer_button(tahapan)}</td>
+          <td class='border'>
+            <div class='d-grid gap-2'>
+              #{reviewer_button(tahapan)}
+            </div>
+          </td>
         </tr>
       ".html_safe
     end

@@ -98,7 +98,10 @@
                   <td class="border rankir-1">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan_rankir_1) %></td>
                   <td class="border rankir-2">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %></td>
                   <td class="border penetapan">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan_penetapan) %></td>
-                  <td class="border"><%= reviewer_button(tahapan, kriteria: 'RincianBelanja') %></td>
+                  <td class="border">
+                    <div class="d-grid gap-2">
+                      <%= reviewer_button(tahapan, kriteria: 'RincianBelanja') %></td>
+                  </div>
                 </tr>
               <% end %>
             <% end %>
