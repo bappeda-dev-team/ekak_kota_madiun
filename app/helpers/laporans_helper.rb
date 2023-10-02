@@ -42,6 +42,12 @@ module LaporansHelper
     sasaran.indikator_sasarans.empty? ? 1 : sasaran.indikator_sasarans.length
   end
 
+  def rowspan_sasaran_x(sasaran)
+    return 1 if sasaran.nil?
+
+    sasaran.indikator_sasarans.empty? ? 1 : sasaran.indikator_sasarans.length + 1
+  end
+
   def indikator_sasaran(sasaran)
     indikator = sasaran&.indikator_sasarans&.first
     "

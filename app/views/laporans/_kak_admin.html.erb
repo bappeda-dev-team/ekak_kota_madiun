@@ -62,6 +62,13 @@
                       <i class="fas fa-journal-whills me-2"></i>
                       <span>Rincian</span>
                     <% end %>
+                    <% if reviewer? %>
+                      <%= link_to review_sasaran_path(sasaran), target: "_blank", rel: "nofollow",
+                       class: "btn btn-sm btn-primary text-white" do %>
+                        <i class="far fa-sticky-note me-2"></i>
+                        <span>Review</span>
+                      <% end %>
+                    <% end %>
                     <% if admin? %>
                       <%= link_to edit_admin_sasaran_path(sasaran), class: "btn btn-sm btn-outline-info" do %>
                         <i class="fas fa-pencil-alt me-2"></i>

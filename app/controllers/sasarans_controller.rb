@@ -1,6 +1,7 @@
 class SasaransController < ApplicationController
   before_action :set_user, only: %i[index new anggaran]
-  before_action :set_sasaran, only: %i[show edit update destroy update_program_kegiatan renaksi_update detail]
+  before_action :set_sasaran,
+                only: %i[show edit update destroy update_program_kegiatan renaksi_update detail review rincian]
   before_action :set_dropdown, only: %i[new edit]
 
   # GET /sasarans or /sasarans.json
@@ -438,9 +439,9 @@ class SasaransController < ApplicationController
              end
   end
 
-  def rincian
-    @sasaran = Sasaran.find(params[:id])
-  end
+  def rincian; end
+
+  def review; end
 
   def hasil_output
     @sasaran = Sasaran.find(params[:id])
