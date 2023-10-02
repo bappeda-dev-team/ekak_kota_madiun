@@ -66,6 +66,7 @@ class Sasaran < ApplicationRecord
   has_many :permasalahans, dependent: :destroy
   has_many :latar_belakangs, dependent: :destroy
   has_many :genders
+  has_many :reviews, -> { where(reviewable_type: 'Sasaran') }, foreign_key: :reviewable_id, primary_key: :id
   belongs_to :strategi, optional: true
   # has_one :strategi
   # has_many :manual_iks, through: :indikator_sasarans

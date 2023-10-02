@@ -6,6 +6,11 @@
 ** [X] Hapus tombol review di laporan KAK
 ** [ ] Tombol Review masuk ke Rincian KAK
 ** [ ] Tombol Review di dalam rincian KAK
+** [ ] Tombol Review per kode rekening
 ** [ ] Tombol Review Tahapan di dalam rincian KAK
-** [ ] Fix Tombol Manual IK
-** [ ] Pindah renaksi kebawah
+** [X] Fix Tombol Manual IK
+** [X] Pindah renaksi kebawah
+
+* Update <2023-10-03 Tue 02:51>
+** Add null checker for tahapans and aksis
+** Renaksi no longer include null and broken clone

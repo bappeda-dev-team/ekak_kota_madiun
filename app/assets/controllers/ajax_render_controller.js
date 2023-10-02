@@ -3,7 +3,20 @@ import { Controller } from 'stimulus'
 export default class extends Controller {
   static targets = ["place"]
   static values = {
-    url: String
+    url: String,
+    id: Number,
+    skor: Number
+  }
+
+  connect() {
+    if (this.idValue > 0) {
+      const url = this.urlValue + '/' + this.idValue + '?skor=' + this.skorValue
+
+      fetch(url, { method: "get" })
+        .then(response => response.text())
+        .then(text => this.successResponse(text))
+        .catch(error => this.errorResponse(error))
+    }
   }
 
   replace(e) {

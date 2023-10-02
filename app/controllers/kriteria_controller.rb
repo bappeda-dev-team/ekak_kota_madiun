@@ -8,7 +8,9 @@ class KriteriaController < ApplicationController
   end
 
   # GET /kriteria/1 or /kriteria/1.json
-  def show; end
+  def show
+    @skor = params[:skor]
+  end
 
   # GET /kriteria/new
   def new

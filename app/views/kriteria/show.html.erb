@@ -1,6 +1,7 @@
   <% (@kriterium.poin_min..@kriterium.poin_max).each do |poin| %>
   <div class="form-check form-check-inline">
-    <%= radio_button_tag 'skor', poin, false, class: 'form-check-input' %>
+    <% skor_value = @skor == poin.to_s %>
+    <%= radio_button_tag 'skor', poin, skor_value, class: 'form-check-input' %>
     <%= label_tag 'skor', class: 'form-check-label' do %>
       <span class="fw-bolder"><%= poin %></span>
     <% end %>

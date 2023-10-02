@@ -4,6 +4,7 @@
 #
 #  id              :bigint           not null, primary key
 #  keterangan      :string
+#  kriteria_type   :string
 #  metadata        :jsonb
 #  reviewable_type :string
 #  skor            :integer
@@ -21,4 +22,6 @@ class Review < ApplicationRecord
 
   belongs_to :user, primary_key: :id, foreign_key: :reviewer_id
   belongs_to :kriterium, primary_key: :id, foreign_key: :kriteria_id
+
+  default_scope { order updated_at: :desc }
 end

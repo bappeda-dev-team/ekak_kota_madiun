@@ -4,6 +4,7 @@
 #
 #  id              :bigint           not null, primary key
 #  keterangan      :string
+#  kriteria_type   :string
 #  metadata        :jsonb
 #  reviewable_type :string
 #  skor            :integer

@@ -14,12 +14,15 @@ class ReviewsController < ApplicationController
   def new
     @review = Review.new(reviewable_type: params[:type],
                          reviewable_id: params[:id],
+                         kriteria_type: params[:kriteria],
                          reviewer_id: current_user.id)
     @kriterias = Kriterium.where(tipe_kriteria: params[:kriteria]).pluck(:kriteria, :id)
   end
 
   # GET /reviews/1/edit
-  def edit; end
+  def edit
+    @kriterias = Kriterium.where(tipe_kriteria: @review.kriteria_type).pluck(:kriteria, :id)
+  end
 
   # POST /reviews or /reviews.json
   def create
@@ -67,7 +70,8 @@ class ReviewsController < ApplicationController
     params.require(:review).permit(:keterangan,
                                    :reviewable_type,
                                    :reviewable_id, :reviewer_id,
-                                   :status, :skor, :kriteria_id)
+                                   :kriteria_type, :kriteria_id,
+                                   :status, :skor)
   end
 
   def html_content(review)

@@ -60,6 +60,9 @@ export default class extends Controller {
       if (event.params.type == 'append') {
         target.insertAdjacentHTML('afterend', html_content)
       }
+      else if (event.params.type == 'prepend') {
+        target.insertAdjacentHTML('beforeend', html_content)
+      }
       else {
         target.innerHTML = html_content
       }
