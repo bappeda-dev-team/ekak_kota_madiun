@@ -1,13 +1,22 @@
 <tr>
-  <td></td>
-  <td><%= kriterium %></td>
-  <td><%= kriterium.poin %></td>
+  <td class="text-wrap"><%= kriterium %></td>
   <td><%= kriterium.poin_max %></td>
   <td><%= kriterium.poin_min %></td>
-  <td><%= kriterium.keterangan %></td>
   <td><%= kriterium.tipe_kriteria %></td>
+  <td><%= kriterium.keterangan %></td>
   <td class="text-center">
     <div class="d-grid gap-3">
+      <%= link_to new_sub_kriterium_path(parent: kriterium), remote: true,
+         data: {
+             controller: 'form-modal',
+             action: 'ajax:complete->form-modal#success:prevent',
+             bs_toggle: 'modal',
+             bs_target: '#form-modal'
+         },
+         class: 'btn btn-outline-primary' do %>
+        <i class="fa fa-plus me-2"></i>
+        <span>Sub Kriteria</span>
+      <% end %>
       <%= link_to edit_kriterium_path(kriterium), remote: true,
          data: {
              controller: 'form-modal',
@@ -29,3 +38,13 @@
     </div>
   </td>
 </tr>
+<% kriterium.sub_kriteria.each do |sub| %>
+  <tr>
+    <td>-</td>
+    <td class="text-wrap"><%= sub %></td>
+    <td><%= sub.poin_max %></td>
+    <td><%= sub.poin_min %></td>
+    <td><%= sub.tipe_kriteria %></td>
+    <td><%= sub.keterangan %></td>
+  </tr>
+<% end %>

@@ -4,7 +4,7 @@ class KriteriaController < ApplicationController
 
   # GET /kriteria or /kriteria.json
   def index
-    @kriteria = Kriterium.all
+    @kriteria = Kriterium.all.where(type: [nil, ''])
   end
 
   # GET /kriteria/1 or /kriteria/1.json
@@ -12,7 +12,7 @@ class KriteriaController < ApplicationController
 
   # GET /kriteria/new
   def new
-    @kriterium = Kriterium.new
+    @kriterium = klass.new
   end
 
   # GET /kriteria/1/edit
@@ -20,29 +20,25 @@ class KriteriaController < ApplicationController
 
   # POST /kriteria or /kriteria.json
   def create
-    @kriterium = Kriterium.new(kriterium_params)
+    @kriterium = klass.new(kriterium_params)
 
-    respond_to do |format|
-      if @kriterium.save
-        format.html { redirect_to kriterium_url(@kriterium), notice: "Kriterium was successfully created." }
-        format.json { render :show, status: :created, location: @kriterium }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @kriterium.errors, status: :unprocessable_entity }
-      end
+    if @kriterium.save
+      render json: { resText: "Kriteria baru dibuat", html_content: html_content(@kriterium) }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan", html_content: error_content(@kriterium) }.to_json,
+             status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /kriteria/1 or /kriteria/1.json
   def update
-    respond_to do |format|
-      if @kriterium.update(kriterium_params)
-        format.html { redirect_to kriterium_url(@kriterium), notice: "Kriterium was successfully updated." }
-        format.json { render :show, status: :ok, location: @kriterium }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @kriterium.errors, status: :unprocessable_entity }
-      end
+    if @kriterium.update(kriterium_params)
+      render json: { resText: "Kriteria berhasil diperbarui", html_content: html_content(@kriterium) }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan", html_content: error_content(@kriterium) }.to_json,
+             status: :unprocessable_entity
     end
   end
 
@@ -58,6 +54,10 @@ class KriteriaController < ApplicationController
 
   private
 
+  def klass
+    Object.const_get params[:controller].classify
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_kriterium
     @kriterium = Kriterium.find(params[:id])
@@ -65,6 +65,22 @@ class KriteriaController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def kriterium_params
-    params.require(:kriterium).permit(:kriteria, :poin, :poin_max, :poin_min, :keterangan, :tipe_kriteria)
+    params.require(klass.name.underscore.to_sym)
+          .permit(:kriteria, :poin_max, :poin_min, :keterangan, :tipe_kriteria, :type,
+                  :kriteria_id)
+  end
+
+  def html_content(kriterium)
+    render_to_string(partial: 'kriterium',
+                     formats: 'html',
+                     layout: false,
+                     locals: { kriterium: kriterium })
+  end
+
+  def error_content(kriterium)
+    render_to_string(partial: 'error',
+                     formats: 'html',
+                     layout: false,
+                     locals: { kriterium: kriterium })
   end
 end

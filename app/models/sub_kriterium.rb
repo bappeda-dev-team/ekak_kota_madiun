@@ -5,7 +5,6 @@
 #  id            :bigint           not null, primary key
 #  keterangan    :string
 #  kriteria      :string
-#  poin          :integer
 #  poin_max      :integer
 #  poin_min      :integer
 #  tipe_kriteria :string

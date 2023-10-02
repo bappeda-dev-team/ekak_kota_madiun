@@ -57,7 +57,12 @@ export default class extends Controller {
     const { resText, html_content } = JSON.parse(message.response)
 
     if (target != null && typeof (target) != 'undefined') {
-      target.innerHTML = html_content
+      if (event.params.type == 'append') {
+        target.insertAdjacentHTML('afterend', html_content)
+      }
+      else {
+        target.innerHTML = html_content
+      }
     }
     this.sweetalertStatus(resText, status)
     this.modalHider()

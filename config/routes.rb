@@ -10,6 +10,7 @@ require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
   resources :kriteria
+  resources :sub_kriteria
   resources :pelaksana
   resources :crosscuttings
   resources :pohon_kinerja_opds do

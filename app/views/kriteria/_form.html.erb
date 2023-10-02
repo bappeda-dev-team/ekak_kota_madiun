@@ -1,4 +1,10 @@
-<%= form_with(model: kriterium, url: kriterium_path) do |form| %>
+<%= form_with(model: kriterium, local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: 'kriteria',
+                form_ajax_type_param: 'append',
+                action: 'ajax:complete->form-ajax#processAjax'
+              }) do |form| %>
   <% if kriterium.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(kriterium.errors.count, "error") %> prohibited this kriterium from being saved:</h2>
@@ -10,35 +16,38 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
-    <%= form.label :kriteria %>
-    <%= form.text_field :kriteria %>
+    <%= form.hidden_field :kriteria_id, class: 'form-control' %>
   </div>
 
   <div class="field">
-    <%= form.label :poin %>
-    <%= form.number_field :poin %>
+    <%= form.label :kriteria, class: 'form-label' %>
+    <%= form.text_field :kriteria, class: 'form-control', placeholder: 'isikan dengan pertanyaan penilaian' %>
   </div>
 
   <div class="field">
-    <%= form.label :poin_max %>
-    <%= form.number_field :poin_max %>
+    <%= form.label :poin_max, class: 'form-label' %>
+    <%= form.number_field :poin_max, class: 'form-control' %>
+    <div class="form-text">poin maksimal</div>
   </div>
 
   <div class="field">
-    <%= form.label :poin_min %>
-    <%= form.number_field :poin_min %>
+    <%= form.label :poin_min, class: 'form-label' %>
+    <%= form.number_field :poin_min, class: 'form-control' %>
+    <div class="form-text">poin minimal</div>
   </div>
 
   <div class="field">
-    <%= form.label :keterangan %>
-    <%= form.text_field :keterangan %>
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_field :keterangan, class: 'form-control', placeholder: '(opsional) isikan dengan keterangan tambahan penilaian' %>
   </div>
 
   <div class="field">
-    <%= form.label :tipe_kriteria %>
-    <%= form.text_field :tipe_kriteria %>
+    <%= form.label :untuk_penilaian, class: 'form-label' %>
+    <%= form.select :tipe_kriteria,
+     options_for_select(Kriterium::TIPE_KRITERIA_OPTIONS, form.object.tipe_kriteria),{},
+     class: 'form-control',
+     data: { controller: 'dropdown', dropdown_parent_value: '#form-modal' } %>
   </div>
 
   <div class="actions">

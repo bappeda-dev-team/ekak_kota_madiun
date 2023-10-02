@@ -2,7 +2,6 @@ class CreateKriteria < ActiveRecord::Migration[6.1]
   def change
     create_table :kriteria do |t|
       t.string :kriteria
-      t.integer :poin
       t.integer :poin_max
       t.integer :poin_min
       t.string :keterangan

@@ -1129,7 +1129,6 @@ ALTER SEQUENCE public.komentars_id_seq OWNED BY public.komentars.id;
 CREATE TABLE public.kriteria (
     id bigint NOT NULL,
     kriteria character varying,
-    poin integer,
     poin_max integer,
     poin_min integer,
     keterangan character varying,
