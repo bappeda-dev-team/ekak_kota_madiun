@@ -1,0 +1,31 @@
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h5 class="card-title">
+          Gambaran Umum
+        </h5>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row align-items-center mb-3">
+      <div class="table-responsive">
+        <table class="table align-items-center">
+          <thead>
+            <tr class="border">
+              <th>Gambaran Umum</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% sasaran.latar_belakangs.order(:updated_at).each do |latarbelakang| %>
+              <tr>
+                <td class="align-middle text-wrap"><%= latarbelakang.gambaran_umum %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

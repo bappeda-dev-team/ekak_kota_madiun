@@ -1,0 +1,44 @@
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h5 class="card-title">
+          Rincian Sasaran
+        </h5>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row align-items-center mb-3">
+      <div class="table-responsive">
+        <table class="table align-items-center">
+          <thead>
+            <tr class="border">
+              <th>Penerima Manfaat</th>
+              <th>Data Terpilah</th>
+              <th>Resiko</th>
+              <th>Lokasi Pelaksanaan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if sasaran.rincian? %>
+              <tr>
+                <td class='border '><%= sasaran.penerima_manfaat %></td>
+                <td class='border '><%= sasaran.rincian.data_terpilah %></td>
+                <td class='border '><%= sasaran.rincian.resiko %></td>
+                <td class='border '><%= sasaran.rincian.lokasi_pelaksanaan %></td>
+              </tr>
+            <% else %>
+              <tr>
+                <td class='border text-wrap'>-</td>
+                <td class='border text-wrap'>-</td>
+                <td class='border text-wrap'>-</td>
+                <td class='border text-wrap'>-</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
