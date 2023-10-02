@@ -1,6 +1,6 @@
 class KriteriaController < ApplicationController
   before_action :set_kriterium, only: %i[show edit update destroy]
-  layout false, only: %i[new edit edit_sub]
+  layout false, only: %i[new edit edit_sub show]
 
   # GET /kriteria or /kriteria.json
   def index

@@ -62,22 +62,23 @@
                       <i class="fas fa-journal-whills me-2"></i>
                       <span>Rincian</span>
                     <% end %>
-                    <%= link_to edit_admin_sasaran_path(sasaran),
-                        class: "btn btn-sm btn-outline-info" do %>
-                      <i class="fas fa-pencil-alt me-2"></i>
-                      <span>Edit</span>
-                    <% end %>
-                    <%= link_to new_review_path(type: sasaran.class.name, id: sasaran, kriteria: 'SasaranKinerja'),
-                     remote: true,
-                     class: "btn btn-sm btn-outline-info",
-                     data: {
-                       controller: 'form-modal',
-                       action: 'ajax:complete->form-modal#success:prevent',
-                       bs_toggle: 'modal',
-                       bs_target: '#form-modal'
-                     } do %>
-                      <i class="fas fa-pencil-alt me-2"></i>
-                      <span>Review</span>
+                    <% if reviewer? %>
+                      <%= link_to new_review_path(type: sasaran.class.name, id: sasaran, kriteria: 'SasaranKinerja'),
+                       remote: true,
+                       class: "btn btn-sm btn-outline-info",
+                       data: {
+                         controller: 'form-modal',
+                         action: 'ajax:complete->form-modal#success:prevent',
+                         bs_toggle: 'modal',
+                         bs_target: '#form-modal'} do %>
+                        <i class="fas fa-pencil-alt me-2"></i>
+                        <span>Review</span>
+                      <% end %>
+                    <% else %>
+                      <%= link_to edit_admin_sasaran_path(sasaran), class: "btn btn-sm btn-outline-info" do %>
+                        <i class="fas fa-pencil-alt me-2"></i>
+                        <span>Edit</span>
+                      <% end %>
                     <% end %>
                   </div>
                 </td>

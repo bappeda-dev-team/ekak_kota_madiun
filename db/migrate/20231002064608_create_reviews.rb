@@ -7,6 +7,8 @@ class CreateReviews < ActiveRecord::Migration[6.1]
       t.bigint :reviewer_id
       t.string :status
       t.jsonb :metadata
+      t.integer :skor
+      t.bigint :kriteria_id
 
       t.timestamps
     end

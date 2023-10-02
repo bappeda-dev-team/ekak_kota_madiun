@@ -15,7 +15,7 @@ class ReviewsController < ApplicationController
     @review = Review.new(reviewable_type: params[:type],
                          reviewable_id: params[:id],
                          reviewer_id: current_user.id)
-    @kriterias = Kriterium.where(tipe_kriteria: params[:kriteria]).pluck(:kriteria)
+    @kriterias = Kriterium.where(tipe_kriteria: params[:kriteria]).pluck(:kriteria, :id)
   end
 
   # GET /reviews/1/edit
@@ -24,28 +24,24 @@ class ReviewsController < ApplicationController
   # POST /reviews or /reviews.json
   def create
     @review = Review.new(review_params)
-
-    respond_to do |format|
-      if @review.save
-        format.html { redirect_to review_url(@review), notice: "Review was successfully created." }
-        format.json { render :show, status: :created, location: @review }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @review.errors, status: :unprocessable_entity }
-      end
+    @review.skor = params[:skor]
+    if @review.save
+      render json: { resText: "Review dibuat", html_content: html_content(@review) }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan", html_content: error_content(@review) }.to_json,
+             status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /reviews/1 or /reviews/1.json
   def update
-    respond_to do |format|
-      if @review.update(review_params)
-        format.html { redirect_to review_url(@review), notice: "Review was successfully updated." }
-        format.json { render :show, status: :ok, location: @review }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @review.errors, status: :unprocessable_entity }
-      end
+    if @review.update(review_params)
+      render json: { resText: "Review berhasil diperbarui", html_content: html_content(@review) }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan", html_content: error_content(@review) }.to_json,
+             status: :unprocessable_entity
     end
   end
 
@@ -68,6 +64,23 @@ class ReviewsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def review_params
-    params.require(:review).permit(:keterangan, :reviewable_type, :reviewable_id, :reviewer_id, :status)
+    params.require(:review).permit(:keterangan,
+                                   :reviewable_type,
+                                   :reviewable_id, :reviewer_id,
+                                   :status, :skor, :kriteria_id)
+  end
+
+  def html_content(review)
+    render_to_string(partial: 'reviews/review',
+                     formats: 'html',
+                     layout: false,
+                     locals: { review: review })
+  end
+
+  def error_content(review)
+    render_to_string(partial: 'error',
+                     formats: 'html',
+                     layout: false,
+                     locals: { review: review })
   end
 end

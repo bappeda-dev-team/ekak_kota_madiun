@@ -1,7 +1,7 @@
 <%= form_with(model: review, local: false,
               data: {
                 controller: 'form-ajax',
-                form_ajax_target_param: @target,
+                form_ajax_target_param: 'hasil-review',
                 form_ajax_type_param: 'append',
                 action: 'ajax:complete->form-ajax#processAjax'
               }
@@ -26,11 +26,26 @@
 
   <div class="field">
     <%= form.label :kriteria_penilaian, class: 'form-label' %>
-    <%= form.select :kriteria,
-     options_for_select(@kriterias),{},
+    <%= form.select :kriteria_id,
+     options_for_select(@kriterias),{include_blank: true},
      class: 'form-control',
-     data: { controller: 'dropdown', dropdown_parent_value: '#form-modal' } %>
-    <div class="form-text">pilih kriteria penilaian</div>
+     data: {
+       controller: 'dropdown',
+       dropdown_parent_value: '#form-modal',
+       placeholder: 'Pilih kriteria penilaian',
+       dropdown_jenis_value: 'chain',
+       dropdown_event_name_value: 'kriteria-skor'
+     } %>
+  </div>
+
+  <div class="field" id='review-score'
+       data-controller='ajax-render'
+       data-ajax-render-url-value='<%= kriteria_path %>'
+       data-action='kriteria-skor@document->ajax-render#replace'>
+    <%= form.label :skor, class: 'form-label' %>
+    <div data-ajax-render-target="place">
+      <%= form.text_field :kriteria_score, class: 'form-control', placeholder: 'Pilih kriteria penilaian untuk memunculkan skor', disabled: true %>
+    </div>
   </div>
 
   <div class="field">

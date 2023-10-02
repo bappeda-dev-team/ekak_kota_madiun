@@ -6,9 +6,11 @@
 #  keterangan      :string
 #  metadata        :jsonb
 #  reviewable_type :string
+#  skor            :integer
 #  status          :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  kriteria_id     :bigint
 #  reviewable_id   :bigint
 #  reviewer_id     :bigint
 #

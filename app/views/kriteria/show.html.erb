@@ -1,34 +1,8 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Kriteria:</strong>
-  <%= @kriterium.kriteria %>
-</p>
-
-<p>
-  <strong>Poin:</strong>
-  <%= @kriterium.poin %>
-</p>
-
-<p>
-  <strong>Poin max:</strong>
-  <%= @kriterium.poin_max %>
-</p>
-
-<p>
-  <strong>Poin min:</strong>
-  <%= @kriterium.poin_min %>
-</p>
-
-<p>
-  <strong>Keterangan:</strong>
-  <%= @kriterium.keterangan %>
-</p>
-
-<p>
-  <strong>Tipe Kriteria:</strong>
-  <%= @kriterium.tipe_kriteria %>
-</p>
-
-<%= link_to 'Edit', edit_kriterium_path(@kriterium) %> |
-<%= link_to 'Back', kriteria_path %>
+  <% (@kriterium.poin_min..@kriterium.poin_max).each do |poin| %>
+  <div class="form-check form-check-inline">
+    <%= radio_button_tag 'skor', poin, false, class: 'form-check-input' %>
+    <%= label_tag 'skor', class: 'form-check-label' do %>
+      <span class="fw-bolder"><%= poin %></span>
+    <% end %>
+  </div>
+<% end %>

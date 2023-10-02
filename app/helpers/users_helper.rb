@@ -25,7 +25,7 @@ module UsersHelper
   end
 
   def reviewer?
-    current_user.has_role?(:reviewer_kak)
+    current_user.has_any_role?(:reviewer_kak, :reviewer)
   end
 
   def admin_opd?

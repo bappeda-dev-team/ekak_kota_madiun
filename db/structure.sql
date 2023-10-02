@@ -2196,6 +2196,8 @@ CREATE TABLE public.reviews (
     reviewer_id bigint,
     status character varying,
     metadata jsonb,
+    skor integer,
+    kriteria_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
