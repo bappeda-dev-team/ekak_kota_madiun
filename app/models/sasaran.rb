@@ -58,7 +58,9 @@ class Sasaran < ApplicationRecord
   has_many :mandatoris, dependent: :nullify
   has_many :inovasis, dependent: :nullify
   has_many :indikator_sasarans, foreign_key: 'sasaran_id', primary_key: 'id_rencana', dependent: :nullify
-  has_many :tahapans, foreign_key: 'id_rencana', primary_key: 'id_rencana', dependent: :nullify, inverse_of: :sasaran
+  has_many :tahapans, lambda {
+                        where.not(id_rencana_aksi: [nil, ''])
+                      }, foreign_key: 'id_rencana', primary_key: 'id_rencana', dependent: :nullify, inverse_of: :sasaran
   has_many :anggarans, through: :tahapans
   has_one :rincian, dependent: :destroy
   has_many :permasalahans, dependent: :destroy

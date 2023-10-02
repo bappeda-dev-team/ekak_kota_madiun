@@ -25,8 +25,10 @@
 #
 class Tahapan < ApplicationRecord
   belongs_to :sasaran, foreign_key: 'id_rencana', primary_key: 'id_rencana', optional: true, inverse_of: :tahapans
-  has_many :aksis, foreign_key: 'id_rencana_aksi', primary_key: 'id_rencana_aksi', dependent: :nullify,
-                   inverse_of: :tahapan
+  has_many :aksis, lambda {
+                     where.not(id_rencana_aksi: [nil, ''])
+                   }, foreign_key: 'id_rencana_aksi', primary_key: 'id_rencana_aksi', dependent: :nullify,
+                      inverse_of: :tahapan
   has_many :anggarans, dependent: :nullify
   has_many :comments, through: :anggarans
 
