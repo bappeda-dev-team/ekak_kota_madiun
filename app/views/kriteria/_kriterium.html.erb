@@ -1,4 +1,4 @@
-<tr>
+<tr id="<%= dom_id(kriterium) %>">
   <td class="text-wrap"><%= kriterium %></td>
   <td><%= kriterium.poin_max %></td>
   <td><%= kriterium.poin_min %></td>
@@ -40,11 +40,43 @@
 </tr>
 <% kriterium.sub_kriteria.each do |sub| %>
   <tr>
-    <td>-</td>
     <td class="text-wrap"><%= sub %></td>
     <td><%= sub.poin_max %></td>
     <td><%= sub.poin_min %></td>
     <td><%= sub.tipe_kriteria %></td>
     <td><%= sub.keterangan %></td>
+    <td class="text-center">
+      <div class="d-grid gap-3">
+        <%= link_to new_sub_kriterium_path(parent: sub), remote: true,
+         data: {
+             controller: 'form-modal',
+             action: 'ajax:complete->form-modal#success:prevent',
+             bs_toggle: 'modal',
+             bs_target: '#form-modal'
+         },
+         class: 'btn btn-outline-primary' do %>
+          <i class="fa fa-plus me-2"></i>
+          <span>Sub Kriteria</span>
+        <% end %>
+        <%= link_to edit_kriterium_path(sub), remote: true,
+         data: {
+             controller: 'form-modal',
+             action: 'ajax:complete->form-modal#success:prevent',
+             bs_toggle: 'modal',
+             bs_target: '#form-modal'
+         },
+         class: 'btn btn-outline-info' do %>
+          <i class="fa fa-edit me-2"></i>
+          <span>Edit</span>
+        <% end %>
+        <%= link_to sub,
+           method: :delete,
+           class: 'btn btn-outline-danger',
+           data: { confirm_swal: "Hapus #{sub}?" } do %>
+          <i class="fa fa-trash-alt me-2"></i>
+          <span>Hapus</span>
+        <% end %>
+      </div>
+    </td>
   </tr>
 <% end %>

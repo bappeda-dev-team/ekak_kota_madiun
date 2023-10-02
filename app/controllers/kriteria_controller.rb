@@ -13,6 +13,7 @@ class KriteriaController < ApplicationController
   # GET /kriteria/new
   def new
     @kriterium = klass.new
+    @target = 'kriteria'
   end
 
   # GET /kriteria/1/edit

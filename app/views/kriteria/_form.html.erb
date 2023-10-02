@@ -1,7 +1,7 @@
 <%= form_with(model: kriterium, local: false,
               data: {
                 controller: 'form-ajax',
-                form_ajax_target_param: 'kriteria',
+                form_ajax_target_param: @target,
                 form_ajax_type_param: 'append',
                 action: 'ajax:complete->form-ajax#processAjax'
               }) do |form| %>
