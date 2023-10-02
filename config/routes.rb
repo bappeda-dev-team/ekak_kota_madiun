@@ -9,6 +9,7 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :reviews
   resources :kriteria
   resources :sub_kriteria
   resources :pelaksana

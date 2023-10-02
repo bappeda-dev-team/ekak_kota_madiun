@@ -2185,6 +2185,42 @@ ALTER SEQUENCE public.renstras_id_seq OWNED BY public.renstras.id;
 
 
 --
+-- Name: reviews; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.reviews (
+    id bigint NOT NULL,
+    keterangan character varying,
+    reviewable_type character varying,
+    reviewable_id bigint,
+    reviewer_id bigint,
+    status character varying,
+    metadata jsonb,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: reviews_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.reviews_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: reviews_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.reviews_id_seq OWNED BY public.reviews.id;
+
+
+--
 -- Name: rincians; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3664,6 +3700,13 @@ ALTER TABLE ONLY public.renstras ALTER COLUMN id SET DEFAULT nextval('public.ren
 
 
 --
+-- Name: reviews id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.reviews ALTER COLUMN id SET DEFAULT nextval('public.reviews_id_seq'::regclass);
+
+
+--
 -- Name: rincians id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4291,6 +4334,14 @@ ALTER TABLE ONLY public.rekenings
 
 ALTER TABLE ONLY public.renstras
     ADD CONSTRAINT renstras_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: reviews reviews_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.reviews
+    ADD CONSTRAINT reviews_pkey PRIMARY KEY (id);
 
 
 --
@@ -5453,6 +5504,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230830024501'),
 ('20230830040036'),
 ('20230922104355'),
-('20230929084519');
+('20230929084519'),
+('20231002064608');
 
 

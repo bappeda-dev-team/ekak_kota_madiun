@@ -1,0 +1,44 @@
+<%= form_with(model: review, local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: @target,
+                form_ajax_type_param: 'append',
+                action: 'ajax:complete->form-ajax#processAjax'
+              }
+) do |form| %>
+  <% if review.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(review.errors.count, "error") %> prohibited this review from being saved:</h2>
+
+      <ul>
+        <% review.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.hidden_field :reviewable_type %>
+    <%= form.hidden_field :reviewable_id %>
+    <%= form.hidden_field :reviewer_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kriteria_penilaian, class: 'form-label' %>
+    <%= form.select :kriteria,
+     options_for_select(@kriterias),{},
+     class: 'form-control',
+     data: { controller: 'dropdown', dropdown_parent_value: '#form-modal' } %>
+    <div class="form-text">pilih kriteria penilaian</div>
+  </div>
+
+  <div class="field">
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_field :keterangan, class: 'form-control' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
