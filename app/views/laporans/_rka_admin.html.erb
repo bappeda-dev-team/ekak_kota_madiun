@@ -76,9 +76,7 @@
                       <i class="fas fa-journal-whills me-2"></i>
                       <span>Rincian</span>
                     <% end %>
-                    <% if reviewer? %>
-                      <%= reviewer_button(sasaran) %>
-                    <% else %>
+                    <% if admin? %>
                       <%= link_to edit_rankir_gelondong_rincian_belanja_path(sasaran),
                         target: "_blank",
                         class: "btn btn-sm btn-outline-info" do %>
@@ -100,8 +98,9 @@
                   <td class="border penetapan">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan_penetapan) %></td>
                   <td class="border">
                     <div class="d-grid gap-2">
-                      <%= reviewer_button(tahapan, kriteria: 'RincianBelanja') %></td>
-                  </div>
+                      Rincian Button
+                    </div>
+                  </td>
                 </tr>
               <% end %>
             <% end %>

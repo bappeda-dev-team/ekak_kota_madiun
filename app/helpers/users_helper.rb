@@ -32,6 +32,10 @@ module UsersHelper
     current_user.kode_opd != "1234567890"
   end
 
+  def admin?
+    current_user.has_any_role?(:admin)
+  end
+
   def eselon_x?(*roles)
     current_user.roles.map(&:name).any? { |role| roles.include?(role) }
   end

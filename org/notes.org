@@ -1,0 +1,11 @@
+#+title: Notes
+#+description: Todo List
+
+
+* UX for reviewer <2023-10-03 Tue>
+** [X] Hapus tombol review di laporan KAK
+** [ ] Tombol Review masuk ke Rincian KAK
+** [ ] Tombol Review di dalam rincian KAK
+** [ ] Tombol Review Tahapan di dalam rincian KAK
+** [ ] Fix Tombol Manual IK
+** [ ] Pindah renaksi kebawah
