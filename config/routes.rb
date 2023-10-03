@@ -509,6 +509,8 @@ Rails.application.routes.draw do
       post :pohon_tematik
       get :clone_sasaran
       post :rencana_kinerja
+      get :opd
+      post :pohon_opd
     end
     collection do
       get :tahun_clone
