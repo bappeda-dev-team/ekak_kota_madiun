@@ -137,7 +137,9 @@ module Api
                            encrypted_password: password,
                            created_at: Time.now, updated_at: Time.now }
       end
-      User.upsert_all(data_pegawais, unique_by: :nik)
+      data_pegawais.each do |data_p|
+        User.upsert(data_p, unique_by: :nik)
+      end
     end
 
     def update_struktur_pegawai(response)
