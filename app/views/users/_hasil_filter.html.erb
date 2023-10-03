@@ -3,6 +3,27 @@
     <div class="col">
       <h2 class="fs-5 fw-bold mb-0">List ASN <%= opd.nama_opd %></h2>
     </div>
+    <div class="col-auto text-end">
+      <% if current_user.has_role? :super_admin %>
+        <% bulan = Date.today.month %>
+        <%= link_to sync_pegawai_path(kode_opd: kode_opd, tahun: tahun_fix(@tahun), bulan: bulan),
+      remote: true,
+      data: { disable_with: 'Memproses....'},
+      class:"btn btn-sm btn-primary" do %>
+          <i class="fas fa-sync me-2"></i>
+          Sync User
+        <% end %>
+        <%= link_to sync_struktur_pegawai_path(kode_opd: kode_opd, tahun: tahun_fix(@tahun), bulan: bulan),
+      remote: true,
+      data: { disable_with: 'Memproses....'},
+      class:"btn btn-sm btn-primary" do %>
+          <i class="fas fa-sync me-2"></i>
+          Sync Struktur
+        <% end %>
+        <%= link_to "Tambah User", new_user_path, remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-user"}, class: "btn btn-sm btn-info" %>
+        <%= link_to "Non Aktifkan Semua User", "/nonaktifkan_semua_user/#{opd.kode_opd}", remote: true, method: :post, class: "btn btn-sm btn-danger" %>
+      <% end %>
+    </div>
   </div>
 </div>
 <div class="card-body">
