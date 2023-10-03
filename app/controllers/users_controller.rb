@@ -195,6 +195,7 @@ class UsersController < ApplicationController
     if checked_role.any?
       checked_role.each do |role_add|
         @user.add_role(role_add)
+        @user.add_role(:asn)
       end
     end
     if unchecked_role.any?
