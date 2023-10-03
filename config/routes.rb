@@ -337,6 +337,7 @@ Rails.application.routes.draw do
       member do
         post :otomatis
         get :review
+        get :review_anggaran
       end
       resources :aksis, path: "rencana_aksi"
       resources :anggarans

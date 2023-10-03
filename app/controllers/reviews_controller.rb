@@ -16,11 +16,15 @@ class ReviewsController < ApplicationController
                          reviewable_id: params[:id],
                          kriteria_type: params[:kriteria],
                          reviewer_id: current_user.id)
+    @target = params[:target].nil? ? 'hasil-review' : params[:target]
+    @type = 'prepend'
     @kriterias = Kriterium.where(tipe_kriteria: params[:kriteria]).pluck(:kriteria, :id)
   end
 
   # GET /reviews/1/edit
   def edit
+    @target = params[:target].nil? ? 'hasil-review' : params[:target]
+    @type = 'replace'
     @kriterias = Kriterium.where(tipe_kriteria: @review.kriteria_type).pluck(:kriteria, :id)
   end
 

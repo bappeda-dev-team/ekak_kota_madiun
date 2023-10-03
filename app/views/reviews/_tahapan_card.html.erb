@@ -1,4 +1,4 @@
-<div class="card border-2 shadow mb-1">
+<div class="card border-2 shadow mb-3">
   <div class="card-header">
     <div class="row align-items-center">
       <div class="col">
@@ -18,7 +18,6 @@
               <th class="text-center">Bobot Renaksi</th>
               <th class="text-center">Anggaran Renaksi</th>
               <th class="text-center">Keterangan</th>
-              <th class="text-center"></th>
             </tr>
           </thead>
           <tbody>
@@ -29,37 +28,40 @@
                 Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %>
               </td>
               <td class="border"><%= tahapan.keterangan %></td>
-              <td class="border">
-                <div class="d-grid gap-2">
-                  <%= reviewer_button(tahapan, kriteria: 'Tahapan')  %>
-                </div>
-              </td>
+              <% if display_review %>
+                <td class="border">
+                  <div class="d-grid gap-2">
+                    <%= reviewer_button(tahapan, kriteria: 'Tahapan')  %>
+                  </div>
+                </td>
+              <% end %>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
-  <div class="card-footer table-responsive">
-    <table class="table align-items-center table-flush">
-      <thead class="thead-light">
-        <tr class="border">
-          <th class="border-bottom" scope="col">Penilaian</th>
-          <th class="border-bottom" scope="col">Skor</th>
-          <th class="border-bottom" scope="col">Keterangan</th>
-          <th class="border-bottom text-center" scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody id="hasil-review">
-        <% tahapan.reviews.each do |review| %>
+  <% if display_review %>
+    <div class="card-footer table-responsive">
+      <table class="table align-items-center table-flush">
+        <thead class="thead-light">
           <tr class="border">
-            <th class="text-gray-900" scope="row"><%= review.kriterium %></th>
-            <td class="fw-bolder text-gray-500"><%= review.skor %></td>
-            <td class="fw-bolder text-gray-500"><%= review.keterangan %></td>
-            <td class="fw-bolder text-gray-500">
-              <div class="d-grid gap-2">
-                <% if reviewer? %>
-                  <%= link_to edit_review_path(review), remote: true,
+            <th class="border-bottom" scope="col">Penilaian</th>
+            <th class="border-bottom" scope="col">Skor</th>
+            <th class="border-bottom" scope="col">Keterangan</th>
+            <th class="border-bottom text-center" scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody id="hasil-review">
+          <% tahapan.reviews.each do |review| %>
+            <tr class="border">
+              <th class="text-gray-900" scope="row"><%= review.kriterium %></th>
+              <td class="fw-bolder text-gray-500"><%= review.skor %></td>
+              <td class="fw-bolder text-gray-500"><%= review.keterangan %></td>
+              <td class="fw-bolder text-gray-500">
+                <div class="d-grid gap-2">
+                  <% if reviewer? %>
+                    <%= link_to edit_review_path(review), remote: true,
                         data: {
                             controller: 'form-modal',
                             action: 'ajax:complete->form-modal#success:prevent',
@@ -67,15 +69,16 @@
                             bs_target: '#form-modal'
                         },
                         class: 'btn btn-outline-info' do %>
-                    <i class="fa fa-edit me-2"></i>
-                    <span>Edit</span>
+                      <i class="fa fa-edit me-2"></i>
+                      <span>Edit</span>
+                    <% end %>
                   <% end %>
-                <% end %>
-              </div>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
 </div>

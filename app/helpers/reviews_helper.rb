@@ -1,8 +1,8 @@
 module ReviewsHelper
-  def reviewer_button(item, kriteria: '', btn_name: 'Review')
+  def reviewer_button(item, kriteria: '', btn_name: 'Review', target: '')
     return unless reviewer?
 
-    link_to new_review_path(type: item.class.name, id: item, kriteria: kriteria),
+    link_to new_review_path(type: item.class.name, id: item, kriteria: kriteria, target: target),
             remote: true,
             class: "btn btn-sm btn-outline-info",
             data: {

@@ -1,0 +1,112 @@
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h5 class="card-title">
+          Anggaran - <strong><%= anggaran.uraian %></strong>
+        </h5>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="anggaran">
+      <table id="detail-anggaran">
+        <thead>
+          <tr>
+            <th rowspan="2" class="text-center">Kode Rekening</th>
+            <th rowspan="2" class="text-center">Uraian</th>
+            <th colspan="3" class="text-center">Rincian Perhitungan</th>
+            <th rowspan="2" class="text-center">PPN (10%)</th>
+            <th rowspan="2" class="text-center">Jumlah</th>
+            <th rowspan="2" class="text-center"></th>
+          </tr>
+          <tr>
+            <th class="text-center">Koefisien</th>
+            <th class="text-center">Satuan</th>
+            <th class="text-center">Harga</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="level-0">
+            <td><%= rekening_anggaran anggaran.kode_rek %></td>
+            <td colspan="5">
+              <%= anggaran.uraian %>
+            </td>
+            <td class="uang text-end"><%= number_with_delimiter(anggaran.jumlah) %></td>
+            <% if display_review %>
+              <td>
+                <div class="d-grid gap-2">
+                  <%= reviewer_button(anggaran, kriteria: 'RincianBelanja', target: "review-#{dom_id(anggaran)}") %>
+                </div>
+              </td>
+            <% end %>
+          </tr>
+          <% if anggaran.perhitungans.any? %>
+            <% anggaran.perhitungans.order(:id).each do |hitung| %>
+              <tr class="rincian-anggaran">
+                <td></td>
+                <td><%= uraian_kode hitung.deskripsi %></td>
+                <td><% hitung.koefisiens.each.with_index(1) do |koef, index|%>
+                    <%= koef.volume %> <%= koef.satuan_volume %> <%= 'x' if index < hitung.koefisiens.length %>
+                  <% end %>
+                </td>
+                <td><%= hitung.satuan %></td>
+                <td><%= number_with_delimiter(hitung.harga) %></td>
+                <td><%= (hitung.pajak.nil? ? 0 : hitung.pajak.potongan * 100).to_i %> %</td>
+                <td class="uang text-end"><%= number_with_delimiter((hitung.total).to_i) %></td>
+                <td></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6" style="text-align:right">Jumlah Anggaran Tahapan :</td>
+            <td class="text-end"><%= number_with_delimiter((anggaran.jumlah)) %></td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <% if display_review %>
+    <div class="card-footer table-responsive">
+      <table class="table align-items-center table-flush">
+        <thead class="thead-light">
+          <tr class="border">
+            <th class="border-bottom" scope="col">Penilaian</th>
+            <th class="border-bottom" scope="col">Skor</th>
+            <th class="border-bottom" scope="col">Keterangan</th>
+            <th class="border-bottom text-center" scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody id="review-<%= dom_id(anggaran) %>">
+          <% anggaran.reviews.each do |review| %>
+            <tr class="border">
+              <th class="text-gray-900" scope="row"><%= review.kriterium %></th>
+              <td class="fw-bolder text-gray-500"><%= review.skor %></td>
+              <td class="fw-bolder text-gray-500"><%= review.keterangan %></td>
+              <td class="fw-bolder text-gray-500">
+                <div class="d-grid gap-2">
+                  <% if reviewer? %>
+                    <%= link_to edit_review_path(review), remote: true,
+                        data: {
+                            controller: 'form-modal',
+                            action: 'ajax:complete->form-modal#success:prevent',
+                            bs_toggle: 'modal',
+                            bs_target: '#form-modal'
+                        },
+                        class: 'btn btn-outline-info' do %>
+                      <i class="fa fa-edit me-2"></i>
+                      <span>Edit</span>
+                    <% end %>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+</div>

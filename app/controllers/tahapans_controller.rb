@@ -1,6 +1,6 @@
 class TahapansController < ApplicationController
   before_action :get_sasaran
-  before_action :set_tahapan, only: %i[show edit update destroy review]
+  before_action :set_tahapan, only: %i[show edit update destroy review review_anggaran]
 
   # GET /tahapans or /tahapans.json
   def index
@@ -86,6 +86,8 @@ class TahapansController < ApplicationController
   end
 
   def review; end
+
+  def review_anggaran; end
 
   private
 

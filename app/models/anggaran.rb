@@ -41,6 +41,7 @@ class Anggaran < ApplicationRecord
   belongs_to :parent, class_name: 'Anggaran', optional: true
   belongs_to :pajak, optional: true
   has_many :comments, dependent: :destroy
+  has_many :reviews, -> { where(reviewable_type: 'RincianBelanja') }, foreign_key: :reviewable_id, primary_key: :id
   has_one :pagu_anggaran, lambda {
                             where(jenis: 'Penetapan')
                           }, class_name: 'PaguAnggaran', foreign_key: 'kode', primary_key: 'id'

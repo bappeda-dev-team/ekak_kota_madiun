@@ -4,10 +4,10 @@
 
 * UX for reviewer <2023-10-03 Tue>
 ** [X] Hapus tombol review di laporan KAK
-** [ ] Tombol Review masuk ke Rincian KAK
-** [ ] Tombol Review di dalam rincian KAK
-** [ ] Tombol Review per kode rekening
-** [ ] Tombol Review Tahapan di dalam rincian KAK
+** [X] Tombol Review masuk ke Rincian KAK
+** [X] Tombol Review di dalam rincian KAK
+** [X] Tombol Review per kode rekening
+** [X] Tombol Review Tahapan di dalam rincian KAK
 ** [X] Fix Tombol Manual IK
 ** [X] Pindah renaksi kebawah
 
