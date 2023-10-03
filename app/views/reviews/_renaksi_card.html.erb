@@ -65,7 +65,13 @@
                 <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.keterangan %></td>
                 <td class="border">
                   <div class="d-grid gap-2">
-                    <%= reviewer_button(tahapan, kriteria: 'Tahapan')  %>
+                    <% if reviewer? %>
+                      <%= link_to review_sasaran_tahapan_path(sasaran, tahapan), target: "_blank", rel: "nofollow",
+                       class: "btn btn-sm btn-primary text-white" do %>
+                        <i class="far fa-sticky-note me-2"></i>
+                        <span>Review</span>
+                      <% end %>
+                    <% end %>
                   </div>
                 </td>
               </tr>

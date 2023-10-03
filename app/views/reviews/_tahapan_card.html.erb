@@ -1,0 +1,81 @@
+<div class="card border-2 shadow mb-1">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h5 class="card-title">
+          Rencana Aksi
+        </h5>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row align-items-center">
+      <div class="table-responsive">
+        <table class="table table-sm align-items-center">
+          <thead>
+            <tr class="border">
+              <th class="text-center">Tahapan</th>
+              <th class="text-center">Bobot Renaksi</th>
+              <th class="text-center">Anggaran Renaksi</th>
+              <th class="text-center">Keterangan</th>
+              <th class="text-center"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border"><%= tahapan %></td>
+              <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.jumlah_target or '-' %></td>
+              <td class="fw-bolder text-gray-500 border text-end">
+                Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %>
+              </td>
+              <td class="border"><%= tahapan.keterangan %></td>
+              <td class="border">
+                <div class="d-grid gap-2">
+                  <%= reviewer_button(tahapan, kriteria: 'Tahapan')  %>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer table-responsive">
+    <table class="table align-items-center table-flush">
+      <thead class="thead-light">
+        <tr class="border">
+          <th class="border-bottom" scope="col">Penilaian</th>
+          <th class="border-bottom" scope="col">Skor</th>
+          <th class="border-bottom" scope="col">Keterangan</th>
+          <th class="border-bottom text-center" scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody id="hasil-review">
+        <% tahapan.reviews.each do |review| %>
+          <tr class="border">
+            <th class="text-gray-900" scope="row"><%= review.kriterium %></th>
+            <td class="fw-bolder text-gray-500"><%= review.skor %></td>
+            <td class="fw-bolder text-gray-500"><%= review.keterangan %></td>
+            <td class="fw-bolder text-gray-500">
+              <div class="d-grid gap-2">
+                <% if reviewer? %>
+                  <%= link_to edit_review_path(review), remote: true,
+                        data: {
+                            controller: 'form-modal',
+                            action: 'ajax:complete->form-modal#success:prevent',
+                            bs_toggle: 'modal',
+                            bs_target: '#form-modal'
+                        },
+                        class: 'btn btn-outline-info' do %>
+                    <i class="fa fa-edit me-2"></i>
+                    <span>Edit</span>
+                  <% end %>
+                <% end %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

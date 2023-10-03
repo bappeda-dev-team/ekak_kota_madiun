@@ -1,0 +1,13 @@
+<%= content_for :html_title, "Review Rencana Aksi" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Review</li>
+  <li class="breadcrumb-item" aria-current="page">Rencana Aksi</li>
+  <li class="breadcrumb-item active" aria-current="page"><%= @tahapan %></li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="px-3">
+    <%= render 'reviews/subkegiatan_card', sasaran: @sasaran, tahun: @tahun %>
+    <%= render 'reviews/sasaran_card', sasaran: @sasaran, display_review: false %>
+    <%= render 'reviews/tahapan_card', tahapan: @tahapan %>
+  </div>
+<% end %>

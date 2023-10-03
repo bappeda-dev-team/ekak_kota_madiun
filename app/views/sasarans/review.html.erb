@@ -11,7 +11,7 @@
       <%= render 'rencana_aksi_card', sasaran: @sasaran %>
     <% else %>
       <%= render 'reviews/subkegiatan_card', sasaran: @sasaran, tahun: @tahun %>
-      <%= render 'reviews/sasaran_card', sasaran: @sasaran %>
+      <%= render 'reviews/sasaran_card', sasaran: @sasaran, display_review: true %>
       <%= render 'reviews/rincian_card', sasaran: @sasaran %>
       <%= render 'reviews/permasalahan_card', sasaran: @sasaran %>
       <%= render 'reviews/dasar_hukum_card', sasaran: @sasaran %>
@@ -22,5 +22,4 @@
     <!-- SECTION - Modal-->
     <!-- TODO - DRY-->
   </div>
-  <%= render 'shared/modal_xl_template', modal_name: 'manual-ik' %>
 <% end %>
