@@ -117,7 +117,7 @@ module Api
 
     def update_data_pegawai(response)
       kode_opd = Opd.find_by(kode_unik_opd: @kode_opd).kode_opd || '0'
-      data = Oj.load(response.body)
+      data = JSON.parse(response.body.to_s)
       pegawais = data['data']
       data_pegawais = []
       pegawais.each do |pegawai|
@@ -137,9 +137,7 @@ module Api
                            encrypted_password: password,
                            created_at: Time.now, updated_at: Time.now }
       end
-      data_pegawais.each do |data_p|
-        User.upsert(data_p, unique_by: :nik)
-      end
+      User.upsert_all(data_pegawais, unique_by: :nik)
     end
 
     def update_struktur_pegawai(response)

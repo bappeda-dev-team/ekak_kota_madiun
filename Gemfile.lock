@@ -281,6 +281,8 @@ GEM
     query_diet (0.7.1)
     racc (1.6.0)
     rack (2.2.3)
+    rack-cors (2.0.1)
+      rack (>= 2.0.0)
     rack-mini-profiler (2.3.4)
       rack (>= 1.2.0)
     rack-proxy (0.7.2)
@@ -525,6 +527,7 @@ DEPENDENCIES
   pry-stack_explorer
   puma (~> 5.0)
   query_diet
+  rack-cors
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1)
   rails-controller-testing
