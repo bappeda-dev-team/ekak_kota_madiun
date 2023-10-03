@@ -32,6 +32,7 @@ class Tahapan < ApplicationRecord
   has_many :anggarans, dependent: :nullify
   has_many :comments, through: :anggarans
 
+  has_many :reviews, -> { where(reviewable_type: 'Tahapan') }, foreign_key: :reviewable_id, primary_key: :id
   validates :tahapan_kerja, presence: true
 
   default_scope { order(Arel.sql("nullif(regexp_replace(urutan, '[^0-9]', '', 'g'),'')::int")) }
