@@ -22,7 +22,7 @@ export default class extends Controller {
   replace(e) {
     const id_param = e.detail.data.id
     if (id_param) {
-      const url = this.urlValue + '/' + id_param
+      const url = this.urlValue + '/' + id_param + '?skor=' + this.skorValue
 
       fetch(url, { method: "get" })
         .then(response => response.text())
