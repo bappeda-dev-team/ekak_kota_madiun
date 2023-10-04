@@ -1,0 +1,23 @@
+<div class="card border-2 shadow">
+  <div class="card-header py-0">
+    <div class="row align-items-center">
+      <div class="col">
+        <h5 class="card-title text-center">
+          Cloning Pohon Kinerja
+        </h5>
+      </div>
+    </div>
+    <div class="col">
+      <strong>
+        <%= @opd %>
+      </strong>
+    </div>
+    <div class="col">
+      <p>
+        Tahun: <%= @tahun %>
+      </p>
+    </div>
+  </div>
+  <%= render 'clone/jumlah_strategi', tahun: @tahun %>
+</div>
+<%= render 'clone/form_clone_pokin_opd', opd: @opd, tahun_asal: @tahun, url: @url %>

@@ -2,7 +2,7 @@
 #+description: Todo List
 
 
-* UX for reviewer <2023-10-03 Tue>
+* DONE UX for reviewer <2023-10-03 Tue 13:14>
 ** [X] Hapus tombol review di laporan KAK
 ** [X] Tombol Review masuk ke Rincian KAK
 ** [X] Tombol Review di dalam rincian KAK
@@ -11,6 +11,22 @@
 ** [X] Fix Tombol Manual IK
 ** [X] Pindah renaksi kebawah
 
-* Update <2023-10-03 Tue 02:51>
+
+* DONE Update <2023-10-03 Tue 13:14>
 ** Add null checker for tahapans and aksis
 ** Renaksi no longer include null and broken clone
+** Sinkron User with M-SKP
+** add role (eselon dkk) = activate user ( add role asn too )
+
+* TODO <2023-10-03 Tue 12:33>
+** Nama Paket , Pagu Paket, di rincian belanja ( sasaran kinerja ) @sasaran
+** Rekap Paket @sasaran @laporan
+** Rekap Rencana Kinerja ( OPD ) @laporan
+** Review pindah ke per subkegiatan @review
+** hapus verifikasi usulan @sasaran
+** tanda siap cetak dan siap ditarik @laporan
+** review langsung banyak tidak satu satu @kriteria
+** menu review kriteria -> di menu apa dan linknya @kriteria
+** PENDING laporan review ( nanti )
+
+* TODO Import SBU SSH baru set ke 2024

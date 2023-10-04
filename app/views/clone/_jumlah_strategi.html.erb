@@ -1,0 +1,16 @@
+<div class="col">
+  <div class="card-body mb-0 py-0">
+    <% if local_variables.include?(:hasil_clone) %>
+      <h5>Hasil Clone</h5>
+    <% end %>
+    <p>Jumlah Strategi <%= tahun %></p>
+    <ul class="px-3">
+      <% @strategi_opds.each do |key, value| %>
+        <li>
+          <span class="fw-bolder"><%= key.to_s.titleize %></span>
+          <span class="fw-bolder">: <%= value %></span>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

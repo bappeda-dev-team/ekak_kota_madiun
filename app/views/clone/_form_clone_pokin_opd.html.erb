@@ -1,0 +1,26 @@
+<%= form_with url: url,
+              method: :post,
+              local: false,
+              data: {
+                  controller: 'form-ajax',
+                  form_ajax_element_id_value: 'jumlah-strategi',
+                  action: 'ajax:complete->form-ajax#afterClonePokin'
+              } do |form| %>
+  <div class="field">
+    <%= form.hidden_field :kode_opd, { class: "form-control", readonly: true, value: opd.kode_unik_opd } %>
+  </div>
+  <div class="field">
+    <%= form.label :tahun_sekarang, { class: "form-label" } %>
+    <%= form.text_field :tahun_asal, { class: "form-control", readonly: true, value: tahun_asal } %>
+  </div>
+  <div class="field">
+    <%= form.label :tahun_tujuan, { class: "form-label" } %>
+    <%= form.select :tahun_tujuan, options_for_select(KelompokAnggaran.all.collect { |ka| [ka.nama_sederhana_kelompok_tahun, ka.id] } ), {include_blank: true},
+                    { data: { placeholder: "Pilih Tahun Cloning",
+                              controller: 'dropdown'
+                    } } %>
+  </div>
+  <div class="actions my-4">
+    <%= form.submit "Clone" %>
+  </div>
+<% end %>
