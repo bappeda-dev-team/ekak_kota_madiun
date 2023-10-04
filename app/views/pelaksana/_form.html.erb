@@ -25,19 +25,27 @@
   </div>
   <div class="field">
     <%= form.label :role, { class: "form-label" } %>
-    <%= form.text_field :role, { class: "form-control", required: true, readonly: true, value: @role } %>
+    <%= form.select :role, options_for_select(@roles), {include_blank: true, required: true},
+     { data: { placeholder: "Pilih Role Pelaksana",
+       controller: 'dropdown',
+       dropdown_jenis_value: 'chain',
+       dropdown_event_name_value: 'change-pelaksana',
+       dropdown_parent_value: '#form-pelaksana-body'
+     } } %>
   </div>
   <div class="field">
     <%= form.label :asn, class: "form-label" %>
-    <%= form.select :asn_list, temans.collect{ |asn| [asn.nama_nip, asn.nik] },
-      { include_blank: true },
-      multiple: true,
-      data: {
-        controller: 'dropdown',
-        placeholder: 'Pilih ASN',
-        dropdown_parent_value: '#form-pelaksana'
-      },
-      class: "form-control" %>
+    <%= form.select :asn_list, [],
+                {include_blank: true},
+                { class: "form-control",
+                  multiple: true,
+                  data: { placeholder: "Pilih Tahun Sasaran",
+                          controller: 'dropdown',
+                          action: 'change-pelaksana@document->dropdown#chain_role_to_pelaksana',
+                          dropdown_jenis_value: 'ajax',
+                          dropdown_parent_value: '#form-pelaksana-body',
+                          dropdown_kode_opd_value: @kode_opd,
+                          dropdown_url_value: teman_pelaksana_path(pelaksana.id,:json) } } %>
   </div>
   <div class="field">
     <%= form.label :keterangan, { class: "form-label" } %>

@@ -16,6 +16,7 @@ export default class extends Controller {
     kodeOpdTerpilih: Array,
     uraian: String,
     item: String,
+    role: String,
     display: { type: Boolean, default: true },
     width: { type: String, default: 'element' }
   }
@@ -56,6 +57,7 @@ export default class extends Controller {
           jenis_rekening: this.rekeningValue,
           tahun: this.tahunValue,
           jenisUraian: this.tipeValue,
+          role: this.roleValue,
           q: params.term
         }),
         delay: 800
@@ -263,6 +265,13 @@ export default class extends Controller {
     const { data } = e.detail
     const jenis_rek = data.id
     this.rekeningValue = jenis_rek
+    this.select.select2('open')
+  }
+
+  chain_role_to_pelaksana(e) {
+    const { data } = e.detail
+    const role = data.id
+    this.roleValue = role
     this.select.select2('open')
   }
 

@@ -12,7 +12,11 @@ Rails.application.routes.draw do
   resources :reviews
   resources :kriteria
   resources :sub_kriteria
-  resources :pelaksana
+  resources :pelaksana do
+    member do
+      get :teman
+    end
+  end
   resources :crosscuttings
   resources :pohon_kinerja_opds do
     member do

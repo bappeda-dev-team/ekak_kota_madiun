@@ -1,5 +1,5 @@
 class PelaksanaController < ApplicationController
-  before_action :set_pelaksana, only: %i[show edit update destroy]
+  before_action :set_pelaksana, only: %i[show edit update destroy teman]
   before_action :set_tahun_opd
 
   layout false
@@ -12,15 +12,22 @@ class PelaksanaController < ApplicationController
 
   def edit
     @role = params[:role]
+    @roles = [@role]
     if @role == 'eselon_3'
-      role_tambahan = :eselon_2b
-      @temans = @opd.users.with_any_role(@role.to_sym, role_tambahan).reject do |u|
-        u.strategi_pohons(@pelaksana.id).any?
-      end
+      @roles.push('eselon_2b')
+    elsif @role == 'eselon_4'
+      @roles.push('staff')
     else
-      @temans = @opd.users.with_any_role(@role.to_sym).reject do |u|
-        u.strategi_pohons(@pelaksana.id).any?
-      end
+      @roles
+    end
+  end
+
+  def teman
+    param = params[:q] || ''
+    role = params[:role]
+    asn_list = @opd.users.where('nama ILIKE ?', "%#{param}%")
+    @temans = asn_list.with_any_role(role).reject do |u|
+      u.strategi_pohons(@pelaksana.id).any?
     end
   end
 
