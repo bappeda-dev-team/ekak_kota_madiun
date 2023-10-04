@@ -30,6 +30,13 @@ class PohonKinerjaOpdsController < ApplicationController
     @tactical_opd = queries.tactical_opd
     @operational_opd = queries.operational_opd
     @staff_opd = queries.staff_opd
+
+    @strategi_opds = {
+      strategi_opd: @strategi_opd.size,
+      tactical_opd: @tactical_opd.size,
+      operational_opd: @operational_opd.size,
+      staff_opd: @staff_opd.size
+    }
   end
 
   def show; end

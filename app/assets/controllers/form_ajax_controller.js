@@ -287,6 +287,18 @@ export default class extends Controller {
     this.sweetalertStatus(text.resText, status)
   }
 
+  afterClonePokin(event) {
+    const [message, status, _xhr] = event.detail
+    this.modalHider()
+    const { resText, html_content } = JSON.parse(message.response)
+    this.sweetalertStatus(resText, status)
+
+    if (this.hasElementIdValue) {
+      const target = document.getElementById(this.elementIdValue)
+      target.insertAdjacentHTML('beforeend', html_content)
+    }
+  }
+
   modalHider(modalName = 'form-modal') {
     const modal = document.getElementById(modalName)
     Modal.getInstance(modal).hide()

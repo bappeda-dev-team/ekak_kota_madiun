@@ -34,7 +34,7 @@ class CloneController < ApplicationController
 
     ket = "clone_dari_#{tahun_asal}"
 
-    strategi_opds.each do |strategi|
+    clone_strategi = strategi_opds.map do |strategi|
       operation = StrategiCloner.call(strategi, traits: :strategi_pohon,
                                                 tahun: @tahun, keterangan: ket, parent_id: nil)
       operation.to_record
@@ -71,15 +71,20 @@ class CloneController < ApplicationController
       end
     end
 
-    # queries_baru = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @opd.kode_unik_opd)
-    # @strategi_opds = {
-    #   strategi_opd: queries_baru.strategi_opd.size,
-    #   tactical_opd: queries_baru.tactical_opd.size,
-    #   operational_opd: queries_baru.operational_opd.size,
-    #   staff_opd: queries_baru.staff_opd.size
-    # }
+    queries_baru = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: params[:kode_opd])
+    @strategi_opds = {
+      strategi_opd: queries_baru.strategi_opd.size,
+      tactical_opd: queries_baru.tactical_opd.size,
+      operational_opd: queries_baru.operational_opd.size,
+      staff_opd: queries_baru.staff_opd.size
+    }
 
-    render json: { resText: "Clone berhasil" }, status: :created
+    if clone_strategi.any?
+      render json: { resText: "Clone berhasil", html_content: html_content(@strategi_opds) }, status: :created
+    else
+      render json: { resText: "Terjadi kesalahan" }.to_json,
+             status: :unprocessable_entity
+    end
   end
 
   def pohon_tematik
@@ -171,5 +176,12 @@ class CloneController < ApplicationController
     tahun_asal = params[:tahun_asal]
     tahun_anggaran = KelompokAnggaran.find(params[:tahun_tujuan]).kode_kelompok
     @tahun = tahun_anggaran.match(/murni/) ? tahun_anggaran[/[^_]\d*/, 0] : tahun_anggaran
+  end
+
+  def html_content(_strategi_opds)
+    render_to_string(partial: 'clone/jumlah_strategi',
+                     formats: 'html',
+                     layout: false,
+                     locals: { tahun: @tahun, hasil_clone: true })
   end
 end

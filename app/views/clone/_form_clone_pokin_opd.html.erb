@@ -3,7 +3,8 @@
               local: false,
               data: {
                   controller: 'form-ajax',
-                  action: 'ajax:complete->form-ajax#afterClone'
+                  form_ajax_element_id_value: 'jumlah-strategi',
+                  action: 'ajax:complete->form-ajax#afterClonePokin'
               } do |form| %>
   <div class="field">
     <%= form.hidden_field :kode_opd, { class: "form-control", readonly: true, value: opd.kode_unik_opd } %>

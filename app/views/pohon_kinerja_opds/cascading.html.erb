@@ -5,6 +5,9 @@
 <% end %>
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout', title: "Pohon Cascading #{@nama_opd} - Tahun #{@tahun}" do %>
+    <div class="card-body row" id='jumlah-strategi'>
+      <%= render 'clone/jumlah_strategi', tahun: @tahun %>
+    </div>
     <%= render 'shared/pohon' do %>
       <%= render 'item_opd', partial: 'pohon_cascading' %>
       <ul data-pohon-tematik-target='dahan'>
