@@ -7,10 +7,17 @@ class CloneController < ApplicationController
   end
 
   def opd
-    pohon = Opd.find params[:id]
-    tahun = cookies[:tahun]
-    url = pohon_opd_clone_path(params[:id])
-    render partial: 'clone/form_clone', locals: { pohon: pohon, tahun_asal: tahun, url: url }, layout: false
+    @opd = Opd.find params[:id]
+    @tahun = cookies[:tahun]
+    queries = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @opd.kode_unik_opd)
+    @strategi_opds = {
+      strategi_opd: queries.strategi_opd.size,
+      tactical_opd: queries.tactical_opd.size,
+      operational_opd: queries.operational_opd.size,
+      staff_opd: queries.staff_opd.size
+    }
+    @url = pohon_opd_clone_path(params[:id])
+    render layout: false
   end
 
   def pohon_opd
@@ -18,19 +25,61 @@ class CloneController < ApplicationController
     tahun_anggaran = KelompokAnggaran.find(params[:tahun_tujuan]).kode_kelompok
     @tahun = tahun_anggaran.match(/murni/) ? tahun_anggaran[/[^_]\d*/, 0] : tahun_anggaran
 
-    pohon = Pohon.find(params[:id])
+    queries = PohonKinerjaOpdQueries.new(tahun: tahun_asal, kode_opd: params[:kode_opd])
+
+    strategi_opds = queries.strategi_opd
+    tactical_opd = queries.tactical_opd
+    operational_opd = queries.operational_opd
+    staff_opd = queries.staff_opd
 
     ket = "clone_dari_#{tahun_asal}"
 
-    operation = PohonCloner.call(pohon, traits: :pohon_tematik,
-                                        tahun: @tahun, pohon_ref_id: '', keterangan: ket)
-    operation.to_record
-    if operation.persist!
-      clone_pohon = operation.to_record
-      render json: { resText: "Pohon di clone ke #{clone_pohon.tahun}" }, status: :created
-    else
-      render json: { resText: 'Gagal, terdapat kesalahan di server' }, status: :unprocessable_entity
+    strategi_opds.each do |strategi|
+      operation = StrategiCloner.call(strategi, traits: :strategi_pohon,
+                                                tahun: @tahun, keterangan: ket, parent_id: nil)
+      operation.to_record
+      operation.persist
+      clone = operation.to_record
+      parent_id = clone.id
+
+      tactical_opd.select { |str| str.strategi_ref_id.to_i == strategi.id }.each do |tactical|
+        operation = StrategiCloner.call(tactical, traits: :strategi_pohon,
+                                                  tahun: @tahun, parent_id: parent_id,
+                                                  keterangan: ket)
+        operation.to_record
+        operation.persist
+        clone = operation.to_record
+        parent_id = clone.id
+
+        operational_opd.select { |str| str.strategi_ref_id.to_i == tactical.id }.each do |operational|
+          operation = StrategiCloner.call(operational, traits: :strategi_pohon,
+                                                       tahun: @tahun, parent_id: parent_id,
+                                                       keterangan: ket)
+          operation.to_record
+          operation.persist
+          clone = operation.to_record
+          parent_id = clone.id
+
+          staff_opd.select { |str| str.strategi_ref_id.to_i == operational.id }.each do |staff|
+            operation = StrategiCloner.call(staff, traits: :strategi_pohon,
+                                                   tahun: @tahun, parent_id: parent_id,
+                                                   keterangan: ket)
+            operation.to_record
+            operation.persist
+          end
+        end
+      end
     end
+
+    # queries_baru = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @opd.kode_unik_opd)
+    # @strategi_opds = {
+    #   strategi_opd: queries_baru.strategi_opd.size,
+    #   tactical_opd: queries_baru.tactical_opd.size,
+    #   operational_opd: queries_baru.operational_opd.size,
+    #   staff_opd: queries_baru.staff_opd.size
+    # }
+
+    render json: { resText: "Clone berhasil" }, status: :created
   end
 
   def pohon_tematik
@@ -114,5 +163,13 @@ class CloneController < ApplicationController
     else
       render json: { resText: 'Gagal, terdapat kesalahan di server' }, status: :unprocessable_entity
     end
+  end
+
+  private
+
+  def set_tahun_clone
+    tahun_asal = params[:tahun_asal]
+    tahun_anggaran = KelompokAnggaran.find(params[:tahun_tujuan]).kode_kelompok
+    @tahun = tahun_anggaran.match(/murni/) ? tahun_anggaran[/[^_]\d*/, 0] : tahun_anggaran
   end
 end
