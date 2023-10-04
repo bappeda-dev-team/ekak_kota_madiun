@@ -43,29 +43,29 @@ class CloneController < ApplicationController
       parent_id = clone.id
 
       tactical_opd.select { |str| str.strategi_ref_id.to_i == strategi.id }.each do |tactical|
-        operation = StrategiCloner.call(tactical, traits: :strategi_pohon,
-                                                  tahun: @tahun, parent_id: parent_id,
-                                                  keterangan: ket)
-        operation.to_record
-        operation.persist
-        clone = operation.to_record
-        parent_id = clone.id
+        operation_tac = StrategiCloner.call(tactical, traits: :strategi_pohon,
+                                                      tahun: @tahun, parent_id: parent_id,
+                                                      keterangan: ket)
+        operation_tac.to_record
+        operation_tac.persist
+        clone_tac = operation_tac.to_record
+        parent_tac = clone_tac.id
 
         operational_opd.select { |str| str.strategi_ref_id.to_i == tactical.id }.each do |operational|
-          operation = StrategiCloner.call(operational, traits: :strategi_pohon,
-                                                       tahun: @tahun, parent_id: parent_id,
-                                                       keterangan: ket)
-          operation.to_record
-          operation.persist
-          clone = operation.to_record
-          parent_id = clone.id
+          operation_op = StrategiCloner.call(operational, traits: :strategi_pohon,
+                                                          tahun: @tahun, parent_id: parent_tac,
+                                                          keterangan: ket)
+          operation_op.to_record
+          operation_op.persist
+          clone_op = operation_op.to_record
+          parent_op = clone_op.id
 
           staff_opd.select { |str| str.strategi_ref_id.to_i == operational.id }.each do |staff|
-            operation = StrategiCloner.call(staff, traits: :strategi_pohon,
-                                                   tahun: @tahun, parent_id: parent_id,
-                                                   keterangan: ket)
-            operation.to_record
-            operation.persist
+            operation_st = StrategiCloner.call(staff, traits: :strategi_pohon,
+                                                      tahun: @tahun, parent_id: parent_op,
+                                                      keterangan: ket)
+            operation_st.to_record
+            operation_st.persist
           end
         end
       end
