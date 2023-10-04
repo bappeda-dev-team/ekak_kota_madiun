@@ -48,10 +48,28 @@ class StrategiCloner < Clowne::Cloner
     include_association :strategi_staffs, params: true, traits: :just_strategi
   end
 
+  trait :strategi_pohon do
+    include_association :indikators
+
+    nullify :strategi_cascade_link
+    nullify :strategi_ref_id
+    nullify :linked_with
+    nullify :metadata
+    nullify :nip_asn
+    nullify :nip_asn_sebelumnya
+    nullify :pohon_id
+    nullify :sasaran_id
+
+    finalize do |_source, record, keterangan:, parent_id:, **|
+      record.keterangan = keterangan
+      record.strategi_ref_id = parent_id
+    end
+  end
+
   # include_association :strategi_eselon_dua_bs, params: true, traits: :with_sasaran
-  include_association :strategi_eselon_tigas, params: true, traits: :with_sasaran
-  include_association :strategi_eselon_empats, params: true, traits: :with_sasaran
-  include_association :strategi_staffs, params: true, traits: :with_sasaran
+  # include_association :strategi_eselon_tigas, params: true, traits: :with_sasaran
+  # include_association :strategi_eselon_empats, params: true, traits: :with_sasaran
+  # include_association :strategi_staffs, params: true, traits: :with_sasaran
 
   finalize do |_source, record, tahun:, **|
     record.tahun = tahun
