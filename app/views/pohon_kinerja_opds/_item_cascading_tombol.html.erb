@@ -1,6 +1,6 @@
-<% unless pohon.exists? %>
-  <% if eselon_x?('eselon_2', 'eselon_3', 'admin', 'super_admin') %>
-    <% if pohon.real.instance_of?(StrategiPohon) %>
+<% unless pohon.exists? && !reviewer? %>
+  <% if pohon.real.instance_of?(StrategiPohon) %>
+    <% if privileged_user || current_user.eselon_user == pohon.role_atasan %>
       <div class="pohon-tombol mb-3">
         <div class="row">
           <div class="col">
@@ -45,12 +45,13 @@
           </div>
         </div>
       </div>
-    <% else %>
-      <% unless pohon.processed? %>
-        <div class="pohon-tombol mb-3">
-          <div class="row">
-            <div class="col">
-              <%= link_to terima_pohon_tematik_path(pohon),
+    <% end %>
+  <% else %>
+    <% unless pohon.processed? %>
+      <div class="pohon-tombol mb-3">
+        <div class="row">
+          <div class="col">
+            <%= link_to terima_pohon_tematik_path(pohon),
          remote: true,
          method: :patch,
          class: 'btn btn-outline-success',
@@ -60,12 +61,12 @@
              controller: 'pohon-tematik',
              action: 'ajax:complete->pohon-tematik#terimaPohon:prevent'
          } do %>
-                <i class="fas fa-check me-2"></i>
-                <span>Terima</span>
-              <% end %>
-            </div>
-            <div class="col">
-              <%= link_to tolak_strategi_pohon_tematik_path(pohon),
+              <i class="fas fa-check me-2"></i>
+              <span>Terima</span>
+            <% end %>
+          </div>
+          <div class="col">
+            <%= link_to tolak_strategi_pohon_tematik_path(pohon),
          remote: true,
          class: 'btn btn-outline-danger',
          data: {
@@ -74,13 +75,12 @@
              bs_toggle: 'modal',
              bs_target: '#form-modal'
          } do %>
-                <i class="fa fa-times me-2"></i>
-                <span>Tolak</span>
-              <% end %>
-            </div>
+              <i class="fa fa-times me-2"></i>
+              <span>Tolak</span>
+            <% end %>
           </div>
         </div>
-      <% end %>
+      </div>
     <% end %>
   <% end %>
 <% end %>

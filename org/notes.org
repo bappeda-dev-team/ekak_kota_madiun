@@ -38,7 +38,7 @@
   - [ ] rincian
   - [ ] gambaran umum
 - [X] User ess 3 dapat menambah stratrgi pokin di level tactical, user esselon 4 dapat menambah operational, staf dapat menambah operational 2
-- [-] Esselon 3 dapat menambah pelaksana esselon 4 (all ess 4 dlm opd), esselon 4 dapat memilih pelaksana staf (all staf dlm opd)
+- [X] Esselon 3 dapat menambah pelaksana esselon 4 (all ess 4 dlm opd), esselon 4 dapat memilih pelaksana staf (all staf dlm opd)
 - [ ] Manual indikator (terdapat kekacauan)> cek
   - [ ] pilih atasan
 - [X] Hilangkan validasi pada usulan

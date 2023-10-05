@@ -81,6 +81,19 @@ class PohonKinerjaPresenter
     @pohon.role
   end
 
+  def role_atasan
+    case role
+    when 'eselon_3'
+      'eselon_2'
+    when 'eselon_4'
+      'eselon_3'
+    when 'staff'
+      'eselon_4'
+    else
+      ''
+    end
+  end
+
   def role_bawahan
     case role
     when 'eselon_2'
