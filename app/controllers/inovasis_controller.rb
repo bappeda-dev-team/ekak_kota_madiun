@@ -20,7 +20,8 @@ class InovasisController < ApplicationController
     user = current_user.nik
     opd = Opd.find_by_kode_unik_opd(cookies[:opd])
     tahun = cookies[:tahun]
-    @inovasi = Inovasi.new(tahun: tahun, nip_asn: user, opd: opd)
+    @inovasi = Inovasi.new(tahun: tahun, nip_asn: user, opd: opd,
+                           is_active: true, status: 'disetujui')
     render layout: false
   end
 
