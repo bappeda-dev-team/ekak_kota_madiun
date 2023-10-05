@@ -185,7 +185,8 @@ CREATE TABLE public.aksis (
     updated_at timestamp(6) without time zone NOT NULL,
     tahapan_id bigint,
     id_rencana_aksi character varying,
-    id_aksi_bulan character varying
+    id_aksi_bulan character varying,
+    keterangan character varying
 );
 
 
@@ -5509,6 +5510,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230922104355'),
 ('20230929084519'),
 ('20231002064608'),
-('20231002201542');
+('20231002201542'),
+('20231005171444');
 
 

@@ -494,8 +494,18 @@ class Sasaran < ApplicationRecord
     return unless clone_asal.tahapans.any?
 
     clone_asal.tahapans.each do |tahap|
-      clone = TahapanCloner.call(tahap, id_rencana_sas: id_rencana, tahun: clone_asal.tahun, traits: :normal)
-      clone.persist!
+      clone = TahapanCloner.call(tahap, id_rencana_sas: id_rencana, tahun: clone_asal.tahun,
+                                        traits: %i[normal])
+      clone.persist
+
+      new_tahapan = clone.to_record
+
+      id_rencana_aksi_new = new_tahapan.id_rencana_aksi
+
+      tahap.aksis.each do |aksi|
+        clone_aksi = AksiCloner.call(aksi, tahun: clone_asal.tahun, id_rencana_aksi: id_rencana_aksi_new)
+        clone_aksi.persist
+      end
     end
   end
 

@@ -9,10 +9,11 @@ class SasaranCloner < Clowne::Cloner
         tahun: params[:tahun]
       }
     }
-    # include_association :tahapans, params: proc { |params, sasaran|
-    # }
-
     nullify :id_rencana
+
+    after_clone do |origin, cloned, tahun:, **|
+      cloned.id_rencana = "clone_#{origin.id_rencana}_#{tahun}"
+    end
 
     after_persist do |origin, cloned, **|
       cloned.indikator_sasarans.each do |indikator|
@@ -38,14 +39,6 @@ class SasaranCloner < Clowne::Cloner
       record.created_at = Time.current
       record.updated_at = Time.current
     end
-  end
-
-  # trait :with_tahapans do
-  #   include_association :tahapans, params: true, trait: :normal
-  # end
-
-  after_clone do |origin, cloned, tahun:, **|
-    cloned.id_rencana = "clone_#{origin.id_rencana}_#{tahun}"
   end
 
   finalize do |_source, record, tahun:, clone_tahun_asal:, clone_oleh:, clone_asli:, **|

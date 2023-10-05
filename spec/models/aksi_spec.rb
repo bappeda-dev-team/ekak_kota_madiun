@@ -6,6 +6,7 @@
 #  bulan           :integer
 #  id_aksi_bulan   :string
 #  id_rencana_aksi :string
+#  keterangan      :string
 #  realisasi       :integer
 #  target          :integer
 #  created_at      :datetime         not null
