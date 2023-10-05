@@ -14,6 +14,7 @@
         <%= hidden_field_tag 'uncheck[]', cross.id %>
         <% if cross.pohonable.sasarans.select { |s| s.nip_asn == cross.user.nik }.any? %>
           <span class="badge bg-success">Rencana Kinerja sudah terisi</span>
+          <%= hidden_field_tag 'check[]', cross.id %>
         <% else %>
           <%= check_box_tag 'check[]', cross.id, true, class: 'form-check-input' %>
         <% end %>
