@@ -43,7 +43,6 @@ class PelaksanaController < ApplicationController
       pohonable_id: '',
       pohonable_type: '',
       role: 'pelaksana-batal',
-      user_id: nil,
       keterangan: keterangan,
       status: 'pelaksana-batal',
       metadata: {
