@@ -13,6 +13,12 @@ class SasaranCloner < Clowne::Cloner
     # }
 
     nullify :id_rencana
+
+    after_persist do |origin, cloned, **|
+      cloned.indikator_sasarans.each do |indikator|
+        indikator.update(sasaran_id: origin.id_rencana) if indikator.keterangan == "cloned_#{cloned.tahun}"
+      end
+    end
   end
 
   trait :pokin do
@@ -40,15 +46,6 @@ class SasaranCloner < Clowne::Cloner
 
   after_clone do |origin, cloned, tahun:, **|
     cloned.id_rencana = "clone_#{origin.id_rencana}_#{tahun}"
-  end
-
-  after_persist do |origin, cloned, **|
-    cloned.indikator_sasarans.each do |indikator|
-      indikator.update(sasaran_id: origin.id_rencana) if indikator.keterangan == "cloned_#{cloned.tahun}"
-    end
-    cloned.tahapans.each do |tahapan|
-      tahapan.update(id_rencana: origin.id_rencana) if tahapan.keterangan == "cloned_#{cloned.tahun}"
-    end
   end
 
   finalize do |_source, record, tahun:, clone_tahun_asal:, clone_oleh:, clone_asli:, **|
