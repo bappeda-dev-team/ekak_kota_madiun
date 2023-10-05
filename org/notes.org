@@ -30,3 +30,15 @@
 ** PENDING laporan review ( nanti )
 
 * TODO Import SBU SSH baru set ke 2024
+* TODO Reviewer bappeda untuk review 2024
+* TODO <2023-10-05 Thu>
+- [ ] hapus rekin problem
+  - [ ] cek keterkaitan sasaran dengan tabel lain di kak
+  - [ ] dasar hukum
+  - [ ] rincian
+  - [ ] gambaran umum
+- [ ] User ess 3 dapat menambah stratrgi pokin di level tactical, user esselon 4 dapat menambah operational, staf dapat menambah operational 2
+- [ ] Esselon 3 dapat menambah pelaksana esselon 4 (all ess 4 dlm opd), esselon 4 dapat memilih pelaksana staf (all staf dlm opd)
+- [ ] Manual indikator (terdapat kekacauan)> cek
+  - [ ] pilih atasan
+- [-] Hilangkan validasi pada usulan
