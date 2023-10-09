@@ -10,6 +10,7 @@ class SasaranCloner < Clowne::Cloner
       }
     }
     nullify :id_rencana
+    nullify :strategi_id
 
     after_clone do |origin, cloned, tahun:, **|
       cloned.id_rencana = "clone_#{origin.id_rencana}_#{tahun}"

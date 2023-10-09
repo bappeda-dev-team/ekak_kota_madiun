@@ -422,13 +422,18 @@ class SasaransController < ApplicationController
 
   def clone_tahapan_sebelum
     sasaran = Sasaran.find(params[:id])
-    respond_to do |format|
-      if sasaran.renaksi_cloner
-        format.html { redirect_to sasaran_path(sasaran), success: 'Renaksi diclone' }
-      else
-        flash.now[:error] = 'Sasaran tidak punya renaksi'
-        format.html { redirect_to sasaran_path(sasaran), success: 'Gagal Clone' }
-      end
+    begin
+      sasaran.renaksi_cloner
+      redirect_to sasaran_path(sasaran), success: 'Renaksi diclone'
+    rescue ActiveRecord::RecordNotUnique
+      flash.now[:error] = 'Renaksi Sudah dikloning'
+      redirect_to sasaran_path(sasaran), success: 'Gagal Clone'
+    rescue ActiveRecord::RecordInvalid
+      flash.now[:error] = 'Renaksi Tidak ditemukan'
+      redirect_to sasaran_path(sasaran), success: 'Gagal Clone'
+    rescue StandardError
+      flash.now[:error] = 'Terjadi Kesalahan'
+      redirect_to sasaran_path(sasaran), success: 'Gagal Clone'
     end
   end
 
