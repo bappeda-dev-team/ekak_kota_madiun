@@ -1,4 +1,4 @@
-<%= content_for :html_title, "Master Tahun" %>
+<%= content_for :html_title, "Master OPD" %>
 <%= content_for :navigation do %>
   <li class="breadcrumb-item" aria-current="page">Data Master</li>
   <li class="breadcrumb-item active" aria-current="page">Master OPD</li>
@@ -20,11 +20,10 @@
         <table class="table table-flush datatable" data-datatable>
           <thead class="thead-light">
             <tr>
-              <th>Nama OPD</th>
-              <th>Kode OPD SKP</th>
+              <th>OPD</th>
+              <th>Urusan</th>
+              <th>Bidang Urusan</th>
               <th>Kode UNIK OPD</th>
-              <th>Kode OPD</th>
-              <th>OPD Induk</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -32,10 +31,9 @@
             <% @opds.each do |opd| %>
               <tr>
                 <td class="text-wrap"><%= opd.nama_opd %></td>
-                <td><%= opd.id_opd_skp %></td>
+                <td class="text-wrap"><%= "(#{opd.kode_urusan}) #{opd.urusan}" %></td>
+                <td class="text-wrap"><%= "(#{opd.kode_bidang_urusan}) #{opd.bidang_urusan}" %></td>
                 <td><%= opd.kode_unik_opd %></td>
-                <td><%= opd.kode_opd %></td>
-                <td><%= opd.opd_induk %></td>
                 <td>
                   <%= link_to edit_full_opd_path(opd), remote: true,
               data: { controller: 'form-modal',

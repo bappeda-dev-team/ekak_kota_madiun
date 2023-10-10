@@ -1,17 +1,9 @@
 <tr id="<%= dom_id(opd) %>">
   <div class="cek">
-    <td class="text-wrap"><%= opd.nama_opd %>
-      <% if super_admin? %>
-        <div class="d-grid">
-          <p><strong>Kode Unik OPD</strong>: <%= opd.kode_unik_opd %></p>
-          <p><strong>Kode OPD</strong>: <%= opd.kode_opd %></p>
-          <p><strong>ID OPD</strong>: <%= opd.id %></p>
-          <p><strong>ID OPD SKP</strong>: <%= opd.id_opd_skp %></p>
-          <p><strong>Jumlah User</strong>: <%= opd.users.size %></p>
-        </div>
-      <% end %>
-    </td>
-    <td><%= opd.opd_induk %></td>
+    <td class="text-wrap"><%= opd.nama_opd %></td>
+    <td class="text-wrap"><%= opd.kode_unik_opd %></td>
+    <td class="text-wrap"><%= "(#{opd.kode_urusan}) #{opd.urusan}" %></td>
+    <td class="text-wrap"><%= "(#{opd.kode_bidang_urusan}) #{opd.bidang_urusan}" %></td>
     <td><%= opd.nama_kepala %></td>
     <td><%= opd.nip_kepala %></td>
     <td><%= opd.pangkat_kepala %></td>
@@ -26,20 +18,6 @@
               class: 'btn btn-sm btn-outline-info' do %>
           <i class="fas fa-edit me-2"></i>
           Edit
-        <% end %>
-        <%= link_to sync_opd_path(kode_opd: opd.kode_unik_opd, tahun: Date.today.year),
-             remote: true,
-             data: { disable_with: 'Memproses....'},
-             class:"btn btn-sm btn-primary" do %>
-          <i class="fas fa-sync me-2"></i>
-          Sync Sasaran OPD
-        <% end %>
-        <%= link_to sync_tujuan_opd_path(kode_opd: opd.kode_unik_opd, tahun: Date.today.year),
-             remote: true,
-             data: { disable_with: 'Memproses....'},
-             class:"btn btn-sm btn-primary" do %>
-          <i class="fas fa-sync me-2"></i>
-          Sync Tujuan OPD
         <% end %>
       </div>
     </td>
