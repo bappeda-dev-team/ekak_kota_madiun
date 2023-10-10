@@ -15,5 +15,10 @@ module Api
     def with_bidang
       @opds = Opd.where(has_bidang: true)
     end
+
+    def urusan_opd
+      @opds = Opd.where.not(kode_unik_opd: nil)
+                 .where.not(urusan: [nil, ''])
+    end
   end
 end

@@ -580,6 +580,7 @@ Rails.application.routes.draw do
     namespace :opd do
       post :daftar_opd
       post :find_opd
+      post :urusan_opd
     end
     namespace :pohon_kinerja do
       post :pohon_kinerja_kota
