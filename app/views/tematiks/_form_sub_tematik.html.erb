@@ -32,7 +32,7 @@
     <%= form.label :sub_tema, class: 'form-label' %>
     <%= form.text_field :tema, class: 'form-control' %>
   </div>
-  <div class="field mt-0" id="indikator-subtematik">
+  <div class="field row mt-0" id="indikator-subtematik">
     <%= form.fields_for :indikators do |indikator_subtematik| %>
       <%= render 'tematiks/indikator_sub_tematik_fields', form: indikator_subtematik %>
     <% end %>

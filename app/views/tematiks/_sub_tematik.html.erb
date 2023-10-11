@@ -2,22 +2,9 @@
   <% rowspan = sub_tema.indikators.size + 1 %>
   <tr>
     <td rowspan="<%= rowspan %>"></td>
-    <td rowspan="<%= rowspan %>"><%= sub_tema.tematik %></td>
-    <td rowspan="<%= rowspan %>" class="text-wrap"><%= sub_tema %></td>
-    <td colspan="4" class="p-0 m-0 border-0"></td>
+    <td rowspan="<%= rowspan %>"><%= sub_tema %></td>
+    <td colspan="3" class="p-0 m-0 border-0"></td>
     <td class="text-wrap" rowspan="<%= rowspan %>"><%= sub_tema.keterangan %></td>
-    <td rowspan="<%= rowspan %>">
-      <ul style="list-style: none;">
-        <% sub_tema.pohon_list.each do |pohon, tahun| %>
-          <li>
-            <%= link_to pohon_tematik_index_path(tematik: sub_tema.id),
-                 class: 'btn btn-outline-primary' do%>
-              <%= tahun %>
-            <% end %>
-          </li>
-        <% end %>
-      </ul>
-    </td>
     <td class="text-center" rowspan="<%= rowspan %>">
       <div class="d-grid gap-3">
         <%= link_to edit_sub_tematik_path(sub_tema), remote: true,
@@ -48,10 +35,9 @@
   </tr>
   <% sub_tema.indikators.each do |indikator| %>
     <tr class="skip">
-      <td class="text-wrap"><%= indikator %></td>
+      <td><%= indikator %></td>
       <td><%= indikator.target %></td>
       <td><%= indikator.satuan %></td>
-      <td><%= indikator.tahun %></td>
     </tr>
   <% end %>
 <% end %>
