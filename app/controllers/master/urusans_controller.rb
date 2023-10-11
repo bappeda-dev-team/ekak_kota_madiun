@@ -19,4 +19,10 @@ class Master::UrusansController < ApplicationController
       @urusans = Master::Urusan.all
     end
   end
+
+  def list_urusan
+    @urusans = Master::Urusan.all
+                             .where.not(nama_urusan: [nil, ''])
+                             .uniq(&:kode_urusan)
+  end
 end
