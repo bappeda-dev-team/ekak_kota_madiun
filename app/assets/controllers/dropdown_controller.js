@@ -17,6 +17,7 @@ export default class extends Controller {
     uraian: String,
     item: String,
     role: String,
+    selected: String,
     display: { type: Boolean, default: true },
     width: { type: String, default: 'element' }
   }
@@ -209,6 +210,10 @@ export default class extends Controller {
   dropdown_with_action(options) {
     const select2ed = this.dropdown_base(options)
     const custom_name = this.eventNameValue
+    if (this.hasSelectedValue) {
+      const newOption = new Option(this.selectedValue, this.selectedValue, true, true)
+      select2ed.append(newOption).trigger('change');
+    }
     return select2ed.on('select2:select', (e) => {
       const custom_event = new CustomEvent(custom_name,
         { detail: { data: e.params.data } })

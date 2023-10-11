@@ -21,7 +21,10 @@ class Master::BidangUrusansController < ApplicationController
   end
 
   def list_bidang_urusan
+    param = params[:q] || ""
+
     @bidang_urusans = Master::BidangUrusan.all
+                                          .where("nama_bidang_urusan ILIKE ?", "%#{param}%")
                                           .where.not(nama_bidang_urusan: [nil, ''])
                                           .uniq(&:kode_bidang_urusan)
   end
