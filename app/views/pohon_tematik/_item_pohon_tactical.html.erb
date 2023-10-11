@@ -4,7 +4,7 @@
   </div>
   <%= render partial: 'pohon_tematik/inner_table', locals: { pohon: pohon, title: 'Tactical' } %>
   <% if super_admin? %>
-    <div class="pohon-tombol mb-3">
+    <div class="pohon-tombol mb-1">
       <div class="row">
         <div class="col">
           <%= link_to edit_tactical_pohon_tematik_path(pohon),
