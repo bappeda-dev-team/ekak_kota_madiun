@@ -4,11 +4,13 @@ class TematiksController < ApplicationController
 
   # GET /tematiks or /tematiks.json
   def index
-    @tematiks = Tematik.all.where(type: nil).order(updated_at: :desc)
+    @tahun = cookies[:tahun]
+    @tematiks = Pohon.where(pohonable_type: 'Tematik', tahun: @tahun).map(&:pohonable)
   end
 
   def sub_tematiks
-    @sub_tematiks = SubTematik.all.order(updated_at: :desc)
+    @tahun = cookies[:tahun]
+    @sub_tematiks = Pohon.where(pohonable_type: 'SubTematik', tahun: @tahun).map(&:pohonable)
   end
 
   # GET /tematiks/1 or /tematiks/1.json
