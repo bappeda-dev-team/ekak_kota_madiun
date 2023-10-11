@@ -6,48 +6,6 @@
               }
 ) do |form| %>
   <div class="field">
-    <%= form.label :kode_urusan, class: 'form-label' %>
-    <%= form.text_field :kode_urusan, class: "form-control", readonly: true, data: { controller: 'set-value', action: 'change-kode-urusan@document->set-value#changeKode' } %>
-  </div>
-  <div class="field">
-    <%= form.label :urusan, class: 'form-label' %>
-    <%= form.select :urusan, [],
-         {include_blank: true},
-         { class: 'form-control',
-           data: {
-             controller: 'dropdown',
-             dropdown_jenis_value: 'extra',
-             dropdown_parent_value: '#form-modal-body',
-             dropdown_url_value: "/list_urusan.json",
-             dropdown_event_name_value: 'change-kode-urusan',
-             dropdown_selected_value: form.object.urusan,
-             placeholder: 'Pilih Urusan OPD',
-           },
-           required: true
-          }%>
-  </div>
-  <div class="field">
-    <%= form.label :kode_bidang_urusan, class: 'form-label' %>
-    <%= form.text_field :kode_bidang_urusan, class: "form-control", readonly: true, data: { controller: 'set-value', action: 'change-kode-bidang-urusan@document->set-value#changeKode' } %>
-  </div>
-  <div class="field">
-    <%= form.label :bidang_urusan, class: 'form-label' %>
-    <%= form.select :bidang_urusan, [],
-         {include_blank: true},
-         { class: 'form-control',
-           data: {
-             controller: 'dropdown',
-             dropdown_jenis_value: 'extra',
-             dropdown_parent_value: '#form-modal-body',
-             dropdown_url_value: '/list_bidang_urusan.json',
-             dropdown_event_name_value: 'change-kode-bidang-urusan',
-             dropdown_selected_value: form.object.bidang_urusan,
-             placeholder: 'Pilih Bidang Urusan OPD',
-           },
-           required: true
-          }%>
-  </div>
-  <div class="field">
     <%= form.label :kode_opd, class: 'form-label' %>
     <%= form.text_field :kode_unik_opd, class: "form-control" %>
   </div>

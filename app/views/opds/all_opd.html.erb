@@ -21,33 +21,17 @@
           <thead class="thead-light">
             <tr>
               <th>OPD</th>
+              <th>Kode OPD</th>
               <th>Urusan</th>
               <th>Bidang Urusan</th>
-              <th>Kode UNIK OPD</th>
-              <th>Action</th>
+              <th>Nama Kepala OPD</th>
+              <th>NIP Kepala OPD</th>
+              <th>Pangkat Kepala OPD</th>
+              <th class="text-center">Action</th>
             </tr>
           </thead>
           <tbody id="opd">
-            <% @opds.each do |opd| %>
-              <tr>
-                <td class="text-wrap"><%= opd.nama_opd %></td>
-                <td class="text-wrap"><%= "(#{opd.kode_urusan}) #{opd.urusan}" %></td>
-                <td class="text-wrap"><%= "(#{opd.kode_bidang_urusan}) #{opd.bidang_urusan}" %></td>
-                <td><%= opd.kode_unik_opd %></td>
-                <td>
-                  <%= link_to edit_full_opd_path(opd), remote: true,
-              data: { controller: 'form-modal',
-                      action: 'ajax:complete->form-modal#success:prevent',
-                   bs_toggle: 'modal',
-                   bs_target: '#form-modal'
-              },
-              class: 'btn btn-sm btn-outline-info' do %>
-                    <i class="fas fa-edit me-2"></i>
-                    Edit
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
+            <%= render partial: 'row_table_opd', collection: @opds, as: :opd  %>
           </tbody>
         </table>
       </div>
