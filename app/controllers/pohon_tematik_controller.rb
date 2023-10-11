@@ -135,6 +135,30 @@ class PohonTematikController < ApplicationController
     keterangan = params[:strategi][:keterangan]
     @strategi = @pohon.pohonable
     if @strategi.update(strategi_params)
+      childs = Pohon.where(pohonable_type: 'Strategi', role: %w[tactical_pohon_kota operational_pohon_kota],
+                           pohon_ref_id: @pohon.id)
+      if childs.any?
+        childs.each do |child|
+          child.opd_id = params[:strategi][:opd_id]
+          child.save!
+
+          strategi_ini = child.pohonable
+          strategi_ini.opd_id = params[:strategi][:opd_id]
+          strategi_ini.save!
+          child_childs = Pohon.where(pohonable_type: 'Strategi', role: %w[tactical_pohon_kota operational_pohon_kota],
+                                     pohon_ref_id: child.id)
+          next unless child_childs.any?
+
+          child_childs.each do |chchild|
+            chchild.opd_id = params[:strategi][:opd_id]
+            chchild.save!
+
+            ssstrategi_ini = chchild.pohonable
+            ssstrategi_ini.opd_id = params[:strategi][:opd_id]
+            ssstrategi_ini.save!
+          end
+        end
+      end
       @pohon.update(keterangan: keterangan)
       html_content = render_to_string(partial: 'pohon_tematik/item_pohon_strategi',
                                       formats: 'html',
