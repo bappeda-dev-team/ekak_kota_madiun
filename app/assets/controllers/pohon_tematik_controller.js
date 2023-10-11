@@ -201,7 +201,7 @@ export default class extends Controller {
     this.showChild(display, button)
     child.classList.toggle('d-none')
     button.dataset.pohonTematikShowParam = display
-    button.nextElementSibling.classList.toggle('d-none')
+    // button.nextElementSibling.classList.toggle('d-none')
   }
 
   toggleDetail(e) {

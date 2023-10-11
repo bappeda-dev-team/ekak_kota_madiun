@@ -42,3 +42,10 @@
 - [ ] Manual indikator (terdapat kekacauan)> cek
   - [ ] pilih atasan
 - [X] Hilangkan validasi pada usulan
+* TODO <2023-10-11 Wed>
+- [X] tampilan tematik / subtematik
+- [X] sembunyikan tombol pilih strategi
+- [ ] rapikan tampilan tombol pohon
+  - menjadi row col
+- [ ] pindah pohon tematik kota
+- [ ] ganti opd ganti kebawahnya juga

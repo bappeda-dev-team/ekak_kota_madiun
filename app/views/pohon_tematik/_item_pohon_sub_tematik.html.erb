@@ -31,7 +31,7 @@
     </table>
   </div>
   <% if super_admin? %>
-    <div class="pohon-tombol mb-3">
+    <div class="pohon-tombol mb-1">
       <div class="row">
         <div class="col">
           <%= link_to pindah_sub_tematik_pohon_tematik_path(pohon),
@@ -72,44 +72,5 @@
       </div>
     </div>
   <% end %>
-  <div class="pohon-foot">
-    <button type="button" class="btn btn-tertiary w-100" data-action="pohon-tematik#toggleChild" data-pohon-tematik-show-param="false">Tampilkan</button>
-    <% if super_admin? %>
-      <div class="d-grid gap-3 mt-3 d-none">
-        <%= link_to new_sub_sub_pohon_tematik_path(pohon),
-             remote: true,
-             data: {
-                 controller: 'pohon-tematik',
-                 pohon_tematik_id_param: "strategi_tematik_#{pohon.object_id}",
-                 action: 'ajax:complete->pohon-tematik#addSubTematik:prevent',
-             },
-             class: 'btn btn-success w-100 text-white' do %>
-          <i class="fas fa-plus me-2"></i>
-          <span>Sub Sub-Tematik</span>
-        <% end %>
-        <%= link_to new_strategi_tematik_pohon_tematik_path(pohon),
-             remote: true,
-             data: {
-                 controller: 'pohon-tematik',
-                 pohon_tematik_id_param: "strategi_tematik_#{pohon.object_id}",
-                 action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
-             },
-             class: 'btn btn-info w-100' do %>
-          <i class="fas fa-plus me-2"></i>
-          <span>Strategi Tematik</span>
-        <% end %>
-        <%= link_to new_strategi_pohon_tematik_path(pohon),
-             remote: true,
-             data: {
-                 controller: 'pohon-tematik',
-                 pohon_tematik_id_param: "strategi_tematik_#{pohon.object_id}",
-                 action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
-             },
-             class: 'btn btn-primary w-100' do %>
-          <i class="fas fa-plus me-2"></i>
-          <span>Strategi Tematik Baru</span>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
+  <%= render 'pohon_tematik/pohon_foot', pohon: pohon, type: 'sub_tematik' %>
 </div>
