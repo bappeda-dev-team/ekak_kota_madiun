@@ -53,11 +53,11 @@ RSpec.describe Opd, type: :model do
 
     it 'should list bidang urusan by kode_urusans' do
       bidang_urusan = create(:master_bidang_urusan)
-      bidang_urusan_2 = create(:master_bidang_urusan, id_unik_sipd: '1.2',
-                                                      kode_bidang_urusan: '2.20',
-                                                      nama_bidang_urusan: 'URUSAN PEMERINTAHAN BIDANG STATISTIK')
+      bidang_urusan2 = create(:master_bidang_urusan, id_unik_sipd: '1.2',
+                                                     kode_bidang_urusan: '2.20',
+                                                     nama_bidang_urusan: 'URUSAN PEMERINTAHAN BIDANG STATISTIK')
       list_bidang_urusan = [[bidang_urusan.kode_bidang_urusan, bidang_urusan.nama_bidang_urusan],
-                            [bidang_urusan_2.kode_bidang_urusan, bidang_urusan_2.nama_bidang_urusan]]
+                            [bidang_urusan2.kode_bidang_urusan, bidang_urusan2.nama_bidang_urusan]]
       opd = create(:opd, kode_unik_opd: '2.16.2.20.2.21.04.000')
       bidang_urusans = opd.list_bidang_urusans
       expect(bidang_urusans).to eq(list_bidang_urusan)
