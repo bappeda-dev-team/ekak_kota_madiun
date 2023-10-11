@@ -45,7 +45,8 @@
 * TODO <2023-10-11 Wed>
 - [X] tampilan tematik / subtematik
 - [X] sembunyikan tombol pilih strategi
-- [ ] rapikan tampilan tombol pohon
+- [X] rapikan tampilan tombol pohon
   - menjadi row col
 - [ ] pindah pohon tematik kota
+- [X] tujuan opd di atas pohon opd
 - [ ] ganti opd ganti kebawahnya juga

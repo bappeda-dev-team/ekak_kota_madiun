@@ -28,6 +28,10 @@ class TujuanOpd < Tujuan
 
   belongs_to :urusan, class_name: 'Master::Urusan', foreign_key: 'urusan_id'
 
+  def to_s
+    tujuan
+  end
+
   def indikator_tujuans
     tujuan = indikators.group_by(&:indikator).transform_values do |indikator|
       indikator.group_by(&:tahun)

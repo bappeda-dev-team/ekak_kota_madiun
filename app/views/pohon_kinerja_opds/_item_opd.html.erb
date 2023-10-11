@@ -23,6 +23,14 @@
           <td class="text-start" width="30px">Nama OPD</td>
           <td class="text-wrap text-start fw-bolder"><%= @nama_opd %></td>
         </tr>
+        <% tujuan = @opd.tujuan_opds %>
+        <% size_tujuan = tujuan.size %>
+        <% tujuan.each.with_index(1) do |tujuan, no| %>
+          <tr>
+            <td class="text-start" width="30px">Tujuan <%= size_tujuan > 1  ? no : ''  %></td>
+            <td class="text-wrap text-start"><%= tujuan %></td>
+          </tr>
+        <% end %>
         <tr>
           <td class="text-start" width="30px">Tahun</td>
           <td class="text-wrap text-start"><%= @tahun %></td>
