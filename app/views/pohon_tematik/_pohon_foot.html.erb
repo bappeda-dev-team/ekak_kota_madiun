@@ -1,13 +1,19 @@
 <div class="pohon-foot">
   <div class="row">
-    <div class="col">
-      <button type="button" class="btn btn-sm btn-tertiary" data-action="pohon-tematik#toggleChild" data-pohon-tematik-show-param="false">Tampilkan</button>
-    </div>
+    <% if type != 'tematik' %>
+      <div class="col">
+        <button type="button" class="btn btn-sm btn-tertiary" data-action="pohon-tematik#toggleChild" data-pohon-tematik-show-param="false">Tampilkan</button>
+      </div>
+    <% end %>
     <% if super_admin? %>
-      <% if type == 'sub_tematik' %>
+      <% if type == 'tematik' %>
+        <%= render 'pohon_tematik/pohon_foot_tematik', pohon: pohon %>
+      <% elsif type == 'sub_tematik' %>
         <%= render 'pohon_tematik/pohon_foot_sub_tematik', pohon: pohon %>
       <% elsif type == 'strategic' %>
         <%= render 'pohon_tematik/pohon_foot_strategic', pohon: pohon %>
+      <% elsif type == 'tactical' %>
+        <%= render 'pohon_tematik/pohon_foot_tactical', pohon: pohon %>
       <% end %>
     <% end %>
   </div>

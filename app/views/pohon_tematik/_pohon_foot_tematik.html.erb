@@ -1,0 +1,26 @@
+<div class="col">
+  <%= link_to new_sub_pohon_tematik_path(pohon),
+             remote: true,
+             data: {
+                 controller: 'pohon-tematik',
+                 pohon_tematik_id_param: "tematik_#{pohon.object_id}",
+                 action: 'ajax:complete->pohon-tematik#addSubTematik:prevent',
+             },
+             class: 'btn btn-sm btn-success text-white' do %>
+    <i class="fas fa-plus me-2"></i>
+    <span>Sub Tema</span>
+  <% end %>
+</div>
+<div class="col">
+  <%= link_to new_strategi_pohon_tematik_path(pohon),
+             remote: true,
+             data: {
+                 controller: 'pohon-tematik',
+                 pohon_tematik_id_param: "strategi_tematik_#{pohon.object_id}",
+                 action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
+             },
+             class: 'btn btn-sm btn-info' do %>
+    <i class="fas fa-plus me-2"></i>
+    <span>Strategic</span>
+  <% end %>
+</div>

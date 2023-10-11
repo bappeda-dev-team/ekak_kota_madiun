@@ -32,33 +32,5 @@
       </div>
     </div>
   <% end %>
-  <div class="pohon-foot">
-    <button type="button" class="btn btn-tertiary w-100" data-action="pohon-tematik#toggleChild" data-pohon-tematik-show-param="false">Tampilkan</button>
-    <% if super_admin? %>
-      <div class="d-grid gap-3 mt-3 d-none">
-        <%= link_to new_operational_tematik_pohon_tematik_path(pohon),
-             remote: true,
-             data: {
-                 controller: 'pohon-tematik',
-                 pohon_tematik_id_param: "operational_tematik_#{pohon.object_id}",
-                 action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
-             },
-             class: 'btn btn-info w-100' do %>
-          <i class="fas fa-plus me-2"></i>
-          <span>Operational Tematik</span>
-        <% end %>
-        <%= link_to new_operational_pohon_tematik_path(pohon),
-             remote: true,
-             data: {
-                 controller: 'pohon-tematik',
-                 pohon_tematik_id_param: "operational_tematik_#{pohon.object_id}",
-                 action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
-             },
-             class: 'btn btn-primary w-100' do %>
-          <i class="fas fa-plus me-2"></i>
-          <span>Operational Tematik Baru</span>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
+  <%= render 'pohon_tematik/pohon_foot', pohon: pohon, type: 'tactical' %>
 </div>
