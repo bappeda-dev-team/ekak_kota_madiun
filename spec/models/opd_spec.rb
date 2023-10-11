@@ -35,4 +35,12 @@ RSpec.describe Opd, type: :model do
     it { should validate_presence_of(:nama_opd)  }
     it { should validate_presence_of(:kode_opd)  }
   end
+
+  describe 'urusan dan bidang urusan' do
+    it 'should separate 6 first kode_unik_opd' do
+      opd = create(:opd, kode_unik_opd: '2.16.2.20.2.21.04.000')
+      kode_urusans = opd.kode_urusans
+      expect(kode_urusans).to include('2.16', '2.20', '2.21')
+    end
+  end
 end

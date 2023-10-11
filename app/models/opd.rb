@@ -334,4 +334,11 @@ class Opd < ApplicationRecord
   def list_strategi_opd(tahun: '')
     strategis.includes(%i[user strategi_atasan]).where(tahun: tahun).group_by(&:role).sort
   end
+
+  def kode_urusans
+    kode_urusans = kode_unik_opd.scan(/.{1,5}/).take(3)
+    kode_urusans.map do |kode|
+      kode.sub(/\.$/, '')
+    end
+  end
 end
