@@ -17,6 +17,8 @@
 #
 FactoryBot.define do
   factory :master_urusan, class: 'Master::Urusan' do
-    
+    id_unik_sipd { "1.1" }
+    kode_urusan { "2" }
+    nama_urusan { "URUSAN PEMERINTAHAN WAJIB YANG TIDAK BERKAITAN DENGAN PELAYANAN DASAR" }
   end
 end

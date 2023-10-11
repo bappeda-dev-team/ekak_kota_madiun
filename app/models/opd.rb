@@ -341,4 +341,23 @@ class Opd < ApplicationRecord
       kode.sub(/\.$/, '')
     end
   end
+
+  def list_urusans
+    kode_urusan = kode_urusans.map do |kode|
+      kode.first
+    end
+    master_urusan = Master::Urusan.where(kode_urusan: kode_urusan)
+                                  .pluck(:kode_urusan,
+                                         :nama_urusan)
+    urusan_unique = Set.new(master_urusan)
+    urusan_unique.to_a
+  end
+
+  def list_bidang_urusans
+    master_bidang_urusan = Master::BidangUrusan.where(kode_bidang_urusan: kode_urusans)
+                                               .pluck(:kode_bidang_urusan,
+                                                      :nama_bidang_urusan)
+    bidang_urusan_unique = Set.new(master_bidang_urusan)
+    bidang_urusan_unique.to_a
+  end
 end

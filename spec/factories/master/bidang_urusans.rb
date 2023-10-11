@@ -18,6 +18,8 @@
 #
 FactoryBot.define do
   factory :master_bidang_urusan, class: 'Master::BidangUrusan' do
-    
+    id_unik_sipd { "1.1" }
+    kode_bidang_urusan { "2.16" }
+    nama_bidang_urusan { "URUSAN PEMERINTAHAN BIDANG KOMUNIKASI DAN INFORMATIKA" }
   end
 end

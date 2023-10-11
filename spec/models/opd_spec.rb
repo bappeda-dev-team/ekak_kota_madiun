@@ -37,10 +37,30 @@ RSpec.describe Opd, type: :model do
   end
 
   describe 'urusan dan bidang urusan' do
-    it 'should separate 6 first kode_unik_opd' do
+    it 'should separate first 15 kode_unik_opd' do
       opd = create(:opd, kode_unik_opd: '2.16.2.20.2.21.04.000')
       kode_urusans = opd.kode_urusans
       expect(kode_urusans).to include('2.16', '2.20', '2.21')
+    end
+
+    it 'should list urusan by kode_urusans' do
+      bidang_urusan = create(:master_urusan)
+      list_urusan = [[bidang_urusan.kode_urusan, bidang_urusan.nama_urusan]]
+      opd = create(:opd, kode_unik_opd: '2.16.2.20.2.21.04.000')
+      urusans = opd.list_urusans
+      expect(urusans).to eq(list_urusan)
+    end
+
+    it 'should list bidang urusan by kode_urusans' do
+      bidang_urusan = create(:master_bidang_urusan)
+      bidang_urusan_2 = create(:master_bidang_urusan, id_unik_sipd: '1.2',
+                                                      kode_bidang_urusan: '2.20',
+                                                      nama_bidang_urusan: 'URUSAN PEMERINTAHAN BIDANG STATISTIK')
+      list_bidang_urusan = [[bidang_urusan.kode_bidang_urusan, bidang_urusan.nama_bidang_urusan],
+                            [bidang_urusan_2.kode_bidang_urusan, bidang_urusan_2.nama_bidang_urusan]]
+      opd = create(:opd, kode_unik_opd: '2.16.2.20.2.21.04.000')
+      bidang_urusans = opd.list_bidang_urusans
+      expect(bidang_urusans).to eq(list_bidang_urusan)
     end
   end
 end
