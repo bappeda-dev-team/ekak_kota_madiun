@@ -10,6 +10,8 @@
         <%= render 'pohon_tematik/pohon_foot_tematik', pohon: pohon %>
       <% elsif type == 'sub_tematik' %>
         <%= render 'pohon_tematik/pohon_foot_sub_tematik', pohon: pohon %>
+      <% elsif type == 'sub_sub_tematik' %>
+        <%= render 'pohon_tematik/pohon_foot_sub_sub_tematik', pohon: pohon %>
       <% elsif type == 'strategic' %>
         <%= render 'pohon_tematik/pohon_foot_strategic', pohon: pohon %>
       <% elsif type == 'tactical' %>
