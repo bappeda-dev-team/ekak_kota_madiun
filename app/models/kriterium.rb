@@ -14,7 +14,7 @@
 #  kriteria_id   :bigint
 #
 class Kriterium < ApplicationRecord
-  TIPE_KRITERIA_OPTIONS = %w[SasaranKinerja Tahapan RincianBelanja].freeze
+  TIPE_KRITERIA_OPTIONS = %w[SasaranKinerja Tahapan RincianBelanja PohonKinerja].freeze
 
   validates :kriteria, presence: true
   validates :poin_max, presence: true
