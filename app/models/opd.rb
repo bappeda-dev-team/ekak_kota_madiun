@@ -26,7 +26,7 @@
 #
 # Indexes
 #
-#  index_opds_on_kode_unik_opd  (kode_unik_opd) UNIQUE
+#  index_opds_on_kode_unik_opd_and_lembaga_id  (kode_unik_opd,lembaga_id) UNIQUE
 #
 class Opd < ApplicationRecord
   validates :nama_opd, presence: true
@@ -61,6 +61,16 @@ class Opd < ApplicationRecord
 
   scope :opd_resmi, -> { where.not(kode_unik_opd: nil) }
   scope :with_bidang, -> { where(has_bidang: true) }
+
+  before_validation :create_kode_opd, if: :new_opd?
+
+  def create_kode_opd
+    self.kode_opd = SecureRandom.random_number(10**4)
+  end
+
+  def new_opd?
+    kode_opd.nil?
+  end
 
   def to_s
     nama_opd
