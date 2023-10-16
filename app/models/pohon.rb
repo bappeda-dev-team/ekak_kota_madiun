@@ -33,6 +33,7 @@ class Pohon < ApplicationRecord
   has_many :komentars, through: :strategis
 
   has_many :sub_pohons, foreign_key: :pohon_ref_id, primary_key: :id, class_name: 'Pohon'
+  belongs_to :parent_pohon, foreign_key: :pohon_ref_id, primary_key: :id, class_name: 'Pohon'
 
   scope :pohon_opd, -> { where(pohonable_type: "IsuStrategisOpd") }
   scope :pohon_kota, -> { where(pohonable_type: "StrategiKotum") }

@@ -1,6 +1,24 @@
 <div class="pohon-body">
   <table class="table table-bordered mb-3">
     <% unless pohon.exists? %>
+      <% if pohon.type == 'Pohon' %>
+        <% if pohon.parent_type.pohonable_type != 'Tematik' %>
+          <% if pohon.parent_type.pohonable_type == 'SubSubTematik' %>
+            <tr>
+              <td class="text-start" width="30px"><%= pohon.parent_parent_parent_type %></td>
+              <td class="text-wrap text-start" colspan="2"><%= pohon.parent_parent_parent_pohon %></td>
+            </tr>
+          <% end %>
+          <tr>
+            <td class="text-start" width="30px"><%= pohon.parent_parent_type %></td>
+            <td class="text-wrap text-start" colspan="2"><%= pohon.parent_parent_pohon %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <td class="text-start" width="30px"><%= pohon.parent_type %></td>
+          <td class="text-wrap text-start" colspan="2"><%= pohon.parent_pohon %></td>
+        </tr>
+      <% end %>
       <tr>
         <td class="text-start" width="30px"><%= pohon.title_up %></td>
         <td class="text-wrap text-start" colspan="2"><%= pohon.pohonable.strategi %></td>

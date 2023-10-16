@@ -15,6 +15,34 @@ class PohonKinerjaPresenter
     @pohon.instance_of?(Pohon) ? @pohon.pohonable : @pohon
   end
 
+  def type
+    real.class.name
+  end
+
+  def parent_type
+    real.parent_pohon
+  end
+
+  def parent_pohon
+    real.parent_pohon.pohonable
+  end
+
+  def parent_parent_type
+    parent_type.parent_pohon
+  end
+
+  def parent_parent_pohon
+    parent_type.parent_pohon.pohonable
+  end
+
+  def parent_parent_parent_type
+    parent_parent_type.parent_pohon
+  end
+
+  def parent_parent_parent_pohon
+    parent_parent_type.parent_pohon.pohonable
+  end
+
   def exists?
     pohonable.nil?
   end
