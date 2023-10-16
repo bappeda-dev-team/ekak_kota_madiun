@@ -1,8 +1,10 @@
 module FilterHelper
   def dropdown_opd(all: nil)
     kota = ['Kota Madiun', 'all'] if all
-    if current_user.has_role?(:super_admin) || current_user.has_role?(:reviewer) || current_user.has_role?(:khusus) || current_user.nik == 'bapelitbangda'
-      options_for_select(Opd.where.not(kode_opd: nil).pluck(:nama_opd, :kode_unik_opd).prepend(kota), cookies[:opd])
+    if current_user.has_role?(:super_admin) || current_user.has_role?(:reviewer) || current_user.nik == 'bapelitbangda'
+      options_for_select(Opd.where.not(kode_opd: nil).collect do |o|
+                           [o.nama_lembaga_opd, o.kode_unik_opd]
+                         end.prepend(kota), cookies[:opd])
     elsif current_user.nik == 'rsud2022'
       options_for_select(Opd.where.not(kode_opd: nil).where(kode_opd: 1270).pluck(:nama_opd, :kode_unik_opd),
                          current_user.opd.kode_unik_opd)

@@ -76,6 +76,10 @@ class Opd < ApplicationRecord
     nama_opd
   end
 
+  def nama_lembaga_opd
+    "#{nama_opd} - #{lembaga}"
+  end
+
   def susunan_renja
     program_kegiatans.urusans
   end
