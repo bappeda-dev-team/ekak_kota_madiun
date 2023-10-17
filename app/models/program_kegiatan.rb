@@ -462,10 +462,9 @@ class ProgramKegiatan < ApplicationRecord
   end
 
   def sasarans_subkegiatan(tahun)
-    sasarans.includes(%i[indikator_sasarans strategi user])
+    sasarans.includes(%i[indikator_sasarans user])
             .where(tahun: tahun)
             .order(nip_asn: :asc)
-            .dengan_strategi
   end
 
   def program_sasaran(tahun)

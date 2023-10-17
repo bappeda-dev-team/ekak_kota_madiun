@@ -172,6 +172,6 @@ class LaporansController < ApplicationController
   def set_default_attr
     @user = current_user
     @kode_opd = cookies[:opd]
-    @tahun = cookies[:tahun] || Date.current.year
+    @tahun = cookies[:tahun]
   end
 end
