@@ -9,6 +9,7 @@
           pohon: sub_tema,
           sub_sub_tematiks: sub_sub_tematiks.select { |sub| sub.pohon_ref_id == sub_tema.id },
           strategic_no_filter: strategics_all,
+          strategics: strategics_all.select { |str| str.pohon_ref_id == sub_tema.id },
           tacticals: tacticals,
           operationals: operationals } %>
       <% end %>
