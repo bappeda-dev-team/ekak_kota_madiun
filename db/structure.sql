@@ -4824,10 +4824,10 @@ CREATE INDEX index_musrenbangs_on_status ON public.musrenbangs USING btree (stat
 
 
 --
--- Name: index_opds_on_kode_unik_opd; Type: INDEX; Schema: public; Owner: -
+-- Name: index_opds_on_kode_unik_opd_and_lembaga_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_opds_on_kode_unik_opd ON public.opds USING btree (kode_unik_opd);
+CREATE UNIQUE INDEX index_opds_on_kode_unik_opd_and_lembaga_id ON public.opds USING btree (kode_unik_opd, lembaga_id);
 
 
 --
@@ -5511,6 +5511,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230929084519'),
 ('20231002064608'),
 ('20231002201542'),
-('20231005171444');
+('20231005171444'),
+('20231016035528');
 
 

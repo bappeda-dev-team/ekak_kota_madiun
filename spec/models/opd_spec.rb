@@ -26,7 +26,7 @@
 #
 # Indexes
 #
-#  index_opds_on_kode_unik_opd  (kode_unik_opd) UNIQUE
+#  index_opds_on_kode_unik_opd_and_lembaga_id  (kode_unik_opd,lembaga_id) UNIQUE
 #
 require 'rails_helper'
 

@@ -5,10 +5,10 @@ class OpdsController < ApplicationController
   def index
     param = params[:q] || ""
 
-    @opds = Opd.where("nama_opd ILIKE ?", "%#{param}%")
+    @opds = Opd.where("nama_opd ILIKE ?", "%#{param}%").where.not(kode_unik_opd: nil)
     return unless params[:item]
 
-    @opds = Opd.where(id: params[:item])
+    @opds = Opd.where(id: params[:item].where.not(kode_unik_opd: nil))
   end
 
   def info
@@ -20,7 +20,10 @@ class OpdsController < ApplicationController
   end
 
   def all_opd
+    @nama_lembaga = cookies[:lembaga]
+    lembaga_id = cookies[:lembaga_id]
     @opds = Opd.all.includes([:opd_induk])
+               .where(lembaga_id: lembaga_id)
                .where.not(kode_unik_opd: nil).order(:kode_unik_opd)
   end
 

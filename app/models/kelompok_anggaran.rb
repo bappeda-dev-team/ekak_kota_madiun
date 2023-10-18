@@ -10,7 +10,7 @@
 #  updated_at    :datetime         not null
 #
 class KelompokAnggaran < ApplicationRecord
-  JENIS_KELOMPOK = %w[Murni Perubahan].freeze
+  JENIS_KELOMPOK = %w[Murni Perubahan Percobaan].freeze
 
   validates :kelompok, presence: true,
                        inclusion: { in: JENIS_KELOMPOK, message: '- gunakan (Murni atau Perubahan)' },
@@ -20,6 +20,8 @@ class KelompokAnggaran < ApplicationRecord
                                           message: 'kode kelompok sudah ada di tahun yang sama' }
   validates :tahun, presence: true,
                     numericality: { only_integer: true, greater_than_or_equal_to: 2020, message: 'tahun minimal 2020' }
+
+  default_scope { order(tahun: :asc) }
 
   after_validation :kode_kelompok_maker
 
@@ -38,7 +40,17 @@ class KelompokAnggaran < ApplicationRecord
   end
 
   def nama_sederhana_kelompok_tahun
-    "#{tahun} #{kelompok if kelompok == 'Perubahan'}"
+    "#{tahun} #{initial_kelompok}"
+  end
+
+  def initial_kelompok
+    if kelompok == 'Murni'
+      ''
+    elsif kelompok == 'Perubahan'
+      kelompok[0]
+    else
+      kelompok
+    end
   end
 
   def murni_perubahan
