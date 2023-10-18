@@ -5,6 +5,9 @@ class KelompokAnggaransController < ApplicationController
   def index
     param = params[:q] || ''
     @kelompok_anggarans = KelompokAnggaran.where('tahun ILIKE ?', "%#{param}%").order(tahun: :asc)
+    return unless current_user.lembaga_id != 1
+
+    @kelompok_anggarans.rewhere(kelompok: 'Percobaan')
   end
 
   def cloning
