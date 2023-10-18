@@ -33,6 +33,7 @@ class IndikatorQueries
                                  sub_jenis: 'Program',
                                  jenis: 'Renstra',
                                  kode_opd: kode_opd)
+                          .order(version: :desc)
     indikator = indikators.first
     {
       indikator: indikator.indikator,
@@ -53,6 +54,7 @@ class IndikatorQueries
                                  sub_jenis: 'Kegiatan',
                                  jenis: 'Renstra',
                                  kode_opd: kode_opd)
+                          .order(version: :desc)
     indikator = indikators.first
     {
       indikator: indikator.indikator,
@@ -73,6 +75,7 @@ class IndikatorQueries
                                  sub_jenis: 'Subkegiatan',
                                  jenis: 'Renstra',
                                  kode_opd: kode_opd)
+                          .order(version: :desc)
     indikator = indikators.first
     {
       indikator: indikator.indikator,

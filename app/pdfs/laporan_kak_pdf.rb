@@ -135,7 +135,7 @@ class LaporanKakPdf < Prawn::Document
       ['', 'Target', ':', target_cell],
       ['', 'Satuan', ':', satuan_cell]
     ]
-    tabel_sasaran = make_table(sasaran_judul, column_widths: { 0 => 17, 2 => 13, 4 => 100 },
+    tabel_sasaran = make_table(sasaran_judul, column_widths: { 0 => 25, 2 => 13, 4 => 100 },
                                               cell_style: @common_table_cell_style, width: @common_table_width)
     tabel_sasaran.draw
   end
