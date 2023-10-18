@@ -4,7 +4,6 @@
 #
 #  id         :bigint           not null, primary key
 #  judul      :string
-#  keterangan :string
 #  peraturan  :text
 #  tahun      :string
 #  created_at :datetime         not null

@@ -3216,7 +3216,8 @@ CREATE TABLE public.users (
     type character varying,
     atasan character varying,
     atasan_nama character varying,
-    nip_sebelum character varying
+    nip_sebelum character varying,
+    lembaga_id integer DEFAULT 1
 );
 
 
@@ -5512,6 +5513,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231002064608'),
 ('20231002201542'),
 ('20231005171444'),
-('20231016035528');
+('20231016035528'),
+('20231018073122');
 
 

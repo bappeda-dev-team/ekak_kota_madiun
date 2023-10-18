@@ -23,6 +23,7 @@
 #  type                   :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  lembaga_id             :integer          default(1)
 #
 # Indexes
 #

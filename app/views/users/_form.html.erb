@@ -10,6 +10,23 @@
     </div>
   <% end %>
   <div class="field">
+    <%= form.label :instansi, class: "form-label" %>
+    <%= form.select :lembaga_id, Lembaga.all.collect {|n| [n.nama_lembaga, n.id]},
+     {include_blank: true},
+    {data: {"placeholder": "Pilih Lembaga",
+            controller: 'dropdown'
+    }, required: true} %>
+  </div>
+  <div class="field">
+    <%= form.label :opd, class: "form-label" %>
+    <%= form.select :kode_opd, Opd.pluck(:nama_opd, :kode_opd), {include_blank: true},
+    {class: "form-control",
+    data: { "placeholder": "Pilih Opd",
+            controller: 'dropdown',
+            dropdown_parent_value: '#form-user'
+    }} %>
+  </div>
+  <div class="field">
     <%= form.label :nama, class: "form-label" %>
     <%= form.text_field :nama, class: "form-control" %>
   </div>
@@ -26,15 +43,6 @@
   <div class="field">
     <%= form.label :password, class: "form-label" %>
     <%= form.password_field :password, class: "form-control" %>
-  </div>
-  <div class="field">
-    <%= form.label :opd, class: "form-label" %>
-    <%= form.select :kode_opd, Opd.pluck(:nama_opd, :kode_opd), {include_blank: true},
-    {class: "form-control",
-    data: { "placeholder": "Pilih Opd",
-            controller: 'dropdown',
-            dropdown_parent_value: '#form-user'
-    }} %>
   </div>
   <% if current_user.has_role? :super_admin %>
     <div class="field">

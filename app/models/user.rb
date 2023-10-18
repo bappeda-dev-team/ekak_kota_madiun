@@ -23,6 +23,7 @@
 #  type                   :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  lembaga_id             :integer          default(1)
 #
 # Indexes
 #
@@ -39,6 +40,7 @@ class User < ApplicationRecord
   # validates :nama, presence: true
   # validates :nik, presence: true
   belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_opd'
+  belongs_to :lembaga, optional: true
   has_many :kaks
   has_many :sasarans, dependent: :destroy, foreign_key: 'nip_asn', primary_key: 'nik'
   has_many :strategis, dependent: :destroy, foreign_key: 'nip_asn', primary_key: 'nik'
