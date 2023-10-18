@@ -39,23 +39,19 @@ class Perhitungan < ApplicationRecord
 
   BATAS_KENA_PAJAK = 2_000_000
 
-  amoeba do
-    enable
-  end
-
   def hitung_total
-    unless destroyed?
-      total_akhir = kalkulasi_harga_total
-      update_column(:total, total_akhir)
-    end
+    return if destroyed?
+
+    total_akhir = kalkulasi_harga_total
+    update_column(:total, total_akhir)
   end
 
   def new_hitung_total
-    unless destroyed?
-      # TODO: TEST THIS PLEASE
-      total_akhir = new_kalkulasi_harga_total
-      update_column(:total, total_akhir)
-    end
+    return if destroyed?
+
+    # TODO: TEST THIS PLEASE
+    total_akhir = new_kalkulasi_harga_total
+    update_column(:total, total_akhir)
   end
 
   def kalkulasi_harga_total

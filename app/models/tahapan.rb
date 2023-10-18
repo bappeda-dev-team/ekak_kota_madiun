@@ -37,12 +37,6 @@ class Tahapan < ApplicationRecord
 
   default_scope { order(Arel.sql("nullif(regexp_replace(urutan, '[^0-9]', '', 'g'),'')::int")) }
 
-  amoeba do
-    append id_rencana: '_2022_p'
-    append id_rencana_aksi: '_2022_p'
-    exclude_association %i[comments aksis]
-  end
-
   def to_s
     tahapan_kerja
   end

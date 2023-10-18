@@ -34,11 +34,6 @@ class Aksi < ApplicationRecord
 
   validates :target, presence: true, numericality: { only_integer: true }
   # validates :realisasi, numericality: { only_integer: true }
-  amoeba do
-    append id_aksi_bulan: '_2022_p'
-    append id_rencana_aksi: '_2022_p'
-  end
-
   def sync_total
     self.id_aksi_bulan = SecureRandom.base36(6) if id_aksi_bulan.nil?
     save

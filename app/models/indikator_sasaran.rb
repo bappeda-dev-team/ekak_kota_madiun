@@ -26,11 +26,6 @@ class IndikatorSasaran < ApplicationRecord
   validates :target, presence: true
   validates :satuan, presence: true
 
-  amoeba do
-    append sasaran_id: '_2022_p'
-    append id_indikator: '_2022_p'
-  end
-
   def to_s
     indikator_kinerja
   end

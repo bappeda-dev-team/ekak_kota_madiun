@@ -128,13 +128,6 @@ class Sasaran < ApplicationRecord
   # def respond_to_missing?(_method, *_args)
   #   0
   # end
-  amoeba do
-    set tahun: '2022_p'
-    append id_rencana: '_2022_p'
-    include_association %i[rincian tematik_sasarans usulans permasalahans]
-    # exclude_association %i[indikator_sasarans latar_belakangs dasar_hukums]
-  end
-
   def to_s
     sasaran_kinerja
   end

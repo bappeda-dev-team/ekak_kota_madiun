@@ -57,11 +57,6 @@ class Anggaran < ApplicationRecord
 
   validates :uraian, presence: true
 
-  amoeba do
-    enable
-    exclude_association %i[childs comments perhitungans]
-  end
-
   def set_default_values
     self.jumlah = 0 if new_record?
   end
