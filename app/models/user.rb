@@ -277,7 +277,7 @@ class User < ApplicationRecord
   end
 
   def sasaran_asn_sync_skp(tahun: nil)
-    sasarans.dengan_rincian.where("sasarans.tahun ILIKE ?", "%#{tahun}%")
+    sasarans.dengan_tahapan.where("sasarans.tahun ILIKE ?", "%#{tahun}%")
   end
 
   def sasaran_pohon_kinerja(tahun: nil)
