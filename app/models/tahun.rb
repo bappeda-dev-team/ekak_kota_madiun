@@ -14,6 +14,8 @@ class Tahun < ApplicationRecord
   validates :tahun, presence: true, inclusion: { in: (2019..2055).map(&:to_s) }
   validates_uniqueness_of :tahun
 
+  default_scope { order(tahun: :asc) }
+
   def to_s
     tahun
   end

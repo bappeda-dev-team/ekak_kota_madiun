@@ -586,8 +586,7 @@ CREATE TABLE public.dasar_hukums (
     tahun character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    sasaran_id character varying,
-    keterangan character varying
+    sasaran_id character varying
 );
 
 
@@ -5513,7 +5512,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231002064608'),
 ('20231002201542'),
 ('20231005171444'),
-('20231005183054'),
 ('20231016035528');
 
 
