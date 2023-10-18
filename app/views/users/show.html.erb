@@ -1,66 +1,69 @@
-<p id="notice">
-  <%= notice %>
-</p>
-<div class="row mb-5">
-  <div class="col-12">
-    <div class="card border-0 shadow">
-      <div class="card-header border-bottom d-flex align-items-center justify-content-between">
-        <h2 class="fs-5 fw-bold mb-0"><%= current_user.nama %></h2>
-      </div>
-      <div class="col text-end">
-        <%= link_to edit_user_path(current_user), class: "btn btn-sm btn-secondary d-inline-flex align-items-center" do %>
-          <svg class="icon icon-xxs me-2" fill="currentColor" viewBox="0 0 20 20"
+<%= content_for :html_title, "Profil" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item active" aria-current="page">Profil User</li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="card border-0 shadow">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h2 class="fs-5 fw-bold mb-0">Profil User</h2>
+        </div>
+        <div class="col text-end">
+          <%= link_to edit_user_path(current_user), class: "btn btn-sm btn-secondary d-inline-flex align-items-center" do %>
+            <svg class="icon icon-xxs me-2" fill="currentColor" viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
+              <path fill-rule="evenodd"
                       d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
                       clip-rule="evenodd"></path>
-          </svg>
-          Edit
-        <% end %>
-      </div>
-      <div class="card-body">
-        <ul class="list-group list-group-flush list my--3">
-          <li class="list-group-item px-0">
-            <div class="row align-items-center">
-              <div class="col-auto">
-                <a href="#" class="avatar">
-                  <%= image_pack_tag('media/images/team/profile-picture-3.jpg', class: "rounded") %>
-                </a>
-              </div>
-              <div class="col-auto ms--2">
-                <h4 class="h6 mb-0">
-                  Nama : <%= current_user.nama.capitalize %>
-                </h4>
-                <div class="d-flex align-items-center">
-                  <div class="bg-primary dot rounded-circle me-1"></div>
-                  <small>Email :</small>
-                  <small><%= current_user.email %></small>
-                </div>
-                <div class="d-flex align-items-center">
-                  <div class="bg-success dot rounded-circle me-1"></div>
-                  <small>NIP :</small>
-                  <small><%= current_user.nik %></small>
-                </div>
-                <div class="d-flex align-items-center">
-                  <div class="bg-secondary dot rounded-circle me-1"></div>
-                  <small>OPD :</small>
-                  <small><%= current_user.opd.nil? ? '---' : current_user.opd.nama_opd %></small>
-                </div>
-                <div class="d-flex align-items-center">
-                  <div class="bg-info dot rounded-circle me-1"></div>
-                  <small>Peran :</small>
-                  <small><%= current_user.roles.pluck :name %></small>
-                </div>
-                <div class="d-flex align-items-center">
-                  <div class="bg-info dot rounded-circle me-1"></div>
-                  <small>Bidang :</small>
-                  <small><%= current_user.nama_bidang %></small>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
+            </svg>
+            Edit
+          <% end %>
+        </div>
       </div>
     </div>
+    <div class="card-body">
+      <ul class="list-group list-group-flush list">
+        <li class="list-group-item px-0">
+          <div class="row align-items-center">
+            <div class="d-flex align-items-center">
+              <h5><%= current_user.nama.capitalize %></h5>
+            </div>
+            <hr/>
+            <div class="d-flex align-items-center">
+              <div class="bg-danger dot rounded-circle me-1"></div>
+              <small>Instansi :</small>
+              <strong><%= current_user.opd.nil? ? '---' : current_user.lembaga %></strong>
+            </div>
+            <div class="d-flex align-items-center">
+              <div class="bg-secondary dot rounded-circle me-1"></div>
+              <small>OPD :</small>
+              <strong><%= current_user.opd.nil? ? '---' : current_user.opd.nama_opd %></strong>
+            </div>
+            <div class="d-flex align-items-center">
+              <div class="bg-success dot rounded-circle me-1"></div>
+              <small>NIP :</small>
+              <strong><%= current_user.nik %></strong>
+            </div>
+            <hr/>
+            <div class="d-flex align-items-center">
+              <div class="bg-primary dot rounded-circle me-1"></div>
+              <small>Email :</small>
+              <small><%= current_user.email %></small>
+            </div>
+            <div class="d-flex align-items-center">
+              <div class="bg-info dot rounded-circle me-1"></div>
+              <small>Peran :</small>
+              <small><%= current_user.roles.pluck :name %></small>
+            </div>
+            <div class="d-flex align-items-center">
+              <div class="bg-info dot rounded-circle me-1"></div>
+              <small>Bidang :</small>
+              <small><%= current_user.nama_bidang %></small>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
-</div>
+<% end %>
