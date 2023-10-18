@@ -12,7 +12,7 @@ default: &default
 
 development:
   <<: *default
-  database: prototype_kak_dev
+  database: <%= ENV.fetch("DATABASE_NAME") { 'prototype_kak_dev' } %>
 
 test:
   <<: *default
