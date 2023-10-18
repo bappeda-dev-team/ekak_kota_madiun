@@ -114,7 +114,7 @@ class LaporanRkaPdf < Prawn::Document
             ], cell_style: { borders: [] })
       move_down 5
       # tahapan
-      sasaran.tahapans.each.with_index(1) do |tahapan, index|
+      sasaran.tahapans.where.not(tahapans: { id_rencana: nil }).each.with_index(1) do |tahapan, index|
         move_down 10
         start_new_page if (cursor - 111).negative?
         text "Tahapan #{index}.  #{tahapan.tahapan_kerja}"
