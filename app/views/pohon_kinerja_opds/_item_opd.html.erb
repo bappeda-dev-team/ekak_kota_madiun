@@ -38,6 +38,9 @@
       </table>
     </div>
     <div class="pohon-foot">
+      <div class="col">
+        <button type="button" class="btn btn-sm btn-tertiary" data-action="pohon-tematik#toggleAll" data-pohon-tematik-show-param="false">Show All</button>
+      </div>
       <% unless reviewer? %>
         <div class="d-grid gap-3">
           <% if privileged_user %>

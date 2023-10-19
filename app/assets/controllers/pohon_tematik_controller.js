@@ -207,6 +207,24 @@ export default class extends Controller {
     });
   }
 
+  toggleAll(e) {
+    const show_button = e.target
+    const show_button_display = !e.params.show
+    const cabang_pohons = document.querySelectorAll('.childs')
+    const tombol_tampilkans = document.querySelectorAll('[data-action="pohon-tematik#toggleChild"]')
+    cabang_pohons.forEach(e => {
+      e.classList.toggle('d-none')
+    });
+    tombol_tampilkans.forEach(e => {
+      const button = e
+      const display = !(button.dataset.pohonTematikShowParam === 'true')
+      this.showChild(display, button)
+      button.dataset.pohonTematikShowParam = display
+    })
+    this.showChild(show_button_display, show_button)
+    show_button.dataset.pohonTematikShowParam = show_button_display
+  }
+
   toggleDetail(e) {
     const button = e.target
     const details = button.previousElementSibling.querySelectorAll('.detail')
@@ -239,6 +257,19 @@ export default class extends Controller {
       button.classList.remove('btn-danger')
       button.classList.add('btn-tertiary')
       button.innerText = 'Tampilkan'
+    }
+  }
+
+  showAll(display, button) {
+    if (display) {
+      button.classList.remove('btn-tertiary')
+      button.classList.add('btn-danger')
+      button.innerText = 'Sembunyikan'
+    }
+    else {
+      button.classList.remove('btn-danger')
+      button.classList.add('btn-tertiary')
+      button.innerText = 'Show All'
     }
   }
 

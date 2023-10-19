@@ -1,5 +1,10 @@
 <div class="pohon-foot">
   <div class="row">
+    <% if type == 'tematik' %>
+      <div class="col">
+        <button type="button" class="btn btn-sm btn-tertiary" data-action="pohon-tematik#toggleAll" data-pohon-tematik-show-param="false">Show All</button>
+      </div>
+    <% end %>
     <% if type != 'tematik' %>
       <div class="col">
         <button type="button" class="btn btn-sm btn-tertiary" data-action="pohon-tematik#toggleChild" data-pohon-tematik-show-param="false">Tampilkan</button>
