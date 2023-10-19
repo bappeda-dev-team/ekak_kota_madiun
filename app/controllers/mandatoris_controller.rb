@@ -26,8 +26,7 @@ class MandatorisController < ApplicationController
     user = current_user.nik
     opd = Opd.find_by_kode_unik_opd cookies[:opd]
     tahun = cookies[:tahun]
-    @mandatori = Mandatori.new(tahun: tahun, nip_asn: user, opd: opd,
-                               is_active: true, status: 'disetujui')
+    @mandatori = Mandatori.new(tahun: tahun, nip_asn: user, opd: opd)
     render layout: false
   end
 
@@ -38,7 +37,8 @@ class MandatorisController < ApplicationController
 
   # POST /mandatoris or /mandatoris.json
   def create
-    @mandatori = Mandatori.new(mandatori_params)
+    form_params = mandatori_params.merge(is_active: true, status: 'disetujui')
+    @mandatori = Mandatori.new(form_params)
 
     respond_to do |format|
       if @mandatori.save
@@ -129,6 +129,7 @@ class MandatorisController < ApplicationController
                     "searchable_type = 'Mandatori' and sasaran_id is null and usulan ILIKE ?", "%#{param}%"
                   )
                   .where(searchable: Mandatori.where(nip_asn: current_user.nik))
+                  .order(searchable_id: :desc)
                   .includes(:searchable)
                   .collect(&:searchable)
   end

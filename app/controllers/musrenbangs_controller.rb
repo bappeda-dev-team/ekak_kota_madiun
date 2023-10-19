@@ -19,9 +19,10 @@ class MusrenbangsController < ApplicationController
 
   def diambil_asn
     @musrenbang = Musrenbang.find(params[:id])
-    @status = params[:status]
+    @status = 'aktif'
     @nip_asn = params[:nip_asn]
     if @musrenbang.update(nip_asn: @nip_asn, status: @status)
+      @musrenbang.toggle! :is_active
       flash.now[:success] = 'Usulan berhasil diambil'
     else
       flash.now[:error] = 'Usulan gagal diambil'
@@ -43,6 +44,7 @@ class MusrenbangsController < ApplicationController
                      "searchable_type = 'Musrenbang' and sasaran_id is null and usulan ILIKE ?", "%#{param}%"
                    )
                    .where(searchable: Musrenbang.where(nip_asn: current_user.nik))
+                   .order(searchable_id: :desc)
                    .includes(:searchable)
                    .collect(&:searchable)
   end

@@ -54,7 +54,7 @@
                         <% end %>
                       <% else %>
                         <%= button_to diambil_asn_musrenbang_path(musrenbang), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active',
-                        params: { nip_asn: current_user.nik, status: 'pengajuan' } do %>
+                        params: { nip_asn: current_user.nik } do %>
                           Ambil Usulan
                         <% end %>
                       <% end %>

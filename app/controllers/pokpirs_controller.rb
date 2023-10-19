@@ -3,7 +3,9 @@ class PokpirsController < ApplicationController
 
   # GET /pokpirs or /pokpirs.json
   def index
-    @pokpirs = Pokpir.all.order(:updated_at).select { |m| m.opd_dituju&.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin }
+    @pokpirs = Pokpir.all.order(:updated_at).select do |m|
+      m.opd_dituju&.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin
+    end
   end
 
   def toggle_is_active
@@ -21,7 +23,7 @@ class PokpirsController < ApplicationController
   end
 
   def setujui_usulan_di_sasaran
-    @pokpir = Musrenbang.find(params[:id])
+    @pokpir = Pokpir.find(params[:id])
     respond_to do |format|
       if @pokpir.update(status: 'disetujui')
         @pokpir.toggle! :is_active
@@ -45,15 +47,18 @@ class PokpirsController < ApplicationController
   end
 
   def usulan_pokpir
-    @pokpirs = Pokpir.belum_diajukan.order(:created_at).select { |m| m.opd_dituju&.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin }
+    @pokpirs = Pokpir.belum_diajukan.order(:created_at).select do |m|
+      m.opd_dituju&.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin
+    end
     render 'user_pokpir'
   end
 
   def diambil_asn
     @pokpir = Pokpir.find(params[:id])
-    @status = params[:status]
+    @status = 'aktif'
     @nip_asn = params[:nip_asn]
     if @pokpir.update(nip_asn: @nip_asn, status: @status)
+      @pokpir.toggle! :is_active
       flash.now[:success] = 'Usulan berhasil diambil'
     else
       flash.now[:error] = 'Usulan gagal diambil'
@@ -68,6 +73,7 @@ class PokpirsController < ApplicationController
                  "searchable_type = 'Pokpir' and sasaran_id is null and usulan ILIKE ?", "%#{param}%"
                )
                .where(searchable: Pokpir.where(nip_asn: current_user.nik))
+               .order(searchable_id: :desc)
                .includes(:searchable)
                .collect(&:searchable)
   end
@@ -97,7 +103,8 @@ class PokpirsController < ApplicationController
 
   # POST /pokpirs or /pokpirs.json
   def create
-    @pokpir = Pokpir.new(pokpir_params)
+    form_params = pokpir_params.merge(is_active: true, status: 'disetujui')
+    @pokpir = Pokpir.new(form_params)
 
     respond_to do |format|
       if @pokpir.save

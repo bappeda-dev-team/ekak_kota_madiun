@@ -32,7 +32,8 @@ class InovasisController < ApplicationController
 
   # POST /inovasis or /inovasis.json
   def create
-    @inovasi = Inovasi.new(inovasi_params)
+    form_params = inovasi_params.merge(is_active: true, status: 'disetujui')
+    @inovasi = Inovasi.new(form_params)
 
     respond_to do |format|
       if @inovasi.save
@@ -121,6 +122,7 @@ class InovasisController < ApplicationController
                   "searchable_type = 'Inovasi' and sasaran_id is null and usulan ILIKE ?", "%#{param}%"
                 )
                 .where(searchable: Inovasi.where(nip_asn: current_user.nik))
+                .order(searchable_id: :desc)
                 .includes(:searchable)
                 .collect(&:searchable)
   end
