@@ -31,11 +31,12 @@ class AnggaransController < ApplicationController
     kode_rekening = rekening.kode_rekening
     @anggaran.uraian = uraian
     @anggaran.level = helpers.anggaran_level(kode_rekening)
-    allowed = if @sasaran.tahun =~ /2024/
-                hasil_output_sasaran == 'Raperda' || rekening.not_blacklisted?
-              else
-                true
-              end
+    # allowed = if @sasaran.tahun =~ /2024/
+    #             hasil_output_sasaran == 'Raperda' || rekening.not_blacklisted?
+    #           else
+    #             true
+    #           end
+    allowed = true
     respond_to do |format|
       if allowed
         if @anggaran.save
