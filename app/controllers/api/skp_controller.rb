@@ -29,7 +29,7 @@ module Api
       @user = User.find_by(nik: @nip)
       @eselon = @user.role_asn
       @status_rencana_aksi = @eselon.any? { |es| %w[eselon_4 staff].include?(es) }
-      @sasaran = Sasaran.find_by(id_rencana: id_sasaran)
+      @sasaran = @user.sasarans.find_by(id_rencana: id_sasaran)
       @tahapans = @sasaran.tahapan_renaksi
     end
 
