@@ -16,6 +16,10 @@ module AnggaranPohon
       end.compact_blank.uniq(&:nama_program)
     end
 
+    def childs
+      child_pohons
+    end
+
     private
 
     def child_pohons

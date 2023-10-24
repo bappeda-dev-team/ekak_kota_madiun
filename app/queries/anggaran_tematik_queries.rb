@@ -35,7 +35,7 @@ class AnggaranTematikQueries
                 .sort_by { |key, _| key[0] }
   end
 
-  def anggaran
+  def total
     sum_pagu(all_programs)
   end
 

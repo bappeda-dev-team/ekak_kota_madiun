@@ -35,6 +35,6 @@ class PohonTematikQueries
   private
 
   def pohon(role:, type:)
-    @pohon.where(tahun: @tahun, role: role, pohonable_type: type).includes(:pohonable)
+    @pohon.where(tahun: @tahun, role: role, pohonable_type: type)
   end
 end
