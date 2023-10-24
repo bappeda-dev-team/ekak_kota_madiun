@@ -34,6 +34,7 @@ module AnggaranPohon
 
       child_pohons
         .flatten
+        .select { |ch| ch.program_kegiatan.presence }
         .map(&:total_anggaran).compact_blank.sum
     end
   end
