@@ -1,5 +1,5 @@
 # config valid for current version and patch releases of Capistrano
-lock "~> 3.17.0"
+lock "~> 3.18.0"
 
 set :application, "prototype_kak"
 set :repo_url, "https://github.com/RyanB1303/prototype_kak.git"
