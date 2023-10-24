@@ -586,6 +586,9 @@ Rails.application.routes.draw do
       post :pohon_kinerja_kota
       post :pohon_kinerja_opd
     end
+    namespace :tematik do
+      post :programs
+    end
   end
 
   resources :sasaran_kota
