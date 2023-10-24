@@ -587,6 +587,7 @@ Rails.application.routes.draw do
       post :pohon_kinerja_opd
     end
     namespace :tematik do
+      get :list_tematik
       post :programs
     end
   end

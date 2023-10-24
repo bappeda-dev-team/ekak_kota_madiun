@@ -4,6 +4,11 @@ module Api
 
     before_action :set_params
 
+    def list_tematik
+      pohon = PohonTematikQueries.new(tahun: @tahun)
+      @tematiks = pohon.tematiks.map(&:pohonable)
+    end
+
     def programs
       anggarans = AnggaranTematikQueries.new(tahun: @tahun, tematik_id: @tematik_id)
       @tematik = anggarans.tematik
