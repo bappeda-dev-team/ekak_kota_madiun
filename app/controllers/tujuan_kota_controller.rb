@@ -9,6 +9,8 @@ class TujuanKotaController < ApplicationController
 
   def new
     @tujuan_kota = TujuanKota.new
+    @tujuan_kota.indikator_tujuans.build.targets.build
+    render layout: false
   end
 
   def edit; end

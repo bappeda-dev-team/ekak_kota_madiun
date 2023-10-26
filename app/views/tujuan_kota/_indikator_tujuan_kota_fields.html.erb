@@ -1,22 +1,15 @@
-<fieldset class="mb-5">
-  <div class="field">
+<fieldset class="mb-3">
+  <div class="field mt-0">
     <%= form.label :indikator, { class: "form-label" } %>
-    <%= form.text_field :indikator, { class: "form-control" } %>
-    <%= form.hidden_field :jenis, readonly: true, value: "Tujuan" %>
-    <%= form.hidden_field :sub_jenis, readonly: true, value: "Kota" %>
+    <%= form.text_area :indikator, { class: "form-control" } %>
   </div>
-  <div class="field">
-    <%= form.label :target, { class: "form-label" } %>
-    <%= form.number_field :target, { class: "form-control", step: 0.01 } %>
+  <div class="field row mt-0" id="target-indikator">
+    <% (2020..2024).each do |tahun| %>
+      <%= form.fields_for :targets, Target.new(tahun: tahun) do |f_target| %>
+        <%= render 'tujuan_opds/target_fields', form: f_target %>
+      <% end %>
+    <% end %>
   </div>
-  <div class="field">
-    <%= form.label :satuan, { class: "form-label" } %>
-    <%= form.text_field :satuan, { class: "form-control" } %>
-  </div>
-  <div class="field">
-    <%= form.label :tahun, class: 'form-label' %>
-    <%= form.select :tahun,[2020, 2021, 2022, 2023, 2024],{},
-      { class: 'form-control', data: { controller: 'dropdown' } }%>
-  </div>
-  <%= link_to_remove_nested(form, link_text: 'Hapus Indikator', link_classes: 'btn btn-outline-danger') %>
+  <%= link_to_remove_nested(form, link_text: 'Hapus Indikator',
+                            link_classes: 'btn btn-outline-danger w-100 mt-2') %>
 </fieldset>
