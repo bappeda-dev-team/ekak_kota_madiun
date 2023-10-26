@@ -1,6 +1,6 @@
 <li>
   <% unless pohon.pohonable.nil? %>
-  <div class="tf-nc strategic-pohon" style="width: 450px;">
+  <div class="tf-nc strategic-pohon" style="width: 550px;">
     <%= render 'pohon_tematik/item_pohon_strategi', pohon: pohon %>
   </div>
   <ul class='d-none childs' id='<%= "tactical_tematik_#{pohon.object_id}" %>'>

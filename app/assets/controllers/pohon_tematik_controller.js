@@ -220,6 +220,10 @@ export default class extends Controller {
       const display = !(button.dataset.pohonTematikShowParam === 'true')
       this.showChild(display, button)
       button.dataset.pohonTematikShowParam = display
+      const cols = button.parentElement.parentElement.querySelectorAll('.hide')
+      cols.forEach(e => {
+        e.classList.toggle('d-none')
+      });
     })
     this.showChild(show_button_display, show_button)
     show_button.dataset.pohonTematikShowParam = show_button_display
