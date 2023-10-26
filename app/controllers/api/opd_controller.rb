@@ -20,5 +20,14 @@ module Api
       @opds = Opd.where.not(kode_unik_opd: nil)
                  .where.not(urusan: [nil, ''])
     end
+
+    def tujuan_opd
+      @opd = Opd.find_by!(kode_unik_opd: params[:kode_opd])
+      @tujuan_opds = @opd.tujuan_opds.includes(%i[indikators])
+    rescue ActiveRecord::RecordNotFound
+      @error = "Opd tidak ditemukan"
+      render json: { message: "terjadi kesalahan", errors: @error }.to_json,
+             status: :not_found
+    end
   end
 end

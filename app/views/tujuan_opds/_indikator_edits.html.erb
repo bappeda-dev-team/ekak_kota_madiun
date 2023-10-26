@@ -3,6 +3,14 @@
     <%= form.label :indikator, { class: "form-label" } %>
     <%= form.text_area :indikator, { class: "form-control" } %>
   </div>
+  <div class="field mt-0">
+    <%= form.label :rumus_perhitungan, { class: "form-label" } %>
+    <%= form.text_area :rumus_perhitungan, { class: "form-control" } %>
+  </div>
+  <div class="field mt-0">
+    <%= form.label :sumber_data, { class: "form-label" } %>
+    <%= form.text_area :sumber_data, { class: "form-control" } %>
+  </div>
   <h5>Target Indikator</h5>
   <div class="field mt-0 row" id="target-indikator">
     <%= form.fields_for :targets do |f_target| %>

@@ -105,7 +105,8 @@ class TujuanOpdsController < ApplicationController
   end
 
   def indikators_attributes
-    { indikators_attributes: [:id, :kode, :kode_opd, :indikator, :_destroy, targets_attributes] }
+    { indikators_attributes: [:id, :kode, :kode_opd, :indikator, :rumus_perhitungan, :sumber_data, :_destroy,
+                              targets_attributes] }
   end
 
   def targets_attributes

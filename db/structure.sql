@@ -118,7 +118,7 @@ CREATE TABLE public.active_storage_blobs (
     metadata text,
     service_name character varying NOT NULL,
     byte_size bigint NOT NULL,
-    checksum character varying NOT NULL,
+    checksum character varying,
     created_at timestamp without time zone NOT NULL
 );
 
@@ -747,7 +747,8 @@ CREATE TABLE public.indikators (
     version integer DEFAULT 0 NOT NULL,
     keterangan character varying,
     kotak integer DEFAULT 0 NOT NULL,
-    kode_opd character varying
+    kode_opd character varying,
+    definisi_operational jsonb
 );
 
 
@@ -5514,6 +5515,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231002201542'),
 ('20231005171444'),
 ('20231016035528'),
-('20231018073122');
+('20231018073122'),
+('20231024022923'),
+('20231024022924'),
+('20231024022925'),
+('20231026080101');
 
 
