@@ -6,7 +6,7 @@ module Api
 
     def list_tematik
       pohon = PohonTematikQueries.new(tahun: @tahun)
-      @tematiks = pohon.tematiks.map(&:pohonable)
+      @tematiks = pohon.tematiks.map(&:pohonable).compact
     end
 
     def programs
