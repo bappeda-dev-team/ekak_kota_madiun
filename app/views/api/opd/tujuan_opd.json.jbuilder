@@ -12,7 +12,7 @@ json.data do
       json.indikator indikator.indikator || '-'
       json.rumus_perhitungan indikator.rumus_perhitungan || '-'
       json.sumber_data indikator.sumber_data || '-'
-      json.target_tujuan indikator.targets do |target|
+      json.target_tujuan(indikator.targets.order(tahun: :asc)) do |target|
         json.id_indikator target.indikator_id
         json.id_target target.id
         json.tahun target.tahun
