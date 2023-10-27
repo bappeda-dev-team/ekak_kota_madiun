@@ -14,25 +14,27 @@ class AnggaranTematikQueries
   end
 
   def tematik_childs
-    get_childs(strategy_anggaran.childs)
+    get_childs(strategy_anggaran.childs) # get Sasaran Operational with ProgramKegiatan
       .flatten
-      .select { |chl| chl.program_kegiatan.presence }
+      .select { |chl| chl.program_kegiatan.presence && chl.opd.presence }
   end
 
   def all_programs
-    tematik_childs.map do |go|
+    tematik_childs.map do |sasaran| # list of Sasaran
       {
-        kode_program: go.program_kegiatan.kode_program,
-        nama_program: go.program_kegiatan.nama_program,
-        pagu: go.total_anggaran.to_i
+        kode_opd: sasaran.opd.kode_unik_opd,
+        nama_opd: sasaran.opd.nama_opd,
+        kode_program: sasaran.program_kegiatan.kode_program,
+        nama_program: sasaran.program_kegiatan.nama_program,
+        pagu: sasaran.total_anggaran.to_i
       }
     end
   end
 
   def program_with_pagu
-    all_programs.group_by { |a| [a[:kode_program], a[:nama_program]] }
-                .transform_values { |values| sum_pagu(values) }
-                .sort_by { |key, _| key[0] }
+    opds = all_programs.group_by { |opd| [opd[:kode_opd], opd[:nama_opd]] }
+    opd_programs = opds.transform_values { |aa| aa.group_by { |bb| [bb[:kode_program], bb[:nama_program]] } }
+    opd_programs.transform_values { |oopds| oopds.transform_values { |values| sum_pagu(values) } }
   end
 
   def total

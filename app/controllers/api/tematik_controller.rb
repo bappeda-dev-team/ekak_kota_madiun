@@ -12,7 +12,7 @@ module Api
     def programs
       anggarans = AnggaranTematikQueries.new(tahun: @tahun, tematik_id: @tematik_id)
       @tematik = anggarans.tematik
-      @programs = anggarans.program_with_pagu
+      @opds = anggarans.program_with_pagu
       @jumlah = anggarans.total
     rescue ActiveRecord::RecordNotFound
       @error = "Tema tidak ditemukan"
