@@ -2,7 +2,7 @@ module FilterHelper
   def dropdown_opd(all: nil)
     kota = ['Kota Madiun', 'all'] if all
     if current_user.has_role?(:super_admin) || current_user.has_role?(:reviewer) || current_user.nik == 'bapelitbangda'
-      options_for_select(Opd.where.not(kode_opd: nil).collect do |o|
+      options_for_select(Opd.includes(:lembaga).where.not(kode_opd: nil).collect do |o|
                            [o.nama_lembaga_opd, o.kode_unik_opd]
                          end.prepend(kota), cookies[:opd])
     elsif current_user.nik == 'rsud2022'

@@ -357,7 +357,7 @@ class PohonKinerjaController < ApplicationController
 
   def kota
     @tahun = cookies[:tahun]
-    @tematiks = Pohon.where(pohonable_type: 'Tematik', tahun: @tahun)
+    @tematiks = Pohon.includes(:pohonable).where(pohonable_type: 'Tematik', tahun: @tahun)
   end
 
   def opd
