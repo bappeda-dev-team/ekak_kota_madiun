@@ -1,7 +1,7 @@
 class PohonTematikController < ApplicationController
   include ActionView::RecordIdentifier
 
-  layout false
+  layout false, except: [:filter]
 
   def index
     @tahun = cookies[:tahun]
@@ -23,6 +23,35 @@ class PohonTematikController < ApplicationController
     @strategi_tematiks = @pohon.strategi_tematiks
     @tactical_tematiks = @pohon.tactical_tematiks
     @operational_tematiks = @pohon.operational_tematiks
+  end
+
+  def filter
+    @tahun = cookies[:tahun]
+    @tematiks = Pohon.includes(:pohonable).where(pohonable_type: 'Tematik', tahun: @tahun)
+  end
+
+  def get_tematik_opd
+    @tahun = cookies[:tahun]
+    opd_id = params[:opd_id]
+    tematik_id = params[:tematik]
+
+    @pohon = PohonTematikQueries.new(tahun: @tahun)
+
+    @tematik = Tematik.find(tematik_id)
+
+    @tematik_kota = Pohon.where(pohonable_type: 'Tematik',
+                                pohonable_id: tematik_id,
+                                tahun: @tahun,
+                                role: 'pohon_kota')
+                         .includes(:pohonable)
+    return if @tematik_kota.empty?
+
+    @sub_tematik_kota = @pohon.sub_tematiks
+    @sub_sub_tematik_kota = @pohon.sub_sub_tematiks
+    @strategi_tematiks = @pohon.strategi_tematiks
+    @tactical_tematiks = @pohon.tactical_tematiks
+    @operational_tematiks = @pohon.operational_tematiks
+    render 'index'
   end
 
   def new

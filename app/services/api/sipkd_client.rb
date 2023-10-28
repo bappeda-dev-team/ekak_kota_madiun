@@ -36,7 +36,6 @@ module Api
           jenis: 'Penetapan',
           sub_jenis: 'Renja',
           kode_opd: @kode_opd,
-          tahun_asli: @tahun_asli,
           kode: pagu['unit_kode'],
           anggaran: pagu['pagu'],
           kode_belanja: pagu['sub_kegiatan_kode'],

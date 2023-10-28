@@ -1,0 +1,60 @@
+<%= content_for :html_title, "Pohon Kinerja Kota" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item active" aria-current="page">Pohon Kinerja Kota</li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="card border-2 shadow mb-3">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h5>Tema - <%= @tematik %></h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <%= form_with url: get_tematik_opd_pohon_tematik_index_path, method: :get,
+            local: false,
+            data: {
+              controller: 'filter-render',
+              action: 'ajax:complete->filter-render#success:prevent',
+            } do |form| %>
+            <div class="field">
+              <%= content_tag(:label, "Tematik", class: 'form-label') %>
+              <%= form.select :tematik,
+              select_pohon_tematik(@tematiks),
+              {},
+              { data: {
+                  controller: 'dropdown',
+                  placeholder: 'Tema Pohon Kinerja'
+                },
+                class: 'form-control',
+                required: true
+              } %>
+            </div>
+            <div class="field">
+              <%= content_tag(:label, "Opd", class: 'form-label') %>
+              <%= form.select :opd,
+              dropdown_opd,
+              {},
+              { data: {
+                  controller: 'dropdown',
+                  placeholder: 'Opd'
+                },
+                class: 'form-control',
+                id: 'opd_select',
+                required: true
+              } %>
+            </div>
+            <%= button_tag class: "btn btn-tertiary w-100 mt-5",
+             data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>  Mencari..." } do %>
+              <i class="fa fa-search me-2"></i>
+              <span>Filter</span>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="render-results">
+  </div>
+<% end %>

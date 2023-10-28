@@ -67,6 +67,8 @@ Rails.application.routes.draw do
       post :create_operational_tematik
       post :create_operational_tematik_baru
       post :create_sub_sub_tema
+      get :filter
+      get :get_tematik_opd
     end
   end
   resources :tematiks do
