@@ -37,8 +37,30 @@ class AnggaranTematikQueries
     opd_programs.transform_values { |oopds| oopds.transform_values { |values| sum_pagu(values) } }
   end
 
+  def all_subkegiatans
+    tematik_childs.map do |sasaran| # list of Sasaran
+      {
+        kode_opd: sasaran.opd.kode_unik_opd,
+        nama_opd: sasaran.opd.nama_opd,
+        kode_subkegiatan: sasaran.program_kegiatan.kode_sub_giat,
+        nama_subkegiatan: sasaran.program_kegiatan.nama_subkegiatan,
+        pagu: sasaran.total_anggaran.to_i
+      }
+    end
+  end
+
+  def subkegiatan_with_pagu
+    opds = all_subkegiatans.group_by { |opd| [opd[:kode_opd], opd[:nama_opd]] }
+    opd_programs = opds.transform_values { |aa| aa.group_by { |bb| [bb[:kode_subkegiatan], bb[:nama_subkegiatan]] } }
+    opd_programs.transform_values { |oopds| oopds.transform_values { |values| sum_pagu(values) } }
+  end
+
   def total
     sum_pagu(all_programs)
+  end
+
+  def total_sub
+    sum_pagu(all_subkegiatans)
   end
 
   def sum_pagu(programs)

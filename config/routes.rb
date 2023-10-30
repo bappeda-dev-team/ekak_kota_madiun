@@ -592,6 +592,7 @@ Rails.application.routes.draw do
     namespace :tematik do
       get :list_tematik
       post :programs
+      post :subkegiatans
     end
   end
 

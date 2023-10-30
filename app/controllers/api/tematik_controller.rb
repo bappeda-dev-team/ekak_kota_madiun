@@ -20,6 +20,17 @@ module Api
              status: :not_found
     end
 
+    def subkegiatans
+      anggarans = AnggaranTematikQueries.new(tahun: @tahun, tematik_id: @tematik_id)
+      @tematik = anggarans.tematik
+      @opds = anggarans.subkegiatan_with_pagu
+      @jumlah = anggarans.total_sub
+    rescue ActiveRecord::RecordNotFound
+      @error = "Tema tidak ditemukan"
+      render json: { message: "terjadi kesalahan", errors: @error }.to_json,
+             status: :not_found
+    end
+
     private
 
     def set_params
