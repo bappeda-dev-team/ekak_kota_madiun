@@ -29,12 +29,14 @@ module Api
     private
 
     def update_pagu_penetapan(response)
-      data = Oj.load(response.body)
+      # data = Oj.load(response.body)
+      data = JSON.parse(response.body)
       pagu_penetapans = data['data']
       pagu_penetapans.each do |pagu|
         data_pagu = {
           jenis: 'Penetapan',
           sub_jenis: 'Renja',
+          tahun: @tahun_asli,
           kode_opd: @kode_opd,
           kode: pagu['unit_kode'],
           anggaran: pagu['pagu'],

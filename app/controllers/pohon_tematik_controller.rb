@@ -32,7 +32,7 @@ class PohonTematikController < ApplicationController
 
   def get_tematik_opd
     @tahun = cookies[:tahun]
-    opd_id = params[:opd_id]
+    opd = Opd.find_by(kode_unik_opd: params[:opd])
     tematik_id = params[:tematik]
 
     @pohon = PohonTematikQueries.new(tahun: @tahun)
@@ -48,7 +48,7 @@ class PohonTematikController < ApplicationController
 
     @sub_tematik_kota = @pohon.sub_tematiks
     @sub_sub_tematik_kota = @pohon.sub_sub_tematiks
-    @strategi_tematiks = @pohon.strategi_tematiks
+    @strategi_tematiks = @pohon.strategi_tematiks.select { |str| str.opd_id == opd.id }
     @tactical_tematiks = @pohon.tactical_tematiks
     @operational_tematiks = @pohon.operational_tematiks
     render 'index'
