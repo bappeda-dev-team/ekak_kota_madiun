@@ -14,6 +14,20 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit :account_update, keys: added_attrs
   end
 
+  def html_content(locals, partial: '')
+    render_to_string(partial: partial,
+                     formats: 'html',
+                     layout: false,
+                     locals: locals)
+  end
+
+  def error_content(locals, partial: '')
+    render_to_string(partial: partial,
+                     formats: 'html',
+                     layout: false,
+                     locals: locals)
+  end
+
   # rescue_from ActionController::ParameterMissing do |exception|
   #   redirect_back(fallback_location: sasarans_path, flash: { error: "Belum dipilih" })
   # end

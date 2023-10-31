@@ -4,35 +4,31 @@
   <li class="breadcrumb-item active" aria-current="page">Program/Kegiatan OPD</li>
 <% end %>
 <% content_for :view_utama do %>
-  <% if cookies[:tahun] && cookies[:opd] %>
-    <div class="card border-0 shadow" data-controller="page-ajax"
+  <div class="card border-0 shadow" data-controller="page-ajax"
              data-page-ajax-opd-value="<%= cookies[:opd] %>"
              data-page-ajax-url-value="<%= content_pks_opd_program_kegiatans_path %>"
              data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >
-      <div data-page-ajax-target="results">
-        <div class="card-header">
-          <div class="row align-items-center">
-            <div class="col">
-              <h2 class="fs-5 fw-bold mb-0">Program Kegiatan Subkegiatan</h2>
-            </div>
+    <div data-page-ajax-target="results">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Program Kegiatan Subkegiatan</h2>
           </div>
-        </div>
-        <div class="loader text-center">
-          <div class="lds-roller">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-          <p>memuat data..</p>
         </div>
       </div>
+      <div class="loader text-center">
+        <div class="lds-roller">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <p>memuat data..</p>
+      </div>
     </div>
-  <% else %>
-    <%= render 'shared/pilih_tahun_dan_opd' %>
-  <% end %>
+  </div>
 <% end %>

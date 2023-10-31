@@ -1,16 +1,1 @@
-<nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
-  <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
-    <li class="breadcrumb-item">
-      <%= link_to root_path do %>
-        <i class="fas fa-home"></i>
-      <% end %>
-    </li>
-    <li class="breadcrumb-item"><%= link_to 'Musrenbang', musrenbangs_path %></li>
-    <li class="breadcrumb-item active" aria-current="page">Form Musrenbang</li>
-  </ol>
-</nav>
-<div class="form-field-container">
-  <h3>Form Musrenbang</h3>
-  <hr>
-  <%= render 'form', musrenbang: @musrenbang %>
-</div>
+<%= render 'form', musrenbang: @musrenbang %>

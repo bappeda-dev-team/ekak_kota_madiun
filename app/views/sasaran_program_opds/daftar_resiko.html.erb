@@ -1,29 +1,21 @@
-<div class="row">
-  <div class="col-12">
-    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
-      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
-        <li class="breadcrumb-item">
-          <%= link_to root_path do %>
-            <i class="fas fa-home"></i>
-          <% end %>
-        </li>
-        <li class="breadcrumb-item">Perencanaan</li>
-        <li class="breadcrumb-item active" aria-current="page">Manajemen Resiko</li>
-      </ol>
-    </nav>
-    <div class="card border-0 shadow">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Manajemen Resiko Tahun <%= @tahun %></h2>
-          </div>
-          <div class="col text-end">
-            <span><%= @opd.nama_opd %></span>
-          </div>
+<%= content_for :html_title, "Manajemen Resiko" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Perencanaan</li>
+  <li class="breadcrumb-item active" aria-current="page">Manajemen Resiko</li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="card border-0 shadow">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h2 class="fs-5 fw-bold mb-0">Manajemen Resiko <%= @opd.nama_opd %></h2>
+        </div>
+        <div class="col-auto text-end">
+          <h2 class="fs-5 fw-bold"><%= @tahun %></h2>
         </div>
       </div>
-      <%= render 'filter/daftar_resiko' %>
     </div>
+    <%= render 'filter/daftar_resiko' %>
   </div>
-</div>
-<%= render 'shared/modal_template', modal_name: 'dampak-daftar-resiko' %>
+  <%= render 'shared/modal_template', modal_name: 'dampak-daftar-resiko' %>
+<% end %>

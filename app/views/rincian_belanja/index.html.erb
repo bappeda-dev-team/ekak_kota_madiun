@@ -1,110 +1,102 @@
-<div class="row">
-  <div class="col-12">
-    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
-      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
-        <li class="breadcrumb-item">
-          <%= link_to root_path do %>
-            <i class="fas fa-home"></i>
-          <% end %>
-        </li>
-        <li class="breadcrumb-item">Perencanaan</li>
-        <li class="breadcrumb-item active" aria-current="page">Rincian Belanja</li>
-      </ol>
-    </nav>
-    <div class="card border-0 shadow">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Rincian Belanja Tahun <%= @tahun %></h2>
-          </div>
-          <div class="col text-end">
-            <span><%= current_user.nama %></span>
-            |
-            <span><%= current_user.nik %></span>
-          </div>
+<%= content_for :html_title, "Rincian Belanja" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Perencanaan</li>
+  <li class="breadcrumb-item active" aria-current="page">Rincian Belanja</li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="card border-0 shadow">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h2 class="fs-5 fw-bold mb-0">Rincian Belanja Tahun <%= @tahun %></h2>
+        </div>
+        <div class="col text-end">
+          <span><%= current_user.nama %></span>
+          |
+          <span><%= current_user.nik %></span>
         </div>
       </div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table align-items-center">
-            <thead class="thead-light">
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table align-items-center">
+          <thead class="thead-light">
+            <tr>
+              <th class="border text-center" scope="col">No</th>
+              <th class="border text-center" scope="col">Pemilik Rencana</th>
+              <th class="border text-center" scope="col">Rencana Kinerja</th>
+              <th class="border text-center" scope="col">Tahun</th>
+              <th class="border text-center" scope="col">Indikator Kinerja</th>
+              <th class="border text-center" scope="col">Target</th>
+              <th class="border text-center" scope="col">Satuan</th>
+              <th class="border text-center" scope="col">Anggaran</th>
+              <th class="border text-center" scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @subkegiatan_sasarans.each.with_index(1) do |(subkegiatan,sasarans), i| %>
+              <% pagu = sasarans.map(&:total_anggaran).compact.sum %>
               <tr>
-                <th class="border text-center" scope="col">No</th>
-                <th class="border text-center" scope="col">Pemilik Rencana</th>
-                <th class="border text-center" scope="col">Rencana Kinerja</th>
-                <th class="border text-center" scope="col">Tahun</th>
-                <th class="border text-center" scope="col">Indikator Kinerja</th>
-                <th class="border text-center" scope="col">Target</th>
-                <th class="border text-center" scope="col">Satuan</th>
-                <th class="border text-center" scope="col">Anggaran</th>
-                <th class="border text-center" scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @subkegiatan_sasarans.each.with_index(1) do |(subkegiatan,sasarans), i| %>
-                <% pagu = sasarans.map(&:total_anggaran).compact.sum %>
-                <tr>
-                  <td class="border text-wrap fw-bolder text-gray-900"><%= i %></td>
-                  <td class="border text-wrap fw-bolder text-gray-900" colspan="6">Subkegiatan: <%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %></td>
-                  <td class="border">Rp. <%= number_with_delimiter(pagu) %></td>
-                  <td class="border">
-                    <div class="col">
-                      <% if subkegiatan %>
+                <td class="border text-wrap fw-bolder text-gray-900"><%= i %></td>
+                <td class="border text-wrap fw-bolder text-gray-900" colspan="6">Subkegiatan: <%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %></td>
+                <td class="border">Rp. <%= number_with_delimiter(pagu) %></td>
+                <td class="border">
+                  <div class="col">
+                    <% if subkegiatan %>
                       <%= link_to(show_subkegiatan_rincian_belanja_path(subkegiatan),
                                   target: "_blank",
                                   class: "btn btn-sm btn-outline-success w-100") do %>
                         <span>Tampilkan</span>
                       <% end %>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+              <% sasarans.each.with_index(1) do |sasaran, no| %>
+                <tr>
+                  <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= "#{i}.#{no}" %></td>
+                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
+                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
+                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.tahun %></td>
+                  <% if sasaran.indikator_sasarans.any? %>
+                    <%= indikator_sasaran(sasaran) %>
+                  <% else %>
+                    <td class="border" colspan="3">
+                      <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
+                    </td>
+                  <% end %>
+                  <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
+                  <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">
+                    <div class="d-grid gap-3">
+                      <%= link_to edit_rincian_belanja_path(sasaran),
+                           target: "_blank",
+                           class: "btn btn-sm btn-outline-info" do %>
+                        <span>Edit</span>
+                      <% end %>
+                      <%= link_to edit_rankir_gelondong_rincian_belanja_path(sasaran),
+                           target: "_blank",
+                           class: "btn btn-sm btn-outline-info" do %>
+                        <span>Edit Gelondong</span>
+                      <% end %>
+                      <%= link_to edit_penetapan_rincian_belanja_path(sasaran),
+                           target: "_blank",
+                           class: "btn btn-sm btn-outline-warning" do %>
+                        <span>Edit Penetapan</span>
                       <% end %>
                     </div>
                   </td>
                 </tr>
-                <% sasarans.each.with_index(1) do |sasaran, no| %>
-                  <tr>
-                    <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= "#{i}.#{no}" %></td>
-                    <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
-                    <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
-                    <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.tahun %></td>
-                    <% if sasaran.indikator_sasarans.any? %>
-                      <%= indikator_sasaran(sasaran) %>
-                    <% else %>
-                      <td class="border" colspan="3">
-                        <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
-                      </td>
-                    <% end %>
-                    <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
-                    <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">
-                      <div class="d-grid gap-3">
-                          <%= link_to edit_rincian_belanja_path(sasaran),
-                           target: "_blank",
-                           class: "btn btn-sm btn-outline-info" do %>
-                            <span>Edit</span>
-                          <% end %>
-                          <%= link_to edit_rankir_gelondong_rincian_belanja_path(sasaran),
-                           target: "_blank",
-                           class: "btn btn-sm btn-outline-info" do %>
-                            <span>Edit Gelondong</span>
-                          <% end %>
-                          <%= link_to edit_penetapan_rincian_belanja_path(sasaran),
-                           target: "_blank",
-                           class: "btn btn-sm btn-outline-warning" do %>
-                            <span>Edit Penetapan</span>
-                          <% end %>
-                      </div>
-                    </td>
-                  </tr>
-                  <% row_indikator_sasaran(sasaran).each do |indikator| %>
-                    <%= indikator %>
-                  <% end %>
-                  <% row_tahapan_anggaran_sasaran(sasaran, colspan: 7).each do |tahapan| %>
-                    <%= tahapan %>
-                  <% end %>
+                <% row_indikator_sasaran(sasaran).each do |indikator| %>
+                  <%= indikator %>
+                <% end %>
+                <% row_tahapan_anggaran_sasaran(sasaran, colspan: 7).each do |tahapan| %>
+                  <%= tahapan %>
                 <% end %>
               <% end %>
-            </tbody>
-          </table>
-        </div>
+            <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
-</div>
+<% end %>

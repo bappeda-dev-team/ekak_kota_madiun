@@ -1,6 +1,7 @@
 class MusrenbangsController < ApplicationController
   before_action :set_musrenbang,
                 only: %i[show edit update destroy aktifkan_usulan non_aktifkan_usulan diambil_asn]
+  layout false, only: %i[new edit]
 
   # GET /musrenbangs or /musrenbangs.json
   def index
@@ -115,29 +116,31 @@ class MusrenbangsController < ApplicationController
   def create
     @musrenbang = Musrenbang.new(musrenbang_params)
 
-    respond_to do |format|
-      if @musrenbang.save
-        format.js
-        format.html { redirect_to @musrenbang, notice: 'Musrenbang was successfully created.' }
-        format.json { render :show, status: :created, location: @musrenbang }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @musrenbang.errors, status: :unprocessable_entity }
-      end
+    if @musrenbang.save
+      render json: { resText: "Entri Musrenbang ditambahkan",
+                     html_content: html_content({ musrenbang: @musrenbang },
+                                                partial: 'musrenbangs/musrenbang') }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: error_content({ musrenbang: @musrenbang },
+                                                 partial: 'musrenbangs/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /musrenbangs/1 or /musrenbangs/1.json
   def update
-    respond_to do |format|
-      if @musrenbang.update(musrenbang_params)
-        format.js
-        format.html { redirect_to @musrenbang, notice: 'Musrenbang was successfully updated.' }
-        format.json { render :show, status: :ok, location: @musrenbang }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @musrenbang.errors, status: :unprocessable_entity }
-      end
+    if @musrenbang.update(musrenbang_params)
+      render json: { resText: "Perubahan tersimpan",
+                     html_content: html_content({ musrenbang: @musrenbang },
+                                                partial: 'musrenbangs/musrenbang') }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: error_content({ musrenbang: @musrenbang },
+                                                 partial: 'musrenbangs/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 

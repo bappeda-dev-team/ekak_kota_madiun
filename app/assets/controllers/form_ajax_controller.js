@@ -53,22 +53,34 @@ export default class extends Controller {
   processAjax(event) {
     // event.preventDefault()
     const [message, status] = event.detail
-    const target = document.getElementById(event.params.target)
     const { resText, html_content } = JSON.parse(message.response)
-
-    if (target != null && typeof (target) != 'undefined') {
-      if (event.params.type == 'append') {
-        target.insertAdjacentHTML('afterend', html_content)
-      }
-      else if (event.params.type == 'prepend') {
-        target.insertAdjacentHTML('beforeend', html_content)
-      }
-      else {
-        target.innerHTML = html_content
-      }
+    if (status == 'Unprocessable Entity') {
+      this.partialAttacher('form-modal-body', html_content)
     }
-    this.sweetalertStatus(resText, status)
-    this.modalHider()
+    else {
+      const target = document.getElementById(event.params.target)
+
+      if (target != null && typeof (target) != 'undefined') {
+        if (event.params.type == 'append') {
+          target.insertAdjacentHTML('afterend', html_content)
+          target.lastChild.classList.add('fading')
+        }
+        else if (event.params.type == 'prepend') {
+          target.insertAdjacentHTML('beforeend', html_content)
+          target.lastChild.classList.add('fading')
+        }
+        else if (event.params.type == 'afterbegin') {
+          target.insertAdjacentHTML('afterbegin', html_content)
+          target.firstChild.classList.add('fading')
+        }
+        else {
+          target.innerHTML = html_content
+          target.classList.add('fading')
+        }
+      }
+      this.sweetalertStatus(resText, status)
+      this.modalHider()
+    }
   }
 
   // modalName is standardize in layout/application.html.erb

@@ -1,7 +1,14 @@
-<%= form_with(model: musrenbang, local: false) do |form| %>
+<%= form_with(model: musrenbang, local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: dom_id(musrenbang),
+                form_ajax_type_param: musrenbang.new_record? ? 'afterbegin' : '',
+                action: 'ajax:complete->form-ajax#processAjax'
+              }
+) do |form| %>
   <% if musrenbang.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(musrenbang.errors.count, "error") %> prohibited this musrenbang from being saved:</h2>
+      <h2>Terdapat <%= musrenbang.errors.count %> kesalahan:</h2>
       <ul>
         <% musrenbang.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -27,7 +34,7 @@
                     {
                      data: {"placeholder": "Pilih Tahun",
                             controller: 'dropdown',
-                            dropdown_parent_value: '#form-usulan'
+                            dropdown_parent_value: '#form-modal-body'
                      }}) %>
   </div>
   <div class="actions">

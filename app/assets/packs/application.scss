@@ -477,3 +477,13 @@ table.counter {
 .pokin {
   width: 500px;
 }
+
+.fading {
+    animation: fade 15s forwards;
+    background-color:rgba(242, 245, 169, 1);
+}
+
+@keyframes fade {
+    from {background-color:rgba(242, 245, 169, 1);}
+    to {background-color:rgba(242, 245, 169, 0);}
+}
