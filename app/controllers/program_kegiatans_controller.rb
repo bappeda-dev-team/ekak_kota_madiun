@@ -293,6 +293,7 @@ class ProgramKegiatansController < ApplicationController
     @tahun = @tahun_asli.gsub("_perubahan", "")
     @kode_opd = cookies[:opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
     @pagus = PaguAnggaran.where(kode_opd: @opd.kode_opd,
                                 sub_jenis: 'Renja',
                                 tahun: @tahun_asli)

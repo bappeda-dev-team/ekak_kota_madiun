@@ -4,7 +4,7 @@ module Api
       @tahun_asli = cookies[:tahun]
       @tahun = @tahun_asli.gsub('_perubahan', '')
       # WARNING: HARD CODED BULAN
-      @bulan = 3
+      @bulan = DateTime.current.month
       @opd = Opd.find(params[:opd_id])
       @kode_unik_opd = @opd.kode_unik_opd
       @kode_opd = @opd.kode_opd

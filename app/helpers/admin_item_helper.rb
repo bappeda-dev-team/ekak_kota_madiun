@@ -50,6 +50,10 @@ module AdminItemHelper
       {
         title: 'Pagu Perencanaan', href: daftar_renstra_program_kegiatans_path,
         icon: 'fas fa-chart-line', identifier: 'daftar_renstra'
+      },
+      {
+        title: 'Pagu SIPKD', href: daftar_pagu_program_kegiatans_path,
+        icon: 'fas fa-chart-line', identifier: 'daftar_pagu'
       }
     ]
   end
