@@ -1,17 +1,22 @@
 class AnggaranHspksController < ApplicationController
   before_action :set_anggaran_hspk, only: %i[show edit update destroy]
+  layout false, only: %i[new edit]
 
   # GET /anggaran_hspks or /anggaran_hspks.json
   def index
-    @anggaran_hspks = AnggaranHspk.all
+    @anggaran_hspks = if current_user.id == 1
+                        AnggaranHspk.all
+                      else
+                        AnggaranHspk.where(opd_id: current_user.opd.id)
+                      end
   end
 
   def anggaran_hspk_search
     param = params[:q] || ''
     @anggaran_hspks = AnggaranHspk.where('uraian_barang ILIKE ?',
-                                                "%#{param}%")
-                                                .or(AnggaranHspk.where('spesifikasi ILIKE ?', "%#{param}%"))
-                                                .limit(80)
+                                         "%#{param}%")
+                                  .or(AnggaranHspk.where('spesifikasi ILIKE ?', "%#{param}%"))
+                                  .limit(80)
   end
 
   # GET /anggaran_hspks/1 or /anggaran_hspks/1.json
@@ -31,7 +36,7 @@ class AnggaranHspksController < ApplicationController
 
     respond_to do |format|
       if @anggaran_hspk.save
-        format.html { redirect_to @anggaran_hspk, notice: "Anggaran hspk was successfully created." }
+        format.html { redirect_to anggaran_hspks_path, notice: "Anggaran hspk was successfully created." }
         format.json { render :show, status: :created, location: @anggaran_hspk }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -72,7 +77,7 @@ class AnggaranHspksController < ApplicationController
   # Only allow a list of trusted parameters through.
   def anggaran_hspk_params
     params.require(:anggaran_hspk).permit(:kode_kelompok_barang, :uraian_kelompok_barang, :kode_barang,
-                                          :tahun, :id_standar_harga,
+                                          :tahun, :id_standar_harga, :opd_id,
                                           :uraian_barang, :spesifikasi, :satuan, :harga_satuan)
   end
 end

@@ -14,6 +14,7 @@
 #  uraian_kelompok_barang :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  opd_id                 :bigint
 #
 class AnggaranHspk < ApplicationRecord
   validates :kode_barang, presence: true

@@ -12,48 +12,56 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :kode_kelompok_barang %>
-    <%= form.text_field :kode_kelompok_barang %>
+    <%= form.hidden_field :opd_id, value: current_user.opd.id %>
   </div>
 
   <div class="field">
-    <%= form.label :uraian_kelompok_barang %>
-    <%= form.text_field :uraian_kelompok_barang %>
+    <%= form.label :kode_kelompok_barang, class: 'form-label' %>
+    <%= form.text_field :kode_kelompok_barang, class: 'form-control', placeholder: 'contoh: 123.123.123' %>
   </div>
 
   <div class="field">
-    <%= form.label :kode_barang %>
-    <%= form.text_field :kode_barang %>
+    <%= form.label :uraian_kelompok_barang, class: 'form-label'%>
+    <%= form.text_field :uraian_kelompok_barang, class: 'form-control', placeholder: 'contoh: Beban Jasa' %>
   </div>
 
   <div class="field">
-    <%= form.label :uraian_barang %>
-    <%= form.text_field :uraian_barang %>
+    <%= form.label :kode_barang, class: 'form-label' %>
+    <%= form.text_field :kode_barang, class: 'form-control', placeholder: 'contoh: 123.123.123.123' %>
   </div>
 
   <div class="field">
-    <%= form.label :spesifikasi %>
-    <%= form.text_field :spesifikasi %>
+    <%= form.label :uraian_barang, class: 'form-label' %>
+    <%= form.text_field :uraian_barang, class: 'form-control', placeholder: 'contoh: Pavingisasi xx' %>
   </div>
 
   <div class="field">
-    <%= form.label :satuan %>
-    <%= form.text_field :satuan %>
+    <%= form.label :spesifikasi, class: 'form-label' %>
+    <%= form.text_field :spesifikasi, class: 'form-control', placeholder: 'contoh: Jasa konstruksi' %>
   </div>
 
   <div class="field">
-    <%= form.label :harga_satuan %>
-    <%= form.text_field :harga_satuan %>
+    <%= form.label :satuan, class: 'form-label' %>
+    <%= form.text_field :satuan, class: 'form-control', placeholder: 'contoh: Ton' %>
   </div>
 
   <div class="field">
-    <%= form.label :tahun %>
-    <%= form.number_field :tahun %>
+    <%= form.label :harga_satuan, class: 'form-label' %>
+    <%= form.text_field :harga_satuan, class: 'form-control' %>
   </div>
 
   <div class="field">
-    <%= form.label :id_standar_harga %>
-    <%= form.text_field :id_standar_harga %>
+    <%= form.label :tahun, class: 'form-label' %>
+    <%= form.select(:tahun, options_for_select(Tahun.pluck(:tahun), form.object.tahun), {},
+    { data: {"placeholder": "Pilih Tahun",
+              controller: 'dropdown',
+              dropdown_parent_value: '#form-modal-body'
+    }}) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :id_standar_harga, class: 'form-label' %>
+    <%= form.text_field :id_standar_harga, class: 'form-control', placeholder: 'contoh: 11111' %>
   </div>
 
   <div class="actions">

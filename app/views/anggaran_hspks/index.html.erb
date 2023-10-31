@@ -16,8 +16,19 @@
           <div class="col">
             <h2 class="fs-5 fw-bold mb-0">Anggaran HSPK</h2>
           </div>
-           <div class="col text-end">
-            <%= link_to "Tambah Data", new_anggaran_hspk_path, class: "btn btn-sm btn-info" %>
+          <div class="col text-end">
+            <%= link_to new_anggaran_hspk_path,
+              remote: true,
+              data: {
+                      controller: 'form-modal',
+                      action: 'ajax:complete->form-modal#success:prevent',
+                      bs_toggle: 'modal',
+                      bs_target: '#form-modal'
+                    },
+              class: "btn btn-sm btn-info" do %>
+              <i class="fas fa-plus me-2"></i>
+              <span>Tambah Data</span>
+            <% end %>
           </div>
         </div>
       </div>

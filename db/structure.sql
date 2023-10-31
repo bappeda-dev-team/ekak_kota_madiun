@@ -118,7 +118,7 @@ CREATE TABLE public.active_storage_blobs (
     metadata text,
     service_name character varying NOT NULL,
     byte_size bigint NOT NULL,
-    checksum character varying,
+    checksum character varying NOT NULL,
     created_at timestamp without time zone NOT NULL
 );
 
@@ -303,7 +303,8 @@ CREATE TABLE public.anggaran_hspks (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     tahun character varying,
-    id_standar_harga character varying
+    id_standar_harga character varying,
+    opd_id bigint
 );
 
 
@@ -5516,9 +5517,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231005171444'),
 ('20231016035528'),
 ('20231018073122'),
-('20231024022923'),
-('20231024022924'),
-('20231024022925'),
-('20231026080101');
+('20231026080101'),
+('20231031065618');
 
 
