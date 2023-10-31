@@ -15,15 +15,15 @@ class ProgramKegiatansController < ApplicationController
                                         .where("nama_subkegiatan ILIKE ?", "%#{param}%")
     if current_user.pegawai_kelurahan?
       @program_kegiatans = @program_kegiatans.select do |program|
-        program.nama_opd_pemilik.upcase.split(/KELURAHAN/, 2).last.strip == current_user.petunjuk_kelurahan
+        program.nama_opd_pemilik.upcase.split("KELURAHAN", 2).last.strip == current_user.petunjuk_kelurahan
       end
     elsif current_user.pegawai_puskesmas?
       @program_kegiatans = @program_kegiatans.select do |program|
-        program.nama_opd_pemilik.upcase.split(/PUSKESMAS/, 2).last.strip == current_user.petunjuk_puskesmas
+        program.nama_opd_pemilik.upcase.split("PUSKESMAS", 2).last.strip == current_user.petunjuk_puskesmas
       end
     elsif current_user.pegawai_bagian?
       @program_kegiatans = @program_kegiatans.select do |program|
-        program.nama_opd_pemilik.upcase.split(/BAGIAN/, 2).last.strip == current_user.petunjuk_bagian
+        program.nama_opd_pemilik.upcase.split("BAGIAN", 2).last.strip == current_user.petunjuk_bagian
       end
     end
     return unless params[:item]
@@ -305,11 +305,12 @@ class ProgramKegiatansController < ApplicationController
     @tahun = @tahun_asli.gsub("_perubahan", "")
     @kode_opd = cookies[:opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
     @program_kegiatans = ProgramKegiatan.where(kode_sub_skpd: @opd.kode_unik_opd,
                                                tahun: @tahun)
                                         .order(:kode_sub_giat)
     program_id = @program_kegiatans.map(&:id).flatten
-    sasarans = Sasaran.where(tahun: @tahun, program_kegiatan_id: program_id)
+    sasarans = Sasaran.where(tahun: @tahun_asli, program_kegiatan_id: program_id)
     @anggarans = sasarans.map(&:anggarans).compact.flatten
   end
 

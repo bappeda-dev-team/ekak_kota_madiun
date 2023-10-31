@@ -46,6 +46,10 @@ module AdminItemHelper
       {
         title: 'Manajemen Resiko', href: daftar_resiko_sasaran_program_opds_path,
         icon: 'fas fa-chart-line', identifier: 'sasaran_program_opds/daftar_resiko'
+      },
+      {
+        title: 'Pagu Perencanaan', href: daftar_renstra_program_kegiatans_path,
+        icon: 'fas fa-chart-line', identifier: 'daftar_renstra'
       }
     ]
   end
@@ -101,6 +105,10 @@ module AdminItemHelper
       {
         title: 'Manajemen Resiko', href: daftar_resiko_sasaran_program_opds_path,
         icon: 'fas fa-chart-line', identifier: 'sasaran_program_opds/daftar_resiko'
+      },
+      {
+        title: 'Pagu Perencanaan', href: daftar_renstra_program_kegiatans_path,
+        icon: 'fas fa-chart-line', identifier: 'daftar_renstra'
       }
     ]
   end

@@ -1,39 +1,31 @@
-<%= content_for :html_title, "Daftar Renstra" %>
+<%= content_for :html_title, "Pagu Perencanaan" %>
 <%= content_for :navigation do %>
   <li class="breadcrumb-item" aria-current="page">Perencanaan OPD</li>
-  <li class="breadcrumb-item active" aria-current="page">Daftar Renstra</li>
+  <li class="breadcrumb-item active" aria-current="page">Pagu Perencanaan</li>
 <% end %>
 <% content_for :view_utama do %>
   <div class="card border-0 shadow">
     <div class="card-header">
       <div class="row align-items-center">
         <div class="col">
-          <div class="row">
-            <h2 class="fs-5 fw-bold">Daftar Renstra</h2>
-          </div>
-          <div class="row">
-            <h2 class="fs-5 fw-bold"><%= @nama_opd %></h2>
-          </div>
-          <div class="row">
-            <h2 class="fs-5 fw-bold"><%= @tahun %></h2>
-          </div>
+          <h2 class="fs-5 fw-bold">Pagu Perencanaan <%= @nama_opd %></h2>
         </div>
         <div class="col-auto">
-          <%= button_to api_pagu_sync_penetapan_path,
-            remote: true,
-            class: 'btn btn-info toggle-active',
-            data: {
-                disable_with: 'Memproses.....'
-            },
-            params: { opd_id: @opd } do %>
-            <i class="fas fa-sync icon icon-xs me-2"></i>
-            Sync Pagu Penetapan
-          <% end %>
+          <h2 class="fs-5 fw-bold"><%= @tahun_asli %></h2>
         </div>
       </div>
     </div>
     <div class="card-body">
       <%# tabel_tujuan_sasaran_opd %>
+      <div class="row mb-3">
+        <div class="col">
+        </div>
+        <div class="col-auto">
+          <% subkegiatans = @anggarans %>
+          <% pagu_total = subkegiatans.flatten.map(&:jumlah).compact.sum %>
+          Total Pagu: Rp. <%= number_with_delimiter(pagu_total) %>
+        </div>
+      </div>
       <div class="table-responsive">
         <table class="table align-items-center" data-controller='form-modal' data-action='ajax-update@window->form-modal#updateTargetValue'>
           <thead class="thead-program">
@@ -73,8 +65,6 @@
             <% end %>
           </tbody>
           <tfoot>
-            <% subkegiatans = @anggarans %>
-            <% pagu_total = subkegiatans.flatten.map(&:jumlah).compact.sum %>
             <tr class="border">
               <td colspan="3">Total: </td>
               <td class="border">Rp. <%= number_with_delimiter(pagu_total) %></td>
