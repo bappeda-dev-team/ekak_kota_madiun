@@ -2,8 +2,9 @@
               local: false,
               data: {
                 controller: 'form-ajax',
-                form_ajax_element_id_value: 'mandatori',
-                action: 'ajax:success->form-ajax#ajaxSuccessAttach:prevent ajax:error->form-ajax#ajaxError:prevent'
+                form_ajax_target_param: dom_id(mandatori),
+                form_ajax_type_param: mandatori.new_record? ? 'afterbegin' : '',
+                action: 'ajax:complete->form-ajax#processAjax'
               }) do |form| %>
   <% if mandatori.errors.any? %>
     <div id="error_explanation">

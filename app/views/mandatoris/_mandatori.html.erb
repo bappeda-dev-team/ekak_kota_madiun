@@ -26,7 +26,7 @@
   <td class="fw-bolder text-center align-middle">
     <%= link_to edit_mandatori_path(mandatori),
      remote: true,
-     class: 'btn btn-outline-info',
+     class: 'btn btn-sm btn-info',
      data: {
          controller: 'form-modal',
          action: 'ajax:complete->form-modal#success:prevent',
@@ -39,7 +39,7 @@
     <%= link_to mandatori_path(mandatori),
      method: :delete,
      remote: true,
-     class: 'btn btn-outline-danger',
+     class: 'btn btn-sm btn-danger',
      data: {
          controller: 'form-ajax',
          form_ajax_element_id_value: dom_id(mandatori),

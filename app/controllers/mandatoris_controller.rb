@@ -40,51 +40,31 @@ class MandatorisController < ApplicationController
     form_params = mandatori_params.merge(is_active: true, status: 'disetujui')
     @mandatori = Mandatori.new(form_params)
 
-    respond_to do |format|
-      if @mandatori.save
-        html_content = render_to_string(partial: 'mandatoris/mandatori',
-                                        formats: 'html',
-                                        layout: false,
-                                        locals: { mandatori: @mandatori })
-        format.json do
-          render json: { resText: "Mandatori tersimpan", attachmentPartial: html_content }.to_json,
-                 status: :created
-        end
-      else
-        error_content = render_to_string(partial: 'mandatoris/form',
-                                         formats: 'html',
-                                         layout: false,
-                                         locals: { mandatori: @mandatori })
-        format.json do
-          render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json,
-                 status: :unprocessable_entity
-        end
-      end
+    if @mandatori.save
+      render json: { resText: "Entri Mandatori ditambahkan",
+                     html_content: html_content({ mandatori: @mandatori },
+                                                partial: 'mandatoris/mandatori') }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: error_content({ mandatori: @mandatori },
+                                                 partial: 'mandatoris/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /mandatoris/1 or /mandatoris/1.json
   def update
-    respond_to do |format|
-      if @mandatori.update(mandatori_params)
-        html_content = render_to_string(partial: 'mandatoris/mandatori',
-                                        formats: 'html',
-                                        layout: false,
-                                        locals: { mandatori: @mandatori })
-        format.json do
-          render json: { resText: "Mandatori tersimpan", attachmentPartial: html_content }.to_json,
-                 status: :created
-        end
-      else
-        error_content = render_to_string(partial: 'mandatoris/form',
-                                         formats: 'html',
-                                         layout: false,
-                                         locals: { mandatori: @mandatori })
-        format.json do
-          render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json,
-                 status: :unprocessable_entity
-        end
-      end
+    if @mandatori.update(mandatori_params)
+      render json: { resText: "Perubahan tersimpan",
+                     html_content: html_content({ mandatori: @mandatori },
+                                                partial: 'mandatoris/mandatori') }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: error_content({ mandatori: @mandatori },
+                                                 partial: 'mandatori/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 

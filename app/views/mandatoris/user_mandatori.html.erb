@@ -1,6 +1,5 @@
 <%= content_for :html_title, "Mandatori" %>
 <%= content_for :navigation do %>
-  <li class="breadcrumb-item" aria-current="page">Perencanaan</li>
   <li class="breadcrumb-item" aria-current="page">Usulan</li>
   <li class="breadcrumb-item active" aria-current="page">Mandatori</li>
 <% end %>
@@ -27,7 +26,7 @@
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-flush datatable counter" data-datatable>
+        <table class="table table-flush counter" data-datatable>
           <thead class="thead-light">
             <tr>
               <th class="border-bottom text-gray-700" scope="col">No.</th>
@@ -40,7 +39,7 @@
               <th class="border-bottom text-gray-700 text-center" scope="col">Action</th>
             </tr>
           </thead>
-          <tbody id="mandatori">
+          <tbody id="new_mandatori">
             <%= render @mandatoris %>
           </tbody>
         </table>

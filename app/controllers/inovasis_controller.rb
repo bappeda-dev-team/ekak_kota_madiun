@@ -35,49 +35,31 @@ class InovasisController < ApplicationController
     form_params = inovasi_params.merge(is_active: true, status: 'disetujui')
     @inovasi = Inovasi.new(form_params)
 
-    respond_to do |format|
-      if @inovasi.save
-        html_content = render_to_string(partial: 'inovasis/inovasi',
-                                        formats: 'html',
-                                        layout: false,
-                                        locals: { inovasi: @inovasi })
-        format.json do
-          render json: { resText: "Inisiatif walikota tersimpan", attachmentPartial: html_content }.to_json,
-                 status: :created
-        end
-      else
-        error_content = render_to_string(partial: 'inovasis/form',
-                                         formats: 'html',
-                                         layout: false,
-                                         locals: { inovasi: @inovasi })
-        format.json do
-          render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
-        end
-      end
+    if @inovasi.save
+      render json: { resText: "Entri Inisiatif ditambahkan",
+                     html_content: html_content({ inovasi: @inovasi },
+                                                partial: 'inovasis/inovasi') }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: error_content({ inovasi: @inovasi },
+                                                 partial: 'inovasis/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /inovasis/1 or /inovasis/1.json
   def update
-    respond_to do |format|
-      if @inovasi.update(inovasi_params)
-        html_content = render_to_string(partial: 'inovasis/inovasi',
-                                        formats: 'html',
-                                        layout: false,
-                                        locals: { inovasi: @inovasi })
-        format.json do
-          render json: { resText: "Perubahan tersimpan", attachmentPartial: html_content, update: true }.to_json,
-                 status: :ok
-        end
-      else
-        error_content = render_to_string(partial: 'inovasis/form',
-                                         formats: 'html',
-                                         layout: false,
-                                         locals: { inovasi: @inovasi })
-        format.json do
-          render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
-        end
-      end
+    if @inovasi.update(inovasi_params)
+      render json: { resText: "Perubahan tersimpan",
+                     html_content: html_content({ inovasi: @inovasi },
+                                                partial: 'inovasis/inovasi') }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: error_content({ inovasi: @inovasi },
+                                                 partial: 'inovasis/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 

@@ -2,8 +2,9 @@
               local: false,
               data: {
                 controller: 'form-ajax',
-                form_ajax_element_id_value: 'inovasi',
-                action: 'ajax:success->form-ajax#ajaxSuccessAttach:prevent ajax:error->form-ajax#ajaxError:prevent'
+                form_ajax_target_param: dom_id(inovasi),
+                form_ajax_type_param: inovasi.new_record? ? 'afterbegin' : '',
+                action: 'ajax:complete->form-ajax#processAjax'
               }) do |form| %>
   <% if inovasi.errors.any? %>
     <div id="error_explanation">
