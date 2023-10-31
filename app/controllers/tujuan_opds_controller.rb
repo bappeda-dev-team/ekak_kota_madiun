@@ -15,12 +15,16 @@ class TujuanOpdsController < ApplicationController
   # GET /tujuan_opds/new
   def new
     @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
     @opds = Opd.where.not(kode_opd: nil)
                .pluck(:nama_opd,
                       :kode_unik_opd)
     tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
-    @urusans = Master::Urusan.where(tahun: tahun_bener).collect { |urusan| [urusan.nama_urusan, urusan.id] }
-    @tujuan_opd = TujuanOpd.new
+    @urusans = Master::Urusan.where(tahun: tahun_bener).collect { |urusan| [urusan.kode_nama_urusan, urusan.id] }
+    @bidang_urusans = Master::BidangUrusan.where(tahun: tahun_bener).collect do |bid_urusan|
+      [bid_urusan.kode_nama_bidang, bid_urusan.id]
+    end
+    @tujuan_opd = TujuanOpd.new(kode_unik_opd: @kode_opd)
     @tujuan_opd.indikators.build.targets.build
     render layout: false
   end
@@ -32,7 +36,10 @@ class TujuanOpdsController < ApplicationController
                .pluck(:nama_opd,
                       :kode_unik_opd)
     tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
-    @urusans = Master::Urusan.where(tahun: tahun_bener).collect { |urusan| [urusan.nama_urusan, urusan.id] }
+    @urusans = Master::Urusan.where(tahun: tahun_bener).collect { |urusan| [urusan.kode_nama_urusan, urusan.id] }
+    @bidang_urusans = Master::BidangUrusan.where(tahun: tahun_bener).collect do |bid_urusan|
+      [bid_urusan.kode_nama_bidang, bid_urusan.id]
+    end
     render layout: false
   end
 
@@ -100,7 +107,7 @@ class TujuanOpdsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def tujuan_opd_params
-    params.require(:tujuan_opd).permit(:tujuan, :id_tujuan, :kode_unik_opd, :tahun_awal, :tahun_akhir, :urusan_id,
+    params.require(:tujuan_opd).permit(:tujuan, :id_tujuan, :kode_unik_opd, :tahun_awal, :tahun_akhir, :urusan_id, :bidang_urusan_id,
                                        indikators_attributes)
   end
 

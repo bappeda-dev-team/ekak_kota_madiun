@@ -29,6 +29,11 @@
           { required: true, class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih Urusan', dropdown_parent_value: '#form-modal' } }%>
   </div>
   <div class="field">
+    <%= form.label :bidang_urusan, class: 'form-label' %>
+    <%= form.select :bidang_urusan_id, @bidang_urusans ,{include_blank: true},
+          { required: true, class: 'form-control', data: { controller: 'dropdown', placeholder: 'Bidang Urusan', dropdown_parent_value: '#form-modal' } }%>
+  </div>
+  <div class="field">
     <%= form.label :tujuan, class: 'form-label' %>
     <%= form.text_field :tujuan, class: 'form-control' %>
   </div>

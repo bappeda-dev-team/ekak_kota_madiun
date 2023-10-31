@@ -17,4 +17,8 @@
 #
 class Master::Urusan < ApplicationRecord
   has_many :tujuan_opds
+
+  def kode_nama_urusan
+    "#{kode_urusan} - #{nama_urusan}"
+  end
 end

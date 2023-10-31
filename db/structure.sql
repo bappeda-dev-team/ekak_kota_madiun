@@ -3170,7 +3170,8 @@ CREATE TABLE public.tujuans (
     updated_at timestamp(6) without time zone NOT NULL,
     tahun_awal character varying,
     tahun_akhir character varying,
-    urusan_id bigint
+    urusan_id bigint,
+    bidang_urusan_id bigint
 );
 
 
@@ -5518,6 +5519,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231016035528'),
 ('20231018073122'),
 ('20231026080101'),
-('20231031065618');
+('20231031065618'),
+('20231031083426');
 
 

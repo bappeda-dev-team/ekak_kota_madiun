@@ -2,16 +2,17 @@
 #
 # Table name: tujuans
 #
-#  id            :bigint           not null, primary key
-#  id_tujuan     :string           not null
-#  kode_unik_opd :string
-#  tahun_akhir   :string
-#  tahun_awal    :string
-#  tujuan        :string
-#  type          :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  urusan_id     :bigint
+#  id               :bigint           not null, primary key
+#  id_tujuan        :string           not null
+#  kode_unik_opd    :string
+#  tahun_akhir      :string
+#  tahun_awal       :string
+#  tujuan           :string
+#  type             :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  bidang_urusan_id :bigint
+#  urusan_id        :bigint
 #
 # Indexes
 #
@@ -27,6 +28,7 @@ class TujuanOpd < Tujuan
   accepts_nested_attributes_for :targets, reject_if: :all_blank, allow_destroy: true
 
   belongs_to :urusan, class_name: 'Master::Urusan', foreign_key: 'urusan_id'
+  belongs_to :bidang_urusan, class_name: 'Master::BidangUrusan', foreign_key: 'bidang_urusan_id'
 
   def to_s
     tujuan
@@ -47,5 +49,9 @@ class TujuanOpd < Tujuan
 
   def urusan_opd
     "#{urusan&.kode_urusan} - #{urusan&.nama_urusan}"
+  end
+
+  def bidang_urusan_opd
+    bidang_urusan&.kode_nama_bidang
   end
 end
