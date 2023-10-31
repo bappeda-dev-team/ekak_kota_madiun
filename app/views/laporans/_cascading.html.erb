@@ -4,7 +4,7 @@
     <%= render partial: 'laporans/item_cascading', locals: { pohon: pohon } %>
   </div>
   <%# self-render childs in helper %>
-  <ul class='d-none'>
+  <ul class='d-none childs'>
     <%= render partial: 'laporans/cascading', collection: childs(pohon), as: :pohon %>
   </ul>
 </li>
