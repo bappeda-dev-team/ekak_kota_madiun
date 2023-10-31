@@ -1,5 +1,11 @@
-<% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
-  <%= render template: "home/laporan_kak_dashboard" %>
-<% else %>
-  <%= render 'user_dashboard' %>
+<%= content_for :html_title, "E-KAK" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+<% end %>
+<% content_for :view_utama do %>
+  <% if privileged_user or reviewer? %>
+    <%= render "admin_dashboard" %>
+  <% else %>
+    <%= render 'user_dashboard' %>
+  <% end %>
 <% end %>

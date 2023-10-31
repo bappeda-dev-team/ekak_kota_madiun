@@ -1,5 +1,6 @@
 class PokpirsController < ApplicationController
   before_action :set_pokpir, only: %i[show edit update destroy aktifkan_pokpir non_aktifkan_pokpir diambil_asn]
+  layout false, only: %i[new edit]
 
   # GET /pokpirs or /pokpirs.json
   def index
@@ -106,29 +107,31 @@ class PokpirsController < ApplicationController
     form_params = pokpir_params.merge(is_active: true, status: 'disetujui')
     @pokpir = Pokpir.new(form_params)
 
-    respond_to do |format|
-      if @pokpir.save
-        format.js
-        format.html { redirect_to pokpirs_path, notice: 'Pokpir was successfully created.' }
-        format.json { render :show, status: :created, location: @pokpir }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @pokpir.errors, status: :unprocessable_entity }
-      end
+    if @pokpir.save
+      render json: { resText: "Entri Pokok Pikiran ditambahkan",
+                     html_content: html_content({ pokpir: @pokpir },
+                                                partial: 'pokpirs/pokpir') }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: error_content({ pokpir: @pokpir },
+                                                 partial: 'pokpirs/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /pokpirs/1 or /pokpirs/1.json
   def update
-    respond_to do |format|
-      if @pokpir.update(pokpir_params)
-        format.js
-        format.html { redirect_to @pokpir, notice: 'Pokpir was successfully updated.' }
-        format.json { render :show, status: :ok, location: @pokpir }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @pokpir.errors, status: :unprocessable_entity }
-      end
+    if @pokpir.update(pokpir_params)
+      render json: { resText: "Perubahan tersimpan",
+                     html_content: html_content({ pokpir: @pokpir },
+                                                partial: 'pokpirs/pokpir') }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: error_content({ pokpir: @pokpir },
+                                                 partial: 'pokpirs/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 

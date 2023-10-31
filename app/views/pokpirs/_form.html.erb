@@ -1,7 +1,14 @@
-<%= form_with(model: pokpir, local: false) do |form| %>
+<%= form_with(model: pokpir, local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: dom_id(pokpir),
+                form_ajax_type_param: pokpir.new_record? ? 'afterbegin' : '',
+                action: 'ajax:complete->form-ajax#processAjax'
+              }
+) do |form| %>
   <% if pokpir.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(pokpir.errors.count, "error") %> prohibited this pokpir from being saved:</h2>
+      <h2>Terdapat <%= pokpir.errors.count %> kesalahan:</h2>
       <ul>
         <% pokpir.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -27,10 +34,10 @@
                     { 
                      data: {"placeholder": "Pilih Tahun",
                             controller: 'dropdown',
-                            dropdown_parent_value: '#form-usulan'
+                            dropdown_parent_value: '#form-modal-body'
                      }}) %>
   </div>
   <div class="actions">
-    <%= form.submit 'Tambah Pokok Pikiran DPRD ' %>
+    <%= form.submit %>
   </div>
 <% end %>

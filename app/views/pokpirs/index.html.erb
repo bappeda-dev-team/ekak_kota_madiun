@@ -1,115 +1,70 @@
-<div class="row">
-  <div class="col-12">
-    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
-      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
-        <li class="breadcrumb-item">
-          <%= link_to root_path do %>
-            <i class="fas fa-home"></i>
-          <% end %>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page"><%= link_to "Usulan Pokok Pikiran", pokpirs_path %></li>
-      </ol>
-    </nav>
-    <% flash.each do |type, msg| %>
-      <% tipe = type == 'error' ? 'danger' : type %>
-      <div class="alert alert-<%= tipe %>">
-        <%= msg %>
-      </div>
-    <% end %>
-    <div class="card border-0 shadow">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Usulan Pokok Pikiran DPRD</h2>
-          </div>
-          <div class="col text-end">
-            <%= link_to "Tambah Usulan", new_pokpir_path, remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#form-usulan'}, class: "btn btn-sm btn-info" %>
-          </div>
-          <% if current_user.has_role? :super_admin %>
-            <div class="col text-end">
-              <%= link_to sync_pokpir_path(kode_opd: '', tahun: 2023),
+<%= content_for :html_title, "Pokok Pikiran" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Usulan</li>
+  <li class="breadcrumb-item active" aria-current="page">Pokok Pikiran</li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="card border-0 shadow">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h2 class="fs-5 fw-bold mb-0">Usulan Pokok Pikiran DPRD</h2>
+        </div>
+        <div class="col text-end">
+          <%= link_to "Tambah Usulan", new_pokpir_path,
+           remote: true,
+           data: {
+             controller: 'form-modal',
+             action: 'ajax:complete->form-modal#success:prevent',
+             bs_toggle: 'modal',
+             bs_target: '#form-modal'
+           },
+           class: "btn btn-sm btn-info" %>
+        </div>
+        <% if current_user.has_role? :super_admin %>
+          <div class="col-auto text-end">
+            <%= link_to sync_pokpir_path(kode_opd: '', tahun: 2023),
                                                 remote: true,
                                                 data: { disable_with: 'Memproses....'},
                                                 class:"btn btn-sm btn-primary" do %>
-                <i class="fas fa-sync me-2"></i>
-                Sync Pokok Pikiran tahun 2023
-              <% end %>
-            </div>
-            <div class="col text-end">
-              <%= link_to update_opd_pokpir_path,
+              <i class="fas fa-sync me-2"></i>
+              Sync Pokok Pikiran tahun 2023
+            <% end %>
+          </div>
+          <div class="col-auto text-end">
+            <%= link_to update_opd_pokpir_path,
                   method: :post,
                   data: { disable_with: 'Memproses....'},
                   class:"btn btn-sm btn-primary" do %>
-                <i class="fas fa-sync me-2"></i>
-                Sync Kamus
-              <% end %>
-            </div>
-          <% end %>
-        </div>
+              <i class="fas fa-sync me-2"></i>
+              Sync Kamus
+            <% end %>
+          </div>
+        <% end %>
       </div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-flush datatable" data-datatable>
-            <caption>Usulan Pokok Pikiran OPD <%= current_user.opd.nama_opd %></caption>
-            <thead class="thead-light">
-              <tr>
-                <th class="border-bottom text-gray-700" scope="col">No.</th>
-                <th class="border-bottom text-gray-700" scope="col">Tahun</th>
-                <th class="border-bottom text-gray-700" scope="col">Usulan</th>
-                <th class="border-bottom text-gray-700" scope="col">Alamat</th>
-                <th class="border-bottom text-gray-700" scope="col">Permasalahan</th>
-                <th class="border-bottom text-gray-700" scope="col">OPD</th>
-                <th class="border-bottom text-gray-700" scope="col">Pengambil Usulan</th>
-                <th class="border-bottom text-gray-700 text-center" scope="col">Status</th>
-                <th class="border-bottom text-gray-700 text-center" scope="col" colspan="1">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @pokpirs.each.with_index(1) do |pokpir, i| %>
-                <tr id="<%= dom_id(pokpir) %>">
-                  <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-                  <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.tahun %></td>
-                  <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.usulan %></td>
-                  <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.alamat %></td>
-                  <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.uraian %></td>
-                  <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.opd_dituju&.nama_opd or pokpir.opd %></td>
-                  <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.asn_pengambil %></td>
-                  <td class="action-<%= dom_id(pokpir) %> text-center align-middle">
-                    <% unless pokpir.is_active %>
-                      <% if pokpir.asn_aktif? %>
-                        <%= button_to toggle_is_active_pokpir_path(pokpir), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
-                          <%= statuses(code: pokpir.status) %>
-                          <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
-                        <% end %>
-                      <% else %>
-                        <button class="btn btn-warning" disabled><%= statuses(code: pokpir.status) %></button>
-                      <% end %>
-                    <% else %>
-                      <% if pokpir.sasaran_aktif? %>
-                        <%= button_to setujui_usulan_di_sasaran_pokpir_path(pokpir), remote: true, class: 'btn btn-tertiary text-light d-inline-flex align-items-center toggle-active' do %>
-                          <%= statuses(code: pokpir.status) %>
-                          <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
-                        <% end %>
-                      <% else %>
-                        <button class='btn btn-primary d-inline-flex align-items-center toggle-active' disabled>
-                          <%= statuses(code: pokpir.status) %>
-                          <i class="fas fa-key text-success icon icon-xs ms-2"></i>
-                        </button>
-                      <% end %>
-                    <% end %>
-                  </td>
-                  <td class="fw-bolder text-gray-500 text-center align-middle">
-                    <%= link_to edit_pokpir_path(pokpir), remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#form-usulan'} do %>
-                      <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit usulan"></i>
-                    <% end %>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-flush datatable" data-datatable>
+          <caption>Usulan Pokok Pikiran OPD <%= current_user.opd.nama_opd %></caption>
+          <thead class="thead-light">
+            <tr>
+              <th class="border-bottom text-gray-700" scope="col">No.</th>
+              <th class="border-bottom text-gray-700" scope="col">Tahun</th>
+              <th class="border-bottom text-gray-700" scope="col">Usulan</th>
+              <th class="border-bottom text-gray-700" scope="col">Alamat</th>
+              <th class="border-bottom text-gray-700" scope="col">Permasalahan</th>
+              <th class="border-bottom text-gray-700" scope="col">OPD</th>
+              <th class="border-bottom text-gray-700" scope="col">Pengambil Usulan</th>
+              <th class="border-bottom text-gray-700 text-center" scope="col">Status</th>
+              <th class="border-bottom text-gray-700 text-center" scope="col" colspan="1">Action</th>
+            </tr>
+          </thead>
+          <tbody id="new_pokpir">
+            <%= render @pokpirs %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
-</div>
-<%= render 'modal' %>
+<% end %>

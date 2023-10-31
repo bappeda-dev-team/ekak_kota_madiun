@@ -22,7 +22,7 @@
            class: "btn btn-sm btn-info" %>
         </div>
         <% if current_user.has_role? :super_admin %>
-          <div class="col text-end">
+          <div class="col-auto text-end">
             <%= link_to sync_musrenbang_path(kode_opd: '', tahun: 2023),
                                                 remote: true,
                                                 data: { disable_with: 'Memproses....'},
@@ -31,7 +31,7 @@
               Sync Musrenbang
             <% end %>
           </div>
-          <div class="col text-end">
+          <div class="col-auto text-end">
             <%= link_to update_opd_path,
                   method: :post,
                   data: { disable_with: 'Memproses....'},

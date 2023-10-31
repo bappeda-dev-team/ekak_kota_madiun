@@ -63,24 +63,38 @@ export default class extends Controller {
       if (target != null && typeof (target) != 'undefined') {
         if (event.params.type == 'append') {
           target.insertAdjacentHTML('afterend', html_content)
-          target.lastChild.classList.add('fading')
+          this.animateBackground(target.lastChild)
         }
         else if (event.params.type == 'prepend') {
           target.insertAdjacentHTML('beforeend', html_content)
-          target.lastChild.classList.add('fading')
+          this.animateBackground(target.lastChild)
         }
         else if (event.params.type == 'afterbegin') {
           target.insertAdjacentHTML('afterbegin', html_content)
-          target.firstChild.classList.add('fading')
+          this.animateBackground(target.firstChild)
         }
         else {
           target.innerHTML = html_content
-          target.classList.add('fading')
+          this.animateBackground(target)
         }
       }
       this.sweetalertStatus(resText, status)
       this.modalHider()
     }
+  }
+
+  animateBackground(target) {
+    target.animate([
+      {
+        //from
+        backgroundColor: 'rgba(242, 245, 169, 1)',
+      },
+      {
+        //to
+        backgroundColor: 'rgba(242, 245, 169, 0)',
+      }
+    ], 10000)
+
   }
 
   // modalName is standardize in layout/application.html.erb
