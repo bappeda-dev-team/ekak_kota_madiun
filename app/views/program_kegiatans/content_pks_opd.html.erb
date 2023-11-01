@@ -2,27 +2,10 @@
   <div class="card-header">
     <div class="row align-items-center">
       <div class="col">
-        <div class="row">
-          <h2 class="fs-5 fw-bold">Program Kegiatan Subkegiatan </h2>
-        </div>
-        <div class="row">
-          <h2 class="fs-5 fw-bold"><%= @nama_opd %></h2>
-        </div>
-        <div class="row">
-          <h2 class="fs-5 fw-bold"><%= @tahun_asli %></h2>
-        </div>
+        <h2 class="fs-5 fw-bold">Program Kegiatan Subkegiatan <%= @nama_opd %></h2>
       </div>
       <div class="col-auto">
-        <%= button_to api_pagu_sync_penetapan_path,
-            remote: true,
-            class: 'btn btn-info toggle-active',
-            data: {
-                disable_with: 'Memproses.....'
-            },
-            params: { opd_id: @opd } do %>
-          <i class="fas fa-sync icon icon-xs me-2"></i>
-          Sync Pagu Penetapan
-        <% end %>
+        <h2 class="fs-5 fw-bold"><%= @tahun_asli %></h2>
       </div>
     </div>
   </div>

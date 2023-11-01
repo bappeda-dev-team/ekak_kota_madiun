@@ -1,0 +1,39 @@
+<div class="card border-0 shadow">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">Pagu <%= @nama_opd %></h2>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row mb-3">
+      <div class="col">
+      </div>
+      <div class="col-auto">
+        <%= button_to api_pagu_sync_pagu_kak_path,
+            remote: true,
+            class: 'btn btn-info toggle-active',
+            data: {
+                disable_with: 'Memproses.....'
+            } do %>
+          <i class="fas fa-sync icon icon-xs me-2"></i>
+          Sync Pagu KAK
+        <% end %>
+      </div>
+      <div class="col-auto">
+        <%= button_to api_pagu_sync_opd_path,
+            remote: true,
+            class: 'btn btn-info toggle-active',
+            data: {
+                disable_with: 'Memproses.....'
+            } do %>
+          <i class="fas fa-sync icon icon-xs me-2"></i>
+          Sync Pagu
+        <% end %>
+      </div>
+    </div>
+    <div data-controller="chart" data-chart-target="opds" data-chart-opd-value="<%= @opd %>">
+    </div>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Aplikasi:</strong>
+  <%= @external_url.aplikasi %>
+</p>
+
+<p>
+  <strong>Endpoint:</strong>
+  <%= @external_url.endpoint %>
+</p>
+
+<p>
+  <strong>Username:</strong>
+  <%= @external_url.username %>
+</p>
+
+<p>
+  <strong>Password:</strong>
+  <%= @external_url.password %>
+</p>
+
+<p>
+  <strong>Keterangan:</strong>
+  <%= @external_url.keterangan %>
+</p>
+
+<p>
+  <strong>Kode:</strong>
+  <%= @external_url.kode %>
+</p>
+
+<%= link_to 'Edit', edit_external_url_path(@external_url) %> |
+<%= link_to 'Back', external_urls_path %>

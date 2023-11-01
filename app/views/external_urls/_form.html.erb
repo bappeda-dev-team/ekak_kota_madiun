@@ -1,0 +1,47 @@
+<%= form_with(model: external_url) do |form| %>
+  <% if external_url.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(external_url.errors.count, "error") %> prohibited this external_url from being saved:</h2>
+
+      <ul>
+        <% external_url.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :aplikasi %>
+    <%= form.text_field :aplikasi %>
+  </div>
+
+  <div class="field">
+    <%= form.label :endpoint %>
+    <%= form.text_area :endpoint %>
+  </div>
+
+  <div class="field">
+    <%= form.label :username %>
+    <%= form.text_field :username %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.text_field :password %>
+  </div>
+
+  <div class="field">
+    <%= form.label :keterangan %>
+    <%= form.text_field :keterangan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kode %>
+    <%= form.text_field :kode %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
