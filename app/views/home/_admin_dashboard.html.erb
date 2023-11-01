@@ -12,22 +12,26 @@
       </div>
       <div class="col-auto">
         <%= button_to api_pagu_sync_pagu_kak_path,
+            disabled: button_disabled?('sync-pagu-kak', @opd, @tahun),
             remote: true,
             class: 'btn btn-info toggle-active',
             data: {
                 disable_with: 'Memproses.....'
-            } do %>
+            },
+            params: { kode_tombol: 'sync-pagu-kak' } do %>
           <i class="fas fa-sync icon icon-xs me-2"></i>
           Sync Pagu KAK
         <% end %>
       </div>
       <div class="col-auto">
         <%= button_to api_pagu_sync_opd_path,
+            disabled: button_disabled?('sync-pagu-sipd', @opd, @tahun),
             remote: true,
             class: 'btn btn-info toggle-active',
             data: {
                 disable_with: 'Memproses.....'
-            } do %>
+            },
+            params: { kode_tombol: 'sync-pagu-sipd' } do %>
           <i class="fas fa-sync icon icon-xs me-2"></i>
           Sync Pagu
         <% end %>

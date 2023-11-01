@@ -67,12 +67,14 @@ module Api
 
     def update_pagu_opd(response)
       # data = Oj.load(response.body)
+      jenis = 'Penetapan'
+      sub_jenis = 'SubKegiatan'
       data = JSON.parse(response.body)
       pagu_opds = data['data']
       pagu_opds.each do |pagu|
         data_pagu = {
-          jenis: 'Penetapan',
-          sub_jenis: 'SubKegiatan',
+          jenis: jenis,
+          sub_jenis: sub_jenis,
           tahun: @tahun_asli,
           kode_opd: pagu['skpd_kode'],
           kode: pagu['sub_kegiatan_kode'],
@@ -80,7 +82,18 @@ module Api
           keterangan: 'Pagu SubKegiatan OPD',
           created_at: Time.now, updated_at: Time.now
         }
-        PaguAnggaran.insert(data_pagu)
+        cek_pagu = PaguAnggaran.find_by(
+          jenis: jenis,
+          sub_jenis: sub_jenis,
+          tahun: @tahun_asli,
+          kode_opd: pagu['skpd_kode'],
+          kode: pagu['sub_kegiatan_kode']
+        )
+        if cek_pagu.nil?
+          PaguAnggaran.insert(data_pagu)
+        else
+          cek_pagu.update(anggaran: pagu['pagu'])
+        end
       end
     end
   end

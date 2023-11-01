@@ -1,0 +1,48 @@
+<%= form_with(model: status_tombol) do |form| %>
+  <% if status_tombol.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(status_tombol.errors.count, "error") %> prohibited this status_tombol from being saved:</h2>
+
+      <ul>
+        <% status_tombol.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :tombol %>
+    <%= form.text_field :tombol %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kode_tombol %>
+    <%= form.text_field :kode_tombol, disabled: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :disabled %>
+    <%= form.check_box :disabled, disabled: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tahun %>
+    <%= form.text_field :tahun %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kode_opd %>
+    <%= form.text_field :kode_opd %>
+  </div>
+
+  <div class="field">
+    <%= form.label :keterangan %>
+    <%= form.text_field :keterangan %>
+  </div>
+
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -2692,6 +2692,42 @@ ALTER SEQUENCE public.spbes_id_seq OWNED BY public.spbes.id;
 
 
 --
+-- Name: status_tombols; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.status_tombols (
+    id bigint NOT NULL,
+    disabled boolean,
+    tombol character varying,
+    keterangan character varying,
+    kode_tombol character varying,
+    kode_opd character varying,
+    tahun character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: status_tombols_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.status_tombols_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: status_tombols_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.status_tombols_id_seq OWNED BY public.status_tombols.id;
+
+
+--
 -- Name: strategi_keluarans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3814,6 +3850,13 @@ ALTER TABLE ONLY public.spbes ALTER COLUMN id SET DEFAULT nextval('public.spbes_
 
 
 --
+-- Name: status_tombols id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.status_tombols ALTER COLUMN id SET DEFAULT nextval('public.status_tombols_id_seq'::regclass);
+
+
+--
 -- Name: strategi_keluarans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4473,6 +4516,14 @@ ALTER TABLE ONLY public.spbe_rincians
 
 ALTER TABLE ONLY public.spbes
     ADD CONSTRAINT spbes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: status_tombols status_tombols_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.status_tombols
+    ADD CONSTRAINT status_tombols_pkey PRIMARY KEY (id);
 
 
 --
@@ -5579,6 +5630,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231026080101'),
 ('20231031065618'),
 ('20231031083426'),
-('20231101013544');
+('20231101013544'),
+('20231101094524');
 
 

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @status_tombol.disabled %>
+</p>
+
+<p>
+  <strong>Tombol:</strong>
+  <%= @status_tombol.tombol %>
+</p>
+
+<p>
+  <strong>Keterangan:</strong>
+  <%= @status_tombol.keterangan %>
+</p>
+
+<p>
+  <strong>Kode tombol:</strong>
+  <%= @status_tombol.kode_tombol %>
+</p>
+
+<%= link_to 'Edit', edit_status_tombol_path(@status_tombol) %> |
+<%= link_to 'Back', status_tombols_path %>

@@ -62,6 +62,10 @@ module SuperAdminItemHelper
       {
         title: 'External API', href: external_urls_path,
         icon: 'fas fa-link-alt', identifier: 'external_url'
+      },
+      {
+        title: 'Status Tombol', href: status_tombols_path,
+        icon: 'fas fa-link-alt', identifier: 'status_tombol'
       }
     ]
   end
