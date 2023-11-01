@@ -9,6 +9,7 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :external_urls
   resources :reviews
   resources :kriteria
   resources :sub_kriteria
@@ -578,12 +579,15 @@ Rails.application.routes.draw do
     end
     namespace :pagu do
       post :sync_penetapan
+      post :sync_opd
+      post :sync_pagu_kak
     end
     namespace :opd do
       post :daftar_opd
       post :find_opd
       post :urusan_opd
       post :tujuan_opd
+      post :perbandingan_pagu
     end
     namespace :pohon_kinerja do
       post :pohon_kinerja_kota

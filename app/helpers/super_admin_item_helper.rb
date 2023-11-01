@@ -58,6 +58,10 @@ module SuperAdminItemHelper
       {
         title: 'Kriteria Verifikasi', href: kriteria_path,
         icon: 'fas fa-calendar-alt', identifier: 'kriteria'
+      },
+      {
+        title: 'External API', href: external_urls_path,
+        icon: 'fas fa-link-alt', identifier: 'external_url'
       }
     ]
   end

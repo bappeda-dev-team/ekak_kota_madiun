@@ -645,6 +645,42 @@ ALTER SEQUENCE public.domains_id_seq OWNED BY public.domains.id;
 
 
 --
+-- Name: external_urls; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.external_urls (
+    id bigint NOT NULL,
+    aplikasi character varying,
+    endpoint text,
+    username character varying,
+    password character varying,
+    keterangan character varying,
+    kode character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: external_urls_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.external_urls_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: external_urls_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.external_urls_id_seq OWNED BY public.external_urls.id;
+
+
+--
 -- Name: genders; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3435,6 +3471,13 @@ ALTER TABLE ONLY public.domains ALTER COLUMN id SET DEFAULT nextval('public.doma
 
 
 --
+-- Name: external_urls id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.external_urls ALTER COLUMN id SET DEFAULT nextval('public.external_urls_id_seq'::regclass);
+
+
+--
 -- Name: genders id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4030,6 +4073,14 @@ ALTER TABLE ONLY public.dasar_hukums
 
 ALTER TABLE ONLY public.domains
     ADD CONSTRAINT domains_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: external_urls external_urls_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.external_urls
+    ADD CONSTRAINT external_urls_pkey PRIMARY KEY (id);
 
 
 --
@@ -4671,6 +4722,13 @@ CREATE INDEX index_comments_on_anggaran_id ON public.comments USING btree (angga
 --
 
 CREATE INDEX index_comments_on_user_id ON public.comments USING btree (user_id);
+
+
+--
+-- Name: index_external_urls_on_kode; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_external_urls_on_kode ON public.external_urls USING btree (kode);
 
 
 --
@@ -5520,6 +5578,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231018073122'),
 ('20231026080101'),
 ('20231031065618'),
-('20231031083426');
+('20231031083426'),
+('20231101013544');
 
 

@@ -2,111 +2,111 @@ import { Controller } from 'stimulus'
 import ApexCharts from 'apexcharts'
 
 export default class extends Controller {
-  static targets = ['first', 'second']
-  connect() {
-    var standing = new ApexCharts(this.firstTarget, this.standingChart());
-    standing.render();
+  static targets = ['opds', 'subkegiatans']
+  static values = {
+    opd: String,
+    url: String
   }
 
-  lineChart() {
-    // Line chart
-    var optionsLineChart = {
-      series: [{
-        name: 'Clients',
-        data: [120, 160, 200, 470, 420, 150, 470, 750, 650, 190, 140]
-      }],
-      labels: ['01 Feb', '02 Feb', '03 Feb', '04 Feb', '05 Feb', '06 Feb', '07 Feb', '08 Feb', '09 Feb', '10 Feb', '11 Feb'],
-      chart: {
-        type: 'area',
-        width: "100%",
-        height: 360
-      },
-      theme: {
-        monochrome: {
-          enabled: true,
-          color: '#31316A',
-        }
-      },
-      tooltip: {
-        fillSeriesColor: false,
-        onDatasetHover: {
-          highlightDataSeries: false,
-        },
-        theme: 'light',
-        style: {
-          fontSize: '12px',
-          fontFamily: 'Inter',
-        },
-      },
-    };
-
-    return optionsLineChart;
-  }
-
-  barChart() {
-    // Bar Chart
-    var optionsBarChart = {
-      series: [{
-        name: 'Sales',
-        data: [34, 29, 32, 38, 39, 35, 36]
-      }],
+  baseChart() {
+    const options = {
       chart: {
         type: 'bar',
-        width: "100%",
-        height: 360
-      },
-      theme: {
-        monochrome: {
-          enabled: true,
-          color: '#31316A',
-        }
+        height: 450,
       },
       plotOptions: {
         bar: {
-          columnWidth: '25%',
-          borderRadius: 5,
-          radiusOnLastStackedBar: true,
-          colors: {
-            backgroundBarColors: ['#F2F4F6', '#F2F4F6', '#F2F4F6', '#F2F4F6'],
-            backgroundBarRadius: 5,
-          },
-        }
-      },
-      labels: [1, 2, 3, 4, 5, 6, 7],
-      xaxis: {
-        categories: ['01 Feb', '02 Feb', '03 Feb', '04 Feb', '05 Feb', '06 Feb', '07 Feb'],
-        crosshairs: {
-          width: 1
-        },
-      },
-      tooltip: {
-        fillSeriesColor: false,
-        onDatasetHover: {
-          highlightDataSeries: false,
-        },
-        theme: 'light',
-        style: {
-          fontSize: '12px',
-          fontFamily: 'Inter',
-        },
-        y: {
-          formatter: function (val) {
-            return "$ " + val + "k"
+          horizontal: true,
+          dataLabels: {
+            position: 'top'
           }
         }
       },
-    };
-
-    var barChart = new ApexCharts(this.element, optionsBarChart);
-    barChart.render();
+      dataLabels: {
+        enabled: true,
+        offsetX: -20,
+        style: {
+          fontSize: '12px',
+          colors: ['#fff']
+        }
+      },
+      series: [],
+      colors: ['#f34336', '#ff9f31'],
+      noData: {
+        text: 'Loading...'
+      },
+      xaxis: {
+        type: 'category'
+      },
+      tooltip: {
+        shared: true,
+        followCursor: true,
+        intersect: false,
+      },
+    }
+    return options;
   }
 
-  standingChart() {
+  opdsTargetConnected() {
+    const chart = new ApexCharts(this.opdsTarget, this.baseChart())
+    chart.render()
+
+    this.fetcher(chart)
+  }
+
+  subkegiatansTargetConnected() {
+    const chart = new ApexCharts(this.subkegiatansTarget, this.baseChart())
+    chart.render()
+
+    this.fetcher(chart)
+  }
+
+  async fetcher(chart) {
+    let formData = new FormData();
+    formData.append('kode_opd', this.opdValue);
+    formData.append('tahun', '2023_perubahan');
+
+    const request = await fetch('/api/opd/perbandingan_pagu',
+      {
+        body: formData,
+        method: "post",
+      })
+    const response = await request.json();
+    const data = response.data
+    this.seriesUpdater(data, chart)
+  }
+
+  seriesUpdater(data, chart) {
+    let testSeries = [
+      {
+        name: 'Pagu KAK',
+        data: [
+          {
+            x: data.nama_opd,
+            y: data.pagu_kak,
+          },
+        ]
+      },
+      {
+        name: 'Pagu SIPD',
+        data: [
+          {
+            x: data.nama_opd,
+            y: data.pagu_sipd
+          },
+        ]
+      }
+
+    ]
+    chart.updateSeries(testSeries)
+  }
+
+  chartRender() {
     var optionsTrafficShareChart = {
-      series: [{
-        name: 'Visits',
-        data: [4, 7, 9, 29, 51]
-      }],
+      series: [],
+      noData: {
+        text: 'Memuat Data...'
+      },
       chart: {
         type: 'bar',
         height: 500,
@@ -172,23 +172,6 @@ export default class extends Controller {
           }
         },
       },
-      xaxis: {
-        categories: ['Mail', 'Social', 'Organic', 'Referrals', 'Direct'],
-        labels: {
-          style: {
-            fontSize: '12px',
-            fontWeight: 500,
-          },
-          offsetY: 5
-        },
-        axisBorder: {
-          color: '#ffffff',
-        },
-        axisTicks: {
-          color: '#ffffff',
-          offsetY: 5
-        },
-      }
     };
 
     return optionsTrafficShareChart;
