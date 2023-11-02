@@ -27,7 +27,7 @@
         <li class="list-group-item px-0">
           <div class="row align-items-center">
             <div class="d-flex align-items-center">
-              <h5><%= current_user.nama.capitalize %></h5>
+              <h5><%= current_user.nama %></h5>
             </div>
             <hr/>
             <div class="d-flex align-items-center">
@@ -46,24 +46,51 @@
               <strong><%= current_user.nik %></strong>
             </div>
             <hr/>
-            <div class="d-flex align-items-center">
-              <div class="bg-primary dot rounded-circle me-1"></div>
-              <small>Email :</small>
-              <small><%= current_user.email %></small>
-            </div>
-            <div class="d-flex align-items-center">
-              <div class="bg-info dot rounded-circle me-1"></div>
-              <small>Peran :</small>
-              <small><%= current_user.roles.pluck :name %></small>
-            </div>
-            <div class="d-flex align-items-center">
-              <div class="bg-info dot rounded-circle me-1"></div>
-              <small>Bidang :</small>
-              <small><%= current_user.nama_bidang %></small>
+            <div class="d-flex justify-content-between">
+              <div class="d-flex align-items-center">
+                <div class="bg-success dot rounded-circle me-1"></div>
+                <small>Jabatan :</small>
+                <strong><%= current_user.jabatan %></strong>
+              </div>
+              <div>
+                <%= button_to api_skp_client_sync_jabatan_path,
+                 disabled: button_disabled?('sync-jabatan-asn', current_user.nik, @tahun),
+                 remote: true,
+                 class: 'btn btn-info toggle-active',
+                 data: {
+                   disable_with: 'Memproses.....'
+                 },
+                 params: { kode_tombol: 'sync-jabatan-asn', kode: @kode_opd, tahun: @tahun } do %>
+                  <i class="fas fa-sync icon icon-xs me-2"></i>
+                  Sync Jabatan ASN
+                <% end %>
+              </div>
             </div>
           </div>
-        </li>
-      </ul>
-    </div>
+          <div class="d-flex align-items-center">
+            <div class="bg-primary dot rounded-circle me-1"></div>
+            <small>Update Terakhir :</small>
+            <small><%= current_user.updated_at %></small>
+          </div>
+          <hr/>
+          <div class="d-flex align-items-center">
+            <div class="bg-primary dot rounded-circle me-1"></div>
+            <small>Email :</small>
+            <small><%= current_user.email %></small>
+          </div>
+          <div class="d-flex align-items-center">
+            <div class="bg-info dot rounded-circle me-1"></div>
+            <small>Peran :</small>
+            <small><%= current_user.roles.pluck :name %></small>
+          </div>
+          <div class="d-flex align-items-center">
+            <div class="bg-info dot rounded-circle me-1"></div>
+            <small>Bidang :</small>
+            <small><%= current_user.nama_bidang %></small>
+          </div>
+        </div>
+      </li>
+    </ul>
   </div>
+</div>
 <% end %>
