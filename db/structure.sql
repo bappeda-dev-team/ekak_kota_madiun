@@ -919,6 +919,44 @@ ALTER SEQUENCE public.isu_strategis_opds_id_seq OWNED BY public.isu_strategis_op
 
 
 --
+-- Name: jabatans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.jabatans (
+    id bigint NOT NULL,
+    nama_jabatan character varying,
+    kelas_jabatan character varying,
+    nilai_jabatan integer,
+    index character varying,
+    kode_opd character varying,
+    tipe character varying,
+    kode_jabatan character varying,
+    tahun character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: jabatans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.jabatans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: jabatans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.jabatans_id_seq OWNED BY public.jabatans.id;
+
+
+--
 -- Name: kaks; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3556,6 +3594,13 @@ ALTER TABLE ONLY public.isu_strategis_opds ALTER COLUMN id SET DEFAULT nextval('
 
 
 --
+-- Name: jabatans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.jabatans ALTER COLUMN id SET DEFAULT nextval('public.jabatans_id_seq'::regclass);
+
+
+--
 -- Name: kaks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4172,6 +4217,14 @@ ALTER TABLE ONLY public.isu_strategis_kota
 
 ALTER TABLE ONLY public.isu_strategis_opds
     ADD CONSTRAINT isu_strategis_opds_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: jabatans jabatans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.jabatans
+    ADD CONSTRAINT jabatans_pkey PRIMARY KEY (id);
 
 
 --
@@ -5631,6 +5684,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231031065618'),
 ('20231031083426'),
 ('20231101013544'),
-('20231101094524');
+('20231101094524'),
+('20231102022936');
 
 

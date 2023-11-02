@@ -29,7 +29,7 @@ module Api
       render 'shared/_notifikasi_simple'
     end
 
-    def sync_opd
+    def sync_opd # rubocop:disable Metrics/AbcSize
       @tahun_asli = cookies[:tahun]
       kode_opd = cookies[:opd]
       kode_tombol = params[:kode_tombol]

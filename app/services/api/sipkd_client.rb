@@ -65,7 +65,7 @@ module Api
       end
     end
 
-    def update_pagu_opd(response)
+    def update_pagu_opd(response) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       # data = Oj.load(response.body)
       jenis = 'Penetapan'
       sub_jenis = 'SubKegiatan'

@@ -9,6 +9,7 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :jabatans
   resources :status_tombols
   resources :external_urls
   resources :reviews
@@ -578,6 +579,9 @@ Rails.application.routes.draw do
       post :tujuan_opd
       post :sasaran_opd
     end
+    namespace :skp_client do
+      post :sync_jabatan
+    end
     namespace :pagu do
       post :sync_penetapan
       post :sync_opd
@@ -709,13 +713,7 @@ Rails.application.routes.draw do
   get "/laporan_tematik_apbd", to: "subkegiatan_tematiks#laporan_tematik_apbd"
   #
   # third party Api
-  get "/sync_sasaran", to: "api/skp_client#sync_sasaran"
   get "/sync_pegawai", to: "api/skp_client#sync_pegawai"
-  get "/sync_struktur_pegawai", to: "api/skp_client#sync_struktur_pegawai"
-  get "/sync_opd", to: "api/skp_client#sync_opd"
-  get "/sync_tujuan_opd", to: "api/skp_client#sync_tujuan_opd"
-  get "/sync_kota", to: "api/skp_client#sync_kota"
-  get "/sync_tujuan_kota", to: "api/skp_client#sync_tujuan_kota"
   get "/sync_subkegiatan", to: "api/sipd_client#sync_subkegiatan"
   get "/sync_subkegiatan_opd", to: "api/sipd_client#sync_subkegiatan_opd"
   get "/update_detail_kegiatan_lama", to: "api/sipd_client#update_detail_kegiatan_lama"

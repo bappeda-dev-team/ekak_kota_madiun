@@ -1,0 +1,59 @@
+<%= content_for :html_title, "Master Jabatan" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Data Master</li>
+  <li class="breadcrumb-item active" aria-current="page">Jabatan</li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="card border-0 shadow">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h2 class="fs-5 fw-bold mb-0">Master Jabatan</h2>
+        </div>
+        <div class="col text-end">
+          <%= link_to "Jabatan Baru", new_jabatan_path,
+           remote: true,
+           data: {
+             controller: 'form-modal',
+             action: 'ajax:complete->form-modal#success:prevent',
+             bs_toggle: 'modal',
+             bs_target: '#form-modal'
+           },
+           class: "btn btn-sm btn-info" %>
+        </div>
+        <div class="col-auto text-end">
+          <%= button_to api_skp_client_sync_jabatan_path,
+            disabled: button_disabled?('sync-jabatan', @kode_opd, @tahun),
+            remote: true,
+            class: 'btn btn-info toggle-active',
+            data: {
+                disable_with: 'Memproses.....'
+            },
+            params: { kode_tombol: 'sync-jabatan', kode_opd: @kode_opd, tahun: @tahun } do %>
+            <i class="fas fa-sync icon icon-xs me-2"></i>
+            Sync Jabatan
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-flush counter" data-datatable>
+          <caption>Data Jabatan tahun <%= @tahun %></caption>
+          <thead class="thead-light">
+            <tr>
+              <th class="border-bottom text-gray-700" scope="col">No.</th>
+              <th class="border-bottom text-gray-700" scope="col">Jabatan</th>
+              <th class="border-bottom text-gray-700" scope="col">Tipe</th>
+              <th class="border-bottom text-gray-700" scope="col">OPD</th>
+              <th class="border-bottom text-gray-700 text-center" scope="col" colspan='1'>Action</th>
+            </tr>
+          </thead>
+          <tbody id="new_jabatan">
+            <%= render @jabatans %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% end %>

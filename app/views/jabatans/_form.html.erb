@@ -1,0 +1,68 @@
+<%= form_with(model: jabatan, local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: dom_id(jabatan),
+                form_ajax_type_param: jabatan.new_record? ? 'afterbegin' : '',
+                action: 'ajax:complete->form-ajax#processAjax'
+              }
+) do |form| %>
+  <% if jabatan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(jabatan.errors.count, "error") %> prohibited this jabatan from being saved:</h2>
+
+      <ul>
+        <% jabatan.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :nama_jabatan, class: 'form-label' %>
+    <%= form.text_field :nama_jabatan, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kelas_jabatan, class: 'form-label' %>
+    <%= form.text_field :kelas_jabatan, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :nilai_jabatan, class: 'form-label' %>
+    <%= form.number_field :nilai_jabatan, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :index, class: 'form-label' %>
+    <%= form.text_field :index, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kode_opd, class: 'form-label' %>
+    <%= form.text_field :kode_opd, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tipe, class: 'form-label' %>
+    <%= form.text_field :tipe, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kode_jabatan, class: 'form-label' %>
+    <%= form.text_field :kode_jabatan, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tahun, class: 'form-label' %>
+    <%= form.select(:tahun, options_for_select(Tahun.pluck(:tahun), form.object.tahun), {},
+    { data: {"placeholder": "Pilih Tahun",
+              controller: 'dropdown',
+              dropdown_parent_value: '#form-modal-body'
+    }}) %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nama jabatan:</strong>
+  <%= @jabatan.nama_jabatan %>
+</p>
+
+<p>
+  <strong>Kelas jabatan:</strong>
+  <%= @jabatan.kelas_jabatan %>
+</p>
+
+<p>
+  <strong>Nilai jabatan:</strong>
+  <%= @jabatan.nilai_jabatan %>
+</p>
+
+<p>
+  <strong>Index:</strong>
+  <%= @jabatan.index %>
+</p>
+
+<p>
+  <strong>Kode opd:</strong>
+  <%= @jabatan.kode_opd %>
+</p>
+
+<p>
+  <strong>Tipe:</strong>
+  <%= @jabatan.tipe %>
+</p>
+
+<p>
+  <strong>Kode jabatan:</strong>
+  <%= @jabatan.kode_jabatan %>
+</p>
+
+<p>
+  <strong>Tahun:</strong>
+  <%= @jabatan.tahun %>
+</p>
+
+<%= link_to 'Edit', edit_jabatan_path(@jabatan) %> |
+<%= link_to 'Back', jabatans_path %>

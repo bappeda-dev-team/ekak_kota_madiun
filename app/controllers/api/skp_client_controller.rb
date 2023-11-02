@@ -9,55 +9,23 @@ module Api
     before_action :set_params
     before_action :verify_kode_opd, only: [:sync_sasaran]
 
-    def sync_sasaran
-      UpdateSkpJob.perform_async(@kode_opd, @tahun, @bulan, @nip_asn)
-      flash.now[:success] = "Update Sasaran #{@nip_asn} Dikerjakan. Harap menunggu..."
-      render 'shared/_notifikasi_simple'
-    end
-
     def sync_pegawai
       UpdateUserJob.perform_later(@kode_opd, @tahun, @bulan)
       flash.now[:success] = "Update Pegawai #{nama_opd} Dikerjakan. Harap menunggu..."
       render 'shared/_notifikasi_simple'
     end
 
-    def sync_struktur_pegawai
-      UpdateStrukturJob.perform_later(@kode_opd, @tahun, @bulan)
-      flash.now[:success] = "Update Struktur Pegawai #{nama_opd} Dikerjakan. Harap menunggu.."
-      render 'shared/_notifikasi_simple'
-    end
+    def sync_jabatan
+      kode_tombol = params[:kode_tombol]
+      SyncJabatanJob.perform_async(@kode_opd, @tahun)
 
-    def sync_opd
-      UpdateOpdJob.perform_later(@kode_opd, @tahun)
-      flash.now[:success] = "Update Sasaran Opd #{nama_opd} Dikerjakan. Harap menunggu..."
-      render 'shared/_notifikasi_simple'
-    end
+      update_tombol(kode_tombol: kode_tombol, tahun: @tahun, kode_opd: @kode_opd, tombol: 'Sync Jabatan')
 
-    def sync_kota
-      UpdateSasaranKotaJob.perform_async(nil, nil)
-      flash.now[:success] = "Update Sasaran Kota Dikerjakan. Harap menunggu..."
-      render 'shared/_notifikasi_simple'
-    end
-
-    def sync_tujuan_kota
-      UpdateTujuanKotaJob.perform_async(nil, nil)
-      flash.now[:success] = "Update Tujuan Kota Dikerjakan. Harap menunggu..."
-      render 'shared/_notifikasi_simple'
-    end
-
-    def sync_tujuan_opd
-      UpdateTujuanOpdJob.perform_later(@kode_opd, @tahun)
-      flash.now[:success] = "Update Tujuan Opd #{nama_opd} Dikerjakan. Harap menunggu..."
+      flash.now[:success] = "Sinkronisasi Jabatan dikerjakan.."
       render 'shared/_notifikasi_simple'
     end
 
     private
-
-    def verify_kode_opd
-      opd = Opd.find_by(kode_unik_opd: @kode_opd).kode_opd
-      user = User.find_by(kode_opd: opd).nil?
-      redirect_to adminsasarans_path, error: "Harap update pegawai #{nama_opd} terlebih dahulu" if user
-    end
 
     def nama_opd
       Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
@@ -68,6 +36,25 @@ module Api
       @tahun = params[:tahun]
       @bulan = params[:bulan]
       @nip_asn = params[:nip_asn]
+    end
+
+    def update_tombol(kode_tombol:, tahun:, kode_opd:, tombol:)
+      status_tombol = StatusTombol.find_by(
+        kode_tombol: kode_tombol,
+        tahun: tahun,
+        kode_opd: kode_opd
+      )
+      if status_tombol.nil?
+        StatusTombol.create(
+          kode_tombol: kode_tombol,
+          tahun: tahun,
+          kode_opd: kode_opd,
+          disabled: true,
+          tombol: tombol
+        )
+      else
+        status_tombol.update(disabled: true)
+      end
     end
   end
 end

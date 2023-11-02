@@ -1,0 +1,2 @@
+module JabatansHelper
+end

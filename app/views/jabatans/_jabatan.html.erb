@@ -1,0 +1,20 @@
+<tr id="<%= dom_id(jabatan) %>">
+  <td class="text-gray-900 fw-bolder" scope="row"></td>
+  <td class="fw-bolder text-gray-500 text-wrap"><%= jabatan.nama_jabatan %></td>
+  <td class="fw-bolder text-gray-500 text-wrap"><%= jabatan.tipe %></td>
+  <td class="fw-bolder text-gray-500 text-wrap"><%= jabatan.kode_opd %></td>
+  <td class="fw-bolder text-gray-500 text-center align-middle">
+    <%= link_to edit_jabatan_path(jabatan),
+                   remote: true,
+                   data: {
+                     controller: 'form-modal',
+                     action: 'ajax:complete->form-modal#success:prevent',
+                     bs_toggle: 'modal',
+                     bs_target: '#form-modal'
+                   },
+                   class: "btn btn-sm btn-info"  do %>
+      <i class="fas fa-edit" data-bs-toggle="tooltip"></i>
+      Edit
+    <% end %>
+  </td>
+</tr>
