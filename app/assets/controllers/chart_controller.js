@@ -85,7 +85,7 @@ export default class extends Controller {
     const options = {
       chart: {
         type: 'bar',
-        height: 500,
+        height: 750,
         foreColor: '#4B5563',
         fontFamily: 'Inter',
       },
@@ -93,8 +93,13 @@ export default class extends Controller {
       noData: {
         text: 'Memuat Data...'
       },
+      colors: ['#f34336', '#ff9f31'],
       dataLabels: {
         enabled: false
+      },
+      tooltip: {
+        shared: true,
+        intersect: false
       },
     }
     const chart = new ApexCharts(this.opdsTarget, options)
@@ -107,10 +112,19 @@ export default class extends Controller {
     const data = await this.fetcher(url, formData)
     const pagu_kak = data.map((val) => {
       let pagu = Math.floor(val.pagu_kak / 1000_000_000)
+      let pagu_sipd = Math.floor(val.pagu_sipd / 1000_000_000)
       return (
         {
           x: val.nama_opd,
-          y: pagu
+          y: pagu,
+          goals: [
+            {
+              name: 'Target',
+              value: pagu_sipd,
+              strokeHeight: 5,
+              strokeColor: '#775DD0'
+            }
+          ]
         }
       )
     })
@@ -134,8 +148,32 @@ export default class extends Controller {
           data: pagu_sipd
         }
       ],
+      tooltip: {
+        fillSeriesColor: false,
+        onDatasetHover: {
+          highlightDataSeries: true,
+        },
+        theme: 'light',
+        style: {
+          fontSize: '12px',
+          fontFamily: 'Inter',
+        },
+        y: {
+          formatter: function (val) {
+            const label = val === 0 ? 0 : "Rp." + val + " M"
+            return label
+          }
+        },
+      },
       xaxis: {
-        position: 'bottom'
+        position: 'bottom',
+        labels: {
+          show: true,
+          rotate: -75,
+          rotateAlways: true,
+          maxHeight: 250,
+          trim: true
+        }
       }
     })
     // chart.updateSeries(newSeries)
