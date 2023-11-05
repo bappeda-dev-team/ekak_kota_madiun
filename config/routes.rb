@@ -462,6 +462,7 @@ Rails.application.routes.draw do
       get :sasaran_tactical
       get :sasaran_operational
       get :bidang
+      get :opd_resmi
     end
     member do
       get :buat_strategi

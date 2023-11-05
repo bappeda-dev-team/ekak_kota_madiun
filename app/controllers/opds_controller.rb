@@ -11,6 +11,15 @@ class OpdsController < ApplicationController
     @opds = Opd.where(id: params[:item].where.not(kode_unik_opd: nil))
   end
 
+  def opd_resmi
+    param = params[:q] || ""
+
+    @opds = Opd.with_user.where("nama_opd ILIKE ?", "%#{param}%").where.not(kode_unik_opd: nil)
+    return unless params[:item]
+
+    @opds = Opd.with_user.where(id: params[:item].where.not(kode_unik_opd: nil))
+  end
+
   def info
     @kode_opd = cookies[:opd]
     @opds = Opd.where(kode_unik_opd: @kode_opd)

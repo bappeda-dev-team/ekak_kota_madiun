@@ -62,7 +62,7 @@ class Opd < ApplicationRecord
 
   scope :opd_resmi, -> { where.not(kode_unik_opd: nil) }
   scope :with_bidang, -> { where(has_bidang: true) }
-  scope :with_user, -> { joins(:users).merge(User.eselon2).where.not(id: 1).uniq }
+  scope :with_user, -> { joins(:users).merge(User.eselon2).where.not(id: 1).distinct.order(:kode_unik_opd) }
 
   before_validation :create_kode_opd, if: :new_opd?
 
