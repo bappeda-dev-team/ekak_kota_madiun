@@ -2,52 +2,105 @@ import { Controller } from 'stimulus'
 import ApexCharts from 'apexcharts'
 
 export default class extends Controller {
-  static targets = ['opd', 'opds', 'subkegiatans']
+  static targets = ['opd', 'opds']
   static values = {
     opd: String,
-    url: String
+    url: String,
+    tahun: String
   }
 
-  baseChart() {
-    const options = {
-      chart: {
-        type: 'bar',
-        height: 650,
-        foreColor: '#4B5563',
-        fontFamily: 'Inter',
-      },
-      series: [],
-      colors: ['#f34336', '#ff9f31'],
-      noData: {
-        text: 'Memuat Data...'
-      },
-      plotOptions: {
-        bar: {
-          barHeight: '100%',
-          horizontal: true,
-          columnWdith: '90%'
+  changeOpd(event) {
+    const { id } = event.detail.data
+    const url = '/api/opd/perbandingan_pagu'
+    let formData = new FormData();
+    formData.append('kode_opd', id);
+    formData.append('tahun', this.tahunValue);
+
+    this.chartUpdate(url, formData)
+  }
+
+  async chartUpdate(url, formData) {
+    const chart = ApexCharts.getChartByID('opd')
+    chart.resetSeries()
+
+    const data = await this.fetcher(url, formData)
+    const pagu_kak = data.subkegiatan_opd.map((val) => {
+      let pagu = Math.floor(val.pagu_kak / 1000_000)
+      let pagu_sipd = Math.floor(val.pagu_sipd / 1000_000)
+      return (
+        {
+          x: val.nama_subkegiatan,
+          y: pagu,
+          goals: [
+            {
+              name: 'Target',
+              value: pagu_sipd,
+              strokeHeight: 2,
+              strokeColor: '#775DD0'
+            }
+          ]
         }
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      tooltip: {
-        shared: true,
-        followCursor: true,
-        intersect: false,
-      },
+      )
+    })
+    const pagu_sipd = data.subkegiatan_opd.map((val) => {
+      let pagu = Math.floor(val.pagu_sipd / 1000_000)
+      return (
+        {
+          x: val.nama_subkegiatan,
+          y: pagu
+        }
+      )
+    })
+    chart.updateOptions({
+      series: [
+        {
+          name: 'Pagu KAK',
+          data: pagu_kak
+        },
+        {
+          name: 'Pagu SIPD',
+          data: pagu_sipd
+        }
+      ],
       title: {
-        text: 'Pagu Subkegiatan',
+        text: 'Pagu Subkegiatan ' + data.nama_opd,
         align: 'center',
         floatinig: true
+      },
+      tooltip: {
+        fillSeriesColor: false,
+        onDatasetHover: {
+          highlightDataSeries: true,
+        },
+        theme: 'light',
+        style: {
+          fontSize: '14px',
+          fontFamily: 'Inter',
+        },
+        y: {
+          formatter: function (val) {
+            const label = val === 0 ? 0 : "Rp." + val + " Juta"
+            return label
+          }
+        },
+      },
+      xaxis: {
+        position: 'bottom',
+        labels: {
+          show: true,
+          rotate: -75,
+          rotateAlways: true,
+          maxHeight: 250,
+          trim: true
+        }
       }
-    }
-    return options;
+    })
   }
 
   async opdTargetConnected() {
     const options = {
       chart: {
+        id: 'opd',
         type: 'bar',
         height: 750,
         foreColor: '#4B5563',
@@ -89,7 +142,7 @@ export default class extends Controller {
 
     let formData = new FormData();
     formData.append('kode_opd', this.opdValue);
-    formData.append('tahun', '2023_perubahan');
+    formData.append('tahun', this.tahunValue);
     const url = '/api/opd/perbandingan_pagu'
 
     const data = await this.fetcher(url, formData)
@@ -131,6 +184,11 @@ export default class extends Controller {
           data: pagu_sipd
         }
       ],
+      title: {
+        text: 'Pagu Subkegiatan ' + data.nama_opd,
+        align: 'center',
+        floatinig: true
+      },
       tooltip: {
         fillSeriesColor: false,
         onDatasetHover: {
@@ -174,21 +232,12 @@ export default class extends Controller {
           autoScaleYaxis: true
         }
       },
-      events: {
-        beforeZoom: (e, { yaxis }) => {
-          return {
-            yaxis: {
-              min: 0,
-            }
-          }
-        }
-      },
       series: [],
       noData: {
         text: 'Memuat Data...'
       },
       title: {
-        text: 'Pagu OPD',
+        text: 'Pagu OPD ' + this.tahunValue,
         align: 'center',
         floatinig: true
       },
@@ -214,7 +263,7 @@ export default class extends Controller {
 
     // data fetch
     let formData = new FormData();
-    formData.append('tahun', '2023_perubahan');
+    formData.append('tahun', this.tahunValue);
     const url = '/api/opd/pagu_all'
     const data = await this.fetcher(url, formData)
     const pagu_kak = data.map((val) => {
@@ -283,14 +332,6 @@ export default class extends Controller {
         }
       }
     })
-    // chart.updateSeries(newSeries)
-  }
-
-  subkegiatansTargetConnected() {
-    const chart = new ApexCharts(this.subkegiatansTarget, this.baseChart())
-    chart.render()
-
-    this.fetcher(chart)
   }
 
   async fetcher(url, formData) {
@@ -301,81 +342,5 @@ export default class extends Controller {
       })
     const response = await request.json();
     return response.data;
-  }
-
-  chartRender() {
-    var optionsTrafficShareChart = {
-      series: [],
-      noData: {
-        text: 'Memuat Data...'
-      },
-      chart: {
-        type: 'bar',
-        height: 500,
-        foreColor: '#4B5563',
-        fontFamily: 'Inter',
-      },
-      plotOptions: {
-        bar: {
-          horizontal: true,
-          distributed: false,
-          barHeight: '90%',
-          borderRadius: 10,
-          colors: {
-            backgroundBarColors: ['#fff'],
-            backgroundBarOpacity: .2,
-            backgroundBarRadius: 10,
-          },
-        }
-      },
-      colors: ['#4D4AE8'],
-      dataLabels: {
-        enabled: true,
-        textAnchor: 'middle',
-        formatter: function (val, opt) {
-          return opt.w.globals.labels[opt.dataPointIndex]
-        },
-        offsetY: -1,
-        dropShadow: {
-          enabled: false,
-        },
-        style: {
-          fontSize: '12px',
-          fontFamily: 'Inter',
-          fontWeight: '500',
-        }
-      },
-      grid: {
-        show: false,
-        borderColor: '#f2f2f2',
-        strokeDashArray: 1,
-      },
-      legend: {
-        show: false,
-      },
-      yaxis: {
-        labels: {
-          show: false
-        },
-      },
-      tooltip: {
-        fillSeriesColor: false,
-        onDatasetHover: {
-          highlightDataSeries: false,
-        },
-        theme: 'light',
-        style: {
-          fontSize: '12px',
-          fontFamily: 'Inter',
-        },
-        y: {
-          formatter: function (val) {
-            return val + "%"
-          }
-        },
-      },
-    };
-
-    return optionsTrafficShareChart;
   }
 }
