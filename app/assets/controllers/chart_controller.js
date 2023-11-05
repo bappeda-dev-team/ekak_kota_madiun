@@ -12,82 +12,51 @@ export default class extends Controller {
     const options = {
       chart: {
         type: 'bar',
-        height: 450,
-      },
-      plotOptions: {
-        bar: {
-          horizontal: true,
-          dataLabels: {
-            position: 'top'
-          }
-        }
-      },
-      dataLabels: {
-        enabled: true,
-        offsetX: -20,
-        style: {
-          fontSize: '12px',
-          colors: ['#fff']
-        }
+        height: 650,
+        foreColor: '#4B5563',
+        fontFamily: 'Inter',
       },
       series: [],
       colors: ['#f34336', '#ff9f31'],
       noData: {
-        text: 'Loading...'
+        text: 'Memuat Data...'
       },
-      xaxis: {
-        type: 'category'
+      plotOptions: {
+        bar: {
+          barHeight: '100%',
+          horizontal: true,
+          columnWdith: '90%'
+        }
+      },
+      dataLabels: {
+        enabled: false,
       },
       tooltip: {
         shared: true,
         followCursor: true,
         intersect: false,
       },
+      title: {
+        text: 'Pagu Subkegiatan',
+        align: 'center',
+        floatinig: true
+      }
     }
     return options;
   }
 
   async opdTargetConnected() {
-    const chart = new ApexCharts(this.opdTarget, this.baseChart())
-    chart.render()
-
-    let formData = new FormData();
-    formData.append('kode_opd', this.opdValue);
-    formData.append('tahun', '2023_perubahan');
-    const url = '/api/opd/perbandingan_pagu'
-
-    const data = await this.fetcher(url, formData)
-    const series = [
-      {
-        name: 'Pagu KAK',
-        data: [
-          {
-            x: data.nama_opd,
-            y: data.pagu_kak,
-          },
-        ]
-      },
-      {
-        name: 'Pagu SIPD',
-        data: [
-          {
-            x: data.nama_opd,
-            y: data.pagu_sipd
-          },
-        ]
-      }
-
-    ]
-    chart.updateSeries(series)
-  }
-
-  async opdsTargetConnected() {
     const options = {
       chart: {
         type: 'bar',
         height: 750,
         foreColor: '#4B5563',
         fontFamily: 'Inter',
+        zoom: {
+          enabled: true,
+          type: 'y',
+          autoScaleYaxis: true
+        }
       },
       series: [],
       noData: {
@@ -97,10 +66,148 @@ export default class extends Controller {
       dataLabels: {
         enabled: false
       },
+      title: {
+        text: 'Pagu Subkegiatan',
+        align: 'center',
+        floatinig: true
+      },
+      subtitle: {
+        text: 'Perbandingan Pagu KAK dan Pagu SIPD',
+        align: 'center',
+        floatinig: true
+      },
       tooltip: {
         shared: true,
         intersect: false
       },
+      xaxis: {
+        tickPlacement: 'on'
+      },
+    }
+    const chart = new ApexCharts(this.opdTarget, options)
+    chart.render()
+
+    let formData = new FormData();
+    formData.append('kode_opd', this.opdValue);
+    formData.append('tahun', '2023_perubahan');
+    const url = '/api/opd/perbandingan_pagu'
+
+    const data = await this.fetcher(url, formData)
+    const pagu_kak = data.subkegiatan_opd.map((val) => {
+      let pagu = Math.floor(val.pagu_kak / 1000_000)
+      let pagu_sipd = Math.floor(val.pagu_sipd / 1000_000)
+      return (
+        {
+          x: val.nama_subkegiatan,
+          y: pagu,
+          goals: [
+            {
+              name: 'Target',
+              value: pagu_sipd,
+              strokeHeight: 2,
+              strokeColor: '#775DD0'
+            }
+          ]
+        }
+      )
+    })
+    const pagu_sipd = data.subkegiatan_opd.map((val) => {
+      let pagu = Math.floor(val.pagu_sipd / 1000_000)
+      return (
+        {
+          x: val.nama_subkegiatan,
+          y: pagu
+        }
+      )
+    })
+    chart.updateOptions({
+      series: [
+        {
+          name: 'Pagu KAK',
+          data: pagu_kak
+        },
+        {
+          name: 'Pagu SIPD',
+          data: pagu_sipd
+        }
+      ],
+      tooltip: {
+        fillSeriesColor: false,
+        onDatasetHover: {
+          highlightDataSeries: true,
+        },
+        theme: 'light',
+        style: {
+          fontSize: '14px',
+          fontFamily: 'Inter',
+        },
+        y: {
+          formatter: function (val) {
+            const label = val === 0 ? 0 : "Rp." + val + " Juta"
+            return label
+          }
+        },
+      },
+      xaxis: {
+        position: 'bottom',
+        labels: {
+          show: true,
+          rotate: -75,
+          rotateAlways: true,
+          maxHeight: 250,
+          trim: true
+        }
+      }
+    })
+  }
+
+  async opdsTargetConnected() {
+    const options = {
+      chart: {
+        type: 'bar',
+        height: 750,
+        foreColor: '#4B5563',
+        fontFamily: 'Inter',
+        zoom: {
+          enabled: true,
+          type: 'y',
+          autoScaleYaxis: true
+        }
+      },
+      events: {
+        beforeZoom: (e, { yaxis }) => {
+          return {
+            yaxis: {
+              min: 0,
+            }
+          }
+        }
+      },
+      series: [],
+      noData: {
+        text: 'Memuat Data...'
+      },
+      title: {
+        text: 'Pagu OPD',
+        align: 'center',
+        floatinig: true
+      },
+      subtitle: {
+        text: 'Perbandingan Pagu KAK dan Pagu SIPD',
+        align: 'center',
+        floatinig: true
+      },
+      colors: ['#f34336', '#ff9f31'],
+      dataLabels: {
+        enabled: false
+      },
+      tooltip: {
+        shared: true,
+        intersect: false
+      },
+      xaxis: {
+        tickPlacement: 'on'
+      }
     }
     const chart = new ApexCharts(this.opdsTarget, options)
     chart.render()
@@ -155,7 +262,7 @@ export default class extends Controller {
         },
         theme: 'light',
         style: {
-          fontSize: '12px',
+          fontSize: '14px',
           fontFamily: 'Inter',
         },
         y: {
@@ -172,7 +279,7 @@ export default class extends Controller {
           rotate: -75,
           rotateAlways: true,
           maxHeight: 250,
-          trim: true
+          trim: true,
         }
       }
     })
