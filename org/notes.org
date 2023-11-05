@@ -50,3 +50,14 @@
 - [ ] pindah pohon tematik kota
 - [X] tujuan opd di atas pohon opd
 - [ ] ganti opd ganti kebawahnya juga
+* TODO <2023-11-05 Sun>
+- [ ] Ganti nama bidang di (_form_detail.html.erb)
+      menjadi pilihan opd bidang
+- [ ] pada jabatan_user model, tambah guard / before create untuk cek
+      jabatan user pada id jabatan, opd, jika ada yang beda, lakukan create
+      jika tidak ada yang berbeda, abaikan input
+      - pada sistem ini, tidak perlu untuk update jabatan bulanan, karena yang diperlukan
+      adalah kapan, user berganti jabatan atau berganti opd.
+      case:
+        - jabatan sama, dan opd berubuah
+        - jabatan berbeda, dan opd tetap sama

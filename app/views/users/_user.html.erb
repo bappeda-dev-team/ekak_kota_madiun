@@ -5,7 +5,14 @@
     <br>
     <%= user.nik %>
   </td>
-  <td class="text-gray-900 text-wrap border" scope="row"><%= user.jabatan %></td>
+  <td class="text-gray-900 text-wrap border" scope="row">
+    <%= user.jabatan %>
+    <ul>
+    <% user.jabatan_users.each do |jabatan_user| %>
+      <li><%= jabatan_user.details %></li>
+    <% end %>
+    </ul>
+  </td>
   <td class="text-gray-900 text-wrap border" scope="row"><%= user.opd.nama_opd %></td>
   <td class="fw-bolder text-gray-500 border">
     <ul>
@@ -61,8 +68,8 @@
   </td>
   <td class="fw-bolder border text-gray-500 text-center">
     <% if current_user.has_role? :super_admin %>
-      <div class="row mb-2">
-      <%= link_to mutasi_asn_user_path(user.id),
+      <div class="d-grid gap-2">
+      <%= link_to mutasi_asn_user_path(user),
           remote: true, 
           data: { 
             controller: 'form-modal', 
@@ -74,12 +81,24 @@
         <i class="fa fa-cog me-2"></i>
         <span>Mutasi ASN</span>
       <% end %>
-      </div>
-      <div class="row mb-2">
-        <%= link_to 'Edit User', edit_detail_user_path(user, target_render: list_all_users_path),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-user"}, class: "btn btn-sm btn-info" %>
-      </div>
-      <div class="row">
-        <%= link_to 'Hapus User', user, method: :delete, data: { confirm_swal: "Hapus #{user.nama}?" }, class: 'btn btn-outline-danger btn-sm' %>
+        <%= link_to edit_detail_user_path(user),
+          remote: true,
+          data: { 
+            controller: 'form-modal', 
+            action: 'ajax:complete->form-modal#success:prevent',
+            bs_toggle: 'modal',
+            bs_target: '#form-modal'
+          }, 
+          class: "btn btn-sm btn-info" do %>
+        <i class="fas fa-pencil-alt me-2"></i>
+        <span>Edit User</span>
+        <% end %>
+        <%= link_to user, method: :delete, 
+            data: { confirm_swal: "Hapus #{user.nama}?" }, 
+            class: 'btn btn-danger btn-sm' do %>
+        <i class="fas fa-trash me-2"></i>
+        <span>Hapus User</span>
+        <% end %>
       </div>
     <% end %>
   </td>

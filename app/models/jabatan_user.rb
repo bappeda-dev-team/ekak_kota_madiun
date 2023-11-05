@@ -15,4 +15,8 @@ class JabatanUser < ApplicationRecord
   belongs_to :jabatan, primary_key: 'id_jabatan', foreign_key: 'id_jabatan'
   belongs_to :opd, primary_key: 'kode_unik_opd', foreign_key: 'kode_opd'
   belongs_to :user, primary_key: 'nik', foreign_key: 'nip_asn'
+
+  def details
+    "#{jabatan.nama_jabatan} (#{bulan}/#{tahun})"
+  end
 end

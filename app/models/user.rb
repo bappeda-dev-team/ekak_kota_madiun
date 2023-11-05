@@ -82,6 +82,8 @@ class User < ApplicationRecord
 
   attr_writer :login
 
+  self.inheritance_column = ''
+
   def to_s
     nama
   end

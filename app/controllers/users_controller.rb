@@ -111,7 +111,7 @@ class UsersController < ApplicationController
   def edit; end
 
   def edit_detail
-    @target_render = params[:target_render]
+    render partial: 'form_detail', locals: { user: @user }
   end
 
   # POST /users or /users.json
@@ -132,31 +132,30 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-      if @user.update(user_params)
+    if @user.update(user_params)
       render json: { resText: "User berhasil dibuat.",
                      html_content: html_content({ user: @user },
                                                 partial: 'users/user') }.to_json,
              status: :ok
-      else
+    else
       render json: { resText: "Terjadi kesalahan",
                      html_content: error_content({ user: @user },
                                                  partial: 'users/form') }.to_json,
              status: :unprocessable_entity
-      end
+    end
   end
 
   def update_detail
-    @target_render = params[:target_render]
-    respond_to do |format|
-      if @user.update(user_detail_params)
-        if @target_render
-          format.html { redirect_to @target_render, success: 'User was successfully updated.' }
-        else
-          format.html { redirect_to adminusers_path, success: 'User was successfully updated.' }
-        end
-      else
-        format.html { render :edit, notice: 'Failed update user' }
-      end
+    if @user.update(user_detail_params)
+      render json: { resText: "Detail user diperbarui",
+                     html_content: html_content({ user: @user },
+                                                partial: 'users/user') }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: error_content({ user: @user },
+                                                 partial: 'users/form_detail') }.to_json,
+             status: :unprocessable_entity
     end
   end
 

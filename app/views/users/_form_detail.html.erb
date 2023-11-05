@@ -1,4 +1,12 @@
-<%= form_with(model: user, url: update_detail_user_path) do |form| %>
+<%= form_with(model: user, url: update_detail_user_path,
+    local: false, 
+    data: {
+      controller: 'form-ajax',
+      form_ajax_target_param: dom_id(user),
+      form_ajax_type_param: user.new_record? ? 'afterbegin' : '',
+      action: 'ajax:complete->form-ajax#processAjax'
+    },
+) do |form| %>
   <% if user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -9,10 +17,6 @@
       </ul>
     </div>
   <% end %>
-  <div class="field">
-    <%= form.label :type, class: "form-label" %>
-    <%= form.text_field :type, class: "form-control", disabled: true %>
-  </div>
   <div class="field">
     <%= form.label :opd, class: "form-label" %>
     <%= form.select :kode_opd, dropdown_opd_user(user), {include_blank: true},
@@ -30,7 +34,7 @@
   </div>
   <div class="field">
     <%= form.label :jabatan, class: "form-label" %>
-    <%= form.text_field :jabatan, class: "form-control" %>
+    <%= form.text_field :jabatan, class: "form-control", readonly: true %>
   </div>
   <div class="field">
     <%= form.label :nama_bidang, class: "form-label" %>
