@@ -6,17 +6,19 @@
       </div>
       <div class="col">
       <%= select_tag :opd, nil, include_blank: true,
+                disabled: super_admin? ? false : true,
                  data: {
                     placeholder: @nama_opd,
                     controller: 'dropdown',
-                    dropdown_jenis_value: 'ajax',
-                    dropdown_url_value: opd_resmi_opds_path(format: :json)
+                    dropdown_jenis_value: 'extra',
+                    dropdown_url_value: opd_resmi_opds_path(format: :json),
+                    dropdown_event_name_value: 'changeOpd'
                 } %>
       </div>
     </div>
   </div>
   <%= render 'home/card_body' do %>
-    <div data-controller="chart" data-chart-target="opd" data-chart-opd-value="<%= @opd %>"></div>
+    <div data-controller="chart" data-chart-target="opd" data-chart-opd-value="<%= @opd %>" data-chart-tahun-value=<%= @tahun %> data-action="changeOpd@document->chart#changeOpd" ></div>
   <% end %>
 </div>
 <% if super_admin? %>
