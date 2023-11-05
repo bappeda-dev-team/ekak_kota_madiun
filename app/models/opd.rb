@@ -8,6 +8,7 @@
 #  id_bidang          :integer
 #  id_daerah          :string
 #  id_opd_skp         :integer
+#  is_bidang          :boolean          default(FALSE)
 #  kode_bidang_urusan :string
 #  kode_opd           :string
 #  kode_opd_induk     :string
@@ -44,7 +45,7 @@ class Opd < ApplicationRecord
   belongs_to :lembaga
   has_many :sasaran_opds, foreign_key: 'kode_unik_opd', primary_key: 'kode_unik_opd'
   has_many :tujuan_opds, class_name: 'TujuanOpd', foreign_key: 'kode_unik_opd', primary_key: 'kode_unik_opd'
-  has_one :kepala, class_name: 'Kepala', foreign_key: :nik, primary_key: :nip_kepala
+  # has_one :kepala, class_name: 'Kepala', foreign_key: :nik, primary_key: :nip_kepala
 
   # kotak usulan opd
   has_many :usulans, dependent: :destroy

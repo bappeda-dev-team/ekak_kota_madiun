@@ -19,6 +19,7 @@ class PaguAnggaran < ApplicationRecord
   # kode -> kode_sub_kegiatan
   # kode_belanja -> kode_parent_belanja
   # kode_sub_bealanja -> kode_rek_belanja
+  belongs_to :opd, foreign_key: :kode_opd, primary_key: :kode_unik_opd
   scope :pagu_rankir_gelondong, lambda {
                                   where(jenis: "RankirGelondong", sub_jenis: "SubBelanja")
                                 }
