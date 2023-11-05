@@ -73,6 +73,6 @@ class JabatansController < ApplicationController
   # Only allow a list of trusted parameters through.
   def jabatan_params
     params.require(:jabatan).permit(:nama_jabatan, :kelas_jabatan, :nilai_jabatan, :index, :kode_opd, :tipe,
-                                    :kode_jabatan, :tahun)
+                                    :id_jabatan, :tahun)
   end
 end

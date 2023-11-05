@@ -7,7 +7,7 @@ class CreateJabatans < ActiveRecord::Migration[6.1]
       t.string :index
       t.string :kode_opd
       t.string :tipe
-      t.string :kode_jabatan
+      t.bigint :id_jabatan
       t.string :tahun
 
       t.timestamps

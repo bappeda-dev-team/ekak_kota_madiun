@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy edit_detail update_detail anggaran_sasaran]
   before_action :set_dropdown, only: %i[new edit]
+
+  layout false, only: %i[new edit]
   # GET /users or /users.json
   def index
     @users = User.all
@@ -115,33 +117,32 @@ class UsersController < ApplicationController
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
-    respond_to do |format|
-      if @user.save
-        params[:user][:role] && @user.add_role(params[:user][:role].to_sym)
-        format.html { redirect_to adminusers_path, success: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new, notice: 'Failed create user' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.save
+      render json: { resText: "User berhasil dibuat.",
+                     html_content: html_content({ user: @user },
+                                                partial: 'users/user') }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: error_content({ user: @user },
+                                                 partial: 'users/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-    @user.nip_sebelum = @user.nik
-    respond_to do |format|
-      @user.nulify_sasaran(@user.nik)
       if @user.update(user_params)
-        @user.add_role(params[:user][:role].to_sym) if params[:user][:role].present?
-
-        format.html { redirect_to user_path(@user), success: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
+      render json: { resText: "User berhasil dibuat.",
+                     html_content: html_content({ user: @user },
+                                                partial: 'users/user') }.to_json,
+             status: :ok
       else
-        format.html { render :edit, notice: 'Failed update user' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: error_content({ user: @user },
+                                                 partial: 'users/form') }.to_json,
+             status: :unprocessable_entity
       end
-    end
   end
 
   def update_detail
@@ -241,6 +242,39 @@ class UsersController < ApplicationController
   def anggaran_sasaran
     @tahun = cookies[:tahun] || Date.today.year
     @sasarans = @user.subkegiatan_sudah_lengkap(@tahun)
+  end
+
+  def mutasi_asn
+    @user = User.find(params[:id])
+    @tahun = cookies[:tahun]
+    @tahun_asli = @tahun.gsub('_perubahan', '')
+    render partial: 'form_mutasi', locals: { user: @user }
+  end
+
+  def update_jabatan # rubocop:disable Metrics
+    @tahun_asli = params[:user][:tahun]
+    @kode_opd = params[:user][:kode_opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @user = User.find(params[:id])
+    # @bulan = DateTime.current.month.to_i
+    @bulan = params[:user][:bulan]
+    @jabatan = params[:user][:jabatan]
+    @jabatan_user = JabatanUser.new(nip_asn: @user.nik,
+                                    kode_opd: @kode_opd, id_jabatan: @jabatan,
+                                    tahun: @tahun_asli, bulan: @bulan)
+    if @jabatan_user.save
+      @user.update(opd: @opd)
+      @user.after_pindah
+      render json: { resText: "Jabatan diperbarui",
+                     html_content: html_content({ user: @user },
+                                                partial: 'users/user') }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: error_content({ user: @user },
+                                                 partial: 'users/form_mutasi') }.to_json,
+             status: :unprocessable_entity
+    end
   end
 
   private

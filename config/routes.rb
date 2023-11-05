@@ -309,6 +309,8 @@ Rails.application.routes.draw do
       get :set_role_khusus
       get :edit_nip
       post :update_nip
+      get :mutasi_asn
+      post :update_jabatan
     end
   end
 

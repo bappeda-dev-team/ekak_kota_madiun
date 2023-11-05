@@ -38,12 +38,6 @@ module Api
       update_jabatan_eselon(noneselon)
     end
 
-    def sync_non_eselon
-      noneselon = H.post("#{URL}/data-jabatan/all/noneselon/#{@tahun}",
-                         form: { username: USERNAME, password: PASSWORD })
-      update_jabatan_noneselon(noneselon)
-    end
-
     private
 
     def update_jabatan_eselon(response) # rubocop:disable Metrics
@@ -53,7 +47,7 @@ module Api
         data_jabatan = {
           index: jabatan['index'],
           kelas_jabatan: jabatan['kelas_jabatan'],
-          kode_jabatan: jabatan['id'],
+          id_jabatan: jabatan['id'],
           kode_opd: jabatan['kode_opd'],
           nama_jabatan: jabatan['nama_jabatan'],
           nilai_jabatan: jabatan['nilai_jabatan'],
@@ -61,7 +55,7 @@ module Api
           tipe: jabatan['tipe']
         }
         jabatan_record = Jabatan.find_by(
-          kode_jabatan: jabatan['id'],
+          id_jabatan: jabatan['id'],
           tahun: @tahun,
           kode_opd: jabatan['kode_opd']
         )

@@ -919,6 +919,41 @@ ALTER SEQUENCE public.isu_strategis_opds_id_seq OWNED BY public.isu_strategis_op
 
 
 --
+-- Name: jabatan_users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.jabatan_users (
+    id bigint NOT NULL,
+    id_jabatan bigint NOT NULL,
+    kode_opd character varying NOT NULL,
+    nip_asn character varying NOT NULL,
+    bulan character varying NOT NULL,
+    tahun character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: jabatan_users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.jabatan_users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: jabatan_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.jabatan_users_id_seq OWNED BY public.jabatan_users.id;
+
+
+--
 -- Name: jabatans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -930,7 +965,7 @@ CREATE TABLE public.jabatans (
     index character varying,
     kode_opd character varying,
     tipe character varying,
-    kode_jabatan character varying,
+    id_jabatan bigint,
     tahun character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -3594,6 +3629,13 @@ ALTER TABLE ONLY public.isu_strategis_opds ALTER COLUMN id SET DEFAULT nextval('
 
 
 --
+-- Name: jabatan_users id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.jabatan_users ALTER COLUMN id SET DEFAULT nextval('public.jabatan_users_id_seq'::regclass);
+
+
+--
 -- Name: jabatans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4217,6 +4259,14 @@ ALTER TABLE ONLY public.isu_strategis_kota
 
 ALTER TABLE ONLY public.isu_strategis_opds
     ADD CONSTRAINT isu_strategis_opds_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: jabatan_users jabatan_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.jabatan_users
+    ADD CONSTRAINT jabatan_users_pkey PRIMARY KEY (id);
 
 
 --
@@ -5685,6 +5735,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231031083426'),
 ('20231101013544'),
 ('20231101094524'),
-('20231102022936');
+('20231102022936'),
+('20231102075706');
 
 

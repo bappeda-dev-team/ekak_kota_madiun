@@ -51,6 +51,7 @@ class User < ApplicationRecord
   has_many :pokpirs, foreign_key: 'nip_asn', primary_key: 'nik'
   has_many :mandatoris, foreign_key: 'nip_asn', primary_key: 'nik'
   has_many :inovasis, foreign_key: 'nip_asn', primary_key: 'nik'
+  has_many :jabatan_users, foreign_key: 'nip_asn', primary_key: 'nik'
 
   # WARNING: many bug in here because added role
   scope :khusus, -> { with_any_role(:admin, :super_admin, :reviewer, :guest, :khusus) }
@@ -85,6 +86,10 @@ class User < ApplicationRecord
     nama
   end
 
+  def nip_asn
+    nik
+  end
+
   def login
     @login || nik || email
   end
@@ -111,12 +116,17 @@ class User < ApplicationRecord
     opd.nama_opd
   end
 
-  def nulify_sasaran(nip)
-    Sasaran.where(nip_asn: nip).update_all(nip_asn_sebelumnya: nip, nip_asn: nil)
+  def after_pindah
+    nulify_sasaran
+    nulify_strategi
   end
 
-  def nulify_strategi(nip)
-    Strategi.where(nip_asn: nip).update_all(nip_asn_sebelumnya: nip, nip_asn: nil)
+  def nulify_sasaran
+    Sasaran.where(nip_asn: nik).update_all(nip_asn_sebelumnya: nik, nip_asn: nil)
+  end
+
+  def nulify_strategi
+    Strategi.where(nip_asn: nik).update_all(nip_asn_sebelumnya: nik, nip_asn: nil)
   end
 
   def update_sasaran

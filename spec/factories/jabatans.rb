@@ -3,9 +3,9 @@
 # Table name: jabatans
 #
 #  id            :bigint           not null, primary key
+#  id_jabatan    :bigint
 #  index         :string
 #  kelas_jabatan :string
-#  kode_jabatan  :string
 #  kode_opd      :string
 #  nama_jabatan  :string
 #  nilai_jabatan :integer

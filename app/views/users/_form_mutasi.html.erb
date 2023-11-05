@@ -1,0 +1,20 @@
+<%= form_with(model: user, url: update_jabatan_user_path, 
+    method: :post,
+    local: false, 
+    data: {
+      controller: 'form-ajax',
+      form_ajax_target_param: dom_id(user),
+      form_ajax_type_param: user.new_record? ? 'afterbegin' : '',
+      action: 'ajax:complete->form-ajax#processAjax'
+    },
+    builder: MutasiAsnFormBuilder) do |form| %>
+  <%= form.text_field :tahun, readonly: true, value: @tahun_asli  %>
+  <%= form.bulans_field :bulan %>
+  <%= form.opds_field :kode_opd %>
+  <%= form.jabatans_field :jabatan, option_jabatans(@tahun_asli) %>
+  <%= form.text_field :nip_asn, readonly: true %>
+  <%= form.text_field :nama, readonly: true %>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
