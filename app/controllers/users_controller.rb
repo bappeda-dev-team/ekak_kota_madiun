@@ -1,8 +1,7 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show edit update destroy edit_detail update_detail anggaran_sasaran]
-  before_action :set_dropdown, only: %i[new edit]
+  before_action :set_user, only: %i[show edit edit_profile update destroy edit_detail update_detail anggaran_sasaran]
 
-  layout false, only: %i[new edit]
+  layout false, only: %i[new edit edit_profile]
   # GET /users or /users.json
   def index
     @users = User.all
@@ -114,6 +113,8 @@ class UsersController < ApplicationController
     render partial: 'form_detail', locals: { user: @user }
   end
 
+  def edit_profile; end
+
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
@@ -133,7 +134,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1 or /users/1.json
   def update
     if @user.update(user_params)
-      render json: { resText: "User berhasil dibuat.",
+      render json: { resText: "Data user diupdate.",
                      html_content: html_content({ user: @user },
                                                 partial: 'users/user') }.to_json,
              status: :ok

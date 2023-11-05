@@ -22,7 +22,7 @@
      {include_blank: true},
     {data: {"placeholder": "Pilih Lembaga",
             controller: 'dropdown'
-    }, required: true} %>
+    }, disabled: true} %>
   </div>
   <div class="field">
     <%= form.label :opd, class: "form-label" %>
@@ -30,8 +30,7 @@
     {class: "form-control",
     data: { "placeholder": "Pilih Opd",
             controller: 'dropdown',
-            dropdown_parent_value: '#form-user'
-    }} %>
+    }, disabled: true} %>
   </div>
   <div class="field">
     <%= form.label :nama, class: "form-label" %>

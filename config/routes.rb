@@ -311,6 +311,7 @@ Rails.application.routes.draw do
       post :update_nip
       get :mutasi_asn
       post :update_jabatan
+      get :edit_profile
     end
   end
 
