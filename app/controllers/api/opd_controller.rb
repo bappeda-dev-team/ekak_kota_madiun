@@ -48,5 +48,28 @@ module Api
                                          sub_jenis: 'SubKegiatan')
                                   .sum(:anggaran)
     end
+
+    def pagu_all # rubocop:disable Metrics/MethodLength
+      tahun = params[:tahun]
+      opds = Opd.with_user
+      @results = opds.map do |opd|
+        anggaran_kak = PaguAnggaran.where(kode_opd: opd.kode_unik_opd,
+                                          tahun: tahun,
+                                          jenis: 'Perencanaan',
+                                          sub_jenis: 'SubKegiatan')
+                                   .sum(:anggaran)
+        anggaran_sipd = PaguAnggaran.where(kode_opd: opd.kode_unik_opd,
+                                           tahun: tahun,
+                                           jenis: 'Penetapan',
+                                           sub_jenis: 'SubKegiatan')
+                                    .sum(:anggaran)
+        {
+          nama_opd: opd.nama_opd,
+          kode_opd: opd.kode_unik_opd,
+          pagu_kak: anggaran_kak,
+          pagu_sipd: anggaran_sipd
+        }
+      end
+    end
   end
 end

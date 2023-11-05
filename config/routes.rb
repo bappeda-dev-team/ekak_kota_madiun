@@ -596,6 +596,7 @@ Rails.application.routes.draw do
       post :urusan_opd
       post :tujuan_opd
       post :perbandingan_pagu
+      post :pagu_all
     end
     namespace :pohon_kinerja do
       post :pohon_kinerja_kota
