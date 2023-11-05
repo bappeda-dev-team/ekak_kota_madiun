@@ -4,36 +4,6 @@
       <div class="col">
         <h2 class="fs-5 fw-bold mb-0">Pagu Subkegiatan</h2>
       </div>
-      <div class="col-auto">
-        <%= button_to api_pagu_sync_pagu_kak_path,
-            disabled: button_disabled?('sync-pagu-kak', @opd, @tahun),
-            remote: true,
-            class: 'btn btn-info toggle-active',
-            data: {
-                disable_with: 'Memproses.....'
-            },
-            params: { kode_tombol: 'sync-pagu-kak' } do %>
-          <i class="fas fa-sync icon icon-xs me-2"></i>
-          Sync Pagu KAK
-        <% end %>
-      </div>
-      <div class="col-auto">
-        <%= button_to api_pagu_sync_opd_path,
-            disabled: button_disabled?('sync-pagu-sipd', @opd, @tahun),
-            remote: true,
-            class: 'btn btn-info toggle-active',
-            data: {
-                disable_with: 'Memproses.....'
-            },
-            params: { kode_tombol: 'sync-pagu-sipd' } do %>
-          <i class="fas fa-sync icon icon-xs me-2"></i>
-          Sync Pagu
-        <% end %>
-      </div>
-    </div>
-  </div>
-  <div class="card-body">
-    <div class="row mb-3">
       <div class="col">
       <%= select_tag :opd, nil, include_blank: true,
                  data: {
@@ -42,13 +12,12 @@
                     dropdown_jenis_value: 'ajax',
                     dropdown_url_value: opd_resmi_opds_path(format: :json)
                 } %>
-        <i class="fas fa-info-circle me-2"></i>
-        <small class="text-muted">Pilih opd untuk mengganti</small>
       </div>
     </div>
-    <div data-controller="chart" data-chart-target="opd" data-chart-opd-value="<%= @opd %>">
-    </div>
   </div>
+  <%= render 'home/card_body' do %>
+    <div data-controller="chart" data-chart-target="opd" data-chart-opd-value="<%= @opd %>"></div>
+  <% end %>
 </div>
 <% if super_admin? %>
   <div class="card border-0 shadow">
