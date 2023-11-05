@@ -37,14 +37,14 @@ module Api
       @nama_opd = opd.nama_opd
       @kode_opd = kode_opd
 
-      subkegiatan_opd = opd.subkegiatans_renstra
+      subkegiatan_opd = opd.program_kegiatans.subkegiatans_satunya
 
-      @anggaran_subkegiatans = subkegiatan_opd.map do |sub|
+      @anggaran_subkegiatans = subkegiatan_opd.order(:kode_sub_giat).map do |sub|
         anggaran_kak = PaguAnggaran.find_by(kode_opd: kode_opd,
-                                             kode: sub.kode_sub_giat,
-                                             tahun: tahun,
-                                             jenis: 'Perencanaan',
-                                             sub_jenis: 'SubKegiatan')
+                                            kode: sub.kode_sub_giat,
+                                            tahun: tahun,
+                                            jenis: 'Perencanaan',
+                                            sub_jenis: 'SubKegiatan')
         pagu_kak = anggaran_kak&.anggaran.to_i || 0
         anggaran_sipd = PaguAnggaran.find_by(kode_opd: kode_opd,
                                              kode: sub.kode_sub_giat,
