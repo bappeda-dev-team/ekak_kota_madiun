@@ -30,23 +30,35 @@ module Api
              status: :not_found
     end
 
-    def perbandingan_pagu
+    def perbandingan_pagu # rubocop:disable Metrics
       tahun = params[:tahun]
       kode_opd = params[:kode_opd]
       opd = Opd.find_by(kode_unik_opd: kode_opd)
       @nama_opd = opd.nama_opd
       @kode_opd = kode_opd
 
-      @anggaran_kak = PaguAnggaran.where(kode_opd: kode_opd,
-                                         tahun: tahun,
-                                         jenis: 'Perencanaan',
-                                         sub_jenis: 'SubKegiatan')
-                                  .sum(:anggaran)
-      @anggaran_opd = PaguAnggaran.where(kode_opd: kode_opd,
-                                         tahun: tahun,
-                                         jenis: 'Penetapan',
-                                         sub_jenis: 'SubKegiatan')
-                                  .sum(:anggaran)
+      subkegiatan_opd = opd.subkegiatans_renstra
+
+      @anggaran_subkegiatans = subkegiatan_opd.map do |sub|
+        anggaran_kak = PaguAnggaran.find_by(kode_opd: kode_opd,
+                                             kode: sub.kode_sub_giat,
+                                             tahun: tahun,
+                                             jenis: 'Perencanaan',
+                                             sub_jenis: 'SubKegiatan')
+        pagu_kak = anggaran_kak&.anggaran.to_i || 0
+        anggaran_sipd = PaguAnggaran.find_by(kode_opd: kode_opd,
+                                             kode: sub.kode_sub_giat,
+                                             tahun: tahun,
+                                             jenis: 'Penetapan',
+                                             sub_jenis: 'SubKegiatan')
+        pagu_sipd = anggaran_sipd&.anggaran.to_i || 0
+        {
+          nama_subkegiatan: sub.nama_subkegiatan,
+          kode_subkegiatan: sub.kode_sub_giat,
+          pagu_subkegiatan_kak: pagu_kak,
+          pagu_subkegiatan_sipd: pagu_sipd
+        }
+      end
     end
 
     def pagu_all # rubocop:disable Metrics/MethodLength
@@ -57,12 +69,12 @@ module Api
                                           tahun: tahun,
                                           jenis: 'Perencanaan',
                                           sub_jenis: 'SubKegiatan')
-                                   .sum(:anggaran)
+                                   .sum(:anggaran).to_i
         anggaran_sipd = PaguAnggaran.where(kode_opd: opd.kode_unik_opd,
                                            tahun: tahun,
                                            jenis: 'Penetapan',
                                            sub_jenis: 'SubKegiatan')
-                                    .sum(:anggaran)
+                                    .sum(:anggaran).to_i
         {
           nama_opd: opd.nama_opd,
           kode_opd: opd.kode_unik_opd,
