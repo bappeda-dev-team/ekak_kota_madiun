@@ -1,14 +1,8 @@
-<div class="card border-0 shadow">
+<div class="card border-0 shadow mb-3">
   <div class="card-header">
     <div class="row align-items-center">
       <div class="col">
-        <h2 class="fs-5 fw-bold mb-0">Pagu <%= @nama_opd %></h2>
-      </div>
-    </div>
-  </div>
-  <div class="card-body">
-    <div class="row mb-3">
-      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">Pagu Subkegiatan</h2>
       </div>
       <div class="col-auto">
         <%= button_to api_pagu_sync_pagu_kak_path,
@@ -37,7 +31,37 @@
         <% end %>
       </div>
     </div>
-    <div data-controller="chart" data-chart-target="opds" data-chart-opd-value="<%= @opd %>">
+  </div>
+  <div class="card-body">
+    <div class="row mb-3">
+      <div class="col">
+      <%= select_tag :opd, nil, include_blank: true,
+                 data: {
+                    placeholder: @nama_opd,
+                    controller: 'dropdown',
+                    dropdown_jenis_value: 'ajax',
+                    dropdown_url_value: opd_resmi_opds_path(format: :json)
+                } %>
+        <i class="fas fa-info-circle me-2"></i>
+        <small class="text-muted">Pilih opd untuk mengganti</small>
+      </div>
+    </div>
+    <div data-controller="chart" data-chart-target="opd" data-chart-opd-value="<%= @opd %>">
     </div>
   </div>
 </div>
+<% if super_admin? %>
+  <div class="card border-0 shadow">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h2 class="fs-5 fw-bold mb-0">Pagu OPD <%= @tahun %></h2>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div data-controller="chart" data-chart-target="opds" data-chart-tahun-value=<%= @tahun %>>
+      </div>
+    </div>
+  </div>
+<% end %>

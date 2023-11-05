@@ -2,7 +2,7 @@ import { Controller } from 'stimulus'
 import ApexCharts from 'apexcharts'
 
 export default class extends Controller {
-  static targets = ['opds', 'subkegiatans']
+  static targets = ['opd', 'opds', 'subkegiatans']
   static values = {
     opd: String,
     url: String
@@ -47,37 +47,17 @@ export default class extends Controller {
     return options;
   }
 
-  opdsTargetConnected() {
-    const chart = new ApexCharts(this.opdsTarget, this.baseChart())
+  async opdTargetConnected() {
+    const chart = new ApexCharts(this.opdTarget, this.baseChart())
     chart.render()
 
-    this.fetcher(chart)
-  }
-
-  subkegiatansTargetConnected() {
-    const chart = new ApexCharts(this.subkegiatansTarget, this.baseChart())
-    chart.render()
-
-    this.fetcher(chart)
-  }
-
-  async fetcher(chart) {
     let formData = new FormData();
     formData.append('kode_opd', this.opdValue);
     formData.append('tahun', '2023_perubahan');
+    const url = '/api/opd/perbandingan_pagu'
 
-    const request = await fetch('/api/opd/perbandingan_pagu',
-      {
-        body: formData,
-        method: "post",
-      })
-    const response = await request.json();
-    const data = response.data
-    this.seriesUpdater(data, chart)
-  }
-
-  seriesUpdater(data, chart) {
-    let testSeries = [
+    const data = await this.fetcher(url, formData)
+    const series = [
       {
         name: 'Pagu KAK',
         data: [
@@ -98,7 +78,84 @@ export default class extends Controller {
       }
 
     ]
-    chart.updateSeries(testSeries)
+    chart.updateSeries(series)
+  }
+
+  async opdsTargetConnected() {
+    const options = {
+      chart: {
+        type: 'bar',
+        height: 500,
+        foreColor: '#4B5563',
+        fontFamily: 'Inter',
+      },
+      series: [],
+      noData: {
+        text: 'Memuat Data...'
+      },
+      dataLabels: {
+        enabled: false
+      },
+    }
+    const chart = new ApexCharts(this.opdsTarget, options)
+    chart.render()
+
+    // data fetch
+    let formData = new FormData();
+    formData.append('tahun', '2023_perubahan');
+    const url = '/api/opd/pagu_all'
+    const data = await this.fetcher(url, formData)
+    const pagu_kak = data.map((val) => {
+      let pagu = Math.floor(val.pagu_kak / 1000_000_000)
+      return (
+        {
+          x: val.nama_opd,
+          y: pagu
+        }
+      )
+    })
+    const pagu_sipd = data.map((val) => {
+      let pagu = Math.floor(val.pagu_sipd / 1000_000_000)
+      return (
+        {
+          x: val.nama_opd,
+          y: pagu
+        }
+      )
+    })
+    chart.updateOptions({
+      series: [
+        {
+          name: 'Pagu KAK',
+          data: pagu_kak
+        },
+        {
+          name: 'Pagu SIPD',
+          data: pagu_sipd
+        }
+      ],
+      xaxis: {
+        position: 'bottom'
+      }
+    })
+    // chart.updateSeries(newSeries)
+  }
+
+  subkegiatansTargetConnected() {
+    const chart = new ApexCharts(this.subkegiatansTarget, this.baseChart())
+    chart.render()
+
+    this.fetcher(chart)
+  }
+
+  async fetcher(url, formData) {
+    const request = await fetch(url,
+      {
+        body: formData,
+        method: "post",
+      })
+    const response = await request.json();
+    return response.data;
   }
 
   chartRender() {
