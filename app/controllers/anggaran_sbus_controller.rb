@@ -3,7 +3,11 @@ class AnggaranSbusController < ApplicationController
 
   # GET /anggaran_sbus or /anggaran_sbus.json
   def index
-    @anggaran_sbus = AnggaranSbu.all
+    @anggaran_sbus = if current_user.id == 1
+                       AnggaranSbu.all
+                     else
+                       AnggaranSbu.where(opd_id: current_user.opd.id)
+                     end
   end
 
   # GET /anggaran_sbus/1 or /anggaran_sbus/1.json

@@ -2,8 +2,10 @@ module AdminItemHelper # rubocop:disable Metrics
   def perencanaan_opd_items # rubocop:disable Metrics
     [
       {
-        title: 'Anggaran HSPK', href: anggaran_hspks_path,
-        icon: 'fas fa-city', identifier: 'anggaran_hspk'
+        title: 'Anggaran', href: "#",
+        multi: true, collections: anggaran_items,
+        id_target: "master-anggaran",
+        icon: 'fas fa-coins', identifier: 'anggaran'
       },
       {
         title: 'Master Usulan', href: "#",
