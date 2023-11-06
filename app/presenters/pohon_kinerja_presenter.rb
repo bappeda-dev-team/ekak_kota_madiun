@@ -154,7 +154,7 @@ class PohonKinerjaPresenter
     if prefix.include?('eselon') || prefix.include?('staff')
       to_real_name(prefix)
     else
-      "#{to_real_name(prefix).capitalize} - Kota"
+      "#{to_real_name(prefix).capitalize} - Dari Kota"
     end
   end
 
@@ -164,7 +164,7 @@ class PohonKinerjaPresenter
     if prefix.include?('eselon') || prefix.include?('staff')
       to_real_name_up(prefix)
     else
-      "#{to_real_name_up(prefix).capitalize} - Kota"
+      "#{to_real_name_up(prefix).capitalize} - Dari Kota"
     end
   end
 
