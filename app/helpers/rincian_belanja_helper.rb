@@ -10,21 +10,20 @@ module RincianBelanjaHelper
   end
 
   def uraian_rincian_anggaran(hitung)
+    tahun = hitung.tahun
     if hitung.deskripsi.downcase.include?('lain_lain') || hitung.spesifikasi.include?('Belanja Gaji')
       uraian = hitung.deskripsi
       spesifikasi = hitung.spesifikasi
-      tahun = hitung.tahun
     else
-      uraian = uraian_kode(hitung.deskripsi)
-      spesifikasi = spesifikasi_anggaran(hitung.deskripsi)
-      tahun = tahun_kode(hitung.deskripsi)
+      uraian = uraian_kode(hitung.deskripsi, hitung.tahun)
+      spesifikasi = spesifikasi_anggaran(hitung.deskripsi, hitung.tahun)
     end
     "#{uraian} <br/> #{spesifikasi} <br/> - #{tahun}".html_safe
   end
 
-  def spesifikasi_anggaran(kode_barang)
+  def spesifikasi_anggaran(kode_barang, tahun)
     # update using delgate method polymorphic
-    Search::AllAnggaran.find_by_kode_barang(kode_barang).spesifikasi
+    Search::AllAnggaran.find_by(kode_barang: kode_barang, tahun: tahun).spesifikasi
   rescue NoMethodError
     'Tidak Ditemukan'
   end
