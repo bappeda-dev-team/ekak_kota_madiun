@@ -19,7 +19,7 @@ class KomentarsController < ApplicationController
     @kode_opd = params[:kode_opd]
     @strategi_id = params[:strategi_id]
     @jenis = params[:jenis]
-    render partial: "form_komentar_pokin"
+    render partial: "form_komentar_pokin", locals: { komentar: @komentar }
   end
 
   # GET /komentars/1/edit
@@ -29,15 +29,16 @@ class KomentarsController < ApplicationController
   def create
     @komentar = Komentar.new(komentar_params)
 
-    respond_to do |format|
-      if @komentar.save
-        format.js
-        format.html { redirect_to komentar_url(@komentar), notice: "Komentar was successfully created." }
-        format.json { render :show, status: :created, location: @komentar }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @komentar.errors, status: :unprocessable_entity }
-      end
+    if @komentar.save
+      render json: { resText: "Review ditambahkan",
+                     html_content: html_content({ komentar: @komentar },
+                                                partial: 'komentars/komentar') }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: error_content({ komentar: @komentar },
+                                                 partial: 'komentars/form_komentar_pokin') }.to_json,
+             status: :unprocessable_entity
     end
   end
 

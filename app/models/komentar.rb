@@ -22,12 +22,15 @@
 #
 class Komentar < ApplicationRecord
   belongs_to :user
-  belongs_to :strategi
   has_one :opd, foreign_key: :kode_unik_opd, primary_key: :kode_opd
 
   # def strategi
   #   Strategi.find(item)
   # end
+
+  def to_s
+    komentar
+  end
 
   def komentator
     user.nama

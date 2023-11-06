@@ -196,6 +196,10 @@ class PohonKotaPresenter
     end
   end
 
+  def komentars
+    @pohon.komentars
+  end
+
   private
 
   def to_real_name(role)
