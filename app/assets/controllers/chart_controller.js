@@ -105,11 +105,6 @@ export default class extends Controller {
         height: 750,
         foreColor: '#4B5563',
         fontFamily: 'Inter',
-        zoom: {
-          enabled: true,
-          type: 'y',
-          autoScaleYaxis: true
-        }
       },
       plotOptions: {
         bar: {
@@ -138,9 +133,6 @@ export default class extends Controller {
         shared: true,
         intersect: false
       },
-      xaxis: {
-        tickPlacement: 'on'
-      },
     }
     const chart = new ApexCharts(this.opdTarget, options)
     chart.render()
@@ -152,17 +144,15 @@ export default class extends Controller {
 
     const data = await this.fetcher(url, formData)
     const pagu_kak = data.subkegiatan_opd.map((val, index) => {
-      let pagu = Math.floor(val.pagu_kak / 1000_000)
-      let pagu_sipd = Math.floor(val.pagu_sipd / 1000_000)
       const no = index + 1
       return (
         {
           x: `${no} ${val.nama_subkegiatan}`,
-          y: pagu,
+          y: val.pagu_kak,
           goals: [
             {
               name: 'Target',
-              value: pagu_sipd,
+              value: val.pagu_sipd,
               strokeHeight: 2,
               strokeColor: '#775DD0'
             }
@@ -171,12 +161,11 @@ export default class extends Controller {
       )
     })
     const pagu_sipd = data.subkegiatan_opd.map((val, index) => {
-      let pagu = Math.floor(val.pagu_sipd / 1000_000)
       const no = index + 1
       return (
         {
           x: `${no} ${val.nama_subkegiatan}`,
-          y: pagu
+          y: val.pagu_sipd
         }
       )
     })
@@ -207,20 +196,37 @@ export default class extends Controller {
           fontFamily: 'Inter',
         },
         y: {
-          formatter: function (val) {
-            const label = val === 0 ? 0 : "Rp." + val + " Juta"
+          formatter: function (anggaran) {
+            let number_string = anggaran.toString(),
+              split = number_string.split(','),
+              sisa = split[0].length % 3,
+              rupiah = split[0].substr(0, sisa),
+              ribuan = split[0].substr(sisa).match(/\d{1,3}/gi);
+
+            if (ribuan) {
+              let separator = sisa ? '.' : '';
+              rupiah += separator + ribuan.join('.');
+            }
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            const label = rupiah == undefined ? 0 : "Rp." + rupiah
             return label
           }
         },
+      },
+      yaxis: {
+        labels: {
+          align: 'left',
+          show: true,
+          rotate: 0,
+          trim: true
+        }
       },
       xaxis: {
         position: 'bottom',
         labels: {
           show: true,
-          rotate: -75,
+          rotate: 0,
           rotateAlways: true,
-          maxHeight: 250,
-          trim: true
         }
       }
     })
@@ -274,16 +280,14 @@ export default class extends Controller {
     const url = '/api/opd/pagu_all'
     const data = await this.fetcher(url, formData)
     const pagu_kak = data.map((val) => {
-      let pagu = Math.floor(val.pagu_kak / 1000_000_000)
-      let pagu_sipd = Math.floor(val.pagu_sipd / 1000_000_000)
       return (
         {
           x: val.nama_opd,
-          y: pagu,
+          y: val.pagu_kak,
           goals: [
             {
               name: 'Target',
-              value: pagu_sipd,
+              value: val.pagu_sipd,
               strokeHeight: 5,
               strokeColor: '#775DD0'
             }
@@ -292,11 +296,10 @@ export default class extends Controller {
       )
     })
     const pagu_sipd = data.map((val) => {
-      let pagu = Math.floor(val.pagu_sipd / 1000_000_000)
       return (
         {
           x: val.nama_opd,
-          y: pagu
+          y: val.pagu_sipd
         }
       )
     })
@@ -322,8 +325,19 @@ export default class extends Controller {
           fontFamily: 'Inter',
         },
         y: {
-          formatter: function (val) {
-            const label = val === 0 ? 0 : "Rp." + val + " M"
+          formatter: function (anggaran) {
+            let number_string = anggaran.toString(),
+              split = number_string.split(','),
+              sisa = split[0].length % 3,
+              rupiah = split[0].substr(0, sisa),
+              ribuan = split[0].substr(sisa).match(/\d{1,3}/gi);
+
+            if (ribuan) {
+              let separator = sisa ? '.' : '';
+              rupiah += separator + ribuan.join('.');
+            }
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            const label = rupiah == undefined ? 0 : "Rp." + rupiah
             return label
           }
         },
