@@ -49,7 +49,7 @@ class AnggaranHspksController < ApplicationController
   def update
     respond_to do |format|
       if @anggaran_hspk.update(anggaran_hspk_params)
-        format.html { redirect_to @anggaran_hspk, notice: "Anggaran hspk was successfully updated." }
+        format.html { redirect_to anggaran_hspks_path, notice: "Anggaran hspk was successfully updated." }
         format.json { render :show, status: :ok, location: @anggaran_hspk }
       else
         format.html { render :edit, status: :unprocessable_entity }
