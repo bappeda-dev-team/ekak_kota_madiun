@@ -1,13 +1,11 @@
 module SidebarItemHelper
-  def sidebar_items
+  def sidebar_items # rubocop:disable Metrics
     if current_user.has_role?(:super_admin) && current_user.id == 1
       render partial: 'layouts/sidebar_super_admin'
     elsif current_user.has_any_role?(:khusus)
       render partial: 'layouts/sidebar_khusus'
     elsif current_user.has_role?(:super_admin)
       render partial: 'layouts/sidebar_admin_saja'
-    elsif current_user.has_role?(:admin) && current_user.id == 377
-      render partial: 'layouts/sidebar_pu'
     elsif current_user.has_role?(:admin)
       render partial: 'layouts/sidebar_admin'
     elsif current_user.has_any_role?(:reviewer, :reviewer_kak)
