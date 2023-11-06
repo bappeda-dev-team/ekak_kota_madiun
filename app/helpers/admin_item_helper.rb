@@ -1,6 +1,10 @@
-module AdminItemHelper
-  def perencanaan_opd_items
+module AdminItemHelper # rubocop:disable Metrics
+  def perencanaan_opd_items # rubocop:disable Metrics
     [
+      {
+        title: 'Anggaran HSPK', href: anggaran_hspks_path,
+        icon: 'fas fa-city', identifier: 'anggaran_hspk'
+      },
       {
         title: 'Master Usulan', href: "#",
         multi: true, collections: usulan_items,
