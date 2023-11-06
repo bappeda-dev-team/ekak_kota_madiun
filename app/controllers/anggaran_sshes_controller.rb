@@ -1,9 +1,14 @@
 class AnggaranSshesController < ApplicationController
   before_action :set_anggaran_ssh, only: %i[show edit update destroy]
+  layout false, only: %i[new edit]
 
   # GET /anggaran_sshes or /anggaran_sshes.json
   def index
-    @anggaran_sshes = AnggaranSsh.all
+    @anggaran_sshes = if current_user.id == 1
+                        AnggaranSsh.all
+                      else
+                        AnggaranSsh.where(opd_id: current_user.opd.id)
+                      end
   end
 
   def anggaran_ssh_search
@@ -46,7 +51,7 @@ class AnggaranSshesController < ApplicationController
 
     respond_to do |format|
       if @anggaran_ssh.save
-        format.html { redirect_to @anggaran_ssh, notice: 'Anggaran ssh was successfully created.' }
+        format.html { redirect_to anggaran_sshes_url, success: 'Anggaran ssh was successfully created.' }
         format.json { render :show, status: :created, location: @anggaran_ssh }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -59,7 +64,7 @@ class AnggaranSshesController < ApplicationController
   def update
     respond_to do |format|
       if @anggaran_ssh.update(anggaran_ssh_params)
-        format.html { redirect_to @anggaran_ssh, notice: 'Anggaran ssh was successfully updated.' }
+        format.html { redirect_to anggaran_sshes_url, success: 'Anggaran ssh was successfully updated.' }
         format.json { render :show, status: :ok, location: @anggaran_ssh }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -72,7 +77,7 @@ class AnggaranSshesController < ApplicationController
   def destroy
     @anggaran_ssh.destroy
     respond_to do |format|
-      format.html { redirect_to anggaran_sshes_url, notice: 'Anggaran ssh was successfully destroyed.' }
+      format.html { redirect_to anggaran_sshes_url, warning: 'Anggaran ssh was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -87,7 +92,7 @@ class AnggaranSshesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def anggaran_ssh_params
     params.require(:anggaran_ssh).permit(:kode_kelompok_barang, :uraian_kelompok_barang, :kode_barang,
-                                         :tahun, :id_standar_harga,
+                                         :tahun, :id_standar_harga, :opd_id,
                                          :uraian_barang, :spesifikasi, :satuan, :harga_satuan)
   end
 end

@@ -383,7 +383,8 @@ CREATE TABLE public.anggaran_sshes (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     tahun character varying,
-    id_standar_harga character varying
+    id_standar_harga character varying,
+    opd_id bigint
 );
 
 
@@ -5740,6 +5741,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231102022936'),
 ('20231102075706'),
 ('20231105100619'),
-('20231106043924');
+('20231106043924'),
+('20231106051540');
 
 
