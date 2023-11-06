@@ -61,3 +61,13 @@
       case:
         - jabatan sama, dan opd berubuah
         - jabatan berbeda, dan opd tetap sama
+* TODO [2023-11-6 Mon]
+- [X] Chart opd vertikal
+- [X] nomor di subkegiatan
+  - [ ] align text left
+- [ ] filter kota
+  - [ ] tematik
+  - [ ] subtematik
+  - [ ] opd
+    - [ ] subkegiatan
+- [ ] hapus pembagian anggaran
