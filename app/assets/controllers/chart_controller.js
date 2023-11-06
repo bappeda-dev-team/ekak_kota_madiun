@@ -111,6 +111,11 @@ export default class extends Controller {
           autoScaleYaxis: true
         }
       },
+      plotOptions: {
+        bar: {
+          horizontal: true
+        }
+      },
       series: [],
       noData: {
         text: 'Memuat Data...'
@@ -146,12 +151,13 @@ export default class extends Controller {
     const url = '/api/opd/perbandingan_pagu'
 
     const data = await this.fetcher(url, formData)
-    const pagu_kak = data.subkegiatan_opd.map((val) => {
+    const pagu_kak = data.subkegiatan_opd.map((val, index) => {
       let pagu = Math.floor(val.pagu_kak / 1000_000)
       let pagu_sipd = Math.floor(val.pagu_sipd / 1000_000)
+      const no = index + 1
       return (
         {
-          x: val.nama_subkegiatan,
+          x: `${no} ${val.nama_subkegiatan}`,
           y: pagu,
           goals: [
             {
@@ -164,11 +170,12 @@ export default class extends Controller {
         }
       )
     })
-    const pagu_sipd = data.subkegiatan_opd.map((val) => {
+    const pagu_sipd = data.subkegiatan_opd.map((val, index) => {
       let pagu = Math.floor(val.pagu_sipd / 1000_000)
+      const no = index + 1
       return (
         {
-          x: val.nama_subkegiatan,
+          x: `${no} ${val.nama_subkegiatan}`,
           y: pagu
         }
       )
