@@ -57,7 +57,7 @@ wb.add_worksheet(name: "SasaranOPD") do |sheet|
     end
   end
 end
-wb.add_worksheet(name: "#{@opd.nama_opd.truncate(20)}") do |sheet|
+wb.add_worksheet(name: @opd.nama_opd.truncate(20).to_s) do |sheet|
   sheet.add_row ["Nama Pemda", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "Target Kinerja"],
                 style: [project_heading, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, center_hor]
   sheet.merge_cells "M1:O1"
@@ -73,41 +73,41 @@ wb.add_worksheet(name: "#{@opd.nama_opd.truncate(20)}") do |sheet|
   sheet.add_row ["Indikator Kinerja Output"], style: project_heading, offset: 9
   # opd
   sheet.add_row ["Pemerintah Kota Madiun"]
-  @sasaran_opd_spip.each do |opd, strategis|
-    sheet.add_row [opd.nama_opd], offset: 1
-    strategis.each do |strategi|
-      next unless strategi.strategi_eselon_tigas.where(tahun: @tahun).any?
-
-      sheet.add_row [strategi.sasaran], offset: 2
-      strategi.indikator_sasarans.each do |indikator_opd|
-        sheet.add_row [indikator_opd.indikator_kinerja, nil, nil, nil, nil, nil, nil, nil, nil,
-                       indikator_opd.satuan, indikator_opd.target, indikator_opd.satuan],
-                      offset: 3
+  sheet.add_row [@sasaran_opd_spip[:opd]], offset: 1
+  @sasaran_opd_spip[:strategic].each do |strategi|
+    sheet.add_row [strategi], offset: 2
+    strategi.indikator_sasarans.each do |indikator_opd|
+      sheet.add_row [indikator_opd.indikator_kinerja, nil, nil, nil, nil, nil, nil, nil, nil,
+                     indikator_opd.satuan, indikator_opd.target, indikator_opd.satuan],
+                    offset: 3
+    end
+    @sasaran_opd_spip[:tactical].select do |str|
+      str.strategi.pohon_ref_id == strategi.strategi_id
+    end.each do |strategi_program|
+      operationals = @sasaran_opd_spip[:operational].select do |opr|
+        opr.strategi.pohon_ref_id == strategi_program.strategi_id
       end
-      strategi.strategi_eselon_tigas.where(tahun: @tahun).each do |strategi_program|
-        next unless strategi_program.strategi_eselon_empats.where(tahun: @tahun).any?
 
-        program = strategi_program.programs_strategi.each_key.first
-        sheet.add_row [strategi_program.sasaran, nil, nil, nil, nil, nil,
-                       program],
-                      offset: 4
-        strategi_program.indikator_sasarans.each do |indikator_pro|
-          sheet.add_row [indikator_pro.indikator, nil, nil, nil, nil, nil, nil,
-                         indikator_pro.satuan, indikator_pro.target, indikator_pro.satuan], offset: 5
+      program = operationals.map { |oo| oo.program_sasaran }.first
+      sheet.add_row [strategi_program, nil, nil, nil, nil, nil,
+                     program],
+                    offset: 4
+      strategi_program.indikator_sasarans.each do |indikator_pro|
+        sheet.add_row [indikator_pro.indikator, nil, nil, nil, nil, nil, nil,
+                       indikator_pro.satuan, indikator_pro.target, indikator_pro.satuan], offset: 5
+      end
+      operationals.each do |strategi_kegiatan|
+        sheet.add_row [strategi_kegiatan, nil, nil, nil, nil,
+                       strategi_kegiatan.kegiatan_sasaran], offset: 6
+        strategi_kegiatan.indikator_sasarans.each do |indikator_keg|
+          sheet.add_row [indikator_keg.indikator_kinerja, nil, nil, nil, nil,
+                         indikator_keg.satuan, indikator_keg.target,
+                         indikator_keg.satuan], offset: 7
         end
-        strategi_program.strategi_eselon_empats.where(tahun: @tahun).each do |strategi_kegiatan|
-          sheet.add_row [strategi_kegiatan.sasaran, nil, nil, nil, nil,
-                         strategi_kegiatan.kegiatan_strategi], offset: 6
-          strategi_kegiatan.indikator_sasarans.each do |indikator_keg|
-            sheet.add_row [indikator_keg.indikator_kinerja, nil, nil, nil, nil,
-                           indikator_keg.satuan, indikator_keg.target,
-                           indikator_keg.satuan], offset: 7
-          end
-          sheet.add_row [strategi_kegiatan.subkegiatan_strategi], offset: 8
-          indikator_sub = strategi_kegiatan.program_kegiatan_strategi&.indikator_subkegiatan_tahun(@tahun, @opd.kode_unik_opd)
-          sheet.add_row [indikator_sub&.dig(:indikator), nil, nil,
-                         indikator_sub&.dig(:satuan), indikator_sub&.dig(:target), indikator_sub&.dig(:satuan)], offset: 9
-        end
+        sheet.add_row [strategi_kegiatan.subkegiatan_sasaran], offset: 8
+        indikator_sub = strategi_kegiatan.program_kegiatan&.indikator_subkegiatan_tahun(strategi_kegiatan.tahun_tanpa_perubahan, @opd.kode_unik_opd)
+        sheet.add_row [indikator_sub&.dig(:indikator), nil, nil,
+                       indikator_sub&.dig(:satuan), indikator_sub&.dig(:target), indikator_sub&.dig(:satuan)], offset: 9
       end
     end
     sheet.column_widths 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5
