@@ -5,45 +5,41 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Listen for rdebug-ide",
-      "type": "Ruby",
-      "request": "attach",
-      "remoteHost": "127.0.0.1",
-      "remotePort": "1234",
-      "remoteWorkspaceRoot": "${workspaceRoot}"
-    },
-    {
-      "name": "Run tests",
-      "type": "Ruby",
+      //Start Rails server
+      "name": "Debug Rails",
+      "type": "rdbg",
       "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "program": "${workspaceFolder}/bin/rspec",
-      "useBundler": true,
-      "pathToBundler": "${workspaceFolder}/bin/bundle",
-      "showDebuggerOutput": true,
-      "pathToRDebugIDE": "/home/ry/.rbenv/shims/rdebug-ide",
-      "args": []
-    },
-    {
-      "name": "Rails server",
-      "type": "Ruby",
-      "request": "launch",
-      "program": "${workspaceRoot}/bin/rails",
+      // "command": "bundle exec rails", #bundle exec rails won't stop in the debugger
+      "command": "bin/rails",
+      "script": "s",
       "args": [
-        "server"
-      ]
+        "-b",
+        "0.0.0.0"
+      ],
     },
     {
-      "name": "Rails Rdebug",
-      "type": "Ruby",
+      // Run tests on the active rspec file
+      "name": "Debug Rspec with current file",
+      "type": "rdbg",
       "request": "launch",
-      "cwd": "${workspaceRoot}",
-      "program": "${workspaceRoot}/bin/rails",
-      "pathToRDebugIDE": "/home/ry/.rbenv/shims/rdebug-ide",
-      "showDebuggerOutput": true,
-      "args": [
-        "server"
-      ]
+      "command": "bundle exec rspec",
+      "script": "${file}",
+      "args": [],
+      // Confirm the executed command in the window. Make it easy to specify options such as execution of 
+      "askParameters": true
+    },
+    {
+      "type": "rdbg",
+      "name": "Debug current file with rdbg",
+      "request": "launch",
+      "script": "${file}",
+      "args": [],
+      "askParameters": true
+    },
+    {
+      "type": "rdbg",
+      "name": "Attach with rdbg",
+      "request": "attach"
     }
   ]
 }

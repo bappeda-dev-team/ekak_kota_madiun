@@ -110,6 +110,8 @@ class Sasaran < ApplicationRecord
   scope :belum_ada_genders, -> { where.missing(:genders) }
   scope :dengan_strategi, -> { select { |s| s.strategi.present? } }
   scope :dengan_manual_ik, -> { select { |s| s.indikator_sasarans.any?(&:manual_ik) } }
+  scope :tanpa_nip, -> { where(nip_asn: [nil, '']) }
+  scope :dengan_nip, -> { where.not(nip_asn: [nil, '']) }
 
   scope :lengkap_strategi_tahun, lambda { |tahun|
                                    includes(%i[strategi usulans program_kegiatan indikator_sasarans])

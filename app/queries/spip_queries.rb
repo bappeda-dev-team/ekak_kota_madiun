@@ -7,8 +7,11 @@ class SpipQueries
     @tujuan_kota = tujuan_kota
     @tahun = tahun
     @opd = opd
-    # example of dependency injection (PokinQueries)
-    @pokin = PokinQueries.new(opd: opd, tahun: tahun_murni)
+    # change to query pattern later after test
+  end
+
+  def pohon_kinerja(kode_opd: )
+    PohonKinerjaOpdQueries.new(kode_opd: kode_opd, tahun: @tahun)
   end
 
   def strategi_kotas
@@ -52,16 +55,19 @@ class SpipQueries
     end.flatten.uniq(&:nama_opd)
   end
 
-  def mapper_strategi_kota_opd(strategi_kota, opd)
-    opd.strategi_eselon2.where(tahun: @tahun).select do |strategi|
-      strategi.pohon.pohonable == strategi_kota
+  def mapper_strategi_kota_opd(opd)
+    pokin = pohon_kinerja(kode_opd: opd.kode_unik_opd)
+    pokin_strategi = pokin.strategi_opd.filter_map do |strategi_pohon|
+      # map strategi_pohon to sasarans
+      strategi_pohon.sasarans.dengan_nip if strategi_pohon.opd == opd
     end
+    pokin_strategi.flatten
   end
 
   def sasaran_opd
     strategi_kotas.select { |sk| sk.tahun.include?(tahun_perubahan) }.to_h do |strategi_kota|
       sasaran_opds = strategi_kota.opds.to_h do |opd|
-        [opd.nama_opd, mapper_strategi_kota_opd(strategi_kota, opd).map(&:sasaran)]
+        [opd.nama_opd, mapper_strategi_kota_opd(opd)]
       end
       [strategi_kota.sasaran_kotum_sasaran, sasaran_opds]
     end
