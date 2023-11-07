@@ -124,7 +124,7 @@
                 <p class="program">Nama Subkegiatan: <%= operational.subkegiatan_sasaran %></p>
               </td>
             </tr>
-            <% indikator_sub = operational.program_kegiatan&.indikator_subkegiatan_tahun(operational.tahun_tanpa_perubahan, @opd.kode_unik_opd) %>
+            <% indikator_sub = IndikatorQueries.new(tahun: operational.tahun_tanpa_perubahan, opd: @opd, program_kegiatan: operational.program_kegiatan).indikator_subkegiatan %>
             <tr class="<%= kosong_class(indikator_sub&.dig(:target) == '0' || indikator_sub&.dig(:target).blank?) %>">
               <td class="border"></td>
               <td class="border"></td>

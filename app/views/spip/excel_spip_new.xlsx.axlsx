@@ -105,7 +105,7 @@ wb.add_worksheet(name: @opd.nama_opd.truncate(20).to_s) do |sheet|
                          indikator_keg.satuan], offset: 7
         end
         sheet.add_row [strategi_kegiatan.subkegiatan_sasaran], offset: 8
-        indikator_sub = strategi_kegiatan.program_kegiatan&.indikator_subkegiatan_tahun(strategi_kegiatan.tahun_tanpa_perubahan, @opd.kode_unik_opd)
+        indikator_sub = IndikatorQueries.new(tahun: strategi_kegiatan.tahun_tanpa_perubahan, opd: @opd, program_kegiatan: strategi_kegiatan.program_kegiatan).indikator_subkegiatan
         sheet.add_row [indikator_sub&.dig(:indikator), nil, nil,
                        indikator_sub&.dig(:satuan), indikator_sub&.dig(:target), indikator_sub&.dig(:satuan)], offset: 9
       end
