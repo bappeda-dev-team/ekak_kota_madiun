@@ -31,7 +31,7 @@
       <tr>
         <td class="border"></td>
         <td class="border">Tahun: <%= strategi.tahun_tanpa_perubahan %></td>
-        <td colspan="11" class="border"><%= strategi %> <%= strategi.user.nama %></td>
+        <td colspan="11" class="border"><%= strategi.strategi %> <%= strategi %> <%= strategi.user.nama %></td>
       </tr>
       <% strategi.indikator_sasarans.each do |indikator_opd| %>
         <tr class="<%= kosong_class(indikator_opd.target == '0' || indikator_opd.target.empty?) %>">
@@ -52,7 +52,7 @@
           <td class="border">Tahun : <%= tactical.tahun_tanpa_perubahan %></td>
           <td colspan="9" class="border">
             <p class="program">Nama Program: nanti dulu</p>
-            <p>Sasaran Program: <%= tactical %> <%= tactical.user.nama %></p>
+            <p>Sasaran Program: <%= tactical.strategi%> <%= tactical %> <%= tactical.user.nama %></p>
           </td>
         </tr>
         <% tactical.indikator_sasarans.each do |indikator_pro| %>
@@ -78,7 +78,7 @@
               <td class="border"></td>
               <td colspan="7" class="border">
                 <p class="program">Nama Kegiatan: nanti dulu</p>
-                <p>Sasaran Kegiatan: <%= operational %></p>
+                <p>Sasaran Kegiatan: <%= operational.strategi %> <%= operational %></p>
                 <% if operational.present? %>
                   <div class="tombol-edit">
                     <%= link_to buka_kak_laporan_path(operational),
@@ -123,7 +123,7 @@
                 <p class="program">Nama Subkegiatan: <%= operational.subkegiatan %></p>
               </td>
             </tr>
-            <% indikator_sub = operational.program_kegiatan&.indikator_subkegiatan_tahun(@tahun, @opd.kode_unik_opd) %>
+            <% indikator_sub = operational.program_kegiatan&.indikator_subkegiatan_tahun(operational.tahun_tanpa_perubahan, @opd.kode_unik_opd) %>
             <tr class="<%= kosong_class(indikator_sub&.dig(:target) == '0' || indikator_sub&.dig(:target).blank?) %>">
               <td class="border"></td>
               <td class="border"></td>
