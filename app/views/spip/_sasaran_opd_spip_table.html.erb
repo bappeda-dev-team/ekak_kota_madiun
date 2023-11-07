@@ -30,7 +30,7 @@
     <% sasaran_opd_spip[:strategic].each do |strategi| %>
       <tr>
         <td class="border"></td>
-        <td class="border">Tahun: <%= strategi.tahun_no_perubahan %></td>
+        <td class="border">Tahun: <%= strategi.tahun_tanpa_perubahan %></td>
         <td colspan="11" class="border"><%= strategi %> <%= strategi.user.nama %></td>
       </tr>
       <% strategi.indikator_sasarans.each do |indikator_opd| %>
@@ -44,12 +44,12 @@
           <td class="border"><%= indikator_opd.satuan %></td>
         </tr>
       <% end %>
-      <% sasaran_opd_spip[:tactical].each do |tactical| %>
+      <% sasaran_opd_spip[:tactical].select { |str| str.strategi.pohon_ref_id == strategi.strategi_id }.each do |tactical| %>
         <tr>
           <td class="border"></td>
           <td class="border"></td>
           <td class="border"></td>
-          <td class="border">Tahun : <%= tactical.tahun_no_perubahan %></td>
+          <td class="border">Tahun : <%= tactical.tahun_tanpa_perubahan %></td>
           <td colspan="9" class="border">
             <p class="program">Nama Program: nanti dulu</p>
             <p>Sasaran Program: <%= tactical %> <%= tactical.user.nama %></p>
@@ -68,7 +68,7 @@
             <td class="border"><%= indikator_pro.satuan %></td>
           </tr>
         <% end %>
-        <% sasaran_opd_spip[:operational].each do |operational| %>
+        <% sasaran_opd_spip[:operational].select { |opr| opr.strategi.pohon_ref_id == tactical.strategi_id }.each do |operational| %>
           <tr class="">
               <td class="border"></td>
               <td class="border"></td>
@@ -118,7 +118,7 @@
               <td class="border"></td>
               <td class="border"></td>
               <td class="border"></td>
-              <td class="border">Tahun: <%= operational.tahun %></td>
+              <td class="border">Tahun: <%= operational.tahun_tanpa_perubahan %></td>
               <td colspan="5" class="border">
                 <p class="program">Nama Subkegiatan: <%= operational.subkegiatan %></p>
               </td>
