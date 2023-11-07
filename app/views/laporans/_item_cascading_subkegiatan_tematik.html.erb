@@ -29,7 +29,6 @@
   <% end %>
   <div class="pohon-body">
     <% if pohon.rencana_kinerjas %>
-      <div class="pohon-body">
         <% pohon.rencana_kinerjas.each.with_index(1) do |sasaran, no| %>
           <%= render 'laporans/tabel_sasaran_cascading',
                    sasaran: sasaran,
@@ -37,7 +36,20 @@
                    no: no,
                    size: pohon.rencana_kinerjas.size %>
         <% end %>
-      </div>
     <% end %>
   </div>
+  <% if current_user.id == 1 %>
+  <div class="pohon-body">
+    <table class="table table-bordered mb-3">
+      <thead>
+        <tr>
+          <th colspan="2">Review</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render partial: 'komentars/komentar', collection: pohon.komentars, as: :komentar %>
+      </tbody>
+    </table>
+  </div>
+  <% end %>
 <% end %>

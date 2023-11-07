@@ -1,14 +1,19 @@
 <% unless pohon.exists? %>
-  <% if eselon_x?('reviewer', 'khusus', 'super_admin') %>
+  <% if current_user.id == 1 %>
     <div class="pohon-tombol mb-3">
       <div class="row">
         <div class="col">
-          <%= render 'shared/komentar_button',
-           link: komentar_pokin_komentars_path(strategi_id: pohon.id,
-                                               jenis: "CASCADING-KOTA"),
-           form_name: 'form-komentar' do %>
-            <i class="far fa-comment me-2"></i>
-            <span>Review</span>
+          <%= link_to komentar_pokin_komentars_path(strategi_id: pohon.id, jenis: "CASCADING-KOTA"),
+              remote: true,
+              data: {
+                controller: 'form-modal',
+                action: 'ajax:complete->form-modal#success:prevent',
+                bs_toggle: 'modal',
+                bs_target: '#form-modal'
+              },
+              class: "btn btn-sm btn-outline-primary" do %>
+                <i class="far fa-comment me-2"></i>
+                <span>Review</span>
           <% end %>
         </div>
       </div>
