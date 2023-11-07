@@ -45,13 +45,14 @@
         </tr>
       <% end %>
       <% sasaran_opd_spip[:tactical].select { |str| str.strategi.pohon_ref_id == strategi.strategi_id }.each do |tactical| %>
+        <% operationals = sasaran_opd_spip[:operational].select { |opr| opr.strategi.pohon_ref_id == tactical.strategi_id }%>
         <tr>
           <td class="border"></td>
           <td class="border"></td>
           <td class="border"></td>
           <td class="border">Tahun : <%= tactical.tahun_tanpa_perubahan %></td>
           <td colspan="9" class="border">
-            <p class="program">Nama Program: nanti dulu</p>
+            <p class="program">Nama Program: <%= operationals.map { |oo| oo.program_sasaran }.first %></p>
             <p>Sasaran Program: <%= tactical.strategi%> <%= tactical %> <%= tactical.user.nama %></p>
           </td>
         </tr>
@@ -68,7 +69,7 @@
             <td class="border"><%= indikator_pro.satuan %></td>
           </tr>
         <% end %>
-        <% sasaran_opd_spip[:operational].select { |opr| opr.strategi.pohon_ref_id == tactical.strategi_id }.each do |operational| %>
+        <% operationals.each do |operational| %>
           <tr class="">
               <td class="border"></td>
               <td class="border"></td>
@@ -77,7 +78,7 @@
               <td class="border"></td>
               <td class="border"></td>
               <td colspan="7" class="border">
-                <p class="program">Nama Kegiatan: nanti dulu</p>
+                <p class="program">Nama Kegiatan: <%= operational.kegiatan_sasaran %></p>
                 <p>Sasaran Kegiatan: <%= operational.strategi %> <%= operational %></p>
                 <% if operational.present? %>
                   <div class="tombol-edit">
@@ -120,7 +121,7 @@
               <td class="border"></td>
               <td class="border">Tahun: <%= operational.tahun_tanpa_perubahan %></td>
               <td colspan="5" class="border">
-                <p class="program">Nama Subkegiatan: <%= operational.subkegiatan %></p>
+                <p class="program">Nama Subkegiatan: <%= operational.subkegiatan_sasaran %></p>
               </td>
             </tr>
             <% indikator_sub = operational.program_kegiatan&.indikator_subkegiatan_tahun(operational.tahun_tanpa_perubahan, @opd.kode_unik_opd) %>

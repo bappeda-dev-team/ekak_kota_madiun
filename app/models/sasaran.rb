@@ -456,6 +456,24 @@ class Sasaran < ApplicationRecord
     program_kegiatan.present? ? program_kegiatan.nama_subkegiatan : 'Belum diisi'
   end
 
+  def program_sasaran
+    program_kegiatan.nama_program
+  rescue NoMethodError
+    'Kosong'
+  end
+
+  def kegiatan_sasaran
+    program_kegiatan.nama_kegiatan
+  rescue NoMethodError
+    'Kosong'
+  end
+
+  def subkegiatan_sasaran
+    program_kegiatan.nama_subkegiatan
+  rescue NoMethodError
+    'Kosong'
+  end
+
   def kode_program
     program_kegiatan.present? ? program_kegiatan.kode_program : '-'
   end
