@@ -11,8 +11,9 @@
             </td>
             <td class="text-wrap text-start"><%= dibagikan.dibagikan_ke %></td>
             <td class="text-wrap text-center align-middle" style="font-size: 11px;">
-              <% if dibagikan.pohonable.sasarans.select { |s| s.nip_asn == dibagikan.nip_asn }.any? %>
-                <span class="badge bg-success">Rencana Kinerja terisi</span>
+              <% checker = dibagikan.pohonable.sasarans.select { |s| s.nip_asn == dibagikan.nip_asn } %>
+              <% if checker.any? %>
+                <span class="badge bg-success">Jumlah Rencana Kinerja: <%= checker.size %></span>
               <% else %>
                 <span class="badge bg-danger">Rencana Kinerja belum terisi</span>
               <% end %>
