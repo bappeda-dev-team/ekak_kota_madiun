@@ -23,57 +23,53 @@
     <tr>
       <td colspan="13" class="border">Kota Madiun</td>
     </tr>
-    <% sasaran_opd_spip.each do |opd, strategis| %>
+    <tr>
+      <td class="border"></td>
+      <td colspan="12" class="border"><%= sasaran_opd_spip[:opd] %></td>
+    </tr>
+    <% sasaran_opd_spip[:strategic].each do |strategi| %>
       <tr>
         <td class="border"></td>
-        <td colspan="12" class="border"><%= opd.nama_opd %></td>
+        <td class="border">Tahun: <%= strategi.tahun_no_perubahan %></td>
+        <td colspan="11" class="border"><%= strategi %> <%= strategi.user.nama %></td>
       </tr>
-      <% strategis.each do |strategi| %>
-        <% next unless strategi.strategi_eselon_tigas.where(tahun: @tahun).any? %>
+      <% strategi.indikator_sasarans.each do |indikator_opd| %>
+        <tr class="<%= kosong_class(indikator_opd.target == '0' || indikator_opd.target.empty?) %>">
+          <td class="border"></td>
+          <td class="border"></td>
+          <td class="border"></td>
+          <td colspan="7" class="border"><%= indikator_opd.indikator_kinerja %></td>
+          <td class="border"><%= indikator_opd.satuan %></td>
+          <td class="border"><%= indikator_opd.target %></td>
+          <td class="border"><%= indikator_opd.satuan %></td>
+        </tr>
+      <% end %>
+      <% sasaran_opd_spip[:tactical].each do |tactical| %>
         <tr>
           <td class="border"></td>
-          <td class="border">Tahun: <%= strategi.tahun %></td>
-          <td colspan="11" class="border"><%= strategi.sasaran %> <%= strategi.user.nama %></td>
+          <td class="border"></td>
+          <td class="border"></td>
+          <td class="border">Tahun : <%= tactical.tahun_no_perubahan %></td>
+          <td colspan="9" class="border">
+            <p class="program">Nama Program: nanti dulu</p>
+            <p>Sasaran Program: <%= tactical %> <%= tactical.user.nama %></p>
+          </td>
         </tr>
-        <% strategi.indikator_sasarans.each do |indikator_opd| %>
-          <tr class="<%= kosong_class(indikator_opd.target == '0' || indikator_opd.target.empty?) %>">
+        <% tactical.indikator_sasarans.each do |indikator_pro| %>
+          <tr class="<%= kosong_class(indikator_pro.target == '0' || indikator_pro.target.blank?) %>">
             <td class="border"></td>
             <td class="border"></td>
             <td class="border"></td>
-            <td colspan="7" class="border"><%= indikator_opd.indikator_kinerja %></td>
-            <td class="border"><%= indikator_opd.satuan %></td>
-            <td class="border"><%= indikator_opd.target %></td>
-            <td class="border"><%= indikator_opd.satuan %></td>
+            <td class="border"></td>
+            <td class="border"></td>
+            <td colspan="5" class="border"><%= indikator_pro.indikator_kinerja %></td>
+            <td class="border"><%= indikator_pro.satuan %></td>
+            <td class="border"><%= indikator_pro.target %></td>
+            <td class="border"><%= indikator_pro.satuan %></td>
           </tr>
         <% end %>
-        <% strategi.strategi_eselon_tigas.where(tahun: @tahun).each do |strategi_program| %>
-          <% next unless strategi_program.strategi_eselon_empats.where(tahun: @tahun).any? %>
-          <tr class="<%= kosong_class(strategi_program.programs_strategi.keys.include?(:Kosong)) %>">
-            <td class="border"></td>
-            <td class="border"></td>
-            <td class="border"></td>
-            <td class="border">Tahun : <%= strategi_program.tahun %></td>
-            <td colspan="9" class="border">
-              <% program = strategi_program.programs_strategi.each_key.first %>
-              <p class="program">Nama Program: <%= program %></p>
-              <p>Sasaran Program: <%= strategi_program.sasaran %> <%= strategi_program.user.nama %></p>
-            </td>
-          </tr>
-          <% strategi_program.indikator_sasarans.each do |indikator_pro| %>
-            <tr class="<%= kosong_class(indikator_pro.target == '0' || indikator_pro.target.blank?) %>">
-              <td class="border"></td>
-              <td class="border"></td>
-              <td class="border"></td>
-              <td class="border"></td>
-              <td class="border"></td>
-              <td colspan="5" class="border"><%= indikator_pro.indikator_kinerja %></td>
-              <td class="border"><%= indikator_pro.satuan %></td>
-              <td class="border"><%= indikator_pro.target %></td>
-              <td class="border"><%= indikator_pro.satuan %></td>
-            </tr>
-          <% end %>
-          <% strategi_program.strategi_eselon_empats.where(tahun: @tahun).each do |strategi_kegiatan| %>
-            <tr class="<%= kosong_class(strategi_kegiatan.kegiatan_strategi.include?('Kosong')) %>">
+        <% sasaran_opd_spip[:operational].each do |operational| %>
+          <tr class="">
               <td class="border"></td>
               <td class="border"></td>
               <td class="border"></td>
@@ -81,11 +77,11 @@
               <td class="border"></td>
               <td class="border"></td>
               <td colspan="7" class="border">
-                <p class="program">Nama Kegiatan: <%= strategi_kegiatan.kegiatan_strategi %></p>
-                <p>Sasaran Kegiatan: <%= strategi_kegiatan.sasaran %></p>
-                <% if strategi_kegiatan.sasaran.present? %>
+                <p class="program">Nama Kegiatan: nanti dulu</p>
+                <p>Sasaran Kegiatan: <%= operational %></p>
+                <% if operational.present? %>
                   <div class="tombol-edit">
-                    <%= link_to buka_kak_laporan_path(strategi_kegiatan),
+                    <%= link_to buka_kak_laporan_path(operational),
                         target: "_blank",
                         class: 'btn btn-sm btn-info' do %>
                       <i class="fas fa-book-open me-2"></i>
@@ -95,11 +91,11 @@
                 <% else %>
                   <p class="alert alert-danger">Sasaran Kosong</p>
                   <b>Pemilik:</b>
-                  <p class="alert alert-danger"><%= strategi_kegiatan.user.nama %></p>
+                  <p class="alert alert-danger"><%= operational.user.nama %></p>
                 <% end %>
               </td>
             </tr>
-            <% strategi_kegiatan.indikator_sasarans.each do |indikator_keg| %>
+            <% operational.indikator_sasarans.each do |indikator_keg| %>
               <tr class="<%= kosong_class(indikator_keg.target == '0' || indikator_keg.target.blank?) %>">
                 <td class="border"></td>
                 <td class="border"></td>
@@ -122,12 +118,12 @@
               <td class="border"></td>
               <td class="border"></td>
               <td class="border"></td>
-              <td class="border">Tahun: <%= strategi_kegiatan.tahun %></td>
+              <td class="border">Tahun: <%= operational.tahun %></td>
               <td colspan="5" class="border">
-                <p class="program">Nama Subkegiatan: <%= strategi_kegiatan.subkegiatan_strategi %></p>
+                <p class="program">Nama Subkegiatan: <%= operational.subkegiatan %></p>
               </td>
             </tr>
-            <% indikator_sub = strategi_kegiatan.program_kegiatan_strategi&.indikator_subkegiatan_tahun(@tahun, @opd.kode_unik_opd) %>
+            <% indikator_sub = operational.program_kegiatan&.indikator_subkegiatan_tahun(@tahun, @opd.kode_unik_opd) %>
             <tr class="<%= kosong_class(indikator_sub&.dig(:target) == '0' || indikator_sub&.dig(:target).blank?) %>">
               <td class="border"></td>
               <td class="border"></td>
@@ -143,7 +139,6 @@
               <td class="border"><%= indikator_sub&.dig(:target) %></td>
               <td class="border"><%= indikator_sub&.dig(:satuan) %></td>
             </tr>
-          <% end %>
         <% end %>
       <% end %>
     <% end %>

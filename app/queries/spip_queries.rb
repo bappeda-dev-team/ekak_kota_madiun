@@ -10,7 +10,7 @@ class SpipQueries
     # change to query pattern later after test
   end
 
-  def pohon_kinerja(kode_opd: )
+  def pohon_kinerja(kode_opd:)
     PohonKinerjaOpdQueries.new(kode_opd: kode_opd, tahun: @tahun)
   end
 
@@ -73,19 +73,16 @@ class SpipQueries
     end
   end
 
-  def spip_sasaran_opd
-    # example of dependency injection (PokinQueries)
-    if @opd.id.in?(opd_khusus)
-      # @opd.strategi_eselon2b.where(tahun: @tahun).group_by(&:opd)
-      @pokin.tactical2.group_by(&:opd)
-    else
-      # @opd.strategi_eselon2.where(tahun: @tahun).group_by(&:opd)
-      @pokin.strategic.group_by(&:opd)
-    end
-    # strategis = @pokin.strategi_in_specific_opd
-    # grouping = @pokin.strategi_by_role(strategis)
-    # eselon3 = grouping["eselon_3"]
-    # tactical2 = eselon3.map(&:strategi_atasan)
-    # @pokin.tactical2.group_by(&:opd)
+  def spip_sasaran_opd # rubocop:disable Metrics
+    pokin = pohon_kinerja(kode_opd: @opd.kode_unik_opd)
+    strategic = pokin.strategi_opd.map { |str| str.sasarans.dengan_nip }.flatten
+    tactical = pokin.tactical_opd.map { |str| str.sasarans.dengan_nip }.flatten
+    operational = pokin.operational_opd.map { |str| str.sasarans.dengan_nip }.flatten
+    {
+      opd: opd.nama_opd,
+      strategic: strategic,
+      tactical: tactical,
+      operational: operational
+    }
   end
 end

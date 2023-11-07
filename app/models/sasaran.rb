@@ -146,6 +146,10 @@ class Sasaran < ApplicationRecord
     tahun.to_s.split('_').first
   end
 
+  def tahun_no_perubahan
+    tahun.gsub('_perubahan', '')
+  end
+
   def program_nil?
     program_kegiatan.nil?
   end
