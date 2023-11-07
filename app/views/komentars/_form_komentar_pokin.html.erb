@@ -1,13 +1,15 @@
-<%= form_with(model: @komentar, local: false,
+<%= form_with(model: komentar, local: false,
               data: { controller: 'form-ajax',
-                      action: 'ajax:success->form-ajax#successResponse'
+                      form_ajax_target_param: 'test_id_pohon',
+                      form_ajax_type_param: komentar.new_record? ? 'afterbegin' : '',
+                      action: 'ajax:complete->form-ajax#processAjax',
 }) do |form| %>
-  <% if @komentar.errors.any? %>
+  <% if komentar.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@komentar.errors.count, "error") %> prohibited this komentar from being saved:</h2>
+      <h2><%= pluralize(komentar.errors.count, "error") %> prohibited this komentar from being saved:</h2>
 
       <ul>
-        <% @komentar.errors.each do |error| %>
+        <% komentar.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
