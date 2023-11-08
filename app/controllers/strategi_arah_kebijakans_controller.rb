@@ -11,7 +11,13 @@ class StrategiArahKebijakansController < ApplicationController
   end
 
   def opd
-    @strategi_arah_kebijakans = StrategiArahKebijakan.all
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    strategi_arah_kebijakan = StrategiArahKebijakan.new(tahun: @tahun, kode_opd: @kode_opd)
+    @isu_strategis_opds = strategi_arah_kebijakan.isu_strategis_opds
+    @tujuan_opds = strategi_arah_kebijakan.tujuan_opds
+    @strategi_opds = strategi_arah_kebijakan.strategi_opds
+    @tactical_opds = strategi_arah_kebijakan.tactical_opds
   end
   # GET /strategi_arah_kebijakans/1 or /strategi_arah_kebijakans/1.json
   def show

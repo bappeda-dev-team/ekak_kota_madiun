@@ -68,8 +68,9 @@ class IsuStrategisOpdsController < ApplicationController
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
     tahun = params[:tahun]
+    tahun_tanpa_perubahan = tahun.gsub('_perubahan', '')
     @tahun = "Tahun #{tahun}"
-    @isu_strategis_opds = @opd.isu_strategis_opds.where(tahun: tahun)
+    @isu_strategis_opds = @opd.isu_strategis_opds.where(tahun: [tahun,tahun_tanpa_perubahan])
     render partial: 'isu_strategis_opds/isu_strategis_opd'
   end
 

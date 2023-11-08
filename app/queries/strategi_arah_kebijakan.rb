@@ -5,6 +5,7 @@ class StrategiArahKebijakan
 
   def initialize(tahun: '', kode_opd: )
     @tahun = tahun
+    @tahun_tanpa_perubahan = tahun.gsub('_perubahan', '')
     @kode_opd = kode_opd
     @opd = Opd.find_by(kode_unik_opd: kode_opd)
   end
@@ -14,7 +15,7 @@ class StrategiArahKebijakan
   end
 
   def isu_strategis_opds
-    @opd.isu_strategis_opds
+    @opd.isu_strategis_opds.where(tahun: [@tahun, @tahun_tanpa_perubahan])
   end
 
   def tujuan_opds
@@ -27,5 +28,9 @@ class StrategiArahKebijakan
 
   def strategi_opds
     pokin_opd.strategi_opd
+  end
+
+  def tactical_opds
+    pokin_opd.tactical_opd
   end
 end

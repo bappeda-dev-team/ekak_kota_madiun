@@ -18,7 +18,7 @@ class IsuStrategisOpd < ApplicationRecord
   has_many :komentars, -> { where(jenis: 'IsuOpd') }, primary_key: :id, foreign_key: :item
 
   def to_s
-    self.class.name.underscore.titleize
+    isu_strategis
   end
 
   def strategi

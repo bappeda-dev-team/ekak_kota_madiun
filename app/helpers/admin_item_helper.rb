@@ -2,6 +2,10 @@ module AdminItemHelper # rubocop:disable Metrics
   def perencanaan_opd_items # rubocop:disable Metrics
     [
       {
+        title: 'Strategi Arah Kebijakan', href: opd_strategi_arah_kebijakans_path,
+        icon: 'fas fa-city', identifier: 'tujuan_opds'
+      },
+      {
         title: 'Anggaran', href: "#",
         multi: true, collections: anggaran_admin_items,
         id_target: "master-anggaran",
