@@ -14,6 +14,7 @@ class StrategiArahKebijakansController < ApplicationController
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
     strategi_arah_kebijakan = StrategiArahKebijakan.new(tahun: @tahun, kode_opd: @kode_opd)
+    @opd = strategi_arah_kebijakan.opd
     @isu_strategis_opds = strategi_arah_kebijakan.isu_strategis_opds
     @tujuan_opds = strategi_arah_kebijakan.tujuan_opds
     @strategi_opds = strategi_arah_kebijakan.strategi_opds
