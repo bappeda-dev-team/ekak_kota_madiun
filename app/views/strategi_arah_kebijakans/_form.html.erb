@@ -1,0 +1,17 @@
+<%= form_with(model: strategi_arah_kebijakan) do |form| %>
+  <% if strategi_arah_kebijakan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(strategi_arah_kebijakan.errors.count, "error") %> prohibited this strategi_arah_kebijakan from being saved:</h2>
+
+      <ul>
+        <% strategi_arah_kebijakan.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

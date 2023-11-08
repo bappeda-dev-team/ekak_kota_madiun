@@ -64,10 +64,17 @@
 * TODO [2023-11-6 Mon]
 - [X] Chart opd vertikal
 - [X] nomor di subkegiatan
-  - [ ] align text left
+  - [X] align text left
 - [ ] filter kota
   - [ ] tematik
   - [ ] subtematik
   - [ ] opd
     - [ ] subkegiatan
 - [ ] hapus pembagian anggaran
+* TODO SCHEDULED: <2023-11-08 Wed>
+** [ ] Laporan Crosscutting
+** [ ] Fix Subkegiatan SD / SMP
+** [ ] hapus terima tolak tahun 2025
+** [ ] sembunyikan sub sub dkk di pohon kinerja opd
+** [ ] opd bisa buat tactical dari kota
+** [-] Strategi Arah Kebijkakan

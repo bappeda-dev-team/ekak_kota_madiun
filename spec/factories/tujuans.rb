@@ -22,6 +22,9 @@ FactoryBot.define do
   factory :tujuan do
     tujuan { "MyString" }
     id_tujuan { "MyString" }
+    kode_unik_opd { "" }
+    tahun_awal { "" }
+    tahun_akhir { "" }
     type { "" }
   end
 end
