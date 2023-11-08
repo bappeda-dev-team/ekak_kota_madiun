@@ -69,7 +69,9 @@ class DasarHukumsController < ApplicationController
     @dasar_hukum.destroy
     respond_to do |format|
       format.js
-      format.html { redirect_to user_sasaran_path(current_user, @sasaran), success: "Dasar hukum was successfully destroyed." }
+      format.html {
+        redirect_to user_sasaran_path(current_user, @sasaran), success: "Dasar hukum was successfully destroyed."
+      }
       format.json { head :no_content }
     end
   end

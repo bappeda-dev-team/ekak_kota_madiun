@@ -18,6 +18,5 @@
 #
 FactoryBot.define do
   factory :sasaran_opd do
-    
   end
 end

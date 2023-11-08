@@ -1,5 +1,4 @@
 class Master::ProgramController < ApplicationController
-
   def index
     @programs = Master::Program.all
   end

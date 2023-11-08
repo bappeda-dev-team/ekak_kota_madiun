@@ -20,5 +20,6 @@ wb.add_worksheet(name: "Usulan #{@jenis_asli.upcase}") do |sheet|
       # sheet.merge_cells("#{pk_cell.cells[2].r}:#{pk_cell.cells.last.r}")
     end
   end
-  sheet.add_row ['', '', 'Jumlah', "Rp. #{number_with_delimiter(@program_kegiatans.map(&:my_pagu).compact.sum)}", '', '']
+  sheet.add_row ['', '', 'Jumlah', "Rp. #{number_with_delimiter(@program_kegiatans.map(&:my_pagu).compact.sum)}", '',
+                 '']
 end

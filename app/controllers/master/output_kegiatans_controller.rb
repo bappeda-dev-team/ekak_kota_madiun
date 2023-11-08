@@ -10,6 +10,7 @@ class Master::OutputKegiatansController < ApplicationController
     redirect_to master_output_path,
                 success: "Update Master Output Kegiatan Selesai"
   end
+
   # TODO: OPTIMIZE AND SECURE
   def handle_filters
     filter_query = params[:filter_query]

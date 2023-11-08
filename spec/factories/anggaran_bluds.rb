@@ -16,6 +16,5 @@
 #
 FactoryBot.define do
   factory :anggaran_blud do
-    
   end
 end

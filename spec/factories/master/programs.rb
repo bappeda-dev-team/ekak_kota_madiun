@@ -20,6 +20,5 @@
 #
 FactoryBot.define do
   factory :master_program, class: 'Master::Program' do
-    
   end
 end

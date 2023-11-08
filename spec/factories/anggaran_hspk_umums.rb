@@ -18,6 +18,5 @@
 #
 FactoryBot.define do
   factory :anggaran_hspk_umum do
-    
   end
 end

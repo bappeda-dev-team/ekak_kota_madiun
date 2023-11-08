@@ -15,6 +15,5 @@
 #
 FactoryBot.define do
   factory :dampak do
-    
   end
 end

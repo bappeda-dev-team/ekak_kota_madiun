@@ -76,8 +76,8 @@ class SpipQueries
   def spip_sasaran_opd # rubocop:disable Metrics
     pokin = pohon_kinerja(kode_opd: @opd.kode_unik_opd)
     strategic = pokin.strategi_opd.map { |str| str.sasarans.dengan_nip.where(tahun: @tahun) }.flatten
-    tactical = pokin.tactical_opd.map { |str| str.sasarans.dengan_nip.where(tahun: @tahun)}.flatten
-    operational = pokin.operational_opd.map { |str| str.sasarans.dengan_nip.where(tahun: @tahun)}.flatten
+    tactical = pokin.tactical_opd.map { |str| str.sasarans.dengan_nip.where(tahun: @tahun) }.flatten
+    operational = pokin.operational_opd.map { |str| str.sasarans.dengan_nip.where(tahun: @tahun) }.flatten
     {
       opd: opd.nama_opd,
       strategic: strategic,

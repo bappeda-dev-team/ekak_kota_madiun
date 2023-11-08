@@ -4,9 +4,11 @@ project_heading = s.add_style sz: 12, b: true
 red_line = s.add_style bg_color: "FF0000"
 center_hor = s.add_style sz: 12, b: true, alignment: { horizontal: :center }
 wb.add_worksheet(name: "InformasiUmumSasaranPemda") do |sheet_pemda|
-  sheet_pemda.add_row ["NAMA", nil, nil, nil, nil, nil, nil, nil, "Target Kinerja"], style: [project_heading, nil, nil, nil, nil, nil, nil, nil, center_hor]
+  sheet_pemda.add_row ["NAMA", nil, nil, nil, nil, nil, nil, nil, "Target Kinerja"],
+                      style: [project_heading, nil, nil, nil, nil, nil, nil, nil, center_hor]
   sheet_pemda.merge_cells "I1:K1"
-  sheet_pemda.add_row ["VISI", nil, nil, nil, nil, nil, nil, "Satuan", "Nilai", "Atribut"], style: project_heading, offset: 1
+  sheet_pemda.add_row ["VISI", nil, nil, nil, nil, nil, nil, "Satuan", "Nilai", "Atribut"], style: project_heading,
+                                                                                            offset: 1
   sheet_pemda.add_row ["MISI"], style: project_heading, offset: 2
   sheet_pemda.add_row ["Tujuan Strategis"], style: project_heading, offset: 3
   sheet_pemda.add_row ["Sasaran Strategis"], style: project_heading, offset: 4
@@ -20,10 +22,11 @@ wb.add_worksheet(name: "InformasiUmumSasaranPemda") do |sheet_pemda|
     sheet_pemda.add_row [SasaranKota.find_by(id_rencana: key).sasaran_atasan], offset: 3
     sheet_pemda.add_row [SasaranKota.find_by(id_rencana: key).sasaran_kinerja], offset: 4
     SasaranKota.find_by(id_rencana: key).indikator_sasarans.each do |ind_sas_kota|
-      sheet_pemda.add_row [ind_sas_kota.indikator_kinerja, nil, nil, ind_sas_kota.satuan, ind_sas_kota.target.to_s, ind_sas_kota.satuan], offset: 5
+      sheet_pemda.add_row [ind_sas_kota.indikator_kinerja, nil, nil, ind_sas_kota.satuan, ind_sas_kota.target.to_s, ind_sas_kota.satuan],
+                          offset: 5
     end
   end
-  sheet_pemda.column_widths 5,5,5,5,5,5
+  sheet_pemda.column_widths 5, 5, 5, 5, 5, 5
 end
 wb.add_worksheet(name: "DaftarOPD") do |sheet_opd|
   sheet_opd.add_row ["Nama OPD"], style: project_heading
@@ -45,9 +48,11 @@ wb.add_worksheet(name: "SasaranOPD") do |sheet|
   end
 end
 wb.add_worksheet(name: "SasaranProgramKegiatanOPD") do |sheet|
-  sheet.add_row ["Nama Pemda", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "Target Kinerja"], style: [project_heading, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, center_hor]
+  sheet.add_row ["Nama Pemda", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "Target Kinerja"],
+                style: [project_heading, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, center_hor]
   sheet.merge_cells "M1:O1"
-  sheet.add_row ["Nama OPD", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "Satuan", "Nilai", "Atribut"], style: project_heading, offset: 1
+  sheet.add_row ["Nama OPD", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "Satuan", "Nilai", "Atribut"],
+                style: project_heading, offset: 1
   sheet.add_row ["Sasaran OPD"], style: project_heading, offset: 2
   sheet.add_row ["Indikator Kinerja Sasaran OPD"], style: project_heading, offset: 3
   sheet.add_row ["Sasaran Program", nil, nil, nil, nil, nil, "Nama Program"], style: project_heading, offset: 4
@@ -63,23 +68,24 @@ wb.add_worksheet(name: "SasaranProgramKegiatanOPD") do |sheet|
   # sasaran kepala opd
   @opd.kepala.sasarans.order(:id).each do |sas_kepala|
     sheet.add_row ["#{sas_kepala.sasaran_kinerja}"], offset: 2
-    
+
     # indikator sas_kepala
     sas_kepala.indikator_sasarans.each do |ind_sas_kepala|
-      sheet.add_row ["#{ind_sas_kepala.indikator_kinerja}", nil, nil, nil, nil, nil, nil, nil, nil, ind_sas_kepala.satuan, ind_sas_kepala.target, ind_sas_kepala.satuan], offset: 3
-      
+      sheet.add_row ["#{ind_sas_kepala.indikator_kinerja}", nil, nil, nil, nil, nil, nil, nil, nil, ind_sas_kepala.satuan, ind_sas_kepala.target, ind_sas_kepala.satuan],
+                    offset: 3
+
       # sasaran program ( kabid )
       ind_sas_kepala.sasaran_kabid.each do |sas_kabid|
-        sheet.add_row ["#{sas_kabid.sasaran_kinerja}", nil, nil, nil, nil, nil, "#{sas_kabid.program_kabid.pop || '-'}"], offset: 4
+        sheet.add_row ["#{sas_kabid.sasaran_kinerja}", nil, nil, nil, nil, nil, "#{sas_kabid.program_kabid.pop || '-'}"],
+                      offset: 4
 
         # indikator sasaran kabid
         sas_kabid.indikator_sasarans.each do |ind_sas_kabid|
           sheet.add_row ["#{ind_sas_kabid.indikator_kinerja}", nil, nil, nil, nil, nil, nil,
                          "#{ind_sas_kabid.satuan}", "#{ind_sas_kabid.target}", "#{ind_sas_kabid.aspek}"], offset: 5
-         end 
-          # sasaran kegiatan ( eselon 4 )
+        end
+        # sasaran kegiatan ( eselon 4 )
         sas_kabid.sasaran_kasi.order(:id).each do |sas_kasi|
-
           sheet.add_row ["#{sas_kasi.sasaran_kinerja}", nil, nil, nil, nil,
                          "#{sas_kasi&.program_kegiatan&.nama_kegiatan || '-'}"], offset: 6
           # indikator kegiatan
@@ -98,7 +104,7 @@ wb.add_worksheet(name: "SasaranProgramKegiatanOPD") do |sheet|
         end
       end
     end
-    sheet.column_widths 5,5,5,5,5,5,5,5,5,5,5,5
+    sheet.column_widths 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5
   end
   # @program_kegiatans.each do |pk|
   #   pk.usulans.where(usulanable_type: @jenis).each do |us|

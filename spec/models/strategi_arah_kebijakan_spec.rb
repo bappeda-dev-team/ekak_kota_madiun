@@ -1,21 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe StrategiArahKebijakan do
-
   def strategi_kebijakan(tahun, kode_opds)
     StrategiArahKebijakan.new(tahun: tahun, kode_opd: kode_opds)
   end
 
-  let(:opd) { create(:opd,
-                     kode_opd: '5.01.5.05.0.00.02.0000',
-                     kode_unik_opd: '5.01.5.05.0.00.02.0000',
-                     nama_opd: 'Badan Perencana') }
+  let(:opd) do
+    create(:opd,
+           kode_opd: '5.01.5.05.0.00.02.0000',
+           kode_unik_opd: '5.01.5.05.0.00.02.0000',
+           nama_opd: 'Badan Perencana')
+  end
 
-  let(:isu_strategis_opd) { create(:isu_strategis_opd,
-                                   kode_opd: '5.01.5.05.0.00.02.0000',
-                                   isu_strategis: 'Contoh Isu',
-                                   kode: 'kode_a',
-                                   tahun: '2023') }
+  let(:isu_strategis_opd) do
+    create(:isu_strategis_opd,
+           kode_opd: '5.01.5.05.0.00.02.0000',
+           isu_strategis: 'Contoh Isu',
+           kode: 'kode_a',
+           tahun: '2023')
+  end
   let(:urusan) { create(:master_urusan) }
   let(:bidang_urusan) { create(:master_bidang_urusan) }
 

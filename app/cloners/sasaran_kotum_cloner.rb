@@ -22,6 +22,5 @@ class SasaranKotumCloner < Clowne::Cloner
   adapter :active_record
 
   finalize do |_source, record, **params|
-
   end
 end

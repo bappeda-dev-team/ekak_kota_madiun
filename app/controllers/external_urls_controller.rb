@@ -1,5 +1,5 @@
 class ExternalUrlsController < ApplicationController
-  before_action :set_external_url, only: %i[ show edit update destroy ]
+  before_action :set_external_url, only: %i[show edit update destroy]
 
   # GET /external_urls or /external_urls.json
   def index
@@ -58,13 +58,14 @@ class ExternalUrlsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_external_url
-      @external_url = ExternalUrl.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def external_url_params
-      params.require(:external_url).permit(:aplikasi, :endpoint, :username, :password, :keterangan, :kode)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_external_url
+    @external_url = ExternalUrl.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def external_url_params
+    params.require(:external_url).permit(:aplikasi, :endpoint, :username, :password, :keterangan, :kode)
+  end
 end

@@ -1,5 +1,5 @@
 class TujuansController < ApplicationController
-  before_action :set_tujuan, only: %i[ show edit update destroy ]
+  before_action :set_tujuan, only: %i[show edit update destroy]
 
   # GET /tujuans or /tujuans.json
   def index
@@ -58,13 +58,14 @@ class TujuansController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_tujuan
-      @tujuan = Tujuan.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def tujuan_params
-      params.require(:tujuan).permit(:tujuan, :id_tujuan, :type)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_tujuan
+    @tujuan = Tujuan.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def tujuan_params
+    params.require(:tujuan).permit(:tujuan, :id_tujuan, :type)
+  end
 end

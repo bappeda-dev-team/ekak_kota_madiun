@@ -60,6 +60,5 @@
 #
 FactoryBot.define do
   factory :renstra do
-    
   end
 end

@@ -12,6 +12,6 @@ json.data do
   json.target @indikator_sasaran.target
   json.satuan @indikator_sasaran.satuan
   json.manual_ik do
-    json.partial! partial: 'manual_ik_item', locals: {manual_ik: @indikator_sasaran.manual_ik}
+    json.partial! partial: 'manual_ik_item', locals: { manual_ik: @indikator_sasaran.manual_ik }
   end
 end

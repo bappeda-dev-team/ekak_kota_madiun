@@ -1,5 +1,5 @@
 class AnggaranHspkUmumsController < ApplicationController
-  before_action :set_anggaran_hspk_umum, only: %i[ show edit update destroy ]
+  before_action :set_anggaran_hspk_umum, only: %i[show edit update destroy]
 
   def index
     @anggaran_hspk_umum = AnggaranHspkUmum.all

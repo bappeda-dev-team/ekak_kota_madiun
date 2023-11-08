@@ -19,5 +19,4 @@
 #  index_master_programs_on_id_unik_sipd  (id_unik_sipd) UNIQUE
 #
 class Master::Program < ApplicationRecord
-  
 end
