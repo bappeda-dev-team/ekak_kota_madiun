@@ -4,7 +4,7 @@
   <li class="breadcrumb-item active" aria-current="page">Strategi Arah Kebijakan OPD</li>
 <% end %>
 <% content_for :view_utama do %>
-  <%= render 'shared/card_layout', title: "Strategi Arah Kebijakan #{@nama_opd} - Tahun #{@tahun}" do %>
+  <%= render 'shared/card_layout', title: "Strategi Arah Kebijakan #{@opd} - Tahun #{@tahun}" do %>
     <div class="table-responsive">
     <table class="table table-flush">
         <caption>Usulan Musrenbang OPD <%= current_user.opd.nama_opd %></caption>
@@ -16,6 +16,15 @@
                 <tr>
                     <th class="border-bottom text-gray-700" scope="col"><%= no %></th>
                     <th class="border-bottom text-gray-700" scope="col" colspan="4"><%= isu_strategis %></th>
+                </tr>
+            <% end %>
+            <tr>
+                <th class="border-bottom text-gray-700 bg-gray-200" scope="col" colspan="5">Tujuan OPD:</th>
+            </tr>
+            <% @tujuan_opds.each.with_index(1) do |tujuan, nom| %>
+                <tr>
+                    <th class="border-bottom text-gray-700" scope="col"><%= nom %></th>
+                    <th class="border-bottom text-gray-700" scope="col" colspan="4"><%= tujuan %></th>
                 </tr>
             <% end %>
             <tr>
