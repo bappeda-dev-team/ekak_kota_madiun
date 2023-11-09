@@ -1,8 +1,8 @@
 <% unless pohon.exists? %>
-  <% if pohon.role == 'eselon_2' || pohon.role == 'eselon_3' %>
+  <% if pohon.role == 'eselon_3' %>
     <div class="pohon-body">
-      <table class="table table-bordered mb-3">
-        <% program_pohon(pohon.real, pohon.role).each do |program| %>
+      <% program_pohon(pohon.real, pohon.role).each do |program| %>
+        <table class="table table-bordered mb-3">
           <tr>
             <td class="text-start">Program</td>
             <td class="text-wrap text-start" colspan="2">
@@ -19,7 +19,9 @@
             <td class="text-wrap text-start">Target / Satuan</td>
             <td class="text-wrap text-start" colspan="2"><%= indikator_prg.dig(:target) %> <%= indikator_prg.dig(:satuan) %></td>
           </tr>
-        <% end %>
+        </table>
+      <% end %>
+      <table class="table table-bordered mb-3">
         <tr>
           <td class="text-start">Pagu</td>
           <td class="rankir-2 text-start" colspan="2">Rp. <%= pagu_pohon(pohon.real, pohon.role) %></td>
@@ -36,6 +38,16 @@
                    no: no,
                    size: pohon.rencana_kinerjas.size %>
       <% end %>
+    </div>
+  <% end %>
+  <% if pohon.role == 'eselon_2' %>
+    <div class="pohon-body">
+      <table class="table table-bordered mb-3">
+        <tr>
+          <td class="text-start" style="width: 180px;">Pagu</td>
+          <td class="rankir-2 text-start" colspan="2">Rp. <%= pagu_pohon(pohon.real, pohon.role) %></td>
+        </tr>
+      </table>
     </div>
   <% end %>
 <% end %>
