@@ -22,13 +22,9 @@ class StrategiArahKebijakansController < ApplicationController
     check = params[:check]
     strategis = Strategi.where(id: check)
 
-    binding.pry
-
     strategis.update_all(
       tujuan_id: @tujuan.id
     )
-
-    binding.pry
 
     @strategi_opds = @strategi_arah_kebijakan.tujuan_strategi_opds
     @tactical_opds = @strategi_arah_kebijakan.tactical_opds

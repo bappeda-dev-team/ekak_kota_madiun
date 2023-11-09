@@ -9,13 +9,23 @@
 ) do |form| %>
   <%= form.label :strategi, class: "form-label" %>
   <% @strategi_opds.each do |strategi| %>
-    <div class="form-check">
+  <div class="row">
+    <div class="form-check col">
       <%= hidden_field_tag 'uncheck[]', strategi.id %>
-      <%= check_box_tag 'check[]', strategi.id, false, class: 'form-check-input' %>
+      <%= check_box_tag 'check[]', strategi.id, (strategi.tujuan_id == @tujuan.id), class: 'form-check-input' %>
       <%= label_tag 'check', class: 'form-check-label' do %>
         <span class="fw-bolder"><%= strategi %></span>
       <% end %>
     </div>
+      <% if strategi.tujuan %>
+    <div class="col-auto">
+      <p class="align-middle">Tujuan OPD: </p>
+    </div>
+    <div class="col-auto">
+        <p class="btn btn-sm btn-outline-primary"><%= strategi.tujuan %></p>
+    </div>
+      <% end%>
+  </div>
   <% end %>
 
   </div>
