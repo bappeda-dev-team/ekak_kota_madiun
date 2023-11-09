@@ -218,16 +218,18 @@ class StrategisController < ApplicationController
 
   def pokin_list
     tahun = cookies[:tahun]
+    # user = current_user.id
+    user = params[:user_id]
     # kode_unik_opd = cookies[:opd]
     # opd = Opd.find_by_kode_unik_opd(kode_unik_opd)
     # role = current_user.role_asn
     @pohons = Pohon.where(tahun: tahun,
-                          user_id: current_user.id,
+                          user_id: user,
                           pohonable_type: 'StrategiPohon').reject { |p| p.pohonable.nil? }
     return unless params[:item]
 
     @pohons = Pohon.where(tahun: tahun,
-                          user_id: current_user.id,
+                          user_id: user,
                           pohonable_id: params[:item],
                           pohonable_type: 'StrategiPohon').reject { |p| p.pohonable.nil? }
   end
