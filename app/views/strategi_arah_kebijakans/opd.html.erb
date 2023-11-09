@@ -7,7 +7,6 @@
   <%= render 'shared/card_layout', title: "Strategi Arah Kebijakan #{@opd} - Tahun #{@tahun}" do %>
     <div class="table-responsive">
     <table class="table table-flush">
-        <caption>Usulan Musrenbang OPD <%= current_user.opd.nama_opd %></caption>
         <thead>
             <tr>
                 <th class="border-bottom text-gray-700" scope="col" colspan="5">Isu Strategis:</th>
@@ -35,21 +34,24 @@
             </tr>
         </thead>
         <tbody>
-            <% @strategi_opds.each.with_index(1) do |strategi, nomor| %>
-            <tr>
-                <td rowspan="<%= @tactical_opds.select { |tact| tact.pohon_ref_id.to_i == strategi.id }.size + strategi.sasarans.dengan_nip.size + 1 %>"><%= nomor %></td>
+            <% @strategi_opds.take(1).each.with_index(1) do |strategi, nomor| %>
+            <tr class="strategi border">
+                <td rowspan="<%= strategi.sasarans.dengan_nip.size + 1 %>"><%= nomor %></td>
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
-                <td rowspan="<%= @tactical_opds.select { |tact| tact.pohon_ref_id.to_i == strategi.id }.size + strategi.sasarans.dengan_nip.size + 1 %>"><%= strategi %></td>
-                <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
-            </tr>
-                <% strategi.sasarans.dengan_nip.each do |sasaran| %>
-                    <tr class="border">
-                        <td rowspan="<%= @tactical_opds.select { |tact| tact.pohon_ref_id.to_i == strategi.id }.size + 1 %>"><%= sasaran %></td>
+                <td class="align-middle" rowspan="<%= strategi.sasarans.dengan_nip.size + 1 %>"><%= strategi %></td>
+                <td rowspan="<%= strategi.sasarans.dengan_nip.size + 1 %>">
+                <table>
+                <% @tactical_opds.select { |tact| tact.pohon_ref_id.to_i == strategi.id }.each do |tactical| %>
+                    <tr class="border sasaran">
+                        <td><%= tactical %></td>
                     </tr>
                 <% end %>
-                <% @tactical_opds.select { |tact| tact.pohon_ref_id.to_i == strategi.id }.each do |tactical| %>
-                    <tr class="border">
-                        <td><%= tactical %> - kebijakan</td>
+                </table>
+                </td>
+            </tr>
+                <% strategi.sasarans.dengan_nip.each do |sasaran| %>
+                    <tr class="border sasaran">
+                        <td class="align-middle"><%= sasaran %></td>
                     </tr>
                 <% end %>
             <% end %>

@@ -22,8 +22,7 @@ class StrategiArahKebijakansController < ApplicationController
   end
 
   # GET /strategi_arah_kebijakans/1 or /strategi_arah_kebijakans/1.json
-  def show
-  end
+  def show; end
 
   # GET /strategi_arah_kebijakans/new
   def new
@@ -31,8 +30,7 @@ class StrategiArahKebijakansController < ApplicationController
   end
 
   # GET /strategi_arah_kebijakans/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /strategi_arah_kebijakans or /strategi_arah_kebijakans.json
   def create
@@ -40,10 +38,10 @@ class StrategiArahKebijakansController < ApplicationController
 
     respond_to do |format|
       if @strategi_arah_kebijakan.save
-        format.html {
+        format.html do
           redirect_to strategi_arah_kebijakan_url(@strategi_arah_kebijakan),
                       notice: "Strategi arah kebijakan was successfully created."
-        }
+        end
         format.json { render :show, status: :created, location: @strategi_arah_kebijakan }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -56,10 +54,10 @@ class StrategiArahKebijakansController < ApplicationController
   def update
     respond_to do |format|
       if @strategi_arah_kebijakan.update(strategi_arah_kebijakan_params)
-        format.html {
+        format.html do
           redirect_to strategi_arah_kebijakan_url(@strategi_arah_kebijakan),
                       notice: "Strategi arah kebijakan was successfully updated."
-        }
+        end
         format.json { render :show, status: :ok, location: @strategi_arah_kebijakan }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -73,9 +71,9 @@ class StrategiArahKebijakansController < ApplicationController
     @strategi_arah_kebijakan.destroy
 
     respond_to do |format|
-      format.html {
+      format.html do
         redirect_to strategi_arah_kebijakans_url, notice: "Strategi arah kebijakan was successfully destroyed."
-      }
+      end
       format.json { head :no_content }
     end
   end

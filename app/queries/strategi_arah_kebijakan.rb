@@ -6,17 +6,18 @@ class StrategiArahKebijakan
 
   def initialize(tahun: '', kode_opd:)
     @tahun = tahun
-    @tahun_tanpa_perubahan = tahun.gsub('_perubahan', '')
     @kode_opd = kode_opd
     @opd = Opd.find_by(kode_unik_opd: kode_opd)
   end
 
-  # def opd
-  #   @opd
-  # end
+  def tahun_tanpa_perubahan
+    tahun.gsub('_perubahan', '')
+  rescue NoMethodError
+    ''
+  end
 
   def isu_strategis_opds
-    @opd.isu_strategis_opds.where(tahun: [@tahun, @tahun_tanpa_perubahan])
+    @opd.isu_strategis_opds.where(tahun: [@tahun, tahun_tanpa_perubahan])
   end
 
   def tujuan_opds
