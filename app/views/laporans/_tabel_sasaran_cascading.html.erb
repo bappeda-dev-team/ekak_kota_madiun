@@ -22,21 +22,6 @@
       <td class="text-start">Anggaran</td>
       <td class="rankir-2 text-start" colspan="2">Rp. <%= pagu_pohon(sasaran, role) %></td>
     </tr>
-    <tr class="<%= sasaran.subkegiatan == 'Belum diisi' ? 'bg-danger text-white' : '' %>">
-      <td class="text-start">Subkegiatan</td>
-      <td class="text-wrap text-start" colspan="2"><%= sasaran.subkegiatan %>
-        (<%= sasaran.program_kegiatan&.kode_sub_giat %>)
-      </td>
-    </tr>
-    <tr>
-      <% indikator_sub = indikator_sub_rekin(@tahun, @opd, sasaran.program_kegiatan) %>
-      <td class="text-wrap text-start">Indikator</td>
-      <td class="text-wrap text-start" colspan="2"><%= indikator_sub.dig(:indikator) %></td>
-    </tr>
-    <tr>
-      <td class="text-wrap text-start">Target / Satuan</td>
-      <td class="text-wrap text-start" colspan="2"><%= indikator_sub.dig(:target) %> <%= indikator_sub.dig(:satuan) %></td>
-    </tr>
   <% end %>
   <tr>
     <td class="text-start">Pelaksana</td>
