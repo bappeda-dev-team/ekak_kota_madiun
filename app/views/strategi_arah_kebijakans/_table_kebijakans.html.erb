@@ -1,0 +1,48 @@
+<table class="table table-flush">
+  <thead>
+    <tr>
+      <th class="border-bottom text-gray-700" scope="col">No.</th>
+      <th class="border-bottom text-gray-700" scope="col">Tujuan</th>
+      <th class="border-bottom text-gray-700" scope="col">Sasaran</th>
+      <th class="border-bottom text-gray-700" scope="col">Strategi</th>
+      <th class="border-bottom text-gray-700" scope="col">Arah Kebijakan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @strategi_opds.each.with_index(1) do |(tujuan, strategis), nomor| %>
+      <tr class="strategi">
+        <td class="align-middle"><%= nomor %></td>
+        <td class="align-middle"><%= tujuan %></td>
+        <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;">
+        
+            <table class="table table-full" style="height: 100%">
+            <% strategis.each do |strategi| %>
+              <tr>
+                <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
+                <td class="align-middle" rowspan="<%= strategi.sasarans.dengan_nip.size + 1 %>">
+                  <p><%= strategi %></p>
+                </td>
+                <td class="p-0 m-0" rowspan="<%= strategi.sasarans.dengan_nip.size + 1 %>" style="height: 100%; border-color: transparent;">
+                  <table class="table table-full" style="height: 100%">
+                    <tbody>
+                      <% @tactical_opds.select { |tact| tact.pohon_ref_id.to_i == strategi.id }.each do |tactical| %>
+                        <tr class="arah-kebijakan">
+                          <td class="border"><%= tactical %></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              <% strategi.sasarans.dengan_nip.each do |sasaran| %>
+                <tr class="sasaran">
+                  <td class="border align-middle"><%= sasaran %></td>
+                </tr>
+              <% end %>
+            <% end %>
+            </table>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

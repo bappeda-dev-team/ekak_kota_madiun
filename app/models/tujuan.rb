@@ -15,4 +15,5 @@
 #  urusan_id        :bigint
 #
 class Tujuan < ApplicationRecord
+  has_many :strategis
 end

@@ -35,4 +35,8 @@ class StrategiArahKebijakan
   def tactical_opds
     pokin_opd.tactical_opd
   end
+
+  def tujuan_strategi_opds
+    strategi_opds.group_by { |st_opd| st_opd.tujuan }
+  end
 end

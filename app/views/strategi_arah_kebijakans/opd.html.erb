@@ -22,21 +22,29 @@
           </tr>
           <% @tujuan_opds.each.with_index(1) do |tujuan, nom| %>
             <tr>
-              <th class="border-bottom text-gray-700" scope="col"><%= nom %></th>
-              <th class="border-bottom text-gray-700" scope="col" colspan="4"><%= tujuan %></th>
+              <th class="border-bottom text-gray-700 align-middle" scope="col"><%= nom %></th>
+              <th class="border-bottom text-gray-700 align-middle" scope="col" colspan="4">
+                <%= tujuan %>
+                <%= link_to edit_strategi_arah_kebijakan_path(tujuan),
+                      remote: true,
+                      data: {
+                        controller: 'form-modal',
+                        action: 'ajax:complete->form-modal#success:prevent',
+                        bs_toggle: 'modal',
+                        bs_target: '#form-modal'
+                      },
+                      class: 'btn btn-sm btn-outline-primary ms-3' do %>
+                  <i class="fas fa-edit"></i>
+                  Pilih Strategi
+                <% end %>
+              </th>
             </tr>
           <% end %>
-          <tr>
-            <th class="border-bottom text-gray-700" scope="col">Tujuan</th>
-            <th class="border-bottom text-gray-700" scope="col">Sasaran</th>
-            <th class="border-bottom text-gray-700" scope="col">Strategi</th>
-            <th class="border-bottom text-gray-700" scope="col">Arah Kebijakan</th>
-          </tr>
         </thead>
-        <tbody>
-            <%= render partial: 'strategi', collection: @strategi_opds, as: :strategi %>
-        </tbody>
       </table>
+    </div>
+    <div id="kebijakans" class="table-responsive">
+      <%= render 'table_kebijakans' %>
     </div>
   <% end %>
 <% end %>
