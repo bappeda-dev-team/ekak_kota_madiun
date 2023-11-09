@@ -11,38 +11,32 @@
   <tbody>
     <% @strategi_opds.each.with_index(1) do |(tujuan, strategis), nomor| %>
       <tr class="strategi">
-        <td class="align-middle"><%= nomor %></td>
-        <td class="align-middle"><%= tujuan %></td>
-        <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;">
-        
-            <table class="table table-full" style="height: 100%">
-            <% strategis.each do |strategi| %>
-              <tr>
-                <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
-                <td class="align-middle" rowspan="<%= strategi.sasarans.dengan_nip.size + 1 %>">
-                  <p><%= strategi %></p>
-                </td>
-                <td class="p-0 m-0" rowspan="<%= strategi.sasarans.dengan_nip.size + 1 %>" style="height: 100%; border-color: transparent;">
-                  <table class="table table-full" style="height: 100%">
-                    <tbody>
-                      <% @tactical_opds.select { |tact| tact.pohon_ref_id.to_i == strategi.id }.each do |tactical| %>
-                        <tr class="arah-kebijakan">
-                          <td class="border"><%= tactical %></td>
-                        </tr>
-                      <% end %>
-                    </tbody>
-                  </table>
-                </td>
-              </tr>
-              <% strategi.sasarans.dengan_nip.each do |sasaran| %>
-                <tr class="sasaran">
-                  <td class="border align-middle"><%= sasaran %></td>
-                </tr>
-              <% end %>
-            <% end %>
-            </table>
-        </td>
+        <% rowspan_atas = strategis.map { |str| @tactical_opds.select { |tact| tact.pohon_ref_id.to_i == str.id }.size + 1 }.flatten.sum + 1 %>
+        <td class="align-middle" rowspan="<%= rowspan_atas %>"><%= nomor %></td>
+        <td class="align-middle text-wrap" rowspan="<%= rowspan_atas %>"><%= tujuan || 'Tujuan Belum dipilih' %></td>
       </tr>
+      <% strategis.each do |strategi| %>
+        <% rowspan_bawah = @tactical_opds.select { |tact| tact.pohon_ref_id.to_i == strategi.id }.size + 1 %>
+        <tr>
+          <td class="align-middle" rowspan="<%= rowspan_bawah %>">
+            <table class="table table-full" style="height: 100%">
+              <tbody>
+                <% strategi.sasarans.dengan_nip.each do |sasaran| %>
+                  <tr class="sasaran">
+                    <td class="border-bottom border-top"><%= sasaran %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </td>
+          <td class="align-middle" rowspan="<%= rowspan_bawah %>"><%= strategi %></td>
+        </tr>
+        <% @tactical_opds.select { |tact| tact.pohon_ref_id.to_i == strategi.id }.each do |tactical| %>
+          <tr class="arah-kebijakan">
+            <td class="border"><%= tactical %></td>
+          </tr>
+        <% end %>
+      <% end %>
     <% end %>
   </tbody>
 </table>
