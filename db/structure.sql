@@ -2926,7 +2926,8 @@ CREATE TABLE public.strategis (
     type character varying,
     strategi_cascade_link bigint,
     linked_with bigint,
-    metadata jsonb
+    metadata jsonb,
+    tujuan_id bigint
 );
 
 
@@ -5239,13 +5240,6 @@ CREATE UNIQUE INDEX index_tujuan_kota_on_id_tujuan ON public.tujuan_kota USING b
 
 
 --
--- Name: index_tujuans_on_id_tujuan; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_tujuans_on_id_tujuan ON public.tujuans USING btree (id_tujuan);
-
-
---
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -5742,6 +5736,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231102075706'),
 ('20231105100619'),
 ('20231106043924'),
-('20231106051540');
+('20231106051540'),
+('20231109012201'),
+('20231109012338');
 
 

@@ -18,6 +18,7 @@
 #  pohon_id              :bigint
 #  sasaran_id            :string
 #  strategi_ref_id       :string
+#  tujuan_id             :bigint
 #
 # Indexes
 #

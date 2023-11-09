@@ -14,9 +14,5 @@
 #  bidang_urusan_id :bigint
 #  urusan_id        :bigint
 #
-# Indexes
-#
-#  index_tujuans_on_id_tujuan  (id_tujuan) UNIQUE
-#
 class Tujuan < ApplicationRecord
 end

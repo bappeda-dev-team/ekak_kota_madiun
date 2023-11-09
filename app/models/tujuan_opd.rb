@@ -14,10 +14,6 @@
 #  bidang_urusan_id :bigint
 #  urusan_id        :bigint
 #
-# Indexes
-#
-#  index_tujuans_on_id_tujuan  (id_tujuan) UNIQUE
-#
 class TujuanOpd < Tujuan
   has_many :indikators, lambda {
                           where(jenis: 'Tujuan', sub_jenis: 'Opd')

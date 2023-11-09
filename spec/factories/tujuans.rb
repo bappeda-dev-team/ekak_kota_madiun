@@ -14,10 +14,6 @@
 #  bidang_urusan_id :bigint
 #  urusan_id        :bigint
 #
-# Indexes
-#
-#  index_tujuans_on_id_tujuan  (id_tujuan) UNIQUE
-#
 FactoryBot.define do
   factory :tujuan do
     tujuan { "MyString" }
