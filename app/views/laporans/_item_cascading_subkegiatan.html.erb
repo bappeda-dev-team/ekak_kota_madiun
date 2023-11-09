@@ -1,34 +1,4 @@
 <% unless pohon.exists? %>
-  <% if pohon.role == 'eselon_3' %>
-    <div class="pohon-body">
-      <% program_pohon(pohon.real, pohon.role).each do |program| %>
-        <table class="table table-bordered mb-3">
-          <tr>
-            <td class="text-start">Program</td>
-            <td class="text-wrap text-start" colspan="2">
-              <%= program&.nama_program || '-' %>
-              (<%= program&.kode_program || '-' %>)
-            </td>
-          </tr>
-          <tr>
-            <% indikator_prg = indikator_prg_rekin(@tahun, @opd, program) %>
-            <td class="text-wrap text-start">Indikator</td>
-            <td class="text-wrap text-start" colspan="2"><%= indikator_prg.dig(:indikator) %></td>
-          </tr>
-          <tr>
-            <td class="text-wrap text-start">Target / Satuan</td>
-            <td class="text-wrap text-start" colspan="2"><%= indikator_prg.dig(:target) %> <%= indikator_prg.dig(:satuan) %></td>
-          </tr>
-        </table>
-      <% end %>
-      <table class="table table-bordered mb-3">
-        <tr>
-          <td class="text-start">Pagu</td>
-          <td class="rankir-2 text-start" colspan="2">Rp. <%= pagu_pohon(pohon.real, pohon.role) %></td>
-        </tr>
-      </table>
-    </div>
-  <% end %>
   <% if pohon.rencana_kinerjas.any? %>
     <div class="pohon-body">
       <% pohon.rencana_kinerjas.each.with_index(1) do |sasaran, no| %>
@@ -40,7 +10,7 @@
       <% end %>
     </div>
   <% end %>
-  <% if pohon.role == 'eselon_2' %>
+  <% if pohon.role == 'eselon_2' || pohon.role == 'eselon_3' %>
     <div class="pohon-body">
       <table class="table table-bordered mb-3">
         <tr>
