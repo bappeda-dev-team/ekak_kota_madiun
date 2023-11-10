@@ -3,7 +3,6 @@
     <div class="col">
       <button type="button" class="btn btn-tertiary" data-action="pohon-tematik#toggleChild" data-pohon-tematik-show-param="false">Tampilkan</button>
     </div>
-    <% unless reviewer? %>
       <% if pohon.real.instance_of?(StrategiPohon) %>
         <div class="col hide d-none">
           <% if privileged_user || current_user.eselon_user == pohon.role_bawahan %>
@@ -48,6 +47,5 @@
           <% end %>
         </div>
       <% end %>
-    <% end %>
   </div>
 </div>
