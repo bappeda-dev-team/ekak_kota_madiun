@@ -12,7 +12,6 @@ default: &default
 
 development:
   <<: *default
-  database: <%= ENV.fetch("DATABASE_NAME") { 'prototype_kak_dev' } %>
 
 test:
   <<: *default

@@ -49,3 +49,4 @@ dump.rdb
 /app/views/.DS_Store
 /.DS_Store
 *.DS_Store
+.env.development.local
