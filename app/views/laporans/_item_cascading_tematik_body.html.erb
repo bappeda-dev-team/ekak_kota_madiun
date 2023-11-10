@@ -31,5 +31,7 @@
       <% end %>
     <% end %>
   </table>
-  <button type="button" class="btn btn-outline-pohon w-100" data-action="pohon-tematik#toggleDetail" data-pohon-tematik-show-param="false">Detail</button>
+  <% if pohon.strategi? %>
+    <button type="button" class="btn btn-outline-pohon w-100" data-action="pohon-tematik#toggleDetail" data-pohon-tematik-show-param="false">Detail</button>
+  <% end %>
 </div>

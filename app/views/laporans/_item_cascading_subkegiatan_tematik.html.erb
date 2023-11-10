@@ -34,12 +34,14 @@
     <% end %>
   </div>
   <% if pohon.role == 'eselon_2' || pohon.role == 'eselon_3' || pohon.role == 'sub_sub_pohon_kota' || pohon.role == 'sub_pohon_kota' || pohon.role == 'pohon_kota' %>
-    <table class="table table-bordered mb-3">
-      <tr>
-        <td class="text-start" style="width: 23%;">Pagu</td>
-        <td class="rankir-2 text-start">Rp. <%= pagu_pohon(pohon.pohonable, pohon.role) %></td>
-      </tr>
-    </table>
+    <div class="pohon-body">
+      <table class="table table-bordered mb-3">
+        <tr>
+          <td class="text-start" style="width: 23%;">Pagu</td>
+          <td class="rankir-2 text-start">Rp. <%= pagu_pohon(pohon.pohonable, pohon.role) %></td>
+        </tr>
+      </table>
+    </div>
     <div class="pohon-body">
       <% program_pohon(pohon.pohonable, pohon.role).each do |program| %>
         <table class="table table-bordered mb-3">
