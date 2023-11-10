@@ -393,11 +393,12 @@ table.counter {
         border: black;
         color: black;
       }
-      button {
-        color: #EEE2DE;
-      }
-      .btn-outline-primary {
-        border-color: #EEE2DE;
+    }
+    .btn-outline-pohon {
+      border-color: #EEE2DE;
+      color: #EEE2DE;
+      &:hover, &:active {
+        background-color: #1f2937;
       }
     }
     .pohon-tombol {
@@ -422,11 +423,12 @@ table.counter {
         border: black;
         color: black;
       }
-      button {
-        color: #EEE2DE;
-      }
-      .btn-outline-primary {
-        border-color: #EEE2DE;
+    }
+    .btn-outline-pohon {
+      border-color: #EEE2DE;
+      color: #EEE2DE;
+      &:hover, &:active {
+        background-color: #1f2937;
       }
     }
     .pohon-tombol {
@@ -450,11 +452,12 @@ table.counter {
         border: black;
         color: black;
       }
-      button {
-        color: black;
-      }
-      .btn-outline-primary {
-        border-color: black;
+    }
+    .btn-outline-pohon {
+      border-color: black;
+      &:hover, &:active {
+        background-color: #1f2937;
+        color: #EEE2DE;
       }
     }
     .pohon-tombol {
