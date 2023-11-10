@@ -190,7 +190,7 @@ class PohonKotaPresenter
     return unless strategi?
 
     if @pohon.pohonable.instance_of?(StrategiPohon)
-      @pohon.pohonable.sasarans
+      @pohon.pohonable.sasarans.dengan_nip
     else
       @pohon.pohonable.strategi_pokin
     end
