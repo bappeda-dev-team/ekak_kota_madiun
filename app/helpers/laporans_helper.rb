@@ -85,11 +85,7 @@ module LaporansHelper
         <tr>
           <td class='border text-wrap' colspan='#{colspan}'>Renaksi #{tahapan.urutan}: #{tahapan.tahapan_kerja}</td>
           <td class='border'>Rp. #{number_with_delimiter(tahapan.anggaran_tahapan)}</td>
-          <td class='border'>
-            <div class='d-grid gap-2'>
-              <p>Rincian Button</p>
-            </div>
-          </td>
+          <td class='border'></td>
         </tr>
       ".html_safe
     end
