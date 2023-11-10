@@ -23,27 +23,8 @@ module ReviewerItemHelper
         icon: 'fas fa-people-arrows', identifier: 'hasil_cascading_kota'
       },
       {
-        title: 'Hasil Cascading', href: hasil_cascading_laporans_path,
+        title: 'Cascading OPD', href: hasil_cascading_laporans_path,
         icon: 'fas fa-people-arrows', identifier: 'hasil_cascading'
-      },
-      {
-        title: 'Rencana Kinerja (KAK)', href: laporan_kak_laporans_path,
-        icon: 'fas fa-bullseye', identifier: 'laporan_kak'
-      },
-      {
-        title: 'Rincian Belanja', href: laporan_rka_laporans_path,
-        icon: 'fas fa-money-check', identifier: 'laporan_rka'
-      },
-      {
-        title: 'Renstra', href: renstra_laporans_path,
-        icon: 'fas fa-stream', identifier: 'renstra'
-      },
-      {
-        title: 'Renja', href: "#",
-        multi: true,
-        collections: laporan_renja_items,
-        id_target: 'renja-items',
-        icon: 'fas fa-tasks', identifier: 'renja'
       }
     ]
   end

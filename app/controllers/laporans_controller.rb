@@ -124,9 +124,9 @@ class LaporansController < ApplicationController
     @opd = queries.opd
     @nama_opd = @opd.nama_opd
 
-    @strategi_kota = queries.strategi_kota
-    @tactical_kota = queries.tactical_kota
-    @operational_kota = queries.operational_kota
+    # @strategi_kota = queries.strategi_kota
+    # @tactical_kota = queries.tactical_kota
+    # @operational_kota = queries.operational_kota
 
     @strategi_opd = queries.strategi_opd
     @tactical_opd = queries.tactical_opd
