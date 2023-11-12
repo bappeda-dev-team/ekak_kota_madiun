@@ -88,6 +88,10 @@ class User < ApplicationRecord
     nama
   end
 
+  def super_admin?
+    has_role?(:super_admin) && id == 1
+  end
+
   def nip_asn
     nik
   end

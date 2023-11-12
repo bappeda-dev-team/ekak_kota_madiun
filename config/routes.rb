@@ -635,12 +635,12 @@ Rails.application.routes.draw do
     post :perubahan_renja
   end
 
-  mount Sidekiq::Web, at: "/sidekiq"
 
   # resque
-  # authenticate :user, ->(u) { u.id == 1 } do
-  #   get '/sidekiq'
-  # end
+  authenticate :user, ->(u) { u.super_admin? } do
+    mount Sidekiq::Web, at: "/sidekiq"
+    mount RailsPerformance::Engine, at: 'rails/performance'
+  end
 
   # sasaran
   get "/verifikasi_sasarans", to: "sasarans#verifikasi_sasaran"
