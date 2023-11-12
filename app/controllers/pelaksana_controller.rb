@@ -27,7 +27,7 @@ class PelaksanaController < ApplicationController
     role = params[:role]
     asn_list = @opd.users.where('nama ILIKE ?', "%#{param}%")
     @temans = asn_list.with_any_role(role).reject do |u|
-      u.strategi_pohons(@pelaksana.id).any?
+      u.strategi_pohon_diterima(@pelaksana.id).any?
     end
   end
 

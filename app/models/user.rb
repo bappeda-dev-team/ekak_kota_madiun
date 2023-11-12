@@ -100,6 +100,10 @@ class User < ApplicationRecord
     pohons.where(strategi_id: strategi_id)
   end
 
+  def strategi_pohon_diterima(strategi_id)
+    strategi_pohons(strategi_id).where.not(status: 'pelaksana-batal', pohonable_type: ['', nil])
+  end
+
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     if (login = conditions.delete(:login))
