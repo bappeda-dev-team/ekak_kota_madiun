@@ -28,14 +28,6 @@ module Api
       head :no_content
     end
 
-    def usulan_pokir
-      @tahun = params[:tahun]
-      # kode_unik_opd = params[:kode_opd]
-      # opd = Opd.find_by(kode_unik_opd: kode_unik_opd)
-      @pokpirs = Pokpir.where(tahun: @tahun)
-                       .order(:updated_at)
-    end
-
     def usulan_mandatori
       @tahun = params[:tahun]
       kode_unik_opd = params[:kode_opd]

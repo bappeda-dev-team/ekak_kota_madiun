@@ -57,20 +57,44 @@ RSpec.describe "Api::Masters", type: :request do
     end
   end
 
-  describe "GET /usulan_pokir" do
+  describe "GET /api/master/pokpirs" do
+    before(:each) { create(:pokpir, tahun: '2023') }
     it "response with ok status" do
-      pokpir = create(:pokpir, tahun: '2023')
-
-      get api_master_usulan_pokir_path(format: :json)
+      get '/api/master/pokpirs'
       expect(response).to have_http_status :ok
     end
 
     it "response with musrenbangs by tahun" do
-      pokpir = create(:pokpir, tahun: '2023')
+      get '/api/master/pokpirs', params: { tahun: '2023' }
+      expect(response_body.size).to eq 1
+    end
+  end
 
-      get api_master_usulan_pokir_path(tahun: '2023', format: :json)
-      results = response_body["results"]
-      expect(results.first["usulan"]).to eq pokpir.usulan
+  describe "POST /api/master/pokpirs" do
+    context "given valid params" do
+      valid_params = { tahun: '2023',
+                       usulan: 'Usulan A',
+                       alamat: 'Jl. XXX',
+                       uraian: 'Lampu rusak',
+                       opd: 'test_opd' }
+      it 'response with created status' do
+        expect { post '/api/master/pokpirs', params: { pokpir: valid_params } }.to change { Pokpir.count }.from(0).to(1)
+
+        expect(response).to have_http_status :created
+      end
+    end
+    context "given invalid params" do
+      invalid_params = { tahun: '2023',
+                         alamat: 'Jl. XXX',
+                         uraian: 'Lampu rusak',
+                         opd: 'test_opd' }
+
+      it 'response with unprocessable_entity status' do
+        post '/api/master/pokpirs',
+             params: { pokpir: invalid_params }
+
+        expect(response).to have_http_status :unprocessable_entity
+      end
     end
   end
 

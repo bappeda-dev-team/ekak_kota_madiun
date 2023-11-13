@@ -618,7 +618,14 @@ Rails.application.routes.draw do
       post :create_usulan_musrenbang
       post :delete_usulan_musrenbang
 
-      get :usulan_pokir
+      resources :pokpirs, defaults: {format: :json} do
+        member do
+          post :toggle_is_active
+          post :diambil_asn
+          post :setujui_usulan_di_sasaran
+        end
+      end
+
       get :usulan_mandatori
       get :usulan_inisiatif
       get :usulan_spbe
