@@ -22,7 +22,7 @@
 #
 FactoryBot.define do
   factory :inovasi do
-    usulan { "MyString" }
-    manfaat { "MyString" }
+    usulan { "Inovasi walikota a" }
+    manfaat { "Pemulusan jalan" }
   end
 end
