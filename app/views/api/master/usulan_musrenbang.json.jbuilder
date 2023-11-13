@@ -1,4 +1,5 @@
 json.results @musrenbangs do |musren|
+  json.id musren.id
   json.tahun musren.tahun
   json.usulan musren.usulan
   json.alamat musren.alamat
