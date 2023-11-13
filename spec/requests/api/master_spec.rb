@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "Api::Masters", type: :request do
-
   describe "GET /usulan_musrenbang" do
     it "response with ok status" do
       musrenbang = create(:musrenbang, tahun: '2023')
@@ -13,9 +12,26 @@ RSpec.describe "Api::Masters", type: :request do
     it "response with musrenbangs by tahun" do
       musrenbang = create(:musrenbang, tahun: '2023')
 
-      get api_master_usulan_musrenbang_path(tahun: '2023',format: :json)
+      get api_master_usulan_musrenbang_path(tahun: '2023', format: :json)
       results = response_body["results"]
       expect(results.first["usulan"]).to eq musrenbang.usulan
+    end
+  end
+
+  describe "GET /usulan_pokir" do
+    it "response with ok status" do
+      pokpir = create(:pokpir, tahun: '2023')
+
+      get api_master_usulan_pokir_path(format: :json)
+      expect(response).to have_http_status :ok
+    end
+
+    it "response with musrenbangs by tahun" do
+      pokpir = create(:pokpir, tahun: '2023')
+
+      get api_master_usulan_pokir_path(tahun: '2023', format: :json)
+      results = response_body["results"]
+      expect(results.first["usulan"]).to eq pokpir.usulan
     end
   end
 
