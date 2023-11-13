@@ -30,15 +30,7 @@ export default class extends Controller {
       return (
         {
           x: val.nama_subkegiatan,
-          y: pagu,
-          goals: [
-            {
-              name: 'Target',
-              value: pagu_sipd,
-              strokeHeight: 2,
-              strokeColor: '#775DD0'
-            }
-          ]
+          y: pagu
         }
       )
     })
@@ -149,14 +141,6 @@ export default class extends Controller {
         {
           x: `${no} ${val.nama_subkegiatan}`,
           y: val.pagu_kak,
-          goals: [
-            {
-              name: 'Target',
-              value: val.pagu_sipd,
-              strokeHeight: 2,
-              strokeColor: '#775DD0'
-            }
-          ]
         }
       )
     })
@@ -284,14 +268,6 @@ export default class extends Controller {
         {
           x: val.nama_opd,
           y: val.pagu_kak,
-          goals: [
-            {
-              name: 'Target',
-              value: val.pagu_sipd,
-              strokeHeight: 5,
-              strokeColor: '#775DD0'
-            }
-          ]
         }
       )
     })
