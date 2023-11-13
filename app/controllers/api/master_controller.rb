@@ -21,7 +21,7 @@ module Api
     def usulan_mandatori
       @tahun = params[:tahun]
       kode_unik_opd = params[:kode_opd]
-      opd = Opd.find_by(kode_unik_opd: kode_unik_opd)
+      opd = Opd.find_by!(kode_unik_opd: kode_unik_opd)
       @mandatoris = Mandatori.includes(:user).where(user: { kode_opd: opd.kode_opd })
     end
 

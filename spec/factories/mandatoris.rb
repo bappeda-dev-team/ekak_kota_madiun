@@ -24,5 +24,6 @@ FactoryBot.define do
   factory :mandatori do
     usulan { "Usulan Mandatori" }
     peraturan_terkait { "Peraturan Mandatori yang dibuat" }
+    nip_asn { "123" }
   end
 end
