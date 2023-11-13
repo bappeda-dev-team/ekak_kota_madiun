@@ -614,11 +614,15 @@ Rails.application.routes.draw do
       post :subkegiatans
     end
     namespace :master do
-      get :usulan_musrenbang
-      post :create_usulan_musrenbang
-      post :delete_usulan_musrenbang
+      resources :musrenbangs, defaults: { format: :json } do
+        member do
+          post :toggle_is_active
+          post :diambil_asn
+          post :setujui_usulan_di_sasaran
+        end
+      end
 
-      resources :pokpirs, defaults: {format: :json} do
+      resources :pokpirs, defaults: { format: :json } do
         member do
           post :toggle_is_active
           post :diambil_asn
@@ -653,7 +657,6 @@ Rails.application.routes.draw do
     get :perubahan
     post :perubahan_renja
   end
-
 
   # resque
   authenticate :user, ->(u) { u.super_admin? } do
