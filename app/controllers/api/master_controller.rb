@@ -10,6 +10,18 @@ module Api
                                .order(:updated_at)
     end
 
+    def create_usulan_musrenbang
+      @musrenbang = Musrenbang.new(musrenbang_params)
+
+      if @musrenbang.save
+        render json: { resText: "Entri Musrenbang ditambahkan" }.to_json,
+               status: :created
+      else
+        render json: { resText: "Terjadi kesalahan", errors: @musrenbang.errors}.to_json,
+               status: :unprocessable_entity
+      end
+    end
+
     def usulan_pokir
       @tahun = params[:tahun]
       # kode_unik_opd = params[:kode_opd]
@@ -37,5 +49,11 @@ module Api
     def usulan_lppd; end
 
     def usulan_spm; end
+
+    private
+
+    def musrenbang_params
+      params.require(:musrenbang).permit(:tahun, :usulan, :uraian, :alamat, :opd)
+    end
   end
 end

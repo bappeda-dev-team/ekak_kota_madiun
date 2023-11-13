@@ -18,6 +18,34 @@ RSpec.describe "Api::Masters", type: :request do
     end
   end
 
+  describe "POST /create_usulan_musrenbang" do
+    context "given valid params" do
+      valid_params = { tahun: '2023',
+                       usulan: 'Usulan A',
+                       alamat: 'Jl. XXX',
+                       uraian: 'Lampu rusak',
+                       opd: 'test_opd' }
+      it 'response with created status' do
+        expect { post '/api/master/create_usulan_musrenbang', params: { musrenbang: valid_params } }.to change { Musrenbang.count }.from(0).to(1)
+
+        expect(response).to have_http_status :created
+      end
+    end
+    context "given invalid params" do
+      invalid_params = { tahun: '2023',
+                         alamat: 'Jl. XXX',
+                         uraian: 'Lampu rusak',
+                         opd: 'test_opd' }
+
+      it 'response with unprocessable_entity status' do
+        post '/api/master/create_usulan_musrenbang',
+             params: { musrenbang: invalid_params }
+
+        expect(response).to have_http_status :unprocessable_entity
+      end
+    end
+  end
+
   describe "GET /usulan_pokir" do
     it "response with ok status" do
       pokpir = create(:pokpir, tahun: '2023')
