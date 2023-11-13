@@ -630,7 +630,17 @@ Rails.application.routes.draw do
         end
       end
 
-      get :usulan_mandatori
+      resources :mandatoris, defaults: { format: :json } do
+        member do
+          post :toggle_is_active
+          post :diambil_asn
+          post :setujui_usulan_di_sasaran
+        end
+        collection do
+          get :spbe
+        end
+      end
+
       get :usulan_inisiatif
       get :usulan_spbe
       get :usulan_lppd
