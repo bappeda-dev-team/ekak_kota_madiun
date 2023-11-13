@@ -613,6 +613,15 @@ Rails.application.routes.draw do
       post :programs
       post :subkegiatans
     end
+    namespace :master do
+      get :usulan_musrenbang
+      get :usulan_pokir
+      get :usulan_mandatori
+      get :usulan_inisiatif
+      get :usulan_spbe
+      get :usulan_lppd
+      get :usulan_spm
+    end
   end
 
   resources :sasaran_kota
