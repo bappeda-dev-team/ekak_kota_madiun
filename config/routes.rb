@@ -641,7 +641,14 @@ Rails.application.routes.draw do
         end
       end
 
-      get :usulan_inisiatif
+      resources :inovasis, defaults: { format: :json } do
+        member do
+          post :toggle_is_active
+          post :diambil_asn
+          post :setujui_usulan_di_sasaran
+        end
+      end
+
       get :usulan_spbe
       get :usulan_lppd
       get :usulan_spm
