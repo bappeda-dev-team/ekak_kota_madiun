@@ -46,6 +46,17 @@ RSpec.describe "Api::Masters", type: :request do
     end
   end
 
+  describe "DELETE /usulan_musrenbang" do
+    context "given valid params" do
+      let(:musrenbang) {  create(:musrenbang, tahun: '2023') }
+      it 'delete musrenbang' do
+        valid_params = { id: musrenbang.id }
+        expect { post '/api/master/delete_usulan_musrenbang', params: { musrenbang: valid_params } }.to change { Musrenbang.count }.from(1).to(0)
+        expect(response).to have_http_status :no_content
+      end
+    end
+  end
+
   describe "GET /usulan_pokir" do
     it "response with ok status" do
       pokpir = create(:pokpir, tahun: '2023')

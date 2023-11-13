@@ -616,6 +616,7 @@ Rails.application.routes.draw do
     namespace :master do
       get :usulan_musrenbang
       post :create_usulan_musrenbang
+      post :delete_usulan_musrenbang
 
       get :usulan_pokir
       get :usulan_mandatori

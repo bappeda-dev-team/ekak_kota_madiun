@@ -17,9 +17,15 @@ module Api
         render json: { resText: "Entri Musrenbang ditambahkan" }.to_json,
                status: :created
       else
-        render json: { resText: "Terjadi kesalahan", errors: @musrenbang.errors}.to_json,
+        render json: { resText: "Terjadi kesalahan", errors: @musrenbang.errors }.to_json,
                status: :unprocessable_entity
       end
+    end
+
+    def delete_usulan_musrenbang
+      Musrenbang.find(params[:musrenbang][:id]).destroy!
+
+      head :no_content
     end
 
     def usulan_pokir
