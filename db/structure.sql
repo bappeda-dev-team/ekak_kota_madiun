@@ -613,6 +613,43 @@ ALTER SEQUENCE public.dasar_hukums_id_seq OWNED BY public.dasar_hukums.id;
 
 
 --
+-- Name: devise_api_tokens; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.devise_api_tokens (
+    id bigint NOT NULL,
+    resource_owner_type character varying NOT NULL,
+    resource_owner_id bigint NOT NULL,
+    access_token character varying NOT NULL,
+    refresh_token character varying,
+    expires_in integer NOT NULL,
+    revoked_at timestamp without time zone,
+    previous_refresh_token character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: devise_api_tokens_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.devise_api_tokens_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: devise_api_tokens_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.devise_api_tokens_id_seq OWNED BY public.devise_api_tokens.id;
+
+
+--
 -- Name: domains; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -897,7 +934,8 @@ CREATE TABLE public.isu_strategis_opds (
     tujuan character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    keterangan character varying
+    keterangan character varying,
+    kode_bidang_urusan character varying
 );
 
 
@@ -3577,6 +3615,13 @@ ALTER TABLE ONLY public.dasar_hukums ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: devise_api_tokens id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.devise_api_tokens ALTER COLUMN id SET DEFAULT nextval('public.devise_api_tokens_id_seq'::regclass);
+
+
+--
 -- Name: domains id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4199,6 +4244,14 @@ ALTER TABLE ONLY public.comments
 
 ALTER TABLE ONLY public.dasar_hukums
     ADD CONSTRAINT dasar_hukums_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: devise_api_tokens devise_api_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.devise_api_tokens
+    ADD CONSTRAINT devise_api_tokens_pkey PRIMARY KEY (id);
 
 
 --
@@ -4880,6 +4933,34 @@ CREATE INDEX index_comments_on_anggaran_id ON public.comments USING btree (angga
 --
 
 CREATE INDEX index_comments_on_user_id ON public.comments USING btree (user_id);
+
+
+--
+-- Name: index_devise_api_tokens_on_access_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_devise_api_tokens_on_access_token ON public.devise_api_tokens USING btree (access_token);
+
+
+--
+-- Name: index_devise_api_tokens_on_previous_refresh_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_devise_api_tokens_on_previous_refresh_token ON public.devise_api_tokens USING btree (previous_refresh_token);
+
+
+--
+-- Name: index_devise_api_tokens_on_refresh_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_devise_api_tokens_on_refresh_token ON public.devise_api_tokens USING btree (refresh_token);
+
+
+--
+-- Name: index_devise_api_tokens_on_resource_owner; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_devise_api_tokens_on_resource_owner ON public.devise_api_tokens USING btree (resource_owner_type, resource_owner_id);
 
 
 --
@@ -5738,6 +5819,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231106043924'),
 ('20231106051540'),
 ('20231109012201'),
-('20231109012338');
+('20231109012338'),
+('20231114032821'),
+('20231115225443');
 
 
