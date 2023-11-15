@@ -1,17 +1,17 @@
 <%= content_for :html_title, "Pohon Kinerja OPD" %>
 <%= content_for :navigation do %>
   <li class="breadcrumb-item" aria-current="page">Perencanaan OPD</li>
-  <li class="breadcrumb-item active" aria-current="page">Strategi Arah Kebijakan OPD</li>
+  <li class="breadcrumb-item active" aria-current="page">Permasalahan dan Isu Strategis</li>
 <% end %>
 <% content_for :view_utama do %>
   <div class="card border-0 shadow" id="user_filter" data-controller="page-ajax"
           data-page-ajax-opd-value="<%= cookies[:opd] %>"
-          data-page-ajax-url-value="<%= filter_isu_strategis_permasalahan_path %>"
+          data-page-ajax-url-value="<%= filter_isu_dan_permasalahans_path %>"
           data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >
     <div class="card-header">
       <div class="row align-items-center">
         <div class="col">
-          <h2 class="fs-5 fw-bold mb-0">Isu dan Permasalahan</h2>
+          <h2 class="fs-5 fw-bold mb-0">Permsalahan dan Isu Strartegis</h2>
         </div>
       </div>
     </div>

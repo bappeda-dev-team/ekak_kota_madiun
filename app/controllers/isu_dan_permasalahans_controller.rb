@@ -3,7 +3,7 @@ class IsuDanPermasalahansController < ApplicationController
 
   def index; end
 
-  def filter_isu
+  def filter
     programs = KakService.new(tahun: @tahun, kode_unik_opd: @kode_unik_opd).program_kegiatans_by_opd
     @program_kegiatans = programs
   end
@@ -26,7 +26,7 @@ class IsuDanPermasalahansController < ApplicationController
   private
 
   def set_params
-    @kode_unik_opd = params[:kode_unik_opd]
+    @kode_unik_opd = params[:kode_opd]
     @tahun = params[:tahun]
   end
 
