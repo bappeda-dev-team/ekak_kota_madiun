@@ -1,11 +1,12 @@
 class IsuDanPermasalahansController < ApplicationController
   before_action :set_params
+  layout false, only: :filter
 
   def index; end
 
   def filter
-    programs = KakService.new(tahun: @tahun, kode_unik_opd: @kode_unik_opd).program_kegiatans_by_opd
-    @program_kegiatans = programs
+    @opd = Opd.find_by(kode_unik_opd: @kode_unik_opd)
+    @nama_opd = @opd.nama_opd
   end
 
   def add_new

@@ -1,0 +1,37 @@
+<div class="card border-0 shadow" id="user_filter">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">Permasalahan dan Isu Strategis</h2>
+      </div>
+      <div class="col text-end">
+        <span><%= @nama_opd %></span>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-flush">
+            <thead>
+                <tr>
+                    <th class="border-bottom text-gray-700">No</th>
+                    <th class="border-bottom text-gray-700">Bidang Urusan</th>
+                    <th class="border-bottom text-gray-700">Isu Strategis</th>
+                    <th class="border-bottom text-gray-700">Permasalahan</th>
+                    <th class="border-bottom text-gray-700">Faktor Penghambat SKP</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @opd.list_bidang_urusans.each.with_index(1) do |bidang_urusan, no| %>
+                <tr>
+                    <td class="align-middle"><%= no %></td>
+                    <td class="align-middle">
+                        <p>(<%= bidang_urusan[0] %>) <%= bidang_urusan[1] %></p>
+                    </td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+  </div>
+</div>
