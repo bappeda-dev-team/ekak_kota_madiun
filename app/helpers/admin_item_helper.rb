@@ -1,9 +1,13 @@
-module AdminItemHelper # rubocop:disable Metrics
+module AdminItemHelper
   def perencanaan_opd_items # rubocop:disable Metrics
     [
       {
+        title: 'Permasalahan dan Isu Strategis', href: isu_dan_permasalahans_path,
+        icon: 'fas fa-city', identifier: 'isu_permaslahaan'
+      },
+      {
         title: 'Strategi Arah Kebijakan', href: opd_strategi_arah_kebijakans_path,
-        icon: 'fas fa-city', identifier: 'tujuan_opds'
+        icon: 'fas fa-city', identifier: 'strategi_kebijakan'
       },
       {
         title: 'Anggaran', href: "#",
@@ -72,7 +76,7 @@ module AdminItemHelper # rubocop:disable Metrics
     [
       { title: 'SSH', href: anggaran_sshes_path, identifier: 'anggaran_ssh' },
       { title: 'SBU', href: anggaran_sbus_index_path, identifier: 'anggaran_sbu' },
-      { title: 'HSPK', href: anggaran_hspks_path, identifier: 'anggaran_hspks' },
+      { title: 'HSPK', href: anggaran_hspks_path, identifier: 'anggaran_hspks' }
     ]
   end
 end
