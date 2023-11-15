@@ -50,7 +50,7 @@ class Opd < ApplicationRecord
   # kotak usulan opd
   has_many :usulans, dependent: :destroy
   has_many :pohons, dependent: :destroy
-  has_many :isu_strategis_opds, foreign_key: 'kode_opd', primary_key: 'kode_opd'
+  has_many :isu_strategis_opds, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd'
   has_many :strategis, -> { where(type: nil) }
   has_many :komentars, lambda {
     where(jenis: "OPD")

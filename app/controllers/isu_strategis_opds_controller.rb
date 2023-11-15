@@ -1,6 +1,7 @@
 class IsuStrategisOpdsController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :set_isu_strategis_opd, only: %i[show edit update destroy]
+  layout false, only: %i[new edit]
 
   # GET /isu_strategis_opds or /isu_strategis_opds.json
   def index
@@ -12,29 +13,25 @@ class IsuStrategisOpdsController < ApplicationController
 
   # GET /isu_strategis_opds/new
   def new
-    opd_collections
-    @isu_strategis_opd = IsuStrategisOpd.new
+    kode_bidang_urusan = params[:kode_bidang_urusan]
+    bidang_urusan = params[:bidang_urusan]
+    opd = params[:opd]
+    @isu_strategis_opd = IsuStrategisOpd.new(bidang_urusan: bidang_urusan, kode_bidang_urusan: kode_bidang_urusan,
+                                             kode_opd: opd)
   end
 
   # GET /isu_strategis_opds/1/edit
-  def edit
-    opd_collections
-  end
+  def edit; end
 
   # POST /isu_strategis_opds or /isu_strategis_opds.json
   def create
     @isu_strategis_opd = IsuStrategisOpd.new(isu_strategis_opd_params)
 
-    respond_to do |format|
-      if @isu_strategis_opd.save
-        format.html do
-          redirect_to isu_strategis_opds_url, success: "Sukses"
-        end
-        format.json { render :show, status: :created, location: @isu_strategis_opd }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @isu_strategis_opd.errors, status: :unprocessable_entity }
-      end
+    if @isu_strategis_opd.save
+      render json: { resText: "Sukses" }.to_json,
+             status: :created
+    else
+      render :new
     end
   end
 
@@ -83,17 +80,12 @@ class IsuStrategisOpdsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def isu_strategis_opd_params
-    params.require(:isu_strategis_opd).permit(:kode, :isu_strategis, :tahun, :kode_opd, :tujuan)
+    params.require(:isu_strategis_opd).permit(:kode, :bidang_urusan, :kode_bidang_urusan, :isu_strategis, :tahun,
+                                              :kode_opd, :tujuan)
   end
 
   def opd_pemilik
     @opd = Opd.find_by(kode_opd: params[:kode_opd])
-  end
-
-  def opd_collections
-    @opds = Opd.where.not(kode_opd: nil)
-               .where(kode_opd: current_user.kode_opd).pluck(:nama_opd,
-                                                             :kode_opd)
   end
 
   def handle_filters

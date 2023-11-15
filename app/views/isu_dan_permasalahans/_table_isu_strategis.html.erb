@@ -1,0 +1,20 @@
+<table class="table table-flush">
+  <thead>
+    <tr>
+      <th class="border-bottom text-gray-700">No</th>
+      <th class="border-bottom text-gray-700">Bidang Urusan</th>
+      <th class="border-bottom text-gray-700">Isu Strategis</th>
+      <th class="border-bottom text-gray-700">Permasalahan</th>
+      <th class="border-bottom text-gray-700">Faktor Penghambat SKP</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @isu_strategis.each.with_index(1) do |isu_strategis, no| %>
+      <tr>
+        <td class="align-middle"><%= no %></td>
+        <td class="align-middle"><%= "(#{isu_strategis.kode_bidang_urusan}) #{isu_strategis.bidang_urusan}" %></td>
+        <td class="align-middle"><%= isu_strategis %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

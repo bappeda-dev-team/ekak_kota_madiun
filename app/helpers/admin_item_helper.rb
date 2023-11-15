@@ -26,10 +26,6 @@ module AdminItemHelper
         icon: 'fas fa-city', identifier: 'tujuan_opds'
       },
       {
-        title: 'Isu Strategis OPD', href: isu_strategis_opds_path,
-        icon: 'fas fa-bullseye', identifier: 'isu_strategis_opds'
-      },
-      {
         title: 'Pohon Kinerja Kota', href: kota_pohon_kinerja_index_path,
         icon: 'fas fa-sitemap', identifier: 'pohon_kinerja/kota'
       },

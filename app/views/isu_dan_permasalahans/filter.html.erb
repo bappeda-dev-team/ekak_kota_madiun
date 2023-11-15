@@ -4,34 +4,53 @@
       <div class="col">
         <h2 class="fs-5 fw-bold mb-0">Permasalahan dan Isu Strategis</h2>
       </div>
-      <div class="col text-end">
-        <span><%= @nama_opd %></span>
+      <div class="col-auto text-end">
+        <p><%= @nama_opd %></p>
+        <p><%= @tahun %></p>
       </div>
     </div>
   </div>
   <div class="card-body">
     <div class="table-responsive">
-        <table class="table table-flush">
-            <thead>
-                <tr>
-                    <th class="border-bottom text-gray-700">No</th>
-                    <th class="border-bottom text-gray-700">Bidang Urusan</th>
-                    <th class="border-bottom text-gray-700">Isu Strategis</th>
-                    <th class="border-bottom text-gray-700">Permasalahan</th>
-                    <th class="border-bottom text-gray-700">Faktor Penghambat SKP</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% @opd.list_bidang_urusans.each.with_index(1) do |bidang_urusan, no| %>
-                <tr>
-                    <td class="align-middle"><%= no %></td>
-                    <td class="align-middle">
-                        <p>(<%= bidang_urusan[0] %>) <%= bidang_urusan[1] %></p>
-                    </td>
-                </tr>
-                <% end %>
-            </tbody>
-        </table>
+      <table class="table table-flush">
+        <thead>
+          <tr>
+            <th class="border-bottom text-gray-700">No</th>
+            <th class="border-bottom text-gray-700">Bidang Urusan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @opd.list_bidang_urusans.each.with_index(1) do |bidang_urusan, no| %>
+            <tr>
+              <td class="align-middle"><%= no %></td>
+              <td class="align-middle">
+                <div class="row">
+                  <div class="col">
+                    <p>(<%= bidang_urusan[0] %>) <%= bidang_urusan[1] %></p>
+                  </div>
+                  <div class="col-auto">
+                    <%= link_to new_isu_strategis_opd_path(bidang_urusan: bidang_urusan[1], kode_bidang_urusan: bidang_urusan[0], opd: @opd.kode_unik_opd),
+                     remote: true,
+                     data: {
+                       controller: 'form-modal',
+                       action: 'ajax:complete->form-modal#success:prevent',
+                       bs_toggle: 'modal',
+                       bs_target: '#form-modal'
+                     },
+                     class: 'btn btn-sm btn-outline-primary ms-3' do %>
+                      <i class="fas fa-edit"></i>
+                      <span>Tambah Isu Strategis</span>
+                    <% end %>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <div id="isu-strategis" class="table-responsive">
+        <%= render 'table_isu_strategis' %>
+      </div>
     </div>
   </div>
 </div>

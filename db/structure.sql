@@ -927,7 +927,7 @@ ALTER SEQUENCE public.isu_strategis_kota_id_seq OWNED BY public.isu_strategis_ko
 
 CREATE TABLE public.isu_strategis_opds (
     id bigint NOT NULL,
-    kode character varying NOT NULL,
+    kode character varying,
     isu_strategis character varying NOT NULL,
     tahun character varying NOT NULL,
     kode_opd character varying NOT NULL,
@@ -935,7 +935,8 @@ CREATE TABLE public.isu_strategis_opds (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     keterangan character varying,
-    kode_bidang_urusan character varying
+    kode_bidang_urusan character varying,
+    bidang_urusan character varying
 );
 
 
@@ -5821,6 +5822,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231109012201'),
 ('20231109012338'),
 ('20231114032821'),
-('20231115225443');
+('20231115225443'),
+('20231115233850'),
+('20231115234747');
 
 

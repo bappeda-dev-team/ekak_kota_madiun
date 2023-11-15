@@ -3,9 +3,10 @@
 # Table name: isu_strategis_opds
 #
 #  id                 :bigint           not null, primary key
+#  bidang_urusan      :string
 #  isu_strategis      :string           not null
 #  keterangan         :string
-#  kode               :string           not null
+#  kode               :string
 #  kode_bidang_urusan :string
 #  kode_opd           :string           not null
 #  tahun              :string           not null
@@ -14,7 +15,7 @@
 #  updated_at         :datetime         not null
 #
 class IsuStrategisOpd < ApplicationRecord
-  belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_opd'
+  belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd'
   has_many :pohons, as: :pohonable, dependent: :destroy
   has_many :komentars, -> { where(jenis: 'IsuOpd') }, primary_key: :id, foreign_key: :item
 

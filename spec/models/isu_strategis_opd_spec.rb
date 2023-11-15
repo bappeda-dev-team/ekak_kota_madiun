@@ -3,9 +3,10 @@
 # Table name: isu_strategis_opds
 #
 #  id                 :bigint           not null, primary key
+#  bidang_urusan      :string
 #  isu_strategis      :string           not null
 #  keterangan         :string
-#  kode               :string           not null
+#  kode               :string
 #  kode_bidang_urusan :string
 #  kode_opd           :string           not null
 #  tahun              :string           not null
