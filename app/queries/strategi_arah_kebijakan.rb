@@ -1,7 +1,7 @@
 class StrategiArahKebijakan
   extend Memoist
 
-  attr_accessor :tahun, :kode_opd
+  attr_accessor :kode_opd
   attr_reader :opd
 
   def initialize(kode_opd:, tahun: '')
@@ -11,7 +11,15 @@ class StrategiArahKebijakan
   end
 
   def tahun_tanpa_perubahan
-    tahun.gsub('_perubahan', '')
+    tahun = @tahun
+    tahun.gsub('_perubahan', '') if tahun.include?('_perubahan')
+  rescue NoMethodError
+    ''
+  end
+
+  def tahun_murni
+    tahun = @tahun
+    tahun.concat('_murni', '') unless tahun.include?('_perubahan')
   rescue NoMethodError
     ''
   end
