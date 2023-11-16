@@ -379,6 +379,6 @@ class Opd < ApplicationRecord
 
   def sasaran_subkegiatans(tahun)
     user_opd = users.aktif.eselon4
-    user_opd.map { |user| user.subkegiatan_sasarans_tahun(tahun) }
+    user_opd.map { |user| user.sasarans_tahun(tahun).map(&:program_kegiatan) }.flatten.compact_blank
   end
 end
