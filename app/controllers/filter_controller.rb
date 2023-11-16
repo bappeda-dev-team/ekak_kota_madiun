@@ -306,7 +306,11 @@ class FilterController < ApplicationController
                                           .uniq(&:kode_program).sort_by(&:kode_program)
       @kode_opd = KODE_OPD_BAGIAN[@nama_opd.to_sym]
     end
-    render partial: 'hasil_filter_renstra'
+    if tahun_awal == 2025
+      render partial: 'hasil_filter_renstra_baru'
+    else
+      render partial: 'hasil_filter_renstra'
+    end
   end
 
   def ranwal_renja
