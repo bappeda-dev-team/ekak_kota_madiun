@@ -4,7 +4,9 @@
       <th class="border-bottom text-gray-700">No</th>
       <th class="border-bottom text-gray-700">Bidang Urusan</th>
       <th class="border-bottom text-gray-700">Isu Strategis</th>
+      <th class="border-bottom text-gray-700 text-center">Action</th>
       <th class="border-bottom text-gray-700">Permasalahan</th>
+      <th class="border-bottom text-gray-700 text-center">Action</th>
       <th class="border-bottom text-gray-700">Faktor Penghambat SKP</th>
     </tr>
   </thead>
@@ -13,15 +15,56 @@
       <tr>
         <td class="align-middle" rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>"><%= no %></td>
         <td class="align-middle" rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>"><%= "(#{isu_strategis.kode_bidang_urusan}) #{isu_strategis.bidang_urusan}" %></td>
+        <td class="align-middle" rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>"><%= isu_strategis %></td>
         <td rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>">
-          <div class="row">
-            <div class="col">
-              <p><%= isu_strategis %></p>
-            </div>
-            <div class="col-auto">
-              <%= link_to new_permasalahan_opd_path(kode_opd: @kode_unik_opd,
-                                                    tahun: @tahun, 
-                                                    isu_strategis_opd_id: isu_strategis),
+          <div class="d-grid gap-3">
+            <%= link_to edit_isu_strategis_opd_path(isu_strategis),
+             remote: true,
+             data: {
+               controller: 'form-modal',
+               action: 'ajax:complete->form-modal#success:prevent',
+               bs_toggle: 'modal',
+               bs_target: '#form-modal'
+             },
+             class: 'btn btn-sm btn-outline-info ms-3' do %>
+              <i class="fas fa-edit"></i>
+              <span>Edit Isu Strategis</span>
+            <% end %>
+            <%= link_to isu_strategis_opd_path(isu_strategis),
+             method: :delete,
+             data: {
+               confirm_swal: 'hapus isu strategis?',
+               controller: 'form-ajax',
+               action: 'ajax:complete->form-ajax#afterSubmitRefresh'
+             },
+             class: 'btn btn-sm btn-outline-danger ms-3' do %>
+              <i class="fas fa-edit"></i>
+              <span>Hapus Isu Strategis</span>
+            <% end %>
+            <hr/>
+            <%= link_to new_permasalahan_opd_path(kode_opd: @kode_unik_opd,
+                                                  tahun: @tahun,
+                                                  isu_strategis_opd_id: isu_strategis),
+             remote: true,
+             data: {
+               controller: 'form-modal',
+               action: 'ajax:complete->form-modal#success:prevent',
+               bs_toggle: 'modal',
+               bs_target: '#form-modal'
+             },
+             class: 'btn btn-sm btn-outline-primary ms-3' do %>
+              <i class="fas fa-edit"></i>
+              <span>Input Permasalahan</span>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+      <% isu_strategis.permasalahan_opds.each do |permasalahan| %>
+        <tr>
+          <td><%= permasalahan %></td>
+          <td>
+            <div class="d-grid gap-3">
+              <%= link_to edit_permasalahan_opd_path(permasalahan),
                remote: true,
                data: {
                  controller: 'form-modal',
@@ -29,17 +72,23 @@
                  bs_toggle: 'modal',
                  bs_target: '#form-modal'
                },
-               class: 'btn btn-sm btn-outline-primary ms-3' do %>
+               class: 'btn btn-sm btn-outline-info ms-3' do %>
                 <i class="fas fa-edit"></i>
-                <span>Input Permasalahan</span>
+                <span>Edit Permasalahan</span>
+              <% end %>
+              <%= link_to permasalahan,
+               method: :delete,
+               data: {
+                 confirm_swal: 'hapus permasalahan?',
+                 controller: 'form-ajax',
+                 action: 'ajax:complete->form-ajax#afterSubmitRefresh'
+               },
+               class: 'btn btn-sm btn-outline-danger ms-3' do %>
+                <i class="fas fa-edit"></i>
+                <span>Hapus Permasalahan</span>
               <% end %>
             </div>
-          </div>
-        </td>
-      </tr>
-      <% isu_strategis.permasalahan_opds.each do |permasalahan| %>
-        <tr>
-          <td><%= permasalahan %></td>
+          </td>
         </tr>
       <% end %>
     <% end %>

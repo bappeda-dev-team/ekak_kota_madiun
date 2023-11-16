@@ -54,10 +54,8 @@ class PermasalahanOpdsController < ApplicationController
   def destroy
     @permasalahan_opd.destroy
 
-    respond_to do |format|
-      format.html { redirect_to permasalahan_opds_url, notice: "Permasalahan opd was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    render json: { resText: "Isu Strategis Dihapus", result: true },
+           status: :accepted
   end
 
   private

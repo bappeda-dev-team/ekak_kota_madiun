@@ -37,16 +37,11 @@ class IsuStrategisOpdsController < ApplicationController
 
   # PATCH/PUT /isu_strategis_opds/1 or /isu_strategis_opds/1.json
   def update
-    respond_to do |format|
-      if @isu_strategis_opd.update(isu_strategis_opd_params)
-        format.html do
-          redirect_to isu_strategis_opds_url, success: "Sukses"
-        end
-        format.json { render :show, status: :ok, location: @isu_strategis_opd }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @isu_strategis_opd.errors, status: :unprocessable_entity }
-      end
+    if @isu_strategis_opd.update(isu_strategis_opd_params)
+      render json: { resText: "Sukses" }.to_json,
+             status: :ok
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -54,10 +49,8 @@ class IsuStrategisOpdsController < ApplicationController
   def destroy
     @isu_strategis_opd.destroy
 
-    respond_to do |format|
-      format.html { redirect_to isu_strategis_opds_url, success: "Isu strategis dihapus" }
-      format.json { head :no_content }
-    end
+    render json: { resText: "Isu Strategis Dihapus", result: true },
+           status: :accepted
   end
 
   def admin_filter
