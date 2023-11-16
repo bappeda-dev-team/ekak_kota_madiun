@@ -4,7 +4,7 @@ class StrategiArahKebijakan
   attr_accessor :tahun, :kode_opd
   attr_reader :opd
 
-  def initialize(tahun: '', kode_opd:)
+  def initialize(kode_opd:, tahun: '')
     @tahun = tahun
     @kode_opd = kode_opd
     @opd = Opd.find_by(kode_unik_opd: kode_opd)
@@ -17,7 +17,7 @@ class StrategiArahKebijakan
   end
 
   def isu_strategis_opds
-    @opd.isu_strategis_opds.where(tahun: [@tahun, tahun_tanpa_perubahan])
+    @opd.isu_strategis_opds.where(tahun: @tahun)
   end
 
   def tujuan_opds
