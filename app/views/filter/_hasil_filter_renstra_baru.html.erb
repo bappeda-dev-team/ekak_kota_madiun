@@ -1,3 +1,4 @@
+
 <div class="card border-0 shadow">
   <div class="card-header">
     <div class="row align-items-center">
@@ -43,13 +44,13 @@
           </thead>
           <tbody>
             <tr>
-              <td class="text-gray-900 text-wrap border"  ><%= program.nama_opd_pemilik %> 
-              <% if current_user.has_role? :super_admin %>
-                <br/>
-                id : <%= program.id %>
-                <br/>
-                kode_sub_skpd : <%= program.kode_sub_skpd %>
-              <% end %>
+              <td class="text-gray-900 text-wrap border"  ><%= program.nama_opd_pemilik %>
+                <% if current_user.has_role? :super_admin %>
+                  <br/>
+                  id : <%= program.id %>
+                  <br/>
+                  kode_sub_skpd : <%= program.kode_sub_skpd %>
+                <% end %>
               </td>
               <td class="text-gray-900 text-wrap border"  ><%= program.kode_program %></td>
               <td class="text-gray-900 text-wrap border"  ><%= nomor %></td>
@@ -63,19 +64,19 @@
                   indikator: program.indikator_program,
                   jenis: 'Renstra',
                   sub_jenis: 'Program'),
-                  remote: true, class: 'btn btn-green',
-                  data: { controller: 'form-modal',
-                          action: 'form-modal#appendForm',
-                          form_modal_location_param: 'form-laporan-renstra-body',
-                          bs_target: '#form-laporan-renstra',
-                          bs_toggle: 'modal' } do %>
-                          Edit
-                        <% end %>
+                 remote: true, class: 'btn btn-green',
+                 data: { controller: 'form-modal',
+                   action: 'form-modal#appendForm',
+                   form_modal_location_param: 'form-laporan-renstra-body',
+                   bs_target: '#form-laporan-renstra',
+                   bs_toggle: 'modal' } do %>
+                  Edit
+                <% end %>
               </td>
               <%= render 'row_indikator_renstra',indikators: program.indikator_renstras_new('program', @kode_opd)[:indikator_program] %>
             </tr>
           </tbody>
-          <% program.kegiatans_opd.each.with_index(1) do |kegiatan, no_giat| %>
+          <% program.kegiatans_opd.select { |keg| keg.kode_giat == program.kode_giat }.each.with_index(1) do |kegiatan, no_giat| %>
             <thead class="thead-kegiatan">
               <tr>
                 <th class="border" scope="col" rowspan="2">OPD</th>
@@ -101,13 +102,13 @@
               <tr>
                 <td class="text-gray-900 text-wrap border"  ><%= kegiatan.nama_opd_pemilik %>
 
-              <% if current_user.has_role? :super_admin %>
-                <br/>
-                id : <%= kegiatan.id %>
-                <br/>
-                kode_sub_skpd : <%= kegiatan.kode_sub_skpd %>
-              <% end %>
-              </td>
+                  <% if current_user.has_role? :super_admin %>
+                    <br/>
+                    id : <%= kegiatan.id %>
+                    <br/>
+                    kode_sub_skpd : <%= kegiatan.kode_sub_skpd %>
+                  <% end %>
+                </td>
                 <td class="text-gray-900 text-wrap border"  ><%= kegiatan.kode_giat %></td>
                 <td class="text-gray-900 text-wrap border"  ><%= no_giat %></td>
                 <td class="text-gray-900 text-wrap border"  ><%= kegiatan.nama_kegiatan %></td>
@@ -120,14 +121,14 @@
                     indikator: kegiatan.indikator_kinerja,
                     jenis: 'Renstra',
                     sub_jenis: 'Kegiatan'),
-                    remote: true, class: 'btn btn-green',
-                    data: { controller: 'form-modal',
-                            action: 'form-modal#appendForm',
-                            form_modal_location_param: 'form-laporan-renstra-body',
-                            bs_target: '#form-laporan-renstra',
-                            bs_toggle: 'modal' } do %>
-                            Edit
-                          <% end %>
+                   remote: true, class: 'btn btn-green',
+                   data: { controller: 'form-modal',
+                     action: 'form-modal#appendForm',
+                     form_modal_location_param: 'form-laporan-renstra-body',
+                     bs_target: '#form-laporan-renstra',
+                     bs_toggle: 'modal' } do %>
+                    Edit
+                  <% end %>
                 </td>
                 <%= render 'row_indikator_renstra',indikators: kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan] %>
               </tr>
@@ -154,17 +155,17 @@
               </tr>
             </thead>
             <tbody>
-              <% kegiatan.subkegiatans_opd.each.with_index(1) do |subgiat, no_subgiat| %>
+              <% kegiatan.subkegiatans_opd.select { |keg| keg.kode_sub_giat == program.kode_sub_giat }.each.with_index(1) do |subgiat, no_subgiat| %>
                 <tr>
                   <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_opd_pemilik %>
-                    
-              <% if current_user.has_role? :super_admin %>
-                <br/>
-                id : <%= subgiat.id %>
-                <br/>
-                kode_sub_skpd : <%= subgiat.kode_sub_skpd %>
-              <% end %>
-              </td>
+
+                    <% if current_user.has_role? :super_admin %>
+                      <br/>
+                      id : <%= subgiat.id %>
+                      <br/>
+                      kode_sub_skpd : <%= subgiat.kode_sub_skpd %>
+                    <% end %>
+                  </td>
                   <td class="text-gray-900 text-wrap border"  ><%= subgiat.kode_sub_giat %></td>
                   <td class="text-gray-900 text-wrap border"  ><%= no_subgiat %></td>
                   <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_subkegiatan %></td>
@@ -177,14 +178,14 @@
                       indikator: subgiat.indikator_subkegiatan,
                       jenis: 'Renstra',
                       sub_jenis: 'Subkegiatan'),
-                      remote: true, class: 'btn btn-green',
-                      data: { controller: 'form-modal',
-                              action: 'form-modal#appendForm',
-                              form_modal_location_param: 'form-laporan-renstra-body',
-                              bs_target: '#form-laporan-renstra',
-                              bs_toggle: 'modal' } do %>
-                              Edit
-                            <% end %>
+                     remote: true, class: 'btn btn-green',
+                     data: { controller: 'form-modal',
+                       action: 'form-modal#appendForm',
+                       form_modal_location_param: 'form-laporan-renstra-body',
+                       bs_target: '#form-laporan-renstra',
+                       bs_toggle: 'modal' } do %>
+                      Edit
+                    <% end %>
                   </td>
                   <%= render 'row_indikator_renstra',indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan] %>
                 </tr>

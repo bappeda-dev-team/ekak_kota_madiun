@@ -64,4 +64,47 @@ RSpec.describe Opd, type: :model do
       expect(bidang_urusans).to eq(list_bidang_urusan)
     end
   end
+
+  describe 'get subkegiatan by sasaran asn' do
+    context 'sasaran complete' do
+      it 'should list subkegiatan by tahun sasaran' do
+        tahun = '2023'
+        user = create(:eselon_4)
+        program = create(:program_kegiatan, opd: user.opd)
+        strategi = create(:strategi, tahun: '2023', role: 'eselon_4', nip_asn: user.nik)
+        create(:sasaran_subkegiatan, user: user, tahun: '2023', program_kegiatan: program, strategi_id: strategi.id)
+        opd = user.opd
+        subkegiatan = opd.sasaran_subkegiatans(tahun)
+
+        expect(subkegiatan.size).to eq 1
+        expect(subkegiatan).to include program
+      end
+      it 'should list subkegiatan by multiple tahun' do
+        periode = (2023..2024)
+        user = create(:eselon_4)
+        program = create(:program_kegiatan, opd: user.opd)
+        strategi = create(:strategi, tahun: '2023', role: 'eselon_4', nip_asn: user.nik)
+        strategi2 = create(:strategi, tahun: '2024', role: 'eselon_4', nip_asn: user.nik)
+        create(:sasaran_subkegiatan, user: user, tahun: '2023', program_kegiatan: program, strategi_id: strategi.id)
+        create(:sasaran_subkegiatan, user: user, tahun: '2024', program_kegiatan: program, strategi_id: strategi2.id)
+        opd = user.opd
+        subkegiatans = periode.map { |tahun| opd.sasaran_subkegiatans(tahun) }.uniq
+
+        expect(subkegiatans.size).to eq 1
+      end
+    end
+    context 'sasaran incomplete' do
+      it 'should not list sasaran by tahun' do
+        tahun = '2023'
+        user = create(:eselon_4)
+        create(:program_kegiatan, opd: user.opd)
+        strategi = create(:strategi, tahun: '2023', role: 'eselon_4', nip_asn: user.nik)
+        create(:sasaran, user: user, tahun: '2023', strategi_id: strategi.id)
+        opd = user.opd
+        subkegiatan = opd.sasaran_subkegiatans(tahun)
+
+        expect(subkegiatan.size).to eq 0
+      end
+    end
+  end
 end

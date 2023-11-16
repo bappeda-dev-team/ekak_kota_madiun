@@ -376,4 +376,9 @@ class Opd < ApplicationRecord
     bidang_urusan_unique = Set.new(master_bidang_urusan)
     bidang_urusan_unique.to_a
   end
+
+  def sasaran_subkegiatans(tahun)
+    user_opd = users.aktif.eselon4
+    user_opd.map { |user| user.sasarans_tahun(tahun).map(&:program_kegiatan) }.flatten.compact_blank
+  end
 end
