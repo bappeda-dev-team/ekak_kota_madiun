@@ -1,17 +1,17 @@
-<%= form_with(model: isu_strategis_opd,
+<%= form_with(model: permasalahan_opd,
               local: false,
               data: {
                 controller: 'form-ajax',
-                form_ajax_target_param: 'isu-strategis',
+                form_ajax_target_param: 'permasalahan-opd',
                 action: 'ajax:complete->form-ajax#afterSubmitRefresh'
               }
 ) do |form| %>
-  <% if isu_strategis_opd.errors.any? %>
+  <% if permasalahan_opd.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(isu_strategis_opd.errors.count, "error") %> prohibited this isu_strategis_opd from being saved:</h2>
+      <h2><%= pluralize(permasalahan_opd.errors.count, "error") %> prohibited this permasalahan_opd from being saved:</h2>
 
       <ul>
-        <% isu_strategis_opd.errors.each do |error| %>
+        <% permasalahan_opd.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
@@ -19,13 +19,12 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :kode_bidang_urusan, class: 'form-label' %>
-    <%= form.text_field :kode_bidang_urusan, class: 'form-control', readonly: true %>
+    <%= form.hidden_field :isu_strategis_opd_id, class: 'form-control', readonly: true %>
   </div>
 
   <div class="field">
-    <%= form.label :bidang_urusan, class: 'form-label' %>
-    <%= form.text_field :bidang_urusan, class: 'form-control', readonly: true %>
+    <%= form.label :isu_strategis_opd, class: 'form-label' %>
+    <%= form.text_field :isu_strategis_opd, class: 'form-control', readonly: true %>
   </div>
 
   <div class="field">
@@ -34,8 +33,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :isu_strategis, class: 'form-label' %>
-    <%= form.text_area :isu_strategis, class: 'form-control' %>
+    <%= form.label :permasalahan, class: 'form-label' %>
+    <%= form.text_field :permasalahan, class: 'form-control' %>
   </div>
 
   <div class="field">
@@ -44,7 +43,7 @@
      {include_blank: true},
      { class: "form-control",
        data: {
-         placeholder: "Pilih Tahun Isu Strategis",
+         placeholder: "Pilih Tahun Permasalahan",
          controller: 'dropdown',
          dropdown_jenis_value: 'ajax',
          dropdown_url_value: kelompok_anggarans_path(:json),

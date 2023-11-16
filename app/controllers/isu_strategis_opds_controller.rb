@@ -31,7 +31,7 @@ class IsuStrategisOpdsController < ApplicationController
       render json: { resText: "Sukses" }.to_json,
              status: :created
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 

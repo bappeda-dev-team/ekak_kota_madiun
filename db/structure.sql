@@ -2009,6 +2009,43 @@ ALTER SEQUENCE public.periodes_id_seq OWNED BY public.periodes.id;
 
 
 --
+-- Name: permasalahan_opds; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.permasalahan_opds (
+    id bigint NOT NULL,
+    permasalahan character varying,
+    kode_opd character varying,
+    tahun character varying,
+    jenis character varying,
+    kode_permasalahan_external character varying,
+    status character varying,
+    isu_strategis_opd_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: permasalahan_opds_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.permasalahan_opds_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: permasalahan_opds_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.permasalahan_opds_id_seq OWNED BY public.permasalahan_opds.id;
+
+
+--
 -- Name: permasalahans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3875,6 +3912,13 @@ ALTER TABLE ONLY public.periodes ALTER COLUMN id SET DEFAULT nextval('public.per
 
 
 --
+-- Name: permasalahan_opds id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.permasalahan_opds ALTER COLUMN id SET DEFAULT nextval('public.permasalahan_opds_id_seq'::regclass);
+
+
+--
 -- Name: permasalahans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4544,6 +4588,14 @@ ALTER TABLE ONLY public.periodes
 
 
 --
+-- Name: permasalahan_opds permasalahan_opds_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.permasalahan_opds
+    ADD CONSTRAINT permasalahan_opds_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: permasalahans permasalahans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -5137,6 +5189,13 @@ CREATE UNIQUE INDEX index_opds_on_kode_unik_opd_and_lembaga_id ON public.opds US
 --
 
 CREATE INDEX index_perhitungans_on_anggaran_id ON public.perhitungans USING btree (anggaran_id);
+
+
+--
+-- Name: index_permasalahan_opds_on_isu_strategis_opd_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_permasalahan_opds_on_isu_strategis_opd_id ON public.permasalahan_opds USING btree (isu_strategis_opd_id);
 
 
 --
@@ -5824,6 +5883,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231114032821'),
 ('20231115225443'),
 ('20231115233850'),
-('20231115234747');
+('20231115234747'),
+('20231115235900');
 
 

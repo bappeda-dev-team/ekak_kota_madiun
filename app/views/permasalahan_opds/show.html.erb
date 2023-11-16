@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Permasalahan:</strong>
+  <%= @permasalahan_opd.permasalahan %>
+</p>
+
+<p>
+  <strong>Kode opd:</strong>
+  <%= @permasalahan_opd.kode_opd %>
+</p>
+
+<p>
+  <strong>Tahun:</strong>
+  <%= @permasalahan_opd.tahun %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @permasalahan_opd.status %>
+</p>
+
+<p>
+  <strong>Isu strategis opd:</strong>
+  <%= @permasalahan_opd.isu_strategis_opd %>
+</p>
+
+<%= link_to 'Edit', edit_permasalahan_opd_path(@permasalahan_opd) %> |
+<%= link_to 'Back', permasalahan_opds_path %>

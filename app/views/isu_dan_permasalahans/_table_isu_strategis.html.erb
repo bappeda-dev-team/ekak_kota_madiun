@@ -11,10 +11,35 @@
   <tbody>
     <% @isu_strategis.each.with_index(1) do |isu_strategis, no| %>
       <tr>
-        <td class="align-middle"><%= no %></td>
-        <td class="align-middle"><%= "(#{isu_strategis.kode_bidang_urusan}) #{isu_strategis.bidang_urusan}" %></td>
-        <td class="align-middle"><%= isu_strategis %></td>
+        <td class="align-middle" rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>"><%= no %></td>
+        <td class="align-middle" rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>"><%= "(#{isu_strategis.kode_bidang_urusan}) #{isu_strategis.bidang_urusan}" %></td>
+        <td rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>">
+          <div class="row">
+            <div class="col">
+              <p><%= isu_strategis %></p>
+            </div>
+            <div class="col-auto">
+              <%= link_to new_permasalahan_opd_path(kode_opd: @kode_unik_opd, isu_strategis_opd_id: isu_strategis),
+               remote: true,
+               data: {
+                 controller: 'form-modal',
+                 action: 'ajax:complete->form-modal#success:prevent',
+                 bs_toggle: 'modal',
+                 bs_target: '#form-modal'
+               },
+               class: 'btn btn-sm btn-outline-primary ms-3' do %>
+                <i class="fas fa-edit"></i>
+                <span>Input Permasalahan</span>
+              <% end %>
+            </div>
+          </div>
+        </td>
       </tr>
+      <% isu_strategis.permasalahan_opds.each do |permasalahan| %>
+      <tr>
+        <td><%= permasalahan %></td>
+      </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
