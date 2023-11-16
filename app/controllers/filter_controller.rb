@@ -287,6 +287,9 @@ class FilterController < ApplicationController
   end
 
   def laporan_renstra
+    periode = params[:periode].split('-')
+    @tahun_awal = periode[0]
+    @tahun_akhir = periode[-1]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
     @program_kegiatans = @opd.program_renstra

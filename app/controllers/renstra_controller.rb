@@ -4,6 +4,7 @@ class RenstraController < ApplicationController
   def index
     # base_data = KakService.new(tahun: 2022, kode_unik_opd: @kode_unik_opd)
     # @program_kegiatans = base_data.program_kegiatans_by_opd
+    @periode = params[:periode]
   end
 
   def admin_renstra; end

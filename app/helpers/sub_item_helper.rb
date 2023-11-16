@@ -39,4 +39,11 @@ module SubItemHelper
       { title: 'Penetapan', href: renja_penetapan_path, identifier: 'renja/penetapan' }
     ]
   end
+
+  def renstra_items
+    [
+      { title: '(2020-2024)', href: renstra_index_path(periode: '2019-2024'), identifier: 'renstra/(2020-2024)' },
+      { title: '(2025-2026)', href: renstra_index_path(periode: '2025-2026'), identifier: 'renstra/(2025-2026)' }
+    ]
+  end
 end

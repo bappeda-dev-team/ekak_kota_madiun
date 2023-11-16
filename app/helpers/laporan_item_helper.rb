@@ -32,7 +32,9 @@ module LaporanItemHelper
         icon: 'fas fa-money-check', identifier: 'laporan_rka'
       },
       {
-        title: 'Renstra', href: renstra_index_path,
+        title: 'Renstra', href: "#",
+        multi: true, collections: renstra_items,
+        id_target: 'renstra-items',
         icon: 'fas fa-stream', identifier: 'renstra'
       },
       {
