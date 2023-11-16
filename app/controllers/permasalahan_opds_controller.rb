@@ -37,16 +37,11 @@ class PermasalahanOpdsController < ApplicationController
 
   # PATCH/PUT /permasalahan_opds/1 or /permasalahan_opds/1.json
   def update
-    respond_to do |format|
-      if @permasalahan_opd.update(permasalahan_opd_params)
-        format.html do
-          redirect_to permasalahan_opd_url(@permasalahan_opd), notice: "Permasalahan opd was successfully updated."
-        end
-        format.json { render :show, status: :ok, location: @permasalahan_opd }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @permasalahan_opd.errors, status: :unprocessable_entity }
-      end
+    if @permasalahan_opd.update(permasalahan_opd_params)
+      render json: { resText: "Sukses" }.to_json,
+             status: :created
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
