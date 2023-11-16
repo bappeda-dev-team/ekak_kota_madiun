@@ -1,15 +1,17 @@
 
 <div class="card border-0 shadow">
   <div class="card-header">
-    <div class="row align-items-center">
-      <div class="col-8">
+    <div class="row">
+      <div class="col">
         <h2 class="fs-5 fw-bold mb-0">Laporan Renstra <%= @nama_opd %> <%= "kode_opd: #{@kode_opd}" if current_user.has_role? :super_admin%></h2>
+      </div>
+      <div class="col-auto">
+        <%= @tahun_awal %> - <%= @tahun_akhir %>
       </div>
     </div>
   </div>
   <div class="card-body">
     <div class="table-responsive">
-      <p><%= @list_subkegiatans.size %></p>
       <table class="table align-items-center" data-controller='form-modal' data-action='ajax-update@window->form-modal#updateTargetValue'>
         <% @program_kegiatans.each.with_index(1) do |program, nomor| %>
           <% if @list_subkegiatans.map(&:kode_program).include? program.kode_program %>
@@ -65,7 +67,9 @@
                     kode_opd: program.kode_sub_skpd,
                     indikator: program.indikator_program,
                     jenis: 'Renstra',
-                    sub_jenis: 'Program'),
+                    sub_jenis: 'Program',
+                    tahun_awal: @tahun_awal,
+                    tahun_akhir: @tahun_akhir),
                    remote: true, class: 'btn btn-green',
                    data: { controller: 'form-modal',
                      action: 'form-modal#appendForm',
@@ -123,7 +127,9 @@
                         kode: kegiatan.kode_giat,
                         indikator: kegiatan.indikator_kinerja,
                         jenis: 'Renstra',
-                        sub_jenis: 'Kegiatan'),
+                        sub_jenis: 'Kegiatan',
+                        tahun_awal: @tahun_awal,
+                        tahun_akhir: @tahun_akhir),
                        remote: true, class: 'btn btn-green',
                        data: { controller: 'form-modal',
                          action: 'form-modal#appendForm',
@@ -181,7 +187,9 @@
                             kode: subgiat.kode_sub_giat,
                             indikator: subgiat.indikator_subkegiatan,
                             jenis: 'Renstra',
-                            sub_jenis: 'Subkegiatan'),
+                            sub_jenis: 'Subkegiatan',
+                            tahun_awal: @tahun_awal,
+                            tahun_akhir: @tahun_akhir),
                            remote: true, class: 'btn btn-green',
                            data: { controller: 'form-modal',
                              action: 'form-modal#appendForm',

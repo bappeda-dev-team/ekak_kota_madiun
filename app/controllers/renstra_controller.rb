@@ -47,9 +47,9 @@ class RenstraController < ApplicationController
     @jenis = params[:jenis]
     @sub_jenis = params[:sub_jenis]
     @id = params[:id]
+    @periode = (params[:tahun_awal]..params[:tahun_akhir])
     @program = ProgramKegiatan.find(@id)
     @targets = @program.send("target_#{@sub_jenis.downcase}_renstra")
-    @keterangan = @targets.empty? ? '' : @targets.dig("2022")[:keterangan]
     @kode_indikator = params[:kode_indikator] || KodeService.new(@kode, @jenis, @sub_jenis).call
     render partial: 'form_renstra'
   end

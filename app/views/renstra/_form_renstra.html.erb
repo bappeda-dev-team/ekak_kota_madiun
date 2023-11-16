@@ -12,7 +12,7 @@
     readonly: true,
     value: @nama %>
 </div>
-<% (2020..2024).each do |tahun| %>
+<% @periode.each do |tahun| %>
   <%= form.hidden_field "renstra[indikator][][tahun]", value: tahun %>
   <%= form.hidden_field "renstra[indikator][][kode]", value: @kode %>
   <%= form.hidden_field "renstra[indikator][][kode_opd]", value: @kode_opd %>
@@ -43,9 +43,7 @@
 <% end %>
 <div class="field">
   <%= form.label :keterangan, class: 'form-label' %>
-  <%= form.text_field :keterangan,
-    class: 'form-control',
-    value: @keterangan %>
+  <%= form.text_field :keterangan, class: 'form-control' %>
 </div>
 <%= form.submit "Simpan" %>
 <% end %>

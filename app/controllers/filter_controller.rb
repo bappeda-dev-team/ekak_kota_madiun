@@ -288,14 +288,14 @@ class FilterController < ApplicationController
 
   def laporan_renstra
     periode = params[:periode].split('-')
-    tahun_awal = periode[0].to_i
-    tahun_akhir = periode[-1].to_i
-    @periode = (tahun_awal..tahun_akhir)
+    @tahun_awal = periode[0].to_i
+    @tahun_akhir = periode[-1].to_i
+    @periode = (@tahun_awal..@tahun_akhir)
     @colspan = (@periode.size * 5) + 3
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
     @program_kegiatans = @opd.program_renstra
-    @list_subkegiatans = @periode.map { |tahun| @opd.sasaran_subkegiatans(tahun) }.flatten
+    @list_subkegiatans = @periode.map { |tahun| @opd.sasaran_subkegiatans(tahun) }.flatten if @tahun_awal == 2025
 
     if OPD_TABLE.key?(@nama_opd.to_sym)
       @program_kegiatans = ProgramKegiatan.includes(:opd)
@@ -303,7 +303,7 @@ class FilterController < ApplicationController
                                           .uniq(&:kode_program).sort_by(&:kode_program)
       @kode_opd = KODE_OPD_BAGIAN[@nama_opd.to_sym]
     end
-    if tahun_awal == 2025
+    if @tahun_awal == 2025
       render partial: 'hasil_filter_renstra_baru'
     else
       render partial: 'hasil_filter_renstra'
