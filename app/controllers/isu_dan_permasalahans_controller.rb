@@ -7,7 +7,8 @@ class IsuDanPermasalahansController < ApplicationController
   def filter
     @opd = Opd.find_by(kode_unik_opd: @kode_unik_opd)
     @nama_opd = @opd.nama_opd
-    @isu_strategis = @opd.isu_strategis_opds
+    tahun_asli = @tahun.include?('perubahan') ? @tahun.gsub('_perubahan', '') : @tahun
+    @isu_strategis = @opd.isu_strategis_opds.where("tahun ILIKE ?", "%#{tahun_asli}%")
   end
 
   def add_new

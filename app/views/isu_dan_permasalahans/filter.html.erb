@@ -29,7 +29,9 @@
                     <p>(<%= bidang_urusan[0] %>) <%= bidang_urusan[1] %></p>
                   </div>
                   <div class="col-auto">
-                    <%= link_to new_isu_strategis_opd_path(bidang_urusan: bidang_urusan[1], kode_bidang_urusan: bidang_urusan[0], opd: @opd.kode_unik_opd),
+                    <%= link_to new_isu_strategis_opd_path(bidang_urusan: bidang_urusan[1],
+                                                           kode_bidang_urusan: bidang_urusan[0],
+                                                           opd: @opd.kode_unik_opd),
                      remote: true,
                      data: {
                        controller: 'form-modal',

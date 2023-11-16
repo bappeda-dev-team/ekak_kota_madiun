@@ -14,7 +14,10 @@ class PermasalahanOpdsController < ApplicationController
   def new
     isu_strategis_opd = params[:isu_strategis_opd_id]
     kode_opd = params[:kode_opd]
-    @permasalahan_opd = PermasalahanOpd.new(isu_strategis_opd_id: isu_strategis_opd, kode_opd: kode_opd)
+    tahun = params[:tahun]
+    @permasalahan_opd = PermasalahanOpd.new(isu_strategis_opd_id: isu_strategis_opd,
+                                            tahun: tahun,
+                                            kode_opd: kode_opd)
   end
 
   # GET /permasalahan_opds/1/edit

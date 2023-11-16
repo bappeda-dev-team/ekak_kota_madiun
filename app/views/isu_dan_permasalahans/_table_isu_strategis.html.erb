@@ -19,7 +19,9 @@
               <p><%= isu_strategis %></p>
             </div>
             <div class="col-auto">
-              <%= link_to new_permasalahan_opd_path(kode_opd: @kode_unik_opd, isu_strategis_opd_id: isu_strategis),
+              <%= link_to new_permasalahan_opd_path(kode_opd: @kode_unik_opd,
+                                                    tahun: @tahun, 
+                                                    isu_strategis_opd_id: isu_strategis),
                remote: true,
                data: {
                  controller: 'form-modal',
@@ -36,9 +38,9 @@
         </td>
       </tr>
       <% isu_strategis.permasalahan_opds.each do |permasalahan| %>
-      <tr>
-        <td><%= permasalahan %></td>
-      </tr>
+        <tr>
+          <td><%= permasalahan %></td>
+        </tr>
       <% end %>
     <% end %>
   </tbody>
