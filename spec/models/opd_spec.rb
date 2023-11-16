@@ -64,4 +64,18 @@ RSpec.describe Opd, type: :model do
       expect(bidang_urusans).to eq(list_bidang_urusan)
     end
   end
+
+  describe 'get subkegiatan by sasaran asn' do
+    it 'should list sasaran asn by tahun' do
+      tahun = '2023'
+      user = create(:eselon_4)
+      program = create(:program_kegiatan, opd: user.opd)
+      strategi = create(:strategi, tahun: '2023', role: 'eselon_4', nip_asn: user.nik)
+      create(:sasaran_subkegiatan, user: user, tahun: '2023', program_kegiatan: program, strategi_id: strategi.id)
+      opd = user.opd
+      subkegiatan = opd.sasaran_subkegiatans(tahun)
+
+      expect(subkegiatan.size).to eq 1
+    end
+  end
 end

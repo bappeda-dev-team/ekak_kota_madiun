@@ -45,6 +45,11 @@ FactoryBot.define do
     sasaran_kinerja { " Terlaksananya monitoring dan evaluasi pelaksanaan kegiatan program smart city kota madiun " }
     status { "draft" }
     tahun { "" }
+    strategi_id { "" }
     association :user
+
+    factory :sasaran_subkegiatan do
+      association :program_kegiatan
+    end
   end
 end

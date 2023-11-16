@@ -288,11 +288,15 @@ class FilterController < ApplicationController
 
   def laporan_renstra
     periode = params[:periode].split('-')
-    @tahun_awal = periode[0]
-    @tahun_akhir = periode[-1]
+    tahun_awal = periode[0].to_i
+    tahun_akhir = periode[-1].to_i
+    @periode = (tahun_awal..tahun_akhir)
+    @colspan = (@periode.size * 5) + 3
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
     @program_kegiatans = @opd.program_renstra
+
+    list_subkegiatan = @periode.map { |tahun| @opd.sasaran_subkegiatans(tahun) }
     if OPD_TABLE.key?(@nama_opd.to_sym)
       @program_kegiatans = ProgramKegiatan.includes(:opd)
                                           .where(id_sub_unit: KODE_OPD_BAGIAN[@nama_opd.to_sym])
