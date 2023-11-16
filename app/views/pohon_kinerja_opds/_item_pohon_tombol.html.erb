@@ -65,20 +65,6 @@
                 <span>Terima</span>
               <% end %>
             </div>
-            <div class="col">
-              <%= link_to tolak_strategi_pohon_tematik_path(pohon),
-         remote: true,
-         class: 'btn btn-outline-danger',
-         data: {
-             controller: 'form-modal',
-             action: 'ajax:complete->form-modal#success:prevent',
-             bs_toggle: 'modal',
-             bs_target: '#form-modal'
-         } do %>
-                <i class="fa fa-times me-2"></i>
-                <span>Tolak</span>
-              <% end %>
-            </div>
           </div>
         </div>
       <% end %>
