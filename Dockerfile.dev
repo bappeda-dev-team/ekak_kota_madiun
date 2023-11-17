@@ -1,35 +1,36 @@
-ARG RUBY_VERSION
+ARG RUBY_VERSION=3.0.1
 
-FROM ruby:$RUBY_VERSION
+FROM registry.docker.com/library/ruby:$RUBY_VERSION as base
 
-ARG NODE_MAJOR
-ARG BUNDLE_VERSION
+
+ARG NODE_MAJOR=14
+ARG BUNDLE_VERSION=2.2.15
 # base install
-RUN curl -SL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash -
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=true apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
+WORKDIR /app
+
+FROM base as build
+
 # RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN curl -sS https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 # RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | tee  /etc/apt/sources.list.d/pgdg.list
+# RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | tee  /etc/apt/sources.list.d/pgdg.list
 
-RUN apt-get update
-RUN apt-get install build-essential nodejs postgresql-client-12 -y
+RUN apt-get update -yqq && \
+    apt-get install -yqq --no-install-recommends \
+    build-essential \
+    libpq-dev \
+    nodejs \
+    postgresql-client \
+    yarn
 
-RUN npm install --global yarn
 #ENV TZ=Asia/Jakarta
 
-RUN mkdir -p /app
-WORKDIR /app
-# copying gemfile and install gem
-COPY Gemfile Gemfile.lock ./
-RUN gem install bundler -v $BUNDLE_VERSION
-RUN bundle install -j $(nproc)
-#RUN if [[ "$RAILS_ENV" == "production" ]]; then bundle install -j $(nproc) --without development test; else bundle install -j $(nproc); fi
-#ADD . $APP_PATH
-RUN yarn install --check-files
+COPY Gemfile* .
 
-# ADD ./dev-docker-entrypoint.sh /usr/local/bin/dev-docker-entrypoint.sh
-# RUN chmod +x /usr/local/bin/dev-docker-entrypoint.sh
+RUN bundle install
 
-EXPOSE 3001
-# ENTRYPOINT ["sh","/usr/local/bin/dev-docker-entrypoint.sh"]
-CMD ["/bin/sh"]
+COPY . .
+
