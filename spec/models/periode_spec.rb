@@ -11,10 +11,19 @@
 require 'rails_helper'
 
 RSpec.describe Periode, type: :model do
-  it 'should find periode by either tahun_awal or tahun_akhir' do
-    periode = create(:periode, tahun_awal: '2025', tahun_akhir: '2026')
-    find_periode = Periode.find_tahun('2025')
+  let(:periode) { create(:periode, tahun_awal: '2025', tahun_akhir: '2026') }
 
-    expect(find_periode).to include periode
+  context 'find periode by either tahun_awal or tahun_akhir' do
+    before(:each) { periode }
+    it 'should find by tahun_awal' do
+      find_periode = Periode.find_tahun(2025)
+
+      expect(find_periode).to include periode
+    end
+    it 'should find by tahun_akhir' do
+      find_periode = Periode.find_tahun('2026')
+
+      expect(find_periode).to include periode
+    end
   end
 end
