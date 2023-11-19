@@ -12,11 +12,18 @@ RSpec.feature "TujuanOpds", type: :feature do
 
     page.driver.browser.set_cookie 'tahun=2025'
   end
-  context 'new tujuan opd' do
-    it 'form should have tahun awal and akhir by periode' do
+  context 'new tujuan opd form' do
+    before(:each) do
       visit '/tujuan_opds/new'
-      expect(page).to have_select('Tahun awal', options: ['', '2025'])
-      expect(page).to have_select('Tahun akhir', options: ['', '2026'])
+    end
+    it 'should have tahun awal and akhir by periode' do
+      expect(page).to have_field('Tahun awal', with: '2025')
+      expect(page).to have_field('Tahun akhir', with: '2026')
+    end
+
+    it 'should not have tahun outside periode' do
+      expect(page).to have_field('Indikator')
+      expect(page).to have_field('Target')
     end
   end
 end
