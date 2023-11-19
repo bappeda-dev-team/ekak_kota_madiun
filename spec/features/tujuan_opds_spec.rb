@@ -21,9 +21,12 @@ RSpec.feature "TujuanOpds", type: :feature do
       expect(page).to have_field('Tahun akhir', with: '2026')
     end
 
-    it 'should not have tahun outside periode' do
-      expect(page).to have_field('Indikator')
-      expect(page).to have_field('Target')
+    it 'should not have target tahun outside periode' do
+      expect(page).not_to have_field('tujuan_opd[indikators_attributes][0][targets_attributes][0][tahun]', with: '2020')
+    end
+    it 'should not have target tahun in periode' do
+      expect(page).to have_field('tujuan_opd[indikators_attributes][0][targets_attributes][0][tahun]', with: '2025')
+      expect(page).to have_field('tujuan_opd[indikators_attributes][0][targets_attributes][1][tahun]', with: '2026')
     end
   end
 end
