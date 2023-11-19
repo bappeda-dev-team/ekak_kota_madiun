@@ -11,5 +11,10 @@
 require 'rails_helper'
 
 RSpec.describe Periode, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'should find periode by either tahun_awal or tahun_akhir' do
+    periode = create(:periode, tahun_awal: '2025', tahun_akhir: '2026')
+    find_periode = Periode.find_tahun('2025')
+
+    expect(find_periode).to include periode
+  end
 end

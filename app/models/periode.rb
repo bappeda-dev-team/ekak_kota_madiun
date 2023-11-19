@@ -14,6 +14,8 @@ class Periode < ApplicationRecord
   validates_uniqueness_of :tahun_awal
   validates_uniqueness_of :tahun_akhir
 
+  scope :find_tahun, ->(tahun) { where(tahun_awal: tahun) }
+
   def to_s
     "#{tahun_awal}-#{tahun_akhir}"
   end
