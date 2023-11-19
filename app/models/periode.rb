@@ -17,6 +17,7 @@ class Periode < ApplicationRecord
   scope :find_tahun, lambda { |tahun|
                        where("tahun_awal::integer <= ?::integer", tahun)
                          .where("tahun_akhir::integer >= ?::integer", tahun)
+                         .first
                      }
 
   def to_s
