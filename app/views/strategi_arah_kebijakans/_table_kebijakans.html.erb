@@ -13,23 +13,23 @@
       <tr class="strategi">
         <% rowspan_atas = strategis.map { |str| @tactical_opds.select { |tact| tact.pohon_ref_id.to_i == str.id }.size + 1 }.flatten.sum + 1 %>
         <td class="align-middle" rowspan="<%= rowspan_atas %>"><%= nomor %></td>
-        <td class="align-middle border <%= tujuan.nil? ? 'bg-danger text-white' : '' %>" rowspan="<%= rowspan_atas %>"><%= tujuan || 'Tujuan belum dipilih' %></td>
+        <td class="text-wrap align-middle border <%= tujuan.nil? ? 'bg-danger text-white' : '' %>" rowspan="<%= rowspan_atas %>"><%= tujuan || 'Tujuan belum dipilih' %></td>
       </tr>
       <% strategis.each do |strategi| %>
         <% rowspan_bawah = @tactical_opds.select { |tact| tact.pohon_ref_id.to_i == strategi.id }.size + 1 %>
         <tr>
-          <td class="border-end px-0 py-0" rowspan="<%= rowspan_bawah %>">
+          <td class="text-wrap border-end px-0 py-0" rowspan="<%= rowspan_bawah %>">
             <div class="d-grid gap-0 w-100">
             <% strategi.sasarans.dengan_nip.each do |sasaran| %>
               <div class="p-3 w-100 border"><%= sasaran %></div>
             <% end %>
             </div>
           </td>
-          <td class="align-middle" rowspan="<%= rowspan_bawah %>"><%= strategi %></td>
+          <td class="text-wrap align-middle" rowspan="<%= rowspan_bawah %>"><%= strategi %></td>
         </tr>
         <% @tactical_opds.select { |tact| tact.pohon_ref_id.to_i == strategi.id }.each do |tactical| %>
           <tr class="arah-kebijakan">
-            <td class="border"><%= tactical %></td>
+            <td class="text-wrap border"><%= tactical %></td>
           </tr>
         <% end %>
       <% end %>
