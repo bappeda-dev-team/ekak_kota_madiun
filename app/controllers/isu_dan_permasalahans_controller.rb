@@ -8,7 +8,9 @@ class IsuDanPermasalahansController < ApplicationController
     @opd = Opd.find_by(kode_unik_opd: @kode_unik_opd)
     @nama_opd = @opd.nama_opd
     tahun_asli = @tahun.include?('perubahan') ? @tahun.gsub('_perubahan', '') : @tahun
-    @isu_strategis = @opd.isu_strategis_opds.where("tahun ILIKE ?", "%#{tahun_asli}%").order(:id)
+    @isu_strategis = @opd.isu_strategis_opds
+                         .where("tahun ILIKE ?", "%#{tahun_asli}%")
+                         .order(:id).group_by { |isu| "(#{isu.kode_bidang_urusan}) #{isu.bidang_urusan}" }
   end
 
   def add_new

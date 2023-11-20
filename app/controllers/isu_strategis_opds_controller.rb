@@ -13,11 +13,12 @@ class IsuStrategisOpdsController < ApplicationController
 
   # GET /isu_strategis_opds/new
   def new
+    tahun = cookies[:tahun]
     kode_bidang_urusan = params[:kode_bidang_urusan]
     bidang_urusan = params[:bidang_urusan]
     opd = params[:opd]
     @isu_strategis_opd = IsuStrategisOpd.new(bidang_urusan: bidang_urusan, kode_bidang_urusan: kode_bidang_urusan,
-                                             kode_opd: opd)
+                                             kode_opd: opd, tahun: tahun)
   end
 
   # GET /isu_strategis_opds/1/edit

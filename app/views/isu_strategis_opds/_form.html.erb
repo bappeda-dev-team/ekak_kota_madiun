@@ -34,23 +34,13 @@
   </div>
 
   <div class="field">
-    <%= form.label :isu_strategis, class: 'form-label' %>
-    <%= form.text_area :isu_strategis, class: 'form-control' %>
+    <%= form.label :tahun, class: 'form-label' %>
+    <%= form.text_field :tahun, required: true, class: 'form-control' %>
   </div>
 
   <div class="field">
-    <%= form.label :tahun, class: 'form-label' %>
-    <%= form.select :tahun, selected_tahun(form.object.tahun),
-     {include_blank: true},
-     { class: "form-control",
-       data: {
-         placeholder: "Pilih Tahun Isu Strategis",
-         controller: 'dropdown',
-         dropdown_jenis_value: 'ajax',
-         dropdown_url_value: kelompok_anggarans_path(:json),
-         dropdown_parent_value: '#form-modal'
-       }
-     } %>
+    <%= form.label :isu_strategis, class: 'form-label' %>
+    <%= form.text_area :isu_strategis, class: 'form-control' %>
   </div>
 
   <div class="actions">
