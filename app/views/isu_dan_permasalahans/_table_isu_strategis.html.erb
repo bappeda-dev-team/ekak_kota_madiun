@@ -14,11 +14,11 @@
       <% rowspan_bidang = isu_strategises.map { |isu| isu.permasalahan_opds.size }.flatten.sum + isu_strategises.size + 1  %>
       <tr>
         <td class="border-start border-end border-bottom align-middle" rowspan="<%= rowspan_bidang %>"><%= no %></td>
-        <td class="border-end border-bottom align-middle" rowspan="<%= rowspan_bidang %>"><%= bidang_urusan %></td>
+        <td class="text-wrap border-start border-end border-bottom align-middle" rowspan="<%= rowspan_bidang %>"><%= bidang_urusan %></td>
       </tr>
       <% isu_strategises.each do |isu_strategis| %>
         <tr>
-          <td class="border-end border-bottom align-middle" rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>"><%= isu_strategis %></td>
+          <td class="text-wrap border-end border-bottom align-middle" rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>"><%= isu_strategis %></td>
           <td colspan="2" class="p-0 m-0 border-0"></td>
           <td class="border-start border-end border-bottom align-middle" rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>">
             <div class="d-grid gap-3">
@@ -50,8 +50,8 @@
         </tr>
         <% isu_strategis.permasalahan_opds.each do |permasalahan| %>
           <tr>
-            <td class="border-bottom align-middle"><%= permasalahan %></td>
-            <td class="border-bottom align-middle"><%= permasalahan %></td>
+            <td class="text-wrap border-start border-end border-top border-bottom align-middle"><%= permasalahan %></td>
+            <td class="text-wrap border-start border-end border-top border-bottom align-middle"><%= permasalahan %></td>
           </tr>
         <% end %>
       <% end %>
