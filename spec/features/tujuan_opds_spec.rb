@@ -10,7 +10,32 @@ RSpec.feature "TujuanOpds", type: :feature do
     # setup cookies
     visit root_path
 
+    page.driver.browser.set_cookie 'opd=test_opd'
     page.driver.browser.set_cookie 'tahun=2025'
+  end
+
+  context 'index' do
+    it 'should show tujuan opd in between periode' do
+      tujuan_opd = create(:tujuan, type: 'TujuanOpd', tahun_awal: '2025', tahun_akhir: '2026',
+                                   tujuan: 'test tujuan', id_tujuan: 'kode_1',
+                                   kode_unik_opd: user.opd.kode_unik_opd)
+      indikator_tujuan = create(:indikator, jenis: 'Tujuan', sub_jenis: 'Opd', kode: 'kode_1')
+
+      create(:target, indikator_id: indikator_tujuan.id, target: 10, satuan: '%', tahun: '2025')
+      create(:target, indikator_id: indikator_tujuan.id, target: 20, satuan: '%', tahun: '2026')
+
+      visit '/tujuan_opds'
+
+      expect(page).to have_text(user.opd.nama_opd)
+      expect(page).to have_text(tujuan_opd.tujuan)
+      expect(page).to have_text(tujuan_opd.tahun_awal)
+      expect(page).to have_text(tujuan_opd.tahun_akhir)
+      expect(page).to have_text(indikator_tujuan.indikator)
+      expect(page).to have_text(indikator_tujuan.targets.first.target)
+      expect(page).to have_text(indikator_tujuan.targets.first.target)
+      expect(page).to have_text(indikator_tujuan.targets.last.satuan)
+      expect(page).to have_text(indikator_tujuan.targets.last.satuan)
+    end
   end
   context 'new tujuan opd form' do
     before(:each) do

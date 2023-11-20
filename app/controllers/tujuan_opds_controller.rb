@@ -4,9 +4,34 @@ class TujuanOpdsController < ApplicationController
 
   # GET /tujuan_opds or /tujuan_opds.json
   def index
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+
+    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @periode = Periode.find_tahun(tahun_bener)
+    @tahun_awal = @periode.tahun_awal.to_i
+    @tahun_akhir = @periode.tahun_akhir.to_i
+
     @opd = current_user.opd
     @nama_opd = @opd.nama_opd
     @tujuan_opds = @opd.tujuan_opds.includes(%i[indikators urusan])
+                       .by_periode(tahun_bener)
+  end
+
+  def admin_filter
+    @tahun = cookies[:tahun]
+    @kode_opd = params[:kode_opd]
+
+    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @periode = Periode.find_tahun(tahun_bener)
+    @tahun_awal = @periode.tahun_awal.to_i
+    @tahun_akhir = @periode.tahun_akhir.to_i
+
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    @tujuan_opds = @opd.tujuan_opds
+                       .by_periode(tahun_bener)
+    render partial: 'tujuan_opds/tujuan_opd'
   end
 
   # GET /tujuan_opds/1 or /tujuan_opds/1.json
@@ -87,14 +112,6 @@ class TujuanOpdsController < ApplicationController
       format.html { redirect_to tujuan_opds_url, notice: "Tujuan opd dihapus" }
       format.json { head :no_content }
     end
-  end
-
-  def admin_filter
-    @kode_opd = params[:kode_opd]
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @nama_opd = @opd.nama_opd
-    @tujuan_opds = @opd.tujuan_opds
-    render partial: 'tujuan_opds/tujuan_opd'
   end
 
   private

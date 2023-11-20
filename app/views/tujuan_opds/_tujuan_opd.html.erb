@@ -31,7 +31,7 @@
             <th class="border" scope="col" rowspan="2">Indikator</th>
             <th class="border" scope="col" rowspan="2">Rumus Perhitungan</th>
             <th class="border" scope="col" rowspan="2">Sumber Data</th>
-            <% (2020..2024).each do |tahun| %>
+            <% (@tahun_awal..@tahun_akhir).each do |tahun| %>
               <th class="border text-center" scope="col" colspan="2"><%= tahun %></th>
             <% end %>
           </tr>
@@ -91,7 +91,7 @@
                 <td class="text-gray-900 text-wrap border"  ><%= indikator_tujuan || '-' %></td>
                 <td class="text-gray-900 text-wrap border"  ><%= indikator_tujuan.rumus_perhitungan || '-' %></td>
                 <td class="text-gray-900 text-wrap border"  ><%= indikator_tujuan.sumber_data || '-' %></td>
-                <% (2020..2024).each do |tahun| %>
+                <% (@tahun_awal..@tahun_akhir).each do |tahun| %>
                   <% target = indikator_tujuan.targets.find_by(tahun: tahun) %>
                   <td class="text-gray-900 text-wrap border"><%= target %></td>
                   <td class="text-gray-900 text-wrap border"><%= target&.satuan %></td>

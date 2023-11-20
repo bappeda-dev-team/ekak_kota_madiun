@@ -26,6 +26,11 @@ class TujuanOpd < Tujuan
   belongs_to :urusan, class_name: 'Master::Urusan', foreign_key: 'urusan_id'
   belongs_to :bidang_urusan, class_name: 'Master::BidangUrusan', foreign_key: 'bidang_urusan_id'
 
+  scope :by_periode, lambda { |tahun|
+                       where("tahun_awal::integer <= ?::integer", tahun)
+                         .where("tahun_akhir::integer >= ?::integer", tahun)
+                     }
+
   def to_s
     tujuan
   end
