@@ -5,12 +5,12 @@ class StrategiArahKebijakansController < ApplicationController
   def opd
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
-    strategi_arah_kebijakan = StrategiArahKebijakan.new(tahun: @tahun, kode_opd: @kode_opd)
+    strategi_arah_kebijakan = StrategiArahKebijakan.new(tahun_strategi: @tahun, kode_opd: @kode_opd)
     @opd = strategi_arah_kebijakan.opd
-    @isu_strategis_opds = strategi_arah_kebijakan.isu_strategis_opds
     @tujuan_opds = strategi_arah_kebijakan.tujuan_opds
     @strategi_opds = strategi_arah_kebijakan.tujuan_strategi_opds
     @tactical_opds = strategi_arah_kebijakan.tactical_opds
+    @isu_strategis_opds = strategi_arah_kebijakan.isu_strategis_opds
   end
 
   def edit
@@ -30,8 +30,8 @@ class StrategiArahKebijakansController < ApplicationController
     @tactical_opds = @strategi_arah_kebijakan.tactical_opds
     if strategis.any?
       render json: { resText: "",
-                     html_content: html_content({ },
-                     partial: 'strategi_arah_kebijakans/table_kebijakans') }.to_json,
+                     html_content: html_content({},
+                                                partial: 'strategi_arah_kebijakans/table_kebijakans') }.to_json,
              status: :ok
     else
       render json: { resText: "Tidak ada perubahan" }.to_json,
