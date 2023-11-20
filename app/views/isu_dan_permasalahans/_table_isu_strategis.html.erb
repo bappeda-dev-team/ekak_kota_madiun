@@ -32,7 +32,7 @@
                },
                class: 'btn btn-sm btn-outline-info ms-3' do %>
                 <i class="fas fa-edit"></i>
-                <span>Edit Isu Strategis</span>
+                <span>Edit</span>
               <% end %>
               <%= link_to isu_strategis_opd_path(isu_strategis),
                method: :delete,
@@ -42,23 +42,8 @@
                  action: 'ajax:complete->form-ajax#afterSubmitRefresh'
                },
                class: 'btn btn-sm btn-outline-danger ms-3' do %>
-                <i class="fas fa-edit"></i>
-                <span>Hapus Isu Strategis</span>
-              <% end %>
-              <hr/>
-              <%= link_to new_permasalahan_opd_path(kode_opd: @kode_unik_opd,
-                                                    tahun: @tahun,
-                                                    isu_strategis_opd_id: isu_strategis),
-               remote: true,
-               data: {
-                 controller: 'form-modal',
-                 action: 'ajax:complete->form-modal#success:prevent',
-                 bs_toggle: 'modal',
-                 bs_target: '#form-modal'
-               },
-               class: 'btn btn-sm btn-outline-primary ms-3' do %>
-                <i class="fas fa-edit"></i>
-                <span>Input Permasalahan</span>
+                <i class="fas fa-trash"></i>
+                <span>Hapus</span>
               <% end %>
             </div>
           </td>
