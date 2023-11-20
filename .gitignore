@@ -50,3 +50,4 @@ dump.rdb
 /.DS_Store
 *.DS_Store
 .env.development.local
+*.dev_prod

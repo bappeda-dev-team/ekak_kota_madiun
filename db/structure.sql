@@ -2022,7 +2022,8 @@ CREATE TABLE public.permasalahan_opds (
     status character varying,
     isu_strategis_opd_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    faktor_penghambat_skp character varying
 );
 
 
@@ -5884,6 +5885,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231115225443'),
 ('20231115233850'),
 ('20231115234747'),
-('20231115235900');
+('20231115235900'),
+('20231120053031');
 
 

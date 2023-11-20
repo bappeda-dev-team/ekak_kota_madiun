@@ -1,70 +1,28 @@
 <table class="table table-flush">
   <thead>
-    <tr>
+    <tr class="border-start border-end border-top">
       <th class="border-bottom text-gray-700">No</th>
       <th class="border-bottom text-gray-700">Bidang Urusan</th>
       <th class="border-bottom text-gray-700">Isu Strategis</th>
-      <th class="border-bottom text-gray-700 text-center">Action</th>
       <th class="border-bottom text-gray-700">Permasalahan</th>
-      <th class="border-bottom text-gray-700 text-center">Action</th>
       <th class="border-bottom text-gray-700">Faktor Penghambat SKP</th>
+      <th class="border-bottom text-gray-700 text-center">Action</th>
     </tr>
   </thead>
   <tbody>
-    <% @isu_strategis.each.with_index(1) do |isu_strategis, no| %>
+    <% @isu_strategis.each.with_index(1) do |(bidang_urusan, isu_strategises), no| %>
+      <% rowspan_bidang = isu_strategises.map { |isu| isu.permasalahan_opds.size }.flatten.sum + isu_strategises.size + 1  %>
       <tr>
-        <td class="align-middle" rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>"><%= no %></td>
-        <td class="align-middle" rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>"><%= "(#{isu_strategis.kode_bidang_urusan}) #{isu_strategis.bidang_urusan}" %></td>
-        <td class="align-middle" rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>"><%= isu_strategis %></td>
-        <td rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>">
-          <div class="d-grid gap-3">
-            <%= link_to edit_isu_strategis_opd_path(isu_strategis),
-             remote: true,
-             data: {
-               controller: 'form-modal',
-               action: 'ajax:complete->form-modal#success:prevent',
-               bs_toggle: 'modal',
-               bs_target: '#form-modal'
-             },
-             class: 'btn btn-sm btn-outline-info ms-3' do %>
-              <i class="fas fa-edit"></i>
-              <span>Edit Isu Strategis</span>
-            <% end %>
-            <%= link_to isu_strategis_opd_path(isu_strategis),
-             method: :delete,
-             data: {
-               confirm_swal: 'hapus isu strategis?',
-               controller: 'form-ajax',
-               action: 'ajax:complete->form-ajax#afterSubmitRefresh'
-             },
-             class: 'btn btn-sm btn-outline-danger ms-3' do %>
-              <i class="fas fa-edit"></i>
-              <span>Hapus Isu Strategis</span>
-            <% end %>
-            <hr/>
-            <%= link_to new_permasalahan_opd_path(kode_opd: @kode_unik_opd,
-                                                  tahun: @tahun,
-                                                  isu_strategis_opd_id: isu_strategis),
-             remote: true,
-             data: {
-               controller: 'form-modal',
-               action: 'ajax:complete->form-modal#success:prevent',
-               bs_toggle: 'modal',
-               bs_target: '#form-modal'
-             },
-             class: 'btn btn-sm btn-outline-primary ms-3' do %>
-              <i class="fas fa-edit"></i>
-              <span>Input Permasalahan</span>
-            <% end %>
-          </div>
-        </td>
+        <td class="border-start border-end border-bottom align-middle" rowspan="<%= rowspan_bidang %>"><%= no %></td>
+        <td class="text-wrap border-start border-end border-bottom align-middle" rowspan="<%= rowspan_bidang %>"><%= bidang_urusan %></td>
       </tr>
-      <% isu_strategis.permasalahan_opds.each do |permasalahan| %>
+      <% isu_strategises.each do |isu_strategis| %>
         <tr>
-          <td><%= permasalahan %></td>
-          <td>
+          <td class="text-wrap border-end border-bottom align-middle" rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>"><%= isu_strategis %></td>
+          <td colspan="2" class="p-0 m-0 border-0"></td>
+          <td class="border-start border-end border-bottom align-middle" rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>">
             <div class="d-grid gap-3">
-              <%= link_to edit_permasalahan_opd_path(permasalahan),
+              <%= link_to edit_isu_strategis_opd_path(isu_strategis),
                remote: true,
                data: {
                  controller: 'form-modal',
@@ -74,22 +32,28 @@
                },
                class: 'btn btn-sm btn-outline-info ms-3' do %>
                 <i class="fas fa-edit"></i>
-                <span>Edit Permasalahan</span>
+                <span>Edit</span>
               <% end %>
-              <%= link_to permasalahan,
+              <%= link_to isu_strategis_opd_path(isu_strategis),
                method: :delete,
                data: {
-                 confirm_swal: 'hapus permasalahan?',
+                 confirm_swal: 'hapus isu strategis?',
                  controller: 'form-ajax',
                  action: 'ajax:complete->form-ajax#afterSubmitRefresh'
                },
                class: 'btn btn-sm btn-outline-danger ms-3' do %>
-                <i class="fas fa-edit"></i>
-                <span>Hapus Permasalahan</span>
+                <i class="fas fa-trash"></i>
+                <span>Hapus</span>
               <% end %>
             </div>
           </td>
         </tr>
+        <% isu_strategis.permasalahan_opds.each do |permasalahan| %>
+          <tr>
+            <td class="text-wrap border-start border-end border-top border-bottom align-middle"><%= permasalahan %></td>
+            <td class="text-wrap border-start border-end border-top border-bottom align-middle"><%= permasalahan.faktor_penghambat_skp %></td>
+          </tr>
+        <% end %>
       <% end %>
     <% end %>
   </tbody>

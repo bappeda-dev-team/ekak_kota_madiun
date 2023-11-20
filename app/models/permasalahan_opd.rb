@@ -3,6 +3,7 @@
 # Table name: permasalahan_opds
 #
 #  id                         :bigint           not null, primary key
+#  faktor_penghambat_skp      :string
 #  jenis                      :string
 #  kode_opd                   :string
 #  kode_permasalahan_external :string
@@ -19,7 +20,7 @@
 #
 class PermasalahanOpd < ApplicationRecord
   belongs_to :isu_strategis_opd
-  belongs_to :opd, foreign_key: :kode_opd, primary_key: :kode_unik_opd
+  belongs_to :opd, foreign_key: :kode_opd, primary_key: :kode_unik_opd, optional: true
 
   def to_s
     permasalahan
