@@ -377,6 +377,21 @@ class Opd < ApplicationRecord
     bidang_urusan_unique.to_a
   end
 
+  def id_urusans
+    kode_urusan = kode_urusans.map do |kode|
+      kode.first
+    end
+    master_urusan = Master::Urusan.where(kode_urusan: kode_urusan).uniq(&:kode_urusan)
+    urusan_unique = Set.new(master_urusan)
+    urusan_unique.to_a
+  end
+
+  def id_bidang_urusans
+    master_bidang_urusan = Master::BidangUrusan.where(kode_bidang_urusan: kode_urusans).uniq(&:kode_bidang_urusan)
+    bidang_urusan_unique = Set.new(master_bidang_urusan)
+    bidang_urusan_unique.to_a
+  end
+
   def sasaran_subkegiatans(tahun)
     user_opd = users.aktif.eselon4
     user_opd.map { |user| user.sasarans_tahun(tahun).map(&:program_kegiatan) }.flatten.compact_blank

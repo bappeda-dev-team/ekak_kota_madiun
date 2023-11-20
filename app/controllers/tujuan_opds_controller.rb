@@ -48,10 +48,13 @@ class TujuanOpdsController < ApplicationController
     @periode = Periode.find_tahun(tahun_bener)
     @tahun_awal = @periode.tahun_awal.to_i
     @tahun_akhir = @periode.tahun_akhir.to_i
-    @urusans = Master::Urusan.where(tahun: tahun_bener).collect { |urusan| [urusan.kode_nama_urusan, urusan.id] }
-    @bidang_urusans = Master::BidangUrusan.where(tahun: tahun_bener).collect do |bid_urusan|
-      [bid_urusan.kode_nama_bidang, bid_urusan.id]
-    end
+    # @urusans = Master::Urusan.where(tahun: tahun_bener).collect { |urusan| [urusan.kode_nama_urusan, urusan.id] }
+    # @bidang_urusans = Master::BidangUrusan.where(tahun: tahun_bener).collect do |bid_urusan|
+    #   [bid_urusan.kode_nama_bidang, bid_urusan.id]
+    # end
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @urusans = @opd.id_urusans.collect { |urusan| [urusan.kode_nama_urusan, urusan.id] }
+    @bidang_urusans = @opd.id_bidang_urusans.collect { |bid_urusan| [bid_urusan.kode_nama_bidang, bid_urusan.id] }
     @tujuan_opd = TujuanOpd.new(kode_unik_opd: @kode_opd,
                                 tahun_awal: @tahun_awal,
                                 tahun_akhir: @tahun_akhir)
