@@ -15,8 +15,8 @@
       <tr>
         <td class="align-middle" rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>"><%= no %></td>
         <td class="align-middle" rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>"><%= "(#{isu_strategis.kode_bidang_urusan}) #{isu_strategis.bidang_urusan}" %></td>
-        <td class="align-middle" rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>"><%= isu_strategis %></td>
-        <td rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>">
+        <td class="align-middle" colspan="2"><%= isu_strategis %></td>
+        <td>
           <div class="d-grid gap-3">
             <%= link_to edit_isu_strategis_opd_path(isu_strategis),
              remote: true,
