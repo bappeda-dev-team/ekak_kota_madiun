@@ -39,13 +39,11 @@
   </div>
   <div class="field">
     <%= form.label :tahun_awal, class: 'form-label' %>
-    <%= form.select :tahun_awal,[2020, 2021, 2022, 2023, 2024],{},
-          { required: true, class: 'form-control', data: { controller: 'dropdown', dropdown_parent_value: '#form-modal', placeholder: 'Pilih Tahun' } }%>
+    <%= form.text_field :tahun_awal, required: true, class: 'form-control' %>
   </div>
   <div class="field">
     <%= form.label :tahun_akhir, class: 'form-label' %>
-    <%= form.select :tahun_akhir,[2020, 2021, 2022, 2023, 2024],{},
-          { required: true, class: 'form-control', data: { controller: 'dropdown', dropdown_parent_value: '#form-modal', placeholder: 'Pilih Tahun' } }%>
+    <%= form.text_field :tahun_akhir, required: true, class: 'form-control' %>
   </div>
   <hr>
   <div class="field mt-0" id="indikator-tujuans-opd">
