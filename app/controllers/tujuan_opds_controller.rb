@@ -41,6 +41,9 @@ class TujuanOpdsController < ApplicationController
                .pluck(:nama_opd,
                       :kode_unik_opd)
     tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @periode = Periode.find_tahun(tahun_bener)
+    @tahun_awal = @periode.tahun_awal.to_i
+    @tahun_akhir = @periode.tahun_akhir.to_i
     @urusans = Master::Urusan.where(tahun: tahun_bener).collect { |urusan| [urusan.kode_nama_urusan, urusan.id] }
     @bidang_urusans = Master::BidangUrusan.where(tahun: tahun_bener).collect do |bid_urusan|
       [bid_urusan.kode_nama_bidang, bid_urusan.id]
