@@ -3,6 +3,7 @@
 # Table name: permasalahan_opds
 #
 #  id                         :bigint           not null, primary key
+#  faktor_penghambat_skp      :string
 #  jenis                      :string
 #  kode_opd                   :string
 #  kode_permasalahan_external :string

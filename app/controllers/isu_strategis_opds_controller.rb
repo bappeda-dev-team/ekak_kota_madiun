@@ -80,7 +80,7 @@ class IsuStrategisOpdsController < ApplicationController
   end
 
   def permasalahan_opds_attributes
-    { permasalahan_opds_attributes: %i[id kode_opd permasalahan _destroy] }
+    { permasalahan_opds_attributes: %i[id kode_opd permasalahan faktor_penghambat_skp _destroy] }
   end
 
   def opd_pemilik
