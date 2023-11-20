@@ -20,6 +20,8 @@ class IsuStrategisOpd < ApplicationRecord
   has_many :komentars, -> { where(jenis: 'IsuOpd') }, primary_key: :id, foreign_key: :item
   has_many :permasalahan_opds
 
+  accepts_nested_attributes_for :permasalahan_opds, reject_if: :all_blank, allow_destroy: true
+
   def to_s
     isu_strategis
   end

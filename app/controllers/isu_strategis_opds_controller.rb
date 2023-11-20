@@ -17,8 +17,10 @@ class IsuStrategisOpdsController < ApplicationController
     kode_bidang_urusan = params[:kode_bidang_urusan]
     bidang_urusan = params[:bidang_urusan]
     opd = params[:opd]
-    @isu_strategis_opd = IsuStrategisOpd.new(bidang_urusan: bidang_urusan, kode_bidang_urusan: kode_bidang_urusan,
+    @isu_strategis_opd = IsuStrategisOpd.new(bidang_urusan: bidang_urusan,
+                                             kode_bidang_urusan: kode_bidang_urusan,
                                              kode_opd: opd, tahun: tahun)
+    @isu_strategis_opd.permasalahan_opds.build
   end
 
   # GET /isu_strategis_opds/1/edit
@@ -27,7 +29,6 @@ class IsuStrategisOpdsController < ApplicationController
   # POST /isu_strategis_opds or /isu_strategis_opds.json
   def create
     @isu_strategis_opd = IsuStrategisOpd.new(isu_strategis_opd_params)
-
     if @isu_strategis_opd.save
       render json: { resText: "Sukses" }.to_json,
              status: :created
@@ -75,7 +76,11 @@ class IsuStrategisOpdsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def isu_strategis_opd_params
     params.require(:isu_strategis_opd).permit(:kode, :bidang_urusan, :kode_bidang_urusan, :isu_strategis, :tahun,
-                                              :kode_opd, :tujuan)
+                                              :kode_opd, :tujuan, permasalahan_opds_attributes)
+  end
+
+  def permasalahan_opds_attributes
+    { permasalahan_opds_attributes: %i[id kode_opd permasalahan _destroy] }
   end
 
   def opd_pemilik
