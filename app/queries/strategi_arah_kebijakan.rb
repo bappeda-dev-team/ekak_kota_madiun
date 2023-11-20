@@ -4,14 +4,14 @@ class StrategiArahKebijakan
   attr_accessor :kode_opd
   attr_reader :opd
 
-  def initialize(kode_opd:, tahun_strategi: '')
-    @tahun_strategi = tahun_strategi
+  def initialize(kode_opd:, tahun: '')
+    @tahun = tahun
     @kode_opd = kode_opd
     @opd = Opd.find_by(kode_unik_opd: kode_opd)
   end
 
   def tahun_tanpa_perubahan
-    tahun = @tahun_strategi
+    tahun = @tahun
     tahun.gsub('_perubahan', '') if tahun.include?('_perubahan')
   rescue NoMethodError
     ''
@@ -25,8 +25,8 @@ class StrategiArahKebijakan
   end
 
   def isu_strategis_opds
-    tahun_x = tahun_murni(@tahun_strategi)
-    @opd.isu_strategis_opds.where(tahun: [@tahun_strategi, tahun_x])
+    tahun_x = tahun_murni(@tahun)
+    @opd.isu_strategis_opds.where(tahun: [@tahun, tahun_x])
   end
 
   def tujuan_opds
@@ -34,7 +34,7 @@ class StrategiArahKebijakan
   end
 
   def pokin_opd
-    PohonKinerjaOpdQueries.new(tahun: @tahun_strategi, kode_opd: @kode_opd)
+    PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
   end
 
   def strategi_opds
