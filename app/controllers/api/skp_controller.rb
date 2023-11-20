@@ -91,5 +91,11 @@ module Api
       @user = User.find_by(nik: @nip)
       @sasarans = @user.sasaran_pohon_kinerja(tahun: @tahun)
     end
+
+    def faktor_penghambat_skp
+      id_rencana = params[:id_rencana]
+      skp_client = Api::SkpClient.new(id_rencana, '')
+      @penghambats = skp_client.get_faktor_penghambat.uniq
+    end
   end
 end

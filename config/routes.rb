@@ -591,6 +591,7 @@ Rails.application.routes.draw do
       post :sasaran_pohon_kinerja_pegawai
       post :tujuan_opd
       post :sasaran_opd
+      post :faktor_penghambat_skp
     end
     namespace :skp_client do
       post :sync_jabatan

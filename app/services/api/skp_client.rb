@@ -38,6 +38,23 @@ module Api
       update_jabatan_eselon(noneselon)
     end
 
+    def get_faktor_penghambat
+      request = HTTP.basic_auth(user: 'skp',
+                                pass: 'rahasiaptt4t1').post("#{URL}/skp-realisasi/ASN/#{@kode_opd}")
+      response = JSON.parse(request.body)
+
+      return { faktor_penghambat: '' } unless response['status']
+
+      data = response['data']
+      data['list_indikator'].map do |ind|
+        ind['detail_realisasi_skp_bulanan'].map do |detail|
+          {
+            faktor_penghambat: detail['faktor_penghambat']
+          }
+        end
+      end.flatten
+    end
+
     private
 
     def update_jabatan_eselon(response) # rubocop:disable Metrics
