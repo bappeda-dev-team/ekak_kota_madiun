@@ -16,6 +16,13 @@ class PohonKinerjaOpdsController < ApplicationController
     @tactical_opd = queries.tactical_opd
     @operational_opd = queries.operational_opd
     @staff_opd = queries.staff_opd
+
+    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @periode = Periode.find_tahun(tahun_bener)
+    @tahun_awal = @periode.tahun_awal.to_i
+    @tahun_akhir = @periode.tahun_akhir.to_i
+    @tujuan_opds = @opd.tujuan_opds.includes(%i[indikators urusan])
+                       .by_periode(tahun_bener)
   end
 
   def cascading
@@ -37,6 +44,13 @@ class PohonKinerjaOpdsController < ApplicationController
       operational_opd: @operational_opd.size,
       staff_opd: @staff_opd.size
     }
+
+    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @periode = Periode.find_tahun(tahun_bener)
+    @tahun_awal = @periode.tahun_awal.to_i
+    @tahun_akhir = @periode.tahun_akhir.to_i
+    @tujuan_opds = @opd.tujuan_opds.includes(%i[indikators urusan])
+                       .by_periode(tahun_bener)
   end
 
   def show; end
