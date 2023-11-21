@@ -65,6 +65,7 @@ class TujuanOpdsController < ApplicationController
   # GET /tujuan_opds/1/edit
   def edit
     @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
     @opds = Opd.where.not(kode_opd: nil)
                .pluck(:nama_opd,
                       :kode_unik_opd)
