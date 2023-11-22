@@ -4,9 +4,9 @@ RSpec.feature "PindahPohonKinerjas", type: :feature do
   let(:user) { create(:super_admin) }
   let(:periode) { create(:periode, tahun_awal: '2025', tahun_akhir: '2026') }
 
-  def strategi(role: '', strategi: 'test-1', opd_id: user.opd.id, strategi_ref_id: '')
+  def strategi(role: '', strategi: 'test-1', opd_id: user.opd.id, strategi_ref_id: '', type: 'StrategiPohon')
     create(:strategi,
-           type: 'StrategiPohon',
+           type: type,
            strategi: strategi,
            opd_id: opd_id,
            tahun: '2025',
@@ -78,7 +78,7 @@ RSpec.feature "PindahPohonKinerjas", type: :feature do
       create_cookie('tahun', '2025')
     end
 
-    it 'success pindah pohon and refresh page', headless: true do
+    it 'pindah di pohon opd', headless: true do
       opd_id = user.opd.id
       strategic = strategi(opd_id: opd_id, role: 'eselon_2', strategi: 'strategic-1')
 
@@ -116,6 +116,51 @@ RSpec.feature "PindahPohonKinerjas", type: :feature do
       click_on "OK"
 
       within("#strategi_pohon_#{strategic_2.id}") do
+        click_on "Tampilkan"
+      end
+
+      expect(page).to have_text('tactical-1')
+    end
+    it 'pindah ke pohon kota' do
+      opd_id = user.opd.id
+
+      # strategic - tactical to strategic_kota - tactical
+      strategic = strategi(opd_id: opd_id, role: 'eselon_2', strategi: 'strategic-1')
+
+      strategic_kota = strategi(opd_id: opd_id, role: 'strategi_pohon_kota', strategi: 'strategic-kota-1', type: '')
+      pohon_kota = create(:pohon,
+                          pohonable_type: 'Strategi',
+                          pohonable_id: strategic_kota.id,
+                          role: 'strategi_pohon_kota',
+                          opd_id: opd_id,
+                          tahun: '2025')
+
+      tactical = strategi(opd_id: opd_id, role: 'eselon_3', strategi_ref_id: strategic.id, strategi: 'tactical-1')
+
+      visit cascading_pohon_kinerja_opds_path
+
+      expect(page).to have_text('strategic-1')
+      expect(page).to have_text('strategic-kota-1')
+
+      within("#strategi_pohon_#{strategic.id}") do
+        click_on "Tampilkan"
+      end
+
+      expect(page).to have_text('tactical-1')
+
+      within("#strategi_pohon_#{tactical.id}") do
+        click_on "Pindah"
+      end
+
+      expect(page).to have_text('Form')
+
+      select2 'strategic-kota-1', from: 'Target pohon'
+      click_on "Simpan Perubahan"
+
+      # sweetalert popup
+      click_on "OK"
+
+      within("#pohon_#{pohon_kota.id}") do
         click_on "Tampilkan"
       end
 
