@@ -1,8 +1,5 @@
-<% presenter = PohonKinerjaPresenter.new(pohon) %>
 <li>
-  <div class="tf-nc pokin <%= presenter.warna_pohon %>" id="<%= dom_id(pohon) %>">
-    <%= render partial: 'pohon_kinerja_opds/item_cascading', locals: { pohon: pohon } %>
-  </div>
+  <%= render partial: 'pohon_kinerja_opds/item_cascading', locals: { pohon: pohon } %>
   <%# self-render childs in helper %>
   <ul class='d-none childs'>
     <%= render partial: 'pohon_kinerja_opds/pohon_cascading', collection: childs(pohon), as: :pohon %>
