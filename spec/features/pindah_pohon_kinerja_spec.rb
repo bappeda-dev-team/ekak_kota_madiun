@@ -66,4 +66,63 @@ RSpec.feature "PindahPohonKinerjas", type: :feature do
       expect(page).to have_text('operational-2')
     end
   end
+
+  context 'with view', js: true do
+    before(:each) do
+      login_as user
+      periode
+      # setup cookies
+      visit root_path
+
+      create_cookie('opd', 'test_opd')
+      create_cookie('tahun', '2025')
+    end
+
+    it 'success pindah pohon and refresh page' do
+      opd_id = user.opd.id
+      strategic = strategi(opd_id: opd_id, role: 'eselon_2', strategi: 'strategic-1')
+
+      strategic_2 = strategi(opd_id: opd_id, role: 'eselon_2', strategi: 'strategic-2')
+
+      tactical = strategi(opd_id: opd_id, role: 'eselon_3', strategi_ref_id: strategic.id, strategi: 'tactical-1')
+
+      tactical_2 = strategi(opd_id: opd_id, role: 'eselon_3', strategi_ref_id: '', strategi: 'tactical-2')
+
+      operational = strategi(opd_id: opd_id, role: 'eselon_4', strategi_ref_id: tactical_2.id, strategi: 'operational-2')
+
+      visit cascading_pohon_kinerja_opds_path
+      # visit '/pohon_Kinerja_opds/cascading'
+
+      expect(page).to have_text('strategic-1')
+      expect(page).to have_text('strategic-2')
+      expect(page).not_to have_text('tactical-2')
+      expect(page).not_to have_text('operational-2')
+
+      within("#strategi_pohon_#{strategic.id}") do
+        click_on "Tampilkan"
+      end
+
+      expect(page).to have_text('tactical-1')
+
+      within("#strategi_pohon_#{tactical.id}") do
+        click_on "Pindah Pohon"
+      end
+
+      sleep 2
+
+      expect(page).to have_text('Form')
+
+      within("#form-modal-body") do
+        expect(page).to have_select2_option 'strategic-1'
+        select2 'strategic-2', css: '#strategi_pohon_strategi_ref_id'
+        click_on "Simpan Perubahan"
+      end
+
+      within("#strategi_pohon_#{strategic_2.id}") do
+        click_on "Tampilkan"
+      end
+
+      expect(page).to have_text('tactical-1')
+    end
+  end
 end

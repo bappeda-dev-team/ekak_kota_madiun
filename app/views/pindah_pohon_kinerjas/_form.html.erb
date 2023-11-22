@@ -1,0 +1,31 @@
+<%= form_with(model: pindah_pohon_kinerja, url: pindah_pohon_kinerja_path, method: :put) do |form| %>
+  <% if pindah_pohon_kinerja.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(pindah_pohon_kinerja.errors.count, "error") %> prohibited this pindah_pohon_kinerja from being saved:</h2>
+
+      <ul>
+        <% pindah_pohon_kinerja.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :target_pohon, { class: "form-label" } %>
+    <%= form.collection_select :strategi_ref_id, @list_atasan, :id, :strategi, {include_blank: true, required: true},
+     { data: { placeholder: "Pilih Pohon",
+       controller: 'dropdown',
+       dropdown_parent_value: '#form-modal-body'
+     } } %>
+  </div>
+
+  <div class="field">
+    <%= form.label :pohon_kinerja, { class: "form-label" } %>
+    <%= form.text_field :strategi, { class: "form-control", readonly: true } %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Simpan Perubahan"%>
+  </div>
+<% end %>
