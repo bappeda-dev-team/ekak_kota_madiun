@@ -2,9 +2,13 @@ class PohonKinerjaPresenter
   attr_accessor :pohon
 
   delegate :id, :to_param, :metadata,
-           to: :pohon
+           to: :pohon_id
   def initialize(pohon)
     @pohon = pohon
+  end
+
+  def pohon_id
+    @pohon.instance_of?(Pohon) ? @pohon.pohonable : @pohon
   end
 
   def real
@@ -115,6 +119,19 @@ class PohonKinerjaPresenter
       'eselon_2'
     when 'eselon_4'
       'eselon_3'
+    when 'staff'
+      'eselon_4'
+    else
+      ''
+    end
+  end
+
+  def role_pohon_atas
+    case role
+    when 'eselon_3', 'tactical_pohon_kota'
+      %w[eselon_2 strategi_pohon_kota]
+    when 'eselon_4', 'operational_pohon_kota'
+      %w[eselon_3 tactical_pohon_kota]
     when 'staff'
       'eselon_4'
     else
