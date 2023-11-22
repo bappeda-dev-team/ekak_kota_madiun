@@ -2,13 +2,9 @@ class PohonKinerjaPresenter
   attr_accessor :pohon
 
   delegate :id, :to_param, :metadata,
-           to: :pohon_id
+           to: :pohon
   def initialize(pohon)
     @pohon = pohon
-  end
-
-  def pohon_id
-    @pohon.instance_of?(Pohon) ? @pohon.pohonable : @pohon
   end
 
   def real
