@@ -78,7 +78,7 @@ RSpec.feature "PindahPohonKinerjas", type: :feature do
       create_cookie('tahun', '2025')
     end
 
-    it 'success pindah pohon and refresh page' do
+    it 'success pindah pohon and refresh page', headless: true do
       opd_id = user.opd.id
       strategic = strategi(opd_id: opd_id, role: 'eselon_2', strategi: 'strategic-1')
 
@@ -105,18 +105,15 @@ RSpec.feature "PindahPohonKinerjas", type: :feature do
       expect(page).to have_text('tactical-1')
 
       within("#strategi_pohon_#{tactical.id}") do
-        click_on "Pindah Pohon"
+        click_on "Pindah"
       end
-
-      sleep 2
 
       expect(page).to have_text('Form')
 
-      within("#form-modal-body") do
-        expect(page).to have_select2_option 'strategic-1'
-        select2 'strategic-2', css: '#strategi_pohon_strategi_ref_id'
-        click_on "Simpan Perubahan"
-      end
+      select2 'strategic-2', from: 'Target pohon'
+      click_on "Simpan Perubahan"
+
+      click_on "OK"
 
       within("#strategi_pohon_#{strategic_2.id}") do
         click_on "Tampilkan"
