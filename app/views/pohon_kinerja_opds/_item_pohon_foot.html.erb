@@ -3,49 +3,49 @@
     <div class="col">
       <button type="button" class="btn btn-tertiary" data-action="pohon-tematik#toggleChild" data-pohon-tematik-show-param="false">Tampilkan</button>
     </div>
-      <% if pohon.real.instance_of?(StrategiPohon) %>
-        <div class="col hide d-none">
-          <% if privileged_user || current_user.eselon_user == pohon.role_bawahan %>
-            <%= link_to new_child_pohon_kinerja_opd_path(pohon, role: pohon.role_bawahan, title: pohon.judul_form, partial: partial),
-             remote: true,
-             data: {
-                 controller: 'pohon-tematik',
-                 action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
-             },
-             class: 'btn btn-info w-100' do %>
-              <i class="fas fa-plus me-2"></i>
-              <span><%= pohon.title %></span>
-            <% end %>
+    <% if pohon.real.instance_of?(StrategiPohon) %>
+      <div class="col hide d-none">
+        <% if privileged_user || current_user.eselon_user == pohon.role_atasan || current_user.eselon_user == pohon.role %>
+          <%= link_to new_child_pohon_kinerja_opd_path(pohon, role: pohon.role_bawahan, title: pohon.judul_form, partial: partial),
+           remote: true,
+           data: {
+             controller: 'pohon-tematik',
+             action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
+           },
+           class: 'btn btn-info w-100' do %>
+            <i class="fas fa-plus me-2"></i>
+            <span><%= pohon.title %></span>
           <% end %>
-        </div>
-      <% else %>
-        <div class="col hide d-none">
-          <% if pohon.title.downcase.include?('tactical') %>
-            <%= link_to new_tactical_pohon_tematik_path(pohon),
-             remote: true,
-             data: {
-                 controller: 'pohon-tematik',
-                 pohon_tematik_id_param: "tactical_tematik_#{pohon.object_id}",
-                 action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
-             },
-             class: 'btn btn-info w-100' do %>
-              <i class="fas fa-plus me-2"></i>
-              <span><%= pohon.title %></span>
-            <% end %>
-          <% else %>
-            <%= link_to new_operational_pohon_tematik_path(pohon),
-             remote: true,
-             data: {
-                 controller: 'pohon-tematik',
-                 pohon_tematik_id_param: "tactical_tematik_#{pohon.object_id}",
-                 action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
-             },
-             class: 'btn btn-info w-100' do %>
-              <i class="fas fa-plus me-2"></i>
-              <span><%= pohon.title %></span>
-            <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="col hide d-none">
+        <% if pohon.title.downcase.include?('tactical') %>
+          <%= link_to new_tactical_pohon_tematik_path(pohon),
+           remote: true,
+           data: {
+             controller: 'pohon-tematik',
+             pohon_tematik_id_param: "tactical_tematik_#{pohon.object_id}",
+             action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
+           },
+           class: 'btn btn-info w-100' do %>
+            <i class="fas fa-plus me-2"></i>
+            <span><%= pohon.title %></span>
           <% end %>
-        </div>
-      <% end %>
+        <% else %>
+          <%= link_to new_operational_pohon_tematik_path(pohon),
+           remote: true,
+           data: {
+             controller: 'pohon-tematik',
+             pohon_tematik_id_param: "tactical_tematik_#{pohon.object_id}",
+             action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
+           },
+           class: 'btn btn-info w-100' do %>
+            <i class="fas fa-plus me-2"></i>
+            <span><%= pohon.title %></span>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>

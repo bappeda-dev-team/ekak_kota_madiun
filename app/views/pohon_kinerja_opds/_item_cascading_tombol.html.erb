@@ -1,6 +1,6 @@
 <% unless pohon.exists? && !reviewer? %>
   <% if pohon.real.instance_of?(StrategiPohon) %>
-    <% if privileged_user || current_user.eselon_user == pohon.role_atasan %>
+    <% if privileged_user || current_user.eselon_user == pohon.role_atasan || current_user.eselon_user == pohon.role %>
       <div class="pohon-tombol mb-3">
         <div class="row">
           <div class="col">
