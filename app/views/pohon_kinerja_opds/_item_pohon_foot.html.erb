@@ -1,7 +1,7 @@
 <div class="pohon-foot <%= pohon.element_class_name %>">
   <div class="row">
     <div class="col">
-      <%= link_to edit_pindah_pohon_kinerja_path(pohon.id, role_atasan: pohon.role_pohon_atas),
+      <%= link_to edit_pindah_pohon_kinerja_path(pohon.pohon_id, role_atasan: pohon.role_pohon_atas),
        remote: true,
        class: 'btn btn-success',
        data: {

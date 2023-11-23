@@ -117,4 +117,12 @@ class Pohon < ApplicationRecord
       'Tidak Ditemukan'
     end
   end
+
+  def id_strategi
+    "#{id}-#{role}"
+  end
+
+  def judul_strategi
+    "#{pohonable} #{'- Dari Kota' if role.include?('kota')}"
+  end
 end

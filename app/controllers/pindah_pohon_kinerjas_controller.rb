@@ -11,13 +11,42 @@ class PindahPohonKinerjasController < ApplicationController
   # GET /pindah_pohon_kinerjas/1/edit
   def edit
     @role_atasan = params[:role_atasan]
+    role_strategi = @role_atasan[0]
+    role_pohon = @role_atasan[-1]
     @list_atasan = Strategi.where(opd_id: @pindah_pohon_kinerja.opd_id,
                                   tahun: @pindah_pohon_kinerja.tahun,
-                                  role: @role_atasan)
+                                  role: role_strategi)
+    @pohons = Pohon.where(opd_id: @pindah_pohon_kinerja.opd_id,
+                          tahun: @pindah_pohon_kinerja.tahun,
+                          pohonable_type: 'Strategi',
+                          role: role_pohon)
+    @list_atasan += @pohons
+    @list_atasan.compact_blank.uniq!
   end
 
   # PATCH/PUT /pindah_pohon_kinerjas/1 or /pindah_pohon_kinerjas/1.json
   def update
+    # NOTE: with strategi ref id containing another text ( role )
+    # may causing an unexpected error from untested code
+    # to debug find strategi_ref_id with pattern
+    # id-role -> 2-strategi_pohon_kota
+    new_parent = pindah_pohon_kinerja_params[:strategi_ref_id].split('-')
+    parent_id = new_parent[0]
+    parent_role = new_parent[-1]
+
+    if parent_role.include?('kota')
+      role = case parent_role
+             when 'strategi_pohon_kota'
+               'tactical_pohon_kota'
+             when 'tactical_pohon_kota'
+               'operational_pohon_kota'
+             else
+               ''
+             end
+
+      @pindah_pohon_kinerja.create_new_pohon(role: role,
+                                             pohon_ref_id: parent_id)
+    end
     respond_to do |format|
       if @pindah_pohon_kinerja.update(pindah_pohon_kinerja_params)
         format.html do

@@ -27,5 +27,32 @@
 require 'rails_helper'
 
 RSpec.describe Strategi, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'should create new pohon if not exists' do
+    strategi = create(:strategi,
+                      type: '',
+                      strategi: 'contoh a',
+                      opd_id: '136',
+                      tahun: '2025',
+                      role: 'eselon_3')
+    expect { strategi.create_new_pohon(role: 'tactical_pohon_kota') }.to change { Pohon.count }.from(0).to(1)
+    expect(strategi.pohon).not_to be_nil
+    expect(strategi.pohon.role).to eq 'tactical_pohon_kota'
+  end
+  it 'should return if pohon exists' do
+    strategi = create(:strategi,
+                      type: '',
+                      strategi: 'contoh a',
+                      opd_id: '136',
+                      tahun: '2025',
+                      role: 'eselon_3')
+    pohon = create(:pohon,
+                   pohonable_id: strategi.id,
+                   pohonable_type: 'Strategi',
+                   opd_id: '136',
+                   tahun: '2025',
+                   role: 'tactical_pohon_kota')
+    # expect { strategi.create_new_pohon }.not_to change { Pohon.count }.from(0).to(1)
+    expect(strategi.pohon).not_to be_nil
+    expect(strategi.create_new_pohon).to be_nil
+  end
 end

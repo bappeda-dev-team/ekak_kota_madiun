@@ -4,15 +4,16 @@ RSpec.feature "PindahPohonKinerjas", type: :feature do
   let(:user) { create(:super_admin) }
   let(:periode) { create(:periode, tahun_awal: '2025', tahun_akhir: '2026') }
 
-  def strategi(role: '', strategi: 'test-1', opd_id: user.opd.id, strategi_ref_id: '', type: 'StrategiPohon')
+  def strategi(strategi_ref_id: '', **args)
     create(:strategi,
-           type: type,
-           strategi: strategi,
-           opd_id: opd_id,
+           type: 'StrategiPohon',
+           strategi: 'test-1',
+           opd_id: user.opd.id,
            tahun: '2025',
            nip_asn: '',
            strategi_ref_id: strategi_ref_id,
-           role: role)
+           role: '',
+           **args)
   end
 
   def indikator(jenis: '', kode: '', indikator: 'indikator-test')
@@ -121,7 +122,8 @@ RSpec.feature "PindahPohonKinerjas", type: :feature do
 
       expect(page).to have_text('tactical-1')
     end
-    it 'pindah ke pohon kota' do
+
+    it 'pindah ke pohon kota', headless: true do
       opd_id = user.opd.id
 
       # strategic - tactical to strategic_kota - tactical
@@ -152,18 +154,13 @@ RSpec.feature "PindahPohonKinerjas", type: :feature do
         click_on "Pindah"
       end
 
-      expect(page).to have_text('Form')
-
-      select2 'strategic-kota-1', from: 'Target pohon'
+      select2 'strategic-kota-1', from: 'Target pohon', match: :first
       click_on "Simpan Perubahan"
 
       # sweetalert popup
       click_on "OK"
 
-      within("#pohon_#{pohon_kota.id}") do
-        click_on "Tampilkan"
-      end
-
+      click_on "Show All"
       expect(page).to have_text('tactical-1')
     end
   end

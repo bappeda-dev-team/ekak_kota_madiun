@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= form.label :target_pohon, { class: "form-label" } %>
-    <%= form.collection_select :strategi_ref_id, @list_atasan, :id, :strategi, {include_blank: true, required: true},
+    <%= form.collection_select :strategi_ref_id, @list_atasan, :id_strategi, :judul_strategi, {include_blank: true, required: true},
      { data: { placeholder: "Pilih Pohon",
        controller: 'dropdown',
        dropdown_parent_value: '#form-modal-body'

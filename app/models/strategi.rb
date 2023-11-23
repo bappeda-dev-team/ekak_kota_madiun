@@ -26,11 +26,13 @@
 #
 class Strategi < ApplicationRecord
   default_scope { order(:id) }
-  belongs_to :pohon, optional: true
+  # belongs_to :pohon, optional: true
   belongs_to :opd, optional: true
   belongs_to :tujuan, optional: true
   belongs_to :user, foreign_key: 'nip_asn', primary_key: 'nik', optional: true
   has_many :sasarans
+  # has_many :pohons, as: :pohonable
+  has_one :pohon, as: :pohonable
   # has_many :komentars, primary_key: :id, foreign_key: :item
 
   # has_many :indikator_sasarans, through: :sasarans
@@ -225,5 +227,26 @@ class Strategi < ApplicationRecord
     strategi_atasan.nama_pemilik
   rescue StandardError
     'Tidak ada pemilik'
+  end
+
+  def create_new_pohon(**args)
+    return unless pohon.nil?
+
+    attributes = {
+      **args,
+      pohonable_id: id,
+      pohonable_type: 'Strategi',
+      opd_id: opd_id,
+      tahun: tahun
+    }
+    create_pohon!(attributes)
+  end
+
+  def id_strategi
+    "#{id}-#{role}"
+  end
+
+  def judul_strategi
+    "#{strategi} #{'- Kota' if role.include?('kota')}"
   end
 end
