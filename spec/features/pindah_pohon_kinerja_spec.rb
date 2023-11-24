@@ -163,5 +163,36 @@ RSpec.feature "PindahPohonKinerjas", type: :feature do
       click_on "Show All"
       expect(page).to have_text('tactical-1')
     end
+
+    it 'pindah level dari tactical ke strategic', headless: true do
+      opd_id = user.opd.id
+
+      # strategic - tactical to strategic_kota - tactical
+      strategic = strategi(opd_id: opd_id, role: 'eselon_2', strategi: 'strategic-1')
+
+      tactical = strategi(opd_id: opd_id, role: 'eselon_3', strategi_ref_id: strategic.id, strategi: 'tactical-1')
+
+      visit cascading_pohon_kinerja_opds_path
+
+      expect(page).to have_text('strategic-1')
+
+      within("#strategi_pohon_#{strategic.id}") do
+        click_on "Tampilkan"
+      end
+
+      expect(page).to have_text('tactical-1')
+
+      within("#strategi_pohon_#{tactical.id}") do
+        click_on "Pindah"
+      end
+
+      select2 'Strategic', from: 'Level pohon', match: :first
+      click_on "Simpan Perubahan"
+
+      # sweetalert popup
+      click_on "OK"
+
+      expect(page).to have_text('tactical-1')
+    end
   end
 end

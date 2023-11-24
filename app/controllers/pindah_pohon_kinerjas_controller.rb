@@ -10,6 +10,7 @@ class PindahPohonKinerjasController < ApplicationController
 
   # GET /pindah_pohon_kinerjas/1/edit
   def edit
+    @roles = %w[Strategic Strategic-Kota Tactical Tactical-Kota Operational Operational-Kota]
     @role_atasan = params[:role_atasan]
     role_strategi = @role_atasan[0]
     role_pohon = @role_atasan[-1]
