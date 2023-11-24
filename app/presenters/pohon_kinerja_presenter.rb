@@ -8,7 +8,8 @@ class PohonKinerjaPresenter
   end
 
   def pohon_id
-    @pohon.instance_of?(Pohon) ? @pohon.pohonable : @pohon
+    # @pohon.instance_of?(Pohon) ? @pohon.pohonable : @pohon
+    @pohon
   end
 
   def real
