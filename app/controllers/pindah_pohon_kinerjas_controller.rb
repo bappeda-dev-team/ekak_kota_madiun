@@ -31,35 +31,34 @@ class PindahPohonKinerjasController < ApplicationController
     # may causing an unexpected error from untested code
     # to debug find strategi_ref_id with pattern
     # id-role -> 2-strategi_pohon_kota
-    new_parent = pindah_pohon_kinerja_params[:strategi_ref_id].split('-')
-    parent_id = new_parent[0]
-    parent_role = new_parent[-1]
 
-    if parent_role.include?('kota')
-      role = case parent_role
-             when 'strategi_pohon_kota'
-               'tactical_pohon_kota'
-             when 'tactical_pohon_kota'
-               'operational_pohon_kota'
-             else
-               ''
-             end
+    update_pohon = if pindah_pohon_kinerja_params[:role].include?('Strategic')
+                     @pindah_pohon_kinerja.update(role: 'eselon_2')
+                   else
+                     new_parent = pindah_pohon_kinerja_params[:strategi_ref_id].split('-')
+                     parent_id = new_parent[0]
+                     parent_role = new_parent[-1]
 
-      @pindah_pohon_kinerja.create_new_pohon(role: role,
-                                             pohon_ref_id: parent_id)
-    end
-    respond_to do |format|
-      if @pindah_pohon_kinerja.update(pindah_pohon_kinerja_params)
-        format.html do
-          redirect_to cascading_pohon_kinerja_opds_url,
-                      success: "Pindah pohon berhasil"
-        end
-        format.json { render :show, status: :ok, location: @pindah_pohon_kinerja }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @pindah_pohon_kinerja.errors, status: :unprocessable_entity }
-      end
-    end
+                     if parent_role.include?('kota')
+                       role = case parent_role
+                              when 'strategi_pohon_kota'
+                                'tactical_pohon_kota'
+                              when 'tactical_pohon_kota'
+                                'operational_pohon_kota'
+                              else
+                                ''
+                              end
+
+                       @pindah_pohon_kinerja.create_new_pohon(role: role,
+                                                              pohon_ref_id: parent_id)
+                     end
+                     @pindah_pohon_kinerja.update(strategi_ref_id: parent_id)
+                   end
+
+    return unless update_pohon
+
+    redirect_to cascading_pohon_kinerja_opds_url,
+                success: "Pindah pohon berhasil"
   end
 
   # DELETE /pindah_pohon_kinerjas/1 or /pindah_pohon_kinerjas/1.json
@@ -81,6 +80,6 @@ class PindahPohonKinerjasController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def pindah_pohon_kinerja_params
-    params.fetch(:strategi_pohon, {}).permit(:strategi_ref_id)
+    params.fetch(:strategi_pohon, {}).permit(:strategi_ref_id, :role)
   end
 end
