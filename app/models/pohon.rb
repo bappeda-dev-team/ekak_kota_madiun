@@ -125,4 +125,8 @@ class Pohon < ApplicationRecord
   def judul_strategi
     "#{pohonable} #{'- Dari Kota' if role.include?('kota')}"
   end
+
+  def id_strategi_parent
+    "#{pohon_ref_id}-#{parent_pohon.role}"
+  end
 end

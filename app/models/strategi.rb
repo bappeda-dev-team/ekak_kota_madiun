@@ -249,4 +249,12 @@ class Strategi < ApplicationRecord
   def judul_strategi
     "#{strategi} #{'- Kota' if role.include?('kota')}"
   end
+
+  def id_strategi_parent
+    if pohon.nil?
+      "#{strategi_ref_id}-#{strategi_atasan.role}"
+    else
+      pohon.id_strategi_parent
+    end
+  end
 end
