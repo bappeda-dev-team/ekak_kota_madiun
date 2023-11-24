@@ -6,11 +6,35 @@ class PindahPohonKinerjasController < ApplicationController
   def index; end
 
   # GET /pindah_pohon_kinerjas/1 or /pindah_pohon_kinerjas/1.json
-  def show; end
+  def show
+    @role_atasan = case params[:role]
+                   when 'eselon_3', 'tactical_pohon_kota'
+                     %w[eselon_2 strategi_pohon_kota]
+                   when 'eselon_4', 'operational_pohon_kota'
+                     %w[eselon_3 tactical_pohon_kota]
+                   when 'staff'
+                     'eselon_4'
+                   else
+                     ''
+                   end
+    role_strategi = @role_atasan[0]
+    role_pohon = @role_atasan[-1]
+    @list_atasan = Strategi.where(opd_id: @pindah_pohon_kinerja.opd_id,
+                                  tahun: @pindah_pohon_kinerja.tahun,
+                                  role: role_strategi)
+    @pohons = Pohon.where(opd_id: @pindah_pohon_kinerja.opd_id,
+                          tahun: @pindah_pohon_kinerja.tahun,
+                          pohonable_type: 'Strategi',
+                          role: role_pohon,
+                          status: [nil, 'diterima', ''])
+    @list_atasan += @pohons
+    @list_atasan.compact_blank.uniq!
+  end
 
   # GET /pindah_pohon_kinerjas/1/edit
   def edit
-    @roles = %w[Strategic Strategic-Kota Tactical Tactical-Kota Operational Operational-Kota]
+    # @roles = %w[Strategic Strategic-Kota Tactical Tactical-Kota Operational Operational-Kota]
+    @roles = [%w[Strategic eselon_2], %w[Tactical eselon_3], %w[Operational eselon_4]]
     @role_atasan = params[:role_atasan]
     role_strategi = @role_atasan[0]
     role_pohon = @role_atasan[-1]
@@ -32,11 +56,12 @@ class PindahPohonKinerjasController < ApplicationController
     # to debug find strategi_ref_id with pattern
     # id-role -> 2-strategi_pohon_kota
 
-    update_pohon = if pindah_pohon_kinerja_params[:role].include?('Strategic')
-                     @pindah_pohon_kinerja.update(role: 'eselon_2')
+    new_parent = pindah_pohon_kinerja_params[:strategi_ref_id].split('-')
+    parent_id = new_parent[0]
+    update_pohon = if pindah_pohon_kinerja_params[:level_pohon].present?
+                     role = pindah_pohon_kinerja_params[:level_pohon]
+                     @pindah_pohon_kinerja.update(role: role, strategi_ref_id: parent_id)
                    else
-                     new_parent = pindah_pohon_kinerja_params[:strategi_ref_id].split('-')
-                     parent_id = new_parent[0]
                      parent_role = new_parent[-1]
 
                      if parent_role.include?('kota')
@@ -80,6 +105,6 @@ class PindahPohonKinerjasController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def pindah_pohon_kinerja_params
-    params.fetch(:strategi_pohon, {}).permit(:strategi_ref_id, :role)
+    params.fetch(:strategi_pohon, {}).permit(:strategi_ref_id, :level_pohon)
   end
 end

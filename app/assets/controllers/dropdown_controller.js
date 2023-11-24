@@ -276,6 +276,7 @@ export default class extends Controller {
   chain_role_to_pelaksana(e) {
     const { data } = e.detail
     const role = data.id
+    console.log(role)
     this.roleValue = role
     this.select.select2('open')
   }

@@ -13,19 +13,25 @@
 
   <div class="field">
     <%= form.label :level_pohon, { class: "form-label" } %>
-    <%= form.select :role, @roles, {include_blank: true, required: true},
+    <%= form.select :level_pohon, @roles, {include_blank: true, required: true},
      { data: { placeholder: "Pilih level",
        controller: 'dropdown',
-       dropdown_parent_value: '#form-modal-body'
+       dropdown_jenis_value: 'chain',
+       dropdown_event_name_value: 'change-target-pohon',
+       dropdown_parent_value: '#form-modal'
      } } %>
   </div>
 
   <div class="field">
     <%= form.label :target_pohon, { class: "form-label" } %>
-    <%= form.collection_select :strategi_ref_id, @list_atasan, :id_strategi, :judul_strategi, {selected: form.object.id_strategi_parent, required: true},
+    <%= form.select :strategi_ref_id, [], {required: true},
      { data: { placeholder: "Pilih Pohon",
        controller: 'dropdown',
-       dropdown_parent_value: '#form-modal-body'
+       dropdown_jenis_value: 'ajax',
+       dropdown_parent_value: '#form-modal',
+       dropdown_role_value: pindah_pohon_kinerja.role,
+       action: 'change-target-pohon@document->dropdown#chain_role_to_pelaksana',
+       dropdown_url_value: pindah_pohon_kinerja_path(pindah_pohon_kinerja,:json)
      } } %>
   </div>
 

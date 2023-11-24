@@ -9,7 +9,7 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
-  resources :pindah_pohon_kinerjas, only: %i[edit update]
+  resources :pindah_pohon_kinerjas, only: %i[show edit update]
   resources :permasalahan_opds
   resources :strategi_arah_kebijakans do
     collection do

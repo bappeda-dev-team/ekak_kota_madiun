@@ -252,7 +252,7 @@ class Strategi < ApplicationRecord
 
   def id_strategi_parent
     if pohon.nil?
-      "#{strategi_ref_id}-#{strategi_atasan.role}"
+      "#{strategi_ref_id}-#{strategi_atasan&.role}"
     else
       pohon.id_strategi_parent
     end
