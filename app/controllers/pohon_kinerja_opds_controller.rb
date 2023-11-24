@@ -8,7 +8,7 @@ class PohonKinerjaOpdsController < ApplicationController
     @opd = queries.opd
     @nama_opd = @opd.nama_opd
 
-    @strategi_kota = queries.strategi_kota
+    @strategi_kota = queries.strategi_kota.reject { |ph| ph.pohonable.nil? }
     @tactical_kota = queries.tactical_kota
     @operational_kota = queries.operational_kota
 
@@ -30,7 +30,7 @@ class PohonKinerjaOpdsController < ApplicationController
     @opd = queries.opd
     @nama_opd = @opd.nama_opd
 
-    @strategi_kota = queries.strategi_kota
+    @strategi_kota = queries.strategi_kota.reject { |ph| ph.pohonable.nil? }
     @tactical_kota = queries.tactical_kota
     @operational_kota = queries.operational_kota
 
