@@ -56,7 +56,13 @@ class PindahPohonKinerjasController < ApplicationController
     # to debug find strategi_ref_id with pattern
     # id-role -> 2-strategi_pohon_kota
 
-    new_parent = pindah_pohon_kinerja_params[:strategi_ref_id].split('-')
+    new_parent = if pindah_pohon_kinerja_params[:strategi_ref_id].present?
+                   pindah_pohon_kinerja_params[:strategi_ref_id].split('-')
+                 else
+                   [
+                     '', ''
+                   ]
+                 end
     parent_id = new_parent[0]
     update_pohon = if pindah_pohon_kinerja_params[:level_pohon].present?
                      role = pindah_pohon_kinerja_params[:level_pohon]
