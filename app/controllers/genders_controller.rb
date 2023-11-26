@@ -75,7 +75,7 @@ class GendersController < ApplicationController
   end
 
   def gbs
-    @genders = Gender.all
+    @genders = Gender.where(tahun: params[:tahun])
     @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik }).group(:id)
     render 'gbs_gender'
   end

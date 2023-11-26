@@ -161,6 +161,16 @@ class LaporansController < ApplicationController
     render partial: 'cascading_kota'
   end
 
+  def gender
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @genders = Gender.all
+    return unless opd
+
+    @program_kegiatans = opd.program_kegiatans.sasarans
+                            .dengan_nip
+                            .lengkap_strategi_tahun(@tahun)
+  end
+
   private
 
   def set_program_kegiatans

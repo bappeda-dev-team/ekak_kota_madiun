@@ -40,7 +40,7 @@
                   <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak GAB"></span>
                 <% end %>
               </td>
-              <% kak.sasarans.each do |show_sasaran| %>
+              <% kak.sasarans.dengan_nip.where(tahun: @tahun).each do |show_sasaran| %>
                 <tr class="<%= warna_sasaran(show_sasaran.status_sasaran) %>">
                   <td class="text-wrap border-start border-end" width="450px">
                     <%= show_sasaran.sasaran_kinerja %>

@@ -151,14 +151,17 @@ class FilterController < ApplicationController
 
   def filter_gender
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
-    @program_kegiatans = ProgramKegiatan.includes(%i[opd sasarans])
-                                        .joins(:sasarans)
+    @program_kegiatans = ProgramKegiatan.includes(%i[opd])
                                         .where(opds: { kode_unik_opd: @kode_opd })
+
     if OPD_TABLE.key?(opd.to_sym)
       @program_kegiatans = ProgramKegiatan.includes(%i[opd])
                                           .joins(:sasarans)
                                           .where(id_sub_unit: KODE_OPD_BAGIAN[opd.to_sym])
     end
+
+    @program_kegiatans.map { |pk| pk.sasarans.dengan_nip }.flatten
+
     respond_to do |format|
       @render_file = "genders/hasil_filter_gender"
       format.js { render "genders/gender_filter" }
