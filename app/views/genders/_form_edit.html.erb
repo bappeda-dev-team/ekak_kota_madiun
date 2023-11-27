@@ -1,0 +1,128 @@
+<div class="gender_analysis"
+     data-controller="gender-form"
+     data-action='change-select@document->gender-form#fill_data'>
+  <div class="field">
+    <%= render 'templates/subkegiatan_card' %>
+  </div>
+
+  <div class="card border-2 shadow mb-3">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="row align-items-center">
+          <div class="col">
+            <h5>Data Pembuka Wawasan</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body" data-gender-form-target="data_pembuka_wawasan" id="data-fill">
+      <%= form_with(model: gender,
+                    local: false,
+                    data: { controller: 'form-ajax',
+                      action: 'ajax:success->form-ajax#successWithoutModal ajax:error->form-ajax#errorWithoutModal',
+                    } ) do |form| %>
+        <% if gender.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(gender.errors.count, "error") %> prohibited this gender from being saved:</h2>
+
+            <ul>
+              <% gender.errors.each do |error| %>
+                <li><%= error.full_message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <div class="header my-3">
+          <%= form.hidden_field :program_kegiatan_id,class: 'form-control', readonly: true %>
+          <%= form.hidden_field :sasaran_id,class: 'form-control', readonly: true %>
+          <div class="field">
+            <%= form.label :sasaran_subkegiatan, class: 'form-label' %>
+            <%= form.text_field :sasaran_kinerja,class: 'form-control', disabled: true, value: gender.sasaran.sasaran_kinerja %>
+          </div>
+          <div class="field">
+            <%= form.label :tahun, class: 'form-label' %>
+            <%= form.text_field :tahun,class: 'form-control', readonly: true, value: gender.sasaran.tahun %>
+          </div>
+          <div class="field">
+            <%= form.label :penerima_manfaat, class: 'form-label' %>
+            <%= form.text_field :penerima_manfaat, class: 'form-control', disabled: true %>
+          </div>
+          <div class="field">
+            <%= form.label :data_terpilah, class: 'form-label' %>
+            <%= form.text_field :data_terpilah, class: 'form-control', disabled: true%>
+          </div>
+          <% gender.sasaran.permasalahans.each do |permasalahan| %>
+            <div class="field">
+              <%= form.label :permasalahan, class: 'form-label' %>
+              <%= form.text_field :permasalahan, class: 'form-control', disabled: true, value: permasalahan.permasalahan %>
+            </div>
+          <% end %>
+
+          <div class="card border-2 shadow" data-form-gender-target="data_baseline">
+            <div class="card-header">
+              <h5>Faktor Kesenjangan </h5>
+            </div>
+            <div class="card-body">
+              <div class="field">
+                <%= form.label :akses, class: 'form-label' %>
+                <%= form.text_field :akses, class: 'form-control' %>
+                <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="akses"></p>
+              </div>
+              <div class="field">
+                <%= form.label :partisipasi, class: 'form-label' %>
+                <%= form.text_field :partisipasi, class: 'form-control' %>
+                <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="partisipasi"></p>
+              </div>
+              <div class="field">
+                <%= form.label :kontrol, class: 'form-label' %>
+                <%= form.text_field :kontrol, class: 'form-control' %>
+                <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="kontrol"></p>
+              </div>
+              <div class="field">
+                <%= form.label :manfaat, class: 'form-label' %>
+                <%= form.text_field :manfaat, class: 'form-control' %>
+                <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="manfaat"></p>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="field">
+                <%= form.label :penyebab_internal, class: 'form-label' %>
+                <%= form.text_field :penyebab_internal,multiple: true, class: 'form-control', data: { gender_form_target: 'penyebab_internal' } %>
+                <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="penyebab_internal"></p>
+              </div>
+              <%= add_new_field_gender("tambah penyebab internal", form, :penyebab_internal, gender )  %>
+              <div class="field">
+                <%= form.label :penyebab_external, class: 'form-label' %>
+                <%= form.text_field :penyebab_external,multiple: true, class: 'form-control', data: { gender_form_target: 'penyebab_external' } %>
+                <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="penyebab_external"></p>
+              </div>
+              <%= add_new_field_gender("tambah penyebab external", form, :penyebab_external, gender )  %>
+            </div>
+          </div>
+
+          <div class="field">
+            <%= form.label :reformulasi_tujuan, class: 'form-label' %>
+            <%= form.text_area :reformulasi_tujuan, class: 'form-control', rows: 3 %>
+          </div>
+        </div>
+
+        <div data-gender-form-target="data_baseline" data-controller="gender-form" data-gender-form-sasaran-value="<%= gender.sasaran.id %>">
+          <%= render 'genders/baseline', form: form, gender: gender, form_count: 1  %>
+        </div>
+
+        <div data-gender-form-target="rencana_aksi" data-controller="gender-form" data-gender-form-sasaran-value="<%= gender.sasaran.id %>">
+        </div>
+
+
+        <div data-gender-form-target="indikator_data" data-controller="gender-form" data-gender-form-sasaran-value="<%= gender.sasaran.id %>">
+          <%= render 'genders/indikator_gender', form: form %>
+        </div>
+
+        <div class="actions">
+          <%= form.submit "Simpan Gender Analysis Pathway" %>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+</div>
