@@ -1,10 +1,4 @@
-<div class="gender_analysis"
-     data-controller="gender-form"
-     data-action='change-select@document->gender-form#fill_data'>
-  <div class="field">
-    <%= render 'templates/subkegiatan_card' %>
-  </div>
-
+<div class="gender_analysis">
   <div class="card border-2 shadow mb-3">
     <div class="card-header">
       <div class="row align-items-center">
@@ -45,11 +39,11 @@
           </div>
           <div class="field">
             <%= form.label :penerima_manfaat, class: 'form-label' %>
-            <%= form.text_field :penerima_manfaat, class: 'form-control', disabled: true %>
+            <%= form.text_field :penerima_manfaat_sasaran, class: 'form-control', disabled: true, value: gender.sasaran.penerima_manfaat %>
           </div>
           <div class="field">
             <%= form.label :data_terpilah, class: 'form-label' %>
-            <%= form.text_field :data_terpilah, class: 'form-control', disabled: true%>
+            <%= form.text_field :data_terpilah_sasaran, class: 'form-control', disabled: true, value: gender.sasaran.rincian.data_terpilah %>
           </div>
           <% gender.sasaran.permasalahans.each do |permasalahan| %>
             <div class="field">
@@ -106,16 +100,126 @@
           </div>
         </div>
 
-        <div data-gender-form-target="data_baseline" data-controller="gender-form" data-gender-form-sasaran-value="<%= gender.sasaran.id %>">
-          <%= render 'genders/baseline', form: form, gender: gender, form_count: 1  %>
+        <div id="baseline">
+          <div class="card border-2 shadow mb-3">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h5>Baseline</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="field">
+                <%= form.label :tahun, class: 'form-label' %>
+                <%= form.select :tahun,[2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027],{},
+                 { class: 'form-control', data: { controller: 'dropdown', gender_form_target: "tahun", dropdown_target: "tahun" } }%>
+                <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="tahun"></p>
+              </div>
+              <div class="field">
+                <%= form.label :sasaran_subkegiatan, class: 'form-label' %>
+                <%= form.text_field :sasaran_subkegiatan, multiple: true, class: 'form-control', data: { gender_form_target: "sasaran" } %>
+                <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="sasaran_subkegiatan"></p>
+              </div>
+              <%= add_new_field_gender("tambah sasaran subkegiatan", form, :sasaran_subkegiatan, gender )  %>
+              <div class="field">
+                <%= form.label :penerima_manfaat, class: 'form-label' %>
+                <%= form.text_field :penerima_manfaat, multiple: true, class: 'form-control', data: { gender_form_target: "penerima_manfaat" } %>
+                <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="penerima_manfaat"></p>
+              </div>
+              <%= add_new_field_gender("tambah penerima manfaat", form, :penerima_manfaat, gender )  %>
+              <div class="field">
+                <%= form.label :data_terpilah, class: 'form-label' %>
+                <%= form.text_field :data_terpilah, multiple: true, class: 'form-control', data: { gender_form_target: "data_terpilah" } %>
+                <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="data_terpilah"></p>
+              </div>
+              <%= add_new_field_gender("tambah data terpilah", form, :data_terpilah, gender )  %>
+            </div>
+          </div>
         </div>
 
-        <div data-gender-form-target="rencana_aksi" data-controller="gender-form" data-gender-form-sasaran-value="<%= gender.sasaran.id %>">
+        <div>
+          <div class="card border-2 shadow mb-3">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="row align-items-center mb-3">
+                  <div class="col-8">
+                    <span class="fs-5 fw-bold mb-0">Rencana Aksi dan Anggaran <%= gender.sasaran.sasaran_kinerja %></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-sm align-items-center">
+                  <caption class="waktu-renaksi">
+                    <strong>Waktu yang dibutuhkan :</strong>
+                    <%= waktu = gender.sasaran.waktu_total == 0 ? "-" : gender.sasaran.waktu_total %> bulan
+                  </caption>
+                  <thead class="thead-light">
+                    <tr>
+                      <th class="border-bottom border-end border-start" scope="col" rowspan="2">No.</th>
+                      <th class="border-bottom border-end" scope="col" rowspan="2">Tahapan Kerja</th>
+                      <th class="border-bottom border-end text-center" scope="col" rowspan="2">Anggaran</th>
+                      <th class="border-bottom border-end" scope="col" rowspan="2">Keterangan</th>
+                      <th class="border-bottom border-end" scope="col" rowspan="2">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% gender.sasaran.tahapans.order(:created_at).each.with_index(1) do |tahapan, index| %>
+                      <tr class="<%= tahapan.ada_komentar? ? 'higlighted' : 'clean' %>">
+                        <td class="fw-bolder border-start border-end" scope="row"><%= index %></td>
+                        <td class="fw-bolder"><%= tahapan.tahapan_kerja %></td>
+                        <td class="fw-bolder">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %></td>
+                        <td class="fw-bolder"><%= tahapan.keterangan %></td>
+                        <td class="fw-bolder">
+                          <input name="gender[rencana_aksi][]" type="checkbox" value="<%= tahapan.tahapan_kerja %>" <%= gender.rencana_aksi.include?(tahapan.tahapan_kerja) ? 'checked' : '' %> />
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="border-bottom border-start border-end" colspan="2">Total</td>
+                      <td class="border-bottom border-end text-end">Rp. <%= number_with_delimiter(gender.sasaran.total_anggaran_dengan_komentar) %></td>
+                      <td class="border-bottom border-end" colspan="2"></td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
 
 
-        <div data-gender-form-target="indikator_data" data-controller="gender-form" data-gender-form-sasaran-value="<%= gender.sasaran.id %>">
-          <%= render 'genders/indikator_gender', form: form %>
+        <div>
+          <div class="card border-2 shadow mb-3">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h5>Indikator</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="field">
+                <%= form.label :indikator, class: 'form-label' %>
+                <%= form.text_field :indikator, class: 'form-control', data: { gender_form_target: "indikator_sasaran" } %>
+              </div>
+              <div class="field">
+                <%= form.label :target, class: 'form-label' %>
+                <%= form.text_field :target, class: 'form-control', data: { gender_form_target: "target_indikator" } %>
+              </div>
+              <div class="field">
+                <%= form.label :satuan, class: 'form-label' %>
+                <%= form.text_field :satuan, class: 'form-control', data: { gender_form_target: "satuan_indikator" } %>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="actions">

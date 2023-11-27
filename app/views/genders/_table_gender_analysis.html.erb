@@ -51,7 +51,7 @@
               <tr>
                 <th></th>
                 <th>Penerima Manfaat</th>
-                <td colspan="4"><%= gender.penerima_manfaat.to_sentence %></td>
+                <td class="text-wrap" colspan="4"><%= gender.penerima_manfaat.to_sentence %></td>
                 <td rowspan="9">
                   <div class="row justify-content-center w-100">
                     <div class="col">
@@ -66,7 +66,7 @@
               <tr>
                 <th></th>
                 <th>Data Terpilah</th>
-                <td colspan="6"><%= gender.data_terpilah.to_sentence %></td>
+                <td class="text-wrap" colspan="4"><%= gender.data_terpilah.to_sentence %></td>
               </tr>
               <tr>
                 <th rowspan="5"></th>
@@ -74,29 +74,29 @@
               </tr>
               <tr class="faktor-kesenjangan">
                 <td>Akses</td>
-                <td class="text-wrap" colspan="4"><%= gender.akses %></td>
+                <td class="text-wrap" colspan="3"><%= gender.akses %></td>
               </tr>
               <tr class="faktor-kesenjangan">
                 <td>Partisipasi</td>
-                <td class="text-wrap" colspan="4"><%= gender.partisipasi %></td>
+                <td class="text-wrap" colspan="3"><%= gender.partisipasi %></td>
               </tr>
               <tr class="faktor-kesenjangan">
                 <td>Kontrol</td>
-                <td class="text-wrap" colspan="4"><%= gender.kontrol %></td>
+                <td class="text-wrap" colspan="3"><%= gender.kontrol %></td>
               </tr>
               <tr class="faktor-kesenjangan">
                 <td>Manfaat</td>
-                <td class="text-wrap" colspan="4"><%= gender.manfaat %></td>
+                <td class="text-wrap" colspan="3"><%= gender.manfaat %></td>
               </tr>
               <tr>
                 <th></th>
                 <th>Penyebab Internal</th>
-                <td colspan="6"><%= gender.penyebab_internal.to_sentence %></td>
+                <td class="text-wrap" colspan="4"><%= gender.penyebab_internal.to_sentence %></td>
               </tr>
               <tr>
                 <th></th>
                 <th>Penyebab External</th>
-                <td colspan="6"><%= gender.penyebab_external.to_sentence %></td>
+                <td class="text-wrap" colspan="4"><%= gender.penyebab_external.to_sentence %></td>
               </tr>
             <% end %>
           <% end %>
