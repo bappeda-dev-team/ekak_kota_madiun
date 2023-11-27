@@ -575,4 +575,8 @@ class Sasaran < ApplicationRecord
       total: total_anggaran
     }
   end
+
+  def anggaran_genders
+    genders.map(&:anggaran_gender).flatten.sum
+  end
 end

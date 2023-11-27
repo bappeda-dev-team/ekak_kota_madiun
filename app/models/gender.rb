@@ -174,4 +174,11 @@ class Gender < ApplicationRecord
       "KEGIATAN: #{program_kegiatan.nama_kegiatan}.\n\n" \
       "<b>SUBKEGIATAN</b>: #{program_kegiatan.nama_subkegiatan}."
   end
+
+  def anggaran_gender
+    tahapans = sasaran.tahapans.select do |tahapan|
+      rencana_aksi.include?(tahapan.tahapan_kerja)
+    end
+    tahapans.map(&:anggaran_tahapan).sum
+  end
 end
