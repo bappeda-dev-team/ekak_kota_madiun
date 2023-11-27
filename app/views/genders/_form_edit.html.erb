@@ -10,11 +10,7 @@
       </div>
     </div>
     <div class="card-body" data-gender-form-target="data_pembuka_wawasan" id="data-fill">
-      <%= form_with(model: gender,
-                    local: false,
-                    data: { controller: 'form-ajax',
-                      action: 'ajax:success->form-ajax#successWithoutModal ajax:error->form-ajax#errorWithoutModal',
-                    } ) do |form| %>
+      <%= form_with(model: gender) do |form| %>
         <% if gender.errors.any? %>
           <div id="error_explanation">
             <h2><%= pluralize(gender.errors.count, "error") %> prohibited this gender from being saved:</h2>
