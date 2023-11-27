@@ -30,7 +30,7 @@ class GapGenderPdf < Prawn::Document
   end
 
   def ttd
-    start_new_page if (cursor - 125).negative?
+    start_new_page if (cursor - 100).negative?
     bounding_box([bounds.width - 370, cursor - 5], width: bounds.width - 200) do
       text "Madiun,    #{I18n.l Date.today, format: '  %B %Y'}", size: 8, align: :center
       move_down 5

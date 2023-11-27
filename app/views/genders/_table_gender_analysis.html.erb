@@ -65,6 +65,12 @@
                       <% end %>
                     </div>
                     <div class="col">
+                      <%= link_to pdf_gap_gender_path(gender,tahun: @tahun,format: :pdf), class:"btn btn-sm btn-secondary m-3 w-100" do %>
+                        <i class="far fa-file-pdf"></i>
+                        <span>Cetak GAP</span>
+                      <% end %>
+                    </div>
+                    <div class="col">
                       <%= link_to edit_gender_path(gender),
                        class: 'm-3 btn btn-sm btn-outline-info w-100' do %>
                         Edit
