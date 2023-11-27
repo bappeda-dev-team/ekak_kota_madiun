@@ -1,8 +1,8 @@
 module GendersHelper
   def gender_items
     [
-      { title: 'GAP', href: gap_genders_path, identifier: 'genders/gap' },
-      { title: 'GBS', href: gbs_genders_path, identifier: 'genders/gbs' }
+      { title: 'GAP', href: laporan_gap_genders_path, identifier: 'genders/laporan_gap' },
+      { title: 'GBS', href: laporan_gbs_genders_path, identifier: 'genders/laporan_gbs' }
     ]
   end
 end

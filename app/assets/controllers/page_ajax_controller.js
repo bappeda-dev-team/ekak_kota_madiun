@@ -15,7 +15,8 @@ export default class extends Controller {
                 opd: String,
                 tahun: String,
                 url: String,
-                jenisUsulan: String
+                jenisUsulan: String,
+                reqtype: { type: String, default: 'POST' }
         }
 
         connect() {
@@ -32,7 +33,7 @@ export default class extends Controller {
                 fetch(url,
                         {
                                 body: formData,
-                                method: "post"
+                                method: this.reqtypeValue
                         })
                         .then(
                                 response => response.text()

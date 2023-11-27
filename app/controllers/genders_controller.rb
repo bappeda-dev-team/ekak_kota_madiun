@@ -102,6 +102,18 @@ class GendersController < ApplicationController
     end
   end
 
+  def laporan_gap
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    return if @kode_opd.nil?
+
+    @opd = Opd.find_by_kode_unik_opd @kode_opd
+    @nama_opd = @opd.nama_opd
+    kak = KakQueries.new(opd: @opd, tahun: @tahun)
+
+    @program_kegiatans = kak.pk_sasarans
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

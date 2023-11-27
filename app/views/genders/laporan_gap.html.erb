@@ -1,0 +1,146 @@
+<%= content_for :html_title, "Laporan GAP" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Laporan</li>
+  <li class="breadcrumb-item active" aria-current="page">GAP</li>
+<% end %>
+<% content_for :view_utama do %>
+  <% if cookies[:tahun] && cookies[:opd] %>
+    <div class="card border-0 shadow" id="genders">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Laporan GAP</h2>
+          </div>
+          <div class="col text-end">
+            <div class="row">
+
+              <p><%= @nama_opd %></p>
+              <p><%= @tahun %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <h5>Subkegiatan Gender</h5>
+          <table class="table align-items-center table-bordered">
+            <thead class="thead-light">
+              <tr>
+                <th class="border text-center" scope="col">No</th>
+                <th class="border text-center" scope="col">Pemilik Rencana</th>
+                <th class="border text-center" scope="col">Rencana Kinerja / Gender</th>
+                <th class="border text-center" scope="col">Indikator</th>
+                <th class="border text-center" scope="col">Target</th>
+                <th class="border text-center" scope="col">Satuan</th>
+                <th class="border text-center" scope="col">Anggaran</th>
+                <th class="border text-center" scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @program_kegiatans.each.with_index(1) do |(subkegiatan, sasarans), i| %>
+                <tr>
+                  <td class="border text-wrap fw-bolder text-gray-900"><%= i %></td>
+                  <td class="border text-wrap fw-bolder text-gray-900" colspan="2">Subkegiatan: <%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %></td>
+                  <%= indikator_sub(subkegiatan, @tahun, @kode_opd) %>
+                  <td class='border rankir-2'>Rp. 0</td>
+                  <td class="border">
+                    <% if subkegiatan %>
+                      <div class="d-grid gap-2">
+                        <%= link_to show_kak_laporan_path(subkegiatan), target: "_blank", rel: "nofollow",
+                         class: "btn btn-sm btn-info" do %>
+                          <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
+                          Tampilkan
+                        <% end %>
+                        <%= link_to pdf_kak_laporan_path(subkegiatan, format: :pdf),
+                         class: "btn btn-sm btn-secondary" do %>
+                          <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak KaK"></span>
+                          Cetak
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </td>
+                </tr>
+                <% sasarans.each.with_index(1) do |sasaran, index| %>
+                  <tr>
+                    <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= "#{i}.#{index}" %></td>
+                    <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
+                    <td class="border text-wrap p-0" rowspan="<%= rowspan_sasaran(sasaran) %>">
+                      <p class="p-3"><%= sasaran.sasaran_kinerja %></p>
+                      <div>
+                        <table class="table table-bordered">
+                          <% sasaran.genders.each do |gender| %>
+                            <tr>
+                              <th>Penerima Manfaat</th>
+                              <td colspan="2"><%= gender.penerima_manfaat.to_sentence %></td>
+                            </tr>
+                            <tr>
+                              <th>Data Terpilah</th>
+                              <td colspan="2"><%= gender.data_terpilah.to_sentence %></td>
+                            </tr>
+                            <tr>
+                              <th rowspan="5">Faktor Kesenjangan</th>
+                            </tr>
+                            <tr class="faktor-kesenjangan">
+                              <th>Akses</th>
+                              <td class="text-wrap" colspan="4"><%= gender.akses %></td>
+                            </tr>
+                            <tr class="faktor-kesenjangan">
+                              <th>Partisipasi</th>
+                              <td class="text-wrap" colspan="4"><%= gender.partisipasi %></td>
+                            </tr>
+                            <tr class="faktor-kesenjangan">
+                              <th>Kontrol</th>
+                              <td class="text-wrap" colspan="4"><%= gender.kontrol %></td>
+                            </tr>
+                            <tr class="faktor-kesenjangan">
+                              <th>Manfaat</th>
+                              <td class="text-wrap" colspan="4"><%= gender.manfaat %></td>
+                            </tr>
+                            <tr>
+                              <th>Penyebab Internal</th>
+                              <td colspan="2"><%= gender.penyebab_internal.to_sentence %></td>
+                            </tr>
+                            <tr>
+                              <th>Penyebab External</th>
+                              <td colspan="2"><%= gender.penyebab_external.to_sentence %></td>
+                            </tr>
+                          <% end %>
+                        </table>
+                      </div>
+                    </td>
+                    <%= indikator_sasaran(sasaran) %>
+                    <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
+                    <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">
+                      <div class="d-grid gap-2">
+                        <%= link_to rincian_sasaran_path(sasaran), target: "_blank", rel: "nofollow",
+                         class: "btn btn-sm btn-success text-white" do %>
+                          <i class="fas fa-journal-whills me-2"></i>
+                          <span>Rincian</span>
+                        <% end %>
+                        <% if reviewer? %>
+                          <%= link_to review_sasaran_path(sasaran), target: "_blank", rel: "nofollow",
+                           class: "btn btn-sm btn-primary text-white" do %>
+                            <i class="far fa-sticky-note me-2"></i>
+                            <span>Review</span>
+                          <% end %>
+                        <% end %>
+                        <% if admin? %>
+                          <%= link_to edit_admin_sasaran_path(sasaran), class: "btn btn-sm btn-outline-info" do %>
+                            <i class="fas fa-pencil-alt me-2"></i>
+                            <span>Edit</span>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    </td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <%= render 'shared/pilih_tahun_dan_opd' %>
+  <% end %>
+<% end %>

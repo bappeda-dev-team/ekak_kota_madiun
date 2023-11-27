@@ -22,6 +22,10 @@
         <%= form.text_field :sasaran_kinerja,class: 'form-control', disabled: true, value: sasaran.sasaran_kinerja %>
       </div>
       <div class="field">
+        <%= form.label :tahun, class: 'form-label' %>
+        <%= form.text_field :tahun,class: 'form-control', readonly: true, value: sasaran.tahun %>
+      </div>
+      <div class="field">
         <%= form.label :penerima_manfaat, class: 'form-label' %>
         <%= form.text_field :penerima_manfaat_sasaran, class: 'form-control', disabled: true, value: sasaran.penerima_manfaat %>
       </div>
