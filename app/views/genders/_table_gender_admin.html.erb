@@ -1,0 +1,111 @@
+<table class="table align-items-center table-bordered">
+  <thead class="thead-light">
+    <tr>
+      <th class="border text-center" scope="col">No</th>
+      <th class="border text-center" scope="col">Pemilik Rencana</th>
+      <th class="border text-center" scope="col">Rencana Kinerja / Gender</th>
+      <th class="border text-center" scope="col">Indikator</th>
+      <th class="border text-center" scope="col">Target</th>
+      <th class="border text-center" scope="col">Satuan</th>
+      <th class="border text-center" scope="col">Anggaran</th>
+      <th class="border text-center" scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @program_kegiatans.each.with_index(1) do |(subkegiatan, sasarans), i| %>
+      <% pagu = sasarans.map(&:anggaran_genders).compact.sum %>
+      <tr>
+        <td class="border text-wrap fw-bolder text-gray-900"><%= i %></td>
+        <td class="border text-wrap fw-bolder text-gray-900" colspan="2">Subkegiatan: <%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %></td>
+        <%= indikator_sub(subkegiatan, @tahun, @kode_opd) %>
+        <td class='border rankir-2'>Rp. <%= number_with_delimiter(pagu) %></td>
+        <td class="border"> </td>
+      </tr>
+      <% sasarans.each.with_index(1) do |sasaran, index| %>
+        <tr>
+          <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= "#{i}.#{index}" %></td>
+          <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
+          <td class="border text-wrap p-0" rowspan="<%= rowspan_sasaran(sasaran) %>">
+            <p class="p-3"><%= sasaran.sasaran_kinerja %></p>
+          </td>
+          <%= indikator_sasaran(sasaran) %>
+          <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">Rp. <%= number_with_delimiter(sasaran.anggaran_genders) %></td>
+          <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">
+          </td>
+        </tr>
+        <% sasaran.genders.each do |gender| %>
+          <tr>
+            <th></th>
+            <th>Penerima Manfaat</th>
+            <td class="text-wrap" colspan="5"><%= gender.penerima_manfaat.to_sentence %></td>
+            <td rowspan="9">
+              <div class="row justify-content-center w-100">
+                <div class="col">
+                  <%= link_to pdf_gbs_gender_path(gender,tahun: @tahun,format: :pdf), class:"btn btn-sm btn-primary m-3 w-100" do %>
+                    <i class="far fa-file-pdf me-2"></i>
+                    <span>Cetak GBS</span>
+                  <% end %>
+                </div>
+                <div class="col">
+                  <%= link_to pdf_gap_gender_path(gender,tahun: @tahun,format: :pdf), class:"btn btn-sm btn-secondary m-3 w-100" do %>
+                    <i class="far fa-file-pdf me-2"></i>
+                    <span>Cetak GAP</span>
+                  <% end %>
+                </div>
+                <div class="col">
+                  <%= link_to admin_edit_gender_path(gender),
+                   remote: true,
+                   data: {
+                     controller: 'form-modal',
+                     action: 'ajax:complete->form-modal#success:prevent',
+                     bs_toggle: 'modal',
+                     bs_target: '#form-modal'
+                   },
+                   class: 'm-3 btn btn-sm btn-outline-info w-100' do %>
+                    <i class="fas fa-pencil-alt me-2"></i>
+                    Edit
+                  <% end %>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th></th>
+            <th>Data Terpilah</th>
+            <td class="text-wrap" colspan="5"><%= gender.data_terpilah.to_sentence %></td>
+          </tr>
+          <tr>
+            <th rowspan="5"></th>
+            <th rowspan="5">Faktor Kesenjangan</th>
+          </tr>
+          <tr class="faktor-kesenjangan">
+            <th>Akses</th>
+            <td class="text-wrap" colspan="4"><%= gender.akses %></td>
+          </tr>
+          <tr class="faktor-kesenjangan">
+            <th>Partisipasi</th>
+            <td class="text-wrap" colspan="4"><%= gender.partisipasi %></td>
+          </tr>
+          <tr class="faktor-kesenjangan">
+            <th>Kontrol</th>
+            <td class="text-wrap" colspan="4"><%= gender.kontrol %></td>
+          </tr>
+          <tr class="faktor-kesenjangan">
+            <th>Manfaat</th>
+            <td class="text-wrap" colspan="4"><%= gender.manfaat %></td>
+          </tr>
+          <tr>
+            <th></th>
+            <th>Penyebab Internal</th>
+            <td class="text-wrap" colspan="5"><%= gender.penyebab_internal.to_sentence %></td>
+          </tr>
+          <tr>
+            <th></th>
+            <th>Penyebab External</th>
+            <td class="text-wrap" colspan="5"><%= gender.penyebab_external.to_sentence %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

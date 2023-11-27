@@ -60,19 +60,20 @@
                   <div class="row justify-content-center w-100">
                     <div class="col">
                       <%= link_to pdf_gbs_gender_path(gender,tahun: @tahun,format: :pdf), class:"btn btn-sm btn-primary m-3 w-100" do %>
-                        <i class="far fa-file-pdf"></i>
+                        <i class="far fa-file-pdf me-2"></i>
                         <span>Cetak GBS</span>
                       <% end %>
                     </div>
                     <div class="col">
                       <%= link_to pdf_gap_gender_path(gender,tahun: @tahun,format: :pdf), class:"btn btn-sm btn-secondary m-3 w-100" do %>
-                        <i class="far fa-file-pdf"></i>
+                        <i class="far fa-file-pdf me-2"></i>
                         <span>Cetak GAP</span>
                       <% end %>
                     </div>
                     <div class="col">
                       <%= link_to edit_gender_path(gender),
                        class: 'm-3 btn btn-sm btn-outline-info w-100' do %>
+                        <i class="fas fa-pencil-alt me-2"></i>
                         Edit
                       <% end %>
                     </div>

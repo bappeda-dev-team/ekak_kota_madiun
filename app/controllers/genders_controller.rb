@@ -1,7 +1,9 @@
 class GendersController < ApplicationController
   include ErrorSerializer
+  before_action :set_default_tahun_opd
   before_action :set_gender, only: %i[show edit update destroy]
 
+  layout false, only: :admin_edit
   # GET /genders or /genders.json
   def index
     @genders = Gender.all
@@ -19,6 +21,11 @@ class GendersController < ApplicationController
 
   # GET /genders/1/edit
   def edit
+    @opd = current_user.opd
+  end
+
+  def admin_edit
+    set_gender
     @opd = current_user.opd
   end
 
@@ -43,6 +50,16 @@ class GendersController < ApplicationController
   def update
     respond_to do |format|
       if @gender.update(gender_params)
+        format.js do
+          @opd = Opd.find_by_kode_unik_opd @kode_opd
+          kak = KakQueries.new(opd: @opd, tahun: @tahun)
+
+          @program_kegiatans = kak.pk_sasarans
+          render json: { resText: 'Perubahan disimpan',
+                         html_content: html_content({},
+                                                    partial: 'genders/table_gender_admin') }.to_json,
+                 status: :accepted
+        end
         format.html { redirect_to gap_genders_path, success: "Data Gender Analysis Berhasil diupdate" }
         format.json { render :show, status: :ok, location: @gender }
       else
@@ -109,8 +126,6 @@ class GendersController < ApplicationController
   end
 
   def laporan_gap
-    @tahun = cookies[:tahun]
-    @kode_opd = cookies[:opd]
     return if @kode_opd.nil?
 
     @opd = Opd.find_by_kode_unik_opd @kode_opd
@@ -125,6 +140,11 @@ class GendersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_gender
     @gender = Gender.find(params[:id])
+  end
+
+  def set_default_tahun_opd
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
   end
 
   # Only allow a list of trusted parameters through.

@@ -21,87 +21,8 @@
         </div>
       </div>
       <div class="card-body">
-        <div class="table-responsive">
-          <h5>Subkegiatan Gender</h5>
-          <table class="table align-items-center table-bordered">
-            <thead class="thead-light">
-              <tr>
-                <th class="border text-center" scope="col">No</th>
-                <th class="border text-center" scope="col">Pemilik Rencana</th>
-                <th class="border text-center" scope="col">Rencana Kinerja / Gender</th>
-                <th class="border text-center" scope="col">Indikator</th>
-                <th class="border text-center" scope="col">Target</th>
-                <th class="border text-center" scope="col">Satuan</th>
-                <th class="border text-center" scope="col">Anggaran</th>
-                <th class="border text-center" scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @program_kegiatans.each.with_index(1) do |(subkegiatan, sasarans), i| %>
-                <tr>
-                  <td class="border text-wrap fw-bolder text-gray-900"><%= i %></td>
-                  <td class="border text-wrap fw-bolder text-gray-900" colspan="2">Subkegiatan: <%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %></td>
-                  <%= indikator_sub(subkegiatan, @tahun, @kode_opd) %>
-                  <td class='border rankir-2'>Rp. 0</td>
-                  <td class="border"> </td>
-                </tr>
-                <% sasarans.each.with_index(1) do |sasaran, index| %>
-                  <tr>
-                    <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= "#{i}.#{index}" %></td>
-                    <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
-                    <td class="border text-wrap p-0" rowspan="<%= rowspan_sasaran(sasaran) %>">
-                      <p class="p-3"><%= sasaran.sasaran_kinerja %></p>
-                      <div>
-                        <table class="table table-bordered">
-                          <% sasaran.genders.each do |gender| %>
-                            <tr>
-                              <th>Penerima Manfaat</th>
-                              <td class="text-wrap" colspan="2"><%= gender.penerima_manfaat.to_sentence %></td>
-                            </tr>
-                            <tr>
-                              <th>Data Terpilah</th>
-                              <td class="text-wrap" colspan="2"><%= gender.data_terpilah.to_sentence %></td>
-                            </tr>
-                            <tr>
-                              <th rowspan="5">Faktor Kesenjangan</th>
-                            </tr>
-                            <tr class="faktor-kesenjangan">
-                              <th>Akses</th>
-                              <td class="text-wrap" colspan="4"><%= gender.akses %></td>
-                            </tr>
-                            <tr class="faktor-kesenjangan">
-                              <th>Partisipasi</th>
-                              <td class="text-wrap" colspan="4"><%= gender.partisipasi %></td>
-                            </tr>
-                            <tr class="faktor-kesenjangan">
-                              <th>Kontrol</th>
-                              <td class="text-wrap" colspan="4"><%= gender.kontrol %></td>
-                            </tr>
-                            <tr class="faktor-kesenjangan">
-                              <th>Manfaat</th>
-                              <td class="text-wrap" colspan="4"><%= gender.manfaat %></td>
-                            </tr>
-                            <tr>
-                              <th>Penyebab Internal</th>
-                              <td class="text-wrap" colspan="2"><%= gender.penyebab_internal.to_sentence %></td>
-                            </tr>
-                            <tr>
-                              <th>Penyebab External</th>
-                              <td class="text-wrap" colspan="2"><%= gender.penyebab_external.to_sentence %></td>
-                            </tr>
-                          <% end %>
-                        </table>
-                      </div>
-                    </td>
-                    <%= indikator_sasaran(sasaran) %>
-                    <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
-                    <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">
-                    </td>
-                  </tr>
-                <% end %>
-              <% end %>
-            </tbody>
-          </table>
+        <div id="genders" class="table-responsive">
+          <%= render 'genders/table_gender_admin' %>
         </div>
       </div>
     </div>

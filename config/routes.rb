@@ -226,6 +226,7 @@ Rails.application.routes.draw do
     member do
       get :pdf_gbs
       get :pdf_gap
+      get :admin_edit
     end
   end
   resources :tujuans

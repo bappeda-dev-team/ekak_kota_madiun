@@ -11,12 +11,15 @@ module LaporanItemHelper
         title: 'SPIP', href: spip_index_path,
         icon: 'fas fa-chalkboard', identifier: 'spip'
       },
-      {
-        title: 'Gender', href: "#",
-        multi: true, collections: gender_items,
-        id_target: 'gender-items',
-        icon: 'fas fa-people-carry', identifier: 'genders'
-      },
+      { title: 'Gender', href: laporan_gap_genders_path,
+        icon: 'fas fa-people-carry',
+        identifier: 'genders/laporan_gap' },
+      # {
+      #   title: 'Gender', href: "#",
+      #   multi: true, collections: gender_items,
+      #   id_target: 'gender-items',
+      #   icon: 'fas fa-people-carry', identifier: 'genders'
+      # },
       {
         title: 'Cascading Kota', href: hasil_cascading_kota_laporans_path,
         icon: 'fas fa-people-arrows', identifier: 'hasil_cascading_kota'
