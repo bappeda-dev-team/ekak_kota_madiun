@@ -80,21 +80,27 @@ class GendersController < ApplicationController
     render 'gbs_gender'
   end
 
-  def pdf_gender
-    # nama_file = Nama subkegiatan
-    @nama_file = ProgramKegiatan.find(params[:id]).nama_subkegiatan
-    @tahun = params[:tahun] || Time.now.year
+  def pdf_gbs
+    @gender = Gender.find(params[:id])
+    @subkegiatan = @gender.program_kegiatan.nama_subkegiatan
+    @tahun = params[:tahun]
     @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
-    @filename = "KAK_Gender_#{@nama_file}_#{@waktu}.pdf"
-    @program_kegiatan = ProgramKegiatan.find(params[:id])
+    @opd = @gender.sasaran.opd
+    @program_kegiatan = @gender.program_kegiatan
+    # render 'kak_gender.pdf'
+    # pdf = GbsGenderPdf.new(opd: @opd, tahun: @tahun, gender: @gender)
+    @filename = "GBS_SUBKEGIATAN_#{@subkegiatan}_TAHUN_#{@tahun}_#{@waktu}.pdf"
     render 'kak_gender.pdf'
-    # render 'pdf_gap.pdf'
+    # respond_to do |format|
+    #   format.pdf { send_data(pdf.render, filename: @filename, type: 'application/pdf', disposition: :attachment) }
+    # end
   end
 
-  def pdf_gap_gender
+  def pdf_gap
     @gender = Gender.find(params[:id])
     @tahun = params[:tahun]
-    @opd = current_user.opd
+    # @opd = current_user.opd
+    @opd = @gender.sasaran.opd
     pdf = GapGenderPdf.new(opd: @opd, tahun: @tahun, gender: @gender)
     @filename = "GAP_#{@opd.nama_opd}_TAHUN_#{@tahun}.pdf"
     respond_to do |format|

@@ -13,19 +13,12 @@ prawn_document(filename: @filename, disposition: 'attachment') do |pdf|
   cell_pembuka_wawasan = []
   cell_penyebab_internal = []
   cell_penyebab_external = []
-  if @program_kegiatan.rincians.exists?
-    @program_kegiatan.rincians.each do |rincian|
-      cell_pembuka_wawasan << ['-', rincian&.data_terpilah || '-']
-    end
+  if @gender.sasaran.present?
+    cell_pembuka_wawasan << ['-', @gender.data_terpilah.to_sentence || '-']
+    cell_penyebab_internal << ['-', @gender.penyebab_internal.to_sentence || '-']
+    cell_penyebab_external << ['-', @gender.penyebab_external.to_sentence || '-']
   else
     cell_pembuka_wawasan << ['-', '-']
-  end
-  if @program_kegiatan.permasalahans.exists?
-    @program_kegiatan.permasalahans.each do |masalah|
-      cell_penyebab_internal << ['-', masalah&.penyebab_internal || '-']
-      cell_penyebab_external << ['-', masalah&.penyebab_external || '-']
-    end
-  else
     cell_penyebab_internal << ['-', '-']
     cell_penyebab_external << ['-', '-']
   end
@@ -40,9 +33,14 @@ prawn_document(filename: @filename, disposition: 'attachment') do |pdf|
                                          column_widths: { 0 => col_0_subtable_width, 1 => subtable_width })
 
   tabel_faktor_kesenjangan = pdf.make_table([
-                                              ['-', '-']
+                                              ['Akses', @gender.akses || '-'],
+                                              ['Partisipasi', @gender.partisipasi || '-'],
+                                              ['Kontrol', @gender.kontrol || '-'],
+                                              ['Manfaat', @gender.manfaat || '-']
                                             ],
-                                            cell_style: { size: 8, border_width: 0 })
+                                            cell_style: { size: 8, border_width: 0 },
+                                            column_widths: { 0 => 46 },
+                                            width: 150.mm)
 
   tabel_internal = pdf.make_table(cell_penyebab_internal,
                                   cell_style: { size: 8, border_width: 0 },
@@ -64,37 +62,42 @@ prawn_document(filename: @filename, disposition: 'attachment') do |pdf|
                                      ],
                                      cell_style: { size: 8, border_width: 0 },
                                      column_widths: { 0 => 20 }, width: table_subtable_width)
+
+  indikator_program = @program_kegiatan&.indikator_program_tahun(@tahun, @opd.kode_unik_opd)
+  indikator_kegiatan = @program_kegiatan&.indikator_kegiatan_tahun(@tahun, @opd.kode_unik_opd)
+  indikator_subkegiatan = @program_kegiatan&.indikator_subkegiatan_tahun(@tahun, @opd.kode_unik_opd)
+
   tabel_capaian_program = pdf.make_table([
                                            ['1.', { content: 'Tolok Ukur' }],
-                                           ['', 'Tujuan Program'],
+                                           ['', '-'],
                                            ['2.', 'Indikator Kinerja dan Target Kinerja'],
                                            ['-',
-                                            "#{@program_kegiatan.indikator_program} #{@program_kegiatan.target_program} #{@program_kegiatan.satuan_target_program}"]
+                                            "#{indikator_program&.dig(:indikator) || '-'} #{indikator_program&.dig(:target) || '-'} #{indikator_program&.dig(:satuan) || '-'}"]
                                          ],
                                          cell_style: { size: 8, border_width: 0 },
                                          column_widths: { 0 => 20 }, width: table_subtable_width)
   tabel_rencana_aksi = pdf.make_table([
                                         [{ content: 'Kegiatan', rowspan: 5, borders: [:right], border_width: 0 }],
                                         [@program_kegiatan.nama_kegiatan || '-'],
-                                        ["Masukan: Rp. #{number_with_delimiter(@program_kegiatan.pagu) || 0}"],
-                                        ["Keluaran: #{@program_kegiatan.indikator_kinerja}"],
-                                        ["Hasil: #{@program_kegiatan.target} #{@program_kegiatan.satuan}"],
+                                        ["Masukan: Rp. #{number_with_delimiter(indikator_kegiatan&.dig(:pagu)) || 0}"],
+                                        ["Keluaran: #{indikator_kegiatan&.dig(:indikator) || '-'}"],
+                                        ["Hasil: #{indikator_kegiatan&.dig(:target) || '-'} #{indikator_kegiatan&.dig(:satuan) || '-'}"],
                                         [{ content: 'Sub Kegiatan', rowspan: 5, borders: [:right], border_width: 0 }],
                                         [@program_kegiatan.nama_kegiatan || '-'],
-                                        ["Masukan: Rp. #{number_with_delimiter(@program_kegiatan.pagu) || 0}"],
-                                        ["Keluaran: #{@program_kegiatan.indikator_subkegiatan}"],
-                                        ["Hasil: #{@program_kegiatan.target_subkegiatan} #{@program_kegiatan.satuan_target_subkegiatan}"]
+                                        ["Masukan: Rp. #{number_with_delimiter(indikator_subkegiatan&.dig(:pagu)) || 0}"],
+                                        ["Keluaran: #{indikator_subkegiatan&.dig(:indikator) || '-'}"],
+                                        ["Hasil: #{indikator_subkegiatan&.dig(:target) || '-'} #{indikator_subkegiatan&.dig(:satuan) || '-'}"]
                                       ],
                                       cell_style: { size: 8, border_width: 0 }, width: table_subtable_width)
   tabel_program_kegiatan = [
     ['SKPD', { content: @program_kegiatan.opd.nama_opd, font_style: :bold }],
-    ['TAHUN ANGGARAN', { content: @program_kegiatan.tahun || 2023.to_s, font_style: :bold }],
+    ['TAHUN ANGGARAN', { content: @tahun, font_style: :bold }],
     ['PROGRAM', { content: @program_kegiatan.nama_program }],
     ['KODE PROGRAM', { content: @program_kegiatan.kode_program }],
     [{ content: 'ANALISIS SITUASI' }, { content: tabel_kesenjangan }],
     ['CAPAIAN PROGRAM', tabel_capaian_program],
     ['JUMLAH ANGGARAN SUBKEGIATAN',
-     { content: "Rp. #{number_with_delimiter(@program_kegiatan.pagu)}", font_style: :bold }],
+     { content: "Rp. #{number_with_delimiter(@gender.anggaran_gender)}", font_style: :bold }],
     ['RENCANA AKSI', tabel_rencana_aksi]
   ]
   pdf.table(tabel_program_kegiatan,

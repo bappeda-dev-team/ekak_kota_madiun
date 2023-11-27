@@ -417,13 +417,15 @@ class ProgramKegiatan < ApplicationRecord
     {
       indikator: indikator.indikator,
       target: indikator.target,
-      satuan: indikator.satuan
+      satuan: indikator.satuan,
+      pagu: indikator.pagu
     }
   rescue NoMethodError
     {
       indikator: nil,
       target: nil,
-      satuan: nil
+      satuan: nil,
+      pagu: 0
     }
   end
 
@@ -434,7 +436,8 @@ class ProgramKegiatan < ApplicationRecord
     {
       indikator: indikator.indikator,
       target: indikator.target,
-      satuan: indikator.satuan
+      satuan: indikator.satuan,
+      pagu: indikator.pagu
     }
   rescue NoMethodError
     {
@@ -451,13 +454,15 @@ class ProgramKegiatan < ApplicationRecord
     {
       indikator: indikator.indikator,
       target: indikator.target,
-      satuan: indikator.satuan
+      satuan: indikator.satuan,
+      pagu: indikator.pagu
     }
   rescue NoMethodError
     {
       indikator: nil,
       target: nil,
-      satuan: nil
+      satuan: nil,
+      pagu: 0
     }
   end
 
