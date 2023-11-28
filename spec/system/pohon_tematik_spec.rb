@@ -134,7 +134,7 @@ RSpec.describe "PohonTematiks", type: :system do
     end
 
     scenario 'edit sub sub tematik', :js do
-      click_on "Sub Sub-Tematik"
+      click_on "Sub Sub"
       within('.form-sub-sub-tematik') do
         fill_in 'sub_sub_tematik[tema]', with: 'Test sub sub-tematik'
         fill_in 'Indikator', with: 'Indikator a'
@@ -169,13 +169,13 @@ RSpec.describe "PohonTematiks", type: :system do
     scenario 'strategic dibawah sub sub tematik', :js do
       within all('.pohon-foot').last do
         click_on "Tampilkan"
-        click_on "Strategi Tematik Baru"
+        click_on "Strategic"
       end
 
       within('.form-strategi-tematik') do
         select2 'Komunikasi', from: 'Opd', search: 'komunikasi'
         fill_in 'strategi[strategi]', with: 'strategi a'
-        fill_in 'Indikator kinerja', with: 'ind as'
+        fill_in 'Indikator', with: 'ind as'
         fill_in 'Target', with: '100'
         fill_in 'Satuan', with: '%'
         fill_in 'strategi[keterangan]', with: 'kk'
@@ -193,7 +193,7 @@ RSpec.describe "PohonTematiks", type: :system do
       within('.form-strategi-tematik') do
         # select2 'Komunikasi', from: 'Opd', search: 'komunikasi'
         fill_in 'strategi[strategi]', with: 'strategi edit'
-        fill_in 'Indikator kinerja', with: 'ind edit'
+        fill_in 'Indikator', with: 'ind edit'
         fill_in 'Target', with: '100'
         fill_in 'Satuan', with: '%'
         fill_in 'strategi[keterangan]', with: 'kk'
