@@ -71,10 +71,6 @@ RSpec.configure do |config|
   end
   # FactoryBot
   config.include FactoryBot::Syntax::Methods
-  # Capybara
-  config.include Capybara::DSL
-  config.include CapybaraSelect2
-  config.include CapybaraSelect2::Helpers # if need specific helpers
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
 
@@ -99,12 +95,5 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :request
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-  config.include ShowMeTheCookies, type: :feature
-end
-
-Shoulda::Matchers.configure do |conf|
-  conf.integrate do |with|
-    with.test_framework :rspec
-    with.library :rails
-  end
+  # config.include ShowMeTheCookies, type: :feature
 end
