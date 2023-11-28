@@ -9,9 +9,9 @@ class PindahPohonKinerjasController < ApplicationController
   def show
     @role_atasan = case params[:role]
                    when 'eselon_3', 'tactical_pohon_kota'
-                     %w[eselon_2 strategi_pohon_kota]
+                     %w[eselon_2]
                    when 'eselon_4', 'operational_pohon_kota'
-                     %w[eselon_3 tactical_pohon_kota]
+                     %w[eselon_3]
                    when 'staff'
                      'eselon_4'
                    else
