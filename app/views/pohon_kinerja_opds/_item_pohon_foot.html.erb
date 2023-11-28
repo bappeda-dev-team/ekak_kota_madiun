@@ -22,7 +22,7 @@
     </div>
     <% if pohon.real.instance_of?(StrategiPohon) %>
       <div class="col hide d-none">
-        <% if privileged_user || current_user.eselon_user == pohon.role_atasan || current_user.eselon_user == pohon.role %>
+        <% if privileged_user || current_user.eselon_user == pohon.role_bawahan || current_user.eselon_user == pohon.role_atasan || current_user.eselon_user == pohon.role %>
           <%= link_to new_child_pohon_kinerja_opd_path(pohon, role: pohon.role_bawahan, title: pohon.judul_form, partial: partial),
            remote: true,
            data: {
