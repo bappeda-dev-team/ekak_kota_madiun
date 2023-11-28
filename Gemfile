@@ -77,7 +77,7 @@ group :test do
   gem 'show_me_the_cookies'
 
   # Easy installation and use of web drivers to run system tests with browsers
-  gem 'webdrivers'
+  # gem 'webdrivers'
 end
 
 gem 'active_link_to'

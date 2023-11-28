@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "IsuDanPermasalahans", type: :feature do
+RSpec.describe "IsuDanPermasalahans", type: :system do
   let(:user) { create(:eselon_4) }
   let(:periode) { create(:periode, tahun_awal: '2025', tahun_akhir: '2026') }
 

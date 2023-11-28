@@ -1,13 +1,16 @@
 require 'rails_helper'
 
 # TODO: change test to check class rather than content
-RSpec.describe 'Tim View', type: :feature do
+RSpec.describe 'Tim View', type: :system do
   before(:each) do
     create(:tim, nama_tim: 'Tim Kota', jenis: 'Kota', tahun: '2023')
     create(:tim, nama_tim: 'Tim Kota 2', jenis: 'Kota', tahun: '2023')
 
     user = create(:super_admin)
     login_as user
+    visit root_path
+    create_cookie('opd', 'test_opd')
+    create_cookie('tahun', '2025')
   end
 
   context "index" do
@@ -33,7 +36,7 @@ RSpec.describe 'Tim View', type: :feature do
       expect(page).to have_link('Hapus Tim', href: tim_path(Tim.first))
     end
 
-    it 'can delete item', :js, :headless do
+    it 'can delete item', :js do
       tim_contoh = Tim.last
       click_link('Hapus Tim', href: tim_path(tim_contoh))
       expect(page).to have_selector('div.swal2-container')
@@ -45,7 +48,7 @@ RSpec.describe 'Tim View', type: :feature do
       expect(page).not_to have_content(tim_contoh)
     end
 
-    it "spawn modal form on new button click", :js, :headless do
+    it "spawn modal form on new button click", :js do
       expect(page).to have_link('Tambah Tim', href: new_tim_path)
       find_link('Tambah Tim').click
       within('#form-modal') do

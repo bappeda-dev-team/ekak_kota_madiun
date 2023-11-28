@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "PohonKinerjaOpds", type: :feature do
+RSpec.describe "PohonKinerjaOpds", type: :system do
   let(:user) { create(:super_admin) }
 
   def strategi_test
