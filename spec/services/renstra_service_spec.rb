@@ -4,7 +4,7 @@ RSpec.describe RenstraService, type: :model do
   let(:kode_opd) { '5.01.5.05.0.00.02.0000' }
   let(:renstra) { RenstraService.new(kode_unik_opd: kode_opd, tahun: 2022) }
   let(:program_kegiatan_mock) { setup_opd_with_programs }
-  let(:indikator) { FactoryBot.create(:indikator, tahun: '2022', jenis: 'Renstra', sub_jenis: 'Program', indikator: 'indikator_test', kode: '5.01.01') }
+  let(:indikator) { FactoryBot.create(:indikator, tahun: '2022', jenis: 'Renstra', sub_jenis: 'Program', indikator: 'indikator_test', kode: '5.01.01', kode_opd: '5.01.5.05.0.00.02.0000') }
 
   def setup_opd_with_programs(*_args)
     opd = FactoryBot.create(:opd, kode_unik_opd: kode_opd)
