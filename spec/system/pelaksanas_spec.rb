@@ -55,13 +55,12 @@ RSpec.describe "Pelaksanas", type: :system do
 
       within("#form-pelaksana-body") do
         select2 'eselon_2', from: 'Role'
-        sleep 1
-        select2_select 'kepala-opd', from: 'Asn'
+        select2_select eselon_2.nama, from: 'Asn'
         fill_in 'Keterangan', with: 'keterangan a'
         click_on 'Simpan perubahan'
       end
 
-      expect(page).to have_text('kepala-opd')
+      expect(page).to have_text(eselon_2.nama)
     end
   end
 end

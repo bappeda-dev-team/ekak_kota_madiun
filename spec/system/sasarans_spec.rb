@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "Sasarans", type: :feature do
+RSpec.describe "Sasarans", type: :system do
   let(:user) { create(:eselon_4) }
 
   before(:each) do
@@ -15,11 +15,11 @@ RSpec.feature "Sasarans", type: :feature do
 
   scenario "new sasaran with pohon kinerja on top", js: true do
     visit new_sasaran_path(tipe: user.eselon_user)
-    expect(page).to have_content "Rencana Kinerja Baru"
-
     fill_in 'sasaran[sasaran_kinerja]', with: 'Test Rencana Kinerja'
-    fill_in 'indikator', with: 'Indikator'
-    fill_in 'target', with: '100'
-    fill_in 'satuan', with: '%'
+    fill_in 'Indikator kinerja', with: 'Indikator'
+    fill_in 'Target', with: '100'
+    fill_in 'Satuan', with: '%'
+    click_on 'Simpan'
+    expect(page).to have_text('Test Rencana Kinerja')
   end
 end

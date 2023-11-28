@@ -11,12 +11,12 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system) do
     driven_by :rack_test
-    Capybara.current_driver = :rack_test
+    # Capybara.current_driver = :rack_test
   end
 
   config.before(:each, type: :system, js: true) do
     driven_by :selenium_headless
-    Capybara.current_driver = :selenium_headless
+    # Capybara.current_driver = :selenium
   end
   # config.before(:suite) do
   #   DatabaseCleaner.clean_with(:truncation)
