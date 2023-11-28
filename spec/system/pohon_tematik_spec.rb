@@ -18,14 +18,15 @@ RSpec.describe "PohonTematiks", type: :system do
                             keterangan: 'test tema')
     create(:pohon, pohonable_type: 'Tematik',
                    pohonable_id: tema.id,
-                   role: 'pohon_kota')
+                   role: 'pohon_kota',
+                   tahun: '2023')
 
     visit kota_pohon_kinerja_index_path
 
-    within('.card-body') do
-      select2 'test tematik 1', from: 'Tematik', search: 'test'
-      click_on "Filter"
-    end
+    select2 'test tematik 1', from: 'Tematik', search: true
+    click_on "Filter"
+    # within('.card-body') do
+    # end
     expect(page).to have_content('Tematik Kota')
     expect(page).to have_content('test tematik 1')
     expect(page).to have_content('test tema')
@@ -116,7 +117,7 @@ RSpec.describe "PohonTematiks", type: :system do
     end
 
     scenario 'new sub sub tematik', :js do
-      click_on "Sub Sub-Tematik"
+      click_on "Sub Sub"
       within('.form-sub-sub-tematik') do
         fill_in 'sub_sub_tematik[tema]', with: 'Test sub sub-tematik'
         fill_in 'Indikator', with: 'Indikator a'
