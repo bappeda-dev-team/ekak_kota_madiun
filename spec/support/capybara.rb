@@ -15,8 +15,8 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :system, js: true) do
-    driven_by :selenium_chrome_headless
-    Capybara.current_driver = :selenium_chrome_headless
+    driven_by :selenium_headless
+    Capybara.current_driver = :selenium_headless
   end
   # config.before(:suite) do
   #   DatabaseCleaner.clean_with(:truncation)
