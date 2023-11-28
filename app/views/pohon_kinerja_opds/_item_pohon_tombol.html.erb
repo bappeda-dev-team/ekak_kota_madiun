@@ -51,7 +51,7 @@
         <div class="pohon-tombol mb-3">
           <div class="row">
             <div class="col">
-              <%= link_to terima_pohon_tematik_path(pohon),
+              <%= link_to terima_pohon_tematik_path(pohon, partial: 'pohon_kinerja_opds/item_pohon'),
                remote: true,
                method: :patch,
                class: 'btn btn-outline-success',

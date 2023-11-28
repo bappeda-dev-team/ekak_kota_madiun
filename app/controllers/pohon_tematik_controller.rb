@@ -206,8 +206,9 @@ class PohonTematikController < ApplicationController
 
   def terima
     @pohon = Pohon.find(params[:id])
+    partial = params[:partial]
     if @pohon.update(status: 'diterima', metadata: { processed_by: current_user.id, processed_at: DateTime.current })
-      html_content = render_to_string(partial: 'pohon_kinerja_opds/item_pohon',
+      html_content = render_to_string(partial: partial,
                                       formats: 'html',
                                       layout: false,
                                       locals: { pohon: @pohon })

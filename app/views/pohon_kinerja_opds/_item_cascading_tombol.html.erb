@@ -49,21 +49,39 @@
   <% else %>
     <div class="pohon-tombol mb-3">
       <div class="row">
-        <div class="col">
-          <%= link_to terima_pohon_tematik_path(pohon),
-           remote: true,
-           method: :patch,
-           class: 'btn btn-outline-success',
-           data: {
-             confirm_swal: "Terima strategi ?",
-             method: 'PATCH',
-             controller: 'pohon-tematik',
-             action: 'ajax:complete->pohon-tematik#terimaPohon:prevent'
-           } do %>
-            <i class="fas fa-check me-2"></i>
-            <span>Terima</span>
-          <% end %>
-        </div>
+        <% if pohon.processed? %>
+          <div class="col">
+            <%= link_to pelaksana_path(pohon),
+             remote: true,
+             class: 'btn btn-sm btn-outline-gray-900',
+             data: {
+               controller: 'form-modal',
+               action: 'form-modal#appendForm',
+               form_modal_location_param: 'form-pelaksana-body',
+               bs_target: '#form-pelaksana',
+               bs_toggle: 'modal'
+             } do %>
+              <span class="fas fa-user-plus me-2"></span>
+              <span>Pelaksana</span>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="col">
+            <%= link_to terima_pohon_tematik_path(pohon, partial: 'pohon_kinerja_opds/item_cascading'),
+             remote: true,
+             method: :patch,
+             class: 'btn btn-outline-success',
+             data: {
+               confirm_swal: "Terima strategi ?",
+               method: 'PATCH',
+               controller: 'pohon-tematik',
+               action: 'ajax:complete->pohon-tematik#terimaPohon:prevent'
+             } do %>
+              <i class="fas fa-check me-2"></i>
+              <span>Terima</span>
+            <% end %>
+          </div>
+        <% end %>
       </div>
     </div>
   <% end %>

@@ -1,10 +1,8 @@
 <% presenter = PohonKinerjaPresenter.new(pohon) %>
-<div class="tf-nc pokin <%= presenter.warna_pohon %>" id="<%= dom_id(pohon) %>">
-  <div class="pohon">
-    <%= render partial: 'pohon_kinerja_opds/item_pohon_title', locals: { pohon: presenter } %>
-    <%= render partial: 'pohon_kinerja_opds/item_cascading_body', locals: { pohon: presenter } %>
-    <%= render partial: 'pohon_kinerja_opds/item_cascading_pelaksana', locals: { pohon: presenter } %>
-    <%= render partial: 'pohon_kinerja_opds/item_cascading_tombol', locals: { pohon: presenter } %>
-    <%= render partial: 'pohon_kinerja_opds/item_pohon_foot', locals: { pohon: presenter, partial: 'pohon_cascading' } %>
-  </div>
+<div class="pohon">
+  <%= render partial: 'pohon_kinerja_opds/item_pohon_title', locals: { pohon: presenter } %>
+  <%= render partial: 'pohon_kinerja_opds/item_cascading_body', locals: { pohon: presenter } %>
+  <%= render partial: 'pohon_kinerja_opds/item_cascading_pelaksana', locals: { pohon: presenter } %>
+  <%= render partial: 'pohon_kinerja_opds/item_cascading_tombol', locals: { pohon: presenter } %>
+  <%= render partial: 'pohon_kinerja_opds/item_pohon_foot', locals: { pohon: presenter, partial: 'pohon_cascading' } %>
 </div>
