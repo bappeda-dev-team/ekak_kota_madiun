@@ -308,7 +308,7 @@ export default class extends Controller {
 
   terimaPohon(e) {
     const [xhr, status] = e.detail
-    const target = e.currentTarget.closest('.tf-nc')
+    const target = e.currentTarget.closest('li')
     const response = xhr.response
     const results = JSON.parse(response)
     const text = results.resText

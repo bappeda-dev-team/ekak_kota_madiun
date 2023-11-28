@@ -5,7 +5,7 @@ class Pelaksana
   end
 
   def strategi
-    @strategi = StrategiPohon.find(@strategi_id)
+    StrategiPohon.find(@strategi_id)
   end
 
   def id

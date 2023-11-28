@@ -208,10 +208,11 @@ class PohonTematikController < ApplicationController
     @pohon = Pohon.find(params[:id])
     partial = params[:partial]
     if @pohon.update(status: 'diterima', metadata: { processed_by: current_user.id, processed_at: DateTime.current })
+      new_pohon = @pohon.add_strategi_pohon
       html_content = render_to_string(partial: partial,
                                       formats: 'html',
                                       layout: false,
-                                      locals: { pohon: @pohon })
+                                      locals: { pohon: new_pohon })
       render json: { resText: "Strategi diterima", attachmentPartial: html_content }.to_json,
              status: :ok
     else

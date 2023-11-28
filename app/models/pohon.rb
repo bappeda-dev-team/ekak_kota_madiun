@@ -129,4 +129,31 @@ class Pohon < ApplicationRecord
   def id_strategi_parent
     "#{pohon_ref_id}-#{parent_pohon.role}"
   end
+
+  def add_strategi_pohon
+    strategi_new = pohonable.dup.attributes
+    new_role = case role
+               when 'strategi_pohon_kota'
+                 'eselon_2'
+               when 'tactical_pohon_kota'
+                 'eselon_3'
+               when 'operational_pohon_kota'
+                 'eselon_4'
+               else
+                 'staff'
+               end
+    sp_new = StrategiPohon.new(strategi_new.merge(role: new_role, tahun: tahun, type: 'StrategiPohon'))
+    sp_new.keterangan = '--dari kota--'
+    sp_new.save
+
+    pohonable.indikators.dup.each do |clones|
+      clones.tap do |clone|
+        clone.assign_attributes(jenis: 'StrategiPohon',
+                                sub_jenis: 'StrategiPohon',
+                                kode: sp_new.id)
+      end.save
+    end
+
+    sp_new
+  end
 end

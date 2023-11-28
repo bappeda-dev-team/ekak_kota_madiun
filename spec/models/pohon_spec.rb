@@ -27,5 +27,14 @@
 require 'rails_helper'
 
 RSpec.describe Pohon, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'should create StrategiPohon' do
+    strategi = create(:strategi, strategi: 'test', role: 'eselon_2', type: '')
+    pohon = create(:pohon, pohonable_type: 'Strategi', pohonable_id: strategi.id,
+                           keterangan: 'test', tahun: '2025')
+    strategi_pohon = pohon.add_strategi_pohon
+
+    expect(strategi_pohon.type).to eq('StrategiPohon')
+    expect(strategi_pohon.keterangan).to eq('--dari kota--')
+    # expect { strategi_pohon }.to change { StrategiPohon.count }.from(1).to(2)
+  end
 end
