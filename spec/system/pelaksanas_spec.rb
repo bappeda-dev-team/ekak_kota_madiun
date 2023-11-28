@@ -60,6 +60,8 @@ RSpec.describe "Pelaksanas", type: :system do
         click_on 'Simpan perubahan'
       end
 
+      click_on "Ok"
+
       expect(page).to have_text(eselon_2.nama)
     end
   end
