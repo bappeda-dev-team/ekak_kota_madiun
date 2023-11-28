@@ -142,7 +142,10 @@ class Pohon < ApplicationRecord
                else
                  'staff'
                end
-    sp_new = StrategiPohon.new(strategi_new.merge(role: new_role, tahun: tahun, type: 'StrategiPohon'))
+    sp_new = StrategiPohon.new(strategi_new.merge(role: new_role,
+                                                  tahun: tahun,
+                                                  strategi_cascade_link: pohonable_id,
+                                                  type: 'StrategiPohon'))
     sp_new.keterangan = '--dari kota--'
     sp_new.save
 
