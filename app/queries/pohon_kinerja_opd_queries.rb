@@ -21,8 +21,8 @@ class PohonKinerjaOpdQueries
   def pohon_kota
     Pohon.where(pohonable_type: 'Strategi',
                 tahun: @tahun, opd_id: opd.id.to_s,
-                status: ['diterima', nil])
-         .where.not("COALESCE(status, '') = ?", "ditolak")
+                status: ['', nil])
+         .where.not("COALESCE(status, '') in (?, ?)", "ditolak", "diterima")
          .includes(:pohonable, pohonable: [:indikator_sasarans])
   end
   memoize :pohon_kota
