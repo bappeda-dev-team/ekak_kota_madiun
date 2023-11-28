@@ -1,15 +1,30 @@
 require 'rails_helper'
 
-RSpec.describe "Gender Form", type: :feature do
+RSpec.describe "Gender Form", type: :system do
   let(:user) { create(:admin_opd) }
   let(:subkegiatan) { create(:program_kegiatan, nama_subkegiatan: 'Test Sub', opd: user.opd) }
-  let(:sasaran) { create(:sasaran, user: user, program_kegiatan: subkegiatan, sasaran_kinerja: 'contoh sasaran_kinerja', penerima_manfaat: 'contoh penerima_manfaat') }
+  let(:sasaran) do
+    create(:sasaran, user: user, program_kegiatan: subkegiatan,
+                     sasaran_kinerja: 'contoh sasaran_kinerja',
+                     penerima_manfaat: 'contoh penerima_manfaat',
+                     tahun: '2022')
+  end
   let!(:rincian) { create :rincian, sasaran: sasaran }
+  let!(:tahapan) { create(:tahapan, sasaran: sasaran) }
+
+  before(:each) do
+    login_as(user)
+    visit root_path
+    create_cookie('opd', 'test_opd')
+    create_cookie('tahun', '2022')
+    sasaran
+    rincian
+    tahapan
+  end
 
   scenario 'Admin fill GAP Form', js: true do
-    login_as(user)
     visit new_gender_path
-    select2 'Test Sub', from: 'SubKegiatan', search: 'Test Sub'
+    select2 'Test Sub', from: 'SubKegiatan', search: true, match: :first
     expect(page).to have_field('Sasaran subkegiatan', with: 'contoh sasaran_kinerja')
     expect(page).to have_field('Penerima manfaat', with: 'contoh penerima_manfaat')
     expect(page).to have_field('Data terpilah', with: 'Data Terpilah')
