@@ -22,6 +22,9 @@ module PrototypeKak
     config.load_defaults 6.1
     config.generators.stylesheets = false
     config.active_model.i18n_customize_full_message = true
+    config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, DateTime, ActiveSupport::TimeWithZone,
+                                                          ActiveSupport::TimeZone, ActiveSupport::HashWithIndifferentAccess]
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

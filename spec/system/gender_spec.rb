@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Gender Form", type: :system do
-  let(:user) { create(:admin_opd) }
+  let(:user) { create(:eselon_4) }
   let(:subkegiatan) { create(:program_kegiatan, nama_subkegiatan: 'Test Sub', opd: user.opd) }
   let(:sasaran) do
     create(:sasaran, user: user, program_kegiatan: subkegiatan,
@@ -9,8 +9,9 @@ RSpec.describe "Gender Form", type: :system do
                      penerima_manfaat: 'contoh penerima_manfaat',
                      tahun: '2022')
   end
-  let!(:rincian) { create :rincian, sasaran: sasaran }
-  let!(:tahapan) { create(:tahapan, sasaran: sasaran) }
+  let(:rincian) { create :rincian, sasaran: sasaran }
+  let(:tahapan) { create(:tahapan, sasaran: sasaran, id_rencana_aksi: 'test-a') }
+  let(:aksi) { create(:aksi, id_rencana_aksi: 'test-a') }
 
   before(:each) do
     login_as(user)
@@ -20,6 +21,7 @@ RSpec.describe "Gender Form", type: :system do
     sasaran
     rincian
     tahapan
+    aksi
   end
 
   scenario 'Admin fill GAP Form', js: true do
