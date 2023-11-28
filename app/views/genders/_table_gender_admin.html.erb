@@ -33,11 +33,14 @@
           <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">
           </td>
         </tr>
+        <% row_indikator_sasaran(sasaran).each do |indikator| %>
+          <%= indikator %>
+        <% end %>
         <% sasaran.genders.each do |gender| %>
           <tr>
             <th></th>
             <th>Penerima Manfaat</th>
-            <td class="text-wrap" colspan="5"><%= gender.penerima_manfaat.to_sentence %></td>
+            <td class="text-wrap" colspan="5"><%= gender.penerima_manfaat %></td>
             <td rowspan="9">
               <div class="row justify-content-center w-100">
                 <div class="col">
@@ -72,7 +75,7 @@
           <tr>
             <th></th>
             <th>Data Terpilah</th>
-            <td class="text-wrap" colspan="5"><%= gender.data_terpilah.to_sentence %></td>
+            <td class="text-wrap" colspan="5"><%= gender.data_terpilah %></td>
           </tr>
           <tr>
             <th rowspan="5"></th>
