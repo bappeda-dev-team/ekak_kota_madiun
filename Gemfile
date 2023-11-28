@@ -48,7 +48,6 @@ end
 
 group :development do
   gem 'annotate'
-  gem 'any_login'
   # capistrano thing
   gem 'capistrano', '~> 3.11', require: false
   gem 'capistrano-passenger', '~> 0.2.0', require: false
@@ -57,7 +56,6 @@ group :development do
   gem 'htmlbeautifier'
   gem 'letter_opener'
   gem 'listen', '~> 3.3'
-  gem 'online_migrations'
   # Display performance information such as SQL time and flame graphs for each request in your browser.
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem 'rack-mini-profiler', '~> 2.0'
@@ -83,6 +81,7 @@ group :test do
 end
 
 gem 'active_link_to'
+gem 'any_login'
 gem 'cancancan'
 gem 'caxlsx'
 gem 'caxlsx_rails'
@@ -92,6 +91,7 @@ gem 'http'
 gem 'memoist'
 gem 'oauth2'
 gem 'oj'
+gem 'online_migrations'
 gem 'pagy', '~> 5.10'
 gem 'prawn'
 gem 'prawn-markup'
