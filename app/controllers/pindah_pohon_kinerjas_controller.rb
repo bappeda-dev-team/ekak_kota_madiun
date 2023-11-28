@@ -64,26 +64,24 @@ class PindahPohonKinerjasController < ApplicationController
                    ]
                  end
     parent_id = new_parent[0]
-    update_pohon = if pindah_pohon_kinerja_params[:level_pohon].present?
+    parent_role = new_parent[-1]
+
+    update_pohon = if parent_role.include?('kota')
+                     role = case parent_role
+                            when 'strategi_pohon_kota'
+                              'tactical_pohon_kota'
+                            when 'tactical_pohon_kota'
+                              'operational_pohon_kota'
+                            else
+                              ''
+                            end
+
+                     @pindah_pohon_kinerja.create_new_pohon(role: role,
+                                                            pohon_ref_id: parent_id)
+                     @pindah_pohon_kinerja.update(strategi_ref_id: "pindah_ke_pohon_#{parent_id}")
+                   else
                      role = pindah_pohon_kinerja_params[:level_pohon]
                      @pindah_pohon_kinerja.update(role: role, strategi_ref_id: parent_id)
-                   else
-                     parent_role = new_parent[-1]
-
-                     if parent_role.include?('kota')
-                       role = case parent_role
-                              when 'strategi_pohon_kota'
-                                'tactical_pohon_kota'
-                              when 'tactical_pohon_kota'
-                                'operational_pohon_kota'
-                              else
-                                ''
-                              end
-
-                       @pindah_pohon_kinerja.create_new_pohon(role: role,
-                                                              pohon_ref_id: parent_id)
-                     end
-                     @pindah_pohon_kinerja.update(strategi_ref_id: parent_id)
                    end
 
     return unless update_pohon
