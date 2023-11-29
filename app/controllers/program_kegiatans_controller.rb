@@ -44,8 +44,16 @@ class ProgramKegiatansController < ApplicationController
 
   def list_program_with_sasarans_rincian
     param = params[:q] || ""
-    @program_kegiatans = ProgramKegiatan.with_sasarans_rincian.where("kode_opd ILIKE ?", "%#{current_user.kode_opd}%")
+    tahun = cookies[:tahun]
+    sasarans = Sasaran.belum_ada_genders
+                      .includes(%i[strategi usulans program_kegiatan indikator_sasarans])
+                      .where(tahun: tahun)
+                      .where.not(strategi_id: ['', nil])
+
+    @program_kegiatans = ProgramKegiatan.where("kode_opd ILIKE ?", "%#{current_user.kode_opd}%")
                                         .where("nama_subkegiatan ILIKE ?", "%#{param}%")
+                                        .joins(:sasarans)
+                                        .merge(sasarans)
     respond_to do |format|
       format.json
     end
