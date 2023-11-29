@@ -17,6 +17,8 @@ class PohonKinerjaOpdsController < ApplicationController
     @operational_opd = queries.operational_opd
     @staff_opd = queries.staff_opd
 
+    return if @tahun.nil?
+
     # TODO: extract to ajax
     tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
     @periode = Periode.find_tahun(tahun_bener)
@@ -47,6 +49,8 @@ class PohonKinerjaOpdsController < ApplicationController
     }
 
     # TODO: extract to ajax
+    return if @tahun.nil?
+
     tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
     @periode = Periode.find_tahun(tahun_bener)
     @tahun_awal = @periode.tahun_awal.to_i
