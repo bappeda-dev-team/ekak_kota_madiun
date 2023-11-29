@@ -188,7 +188,7 @@ class PohonTematikController < ApplicationController
           end
         end
       end
-      @pohon.update(keterangan: keterangan)
+      @pohon.update(keterangan: keterangan, opd_id: params[:strategi][:opd_id])
       html_content = render_to_string(partial: 'pohon_tematik/item_pohon_strategi',
                                       formats: 'html',
                                       layout: false,
@@ -296,7 +296,7 @@ class PohonTematikController < ApplicationController
     keterangan = params[:strategi][:keterangan]
     @strategi = @pohon.pohonable
     if @strategi.update(strategi_params)
-      @pohon.update(keterangan: keterangan)
+      @pohon.update(keterangan: keterangan, opd_id: params[:strategi][:opd_id])
       html_content = render_to_string(partial: 'pohon_tematik/item_pohon_tactical',
                                       formats: 'html',
                                       layout: false,
@@ -343,7 +343,7 @@ class PohonTematikController < ApplicationController
     keterangan = params[:strategi][:keterangan]
     @strategi = @pohon.pohonable
     if @strategi.update(strategi_params)
-      @pohon.update(keterangan: keterangan)
+      @pohon.update(keterangan: keterangan, opd_id: params[:strategi][:opd_id])
       html_content = render_to_string(partial: 'pohon_tematik/item_pohon_operational',
                                       formats: 'html',
                                       layout: false,
