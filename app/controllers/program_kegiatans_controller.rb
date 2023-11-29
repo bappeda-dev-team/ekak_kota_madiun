@@ -46,9 +46,8 @@ class ProgramKegiatansController < ApplicationController
     param = params[:q] || ""
     tahun = cookies[:tahun]
     sasarans = Sasaran.belum_ada_genders
-                      .includes(%i[strategi usulans program_kegiatan indikator_sasarans])
+                      .dengan_rincian
                       .where(tahun: tahun)
-                      .where.not(strategi_id: ['', nil])
 
     @program_kegiatans = ProgramKegiatan.where("kode_opd ILIKE ?", "%#{current_user.kode_opd}%")
                                         .where("nama_subkegiatan ILIKE ?", "%#{param}%")
