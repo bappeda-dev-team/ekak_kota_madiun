@@ -35,6 +35,20 @@ CREATE TYPE public.usulan_status AS ENUM (
 );
 
 
+--
+-- Name: trigger_e5ed29ff3f(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.trigger_e5ed29ff3f() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+  NEW."strategi_id_for_type_change" := NEW."strategi_id";
+  RETURN NEW;
+END;
+$$;
+
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -610,43 +624,6 @@ CREATE SEQUENCE public.dasar_hukums_id_seq
 --
 
 ALTER SEQUENCE public.dasar_hukums_id_seq OWNED BY public.dasar_hukums.id;
-
-
---
--- Name: devise_api_tokens; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.devise_api_tokens (
-    id bigint NOT NULL,
-    resource_owner_type character varying NOT NULL,
-    resource_owner_id bigint NOT NULL,
-    access_token character varying NOT NULL,
-    refresh_token character varying,
-    expires_in integer NOT NULL,
-    revoked_at timestamp without time zone,
-    previous_refresh_token character varying,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: devise_api_tokens_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.devise_api_tokens_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: devise_api_tokens_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.devise_api_tokens_id_seq OWNED BY public.devise_api_tokens.id;
 
 
 --
@@ -2099,7 +2076,8 @@ CREATE TABLE public.pohons (
     tahun character varying,
     pohon_ref_id bigint,
     status character varying,
-    metadata jsonb
+    metadata jsonb,
+    strategi_pohon_id bigint
 );
 
 
@@ -3282,7 +3260,9 @@ CREATE TABLE public.tematiks (
     tematik_ref_id bigint,
     type character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    level integer DEFAULT 1,
+    tahun character varying
 );
 
 
@@ -3651,13 +3631,6 @@ ALTER TABLE ONLY public.comments ALTER COLUMN id SET DEFAULT nextval('public.com
 --
 
 ALTER TABLE ONLY public.dasar_hukums ALTER COLUMN id SET DEFAULT nextval('public.dasar_hukums_id_seq'::regclass);
-
-
---
--- Name: devise_api_tokens id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.devise_api_tokens ALTER COLUMN id SET DEFAULT nextval('public.devise_api_tokens_id_seq'::regclass);
 
 
 --
@@ -4290,14 +4263,6 @@ ALTER TABLE ONLY public.comments
 
 ALTER TABLE ONLY public.dasar_hukums
     ADD CONSTRAINT dasar_hukums_pkey PRIMARY KEY (id);
-
-
---
--- Name: devise_api_tokens devise_api_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.devise_api_tokens
-    ADD CONSTRAINT devise_api_tokens_pkey PRIMARY KEY (id);
 
 
 --
@@ -4990,34 +4955,6 @@ CREATE INDEX index_comments_on_user_id ON public.comments USING btree (user_id);
 
 
 --
--- Name: index_devise_api_tokens_on_access_token; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_devise_api_tokens_on_access_token ON public.devise_api_tokens USING btree (access_token);
-
-
---
--- Name: index_devise_api_tokens_on_previous_refresh_token; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_devise_api_tokens_on_previous_refresh_token ON public.devise_api_tokens USING btree (previous_refresh_token);
-
-
---
--- Name: index_devise_api_tokens_on_refresh_token; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_devise_api_tokens_on_refresh_token ON public.devise_api_tokens USING btree (refresh_token);
-
-
---
--- Name: index_devise_api_tokens_on_resource_owner; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_devise_api_tokens_on_resource_owner ON public.devise_api_tokens USING btree (resource_owner_type, resource_owner_id);
-
-
---
 -- Name: index_external_urls_on_kode; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -5442,6 +5379,13 @@ CREATE INDEX index_usulans_on_sasaran_id ON public.usulans USING btree (sasaran_
 --
 
 CREATE INDEX index_usulans_on_usulanable ON public.usulans USING btree (usulanable_type, usulanable_id);
+
+
+--
+-- Name: sasarans trigger_e5ed29ff3f; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER trigger_e5ed29ff3f BEFORE INSERT OR UPDATE ON public.sasarans FOR EACH ROW EXECUTE FUNCTION public.trigger_e5ed29ff3f();
 
 
 --
@@ -5881,11 +5825,13 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231106051540'),
 ('20231109012201'),
 ('20231109012338'),
-('20231114032821'),
 ('20231115225443'),
 ('20231115233850'),
 ('20231115234747'),
 ('20231115235900'),
-('20231120053031');
+('20231120053031'),
+('20231129075933'),
+('20231130031534'),
+('20231130045944');
 
 

@@ -2,20 +2,21 @@
 #
 # Table name: pohons
 #
-#  id             :bigint           not null, primary key
-#  keterangan     :string
-#  metadata       :jsonb
-#  pohonable_type :string
-#  role           :string
-#  status         :string
-#  tahun          :string
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  opd_id         :bigint
-#  pohon_ref_id   :bigint
-#  pohonable_id   :bigint
-#  strategi_id    :bigint
-#  user_id        :bigint
+#  id                :bigint           not null, primary key
+#  keterangan        :string
+#  metadata          :jsonb
+#  pohonable_type    :string
+#  role              :string
+#  status            :string
+#  tahun             :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  opd_id            :bigint
+#  pohon_ref_id      :bigint
+#  pohonable_id      :bigint
+#  strategi_id       :bigint
+#  strategi_pohon_id :bigint
+#  user_id           :bigint
 #
 # Indexes
 #
@@ -130,7 +131,7 @@ class Pohon < ApplicationRecord
     "#{pohon_ref_id}-#{parent_pohon.role}"
   end
 
-  def add_strategi_pohon
+  def add_strategi_pohon(ref_id: '')
     strategi_new = pohonable.dup.attributes
     new_role = case role
                when 'strategi_pohon_kota'
@@ -145,7 +146,8 @@ class Pohon < ApplicationRecord
     sp_new = StrategiPohon.new(strategi_new.merge(role: new_role,
                                                   tahun: tahun,
                                                   strategi_cascade_link: pohonable_id,
-                                                  type: 'StrategiPohon'))
+                                                  type: 'StrategiPohon',
+                                                  strategi_ref_id: ref_id))
     sp_new.keterangan = '--dari kota--'
     sp_new.save
 

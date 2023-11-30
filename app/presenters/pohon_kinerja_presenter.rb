@@ -78,7 +78,7 @@ class PohonKinerjaPresenter
   def processed?
     return false unless @pohon.instance_of?(Pohon)
 
-    @pohon.status? && @pohon.metadata.key?("processed_by")
+    @pohon.status? && @pohon.metadata.key?("processed_by") && @pohon.strategi_pohon_id?
   end
 
   def taken?

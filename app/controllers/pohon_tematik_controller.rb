@@ -207,8 +207,19 @@ class PohonTematikController < ApplicationController
   def terima
     @pohon = Pohon.find(params[:id])
     partial = params[:partial]
-    if @pohon.update(status: 'diterima', metadata: { processed_by: current_user.id, processed_at: DateTime.current })
-      new_pohon = @pohon.add_strategi_pohon
+
+    new_pohon = @pohon.add_strategi_pohon
+    childs = Pohon.where(pohon_ref_id: @pohon.id,
+                         tahun: @pohon.tahun,
+                         opd_id: @pohon.opd_id)
+
+    childs.each do |pohon|
+      child_pohon = pohon.add_strategi_pohon(ref_id: new_pohon.id)
+      pohon.update(status: 'diterima', strategi_pohon_id: child_pohon.id,
+                   metadata: { processed_by: current_user.id, processed_at: DateTime.current })
+    end
+    if @pohon.update(status: 'diterima', strategi_pohon_id: new_pohon.id,
+                     metadata: { processed_by: current_user.id, processed_at: DateTime.current })
       html_content = render_to_string(partial: partial,
                                       formats: 'html',
                                       layout: false,

@@ -66,19 +66,30 @@ RSpec.describe "Pelaksanas", type: :system do
   scenario "tambah pelaksana pohon kinerja kota", js: true do
     opd_id = user.opd.id
     strategic = strategi(strategi: 'kota-111', opd_id: opd_id, role: 'strategi_pohon_kota', type: '')
+    tactical = strategi(strategi: 'tactical kota a', opd_id: opd_id, role: 'tactical_pohon_kota', type: '')
     strategi_kota = create(:pohon,
                            pohonable_type: 'Strategi',
                            pohonable_id: strategic.id,
                            opd_id: opd_id,
                            role: 'strategi_pohon_kota',
                            tahun: '2025')
+    tactical_kota = create(:pohon,
+                           pohonable_type: 'Strategi',
+                           pohonable_id: tactical.id,
+                           opd_id: opd_id,
+                           role: 'tactical_pohon_kota',
+                           tahun: '2025',
+                           pohon_ref_id: strategi_kota.id)
 
     eselon_2 = create(:eselon_2, nama: 'kepala-opd', email: 'contoh-email@email.com', nik: '123')
 
     visit cascading_pohon_kinerja_opds_path
 
+    click_on "Show All"
+
     expect(page).to have_text('Strategic - Dari Kota')
     expect(page).to have_text('kota-1')
+    expect(page).to have_text('tactical kota a')
 
     within("#pohon_#{strategi_kota.id}") do
       click_on "Terima"
@@ -110,5 +121,11 @@ RSpec.describe "Pelaksanas", type: :system do
     click_on "Ok"
 
     expect(page).to have_text(eselon_2.nama)
+
+    visit cascading_pohon_kinerja_opds_path
+
+    click_on "Show All"
+
+    expect(page).to have_text('tactical kota a')
   end
 end

@@ -2,20 +2,21 @@
 #
 # Table name: pohons
 #
-#  id             :bigint           not null, primary key
-#  keterangan     :string
-#  metadata       :jsonb
-#  pohonable_type :string
-#  role           :string
-#  status         :string
-#  tahun          :string
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  opd_id         :bigint
-#  pohon_ref_id   :bigint
-#  pohonable_id   :bigint
-#  strategi_id    :bigint
-#  user_id        :bigint
+#  id                :bigint           not null, primary key
+#  keterangan        :string
+#  metadata          :jsonb
+#  pohonable_type    :string
+#  role              :string
+#  status            :string
+#  tahun             :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  opd_id            :bigint
+#  pohon_ref_id      :bigint
+#  pohonable_id      :bigint
+#  strategi_id       :bigint
+#  strategi_pohon_id :bigint
+#  user_id           :bigint
 #
 # Indexes
 #
