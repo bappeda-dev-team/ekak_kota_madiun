@@ -20,7 +20,8 @@ class PohonKinerjaOpdQueries
 
   def pohon_kota
     Pohon.where(pohonable_type: 'Strategi',
-                tahun: @tahun, opd_id: opd.id.to_s)
+                tahun: @tahun, opd_id: opd.id.to_s,
+                status: [nil, '', 'diterima'])
          .includes(:pohonable, pohonable: [:indikator_sasarans])
   end
   memoize :pohon_kota
