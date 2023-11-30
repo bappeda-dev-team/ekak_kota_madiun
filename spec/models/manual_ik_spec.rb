@@ -28,5 +28,18 @@
 require 'rails_helper'
 
 RSpec.describe ManualIk, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should belong_to(:indikator_sasaran) }
+  it { should validate_presence_of(:perspektif) }
+  it { should validate_presence_of(:rhk) }
+  it { should validate_presence_of(:tujuan_rhk) }
+  it { should validate_presence_of(:indikator_kinerja) }
+  it { should validate_presence_of(:target) }
+  it { should validate_presence_of(:satuan) }
+  it { should validate_presence_of(:definisi) }
+  it { should validate_presence_of(:key_activities) }
+  it { should validate_presence_of(:formula) }
+  it { should validate_presence_of(:jenis_indikator) }
+  it { should validate_presence_of(:penanggung_jawab) }
+  it { should validate_presence_of(:penyedia_data) }
+  it { should validate_presence_of(:sumber_data) }
 end
