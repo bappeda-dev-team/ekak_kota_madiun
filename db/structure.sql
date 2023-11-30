@@ -35,19 +35,6 @@ CREATE TYPE public.usulan_status AS ENUM (
 );
 
 
---
--- Name: trigger_e5ed29ff3f(); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION public.trigger_e5ed29ff3f() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-  NEW."strategi_id_for_type_change" := NEW."strategi_id";
-  RETURN NEW;
-END;
-$$;
-
 
 SET default_tablespace = '';
 
@@ -5379,13 +5366,6 @@ CREATE INDEX index_usulans_on_sasaran_id ON public.usulans USING btree (sasaran_
 --
 
 CREATE INDEX index_usulans_on_usulanable ON public.usulans USING btree (usulanable_type, usulanable_id);
-
-
---
--- Name: sasarans trigger_e5ed29ff3f; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER trigger_e5ed29ff3f BEFORE INSERT OR UPDATE ON public.sasarans FOR EACH ROW EXECUTE FUNCTION public.trigger_e5ed29ff3f();
 
 
 --
