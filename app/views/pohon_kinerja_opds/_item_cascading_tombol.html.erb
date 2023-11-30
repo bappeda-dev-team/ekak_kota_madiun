@@ -48,25 +48,27 @@
     <% end %>
   <% else %>
     <% unless pohon.processed? %>
-      <div class="pohon-tombol mb-3">
-        <div class="row">
-          <div class="col">
-            <%= link_to terima_pohon_tematik_path(pohon, partial: 'pohon_kinerja_opds/pohon_cascading'),
-             remote: true,
-             method: :patch,
-             class: 'btn btn-outline-success',
-             data: {
-               confirm_swal: "Terima strategi ?",
-               method: 'PATCH',
-               controller: 'pohon-tematik',
-               action: 'ajax:complete->pohon-tematik#terimaPohon:prevent'
-             } do %>
-              <i class="fas fa-check me-2"></i>
-              <span>Terima</span>
-            <% end %>
+      <% if pohon.role == 'strategi_pohon_kota' %>
+        <div class="pohon-tombol mb-3">
+          <div class="row">
+            <div class="col">
+              <%= link_to terima_pohon_tematik_path(pohon, partial: 'pohon_kinerja_opds/pohon_cascading'),
+               remote: true,
+               method: :patch,
+               class: 'btn btn-outline-success',
+               data: {
+                 confirm_swal: "Terima strategi ?",
+                 method: 'PATCH',
+                 controller: 'pohon-tematik',
+                 action: 'ajax:complete->pohon-tematik#terimaPohon:prevent'
+               } do %>
+                <i class="fas fa-check me-2"></i>
+                <span>Terima</span>
+              <% end %>
+            </div>
           </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
