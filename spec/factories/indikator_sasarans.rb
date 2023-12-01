@@ -20,5 +20,8 @@
 #
 FactoryBot.define do
   factory :indikator_sasaran do
+    indikator_kinerja { 'indikator-kinerja-1' }
+    target { 10 }
+    satuan { '%' }
   end
 end

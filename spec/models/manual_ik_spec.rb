@@ -9,10 +9,10 @@
 #  formula              :string
 #  indikator_kinerja    :string
 #  jenis_indikator      :string
-#  jenis_output         :string
 #  key_activities       :string
 #  key_milestone        :string
 #  mulai                :string
+#  output_data          :string           default(["\"kinerja\""]), is an Array
 #  penanggung_jawab     :string
 #  penyedia_data        :string
 #  periode_pelaporan    :string
@@ -43,6 +43,11 @@ RSpec.describe ManualIk, type: :model do
   it { should validate_presence_of(:penanggung_jawab) }
   it { should validate_presence_of(:penyedia_data) }
   it { should validate_presence_of(:sumber_data) }
-  it { should validate_presence_of(:jenis_output) }
-  it { should validate_inclusion_of(:jenis_output).in_array(%w[kinerja penduduk spatial]) }
+
+  it 'should save output_data as Array' do
+    ind = create(:indikator_sasaran)
+    man_ik = create(:manual_ik, output_data: %w[kinerja penduduk], indikator_sasaran: ind)
+    expect(man_ik.output_data).to eq %w[kinerja penduduk]
+    expect(man_ik.output_data).to be_a Array
+  end
 end

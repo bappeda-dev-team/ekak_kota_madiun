@@ -9,10 +9,10 @@
 #  formula              :string
 #  indikator_kinerja    :string
 #  jenis_indikator      :string
-#  jenis_output         :string
 #  key_activities       :string
 #  key_milestone        :string
 #  mulai                :string
+#  output_data          :string           default(["\"kinerja\""]), is an Array
 #  penanggung_jawab     :string
 #  penyedia_data        :string
 #  periode_pelaporan    :string
@@ -29,6 +29,8 @@
 class ManualIk < ApplicationRecord
   belongs_to :indikator_sasaran
 
+  # serialize :output_data, Array
+
   validates :perspektif, presence: true
   validates :rhk, presence: true
   validates :tujuan_rhk, presence: true
@@ -42,8 +44,6 @@ class ManualIk < ApplicationRecord
   validates :penanggung_jawab, presence: true
   validates :penyedia_data, presence: true
   validates :sumber_data, presence: true
-  validates :jenis_output, presence: true,
-                           inclusion: { in: %w[kinerja penduduk spatial] }
 
   PERSPEKTIF = [
     'Penerima Layanan',
@@ -63,7 +63,7 @@ class ManualIk < ApplicationRecord
     Tahunan
   ].freeze
 
-  JENIS_OUTPUT = %w[
+  OUTPUT_DATA = %w[
     kinerja
     penduduk
     spatial

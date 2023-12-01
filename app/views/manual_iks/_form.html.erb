@@ -89,54 +89,20 @@
               <%= form.label :deskripsi_indikator_kinerja_individu, class: "form-label" %>
             </td>
             <td>
-              <% sasaran_atasan = Sasaran.find_by(id_rencana: @sasaran.sasaran_atasan_pohon[:sasaran_atasan_id]) %>
-              <% unless sasaran_atasan.nil? %>
-                <div class="row align-items-center border border-primary border-collapse">
-                  <div class="col-auto">
-                    <i class="far fa-lightbulb"></i>
-                  </div>
-                  <div class="col text-wrap border-start border-primary">
-                    <div class="row pb-2 border-bottom border-primary p-2">
-                      Definisi Indikator Atasan
-                    </div>
-                    <div class="row pb-2 border-bottom border-primary p-2">
-                      <%= @sasaran.sasaran_atasan_pohon[:nama_atasan] %>
-                    </div>
-                    <div class="row pb-2 border-bottom border-primary p-2">
-                      Sasaran Kinerja :
-                      <%= @sasaran.sasaran_atasan_pohon[:sasaran_atasan] %>
-                    </div>
-                    <% sasaran_atasan&.indikator_sasarans&.each do |indikator| %>
-                      <div class="row pb-2 p-2">
-                        Indikator Sasaran Atasan :
-                        <%= indikator&.indikator_kinerja %>
-                      </div>
-                      <div class="row pb-2 p-2">
-                        Definisi Atasan :
-                        <%= indikator&.manual_ik&.definisi %>
-                      </div>
-                    <% end %>
-                  </div>
-                </div>
-              <% end %>
               <div class="field">
                 <%= form.label :definisi, class: "form-label" %>
                 <%= form.text_area :definisi, class: "form-control",
-                  placeholder: "Menjelaskan penjelasan dari indikator kinerja. Bisa dijelaskan dengan detail atau perintah yang ingin diturunkan ke bawahan" %>
+                   placeholder: "Menjelaskan penjelasan dari indikator kinerja. Bisa dijelaskan dengan detail atau perintah yang ingin diturunkan ke bawahan" %>
               </div>
               <div class="field">
                 <%= form.label :key_activities, class: "form-label" %>
                 <%= form.text_area :key_activities, class: "form-control",
-                  placeholder: "hal yang paling menentukan dalam pencapaian rencana hasil kerja" %>
+                    placeholder: "hal yang paling menentukan dalam pencapaian rencana hasil kerja" %>
               </div>
-              <%# <div class="field"> %>
-              <%#   <%= form.label :key_milestone, class: "form-label" %1> %>
-              <%#   <%= form.text_field :key_milestone, class: "form-control" %1> %>
-              <%# </div> %>
               <div class="field">
                 <%= form.label :formula, class: "form-label" %>
                 <%= form.text_area :formula, class: "form-control",
-                  placeholder: "Menjelaskan bagaimana cara perhitungan target indikator" %>
+                    placeholder: "Menjelaskan bagaimana cara perhitungan target indikator" %>
               </div>
             </td>
           </tr>
@@ -157,10 +123,26 @@
             <td>
               <div class="field">
                 <%= form.select :jenis_indikator, ManualIk::JENIS_INDIKATOR, {include_blank: true},
-                  class: "form-control", data: {
-                    controller: "dropdown",
-                    placeholder: "Output / Outcome"
-                  } %>
+                 class: "form-control", data: {
+                   controller: "dropdown",
+                   placeholder: "Output / Outcome"
+                 } %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= form.label :output_data, class: "form-label" %>
+            </td>
+            <td>
+              <div class="field">
+                <% ManualIk::OUTPUT_DATA.each do |data| %>
+                  <% box_check = form.object.output_data.include?(data) %>
+                  <%= check_box_tag 'manual_ik[output_data][]', data, box_check , class: 'form-check-input' %>
+                  <%= form.label :output_data, class: 'form-check-label' do %>
+                    <span class="fw-bolder"><%= data.titleize %></span>
+                  <% end %>
+                <% end %>
               </div>
             </td>
           </tr>
@@ -219,9 +201,9 @@
               <div class="field">
                 <%= form.select :periode_pelaporan, ManualIk::PERIODE_PELAPORAN ,{include_blank: true},class: "form-control",
                  data: {
-                  controller: "dropdown",
-                  placeholder: "Pilih Periode Pelaporan"
-                } %>
+                   controller: "dropdown",
+                   placeholder: "Pilih Periode Pelaporan"
+                 } %>
               </div>
             </td>
           </tr>
