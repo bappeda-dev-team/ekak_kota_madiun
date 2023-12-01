@@ -71,14 +71,14 @@ RSpec.describe "PohonTematiks", type: :system do
       tema = create(:tematik, tema: 'test tematik 1',
                               keterangan: 'test tema')
 
-      sub_tema = create(:tematik, tema: 'test sub tematik',
-                                  type: 'SubTematik',
-                                  tematik_ref_id: tema.id,
-                                  keterangan: 'test sub tema')
+      @sub_tema = create(:tematik, tema: 'test sub tematik',
+                                   type: 'SubTematik',
+                                   tematik_ref_id: tema.id,
+                                   keterangan: 'test sub tema')
 
       sub_sub_tema = create(:tematik, tema: 'test sub sub tematik',
                                       type: 'SubSubTematik',
-                                      tematik_ref_id: sub_tema.id,
+                                      tematik_ref_id: @sub_tema.id,
                                       keterangan: 'test sub tema')
 
       pohon_tema = create(:pohon, pohonable_type: 'Tematik',
@@ -88,7 +88,7 @@ RSpec.describe "PohonTematiks", type: :system do
                                   role: 'pohon_kota')
 
       pohon_sub = create(:pohon, pohonable_type: 'SubTematik',
-                                 pohonable_id: sub_tema.id,
+                                 pohonable_id: @sub_tema.id,
                                  pohon_ref_id: pohon_tema.id,
                                  keterangan: 'test pohon sub',
                                  tahun: '2023',
@@ -164,6 +164,45 @@ RSpec.describe "PohonTematiks", type: :system do
       expect(page).to have_content 'update sub sub-tematik'
       expect(page).to have_content 'ind a'
       expect(page).to have_content 'ket sub sub'
+    end
+
+    scenario 'hapus sub tematik, dan naikkan child ke atas', :js do
+      within("#sub_tematik_#{@sub_tema.id}") do
+        click_on "Strategic"
+      end
+
+      within('.form-strategi-tematik') do
+        select2 'Komunikasi', from: 'Opd', search: 'komunikasi'
+        fill_in 'strategi[strategi]', with: 'strategic'
+        fill_in 'Indikator', with: 'ind as'
+        fill_in 'Target', with: '100'
+        fill_in 'Satuan', with: '%'
+        fill_in 'strategi[keterangan]', with: 'kk'
+        click_on 'Simpan'
+      end
+
+      click_button "Ok"
+
+      expect(page).to have_content 'strategic'
+
+      within("#sub_tematik_#{@sub_tema.id}") do
+        click_on "Hapus"
+      end
+
+      click_button "Ya"
+
+      click_button "Ok"
+
+      expect(page).not_to have_content('test sub tematik')
+
+      visit kota_pohon_kinerja_index_path
+
+      within('.card-body') do
+        select2 'test tematik 1', from: 'Tematik', search: 'test'
+        click_on "Filter"
+      end
+      expect(page).to have_content('test sub sub tematik')
+      expect(page).to have_content('strategic')
     end
 
     scenario 'strategic dibawah sub sub tematik', :js do

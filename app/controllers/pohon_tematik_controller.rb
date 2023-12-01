@@ -539,8 +539,23 @@ class PohonTematikController < ApplicationController
 
   def destroy
     @pohon = Pohon.find(params[:id])
-    childs = Pohon.where(pohon_ref_id: @pohon.id)
-    childs.destroy_all
+    sub_pohons = @pohon.sub_pohons
+
+    sub_pohons.each do |sub_pohon|
+      if sub_pohon.role == 'sub_sub_pohon_kota'
+        sub_tematik = @pohon.pohonable
+        sub_pohon.pohonable.update(type: sub_tematik.type,
+                                   tematik_ref_id: sub_tematik.tematik_ref_id)
+        sub_pohon.update(pohon_ref_id: @pohon.pohon_ref_id,
+                         role: @pohon.role,
+                         tahun: @pohon.tahun,
+                         pohonable_type: @pohon.pohonable_type)
+      else
+        sub_pohon.update(pohon_ref_id: @pohon.pohon_ref_id,
+                         tahun: @pohon.tahun)
+
+      end
+    end
     @pohon.destroy
 
     render json: { resText: "Dihapus" }.to_json, status: :accepted
