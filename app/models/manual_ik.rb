@@ -9,6 +9,7 @@
 #  formula              :string
 #  indikator_kinerja    :string
 #  jenis_indikator      :string
+#  jenis_output         :string
 #  key_activities       :string
 #  key_milestone        :string
 #  mulai                :string
@@ -41,6 +42,8 @@ class ManualIk < ApplicationRecord
   validates :penanggung_jawab, presence: true
   validates :penyedia_data, presence: true
   validates :sumber_data, presence: true
+  validates :jenis_output, presence: true,
+                           inclusion: { in: %w[kinerja penduduk spatial] }
 
   PERSPEKTIF = [
     'Penerima Layanan',
@@ -58,5 +61,11 @@ class ManualIk < ApplicationRecord
     Bulanan
     Triwulan
     Tahunan
+  ].freeze
+
+  JENIS_OUTPUT = %w[
+    kinerja
+    penduduk
+    spatial
   ].freeze
 end

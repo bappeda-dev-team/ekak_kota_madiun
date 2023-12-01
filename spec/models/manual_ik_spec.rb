@@ -9,6 +9,7 @@
 #  formula              :string
 #  indikator_kinerja    :string
 #  jenis_indikator      :string
+#  jenis_output         :string
 #  key_activities       :string
 #  key_milestone        :string
 #  mulai                :string
@@ -42,4 +43,6 @@ RSpec.describe ManualIk, type: :model do
   it { should validate_presence_of(:penanggung_jawab) }
   it { should validate_presence_of(:penyedia_data) }
   it { should validate_presence_of(:sumber_data) }
+  it { should validate_presence_of(:jenis_output) }
+  it { should validate_inclusion_of(:jenis_output).in_array(%w[kinerja penduduk spatial]) }
 end

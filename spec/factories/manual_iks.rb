@@ -9,6 +9,7 @@
 #  formula              :string
 #  indikator_kinerja    :string
 #  jenis_indikator      :string
+#  jenis_output         :string
 #  key_activities       :string
 #  key_milestone        :string
 #  mulai                :string

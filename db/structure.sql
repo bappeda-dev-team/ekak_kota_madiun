@@ -35,6 +35,19 @@ CREATE TYPE public.usulan_status AS ENUM (
 );
 
 
+--
+-- Name: trigger_e5ed29ff3f(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.trigger_e5ed29ff3f() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+  NEW."strategi_id_for_type_change" := NEW."strategi_id";
+  RETURN NEW;
+END;
+$$;
+
 
 SET default_tablespace = '';
 
@@ -1409,7 +1422,8 @@ CREATE TABLE public.manual_iks (
     budget character varying,
     indikator_sasaran_id character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    jenis_output character varying
 );
 
 
@@ -2562,7 +2576,8 @@ CREATE TABLE public.sasarans (
     nip_asn_sebelumnya character varying,
     opd_id bigint,
     keterangan character varying,
-    metadata jsonb
+    metadata jsonb,
+    strategi_id_for_type_change integer
 );
 
 
@@ -5369,6 +5384,13 @@ CREATE INDEX index_usulans_on_usulanable ON public.usulans USING btree (usulanab
 
 
 --
+-- Name: sasarans trigger_e5ed29ff3f; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER trigger_e5ed29ff3f BEFORE INSERT OR UPDATE ON public.sasarans FOR EACH ROW EXECUTE FUNCTION public.trigger_e5ed29ff3f();
+
+
+--
 -- Name: comments fk_rails_03de2dc08c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -5812,6 +5834,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231120053031'),
 ('20231129075933'),
 ('20231130031534'),
-('20231130045944');
+('20231130045944'),
+('20231130072226'),
+('20231130234550');
 
 
