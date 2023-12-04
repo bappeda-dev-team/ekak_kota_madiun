@@ -579,4 +579,12 @@ class Sasaran < ApplicationRecord
   def anggaran_genders
     genders.map(&:anggaran_gender).flatten.sum
   end
+
+  def pemilik
+    nip_asn.present? ? User.find_by(nik: nip_asn) : User.find_by(nik: nip_asn_sebelumnya)
+  end
+
+  def pemilik_asli?
+    nip_asn == nip_asn_sebelumnya || nip_asn_sebelumnya.nil?
+  end
 end

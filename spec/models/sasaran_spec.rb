@@ -239,4 +239,18 @@ RSpec.describe Sasaran, type: :model do
       expect(Sasaran.total_sudah_lengkap).to eq(1)
     end
   end
+
+  it 'should have pemilik' do
+    sasaran = create(:sasaran)
+    user = sasaran.user
+    expect(sasaran.pemilik).to eq(user)
+  end
+
+  it 'should know if pemilik_asli not change' do
+    sasaran = create(:sasaran)
+    user = sasaran.user
+    # new_user = create(:user, nik: '123', nama: 'new_user')
+    sasaran.update(nip_asn: nil, nip_asn_sebelumnya: user.nik)
+    expect(sasaran.pemilik_asli?).to be false
+  end
 end

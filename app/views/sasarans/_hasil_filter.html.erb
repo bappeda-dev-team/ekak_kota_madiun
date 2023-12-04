@@ -10,7 +10,7 @@
     <thead class="thead-light">
       <tr>
         <th class="border-bottom" scope="col">No.</th>
-        <th class="border-bottom" scope="col">ASN Eselon 4</th>
+        <th class="border-bottom" scope="col">Pemilik</th>
         <th class="border-bottom text-center" scope="col">Strategi</th>
         <th class="border-bottom text-center" scope="col">Sasaran Kinerja</th>
         <th class="border-bottom text-center" scope="col">Tahun</th>
@@ -24,7 +24,7 @@
       <% @sasarans.each.with_index(1) do |sasaran, i| %>
         <tr>
           <td class="text-gray-900 fw-bolder" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
-          <td class="text-gray-900 text-wrap" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.user.nama %></td>
+          <td class="text-gray-900 text-wrap" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.pemilik %></td>
           <td class="text-gray-900 text-wrap" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.strategi.strategi %></td>
           <td class="text-gray-900 text-wrap" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
           <td class="text-gray-900 text-wrap" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.tahun %></td>
