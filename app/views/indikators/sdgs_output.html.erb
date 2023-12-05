@@ -1,0 +1,32 @@
+<%= content_for :html_title, "Outcome LPPD OPD" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Indikator</li>
+  <li class="breadcrumb-item" aria-current="page">SDGS</li>
+  <li class="breadcrumb-item active" aria-current="page">Output</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout', title: "Indikator SDGS Output #{@nama_opd} - #{@tahun}" do %>
+    <div class="table-responsive mb-5">
+      <table class="table align-items-center">
+        <thead class="thead-tujuan">
+          <tr class="header-tujuan">
+            <th class="border" scope="col" width="20px">No.</th>
+            <th class="border" scope="col">Indikator</th>
+            <th class="border" scope="col" width="50px">Target</th>
+            <th class="border" scope="col">Satuan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @sdgs_output.each.with_index(1) do |indikator, no_iku| %>
+            <tr>
+              <td class="text-gray-900 text-wrap border" width='20px' scope="row"><%= no_iku %></td>
+              <td class="text-gray-900 text-wrap border"><%= indikator || '-' %></td>
+              <td class="text-gray-900 text-wrap border"><%= indikator.target %></td>
+              <td class="text-gray-900 text-wrap border"><%= indikator.satuan %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>

@@ -24,6 +24,12 @@ Rails.application.routes.draw do
       get :iku_opd
       get :lppd_outcome
       get :lppd_output
+      get :spm_outcome
+      get :spm_output
+      get :sdgs_outcome
+      get :sdgs_output
+      get :rb_outcome
+      get :rb_output
     end
   end
   resources :pindah_pohon_kinerjas, only: %i[show edit update]

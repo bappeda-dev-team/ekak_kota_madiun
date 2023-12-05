@@ -92,6 +92,24 @@ module AdminItemHelper
         multi: true, collections: indikator_lppd_items,
         id_target: 'lppd-indikator',
         identifier: 'lppd'
+      },
+      {
+        title: 'SPM', href: '#',
+        multi: true, collections: indikator_spm_items,
+        id_target: 'spm-indikator',
+        identifier: 'spm'
+      },
+      {
+        title: 'SDGs', href: '#',
+        multi: true, collections: indikator_sdgs_items,
+        id_target: 'sdgs-indikator',
+        identifier: 'sdgs'
+      },
+      {
+        title: 'RB', href: '#',
+        multi: true, collections: indikator_rb_items,
+        id_target: 'rb-indikator',
+        identifier: 'rb'
       }
     ]
   end
@@ -120,6 +138,39 @@ module AdminItemHelper
       },
       {
         title: 'Indikator Output', href: lppd_output_indikators_path, identifier: 'lppd_output'
+      }
+    ]
+  end
+
+  def indikator_spm_items
+    [
+      {
+        title: 'Indikator Outcome', href: spm_outcome_indikators_path, identifier: 'spm_outcome'
+      },
+      {
+        title: 'Indikator Output', href: spm_output_indikators_path, identifier: 'spm_output'
+      }
+    ]
+  end
+
+  def indikator_sdgs_items
+    [
+      {
+        title: 'Indikator Outcome', href: sdgs_outcome_indikators_path, identifier: 'sdgs_outcome'
+      },
+      {
+        title: 'Indikator Output', href: sdgs_output_indikators_path, identifier: 'sdgs_output'
+      }
+    ]
+  end
+
+  def indikator_rb_items
+    [
+      {
+        title: 'Indikator Outcome', href: rb_outcome_indikators_path, identifier: 'rb_outcome'
+      },
+      {
+        title: 'Indikator Output', href: rb_output_indikators_path, identifier: 'rb_output'
       }
     ]
   end

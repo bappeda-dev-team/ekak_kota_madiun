@@ -64,6 +64,24 @@ class Opd < ApplicationRecord
   has_many :lppd_output, lambda {
                            where(jenis: 'LPPD', sub_jenis: 'Output')
                          }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', class_name: 'Indikator'
+  has_many :spm_outcome, lambda {
+                           where(jenis: 'SPM', sub_jenis: 'Outcome')
+                         }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', class_name: 'Indikator'
+  has_many :spm_output, lambda {
+                          where(jenis: 'SPM', sub_jenis: 'Output')
+                        }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', class_name: 'Indikator'
+  has_many :sdgs_outcome, lambda {
+                            where(jenis: 'SDGS', sub_jenis: 'Outcome')
+                          }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', class_name: 'Indikator'
+  has_many :sdgs_output, lambda {
+                           where(jenis: 'SDGS', sub_jenis: 'Output')
+                         }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', class_name: 'Indikator'
+  has_many :rb_outcome, lambda {
+                          where(jenis: 'RB', sub_jenis: 'Outcome')
+                        }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', class_name: 'Indikator'
+  has_many :rb_output, lambda {
+                         where(jenis: 'RB', sub_jenis: 'Output')
+                       }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', class_name: 'Indikator'
 
   accepts_nested_attributes_for :indikator_sasarans, reject_if: :all_blank, allow_destroy: true
 

@@ -125,6 +125,54 @@ class IndikatorsController < ApplicationController
     @lppd_output = opd.lppd_output.where(tahun: @tahun)
   end
 
+  def spm_outcome
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = opd.nama_opd
+    @spm_outcome = opd.spm_outcome.where(tahun: @tahun)
+  end
+
+  def spm_output
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = opd.nama_opd
+    @spm_output = opd.spm_output.where(tahun: @tahun)
+  end
+
+  def sdgs_outcome
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = opd.nama_opd
+    @sdgs_outcome = opd.sdgs_outcome.where(tahun: @tahun)
+  end
+
+  def sdgs_output
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = opd.nama_opd
+    @sdgs_output = opd.sdgs_output.where(tahun: @tahun)
+  end
+
+  def rb_outcome
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = opd.nama_opd
+    @rb_outcome = opd.rb_outcome.where(tahun: @tahun)
+  end
+
+  def rb_output
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = opd.nama_opd
+    @rb_output = opd.rb_output.where(tahun: @tahun)
+  end
+
   # GET /indikators or /indikators.json
   def index
     @indikators = Indikator.all
