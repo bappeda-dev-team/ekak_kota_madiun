@@ -1,0 +1,2 @@
+module IndikatorsHelper
+end

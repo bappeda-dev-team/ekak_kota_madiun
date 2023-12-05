@@ -1,0 +1,17 @@
+<%= form_with(model: indikator) do |form| %>
+  <% if indikator.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(indikator.errors.count, "error") %> prohibited this indikator from being saved:</h2>
+
+      <ul>
+        <% indikator.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

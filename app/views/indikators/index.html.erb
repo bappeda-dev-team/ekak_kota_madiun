@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Indikators</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @indikators.each do |indikator| %>
+      <tr>
+        <td><%= link_to 'Show', indikator %></td>
+        <td><%= link_to 'Edit', edit_indikator_path(indikator) %></td>
+        <td><%= link_to 'Destroy', indikator, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Indikator', new_indikator_path %>
