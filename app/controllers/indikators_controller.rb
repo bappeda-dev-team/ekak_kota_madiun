@@ -40,12 +40,16 @@ class IndikatorsController < ApplicationController
     @iku_kota = iku_kota.map(&:indikators).compact_blank.flatten
   end
 
-  def renja_opd
+  def renja_opd; end
+
+  def item_renja_opd
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
     @program_kegiatans = @opd.program_renstra
+
+    render layout: false
   end
 
   # GET /indikators or /indikators.json

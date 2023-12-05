@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       get :rkpd_program
       get :iku_kota
       get :renja_opd
+      post :item_renja_opd
       get :sasaran_renja_opd
     end
   end
