@@ -1,21 +1,23 @@
 <li class="nav-item" >
-  <span class="nav-link d-flex justify-content-between align-items-center collapsed"
-        aria-expanded="false"
-        data-bs-toggle="collapse"
-        data-bs-target="#<%= item[:id_target] %>">
-    <span>
-      <span class="sidebar-icon">
-        <i class="<%= item[:icon] %> icon icon-xs me-2"></i>
+  <%= active_link_to(item[:href], active: :exact) do %>
+    <span class="nav-link d-flex justify-content-between align-items-center <%= is_active_link?(item[:href], :exact) ? '' : 'collapsed' %>"
+          aria-expanded="<%= is_active_link?(item[:href], :exact) %>"
+          data-bs-toggle="collapse"
+          data-bs-target="#<%= item[:id_target] %>">
+      <span>
+        <span class="sidebar-icon">
+          <i class="<%= item[:icon] %> icon icon-xs me-2"></i>
+        </span>
+        <span class="sidebar-text"><%= item[:title] %></span>
       </span>
-      <span class="sidebar-text"><%= item[:title] %></span>
+      <span class="link-arrow">
+        <i class="fas fa-angle-right icon icon-sm"></i>
+      </span>
     </span>
-    <span class="link-arrow">
-      <i class="fas fa-angle-right icon icon-sm"></i>
-    </span>
-  </span>
-  <div class="multi-level ms-3 collapse"
+  <% end %>
+  <div class="multi-level ms-3 <%= is_active_link?(item[:href], :exact) ? '' : 'collapse' %>"
        data-sidebar-target="item"
-       aria-expanded="false"
+       aria-expanded="<%= is_active_link?(item[:href], :exact) %>"
        role="list" id="<%= item[:id_target] %>">
     <ul class="flex-column nav">
       <% item[:collections].each do |sub_item| %>

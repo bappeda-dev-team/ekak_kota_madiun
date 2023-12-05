@@ -42,8 +42,10 @@ module AdminItemHelper
         icon: 'fas fa-building', identifier: 'opds/info'
       },
       {
-        title: 'Program/Kegiatan', href: pks_opd_program_kegiatans_path,
-        icon: 'fas fa-building', identifier: 'opds/info'
+        title: 'Indikator', href: "#",
+        multi: true, collections: indikator_opd_items,
+        id_target: "list-indikator-opd",
+        icon: 'fas fa-book-open', identifier: 'indikators'
       },
       {
         title: 'Daftar ASN', href: adminusers_path,
@@ -73,6 +75,25 @@ module AdminItemHelper
       { title: 'SSH', href: anggaran_sshes_path, identifier: 'anggaran_ssh' },
       { title: 'SBU', href: anggaran_sbus_index_path, identifier: 'anggaran_sbu' },
       { title: 'HSPK', href: anggaran_hspks_path, identifier: 'anggaran_hspks' }
+    ]
+  end
+
+  def indikator_opd_items
+    [
+      {
+        title: 'Renja', href: renja_opd_indikators_path,
+        multi: true, collections: indikator_renja_items,
+        id_target: 'renja-indikator',
+        identifier: 'renja'
+      }
+    ]
+  end
+
+  def indikator_renja_items
+    [
+      {
+        title: 'Sasaran', href: sasaran_renja_opd_indikators_path, identifier: 'rkpd_tujuan'
+      }
     ]
   end
 end
