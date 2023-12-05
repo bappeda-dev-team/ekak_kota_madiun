@@ -130,10 +130,27 @@ module SuperAdminItemHelper
   def indikator_items
     [
       {
-        title: 'RKPD', href: rkpd_indikators_path, identifier: 'rkpd'
+        title: 'RKPD', href: '#',
+        multi: true, collections: indikator_rkpd_items,
+        id_target: 'rkpd-indikator',
+        identifier: 'rkpd'
       },
       {
         title: 'IKU', href: iku_kota_indikators_path, identifier: 'iku_kota'
+      }
+    ]
+  end
+
+  def indikator_rkpd_items
+    [
+      {
+        title: 'Tujuan', href: rkpd_tujuan_indikators_path, identifier: 'rkpd_tujuan'
+      },
+      {
+        title: 'Sasaran', href: rkpd_sasaran_indikators_path, identifier: 'rkpd_sasaran'
+      },
+      {
+        title: 'Program', href: rkpd_program_indikators_path, identifier: 'rkpd_program'
       }
     ]
   end

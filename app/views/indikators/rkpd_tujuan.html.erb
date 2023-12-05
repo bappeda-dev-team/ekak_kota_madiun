@@ -1,0 +1,39 @@
+<%= content_for :html_title, "Indikator RKPD - Tujuan" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item">Indikator</li>
+  <li class="breadcrumb-item">RKPD</li>
+  <li class="breadcrumb-item active" aria-current="page">Tujuan</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout', title: "Indikator Tujuan Kota - #{@tahun}" do %>
+    <div class="table-responsive mb-5">
+      <table class="table align-items-center">
+        <thead class="thead-tujuan">
+          <tr class="header-tujuan">
+            <th class="border" scope="col" width="20px">No.</th>
+            <th class="border" scope="col">Tujuan Kota</th>
+            <th class="border" scope="col">Indikator</th>
+            <th class="border" scope="col" width="50px">Target</th>
+            <th class="border" scope="col">Satuan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tujuan_kota.each.with_index(1) do |tema, no_tujuan| %>
+            <% rowsize = tema.indikators.size + 1 %>
+            <tr>
+              <td class="text-gray-900 text-wrap border" width='20px' scope="row" rowspan="<%= rowsize %>"><%= no_tujuan %></td>
+              <td class="text-gray-900 text-wrap border" scope="row" rowspan="<%= rowsize %>" ><%= tema %></td>
+            </tr>
+            <% tema.indikators.each do |indikator| %>
+              <tr>
+                <td class="text-gray-900 text-wrap border"><%= indikator || '-' %></td>
+                <td class="text-gray-900 text-wrap border"><%= indikator.target %></td>
+                <td class="text-gray-900 text-wrap border"><%= indikator.satuan %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,40 @@
+<%= content_for :html_title, "Indikator RKPD - Program" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item">Indikator</li>
+  <li class="breadcrumb-item">RKPD</li>
+  <li class="breadcrumb-item active" aria-current="page">Program</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout', title: "Indikator Program - #{@tahun}" do %>
+    <div class="table-responsive mb-5">
+      <table class="table align-items-center">
+        <thead class="thead-tujuan">
+          <tr class="header-tujuan">
+            <th class="border" scope="col" width="20px">No.</th>
+            <th class="border" scope="col">Program</th>
+            <th class="border" scope="col">Indikator</th>
+            <th class="border" scope="col" width="50px">Target</th>
+            <th class="border" scope="col">Satuan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @program_kota.each do |opd, programs| %>
+            <tr>
+              <td class="text-wrap border bg-gray-300" colspan="5"><%= opd %></td>
+            </tr>
+            <% programs.each.with_index(1) do |program, no_prg| %>
+              <% ind = ind_prg(program, @tahun, opd.kode_unik_opd) %>
+              <tr>
+                <td class="text-gray-900 text-wrap border" width='20px' scope="row"><%= no_prg %></td>
+                <td class="text-gray-900 text-wrap border" scope="row"><%= program.nama_program %></td>
+                <td class="text-gray-900 text-wrap border"><%= ind&.dig(:indikator) %></td>
+                <td class="text-gray-900 text-wrap border"><%= ind&.dig(:target) %></td>
+                <td class="text-gray-900 text-wrap border"><%= ind&.dig(:satuan) %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>

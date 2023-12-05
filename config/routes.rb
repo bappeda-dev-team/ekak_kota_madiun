@@ -11,7 +11,9 @@ require "sidekiq_unique_jobs/web"
 Rails.application.routes.draw do
   resources :indikators do
     collection do
-      get :rkpd
+      get :rkpd_tujuan
+      get :rkpd_sasaran
+      get :rkpd_program
       get :iku_kota
     end
   end

@@ -16,15 +16,13 @@
           </tr>
         </thead>
         <tbody>
-          <% @iku_kota.each do |tema| %>
-            <% tema.indikators.each.with_index(1) do |indikator, no_iku| %>
-              <tr>
-                <td class="text-gray-900 text-wrap border" width='20px' scope="row"><%= no_iku %></td>
-                <td class="text-gray-900 text-wrap border"><%= indikator || '-' %></td>
-                <td class="text-gray-900 text-wrap border"><%= indikator.target %></td>
-                <td class="text-gray-900 text-wrap border"><%= indikator.satuan %></td>
-              </tr>
-            <% end %>
+          <% @iku_kota.each.with_index(1) do |indikator, no_iku| %>
+            <tr>
+              <td class="text-gray-900 text-wrap border" width='20px' scope="row"><%= no_iku %></td>
+              <td class="text-gray-900 text-wrap border"><%= indikator || '-' %></td>
+              <td class="text-gray-900 text-wrap border"><%= indikator.target %></td>
+              <td class="text-gray-900 text-wrap border"><%= indikator.satuan %></td>
+            </tr>
           <% end %>
         </tbody>
       </table>

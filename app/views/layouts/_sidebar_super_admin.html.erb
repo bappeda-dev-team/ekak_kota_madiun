@@ -1,11 +1,9 @@
-<li class="nav-item">
-  <%= active_link_to(root_path, wrap_tag: :li, wrap_class: 'nav-item', active: :exact, class: "nav-link") do %>
-    <span class="sidebar-icon">
-      <i class="fas fa-chart-pie icon icon-xs me-2"></i>
-    </span>
-    <span class="sidebar-text">Dashboard</span>
-  <% end %>
-</li>
+<%= active_link_to(root_path, wrap_tag: :li, wrap_class: 'nav-item', active: :exact, class: "nav-link") do %>
+  <span class="sidebar-icon">
+    <i class="fas fa-chart-pie icon icon-xs me-2"></i>
+  </span>
+  <span class="sidebar-text">Dashboard</span>
+<% end %>
 <%= render partial: 'shared/sidebar_item', locals: { title: "Data Master", items: super_admin_items, target: 'data-master-items' }, cached: true %>
 <%= render partial: 'shared/sidebar_item', locals: { title: "Perencanaan Kota", items: perencanaan_kota_items, target: 'perencanaan-kota-items' }, cached: true %>
 <%= render partial: 'shared/sidebar_item', locals: { title: "Perencanaan OPD", items: perencanaan_opd_items , target: 'perencanaan-opd-items' }, cached: true %>

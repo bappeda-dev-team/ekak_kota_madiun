@@ -1,12 +1,10 @@
 <% if current_user.has_any_role?(:eselon_2, :eselon_3, :eselon_4, :staff) %>
-  <li class="nav-item">
-    <%= active_link_to(root_path, wrap_tag: :li, wrap_class: 'nav-item', active: :exact, class: "nav-link") do %>
-      <span class="sidebar-icon">
-        <i class="fas fa-chart-pie icon icon-xs me-2"></i>
-      </span>
-      <span class="sidebar-text">Dashboard</span>
-    <% end %>
-  </li>
+  <%= active_link_to(root_path, wrap_tag: :li, wrap_class: 'nav-item', active: :exact, class: "nav-link") do %>
+    <span class="sidebar-icon">
+      <i class="fas fa-chart-pie icon icon-xs me-2"></i>
+    </span>
+    <span class="sidebar-text">Dashboard</span>
+  <% end %>
   <%= render partial: 'shared/sidebar_item', locals: { title: "Perencanaan", items: perencanaan_items, target: 'perencanaan-items' }, cached: true %>
   <%= render partial: 'shared/sidebar_item', locals: { title: "Laporan ASN", items: laporan_items , target: 'laporan-items' }, cached: true %>
 <% end %>

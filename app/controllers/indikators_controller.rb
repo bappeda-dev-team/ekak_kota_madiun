@@ -1,7 +1,7 @@
 class IndikatorsController < ApplicationController
   before_action :set_indikator, only: %i[show edit update destroy]
 
-  def rkpd
+  def rkpd_tujuan
     @tahun = cookies[:tahun]
 
     # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
@@ -9,7 +9,23 @@ class IndikatorsController < ApplicationController
     tematiks = PohonTematikQueries.new(tahun: @tahun)
 
     @tujuan_kota = tematiks.tematiks.map(&:pohonable).compact_blank
+  end
+
+  def rkpd_sasaran
+    @tahun = cookies[:tahun]
+
+    # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+
+    tematiks = PohonTematikQueries.new(tahun: @tahun)
+
     @sasaran_kota = tematiks.sub_tematiks.map(&:pohonable).compact_blank
+  end
+
+  def rkpd_program
+    @tahun = cookies[:tahun]
+
+    # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+
     @program_kota = ProgramKegiatan.programs.group_by(&:opd)
   end
 
@@ -18,7 +34,10 @@ class IndikatorsController < ApplicationController
 
     tematiks = PohonTematikQueries.new(tahun: @tahun)
 
-    @iku_kota = tematiks.tematiks.map(&:pohonable).compact_blank
+    tujuan_kota = tematiks.tematiks.map(&:pohonable).compact_blank
+    sasaran_kota = tematiks.sub_tematiks.map(&:pohonable).compact_blank
+    iku_kota = tujuan_kota + sasaran_kota
+    @iku_kota = iku_kota.map(&:indikators).compact_blank.flatten
   end
 
   # GET /indikators or /indikators.json
