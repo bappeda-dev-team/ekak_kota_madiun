@@ -47,6 +47,48 @@
                 <td class="text-gray-900 text-wrap border"><%= target&.satuan %></td>
               </tr>
             <% end %>
+            <tr>
+              <td class="text-gray-900 text-wrap border" colspan="6">Sasaran OPD</td>
+            </tr>
+            <% tujuan.strategis.each do |strategi| %>
+              <% strategi.sasarans.each.with_index(1) do |sasaran, no_sas| %>
+                <tr>
+                  <td class="text-gray-900 text-wrap border" width='20px' scope="row" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= no_sas %></td>
+                  <td class="text-gray-900 text-wrap border" colspan="2" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran %></td>
+                  <% if sasaran.indikator_sasarans.any? %>
+                    <%= indikator_sasaran(sasaran) %>
+                  <% else %>
+                    <td class="border" colspan="3">
+                      <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
+                    </td>
+                  <% end %>
+                </tr>
+                <% row_indikator_sasaran(sasaran).each do |indikator| %>
+                  <%= indikator %>
+                <% end %>
+              <% end %>
+              <tr>
+                <td class="text-gray-900 text-wrap border" colspan="6">Program</td>
+              </tr>
+              <% program_pohon(strategi, 'eselon_2').each.with_index(1) do |program, no_prg| %>
+                <tr>
+                  <td class="text-gray-900 text-wrap border" width='20px' scope="row"><%= no_prg %></td>
+                  <td class="text-gray-900 text-wrap border" colspan="2">
+                    <p>
+                      <%= program&.nama_program || '-' %>
+                      (<%= program&.kode_program || '-' %>)
+                    </p>
+                  </td>
+                  <% indikator_prg = indikator_prg_rekin(@tahun_bener, @opd, program) %>
+                  <td class="text-gray-900 text-wrap border" data-table-tematik-target="indikators"><%= indikator_prg.dig(:indikator) %></td>
+                  <td class="text-gray-900 text-wrap border" data-table-tematik-target="indikators"><%= indikator_prg.dig(:target) %></td>
+                  <td class="text-gray-900 text-wrap border" data-table-tematik-target="indikators"><%= indikator_prg.dig(:satuan) %></td>
+                </tr>
+              <% end %>
+            <% end %>
+            <tr>
+              <td colspan="6" class="rekap_pokin_separator"> </td>
+            </tr>
           <% end %>
         </tbody>
       </table>
