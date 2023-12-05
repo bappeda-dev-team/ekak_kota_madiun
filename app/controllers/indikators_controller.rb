@@ -40,8 +40,10 @@ class IndikatorsController < ApplicationController
     @iku_kota = iku_kota.map(&:indikators).compact_blank.flatten
   end
 
+  # GET /indikators/renja_opd
   def renja_opd; end
 
+  # POST /indikators/item_renja_opd -> ajax page from renja_opd
   def item_renja_opd
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
