@@ -80,23 +80,18 @@
         </thead>
         <tbody>
           <% @program_kota.each do |opd, programs| %>
-            <% tahun_bener = tahun_fix(@tahun) %>
             <tr>
               <td class="text-wrap border bg-gray-300" colspan="5"><%= opd %></td>
             </tr>
             <% programs.each.with_index(1) do |program, no_prg| %>
-              <% row_prg = program.indikator_program_renstra.where(tahun: @tahun).size + 1 %>
+              <% ind_prg = program.indikator_program_tahun(@tahun, opd.kode_unik_opd) %>
               <tr>
-                <td class="text-gray-900 text-wrap border" rowspan="<%= row_prg %>" width='20px' scope="row"><%= no_prg %></td>
-                <td class="text-gray-900 text-wrap border" rowspan="<%= row_prg %>" scope="row"><%= program.nama_program %></td>
+                <td class="text-gray-900 text-wrap border" width='20px' scope="row"><%= no_prg %></td>
+                <td class="text-gray-900 text-wrap border" scope="row"><%= program.nama_program %></td>
+                <td class="text-gray-900 text-wrap border"><%= ind_prg&.dig(:indikator) %></td>
+                <td class="text-gray-900 text-wrap border"><%= ind_prg&.dig(:target) %></td>
+                <td class="text-gray-900 text-wrap border"><%= ind_prg&.dig(:satuan) %></td>
               </tr>
-              <% program.indikator_program_renstra.where(tahun: tahun_bener).each do |ind_prg| %>
-                <tr>
-                  <td class="text-gray-900 text-wrap border"><%= ind_prg || '-' %></td>
-                  <td class="text-gray-900 text-wrap border"><%= ind_prg.target %></td>
-                  <td class="text-gray-900 text-wrap border"><%= ind_prg.satuan %></td>
-                </tr>
-              <% end %>
             <% end %>
           <% end %>
         </tbody>
