@@ -92,7 +92,16 @@ module AdminItemHelper
   def indikator_renja_items
     [
       {
-        title: 'Sasaran', href: sasaran_renja_opd_indikators_path, identifier: 'rkpd_tujuan'
+        title: 'Sasaran', href: sasaran_renja_opd_indikators_path, identifier: 'sasaran_renja_opd'
+      },
+      {
+        title: 'Program', href: program_renja_opd_indikators_path, identifier: 'sasaran_program_opd'
+      },
+      {
+        title: 'Kegiatan', href: kegiatan_renja_opd_indikators_path, identifier: 'sasaran_kegiatan_opd'
+      },
+      {
+        title: 'Subkegiatan', href: subkegiatan_renja_opd_indikators_path, identifier: 'sasaran_subkegiatan_opd'
       }
     ]
   end

@@ -18,6 +18,9 @@ Rails.application.routes.draw do
       get :renja_opd
       post :item_renja_opd
       get :sasaran_renja_opd
+      get :program_renja_opd
+      get :kegiatan_renja_opd
+      get :subkegiatan_renja_opd
     end
   end
   resources :pindah_pohon_kinerjas, only: %i[show edit update]

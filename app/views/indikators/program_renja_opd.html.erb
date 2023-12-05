@@ -1,0 +1,39 @@
+<%= content_for :html_title, "Indikator Program OPD" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item">Indikator</li>
+  <li class="breadcrumb-item">Renja</li>
+  <li class="breadcrumb-item active" aria-current="page">Program</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout', title: "Indikator Program #{@nama_opd} - #{@tahun}" do %>
+    <div class="table-responsive">
+      <table class="table align-items-center" data-controller='form-modal' data-action='ajax-update@window->form-modal#updateTargetValue'>
+        <thead class="thead-program">
+          <tr >
+            <th class="border" scope="col" rowspan="2">No.</th>
+            <th class="border" scope="col" rowspan="2">Program</th>
+            <th class="border text-center" scope="col" rowspan="2">Aksi</th>
+            <th class="border text-center" scope="col" colspan="5"><%= @tahun %></th>
+          </tr>
+          <tr>
+            <th class="border" scope="col">Indikator</th>
+            <th class="border" scope="col" width="50px">Target</th>
+            <th class="border" scope="col">Satuan</th>
+            <th class="border" scope="col">Pagu Indikatif</th>
+            <th class="border" scope="col">Keterangan</th>
+          </tr>
+        </thead>
+        <% @programs.each.with_index(1) do |program, nomor| %>
+          <tbody>
+            <tr>
+              <td class="text-gray-900 text-wrap border"  ><%= nomor %></td>
+              <td class="text-gray-900 text-wrap border"  ><%= program.nama_program %></td>
+              <td class="text-gray-900 text-wrap border" >-</td>
+              <%= render 'filter/row_indikator_renja',indikators: program.indikator_renstras_new('program', @kode_opd)[:indikator_program], tahun: @tahun, debug: false %>
+            </tr>
+          </tbody>
+        <% end %>
+      </table>
+    </div>
+  <% end %>
+<% end %>

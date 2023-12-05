@@ -1,0 +1,39 @@
+<%= content_for :html_title, "Indikator Kegiatan OPD" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item">Indikator</li>
+  <li class="breadcrumb-item">Renja</li>
+  <li class="breadcrumb-item active" aria-current="page">Kegiatan</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout', title: "Indikator Kegiatan #{@nama_opd} - #{@tahun}" do %>
+    <div class="table-responsive">
+      <table class="table align-items-center" data-controller='form-modal' data-action='ajax-update@window->form-modal#updateTargetValue'>
+        <thead class="thead-kegiatan">
+          <tr >
+            <th class="border" scope="col" rowspan="2">No.</th>
+            <th class="border" scope="col" rowspan="2">Kegiatan</th>
+            <th class="border text-center" scope="col" rowspan="2">Aksi</th>
+            <th class="border text-center" scope="col" colspan="5"><%= @tahun %></th>
+          </tr>
+          <tr>
+            <th class="border" scope="col">Indikator</th>
+            <th class="border" scope="col" width="50px">Target</th>
+            <th class="border" scope="col">Satuan</th>
+            <th class="border" scope="col">Pagu Indikatif</th>
+            <th class="border" scope="col">Keterangan</th>
+          </tr>
+        </thead>
+        <% @kegiatans.each.with_index(1) do |kegiatan, nomor| %>
+          <tbody>
+            <tr>
+              <td class="text-gray-900 text-wrap border"  ><%= nomor %></td>
+              <td class="text-gray-900 text-wrap border"  ><%= kegiatan.nama_kegiatan %></td>
+              <td class="text-gray-900 text-wrap border" >-</td>
+              <%= render 'filter/row_indikator_renja',indikators: kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan], tahun: @tahun, debug: false %>
+            </tr>
+          </tbody>
+        <% end %>
+      </table>
+    </div>
+  <% end %>
+<% end %>

@@ -64,6 +64,24 @@ class IndikatorsController < ApplicationController
     @sasarans_opd = pohon_kinerja.strategi_opd.map(&:sasarans).flatten.compact_blank
   end
 
+  def program_renja_opd
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    @programs = @opd.program_renstra
+  end
+
+  def kegiatan_renja_opd
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    @kegiatans = @opd.kegiatans_renstra
+  end
+
   # GET /indikators or /indikators.json
   def index
     @indikators = Indikator.all
