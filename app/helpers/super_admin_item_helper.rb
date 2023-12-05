@@ -103,6 +103,12 @@ module SuperAdminItemHelper
       {
         title: 'Pohon Kinerja Kota', href: kota_pohon_kinerja_index_path,
         icon: 'fas fa-tree', identifier: 'pohon_kinerja/kota'
+      },
+      {
+        title: 'Indikator', href: "#",
+        multi: true, collections: indikator_items,
+        id_target: "list-indikator",
+        icon: 'fas fa-book-open', identifier: 'indikators'
       }
     ]
   end
@@ -117,6 +123,14 @@ module SuperAdminItemHelper
       },
       {
         title: 'Kebutuhan SPBE', href: kebutuhans_path, identifier: 'kebutuhan'
+      }
+    ]
+  end
+
+  def indikator_items
+    [
+      {
+        title: 'RKPD', href: rkpd_indikators_path, identifier: 'rkpd'
       }
     ]
   end

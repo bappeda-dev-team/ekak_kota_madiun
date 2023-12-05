@@ -3,14 +3,14 @@ class IndikatorsController < ApplicationController
 
   def rkpd
     @tahun = cookies[:tahun]
-    @kode_opd = cookies[:opd]
 
-    @tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
 
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @nama_opd = @opd.nama_opd
-    @tujuan_opds = @opd.tujuan_opds
-                       .by_periode(@tahun_bener)
+    @tematiks = PohonTematikQueries.new(tahun: @tahun)
+
+    @tujuan_kota = @tematiks.tematiks.map(&:pohonable).compact_blank
+    @sasaran_kota = @tematiks.sub_tematiks.map(&:pohonable).compact_blank
+    @program_kota = ProgramKegiatan.programs.group_by(&:opd)
   end
 
   # GET /indikators or /indikators.json

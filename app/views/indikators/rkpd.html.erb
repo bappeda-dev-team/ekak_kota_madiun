@@ -4,91 +4,100 @@
   <li class="breadcrumb-item active" aria-current="page">RKPD</li>
 <% end %>
 <% content_for :view_utama do %>
-  <%= render 'shared/card_layout', title: "Indikator RKPD - #{@tahun}" do %>
+  <%= render 'shared/card_layout', title: "Tujuan Kota - #{@tahun}" do %>
     <div class="table-responsive mb-5">
       <table class="table align-items-center">
         <thead class="thead-tujuan">
           <tr class="header-tujuan">
             <th class="border" scope="col" width="20px">No.</th>
-            <th class="border" scope="col">Urusan / Bidang Urusan</th>
-            <th class="border" scope="col">Tujuan OPD</th>
+            <th class="border" scope="col">Tujuan Kota</th>
             <th class="border" scope="col">Indikator</th>
             <th class="border" scope="col" width="50px">Target</th>
             <th class="border" scope="col">Satuan</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="text-gray-900 text-wrap border" scope="row">OPD</td>
-            <td class="text-gray-900 text-wrap border" colspan="5"><%= @nama_opd %></td>
-          </tr>
-          <% @tujuan_opds.each.with_index(1) do |tujuan, no_tujuan| %>
-            <% rowsize = tujuan.indikators.size + 1 %>
+          <% @tujuan_kota.each.with_index(1) do |tema, no_tujuan| %>
+            <% rowsize = tema.indikators.size + 1 %>
             <tr>
               <td class="text-gray-900 text-wrap border" width='20px' scope="row" rowspan="<%= rowsize %>"><%= no_tujuan %></td>
-              <td class="text-gray-900 text-wrap border" scope="row" rowspan="<%= rowsize %>" >
-                <div class="grid gap-2">
-                  <p>
-                    <%= tujuan.urusan_opd %>
-                  </p>
-                  <hr/>
-                  <p>
-                    <%= tujuan.bidang_urusan_opd %>
-                  </p>
-                </div>
-              </td>
-              <td class="text-gray-900 text-wrap border" style="width: 30%;" scope="row" rowspan="<%= rowsize %>" ><%= tujuan.tujuan %></td>
+              <td class="text-gray-900 text-wrap border" scope="row" rowspan="<%= rowsize %>" ><%= tema %></td>
             </tr>
-            <% tujuan.indikators.each do |indikator_tujuan| %>
+            <% tema.indikators.each do |indikator| %>
               <tr>
-                <td class="text-gray-900 text-wrap border"  ><%= indikator_tujuan || '-' %></td>
-                <% target = indikator_tujuan.targets.find_by(tahun: @tahun_bener) %>
-                <td class="text-gray-900 text-wrap border"><%= target %></td>
-                <td class="text-gray-900 text-wrap border"><%= target&.satuan %></td>
+                <td class="text-gray-900 text-wrap border"><%= indikator || '-' %></td>
+                <td class="text-gray-900 text-wrap border"><%= indikator.target %></td>
+                <td class="text-gray-900 text-wrap border"><%= indikator.satuan %></td>
               </tr>
             <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+  <%= render 'shared/card_layout', title: "Sasaran Kota - #{@tahun}" do %>
+    <div class="table-responsive mb-5">
+      <table class="table align-items-center">
+        <thead class="thead-tujuan">
+          <tr class="header-tujuan">
+            <th class="border" scope="col" width="20px">No.</th>
+            <th class="border" scope="col">Sasaran Kota</th>
+            <th class="border" scope="col">Indikator</th>
+            <th class="border" scope="col" width="50px">Target</th>
+            <th class="border" scope="col">Satuan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @sasaran_kota.each.with_index(1) do |sub_tema, no_sas| %>
+            <% row_sub = sub_tema.indikators.size + 1 %>
             <tr>
-              <td class="text-gray-900 text-wrap border" colspan="6">Sasaran OPD</td>
+              <td class="text-gray-900 text-wrap border" width='20px' scope="row" rowspan="<%= row_sub %>"><%= no_sas %></td>
+              <td class="text-gray-900 text-wrap border" scope="row" rowspan="<%= row_sub %>" ><%= sub_tema %></td>
             </tr>
-            <% tujuan.strategis.each do |strategi| %>
-              <% strategi.sasarans.each.with_index(1) do |sasaran, no_sas| %>
-                <tr>
-                  <td class="text-gray-900 text-wrap border" width='20px' scope="row" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= no_sas %></td>
-                  <td class="text-gray-900 text-wrap border" colspan="2" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran %></td>
-                  <% if sasaran.indikator_sasarans.any? %>
-                    <%= indikator_sasaran(sasaran) %>
-                  <% else %>
-                    <td class="border" colspan="3">
-                      <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
-                    </td>
-                  <% end %>
-                </tr>
-                <% row_indikator_sasaran(sasaran).each do |indikator| %>
-                  <%= indikator %>
-                <% end %>
-              <% end %>
+            <% sub_tema.indikators.each do |indikator_sub| %>
               <tr>
-                <td class="text-gray-900 text-wrap border" colspan="6">Program</td>
+                <td class="text-gray-900 text-wrap border"><%= indikator_sub || '-' %></td>
+                <td class="text-gray-900 text-wrap border"><%= indikator_sub.target %></td>
+                <td class="text-gray-900 text-wrap border"><%= indikator_sub.satuan %></td>
               </tr>
-              <% program_pohon(strategi, 'eselon_2').each.with_index(1) do |program, no_prg| %>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+  <%= render 'shared/card_layout', title: "Program" do %>
+    <div class="table-responsive mb-5">
+      <table class="table align-items-center">
+        <thead class="thead-tujuan">
+          <tr class="header-tujuan">
+            <th class="border" scope="col" width="20px">No.</th>
+            <th class="border" scope="col">Program</th>
+            <th class="border" scope="col">Indikator</th>
+            <th class="border" scope="col" width="50px">Target</th>
+            <th class="border" scope="col">Satuan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @program_kota.each do |opd, programs| %>
+            <% tahun_bener = tahun_fix(@tahun) %>
+            <tr>
+              <td class="text-wrap border bg-gray-300" colspan="5"><%= opd %></td>
+            </tr>
+            <% programs.each.with_index(1) do |program, no_prg| %>
+              <% row_prg = program.indikator_program_renstra.where(tahun: @tahun).size + 1 %>
+              <tr>
+                <td class="text-gray-900 text-wrap border" rowspan="<%= row_prg %>" width='20px' scope="row"><%= no_prg %></td>
+                <td class="text-gray-900 text-wrap border" rowspan="<%= row_prg %>" scope="row"><%= program.nama_program %></td>
+              </tr>
+              <% program.indikator_program_renstra.where(tahun: tahun_bener).each do |ind_prg| %>
                 <tr>
-                  <td class="text-gray-900 text-wrap border" width='20px' scope="row"><%= no_prg %></td>
-                  <td class="text-gray-900 text-wrap border" colspan="2">
-                    <p>
-                      <%= program&.nama_program || '-' %>
-                      (<%= program&.kode_program || '-' %>)
-                    </p>
-                  </td>
-                  <% indikator_prg = indikator_prg_rekin(@tahun_bener, @opd, program) %>
-                  <td class="text-gray-900 text-wrap border" data-table-tematik-target="indikators"><%= indikator_prg.dig(:indikator) %></td>
-                  <td class="text-gray-900 text-wrap border" data-table-tematik-target="indikators"><%= indikator_prg.dig(:target) %></td>
-                  <td class="text-gray-900 text-wrap border" data-table-tematik-target="indikators"><%= indikator_prg.dig(:satuan) %></td>
+                  <td class="text-gray-900 text-wrap border"><%= ind_prg || '-' %></td>
+                  <td class="text-gray-900 text-wrap border"><%= ind_prg.target %></td>
+                  <td class="text-gray-900 text-wrap border"><%= ind_prg.satuan %></td>
                 </tr>
               <% end %>
             <% end %>
-            <tr>
-              <td colspan="6" class="rekap_pokin_separator"> </td>
-            </tr>
           <% end %>
         </tbody>
       </table>
