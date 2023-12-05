@@ -1,0 +1,39 @@
+<%= content_for :html_title, "Indikator Sasaran OPD" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item">Indikator</li>
+  <li class="breadcrumb-item">Renja</li>
+  <li class="breadcrumb-item active" aria-current="page">Sasaran</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout', title: "Indikator Sasaran #{@nama_opd} - #{@tahun}" do %>
+    <div class="table-responsive mb-5">
+      <table class="table align-items-center">
+        <thead class="thead-tujuan">
+          <tr class="header-tujuan">
+            <th class="border" scope="col" width="20px">No.</th>
+            <th class="border" scope="col">Sasaran OPD</th>
+            <th class="border" scope="col">Indikator</th>
+            <th class="border" scope="col" width="50px">Target</th>
+            <th class="border" scope="col">Satuan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @sasarans_opd.each.with_index(1) do |sasaran, no_sas| %>
+            <% row_sas = sasaran.indikator_sasarans.size + 1 %>
+            <tr>
+              <td class="text-gray-900 text-wrap border" width='20px' scope="row" rowspan="<%= row_sas %>"><%= no_sas %></td>
+              <td class="text-gray-900 text-wrap border" scope="row" rowspan="<%= row_sas %>" ><%= sasaran %></td>
+            </tr>
+            <% sasaran.indikator_sasarans.each do |indikator_sas| %>
+              <tr>
+                <td class="text-gray-900 text-wrap border"><%= indikator_sas || '-' %></td>
+                <td class="text-gray-900 text-wrap border"><%= indikator_sas.target %></td>
+                <td class="text-gray-900 text-wrap border"><%= indikator_sas.satuan %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>

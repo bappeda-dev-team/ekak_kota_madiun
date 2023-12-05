@@ -54,6 +54,16 @@ class IndikatorsController < ApplicationController
     render layout: false
   end
 
+  def sasaran_renja_opd
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+
+    pohon_kinerja = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
+    @opd = pohon_kinerja.opd
+    @nama_opd = @opd.nama_opd
+    @sasarans_opd = pohon_kinerja.strategi_opd.map(&:sasarans).flatten.compact_blank
+  end
+
   # GET /indikators or /indikators.json
   def index
     @indikators = Indikator.all
