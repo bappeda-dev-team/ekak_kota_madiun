@@ -84,13 +84,13 @@
               <td class="text-wrap border bg-gray-300" colspan="5"><%= opd %></td>
             </tr>
             <% programs.each.with_index(1) do |program, no_prg| %>
-              <% ind_prg = program.indikator_program_tahun(@tahun, opd.kode_unik_opd) %>
+              <% ind = ind_prg(program, @tahun, opd.kode_unik_opd) %>
               <tr>
                 <td class="text-gray-900 text-wrap border" width='20px' scope="row"><%= no_prg %></td>
                 <td class="text-gray-900 text-wrap border" scope="row"><%= program.nama_program %></td>
-                <td class="text-gray-900 text-wrap border"><%= ind_prg&.dig(:indikator) %></td>
-                <td class="text-gray-900 text-wrap border"><%= ind_prg&.dig(:target) %></td>
-                <td class="text-gray-900 text-wrap border"><%= ind_prg&.dig(:satuan) %></td>
+                <td class="text-gray-900 text-wrap border"><%= ind&.dig(:indikator) %></td>
+                <td class="text-gray-900 text-wrap border"><%= ind&.dig(:target) %></td>
+                <td class="text-gray-900 text-wrap border"><%= ind&.dig(:satuan) %></td>
               </tr>
             <% end %>
           <% end %>
