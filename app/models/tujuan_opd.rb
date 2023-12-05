@@ -23,6 +23,9 @@ class TujuanOpd < Tujuan
   accepts_nested_attributes_for :indikators, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :targets, reject_if: :all_blank, allow_destroy: true
 
+  has_many :strategis
+  has_many :sasarans, through: :strategis
+
   belongs_to :urusan, class_name: 'Master::Urusan', foreign_key: 'urusan_id'
   belongs_to :bidang_urusan, class_name: 'Master::BidangUrusan', foreign_key: 'bidang_urusan_id'
 

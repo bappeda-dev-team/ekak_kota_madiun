@@ -1,7 +1,17 @@
 class IndikatorsController < ApplicationController
   before_action :set_indikator, only: %i[show edit update destroy]
 
-  def rkpd; end
+  def rkpd
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+
+    @tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    @tujuan_opds = @opd.tujuan_opds
+                       .by_periode(@tahun_bener)
+  end
 
   # GET /indikators or /indikators.json
   def index

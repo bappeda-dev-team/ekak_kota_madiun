@@ -1,3 +1,55 @@
-Dinas A
-Tujuan A
-Program A
+<%= content_for :html_title, "Indikator RKPD" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Indikator</li>
+  <li class="breadcrumb-item active" aria-current="page">RKPD</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout', title: "Indikator RKPD - #{@tahun}" do %>
+    <div class="table-responsive mb-5">
+      <table class="table align-items-center">
+        <thead class="thead-tujuan">
+          <tr class="header-tujuan">
+            <th class="border" scope="col" width="20px">No.</th>
+            <th class="border" scope="col">Urusan / Bidang Urusan</th>
+            <th class="border" scope="col">Tujuan OPD</th>
+            <th class="border" scope="col">Indikator</th>
+            <th class="border" scope="col" width="50px">Target</th>
+            <th class="border" scope="col">Satuan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-gray-900 text-wrap border" scope="row">OPD</td>
+            <td class="text-gray-900 text-wrap border" colspan="5"><%= @nama_opd %></td>
+          </tr>
+          <% @tujuan_opds.each.with_index(1) do |tujuan, no_tujuan| %>
+            <% rowsize = tujuan.indikators.size + 1 %>
+            <tr>
+              <td class="text-gray-900 text-wrap border" width='20px' scope="row" rowspan="<%= rowsize %>"><%= no_tujuan %></td>
+              <td class="text-gray-900 text-wrap border" scope="row" rowspan="<%= rowsize %>" >
+                <div class="grid gap-2">
+                  <p>
+                    <%= tujuan.urusan_opd %>
+                  </p>
+                  <hr/>
+                  <p>
+                    <%= tujuan.bidang_urusan_opd %>
+                  </p>
+                </div>
+              </td>
+              <td class="text-gray-900 text-wrap border" style="width: 30%;" scope="row" rowspan="<%= rowsize %>" ><%= tujuan.tujuan %></td>
+            </tr>
+            <% tujuan.indikators.each do |indikator_tujuan| %>
+              <tr>
+                <td class="text-gray-900 text-wrap border"  ><%= indikator_tujuan || '-' %></td>
+                <% target = indikator_tujuan.targets.find_by(tahun: @tahun_bener) %>
+                <td class="text-gray-900 text-wrap border"><%= target %></td>
+                <td class="text-gray-900 text-wrap border"><%= target&.satuan %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>
