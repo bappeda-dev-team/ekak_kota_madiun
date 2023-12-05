@@ -82,6 +82,15 @@ class IndikatorsController < ApplicationController
     @kegiatans = @opd.kegiatans_renstra
   end
 
+  def subkegiatan_renja_opd
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    @subkegiatans = @opd.subkegiatans_renstra
+  end
+
   # GET /indikators or /indikators.json
   def index
     @indikators = Indikator.all
