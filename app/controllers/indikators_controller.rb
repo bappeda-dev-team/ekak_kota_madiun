@@ -109,6 +109,22 @@ class IndikatorsController < ApplicationController
     @iku_opd = iku_opd.map(&:indikators).compact_blank.flatten
   end
 
+  def lppd_outcome
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = opd.nama_opd
+    @lppd_outcome = opd.lppd_outcome.where(tahun: @tahun)
+  end
+
+  def lppd_output
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = opd.nama_opd
+    @lppd_output = opd.lppd_output.where(tahun: @tahun)
+  end
+
   # GET /indikators or /indikators.json
   def index
     @indikators = Indikator.all

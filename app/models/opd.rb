@@ -58,6 +58,13 @@ class Opd < ApplicationRecord
   belongs_to :opd_induk, class_name: 'Opd', primary_key: 'kode_unik_opd', foreign_key: 'kode_opd_induk', optional: true
   has_many :bidangs, class_name: 'Opd', foreign_key: 'kode_opd_induk', primary_key: 'kode_unik_opd'
 
+  has_many :lppd_outcome, lambda {
+                            where(jenis: 'LPPD', sub_jenis: 'Outcome')
+                          }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', class_name: 'Indikator'
+  has_many :lppd_output, lambda {
+                           where(jenis: 'LPPD', sub_jenis: 'Output')
+                         }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', class_name: 'Indikator'
+
   accepts_nested_attributes_for :indikator_sasarans, reject_if: :all_blank, allow_destroy: true
 
   scope :opd_resmi, -> { where.not(kode_unik_opd: nil) }

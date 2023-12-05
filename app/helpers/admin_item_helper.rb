@@ -86,7 +86,13 @@ module AdminItemHelper
         id_target: 'renja-indikator',
         identifier: 'renja'
       },
-      { title: 'IKU', href: iku_opd_indikators_path, identifier: 'iku_opd' }
+      { title: 'IKU', href: iku_opd_indikators_path, identifier: 'iku_opd' },
+      {
+        title: 'LPPD', href: '#',
+        multi: true, collections: indikator_lppd_items,
+        id_target: 'lppd-indikator',
+        identifier: 'lppd'
+      }
     ]
   end
 
@@ -103,6 +109,17 @@ module AdminItemHelper
       },
       {
         title: 'Subkegiatan', href: subkegiatan_renja_opd_indikators_path, identifier: 'sasaran_subkegiatan_opd'
+      }
+    ]
+  end
+
+  def indikator_lppd_items
+    [
+      {
+        title: 'Indikator Outcome', href: lppd_outcome_indikators_path, identifier: 'lppd_outcome'
+      },
+      {
+        title: 'Indikator Output', href: lppd_output_indikators_path, identifier: 'lppd_output'
       }
     ]
   end

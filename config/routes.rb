@@ -22,6 +22,8 @@ Rails.application.routes.draw do
       get :kegiatan_renja_opd
       get :subkegiatan_renja_opd
       get :iku_opd
+      get :lppd_outcome
+      get :lppd_output
     end
   end
   resources :pindah_pohon_kinerjas, only: %i[show edit update]
