@@ -6,11 +6,19 @@ class IndikatorsController < ApplicationController
 
     # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
 
-    @tematiks = PohonTematikQueries.new(tahun: @tahun)
+    tematiks = PohonTematikQueries.new(tahun: @tahun)
 
-    @tujuan_kota = @tematiks.tematiks.map(&:pohonable).compact_blank
-    @sasaran_kota = @tematiks.sub_tematiks.map(&:pohonable).compact_blank
+    @tujuan_kota = tematiks.tematiks.map(&:pohonable).compact_blank
+    @sasaran_kota = tematiks.sub_tematiks.map(&:pohonable).compact_blank
     @program_kota = ProgramKegiatan.programs.group_by(&:opd)
+  end
+
+  def iku_kota
+    @tahun = cookies[:tahun]
+
+    tematiks = PohonTematikQueries.new(tahun: @tahun)
+
+    @iku_kota = tematiks.tematiks.map(&:pohonable).compact_blank
   end
 
   # GET /indikators or /indikators.json

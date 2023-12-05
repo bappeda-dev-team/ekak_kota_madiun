@@ -131,6 +131,9 @@ module SuperAdminItemHelper
     [
       {
         title: 'RKPD', href: rkpd_indikators_path, identifier: 'rkpd'
+      },
+      {
+        title: 'IKU', href: iku_kota_indikators_path, identifier: 'iku_kota'
       }
     ]
   end

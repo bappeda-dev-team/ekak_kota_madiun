@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :indikators do
     collection do
       get :rkpd
+      get :iku_kota
     end
   end
   resources :pindah_pohon_kinerjas, only: %i[show edit update]
