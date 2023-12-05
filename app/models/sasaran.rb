@@ -587,4 +587,9 @@ class Sasaran < ApplicationRecord
   def pemilik_asli?
     nip_asn == nip_asn_sebelumnya || nip_asn_sebelumnya.nil?
   end
+
+  # alias method indikator_sasarans
+  def indikators
+    indikator_sasarans
+  end
 end

@@ -47,9 +47,9 @@ class IndikatorsController < ApplicationController
   def item_renja_opd
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @nama_opd = @opd.nama_opd
-    @program_kegiatans = @opd.program_renstra
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = opd.nama_opd
+    @program_kegiatans = opd.program_renstra
 
     render layout: false
   end
@@ -59,8 +59,8 @@ class IndikatorsController < ApplicationController
     @kode_opd = cookies[:opd]
 
     pohon_kinerja = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
-    @opd = pohon_kinerja.opd
-    @nama_opd = @opd.nama_opd
+    opd = pohon_kinerja.opd
+    @nama_opd = opd.nama_opd
     @sasarans_opd = pohon_kinerja.strategi_opd.map(&:sasarans).flatten.compact_blank
   end
 
@@ -68,27 +68,45 @@ class IndikatorsController < ApplicationController
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
 
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @nama_opd = @opd.nama_opd
-    @programs = @opd.program_renstra
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = opd.nama_opd
+    @programs = opd.program_renstra
   end
 
   def kegiatan_renja_opd
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
 
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @nama_opd = @opd.nama_opd
-    @kegiatans = @opd.kegiatans_renstra
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = opd.nama_opd
+    @kegiatans = opd.kegiatans_renstra
   end
 
   def subkegiatan_renja_opd
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
 
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @nama_opd = @opd.nama_opd
-    @subkegiatans = @opd.subkegiatans_renstra
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = opd.nama_opd
+    @subkegiatans = opd.subkegiatans_renstra
+  end
+
+  def iku_opd
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+
+    @tahun_bener = @tahun&.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+
+    pokin_opd = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
+
+    opd = pokin_opd.opd
+    @nama_opd = opd.nama_opd
+
+    tujuan_opd = opd.tujuan_opds
+                    .by_periode(@tahun_bener)
+    sasaran_opd = pokin_opd.strategi_opd.map(&:sasarans).flatten.compact_blank
+    iku_opd = tujuan_opd + sasaran_opd
+    @iku_opd = iku_opd.map(&:indikators).compact_blank.flatten
   end
 
   # GET /indikators or /indikators.json

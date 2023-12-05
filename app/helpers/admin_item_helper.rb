@@ -85,7 +85,8 @@ module AdminItemHelper
         multi: true, collections: indikator_renja_items,
         id_target: 'renja-indikator',
         identifier: 'renja'
-      }
+      },
+      { title: 'IKU', href: iku_opd_indikators_path, identifier: 'iku_opd' }
     ]
   end
 
