@@ -6,25 +6,33 @@
 <% end %>
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout', title: "Indikator RB Outcome #{@nama_opd} - #{@tahun}" do %>
-    <div class="table-responsive mb-5">
-      <table class="table align-items-center">
+    <div class="table-responsive mb-5 d-grid gap-2">
+      <div class="action-btn">
+        <%= link_to new_indikator_path(jenis: 'RB', sub_jenis: 'Outcome', kode_opd: @kode_opd, tahun: @tahun),
+         remote: true,
+         data: {
+           controller: 'form-modal',
+           action: 'ajax:complete->form-modal#success:prevent',
+           bs_toggle: 'modal',
+           bs_target: '#form-modal'
+         },
+         class: 'btn btn-sm btn-primary' do %>
+          <i class="fas fa-plus me-2"></i>
+          <span>Indikator Outcome RB</span>
+        <% end %>
+      </div>
+      <table class="table align-items-center counter">
         <thead class="thead-tujuan">
           <tr class="header-tujuan">
             <th class="border" scope="col" width="20px">No.</th>
             <th class="border" scope="col">Indikator</th>
             <th class="border" scope="col" width="50px">Target</th>
             <th class="border" scope="col">Satuan</th>
+            <th class="border" scope="col">Action</th>
           </tr>
         </thead>
-        <tbody>
-          <% @rb_outcome.each.with_index(1) do |indikator, no_iku| %>
-            <tr>
-              <td class="text-gray-900 text-wrap border" width='20px' scope="row"><%= no_iku %></td>
-              <td class="text-gray-900 text-wrap border"><%= indikator || '-' %></td>
-              <td class="text-gray-900 text-wrap border"><%= indikator.target %></td>
-              <td class="text-gray-900 text-wrap border"><%= indikator.satuan %></td>
-            </tr>
-          <% end %>
+        <tbody id="new_indikator">
+          <%= render partial: 'indikators/indikator', collection: @rb_outcome, as: :indikator %>
         </tbody>
       </table>
     </div>

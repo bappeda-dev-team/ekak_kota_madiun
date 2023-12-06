@@ -208,4 +208,78 @@ RSpec.describe "IndikatorTambahans", type: :system do
       expect(page).to have_content('Indikator edit')
     end
   end
+
+  context 'indikator rb outcome opd' do
+    it 'create new rb outcome' do
+      visit rb_outcome_indikators_path
+
+      click_on 'Indikator Outcome RB'
+
+      fill_in 'Indikator', with: 'Indikator test'
+      fill_in 'Target', with: '10'
+      fill_in 'Satuan', with: '%'
+      fill_in 'Keterangan', with: 'keterangan a'
+
+      click_on 'Simpan Indikator'
+
+      expect(page).to have_content('Indikator test')
+
+      visit rb_outcome_indikators_path
+
+      expect(page).to have_content('Indikator test')
+    end
+
+    it 'edit rb outcome' do
+      create(:indikator, indikator: 'test', jenis: 'RB', sub_jenis: 'Outcome', kode_opd: 'test_opd', tahun: '2025')
+
+      visit rb_outcome_indikators_path
+
+      expect(page).to have_content('test')
+      # edit new item
+      click_on 'Edit'
+
+      fill_in 'Indikator', with: 'Indikator edit'
+
+      click_on 'Simpan Perubahan Indikator'
+
+      expect(page).to have_content('Indikator edit')
+    end
+  end
+
+  context 'indikator rb output opd' do
+    it 'create new rb output' do
+      visit rb_output_indikators_path
+
+      click_on 'Indikator Output RB'
+
+      fill_in 'Indikator', with: 'Indikator test'
+      fill_in 'Target', with: '10'
+      fill_in 'Satuan', with: '%'
+      fill_in 'Keterangan', with: 'keterangan a'
+
+      click_on 'Simpan Indikator'
+
+      expect(page).to have_content('Indikator test')
+
+      visit rb_output_indikators_path
+
+      expect(page).to have_content('Indikator test')
+    end
+
+    it 'edit rb output' do
+      create(:indikator, indikator: 'test', jenis: 'RB', sub_jenis: 'Output', kode_opd: 'test_opd', tahun: '2025')
+
+      visit rb_output_indikators_path
+
+      expect(page).to have_content('test')
+      # edit new item
+      click_on 'Edit'
+
+      fill_in 'Indikator', with: 'Indikator edit'
+
+      click_on 'Simpan Perubahan Indikator'
+
+      expect(page).to have_content('Indikator edit')
+    end
+  end
 end
