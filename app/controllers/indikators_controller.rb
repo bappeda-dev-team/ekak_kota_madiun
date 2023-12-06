@@ -257,6 +257,7 @@ class IndikatorsController < ApplicationController
   def indikator_params
     params.require(:indikator).permit(:indikator, :jenis, :sub_jenis,
                                       :tahun, :kode_opd, :target, :satuan,
+                                      :definisi_operational,
                                       :keterangan)
   end
 
