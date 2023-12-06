@@ -1,0 +1,22 @@
+<tr id="<%= dom_id(indikator) %>">
+  <td class="text-gray-900 text-wrap border" width='20px' scope="col"></td>
+  <td class="text-gray-900 text-wrap border"><%= indikator || '-' %></td>
+  <td class="text-gray-900 text-wrap border"><%= indikator.target %></td>
+  <td class="text-gray-900 text-wrap border"><%= indikator.satuan %></td>
+  <td class="text-gray-900 text-wrap border" width='200px'>
+    <div class="d-grid gap-3">
+      <%= link_to edit_indikator_path(indikator),
+       remote: true,
+       data: {
+         controller: 'form-modal',
+         action: 'ajax:complete->form-modal#success:prevent',
+         bs_toggle: 'modal',
+         bs_target: '#form-modal'
+       },
+       class: 'btn btn-sm btn-outline-info' do %>
+        <i class="fa fa-pencil-alt me-2"></i>
+        <span>Edit</span>
+      <% end %>
+    </div>
+  </td>
+</tr>

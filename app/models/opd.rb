@@ -59,28 +59,28 @@ class Opd < ApplicationRecord
   has_many :bidangs, class_name: 'Opd', foreign_key: 'kode_opd_induk', primary_key: 'kode_unik_opd'
 
   has_many :lppd_outcome, lambda {
-                            where(jenis: 'LPPD', sub_jenis: 'Outcome')
+                            where(jenis: 'LPPD', sub_jenis: 'Outcome').order(id: :desc)
                           }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', class_name: 'Indikator'
   has_many :lppd_output, lambda {
-                           where(jenis: 'LPPD', sub_jenis: 'Output')
+                           where(jenis: 'LPPD', sub_jenis: 'Output').order(id: :desc)
                          }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', class_name: 'Indikator'
   has_many :spm_outcome, lambda {
-                           where(jenis: 'SPM', sub_jenis: 'Outcome')
+                           where(jenis: 'SPM', sub_jenis: 'Outcome').order(id: :desc)
                          }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', class_name: 'Indikator'
   has_many :spm_output, lambda {
-                          where(jenis: 'SPM', sub_jenis: 'Output')
+                          where(jenis: 'SPM', sub_jenis: 'Output').order(id: :desc)
                         }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', class_name: 'Indikator'
   has_many :sdgs_outcome, lambda {
-                            where(jenis: 'SDGS', sub_jenis: 'Outcome')
+                            where(jenis: 'SDGS', sub_jenis: 'Outcome').order(id: :desc)
                           }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', class_name: 'Indikator'
   has_many :sdgs_output, lambda {
-                           where(jenis: 'SDGS', sub_jenis: 'Output')
+                           where(jenis: 'SDGS', sub_jenis: 'Output').order(id: :desc)
                          }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', class_name: 'Indikator'
   has_many :rb_outcome, lambda {
-                          where(jenis: 'RB', sub_jenis: 'Outcome')
+                          where(jenis: 'RB', sub_jenis: 'Outcome').order(id: :desc)
                         }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', class_name: 'Indikator'
   has_many :rb_output, lambda {
-                         where(jenis: 'RB', sub_jenis: 'Output')
+                         where(jenis: 'RB', sub_jenis: 'Output').order(id: :desc)
                        }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', class_name: 'Indikator'
 
   accepts_nested_attributes_for :indikator_sasarans, reject_if: :all_blank, allow_destroy: true

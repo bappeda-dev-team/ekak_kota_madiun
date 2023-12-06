@@ -1,5 +1,6 @@
 class IndikatorsController < ApplicationController
   before_action :set_indikator, only: %i[show edit update destroy]
+  layout false, only: %i[new edit]
 
   def rkpd_tujuan
     @tahun = cookies[:tahun]
@@ -183,7 +184,7 @@ class IndikatorsController < ApplicationController
 
   # GET /indikators/new
   def new
-    @indikator = Indikator.new
+    @indikator = Indikator.new(new_indikator_params)
   end
 
   # GET /indikators/1/edit
@@ -193,27 +194,31 @@ class IndikatorsController < ApplicationController
   def create
     @indikator = Indikator.new(indikator_params)
 
-    respond_to do |format|
-      if @indikator.save
-        format.html { redirect_to indikator_url(@indikator), notice: "Indikator was successfully created." }
-        format.json { render :show, status: :created, location: @indikator }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @indikator.errors, status: :unprocessable_entity }
-      end
+    if @indikator.save
+      render json: { resText: 'Indikator ditambahkan',
+                     html_content: html_content({ indikator: @indikator },
+                                                partial: 'indikators/indikator') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ indikator: @indikator },
+                                                 partial: 'indikators/form').to_json }.to_json,
+             status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /indikators/1 or /indikators/1.json
   def update
-    respond_to do |format|
-      if @indikator.update(indikator_params)
-        format.html { redirect_to indikator_url(@indikator), notice: "Indikator was successfully updated." }
-        format.json { render :show, status: :ok, location: @indikator }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @indikator.errors, status: :unprocessable_entity }
-      end
+    if @indikator.update(indikator_params)
+      render json: { resText: 'Perubahan disimpan',
+                     html_content: html_content({ indikator: @indikator },
+                                                partial: 'indikators/indikator') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ indikator: @indikator },
+                                                 partial: 'indikators/form').to_json }.to_json,
+             status: :unprocessable_entity
     end
   end
 
@@ -236,6 +241,12 @@ class IndikatorsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def indikator_params
-    params.fetch(:indikator, {})
+    params.require(:indikator).permit(:indikator, :jenis, :sub_jenis,
+                                      :tahun, :kode_opd, :target, :satuan,
+                                      :keterangan)
+  end
+
+  def new_indikator_params
+    params.permit(:jenis, :sub_jenis, :tahun, :kode_opd)
   end
 end

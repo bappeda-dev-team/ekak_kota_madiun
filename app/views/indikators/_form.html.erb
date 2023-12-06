@@ -1,4 +1,10 @@
-<%= form_with(model: indikator) do |form| %>
+<%= form_with model: indikator, local: false,
+ data: {
+   controller: 'form-ajax',
+   form_ajax_target_param: dom_id(indikator),
+   form_ajax_type_param: indikator.new_record? ? 'afterbegin' : '',
+   action: 'ajax:complete->form-ajax#processAjax'
+ } do |form| %>
   <% if indikator.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(indikator.errors.count, "error") %> prohibited this indikator from being saved:</h2>
@@ -10,6 +16,37 @@
       </ul>
     </div>
   <% end %>
+
+  <div class="field">
+    <%= form.hidden_field :jenis, class: 'form-control', readonly: true %>
+    <%= form.hidden_field :sub_jenis, class: 'form-control', readonly: true %>
+    <%= form.hidden_field :kode_opd, class: 'form-control', readonly: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tahun, class: 'form-label' %>
+    <%= form.text_field :tahun, class: 'form-control', readonly: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :indikator, class: 'form-label' %>
+    <%= form.text_field :indikator, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :target, class: 'form-label' %>
+    <%= form.text_field :target, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :satuan, class: 'form-label' %>
+    <%= form.text_field :satuan, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_field :keterangan, class: 'form-control' %>
+  </div>
 
   <div class="actions">
     <%= form.submit %>
