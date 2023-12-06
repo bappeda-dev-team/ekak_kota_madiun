@@ -117,6 +117,9 @@ module AdminItemHelper
   def indikator_renja_items
     [
       {
+        title: 'Tujuan', href: tujuan_renja_opd_indikators_path, identifier: 'tujuan_renja_opd'
+      },
+      {
         title: 'Sasaran', href: sasaran_renja_opd_indikators_path, identifier: 'sasaran_renja_opd'
       },
       {

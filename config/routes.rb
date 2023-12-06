@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       get :iku_kota
       get :renja_opd
       post :item_renja_opd
+      get :tujuan_renja_opd
       get :sasaran_renja_opd
       get :program_renja_opd
       get :kegiatan_renja_opd

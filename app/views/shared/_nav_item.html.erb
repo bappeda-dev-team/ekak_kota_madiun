@@ -5,9 +5,11 @@
           data-bs-toggle="collapse"
           data-bs-target="#<%= item[:id_target] %>">
       <span>
-        <span class="sidebar-icon">
-          <i class="<%= item[:icon] %> icon icon-xs me-2"></i>
-        </span>
+        <% unless item[:icon].nil? %>
+          <span class="sidebar-icon">
+            <i class="<%= item[:icon] %> icon icon-xs me-2"></i>
+          </span>
+        <% end %>
         <span class="sidebar-text"><%= item[:title] %></span>
       </span>
       <span class="link-arrow">

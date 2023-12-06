@@ -55,6 +55,20 @@ class IndikatorsController < ApplicationController
     render layout: false
   end
 
+  def tujuan_renja_opd
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+
+    @tahun_bener = @tahun&.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+
+    pokin_opd = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
+
+    opd = pokin_opd.opd
+    @nama_opd = opd.nama_opd
+
+    @tujuan_opd = opd.tujuan_opds.by_periode(@tahun_bener)
+  end
+
   def sasaran_renja_opd
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
