@@ -25,6 +25,11 @@ RSpec.describe "IndikatorTambahans", type: :system do
       click_on 'Simpan Indikator'
 
       expect(page).to have_content('Indikator test')
+
+      # confirm the record stored
+      visit lppd_outcome_indikators_path
+
+      expect(page).to have_content('Indikator test')
     end
 
     it 'edit lppd outcome' do
@@ -56,6 +61,11 @@ RSpec.describe "IndikatorTambahans", type: :system do
       fill_in 'Keterangan', with: 'keterangan a'
 
       click_on 'Simpan Indikator'
+
+      expect(page).to have_content('Indikator test')
+
+      # confirm the record stored
+      visit lppd_output_indikators_path
 
       expect(page).to have_content('Indikator test')
     end
@@ -91,6 +101,11 @@ RSpec.describe "IndikatorTambahans", type: :system do
       click_on 'Simpan Indikator'
 
       expect(page).to have_content('Indikator test')
+
+      # confirm the record stored
+      visit spm_outcome_indikators_path
+
+      expect(page).to have_content('Indikator test')
     end
 
     it 'edit spm outcome' do
@@ -122,6 +137,11 @@ RSpec.describe "IndikatorTambahans", type: :system do
       fill_in 'Keterangan', with: 'keterangan a'
 
       click_on 'Simpan Indikator'
+
+      expect(page).to have_content('Indikator test')
+
+      # confirm the record stored
+      visit spm_output_indikators_path
 
       expect(page).to have_content('Indikator test')
     end
@@ -157,6 +177,11 @@ RSpec.describe "IndikatorTambahans", type: :system do
       click_on 'Simpan Indikator'
 
       expect(page).to have_content('Indikator test')
+
+      # confirm the record stored
+      visit sdgs_outcome_indikators_path
+
+      expect(page).to have_content('Indikator test')
     end
 
     it 'edit sdgs outcome' do
@@ -188,6 +213,11 @@ RSpec.describe "IndikatorTambahans", type: :system do
       fill_in 'Keterangan', with: 'keterangan a'
 
       click_on 'Simpan Indikator'
+
+      expect(page).to have_content('Indikator test')
+
+      # confirm the record stored
+      visit sdgs_output_indikators_path
 
       expect(page).to have_content('Indikator test')
     end
