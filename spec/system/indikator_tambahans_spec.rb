@@ -76,4 +76,70 @@ RSpec.describe "IndikatorTambahans", type: :system do
       expect(page).to have_content('Indikator edit')
     end
   end
+
+  context 'indikator spm outcome opd' do
+    it 'create new spm outcome' do
+      visit spm_outcome_indikators_path
+
+      click_on 'Indikator Outcome SPM'
+
+      fill_in 'Indikator', with: 'Indikator test'
+      fill_in 'Target', with: '10'
+      fill_in 'Satuan', with: '%'
+      fill_in 'Keterangan', with: 'keterangan a'
+
+      click_on 'Simpan Indikator'
+
+      expect(page).to have_content('Indikator test')
+    end
+
+    it 'edit spm outcome' do
+      create(:indikator, indikator: 'test', jenis: 'SPM', sub_jenis: 'Outcome', kode_opd: 'test_opd', tahun: '2025')
+
+      visit spm_outcome_indikators_path
+
+      expect(page).to have_content('test')
+      # edit new item
+      click_on 'Edit'
+
+      fill_in 'Indikator', with: 'Indikator edit'
+
+      click_on 'Simpan Perubahan Indikator'
+
+      expect(page).to have_content('Indikator edit')
+    end
+  end
+
+  context 'indikator spm output opd' do
+    it 'create new spm output' do
+      visit spm_output_indikators_path
+
+      click_on 'Indikator Output SPM'
+
+      fill_in 'Indikator', with: 'Indikator test'
+      fill_in 'Target', with: '10'
+      fill_in 'Satuan', with: '%'
+      fill_in 'Keterangan', with: 'keterangan a'
+
+      click_on 'Simpan Indikator'
+
+      expect(page).to have_content('Indikator test')
+    end
+
+    it 'edit spm output' do
+      create(:indikator, indikator: 'test', jenis: 'SPM', sub_jenis: 'Output', kode_opd: 'test_opd', tahun: '2025')
+
+      visit spm_output_indikators_path
+
+      expect(page).to have_content('test')
+      # edit new item
+      click_on 'Edit'
+
+      fill_in 'Indikator', with: 'Indikator edit'
+
+      click_on 'Simpan Perubahan Indikator'
+
+      expect(page).to have_content('Indikator edit')
+    end
+  end
 end
