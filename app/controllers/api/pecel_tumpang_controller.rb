@@ -9,4 +9,12 @@ class Api::PecelTumpangController < ApplicationController
                                          .or(Search::AllAnggaran.where('spesifikasi ILIKE ?', "%#{param}%"))
                                          .limit(80).includes(:searchable).collect(&:searchable)
   end
+
+  def data_kependudukan
+    @tahun = params[:tahun]
+    kode_opd = params[:kode_opd]
+
+    opd = Opd.find_by(kode_unik_opd: kode_opd)
+    @nama_opd = opd.nama_opd
+  end
 end
