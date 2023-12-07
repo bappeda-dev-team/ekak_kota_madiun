@@ -3,6 +3,21 @@ require 'rails_helper'
 RSpec.describe "IndikatorTambahans", type: :system do
   let(:admin) { create(:super_admin) }
 
+  def input_indikator
+    fill_in 'Indikator', with: 'Indikator test'
+    fill_in 'Target', with: '10'
+    fill_in 'Satuan', with: '%'
+    fill_in 'Sumber data', with: 'contoh sumber data'
+    fill_in 'Rumus perhitungan', with: 'contoh rumus'
+    fill_in 'Keterangan', with: 'keterangan a'
+
+    click_on 'Simpan Indikator'
+
+    expect(page).to have_content('Indikator test')
+    expect(page).to have_content('contoh sumber data')
+    expect(page).to have_content('contoh rumus')
+  end
+
   before(:each) do
     login_as admin
     visit root_path
@@ -17,15 +32,7 @@ RSpec.describe "IndikatorTambahans", type: :system do
 
       click_on 'Indikator Outcome LPPD'
 
-      fill_in 'Indikator', with: 'Indikator test'
-      fill_in 'Target', with: '10'
-      fill_in 'Satuan', with: '%'
-      fill_in 'Keterangan', with: 'keterangan a'
-
-      click_on 'Simpan Indikator'
-
-      expect(page).to have_content('Indikator test')
-
+      input_indikator
       # confirm the record stored
       visit lppd_outcome_indikators_path
 
@@ -55,14 +62,7 @@ RSpec.describe "IndikatorTambahans", type: :system do
 
       click_on 'Indikator Output LPPD'
 
-      fill_in 'Indikator', with: 'Indikator test'
-      fill_in 'Target', with: '10'
-      fill_in 'Satuan', with: '%'
-      fill_in 'Keterangan', with: 'keterangan a'
-
-      click_on 'Simpan Indikator'
-
-      expect(page).to have_content('Indikator test')
+      input_indikator
 
       # confirm the record stored
       visit lppd_output_indikators_path
@@ -93,14 +93,7 @@ RSpec.describe "IndikatorTambahans", type: :system do
 
       click_on 'Indikator Outcome SPM'
 
-      fill_in 'Indikator', with: 'Indikator test'
-      fill_in 'Target', with: '10'
-      fill_in 'Satuan', with: '%'
-      fill_in 'Keterangan', with: 'keterangan a'
-
-      click_on 'Simpan Indikator'
-
-      expect(page).to have_content('Indikator test')
+      input_indikator
 
       # confirm the record stored
       visit spm_outcome_indikators_path
@@ -131,14 +124,7 @@ RSpec.describe "IndikatorTambahans", type: :system do
 
       click_on 'Indikator Output SPM'
 
-      fill_in 'Indikator', with: 'Indikator test'
-      fill_in 'Target', with: '10'
-      fill_in 'Satuan', with: '%'
-      fill_in 'Keterangan', with: 'keterangan a'
-
-      click_on 'Simpan Indikator'
-
-      expect(page).to have_content('Indikator test')
+      input_indikator
 
       # confirm the record stored
       visit spm_output_indikators_path
@@ -169,14 +155,7 @@ RSpec.describe "IndikatorTambahans", type: :system do
 
       click_on 'Indikator Outcome SDGs'
 
-      fill_in 'Indikator', with: 'Indikator test'
-      fill_in 'Target', with: '10'
-      fill_in 'Satuan', with: '%'
-      fill_in 'Keterangan', with: 'keterangan a'
-
-      click_on 'Simpan Indikator'
-
-      expect(page).to have_content('Indikator test')
+      input_indikator
 
       # confirm the record stored
       visit sdgs_outcome_indikators_path
@@ -207,14 +186,7 @@ RSpec.describe "IndikatorTambahans", type: :system do
 
       click_on 'Indikator Output SDGs'
 
-      fill_in 'Indikator', with: 'Indikator test'
-      fill_in 'Target', with: '10'
-      fill_in 'Satuan', with: '%'
-      fill_in 'Keterangan', with: 'keterangan a'
-
-      click_on 'Simpan Indikator'
-
-      expect(page).to have_content('Indikator test')
+      input_indikator
 
       # confirm the record stored
       visit sdgs_output_indikators_path
@@ -245,14 +217,7 @@ RSpec.describe "IndikatorTambahans", type: :system do
 
       click_on 'Indikator Outcome RB'
 
-      fill_in 'Indikator', with: 'Indikator test'
-      fill_in 'Target', with: '10'
-      fill_in 'Satuan', with: '%'
-      fill_in 'Keterangan', with: 'keterangan a'
-
-      click_on 'Simpan Indikator'
-
-      expect(page).to have_content('Indikator test')
+      input_indikator
 
       visit rb_outcome_indikators_path
 
@@ -282,14 +247,7 @@ RSpec.describe "IndikatorTambahans", type: :system do
 
       click_on 'Indikator Output RB'
 
-      fill_in 'Indikator', with: 'Indikator test'
-      fill_in 'Target', with: '10'
-      fill_in 'Satuan', with: '%'
-      fill_in 'Keterangan', with: 'keterangan a'
-
-      click_on 'Simpan Indikator'
-
-      expect(page).to have_content('Indikator test')
+      input_indikator
 
       visit rb_output_indikators_path
 
