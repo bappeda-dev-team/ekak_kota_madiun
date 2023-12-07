@@ -7,6 +7,8 @@ class TujuanOpdsController < ApplicationController
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
 
+    return if @tahun.nil?
+
     tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
     @periode = Periode.find_tahun(tahun_bener)
     @tahun_awal = @periode.tahun_awal.to_i
@@ -20,7 +22,9 @@ class TujuanOpdsController < ApplicationController
 
   def admin_filter
     @tahun = cookies[:tahun]
-    @kode_opd = params[:kode_opd]
+    @kode_opd = cookies[:opd]
+
+    return if @tahun.nil?
 
     tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
     @periode = Periode.find_tahun(tahun_bener)

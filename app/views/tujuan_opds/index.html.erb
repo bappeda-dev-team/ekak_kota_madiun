@@ -4,35 +4,10 @@
   <li class="breadcrumb-item active" aria-current="page">Tujuan OPD</li>
 <% end %>
 <% content_for :view_utama do %>
-  <% if current_user.has_role?(:super_admin) %>
-    <div class="card border-0 shadow" id="user_filter" data-controller="page-ajax"
-             data-page-ajax-opd-value="<%= cookies[:opd] %>"
-             data-page-ajax-url-value="<%= admin_filter_tujuan_opds_path %>"
-             data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >
-      <div data-page-ajax-target="results">
-        <div class="card-header">
-          <div class="row align-items-center">
-            <div class="col">
-              <h2 class="fs-5 fw-bold mb-0">Tujuan OPD</h2>
-            </div>
-          </div>
-        </div>
-        <div class="loader text-center">
-          <div class="lds-roller">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-          <p>memuat data..</p>
-        </div>
-      </div>
-    </div>
-  <% else %>
-    <%= render 'tujuan_opds/tujuan_opd' %>
-  <% end %>
+  <%= render 'shared/card_ajax',
+             title: "Tujuan OPD",
+             data_page_attr: {
+               controller: 'page-ajax',
+               page_ajax_url_value: admin_filter_tujuan_opds_path
+             } %>
 <% end %>
