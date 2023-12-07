@@ -41,4 +41,16 @@ class IndikatorSasaran < ApplicationRecord
   def indikator
     indikator_kinerja
   end
+
+  def sumber_data
+    manual_ik.sumber_data
+  rescue StandardError
+    ''
+  end
+
+  def output_data
+    manual_ik.output_data
+  rescue StandardError
+    ''
+  end
 end

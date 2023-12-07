@@ -605,7 +605,7 @@ Rails.application.routes.draw do
     end
     namespace :pecel_tumpang do
       get :data_anggarans
-      post :data_kependudukan
+      post :kinerja_opd
     end
     namespace :renja do
       post :opd_subkegiatan
