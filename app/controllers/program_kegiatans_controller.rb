@@ -234,7 +234,14 @@ class ProgramKegiatansController < ApplicationController
   end
 
   def create
-    @programKegiatan = ProgramKegiatan.new(programKegiatan_params)
+    opd = Opd.find_by(kode_opd: programKegiatan_params[:kode_opd])
+    fixed_params = programKegiatan_params.merge({
+                                                  kode_skpd: opd.kode_unik_opd,
+                                                  kode_sub_skpd: opd.kode_unik_opd,
+                                                  id_unit: opd.id_opd_skp,
+                                                  id_sub_unit: opd.id_opd_skp
+                                                })
+    @programKegiatan = ProgramKegiatan.new(fixed_params)
     respond_to do |format|
       if @programKegiatan.save
         format.js do
