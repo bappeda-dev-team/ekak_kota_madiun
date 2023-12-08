@@ -242,6 +242,14 @@ class PohonKinerjaPresenter
     rencana_kinerjas.group_by(&:program_kegiatan)
   end
 
+  def pohon_kota
+    return unless type != 'Pohon'
+
+    @pohon.strategi_asli.role.include?('kota') ? '- Dari Kota' : ''
+  rescue StandardError
+    ''
+  end
+
   private
 
   def to_real_name(role)
