@@ -5,6 +5,24 @@
         <td class="text-start" width="30px"><%= pohon.title_up %></td>
         <td class="text-wrap text-start" colspan="2"><%= pohon.pohonable.strategi %></td>
       </tr>
+      <% if pohon.type == 'Pohon' %>
+        <% if pohon.parent_type.pohonable_type != 'Tematik' %>
+          <% if pohon.parent_type.pohonable_type == 'SubSubTematik' %>
+            <tr class="detail d-none">
+              <td class="text-start" width="30px"><%= pohon.parent_parent_parent_type %></td>
+              <td class="text-wrap text-start" colspan="2"><%= pohon.parent_parent_parent_pohon %></td>
+            </tr>
+          <% end %>
+          <tr class="detail d-none">
+            <td class="text-start" width="30px"><%= pohon.parent_parent_type %></td>
+            <td class="text-wrap text-start" colspan="2"><%= pohon.parent_parent_pohon %></td>
+          </tr>
+        <% end %>
+        <tr class="detail d-none">
+          <td class="text-start" width="30px"><%= pohon.parent_type %></td>
+          <td class="text-wrap text-start" colspan="2"><%= pohon.parent_pohon %></td>
+        </tr>
+      <% end %>
       <% pohon.indikators.each.with_index(1) do |indikator, i| %>
         <tr class="detail d-none">
           <td class="text-start" width="30px">Indikator
