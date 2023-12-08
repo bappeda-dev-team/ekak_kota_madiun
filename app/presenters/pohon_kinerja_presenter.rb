@@ -250,6 +250,14 @@ class PohonKinerjaPresenter
     ''
   end
 
+  def pohon_kota_id
+    return unless type != 'Pohon'
+
+    @pohon.strategi_asli.role.include?('kota') ? @pohon.strategi_cascade_link : ''
+  rescue StandardError
+    ''
+  end
+
   private
 
   def to_real_name(role)

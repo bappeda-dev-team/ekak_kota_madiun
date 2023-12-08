@@ -69,6 +69,18 @@
           </div>
         </div>
       <% end %>
+    <% else %>
+      <div class="pohon-tombol mb-3">
+        <div class="row">
+          <div class="col">
+            <%= link_to "##{pohon.pohonable.id}",
+             class: 'btn btn-outline-primary' do %>
+              <i class="fas fa-arrow-right me-2"></i>
+              <span>Cek Strategi</span>
+            <% end %>
+          </div>
+        </div>
+      </div>
     <% end %>
   <% end %>
 <% end %>
