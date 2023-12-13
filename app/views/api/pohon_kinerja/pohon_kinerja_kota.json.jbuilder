@@ -44,6 +44,7 @@ json.results do
     json.parent strategic.pohon_ref_id
     json.strategi pohon.strategi
     json.keterangan pohon.keterangan
+    json.perangkat_daerah pohon.opd
     json.indikators pohon.indikators do |indikator|
       json.indikator indikator.indikator
       json.target indikator.target
@@ -69,7 +70,7 @@ json.results do
     json.parent operational.pohon_ref_id
     json.strategi pohon.pohonable.strategi
     json.keterangan pohon.keterangan
-    json.perangkat_daerah pohon.pohonable.opd
+    json.perangkat_daerah pohon.opd
     json.indikators pohon.indikators do |indikator|
       json.indikator indikator.indikator
       json.target indikator.target
