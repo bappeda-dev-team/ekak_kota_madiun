@@ -15,12 +15,12 @@ module Api
 
     def pohon_kinerja_kota
       @pohon = queries_kota
-      @tema = @pohon.tematiks
-      @sub_tematiks = @pohon.sub_tematiks
-      @sub_sub_tematiks = @pohon.sub_sub_tematiks
-      @strategics = @pohon.strategi_tematiks
-      @tacticals = @pohon.tactical_tematiks
-      @operationals = @pohon.operational_tematiks
+      @tema = @pohon.tematiks.reject { |ph| ph.pohonable.nil? }
+      @sub_tematiks = @pohon.sub_tematiks.reject { |ph| ph.pohonable.nil? }
+      @sub_sub_tematiks = @pohon.sub_sub_tematiks.reject { |ph| ph.pohonable.nil? }
+      @strategics = @pohon.strategi_tematiks.reject { |ph| ph.pohonable.nil? }
+      @tacticals = @pohon.tactical_tematiks.reject { |ph| ph.pohonable.nil? }
+      @operationals = @pohon.operational_tematiks.reject { |ph| ph.pohonable.nil? }
     end
 
     private

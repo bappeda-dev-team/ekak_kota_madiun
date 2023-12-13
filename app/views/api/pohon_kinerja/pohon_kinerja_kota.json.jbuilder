@@ -9,7 +9,7 @@ json.results do
     json.tema pohon.pohonable.tema
     json.keterangan pohon.keterangan
     json.indikators pohon.indikators do |indikator|
-      json.indikator indikator
+      json.indikator indikator.indikator
       json.target indikator.target
       json.satuan indikator.satuan
     end
@@ -21,7 +21,7 @@ json.results do
     json.tema pohon.pohonable.tema
     json.keterangan pohon.keterangan
     json.indikators pohon.indikators do |indikator|
-      json.indikator indikator
+      json.indikator indikator.indikator
       json.target indikator.target
       json.satuan indikator.satuan
     end
@@ -33,7 +33,7 @@ json.results do
     json.tema pohon.pohonable.tema
     json.keterangan pohon.keterangan
     json.indikators pohon.indikators do |indikator|
-      json.indikator indikator
+      json.indikator indikator.indikator
       json.target indikator.target
       json.satuan indikator.satuan
     end
@@ -45,7 +45,7 @@ json.results do
     json.strategi pohon.strategi
     json.keterangan pohon.keterangan
     json.indikators pohon.indikators do |indikator|
-      json.indikator indikator
+      json.indikator indikator.indikator
       json.target indikator.target
       json.satuan indikator.satuan
     end
@@ -58,7 +58,7 @@ json.results do
     json.keterangan pohon.keterangan
     json.perangkat_daerah pohon.opd
     json.indikators pohon.indikators do |indikator|
-      json.indikator indikator
+      json.indikator indikator.indikator
       json.target indikator.target
       json.satuan indikator.satuan
     end
@@ -71,7 +71,7 @@ json.results do
     json.keterangan pohon.keterangan
     json.perangkat_daerah pohon.pohonable.opd
     json.indikators pohon.indikators do |indikator|
-      json.indikator indikator
+      json.indikator indikator.indikator
       json.target indikator.target
       json.satuan indikator.satuan
     end
