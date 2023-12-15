@@ -365,7 +365,7 @@ class FilterController < ApplicationController
     @tahun_sasaran = @tahun_sasaran.match(/murni/) ? @tahun_sasaran[/[^_]\d*/, 0] : @tahun_sasaran
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @lembaga = @opd.lembaga
-    @nama_opd = @opd.nama_opd
+    @nama_opd = @opd.nama_lembaga_opd
     cookies[:tahun] = @tahun_sasaran
     cookies[:opd] = @kode_opd
     cookies[:lembaga_id] = @lembaga.id
