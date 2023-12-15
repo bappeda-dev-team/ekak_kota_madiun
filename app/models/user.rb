@@ -119,7 +119,7 @@ class User < ApplicationRecord
   end
 
   def assign_default_role
-    add_role(:non_aktif) if roles.blank?
+    add_role(:asn) if roles.blank?
   end
 
   def nama_opd

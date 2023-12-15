@@ -55,7 +55,8 @@ class Opd < ApplicationRecord
   has_many :komentars, lambda {
     where(jenis: "OPD")
   }, primary_key: :id, foreign_key: :item
-  belongs_to :opd_induk, class_name: 'Opd', primary_key: 'kode_unik_opd', foreign_key: 'kode_opd_induk', optional: true
+  belongs_to :opd_induk, class_name: 'Opd', primary_key: 'kode_unik_opd', foreign_key: 'kode_opd_induk',
+                         optional: true
   has_many :bidangs, class_name: 'Opd', foreign_key: 'kode_opd_induk', primary_key: 'kode_unik_opd'
 
   has_many :lppd_outcome, lambda {

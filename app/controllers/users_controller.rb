@@ -118,7 +118,13 @@ class UsersController < ApplicationController
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
+    roles = params[:user][:role].compact_blank
     if @user.save
+      if roles.present?
+        roles.each do |role|
+          @user.add_role role.to_sym
+        end
+      end
       render json: { resText: "User berhasil dibuat.",
                      html_content: html_content({ user: @user },
                                                 partial: 'users/user') }.to_json,

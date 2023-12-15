@@ -1,10 +1,10 @@
 <%= form_with(model: user, local: false,
-    data: {
-      controller: 'form-ajax',
-      form_ajax_target_param: dom_id(user),
-      form_ajax_type_param: user.new_record? ? 'afterbegin' : '',
-      action: 'ajax:complete->form-ajax#processAjax'
-    }
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: dom_id(user),
+                form_ajax_type_param: user.new_record? ? 'afterbegin' : '',
+                action: 'ajax:complete->form-ajax#processAjax'
+              }
 ) do |form| %>
   <% if user.errors.any? %>
     <div id="error_explanation">
@@ -20,18 +20,18 @@
     <%= form.label :instansi, class: "form-label" %>
     <%= form.select :lembaga_id, Lembaga.all.collect {|n| [n.nama_lembaga, n.id]},
      {include_blank: true},
-    {data: {"placeholder": "Pilih Lembaga",
-            controller: 'dropdown'
-    }, required: true} %>
+     {data: {"placeholder": "Pilih Lembaga",
+             controller: 'dropdown'
+     }, required: true} %>
   </div>
   <div class="field">
     <%= form.label :opd, class: "form-label" %>
-    <%= form.select :kode_opd, Opd.pluck(:nama_opd, :kode_opd), {include_blank: true},
-    {class: "form-control",
-    data: { "placeholder": "Pilih Opd",
-            controller: 'dropdown',
-            dropdown_parent_value: '#form-modal'
-    }} %>
+    <%= form.select :kode_opd, Opd.all.collect { |o| [o.nama_lembaga_opd, o.kode_opd] }, {include_blank: true},
+     {class: "form-control",
+      data: { "placeholder": "Pilih Opd",
+        controller: 'dropdown',
+        dropdown_parent_value: '#form-modal'
+     }} %>
   </div>
   <div class="field">
     <%= form.label :nama, class: "form-label" %>
@@ -49,6 +49,19 @@
     <%= form.label :password, class: "form-label" %>
     <%= form.password_field :password, class: "form-control" %>
   </div>
+  <% if current_user.has_role? :super_admin %>
+    <div class="field">
+      <% data_role = options_from_collection_for_select(Role.all, :name, :name, user.roles.pluck(:name)) %>
+      <%= form.label :role, class: "form-label" %>
+      <%= form.select :role, data_role, {include_blank: true},
+       { class: "form-select select2-role",
+         multiple: true,
+         data: { placeholder: 'Pilih Role',
+           controller: 'dropdown',
+           dropdown_parent_value: '#form-modal'
+         } } %>
+    </div>
+  <% end %>
   <div class="actions">
     <%= form.submit %>
   </div>
