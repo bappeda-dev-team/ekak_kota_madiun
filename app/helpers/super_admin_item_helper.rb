@@ -144,6 +144,9 @@ module SuperAdminItemHelper
   def indikator_rkpd_items
     [
       {
+        title: 'Makro', href: rkpd_makro_indikators_path, identifier: 'rkpd_tujuan'
+      },
+      {
         title: 'Tujuan', href: rkpd_tujuan_indikators_path, identifier: 'rkpd_tujuan'
       },
       {
