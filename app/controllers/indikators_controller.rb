@@ -198,7 +198,7 @@ class IndikatorsController < ApplicationController
 
   # GET /indikators or /indikators.json
   def index
-    @indikators = Indikator.all
+    handle_filters
   end
 
   # GET /indikators/1 or /indikators/1.json
@@ -254,6 +254,15 @@ class IndikatorsController < ApplicationController
     end
   end
 
+  def import
+    return redirect_to request.referer, error: 'File belum dipilih' if params[:file].nil?
+
+    redirect_to request.referer, warning: 'Upload File CSV' unless params[:file].content_type == 'text/csv'
+
+    CsvImportService.new.call(params[:file])
+    redirect_to request.referer, success: 'Import Selesai'
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -272,5 +281,15 @@ class IndikatorsController < ApplicationController
 
   def new_indikator_params
     params.permit(:jenis, :sub_jenis, :tahun, :kode_opd)
+  end
+
+  def handle_filters
+    filter_query = params[:filter_query]
+    @tahun = if filter_query == 'tahun'
+               params[:tahun]
+             else
+               cookies[:tahun]
+             end
+    @indikators = Indikator.where(tahun: @tahun)
   end
 end

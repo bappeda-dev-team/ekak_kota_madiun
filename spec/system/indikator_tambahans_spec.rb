@@ -54,6 +54,12 @@ RSpec.describe "IndikatorTambahans", type: :system do
 
       expect(page).to have_content('Indikator edit')
     end
+
+    it 'import csv file to outcome lppd' do
+      visit lppd_outcome_indikators_path
+
+      click_on 'Import Outcome LPPD'
+    end
   end
 
   context 'indikator lppd output opd' do

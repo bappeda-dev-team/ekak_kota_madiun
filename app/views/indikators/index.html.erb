@@ -1,25 +1,82 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Indikators</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @indikators.each do |indikator| %>
-      <tr>
-        <td><%= link_to 'Show', indikator %></td>
-        <td><%= link_to 'Edit', edit_indikator_path(indikator) %></td>
-        <td><%= link_to 'Destroy', indikator, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Indikator', new_indikator_path %>
+<%= content_for :html_title, "Master Indikator" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Data Master</li>
+  <li class="breadcrumb-item active" aria-current="page">Indikator</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout', title: "Indikator Tahun - #{@tahun}" do %>
+    <div class="col">
+      <%= render 'import' %>
+    </div>
+    <div class="col">
+      <form action="/indikators" method="GET" class="row">
+        <input type="hidden" name="filter_query" value="tahun">
+        <div class="col">
+          <select name="tahun" id="tahun" data-controller="dropdown">
+            <option value="">Pilih Tahun</option>
+            <% for tahun in Tahun.all.pluck(:tahun) do %>
+              <option value="<%= tahun %>"><%= tahun %></option>
+            <% end %>
+          </select>
+        </div>
+        <div class="col-auto">
+          <input type="submit" value="Filter" class="btn btn-primary">
+        </div>
+      </form>
+    </div>
+    <div class="table-responsive mt-5">
+      <table class="table datatable align-items-center counter" data-datatable>
+        <thead class="thead-indikator">
+          <tr class="header-indikator">
+            <th class="border" scope="col" rowspan="2" width="20px">No.</th>
+            <th class="border" scope="col" rowspan="2">Indikator</th>
+            <th class="border" scope="col" rowspan="2">Jenis</th>
+            <th class="border" scope="col" rowspan="2">Sub-Jenis</th>
+            <th class="border text-center" scope="col" rowspan="2" width="50px">Target</th>
+            <th class="border text-center" scope="col" rowspan="2">Satuan</th>
+            <th class="border text-center" scope="col" colspan="2">Definisi Operasional</th>
+            <th class="border" scope="col" rowspan="2">Tahun</th>
+            <th class="border" scope="col" rowspan="2">Opd</th>
+            <th class="border text-center" scope="col" rowspan="2">Action</th>
+          </tr>
+          <tr class="text-center">
+            <th class="border text-center" scope="col">Sumber Data</th>
+            <th class="border text-center" scope="col">Rumus Perhitungan</th>
+          </tr>
+        </thead>
+        <tbody id="new_indikator">
+          <% @indikators.each do |indikator| %>
+            <tr id="<%= dom_id(indikator) %>">
+              <td class="text-gray-900 text-wrap border" width='20px'></td>
+              <td class="text-gray-900 text-wrap border"><%= indikator || '-' %></td>
+              <td class="text-gray-900 text-wrap border"><%= indikator.jenis || '-' %></td>
+              <td class="text-gray-900 text-wrap border"><%= indikator.sub_jenis || '-' %></td>
+              <td class="text-gray-900 text-wrap border"><%= indikator.target %></td>
+              <td class="text-gray-900 text-wrap border"><%= indikator.satuan %></td>
+              <td class="text-gray-900 text-wrap border"><%= indikator.sumber_data %></td>
+              <td class="text-gray-900 text-wrap border"><%= indikator.rumus_perhitungan %></td>
+              <td class="text-gray-900 text-wrap border"><%= indikator.tahun || '-' %></td>
+              <td class="text-gray-900 text-wrap border"><%= indikator&.opd || '-' %></td>
+              <td class="text-gray-900 text-wrap border" width='200px'>
+                <div class="d-grid gap-3">
+                  <%= link_to edit_indikator_path(indikator),
+                   remote: true,
+                   data: {
+                     controller: 'form-modal',
+                     action: 'ajax:complete->form-modal#success:prevent',
+                     bs_toggle: 'modal',
+                     bs_target: '#form-modal'
+                   },
+                   class: 'btn btn-sm btn-outline-info' do %>
+                    <i class="fa fa-pencil-alt me-2"></i>
+                    <span>Edit</span>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>

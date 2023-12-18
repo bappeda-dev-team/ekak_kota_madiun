@@ -38,6 +38,10 @@ module SuperAdminItemHelper
         icon: 'fas fa-archive', identifier: 'adminsasarans'
       },
       {
+        title: 'Master Indikator', href: indikators_path,
+        icon: 'fas fa-target', identifier: 'indikators'
+      },
+      {
         title: 'Tematik', href: subkegiatan_tematiks_path,
         icon: 'fas fa-tags', identifier: 'tematik'
       },

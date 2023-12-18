@@ -1,0 +1,7 @@
+<div class="mb-3">
+  <%= form_tag import_indikators_path, method: :post, multipart: true do %>
+    <%= label_tag :file, 'Import Indikator' ,class: 'form-label' %>
+    <%= file_field_tag :file, accept: ".csv", class: 'form-control' %>
+    <%= submit_tag '⚙️ Import Indikator' %>
+  <% end %>
+</div>
