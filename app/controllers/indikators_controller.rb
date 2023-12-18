@@ -2,6 +2,14 @@ class IndikatorsController < ApplicationController
   before_action :set_indikator, only: %i[show edit update destroy]
   layout false, only: %i[new edit]
 
+  def rkpd_makro
+    @tahun = cookies[:tahun]
+
+    # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+
+    @rkpd_makro = Indikator.rkpd_makro.where(tahun: @tahun).includes(:targets)
+  end
+
   def rkpd_tujuan
     @tahun = cookies[:tahun]
 

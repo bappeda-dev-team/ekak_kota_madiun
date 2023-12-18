@@ -25,6 +25,8 @@ class Indikator < ApplicationRecord
   store_accessor :definisi_operational, :rumus_perhitungan
   store_accessor :definisi_operational, :sumber_data
 
+  scope :rkpd_makro, -> { where(jenis: 'RKPD', sub_jenis: 'Outcome') }
+
   def to_s
     indikator
   end

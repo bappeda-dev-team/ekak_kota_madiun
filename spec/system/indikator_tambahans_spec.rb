@@ -8,7 +8,7 @@ RSpec.describe "IndikatorTambahans", type: :system do
     fill_in 'Target', with: '10'
     fill_in 'Satuan', with: '%'
     fill_in 'Sumber data', with: 'contoh sumber data'
-    fill_in 'Rumus perhitungan', with: 'contoh rumus'
+    fill_in 'indikator_rumus_perhitungan', with: 'contoh rumus'
     fill_in 'Keterangan', with: 'keterangan a'
 
     click_on 'Simpan Indikator'
@@ -258,6 +258,36 @@ RSpec.describe "IndikatorTambahans", type: :system do
       create(:indikator, indikator: 'test', jenis: 'RB', sub_jenis: 'Output', kode_opd: 'test_opd', tahun: '2025')
 
       visit rb_output_indikators_path
+
+      expect(page).to have_content('test')
+      # edit new item
+      click_on 'Edit'
+
+      fill_in 'Indikator', with: 'Indikator edit'
+
+      click_on 'Simpan Perubahan Indikator'
+
+      expect(page).to have_content('Indikator edit')
+    end
+  end
+
+  context 'indikator rkpd makro' do
+    it 'create new rkpd makro' do
+      visit rkpd_makro_indikators_path
+
+      click_on 'Indikator RKPD Makro'
+
+      input_indikator
+
+      visit rkpd_makro_indikators_path
+
+      expect(page).to have_content('Indikator test')
+    end
+
+    it 'edit rb output' do
+      create(:indikator, indikator: 'test', jenis: 'RKPD', sub_jenis: 'Outcome', tahun: '2025')
+
+      visit rkpd_makro_indikators_path
 
       expect(page).to have_content('test')
       # edit new item
