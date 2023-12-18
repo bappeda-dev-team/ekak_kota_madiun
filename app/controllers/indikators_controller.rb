@@ -259,8 +259,13 @@ class IndikatorsController < ApplicationController
 
     redirect_to request.referer, warning: 'Upload File CSV' unless params[:file].content_type == 'text/csv'
 
-    CsvImportService.new.call(params[:file])
-    redirect_to request.referer, success: 'Import Selesai'
+    import_errors = CsvImportService.new.call(params[:file])
+
+    if import_errors.nil?
+      redirect_to request.referer, success: 'Import Selesai'
+    else
+      redirect_to request.referer, error: 'Tejadi kesalahan, data tidak sesuai'
+    end
   end
 
   private
@@ -290,6 +295,6 @@ class IndikatorsController < ApplicationController
              else
                cookies[:tahun]
              end
-    @indikators = Indikator.where(tahun: @tahun)
+    @indikators = Indikator.includes(:opd).where(tahun: @tahun, sub_jenis: %w[Output Outcome]).limit(20)
   end
 end

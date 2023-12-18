@@ -18,13 +18,16 @@ class CsvImportService
       indikator_hash[:satuan] = row['satuan']
 
       indikator = Indikator.create(indikator_hash)
+      return indikator.errors unless indikator.save
 
       target_hash = {}
       target_hash[:target] = row['target']
       target_hash[:satuan] = row['satuan']
       target_hash[:tahun] = row['tahun']
 
-      indikator.targets.create(target_hash)
+      target = indikator.targets.create(target_hash)
+      target.save
+
       # for performance, you could create a separate job to import each user
       # CsvImportJob.perform_later(user_hash)
     end

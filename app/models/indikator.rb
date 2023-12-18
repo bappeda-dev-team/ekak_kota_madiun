@@ -20,7 +20,7 @@
 #
 class Indikator < ApplicationRecord
   has_many :targets
-  belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd'
+  belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', optional: true
   accepts_nested_attributes_for :targets, reject_if: :all_blank, allow_destroy: true
 
   store_accessor :definisi_operational, :rumus_perhitungan
