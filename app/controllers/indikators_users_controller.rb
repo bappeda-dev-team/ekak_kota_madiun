@@ -38,6 +38,7 @@ class IndikatorsUsersController < ApplicationController
 
   # GET /indikators_users/new
   def new
+    @strategi_id = params[:strategi_id]
     @dom_id = params[:dom_id]
     @role = params[:role]
     @roles = [@role]
@@ -56,6 +57,7 @@ class IndikatorsUsersController < ApplicationController
 
   # POST /indikators_users or /indikators_users.json
   def create
+    strategi = Strategi.find(params[:indikators_user][:strategi_id])
     indikators = params[:indikators_user][:indikator_id].compact_blank
     user = params[:indikators_user][:user_id]
 
@@ -66,7 +68,8 @@ class IndikatorsUsersController < ApplicationController
     end
 
     if indikator_users.any?
-      render json: { resText: "Pelaksana Indikator diperbarui" }.to_json,
+      render json: { resText: "Pelaksana Indikator diperbarui",
+                     html_content: html_content(strategi) }.to_json,
              status: :ok
 
     else

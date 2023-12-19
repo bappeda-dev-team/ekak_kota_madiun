@@ -1,8 +1,8 @@
 <% unless pohon.exists? %>
   <% if pohon.pelaksana.any? %>
     <div class="pohon-body">
-      <table class="table table-bordered mb-3">
-        <% pohon.pelaksana.each.with_index(1) do |dibagikan, no| %>
+      <% pohon.pelaksana.each.with_index(1) do |dibagikan, no| %>
+        <table class="table table-bordered mb-3">
           <tr>
             <td class="text-start" width="20px">Pelaksana
               <% if pohon.pelaksana.size > 1 %>
@@ -19,12 +19,12 @@
               <% end %>
             </td>
           </tr>
-        <% end %>
-      </table>
+        </table>
+      <% end %>
     </div>
     <div class="pohon-body">
-      <table class="table table-bordered mb-3">
-        <% pohon.pelaksana.each.with_index(1) do |dibagikan, no| %>
+      <% pohon.pelaksana.each.with_index(1) do |dibagikan, no| %>
+        <table class="table table-bordered mb-3">
           <tr>
             <td class="text-start" width="20px">Pelaksana
               <% if pohon.pelaksana.size > 1 %>
@@ -43,13 +43,13 @@
               <td class="text-wrap text-start"><%= ind %></td>
             </tr>
           <% end %>
-        <% end %>
-      </table>
+        </table>
+      <% end %>
     </div>
     <div class="pohon-tombol mb-3">
       <div class="row">
         <div class="col">
-          <%= link_to new_indikators_user_path(role: pohon.role, dom_id: dom_id(pohon.real)),
+          <%= link_to new_indikators_user_path(role: pohon.role, dom_id: dom_id(pohon.real), strategi_id: pohon.real.id),
            remote: true,
            class: 'btn btn-sm btn-outline-gray-900',
            data: {

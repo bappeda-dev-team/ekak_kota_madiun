@@ -6,17 +6,9 @@
    form_ajax_pohon_param: @dom_id,
    action: 'ajax:complete->form-ajax#successResponseNew'
  } do |form| %>
-  <% if indikators_user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(indikators_user.errors.count, "error") %> prohibited this indikators_user from being saved:</h2>
-
-      <ul>
-        <% indikators_user.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <div class="field">
+    <%= form.hidden_field :strategi_id, value: @strategi_id %>
+  </div>
   <div class="field">
     <%= form.label :jenis_indikator, { class: "form-label" } %>
     <%= form.select :jenis, ['LPPD - Outcome',
