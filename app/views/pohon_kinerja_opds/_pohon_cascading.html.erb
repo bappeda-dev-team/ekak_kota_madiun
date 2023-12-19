@@ -1,24 +1,10 @@
 <% presenter = PohonKinerjaPresenter.new(pohon) %>
-<% if presenter.type == 'Pohon' %>
-  <% unless presenter.parent_type.nil? %>
-    <li>
-      <div class="tf-nc pokin <%= presenter.warna_pohon %>" id="<%= dom_id(pohon) %>">
-        <%= render partial: 'pohon_kinerja_opds/item_cascading', locals: { pohon: presenter } %>
-      </div>
-      <%# self-render childs in helper %>
-      <ul class='d-none childs'>
-        <%= render partial: 'pohon_kinerja_opds/pohon_cascading', collection: childs(pohon), as: :pohon %>
-      </ul>
-    </li>
-  <% end %>
-<% else %>
-  <li>
-    <div class="tf-nc pokin <%= presenter.warna_pohon %>" id="<%= dom_id(pohon) %>">
-      <%= render partial: 'pohon_kinerja_opds/item_cascading', locals: { pohon: presenter } %>
-    </div>
-    <%# self-render childs in helper %>
-    <ul class='d-none childs'>
-      <%= render partial: 'pohon_kinerja_opds/pohon_cascading', collection: childs(pohon), as: :pohon %>
-    </ul>
-  </li>
-<% end %>
+<li>
+  <div class="tf-nc pokin <%= presenter.warna_pohon %>" id="<%= dom_id(pohon) %>">
+    <%= render partial: 'pohon_kinerja_opds/item_cascading', locals: { pohon: pohon } %>
+  </div>
+  <%# self-render childs in helper %>
+  <ul class='d-none childs'>
+    <%= render partial: 'pohon_kinerja_opds/pohon_cascading', collection: childs(pohon), as: :pohon %>
+  </ul>
+</li>

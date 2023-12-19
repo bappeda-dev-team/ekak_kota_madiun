@@ -22,10 +22,34 @@
         <% end %>
       </table>
     </div>
+    <div class="pohon-body">
+      <table class="table table-bordered mb-3">
+        <% pohon.pelaksana.each.with_index(1) do |dibagikan, no| %>
+          <tr>
+            <td class="text-start" width="20px">Pelaksana
+              <% if pohon.pelaksana.size > 1 %>
+                <%= no %>
+              <% end %>
+            </td>
+            <td class="text-wrap text-start"><%= dibagikan.dibagikan_ke %></td>
+          </tr>
+          <% dibagikan.user.indikators.each.with_index(1) do |ind, no_i| %>
+            <tr>
+              <td class="text-start" width="20px">Indikator
+                <%= ind.jenis %>
+                <%= ind.sub_jenis %>
+                <%= no_i %>
+              </td>
+              <td class="text-wrap text-start"><%= ind %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+    </div>
     <div class="pohon-tombol mb-3">
       <div class="row">
         <div class="col">
-          <%= link_to new_indikators_user_path(role: pohon.role),
+          <%= link_to new_indikators_user_path(role: pohon.role, dom_id: dom_id(pohon.real)),
            remote: true,
            class: 'btn btn-sm btn-outline-gray-900',
            data: {
