@@ -4,8 +4,6 @@
 #
 #  id             :bigint           not null, primary key
 #  keterangan     :string
-#  level          :integer          default(1)
-#  tahun          :string
 #  tema           :string
 #  type           :string
 #  created_at     :datetime         not null

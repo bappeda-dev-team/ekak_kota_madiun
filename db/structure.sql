@@ -35,7 +35,6 @@ CREATE TYPE public.usulan_status AS ENUM (
 );
 
 
-
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -809,6 +808,38 @@ CREATE SEQUENCE public.indikators_id_seq
 --
 
 ALTER SEQUENCE public.indikators_id_seq OWNED BY public.indikators.id;
+
+
+--
+-- Name: indikators_users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.indikators_users (
+    id bigint NOT NULL,
+    indikator_id bigint,
+    user_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: indikators_users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.indikators_users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: indikators_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.indikators_users_id_seq OWNED BY public.indikators_users.id;
 
 
 --
@@ -2563,8 +2594,7 @@ CREATE TABLE public.sasarans (
     nip_asn_sebelumnya character varying,
     opd_id bigint,
     keterangan character varying,
-    metadata jsonb,
-    strategi_id_for_type_change integer
+    metadata jsonb
 );
 
 
@@ -3249,9 +3279,7 @@ CREATE TABLE public.tematiks (
     tematik_ref_id bigint,
     type character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    level integer DEFAULT 1,
-    tahun character varying
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -3655,6 +3683,13 @@ ALTER TABLE ONLY public.indikator_sasarans ALTER COLUMN id SET DEFAULT nextval('
 --
 
 ALTER TABLE ONLY public.indikators ALTER COLUMN id SET DEFAULT nextval('public.indikators_id_seq'::regclass);
+
+
+--
+-- Name: indikators_users id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.indikators_users ALTER COLUMN id SET DEFAULT nextval('public.indikators_users_id_seq'::regclass);
 
 
 --
@@ -4292,6 +4327,14 @@ ALTER TABLE ONLY public.indikator_sasarans
 
 ALTER TABLE ONLY public.indikators
     ADD CONSTRAINT indikators_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: indikators_users indikators_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.indikators_users
+    ADD CONSTRAINT indikators_users_pkey PRIMARY KEY (id);
 
 
 --
@@ -4969,6 +5012,20 @@ CREATE INDEX index_genders_on_sasaran_id ON public.genders USING btree (sasaran_
 --
 
 CREATE UNIQUE INDEX index_indikator_sasarans_on_id_indikator ON public.indikator_sasarans USING btree (id_indikator);
+
+
+--
+-- Name: index_indikators_users_on_indikator_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_indikators_users_on_indikator_id ON public.indikators_users USING btree (indikator_id);
+
+
+--
+-- Name: index_indikators_users_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_indikators_users_on_user_id ON public.indikators_users USING btree (user_id);
 
 
 --
@@ -5812,10 +5869,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231115234747'),
 ('20231115235900'),
 ('20231120053031'),
-('20231129075933'),
-('20231130031534'),
 ('20231130045944'),
-('20231130072226'),
-('20231130234550');
+('20231130234550'),
+('20231218235143');
 
 
