@@ -9,6 +9,7 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :indikators_users
   resources :indikators do
     collection do
       post :import
