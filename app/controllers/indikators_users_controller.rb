@@ -38,6 +38,7 @@ class IndikatorsUsersController < ApplicationController
 
   # GET /indikators_users/new
   def new
+    @dom_id = params[:dom_id]
     @role = params[:role]
     @roles = [@role]
     if @role == 'eselon_3'
@@ -55,18 +56,22 @@ class IndikatorsUsersController < ApplicationController
 
   # POST /indikators_users or /indikators_users.json
   def create
-    @indikators_user = IndikatorsUser.new(indikators_user_params)
+    indikators = params[:indikators_user][:indikator_id].compact_blank
+    user = params[:indikators_user][:user_id]
 
-    respond_to do |format|
-      if @indikators_user.save
-        format.html do
-          redirect_to indikators_user_url(@indikators_user), notice: "Indikators user was successfully created."
-        end
-        format.json { render :show, status: :created, location: @indikators_user }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @indikators_user.errors, status: :unprocessable_entity }
-      end
+    indikator_users = []
+    indikators.each do |ind|
+      ind_user = IndikatorsUser.create(indikator_id: ind, user_id: user)
+      indikator_users << ind_user
+    end
+
+    if indikator_users.any?
+      render json: { resText: "Pelaksana Indikator diperbarui" }.to_json,
+             status: :ok
+
+    else
+      render json: { resText: "terjadi kesalahan", errors: error_content }.to_json,
+             status: :unprocessable_entity
     end
   end
 
@@ -111,5 +116,19 @@ class IndikatorsUsersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def indikators_user_params
     params.require(:indikators_user).permit(:indikator_id, :user_id)
+  end
+
+  def html_content(pohon)
+    render_to_string(partial: 'pohon_kinerja_opds/item_cascading',
+                     formats: 'html',
+                     layout: false,
+                     locals: { pohon: pohon })
+  end
+
+  def error_content
+    render_to_string(partial: 'form',
+                     formats: 'html',
+                     layout: false,
+                     locals: { pelaksana: @pelaksana })
   end
 end

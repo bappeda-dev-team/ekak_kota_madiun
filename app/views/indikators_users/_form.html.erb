@@ -1,4 +1,11 @@
-<%= form_with(model: indikators_user) do |form| %>
+<%= form_with model: indikators_user,
+ local: false,
+ data: {
+   controller: 'form-ajax',
+   form_ajax_modal_param: 'form-pelaksana',
+   form_ajax_pohon_param: @dom_id,
+   action: 'ajax:complete->form-ajax#successResponseNew'
+ } do |form| %>
   <% if indikators_user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(indikators_user.errors.count, "error") %> prohibited this indikators_user from being saved:</h2>
@@ -27,12 +34,12 @@
        controller: 'dropdown',
        dropdown_jenis_value: 'chain',
        dropdown_event_name_value: 'change-jenis-indikator',
-       dropdown_parent_value: '#form-pelaksana-body'
+       dropdown_parent_value: '#form-pelaksana'
      } } %>
   </div>
   <div class="field">
     <%= form.label :indikator, class: "form-label" %>
-    <%= form.select :indikator, [],
+    <%= form.select :indikator_id, [],
      {include_blank: true},
      { class: "form-control",
        multiple: true,
@@ -40,7 +47,7 @@
          controller: 'dropdown',
          action: 'change-jenis-indikator@document->dropdown#chain_jenis_indikator',
          dropdown_jenis_value: 'ajax',
-         dropdown_parent_value: '#form-pelaksana-body',
+         dropdown_parent_value: '#form-pelaksana',
          dropdown_kode_opd_value: @kode_opd,
          dropdown_url_value: indikator_by_jenis_indikators_users_path(:json) } } %>
   </div>
@@ -51,20 +58,19 @@
        controller: 'dropdown',
        dropdown_jenis_value: 'chain',
        dropdown_event_name_value: 'change-pelaksana',
-       dropdown_parent_value: '#form-pelaksana-body'
+       dropdown_parent_value: '#form-pelaksana'
      } } %>
   </div>
   <div class="field">
     <%= form.label :asn, class: "form-label" %>
-    <%= form.select :asn_list, [],
+    <%= form.select :user_id, [],
      {include_blank: true},
      { class: "form-control",
-       multiple: true,
        data: { placeholder: "Pilih Pelaksana",
          controller: 'dropdown',
          action: 'change-pelaksana@document->dropdown#chain_role_to_pelaksana',
          dropdown_jenis_value: 'ajax',
-         dropdown_parent_value: '#form-pelaksana-body',
+         dropdown_parent_value: '#form-pelaksana',
          dropdown_kode_opd_value: @kode_opd,
          dropdown_url_value: pelaksana_indikator_indikators_users_path(:json) } } %>
   </div>
