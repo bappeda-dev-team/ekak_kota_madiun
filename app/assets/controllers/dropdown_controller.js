@@ -6,6 +6,7 @@ export default class extends Controller {
   static targets = ["tahun"]
   static values = {
     jenis: String,
+    subJenis: String,
     eventName: { type: String, default: 'change-select' },
     tipe: String,
     tahun: String,
@@ -59,6 +60,8 @@ export default class extends Controller {
           tahun: this.tahunValue,
           jenisUraian: this.tipeValue,
           role: this.roleValue,
+          jenis: this.jenisValue,
+          sub_jenis: this.subJenisValue,
           q: params.term
         }),
         delay: 800
@@ -276,8 +279,18 @@ export default class extends Controller {
   chain_role_to_pelaksana(e) {
     const { data } = e.detail
     const role = data.id
-    console.log(role)
     this.roleValue = role
+    this.select.select2('open')
+  }
+
+  chain_jenis_indikator(e) {
+    const { data } = e.detail
+    const split = data.id.split(' ')
+
+    const jenis = split[0]
+    const sub_jenis = split[2]
+    this.jenisValue = jenis
+    this.subJenisValue = sub_jenis
     this.select.select2('open')
   }
 

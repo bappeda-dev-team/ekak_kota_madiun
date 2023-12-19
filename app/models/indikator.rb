@@ -38,4 +38,8 @@ class Indikator < ApplicationRecord
   def target_satuan
     "#{target} #{satuan}"
   end
+
+  def jenis_sub_jenis
+    "#{jenis} - #{indikator} (#{sub_jenis})"
+  end
 end

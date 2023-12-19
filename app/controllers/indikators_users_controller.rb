@@ -1,5 +1,6 @@
 class IndikatorsUsersController < ApplicationController
   before_action :set_indikators_user, only: %i[show edit update destroy]
+  before_action :set_tahun_opd
   layout false, only: %i[new edit]
 
   # GET /indikators_users or /indikators_users.json
@@ -7,11 +8,45 @@ class IndikatorsUsersController < ApplicationController
     @indikators_users = IndikatorsUser.all
   end
 
+  def indikator_by_jenis
+    search = params[:q] || ''
+    jenis = params[:jenis]
+    sub_jenis = params[:sub_jenis]
+    kode_opd = params[:kode_opd]
+
+    indikators = Indikator.where(jenis: jenis,
+                                 sub_jenis: sub_jenis,
+                                 tahun: @tahun,
+                                 kode_opd: kode_opd)
+                          .where('indikator ILIKE ?', "%#{search}%")
+    results = indikators.map { |ind| { id: ind.id, text: ind.jenis_sub_jenis } }
+
+    render json: { results: results }.to_json
+  end
+
+  def pelaksana_indikator
+    param = params[:q] || ''
+    role = params[:role]
+    asn_list = @opd.users.where('nama ILIKE ?', "%#{param}%")
+    pelaksana = asn_list.with_any_role(role)
+    pelaksana.map! { |user| { id: user.id, text: user.nama_nip } }
+    render json: { results: pelaksana }.to_json
+  end
+
   # GET /indikators_users/1 or /indikators_users/1.json
   def show; end
 
   # GET /indikators_users/new
   def new
+    @role = params[:role]
+    @roles = [@role]
+    if @role == 'eselon_3'
+      @roles.push('eselon_2b')
+    elsif @role == 'eselon_4'
+      @roles.push('staff')
+    else
+      @roles
+    end
     @indikators_user = IndikatorsUser.new
   end
 
@@ -65,6 +100,12 @@ class IndikatorsUsersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_indikators_user
     @indikators_user = IndikatorsUser.find(params[:id])
+  end
+
+  def set_tahun_opd
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
   end
 
   # Only allow a list of trusted parameters through.
