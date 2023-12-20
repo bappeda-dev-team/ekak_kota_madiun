@@ -83,7 +83,7 @@ prawn_document(filename: @filename, disposition: 'attachment') do |pdf|
                                         ["Keluaran: #{indikator_kegiatan&.dig(:indikator) || '-'}"],
                                         ["Hasil: #{indikator_kegiatan&.dig(:target) || '-'} #{indikator_kegiatan&.dig(:satuan) || '-'}"],
                                         [{ content: 'Sub Kegiatan', rowspan: 5, borders: [:right], border_width: 0 }],
-                                        [@program_kegiatan.nama_kegiatan || '-'],
+                                        [@program_kegiatan.nama_subkegiatan || '-'],
                                         ["Masukan: Rp. #{number_with_delimiter(indikator_subkegiatan&.dig(:pagu)) || 0}"],
                                         ["Keluaran: #{indikator_subkegiatan&.dig(:indikator) || '-'}"],
                                         ["Hasil: #{indikator_subkegiatan&.dig(:target) || '-'} #{indikator_subkegiatan&.dig(:satuan) || '-'}"]
