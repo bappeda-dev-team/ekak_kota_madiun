@@ -5,7 +5,14 @@
         <div class="card-header">
           <div class="row align-items-center">
             <div class="col">
-              <h2 class="fs-5 fw-bold mb-0">Sasaran Kinerja / Rencana Kinerja</h2>
+              <h2 class="fs-5 fw-bold mb-0">Rencana Kinerja Tahun <%= @tahun %></h2>
+            </div>
+            <div class="col text-end">
+              <span><%= current_user.nama %></span>
+              |
+              <span><%= current_user.nik %></span>
+              |
+              <span>Role: <%= current_user.eselon_user %></span>
             </div>
           </div>
         </div>

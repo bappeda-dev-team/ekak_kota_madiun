@@ -1,8 +1,10 @@
 <div class="d-grid gap-3">
-  <%= link_to sasaran_path(sasaran),
-   class: "btn btn-sm btn-outline-primary" do %>
-    <i class="fa fa-book-open me-2"></i>
-    <span>Input KAK</span>
+  <% if current_user.eselon_user != 'staff' %>
+    <%= link_to sasaran_path(sasaran),
+     class: "btn btn-sm btn-outline-primary" do %>
+      <i class="fa fa-book-open me-2"></i>
+      <span>Input KAK</span>
+    <% end %>
   <% end %>
   <%= link_to edit_sasaran_path(sasaran),
    class: "btn btn-sm btn-outline-info" do %>
@@ -17,14 +19,14 @@
     <span>Hapus</span>
   <% end %>
   <%= link_to clone_sasaran_clone_path(sasaran), remote: true,
-                      data: {
-                        controller: 'form-modal',
-                        action: 'form-modal#appendForm',
-                        form_modal_location_param: 'form-modal-body',
-                        bs_toggle: 'modal',
-                        bs_target: '#form-modal'
-                      },
-                      class: "btn btn-sm btn-primary w-100 mt-3" do %>
+   data: {
+     controller: 'form-modal',
+     action: 'form-modal#appendForm',
+     form_modal_location_param: 'form-modal-body',
+     bs_toggle: 'modal',
+     bs_target: '#form-modal'
+   },
+   class: "btn btn-sm btn-primary w-100 mt-3" do %>
     <i class="fa fa-clone me-2"></i>
     <span>Clone</span>
   <% end %>
