@@ -33,6 +33,11 @@ class TujuanKota < ApplicationRecord
   has_many :sasaran_kota, foreign_key: 'id_tujuan', primary_key: 'kode_tujuan'
   has_many :strategi_kota, through: :sasaran_kota
 
+  scope :by_periode, lambda { |tahun|
+                       where("tahun_awal::integer <= ?::integer", tahun)
+                         .where("tahun_akhir::integer >= ?::integer", tahun)
+                     }
+
   def tahun_awal_akhir
     "#{tahun_awal} - #{tahun_akhir}"
   end

@@ -703,7 +703,11 @@ Rails.application.routes.draw do
   end
 
   resources :sasaran_kota
-  resources :tujuan_kota
+  resources :tujuan_kota do
+    collection do
+      post :admin_filter
+    end
+  end
   get :crosscutting_kota, to: "sasaran_kota#crosscutting_kota"
 
   # renja

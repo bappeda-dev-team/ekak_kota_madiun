@@ -1,0 +1,61 @@
+<div class="card border-0 shadow">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">Tujuan Kota <%= @tahun %></h2>
+      </div>
+      <div class="col-auto">
+        <%= link_to new_tujuan_kotum_path,
+            remote: true,
+            data: {
+              controller: 'form-modal',
+              action: 'ajax:complete->form-modal#success:prevent',
+              bs_toggle: 'modal',
+              bs_target: '#form-modal'
+            },
+         class: 'btn btn-sm btn-info text-white' do %>
+          <span>Buat Tujuan Kota Baru</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table align-items-center counter">
+      <thead class="thead-light">
+        <tr>
+          <th class="border-bottom" scope="col">No.</th>
+          <th class="border-bottom text-center" scope="col">Aksi</th>
+          <th class="border-bottom" scope="col">Tujuan Kota</th>
+          <th class="border-bottom" scope="col">Periode</th>
+          <th class="border-bottom" scope="col">Indikator</th>
+          <th class="border-bottom" scope="col">Target</th>
+          <th class="border-bottom" scope="col">Satuan</th>
+          <th class="border-bottom" scope="col">Tahun</th>
+        </tr>
+      </thead>
+      <tbody id="tempat-row-sasaran">
+        <% @tujuan_kota.each do |tujuan| %>
+          <tr>
+            <td class="fw-bolder" scope="row" rowspan="<%= tujuan.indikator_tujuans.size + 1 %>"></td>
+            <td class="fw-bolder" scope="row" rowspan="<%= tujuan.indikator_tujuans.size + 1 %>">
+              <%= link_to edit_tujuan_kotum_path(tujuan),
+               class: "m-3 btn btn-outline-info" do %>
+                <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit Tujuan"></i>
+                <span>Edit</span>
+              <% end %>
+              <%= link_to tujuan_kotum_path(tujuan), method: :delete,
+               data: { confirm_swal: "Hapus #{tujuan.tujuan} ?"},
+               class: "m-3 btn btn-outline-danger" do %>
+                <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus Tujuan"></i>
+                <span>Hapus</span>
+              <% end %>
+            </td>
+            <td class="fw-bolder text-wrap" scope="row" rowspan="<%= tujuan.indikator_tujuans.size + 1 %>"><%= tujuan.tujuan %></td>
+            <td class="fw-bolder" scope="row" rowspan="<%= tujuan.indikator_tujuans.size + 1 %>"><%= tujuan.tahun_awal_akhir %></td>
+            <%= render 'indikator_tujuan_kota_row', indikator_tujuans: tujuan.indikator_tujuans %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
