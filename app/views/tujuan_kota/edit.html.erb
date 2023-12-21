@@ -3,10 +3,3 @@
 <%= form_for(@tujuan_kota, url: tujuan_kotum_path(@tujuan_kota), method: :patch) do |form| %>
   <%= render 'form' , form: form, tujuan_kota: @tujuan_kota %>
 <% end %>
-
-<div class="card-body">
-  <%= link_to tujuan_kota_path, class: 'btn btn-info w-100 text-white' do %>
-    <span class="fas fa-arrow-left"></span>
-    <span>Kembali</span>
-  <% end %>
-</div>

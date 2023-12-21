@@ -2,7 +2,7 @@
   <div class="card-header">
     <div class="row align-items-center">
       <div class="col">
-        <h2 class="fs-5 fw-bold mb-0">Tujuan Kota <%= @tahun %></h2>
+        <h2 class="fs-5 fw-bold mb-0">Tujuan Kota Periode <%= "#{@tahun_awal} - #{@tahun_akhir}" %></h2>
       </div>
       <div class="col-auto">
         <%= link_to new_tujuan_kotum_path,
@@ -19,43 +19,77 @@
       </div>
     </div>
   </div>
-  <div class="table-responsive">
-    <table class="table align-items-center counter">
-      <thead class="thead-light">
-        <tr>
-          <th class="border-bottom" scope="col">No.</th>
-          <th class="border-bottom text-center" scope="col">Aksi</th>
-          <th class="border-bottom" scope="col">Tujuan Kota</th>
-          <th class="border-bottom" scope="col">Periode</th>
-          <th class="border-bottom" scope="col">Indikator</th>
-          <th class="border-bottom" scope="col">Target</th>
-          <th class="border-bottom" scope="col">Satuan</th>
-          <th class="border-bottom" scope="col">Tahun</th>
-        </tr>
-      </thead>
-      <tbody id="tempat-row-sasaran">
-        <% @tujuan_kota.each do |tujuan| %>
-          <tr>
-            <td class="fw-bolder" scope="row" rowspan="<%= tujuan.indikator_tujuans.size + 1 %>"></td>
-            <td class="fw-bolder" scope="row" rowspan="<%= tujuan.indikator_tujuans.size + 1 %>">
-              <%= link_to edit_tujuan_kotum_path(tujuan),
-               class: "m-3 btn btn-outline-info" do %>
-                <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit Tujuan"></i>
-                <span>Edit</span>
-              <% end %>
-              <%= link_to tujuan_kotum_path(tujuan), method: :delete,
-               data: { confirm_swal: "Hapus #{tujuan.tujuan} ?"},
-               class: "m-3 btn btn-outline-danger" do %>
-                <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus Tujuan"></i>
-                <span>Hapus</span>
-              <% end %>
-            </td>
-            <td class="fw-bolder text-wrap" scope="row" rowspan="<%= tujuan.indikator_tujuans.size + 1 %>"><%= tujuan.tujuan %></td>
-            <td class="fw-bolder" scope="row" rowspan="<%= tujuan.indikator_tujuans.size + 1 %>"><%= tujuan.tahun_awal_akhir %></td>
-            <%= render 'indikator_tujuan_kota_row', indikator_tujuans: tujuan.indikator_tujuans %>
+  <div class="card-body">
+    <div class="table-responsive mb-5">
+      <table class="table align-items-center">
+        <thead class="thead-tujuan">
+          <tr class="header-tujuan">
+            <th class="border" rowspan="2" width="20px">No.</th>
+            <th class="border text-center" rowspan="2">Aksi</th>
+            <th class="border" rowspan="2">Tujuan Kota</th>
+            <th class="border" rowspan="2">Periode</th>
+            <th class="border" rowspan="2">Indikator</th>
+            <th class="border" rowspan="2">Rumus Perhitungan</th>
+            <th class="border" rowspan="2">Sumber Data</th>
+            <% (@tahun_awal..@tahun_akhir).each do |tahun| %>
+              <th class="border text-center" scope="col" colspan="2"><%= tahun %></th>
+            <% end %>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+          <tr>
+            <% (@tahun_awal..@tahun_akhir).each do %>
+              <th class="border" scope="col" width="50px">Target</th>
+              <th class="border" scope="col">Satuan</th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody id="tempat-row-sasaran">
+          <% @tujuan_kota.each.with_index(1) do |tujuan, no_tujuan| %>
+            <% rowsize = tujuan.indikator_tujuans.size + 1 %>
+            <tr>
+              <td class="text-gray-900 text-wrap border" width='20px' scope="row" rowspan="<%= rowsize %>"><%= no_tujuan %></td>
+              <td class="text-gray-900 border px-auto" scope="row" rowspan="<%= rowsize %>">
+                <div class="row justify-content-center w-100">
+                  <div class="col">
+                    <%= link_to edit_tujuan_kotum_path(tujuan),
+                     remote: true,
+                     class: "m-3 btn btn-outline-info w-100",
+                     data: {
+                       controller: 'form-modal',
+                       action: 'ajax:complete->form-modal#success:prevent',
+                       bs_toggle: 'modal',
+                       bs_target: '#form-modal' } do %>
+                      <i class="fa fa-edit"></i>
+                      <span>Edit</span>
+                    <% end %>
+                  </div>
+                  <div class="col">
+                    <%= link_to tujuan, method: :delete,
+                        data: { confirm_swal: "Hapus #{tujuan.tujuan} ?"},
+                     class: "m-3 btn btn-outline-danger w-100" do %>
+                      <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+                      <span>Hapus</span>
+                    <% end %>
+                  </div>
+                </div>
+              </td>
+              <td class="fw-bolder text-wrap" scope="row" rowspan="<%= rowsize %>"><%= tujuan.tujuan %></td>
+              <td class="fw-bolder border" scope="row" rowspan="<%= rowsize %>"><%= tujuan.tahun_awal_akhir %></td>
+            </tr>
+            <% tujuan.indikator_tujuans.each do |indikator_tujuan| %>
+              <tr>
+                <td class="text-gray-900 text-wrap border"><%= indikator_tujuan || '-' %></td>
+                <td class="text-gray-900 text-wrap border"><%= indikator_tujuan.rumus_perhitungan || '-' %></td>
+                <td class="text-gray-900 text-wrap border"><%= indikator_tujuan.sumber_data || '-' %></td>
+                <% (@tahun_awal..@tahun_akhir).each do |tahun| %>
+                  <% target = indikator_tujuan.targets.find_by(tahun: tahun) %>
+                  <td class="text-gray-900 text-wrap border"><%= target %></td>
+                  <td class="text-gray-900 text-wrap border"><%= target&.satuan %></td>
+                <% end %>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

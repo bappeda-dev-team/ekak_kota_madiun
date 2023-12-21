@@ -22,12 +22,27 @@ class TujuanKotaController < ApplicationController
   def show; end
 
   def new
+    @tahun = cookies[:tahun]
+    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+
+    @periode = Periode.find_tahun(tahun_bener)
+    @tahun_awal = @periode.tahun_awal.to_i
+    @tahun_akhir = @periode.tahun_akhir.to_i
+
     @tujuan_kota = TujuanKota.new
     @tujuan_kota.indikator_tujuans.build.targets.build
+
     render layout: false
   end
 
-  def edit; end
+  def edit
+    @tahun = cookies[:tahun]
+    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @periode = Periode.find_tahun(tahun_bener)
+    @tahun_awal = @periode.tahun_awal.to_i
+    @tahun_akhir = @periode.tahun_akhir.to_i
+    render layout: false
+  end
 
   def create
     @tujuan_kota = TujuanKota.new(tujuan_kota_params)
@@ -69,7 +84,12 @@ class TujuanKotaController < ApplicationController
   end
 
   def indikator_tujuans_attributes
-    { indikator_tujuans_attributes: %i[id kode jenis sub_jenis indikator target satuan tahun _destroy] }
+    { indikator_tujuans_attributes: [:id, :kode, :kode_opd, :indikator, :rumus_perhitungan, :sumber_data, :_destroy,
+                                     targets_attributes] }
+  end
+
+  def targets_attributes
+    { targets_attributes: %i[id target satuan tahun indikator_id opd_id jenis _destroy] }
   end
 
   def handle_filters

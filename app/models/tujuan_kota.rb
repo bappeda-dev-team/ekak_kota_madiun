@@ -20,19 +20,19 @@
 #  index_tujuan_kota_on_id_tujuan  (id_tujuan) UNIQUE
 #
 class TujuanKota < ApplicationRecord
-  default_scope { order(:id) }
-
-  scope :visis, -> { joins(%i[indikator_tujuans sasaran_kota]).where.not(visi: nil) }
-  scope :misis, -> { joins(%i[indikator_tujuans sasaran_kota]).where.not(misi: nil) }
-  scope :sasarans, -> { joins(:sasaran_kota) }
-
   has_many :indikator_tujuans, -> { order(:tahun) },
            class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id_tujuan'
+  has_many :targets, through: :indikators
+
   accepts_nested_attributes_for :indikator_tujuans, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :targets, reject_if: :all_blank, allow_destroy: true
 
   has_many :sasaran_kota, foreign_key: 'id_tujuan', primary_key: 'kode_tujuan'
   has_many :strategi_kota, through: :sasaran_kota
 
+  scope :visis, -> { joins(%i[indikator_tujuans sasaran_kota]).where.not(visi: nil) }
+  scope :misis, -> { joins(%i[indikator_tujuans sasaran_kota]).where.not(misi: nil) }
+  scope :sasarans, -> { joins(:sasaran_kota) }
   scope :by_periode, lambda { |tahun|
                        where("tahun_awal::integer <= ?::integer", tahun)
                          .where("tahun_akhir::integer >= ?::integer", tahun)
