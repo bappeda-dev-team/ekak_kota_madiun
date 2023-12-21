@@ -3,22 +3,7 @@ class TujuanOpdsController < ApplicationController
   before_action :set_tujuan_opd, only: %i[show edit update destroy]
 
   # GET /tujuan_opds or /tujuan_opds.json
-  def index
-    @tahun = cookies[:tahun]
-    @kode_opd = cookies[:opd]
-
-    return if @tahun.nil?
-
-    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
-    @periode = Periode.find_tahun(tahun_bener)
-    @tahun_awal = @periode.tahun_awal.to_i
-    @tahun_akhir = @periode.tahun_akhir.to_i
-
-    @opd = current_user.opd
-    @nama_opd = @opd.nama_opd
-    @tujuan_opds = @opd.tujuan_opds.includes(%i[indikators urusan])
-                       .by_periode(tahun_bener)
-  end
+  def index; end
 
   def admin_filter
     @tahun = cookies[:tahun]
