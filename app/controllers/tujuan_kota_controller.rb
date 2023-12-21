@@ -1,4 +1,5 @@
 class TujuanKotaController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :set_tujuan_kota, only: %i[show edit update destroy]
 
   def index; end
@@ -69,7 +70,8 @@ class TujuanKotaController < ApplicationController
   def destroy
     @tujuan_kota.destroy
     respond_to do |format|
-      format.html { redirect_to tujuan_kota_path, success: 'Tujuan dihapus' }
+      format.html { redirect_to tujuan_kota_path, notice: 'Tujuan dihapus' }
+      format.json { head :no_content }
     end
   end
 
