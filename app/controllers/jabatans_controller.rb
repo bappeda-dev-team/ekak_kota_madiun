@@ -5,7 +5,7 @@ class JabatansController < ApplicationController
   # GET /jabatans or /jabatans.json
   def index
     @tahun_asli = cookies[:tahun]
-    @tahun = @tahun_asli.gsub('_perubahan', '')
+    @tahun = @tahun_asli&.gsub('_perubahan', '')
     @kode_opd = cookies[:opd]
     @jabatans = Jabatan.where(tahun: @tahun)
   end
