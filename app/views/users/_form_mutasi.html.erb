@@ -11,7 +11,7 @@
   <%= form.text_field :tahun, readonly: true, value: @tahun_asli  %>
   <%= form.bulans_field :bulan %>
   <%= form.opds_field :kode_opd %>
-  <%= form.jabatans_field :jabatan, option_jabatans(@tahun_asli) %>
+  <%= form.jabatans_field :jabatan, option_jabatans %>
   <%= form.text_field :nip_asn, readonly: true %>
   <%= form.text_field :nama, readonly: true %>
   <div class="actions">
