@@ -1,6 +1,6 @@
 module SasaransHelper
   def diajukan?
-    @sasaran.status == 'pengajuan' || @sasaran.status == 'disetujui'
+    @sasaran.status == 'pengajuan' || @sasaran.status == 'disetujui' || tahun_fix(@sasaran.tahun).to_i < Date.current.year
   end
 
   def status_sasaran(status) # rubocop:disable Metrics/MethodLength

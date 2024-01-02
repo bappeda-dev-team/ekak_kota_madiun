@@ -3,7 +3,7 @@ module AksisHelper
     aksi = tahapan.aksis.find_by(bulan: bulan)
     if aksi
       target_dengan_bulan(sasaran, tahapan, aksi, bulan, disabled)
-    elsif bulan <= Date.current.month && tahun_fix(sasaran.tahun) == Date.current.year.to_s
+    elsif tahun_fix(sasaran.tahun).to_i < Date.current.year
 
       target_disabled
     else
