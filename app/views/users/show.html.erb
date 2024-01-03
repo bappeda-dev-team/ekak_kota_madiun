@@ -53,19 +53,10 @@
               <div class="d-flex align-items-center">
                 <div class="bg-success dot rounded-circle me-1"></div>
                 <small>Jabatan :</small>
-                <strong><%= current_user.jabatan %></strong>
-              </div>
-              <div>
-                <%= button_to api_skp_client_sync_jabatan_path,
-                 disabled: button_disabled?('sync-jabatan-asn', current_user.nik, @tahun),
-                 remote: true,
-                 class: 'btn btn-info toggle-active',
-                 data: {
-                   disable_with: 'Memproses.....'
-                 },
-                 params: { kode_tombol: 'sync-jabatan-asn', kode: @kode_opd, tahun: @tahun } do %>
-                  <i class="fas fa-sync icon icon-xs me-2"></i>
-                  Sync Jabatan ASN
+                <% if current_user.jabatan_users.any? %>
+                  <strong><%= current_user.jabatan_users.last.details %></strong>
+                <% else %>
+                  <strong><%= current_user.jabatan %></strong>
                 <% end %>
               </div>
             </div>
