@@ -4,6 +4,7 @@
 #
 #  id             :bigint           not null, primary key
 #  keterangan     :string
+#  tahun          :string
 #  tema           :string
 #  type           :string
 #  created_at     :datetime         not null
@@ -46,6 +47,20 @@ RSpec.describe Tematik, type: :model do
                      tahun: '2023',
                      role: 'pohon_kota')
       expect(tematik.pohon_list).to eq([[pohon.id, pohon.tahun]])
+    end
+  end
+
+  context '#update_tahun' do
+    it 'should update tahun from pohon' do
+      tematik = create(:tematik, tema: 'contoh 1', keterangan: 'keterangan')
+      create(:pohon,
+             pohonable_type: 'Tematik',
+             pohonable_id: tematik.id,
+             keterangan: 'contoh tematik',
+             tahun: '2023',
+             role: 'pohon_kota')
+      tematik.update_tahun
+      expect(tematik.tahun).to eq '2023'
     end
   end
 end

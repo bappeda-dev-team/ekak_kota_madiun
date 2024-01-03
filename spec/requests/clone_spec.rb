@@ -120,5 +120,28 @@ RSpec.describe "Clones", type: :request do
       expect(pohon_count).to eq(jumlah_setelah_clone)
       expect(response.body).to include("Pohon di clone")
     end
+
+    it 'should not change source tema' do
+      tahun_asal = '2024'
+      tahun_tujuan = kelompok_anggaran.id
+      pohon_asli = pohon
+      pohon_child1
+      pohon_child2
+      pohon_child3
+      pohon_child31
+      pohon_child4
+
+      post "/clone/#{pohon_asli.id}/pohon_tematik",
+           params: {
+             tahun_asal: tahun_asal,
+             tahun_tujuan: tahun_tujuan
+           }
+      new_pohon = Pohon.find_by(tahun: '2023_perubahan', pohonable_type: 'Tematik')
+      expect(new_pohon.pohonable.tahun).to eq('2023_perubahan')
+      sub_pohon = new_pohon.sub_pohons.pluck(:pohonable_type)
+      expect(sub_pohon).to include('SubTematik')
+      # sub_pohon.pohonable.update(tema: 'hasil edit berbeda')
+      # expect(sub_pohon.pohonable.tema).to_not eq(pohon_child1.pohonable.tema)
+    end
   end
 end

@@ -4,6 +4,7 @@
 #
 #  id             :bigint           not null, primary key
 #  keterangan     :string
+#  tahun          :string
 #  tema           :string
 #  type           :string
 #  created_at     :datetime         not null
@@ -25,10 +26,20 @@ class Tematik < ApplicationRecord
     tema
   end
 
-  def pohon_list
+  def pohon_kinerja_tematiks
     Pohon.where(pohonable_id: id,
                 pohonable_type: 'Tematik',
                 role: 'pohon_kota')
-         .pluck(:id, :tahun)
+  end
+
+  def pohon_list
+    pohon_kinerja_tematiks.pluck(:id, :tahun)
+  end
+
+  def update_tahun
+    pohon_kinerja_tematiks.each do |pohon|
+      tahun = pohon.tahun
+      update(tahun: tahun)
+    end
   end
 end

@@ -3279,7 +3279,8 @@ CREATE TABLE public.tematiks (
     tematik_ref_id bigint,
     type character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    tahun character varying
 );
 
 
@@ -5871,6 +5872,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231120053031'),
 ('20231130045944'),
 ('20231130234550'),
-('20231218235143');
+('20231218235143'),
+('20240103124318');
 
 
