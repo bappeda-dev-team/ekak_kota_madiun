@@ -8,7 +8,7 @@
       <% if current_user.has_role? :super_admin %>
         <% bulan=Date.today.month %>
         <%= link_to sync_pegawai_path(kode_opd: kode_opd, tahun: tahun_fix(@tahun), bulan: bulan), remote: true, data:
-            { disable_with: 'Memproses....' }, class:"btn btn-sm btn-primary" do %>
+        { disable_with: 'Memproses....' }, class:"btn btn-sm btn-primary" do %>
           <i class="fas fa-sync me-2"></i>
           Sync User
         <% end %>
@@ -39,7 +39,11 @@
               <%= user.nik %>
             </td>
             <td class="text-gray-900 text-wrap" scope="row">
-              <%= user.jabatan %>
+              <% if user.jabatan_users.any? %>
+                <strong><%= user.jabatan_users.last.details %></strong>
+              <% else %>
+                <strong><%= user.jabatan %></strong>
+              <% end %>
             </td>
             <td class="fw-bolder text-gray-500 border" id="<%= the_dom %>">
               <ul>
@@ -52,16 +56,16 @@
             </td>
             <td class="fw-bolder text-gray-500 text-center">
               <div class="d-grid gap-3">
-                <%= link_to set_role_user_path(user.id, dom_id: the_dom), 
-                    remote: true, 
-                    data: { 
-                      controller: 'form-modal',
-                      action: 'form-modal#appendForm',
-                      form_modal_location_param: 'form-user-role-body',
-                      bs_target: '#form-user-role',
-                      bs_toggle: 'modal'
-                    },
-                    class: "btn btn-sm btn-info" do %>
+                <%= link_to set_role_user_path(user.id, dom_id: the_dom),
+                 remote: true,
+                 data: {
+                   controller: 'form-modal',
+                   action: 'form-modal#appendForm',
+                   form_modal_location_param: 'form-user-role-body',
+                   bs_target: '#form-user-role',
+                   bs_toggle: 'modal'
+                 },
+                 class: "btn btn-sm btn-info" do %>
                   <i class="fa fa-cog me-2"></i>
                   <span>Role</span>
                 <% end %>
