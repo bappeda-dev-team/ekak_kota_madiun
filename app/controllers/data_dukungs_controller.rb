@@ -1,5 +1,5 @@
 class DataDukungsController < ApplicationController
-  before_action :set_data_dukung, only: %i[ show edit update destroy ]
+  before_action :set_data_dukung, only: %i[show edit update destroy]
 
   # GET /data_dukungs or /data_dukungs.json
   def index
@@ -7,8 +7,7 @@ class DataDukungsController < ApplicationController
   end
 
   # GET /data_dukungs/1 or /data_dukungs/1.json
-  def show
-  end
+  def show; end
 
   # GET /data_dukungs/new
   def new
@@ -16,8 +15,7 @@ class DataDukungsController < ApplicationController
   end
 
   # GET /data_dukungs/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /data_dukungs or /data_dukungs.json
   def create
@@ -58,13 +56,14 @@ class DataDukungsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_data_dukung
-      @data_dukung = DataDukung.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def data_dukung_params
-      params.require(:data_dukung).permit(:nama_data, :keterangan)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_data_dukung
+    @data_dukung = DataDukung.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def data_dukung_params
+    params.require(:data_dukung).permit(:nama_data, :keterangan, :data_dukungable_type, :data_dukungable_id)
+  end
 end

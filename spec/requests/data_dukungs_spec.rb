@@ -16,10 +16,24 @@ RSpec.describe "/data_dukungs", type: :request do
   # This should return the minimal set of attributes required to create a valid
   # DataDukung. As you add validations to DataDukung, be sure to
   # adjust the attributes here as well.
+  let(:user) { create(:user) }
+
+  let(:isu_strategis) do
+    create(:isu_strategis_opd,
+           kode_opd: user.opd.kode_unik_opd)
+  end
+  let(:permasalahan_opd) do
+    create(:permasalahan_opd,
+           isu_strategis_opd: isu_strategis,
+           kode_opd: user.opd.kode_unik_opd,
+           tahun: '2024')
+  end
   let(:valid_attributes) do
     {
       nama_data: 'Test Data',
-      keterangan: 'test'
+      keterangan: 'test',
+      data_dukungable_type: 'PermasalahanOpd',
+      data_dukungable_id: permasalahan_opd.id
     }
   end
 
@@ -29,8 +43,6 @@ RSpec.describe "/data_dukungs", type: :request do
       keterangan: 'test'
     }
   end
-
-  let(:user) { create(:user) }
 
   before(:each) do
     sign_in user
