@@ -92,9 +92,10 @@ class CloneController < ApplicationController
     tahun_anggaran = KelompokAnggaran.find(params[:tahun_tujuan]).kode_kelompok
     @tahun = tahun_anggaran.match(/murni/) ? tahun_anggaran[/[^_]\d*/, 0] : tahun_anggaran
 
+    ket = "clone_dari_#{tahun_asal}"
     pohon = Pohon.find(params[:id])
 
-    ket = "clone_dari_#{tahun_asal}"
+    @pohon = PohonTematikQueries.new(tahun: tahun_asal)
 
     tema = pohon.pohonable
     tema_operation = TematikCloner.call(tema, tahun: @tahun, keterangan: ket)
@@ -112,18 +113,11 @@ class CloneController < ApplicationController
     pohon_tema_clone = pohon_tema_operation.to_record
     pohon_tema_id = pohon_tema_clone.id
 
-    clone_sub_pohons = pohon.sub_pohons.map do |sub_ph|
+    clone_sub_pohons = @pohon.sub_tematiks.select { |ph| ph.pohon_ref_id == pohon.id }.map do |sub_ph|
       sub_tema = sub_ph.pohonable
-      sub_tema_operation = if sub_ph.pohonable_type == 'SubTematik'
-                             SubTematikCloner.call(sub_tema, tahun: @tahun,
-                                                             tematik_ref_id: tema_clone_id,
-                                                             keterangan: ket)
-                           else
-
-                             StrategiCloner.call(sub_tema, traits: :strategi_pohon,
-                                                           tahun: @tahun, keterangan: ket,
-                                                           parent_id: nil)
-                           end
+      sub_tema_operation = SubTematikCloner.call(sub_tema, tahun: @tahun,
+                                                           tematik_ref_id: tema_clone_id,
+                                                           keterangan: ket)
       sub_tema_operation.to_record
       sub_tema_operation.persist
       sub_tema_clone = sub_tema_operation.to_record
@@ -135,20 +129,17 @@ class CloneController < ApplicationController
                                                           pohonable_id: sub_tema_clone_id)
       pohon_sub_tema_operation.to_record
       pohon_sub_tema_operation.persist
-      pohon_sub_tema_clone = pohon_tema_operation.to_record
+      pohon_sub_tema_clone = pohon_sub_tema_operation.to_record
       pohon_sub_tema_id = pohon_sub_tema_clone.id
 
-      sub_ph.sub_pohons.map do |sub_sub_ph|
+      clone_strategi_tematik(pohon: @pohon, tahun: @tahun, parent_id: sub_ph.id,
+                             new_parent_id: pohon_sub_tema_id, ket: ket)
+
+      @pohon.sub_sub_tematiks.select { |sb| sb.pohon_ref_id == sub_ph.id }.each do |sub_sub_ph|
         sub_sub_tema = sub_sub_ph.pohonable
-        sub_sub_tema_operation = if sub_sub_ph.pohonable_type == 'SubSubTematik'
-                                   SubSubTematikCloner.call(sub_sub_tema, tahun: @tahun,
-                                                                          tematik_ref_id: sub_tema_clone_id,
-                                                                          keterangan: ket)
-                                 else
-                                   StrategiCloner.call(sub_sub_tema, traits: :strategi_pohon,
-                                                                     tahun: @tahun, keterangan: ket,
-                                                                     parent_id: nil)
-                                 end
+        sub_sub_tema_operation = SubSubTematikCloner.call(sub_sub_tema, tahun: @tahun,
+                                                                        tematik_ref_id: sub_tema_clone_id,
+                                                                        keterangan: ket)
         sub_sub_tema_operation.to_record
         sub_sub_tema_operation.persist
         sub_sub_tema_clone = sub_sub_tema_operation.to_record
@@ -160,14 +151,14 @@ class CloneController < ApplicationController
                                                                     pohonable_id: sub_sub_tema_clone_id)
         pohon_sub_sub_tema_operation.to_record
         pohon_sub_sub_tema_operation.persist
-        pohon_sub_sub_tema_clone = pohon_sub_tema_operation.to_record
+        pohon_sub_sub_tema_clone = pohon_sub_sub_tema_operation.to_record
         pohon_sub_sub_tema_id = pohon_sub_sub_tema_clone.id
+
+        clone_strategi_tematik(pohon: @pohon, tahun: @tahun, parent_id: sub_sub_ph.id,
+                               new_parent_id: pohon_sub_sub_tema_id, ket: ket)
       end
     end
 
-    # operation = PohonCloner.call(pohon, traits: :pohon_tematik,
-    #                                     tahun: @tahun, pohon_ref_id: '', keterangan: ket)
-    # operation.to_record
     if clone_sub_pohons.any?
       render json: { resText: "Pohon di clone ke #{@tahun}" }, status: :created
     else
@@ -251,5 +242,48 @@ class CloneController < ApplicationController
                      formats: 'html',
                      layout: false,
                      locals: { tahun: @tahun, hasil_clone: true })
+  end
+
+  def clone_strategi_tematik(pohon:, parent_id:, new_parent_id:, ket:, tahun:)
+    pohon.strategi_tematiks.select { |str| str.pohon_ref_id == parent_id }.each do |phh_str|
+      ph_str = phh_str.pohonable
+      ph_str_operation = StrategiCloner.call(ph_str, traits: :strategi_pohon,
+                                                     tahun: tahun,
+                                                     parent_id: nil,
+                                                     keterangan: ket)
+      ph_str_operation.to_record
+      ph_str_operation.persist
+      ph_str_clone = ph_str_operation.to_record
+      ph_str_clone_id = ph_str_clone.id
+
+      pohon_str_operation = PohonCloner.call(phh_str, traits: :pohon_no_sub,
+                                                      tahun: tahun,
+                                                      pohon_ref_id: new_parent_id,
+                                                      pohonable_id: ph_str_clone_id)
+      pohon_str_operation.to_record
+      pohon_str_operation.persist
+      pohon_str_clone = pohon_str_operation.to_record
+      pohon_str_id = pohon_str_clone.id
+
+      pohon.tactical_tematiks.select { |tac| tac.pohon_ref_id == phh_str.id }.each do |phh_tac|
+        ph_tac = phh_tac.pohonable
+        ph_tac_operation = StrategiCloner.call(ph_tac, traits: :strategi_pohon,
+                                                       tahun: tahun,
+                                                       parent_id: ph_str_clone_id,
+                                                       keterangan: ket)
+        ph_tac_operation.to_record
+        ph_tac_operation.persist
+        ph_tac_clone = ph_tac_operation.to_record
+        ph_tac_clone_id = ph_tac_clone.id
+
+        pohon_tac_operation = PohonCloner.call(phh_tac, traits: :pohon_no_sub,
+                                                        tahun: tahun,
+                                                        pohon_ref_id: pohon_str_id,
+                                                        pohonable_id: ph_tac_clone_id)
+        pohon_tac_operation.to_record
+        pohon_tac_operation.persist
+        pohon_tac_operation.to_record
+      end
+    end
   end
 end

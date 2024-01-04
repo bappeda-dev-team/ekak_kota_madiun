@@ -22,6 +22,8 @@ class PohonCloner < Clowne::Cloner
   end
 
   trait :pohon_no_sub do
+    nullify :status
+    nullify :strategi_pohon_id
     finalize do |source, record, tahun:, pohon_ref_id:, pohonable_id:, **|
       record.created_at = Time.current
       record.updated_at = Time.current
