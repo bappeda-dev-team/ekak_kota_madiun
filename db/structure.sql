@@ -613,6 +613,38 @@ ALTER SEQUENCE public.dasar_hukums_id_seq OWNED BY public.dasar_hukums.id;
 
 
 --
+-- Name: data_dukungs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.data_dukungs (
+    id bigint NOT NULL,
+    nama_data character varying,
+    keterangan character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: data_dukungs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.data_dukungs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: data_dukungs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.data_dukungs_id_seq OWNED BY public.data_dukungs.id;
+
+
+--
 -- Name: domains; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3652,6 +3684,13 @@ ALTER TABLE ONLY public.dasar_hukums ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: data_dukungs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.data_dukungs ALTER COLUMN id SET DEFAULT nextval('public.data_dukungs_id_seq'::regclass);
+
+
+--
 -- Name: domains id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4288,6 +4327,14 @@ ALTER TABLE ONLY public.comments
 
 ALTER TABLE ONLY public.dasar_hukums
     ADD CONSTRAINT dasar_hukums_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: data_dukungs data_dukungs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.data_dukungs
+    ADD CONSTRAINT data_dukungs_pkey PRIMARY KEY (id);
 
 
 --
@@ -5873,6 +5920,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231130045944'),
 ('20231130234550'),
 ('20231218235143'),
-('20240103124318');
+('20240103124318'),
+('20240104085456');
 
 

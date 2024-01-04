@@ -1,0 +1,27 @@
+<%= form_with(model: data_dukung) do |form| %>
+  <% if data_dukung.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(data_dukung.errors.count, "error") %> prohibited this data_dukung from being saved:</h2>
+
+      <ul>
+        <% data_dukung.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :nama_data %>
+    <%= form.text_field :nama_data %>
+  </div>
+
+  <div class="field">
+    <%= form.label :keterangan %>
+    <%= form.text_field :keterangan %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
