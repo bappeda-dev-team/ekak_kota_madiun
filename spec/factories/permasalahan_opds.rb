@@ -20,10 +20,10 @@
 #
 FactoryBot.define do
   factory :permasalahan_opd do
-    permasalahan { "MyString" }
-    kode_opd { "MyString" }
-    tahun { "MyString" }
-    status { "MyString" }
-    isu_strategis_opd { "" }
+    permasalahan { "COntoh A" }
+    kode_opd { "" }
+    tahun { "2023" }
+    status { "aktif" }
+    association :isu_strategis_opd
   end
 end

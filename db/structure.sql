@@ -620,6 +620,8 @@ CREATE TABLE public.data_dukungs (
     id bigint NOT NULL,
     nama_data character varying,
     keterangan character varying,
+    data_dukungable_type character varying,
+    data_dukungable_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -5032,6 +5034,13 @@ CREATE INDEX index_comments_on_anggaran_id ON public.comments USING btree (angga
 --
 
 CREATE INDEX index_comments_on_user_id ON public.comments USING btree (user_id);
+
+
+--
+-- Name: index_data_dukungs_on_data_dukungable; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_data_dukungs_on_data_dukungable ON public.data_dukungs USING btree (data_dukungable_type, data_dukungable_id);
 
 
 --

@@ -21,6 +21,7 @@
 class PermasalahanOpd < ApplicationRecord
   belongs_to :isu_strategis_opd
   belongs_to :opd, foreign_key: :kode_opd, primary_key: :kode_unik_opd, optional: true
+  has_many :data_dukungs, as: :data_dukungable
 
   def to_s
     permasalahan
