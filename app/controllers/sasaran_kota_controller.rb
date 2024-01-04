@@ -60,12 +60,12 @@ class SasaranKotaController < ApplicationController
 
   def handle_filters
     tahun = params[:tahun]
-    if tahun.nil? || tahun == 'all'
-      @tahun = ''
-      @sasaran_kota = SasaranKotum.all.includes([:indikator_sasarans])
-    else
-      @tahun = "Tahun #{tahun}"
-      @sasaran_kota = SasaranKotum.where(tahun_awal: tahun).or(SasaranKotum.where(tahun_akhir: tahun)).includes([:indikator_sasarans])
-    end
+    @tahun = if tahun.nil?
+               cookies[:tahun]
+             else
+               "Tahun #{tahun}"
+             end
+    @sasaran_kota = Pohon.where(pohonable_type: 'SubSubTematik', tahun: @tahun).map(&:pohonable)
+                         .compact
   end
 end
