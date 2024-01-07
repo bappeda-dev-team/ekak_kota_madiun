@@ -66,7 +66,7 @@ RSpec.describe "/data_dukungs", type: :request do
 
   describe "GET /new" do
     it "renders a successful response" do
-      get new_data_dukung_url
+      get new_data_dukung_url(permasalahan_id: permasalahan_opd.id)
       expect(response).to be_successful
     end
   end

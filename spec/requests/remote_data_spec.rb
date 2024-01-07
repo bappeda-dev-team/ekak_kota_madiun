@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# TODO: implement this to check ajax data
 RSpec.describe "Remote Data Spec", type: :request do
   let(:user) { create(:user) }
   let(:program_kegiatans) { create_list(:program_kegiatan, 10) }

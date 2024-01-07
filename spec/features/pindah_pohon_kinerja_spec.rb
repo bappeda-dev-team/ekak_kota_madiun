@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "PindahPohonKinerjas", type: :system do
+RSpec.describe "PindahPohonKinerjas", type: :feature do
   let(:user) { create(:super_admin) }
   let(:periode) { create(:periode, tahun_awal: '2025', tahun_akhir: '2026') }
 

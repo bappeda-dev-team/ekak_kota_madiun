@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Gender Form", type: :system do
+RSpec.describe "Gender Form", type: :feature do
   let(:user) { create(:eselon_4) }
   let(:subkegiatan) { create(:program_kegiatan, nama_subkegiatan: 'Test Sub', opd: user.opd) }
   let(:strategi) { create(:strategi, tahun: '2022', nip_asn: user.nik, sasaran_id: '') }

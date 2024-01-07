@@ -272,9 +272,6 @@ Rails.application.routes.draw do
   end
 
   resources :isu_dan_permasalahans, param: :kode_program do
-    collection do
-      post :filter
-    end
     member do
       get :add_new
       post :add_isu_strategis

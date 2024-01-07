@@ -5,20 +5,16 @@ ruby '3.0.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1'
-# Use sqlite3 as the database for Active Record
-# gem 'sqlite3', '~> 1.4'
+# Use postgresql as the database for Active Record
 gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
-# Use SCSS for stylesheets
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 5.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
@@ -31,7 +27,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   gem 'bullet'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  # gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'pry-rails'
@@ -41,7 +37,7 @@ group :development, :test do
   gem 'query_diet'
   gem 'rails-controller-testing'
   gem 'rspec-core'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 6.1.0'
   gem 'shoulda-matchers', '~> 5.0'
   gem 'table_print'
 end
@@ -71,13 +67,9 @@ group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 3.26'
   gem 'capybara-select-2'
-  gem "capybara-wsl"
   gem 'fuubar'
   gem 'selenium-webdriver'
   gem 'show_me_the_cookies'
-
-  # Easy installation and use of web drivers to run system tests with browsers
-  # gem 'webdrivers'
 end
 
 gem 'active_link_to'

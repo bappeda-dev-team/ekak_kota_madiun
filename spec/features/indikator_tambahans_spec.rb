@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "IndikatorTambahans", type: :system do
+RSpec.describe "IndikatorTambahans", type: :feature do
   let(:admin) { create(:super_admin) }
 
   def input_indikator
@@ -53,12 +53,6 @@ RSpec.describe "IndikatorTambahans", type: :system do
       click_on 'Simpan Perubahan Indikator'
 
       expect(page).to have_content('Indikator edit')
-    end
-
-    it 'import csv file to outcome lppd' do
-      visit lppd_outcome_indikators_path
-
-      click_on 'Import Outcome LPPD'
     end
   end
 

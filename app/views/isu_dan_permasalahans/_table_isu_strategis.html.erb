@@ -5,7 +5,7 @@
       <th class="border-bottom text-gray-700">Bidang Urusan</th>
       <th class="border-bottom text-gray-700">Isu Strategis</th>
       <th class="border-bottom text-gray-700">Permasalahan</th>
-      <th class="border-bottom text-gray-700">Faktor Penghambat SKP</th>
+      <th class="border-bottom text-gray-700">Data Dukung</th>
       <th class="border-bottom text-gray-700 text-center">Action</th>
     </tr>
   </thead>
@@ -50,7 +50,21 @@
         </tr>
         <% isu_strategis.permasalahan_opds.each do |permasalahan| %>
           <tr>
-            <td class="text-wrap border-start border-end border-top border-bottom align-middle"><%= permasalahan %></td>
+            <td class="text-wrap border-start border-end border-top border-bottom align-middle"><%= permasalahan %>
+
+              <%= link_to new_data_dukung_path(permasalahan_id: permasalahan),
+               remote: true,
+               data: {
+                 controller: 'form-modal',
+                 action: 'ajax:complete->form-modal#success:prevent',
+                 bs_toggle: 'modal',
+                 bs_target: '#form-modal'
+               },
+               class: 'btn btn-sm btn-outline-primary ms-3' do %>
+                <i class="fas fa-pencil"></i>
+                <span>Tambah Data Dukung</span>
+              <% end %>
+            </td>
             <td class="text-wrap border-start border-end border-top border-bottom align-middle"><%= permasalahan.faktor_penghambat_skp %></td>
           </tr>
         <% end %>

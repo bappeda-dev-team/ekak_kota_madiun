@@ -1,10 +1,7 @@
 class IsuDanPermasalahansController < ApplicationController
   before_action :set_params
-  layout false, only: :filter
 
-  def index; end
-
-  def filter
+  def index
     @opd = Opd.find_by(kode_unik_opd: @kode_unik_opd)
     @nama_opd = @opd.nama_opd
     tahun_asli = @tahun.include?('perubahan') ? @tahun.gsub('_perubahan', '') : @tahun
@@ -31,8 +28,8 @@ class IsuDanPermasalahansController < ApplicationController
   private
 
   def set_params
-    @kode_unik_opd = params[:kode_opd]
-    @tahun = params[:tahun]
+    @kode_unik_opd = cookies[:opd]
+    @tahun = cookies[:tahun]
   end
 
   def isu_strategis_params

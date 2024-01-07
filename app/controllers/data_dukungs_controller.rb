@@ -1,5 +1,6 @@
 class DataDukungsController < ApplicationController
   before_action :set_data_dukung, only: %i[show edit update destroy]
+  layout false, only: %i[new edit]
 
   # GET /data_dukungs or /data_dukungs.json
   def index
@@ -11,7 +12,8 @@ class DataDukungsController < ApplicationController
 
   # GET /data_dukungs/new
   def new
-    @data_dukung = DataDukung.new
+    @permasalahan = PermasalahanOpd.find(params[:permasalahan_id])
+    @data_dukung = @permasalahan.data_dukungs.build
   end
 
   # GET /data_dukungs/1/edit

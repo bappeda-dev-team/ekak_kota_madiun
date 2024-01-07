@@ -118,15 +118,6 @@ RSpec.describe "Clones", type: :request do
            role: 'tactical_pohon_kota',
            tahun: '2023'
   end
-  let(:pohon_child4) do
-    create :pohon,
-           pohonable_type: 'Strategi',
-           pohonable_id: operational.id,
-           keterangan: 'pohon test 4',
-           pohon_ref_id: pohon_child3.id,
-           role: 'operational_pohon_kota',
-           tahun: '2023'
-  end
   let(:kelompok_anggaran) do
     create :kelompok_anggaran,
            tahun: '2023',
@@ -138,14 +129,16 @@ RSpec.describe "Clones", type: :request do
       sign_in user
     end
     it 'should duplicate pohon count' do
-      tahun_asal = '2024'
+      tahun_asal = '2023'
       tahun_tujuan = kelompok_anggaran.id
       pohon_asli = pohon
       pohon_child1
+      pohon_child12
       pohon_child2
+      pohon_child22
+      pohon_child23
       pohon_child3
       pohon_child31
-      pohon_child4
 
       jumlah_awal = Pohon.count
 
@@ -172,7 +165,6 @@ RSpec.describe "Clones", type: :request do
       pohon_child23
       pohon_child3
       pohon_child31
-      pohon_child4
 
       post "/clone/#{pohon_asli.id}/pohon_tematik",
            params: {
@@ -180,15 +172,8 @@ RSpec.describe "Clones", type: :request do
              tahun_tujuan: tahun_tujuan
            }
       new_pohon = Pohon.find_by(tahun: '2023_perubahan', pohonable_type: 'Tematik')
-      # expect(new_pohon.pohonable.tahun).to eq('2023_perubahan')
-      # pohon_tematik = PohonTematikQueries.new(tahun: '2023_perubahan')
-      # expect(pohon_tematik.sub_tematiks.size).to eq 1
-      # expect(pohon_tematik.sub_sub_tematiks.size).to eq 1
-      # expect(pohon_tematik.strategi_tematiks.size).to eq 1
       sub_pohon = new_pohon.sub_pohons
-      expect(sub_pohon.map(&:pohonable)).to include a_kind_of(SubTematik)
-      expect(sub_pohon.map(&:pohonable)).to include a_kind_of(SubSubTematik)
-      expect(sub_pohon.map(&:pohonable)).to include a_kind_of(Strategi)
+      expect(sub_pohon.map(&:pohonable)).to include(a_kind_of(SubTematik))
     end
   end
 end

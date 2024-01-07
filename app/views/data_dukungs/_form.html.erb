@@ -12,6 +12,11 @@
   <% end %>
 
   <div class="field">
+    <%= form.hidden_field :data_dukungable_type %>
+    <%= form.hidden_field :data_dukungable_id %>
+  </div>
+
+  <div class="field">
     <%= form.label :nama_data %>
     <%= form.text_field :nama_data %>
   </div>

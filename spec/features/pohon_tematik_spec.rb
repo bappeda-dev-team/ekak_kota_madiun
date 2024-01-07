@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "PohonTematiks", type: :system do
+RSpec.describe "PohonTematiks", type: :feature do
   let(:user) { create(:super_admin) }
 
   before(:each) do

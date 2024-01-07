@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Sasarans", type: :system do
+RSpec.describe "Sasarans", type: :feature do
   let(:user) { create(:eselon_4) }
 
   before(:each) do
