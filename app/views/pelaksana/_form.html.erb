@@ -1,12 +1,12 @@
 <%= form_with url: pelaksana_path(pelaksana.id),
-              local: false,
-              method: :patch,
-              data: {
-                controller: 'form-ajax',
-                form_ajax_modal_param: 'form-pelaksana',
-                form_ajax_pohon_param: dom_id(pelaksana.strategi),
-                action: 'ajax:complete->form-ajax#successResponseNew'
-              } do |form| %>
+ local: false,
+ method: :patch,
+ data: {
+   controller: 'form-ajax',
+   form_ajax_modal_param: 'form-pelaksana',
+   form_ajax_pohon_param: dom_id(pelaksana.strategi),
+   action: 'ajax:complete->form-ajax#successResponseNew'
+ } do |form| %>
   <div class="field">
     <%= form.label :pelaksana, class: "form-label" %>
     <% pelaksana.cascading.each do |cross| %>
@@ -31,22 +31,22 @@
        controller: 'dropdown',
        dropdown_jenis_value: 'chain',
        dropdown_event_name_value: 'change-pelaksana',
-       dropdown_parent_value: '#form-pelaksana-body'
+       dropdown_parent_value: '#form-pelaksana'
      } } %>
   </div>
   <div class="field">
     <%= form.label :asn, class: "form-label" %>
     <%= form.select :asn_list, [],
-                {include_blank: true},
-                { class: "form-control",
-                  multiple: true,
-                  data: { placeholder: "Pilih Pelaksana",
-                          controller: 'dropdown',
-                          action: 'change-pelaksana@document->dropdown#chain_role_to_pelaksana',
-                          dropdown_jenis_value: 'ajax',
-                          dropdown_parent_value: '#form-pelaksana-body',
-                          dropdown_kode_opd_value: @kode_opd,
-                          dropdown_url_value: teman_pelaksana_path(pelaksana.id,:json) } } %>
+     {include_blank: true},
+     { class: "form-control",
+       multiple: true,
+       data: { placeholder: "Pilih Pelaksana",
+         controller: 'dropdown',
+         action: 'change-pelaksana@document->dropdown#chain_role_to_pelaksana',
+         dropdown_jenis_value: 'ajax',
+         dropdown_parent_value: '#form-pelaksana',
+         dropdown_kode_opd_value: @kode_opd,
+         dropdown_url_value: teman_pelaksana_path(pelaksana.id,:json) } } %>
   </div>
   <div class="field">
     <%= form.label :keterangan, { class: "form-label" } %>
