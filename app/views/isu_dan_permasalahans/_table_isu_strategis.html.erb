@@ -50,8 +50,12 @@
         </tr>
         <% isu_strategis.permasalahan_opds.each do |permasalahan| %>
           <tr>
-            <td class="text-wrap border-start border-end border-top border-bottom align-middle"><%= permasalahan %>
-
+            <td class="text-wrap border-start border-end border-top border-bottom align-middle"><%= permasalahan %></td>
+            <td class="text-wrap border-start border-end border-top border-bottom align-middle">
+              <div id="new_data_dukung">
+                <%= render partial: 'data_dukungs/data_dukung',
+                           collection: permasalahan.data_dukungs, as: :data_dukung %>
+              </div>
               <%= link_to new_data_dukung_path(permasalahan_id: permasalahan),
                remote: true,
                data: {
@@ -65,7 +69,6 @@
                 <span>Tambah Data Dukung</span>
               <% end %>
             </td>
-            <td class="text-wrap border-start border-end border-top border-bottom align-middle"><%= permasalahan.faktor_penghambat_skp %></td>
           </tr>
         <% end %>
       <% end %>

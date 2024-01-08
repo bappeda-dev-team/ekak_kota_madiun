@@ -23,14 +23,16 @@ class DataDukungsController < ApplicationController
   def create
     @data_dukung = DataDukung.new(data_dukung_params)
 
-    respond_to do |format|
-      if @data_dukung.save
-        format.html { redirect_to data_dukung_url(@data_dukung), notice: "Data dukung was successfully created." }
-        format.json { render :show, status: :created, location: @data_dukung }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @data_dukung.errors, status: :unprocessable_entity }
-      end
+    if @data_dukung.save
+      render json: { resText: "Data dukung ditambahkan",
+                     html_content: html_content({ data_dukung: @data_dukung },
+                                                partial: 'data_dukungs/data_dukung') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ data_dukung: @data_dukung },
+                                                 partial: 'data_dukungs/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 

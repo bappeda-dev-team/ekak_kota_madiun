@@ -14,7 +14,7 @@ RSpec.describe "IsuDanPermasalahans", type: :feature do
     create_cookie('tahun', '2025')
   end
 
-  scenario 'add data dukung permasalahan' do
+  scenario 'add data dukung permasalahan', js: true do
     isu_opd = create(:isu_strategis_opd,
                      tahun: '2025',
                      kode_opd: 'test_opd',
@@ -26,6 +26,9 @@ RSpec.describe "IsuDanPermasalahans", type: :feature do
                      kode_opd: 'test_opd')
 
     visit isu_dan_permasalahans_path
+
+    expect(page).to have_text 'test isu'
+    expect(page).to have_text 'test masalah'
 
     click_on 'Tambah Data Dukung'
 
