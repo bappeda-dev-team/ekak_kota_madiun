@@ -1,10 +1,8 @@
 <div class="d-grid gap-3">
-  <% if current_user.eselon_user != 'staff' %>
-    <%= link_to sasaran_path(sasaran),
-     class: "btn btn-sm btn-outline-primary" do %>
-      <i class="fa fa-book-open me-2"></i>
-      <span>Input KAK</span>
-    <% end %>
+  <%= link_to sasaran_path(sasaran),
+   class: "btn btn-sm btn-outline-primary" do %>
+    <i class="fa fa-book-open me-2"></i>
+    <span>Input KAK</span>
   <% end %>
   <%= link_to edit_sasaran_path(sasaran),
    class: "btn btn-sm btn-outline-info" do %>
