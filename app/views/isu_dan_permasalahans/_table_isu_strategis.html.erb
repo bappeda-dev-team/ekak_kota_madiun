@@ -10,6 +10,7 @@
       <% (@tahun_awal..@tahun_akhir).each do |tahun| %>
         <th class="border text-center" scope="col" colspan="2"><%= tahun %></th>
       <% end %>
+      <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Action</th>
     </tr>
     <tr>
       <% (@tahun_awal..@tahun_akhir).each do %>
@@ -61,6 +62,34 @@
           <% rowspan_data = permasalahan.data_dukungs.size + 1  %>
           <tr>
             <td class="text-wrap border align-middle" rowspan="<%= rowspan_data %>"><%= permasalahan %></td>
+            <td colspan="<%= (@tahun_awal..@tahun_akhir).size * 2 + 1 %>" class="p-0 m-0 border-0"></td>
+            <td class="border align-middle" rowspan="<%= rowspan_data %>">
+              <div class="d-grid gap-3" id="<%= dom_id(permasalahan, 'action') %>">
+                <%= link_to edit_permasalahan_opd_path(permasalahan),
+                 remote: true,
+                 data: {
+                   controller: 'form-modal',
+                   action: 'ajax:complete->form-modal#success:prevent',
+                   bs_toggle: 'modal',
+                   bs_target: '#form-modal'
+                 },
+                 class: 'btn btn-sm btn-outline-info ms-3' do %>
+                  <i class="fas fa-edit"></i>
+                  <span>Edit</span>
+                <% end %>
+                <%= link_to permasalahan_opd_path(permasalahan),
+                 method: :delete,
+                 data: {
+                   confirm_swal: 'hapus permasalahan?',
+                   controller: 'form-ajax',
+                   action: 'ajax:complete->form-ajax#afterSubmitRefresh'
+                 },
+                 class: 'btn btn-sm btn-outline-danger ms-3' do %>
+                  <i class="fas fa-trash"></i>
+                  <span>Hapus</span>
+                <% end %>
+              </div>
+            </td>
           </tr>
           <% permasalahan.data_dukungs.each do |data| %>
             <tr>

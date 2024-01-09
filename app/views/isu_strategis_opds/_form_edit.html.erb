@@ -34,16 +34,6 @@
     <%= form.text_area :isu_strategis, class: 'form-control' %>
   </div>
 
-  <div class="field mt-0" id="permasalahan-opds">
-    <%= form.fields_for :permasalahan_opds do |permasalahan| %>
-      <%= render 'isu_strategis_opds/permasalahan_opd_fields', form: permasalahan %>
-    <% end %>
-  </div>
-  <%= link_to_add_nested(form, :permasalahan_opds, "#permasalahan-opds",
-                             link_classes: 'btn btn-primary w-100',
-                             link_text: 'Tambah Permasalahan',
-                             partial: 'isu_strategis_opds/permasalahan_opd_fields') %>
-
   <div class="actions">
     <%= form.submit %>
   </div>

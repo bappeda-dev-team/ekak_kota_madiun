@@ -21,7 +21,13 @@ class PermasalahanOpdsController < ApplicationController
   end
 
   # GET /permasalahan_opds/1/edit
-  def edit; end
+  def edit
+    @tahun = cookies[:tahun].present? ? cookies[:tahun] : Date.today.year.to_s
+    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @periode = Periode.find_tahun(tahun_bener)
+    @tahun_awal = @periode.tahun_awal.to_i
+    @tahun_akhir = @periode.tahun_akhir.to_i
+  end
 
   # POST /permasalahan_opds or /permasalahan_opds.json
   def create
@@ -62,6 +68,17 @@ class PermasalahanOpdsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def permasalahan_opd_params
-    params.require(:permasalahan_opd).permit(:permasalahan, :kode_opd, :tahun, :status, :isu_strategis_opd_id)
+    params.require(:permasalahan_opd).permit(:permasalahan, :kode_opd, :tahun, :status, :isu_strategis_opd_id,
+                                             data_dukung_attributes)
+  end
+
+  def data_dukung_attributes
+    { data_dukungs_attributes: [:id, :data_dukungable_type, :data_dukungable_id,
+                                :nama_data, :_destroy,
+                                jumlahs_attributes] }
+  end
+
+  def jumlahs_attributes
+    { jumlahs_attributes: %i[id jumlah satuan tahun _destroy] }
   end
 end

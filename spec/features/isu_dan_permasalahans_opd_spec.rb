@@ -58,11 +58,11 @@ RSpec.describe "IsuDanPermasalahansOpd", type: :feature do
                      tahun: '2025',
                      kode_opd: '2.16.2.20.2.21.04.000',
                      isu_strategis: 'test isu')
-    create(:permasalahan_opd,
-           permasalahan: 'test masalah',
-           tahun: '2025',
-           isu_strategis_opd: isu_opd,
-           kode_opd: '2.16.2.20.2.21.04.000')
+    prm_1 = create(:permasalahan_opd,
+                   permasalahan: 'test masalah',
+                   tahun: '2025',
+                   isu_strategis_opd: isu_opd,
+                   kode_opd: '2.16.2.20.2.21.04.000')
     create(:permasalahan_opd,
            permasalahan: 'test masalah 2',
            tahun: '2025',
@@ -71,13 +71,15 @@ RSpec.describe "IsuDanPermasalahansOpd", type: :feature do
 
     visit isu_dan_permasalahans_path
 
-    click_on 'Edit'
+    within "#action_#{prm_1.class.name.underscore}_#{prm_1.id}" do
+      click_on 'Edit'
+    end
 
-    fill_in 'isu_strategis_opd[permasalahan_opds_attributes][0][data_dukungs_attributes][0][nama_data]', with: 'Test Data'
-    fill_in 'isu_strategis_opd[permasalahan_opds_attributes][0][data_dukungs_attributes][0][jumlah]', with: 10
-    fill_in 'isu_strategis_opd[permasalahan_opds_attributes][0][data_dukungs_attributes][0][satuan]', with: '%'
+    fill_in 'permasalahan_opd[data_dukungs_attributes][0][nama_data]', with: 'Test Data'
+    fill_in 'permasalahan_opd[data_dukungs_attributes][0][jumlahs_attributes][0][jumlah]', with: 10
+    fill_in 'permasalahan_opd[data_dukungs_attributes][0][jumlahs_attributes][0][satuan]', with: '%'
 
-    click_on 'Simpan Perubahan Isu strategis opd'
+    click_on 'Simpan Perubahan Permasalahan opd'
     click_on 'Ok'
 
     expect(page).to have_text 'Test Data'
