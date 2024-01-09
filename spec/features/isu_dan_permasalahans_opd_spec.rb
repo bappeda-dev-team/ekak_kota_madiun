@@ -54,11 +54,16 @@ RSpec.describe "IsuDanPermasalahansOpd", type: :feature do
                      tahun: '2025',
                      kode_opd: '2.16.2.20.2.21.04.000',
                      isu_strategis: 'test isu')
-    prm_opd = create(:permasalahan_opd,
-                     permasalahan: 'test masalah',
-                     tahun: '2025',
-                     isu_strategis_opd: isu_opd,
-                     kode_opd: '2.16.2.20.2.21.04.000')
+    create(:permasalahan_opd,
+           permasalahan: 'test masalah',
+           tahun: '2025',
+           isu_strategis_opd: isu_opd,
+           kode_opd: '2.16.2.20.2.21.04.000')
+    create(:permasalahan_opd,
+           permasalahan: 'test masalah 2',
+           tahun: '2025',
+           isu_strategis_opd: isu_opd,
+           kode_opd: '2.16.2.20.2.21.04.000')
 
     visit isu_dan_permasalahans_path
 

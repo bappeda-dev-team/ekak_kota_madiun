@@ -16,16 +16,17 @@
   </thead>
   <tbody>
     <% @isu_strategis.each.with_index(1) do |(bidang_urusan, isu_strategises), no| %>
-      <% rowspan_bidang = isu_strategises.map { |isu| isu.permasalahan_opds.size }.flatten.sum + isu_strategises.size + 1  %>
+      <% rowspan_bidang = isu_strategises.map { |isu| isu.permasalahan_opds.size + isu.permasalahan_opds.map{ |pm| pm.data_dukungs.size }.flatten.sum }.flatten.sum + isu_strategises.size + 1  %>
       <tr>
         <td class="border-start border-end border-bottom align-middle" rowspan="<%= rowspan_bidang %>"><%= no %></td>
         <td class="text-wrap border-start border-end border-bottom align-middle" rowspan="<%= rowspan_bidang %>"><%= bidang_urusan %></td>
       </tr>
       <% isu_strategises.each do |isu_strategis| %>
+        <% rowspan_isu = isu_strategis.permasalahan_opds.size + isu_strategis.permasalahan_opds.map{ |pm| pm.data_dukungs.size }.flatten.sum + 2  %>
         <tr>
-          <td class="text-wrap border-end border-bottom align-middle" rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>"><%= isu_strategis %></td>
+          <td class="text-wrap border-end border-bottom align-middle" rowspan="<%= rowspan_isu %>"><%= isu_strategis %></td>
           <td colspan="4" class="p-0 m-0 border-0"></td>
-          <td class="border-start border-end border-bottom align-middle" rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>">
+          <td class="border-start border-end border-bottom align-middle" rowspan="<%= rowspan_isu %>">
             <div class="d-grid gap-3">
               <%= link_to edit_isu_strategis_opd_path(isu_strategis),
                remote: true,
@@ -54,12 +55,17 @@
           </td>
         </tr>
         <% isu_strategis.permasalahan_opds.each do |permasalahan| %>
+          <% rowspan_data = permasalahan.data_dukungs.size + 1  %>
           <tr>
-            <td class="text-wrap border align-middle"><%= permasalahan %></td>
-            <td class="text-wrap border align-middle"><%= permasalahan.data %></td>
-            <td class="text-wrap border align-middle"><%= permasalahan.jumlah_data %></td>
-            <td class="text-wrap border align-middle"><%= permasalahan.tahun_data %></td>
+            <td class="text-wrap border align-middle" rowspan="<%= rowspan_data %>"><%= permasalahan %></td>
           </tr>
+          <% permasalahan.data_dukungs.each do |data| %>
+            <tr>
+              <td class="text-wrap border align-middle"><%= data %></td>
+              <td class="text-wrap border align-middle"><%= data.jumlah_satuan %></td>
+              <td class="text-wrap border align-middle"><%= data.tahun %></td>
+            </tr>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>

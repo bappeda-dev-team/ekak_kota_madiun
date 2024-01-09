@@ -20,7 +20,7 @@
 class DataDukung < ApplicationRecord
   belongs_to :data_dukungable, polymorphic: true
 
-  validates :nama_data, presence: true
+  # validates :nama_data, presence: true
 
   def to_s
     nama_data
