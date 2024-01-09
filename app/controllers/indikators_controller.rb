@@ -27,7 +27,9 @@ class IndikatorsController < ApplicationController
 
     tematiks = PohonTematikQueries.new(tahun: @tahun)
 
-    @sasaran_kota = tematiks.sub_tematiks.map(&:pohonable).compact_blank
+    sub_tematiks = tematiks.sub_tematiks.map(&:pohonable).compact_blank
+    sub_sub_tematiks = tematiks.sub_sub_tematiks.map(&:pohonable).compact_blank
+    @sasaran_kota = sub_tematiks + sub_sub_tematiks
   end
 
   def rkpd_program
