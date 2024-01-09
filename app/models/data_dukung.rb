@@ -4,8 +4,11 @@
 #
 #  id                   :bigint           not null, primary key
 #  data_dukungable_type :string
+#  jumlah               :integer
 #  keterangan           :string
 #  nama_data            :string
+#  satuan               :string
+#  tahun                :string
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  data_dukungable_id   :bigint
@@ -21,5 +24,9 @@ class DataDukung < ApplicationRecord
 
   def to_s
     nama_data
+  end
+
+  def jumlah_satuan
+    "#{jumlah} #{satuan}"
   end
 end

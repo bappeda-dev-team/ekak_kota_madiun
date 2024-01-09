@@ -13,18 +13,32 @@ class IsuStrategisOpdsController < ApplicationController
 
   # GET /isu_strategis_opds/new
   def new
-    tahun = cookies[:tahun]
+    @tahun = cookies[:tahun].present? ? cookies[:tahun] : Date.today.year.to_s
+
+    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @periode = Periode.find_tahun(tahun_bener)
+    @tahun_awal = @periode.tahun_awal.to_i
+    @tahun_akhir = @periode.tahun_akhir.to_i
+
     kode_bidang_urusan = params[:kode_bidang_urusan]
     bidang_urusan = params[:bidang_urusan]
     opd = params[:opd]
     @isu_strategis_opd = IsuStrategisOpd.new(bidang_urusan: bidang_urusan,
                                              kode_bidang_urusan: kode_bidang_urusan,
-                                             kode_opd: opd, tahun: tahun)
+                                             kode_opd: opd, tahun: @tahun)
     @isu_strategis_opd.permasalahan_opds.build
   end
 
   # GET /isu_strategis_opds/1/edit
-  def edit; end
+  def edit
+    @tahun = cookies[:tahun].present? ? cookies[:tahun] : Date.today.year.to_s
+    @kode_opd = cookies[:opd]
+
+    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @periode = Periode.find_tahun(tahun_bener)
+    @tahun_awal = @periode.tahun_awal.to_i
+    @tahun_akhir = @periode.tahun_akhir.to_i
+  end
 
   # POST /isu_strategis_opds or /isu_strategis_opds.json
   def create
@@ -80,7 +94,13 @@ class IsuStrategisOpdsController < ApplicationController
   end
 
   def permasalahan_opds_attributes
-    { permasalahan_opds_attributes: %i[id kode_opd permasalahan faktor_penghambat_skp _destroy] }
+    { permasalahan_opds_attributes: [:id, :kode_opd, :permasalahan,
+                                     :faktor_penghambat_skp, :_destroy,
+                                     data_dukung_attributes] }
+  end
+
+  def data_dukung_attributes
+    { data_dukungs_attributes: %i[id data_dukungable_type data_dukungable_id nama_data jumlah satuan tahun _destroy] }
   end
 
   def opd_pemilik

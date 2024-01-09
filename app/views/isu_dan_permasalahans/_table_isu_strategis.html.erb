@@ -1,12 +1,17 @@
 <table class="table table-flush">
   <thead>
     <tr class="border-start border-end border-top">
-      <th class="border-bottom text-gray-700">No</th>
-      <th class="border-bottom text-gray-700">Bidang Urusan</th>
-      <th class="border-bottom text-gray-700">Isu Strategis</th>
-      <th class="border-bottom text-gray-700">Permasalahan</th>
-      <th class="border-bottom text-gray-700">Data Dukung</th>
-      <th class="border-bottom text-gray-700 text-center">Action</th>
+      <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">No</th>
+      <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Bidang Urusan</th>
+      <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Isu Strategis</th>
+      <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Permasalahan</th>
+      <th class="border-bottom border-start border-end text-gray-700 align-middle text-center" colspan="3">Data Dukung</th>
+      <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Action</th>
+    </tr>
+    <tr class="border-start border-end border-top">
+      <th class="border-bottom border-start border-end text-gray-700">Data</th>
+      <th class="border-bottom border-end text-gray-700">Jumlah</th>
+      <th class="border-bottom border-end text-gray-700">Tahun</th>
     </tr>
   </thead>
   <tbody>
@@ -19,7 +24,7 @@
       <% isu_strategises.each do |isu_strategis| %>
         <tr>
           <td class="text-wrap border-end border-bottom align-middle" rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>"><%= isu_strategis %></td>
-          <td colspan="2" class="p-0 m-0 border-0"></td>
+          <td colspan="4" class="p-0 m-0 border-0"></td>
           <td class="border-start border-end border-bottom align-middle" rowspan="<%= isu_strategis.permasalahan_opds.count + 1 %>">
             <div class="d-grid gap-3">
               <%= link_to edit_isu_strategis_opd_path(isu_strategis),
@@ -50,25 +55,10 @@
         </tr>
         <% isu_strategis.permasalahan_opds.each do |permasalahan| %>
           <tr>
-            <td class="text-wrap border-start border-end border-top border-bottom align-middle"><%= permasalahan %></td>
-            <td class="text-wrap border-start border-end border-top border-bottom align-middle">
-              <div id="new_data_dukung">
-                <%= render partial: 'data_dukungs/data_dukung',
-                           collection: permasalahan.data_dukungs, as: :data_dukung %>
-              </div>
-              <%= link_to new_data_dukung_path(permasalahan_id: permasalahan),
-               remote: true,
-               data: {
-                 controller: 'form-modal',
-                 action: 'ajax:complete->form-modal#success:prevent',
-                 bs_toggle: 'modal',
-                 bs_target: '#form-modal'
-               },
-               class: 'btn btn-sm btn-outline-primary ms-3' do %>
-                <i class="fas fa-pencil"></i>
-                <span>Tambah Data Dukung</span>
-              <% end %>
-            </td>
+            <td class="text-wrap border align-middle"><%= permasalahan %></td>
+            <td class="text-wrap border align-middle"><%= permasalahan.data %></td>
+            <td class="text-wrap border align-middle"><%= permasalahan.jumlah_data %></td>
+            <td class="text-wrap border align-middle"><%= permasalahan.tahun_data %></td>
           </tr>
         <% end %>
       <% end %>

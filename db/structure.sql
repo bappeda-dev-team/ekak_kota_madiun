@@ -623,7 +623,10 @@ CREATE TABLE public.data_dukungs (
     data_dukungable_type character varying,
     data_dukungable_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    tahun character varying,
+    jumlah integer,
+    satuan character varying
 );
 
 
@@ -5930,6 +5933,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231130234550'),
 ('20231218235143'),
 ('20240103124318'),
-('20240104085456');
+('20240104085456'),
+('20240108230926');
 
 

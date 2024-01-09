@@ -6,6 +6,12 @@
     <%= form.label :permasalahan, { class: "form-label" } %>
     <%= form.text_area :permasalahan, { class: "form-control" } %>
   </div>
+  <div class="field row mt-0" id="data-dukung">
+    <%= form.fields_for :data_dukungs, DataDukung.new(tahun: @tahun, data_dukungable: form.object) do |f_target| %>
+      <%= render 'data_dukungs/data_dukung_fields', form: f_target %>
+    <% end %>
+  </div>
+
   <%= link_to_remove_nested(form, link_text: 'Hapus Permasalahan',
                             link_classes: 'btn btn-outline-danger w-100 mt-2') %>
 </fieldset>

@@ -23,7 +23,21 @@ class PermasalahanOpd < ApplicationRecord
   belongs_to :opd, foreign_key: :kode_opd, primary_key: :kode_unik_opd, optional: true
   has_many :data_dukungs, as: :data_dukungable
 
+  accepts_nested_attributes_for :data_dukungs, reject_if: :all_blank, allow_destroy: true
+
   def to_s
     permasalahan
+  end
+
+  def data
+    data_dukungs.map(&:nama_data)
+  end
+
+  def jumlah_data
+    data_dukungs.map(&:jumlah_satuan)
+  end
+
+  def tahun_data
+    data_dukungs.map(&:tahun)
   end
 end
