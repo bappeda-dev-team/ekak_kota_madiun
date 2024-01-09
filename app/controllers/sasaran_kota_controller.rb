@@ -65,7 +65,7 @@ class SasaranKotaController < ApplicationController
              else
                "Tahun #{tahun}"
              end
-    @sasaran_kota = Pohon.where(pohonable_type: 'SubSubTematik', tahun: @tahun).map(&:pohonable)
+    @sasaran_kota = Pohon.where(pohonable_type: %w[SubTematik SubSubTematik], tahun: @tahun).map(&:pohonable)
                          .compact
   end
 end
