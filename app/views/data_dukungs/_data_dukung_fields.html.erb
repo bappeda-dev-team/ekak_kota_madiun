@@ -1,4 +1,4 @@
-<fieldset class="data-dukung-tahun col">
+<fieldset class="mb-3">
   <div class="field">
     <%= form.hidden_field :data_dukungable_type %>
     <%= form.hidden_field :data_dukungable_id %>
@@ -7,16 +7,11 @@
     <%= form.label :nama_data, { class: "form-label" } %>
     <%= form.text_area :nama_data, { class: "form-control" } %>
   </div>
-  <div class="field">
-    <%= form.label :jumlah, { class: "form-label" } %>
-    <%= form.number_field :jumlah, { class: "form-control" } %>
-  </div>
-  <div class="field">
-    <%= form.label :satuan, { class: "form-label" } %>
-    <%= form.text_field :satuan, { class: "form-control" } %>
-  </div>
-  <div class="field">
-    <%= form.label :tahun, class: 'form-label' %>
-    <%= form.text_field :tahun, { class: 'form-control' } %>
+  <div class="field row mt-0" id="jumlah">
+    <% (@tahun_awal..@tahun_akhir).each do |tahun| %>
+      <%= form.fields_for :jumlahs, Jumlah.new(tahun: tahun, data_dukung: form.object) do |f_jumlah| %>
+        <%= render 'jumlahs/jumlah_fields', form: f_jumlah %>
+      <% end %>
+    <% end %>
   </div>
 </fieldset>

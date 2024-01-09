@@ -100,7 +100,13 @@ class IsuStrategisOpdsController < ApplicationController
   end
 
   def data_dukung_attributes
-    { data_dukungs_attributes: %i[id data_dukungable_type data_dukungable_id nama_data jumlah satuan tahun _destroy] }
+    { data_dukungs_attributes: [:id, :data_dukungable_type, :data_dukungable_id,
+                                :nama_data, :_destroy,
+                                jumlahs_attributes] }
+  end
+
+  def jumlahs_attributes
+    { jumlahs_attributes: %i[id jumlah satuan tahun _destroy] }
   end
 
   def opd_pemilik

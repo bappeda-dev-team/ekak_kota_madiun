@@ -3,15 +3,19 @@
     <tr class="border-start border-end border-top">
       <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">No</th>
       <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Bidang Urusan</th>
+      <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Action</th>
       <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Isu Strategis</th>
       <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Permasalahan</th>
-      <th class="border-bottom border-start border-end text-gray-700 align-middle text-center" colspan="3">Data Dukung</th>
-      <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Action</th>
+      <th class="border text-gray-700 align-middle text-center" rowspan="2">Data Dukung</th>
+      <% (@tahun_awal..@tahun_akhir).each do |tahun| %>
+        <th class="border text-center" scope="col" colspan="2"><%= tahun %></th>
+      <% end %>
     </tr>
-    <tr class="border-start border-end border-top">
-      <th class="border-bottom border-start border-end text-gray-700">Data</th>
-      <th class="border-bottom border-end text-gray-700">Jumlah</th>
-      <th class="border-bottom border-end text-gray-700">Tahun</th>
+    <tr>
+      <% (@tahun_awal..@tahun_akhir).each do %>
+        <th class="border" scope="col" width="50px">Jumlah</th>
+        <th class="border" scope="col">Satuan</th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
@@ -24,8 +28,6 @@
       <% isu_strategises.each do |isu_strategis| %>
         <% rowspan_isu = isu_strategis.permasalahan_opds.size + isu_strategis.permasalahan_opds.map{ |pm| pm.data_dukungs.size }.flatten.sum + 2  %>
         <tr>
-          <td class="text-wrap border-end border-bottom align-middle" rowspan="<%= rowspan_isu %>"><%= isu_strategis %></td>
-          <td colspan="4" class="p-0 m-0 border-0"></td>
           <td class="border-start border-end border-bottom align-middle" rowspan="<%= rowspan_isu %>">
             <div class="d-grid gap-3">
               <%= link_to edit_isu_strategis_opd_path(isu_strategis),
@@ -53,6 +55,7 @@
               <% end %>
             </div>
           </td>
+          <td class="text-wrap border-end border-bottom align-middle" rowspan="<%= rowspan_isu %>"><%= isu_strategis %></td>
         </tr>
         <% isu_strategis.permasalahan_opds.each do |permasalahan| %>
           <% rowspan_data = permasalahan.data_dukungs.size + 1  %>
@@ -62,8 +65,11 @@
           <% permasalahan.data_dukungs.each do |data| %>
             <tr>
               <td class="text-wrap border align-middle"><%= data %></td>
-              <td class="text-wrap border align-middle"><%= data.jumlah_satuan %></td>
-              <td class="text-wrap border align-middle"><%= data.tahun %></td>
+              <% (@tahun_awal..@tahun_akhir).each do |tahun| %>
+                <% jumlah = data.jumlahs.find_by(tahun: tahun) %>
+                <td class="text-wrap border align-middle"><%= jumlah&.jumlah %></td>
+                <td class="text-wrap border align-middle"><%= jumlah&.satuan %></td>
+              <% end %>
             </tr>
           <% end %>
         <% end %>

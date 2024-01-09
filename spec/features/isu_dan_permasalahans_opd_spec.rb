@@ -26,8 +26,10 @@ RSpec.describe "IsuDanPermasalahansOpd", type: :feature do
     fill_in 'Permasalahan', with: 'Permasalahan A'
 
     fill_in 'isu_strategis_opd[permasalahan_opds_attributes][0][data_dukungs_attributes][0][nama_data]', with: 'test data 1'
-    fill_in 'isu_strategis_opd[permasalahan_opds_attributes][0][data_dukungs_attributes][0][jumlah]', with: 10
-    fill_in 'isu_strategis_opd[permasalahan_opds_attributes][0][data_dukungs_attributes][0][satuan]', with: '%'
+    fill_in 'isu_strategis_opd[permasalahan_opds_attributes][0][data_dukungs_attributes][0][jumlahs_attributes][0][jumlah]', with: 10
+    fill_in 'isu_strategis_opd[permasalahan_opds_attributes][0][data_dukungs_attributes][0][jumlahs_attributes][0][satuan]', with: '%'
+    fill_in 'isu_strategis_opd[permasalahan_opds_attributes][0][data_dukungs_attributes][0][jumlahs_attributes][1][jumlah]', with: 20
+    fill_in 'isu_strategis_opd[permasalahan_opds_attributes][0][data_dukungs_attributes][0][jumlahs_attributes][1][satuan]', with: '%'
 
     # fill_in 'isu_strategis_opd[permasalahan_opds_attributes][0][data_dukungs_attributes][1][nama_data]', with: 'test data 2'
     # fill_in 'isu_strategis_opd[permasalahan_opds_attributes][0][data_dukungs_attributes][1][jumlah]', with: 20
@@ -41,8 +43,10 @@ RSpec.describe "IsuDanPermasalahansOpd", type: :feature do
     expect(page).to have_content('Permasalahan A')
     # data 1
     expect(page).to have_content('test data 1')
-    expect(page).to have_content('10 %')
     expect(page).to have_content('2025')
+    expect(page).to have_content('10 %')
+    expect(page).to have_content('2026')
+    expect(page).to have_content('20 %')
     # data 2
     # expect(page).to have_content('test data 2')
     # expect(page).to have_content('20 %')

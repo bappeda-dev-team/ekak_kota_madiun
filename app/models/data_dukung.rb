@@ -19,6 +19,9 @@
 #
 class DataDukung < ApplicationRecord
   belongs_to :data_dukungable, polymorphic: true
+  has_many :jumlahs
+
+  accepts_nested_attributes_for :jumlahs, reject_if: :all_blank, allow_destroy: true
 
   # validates :nama_data, presence: true
 

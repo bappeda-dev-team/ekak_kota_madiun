@@ -1,0 +1,37 @@
+<%= form_with(model: jumlah) do |form| %>
+  <% if jumlah.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(jumlah.errors.count, "error") %> prohibited this jumlah from being saved:</h2>
+
+      <ul>
+        <% jumlah.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :jumlah %>
+    <%= form.number_field :jumlah %>
+  </div>
+
+  <div class="field">
+    <%= form.label :satuan %>
+    <%= form.text_field :satuan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tahun %>
+    <%= form.text_field :tahun %>
+  </div>
+
+  <div class="field">
+    <%= form.label :keterangan %>
+    <%= form.text_field :keterangan %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

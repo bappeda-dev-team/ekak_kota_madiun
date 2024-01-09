@@ -1065,6 +1065,41 @@ ALTER SEQUENCE public.jabatans_id_seq OWNED BY public.jabatans.id;
 
 
 --
+-- Name: jumlahs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.jumlahs (
+    id bigint NOT NULL,
+    jumlah integer,
+    satuan character varying,
+    tahun character varying,
+    keterangan character varying,
+    data_dukung_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: jumlahs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.jumlahs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: jumlahs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.jumlahs_id_seq OWNED BY public.jumlahs.id;
+
+
+--
 -- Name: kaks; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3773,6 +3808,13 @@ ALTER TABLE ONLY public.jabatans ALTER COLUMN id SET DEFAULT nextval('public.jab
 
 
 --
+-- Name: jumlahs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.jumlahs ALTER COLUMN id SET DEFAULT nextval('public.jumlahs_id_seq'::regclass);
+
+
+--
 -- Name: kaks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4428,6 +4470,14 @@ ALTER TABLE ONLY public.jabatan_users
 
 ALTER TABLE ONLY public.jabatans
     ADD CONSTRAINT jabatans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: jumlahs jumlahs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.jumlahs
+    ADD CONSTRAINT jumlahs_pkey PRIMARY KEY (id);
 
 
 --
@@ -5100,6 +5150,13 @@ CREATE INDEX index_inovasis_on_sasaran_id ON public.inovasis USING btree (sasara
 --
 
 CREATE INDEX index_inovasis_on_status ON public.inovasis USING btree (status);
+
+
+--
+-- Name: index_jumlahs_on_data_dukung_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_jumlahs_on_data_dukung_id ON public.jumlahs USING btree (data_dukung_id);
 
 
 --
@@ -5934,6 +5991,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231218235143'),
 ('20240103124318'),
 ('20240104085456'),
-('20240108230926');
+('20240108230926'),
+('20240109050012');
 
 

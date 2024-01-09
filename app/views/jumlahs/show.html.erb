@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Jumlah:</strong>
+  <%= @jumlah.jumlah %>
+</p>
+
+<p>
+  <strong>Satuan:</strong>
+  <%= @jumlah.satuan %>
+</p>
+
+<p>
+  <strong>Tahun:</strong>
+  <%= @jumlah.tahun %>
+</p>
+
+<p>
+  <strong>Keterangan:</strong>
+  <%= @jumlah.keterangan %>
+</p>
+
+<%= link_to 'Edit', edit_jumlah_path(@jumlah) %> |
+<%= link_to 'Back', jumlahs_path %>
