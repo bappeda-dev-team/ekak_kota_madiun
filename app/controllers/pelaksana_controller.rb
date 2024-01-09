@@ -95,6 +95,19 @@ class PelaksanaController < ApplicationController
                      locals: { pelaksana: @pelaksana })
   end
 
+  def destroy
+    pohon_pelaksana = Pohon.find(params[:id])
+    user = User.find(params[:user_id])
+
+    pohon_pelaksana.pohonable
+                   .sasarans.where(user: user)
+                   .update_all(strategi_id: '')
+
+    pohon_pelaksana.destroy
+    render json: { resText: "Berhasil hapus pelaksana", result: true },
+           status: :accepted
+  end
+
   private
 
   def set_tahun_opd

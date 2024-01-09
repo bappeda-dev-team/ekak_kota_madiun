@@ -62,4 +62,44 @@ RSpec.describe "Pelaksanas", type: :feature do
 
     expect(page).to have_text(eselon_2.nama)
   end
+
+  scenario "hapus pelaksana pohon kinerja opd", js: true do
+    opd_id = user.opd.id
+    strategic = strategi(strategi: 'strategi-1', opd_id: opd_id, role: 'eselon_2')
+    eselon_2 = create(:eselon_2, nama: 'kepala-opd', email: 'contoh-email@email.com', nik: '123')
+
+    visit cascading_pohon_kinerja_opds_path
+
+    expect(page).to have_text('strategi-1')
+
+    within("#strategi_pohon_#{strategic.id}") do
+      click_on "Pelaksana"
+    end
+
+    expect(page).to have_text('Pelaksana')
+
+    within("#form-pelaksana") do
+      click_on "Edit"
+    end
+
+    expect(page).to have_text('Role')
+
+    within("#form-pelaksana-body") do
+      select2 'eselon_2', from: 'Role'
+      select2_select eselon_2.nama, from: 'Asn'
+      fill_in 'Keterangan', with: 'keterangan a'
+      click_on 'Simpan perubahan'
+    end
+
+    click_on "Ok"
+
+    expect(page).to have_text(eselon_2.nama)
+
+    click_on 'Hapus Pelaksana'
+    click_on 'Ya'
+
+    click_on 'OK'
+
+    expect(page).to_not have_text(eselon_2.nama)
+  end
 end
