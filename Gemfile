@@ -100,7 +100,7 @@ gem 'sidekiq-status'
 gem 'sidekiq-unique-jobs'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-gem 'vanilla_nested'
+gem 'vanilla_nested', github: 'arielj/vanilla-nested', branch: "support-3-level-nesting"
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'

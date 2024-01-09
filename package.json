@@ -30,7 +30,7 @@
     "treeflex": "^2.0.1",
     "trix": "^1.2.0",
     "turbolinks": "^5.2.0",
-    "vanilla-nested": "^1.6.1",
+    "vanilla-nested": "arielj/vanilla-nested#support-3-level-nesting",
     "webpack": "4.46.0",
     "webpack-cli": "3.3.12"
   },
