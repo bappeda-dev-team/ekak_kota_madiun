@@ -1,21 +1,23 @@
 <div class="pohon-foot <%= pohon.element_class_name %>">
   <div class="row">
     <% if pohon.real.instance_of?(StrategiPohon) %>
-      <div class="col">
-        <%= link_to edit_pindah_pohon_kinerja_path(pohon.pohon_id, role_atasan: pohon.role_pohon_atas),
-         remote: true,
-         class: 'btn btn-success',
-         data: {
-           controller: 'form-modal',
-           action: 'form-modal#appendForm',
-           form_modal_location_param: 'form-modal-body',
-           bs_target: '#form-modal',
-           bs_toggle: 'modal'
-         } do %>
-          <span class="fas fa-angle-double-up me-2"></span>
-          <span>Pindah</span>
-        <% end %>
-      </div>
+      <% if privileged_user %>
+        <div class="col">
+          <%= link_to edit_pindah_pohon_kinerja_path(pohon.pohon_id, role_atasan: pohon.role_pohon_atas),
+           remote: true,
+           class: 'btn btn-success',
+           data: {
+             controller: 'form-modal',
+             action: 'form-modal#appendForm',
+             form_modal_location_param: 'form-modal-body',
+             bs_target: '#form-modal',
+             bs_toggle: 'modal'
+           } do %>
+            <span class="fas fa-angle-double-up me-2"></span>
+            <span>Pindah</span>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
     <div class="col">
       <button type="button" class="btn btn-tertiary" data-action="pohon-tematik#toggleChild" data-pohon-tematik-show-param="false">Tampilkan</button>

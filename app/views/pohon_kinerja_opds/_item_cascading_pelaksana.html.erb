@@ -17,18 +17,21 @@
               <% else %>
                 <span class="badge bg-danger">Rencana Kinerja belum terisi</span>
               <% end %>
-              <%= link_to pelaksana_path(dibagikan, user_id: dibagikan.user_id),
-               method: :delete,
-               data: {
-                 confirm_swal: 'hapus pelaksana?',
-                 controller: 'form-ajax',
-                 action: 'ajax:complete->form-ajax#afterSubmitRefresh'
-               },
-               class: 'btn btn-sm btn-outline-danger ms-3' do %>
-                <i class="fas fa-trash"></i>
-                <span>Hapus Pelaksana</span>
-              <% end %>
             </td>
+            <% if privileged_user %>
+              <td class="text-center align-middle">
+                <%= link_to pelaksana_path(dibagikan, user_id: dibagikan.user_id),
+                 method: :delete,
+                 data: {
+                   confirm_swal: 'hapus pelaksana?',
+                   controller: 'form-ajax',
+                   action: 'ajax:complete->form-ajax#afterSubmitRefresh'
+                 },
+                 class: 'btn btn-sm btn-outline-danger' do %>
+                  <i class="fas fa-trash"></i>
+                <% end %>
+              </td>
+            <% end %>
           </tr>
         </table>
       <% end %>
