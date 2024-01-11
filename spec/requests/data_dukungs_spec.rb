@@ -87,9 +87,10 @@ RSpec.describe "/data_dukungs", type: :request do
         end.to change(DataDukung, :count).by(1)
       end
 
-      it "redirects to the created data_dukung" do
+      it "return json response with html" do
         post data_dukungs_url, params: { data_dukung: valid_attributes }
-        expect(response).to redirect_to(data_dukung_url(DataDukung.last))
+        json_response = JSON.parse(response.body).deep_symbolize_keys
+        expect(json_response).to include(:html_content)
       end
     end
 
