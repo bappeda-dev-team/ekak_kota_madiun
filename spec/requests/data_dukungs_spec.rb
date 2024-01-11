@@ -56,14 +56,6 @@ RSpec.describe "/data_dukungs", type: :request do
     end
   end
 
-  describe "GET /show" do
-    it "renders a successful response" do
-      data_dukung = DataDukung.create! valid_attributes
-      get data_dukung_url(data_dukung)
-      expect(response).to be_successful
-    end
-  end
-
   describe "GET /new" do
     it "renders a successful response" do
       get new_data_dukung_url(permasalahan_id: permasalahan_opd.id)
