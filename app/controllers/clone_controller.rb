@@ -191,13 +191,16 @@ class CloneController < ApplicationController
       render json: { resText: "Berhasil di clone ke #{@tahun}" },
              status: :created
     rescue ActiveRecord::RecordNotUnique
-      render json: { resText: "Rencana kinerja sudah dikloning di-tahun #{@tahun}" },
+      render json: { resText: "Rencana kinerja sudah dikloning di-tahun #{@tahun}",
+                     html_content: "<p class='alert alert-danger'>Rencana kinerja sudah dikloning di-tahun #{@tahun}</p>" },
              status: :unprocessable_entity
     rescue ActiveRecord::RecordInvalid
-      render json: { resText: "terdapat kekurangan isian" },
+      render json: { resText: "terdapat kekurangan isian",
+                     html_content: "<p class='alert alert-danger'>terdapat kekurangan isian rencana kinerja</p>" },
              status: :unprocessable_entity
     rescue StandardError
-      render json: { resText: "Terjadi kesalahan" },
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: "<p class='alert alert-danger'>Terjadi kesalahan</p>" },
              status: :unprocessable_entity
     end
   end
