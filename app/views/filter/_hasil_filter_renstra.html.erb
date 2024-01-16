@@ -46,14 +46,7 @@
           </thead>
           <tbody>
             <tr>
-              <td class="text-gray-900 text-wrap border"  ><%= program.nama_opd_pemilik %>
-                <% if current_user.has_role? :super_admin %>
-                  <br/>
-                  id : <%= program.id %>
-                  <br/>
-                  kode_sub_skpd : <%= program.kode_sub_skpd %>
-                <% end %>
-              </td>
+              <td class="text-gray-900 text-wrap border"  ><%= program.nama_opd_pemilik %></td>
               <td class="text-gray-900 text-wrap border"  ><%= program.kode_program %></td>
               <td class="text-gray-900 text-wrap border"  ><%= nomor %></td>
               <td class="text-gray-900 text-wrap border"  ><%= program.nama_program %></td>
@@ -104,15 +97,7 @@
             </thead>
             <tbody>
               <tr>
-                <td class="text-gray-900 text-wrap border"  ><%= kegiatan.nama_opd_pemilik %>
-
-                  <% if current_user.has_role? :super_admin %>
-                    <br/>
-                    id : <%= kegiatan.id %>
-                    <br/>
-                    kode_sub_skpd : <%= kegiatan.kode_sub_skpd %>
-                  <% end %>
-                </td>
+                <td class="text-gray-900 text-wrap border"  ><%= kegiatan.nama_opd_pemilik %></td>
                 <td class="text-gray-900 text-wrap border"  ><%= kegiatan.kode_giat %></td>
                 <td class="text-gray-900 text-wrap border"  ><%= no_giat %></td>
                 <td class="text-gray-900 text-wrap border"  ><%= kegiatan.nama_kegiatan %></td>
@@ -163,15 +148,7 @@
             <tbody>
               <% kegiatan.subkegiatans_opd.each.with_index(1) do |subgiat, no_subgiat| %>
                 <tr>
-                  <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_opd_pemilik %>
-
-                    <% if current_user.has_role? :super_admin %>
-                      <br/>
-                      id : <%= subgiat.id %>
-                      <br/>
-                      kode_sub_skpd : <%= subgiat.kode_sub_skpd %>
-                    <% end %>
-                  </td>
+                  <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_opd_pemilik %></td>
                   <td class="text-gray-900 text-wrap border"  ><%= subgiat.kode_sub_giat %></td>
                   <td class="text-gray-900 text-wrap border"  ><%= no_subgiat %></td>
                   <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_subkegiatan %></td>

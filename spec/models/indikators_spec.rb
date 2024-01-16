@@ -39,4 +39,38 @@ RSpec.describe Indikator, type: :model do
     expect(target).to be_valid
     expect(indikator.targets).to include target
   end
+
+  context '#sum_pagu_renstra' do
+    it 'sum total pagu kegiatan from subkegiatan' do
+      Indikator.create(jenis: 'Renstra',
+                       sub_jenis: 'Subkegiatan',
+                       kode_opd: '123',
+                       pagu: '200',
+                       kode: '123_456_789')
+      ind_kegiatan = Indikator.create(jenis: 'Renstra',
+                                      sub_jenis: 'Kegiatan',
+                                      kode_opd: '123',
+                                      kode: '123_456')
+      pagu_kegiatan = ind_kegiatan.sum_pagu_renstra(sub_jenis: 'Subkegiatan')
+      expect(pagu_kegiatan).to eq(200)
+    end
+    it 'sum total pagu kegiatan from any subkegiatan' do
+      Indikator.create(jenis: 'Renstra',
+                       sub_jenis: 'Subkegiatan',
+                       kode_opd: '123',
+                       pagu: '200',
+                       kode: '123_456_789')
+      Indikator.create(jenis: 'Renstra',
+                       sub_jenis: 'Subkegiatan',
+                       kode_opd: '123',
+                       pagu: '200',
+                       kode: '123_456_888')
+      ind_kegiatan = Indikator.create(jenis: 'Renstra',
+                                      sub_jenis: 'Kegiatan',
+                                      kode_opd: '123',
+                                      kode: '123_456')
+      pagu_kegiatan = ind_kegiatan.sum_pagu_renstra(sub_jenis: 'Subkegiatan')
+      expect(pagu_kegiatan).to eq(400)
+    end
+  end
 end

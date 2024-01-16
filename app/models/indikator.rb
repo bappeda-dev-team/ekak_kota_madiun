@@ -42,4 +42,16 @@ class Indikator < ApplicationRecord
   def jenis_sub_jenis
     "#{jenis} - #{indikator} (#{sub_jenis})"
   end
+
+  def sum_pagu_renstra(sub_jenis:)
+    indikator_childs = Indikator.where(jenis: 'Renstra',
+                                       sub_jenis: sub_jenis,
+                                       kode_opd: kode_opd,
+                                       tahun: tahun).filter do |child|
+      child.kode.include?(kode)
+    end
+    pagu_sub = indikator_childs.group_by(&:kode)
+                               .map { |_k, v| v.max_by(&:version) }
+    pagu_sub.inject(0) { |injection, pagu| injection + pagu.pagu.to_i }
+  end
 end
