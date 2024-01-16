@@ -62,4 +62,8 @@ class Mandatori < ApplicationRecord
   def asn_aktif?
     nip_asn.present?
   end
+
+  def usulan_tahun
+    "#{usulan} (#{tahun})"
+  end
 end

@@ -3,19 +3,21 @@ class MandatorisController < ApplicationController
 
   # GET /mandatoris or /mandatoris.json
   def index
+    @tahun = cookies[:tahun] || Date.current.year.to_s
     kode_opd = Opd.find_by(kode_unik_opd: cookies[:opd]).kode_opd
-    @mandatoris = Mandatori.includes(:user).where(user: { kode_opd: kode_opd })
+    @mandatoris = Mandatori.includes(:user).where(user: { kode_opd: kode_opd }, tahun: @tahun)
   end
 
   # TODO: refactor, violating rails principle
   def usulan_mandatori
-    @mandatoris = Mandatori.where(nip_asn: current_user.nik).order(:created_at)
+    @tahun = cookies[:tahun] || Date.current.year.to_s
+    @mandatoris = Mandatori.where(nip_asn: current_user.nik, tahun: @tahun).order(:created_at)
     render 'user_mandatori'
   end
 
   def spbe
-    tahun = cookies[:tahun]
-    @mandatoris = SasaranSpbe.all
+    @tahun = cookies[:tahun] || Date.current.year.to_s
+    @mandatoris = SasaranSpbe.where(tahun: @tahun)
   end
 
   # GET /mandatoris/1 or /mandatoris/1.json
@@ -103,12 +105,13 @@ class MandatorisController < ApplicationController
   end
 
   def mandatori_search
+    tahun = cookies[:tahun] || Date.current.year.to_s
     param = params[:q] || ''
     @mandatoris = Search::AllUsulan
                   .where(
                     "searchable_type = 'Mandatori' and sasaran_id is null and usulan ILIKE ?", "%#{param}%"
                   )
-                  .where(searchable: Mandatori.where(nip_asn: current_user.nik))
+                  .where(searchable: Mandatori.where(nip_asn: current_user.nik, tahun: tahun))
                   .order(searchable_id: :desc)
                   .includes(:searchable)
                   .collect(&:searchable)

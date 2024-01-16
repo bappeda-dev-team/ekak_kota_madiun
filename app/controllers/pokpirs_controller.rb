@@ -4,8 +4,34 @@ class PokpirsController < ApplicationController
 
   # GET /pokpirs or /pokpirs.json
   def index
-    @pokpirs = Pokpir.all.order(:updated_at).select do |m|
+    tahun = cookies[:tahun] || Date.current.year.to_s
+    @tahun_bener = tahun.match(/murni|perubahan/) ? tahun[/[^_]\d*/, 0] : tahun
+    @pokpirs = Pokpir.where(tahun: @tahun_bener).order(:updated_at).select do |m|
       m.opd_dituju&.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin
+    end
+  end
+
+  def usulan_pokpir
+    tahun = cookies[:tahun] || Date.current.year.to_s
+    @tahun_bener = tahun.match(/murni|perubahan/) ? tahun[/[^_]\d*/, 0] : tahun
+    @pokpirs = Pokpir.belum_diajukan
+                     .where(tahun: @tahun_bener)
+                     .order(:created_at).select do |m|
+      m.opd_dituju&.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin
+    end
+    render 'user_pokpir'
+  end
+
+  def diambil_asn
+    @pokpir = Pokpir.find(params[:id])
+    @status = 'aktif'
+    @nip_asn = params[:nip_asn]
+    if @pokpir.update(nip_asn: @nip_asn, status: @status)
+      @pokpir.toggle! :is_active
+      flash.now[:success] = 'Usulan berhasil diambil'
+    else
+      flash.now[:error] = 'Usulan gagal diambil'
+      :unprocessable_entity
     end
   end
 
@@ -45,26 +71,6 @@ class PokpirsController < ApplicationController
     end
     flash[:success] = 'Usulan disesuaikan dengan kamus'
     redirect_to pokpirs_path
-  end
-
-  def usulan_pokpir
-    @pokpirs = Pokpir.belum_diajukan.order(:created_at).select do |m|
-      m.opd_dituju&.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin
-    end
-    render 'user_pokpir'
-  end
-
-  def diambil_asn
-    @pokpir = Pokpir.find(params[:id])
-    @status = 'aktif'
-    @nip_asn = params[:nip_asn]
-    if @pokpir.update(nip_asn: @nip_asn, status: @status)
-      @pokpir.toggle! :is_active
-      flash.now[:success] = 'Usulan berhasil diambil'
-    else
-      flash.now[:error] = 'Usulan gagal diambil'
-      :unprocessable_entity
-    end
   end
 
   def pokpir_search

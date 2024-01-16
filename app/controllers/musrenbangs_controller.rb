@@ -5,14 +5,19 @@ class MusrenbangsController < ApplicationController
 
   # GET /musrenbangs or /musrenbangs.json
   def index
-    @musrenbangs = Musrenbang.all.order(:updated_at)
+    tahun = cookies[:tahun] || Date.current.year.to_s
+    @tahun_bener = tahun.match(/murni|perubahan/) ? tahun[/[^_]\d*/, 0] : tahun
+    @musrenbangs = Musrenbang.where(tahun: @tahun_bener).order(:updated_at)
                              .select { |m| m.opd_dituju&.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin }
   end
 
   def usulan_musrenbang
     # TODO: Pisah per OPD user masing masing ( nunggu API )
+    tahun = cookies[:tahun] || Date.current.year.to_s
+    @tahun_bener = tahun.match(/murni|perubahan/) ? tahun[/[^_]\d*/, 0] : tahun
     @musrenbangs = Musrenbang.belum_diajukan
                              .or(Musrenbang.where(nip_asn: current_user.nik))
+                             .where(tahun: @tahun_bener)
                              .order(:updated_at)
                              .select { |m| m.opd_dituju&.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin }
     render 'user_musrenbang'
@@ -39,12 +44,14 @@ class MusrenbangsController < ApplicationController
   end
 
   def musrenbang_search
+    tahun = cookies[:tahun] || Date.current.year.to_s
+    tahun_bener = tahun.match(/murni|perubahan/) ? tahun[/[^_]\d*/, 0] : tahun
     param = params[:q] || ''
     @musrenbangs = Search::AllUsulan
                    .where(
                      "searchable_type = 'Musrenbang' and sasaran_id is null and usulan ILIKE ?", "%#{param}%"
                    )
-                   .where(searchable: Musrenbang.where(nip_asn: current_user.nik))
+                   .where(searchable: Musrenbang.where(nip_asn: current_user.nik, tahun: tahun_bener))
                    .order(searchable_id: :desc)
                    .includes(:searchable)
                    .collect(&:searchable)

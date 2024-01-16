@@ -3,12 +3,14 @@ class InovasisController < ApplicationController
 
   # GET /inovasis or /inovasis.json
   def index
+    @tahun = cookies[:tahun] || Date.current.year.to_s
     kode_opd = Opd.find_by(kode_unik_opd: cookies[:opd]).kode_opd
-    @inovasis = Inovasi.includes(:user).where(user: { kode_opd: kode_opd })
+    @inovasis = Inovasi.includes(:user).where(user: { kode_opd: kode_opd }, tahun: @tahun)
   end
 
   def usulan_inisiatif
-    @inovasis = Inovasi.where(nip_asn: current_user.nik)
+    @tahun = cookies[:tahun] || Date.current.year.to_s
+    @inovasis = Inovasi.where(nip_asn: current_user.nik, tahun: @tahun)
     render 'user_inisiatif'
   end
 
@@ -98,12 +100,13 @@ class InovasisController < ApplicationController
   end
 
   def inovasi_search
+    tahun = cookies[:tahun] || Date.current.year.to_s
     param = params[:q] || ''
     @inovasis = Search::AllUsulan
                 .where(
                   "searchable_type = 'Inovasi' and sasaran_id is null and usulan ILIKE ?", "%#{param}%"
                 )
-                .where(searchable: Inovasi.where(nip_asn: current_user.nik))
+                .where(searchable: Inovasi.where(nip_asn: current_user.nik, tahun: tahun))
                 .order(searchable_id: :desc)
                 .includes(:searchable)
                 .collect(&:searchable)
