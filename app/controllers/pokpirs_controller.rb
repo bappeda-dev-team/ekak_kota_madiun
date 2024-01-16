@@ -74,12 +74,14 @@ class PokpirsController < ApplicationController
   end
 
   def pokpir_search
+    tahun = cookies[:tahun] || Date.current.year.to_s
+    tahun_bener = tahun.match(/murni|perubahan/) ? tahun[/[^_]\d*/, 0] : tahun
     param = params[:q] || ''
     @pokpirs = Search::AllUsulan
                .where(
                  "searchable_type = 'Pokpir' and sasaran_id is null and usulan ILIKE ?", "%#{param}%"
                )
-               .where(searchable: Pokpir.where(nip_asn: current_user.nik))
+               .where(searchable: Pokpir.where(nip_asn: current_user.nik, tahun: tahun_bener))
                .order(searchable_id: :desc)
                .includes(:searchable)
                .collect(&:searchable)
