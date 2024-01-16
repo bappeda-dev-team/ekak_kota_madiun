@@ -6,9 +6,13 @@ class IsuDanPermasalahansController < ApplicationController
     @nama_opd = @opd.nama_opd
     tahun_asli = @tahun.include?('perubahan') ? @tahun.gsub('_perubahan', '') : @tahun
 
-    @periode = Periode.find_tahun(tahun_asli)
-    @tahun_awal = @periode.tahun_awal.to_i
-    @tahun_akhir = @periode.tahun_akhir.to_i
+    # periode = Periode.find_tahun(tahun_asli)
+    # tahun_awal = periode.tahun_awal.to_i
+    # tahun_akhir = periode.tahun_akhir.to_i
+    # @range_tahun = tahun_akhir.downto(tahun_awal).to_a
+    tahun_awal = 2019
+    tahun_akhir = 2023
+    @range_tahun = tahun_akhir.downto(tahun_awal).to_a
 
     @isu_strategis = @opd.isu_strategis_opds
                          .where("tahun ILIKE ?", "%#{tahun_asli}%")

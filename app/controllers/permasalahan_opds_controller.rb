@@ -24,9 +24,13 @@ class PermasalahanOpdsController < ApplicationController
   def edit
     @tahun = cookies[:tahun].present? ? cookies[:tahun] : Date.today.year.to_s
     tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
-    @periode = Periode.find_tahun(tahun_bener)
-    @tahun_awal = @periode.tahun_awal.to_i
-    @tahun_akhir = @periode.tahun_akhir.to_i
+    # periode = Periode.find_tahun(tahun_bener)
+    # tahun_awal = periode.tahun_awal.to_i
+    # tahun_akhir = periode.tahun_akhir.to_i
+    # HARD CODED FROM REQ
+    tahun_awal = 2019
+    tahun_akhir = 2023
+    @range_tahun = tahun_akhir.downto(tahun_awal).to_a
   end
 
   # POST /permasalahan_opds or /permasalahan_opds.json

@@ -7,13 +7,13 @@
       <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Isu Strategis</th>
       <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Permasalahan</th>
       <th class="border text-gray-700 align-middle text-center" rowspan="2">Data Dukung</th>
-      <% (@tahun_awal..@tahun_akhir).each do |tahun| %>
+      <% @range_tahun.each do |tahun| %>
         <th class="border text-center" scope="col" colspan="2"><%= tahun %></th>
       <% end %>
       <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Action</th>
     </tr>
     <tr>
-      <% (@tahun_awal..@tahun_akhir).each do %>
+      <% @range_tahun.each do %>
         <th class="border" scope="col" width="50px">Jumlah</th>
         <th class="border" scope="col">Satuan</th>
       <% end %>
@@ -62,7 +62,7 @@
           <% rowspan_data = permasalahan.data_dukungs.size + 1  %>
           <tr>
             <td class="text-wrap border align-middle" rowspan="<%= rowspan_data %>"><%= permasalahan %></td>
-            <td colspan="<%= (@tahun_awal..@tahun_akhir).size * 2 + 1 %>" class="p-0 m-0 border-0"></td>
+            <td colspan="<%= @range_tahun.size * 2 + 1 %>" class="p-0 m-0 border-0"></td>
             <td class="border align-middle" rowspan="<%= rowspan_data %>">
               <div class="d-grid gap-3" id="<%= dom_id(permasalahan, 'action') %>">
                 <%= link_to edit_permasalahan_opd_path(permasalahan),
@@ -94,7 +94,7 @@
           <% permasalahan.data_dukungs.each do |data| %>
             <tr>
               <td class="text-wrap border align-middle"><%= data %></td>
-              <% (@tahun_awal..@tahun_akhir).each do |tahun| %>
+              <% @range_tahun.each do |tahun| %>
                 <% jumlah = data.jumlahs.find_by(tahun: tahun) %>
                 <td class="text-wrap border align-middle"><%= jumlah&.jumlah %></td>
                 <td class="text-wrap border align-middle"><%= jumlah&.satuan %></td>
