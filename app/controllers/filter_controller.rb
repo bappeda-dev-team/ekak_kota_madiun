@@ -297,7 +297,7 @@ class FilterController < ApplicationController
     @colspan = (@periode.size * 5) + 3
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
-    @program_kegiatans = @opd.program_renstra
+    @program_kegiatans = @opd.program_renstra.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
     @list_subkegiatans = @periode.map { |tahun| @opd.sasaran_subkegiatans(tahun) }.flatten if @tahun_awal == 2025
 
     if OPD_TABLE.key?(@nama_opd.to_sym)
