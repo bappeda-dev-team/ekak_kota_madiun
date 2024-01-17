@@ -36,7 +36,16 @@
             <td class="border" scope="col" colspan="2"><%= bid_urusan[1] %></td>
             <% @periode.each do |tahun| %>
               <td class="border" scope="col" colspan="3"></td>
-              <td class="text-gray-900 text-wrap border" colspan>Rp. sum pagu</td>
+              <% pagu_bid_urusan = Indikator.where(jenis: 'Renstra',
+                                                   sub_jenis: 'Subkegiatan',
+                                                   kode_opd: @opd.kode_unik_opd,
+                                                   tahun: tahun)
+                                                   .filter { |hh| hh.kode.include?(bid_urusan[0]) }
+                                                   .group_by(&:kode)
+                                                   .map { |_k, v| v.max_by(&:version) }
+                                                   .inject(0) { |inj, pagu| inj + pagu.pagu.to_i }
+              %>
+              <td class="text-gray-900 text-wrap border" colspan>Rp. <%= number_with_delimiter(pagu_bid_urusan) %></td>
               <td class="border" scope="col"></td>
             <% end %>
           </tbody>
