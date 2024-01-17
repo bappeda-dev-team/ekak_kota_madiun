@@ -2,11 +2,13 @@
   <thead>
     <tr>
       <th>Hasil Output</th>
+      <th>Nama Output</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td class="align-middle"><%= sasaran.metadata&.dig("hasil_output") %></td>
+      <td class="align-middle"><%= sasaran.metadata&.dig("nama_output") || '-' %></td>
     </tr>
   </tbody>
 </table>

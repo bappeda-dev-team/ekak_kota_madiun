@@ -22,8 +22,16 @@
                     }
       ) do |f| %>
         <%= f.select(:hasil_output,
-                     ['Bukan Raperda', 'Raperda'],
+                     ['Raperda', 'Raperwal', 'Rancang Surat Keputusan', 'Bukan Raperda'],
                      {selected: f.object.output_sasaran}, { data: {controller: 'dropdown'} } )%>
+        <div class="field">
+          <%= f.label 'Nama output', class: "form-label" %>
+          <div class="alert alert-warning">
+            <i class="far fa-lightbulb me-2"></i>
+            Kosongkan jika 'Bukan Raperda'
+          </div>
+          <%= f.text_area :nama_output, {class: "form-control", required: true, placeholder: 'tuliskan nama perda / perwal / SK', value: f.object.nama_output_sasaran} %>
+        </div>
         <div class="actions">
           <%= f.submit %>
         </div>
