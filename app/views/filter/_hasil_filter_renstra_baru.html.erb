@@ -23,8 +23,7 @@
           <tr>
             <% @periode.each do %>
               <th class="border" scope="col" colspan="3"></th>
-              <th class="border" scope="col">Pagu Indikatif</th>
-              <th class="border" scope="col"></th>
+              <th class="border" scope="col" colspan="2">Pagu Indikatif</th>
             <% end %>
           </tr>
         </thead>
@@ -41,8 +40,7 @@
                                           .map { |_k, v| v.max_by(&:version) }
                                           .inject(0) { |inj, pagu| inj + pagu.pagu.to_i }
             %>
-            <td class="text-gray-900 text-wrap border" colspan>Rp. <%= number_with_delimiter(pagu_opd) %></td>
-            <td class="border" scope="col"></td>
+            <td class="text-gray-900 text-wrap border" colspan="2">Rp. <%= number_with_delimiter(pagu_opd) %></td>
           <% end %>
         </tbody>
         <% @program_kegiatans.each.with_index(1) do |(bid_urusan, programs), nomor_bid| %>
@@ -58,8 +56,7 @@
             <tr>
               <% @periode.each do %>
                 <th class="border" scope="col" colspan="3"></th>
-                <th class="border" scope="col">Pagu Indikatif</th>
-                <th class="border" scope="col"></th>
+                <th class="border" scope="col" colspan="2">Pagu Indikatif</th>
               <% end %>
             </tr>
           </thead>
@@ -78,8 +75,7 @@
                                                    .map { |_k, v| v.max_by(&:version) }
                                                    .inject(0) { |inj, pagu| inj + pagu.pagu.to_i }
               %>
-              <td class="text-gray-900 text-wrap border" colspan>Rp. <%= number_with_delimiter(pagu_bid_urusan) %></td>
-              <td class="border" scope="col"></td>
+              <td class="text-gray-900 text-wrap border" colspan="2">Rp. <%= number_with_delimiter(pagu_bid_urusan) %></td>
             <% end %>
           </tbody>
           <% programs.each.with_index(1) do |program, nomor| %>
