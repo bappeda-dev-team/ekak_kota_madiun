@@ -573,6 +573,8 @@ Rails.application.routes.draw do
       post :rencana_kinerja
       get :opd
       post :pohon_opd
+      get :clone_mandatori
+      post :mandatori_cloner
     end
     collection do
       get :tahun_clone

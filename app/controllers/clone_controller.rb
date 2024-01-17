@@ -232,6 +232,43 @@ class CloneController < ApplicationController
     end
   end
 
+  def clone_mandatori
+    mandatori = Mandatori.find params[:id]
+    tahun = cookies[:tahun]
+    url = mandatori_cloner_clone_path(mandatori)
+    render partial: 'clone/form_clone_mandatori', locals: { mandatori: mandatori,
+                                                            tahun_asal: tahun,
+                                                            url: url },
+           layout: false
+  end
+
+  def mandatori_cloner
+    tahun_anggaran = KelompokAnggaran.find(params[:tahun_tujuan]).kode_kelompok
+    @tahun = tahun_anggaran.match(/murni/) ? tahun_anggaran[/[^_]\d*/, 0] : tahun_anggaran
+    mandatori = Mandatori.find(params[:id])
+
+    operation = MandatoriCloner.call(mandatori, tahun: @tahun)
+
+    begin
+      operation.to_record
+      operation.persist!
+      render json: { resText: "Berhasil di clone ke #{@tahun}" },
+             status: :created
+    rescue ActiveRecord::RecordNotUnique
+      render json: { resText: "Mandatori sudah dikloning di-tahun #{@tahun}",
+                     html_content: "<p class='alert alert-danger'>Mandatori kinerja sudah dikloning di-tahun #{@tahun}</p>" },
+             status: :unprocessable_entity
+    rescue ActiveRecord::RecordInvalid
+      render json: { resText: "terdapat kekurangan isian",
+                     html_content: "<p class='alert alert-danger'>terdapat kekurangan isian</p>" },
+             status: :unprocessable_entity
+    rescue StandardError
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: "<p class='alert alert-danger'>Terjadi kesalahan</p>" },
+             status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_tahun_clone
