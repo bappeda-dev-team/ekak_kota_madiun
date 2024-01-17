@@ -17,4 +17,9 @@
 
   <%= link_to_remove_nested(form, link_text: 'Hapus data dukung',
                             link_classes: 'btn btn-outline-danger mt-2') %>
+
+  <div class="field">
+    <%= form.label :narasi_data_dukung, { class: "form-label" } %>
+    <%= form.text_area :keterangan, { class: "form-control" } %>
+  </div>
 </fieldset>

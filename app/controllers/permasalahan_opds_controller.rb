@@ -12,11 +12,19 @@ class PermasalahanOpdsController < ApplicationController
 
   # GET /permasalahan_opds/new
   def new
-    isu_strategis_opd = params[:isu_strategis_opd_id]
+    isu_strategis_opd = IsuStrategisOpd.find(params[:isu_strategis_opd])
     kode_opd = params[:kode_opd]
-    tahun = params[:tahun]
-    @permasalahan_opd = PermasalahanOpd.new(isu_strategis_opd_id: isu_strategis_opd,
-                                            tahun: tahun,
+    @tahun = cookies[:tahun].present? ? cookies[:tahun] : Date.today.year.to_s
+    # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    # periode = Periode.find_tahun(tahun_bener)
+    # tahun_awal = periode.tahun_awal.to_i
+    # tahun_akhir = periode.tahun_akhir.to_i
+    # HARD CODED FROM REQ
+    tahun_awal = 2019
+    tahun_akhir = 2023
+    @range_tahun = tahun_akhir.downto(tahun_awal).to_a
+    @permasalahan_opd = PermasalahanOpd.new(isu_strategis_opd: isu_strategis_opd,
+                                            tahun: @tahun,
                                             kode_opd: kode_opd)
   end
 
@@ -78,7 +86,7 @@ class PermasalahanOpdsController < ApplicationController
 
   def data_dukung_attributes
     { data_dukungs_attributes: [:id, :data_dukungable_type, :data_dukungable_id,
-                                :nama_data, :_destroy,
+                                :nama_data, :keterangan, :_destroy,
                                 jumlahs_attributes] }
   end
 

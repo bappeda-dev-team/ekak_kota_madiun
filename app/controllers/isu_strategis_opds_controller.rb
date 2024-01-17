@@ -29,7 +29,7 @@ class IsuStrategisOpdsController < ApplicationController
     @isu_strategis_opd = IsuStrategisOpd.new(bidang_urusan: bidang_urusan,
                                              kode_bidang_urusan: kode_bidang_urusan,
                                              kode_opd: opd, tahun: @tahun)
-    @isu_strategis_opd.permasalahan_opds.build
+    @isu_strategis_opd.permasalahan_opds.build(tahun: @tahun, kode_opd: opd)
   end
 
   # GET /isu_strategis_opds/1/edit
@@ -99,12 +99,14 @@ class IsuStrategisOpdsController < ApplicationController
 
   def permasalahan_opds_attributes
     { permasalahan_opds_attributes: [:id, :kode_opd, :permasalahan,
+                                     :tahun,
                                      :faktor_penghambat_skp, :_destroy,
                                      data_dukung_attributes] }
   end
 
   def data_dukung_attributes
     { data_dukungs_attributes: [:id, :data_dukungable_type, :data_dukungable_id,
+                                :keterangan,
                                 :nama_data, :_destroy,
                                 jumlahs_attributes] }
   end

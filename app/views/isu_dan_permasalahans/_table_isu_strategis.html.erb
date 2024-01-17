@@ -3,14 +3,15 @@
     <tr class="border-start border-end border-top">
       <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">No</th>
       <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Bidang Urusan</th>
-      <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Action</th>
+      <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Action Isu Strategis</th>
       <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Isu Strategis</th>
       <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Permasalahan</th>
       <th class="border text-gray-700 align-middle text-center" rowspan="2">Data Dukung</th>
+      <th class="border text-gray-700 align-middle text-center" rowspan="2">Narasi Data Dukung</th>
       <% @range_tahun.each do |tahun| %>
         <th class="border text-center" scope="col" colspan="2"><%= tahun %></th>
       <% end %>
-      <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Action</th>
+      <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Action Permasalahan</th>
     </tr>
     <tr>
       <% @range_tahun.each do %>
@@ -62,9 +63,21 @@
           <% rowspan_data = permasalahan.data_dukungs.size + 1  %>
           <tr>
             <td class="text-wrap border align-middle" rowspan="<%= rowspan_data %>"><%= permasalahan %></td>
-            <td colspan="<%= @range_tahun.size * 2 + 1 %>" class="p-0 m-0 border-0"></td>
+            <td colspan="<%= @range_tahun.size * 2 + 2 %>" class="p-0 m-0 border-0"></td>
             <td class="border align-middle" rowspan="<%= rowspan_data %>">
               <div class="d-grid gap-3" id="<%= dom_id(permasalahan, 'action') %>">
+                <%= link_to new_permasalahan_opd_path(isu_strategis_opd: isu_strategis),
+                 remote: true,
+                 data: {
+                   controller: 'form-modal',
+                   action: 'ajax:complete->form-modal#success:prevent',
+                   bs_toggle: 'modal',
+                   bs_target: '#form-modal'
+                 },
+                 class: 'btn btn-sm btn-outline-primary ms-3' do %>
+                  <i class="fas fa-plus"></i>
+                  <span>Baru</span>
+                <% end %>
                 <%= link_to edit_permasalahan_opd_path(permasalahan),
                  remote: true,
                  data: {
@@ -94,6 +107,7 @@
           <% permasalahan.data_dukungs.each do |data| %>
             <tr>
               <td class="text-wrap border align-middle"><%= data %></td>
+              <td class="text-wrap border align-middle"><%= data.keterangan %></td>
               <% @range_tahun.each do |tahun| %>
                 <% jumlah = data.jumlahs.find_by(tahun: tahun) %>
                 <td class="text-wrap border align-middle"><%= jumlah&.jumlah %></td>
