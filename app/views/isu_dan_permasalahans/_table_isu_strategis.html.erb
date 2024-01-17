@@ -28,7 +28,7 @@
         <td class="text-wrap border-start border-end border-bottom align-middle" rowspan="<%= rowspan_bidang %>"><%= bidang_urusan %></td>
       </tr>
       <% isu_strategises.each do |isu_strategis| %>
-        <% rowspan_isu = isu_strategis.permasalahan_opds.size + isu_strategis.permasalahan_opds.map{ |pm| pm.data_dukungs.size }.flatten.sum + 2  %>
+        <% rowspan_isu = isu_strategis.permasalahan_opds.size + isu_strategis.permasalahan_opds.map{ |pm| pm.data_dukungs.size }.flatten.sum + 1  %>
         <tr>
           <td class="border-start border-end border-bottom align-middle" rowspan="<%= rowspan_isu %>">
             <div class="d-grid gap-3">
