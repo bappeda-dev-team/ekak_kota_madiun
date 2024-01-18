@@ -5,7 +5,7 @@
   <li class="breadcrumb-item active" aria-current="page">Outcome</li>
 <% end %>
 <% content_for :view_utama do %>
-  <%= render 'shared/card_layout', title: "Indikator LPPD Outcome #{@nama_opd} - #{@tahun}" do %>
+  <%= render 'shared/card_layout', title: "Indikator LPPD Outcome - #{@tahun}" do %>
     <div class="table-responsive mb-5 d-grid gap-2">
       <div class="action-btn">
         <%= link_to new_indikator_path(jenis: 'LPPD', sub_jenis: 'Outcome', kode_opd: @kode_opd, tahun: @tahun),
