@@ -34,6 +34,8 @@ class Indikator < ApplicationRecord
   scope :rb_output, -> { where(jenis: 'RB', sub_jenis: 'Output').order(id: :desc) }
   scope :lppd_outcome, -> { where(jenis: 'LPPD', sub_jenis: 'Outcome').order(id: :desc) }
   scope :lppd_output, -> { where(jenis: 'LPPD', sub_jenis: 'Output').order(id: :desc) }
+  scope :spm_outcome, -> { where(jenis: 'SPM', sub_jenis: 'Outcome').order(id: :desc) }
+  scope :spm_output, -> { where(jenis: 'SPM', sub_jenis: 'Output').order(id: :desc) }
 
   def to_s
     indikator
