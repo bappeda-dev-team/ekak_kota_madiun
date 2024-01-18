@@ -28,7 +28,7 @@
                       data: { placeholder: "Pilih Strategi (Pokin)",
                               controller: 'dropdown',
                               dropdown_jenis_value: 'ajax_preselect',
-                              dropdown_url_value: pokin_list_strategis_path(user_id: sasaran.user.id,format: :json),
+                              dropdown_url_value: pokin_list_strategis_path(user_id: sasaran.user.id,format: :json, item: form.object.strategi_id),
                               dropdown_item_value: form.object.strategi_id
                             } } %>
       </div>
