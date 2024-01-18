@@ -1,6 +1,6 @@
 class IndikatorsController < ApplicationController
   before_action :set_indikator, only: %i[show edit update destroy]
-  layout false, only: %i[new edit]
+  layout false, only: %i[new edit new_indikator_rb]
 
   def rkpd_makro
     @tahun = cookies[:tahun]
@@ -185,17 +185,13 @@ class IndikatorsController < ApplicationController
   def rb_outcome
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
-    opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @nama_opd = opd.nama_opd
-    @rb_outcome = opd.rb_outcome.where(tahun: @tahun)
+    @rb_outcome = Indikator.rb_outcome.where(tahun: @tahun)
   end
 
   def rb_output
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
-    opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @nama_opd = opd.nama_opd
-    @rb_output = opd.rb_output.where(tahun: @tahun)
+    @rb_output = Indikator.rb_output.where(tahun: @tahun)
   end
 
   # GET /indikators or /indikators.json
@@ -208,11 +204,18 @@ class IndikatorsController < ApplicationController
 
   # GET /indikators/new
   def new
+    @opds = Opd.opd_resmi
+               .pluck(:nama_opd,
+                      :kode_unik_opd)
     @indikator = Indikator.new(new_indikator_params)
   end
 
   # GET /indikators/1/edit
-  def edit; end
+  def edit
+    @opds = Opd.opd_resmi
+               .pluck(:nama_opd,
+                      :kode_unik_opd)
+  end
 
   # POST /indikators or /indikators.json
   def create

@@ -104,12 +104,6 @@ module AdminItemHelper
         multi: true, collections: indikator_sdgs_items,
         id_target: 'sdgs-indikator',
         identifier: 'sdgs'
-      },
-      {
-        title: 'RB', href: '#',
-        multi: true, collections: indikator_rb_items,
-        id_target: 'rb-indikator',
-        identifier: 'rb'
       }
     ]
   end
@@ -163,17 +157,6 @@ module AdminItemHelper
       },
       {
         title: 'Indikator Output', href: sdgs_output_indikators_path, identifier: 'sdgs_output'
-      }
-    ]
-  end
-
-  def indikator_rb_items
-    [
-      {
-        title: 'Indikator Outcome', href: rb_outcome_indikators_path, identifier: 'rb_outcome'
-      },
-      {
-        title: 'Indikator Output', href: rb_output_indikators_path, identifier: 'rb_output'
       }
     ]
   end

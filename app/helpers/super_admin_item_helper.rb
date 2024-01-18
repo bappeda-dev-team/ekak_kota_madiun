@@ -141,6 +141,12 @@ module SuperAdminItemHelper
       },
       {
         title: 'IKU', href: iku_kota_indikators_path, identifier: 'iku_kota'
+      },
+      {
+        title: 'RB', href: '#',
+        multi: true, collections: indikator_rb_items,
+        id_target: 'rb-indikator',
+        identifier: 'rb'
       }
     ]
   end
@@ -158,6 +164,17 @@ module SuperAdminItemHelper
       },
       {
         title: 'Program', href: rkpd_program_indikators_path, identifier: 'rkpd_program'
+      }
+    ]
+  end
+
+  def indikator_rb_items
+    [
+      {
+        title: 'Indikator Outcome', href: rb_outcome_indikators_path, identifier: 'rb_outcome'
+      },
+      {
+        title: 'Indikator Output', href: rb_output_indikators_path, identifier: 'rb_output'
       }
     ]
   end

@@ -20,12 +20,23 @@
   <div class="field">
     <%= form.hidden_field :jenis, class: 'form-control', readonly: true %>
     <%= form.hidden_field :sub_jenis, class: 'form-control', readonly: true %>
-    <%= form.hidden_field :kode_opd, class: 'form-control', readonly: true %>
   </div>
 
   <div class="field">
     <%= form.label :tahun, class: 'form-label' %>
     <%= form.text_field :tahun, class: 'form-control', readonly: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :opd, class: 'form-label' %>
+    <%= form.select :kode_opd, @opds,
+        {include_blank: true},
+     { required: true,
+       class: 'form-control',
+       data: { controller: 'dropdown',
+         placeholder: 'Pilih OPD',
+         dropdown_parent_value: '#form-modal'
+       } }%>
   </div>
 
   <div class="field">
