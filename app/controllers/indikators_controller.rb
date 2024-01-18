@@ -241,10 +241,7 @@ class IndikatorsController < ApplicationController
   def destroy
     @indikator.destroy
 
-    respond_to do |format|
-      format.html { redirect_to indikators_url, notice: "Indikator was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    render json: { resText: "Indikator Dihapus" }.to_json, status: :accepted
   end
 
   def import

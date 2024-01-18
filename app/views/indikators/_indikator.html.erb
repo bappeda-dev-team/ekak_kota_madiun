@@ -20,6 +20,19 @@
         <i class="fa fa-pencil-alt me-2"></i>
         <span>Edit</span>
       <% end %>
+      <%= link_to indikator,
+           method: :delete,
+           remote: true,
+           class: 'btn btn-outline-danger',
+           data: { 
+              controller: 'form-ajax',
+              confirm_swal: "Hapus indikator #{indikator}?",
+              action: 'ajax:success->form-ajax#ajaxDelete',
+              form_ajax_element_id_value: dom_id(indikator)
+            } do %>
+        <i class="fa fa-trash-alt me-2"></i>
+        <span>Hapus</span>
+      <% end %>
     </div>
   </td>
 </tr>
