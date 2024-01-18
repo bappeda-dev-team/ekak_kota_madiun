@@ -161,17 +161,13 @@ class IndikatorsController < ApplicationController
   def sdgs_outcome
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
-    opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @nama_opd = opd.nama_opd
-    @sdgs_outcome = opd.sdgs_outcome.where(tahun: @tahun)
+    @sdgs_outcome = Indikator.sdgs_outcome.where(tahun: @tahun)
   end
 
   def sdgs_output
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
-    opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @nama_opd = opd.nama_opd
-    @sdgs_output = opd.sdgs_output.where(tahun: @tahun)
+    @sdgs_output = Indikator.sdgs_output.where(tahun: @tahun)
   end
 
   def rb_outcome
