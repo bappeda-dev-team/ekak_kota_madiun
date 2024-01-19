@@ -55,6 +55,18 @@
                 <i class="fas fa-trash"></i>
                 <span>Hapus</span>
               <% end %>
+              <%= link_to clone_isu_strategis_opd_path(isu_strategis, tahun: @tahun, kode_opd: @kode_opd),
+               remote: true,
+               data: {
+                 controller: 'form-modal',
+                 action: 'ajax:complete->form-modal#success:prevent',
+                 bs_toggle: 'modal',
+                 bs_target: '#form-modal'
+               },
+               class: 'btn btn-sm btn-primary ms-3' do %>
+                <i class="fas fa-copy"></i>
+                <span>Clone</span>
+              <% end %>
             </div>
           </td>
           <td class="text-wrap border-end border-bottom align-middle" rowspan="<%= rowspan_isu %>"><%= isu_strategis %></td>

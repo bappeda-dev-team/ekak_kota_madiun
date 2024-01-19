@@ -1,7 +1,7 @@
 class IsuStrategisOpdsController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :set_isu_strategis_opd, only: %i[show edit update destroy]
-  layout false, only: %i[new edit]
+  before_action :set_isu_strategis_opd, only: %i[show edit update destroy clone commit_clone]
+  layout false, only: %i[new edit clone]
 
   # GET /isu_strategis_opds or /isu_strategis_opds.json
   def index
@@ -42,6 +42,12 @@ class IsuStrategisOpdsController < ApplicationController
     @tahun_awal = @periode.tahun_awal.to_i
     @tahun_akhir = @periode.tahun_akhir.to_i
     @range_tahun = @tahun_akhir.downto(@tahun_awal).to_a
+  end
+
+  # GET /clone_isu_strategis_opds/1/edit
+  def clone
+    @tahun = params[:tahun]
+    @kode_opd = params[:kode_opd]
   end
 
   # POST /isu_strategis_opds or /isu_strategis_opds.json

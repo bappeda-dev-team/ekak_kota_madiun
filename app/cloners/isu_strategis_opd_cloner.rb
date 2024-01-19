@@ -7,6 +7,10 @@ class IsuStrategisOpdCloner < Clowne::Cloner
                         params: true, traits: %i[with_strategi_sasaran]
   end
 
+  trait :with_permasalahan do
+    include_association :permasalahan_opds, params: true
+  end
+
   finalize do |source, record, tahun:, tahun_asal:, **|
     record.kode = "#{source.kode}_#{tahun}"
     record.tahun = tahun

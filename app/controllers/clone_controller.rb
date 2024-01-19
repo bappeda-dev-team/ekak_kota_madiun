@@ -269,6 +269,36 @@ class CloneController < ApplicationController
     end
   end
 
+  def isu_strategis_opd
+    isu_strategis_opd = IsuStrategisOpd.find(params[:id])
+    tahun_asal = params[:tahun_asal]
+    tahun_anggaran = KelompokAnggaran.find(params[:tahun_tujuan]).kode_kelompok
+    @tahun = tahun_anggaran.match(/murni/) ? tahun_anggaran[/[^_]\d*/, 0] : tahun_anggaran
+
+    operation = IsuStrategisOpdCloner.call(isu_strategis_opd,
+                                           traits: :with_permasalahan,
+                                           tahun: @tahun, tahun_asal: tahun_asal)
+
+    begin
+      operation.to_record
+      operation.persist!
+      render json: { resText: "Berhasil clone ke tahun #{@tahun}" },
+             status: :created
+    rescue ActiveRecord::RecordNotUnique
+      render json: { resText: "Isu Strategis OPD sudah dikloning di-tahun #{@tahun}",
+                     html_content: "<p class='alert alert-danger'>Mandatori kinerja sudah dikloning di-tahun #{@tahun}</p>" },
+             status: :unprocessable_entity
+    rescue ActiveRecord::RecordInvalid
+      render json: { resText: "terdapat kekurangan isian",
+                     html_content: "<p class='alert alert-danger'>terdapat kekurangan isian</p>" },
+             status: :unprocessable_entity
+    rescue StandardError
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: "<p class='alert alert-danger'>Terjadi kesalahan</p>" },
+             status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_tahun_clone

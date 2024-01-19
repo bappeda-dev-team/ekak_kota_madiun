@@ -235,6 +235,9 @@ Rails.application.routes.draw do
     collection do
       post :admin_filter
     end
+    member do
+      get :clone
+    end
   end
   resources :isu_strategis_kota do
     member do
@@ -575,6 +578,7 @@ Rails.application.routes.draw do
       post :pohon_opd
       get :clone_mandatori
       post :mandatori_cloner
+      post :isu_strategis_opd
     end
     collection do
       get :tahun_clone
