@@ -31,11 +31,11 @@ export default class extends Controller {
 
   ajaxDelete(e) {
     const [xhr] = e.detail;
-    console.log('deleted')
+    console.log("deleted");
     this.sweetAlertSuccess(xhr.resText);
     if (this.hasElementIdValue) {
       const target = document.getElementById(this.elementIdValue);
-      console.log(target)
+      console.log(target);
       target.remove();
     }
   }
@@ -63,10 +63,10 @@ export default class extends Controller {
       if (target != null && typeof target != "undefined") {
         if (event.params.type == "append") {
           target.insertAdjacentHTML("afterend", html_content);
-          this.animateBackground(target.lastChild);
+          this.animateBackground(target.lastElementChild);
         } else if (event.params.type == "prepend") {
           target.insertAdjacentHTML("beforeend", html_content);
-          this.animateBackground(target.lastChild);
+          this.animateBackground(target.lastElementChild);
         } else if (event.params.type == "afterbegin") {
           target.insertAdjacentHTML("afterbegin", html_content);
           this.animateBackground(target.firstChild);

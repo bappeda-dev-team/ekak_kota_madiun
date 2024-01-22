@@ -1,5 +1,5 @@
 <% unless pohon.exists? %>
-  <div class="pohon-body" id="<%= dom_id(pohon.pohon_id) %>">
+  <div class="pohon-body" id="<%= dom_id(pohon.pohon_id, 'review') %>">
     <%= render partial: 'reviews/review', collection: pohon.reviews, as: :review %>
   </div>
   <% if reviewer? %>
@@ -8,7 +8,7 @@
         <div class="col">
           <%= link_to new_review_path(type: 'Strategi',
                                       id: pohon.pohon_id,
-                                      target: dom_id(pohon.pohon_id)),
+                                      target: dom_id(pohon.pohon_id, 'review')),
            remote: true,
            class: 'btn btn-outline-primary',
            data: {

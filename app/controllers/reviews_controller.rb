@@ -16,25 +16,27 @@ class ReviewsController < ApplicationController
                          reviewable_id: params[:id],
                          reviewer_id: current_user.id)
     @target = params[:target]
-    @type = 'append'
+    @type = 'prepend'
   end
 
   # GET /reviews/1/edit
   def edit
     @target = params[:target].empty? ? 'hasil-review' : params[:target]
     @type = 'replace'
-    @kriterias = Kriterium.where(tipe_kriteria: @review.kriteria_type).pluck(:kriteria, :id)
   end
 
   # POST /reviews or /reviews.json
   def create
     @review = Review.new(review_params)
-    @review.skor = params[:skor]
     if @review.save
-      render json: { resText: "Review dibuat", html_content: html_content(@review) }.to_json,
+      render json: { resText: "Review dibuat",
+                     html_content: html_content({ review: @review },
+                                                partial: 'reviews/review') }.to_json,
              status: :ok
     else
-      render json: { resText: "Terjadi kesalahan", html_content: error_content(@review) }.to_json,
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ review: @review },
+                                                 partial: 'reviews/form') }.to_json,
              status: :unprocessable_entity
     end
   end
@@ -75,19 +77,5 @@ class ReviewsController < ApplicationController
                                    :reviewable_id, :reviewer_id,
                                    :kriteria_type, :kriteria_id,
                                    :status, :skor)
-  end
-
-  def html_content(review)
-    render_to_string(partial: 'reviews/review',
-                     formats: 'html',
-                     layout: false,
-                     locals: { review: review })
-  end
-
-  def error_content(review)
-    render_to_string(partial: 'reviews/form',
-                     formats: 'html',
-                     layout: false,
-                     locals: { review: review })
   end
 end
