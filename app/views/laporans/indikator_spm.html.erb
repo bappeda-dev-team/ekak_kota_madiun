@@ -15,17 +15,17 @@
     <div class="table-responsive tab-content" id="nav-tabContent">
       <div class="tab-pane fade show active" id="outcome-spm" role="tabpanel" aria-labelledby="outcome-spm" tabindex="0">
         <table class="table align-items-center counter">
-          <%= render 'indikators/header_table_indikator' %>
+          <%= render 'indikators/header_laporan_indikator' %>
           <tbody>
-            <%= render partial: 'indikators/indikator', collection: @spm_outcome, as: :indikator %>
+            <%= render partial: 'indikators/laporan_indikator', collection: @spm_outcome, as: :indikator %>
           </tbody>
         </table>
       </div>
       <div class="tab-pane fade" id="output-spm" role="tabpanel" aria-labelledby="output-spm" tabindex="1">
         <table class="table align-items-center counter">
-          <%= render 'indikators/header_table_indikator' %>
+          <%= render 'indikators/header_laporan_indikator' %>
           <tbody>
-            <%= render partial: 'indikators/indikator', collection: @spm_output, as: :indikator %>
+            <%= render partial: 'indikators/laporan_indikator', collection: @spm_output, as: :indikator %>
           </tbody>
         </table>
       </div>
