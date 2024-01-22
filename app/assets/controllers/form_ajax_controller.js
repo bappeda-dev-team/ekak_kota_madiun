@@ -31,11 +31,9 @@ export default class extends Controller {
 
   ajaxDelete(e) {
     const [xhr] = e.detail;
-    console.log("deleted");
     this.sweetAlertSuccess(xhr.resText);
     if (this.hasElementIdValue) {
       const target = document.getElementById(this.elementIdValue);
-      console.log(target);
       target.remove();
     }
   }

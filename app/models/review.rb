@@ -25,5 +25,5 @@ class Review < ApplicationRecord
   belongs_to :user, primary_key: :id, foreign_key: :reviewer_id
   belongs_to :kriterium, primary_key: :id, foreign_key: :kriteria_id, optional: true
 
-  default_scope { order updated_at: :asc }
+  default_scope { order created_at: :asc }
 end

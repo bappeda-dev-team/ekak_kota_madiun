@@ -5,7 +5,8 @@
     <% if reviewer? %>
       <td class="fw-bolder text-gray-500" width="50px">
         <div class="d-grid gap-2">
-          <%= link_to edit_review_path(review, target: dom_id(review)), remote: true,
+          <%= link_to edit_review_path(review, target: dom_id(review)),
+           remote: true,
            data: {
              controller: 'form-modal',
              action: 'ajax:complete->form-modal#success:prevent',

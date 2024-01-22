@@ -21,7 +21,7 @@ class ReviewsController < ApplicationController
 
   # GET /reviews/1/edit
   def edit
-    @target = params[:target].empty? ? 'hasil-review' : params[:target]
+    @target = params[:target]
     @type = 'replace'
   end
 
@@ -44,10 +44,14 @@ class ReviewsController < ApplicationController
   # PATCH/PUT /reviews/1 or /reviews/1.json
   def update
     if @review.update(review_params)
-      render json: { resText: "Review berhasil diperbarui", html_content: html_content(@review) }.to_json,
+      render json: { resText: "Review diperbarui",
+                     html_content: html_content({ review: @review },
+                                                partial: 'reviews/review') }.to_json,
              status: :ok
     else
-      render json: { resText: "Terjadi kesalahan", html_content: error_content(@review) }.to_json,
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: error_content({ review: @review },
+                                                 partial: 'reviews/form') }.to_json,
              status: :unprocessable_entity
     end
   end
