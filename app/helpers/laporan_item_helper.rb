@@ -8,6 +8,12 @@ module LaporanItemHelper
         icon: 'fas fa-book', identifier: 'usulans'
       },
       {
+        title: 'Indikator Opd', href: "#",
+        multi: true, collections: laporan_indikators,
+        id_target: 'indikator-opd',
+        icon: 'fas fa-book', identifier: 'usulans'
+      },
+      {
         title: 'SPIP', href: spip_index_path,
         icon: 'fas fa-chalkboard', identifier: 'spip'
       },
@@ -64,6 +70,15 @@ module LaporanItemHelper
         title: 'Rekap Cascading', href: list_pohon_pohon_kinerja_index_path,
         icon: 'fas fa-archive', identifier: 'rekap_cascading'
       }
+    ]
+  end
+
+  def laporan_indikators
+    [
+      { title: 'RB', href: indikator_rb_laporans_path, identifier: 'laporan_indikator_rb' },
+      { title: 'LPPD', href: indikator_lppd_laporans_path, identifier: 'laporan_indikator_lppd' },
+      { title: 'SPM', href: indikator_spm_laporans_path, identifier: 'laporan_indikator_spm' },
+      { title: 'SDGs', href: indikator_sdgs_laporans_path, identifier: 'laporan_indikator_sdgs' }
     ]
   end
 end

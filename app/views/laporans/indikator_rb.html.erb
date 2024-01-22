@@ -1,0 +1,34 @@
+<%= content_for :html_title, "Laporan Indikator RB" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Laporan</li>
+  <li class="breadcrumb-item" aria-current="page">Indikator</li>
+  <li class="breadcrumb-item active" aria-current="page">RB</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout', title: "Laporan Indikator RB #{@nama_opd} - #{@tahun}" do %>
+    <nav class="mb-3">
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-outcome-tab" data-bs-toggle="tab" data-bs-target="#outcome-rb" type="button" role="tab" aria-controls="outcome-rb" aria-selected="true">Outcome</button>
+        <button class="nav-link" id="nav-output-tab" data-bs-toggle="tab" data-bs-target="#output-rb" type="button" role="tab" aria-controls="output-rb" aria-selected="false">Output</button>
+      </div>
+    </nav>
+    <div class="table-responsive tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="outcome-rb" role="tabpanel" aria-labelledby="outcome-rb" tabindex="0">
+        <table class="table align-items-center counter">
+          <%= render 'indikators/header_table_indikator' %>
+          <tbody>
+            <%= render partial: 'indikators/indikator', collection: @rb_outcome, as: :indikator %>
+          </tbody>
+        </table>
+      </div>
+      <div class="tab-pane fade" id="output-rb" role="tabpanel" aria-labelledby="output-rb" tabindex="1">
+        <table class="table align-items-center counter">
+          <%= render 'indikators/header_table_indikator' %>
+          <tbody>
+            <%= render partial: 'indikators/indikator', collection: @rb_output, as: :indikator %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% end %>
+<% end %>

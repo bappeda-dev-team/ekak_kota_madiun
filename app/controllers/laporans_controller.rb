@@ -171,6 +171,21 @@ class LaporansController < ApplicationController
                             .lengkap_strategi_tahun(@tahun)
   end
 
+  def indikator_rb
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    @rb_outcome = @opd.rb_outcome.where(tahun: @tahun)
+    @rb_output = @opd.rb_output.where(tahun: @tahun)
+  end
+
+  def indikator_lppd; end
+
+  def indikator_spm; end
+
+  def indikator_sdgs; end
+
   private
 
   def set_program_kegiatans

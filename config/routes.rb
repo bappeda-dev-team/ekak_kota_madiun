@@ -490,6 +490,10 @@ Rails.application.routes.draw do
       post :cascading_opd
       get :hasil_cascading_kota
       get :cascading_kota
+      get :indikator_rb
+      get :indikator_lppd
+      get :indikator_spm
+      get :indikator_sdgs
     end
 
     member do
