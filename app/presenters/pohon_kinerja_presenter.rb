@@ -258,6 +258,10 @@ class PohonKinerjaPresenter
     ''
   end
 
+  def reviews
+    pohonable.reviews
+  end
+
   private
 
   def to_real_name(role)

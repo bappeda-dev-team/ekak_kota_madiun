@@ -6,6 +6,7 @@
 #  keterangan      :string
 #  kriteria_type   :string
 #  metadata        :jsonb
+#  penilaian       :string
 #  reviewable_type :string
 #  skor            :integer
 #  status          :string

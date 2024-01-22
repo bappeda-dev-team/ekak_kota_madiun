@@ -1,22 +1,27 @@
-<tr class="border" id="<%= dom_id(review) %>">
-  <th class="text-gray-900" scope="row"><%= review.kriterium %></th>
-  <td class="fw-bolder text-gray-500"><%= review.skor %></td>
-  <td class="fw-bolder text-gray-500"><%= review.keterangan %></td>
-  <td class="fw-bolder text-gray-500">
-    <div class="d-grid gap-2">
-      <% if reviewer? %>
-        <%= link_to edit_review_path(review, target: dom_id(review)), remote: true,
-                        data: {
-                            controller: 'form-modal',
-                            action: 'ajax:complete->form-modal#success:prevent',
-                            bs_toggle: 'modal',
-                            bs_target: '#form-modal'
-                        },
-                        class: 'btn btn-outline-info' do %>
-          <i class="fa fa-edit me-2"></i>
-          <span>Edit</span>
+<table class="table table-bordered mb-3" id="<%= dom_id(review) %>">
+  <tr class="border">
+    <td class="text-start" width="20px">Review</td>
+    <td class="fw-bolder text-gray-500 text-wrap text-start"><%= review.penilaian %></td>
+    <td class="fw-bolder text-gray-500" width="50px">
+      <div class="d-grid gap-2">
+        <% if reviewer? %>
+          <%= link_to edit_review_path(review, target: dom_id(review)), remote: true,
+           data: {
+             controller: 'form-modal',
+             action: 'ajax:complete->form-modal#success:prevent',
+             bs_toggle: 'modal',
+             bs_target: '#form-modal'
+           },
+           class: 'btn btn-outline-info' do %>
+            <i class="fa fa-edit me-2"></i>
+            <span>Edit</span>
+          <% end %>
         <% end %>
-      <% end %>
-    </div>
-  </td>
-</tr>
+      </div>
+    </td>
+  </tr>
+  <tr class="border">
+    <td class="text-start" width="20px">Keterangan</td>
+    <td class="fw-bolder text-gray-500 text-wrap text-start" colspan="2"><%= review.keterangan %></td>
+  </tr>
+</table>

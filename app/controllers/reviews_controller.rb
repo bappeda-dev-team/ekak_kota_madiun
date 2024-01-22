@@ -14,11 +14,9 @@ class ReviewsController < ApplicationController
   def new
     @review = Review.new(reviewable_type: params[:type],
                          reviewable_id: params[:id],
-                         kriteria_type: params[:kriteria],
                          reviewer_id: current_user.id)
-    @target = params[:target].empty? ? 'hasil-review' : params[:target]
-    @type = 'prepend'
-    @kriterias = Kriterium.where(tipe_kriteria: params[:kriteria]).pluck(:kriteria, :id)
+    @target = params[:target]
+    @type = 'append'
   end
 
   # GET /reviews/1/edit
@@ -72,6 +70,7 @@ class ReviewsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def review_params
     params.require(:review).permit(:keterangan,
+                                   :penilaian,
                                    :reviewable_type,
                                    :reviewable_id, :reviewer_id,
                                    :kriteria_type, :kriteria_id,
@@ -86,7 +85,7 @@ class ReviewsController < ApplicationController
   end
 
   def error_content(review)
-    render_to_string(partial: 'error',
+    render_to_string(partial: 'reviews/form',
                      formats: 'html',
                      layout: false,
                      locals: { review: review })

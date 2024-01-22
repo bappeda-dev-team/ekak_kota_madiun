@@ -33,6 +33,7 @@ class Strategi < ApplicationRecord
   has_many :sasarans
   # has_many :pohons, as: :pohonable
   has_one :pohon, as: :pohonable
+  has_many :reviews, as: :reviewable
   # has_many :komentars, primary_key: :id, foreign_key: :item
 
   # has_many :indikator_sasarans, through: :sasarans

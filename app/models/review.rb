@@ -6,6 +6,7 @@
 #  keterangan      :string
 #  kriteria_type   :string
 #  metadata        :jsonb
+#  penilaian       :string
 #  reviewable_type :string
 #  skor            :integer
 #  status          :string
@@ -20,8 +21,9 @@ class Review < ApplicationRecord
   validates :reviewable_type, presence: true
   validates :reviewer_id, presence: true
 
+  belongs_to :reviewable, polymorphic: true
   belongs_to :user, primary_key: :id, foreign_key: :reviewer_id
-  belongs_to :kriterium, primary_key: :id, foreign_key: :kriteria_id
+  belongs_to :kriterium, primary_key: :id, foreign_key: :kriteria_id, optional: true
 
   default_scope { order updated_at: :desc }
 end

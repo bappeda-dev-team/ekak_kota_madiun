@@ -2461,7 +2461,8 @@ CREATE TABLE public.reviews (
     kriteria_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    kriteria_type character varying
+    kriteria_type character varying,
+    penilaian character varying
 );
 
 
@@ -5992,6 +5993,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240103124318'),
 ('20240104085456'),
 ('20240108230926'),
-('20240109050012');
+('20240109050012'),
+('20240122040639');
 
 
