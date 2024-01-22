@@ -1,8 +1,9 @@
+<% presenter = PohonKinerjaPresenter.new(pohon) %>
 <div class="pohon">
-  <%= render partial: 'pohon_kinerja_opds/item_pohon_title', locals: { pohon: pohon } %>
-  <%= render partial: 'pohon_kinerja_opds/item_pohon_body', locals: { pohon: pohon } %>
-  <%= render partial: 'pohon_kinerja_opds/item_pohon_crosscutting', locals: { pohon: pohon } %>
-  <%= render partial: 'pohon_kinerja_opds/item_reviews', locals: { pohon: pohon } %>
-  <%= render partial: 'pohon_kinerja_opds/item_pohon_tombol', locals: { pohon: pohon } %>
-  <%= render partial: 'pohon_kinerja_opds/item_pohon_foot', locals: { pohon: pohon, partial: 'pohon_kinerja_opd' } %>
+  <%= render partial: 'pohon_kinerja_opds/item_pohon_title', locals: { pohon: presenter } %>
+  <%= render partial: 'pohon_kinerja_opds/item_pohon_body', locals: { pohon: presenter } %>
+  <%= render partial: 'pohon_kinerja_opds/item_pohon_crosscutting', locals: { pohon: presenter } %>
+  <%= render partial: 'pohon_kinerja_opds/item_reviews', locals: { pohon: presenter } %>
+  <%= render partial: 'pohon_kinerja_opds/item_pohon_tombol', locals: { pohon: presenter } %>
+  <%= render partial: 'pohon_kinerja_opds/item_pohon_foot', locals: { pohon: presenter, partial: 'pohon_kinerja_opd' } %>
 </div>
