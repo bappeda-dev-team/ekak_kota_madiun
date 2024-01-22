@@ -1,11 +1,11 @@
-<%= content_for :html_title, "Outcome LPPD OPD" %>
+<%= content_for :html_title, "Output SDGs" %>
 <%= content_for :navigation do %>
   <li class="breadcrumb-item" aria-current="page">Indikator</li>
-  <li class="breadcrumb-item" aria-current="page">SDGS</li>
+  <li class="breadcrumb-item" aria-current="page">SDGs</li>
   <li class="breadcrumb-item active" aria-current="page">Output</li>
 <% end %>
 <% content_for :view_utama do %>
-  <%= render 'shared/card_layout', title: "Indikator SDGS Output - #{@tahun}" do %>
+  <%= render 'shared/card_layout', title: "Indikator SDGs Output - #{@tahun}" do %>
     <div class="table-responsive mb-5 d-grid gap-2">
       <div class="action-btn">
         <%= link_to new_indikator_path(jenis: 'SDGS', sub_jenis: 'Output', kode_opd: @kode_opd, tahun: @tahun),
