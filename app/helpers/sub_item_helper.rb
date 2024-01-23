@@ -42,7 +42,7 @@ module SubItemHelper
 
   def renstra_items
     [
-      { title: '(2020-2024)', href: renstra_index_path(periode: '2020-2024'), identifier: 'renstra/(2020-2024)' },
+      { title: '(2019-2024)', href: renstra_index_path(periode: '2019-2024'), identifier: 'renstra/(2019-2024)' },
       { title: '(2025-2026)', href: renstra_index_path(periode: '2025-2026'), identifier: 'renstra/(2025-2026)' }
     ]
   end
