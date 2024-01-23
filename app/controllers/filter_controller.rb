@@ -299,21 +299,10 @@ class FilterController < ApplicationController
     @nama_opd = @opd.nama_opd
     program_renstra = @opd.program_renstra
 
-    # if OPD_TABLE.key?(@nama_opd.to_sym)
-    #   program_renstra = ProgramKegiatan.includes(:opd)
-    #                                    .where(id_sub_unit: KODE_OPD_BAGIAN[@nama_opd.to_sym])
-    #                                    .uniq(&:kode_program).sort_by(&:kode_program)
-    #   @kode_opd = KODE_OPD_BAGIAN[@nama_opd.to_sym]
-    # end
-
-    @program_kegiatans = program_renstra.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
     @list_subkegiatans = @periode.map { |tahun| @opd.sasaran_subkegiatans(tahun) }.flatten if @tahun_awal == 2025
+    @program_kegiatans = program_renstra.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
 
-    if @tahun_awal == 2025
-      render partial: 'hasil_filter_renstra_baru'
-    else
-      render partial: 'hasil_filter_renstra'
-    end
+    render partial: 'hasil_filter_renstra'
   end
 
   def ranwal_renja
