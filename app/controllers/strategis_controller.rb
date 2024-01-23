@@ -228,14 +228,6 @@ class StrategisController < ApplicationController
       user_id: user,
       pohonable_type: 'StrategiPohon'
     ).reject { |p| p.pohonable.nil? }
-    return unless params[:item]
-
-    @pohons = Pohon.where(
-      tahun: tahun,
-      user_id: user,
-      pohonable_id: params[:item],
-      pohonable_type: 'StrategiPohon'
-    ).reject { |p| p.pohonable.nil? }
   end
 
   private
