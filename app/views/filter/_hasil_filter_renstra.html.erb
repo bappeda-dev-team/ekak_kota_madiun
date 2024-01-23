@@ -44,142 +44,11 @@
           <% end %>
         </tbody>
         <% @program_kegiatans.each.with_index(1) do |(bid_urusan, programs), nomor_bid| %>
-          <thead class="thead-bidang-urusan">
-            <tr class="header-bidang-urusan">
-              <th class="border" scope="col" rowspan="2" colspan="2">Kode Bidang Urusan</th>
-              <th class="border" scope="col" rowspan="2">No.</th>
-              <th class="border" scope="col" rowspan="2" colspan="2">Nama Bidang Urusan</th>
-              <% @periode.each do |tahun| %>
-                <th class="border text-center" scope="col" colspan="5"><%= tahun %></th>
-              <% end %>
-            </tr>
-            <tr>
-              <% @periode.each do %>
-                <th class="border" scope="col" colspan="3"></th>
-                <th class="border" scope="col" colspan="2">Pagu Indikatif</th>
-              <% end %>
-            </tr>
-          </thead>
-          <tbody>
-            <td class="border" scope="col" colspan="2"><%= bid_urusan[0] %></td>
-            <td class="text-gray-900 text-wrap border"  ><%= nomor_bid %></td>
-            <td class="border" scope="col" colspan="2"><%= bid_urusan[1] %></td>
-            <% @periode.each do |tahun| %>
-              <td class="border" scope="col" colspan="3"></td>
-              <% pagu_bid_urusan = Indikator.where(jenis: 'Renstra',
-                                                   sub_jenis: 'Subkegiatan',
-                                                   kode_opd: @opd.kode_unik_opd,
-                                                   tahun: tahun)
-                                                   .filter { |hh| hh.kode.include?(bid_urusan[0]) }
-                                                   .group_by(&:kode)
-                                                   .map { |_k, v| v.max_by(&:version) }
-                                                   .inject(0) { |inj, pagu| inj + pagu.pagu.to_i }
-              %>
-              <td class="fw-bolder text-gray-900 text-wrap border" colspan="2">Rp. <%= number_with_delimiter(pagu_bid_urusan) %></td>
-            <% end %>
-          </tbody>
+          <%= render partial: 'renstra/bidang_urusan_renstra', locals: { bid_urusan: bid_urusan, nomor_bid: nomor_bid } %>
           <% programs.each.with_index(1) do |program, nomor| %>
-            <thead class="thead-program">
-              <tr class="header-program">
-                <th class="border" scope="col" rowspan="2">OPD</th>
-                <th class="border" scope="col" rowspan="2">Kode Program</th>
-                <th class="border" scope="col" rowspan="2">No.</th>
-                <th class="border" scope="col" rowspan="2">Program</th>
-                <th class="border text-center" scope="col" rowspan="2">Aksi</th>
-                <% @periode.each do |tahun| %>
-                  <th class="border text-center" scope="col" colspan="5"><%= tahun %></th>
-                <% end %>
-              </tr>
-              <tr>
-                <% @periode.each do %>
-                  <th class="border" scope="col">Indikator</th>
-                  <th class="border" scope="col" width="50px">Target</th>
-                  <th class="border" scope="col">Satuan</th>
-                  <th class="border" scope="col">Pagu Indikatif</th>
-                  <th class="border" scope="col">Keterangan</th>
-                <% end %>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="text-gray-900 text-wrap border"  ><%= program.nama_opd_pemilik %></td>
-                <td class="text-gray-900 text-wrap border"  ><%= program.kode_program %></td>
-                <td class="text-gray-900 text-wrap border"  ><%= nomor %></td>
-                <td class="text-gray-900 text-wrap border"  ><%= program.nama_program %></td>
-                <td class="text-gray-900 text-wrap border" >
-                  <%= link_to edit_renstra_path(
-                    program,
-                    nama: program.nama_program,
-                    kode: program.kode_program,
-                    kode_opd: program.kode_sub_skpd,
-                    indikator: program.indikator_program,
-                    jenis: 'Renstra',
-                    sub_jenis: 'Program',
-                    tahun_awal: @tahun_awal,
-                    tahun_akhir: @tahun_akhir),
-                   remote: true, class: 'btn btn-green',
-                   data: { controller: 'form-modal',
-                     action: 'form-modal#appendForm',
-                     form_modal_location_param: 'form-laporan-renstra-body',
-                     bs_target: '#form-laporan-renstra',
-                     bs_toggle: 'modal' } do %>
-                    Edit
-                  <% end %>
-                </td>
-                <%= render 'row_indikator_renstra',indikators: program.indikator_renstras_new('program', @kode_opd)[:indikator_program] %>
-              </tr>
-            </tbody>
+            <%= render partial: 'renstra/program_renstra', locals: { program: program, nomor: nomor } %>
             <% program.kegiatans_opd.each.with_index(1) do |kegiatan, no_giat| %>
-              <thead class="thead-kegiatan">
-                <tr>
-                  <th class="border" scope="col" rowspan="2">OPD</th>
-                  <th class="border" scope="col" rowspan="2">Kode Kegiatan</th>
-                  <th class="border" scope="col" rowspan="2">No</th>
-                  <th class="border" scope="col" rowspan="2">Nama Kegiatan</th>
-                  <th class="border text-center" scope="col" rowspan="2">Aksi</th>
-                  <% @periode.each do |tahun| %>
-                    <th class="border text-center" scope="col" colspan="5"><%= tahun %></th>
-                  <% end %>
-                </tr>
-                <tr>
-                  <% @periode.each do %>
-                    <th class="border" scope="col">Indikator</th>
-                    <th class="border" scope="col" width="50px">Target</th>
-                    <th class="border" scope="col">Satuan</th>
-                    <th class="border" scope="col">Pagu Indikatif</th>
-                    <th class="border" scope="col">Keterangan</th>
-                  <% end %>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="text-gray-900 text-wrap border"  ><%= kegiatan.nama_opd_pemilik %></td>
-                  <td class="text-gray-900 text-wrap border"  ><%= kegiatan.kode_giat %></td>
-                  <td class="text-gray-900 text-wrap border"  ><%= no_giat %></td>
-                  <td class="text-gray-900 text-wrap border"  ><%= kegiatan.nama_kegiatan %></td>
-                  <td class="text-gray-900 text-wrap border">
-                    <%= link_to edit_renstra_path(
-                      kegiatan,
-                      nama: kegiatan.nama_kegiatan,
-                      kode_opd: kegiatan.kode_sub_skpd,
-                      kode: kegiatan.kode_giat,
-                      indikator: kegiatan.indikator_kinerja,
-                      jenis: 'Renstra',
-                      sub_jenis: 'Kegiatan',
-                      tahun_awal: @tahun_awal,
-                      tahun_akhir: @tahun_akhir),
-                     remote: true, class: 'btn btn-green',
-                     data: { controller: 'form-modal',
-                       action: 'form-modal#appendForm',
-                       form_modal_location_param: 'form-laporan-renstra-body',
-                       bs_target: '#form-laporan-renstra',
-                       bs_toggle: 'modal' } do %>
-                      Edit
-                    <% end %>
-                  </td>
-                  <%= render 'row_indikator_renstra',indikators: kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan] %>
-                </tr>
-              </tbody>
+              <%= render partial: 'renstra/kegiatan_renstra', locals: { kegiatan: kegiatan, no_giat: no_giat } %>
               <thead class="thead-subkegiatan">
                 <tr>
                   <th class="border" scope="col" rowspan="2">OPD</th>
@@ -203,33 +72,7 @@
               </thead>
               <tbody>
                 <% kegiatan.subkegiatans_opd.each.with_index(1) do |subgiat, no_subgiat| %>
-                  <tr>
-                    <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_opd_pemilik %></td>
-                    <td class="text-gray-900 text-wrap border"  ><%= subgiat.kode_sub_giat %></td>
-                    <td class="text-gray-900 text-wrap border"  ><%= no_subgiat %></td>
-                    <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_subkegiatan %></td>
-                    <td class="text-gray-900 text-wrap border">
-                      <%= link_to edit_renstra_path(
-                        subgiat,
-                        nama: subgiat.nama_subkegiatan,
-                        kode_opd: subgiat.kode_sub_skpd,
-                        kode: subgiat.kode_sub_giat,
-                        indikator: subgiat.indikator_subkegiatan,
-                        jenis: 'Renstra',
-                        sub_jenis: 'Subkegiatan',
-                        tahun_awal: @tahun_awal,
-                        tahun_akhir: @tahun_akhir),
-                       remote: true, class: 'btn btn-green',
-                       data: { controller: 'form-modal',
-                         action: 'form-modal#appendForm',
-                         form_modal_location_param: 'form-laporan-renstra-body',
-                         bs_target: '#form-laporan-renstra',
-                         bs_toggle: 'modal' } do %>
-                        Edit
-                      <% end %>
-                    </td>
-                    <%= render 'row_indikator_renstra',indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan] %>
-                  </tr>
+                  <%= render partial: 'renstra/subkegiatan_renstra', locals: { subgiat: subgiat, no_subgiat: no_subgiat } %>
                 <% end %>
               </tbody>
             <% end %>

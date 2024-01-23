@@ -1,0 +1,53 @@
+<thead class="thead-program">
+  <tr class="header-program">
+    <th class="border" scope="col" rowspan="2">OPD</th>
+    <th class="border" scope="col" rowspan="2">Kode Program</th>
+    <th class="border" scope="col" rowspan="2">No.</th>
+    <th class="border" scope="col" rowspan="2">Program</th>
+    <th class="border text-center" scope="col" rowspan="2">Aksi</th>
+    <% @periode.each do |tahun| %>
+      <th class="border text-center" scope="col" colspan="5"><%= tahun %></th>
+    <% end %>
+  </tr>
+  <tr>
+    <% @periode.each do %>
+      <th class="border" scope="col">Indikator</th>
+      <th class="border" scope="col" width="50px">Target</th>
+      <th class="border" scope="col">Satuan</th>
+      <th class="border" scope="col">Pagu Indikatif</th>
+      <th class="border" scope="col">Keterangan</th>
+    <% end %>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="text-gray-900 text-wrap border"><%= program.nama_opd_pemilik %></td>
+    <td class="text-gray-900 text-wrap border"><%= program.kode_program %></td>
+    <td class="text-gray-900 text-wrap border"><%= nomor %></td>
+    <td class="text-gray-900 text-wrap border"><%= program.nama_program %></td>
+    <td class="text-gray-900 text-wrap border" width="25%">
+      <div class="d-grid gap-2">
+        <%= link_to edit_renstra_path(
+          program,
+          nama: program.nama_program,
+          kode: program.kode_program,
+          kode_opd: program.kode_sub_skpd,
+          indikator: program.indikator_program,
+          jenis: 'Renstra',
+          sub_jenis: 'Program',
+          tahun_awal: @tahun_awal,
+          tahun_akhir: @tahun_akhir),
+         remote: true, class: 'btn btn-outline-info w-100',
+         data: { controller: 'form-modal',
+           action: 'form-modal#appendForm',
+           form_modal_location_param: 'form-laporan-renstra-body',
+           bs_target: '#form-laporan-renstra',
+           bs_toggle: 'modal' } do %>
+          <span class="fas fa-edit me-2"></span>
+          Edit
+        <% end %>
+      </div>
+    </td>
+    <%= render 'row_indikator_renstra',indikators: program.indikator_renstras_new('program', @kode_opd)[:indikator_program] %>
+  </tr>
+</tbody>

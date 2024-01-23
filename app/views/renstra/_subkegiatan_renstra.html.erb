@@ -1,0 +1,49 @@
+<tr>
+  <td class="text-gray-900 text-wrap border"><%= subgiat.nama_opd_pemilik %></td>
+  <td class="text-gray-900 text-wrap border"><%= subgiat.kode_sub_giat %></td>
+  <td class="text-gray-900 text-wrap border"><%= no_subgiat %></td>
+  <td class="text-gray-900 text-wrap border"><%= subgiat.nama_subkegiatan %></td>
+  <td class="text-gray-900 text-wrap border" width="25%">
+    <div class="d-grid gap-2">
+      <%= link_to edit_renstra_path(
+        subgiat,
+        nama: subgiat.nama_subkegiatan,
+        kode_opd: subgiat.kode_sub_skpd,
+        kode: subgiat.kode_sub_giat,
+        indikator: subgiat.indikator_subkegiatan,
+        jenis: 'Renstra',
+        sub_jenis: 'Subkegiatan',
+        tahun_awal: @tahun_awal,
+        tahun_akhir: @tahun_akhir),
+       remote: true, class: 'btn btn-outline-info w-100',
+       data: { controller: 'form-modal',
+         action: 'form-modal#appendForm',
+         form_modal_location_param: 'form-laporan-renstra-body',
+         bs_target: '#form-laporan-renstra',
+         bs_toggle: 'modal' } do %>
+        <span class="fas fa-edit me-2"></span>
+        Edit
+      <% end %>
+      <%= link_to edit_renstra_path(
+        subgiat,
+        nama: subgiat.nama_subkegiatan,
+        kode_opd: subgiat.kode_sub_skpd,
+        kode: subgiat.kode_sub_giat,
+        indikator: subgiat.indikator_subkegiatan,
+        jenis: 'Renstra',
+        sub_jenis: 'Subkegiatan',
+        tahun_awal: @tahun_awal,
+        tahun_akhir: @tahun_akhir),
+       remote: true, class: 'btn btn-outline-primary w-100',
+       data: { controller: 'form-modal',
+         action: 'form-modal#appendForm',
+         form_modal_location_param: 'form-laporan-renstra-body',
+         bs_target: '#form-laporan-renstra',
+         bs_toggle: 'modal' } do %>
+        <span class="fas fa-clipboard-check me-2"></span>
+        Realisasi
+      <% end %>
+    </div>
+  </td>
+  <%= render 'row_indikator_renstra',indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan] %>
+</tr>
