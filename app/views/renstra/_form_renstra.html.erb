@@ -3,7 +3,10 @@
   local: false,
   data: { controller: 'form-ajax',
     action: 'ajax:success->form-ajax#successResponse',
-    form_ajax_modal_param: 'form-laporan-renstra'
+    form_ajax_modal_param: 'form-laporan-renstra',
+    form_ajax_target_param: dom_id(@program, 'subkegiatan'),
+    form_ajax_type_param: 'replace',
+    action: 'ajax:complete->form-ajax#processAjax'
 }) do |form| %>
   <div class="field">
     <%= form.label @sub_jenis, class: 'form-label' %>

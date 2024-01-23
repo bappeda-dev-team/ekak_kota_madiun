@@ -2,29 +2,29 @@
   <% if indikators.any? { |ind| ind.tahun == tahun.to_s } %>
     <% indikators&.each do |indikator| %>
       <% if indikator.tahun == tahun.to_s %>
-        <td class="text-gray-900 text-wrap border"  ><%= indikator.indikator %></td>
-        <td class="text-gray-900 text-wrap border"  ><%= indikator.target %></td>
-        <td class="text-gray-900 text-wrap border"  ><%= indikator.satuan %></td>
-        <td class="text-gray-900 text-wrap border"  ><%= indikator.realisasi %></td>
-        <td class="text-gray-900 text-wrap border"  ><%= indikator.satuan %></td>
+        <td class="text-gray-900 text-wrap border"><%= indikator.indikator %></td>
+        <td class="text-gray-900 text-wrap border"><%= indikator.target %></td>
+        <td class="text-gray-900 text-wrap border"><%= indikator.satuan %></td>
+        <td class="text-gray-900 text-wrap border"><%= indikator.realisasi %></td>
+        <td class="text-gray-900 text-wrap border"><%= indikator.satuan %></td>
         <% if indikator.sub_jenis == 'Subkegiatan' %>
-          <td class="text-gray-900 text-wrap border"  >Rp.<%= number_with_delimiter(indikator.pagu) %></td>
-          <td class="text-gray-900 text-wrap border"  >Rp.<%= number_with_delimiter(indikator.realisasi_pagu) %></td>
+          <td class="text-gray-900 text-wrap border">Rp.<%= number_with_delimiter(indikator.pagu) %></td>
+          <td class="text-gray-900 text-wrap border">Rp.<%= number_with_delimiter(indikator.realisasi_pagu) %></td>
         <% else %>
-          <td class="text-gray-900 text-wrap border"  >Rp. <%= number_with_delimiter(indikator.sum_pagu_renstra(sub_jenis: 'Subkegiatan')) %></td>
-          <td class="text-gray-900 text-wrap border"  >Rp. <%= number_with_delimiter(indikator.sum_realisasi_pagu_renstra(sub_jenis: 'Subkegiatan')) %></td>
+          <td class="text-gray-900 text-wrap border">Rp. <%= number_with_delimiter(indikator.sum_pagu_renstra(sub_jenis: 'Subkegiatan')) %></td>
+          <td class="text-gray-900 text-wrap border">Rp. <%= number_with_delimiter(indikator.sum_realisasi_pagu_renstra(sub_jenis: 'Subkegiatan')) %></td>
         <% end %>
-        <td class="text-gray-900 text-wrap border"  ><%= indikator.keterangan %></td>
+        <td class="text-gray-900 text-wrap border"><%= indikator.keterangan %></td>
       <% end %>
     <% end %>
   <% else %>
-    <td class="text-gray-900 text-wrap border"  ></td>
-    <td class="text-gray-900 text-wrap border"  ></td>
-    <td class="text-gray-900 text-wrap border"  ></td>
-    <td class="text-gray-900 text-wrap border"  ></td>
-    <td class="text-gray-900 text-wrap border"  ></td>
-    <td class="text-gray-900 text-wrap border"  ></td>
-    <td class="text-gray-900 text-wrap border"  ></td>
-    <td class="text-gray-900 text-wrap border"  ></td>
+    <td class="text-gray-900 text-wrap border"></td>
+    <td class="text-gray-900 text-wrap border"></td>
+    <td class="text-gray-900 text-wrap border"></td>
+    <td class="text-gray-900 text-wrap border"></td>
+    <td class="text-gray-900 text-wrap border"></td>
+    <td class="text-gray-900 text-wrap border"></td>
+    <td class="text-gray-900 text-wrap border"></td>
+    <td class="text-gray-900 text-wrap border"></td>
   <% end %>
 <% end %>

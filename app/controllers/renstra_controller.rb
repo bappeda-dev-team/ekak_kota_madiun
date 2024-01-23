@@ -71,6 +71,8 @@ class RenstraController < ApplicationController
 
   def update_programs
     # indikator_input = params[:indikator]
+    @periode = (2019..2024)
+    program = ProgramKegiatan.find(params[:id])
     keterangan = params[:keterangan]
     param_indikator = indikator_params.to_h
     @indikator = param_indikator[:indikator]
@@ -86,7 +88,13 @@ class RenstraController < ApplicationController
       end
     end
     indikator = Indikator.upsert_all(@indikator)
-    render json: { resText: 'Data disimpan' }, status: :accepted if indikator
+
+    return unless indikator
+
+    render json: { resText: 'Data disimpan',
+                   html_content: html_content({ subgiat: program, no_subgiat: 'xx' },
+                                              partial: 'renstra/subkegiatan_renstra.html.erb') }.to_json,
+           status: :accepted
   end
 
   def laporan_renstra

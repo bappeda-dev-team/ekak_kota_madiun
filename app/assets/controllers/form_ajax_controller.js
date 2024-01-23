@@ -74,7 +74,12 @@ export default class extends Controller {
         }
       }
       this.sweetalertStatus(resText, status);
-      this.modalHider();
+      const modal = event.params.modal;
+      if (modal != null && typeof modal != "undefined") {
+        this.modalHider(modal);
+      } else {
+        this.modalHider();
+      }
     }
   }
 
@@ -87,7 +92,7 @@ export default class extends Controller {
         },
         {
           //to
-          backgroundColor: "rgba(242, 245, 169, 0)",
+          backgroundColor: "rgba(242, 245, 169, 0.8)",
         },
       ],
       10000,
