@@ -12,6 +12,8 @@
 #  kode_opd             :string
 #  kotak                :integer          default(0), not null
 #  pagu                 :string           default("0")
+#  realisasi            :string
+#  realisasi_pagu       :string
 #  satuan               :string
 #  sub_jenis            :string
 #  tahun                :string

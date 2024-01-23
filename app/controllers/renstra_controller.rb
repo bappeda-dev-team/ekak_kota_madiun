@@ -1,5 +1,6 @@
 class RenstraController < ApplicationController
   before_action :set_renstra
+  layout false, only: [:edit_realisasi]
 
   def index
     # base_data = KakService.new(tahun: 2022, kode_unik_opd: @kode_unik_opd)
@@ -54,13 +55,26 @@ class RenstraController < ApplicationController
     render partial: 'form_renstra'
   end
 
+  def edit_realisasi
+    @nama = params[:nama]
+    @kode = params[:kode]
+    @kode_opd = params[:kode_opd]
+    @satuan = params[:satuan]
+    @jenis = params[:jenis]
+    @sub_jenis = params[:sub_jenis]
+    @id = params[:id]
+    @periode = (params[:tahun_awal]..params[:tahun_akhir])
+    @program = ProgramKegiatan.find(@id)
+    @targets = @program.send("target_#{@sub_jenis.downcase}_renstra")
+    @kode_indikator = params[:kode_indikator] || KodeService.new(@kode, @jenis, @sub_jenis).call
+  end
+
   def update_programs
     # indikator_input = params[:indikator]
     keterangan = params[:keterangan]
     param_indikator = indikator_params.to_h
     @indikator = param_indikator[:indikator]
     @indikator.each do |h|
-      # h[:indikator] = indikator_input
       h[:keterangan] = keterangan
     end
     kode_ind = params[:_kode_indikator]
@@ -71,13 +85,8 @@ class RenstraController < ApplicationController
         h[:version] = versi
       end
     end
-    indikator = Indikator.upsert_all(@indikator, returning: %w[indikator tahun target satuan pagu])
-    render json: { resText: 'Data disimpan', result: indikator }, status: :accepted if indikator
-  end
-
-  def set_renstra
-    @kode_unik_opd = params[:kode_unik_opd]
-    @tahun = params[:tahun]
+    indikator = Indikator.upsert_all(@indikator)
+    render json: { resText: 'Data disimpan' }, status: :accepted if indikator
   end
 
   def laporan_renstra
@@ -91,6 +100,11 @@ class RenstraController < ApplicationController
 
   private
 
+  def set_renstra
+    @kode_unik_opd = params[:kode_unik_opd]
+    @tahun = params[:tahun]
+  end
+
   def renstra_params
     params.require(:program_kegiatan)
           .permit(:nama_subkegiatan, :tahun, :target_subkegiatan, :indikator_subkegiatan)
@@ -98,6 +112,6 @@ class RenstraController < ApplicationController
 
   def indikator_params
     params.require(:renstra).permit(indikator: %i[indikator tahun satuan kode jenis sub_jenis target pagu keterangan
-                                                  kode_opd kode_indikator])
+                                                  kode_opd kode_indikator realisasi realisasi_pagu])
   end
 end

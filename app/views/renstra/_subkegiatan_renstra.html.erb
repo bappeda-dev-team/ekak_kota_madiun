@@ -24,7 +24,7 @@
         <span class="fas fa-edit me-2"></span>
         Edit
       <% end %>
-      <%= link_to edit_renstra_path(
+      <%= link_to edit_realisasi_renstra_path(
         subgiat,
         nama: subgiat.nama_subkegiatan,
         kode_opd: subgiat.kode_sub_skpd,
@@ -45,5 +45,5 @@
       <% end %>
     </div>
   </td>
-  <%= render 'row_indikator_renstra',indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan] %>
+  <%= render 'renstra/row_indikator_renstra',indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan] %>
 </tr>

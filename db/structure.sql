@@ -824,7 +824,9 @@ CREATE TABLE public.indikators (
     keterangan character varying,
     kotak integer DEFAULT 0 NOT NULL,
     kode_opd character varying,
-    definisi_operational jsonb
+    definisi_operational jsonb,
+    realisasi character varying,
+    realisasi_pagu character varying
 );
 
 
@@ -5994,6 +5996,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240104085456'),
 ('20240108230926'),
 ('20240109050012'),
-('20240122040639');
+('20240122040639'),
+('20240123053655'),
+('20240123060506');
 
 

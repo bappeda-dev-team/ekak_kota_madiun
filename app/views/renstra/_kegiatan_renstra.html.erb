@@ -6,7 +6,7 @@
     <th class="border" scope="col" rowspan="2">Nama Kegiatan</th>
     <th class="border text-center" scope="col" rowspan="2">Aksi</th>
     <% @periode.each do |tahun| %>
-      <th class="border text-center" scope="col" colspan="5"><%= tahun %></th>
+      <th class="border text-center" scope="col" colspan="8"><%= tahun %></th>
     <% end %>
   </tr>
   <tr>
@@ -14,7 +14,10 @@
       <th class="border" scope="col">Indikator</th>
       <th class="border" scope="col" width="50px">Target</th>
       <th class="border" scope="col">Satuan</th>
+      <th class="border" scope="col" width="50px">Realisasi</th>
+      <th class="border" scope="col">Satuan</th>
       <th class="border" scope="col">Pagu Indikatif</th>
+      <th class="border" scope="col">Realisasi</th>
       <th class="border" scope="col">Keterangan</th>
     <% end %>
   </tr>
@@ -46,8 +49,27 @@
           <span class="fas fa-edit me-2"></span>
           Edit
         <% end %>
+        <%= link_to edit_realisasi_renstra_path(
+          kegiatan,
+          nama: kegiatan.nama_kegiatan,
+          kode_opd: kegiatan.kode_sub_skpd,
+          kode: kegiatan.kode_giat,
+          indikator: kegiatan.indikator_kinerja,
+          jenis: 'Renstra',
+          sub_jenis: 'Kegiatan',
+          tahun_awal: @tahun_awal,
+          tahun_akhir: @tahun_akhir),
+         remote: true, class: 'btn btn-outline-primary w-100',
+         data: { controller: 'form-modal',
+           action: 'form-modal#appendForm',
+           form_modal_location_param: 'form-laporan-renstra-body',
+           bs_target: '#form-laporan-renstra',
+           bs_toggle: 'modal' } do %>
+          <span class="fas fa-clipboard-check me-2"></span>
+          Realisasi
+        <% end %>
       </div>
     </td>
-    <%= render 'row_indikator_renstra',indikators: kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan] %>
+    <%= render 'renstra/row_indikator_renstra',indikators: kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan] %>
   </tr>
 </tbody>
