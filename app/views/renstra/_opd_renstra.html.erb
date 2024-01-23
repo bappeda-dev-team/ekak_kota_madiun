@@ -27,7 +27,15 @@
                                   .map { |_k, v| v.max_by(&:version) }
                                   .inject(0) { |inj, pagu| inj + pagu.pagu.to_i }
     %>
+    <% realisasi_pagu_opd = Indikator.where(jenis: 'Renstra',
+                                  sub_jenis: 'Subkegiatan',
+                                  kode_opd: @opd.kode_unik_opd,
+                                  tahun: tahun)
+                                  .group_by(&:kode)
+                                  .map { |_k, v| v.max_by(&:version) }
+                                  .inject(0) { |inj, pagu| inj + pagu.realisasi_pagu.to_i }
+    %>
     <td class="fw-bolder text-gray-900 text-wrap border" style="font-size: larger;">Rp. <%= number_with_delimiter(pagu_opd) %></td>
-    <td class="fw-bolder text-gray-900 text-wrap border" style="font-size: larger;" colspan="2">Rp. PAGU REALISASI</td>
+    <td class="fw-bolder text-gray-900 text-wrap border" style="font-size: larger;" colspan="2">Rp. <%= number_with_delimiter(realisasi_pagu_opd) %></td>
   <% end %>
 </tbody>
