@@ -1,6 +1,5 @@
 class RenstraController < ApplicationController
   before_action :set_renstra
-  layout false, only: [:edit_realisasi]
 
   def index
     # base_data = KakService.new(tahun: 2022, kode_unik_opd: @kode_unik_opd)
@@ -10,70 +9,28 @@ class RenstraController < ApplicationController
 
   def admin_renstra; end
 
-  def new
-    @nama = params[:nama]
-    @kode = params[:kode]
-    @jenis = params[:jenis]
-    @sub_jenis = params[:sub_jenis]
-    @kode_indikator = params[:kode_indikator] || KodeService.new(@kode, @jenis, @sub_jenis).call
-    render partial: 'form_renstra_new'
-  end
-
-  def create
-    indikator_input = params[:indikator]
-    keterangan = params[:keterangan]
-    param_indikator = indikator_params.to_h
-    @indikator = param_indikator[:indikator]
-    @indikator.each do |h|
-      h[:indikator] = indikator_input
-      h[:keterangan] = keterangan
-    end
-    kode_ind = params[:_kode_indikator]
-    indikator_check = Indikator.where(kode_indikator: kode_ind)
-    if indikator_check.any?
-      kotak = indikator_check.maximum(:kotak) + 1
-      @indikator.each do |h|
-        h[:kotak] = kotak
-      end
-    end
-    indikator = Indikator.upsert_all(@indikator, returning: %w[indikator tahun target satuan pagu])
-    render json: { resText: 'Data disimpan', result: indikator }, status: :accepted if indikator
-  end
-
   def edit
-    @nama = params[:nama]
-    @kode = params[:kode]
-    @kode_opd = params[:kode_opd]
-    @satuan = params[:satuan]
-    @jenis = params[:jenis]
-    @sub_jenis = params[:sub_jenis]
-    @id = params[:id]
-    @periode = (params[:tahun_awal]..params[:tahun_akhir])
-    @program = ProgramKegiatan.find(@id)
-    @targets = @program.send("target_#{@sub_jenis.downcase}_renstra")
-    @kode_indikator = params[:kode_indikator] || KodeService.new(@kode, @jenis, @sub_jenis).call
+    form_edit_attr
     render partial: 'form_renstra'
   end
 
   def edit_realisasi
-    @nama = params[:nama]
-    @kode = params[:kode]
-    @kode_opd = params[:kode_opd]
-    @satuan = params[:satuan]
-    @jenis = params[:jenis]
-    @sub_jenis = params[:sub_jenis]
-    @id = params[:id]
-    @periode = (params[:tahun_awal]..params[:tahun_akhir])
-    @program = ProgramKegiatan.find(@id)
-    @targets = @program.send("target_#{@sub_jenis.downcase}_renstra")
-    @kode_indikator = params[:kode_indikator] || KodeService.new(@kode, @jenis, @sub_jenis).call
+    form_edit_attr
+    render partial: 'form_realisasi'
   end
 
   def update_programs
     # indikator_input = params[:indikator]
-    @periode = (2019..2024)
+    @tahun_awal = params[:tahun_awal]
+    @tahun_akhir = params[:tahun_akhir]
+    nomor = params[:nomor]
+    sub_jenis = params[:sub_jenis].downcase
+    kode_opd = params[:kode_opd]
+    periode = (@tahun_awal..@tahun_akhir)
+
     program = ProgramKegiatan.find(params[:id])
     keterangan = params[:keterangan]
+
     param_indikator = indikator_params.to_h
     @indikator = param_indikator[:indikator]
     @indikator.each do |h|
@@ -87,13 +44,27 @@ class RenstraController < ApplicationController
         h[:version] = versi
       end
     end
-    indikator = Indikator.upsert_all(@indikator)
+    # update / insert to database
+    Indikator.upsert_all(@indikator)
 
-    return unless indikator
-
+    # decide partial and indikators fetch
+    case sub_jenis
+    when 'program'
+      partial = 'renstra/program_renstra'
+      indikators = program.indikator_renstras_new('program', kode_opd)[:indikator_program]
+    when 'kegiatan'
+      partial = 'renstra/kegiatan_renstra'
+      indikators = program.indikator_renstras_new('kegiatan', kode_opd)[:indikator_kegiatan]
+    else
+      partial = 'renstra/subkegiatan_renstra'
+      indikators = program.indikator_renstras_new('subkegiatan', kode_opd)[:indikator_subkegiatan]
+    end
     render json: { resText: 'Data disimpan',
-                   html_content: html_content({ subgiat: program, no_subgiat: 'xx' },
-                                              partial: 'renstra/subkegiatan_renstra.html.erb') }.to_json,
+                   html_content: html_content({ periode: periode,
+                                                nomor: nomor,
+                                                program: program,
+                                                indikators: indikators },
+                                              partial: partial) }.to_json,
            status: :accepted
   end
 
@@ -111,6 +82,23 @@ class RenstraController < ApplicationController
   def set_renstra
     @kode_unik_opd = params[:kode_unik_opd]
     @tahun = params[:tahun]
+  end
+
+  def form_edit_attr
+    @nama = params[:nama]
+    @kode = params[:kode]
+    @kode_opd = params[:kode_opd]
+    @satuan = params[:satuan]
+    @jenis = params[:jenis]
+    @sub_jenis = params[:sub_jenis]
+    @tahun_awal = params[:tahun_awal]
+    @tahun_akhir = params[:tahun_akhir]
+    @periode = (params[:tahun_awal]..params[:tahun_akhir])
+    @nomor = params[:nomor]
+    @program = ProgramKegiatan.find(params[:id])
+    @targets = @program.send("target_#{@sub_jenis.downcase}_renstra")
+    @kode_indikator = params[:kode_indikator] || KodeService.new(@kode, @jenis, @sub_jenis).call
+    @dom_target = helpers.dom_id(@program, @sub_jenis)
   end
 
   def renstra_params

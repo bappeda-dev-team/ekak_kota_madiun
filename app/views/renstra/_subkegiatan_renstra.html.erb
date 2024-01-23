@@ -1,16 +1,16 @@
-<tr id="<%= dom_id(subgiat, 'subkegiatan') %>">
-  <td class="text-gray-900 text-wrap border"><%= subgiat.nama_opd_pemilik %></td>
-  <td class="text-gray-900 text-wrap border"><%= subgiat.kode_sub_giat %></td>
-  <td class="text-gray-900 text-wrap border"><%= no_subgiat %></td>
-  <td class="text-gray-900 text-wrap border"><%= subgiat.nama_subkegiatan %></td>
+<tr id="<%= dom_id(program, 'Subkegiatan') %>">
+  <td class="text-gray-900 text-wrap border"><%= program.nama_opd_pemilik %></td>
+  <td class="text-gray-900 text-wrap border"><%= program.kode_sub_giat %></td>
+  <td class="text-gray-900 text-wrap border"><%= nomor %></td>
+  <td class="text-gray-900 text-wrap border"><%= program.nama_subkegiatan %></td>
   <td class="text-gray-900 text-wrap border px-2">
     <div class="d-grid gap-2">
       <%= link_to edit_renstra_path(
-        subgiat,
-        nama: subgiat.nama_subkegiatan,
-        kode_opd: subgiat.kode_sub_skpd,
-        kode: subgiat.kode_sub_giat,
-        indikator: subgiat.indikator_subkegiatan,
+        program,
+        nama: program.nama_subkegiatan,
+        kode_opd: program.kode_sub_skpd,
+        kode: program.kode_sub_giat,
+        nomor: nomor,
         jenis: 'Renstra',
         sub_jenis: 'Subkegiatan',
         tahun_awal: @tahun_awal,
@@ -25,11 +25,11 @@
         Edit
       <% end %>
       <%= link_to edit_realisasi_renstra_path(
-        subgiat,
-        nama: subgiat.nama_subkegiatan,
-        kode_opd: subgiat.kode_sub_skpd,
-        kode: subgiat.kode_sub_giat,
-        indikator: subgiat.indikator_subkegiatan,
+        program,
+        nama: program.nama_subkegiatan,
+        kode_opd: program.kode_sub_skpd,
+        kode: program.kode_sub_giat,
+        nomor: nomor,
         jenis: 'Renstra',
         sub_jenis: 'Subkegiatan',
         tahun_awal: @tahun_awal,
@@ -45,5 +45,5 @@
       <% end %>
     </div>
   </td>
-  <%= render 'renstra/row_indikator_renstra',indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan] %>
+  <%= render 'renstra/row_indikator_renstra', indikators: indikators, periode: periode %>
 </tr>

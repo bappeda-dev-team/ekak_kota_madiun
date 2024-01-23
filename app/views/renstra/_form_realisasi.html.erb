@@ -3,14 +3,19 @@
   local: false,
   data: { controller: 'form-ajax',
     action: 'ajax:success->form-ajax#successResponse',
-    form_ajax_modal_param: 'form-laporan-renstra'
+    form_ajax_modal_param: 'form-laporan-renstra',
+    form_ajax_target_param: @dom_target,
+    form_ajax_type_param: 'replace',
+    action: 'ajax:complete->form-ajax#processAjax'
 }) do |form| %>
   <div class="field">
     <%= form.label @sub_jenis, class: 'form-label' %>
-    <%= form.text_field :nama,
-     class: 'form-control',
-     readonly: true,
-     value: @nama %>
+    <%= form.text_field :nama, class: 'form-control', readonly: true, value: @nama %>
+    <%= form.hidden_field :tahun_awal, value: @tahun_awal %>
+    <%= form.hidden_field :tahun_akhir, value: @tahun_akhir %>
+    <%= form.hidden_field :nomor, value: @nomor %>
+    <%= form.hidden_field :kode_opd, value: @kode_opd %>
+    <%= form.hidden_field :sub_jenis, value: @sub_jenis %>
   </div>
   <% @periode.each do |tahun| %>
     <%= form.hidden_field "renstra[indikator][][tahun]", value: tahun %>

@@ -1,28 +1,4 @@
-<thead class="thead-program">
-  <tr class="header-program">
-    <th class="border" scope="col" rowspan="2">OPD</th>
-    <th class="border" scope="col" rowspan="2">Kode Program</th>
-    <th class="border" scope="col" rowspan="2">No.</th>
-    <th class="border" scope="col" rowspan="2">Program</th>
-    <th class="border text-center" scope="col" rowspan="2">Aksi</th>
-    <% @periode.each do |tahun| %>
-      <th class="border text-center" scope="col" colspan="8"><%= tahun %></th>
-    <% end %>
-  </tr>
-  <tr>
-    <% @periode.each do %>
-      <th class="border" scope="col">Indikator</th>
-      <th class="border" scope="col" width="50px">Target</th>
-      <th class="border" scope="col">Satuan</th>
-      <th class="border" scope="col" width="50px">Realisasi</th>
-      <th class="border" scope="col">Satuan</th>
-      <th class="border" scope="col">Pagu Indikatif</th>
-      <th class="border" scope="col">Realisasi</th>
-      <th class="border" scope="col">Keterangan</th>
-    <% end %>
-  </tr>
-</thead>
-<tbody>
+<tbody id="<%= dom_id(program, 'Program') %>">
   <tr>
     <td class="text-gray-900 text-wrap border"><%= program.nama_opd_pemilik %></td>
     <td class="text-gray-900 text-wrap border"><%= program.kode_program %></td>
@@ -35,7 +11,7 @@
           nama: program.nama_program,
           kode: program.kode_program,
           kode_opd: program.kode_sub_skpd,
-          indikator: program.indikator_program,
+          nomor: nomor,
           jenis: 'Renstra',
           sub_jenis: 'Program',
           tahun_awal: @tahun_awal,
@@ -54,7 +30,7 @@
           nama: program.nama_program,
           kode: program.kode_program,
           kode_opd: program.kode_sub_skpd,
-          indikator: program.indikator_program,
+          nomor: nomor,
           jenis: 'Renstra',
           sub_jenis: 'Program',
           tahun_awal: @tahun_awal,
@@ -70,6 +46,6 @@
         <% end %>
       </div>
     </td>
-    <%= render 'renstra/row_indikator_renstra',indikators: program.indikator_renstras_new('program', @kode_opd)[:indikator_program] %>
+    <%= render 'renstra/row_indikator_renstra', indikators: indikators, periode: periode %>
   </tr>
 </tbody>

@@ -1,4 +1,4 @@
-<% @periode.each do |tahun| %>
+<% periode.each do |tahun| %>
   <% if indikators.any? { |ind| ind.tahun == tahun.to_s } %>
     <% indikators&.each do |indikator| %>
       <% if indikator.tahun == tahun.to_s %>

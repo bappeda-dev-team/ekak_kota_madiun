@@ -1,0 +1,24 @@
+<thead class='<%= "thead-#{sub_jenis}" %>'>
+  <tr class='<%= "header-#{sub_jenis}" %>'>
+    <th class="border" scope="col" rowspan="2">OPD</th>
+    <th class="border" scope="col" rowspan="2">Kode <%= sub_jenis.titleize %></th>
+    <th class="border" scope="col" rowspan="2">No.</th>
+    <th class="border" scope="col" rowspan="2"><%= sub_jenis.titleize %></th>
+    <th class="border text-center" scope="col" rowspan="2">Aksi</th>
+    <% periode.each do |tahun| %>
+      <th class="border text-center" scope="col" colspan="8"><%= tahun %></th>
+    <% end %>
+  </tr>
+  <tr>
+    <% periode.each do %>
+      <th class="border" scope="col">Indikator</th>
+      <th class="border" scope="col" width="50px">Target</th>
+      <th class="border" scope="col">Satuan</th>
+      <th class="border" scope="col" width="50px">Realisasi</th>
+      <th class="border" scope="col">Satuan</th>
+      <th class="border" scope="col">Pagu Indikatif</th>
+      <th class="border" scope="col">Realisasi</th>
+      <th class="border" scope="col">Keterangan</th>
+    <% end %>
+  </tr>
+</thead>

@@ -1,41 +1,17 @@
-<thead class="thead-kegiatan">
-  <tr class="header-kegiatan">
-    <th class="border" scope="col" rowspan="2">OPD</th>
-    <th class="border" scope="col" rowspan="2">Kode Kegiatan</th>
-    <th class="border" scope="col" rowspan="2">No</th>
-    <th class="border" scope="col" rowspan="2">Nama Kegiatan</th>
-    <th class="border text-center" scope="col" rowspan="2">Aksi</th>
-    <% @periode.each do |tahun| %>
-      <th class="border text-center" scope="col" colspan="8"><%= tahun %></th>
-    <% end %>
-  </tr>
+<tbody id="<%= dom_id(program, 'Kegiatan') %>">
   <tr>
-    <% @periode.each do %>
-      <th class="border" scope="col">Indikator</th>
-      <th class="border" scope="col" width="50px">Target</th>
-      <th class="border" scope="col">Satuan</th>
-      <th class="border" scope="col" width="50px">Realisasi</th>
-      <th class="border" scope="col">Satuan</th>
-      <th class="border" scope="col">Pagu Indikatif</th>
-      <th class="border" scope="col">Realisasi</th>
-      <th class="border" scope="col">Keterangan</th>
-    <% end %>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td class="text-gray-900 text-wrap border"><%= kegiatan.nama_opd_pemilik %></td>
-    <td class="text-gray-900 text-wrap border"><%= kegiatan.kode_giat %></td>
-    <td class="text-gray-900 text-wrap border"><%= no_giat %></td>
-    <td class="text-gray-900 text-wrap border"><%= kegiatan.nama_kegiatan %></td>
+    <td class="text-gray-900 text-wrap border"><%= program.nama_opd_pemilik %></td>
+    <td class="text-gray-900 text-wrap border"><%= program.kode_giat %></td>
+    <td class="text-gray-900 text-wrap border"><%= nomor %></td>
+    <td class="text-gray-900 text-wrap border"><%= program.nama_kegiatan %></td>
     <td class="text-gray-900 text-wrap border px-2">
       <div class="d-grid gap-2">
         <%= link_to edit_renstra_path(
-          kegiatan,
-          nama: kegiatan.nama_kegiatan,
-          kode_opd: kegiatan.kode_sub_skpd,
-          kode: kegiatan.kode_giat,
-          indikator: kegiatan.indikator_kinerja,
+          program,
+          nama: program.nama_kegiatan,
+          kode_opd: program.kode_sub_skpd,
+          kode: program.kode_giat,
+          nomor: nomor,
           jenis: 'Renstra',
           sub_jenis: 'Kegiatan',
           tahun_awal: @tahun_awal,
@@ -50,11 +26,11 @@
           Edit
         <% end %>
         <%= link_to edit_realisasi_renstra_path(
-          kegiatan,
-          nama: kegiatan.nama_kegiatan,
-          kode_opd: kegiatan.kode_sub_skpd,
-          kode: kegiatan.kode_giat,
-          indikator: kegiatan.indikator_kinerja,
+          program,
+          nama: program.nama_kegiatan,
+          kode_opd: program.kode_sub_skpd,
+          kode: program.kode_giat,
+          nomor: nomor,
           jenis: 'Renstra',
           sub_jenis: 'Kegiatan',
           tahun_awal: @tahun_awal,
@@ -70,6 +46,6 @@
         <% end %>
       </div>
     </td>
-    <%= render 'renstra/row_indikator_renstra',indikators: kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan] %>
+    <%= render 'renstra/row_indikator_renstra', indikators: indikators, periode: periode %>
   </tr>
 </tbody>
