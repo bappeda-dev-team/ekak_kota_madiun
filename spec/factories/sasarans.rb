@@ -51,5 +51,13 @@ FactoryBot.define do
     factory :sasaran_subkegiatan do
       association :program_kegiatan
     end
+
+    factory :complete_sasaran do
+      association :strategi
+      association :program_kegiatan
+      after(:create) do |sasaran|
+        sasaran.indikator_sasarans << FactoryBot.build(:indikator_sasaran)
+      end
+    end
   end
 end

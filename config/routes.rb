@@ -506,6 +506,11 @@ Rails.application.routes.draw do
       get :buka_kak
     end
   end
+  namespace :laporans do
+    namespace :substansi_renstra do
+      get :dasar_hukum
+    end
+  end
   # laporan rka
   # get "/pdf_rka/:id/:tahun", to: "program_kegiatans#pdf_rka"
   # get "/pdf_kak/:id/:tahun", to: "program_kegiatans#pdf_kak"

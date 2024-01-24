@@ -1,0 +1,28 @@
+<%= content_for :html_title, "Bab 1 - Dasar Hukum" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Substansi Renstra</li>
+  <li class="breadcrumb-item" aria-current="page">Bab 1</li>
+  <li class="breadcrumb-item active" aria-current="page">Dasar Hukum</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout', title: "Laporan Dasar Hukum #{@opd} - Tahun #{@tahun}" do %>
+    <div class="table-responsive mb-5 d-grid gap-2">
+      <table class="table align-items-center counter">
+        <thead class="thead-light">
+          <tr>
+            <th class="border-bottom text-gray-700" scope="col">No.</th>
+            <th class="border-bottom text-gray-700" scope="col">Peraturan Terkait</th>
+          </tr>
+        </thead>
+        <tbody id="new_mandatori">
+          <% @dasar_hukums.each do |mandatori| %>
+            <tr>
+              <td class="text-gray-900 fw-bolder align-middle" scope="row"></td>
+              <td class="fw-bolder text-wrap"><%= mandatori.peraturan_terkait %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>
