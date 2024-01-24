@@ -5,7 +5,9 @@
 <% content_for :view_utama do %>
   <% if privileged_user or reviewer? %>
     <%= render "admin_dashboard" %>
-  <% else %>
+  <% elsif user_aktif? %>
     <%= render 'user_dashboard' %>
+  <% else %>
+    <%= render 'nonaktif' %>
   <% end %>
 <% end %>

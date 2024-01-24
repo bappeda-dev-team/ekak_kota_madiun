@@ -44,6 +44,10 @@ module UsersHelper
     current_user.roles.map(&:name).any? { |role| roles.include?(role) }
   end
 
+  def user_aktif?
+    current_user.has_role?(:asn)
+  end
+
   def selected_user(user)
     options_for_select([[user.nama, user.nik]], selected: user.nik)
   end
