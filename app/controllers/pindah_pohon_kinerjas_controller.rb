@@ -7,13 +7,14 @@ class PindahPohonKinerjasController < ApplicationController
 
   # GET /pindah_pohon_kinerjas/1 or /pindah_pohon_kinerjas/1.json
   def show
+    search = params[:q]
     @role_atasan = case params[:role]
                    when 'eselon_3', 'tactical_pohon_kota'
                      %w[eselon_2]
                    when 'eselon_4', 'operational_pohon_kota'
                      %w[eselon_3]
                    when 'staff'
-                     'eselon_4'
+                     %w[eselon_4]
                    else
                      ''
                    end
@@ -22,6 +23,7 @@ class PindahPohonKinerjasController < ApplicationController
     @list_atasan = Strategi.where(opd_id: @pindah_pohon_kinerja.opd_id,
                                   tahun: @pindah_pohon_kinerja.tahun,
                                   role: role_strategi)
+                           .where('strategi ILIKE ?', "%#{search}%")
     @pohons = Pohon.where(opd_id: @pindah_pohon_kinerja.opd_id,
                           tahun: @pindah_pohon_kinerja.tahun,
                           pohonable_type: 'Strategi',
@@ -34,7 +36,7 @@ class PindahPohonKinerjasController < ApplicationController
   # GET /pindah_pohon_kinerjas/1/edit
   def edit
     # @roles = %w[Strategic Strategic-Kota Tactical Tactical-Kota Operational Operational-Kota]
-    @roles = [%w[Strategic eselon_2], %w[Tactical eselon_3], %w[Operational eselon_4]]
+    @roles = [%w[Strategic eselon_2], %w[Tactical eselon_3], %w[Operational eselon_4], %w[Staff staff]]
     @role_atasan = params[:role_atasan]
     role_strategi = @role_atasan[0]
     role_pohon = @role_atasan[-1]
