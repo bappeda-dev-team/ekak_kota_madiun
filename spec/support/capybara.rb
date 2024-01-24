@@ -3,7 +3,8 @@ Capybara.register_driver :selenium_debug_chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new
 
   %w[
-    incognito disable-extensions auto-open-devtools-for-tabs
+    incognito
+    disable-extensions
     window-size=1920,1080
   ].each { options.add_argument _1 }
 
