@@ -76,4 +76,39 @@ class Indikator < ApplicationRecord
                                .map { |_k, v| v.max_by(&:version) }
     pagu_sub.inject(0) { |injection, pagu| injection + pagu.realisasi_pagu.to_i }
   end
+
+  def capaian_pagu
+    capaian = if realisasi_pagu != 0 && pagu != 0
+                ((realisasi_pagu.to_f / pagu.to_f) * 100)
+              else
+                0.0
+              end
+    capaian.nan? ? 0.0 : capaian.round(2)
+  rescue NoMethodError
+    0.0
+  end
+
+  def sum_capaian_pagu(sub_jenis:)
+    sum_pagu = sum_pagu_renstra(sub_jenis: sub_jenis)
+    sum_realisasi = sum_realisasi_pagu_renstra(sub_jenis: sub_jenis)
+    capaian = if sum_realisasi != 0 && sum_pagu != 0
+                ((sum_realisasi / sum_pagu.to_f) * 100).round(2)
+              else
+                0.0
+              end
+    capaian.nan? ? 0.0 : capaian.round(2)
+  rescue NoMethodError
+    0.0
+  end
+
+  def capaian_target
+    capaian = if target != 0 && realisasi != 0
+                ((realisasi / target.to_f) * 100)
+              else
+                0.0
+              end
+    capaian.nan? ? 0.0 : capaian.round(2)
+  rescue NoMethodError
+    0.0
+  end
 end

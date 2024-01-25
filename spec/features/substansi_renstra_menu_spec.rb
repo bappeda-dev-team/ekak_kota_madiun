@@ -88,5 +88,23 @@ RSpec.feature "Substansi Renstra menu on sidebar", type: :feature do
         expect(page).to have_text('peraturan y')
       end
     end
+
+    context 'bab 2' do
+      it 'show Evaluasi Renstra Item' do
+        login_as user
+
+        visit root_path
+        # create_cookie('opd', 'test_opd')
+        # create_cookie('tahun', '2025')
+        page.driver.browser.set_cookie 'opd=test_opd'
+        page.driver.browser.set_cookie 'tahun=2025'
+
+        find('span.sidebar-text', text: 'Substansi Renstra').click
+        find('span.sidebar-text', text: 'Bab 2').click
+
+        click_on 'Evaluasi Renstra'
+        expect(page).to have_content('Laporan Evaluasi Renstra - Periode 2019-2024')
+      end
+    end
   end
 end

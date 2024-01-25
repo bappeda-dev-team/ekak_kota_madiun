@@ -58,8 +58,8 @@ module Laporans::SubstansiRenstraHelper
   def bab_2
     [
       {
-        title: 'Evaluasi Renstra', href: spip_index_path,
-        icon: 'fas fa-chalkboard', identifier: 'spip'
+        title: 'Evaluasi Renstra', href: laporans_substansi_renstra_evaluasi_renstra_path(periode: '2019-2024'),
+        icon: 'fas fa-chalkboard', identifier: 'substansi-renstra-bab-2-evaluasi-renstra'
       }
     ]
   end

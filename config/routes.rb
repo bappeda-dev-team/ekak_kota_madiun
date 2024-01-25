@@ -509,6 +509,7 @@ Rails.application.routes.draw do
   namespace :laporans do
     namespace :substansi_renstra do
       get :dasar_hukum
+      get :evaluasi_renstra
     end
   end
   # laporan rka

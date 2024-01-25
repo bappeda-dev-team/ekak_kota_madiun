@@ -1,4 +1,5 @@
 <% periode.each do |tahun| %>
+  <% with_capaian = true if local_assigns[:with_capaian].present? %>
   <% if indikators.any? { |ind| ind.tahun == tahun.to_s } %>
     <% indikators&.each do |indikator| %>
       <% if indikator.tahun == tahun.to_s %>
@@ -7,12 +8,21 @@
         <td class="text-gray-900 text-wrap border"><%= indikator.satuan %></td>
         <td class="text-gray-900 text-wrap border"><%= indikator.realisasi %></td>
         <td class="text-gray-900 text-wrap border"><%= indikator.satuan %></td>
+        <% if with_capaian  %>
+          <td class="text-gray-900 text-wrap border"><%= "#{indikator.capaian_target} %" %></td>
+        <% end %>
         <% if indikator.sub_jenis == 'Subkegiatan' %>
           <td class="text-gray-900 text-wrap border">Rp.<%= number_with_delimiter(indikator.pagu) %></td>
           <td class="text-gray-900 text-wrap border">Rp.<%= number_with_delimiter(indikator.realisasi_pagu) %></td>
+          <% if with_capaian  %>
+            <td class="text-gray-900 text-wrap border"><%= "#{indikator.capaian_pagu} %" %></td>
+          <% end %>
         <% else %>
           <td class="text-gray-900 text-wrap border">Rp. <%= number_with_delimiter(indikator.sum_pagu_renstra(sub_jenis: 'Subkegiatan')) %></td>
           <td class="text-gray-900 text-wrap border">Rp. <%= number_with_delimiter(indikator.sum_realisasi_pagu_renstra(sub_jenis: 'Subkegiatan')) %></td>
+          <% if with_capaian  %>
+            <td class="text-gray-900 text-wrap border"><%= "#{indikator.sum_capaian_pagu(sub_jenis: 'Subkegiatan')} %" %></td>
+          <% end %>
         <% end %>
         <td class="text-gray-900 text-wrap border"><%= indikator.keterangan %></td>
       <% end %>
@@ -23,8 +33,14 @@
     <td class="text-gray-900 text-wrap border"></td>
     <td class="text-gray-900 text-wrap border"></td>
     <td class="text-gray-900 text-wrap border"></td>
+    <% if with_capaian  %>
+      <td class="text-gray-900 text-wrap border">-</td>
+    <% end %>
     <td class="text-gray-900 text-wrap border"></td>
     <td class="text-gray-900 text-wrap border"></td>
+    <% if with_capaian  %>
+      <td class="text-gray-900 text-wrap border">-</td>
+    <% end %>
     <td class="text-gray-900 text-wrap border"></td>
   <% end %>
 <% end %>
