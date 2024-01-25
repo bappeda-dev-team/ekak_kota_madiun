@@ -50,7 +50,7 @@ module Laporans::SubstansiRenstraHelper
     [
       {
         title: 'Dasar Hukum', href: laporans_substansi_renstra_dasar_hukum_path,
-        icon: 'fas fa-chalkboard', identifier: 'substansi-renstra-bab-1-dasar-hukum'
+        identifier: 'substansi-renstra-bab-1-dasar-hukum'
       }
     ]
   end
@@ -59,7 +59,7 @@ module Laporans::SubstansiRenstraHelper
     [
       {
         title: 'Evaluasi Renstra', href: laporans_substansi_renstra_evaluasi_renstra_path(periode: '2019-2024'),
-        icon: 'fas fa-chalkboard', identifier: 'substansi-renstra-bab-2-evaluasi-renstra'
+        identifier: 'substansi-renstra-bab-2-evaluasi-renstra'
       }
     ]
   end
@@ -67,12 +67,12 @@ module Laporans::SubstansiRenstraHelper
   def bab_3
     [
       {
-        title: 'Permasalahan dan Isu Strategis', href: spip_index_path,
-        identifier: 'spip'
+        title: 'Permasalahan dan Isu Strategis', href: '#',
+        identifier: 'substansi-renstra-bab-3-permasalahan'
       },
       {
-        title: 'Pohon Kinerja', href: spip_index_path,
-        identifier: 'spip'
+        title: 'Pohon Kinerja', href: '#',
+        identifier: 'substansi-renstra-bab-3-pohon-kinerja'
       }
     ]
   end
@@ -80,12 +80,12 @@ module Laporans::SubstansiRenstraHelper
   def bab_4
     [
       {
-        title: 'Tujuan dan Sasaran', href: spip_index_path,
-        identifier: 'spip'
+        title: 'Tujuan dan Sasaran', href: '#',
+        identifier: 'substansi-renstra-bab-4-tujuan-sasaran'
       },
       {
-        title: 'Pohon Cascading', href: spip_index_path,
-        identifier: 'spip'
+        title: 'Pohon Cascading', href: '#',
+        identifier: 'substansi-renstra-bab-4-pohon-cascading'
       }
     ]
   end
@@ -93,8 +93,8 @@ module Laporans::SubstansiRenstraHelper
   def bab_5
     [
       {
-        title: 'Strategi dan Arah Kebijakan', href: spip_index_path,
-        identifier: 'spip'
+        title: 'Strategi dan Arah Kebijakan', href: '#',
+        identifier: 'substansi-renstra-bab-5-strategi-kebijakan'
       }
     ]
   end
@@ -102,8 +102,8 @@ module Laporans::SubstansiRenstraHelper
   def bab_6
     [
       {
-        title: 'Matriks Renstra', href: spip_index_path,
-        identifier: 'spip'
+        title: 'Matriks Renstra', href: '#',
+        identifier: 'substansi-renstra-bab-6-matrik-renstra'
       }
     ]
   end
