@@ -79,7 +79,7 @@ class Indikator < ApplicationRecord
 
   def capaian_pagu
     capaian = if realisasi_pagu != 0 && pagu != 0
-                ((realisasi_pagu.to_f / pagu.to_f) * 100)
+                ((realisasi_pagu / pagu.to_f) * 100)
               else
                 0.0
               end
