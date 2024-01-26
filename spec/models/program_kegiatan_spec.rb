@@ -56,7 +56,15 @@ RSpec.describe ProgramKegiatan, type: :model do
 
   describe 'ProgramKegiatan_program#target_renstra_program' do
     let(:program_kegiatan) { create(:program_kegiatan, kode_program: 'test_kode_program') }
-    let!(:indikator_program_renstra) { create(:indikator, tahun: '2022', jenis: 'Renstra', sub_jenis: 'Program', indikator: 'indikator_test', kode: 'test_kode_program') }
+    let!(:indikator_program_renstra) do
+      create(:indikator, tahun: '2022',
+                         jenis: 'Renstra',
+                         sub_jenis: 'Program',
+                         indikator: 'indikator_test',
+                         kode_opd: '5.01.5.05.0.00.02.0000',
+                         realisasi: 10,
+                         kode: 'test_kode_program')
+    end
 
     context "indikator by jenis Renstra and sub_jenis Program" do
       it 'should not empty' do
@@ -69,7 +77,7 @@ RSpec.describe ProgramKegiatan, type: :model do
         expect(program_kegiatan.target_program_renstra["2022"]).to include(indikator: 'indikator_test')
       end
       it 'should return {indikator, pagu, satuan, target} by tahun' do
-        expect(program_kegiatan.target_program_renstra).to include("2022" => { indikator: 'indikator_test', keterangan: nil, pagu: "0", satuan: 'MyString', target: 'MyString' })
+        expect(program_kegiatan.target_program_renstra).to include("2022" => { indikator: 'indikator_test', keterangan: nil, pagu: "0", satuan: 'MyString', target: 'MyString', realisasi: '10' })
       end
     end
   end
