@@ -507,4 +507,16 @@ class ProgramKegiatan < ApplicationRecord
       [angg.kode_rekening, angg.uraian]
     end
   end
+
+  def kode_sub_skpd_kode_program
+    [kode_sub_skpd, kode_program]
+  end
+
+  def kode_sub_skpd_kode_kegiatan
+    [kode_sub_skpd, kode_giat]
+  end
+
+  def kode_sub_skpd_kode_subkegiatan
+    [kode_sub_skpd, kode_sub_giat]
+  end
 end

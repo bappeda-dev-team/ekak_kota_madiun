@@ -17,7 +17,7 @@
           <%= render partial: 'renstra/bidang_urusan_renstra', locals: { bid_urusan: bid_urusan, nomor_bid: nomor_bid } %>
           <% if @list_subkegiatans %>
             <% programs.each.with_index(1) do |program, nomor| %>
-              <% if @list_subkegiatans.map(&:kode_program).include?(program.kode_program) %>
+              <% if @list_subkegiatans.map(&:kode_sub_skpd_kode_program).include?(program.kode_sub_skpd_kode_program) %>
                 <%= render partial: 'renstra/head_table_renstra', locals: { periode: @periode, sub_jenis: 'program' } %>
                 <%= render partial: 'renstra/program_renstra',
                            locals: {
@@ -26,7 +26,7 @@
                              indikators: program.indikator_renstras_new('program', @kode_opd)[:indikator_program],
                              periode: @periode } %>
                 <% program.kegiatans_opd.each.with_index(1) do |kegiatan, no_giat| %>
-                  <% if @list_subkegiatans.map(&:kode_giat).include?(kegiatan.kode_giat) %>
+                  <% if @list_subkegiatans.map(&:kode_sub_skpd_kode_kegiatan).include?(kegiatan.kode_sub_skpd_kode_kegiatan) %>
                     <%= render partial: 'renstra/head_table_renstra', locals: { periode: @periode, sub_jenis: 'kegiatan' } %>
                     <%= render partial: 'renstra/kegiatan_renstra',
                                locals: {
@@ -36,7 +36,7 @@
                                  periode: @periode } %>
                     <%= render partial: 'renstra/head_table_renstra', locals: { periode: @periode, sub_jenis: 'subkegiatan' } %>
                     <% kegiatan.subkegiatans_opd.each.with_index(1) do |subgiat, no_subgiat| %>
-                      <% if @list_subkegiatans.map(&:kode_sub_giat).include?(subgiat.kode_sub_giat) %>
+                      <% if @list_subkegiatans.map(&:kode_sub_skpd_kode_subkegiatan).include?(subgiat.kode_sub_skpd_kode_subkegiatan) %>
                         <%= render partial: 'renstra/subkegiatan_renstra',
                                    locals: {
                                      program: subgiat,
