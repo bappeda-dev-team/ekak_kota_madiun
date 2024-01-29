@@ -618,6 +618,7 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
+    resources :renstras
     namespace :programs do
       post :indikators
       post :permasalahans
