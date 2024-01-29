@@ -10,6 +10,12 @@
           Cetak Ranwal Renja
         <% end %>
       </div>
+      <div class="col">
+        <%= link_to renja_ranwal_cetak_path(format: :xlsx, tahun: @tahun, kode_opd: @kode_opd), class:"m-3 btn btn-outline-success" do %>
+          <span class="far fa-file-excel" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak Excel Ranwal Renja"></span>
+          Cetak Excel Ranwal Renja
+        <% end %>
+      </div>
     </div>
   </div>
   <div class="card-body">

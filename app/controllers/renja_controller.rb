@@ -11,16 +11,21 @@ class RenjaController < ApplicationController
 
   def ranwal_cetak
     @title = "Rawnal Renja"
+    @tahun = params[:tahun]
     @opd = Opd.find_by(kode_unik_opd: params[:kode_opd])
-    @program_kegiatans = @opd.susunan_renja
+    @nama_opd = @opd.nama_opd
+    # @program_kegiatans = @opd.susunan_renja
     # if OPD_TABLE.key?(@nama_opd.to_sym)
     #   @program_kegiatans = ProgramKegiatan.includes(:opd)
     #                                       .where(id_sub_unit: KODE_OPD_BAGIAN[@nama_opd.to_sym], tahun: @tahun)
     #                                       .uniq(&:kode_program).sort_by(&:kode_program)
     #   @kode_opd = KODE_OPD_BAGIAN[@nama_opd.to_sym]
     # end
-    @nama_opd = @opd.nama_opd
-    @tahun = params[:tahun]
+    program_renstra = @opd.program_renstra
+    @tahun_awal = @tahun.to_i
+    @tahun_akhir = @tahun.to_i
+    @periode = (@tahun_awal..@tahun_akhir)
+    @program_kegiatans = program_renstra.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
     respond_to do |format|
       format.html
       format.pdf do
@@ -30,6 +35,9 @@ class RenjaController < ApplicationController
                layout: 'pdf.html.erb',
                template: 'renja/ranwal_cetak.html.erb',
                show_as_html: params.key?('debug')
+      end
+      format.xlsx do
+        render filename: "ranwal_renja_#{@nama_opd}_tahun_#{@tahun}"
       end
     end
   end

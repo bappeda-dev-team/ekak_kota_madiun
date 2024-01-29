@@ -1,0 +1,16 @@
+wb = xlsx_package.workbook
+s = wb.styles
+project_heading = s.add_style sz: 12, b: true
+center_hor = s.add_style sz: 12, b: true, alignment: { horizontal: :center }
+wb.add_worksheet(name: "renja_#{@tahun}") do |sheet_renja|
+  sheet_renja.add_row ["NAMA", nil, nil, nil, nil, nil, nil, nil, "Target Kinerja"],
+                      style: [project_heading, nil, nil, nil, nil, nil, nil, nil, center_hor]
+  sheet_renja.merge_cells "I1:K1"
+  sheet_renja.add_row ["VISI", nil, nil, nil, nil, nil, nil, "Satuan", "Nilai", "Atribut"], style: project_heading,
+                                                                                            offset: 1
+  sheet_renja.add_row ["MISI"], style: project_heading, offset: 2
+  sheet_renja.add_row ["Tujuan Strategis"], style: project_heading, offset: 3
+  sheet_renja.add_row ["Sasaran Strategis"], style: project_heading, offset: 4
+  sheet_renja.add_row ["Indikator Kinerja Sasaran"], style: project_heading, offset: 5
+  sheet_renja.add_row [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+end
