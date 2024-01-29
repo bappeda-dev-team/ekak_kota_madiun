@@ -1,16 +1,39 @@
 wb = xlsx_package.workbook
-s = wb.styles
-project_heading = s.add_style sz: 12, b: true
-center_hor = s.add_style sz: 12, b: true, alignment: { horizontal: :center }
 wb.add_worksheet(name: "renja_#{@tahun}") do |sheet_renja|
-  sheet_renja.add_row ["NAMA", nil, nil, nil, nil, nil, nil, nil, "Target Kinerja"],
-                      style: [project_heading, nil, nil, nil, nil, nil, nil, nil, center_hor]
-  sheet_renja.merge_cells "I1:K1"
-  sheet_renja.add_row ["VISI", nil, nil, nil, nil, nil, nil, "Satuan", "Nilai", "Atribut"], style: project_heading,
-                                                                                            offset: 1
-  sheet_renja.add_row ["MISI"], style: project_heading, offset: 2
-  sheet_renja.add_row ["Tujuan Strategis"], style: project_heading, offset: 3
-  sheet_renja.add_row ["Sasaran Strategis"], style: project_heading, offset: 4
-  sheet_renja.add_row ["Indikator Kinerja Sasaran"], style: project_heading, offset: 5
-  sheet_renja.add_row [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+  sheet_renja.add_row ['KODE', 'Urusan / Bidang Urusan / Program / Kegiatan / Subkegiatan', 'Indikator', 'Target',
+                       'Satuan', 'Pagu Indikatif', 'Keterangan']
+
+  @program_kegiatans.each do |bid_urusan, programs|
+    sheet_renja.add_row [bid_urusan[0], bid_urusan[1], nil, nil, nil, nil, nil, nil]
+    programs.each do |program|
+      indikator_program = program.indikator_program_tahun(@tahun, 'x')
+      sheet_renja.add_row [program.kode_program,
+                           program.nama_program,
+                           indikator_program[:indikator],
+                           indikator_program[:target],
+                           indikator_program[:satuan],
+                           indikator_program[:pagu],
+                           nil]
+      program.kegiatans_opd.each do |kegiatan|
+        indikator_kegiatan = kegiatan.indikator_kegiatan_tahun(@tahun, 'x')
+        sheet_renja.add_row [kegiatan.kode_giat,
+                             kegiatan.nama_kegiatan,
+                             indikator_kegiatan[:indikator],
+                             indikator_kegiatan[:target],
+                             indikator_kegiatan[:satuan],
+                             indikator_kegiatan[:pagu],
+                             nil]
+        kegiatan.subkegiatans_opd.each do |subkegiatan|
+          indikator_subkegiatan = subkegiatan.indikator_subkegiatan_tahun(@tahun, 'x')
+          sheet_renja.add_row [subkegiatan.kode_sub_giat,
+                               subkegiatan.nama_subkegiatan,
+                               indikator_subkegiatan[:indikator],
+                               indikator_subkegiatan[:target],
+                               indikator_subkegiatan[:satuan],
+                               indikator_subkegiatan[:pagu],
+                               nil]
+        end
+      end
+    end
+  end
 end
