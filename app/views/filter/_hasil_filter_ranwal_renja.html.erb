@@ -5,12 +5,6 @@
         <h2 class="fs-5 fw-bold mb-0">Ranwal Renja <%= @nama_opd %> <%= "kode_opd: #{@kode_opd}" if current_user.has_role? :super_admin%></h2>
       </div>
       <div class="col">
-        <%= link_to renja_ranwal_cetak_path(format: :pdf, tahun: @tahun, kode_opd: @kode_opd), class:"m-3 btn btn-outline-danger" do %>
-          <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak Ranwal Renja"></span>
-          Cetak Ranwal Renja
-        <% end %>
-      </div>
-      <div class="col">
         <%= link_to renja_ranwal_cetak_path(format: :xlsx, tahun: @tahun, kode_opd: @kode_opd), class:"m-3 btn btn-outline-success" do %>
           <span class="far fa-file-excel" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak Excel Ranwal Renja"></span>
           Cetak Excel Ranwal Renja
