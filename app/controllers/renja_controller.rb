@@ -25,7 +25,13 @@ class RenjaController < ApplicationController
     @tahun_awal = @tahun.to_i
     @tahun_akhir = @tahun.to_i
     @periode = (@tahun_awal..@tahun_akhir)
-    @program_kegiatans = program_renstra.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
+    program_kegiatan_by_urusans = program_renstra.group_by do |prg|
+      [prg.kode_urusan, prg.nama_urusan]
+    end
+    @program_kegiatans = program_kegiatan_by_urusans.transform_values do |prg_v1|
+      prg_v1.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
+    end
+
     respond_to do |format|
       format.html
       format.pdf do
