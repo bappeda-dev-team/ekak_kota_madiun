@@ -17,7 +17,7 @@ module Laporans::SubstansiRenstraHelper
         title: 'Bab 3', href: "#",
         multi: true, collections: bab_3,
         id_target: 'renstra-bab-3',
-        icon: 'fas fa-book', identifier: 'usulans'
+        icon: 'fas fa-book', identifier: 'bab_3'
       },
       {
         title: 'Bab 4', href: "#",
@@ -67,11 +67,11 @@ module Laporans::SubstansiRenstraHelper
   def bab_3
     [
       {
-        title: 'Permasalahan dan Isu Strategis', href: '#',
+        title: 'Permasalahan dan Isu Strategis', href: laporans_substansi_renstra_permasalahan_isu_strategis_path,
         identifier: 'substansi-renstra-bab-3-permasalahan'
       },
       {
-        title: 'Pohon Kinerja', href: '#',
+        title: 'Pohon Kinerja', href: laporans_substansi_renstra_pohon_kinerja_path,
         identifier: 'substansi-renstra-bab-3-pohon-kinerja'
       }
     ]

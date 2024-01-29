@@ -31,4 +31,18 @@ class Laporans::SubstansiRenstraController < ApplicationController
     @list_subkegiatans = @periode.map { |tahun| @opd.sasaran_subkegiatans(tahun) }.flatten if @tahun_awal == 2025
     @program_kegiatans = program_renstra.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
   end
+
+  def permasalahan_isu_strategis
+    @kode_unik_opd = cookies[:opd]
+    @tahun = cookies[:tahun]
+    @opd = Opd.find_by(kode_unik_opd: @kode_unik_opd)
+    @nama_opd = @opd.nama_opd
+    tahun_asli = @tahun.include?('perubahan') ? @tahun.gsub('_perubahan', '') : @tahun
+    tahun_awal = 2019
+    tahun_akhir = 2023
+    @range_tahun = tahun_akhir.downto(tahun_awal).to_a
+    @isu_strategis = @opd.isu_strategis_opds
+                         .where("tahun ILIKE ?", "%#{tahun_asli}%")
+                         .order(:id).group_by { |isu| "(#{isu.kode_bidang_urusan}) #{isu.bidang_urusan}" }
+  end
 end

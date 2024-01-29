@@ -510,6 +510,8 @@ Rails.application.routes.draw do
     namespace :substansi_renstra do
       get :dasar_hukum
       get :evaluasi_renstra
+      get :permasalahan_isu_strategis
+      get :pohon_kinerja
     end
   end
   # laporan rka

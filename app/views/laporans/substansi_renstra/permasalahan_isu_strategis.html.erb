@@ -1,0 +1,66 @@
+<%= content_for :html_title, "Bab 3 - Permasalahan dan Isu Strategsi" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Substansi Renstra</li>
+  <li class="breadcrumb-item" aria-current="page">Bab 3</li>
+  <li class="breadcrumb-item active" aria-current="page">Permasalahan dan Isu Strategis</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout', title: "Laporan Permasalahan dan Isu Strategis" do %>
+    <div class="table-responsive mb-5 d-grid gap-2">
+      <table class="table table-flush">
+        <thead>
+          <tr class="border-start border-end border-top">
+            <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">No</th>
+            <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Bidang Urusan</th>
+            <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Isu Strategis</th>
+            <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Permasalahan</th>
+            <th class="border text-gray-700 align-middle text-center" rowspan="2">Data Dukung</th>
+            <th class="border text-gray-700 align-middle text-center" rowspan="2">Narasi Data Dukung</th>
+            <% @range_tahun.each do |tahun| %>
+              <th class="border text-center" scope="col" colspan="2"><%= tahun %></th>
+            <% end %>
+          </tr>
+          <tr>
+            <% @range_tahun.each do %>
+              <th class="border" scope="col" width="50px">Jumlah</th>
+              <th class="border" scope="col">Satuan</th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @isu_strategis.each.with_index(1) do |(bidang_urusan, isu_strategises), no| %>
+            <% rowspan_bidang = isu_strategises.map { |isu| isu.permasalahan_opds.size + isu.permasalahan_opds.map{ |pm| pm.data_dukungs.size }.flatten.sum }.flatten.sum + isu_strategises.size + 1  %>
+            <tr>
+              <td class="border-start border-end border-bottom align-middle" rowspan="<%= rowspan_bidang %>"><%= no %></td>
+              <td class="text-wrap border-start border-end border-bottom align-middle" rowspan="<%= rowspan_bidang %>"><%= bidang_urusan %></td>
+            </tr>
+            <% isu_strategises.each do |isu_strategis| %>
+              <% rowspan_isu = isu_strategis.permasalahan_opds.size + isu_strategis.permasalahan_opds.map{ |pm| pm.data_dukungs.size }.flatten.sum + 1  %>
+              <tr>
+                <td class="text-wrap border-end border-bottom align-middle" rowspan="<%= rowspan_isu %>"><%= isu_strategis %></td>
+              </tr>
+              <% isu_strategis.permasalahan_opds.each do |permasalahan| %>
+                <% rowspan_data = permasalahan.data_dukungs.size + 1  %>
+                <tr>
+                  <td class="text-wrap border align-middle" rowspan="<%= rowspan_data %>"><%= permasalahan %></td>
+                  <td colspan="<%= @range_tahun.size * 2 + 2 %>" class="p-0 m-0 border-0"></td>
+                </tr>
+                <% permasalahan.data_dukungs.each do |data| %>
+                  <tr>
+                    <td class="text-wrap border align-middle"><%= data %></td>
+                    <td class="text-wrap border align-middle"><%= data.keterangan %></td>
+                    <% @range_tahun.each do |tahun| %>
+                      <% jumlah = data.jumlahs.find_by(tahun: tahun) %>
+                      <td class="text-wrap border align-middle"><%= jumlah&.jumlah %></td>
+                      <td class="text-wrap border align-middle"><%= jumlah&.satuan %></td>
+                    <% end %>
+                  </tr>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>

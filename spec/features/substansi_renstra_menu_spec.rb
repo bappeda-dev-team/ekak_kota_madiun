@@ -106,5 +106,23 @@ RSpec.feature "Substansi Renstra menu on sidebar", type: :feature do
         expect(page).to have_content('Laporan Evaluasi Renstra - Periode 2019-2024')
       end
     end
+
+    context 'bab 3' do
+      it 'show Permasalahan dan Isu Strategis' do
+        login_as user
+
+        visit root_path
+        # create_cookie('opd', 'test_opd')
+        # create_cookie('tahun', '2025')
+        page.driver.browser.set_cookie 'opd=test_opd'
+        page.driver.browser.set_cookie 'tahun=2025'
+
+        find('span.sidebar-text', text: 'Substansi Renstra').click
+        find('span.sidebar-text', text: 'Bab 3').click
+
+        find('#substansi-renstra-bab-3-permasalahan').click
+        expect(page).to have_content('Laporan Permasalahan dan Isu Strategis')
+      end
+    end
   end
 end
