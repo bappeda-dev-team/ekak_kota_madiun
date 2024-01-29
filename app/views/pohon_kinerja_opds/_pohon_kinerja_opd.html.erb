@@ -1,10 +1,11 @@
 <% presenter = PohonKinerjaPresenter.new(pohon) %>
+<% show_button = local_assigns.fetch(:show_button, true) %>
 <li>
   <div class="tf-nc pokin <%= presenter.warna_pohon %>" id="<%= dom_id(pohon) %>">
-    <%= render partial: 'pohon_kinerja_opds/item_pohon', locals: { pohon: pohon } %>
+    <%= render partial: 'pohon_kinerja_opds/item_pohon', locals: { pohon: pohon, show_button: show_button } %>
   </div>
   <%# self-render childs in helper %>
   <ul class='d-none childs'>
-    <%= render partial: 'pohon_kinerja_opds/pohon_kinerja_opd', collection: childs(pohon), as: :pohon %>
+    <%= render partial: 'pohon_kinerja_opds/pohon_kinerja_opd', collection: childs(pohon), as: :pohon, locals: { show_button: show_button } %>
   </ul>
 </li>
