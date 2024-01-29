@@ -1,0 +1,12 @@
+<%= content_for :html_title, "Bab 5 - Strategi Arah Kebijakan" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Substansi Renstra</li>
+  <li class="breadcrumb-item" aria-current="page">Bab 5</li>
+  <li class="breadcrumb-item active" aria-current="page">Strategi Arah Kebijakan</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout_subtitle', title: "Laporan Strategi Arah Kebijakan", sub_title: @opd, sub_title_2: @tahun do %>
+    <div class="table-responsive mb-5 d-grid gap-2">
+    </div>
+  <% end %>
+<% end %>

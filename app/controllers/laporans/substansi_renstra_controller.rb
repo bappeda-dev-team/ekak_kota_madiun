@@ -86,4 +86,6 @@ class Laporans::SubstansiRenstraController < ApplicationController
   end
 
   def pohon_cascading; end
+
+  def strategi_arah_kebijakan; end
 end

@@ -93,8 +93,8 @@ module Laporans::SubstansiRenstraHelper
   def bab_5
     [
       {
-        title: 'Strategi dan Arah Kebijakan', href: '#',
-        identifier: 'substansi-renstra-bab-5-strategi-kebijakan'
+        title: 'Strategi dan Arah Kebijakan', href: laporans_substansi_renstra_strategi_arah_kebijakan_path,
+        identifier: 'substansi-renstra-bab-5-strategi-arah-kebijakan'
       }
     ]
   end

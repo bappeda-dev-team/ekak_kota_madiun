@@ -152,5 +152,25 @@ RSpec.feature "Substansi Renstra menu on sidebar", type: :feature do
         expect(page).to have_content('Laporan Pohon Cascading')
       end
     end
+    context 'bab 5' do
+      it 'show Strategi dan Arah Kebijakan' do
+        login_as user
+
+        visit root_path
+        # create_cookie('opd', 'test_opd')
+        # create_cookie('tahun', '2025')
+        page.driver.browser.set_cookie 'opd=test_opd'
+        page.driver.browser.set_cookie 'tahun=2025'
+
+        find('span.sidebar-text', text: 'Substansi Renstra').click
+        find('span.sidebar-text', text: 'Bab 5').click
+
+        find('#substansi-renstra-bab-5-strategi-arah-kebijakan').click
+        expect(page).to have_title('Bab 5 - Strategi Arah Kebijakan')
+        expect(page).to have_selector('li.breadcrumb-item', text: 'Bab 5')
+        expect(page).to have_selector('li.breadcrumb-item.active', text: 'Strategi Arah Kebijakan')
+        expect(page).to have_content('Laporan Strategi Arah Kebijakan')
+      end
+    end
   end
 end

@@ -515,6 +515,7 @@ Rails.application.routes.draw do
       get :pohon_kinerja
       get :tujuan_dan_sasaran
       get :pohon_cascading
+      get :strategi_arah_kebijakan
     end
   end
   # laporan rka
