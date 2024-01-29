@@ -172,5 +172,26 @@ RSpec.feature "Substansi Renstra menu on sidebar", type: :feature do
         expect(page).to have_content('Laporan Strategi Arah Kebijakan')
       end
     end
+
+    context 'bab 6' do
+      it 'show Matrik Renstra' do
+        login_as user
+
+        visit root_path
+        # create_cookie('opd', 'test_opd')
+        # create_cookie('tahun', '2025')
+        page.driver.browser.set_cookie 'opd=test_opd'
+        page.driver.browser.set_cookie 'tahun=2025'
+
+        find('span.sidebar-text', text: 'Substansi Renstra').click
+        find('span.sidebar-text', text: 'Bab 6').click
+
+        find('#substansi-renstra-bab-6-matrik-renstra').click
+        expect(page).to have_title('Bab 6 - Matrik Renstra')
+        expect(page).to have_selector('li.breadcrumb-item', text: 'Bab 6')
+        expect(page).to have_selector('li.breadcrumb-item.active', text: 'Matrik Renstra')
+        expect(page).to have_content('Laporan Matrik Renstra')
+      end
+    end
   end
 end

@@ -28,7 +28,6 @@ class Laporans::SubstansiRenstraController < ApplicationController
     @nama_opd = @opd.nama_opd
     program_renstra = @opd.program_renstra
 
-    @list_subkegiatans = @periode.map { |tahun| @opd.sasaran_subkegiatans(tahun) }.flatten if @tahun_awal == 2025
     program_kegiatan_by_urusans = program_renstra.group_by do |prg|
       [prg.kode_urusan, prg.nama_urusan]
     end
@@ -96,5 +95,24 @@ class Laporans::SubstansiRenstraController < ApplicationController
     @strategi_opds = strategi_arah_kebijakan.tujuan_strategi_opds
     @tactical_opds = strategi_arah_kebijakan.tactical_opds
     @isu_strategis_opds = strategi_arah_kebijakan.isu_strategis_opds
+  end
+
+  def matrik_renstra
+    periode = params[:periode].split('-')
+    @tahun_awal = periode[0].to_i
+    @tahun_akhir = periode[-1].to_i
+    @periode = (@tahun_awal..@tahun_akhir)
+    @colspan = (@periode.size * 5) + 3
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    program_renstra = @opd.program_renstra
+
+    program_kegiatan_by_urusans = program_renstra.group_by do |prg|
+      [prg.kode_urusan, prg.nama_urusan]
+    end
+    @program_kegiatans = program_kegiatan_by_urusans.transform_values do |prg_v1|
+      prg_v1.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
+    end
   end
 end
