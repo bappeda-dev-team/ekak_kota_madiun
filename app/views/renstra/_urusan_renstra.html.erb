@@ -1,0 +1,89 @@
+<thead class="thead-urusan">
+  <% disable_action = true if local_assigns[:disable_action].present? %>
+  <tr class="header-urusan">
+    <th class="border" scope="col" rowspan="2" colspan="2">Kode Urusan</th>
+    <th class="border" scope="col" rowspan="2">No.</th>
+    <th class="border" scope="col" rowspan="2" colspan="2">Nama Urusan</th>
+    <% if disable_action %>
+      <% @periode.each do |tahun| %>
+        <th class="border text-center" scope="col" colspan="10"><%= tahun %></th>
+      <% end %>
+    <% else %>
+      <% @periode.each do |tahun| %>
+        <th class="border text-center" scope="col" colspan="8"><%= tahun %></th>
+      <% end %>
+    <% end %>
+  </tr>
+  <tr>
+    <% if disable_action %>
+      <% @periode.each do %>
+        <th class="border" scope="col" colspan="6"></th>
+        <th class="border" scope="col">Pagu Indikatif</th>
+        <th class="border" scope="col">Realisasi</th>
+        <th class="border" scope="col" colspan="2">Capaian</th>
+      <% end %>
+    <% else %>
+      <% @periode.each do %>
+        <th class="border" scope="col" colspan="5"></th>
+        <th class="border" scope="col">Pagu Indikatif</th>
+        <th class="border" scope="col" colspan="2">Realisasi</th>
+      <% end %>
+    <% end %>
+  </tr>
+</thead>
+<tbody>
+  <td class="border" scope="col" colspan="2"><%= urusan[0] %></td>
+  <td class="text-gray-900 text-wrap border"  ><%= nomor_ur %></td>
+  <td class="border" scope="col" colspan="2"><%= urusan[1] %></td>
+  <% if disable_action %>
+    <% @periode.each do |tahun| %>
+      <% pagu_urusan = Indikator.where(jenis: 'Renstra',
+                                       sub_jenis: 'Subkegiatan',
+                                       kode_opd: @opd.kode_unik_opd,
+                                       tahun: tahun)
+                                       .filter { |hh| hh.kode_urusan == urusan[0] }
+                                       .group_by(&:kode)
+                                       .map { |_k, v| v.max_by(&:version) }
+                                       .inject(0) { |inj, pagu| inj + pagu.pagu.to_i }
+      %>
+      <% realisasi_pagu_urusan = Indikator.where(jenis: 'Renstra',
+                                                 sub_jenis: 'Subkegiatan',
+                                                 kode_opd: @opd.kode_unik_opd,
+                                                 tahun: tahun)
+                                                 .filter { |hh| hh.kode_urusan == urusan[0] }
+                                                 .group_by(&:kode)
+                                                 .map { |_k, v| v.max_by(&:version) }
+                                                 .inject(0) { |inj, pagu| inj + pagu.realisasi_pagu.to_i }
+      %>
+      <% capaian = pagu_urusan != 0 ? ((realisasi_pagu_urusan / pagu_urusan.to_f) * 100).round(2)  : '0.0' %>
+      <td class="border" scope="col" colspan="6"></td>
+      <td class="fw-bolder text-gray-900 text-wrap border">Rp. <%= number_with_delimiter(pagu_urusan) %></td>
+      <td class="fw-bolder text-gray-900 text-wrap border">Rp. <%= number_with_delimiter(realisasi_pagu_urusan) %></td>
+      <td class="fw-bolder text-gray-900 text-wrap border" colspan="2"><%= "#{capaian} %" %></td>
+    <% end %>
+  <% else %>
+    <% @periode.each do |tahun| %>
+      <% pagu_urusan = Indikator.where(jenis: 'Renstra',
+                                       sub_jenis: 'Subkegiatan',
+                                       kode_opd: @opd.kode_unik_opd,
+                                       tahun: tahun)
+                                       .filter { |hh| hh.kode_urusan == urusan[0] }
+                                       .group_by(&:kode)
+                                       .map { |_k, v| v.max_by(&:version) }
+                                       .inject(0) { |inj, pagu| inj + pagu.pagu.to_i }
+      %>
+      <% realisasi_pagu_urusan = Indikator.where(jenis: 'Renstra',
+                                                 sub_jenis: 'Subkegiatan',
+                                                 kode_opd: @opd.kode_unik_opd,
+                                                 tahun: tahun)
+                                                 .filter { |hh| hh.kode_urusan == urusan[0] }
+                                                 .group_by(&:kode)
+                                                 .map { |_k, v| v.max_by(&:version) }
+                                                 .inject(0) { |inj, pagu| inj + pagu.realisasi_pagu.to_i }
+      %>
+      <td class="border" scope="col" colspan="5"></td>
+      <td class="fw-bolder text-gray-900 text-wrap border">Rp. <%= number_with_delimiter(pagu_urusan) %></td>
+      <td class="fw-bolder text-gray-900 text-wrap border" colspan="2">Rp. <%= number_with_delimiter(realisasi_pagu_urusan) %></td>
+    <% end %>
+  <% end %>
+</tbody>

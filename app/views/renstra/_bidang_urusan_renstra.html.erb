@@ -41,7 +41,7 @@
                                            sub_jenis: 'Subkegiatan',
                                            kode_opd: @opd.kode_unik_opd,
                                            tahun: tahun)
-                                           .filter { |hh| hh.kode.include?(bid_urusan[0]) }
+                                           .filter { |hh| hh.kode_bidang_urusan == bid_urusan[0] }
                                            .group_by(&:kode)
                                            .map { |_k, v| v.max_by(&:version) }
                                            .inject(0) { |inj, pagu| inj + pagu.pagu.to_i }
@@ -50,7 +50,7 @@
                                                      sub_jenis: 'Subkegiatan',
                                                      kode_opd: @opd.kode_unik_opd,
                                                      tahun: tahun)
-                                                     .filter { |hh| hh.kode.include?(bid_urusan[0]) }
+                                                     .filter { |hh| hh.kode_bidang_urusan == bid_urusan[0] }
                                                      .group_by(&:kode)
                                                      .map { |_k, v| v.max_by(&:version) }
                                                      .inject(0) { |inj, pagu| inj + pagu.realisasi_pagu.to_i }
@@ -67,7 +67,7 @@
                                            sub_jenis: 'Subkegiatan',
                                            kode_opd: @opd.kode_unik_opd,
                                            tahun: tahun)
-                                           .filter { |hh| hh.kode.include?(bid_urusan[0]) }
+                                           .filter { |hh| hh.kode_bidang_urusan == bid_urusan[0] }
                                            .group_by(&:kode)
                                            .map { |_k, v| v.max_by(&:version) }
                                            .inject(0) { |inj, pagu| inj + pagu.pagu.to_i }
@@ -76,7 +76,7 @@
                                                      sub_jenis: 'Subkegiatan',
                                                      kode_opd: @opd.kode_unik_opd,
                                                      tahun: tahun)
-                                                     .filter { |hh| hh.kode.include?(bid_urusan[0]) }
+                                                     .filter { |hh| hh.kode_bidang_urusan == bid_urusan[0] }
                                                      .group_by(&:kode)
                                                      .map { |_k, v| v.max_by(&:version) }
                                                      .inject(0) { |inj, pagu| inj + pagu.realisasi_pagu.to_i }

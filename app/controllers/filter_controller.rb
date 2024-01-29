@@ -300,8 +300,12 @@ class FilterController < ApplicationController
     program_renstra = @opd.program_renstra
 
     @list_subkegiatans = @periode.map { |tahun| @opd.sasaran_subkegiatans(tahun) }.flatten if @tahun_awal == 2025
-    @program_kegiatans = program_renstra.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
-
+    program_kegiatan_by_urusans = program_renstra.group_by do |prg|
+      [prg.kode_urusan, prg.nama_urusan]
+    end
+    @program_kegiatans = program_kegiatan_by_urusans.transform_values do |prg_v1|
+      prg_v1.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
+    end
     render partial: 'hasil_filter_renstra'
   end
 
@@ -315,7 +319,12 @@ class FilterController < ApplicationController
     #                                       .uniq(&:kode_program).sort_by(&:kode_program)
     #   @kode_opd = KODE_OPD_BAGIAN[@nama_opd.to_sym]
     # end
-    @program_kegiatans = program_renstra.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
+    program_kegiatan_by_urusans = program_renstra.group_by do |prg|
+      [prg.kode_urusan, prg.nama_urusan]
+    end
+    @program_kegiatans = program_kegiatan_by_urusans.transform_values do |prg_v1|
+      prg_v1.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
+    end
     @tahun_awal = @tahun.to_i
     @tahun_akhir = @tahun.to_i
     @periode = (@tahun_awal..@tahun_akhir)

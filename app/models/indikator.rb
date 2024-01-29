@@ -111,4 +111,12 @@ class Indikator < ApplicationRecord
   rescue NoMethodError
     0.0
   end
+
+  def kode_urusan
+    kode[0]
+  end
+
+  def kode_bidang_urusan
+    kode[0, 4]
+  end
 end
