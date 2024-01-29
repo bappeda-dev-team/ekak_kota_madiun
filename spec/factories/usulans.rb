@@ -20,5 +20,8 @@
 #
 FactoryBot.define do
   factory :usulan do
+    usulanable_id { 1 }
+    usulanable_type { "Type" }
+    sasaran_id { 1 }
   end
 end

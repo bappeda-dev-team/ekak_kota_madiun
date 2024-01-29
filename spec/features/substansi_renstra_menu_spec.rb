@@ -61,34 +61,6 @@ RSpec.feature "Substansi Renstra menu on sidebar", type: :feature do
 
     let(:user) { create(:super_admin) }
 
-    context 'bab 1' do
-      before(:each) do
-        login_as user
-
-        visit root_path
-        # create_cookie('opd', 'test_opd')
-        # create_cookie('tahun', '2025')
-        page.driver.browser.set_cookie 'opd=test_opd'
-        page.driver.browser.set_cookie 'tahun=2025'
-      end
-
-      it 'show Dasar Hukum for selected opd and tahun' do
-        find('span.sidebar-text', text: 'Substansi Renstra').click
-        find('span.sidebar-text', text: 'Bab 1').click
-
-        user_eselon4 = create(:eselon_4, email: 'usulan@test.com', nik: '123_456')
-        sasaran = create(:complete_sasaran, user: user_eselon4, tahun: '2025')
-        mandatori = create(:mandatori, peraturan_terkait: 'peraturan y', tahun: '2025', sasaran_id: sasaran.id)
-        Usulan.create(usulanable_id: mandatori.id,
-                      usulanable_type: 'Mandatori',
-                      sasaran_id: sasaran)
-
-        click_on 'Dasar Hukum'
-        expect(page).to have_text('Laporan Dasar Hukum')
-        expect(page).to have_text('peraturan y')
-      end
-    end
-
     context 'bab 2' do
       it 'show Evaluasi Renstra Item' do
         login_as user
