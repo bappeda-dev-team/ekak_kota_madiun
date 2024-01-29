@@ -124,7 +124,7 @@ class Sasaran < ApplicationRecord
 
   enum status: { draft: 'draft', pengajuan: 'pengajuan', disetujui: 'disetujui', ditolak: 'ditolak' }
   store_accessor :metadata, :hasil_output, :nama_output, :processed_at, :deleted_at, :deleted_by, :keterangan_hapus,
-                 :clone_tahun_asal, :clone_oleh, :clone_asli, :id_rencana_sebelum
+                 :clone_tahun_asal, :clone_oleh, :clone_asli, :id_rencana_sebelum, :inovasi_sasaran, :hasil_inovasi
 
   # DANGER, maybe broke something, uncomment this
   # def respond_to_missing?(_method, *_args)
@@ -412,13 +412,17 @@ class Sasaran < ApplicationRecord
   end
 
   def output_inovasi_terisi?
-    metadata.key?("output")
+    metadata.key?("inovasi_sasaran")
   rescue NoMethodError
     false
   end
 
+  def hasil_inovasi_sasaran
+    metadata&.dig("hasil_inovasi")
+  end
+
   def inovasi_sasaran
-    metadata&.dig("hasil_output")
+    metadata&.dig("inovasi_sasaran")
   end
 
   def output_sasaran

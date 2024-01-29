@@ -13,7 +13,7 @@
   </div>
   <% unless diajukan? %>
     <div class="card-body" id="inovasi-sasaran">
-      <%= form_with(model: sasaran,url: hasil_output_sasaran_path,
+      <%= form_with(model: sasaran,url: inovasi_sasaran_path,
                     local: false,
                     id: 'form-inovasi',
                     data: {
@@ -22,9 +22,9 @@
                       action: 'ajax:complete->form-ajax#processAjax'
                     }
       ) do |f| %>
-        <%= f.select(:hasil_output,
+        <%= f.select(:hasil_inovasi,
                      ['Bukan Inovasi', 'Inovasi'],
-                     {selected: f.object.inovasi_sasaran},
+                     {selected: f.object.hasil_inovasi_sasaran},
                      {
                        id: 'pilihan-inovasi',
                        data: {
@@ -34,8 +34,8 @@
                          dropdown_event_name_value: 'toggle-inovasi-fields',
                        } } )%>
         <div class="field d-none" id="nama_inovasi" data-controller="field" data-action="toggle-inovasi-fields@document->field#toggle_visible">
-          <%= f.label :nama_output,'Inovasi', class: "form-label" %>
-          <%= f.text_area :nama_output, {class: "form-control", placeholder: 'tuliskan inovasi...', value: f.object.inovasi_sasaran} %>
+          <%= f.label :inovasi_sasaran,'Inovasi', class: "form-label" %>
+          <%= f.text_area :inovasi_sasaran, {class: "form-control", placeholder: 'tuliskan inovasi...', value: f.object.inovasi_sasaran} %>
         </div>
         <div class="actions">
           <%= f.submit %>

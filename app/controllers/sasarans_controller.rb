@@ -457,24 +457,35 @@ class SasaransController < ApplicationController
     nama_output = sasaran_params[:nama_output]
     if @sasaran.update(metadata: { hasil_output: hasil_output, nama_output: nama_output,
                                    processed_at: DateTime.current })
-      render json: { resText: "Sasaran diupdate", html_content: html_content(@sasaran) }.to_json,
+      render json: { resText: "Output sasaran diupdate",
+                     html_content: html_content({ sasaran: @sasaran },
+                                                partial: 'sasarans/hasil_output') }.to_json,
              status: :ok
     else
-      render json: { resText: "Terjadi kesalahan", html_content: error_content(@sasaran) }.to_json,
+      render json: { resText: "Terjadi kesalahan", html_content: errors_content(@sasaran) }.to_json,
+             status: :unprocessable_entity
+    end
+  end
+
+  def inovasi
+    @sasaran = Sasaran.find(params[:id])
+    hasil_inovasi = sasaran_params[:hasil_inovasi]
+    inovasi_sasaran = sasaran_params[:inovasi_sasaran]
+    if @sasaran.update(metadata: { hasil_inovasi: hasil_inovasi, inovasi_sasaran: inovasi_sasaran,
+                                   processed_at: DateTime.current })
+      render json: { resText: "Inovasi sasaran disimpan",
+                     html_content: html_content({ sasaran: @sasaran },
+                                                partial: 'sasarans/hasil_inovasi') }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan", html_content: errors_content(@sasaran) }.to_json,
              status: :unprocessable_entity
     end
   end
 
   private
 
-  def html_content(sasaran)
-    render_to_string(partial: 'hasil_output',
-                     formats: 'html',
-                     layout: false,
-                     locals: { sasaran: sasaran })
-  end
-
-  def error_content(sasaran)
+  def errors_content(sasaran)
     render_to_string(partial: 'error',
                      formats: 'html',
                      layout: false,
@@ -518,6 +529,8 @@ class SasaransController < ApplicationController
                                     :anggaran, :type,
                                     :hasil_output,
                                     :nama_output,
+                                    :hasil_inovasi,
+                                    :inovasi_sasaran,
                                     :strategi_id,
                                     :kelompok_anggaran, :filter_file, :filter_target, :filter_type, :sasaran_milik,
                                     indikator_sasarans_attributes: %i[id indikator_kinerja aspek target satuan _destroy])
