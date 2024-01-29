@@ -411,6 +411,16 @@ class Sasaran < ApplicationRecord
     false
   end
 
+  def output_inovasi_terisi?
+    metadata.key?("output")
+  rescue NoMethodError
+    false
+  end
+
+  def inovasi_sasaran
+    metadata&.dig("hasil_output")
+  end
+
   def output_sasaran
     metadata&.dig("hasil_output")
   end

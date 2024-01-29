@@ -1,0 +1,52 @@
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="row align-items-center">
+        <div class="col">
+          <h4 class="card-title">
+            Inovasi Sasaran
+            <span class="ms-2"><%= sesuai?(sasaran.output_inovasi_terisi?) %></span>
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% unless diajukan? %>
+    <div class="card-body" id="inovasi-sasaran">
+      <%= form_with(model: sasaran,url: hasil_output_sasaran_path,
+                    local: false,
+                    id: 'form-inovasi',
+                    data: {
+                      controller: 'form-ajax',
+                      form_ajax_target_param: 'sasaran-inovasi',
+                      action: 'ajax:complete->form-ajax#processAjax'
+                    }
+      ) do |f| %>
+        <%= f.select(:hasil_output,
+                     ['Bukan Inovasi', 'Inovasi'],
+                     {selected: f.object.inovasi_sasaran},
+                     {
+                       id: 'pilihan-inovasi',
+                       data: {
+                         controller: 'dropdown',
+                         dropdown_parent_value: '#inovasi-sasaran',
+                         dropdown_jenis_value: 'chain',
+                         dropdown_event_name_value: 'toggle-inovasi-fields',
+                       } } )%>
+        <div class="field d-none" id="nama_inovasi" data-controller="field" data-action="toggle-inovasi-fields@document->field#toggle_visible">
+          <%= f.label :nama_output,'Inovasi', class: "form-label" %>
+          <%= f.text_area :nama_output, {class: "form-control", placeholder: 'tuliskan inovasi...', value: f.object.inovasi_sasaran} %>
+        </div>
+        <div class="actions">
+          <%= f.submit %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="card-body">
+    <div class="table-responsive" id="sasaran-inovasi">
+      <%= render 'sasarans/hasil_inovasi', sasaran: sasaran %>
+    </div>
+  </div>
+  <hr>
+</div>

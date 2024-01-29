@@ -12,9 +12,10 @@
     </div>
   </div>
   <% unless diajukan? %>
-    <div class="card-body">
+    <div class="card-body" id="raperda-sasaran">
       <%= form_with(model: sasaran,url: hasil_output_sasaran_path,
                     local: false,
+                    id: 'form-raperda',
                     data: {
                       controller: 'form-ajax',
                       form_ajax_target_param: 'sasaran-raperda',
@@ -22,14 +23,18 @@
                     }
       ) do |f| %>
         <%= f.select(:hasil_output,
-                     ['Raperda', 'Raperwal', 'Inovasi', 'Rancang Surat Keputusan', 'Bukan Raperda'],
-                     {selected: f.object.output_sasaran}, { data: {controller: 'dropdown'} } )%>
-        <div class="field">
-          <%= f.label 'Nama output', class: "form-label" %>
-          <div class="alert alert-warning">
-            <i class="far fa-lightbulb me-2"></i>
-            Kosongkan jika 'Bukan Raperda'
-          </div>
+                     ['Bukan Raperda','Raperda', 'Raperwal', 'Rancang Surat Keputusan'],
+                     {selected: f.object.output_sasaran},
+                     {
+                       id: 'pilihan-raperda',
+                       data: {
+                         controller: 'dropdown',
+                         dropdown_parent_value: '#raperda-sasaran',
+                         dropdown_jenis_value: 'chain',
+                         dropdown_event_name_value: 'toggle-raperda-fields',
+                       } } )%>
+        <div class="field d-none" id="nama_raperda" data-controller="field" data-action="toggle-raperda-fields@document->field#toggle_visible">
+          <%= f.label :nama_output,'Nama output', class: "form-label" %>
           <%= f.text_area :nama_output, {class: "form-control",  placeholder: 'tuliskan nama perda / perwal / SK', value: f.object.nama_output_sasaran} %>
         </div>
         <div class="actions">
