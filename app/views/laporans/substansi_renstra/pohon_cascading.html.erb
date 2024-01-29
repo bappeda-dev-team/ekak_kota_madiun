@@ -1,0 +1,12 @@
+<%= content_for :html_title, "Bab 4 - Pohon Cascading" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Substansi Renstra</li>
+  <li class="breadcrumb-item" aria-current="page">Bab 4</li>
+  <li class="breadcrumb-item active" aria-current="page">Pohon Cascading</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout', title: "Laporan Pohon Cascading" do %>
+    <div class="table-responsive">
+    </div>
+  <% end %>
+<% end %>

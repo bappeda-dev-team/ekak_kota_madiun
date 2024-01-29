@@ -174,6 +174,9 @@ RSpec.feature "Substansi Renstra menu on sidebar", type: :feature do
         find('span.sidebar-text', text: 'Bab 4').click
 
         find('#substansi-renstra-bab-4-pohon-cascading').click
+        expect(page).to have_title('Bab 4 - Pohon Cascading')
+        expect(page).to have_selector('li.breadcrumb-item', text: 'Bab 4')
+        expect(page).to have_selector('li.breadcrumb-item.active', text: 'Pohon Cascading')
         expect(page).to have_content('Laporan Pohon Cascading')
       end
     end

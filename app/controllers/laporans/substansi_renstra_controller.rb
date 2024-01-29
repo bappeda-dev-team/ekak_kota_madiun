@@ -79,4 +79,6 @@ class Laporans::SubstansiRenstraController < ApplicationController
     @opd = strategi_arah_kebijakan.opd
     @strategi_opds = strategi_arah_kebijakan.tujuan_strategi_opds
   end
+
+  def pohon_cascading; end
 end
