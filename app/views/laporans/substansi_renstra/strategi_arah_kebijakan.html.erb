@@ -6,7 +6,37 @@
 <% end %>
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout_subtitle', title: "Laporan Strategi Arah Kebijakan", sub_title: @opd, sub_title_2: @tahun do %>
-    <div class="table-responsive mb-5 d-grid gap-2">
+    <div id="kebijakans" class="table-responsive">
+      <table class="table table-flush">
+        <thead>
+          <tr>
+            <th class="border-bottom text-gray-700" scope="col">No.</th>
+            <th class="border-bottom text-gray-700" scope="col">Tujuan</th>
+            <th class="border-bottom text-gray-700" scope="col">Strategi</th>
+            <th class="border-bottom text-gray-700" scope="col">Arah Kebijakan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @strategi_opds.each.with_index(1) do |(tujuan, strategis), nomor| %>
+            <tr class="strategi">
+              <% rowspan_atas = strategis.map { |str| @tactical_opds.select { |tact| tact.pohon_ref_id.to_i == str.id }.size + 1 }.flatten.sum + 1 %>
+              <td class="align-middle" rowspan="<%= rowspan_atas %>"><%= nomor %></td>
+              <td class="text-wrap align-middle border <%= tujuan.nil? ? 'bg-danger text-white' : '' %>" rowspan="<%= rowspan_atas %>"><%= tujuan || 'Tujuan belum dipilih' %></td>
+            </tr>
+            <% strategis.each do |strategi| %>
+              <% rowspan_bawah = @tactical_opds.select { |tact| tact.pohon_ref_id.to_i == strategi.id }.size + 1 %>
+              <tr>
+                <td class="text-wrap align-middle" rowspan="<%= rowspan_bawah %>"><%= strategi %></td>
+              </tr>
+              <% @tactical_opds.select { |tact| tact.pohon_ref_id.to_i == strategi.id }.each do |tactical| %>
+                <tr class="arah-kebijakan">
+                  <td class="text-wrap border"><%= tactical %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   <% end %>
 <% end %>

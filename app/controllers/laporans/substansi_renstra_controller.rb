@@ -87,5 +87,14 @@ class Laporans::SubstansiRenstraController < ApplicationController
 
   def pohon_cascading; end
 
-  def strategi_arah_kebijakan; end
+  def strategi_arah_kebijakan
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    strategi_arah_kebijakan = StrategiArahKebijakan.new(tahun: @tahun, kode_opd: @kode_opd)
+    @opd = strategi_arah_kebijakan.opd
+    @tujuan_opds = strategi_arah_kebijakan.tujuan_opds
+    @strategi_opds = strategi_arah_kebijakan.tujuan_strategi_opds
+    @tactical_opds = strategi_arah_kebijakan.tactical_opds
+    @isu_strategis_opds = strategi_arah_kebijakan.isu_strategis_opds
+  end
 end
