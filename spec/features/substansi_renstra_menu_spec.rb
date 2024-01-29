@@ -123,6 +123,22 @@ RSpec.feature "Substansi Renstra menu on sidebar", type: :feature do
         find('#substansi-renstra-bab-3-permasalahan').click
         expect(page).to have_content('Laporan Permasalahan dan Isu Strategis')
       end
+
+      it 'show Pohon Kinerja' do
+        login_as user
+
+        visit root_path
+        # create_cookie('opd', 'test_opd')
+        # create_cookie('tahun', '2025')
+        page.driver.browser.set_cookie 'opd=test_opd'
+        page.driver.browser.set_cookie 'tahun=2025'
+
+        find('span.sidebar-text', text: 'Substansi Renstra').click
+        find('span.sidebar-text', text: 'Bab 3').click
+
+        find('#substansi-renstra-bab-3-pohon-kinerja').click
+        expect(page).to have_content('Laporan Pohon Kinerja')
+      end
     end
   end
 end

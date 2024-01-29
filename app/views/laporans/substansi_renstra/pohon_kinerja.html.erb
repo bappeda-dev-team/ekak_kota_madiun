@@ -1,0 +1,17 @@
+<%= content_for :html_title, "Bab 3 - Pohon Kinerja" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Substansi Renstra</li>
+  <li class="breadcrumb-item" aria-current="page">Bab 3</li>
+  <li class="breadcrumb-item active" aria-current="page">Pohon Kinerja</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout', title: "Laporan Pohon Kinerja" do %>
+    <%= render 'shared/pohon' do %>
+      <%= render 'pohon_kinerja_opds/item_opd', partial: 'pohon_kinerja_opds/pohon_kinerja_opd' %>
+      <ul data-pohon-tematik-target='dahan'>
+        <%= render partial: 'pohon_kinerja_opds/pohon_kinerja_opd', collection: @strategi_kota, as: :pohon %>
+        <%= render partial: 'pohon_kinerja_opds/pohon_kinerja_opd', collection: @strategi_opd, as: :pohon %>
+      </ul>
+    <% end %>
+  <% end %>
+<% end %>
