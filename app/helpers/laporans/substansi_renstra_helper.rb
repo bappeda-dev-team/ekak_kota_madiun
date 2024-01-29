@@ -80,11 +80,11 @@ module Laporans::SubstansiRenstraHelper
   def bab_4
     [
       {
-        title: 'Tujuan dan Sasaran', href: '#',
-        identifier: 'substansi-renstra-bab-4-tujuan-sasaran'
+        title: 'Tujuan dan Sasaran', href: laporans_substansi_renstra_tujuan_dan_sasaran_path,
+        identifier: 'substansi-renstra-bab-4-tujuan-dan-sasaran'
       },
       {
-        title: 'Pohon Cascading', href: '#',
+        title: 'Pohon Cascading', href: laporans_substansi_renstra_pohon_cascading_path,
         identifier: 'substansi-renstra-bab-4-pohon-cascading'
       }
     ]

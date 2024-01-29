@@ -71,4 +71,12 @@ class Laporans::SubstansiRenstraController < ApplicationController
     @tujuan_opds = @opd.tujuan_opds.includes(%i[indikators urusan])
                        .by_periode(tahun_bener)
   end
+
+  def tujuan_dan_sasaran
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    strategi_arah_kebijakan = StrategiArahKebijakan.new(tahun: @tahun, kode_opd: @kode_opd)
+    @opd = strategi_arah_kebijakan.opd
+    @strategi_opds = strategi_arah_kebijakan.tujuan_strategi_opds
+  end
 end

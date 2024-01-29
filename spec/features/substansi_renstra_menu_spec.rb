@@ -140,5 +140,42 @@ RSpec.feature "Substansi Renstra menu on sidebar", type: :feature do
         expect(page).to have_content('Laporan Pohon Kinerja')
       end
     end
+
+    context 'bab 4' do
+      it 'show Tujuan dan Sasaran' do
+        login_as user
+
+        visit root_path
+        # create_cookie('opd', 'test_opd')
+        # create_cookie('tahun', '2025')
+        page.driver.browser.set_cookie 'opd=test_opd'
+        page.driver.browser.set_cookie 'tahun=2025'
+
+        find('span.sidebar-text', text: 'Substansi Renstra').click
+        find('span.sidebar-text', text: 'Bab 4').click
+
+        find('#substansi-renstra-bab-4-tujuan-dan-sasaran').click
+        expect(page).to have_title('Bab 4 - Tujuan dan Sasaran')
+        expect(page).to have_selector('li.breadcrumb-item', text: 'Bab 4')
+        expect(page).to have_selector('li.breadcrumb-item.active', text: 'Tujuan dan Sasaran')
+        expect(page).to have_content('Laporan Tujuan dan Sasaran')
+      end
+
+      it 'show Pohon Cascading' do
+        login_as user
+
+        visit root_path
+        # create_cookie('opd', 'test_opd')
+        # create_cookie('tahun', '2025')
+        page.driver.browser.set_cookie 'opd=test_opd'
+        page.driver.browser.set_cookie 'tahun=2025'
+
+        find('span.sidebar-text', text: 'Substansi Renstra').click
+        find('span.sidebar-text', text: 'Bab 4').click
+
+        find('#substansi-renstra-bab-4-pohon-cascading').click
+        expect(page).to have_content('Laporan Pohon Cascading')
+      end
+    end
   end
 end

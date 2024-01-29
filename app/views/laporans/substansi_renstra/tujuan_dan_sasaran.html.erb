@@ -1,0 +1,41 @@
+<%= content_for :html_title, "Bab 4 - Tujuan dan Sasaran" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Substansi Renstra</li>
+  <li class="breadcrumb-item" aria-current="page">Bab 4</li>
+  <li class="breadcrumb-item active" aria-current="page">Tujuan dan Sasaran</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout', title: "Laporan Tujuan dan Sasaran" do %>
+    <div class="table-responsive">
+      <table class="table table-flush">
+        <thead>
+          <tr>
+            <th class="border-bottom text-gray-700" scope="col">No.</th>
+            <th class="border-bottom text-gray-700" scope="col">Tujuan</th>
+            <th class="border-bottom text-gray-700" scope="col">Sasaran</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @strategi_opds.each.with_index(1) do |(tujuan, strategis), nomor| %>
+            <tr class="strategi">
+              <% rowspan_atas = strategis.size + 1 %>
+              <td class="align-middle" rowspan="<%= rowspan_atas %>"><%= nomor %></td>
+              <td class="text-wrap align-middle border <%= tujuan.nil? ? 'bg-danger text-white' : '' %>" rowspan="<%= rowspan_atas %>"><%= tujuan || '-' %></td>
+            </tr>
+            <% strategis.each do |strategi| %>
+              <tr>
+                <td class="text-wrap border-end px-0 py-0">
+                  <div class="d-grid gap-0 w-100">
+                    <% strategi.sasarans.dengan_nip.each do |sasaran| %>
+                      <div class="p-3 w-100 border"><%= sasaran %></div>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>
