@@ -44,7 +44,6 @@ RSpec.feature "Laporans", type: :feature do
       fill_in('Tahapan kerja', with: 'test_tahapan')
       fill_in('Keterangan', with: 'test_tahapan')
       click_on('Simpan Tahapan')
-      # binding.pry
     end
   end
 end

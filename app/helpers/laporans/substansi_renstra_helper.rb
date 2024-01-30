@@ -102,7 +102,7 @@ module Laporans::SubstansiRenstraHelper
   def bab_6
     [
       {
-        title: 'Matriks Renstra', href: laporans_substansi_renstra_matrik_renstra_path(periode: '2019-2024'),
+        title: 'Matriks Renstra', href: laporans_substansi_renstra_matrik_renstra_path(periode: '2025-2026'),
         identifier: 'substansi-renstra-bab-6-matrik-renstra'
       }
     ]
