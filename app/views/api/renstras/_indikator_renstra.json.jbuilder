@@ -10,11 +10,11 @@ if indikators.any? { |ind| ind.tahun == tahun.to_s }
     json.satuan indikator.satuan
 
     if indikator.sub_jenis == 'Subkegiatan'
-      json.pagu number_with_delimiter(indikator.pagu)
-      json.pagu_realisasi number_with_delimiter(indikator.realisasi_pagu)
+      json.pagu indikator.pagu
+      json.pagu_realisasi indikator.realisasi_pagu
     else
-      json.pagu number_with_delimiter(indikator.sum_pagu_renstra(sub_jenis: 'Subkegiatan'))
-      json.pagu_realisasi number_with_delimiter(indikator.sum_realisasi_pagu_renstra(sub_jenis: 'Subkegiatan'))
+      json.pagu indikator.sum_pagu_renstra(sub_jenis: 'Subkegiatan')
+      json.pagu_realisasi indikator.sum_realisasi_pagu_renstra(sub_jenis: 'Subkegiatan')
     end
   end
 else
@@ -24,6 +24,6 @@ else
   json.satuan ""
   json.realisasi 0
   json.satuan ""
-  json.pagu_program 0
-  json.pagu_realisasi_program 0
+  json.pagu 0
+  json.pagu_realisasi 0
 end
