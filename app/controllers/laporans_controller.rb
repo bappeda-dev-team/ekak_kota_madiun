@@ -227,7 +227,7 @@ class LaporansController < ApplicationController
     end
   end
 
-  def sasaran_kemiskinan
+  def sasaran_penduduk
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @sasarans = @opd.users.includes(:sasarans).aktif.eselon4
                     .flat_map do |user|

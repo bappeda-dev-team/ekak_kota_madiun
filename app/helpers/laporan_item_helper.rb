@@ -26,7 +26,7 @@ module LaporanItemHelper
       { title: 'Inovasi Sasaran Kinerja', href: inovasi_sasaran_kinerja_laporans_path,
         icon: 'fas fa-book-open',
         identifier: 'laporan-inovasi-sasaran-kinerja' },
-      { title: 'Sasaran Kemiskinan', href: sasaran_kemiskinan_laporans_path,
+      { title: 'Sasaran Penduduk', href: sasaran_penduduk_laporans_path,
         icon: 'fas fa-book-open',
         identifier: 'laporan-sasaran-kemiskinan' },
       # {

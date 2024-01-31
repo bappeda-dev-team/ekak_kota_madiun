@@ -50,16 +50,16 @@ RSpec.feature "Laporans", type: :feature do
       expect(page).to have_content('inovasi test')
     end
 
-    scenario 'user(eselon_4) create sasaran with kemiskinan in manual ik', js: true do
+    scenario 'user(eselon_4) create sasaran with penduduk in manual ik', js: true do
       find('span.sidebar-text', text: 'Laporan').click
-      click_on('Sasaran Kemiskinan')
-      expect(page).to have_title('Sasaran Kemiskinan')
-      expect(page).to have_selector('li.breadcrumb-item.active', text: 'Sasaran Kemiskinan')
+      click_on('Sasaran Penduduk')
+      expect(page).to have_title('Sasaran Penduduk')
+      expect(page).to have_selector('li.breadcrumb-item.active', text: 'Sasaran Penduduk')
       within('.card-header') do
-        expect(page).to have_content('Laporan Sasaran Kemiskinan')
+        expect(page).to have_content('Laporan Sasaran Penduduk')
         expect(page).to have_content('2025')
       end
-      within('#sasaran-kemiskinan') do
+      within('#sasaran-penduduk') do
         expect(page).to have_content('SasaranTest')
         expect(page).to have_content('Penduduk')
       end

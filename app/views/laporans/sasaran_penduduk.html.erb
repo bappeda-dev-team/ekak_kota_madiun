@@ -1,12 +1,12 @@
-<%= content_for :html_title, 'Sasaran Kemiskinan' %>
+<%= content_for :html_title, 'Sasaran Penduduk' %>
 <%= content_for :navigation do %>
   <li class="breadcrumb-item" aria-current="page">Laporan</li>
-  <li class="breadcrumb-item active" aria-current="page">Sasaran Kemiskinan</li>
+  <li class="breadcrumb-item active" aria-current="page">Sasaran Penduduk</li>
 <% end %>
 <% content_for :view_utama do %>
-  <%= render 'shared/card_layout_subtitle', title: 'Laporan Sasaran Kemiskinan', sub_title: @tahun do %>
+  <%= render 'shared/card_layout_subtitle', title: 'Laporan Sasaran Penduduk', sub_title: @tahun do %>
     <div class="table-responsive mb-5 d-grid gap-2">
-      <table class="table align-items-center counter" id="sasaran-kemiskinan">
+      <table class="table align-items-center counter" id="sasaran-penduduk">
         <thead class="thead-light">
           <tr>
             <th class="border text-center" scope="col">No.</th>
@@ -19,7 +19,7 @@
           </tr>
         </thead>
         <tbody>
-          <%= render partial: 'sasarans/sasaran_kemiskinan', collection: @sasarans, as: :sasaran %>
+          <%= render partial: 'sasarans/sasaran_penduduk', collection: @sasarans, as: :sasaran %>
         </tbody>
       </table>
     </div>
