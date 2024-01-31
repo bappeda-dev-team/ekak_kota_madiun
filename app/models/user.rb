@@ -267,7 +267,7 @@ class User < ApplicationRecord
   end
 
   def pegawai_bagian?
-    nama_bidang&.upcase&.include?('BAGIAN')
+    nama_bidang&.upcase&.include?('BAGIAN') && kode_opd == '1260'
   end
 
   def petunjuk_bagian
