@@ -1,0 +1,16 @@
+<tr id="<%= dom_id(sasaran) %>">
+  <td class="text-gray-900 text-wrap border" rowspan="<%= rowspan_sasaran(sasaran) %>" width='20px'></td>
+  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
+  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.tahun %></td>
+  <% if sasaran.indikator_sasarans.any? %>
+    <%= indikator_sasaran(sasaran) %>
+  <% else %>
+    <td class="border" colspan="3">
+      <h2 class="banner bg-danger">INDIKATOR BELUM TERISI</h2>
+    </td>
+  <% end %>
+  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.inovasi_sasaran %></td>
+</tr>
+<% row_indikator_sasaran(sasaran).each do |indikator| %>
+  <%= indikator %>
+<% end %>

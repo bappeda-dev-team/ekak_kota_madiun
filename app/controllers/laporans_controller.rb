@@ -207,6 +207,26 @@ class LaporansController < ApplicationController
     @sdgs_output = @opd.sdgs_output.where(tahun: @tahun)
   end
 
+  def output_raperda
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @sasarans = @opd.users.includes(:sasarans).aktif.eselon4
+                    .flat_map do |user|
+      user.sasarans.where(tahun: @tahun).filter do |sasaran|
+        sasaran.output_sasaran != 'Bukan Raperda'
+      end
+    end
+  end
+
+  def inovasi_sasaran_kinerja
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @sasarans = @opd.users.includes(:sasarans).aktif.eselon4
+                    .flat_map do |user|
+      user.sasarans.where(tahun: @tahun).filter do |sasaran|
+        sasaran.hasil_inovasi_sasaran != 'Bukan Inovasi'
+      end
+    end
+  end
+
   private
 
   def set_program_kegiatans
