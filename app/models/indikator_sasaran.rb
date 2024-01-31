@@ -51,6 +51,6 @@ class IndikatorSasaran < ApplicationRecord
   def output_data
     manual_ik.output_data
   rescue StandardError
-    ''
+    []
   end
 end

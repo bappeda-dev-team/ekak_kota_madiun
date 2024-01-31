@@ -4,17 +4,16 @@
   <td class="border text-wrap" rowspan="<%= rowspan_sasaran_x(sasaran) %>"><%= sasaran.tahun %></td>
 </tr>
 <% sasaran.indikator_sasarans.each do |indikator| %>
-  <tr>
-    <td class='border text-wrap'><%= indikator.indikator_kinerja %></td>
-    <td class='border text-wrap'><%= indikator.target %></td>
-    <td class='border text-wrap'><%= indikator.satuan %></td>
-    <td class='border text-wrap'>
+  <tr class="skip">
+    <td class='border-end text-wrap'><%= indikator.indikator_kinerja %></td>
+    <td class='border-end text-wrap'><%= indikator.target %></td>
+    <td class='border-end text-wrap'><%= indikator.satuan %></td>
+    <td class='border-end'>
       <div class="d-grid gap-3">
-        <% indikator.manual_ik.output_data.each do |output| %>
-          <div>
-            <%= label_tag 'check', class: 'form-check-label' do %>
-              <span class="fw-bolder"><%= output.capitalize %></span>
-            <% end %>
+        <% indikator.output_data.each do |output| %>
+          <div class='form-check'>
+            <i class="far fa-check-square icon icon-xs"></i>
+            <span class="fw-bolder"><%= output.capitalize %></span>
           </div>
         <% end %>
       </div>

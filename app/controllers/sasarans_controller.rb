@@ -455,8 +455,10 @@ class SasaransController < ApplicationController
     @sasaran = Sasaran.find(params[:id])
     hasil_output = sasaran_params[:hasil_output]
     nama_output = sasaran_params[:nama_output]
-    if @sasaran.update(metadata: { hasil_output: hasil_output, nama_output: nama_output,
-                                   processed_at: DateTime.current })
+    prev_metadata = @sasaran.metadata.present? ? @sasaran.metadata : {}
+    new_metadata = prev_metadata.merge({ hasil_output: hasil_output, nama_output: nama_output,
+                                         processed_at: DateTime.current })
+    if @sasaran.update(metadata: new_metadata)
       render json: { resText: "Output sasaran diupdate",
                      html_content: html_content({ sasaran: @sasaran },
                                                 partial: 'sasarans/hasil_output') }.to_json,
@@ -471,8 +473,10 @@ class SasaransController < ApplicationController
     @sasaran = Sasaran.find(params[:id])
     hasil_inovasi = sasaran_params[:hasil_inovasi]
     inovasi_sasaran = sasaran_params[:inovasi_sasaran]
-    if @sasaran.update(metadata: { hasil_inovasi: hasil_inovasi, inovasi_sasaran: inovasi_sasaran,
-                                   processed_at: DateTime.current })
+    prev_metadata = @sasaran.metadata.present? ? @sasaran.metadata : {}
+    new_metadata = prev_metadata.merge({ hasil_inovasi: hasil_inovasi, inovasi_sasaran: inovasi_sasaran,
+                                         processed_at: DateTime.current })
+    if @sasaran.update(metadata: new_metadata)
       render json: { resText: "Inovasi sasaran disimpan",
                      html_content: html_content({ sasaran: @sasaran },
                                                 partial: 'sasarans/hasil_inovasi') }.to_json,
