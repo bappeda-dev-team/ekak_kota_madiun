@@ -227,6 +227,16 @@ class LaporansController < ApplicationController
     end
   end
 
+  def sasaran_kemiskinan
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @sasarans = @opd.users.includes(:sasarans).aktif.eselon4
+                    .flat_map do |user|
+      user.sasarans.includes([:indikator_sasarans]).where(tahun: @tahun).dengan_manual_ik.filter do |sasaran|
+        sasaran.indikator_sasarans.filter { |ind| ind.manual_ik.output_data.include?('penduduk') }
+      end
+    end
+  end
+
   private
 
   def set_program_kegiatans

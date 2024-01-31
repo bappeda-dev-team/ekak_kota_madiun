@@ -6,15 +6,17 @@
       </div>
       <div class="col-auto">
         <div class="text-end">
-          <strong><%= sub_title %></strong>
+          <strong><%= local_assigns[:sub_title] %></strong>
         </div>
         <div class="text-end">
-          <span><%= sub_title_2 %></span>
+          <strong><%= local_assigns[:sub_title_2] %></strong>
         </div>
       </div>
     </div>
   </div>
   <div class="card-body p-3">
-    <%= yield %>
+    <div class="d-grid gap-4">
+      <%= yield %>
+    </div>
   </div>
 </div>

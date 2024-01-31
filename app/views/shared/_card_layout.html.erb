@@ -2,11 +2,13 @@
   <div class="card-header">
     <div class="row align-items-center">
       <div class="col">
-        <h5><%= title %></h5>
+        <h5><%= local_assigns[:title] %></h5>
       </div>
     </div>
   </div>
   <div class="card-body p-3">
-    <%= yield %>
+    <div class="d-grid gap-4">
+      <%= yield %>
+    </div>
   </div>
 </div>
