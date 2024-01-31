@@ -51,12 +51,19 @@ RSpec.feature "Laporans", type: :feature do
         fill_in('Nama output', with: 'raperda test')
         click_on('Simpan Perubahan Sasaran')
       end
+      click_on('Ok')
 
       find('span.sidebar-text', text: 'Laporan').click
       click_on('Output Raperda')
       expect(page).to have_title('Output Raperda')
       expect(page).to have_selector('li.breadcrumb-item', text: 'Output Raperda')
+      expect(page).to have_content('Output Raperda Sasaran Kinerja')
+      within('.card-header') do
+        expect(page).to have_content('Dinas Komunikasi dan Informatika')
+      end
+      expect(page).to have_content('2025')
       expect(page).to have_content('SasaranTest')
+      expect(page).to have_content('Raperda')
       expect(page).to have_content('raperda test')
     end
   end
