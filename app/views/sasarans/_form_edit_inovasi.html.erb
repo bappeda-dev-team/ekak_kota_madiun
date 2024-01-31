@@ -1,0 +1,25 @@
+<%= form_with(model: @sasaran, url: inovasi_sasaran_path,
+              local: false ,html: { data: { action: "ajax:complete->editable-table#processAjax" } }) do |form| %>
+  <div class="field">
+    <%= form.label :hasil_inovasi, class: "form-label" %>
+    <%= form.select(:hasil_inovasi,
+                    ['Bukan Inovasi', 'Inovasi'],
+                    {selected: form.object.hasil_inovasi_sasaran},
+                    {
+                      id: 'pilihan-inovasi',
+                      data: {
+                        controller: 'dropdown',
+                        dropdown_parent_value: '#inovasi-sasaran',
+                        dropdown_jenis_value: 'chain',
+                        dropdown_event_name_value: 'toggle-inovasi-fields',
+                      } } )%>
+  </div>
+  <div class="field" id="nama_inovasi" data-controller="field" data-action="toggle-inovasi-fields@document->field#toggle_visible">
+    <%= form.label :inovasi_sasaran,'Inovasi', class: "form-label" %>
+    <%= form.text_area :inovasi_sasaran, {class: "form-control", placeholder: 'tuliskan inovasi...', value: form.object.inovasi_sasaran} %>
+  </div>
+  <div class="actions d-grid gap-3">
+    <%= form.submit %>
+    <button type="button" class="btn btn-danger w-100" aria-label="Close" data-action="editable-table#closeForm">Batal</button>
+  </div>
+<% end %>

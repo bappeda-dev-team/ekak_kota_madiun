@@ -1,14 +1,30 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th>Hasil Output</th>
-      <th>Nama Output</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="align-middle"><%= sasaran.metadata&.dig("hasil_output") %></td>
-      <td class="align-middle"><%= sasaran.metadata&.dig("nama_output") || '-' %></td>
-    </tr>
-  </tbody>
-</table>
+<div data-controller='editable-table'>
+  <div class="form-edit d-none" data-editable-table-target="form">
+  </div>
+
+  <table class="table" data-editable-table-target="main">
+    <thead>
+      <tr>
+        <th>Hasil Output</th>
+        <th>Nama Output</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="align-middle"><%= sasaran.metadata&.dig("hasil_output") %></td>
+        <td class="align-middle"><%= sasaran.metadata&.dig("nama_output") || '-' %></td>
+        <td class="align-middle">
+          <%= link_to edit_output_sasaran_path(sasaran),
+           remote: true, class: 'btn btn-outline-info',
+           data: {
+             action: 'ajax:complete->editable-table#edit:prevent',
+           } do %>
+            <span class="fas fa-pencil"></span>
+            <span>Edit Hasil Output</span>
+          <% end %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

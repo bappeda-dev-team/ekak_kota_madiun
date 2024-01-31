@@ -11,7 +11,7 @@
       </div>
     </div>
   </div>
-  <% unless diajukan? %>
+  <% unless diajukan? || sasaran.output_inovasi_terisi? %>
     <div class="card-body" id="inovasi-sasaran">
       <%= form_with(model: sasaran,url: inovasi_sasaran_path,
                     local: false,
@@ -48,7 +48,9 @@
   <% end %>
   <div class="card-body">
     <div class="table-responsive" id="sasaran-inovasi">
-      <%= render 'sasarans/hasil_inovasi', sasaran: sasaran %>
+      <% if sasaran.output_inovasi_terisi? %>
+        <%= render 'sasarans/hasil_inovasi', sasaran: sasaran %>
+      <% end %>
     </div>
   </div>
   <hr>

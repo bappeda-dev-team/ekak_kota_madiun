@@ -1,12 +1,27 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th>Inovasi</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="align-middle"><%= sasaran.metadata&.dig("inovasi_sasaran") %></td>
-    </tr>
-  </tbody>
-</table>
+<div data-controller='editable-table'>
+  <div class="form-edit d-none" data-editable-table-target="form">
+  </div>
+
+  <table class="table" data-editable-table-target="main">
+    <thead>
+      <tr>
+        <th>Inovasi</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="align-middle"><%= sasaran.metadata&.dig("inovasi_sasaran") %></td>
+        <td class="align-middle">
+          <%= link_to edit_inovasi_sasaran_path(sasaran),
+           remote: true, class: 'btn btn-outline-info',
+           data: {
+             action: 'ajax:complete->editable-table#edit:prevent',
+           } do %>
+            <span class="fas fa-pencil"></span>
+            <span>Edit Inovasi</span>
+          <% end %>
+      </tr>
+    </tbody>
+  </table>
+</div>

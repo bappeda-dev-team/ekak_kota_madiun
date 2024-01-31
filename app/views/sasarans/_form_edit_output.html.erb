@@ -1,0 +1,26 @@
+<%= form_with(model: @sasaran, url: hasil_output_sasaran_path,
+              local: false ,html: { data: { action: "ajax:complete->editable-table#processAjax" } }) do |form| %>
+  <div class="field">
+    <%= form.label :hasil_output, class: "form-label" %>
+    <%= form.select(:hasil_output,
+                    ['Bukan Raperda','Raperda', 'Raperwal', 'Rancang Surat Keputusan'],
+                    {selected: form.object.output_sasaran},
+                    {
+                      id: 'pilihan-raperda',
+                      class: 'form-control',
+                      data: {
+                        controller: 'dropdown',
+                        dropdown_parent_value: '#raperda-sasaran',
+                        dropdown_jenis_value: 'chain',
+                        dropdown_event_name_value: 'toggle-raperda-fields',
+                      } } )%>
+  </div>
+  <div class="field" id="nama_raperda" data-controller="field" data-action="toggle-raperda-fields@document->field#toggle_visible">
+    <%= form.label :nama_output,'Nama output', class: "form-label" %>
+    <%= form.text_area :nama_output, {class: "form-control",  placeholder: 'tuliskan nama perda / perwal / SK', value: form.object.nama_output_sasaran} %>
+  </div>
+  <div class="actions d-grid gap-3">
+    <%= form.submit %>
+    <button type="button" class="btn btn-danger w-100" aria-label="Close" data-action="editable-table#closeForm">Batal</button>
+  </div>
+<% end %>

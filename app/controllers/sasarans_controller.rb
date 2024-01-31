@@ -487,6 +487,16 @@ class SasaransController < ApplicationController
     end
   end
 
+  def edit_output
+    @sasaran = Sasaran.find(params[:id])
+    render partial: 'form_edit_output'
+  end
+
+  def edit_inovasi
+    @sasaran = Sasaran.find(params[:id])
+    render partial: 'form_edit_inovasi'
+  end
+
   private
 
   def errors_content(sasaran)

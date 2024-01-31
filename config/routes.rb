@@ -382,6 +382,8 @@ Rails.application.routes.draw do
       get :rekap_sasaran
     end
     member do
+      get :edit_inovasi
+      get :edit_output
       get :data_detail
       get :rencana_aksi
       get :subkegiatan
