@@ -23,6 +23,9 @@ module LaporanItemHelper
       { title: 'Output Raperda', href: output_raperda_laporans_path,
         icon: 'fas fa-book-open',
         identifier: 'laporan-output-raperda' },
+      { title: 'Inovasi Sasaran Kinerja', href: inovasi_sasaran_kinerja_laporans_path,
+        icon: 'fas fa-book-open',
+        identifier: 'laporan-inovasi-sasaran-kinerja' },
       # {
       #   title: 'Gender', href: "#",
       #   multi: true, collections: gender_items,
