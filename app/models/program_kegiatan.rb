@@ -430,7 +430,7 @@ class ProgramKegiatan < ApplicationRecord
       indikator: indikator.indikator,
       target: indikator.target,
       satuan: indikator.satuan,
-      pagu: indikator.pagu
+      pagu: indikator.sum_pagu_renstra(sub_jenis: 'Subkegiatan')
     }
   rescue NoMethodError
     {
@@ -449,7 +449,7 @@ class ProgramKegiatan < ApplicationRecord
       indikator: indikator.indikator,
       target: indikator.target,
       satuan: indikator.satuan,
-      pagu: indikator.pagu
+      pagu: indikator.sum_pagu_renstra(sub_jenis: 'Subkegiatan')
     }
   rescue NoMethodError
     {
