@@ -58,6 +58,7 @@ export default class extends Controller {
     } else {
       const target = document.getElementById(event.params.target);
 
+      // TODO: ubah ke switch case
       if (target != null && typeof target != "undefined") {
         if (event.params.type == "append") {
           target.insertAdjacentHTML("afterend", html_content);
@@ -68,6 +69,14 @@ export default class extends Controller {
         } else if (event.params.type == "afterbegin") {
           target.insertAdjacentHTML("afterbegin", html_content);
           this.animateBackground(target.firstChild);
+        } else if (event.params.type == "nested") {
+          const nestedRows = this.findNestedRow(target);
+          nestedRows.forEach((e) => e.remove());
+          target.outerHTML = html_content;
+          const new_target = document.getElementById(event.params.target);
+          const new_nesteds = this.findNestedRow(new_target);
+          this.animateBackground(new_target);
+          new_nesteds.forEach((e) => this.animateBackground(e));
         } else {
           target.innerHTML = html_content;
           this.animateBackground(target);
@@ -81,6 +90,20 @@ export default class extends Controller {
         this.modalHider();
       }
     }
+  }
+
+  findNestedRow(target) {
+    const elements = [];
+    let nextSibling = target.nextElementSibling;
+    while (nextSibling) {
+      if (nextSibling.classList.contains("skip")) {
+        elements.push(nextSibling);
+        nextSibling = nextSibling.nextElementSibling;
+      } else {
+        nextSibling = false;
+      }
+    }
+    return elements;
   }
 
   animateBackground(target) {

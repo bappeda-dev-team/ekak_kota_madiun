@@ -3,7 +3,7 @@
                 controller: 'form-ajax',
                 action: 'ajax:success->form-ajax#successResponse',
                 form_ajax_target_param: dom_id(@strategi_kota),
-                form_ajax_type_param: '',
+                form_ajax_type_param: 'nested',
                 action: 'ajax:complete->form-ajax#processAjax'
 }) do |form| %>
   <%= form.hidden_field :tematik_id %>
