@@ -55,8 +55,6 @@ module Api
       @tahun = params[:tahun]
       @kode_opd = params[:kode_opd]
       @opd = case @kode_opd
-             when '4.02.0.00.0.00.01.0000'
-               Opd.find_by(kode_unik_opd: '4.02.0.00.0.00.01.00')
              when '7.01.0.00.0.00.03.0000'
                Opd.find_by(kode_unik_opd: '7.01.0.00.0.00.03.00')
              else
