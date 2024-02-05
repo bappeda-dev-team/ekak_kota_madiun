@@ -91,5 +91,19 @@ RSpec.feature "PerencanaanKota", type: :feature do
       expect(page).to have_content('Edit Sasaran Kota')
       expect(page).to have_content('indikator kota a')
     end
+
+    scenario 'admin should not see sasaran kota outside the tahun scope', js: true do
+      login_as admin_kota
+
+      visit root_path
+
+      create_cookie('opd', 'test_opd')
+      create_cookie('tahun', '2030')
+
+      find('span.sidebar-text', text: 'Perencanaan Kota').click
+      click_on('Sasaran Kota')
+
+      expect(page).to_not have_content('strategi kota a')
+    end
   end
 end
