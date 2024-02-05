@@ -9,8 +9,12 @@
   <%= form.hidden_field :tematik_id %>
   <div class="field">
     <%= form.label :tujuan_kota, class: 'form-label' %>
-    <%= form.select :id_tujuan, TujuanKota.all.collect {|tk| [ tk.tujuan, tk.kode_tujuan] },{ include_blank: true, required: true },
-     { class: 'form-control', data: { controller: 'dropdown', placeholder: 'Pilih Tujuan Kota' } }%>
+    <%= form.select :id_tujuan, TujuanKota.all.collect {|tk| [ tk.tujuan, tk.kode_tujuan] },{ include_blank: true  },
+     { required: true,
+       class: 'form-control', data: {
+         controller: 'dropdown',
+         dropdown_parent_value: '#form-modal',
+         placeholder: 'Pilih Tujuan Kota' } }%>
   </div>
 
   <div class="field">
@@ -20,14 +24,22 @@
 
   <div class="field">
     <%= form.label :tahun_awal, class: 'form-label' %>
-    <%= form.select :tahun_awal,[2020, 2021, 2022, 2023, 2024],{},
-     { class: 'form-control', data: { controller: 'dropdown' } }%>
+    <%= form.select(:tahun_awal, options_for_select(Tahun.pluck(:tahun), form.object.tahun_awal), {include_blank: true},
+                    {required: true,
+                     data: {"placeholder": "Pilih Tahun",
+                            controller: 'dropdown',
+                            dropdown_parent_value: '#form-modal'
+    }}) %>
   </div>
 
   <div class="field">
     <%= form.label :tahun_akhir, class: 'form-label' %>
-    <%= form.select :tahun_akhir,[2020, 2021, 2022, 2023, 2024],{},
-     { class: 'form-control', data: { controller: 'dropdown' } }%>
+    <%= form.select(:tahun_akhir, options_for_select(Tahun.pluck(:tahun), form.object.tahun_akhir), {include_blank: true},
+                    {required: true,
+                     data: {"placeholder": "Pilih Tahun",
+                            controller: 'dropdown',
+                            dropdown_parent_value: '#form-modal'
+    }}) %>
   </div>
 
   <div class="actions">

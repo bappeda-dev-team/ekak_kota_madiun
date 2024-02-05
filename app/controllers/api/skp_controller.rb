@@ -102,6 +102,7 @@ module Api
                                   tahun: @tahun).map(&:pohonable)
                            .compact
                            .select { |sasaran| sasaran.sasaran_kotum.present? }
+                           .reject { |sasaran| sasaran.sasaran_kotum.sasaran.blank? }
     end
   end
 end

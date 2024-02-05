@@ -38,6 +38,10 @@ class TujuanKota < ApplicationRecord
                          .where("tahun_akhir::integer >= ?::integer", tahun)
                      }
 
+  def to_s
+    tujuan
+  end
+
   def tahun_awal_akhir
     "#{tahun_awal} - #{tahun_akhir}"
   end
