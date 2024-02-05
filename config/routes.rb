@@ -665,6 +665,7 @@ Rails.application.routes.draw do
       post :tujuan_opd
       post :sasaran_opd
       post :faktor_penghambat_skp
+      post :sasaran_kota
     end
     namespace :skp_client do
       post :sync_jabatan

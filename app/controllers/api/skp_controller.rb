@@ -95,5 +95,13 @@ module Api
       skp_client = Api::SkpClient.new(id_rencana, '')
       @penghambats = skp_client.get_faktor_penghambat.uniq
     end
+
+    def sasaran_kota
+      @tahun = params[:tahun]
+      @sasaran_kota = Pohon.where(pohonable_type: %w[SubTematik SubSubTematik],
+                                  tahun: @tahun).map(&:pohonable)
+                           .compact
+                           .select { |sasaran| sasaran.sasaran_kotum.present? }
+    end
   end
 end
