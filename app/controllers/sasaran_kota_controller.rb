@@ -1,5 +1,6 @@
 class SasaranKotaController < ApplicationController
   before_action :set_sasaran_kota, only: %i[show edit update destroy]
+  layout false, only: %i[new edit]
 
   def index
     handle_filters
@@ -8,19 +9,25 @@ class SasaranKotaController < ApplicationController
   def show; end
 
   def new
-    @sasaran_kota = SasaranKotum.new
+    @strategi_kota = Tematik.find(params[:tematik_id]).id
+    @sasaran_kota = SasaranKotum.new(tematik_id: @strategi_kota)
   end
 
   def edit; end
 
   def create
     @sasaran_kota = SasaranKotum.new(sasaran_kota_params)
-    respond_to do |format|
-      if @sasaran_kota.save
-        format.html { redirect_to sasaran_kota_path, success: 'Sasaran ditambahkan' }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-      end
+    if @sasaran_kota.save
+      strategi_kota = Tematik.find(sasaran_kota_params[:tematik_id])
+      render json: { resText: 'Sasaran ditambahkan',
+                     html_content: html_content({ sasaran: strategi_kota },
+                                                partial: 'sasaran_kota/sasaran_kota') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ sasaran_kotum: @sasaran_kota },
+                                                 partial: 'sasaran_kota/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
@@ -50,7 +57,7 @@ class SasaranKotaController < ApplicationController
   end
 
   def sasaran_kota_params
-    params.require(:sasaran_kotum).permit(:sasaran, :tahun_awal, :tahun_akhir, :id_tujuan, :id_sasaran,
+    params.require(:sasaran_kotum).permit(:sasaran, :tahun_awal, :tahun_akhir, :id_tujuan, :id_sasaran, :tematik_id,
                                           indikator_sasarans_params)
   end
 

@@ -17,5 +17,6 @@ FactoryBot.define do
     keterangan { "MyString" }
     tematik_ref_id { "" }
     type { "" }
+    tahun { "2025" }
   end
 end

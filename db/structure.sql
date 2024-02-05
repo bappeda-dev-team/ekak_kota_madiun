@@ -2578,7 +2578,8 @@ CREATE TABLE public.sasaran_kota (
     sasaran character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    kode_sasaran character varying
+    kode_sasaran character varying,
+    tematik_id bigint
 );
 
 
@@ -5408,6 +5409,13 @@ CREATE UNIQUE INDEX index_sasaran_kota_on_id_sasaran ON public.sasaran_kota USIN
 
 
 --
+-- Name: index_sasaran_kota_on_tematik_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_sasaran_kota_on_tematik_id ON public.sasaran_kota USING btree (tematik_id);
+
+
+--
 -- Name: index_sasaran_opds_on_id_sasaran; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -5998,6 +6006,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240109050012'),
 ('20240122040639'),
 ('20240123053655'),
-('20240123060506');
+('20240123060506'),
+('20240205190144');
 
 

@@ -15,10 +15,12 @@
 #  visi         :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  tematik_id   :bigint
 #
 # Indexes
 #
 #  index_sasaran_kota_on_id_sasaran  (id_sasaran) UNIQUE
+#  index_sasaran_kota_on_tematik_id  (tematik_id)
 #
 require 'rails_helper'
 

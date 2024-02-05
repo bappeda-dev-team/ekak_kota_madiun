@@ -1,0 +1,28 @@
+<% rowspan = sasaran.indikators.size + 1 %>
+<tr>
+  <td rowspan="<%= rowspan %>" class="border"></td>
+  <td rowspan="<%= rowspan %>" class="text-wrap border"><%= sasaran %></td>
+  <td rowspan="<%= rowspan %>" class="text-wrap border"><%= sasaran.sasaran_kotum.to_s %></td>
+  <td rowspan="<%= rowspan %>" class="border">
+    <%= link_to new_sasaran_kotum_path(tematik_id: sasaran.id), remote: true,
+     data: {
+       controller: 'form-modal',
+       action: 'ajax:complete->form-modal#success:prevent',
+       bs_toggle: 'modal',
+       bs_target: '#form-modal'
+     },
+     class: 'btn btn-outline-info' do %>
+      <i class="fa fa-edit me-2"></i>
+      <span>Edit</span>
+    <% end %>
+  </td>
+  <td colspan="3" class="p-0 m-0 border-0"></td>
+  <td class="text-wrap border" rowspan="<%= rowspan %>"><%= sasaran.keterangan %></td>
+</tr>
+<% sasaran.indikators.each do |indikator| %>
+  <tr class="skip">
+    <td class="text-wrap border"><%= indikator %></td>
+    <td class="border"><%= indikator.target %></td>
+    <td class="border"><%= indikator.satuan %></td>
+  </tr>
+<% end %>
