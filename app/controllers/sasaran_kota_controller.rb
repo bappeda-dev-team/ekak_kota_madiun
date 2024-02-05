@@ -9,11 +9,13 @@ class SasaranKotaController < ApplicationController
   def show; end
 
   def new
-    @strategi_kota = Tematik.find(params[:tematik_id]).id
-    @sasaran_kota = SasaranKotum.new(tematik_id: @strategi_kota)
+    @strategi_kota = Tematik.find(params[:tematik_id])
+    @sasaran_kota = SasaranKotum.new(tematik: @strategi_kota)
   end
 
-  def edit; end
+  def edit
+    @strategi_kota = @sasaran_kota.tematik
+  end
 
   def create
     @sasaran_kota = SasaranKotum.new(sasaran_kota_params)
@@ -32,12 +34,17 @@ class SasaranKotaController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @sasaran_kota.update(sasaran_kota_params)
-        format.html { redirect_to sasaran_kota_path, success: 'Sukses' }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-      end
+    if @sasaran_kota.update(sasaran_kota_params)
+      strategi_kota = Tematik.find(sasaran_kota_params[:tematik_id])
+      render json: { resText: 'Sasaran ditambahkan',
+                     html_content: html_content({ sasaran: strategi_kota },
+                                                partial: 'sasaran_kota/sasaran_kota') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ sasaran_kotum: @sasaran_kota },
+                                                 partial: 'sasaran_kota/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
