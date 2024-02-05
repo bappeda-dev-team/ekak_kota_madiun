@@ -66,13 +66,13 @@ module Api
     def sasaran_opd
       @tahun = params[:tahun]
       @kode_opd = params[:kode_opd]
-      @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+      queries = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
+      @opd = queries.opd
       @kepala_opd = @opd.eselon_dua_opd
-
-      @sasaran_opds = @kepala_opd.sasarans
-                                 .where("sasarans.tahun ILIKE ?", @tahun)
-                                 .dengan_manual_ik
-                                 .select { |s| s.strategi.present? }
+      strategi_opd = queries.strategi_opd.includes(:sasarans).filter do |str_opd|
+        str_opd.strategi_asli&.role&.include?('kota')
+      end
+      @sasaran_opds = strategi_opd.map(&:sasarans).compact.flatten
     end
 
     def sasaran_pohon_kinerja
