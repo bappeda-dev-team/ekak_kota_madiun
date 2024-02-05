@@ -14,32 +14,34 @@
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        <caption>Jumlah Sasaran Kota Tahun <%= @tahun %>: <strong><%= @sasaran_kota.size %> Sasaran</strong></caption>
+        <caption class="p-3">Jumlah Sasaran Kota Tahun <%= @tahun %>: <strong><%= @sasaran_kota.size %> Sasaran</strong></caption>
         <table class="table counter">
           <thead>
             <tr>
-              <th class="border-bottom" scope="col">No.</th>
-              <th class="border-bottom" scope="col">Sasaran Kota</th>
-              <th class="border-bottom" scope="col">Indikator</th>
-              <th class="border-bottom" scope="col">Target</th>
-              <th class="border-bottom" scope="col">Satuan</th>
-              <th class="border-bottom" scope="col">Keterangan</th>
+              <th class="border" scope="col">No.</th>
+              <th class="border" scope="col">Strategi Kota</th>
+              <th class="border" scope="col">Sasaran Kota</th>
+              <th class="border" scope="col">Indikator</th>
+              <th class="border" scope="col">Target</th>
+              <th class="border" scope="col">Satuan</th>
+              <th class="border" scope="col">Keterangan</th>
             </tr>
           </thead>
           <tbody id="sub-sub-tematik">
             <% @sasaran_kota.each.with_index(1) do |sasaran, i| %>
               <% rowspan = sasaran.indikators.size + 1 %>
               <tr>
-                <td rowspan="<%= rowspan %>"></td>
-                <td rowspan="<%= rowspan %>"><%= sasaran %></td>
+                <td rowspan="<%= rowspan %>" class="border"></td>
+                <td rowspan="<%= rowspan %>" class="text-wrap border"><%= sasaran %></td>
+                <td rowspan="<%= rowspan %>" class="text-wrap border"><%= sasaran %></td>
                 <td colspan="3" class="p-0 m-0 border-0"></td>
-                <td class="text-wrap" rowspan="<%= rowspan %>"><%= sasaran.keterangan %></td>
+                <td class="text-wrap border" rowspan="<%= rowspan %>"><%= sasaran.keterangan %></td>
               </tr>
               <% sasaran.indikators.each do |indikator| %>
                 <tr class="skip">
-                  <td><%= indikator %></td>
-                  <td><%= indikator.target %></td>
-                  <td><%= indikator.satuan %></td>
+                  <td class="text-wrap border"><%= indikator %></td>
+                  <td class="border"><%= indikator.target %></td>
+                  <td class="border"><%= indikator.satuan %></td>
                 </tr>
               <% end %>
             <% end %>
