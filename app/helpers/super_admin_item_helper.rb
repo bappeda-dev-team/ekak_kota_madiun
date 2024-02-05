@@ -85,14 +85,6 @@ module SuperAdminItemHelper
         icon: 'fas fa-landmark', identifier: 'tujuan_kota'
       },
       {
-        title: 'Isu Strategis', href: isu_strategis_kota_path,
-        icon: 'fas fa-tasks', identifier: 'isu_strategis_kota'
-      },
-      {
-        title: 'Strategi Kota', href: strategi_kota_path,
-        icon: 'far fa-clipboard', identifier: 'strategi_kota'
-      },
-      {
         title: 'Sasaran Kota', href: sasaran_kota_path,
         icon: 'fas fa-bullseye', identifier: 'sasaran_kota'
       },

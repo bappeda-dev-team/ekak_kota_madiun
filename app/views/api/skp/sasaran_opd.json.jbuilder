@@ -11,6 +11,7 @@ json.data do
 
     json.strategi_kota_id sasaran_opd.strategi.strategi_asli.pohon.parent_pohon.pohonable_id
     json.strategi_kota sasaran_opd.strategi.strategi_asli.pohon.parent_pohon.pohonable.to_s
+    json.sasaran_kota sasaran_opd.strategi.strategi_asli.pohon.parent_pohon.pohonable&.sasaran_kotum.to_s
 
     json.strategi_opd sasaran_opd.strategi.to_s
     json.sasaran_opd sasaran_opd.sasaran_kinerja
