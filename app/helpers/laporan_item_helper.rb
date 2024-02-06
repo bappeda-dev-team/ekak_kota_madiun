@@ -20,15 +20,18 @@ module LaporanItemHelper
       { title: 'Gender', href: laporan_gap_genders_path,
         icon: 'fas fa-people-carry',
         identifier: 'genders/laporan_gap' },
-      { title: 'Output Raperda', href: output_raperda_laporans_path,
-        icon: 'fas fa-book-open',
-        identifier: 'laporan-output-raperda' },
+      {
+        title: 'Rancangan Peraturan', href: "#",
+        multi: true, collections: peraturan_items,
+        id_target: 'peraturan-items',
+        icon: 'fas fa-book-reader', identifier: 'peraturan'
+      },
       { title: 'Inovasi Sasaran Kinerja', href: inovasi_sasaran_kinerja_laporans_path,
         icon: 'fas fa-book-open',
         identifier: 'laporan-inovasi-sasaran-kinerja' },
       { title: 'Sasaran Penduduk', href: sasaran_penduduk_laporans_path,
         icon: 'fas fa-book-open',
-        identifier: 'laporan-sasaran-kemiskinan' },
+        identifier: 'laporan-sasaran-kemiskinan' }
       # {
       #   title: 'Gender', href: "#",
       #   multi: true, collections: gender_items,
@@ -88,6 +91,20 @@ module LaporanItemHelper
       { title: 'LPPD', href: indikator_lppd_laporans_path, identifier: 'laporan_indikator_lppd' },
       { title: 'SPM', href: indikator_spm_laporans_path, identifier: 'laporan_indikator_spm' },
       { title: 'SDGs', href: indikator_sdgs_laporans_path, identifier: 'laporan_indikator_sdgs' }
+    ]
+  end
+
+  def peraturan_items
+    [
+      { title: 'Perda', href: output_raperda_laporans_path,
+        icon: 'fas fa-book-open',
+        identifier: 'laporan-output-raperda' },
+      { title: 'Perwal', href: output_perwal_laporans_path,
+        icon: 'fas fa-book-open',
+        identifier: 'laporan-output-raperda' },
+      { title: 'SK Walikota', href: output_sk_walikota_laporans_path,
+        icon: 'fas fa-book-open',
+        identifier: 'laporan-output-raperda' }
     ]
   end
 end

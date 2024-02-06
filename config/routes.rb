@@ -484,6 +484,8 @@ Rails.application.routes.draw do
       get :sasaran_penduduk
       get :inovasi_sasaran_kinerja
       get :output_raperda
+      get :output_perwal
+      get :output_sk_walikota
       get :atasan
       get :laporan_kak
       get :laporan_rka
