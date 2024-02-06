@@ -1,11 +1,11 @@
-<%= content_for :html_title, 'Peraturan - Perwal' %>
+<%= content_for :html_title, 'Daftar Rancangan Peraturan Walikota' %>
 <%= content_for :navigation do %>
   <li class="breadcrumb-item" aria-current="page">Laporan</li>
   <li class="breadcrumb-item" aria-current="page">Peraturan</li>
   <li class="breadcrumb-item active" aria-current="page">Perwal</li>
 <% end %>
 <% content_for :view_utama do %>
-  <%= render 'shared/card_layout_subtitle', title: 'Output Perwal Sasaran Kinerja', sub_title: @opd, sub_title_2: @tahun do %>
+  <%= render 'shared/card_layout_subtitle', title: 'Daftar Rancangan Peraturan Walikota', sub_title: @opd, sub_title_2: @tahun do %>
     <div class="table-responsive mb-5 d-grid gap-2">
       <table class="table align-items-center counter">
         <thead class="thead-light">
