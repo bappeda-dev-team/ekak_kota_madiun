@@ -11,6 +11,7 @@
   <% end %>
   <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.output_sasaran %></td>
   <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_output_sasaran %></td>
+  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
 </tr>
 <% row_indikator_sasaran(sasaran).each do |indikator| %>
   <%= indikator %>
