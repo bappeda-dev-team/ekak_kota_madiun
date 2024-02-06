@@ -55,8 +55,40 @@ module Api
       @tahun = params[:tahun]
       @kode_opd = params[:kode_opd]
       @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+      if @opd.nil?
+        render json: {
+          message: 'OPD tidak ditemukan',
+          errors: {
+            kode_opd: @kode_opd
+          }
+        }, status: :not_found
+        return
+      end
+      tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+      periode = Periode.find_tahun_all(tahun_bener)
+      if periode.empty?
+        render json: {
+          message: 'Periode tahun tidak ditemukan',
+          errors: {
+            tahun: @tahun
+          }
+        }, status: :not_found
+        return
+      end
+      @periode = periode.first
+      @tahun_awal = @periode.tahun_awal.to_i
+      @tahun_akhir = @periode.tahun_akhir.to_i
+      @range = (@tahun_awal..@tahun_akhir)
 
       @tujuan_opds = @opd.tujuan_opds
+                         .by_periode(tahun_bener)
+    rescue ActiveRecord::StatementInvalid
+      render json: {
+        message: 'Tahun tidak valid',
+        errors: {
+          tahun: @tahun
+        }
+      }, status: :unprocessable_entity
     end
 
     def sasaran_opd
