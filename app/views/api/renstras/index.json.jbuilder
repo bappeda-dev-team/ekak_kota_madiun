@@ -94,7 +94,7 @@ json.data do
             json.nama_subkegiatan subkegiatan.nama_subkegiatan
             indikator_subkegiatans = subkegiatan.indikator_renstras_new('subkegiatan',
                                                                         @kode_opd)[:indikator_subkegiatan].sort_by(&:tahun)
-            json.indikator_kegiatan @periode do |tahun_subkeg|
+            json.indikator_subkegiatan @periode do |tahun_subkeg|
               json.partial! partial: 'api/renstras/indikator_renstra',
                             locals: { tahun: tahun_subkeg, indikators: indikator_subkegiatans }
             end

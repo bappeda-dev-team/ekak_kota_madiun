@@ -96,6 +96,19 @@ module Api
       @penghambats = skp_client.get_faktor_penghambat.uniq
     end
 
+    def tujuan_kota
+      @tahun = params[:tahun]
+
+      tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+      @periode = Periode.find_tahun(tahun_bener)
+      @tahun_awal = @periode.tahun_awal.to_i
+      @tahun_akhir = @periode.tahun_akhir.to_i
+      @range = (@tahun_awal..@tahun_akhir)
+
+      @tujuan_kota = TujuanKota.all.includes([:indikator_tujuans])
+                               .by_periode(tahun_bener)
+    end
+
     def sasaran_kota
       @tahun = params[:tahun]
       @sasaran_kota = Pohon.where(pohonable_type: %w[SubTematik SubSubTematik],
