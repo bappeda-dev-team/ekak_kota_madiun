@@ -4,7 +4,6 @@ export default class extends Controller {
   static targets = ["field", "password"];
 
   toggleVisible(e) {
-    console.log(e.currentTarget);
     const target = e.currentTarget.previousElementSibling;
     const { type } = e.params;
     if (type == "password") {
