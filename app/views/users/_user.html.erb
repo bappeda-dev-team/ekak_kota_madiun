@@ -80,6 +80,18 @@
           <i class="fa fa-cog me-2"></i>
           <span>Mutasi ASN</span>
         <% end %>
+        <%= link_to update_password_user_path(user),
+         remote: true,
+         data: {
+           controller: 'form-modal',
+           action: 'ajax:complete->form-modal#success:prevent',
+           bs_toggle: 'modal',
+           bs_target: '#form-modal'
+         },
+         class: "btn btn-sm btn-secondary" do %>
+          <i class="fa fa-cog me-2"></i>
+          <span>Update Password</span>
+        <% end %>
         <%= link_to edit_detail_user_path(user),
          remote: true,
          data: {

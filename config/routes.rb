@@ -367,6 +367,8 @@ Rails.application.routes.draw do
       get :mutasi_asn
       post :update_jabatan
       get :edit_profile
+      get :update_password
+      patch :ganti_password
     end
   end
 

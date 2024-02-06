@@ -257,6 +257,31 @@ class UsersController < ApplicationController
     render partial: 'form_mutasi', locals: { user: @user }
   end
 
+  def update_password
+    @user = User.find(params[:id])
+    render partial: 'form_password', locals: { user: @user }
+  end
+
+  def ganti_password
+    @user = User.find(params[:id])
+    password = user_params[:password]
+    confirm_password = user_params[:password_confirmation]
+
+    if password == confirm_password
+      @user.update(password: user_params[:password])
+      render json: { resText: "Password diperbarui",
+                     html_content: html_content({ user: @user },
+                                                partial: 'users/user') }.to_json,
+             status: :ok
+    else
+      @error = 'Password tidak sesuai'
+      render json: { resText: "Password tidak sesuai",
+                     html_content: error_content({ user: @user },
+                                                 partial: 'users/form_password') }.to_json,
+             status: :unprocessable_entity
+    end
+  end
+
   def update_jabatan # rubocop:disable Metrics
     @tahun_asli = params[:user][:tahun]
     @kode_opd = params[:user][:kode_opd]
@@ -296,7 +321,7 @@ class UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:nama, :nik, :password, :kode_opd, :email, :lembaga_id)
+    params.require(:user).permit(:nama, :nik, :password, :kode_opd, :email, :lembaga_id, :password_confirmation)
   end
 
   def user_detail_params
