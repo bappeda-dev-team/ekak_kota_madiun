@@ -227,8 +227,7 @@ class LaporansController < ApplicationController
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     sasaran_user = @opd.users.includes(:sasarans).aktif.eselon4.flat_map(&:sasarans)
     @sasarans = sasaran_user.select do |sasaran|
-      sasaran.tahun == @tahun && ['Raperda', 'Raperwal',
-                                  'Rancang Surat Keputusan'].include?(sasaran.output_sasaran)
+      sasaran.tahun == @tahun && ['Rancang Surat Keputusan'].include?(sasaran.output_sasaran)
     end
   end
 

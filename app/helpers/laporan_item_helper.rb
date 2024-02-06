@@ -31,7 +31,7 @@ module LaporanItemHelper
         identifier: 'laporan-inovasi-sasaran-kinerja' },
       { title: 'Sasaran Penduduk', href: sasaran_penduduk_laporans_path,
         icon: 'fas fa-book-open',
-        identifier: 'laporan-sasaran-kemiskinan' }
+        identifier: 'laporan-sasaran-kemiskinan' },
       # {
       #   title: 'Gender', href: "#",
       #   multi: true, collections: gender_items,

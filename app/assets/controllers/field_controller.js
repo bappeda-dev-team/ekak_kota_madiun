@@ -7,7 +7,7 @@ export default class extends Controller {
     if (data.text.includes("Bukan")) {
       target.classList.add("d-none");
     } else {
-      target.classList.toggle("d-none");
+      target.classList.remove("d-none");
     }
   }
 }
