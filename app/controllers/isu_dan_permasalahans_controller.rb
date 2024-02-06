@@ -2,21 +2,15 @@ class IsuDanPermasalahansController < ApplicationController
   before_action :set_params
 
   def index
-    @opd = Opd.find_by(kode_unik_opd: @kode_unik_opd)
-    @nama_opd = @opd.nama_opd
-    tahun_asli = @tahun.include?('perubahan') ? @tahun.gsub('_perubahan', '') : @tahun
+    isu_dan_permasalahan = IsuDanPermasalahan.new(tahun: @tahun, kode_opd: @kode_unik_opd)
+    @opd = isu_dan_permasalahan.opd
+    @list_bidang_urusans = isu_dan_permasalahan.list_bidang_urusans
+    @isu_strategis = isu_dan_permasalahan.isu_strategis
 
-    # periode = Periode.find_tahun(tahun_asli)
-    # tahun_awal = periode.tahun_awal.to_i
-    # tahun_akhir = periode.tahun_akhir.to_i
-    # @range_tahun = tahun_akhir.downto(tahun_awal).to_a
+    # TODO: hard-coded
     tahun_awal = 2019
     tahun_akhir = 2023
     @range_tahun = tahun_akhir.downto(tahun_awal).to_a
-
-    @isu_strategis = @opd.isu_strategis_opds
-                         .where("tahun ILIKE ?", "%#{tahun_asli}%")
-                         .order(:id).group_by { |isu| "(#{isu.kode_bidang_urusan}) #{isu.bidang_urusan}" }
   end
 
   def add_new
