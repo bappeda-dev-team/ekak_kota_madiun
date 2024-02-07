@@ -21,7 +21,9 @@ export default class extends Controller {
 
         connect() {
                 const url = this.urlValue;
-                const token = "";
+                const token = document.head.querySelector(
+                        'meta[name="csrf-token"]',
+                ).content;
 
                 // Build formData object.
                 let formData = new FormData();
