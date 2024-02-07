@@ -17,7 +17,19 @@ class PerhitungansController < ApplicationController
   end
 
   # GET /perhitungans/1/edit
-  def edit; end
+  def edit
+    param = @perhitungan.deskripsi
+    tahun = @perhitungan.tahun
+    @selected = Search::AllAnggaran
+                .where('kode_barang ILIKE ?', "%#{param}%")
+                .where('tahun = ?', tahun)
+
+    @jenis_anggaran = if @perhitungan.jenis_anggaran.blank?
+                        @selected.first.searchable_type
+                      else
+                        @perhitungan.jenis_anggaran
+                      end
+  end
 
   # POST /perhitungans or /perhitungans.json
   def create
