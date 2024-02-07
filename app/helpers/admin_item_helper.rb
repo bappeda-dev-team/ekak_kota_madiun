@@ -26,6 +26,10 @@ module AdminItemHelper
         icon: 'fas fa-city', identifier: 'tujuan_opds'
       },
       {
+        title: 'Sasaran OPD', href: sasaran_opds_path,
+        icon: 'fas fa-tasks', identifier: 'sasaran_opds'
+      },
+      {
         title: 'Pohon Kinerja Kota', href: kota_pohon_kinerja_index_path,
         icon: 'fas fa-sitemap', identifier: 'pohon_kinerja/kota'
       },

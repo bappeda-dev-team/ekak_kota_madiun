@@ -3,7 +3,11 @@ class SasaranOpdsController < ApplicationController
 
   # GET /sasaran_opds or /sasaran_opds.json
   def index
-    @sasaran_opds = SasaranOpd.all
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @user = @opd.eselon_dua_opd
+    @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
   end
 
   # GET /sasaran_opds/1 or /sasaran_opds/1.json

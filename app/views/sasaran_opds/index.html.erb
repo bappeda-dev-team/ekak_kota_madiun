@@ -1,30 +1,51 @@
-<div class="row">
-  <div class="col-12" data-controller="filter-render">
-    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
-      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
-        <li class="breadcrumb-item">
-          <%= link_to root_path do %>
-            <i class="fas fa-home"></i>
+<%= content_for :html_title, "Sasaran OPD" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Perencaan OPD</li>
+  <li class="breadcrumb-item active" aria-current="page">Sasaran OPD</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout_subtitle', title: "Sasaran OPD",
+             sub_title: @opd, sub_title_2: @tahun do %>
+    <div class="table-responsive">
+      <table class="table align-items-center">
+        <thead class="thead-light">
+          <tr>
+            <th class="border text-center" scope="col">No</th>
+            <th class="border text-center" scope="col">Pohon Kinerja</th>
+            <th class="border text-center" scope="col">Pemilik</th>
+            <th class="border text-center" scope="col">Status</th>
+            <th class="border text-center" scope="col">Rencana Kinerja</th>
+            <th class="border text-center" scope="col">Tahun</th>
+            <th class="border text-center" scope="col">Indikator Rencana Kinerja</th>
+            <th class="border text-center" scope="col">Target</th>
+            <th class="border text-center" scope="col">Satuan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @sasaran_opds.each.with_index(1) do |sasaran, i| %>
+            <tr>
+              <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= i %></td>
+              <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.strategi %></td>
+              <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.user.nama_nip %></td>
+              <td class="border text-center" rowspan="<%= rowspan_sasaran(sasaran) %>">
+                <%= status_sasaran_pokin(sasaran&.status_sasaran) %>
+              </td>
+              <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
+              <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.tahun %></td>
+              <% if sasaran.indikator_sasarans.any? %>
+                <%= indikator_sasaran(sasaran) %>
+              <% else %>
+                <td class="border" colspan="3">
+                  <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
+                </td>
+              <% end %>
+            </tr>
+            <% row_indikator_sasaran(sasaran).each do |indikator| %>
+              <%= indikator %>
+            <% end %>
           <% end %>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">Sasaran OPD</li>
-      </ol>
-    </nav>
-    <% if current_user.has_role? :admin %>
-      <%= render 'shared/filter_card', filter_url: '/filter/sasaran_opd',
-        action: 'ajax:success->filter-render#append'%>
-    <% end %>
-    <div class="card border-0 shadow" id="hasil_filter_opd" data-filter-render-target="results">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Sasaran OPD</h2>
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        ...
-      </div>
+        </tbody>
+      </table>
     </div>
-  </div>
-</div>
+  <% end %>
+<% end %>
