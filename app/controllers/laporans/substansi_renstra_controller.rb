@@ -116,4 +116,10 @@ class Laporans::SubstansiRenstraController < ApplicationController
       prg_v1.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
     end
   end
+
+  def kepegawaian_dan_aset
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+  end
 end

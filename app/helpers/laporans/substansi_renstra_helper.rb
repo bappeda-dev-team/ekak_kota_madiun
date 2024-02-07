@@ -58,6 +58,10 @@ module Laporans::SubstansiRenstraHelper
   def bab_2
     [
       {
+        title: 'Kepegawaian dan Aset', href: laporans_substansi_renstra_kepegawaian_dan_aset_path,
+        identifier: 'substansi-renstra-bab-2-kepegawaian-dan-aset'
+      },
+      {
         title: 'Evaluasi Renstra', href: laporans_substansi_renstra_evaluasi_renstra_path(periode: '2019-2024'),
         identifier: 'substansi-renstra-bab-2-evaluasi-renstra'
       }

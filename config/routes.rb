@@ -519,6 +519,7 @@ Rails.application.routes.draw do
   namespace :laporans do
     namespace :substansi_renstra do
       get :dasar_hukum
+      get :kepegawaian_dan_aset
       get :evaluasi_renstra
       get :permasalahan_isu_strategis
       get :pohon_kinerja

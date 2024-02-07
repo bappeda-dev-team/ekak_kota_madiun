@@ -1,0 +1,10 @@
+<%= content_for :html_title, "Bab 2 - Kepegawaian dan Aset" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Substansi Renstra</li>
+  <li class="breadcrumb-item" aria-current="page">Bab 2</li>
+  <li class="breadcrumb-item active" aria-current="page">Kepegawaian dan Aset</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout_subtitle', title: "Laporan Kepegawaian dan Aset", sub_title: @opd, sub_title_2: @tahun do %>
+  <% end %>
+<% end %>
