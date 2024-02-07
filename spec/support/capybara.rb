@@ -1,4 +1,5 @@
-# require "capybara/rspec"
+require "capybara/rspec"
+require 'capybara/rails'
 Capybara.register_driver :selenium_debug_chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new
 

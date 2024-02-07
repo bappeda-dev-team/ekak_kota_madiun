@@ -3,6 +3,10 @@ require 'rails_helper'
 RSpec.describe "TujuanOpds", type: :feature do
   let(:user) { create(:eselon_4) }
   let(:periode) { create(:periode, tahun_awal: '2025', tahun_akhir: '2026') }
+  let(:urusan) { create(:master_urusan) }
+  let(:bidang_urusan) { create(:master_bidang_urusan) }
+  let(:urusan_rutin) { create(:master_urusan, nama_urusan: 'Rutin', kode_urusan: 'X', id_unik_sipd: 'X') }
+  let(:bidang_urusan_rutin) { create(:master_bidang_urusan, nama_bidang_urusan: 'Rutin', kode_bidang_urusan: 'X.XX', id_unik_sipd: 'X.XX') }
 
   context 'new tujuan opd form' do
     before(:each) do
@@ -63,37 +67,46 @@ RSpec.describe "TujuanOpds", type: :feature do
 
   context 'user admin creating new tujuan opd' do
     before(:each) do
-      admin = create(:admin_opd)
-      login_as admin
+      opd = create(:opd, kode_unik_opd: '2.16.2.20.2.21.04.000')
+      admin = create(:admin_opd, opd: opd)
       periode
-      # setup cookies
+
+      login_as admin
+
       visit root_path
 
-      create_cookie('opd', 'test_opd')
+      # setup cookies
+
+      create_cookie('opd', '2.16.2.20.2.21.04.000')
       create_cookie('tahun', '2025')
     end
-    scenario 'admin open tujuan opd menu create new and get urusan list by kode_opd', js: true do
-      urusan = create(:master_urusan)
-      bidang_urusan = create(:master_bidang_urusan)
+    scenario 'input new tujuan opd', js: true do
+      urusan
+      urusan_rutin
+      bidang_urusan
+      bidang_urusan_rutin
       find('span.sidebar-text', text: 'Perencanaan OPD').click
       click_on 'Tujuan OPD'
 
-      click_on 'Buat Tujuan OPD Baru'
-      select2('URUSAN PEMERINTAHAN WAJIB YANG TIDAK BERKAITAN DENGAN PELAYANAN DASAR', from: 'Urusan')
-      select2('URUSAN PEMERINTAHAN BIDANG KOMUNIKASI DAN INFORMATIKA', from: 'Bidang urusan')
-      fill_in('Tujuan', with: 'Tujuan OPD X')
-      fill_in('Indikator', with: 'Indikator tujuan 1')
-      fill_in('Rumus perhitungan', with: 'rumus a')
-      fill_in('Sumber data', with: 'sumber data xxx')
-      fill_in('tujuan_opd[indikators_attributes][0][targets_attributes][0][target]', with: '10')
-      fill_in('tujuan_opd[indikators_attributes][0][targets_attributes][0][satuan]', with: '%')
-      fill_in('tujuan_opd[indikators_attributes][0][targets_attributes][1][target]', with: '20')
-      fill_in('tujuan_opd[indikators_attributes][0][targets_attributes][1][satuan]', with: '%')
-      click_on 'Simpan Tujuan opd'
+      click_on('Buat Tujuan OPD Baru')
+
+      within('#form-modal-body') do
+        select2(urusan_rutin.nama_urusan, from: 'Urusan')
+        select2(bidang_urusan_rutin.nama_bidang_urusan, from: 'Bidang urusan')
+        fill_in('Tujuan', with: 'tujuan_1')
+        fill_in('Indikator', with: 'indikator_x')
+        fill_in('Rumus perhitungan', with: 'rumus a')
+        fill_in('Sumber data', with: 'sumber data xxx')
+        fill_in('tujuan_opd[indikators_attributes][0][targets_attributes][0][target]', with: '10')
+        fill_in('tujuan_opd[indikators_attributes][0][targets_attributes][0][satuan]', with: '%')
+        fill_in('tujuan_opd[indikators_attributes][0][targets_attributes][1][target]', with: '20')
+        fill_in('tujuan_opd[indikators_attributes][0][targets_attributes][1][satuan]', with: '%')
+        click_on 'Simpan Tujuan opd'
+      end
       click_on 'Ok'
 
-      expect(page).to have_content('Tujuan OPD X')
-      expect(page).to have_content('Indikator tujuan 1')
+      expect(page).to have_content('tujuan_1')
+      expect(page).to have_content('indikator_x')
       expect(page).to have_content('rumus a')
       expect(page).to have_content('sumber data xxx')
       expect(page).to have_content('10')

@@ -407,15 +407,19 @@ class Opd < ApplicationRecord
     kode_urusan = kode_urusans.map do |kode|
       kode.first
     end
+    master_urusan_rutin = Master::Urusan.where(kode_urusan: 'X').uniq(&:kode_urusan)
     master_urusan = Master::Urusan.where(kode_urusan: kode_urusan).uniq(&:kode_urusan)
     urusan_unique = Set.new(master_urusan)
-    urusan_unique.to_a
+    urusans = urusan_unique.to_a
+    urusans.prepend(master_urusan_rutin).flatten
   end
 
   def id_bidang_urusans
+    master_bidang_urusan_rutin = Master::BidangUrusan.where(kode_bidang_urusan: 'X.XX').uniq(&:kode_bidang_urusan)
     master_bidang_urusan = Master::BidangUrusan.where(kode_bidang_urusan: kode_urusans).uniq(&:kode_bidang_urusan)
     bidang_urusan_unique = Set.new(master_bidang_urusan)
-    bidang_urusan_unique.to_a
+    bidang_urusans = bidang_urusan_unique.to_a
+    bidang_urusans.prepend(master_bidang_urusan_rutin).flatten
   end
 
   def sasaran_subkegiatans(tahun)

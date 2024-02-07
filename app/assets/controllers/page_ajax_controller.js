@@ -1,53 +1,45 @@
-// Visit The Stimulus Handbook for more details 
+// Visit The Stimulus Handbook for more details
 // https://stimulusjs.org/handbook/introduction
-// 
+//
 // This example controller works with specially annotated HTML like:
 //
 // <div data-controller="hello">
 //   <h1 data-target="hello.output"></h1>
 // </div>
 
-import { Controller } from "stimulus"
+import { Controller } from "stimulus";
 
 export default class extends Controller {
-        static targets = ['results']
+        static targets = ["results"];
         static values = {
                 opd: String,
                 tahun: String,
                 url: String,
                 jenisUsulan: String,
-                reqtype: { type: String, default: 'POST' }
-        }
+                reqtype: { type: String, default: "POST" },
+        };
 
         connect() {
-                const url = this.urlValue
-                const token = document.head.querySelector('meta[name="csrf-token"]').content
+                const url = this.urlValue;
+                const token = "";
 
                 // Build formData object.
                 let formData = new FormData();
-                formData.append('kode_opd', this.opdValue);
-                formData.append('tahun', this.tahunValue);
-                formData.append('jenis', this.jenisUsulanValue);
-                formData.append('authenticity_token', token);
+                formData.append("kode_opd", this.opdValue);
+                formData.append("tahun", this.tahunValue);
+                formData.append("jenis", this.jenisUsulanValue);
+                formData.append("authenticity_token", token);
 
-                fetch(url,
-                        {
-                                body: formData,
-                                method: this.reqtypeValue
+                fetch(url, {
+                        body: formData,
+                        method: this.reqtypeValue,
+                })
+                        .then((response) => response.text())
+                        .then((text) => {
+                                this.resultsTarget.innerHTML = text;
                         })
-                        .then(
-                                response => response.text()
-                        )
-                        .then(
-                                text => {
-                                        this.resultsTarget.innerHTML = text
-                                }
-                        ).catch(
-                                e => {
-                                        this.resultsTarget.innerHTML = "Terjadi Kesalahan"
-                                }
-
-                        )
+                        .catch((e) => {
+                                this.resultsTarget.innerHTML = "Terjadi Kesalahan";
+                        });
         }
 }
-
