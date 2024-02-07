@@ -97,9 +97,7 @@ module Api
       queries = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
       @opd = queries.opd
       @kepala_opd = @opd.eselon_dua_opd
-      strategi_opd = queries.strategi_opd.includes(:sasarans).filter do |str_opd|
-        str_opd.strategi_asli&.role&.include?('kota')
-      end
+      strategi_opd = queries.strategi_opd
       @sasaran_opds = strategi_opd.map(&:sasarans).compact.flatten
     end
 

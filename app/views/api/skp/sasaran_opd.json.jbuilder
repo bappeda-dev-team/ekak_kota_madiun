@@ -8,11 +8,6 @@ json.data do
   json.jumlah_sasaran_valid @sasaran_opds.size
   json.sasaran_opds @sasaran_opds do |sasaran_opd|
     json.id_sasaran sasaran_opd.id
-
-    json.strategi_kota_id sasaran_opd.strategi.strategi_asli.pohon.parent_pohon.pohonable_id
-    json.strategi_kota sasaran_opd.strategi.strategi_asli.pohon.parent_pohon.pohonable.to_s
-    json.sasaran_kota sasaran_opd.strategi.strategi_asli.pohon.parent_pohon.pohonable&.sasaran_kotum.to_s
-
     json.strategi_opd sasaran_opd.strategi.to_s
     json.sasaran_opd sasaran_opd.sasaran_kinerja
     json.tahun sasaran_opd.tahun
