@@ -10,100 +10,103 @@
     </div>
   <% end %>
   <% tahun_options = Search::AllAnggaran.distinct.order(tahun: :asc).pluck(:tahun).compact %>
-  <div class="field">
-    <%= form.label :tahun, {class: "form-label"} %>
-    <%= form.select :tahun, tahun_options, {include_blank: true} ,
-    { class: "form-control",
-      data: { "placeholder": "Tahun Anggaran",
-              controller: 'dropdown',
-              dropdown_jenis_value: 'tahun_anggaran',
-              dropdown_parent_value: '#form-perhitungan',
-              dropdown_tahun_value: "#{form.object.tahun}",
-              dropdown_event_name_value: 'tahun-ssh',
-      }} %>
-  </div>
-  <div class="field">
-    <%= form.label :jenis_anggaran, {class: "form-label"} %>
-    <%= form.select :jenis_anggaran, [], {include_blank: true} ,
-    { class: "form-control",
-      data: { "placeholder": "Jenis Standar Harga",
-              controller: 'dropdown',
-              dropdown_jenis_value: 'jenis_anggaran',
-              dropdown_url_value: '/anggaran_jenis_search.json',
-              dropdown_parent_value: '#form-perhitungan',
-              dropdown_event_name_value: 'jenis-ssh',
-              dropdown_tipe_value: "#{@jenis_anggaran}",
-      }} %>
-  </div>
-  <div class="field">
-    <%= form.label :uraian, {class: "form-label"} %>
-    <%= form.select :deskripsi, [], {include_blank: true} ,
-    { class: "form-control",
-      data: { "placeholder": "Pilih Uraian",
-              controller: 'dropdown',
-              dropdown_jenis_value: 'uraian_anggaran',
-              dropdown_url_value: '/anggaran_ssh_search.json',
-              dropdown_parent_value: '#form-perhitungan',
-              dropdown_uraian_value: "#{form.object.deskripsi}",
-              dropdown_tahun_value: "#{form.object.tahun}",
-              dropdown_tipe_value: "#{form.object.jenis_anggaran}",
-              action: 'change-select@document->dropdown#fill_spesifikasi_satuan_harga
+  <div class="modal-body">
+    <div class="field">
+      <%= form.label :tahun, {class: "form-label"} %>
+      <%= form.select :tahun, tahun_options, {include_blank: true} ,
+       { class: "form-control",
+         data: { "placeholder": "Tahun Anggaran",
+           controller: 'dropdown',
+           dropdown_jenis_value: 'tahun_anggaran',
+           dropdown_parent_value: '#form-perhitungan',
+           dropdown_tahun_value: "#{form.object.tahun}",
+           dropdown_event_name_value: 'tahun-ssh',
+       }} %>
+    </div>
+    <div class="field">
+      <%= form.label :jenis_anggaran, {class: "form-label"} %>
+      <%= form.select :jenis_anggaran, [], {include_blank: true} ,
+       { class: "form-control",
+         data: { "placeholder": "Jenis Standar Harga",
+           controller: 'dropdown',
+           dropdown_jenis_value: 'jenis_anggaran',
+           dropdown_url_value: '/anggaran_jenis_search.json',
+           dropdown_parent_value: '#form-perhitungan',
+           dropdown_event_name_value: 'jenis-ssh',
+           dropdown_tipe_value: "#{@jenis_anggaran}",
+       }} %>
+    </div>
+    <div class="field">
+      <%= form.label :uraian, {class: "form-label"} %>
+      <%= form.select :deskripsi, [], {include_blank: true} ,
+       { class: "form-control",
+         data: { "placeholder": "Pilih Uraian",
+           controller: 'dropdown',
+           dropdown_jenis_value: 'uraian_anggaran',
+           dropdown_url_value: '/anggaran_ssh_search.json',
+           dropdown_parent_value: '#form-perhitungan',
+           dropdown_uraian_value: "#{form.object.deskripsi}",
+           dropdown_tahun_value: "#{form.object.tahun}",
+           dropdown_tipe_value: "#{form.object.jenis_anggaran}",
+           action: 'change-select@document->dropdown#fill_spesifikasi_satuan_harga
 tahun-ssh@document->dropdown#fill_tahun
 jenis-ssh@document->dropdown#fill_jenis_uraian'
-      }} %>
-  </div>
-  <div class="field">
-    <%= form.label :spesifikasi, {class: "form-label"} %>
-    <%= form.text_field :spesifikasi, {id: 'spesifikasi', class: "form-control", readonly: true} %>
-  </div>
-  <div class="field">
-    <% options = options_from_collection_for_select(Pajak.all, :id, :simple_pajak, perhitungan&.pajak&.id || '') %>
-    <%= form.label :pajak_id , {class: "form-label"}%>
-    <%= form.select :pajak_id, options, {},
-    { data: { controller: 'dropdown',
-              dropdown_parent_value: '#form-perhitungan'
-      }} %>
-  </div>
-  <h4><strong>Koefisiens : </strong></h4>
-  <div class="field">
-    <%= form.fields_for :koefisiens do |f| %>
-      <%= render 'koefisien_fields', f: f %>
-    <% end %>
-    <div class="action mt-3">
-      <%= add_koefisiens "Tambah Koefisien", form, :koefisiens, @anggaran.id %>
+       }} %>
+    </div>
+    <div class="field">
+      <%= form.label :spesifikasi, {class: "form-label"} %>
+      <%= form.text_field :spesifikasi, {id: 'spesifikasi', class: "form-control", readonly: true} %>
+    </div>
+    <div class="field">
+      <% options = options_from_collection_for_select(Pajak.all, :id, :simple_pajak, perhitungan&.pajak&.id || '') %>
+      <%= form.label :pajak_id , {class: "form-label"}%>
+      <%= form.select :pajak_id, options, {},
+       { data: { controller: 'dropdown',
+         dropdown_parent_value: '#form-perhitungan'
+       }} %>
+    </div>
+    <h4><strong>Koefisiens : </strong></h4>
+    <div class="field">
+      <%= form.fields_for :koefisiens do |f| %>
+        <%= render 'koefisien_fields', f: f %>
+      <% end %>
+      <div class="action mt-3">
+        <%= add_koefisiens "Tambah Koefisien", form, :koefisiens, @anggaran.id %>
+      </div>
+    </div>
+    <hr>
+    <div class="field">
+      <%= form.label :satuan, {class: "form-label"} %>
+      <%= form.text_field :satuan, {id: 'satuan', class: "form-control", readonly: true} %>
+    </div>
+    <div class="field">
+      <%= form.label :harga, {class: "form-label"} %>
+      <%= form.number_field :harga, {id: 'harga', class: "form-control", readonly: true} %>
     </div>
   </div>
-  <hr>
-  <div class="field">
-    <%= form.label :satuan, {class: "form-label"} %>
-    <%= form.text_field :satuan, {id: 'satuan', class: "form-control", readonly: true} %>
-  </div>
-  <div class="field">
-    <%= form.label :harga, {class: "form-label"} %>
-    <%= form.number_field :harga, {id: 'harga', class: "form-control", readonly: true} %>
-  </div>
-  <div class="actions">
+  <div class="modal-footer">
     <%= form.submit "Simpan", data: { disable_with: "Processing..." } %>
+    <button type="button" class="btn btn-danger w-100 my-3" data-bs-dismiss="modal" aria-label="Close">Batal</button>
   </div>
 <% end %>
 <script>
-  $(function() {
-    $('form').on('click', '.remove-field', function(event) {
-      let element = event.target.parentElement
-      let destroyInput = element.querySelector('[name$="[_destroy]"');
-      $(this).closest('fieldset').empty()
-      destroyInput.value = 1
-      element.insertAdjacentElement('afterbegin', destroyInput);
-      return event.preventDefault();
-    });
+ $(function() {
+   $('form').on('click', '.remove-field', function(event) {
+     let element = event.target.parentElement
+     let destroyInput = element.querySelector('[name$="[_destroy]"');
+     $(this).closest('fieldset').empty()
+     destroyInput.value = 1
+     element.insertAdjacentElement('afterbegin', destroyInput);
+     return event.preventDefault();
+   });
 
-    $('form').on('click', '.add_fields_<%= @anggaran.id %>', function(event) {
-      let regexp, time;
-      time = new Date().getTime();
-      regexp = new RegExp($(this).data('id'), 'g')
-      $(this).before($(this).data('fields').replace(regexp, time))
-      return event.preventDefault()
-    });
+   $('form').on('click', '.add_fields_<%= @anggaran.id %>', function(event) {
+     let regexp, time;
+     time = new Date().getTime();
+     regexp = new RegExp($(this).data('id'), 'g')
+     $(this).before($(this).data('fields').replace(regexp, time))
+     return event.preventDefault()
+   });
 
-  });
+ });
 </script>
