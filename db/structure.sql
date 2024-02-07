@@ -2023,7 +2023,8 @@ CREATE TABLE public.perhitungans (
     harga numeric,
     total numeric,
     volume numeric,
-    tahun character varying
+    tahun character varying,
+    jenis_anggaran character varying
 );
 
 
@@ -6007,6 +6008,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240122040639'),
 ('20240123053655'),
 ('20240123060506'),
-('20240205190144');
+('20240205190144'),
+('20240207074333');
 
 

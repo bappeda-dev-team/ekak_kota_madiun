@@ -24,9 +24,9 @@ module AnggaransHelper
     end
   end
 
-  def uraian_kode(kode_barang, tahun)
+  def uraian_kode(kode_barang, tahun, jenis_anggaran)
     # update using delgate method polymorphic
-    Search::AllAnggaran.find_by(kode_barang: kode_barang, tahun: tahun).uraian_barang
+    Search::AllAnggaran.find_by(kode_barang: kode_barang, tahun: tahun, searchable_type: jenis_anggaran).uraian_barang
   rescue NoMethodError
     'Tidak Ditemukan'
   end
@@ -41,7 +41,7 @@ module AnggaransHelper
   def tahun_kode(kode_barang)
     # update using delgate method polymorphic
 
-    # TODO test this
+    # TODO: test this
 
     finder = Search::AllAnggaran.find_by_kode_barang(kode_barang)
     type = finder.searchable_type

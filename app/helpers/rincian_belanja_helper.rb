@@ -15,15 +15,15 @@ module RincianBelanjaHelper
       uraian = hitung.deskripsi
       spesifikasi = hitung.spesifikasi
     else
-      uraian = uraian_kode(hitung.deskripsi, hitung.tahun)
-      spesifikasi = spesifikasi_anggaran(hitung.deskripsi, hitung.tahun)
+      uraian = uraian_kode(hitung.deskripsi, hitung.tahun, hitung.jenis_anggaran)
+      spesifikasi = spesifikasi_anggaran(hitung.deskripsi, hitung.tahun, hitung.jenis_anggaran)
     end
     "#{uraian} <br/> #{spesifikasi} <br/> - #{tahun}".html_safe
   end
 
-  def spesifikasi_anggaran(kode_barang, tahun)
+  def spesifikasi_anggaran(kode_barang, tahun, jenis_barang)
     # update using delgate method polymorphic
-    Search::AllAnggaran.find_by(kode_barang: kode_barang, tahun: tahun).spesifikasi
+    Search::AllAnggaran.find_by(kode_barang: kode_barang, tahun: tahun, searchable_type: jenis_barang).spesifikasi
   rescue NoMethodError
     'Tidak Ditemukan'
   end

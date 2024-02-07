@@ -106,6 +106,7 @@ class PerhitungansController < ApplicationController
   def perhitungan_params
     params.require(:perhitungan).permit(:satuan, :spesifikasi, :tahun,
                                         :harga, :anggaran_id, :deskripsi, :pajak_id,
+                                        :jenis_anggaran,
                                         koefisiens_attributes: %i[id volume satuan_volume _destroy])
   end
 end

@@ -2,18 +2,19 @@
 #
 # Table name: perhitungans
 #
-#  id          :bigint           not null, primary key
-#  deskripsi   :string
-#  harga       :decimal(, )
-#  satuan      :string
-#  spesifikasi :text
-#  tahun       :string
-#  total       :decimal(, )
-#  volume      :decimal(, )
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  anggaran_id :bigint
-#  pajak_id    :bigint
+#  id             :bigint           not null, primary key
+#  deskripsi      :string
+#  harga          :decimal(, )
+#  jenis_anggaran :string
+#  satuan         :string
+#  spesifikasi    :text
+#  tahun          :string
+#  total          :decimal(, )
+#  volume         :decimal(, )
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  anggaran_id    :bigint
+#  pajak_id       :bigint
 #
 # Indexes
 #
