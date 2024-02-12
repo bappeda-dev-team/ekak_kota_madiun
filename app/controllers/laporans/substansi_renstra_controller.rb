@@ -121,5 +121,8 @@ class Laporans::SubstansiRenstraController < ApplicationController
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @jabatans = @opd.jabatans
+    @status_kepegawaian = Jabatan::STATUS_KEPEGAWAIAN
+    @jenis_pendidikan = Kepegawaian::JENIS_PENDIDIKAN
   end
 end

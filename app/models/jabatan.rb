@@ -16,4 +16,20 @@
 #
 class Jabatan < ApplicationRecord
   has_many :kepegawaians
+
+  STATUS_KEPEGAWAIAN = %w[PNS PPPK Kontrak Upah]
+
+  def to_s
+    nama_jabatan
+  end
+
+  def jumlah_status_kepegawaian
+    kepegawaians.to_h do |pegawai|
+      [pegawai.status_kepegawaian, pegawai.jumlah]
+    end
+  end
+
+  def pendidikan_pegawai
+    kepegawaians.flat_map(&:pendidikan_pegawai)
+  end
 end

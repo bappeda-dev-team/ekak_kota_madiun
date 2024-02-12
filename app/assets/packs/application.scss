@@ -1,4 +1,4 @@
-$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
 @import "~@fortawesome/fontawesome-free/scss/solid.scss";
 @import "~@fortawesome/fontawesome-free/scss/_mixins.scss";
@@ -49,7 +49,7 @@ td.wrap-text {
 }
 
 .higlighted {
-  background-color: #FF55BB;
+  background-color: #ff55bb;
 }
 
 .text-dark {
@@ -65,68 +65,67 @@ td.wrap-text {
 }
 
 .tujuan-opd {
-  background-color: #EB1D36;
+  background-color: #eb1d36;
 }
 
 .sasaran-kabid {
-  background-color: #277BC0;
+  background-color: #277bc0;
 }
 
 .sasaran-kota {
-  background-color: #FECD70;
+  background-color: #fecd70;
   color: #000000;
 }
 
 .indikators-sasaran-kota {
-  background-color: #7FB77E;
+  background-color: #7fb77e;
 }
 
 .tujuan-kota {
-  background-color: #A77979;
+  background-color: #a77979;
 }
 
-.indikators-tujuan-kota { 
-  background-color: #472D2D;
+.indikators-tujuan-kota {
+  background-color: #472d2d;
 }
 
 .nama-opd {
   background-color: #483838;
 }
 #pokin-cetak {
-        width: 100%;
-        height: 80%;
-        background-color: 'white';
+  width: 100%;
+  height: 80%;
+  background-color: "white";
 }
 
 #pokin {
-        border: 1px solid blue;
-        width: 100%;
-        height: 650px;
-        background-color: 'white';
-
+  border: 1px solid blue;
+  width: 100%;
+  height: 650px;
+  background-color: "white";
 }
 .pohon-kinerja {
-        border: 1px solid blue;
-        width: 100%;
-        height: 450px;
-        background-color: 'white';
+  border: 1px solid blue;
+  width: 100%;
+  height: 450px;
+  background-color: "white";
 }
 
 .pohon-kinerja-print {
-        border: 1px solid blue;
-        width: 100%;
-        height: 750px;
-        background-color: 'white';
+  border: 1px solid blue;
+  width: 100%;
+  height: 750px;
+  background-color: "white";
 }
 
 .global_filter {
-        font-size: 0.75rem;
+  font-size: 0.75rem;
 }
 .filter-form {
-        width: 450px;
-        .tahun_sasaran {
-                width: 45px;
-        }
+  width: 450px;
+  .tahun_sasaran {
+    width: 45px;
+  }
 }
 // .table td {
 //   white-space: normal;
@@ -223,74 +222,90 @@ td.wrap-text {
 }
 
 .rekap_pokin_separator {
-background: repeating-linear-gradient(
-  -55deg,
-  #222,
-  #222 10px,
-  #333 10px,
-  #333 20px
-);border: 0
+  background: repeating-linear-gradient(
+    -55deg,
+    #222,
+    #222 10px,
+    #333 10px,
+    #333 20px
+  );
+  border: 0;
 }
 .isu-strategis-kota {
-  background-color: #6DA9E4;
+  background-color: #6da9e4;
 }
 .strategi-kota {
-  background-color: #00FFF6;
+  background-color: #00fff6;
 }
 .strategic-objective {
-  background-color: #B73239;
-  color: #EEE2DE;
+  background-color: #b73239;
+  color: #eee2de;
 }
 .tactical-objective {
-  background-color: #0B5394;
-  color: #EEE2DE;
+  background-color: #0b5394;
+  color: #eee2de;
 }
 .tactical-objective-2 {
-  background-color: #6391BA;
-  color: #EEE2DE;
+  background-color: #6391ba;
+  color: #eee2de;
 }
 .operational-objective {
-  background-color: #93C47D;
+  background-color: #93c47d;
 }
 .operational-objective-2 {
-  background-color: #FFFF00;
+  background-color: #ffff00;
 }
 
 td[data-subkegiatan="belum diisi"] {
-  background-color: #B73239;
-  color: #EEE2DE;
+  background-color: #b73239;
+  color: #eee2de;
 }
 
 td[data-tahun-pelaksanaan="success"] {
-  background-color: #38E54D;
+  background-color: #38e54d;
   &:before {
     @extend %fa-icon;
     @extend .fas;
-    content: fa-content($fa-var-check)
+    content: fa-content($fa-var-check);
   }
 }
 td[data-tahun-pelaksanaan="success"] + td[data-tahun-pelaksanaan] {
-  background-color: #38E54D;
+  background-color: #38e54d;
   &:before {
     @extend %fa-icon;
     @extend .fas;
-    content: fa-content($fa-var-check)
+    content: fa-content($fa-var-check);
   }
 }
 td[data-tahun-akhir-pelaksanaan="success"] {
-  background-color: #38E54D;
+  background-color: #38e54d;
   &:before {
     @extend %fa-icon;
     @extend .fas;
-    content: fa-content($fa-var-check)
+    content: fa-content($fa-var-check);
   }
 }
 td.spbe-kebutuhan:empty {
-  background-color: #B73239;
-  color: #EEE2DE;
+  background-color: #b73239;
+  color: #eee2de;
 
   &:after {
-    content: 'Belum diisi';
+    content: "Belum diisi";
+  }
+}
+td[data-pendidikan="true"] {
+  @extend .text-center;
+  &:before {
+    @extend %fa-icon;
+    @extend .fas;
+    @extend .text-success;
+    content: fa-content($fa-var-check);
+  }
+}
+td[data-pendidikan="false"] {
+  @extend .text-center;
+  &:before {
+    content: "-";
   }
 }
 input::placeholder {
@@ -342,7 +357,7 @@ input::placeholder {
     @extend %fa-icon;
     @extend .fas;
     content: fa-content($fa-var-check);
-    color: #38E54D;
+    color: #38e54d;
   }
 }
 
@@ -354,7 +369,7 @@ input::placeholder {
     @extend %fa-icon;
     @extend .fas;
     content: fa-content($fa-var-times);
-    color: #B73239;
+    color: #b73239;
   }
 }
 
@@ -377,14 +392,15 @@ table.counter {
   padding: 0.25em;
 }
 
-.strategic-pohon, .strategi-pohon {
-  background-color: #B73239;
+.strategic-pohon,
+.strategi-pohon {
+  background-color: #b73239;
   .pohon {
-    color: #EEE2DE;
+    color: #eee2de;
     .pohon-title {
-      border-color: #EEE2DE;
+      border-color: #eee2de;
       h5 {
-      color: #EEE2DE;
+        color: #eee2de;
       }
     }
     .pohon-body {
@@ -395,9 +411,10 @@ table.counter {
       }
     }
     .btn-outline-pohon {
-      border-color: #EEE2DE;
-      color: #EEE2DE;
-      &:hover, &:active {
+      border-color: #eee2de;
+      color: #eee2de;
+      &:hover,
+      &:active {
         background-color: #1f2937;
       }
     }
@@ -408,13 +425,13 @@ table.counter {
 }
 .tactical-pohon {
   border: 1px solid black;
-  background-color: #0B5394;
+  background-color: #0b5394;
   .pohon {
-    color: #EEE2DE;
+    color: #eee2de;
     .pohon-title {
-      border-color: #EEE2DE;
+      border-color: #eee2de;
       h5 {
-      color: #EEE2DE;
+        color: #eee2de;
       }
     }
     .pohon-body {
@@ -425,9 +442,10 @@ table.counter {
       }
     }
     .btn-outline-pohon {
-      border-color: #EEE2DE;
-      color: #EEE2DE;
-      &:hover, &:active {
+      border-color: #eee2de;
+      color: #eee2de;
+      &:hover,
+      &:active {
         background-color: #1f2937;
       }
     }
@@ -437,9 +455,9 @@ table.counter {
   }
 }
 .operational-pohon {
-  background-color: #93C47D;
+  background-color: #93c47d;
   .pohon {
-        color: black;
+    color: black;
     .pohon-title {
       border-color: black;
       h5 {
@@ -455,9 +473,10 @@ table.counter {
     }
     .btn-outline-pohon {
       border-color: black;
-      &:hover, &:active {
+      &:hover,
+      &:active {
         background-color: #1f2937;
-        color: #EEE2DE;
+        color: #eee2de;
       }
     }
     .pohon-tombol {
@@ -482,11 +501,15 @@ table.counter {
 }
 
 .fading {
-    animation: fade 15s forwards;
-    background-color:rgba(242, 245, 169, 1);
+  animation: fade 15s forwards;
+  background-color: rgba(242, 245, 169, 1);
 }
 
 @keyframes fade {
-    from {background-color:rgba(242, 245, 169, 1);}
-    to {background-color:rgba(242, 245, 169, 0);}
+  from {
+    background-color: rgba(242, 245, 169, 1);
+  }
+  to {
+    background-color: rgba(242, 245, 169, 0);
+  }
 }
