@@ -1241,6 +1241,41 @@ ALTER SEQUENCE public.kelompok_anggarans_id_seq OWNED BY public.kelompok_anggara
 
 
 --
+-- Name: kepegawaians; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.kepegawaians (
+    id bigint NOT NULL,
+    status_kepegawaian character varying,
+    jumlah integer,
+    jabatan_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    opd_id bigint,
+    tahun character varying NOT NULL
+);
+
+
+--
+-- Name: kepegawaians_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.kepegawaians_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: kepegawaians_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.kepegawaians_id_seq OWNED BY public.kepegawaians.id;
+
+
+--
 -- Name: kesenjangans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2005,6 +2040,39 @@ CREATE SEQUENCE public.pajaks_id_seq
 --
 
 ALTER SEQUENCE public.pajaks_id_seq OWNED BY public.pajaks.id;
+
+
+--
+-- Name: pendidikan_terakhirs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.pendidikan_terakhirs (
+    id bigint NOT NULL,
+    pendidikan character varying,
+    keterangan character varying,
+    kepegawaian_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: pendidikan_terakhirs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.pendidikan_terakhirs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: pendidikan_terakhirs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.pendidikan_terakhirs_id_seq OWNED BY public.pendidikan_terakhirs.id;
 
 
 --
@@ -3848,6 +3916,13 @@ ALTER TABLE ONLY public.kelompok_anggarans ALTER COLUMN id SET DEFAULT nextval('
 
 
 --
+-- Name: kepegawaians id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.kepegawaians ALTER COLUMN id SET DEFAULT nextval('public.kepegawaians_id_seq'::regclass);
+
+
+--
 -- Name: kesenjangans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3985,6 +4060,13 @@ ALTER TABLE ONLY public.pagus ALTER COLUMN id SET DEFAULT nextval('public.pagus_
 --
 
 ALTER TABLE ONLY public.pajaks ALTER COLUMN id SET DEFAULT nextval('public.pajaks_id_seq'::regclass);
+
+
+--
+-- Name: pendidikan_terakhirs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pendidikan_terakhirs ALTER COLUMN id SET DEFAULT nextval('public.pendidikan_terakhirs_id_seq'::regclass);
 
 
 --
@@ -4518,6 +4600,14 @@ ALTER TABLE ONLY public.kelompok_anggarans
 
 
 --
+-- Name: kepegawaians kepegawaians_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.kepegawaians
+    ADD CONSTRAINT kepegawaians_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: kesenjangans kesenjangans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4675,6 +4765,14 @@ ALTER TABLE ONLY public.pagus
 
 ALTER TABLE ONLY public.pajaks
     ADD CONSTRAINT pajaks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: pendidikan_terakhirs pendidikan_terakhirs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pendidikan_terakhirs
+    ADD CONSTRAINT pendidikan_terakhirs_pkey PRIMARY KEY (id);
 
 
 --
@@ -5179,6 +5277,20 @@ CREATE UNIQUE INDEX index_kamus_usulans_on_id_kamus ON public.kamus_usulans USIN
 
 
 --
+-- Name: index_kepegawaians_on_jabatan_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_kepegawaians_on_jabatan_id ON public.kepegawaians USING btree (jabatan_id);
+
+
+--
+-- Name: index_kepegawaians_on_opd_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_kepegawaians_on_opd_id ON public.kepegawaians USING btree (opd_id);
+
+
+--
 -- Name: index_kesenjangans_on_rincian_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -5288,6 +5400,13 @@ CREATE INDEX index_musrenbangs_on_status ON public.musrenbangs USING btree (stat
 --
 
 CREATE UNIQUE INDEX index_opds_on_kode_unik_opd_and_lembaga_id ON public.opds USING btree (kode_unik_opd, lembaga_id);
+
+
+--
+-- Name: index_pendidikan_terakhirs_on_kepegawaian_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_pendidikan_terakhirs_on_kepegawaian_id ON public.pendidikan_terakhirs USING btree (kepegawaian_id);
 
 
 --
@@ -5573,6 +5692,14 @@ ALTER TABLE ONLY public.tematik_sasarans
 
 
 --
+-- Name: kepegawaians fk_rails_0da5ddb7fd; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.kepegawaians
+    ADD CONSTRAINT fk_rails_0da5ddb7fd FOREIGN KEY (jabatan_id) REFERENCES public.jabatans(id);
+
+
+--
 -- Name: tematik_sasarans fk_rails_22e78acf56; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -5610,6 +5737,14 @@ ALTER TABLE ONLY public.perhitungans
 
 ALTER TABLE ONLY public.permasalahans
     ADD CONSTRAINT fk_rails_4bce9be9f2 FOREIGN KEY (sasaran_id) REFERENCES public.sasarans(id);
+
+
+--
+-- Name: pendidikan_terakhirs fk_rails_4f0f406e34; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pendidikan_terakhirs
+    ADD CONSTRAINT fk_rails_4f0f406e34 FOREIGN KEY (kepegawaian_id) REFERENCES public.kepegawaians(id);
 
 
 --
@@ -6009,6 +6144,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240123053655'),
 ('20240123060506'),
 ('20240205190144'),
-('20240207074333');
+('20240207074333'),
+('20240212012725'),
+('20240212013948'),
+('20240212014204'),
+('20240212014714');
 
 

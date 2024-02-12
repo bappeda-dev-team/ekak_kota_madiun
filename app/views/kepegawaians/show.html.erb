@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Status kepegawaian:</strong>
+  <%= @kepegawaian.status_kepegawaian %>
+</p>
+
+<p>
+  <strong>Jumlah:</strong>
+  <%= @kepegawaian.jumlah %>
+</p>
+
+<p>
+  <strong>Jabatan:</strong>
+  <%= @kepegawaian.jabatan_id %>
+</p>
+
+<%= link_to 'Edit', edit_kepegawaian_path(@kepegawaian) %> |
+<%= link_to 'Back', kepegawaians_path %>

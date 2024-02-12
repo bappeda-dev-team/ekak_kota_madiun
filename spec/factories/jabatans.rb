@@ -22,7 +22,6 @@ FactoryBot.define do
     index { "MyString" }
     kode_opd { "MyString" }
     tipe { "MyString" }
-    kode_jabatan { "MyString" }
     tahun { "MyString" }
   end
 end

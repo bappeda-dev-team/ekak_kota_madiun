@@ -15,4 +15,5 @@
 #  updated_at    :datetime         not null
 #
 class Jabatan < ApplicationRecord
+  has_many :kepegawaians
 end
