@@ -44,20 +44,7 @@ RSpec.describe Jabatan, type: :model do
       sma = PendidikanTerakhir.create(kepegawaian: kepegawaian,
                                       pendidikan: 'SMA')
 
-      expect(jabatan.pendidikan_pegawai).to eq({
-                                                 'SD/SMP' => false,
-                                                 'SMA' => true,
-                                                 'D1/D3' => false,
-                                                 'D4/S1' => true,
-                                                 'S2/S3' => false
-                                               })
-      expect(jabatan.pendidikan_pegawai).to include({
-                                                      'SD/SMP' => false,
-                                                      'SMA' => true,
-                                                      'D1/D3' => false,
-                                                      'D4/S1' => true,
-                                                      'S2/S3' => false
-                                                    })
+      expect(jabatan.pendidikan_pegawai).to eq(['D4/S1', 'SMA'])
     end
   end
 end
