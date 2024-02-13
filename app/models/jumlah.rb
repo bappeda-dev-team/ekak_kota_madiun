@@ -3,7 +3,7 @@
 # Table name: jumlahs
 #
 #  id             :bigint           not null, primary key
-#  jumlah         :integer
+#  jumlah         :decimal(, )
 #  keterangan     :string
 #  satuan         :string
 #  tahun          :string
