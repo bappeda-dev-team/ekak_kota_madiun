@@ -5,7 +5,7 @@
   </div>
   <div class="field">
     <%= form.label :jumlah, { class: "form-label" } %>
-    <%= form.number_field :jumlah, { class: "form-control" } %>
+    <%= form.number_field :jumlah, { class: "form-control", step: 0.001 } %>
   </div>
   <div class="field">
     <%= form.label :satuan, { class: "form-label" } %>
