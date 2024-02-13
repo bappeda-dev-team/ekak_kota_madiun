@@ -1,4 +1,3 @@
-<tr data-controller="row">
   <%= form_with(model: [@jabatan, kepegawaian], local: false,
                 data: {
                   action: 'ajax:complete->row#processAjax',
@@ -6,23 +5,24 @@
                 id: dom_id(@jabatan, 'form')
   ) do |form| %>
     <td class="text-gray-900 fw-bolder align-middle" scope="row"></td>
-    <td class="border fw-bolder text-wrap" width="700px"><%= @jabatan %></td>
-    <td class="border fw-bolder">
+    <td class="fw-bolder text-wrap" width="700px"><%= @jabatan %></td>
+    <td class="fw-bolder">
       <div class="d-grid gap-2">
         <%= form.submit 'Simpan', class: 'btn btn-sm', style: 'margin-top: 0 !important;', form: dom_id(@jabatan, 'form') %>
         <button class="btn btn-sm btn-outline-danger" data-action="row#batal">Batal</button>
       </div>
     </td>
     <% @status_kepegawaian.each do |kepegawaian| %>
-      <td class='border fw-bolder text-center text-wrap field' width="250px">
+      <td class='border fw-bolder text-center text-wrap field' width="120px">
         <%= form.hidden_field :tahun, form: dom_id(@jabatan, 'form')%>
         <%= form.hidden_field :opd_id, form: dom_id(@jabatan, 'form')%>
         <%= form.hidden_field :status_kepegawaian, value: kepegawaian, multiple: true, form: dom_id(@jabatan, 'form') %>
-        <%= form.number_field :jumlah, class: 'form-control', placeholder: '0' , multiple: true, form: dom_id(@jabatan, 'form')%>
+        <%= form.number_field :jumlah, class: 'form-control', placeholder: '0' , multiple: true, min: 0, form: dom_id(@jabatan, 'form')%>
       </td>
     <% end %>
     <% @jenis_pendidikan.each do |pendidikan| %>
-      <td class="border fw-bolder text-wrap">--</td>
+      <td class="border fw-bolder text-wrap">
+        <%= form.check_box :pendidikan_terakhir, { multiple: true , class: 'form-check-input', form: dom_id(@jabatan, 'form') }, pendidikan, '' %>
+      </td>
     <% end %>
   <% end %>
-</tr>

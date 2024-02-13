@@ -28,6 +28,7 @@ class Kepegawaian < ApplicationRecord
 
   validates :status_kepegawaian, presence: true
   validates :tahun, presence: true
+  validates :jumlah, numericality: { greater_than_or_equal: 0 }
 
   JENIS_PENDIDIKAN = %w[SD/SMP SMA D1/D3 D4/S1 S2/S3]
 

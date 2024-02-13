@@ -7,26 +7,26 @@
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout_subtitle', title: "Laporan Kepegawaian dan Aset", sub_title: @opd, sub_title_2: @tahun do %>
     <div class="table-responsive mb-5 d-grid gap-2">
-      <table class="table align-items-center counter border">
-        <thead class="thead-light">
+      <table class="table table-bordered align-items-center counter border">
+        <thead class="thead-light sticky-top">
           <tr>
-            <th class="border text-gray-700" scope="col" rowspan="2">No.</th>
-            <th class="border text-center text-gray-700" scope="col" rowspan="2">Jabatan</th>
-            <th class="border text-center text-gray-700" scope="col" rowspan="2">Action</th>
-            <th class="border text-center text-gray-700" scope="col" colspan="4">Status Kepegawaian</th>
-            <th class="border text-center text-gray-700" scope="col" colspan="5">Pendidikan Terakhir</th>
+            <th class="text-gray-700" scope="col" rowspan="2">No.</th>
+            <th class="text-center text-gray-700" scope="col" rowspan="2">Jabatan</th>
+            <th class="text-center text-gray-700" scope="col" rowspan="2">Action</th>
+            <th class="text-center text-gray-700" scope="col" colspan="4">Status Kepegawaian</th>
+            <th class="text-center text-gray-700" scope="col" colspan="5">Pendidikan Terakhir</th>
           </tr>
           <tr>
-            <th class="border text-center text-gray-700" scope="col">PNS</th>
-            <th class="border text-center text-gray-700" scope="col">PPPK</th>
-            <th class="border text-center text-gray-700" scope="col">Kontrak</th>
-            <th class="border text-center text-gray-700" scope="col">Upah</th>
+            <th class="text-center text-gray-700" scope="col">PNS</th>
+            <th class="text-center text-gray-700" scope="col">PPPK</th>
+            <th class="text-center text-gray-700" scope="col">Kontrak</th>
+            <th class="text-center text-gray-700" scope="col">Upah</th>
 
-            <th class="border text-center text-gray-700" scope="col">SD/SMP</th>
-            <th class="border text-center text-gray-700" scope="col">SMA</th>
-            <th class="border text-center text-gray-700" scope="col">D1/D3</th>
-            <th class="border text-center text-gray-700" scope="col">D4/S1</th>
-            <th class="border text-center text-gray-700" scope="col">S2/S3</th>
+            <th class="text-center text-gray-700" scope="col">SD/SMP</th>
+            <th class="text-center text-gray-700" scope="col">SMA</th>
+            <th class="text-center text-gray-700" scope="col">D1/D3</th>
+            <th class="text-center text-gray-700" scope="col">D4/S1</th>
+            <th class="text-center text-gray-700" scope="col">S2/S3</th>
           </tr>
         </thead>
         <tbody id="new_kepegawaian">

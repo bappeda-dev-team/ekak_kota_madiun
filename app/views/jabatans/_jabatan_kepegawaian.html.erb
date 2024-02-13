@@ -1,7 +1,7 @@
 <tr data-controller="row">
   <td class="text-gray-900 fw-bolder align-middle" scope="row"></td>
-  <td class="border fw-bolder text-wrap" width="700px"><%= jabatan %></td>
-  <td class="border fw-bolder">
+  <td class="fw-bolder text-wrap" width="700px"><%= jabatan %></td>
+  <td class="fw-bolder">
     <% if jabatan.kepegawaians.any? %>
       <%= link_to edit_jumlah_jabatan_kepegawaians_path(jabatan_id: jabatan),
        remote: true, class: 'btn btn-sm btn-outline-info',
@@ -25,9 +25,9 @@
     <% end %>
   </td>
   <% @status_kepegawaian.each do |kepegawaian| %>
-    <td class="border fw-bolder text-center text-wrap <%= dom_class(jabatan, 'kepegawaian') %>" width="250px"><%= jabatan.jumlah_status_kepegawaian(@tahun).dig(kepegawaian) %></td>
+    <td class="fw-bolder text-center text-wrap <%= dom_class(jabatan, 'kepegawaian') %>" width="120px"><%= jabatan.jumlah_status_kepegawaian(@tahun).dig(kepegawaian) %></td>
   <% end %>
   <% @jenis_pendidikan.each do |pendidikan| %>
-    <td class="border fw-bolder text-wrap <%= dom_class(jabatan, 'pendidikan') %>" data-pendidikan="<%= jabatan.pendidikan_pegawai.include?(pendidikan) %>"></td>
+    <td class="fw-bolder text-wrap <%= dom_class(jabatan, 'pendidikan') %>" data-pendidikan="<%= jabatan.pendidikan_pegawai.include?(pendidikan) %>"></td>
   <% end %>
 </tr>

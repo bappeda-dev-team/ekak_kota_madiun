@@ -1,28 +1,3 @@
 <tr data-controller="row">
-  <%= form_with(url: update_jumlah_jabatan_kepegawaians_path,
-                local: false,
-                data: {
-                  action: 'ajax:complete->row#processAjax',
-                },
-                id: dom_id(@jabatan, 'form')
-  ) do |form| %>
-    <td class="text-gray-900 fw-bolder align-middle" scope="row"></td>
-    <td class="border fw-bolder text-wrap" width="700px"><%= @jabatan %></td>
-    <td class="border fw-bolder">
-      <div class="d-grid gap-2">
-        <%= form.submit 'Simpan', class: 'btn btn-sm', style: 'margin-top: 0 !important;', form: dom_id(@jabatan, 'form') %>
-        <button class="btn btn-sm btn-outline-danger" data-action="row#batal">Batal</button>
-      </div>
-    </td>
-    <% @status_kepegawaian.each do |kepegawaian| %>
-      <% jumlah = @kepegawaians.find_by(status_kepegawaian: kepegawaian).jumlah %>
-      <td class='border fw-bolder text-center text-wrap field' width="250px">
-        <%= form.hidden_field :status_kepegawaian, value: kepegawaian, multiple: true, form: dom_id(@jabatan, 'form') %>
-        <%= form.number_field :jumlah, value: jumlah, class: 'form-control', placeholder: '0', multiple: true, form: dom_id(@jabatan, 'form')%>
-      </td>
-    <% end %>
-    <% @jenis_pendidikan.each do |pendidikan| %>
-      <td class="border fw-bolder text-wrap">--</td>
-    <% end %>
-  <% end %>
+  <%= render 'kepegawaians/form_edit_jumlah' %>
 </tr>

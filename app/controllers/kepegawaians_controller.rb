@@ -44,11 +44,28 @@ class KepegawaiansController < ApplicationController
 
     status_kepegawaians = params[:status_kepegawaian]
     jumlah_kepegawaians = params[:jumlah]
+    pendidikan_terakhirs = params[:pendidikan_terakhir]
 
     kepegawaians = status_kepegawaians.zip(jumlah_kepegawaians)
 
     @kepegawaians = kepegawaians.map do |status, jumlah|
       @jabatan.kepegawaians.find_by(status_kepegawaian: status).update({ jumlah: jumlah })
+    end
+
+    tambah_pendidikan = pendidikan_terakhirs.difference(@jabatan.pendidikan_pegawai).compact_blank
+    hapus_pendidikan = @jabatan.pendidikan_pegawai.difference(pendidikan_terakhirs).compact_blank
+
+    if tambah_pendidikan.any?
+      @jabatan.kepegawaians.map do |kp|
+        tambah_pendidikan.each do |pt|
+          kp.pendidikan_terakhirs.create({
+                                           pendidikan: pt,
+                                           keterangan: '-'
+                                         })
+        end
+      end
+    elsif hapus_pendidikan.any?
+      @jabatan.pendidikan_terakhirs.where(pendidikan: hapus_pendidikan).destroy_all
     end
 
     if @kepegawaians.any?
@@ -58,8 +75,8 @@ class KepegawaiansController < ApplicationController
              status: :ok
     else
       render json: { resText: 'Terjadi kesalahan',
-                     html_content: error_content({ kepegawaian: @kepegawaian },
-                                                 partial: 'kepegawaians/form') }.to_json,
+                     html_content: error_content({},
+                                                 partial: 'kepegawaians/form_edit_jumlah') }.to_json,
              status: :unprocessable_entity
     end
   end
@@ -69,10 +86,12 @@ class KepegawaiansController < ApplicationController
     @jabatan = Jabatan.find(params[:jabatan_id])
     @status_kepegawaian = Jabatan::STATUS_KEPEGAWAIAN
     @jenis_pendidikan = Kepegawaian::JENIS_PENDIDIKAN
+    @opd = Opd.find_by(kode_unik_opd: cookies[:opd])
     @tahun = cookies[:tahun]
 
     status_kepegawaians = params[:kepegawaian][:status_kepegawaian]
     jumlah_kepegawaians = params[:kepegawaian][:jumlah]
+    pendidikan_terakhirs = params[:kepegawaian][:pendidikan_terakhir].compact_blank
     tahun = params[:kepegawaian][:tahun]
     opd = params[:kepegawaian][:opd_id]
     kepegawaians = status_kepegawaians.zip(jumlah_kepegawaians)
@@ -82,18 +101,31 @@ class KepegawaiansController < ApplicationController
                                      opd_id: opd,
                                      tahun: tahun,
                                      status_kepegawaian: status,
-                                     jumlah: jumlah
+                                     jumlah: jumlah.to_i
                                    })
     end
 
     if @kepegawaians.any?
+
+      @kepegawaians.map do |kp|
+        pendidikan_terakhirs.each do |pt|
+          kp.pendidikan_terakhirs.create({
+                                           pendidikan: pt,
+                                           keterangan: '-'
+                                         })
+        end
+      end
+
       render json: { resText: 'Entri Jabatan ditambahkan',
                      html_content: html_content({ jabatan: @jabatan },
                                                 partial: 'jabatans/jabatan_kepegawaian') }.to_json,
              status: :ok
     else
+      @kepegawaian = @jabatan.kepegawaians
+                             .build(opd_id: @opd.id,
+                                    tahun: @tahun)
       render json: { resText: 'Terjadi kesalahan',
-                     html_content: error_content({ kepegawaian: @kepegawaian },
+                     html_content: error_content({ jabatan: @jabatan },
                                                  partial: 'kepegawaians/form') }.to_json,
              status: :unprocessable_entity
     end
