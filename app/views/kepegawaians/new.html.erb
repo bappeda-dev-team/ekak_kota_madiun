@@ -1,5 +1,25 @@
-<h1>New Kepegawaian</h1>
-
-<%= render 'form', kepegawaian: @kepegawaian %>
-
-<%= link_to 'Back', kepegawaians_path %>
+<tr data-controller="row">
+  <%= form_with(model: @kepegawaian, local: false,
+                data: {
+                  controller: 'form-ajax',
+                  action: 'ajax:complete->form-ajax#processAjax'
+                }
+  ) do |form| %>
+    <td class="text-gray-900 fw-bolder align-middle" scope="row"></td>
+    <td class="border fw-bolder text-wrap" width="700px"><%= @jabatan %></td>
+    <td class="border fw-bolder">
+      <button class="btn btn-outline-tertiary">
+        <span class="fas fa-pencil-alt me-2"></span>
+        <span>SIMPAN</span>
+      </button>
+    </td>
+    <% @status_kepegawaian.each do |kepegawaian| %>
+      <td class='border fw-bolder text-wrap field' width="200px">
+        <%= form.number_field :jumlah, class: 'form-control', placeholder: '0' %>
+      </td>
+    <% end %>
+    <% @jenis_pendidikan.each do |pendidikan| %>
+      <td class="border fw-bolder text-wrap">--</td>
+    <% end %>
+  <% end %>
+</tr>

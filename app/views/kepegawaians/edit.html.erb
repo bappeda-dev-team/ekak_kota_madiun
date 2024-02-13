@@ -1,6 +1,18 @@
-<h1>Editing Kepegawaian</h1>
-
-<%= render 'form', kepegawaian: @kepegawaian %>
-
-<%= link_to 'Show', @kepegawaian %> |
-<%= link_to 'Back', kepegawaians_path %>
+<%= form_with(model: @kepegawaian) do |form| %>
+  <tr data-controller="row">
+    <td class="text-gray-900 fw-bolder align-middle" scope="row"></td>
+    <td class="border fw-bolder text-wrap" width="700px"><%= @jabatan %></td>
+    <td class="border fw-bolder">
+      <button class="btn-outline-tertiary">
+        <span class="fas fa-pencil-alt me-2"></span>
+        <span>SIMPAN</span>
+      </button>
+    </td>
+    <% @status_kepegawaian.each do |kepegawaian| %>
+      <td class='border fw-bolder text-wrap'><%= form.number_field :jumlah %></td>
+    <% end %>
+    <% @jenis_pendidikan.each do |pendidikan| %>
+      <td class="border fw-bolder text-wrap">Keterangan ABC</td>
+    <% end %>
+  </tr>
+<% end %>

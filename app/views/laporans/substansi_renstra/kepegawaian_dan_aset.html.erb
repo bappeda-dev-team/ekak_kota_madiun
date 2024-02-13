@@ -12,6 +12,7 @@
           <tr>
             <th class="border text-gray-700" scope="col" rowspan="2">No.</th>
             <th class="border text-center text-gray-700" scope="col" rowspan="2">Jabatan</th>
+            <th class="border text-center text-gray-700" scope="col" rowspan="2">Action</th>
             <th class="border text-center text-gray-700" scope="col" colspan="4">Status Kepegawaian</th>
             <th class="border text-center text-gray-700" scope="col" colspan="5">Pendidikan Terakhir</th>
           </tr>
@@ -29,18 +30,7 @@
           </tr>
         </thead>
         <tbody id="new_kepegawaian">
-          <% @jabatans.each do |jabatan| %>
-            <tr id="<%= dom_id(jabatan) %>">
-              <td class="text-gray-900 fw-bolder align-middle" scope="row"></td>
-              <td class="border fw-bolder text-wrap"><%= jabatan %></td>
-              <% @status_kepegawaian.each do |kepegawaian| %>
-                <td class='border fw-bolder text-wrap <%= dom_class(jabatan, 'kepegawaian') %>'><%= jabatan.jumlah_status_kepegawaian.dig(kepegawaian) %></td>
-              <% end %>
-              <% @jenis_pendidikan.each do |pendidikan| %>
-                <td class="border fw-bolder text-wrap <%= dom_class(jabatan, 'pendidikan') %>" data-pendidikan="<%= jabatan.pendidikan_pegawai.include?(pendidikan) %>"></td>
-              <% end %>
-            </tr>
-          <% end %>
+          <%= render partial: 'jabatans/jabatan_kepegawaian', collection: @jabatans, as: :jabatan %>
         </tbody>
       </table>
     </div>
