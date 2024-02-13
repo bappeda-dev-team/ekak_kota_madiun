@@ -2,18 +2,30 @@
   <td class="text-gray-900 fw-bolder align-middle" scope="row"></td>
   <td class="border fw-bolder text-wrap" width="700px"><%= jabatan %></td>
   <td class="border fw-bolder">
-    <%= link_to new_kepegawaian_path(jabatan_id: jabatan.id),
-     remote: true, class: 'btn btn-outline-primary',
-     data: {
-       action: 'ajax:complete->row#editRow:prevent',
-       editable_table_target: 'edit'
-     } do %>
-      <span class="fas fa-pencil-alt me-2"></span>
-      <span>Input</span>
+    <% if jabatan.kepegawaians.any? %>
+      <%= link_to edit_jumlah_jabatan_kepegawaians_path(jabatan_id: jabatan),
+       remote: true, class: 'btn btn-sm btn-outline-info',
+       data: {
+         action: 'ajax:complete->row#editRow:prevent',
+         editable_table_target: 'edit'
+       } do %>
+        <span class="fas fa-pencil-alt me-2"></span>
+        <span>Edit</span>
+      <% end %>
+    <% else %>
+      <%= link_to new_jabatan_kepegawaian_path(jabatan_id: jabatan),
+       remote: true, class: 'btn btn-sm btn-outline-primary',
+       data: {
+         action: 'ajax:complete->row#editRow:prevent',
+         editable_table_target: 'edit'
+       } do %>
+        <span class="fas fa-plus me-2"></span>
+        <span>Input</span>
+      <% end %>
     <% end %>
   </td>
   <% @status_kepegawaian.each do |kepegawaian| %>
-    <td class='border fw-bolder text-wrap <%= dom_class(jabatan, 'kepegawaian') %>'><%= jabatan.jumlah_status_kepegawaian.dig(kepegawaian) %></td>
+    <td class="border fw-bolder text-center text-wrap <%= dom_class(jabatan, 'kepegawaian') %>" width="250px"><%= jabatan.jumlah_status_kepegawaian(@tahun).dig(kepegawaian) %></td>
   <% end %>
   <% @jenis_pendidikan.each do |pendidikan| %>
     <td class="border fw-bolder text-wrap <%= dom_class(jabatan, 'pendidikan') %>" data-pendidikan="<%= jabatan.pendidikan_pegawai.include?(pendidikan) %>"></td>

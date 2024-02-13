@@ -16,6 +16,7 @@
 #
 class Jabatan < ApplicationRecord
   has_many :kepegawaians
+  accepts_nested_attributes_for :kepegawaians, reject_if: :all_blank, allow_destroy: true
 
   STATUS_KEPEGAWAIAN = %w[PNS PPPK Kontrak Upah]
 
@@ -23,8 +24,8 @@ class Jabatan < ApplicationRecord
     nama_jabatan
   end
 
-  def jumlah_status_kepegawaian
-    kepegawaians.to_h do |pegawai|
+  def jumlah_status_kepegawaian(tahun)
+    kepegawaians.where(tahun: tahun).to_h do |pegawai|
       [pegawai.status_kepegawaian, pegawai.jumlah]
     end
   end

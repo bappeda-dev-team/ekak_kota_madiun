@@ -9,7 +9,6 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
-  resources :kepegawaians
   resources :jumlahs
   resources :data_dukungs
   resources :indikators_users do
@@ -51,7 +50,14 @@ Rails.application.routes.draw do
       get :opd
     end
   end
-  resources :jabatans
+  resources :jabatans do
+    resources :kepegawaians do
+      collection do
+        get :edit_jumlah
+        post :update_jumlah
+      end
+    end
+  end
   resources :status_tombols
   resources :external_urls
   resources :reviews

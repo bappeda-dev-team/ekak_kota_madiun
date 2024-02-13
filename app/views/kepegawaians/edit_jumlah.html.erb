@@ -1,5 +1,6 @@
 <tr data-controller="row">
-  <%= form_with(model: [@jabatan, kepegawaian], local: false,
+  <%= form_with(url: update_jumlah_jabatan_kepegawaians_path,
+                local: false,
                 data: {
                   action: 'ajax:complete->row#processAjax',
                 },
@@ -14,11 +15,10 @@
       </div>
     </td>
     <% @status_kepegawaian.each do |kepegawaian| %>
+      <% jumlah = @kepegawaians.find_by(status_kepegawaian: kepegawaian).jumlah %>
       <td class='border fw-bolder text-center text-wrap field' width="250px">
-        <%= form.hidden_field :tahun, form: dom_id(@jabatan, 'form')%>
-        <%= form.hidden_field :opd_id, form: dom_id(@jabatan, 'form')%>
         <%= form.hidden_field :status_kepegawaian, value: kepegawaian, multiple: true, form: dom_id(@jabatan, 'form') %>
-        <%= form.number_field :jumlah, class: 'form-control', placeholder: '0' , multiple: true, form: dom_id(@jabatan, 'form')%>
+        <%= form.number_field :jumlah, value: jumlah, class: 'form-control', placeholder: '0', multiple: true, form: dom_id(@jabatan, 'form')%>
       </td>
     <% end %>
     <% @jenis_pendidikan.each do |pendidikan| %>

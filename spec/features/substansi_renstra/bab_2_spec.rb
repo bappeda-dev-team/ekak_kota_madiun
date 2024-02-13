@@ -3,22 +3,6 @@ require 'rails_helper'
 RSpec.describe "Substansi Renstra Bab 2", type: :feature do
   let(:user) { create(:super_admin) }
   let(:opd) { user.opd }
-  let(:kepala_opd) do
-    create(:jabatan, kode_opd: opd.kode_unik_opd,
-                     nama_jabatan: 'Kepala OPD')
-  end
-  let(:sekretaris) do
-    create(:jabatan, kode_opd: opd.kode_unik_opd,
-                     nama_jabatan: 'Sekretaris OPD')
-  end
-  let(:fungsional1) do
-    create(:jabatan, kode_opd: opd.kode_unik_opd,
-                     nama_jabatan: 'Fungsional 1')
-  end
-  let(:staff1) do
-    create(:jabatan, kode_opd: opd.kode_unik_opd,
-                     nama_jabatan: 'Staff 1')
-  end
 
   def open_aset_kepegawaian_page
     login_as user
@@ -61,6 +45,23 @@ RSpec.describe "Substansi Renstra Bab 2", type: :feature do
   end
 
   context 'on already inputted kependidikan and pendidikan terakhir in jabatan opd' do
+    let(:kepala_opd) do
+      create(:jabatan, kode_opd: opd.kode_unik_opd,
+                       nama_jabatan: 'Kepala OPD')
+    end
+    let(:sekretaris) do
+      create(:jabatan, kode_opd: opd.kode_unik_opd,
+                       nama_jabatan: 'Sekretaris OPD')
+    end
+    let(:fungsional1) do
+      create(:jabatan, kode_opd: opd.kode_unik_opd,
+                       nama_jabatan: 'Fungsional 1')
+    end
+    let(:staff1) do
+      create(:jabatan, kode_opd: opd.kode_unik_opd,
+                       nama_jabatan: 'Staff 1')
+    end
+
     it 'show Kepegawaian Item', js: true do
       kepala_opd
       sekretaris

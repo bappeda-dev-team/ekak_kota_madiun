@@ -19,31 +19,35 @@ export default class extends Controller {
 
   editRow(e) {
     const [xhr, status] = e.detail;
-    console.log(status);
     const targetRow = this.element;
 
     if (status == "OK") {
       const html = xhr.response;
-      targetRow.outerHTML = html;
+      targetRow.classList.add("d-none");
+      targetRow.insertAdjacentHTML("afterend", html);
     } else {
       this.sweetalertStatus(status.text, status);
     }
   }
 
+  batal() {
+    const targetRow = this.element;
+    targetRow.previousElementSibling.classList.remove("d-none");
+    targetRow.remove();
+  }
+
   processAjax(event) {
-    // event.preventDefault()
     const [message, status] = event.detail;
     const { resText, html_content } = JSON.parse(message.response);
-    const target = this.element.parentElement;
+    const targetRow = this.element;
+
     if (status == "Unprocessable Entity") {
-      const formElement = this.formTarget;
-      formElement.innerHTML = html_content;
+      targetRow.outerHTML = html_content;
     } else {
-      target.innerHTML = html_content;
-      this.animateBackground(target);
-      // target.replaceWith(html);
+      targetRow.outerHTML = html_content;
+      this.animateBackground(targetRow);
     }
-    this.sweetalertStatus(resText, status);
+    // this.sweetalertStatus(resText, status);
   }
 
   animateBackground(target) {
@@ -74,11 +78,6 @@ export default class extends Controller {
     this.toggleButton();
     const form = this.formTarget.querySelector("form");
     Rails.fire(form, "submit");
-  }
-
-  cancelForm() {
-    this.toggleButton();
-    this.formTarget.innerHTML = "";
   }
 
   toggleButton() {

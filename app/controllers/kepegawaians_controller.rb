@@ -1,6 +1,6 @@
 class KepegawaiansController < ApplicationController
   before_action :set_kepegawaian, only: %i[show edit update destroy]
-  layout false, only: %i[new edit]
+  layout false, only: %i[new edit_jumlah]
 
   # GET /kepegawaians or /kepegawaians.json
   def index
@@ -20,26 +20,81 @@ class KepegawaiansController < ApplicationController
     @jenis_pendidikan = Kepegawaian::JENIS_PENDIDIKAN
 
     @kepegawaian = @jabatan.kepegawaians
-                           .build(opd: @opd,
+                           .build(opd_id: @opd.id,
                                   tahun: @tahun)
   end
 
   # GET /kepegawaians/1/edit
   def edit; end
 
-  # POST /kepegawaians or /kepegawaians.json
-  def create
-    @kepegawaian = Kepegawaian.new(kepegawaian_params)
+  def edit_jumlah
+    @jabatan = Jabatan.find(params[:jabatan_id])
+    @opd = Opd.find_by(kode_unik_opd: cookies[:opd])
+    @tahun = cookies[:tahun]
+    @status_kepegawaian = Jabatan::STATUS_KEPEGAWAIAN
+    @jenis_pendidikan = Kepegawaian::JENIS_PENDIDIKAN
+    @kepegawaians = @jabatan.kepegawaians.where(tahun: @tahun, opd: @opd)
+  end
 
-    if @kepegawaian.save
-      render json: { resText: 'Entri Jabatan ditambahkan',
-                     html_content: html_content({ jabatan: @kepegawaian },
-                                                partial: 'kepegawaians/kepegawaian') }.to_json,
+  def update_jumlah
+    @jabatan = Jabatan.find(params[:jabatan_id])
+    @status_kepegawaian = Jabatan::STATUS_KEPEGAWAIAN
+    @jenis_pendidikan = Kepegawaian::JENIS_PENDIDIKAN
+    @tahun = cookies[:tahun]
+
+    status_kepegawaians = params[:status_kepegawaian]
+    jumlah_kepegawaians = params[:jumlah]
+
+    kepegawaians = status_kepegawaians.zip(jumlah_kepegawaians)
+
+    @kepegawaians = kepegawaians.map do |status, jumlah|
+      @jabatan.kepegawaians.find_by(status_kepegawaian: status).update({ jumlah: jumlah })
+    end
+
+    if @kepegawaians.any?
+      render json: { resText: 'Update berhasil',
+                     html_content: html_content({ jabatan: @jabatan },
+                                                partial: 'jabatans/jabatan_kepegawaian') }.to_json,
              status: :ok
     else
       render json: { resText: 'Terjadi kesalahan',
-                     html_content: error_content({ jabatan: @kepegawaian },
-                                                 partial: 'kepegawaians/form').to_json }.to_json,
+                     html_content: error_content({ kepegawaian: @kepegawaian },
+                                                 partial: 'kepegawaians/form') }.to_json,
+             status: :unprocessable_entity
+    end
+  end
+
+  # POST /kepegawaians or /kepegawaians.json
+  def create
+    @jabatan = Jabatan.find(params[:jabatan_id])
+    @status_kepegawaian = Jabatan::STATUS_KEPEGAWAIAN
+    @jenis_pendidikan = Kepegawaian::JENIS_PENDIDIKAN
+    @tahun = cookies[:tahun]
+
+    status_kepegawaians = params[:kepegawaian][:status_kepegawaian]
+    jumlah_kepegawaians = params[:kepegawaian][:jumlah]
+    tahun = params[:kepegawaian][:tahun]
+    opd = params[:kepegawaian][:opd_id]
+    kepegawaians = status_kepegawaians.zip(jumlah_kepegawaians)
+
+    @kepegawaians = kepegawaians.map do |status, jumlah|
+      @jabatan.kepegawaians.create({
+                                     opd_id: opd,
+                                     tahun: tahun,
+                                     status_kepegawaian: status,
+                                     jumlah: jumlah
+                                   })
+    end
+
+    if @kepegawaians.any?
+      render json: { resText: 'Entri Jabatan ditambahkan',
+                     html_content: html_content({ jabatan: @jabatan },
+                                                partial: 'jabatans/jabatan_kepegawaian') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ kepegawaian: @kepegawaian },
+                                                 partial: 'kepegawaians/form') }.to_json,
              status: :unprocessable_entity
     end
   end
@@ -76,6 +131,6 @@ class KepegawaiansController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def kepegawaian_params
-    params.require(:kepegawaian).permit(:status_kepegawaian, :jumlah, :jabatan_id)
+    params.require(:kepegawaian).permit!
   end
 end

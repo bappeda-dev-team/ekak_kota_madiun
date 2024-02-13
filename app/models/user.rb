@@ -396,4 +396,12 @@ class User < ApplicationRecord
   def opd_bidang_user
     Opd.find_by(kode_opd: kode_opd, id_bidang: id_bidang)
   end
+
+  def nik=(nik)
+    write_attribute(:nik, nik.try(:strip))
+  end
+
+  def email=(email)
+    write_attribute(:email, email.try(:strip))
+  end
 end

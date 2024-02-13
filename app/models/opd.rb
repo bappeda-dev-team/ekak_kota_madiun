@@ -32,7 +32,7 @@
 class Opd < ApplicationRecord
   validates :nama_opd, presence: true
   validates :kode_opd, presence: true
-  has_many :jabatans, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd'
+  has_many :jabatans, -> { order('nilai_jabatan DESC') }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd'
   has_many :users, foreign_key: 'kode_opd', primary_key: 'kode_opd'
   has_many :sasarans, through: :users
   has_many :indikator_sasarans, through: :sasarans
