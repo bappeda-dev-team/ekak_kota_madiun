@@ -35,20 +35,6 @@ CREATE TYPE public.usulan_status AS ENUM (
 );
 
 
---
--- Name: trigger_7415c28ad2(); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION public.trigger_7415c28ad2() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-  NEW."jumlah_for_type_change" := NEW."jumlah";
-  RETURN NEW;
-END;
-$$;
-
-
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -1086,7 +1072,6 @@ ALTER SEQUENCE public.jabatans_id_seq OWNED BY public.jabatans.id;
 
 CREATE TABLE public.jumlahs (
     id bigint NOT NULL,
-    jumlah_for_type_change integer,
     satuan character varying,
     tahun character varying,
     keterangan character varying,
@@ -5691,13 +5676,6 @@ CREATE INDEX index_usulans_on_usulanable ON public.usulans USING btree (usulanab
 
 
 --
--- Name: jumlahs trigger_7415c28ad2; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER trigger_7415c28ad2 BEFORE INSERT OR UPDATE ON public.jumlahs FOR EACH ROW EXECUTE FUNCTION public.trigger_7415c28ad2();
-
-
---
 -- Name: comments fk_rails_03de2dc08c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -6173,6 +6151,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240212014714'),
 ('20240213031735'),
 ('20240213031939'),
-('20240213032106');
+('20240213032106'),
+('20240213033144');
 
 
