@@ -10,6 +10,9 @@ Anggaran.destroy_all
 Pajak.destroy_all
 User.destroy_all
 Opd.destroy_all
+Periode.destroy_all
+Tahun.destroy_all
+KelompokAnggaran.destroy_all
 
 lembaga = Lembaga.create(nama_lembaga: 'Kota Madiun', tahun: '2022')
 Pajak.create(tahun: '2022', tipe: 'Tanpa Pajak', potongan: 0)
@@ -26,6 +29,16 @@ user = User.create(nama: 'Super Admin', nik: 'super_admin', kode_opd: opd.kode_o
 %w[admin asn reviewer non_aktif super_admin].each do |role_name|
   Role.create! name: role_name
 end
+periode_1 = Periode.create(tahun_awal: '2019', tahun_akhir: '2024')
+periode_2 = Periode.create(tahun_awal: '2025', tahun_akhir: '2026')
+(2019..2024).each do |tahun|
+  Tahun.create! tahun: tahun, periode: periode_1
+  KelompokAnggaran.create tahun: tahun, kelompok: 'Murni'
+end
+(2025..2026).each do |tahun|
+  Tahun.create! tahun: tahun, periode: periode_2
+end
+
 user.add_role :super_admin
 user.add_role :asn
 user.add_role :admin
