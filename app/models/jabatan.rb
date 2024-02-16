@@ -31,7 +31,24 @@ class Jabatan < ApplicationRecord
     end
   end
 
-  def pendidikan_pegawai
-    kepegawaians.flat_map(&:pendidikan_pegawai)
+  def pendidikan_pegawai(tahun)
+    kepegawaians.where(tahun: tahun).flat_map(&:pendidikan_pegawai)
+  end
+
+  def tambah_pendidikan_kepegawaian(tambah_pendidikan)
+    kepegawaians.map do |kp|
+      tambah_pendidikan.each do |pt|
+        kp.pendidikan_terakhirs.create({
+                                         pendidikan: pt,
+                                         keterangan: '-'
+                                       })
+      end
+    end
+  end
+
+  def hapus_pendidikan_kepegawaian(hapus_pendidikan)
+    pendidikan_terakhirs
+      .where(pendidikan: hapus_pendidikan)
+      .destroy_all
   end
 end

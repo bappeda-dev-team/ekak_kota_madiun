@@ -22,7 +22,7 @@
   <% end %>
   <% @jenis_pendidikan.each do |pendidikan| %>
     <td class="border fw-bolder text-wrap">
-      <% checked = @jabatan.pendidikan_pegawai.include?(pendidikan) %>
+      <% checked = @jabatan.pendidikan_pegawai(@tahun).include?(pendidikan) %>
       <%= form.check_box :pendidikan_terakhir, { checked: checked, multiple: true , class: 'form-check-input', form: dom_id(@jabatan, 'form') }, pendidikan, '' %>
     </td>
   <% end %>

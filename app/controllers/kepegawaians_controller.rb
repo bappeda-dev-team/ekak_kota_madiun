@@ -52,21 +52,13 @@ class KepegawaiansController < ApplicationController
       @jabatan.kepegawaians.find_by(status_kepegawaian: status).update({ jumlah: jumlah })
     end
 
-    tambah_pendidikan = pendidikan_terakhirs.difference(@jabatan.pendidikan_pegawai).compact_blank
-    hapus_pendidikan = @jabatan.pendidikan_pegawai.difference(pendidikan_terakhirs).compact_blank
+    pendidikan_pegawai = @jabatan.pendidikan_pegawai(@tahun)
+    tambah_pendidikan = pendidikan_terakhirs.difference(pendidikan_pegawai).compact_blank
+    hapus_pendidikan = pendidikan_pegawai.difference(pendidikan_terakhirs).compact_blank
 
-    if tambah_pendidikan.any?
-      @jabatan.kepegawaians.map do |kp|
-        tambah_pendidikan.each do |pt|
-          kp.pendidikan_terakhirs.create({
-                                           pendidikan: pt,
-                                           keterangan: '-'
-                                         })
-        end
-      end
-    elsif hapus_pendidikan.any?
-      @jabatan.pendidikan_terakhirs.where(pendidikan: hapus_pendidikan).destroy_all
-    end
+    @jabatan.tambah_pendidikan_kepegawaian(tambah_pendidikan) if tambah_pendidikan.any?
+
+    @jabatan.hapus_pendidikan_kepegawaian(hapus_pendidikan) if hapus_pendidikan.any?
 
     if @kepegawaians.any?
       render json: { resText: 'Update berhasil',
