@@ -39,7 +39,8 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'rspec-core'
   gem 'rspec-rails', '~> 6.1.0'
-  gem 'ruby-lsp-rails'
+  gem 'ruby-lsp-rails', require: false
+  gem 'ruby-lsp-rspec', require: false
   gem 'shoulda-matchers', '~> 5.0'
   gem 'table_print'
 end

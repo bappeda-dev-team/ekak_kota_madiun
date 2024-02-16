@@ -424,6 +424,8 @@ GEM
       railties (>= 6.0)
       ruby-lsp (>= 0.14.0, < 0.15.0)
       sorbet-runtime (>= 0.5.9897)
+    ruby-lsp-rspec (0.1.10)
+      ruby-lsp (~> 0.14.0)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
@@ -593,6 +595,7 @@ DEPENDENCIES
   rspec-rails (~> 6.1.0)
   rubocop-rails
   ruby-lsp-rails
+  ruby-lsp-rspec
   sassc-rails
   scenic
   selenium-webdriver
