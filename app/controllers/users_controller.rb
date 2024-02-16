@@ -282,6 +282,27 @@ class UsersController < ApplicationController
     end
   end
 
+  def reset_password
+    @user = User.find(params[:id])
+    default = ExternalUrl.find_by(aplikasi: 'E-KAK', username: 'default')
+    password = default.password
+    confirm_password = default.password
+
+    if password == confirm_password
+      @user.update(password: password)
+      render json: { resText: "Password diperbarui",
+                     html_content: html_content({ user: @user },
+                                                partial: 'users/user') }.to_json,
+             status: :ok
+    else
+      @error = 'Password tidak sesuai'
+      render json: { resText: "Password tidak sesuai",
+                     html_content: error_content({ user: @user },
+                                                 partial: 'users/form_password') }.to_json,
+             status: :unprocessable_entity
+    end
+  end
+
   def update_jabatan # rubocop:disable Metrics
     @tahun_asli = params[:user][:tahun]
     @kode_opd = params[:user][:kode_opd]

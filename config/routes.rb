@@ -376,6 +376,7 @@ Rails.application.routes.draw do
       get :edit_profile
       get :update_password
       patch :ganti_password
+      patch :reset_password
     end
   end
 
