@@ -2,22 +2,31 @@
 #
 # Table name: jabatans
 #
-#  id            :bigint           not null, primary key
-#  id_jabatan    :bigint
-#  index         :string
-#  kelas_jabatan :string
-#  kode_opd      :string
-#  nama_jabatan  :string
-#  nilai_jabatan :integer
-#  tahun         :string
-#  tipe          :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id               :bigint           not null, primary key
+#  id_jabatan       :bigint
+#  index            :string
+#  kelas_jabatan    :string
+#  kode_opd         :string
+#  nama_jabatan     :string
+#  nilai_jabatan    :integer
+#  tahun            :string
+#  tipe             :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  jenis_jabatan_id :bigint
+#
+# Indexes
+#
+#  index_jabatans_on_jenis_jabatan_id  (jenis_jabatan_id)
 #
 class Jabatan < ApplicationRecord
   has_many :kepegawaians
   has_many :pendidikan_terakhirs, through: :kepegawaians
   accepts_nested_attributes_for :kepegawaians, reject_if: :all_blank, allow_destroy: true
+
+  belongs_to :jenis_jabatan
+  validates :nama_jabatan, presence: true, length: { minimum: 5 }
+  after_validation { nama_jabatan.upcase! }
 
   STATUS_KEPEGAWAIAN = %w[PNS PPPK Kontrak Upah]
 
@@ -55,5 +64,9 @@ class Jabatan < ApplicationRecord
     pendidikan_terakhirs
       .where(pendidikan: hapus_pendidikan)
       .destroy_all
+  end
+
+  def nama_jenis_jabatan
+    jenis_jabatan.to_s
   end
 end
