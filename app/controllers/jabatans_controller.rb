@@ -15,7 +15,11 @@ class JabatansController < ApplicationController
 
   # GET /jabatans/new
   def new
+    @opd = Opd.find_by(kode_unik_opd: cookies[:opd])
+    @tahun = cookies[:tahun]
     @jabatan = Jabatan.new
+    @status_kepegawaian = Jabatan::STATUS_KEPEGAWAIAN
+    @jenis_pendidikan = Kepegawaian::JENIS_PENDIDIKAN
   end
 
   # GET /jabatans/1/edit
