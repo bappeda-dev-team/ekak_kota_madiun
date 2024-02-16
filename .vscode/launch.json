@@ -5,41 +5,15 @@
   "version": "0.2.0",
   "configurations": [
     {
-      //Start Rails server
-      "name": "Debug Rails",
-      "type": "rdbg",
+      "type": "ruby_lsp",
       "request": "launch",
-      // "command": "bundle exec rails", #bundle exec rails won't stop in the debugger
-      "command": "bin/rails",
-      "script": "s",
-      "args": [
-        "-b",
-        "0.0.0.0"
-      ],
+      "name": "Debug current spec",
+      "program": "bundle exec rspec ${file}",
     },
     {
-      // Run tests on the active rspec file
-      "name": "Debug Rspec with current file",
-      "type": "rdbg",
-      "request": "launch",
-      "command": "bundle exec rspec",
-      "script": "${file}",
-      "args": [],
-      // Confirm the executed command in the window. Make it easy to specify options such as execution of 
-      "askParameters": true
+      "type": "ruby_lsp",
+      "request": "attach",
+      "name": "Attach to existing server",
     },
-    {
-      "type": "rdbg",
-      "name": "Debug current file with rdbg",
-      "request": "launch",
-      "script": "${file}",
-      "args": [],
-      "askParameters": true
-    },
-    {
-      "type": "rdbg",
-      "name": "Attach with rdbg",
-      "request": "attach"
-    }
   ]
 }
