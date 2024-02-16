@@ -49,7 +49,7 @@ class KepegawaiansController < ApplicationController
     kepegawaians = status_kepegawaians.zip(jumlah_kepegawaians)
 
     @kepegawaians = kepegawaians.map do |status, jumlah|
-      @jabatan.kepegawaians.find_by(status_kepegawaian: status).update({ jumlah: jumlah })
+      @jabatan.update_jumlah_kepegawaian(@tahun, status, jumlah)
     end
 
     pendidikan_pegawai = @jabatan.pendidikan_pegawai(@tahun)

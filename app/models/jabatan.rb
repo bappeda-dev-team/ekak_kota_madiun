@@ -31,6 +31,11 @@ class Jabatan < ApplicationRecord
     end
   end
 
+  def update_jumlah_kepegawaian(tahun, status, jumlah)
+    kepegawaians.where(tahun: tahun, status_kepegawaian: status)
+                .update_all(jumlah: jumlah)
+  end
+
   def pendidikan_pegawai(tahun)
     kepegawaians.where(tahun: tahun).flat_map(&:pendidikan_pegawai)
   end
