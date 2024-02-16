@@ -1,6 +1,7 @@
 <tr data-controller="row">
   <td class="text-gray-900 fw-bolder align-middle" scope="row"></td>
   <td class="fw-bolder text-wrap" width="700px"><%= jabatan %></td>
+  <td class="fw-bolder text-wrap" width="700px"><%= jabatan.jenis_jabatan %></td>
   <td class="fw-bolder">
     <% if jabatan.kepegawaians.where(tahun: @tahun).any? %>
       <%= link_to edit_jumlah_jabatan_kepegawaians_path(jabatan_id: jabatan),

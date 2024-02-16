@@ -6,6 +6,14 @@
 ) do |form| %>
   <td class="text-gray-900 fw-bolder align-middle" scope="row"></td>
   <td class="fw-bolder text-wrap" width="700px"><%= form.text_field :jabatan, class: 'form-control',form: dom_id(@jabatan, 'form'), placeholder: 'Input nama jabatan...' %></td>
+  <td class="fw-bolder text-wrap" width="700px">
+    <%= form.select :jenis_jabatan, dropdown_jenis_jabatan(@tahun), {include_blank: true},
+      class: "form-control",
+      data: {
+        controller: "dropdown",
+        placeholder: "Pilih kategori jabatan",
+      } %>
+  </td>
   <td class="fw-bolder">
     <div class="d-grid gap-2">
       <%= form.submit 'Simpan', class: 'btn btn-sm', style: 'margin-top: 0 !important;', form: dom_id(@jabatan, 'form') %>
