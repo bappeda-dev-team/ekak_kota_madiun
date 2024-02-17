@@ -21,11 +21,10 @@ export default class extends Controller {
   addRow(e) {
     const [xhr, status] = e.detail;
     const targetRow = document.getElementById(this.elementValue);
-    console.log(targetRow)
 
     if (status == "OK" && targetRow != null && typeof targetRow != "undefined") {
       const html = xhr.response;
-      targetRow.insertAdjacentHTML('beforebegin', html)
+      targetRow.insertAdjacentHTML('afterbegin', html)
     } else {
       this.sweetalertStatus(status.text, status);
     }

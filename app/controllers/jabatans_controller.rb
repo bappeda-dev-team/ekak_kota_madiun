@@ -15,11 +15,8 @@ class JabatansController < ApplicationController
 
   # GET /jabatans/new
   def new
-    @opd = Opd.find_by(kode_unik_opd: cookies[:opd])
-    @tahun = cookies[:tahun]
+    setup_jabatan
     @jabatan = Jabatan.new(kode_opd: @opd.kode_unik_opd, tahun: @tahun)
-    @status_kepegawaian = Jabatan::STATUS_KEPEGAWAIAN
-    @jenis_pendidikan = Kepegawaian::JENIS_PENDIDIKAN
     @jabatan.kepegawaians.build(tahun: @tahun, opd: @opd, status_kepegawaian: '', jumlah: 0)
   end
 
@@ -28,10 +25,7 @@ class JabatansController < ApplicationController
 
   # POST /jabatans or /jabatans.json
   def create
-    @opd = Opd.find_by(kode_unik_opd: cookies[:opd])
-    @tahun = cookies[:tahun]
-    @status_kepegawaian = Jabatan::STATUS_KEPEGAWAIAN
-    @jenis_pendidikan = Kepegawaian::JENIS_PENDIDIKAN
+    setup_jabatan
     @jabatan = Jabatan.new(jabatan_params)
 
     if @jabatan.save
@@ -42,7 +36,7 @@ class JabatansController < ApplicationController
     else
       render json: { resText: 'Terjadi kesalahan',
                      html_content: error_content({ jabatan: @jabatan },
-                                                 partial: 'jabatans/form').to_json }.to_json,
+                                                 partial: 'jabatans/form_row') }.to_json,
              status: :unprocessable_entity
     end
   end
@@ -73,6 +67,14 @@ class JabatansController < ApplicationController
   end
 
   private
+
+  def setup_jabatan
+    @count = (SecureRandom.random_number(9e5) + 1e5).to_i
+    @opd = Opd.find_by(kode_unik_opd: cookies[:opd])
+    @tahun = cookies[:tahun]
+    @status_kepegawaian = Jabatan::STATUS_KEPEGAWAIAN
+    @jenis_pendidikan = Kepegawaian::JENIS_PENDIDIKAN
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_jabatan

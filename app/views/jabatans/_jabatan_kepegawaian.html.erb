@@ -1,7 +1,9 @@
 <tr data-controller="row">
   <td class="text-gray-900 fw-bolder align-middle" scope="row"></td>
   <td class="fw-bolder text-wrap" width="700px"><%= jabatan %></td>
-  <td class="fw-bolder text-wrap" width="700px"><%= jabatan.jenis_jabatan %></td>
+  <%= render(ColFieldComponent.new(width: '500px')) do %>
+    <%= jabatan.jenis_jabatan %>
+  <% end %>
   <td class="fw-bolder">
     <% if jabatan.kepegawaians.where(tahun: @tahun).any? %>
       <%= link_to edit_jumlah_jabatan_kepegawaians_path(jabatan_id: jabatan),
@@ -26,7 +28,9 @@
     <% end %>
   </td>
   <% @status_kepegawaian.each do |kepegawaian| %>
-    <td class="fw-bolder text-center text-wrap <%= dom_class(jabatan, 'kepegawaian') %>" width="120px"><%= jabatan.jumlah_status_kepegawaian(@tahun).dig(kepegawaian) %></td>
+    <%= render(ColFieldComponent.new(el_class: "text-center #{dom_class(jabatan, 'kepegawaian')}")) do %>
+      <%= jabatan.jumlah_status_kepegawaian(@tahun).dig(kepegawaian) %>
+    <% end%>
   <% end %>
   <% @jenis_pendidikan.each do |pendidikan| %>
     <td class="fw-bolder text-wrap <%= dom_class(jabatan, 'pendidikan') %>" data-pendidikan="<%= jabatan.pendidikan_pegawai(@tahun).include?(pendidikan) %>"></td>
