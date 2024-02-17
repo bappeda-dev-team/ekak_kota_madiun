@@ -5,27 +5,15 @@
     <%= jabatan.jenis_jabatan %>
   <% end %>
   <td class="fw-bolder">
-    <% if jabatan.kepegawaians.where(tahun: @tahun).any? %>
-      <%= link_to edit_jumlah_jabatan_kepegawaians_path(jabatan_id: jabatan),
-       remote: true, class: 'btn btn-sm btn-outline-info',
-       data: {
-         action: 'ajax:complete->row#editRow:prevent',
-         editable_table_target: 'edit'
-       } do %>
-        <span class="fas fa-pencil-alt me-2"></span>
-        <span>Edit</span>
+    <div class="d-grid gap-2">
+      <% if jabatan.kepegawaians.where(tahun: @tahun).any? %>
+        <%= render(EditRowButtonComponent.new(path: edit_jumlah_jabatan_kepegawaians_path(jabatan_id: jabatan))) %>
+      <% else %>
+        <%= render(EditRowButtonComponent.new(path: new_jabatan_kepegawaian_path(jabatan_id: jabatan))) %>
       <% end %>
-    <% else %>
-      <%= link_to new_jabatan_kepegawaian_path(jabatan_id: jabatan),
-       remote: true, class: 'btn btn-sm btn-outline-primary',
-       data: {
-         action: 'ajax:complete->row#editRow:prevent',
-         editable_table_target: 'edit'
-       } do %>
-        <span class="fas fa-plus me-2"></span>
-        <span>Input</span>
-      <% end %>
-    <% end %>
+      <%= render(DeleteButtonComponent.new(path: jabatan_path(jabatan), 
+                                           title: 'Hapus jabatan ?')) %>
+    </div>
   </td>
   <% @status_kepegawaian.each do |kepegawaian| %>
     <%= render(ColFieldComponent.new(el_class: "text-center #{dom_class(jabatan, 'kepegawaian')}")) do %>

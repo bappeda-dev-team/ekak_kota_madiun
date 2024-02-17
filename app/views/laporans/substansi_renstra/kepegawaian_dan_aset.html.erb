@@ -7,7 +7,7 @@
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout_subtitle', title: "Laporan Kepegawaian dan Aset", sub_title: @opd, sub_title_2: @tahun do %>
     <%= link_to new_jabatan_path,
-      remote: true, class: 'btn btn-sm btn-outline-primary',
+      remote: true, class: 'btn btn-primary',
       data: {
       controller: 'row',
       action: 'ajax:complete->row#addRow:prevent',
@@ -15,7 +15,7 @@
       row_element_value: 'new_kepegawaian'
       } do %>
       <span class="fas fa-plus me-2"></span>
-      <span>Input</span>
+      <span>Jabatan Baru</span>
     <% end %>
     <div class="table-responsive mb-5 d-grid gap-2">
       <table class="table table-bordered align-items-center counter border">
