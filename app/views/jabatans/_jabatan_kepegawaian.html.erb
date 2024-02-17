@@ -11,8 +11,6 @@
       <% else %>
         <%= render(EditRowButtonComponent.new(path: new_jabatan_kepegawaian_path(jabatan_id: jabatan))) %>
       <% end %>
-      <%= render(DeleteButtonComponent.new(path: jabatan_path(jabatan), 
-                                           title: 'Hapus jabatan ?')) %>
     </div>
   </td>
   <% @status_kepegawaian.each do |kepegawaian| %>
