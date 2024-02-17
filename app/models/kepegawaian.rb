@@ -25,6 +25,11 @@ class Kepegawaian < ApplicationRecord
   belongs_to :opd
 
   has_many :pendidikan_terakhirs
+  accepts_nested_attributes_for :pendidikan_terakhirs, reject_if: :reject_pendidikan
+
+  def reject_pendidikan(attributes)
+    attributes['pendidikan'].blank?
+  end
 
   # validates :status_kepegawaian, presence: true
   # validates :tahun, presence: true

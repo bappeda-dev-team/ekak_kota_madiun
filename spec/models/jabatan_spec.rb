@@ -96,5 +96,28 @@ RSpec.describe Jabatan, type: :model do
       expect(jabatan.kepegawaians.size).to eq(1)
       expect(jabatan.jumlah_status_kepegawaian('2025')).to include({ 'PNS' => 1 })
     end
+
+    it 'create new jabatan with pendidikan terakhir and jumlah kepegawaian' do
+      jabatan_pimpinan_tinggi = JenisJabatan.create(nama_jenis: 'Jabatan Pimpinan Tinggi',
+                                                    nilai: 1)
+      jabatan = Jabatan.create({
+                                 nama_jabatan: 'Jabatan ABC',
+                                 nilai_jabatan: 99,
+                                 tahun: '2023',
+                                 kode_opd: opd.kode_unik_opd,
+                                 jenis_jabatan: jabatan_pimpinan_tinggi,
+                                 kepegawaians_attributes: [{
+                                   jumlah: 1,
+                                   status_kepegawaian: 'PNS',
+                                   tahun: '2025',
+                                   opd: opd,
+                                   pendidikan_terakhirs_attributes: [{
+                                     pendidikan: 'D4/S1'
+                                   }]
+                                 }]
+                               })
+      expect(jabatan.pendidikan_terakhirs.size).to eq(1)
+      expect(jabatan.pendidikan_pegawai('2025')).to include('D4/S1')
+    end
   end
 end

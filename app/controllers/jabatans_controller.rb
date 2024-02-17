@@ -18,6 +18,7 @@ class JabatansController < ApplicationController
     setup_jabatan
     @jabatan = Jabatan.new(kode_opd: @opd.kode_unik_opd, tahun: @tahun)
     @jabatan.kepegawaians.build(tahun: @tahun, opd: @opd, status_kepegawaian: '', jumlah: 0)
+            .pendidikan_terakhirs.build
   end
 
   # GET /jabatans/1/edit
@@ -26,9 +27,16 @@ class JabatansController < ApplicationController
   # POST /jabatans or /jabatans.json
   def create
     setup_jabatan
+    pendidikan = params[:pendidikan]
     @jabatan = Jabatan.new(jabatan_params)
 
     if @jabatan.save
+
+      pendidikan.each do |pend|
+        @jabatan.kepegawaians.first
+                .pendidikan_terakhirs.create(pendidikan: pend)
+      end
+
       render json: { resText: 'Jabatan ditambahkan',
                      html_content: html_content({ jabatan: @jabatan },
                                                 partial: 'jabatans/jabatan_kepegawaian') }.to_json,
@@ -85,6 +93,15 @@ class JabatansController < ApplicationController
   def jabatan_params
     params.require(:jabatan).permit(:nama_jabatan, :kelas_jabatan, :nilai_jabatan, :index, :kode_opd, :tipe,
                                     :id_jabatan, :tahun, :jenis_jabatan_id,
-                                    kepegawaians_attributes: %i[id tahun jumlah opd_id status_kepegawaian])
+                                    kepegawaians_attributes: kepegawaian_params)
+  end
+
+  def kepegawaian_params
+    [:id, :tahun, :jumlah, :opd_id,
+     :status_kepegawaian, { pendidikan_terakhirs_attributes: pendidikan_params }]
+  end
+
+  def pendidikan_params
+    %i[id pendidikan]
   end
 end
