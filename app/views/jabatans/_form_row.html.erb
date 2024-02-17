@@ -1,0 +1,42 @@
+<%= form_with(model: jabatan, local: false,
+              data: {
+                action: 'ajax:complete->row#processAjax',
+              },
+              id: dom_id(jabatan, 'form')
+) do |form| %>
+  <td class="fw-bolder text-wrap" width="700px" colspan="2">
+    <%= form.hidden_field :kode_opd, form: dom_id(jabatan, 'form')%>
+    <%= form.text_area :nama_jabatan, class: 'form-control',form: dom_id(jabatan, 'form'), placeholder: 'Input nama jabatan...', cols: 5 %>
+  </td>
+  <td class="fw-bolder text-wrap" width="500px">
+    <%= form.select :jenis_jabatan_id, dropdown_jenis_jabatan(@tahun), {include_blank: true},
+      class: "form-control",
+      id: dom_id(jabatan, @count),
+      form: dom_id(jabatan, 'form'),
+      data: {
+        controller: "dropdown",
+        placeholder: "Pilih kategori jabatan",
+      } %>
+  </td>
+  <td class="fw-bolder">
+    <div class="d-grid gap-2">
+      <%= form.submit 'Simpan', class: 'btn btn-sm', style: 'margin-top: 0 !important;', form: dom_id(jabatan, 'form') %>
+      <button class="btn btn-sm btn-outline-danger" data-action="row#batal">Batal</button>
+    </div>
+  </td>
+  <% @status_kepegawaian.each do |kepegawaian| %>
+    <%= form.fields_for :kepegawaians do |f_kp| %>
+      <%= render(ColFieldComponent.new) do %>
+        <%= f_kp.hidden_field :tahun, form: dom_id(jabatan, 'form')%>
+        <%= f_kp.hidden_field :opd_id, form: dom_id(jabatan, 'form')%>
+        <%= f_kp.hidden_field :status_kepegawaian, value: kepegawaian, form: dom_id(jabatan, 'form') %>
+        <%= f_kp.number_field :jumlah, class: 'form-control', placeholder: '0' , min: 0, form: dom_id(jabatan, 'form')%>
+      <% end %>
+    <% end %>
+  <% end %>
+  <% @jenis_pendidikan.each do |pendidikan| %>
+    <%= render(ColFieldComponent.new(el_class: 'text-center')) do %>
+      <%= check_box_tag 'pendidikan[]', pendidikan, false, { class: 'form-check-input', form: dom_id(jabatan, 'form') } %>
+    <% end %>
+  <% end %>
+<% end %>

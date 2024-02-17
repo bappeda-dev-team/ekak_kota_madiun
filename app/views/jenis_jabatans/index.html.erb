@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Jenis Jabatans</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nama jenis</th>
+      <th>Nilai</th>
+      <th>Keterangan</th>
+      <th>Tahun</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @jenis_jabatans.each do |jenis_jabatan| %>
+      <tr>
+        <td><%= jenis_jabatan.nama_jenis %></td>
+        <td><%= jenis_jabatan.nilai %></td>
+        <td><%= jenis_jabatan.keterangan %></td>
+        <td><%= jenis_jabatan.tahun %></td>
+        <td><%= link_to 'Show', jenis_jabatan %></td>
+        <td><%= link_to 'Edit', edit_jenis_jabatan_path(jenis_jabatan) %></td>
+        <td><%= link_to 'Destroy', jenis_jabatan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Jenis Jabatan', new_jenis_jabatan_path %>

@@ -1043,7 +1043,8 @@ CREATE TABLE public.jabatans (
     id_jabatan bigint,
     tahun character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    jenis_jabatan_id bigint
 );
 
 
@@ -1064,6 +1065,40 @@ CREATE SEQUENCE public.jabatans_id_seq
 --
 
 ALTER SEQUENCE public.jabatans_id_seq OWNED BY public.jabatans.id;
+
+
+--
+-- Name: jenis_jabatans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.jenis_jabatans (
+    id bigint NOT NULL,
+    nama_jenis character varying DEFAULT 'Jabatan Fungsional'::character varying NOT NULL,
+    nilai integer DEFAULT 3 NOT NULL,
+    keterangan character varying,
+    tahun character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: jenis_jabatans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.jenis_jabatans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: jenis_jabatans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.jenis_jabatans_id_seq OWNED BY public.jenis_jabatans.id;
 
 
 --
@@ -3881,6 +3916,13 @@ ALTER TABLE ONLY public.jabatans ALTER COLUMN id SET DEFAULT nextval('public.jab
 
 
 --
+-- Name: jenis_jabatans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.jenis_jabatans ALTER COLUMN id SET DEFAULT nextval('public.jenis_jabatans_id_seq'::regclass);
+
+
+--
 -- Name: jumlahs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4557,6 +4599,14 @@ ALTER TABLE ONLY public.jabatan_users
 
 ALTER TABLE ONLY public.jabatans
     ADD CONSTRAINT jabatans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: jenis_jabatans jenis_jabatans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.jenis_jabatans
+    ADD CONSTRAINT jenis_jabatans_pkey PRIMARY KEY (id);
 
 
 --
@@ -5253,6 +5303,13 @@ CREATE INDEX index_inovasis_on_sasaran_id ON public.inovasis USING btree (sasara
 --
 
 CREATE INDEX index_inovasis_on_status ON public.inovasis USING btree (status);
+
+
+--
+-- Name: index_jabatans_on_jenis_jabatan_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_jabatans_on_jenis_jabatan_id ON public.jabatans USING btree (jenis_jabatan_id);
 
 
 --
@@ -6152,6 +6209,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240213031735'),
 ('20240213031939'),
 ('20240213032106'),
-('20240213033144');
+('20240213033144'),
+('20240216174707'),
+('20240216175904');
 
 

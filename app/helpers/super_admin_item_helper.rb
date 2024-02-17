@@ -18,8 +18,8 @@ module SuperAdminItemHelper
         icon: 'fas fa-users', identifier: 'list_all'
       },
       {
-        title: 'Master Jabatan', href: jabatans_path,
-        icon: 'fas fa-people', identifier: 'jabatans'
+        title: 'Master Jenis Jabatan', href: jenis_jabatans_path,
+        icon: 'fas fa-people', identifier: 'jenis_jabatans'
       },
       {
         title: 'User Khusus', href: khusus_users_path,

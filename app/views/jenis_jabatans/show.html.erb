@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nama jenis:</strong>
+  <%= @jenis_jabatan.nama_jenis %>
+</p>
+
+<p>
+  <strong>Nilai:</strong>
+  <%= @jenis_jabatan.nilai %>
+</p>
+
+<p>
+  <strong>Keterangan:</strong>
+  <%= @jenis_jabatan.keterangan %>
+</p>
+
+<p>
+  <strong>Tahun:</strong>
+  <%= @jenis_jabatan.tahun %>
+</p>
+
+<%= link_to 'Edit', edit_jenis_jabatan_path(@jenis_jabatan) %> |
+<%= link_to 'Back', jenis_jabatans_path %>

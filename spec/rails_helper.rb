@@ -10,6 +10,7 @@ require 'rspec/rails'
 require 'devise'
 require 'database_cleaner'
 require "clowne/rspec"
+require "view_component/test_helpers"
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -87,4 +88,8 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   config.include Devise::TestHelpers, type: :controller
   config.include Devise::Test::IntegrationHelpers, type: :request
+
+  # viewcomponent
+  config.include ViewComponent::TestHelpers, type: :component
+  config.include Capybara::RSpecMatchers, type: :component
 end

@@ -15,7 +15,20 @@ export default class extends Controller {
   ];
   static values = {
     anggaran: Number,
+    element: String
   };
+
+  addRow(e) {
+    const [xhr, status] = e.detail;
+    const targetRow = document.getElementById(this.elementValue);
+
+    if (status == "OK" && targetRow != null && typeof targetRow != "undefined") {
+      const html = xhr.response;
+      targetRow.insertAdjacentHTML('afterbegin', html)
+    } else {
+      this.sweetalertStatus(status.text, status);
+    }
+  }
 
   editRow(e) {
     const [xhr, status] = e.detail;
@@ -32,7 +45,10 @@ export default class extends Controller {
 
   batal() {
     const targetRow = this.element;
-    targetRow.previousElementSibling.classList.remove("d-none");
+
+    if (targetRow.previousElementSibling != null) {
+      targetRow.previousElementSibling.classList.remove("d-none");
+    }
     targetRow.remove();
   }
 
@@ -42,7 +58,8 @@ export default class extends Controller {
     const targetRow = this.element;
 
     if (status == "Unprocessable Entity") {
-      targetRow.outerHTML = html_content;
+      // targetRow.outerHTML = html_content;
+      console.log('error xx', resText)
     } else {
       targetRow.outerHTML = html_content;
       this.animateBackground(targetRow);
