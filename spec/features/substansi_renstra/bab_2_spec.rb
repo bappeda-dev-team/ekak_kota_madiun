@@ -120,5 +120,16 @@ RSpec.describe "Substansi Renstra Bab 2", type: :feature do
 
       expect(page).to_not have_content(kepala_opd.nama_jabatan)
     end
+
+    it 'can create new input', js: true do
+      pending('stimulus cannot get response')
+      create(:jenis_jabatan)
+      open_aset_kepegawaian_page
+
+      click_on('Input')
+
+      expect(page).to have_content('Input')
+      expect(page).to have_content('Input')
+    end
   end
 end
