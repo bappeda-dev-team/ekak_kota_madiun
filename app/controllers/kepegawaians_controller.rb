@@ -48,6 +48,8 @@ class KepegawaiansController < ApplicationController
 
     kepegawaians = status_kepegawaians.zip(jumlah_kepegawaians)
 
+    @jabatan.update(jenis_jabatan_id: params[:jenis_jabatan_id])
+
     @kepegawaians = kepegawaians.map do |status, jumlah|
       @jabatan.update_jumlah_kepegawaian(@tahun, status, jumlah)
     end
@@ -87,6 +89,8 @@ class KepegawaiansController < ApplicationController
     tahun = params[:kepegawaian][:tahun]
     opd = params[:kepegawaian][:opd_id]
     kepegawaians = status_kepegawaians.zip(jumlah_kepegawaians)
+
+    @jabatan.update(jenis_jabatan_id: kepegawaian_params[:jenis_jabatan_id])
 
     @kepegawaians = kepegawaians.map do |status, jumlah|
       @jabatan.kepegawaians.create({

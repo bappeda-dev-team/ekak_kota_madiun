@@ -7,7 +7,13 @@
     <td class="text-gray-900 fw-bolder align-middle" scope="row"></td>
     <td class="fw-bolder text-wrap" width="700px"><%= @jabatan %></td>
     <%= render(ColFieldComponent.new(width: '500px')) do %>
-      <%= @jabatan.jenis_jabatan %>
+      <%= form.select :jenis_jabatan_id, dropdown_jenis_jabatan(@tahun), {include_blank: true},
+        class: "form-control",
+        form: dom_id(@jabatan, 'form'),
+        data: {
+          controller: "dropdown",
+          placeholder: "Pilih kategori jabatan",
+        } %>
     <% end %>
     <td class="fw-bolder">
       <div class="d-grid gap-2">

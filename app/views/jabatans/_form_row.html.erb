@@ -8,7 +8,7 @@
     <%= form.hidden_field :kode_opd, form: dom_id(jabatan, 'form')%>
     <%= form.text_area :nama_jabatan, class: 'form-control',form: dom_id(jabatan, 'form'), placeholder: 'Input nama jabatan...', cols: 5 %>
   </td>
-  <td class="fw-bolder text-wrap" width="500px">
+  <%= render(ColFieldComponent.new(width: '500px')) do %>
     <%= form.select :jenis_jabatan_id, dropdown_jenis_jabatan(@tahun), {include_blank: true},
       class: "form-control",
       id: dom_id(jabatan, @count),
@@ -17,7 +17,7 @@
         controller: "dropdown",
         placeholder: "Pilih kategori jabatan",
       } %>
-  </td>
+  <% end %>
   <td class="fw-bolder">
     <div class="d-grid gap-2">
       <%= form.submit 'Simpan', class: 'btn btn-sm', style: 'margin-top: 0 !important;', form: dom_id(jabatan, 'form') %>

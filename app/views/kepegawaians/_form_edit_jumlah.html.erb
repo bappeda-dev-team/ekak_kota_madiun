@@ -8,7 +8,14 @@
   <td class="text-gray-900 fw-bolder align-middle" scope="row"></td>
   <td class="border fw-bolder text-wrap" width="700px"><%= @jabatan %></td>
   <%= render(ColFieldComponent.new(width: '500px')) do %>
-    <%= @jabatan.jenis_jabatan %>
+    <%= form.select :jenis_jabatan_id, dropdown_jenis_jabatan(@tahun, selected: @jabatan.jenis_jabatan_id), {include_blank: true},
+      class: "form-control",
+      id: dom_id(@jabatan),
+      form: dom_id(@jabatan, 'form'),
+      data: {
+        controller: "dropdown",
+        placeholder: "Pilih kategori jabatan",
+      } %>
   <% end %>
   <td class="border fw-bolder">
     <div class="d-grid gap-2">
