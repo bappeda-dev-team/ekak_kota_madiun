@@ -65,7 +65,7 @@ RSpec.describe Jabatan, type: :model do
     expect(jabatan_kepala_bappeda.nama_jabatan).to eq('KEPALA BAPPEDA')
   end
 
-  context '#nama_jenis_jabatan' do
+  describe '#nama_jenis_jabatan' do
     it 'show nama_jenis of jabatan' do
       jabatan_pimpinan_tinggi = JenisJabatan.create(nama_jenis: 'Jabatan Pimpinan Tinggi',
                                                     nilai: 1)
@@ -73,6 +73,28 @@ RSpec.describe Jabatan, type: :model do
                                               nilai_jabatan: 20,
                                               jenis_jabatan: jabatan_pimpinan_tinggi)
       expect(jabatan_kepala_bappeda.nama_jenis_jabatan).to eq('Jabatan Pimpinan Tinggi')
+    end
+  end
+
+  context 'create jabatan with kepegawaians and pendidikan terakhir' do
+    it 'create jabatan nested with kepegawaians' do
+      jabatan_pimpinan_tinggi = JenisJabatan.create(nama_jenis: 'Jabatan Pimpinan Tinggi',
+                                                    nilai: 1)
+      jabatan = Jabatan.create({
+                                 nama_jabatan: 'Jabatan ABC',
+                                 nilai_jabatan: 99,
+                                 tahun: '2023',
+                                 kode_opd: opd.kode_unik_opd,
+                                 jenis_jabatan: jabatan_pimpinan_tinggi,
+                                 kepegawaians_attributes: [{
+                                   jumlah: 1,
+                                   status_kepegawaian: 'PNS',
+                                   tahun: '2025',
+                                   opd: opd
+                                 }]
+                               })
+      expect(jabatan.kepegawaians.size).to eq(1)
+      expect(jabatan.jumlah_status_kepegawaian('2025')).to include({ 'PNS' => 1 })
     end
   end
 end
