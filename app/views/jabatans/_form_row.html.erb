@@ -5,10 +5,14 @@
               id: dom_id(@jabatan, 'form')
 ) do |form| %>
   <td class="text-gray-900 fw-bolder align-middle" scope="row"></td>
-  <td class="fw-bolder text-wrap" width="700px"><%= form.text_field :jabatan, class: 'form-control',form: dom_id(@jabatan, 'form'), placeholder: 'Input nama jabatan...' %></td>
   <td class="fw-bolder text-wrap" width="700px">
-    <%= form.select :jenis_jabatan, dropdown_jenis_jabatan(@tahun), {include_blank: true},
+    <%= form.hidden_field :kode_opd, form: dom_id(@jabatan, 'form')%>
+    <%= form.text_area :nama_jabatan, class: 'form-control',form: dom_id(@jabatan, 'form'), placeholder: 'Input nama jabatan...', cols: 5 %>
+  </td>
+  <td class="fw-bolder text-wrap" width="700px">
+    <%= form.select :jenis_jabatan_id, dropdown_jenis_jabatan(@tahun), {include_blank: true},
       class: "form-control",
+      form: dom_id(@jabatan, 'form'),
       data: {
         controller: "dropdown",
         placeholder: "Pilih kategori jabatan",
@@ -21,16 +25,13 @@
     </div>
   </td>
   <% @status_kepegawaian.each do |kepegawaian| %>
-    <td class='border fw-bolder text-center text-wrap field' width="120px">
-      <%= form.hidden_field :tahun, form: dom_id(@jabatan, 'form')%>
-      <%= form.hidden_field :opd_id, form: dom_id(@jabatan, 'form')%>
-      <%= form.hidden_field :status_kepegawaian, value: kepegawaian, multiple: true, form: dom_id(@jabatan, 'form') %>
-      <%= form.number_field :jumlah, class: 'form-control', placeholder: '0' , multiple: true, min: 0, form: dom_id(@jabatan, 'form')%>
-    </td>
-  <% end %>
-  <% @jenis_pendidikan.each do |pendidikan| %>
-    <td class="border fw-bolder text-wrap">
-      <%= form.check_box :pendidikan_terakhir, { multiple: true , class: 'form-check-input', form: dom_id(@jabatan, 'form') }, pendidikan, '' %>
-    </td>
+    <%= form.fields_for :kepegawaians, id: 'kepegawaian' do |f_kp| %>
+      <td class='border fw-bolder text-center text-wrap field' width="150px">
+        <%= f_kp.hidden_field :tahun, form: dom_id(@jabatan, 'form')%>
+        <%= f_kp.hidden_field :opd_id, form: dom_id(@jabatan, 'form')%>
+        <%= f_kp.hidden_field :status_kepegawaian, value: kepegawaian, form: dom_id(@jabatan, 'form') %>
+        <%= f_kp.number_field :jumlah, class: 'form-control', placeholder: '0' , min: 0, form: dom_id(@jabatan, 'form')%>
+      </td>
+    <% end %>
   <% end %>
 <% end %>

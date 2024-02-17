@@ -22,10 +22,6 @@ module SuperAdminItemHelper
         icon: 'fas fa-people', identifier: 'jenis_jabatans'
       },
       {
-        title: 'Master Jabatan', href: jabatans_path,
-        icon: 'fas fa-people', identifier: 'jabatans'
-      },
-      {
         title: 'User Khusus', href: khusus_users_path,
         icon: 'fas fa-user-tie', identifier: 'khusus_users'
       },

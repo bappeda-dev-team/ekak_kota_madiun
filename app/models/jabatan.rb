@@ -22,7 +22,7 @@
 class Jabatan < ApplicationRecord
   has_many :kepegawaians
   has_many :pendidikan_terakhirs, through: :kepegawaians
-  accepts_nested_attributes_for :kepegawaians, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :kepegawaians
 
   belongs_to :jenis_jabatan
   validates :nama_jabatan, presence: true, length: { minimum: 5 }

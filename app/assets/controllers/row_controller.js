@@ -21,6 +21,7 @@ export default class extends Controller {
   addRow(e) {
     const [xhr, status] = e.detail;
     const targetRow = document.getElementById(this.elementValue);
+    console.log(targetRow)
 
     if (status == "OK" && targetRow != null && typeof targetRow != "undefined") {
       const html = xhr.response;
@@ -58,7 +59,8 @@ export default class extends Controller {
     const targetRow = this.element;
 
     if (status == "Unprocessable Entity") {
-      targetRow.outerHTML = html_content;
+      // targetRow.outerHTML = html_content;
+      console.log('error xx', resText)
     } else {
       targetRow.outerHTML = html_content;
       this.animateBackground(targetRow);

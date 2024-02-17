@@ -17,9 +17,10 @@ class JabatansController < ApplicationController
   def new
     @opd = Opd.find_by(kode_unik_opd: cookies[:opd])
     @tahun = cookies[:tahun]
-    @jabatan = Jabatan.new
+    @jabatan = Jabatan.new(kode_opd: @opd.kode_unik_opd, tahun: @tahun)
     @status_kepegawaian = Jabatan::STATUS_KEPEGAWAIAN
     @jenis_pendidikan = Kepegawaian::JENIS_PENDIDIKAN
+    @jabatan.kepegawaians.build(tahun: @tahun, opd: @opd, status_kepegawaian: '', jumlah: 0)
   end
 
   # GET /jabatans/1/edit
@@ -27,12 +28,16 @@ class JabatansController < ApplicationController
 
   # POST /jabatans or /jabatans.json
   def create
+    @opd = Opd.find_by(kode_unik_opd: cookies[:opd])
+    @tahun = cookies[:tahun]
+    @status_kepegawaian = Jabatan::STATUS_KEPEGAWAIAN
+    @jenis_pendidikan = Kepegawaian::JENIS_PENDIDIKAN
     @jabatan = Jabatan.new(jabatan_params)
 
     if @jabatan.save
-      render json: { resText: 'Entri Jabatan ditambahkan',
+      render json: { resText: 'Jabatan ditambahkan',
                      html_content: html_content({ jabatan: @jabatan },
-                                                partial: 'jabatans/jabatan') }.to_json,
+                                                partial: 'jabatans/jabatan_kepegawaian') }.to_json,
              status: :ok
     else
       render json: { resText: 'Terjadi kesalahan',
@@ -77,6 +82,7 @@ class JabatansController < ApplicationController
   # Only allow a list of trusted parameters through.
   def jabatan_params
     params.require(:jabatan).permit(:nama_jabatan, :kelas_jabatan, :nilai_jabatan, :index, :kode_opd, :tipe,
-                                    :id_jabatan, :tahun)
+                                    :id_jabatan, :tahun, :jenis_jabatan_id,
+                                    kepegawaians_attributes: %i[id tahun jumlah opd_id status_kepegawaian])
   end
 end
