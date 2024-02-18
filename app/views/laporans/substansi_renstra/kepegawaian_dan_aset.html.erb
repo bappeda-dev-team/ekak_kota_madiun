@@ -9,10 +9,9 @@
     <%= link_to new_jabatan_path,
       remote: true, class: 'btn btn-primary',
       data: {
-      controller: 'row',
-      action: 'ajax:complete->row#addRow:prevent',
-      editable_table_target: 'edit',
-      row_element_value: 'new_kepegawaian'
+        controller: 'row',
+        action: 'ajax:complete->row#addRow',
+        row_element_value: 'new_kepegawaian'
       } do %>
       <span class="fas fa-plus me-2"></span>
       <span>Jabatan Baru</span>
