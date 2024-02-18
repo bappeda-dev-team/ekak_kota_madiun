@@ -21,7 +21,7 @@
 #  fk_rails_...  (jabatan_id => jabatans.id)
 #
 class Kepegawaian < ApplicationRecord
-  belongs_to :jabatan
+  belongs_to :jabatan, inverse_of: :kepegawaians
   belongs_to :opd
 
   has_many :pendidikan_terakhirs, dependent: :destroy

@@ -22,7 +22,10 @@ class JabatansController < ApplicationController
   end
 
   # GET /jabatans/1/edit
-  def edit; end
+  def edit
+    setup_jabatan
+    @kepegawaians = @jabatan.kepegawaians.where(tahun: @tahun, opd: @opd)
+  end
 
   # POST /jabatans or /jabatans.json
   def create
@@ -51,15 +54,20 @@ class JabatansController < ApplicationController
 
   # PATCH/PUT /jabatans/1 or /jabatans/1.json
   def update
+    @kepegawaians = @jabatan.kepegawaians.where(tahun: @tahun, opd: @opd)
+    setup_jabatan
     if @jabatan.update(jabatan_params)
+      update_jumlah_kepegawaian_jabatan
+      update_pendidikan_jabatan
+
       render json: { resText: 'Perubahan tersimpan',
                      html_content: html_content({ jabatan: @jabatan },
-                                                partial: 'jabatans/jabatan') }.to_json,
+                                                partial: 'jabatans/jabatan_kepegawaian') }.to_json,
              status: :ok
     else
       render json: { resText: 'Terjadi kesalahan',
                      html_content: error_content({ jabatan: @jabatan },
-                                                 partial: 'jabatans/form').to_json }.to_json,
+                                                 partial: 'jabatans/form_row_edit') }.to_json,
              status: :unprocessable_entity
     end
   end
@@ -97,11 +105,32 @@ class JabatansController < ApplicationController
   end
 
   def kepegawaian_params
-    [:id, :tahun, :jumlah, :opd_id,
-     :status_kepegawaian, { pendidikan_terakhirs_attributes: pendidikan_params }]
+    %i[id tahun jumlah opd_id
+       status_kepegawaian]
   end
 
   def pendidikan_params
     %i[id pendidikan]
+  end
+
+  def update_pendidikan_jabatan
+    pendidikan = params[:pendidikan]
+    pendidikan_pegawai = @jabatan.pendidikan_pegawai(@tahun)
+    tambah_pendidikan = pendidikan.difference(pendidikan_pegawai).compact_blank
+    hapus_pendidikan = pendidikan_pegawai.difference(pendidikan).compact_blank
+
+    @jabatan.tambah_pendidikan_kepegawaian(tambah_pendidikan) if tambah_pendidikan.any?
+
+    @jabatan.hapus_pendidikan_kepegawaian(hapus_pendidikan) if hapus_pendidikan.any?
+  end
+
+  def update_jumlah_kepegawaian_jabatan
+    status_kepegawaians = params[:status_kepegawaian]
+    jumlah_kepegawaians = params[:jumlah]
+    kepegawaians = status_kepegawaians.zip(jumlah_kepegawaians)
+
+    @kepegawaians = kepegawaians.map do |status, jumlah|
+      @jabatan.update_jumlah_kepegawaian(@tahun, status, jumlah)
+    end
   end
 end

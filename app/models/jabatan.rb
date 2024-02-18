@@ -20,7 +20,7 @@
 #  index_jabatans_on_jenis_jabatan_id  (jenis_jabatan_id)
 #
 class Jabatan < ApplicationRecord
-  has_many :kepegawaians, dependent: :destroy
+  has_many :kepegawaians, inverse_of: :jabatan, dependent: :destroy
   has_many :pendidikan_terakhirs, through: :kepegawaians, dependent: :destroy
   has_many :jabatan_users, foreign_key: 'id_jabatan', primary_key: 'id_jabatan', dependent: :destroy
 

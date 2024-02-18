@@ -427,4 +427,8 @@ class Opd < ApplicationRecord
     user_opd = users.aktif.eselon4
     user_opd.map { |user| user.sasarans_tahun(tahun).map(&:program_kegiatan) }.flatten.compact_blank
   end
+
+  def jabatan_baru
+    jabatans.where(nilai_jabatan: nil)
+  end
 end

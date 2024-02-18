@@ -1,0 +1,41 @@
+<%= form_with(model: jabatan, local: false,
+              data: {
+                action: 'ajax:complete->row#processAjax',
+              },
+              id: dom_id(jabatan, 'form')
+) do |form| %>
+  <td class="fw-bolder text-wrap" width="700px" colspan="2">
+    <%= hidden_field_tag '_method', 'patch', { form: dom_id(jabatan, 'form') } %>
+    <%= form.hidden_field :kode_opd, form: dom_id(jabatan, 'form')%>
+    <%= form.text_area :nama_jabatan, class: 'form-control',form: dom_id(jabatan, 'form'), placeholder: 'Input nama jabatan...', cols: 5 %>
+  </td>
+  <%= render(ColFieldComponent.new(width: '500px')) do %>
+    <%= form.select :jenis_jabatan_id, dropdown_jenis_jabatan(@tahun, selected: form.object.jenis_jabatan_id), {include_blank: true},
+      class: "form-control",
+      id: dom_id(jabatan, @count),
+      form: dom_id(jabatan, 'form'),
+      data: {
+        controller: "dropdown",
+        placeholder: "Pilih kategori jabatan",
+      } %>
+  <% end %>
+  <td class="fw-bolder">
+    <div class="d-grid gap-2">
+      <%= form.submit 'Simpan', class: 'btn btn-sm', style: 'margin-top: 0 !important;', form: dom_id(jabatan, 'form') %>
+      <button class="btn btn-sm btn-outline-danger" data-action="row#batal">Batal</button>
+    </div>
+  </td>
+  <% @status_kepegawaian.each do |kepegawaian| %>
+    <% jumlah = @kepegawaians.find_by(status_kepegawaian: kepegawaian).jumlah %>
+    <%= render(ColFieldComponent.new) do %>
+      <%= hidden_field_tag 'status_kepegawaian[]', kepegawaian, form: dom_id(@jabatan, 'form') %>
+      <%= number_field_tag 'jumlah[]', jumlah, class: 'form-control', placeholder: '0', multiple: true, min: 0, form: dom_id(@jabatan, 'form')%>
+    <% end %>
+  <% end %>
+  <% @jenis_pendidikan.each do |pendidikan| %>
+    <% checked = jabatan.pendidikan_pegawai(@tahun).include?(pendidikan) %>
+    <%= render(ColFieldComponent.new(el_class: 'text-center')) do %>
+      <%= check_box_tag 'pendidikan[]', pendidikan, checked, { class: 'form-check-input', form: dom_id(jabatan, 'form') } %>
+    <% end %>
+  <% end %>
+<% end %>

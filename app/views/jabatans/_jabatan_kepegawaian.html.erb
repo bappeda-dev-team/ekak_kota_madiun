@@ -6,11 +6,8 @@
   <% end %>
   <td class="fw-bolder">
     <div class="d-grid gap-2">
-      <% if jabatan.kepegawaians.where(tahun: @tahun).any? %>
-        <%= render(EditRowButtonComponent.new(path: edit_jumlah_jabatan_kepegawaians_path(jabatan_id: jabatan))) %>
-      <% else %>
-        <%= render(EditRowButtonComponent.new(path: new_jabatan_kepegawaian_path(jabatan_id: jabatan))) %>
-      <% end %>
+      <%= render(EditRowButtonComponent.new(path: edit_jabatan_path(jabatan))) %>
+      <%= render(DeleteButtonComponent.new(path: jabatan_path(jabatan))) %>
     </div>
   </td>
   <% @status_kepegawaian.each do |kepegawaian| %>
