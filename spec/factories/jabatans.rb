@@ -23,7 +23,7 @@ FactoryBot.define do
   factory :jabatan do
     nama_jabatan { "MyString" }
     kelas_jabatan { "MyString" }
-    nilai_jabatan { 1 }
+    nilai_jabatan { nil }
     index { "MyString" }
     kode_opd { "MyString" }
     tipe { "MyString" }

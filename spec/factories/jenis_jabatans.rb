@@ -12,9 +12,9 @@
 #
 FactoryBot.define do
   factory :jenis_jabatan do
-    nama_jenis { "MyString" }
+    nama_jenis { "Jabatan Pimpinan Tinggi" }
     nilai { 1 }
-    keterangan { "MyString" }
-    tahun { "MyString" }
+    keterangan { "test" }
+    tahun { "2025" }
   end
 end

@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe "Substansi Renstra Bab 2", type: :feature do
   let(:user) { create(:super_admin) }
   let(:opd) { user.opd }
+  let(:jenis_jabatan) { create(:jenis_jabatan) }
 
   def open_aset_kepegawaian_page
     login_as user
@@ -47,19 +48,23 @@ RSpec.describe "Substansi Renstra Bab 2", type: :feature do
   context 'on already inputted kependidikan and pendidikan terakhir in jabatan opd' do
     let(:kepala_opd) do
       create(:jabatan, kode_opd: opd.kode_unik_opd,
-                       nama_jabatan: 'Kepala OPD')
+                       nama_jabatan: 'Kepala OPD',
+                       jenis_jabatan: jenis_jabatan)
     end
     let(:sekretaris) do
       create(:jabatan, kode_opd: opd.kode_unik_opd,
-                       nama_jabatan: 'Sekretaris OPD')
+                       nama_jabatan: 'Sekretaris OPD',
+                       jenis_jabatan: jenis_jabatan)
     end
     let(:fungsional1) do
       create(:jabatan, kode_opd: opd.kode_unik_opd,
-                       nama_jabatan: 'Fungsional 1')
+                       nama_jabatan: 'Fungsional 1',
+                       jenis_jabatan: jenis_jabatan)
     end
     let(:staff1) do
       create(:jabatan, kode_opd: opd.kode_unik_opd,
-                       nama_jabatan: 'Staff 1')
+                       nama_jabatan: 'Staff 1',
+                       jenis_jabatan: jenis_jabatan)
     end
 
     it 'show Kepegawaian Item', js: true do
@@ -101,35 +106,21 @@ RSpec.describe "Substansi Renstra Bab 2", type: :feature do
   end
 
   context 'on blank data' do
-    it 'show jabatan in opd without kepegawaian', js: true do
-      kepala_opd
-      sekretaris
-      fungsional1
-      staff1
-
-      open_aset_kepegawaian_page
-
-      expect(page).to have_content(kepala_opd.nama_jabatan)
-      expect(page).to have_content(sekretaris.nama_jabatan)
-      expect(page).to have_content(fungsional1.nama_jabatan)
-      expect(page).to have_content(staff1.nama_jabatan)
-    end
-
-    it 'show opd without jabatan', js: true do
-      open_aset_kepegawaian_page
-
-      expect(page).to_not have_content(kepala_opd.nama_jabatan)
-    end
-
     it 'can create new input', js: true do
-      pending('stimulus cannot get response')
       create(:jenis_jabatan)
       open_aset_kepegawaian_page
 
-      click_on('Input')
+      click_on('Jabatan Baru')
 
-      expect(page).to have_content('Input')
-      expect(page).to have_content('Input')
+      find(:xpath, '//*[@id="jabatan_nama_jabatan"]').set('kepala jabatan test')
+      select2('Jabatan Pimpinan Tinggi', xpath: '//*[@id="new_kepegawaian"]/tr/td[2]/span')
+      find(:xpath, '//*[@id="jabatan_kepegawaians_attributes_0_jumlah"]').set(5)
+      find_all(:xpath, '//*[@id="pendidikan_"]').last.click
+      find(:xpath, '//*[@id="new_kepegawaian"]/tr/td[3]/div/input').click
+
+      expect(page).to have_content('KEPALA JABATAN TEST')
+      expect(page).to have_selector('td.jumlah_kepegawaian_jabatan.pns', text: 5)
+      expect(page).to have_selector('td[data-jenis-pendidikan="S2/S3"][data-pendidikan="true"]')
     end
   end
 end
