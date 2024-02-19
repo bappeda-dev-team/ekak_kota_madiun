@@ -24,10 +24,16 @@ class Aset < ApplicationRecord
   validates :jumlah, presence: true, numericality: { greater_than_or_equal: 0 }
   validates :satuan, presence: true
 
+  after_validation { nama_aset.upcase! }
+
   scope :all_tahun, lambda { |tahun|
                       where("tahun_awal <= ?::integer", tahun)
                         .where("tahun_akhir >= ?::integer", tahun)
                     }
+
+  def to_s
+    nama_aset
+  end
 
   def perolehan_aset
     awal = tahun_awal.to_i

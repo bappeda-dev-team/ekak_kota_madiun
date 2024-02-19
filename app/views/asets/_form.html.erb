@@ -1,52 +1,48 @@
-<%= form_with(model: aset) do |form| %>
-  <% if aset.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(aset.errors.count, "error") %> prohibited this aset from being saved:</h2>
-
-      <ul>
-        <% aset.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<%= form_with(model: aset, local: false,
+              data: {
+                action: 'ajax:complete->row#processAjax',
+              },
+              id: dom_id(aset, 'form')
+) do |form| %>
+  <td class="fw-bolder text-wrap" width="500px" colspan="2">
+    <%= hidden_field_tag '_method', 'patch', { form: dom_id(aset, 'form') } unless aset.new_record? %>
+    <%= form.hidden_field :kode_unik_opd, form: dom_id(aset, 'form')%>
+    <%= form.text_field :nama_aset, class: 'form-control',
+        form: dom_id(aset, 'form'), placeholder: 'Aset pendukung OPD' %>
+  </td>
+  <td class="fw-bolder">
+    <div class="d-grid gap-2">
+      <%= form.submit 'Simpan', class: 'btn btn-sm', style: 'margin-top: 0 !important;', 
+          form: dom_id(aset, 'form') %>
+      <button class="btn btn-sm btn-outline-danger" data-action="row#batal">Batal</button>
+    </div>
+  </td>
+  <%= render(ColFieldComponent.new(width: '200px')) do %>
+    <%= form.number_field :jumlah, class: 'form-control', placeholder: '0' , min: 0, 
+        form: dom_id(aset, 'form')%>
+  <% end%>
+  <%= render(ColFieldComponent.new(width: '500px')) do %>
+    <%= form.text_field :satuan, class: 'form-control', placeholder: 'unit/satuan aset', 
+        form: dom_id(aset, 'form')%>
+  <% end%>
+  <% @kondisi_aset.each do |kondisi| %>
+    <%= render(ColFieldComponent.new(el_class: 'text-center', width: '100px')) do %>
+      <%= form.check_box :kondisi, { multiple: true, class: 'form-check-input', 
+          form: dom_id(aset, 'form') }, kondisi, '' %>
+    <% end%>
+  <% end %>
+  <%= render(ColFieldComponent.new()) do %>
+    <div class="d-grid gap-2">
+      <%= form.number_field :tahun_awal, class: 'form-control', placeholder: 'Tahun awal', 
+          min: 2019,
+          form: dom_id(aset, 'form')%>
+      <%= form.number_field :tahun_akhir, class: 'form-control', placeholder: 'Tahun akhir', 
+          min: @tahun,
+          form: dom_id(aset, 'form')%>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= form.label :nama_aset %>
-    <%= form.text_field :nama_aset %>
-  </div>
-
-  <div class="field">
-    <%= form.label :jumlah %>
-    <%= form.number_field :jumlah %>
-  </div>
-
-  <div class="field">
-    <%= form.label :satuan %>
-    <%= form.text_field :satuan %>
-  </div>
-
-  <div class="field">
-    <%= form.label :kondisi %>
-    <%= form.text_area :kondisi %>
-  </div>
-
-  <div class="field">
-    <%= form.label :tahun_awal %>
-    <%= form.text_field :tahun_awal %>
-  </div>
-
-  <div class="field">
-    <%= form.label :tahun_akhir %>
-    <%= form.text_field :tahun_akhir %>
-  </div>
-
-  <div class="field">
-    <%= form.label :keterangan %>
-    <%= form.text_field :keterangan %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <%= render(ColFieldComponent.new()) do %>
+    <%= form.text_area :keterangan, class: 'form-control', placeholder: 'penjelasan jumlah dan kondisi aset', 
+        form: dom_id(aset, 'form'), col: 5 %>
+  <% end %>
 <% end %>

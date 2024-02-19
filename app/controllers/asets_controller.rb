@@ -12,14 +12,23 @@ class AsetsController < ApplicationController
 
   # GET /asets/new
   def new
-    @aset = Aset.new
+    @tahun = cookies[:tahun]
+    @opd = Opd.find_by(kode_unik_opd: cookies[:opd])
+    @count = (SecureRandom.random_number(9e5) + 1e5).to_i
+    @aset = Aset.new(opd: @opd, tahun_akhir: @tahun)
+    @kondisi_aset = Aset::KONDISI_ASET
   end
 
   # GET /asets/1/edit
-  def edit; end
+  def edit
+    @tahun = cookies[:tahun]
+    @count = (SecureRandom.random_number(9e5) + 1e5).to_i
+    @kondisi_aset = Aset::KONDISI_ASET
+  end
 
   # POST /asets or /asets.json
   def create
+    @kondisi_aset = Aset::KONDISI_ASET
     @aset = Aset.new(aset_params)
 
     if @aset.save
@@ -30,21 +39,24 @@ class AsetsController < ApplicationController
     else
       render json: { resText: 'Terjadi kesalahan',
                      html_content: error_content({ aset: @aset },
-                                                 partial: 'asets/form_row') }.to_json,
+                                                 partial: 'asets/form') }.to_json,
              status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /asets/1 or /asets/1.json
   def update
-    respond_to do |format|
-      if @aset.update(aset_params)
-        format.html { redirect_to aset_url(@aset), notice: "Aset was successfully updated." }
-        format.json { render :show, status: :ok, location: @aset }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @aset.errors, status: :unprocessable_entity }
-      end
+    @kondisi_aset = Aset::KONDISI_ASET
+    if @aset.update(aset_params)
+      render json: { resText: 'Perubahan data disimpan',
+                     html_content: html_content({ aset: @aset },
+                                                partial: 'asets/aset') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ aset: @aset },
+                                                 partial: 'asets/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
@@ -67,6 +79,7 @@ class AsetsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def aset_params
-    params.require(:aset).permit(:nama_aset, :jumlah, :satuan, :kondisi, :tahun_awal, :tahun_akhir, :keterangan)
+    params.require(:aset).permit(:nama_aset, :jumlah,
+                                 :satuan, :tahun_awal, :tahun_akhir, :keterangan, :kode_unik_opd, kondisi: [])
   end
 end

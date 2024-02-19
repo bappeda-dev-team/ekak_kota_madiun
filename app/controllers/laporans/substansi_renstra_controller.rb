@@ -132,5 +132,7 @@ class Laporans::SubstansiRenstraController < ApplicationController
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @asets = @opd.aset_opd(@tahun)
+    @kondisi_aset = Aset::KONDISI_ASET
   end
 end

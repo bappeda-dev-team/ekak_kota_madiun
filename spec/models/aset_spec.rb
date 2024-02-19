@@ -33,6 +33,13 @@ RSpec.describe Aset, type: :model do
                               tahun_akhir: 2023)
       expect(aset_baik.kondisi).to eq(['Baik'])
     end
+    it 'return true for Baik' do
+      aset_baik = Aset.create(nama_aset: 'Test',
+                              kondisi: ['Baik'],
+                              tahun_awal: 2019,
+                              tahun_akhir: 2023)
+      expect(aset_baik.kondisi.include?('Baik')).to be true
+    end
   end
 
   describe '#perolehan_aset' do

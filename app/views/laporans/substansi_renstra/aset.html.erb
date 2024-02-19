@@ -13,20 +13,21 @@
             <th class="text-gray-700" scope="col" rowspan="2">No.</th>
             <th class="text-center text-gray-700" scope="col" rowspan="2">Aset Pendukung</th>
             <th class="text-center text-gray-700" scope="col" rowspan="2">Action</th>
-            <th class="text-center text-gray-700" scope="col" rowspan="2">Jumlah</th>
+            <th class="text-center text-gray-700" scope="col" width="200px" rowspan="2">Jumlah</th>
             <th class="text-center text-gray-700" scope="col" rowspan="2">Satuan</th>
             <th class="text-center text-gray-700" scope="col" colspan="3">Kondisi Aset</th>
             <th class="text-center text-gray-700" scope="col" >Perolehan Aset</th>
             <th class="text-center text-gray-700" scope="col" rowspan="2">Keterangan</th>
           </tr>
           <tr>
-            <th class="text-center text-gray-700" scope="col">Baik</th>
-            <th class="text-center text-gray-700" scope="col">Cukup</th>
-            <th class="text-center text-gray-700" scope="col">Kurang</th>
+            <th class="text-center text-gray-700" width="100px" scope="col">Baik</th>
+            <th class="text-center text-gray-700" width="100px" scope="col">Cukup</th>
+            <th class="text-center text-gray-700" width="100px" scope="col">Kurang</th>
             <th class="text-center text-gray-700" scope="col">Tahun</th>
           </tr>
         </thead>
         <tbody id="new_aset">
+          <%= render partial: 'asets/aset', collection: @asets, as: :aset %>
         </tbody>
         <tfoot>
         </tfoot>
