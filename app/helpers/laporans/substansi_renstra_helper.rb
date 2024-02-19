@@ -58,7 +58,7 @@ module Laporans::SubstansiRenstraHelper
   def bab_2
     [
       {
-        title: 'Kepegawaian dan Aset', href: laporans_substansi_renstra_kepegawaian_dan_aset_path,
+        title: 'Sumber Daya Manusia', href: laporans_substansi_renstra_kepegawaian_dan_aset_path,
         identifier: 'substansi-renstra-bab-2-kepegawaian-dan-aset'
       },
       {

@@ -17,12 +17,12 @@ RSpec.describe "Substansi Renstra Bab 2", type: :feature do
     find('span.sidebar-text', text: 'Substansi Renstra').click
     find('span.sidebar-text', text: 'Bab 2').click
 
-    click_on 'Kepegawaian dan Aset'
-    expect(page).to have_title('Bab 2 - Kepegawaian dan Aset')
+    click_on 'Sumber Daya Manusia'
+    expect(page).to have_title('Bab 2 - Sumber Daya Manusia')
     expect(page).to have_selector('li.breadcrumb-item', text: 'Substansi Renstra')
     expect(page).to have_selector('li.breadcrumb-item', text: 'Bab 2')
-    expect(page).to have_selector('li.breadcrumb-item.active', text: 'Kepegawaian dan Aset')
-    expect(page).to have_content('Laporan Kepegawaian dan Aset')
+    expect(page).to have_selector('li.breadcrumb-item.active', text: 'Sumber Daya Manusia')
+    expect(page).to have_content('Laporan Sumber Daya Manusia')
     expect(page).to have_content(user.opd.nama_opd)
     expect(page).to have_content('2025')
   end

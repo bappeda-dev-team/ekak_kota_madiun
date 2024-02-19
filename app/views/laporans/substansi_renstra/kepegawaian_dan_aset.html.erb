@@ -1,11 +1,11 @@
-<%= content_for :html_title, "Bab 2 - Kepegawaian dan Aset" %>
+<%= content_for :html_title, "Bab 2 - Sumber Daya Manusia" %>
 <%= content_for :navigation do %>
   <li class="breadcrumb-item" aria-current="page">Substansi Renstra</li>
   <li class="breadcrumb-item" aria-current="page">Bab 2</li>
-  <li class="breadcrumb-item active" aria-current="page">Kepegawaian dan Aset</li>
+  <li class="breadcrumb-item active" aria-current="page">Sumber Daya Manusia</li>
 <% end %>
 <% content_for :view_utama do %>
-  <%= render 'shared/card_layout_subtitle', title: "Laporan Kepegawaian dan Aset", sub_title: @opd, sub_title_2: @tahun do %>
+  <%= render 'shared/card_layout_subtitle', title: "Laporan Sumber Daya Manusia", sub_title: @opd, sub_title_2: @tahun do %>
     <%= link_to new_jabatan_path,
       remote: true, class: 'btn btn-primary',
       data: {
