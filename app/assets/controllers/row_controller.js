@@ -1,4 +1,5 @@
 import { Controller } from "stimulus";
+import Swal from "sweetalert2";
 
 export default class extends Controller {
   static values = {
@@ -11,7 +12,7 @@ export default class extends Controller {
 
     if (status == "OK" && targetRow != null && typeof targetRow != "undefined") {
       const html = xhr.response;
-      targetRow.insertAdjacentHTML('afterbegin', html)
+      targetRow.insertAdjacentHTML('beforeend', html)
     } else {
       this.sweetalertStatus(status.text, status);
     }
@@ -21,12 +22,12 @@ export default class extends Controller {
     const [xhr, status] = e.detail;
     const targetRow = this.element;
 
-    if (status == "OK") {
+    if (status == "OK" && targetRow != null && typeof targetRow != "undefined") {
       const html = xhr.response;
       targetRow.classList.add("d-none");
       targetRow.insertAdjacentHTML("afterend", html);
     } else {
-      this.sweetalertStatus(status.text, status);
+      console.log({ status })
     }
   }
 
@@ -44,13 +45,11 @@ export default class extends Controller {
     const { resText, html_content } = JSON.parse(message.response);
     const targetRow = this.element;
 
-    if (status == "Unprocessable Entity") {
-      // targetRow.outerHTML = html_content;
-      // alert error here
-      console.error({ error: resText })
-    } else {
+    if (status == "OK") {
       targetRow.outerHTML = html_content;
       this.animateBackground(targetRow);
+    } else {
+      this.sweetalertStatus(resText, status);
     }
   }
 
@@ -68,5 +67,37 @@ export default class extends Controller {
       ],
       10000,
     );
+  }
+
+  sweetalertStatus(text, status) {
+    if (status == "Accepted") {
+      Swal.fire({
+        title: "Sukses",
+        text: text,
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
+    } else if (status == "OK") {
+      Swal.fire({
+        title: "Sukses",
+        text: text,
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
+    } else if (status == "Created") {
+      Swal.fire({
+        title: "Sukses",
+        text: text,
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
+    } else {
+      Swal.fire({
+        title: "Gagal",
+        text: text,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
   }
 }

@@ -35,8 +35,8 @@
     <% end %>
   <% end %>
   <% @jenis_pendidikan.each do |pendidikan| %>
-    <%= render(ColFieldComponent.new(el_class: 'text-center')) do %>
+    <td class="fw-bolder text-wrap text-center">
       <%= check_box_tag 'pendidikan[]', pendidikan, false, { class: 'form-check-input', form: dom_id(jabatan, 'form') } %>
-    <% end %>
+    </td>
   <% end %>
 <% end %>

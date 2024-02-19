@@ -67,7 +67,7 @@ class JabatansController < ApplicationController
     else
       render json: { resText: 'Terjadi kesalahan',
                      html_content: error_content({ jabatan: @jabatan },
-                                                 partial: 'jabatans/form_row_edit') }.to_json,
+                                                 partial: 'jabatans/form_row') }.to_json,
              status: :unprocessable_entity
     end
   end
