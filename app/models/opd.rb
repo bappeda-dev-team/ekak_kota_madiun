@@ -429,6 +429,6 @@ class Opd < ApplicationRecord
   end
 
   def jabatan_baru
-    jabatans.where(nilai_jabatan: nil)
+    jabatans.where(nilai_jabatan: nil).sort_by { |jab| jab.jenis_jabatan.nilai }
   end
 end
