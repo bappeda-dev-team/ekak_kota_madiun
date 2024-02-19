@@ -459,6 +459,43 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: asets; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.asets (
+    id bigint NOT NULL,
+    nama_aset character varying,
+    jumlah integer,
+    satuan character varying,
+    kondisi text[] DEFAULT '{}'::text[],
+    tahun_awal integer,
+    tahun_akhir integer,
+    keterangan character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: asets_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.asets_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: asets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.asets_id_seq OWNED BY public.asets.id;
+
+
+--
 -- Name: background_migration_jobs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3804,6 +3841,13 @@ ALTER TABLE ONLY public.anggarans ALTER COLUMN id SET DEFAULT nextval('public.an
 
 
 --
+-- Name: asets id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.asets ALTER COLUMN id SET DEFAULT nextval('public.asets_id_seq'::regclass);
+
+
+--
 -- Name: background_migration_jobs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4471,6 +4515,14 @@ ALTER TABLE ONLY public.anggarans
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: asets asets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.asets
+    ADD CONSTRAINT asets_pkey PRIMARY KEY (id);
 
 
 --
@@ -6211,6 +6263,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240213032106'),
 ('20240213033144'),
 ('20240216174707'),
-('20240216175904');
+('20240216175904'),
+('20240219081805');
 
 

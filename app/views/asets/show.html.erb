@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nama aset:</strong>
+  <%= @aset.nama_aset %>
+</p>
+
+<p>
+  <strong>Jumlah:</strong>
+  <%= @aset.jumlah %>
+</p>
+
+<p>
+  <strong>Satuan:</strong>
+  <%= @aset.satuan %>
+</p>
+
+<p>
+  <strong>Kondisi:</strong>
+  <%= @aset.kondisi %>
+</p>
+
+<p>
+  <strong>Tahun awal:</strong>
+  <%= @aset.tahun_awal %>
+</p>
+
+<p>
+  <strong>Tahun akhir:</strong>
+  <%= @aset.tahun_akhir %>
+</p>
+
+<p>
+  <strong>Keterangan:</strong>
+  <%= @aset.keterangan %>
+</p>
+
+<%= link_to 'Edit', edit_aset_path(@aset) %> |
+<%= link_to 'Back', asets_path %>

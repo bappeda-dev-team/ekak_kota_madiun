@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Asets</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nama aset</th>
+      <th>Jumlah</th>
+      <th>Satuan</th>
+      <th>Kondisi</th>
+      <th>Tahun awal</th>
+      <th>Tahun akhir</th>
+      <th>Keterangan</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @asets.each do |aset| %>
+      <tr>
+        <td><%= aset.nama_aset %></td>
+        <td><%= aset.jumlah %></td>
+        <td><%= aset.satuan %></td>
+        <td><%= aset.kondisi %></td>
+        <td><%= aset.tahun_awal %></td>
+        <td><%= aset.tahun_akhir %></td>
+        <td><%= aset.keterangan %></td>
+        <td><%= link_to 'Show', aset %></td>
+        <td><%= link_to 'Edit', edit_aset_path(aset) %></td>
+        <td><%= link_to 'Destroy', aset, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Aset', new_aset_path %>

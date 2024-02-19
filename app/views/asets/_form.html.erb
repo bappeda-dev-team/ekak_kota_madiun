@@ -1,0 +1,52 @@
+<%= form_with(model: aset) do |form| %>
+  <% if aset.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(aset.errors.count, "error") %> prohibited this aset from being saved:</h2>
+
+      <ul>
+        <% aset.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :nama_aset %>
+    <%= form.text_field :nama_aset %>
+  </div>
+
+  <div class="field">
+    <%= form.label :jumlah %>
+    <%= form.number_field :jumlah %>
+  </div>
+
+  <div class="field">
+    <%= form.label :satuan %>
+    <%= form.text_field :satuan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kondisi %>
+    <%= form.text_area :kondisi %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tahun_awal %>
+    <%= form.text_field :tahun_awal %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tahun_akhir %>
+    <%= form.text_field :tahun_akhir %>
+  </div>
+
+  <div class="field">
+    <%= form.label :keterangan %>
+    <%= form.text_field :keterangan %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
