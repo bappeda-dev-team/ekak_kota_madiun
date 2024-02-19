@@ -1,0 +1,8 @@
+<%= form_with(model: @model, local: false,
+              data: {
+                action: 'ajax:complete->row#processAjax',
+              },
+              id: dom_id(@model, 'form')
+) do |form| %>
+<% end %>
+

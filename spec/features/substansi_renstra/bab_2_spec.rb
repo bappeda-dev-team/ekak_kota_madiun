@@ -123,4 +123,60 @@ RSpec.describe "Substansi Renstra Bab 2", type: :feature do
       expect(page).to have_selector('td[data-jenis-pendidikan="S2/S3"][data-pendidikan="true"]')
     end
   end
+
+  def open_aset
+    login_as user
+
+    visit root_path
+    create_cookie('opd', 'test_opd')
+    create_cookie('tahun', '2025')
+    # page.driver.browser.set_cookie 'opd=test_opd'
+    # page.driver.browser.set_cookie 'tahun=2025'
+
+    find('span.sidebar-text', text: 'Substansi Renstra').click
+    find('span.sidebar-text', text: 'Bab 2').click
+
+    click_on 'Aset'
+  end
+  describe 'aset opd' do
+    context 'with opd and tahun selected' do
+      before do
+        open_aset
+      end
+      it 'show menu aset opd for current opd and tahun', js: true do
+        expect(page).to have_title('Bab 2 - Aset')
+        expect(page).to have_selector('li.breadcrumb-item', text: 'Substansi Renstra')
+        expect(page).to have_selector('li.breadcrumb-item', text: 'Bab 2')
+        expect(page).to have_selector('li.breadcrumb-item.active', text: 'Aset')
+        expect(page).to have_content('Laporan Aset')
+        expect(page).to have_content(user.opd.nama_opd)
+        expect(page).to have_content('2025')
+      end
+      it 'able to tambah aset opd', js: true do
+        expect(page).to have_content('Tambah Aset OPD')
+
+        click_on 'Tambah Aset OPD'
+
+        find(:xpath, '//*[@id="aset_nama_aset"]').set('Kendaraan dinas')
+        find(:xpath, '//*[@id="aset_jumlah"]').set(5)
+        find(:xpath, '//*[@id="aset_satuan"]').set('Unit')
+        find(:xpath, '//*[@id="aset_kondisi_baik"]').click
+        find(:xpath, '//*[@id="aset_kondisi_cukup"]').click
+        find(:xpath, '//*[@id="aset_kondisi_kurang"]').click
+        find(:xpath, '//*[@id="aset_tahun_awal"]').set('2018')
+        find(:xpath, '//*[@id="aset_tahun_akhir"]').set('2025')
+        find(:xpath, '//*[@id="aset_keterangan"]').set('3 kendaraan kondisi baik, 1 kendaraan buruk, 1 kendaraan cukup baik')
+        find(:xpath, '//*[@id="new_aset"]/tr/td[2]/div/input').click
+
+        expect(page).to have_selector('td.aset_nama_aset', text: 'KENDARAAN DINAS')
+        expect(page).to have_selector('td.aset_jumlah', text: '5')
+        expect(page).to have_selector('td.aset_satuan', text: 'Unit')
+        expect(page).to have_selector('td[data-kondisi-aset="Baik"][data-status-kondisi="true"]')
+        expect(page).to have_selector('td[data-kondisi-aset="Cukup"][data-status-kondisi="true"]')
+        expect(page).to have_selector('td[data-kondisi-aset="Kurang"][data-status-kondisi="true"]')
+        expect(page).to have_selector('td.aset_perolehan_tahun', text: '2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025')
+        expect(page).to have_selector('td.aset_keterangan', text: '3 kendaraan kondisi baik, 1 kendaraan buruk, 1 kendaraan cukup baik')
+      end
+    end
+  end
 end

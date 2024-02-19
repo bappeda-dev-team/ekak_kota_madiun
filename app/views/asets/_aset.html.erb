@@ -1,0 +1,17 @@
+<tr data-controller="row">
+  <td class="text-gray-900 fw-bolder align-middle" scope="row"></td>
+  <td class="fw-bolder text-wrap aset_nama_aset" width="700px"><%= aset %></td>
+  <td class="fw-bolder">
+    <div class="d-grid gap-2">
+      <%= render(EditRowButtonComponent.new(path: edit_aset_path(aset))) %>
+      <%= render(DeleteButtonComponent.new(path: aset_path(aset), title: "Hapus aset #{aset}?")) %>
+    </div>
+  </td>
+  <%= render(ColFieldComponent.new(el_class: 'text-center aset_jumlah', width: '300px').with_content(aset.jumlah)) %>
+  <%= render(ColFieldComponent.new(el_class: 'text-center aset_satuan', width: '500px').with_content(aset.satuan)) %>
+  <% @kondisi_aset.each do |kondisi| %>
+    <td class="fw-bolder text-wrap" data-kondisi-aset="<%= kondisi %>" data-status-kondisi="<%= aset.kondisi.include?(kondisi) %>"></td>
+  <% end %>
+  <%= render(ColFieldComponent.new(el_class: 'aset_perolehan_tahun', width: '500px').with_content(aset.perolehan_aset)) %>
+  <%= render(ColFieldComponent.new(el_class: 'aset_keterangan', width: '500px').with_content(aset.keterangan)) %>
+</tr>

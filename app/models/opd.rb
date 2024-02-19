@@ -32,6 +32,7 @@
 class Opd < ApplicationRecord
   validates :nama_opd, presence: true
   validates :kode_opd, presence: true
+  has_many :asets, primary_key: :kode_unik_opd, foreign_key: :kode_unik_opd
   has_many :jabatans, -> { order('nilai_jabatan DESC') }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd'
   has_many :users, foreign_key: 'kode_opd', primary_key: 'kode_opd'
   has_many :sasarans, through: :users
@@ -435,5 +436,9 @@ class Opd < ApplicationRecord
   def kode_opd_unik
     kode_unik = kode_unik_opd.scan(/.{1,17}/).take(1).first
     Opd.where('kode_unik_opd ILIKE ?', "%#{kode_unik}%").pluck(:kode_unik_opd)
+  end
+
+  def aset_opd(tahun)
+    asets.all_tahun(tahun)
   end
 end

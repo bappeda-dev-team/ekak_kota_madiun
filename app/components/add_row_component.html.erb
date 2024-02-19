@@ -1,0 +1,10 @@
+<%= link_to @path,
+  remote: true, class: 'btn btn-primary',
+  data: {
+    controller: 'row',
+    action: 'ajax:complete->row#addRow',
+    row_element_value: @target
+  } do %>
+  <span class="fas fa-plus me-2"></span>
+  <span><%= @title %></span>
+<% end %>

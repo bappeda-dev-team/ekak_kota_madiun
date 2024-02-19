@@ -9,6 +9,7 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :asets
   resources :jenis_jabatans
   resources :jumlahs
   resources :data_dukungs
@@ -529,6 +530,7 @@ Rails.application.routes.draw do
     namespace :substansi_renstra do
       get :dasar_hukum
       get :kepegawaian_dan_aset
+      get :aset
       get :evaluasi_renstra
       get :permasalahan_isu_strategis
       get :pohon_kinerja

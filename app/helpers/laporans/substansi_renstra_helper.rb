@@ -59,7 +59,11 @@ module Laporans::SubstansiRenstraHelper
     [
       {
         title: 'Sumber Daya Manusia', href: laporans_substansi_renstra_kepegawaian_dan_aset_path,
-        identifier: 'substansi-renstra-bab-2-kepegawaian-dan-aset'
+        identifier: 'substansi-renstra-bab-2-sumber-daya-manusia'
+      },
+      {
+        title: 'Aset', href: laporans_substansi_renstra_aset_path,
+        identifier: 'substansi-renstra-bab-2-aset'
       },
       {
         title: 'Evaluasi Renstra', href: laporans_substansi_renstra_evaluasi_renstra_path(periode: '2019-2024'),
