@@ -122,6 +122,8 @@ class Laporans::SubstansiRenstraController < ApplicationController
     @kode_opd = cookies[:opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @jabatans = @opd.jabatan_baru
+    @jumlah_kepegawaian = @opd.jabatan_baru.map { |jab| jab.jumlah_status_kepegawaian(@tahun) }
+    @jumlah_pendidikan = @opd.jabatan_baru.flat_map { |jab| jab.pendidikan_pegawai(@tahun).uniq }.tally
     @status_kepegawaian = Jabatan::STATUS_KEPEGAWAIAN
     @jenis_pendidikan = Kepegawaian::JENIS_PENDIDIKAN
   end
