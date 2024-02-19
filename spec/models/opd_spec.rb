@@ -106,4 +106,18 @@ RSpec.describe Opd, type: :model do
       end
     end
   end
+
+  describe '#kode_opd_unik' do
+    it 'show kode unik opd with no child' do
+      kominfo = create(:opd, kode_unik_opd: '2.16.2.20.2.21.04.000')
+      expect(kominfo.kode_opd_unik).to include('2.16.2.20.2.21.04.000')
+    end
+
+    it 'show kode opd from their child opd too' do
+      kecamatan = create(:opd, kode_unik_opd: '7.01.0.00.0.00.02.0000')
+      kelurahan = create(:opd, kode_unik_opd: '7.01.0.00.0.00.02.0007')
+      expect(kecamatan.kode_opd_unik).to eq(['7.01.0.00.0.00.02.0000',
+                                             '7.01.0.00.0.00.02.0007'])
+    end
+  end
 end

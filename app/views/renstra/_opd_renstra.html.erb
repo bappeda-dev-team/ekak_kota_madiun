@@ -37,7 +37,7 @@
     <% @periode.each do |tahun| %>
       <% pagu_opd = Indikator.where(jenis: 'Renstra',
                                     sub_jenis: 'Subkegiatan',
-                                    kode_opd: @opd.kode_unik_opd,
+                                    kode_opd: @opd.kode_opd_unik,
                                     tahun: tahun)
                                     .group_by(&:kode)
                                     .map { |_k, v| v.max_by(&:version) }
@@ -45,7 +45,7 @@
       %>
       <% realisasi_pagu_opd = Indikator.where(jenis: 'Renstra',
                                               sub_jenis: 'Subkegiatan',
-                                              kode_opd: @opd.kode_unik_opd,
+                                              kode_opd: @opd.kode_opd_unik,
                                               tahun: tahun)
                                               .group_by(&:kode)
                                               .map { |_k, v| v.max_by(&:version) }
@@ -61,7 +61,7 @@
     <% @periode.each do |tahun| %>
       <% pagu_opd = Indikator.where(jenis: 'Renstra',
                                     sub_jenis: 'Subkegiatan',
-                                    kode_opd: @opd.kode_unik_opd,
+                                    kode_opd: @opd.kode_opd_unik,
                                     tahun: tahun)
                                     .group_by(&:kode)
                                     .map { |_k, v| v.max_by(&:version) }
@@ -69,7 +69,7 @@
       %>
       <% realisasi_pagu_opd = Indikator.where(jenis: 'Renstra',
                                               sub_jenis: 'Subkegiatan',
-                                              kode_opd: @opd.kode_unik_opd,
+                                              kode_opd: @opd.kode_opd_unik,
                                               tahun: tahun)
                                               .group_by(&:kode)
                                               .map { |_k, v| v.max_by(&:version) }

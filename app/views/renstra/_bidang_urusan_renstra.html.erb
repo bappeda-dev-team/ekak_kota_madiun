@@ -39,7 +39,7 @@
     <% @periode.each do |tahun| %>
       <% pagu_bid_urusan = Indikator.where(jenis: 'Renstra',
                                            sub_jenis: 'Subkegiatan',
-                                           kode_opd: @opd.kode_unik_opd,
+                                           kode_opd: @opd.kode_opd_unik,
                                            tahun: tahun)
                                            .filter { |hh| hh.kode_bidang_urusan == bid_urusan[0] }
                                            .group_by(&:kode)
@@ -48,7 +48,7 @@
       %>
       <% realisasi_pagu_bid_urusan = Indikator.where(jenis: 'Renstra',
                                                      sub_jenis: 'Subkegiatan',
-                                                     kode_opd: @opd.kode_unik_opd,
+                                                     kode_opd: @opd.kode_opd_unik,
                                                      tahun: tahun)
                                                      .filter { |hh| hh.kode_bidang_urusan == bid_urusan[0] }
                                                      .group_by(&:kode)
@@ -65,7 +65,7 @@
     <% @periode.each do |tahun| %>
       <% pagu_bid_urusan = Indikator.where(jenis: 'Renstra',
                                            sub_jenis: 'Subkegiatan',
-                                           kode_opd: @opd.kode_unik_opd,
+                                           kode_opd: @opd.kode_opd_unik,
                                            tahun: tahun)
                                            .filter { |hh| hh.kode_bidang_urusan == bid_urusan[0] }
                                            .group_by(&:kode)
@@ -74,7 +74,7 @@
       %>
       <% realisasi_pagu_bid_urusan = Indikator.where(jenis: 'Renstra',
                                                      sub_jenis: 'Subkegiatan',
-                                                     kode_opd: @opd.kode_unik_opd,
+                                                     kode_opd: @opd.kode_opd_unik,
                                                      tahun: tahun)
                                                      .filter { |hh| hh.kode_bidang_urusan == bid_urusan[0] }
                                                      .group_by(&:kode)

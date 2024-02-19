@@ -431,4 +431,9 @@ class Opd < ApplicationRecord
   def jabatan_baru
     jabatans.where(nilai_jabatan: nil).sort_by { |jab| jab.jenis_jabatan.nilai }
   end
+
+  def kode_opd_unik
+    kode_unik = kode_unik_opd.scan(/.{1,17}/).take(1).first
+    Opd.where('kode_unik_opd ILIKE ?', "%#{kode_unik}%").pluck(:kode_unik_opd)
+  end
 end
