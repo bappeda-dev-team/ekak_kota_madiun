@@ -34,7 +34,6 @@
   <%= render(ColFieldComponent.new()) do %>
     <div class="d-grid gap-2">
       <%= form.number_field :tahun_awal, class: 'form-control', placeholder: 'Tahun awal', 
-          min: 2019,
           form: dom_id(aset, 'form')%>
       <%= form.number_field :tahun_akhir, class: 'form-control', placeholder: 'Tahun akhir', 
           min: @tahun,

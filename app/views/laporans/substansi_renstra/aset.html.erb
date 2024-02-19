@@ -30,6 +30,14 @@
           <%= render partial: 'asets/aset', collection: @asets, as: :aset %>
         </tbody>
         <tfoot>
+          <td class="text-gray-900 fw-bolder text-center" colspan="3">Jumlah Keseluruhan Aset</td>
+          <td class="text-gray-900 fw-bolder text-center"><%= @jumlah_aset %></td>
+          <td class="text-gray-900 fw-bolder text-center"></td>
+          <% @kondisi_aset.each do |kondisi| %>
+            <% jumlah_kondisi = @jumlah_kondisis.dig(kondisi) || 0 %>
+            <%= render(ColFieldComponent.new(el_class: 'text-center').with_content(jumlah_kondisi)) %>
+          <% end %>
+          <td class="text-gray-900 fw-bolder text-center" colspan="2"></td>
         </tfoot>
       </table>
       <%= render AddRowComponent.new(path: new_aset_path, 

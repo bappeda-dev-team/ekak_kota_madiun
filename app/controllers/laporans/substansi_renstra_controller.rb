@@ -134,5 +134,7 @@ class Laporans::SubstansiRenstraController < ApplicationController
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @asets = @opd.aset_opd(@tahun)
     @kondisi_aset = Aset::KONDISI_ASET
+    @jumlah_aset = @asets.sum(:jumlah)
+    @jumlah_kondisis = @asets.flat_map(&:kondisi).tally
   end
 end

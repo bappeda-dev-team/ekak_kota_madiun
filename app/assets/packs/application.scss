@@ -92,6 +92,7 @@ td.wrap-text {
 .nama-opd {
   background-color: #483838;
 }
+
 #pokin-cetak {
   width: 100%;
   height: 80%;
@@ -104,6 +105,7 @@ td.wrap-text {
   height: 650px;
   background-color: "white";
 }
+
 .pohon-kinerja {
   border: 1px solid blue;
   width: 100%;
@@ -121,12 +123,15 @@ td.wrap-text {
 .global_filter {
   font-size: 0.75rem;
 }
+
 .filter-form {
   width: 450px;
+
   .tahun_sasaran {
     width: 45px;
   }
 }
+
 // .table td {
 //   white-space: normal;
 // }
@@ -135,6 +140,7 @@ td.wrap-text {
 .lds-roller div:after {
   box-sizing: border-box;
 }
+
 .lds-roller {
   vertical-align: middle;
   display: inline-block;
@@ -142,10 +148,12 @@ td.wrap-text {
   width: 80px;
   height: 80px;
 }
+
 .lds-roller div {
   animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   transform-origin: 40px 40px;
 }
+
 .lds-roller div:after {
   content: " ";
   display: block;
@@ -156,102 +164,125 @@ td.wrap-text {
   background: currentColor;
   margin: -3.6px 0 0 -3.6px;
 }
+
 .lds-roller div:nth-child(1) {
   animation-delay: -0.036s;
 }
+
 .lds-roller div:nth-child(1):after {
   top: 62.62742px;
   left: 62.62742px;
 }
+
 .lds-roller div:nth-child(2) {
   animation-delay: -0.072s;
 }
+
 .lds-roller div:nth-child(2):after {
   top: 67.71281px;
   left: 56px;
 }
+
 .lds-roller div:nth-child(3) {
   animation-delay: -0.108s;
 }
+
 .lds-roller div:nth-child(3):after {
   top: 70.90963px;
   left: 48.28221px;
 }
+
 .lds-roller div:nth-child(4) {
   animation-delay: -0.144s;
 }
+
 .lds-roller div:nth-child(4):after {
   top: 72px;
   left: 40px;
 }
+
 .lds-roller div:nth-child(5) {
   animation-delay: -0.18s;
 }
+
 .lds-roller div:nth-child(5):after {
   top: 70.90963px;
   left: 31.71779px;
 }
+
 .lds-roller div:nth-child(6) {
   animation-delay: -0.216s;
 }
+
 .lds-roller div:nth-child(6):after {
   top: 67.71281px;
   left: 24px;
 }
+
 .lds-roller div:nth-child(7) {
   animation-delay: -0.252s;
 }
+
 .lds-roller div:nth-child(7):after {
   top: 62.62742px;
   left: 17.37258px;
 }
+
 .lds-roller div:nth-child(8) {
   animation-delay: -0.288s;
 }
+
 .lds-roller div:nth-child(8):after {
   top: 56px;
   left: 12.28719px;
 }
+
 @keyframes lds-roller {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
 
 .rekap_pokin_separator {
-  background: repeating-linear-gradient(
-    -55deg,
-    #222,
-    #222 10px,
-    #333 10px,
-    #333 20px
-  );
+  background: repeating-linear-gradient(-55deg,
+      #222,
+      #222 10px,
+      #333 10px,
+      #333 20px);
   border: 0;
 }
+
 .isu-strategis-kota {
   background-color: #6da9e4;
 }
+
 .strategi-kota {
   background-color: #00fff6;
 }
+
 .strategic-objective {
   background-color: #b73239;
   color: #eee2de;
 }
+
 .tactical-objective {
   background-color: #0b5394;
   color: #eee2de;
 }
+
 .tactical-objective-2 {
   background-color: #6391ba;
   color: #eee2de;
 }
+
 .operational-objective {
   background-color: #93c47d;
 }
+
 .operational-objective-2 {
   background-color: #ffff00;
 }
@@ -263,28 +294,34 @@ td[data-subkegiatan="belum diisi"] {
 
 td[data-tahun-pelaksanaan="success"] {
   background-color: #38e54d;
+
   &:before {
     @extend %fa-icon;
     @extend .fas;
     content: fa-content($fa-var-check);
   }
 }
-td[data-tahun-pelaksanaan="success"] + td[data-tahun-pelaksanaan] {
+
+td[data-tahun-pelaksanaan="success"]+td[data-tahun-pelaksanaan] {
   background-color: #38e54d;
+
   &:before {
     @extend %fa-icon;
     @extend .fas;
     content: fa-content($fa-var-check);
   }
 }
+
 td[data-tahun-akhir-pelaksanaan="success"] {
   background-color: #38e54d;
+
   &:before {
     @extend %fa-icon;
     @extend .fas;
     content: fa-content($fa-var-check);
   }
 }
+
 td.spbe-kebutuhan:empty {
   background-color: #b73239;
   color: #eee2de;
@@ -293,8 +330,10 @@ td.spbe-kebutuhan:empty {
     content: "Belum diisi";
   }
 }
+
 td[data-pendidikan="true"] {
   @extend .text-center;
+
   &:before {
     @extend %fa-icon;
     @extend .fas;
@@ -302,17 +341,40 @@ td[data-pendidikan="true"] {
     content: fa-content($fa-var-check);
   }
 }
+
 td[data-pendidikan="false"] {
   @extend .text-center;
+
   &:before {
     content: "-";
   }
 }
+
+td[data-status-kondisi="true"] {
+  @extend .text-center;
+
+  &:before {
+    @extend %fa-icon;
+    @extend .fas;
+    @extend .text-success;
+    content: fa-content($fa-var-check);
+  }
+}
+
+td[data-status-kondisi="false"] {
+  @extend .text-center;
+
+  &:before {
+    content: "-";
+  }
+}
+
 input::placeholder {
   font-weight: lighter;
   opacity: 0.5;
   color: red;
 }
+
 .tf-tree.show ul {
   width: max-content;
 }
@@ -333,6 +395,7 @@ input::placeholder {
 .pohon-body {
   // border-bottom: 1px solid black;
   padding: 1rem 0;
+
   table {
     background-color: white;
     border: black;
@@ -352,6 +415,7 @@ input::placeholder {
 .pohon-accepted {
   @extend .border;
   @extend .border-success;
+
   h5:after {
     @extend .mx-3;
     @extend %fa-icon;
@@ -364,6 +428,7 @@ input::placeholder {
 .pohon-rejected {
   @extend .border;
   @extend .border-danger;
+
   h5:after {
     @extend .mx-3;
     @extend %fa-icon;
@@ -395,14 +460,18 @@ table.counter {
 .strategic-pohon,
 .strategi-pohon {
   background-color: #b73239;
+
   .pohon {
     color: #eee2de;
+
     .pohon-title {
       border-color: #eee2de;
+
       h5 {
         color: #eee2de;
       }
     }
+
     .pohon-body {
       table {
         background-color: white;
@@ -410,30 +479,38 @@ table.counter {
         color: black;
       }
     }
+
     .btn-outline-pohon {
       border-color: #eee2de;
       color: #eee2de;
+
       &:hover,
       &:active {
         background-color: #1f2937;
       }
     }
+
     .pohon-tombol {
       background-color: whitesmoke;
     }
   }
 }
+
 .tactical-pohon {
   border: 1px solid black;
   background-color: #0b5394;
+
   .pohon {
     color: #eee2de;
+
     .pohon-title {
       border-color: #eee2de;
+
       h5 {
         color: #eee2de;
       }
     }
+
     .pohon-body {
       table {
         background-color: white;
@@ -441,29 +518,37 @@ table.counter {
         color: black;
       }
     }
+
     .btn-outline-pohon {
       border-color: #eee2de;
       color: #eee2de;
+
       &:hover,
       &:active {
         background-color: #1f2937;
       }
     }
+
     .pohon-tombol {
       background-color: whitesmoke;
     }
   }
 }
+
 .operational-pohon {
   background-color: #93c47d;
+
   .pohon {
     color: black;
+
     .pohon-title {
       border-color: black;
+
       h5 {
         color: black;
       }
     }
+
     .pohon-body {
       table {
         background-color: white;
@@ -471,14 +556,17 @@ table.counter {
         color: black;
       }
     }
+
     .btn-outline-pohon {
       border-color: black;
+
       &:hover,
       &:active {
         background-color: #1f2937;
         color: #eee2de;
       }
     }
+
     .pohon-tombol {
       background-color: whitesmoke;
     }
@@ -489,6 +577,7 @@ table.counter {
   .pohon-title {
     background-color: white;
   }
+
   .pohon-body {
     margin-top: 1rem;
     padding: 0.5rem;
@@ -509,6 +598,7 @@ table.counter {
   from {
     background-color: rgba(242, 245, 169, 1);
   }
+
   to {
     background-color: rgba(242, 245, 169, 0);
   }
