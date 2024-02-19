@@ -127,4 +127,10 @@ class Laporans::SubstansiRenstraController < ApplicationController
     @status_kepegawaian = Jabatan::STATUS_KEPEGAWAIAN
     @jenis_pendidikan = Kepegawaian::JENIS_PENDIDIKAN
   end
+
+  def aset
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+  end
 end

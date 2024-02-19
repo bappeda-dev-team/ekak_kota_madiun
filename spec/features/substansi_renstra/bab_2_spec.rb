@@ -123,4 +123,31 @@ RSpec.describe "Substansi Renstra Bab 2", type: :feature do
       expect(page).to have_selector('td[data-jenis-pendidikan="S2/S3"][data-pendidikan="true"]')
     end
   end
+
+  describe 'aset opd' do
+    context 'with opd and tahun selected' do
+      it 'show menu aset opd for current opd and tahun', js: true do
+        login_as user
+
+        visit root_path
+        create_cookie('opd', 'test_opd')
+        create_cookie('tahun', '2025')
+        # page.driver.browser.set_cookie 'opd=test_opd'
+        # page.driver.browser.set_cookie 'tahun=2025'
+
+        find('span.sidebar-text', text: 'Substansi Renstra').click
+        find('span.sidebar-text', text: 'Bab 2').click
+
+        click_on 'Aset'
+
+        expect(page).to have_title('Bab 2 - Aset')
+        expect(page).to have_selector('li.breadcrumb-item', text: 'Substansi Renstra')
+        expect(page).to have_selector('li.breadcrumb-item', text: 'Bab 2')
+        expect(page).to have_selector('li.breadcrumb-item.active', text: 'Aset')
+        expect(page).to have_content('Laporan Aset')
+        expect(page).to have_content(user.opd.nama_opd)
+        expect(page).to have_content('2025')
+      end
+    end
+  end
 end

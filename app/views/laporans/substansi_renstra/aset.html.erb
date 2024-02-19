@@ -1,0 +1,39 @@
+<%= content_for :html_title, "Bab 2 - Aset" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Substansi Renstra</li>
+  <li class="breadcrumb-item" aria-current="page">Bab 2</li>
+  <li class="breadcrumb-item active" aria-current="page">Aset</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout_subtitle', title: "Laporan Aset", sub_title: @opd, sub_title_2: @tahun do %>
+    <div class="table-responsive mb-5 d-grid gap-3">
+      <table class="table table-bordered align-items-center counter border">
+        <thead class="thead-light sticky-top">
+          <tr>
+            <th class="text-gray-700" scope="col" rowspan="2">No.</th>
+            <th class="text-center text-gray-700" scope="col" rowspan="2">Aset Pendukung</th>
+            <th class="text-center text-gray-700" scope="col" rowspan="2">Action</th>
+            <th class="text-center text-gray-700" scope="col" rowspan="2">Jumlah</th>
+            <th class="text-center text-gray-700" scope="col" rowspan="2">Satuan</th>
+            <th class="text-center text-gray-700" scope="col" colspan="3">Kondisi Aset</th>
+            <th class="text-center text-gray-700" scope="col" >Perolehan Aset</th>
+            <th class="text-center text-gray-700" scope="col" rowspan="2">Keterangan</th>
+          </tr>
+          <tr>
+            <th class="text-center text-gray-700" scope="col">Baik</th>
+            <th class="text-center text-gray-700" scope="col">Cukup</th>
+            <th class="text-center text-gray-700" scope="col">Kurang</th>
+            <th class="text-center text-gray-700" scope="col">Tahun</th>
+          </tr>
+        </thead>
+        <tbody id="new_aset">
+        </tbody>
+        <tfoot>
+        </tfoot>
+      </table>
+      <%= render AddRowComponent.new(path: '', 
+                                     target: 'new_aset', 
+                                     title: 'Tambah Aset OPD') %>
+    </div>
+  <% end %>
+<% end %>
