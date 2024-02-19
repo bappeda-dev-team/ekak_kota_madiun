@@ -2,24 +2,32 @@
 #
 # Table name: asets
 #
-#  id          :bigint           not null, primary key
-#  jumlah      :integer
-#  keterangan  :string
-#  kondisi     :text             default([]), is an Array
-#  nama_aset   :string
-#  satuan      :string
-#  tahun_akhir :integer
-#  tahun_awal  :integer
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id            :bigint           not null, primary key
+#  jumlah        :integer
+#  keterangan    :string
+#  kode_unik_opd :string
+#  kondisi       :text             default([]), is an Array
+#  nama_aset     :string
+#  satuan        :string
+#  tahun_akhir   :integer
+#  tahun_awal    :integer
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
 #
 
 class Aset < ApplicationRecord
   KONDISI_ASET = %w[Baik Cukup Kurang]
 
+  belongs_to :opd, foreign_key: :kode_unik_opd, primary_key: :kode_unik_opd
+
   validates :nama_aset, presence: true
   validates :jumlah, presence: true, numericality: { greater_than_or_equal: 0 }
   validates :satuan, presence: true
+
+  scope :all_tahun, lambda { |tahun|
+                      where("tahun_awal <= ?::integer", tahun)
+                        .where("tahun_akhir >= ?::integer", tahun)
+                    }
 
   def perolehan_aset
     awal = tahun_awal.to_i

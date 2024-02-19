@@ -120,4 +120,17 @@ RSpec.describe Opd, type: :model do
                                              '7.01.0.00.0.00.02.0007'])
     end
   end
+
+  describe '#aset_opd' do
+    it 'show aset of opd x' do
+      kominfo = create(:opd, kode_unik_opd: '2.16.2.20.2.21.04.000')
+      asets = kominfo.asets.create(nama_aset: 'Mobil Dinas',
+                                   kondisi: ['Baik'],
+                                   jumlah: 5,
+                                   satuan: 'Unit',
+                                   tahun_awal: 2019,
+                                   tahun_akhir: 2025)
+      expect(kominfo.aset_opd(2025)).to include(asets)
+    end
+  end
 end

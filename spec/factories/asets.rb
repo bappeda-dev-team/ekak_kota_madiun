@@ -2,16 +2,17 @@
 #
 # Table name: asets
 #
-#  id          :bigint           not null, primary key
-#  jumlah      :integer
-#  keterangan  :string
-#  kondisi     :text             default([]), is an Array
-#  nama_aset   :string
-#  satuan      :string
-#  tahun_akhir :integer
-#  tahun_awal  :integer
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id            :bigint           not null, primary key
+#  jumlah        :integer
+#  keterangan    :string
+#  kode_unik_opd :string
+#  kondisi       :text             default([]), is an Array
+#  nama_aset     :string
+#  satuan        :string
+#  tahun_akhir   :integer
+#  tahun_awal    :integer
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
 #
 FactoryBot.define do
   factory :aset do

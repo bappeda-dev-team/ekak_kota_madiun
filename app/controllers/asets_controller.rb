@@ -1,5 +1,6 @@
 class AsetsController < ApplicationController
-  before_action :set_aset, only: %i[ show edit update destroy ]
+  before_action :set_aset, only: %i[show edit update destroy]
+  layout false, only: %i[new edit]
 
   # GET /asets or /asets.json
   def index
@@ -7,8 +8,7 @@ class AsetsController < ApplicationController
   end
 
   # GET /asets/1 or /asets/1.json
-  def show
-  end
+  def show; end
 
   # GET /asets/new
   def new
@@ -16,21 +16,22 @@ class AsetsController < ApplicationController
   end
 
   # GET /asets/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /asets or /asets.json
   def create
     @aset = Aset.new(aset_params)
 
-    respond_to do |format|
-      if @aset.save
-        format.html { redirect_to aset_url(@aset), notice: "Aset was successfully created." }
-        format.json { render :show, status: :created, location: @aset }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @aset.errors, status: :unprocessable_entity }
-      end
+    if @aset.save
+      render json: { resText: 'Aset OPD ditambahkan',
+                     html_content: html_content({ aset: @aset },
+                                                partial: 'asets/aset') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ aset: @aset },
+                                                 partial: 'asets/form_row') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
@@ -58,13 +59,14 @@ class AsetsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_aset
-      @aset = Aset.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def aset_params
-      params.require(:aset).permit(:nama_aset, :jumlah, :satuan, :kondisi, :tahun_awal, :tahun_akhir, :keterangan)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_aset
+    @aset = Aset.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def aset_params
+    params.require(:aset).permit(:nama_aset, :jumlah, :satuan, :kondisi, :tahun_awal, :tahun_akhir, :keterangan)
+  end
 end
