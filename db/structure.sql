@@ -473,7 +473,8 @@ CREATE TABLE public.asets (
     keterangan character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    kode_unik_opd character varying
+    kode_unik_opd character varying,
+    tahun_aset character varying[]
 );
 
 
@@ -6266,6 +6267,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240216174707'),
 ('20240216175904'),
 ('20240219081805'),
-('20240219155631');
+('20240219155631'),
+('20240220011758');
 
 

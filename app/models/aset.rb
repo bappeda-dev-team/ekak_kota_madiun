@@ -10,6 +10,7 @@
 #  nama_aset     :string
 #  satuan        :string
 #  tahun_akhir   :integer
+#  tahun_aset    :string           is an Array
 #  tahun_awal    :integer
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
@@ -23,6 +24,7 @@ class Aset < ApplicationRecord
   validates :nama_aset, presence: true
   validates :jumlah, presence: true, numericality: { greater_than_or_equal: 0 }
   validates :satuan, presence: true
+  validates :tahun_aset, presence: true
 
   after_validation { nama_aset.upcase! }
 
@@ -36,9 +38,6 @@ class Aset < ApplicationRecord
   end
 
   def perolehan_aset
-    awal = tahun_awal.to_i
-    akhir = tahun_akhir.to_i
-    range = (awal..akhir).to_a
-    range.to_sentence(last_word_connector: ', ')
+    tahun_aset.to_a.to_sentence(last_word_connector: ', ')
   end
 end

@@ -80,6 +80,8 @@ class AsetsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def aset_params
     params.require(:aset).permit(:nama_aset, :jumlah,
-                                 :satuan, :tahun_awal, :tahun_akhir, :keterangan, :kode_unik_opd, kondisi: [])
+                                 :satuan, :tahun_awal, :tahun_akhir,
+                                 :keterangan, :kode_unik_opd, kondisi: [],
+                                                              tahun_aset: [])
   end
 end

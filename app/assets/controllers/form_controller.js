@@ -16,4 +16,15 @@ export default class extends Controller {
       e.currentTarget.firstElementChild.className = "far fa-eye";
     }
   }
+
+  addNewField(e) {
+    // let regexp, time;
+    // time = new Date().getTime();
+    // regexp = new RegExp($(event.currentTarget).data('id'), 'g')
+    // $(event.currentTarget).before($(event.currentTarget).data('fields').replace(regexp, time))
+    // event.preventDefault()
+    const formTarget = e.currentTarget.previousElementSibling;
+    const newEl = formTarget.cloneNode(true)
+    formTarget.insertAdjacentElement("afterend", newEl);
+  }
 }

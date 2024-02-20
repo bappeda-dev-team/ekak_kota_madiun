@@ -33,11 +33,17 @@
   <% end %>
   <%= render(ColFieldComponent.new()) do %>
     <div class="d-grid gap-2">
-      <%= form.number_field :tahun_awal, class: 'form-control', placeholder: 'Tahun awal', 
+    <% if aset.new_record? || aset.tahun_aset.nil? %>
+      <%= form.number_field :tahun_aset, multiple: true, class: 'form-control', placeholder: 'Tahun perolehan', 
           form: dom_id(aset, 'form')%>
-      <%= form.number_field :tahun_akhir, class: 'form-control', placeholder: 'Tahun akhir', 
-          min: @tahun,
-          form: dom_id(aset, 'form')%>
+      <%= render(AddNewFieldComponent.new(text: 'Tambah Tahun')) %>
+    <% else %>
+      <% aset.tahun_aset.each do |tahun| %>
+        <%= form.number_field :tahun_aset, multiple: true, class: 'form-control', placeholder: 'Tahun perolehan', 
+            form: dom_id(aset, 'form'), value: tahun %>
+      <% end %>
+      <%= render(AddNewFieldComponent.new(text: 'Tambah Tahun')) %>
+    <% end%>
     </div>
   <% end %>
   <%= render(ColFieldComponent.new()) do %>

@@ -1,0 +1,8 @@
+<%= link_to '#', class: 'btn btn-sm btn-primary', 
+  data: { 
+    controller: 'form',
+    action: 'click->form#addNewField'
+   } do %>
+  <i class="fas fa-plus me-2"></i>
+  <span><%= @text %></span>
+<% end %>

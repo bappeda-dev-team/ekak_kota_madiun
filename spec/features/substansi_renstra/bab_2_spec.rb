@@ -163,8 +163,7 @@ RSpec.describe "Substansi Renstra Bab 2", type: :feature do
         find(:xpath, '//*[@id="aset_kondisi_baik"]').click
         find(:xpath, '//*[@id="aset_kondisi_cukup"]').click
         find(:xpath, '//*[@id="aset_kondisi_kurang"]').click
-        find(:xpath, '//*[@id="aset_tahun_awal"]').set('2018')
-        find(:xpath, '//*[@id="aset_tahun_akhir"]').set('2025')
+        find(:xpath, '//*[@id="aset_tahun_aset"]').set('2018')
         find(:xpath, '//*[@id="aset_keterangan"]').set('3 kendaraan kondisi baik, 1 kendaraan buruk, 1 kendaraan cukup baik')
         find(:xpath, '//*[@id="new_aset"]/tr/td[2]/div/input').click
 
@@ -174,7 +173,7 @@ RSpec.describe "Substansi Renstra Bab 2", type: :feature do
         expect(page).to have_selector('td[data-kondisi-aset="Baik"][data-status-kondisi="true"]')
         expect(page).to have_selector('td[data-kondisi-aset="Cukup"][data-status-kondisi="true"]')
         expect(page).to have_selector('td[data-kondisi-aset="Kurang"][data-status-kondisi="true"]')
-        expect(page).to have_selector('td.aset_perolehan_tahun', text: '2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025')
+        expect(page).to have_selector('td.aset_perolehan_tahun', text: '2018')
         expect(page).to have_selector('td.aset_keterangan', text: '3 kendaraan kondisi baik, 1 kendaraan buruk, 1 kendaraan cukup baik')
       end
     end
