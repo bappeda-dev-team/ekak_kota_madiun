@@ -412,6 +412,7 @@ Rails.application.routes.draw do
       patch :hasil_output
       patch :inovasi
       get :review
+      post :hapus_program_from_sasaran
     end
     resources :rincians do
       get "subkegiatan", on: :new
@@ -786,7 +787,6 @@ Rails.application.routes.draw do
   # sasaran
   get "/verifikasi_sasarans", to: "sasarans#verifikasi_sasaran"
   get "/laporan_sasarans", to: "sasarans#laporan_sasaran"
-  post "/hapus_program_from_sasaran", to: "sasarans#hapus_program_from_sasaran"
   post "/hapus_tematik_from_sasaran", to: "sasarans#hapus_tematik_from_sasaran"
   post "/add_sasaran_tematik", to: "sasarans#add_sasaran_tematik"
   post "/ajukan_semua_sasaran", to: "sasarans#ajukan_semua_sasaran"

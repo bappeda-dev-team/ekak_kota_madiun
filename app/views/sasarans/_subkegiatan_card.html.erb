@@ -57,7 +57,7 @@
               </td>
               <% unless diajukan? %>
                 <td class="text-center align-middle">
-                  <%= button_to 'Hapus', "/hapus_program_from_sasaran", remote: true, method: :post, class: 'btn btn-danger text-center', data: {confirm_swal: "Hapus sub kegiatan?"}, params: {id_sasaran: sasaran.id} %>
+                  <%= link_to 'Hapus', hapus_program_from_sasaran_sasaran_path(sasaran), remote: true, method: :post, class: 'btn btn-danger text-center', data: {confirm_swal: "Hapus sub kegiatan?"}, params: {} %>
                 </td>
               <% end %>
             </tr>
