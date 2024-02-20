@@ -9,6 +9,7 @@
 #  id_daerah          :string
 #  id_opd_skp         :integer
 #  is_bidang          :boolean          default(FALSE)
+#  is_kota            :boolean          default(FALSE)
 #  kode_bidang_urusan :string
 #  kode_opd           :string
 #  kode_opd_induk     :string
@@ -88,7 +89,9 @@ class Opd < ApplicationRecord
 
   accepts_nested_attributes_for :indikator_sasarans, reject_if: :all_blank, allow_destroy: true
 
+  default_scope { where(is_kota: false).where.not(kode_opd: nil) }
   scope :opd_resmi, -> { where.not(kode_unik_opd: nil) }
+  scope :opd_resmi_kota, -> { where.not(kode_unik_opd: nil).or(Opd.unscoped.where(is_kota: true)) }
   scope :with_bidang, -> { where(has_bidang: true) }
   scope :with_user, -> { joins(:users).merge(User.eselon2).where.not(id: 1).distinct.order(:kode_unik_opd) }
 

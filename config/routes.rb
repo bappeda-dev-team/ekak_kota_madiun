@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   resources :indikators do
     collection do
       post :import
+      get :rpjp_makro
+      get :rpjmd_makro
       get :rkpd_makro
       get :rkpd_tujuan
       get :rkpd_sasaran

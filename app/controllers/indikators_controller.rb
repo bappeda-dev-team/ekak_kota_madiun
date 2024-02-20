@@ -2,6 +2,22 @@ class IndikatorsController < ApplicationController
   before_action :set_indikator, only: %i[show edit update destroy]
   layout false, only: %i[new edit new_indikator_rb]
 
+  def rpjp_makro
+    @tahun = cookies[:tahun]
+
+    # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+
+    @rpjp_makro = Indikator.rpjp_makro.where(tahun: @tahun).includes(:targets)
+  end
+
+  def rpjmd_makro
+    @tahun = cookies[:tahun]
+
+    # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+
+    @rpjmd_makro = Indikator.rpjmd_makro.where(tahun: @tahun).includes(:targets)
+  end
+
   def rkpd_makro
     @tahun = cookies[:tahun]
 
@@ -192,7 +208,7 @@ class IndikatorsController < ApplicationController
 
   # GET /indikators/new
   def new
-    @opds = Opd.opd_resmi
+    @opds = Opd.opd_resmi_kota
                .pluck(:nama_opd,
                       :kode_unik_opd)
     @indikator = Indikator.new(new_indikator_params)
@@ -200,7 +216,7 @@ class IndikatorsController < ApplicationController
 
   # GET /indikators/1/edit
   def edit
-    @opds = Opd.opd_resmi
+    @opds = Opd.opd_resmi_kota
                .pluck(:nama_opd,
                       :kode_unik_opd)
   end

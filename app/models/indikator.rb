@@ -31,6 +31,8 @@ class Indikator < ApplicationRecord
   store_accessor :definisi_operational, :rumus_perhitungan
   store_accessor :definisi_operational, :sumber_data
 
+  scope :rpjp_makro, -> { where(jenis: 'RPJP', sub_jenis: 'Makro').order(id: :desc) }
+  scope :rpjmd_makro, -> { where(jenis: 'RPJMD', sub_jenis: 'Makro').order(id: :desc) }
   scope :rkpd_makro, -> { where(jenis: 'RKPD', sub_jenis: 'Outcome') }
   scope :rb_outcome, -> { where(jenis: 'RB', sub_jenis: 'Outcome').order(id: :desc) }
   scope :rb_output, -> { where(jenis: 'RB', sub_jenis: 'Output').order(id: :desc) }

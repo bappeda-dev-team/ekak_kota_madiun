@@ -9,6 +9,7 @@
 #  id_daerah          :string
 #  id_opd_skp         :integer
 #  is_bidang          :boolean          default(FALSE)
+#  is_kota            :boolean          default(FALSE)
 #  kode_bidang_urusan :string
 #  kode_opd           :string
 #  kode_opd_induk     :string

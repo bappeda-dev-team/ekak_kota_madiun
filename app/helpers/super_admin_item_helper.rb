@@ -126,6 +126,18 @@ module SuperAdminItemHelper
   def indikator_items
     [
       {
+        title: 'RPJP', href: '#',
+        multi: true, collections: indikator_rpjp_items,
+        id_target: 'rpjp-indikator',
+        identifier: 'rpjp'
+      },
+      {
+        title: 'RPJMD', href: '#',
+        multi: true, collections: indikator_rpjmd_items,
+        id_target: 'rpjmd-indikator',
+        identifier: 'rpjmd'
+      },
+      {
         title: 'RKPD', href: '#',
         multi: true, collections: indikator_rkpd_items,
         id_target: 'rkpd-indikator',
@@ -157,6 +169,22 @@ module SuperAdminItemHelper
         multi: true, collections: indikator_sdgs_items,
         id_target: 'sdgs-indikator',
         identifier: 'sdgs'
+      }
+    ]
+  end
+
+  def indikator_rpjp_items
+    [
+      {
+        title: 'Makro', href: rpjp_makro_indikators_path, identifier: 'rpjp_makro'
+      }
+    ]
+  end
+
+  def indikator_rpjmd_items
+    [
+      {
+        title: 'Makro', href: rpjmd_makro_indikators_path, identifier: 'rpjmd_makro'
       }
     ]
   end
