@@ -55,28 +55,28 @@ class Indikator < ApplicationRecord
     "#{jenis} - #{indikator} (#{sub_jenis})"
   end
 
+  # child_indikator('Kegiatan') ->
+  # 'Kegiatan' with kode '3.27.03.2.01'
+  # will match ['3.27.03.2.01.0016', '3.27.03.2.01.02', '3.27.03.2.01.01']
+  # group in same kode, than find it maximum version
+  # version is for audit / tracking change
+  # updated by 1 in each update
+  def child_indikator(sub_jenis)
+    childs = Indikator.where(jenis: 'Renstra',
+                             sub_jenis: sub_jenis,
+                             kode_opd: kode_opd,
+                             tahun: tahun)
+    childs.filter { |child| child.kode.include?(kode) }
+          .group_by(&:kode)
+          .map { |_k, v| v.max_by(&:version) }
+  end
+
   def sum_pagu_renstra(sub_jenis:)
-    indikator_childs = Indikator.where(jenis: 'Renstra',
-                                       sub_jenis: sub_jenis,
-                                       kode_opd: kode_opd,
-                                       tahun: tahun).filter do |child|
-      child.kode.include?(kode)
-    end
-    pagu_sub = indikator_childs.group_by(&:kode)
-                               .map { |_k, v| v.max_by(&:version) }
-    pagu_sub.inject(0) { |injection, pagu| injection + pagu.pagu.to_i }
+    child_indikator(sub_jenis).inject(0) { |injection, pagu| injection + pagu.pagu.to_i }
   end
 
   def sum_realisasi_pagu_renstra(sub_jenis:)
-    indikator_childs = Indikator.where(jenis: 'Renstra',
-                                       sub_jenis: sub_jenis,
-                                       kode_opd: kode_opd,
-                                       tahun: tahun).filter do |child|
-      child.kode.include?(kode)
-    end
-    pagu_sub = indikator_childs.group_by(&:kode)
-                               .map { |_k, v| v.max_by(&:version) }
-    pagu_sub.inject(0) { |injection, pagu| injection + pagu.realisasi_pagu.to_i }
+    child_indikator(sub_jenis).inject(0) { |injection, pagu| injection + pagu.realisasi_pagu.to_i }
   end
 
   def capaian_pagu
