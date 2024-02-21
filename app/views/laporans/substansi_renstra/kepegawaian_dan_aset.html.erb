@@ -36,13 +36,10 @@
         <tfoot>
           <td class="text-gray-900 fw-bolder text-center" colspan="4">Jumlah</td>
           <% @status_kepegawaian.each do |kep| %>
-            <% jumlah = @jumlah_kepegawaian.sum { |hh| hh.dig(kep) } || 0 %>
+            <% jumlah = @jumlah_kepegawaian.sum { |hh| hh&.dig(kep) || 0 } %>
             <%= render(ColFieldComponent.new(el_class: 'text-center').with_content(jumlah)) %>
           <% end %>
-          <% @jenis_pendidikan.each do |pendidikan| %>
-            <% jumlah_pend = @jumlah_pendidikan.dig(pendidikan) || 0 %>
-            <%= render(ColFieldComponent.new(el_class: 'text-center').with_content(jumlah_pend)) %>
-          <% end %>
+          <td class="bg-gray-300" colspan="5"></td>
         </tfoot>
       </table>
       <%= link_to new_jabatan_path,
