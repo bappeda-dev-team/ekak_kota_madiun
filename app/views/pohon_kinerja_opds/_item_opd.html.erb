@@ -1,8 +1,9 @@
+<% show_button = local_assigns.fetch(:show_button, true) %>
 <div class="tf-nc" style="width: 450px;">
   <div class="pohon">
     <div class="pohon-title">
       <h5 class="text-center"><strong>Pohon Kinerja OPD</strong></h5>
-      <% if privileged_user %>
+      <% if privileged_user && show_button %>
         <%= link_to opd_clone_path(@opd), remote: true,
          data: {
            controller: 'form-modal',

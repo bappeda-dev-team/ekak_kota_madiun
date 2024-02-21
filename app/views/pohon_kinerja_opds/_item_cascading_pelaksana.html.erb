@@ -1,3 +1,4 @@
+<% show_button = local_assigns.fetch(:show_button, true) %>
 <% unless pohon.exists? %>
   <% if pohon.pelaksana.any? %>
     <div class="pohon-body">
@@ -18,7 +19,7 @@
                 <span class="badge bg-danger">Rencana Kinerja belum terisi</span>
               <% end %>
             </td>
-            <% if privileged_user %>
+            <% if privileged_user && show_button %>
               <td class="text-center align-middle">
                 <%= link_to pelaksana_path(dibagikan, user_id: dibagikan.user_id),
                  method: :delete,
