@@ -345,6 +345,8 @@ Rails.application.routes.draw do
       post :toggle_is_active
       post :diambil_asn
       post :setujui_usulan_di_sasaran
+      get :edit_renstra
+      post :update_renstra
     end
     collection do
       get :spbe
@@ -440,6 +442,14 @@ Rails.application.routes.draw do
       get :clone_form
       post :clone
       post :pilih_asn
+    end
+  end
+
+  resources :dasar_hukums do
+    member do
+      get :edit_renstra
+      post :update_renstra
+      delete :hapus_renstra
     end
   end
 

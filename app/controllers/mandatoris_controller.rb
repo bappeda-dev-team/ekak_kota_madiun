@@ -70,6 +70,26 @@ class MandatorisController < ApplicationController
     end
   end
 
+  def edit_renstra
+    @mandatori = Mandatori.find(params[:id])
+    render layout: false
+  end
+
+  def update_renstra
+    @mandatori = Mandatori.find(params[:id])
+    if @mandatori.update(mandatori_params)
+      render json: { resText: "Perubahan tersimpan",
+                     html_content: html_content({ mandatori: @mandatori },
+                                                partial: 'mandatoris/mandatori_renstra') }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: error_content({ mandatori: @mandatori },
+                                                 partial: 'mandatori/form_row') }.to_json,
+             status: :unprocessable_entity
+    end
+  end
+
   # DELETE /mandatoris/1 or /mandatoris/1.json
   def destroy
     @mandatori.destroy

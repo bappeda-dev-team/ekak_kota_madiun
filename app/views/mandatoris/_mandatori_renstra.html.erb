@@ -1,0 +1,13 @@
+<tr id="<%= dom_id(mandatori) %>" data-controller="row">
+  <td class="text-gray-900 fw-bolder align-middle" scope="row"></td>
+  <td class="fw-bolder text-wrap"><%= mandatori.peraturan_terkait %></td>
+  <td class="fw-bolder text-wrap"><%= mandatori.uraian %></td>
+  <td class="text-gray-900 border px-2">
+    <div class="d-grid gap-2">
+      <%= render(EditRowButtonComponent.new(path: edit_renstra_mandatori_path(mandatori))) %>
+      <%= render(DeleteButtonAjaxComponent.new(path: mandatori,
+                                               model: mandatori,
+                                               text: 'Hapus dasar hukum ?')) %>
+    </div>
+  </td>
+</tr>

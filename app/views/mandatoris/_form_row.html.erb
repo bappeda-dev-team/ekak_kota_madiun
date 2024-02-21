@@ -1,0 +1,23 @@
+<%= form_with(model: mandatori, url: update_renstra_mandatori_path, local: false,
+              data: {
+                action: 'ajax:complete->row#processAjax',
+              },
+              id: dom_id(mandatori, 'form')
+            ) do |form| %>
+  <td class="text-gray-900 fw-bolder align-middle" scope="row"></td>
+  <td class="fw-bolder text-wrap">
+    <%= form.text_area :peraturan_terkait, class: 'form-control', placeholder: 'isikan peraturan mandatori',
+        form: dom_id(mandatori, 'form') %>
+  </td>
+  <td class="fw-bolder text-wrap">
+    <%= form.text_area :uraian, class: 'form-control', placeholder: 'isikan uraian / penjabaran peraturan',
+        form: dom_id(mandatori, 'form') %>
+  </td>
+  <td class="text-gray-900 border px-2">
+    <div class="d-grid gap-2">
+      <%= form.submit 'Simpan', class: 'btn btn-sm', style: 'margin-top: 0 !important;',
+        form: dom_id(mandatori, 'form') %>
+      <button class="btn btn-sm btn-outline-danger" data-action="row#batal">Batal</button>
+    </div>
+  </td>
+<% end %>

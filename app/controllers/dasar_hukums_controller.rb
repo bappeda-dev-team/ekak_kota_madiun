@@ -69,11 +69,37 @@ class DasarHukumsController < ApplicationController
     @dasar_hukum.destroy
     respond_to do |format|
       format.js
-      format.html {
-        redirect_to user_sasaran_path(current_user, @sasaran), success: "Dasar hukum was successfully destroyed."
-      }
+      format.html do
+        redirect_to user_sasaran_path(current_user, @sasaran), success: "Dasar hukum berhasil dihapus"
+      end
       format.json { head :no_content }
     end
+  end
+
+  def edit_renstra
+    @dasar_hukum = DasarHukum.find(params[:id])
+    render layout: false
+  end
+
+  def update_renstra
+    @dasar_hukum = DasarHukum.find(params[:id])
+    if @dasar_hukum.update(dasar_hukum_params)
+      render json: { resText: "Perubahan tersimpan",
+                     html_content: html_content({ dasar_hukum: @dasar_hukum },
+                                                partial: 'dasar_hukums/dasar_hukum_renstra') }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: error_content({ dasar_hukum: @dasar_hukum },
+                                                 partial: 'dasar_hukums/form_row') }.to_json,
+             status: :unprocessable_entity
+    end
+  end
+
+  def hapus_renstra
+    @dasar_hukum = DasarHukum.find(params[:id])
+    @dasar_hukum.destroy
+    render json: { resText: "Dasar hukum berhasil dihapus", result: true }
   end
 
   private

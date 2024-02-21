@@ -610,4 +610,12 @@ class Sasaran < ApplicationRecord
   def indikators
     indikator_sasarans
   end
+
+  def mandatori_sasaran(tahun)
+    mandatoris.where(tahun: tahun)
+  end
+
+  def dasar_hukum_sasaran
+    dasar_hukums
+  end
 end
