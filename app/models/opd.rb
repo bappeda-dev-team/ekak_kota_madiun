@@ -441,7 +441,7 @@ class Opd < ApplicationRecord
     Opd.where('kode_unik_opd ILIKE ?', "%#{kode_unik}%").pluck(:kode_unik_opd)
   end
 
-  def aset_opd(tahun)
-    asets.all_tahun(tahun)
+  def aset_opd(_tahun)
+    asets
   end
 end
