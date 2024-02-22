@@ -94,12 +94,9 @@ class RenjaController < ApplicationController
     @program_kegiatans = program_kegiatan_by_urusans.transform_values do |prg_v1|
       prg_v1.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
     end
+    @filename = "rankir_renja_#{@nama_opd}_tahun_#{@tahun}.xlsx"
 
-    respond_to do |format|
-      format.xlsx do
-        render filename: "rankir_renja_#{@nama_opd}_tahun_#{@tahun}"
-      end
-    end
+    render xlsx: 'rankir_cetak', filename: @filename
   end
 
   def penetapan; end
