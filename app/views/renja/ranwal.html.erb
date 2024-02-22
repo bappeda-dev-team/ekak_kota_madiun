@@ -1,10 +1,6 @@
 <%= content_for :html_title, "Renja - Ranwal" %>
 <%= content_for :navigation do %>
-  <li class="breadcrumb-item">
-    <%= link_to root_path do %>
-      <i class="fas fa-home"></i>
-    <% end %>
-  </li>
+  <li class="breadcrumb-item" aria-current="page">Laporan</li>
   <li class="breadcrumb-item active" aria-current="page">Ranwal Renja</li>
 <% end %>
 <% content_for :view_utama do %>
@@ -37,18 +33,7 @@
       </div>
     </div>
   <% else %>
-    <div class="card border-0 shadow" id="user_filter">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Ranwal Renja</h2>
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="alert alert-info">Pilih Tahun dan OPD</p>
-      </div>
-    </div>
+    <%= render 'shared/pilih_tahun_dan_opd' %>
   <% end %>
 <%= render 'shared/modal_template', modal_name: 'ranwal-renja' %>
 <% end %>

@@ -1,54 +1,39 @@
 <%= content_for :html_title, "Renstra" %>
 <%= content_for :navigation do %>
-  <li class="breadcrumb-item">
-    <%= link_to root_path do %>
-      <i class="fas fa-home"></i>
-    <% end %>
-  </li>
-  <li class="breadcrumb-item active" aria-current="page">Laporan Renstra</li>
+  <li class="breadcrumb-item" aria-current="page">Laporan</li>
+  <li class="breadcrumb-item active" aria-current="page">Renstra</li>
 <% end %>
 <% content_for :view_utama do %>
-    <% if cookies[:tahun] && cookies[:opd] %>
-      <div class="card border-0 shadow" id="user_filter" data-controller="page-ajax"
-             data-page-ajax-opd-value="<%= cookies[:opd] %>"
-             data-page-ajax-url-value="<%= filter_laporan_renstra_path(periode: @periode) %>"
-             data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >
-        <div data-page-ajax-target="results">
-        <div class="card-header">
-          <div class="row align-items-center">
-            <div class="col">
-              <h2 class="fs-5 fw-bold mb-0">Laporan Renstra</h2>
-            </div>
-          </div>
-        </div>
-          <div class="loader text-center">
-            <div class="lds-roller">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-            <p>memuat data..</p>
+  <% if cookies[:tahun] && cookies[:opd] %>
+    <div class="card border-0 shadow" id="user_filter" data-controller="page-ajax"
+            data-page-ajax-opd-value="<%= cookies[:opd] %>"
+            data-page-ajax-url-value="<%= filter_laporan_renstra_path(periode: @periode) %>"
+            data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >
+      <div data-page-ajax-target="results">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Laporan Renstra</h2>
           </div>
         </div>
       </div>
-    <% else %>
-      <div class="card border-0 shadow" id="user_filter">
-        <div class="card-header">
-          <div class="row align-items-center">
-            <div class="col">
-              <h2 class="fs-5 fw-bold mb-0">Laporan Renstra</h2>
-            </div>
+        <div class="loader text-center">
+          <div class="lds-roller">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
           </div>
-        </div>
-        <div class="card-body">
-          <p class="alert alert-info">Pilih Tahun dan OPD</p>
+          <p>memuat data..</p>
         </div>
       </div>
-    <% end %>
-<%= render 'shared/modal_template', modal_name: 'laporan-renstra' %>
+    </div>
+  <% else %>
+    <%= render 'shared/pilih_tahun_dan_opd' %>
+  <% end %>
+  <%= render 'shared/modal_template', modal_name: 'laporan-renstra' %>
 <% end %>
