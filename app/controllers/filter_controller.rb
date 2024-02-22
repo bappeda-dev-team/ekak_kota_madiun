@@ -298,8 +298,12 @@ class FilterController < ApplicationController
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
     program_renstra = @opd.program_renstra
-
-    @list_subkegiatans = @periode.map { |tahun| @opd.sasaran_subkegiatans(tahun) }.flatten if @tahun_awal == 2025
+    if @tahun_awal == 2025
+      @list_subkegiatans = @opd.sasaran_subkegiatans(@tahun_awal)
+      @kode_subs = @list_subkegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
+    else
+      @kode_subs = @opd.program_kegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
+    end
     program_kegiatan_by_urusans = program_renstra.group_by do |prg|
       [prg.kode_urusan, prg.nama_urusan]
     end

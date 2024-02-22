@@ -18,7 +18,7 @@
             <td class="text-gray-900 text-wrap border"><%= "#{indikator.capaian_pagu} %" %></td>
           <% end %>
         <% else %>
-          <td class="text-gray-900 text-wrap border">Rp. <%= number_with_delimiter(indikator.sum_pagu_renstra(sub_jenis: 'Subkegiatan')) %></td>
+          <td class="text-gray-900 text-wrap border">Rp. <%= number_with_delimiter(indikator.sum_pagu_renstra(sub_jenis: 'Subkegiatan', subkegiatan_used: @kode_subs)) %></td>
           <td class="text-gray-900 text-wrap border">Rp. <%= number_with_delimiter(indikator.sum_realisasi_pagu_renstra(sub_jenis: 'Subkegiatan')) %></td>
           <% if with_capaian  %>
             <td class="text-gray-900 text-wrap border"><%= "#{indikator.sum_capaian_pagu(sub_jenis: 'Subkegiatan')} %" %></td>

@@ -71,10 +71,16 @@ class Indikator < ApplicationRecord
           .map { |_k, v| v.max_by(&:version) }
   end
 
-  def sum_pagu_renstra(sub_jenis:)
-    child_indikator(sub_jenis).inject(0) { |injection, pagu| injection + pagu.pagu.to_i }
+  # cek perbedaan method ini dengan realisasi
+  def sum_pagu_renstra(sub_jenis:, subkegiatan_used: { "none" => 0 })
+    childs = child_indikator(sub_jenis)
+    bb = childs.to_h { |ch| [ch.kode, ch.pagu] }
+
+    hash_total = subkegiatan_used.replace(bb)
+    hash_total.values.inject(0) { |injection, pagu| injection + pagu.to_i }
   end
 
+  # realisasi
   def sum_realisasi_pagu_renstra(sub_jenis:)
     child_indikator(sub_jenis).inject(0) { |injection, pagu| injection + pagu.realisasi_pagu.to_i }
   end

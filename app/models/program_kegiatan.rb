@@ -519,4 +519,15 @@ class ProgramKegiatan < ApplicationRecord
   def kode_sub_skpd_kode_subkegiatan
     [kode_sub_skpd, kode_sub_giat]
   end
+
+  def kode_by_jenis(jenis)
+    case jenis
+    when 'Program'
+      kode_program
+    when 'Kegiatan'
+      kode_giat
+    else
+      kode_sub_giat
+    end
+  end
 end
