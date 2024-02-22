@@ -314,6 +314,10 @@ class FilterController < ApplicationController
   end
 
   def ranwal_renja
+    @tahun_awal = @tahun.to_i
+    @tahun_akhir = @tahun.to_i
+    @periode = (@tahun_awal..@tahun_akhir)
+    @colspan = (@periode.size * 5) + 3
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
     program_renstra = @opd.program_renstra
@@ -323,16 +327,18 @@ class FilterController < ApplicationController
     #                                       .uniq(&:kode_program).sort_by(&:kode_program)
     #   @kode_opd = KODE_OPD_BAGIAN[@nama_opd.to_sym]
     # end
+    if @tahun_awal == 2025
+      @list_subkegiatans = @opd.sasaran_subkegiatans(@tahun_awal)
+      @kode_subs = @list_subkegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
+    else
+      @kode_subs = @opd.program_kegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
+    end
     program_kegiatan_by_urusans = program_renstra.group_by do |prg|
       [prg.kode_urusan, prg.nama_urusan]
     end
     @program_kegiatans = program_kegiatan_by_urusans.transform_values do |prg_v1|
       prg_v1.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
     end
-    @tahun_awal = @tahun.to_i
-    @tahun_akhir = @tahun.to_i
-    @periode = (@tahun_awal..@tahun_akhir)
-    @colspan = (@periode.size * 5) + 3
     render partial: 'hasil_filter_ranwal_renja'
   end
 
