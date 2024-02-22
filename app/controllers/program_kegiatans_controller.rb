@@ -12,12 +12,9 @@ class ProgramKegiatansController < ApplicationController
     param = params[:q] || ""
     # FIXME: REFACTOR TOO MUCH LOGIC
     @program_kegiatans = ProgramKegiatan.where("kode_opd ILIKE ?", "%#{current_user.kode_opd}%")
-                                        .where("nama_subkegiatan ILIKE ?", "%#{param}%")
-    if current_user.pegawai_kelurahan?
-      @program_kegiatans = @program_kegiatans.select do |program|
-        program.nama_opd_pemilik.upcase.split("KELURAHAN", 2).last.strip == current_user.petunjuk_kelurahan
-      end
-    elsif current_user.pegawai_puskesmas?
+                                        .where("nama_subkegiatan ILIKE ?", "#{param}%")
+
+    if current_user.pegawai_puskesmas?
       @program_kegiatans = @program_kegiatans.select do |program|
         program.nama_opd_pemilik.upcase.split("PUSKESMAS", 2).last.strip == current_user.petunjuk_puskesmas
       end
