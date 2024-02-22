@@ -4,6 +4,12 @@
       <div class="col-8">
         <h2 class="fs-5 fw-bold mb-0">Rankir Renja <%= @nama_opd %> <%= "kode_opd: #{@kode_opd}" if current_user.has_role? :super_admin%></h2>
       </div>
+      <div class="col">
+        <%= link_to renja_rankir_cetak_path(format: :xlsx, tahun: @tahun, kode_opd: @kode_opd), class:"m-3 btn btn-outline-success" do %>
+          <span class="far fa-file-excel"></span>
+          Cetak Excel Rankir Renja
+        <% end %>
+      </div>
     </div>
   </div>
   <div class="card-body">

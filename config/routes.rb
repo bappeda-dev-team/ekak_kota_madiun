@@ -779,6 +779,7 @@ Rails.application.routes.draw do
     get :rankir_1
     get :rankir
     get :edit_rankir
+    get :rankir_cetak
     post :update_rankir
     get :penetapan
     post :rankir_renja
