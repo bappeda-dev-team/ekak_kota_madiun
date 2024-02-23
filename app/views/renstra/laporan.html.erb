@@ -1,0 +1,17 @@
+<div class="card border-0 shadow">
+  <div class="card-header">
+    <div class="row">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">Laporan Renstra <%= @nama_opd %></h2>
+      </div>
+      <div class="col-auto">
+        <%= @tahun_awal %> - <%= @tahun_akhir %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <%= render 'table_renstra' %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+  
+<table class="table align-items-center" data-controller='form-modal' data-action='ajax-update@window->form-modal#updateTargetValue'>
+  <%= render 'renstra/opd_renstra' %>
+  <% @program_kegiatans.each.with_index(1) do |(urusan, bid_urusans), nomor_ur| %>
+    <%= render partial: 'renstra/urusan_renstra', locals: { urusan: urusan, nomor_ur: nomor_ur } %>
+    <% bid_urusans.each.with_index(1) do |(bid_urusan, programs), nomor_bid| %>
+      <%= render partial: 'renstra/bidang_urusan_renstra', locals: { bid_urusan: bid_urusan, nomor_bid: nomor_bid } %>
+      <% if @list_subkegiatans %>
+        <% programs.each.with_index(1) do |program, nomor| %>
+          <% if @list_subkegiatans.map(&:kode_program).include?(program.kode_program) %>
+            <%= render partial: 'renstra/head_table_renstra', locals: { periode: @periode, sub_jenis: 'program' } %>
+            <%= render partial: 'renstra/program_renstra',
+                             locals: {
+                               program: program,
+                               nomor: nomor,
+                               indikators: program.indikator_renstras_new('program', @kode_opd)[:indikator_program],
+                               periode: @periode } %>
+            <% program.kegiatans_opd.each.with_index(1) do |kegiatan, no_giat| %>
+              <% if @list_subkegiatans.map(&:kode_giat).include?(kegiatan.kode_giat) %>
+                <%= render partial: 'renstra/head_table_renstra', locals: { periode: @periode, sub_jenis: 'kegiatan' } %>
+                <%= render partial: 'renstra/kegiatan_renstra',
+                                 locals: {
+                                   program: kegiatan,
+                                   nomor: no_giat,
+                                   indikators: kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan],
+                                   periode: @periode } %>
+                <%= render partial: 'renstra/head_table_renstra', locals: { periode: @periode, sub_jenis: 'subkegiatan' } %>
+                <% kegiatan.subkegiatans_opd.each.with_index(1) do |subgiat, no_subgiat| %>
+                  <% if @list_subkegiatans.map(&:kode_sub_giat).include?(subgiat.kode_sub_giat) %>
+                    <%= render partial: 'renstra/subkegiatan_renstra',
+                                     locals: {
+                                       program: subgiat,
+                                       nomor: no_subgiat,
+                                       indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan],
+                                       periode: @periode } %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <% programs.each.with_index(1) do |program, nomor| %>
+          <%= render partial: 'renstra/head_table_renstra', locals: { periode: @periode, sub_jenis: 'program' } %>
+          <%= render partial: 'renstra/program_renstra',
+                           locals: {
+                             program: program,
+                             nomor: nomor,
+                             indikators: program.indikator_renstras_new('program', @kode_opd)[:indikator_program],
+                             periode: @periode } %>
+          <% program.kegiatans_opd.each.with_index(1) do |kegiatan, no_giat| %>
+            <%= render partial: 'renstra/head_table_renstra', locals: { periode: @periode, sub_jenis: 'kegiatan' } %>
+            <%= render partial: 'renstra/kegiatan_renstra',
+                             locals: {
+                               program: kegiatan,
+                               nomor: no_giat,
+                               indikators: kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan],
+                               periode: @periode } %>
+            <%= render partial: 'renstra/head_table_renstra', locals: { periode: @periode, sub_jenis: 'subkegiatan' } %>
+            <% kegiatan.subkegiatans_opd.each.with_index(1) do |subgiat, no_subgiat| %>
+              <%= render partial: 'renstra/subkegiatan_renstra',
+                               locals: {
+                                 program: subgiat,
+                                 nomor: no_subgiat,
+                                 indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan],
+                                 periode: @periode } %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+</table>

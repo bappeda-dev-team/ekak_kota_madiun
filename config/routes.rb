@@ -282,6 +282,7 @@ Rails.application.routes.draw do
   resources :renstra do
     collection do
       get :admin_renstra
+      post :laporan
     end
     member do
       post :update_programs
@@ -643,7 +644,7 @@ Rails.application.routes.draw do
   namespace :filter do
     post :daftar_resiko
     post :isu_strategis_permasalahan
-    post :laporan_renstra
+    # post :laporan_renstra
     get :tahun_dan_opd
     post :renstra_master
     # post :tujuan_opd
