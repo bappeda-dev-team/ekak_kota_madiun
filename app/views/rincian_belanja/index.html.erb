@@ -68,15 +68,15 @@
                   <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
                   <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">
                     <div class="d-grid gap-3">
-                      <%= link_to edit_rincian_belanja_path(sasaran),
-                           target: "_blank",
-                           class: "btn btn-sm btn-outline-info" do %>
-                        <span>Edit</span>
-                      <% end %>
                       <%= link_to edit_rankir_gelondong_rincian_belanja_path(sasaran),
                            target: "_blank",
                            class: "btn btn-sm btn-outline-info" do %>
                         <span>Edit Gelondong</span>
+                      <% end %>
+                      <%= link_to edit_rincian_belanja_path(sasaran),
+                           target: "_blank",
+                           class: "btn btn-sm btn-outline-primary" do %>
+                        <span>Edit Rincian</span>
                       <% end %>
                       <%= link_to edit_penetapan_rincian_belanja_path(sasaran),
                            target: "_blank",
