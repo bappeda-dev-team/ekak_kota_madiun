@@ -14,6 +14,7 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  anggaran_id    :bigint
+#  barang_id      :bigint
 #  pajak_id       :bigint
 #
 # Indexes

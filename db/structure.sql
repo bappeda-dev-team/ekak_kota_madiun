@@ -2167,7 +2167,8 @@ CREATE TABLE public.perhitungans (
     total numeric,
     volume numeric,
     tahun character varying,
-    jenis_anggaran character varying
+    jenis_anggaran character varying,
+    barang_id bigint
 );
 
 
@@ -6270,6 +6271,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240219081805'),
 ('20240219155631'),
 ('20240220011758'),
-('20240220052629');
+('20240220052629'),
+('20240223020811');
 
 
