@@ -43,22 +43,22 @@ class RenjaComponent < ViewComponent::Base
   end
 
   def indikator
-    indikator_program_kegiatan.indikator
+    indikator_program_kegiatan&.indikator || '-'
   end
 
   def target
-    indikator_program_kegiatan.target
+    indikator_program_kegiatan&.target || '-'
   end
 
   def satuan
-    indikator_program_kegiatan.satuan
+    indikator_program_kegiatan&.satuan || '-'
   end
 
   def pagu_indikator
     if @jenis == 'subkegiatan'
-      indikator_program_kegiatan.pagu
+      indikator_program_kegiatan&.pagu || 0
     else
-      indikator_program_kegiatan.sum_pagu_renstra(sub_jenis: 'Subkegiatan')
+      indikator_program_kegiatan&.sum_pagu_renstra(sub_jenis: 'Subkegiatan') || 0
     end
   end
 
@@ -67,6 +67,6 @@ class RenjaComponent < ViewComponent::Base
   end
 
   def keterangan
-    indikator_program_kegiatan.keterangan
+    indikator_program_kegiatan&.keterangan
   end
 end

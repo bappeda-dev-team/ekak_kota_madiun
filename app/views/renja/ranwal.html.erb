@@ -5,21 +5,22 @@
 <% end %>
 <% content_for :view_utama do %>
   <% if cookies[:tahun] && cookies[:opd] %>
-    <div class="card border-0 shadow" data-controller="page-ajax"
-            data-page-ajax-url-value="<%= renja_ranwal_renja_path %>"
+    <div class="card border-0 shadow" 
+      data-controller="page-ajax"
+      data-page-ajax-url-value="<%= renja_ranwal_renja_path %>">
       <div data-page-ajax-target="results">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Ranwal Renja</h2>
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2 class="fs-5 fw-bold mb-0">Ranwal Renja</h2>
+            </div>
           </div>
         </div>
+        <%= render(LoaderComponent.new())%>
       </div>
-      <%= render(LoaderComponent.new())%>
     </div>
-  </div>
-<% else %>
-  <%= render 'shared/pilih_tahun_dan_opd' %>
-<% end %>
-<%= render 'shared/modal_template', modal_name: 'ranwal-renja' %>
+  <% else %>
+    <%= render 'shared/pilih_tahun_dan_opd' %>
+  <% end %>
+  <%= render 'shared/modal_template', modal_name: 'ranwal-renja' %>
 <% end %>

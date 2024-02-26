@@ -1,21 +1,19 @@
-<div class="table-responsive">
-  <table class="table align-items-center" data-controller='form-modal' data-action='ajax-update@window->form-modal#updateTargetValue'>
-    <%= render partial: 'renja/pdf/opd_renja' %>
-    <% @program_kegiatans.each do |urusan, bid_urusans| %>
-      <%= render partial: 'renja/pdf/urusan', locals: { urusan: urusan } %>
-      <% bid_urusans.each do |bid_urusan, programs| %>
-        <%= render partial: 'renja/pdf/bidang_urusan', locals: { bid_urusan: bid_urusan } %>
-        <% programs.each do |program| %>
-          <%= render(RenjaComponent.new(program: program, tahun: @tahun, jenis: 'program'))%>
-          <% program.kegiatans_opd.each do |kegiatan| %>
-            <%= render(RenjaComponent.new(program: kegiatan, tahun: @tahun, jenis: 'kegiatan'))%>
-            <%= render(HeaderRenjaComponent.new(title: 'Subkegiatan', indikator: true)) %>
-            <% kegiatan.subkegiatans_opd.each do |subgiat| %>
-              <%= render(RenjaComponent.new(program: subgiat, tahun: @tahun, jenis: 'subkegiatan', head: false))%>
-            <% end %>
+<table class="table align-items-center">
+  <%= render partial: 'renja/pdf/opd_renja' %>
+  <% @program_kegiatans.each do |urusan, bid_urusans| %>
+    <%= render partial: 'renja/pdf/urusan', locals: { urusan: urusan } %>
+    <% bid_urusans.each do |bid_urusan, programs| %>
+      <%= render partial: 'renja/pdf/bidang_urusan', locals: { bid_urusan: bid_urusan } %>
+      <% programs.each do |program| %>
+        <%= render(RenjaComponent.new(program: program, tahun: @tahun, jenis: 'program'))%>
+        <% program.kegiatans_opd.each do |kegiatan| %>
+          <%= render(RenjaComponent.new(program: kegiatan, tahun: @tahun, jenis: 'kegiatan'))%>
+          <%= render(HeaderRenjaComponent.new(title: 'Subkegiatan', indikator: true)) %>
+          <% kegiatan.subkegiatans_opd.each do |subgiat| %>
+            <%= render(RenjaComponent.new(program: subgiat, tahun: @tahun, jenis: 'subkegiatan', head: false))%>
           <% end %>
         <% end %>
       <% end %>
     <% end %>
-  </table>
-</div>
+  <% end %>
+</table>
