@@ -198,6 +198,11 @@ class ProgramKegiatan < ApplicationRecord
     sasarans.map(&:waktu_total).compact.sum
   end
 
+  def indikator_renstras_alt_new(type, kode_unit, tahun)
+    send("indikator_#{type}_renstra").where(tahun: tahun, kode_opd: kode_unit)
+                                     .max_by(&:version)
+  end
+
   def indikator_renstras_new(type, kode_unit)
     {
       "indikator_#{type}": indikator_key_grouper(type, kode_unit, jenis: "renstra")

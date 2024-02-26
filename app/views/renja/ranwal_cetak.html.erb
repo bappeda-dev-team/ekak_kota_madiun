@@ -1,91 +1,39 @@
-<div class="card-body">
-  <table class="table table-borderless">
-    <tbody>
-      <tr>
-        <td align="center" style="color:#2a6ebb;" class="title-one"><b>RANCANGAN AWAL RENCANA KERJA</b></td>
-      </tr>
-      <tr>
-        <td align="center" class="title-two">
-          <%= @nama_opd %>
-          <br/>
-          <%= "Tahun: #{@tahun}" %>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-<div class="card-body">
-  <table class="table align-items-center">
-    <thead>
-      <tr class="header-program">
-        <th class="border align-middle" scope="col" >Kode</th>
-        <th class="border align-middle text-start" scope="col" >Urusan / Bidang Urusan / Program / Kegiatan / Subkegiatan</th>
-        <th class="border align-middle" scope="col">Indikator</th>
-        <th class="border align-middle" scope="col" width="50px">Target</th>
-        <th class="border align-middle" scope="col">Satuan</th>
-        <th class="border align-middle" scope="col">Pagu Indikatif</th>
-        <th class="border align-middle" scope="col">Keterangan</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @program_kegiatans.each.with_index(1) do |urusan, no_urusan| %>
-        <tr>
-          <td class="border" scope="col"><%= urusan.kode_urusan %></td>
-          <td class="border" scope="col" colspan="6"><%= urusan.nama_urusan %></td>
-        </tr>
-        <% urusan.bidang_urusans_opd.each.with_index(1) do |bidang_urusan, no_bidang_urusan| %>
-          <tr class="bidang-urusan">
-            <td class="border" scope="col"><%= bidang_urusan.kode_bidang_urusan %></td>
-            <td class="border" scope="col" colspan="6"><%= bidang_urusan.nama_bidang_urusan %></td>
-          </tr>
-          <% bidang_urusan.programs_opd_b.each.with_index(1) do |program, nomor| %>
-            <tr class="program">
-              <td class=" text-wrap border"  ><%= program.kode_program %></td>
-              <td class=" text-wrap border"  ><%= program.nama_program %></td>
-              <% if program.indikator_renstras_new('program', @kode_opd)[:indikator_program] %>
-                <%= render 'row_indikator_ranwal_renja',indikators: program.indikator_renstras_new('program', @kode_opd)[:indikator_program], tahun: @tahun %>
-              <% else %>
-                <td class="text-gray-900 text-wrap border"></td>
-                <td class="text-gray-900 text-wrap border"></td>
-                <td class="text-gray-900 text-wrap border"></td>
-                <td class="text-gray-900 text-wrap border"></td>
-                <td class="text-gray-900 text-wrap border"></td>
-              <% end %>
-            </tr>
-            <% program.kegiatans_opd.each.with_index(1) do |kegiatan, no_giat| %>
-              <tr class="kegiatan">
-                <td class=" text-wrap border"  ><%= kegiatan.kode_giat %></td>
-                <td class=" text-wrap border"  ><%= kegiatan.nama_kegiatan %></td>
-                <% if kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan] %>
-                  <%= render 'row_indikator_ranwal_renja',indikators: kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan], tahun: @tahun %>
-                <% else %>
-                  <td class="text-gray-900 text-wrap border"></td>
-                  <td class="text-gray-900 text-wrap border"></td>
-                  <td class="text-gray-900 text-wrap border"></td>
-                  <td class="text-gray-900 text-wrap border"></td>
-                  <td class="text-gray-900 text-wrap border"></td>
-                <% end %>
-              </tr>
-              <% kegiatan.subkegiatans_opd.each.with_index(1) do |subgiat, no_subgiat| %>
-                <tr class="subkegiatan">
-                  <td class=" text-wrap border"  ><%= subgiat.kode_sub_giat %></td>
-                  <td class=" text-wrap border"  ><%= subgiat.nama_subkegiatan %></td>
-                  <% if subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan] %>
-                    <%= render 'row_indikator_ranwal_renja',indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan], tahun: @tahun %>
-                  <% else %>
-                    <td class="text-gray-900 text-wrap border"></td>
-                    <td class="text-gray-900 text-wrap border"></td>
-                    <td class="text-gray-900 text-wrap border"></td>
-                    <td class="text-gray-900 text-wrap border"></td>
-                    <td class="text-gray-900 text-wrap border"></td>
-                  <% end %>
-                </tr>
-              <% end %>
-            <% end %>
+<table class="table align-items-center" data-controller='form-modal' data-action='ajax-update@window->form-modal#updateTargetValue'>
+  <%= render partial: 'renja/cetak_opd_renja', locals: { disable_action: true } %>
+  <% @program_kegiatans.each.with_index(1) do |(urusan, bid_urusans), nomor_ur| %>
+    <%= render partial: 'renja/pdf/urusan', locals: { urusan: urusan, nomor_ur: nomor_ur, disable_action: true } %>
+    <% bid_urusans.each.with_index(1) do |(bid_urusan, programs), nomor_bid| %>
+      <%= render partial: 'renja/pdf/bidang_urusan', locals: { bid_urusan: bid_urusan, nomor_bid: nomor_bid, disable_action: true } %>
+      <% programs.each.with_index(1) do |program, nomor| %>
+        <%= render partial: 'renja/pdf/program',
+                         locals: {
+                           sub_jenis: 'program',
+                           program: program,
+                           nomor: nomor,
+                           indikators: program.indikator_renstras_new('program', @kode_opd)[:indikator_program],
+                           disable_action: true,
+                           periode: @periode } %>
+        <% program.kegiatans_opd.each.with_index(1) do |kegiatan, no_giat| %>
+          <%= render partial: 'renstra/head_table_renstra', locals: { periode: @periode, sub_jenis: 'kegiatan', disable_action: true } %>
+          <%= render partial: 'renstra/kegiatan_renstra',
+                           locals: {
+                             program: kegiatan,
+                             nomor: no_giat,
+                             indikators: kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan],
+                             disable_action: true,
+                             periode: @periode } %>
+          <%= render partial: 'renstra/head_table_renstra', locals: { periode: @periode, sub_jenis: 'subkegiatan', disable_action: true } %>
+          <% kegiatan.subkegiatans_opd.each.with_index(1) do |subgiat, no_subgiat| %>
+            <%= render partial: 'renstra/subkegiatan_renstra',
+                             locals: {
+                               program: subgiat,
+                               nomor: no_subgiat,
+                               indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan],
+                               disable_action: true,
+                               periode: @periode } %>
           <% end %>
         <% end %>
       <% end %>
-    </tbody>
-  </table>
-</div>
+    <% end %>
+  <% end %>
+</table>

@@ -1,0 +1,29 @@
+<thead class='<%= "thead-#{sub_jenis}" %>'>
+  <tr class='<%= "header-#{sub_jenis}" %>'>
+    <th class="border" scope="col" rowspan="2">Kode <%= sub_jenis.titleize %></th>
+    <th class="border" scope="col" rowspan="2">No.</th>
+    <th class="border" scope="col" rowspan="2" colspan="3"><%= sub_jenis.titleize %></th>
+    <% periode.each do |tahun| %>
+      <th class="border text-center" scope="col" colspan="10"><%= tahun %></th>
+    <% end %>
+  </tr>
+  <tr>
+    <% periode.each do %>
+      <th class="border" scope="col">Indikator</th>
+      <th class="border" scope="col" width="50px">Target</th>
+      <th class="border" scope="col">Satuan</th>
+      <th class="border" scope="col">Pagu Indikatif</th>
+      <th class="border" scope="col">Keterangan</th>
+    <% end %>
+  </tr>
+</thead>
+<tbody id="<%= dom_id(program, 'Program') %>">
+  <tr>
+    <td class="text-gray-900 text-wrap border"><%= program.kode_program %></td>
+    <td class="text-gray-900 text-wrap border"><%= nomor %></td>
+    <td class="text-gray-900 text-wrap border" colspan="3"><%= program.nama_program %></td>
+    <% periode.each do |tahun| %>
+      <%= render(ColIndikatorRenjaComponent.new(tahun, 'program', program)) %>
+    <% end %>
+  </tr>
+</tbody>

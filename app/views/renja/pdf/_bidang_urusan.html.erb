@@ -1,0 +1,34 @@
+<thead class="thead-bidang-urusan">
+  <tr class="header-bidang-urusan">
+    <th class="border" scope="col" rowspan="2">Kode Bidang Urusan</th>
+    <th class="border" scope="col" rowspan="2">No.</th>
+    <th class="border" scope="col" rowspan="2" colspan="3">Nama Bidang Urusan</th>
+    <% @periode.each do |tahun| %>
+      <th class="border text-center" scope="col" colspan="5"><%= tahun %></th>
+    <% end %>
+  </tr>
+  <tr>
+    <% @periode.each do %>
+      <th class="border" scope="col" colspan="3"></th>
+      <th class="border" scope="col" colspan="2">Pagu Indikatif</th>
+    <% end %>
+  </tr>
+</thead>
+<tbody>
+  <td class="border" scope="col"><%= bid_urusan[0] %></td>
+  <td class="text-gray-900 text-wrap border"  ><%= nomor_bid %></td>
+  <td class="border" scope="col" colspan="3"><%= bid_urusan[1] %></td>
+  <% @periode.each do |tahun| %>
+    <% pagu_bid_urusan = Indikator.where(jenis: 'Renstra',
+                                           sub_jenis: 'Subkegiatan',
+                                           kode_opd: @opd.kode_opd_unik,
+                                           tahun: tahun)
+                                           .filter { |hh| hh.kode_bidang_urusan == bid_urusan[0] }
+                                           .group_by(&:kode)
+                                           .map { |_k, v| v.max_by(&:version) }
+                                           .inject(0) { |inj, pagu| inj + pagu.pagu.to_i }
+      %>
+    <td class="border" scope="col" colspan="3"></td>
+    <td class="fw-bolder text-gray-900 text-wrap border" colspan="2">Rp. <%= number_with_delimiter(pagu_bid_urusan) %></td>
+  <% end %>
+</tbody>
