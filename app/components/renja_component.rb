@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class RenjaComponent < ViewComponent::Base
-  def initialize(program: '', periode: '', jenis: '', head: true)
+  def initialize(program: '', tahun: '', jenis: '', head: true)
     super
     @program = program
-    @periode = periode
+    @tahun = tahun
     @jenis = jenis
     @head = head
   end
@@ -32,5 +32,41 @@ class RenjaComponent < ViewComponent::Base
 
   def nama
     nama_kode[1]
+  end
+
+  def kode_opd
+    @kode_opd ||= @program.kode_sub_skpd
+  end
+
+  def indikator_program_kegiatan
+    @indikator_program_kegiatan ||= @program.indikator_renstras_alt_new(@jenis, kode_opd, @tahun)
+  end
+
+  def indikator
+    indikator_program_kegiatan.indikator
+  end
+
+  def target
+    indikator_program_kegiatan.target
+  end
+
+  def satuan
+    indikator_program_kegiatan.satuan
+  end
+
+  def pagu_indikator
+    if @jenis == 'subkegiatan'
+      indikator_program_kegiatan.pagu
+    else
+      indikator_program_kegiatan.sum_pagu_renstra(sub_jenis: 'Subkegiatan')
+    end
+  end
+
+  def pagu
+    "Rp. #{number_with_delimiter(pagu_indikator)}"
+  end
+
+  def keterangan
+    indikator_program_kegiatan.keterangan
   end
 end

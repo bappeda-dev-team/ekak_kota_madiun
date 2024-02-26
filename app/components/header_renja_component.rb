@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 class HeaderRenjaComponent < ViewComponent::Base
-  def initialize(title: '', indikator: false, periode: [])
+  def initialize(title: '', indikator: false)
     super
     @title = title
-    @periode = periode
     @indikator = indikator
   end
 

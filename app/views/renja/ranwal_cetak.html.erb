@@ -1,6 +1,4 @@
-  
 <table class="table align-items-center" data-controller='form-modal' data-action='ajax-update@window->form-modal#updateTargetValue'>
-  <%= render partial: 'renja/pdf/opd_renja' %>
   <% @program_kegiatans.each do |urusan, bid_urusans| %>
     <%= render partial: 'renja/pdf/urusan', locals: { urusan: urusan } %>
     <% bid_urusans.each do |bid_urusan, programs| %>
