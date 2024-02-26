@@ -10,15 +10,11 @@ class RenjaController < ApplicationController
   def ranwal; end
 
   def ranwal_renja
-    @tahun_awal = @tahun.to_i
-    @tahun_akhir = @tahun.to_i
-    @periode = (@tahun_awal..@tahun_akhir)
-    @colspan = (@periode.size * 5) + 3
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
     @program_renstra = @opd.program_renstra
-    if @tahun_awal == 2025
-      @list_subkegiatans = @opd.sasaran_subkegiatans(@tahun_awal)
+    if @tahun == 2025
+      @list_subkegiatans = @opd.sasaran_subkegiatans(@tahun)
       @kode_subs = @list_subkegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
     else
       @kode_subs = @opd.program_kegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
@@ -37,12 +33,9 @@ class RenjaController < ApplicationController
     @tahun = params[:tahun]
     @opd = Opd.find_by(kode_unik_opd: params[:kode_opd])
     @nama_opd = @opd.nama_opd
-    @tahun_awal = @tahun.to_i
-    @tahun_akhir = @tahun.to_i
-    @periode = (@tahun_awal..@tahun_akhir)
     @program_renstra = @opd.program_renstra
-    if @tahun_awal == 2025
-      @list_subkegiatans = @opd.sasaran_subkegiatans(@tahun_awal)
+    if @tahun == 2025
+      @list_subkegiatans = @opd.sasaran_subkegiatans(@tahun)
       @kode_subs = @list_subkegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
     else
       @kode_subs = @opd.program_kegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
