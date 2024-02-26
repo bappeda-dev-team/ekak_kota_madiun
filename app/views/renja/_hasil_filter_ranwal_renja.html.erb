@@ -19,7 +19,9 @@
   <div class="card-body">
     <%# tabel_tujuan_sasaran_opd %>
     <div class="table-responsive">
-      <%= render partial: 'renja/tabel_renja'%>
+      <% @program_kegiatans.each do |sub_opd, urusans| %>
+        <%= render partial: 'renja/tabel_renja', locals: { sub_opd: sub_opd, urusans: urusans } %>
+      <% end %>
     </div>
   </div>
 </div>

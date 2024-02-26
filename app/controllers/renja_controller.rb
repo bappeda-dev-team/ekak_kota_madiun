@@ -19,12 +19,15 @@ class RenjaController < ApplicationController
     else
       @kode_subs = @opd.program_kegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
     end
-    program_kegiatan_by_urusans = @program_renstra.group_by do |prg|
-      [prg.kode_urusan, prg.nama_urusan]
+    program_kegiatan_by_sub_skpd = @program_renstra.group_by do |prg|
+      [prg.kode_sub_skpd, prg.nama_opd_pemilik]
     end
-    @program_kegiatans = program_kegiatan_by_urusans.transform_values do |prg_v1|
-      prg_v1.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
+    program_kegiatan_by_urusans = program_kegiatan_by_sub_skpd.transform_values do |prg_v1|
+      prg_v1.group_by { |prg| [prg.kode_urusan, prg.nama_urusan] }.transform_values do |prg_v1|
+        prg_v1.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
+      end
     end
+    @program_kegiatans = program_kegiatan_by_urusans
     render partial: 'hasil_filter_ranwal_renja'
   end
 

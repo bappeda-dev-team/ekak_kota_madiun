@@ -1,6 +1,6 @@
-<table class="table align-items-center">
-  <%= render(RenjaComponent.new(program: @opd.nama_kode_opd, tahun: @tahun, jenis: 'opd', collections: @program_renstra))%>
-  <% @program_kegiatans.each do |urusan, bid_urusans| %>
+<table class="table table-border align-items-center my-3">
+  <%= render(RenjaComponent.new(program: sub_opd, tahun: @tahun, jenis: 'sub_opd', collections: urusans.values.map(&:values).flatten))%>
+  <% urusans.each do |urusan, bid_urusans| %>
     <%= render(RenjaComponent.new(program: urusan, tahun: @tahun, jenis: 'urusan', collections: bid_urusans.values.flatten))%>
     <% bid_urusans.each do |bid_urusan, programs| %>
       <%= render(RenjaComponent.new(program: bid_urusan, tahun: @tahun, jenis: 'bidang_urusan', collections: programs))%>
