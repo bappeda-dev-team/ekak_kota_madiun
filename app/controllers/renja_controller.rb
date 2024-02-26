@@ -16,14 +16,14 @@ class RenjaController < ApplicationController
     @colspan = (@periode.size * 5) + 3
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
-    program_renstra = @opd.program_renstra
+    @program_renstra = @opd.program_renstra
     if @tahun_awal == 2025
       @list_subkegiatans = @opd.sasaran_subkegiatans(@tahun_awal)
       @kode_subs = @list_subkegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
     else
       @kode_subs = @opd.program_kegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
     end
-    program_kegiatan_by_urusans = program_renstra.group_by do |prg|
+    program_kegiatan_by_urusans = @program_renstra.group_by do |prg|
       [prg.kode_urusan, prg.nama_urusan]
     end
     @program_kegiatans = program_kegiatan_by_urusans.transform_values do |prg_v1|

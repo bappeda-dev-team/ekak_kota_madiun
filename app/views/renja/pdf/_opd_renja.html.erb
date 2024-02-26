@@ -1,7 +1,7 @@
 <%= render(HeaderRenjaComponent.new(title: 'OPD')) %>
 <tr>
   <td class="border" scope="col"><%= @opd.kode_unik_opd %></td>
-  <td class="border" scope="col" colspan="3"><%= @opd.nama_opd %></td>
+  <td class="border" scope="col"><%= @opd.nama_opd %></td>
   <% @periode.each do |tahun| %>
     <% pagu_opd = Indikator.where(jenis: 'Renstra',
                                     sub_jenis: 'Subkegiatan',

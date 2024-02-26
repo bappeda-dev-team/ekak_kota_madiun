@@ -1,11 +1,15 @@
 <% if @head %>
-  <%= render(HeaderRenjaComponent.new(title: title, indikator: true)) %>
+  <%= render(HeaderRenjaComponent.new(title: title, indikator: with_indikator?)) %>
 <% end %>
-<tr id="<%= dom_id(@program, @jenis.titleize) %>">
+<tr>
   <td class="text-gray-900 text-wrap border"><%= kode %></td>
-  <td class="text-gray-900 text-wrap border" colspan="3"><%= nama %></td>
-  <td class="text-gray-900 text-wrap border"><%= indikator %></td>
-  <td class="text-gray-900 text-wrap border"><%= target %></td>
-  <td class="text-gray-900 text-wrap border"><%= satuan %></td>
-  <td class="text-gray-900 text-wrap border"><%= pagu %></td>
+  <td class="text-gray-900 text-wrap border" width="950px"><%= nama %></td>
+  <% if with_indikator? %>
+    <td class="text-gray-900 text-wrap border"><%= indikator %></td>
+    <td class="text-gray-900 text-wrap border"><%= target %></td>
+    <td class="text-gray-900 text-wrap border"><%= satuan %></td>
+  <% else %>
+    <td class="border" scope="col" colspan="3"></td>
+  <% end %>
+  <td class="text-gray-900 text-wrap border" width="700px"><%= pagu %></td>
 </tr>

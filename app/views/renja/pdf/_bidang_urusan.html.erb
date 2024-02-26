@@ -1,7 +1,7 @@
 <%= render(HeaderRenjaComponent.new(title: 'Bidang Urusan')) %>
 <tr>
   <td class="border" scope="col"><%= bid_urusan[0] %></td>
-  <td class="border" scope="col" colspan="3"><%= bid_urusan[1] %></td>
+  <td class="border" scope="col"><%= bid_urusan[1] %></td>
   <% @periode.each do |tahun| %>
     <% pagu_bid_urusan = Indikator.where(jenis: 'Renstra',
                                            sub_jenis: 'Subkegiatan',
@@ -13,6 +13,6 @@
                                            .inject(0) { |inj, pagu| inj + pagu.pagu.to_i }
       %>
     <td class="border" scope="col" colspan="3"></td>
-    <td class="fw-bolder text-gray-900 text-wrap border" colspan="2">Rp. <%= number_with_delimiter(pagu_bid_urusan) %></td>
+    <td class="fw-bolder text-gray-900 text-wrap border">Rp. <%= number_with_delimiter(pagu_bid_urusan) %></td>
   <% end %>
 </tr>

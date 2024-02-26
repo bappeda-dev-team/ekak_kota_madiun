@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 class RenjaComponent < ViewComponent::Base
-  def initialize(program: '', tahun: '', jenis: '', head: true)
+  def initialize(program: '', tahun: '', jenis: '', head: true, collections: '')
     super
     @program = program
     @tahun = tahun
     @jenis = jenis
     @head = head
+    @collections = collections
   end
 
   def title
@@ -22,7 +23,7 @@ class RenjaComponent < ViewComponent::Base
     when 'subkegiatan' || 'Subkegiatan'
       [@program.kode_sub_giat, @program.nama_subkegiatan]
     else
-      @jenis
+      @program
     end
   end
 
@@ -62,11 +63,29 @@ class RenjaComponent < ViewComponent::Base
     end
   end
 
+  def pagu_non_program
+    jumlah = @collections.flat_map do |subs|
+      subs.indikator_renstras_alt_new('program', subs.kode_sub_skpd, @tahun)
+          &.sum_pagu_renstra(sub_jenis: 'Subkegiatan')
+    end
+
+    jumlah.inject(0) { |inj, pagu| inj + pagu.to_i }
+  end
+
   def pagu
-    "Rp. #{number_with_delimiter(pagu_indikator)}"
+    if with_indikator?
+      "Rp. #{number_with_delimiter(pagu_indikator)}"
+    else
+      "Rp. #{number_with_delimiter(pagu_non_program)}"
+    end
   end
 
   def keterangan
     indikator_program_kegiatan&.keterangan
+  end
+
+  def with_indikator?
+    allowed = %w[Program program Kegiatan kegiatan Subkegiatan subkegiatan]
+    @jenis.in? allowed
   end
 end

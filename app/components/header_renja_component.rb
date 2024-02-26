@@ -8,6 +8,6 @@ class HeaderRenjaComponent < ViewComponent::Base
   end
 
   def style_header
-    "thead-#{@title.parameterize}"
+    "thead-#{@title.parameterize.dasherize}"
   end
 end
