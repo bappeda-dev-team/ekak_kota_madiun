@@ -9,7 +9,7 @@ class RenjaController < ApplicationController
 
   def ranwal; end
 
-  def ranwal_renja
+  def set_ranwal
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
     @program_renstra = @opd.program_renstra
@@ -28,27 +28,16 @@ class RenjaController < ApplicationController
       end
     end
     @program_kegiatans = program_kegiatan_by_urusans
+  end
+
+  def ranwal_renja
+    set_ranwal
     render partial: 'hasil_filter_ranwal_renja'
   end
 
   def ranwal_cetak
     @title = "Rawnal Renja"
-    @tahun = params[:tahun]
-    @opd = Opd.find_by(kode_unik_opd: params[:kode_opd])
-    @nama_opd = @opd.nama_opd
-    @program_renstra = @opd.program_renstra
-    if @tahun == 2025
-      @list_subkegiatans = @opd.sasaran_subkegiatans(@tahun)
-      @kode_subs = @list_subkegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
-    else
-      @kode_subs = @opd.program_kegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
-    end
-    program_kegiatan_by_urusans = @program_renstra.group_by do |prg|
-      [prg.kode_urusan, prg.nama_urusan]
-    end
-    @program_kegiatans = program_kegiatan_by_urusans.transform_values do |prg_v1|
-      prg_v1.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
-    end
+    set_ranwal
 
     respond_to do |format|
       format.html
