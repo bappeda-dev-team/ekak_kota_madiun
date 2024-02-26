@@ -1,0 +1,10 @@
+<% if @head %>
+  <%= render(HeaderRenjaComponent.new(title: title, periode: @periode, indikator: true)) %>
+<% end %>
+<tr id="<%= dom_id(@program, @jenis.titleize) %>">
+  <td class="text-gray-900 text-wrap border"><%= kode %></td>
+  <td class="text-gray-900 text-wrap border" colspan="3"><%= nama %></td>
+  <% @periode.each do |tahun| %>
+    <%= render(ColIndikatorRenjaComponent.new(tahun, @jenis, @program)) %>
+  <% end %>
+</tr>

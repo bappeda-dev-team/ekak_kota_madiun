@@ -6,26 +6,12 @@
       <% bid_urusans.each do |bid_urusan, programs| %>
         <%= render partial: 'renja/pdf/bidang_urusan', locals: { bid_urusan: bid_urusan } %>
         <% programs.each do |program| %>
-          <%= render partial: 'renja/pdf/program',
-                         locals: {
-                           sub_jenis: 'program',
-                           program: program,
-                           periode: @periode } %>
+          <%= render(RenjaComponent.new(program: program, periode: @periode, jenis: 'program'))%>
           <% program.kegiatans_opd.each do |kegiatan| %>
-            <%= render partial: 'renja/pdf/kegiatan',
-                           locals: {
-                             sub_jenis: 'kegiatan',
-                             program: kegiatan,
-                             periode: @periode } %>
+            <%= render(RenjaComponent.new(program: kegiatan, periode: @periode, jenis: 'kegiatan'))%>
             <%= render(HeaderRenjaComponent.new(title: 'Subkegiatan', periode: @periode, indikator: true)) %>
             <% kegiatan.subkegiatans_opd.each do |subgiat| %>
-              <%= render partial: 'renja/pdf/subkegiatan',
-                             locals: {
-                               sub_jenis: 'subkegiatan',
-                               program: subgiat,
-                               indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan],
-                               disable_action: true,
-                               periode: @periode } %>
+              <%= render(RenjaComponent.new(program: subgiat, periode: @periode, jenis: 'subkegiatan', head: false))%>
             <% end %>
           <% end %>
         <% end %>
