@@ -9,27 +9,6 @@ class RenjaController < ApplicationController
 
   def ranwal; end
 
-  def set_ranwal
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @nama_opd = @opd.nama_opd
-    @program_renstra = @opd.program_renstra
-    if @tahun == 2025
-      @list_subkegiatans = @opd.sasaran_subkegiatans(@tahun)
-      @kode_subs = @list_subkegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
-    else
-      @kode_subs = @opd.program_kegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
-    end
-    program_kegiatan_by_sub_skpd = @program_renstra.group_by do |prg|
-      [prg.kode_sub_skpd, prg.nama_opd_pemilik]
-    end
-    program_kegiatan_by_urusans = program_kegiatan_by_sub_skpd.transform_values do |prg_v1|
-      prg_v1.group_by { |prg| [prg.kode_urusan, prg.nama_urusan] }.transform_values do |prg_v1|
-        prg_v1.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
-      end
-    end
-    @program_kegiatans = program_kegiatan_by_urusans
-  end
-
   def ranwal_renja
     set_ranwal
     render partial: 'hasil_filter_ranwal_renja'
@@ -70,27 +49,7 @@ class RenjaController < ApplicationController
   end
 
   def rankir_renja
-    @kode_opd = params[:kode_opd]
-    @tahun = params[:tahun]
-    @tahun_awal = @tahun.to_i
-    @tahun_akhir = @tahun.to_i
-    @periode = (@tahun_awal..@tahun_akhir)
-    @colspan = (@periode.size * 5) + 3
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @nama_opd = @opd.nama_opd
-    program_renstra = @opd.program_renstra
-    if @tahun_awal == 2025
-      @list_subkegiatans = @opd.sasaran_subkegiatans(@tahun_awal)
-      @kode_subs = @list_subkegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
-    else
-      @kode_subs = @opd.program_kegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
-    end
-    program_kegiatan_by_urusans = program_renstra.group_by do |prg|
-      [prg.kode_urusan, prg.nama_urusan]
-    end
-    @program_kegiatans = program_kegiatan_by_urusans.transform_values do |prg_v1|
-      prg_v1.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
-    end
+    set_ranwal
     render partial: 'rankir_renja'
   end
 
@@ -219,5 +178,26 @@ class RenjaController < ApplicationController
   def indikator_params
     params.require(:renstra).permit(indikator: %i[indikator tahun satuan kode jenis sub_jenis target pagu keterangan
                                                   kode_opd kode_indikator])
+  end
+
+  def set_ranwal
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    @program_renstra = @opd.program_renstra
+    if @tahun == 2025
+      @list_subkegiatans = @opd.sasaran_subkegiatans(@tahun)
+      @kode_subs = @list_subkegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
+    else
+      @kode_subs = @opd.program_kegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
+    end
+    program_kegiatan_by_sub_skpd = @program_renstra.group_by do |prg|
+      [prg.kode_sub_skpd, prg.nama_opd_pemilik]
+    end
+    program_kegiatan_by_urusans = program_kegiatan_by_sub_skpd.transform_values do |prg_v1|
+      prg_v1.group_by { |prg| [prg.kode_urusan, prg.nama_urusan] }.transform_values do |prg_v1|
+        prg_v1.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
+      end
+    end
+    @program_kegiatans = program_kegiatan_by_urusans
   end
 end
