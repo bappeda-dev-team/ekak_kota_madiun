@@ -1,33 +1,28 @@
+  
 <table class="table align-items-center" data-controller='form-modal' data-action='ajax-update@window->form-modal#updateTargetValue'>
-  <%= render partial: 'renja/cetak_opd_renja', locals: { disable_action: true } %>
-  <% @program_kegiatans.each.with_index(1) do |(urusan, bid_urusans), nomor_ur| %>
-    <%= render partial: 'renja/pdf/urusan', locals: { urusan: urusan, nomor_ur: nomor_ur, disable_action: true } %>
-    <% bid_urusans.each.with_index(1) do |(bid_urusan, programs), nomor_bid| %>
-      <%= render partial: 'renja/pdf/bidang_urusan', locals: { bid_urusan: bid_urusan, nomor_bid: nomor_bid, disable_action: true } %>
-      <% programs.each.with_index(1) do |program, nomor| %>
+  <%= render partial: 'renja/pdf/opd_renja' %>
+  <% @program_kegiatans.each do |urusan, bid_urusans| %>
+    <%= render partial: 'renja/pdf/urusan', locals: { urusan: urusan } %>
+    <% bid_urusans.each do |bid_urusan, programs| %>
+      <%= render partial: 'renja/pdf/bidang_urusan', locals: { bid_urusan: bid_urusan } %>
+      <% programs.each do |program| %>
         <%= render partial: 'renja/pdf/program',
                          locals: {
                            sub_jenis: 'program',
                            program: program,
-                           nomor: nomor,
-                           indikators: program.indikator_renstras_new('program', @kode_opd)[:indikator_program],
-                           disable_action: true,
                            periode: @periode } %>
-        <% program.kegiatans_opd.each.with_index(1) do |kegiatan, no_giat| %>
-          <%= render partial: 'renstra/head_table_renstra', locals: { periode: @periode, sub_jenis: 'kegiatan', disable_action: true } %>
-          <%= render partial: 'renstra/kegiatan_renstra',
+        <% program.kegiatans_opd.each do |kegiatan| %>
+          <%= render partial: 'renja/pdf/kegiatan',
                            locals: {
+                             sub_jenis: 'kegiatan',
                              program: kegiatan,
-                             nomor: no_giat,
-                             indikators: kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan],
-                             disable_action: true,
                              periode: @periode } %>
-          <%= render partial: 'renstra/head_table_renstra', locals: { periode: @periode, sub_jenis: 'subkegiatan', disable_action: true } %>
-          <% kegiatan.subkegiatans_opd.each.with_index(1) do |subgiat, no_subgiat| %>
-            <%= render partial: 'renstra/subkegiatan_renstra',
+          <%= render(HeaderRenjaComponent.new(title: 'Subkegiatan', periode: @periode, indikator: true)) %>
+          <% kegiatan.subkegiatans_opd.each do |subgiat| %>
+            <%= render partial: 'renja/pdf/subkegiatan',
                              locals: {
+                               sub_jenis: 'subkegiatan',
                                program: subgiat,
-                               nomor: no_subgiat,
                                indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan],
                                disable_action: true,
                                periode: @periode } %>

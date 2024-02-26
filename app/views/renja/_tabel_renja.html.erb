@@ -1,0 +1,35 @@
+<div class="table-responsive">
+  <table class="table align-items-center" data-controller='form-modal' data-action='ajax-update@window->form-modal#updateTargetValue'>
+    <%= render partial: 'renja/pdf/opd_renja' %>
+    <% @program_kegiatans.each do |urusan, bid_urusans| %>
+      <%= render partial: 'renja/pdf/urusan', locals: { urusan: urusan } %>
+      <% bid_urusans.each do |bid_urusan, programs| %>
+        <%= render partial: 'renja/pdf/bidang_urusan', locals: { bid_urusan: bid_urusan } %>
+        <% programs.each do |program| %>
+          <%= render partial: 'renja/pdf/program',
+                         locals: {
+                           sub_jenis: 'program',
+                           program: program,
+                           periode: @periode } %>
+          <% program.kegiatans_opd.each do |kegiatan| %>
+            <%= render partial: 'renja/pdf/kegiatan',
+                           locals: {
+                             sub_jenis: 'kegiatan',
+                             program: kegiatan,
+                             periode: @periode } %>
+            <%= render(HeaderRenjaComponent.new(title: 'Subkegiatan', periode: @periode, indikator: true)) %>
+            <% kegiatan.subkegiatans_opd.each do |subgiat| %>
+              <%= render partial: 'renja/pdf/subkegiatan',
+                             locals: {
+                               sub_jenis: 'subkegiatan',
+                               program: subgiat,
+                               indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan],
+                               disable_action: true,
+                               periode: @periode } %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </table>
+</div>

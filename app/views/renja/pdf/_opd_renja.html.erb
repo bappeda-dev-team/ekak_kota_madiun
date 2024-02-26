@@ -1,0 +1,17 @@
+<%= render(HeaderRenjaComponent.new(title: 'OPD', periode: @periode)) %>
+<tr>
+  <td class="border" scope="col"><%= @opd.kode_unik_opd %></td>
+  <td class="border" scope="col" colspan="3"><%= @opd.nama_opd %></td>
+  <% @periode.each do |tahun| %>
+    <% pagu_opd = Indikator.where(jenis: 'Renstra',
+                                    sub_jenis: 'Subkegiatan',
+                                    kode_opd: @opd.kode_opd_unik,
+                                    tahun: tahun)
+                                    .group_by(&:kode)
+                                    .map { |_k, v| v.max_by(&:version) }
+                                    .inject(0) { |inj, pagu| inj + pagu.pagu.to_i }
+      %>
+    <td class="border" scope="col" colspan="3"></td>
+    <td class="fw-bolder text-gray-900 text-wrap border" style="font-size: larger;">Rp. <%= number_with_delimiter(pagu_opd) %></td>
+  <% end %>
+</tr>

@@ -1,0 +1,9 @@
+<tr>
+  <td class="border" scope="col"><%= title %></td>
+  <td class="text-gray-900 text-wrap border"><%= @no %></td>
+  <td class="border" scope="col" colspan="3"><%= kode %></td>
+  <% @periode.each do |tahun| %>
+    <td class="border" scope="col" colspan="3"></td>
+    <td class="fw-bolder text-gray-900 text-wrap border" colspan="2"><%= pagu %></td>
+  <% end %>
+</tr>

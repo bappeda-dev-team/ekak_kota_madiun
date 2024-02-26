@@ -1,0 +1,7 @@
+<tr id="<%= dom_id(program, 'Subkegiatan') %>">
+  <td class="text-gray-900 text-wrap border"><%= program.kode_sub_giat %></td>
+  <td class="text-gray-900 text-wrap border" colspan="3"><%= program.nama_subkegiatan %></td>
+  <% periode.each do |tahun| %>
+    <%= render(ColIndikatorRenjaComponent.new(tahun, 'subkegiatan', program)) %>
+  <% end %>
+</tr>

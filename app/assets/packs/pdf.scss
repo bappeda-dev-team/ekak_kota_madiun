@@ -1,54 +1,102 @@
-table, th, td {
+table,
+th,
+td {
   // border: 1px solid black;
   border-collapse: collapse;
-} 
+}
+
 // table {
 //   width: 100%;
 // }
-  .border {
-        border: 1px solid !important;
-  }
+.border {
+  border: 1px solid !important;
+}
 
-  .bidang-urusan {
-    td {
-      background-color: #d81c45 !important;
-      border-color: #000000 !important;
-      color: white !important;
+.bidang-urusan {
+  td {
+    background-color: #d81c45 !important;
+    border-color: #000000 !important;
+    color: white !important;
+  }
+}
+
+.program {
+  td {
+    background-color: #225dc6 !important;
+    border-color: #000000 !important;
+    color: white !important;
+  }
+}
+
+.kegiatan {
+  td {
+    background-color: #2CA58D !important;
+    border-color: #000000 !important;
+    color: white !important;
+  }
+}
+
+.subkegiatan {
+  td {
+    background-color: aliceblue !important;
+    border-color: #000000 !important;
+  }
+}
+
+.title-one {
+  font-size: 18px !important;
+  letter-spacing: 3px !important;
+}
+
+.title-two {
+  font-size: 16px !important;
+  letter-spacing: 1px !important;
+  font-weight: bold !important;
+}
+
+.alwaysbreak {
+  page-break-before: always;
+}
+
+.nobreak:before {
+  clear: both;
+}
+
+.nobreak {
+  page-break-inside: avoid;
+}
+
+.table {
+
+  .thead-bidang-urusan {
+    th {
+      background-color: #d81c45;
+      color: #ffffff;
+      border-color: #000000;
     }
   }
-  .program {
-    td {
-      background-color: #225dc6 !important;
-      border-color: #000000 !important;
-      color: white !important;
+
+  .thead-program {
+    th {
+      background-color: #225dc6;
+      color: #ffffff;
+      border-color: #000000;
     }
   }
 
-  .kegiatan {
-    td {
-      background-color: #2CA58D !important;
-      border-color: #000000 !important;
-      color: white !important;
+  .thead-kegiatan {
+    th {
+      background-color: #2CA58D;
+      color: #ffffff;
+      border-color: #000000;
     }
   }
 
-  .subkegiatan {
-    td {
-      background-color: aliceblue !important;
-      border-color: #000000 !important;
+  .thead-subkegiatan {
+    th {
+      background-color: #10B981;
+      color: #ffffff;
+      border-color: #000000;
     }
   }
-  .title-one {
-     font-size: 18px !important;
-     letter-spacing: 3px !important;
-  }
-
-  .title-two {
-          font-size: 16px !important;
-          letter-spacing: 1px !important;
-          font-weight: bold !important;
-  }
-div.alwaysbreak { page-break-before: always; }
-div.nobreak:before { clear:both; }
-div.nobreak { page-break-inside: avoid; }
-
+}

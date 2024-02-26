@@ -18,44 +18,6 @@
   </div>
   <div class="card-body">
     <%# tabel_tujuan_sasaran_opd %>
-    <div class="table-responsive">
-      <table class="table align-items-center" data-controller='form-modal' data-action='ajax-update@window->form-modal#updateTargetValue'>
-        <%= render partial: 'renja/cetak_opd_renja', locals: { disable_action: true } %>
-        <% @program_kegiatans.each.with_index(1) do |(urusan, bid_urusans), nomor_ur| %>
-          <%= render partial: 'renja/pdf/urusan', locals: { urusan: urusan, nomor_ur: nomor_ur } %>
-          <% bid_urusans.each.with_index(1) do |(bid_urusan, programs), nomor_bid| %>
-            <%= render partial: 'renja/pdf/bidang_urusan', locals: { bid_urusan: bid_urusan, nomor_bid: nomor_bid } %>
-            <% programs.each.with_index(1) do |program, nomor| %>
-              <%= render partial: 'renja/pdf/program',
-                         locals: {
-                           sub_jenis: 'program',
-                           program: program,
-                           nomor: nomor,
-                           periode: @periode } %>
-              <% program.kegiatans_opd.each.with_index(1) do |kegiatan, no_giat| %>
-                <%= render partial: 'renstra/head_table_renstra', locals: { periode: @periode, sub_jenis: 'kegiatan', disable_action: true } %>
-                <%= render partial: 'renstra/kegiatan_renstra',
-                           locals: {
-                             program: kegiatan,
-                             nomor: no_giat,
-                             indikators: kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan],
-                             disable_action: true,
-                             periode: @periode } %>
-                <%= render partial: 'renstra/head_table_renstra', locals: { periode: @periode, sub_jenis: 'subkegiatan', disable_action: true } %>
-                <% kegiatan.subkegiatans_opd.each.with_index(1) do |subgiat, no_subgiat| %>
-                  <%= render partial: 'renstra/subkegiatan_renstra',
-                             locals: {
-                               program: subgiat,
-                               nomor: no_subgiat,
-                               indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan],
-                               disable_action: true,
-                               periode: @periode } %>
-                <% end %>
-              <% end %>
-            <% end %>
-          <% end %>
-        <% end %>
-      </table>
-    </div>
+    <%= render partial: 'renja/tabel_renja'%>
   </div>
 </div>

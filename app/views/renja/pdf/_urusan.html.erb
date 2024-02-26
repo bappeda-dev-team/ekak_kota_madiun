@@ -1,22 +1,6 @@
-<thead class="thead-urusan">
-  <tr class="header-urusan">
-    <th class="border" scope="col" rowspan="2">Kode Urusan</th>
-    <th class="border" scope="col" rowspan="2">No.</th>
-    <th class="border" scope="col" rowspan="2" colspan="3">Nama Urusan</th>
-    <% @periode.each do |tahun| %>
-      <th class="border text-center" scope="col" colspan="10"><%= tahun %></th>
-    <% end %>
-  </tr>
-  <tr>
-    <% @periode.each do %>
-      <th class="border" scope="col" colspan="6"></th>
-      <th class="border" scope="col">Pagu Indikatif</th>
-    <% end %>
-  </tr>
-</thead>
-<tbody>
+<%= render(HeaderRenjaComponent.new(title: 'Urusan', periode: @periode)) %>
+<tr>
   <td class="border" scope="col"><%= urusan[0] %></td>
-  <td class="text-gray-900 text-wrap border"  ><%= nomor_ur %></td>
   <td class="border" scope="col" colspan="3"><%= urusan[1] %></td>
   <% @periode.each do |tahun| %>
     <% pagu_urusan = Indikator.where(jenis: 'Renstra',
@@ -28,7 +12,7 @@
                                        .map { |_k, v| v.max_by(&:version) }
                                        .inject(0) { |inj, pagu| inj + pagu.pagu.to_i }
       %>
-    <td class="border" scope="col" colspan="6"></td>
-    <td class="fw-bolder text-gray-900 text-wrap border">Rp. <%= number_with_delimiter(pagu_urusan) %></td>
+    <td class="border" scope="col" colspan="3"></td>
+    <td class="fw-bolder text-gray-900 text-wrap border" colspan="2">Rp. <%= number_with_delimiter(pagu_urusan) %></td>
   <% end %>
-</tbody>
+</tr>
