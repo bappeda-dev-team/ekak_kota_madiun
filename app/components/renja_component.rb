@@ -19,8 +19,10 @@ class RenjaComponent < ViewComponent::Base
       [@program.kode_program, @program.nama_program]
     when 'kegiatan' || 'Kegiatan'
       [@program.kode_giat, @program.nama_kegiatan]
-    else
+    when 'subkegiatan' || 'Subkegiatan'
       [@program.kode_sub_giat, @program.nama_subkegiatan]
+    else
+      @jenis
     end
   end
 

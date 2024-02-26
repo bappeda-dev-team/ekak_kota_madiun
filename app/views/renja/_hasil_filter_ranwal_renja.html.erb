@@ -2,7 +2,7 @@
   <div class="card-header">
     <div class="row align-items-center">
       <div class="col">
-        <h2 class="fs-5 fw-bold mb-0">Ranwal Renja <%= @nama_opd %></h2>
+        <h2 class="fs-5 fw-bold mb-0">Ranwal Renja <%= @nama_opd %> <%= @tahun_awal %></h2>
       </div>
       <div class="col-auto">
         <%= link_to renja_ranwal_cetak_path(format: :xlsx, tahun: @tahun, kode_opd: @kode_opd), class:"m-3 btn btn-outline-success" do %>
