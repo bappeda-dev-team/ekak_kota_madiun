@@ -86,18 +86,20 @@ class RenjaComponent < ViewComponent::Base
     end
   end
 
+  # TODO: fix kalau pelaksana pindah / pensiun
+  def hitung_pagu_rankir
+    @hitung_pagu_rankir ||= @program.pagu_sub_rankir_tahun(@tahun, kode_opd)
+  end
+
   def pagu_rankir
-    if @jenis == 'subkegiatan'
-      ProgramKegiatan
-        .where(kode_sub_giat: nama_kode[0],
-               kode_sub_skpd: kode_opd).map do |sub|
-        sub.sasarans.lengkap_strategi_tahun(@tahun).map(&:total_anggaran).compact.sum
-      end.sum
+    if with_indikator?
+      if @jenis == 'subkegiatan'
+        hitung_pagu_rankir
+      else
+        @collections.map { |prg| prg.pagu_sub_rankir_tahun(@tahun, kode_opd) }.sum
+      end
     else
-      5000
-      # @collections.map do |subkegiatan|
-      #   subkegiatan.map { |pp| pp.pagu_sub_rankir_tahun(@tahun) }.compact.sum
-      # end
+      @collections.map { |prg| prg.pagu_sub_rankir_tahun(@tahun, prg.kode_sub_skpd) }.sum
     end
   end
 

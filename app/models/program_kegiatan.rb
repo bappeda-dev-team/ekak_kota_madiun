@@ -397,9 +397,15 @@ class ProgramKegiatan < ApplicationRecord
     sasarans.where(tahun: %w[2022 2023 2024]).size
   end
 
-  def pagu_sub_rankir_tahun(tahun)
-    ProgramKegiatan.where(kode_sub_giat: kode_sub_giat).map do |sub|
-      sub.sasarans.lengkap_strategi_tahun(tahun).map(&:total_anggaran).compact.sum
+  def anggaran_sasarans(tahun)
+    sasarans.lengkap_strategi_tahun(tahun)
+            .map(&:total_anggaran).compact.sum
+  end
+
+  def pagu_sub_rankir_tahun(tahun, kode_opd)
+    ProgramKegiatan.where(kode_sub_giat: kode_sub_giat,
+                          kode_sub_skpd: kode_opd).map do |sub|
+      sub.anggaran_sasarans(tahun)
     end.sum
   end
 
