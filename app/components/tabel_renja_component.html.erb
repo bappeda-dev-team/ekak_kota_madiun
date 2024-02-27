@@ -1,0 +1,21 @@
+<table class="table table-border align-items-center my-3">
+  <%= render(RenjaComponent.new(program: @sub_opd, tahun: @tahun, 
+                                jenis: 'sub_opd', 
+                                collections: @urusans.values.map(&:values).flatten))%>
+  <% @urusans.each do |urusan, bid_urusans| %>
+    <%= render(RenjaComponent.new(program: urusan, tahun: @tahun, jenis: 'urusan', collections: bid_urusans.values.flatten))%>
+    <% bid_urusans.each do |bid_urusan, programs| %>
+      <%= render(RenjaComponent.new(program: bid_urusan, tahun: @tahun, jenis: 'bidang_urusan', collections: programs))%>
+      <% programs.each do |program| %>
+        <%= render(RenjaComponent.new(program: program, tahun: @tahun, jenis: 'program', jenis_renja: @jenis_renja))%>
+        <% program.kegiatans_opd.each do |kegiatan| %>
+          <%= render(RenjaComponent.new(program: kegiatan, tahun: @tahun, jenis: 'kegiatan', jenis_renja: @jenis_renja))%>
+          <%= render(HeaderRenjaComponent.new(title: 'Subkegiatan', indikator: true)) %>
+          <% kegiatan.subkegiatans_opd.each do |subgiat| %>
+            <%= render(RenjaComponent.new(program: subgiat, tahun: @tahun, jenis: 'subkegiatan', head: false, jenis_renja: @jenis_renja))%>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+</table>

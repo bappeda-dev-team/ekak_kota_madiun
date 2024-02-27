@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 
 class RenjaComponent < ViewComponent::Base
-  def initialize(program: '', tahun: '', jenis: '', head: true, collections: '')
+  def initialize(program: '', tahun: '',
+                 jenis: '', head: true,
+                 jenis_renja: '',
+                 collections: '')
     super
     @program = program
     @tahun = tahun
     @jenis = jenis
     @head = head
     @collections = collections
+    @jenis_renja = jenis_renja
   end
 
   def title
@@ -73,10 +77,23 @@ class RenjaComponent < ViewComponent::Base
   end
 
   def pagu
-    if with_indikator?
+    if rankir?
+      "Rp. #{number_with_delimiter(pagu_rankir)}"
+    elsif with_indikator?
       "Rp. #{number_with_delimiter(pagu_indikator)}"
     else
       "Rp. #{number_with_delimiter(pagu_non_program)}"
+    end
+  end
+
+  def pagu_rankir
+    if @jenis == 'subkegiatan'
+      @program.pagu_sub_rankir_tahun(@tahun)
+    else
+      5000
+      # @collections.map do |subkegiatan|
+      #   subkegiatan.map { |pp| pp.pagu_sub_rankir_tahun(@tahun) }.compact.sum
+      # end
     end
   end
 
@@ -87,5 +104,9 @@ class RenjaComponent < ViewComponent::Base
   def with_indikator?
     allowed = %w[Program program Kegiatan kegiatan Subkegiatan subkegiatan]
     @jenis.in? allowed
+  end
+
+  def rankir?
+    @jenis_renja == 'rankir'
   end
 end
