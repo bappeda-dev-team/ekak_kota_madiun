@@ -9,31 +9,24 @@ class RenjaController < ApplicationController
 
   def ranwal; end
 
+  def ranwal_renja
+    set_ranwal
+    render partial: 'hasil_filter_ranwal_renja'
+  end
+
   def ranwal_cetak
     @title = "Rawnal Renja"
-    @tahun = params[:tahun]
-    @opd = Opd.find_by(kode_unik_opd: params[:kode_opd])
-    @nama_opd = @opd.nama_opd
-    program_renstra = @opd.program_renstra
-    @tahun_awal = @tahun.to_i
-    @tahun_akhir = @tahun.to_i
-    @periode = (@tahun_awal..@tahun_akhir)
-    program_kegiatan_by_urusans = program_renstra.group_by do |prg|
-      [prg.kode_urusan, prg.nama_urusan]
-    end
-    @program_kegiatans = program_kegiatan_by_urusans.transform_values do |prg_v1|
-      prg_v1.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
-    end
+    set_ranwal
 
     respond_to do |format|
       format.html
       format.pdf do
         render pdf: "ranwal_renja_#{@nama_opd}_tahun_#{@tahun}",
                dispotition: 'attachment',
+               orientation: 'Landscape',
                page_size: 'Legal',
                layout: 'pdf.html.erb',
-               template: 'renja/ranwal_cetak.html.erb',
-               show_as_html: params.key?('debug')
+               template: 'renja/ranwal_cetak.html.erb'
       end
       format.xlsx do
         render filename: "ranwal_renja_#{@nama_opd}_tahun_#{@tahun}"
@@ -55,48 +48,32 @@ class RenjaController < ApplicationController
   end
 
   def rankir_renja
-    @kode_opd = params[:kode_opd]
-    @tahun = params[:tahun]
-    @tahun_awal = @tahun.to_i
-    @tahun_akhir = @tahun.to_i
-    @periode = (@tahun_awal..@tahun_akhir)
-    @colspan = (@periode.size * 5) + 3
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @nama_opd = @opd.nama_opd
-    program_renstra = @opd.program_renstra
-    if @tahun_awal == 2025
-      @list_subkegiatans = @opd.sasaran_subkegiatans(@tahun_awal)
-      @kode_subs = @list_subkegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
-    else
-      @kode_subs = @opd.program_kegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
-    end
-    program_kegiatan_by_urusans = program_renstra.group_by do |prg|
-      [prg.kode_urusan, prg.nama_urusan]
-    end
-    @program_kegiatans = program_kegiatan_by_urusans.transform_values do |prg_v1|
-      prg_v1.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
-    end
+    set_ranwal
+    @user = @opd.eselon_dua_opd
+    @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
     render partial: 'rankir_renja'
   end
 
   def rankir_cetak
+    set_ranwal
+    @user = @opd.eselon_dua_opd
+    @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
+    @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
     @title = "Rankir Renja"
-    @tahun = params[:tahun]
-    @opd = Opd.find_by(kode_unik_opd: params[:kode_opd])
-    @nama_opd = @opd.nama_opd
-    program_renstra = @opd.program_renstra
-    @tahun_awal = @tahun.to_i
-    @tahun_akhir = @tahun.to_i
-    @periode = (@tahun_awal..@tahun_akhir)
-    program_kegiatan_by_urusans = program_renstra.group_by do |prg|
-      [prg.kode_urusan, prg.nama_urusan]
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "rankir_renja_#{@nama_opd}_tahun_#{@tahun}",
+               dispotition: 'attachment',
+               orientation: 'Landscape',
+               page_size: 'Legal',
+               layout: 'pdf.html.erb',
+               template: 'renja/rankir_cetak.html.erb'
+      end
+      format.xlsx do
+        render filename: "ranwal_renja_#{@nama_opd}_tahun_#{@tahun}"
+      end
     end
-    @program_kegiatans = program_kegiatan_by_urusans.transform_values do |prg_v1|
-      prg_v1.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
-    end
-    @filename = "rankir_renja_#{@nama_opd}_tahun_#{@tahun}.xlsx"
-
-    render xlsx: 'rankir_cetak', filename: @filename
   end
 
   def penetapan; end
@@ -190,8 +167,8 @@ class RenjaController < ApplicationController
   end
 
   def set_renja
-    @kode_unik_opd = params[:kode_unik_opd]
-    @tahun = params[:tahun]
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
   end
 
   private
@@ -204,5 +181,26 @@ class RenjaController < ApplicationController
   def indikator_params
     params.require(:renstra).permit(indikator: %i[indikator tahun satuan kode jenis sub_jenis target pagu keterangan
                                                   kode_opd kode_indikator])
+  end
+
+  def set_ranwal
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    @program_renstra = @opd.program_renstra
+    if @tahun == 2025
+      @list_subkegiatans = @opd.sasaran_subkegiatans(@tahun)
+      @kode_subs = @list_subkegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
+    else
+      @kode_subs = @opd.program_kegiatans.to_h { |sub| [sub.kode_sub_giat, 0] }
+    end
+    program_kegiatan_by_sub_skpd = @program_renstra.group_by do |prg|
+      [prg.kode_sub_skpd, prg.nama_opd_pemilik]
+    end
+    program_kegiatan_by_urusans = program_kegiatan_by_sub_skpd.transform_values do |prg_v1|
+      prg_v1.group_by { |prg| [prg.kode_urusan, prg.nama_urusan] }.transform_values do |prg_v1|
+        prg_v1.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
+      end
+    end
+    @program_kegiatans = program_kegiatan_by_urusans
   end
 end

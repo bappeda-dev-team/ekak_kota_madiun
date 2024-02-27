@@ -444,4 +444,8 @@ class Opd < ApplicationRecord
   def aset_opd(_tahun)
     asets
   end
+
+  def nama_kode_opd
+    [kode_unik_opd, nama_opd]
+  end
 end

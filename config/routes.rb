@@ -650,7 +650,7 @@ Rails.application.routes.draw do
     # post :tujuan_opd
     post :sasaran_opd
     post :crosscutting_kota
-    post :ranwal_renja
+    # post :ranwal_renja
     post :pohon_kinerja_opd
     post :kak_dashboard
   end
@@ -776,6 +776,7 @@ Rails.application.routes.draw do
   # renja
   namespace :renja do
     get :ranwal
+    post :ranwal_renja
     get :ranwal_cetak
     get :rankir_1
     get :rankir

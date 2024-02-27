@@ -1,0 +1,31 @@
+<thead>
+  <tr class="header-bidang-urusan">
+    <th class="border" scope="col" rowspan="2" colspan="2">Kode OPD</th>
+    <th class="border" scope="col" rowspan="2" colspan="3">Nama OPD</th>
+    <% @periode.each do |tahun| %>
+      <th class="border text-center" scope="col" colspan="10"><%= tahun %></th>
+    <% end %>
+  </tr>
+  <tr>
+    <% @periode.each do %>
+      <th class="border" scope="col" colspan="6"></th>
+      <th class="border" scope="col">Pagu Indikatif</th>
+    <% end %>
+  </tr>
+</thead>
+<tbody>
+  <td class="border" scope="col" colspan="2"><%= @opd.kode_unik_opd %></td>
+  <td class="border" scope="col" colspan="3"><%= @opd.nama_opd %></td>
+  <% @periode.each do |tahun| %>
+    <% pagu_opd = Indikator.where(jenis: 'Renstra',
+                                    sub_jenis: 'Subkegiatan',
+                                    kode_opd: @opd.kode_opd_unik,
+                                    tahun: tahun)
+                                    .group_by(&:kode)
+                                    .map { |_k, v| v.max_by(&:version) }
+                                    .inject(0) { |inj, pagu| inj + pagu.pagu.to_i }
+      %>
+    <td class="border" scope="col" colspan="6"></td>
+    <td class="fw-bolder text-gray-900 text-wrap border" style="font-size: larger;">Rp. <%= number_with_delimiter(pagu_opd) %></td>
+  <% end %>
+</tbody>

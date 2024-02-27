@@ -6,17 +6,15 @@
 <% content_for :view_utama do %>
   <% if cookies[:tahun] && cookies[:opd] %>
     <div class="card border-0 shadow" id="user_filter" data-controller="page-ajax"
-            data-page-ajax-opd-value="<%= cookies[:opd] %>"
-            data-page-ajax-url-value="<%= renja_rankir_renja_path %>"
-            data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >
+        data-page-ajax-url-value="<%= renja_rankir_renja_path %>">
       <div data-page-ajax-target="results">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Rankir Renja</h2>
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2 class="fs-5 fw-bold mb-0">Rankir Renja</h2>
+            </div>
           </div>
         </div>
-      </div>
         <div class="loader text-center">
           <div class="lds-roller">
             <div></div>

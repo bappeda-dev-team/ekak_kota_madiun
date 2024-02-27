@@ -1,0 +1,23 @@
+<div class="card border-0 shadow">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">Ranwal Renja <%= @nama_opd %> <%= @tahun %></h2>
+      </div>
+      <div class="col-auto">
+        <%= link_to renja_ranwal_cetak_path(format: :pdf, tahun: @tahun, kode_opd: @kode_opd), class:"m-3 btn btn-outline-danger" do %>
+          <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak Excel Ranwal Renja"></span>
+          Cetak PDF Ranwal Renja
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <%# tabel_tujuan_sasaran_opd %>
+    <div class="table-responsive">
+      <% @program_kegiatans.each do |sub_opd, urusans| %>
+        <%= render partial: 'renja/tabel_renja', locals: { sub_opd: sub_opd, urusans: urusans } %>
+      <% end %>
+    </div>
+  </div>
+</div>

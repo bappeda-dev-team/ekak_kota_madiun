@@ -1,0 +1,12 @@
+<tr class="<%= style_header %>">
+  <th class="border" scope="col">Kode <%= @title.titleize %></th>
+  <th class="border" scope="col">Nama <%= @title.titleize %></th>
+  <% if @indikator %>
+    <th class="border" scope="col">Indikator</th>
+    <th class="border" scope="col" width="50px">Target</th>
+    <th class="border" scope="col">Satuan</th>
+  <% else%>
+    <th class="border" scope="col" colspan="3"></th>
+  <% end %>
+  <th class="border" scope="col">Pagu Indikatif</th>
+</tr>
