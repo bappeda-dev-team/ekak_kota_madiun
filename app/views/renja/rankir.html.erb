@@ -1,7 +1,7 @@
-<%= content_for :html_title, "Renja - Rankir 2" %>
+<%= content_for :html_title, "Rancangan Akhir Rencana Kerja" %>
 <%= content_for :navigation do %>
   <li class="breadcrumb-item" aria-current="page">Laporan</li>
-  <li class="breadcrumb-item active" aria-current="page">Rankir Renja</li>
+  <li class="breadcrumb-item active" aria-current="page">Rancangan Akhir Rencana Kerja</li>
 <% end %>
 <% content_for :view_utama do %>
   <% if cookies[:tahun] && cookies[:opd] %>
@@ -11,23 +11,11 @@
         <div class="card-header">
           <div class="row align-items-center">
             <div class="col">
-              <h2 class="fs-5 fw-bold mb-0">Rankir Renja</h2>
+              <h2 class="fs-5 fw-bold mb-0">Rancangan Akhir Rencana Kerja</h2>
             </div>
           </div>
         </div>
-        <div class="loader text-center">
-          <div class="lds-roller">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-          <p>memuat data..</p>
-        </div>
+        <%= render(LoaderComponent.new())%>
       </div>
     </div>
   <% else %>

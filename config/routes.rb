@@ -786,6 +786,7 @@ Rails.application.routes.draw do
     get :penetapan
     post :rankir_renja
     post :rankir_renja_1
+    get :rancangan_cetak
     post :penetapan_renja
     get :perubahan
     post :perubahan_renja

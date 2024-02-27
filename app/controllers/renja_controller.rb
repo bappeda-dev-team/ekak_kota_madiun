@@ -38,13 +38,29 @@ class RenjaController < ApplicationController
   def rankir; end
 
   def rankir_renja_1
-    @kode_opd = params[:kode_opd]
-    @tahun_asli = params[:tahun]
-    @tahun = @tahun_asli.gsub("_perubahan", "")
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @nama_opd = @opd.nama_opd
-    @program_kegiatans = @opd.program_renstra
+    set_ranwal
+    @user = @opd.eselon_dua_opd
+    @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
     render partial: 'rankir_renja_1'
+  end
+
+  def rancangan_cetak
+    set_ranwal
+    @user = @opd.eselon_dua_opd
+    @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
+    @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
+    @title = "Rankir Renja"
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "rancangan_renja_#{@nama_opd}_tahun_#{@tahun}",
+               dispotition: 'attachment',
+               orientation: 'Landscape',
+               page_size: 'Legal',
+               layout: 'pdf.html.erb',
+               template: 'renja/rancangan_cetak.html.erb'
+      end
+    end
   end
 
   def rankir_renja

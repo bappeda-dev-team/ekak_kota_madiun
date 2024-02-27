@@ -1,39 +1,25 @@
-<%= content_for :html_title, "Renja - Rankir 1" %>
+<%= content_for :html_title, "Rancangan Rencana Kerja" %>
 <%= content_for :navigation do %>
   <li class="breadcrumb-item" aria-current="page">Laporan</li>
-  <li class="breadcrumb-item active" aria-current="page">Rankir Renja</li>
+  <li class="breadcrumb-item active" aria-current="page">Rancangan Rencana Kerja</li>
 <% end %>
 <% content_for :view_utama do %>
   <% if cookies[:tahun] && cookies[:opd] %>
     <div class="card border-0 shadow" id="user_filter" data-controller="page-ajax"
-            data-page-ajax-opd-value="<%= cookies[:opd] %>"
-            data-page-ajax-url-value="<%= renja_rankir_renja_1_path %>"
-            data-page-ajax-tahun-value="<%= cookies[:tahun] %>" >
+        data-page-ajax-url-value="<%= renja_rankir_renja_1_path %>">
       <div data-page-ajax-target="results">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Rankir Renja 1</h2>
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2 class="fs-5 fw-bold mb-0">Rancangan Rencana Kerja</h2>
+            </div>
           </div>
         </div>
-      </div>
-        <div class="loader text-center">
-          <div class="lds-roller">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-          <p>memuat data..</p>
-        </div>
+        <%= render(LoaderComponent.new) %>
       </div>
     </div>
   <% else %>
     <%= render 'shared/pilih_tahun_dan_opd' %>
   <% end %>
-<%= render 'shared/modal_template', modal_name: 'rankir-renja' %>
+  <%= render 'shared/modal_template', modal_name: 'rankir-renja' %>
 <% end %>

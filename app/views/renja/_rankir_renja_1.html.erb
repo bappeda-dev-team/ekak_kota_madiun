@@ -2,216 +2,92 @@
   <div class="card-header">
     <div class="row align-items-center">
       <div class="col-8">
-        <h2 class="fs-5 fw-bold mb-0">Rankir Renja 1 - <%= @nama_opd %> <%= @tahun_asli %></h2>
+        <h2 class="fs-5 fw-bold mb-0">Rancangan Rencana Kerja <%= @nama_opd %> <%= @tahun_asli %></h2>
+      </div>
+      <div class="col">
+        <%= link_to renja_rancangan_cetak_path(format: :pdf, tahun: @tahun, kode_opd: @kode_opd), class:"m-3 btn btn-outline-danger" do %>
+          <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak PDF Rankir Renja"></span>
+          Cetak PDF Rancangan Renja
+        <% end %>
       </div>
     </div>
   </div>
-  <div class="card-body">
-    <%# tabel_tujuan_sasaran_opd %>
+  <div class="card-body d-grid gap-2">
     <div class="table-responsive">
-      <table class="table align-items-center" data-controller='form-modal' data-action='ajax-update@window->form-modal#updateTargetValue'>
-        <% @program_kegiatans.each.with_index(1) do |program, nomor| %>
-          <thead class="thead-bidang-urusan">
-            <tr class="header-bidang-urusan">
-              <th class="border" scope="col" colspan="2">Kode Bidang Urusan</th>
-              <th class="border" scope="col" colspan="28">Nama Bidang Urusan</th>
-            </tr>
-          </thead>
-          <tbody>
-            <td class="border" scope="col" colspan="2"><%= program.kode_bidang_urusan %></td>
-            <td class="border" scope="col" colspan="28"><%= program.nama_bidang_urusan %></td>
-          </tbody>
-          <thead class="thead-program">
-            <tr class="header-program">
-              <th class="border" scope="col" rowspan="2">OPD</th>
-              <th class="border" scope="col" rowspan="2">Kode Program</th>
-              <th class="border" scope="col" rowspan="2">No.</th>
-              <th class="border" scope="col" rowspan="2">Program</th>
-              <th class="border text-center" scope="col" rowspan="2">Aksi</th>
-              <th class="border text-center" scope="col" colspan="5"><%= @tahun_asli %></th>
-            </tr>
+      <h5>Tujuan</h5>
+      <table class="table align-items-center">
+        <thead class="thead-tujuan">
+          <tr class="header-tujuan">
+            <th class="border" scope="col" rowspan="2">Tujuan OPD</th>
+            <th class="border" scope="col" rowspan="2">Indikator</th>
+            <th class="border" scope="col" rowspan="2">Rumus Perhitungan</th>
+            <th class="border" scope="col" rowspan="2">Sumber Data</th>
+            <th class="border text-center" scope="col" colspan="2"><%= @tahun %></th>
+          </tr>
+          <tr>
+            <th class="border" scope="col" width="50px">Target</th>
+            <th class="border" scope="col">Satuan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @opd.tujuan_opds.by_periode(@tahun).each.with_index(1) do |tujuan, no_tujuan| %>
+            <% rowsize = tujuan.indikators.size + 1 %>
             <tr>
-              <th class="border" scope="col">Indikator</th>
-              <th class="border" scope="col" width="50px">Target</th>
-              <th class="border" scope="col">Satuan</th>
-              <th class="border" scope="col">Pagu</th>
-              <th class="border" scope="col">Keterangan</th>
+              <td class="text-gray-900 text-wrap border" style="width: 30%;" scope="row" rowspan="<%= rowsize %>" ><%= tujuan.tujuan %></td>
+              <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="11"></td>
             </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="text-gray-900 text-wrap border"  ><%= program.nama_opd_pemilik %> 
-              <% if current_user.has_role? :super_admin %>
-                <br/>
-                id : <%= program.id %>
-                <br/>
-                kode_sub_skpd : <%= program.kode_sub_skpd %>
-              <% end %>
-              </td>
-              <td class="text-gray-900 text-wrap border"  ><%= program.kode_program %></td>
-              <td class="text-gray-900 text-wrap border"  ><%= nomor %></td>
-              <td class="text-gray-900 text-wrap border"  ><%= program.nama_program %></td>
-              <% unless program.indikator_renstras_new('program', @kode_opd)[:indikator_program].blank? %>
-                <td class="text-gray-900 text-wrap border" >
-                  <% pagu_program = program.kegiatans_opd
-                    .reject{ |keg| keg.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan]&.any? { |ii| ii.indikator.blank? } }
-                    .map { |keg| keg.subkegiatans_opd.map{|pp| pp.pagu_sub_rankir_1_tahun(@tahun_asli) }.compact.sum }.compact.sum %>
-                    <%= link_to renja_edit_rankir_path(
-                      id: program.id,
-                      nama: program.nama_program,
-                      kode: program.kode_program,
-                      kode_opd: program.kode_sub_skpd,
-                      tahun: @tahun,
-                      indikator: program.indikator_program,
-                      pagu: pagu_program,
-                      jenis: 'Rankir_Renja',
-                      sub_jenis: 'Program'),
-                      remote: true, class: 'btn btn-green',
-                      data: { controller: 'form-modal',
-                              action: 'form-modal#appendForm',
-                              form_modal_location_param: 'form-rankir-renja-body',
-                              bs_target: '#form-rankir-renja',
-                              bs_toggle: 'modal' } do %>
-                              Edit
-                            <% end %>
-                </td>
-                <% else %>
-                  <% pagu_program = 0 %>
-                  <td class="text-gray-900 text-wrap border" >
-                    Renstra belum diisi
-                  </td>
-                <% end %>
-                <%= render 'row_indikator_rankir_renja',indikators: program.indikator_renstras_new('program', @kode_opd)[:indikator_program], tahun: @tahun, pagu: pagu_program %>
-            </tr>
-          </tbody>
-          <% program.kegiatans_opd_by_tahun(@tahun).each.with_index(1) do |kegiatan, no_giat| %>
-            <thead class="thead-kegiatan">
+            <% tujuan.indikators.each do |indikator_tujuan| %>
               <tr>
-                <th class="border" scope="col" rowspan="2">OPD</th>
-                <th class="border" scope="col" rowspan="2">Kode Kegiatan</th>
-                <th class="border" scope="col" rowspan="2">No</th>
-                <th class="border" scope="col" rowspan="2">Nama Kegiatan</th>
-                <th class="border text-center" scope="col" rowspan="2">Aksi</th>
-                <th class="border text-center" scope="col" colspan="5"><%= @tahun_asli %></th>
+                <td class="text-gray-900 text-wrap border"  ><%= indikator_tujuan || '-' %></td>
+                <td class="text-gray-900 text-wrap border"  ><%= indikator_tujuan.rumus_perhitungan || '-' %></td>
+                <td class="text-gray-900 text-wrap border"  ><%= indikator_tujuan.sumber_data || '-' %></td>
+                <% target = indikator_tujuan.targets.find_by(tahun: @tahun) %>
+                <td class="text-gray-900 text-wrap border"><%= target %></td>
+                <td class="text-gray-900 text-wrap border"><%= target&.satuan %></td>
               </tr>
-              <tr>
-                  <th class="border" scope="col">Indikator</th>
-                  <th class="border" scope="col" width="50px">Target</th>
-                  <th class="border" scope="col">Satuan</th>
-                  <th class="border" scope="col">Pagu</th>
-                  <th class="border" scope="col">Keterangan</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="text-gray-900 text-wrap border"  ><%= kegiatan.nama_opd_pemilik %>
-              <% if current_user.has_role? :super_admin %>
-                <br/>
-                id : <%= kegiatan.id %>
-                <br/>
-                kode_sub_skpd : <%= kegiatan.kode_sub_skpd %>
-              <% end %>
-              </td>
-                <td class="text-gray-900 text-wrap border"  ><%= kegiatan.kode_giat %></td>
-                <td class="text-gray-900 text-wrap border"  ><%= "#{nomor}.#{no_giat}" %></td>
-                <td class="text-gray-900 text-wrap border"  ><%= kegiatan.nama_kegiatan %></td>
-                <% unless kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan]&.any? { |ii| ii.indikator.blank? } %>
-                  <% pagu_kegiatan = kegiatan.subkegiatans_opd.map{|pp| pp.pagu_sub_rankir_1_tahun(@tahun_asli) }.compact.sum %>
-                  <td class="text-gray-900 text-wrap border" >
-                    <%= link_to renja_edit_rankir_path(
-                      id: kegiatan.id,
-                      nama: kegiatan.nama_kegiatan,
-                      kode: kegiatan.kode_giat,
-                      kode_opd: kegiatan.kode_sub_skpd,
-                      tahun: @tahun,
-                      indikator: kegiatan.indikator_kinerja,
-                      pagu: pagu_kegiatan,
-                      jenis: 'Rankir_Renja',
-                      sub_jenis: 'Kegiatan'),
-                      remote: true, class: 'btn btn-green',
-                      data: { controller: 'form-modal',
-                              action: 'form-modal#appendForm',
-                              form_modal_location_param: 'form-rankir-renja-body',
-                              bs_target: '#form-rankir-renja',
-                              bs_toggle: 'modal' } do %>
-                              Edit
-                            <% end %>
-                  </td>
-                <% else %>
-                  <% pagu_kegiatan = 0 %>
-                  <td class="text-gray-900 text-wrap border">
-                    Renstra belum diisi
-                  </td>
-                <% end %>
-                <%= render 'row_indikator_rankir_renja',indikators: kegiatan.indikator_renstras_new('kegiatan', @kode_opd)[:indikator_kegiatan], tahun: @tahun, pagu: pagu_kegiatan %>
-              </tr>
-            </tbody>
-            <thead class="thead-subkegiatan">
-              <tr>
-                <th class="border" scope="col" rowspan="2">OPD</th>
-                <th class="border" scope="col" rowspan="2">Kode Subkegiatan</th>
-                <th class="border" scope="col" rowspan="2">No</th>
-                <th class="border" scope="col" rowspan="2">Nama Subkegiatan</th>
-                <th class="border text-center" scope="col" rowspan="2">Aksi</th>
-                <th class="border text-center" scope="col" colspan="5"><%= @tahun_asli %></th>
-              </tr>
-              <tr class="sub-table-subkegiatans">
-                <th class="border" scope="col">Indikator</th>
-                <th class="border" scope="col" width="50px">Target</th>
-                <th class="border" scope="col">Satuan</th>
-                <th class="border" scope="col">Pagu</th>
-                <th class="border" scope="col">Keterangan</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% kegiatan.subkegiatans_opd_by_tahun(@tahun).each.with_index(1) do |subgiat, no_subgiat| %>
-                <tr>
-                  <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_opd_pemilik %>
-                    <% if current_user.has_role? :super_admin %>
-                      <br/>
-                      id : <%= subgiat.id %>
-                      <br/>
-                      kode_sub_skpd : <%= subgiat.kode_sub_skpd %>
-                    <% end %>
-                  </td>
-                  <td class="text-gray-900 text-wrap border"  ><%= subgiat.kode_sub_giat %></td>
-                  <td class="text-gray-900 text-wrap border"  ><%= "#{nomor}.#{no_giat}.#{no_subgiat}" %></td>
-                  <td class="text-gray-900 text-wrap border"  ><%= subgiat.nama_subkegiatan %></td>
-                  <% if subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan] %>
-                    <% pagu_subkegiatan = subgiat.pagu_sub_rankir_1_tahun(@tahun_asli) %>
-                    <td class="text-gray-900 text-wrap border" >
-                      <%= link_to renja_edit_rankir_path(
-                        id: subgiat.id,
-                        nama: subgiat.nama_kegiatan,
-                        kode: subgiat.kode_giat,
-                        kode_opd: subgiat.kode_sub_skpd,
-                        tahun: @tahun,
-                        indikator: subgiat.indikator_kinerja,
-                        pagu: pagu_subkegiatan,
-                        jenis: 'Rankir_Renja',
-                        sub_jenis: 'Subkegiatan'),
-                        remote: true, class: 'btn btn-green',
-                        data: { controller: 'form-modal',
-                                action: 'form-modal#appendForm',
-                                form_modal_location_param: 'form-rankir-renja-body',
-                                bs_target: '#form-rankir-renja',
-                                bs_toggle: 'modal' } do %>
-                                Edit
-                              <% end %>
-                    </td>
-                  <% else %>
-                    <% pagu_subkegiatan = 0 %>
-                    <td class="text-gray-900 text-wrap border">
-                      Renstra belum diisi
-                    </td>
-                  <% end %>
-                  <%= render 'row_indikator_rankir_renja',indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan], tahun: @tahun, pagu: pagu_subkegiatan %>
-                </tr>
-              <% end %>
-            </tbody>
+            <% end %>
           <% end %>
-        <% end %>
+        </tbody>
       </table>
+    </div>
+    <div class="table-responsive">
+      <h5>Sasaran</h5>
+      <table class="table align-items-center">
+        <thead class="thead-tujuan">
+          <tr class="header-tujuan">
+            <th class="border text-center" scope="col">Sasaran OPD</th>
+            <th class="border text-center" scope="col">Indikator</th>
+            <th class="border text-center" scope="col">Target</th>
+            <th class="border text-center" scope="col">Satuan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @sasaran_opds.each do |sasaran| %>
+            <tr>
+              <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
+              <% if sasaran.indikator_sasarans.any? %>
+                <%= indikator_sasaran(sasaran) %>
+              <% else %>
+                <td class="border" colspan="3">
+                  <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
+                </td>
+              <% end %>
+            </tr>
+            <% row_indikator_sasaran(sasaran).each do |indikator| %>
+              <%= indikator %>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-responsive">
+      <h5>Program/Kegiatan/Sub Kegiatan</h5>
+      <% @program_kegiatans.each do |sub_opd, urusans| %>
+        <%= render(TabelRenjaComponent.new(sub_opd: sub_opd, 
+                                           urusans: urusans, 
+                                           jenis_renja: 'rancangan', 
+                                           tahun: @tahun )) %>
+      <% end %>
     </div>
   </div>
 </div>
