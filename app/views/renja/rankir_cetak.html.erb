@@ -1,0 +1,6 @@
+<% @program_kegiatans.each do |sub_opd, urusans| %>
+  <%= render(TabelRenjaComponent.new(sub_opd: sub_opd, 
+                                           urusans: urusans, 
+                                           jenis_renja: 'rankir', 
+                                           tahun: @tahun )) %>
+<% end %>

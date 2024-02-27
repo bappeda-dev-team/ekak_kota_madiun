@@ -26,8 +26,7 @@ class RenjaController < ApplicationController
                orientation: 'Landscape',
                page_size: 'Legal',
                layout: 'pdf.html.erb',
-               template: 'renja/ranwal_cetak.html.erb',
-               show_as_html: params.key?('debug')
+               template: 'renja/ranwal_cetak.html.erb'
       end
       format.xlsx do
         render filename: "ranwal_renja_#{@nama_opd}_tahun_#{@tahun}"
@@ -54,23 +53,22 @@ class RenjaController < ApplicationController
   end
 
   def rankir_cetak
+    set_ranwal
     @title = "Rankir Renja"
-    @tahun = params[:tahun]
-    @opd = Opd.find_by(kode_unik_opd: params[:kode_opd])
-    @nama_opd = @opd.nama_opd
-    program_renstra = @opd.program_renstra
-    @tahun_awal = @tahun.to_i
-    @tahun_akhir = @tahun.to_i
-    @periode = (@tahun_awal..@tahun_akhir)
-    program_kegiatan_by_urusans = program_renstra.group_by do |prg|
-      [prg.kode_urusan, prg.nama_urusan]
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "rankir_renja_#{@nama_opd}_tahun_#{@tahun}",
+               dispotition: 'attachment',
+               orientation: 'Landscape',
+               page_size: 'Legal',
+               layout: 'pdf.html.erb',
+               template: 'renja/rankir_cetak.html.erb'
+      end
+      format.xlsx do
+        render filename: "ranwal_renja_#{@nama_opd}_tahun_#{@tahun}"
+      end
     end
-    @program_kegiatans = program_kegiatan_by_urusans.transform_values do |prg_v1|
-      prg_v1.group_by { |prg| [prg.kode_bidang_urusan, prg.nama_bidang_urusan] }
-    end
-    @filename = "rankir_renja_#{@nama_opd}_tahun_#{@tahun}.xlsx"
-
-    render xlsx: 'rankir_cetak', filename: @filename
   end
 
   def penetapan; end
