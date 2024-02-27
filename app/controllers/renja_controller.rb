@@ -56,6 +56,9 @@ class RenjaController < ApplicationController
 
   def rankir_cetak
     set_ranwal
+    @user = @opd.eselon_dua_opd
+    @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
+    @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
     @title = "Rankir Renja"
     respond_to do |format|
       format.html
