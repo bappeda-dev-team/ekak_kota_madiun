@@ -49,6 +49,8 @@ class RenjaController < ApplicationController
 
   def rankir_renja
     set_ranwal
+    @user = @opd.eselon_dua_opd
+    @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
     render partial: 'rankir_renja'
   end
 
