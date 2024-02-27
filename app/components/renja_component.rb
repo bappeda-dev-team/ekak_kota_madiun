@@ -88,7 +88,11 @@ class RenjaComponent < ViewComponent::Base
 
   def pagu_rankir
     if @jenis == 'subkegiatan'
-      @program.pagu_sub_rankir_tahun(@tahun)
+      ProgramKegiatan
+        .where(kode_sub_giat: nama_kode[0],
+               kode_sub_skpd: kode_opd).map do |sub|
+        sub.sasarans.lengkap_strategi_tahun(@tahun).map(&:total_anggaran).compact.sum
+      end.sum
     else
       5000
       # @collections.map do |subkegiatan|
