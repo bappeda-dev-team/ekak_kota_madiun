@@ -1,5 +1,16 @@
+<div class="kop">
+  <div class="kop-judul">
+    <h2>RANCANGAN AKHIR RENCANA KERJA</h2>
+  </div>
+  <div class="kop-opd">
+    <h3><%= @nama_opd %></h3>
+  </div>
+  <div class="kop-tahun">
+    <h3>Tahun <%= @tahun %></h3>
+  </div>
+</div>
 <div class="table-responsive">
-  <h5>Tujuan OPD <%= @tahun %></h5>
+  <h5>Tujuan</h5>
   <table class="table align-items-center">
     <thead class="thead-tujuan">
       <tr class="header-tujuan">
@@ -36,7 +47,7 @@
   </table>
 </div>
 <div class="table-responsive">
-  <h5>Sasaran OPD <%= @tahun %></h5>
+  <h5>Sasaran</h5>
   <table class="table align-items-center">
     <thead class="thead-tujuan">
       <tr class="header-tujuan">
@@ -66,7 +77,7 @@
   </table>
 </div>
 <div>
-  <h5>Renja Rankir <%= @tahun %></h5>
+  <h5>Program/Kegiatan/Sub Kegiatan</h5>
   <% @program_kegiatans.each do |sub_opd, urusans| %>
     <%= render(TabelRenjaComponent.new(sub_opd: sub_opd, 
                                            urusans: urusans, 

@@ -5,6 +5,31 @@ td {
   border-collapse: collapse;
 }
 
+.kop {
+  text-align: center;
+  border: 1px solid #000000;
+  margin-bottom: 50px;
+  align-items: center;
+
+  .kop-judul {
+    padding: 5px;
+    font-weight: bolder;
+    border-bottom: 1px solid #000000;
+    background-color: yellow;
+  }
+
+  .kop-opd {
+    padding: 5px;
+    font-weight: bolder;
+    border-bottom: 1px solid #000000;
+  }
+
+  .kop-tahun {
+    padding: 5px;
+    font-weight: normal;
+  }
+}
+
 // table {
 //   width: 100%;
 // }
