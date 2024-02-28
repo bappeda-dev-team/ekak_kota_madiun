@@ -45,36 +45,7 @@
     </tbody>
   </table>
 </div>
-<div class="table-responsive">
-  <h5>Sasaran</h5>
-  <table class="table align-items-center">
-    <thead class="thead-tujuan">
-      <tr class="header-tujuan">
-        <th class="border text-center" scope="col">Sasaran OPD</th>
-        <th class="border text-center" scope="col">Indikator</th>
-        <th class="border text-center" scope="col">Target</th>
-        <th class="border text-center" scope="col">Satuan</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @sasaran_opds.each do |sasaran| %>
-        <tr>
-          <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
-          <% if sasaran.indikator_sasarans.any? %>
-            <%= indikator_sasaran(sasaran) %>
-          <% else %>
-            <td class="border" colspan="3">
-              -
-            </td>
-          <% end %>
-        </tr>
-        <% row_indikator_sasaran(sasaran).each do |indikator| %>
-          <%= indikator %>
-        <% end %>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+<%= render partial: 'sasaran_opd', locals: { sasaran_opds: @sasaran_opds } %>
 <div>
   <h5>Program/Kegiatan/Sub Kegiatan</h5>
   <% @program_kegiatans.each do |sub_opd, urusans| %>

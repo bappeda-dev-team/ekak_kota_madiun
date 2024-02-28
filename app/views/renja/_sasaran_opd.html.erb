@@ -1,0 +1,36 @@
+<div class="table-responsive">
+  <h5>Sasaran</h5>
+  <table class="table align-items-center">
+    <thead class="thead-tujuan">
+      <tr class="header-tujuan">
+        <% if sasaran_opds.size > 1 %>
+          <th class="border text-center" scope="col">No.</th>
+        <% end %>
+        <th class="border text-center" scope="col">Sasaran OPD</th>
+        <th class="border text-center" scope="col">Indikator</th>
+        <th class="border text-center" scope="col">Target</th>
+        <th class="border text-center" scope="col">Satuan</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% sasaran_opds.each.with_index(1) do |sasaran, no| %>
+        <tr>
+          <% if sasaran_opds.size > 1 %>
+            <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= no %></td>
+          <% end %>
+          <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>" width="550px"><%= sasaran.sasaran_kinerja %></td>
+          <% if sasaran.indikator_sasarans.any? %>
+            <%= indikator_sasaran(sasaran) %>
+          <% else %>
+            <td class="border" colspan="3">
+              -
+            </td>
+          <% end %>
+        </tr>
+        <% row_indikator_sasaran(sasaran).each do |indikator| %>
+          <%= indikator %>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

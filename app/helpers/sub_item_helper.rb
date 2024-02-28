@@ -35,8 +35,8 @@ module SubItemHelper
   def renja_items
     [
       { title: 'Ranwal', href: renja_ranwal_path, identifier: 'renja/ranwal' },
-      { title: 'Rankir - 1', href: renja_rankir_1_path, identifier: 'renja/rankir' },
-      { title: 'Rankir - 2', href: renja_rankir_path, identifier: 'renja/rankir' },
+      { title: 'Rancangan', href: renja_rankir_1_path, identifier: 'renja/rankir' },
+      { title: 'Rankir', href: renja_rankir_path, identifier: 'renja/rankir' },
       { title: 'Penetapan', href: renja_penetapan_path, identifier: 'renja/penetapan' }
     ]
   end
