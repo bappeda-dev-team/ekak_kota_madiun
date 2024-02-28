@@ -1,23 +1,17 @@
-<div class="row">
-  <div class="col-12">
-    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
-      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
-        <li class="breadcrumb-item">
-          <%= link_to root_path do %>
-            <i class="fas fa-home"></i>
-          <% end %>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">ASB</li>
-      </ol>
-    </nav>
-    <div class="card border-0 shadow">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Anggaran ASB</h2>
-          </div>
-          <div class="col text-end">
-            <%= link_to new_anggaran_asb_path,
+<%= content_for :html_title, "Anggaran ASB" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Anggaran</li>
+  <li class="breadcrumb-item active" aria-current="page">ASB</li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="card border-0 shadow">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h2 class="fs-5 fw-bold mb-0">Anggaran ASB</h2>
+        </div>
+        <div class="col text-end">
+          <%= link_to new_anggaran_asb_path,
               remote: true,
               data: {
                       controller: 'form-modal',
@@ -26,37 +20,37 @@
                       bs_target: '#form-modal'
                     },
               class: "btn btn-sm btn-info" do %>
-              <i class="fas fa-plus me-2"></i>
-              <span>Tambah Data</span>
-            <% end %>
-          </div>
+            <i class="fas fa-plus me-2"></i>
+            <span>Tambah Data</span>
+          <% end %>
         </div>
       </div>
-      <div class="table-responsive p-4">
-        <table class="table table-flush datatable" data-datatable>
-          <thead>
+    </div>
+    <div class="table-responsive p-4">
+      <table class="table table-flush datatable" data-datatable>
+        <thead>
+          <tr>
+            <th>Tahun</th>
+            <th>Kode barang</th>
+            <th>Uraian barang</th>
+            <th>Spesifikasi</th>
+            <th>Satuan</th>
+            <th>Harga satuan</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @anggaran_asbs.each do |anggaran_asb| %>
             <tr>
-              <th>Tahun</th>
-              <th>Kode barang</th>
-              <th>Uraian barang</th>
-              <th>Spesifikasi</th>
-              <th>Satuan</th>
-              <th>Harga satuan</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @anggaran_asbs.each do |anggaran_asb| %>
-              <tr>
-                <td><%= anggaran_asb.tahun %></td>
-                <td><%= anggaran_asb.kode_barang %></td>
-                <td><%= anggaran_asb.uraian_barang %></td>
-                <td><%= anggaran_asb.spesifikasi %></td>
-                <td><%= anggaran_asb.satuan %></td>
-                <td><%=number_with_delimiter(anggaran_asb.harga_satuan, delimiter: '.') %></td>
-                <td class="fw-bolder text-gray-500 text-center align-middle">
-                  <div class="d-grid gap-2">
-                    <%= link_to edit_anggaran_asb_path(anggaran_asb),
+              <td><%= anggaran_asb.tahun %></td>
+              <td><%= anggaran_asb.kode_barang %></td>
+              <td><%= anggaran_asb.uraian_barang %></td>
+              <td><%= anggaran_asb.spesifikasi %></td>
+              <td><%= anggaran_asb.satuan %></td>
+              <td><%=number_with_delimiter(anggaran_asb.harga_satuan, delimiter: '.') %></td>
+              <td class="fw-bolder text-gray-500 text-center align-middle">
+                <div class="d-grid gap-2">
+                  <%= link_to edit_anggaran_asb_path(anggaran_asb),
                                 remote: true,
                                 data: {
                                   controller: 'form-modal',
@@ -65,23 +59,22 @@
                                   bs_target: '#form-modal'
                                 },
                                 class: "btn btn-sm btn-info"  do %>
-                      <i class="fas fa-edit" data-bs-toggle="tooltip"></i>
-                      Edit
-                    <% end %>
-                    <%= link_to anggaran_asb,
+                    <i class="fas fa-edit" data-bs-toggle="tooltip"></i>
+                    Edit
+                  <% end %>
+                  <%= link_to anggaran_asb,
                       method: :delete,
                       class: 'btn btn-sm btn-outline-danger',
                       data: { confirm_swal: "Hapus anggaran?" } do %>
-                      <i class="fa fa-trash-alt me-2"></i>
-                      <span>Hapus</span>
-                    <% end %>
-                  </div>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
+                    <i class="fa fa-trash-alt me-2"></i>
+                    <span>Hapus</span>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
-</div>
+<% end %>

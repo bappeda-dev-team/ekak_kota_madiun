@@ -5,7 +5,7 @@ class AnggaranHspksController < ApplicationController
   # GET /anggaran_hspks or /anggaran_hspks.json
   def index
     @anggaran_hspks = if current_user.id == 1
-                        AnggaranHspk.all
+                        AnggaranHspk.all.limit(50)
                       else
                         AnggaranHspk.where(opd_id: current_user.opd.id)
                       end
