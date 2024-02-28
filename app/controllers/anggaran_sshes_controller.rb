@@ -5,7 +5,7 @@ class AnggaranSshesController < ApplicationController
   # GET /anggaran_sshes or /anggaran_sshes.json
   def index
     @anggaran_sshes = if current_user.id == 1
-                        AnggaranSsh.all
+                        AnggaranSsh.all.limit(50)
                       else
                         AnggaranSsh.where(opd_id: current_user.opd.id)
                       end

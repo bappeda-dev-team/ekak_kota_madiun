@@ -1,9 +1,9 @@
-<%= form_with(scope: :anggaran_sbus, model: anggaran_sbus, url: url ) do |form| %>
-  <% if anggaran_sbus.errors.any? %>
+<%= form_with(model: anggaran_asb) do |form| %>
+  <% if anggaran_asb.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(anggaran_sbus.errors.count, "error") %> prohibited this anggaran from being saved:</h2>
+      <h2><%= pluralize(anggaran_asb.errors.count, "error") %> prohibited this anggaran_asb from being saved:</h2>
       <ul>
-        <% anggaran_sbus.errors.each do |error| %>
+        <% anggaran_asb.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>

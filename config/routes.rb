@@ -300,6 +300,7 @@ Rails.application.routes.draw do
   resources :kemungkinans
   resources :skalas
   resources :dampaks
+  resources :anggaran_asbs
   resources :anggaran_hspks
   resources :anggaran_sbus
   resources :anggaran_sshes
