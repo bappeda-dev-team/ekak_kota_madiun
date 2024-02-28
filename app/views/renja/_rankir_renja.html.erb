@@ -13,43 +13,8 @@
     </div>
   </div>
   <div class="card-body d-grid gap-2">
-    <div class="table-responsive">
-      <h5>Tujuan</h5>
-      <table class="table align-items-center">
-        <thead class="thead-tujuan">
-          <tr class="header-tujuan">
-            <th class="border" scope="col" rowspan="2">Tujuan OPD</th>
-            <th class="border" scope="col" rowspan="2">Indikator</th>
-            <th class="border" scope="col" rowspan="2">Rumus Perhitungan</th>
-            <th class="border" scope="col" rowspan="2">Sumber Data</th>
-            <th class="border text-center" scope="col" colspan="2"><%= @tahun %></th>
-          </tr>
-          <tr>
-            <th class="border" scope="col" width="50px">Target</th>
-            <th class="border" scope="col">Satuan</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @opd.tujuan_opds.by_periode(@tahun).each.with_index(1) do |tujuan, no_tujuan| %>
-            <% rowsize = tujuan.indikators.size + 1 %>
-            <tr>
-              <td class="text-gray-900 text-wrap border" rowspan="<%= rowsize %>" ><%= tujuan.tujuan %></td>
-            </tr>
-            <% tujuan.indikators.each do |indikator_tujuan| %>
-              <tr>
-                <td class="text-gray-900 text-wrap border"  ><%= indikator_tujuan || '-' %></td>
-                <td class="text-gray-900 text-wrap border"  ><%= indikator_tujuan.rumus_perhitungan || '-' %></td>
-                <td class="text-gray-900 text-wrap border"  ><%= indikator_tujuan.sumber_data || '-' %></td>
-                <% target = indikator_tujuan.targets.find_by(tahun: @tahun) %>
-                <td class="text-gray-900 text-wrap border"><%= target %></td>
-                <td class="text-gray-900 text-wrap border"><%= target&.satuan %></td>
-              </tr>
-            <% end %>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-    <%= render partial: 'renja/sasaran_opd', locals: { sasaran_opds: @sasaran_opds } %>
+    <%= render partial: 'tujuan_opd', locals: { tujuan_opds: @tujuan_opds } %>
+    <%= render partial: 'sasaran_opd', locals: { sasaran_opds: @sasaran_opds } %>
     <div class="table-responsive">
       <h5>Program/Kegiatan/Sub Kegiatan</h5>
       <% @program_kegiatans.each do |sub_opd, urusans| %>
