@@ -2940,7 +2940,17 @@ UNION
     anggaran_hspk_umums.tahun,
     'AnggaranHspkUmum'::text AS searchable_type,
     anggaran_hspk_umums.id AS searchable_id
-   FROM public.anggaran_hspk_umums;
+   FROM public.anggaran_hspk_umums
+UNION
+ SELECT anggaran_asbs.uraian_barang,
+    anggaran_asbs.kode_barang,
+    anggaran_asbs.spesifikasi,
+    anggaran_asbs.satuan,
+    anggaran_asbs.harga_satuan,
+    anggaran_asbs.tahun,
+    'AnggaranAsb'::text AS searchable_type,
+    anggaran_asbs.id AS searchable_id
+   FROM public.anggaran_asbs;
 
 
 --
@@ -6328,6 +6338,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240220011758'),
 ('20240220052629'),
 ('20240223020811'),
-('20240228022450');
+('20240228022450'),
+('20240228025145');
 
 
