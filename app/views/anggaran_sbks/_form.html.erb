@@ -1,0 +1,58 @@
+<%= form_with(model: anggaran_sbk) do |form| %>
+  <% if anggaran_sbk.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(anggaran_sbk.errors.count, "error") %> prohibited this anggaran_sbk from being saved:</h2>
+      <ul>
+        <% anggaran_sbk.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.hidden_field :opd_id, value: current_user.opd.id %>
+  </div>
+  <div class="field">
+    <%= form.label :kode_kelompok_barang, class: 'form-label' %>
+    <%= form.text_field :kode_kelompok_barang, class: 'form-control', placeholder: 'contoh: 123.123.123' %>
+  </div>
+  <div class="field">
+    <%= form.label :uraian_kelompok_barang, class: 'form-label'%>
+    <%= form.text_field :uraian_kelompok_barang, class: 'form-control', placeholder: 'contoh: Beban Jasa' %>
+  </div>
+  <div class="field">
+    <%= form.label :kode_barang, class: 'form-label' %>
+    <%= form.text_field :kode_barang, class: 'form-control', placeholder: 'contoh: 123.123.123.123' %>
+  </div>
+  <div class="field">
+    <%= form.label :uraian_barang, class: 'form-label' %>
+    <%= form.text_field :uraian_barang, class: 'form-control', placeholder: 'contoh: Pavingisasi xx' %>
+  </div>
+  <div class="field">
+    <%= form.label :spesifikasi, class: 'form-label' %>
+    <%= form.text_field :spesifikasi, class: 'form-control', placeholder: 'contoh: Jasa konstruksi' %>
+  </div>
+  <div class="field">
+    <%= form.label :satuan, class: 'form-label' %>
+    <%= form.text_field :satuan, class: 'form-control', placeholder: 'contoh: Ton' %>
+  </div>
+  <div class="field">
+    <%= form.label :harga_satuan, class: 'form-label' %>
+    <%= form.text_field :harga_satuan, class: 'form-control' %>
+  </div>
+  <div class="field">
+    <%= form.label :tahun, class: 'form-label' %>
+    <%= form.select(:tahun, options_for_select(Tahun.pluck(:tahun), form.object.tahun), {},
+    { data: {"placeholder": "Pilih Tahun",
+              controller: 'dropdown',
+              dropdown_parent_value: '#form-modal-body'
+    }}) %>
+  </div>
+  <div class="field">
+    <%= form.label :id_standar_harga, class: 'form-label' %>
+    <%= form.text_field :id_standar_harga, class: 'form-control', placeholder: 'contoh: 11111' %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

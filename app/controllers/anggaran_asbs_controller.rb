@@ -5,7 +5,7 @@ class AnggaranAsbsController < ApplicationController
   # GET /anggaran_asbs or /anggaran_asbs.json
   def index
     @anggaran_asbs = if current_user.id == 1
-                       AnggaranAsb.all
+                       AnggaranAsb.all.limit(50)
                      else
                        AnggaranAsb.where(opd_id: current_user.opd.id)
                      end

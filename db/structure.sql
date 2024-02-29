@@ -368,6 +368,46 @@ ALTER SEQUENCE public.anggaran_hspks_id_seq OWNED BY public.anggaran_hspks.id;
 
 
 --
+-- Name: anggaran_sbks; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.anggaran_sbks (
+    id bigint NOT NULL,
+    harga_satuan bigint,
+    id_standar_harga character varying,
+    kode_barang character varying,
+    kode_kelompok_barang character varying,
+    satuan character varying,
+    spesifikasi character varying,
+    tahun character varying,
+    uraian_barang character varying,
+    uraian_kelompok_barang character varying,
+    opd_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: anggaran_sbks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.anggaran_sbks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: anggaran_sbks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.anggaran_sbks_id_seq OWNED BY public.anggaran_sbks.id;
+
+
+--
 -- Name: anggaran_sbus; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3881,6 +3921,13 @@ ALTER TABLE ONLY public.anggaran_hspks ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: anggaran_sbks id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.anggaran_sbks ALTER COLUMN id SET DEFAULT nextval('public.anggaran_sbks_id_seq'::regclass);
+
+
+--
 -- Name: anggaran_sbus id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4552,6 +4599,14 @@ ALTER TABLE ONLY public.anggaran_hspk_umums
 
 ALTER TABLE ONLY public.anggaran_hspks
     ADD CONSTRAINT anggaran_hspks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: anggaran_sbks anggaran_sbks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.anggaran_sbks
+    ADD CONSTRAINT anggaran_sbks_pkey PRIMARY KEY (id);
 
 
 --
@@ -6339,6 +6394,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240220052629'),
 ('20240223020811'),
 ('20240228022450'),
-('20240228025145');
+('20240228025145'),
+('20240229033327');
 
 

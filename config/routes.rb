@@ -9,6 +9,7 @@ require "sidekiq-status/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :anggaran_sbks
   resources :asets
   resources :jenis_jabatans
   resources :jumlahs
