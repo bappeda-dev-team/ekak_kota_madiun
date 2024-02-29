@@ -65,14 +65,23 @@ class RenjaService
   def pagu_subkegiatan(kode_subkegiatan)
     case @jenis
     when 'ranwal'
-      Indikator.where(jenis: "Renstra", sub_jenis: "Subkegiatan",
-                      tahun: @tahun,
-                      kode: kode_subkegiatan,
-                      kode_opd: @kode_opd)
-               .max_by(&:version)
-               .pagu.to_i
+      pagu_ranwal(kode_subkegiatan)
+    when 'rancangan'
+      5000
+    when 'rankir'
+      10_000
     else
       0
     end
+  end
+
+  def pagu_ranwal(kode)
+    Indikator.where(jenis: "Renstra",
+                    sub_jenis: "Subkegiatan",
+                    tahun: @tahun,
+                    kode: kode,
+                    kode_opd: @kode_opd)
+             .max_by(&:version)
+             .pagu.to_i
   end
 end

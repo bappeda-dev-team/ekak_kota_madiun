@@ -68,20 +68,40 @@ RSpec.describe RenjaService do
     end
   end
 
-  context 'indikator dan pagu' do
-    it 'memunculkan pagu indikator subkegiatan' do
-      create(:indikator, jenis: 'Renstra',
-                         sub_jenis: 'Subkegiatan',
-                         tahun: '2024',
-                         pagu: 50_000,
-                         version: 0,
-                         kotak: 0,
-                         kode: '123.456',
-                         kode_opd: '1.23.456')
-      expect(subject.pagu_subkegiatan('123.456')).to eq(50_000)
+  describe '#pagu_subkegiatan(kode_subkegiatan)' do
+    context 'ranwal' do
+      it 'mengambil pagu dari Indikator Renstra Subkegiatan' do
+        # indikator jenis Renstra
+        create(:indikator, jenis: 'Renstra',
+                           sub_jenis: 'Subkegiatan',
+                           tahun: '2024',
+                           pagu: 50_000,
+                           version: 0,
+                           kotak: 0,
+                           kode: '123.456',
+                           kode_opd: '1.23.456')
+        expect(subject.pagu_subkegiatan('123.456')).to eq(50_000)
+      end
     end
 
-    it 'pagu 0 untuk selain ranwal rancangan rankir' do
+    context 'rancangan' do
+      it 'mengambil pagu dari PaguAnggaran RankirGelondong' do
+        # indikator jenis Renstra
+        sasaran =
+          PaguAnggaran.create(kode_opd: '1.23.456',
+                              tahun: '2024',
+                              kode: '123.456',
+                              jenis: 'RankirGelondong',
+                              anggaran: 100_000)
+        renja_rancangan = described_class.new(kode_opd: '1.23.456',
+                                              tahun: '2024',
+                                              jenis: 'rancangan')
+
+        expect(renja_rancangan.pagu_subkegiatan('123.456')).to eq(100_000)
+      end
+    end
+
+    it 'pagu 0 untuk selain [ranwal rancangan rankir]' do
       contoh = described_class.new(kode_opd: '1.23.456',
                                    tahun: '2024',
                                    jenis: 'tidak diketahui')
