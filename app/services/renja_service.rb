@@ -1,7 +1,8 @@
 class RenjaService
-  def initialize(kode_opd: '', tahun: '')
+  def initialize(kode_opd: '', tahun: '', jenis: 'ranwal')
     @kode_opd = kode_opd
     @tahun = tahun
+    @jenis = jenis
   end
 
   def opd
@@ -59,5 +60,19 @@ class RenjaService
         kode: pr.kode_sub_giat,
         nama: pr.nama_subkegiatan }
     end.uniq { |pk| pk[:kode] }
+  end
+
+  def pagu_subkegiatan(kode_subkegiatan)
+    case @jenis
+    when 'ranwal'
+      Indikator.where(jenis: "Renstra", sub_jenis: "Subkegiatan",
+                      tahun: @tahun,
+                      kode: kode_subkegiatan,
+                      kode_opd: @kode_opd)
+               .max_by(&:version)
+               .pagu.to_i
+    else
+      0
+    end
   end
 end

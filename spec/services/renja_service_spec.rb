@@ -67,4 +67,25 @@ RSpec.describe RenjaService do
       expect(subject.subkegiatan_renja).to eq(subkegiatans)
     end
   end
+
+  context 'indikator dan pagu' do
+    it 'memunculkan pagu indikator subkegiatan' do
+      create(:indikator, jenis: 'Renstra',
+                         sub_jenis: 'Subkegiatan',
+                         tahun: '2024',
+                         pagu: 50_000,
+                         version: 0,
+                         kotak: 0,
+                         kode: '123.456',
+                         kode_opd: '1.23.456')
+      expect(subject.pagu_subkegiatan('123.456')).to eq(50_000)
+    end
+
+    it 'pagu 0 untuk selain ranwal rancangan rankir' do
+      contoh = described_class.new(kode_opd: '1.23.456',
+                                   tahun: '2024',
+                                   jenis: 'tidak diketahui')
+      expect(contoh.pagu_subkegiatan('123')).to eq 0
+    end
+  end
 end
