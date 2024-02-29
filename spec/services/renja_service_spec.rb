@@ -92,12 +92,19 @@ RSpec.describe RenjaService do
                               tahun: '2024',
                               kode: '123.456',
                               jenis: 'RankirGelondong',
+                              kode_belanja: '1.11',
                               anggaran: 100_000)
+        PaguAnggaran.create(kode_opd: '1.23.456',
+                            tahun: '2024',
+                            kode: '123.456',
+                            jenis: 'RankirGelondong',
+                            kode_belanja: '1.22',
+                            anggaran: 100_000)
         renja_rancangan = described_class.new(kode_opd: '1.23.456',
                                               tahun: '2024',
                                               jenis: 'rancangan')
 
-        expect(renja_rancangan.pagu_subkegiatan('123.456')).to eq(100_000)
+        expect(renja_rancangan.pagu_subkegiatan('123.456')).to eq(200_000)
       end
     end
 

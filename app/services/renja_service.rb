@@ -67,7 +67,7 @@ class RenjaService
     when 'ranwal'
       pagu_ranwal(kode_subkegiatan)
     when 'rancangan'
-      5000
+      pagu_rancangan(kode_subkegiatan)
     when 'rankir'
       10_000
     else
@@ -83,5 +83,13 @@ class RenjaService
                     kode_opd: @kode_opd)
              .max_by(&:version)
              .pagu.to_i
+  end
+
+  def pagu_rancangan(kode)
+    PaguAnggaran.where(jenis: 'RankirGelondong',
+                       tahun: @tahun,
+                       kode: kode,
+                       kode_opd: @kode_opd)
+                .sum(:anggaran)
   end
 end
