@@ -1,3 +1,19 @@
-<% @program_kegiatans.each do |sub_opd, urusans| %>
-  <%= render partial: 'tabel_renja', locals: { sub_opd: sub_opd, urusans: urusans } %>
-<% end %>
+<div class="kop">
+  <div class="kop-judul">
+    <h2>RANCANGAN AWAL RENCANA KERJA</h2>
+  </div>
+  <div class="kop-opd">
+    <h3><%= @nama_opd %></h3>
+  </div>
+  <div class="kop-tahun">
+    <h3>Tahun <%= @tahun %></h3>
+  </div>
+</div>
+<%= render partial: 'tujuan_opd', locals: { tujuan_opds: @tujuan_opds } %>
+<%= render partial: 'sasaran_opd', locals: { sasaran_opds: @sasaran_opds } %>
+<div>
+  <h5>Program/Kegiatan/Sub Kegiatan</h5>
+  <% @program_kegiatans.each do |sub_opd, urusans| %>
+    <%= render partial: 'tabel_renja', locals: { sub_opd: sub_opd, urusans: urusans } %>
+  <% end %>
+</div>

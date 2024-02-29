@@ -11,12 +11,18 @@ class RenjaController < ApplicationController
 
   def ranwal_renja
     set_ranwal
+    @user = @opd.eselon_dua_opd
+    @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
+    @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
     render partial: 'hasil_filter_ranwal_renja'
   end
 
   def ranwal_cetak
-    @title = "Rawnal Renja"
     set_ranwal
+    @title = "Rawnal Renja"
+    @user = @opd.eselon_dua_opd
+    @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
+    @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
 
     respond_to do |format|
       format.html

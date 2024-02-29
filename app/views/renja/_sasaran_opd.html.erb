@@ -4,7 +4,7 @@
     <thead class="thead-tujuan">
       <tr class="header-tujuan">
         <% if sasaran_opds.size > 1 %>
-          <th class="border text-center" scope="col">No.</th>
+          <th class="border" scope="col">No.</th>
         <% end %>
         <th class="border text-center" scope="col">Sasaran OPD</th>
         <th class="border text-center" scope="col">Indikator</th>
@@ -24,7 +24,7 @@
         </tr>
         <% sasaran.indikator_sasarans.each do |indikator| %>
           <tr>
-            <td class="border text-wrap"><%= indikator %></td>
+            <td class="border text-wrap" width="500px"><%= indikator %></td>
             <td class="border text-wrap"><%= indikator.rumus_perhitungan %></td>
             <td class="border text-wrap"><%= indikator.sumber_data %></td>
             <td class="border text-wrap"><%= indikator.target %></td>

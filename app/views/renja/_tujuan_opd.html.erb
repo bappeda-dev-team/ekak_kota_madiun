@@ -4,7 +4,7 @@
     <thead class="thead-tujuan">
       <tr class="header-tujuan">
         <% if tujuan_opds.size > 1 %>
-          <th class="border text-center" scope="col">No.</th>
+          <th class="border" scope="col" rowspan="2" >No.</th>
         <% end %>
         <th class="border" scope="col" rowspan="2">Tujuan OPD</th>
         <th class="border" scope="col" rowspan="2">Indikator</th>
@@ -20,15 +20,16 @@
     <tbody>
       <% tujuan_opds.each.with_index(1) do |tujuan, no_tujuan| %>
         <% rowsize = tujuan.indikators.size + 1 %>
+        <% width_tujuan = tujuan_opds.size > 1 ? '550px' : '590px' %>
         <tr>
           <% if tujuan_opds.size > 1 %>
             <td class="text-gray-900 text-wrap border" rowspan="<%= rowsize %>" ><%= no_tujuan %></td>
           <% end %>
-          <td class="text-gray-900 text-wrap border" rowspan="<%= rowsize %>" width="620px" ><%= tujuan.tujuan %></td>
+          <td class="text-gray-900 text-wrap border" rowspan="<%= rowsize %>" width="<%= width_tujuan %>" ><%= tujuan.tujuan %></td>
         </tr>
         <% tujuan.indikators.each do |indikator_tujuan| %>
           <tr>
-            <td class="text-gray-900 text-wrap border"  ><%= indikator_tujuan || '-' %></td>
+            <td class="text-gray-900 text-wrap border" width="500px" ><%= indikator_tujuan || '-' %></td>
             <td class="text-gray-900 text-wrap border"  ><%= indikator_tujuan.rumus_perhitungan || '-' %></td>
             <td class="text-gray-900 text-wrap border"  ><%= indikator_tujuan.sumber_data || '-' %></td>
             <% target = indikator_tujuan.targets.find_by(tahun: @tahun) %>
