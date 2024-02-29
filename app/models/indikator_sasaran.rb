@@ -48,6 +48,12 @@ class IndikatorSasaran < ApplicationRecord
     ''
   end
 
+  def rumus_perhitungan
+    manual_ik.formula
+  rescue StandardError
+    ''
+  end
+
   def output_data
     manual_ik.output_data
   rescue StandardError

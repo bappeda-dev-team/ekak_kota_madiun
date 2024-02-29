@@ -8,6 +8,8 @@
         <% end %>
         <th class="border text-center" scope="col">Sasaran OPD</th>
         <th class="border text-center" scope="col">Indikator</th>
+        <th class="border text-center" scope="col">Rumus Perhitungan</th>
+        <th class="border text-center" scope="col">Sumber Data</th>
         <th class="border text-center" scope="col">Target</th>
         <th class="border text-center" scope="col">Satuan</th>
       </tr>
@@ -16,19 +18,18 @@
       <% sasaran_opds.each.with_index(1) do |sasaran, no| %>
         <tr>
           <% if sasaran_opds.size > 1 %>
-            <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= no %></td>
+            <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) + 1 %>"><%= no %></td>
           <% end %>
-          <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>" width="550px"><%= sasaran.sasaran_kinerja %></td>
-          <% if sasaran.indikator_sasarans.any? %>
-            <%= indikator_sasaran(sasaran) %>
-          <% else %>
-            <td class="border" colspan="3">
-              -
-            </td>
-          <% end %>
+          <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) + 1 %>" width="550px"><%= sasaran.sasaran_kinerja %></td>
         </tr>
-        <% row_indikator_sasaran(sasaran).each do |indikator| %>
-          <%= indikator %>
+        <% sasaran.indikator_sasarans.each do |indikator| %>
+          <tr>
+            <td class="border text-wrap"><%= indikator %></td>
+            <td class="border text-wrap"><%= indikator.rumus_perhitungan %></td>
+            <td class="border text-wrap"><%= indikator.sumber_data %></td>
+            <td class="border text-wrap"><%= indikator.target %></td>
+            <td class="border text-wrap"><%= indikator.satuan %></td>
+          </tr>
         <% end %>
       <% end %>
     </tbody>
