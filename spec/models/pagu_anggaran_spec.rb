@@ -4,6 +4,7 @@
 #
 #  id               :bigint           not null, primary key
 #  anggaran         :decimal(, )
+#  id_anggaran      :integer
 #  jenis            :string
 #  keterangan       :string
 #  kode             :string

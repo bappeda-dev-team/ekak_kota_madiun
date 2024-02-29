@@ -23,11 +23,11 @@ class PaguAnggaransController < ApplicationController
       if @pagu_anggaran.save
         format.json do
           render json: { results: {
-            anggaran: "Rp. #{number_with_delimiter(@pagu_anggaran.anggaran)}",
-            total: "Rp. #{number_with_delimiter(@anggaran.total_anggaran_penetapan)}",
-            jumlah: "Rp. #{number_with_delimiter(@anggaran.tahapan.anggaran_tahapan_penetapan)}",
-            parent: @anggaran.kode_rekening_gp
-          },
+                           anggaran: "Rp. #{number_with_delimiter(@pagu_anggaran.anggaran)}",
+                           total: "Rp. #{number_with_delimiter(@anggaran.total_anggaran_penetapan)}",
+                           jumlah: "Rp. #{number_with_delimiter(@anggaran.tahapan.anggaran_tahapan_penetapan)}",
+                           parent: @anggaran.kode_rekening_gp
+                         },
                          message: 'Tersimpan' },
                  status: :accepted
         end
@@ -45,11 +45,11 @@ class PaguAnggaransController < ApplicationController
       if @pagu_anggaran.update(pagu_anggarans_params)
         format.json do
           render json: { results: {
-            anggaran: "Rp. #{number_with_delimiter(@pagu_anggaran.anggaran)}",
-            total: "Rp. #{number_with_delimiter(@anggaran.total_anggaran_penetapan)}",
-            jumlah: "Rp. #{number_with_delimiter(@anggaran.tahapan.anggaran_tahapan_penetapan)}",
-            parent: @anggaran.kode_rekening_gp
-          },
+                           anggaran: "Rp. #{number_with_delimiter(@pagu_anggaran.anggaran)}",
+                           total: "Rp. #{number_with_delimiter(@anggaran.total_anggaran_penetapan)}",
+                           jumlah: "Rp. #{number_with_delimiter(@anggaran.tahapan.anggaran_tahapan_penetapan)}",
+                           parent: @anggaran.kode_rekening_gp
+                         },
                          message: 'Tersimpan' },
                  status: :accepted
         end
@@ -90,6 +90,7 @@ class PaguAnggaransController < ApplicationController
                                           :kode_sub_belanja,
                                           :jenis, :sub_jenis,
                                           :keterangan,
+                                          :id_anggaran,
                                           :anggaran, :tahun)
   end
 end

@@ -2105,7 +2105,8 @@ CREATE TABLE public.pagu_anggarans (
     kode_sub_belanja character varying,
     keterangan character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    id_anggaran integer
 );
 
 
@@ -6406,6 +6407,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240228022450'),
 ('20240228025145'),
 ('20240229033327'),
-('20240229033927');
+('20240229033927'),
+('20240229142322');
 
 
