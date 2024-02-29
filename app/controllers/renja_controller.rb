@@ -61,10 +61,11 @@ class RenjaController < ApplicationController
   def rankir; end
 
   def rankir_renja
-    set_ranwal
     @user = @opd.eselon_dua_opd
     @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
     @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
+    renja = RenjaService.new(kode_opd: @kode_opd, tahun: @tahun, jenis: 'rankir')
+    @program_kegiatans = renja.program_kegiatan_renja
     render partial: 'rankir_renja'
   end
 

@@ -1,42 +1,30 @@
 # frozen_string_literal: true
 
 class RenjaComponent < ViewComponent::Base
-  def initialize(program: '', tahun: '',
-                 jenis: '', head: true,
-                 jenis_renja: '',
-                 collections: '')
+  def initialize(program: '', head: true)
     super
     @program = program
-    @tahun = tahun
-    @jenis = jenis
     @head = head
-    @collections = collections
-    @jenis_renja = jenis_renja
-  end
-
-  def title
-    @jenis.capitalize
   end
 
   def nama_kode
-    case @jenis
-    when 'program' || 'Program'
-      [@program.kode_program, @program.nama_program]
-    when 'kegiatan' || 'Kegiatan'
-      [@program.kode_giat, @program.nama_kegiatan]
-    when 'subkegiatan' || 'Subkegiatan'
-      [@program.kode_sub_giat, @program.nama_subkegiatan]
-    else
-      @program
-    end
+    @program
+  end
+
+  def title
+    nama_kode[:jenis].capitalize
   end
 
   def kode
-    nama_kode[0]
+    nama_kode[:kode]
   end
 
   def nama
-    nama_kode[1]
+    nama_kode[:nama]
+  end
+
+  def pagu
+    "Rp. #{number_with_delimiter(@program[:pagu])}"
   end
 
   def kode_opd
@@ -74,16 +62,6 @@ class RenjaComponent < ViewComponent::Base
     end
 
     jumlah.inject(0) { |inj, pagu| inj + pagu.to_i }
-  end
-
-  def pagu
-    if rankir?
-      "Rp. #{number_with_delimiter(pagu_rankir)}"
-    elsif with_indikator?
-      "Rp. #{number_with_delimiter(pagu_indikator)}"
-    else
-      "Rp. #{number_with_delimiter(pagu_non_program)}"
-    end
   end
 
   # TODO: fix kalau pelaksana pindah / pensiun

@@ -23,5 +23,6 @@ FactoryBot.define do
     indikator_kinerja { 'indikator-kinerja-1' }
     target { 10 }
     satuan { '%' }
+    association :sasaran
   end
 end

@@ -108,6 +108,28 @@ RSpec.describe RenjaService do
       end
     end
 
+    context 'rankir' do
+      it 'mengambil pagu dari Anggaran RincianBelanja' do
+        # indikator jenis Renstra
+        subkegiatan = create(:program_kegiatan, opd: opd,
+                                                kode_skpd: '1.23.456',
+                                                kode_sub_skpd: '1.23.456',
+                                                kode_sub_giat: '123.456',
+                                                nama_subkegiatan: 'test subkegiatan')
+        sasaran = create(:complete_sasaran, program_kegiatan: subkegiatan)
+        indikator_sasaran = create(:indikator_sasaran, sasaran: sasaran)
+        tahapan = create(:tahapan, sasaran: sasaran)
+        anggaran1 = create(:anggaran, tahapan: tahapan,
+                                      jumlah: 500_000)
+
+        renja_rankir = described_class.new(kode_opd: '1.23.456',
+                                           tahun: '2024',
+                                           jenis: 'rankir')
+
+        expect(renja_rankir.pagu_subkegiatan('123.456')).to eq(200_000)
+      end
+    end
+
     it 'pagu 0 untuk selain [ranwal rancangan rankir]' do
       contoh = described_class.new(kode_opd: '1.23.456',
                                    tahun: '2024',

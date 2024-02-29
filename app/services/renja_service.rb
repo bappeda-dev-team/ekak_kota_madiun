@@ -9,6 +9,15 @@ class RenjaService
     Opd.find_by(kode_unik_opd: @kode_opd)
   end
 
+  def program_kegiatan_renja
+    { sub_opd: sub_opd,
+      urusan: urusan_opd,
+      bidang_urusan: bidang_urusan_opd,
+      program: program_renja,
+      kegiatan: kegiatan_renja,
+      subkegiatan: subkegiatan_renja }
+  end
+
   def pelaksana_subkegiatan
     opd.users.eselon4
   end
@@ -25,11 +34,43 @@ class RenjaService
                              pelaksana_subkegiatan.flat_map do |user|
                                user.sasarans
                                    .includes(:program_kegiatan)
-                                   .where(tahun: @tahun)
-                                   .where.not(program_kegiatans: { kode_skpd: [nil, ""] })
+                                   .where(tahun: @tahun, keterangan: [nil, ""])
                                    .map(&:program_kegiatan)
                              end.compact_blank
                            end
+  end
+
+  def sub_opd
+    program_kegiatans.map do |pr|
+      { jenis: 'sub_opd',
+        parent: pr.kode_skpd,
+        kode_opd: pr.kode_sub_skpd,
+        kode: pr.kode_sub_skpd,
+        nama: pr.nama_opd_pemilik,
+        pagu: 5000 }
+    end.uniq { |pk| pk[:kode] }
+  end
+
+  def urusan_opd
+    program_kegiatans.map do |pr|
+      { jenis: 'urusan',
+        parent: pr.kode_urusan,
+        kode_opd: pr.kode_sub_skpd,
+        kode: pr.kode_urusan,
+        nama: pr.nama_urusan,
+        pagu: 5000 }
+    end.uniq { |pk| pk[:kode] }
+  end
+
+  def bidang_urusan_opd
+    program_kegiatans.map do |pr|
+      { jenis: 'bidang_urusan',
+        parent: pr.kode_urusan,
+        kode_opd: pr.kode_sub_skpd,
+        kode: pr.kode_bidang_urusan,
+        nama: pr.nama_bidang_urusan,
+        pagu: 5000 }
+    end.uniq { |pk| pk[:kode] }
   end
 
   def program_renja
@@ -38,7 +79,8 @@ class RenjaService
         parent: pr.kode_bidang_urusan,
         kode_opd: pr.kode_sub_skpd,
         kode: pr.kode_program,
-        nama: pr.nama_program }
+        nama: pr.nama_program,
+        pagu: 5000 }
     end.uniq { |pk| pk[:kode] }
   end
 
@@ -48,7 +90,8 @@ class RenjaService
         parent: pr.kode_program,
         kode_opd: pr.kode_sub_skpd,
         kode: pr.kode_giat,
-        nama: pr.nama_kegiatan }
+        nama: pr.nama_kegiatan,
+        pagu: 5000 }
     end.uniq { |pk| pk[:kode] }
   end
 
@@ -58,7 +101,8 @@ class RenjaService
         parent: pr.kode_giat,
         kode_opd: pr.kode_sub_skpd,
         kode: pr.kode_sub_giat,
-        nama: pr.nama_subkegiatan }
+        nama: pr.nama_subkegiatan,
+        pagu: pr.anggaran_sasarans(@tahun) }
     end.uniq { |pk| pk[:kode] }
   end
 
@@ -69,7 +113,7 @@ class RenjaService
     when 'rancangan'
       pagu_rancangan(kode_subkegiatan)
     when 'rankir'
-      10_000
+      program_kegiatans.sum { |pk| pk.anggaran_sasarans(@tahun) }
     else
       0
     end

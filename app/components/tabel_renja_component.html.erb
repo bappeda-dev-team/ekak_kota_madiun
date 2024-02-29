@@ -1,30 +1,20 @@
-<table class="table table-border align-items-center my-3">
-  <%= render(RenjaComponent.new(program: @sub_opd, tahun: @tahun, 
-                                jenis: 'sub_opd', 
-                                jenis_renja: 'rankir',
-                                collections: @urusans.values.flat_map { |bu| bu.values.flat_map { |pg| pg.flat_map { |pr| pr.kegiatans_opd.flat_map { |kg| kg.subkegiatans_opd}}} }))%>
-  <% @urusans.each do |urusan, bid_urusans| %>
-    <%= render(RenjaComponent.new(program: urusan, 
-                                  tahun: @tahun, 
-                                  jenis: 'urusan', 
-                                  jenis_renja: 'rankir',
-                                  collections: bid_urusans.values.flat_map { |bu| bu.flat_map { |pr| pr.kegiatans_opd.flat_map { |kg| kg.subkegiatans_opd}}}))%>
-    <% bid_urusans.each do |bid_urusan, programs| %>
-      <%= render(RenjaComponent.new(program: bid_urusan, 
-                                    tahun: @tahun, 
-                                    jenis: 'bidang_urusan', 
-                                    jenis_renja: 'rankir',
-                                    collections: programs.flat_map { |pr| pr.kegiatans_opd.flat_map { |kg| kg.subkegiatans_opd }}))%>
-      <% programs.each do |program| %>
-        <%= render(RenjaComponent.new(program: program, tahun: @tahun, jenis: 'program', jenis_renja: @jenis_renja, collections: program.kegiatans_opd.flat_map { |keg| keg.subkegiatans_opd }))%>
-        <% program.kegiatans_opd.each do |kegiatan| %>
-          <%= render(RenjaComponent.new(program: kegiatan, tahun: @tahun, jenis: 'kegiatan', jenis_renja: @jenis_renja, collections: kegiatan.subkegiatans_opd))%>
-          <%= render(HeaderRenjaComponent.new(title: 'Subkegiatan', indikator: true)) %>
-          <% kegiatan.subkegiatans_opd.each do |subgiat| %>
-            <%= render(RenjaComponent.new(program: subgiat, tahun: @tahun, jenis: 'subkegiatan', head: false, jenis_renja: @jenis_renja))%>
+<% sub_opd.each do |opd| %>
+  <table class="table table-border align-items-center my-3">
+    <% urusan_opd.each do |urusan| %>
+      <%= render(RenjaComponent.new(program: urusan))%>
+      <% bidang_urusan_opd(urusan[:kode]).each do |bidang_urusan| %>
+        <%= render(RenjaComponent.new(program: bidang_urusan))%>
+        <% program_opd(bidang_urusan[:kode]).each do |program| %>
+          <%= render(RenjaComponent.new(program: program))%>
+          <% kegiatan_opd(program[:kode]).each do |kegiatan| %>
+            <%= render(RenjaComponent.new(program: kegiatan))%>
+            <%= render(HeaderRenjaComponent.new(title: 'Subkegiatan', indikator: true)) %>
+            <% subkegiatan_opd(kegiatan[:kode]).each do |subgiat| %>
+              <%= render(RenjaComponent.new(program: subgiat, head: false))%>
+            <% end %>
           <% end %>
         <% end %>
       <% end %>
     <% end %>
-  <% end %>
-</table>
+  </table>
+<% end %>
