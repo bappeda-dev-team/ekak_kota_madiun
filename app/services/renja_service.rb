@@ -15,6 +15,8 @@ class RenjaService
   def program_kegiatans
     @program_kegiatans ||= if @tahun.to_i < 2025
                              ProgramKegiatan.where(kode_skpd: @kode_opd)
+                                            .where.not(kode_skpd: [nil, ""])
+
                            else
                              # mencari program kegiatan yang digunakan
                              # dalam sasaran kinerja
@@ -23,8 +25,9 @@ class RenjaService
                                user.sasarans
                                    .includes(:program_kegiatan)
                                    .where(tahun: @tahun)
+                                   .where.not(program_kegiatans: { kode_skpd: [nil, ""] })
                                    .map(&:program_kegiatan)
-                             end.compact_blank.uniq
+                             end.compact_blank
                            end
   end
 

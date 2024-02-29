@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe RenjaService do
-  subject { described_class.new(kode_opd: '1.23.456', tahun: '2025') }
+  subject { described_class.new(kode_opd: '1.23.456', tahun: '2024') }
 
   let(:opd) { create(:opd, kode_unik_opd: '1.23.456') }
 
