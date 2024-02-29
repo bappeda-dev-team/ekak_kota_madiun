@@ -778,17 +778,15 @@ Rails.application.routes.draw do
   # renja
   namespace :renja do
     get :ranwal
-    post :ranwal_renja
     get :ranwal_cetak
-    get :rankir_1
-    get :rankir
-    get :edit_rankir
-    get :rankir_cetak
-    post :update_rankir
-    get :penetapan
-    post :rankir_renja
-    post :rankir_renja_1
+    post :ranwal_renja
+    get :rancangan
     get :rancangan_cetak
+    post :rancangan_renja
+    get :rankir
+    get :rankir_cetak
+    post :rankir_renja
+    get :penetapan
     post :penetapan_renja
     get :perubahan
     post :perubahan_renja
