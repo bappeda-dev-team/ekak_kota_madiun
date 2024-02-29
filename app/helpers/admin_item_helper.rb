@@ -78,6 +78,7 @@ module AdminItemHelper
     [
       { title: 'SSH', href: anggaran_sshes_path, identifier: 'anggaran_ssh' },
       { title: 'SBU', href: anggaran_sbus_index_path, identifier: 'anggaran_sbu' },
+      { title: 'SBK', href: anggaran_sbks_path, identifier: 'anggaran_sbk' },
       { title: 'HSPK', href: anggaran_hspks_path, identifier: 'anggaran_hspks' },
       { title: 'ASB', href: anggaran_asbs_path, identifier: 'anggaran_asb' }
     ]
