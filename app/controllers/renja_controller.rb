@@ -22,8 +22,8 @@ class RenjaController < ApplicationController
     @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
     @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
 
-    # renja = RenjaService.new(kode_opd: @kode_opd, tahun: @tahun, jenis: 'ranwal')
-    # @program_kegiatans = renja.program_kegiatan_renja
+    renja = RenjaService.new(kode_opd: @kode_opd, tahun: @tahun, jenis: 'ranwal')
+    @program_kegiatans = renja.program_kegiatan_renja
 
     respond_to do |format|
       format.html
@@ -143,5 +143,6 @@ class RenjaController < ApplicationController
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
   end
 end
