@@ -21,9 +21,9 @@ class TabelRenjaComponent < ViewComponent::Base
     @program_kegiatans[:urusan]
   end
 
-  def pagu_urusan(kode_urusan)
+  def pagu_urusan(kode_urusan, opd)
     @program_kegiatans[:subkegiatan]
-      .select { |prs| prs[:kode_urusan] == kode_urusan }
+      .select { |prs| prs[:kode_urusan] == kode_urusan && prs[:kode_sub_opd] == opd }
       .sum { |sub| sub[:pagu] }
   end
 
@@ -31,31 +31,31 @@ class TabelRenjaComponent < ViewComponent::Base
     @program_kegiatans[:bidang_urusan].select { |prs| prs[:parent] == parent }
   end
 
-  def pagu_bidang_urusan(kode_bidang_urusan)
+  def pagu_bidang_urusan(kode_bidang_urusan, opd)
     @program_kegiatans[:subkegiatan]
-      .select { |prs| prs[:kode_bidang_urusan] == kode_bidang_urusan }
+      .select { |prs| prs[:kode_bidang_urusan] == kode_bidang_urusan && prs[:kode_sub_opd] == opd }
       .sum { |sub| sub[:pagu] }
   end
 
-  def program_opd(parent)
-    @program_kegiatans[:program].select { |prs| prs[:parent] == parent }
+  def program_opd(parent, opd)
+    @program_kegiatans[:program].select { |prs| prs[:parent] == parent && prs[:kode_opd] == opd }
   end
 
-  def pagu_program(kode_program)
+  def pagu_program(kode_program, opd)
     @program_kegiatans[:subkegiatan]
-      .select { |prs| prs[:kode_program] == kode_program }
+      .select { |prs| prs[:kode_program] == kode_program && prs[:kode_sub_opd] == opd }
       .sum { |sub| sub[:pagu] }
   end
 
-  def kegiatan_opd(parent)
-    @program_kegiatans[:kegiatan].select { |prs| prs[:parent] == parent }
+  def kegiatan_opd(parent, opd)
+    @program_kegiatans[:kegiatan].select { |prs| prs[:parent] == parent && prs[:kode_opd] == opd }
   end
 
-  def pagu_kegiatan(kode_kegiatan)
-    subkegiatan_opd(kode_kegiatan).sum { |sub| sub[:pagu] }
+  def pagu_kegiatan(kode_kegiatan, opd)
+    subkegiatan_opd(kode_kegiatan, opd).sum { |sub| sub[:pagu] }
   end
 
-  def subkegiatan_opd(parent)
-    @program_kegiatans[:subkegiatan].select { |prs| prs[:parent] == parent }
+  def subkegiatan_opd(parent, opd)
+    @program_kegiatans[:subkegiatan].select { |prs| prs[:parent] == parent && prs[:kode_sub_opd] == opd }
   end
 end

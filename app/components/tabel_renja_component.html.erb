@@ -4,19 +4,19 @@
                                 anggaran: pagu_sub_opd(opd[:kode])))%>
     <% urusan_opd.each do |urusan| %>
       <%= render(RenjaComponent.new(program: urusan,
-                                    anggaran: pagu_urusan(urusan[:kode])))%>
+                                    anggaran: pagu_urusan(urusan[:kode], opd[:kode])))%>
       <% bidang_urusan_opd(urusan[:kode]).each do |bidang_urusan| %>
         <%= render(RenjaComponent.new(program: bidang_urusan,
-                                      anggaran: pagu_bidang_urusan(bidang_urusan[:kode])))%>
-        <% program_opd(bidang_urusan[:kode]).each do |program| %>
+                                      anggaran: pagu_bidang_urusan(bidang_urusan[:kode], opd[:kode])))%>
+        <% program_opd(bidang_urusan[:kode], opd[:kode]).each do |program| %>
           <%= render(RenjaComponent.new(program: program,
-                                        anggaran: pagu_program(program[:kode])))%>
-          <% kegiatan_opd(program[:kode]).each do |kegiatan| %>
+                                        anggaran: pagu_program(program[:kode], opd[:kode])))%>
+          <% kegiatan_opd(program[:kode], opd[:kode]).each do |kegiatan| %>
             <%= render(RenjaComponent.new(program: kegiatan,
-                                          anggaran: pagu_kegiatan(kegiatan[:kode])
+                                          anggaran: pagu_kegiatan(kegiatan[:kode], opd[:kode])
                                           ))%>
             <%= render(HeaderRenjaComponent.new(title: 'Subkegiatan', indikator: true)) %>
-            <% subkegiatan_opd(kegiatan[:kode]).each do |subgiat| %>
+            <% subkegiatan_opd(kegiatan[:kode], opd[:kode]).each do |subgiat| %>
               <%= render(RenjaComponent.new(program: subgiat, head: false))%>
             <% end %>
           <% end %>

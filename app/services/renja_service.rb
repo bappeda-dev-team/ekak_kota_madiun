@@ -84,10 +84,10 @@ class RenjaService
         kode_opd: pr.kode_sub_skpd,
         kode: pr.kode_program,
         nama: pr.nama_program,
-        indikators: indikators(pr.kode_program, 'Program'),
+        indikators: indikators(pr.kode_program, 'Program', pr.kode_sub_skpd),
         pagu: 0 }
     end
-    items.uniq { |pk| pk[:kode] }.sort_by { |pk| pk.values_at(:kode) }
+    items.uniq { |pk| pk[:kode] && pk[:kode_opd] }.sort_by { |pk| pk.values_at(:kode) }
   end
 
   def kegiatan_renja
@@ -97,10 +97,10 @@ class RenjaService
         kode_opd: pr.kode_sub_skpd,
         kode: pr.kode_giat,
         nama: pr.nama_kegiatan,
-        indikators: indikators(pr.kode_giat, 'Kegiatan'),
+        indikators: indikators(pr.kode_giat, 'Kegiatan', pr.kode_sub_skpd),
         pagu: 0 }
     end
-    items.uniq { |pk| pk[:kode] }.sort_by { |pk| pk.values_at(:kode) }
+    items.uniq { |pk| pk[:kode] && pk[:kode_opd] }.sort_by { |pk| pk.values_at(:kode) }
   end
 
   def subkegiatan_renja
@@ -115,18 +115,18 @@ class RenjaService
         kode_kegiatan: pr.kode_giat,
         kode: pr.kode_sub_giat,
         nama: pr.nama_subkegiatan,
-        indikators: indikators(pr.kode_sub_giat, 'Subkegiatan'),
+        indikators: indikators(pr.kode_sub_giat, 'Subkegiatan', pr.kode_sub_skpd),
         pagu: pagu_subkegiatan(pr.kode_sub_giat, pr.kode_sub_skpd) }
     end
-    items.uniq { |pk| pk[:kode] }.sort_by { |pk| pk.values_at(:kode) }
+    items.uniq { |pk| pk[:kode] && pk[:kode_sub_opd] }.sort_by { |pk| pk.values_at(:kode) }
   end
 
   def pagu_subkegiatan(kode_subkegiatan, kode_opd)
     case @jenis
     when 'ranwal'
-      pagu_ranwal(kode_subkegiatan)
+      pagu_ranwal(kode_subkegiatan, kode_opd)
     when 'rancangan'
-      pagu_rancangan(kode_subkegiatan)
+      pagu_rancangan(kode_subkegiatan, kode_opd)
     when 'rankir'
       pagu_rankir(kode_subkegiatan, kode_opd)
     else
@@ -134,21 +134,21 @@ class RenjaService
     end
   end
 
-  def pagu_ranwal(kode)
+  def pagu_ranwal(kode, kode_opd)
     Indikator.where(jenis: "Renstra",
                     sub_jenis: "Subkegiatan",
                     tahun: @tahun,
                     kode: kode,
-                    kode_opd: @kode_opd)
+                    kode_opd: kode_opd)
              .max_by(&:version)
              &.pagu.to_i
   end
 
-  def pagu_rancangan(kode)
+  def pagu_rancangan(kode, kode_opd)
     PaguAnggaran.where(jenis: 'RankirGelondong',
                        tahun: @tahun,
                        kode: kode,
-                       kode_opd: @kode_opd)
+                       kode_opd: kode_opd)
                 .sum(:anggaran)
   end
 
@@ -163,7 +163,7 @@ class RenjaService
     end.sum
   end
 
-  def indikators(kode, jenis)
+  def indikators(kode, jenis, opd)
     # warning, kode opd tidak berlaku untuk
     # sub opd seperti kelurahan, sd, puskesmas
     # TODO cek setelah ini
@@ -171,7 +171,7 @@ class RenjaService
                                 sub_jenis: jenis,
                                 tahun: @tahun,
                                 kode: kode,
-                                kode_opd: @kode_opd)
+                                kode_opd: opd)
                          .max_by(&:version)
     {
       indikator: indikator&.indikator,
