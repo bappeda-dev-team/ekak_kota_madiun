@@ -164,6 +164,9 @@ class RenjaService
   end
 
   def indikators(kode, jenis)
+    # warning, kode opd tidak berlaku untuk
+    # sub opd seperti kelurahan, sd, puskesmas
+    # TODO cek setelah ini
     indikator = Indikator.where(jenis: "Renstra",
                                 sub_jenis: jenis,
                                 tahun: @tahun,
