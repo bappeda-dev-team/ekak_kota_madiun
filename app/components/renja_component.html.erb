@@ -4,6 +4,12 @@
 <tr>
   <td class="text-gray-900 text-wrap border"><%= kode %></td>
   <td class="text-gray-900 text-wrap border" width="450px"><%= nama %></td>
-  <td class="border" scope="col" colspan="3"></td>
+  <% if with_indikator? %>
+    <td class="text-gray-900 text-wrap border"><%= indikators[:indikator] %></td>
+    <td class="text-gray-900 text-wrap border"><%= indikators[:target] %></td>
+    <td class="text-gray-900 text-wrap border"><%= indikators[:satuan] %></td>
+  <% else %>
+    <td class="border" scope="col" colspan="3"></td>
+  <% end %>
   <td class="text-gray-900 border" width="250px"><%= pagu %></td>
 </tr>

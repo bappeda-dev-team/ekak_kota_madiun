@@ -42,62 +42,69 @@ class RenjaService
   end
 
   def sub_opd
-    program_kegiatans.map do |pr|
+    items = program_kegiatans.map do |pr|
       { jenis: 'sub_opd',
         parent: pr.kode_skpd,
         kode_opd: pr.kode_sub_skpd,
         kode: pr.kode_sub_skpd,
         nama: pr.nama_opd_pemilik,
         pagu: 0 }
-    end.uniq { |pk| pk[:kode] }
+    end
+    items.uniq { |pk| pk[:kode] }.sort_by { |pk| pk.values_at(:kode) }
   end
 
   def urusan_opd
-    program_kegiatans.map do |pr|
+    items = program_kegiatans.map do |pr|
       { jenis: 'urusan',
         parent: pr.kode_urusan,
         kode_opd: pr.kode_sub_skpd,
         kode: pr.kode_urusan,
         nama: pr.nama_urusan,
         pagu: 0 }
-    end.uniq { |pk| pk[:kode] }
+    end
+    items.uniq { |pk| pk[:kode] }.sort_by { |pk| pk.values_at(:kode) }
   end
 
   def bidang_urusan_opd
-    program_kegiatans.map do |pr|
+    items = program_kegiatans.map do |pr|
       { jenis: 'bidang_urusan',
         parent: pr.kode_urusan,
         kode_opd: pr.kode_sub_skpd,
         kode: pr.kode_bidang_urusan,
         nama: pr.nama_bidang_urusan,
         pagu: 0 }
-    end.uniq { |pk| pk[:kode] }
+    end
+    items.uniq { |pk| pk[:kode] }.sort_by { |pk| pk.values_at(:kode) }
   end
 
   def program_renja
-    program_kegiatans.map do |pr|
+    items = program_kegiatans.map do |pr|
       { jenis: 'program',
         parent: pr.kode_bidang_urusan,
         kode_opd: pr.kode_sub_skpd,
         kode: pr.kode_program,
         nama: pr.nama_program,
+        indikators: indikators(pr.kode_program, 'Program'),
         pagu: 0 }
-    end.uniq { |pk| pk[:kode] }
+    end
+    items.uniq { |pk| pk[:kode] }.sort_by { |pk| pk.values_at(:kode) }
   end
 
   def kegiatan_renja
-    program_kegiatans.map do |pr|
+    items = program_kegiatans.map do |pr|
       { jenis: 'kegiatan',
         parent: pr.kode_program,
         kode_opd: pr.kode_sub_skpd,
         kode: pr.kode_giat,
         nama: pr.nama_kegiatan,
+        indikators: indikators(pr.kode_giat, 'Kegiatan'),
         pagu: 0 }
-    end.uniq { |pk| pk[:kode] }
+    end
+    items.uniq { |pk| pk[:kode] }.sort_by { |pk| pk.values_at(:kode) }
   end
 
   def subkegiatan_renja
-    program_kegiatans.map do |pr|
+    items = program_kegiatans.map do |pr|
       { jenis: 'subkegiatan',
         parent: pr.kode_giat,
         kode_opd: pr.kode_skpd,
@@ -108,20 +115,20 @@ class RenjaService
         kode_kegiatan: pr.kode_giat,
         kode: pr.kode_sub_giat,
         nama: pr.nama_subkegiatan,
-        pagu: pagu_subkegiatan(pr.kode_sub_giat) }
-    end.uniq { |pk| pk[:kode] }
+        indikators: indikators(pr.kode_sub_giat, 'Subkegiatan'),
+        pagu: pagu_subkegiatan(pr.kode_sub_giat, pr.kode_sub_skpd) }
+    end
+    items.uniq { |pk| pk[:kode] }.sort_by { |pk| pk.values_at(:kode) }
   end
 
-  def pagu_subkegiatan(kode_subkegiatan)
+  def pagu_subkegiatan(kode_subkegiatan, kode_opd)
     case @jenis
     when 'ranwal'
       pagu_ranwal(kode_subkegiatan)
     when 'rancangan'
       pagu_rancangan(kode_subkegiatan)
     when 'rankir'
-      program_kegiatans.select { |pks| pks.kode_sub_giat == kode_subkegiatan }
-                       .uniq
-                       .sum { |pk| pk.anggaran_sasarans(@tahun) }
+      pagu_rankir(kode_subkegiatan, kode_opd)
     else
       0
     end
@@ -143,5 +150,30 @@ class RenjaService
                        kode: kode,
                        kode_opd: @kode_opd)
                 .sum(:anggaran)
+  end
+
+  def pagu_rankir(kode, kode_opd)
+    ProgramKegiatan.where(kode_sub_giat: kode, kode_sub_skpd: kode_opd).flat_map do |sub|
+      sub.sasarans
+         .includes(%i[strategi indikator_sasarans])
+         .where(tahun: @tahun)
+         .select { |s| s.strategi.present? }
+         .map(&:total_anggaran)
+         .compact_blank
+    end.sum
+  end
+
+  def indikators(kode, jenis)
+    indikator = Indikator.where(jenis: "Renstra",
+                                sub_jenis: jenis,
+                                tahun: @tahun,
+                                kode: kode,
+                                kode_opd: @kode_opd)
+                         .max_by(&:version)
+    {
+      indikator: indikator&.indikator,
+      target: indikator&.target,
+      satuan: indikator&.satuan
+    }
   end
 end
