@@ -15,9 +15,6 @@
   <div class="card-body d-grid gap-2">
     <%= render partial: 'tujuan_opd', locals: { tujuan_opds: @tujuan_opds } %>
     <%= render partial: 'sasaran_opd', locals: { sasaran_opds: @sasaran_opds } %>
-    <div class="table-responsive">
-      <h5>Program/Kegiatan/Sub Kegiatan</h5>
-      <%= render(TabelRenjaComponent.new(program_kegiatans: @program_kegiatans)) %>
-    </div>
+    <%= render partial: 'program_kegiatan_subkegiatan', locals: { program_kegiatans: @program_kegiatans } %>
   </div>
 </div>

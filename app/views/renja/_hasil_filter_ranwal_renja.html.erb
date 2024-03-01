@@ -15,11 +15,6 @@
   <div class="card-body">
     <%= render partial: 'tujuan_opd', locals: { tujuan_opds: @tujuan_opds } %>
     <%= render partial: 'sasaran_opd', locals: { sasaran_opds: @sasaran_opds } %>
-    <div class="table-responsive">
-      <h5>Program/Kegiatan/Sub Kegiatan</h5>
-      <% @program_kegiatans.each do |sub_opd, urusans| %>
-        <%= render partial: 'renja/tabel_renja', locals: { sub_opd: sub_opd, urusans: urusans } %>
-      <% end %>
-    </div>
+    <%= render partial: 'program_kegiatan_subkegiatan', locals: { program_kegiatans: @program_kegiatans } %>
   </div>
 </div>

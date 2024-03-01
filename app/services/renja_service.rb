@@ -108,7 +108,7 @@ class RenjaService
         kode_kegiatan: pr.kode_giat,
         kode: pr.kode_sub_giat,
         nama: pr.nama_subkegiatan,
-        pagu: pr.anggaran_sasarans(@tahun) }
+        pagu: pagu_subkegiatan(pr.kode_sub_giat) }
     end.uniq { |pk| pk[:kode] }
   end
 
@@ -119,7 +119,9 @@ class RenjaService
     when 'rancangan'
       pagu_rancangan(kode_subkegiatan)
     when 'rankir'
-      program_kegiatans.sum { |pk| pk.anggaran_sasarans(@tahun) }
+      program_kegiatans.select { |pks| pks.kode_sub_giat == kode_subkegiatan }
+                       .uniq
+                       .sum { |pk| pk.anggaran_sasarans(@tahun) }
     else
       0
     end
@@ -132,7 +134,7 @@ class RenjaService
                     kode: kode,
                     kode_opd: @kode_opd)
              .max_by(&:version)
-             .pagu.to_i
+             &.pagu.to_i
   end
 
   def pagu_rancangan(kode)

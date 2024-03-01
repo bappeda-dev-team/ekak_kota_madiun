@@ -7,19 +7,28 @@ class RenjaController < ApplicationController
     @user = @opd.eselon_dua_opd
     @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
     @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
+
+    renja = RenjaService.new(kode_opd: @kode_opd, tahun: @tahun, jenis: 'ranwal')
+    @program_kegiatans = renja.program_kegiatan_renja
+
     render partial: 'hasil_filter_ranwal_renja'
   end
 
   def ranwal_cetak
     @title = "Rawnal Renja"
     @user = @opd.eselon_dua_opd
+    @nama_opd = @opd.nama_opd
+
     @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
     @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
+
+    # renja = RenjaService.new(kode_opd: @kode_opd, tahun: @tahun, jenis: 'ranwal')
+    # @program_kegiatans = renja.program_kegiatan_renja
 
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: "ranwal_renja_#{@nama_opd}_tahun_#{@tahun}",
+        render pdf: "ranwal_renja",
                dispotition: 'attachment',
                orientation: 'Landscape',
                page_size: 'Legal',
@@ -37,14 +46,23 @@ class RenjaController < ApplicationController
   def rancangan_renja
     @user = @opd.eselon_dua_opd
     @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
+
+    renja = RenjaService.new(kode_opd: @kode_opd, tahun: @tahun, jenis: 'rancangan')
+    @program_kegiatans = renja.program_kegiatan_renja
+
     render partial: 'rancangan_renja'
   end
 
   def rancangan_cetak
+    @title = "Rancangan Renja"
+
     @user = @opd.eselon_dua_opd
     @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
     @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
-    @title = "Rankir Renja"
+
+    renja = RenjaService.new(kode_opd: @kode_opd, tahun: @tahun, jenis: 'rancangan')
+    @program_kegiatans = renja.program_kegiatan_renja
+
     respond_to do |format|
       format.html
       format.pdf do
@@ -64,17 +82,23 @@ class RenjaController < ApplicationController
     @user = @opd.eselon_dua_opd
     @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
     @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
+
     renja = RenjaService.new(kode_opd: @kode_opd, tahun: @tahun, jenis: 'rankir')
     @program_kegiatans = renja.program_kegiatan_renja
+
     render partial: 'rankir_renja'
   end
 
   def rankir_cetak
-    set_ranwal
+    @title = "Rankir Renja"
+
     @user = @opd.eselon_dua_opd
     @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
     @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
-    @title = "Rankir Renja"
+
+    renja = RenjaService.new(kode_opd: @kode_opd, tahun: @tahun, jenis: 'rankir')
+    @program_kegiatans = renja.program_kegiatan_renja
+
     respond_to do |format|
       format.html
       format.pdf do
