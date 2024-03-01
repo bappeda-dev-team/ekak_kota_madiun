@@ -1,18 +1,23 @@
 # frozen_string_literal: true
 
 class RenjaComponent < ViewComponent::Base
-  def initialize(program: '', head: true)
+  def initialize(program: '', head: true, anggaran: 0)
     super
     @program = program
     @head = head
+    @anggaran = anggaran
   end
 
   def nama_kode
     @program
   end
 
+  def jenis
+    nama_kode[:jenis]
+  end
+
   def title
-    nama_kode[:jenis].capitalize
+    jenis.capitalize
   end
 
   def kode
@@ -24,7 +29,11 @@ class RenjaComponent < ViewComponent::Base
   end
 
   def pagu
-    "Rp. #{number_with_delimiter(@program[:pagu])}"
+    if jenis == 'subkegiatan'
+      "Rp. #{number_with_delimiter(@program[:pagu])}"
+    else
+      "Rp. #{number_with_delimiter(@anggaran)}"
+    end
   end
 
   def kode_opd

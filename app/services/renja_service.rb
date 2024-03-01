@@ -34,7 +34,8 @@ class RenjaService
                              pelaksana_subkegiatan.flat_map do |user|
                                user.sasarans
                                    .includes(:program_kegiatan)
-                                   .where(tahun: @tahun, keterangan: [nil, ""])
+                                   .where(tahun: @tahun)
+                                   .where.not(program_kegiatans: { kode_skpd: [nil, ""] })
                                    .map(&:program_kegiatan)
                              end.compact_blank
                            end
@@ -47,7 +48,7 @@ class RenjaService
         kode_opd: pr.kode_sub_skpd,
         kode: pr.kode_sub_skpd,
         nama: pr.nama_opd_pemilik,
-        pagu: 5000 }
+        pagu: 0 }
     end.uniq { |pk| pk[:kode] }
   end
 
@@ -58,7 +59,7 @@ class RenjaService
         kode_opd: pr.kode_sub_skpd,
         kode: pr.kode_urusan,
         nama: pr.nama_urusan,
-        pagu: 5000 }
+        pagu: 0 }
     end.uniq { |pk| pk[:kode] }
   end
 
@@ -69,7 +70,7 @@ class RenjaService
         kode_opd: pr.kode_sub_skpd,
         kode: pr.kode_bidang_urusan,
         nama: pr.nama_bidang_urusan,
-        pagu: 5000 }
+        pagu: 0 }
     end.uniq { |pk| pk[:kode] }
   end
 
@@ -80,7 +81,7 @@ class RenjaService
         kode_opd: pr.kode_sub_skpd,
         kode: pr.kode_program,
         nama: pr.nama_program,
-        pagu: 5000 }
+        pagu: 0 }
     end.uniq { |pk| pk[:kode] }
   end
 
@@ -91,7 +92,7 @@ class RenjaService
         kode_opd: pr.kode_sub_skpd,
         kode: pr.kode_giat,
         nama: pr.nama_kegiatan,
-        pagu: 5000 }
+        pagu: 0 }
     end.uniq { |pk| pk[:kode] }
   end
 
@@ -99,7 +100,12 @@ class RenjaService
     program_kegiatans.map do |pr|
       { jenis: 'subkegiatan',
         parent: pr.kode_giat,
-        kode_opd: pr.kode_sub_skpd,
+        kode_opd: pr.kode_skpd,
+        kode_sub_opd: pr.kode_sub_skpd,
+        kode_urusan: pr.kode_urusan,
+        kode_bidang_urusan: pr.kode_bidang_urusan,
+        kode_program: pr.kode_program,
+        kode_kegiatan: pr.kode_giat,
         kode: pr.kode_sub_giat,
         nama: pr.nama_subkegiatan,
         pagu: pr.anggaran_sasarans(@tahun) }

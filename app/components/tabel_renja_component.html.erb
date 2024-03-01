@@ -1,13 +1,20 @@
 <% sub_opd.each do |opd| %>
   <table class="table table-border align-items-center my-3">
+    <%= render(RenjaComponent.new(program: opd,
+                                anggaran: pagu_sub_opd(opd[:kode])))%>
     <% urusan_opd.each do |urusan| %>
-      <%= render(RenjaComponent.new(program: urusan))%>
+      <%= render(RenjaComponent.new(program: urusan,
+                                    anggaran: pagu_urusan(urusan[:kode])))%>
       <% bidang_urusan_opd(urusan[:kode]).each do |bidang_urusan| %>
-        <%= render(RenjaComponent.new(program: bidang_urusan))%>
+        <%= render(RenjaComponent.new(program: bidang_urusan,
+                                      anggaran: pagu_bidang_urusan(bidang_urusan[:kode])))%>
         <% program_opd(bidang_urusan[:kode]).each do |program| %>
-          <%= render(RenjaComponent.new(program: program))%>
+          <%= render(RenjaComponent.new(program: program,
+                                        anggaran: pagu_program(program[:kode])))%>
           <% kegiatan_opd(program[:kode]).each do |kegiatan| %>
-            <%= render(RenjaComponent.new(program: kegiatan))%>
+            <%= render(RenjaComponent.new(program: kegiatan,
+                                          anggaran: pagu_kegiatan(kegiatan[:kode])
+                                          ))%>
             <%= render(HeaderRenjaComponent.new(title: 'Subkegiatan', indikator: true)) %>
             <% subkegiatan_opd(kegiatan[:kode]).each do |subgiat| %>
               <%= render(RenjaComponent.new(program: subgiat, head: false))%>
