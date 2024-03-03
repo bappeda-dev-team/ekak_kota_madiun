@@ -15,6 +15,13 @@ class TematiksController < ApplicationController
                          .compact
   end
 
+  def rad_cetak
+    @tahun = cookies[:tahun]
+    @sub_tematiks = Pohon.where(pohonable_type: 'SubTematik', tahun: @tahun)
+                         .map(&:pohonable)
+                         .compact
+  end
+
   # GET /tematiks/1 or /tematiks/1.json
   def show; end
 

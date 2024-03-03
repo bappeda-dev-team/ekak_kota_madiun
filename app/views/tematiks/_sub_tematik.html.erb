@@ -1,12 +1,26 @@
 <% sub_tematiks.each do |sub_tema| %>
-  <% rowspan = sub_tema.indikators.size + 1 %>
+  <% rowspan = sub_tema.indikators.size %>
   <tr>
     <td rowspan="<%= rowspan %>"></td>
-    <td rowspan="<%= rowspan %>"><%= sub_tema %></td>
-    <td colspan="3" class="p-0 m-0 border-0"></td>
+    <td class="text-wrap" rowspan="<%= rowspan %>"><%= sub_tema.tematik %></td>
+    <td class="text-wrap" rowspan="<%= rowspan %>"><%= sub_tema %></td>
+    <td class="text-wrap"><%= sub_tema.indikators.first.indikator %></td>
+    <td><%= sub_tema.indikators.first.target %></td>
+    <td><%= sub_tema.indikators.first.satuan %></td>
     <td class="text-wrap" rowspan="<%= rowspan %>"><%= sub_tema.keterangan %></td>
     <td class="text-center" rowspan="<%= rowspan %>">
       <div class="d-grid gap-3">
+        <%= link_to edit_sub_tematik_path(sub_tema), remote: true,
+         data: {
+             controller: 'form-modal',
+             action: 'ajax:complete->form-modal#success:prevent',
+             bs_toggle: 'modal',
+             bs_target: '#form-modal'
+         },
+         class: 'btn btn-outline-success' do %>
+          <i class="fa fa-file-excel me-2"></i>
+          <span>Cetak RAD</span>
+        <% end %>
         <%= link_to edit_sub_tematik_path(sub_tema), remote: true,
          data: {
              controller: 'form-modal',
@@ -33,9 +47,9 @@
       </div>
     </td>
   </tr>
-  <% sub_tema.indikators.each do |indikator| %>
+  <% sub_tema.indikators.drop(1).each do |indikator| %>
     <tr class="skip">
-      <td><%= indikator %></td>
+      <td class="text-wrap"><%= indikator %></td>
       <td><%= indikator.target %></td>
       <td><%= indikator.satuan %></td>
     </tr>

@@ -93,7 +93,7 @@ module SuperAdminItemHelper
         icon: 'fas fa-folder-plus', identifier: 'tematik_kota'
       },
       {
-        title: 'Sub-Tematik Kota', href: sub_tematiks_tematiks_path,
+        title: 'RAD / Sub-Tematik', href: sub_tematiks_tematiks_path,
         icon: 'fas fa-folder-plus', identifier: 'tematik_kota'
       },
       {

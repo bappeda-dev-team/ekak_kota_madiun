@@ -41,16 +41,16 @@
                   <td class="fw-bolder text-gray-500"><%= subkegiatan_tematik.kode_tematik %></td>
                   <td class="fw-bolder text-gray-500"><%= link_to 'Tambah User', '#' %></td>
                   <td class="fw-bolder text-gray-500"><%= link_to subkegiatan_tematik do %>
-                    <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
-                  <% end %>
+                      <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
+                    <% end %>
                   </td>
                   <td class="fw-bolder text-gray-500"><%= link_to edit_subkegiatan_tematik_path(subkegiatan_tematik) do %>
-                    <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
-                  <% end %>
+                      <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+                    <% end %>
                   </td>
                   <td class="fw-bolder text-gray-500"><%= link_to subkegiatan_tematik, method: :delete, data: { confirm: 'Hapus Tematik?' } do %>
-                    <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
-                  <% end %>
+                      <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+                    <% end %>
                   </td>
                 </tr>
               <% end %>
