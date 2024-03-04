@@ -46,6 +46,7 @@ class RenjaController < ApplicationController
   def rancangan_renja
     @user = @opd.eselon_dua_opd
     @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
+    @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
 
     renja = RenjaService.new(kode_opd: @kode_opd, tahun: @tahun, jenis: 'rancangan')
     @program_kegiatans = renja.program_kegiatan_renja
