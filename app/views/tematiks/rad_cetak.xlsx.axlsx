@@ -1,6 +1,21 @@
 wb = xlsx_package.workbook
-wb.add_worksheet(name: "laporan - RAD") do |sheet_rad|
-  sheet_rad.add_row ['LAPORAN RENCANA AKSI DAERAH']
-  sheet_rad.add_row ["Sub Tematik #{@sub_tematik.tematik} KOTA MADIUN"]
-  sheet_rad.add_row ["TAHUN #{@tahun}/2023"]
+s = wb.styles
+header = s.add_style sz: 16, b: true, alignment: { horizontal: :center }
+wb.add_worksheet(name: "laporan - RAD") do |sheet|
+  sheet.add_row ['LAPORAN RENCANA AKSI DAERAH'], style: header, offset: 3
+  sheet.add_row ["Sub Tematik #{@sub_tematik.tematik} KOTA MADIUN"], style: header, offset: 3
+  sheet.add_row ["TAHUN #{@tahun}/2023"], style: header, offset: 3
+  sheet.add_row
+  sheet.add_row
+  sheet.add_row ['Sasaran Kota 1', ': Pemerataan Gender'], offset: 4
+  sheet.add_row ['Indikator', ': Indikator Gender'], offset: 4
+  sheet.add_row ['Target/Satuan', ': 10 Indeks'], offset: 4
+  sheet.add_row
+
+  [
+    'D1:T1',
+    'D2:T2',
+    'D3:T3'
+  ].each { |range| sheet.merge_cells(range) }
+  sheet.column_widths 2, 2, 2, 2
 end
