@@ -18,10 +18,23 @@ class TematiksController < ApplicationController
   end
 
   def rad_cetak
+    @title = "laporan_rad_sub_tematik"
     @tahun = cookies[:tahun]
-    @sub_tematiks = Pohon.where(pohonable_type: 'SubTematik', tahun: @tahun)
-                         .map(&:pohonable)
-                         .compact
+    @sub_tematik = SubTematik.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "#{@title}_#{@sub_tematik.tematik}_tahun_#{@tahun}",
+               dispotition: 'attachment',
+               orientation: 'Landscape',
+               page_size: 'Legal',
+               layout: 'pdf.html.erb',
+               template: 'tematiks/ranwal_cetak.html.erb'
+      end
+      format.xlsx do
+        render filename: "#{@title}_#{@sub_tematik.tematik}_tahun_#{@tahun}"
+      end
+    end
   end
 
   # GET /tematiks/1 or /tematiks/1.json

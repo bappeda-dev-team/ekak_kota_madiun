@@ -1,0 +1,6 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "laporan - RAD") do |sheet_rad|
+  sheet_rad.add_row ['LAPORAN RENCANA AKSI DAERAH']
+  sheet_rad.add_row ["Sub Tematik #{@sub_tematik.tematik} KOTA MADIUN"]
+  sheet_rad.add_row ["TAHUN #{@tahun}/2023"]
+end

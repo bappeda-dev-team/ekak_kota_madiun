@@ -14,14 +14,7 @@
       <td class="text-wrap" rowspan="<%= rowspan %>"><%= sub_tema.keterangan %></td>
       <td class="text-center" rowspan="<%= rowspan %>">
         <div class="d-grid gap-3">
-          <%= link_to edit_sub_tematik_path(sub_tema), remote: true,
-         data: {
-             controller: 'form-modal',
-             action: 'ajax:complete->form-modal#success:prevent',
-             bs_toggle: 'modal',
-             bs_target: '#form-modal'
-         },
-         class: 'btn btn-outline-success' do %>
+          <%= link_to rad_cetak_tematik_path(sub_tema, format: :xlsx), class: 'btn btn-outline-success' do %>
             <i class="fa fa-file-excel me-2"></i>
             <span>Cetak RAD</span>
           <% end %>
