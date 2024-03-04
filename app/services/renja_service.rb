@@ -87,7 +87,7 @@ class RenjaService
         indikators: indikators(pr.kode_program, 'Program', pr.kode_sub_skpd),
         pagu: 0 }
     end
-    items.uniq { |pk| pk[:kode] && pk[:kode_opd] }.sort_by { |pk| pk.values_at(:kode) }
+    items.uniq { |pk| pk[:kode] }.sort_by { |pk| pk.values_at(:kode) }
   end
 
   def kegiatan_renja
@@ -100,7 +100,7 @@ class RenjaService
         indikators: indikators(pr.kode_giat, 'Kegiatan', pr.kode_sub_skpd),
         pagu: 0 }
     end
-    items.uniq { |pk| pk[:kode] && pk[:kode_opd] }.sort_by { |pk| pk.values_at(:kode) }
+    items.uniq { |pk| pk[:kode] }.sort_by { |pk| pk.values_at(:kode) }
   end
 
   def subkegiatan_renja
@@ -118,7 +118,7 @@ class RenjaService
         indikators: indikators(pr.kode_sub_giat, 'Subkegiatan', pr.kode_sub_skpd),
         pagu: pagu_subkegiatan(pr.kode_sub_giat, pr.kode_sub_skpd) }
     end
-    items.uniq { |pk| pk[:kode] && pk[:kode_sub_opd] }.sort_by { |pk| pk.values_at(:kode) }
+    items.uniq { |pk| pk[:kode] }.sort_by { |pk| pk.values_at(:kode) }
   end
 
   def pagu_subkegiatan(kode_subkegiatan, kode_opd)
