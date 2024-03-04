@@ -50,7 +50,7 @@ class RenjaService
         nama: pr.nama_opd_pemilik,
         pagu: 0 }
     end
-    items.uniq { |pk| pk[:kode] }.sort_by { |pk| pk.values_at(:kode) }
+    items.uniq { |pk| pk.values_at(:kode) }.sort_by { |pk| pk.values_at(:kode) }
   end
 
   def urusan_opd
@@ -62,7 +62,7 @@ class RenjaService
         nama: pr.nama_urusan,
         pagu: 0 }
     end
-    items.uniq { |pk| pk[:kode] }.sort_by { |pk| pk.values_at(:kode) }
+    items.uniq { |pk| pk.values_at(:kode) }.sort_by { |pk| pk.values_at(:kode) }
   end
 
   def bidang_urusan_opd
@@ -74,7 +74,7 @@ class RenjaService
         nama: pr.nama_bidang_urusan,
         pagu: 0 }
     end
-    items.uniq { |pk| pk[:kode] }.sort_by { |pk| pk.values_at(:kode) }
+    items.uniq { |pk| pk.values_at(:kode) }.sort_by { |pk| pk.values_at(:kode) }
   end
 
   def program_renja
@@ -87,7 +87,7 @@ class RenjaService
         indikators: indikators(pr.kode_program, 'Program', pr.kode_sub_skpd),
         pagu: 0 }
     end
-    items.uniq { |pk| pk[:kode] }.sort_by { |pk| pk.values_at(:kode) }
+    items.uniq { |pk| pk.values_at(:kode, :kode_opd) }.sort_by { |pk| pk.values_at(:kode) }
   end
 
   def kegiatan_renja
@@ -100,7 +100,7 @@ class RenjaService
         indikators: indikators(pr.kode_giat, 'Kegiatan', pr.kode_sub_skpd),
         pagu: 0 }
     end
-    items.uniq { |pk| pk[:kode] }.sort_by { |pk| pk.values_at(:kode) }
+    items.uniq { |pk| pk.values_at(:kode, :kode_opd) }.sort_by { |pk| pk.values_at(:kode) }
   end
 
   def subkegiatan_renja
@@ -118,7 +118,11 @@ class RenjaService
         indikators: indikators(pr.kode_sub_giat, 'Subkegiatan', pr.kode_sub_skpd),
         pagu: pagu_subkegiatan(pr.kode_sub_giat, pr.kode_sub_skpd) }
     end
-    items.uniq { |pk| pk[:kode] }.sort_by { |pk| pk.values_at(:kode) }
+    if sub_opd.size > 1
+      items.sort_by { |pk| pk.values_at(:kode) }
+    else
+      items.uniq { |pk| pk.values_at(:kode) }.sort_by { |pk| pk.values_at(:kode) }
+    end
   end
 
   def pagu_subkegiatan(kode_subkegiatan, kode_opd)
