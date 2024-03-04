@@ -40,7 +40,9 @@ class KakQueries
   end
 
   def pk_sasarans
-    sasarans.group_by(&:program_kegiatan).to_h
+    sasarans.group_by(&:program_kegiatan)
+            .sort_by { |pk, _| pk.nil? ? [] : pk.values_at(:kode_sub_giat) }
+            .to_h
   end
 
   def by_subkegiatan(sasarans)
