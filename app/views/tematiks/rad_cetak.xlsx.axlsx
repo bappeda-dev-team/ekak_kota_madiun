@@ -1,21 +1,76 @@
 wb = xlsx_package.workbook
 s = wb.styles
 header = s.add_style sz: 16, b: true, alignment: { horizontal: :center }
+number = s.add_style sz: 8, b: true, alignment: { horizontal: :center, vertical: :center }
 wb.add_worksheet(name: "laporan - RAD") do |sheet|
   sheet.add_row ['LAPORAN RENCANA AKSI DAERAH'], style: header, offset: 3
-  sheet.add_row ["Sub Tematik #{@sub_tematik.tematik} KOTA MADIUN"], style: header, offset: 3
+  sheet.add_row ["Sub Tematik #{@sub_tematik} KOTA MADIUN"], style: header, offset: 3
   sheet.add_row ["TAHUN #{@tahun}/2023"], style: header, offset: 3
   sheet.add_row
   sheet.add_row
-  sheet.add_row ['Sasaran Kota 1', ': Pemerataan Gender'], offset: 4
-  sheet.add_row ['Indikator', ': Indikator Gender'], offset: 4
-  sheet.add_row ['Target/Satuan', ': 10 Indeks'], offset: 4
-  sheet.add_row
+  @sasaran_kota.each.with_index(1) do |sasaran_kota, no_kota|
+    sheet.add_row ["Sasaran Kota #{no_kota}", ": #{sasaran_kota.pohonable.tema}"], offset: 4
+    sasaran_kota.pohonable.indikators.each do |indikator_kota|
+      sheet.add_row ['Indikator', ": #{indikator_kota.indikator}"], offset: 4
+      sheet.add_row ['Target/Satuan', ": #{indikator_kota.target} #{indikator_kota.satuan}"], offset: 4
+    end
+    sheet.add_row
+    sheet.add_row ['No', 'Perangkat Daerah', 'Sasaran Strategis',
+                   'Indikator', 'Target', 'Satuan',
+                   'Sasaran Kinerja Tactical',
+                   'Indikator', 'Target', 'Satuan',
+                   'Sasaran Kinerja Operational',
+                   'Indikator', 'Target', 'Satuan',
+                   'Sub Kegiatan', 'Pagu Anggaran', 'Keterangan'], offset: 3
+    sheet.add_row (1..17).to_a, style: number, offset: 3
+    sasaran_kota.sub_pohons.each.with_index(1) do |strategic, no|
+      sas_kota = sheet.add_row ["#{no}", "#{strategic.opd.nama_opd}", "#{strategic.pohonable}"],
+                               offset: 3
+      strategic.pohonable.indikators.take(1).each do |ind|
+        sas_kota.add_cell("#{ind.indikator}")
+        sas_kota.add_cell("#{ind.target}")
+        sas_kota.add_cell("#{ind.satuan}")
+      end
+      strategic.pohonable.indikators.drop(1).each do |ind|
+        sheet.add_row ["", "", "", "#{ind.indikator}",
+                       "#{ind.target}", "#{ind.satuan}"],
+                      offset: 3
+      end
+      strategic.sub_pohons.take(1).each do |tactical|
+        sas_kota.add_cell("#{tactical.pohonable}")
+        tactical.pohonable.indikators.take(1).each do |ind|
+          sas_kota.add_cell("#{ind.indikator}")
+          sas_kota.add_cell("#{ind.target}")
+          sas_kota.add_cell("#{ind.satuan}")
+        end
+        tactical.pohonable.indikators.drop(1).each do |ind|
+          sheet.add_row ["", "", "", "", "", "", "",
+                         "#{ind.indikator}",
+                         "#{ind.target}", "#{ind.satuan}"],
+                        offset: 3
+        end
+      end
+      strategic.sub_pohons.drop(1).each do |tactical|
+        tact_kota = sheet.add_row ["", "", "", "", "", "", "#{tactical.pohonable}"], offset: 3
+        tactical.pohonable.indikators.take(1).each do |ind|
+          tact_kota.add_cell("#{ind.indikator}")
+          tact_kota.add_cell("#{ind.target}")
+          tact_kota.add_cell("#{ind.satuan}")
+        end
+        tactical.pohonable.indikators.drop(1).each do |ind|
+          sheet.add_row ["", "", "", "", "", "", "",
+                         "#{ind.indikator}",
+                         "#{ind.target}", "#{ind.satuan}"],
+                        offset: 3
+        end
+      end
+    end
+  end
 
   [
     'D1:T1',
     'D2:T2',
     'D3:T3'
   ].each { |range| sheet.merge_cells(range) }
-  sheet.column_widths 2, 2, 2, 2
+  sheet.column_widths 2, 2, 2, 6
 end

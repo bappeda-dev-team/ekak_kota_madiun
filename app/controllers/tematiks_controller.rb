@@ -21,6 +21,13 @@ class TematiksController < ApplicationController
     @title = "laporan_rad_sub_tematik"
     @tahun = cookies[:tahun]
     @sub_tematik = SubTematik.find(params[:id])
+    pohon_sub = Pohon.find_by(pohonable_id: @sub_tematik.id,
+                              pohonable_type: 'SubTematik',
+                              tahun: @tahun,
+                              role: 'sub_pohon_kota')
+    @sasaran_kota = pohon_sub.sub_pohons.where(pohonable_type: 'SubSubTematik',
+                                               tahun: @tahun)
+    @sasaran_opds = @sasaran_kota.flat_map(&:sub_pohons).group_by(&:pohon_ref_id)
     respond_to do |format|
       format.html
       format.pdf do
@@ -29,7 +36,7 @@ class TematiksController < ApplicationController
                orientation: 'Landscape',
                page_size: 'Legal',
                layout: 'pdf.html.erb',
-               template: 'tematiks/ranwal_cetak.html.erb'
+               template: 'tematiks/rad_cetak.html.erb'
       end
       format.xlsx do
         render filename: "#{@title}_#{@sub_tematik.tematik}_tahun_#{@tahun}"
