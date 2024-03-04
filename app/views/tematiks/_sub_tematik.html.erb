@@ -1,13 +1,24 @@
-<% sub_tematiks.each do |sub_tema| %>
-  <% rowspan = sub_tema.indikators.size + 1 %>
+<% sub_tematiks.each.with_index(1) do |(tema, sub_temas), no_tema| %>
   <tr>
-    <td rowspan="<%= rowspan %>"></td>
-    <td rowspan="<%= rowspan %>"><%= sub_tema %></td>
-    <td colspan="3" class="p-0 m-0 border-0"></td>
-    <td class="text-wrap" rowspan="<%= rowspan %>"><%= sub_tema.keterangan %></td>
-    <td class="text-center" rowspan="<%= rowspan %>">
-      <div class="d-grid gap-3">
-        <%= link_to edit_sub_tematik_path(sub_tema), remote: true,
+    <td class="text-wrap fw-bolder text-gray-900"><%= no_tema %></td>
+    <td class="text-wrap fw-bolder text-gray-900" colspan="6">Tema: <%= tema %></td>
+  </tr>
+  <% sub_temas.each.with_index(1) do |sub_tema, no| %>
+    <% rowspan = sub_tema.indikators.size %>
+    <tr class="skip">
+      <td class="text-wrap" rowspan="<%= rowspan %>"><%= "#{no_tema}.#{no}" %></td>
+      <td class="text-wrap" rowspan="<%= rowspan %>"><%= sub_tema %></td>
+      <td class="text-wrap"><%= sub_tema.indikators.first.indikator %></td>
+      <td><%= sub_tema.indikators.first.target %></td>
+      <td><%= sub_tema.indikators.first.satuan %></td>
+      <td class="text-wrap" rowspan="<%= rowspan %>"><%= sub_tema.keterangan %></td>
+      <td class="text-center" rowspan="<%= rowspan %>">
+        <div class="d-grid gap-3">
+          <%= link_to rad_cetak_tematik_path(sub_tema, format: :xlsx), class: 'btn btn-outline-success' do %>
+            <i class="fa fa-file-excel me-2"></i>
+            <span>Cetak RAD</span>
+          <% end %>
+          <%= link_to edit_sub_tematik_path(sub_tema), remote: true,
          data: {
              controller: 'form-modal',
              action: 'ajax:complete->form-modal#success:prevent',
@@ -15,10 +26,10 @@
              bs_target: '#form-modal'
          },
          class: 'btn btn-outline-info' do %>
-          <i class="fa fa-edit me-2"></i>
-          <span>Edit Sub-Tema</span>
-        <% end %>
-        <%= link_to tematik_path(sub_tema),
+            <i class="fa fa-edit me-2"></i>
+            <span>Edit Sub-Tema</span>
+          <% end %>
+          <%= link_to tematik_path(sub_tema),
            method: :delete,
             remote: true,
            class: 'btn btn-outline-danger',
@@ -27,17 +38,18 @@
                controller: 'form-modal',
                action: 'ajax:complete->form-modal#success:prevent',
            } do %>
-          <i class="fa fa-trash-alt me-2"></i>
-          <span>Hapus Tema</span>
-        <% end %>
-      </div>
-    </td>
-  </tr>
-  <% sub_tema.indikators.each do |indikator| %>
-    <tr class="skip">
-      <td><%= indikator %></td>
-      <td><%= indikator.target %></td>
-      <td><%= indikator.satuan %></td>
+            <i class="fa fa-trash-alt me-2"></i>
+            <span>Hapus Tema</span>
+          <% end %>
+        </div>
+      </td>
     </tr>
+    <% sub_tema.indikators.drop(1).each do |indikator| %>
+      <tr class="skip">
+        <td class="text-wrap"><%= indikator %></td>
+        <td><%= indikator.target %></td>
+        <td><%= indikator.satuan %></td>
+      </tr>
+    <% end %>
   <% end %>
 <% end %>

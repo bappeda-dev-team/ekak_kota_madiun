@@ -13,80 +13,8 @@
     </div>
   </div>
   <div class="card-body d-grid gap-2">
-    <div class="table-responsive">
-      <h5>Tujuan</h5>
-      <table class="table align-items-center">
-        <thead class="thead-tujuan">
-          <tr class="header-tujuan">
-            <th class="border" scope="col" rowspan="2">Tujuan OPD</th>
-            <th class="border" scope="col" rowspan="2">Indikator</th>
-            <th class="border" scope="col" rowspan="2">Rumus Perhitungan</th>
-            <th class="border" scope="col" rowspan="2">Sumber Data</th>
-            <th class="border text-center" scope="col" colspan="2"><%= @tahun %></th>
-          </tr>
-          <tr>
-            <th class="border" scope="col" width="50px">Target</th>
-            <th class="border" scope="col">Satuan</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @opd.tujuan_opds.by_periode(@tahun).each.with_index(1) do |tujuan, no_tujuan| %>
-            <% rowsize = tujuan.indikators.size + 1 %>
-            <tr>
-              <td class="text-gray-900 text-wrap border" rowspan="<%= rowsize %>" ><%= tujuan.tujuan %></td>
-            </tr>
-            <% tujuan.indikators.each do |indikator_tujuan| %>
-              <tr>
-                <td class="text-gray-900 text-wrap border"  ><%= indikator_tujuan || '-' %></td>
-                <td class="text-gray-900 text-wrap border"  ><%= indikator_tujuan.rumus_perhitungan || '-' %></td>
-                <td class="text-gray-900 text-wrap border"  ><%= indikator_tujuan.sumber_data || '-' %></td>
-                <% target = indikator_tujuan.targets.find_by(tahun: @tahun) %>
-                <td class="text-gray-900 text-wrap border"><%= target %></td>
-                <td class="text-gray-900 text-wrap border"><%= target&.satuan %></td>
-              </tr>
-            <% end %>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-    <div class="table-responsive">
-      <h5>Sasaran</h5>
-      <table class="table align-items-center">
-        <thead class="thead-tujuan">
-          <tr class="header-tujuan">
-            <th class="border text-center" scope="col">Sasaran OPD</th>
-            <th class="border text-center" scope="col">Indikator</th>
-            <th class="border text-center" scope="col">Target</th>
-            <th class="border text-center" scope="col">Satuan</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @sasaran_opds.each do |sasaran| %>
-            <tr>
-              <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
-              <% if sasaran.indikator_sasarans.any? %>
-                <%= indikator_sasaran(sasaran) %>
-              <% else %>
-                <td class="border" colspan="3">
-                  <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
-                </td>
-              <% end %>
-            </tr>
-            <% row_indikator_sasaran(sasaran).each do |indikator| %>
-              <%= indikator %>
-            <% end %>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-    <div class="table-responsive">
-      <h5>Program/Kegiatan/Sub Kegiatan</h5>
-      <% @program_kegiatans.each do |sub_opd, urusans| %>
-        <%= render(TabelRenjaComponent.new(sub_opd: sub_opd, 
-                                           urusans: urusans, 
-                                           jenis_renja: 'rancangan', 
-                                           tahun: @tahun )) %>
-      <% end %>
-    </div>
+    <%= render partial: 'tujuan_opd', locals: { tujuan_opds: @tujuan_opds } %>
+    <%= render partial: 'sasaran_opd', locals: { sasaran_opds: @sasaran_opds } %>
+    <%= render partial: 'program_kegiatan_subkegiatan', locals: { program_kegiatans: @program_kegiatans } %>
   </div>
 </div>

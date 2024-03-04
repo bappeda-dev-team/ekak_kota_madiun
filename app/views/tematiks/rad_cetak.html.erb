@@ -1,0 +1,82 @@
+<%= content_for :html_title, "Rencana Aksi Daerah" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item active" aria-current="page">Rencana Aksi Daerah</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout_subtitle', title: "Rencana Aksi Daerah", sub_title: @sub_tematik, sub_title_2: @tahun do %>
+    <div class="d-grid gap-2">
+      <% @sasaran_kota.each.with_index(1) do |sas, no| %>
+        <div>
+          <h5>Sasaran Kota   : <%= sas.pohonable %></h5>
+          <% sas.pohonable.indikators.each do |ind|%>
+            <h5>Indikator      : <%= ind  %></h5>
+            <h5>Target/Satuan  : <%= ind.target %> <%= ind.satuan %></h5>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <div class="table-responsive">
+      <table class="table table-bordered align-items-center">
+        <thead class="thead-tujuan">
+          <tr class="header-tujuan">
+            <th class="border" scope="col">No.</th>
+            <th class="border text-center" scope="col">Perangkat Daerah</th>
+            <th class="border text-center" scope="col">Sasaran OPD</th>
+            <th class="border text-center" scope="col">Indikator</th>
+            <th class="border text-center" scope="col">Target</th>
+            <th class="border text-center" scope="col">Satuan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @sasaran_opds.each.with_index(1) do |sasaran,no| %>
+            <% rowspan = sasaran.pohonable.indikators.size + 1 %>
+            <tr>
+              <td class="border text-wrap" rowspan="<%= rowspan %>"><%= no %></td>
+              <td class="border text-wrap" rowspan="<%= rowspan %>"><%= sasaran.opd %></td>
+              <td class="border text-wrap" rowspan="<%= rowspan %>" width="550px"><%= sasaran.pohonable.to_s %></td>
+            </tr>
+            <% sasaran.pohonable.indikators.each do |indikator| %>
+              <tr>
+                <td class="border text-wrap" width="550px"><%= indikator %></td>
+                <td class="border text-wrap"><%= indikator.target %></td>
+                <td class="border text-wrap"><%= indikator.satuan %></td>
+              </tr>
+            <% end %>
+            <% if sasaran.sub_pohons.any? %>
+              <% sasaran.sub_pohons.each.with_index(1) do |tactical, no| %>
+                <% rowspan = tactical.pohonable.indikators.size + 1 %>
+                <tr class="tactical-pohon">
+                  <td class="border text-white text-wrap" colspan="2" rowspan="<%= rowspan %>">Tactical <%= sasaran.sub_pohons.size > 1 ? no : '' %></td>
+                  <td class="border text-white text-wrap" width="550px" rowspan="<%= rowspan %>"><%= tactical.pohonable.to_s %></td>
+                </tr>
+                <% tactical.pohonable.indikators.each do |indikator| %>
+                  <tr>
+                    <td class="border text-wrap" width="550px"><%= indikator %></td>
+                    <td class="border text-wrap"><%= indikator.target %></td>
+                    <td class="border text-wrap"><%= indikator.satuan %></td>
+                  </tr>
+                <% end %>
+                <% if tactical.sub_pohons.any? %>
+                  <% tactical.sub_pohons.each.with_index(1) do |operational, no| %>
+                    <% rowspan = operational.pohonable.indikators.size + 1 %>
+                    <tr class="operational-pohon">
+                      <td class="border text-wrap" colspan="2" rowspan="<%= rowspan %>">Operational <%= tactical.sub_pohons.size > 1 ? no : '' %></td>
+                      <td class="border text-wrap" width="550px" rowspan="<%= rowspan %>"><%= operational.pohonable.to_s %></td>
+                    </tr>
+                    <% operational.pohonable.indikators.each do |indikator| %>
+                      <tr>
+                        <td class="border text-wrap" width="550px"><%= indikator %></td>
+                        <td class="border text-wrap"><%= indikator.target %></td>
+                        <td class="border text-wrap"><%= indikator.satuan %></td>
+                      </tr>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>
