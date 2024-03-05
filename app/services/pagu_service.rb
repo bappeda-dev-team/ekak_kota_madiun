@@ -46,7 +46,7 @@ class PaguService
   end
 
   def pelaksana_subkegiatan(opd)
-    opd.users.eselon4
+    opd.users.aktif.eselon4
   end
 
   def program_kegiatans(opd)

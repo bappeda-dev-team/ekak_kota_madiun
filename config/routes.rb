@@ -614,7 +614,7 @@ Rails.application.routes.draw do
     get :pagu_ranwal
     post :pagu_ranwal_opds
     get :pagu_rancangan
-    post :pagu_rancangan
+    post :pagu_rancangan_opds
     get :pagu_rankir
     post :pagu_rankir
     get :pagu_penetapan

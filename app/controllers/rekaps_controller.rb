@@ -12,6 +12,13 @@ class RekapsController < ApplicationController
 
   def pagu_rancangan; end
 
+  def pagu_rancangan_opds
+    pagu = PaguService.new(tahun: @tahun, jenis: 'rancangan')
+    @rekap_ranwal = pagu.program_kegiatan_opd
+
+    render partial: 'rekaps/pagu_rancangan_opds'
+  end
+
   def pagu_rankir; end
 
   def pagu_penetapan; end
