@@ -1,0 +1,38 @@
+<%= form_with model: pagu_anggaran, url: @url, local: false, 
+  data: { 
+    controller: 'form-ajax',
+    form_ajax_target_param: "#{pagu_anggaran.kode}",
+    form_ajax_type_param: 'replace_next',
+    action: 'ajax:complete->form-ajax#processAjax'
+  } do |form| %>
+  <% if pagu_anggaran.errors.any? %>
+    <div id="error_explanation">
+      <h2>Terdapat <%= pluralize(pagu_anggaran.errors.count, "error") %>:</h2>
+      <ul>
+        <% pagu_anggaran.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= form.hidden_field :tahun %>
+  <%= form.hidden_field :kode_opd %>
+  <%= form.hidden_field :kode %>
+  <%= form.hidden_field :jenis %>
+  <%= form.hidden_field :sub_jenis %>
+  <div class="field">
+    <%= form.label :pagu_batasan, class: 'form-label' %>
+    <%= form.number_field :anggaran, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.label :pagu_pengajuan, class: 'form-label' %>
+    <p>Rp. <%= form.object.anggaran %></p>
+  </div>
+  <div class="field">
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_area :keterangan, class: 'form-control' %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

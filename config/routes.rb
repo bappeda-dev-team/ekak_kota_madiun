@@ -164,7 +164,14 @@ Rails.application.routes.draw do
       get :edit_operational_opd
     end
   end
-  resources :pagu_anggarans
+  resources :pagu_anggarans do
+    get :new_batasan, on: :collection
+    post :create_batasan, on: :collection
+    member do
+      get :edit_batasan
+      patch :update_batasan
+    end
+  end
   resources :indikator_sasarans do
     resources :manual_iks do
       member do
@@ -609,8 +616,19 @@ Rails.application.routes.draw do
   resources :sumber_danas, except: %i[show]
   resources :kamus_usulans
   resources :usulans
-  resources :rekaps, param: :kode_unik_opd do
-    get "jumlah", on: :collection
+
+  namespace :rekaps do
+    get :pagu_ranwal
+    post :pagu_ranwal_opds
+    get :pagu_rancangan
+    post :pagu_rancangan_opds
+    get :pagu_rankir
+    post :pagu_rankir_opds
+    get :pagu_penetapan
+    post :pagu_penetapan_opds
+    get :perbandingan_pagu
+    post :perbandingan_pagu
+    get :jumlah
   end
 
   resources :spip, param: :kode_opd do

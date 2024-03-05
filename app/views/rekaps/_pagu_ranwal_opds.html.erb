@@ -1,0 +1,30 @@
+<%= render 'shared/card_layout', title: "Rekap Pagu Ranwal #{@tahun}" do %>
+  <div class="table-responsive mb-5 d-grid gap-3">
+    <table class="table table-bordered align-items-center counter border">
+      <thead class="thead-light sticky-top">
+        <tr>
+          <th class="text-gray-700" scope="col">No.</th>
+          <th class="text-gray-700" scope="col">Perangkat Daerah</th>
+          <th class="text-gray-700" scope="col">Jumlah Program</th>
+          <th class="text-gray-700" scope="col">Jumlah Kegiatan</th>
+          <th class="text-gray-700" scope="col">Jumlah Sub Kegiatan</th>
+          <th class="text-gray-700" scope="col">Pagu Anggaran</th>
+          <th class="text-gray-700" scope="col">Keterangan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @rekap_ranwal.each do |rekap| %>
+          <tr data-controller="row">
+            <td class="align-middle" scope="row"></td>
+            <td class="align-middle" scope="row"><%= rekap[:nama_opd] %></td>
+            <td class="text-gray-900 fw-bolder text-center" scope="row"><%= rekap[:jumlah_program] %></td>
+            <td class="text-gray-900 fw-bolder text-center" scope="row"><%= rekap[:jumlah_kegiatan] %></td>
+            <td class="text-gray-900 fw-bolder text-center" scope="row"><%= rekap[:jumlah_subkegiatan] %></td>
+            <td class="text-gray-900 fw-bolder align-middle" scope="row">Rp. <%= number_with_delimiter(rekap[:pagu]) %></td>
+            <td class="text-gray-900 fw-bolder align-middle" scope="row">--</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

@@ -1,0 +1,68 @@
+<%= render 'shared/card_layout', title: "Rekap Pagu Rankir #{@tahun}" do %>
+  <div class="table-responsive mb-5 d-grid gap-3">
+    <table class="table table-bordered align-items-center counter border">
+      <thead class="thead-light sticky-top">
+        <tr>
+          <th class="text-gray-700" scope="col">No.</th>
+          <th class="text-gray-700" scope="col">Perangkat Daerah</th>
+          <th class="text-gray-700" scope="col">Jumlah Program</th>
+          <th class="text-gray-700" scope="col">Jumlah Kegiatan</th>
+          <th class="text-gray-700" scope="col">Jumlah Sub Kegiatan</th>
+          <th class="text-gray-700" scope="col">Pagu Anggaran Pengajuan</th>
+          <th class="text-gray-700" scope="col">Pagu Batasan</th>
+          <th class="text-gray-700" scope="col">Keterangan</th>
+          <th class="text-gray-700" scope="col">Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @rekap_ranwal.each do |rekap| %>
+          <tr data-controller="row">
+            <td class="align-middle" scope="row"></td>
+            <td class="align-middle" scope="row"><%= rekap[:nama_opd] %></td>
+            <td class="text-gray-900 fw-bolder text-center" scope="row"><%= rekap[:jumlah_program] %></td>
+            <td class="text-gray-900 fw-bolder text-center" scope="row"><%= rekap[:jumlah_kegiatan] %></td>
+            <td class="text-gray-900 fw-bolder text-center" scope="row"><%= rekap[:jumlah_subkegiatan] %></td>
+            <td class="text-gray-900 fw-bolder align-middle" scope="row">Rp. <%= number_with_delimiter(rekap[:pagu]) %></td>
+            <td class="text-gray-900 fw-bolder align-middle" id="<%= rekap[:kode_opd] %>" scope="row">Rp. <%= number_with_delimiter(rekap[:pagu_batasan]) %></td>
+            <td class="text-gray-900 fw-bolder align-middle" scope="row"><%= rekap[:keterangan] %></td>
+            <td class="text-gray-900 fw-bolder align-middle" scope="row">
+              <% cek_pagu_batasan = PaguAnggaran.find_by(jenis: 'Batasan', sub_jenis: 'rancangan', tahun: @tahun, kode: rekap[:kode_opd]) %>
+              <div class="d-grid gap-2">
+                <% if cek_pagu_batasan.nil? %>
+                  <%= link_to new_batasan_pagu_anggarans_path(tahun: @tahun, 
+                                                        kode_opd: rekap[:kode_opd],
+                                                        sub_jenis: 'rancangan',
+                                                        anggaran: rekap[:pagu]),
+                  remote: true, 
+                  class: 'btn btn-sm btn-outline-info',
+                  data: {
+                    controller: 'form-modal',
+                    action: 'ajax:complete->form-modal#success:prevent',
+                    bs_toggle: 'modal',
+                    bs_target: '#form-modal'
+                  } do %>
+                    <span class="fas fa-pencil-alt me-2"></span>
+                    <span>Edit Batasan</span>
+                  <% end %>
+                <% else %>
+                  <%= link_to edit_batasan_pagu_anggaran_path(cek_pagu_batasan),
+                  remote: true, 
+                  class: 'btn btn-sm btn-outline-info',
+                  data: {
+                    controller: 'form-modal',
+                    action: 'ajax:complete->form-modal#success:prevent',
+                    bs_toggle: 'modal',
+                    bs_target: '#form-modal'
+                  } do %>
+                    <span class="fas fa-pencil-alt me-2"></span>
+                    <span>Edit Batasan</span>
+                  <% end %>
+                <% end %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
