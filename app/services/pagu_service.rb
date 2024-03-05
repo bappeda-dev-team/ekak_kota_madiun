@@ -5,12 +5,6 @@ class PaguService
   end
 
   def opds
-    opd_resmi = Opd.opd_resmi
-    @opds ||= opd_resmi.map do |opd|
-      {
-        nama: opd.nama_opd,
-        kode: opd.kode_unik_opd
-      }
-    end
+    @opds ||= Opd.opd_resmi
   end
 end

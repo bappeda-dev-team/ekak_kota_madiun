@@ -5,22 +5,10 @@ RSpec.describe PaguService, type: :model do
 
   context 'opd dan program kegiatan' do
     it 'menampilkan seluruh opd dalam kota' do
-      create(:opd, nama_opd: 'OPD A', kode_unik_opd: '123.111')
-      create(:opd, nama_opd: 'OPD B', kode_unik_opd: '123.222')
-      create(:opd, nama_opd: 'OPD C', kode_unik_opd: '123.333')
       contoh_opds = [
-        {
-          nama: 'OPD A',
-          kode: '123.111'
-        },
-        {
-          nama: 'OPD B',
-          kode: '123.222'
-        },
-        {
-          nama: 'OPD C',
-          kode: '123.333'
-        }
+        create(:opd, nama_opd: 'OPD A', kode_unik_opd: '123.111'),
+        create(:opd, nama_opd: 'OPD B', kode_unik_opd: '123.222'),
+        create(:opd, nama_opd: 'OPD C', kode_unik_opd: '123.333')
       ]
       expect(subject.opds).to eq(contoh_opds)
     end
