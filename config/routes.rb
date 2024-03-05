@@ -625,7 +625,7 @@ Rails.application.routes.draw do
     get :pagu_rankir
     post :pagu_rankir_opds
     get :pagu_penetapan
-    post :pagu_penetapan
+    post :pagu_penetapan_opds
     get :perbandingan_pagu
     post :perbandingan_pagu
     get :jumlah

@@ -76,6 +76,8 @@ class PaguService
       pagu_rancangan(opd)
     when 'rankir'
       pagu_rankir(opd)
+    when 'penetapan'
+      pagu_penetapan(opd)
     else
       0
     end
@@ -126,6 +128,15 @@ class PaguService
          .select { |s| s.strategi.present? }
          .map(&:total_anggaran)
          .compact_blank
+    end.sum
+  end
+
+  def pagu_penetapan(opd)
+    kode_opd = opd.kode_unik_opd
+    ProgramKegiatan.where(kode_sub_skpd: kode_opd).map do |sub|
+      sub.sasarans.includes(%i[indikator_sasarans])
+         .where(tahun: @tahun, keterangan: nil)
+         .map(&:total_anggaran_penetapan).compact.sum
     end.sum
   end
 end
