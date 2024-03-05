@@ -1,6 +1,6 @@
 module LaporanItemHelper
   def laporan_items
-    [
+    items = [
       {
         title: 'Usulan', href: "#",
         multi: true, collections: laporan_usulans,
@@ -82,6 +82,24 @@ module LaporanItemHelper
         title: 'Rekap Cascading', href: list_pohon_pohon_kinerja_index_path,
         icon: 'fas fa-archive', identifier: 'rekap_cascading'
       }
+    ]
+    return items unless super_admin?
+
+    items.push({
+                 title: 'Rekap Pagu', href: "#",
+                 multi: true, collections: rekap_pagu_items,
+                 id_target: 'rekap-pagu-items',
+                 icon: 'fas fa-tasks', identifier: 'rekap_pagu'
+               })
+  end
+
+  def rekap_pagu_items
+    [
+      { title: 'Pagu Ranwal', href: indikator_rb_laporans_path, identifier: 'laporan_indikator_rb' },
+      { title: 'Pagu Rancangan', href: indikator_lppd_laporans_path, identifier: 'laporan_indikator_lppd' },
+      { title: 'Pagu Rankir', href: indikator_spm_laporans_path, identifier: 'laporan_indikator_spm' },
+      { title: 'Pagu Penetapan', href: indikator_sdgs_laporans_path, identifier: 'laporan_indikator_sdgs' },
+      { title: 'Perbandingan Pagu', href: indikator_sdgs_laporans_path, identifier: 'laporan_indikator_sdgs' }
     ]
   end
 
