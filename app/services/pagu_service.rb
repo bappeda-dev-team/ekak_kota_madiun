@@ -100,7 +100,7 @@ class PaguService
     end.sum
   end
 
-  def pagu_rankir(kode_opd)
+  def pagu_rankir(opd)
     kode_opd = opd.kode_unik_opd
     ProgramKegiatan.where(kode_sub_skpd: kode_opd).flat_map do |sub|
       sub.sasarans
