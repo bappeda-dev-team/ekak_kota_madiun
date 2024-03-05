@@ -41,8 +41,8 @@ class Opd < ApplicationRecord
   has_many :program_kegiatans, foreign_key: 'kode_skpd', primary_key: 'kode_unik_opd' do
     def programs
       where.not(kode_skpd: [nil, ""])
-           .uniq { |pk| pk.values_at(:kode_program, :id_sub_unit) }
-           .sort_by { |pk| pk.values_at(:kode_program, :id_sub_unit) }
+           .uniq { |pk| pk.values_at(:kode_program, :kode_sub_skpd) }
+           .sort_by { |pk| pk.values_at(:kode_program, :kode_sub_skpd) }
     end
   end
   belongs_to :lembaga
