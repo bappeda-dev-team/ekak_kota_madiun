@@ -164,7 +164,14 @@ Rails.application.routes.draw do
       get :edit_operational_opd
     end
   end
-  resources :pagu_anggarans
+  resources :pagu_anggarans do
+    get :new_batasan, on: :collection
+    post :create_batasan, on: :collection
+    member do
+      get :edit_batasan
+      patch :update_batasan
+    end
+  end
   resources :indikator_sasarans do
     resources :manual_iks do
       member do

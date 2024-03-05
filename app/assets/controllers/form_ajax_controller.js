@@ -77,7 +77,11 @@ export default class extends Controller {
           const new_nesteds = this.findNestedRow(new_target);
           this.animateBackground(new_target);
           new_nesteds.forEach((e) => this.animateBackground(e));
-        } else {
+        } else if (event.params.type == 'replace_next') {
+          target.nextElementSibling.remove();
+          target.outerHTML = html_content;
+        }
+        else {
           target.innerHTML = html_content;
           this.animateBackground(target);
         }

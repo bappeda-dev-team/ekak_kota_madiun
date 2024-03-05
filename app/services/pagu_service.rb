@@ -10,13 +10,16 @@ class PaguService
 
   def program_kegiatan_opd
     opds.map do |opd|
+      pagu_batas = pagu_batasan(opd)
       {
         nama_opd: opd.nama_opd,
         kode_opd: opd.kode_unik_opd,
         jumlah_program: program_opd(opd).size,
         jumlah_kegiatan: kegiatan_opd(opd).size,
         jumlah_subkegiatan: subkegiatan_opd(opd).size,
-        pagu: pagu_opd(opd)
+        pagu: pagu_opd(opd),
+        pagu_batasan: pagu_batas[0],
+        keterangan: pagu_batas[1]
       }
     end
   end
@@ -76,6 +79,20 @@ class PaguService
     else
       0
     end
+  end
+
+  def pagu_batasan(opd)
+    return [0, ''] if @jenis == 'ranwal'
+
+    kode_opd = opd.kode_unik_opd
+    pagu_batas = PaguAnggaran.find_by(kode: kode_opd,
+                                      jenis: 'Batasan',
+                                      sub_jenis: 'rancangan',
+                                      tahun: @tahun)
+    pagu = pagu_batas.nil? ? 0 : pagu_batas.anggaran
+    keterangan = pagu_batas.nil? ? '' : pagu_batas.keterangan
+
+    [pagu, keterangan]
   end
 
   def pagu_ranwal(opd)

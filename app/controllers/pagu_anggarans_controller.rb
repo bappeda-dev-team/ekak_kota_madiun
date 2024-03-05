@@ -3,11 +3,64 @@ class PaguAnggaransController < ApplicationController
   before_action :params_from_link, only: %i[new edit]
   before_action :set_pagu, only: %i[edit]
 
+  layout false, only: %i[new_batasan edit_batasan]
+
   def new
     @pagu_anggaran = PaguAnggaran.new
     @kode_opd = current_user.opd.kode_opd
 
     render partial: 'form_pagu_anggaran'
+  end
+
+  def new_batasan
+    tahun = params[:tahun]
+    kode_opd = params[:kode_opd]
+    sub_jenis = params[:sub_jenis]
+    anggaran_usulan = params[:anggaran].to_i
+    @pagu_anggaran = PaguAnggaran.new(jenis: 'Batasan',
+                                      tahun: tahun,
+                                      kode_opd: kode_opd,
+                                      kode: kode_opd,
+                                      sub_jenis: sub_jenis,
+                                      anggaran: anggaran_usulan)
+    @url = create_batasan_pagu_anggarans_path
+  end
+
+  def create_batasan
+    @pagu_anggaran = PaguAnggaran.new(pagu_anggarans_params)
+
+    if @pagu_anggaran.save
+      render json: { resText: 'Pagu Batasan dibuat',
+                     html_content: html_content({ pagu_anggaran: @pagu_anggaran },
+                                                partial: 'pagu_anggarans/pagu_batasan') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Gagal menyimpan, terjadi kesalahan',
+                     html_content: error_content({ pagu_anggaran: @pagu_anggaran },
+                                                 partial: 'pagu_anggarans/form_batasan') }.to_json,
+             status: :unprocessable_entity
+    end
+  end
+
+  def edit_batasan
+    @pagu_anggaran = PaguAnggaran.find(params[:id])
+    @url = update_batasan_pagu_anggaran_path
+  end
+
+  def update_batasan
+    @pagu_anggaran = PaguAnggaran.find(params[:id])
+
+    if @pagu_anggaran.update(pagu_anggarans_params)
+      render json: { resText: 'Perubahan Pagu Batasan disimpan',
+                     html_content: html_content({ pagu_anggaran: @pagu_anggaran },
+                                                partial: 'pagu_anggarans/pagu_batasan') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Gagal menyimpan, terjadi kesalahan',
+                     html_content: error_content({ pagu_anggaran: @pagu_anggaran },
+                                                 partial: 'pagu_anggarans/form_batasan') }.to_json,
+             status: :unprocessable_entity
+    end
   end
 
   def edit
