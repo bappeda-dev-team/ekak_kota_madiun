@@ -3,6 +3,13 @@ class RekapsController < ApplicationController
   before_action :set_tahun
   def pagu_ranwal; end
 
+  def pagu_ranwal_opds
+    pagu = PaguService.new(tahun: @tahun)
+    @rekap_ranwal = pagu.program_kegiatan_opd
+
+    render partial: 'rekaps/pagu_ranwal_opds'
+  end
+
   def pagu_rancangan; end
 
   def pagu_rankir; end

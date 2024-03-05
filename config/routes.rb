@@ -612,7 +612,7 @@ Rails.application.routes.draw do
 
   namespace :rekaps do
     get :pagu_ranwal
-    post :pagu_ranwal
+    post :pagu_ranwal_opds
     get :pagu_rancangan
     post :pagu_rancangan
     get :pagu_rankir
