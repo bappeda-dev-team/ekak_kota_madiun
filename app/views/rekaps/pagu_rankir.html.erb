@@ -1,0 +1,14 @@
+<%= content_for :html_title, "Rekap Pagu Rankir" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Laporan</li>
+  <li class="breadcrumb-item" aria-current="page">Rekap Pagu</li>
+  <li class="breadcrumb-item active" aria-current="page">Pagu Rankir</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_ajax',
+             title: "Rekap Pagu Rankir #{@tahun}",
+             data_page_attr: {
+               controller: 'page-ajax',
+               page_ajax_url_value: rekaps_pagu_rankir_path
+             } %>
+<% end %>

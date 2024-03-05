@@ -95,11 +95,11 @@ module LaporanItemHelper
 
   def rekap_pagu_items
     [
-      { title: 'Pagu Ranwal', href: indikator_rb_laporans_path, identifier: 'laporan_indikator_rb' },
-      { title: 'Pagu Rancangan', href: indikator_lppd_laporans_path, identifier: 'laporan_indikator_lppd' },
-      { title: 'Pagu Rankir', href: indikator_spm_laporans_path, identifier: 'laporan_indikator_spm' },
-      { title: 'Pagu Penetapan', href: indikator_sdgs_laporans_path, identifier: 'laporan_indikator_sdgs' },
-      { title: 'Perbandingan Pagu', href: indikator_sdgs_laporans_path, identifier: 'laporan_indikator_sdgs' }
+      { title: 'Pagu Ranwal', href: rekaps_pagu_ranwal_path, identifier: 'rekaps_pagu_ranwal' },
+      { title: 'Pagu Rancangan', href: rekaps_pagu_rancangan_path, identifier: 'rekaps_pagu_rancangan' },
+      { title: 'Pagu Rankir', href: rekaps_pagu_rankir_path, identifier: 'rekaps_pagu_rankir' },
+      { title: 'Pagu Penetapan', href: rekaps_pagu_penetapan_path, identifier: 'rekaps_pagu_penetapan' },
+      { title: 'Perbandingan Pagu', href: rekaps_perbandingan_pagu_path, identifier: 'rekaps_perbandingan_pagu' }
     ]
   end
 

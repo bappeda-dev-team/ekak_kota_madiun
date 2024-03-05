@@ -1,7 +1,22 @@
 class RekapsController < ApplicationController
   # before_action :kode_opd
+  before_action :set_tahun
+  def pagu_ranwal; end
 
-  def jumlah
+  def pagu_rancangan; end
+
+  def pagu_rankir; end
+
+  def pagu_penetapan; end
+
+  def perbandingan_pagu; end
+
+  def jumlah; end
+
+  private
+
+  def set_tahun
+    @tahun = cookies[:tahun]
   end
 
   def kode_opd_params

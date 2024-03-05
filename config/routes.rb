@@ -609,8 +609,19 @@ Rails.application.routes.draw do
   resources :sumber_danas, except: %i[show]
   resources :kamus_usulans
   resources :usulans
-  resources :rekaps, param: :kode_unik_opd do
-    get "jumlah", on: :collection
+
+  namespace :rekaps do
+    get :pagu_ranwal
+    post :pagu_ranwal
+    get :pagu_rancangan
+    post :pagu_rancangan
+    get :pagu_rankir
+    post :pagu_rankir
+    get :pagu_penetapan
+    post :pagu_penetapan
+    get :perbandingan_pagu
+    post :perbandingan_pagu
+    get :jumlah
   end
 
   resources :spip, param: :kode_opd do

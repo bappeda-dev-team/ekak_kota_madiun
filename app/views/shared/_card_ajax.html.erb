@@ -7,18 +7,6 @@
         </div>
       </div>
     </div>
-    <div class="loader text-center">
-      <div class="lds-roller">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      <p>memuat data..</p>
-    </div>
+    <%= render(LoaderComponent.new())%>
   </div>
 <% end %>
