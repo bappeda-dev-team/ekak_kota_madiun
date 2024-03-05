@@ -149,11 +149,11 @@ class RenjaService
   end
 
   def pagu_rancangan(kode, kode_opd)
-    PaguAnggaran.where(jenis: 'RankirGelondong',
-                       tahun: @tahun,
-                       kode: kode,
-                       kode_opd: kode_opd)
-                .sum(:anggaran)
+    ProgramKegiatan.where(kode_sub_giat: kode, kode_sub_skpd: kode_opd).map do |sub|
+      sub.sasarans.includes(%i[indikator_sasarans])
+         .where(tahun: @tahun, keterangan: nil)
+         .map(&:total_anggaran_rankir_1).compact.sum
+    end.sum
   end
 
   def pagu_rankir(kode, kode_opd)
