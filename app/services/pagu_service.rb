@@ -41,7 +41,7 @@ class PaguService
 
   def subkegiatan_opd(opd)
     if sub_opd(opd).size > 1
-      program_kegiatans(opd)
+      program_kegiatans(opd).uniq { |pk| pk.values_at(:kode_sub_skpd, :kode_sub_giat) }
     else
       program_kegiatans(opd)
         .uniq { |pk| pk.values_at(:kode_sub_giat) }
@@ -120,15 +120,24 @@ class PaguService
   end
 
   def pagu_rankir(opd)
-    kode_opd = opd.kode_unik_opd
-    ProgramKegiatan.where(kode_sub_skpd: kode_opd).flat_map do |sub|
-      sub.sasarans
-         .includes(%i[strategi indikator_sasarans])
-         .where(tahun: @tahun)
-         .select { |s| s.strategi.present? }
-         .map(&:total_anggaran)
-         .compact_blank
-    end.sum
+    # kode_opd = opd.kode_unik_opd
+    # ProgramKegiatan.where(kode_sub_skpd: kode_opd).flat_map do |sub|
+    #   sub.sasarans
+    #      .includes(%i[strategi indikator_sasarans])
+    #      .where(tahun: @tahun)
+    #      .select { |s| s.strategi.present? }
+    #      .map(&:total_anggaran)
+    #      .compact_blank
+    # end.sum
+    # TODO benchmark this thing
+    pelaksana_subkegiatan(opd).flat_map do |user|
+      user.sasarans
+          .joins(:program_kegiatan)
+          .includes(:anggarans)
+          .where(tahun: @tahun)
+          .where.not(program_kegiatans: { kode_skpd: [nil, ""] })
+          .map(&:total_anggaran)
+    end.compact_blank.sum
   end
 
   def pagu_penetapan(opd)
