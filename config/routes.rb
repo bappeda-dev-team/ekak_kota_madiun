@@ -627,7 +627,7 @@ Rails.application.routes.draw do
     get :pagu_penetapan
     post :pagu_penetapan_opds
     get :perbandingan_pagu
-    post :perbandingan_pagu
+    post :perbandingan_pagu_opds
     get :jumlah
   end
 
