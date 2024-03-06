@@ -10,6 +10,7 @@
           <th class="text-gray-700" scope="col">Jumlah Sub Kegiatan</th>
           <th class="text-gray-700" scope="col">Pagu Penetapan</th>
           <th class="text-gray-700" scope="col">Keterangan</th>
+          <th class="text-gray-700" scope="col">Aksi</th>
         </tr>
       </thead>
       <tbody>
@@ -22,6 +23,41 @@
             <td class="text-gray-900 fw-bolder text-center" scope="row"><%= rekap[:jumlah_subkegiatan] %></td>
             <td class="text-gray-900 fw-bolder align-middle" scope="row">Rp. <%= number_with_delimiter(rekap[:pagu]) %></td>
             <td class="text-gray-900 fw-bolder align-middle" scope="row"><%= rekap[:keterangan] %></td>
+            <td class="text-gray-900 fw-bolder align-middle" scope="row">
+              <% cek_pagu_batasan = PaguAnggaran.find_by(jenis: 'Batasan', sub_jenis: 'penetapan', tahun: @tahun, kode: rekap[:kode_opd]) %>
+              <div class="d-grid gap-2">
+                <% if cek_pagu_batasan.nil? %>
+                  <%= link_to new_batasan_pagu_anggarans_path(tahun: @tahun, 
+                                                        kode_opd: rekap[:kode_opd],
+                                                        sub_jenis: 'penetapan',
+                                                        anggaran: rekap[:pagu]),
+                  remote: true, 
+                  class: 'btn btn-sm btn-outline-info',
+                  data: {
+                    controller: 'form-modal',
+                    action: 'ajax:complete->form-modal#success:prevent',
+                    bs_toggle: 'modal',
+                    bs_target: '#form-modal'
+                  } do %>
+                    <span class="fas fa-pencil-alt me-2"></span>
+                    <span>Edit Batasan</span>
+                  <% end %>
+                <% else %>
+                  <%= link_to edit_batasan_pagu_anggaran_path(cek_pagu_batasan),
+                  remote: true, 
+                  class: 'btn btn-sm btn-outline-info',
+                  data: {
+                    controller: 'form-modal',
+                    action: 'ajax:complete->form-modal#success:prevent',
+                    bs_toggle: 'modal',
+                    bs_target: '#form-modal'
+                  } do %>
+                    <span class="fas fa-pencil-alt me-2"></span>
+                    <span>Edit Batasan</span>
+                  <% end %>
+                <% end %>
+              </div>
+            </td>
           </tr>
         <% end %>
       </tbody>

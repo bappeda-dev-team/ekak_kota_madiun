@@ -89,7 +89,7 @@ class PaguService
     kode_opd = opd.kode_unik_opd
     pagu_batas = PaguAnggaran.find_by(kode: kode_opd,
                                       jenis: 'Batasan',
-                                      sub_jenis: 'rancangan',
+                                      sub_jenis: @jenis,
                                       tahun: @tahun)
     pagu = pagu_batas.nil? ? 0 : pagu_batas.anggaran
     keterangan = pagu_batas.nil? ? '' : pagu_batas.keterangan

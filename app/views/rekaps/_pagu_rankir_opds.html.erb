@@ -26,12 +26,12 @@
             <td class="text-gray-900 fw-bolder align-middle" id="<%= rekap[:kode_opd] %>" scope="row">Rp. <%= number_with_delimiter(rekap[:pagu_batasan]) %></td>
             <td class="text-gray-900 fw-bolder align-middle" scope="row"><%= rekap[:keterangan] %></td>
             <td class="text-gray-900 fw-bolder align-middle" scope="row">
-              <% cek_pagu_batasan = PaguAnggaran.find_by(jenis: 'Batasan', sub_jenis: 'rancangan', tahun: @tahun, kode: rekap[:kode_opd]) %>
+              <% cek_pagu_batasan = PaguAnggaran.find_by(jenis: 'Batasan', sub_jenis: 'rankir', tahun: @tahun, kode: rekap[:kode_opd]) %>
               <div class="d-grid gap-2">
                 <% if cek_pagu_batasan.nil? %>
                   <%= link_to new_batasan_pagu_anggarans_path(tahun: @tahun, 
                                                         kode_opd: rekap[:kode_opd],
-                                                        sub_jenis: 'rancangan',
+                                                        sub_jenis: 'rankir',
                                                         anggaran: rekap[:pagu]),
                   remote: true, 
                   class: 'btn btn-sm btn-outline-info',
