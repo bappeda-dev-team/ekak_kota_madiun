@@ -120,23 +120,13 @@ class PaguService
   end
 
   def pagu_rankir(opd)
-    # kode_opd = opd.kode_unik_opd
-    # ProgramKegiatan.where(kode_sub_skpd: kode_opd).flat_map do |sub|
-    #   sub.sasarans
-    #      .includes(%i[strategi indikator_sasarans])
-    #      .where(tahun: @tahun)
-    #      .select { |s| s.strategi.present? }
-    #      .map(&:total_anggaran)
-    #      .compact_blank
-    # end.sum
-    # TODO benchmark this thing
     pelaksana_subkegiatan(opd).flat_map do |user|
       user.sasarans
           .joins(:program_kegiatan)
           .includes(:anggarans)
           .where(tahun: @tahun)
-          .where.not(program_kegiatans: { kode_skpd: [nil, ""] })
-          .map(&:total_anggaran)
+          .where.not(indikator_sasarans: [nil, ""])
+          .map { |s| s.anggarans.compact.sum(&:jumlah) }
     end.compact_blank.sum
   end
 

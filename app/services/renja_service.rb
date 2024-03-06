@@ -119,7 +119,7 @@ class RenjaService
         pagu: pagu_subkegiatan(pr.kode_sub_giat, pr.kode_sub_skpd) }
     end
     if sub_opd.size > 1
-      items.sort_by { |pk| pk.values_at(:kode) }
+      items.uniq { |pk| pk.values_at(:kode_sub_opd, :kode) }.sort_by { |pk| pk.values_at(:kode_sub_opd) }
     else
       items.uniq { |pk| pk.values_at(:kode) }.sort_by { |pk| pk.values_at(:kode) }
     end
@@ -157,20 +157,17 @@ class RenjaService
   end
 
   def pagu_rankir(kode, kode_opd)
-    ProgramKegiatan.where(kode_sub_giat: kode, kode_sub_skpd: kode_opd).flat_map do |sub|
-      sub.sasarans
-         .includes(%i[strategi indikator_sasarans])
-         .where(tahun: @tahun)
-         .select { |s| s.strategi.present? }
-         .map(&:total_anggaran)
-         .compact_blank
-    end.sum
+    pelaksana_subkegiatan.flat_map do |user|
+      user.sasarans
+          .joins(:program_kegiatan)
+          .includes(%i[anggarans])
+          .where(tahun: @tahun, program_kegiatans: { kode_sub_giat: kode, kode_sub_skpd: kode_opd })
+          .where.not(indikator_sasarans: [nil, ""], program_kegiatans: { kode_skpd: [nil, ""] })
+          .map { |s| s.anggarans.compact.sum(&:jumlah) }
+    end.compact_blank.sum
   end
 
   def indikators(kode, jenis, opd)
-    # warning, kode opd tidak berlaku untuk
-    # sub opd seperti kelurahan, sd, puskesmas
-    # TODO cek setelah ini
     indikator = Indikator.where(jenis: "Renstra",
                                 sub_jenis: jenis,
                                 tahun: @tahun,
