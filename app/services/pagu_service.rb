@@ -111,12 +111,14 @@ class PaguService
   end
 
   def pagu_rancangan(opd)
-    kode_opd = opd.kode_unik_opd
-    ProgramKegiatan.where(kode_sub_skpd: kode_opd).map do |sub|
-      sub.sasarans.includes(%i[indikator_sasarans])
-         .where(tahun: @tahun, keterangan: nil)
-         .map(&:total_anggaran_rankir_1).compact.sum
-    end.sum
+    pelaksana_subkegiatan(opd).flat_map do |user|
+      user.sasarans
+          .joins(:program_kegiatan)
+          .includes(:anggarans)
+          .where(tahun: @tahun)
+          .where.not(indikator_sasarans: [nil, ""])
+          .map(&:total_anggaran_rankir_1).compact.sum
+    end.compact_blank.sum
   end
 
   def pagu_rankir(opd)
@@ -131,11 +133,13 @@ class PaguService
   end
 
   def pagu_penetapan(opd)
-    kode_opd = opd.kode_unik_opd
-    ProgramKegiatan.where(kode_sub_skpd: kode_opd).map do |sub|
-      sub.sasarans.includes(%i[indikator_sasarans])
-         .where(tahun: @tahun, keterangan: nil)
-         .map(&:total_anggaran_penetapan).compact.sum
-    end.sum
+    pelaksana_subkegiatan(opd).flat_map do |user|
+      user.sasarans
+          .joins(:program_kegiatan)
+          .includes(:anggarans)
+          .where(tahun: @tahun)
+          .where.not(indikator_sasarans: [nil, ""])
+          .map(&:total_anggaran_penetapan).compact.sum
+    end.compact_blank.sum
   end
 end
