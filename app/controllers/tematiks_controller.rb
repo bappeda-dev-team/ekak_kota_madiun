@@ -13,6 +13,7 @@ class TematiksController < ApplicationController
     @tahun = cookies[:tahun]
     @sub_tematiks = Pohon.where(pohonable_type: 'SubTematik', tahun: @tahun)
                          .map(&:pohonable)
+                         .compact_blank
                          .group_by(&:tematik)
                          .compact
   end
