@@ -9,80 +9,80 @@
     <h3>Tahun <%= @tahun %>/2023</h3>
   </div>
 </div>
-<% @sasaran_kota.each.with_index(1) do |sas, no| %>
-  <div class="d-grid gap-2">
-    <div>
-      <h5>Sasaran Kota   : <%= sas.pohonable.sasaran_kotum %></h5>
-      <% sas.pohonable.indikators.each do |ind|%>
-        <h5>Indikator      : <%= ind  %></h5>
-        <h5>Target/Satuan  : <%= ind.target %> <%= ind.satuan %></h5>
-      <% end %>
-    </div>
-  </div>
-  <div class="table-responsive">
-    <table class="table table-bordered align-items-center">
-      <tr>
-        <th width="20px">No.</th>
-        <th width="450px">Perangkat Daerah</th>
-        <th class="p-0 m-0">
-          <table class="m-0 p-0 w-100">
+<div class="d-grid gap-2">
+  <% @sasaran_kota.each.with_index(1) do |sas, no| %>
+    <div class="table-responsive">
+      <table class="table table-bordered align-items-center">
+        <caption>
+          <h5>Sasaran Kota   : <%= sas.pohonable.sasaran_kotum %></h5>
+          <% sas.pohonable.indikators.each do |ind|%>
+            <p>Indikator      : <%= ind  %></p>
+            <p>Target/Satuan  : <%= ind.target %> <%= ind.satuan %></p>
+          <% end %>
+        </caption>
+        <tr>
+          <th width="20px">No.</th>
+          <th width="450px">Perangkat Daerah</th>
+          <th class="p-0 m-0">
+            <table class="m-0 p-0 w-100">
+              <tr>
+                <th width="550px">Sasaran OPD</th>
+                <th width="350px">Indikator</th>
+                <th width="150px">Target</th>
+                <th width="250px">Satuan</th>
+              </tr>
+            </table>
+          </th>
+        </tr>
+        <tbody>
+          <% sas.sub_pohons.group_by(&:opd).each.with_index(1) do |(opd, strategi_opds), no| %>
+            <div class="alwaysbreak m-3"></div>
             <tr>
-              <th width="550px">Sasaran OPD</th>
-              <th width="350px">Indikator</th>
-              <th width="150px">Target</th>
-              <th width="250px">Satuan</th>
-            </tr>
-          </table>
-        </th>
-      </tr>
-      <tbody>
-        <% sas.sub_pohons.group_by(&:opd).each.with_index(1) do |(opd, strategi_opds), no| %>
-          <div class="alwaysbreak m-3"></div>
-          <tr>
-            <td class="text-wrap text-center" width="20px"><%= no %></td>
-            <td class="text-wrap" width="450px"><%= opd %></td>
-            <td class="p-0 m-0">
-              <% strategi_opds.each do |strategi| %>
-                <% strategi.pohonable.strategi_diterima_opd.each do |str_opd| %>
-                  <div class="nobreak m-3"></div>
-                  <% str_opd.sasarans.dengan_nip.where(tahun: @tahun).each do |sasaran| %>
-                    <table class="table m-0 p-0 w-100 strategi-pohon text-white">
-                      <tr>
-                        <td class="text-wrap">Strategic</td>
-                      </tr>
-                    </table>
-                    <%= render 'tabel_sasaran_opd', sasaran: sasaran %>
-                  <% end %>
-                  <%# tactical #%>
-                  <% str_opd.strategi_bawahans.each do |tact| %>
+              <td class="text-wrap text-center" width="20px"><%= no %></td>
+              <td class="text-wrap" width="450px"><%= opd %></td>
+              <td class="p-0 m-0">
+                <% strategi_opds.each do |strategi| %>
+                  <% strategi.pohonable.strategi_diterima_opd.each do |str_opd| %>
                     <div class="nobreak m-3"></div>
-                    <% tact.sasarans.dengan_nip.where(tahun: @tahun).each do |sasaran| %>
-                      <table class="table m-0 p-0 w-100 tactical-pohon text-white">
+                    <% str_opd.sasarans.dengan_nip.where(tahun: @tahun).each do |sasaran| %>
+                      <table class="table m-0 p-0 w-100 strategi-pohon text-white">
                         <tr>
-                          <td class="text-wrap">Tactical</td>
+                          <td class="text-wrap">Strategic</td>
                         </tr>
                       </table>
                       <%= render 'tabel_sasaran_opd', sasaran: sasaran %>
+                    <% end %>
+                    <%# tactical #%>
+                    <% str_opd.strategi_bawahans.each do |tact| %>
                       <div class="nobreak m-3"></div>
-                      <%# operational #%>
-                      <table class="table m-0 p-0 w-100 operational-pohon text-white">
-                        <tr>
-                          <td class="text-wrap">Operational</td>
-                        </tr>
-                      </table>
-                      <% tact.strategi_bawahans.each do |operational| %>
-                        <% operational.sasarans.dengan_nip.where(tahun: @tahun).each do |sasaran| %>
-                          <%= render 'tabel_sasaran_opd', sasaran: sasaran %>
+                      <% tact.sasarans.dengan_nip.where(tahun: @tahun).each do |sasaran| %>
+                        <table class="table m-0 p-0 w-100 tactical-pohon text-white">
+                          <tr>
+                            <td class="text-wrap">Tactical</td>
+                          </tr>
+                        </table>
+                        <%= render 'tabel_sasaran_opd', sasaran: sasaran %>
+                        <div class="nobreak m-3"></div>
+                        <%# operational #%>
+                        <table class="table m-0 p-0 w-100 operational-pohon text-white">
+                          <tr>
+                            <td class="text-wrap">Operational</td>
+                          </tr>
+                        </table>
+                        <% tact.strategi_bawahans.each do |operational| %>
+                          <% operational.sasarans.dengan_nip.where(tahun: @tahun).each do |sasaran| %>
+                            <%= render 'tabel_sasaran_opd', sasaran: sasaran %>
+                          <% end %>
                         <% end %>
                       <% end %>
                     <% end %>
                   <% end %>
                 <% end %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-<% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+</div>

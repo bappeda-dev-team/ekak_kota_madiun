@@ -5,6 +5,12 @@ td {
   border-collapse: collapse;
 }
 
+caption {
+  caption-side: top;
+  padding: 10px;
+  font-weight: bolder;
+}
+
 .kop {
   text-align: center;
   border: 1px solid #000000;
