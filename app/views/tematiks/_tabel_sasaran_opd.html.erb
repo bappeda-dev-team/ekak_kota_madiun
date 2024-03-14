@@ -1,0 +1,12 @@
+<table class="table table-bordered m-0 p-0 w-100">
+  <tr>
+    <td class="text-wrap" rowspan="<%= sasaran.indikator_sasarans.size + 1 %>" width="550px"><%= sasaran %></td>
+  </tr>
+  <% sasaran.indikator_sasarans.each do |indikator| %>
+    <tr>
+      <td class="text-wrap" width="350px"><%= indikator %></td>
+      <td class="text-wrap" width="150px"><%= indikator.target %></td>
+      <td class="text-wrap" width="250px"><%= indikator.satuan %></td>
+    </tr>
+  <% end %>
+</table>

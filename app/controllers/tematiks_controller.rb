@@ -27,7 +27,6 @@ class TematiksController < ApplicationController
                               role: 'sub_pohon_kota')
     @sasaran_kota = pohon_sub.sub_pohons.where(pohonable_type: 'SubSubTematik',
                                                tahun: @tahun)
-    @sasaran_opds = @sasaran_kota.flat_map(&:sub_pohons)
     respond_to do |format|
       format.html
       format.pdf do

@@ -1,82 +1,88 @@
-<%= content_for :html_title, "Rencana Aksi Daerah" %>
-<%= content_for :navigation do %>
-  <li class="breadcrumb-item active" aria-current="page">Rencana Aksi Daerah</li>
-<% end %>
-<% content_for :view_utama do %>
-  <%= render 'shared/card_layout_subtitle', title: "Rencana Aksi Daerah", sub_title: @sub_tematik, sub_title_2: @tahun do %>
-    <div class="d-grid gap-2">
-      <% @sasaran_kota.each.with_index(1) do |sas, no| %>
-        <div>
-          <h5>Sasaran Kota   : <%= sas.pohonable %></h5>
-          <% sas.pohonable.indikators.each do |ind|%>
-            <h5>Indikator      : <%= ind  %></h5>
-            <h5>Target/Satuan  : <%= ind.target %> <%= ind.satuan %></h5>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-    <div class="table-responsive">
-      <table class="table table-bordered align-items-center">
-        <thead class="thead-tujuan">
-          <tr class="header-tujuan">
-            <th class="border" scope="col">No.</th>
-            <th class="border text-center" scope="col">Perangkat Daerah</th>
-            <th class="border text-center" scope="col">Sasaran OPD</th>
-            <th class="border text-center" scope="col">Indikator</th>
-            <th class="border text-center" scope="col">Target</th>
-            <th class="border text-center" scope="col">Satuan</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @sasaran_opds.each.with_index(1) do |sasaran,no| %>
-            <% rowspan = sasaran.pohonable.indikators.size + 1 %>
+<div class="kop">
+  <div class="kop-judul">
+    <h2>LAPORAN RENCANA AKSI DAERAH</h2>
+  </div>
+  <div class="kop-opd">
+    <h3>SUB TEMATIK <%= @sub_tematik %> KOTA MADIUN</h3>
+  </div>
+  <div class="kop-tahun">
+    <h3>Tahun <%= @tahun %>/2023</h3>
+  </div>
+</div>
+<% @sasaran_kota.each.with_index(1) do |sas, no| %>
+  <div class="d-grid gap-2">
+    <div>
+      <h5>Sasaran Kota   : <%= sas.pohonable.sasaran_kotum %></h5>
+      <% sas.pohonable.indikators.each do |ind|%>
+        <h5>Indikator      : <%= ind  %></h5>
+        <h5>Target/Satuan  : <%= ind.target %> <%= ind.satuan %></h5>
+      <% end %>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-bordered align-items-center">
+      <tr>
+        <th width="20px">No.</th>
+        <th width="450px">Perangkat Daerah</th>
+        <th class="p-0 m-0">
+          <table class="m-0 p-0 w-100">
             <tr>
-              <td class="border text-wrap" rowspan="<%= rowspan %>"><%= no %></td>
-              <td class="border text-wrap" rowspan="<%= rowspan %>"><%= sasaran.opd %></td>
-              <td class="border text-wrap" rowspan="<%= rowspan %>" width="550px"><%= sasaran.pohonable.to_s %></td>
+              <th width="550px">Sasaran OPD</th>
+              <th width="350px">Indikator</th>
+              <th width="150px">Target</th>
+              <th width="250px">Satuan</th>
             </tr>
-            <% sasaran.pohonable.indikators.each do |indikator| %>
-              <tr>
-                <td class="border text-wrap" width="550px"><%= indikator %></td>
-                <td class="border text-wrap"><%= indikator.target %></td>
-                <td class="border text-wrap"><%= indikator.satuan %></td>
-              </tr>
-            <% end %>
-            <% if sasaran.sub_pohons.any? %>
-              <% sasaran.sub_pohons.each.with_index(1) do |tactical, no| %>
-                <% rowspan = tactical.pohonable.indikators.size + 1 %>
-                <tr class="tactical-pohon">
-                  <td class="border text-white text-wrap" colspan="2" rowspan="<%= rowspan %>">Tactical <%= sasaran.sub_pohons.size > 1 ? no : '' %></td>
-                  <td class="border text-white text-wrap" width="550px" rowspan="<%= rowspan %>"><%= tactical.pohonable.to_s %></td>
-                </tr>
-                <% tactical.pohonable.indikators.each do |indikator| %>
-                  <tr>
-                    <td class="border text-wrap" width="550px"><%= indikator %></td>
-                    <td class="border text-wrap"><%= indikator.target %></td>
-                    <td class="border text-wrap"><%= indikator.satuan %></td>
-                  </tr>
-                <% end %>
-                <% if tactical.sub_pohons.any? %>
-                  <% tactical.sub_pohons.each.with_index(1) do |operational, no| %>
-                    <% rowspan = operational.pohonable.indikators.size + 1 %>
-                    <tr class="operational-pohon">
-                      <td class="border text-wrap" colspan="2" rowspan="<%= rowspan %>">Operational <%= tactical.sub_pohons.size > 1 ? no : '' %></td>
-                      <td class="border text-wrap" width="550px" rowspan="<%= rowspan %>"><%= operational.pohonable.to_s %></td>
-                    </tr>
-                    <% operational.pohonable.indikators.each do |indikator| %>
+          </table>
+        </th>
+      </tr>
+      <tbody>
+        <% sas.sub_pohons.group_by(&:opd).each.with_index(1) do |(opd, strategi_opds), no| %>
+          <div class="alwaysbreak m-3"></div>
+          <tr>
+            <td class="text-wrap text-center" width="20px"><%= no %></td>
+            <td class="text-wrap" width="450px"><%= opd %></td>
+            <td class="p-0 m-0">
+              <% strategi_opds.each do |strategi| %>
+                <% strategi.pohonable.strategi_diterima_opd.each do |str_opd| %>
+                  <div class="nobreak m-3"></div>
+                  <% str_opd.sasarans.dengan_nip.where(tahun: @tahun).each do |sasaran| %>
+                    <table class="table m-0 p-0 w-100 strategi-pohon text-white">
                       <tr>
-                        <td class="border text-wrap" width="550px"><%= indikator %></td>
-                        <td class="border text-wrap"><%= indikator.target %></td>
-                        <td class="border text-wrap"><%= indikator.satuan %></td>
+                        <td class="text-wrap">Strategic</td>
                       </tr>
+                    </table>
+                    <%= render 'tabel_sasaran_opd', sasaran: sasaran %>
+                  <% end %>
+                  <%# tactical #%>
+                  <% str_opd.strategi_bawahans.each do |tact| %>
+                    <div class="nobreak m-3"></div>
+                    <% tact.sasarans.dengan_nip.where(tahun: @tahun).each do |sasaran| %>
+                      <table class="table m-0 p-0 w-100 tactical-pohon text-white">
+                        <tr>
+                          <td class="text-wrap">Tactical</td>
+                        </tr>
+                      </table>
+                      <%= render 'tabel_sasaran_opd', sasaran: sasaran %>
+                      <div class="nobreak m-3"></div>
+                      <%# operational #%>
+                      <table class="table m-0 p-0 w-100 operational-pohon text-white">
+                        <tr>
+                          <td class="text-wrap">Operational</td>
+                        </tr>
+                      </table>
+                      <% tact.strategi_bawahans.each do |operational| %>
+                        <% operational.sasarans.dengan_nip.where(tahun: @tahun).each do |sasaran| %>
+                          <%= render 'tabel_sasaran_opd', sasaran: sasaran %>
+                        <% end %>
+                      <% end %>
                     <% end %>
                   <% end %>
                 <% end %>
               <% end %>
-            <% end %>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <% end %>

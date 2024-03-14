@@ -258,4 +258,8 @@ class Strategi < ApplicationRecord
       pohon.id_strategi_parent
     end
   end
+
+  def strategi_diterima_opd
+    StrategiPohon.where(strategi_cascade_link: id)
+  end
 end
