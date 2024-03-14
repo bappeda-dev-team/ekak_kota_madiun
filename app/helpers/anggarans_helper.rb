@@ -24,9 +24,15 @@ module AnggaransHelper
     end
   end
 
-  def uraian_kode(kode_barang, tahun, jenis_anggaran)
+  def uraian_kode(kode_barang, tahun, jenis_anggaran, opd_id)
     # update using delgate method polymorphic
-    Search::AllAnggaran.find_by(kode_barang: kode_barang, tahun: tahun, searchable_type: jenis_anggaran).uraian_barang
+    uraians = Search::AllAnggaran.where(kode_barang: kode_barang, tahun: tahun, searchable_type: jenis_anggaran)
+
+    if uraians.size > 1
+      uraians.select { |search| search.searchable.opd_id == opd_id }.first
+    else
+      uraians.first
+    end
   rescue NoMethodError
     'Tidak Ditemukan'
   end

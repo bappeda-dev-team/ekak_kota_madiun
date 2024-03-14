@@ -92,7 +92,7 @@
                     <% anggaran.perhitungans.includes([:koefisiens, :pajak]).order(:created_at).each do |hitung| %>
                       <tr class="rincian-anggaran">
                         <td></td>
-                        <td><%= uraian_rincian_anggaran(hitung) %></td>
+                        <td class="uraian-anggaran"><%= uraian_rincian_anggaran(hitung, anggaran.sasaran.opd.id) %></td>
                         <td class="text-center"><% hitung.koefisiens.each.with_index(1) do |koef, index|%>
                             <%= koef.volume %> <%= koef.satuan_volume %> <%= 'x' if index < hitung.koefisiens.length %>
                           <% end %>

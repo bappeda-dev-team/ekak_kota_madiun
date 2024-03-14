@@ -129,7 +129,7 @@ class LaporanRkaPdf < Prawn::Document
             header_anggaran << [rekening_anggaran(anggaran.kode_rek), { content: anggaran.uraian, colspan: 5 },
                                 { content: "Rp. #{number_with_delimiter(anggaran.jumlah)}", align: :right }]
             anggaran.perhitungans.each do |perhitungan|
-              deskripsi = perhitungan.spesifikasi&.include?('Belanja Gaji') ? perhitungan.deskripsi : uraian_kode(perhitungan.deskripsi)
+              deskripsi = perhitungan.spesifikasi&.include?('Belanja Gaji') ? perhitungan.deskripsi : uraian_kode_barang(perhitungan.deskripsi)
               header_anggaran << ['', deskripsi, perhitungan.list_koefisien, perhitungan.satuan,
                                   { content: "Rp. #{number_with_delimiter(perhitungan.harga)}", align: :right },
                                   { content: perhitungan.plus_pajak.to_s },
@@ -164,7 +164,7 @@ class LaporanRkaPdf < Prawn::Document
     end
   end
 
-  def uraian_kode(kode_barang)
+  def uraian_kode_barang(kode_barang)
     # update using delgate method polymorphic
     Search::AllAnggaran.find_by_kode_barang(kode_barang).uraian_barang
   rescue NoMethodError

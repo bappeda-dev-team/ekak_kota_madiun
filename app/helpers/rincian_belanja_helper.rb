@@ -9,14 +9,15 @@ module RincianBelanjaHelper
     end
   end
 
-  def uraian_rincian_anggaran(hitung)
+  def uraian_rincian_anggaran(hitung, opd_id)
     tahun = hitung.tahun
     if hitung.deskripsi.downcase.include?('lain_lain') || hitung.spesifikasi.include?('Belanja Gaji')
       uraian = hitung.deskripsi
       spesifikasi = hitung.spesifikasi
     else
-      uraian = uraian_kode(hitung.deskripsi, hitung.tahun, hitung.jenis_anggaran)
-      spesifikasi = spesifikasi_anggaran(hitung.deskripsi, hitung.tahun, hitung.jenis_anggaran)
+      barang = uraian_kode(hitung.deskripsi, hitung.tahun, hitung.jenis_anggaran, opd_id)
+      uraian = barang.uraian_barang
+      spesifikasi = barang.spesifikasi
     end
     "#{uraian} <br/> #{spesifikasi} <br/> - #{tahun}".html_safe
   end
