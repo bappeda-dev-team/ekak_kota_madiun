@@ -18,11 +18,7 @@ class PerhitungansController < ApplicationController
 
   # GET /perhitungans/1/edit
   def edit
-    param = @perhitungan.deskripsi
-    tahun = @perhitungan.tahun
-    @selected = Search::AllAnggaran
-                .where('kode_barang ILIKE ?', "%#{param}%")
-                .where('tahun = ?', tahun)
+    @selected = @perhitungan.deskripsi_anggaran
 
     @jenis_anggaran = if @perhitungan.jenis_anggaran.blank?
                         @selected.first.searchable_type

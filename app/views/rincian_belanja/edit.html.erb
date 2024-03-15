@@ -124,7 +124,7 @@
                         <td class="me-1 text-end">Rp. <%= number_with_delimiter(hitung.harga) %></td>
                         <td class="text-end"><%= (hitung.pajak.nil? ? 0 : hitung.pajak.potongan * 100).to_i %> %</td>
                         <td class="text-end">Rp. <%= number_with_delimiter(hitung.harga_plus_pajak.nil? ? 0 : hitung.harga_plus_pajak) %></td>
-                        <td class="uang text-end">Rp. <%= number_with_delimiter((hitung.total)) %></td>
+                        <td class="uang text-end">Rp. <%= number_with_delimiter(hitung.total) %></td>
                         <td>
                           <div class="d-grid gap-3 p-3">
                             <%= link_to "Edit Rincian", link_edit_anggaran(anggaran, hitung), remote: true,

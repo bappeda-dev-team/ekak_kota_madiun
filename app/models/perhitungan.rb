@@ -133,4 +133,23 @@ class Perhitungan < ApplicationRecord
       0
     end
   end
+
+  def deskripsi_anggaran
+    opd_id = anggaran.sasaran.opd.id
+    uraians = Search::AllAnggaran.where(kode_barang: deskripsi,
+                                        tahun: tahun,
+                                        searchable_type: jenis_anggaran,
+                                        harga_satuan: harga.to_i)
+    if uraians.size > 1
+      uraians.select { |search| search.searchable.opd_id == opd_id }
+    else
+      uraians
+    end
+  end
+
+  def uraian_barang
+    deskripsi_anggaran.first.uraian_barang
+  rescue NoMethodError
+    'Tidak Ditemukan'
+  end
 end

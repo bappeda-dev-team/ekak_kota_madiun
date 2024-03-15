@@ -16,9 +16,8 @@ module RincianBelanjaHelper
       uraian = hitung.deskripsi
       spesifikasi = hitung.spesifikasi
     else
-      barang = uraian_kode(hitung.deskripsi, hitung.tahun, hitung.jenis_anggaran, opd_id)
-      uraian = barang.uraian_barang
-      spesifikasi = barang.spesifikasi
+      uraian = hitung.uraian_barang
+      spesifikasi = hitung.spesifikasi
     end
     "#{uraian} <br/> #{spesifikasi} <br/> - #{tahun}".html_safe
   end
