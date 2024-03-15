@@ -129,14 +129,14 @@ class Opd < ApplicationRecord
     ProgramKegiatan.where(kode_opd: kode_opd)
                    .where.not(kode_skpd: [nil, ""])
                    .uniq { |pk| pk.values_at(:kode_giat, :id_sub_unit) }
-                   .sort_by { |pk| pk.values_at(:kode_giat, :id_sub_unit) }
+                   .sort_by { |pk| pk.values_at(:kode_giat) }
   end
 
   def subkegiatans_renstra
     ProgramKegiatan.where(kode_opd: kode_opd)
                    .where.not(kode_skpd: [nil, ""])
                    .uniq { |pk| pk.values_at(:kode_sub_giat, :id_sub_unit) }
-                   .sort_by { |pk| pk.values_at(:kode_sub_giat, :id_sub_unit) }
+                   .sort_by { |pk| pk.values_at(:kode_sub_giat) }
   end
 
   def text_urusan
