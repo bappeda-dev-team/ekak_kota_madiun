@@ -129,7 +129,7 @@ class LaporanRkaPdf < Prawn::Document
             header_anggaran << [rekening_anggaran(anggaran.kode_rek), { content: anggaran.uraian, colspan: 5 },
                                 { content: "Rp. #{number_with_delimiter(anggaran.jumlah)}", align: :right }]
             anggaran.perhitungans.each do |perhitungan|
-              deskripsi = perhitungan.spesifikasi&.include?('Belanja Gaji') ? perhitungan.deskripsi : uraian_kode_barang(perhitungan.deskripsi)
+              deskripsi = perhitungan.spesifikasi&.include?('Belanja Gaji') ? perhitungan.deskripsi : perhitungan.uraian_barang
               header_anggaran << ['', deskripsi, perhitungan.list_koefisien, perhitungan.satuan,
                                   { content: "Rp. #{number_with_delimiter(perhitungan.harga)}", align: :right },
                                   { content: perhitungan.plus_pajak.to_s },
