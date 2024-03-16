@@ -15,6 +15,7 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  hspk_id                :bigint
+#  opd_id                 :bigint
 #
 FactoryBot.define do
   factory :anggaran_hspk_umum do

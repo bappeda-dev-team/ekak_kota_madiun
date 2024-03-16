@@ -868,6 +868,7 @@ Rails.application.routes.draw do
   # Tahapan
   # Anggaran
   get "/anggaran_ssh_search", to: "anggaran_sshes#anggaran_ssh_search"
+  get "/anggaran_ssh_find", to: "anggaran_sshes#anggaran_ssh_find"
   get "/anggaran_jenis_search", to: "anggaran_sshes#anggaran_jenis_search"
   get "/anggaran_spesifikasi_search", to: "anggaran_sshes#anggaran_spesifikasi_search"
   get "/anggaran_hspk_search", to: "anggaran_hspks#anggaran_hspk_search"

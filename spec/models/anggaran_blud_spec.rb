@@ -13,6 +13,7 @@
 #  uraian_kelompok_barang :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  opd_id                 :bigint
 #
 require 'rails_helper'
 

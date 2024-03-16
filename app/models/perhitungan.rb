@@ -134,8 +134,11 @@ class Perhitungan < ApplicationRecord
     end
   end
 
+  def opd_id
+    anggaran.sasaran.opd.id
+  end
+
   def deskripsi_anggaran
-    opd_id = anggaran.sasaran.opd.id
     uraians = Search::AllAnggaran.where(tahun: tahun,
                                         searchable_type: jenis_anggaran,
                                         harga_satuan: harga.to_i)
@@ -153,11 +156,7 @@ class Perhitungan < ApplicationRecord
     'Tidak Ditemukan'
   end
 
-  private
-
-  def numeric_deskripsi?
-    !Float(deskripsi).nil?
-  rescue StandardError
-    false
+  def usulan_opd?
+    deskripsi_anggaran.first.searchable.opd_id.present?
   end
 end

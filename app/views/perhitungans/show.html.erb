@@ -6,12 +6,24 @@
   <%= @perhitungan.anggaran.uraian %>
 </p>
 <p>
+  <strong>Jenis Rekening :</strong>
+  <%= @perhitungan.deskripsi_anggaran.first.searchable_type %>
+  |
   <strong>Kode Barang :</strong>
   <%= @perhitungan.deskripsi %>
   |
   <strong>Barang ID :</strong>
   <%= @perhitungan.barang_id %>
+  |
+  <strong>Tahun :</strong>
+  <%= @perhitungan.tahun %>
 </p>
+<% if @perhitungan.usulan_opd? %>
+  <p>
+    <strong>OPD Pengusul :</strong>
+    <%= @perhitungan.deskripsi_anggaran.first.searchable.opd %>
+  </p>
+<% end %>
 |
 <div class="ps-2">
   <p>

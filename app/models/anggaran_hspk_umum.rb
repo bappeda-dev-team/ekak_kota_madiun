@@ -15,10 +15,13 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  hspk_id                :bigint
+#  opd_id                 :bigint
 #
 class AnggaranHspkUmum < ApplicationRecord
   validates :kode_barang, presence: true
   validates :kode_kelompok_barang, presence: true
   validates :uraian_barang, presence: true
   validates :harga_satuan, numericality: true
+
+  belongs_to :opd, optional: true
 end

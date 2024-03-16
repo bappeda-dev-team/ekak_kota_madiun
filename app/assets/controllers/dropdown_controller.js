@@ -10,6 +10,8 @@ export default class extends Controller {
     tipe: String,
     tahun: String,
     barang: String,
+    perhitunganId: String,
+    opd: String,
     rekening: String,
     parent: String,
     url: String,
@@ -162,7 +164,10 @@ export default class extends Controller {
     if (this.uraianValue.length > 0) {
       $.ajax({
         type: "GET",
-        url: `${this.urlValue}?q=${this.uraianValue}&tahun=${this.tahunValue}&jenisUraian=${this.tipeValue}&barangId=${this.barangValue}`,
+        url: `/anggaran_ssh_find.json`,
+        data: {
+          perhitungan_id: this.perhitunganIdValue
+        }
       }).then(function (data) {
         const data_first = data.results[0];
         const options = new Option(data_first.text, data_first.id, true, true);
@@ -258,6 +263,7 @@ export default class extends Controller {
 
   fill_spesifikasi_satuan_harga(e) {
     const data_barang = e.detail.data;
+    console.log(data_barang)
     $("#perhitungan_barang_id").val(data_barang.barang_id);
     $("#spesifikasi").val(data_barang.spesifikasi);
     $("#satuan").val(data_barang.satuan);

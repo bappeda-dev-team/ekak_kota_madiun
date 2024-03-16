@@ -16,13 +16,18 @@ class AnggaranSshesController < ApplicationController
     tahun = params[:tahun] || ''
     jenis_uraian = params[:jenisUraian] || ''
     @anggaran_sshes = Search::AllAnggaran
-                      .where('uraian_barang ILIKE ? or spesifikasi ILIKE ? or kode_barang ILIKE ?',
-                             "%#{param}%", "%#{param}%", "%#{param}%")
                       .where('tahun = ?', tahun)
                       .where('searchable_type ILIKE ?', "%#{jenis_uraian}%")
+                      .where("concat_ws(' ', kode_barang, searchable_id, uraian_barang, spesifikasi) ILIKE ?", "%#{param}%")
                       .limit(80)
                       .includes(:searchable)
                       .collect(&:searchable)
+  end
+
+  def anggaran_ssh_find
+    perhitungan_id = params[:perhitungan_id]
+    perhitungan = Perhitungan.find(perhitungan_id)
+    @anggaran_sshes = perhitungan.deskripsi_anggaran
   end
 
   def anggaran_spesifikasi_search

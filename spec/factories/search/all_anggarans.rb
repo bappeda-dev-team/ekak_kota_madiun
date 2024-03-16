@@ -9,6 +9,7 @@
 #  spesifikasi     :string
 #  tahun           :string
 #  uraian_barang   :string
+#  opd_id          :bigint
 #  searchable_id   :bigint
 #
 FactoryBot.define do

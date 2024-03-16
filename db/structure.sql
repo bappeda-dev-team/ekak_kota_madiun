@@ -264,7 +264,8 @@ CREATE TABLE public.anggaran_bluds (
     harga_satuan bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    tahun character varying
+    tahun character varying,
+    opd_id bigint
 );
 
 
@@ -304,7 +305,8 @@ CREATE TABLE public.anggaran_hspk_umums (
     id_standar_harga character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    hspk_id bigint
+    hspk_id bigint,
+    opd_id bigint
 );
 
 
@@ -2939,6 +2941,7 @@ CREATE VIEW public.search_all_anggarans AS
     anggaran_sshes.satuan,
     anggaran_sshes.harga_satuan,
     anggaran_sshes.tahun,
+    anggaran_sshes.opd_id,
     'AnggaranSsh'::text AS searchable_type,
     anggaran_sshes.id AS searchable_id
    FROM public.anggaran_sshes
@@ -2949,6 +2952,7 @@ UNION
     anggaran_sbus.satuan,
     anggaran_sbus.harga_satuan,
     anggaran_sbus.tahun,
+    anggaran_sbus.opd_id,
     'AnggaranSbu'::text AS searchable_type,
     anggaran_sbus.id AS searchable_id
    FROM public.anggaran_sbus
@@ -2959,6 +2963,7 @@ UNION
     anggaran_hspks.satuan,
     anggaran_hspks.harga_satuan,
     anggaran_hspks.tahun,
+    anggaran_hspks.opd_id,
     'AnggaranHspk'::text AS searchable_type,
     anggaran_hspks.id AS searchable_id
    FROM public.anggaran_hspks
@@ -2969,6 +2974,7 @@ UNION
     anggaran_bluds.satuan,
     anggaran_bluds.harga_satuan,
     anggaran_bluds.tahun,
+    anggaran_bluds.opd_id,
     'AnggaranBlud'::text AS searchable_type,
     anggaran_bluds.id AS searchable_id
    FROM public.anggaran_bluds
@@ -2979,6 +2985,7 @@ UNION
     anggaran_hspk_umums.satuan,
     anggaran_hspk_umums.harga_satuan,
     anggaran_hspk_umums.tahun,
+    anggaran_hspk_umums.opd_id,
     'AnggaranHspkUmum'::text AS searchable_type,
     anggaran_hspk_umums.id AS searchable_id
    FROM public.anggaran_hspk_umums
@@ -2989,6 +2996,7 @@ UNION
     anggaran_asbs.satuan,
     anggaran_asbs.harga_satuan,
     anggaran_asbs.tahun,
+    anggaran_asbs.opd_id,
     'AnggaranAsb'::text AS searchable_type,
     anggaran_asbs.id AS searchable_id
    FROM public.anggaran_asbs
@@ -2999,6 +3007,7 @@ UNION
     anggaran_sbks.satuan,
     anggaran_sbks.harga_satuan,
     anggaran_sbks.tahun,
+    anggaran_sbks.opd_id,
     'AnggaranSbk'::text AS searchable_type,
     anggaran_sbks.id AS searchable_id
    FROM public.anggaran_sbks;
@@ -6408,6 +6417,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240228025145'),
 ('20240229033327'),
 ('20240229033927'),
-('20240229142322');
+('20240229142322'),
+('20240316223118'),
+('20240316223419'),
+('20240316223521');
 
 

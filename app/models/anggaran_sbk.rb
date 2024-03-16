@@ -19,4 +19,6 @@
 class AnggaranSbk < ApplicationRecord
   validates :kode_barang, presence: true
   validates :kode_kelompok_barang, presence: true
+
+  belongs_to :opd, optional: true
 end
