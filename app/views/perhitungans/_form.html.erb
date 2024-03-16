@@ -47,12 +47,14 @@
            dropdown_uraian_value: "#{form.object.deskripsi}",
            dropdown_tahun_value: "#{form.object.tahun}",
            dropdown_tipe_value: "#{form.object.jenis_anggaran}",
+           dropdown_barang_value: "#{form.object.id}",
            action: 'change-select@document->dropdown#fill_spesifikasi_satuan_harga
 tahun-ssh@document->dropdown#fill_tahun
 jenis-ssh@document->dropdown#fill_jenis_uraian'
        }} %>
   </div>
   <div class="field">
+    <%= form.hidden_field :barang_id %>
     <%= form.label :spesifikasi, {class: "form-label"} %>
     <%= form.text_field :spesifikasi, {id: 'spesifikasi', class: "form-control", readonly: true} %>
   </div>
