@@ -263,7 +263,6 @@ export default class extends Controller {
 
   fill_spesifikasi_satuan_harga(e) {
     const data_barang = e.detail.data;
-    console.log(data_barang)
     $("#perhitungan_barang_id").val(data_barang.barang_id);
     $("#spesifikasi").val(data_barang.spesifikasi);
     $("#satuan").val(data_barang.satuan);
