@@ -1,24 +1,44 @@
 <p id="notice"><%= notice %></p>
+<h5>Rincian Perhitungan Belanja</h5>
+<br>
 <p>
-  <strong>Anggaran :</strong>
-  <%= @perhitungan.anggaran.uraian %> -
-  <%= @perhitungan.uraian_barang %>
+  <strong>Rekening Anggaran :</strong>
+  <%= @perhitungan.anggaran.uraian %>
 </p>
 <p>
-  <% @perhitungan.koefisiens.each do |koef| %>
-    <p>
-      <strong>Volume:</strong>
-      <%= koef.volume %>
-    </p>
-    <p>
-      <strong>Satuan:</strong>
-      <%= koef.satuan_volume %>
-    </p>
-  <% end %>
+  <strong>Kode Barang :</strong>
+  <%= @perhitungan.deskripsi %>
+  |
+  <strong>Barang ID :</strong>
+  <%= @perhitungan.barang_id %>
 </p>
+|
+<div class="ps-2">
+  <p>
+    <strong>Nama Barang :</strong>
+    <%= @perhitungan.uraian_barang %>
+  </p>
+  <p>
+    <strong>Spesifikasi :</strong>
+    <%= @perhitungan.spesifikasi %>
+  </p>
+  <p>
+    <strong>Harga Satuan :</strong>
+    Rp. <%= number_with_delimiter(@perhitungan.harga) %>
+  </p>
+  <p>
+    <% @perhitungan.koefisiens.each do |koef| %>
+      <p>
+        <strong>Volume:</strong>
+        <%= koef.volume %> <%= koef.satuan_volume %>
+      </p>
+    <% end %>
+  </p>
+</div>
+|
 <p>
-  <strong>Harga:</strong>
-  <%= @perhitungan.harga %>
+  <strong>Total :</strong>
+  Rp. <%= number_with_delimiter(@perhitungan.total) %>
 </p>
 <%= link_to 'Edit', edit_perhitungan_path(@perhitungan) %> |
 <%= link_to 'Back', perhitungans_path %>

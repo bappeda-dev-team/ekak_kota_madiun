@@ -136,10 +136,16 @@ class Perhitungan < ApplicationRecord
 
   def deskripsi_anggaran
     opd_id = anggaran.sasaran.opd.id
-    uraians = Search::AllAnggaran.where(kode_barang: deskripsi,
-                                        tahun: tahun,
-                                        searchable_type: jenis_anggaran,
-                                        harga_satuan: harga.to_i)
+    uraians = if numeric_deskripsi?
+                Search::AllAnggaran.where(tahun: tahun,
+                                          searchable_type: jenis_anggaran,
+                                          searchable_id: deskripsi)
+              else
+                Search::AllAnggaran.where(kode_barang: deskripsi,
+                                          tahun: tahun,
+                                          searchable_type: jenis_anggaran,
+                                          harga_satuan: harga.to_i)
+              end
     if uraians.size > 1
       uraians.select { |search| search.searchable.opd_id == opd_id }
     else
@@ -151,5 +157,13 @@ class Perhitungan < ApplicationRecord
     deskripsi_anggaran.first.uraian_barang
   rescue NoMethodError
     'Tidak Ditemukan'
+  end
+
+  private
+
+  def numeric_deskripsi?
+    !Float(deskripsi).nil?
+  rescue StandardError
+    false
   end
 end

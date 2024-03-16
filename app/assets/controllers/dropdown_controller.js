@@ -9,6 +9,7 @@ export default class extends Controller {
     eventName: { type: String, default: "change-select" },
     tipe: String,
     tahun: String,
+    barang: String,
     rekening: String,
     parent: String,
     url: String,
@@ -69,6 +70,26 @@ export default class extends Controller {
     return options;
   }
 
+  get options_for_anggarans() {
+    let options = {
+      width: "100%",
+      theme: "bootstrap-5",
+      dropdownParent: this.parentValue,
+      ajax: {
+        url: this.urlValue,
+        data: (params) => ({
+          tahun: this.tahunValue,
+          jenisUraian: this.tipeValue,
+          barang_id: this.barangValue,
+          q: params.term,
+        }),
+        delay: 800,
+      },
+      cache: true,
+    };
+    return options;
+  }
+
   connect() {
     if (this.displayValue) {
       this.jenis_dropdown_generator();
@@ -97,7 +118,7 @@ export default class extends Controller {
         this.dropdown_jenis_anggaran(this.options_with_ajax);
         break;
       case "uraian_anggaran":
-        this.dropdown_uraian_anggaran(this.options_with_ajax);
+        this.dropdown_uraian_anggaran(this.options_for_anggarans);
         break;
       case "chain":
         this.dropdown_with_action(this.default_options);
@@ -141,7 +162,7 @@ export default class extends Controller {
     if (this.uraianValue.length > 0) {
       $.ajax({
         type: "GET",
-        url: `${this.urlValue}?q=${this.uraianValue}&tahun=${this.tahunValue}&jenisUraian=${this.tipeValue}`,
+        url: `${this.urlValue}?q=${this.uraianValue}&tahun=${this.tahunValue}&jenisUraian=${this.tipeValue}&barangId=${this.barangValue}`,
       }).then(function (data) {
         const data_first = data.results[0];
         const options = new Option(data_first.text, data_first.id, true, true);
@@ -237,6 +258,7 @@ export default class extends Controller {
 
   fill_spesifikasi_satuan_harga(e) {
     const data_barang = e.detail.data;
+    $("#perhitungan_barang_id").val(data_barang.barang_id);
     $("#spesifikasi").val(data_barang.spesifikasi);
     $("#satuan").val(data_barang.satuan);
     $("#harga").val(data_barang.harga);
