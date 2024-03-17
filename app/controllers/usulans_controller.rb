@@ -17,16 +17,19 @@ class UsulansController < ApplicationController
     usulan = params[:usulan_id].to_i
     usulan_type = params[:usulan_type]
     u = Usulan.create(usulanable_id: usulan, usulanable_type: usulan_type, sasaran_id: sasaran)
-    usulan = usulan_type.constantize.find(usulan)
-    sasaran_update = Sasaran.find(sasaran)
-    if usulan_type == 'Mandatori'
-      sasaran_update.dasar_hukums.create!(judul: usulan.peraturan_terkait, peraturan: usulan.uraian,
-                                          tahun: usulan.tahun)
-    else
-      sasaran_update.permasalahans.create!(jenis: 'Umum', permasalahan: usulan.uraian)
-    end
     respond_to do |format|
-      if u.save && usulan.update(sasaran_id: sasaran, status: 'menunggu_persetujuan')
+      if u.save
+        usulan = u.usulanable
+        sasaran_update = u.sasaran
+        usulan.update(sasaran_id: sasaran, status: 'menunggu_persetujuan')
+        if usulan_type == 'Mandatori'
+          sasaran_update.dasar_hukums.create!(usulan_id: u.id, judul: usulan.peraturan_terkait, peraturan: usulan.uraian,
+                                              tahun: usulan.tahun)
+        else
+          # usulan_id -> Usulan (polymorph) id
+          sasaran_update.permasalahans.create!(usulan_id: u.id, jenis: 'Umum', permasalahan: usulan.uraian,
+                                               tahun: usulan.tahun)
+        end
         flash.now[:success] = 'Usulan berhasil ditambahkan'
         format.js { render 'update_sasaran_asn' }
       else
@@ -102,6 +105,15 @@ class UsulansController < ApplicationController
     @usulan = @sasaran.usulans.find(usulan_id)
     @usulan.usulanable.update(sasaran_id: nil)
     @usulan.destroy
+    # logic hapus dasar_hukum / permasalahan by usulan
+    # if usulan_type == 'Mandatori'
+    #   sasaran_update.dasar_hukums.create!(usulan_id: u.id, judul: usulan.peraturan_terkait, peraturan: usulan.uraian,
+    #                                       tahun: usulan.tahun)
+    # else
+    #   # usulan_id -> Usulan (polymorph) id
+    #   sasaran_update.permasalahans.create!(usulan_id: u.id, jenis: 'Umum', permasalahan: usulan.uraian,
+    #                                        tahun: usulan.tahun)
+    # end
 
     respond_to do |format|
       format.html { redirect_to sasaran_path(@sasaran), success: 'Usulan berhasil dihapus' }

@@ -710,7 +710,8 @@ CREATE TABLE public.dasar_hukums (
     tahun character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    sasaran_id character varying
+    sasaran_id character varying,
+    usulan_id bigint
 );
 
 
@@ -2356,7 +2357,9 @@ CREATE TABLE public.permasalahans (
     penyebab_external character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    sasaran_id bigint
+    sasaran_id bigint,
+    usulan_id bigint,
+    tahun character varying
 );
 
 
@@ -6429,6 +6432,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240316223118'),
 ('20240316223419'),
 ('20240316223521'),
-('20240317163130');
+('20240317163130'),
+('20240317191023'),
+('20240317191248'),
+('20240317191552');
 
 

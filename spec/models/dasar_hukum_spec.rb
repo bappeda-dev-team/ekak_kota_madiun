@@ -9,6 +9,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  sasaran_id :string
+#  usulan_id  :bigint
 #
 # Foreign Keys
 #
