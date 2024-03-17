@@ -13,7 +13,11 @@
   </div>
   <% unless sasaran.status == 'pengajuan' || sasaran.status == 'disetujui' %>
     <div class="card-body">
-      <p>Tambah SubKegiatan</p>
+      <% if sasaran.program_kegiatan.present? %>
+        <p>SubKegiatan terpilih :</p>
+      <% else %>
+        <p>Pilih SubKegiatan</p>
+      <% end %>
       <%= form_with(model: sasaran, local: false) do |f| %>
         <%= f.select(:program_kegiatan_id, ProgramKegiatan.where(id: sasaran.program_kegiatan_id).pluck(:nama_subkegiatan, :id), {},
         {data: { controller: 'dropdown',
@@ -26,7 +30,7 @@
       <% end %>
     </div>
   <% end %>
-  <% unless sasaran.program_kegiatan.nil? %>
+  <% if sasaran.program_kegiatan.present? %>
     <div class="card-body">
       <div class="table-responsive">
         <table class="table border">

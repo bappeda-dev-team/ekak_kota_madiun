@@ -36,17 +36,17 @@
             <th width="200px">Usulan</th>
             <th width="200px"><%= header_deskripsi %></th>
             <th width="500px"><%= header_uraian %></th>
-            <th class="text-center align-middle" width="60px">Aksi</th>
+            <th class="text-center align-middle" width="50px">Aksi</th>
           </tr>
         </thead>
         <tbody>
           <% usulans.each do |usulan| %>
             <tr>
-              <td class="text-wrap align-middle" width="20px"></td>
+              <td class="align-middle" width="20px"></td>
               <td class="text-wrap align-middle" width="200px"><%= usulan.usulan %></td>
               <td class="text-wrap align-middle" width="200px"><%= usulan.deskripsi %></td>
               <td class="text-wrap align-middle" width="500px"><%= usulan.uraian %></td>
-              <td class="text-center align-middle" width="60px">
+              <td class="text-center align-middle" width="50px">
                 <%= button_to 'Hapus', hapus_usulan_dari_sasaran_path(usulan), remote: true, class: 'btn btn-danger' %>
               </td>
             </tr>

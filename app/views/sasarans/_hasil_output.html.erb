@@ -1,20 +1,19 @@
 <div data-controller='editable-table'>
   <div class="form-edit d-none" data-editable-table-target="form">
   </div>
-
-  <table class="table" data-editable-table-target="main">
+  <table class="table table-bordered" data-editable-table-target="main">
     <thead>
       <tr>
         <th>Hasil Output</th>
         <th>Nama Output</th>
-        <th>Action</th>
+        <th class="text-center align-middle">Action</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td class="align-middle"><%= sasaran.metadata&.dig("hasil_output") %></td>
         <td class="align-middle"><%= sasaran.metadata&.dig("nama_output") || '-' %></td>
-        <td class="align-middle">
+        <td class="text-center align-middle">
           <%= link_to edit_output_sasaran_path(sasaran),
            remote: true, class: 'btn btn-outline-info',
            data: {

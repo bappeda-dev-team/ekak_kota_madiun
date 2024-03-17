@@ -14,33 +14,31 @@
   <% unless sasaran.permasalahans.nil? %>
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table">
+        <table class="table table-bordered counter">
           <thead>
             <tr>
+              <th width="20px">No.</th>
               <th>Jenis</th>
               <th>Permasalahan</th>
               <th>Penyebab Internal</th>
               <th>Penyebab External</th>
               <% unless diajukan? %>
-                <th class="text-center align-middle">Action</th>
+                <th class="text-center align-middle" width="50px">Action</th>
               <% end %>
             </tr>
           </thead>
           <tbody>
             <% sasaran.permasalahans.order(:updated_at).each do |permasalahan| %>
               <tr>
+                <td class="align-middle"></td>
                 <td class="align-middle text-wrap"><%= permasalahan.jenis %></td>
                 <td class="align-middle text-wrap"><%= permasalahan.permasalahan %></td>
                 <td class="align-middle text-wrap"><%= permasalahan.penyebab_internal %></td>
                 <td class="align-middle text-wrap"><%= permasalahan.penyebab_external %></td>
                 <% unless diajukan? %>
-                  <td class="text-center align-middle">
-                    <%= link_to 'Edit permasalahan', edit_sasaran_permasalahan_path(sasaran,permasalahan), remote: true, class: 'btn btn-outline-info text-center me-3',
-                  data: {'bs-toggle': 'modal', 'bs-target': '#form-permasalahan'} %>
-                    <%= link_to sasaran_permasalahan_path(sasaran,permasalahan), method: :delete, remote: true, data: { confirm_swal: "Yakin ingin menghapus data ini?" }, class: "btn btn-sm btn-danger" do %>
-                      <i class="fas fa-trash me-2"></i>
-                      <span>Hapus</span>
-                    <% end %>
+                  <td class="text-center align-middle" width="50px">
+                    <%= render(EditButtonComponent.new(path: edit_sasaran_permasalahan_path(sasaran, permasalahan))) %>
+                    <%= render(DeleteButtonComponent.new(path: sasaran_permasalahan_path(sasaran, permasalahan), title: 'Hapus permasalahan ?')) %>
                   </td>
                 <% end %>
               </tr>

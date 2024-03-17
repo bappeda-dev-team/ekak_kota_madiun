@@ -1,5 +1,6 @@
 class PermasalahansController < ApplicationController
   before_action :set_permasalahan, only: %i[show edit update destroy]
+  layout false, only: %i[edit new]
 
   # GET /permasalahans or /permasalahans.json
   def index
