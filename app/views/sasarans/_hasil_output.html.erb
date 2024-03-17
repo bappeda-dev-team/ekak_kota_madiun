@@ -4,23 +4,23 @@
   <table class="table table-bordered" data-editable-table-target="main">
     <thead>
       <tr>
-        <th>Hasil Output</th>
+        <th width="50px">Hasil Output</th>
         <th>Nama Output</th>
-        <th class="text-center align-middle">Action</th>
+        <th class="text-center align-middle" width="50px">Aksi</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td class="align-middle"><%= sasaran.metadata&.dig("hasil_output") %></td>
+        <td class="align-middle" width="50px"><%= sasaran.metadata&.dig("hasil_output") %></td>
         <td class="align-middle"><%= sasaran.metadata&.dig("nama_output") || '-' %></td>
-        <td class="text-center align-middle">
+        <td class="text-center align-middle" width="50px">
           <%= link_to edit_output_sasaran_path(sasaran),
-           remote: true, class: 'btn btn-outline-info',
+           remote: true, class: 'btn btn-sm btn-outline-info',
            data: {
              action: 'ajax:complete->editable-table#edit:prevent',
            } do %>
-            <span class="fas fa-pencil"></span>
-            <span>Edit Hasil Output</span>
+            <span class="fas fa-pencil-alt me-2"></span>
+            <span>Edit</span>
           <% end %>
         </td>
       </tr>

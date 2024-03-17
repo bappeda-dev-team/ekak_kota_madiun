@@ -33,7 +33,7 @@
   <% if sasaran.program_kegiatan.present? %>
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table border">
+        <table class="table table-bordered">
           <thead>
             <tr>
               <th>SubKegiatan</th>
@@ -42,7 +42,7 @@
               <th>Pagu Rankir <%= @tahun %></th>
               <th>Pagu Penetapan <%= @tahun %></th>
               <% unless diajukan? %>
-                <th class="text-center align-middle">Action</th>
+                <th class="text-center align-middle" width="50px">Aksi</th>
               <% end %>
             </tr>
           </thead>
@@ -60,8 +60,12 @@
                 Rp.  <%= number_with_delimiter(sasaran.program_kegiatan.pagu_penetapan_tahun(tahun)) %>
               </td>
               <% unless diajukan? %>
-                <td class="text-center align-middle">
-                  <%= link_to 'Hapus', hapus_program_from_sasaran_sasaran_path(sasaran), remote: true, method: :post, class: 'btn btn-danger text-center', data: {confirm_swal: "Hapus sub kegiatan?"}, params: {} %>
+                <td class="text-center align-middle" width="50px">
+                  <%= link_to hapus_program_from_sasaran_sasaran_path(sasaran), remote: true, 
+                  method: :post, class: 'btn btn-sm btn-outline-danger text-center', data: {confirm_swal: "Hapus sub kegiatan?"} do %>
+                    <i class="fa fa-trash-alt me-2"></i>
+                    <span>Hapus</span>
+                  <% end %>
                 </td>
               <% end %>
             </tr>
@@ -69,6 +73,5 @@
         </table>
       </div>
     </div>
-    <hr>
   <% end %>
 </div>
