@@ -66,4 +66,8 @@ class Mandatori < ApplicationRecord
   def usulan_tahun
     "#{usulan} (#{tahun})"
   end
+
+  def deskripsi
+    peraturan_terkait
+  end
 end

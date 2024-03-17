@@ -3021,28 +3021,36 @@ CREATE VIEW public.search_all_usulans AS
  SELECT musrenbangs.usulan,
     musrenbangs.sasaran_id,
     'Musrenbang'::text AS searchable_type,
-    musrenbangs.id AS searchable_id
+    musrenbangs.id AS searchable_id,
+    musrenbangs.tahun,
+    musrenbangs.nip_asn
    FROM public.musrenbangs
   WHERE (musrenbangs.is_active = true)
 UNION
  SELECT pokpirs.usulan,
     pokpirs.sasaran_id,
     'Pokpir'::text AS searchable_type,
-    pokpirs.id AS searchable_id
+    pokpirs.id AS searchable_id,
+    pokpirs.tahun,
+    pokpirs.nip_asn
    FROM public.pokpirs
   WHERE (pokpirs.is_active = true)
 UNION
  SELECT mandatoris.usulan,
     mandatoris.sasaran_id,
     'Mandatori'::text AS searchable_type,
-    mandatoris.id AS searchable_id
+    mandatoris.id AS searchable_id,
+    mandatoris.tahun,
+    mandatoris.nip_asn
    FROM public.mandatoris
   WHERE (mandatoris.is_active = true)
 UNION
  SELECT inovasis.usulan,
     inovasis.sasaran_id,
     'Inovasi'::text AS searchable_type,
-    inovasis.id AS searchable_id
+    inovasis.id AS searchable_id,
+    inovasis.tahun,
+    inovasis.nip_asn
    FROM public.inovasis
   WHERE (inovasis.is_active = true);
 
@@ -6420,6 +6428,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240229142322'),
 ('20240316223118'),
 ('20240316223419'),
-('20240316223521');
+('20240316223521'),
+('20240317163130');
 
 

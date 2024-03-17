@@ -9,25 +9,44 @@
     </div>
   </div>
   <div class="card-body">
+    <%= form_with(url: '/update_sasaran_asn', local: false) do |form| %>
+      <div class="field">
+        <%= form.hidden_field :sasaran_id, value: @sasaran.id   %>
+        <%= form.hidden_field :usulan_type  %>
+        <%= form.select :usulan_id, [], {include_blank: true}, 
+            {id: "#{@jenis}_dropdown",
+             data: { "placeholder": "Pilih #{title}",
+                    controller: 'dropdown',
+                    dropdown_jenis_value: 'extra',
+                    dropdown_url_value: search_usulan_user_path(format: :json, usulan_type: @jenis, nip_asn: @sasaran.user.nip_asn),
+                    action: 'change-select@document->dropdown#fill_usulan_type'
+            }} %>
+      </div>
+      <div class="actions">
+        <%= form.submit %>
+      </div>
+    <% end %>
+  </div>
+  <div class="card-body">
     <div class="table-responsive">
-      <table class="table table-usulan border counter">
+      <table class="table table-bordered counter">
         <thead>
           <tr>
-            <th>No</th>
-            <th>Usulan</th>
-            <th>Peraturan Terkait</th>
-            <th>Uraian</th>
-            <th class="text-center align-middle">Aksi</th>
+            <th width="20px">No</th>
+            <th width="200px">Usulan</th>
+            <th width="200px"><%= header_deskripsi %></th>
+            <th width="500px"><%= header_uraian %></th>
+            <th class="text-center align-middle" width="60px">Aksi</th>
           </tr>
         </thead>
         <tbody>
           <% usulans.each do |usulan| %>
             <tr>
-              <td class="text-wrap align-middle"></td>
-              <td class="text-wrap align-middle"><%= usulan.usulan %></td>
-              <td class="text-wrap align-middle"><%= usulan.try(:alamat) || usulan.try(:peraturan_terkait) %></td>
-              <td class="text-wrap align-middle"><%= usulan.uraian %></td>
-              <td class="text-center align-middle">
+              <td class="text-wrap align-middle" width="20px"></td>
+              <td class="text-wrap align-middle" width="200px"><%= usulan.usulan %></td>
+              <td class="text-wrap align-middle" width="200px"><%= usulan.deskripsi %></td>
+              <td class="text-wrap align-middle" width="500px"><%= usulan.uraian %></td>
+              <td class="text-center align-middle" width="60px">
                 <%= button_to 'Hapus', hapus_usulan_dari_sasaran_path(usulan), remote: true, class: 'btn btn-danger' %>
               </td>
             </tr>

@@ -67,4 +67,8 @@ class Inovasi < ApplicationRecord
   def usulan_tahun
     "#{usulan} (#{tahun})"
   end
+
+  def deskripsi
+    manfaat
+  end
 end

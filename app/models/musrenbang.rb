@@ -73,4 +73,8 @@ class Musrenbang < ApplicationRecord
   def usulan_tahun
     "#{usulan} (#{tahun})"
   end
+
+  def deskripsi
+    alamat
+  end
 end

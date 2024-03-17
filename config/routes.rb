@@ -564,6 +564,9 @@ Rails.application.routes.draw do
       get :matrik_renstra
     end
   end
+  namespace :search do
+    get :usulan_user
+  end
   # laporan rka
   # get "/pdf_rka/:id/:tahun", to: "program_kegiatans#pdf_rka"
   # get "/pdf_kak/:id/:tahun", to: "program_kegiatans#pdf_kak"
