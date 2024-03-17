@@ -23,8 +23,7 @@ class UsulanCardComponent < ViewComponent::Base
   end
 
   def title
-    judul = jenis_asli[:title]
-    "Usulan #{judul}"
+    jenis_asli[:title]
   end
 
   def header_deskripsi
@@ -36,6 +35,6 @@ class UsulanCardComponent < ViewComponent::Base
   end
 
   def usulans
-    @sasaran.usulans.where(usulanable_type: @usulan_type).map(&:usulanable)
+    @sasaran.usulans.where(usulanable_type: @usulan_type)
   end
 end

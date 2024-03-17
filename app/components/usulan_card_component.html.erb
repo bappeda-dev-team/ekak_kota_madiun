@@ -3,7 +3,7 @@
     <div class="row align-items-center">
       <div class="row align-items-center">
         <div class="col">
-          <h5><%= title %></h5>
+          <h5>Usulan <%= title %></h5>
         </div>
       </div>
     </div>
@@ -47,7 +47,7 @@
               <td class="text-wrap align-middle" width="200px"><%= usulan.deskripsi %></td>
               <td class="text-wrap align-middle" width="500px"><%= usulan.uraian %></td>
               <td class="text-center align-middle" width="50px">
-                <%= button_to 'Hapus', hapus_usulan_dari_sasaran_path(usulan), remote: true, class: 'btn btn-danger' %>
+                <%= render(DeleteButtonComponent.new(path: sasaran_usulan_path(@sasaran, usulan), title: 'Hapus usulan ?')) %>
               </td>
             </tr>
           <% end %>

@@ -1,5 +1,5 @@
 class UsulansController < ApplicationController
-  before_action :check_params, only: %i[update_sasaran_asn hapus_usulan_dari_sasaran]
+  before_action :check_params, only: %i[update_sasaran_asn]
 
   def index
     @tahun = cookies[:tahun] || Date.current.year
@@ -32,23 +32,6 @@ class UsulansController < ApplicationController
       else
         flash.now[:error] = 'Terjadi kesalahan'
         format.js { render 'update_sasaran_asn', status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def hapus_usulan_dari_sasaran
-    usulan = params[:usulan_id].to_i
-    usulan_type = params[:usulan_type]
-    u = Usulan.find_by(usulanable_id: usulan)
-    usulan = usulan_type.constantize.find(usulan)
-    respond_to do |format|
-      if u.destroy
-        usulan.update(sasaran_id: nil)
-        flash.now[:success] = 'Usulan berhasil dihapus'
-        format.js { render 'update_sasaran_asn' }
-      else
-        flash.now[:error] = 'Usulan gagal dihapus'
-        format.js { render 'update_sasaaran_asn', status: :unprocessable_entity }
       end
     end
   end
@@ -111,6 +94,19 @@ class UsulansController < ApplicationController
     @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
     @filename = "Laporan_USULAN_#{@jenis_asli}_#{@nama_file}_#{@waktu}.xlsx"
     render xlsx: "excel_usulan", filename: @filename, disposition: "inline"
+  end
+
+  def destroy
+    @sasaran = Sasaran.find(params[:sasaran_id])
+    usulan_id = params[:id]
+    @usulan = @sasaran.usulans.find(usulan_id)
+    @usulan.usulanable.update(sasaran_id: nil)
+    @usulan.destroy
+
+    respond_to do |format|
+      format.html { redirect_to sasaran_path(@sasaran), success: 'Usulan berhasil dihapus' }
+      format.json { head :no_content }
+    end
   end
 
   private
