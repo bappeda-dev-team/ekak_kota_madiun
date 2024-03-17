@@ -1,5 +1,6 @@
 class DasarHukumsController < ApplicationController
   before_action :set_dasar_hukum, only: %i[show edit update destroy]
+  layout false, only: %i[edit new]
 
   # GET /dasar_hukums or /dasar_hukums.json
   def index

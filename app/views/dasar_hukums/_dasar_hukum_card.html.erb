@@ -14,29 +14,27 @@
   <% unless sasaran.dasar_hukums.nil? %>
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table">
+        <table class="table table-bordered counter">
           <thead>
             <tr>
+              <th width="20px">No.</th>
               <th>Peraturan terkait</th>
               <th>Uraian</th>
               <% unless diajukan? %>
-                <th class="text-center align-middle">Action</th>
+                <th class="text-center align-middle">Aksi</th>
               <% end %>
             </tr>
           </thead>
           <tbody>
             <% sasaran.dasar_hukums.order(:updated_at).each do |dashu| %>
               <tr>
+                <td class="align-middle"></td>
                 <td class="align-middle text-wrap"><%= dashu.judul %></td>
                 <td class="align-middle text-wrap"><%= dashu.peraturan %></td>
                 <% unless diajukan? %>
-                  <td class="text-center align-middle">
-                    <%= link_to 'Edit Dasar Hukum', edit_sasaran_dasar_hukum_path(sasaran,dashu), remote: true, class: 'btn btn-outline-info text-center me-3',
-                  data: {'bs-toggle': 'modal', 'bs-target': '#form-dasarhukum'} %>
-                    <%= link_to sasaran_dasar_hukum_path(sasaran,dashu), method: :delete, remote: true, data: { confirm_swal: "Yakin ingin menghapus data ini?" }, class: "btn btn-sm btn-danger" do %>
-                      <i class="fas fa-trash me-2"></i>
-                      <span>Hapus</span>
-                    <% end %>
+                  <td class="text-center align-middle" width="50px">
+                    <%= render(EditButtonComponent.new(path: edit_sasaran_dasar_hukum_path(sasaran,dashu))) %>
+                    <%= render(DeleteButtonComponent.new(path: sasaran_dasar_hukum_path(sasaran,dashu), title: 'Hapus dasar hukum ?')) %>
                   </td>
                 <% end %>
               </tr>
