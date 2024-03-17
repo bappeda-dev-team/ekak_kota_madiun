@@ -14,7 +14,7 @@ class KriteriaController < ApplicationController
 
   # GET /kriteria/new
   def new
-    @kriterium = klass.new
+    @kriterium = Kriterium.new
     @target = 'kriteria'
   end
 
@@ -23,7 +23,7 @@ class KriteriaController < ApplicationController
 
   # POST /kriteria or /kriteria.json
   def create
-    @kriterium = klass.new(kriterium_params)
+    @kriterium = Kriterium.new(kriterium_params)
 
     if @kriterium.save
       render json: { resText: "Kriteria baru dibuat", html_content: html_content(@kriterium) }.to_json,
@@ -57,10 +57,6 @@ class KriteriaController < ApplicationController
 
   private
 
-  def klass
-    Object.const_get params[:controller].classify
-  end
-
   # Use callbacks to share common setup or constraints between actions.
   def set_kriterium
     @kriterium = Kriterium.find(params[:id])
@@ -68,7 +64,7 @@ class KriteriaController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def kriterium_params
-    params.require(klass.name.underscore.to_sym)
+    params.require(:kriterium)
           .permit(:kriteria, :poin_max, :poin_min, :keterangan, :tipe_kriteria, :type,
                   :kriteria_id)
   end

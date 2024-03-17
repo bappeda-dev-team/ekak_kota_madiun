@@ -36,13 +36,6 @@ class MusrenbangsController < ApplicationController
     end
   end
 
-  # TODO: delete, depreceated
-  def asn_musrenbang
-    nip_asn = params[:nip]
-    @musrenbangs = Musrenbang.where(nip_asn: nip_asn)
-    @musrenbang = Musrenbang.new
-  end
-
   def musrenbang_search
     tahun = cookies[:tahun] || Date.current.year.to_s
     tahun_bener = tahun.match(/murni|perubahan/) ? tahun[/[^_]\d*/, 0] : tahun
