@@ -289,7 +289,9 @@ class UsersController < ApplicationController
     confirm_password = default.password
 
     if password == confirm_password
-      @user.update(password: password)
+      password_escaped = password.sub(/.*/, "[redacted]")
+
+      @user.update(password: password_escaped)
       render json: { resText: "Password diperbarui",
                      html_content: html_content({ user: @user },
                                                 partial: 'users/user') }.to_json,
