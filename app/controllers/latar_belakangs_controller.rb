@@ -1,5 +1,6 @@
 class LatarBelakangsController < ApplicationController
   before_action :set_latar_belakang, only: %i[show edit update destroy]
+  layout false, only: %i[edit new]
 
   # GET /latar_belakangs or /latar_belakangs.json
   def index

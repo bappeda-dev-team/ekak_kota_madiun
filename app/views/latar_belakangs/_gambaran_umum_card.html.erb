@@ -14,25 +14,23 @@
   <% unless sasaran.latar_belakangs.nil? %>
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table">
+        <table class="table table-bordered counter">
           <thead>
             <tr>
+              <th width="20px">No.</th>
               <th>Gambaran Umum</th>
-              <th class="text-center align-middle">Action</th>
+              <th class="text-center align-middle" width="50px">Aksi</th>
             </tr>
           </thead>
           <tbody>
             <% sasaran.latar_belakangs.order(:updated_at).each do |latarbelakang| %>
               <tr>
+                <td class="align-middle"></td>
                 <td class="align-middle text-wrap"><%= latarbelakang.gambaran_umum %></td>
                 <% unless diajukan? %>
-                  <td class="text-center align-middle">
-                    <%= link_to 'Edit Gambaran Umum', edit_sasaran_latar_belakang_path(sasaran,latarbelakang), remote: true, class: 'btn btn-outline-info text-center me-3',
-                  data: {'bs-toggle': 'modal', 'bs-target': '#form-gambaranumum'} %>
-                    <%= link_to sasaran_latar_belakang_path(sasaran,latarbelakang), method: :delete, remote: true, data: { confirm_swal: "Yakin ingin menghapus data ini?" }, class: "btn btn-sm btn-danger" do %>
-                      <i class="fas fa-trash me-2"></i>
-                      <span>Hapus</span>
-                    <% end %>
+                  <td class="text-center align-middle" width="50px">
+                    <%= render(EditButtonComponent.new(path: edit_sasaran_latar_belakang_path(sasaran, latarbelakang))) %>
+                    <%= render(DeleteButtonComponent.new(path: sasaran_latar_belakang_path(sasaran, latarbelakang), title: 'Hapus gambaran umum ?')) %>
                   </td>
                 <% end %>
               </tr>
