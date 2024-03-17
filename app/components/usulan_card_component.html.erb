@@ -1,0 +1,39 @@
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="row align-items-center">
+        <div class="col">
+          <h5><%= title %></h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-usulan border counter">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Usulan</th>
+            <th>Peraturan Terkait</th>
+            <th>Uraian</th>
+            <th class="text-center align-middle">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% usulans.each do |usulan| %>
+            <tr>
+              <td class="text-wrap align-middle"></td>
+              <td class="text-wrap align-middle"><%= usulan.usulan %></td>
+              <td class="text-wrap align-middle"><%= usulan.try(:alamat) || usulan.try(:peraturan_terkait) %></td>
+              <td class="text-wrap align-middle"><%= usulan.uraian %></td>
+              <td class="text-center align-middle">
+                <%= button_to 'Hapus', hapus_usulan_dari_sasaran_path(usulan), remote: true, class: 'btn btn-danger' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

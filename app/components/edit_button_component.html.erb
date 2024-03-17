@@ -1,0 +1,12 @@
+<%= link_to @path,
+  remote: true,
+  class: 'btn btn-sm btn-outline-info',
+  data: {
+    controller: 'form-modal',
+    action: 'ajax:complete->form-modal#success:prevent',
+    bs_toggle: 'modal',
+    bs_target: '#form-modal'
+  } do %>
+  <i class="fa fa-pencil-alt me-2"></i>
+  <span>Edit</span>
+<% end %>

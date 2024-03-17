@@ -1,6 +1,7 @@
 class TahapansController < ApplicationController
   before_action :get_sasaran
   before_action :set_tahapan, only: %i[show edit update destroy review review_anggaran]
+  layout false, only: %i[edit new]
 
   # GET /tahapans or /tahapans.json
   def index
