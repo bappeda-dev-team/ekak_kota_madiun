@@ -4,23 +4,9 @@
       <div class="col">
         <h2 class="fs-5 fw-bold mb-0">Laporan Usulan <%= @type_alsi %></h2>
       </div>
-      <div class="col">
-        <% if @kode_opd == 'all' %>
-          <% opd = 'all_opd' %>
-        <% else %>
-          <% opd = Opd.find_by(kode_unik_opd: @kode_opd).id_opd_skp %>
-        <% end %>
-        <%= link_to "/pdf_usulan/#{@type_alsi}/#{opd}/#{@tahun}.pdf", class:"btn btn-sm btn-primary" do %>
-          Download PDF 
-          <i class="fas fa-file-pdf ms-2"></i>
-        <% end %>
-        <%= link_to "/excel_usulan/#{@type_alsi}/#{opd}/#{@tahun}.xlsx", class:"btn btn-sm btn-primary" do %>
-          Download Excel 
-          <i class="fas fa-file-excel ms-2"></i>
-        <% end %>
-      </div>
-      <div class="col text-end">
-        <%= @nama_opd %>
+      <div class="col-auto">
+        <div class="text-end"><strong><%= @nama_opd %></strong></div>
+        <div class="text-end"><strong><%= @tahun %></strong></div>
       </div>
     </div>
   </div>
