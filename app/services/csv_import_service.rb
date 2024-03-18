@@ -2,7 +2,7 @@ class CsvImportService
   require 'csv'
 
   def call(file)
-    opened_file = File.open(file)
+    opened_file = file.open
     options = { headers: true, col_sep: ';' }
     CSV.foreach(opened_file, **options) do |row|
       # map the CSV columns to your database columns
