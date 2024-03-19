@@ -1,11 +1,14 @@
 <div class="card border-0 shadow">
   <div class="card-header">
-    <div class="row">
+    <div class="row align-items-center">
       <div class="col">
-        <h2 class="fs-5 fw-bold mb-0">Laporan Renstra <%= @nama_opd %></h2>
+        <h2 class="fs-5 fw-bold mb-0">Laporan Renstra <%= @nama_opd %>  <%= @tahun_awal %> - <%= @tahun_akhir %></h2>
       </div>
       <div class="col-auto">
-        <%= @tahun_awal %> - <%= @tahun_akhir %>
+        <%= link_to renstra_cetak_renstra_index_path(format: :pdf, tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir, kode_unik_opd: @kode_opd), class:"m-3 btn btn-outline-danger" do %>
+          <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak Excel Ranwal Renja"></span>
+          Cetak PDF Renstra
+        <% end %>
       </div>
     </div>
   </div>

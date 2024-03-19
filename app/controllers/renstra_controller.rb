@@ -95,14 +95,23 @@ class RenstraController < ApplicationController
   end
 
   def renstra_cetak
-    @title = "Rawnal Renja"
+    @title = "Renstra"
     @tahun_awal = params[:tahun_awal]
     @tahun_akhir = params[:tahun_akhir]
     renstra = RenstraQueries.new(kode_opd: @kode_unik_opd, tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir)
+    @nama_opd = renstra.opd.nama_opd
     @program_kegiatans = renstra.program_kegiatan_renstra
     @periode = renstra.periode
     respond_to do |format|
       format.html
+      format.pdf do
+        render pdf: "renstra_#{@nama_opd}_#{@tahun_awal}_#{@tahun_akhir}",
+               dispotition: 'attachment',
+               orientation: 'Landscape',
+               page_size: 'Legal',
+               layout: 'pdf.html.erb',
+               template: 'renstra/renstra_cetak.html.erb'
+      end
     end
   end
 
