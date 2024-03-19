@@ -5,7 +5,17 @@
   <td class="text-gray-900 text-wrap border"><%= kode %></td>
   <td class="text-gray-900 text-wrap border" width="450px"><%= nama %></td>
   <% unless @cetak %>
-    <td class="text-gray-900 text-wrap border">Tombol Aksi</td>
+    <td class="text-gray-900 text-wrap border">
+      <%= render(EditButtonComponent.new(path: edit_renstra_path(@program,
+      nama: nama,
+      kode: kode,
+      kode_opd: @program[:sub_opd],
+      jenis: 'Renstra',
+      sub_jenis: title,
+      tahun_awal: @periode.first,
+      tahun_akhir: @periode.last
+      ))) %>
+    </td>
   <% end %>
   <% periode.each do |tahun| %>
     <% if with_indikator? %>
