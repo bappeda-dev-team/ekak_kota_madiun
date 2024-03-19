@@ -1,0 +1,21 @@
+<thead class="<%= style_header %>">
+  <tr>
+    <th class="border" scope="col" rowspan="2">Kode <%= @title.titleize %></th>
+    <th class="border" scope="col" rowspan="2">Nama <%= @title.titleize %></th>
+    <% periode.each do |tahun| %>
+      <th class="border text-center" scope="col" colspan="4"><%= tahun %></th>
+    <% end %>
+  </tr>
+  <tr>
+    <% periode.each do %>
+      <% if @indikator %>
+        <th class="border" scope="col">Indikator</th>
+        <th class="border" scope="col" width="50px">Target</th>
+        <th class="border" scope="col">Satuan</th>
+      <% else%>
+        <th class="border" scope="col" colspan="3"></th>
+      <% end %>
+      <th class="border" scope="col">Pagu Indikatif</th>
+    <% end %>
+  </tr>
+</thead>

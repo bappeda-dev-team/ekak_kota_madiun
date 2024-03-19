@@ -94,6 +94,18 @@ class RenstraController < ApplicationController
     end
   end
 
+  def renstra_cetak
+    @title = "Rawnal Renja"
+    @tahun_awal = params[:tahun_awal]
+    @tahun_akhir = params[:tahun_akhir]
+    renstra = RenstraQueries.new(kode_opd: @kode_unik_opd, tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir)
+    @program_kegiatans = renstra.program_kegiatan_renstra
+    @periode = renstra.periode
+    respond_to do |format|
+      format.html
+    end
+  end
+
   private
 
   def set_renstra

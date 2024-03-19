@@ -292,6 +292,7 @@ Rails.application.routes.draw do
     collection do
       get :admin_renstra
       post :laporan
+      get :renstra_cetak
     end
     member do
       post :update_programs

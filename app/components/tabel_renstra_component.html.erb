@@ -1,0 +1,32 @@
+<% sub_opd.each do |opd| %>
+  <table class="table table-border align-items-center my-3">
+    <%= render(RenstraRowComponent.new(program: opd,
+                                periode: periode,
+                                anggaran: pagu_sub_opd(opd[:kode])))%>
+    <% urusan_opd.each do |urusan| %>
+      <%= render(RenstraRowComponent.new(program: urusan,
+                                    periode: periode,
+                                    anggaran: pagu_urusan(urusan[:kode], opd[:kode])))%>
+      <% bidang_urusan_opd(urusan[:kode]).each do |bidang_urusan| %>
+        <%= render(RenstraRowComponent.new(program: bidang_urusan,
+                                      periode: periode,
+                                      anggaran: pagu_bidang_urusan(bidang_urusan[:kode], opd[:kode])))%>
+        <% program_opd(bidang_urusan[:kode], opd[:kode]).each do |program| %>
+          <%= render(RenstraRowComponent.new(program: program,
+                                        periode: periode,
+                                        anggaran: pagu_program(program[:kode], opd[:kode])))%>
+          <% kegiatan_opd(program[:kode], opd[:kode]).each do |kegiatan| %>
+            <%= render(RenstraRowComponent.new(program: kegiatan,
+                                          periode: periode,
+                                          anggaran: pagu_kegiatan(kegiatan[:kode], opd[:kode])
+                                          ))%>
+            <%= render(HeaderRenstraComponent.new(title: 'Subkegiatan', indikator: true, periode: periode)) %>
+            <% subkegiatan_opd(kegiatan[:kode], opd[:kode]).each do |subgiat| %>
+              <%= render(RenstraRowComponent.new(program: subgiat, periode: periode, head: false))%>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </table>
+<% end %>

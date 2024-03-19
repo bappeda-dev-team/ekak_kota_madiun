@@ -1,0 +1,17 @@
+<% if @head %>
+  <%= render(HeaderRenstraComponent.new(title: title, indikator: with_indikator?, periode: periode)) %>
+<% end %>
+<tr>
+  <td class="text-gray-900 text-wrap border"><%= kode %></td>
+  <td class="text-gray-900 text-wrap border" width="450px"><%= nama %></td>
+  <% periode.each do |tahun| %>
+    <% if with_indikator? %>
+      <td class="text-gray-900 text-wrap border"><%= indikators[tahun][:indikator] %></td>
+      <td class="text-gray-900 text-wrap border"><%= indikators[tahun][:target] %></td>
+      <td class="text-gray-900 text-wrap border"><%= indikators[tahun][:satuan] %></td>
+    <% else %>
+      <td class="border" scope="col" colspan="3"></td>
+    <% end %>
+    <td class="text-gray-900 border" width="250px"><%= "Rp. #{number_with_delimiter(pagu(tahun))}" %></td>
+  <% end %>
+</tr>
