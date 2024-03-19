@@ -3,12 +3,13 @@
 class RenstraRowComponent < ViewComponent::Base
   attr_reader :periode
 
-  def initialize(program: '', head: true, anggaran: 0, periode: [])
+  def initialize(program: '', head: true, anggaran: 0, periode: [], cetak: true)
     super
     @program = program
     @head = head
     @anggaran = anggaran
     @periode = periode
+    @cetak = cetak
   end
 
   def jenis

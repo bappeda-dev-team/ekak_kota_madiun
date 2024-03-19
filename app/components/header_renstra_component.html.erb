@@ -1,6 +1,9 @@
 <tr class="<%= style_header %>">
   <th class="border" scope="col" rowspan="2">Kode <%= @title.titleize %></th>
   <th class="border" scope="col" rowspan="2">Nama <%= @title.titleize %></th>
+  <% unless @cetak %>
+    <th class="border" scope="col" rowspan="2">Aksi</th>
+  <% end %>
   <% periode.each do |tahun| %>
     <th class="border text-center" scope="col" colspan="4"><%= tahun %></th>
   <% end %>

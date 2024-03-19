@@ -1,9 +1,12 @@
 <% if @head %>
-  <%= render(HeaderRenstraComponent.new(title: title, indikator: with_indikator?, periode: periode)) %>
+  <%= render(HeaderRenstraComponent.new(title: title, indikator: with_indikator?, periode: periode, cetak: @cetak)) %>
 <% end %>
 <tr>
   <td class="text-gray-900 text-wrap border"><%= kode %></td>
   <td class="text-gray-900 text-wrap border" width="450px"><%= nama %></td>
+  <% unless @cetak %>
+    <td class="text-gray-900 text-wrap border">Tombol Aksi</td>
+  <% end %>
   <% periode.each do |tahun| %>
     <% if with_indikator? %>
       <td class="text-gray-900 text-wrap border"><%= indikators[tahun][:indikator] %></td>

@@ -3,11 +3,12 @@
 class HeaderRenstraComponent < ViewComponent::Base
   attr_accessor :periode
 
-  def initialize(title: '', indikator: false, periode: [])
+  def initialize(title: '', indikator: false, periode: [], cetak: true)
     super
     @title = title
     @indikator = indikator
     @periode = periode
+    @cetak = cetak
   end
 
   def style_header
