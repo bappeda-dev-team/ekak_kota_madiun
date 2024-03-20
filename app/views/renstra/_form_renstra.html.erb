@@ -5,6 +5,7 @@
     action: 'ajax:success->form-ajax#successResponse',
     form_ajax_target_param: @dom_target,
     form_ajax_type_param: 'replace',
+    form_ajax_with_alert_value: false,
     action: 'ajax:complete->form-ajax#processAjax'
 }) do |form| %>
   <div class="field">

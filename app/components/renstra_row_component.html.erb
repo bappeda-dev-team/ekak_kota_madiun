@@ -25,6 +25,6 @@
     <% else %>
       <td class="border" scope="col" colspan="3"></td>
     <% end %>
-    <td class="text-gray-900 border" width="250px"><%= "Rp. #{number_with_delimiter(pagu(tahun))}" %></td>
+    <td class="text-gray-900 border pagu pagu-<%= jenis %>" width="250px"><%= "Rp. #{number_with_delimiter(pagu(tahun))}" %></td>
   <% end %>
 </tr>
