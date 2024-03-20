@@ -14,4 +14,9 @@ class HeaderRenstraComponent < ViewComponent::Base
   def style_header
     "thead-#{@title.parameterize.dasherize}"
   end
+
+  def with_aksi?
+    allowed = %w[Program program Kegiatan kegiatan Subkegiatan subkegiatan]
+    @title.in? allowed
+  end
 end

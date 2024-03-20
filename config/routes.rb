@@ -291,8 +291,10 @@ Rails.application.routes.draw do
   resources :renstra do
     collection do
       get :admin_renstra
-      post :laporan
+      get :laporan
       get :renstra_cetak
+      get :edit_indikator
+      post :update_indikator
     end
     member do
       post :update_programs

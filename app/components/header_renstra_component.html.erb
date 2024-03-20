@@ -1,8 +1,10 @@
 <tr class="<%= style_header %>">
   <th class="border" scope="col" rowspan="2">Kode <%= @title.titleize %></th>
-  <th class="border" scope="col" rowspan="2">Nama <%= @title.titleize %></th>
-  <% unless @cetak %>
-    <th class="border" scope="col" rowspan="2">Aksi</th>
+  <% if with_aksi? %>
+    <th class="border" scope="col" rowspan="2">Nama <%= @title.titleize %></th>
+    <th class="border text-center" scope="col" rowspan="2">Aksi</th>
+  <% else %>
+    <th class="border" scope="col" colspan="2" rowspan="2">Nama <%= @title.titleize %></th>
   <% end %>
   <% periode.each do |tahun| %>
     <th class="border text-center" scope="col" colspan="4"><%= tahun %></th>

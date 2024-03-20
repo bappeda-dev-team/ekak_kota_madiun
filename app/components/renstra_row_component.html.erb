@@ -1,21 +1,17 @@
 <% if @head %>
   <%= render(HeaderRenstraComponent.new(title: title, indikator: with_indikator?, periode: periode, cetak: @cetak)) %>
 <% end %>
-<tr>
+<tr id="<%= row_id %>">
   <td class="text-gray-900 text-wrap border"><%= kode %></td>
-  <td class="text-gray-900 text-wrap border" width="450px"><%= nama %></td>
-  <% unless @cetak %>
-    <td class="text-gray-900 text-wrap border">
-      <%= render(EditButtonComponent.new(path: edit_renstra_path(@program,
-      nama: nama,
-      kode: kode,
-      kode_opd: @program[:sub_opd],
-      jenis: 'Renstra',
-      sub_jenis: title,
-      tahun_awal: @periode.first,
-      tahun_akhir: @periode.last
-      ))) %>
+  <% if with_aksi? %>
+    <td class="text-gray-900 text-wrap border" width="450px"><%= nama %></td>
+    <td class="border">
+      <div class="d-grid gap-2">
+        <%= render(EditButtonComponent.new(path: edit_path)) %>
+      </div>
     </td>
+  <% else %>
+    <td class="text-gray-900 text-wrap border" colspan="2" width="450px"><%= nama %></td>
   <% end %>
   <% periode.each do |tahun| %>
     <% if with_indikator? %>

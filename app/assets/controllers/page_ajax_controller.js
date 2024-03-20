@@ -21,6 +21,15 @@ export default class extends Controller {
 
         connect() {
                 const url = this.urlValue;
+                if (this.reqtypeValue == "POST") {
+                        this.fetcherPost(url)
+                } else {
+                        this.fetcherGet(url)
+                }
+
+        }
+
+        fetcherPost(url) {
                 const token = document.head.querySelector(
                         'meta[name="csrf-token"]',
                 ).content;
@@ -36,6 +45,17 @@ export default class extends Controller {
                         body: formData,
                         method: this.reqtypeValue,
                 })
+                        .then((response) => response.text())
+                        .then((text) => {
+                                this.resultsTarget.innerHTML = text;
+                        })
+                        .catch((e) => {
+                                this.resultsTarget.innerHTML = "Terjadi Kesalahan";
+                        });
+        }
+
+        fetcherGet(url) {
+                fetch(url)
                         .then((response) => response.text())
                         .then((text) => {
                                 this.resultsTarget.innerHTML = text;
