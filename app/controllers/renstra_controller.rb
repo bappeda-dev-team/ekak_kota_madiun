@@ -72,7 +72,7 @@ class RenstraController < ApplicationController
                                                        periode: periode,
                                                        cetak: false,
                                                        head: false,
-                                                       anggaran: { "2025" => 0, "2026" => 0 }))
+                                                       anggaran: set_pagu))
     render json: { resText: 'Data disimpan',
                    html_content: partial }.to_json,
            status: :accepted

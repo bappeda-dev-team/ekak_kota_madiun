@@ -33,11 +33,7 @@ class RenstraRowComponent < ViewComponent::Base
   end
 
   def pagu(tahun)
-    if jenis == 'subkegiatan'
-      @program[:pagu][tahun]
-    else
-      @anggaran[tahun]
-    end
+    @anggaran[tahun]
   end
 
   def indikators

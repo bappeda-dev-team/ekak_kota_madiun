@@ -27,7 +27,11 @@
                                           ))%>
             <%= render(HeaderRenstraComponent.new(title: 'Subkegiatan', indikator: true, periode: periode, cetak: @cetak)) %>
             <% subkegiatan_opd(kegiatan[:kode], opd[:kode]).each do |subgiat| %>
-              <%= render(RenstraRowComponent.new(program: subgiat, periode: periode, cetak: @cetak, head: false))%>
+              <%= render(RenstraRowComponent.new(program: subgiat, 
+                                                 periode: periode, 
+                                                 cetak: @cetak, 
+                                                 anggaran: subgiat[:pagu],
+                                                 head: false))%>
             <% end %>
           <% end %>
         <% end %>
