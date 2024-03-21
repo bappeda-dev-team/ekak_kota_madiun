@@ -6,6 +6,7 @@
 <% content_for :view_utama do %>
   <% if cookies[:tahun] && cookies[:opd] %>
     <div class="card border-0 shadow" data-controller="page-ajax"
+     data-page-ajax-reqtype-value="GET"
      data-page-ajax-url-value="<%= laporan_renstra_index_path(periode: @periode) %>" >
       <div data-page-ajax-target="results">
         <div class="card-header">

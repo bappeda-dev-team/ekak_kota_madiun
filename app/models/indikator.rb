@@ -19,6 +19,8 @@
 #  tahun                :string
 #  target               :string
 #  version              :integer          default(0), not null
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
 #
 class Indikator < ApplicationRecord
   has_many :targets

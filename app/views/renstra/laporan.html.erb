@@ -14,7 +14,8 @@
   </div>
   <div class="card-body">
     <div class="table-responsive">
-      <%= render 'table_renstra' %>
+      <h5>Program/Kegiatan/Sub Kegiatan</h5>
+      <%= render(TabelRenstraComponent.new(program_kegiatans: @program_kegiatans, periode: @periode, cetak: false)) %>
     </div>
   </div>
 </div>

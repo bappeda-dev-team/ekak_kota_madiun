@@ -948,7 +948,9 @@ CREATE TABLE public.indikators (
     kode_opd character varying,
     definisi_operational jsonb,
     realisasi character varying,
-    realisasi_pagu character varying
+    realisasi_pagu character varying,
+    created_at timestamp(6) without time zone DEFAULT now() NOT NULL,
+    updated_at timestamp(6) without time zone DEFAULT now() NOT NULL
 );
 
 
@@ -6435,6 +6437,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240317163130'),
 ('20240317191023'),
 ('20240317191248'),
-('20240317191552');
+('20240317191552'),
+('20240320032901');
 
 

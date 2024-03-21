@@ -3,10 +3,15 @@
 class TabelRenstraComponent < ViewComponent::Base
   attr_reader :periode
 
-  def initialize(program_kegiatans: {}, periode: '')
+  def initialize(program_kegiatans: {}, periode: '', cetak: true)
     super
     @program_kegiatans = program_kegiatans
     @periode = periode
+    @cetak = cetak
+  end
+
+  def kode_parent(program)
+    "#{program[:parent]}-#{program[:kode_opd]}"
   end
 
   def sub_opd

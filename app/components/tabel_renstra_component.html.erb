@@ -2,27 +2,42 @@
   <table class="table table-border align-items-center my-3">
     <%= render(RenstraRowComponent.new(program: opd,
                                 periode: periode,
+                                cetak: @cetak,
+                                parent: kode_parent(opd),
                                 anggaran: pagu_sub_opd(opd[:kode])))%>
     <% urusan_opd.each do |urusan| %>
       <%= render(RenstraRowComponent.new(program: urusan,
                                     periode: periode,
+                                    cetak: @cetak,
+                                    parent: kode_parent(urusan),
                                     anggaran: pagu_urusan(urusan[:kode], opd[:kode])))%>
       <% bidang_urusan_opd(urusan[:kode]).each do |bidang_urusan| %>
         <%= render(RenstraRowComponent.new(program: bidang_urusan,
                                       periode: periode,
+                                      cetak: @cetak,
+                                      parent: kode_parent(bidang_urusan),
                                       anggaran: pagu_bidang_urusan(bidang_urusan[:kode], opd[:kode])))%>
         <% program_opd(bidang_urusan[:kode], opd[:kode]).each do |program| %>
           <%= render(RenstraRowComponent.new(program: program,
                                         periode: periode,
+                                        cetak: @cetak,
+                                        parent: kode_parent(program),
                                         anggaran: pagu_program(program[:kode], opd[:kode])))%>
           <% kegiatan_opd(program[:kode], opd[:kode]).each do |kegiatan| %>
             <%= render(RenstraRowComponent.new(program: kegiatan,
                                           periode: periode,
+                                          cetak: @cetak,
+                                          parent: kode_parent(kegiatan),
                                           anggaran: pagu_kegiatan(kegiatan[:kode], opd[:kode])
                                           ))%>
-            <%= render(HeaderRenstraComponent.new(title: 'Subkegiatan', indikator: true, periode: periode)) %>
+            <%= render(HeaderRenstraComponent.new(title: 'Subkegiatan', indikator: true, periode: periode, cetak: @cetak)) %>
             <% subkegiatan_opd(kegiatan[:kode], opd[:kode]).each do |subgiat| %>
-              <%= render(RenstraRowComponent.new(program: subgiat, periode: periode, head: false))%>
+              <%= render(RenstraRowComponent.new(program: subgiat, 
+                                                 periode: periode, 
+                                                 cetak: @cetak, 
+                                                 parent: kode_parent(subgiat),
+                                                 anggaran: subgiat[:pagu],
+                                                 head: false))%>
             <% end %>
           <% end %>
         <% end %>

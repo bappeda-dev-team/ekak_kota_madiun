@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
 class RenstraRowComponent < ViewComponent::Base
-  attr_reader :periode
+  attr_reader :periode, :parent
 
-  def initialize(program: '', head: true, anggaran: 0, periode: [])
+  def initialize(program: '', head: true, anggaran: 0, periode: [], cetak: true, parent: '')
     super
     @program = program
     @head = head
     @anggaran = anggaran
     @periode = periode
+    @cetak = cetak
+    @parent = parent
   end
 
   def jenis
@@ -17,6 +19,10 @@ class RenstraRowComponent < ViewComponent::Base
 
   def title
     jenis.capitalize
+  end
+
+  def kode_opd
+    @program[:kode_opd]
   end
 
   def kode
@@ -28,11 +34,7 @@ class RenstraRowComponent < ViewComponent::Base
   end
 
   def pagu(tahun)
-    if jenis == 'subkegiatan'
-      @program[:pagu][tahun]
-    else
-      @anggaran[tahun]
-    end
+    @anggaran[tahun]
   end
 
   def indikators
@@ -42,5 +44,27 @@ class RenstraRowComponent < ViewComponent::Base
   def with_indikator?
     allowed = %w[Program program Kegiatan kegiatan Subkegiatan subkegiatan]
     jenis.in? allowed
+  end
+
+  def with_aksi?
+    allowed = %w[Program program Kegiatan kegiatan Subkegiatan subkegiatan]
+    jenis.in? allowed
+  end
+
+  def edit_path
+    edit_indikator_renstra_index_path(
+      nama: nama,
+      kode_opd: kode_opd,
+      kode: kode,
+      parent: @parent,
+      jenis: 'Renstra',
+      sub_jenis: title,
+      tahun_awal: @periode.first,
+      tahun_akhir: @periode.last
+    )
+  end
+
+  def row_id
+    "#{kode}-#{kode_opd}"
   end
 end

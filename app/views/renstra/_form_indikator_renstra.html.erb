@@ -1,36 +1,29 @@
 <%= form_with(
   url: update_indikator_renstra_index_path,
   local: false,
-  data: { controller: 'form-ajax calculation',
+  data: { controller: 'form-ajax',
     action: 'ajax:success->form-ajax#successResponse',
+    form_ajax_modal_param: 'form-laporan-renstra',
     form_ajax_target_param: @dom_target,
-    form_ajax_type_param: 'total_replace',
-    form_ajax_with_alert_value: false,
-    calculation_parent_value: @parent,
-    action: 'ajax:complete->form-ajax#processAjax
-             ajax:complete->calculation#sumTotal'
+    form_ajax_type_param: 'replace',
+    action: 'ajax:complete->form-ajax#processAjax'
 }) do |form| %>
   <div class="field">
     <%= form.label @sub_jenis, class: 'form-label' %>
     <%= form.text_field :nama, class: 'form-control', readonly: true, value: @nama %>
     <%= form.hidden_field :tahun_awal, value: @tahun_awal %>
     <%= form.hidden_field :tahun_akhir, value: @tahun_akhir %>
-    <%= form.hidden_field :kode, value: @kode %>
-    <%= form.hidden_field :parent, value: @parent %>
     <%= form.hidden_field :kode_opd, value: @kode_opd %>
-    <%= form.hidden_field :jenis, value: @sub_jenis %>
+    <%= form.hidden_field :sub_jenis, value: @sub_jenis %>
   </div>
   <% @periode.each do |tahun| %>
-    <div class="field hidden">
-      <%= form.hidden_field "renstra[indikator][][tahun]", value: tahun %>
-      <%= form.hidden_field "renstra[indikator][][kode]", value: @kode %>
-      <%= form.hidden_field "renstra[indikator][][kode_opd]", value: @kode_opd %>
-      <%= form.hidden_field "renstra[indikator][][jenis]", value: @jenis %>
-      <%= form.hidden_field "renstra[indikator][][sub_jenis]", value: @sub_jenis %>
-      <%= form.hidden_field "renstra[indikator][][kode_indikator]", value: @kode_indikator %>
-      <% version = @targets[tahun.to_s]&.[](:version).nil? ? 0 : @targets[tahun.to_s]&.[](:version) + 1 %>
-      <%= form.hidden_field "renstra[indikator][][version]", value: version %>
-    </div>
+    <%= form.hidden_field "renstra[indikator][][tahun]", value: tahun %>
+    <%= form.hidden_field "renstra[indikator][][kode]", value: @kode %>
+    <%= form.hidden_field "renstra[indikator][][kode_opd]", value: @kode_opd %>
+    <%= form.hidden_field "renstra[indikator][][jenis]", value: @jenis %>
+    <%= form.hidden_field "renstra[indikator][][sub_jenis]", value: @sub_jenis %>
+    <%= form.hidden_field "renstra[indikator][][kode_indikator]", value: @kode_indikator %>
+    <%= form.hidden_field :_kode_indikator, value: @kode_indikator %>
     <div class="field">
       <%= form.label "indikator #{@sub_jenis} Tahun #{tahun}", class: 'form-label' %>
       <%= form.text_field "renstra[indikator][][indikator]",
@@ -54,5 +47,9 @@
       <% end %>
     </div>
   <% end %>
+  <div class="field">
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_field :keterangan, class: 'form-control' %>
+  </div>
   <%= form.submit "Simpan" %>
 <% end %>
