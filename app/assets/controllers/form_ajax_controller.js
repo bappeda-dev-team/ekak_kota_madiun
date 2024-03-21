@@ -81,6 +81,10 @@ export default class extends Controller {
         } else if (event.params.type == 'replace_next') {
           target.nextElementSibling.remove();
           target.outerHTML = html_content;
+        } else if (event.params.type == 'total_replace') {
+          target.outerHTML = html_content
+          const newTarget = document.getElementById(event.params.target)
+          this.animateBackground(newTarget);
         }
         else {
           target.innerHTML = html_content;

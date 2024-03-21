@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
 class RenstraRowComponent < ViewComponent::Base
-  attr_reader :periode
+  attr_reader :periode, :parent
 
-  def initialize(program: '', head: true, anggaran: 0, periode: [], cetak: true)
+  def initialize(program: '', head: true, anggaran: 0, periode: [], cetak: true, parent: '')
     super
     @program = program
     @head = head
     @anggaran = anggaran
     @periode = periode
     @cetak = cetak
+    @parent = parent
   end
 
   def jenis
@@ -55,6 +56,7 @@ class RenstraRowComponent < ViewComponent::Base
       nama: nama,
       kode_opd: kode_opd,
       kode: kode,
+      parent: @parent,
       jenis: 'Renstra',
       sub_jenis: title,
       tahun_awal: @periode.first,

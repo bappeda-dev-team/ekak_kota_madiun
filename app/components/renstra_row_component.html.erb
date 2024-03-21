@@ -1,7 +1,13 @@
 <% if @head %>
   <%= render(HeaderRenstraComponent.new(title: title, indikator: with_indikator?, periode: periode, cetak: @cetak)) %>
 <% end %>
-<tr id="<%= row_id %>">
+<tr id="<%= row_id %>"
+    data-controller="calculation" 
+    data-calculation-jenis-value="<%= jenis %>" 
+    data-calculation-parent-value="<%= parent %>"
+    data-calculation-kode-value="<%= kode %>" 
+    data-calculation-anggaran-value="<%= @anggaran.to_json %>"
+    data-action="calculation:sumTotal->calculation#what" >
   <td class="text-gray-900 text-wrap border"><%= kode %></td>
   <% if @cetak %>
     <td class="text-gray-900 text-wrap border" colspan="2" width="450px"><%= nama %></td>
@@ -25,6 +31,8 @@
     <% else %>
       <td class="border" scope="col" colspan="3"></td>
     <% end %>
-    <td class="text-gray-900 border pagu pagu-<%= jenis %>" width="250px"><%= "Rp. #{number_with_delimiter(pagu(tahun))}" %></td>
+    <td class="text-gray-900 border pagu pagu-<%= jenis %>" width="250px">
+      Rp. <span class="uang" data-calculation-target="hitung" data-tahun="<%= tahun %>"><%= number_with_delimiter(pagu(tahun)) %></span>
+    </td>
   <% end %>
 </tr>

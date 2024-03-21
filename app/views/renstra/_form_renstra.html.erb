@@ -1,12 +1,14 @@
 <%= form_with(
   url: update_indikator_renstra_index_path,
   local: false,
-  data: { controller: 'form-ajax',
+  data: { controller: 'form-ajax calculation',
     action: 'ajax:success->form-ajax#successResponse',
     form_ajax_target_param: @dom_target,
-    form_ajax_type_param: 'replace',
+    form_ajax_type_param: 'total_replace',
     form_ajax_with_alert_value: false,
-    action: 'ajax:complete->form-ajax#processAjax'
+    calculation_parent_value: @parent,
+    action: 'ajax:complete->form-ajax#processAjax
+             ajax:complete->calculation#sumTotal'
 }) do |form| %>
   <div class="field">
     <%= form.label @sub_jenis, class: 'form-label' %>
@@ -14,6 +16,7 @@
     <%= form.hidden_field :tahun_awal, value: @tahun_awal %>
     <%= form.hidden_field :tahun_akhir, value: @tahun_akhir %>
     <%= form.hidden_field :kode, value: @kode %>
+    <%= form.hidden_field :parent, value: @parent %>
     <%= form.hidden_field :kode_opd, value: @kode_opd %>
     <%= form.hidden_field :jenis, value: @sub_jenis %>
   </div>

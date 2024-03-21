@@ -10,6 +10,10 @@ class TabelRenstraComponent < ViewComponent::Base
     @cetak = cetak
   end
 
+  def kode_parent(program)
+    "#{program[:parent]}-#{program[:kode_opd]}"
+  end
+
   def sub_opd
     @program_kegiatans[:sub_opd]
   end

@@ -15,6 +15,7 @@ class RenstraController < ApplicationController
     @nama = params[:nama]
     @kode = params[:kode]
     @kode_opd = params[:kode_opd]
+    @parent = params[:parent]
     @jenis = params[:jenis]
     @sub_jenis = params[:sub_jenis]
     @tahun_awal = params[:tahun_awal]
@@ -43,6 +44,7 @@ class RenstraController < ApplicationController
     @kode_opd = params[:kode_opd]
     @nama = params[:nama]
     @kode = params[:kode]
+    @parent = params[:parent]
     @jenis = params[:jenis]
 
     periode = (@tahun_awal..@tahun_akhir)
@@ -72,6 +74,7 @@ class RenstraController < ApplicationController
                                                        periode: periode,
                                                        cetak: false,
                                                        head: false,
+                                                       parent: @parent,
                                                        anggaran: set_pagu))
     render json: { resText: 'Data disimpan',
                    html_content: partial }.to_json,
