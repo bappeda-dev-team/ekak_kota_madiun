@@ -9,6 +9,8 @@
     <h3>Periode <%= @tahun_awal %>-<%= @tahun_akhir %></h3>
   </div>
 </div>
+<%= render partial: 'renja/tujuan_opd', locals: { tujuan_opds: @tujuan_opds } %>
+<%= render partial: 'renja/sasaran_opd', locals: { sasaran_opds: @sasaran_opds } %>
 <div class="table-responsive">
   <h5>Program/Kegiatan/Sub Kegiatan</h5>
   <%= render(TabelRenstraComponent.new(program_kegiatans: @program_kegiatans, periode: @periode)) %>
