@@ -96,6 +96,12 @@ class RenstraController < ApplicationController
     @nama_opd = renstra.opd.nama_opd
     @program_kegiatans = renstra.program_kegiatan_renstra
     @periode = renstra.periode
+
+    # tujuan sasaran opd
+    @opd = renstra.opd
+    @user = @opd.eselon_dua_opd
+    @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
+    @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
   end
 
   def renstra_cetak
@@ -106,6 +112,12 @@ class RenstraController < ApplicationController
     @nama_opd = renstra.opd.nama_opd
     @program_kegiatans = renstra.program_kegiatan_renstra
     @periode = renstra.periode
+
+    # tujuan sasaran opd
+    @opd = renstra.opd
+    @user = @opd.eselon_dua_opd
+    @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
+    @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
     respond_to do |format|
       format.html
       format.pdf do
@@ -115,6 +127,9 @@ class RenstraController < ApplicationController
                page_size: 'Legal',
                layout: 'pdf.html.erb',
                template: 'renstra/renstra_cetak.html.erb'
+      end
+      format.xlsx do
+        render filename: "renstra_#{@nama_opd}_#{@tahun_awal}_#{@tahun_akhir}"
       end
     end
   end

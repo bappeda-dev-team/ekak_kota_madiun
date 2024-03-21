@@ -6,13 +6,19 @@
       </div>
       <div class="col-auto">
         <%= link_to renstra_cetak_renstra_index_path(format: :pdf, tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir, kode_unik_opd: @kode_opd), class:"m-3 btn btn-outline-danger" do %>
-          <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak Excel Ranwal Renja"></span>
+          <span class="far fa-file-pdf me-2"></span>
           Cetak PDF Renstra
+        <% end %>
+        <%= link_to renstra_cetak_renstra_index_path(format: :xlsx, tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir, kode_unik_opd: @kode_opd), class:"m-3 btn btn-outline-success" do %>
+          <span class="far fa-file-excel me-2"></span>
+          Cetak Excel Renstra
         <% end %>
       </div>
     </div>
   </div>
   <div class="card-body">
+    <%= render partial: 'renja/tujuan_opd', locals: { tujuan_opds: @tujuan_opds } %>
+    <%= render partial: 'renja/sasaran_opd', locals: { sasaran_opds: @sasaran_opds } %>
     <div class="table-responsive">
       <h5>Program/Kegiatan/Sub Kegiatan</h5>
       <%= render(TabelRenstraComponent.new(program_kegiatans: @program_kegiatans, periode: @periode, cetak: false)) %>

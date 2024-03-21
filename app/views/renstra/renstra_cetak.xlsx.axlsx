@@ -1,0 +1,117 @@
+def pagu_sub_opd(kode_sub_opd)
+  subkegiatans = @program_kegiatans[:subkegiatan]
+                 .select { |prs| prs[:kode_sub_opd] == kode_sub_opd }
+
+  @periode.to_h do |tahun|
+    [tahun, subkegiatans.sum { |sub| sub[:pagu][tahun] }]
+  end
+end
+
+def pagu_urusan(kode_urusan, opd)
+  subkegiatans = @program_kegiatans[:subkegiatan]
+                 .select { |prs| prs[:kode_urusan] == kode_urusan && prs[:kode_sub_opd] == opd }
+
+  @periode.to_h do |tahun|
+    [tahun, subkegiatans.sum { |sub| sub[:pagu][tahun] }]
+  end
+end
+
+def pagu_bidang_urusan(kode_bidang_urusan, opd)
+  subkegiatans = @program_kegiatans[:subkegiatan]
+                 .select { |prs| prs[:kode_bidang_urusan] == kode_bidang_urusan && prs[:kode_sub_opd] == opd }
+
+  @periode.to_h do |tahun|
+    [tahun, subkegiatans.sum { |sub| sub[:pagu][tahun] }]
+  end
+end
+
+def pagu_program(kode_program, opd)
+  subkegiatans = @program_kegiatans[:subkegiatan]
+                 .select { |prs| prs[:kode_program] == kode_program && prs[:kode_sub_opd] == opd }
+
+  @periode.to_h do |tahun|
+    [tahun, subkegiatans.sum { |sub| sub[:pagu][tahun] }]
+  end
+end
+
+def pagu_kegiatan(kode_kegiatan, opd)
+  @periode.to_h do |tahun|
+    [tahun, subkegiatan_opd(kode_kegiatan, opd).sum { |sub| sub[:pagu][tahun] }]
+  end
+end
+
+def subkegiatan_opd(parent, opd)
+  @program_kegiatans[:subkegiatan].select { |prs| prs[:parent] == parent && prs[:kode_sub_opd] == opd }
+end
+
+def indikators(programs, pagu)
+  @periode.flat_map do |tahun|
+    [programs[:indikators][tahun][:indikator],
+     programs[:indikators][tahun][:target],
+     programs[:indikators][tahun][:satuan],
+     pagu[tahun]]
+  end
+end
+
+def pagu_no_indikators(pagu)
+  @periode.flat_map do |tahun|
+    ['',
+     '',
+     '',
+     pagu[tahun]]
+  end
+end
+
+header_indikator = @periode.flat_map do |tahun|
+  ['Indikator', 'Target', 'Satuan', 'Pagu Indikatif']
+end
+
+header_tahun = @periode.flat_map do |tahun|
+  [tahun, '', '', '']
+end
+
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "renja_#{@tahun}") do |sheet_renja|
+  sheet_renja.add_row ['KODE', 'Urusan / Bidang Urusan / Program / Kegiatan / Subkegiatan'] + header_tahun
+  sheet_renja.add_row ['', ''] + header_indikator
+  sheet_renja.merge_cells('A1:A2')
+  sheet_renja.merge_cells('B1:B2')
+  sheet_renja.merge_cells('C1:F1')
+  sheet_renja.merge_cells('G1:J1')
+
+  @program_kegiatans[:sub_opd].each do |sub_opd|
+    sheet_renja.add_row [sub_opd[:kode], sub_opd[:nama]] + pagu_no_indikators(pagu_sub_opd(sub_opd[:kode]))
+    @program_kegiatans[:urusan].each do |urusan|
+      sheet_renja.add_row [urusan[:kode],
+                           urusan[:nama]] + pagu_no_indikators(pagu_urusan(urusan[:kode], sub_opd[:kode]))
+      @program_kegiatans[:bidang_urusan].select { |prs| prs[:parent] == urusan[:kode] }
+                                        .each do |bid_urusan|
+        sheet_renja.add_row [bid_urusan[:kode],
+                             bid_urusan[:nama]] + pagu_no_indikators(pagu_bidang_urusan(bid_urusan[:kode],
+                                                                                        sub_opd[:kode]))
+        @program_kegiatans[:program].select do |prs|
+          prs[:parent] == bid_urusan[:kode] && prs[:kode_opd] == sub_opd[:kode]
+        end
+                                    .each do |program|
+          sheet_renja.add_row [program[:kode],
+                               program[:nama]] + indikators(program, pagu_program(program[:kode], sub_opd[:kode]))
+          @program_kegiatans[:kegiatan].select do |prs|
+            prs[:parent] == program[:kode] && prs[:kode_opd] == sub_opd[:kode]
+          end
+                 .each do |kegiatan|
+            sheet_renja.add_row [kegiatan[:kode],
+                                 kegiatan[:nama]] + indikators(kegiatan,
+                                                               pagu_kegiatan(kegiatan[:kode], sub_opd[:kode]))
+            @program_kegiatans[:subkegiatan].select do |prs|
+              prs[:parent] == kegiatan[:kode] && prs[:kode_opd] == sub_opd[:kode]
+            end
+                   .each do |subkegiatan|
+              sheet_renja.add_row [subkegiatan[:kode],
+                                   subkegiatan[:nama]] + indikators(subkegiatan, subkegiatan[:pagu])
+            end
+          end
+        end
+      end
+    end
+  end
+end
