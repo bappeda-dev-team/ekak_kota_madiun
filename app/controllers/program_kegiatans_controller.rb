@@ -9,7 +9,7 @@ class ProgramKegiatansController < ApplicationController
   layout false, only: %i[show_to_kak kak_detail kak_renaksi kak_waktu]
 
   def index
-    param = params[:q].strip || ""
+    param = params[:q] || ""
     # FIXME: REFACTOR TOO MUCH LOGIC
     @program_kegiatans = ProgramKegiatan.where("kode_opd ILIKE ?", "%#{current_user.kode_opd}%")
                                         .where("nama_subkegiatan ILIKE ?", "%#{param}%")
