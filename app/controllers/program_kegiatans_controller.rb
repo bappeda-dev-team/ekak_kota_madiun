@@ -10,9 +10,14 @@ class ProgramKegiatansController < ApplicationController
 
   def index
     param = params[:q] || ""
+
+    query = param.strip.squish
+
+    return if query.size < 5
+
     # FIXME: REFACTOR TOO MUCH LOGIC
     @program_kegiatans = ProgramKegiatan.where("kode_opd ILIKE ?", "%#{current_user.kode_opd}%")
-                                        .where("nama_subkegiatan ILIKE ?", "%#{param}%")
+                                        .where("nama_subkegiatan ILIKE ?", "%#{query}%")
 
     if current_user.pegawai_puskesmas?
       @program_kegiatans = @program_kegiatans.select do |program|
@@ -23,9 +28,6 @@ class ProgramKegiatansController < ApplicationController
         program.nama_opd_pemilik.upcase.split("BAGIAN", 2).last.strip == current_user.petunjuk_bagian
       end
     end
-    return unless params[:item]
-
-    @program_kegiatans = ProgramKegiatan.where(id: params[:item])
   end
 
   def subkegiatans

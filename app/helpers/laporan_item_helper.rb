@@ -67,20 +67,12 @@ module LaporanItemHelper
         icon: 'fas fa-tasks', identifier: 'renja'
       },
       {
-        title: 'Renja Perubahan', href: renja_perubahan_path,
-        icon: 'fas fa-archive', identifier: 'perubahan_renja'
-      },
-      {
         title: 'Rekap Rencana Kinerja', href: rekap_sasaran_sasarans_path,
         icon: 'fas fa-archive', identifier: 'rekap_sasaran'
       },
       {
         title: 'Rekap Strategi', href: rekap_strategi_strategis_path,
         icon: 'fas fa-archive', identifier: 'rekap_strategi'
-      },
-      {
-        title: 'Rekap Cascading', href: list_pohon_pohon_kinerja_index_path,
-        icon: 'fas fa-archive', identifier: 'rekap_cascading'
       }
     ]
     return items unless super_admin?

@@ -1,59 +1,38 @@
-<div class="row">
-  <div class="col-12">
-    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
-      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
-        <li class="breadcrumb-item">
-          <%= link_to root_path do %>
-            <i class="fas fa-home"></i>
-          <% end %>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">Master Subkegiatan</li>
-      </ol>
-    </nav>
-    <div class="card border-0 shadow">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Master Subkegiatan</h2>
-          </div>
-        </div>
-      </div>
-      <div class="table-responsive">
-        <table class="table align-items-center">
-          <thead class="thead-light">
+<%= content_for :html_title, "Master Subkegiatan" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Perencanaan OPD</li>
+  <li class="breadcrumb-item active" aria-current="page">Master Subkegiatan</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout', title: 'Master Subkegiatan' do %>
+    <div class="table-responsive">
+      <table class="table align-items-center">
+        <thead class="thead-light">
+          <tr>
+            <th class="border-bottom" scope="col">No.</th>
+            <th class="border-bottom" scope="col">Kode SubKegiatan</th>
+            <th class="border-bottom" scope="col">Nama SubKegiatan</th>
+            <th class="border-bottom" scope="col">OPD</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @subkegiatans.each_with_index do |subgiat, i| %>
+            <% ranges = @pagy.from..@pagy.to %>
             <tr>
-              <th class="border-bottom" scope="col">No.</th>
-              <th class="border-bottom" scope="col">No SubKegiatan</th>
-              <th class="border-bottom" scope="col">Kode SubKegiatan</th>
-              <th class="border-bottom" scope="col">Nama SubKegiatan</th>
-              <th class="border-bottom" scope="col">Tahun</th>
-              <th class="border-bottom" scope="col">id_program</th>
-              <th class="border-bottom" scope="col">id_kegiatan</th>
-              <th class="border-bottom" scope="col">id_subkegiatan</th>
+              <td class="text-gray-900 fw-bolder" scope="row"><%= ranges.to_a[i] %></td>
+              <td class="fw-bolder text-gray-500"><%= subgiat.kode_sub_giat %></td>
+              <td class="text-gray-900 text-wrap" scope="row"><%= subgiat.nama_subkegiatan %></td>
+              <td class="text-gray-900" scope="row"><%= subgiat.nama_opd_pemilik %></td>
             </tr>
-          </thead>
-          <tbody>
-            <% @subkegiatans.each_with_index do |subgiat, i| %>
-              <% ranges = @pagy.from..@pagy.to %>
-              <tr>
-                <td class="text-gray-900 fw-bolder" scope="row"><%= ranges.to_a[i] %></td>
-                <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= subgiat.no_sub_kegiatan %></td>
-                <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= subgiat.kode_sub_kegiatan %></td>
-                <td class="text-gray-900" scope="row" style="white-space: initial !important;"><%= subgiat.nama_sub_kegiatan %></td>
-                <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= subgiat.tahun %></td>
-                <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= subgiat.id_program %></td>
-                <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= subgiat.id_kegiatan %></td>
-                <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= subgiat.id_sub_kegiatan_sipd %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-      <div class="row">
-        <div class="col align-self-center">
-          <%= render partial: 'shared/pagination', locals: { pagy: @pagy } %>
-        </div>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="row">
+      <div class="col align-self-center">
+        <%= render partial: 'shared/pagination', locals: { pagy: @pagy } %>
       </div>
     </div>
   </div>
-</div>
+<% end %>
+<% end %>

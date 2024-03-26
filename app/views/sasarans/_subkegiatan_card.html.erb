@@ -21,7 +21,8 @@
       <%= form_with(model: sasaran, local: false) do |f| %>
         <%= f.select(:program_kegiatan_id, ProgramKegiatan.where(id: sasaran.program_kegiatan_id).pluck(:nama_subkegiatan, :id), {},
         {data: { controller: 'dropdown',
-                'ajax--url': "/program_kegiatans.json",
+                dropdown_jenis_value: 'ajax',
+                dropdown_url_value: "/program_kegiatans.json",
                 "ajax--cache": "true",
                 "placeholder": "Pilih SubKegiatan"}} )%>
         <div class="actions">

@@ -2,7 +2,7 @@ class Master::SubkegiatanController < ApplicationController
   include Pagy::Backend
 
   def index
-    @pagy, @subkegiatans = pagy(Master::Subkegiatan.all, items: 15)
+    @pagy, @subkegiatans = pagy(ProgramKegiatan.all.order(:kode_sub_giat), items: 15)
   end
 
   def sync_master_subkegiatan
