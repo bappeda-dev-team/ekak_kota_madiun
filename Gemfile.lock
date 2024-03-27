@@ -230,6 +230,7 @@ GEM
     memoist (0.16.2)
     method_source (1.0.0)
     mini_mime (1.1.5)
+    mini_portile2 (2.8.5)
     minitest (5.22.3)
     msgpack (1.7.2)
     multi_xml (0.6.0)
@@ -251,6 +252,9 @@ GEM
       net-protocol
     net-ssh (7.2.1)
     nio4r (2.7.0)
+    nokogiri (1.16.3)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
     nokogiri (1.16.3-arm64-darwin)
       racc (~> 1.4)
     nokogiri (1.16.3-x64-mingw32)
@@ -551,6 +555,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-21
+  ruby
   x64-mingw32
   x86_64-linux
 
@@ -633,4 +638,4 @@ RUBY VERSION
    ruby 3.0.1p64
 
 BUNDLED WITH
-   2.2.15
+   2.5.7

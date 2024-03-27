@@ -13,8 +13,18 @@ class RenstraQueries
     Opd.find_by(kode_unik_opd: @kode_opd)
   end
 
+  def opd_induk
+    { jenis: 'opd',
+      parent: @kode_opd,
+      kode_opd: opd.kode_unik_opd,
+      kode: opd.kode_unik_opd,
+      nama: opd.nama_opd,
+      pagu: 0 }
+  end
+
   def program_kegiatan_renstra
-    { sub_opd: sub_opd,
+    { opd: opd_induk,
+      sub_opd: sub_opd,
       urusan: urusan_opd,
       bidang_urusan: bidang_urusan_opd,
       program: programs,

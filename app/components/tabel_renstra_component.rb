@@ -18,6 +18,17 @@ class TabelRenstraComponent < ViewComponent::Base
     end
   end
 
+  def opd_induk
+    @program_kegiatans[:opd]
+  end
+
+  def total_pagu_opd
+    subkegiatans = @program_kegiatans[:subkegiatan]
+    periode.to_h do |tahun|
+      [tahun, subkegiatans.sum { |sub| sub[:pagu][tahun] }]
+    end
+  end
+
   def sub_opd
     @program_kegiatans[:sub_opd]
   end

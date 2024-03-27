@@ -572,6 +572,7 @@ Rails.application.routes.draw do
   end
   namespace :search do
     get :usulan_user
+    get :subkegiatan
   end
   # laporan rka
   # get "/pdf_rka/:id/:tahun", to: "program_kegiatans#pdf_rka"

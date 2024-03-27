@@ -5,6 +5,13 @@
 <% end %>
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout', title: 'Master Subkegiatan' do %>
+    <div class="ps-2">
+      <%= form_with url: search_subkegiatan_path, method: :get do |form| %>
+        <%= form.label :query, "Cari subkegiatan" %>
+        <%= form.text_field :query %>
+        <%= form.submit "Search" %>
+      <% end %>
+    </div>
     <div class="table-responsive">
       <table class="table align-items-center">
         <thead class="thead-light">
