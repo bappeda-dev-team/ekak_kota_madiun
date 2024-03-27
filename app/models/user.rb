@@ -311,10 +311,17 @@ class User < ApplicationRecord
             .select { |s| s.tahapan? && s.manual_ik? && s.strategi? && s.target_sesuai? }
   end
 
-  def sasaran_pohon_kinerja_periode(tahun: [])
-    sasarans.includes(%i[strategi indikator_sasarans])
-            .where(tahun: tahun)
-            .select { |s| s.tahapan? && s.manual_ik? && s.strategi? && s.target_sesuai? }
+  def sasaran_pohon_kinerja_periode(periode)
+    sasaran_opds = sasarans.includes([:strategi, { indikator_sasarans: [:manual_ik] }])
+                           .where(tahun: periode)
+                           .select { |s| s.tahapan? && s.manual_ik? && s.strategi? && s.target_sesuai? }
+    sasaran_opds.group_by(&:sasaran_kinerja).transform_values do |sasarans|
+      sasarans.flat_map { |sas| sas.indikator_sasarans }.group_by do |ind|
+        [ind.indikator_kinerja, ind.rumus_perhitungan, ind.sumber_data]
+      end.transform_values do |inds|
+        inds.to_h { |inn| [inn.sasaran.tahun, [inn.target, inn.satuan]] }
+      end
+    end
   end
 
   def eselon_user

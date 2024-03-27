@@ -4,33 +4,47 @@
     <thead class="thead-tujuan">
       <tr class="header-tujuan">
         <% if sasaran_opds.size > 1 %>
-          <th class="border" scope="col">No.</th>
+          <th class="border" scope="col" rowspan="2">No.</th>
         <% end %>
-        <th class="border text-center" scope="col">Sasaran OPD</th>
-        <th class="border text-center" scope="col">Tahun</th>
-        <th class="border text-center" scope="col">Indikator</th>
-        <th class="border text-center" scope="col">Rumus Perhitungan</th>
-        <th class="border text-center" scope="col">Sumber Data</th>
-        <th class="border text-center" scope="col">Target</th>
-        <th class="border text-center" scope="col">Satuan</th>
+        <th class="border text-center" scope="col" rowspan="2">Sasaran OPD</th>
+        <th class="border text-center" scope="col" rowspan="2">Indikator</th>
+        <th class="border text-center" scope="col" rowspan="2">Rumus Perhitungan</th>
+        <th class="border text-center" scope="col" rowspan="2">Sumber Data</th>
+        <% periode.each do |tahun| %>
+          <th class="border text-center" scope="col" colspan="2"><%= tahun %></th>
+        <% end %>
+      </tr>
+      <tr>
+        <% periode.each do |tahun| %>
+          <th class="border text-center" scope="col">Target</th>
+          <th class="border text-center" scope="col">Satuan</th>
+        <% end %>
       </tr>
     </thead>
     <tbody>
-      <% sasaran_opds.each.with_index(1) do |sasaran, no| %>
+      <% sasaran_opds.each.with_index(1) do |(sasaran, indikators), no| %>
         <tr>
           <% if sasaran_opds.size > 1 %>
-            <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) + 1 %>"><%= no %></td>
+            <td class="border text-wrap" rowspan="<%= indikators.size + 1 %>"><%= no %></td>
           <% end %>
-          <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) + 1 %>" width="550px"><%= sasaran.sasaran_kinerja %></td>
-          <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) + 1 %>"><%= sasaran.tahun %></td>
+          <td class="border text-wrap" rowspan="<%= indikators.size + 1 %>"><%= sasaran %></td>
         </tr>
-        <% sasaran.indikator_sasarans.each do |indikator| %>
+        <% indikators.each do |indikatorss, targets| %>
           <tr>
-            <td class="border text-wrap" width="500px"><%= indikator %></td>
-            <td class="border text-wrap"><%= indikator.rumus_perhitungan %></td>
-            <td class="border text-wrap"><%= indikator.sumber_data %></td>
-            <td class="border text-wrap"><%= indikator.target %></td>
-            <td class="border text-wrap"><%= indikator.satuan %></td>
+            <% indikatorss.each do |indikator| %>
+              <td class="border text-wrap"><%= indikator %></td>
+            <% end %>
+            <% periode.each do |tahun| %>
+              <% targetss = targets.dig(tahun.to_s) %>
+              <% if targetss %>
+                <% targetss.each do |target| %>
+                  <td class="border text-center"><%= target %></td>
+                <% end %>
+              <% else %>
+                <td class="border text-center">-</td>
+                <td class="border text-center">-</td>
+              <% end %>
+            <% end %>
           </tr>
         <% end %>
       <% end %>

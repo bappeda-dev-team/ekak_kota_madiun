@@ -100,7 +100,7 @@ class RenstraController < ApplicationController
     # tujuan sasaran opd
     @opd = renstra.opd
     @user = @opd.eselon_dua_opd
-    @sasaran_opds = @user.sasaran_pohon_kinerja_periode(tahun: @periode)
+    @sasaran_opds = @user.sasaran_pohon_kinerja_periode(@periode)
     @tujuan_opds = @opd.tujuan_opds.where(tahun_awal: @periode, tahun_akhir: @periode)
   end
 
