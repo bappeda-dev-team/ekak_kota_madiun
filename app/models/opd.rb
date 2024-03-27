@@ -216,7 +216,16 @@ class Opd < ApplicationRecord
   end
 
   def eselon_dua_opd
-    users.with_role("eselon_2").first
+    if kode_unik_opd.last == '0'
+      users.with_role("eselon_2").first
+    else
+      opd_pusat = Opd.find_by(kode_unik_opd: kode_opd_to_induk_opd)
+      opd_pusat.eselon_dua_opd
+    end
+  end
+
+  def kode_opd_to_induk_opd
+    kode_unik_opd.gsub(/\d$/, '0')
   end
 
   def pohon_opd

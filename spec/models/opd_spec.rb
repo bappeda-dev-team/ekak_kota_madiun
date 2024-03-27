@@ -134,4 +134,32 @@ RSpec.describe Opd, type: :model do
       expect(kominfo.aset_opd(2025)).to include(asets)
     end
   end
+
+  describe '#kode_opd_to_induk_opd' do
+    it 'should replace last character to 0' do
+      # Arrange
+      kelurahan = create(:opd, kode_unik_opd: '7.01.0.00.0.00.02.0007')
+
+      # Act
+      kode_induk_opd = kelurahan.kode_opd_to_induk_opd
+
+      # Assert
+      expect(kode_induk_opd).to eq('7.01.0.00.0.00.02.0000')
+    end
+  end
+
+  context 'find user eselon dua opd' do
+    it 'should get eselon dua opd from induk opd only' do
+      # Arrange
+      kecamatan = create(:opd, kode_unik_opd: '7.01.0.00.0.00.02.0000') # induk
+      eselon_dua_kecamatan = create(:eselon_2, opd: kecamatan)
+      kelurahan = create(:opd, kode_unik_opd: '7.01.0.00.0.00.02.0007') # child_opd
+
+      # Act
+      eselon_dua_kelurahan = kelurahan.eselon_dua_opd
+
+      # Assert
+      expect(eselon_dua_kelurahan).to eq eselon_dua_kecamatan
+    end
+  end
 end
