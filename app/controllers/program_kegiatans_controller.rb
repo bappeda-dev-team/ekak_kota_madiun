@@ -234,11 +234,11 @@ class ProgramKegiatansController < ApplicationController
 
   def create
     opd = Opd.find_by(kode_opd: programKegiatan_params[:kode_opd])
+    sub_opd = Opd.find_by(kode_unik_opd: programKegiatan_params[:kode_sub_skpd])
     fixed_params = programKegiatan_params.merge({
                                                   kode_skpd: opd.kode_unik_opd,
-                                                  kode_sub_skpd: opd.kode_unik_opd,
                                                   id_unit: opd.id_opd_skp,
-                                                  id_sub_unit: opd.id_opd_skp
+                                                  id_sub_unit: sub_opd.id_opd_skp
                                                 })
     @programKegiatan = ProgramKegiatan.new(fixed_params)
     respond_to do |format|
@@ -276,9 +276,10 @@ class ProgramKegiatansController < ApplicationController
 
   def destroy
     @programKegiatan.destroy
-    respond_to do |format|
-      format.html { redirect_to program_kegiatans_url, notice: "Program dihapus" }
-    end
+    render json: { resText: "ProgramKegiatan dihapus", result: true }
+    # respond_to do |format|
+    #   format.html { redirect_to program_kegiatans_url, notice: "Program dihapus" }
+    # end
   end
 
   def destroy_all

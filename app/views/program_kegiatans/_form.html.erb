@@ -10,9 +10,16 @@
     </div>
   <% end %>
   <div class="field">
-    <% options = options_from_collection_for_select(Opd.all, 'kode_opd', 'nama_opd') %>
-    <%= form.label :kode_opd , class: "form-label" %>
+    <%= form.label :kode_opd_induk , class: "form-label" %>
     <%= form.select :kode_opd, Opd.pluck(:nama_opd, :kode_opd), {include_blank: true} ,
+      { data: { "placeholder": "Pilih OPD",
+                controller: 'dropdown',
+                dropdown_parent_value: '#form-programkegiatan'
+      } } %>
+  </div>
+  <div class="field">
+    <%= form.label :kode_sub_opd , class: "form-label" %>
+    <%= form.select :kode_sub_skpd, Opd.pluck(:nama_opd, :kode_unik_opd), {include_blank: true} ,
       { data: { "placeholder": "Pilih OPD",
                 controller: 'dropdown',
                 dropdown_parent_value: '#form-programkegiatan'
