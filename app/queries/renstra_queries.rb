@@ -123,7 +123,7 @@ class RenstraQueries
         pagu: pagu_subkegiatan(pr.kode_sub_giat, pr.kode_sub_skpd) }
     end
     if sub_opd.size > 1
-      items.uniq { |pk| pk.values_at(:kode_sub_opd, :kode) }.sort_by { |pk| pk.values_at(:kode_sub_opd) }
+      items.uniq { |pk| pk.values_at(:kode_sub_opd, :kode) }.sort_by { |pk| pk.values_at(:kode, :kode_sub_opd) }
     else
       items.uniq { |pk| pk.values_at(:kode) }.sort_by { |pk| pk.values_at(:kode) }
     end
