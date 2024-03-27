@@ -22,7 +22,11 @@ class RenstraRowComponent < ViewComponent::Base
   end
 
   def kode_opd
-    @program[:kode_opd]
+    if @program[:jenis] == 'subkegiatan'
+      @program[:kode_sub_opd]
+    else
+      @program[:kode_opd]
+    end
   end
 
   def kode

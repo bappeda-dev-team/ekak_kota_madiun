@@ -11,7 +11,11 @@ class TabelRenstraComponent < ViewComponent::Base
   end
 
   def kode_parent(program)
-    "#{program[:parent]}-#{program[:kode_opd]}"
+    if program[:jenis] == 'subkegiatan'
+      "#{program[:parent]}-#{program[:kode_sub_opd]}"
+    else
+      "#{program[:parent]}-#{program[:kode_opd]}"
+    end
   end
 
   def sub_opd
