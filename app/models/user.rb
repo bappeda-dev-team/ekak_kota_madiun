@@ -311,6 +311,12 @@ class User < ApplicationRecord
             .select { |s| s.tahapan? && s.manual_ik? && s.strategi? && s.target_sesuai? }
   end
 
+  def sasaran_pohon_kinerja_periode(tahun: [])
+    sasarans.includes(%i[strategi indikator_sasarans])
+            .where(tahun: tahun)
+            .select { |s| s.tahapan? && s.manual_ik? && s.strategi? && s.target_sesuai? }
+  end
+
   def eselon_user
     eselon = roles.where("roles.name ilike ?", "%eselon%").first
     eselon_user = eselon.nil? ? roles.where("roles.name ilike ?", "%staff%").first : eselon

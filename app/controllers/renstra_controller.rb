@@ -100,8 +100,8 @@ class RenstraController < ApplicationController
     # tujuan sasaran opd
     @opd = renstra.opd
     @user = @opd.eselon_dua_opd
-    @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
-    @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
+    @sasaran_opds = @user.sasaran_pohon_kinerja_periode(tahun: @periode)
+    @tujuan_opds = @opd.tujuan_opds.where(tahun_awal: @periode, tahun_akhir: @periode)
   end
 
   def renstra_cetak
@@ -116,8 +116,8 @@ class RenstraController < ApplicationController
     # tujuan sasaran opd
     @opd = renstra.opd
     @user = @opd.eselon_dua_opd
-    @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
-    @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
+    @sasaran_opds = @user.sasaran_pohon_kinerja_periode(tahun: @periode)
+    @tujuan_opds = @opd.tujuan_opds.where(tahun_awal: @periode, tahun_akhir: @periode)
     respond_to do |format|
       format.html
       format.pdf do
