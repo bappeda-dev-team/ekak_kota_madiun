@@ -12,22 +12,19 @@
           class:"btn btn-sm btn-tertiary" do %>
           <i class="fas fa-sync me-2"></i>
           Sync Tahun <%= @tahun %>
-      <% end %>
+        <% end %>
       </div>
     <% end %>
   </div>
 </div>
 <div class="card-body">
   <div class="table-responsive">
-    <table class="table align-items-center" id="filter-program">
+    <table class="table align-items-center counter" id="filter-program">
       <thead class="thead-light">
         <tr>
           <th class="border-bottom" scope="col">No.</th>
-          <th class="border-bottom" scope="col">Tahun</th>
+          <th class="border-bottom" scope="col">Kode</th>
           <th class="border-bottom" scope="col">Nama SubKegiatan</th>
-          <th class="border-bottom" scope="col">Indikator Sub kegiatan</th>
-          <th class="border-bottom" scope="col">Target</th>
-          <th class="border-bottom" scope="col">Satuan</th>
           <th class="border-bottom" scope="col">Sub OPD</th>
           <th class="border-bottom" scope="col">Tahun</th>
           <th class="border-bottom" scope="col">Jumlah Sasaran</th>
@@ -35,14 +32,11 @@
         </tr>
       </thead>
       <tbody>
-        <% @programKegiatans.order(:id_sub_giat).each.with_index(1) do |prog, i| %>
+        <% @programKegiatans.order(:id_sub_giat).each do |prog| %>
           <tr id="<%= dom_id(prog) %>" class="<%= 'bg-warning' if prog.jumlah_sasaran.zero? %>">
-            <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
-            <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.tahun %></td>
+            <td class="text-gray-900 fw-bolder" scope="row"></td>
+            <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.kode_sub_giat %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.nama_subkegiatan %></td>
-            <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.indikator_subkegiatan %></td>
-            <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.target_subkegiatan %></td>
-            <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.satuan_target_subkegiatan %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.nama_opd_pemilik %></td>
             <td class="fw-bolder text-gray-500" style="white-space: initial !important;"><%= prog.tahun %></td>
             <td class="fw-bolder text-gray-500 text-center" style="white-space: initial !important;"><%= prog.jumlah_sasaran %></td>
