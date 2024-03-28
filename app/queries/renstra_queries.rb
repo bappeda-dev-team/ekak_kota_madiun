@@ -48,7 +48,7 @@ class RenstraQueries
                              pelaksana_subkegiatan.flat_map do |user|
                                user.sasarans
                                    .includes(:program_kegiatan)
-                                   .where(tahun: @tahun_awal)
+                                   .where(tahun: periode)
                                    .where.not(program_kegiatans: { kode_skpd: [nil, ""] })
                                    .map(&:program_kegiatan)
                              end.compact_blank
