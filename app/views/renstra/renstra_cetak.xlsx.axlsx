@@ -106,7 +106,7 @@ wb.add_worksheet(name: "renstra_#{@tahun_awal}_#{@tahun_akhir}") do |sheet_renja
               prs[:parent] == kegiatan[:kode] && prs[:kode_opd] == sub_opd[:kode]
             end
                    .each do |subkegiatan|
-              sheet_renja.add_row [subkegiatan[:kode],
+              sheet_renja.add_row [subkegiatan[:kode_tweak],
                                    subkegiatan[:nama]] + indikators(subkegiatan, subkegiatan[:pagu])
             end
           end

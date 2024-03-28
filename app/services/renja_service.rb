@@ -114,14 +114,23 @@ class RenjaService
         kode_program: pr.kode_program,
         kode_kegiatan: pr.kode_giat,
         kode: pr.kode_sub_giat,
+        kode_tweak: kode_tweak(pr.kode_sub_giat),
         nama: pr.nama_subkegiatan,
         indikators: indikators(pr.kode_sub_giat, 'Subkegiatan', pr.kode_sub_skpd),
         pagu: pagu_subkegiatan(pr.kode_sub_giat, pr.kode_sub_skpd) }
     end
     if sub_opd.size > 1
-      items.uniq { |pk| pk.values_at(:kode_sub_opd, :kode) }.sort_by { |pk| pk.values_at(:kode_sub_opd) }
+      items.uniq { |pk| pk.values_at(:kode_sub_opd, :kode) }.sort_by { |pk| pk.values_at(:kode_tweak, :kode_sub_opd) }
     else
-      items.uniq { |pk| pk.values_at(:kode) }.sort_by { |pk| pk.values_at(:kode) }
+      items.uniq { |pk| pk.values_at(:kode) }.sort_by { |pk| pk.values_at(:kode_tweak) }
+    end
+  end
+
+  def kode_tweak(kode) # khusus subkegiatan
+    if kode.scan(/\d+$/).last.size == 2
+      kode.gsub(/[.](?!.*[.])/, ".00\\1")
+    else
+      kode
     end
   end
 

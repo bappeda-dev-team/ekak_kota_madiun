@@ -3,13 +3,14 @@
 require "rails_helper"
 
 RSpec.describe RenstraRowComponent, type: :component do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "replace last XX kode with 00XX for subkegiatan" do
+    # Arrange
+    row_copmonent = RenstraRowComponent.new(program: { kode: '4.01.02.2.01.01', jenis: 'subkegiatan' })
 
-  # it "renders something useful" do
-  #   expect(
-  #     render_inline(described_class.new(attr: "value")) { "Hello, components!" }.css("p").to_html
-  #   ).to include(
-  #     "Hello, components!"
-  #   )
-  # end
+    # Act
+    new_kode = row_copmonent.kode_tweak
+
+    # Assert
+    expect(new_kode).to eq('4.01.02.2.01.0001')
+  end
 end

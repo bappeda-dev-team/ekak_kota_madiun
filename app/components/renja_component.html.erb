@@ -2,7 +2,7 @@
   <%= render(HeaderRenjaComponent.new(title: title, indikator: with_indikator?)) %>
 <% end %>
 <tr>
-  <td class="text-gray-900 text-wrap border"><%= kode %></td>
+  <td class="text-gray-900 text-wrap border"><%= kode_tweak %></td>
   <td class="text-gray-900 text-wrap border" width="450px"><%= nama %></td>
   <% if with_indikator? %>
     <td class="text-gray-900 text-wrap border"><%= indikators[:indikator] %></td>

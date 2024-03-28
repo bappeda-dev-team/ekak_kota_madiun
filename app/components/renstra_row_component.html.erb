@@ -8,7 +8,7 @@
     data-calculation-kode-value="<%= kode %>" 
     data-calculation-anggaran-value="<%= @anggaran.to_json %>"
     data-action="calculation:sumTotal->calculation#what" >
-  <td class="text-gray-900 text-wrap border"><%= kode %></td>
+  <td class="text-gray-900 text-wrap border"><%= kode_tweak %></td>
   <% if @cetak %>
     <td class="text-gray-900 text-wrap border" colspan="2" width="450px"><%= nama %></td>
   <% else %>
