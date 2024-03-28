@@ -151,3 +151,33 @@ wb.add_worksheet(name: "sasaran_opd") do |sheet_sas|
     end
   end
 end
+
+def target_tujuan(targets)
+  @periode.flat_map do |tahun|
+    target = targets.find_by(tahun: tahun)
+    [target.target, target.satuan] || ['-', '-']
+  end
+end
+wb.add_worksheet(name: "tujuan_opd") do |sheet_tuj|
+  sheet_tuj.add_row ['Tujuan OPD', 'Indikator', 'Rumus Perhitungan', 'Sumber Data'] + header_tahun_sasaran
+  sheet_tuj.add_row ['', '', '', ''] + header_target_sasaran
+  sheet_tuj.merge_cells('A1:A2')
+  sheet_tuj.merge_cells('B1:B2')
+  sheet_tuj.merge_cells('C1:C2')
+  sheet_tuj.merge_cells('D1:D2')
+  sheet_tuj.merge_cells('E1:F1')
+  sheet_tuj.merge_cells('G1:H1')
+
+  @tujuan_opds.each do |tujuan|
+    indikators = tujuan.indikators
+    current_rows = indikators.map do |ind|
+      sheet_tuj.add_row [tujuan.tujuan, ind.indikator, ind.rumus_perhitungan,
+                         ind.sumber_data] + target_tujuan(ind.targets)
+    end
+    size_of_sasaran = current_rows.map { |row| row.cells[0].value }
+    if size_of_sasaran.size > 1
+      the_rows = current_rows.map { |row| row.cells[0].r }
+      sheet_tuj.merge_cells the_rows.join(':')
+    end
+  end
+end
