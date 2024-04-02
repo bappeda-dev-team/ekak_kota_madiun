@@ -1,5 +1,5 @@
 <table class="table table-bordered mb-3" id="<%= dom_id(review) %>">
-  <tr class="border">
+  <tr>
     <td class="text-start" width="20px">Review</td>
     <td class="fw-bolder text-gray-500 text-wrap text-start"><%= review.penilaian %></td>
     <% if reviewer? %>
@@ -21,7 +21,7 @@
       </td>
     <% end %>
   </tr>
-  <tr class="border">
+  <tr>
     <td class="text-start" width="20px">Keterangan</td>
     <td class="fw-bolder text-gray-500 text-wrap text-start" colspan="2"><%= review.keterangan %> (<%= review.user.nama %>)</td>
   </tr>
