@@ -1,0 +1,26 @@
+<div class="pohon-body" id="<%= dom_id(pohon, 'review') %>">
+  <%= render partial: 'reviews/review', collection: pohon.reviews, as: :review %>
+</div>
+<% if reviewer? %>
+  <div class="pohon-tombol mb-3">
+    <div class="row">
+      <div class="col">
+        <%= link_to new_review_path(type: pohon.class.name,
+                                      id: pohon,
+                                      target: dom_id(pohon, 'review')),
+           remote: true,
+           class: 'btn btn-outline-primary',
+           data: {
+             controller: 'form-modal',
+             action: 'form-modal#appendForm',
+             form_modal_location_param: 'form-modal-body',
+             bs_target: '#form-modal',
+             bs_toggle: 'modal'
+           } do %>
+          <span class="fas fa-marker me-2"></span>
+          <span>Review</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

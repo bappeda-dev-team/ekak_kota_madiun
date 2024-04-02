@@ -20,6 +20,7 @@ class Tematik < ApplicationRecord
                         }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id'
   accepts_nested_attributes_for :indikators, reject_if: :all_blank, allow_destroy: true
 
+  has_many :reviews, as: :reviewable
   has_many :sub_tematiks, primary_key: :id, foreign_key: :tematik_ref_id
   has_one :sasaran_kotum
 

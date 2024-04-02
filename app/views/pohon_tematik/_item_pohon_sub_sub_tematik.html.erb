@@ -31,6 +31,7 @@
     </table>
   </div>
   <% if super_admin? %>
+    <%= render partial: 'pohon_tematik/item_reviews', locals: { pohon: pohon } %>
     <div class="pohon-tombol mb-3 action-sub-sub-tematik">
       <div class="row">
         <div class="col">

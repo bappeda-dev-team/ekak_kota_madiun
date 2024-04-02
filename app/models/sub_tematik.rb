@@ -17,6 +17,7 @@ class SubTematik < Tematik
   has_many :indikators, lambda {
                           where(jenis: 'Tematik', sub_jenis: 'SubTematik')
                         }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id'
+  has_many :reviews, as: :reviewable
 
   accepts_nested_attributes_for :indikators, reject_if: :all_blank, allow_destroy: true
 
