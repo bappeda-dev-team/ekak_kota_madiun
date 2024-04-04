@@ -102,6 +102,26 @@ class User < ApplicationRecord
     @login || nik || email
   end
 
+  def nama_jabatan_terakhir
+    if jabatan_users.any?
+      jabatan_users.last.nama_jabatan
+    else
+      jabatan
+    end
+  end
+
+  def tahun_jabatan
+    if jabatan_users.any?
+      jabatan_users.last.tahun
+    else
+      created_at.year.to_s
+    end
+  end
+
+  def status_kepegawaian
+    "PNS"
+  end
+
   def strategi_pohons(strategi_id)
     pohons.where(strategi_id: strategi_id)
   end

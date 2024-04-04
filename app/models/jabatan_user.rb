@@ -19,4 +19,8 @@ class JabatanUser < ApplicationRecord
   def details
     "#{jabatan.nama_jabatan} (#{bulan}/#{tahun})"
   end
+
+  def nama_jabatan
+    jabatan.nama_jabatan
+  end
 end

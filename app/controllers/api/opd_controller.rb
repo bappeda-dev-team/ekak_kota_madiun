@@ -6,6 +6,11 @@ module Api
       @opds = Opd.where.not(kode_unik_opd: nil)
     end
 
+    def daftar_pegawai
+      @opd = Opd.find_by!(kode_unik_opd: params[:kode_opd])
+      @users = @opd.users.aktif.non_admin
+    end
+
     def find_opd
       nama_opd = params[:q]
       @opds = Opd.where('nama_opd ILIKE ?', "%#{nama_opd}%")

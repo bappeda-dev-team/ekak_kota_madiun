@@ -744,6 +744,7 @@ Rails.application.routes.draw do
       post :tujuan_opd
       post :perbandingan_pagu
       post :pagu_all
+      post :daftar_pegawai
     end
     namespace :pohon_kinerja do
       post :pohon_kinerja_kota
