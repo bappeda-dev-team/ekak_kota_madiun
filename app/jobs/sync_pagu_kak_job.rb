@@ -3,7 +3,7 @@ class SyncPaguKakJob
   include Sidekiq::Job
 
   queue_as :default
-  sidekiq_options lock: :until_executed
+  # sidekiq_options lock: :until_executed
 
   def perform(*args)
     tahun, kode_opd = args
