@@ -51,3 +51,5 @@ dump.rdb
 *.DS_Store
 .env.development.local
 *.dev_prod
+
+/config/credentials/production.key

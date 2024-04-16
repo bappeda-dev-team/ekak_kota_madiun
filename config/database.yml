@@ -12,12 +12,12 @@ default: &default
 
 development:
   <<: *default
-  database: <%= ENV.fetch("DATABASE_NAME") { 'prototype_kak_dev' } %>
+  database: <%= ENV.fetch("DATABASE_NAME") { 'ekak_kota_madiun_dev' } %>
 
 test:
   <<: *default
-  database: prototype_kak_test
+  database: ekak_kota_madiun_test
 
 production:
   <<: *default
-  database: prototype_kak_prod
+  database: ekak_kota_madiun_prod
