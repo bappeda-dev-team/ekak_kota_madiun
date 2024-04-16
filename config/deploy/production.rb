@@ -11,6 +11,8 @@ server '10.91.22.180', user: 'bappeda', roles: %w[app db web]
 set :deploy_to, "/home/bappeda/app/ekak_kota_madiun"
 # role-based syntax
 # ==================
+set :sidekiq_service_unit_name, 'sidekiq'
+set :rails_env, :production
 
 # Defines a role with one or multiple servers. The primary server in each
 # group is considered to be the first unless any hosts have the primary
