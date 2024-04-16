@@ -19,7 +19,7 @@ module Api
       kode_tombol = params[:kode_tombol]
       SyncJabatanJob.perform_async(@kode_opd, @tahun)
 
-      update_tombol(kode_tombol: kode_tombol, tahun: @tahun, kode_opd: @kode_opd, tombol: 'Sync Jabatan')
+      # update_tombol(kode_tombol: kode_tombol, tahun: @tahun, kode_opd: @kode_opd, tombol: 'Sync Jabatan')
 
       flash.now[:success] = "Sinkronisasi Jabatan dikerjakan.."
       render 'shared/_notifikasi_simple'

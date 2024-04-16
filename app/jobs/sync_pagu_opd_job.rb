@@ -1,6 +1,5 @@
 class SyncPaguOpdJob
   include Sidekiq::Worker
-  include Sidekiq::Status::Worker
   include Sidekiq::Job
 
   queue_as :default

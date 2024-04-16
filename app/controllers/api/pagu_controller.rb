@@ -23,7 +23,7 @@ module Api
 
       SyncPaguKakJob.perform_async(@tahun, @kode_opd)
 
-      update_tombol(kode_tombol: kode_tombol, tahun: @tahun, kode_opd: @kode_opd, tombol: 'Sync Pagu KAK')
+      # update_tombol(kode_tombol: kode_tombol, tahun: @tahun, kode_opd: @kode_opd, tombol: 'Sync Pagu KAK')
 
       flash.now[:success] = "Sinkronisasi Pagu KAK Dikerjakan."
       render 'shared/_notifikasi_simple'
@@ -42,7 +42,7 @@ module Api
 
       SyncPaguOpdJob.perform_async(@kode_unik_opd, @tahun, @bulan, @kode_opd, @tahun_asli)
 
-      update_tombol(kode_tombol: kode_tombol, tahun: @tahun_asli, kode_opd: kode_opd, tombol: 'Sync Pagu')
+      # update_tombol(kode_tombol: kode_tombol, tahun: @tahun_asli, kode_opd: kode_opd, tombol: 'Sync Pagu')
 
       flash.now[:success] = "Sinkronisasi Pagu OPD Dikerjakan."
       render 'shared/_notifikasi_simple'
