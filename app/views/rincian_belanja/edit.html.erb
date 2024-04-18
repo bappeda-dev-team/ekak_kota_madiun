@@ -1,54 +1,47 @@
-<nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
-  <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
-    <li class="breadcrumb-item">
-      <i class="fas fa-home"></i>
-    </li>
-    <li class="breadcrumb-item" aria-current="page">Rincian Belanja</li>
-    <li class="breadcrumb-item" aria-current="page">Rencana Kinerja</li>
-    <li class="breadcrumb-item active" aria-current="page"><%= @sasaran.sasaran_kinerja %></li>
-  </ol>
-</nav>
-<div class="px-3">
-  <div class="card border-2 shadow mb-1">
-    <div class="card-header">
-      <div class="row align-items-center">
-        <table class="table align-items-center">
-          <thead>
-            <tr>
-              <th class="border text-center" scope="col" colspan="2"></th>
-              <th class="border text-center" scope="col">Indikator</th>
-              <th class="border text-center" scope="col">Target</th>
-              <th class="border text-center" scope="col">Satuan</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% indikator_sub = @sasaran.program_kegiatan&.indikator_subkegiatan_tahun(@tahun, @kode_opd) %>
-            <tr class="table-info">
-              <th class="border fw-bolder text-gray-900">Subkegiatan:</th>
-              <td class="border text-wrap"><%= @sasaran.subkegiatan %></td>
-              <td class="border text-wrap"><%= indikator_sub&.dig(:indikator) %></td>
-              <td class="border text-wrap"><%= indikator_sub&.dig(:target) %></td>
-              <td class="border text-wrap"><%= indikator_sub&.dig(:satuan) %></td>
-            </tr>
-            <% indikator = @sasaran.indikator_sasarans.first %>
-            <tr>
-              <th class="border fw-bolder text-gray-900">Rencana Kinerja</th>
-              <td class="border text-wrap" rowspan="<%= @sasaran.indikator_sasarans.count  %>"><%= @sasaran.sasaran_kinerja %></td>
-              <td class="border text-wrap"><%= indikator&.indikator_kinerja %></td>
-              <td class="border text-wrap"><%= indikator&.target %></td>
-              <td class="border text-wrap"><%= indikator&.satuan %></td>
-            </tr>
-            <% @sasaran.indikator_sasarans.drop(1).each do |indikator_s| %>
-              <tr>
-                <td class="border text-wrap"><%= indikator_s.indikator_kinerja %></td>
-                <td class="border text-wrap"><%= indikator_s.target %></td>
-                <td class="border text-wrap"><%= indikator_s.satuan %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
+<%= content_for :html_title, "Rincian Belanja" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Rincian Belanja</li>
+  <li class="breadcrumb-item active" aria-current="page"><%= @sasaran.sasaran_kinerja %></li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="card border-2 mb-2">
+    <table class="table align-items-center">
+      <thead>
+        <tr>
+          <th class="border text-center" scope="col" colspan="2"></th>
+          <th class="border text-center" scope="col">Indikator</th>
+          <th class="border text-center" scope="col">Target</th>
+          <th class="border text-center" scope="col">Satuan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% indikator_sub = @sasaran.program_kegiatan&.indikator_subkegiatan_tahun(@tahun, @kode_opd) %>
+        <tr class="table-info">
+          <th class="border fw-bolder text-gray-900">Subkegiatan:</th>
+          <td class="border text-wrap"><%= @sasaran.subkegiatan %></td>
+          <td class="border text-wrap"><%= indikator_sub&.dig(:indikator) %></td>
+          <td class="border text-wrap"><%= indikator_sub&.dig(:target) %></td>
+          <td class="border text-wrap"><%= indikator_sub&.dig(:satuan) %></td>
+        </tr>
+        <% indikator = @sasaran.indikator_sasarans.first %>
+        <tr>
+          <th class="border fw-bolder text-gray-900">Rencana Kinerja</th>
+          <td class="border text-wrap" rowspan="<%= @sasaran.indikator_sasarans.count  %>"><%= @sasaran.sasaran_kinerja %></td>
+          <td class="border text-wrap"><%= indikator&.indikator_kinerja %></td>
+          <td class="border text-wrap"><%= indikator&.target %></td>
+          <td class="border text-wrap"><%= indikator&.satuan %></td>
+        </tr>
+        <% @sasaran.indikator_sasarans.drop(1).each do |indikator_s| %>
+          <tr>
+            <td class="border text-wrap"><%= indikator_s.indikator_kinerja %></td>
+            <td class="border text-wrap"><%= indikator_s.target %></td>
+            <td class="border text-wrap"><%= indikator_s.satuan %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="sasaran-rincian-belanja" style="zoom: .75;">
     <% @sasaran.tahapans.includes(:anggarans).each do |tahapan| %>
       <div class="card border-2 shadow mb-1">
         <div class="card-header">
@@ -155,5 +148,5 @@
       </div>
     <% end %>
   </div>
-</div>
+<% end %>
 <%= render 'modal_perhitungans' %>
