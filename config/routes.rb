@@ -136,6 +136,7 @@ Rails.application.routes.draw do
     member do
       get :edit_sub
       post :sub
+      get :rad
       get :rad_cetak
       patch :update_sub
       delete :sub

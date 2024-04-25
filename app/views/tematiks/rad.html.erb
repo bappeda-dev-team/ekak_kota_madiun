@@ -1,0 +1,49 @@
+<%= content_for :html_title, "Rencana Aksi Daerah" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Perencanaan Kota</li>
+  <li class="breadcrumb-item active" aria-current="page">Rencana Aksi Daerah</li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="card border-0 shadow">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h2 class="fs-5 fw-bold mb-0">Rencana Aksi Daerah - <%= @sub_tematik %></h2>
+          <h2 class="fs-5 fw-bold mb-0">Tahun <%= @tahun %> / 2023</h2>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered align-items-center">
+          <thead>
+            <tr>
+              <th>Sasaran Kota</th>
+              <th>Indikator</th>
+              <th>Target</th>
+              <th>Satuan</th>
+              <th>Keterangan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% rowspan = @sub_tematik.indikators.size + 1 %>
+            <tr>
+              <td rowspan="<%= rowspan %>" class="text-wrap border"><%= @sub_tematik.sasaran_kotum %></td>
+              <td colspan="3" class="p-0 m-0 border-0"></td>
+              <td class="text-wrap border" rowspan="<%= rowspan %>"><%= @sub_tematik.keterangan %></td>
+            </tr>
+            <% @sub_tematik.indikators.each do |indikator| %>
+              <tr class="skip">
+                <td class="text-wrap border"><%= indikator %></td>
+                <td class="border"><%= indikator.target %></td>
+                <td class="border"><%= indikator.satuan %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="d-grid gap-2">
+      </div>
+    </div>
+  </div>
+<% end %>

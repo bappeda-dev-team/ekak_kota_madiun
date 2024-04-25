@@ -14,6 +14,10 @@
       <td class="text-wrap" rowspan="<%= rowspan %>"><%= sub_tema.keterangan %></td>
       <td class="text-center" rowspan="<%= rowspan %>">
         <div class="d-grid gap-3">
+          <%= link_to rad_tematik_path(sub_tema), class: 'btn btn-outline-primary' do %>
+            <i class="fa fa-eye me-2"></i>
+            <span>Lihat RAD</span>
+          <% end %>
           <%= link_to rad_cetak_tematik_path(sub_tema, format: :pdf), class: 'btn btn-outline-danger' do %>
             <i class="fa fa-file-pdf me-2"></i>
             <span>Cetak RAD</span>
