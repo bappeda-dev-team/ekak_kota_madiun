@@ -57,6 +57,16 @@ class SasaranKotaController < ApplicationController
 
   def crosscutting_kota; end
 
+  def rad_kota
+    @tahun = params[:tahun]
+    @sub_tematik = SubTematik.find(params[:id])
+    pohon_sub = Pohon.find_by(pohonable_id: @sub_tematik.id,
+                              pohonable_type: 'SubTematik',
+                              tahun: @tahun,
+                              role: 'sub_pohon_kota')
+    @sasaran_kota = pohon_sub.sub_pohons.where(tahun: @tahun)
+  end
+
   private
 
   def set_sasaran_kota
@@ -77,7 +87,7 @@ class SasaranKotaController < ApplicationController
     @tahun = if tahun.nil?
                cookies[:tahun]
              else
-               "Tahun #{tahun}"
+               tahun
              end
     @sasaran_kota = Pohon.where(pohonable_type: %w[SubTematik SubSubTematik], tahun: @tahun).map(&:pohonable)
                          .compact

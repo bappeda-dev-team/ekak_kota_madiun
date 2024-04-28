@@ -8,30 +8,31 @@
     <div class="card-header">
       <div class="row align-items-center">
         <div class="col">
-          <h2 class="fs-5 fw-bold mb-0">Sasaran Kota Tahun <%= @tahun %><h2>
+          <h2 class="fs-5 fw-bold mb-0">Sasaran Kota Tahun <%= @tahun %>
+            <h2>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table counter">
+              <caption class="caption-top">Jumlah Sasaran Kota: <strong><%= @sasaran_kota.size %> Sasaran</strong></caption>
+              <thead>
+                <tr>
+                  <th class="border" scope="col">No.</th>
+                  <th class="border" scope="col">Strategi Kota</th>
+                  <th class="border" scope="col" colspan="2">Sasaran Kota</th>
+                  <th class="border" scope="col">Indikator</th>
+                  <th class="border" scope="col">Target</th>
+                  <th class="border" scope="col">Satuan</th>
+                  <th class="border" scope="col">Keterangan</th>
+                </tr>
+              </thead>
+              <tbody id="sasaran-kota">
+                <%= render partial: 'sasaran_kota/sasaran_kota', collection: @sasaran_kota, as: :sasaran %>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="card-body">
-      <div class="table-responsive">
-        <caption class="p-3">Jumlah Sasaran Kota Tahun <%= @tahun %>: <strong><%= @sasaran_kota.size %> Sasaran</strong></caption>
-        <table class="table counter">
-          <thead>
-            <tr>
-              <th class="border" scope="col">No.</th>
-              <th class="border" scope="col">Strategi Kota</th>
-              <th class="border" scope="col" colspan="2">Sasaran Kota</th>
-              <th class="border" scope="col">Indikator</th>
-              <th class="border" scope="col">Target</th>
-              <th class="border" scope="col">Satuan</th>
-              <th class="border" scope="col">Keterangan</th>
-            </tr>
-          </thead>
-          <tbody id="sasaran-kota">
-            <%= render partial: 'sasaran_kota/sasaran_kota', collection: @sasaran_kota, as: :sasaran %>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-<% end %>
+    <% end %>

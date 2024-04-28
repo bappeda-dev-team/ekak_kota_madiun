@@ -136,7 +136,6 @@ Rails.application.routes.draw do
     member do
       get :edit_sub
       post :sub
-      get :rad
       get :rad_cetak
       patch :update_sub
       delete :sub
@@ -797,7 +796,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :sasaran_kota
+  resources :sasaran_kota do
+    member do
+      get :rad_kota
+    end
+  end
   resources :tujuan_kota do
     collection do
       post :admin_filter

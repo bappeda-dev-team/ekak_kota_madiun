@@ -18,17 +18,6 @@ class TematiksController < ApplicationController
                          .compact
   end
 
-  def rad
-    @tahun = cookies[:tahun]
-    @sub_tematik = SubTematik.find(params[:id])
-    pohon_sub = Pohon.find_by(pohonable_id: @sub_tematik.id,
-                              pohonable_type: 'SubTematik',
-                              tahun: @tahun,
-                              role: 'sub_pohon_kota')
-    @sasaran_kota = pohon_sub.sub_pohons.where(pohonable_type: 'SubSubTematik',
-                                               tahun: @tahun)
-  end
-
   def rad_cetak
     @title = "laporan_rad_sub_tematik"
     @tahun = cookies[:tahun]
