@@ -1,0 +1,36 @@
+<table class="table table-bordered align-items-center">
+    <caption class="caption-top fw-bold">Rencana Aksi Daerah</caption>
+    <thead>
+        <tr>
+            <th>No</th>
+            <th colspan="2">Rencana Aksi</th>
+            <th>Indikator</th>
+            <th>Target</th>
+            <th>Satuan</th>
+            <th>OPD Pelaksana</th>
+            <th>Keterangan</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% rad_sasaran_kota.each.with_index(1) do |sas, no| %>
+            <% rowspan_ind = sas.pohonable.indikators.size + 1 %>
+            <tr>
+                <td rowspan="<%= rowspan_ind %>" class="text-wrap text-center"><%= no %></td>
+                <td rowspan="<%= rowspan_ind %>" class="text-wrap"><%= sas.pohonable %></td>
+                <td rowspan="<%= rowspan_ind %>" class="border">
+                    <div class="d-grid-gap-3">Tombol</div>
+                </td>
+                <td class="p-0 m-0" colspan="3"></td>
+                <td rowspan="<%= rowspan_ind %>" class="text-wrap"><%= sas.opd %></td>
+                <td rowspan="<%= rowspan_ind %>" class="border"><%= sas.keterangan %></td>
+            </tr>
+            <% sas.pohonable.indikators.each do |ind| %>
+                <tr class="skip">
+                    <td class="text-wrap border"><%= ind %></td>
+                    <td class="border"><%= ind.target %></td>
+                    <td class="border"><%= ind.satuan %></td>
+                </tr>
+            <% end %>
+        <% end %>
+    </tbody>
+</table>

@@ -1,0 +1,27 @@
+<table class="table table-bordered align-items-center">
+    <caption class="caption-top fw-bold">Sasaran Kota</caption>
+    <thead>
+        <tr>
+            <th>Sasaran Kota</th>
+            <th>Indikator</th>
+            <th>Target</th>
+            <th>Satuan</th>
+            <th>Keterangan</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% rowspan = sasaran_kota_rad.indikators.size + 1 %>
+        <tr>
+            <td rowspan="<%= rowspan %>" class="text-wrap border"><%= sasaran_kota_rad.sasaran_kotum %></td>
+            <td colspan="3" class="p-0 m-0 border-0"></td>
+            <td class="text-wrap border" rowspan="<%= rowspan %>"><%= sasaran_kota_rad.keterangan %></td>
+        </tr>
+        <% sasaran_kota_rad.indikators.each do |indikator| %>
+            <tr class="skip">
+                <td class="text-wrap border"><%= indikator %></td>
+                <td class="border"><%= indikator.target %></td>
+                <td class="border"><%= indikator.satuan %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
