@@ -6,18 +6,11 @@
   <li class="breadcrumb-item active" aria-current="page">Rencana Aksi Daerah</li>
 <% end %>
 <% content_for :view_utama do %>
-  <div class="card border-2 shadow">
+  <div class="card border-0 shadow">
     <div class="card-header">
-      <div class="row align-items-center">
-        <div class="col">
-          <h2 class="fs-5 fw-bold mb-0">Rencana Aksi Daerah - <%= @sub_tematik.sasaran_kotum %></h2>
-          <h2 class="fs-5 fw-bold mb-0">Tahun <%= @tahun %> / 2023</h2>
-        </div>
-      </div>
-    </div>
-    <div class="card-body d-grid gap-2">
-      <div class="table-responsive">
+      <div class="sasaran-kota-rad">
         <table class="table table-bordered align-items-center">
+          <caption class="caption-top fw-bold">Sasaran Kota</caption>
           <thead>
             <tr>
               <th>Sasaran Kota</th>
@@ -44,34 +37,144 @@
           </tbody>
         </table>
       </div>
-      <div class="table-responsive">
+    </div>
+    <div class="card-body">
+      <div class="sub-sasaran-kota">
         <table class="table table-bordered align-items-center">
+          <caption class="caption-top fw-bold">Sub Sasaran</caption>
           <thead>
             <tr>
               <th>No</th>
-              <th>Rencana Aksi</th>
+              <th colspan="2">Sub Sasaran Kota</th>
+              <th>Indikator</th>
+              <th>Target</th>
+              <th>Satuan</th>
               <th>OPD Pelaksana</th>
+              <th>Keterangan</th>
             </tr>
           </thead>
           <tbody>
-            <% @sasaran_kota.where(role: ['strategi_pohon_kota', 'sub_sub_pohon_kota']).each.with_index(1) do |sas, no| %>
+            <% @sub_sasaran_kota.each.with_index(1) do |sub, no| %>
+              <% rowspan_ind_sub = sub.pohonable.indikators.size + 1 %>
+              <% sub_sasaran_kota = sub.pohonable.sasaran_kotum.present? ? sub.pohonable.sasaran_kotum : sub.pohonable %>
               <tr>
-                <td class="text-wrap text-center""><%= no %></td>
-                <td class="text-wrap"><%= sas.pohonable %> - <%= sas.role %> <%= sas.id %></td>
-                <% if sas.role == 'strategi_pohon_kota' %>
-                  <td class="text-wrap"><%= sas.opd %></td>
-                <% else %>
-                  <td class="text-wrap">
-                    <div class="d-grid gap-2">
-                      <% sas.sub_pohons.group_by(&:opd).each do |opd, _| %>
-                        <p>
-                          <%= opd %>
-                        </p>
-                      <% end %>
-                    </div>
-                  </td>
-                <% end %>
+                <td rowspan="<%= rowspan_ind_sub %>" class="text-wrap text-center"><%= no %></td>
+                <td rowspan="<%= rowspan_ind_sub %>" class="text-wrap"><%= sub_sasaran_kota %></td>
+                <td rowspan="<%= rowspan_ind_sub %>" class="border">
+                  <div class="d-grid gap-3">
+                    <% if sub.pohonable.sasaran_kotum.present? %>
+                      <div class="tombol-edit-strategi">
+                        <%= link_to edit_sasaran_kotum_path(sub.pohonable.sasaran_kotum), remote: true,
+                         data: {
+                           controller: 'form-modal',
+                           action: 'ajax:complete->form-modal#success:prevent',
+                           bs_toggle: 'modal',
+                           bs_target: '#form-modal'
+                         },
+                         class: 'btn btn-outline-info' do %>
+                          <i class="fa fa-edit me-2"></i>
+                          <span>Edit</span>
+                        <% end %>
+                      </div>
+                      <div class="tombol-view-rad">
+                        <%= link_to rad_kota_sasaran_kotum_path(sub.pohonable, tahun: @tahun), class: 'btn btn-outline-primary' do %>
+                          <i class="fa fa-book-open me-2"></i>
+                          <span>RAD</span>
+                        <% end %>
+                      </div>
+                    <% else %>
+                      <div class="tombol-input-sasaran-kota">
+                        <%= link_to new_sasaran_kotum_path(tematik_id: sub.pohonable.id), remote: true,
+                         data: {
+                           controller: 'form-modal',
+                           action: 'ajax:complete->form-modal#success:prevent',
+                           bs_toggle: 'modal',
+                           bs_target: '#form-modal'
+                         },
+                         class: 'btn btn-secondary' do %>
+                          <i class="fa fa-plus me-2"></i>
+                          <span>Input Sasaran</span>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
+                </td>
+                <td colspan="3" class="p-0 m-0 border-0"></td>
+                <td rowspan="<%= rowspan_ind_sub %>" class="text-wrap border"></td>
+                <td rowspan="<%= rowspan_ind_sub %>" class="text-wrap border"><%= sub.keterangan %></td>
               </tr>
+              <% sub.pohonable.indikators.each do |indikator| %>
+                <tr class="skip">
+                  <td class="text-wrap border"><%= indikator %></td>
+                  <td class="border"><%= indikator.target %></td>
+                  <td class="border"><%= indikator.satuan %></td>
+                </tr>
+              <% end %>
+              <tr>
+                <th>No</th>
+                <th colspan="2">Rencana Aksi Sub Sasaran</th>
+                <th>Indikator</th>
+                <th>Target</th>
+                <th>Satuan</th>
+                <th>OPD Pelaksana</th>
+                <th>Keterangan</th>
+              </tr>
+              <% sub.sub_pohons.each.with_index(1) do |sub_ren, no_ren| %>
+                <% rowspan_ind_sub = sub_ren.pohonable.indikators.size + 1 %>
+                <tr>
+                  <td rowspan="<%= rowspan_ind_sub %>" class="text-wrap text-center"><%= no %>.<%= no_ren %></td>
+                  <td rowspan="<%= rowspan_ind_sub %>" class="text-wrap"><%= sub_ren.pohonable %></td>
+                  <td rowspan="<%= rowspan_ind_sub %>" class="border"></td>
+                  <td class="p-0 m-0" colspan="3"></td>
+                  <td rowspan="<%= rowspan_ind_sub %>" class="text-wrap"><%= sub_ren.opd %></td>
+                  <td rowspan="<%= rowspan_ind_sub %>" class="border"><%= sub_ren.keterangan || '-' %></td>
+                </tr>
+                <% sub_ren.pohonable.indikators.each do |ind| %>
+                  <tr class="skip">
+                    <td class="text-wrap border"><%= ind %></td>
+                    <td class="border"><%= ind.target %></td>
+                    <td class="border"><%= ind.satuan %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="rad-sasaran-kota">
+        <table class="table table-bordered align-items-center">
+          <caption class="caption-top fw-bold">Rencana Aksi Daerah</caption>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th colspan="2">Rencana Aksi</th>
+              <th>Indikator</th>
+              <th>Target</th>
+              <th>Satuan</th>
+              <th>OPD Pelaksana</th>
+              <th>Keterangan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @rad_sasaran_kota.each.with_index(1) do |sas, no| %>
+              <% rowspan_ind = sas.pohonable.indikators.size + 1 %>
+              <tr>
+                <td rowspan="<%= rowspan_ind %>" class="text-wrap text-center"><%= no %></td>
+                <td rowspan="<%= rowspan_ind %>" class="text-wrap"><%= sas.pohonable %></td>
+                <td rowspan="<%= rowspan_ind %>" class="border">
+                  <div class="d-grid-gap-3">Tombol</div>
+                </td>
+                <td class="p-0 m-0" colspan="3"></td>
+                <td rowspan="<%= rowspan_ind %>" class="text-wrap"><%= sas.opd %></td>
+                <td rowspan="<%= rowspan_ind %>" class="border"><%= sas.keterangan %></td>
+              </tr>
+              <% sas.pohonable.indikators.each do |ind| %>
+                <tr class="skip">
+                  <td class="text-wrap border"><%= ind %></td>
+                  <td class="border"><%= ind.target %></td>
+                  <td class="border"><%= ind.satuan %></td>
+                </tr>
+              <% end %>
             <% end %>
           </tbody>
         </table>

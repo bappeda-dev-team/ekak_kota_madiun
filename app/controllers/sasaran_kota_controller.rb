@@ -59,12 +59,11 @@ class SasaranKotaController < ApplicationController
 
   def rad_kota
     @tahun = params[:tahun]
-    @sub_tematik = SubTematik.find(params[:id])
+    @sub_tematik = Tematik.find(params[:id])
     pohon_sub = Pohon.find_by(pohonable_id: @sub_tematik.id,
-                              pohonable_type: 'SubTematik',
-                              tahun: @tahun,
-                              role: 'sub_pohon_kota')
-    @sasaran_kota = pohon_sub.sub_pohons.where(tahun: @tahun)
+                              tahun: @tahun)
+    @sub_sasaran_kota = pohon_sub.sub_pohons.where(tahun: @tahun, role: 'sub_sub_pohon_kota')
+    @rad_sasaran_kota = pohon_sub.sub_pohons.where(tahun: @tahun, role: 'strategi_pohon_kota')
   end
 
   private
