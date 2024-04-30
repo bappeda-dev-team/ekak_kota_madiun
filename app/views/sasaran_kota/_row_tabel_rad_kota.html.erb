@@ -1,0 +1,20 @@
+<% rowspan_ind = sas.pohonable.indikators.size + 1 %>
+<% warna_row = PohonKotaPresenter.new(sas).warna_row %>
+<tr class="<%= warna_row %>">
+    <td rowspan="<%= rowspan_ind %>" class="text-wrap text-center"><%= no %></td>
+    <td rowspan="<%= rowspan_ind %>" class="text-wrap"><%= sas.pohonable %></td>
+    <td class="p-0 m-0" colspan="3"></td>
+    <td rowspan="<%= rowspan_ind %>" class="text-wrap"><%= sas.opd %></td>
+    <td rowspan="<%= rowspan_ind %>" class="border"><%= sas.keterangan %></td>
+</tr>
+<% sas.pohonable.indikators.each do |ind| %>
+    <tr class="<%= warna_row %>">
+        <td class="text-wrap border"><%= ind %></td>
+        <td class="border"><%= ind.target %></td>
+        <td class="border"><%= ind.satuan %></td>
+    </tr>
+<% end %>
+
+<% sas.sub_pohons.each.with_index(1) do |sub_sas, no_sub| %>
+    <%= render 'sasaran_kota/row_tabel_rad_kota', sas: sub_sas, no: "#{no}.#{no_sub}" %>
+<% end %>

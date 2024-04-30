@@ -200,6 +200,19 @@ class PohonKotaPresenter
     @pohon.komentars
   end
 
+  def warna_row
+    case @pohon.role
+    when 'strategi_pohon_kota'
+      'table-danger'
+    when 'tactical_pohon_kota'
+      'table-info'
+    when 'operational_pohon_kota'
+      'table-success'
+    else
+      'table-light'
+    end
+  end
+
   private
 
   def to_real_name(role)

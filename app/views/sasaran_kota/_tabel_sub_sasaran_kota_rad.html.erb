@@ -3,7 +3,7 @@
     <thead>
         <tr>
             <th>No</th>
-            <th colspan="2">Sub Sasaran Kota</th>
+            <th>Sub Sasaran Kota</th>
             <th>Indikator</th>
             <th>Target</th>
             <th>Satuan</th>
@@ -17,44 +17,50 @@
             <% sub_sasaran_kota = sub.pohonable.sasaran_kotum.present? ? sub.pohonable.sasaran_kotum : sub.pohonable %>
             <tr>
                 <td rowspan="<%= rowspan_ind_sub %>" class="text-wrap text-center"><%= no %></td>
-                <td rowspan="<%= rowspan_ind_sub %>" class="text-wrap"><%= sub_sasaran_kota %></td>
-                <td rowspan="<%= rowspan_ind_sub %>" class="border">
-                    <div class="d-grid gap-3">
-                        <% if sub.pohonable.sasaran_kotum.present? %>
-                            <div class="tombol-edit-strategi">
-                                <%= link_to edit_sasaran_kotum_path(sub.pohonable.sasaran_kotum), remote: true,
-                                 data: {
-                                     controller: 'form-modal',
-                                     action: 'ajax:complete->form-modal#success:prevent',
-                                     bs_toggle: 'modal',
-                                     bs_target: '#form-modal'
-                                 },
-                                 class: 'btn btn-outline-info' do %>
-                                    <i class="fa fa-edit me-2"></i>
-                                    <span>Edit</span>
+                <td rowspan="<%= rowspan_ind_sub %>" class="py-0 text-wrap">
+                    <div class="row">
+                        <div class="col align-content-around">
+                            <%= sub_sasaran_kota %>
+                        </div>
+                        <div class="col text-center">
+                            <div class="d-grid gap-3 py-2 border-start">
+                                <% if sub.pohonable.sasaran_kotum.present? %>
+                                    <div class="tombol-edit-strategi">
+                                        <%= link_to edit_sasaran_kotum_path(sub.pohonable.sasaran_kotum), remote: true,
+                                         data: {
+                                             controller: 'form-modal',
+                                             action: 'ajax:complete->form-modal#success:prevent',
+                                             bs_toggle: 'modal',
+                                             bs_target: '#form-modal'
+                                         },
+                                         class: 'btn btn-outline-info' do %>
+                                            <i class="fa fa-edit me-2"></i>
+                                            <span>Edit</span>
+                                        <% end %>
+                                    </div>
+                                    <div class="tombol-view-rad">
+                                        <%= link_to rad_kota_sasaran_kotum_path(sub.pohonable, tahun: @tahun), class: 'btn btn-outline-primary' do %>
+                                            <i class="fa fa-book-open me-2"></i>
+                                            <span>RAD</span>
+                                        <% end %>
+                                    </div>
+                                <% else %>
+                                    <div class="tombol-input-sasaran-kota">
+                                        <%= link_to new_sasaran_kotum_path(tematik_id: sub.pohonable.id), remote: true,
+                                         data: {
+                                             controller: 'form-modal',
+                                             action: 'ajax:complete->form-modal#success:prevent',
+                                             bs_toggle: 'modal',
+                                             bs_target: '#form-modal'
+                                         },
+                                         class: 'btn btn-secondary' do %>
+                                            <i class="fa fa-plus me-2"></i>
+                                            <span>Input Sasaran</span>
+                                        <% end %>
+                                    </div>
                                 <% end %>
                             </div>
-                            <div class="tombol-view-rad">
-                                <%= link_to rad_kota_sasaran_kotum_path(sub.pohonable, tahun: @tahun), class: 'btn btn-outline-primary' do %>
-                                    <i class="fa fa-book-open me-2"></i>
-                                    <span>RAD</span>
-                                <% end %>
-                            </div>
-                        <% else %>
-                            <div class="tombol-input-sasaran-kota">
-                                <%= link_to new_sasaran_kotum_path(tematik_id: sub.pohonable.id), remote: true,
-                                 data: {
-                                     controller: 'form-modal',
-                                     action: 'ajax:complete->form-modal#success:prevent',
-                                     bs_toggle: 'modal',
-                                     bs_target: '#form-modal'
-                                 },
-                                 class: 'btn btn-secondary' do %>
-                                    <i class="fa fa-plus me-2"></i>
-                                    <span>Input Sasaran</span>
-                                <% end %>
-                            </div>
-                        <% end %>
+                        </div>
                     </div>
                 </td>
                 <td colspan="3" class="p-0 m-0 border-0"></td>
@@ -70,7 +76,7 @@
             <% end %>
             <tr>
                 <th>No</th>
-                <th colspan="2">Rencana Aksi Sub Sasaran</th>
+                <th>Rencana Aksi Sub Sasaran</th>
                 <th>Indikator</th>
                 <th>Target</th>
                 <th>Satuan</th>
@@ -78,22 +84,7 @@
                 <th>Keterangan</th>
             </tr>
             <% sub.sub_pohons.each.with_index(1) do |sub_ren, no_ren| %>
-                <% rowspan_ind_sub = sub_ren.pohonable.indikators.size + 1 %>
-                <tr>
-                    <td rowspan="<%= rowspan_ind_sub %>" class="text-wrap text-center"><%= no %>.<%= no_ren %></td>
-                    <td rowspan="<%= rowspan_ind_sub %>" class="text-wrap"><%= sub_ren.pohonable %></td>
-                    <td rowspan="<%= rowspan_ind_sub %>" class="border"></td>
-                    <td class="p-0 m-0" colspan="3"></td>
-                    <td rowspan="<%= rowspan_ind_sub %>" class="text-wrap"><%= sub_ren.opd %></td>
-                    <td rowspan="<%= rowspan_ind_sub %>" class="border"><%= sub_ren.keterangan || '-' %></td>
-                </tr>
-                <% sub_ren.pohonable.indikators.each do |ind| %>
-                    <tr class="skip">
-                        <td class="text-wrap border"><%= ind %></td>
-                        <td class="border"><%= ind.target %></td>
-                        <td class="border"><%= ind.satuan %></td>
-                    </tr>
-                <% end %>
+                <%= render 'sasaran_kota/row_tabel_rad_kota', sas: sub_ren, no: "#{no}.#{no_ren}" %>
             <% end %>
         <% end %>
     </tbody>
