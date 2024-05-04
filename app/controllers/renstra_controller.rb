@@ -3,8 +3,7 @@ class RenstraController < ApplicationController
   layout false, only: %i[laporan]
 
   def index
-    # base_data = KakService.new(tahun: 2022, kode_unik_opd: @kode_unik_opd)
-    # @program_kegiatans = base_data.program_kegiatans_by_opd
+    # goto #laporan in this controller for data
     @periode = params[:periode]
   end
 
