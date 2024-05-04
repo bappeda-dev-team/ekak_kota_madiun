@@ -13,10 +13,25 @@ This tools focused for Madiun City Organization planners to handling budget prop
 - NodeJS v 14
 - Yarn 1.22
 - redis
+- [overmind](https://github.com/DarthSim/overmind)
+- tmux (for overmind)
 
-## System Dependencies
-- run `bundle install`
+## run dev server
+``` sh
+bin/dev
+```
+
+## view dev log
+
+``` sh
+overmind status
+```
+
+
+## deps to install
+- run    `bundle install`
 - run `yarn install`
+
 
 ## Database Preparation
 - run `rails db:create`
@@ -32,12 +47,3 @@ This tools focused for Madiun City Organization planners to handling budget prop
 - Background job: resque
 - redis
 - run `QUEUE=* rake resque:work`
-
-# Docker
-- Warning, this project not based on docker environment
-- docker will have a lot of issue including database env
-- nekad? ok
-- run `docker-compose build && docker-compose up`
-
-# Contributing
-Bug reports and pull requests are welcome on GitHub at https://github.com/RyanB1303/prototype_kak.
