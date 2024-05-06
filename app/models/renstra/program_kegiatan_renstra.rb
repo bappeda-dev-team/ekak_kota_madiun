@@ -17,6 +17,7 @@ class Renstra::ProgramKegiatanRenstra
   def program_kegiatan_opd_khusus(id_sub_unit:)
     ProgramKegiatan.includes(:opd)
                    .where(id_sub_unit: id_sub_unit)
+                   .uniq(&:kode_sub_skpd)
   end
 
   def indikator_programs_opd(opd:, program_kegiatans_by_opd:)
@@ -76,7 +77,7 @@ class Renstra::ProgramKegiatanRenstra
     if indikators
       indikators.map do |ind|
         indikator_serializer(indikator: ind)
-      end
+      end.sort_by { |ind| ind.values_at(:tahun) }
     else
       []
     end
@@ -84,6 +85,7 @@ class Renstra::ProgramKegiatanRenstra
 
   def indikator_serializer(indikator:)
     {
+      id: indikator.id,
       tahun: indikator.tahun,
       indikator: indikator.indikator,
       target: indikator.target,
