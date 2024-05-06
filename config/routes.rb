@@ -798,6 +798,7 @@ Rails.application.routes.draw do
     namespace :spip do
       post :program
       post :kegiatan
+      post :subkegiatan
     end
   end
 
