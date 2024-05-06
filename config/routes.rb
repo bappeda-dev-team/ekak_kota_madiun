@@ -794,6 +794,10 @@ Rails.application.routes.draw do
       get :usulan_lppd
       get :usulan_spm
     end
+
+    namespace :spip do
+      post :opd
+    end
   end
 
   resources :sasaran_kota do
