@@ -22,24 +22,45 @@ module Api
       items = program_kegiatans.map do |pr|
         indikator_programs = indikators(pr.kode_program, 'Program', pr.kode_sub_skpd, tahun)
         sasaran_programs = sasaran_program(pr, tahun)
+        pagu_programs = pagu_program(program_kegiatans, kode_opd, tahun, pr.kode_program)
+
         { jenis: 'program',
           kode_opd: pr.kode_sub_skpd,
           kode: pr.kode_program,
           nama: pr.nama_program,
-          pagu: 0,
-          indikators: indikator_programs,
+          pagu: pagu_programs,
+          indikator_program: indikator_programs,
           sasaran_program: sasaran_programs }
       end
       items.uniq { |pk| pk.values_at(:kode, :kode_opd) }.sort_by { |pk| pk.values_at(:kode) }
     end
 
+    def indikator_program(kode, jenis, kode_opd, tahun)
+      Indikator.where(jenis: "Renstra",
+                      sub_jenis: jenis,
+                      tahun: tahun,
+                      kode: kode,
+                      kode_opd: kode_opd)
+               .max_by(&:version)
+    end
+
+    def pagu_program(program_kegiatans, kode_opd, tahun, kode_program)
+      pagu_subkegiatans = program_kegiatans.map do |program_kegiatan|
+        indikator = indikator_program(program_kegiatan.kode_sub_giat,
+                                      'Subkegiatan', kode_opd, tahun)
+        {
+          kode_program: program_kegiatan.kode_program,
+          pagu_subkegiatan: indikator&.pagu.to_i || 0
+        }
+      end
+
+      pagu_total = pagu_subkegiatans.group_by { |pagu| pagu[:kode_program] }
+                       .transform_values { |vals| vals.sum { |val| val[:pagu_subkegiatan] } }
+      pagu_total.dig(kode_program)
+    end
+
     def indikators(kode_program, jenis, kode_opd, tahun)
-      indikator = Indikator.where(jenis: "Renstra",
-                                  sub_jenis: jenis,
-                                  tahun: tahun,
-                                  kode: kode_program,
-                                  kode_opd: kode_opd)
-                           .max_by(&:version)
+      indikator = indikator_program(kode_program, jenis, kode_opd, tahun)
       {
         id: indikator&.id,
         tahun: indikator&.tahun,
@@ -55,6 +76,7 @@ module Api
       sasarans.map do |sasaran|
         {
           id: sasaran.id,
+          tahun: sasaran.tahun,
           sasaran: sasaran.sasaran_kinerja,
           nama: sasaran.user.nama,
           nip: sasaran.nip_asn,
@@ -65,7 +87,6 @@ module Api
         }
       end
     end
-
 
     def indikator_sasaran(sasaran)
       indikators = sasaran.indikator_sasarans
