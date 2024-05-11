@@ -45,7 +45,6 @@ module Api
                                          .where.not(kode_skpd: [nil, ""])
       items = program_kegiatans.map do |pr|
         indikator_programs = indikators(pr.kode_program, 'Program', pr.kode_sub_skpd, tahun)
-        sasaran_programs = sasaran_program(pr, tahun)
         pagu_programs = pagu_program(program_kegiatans, kode_opd, tahun, pr.kode_program)
 
         { jenis: 'program',
@@ -53,10 +52,23 @@ module Api
           kode: pr.kode_program,
           nama: pr.nama_program,
           pagu: pagu_programs,
-          indikator_program: indikator_programs,
-          sasaran_program: sasaran_programs }
+          indikator_program: indikator_programs
+         }
       end
-      items.uniq { |pk| pk.values_at(:kode, :kode_opd) }.sort_by { |pk| pk.values_at(:kode) }
+
+      item_programs = items.uniq { |pk| pk.values_at(:kode, :kode_opd) }.sort_by { |pk| pk.values_at(:kode) }
+      item_programs.map do |prg|
+        sasaran_programs = sasaran_program(prg[:kode], tahun)
+
+        { jenis: 'program',
+          kode_opd: prg[:kode_opd],
+          kode: prg[:kode],
+          nama: prg[:nama],
+          pagu: prg[:pagu],
+          indikator_program: prg[:indikator_program],
+          sasaran_program: sasaran_programs
+        }
+      end
     end
 
     def kegiatan_opd(kode_opd, tahun)
@@ -64,7 +76,6 @@ module Api
                                          .where.not(kode_skpd: [nil, ""])
       items = program_kegiatans.map do |pr|
         indikator_kegiatans = indikators(pr.kode_giat, 'Kegiatan', pr.kode_sub_skpd, tahun)
-        sasaran_programs = sasaran_program(pr, tahun)
         pagu_kegiatans = pagu_kegiatan(program_kegiatans, kode_opd, tahun, pr.kode_giat)
 
         { jenis: 'kegiatan',
@@ -73,9 +84,22 @@ module Api
           nama: pr.nama_kegiatan,
           pagu: pagu_kegiatans,
           indikator_kegiatan: indikator_kegiatans,
-          sasaran_kegiatan: sasaran_programs }
+        }
       end
-      items.uniq { |pk| pk.values_at(:kode, :kode_opd) }.sort_by { |pk| pk.values_at(:kode) }
+
+      item_kegiatans = items.uniq { |pk| pk.values_at(:kode, :kode_opd) }.sort_by { |pk| pk.values_at(:kode) }
+      item_kegiatans.map do |keg|
+        sasaran_kegiatan = sasaran_program(keg[:kode], tahun)
+
+        { jenis: 'kegiatan',
+          kode_opd: keg[:kode_opd],
+          kode: keg[:kode],
+          nama: keg[:nama],
+          pagu: keg[:pagu],
+          indikator_kegiatan: keg[:indikator_kegiatan],
+          sasaran_kegiatan: sasaran_kegiatan
+        }
+      end
     end
 
     def subkegiatan_opd(kode_opd, tahun)
@@ -83,18 +107,27 @@ module Api
                                          .where.not(kode_skpd: [nil, ""])
       items = program_kegiatans.map do |pr|
         indikator_subkegiatans = indikators(pr.kode_sub_giat, 'Subkegiatan', pr.kode_sub_skpd, tahun)
-        sasaran_subkegiatans = sasaran_program(pr, tahun)
         pagu_subkegiatans = pagu_subkegiatan(program_kegiatans, kode_opd, tahun, pr.kode_sub_giat)
 
         { jenis: 'subkegiatan',
           kode_opd: pr.kode_sub_skpd,
-          kode: kode_tweak(pr.kode_sub_giat),
+          kode: pr.kode_sub_giat,
           nama: pr.nama_subkegiatan,
           pagu: pagu_subkegiatans,
-          indikator_subkegiatan: indikator_subkegiatans,
-          sasaran_subkegiatan: sasaran_subkegiatans }
+          indikator_subkegiatan: indikator_subkegiatans }
       end
-      items.sort_by { |pk| pk.values_at(:kode) }
+      item_subkegiatans = items.uniq { |pk| pk.values_at(:kode) }.sort_by { |pk| pk.values_at(:kode) }
+      item_subkegiatans.map do |sub|
+        sasaran_subkegiatans = sasaran_program(sub[:kode], tahun)
+        {
+          jenis: 'subkegiatan',
+          kode: kode_tweak(sub[:kode]),
+          nama: sub[:nama],
+          pagu: sub[:pagu],
+          indikator_subkegiatan: sub[:indikator_subkegiatan],
+          sasaran_subkegiatan: sasaran_subkegiatans
+        }
+      end
     end
 
     def indikator_program(kode, jenis, kode_opd, tahun)
@@ -163,8 +196,11 @@ module Api
     end
 
     def sasaran_program(program_kegiatan, tahun)
-      sasarans = program_kegiatan.sasarans.dengan_nip.includes(%i[strategi user])
-                                 .where(tahun: tahun).dengan_strategi
+      sasarans = Sasaran.dengan_nip
+                        .includes(%i[user program_kegiatan])
+                        .joins(:program_kegiatan)
+                        .where(tahun: tahun)
+                        .where("program_kegiatans.kode_sub_giat ILIKE ?", "%#{program_kegiatan}%")
 
       sasarans.map do |sasaran|
         {
@@ -174,8 +210,6 @@ module Api
           nama: sasaran.user.nama,
           nip: sasaran.nip_asn,
           indikator_sasarans: indikator_sasaran(sasaran),
-          strategi: sasaran.strategi.to_s,
-          role: sasaran.strategi.role,
           jabatan: sasaran.user.nama_jabatan_terakhir
         }
       end
