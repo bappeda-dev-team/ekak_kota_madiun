@@ -163,7 +163,7 @@ module Api
     end
 
     def sasaran_program(program_kegiatan, tahun)
-      sasarans = program_kegiatan.sasarans.includes(%i[strategi user])
+      sasarans = program_kegiatan.sasarans.dengan_nip.includes(%i[strategi user])
                                  .where(tahun: tahun).dengan_strategi
 
       sasarans.map do |sasaran|
