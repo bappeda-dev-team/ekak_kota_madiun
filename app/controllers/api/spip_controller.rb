@@ -194,7 +194,7 @@ module Api
     end
 
     def kode_tweak(kode) # khusus subkegiatan
-      if kode.scan(/\d+$/).last.size == 2
+      if kode.scan(/\d+$/).last&.size == 2
         kode.gsub(/[.](?!.*[.])/, ".00\\1")
       else
         kode
