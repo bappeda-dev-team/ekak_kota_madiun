@@ -34,7 +34,7 @@ class RenstraRowComponent < ViewComponent::Base
   end
 
   def kode_tweak
-    if kode.scan(/\d+$/).last.size == 2 && jenis == 'subkegiatan'
+    if kode.scan(/\d+$/).last&.size == 2 && jenis == 'subkegiatan'
       kode.gsub(/[.](?!.*[.])/, ".00\\1")
     else
       kode
