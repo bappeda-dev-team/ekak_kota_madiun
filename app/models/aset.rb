@@ -38,6 +38,6 @@ class Aset < ApplicationRecord
   end
 
   def perolehan_aset
-    tahun_aset.to_a.to_sentence(last_word_connector: ', ')
+    tahun_aset.to_a.join(',')
   end
 end
