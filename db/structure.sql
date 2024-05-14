@@ -2238,6 +2238,42 @@ ALTER SEQUENCE public.pendidikan_terakhirs_id_seq OWNED BY public.pendidikan_ter
 
 
 --
+-- Name: pendidikans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.pendidikans (
+    id bigint NOT NULL,
+    jumlah integer,
+    keterangan character varying,
+    pendidikan character varying,
+    tahun character varying,
+    jabatan_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    opd_id bigint
+);
+
+
+--
+-- Name: pendidikans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.pendidikans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: pendidikans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.pendidikans_id_seq OWNED BY public.pendidikans.id;
+
+
+--
 -- Name: perhitungans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -4298,6 +4334,13 @@ ALTER TABLE ONLY public.pendidikan_terakhirs ALTER COLUMN id SET DEFAULT nextval
 
 
 --
+-- Name: pendidikans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pendidikans ALTER COLUMN id SET DEFAULT nextval('public.pendidikans_id_seq'::regclass);
+
+
+--
 -- Name: perhitungans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -5036,6 +5079,14 @@ ALTER TABLE ONLY public.pendidikan_terakhirs
 
 
 --
+-- Name: pendidikans pendidikans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pendidikans
+    ADD CONSTRAINT pendidikans_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: perhitungans perhitungans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -5677,6 +5728,20 @@ CREATE INDEX index_pendidikan_terakhirs_on_kepegawaian_id ON public.pendidikan_t
 
 
 --
+-- Name: index_pendidikans_on_jabatan_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_pendidikans_on_jabatan_id ON public.pendidikans USING btree (jabatan_id);
+
+
+--
+-- Name: index_pendidikans_on_opd_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_pendidikans_on_opd_id ON public.pendidikans USING btree (opd_id);
+
+
+--
 -- Name: index_perhitungans_on_anggaran_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -6103,6 +6168,14 @@ ALTER TABLE ONLY public.active_storage_attachments
 
 
 --
+-- Name: pendidikans fk_rails_c5d9111e2d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pendidikans
+    ADD CONSTRAINT fk_rails_c5d9111e2d FOREIGN KEY (jabatan_id) REFERENCES public.jabatans(id);
+
+
+--
 -- Name: rincians fk_rails_d41263ddba; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -6440,6 +6513,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240317191248'),
 ('20240317191552'),
 ('20240320032901'),
-('20240514024919');
+('20240514024919'),
+('20240514032217'),
+('20240514032911');
 
 
