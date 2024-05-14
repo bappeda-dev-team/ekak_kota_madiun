@@ -16,6 +16,8 @@
     <% end%>
   <% end %>
   <% @jenis_pendidikan.each do |pendidikan| %>
-    <td class="fw-bolder text-wrap <%= dom_class(jabatan, pendidikan) %>" data-jenis-pendidikan="<%= pendidikan%>" data-pendidikan="<%= jabatan.pendidikan_pegawai(@tahun).include?(pendidikan) %>"></td>
+    <td class="fw-bolder text-wrap">
+      <%= jabatan.jumlah_pendidikan(@tahun).dig(pendidikan) %>
+    </td>
   <% end %>
 </tr>

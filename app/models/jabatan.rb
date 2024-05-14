@@ -21,10 +21,11 @@
 #
 class Jabatan < ApplicationRecord
   has_many :kepegawaians, inverse_of: :jabatan, dependent: :destroy
-  has_many :pendidikan_terakhirs, through: :kepegawaians, dependent: :destroy
+  has_many :pendidikans, dependent: :destroy
   has_many :jabatan_users, foreign_key: 'id_jabatan', primary_key: 'id_jabatan', dependent: :destroy
 
   accepts_nested_attributes_for :kepegawaians
+  accepts_nested_attributes_for :pendidikans
 
   belongs_to :jenis_jabatan
   validates :nama_jabatan, presence: true, length: { minimum: 5 }
@@ -39,6 +40,12 @@ class Jabatan < ApplicationRecord
   def jumlah_status_kepegawaian(tahun)
     kepegawaians.where(tahun: tahun).to_h do |pegawai|
       [pegawai.status_kepegawaian, pegawai.jumlah]
+    end
+  end
+
+  def jumlah_pendidikan(tahun)
+    pendidikans.where(tahun: tahun).to_h do |pendidikan|
+      [pendidikan.pendidikan, pendidikan.jumlah]
     end
   end
 

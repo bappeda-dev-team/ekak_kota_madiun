@@ -35,10 +35,12 @@
     <% end %>
   <% end %>
   <% @jenis_pendidikan.each do |pendidikan| %>
-    <%= form.fields_for :pendidikan_terakhirs do |f_pt| %>
+    <%= form.fields_for :pendidikans do |f_pt| %>
       <td class="fw-bolder text-wrap text-center">
+        <%= f_pt.hidden_field :tahun, form: dom_id(jabatan, 'form')%>
+        <%= f_pt.hidden_field :opd_id, form: dom_id(jabatan, 'form')%>
         <%= f_pt.hidden_field :pendidikan, value: pendidikan, form: dom_id(jabatan, 'form') %>
-        <%= f_pt.number_field :jumlah, class: 'form-control w-100', placeholder: '0' , min: 0, form: dom_id(jabatan, 'form')%>
+        <%= f_pt.number_field :jumlah, class: 'form-control', placeholder: '0' , min: 0, form: dom_id(jabatan, 'form')%>
       </td>
     <% end %>
   <% end %>
