@@ -33,9 +33,10 @@
     <% end %>
   <% end %>
   <% @jenis_pendidikan.each do |pendidikan| %>
-    <% checked = jabatan.pendidikan_pegawai(@tahun).include?(pendidikan) %>
-    <td class="fw-bolder text-wrap text-center">
-      <%= check_box_tag 'pendidikan[]', pendidikan, checked, { class: 'form-check-input', form: dom_id(jabatan, 'form') } %>
-    </td>
+    <% jumlah = @pendidikans.find_by(pendidikan: pendidikan)&.jumlah || 0 %>
+    <%= render(ColFieldComponent.new) do %>
+      <%= hidden_field_tag 'pendidikan[]', pendidikan, form: dom_id(@jabatan, 'form') %>
+      <%= number_field_tag 'jumlah_pendidikan[]', jumlah, class: 'form-control', placeholder: '0', multiple: true, min: 0, form: dom_id(@jabatan, 'form')%>
+    <% end %>
   <% end %>
 <% end %>

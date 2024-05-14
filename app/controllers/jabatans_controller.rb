@@ -25,6 +25,7 @@ class JabatansController < ApplicationController
   def edit
     setup_jabatan
     @kepegawaians = @jabatan.kepegawaians.where(tahun: @tahun, opd: @opd)
+    @pendidikans = @jabatan.pendidikans.where(tahun: @tahun, opd: @opd)
   end
 
   # POST /jabatans or /jabatans.json
@@ -51,7 +52,7 @@ class JabatansController < ApplicationController
     setup_jabatan
     if @jabatan.update(jabatan_params)
       update_jumlah_kepegawaian_jabatan
-      update_pendidikan_jabatan
+      update_jumlah_pendidikan_jabatan
 
       render json: { resText: 'Perubahan tersimpan',
                      html_content: html_content({ jabatan: @jabatan },
@@ -126,5 +127,23 @@ class JabatansController < ApplicationController
     @kepegawaians = kepegawaians.map do |status, jumlah|
       @jabatan.update_jumlah_kepegawaian(@tahun, status, jumlah)
     end
+  end
+
+  def update_jumlah_pendidikan_jabatan
+    pendidikan = params[:pendidikan]
+    jumlah_pendidikan = params[:jumlah_pendidikan]
+    pendidikans_all = pendidikan.zip(jumlah_pendidikan)
+
+    @pendidikans = if @jabatan.pendidikans.any?
+                     pendidikans_all.map do |pend, jumlah|
+                       @jabatan.update_jumlah_pendidikan(@tahun, pend, jumlah)
+                     end
+                   else
+                     pendidikans_all.each do |pend, jumlah|
+                       @jabatan.pendidikans.create(tahun: @tahun, jumlah: jumlah,
+                                                   pendidikan: pend,
+                                                   opd_id: @jabatan.opd.id)
+                     end
+                   end
   end
 end

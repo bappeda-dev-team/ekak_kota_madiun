@@ -28,6 +28,7 @@ class Jabatan < ApplicationRecord
   accepts_nested_attributes_for :pendidikans
 
   belongs_to :jenis_jabatan
+  belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd'
   validates :nama_jabatan, presence: true, length: { minimum: 5 }
   after_validation { nama_jabatan.upcase! }
 
@@ -52,6 +53,11 @@ class Jabatan < ApplicationRecord
   def update_jumlah_kepegawaian(tahun, status, jumlah)
     kepegawaians.where(tahun: tahun, status_kepegawaian: status)
                 .update_all(jumlah: jumlah)
+  end
+
+  def update_jumlah_pendidikan(tahun, pendidikan, jumlah)
+    pendidikans.where(tahun: tahun, pendidikan: pendidikan)
+               .update_all(jumlah: jumlah)
   end
 
   def pendidikan_pegawai(tahun)
