@@ -3,6 +3,7 @@
 # Table name: pendidikan_terakhirs
 #
 #  id             :bigint           not null, primary key
+#  jumlah         :integer
 #  keterangan     :string
 #  pendidikan     :string
 #  created_at     :datetime         not null

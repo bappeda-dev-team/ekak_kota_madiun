@@ -2213,7 +2213,8 @@ CREATE TABLE public.pendidikan_terakhirs (
     keterangan character varying,
     kepegawaian_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    jumlah integer
 );
 
 
@@ -6438,6 +6439,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240317191023'),
 ('20240317191248'),
 ('20240317191552'),
-('20240320032901');
+('20240320032901'),
+('20240514024919');
 
 
