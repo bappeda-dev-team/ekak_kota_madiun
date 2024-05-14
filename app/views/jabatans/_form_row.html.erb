@@ -10,13 +10,13 @@
   </td>
   <%= render(ColFieldComponent.new(width: '500px')) do %>
     <%= form.select :jenis_jabatan_id, dropdown_jenis_jabatan(@tahun), {include_blank: true},
-      class: "form-control",
-      id: dom_id(jabatan, @count),
-      form: dom_id(jabatan, 'form'),
-      data: {
-        controller: "dropdown",
-        placeholder: "Pilih kategori jabatan",
-      } %>
+     class: "form-control",
+     id: dom_id(jabatan, @count),
+     form: dom_id(jabatan, 'form'),
+     data: {
+       controller: "dropdown",
+       placeholder: "Pilih kategori jabatan",
+     } %>
   <% end %>
   <td class="fw-bolder">
     <div class="d-grid gap-2">
@@ -35,8 +35,11 @@
     <% end %>
   <% end %>
   <% @jenis_pendidikan.each do |pendidikan| %>
-    <td class="fw-bolder text-wrap text-center">
-      <%= check_box_tag 'pendidikan[]', pendidikan, false, { class: 'form-check-input', form: dom_id(jabatan, 'form') } %>
-    </td>
+    <%= form.fields_for :pendidikan_terakhirs do |f_pt| %>
+      <td class="fw-bolder text-wrap text-center">
+        <%= f_pt.hidden_field :pendidikan, value: pendidikan, form: dom_id(jabatan, 'form') %>
+        <%= f_pt.number_field :jumlah, class: 'form-control w-100', placeholder: '0' , min: 0, form: dom_id(jabatan, 'form')%>
+      </td>
+    <% end %>
   <% end %>
 <% end %>

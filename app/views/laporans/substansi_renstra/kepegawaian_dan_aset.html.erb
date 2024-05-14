@@ -6,49 +6,51 @@
 <% end %>
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout_subtitle', title: "Laporan Sumber Daya Manusia", sub_title: @opd, sub_title_2: @tahun do %>
-    <div class="table-responsive mb-5 d-grid gap-3">
-      <table class="table table-bordered align-items-center counter border">
-        <thead class="thead-light sticky-top">
-          <tr>
-            <th class="text-gray-700" scope="col" rowspan="2">No.</th>
-            <th class="text-center text-gray-700" scope="col" rowspan="2">Nama Jabatan</th>
-            <th class="text-center text-gray-700" scope="col" rowspan="2">Jenis Jabatan</th>
-            <th class="text-center text-gray-700" scope="col" rowspan="2">Action</th>
-            <th class="text-center text-gray-700" scope="col" colspan="4">Status Kepegawaian</th>
-            <th class="text-center text-gray-700" scope="col" colspan="5">Pendidikan Terakhir</th>
-          </tr>
-          <tr>
-            <th class="text-center text-gray-700" scope="col">PNS</th>
-            <th class="text-center text-gray-700" scope="col">PPPK</th>
-            <th class="text-center text-gray-700" scope="col">Kontrak</th>
-            <th class="text-center text-gray-700" scope="col">Upah</th>
+    <div class="d-grid gap-3">
+      <div class="table-responsive">
+        <table class="table table-bordered align-items-center counter border">
+          <thead class="thead-light sticky-top">
+            <tr>
+              <th class="text-gray-700" scope="col" rowspan="2">No.</th>
+              <th class="text-center text-gray-700" scope="col" rowspan="2">Nama Jabatan</th>
+              <th class="text-center text-gray-700 px-5" scope="col" rowspan="2">Jenis Jabatan</th>
+              <th class="text-center text-gray-700" scope="col" rowspan="2">Action</th>
+              <th class="text-center text-gray-700" scope="col" colspan="4">Status Kepegawaian</th>
+              <th class="text-center text-gray-700" scope="col" colspan="5">Pendidikan Terakhir</th>
+            </tr>
+            <tr>
+              <th class="text-center text-gray-700 px-5" scope="col">PNS</th>
+              <th class="text-center text-gray-700 px-5" scope="col">PPPK</th>
+              <th class="text-center text-gray-700 px-5" scope="col">Kontrak</th>
+              <th class="text-center text-gray-700 px-5" scope="col">Upah</th>
 
-            <th class="text-center text-gray-700" scope="col">SD/SMP</th>
-            <th class="text-center text-gray-700" scope="col">SMA</th>
-            <th class="text-center text-gray-700" scope="col">D1/D3</th>
-            <th class="text-center text-gray-700" scope="col">D4/S1</th>
-            <th class="text-center text-gray-700" scope="col">S2/S3</th>
-          </tr>
-        </thead>
-        <tbody id="new_kepegawaian">
-          <%= render partial: 'jabatans/jabatan_kepegawaian', collection: @jabatans, as: :jabatan %>
-        </tbody>
-        <tfoot>
-          <td class="text-gray-900 fw-bolder text-center" colspan="4">Jumlah</td>
-          <% @status_kepegawaian.each do |kep| %>
-            <% jumlah = @jumlah_kepegawaian.sum { |hh| hh&.dig(kep) || 0 } %>
-            <%= render(ColFieldComponent.new(el_class: 'text-center').with_content(jumlah)) %>
-          <% end %>
-          <td class="bg-gray-300" colspan="5"></td>
-        </tfoot>
-      </table>
+              <th class="text-center text-gray-700 px-5" scope="col">SD/SMP</th>
+              <th class="text-center text-gray-700 px-5" scope="col">SMA</th>
+              <th class="text-center text-gray-700 px-5" scope="col">D1/D3</th>
+              <th class="text-center text-gray-700 px-5" scope="col">D4/S1</th>
+              <th class="text-center text-gray-700 px-5" scope="col">S2/S3</th>
+            </tr>
+          </thead>
+          <tbody id="new_kepegawaian">
+            <%= render partial: 'jabatans/jabatan_kepegawaian', collection: @jabatans, as: :jabatan %>
+          </tbody>
+          <tfoot>
+            <td class="text-gray-900 fw-bolder text-center" colspan="4">Jumlah</td>
+            <% @status_kepegawaian.each do |kep| %>
+              <% jumlah = @jumlah_kepegawaian.sum { |hh| hh&.dig(kep) || 0 } %>
+              <%= render(ColFieldComponent.new(el_class: 'text-center').with_content(jumlah)) %>
+            <% end %>
+            <td class="bg-gray-300" colspan="5"></td>
+          </tfoot>
+        </table>
+      </div>
       <%= link_to new_jabatan_path,
-        remote: true, class: 'btn btn-primary',
-        data: {
-          controller: 'row',
-          action: 'ajax:complete->row#addRow',
-          row_element_value: 'new_kepegawaian'
-        } do %>
+          remote: true, class: 'btn btn-primary',
+          data: {
+            controller: 'row',
+            action: 'ajax:complete->row#addRow',
+            row_element_value: 'new_kepegawaian'
+          } do %>
         <span class="fas fa-plus me-2"></span>
         <span>Jabatan Baru</span>
       <% end %>
