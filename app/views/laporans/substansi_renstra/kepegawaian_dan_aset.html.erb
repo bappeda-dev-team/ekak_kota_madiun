@@ -40,7 +40,10 @@
               <% jumlah = @jumlah_kepegawaian.sum { |hh| hh&.dig(kep) || 0 } %>
               <%= render(ColFieldComponent.new(el_class: 'text-center').with_content(jumlah)) %>
             <% end %>
-            <td class="bg-gray-300" colspan="5"></td>
+            <% @jenis_pendidikan.each do |pend| %>
+              <% jumlah = @jumlah_pendidikan.sum { |hh| hh&.dig(pend) || 0 } %>
+              <%= render(ColFieldComponent.new(el_class: 'text-center').with_content(jumlah)) %>
+            <% end %>
           </tfoot>
         </table>
       </div>
