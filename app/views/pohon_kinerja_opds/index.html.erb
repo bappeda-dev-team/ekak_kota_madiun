@@ -9,6 +9,7 @@
       <%= render 'item_opd', partial: 'pohon_kinerja_opd' %>
       <ul data-pohon-tematik-target='dahan'>
         <%= render partial: 'pohon_kinerja_opd', collection: @strategi_kota, as: :pohon %>
+        <%= render partial: 'pohon_kinerja_opd', collection: @strategi_crosscutting, as: :pohon %>
         <%= render partial: 'pohon_kinerja_opd', collection: @strategi_opd, as: :pohon %>
       </ul>
     <% end %>

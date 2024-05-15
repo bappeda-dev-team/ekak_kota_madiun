@@ -425,6 +425,18 @@ input::placeholder {
   }
 }
 
+.pohon-crosscutting {
+  @extend .border;
+  @extend .border-info;
+
+  h5:after {
+    @extend .mx-3;
+    @extend %fa-icon;
+    @extend .fas;
+    content: fa-content($fa-var-puzzle-piece);
+  }
+}
+
 .pohon-rejected {
   @extend .border;
   @extend .border-danger;

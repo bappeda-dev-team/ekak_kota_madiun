@@ -5,7 +5,7 @@
         <td class="text-start" width="30px"><%= pohon.title_up %></td>
         <td class="text-wrap text-start" colspan="2"><%= pohon.pohonable.strategi %></td>
       </tr>
-      <% if pohon.type == 'Pohon' %>
+      <% if pohon.type == 'Pohon' && pohon.role != 'opd' %>
         <% if pohon.parent_type.pohonable_type != 'Tematik' %>
           <% if pohon.parent_type.pohonable_type == 'SubSubTematik' %>
             <tr class="detail d-none">
