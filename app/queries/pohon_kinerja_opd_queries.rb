@@ -20,11 +20,19 @@ class PohonKinerjaOpdQueries
 
   def pohon_kota
     Pohon.where(pohonable_type: 'Strategi',
-                tahun: @tahun, opd_id: opd.id.to_s,
+                tahun: @tahun, opd_id: opd.id,
                 status: [nil, '', 'diterima'])
          .includes(:pohonable, pohonable: [:indikator_sasarans])
   end
   memoize :pohon_kota
+
+  def pohon_crosscutting
+    Pohon.where(pohonable_type: 'StrategiPohon',
+                tahun: @tahun, opd_id: opd.id,
+                status: 'crosscutting')
+         .includes(:pohonable, pohonable: [:indikators])
+  end
+  memoize :pohon_crosscutting
 
   def strategi_kota
     pohon_kota.rewhere(role: 'strategi_pohon_kota')
@@ -52,5 +60,9 @@ class PohonKinerjaOpdQueries
 
   def staff_opd
     pohon_opd.rewhere(role: 'staff')
+  end
+
+  def strategi_crosscutting
+    pohon_crosscutting
   end
 end

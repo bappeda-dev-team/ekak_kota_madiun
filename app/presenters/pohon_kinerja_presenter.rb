@@ -66,7 +66,14 @@ class PohonKinerjaPresenter
   def status
     if @pohon.instance_of?(Pohon)
       if @pohon.status?
-        @pohon.status == 'diterima' ? 'pohon-accepted' : 'pohon-rejected'
+        case @pohon.status
+        when 'diterima'
+          'pohon-accepted'
+        when 'crosscutting'
+          'pohon-crosscutting'
+        else
+          'pohon-rejected'
+        end
       else
         ''
       end
@@ -180,6 +187,8 @@ class PohonKinerjaPresenter
     prefix = @pohon.role.chomp("_pohon_kota")
     if prefix.include?('eselon') || prefix.include?('staff')
       to_real_name_up(prefix)
+    elsif @pohon.role == 'opd'
+      "#{to_real_name_up(prefix).capitalize} - OPD"
     else
       "#{to_real_name_up(prefix).capitalize} - Dari Kota"
     end
@@ -277,6 +286,8 @@ class PohonKinerjaPresenter
       'Strategic'
     elsif %w[tactical eselon_3].include?(role)
       'Tactical'
+    elsif %w[opd].include?(role)
+      'Crosscutting'
     else
       'Operational'
     end

@@ -12,6 +12,8 @@ class PohonKinerjaOpdsController < ApplicationController
     @tactical_kota = queries.tactical_kota
     @operational_kota = queries.operational_kota
 
+    @strategi_crosscutting = queries.strategi_crosscutting.reject { |ph| ph.pohonable.nil? }
+
     @strategi_opd = queries.strategi_opd
     @tactical_opd = queries.tactical_opd
     @operational_opd = queries.operational_opd
