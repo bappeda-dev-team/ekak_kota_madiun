@@ -163,6 +163,12 @@ class Laporans::SubstansiRenstraController < ApplicationController
     @asets = @opd.aset_opd(@tahun)
     @kondisi_aset = Aset::KONDISI_ASET
     @jumlah_aset = @asets.sum(:jumlah)
-    @jumlah_kondisis = @asets.flat_map(&:kondisi).tally
+    status_asets = @asets.map(&:status_aset).compact_blank
+    @jumlah_kondisi_asets = status_asets.each_with_object({}) do |asets, kond|
+      asets.each do |kondisi, jumlah|
+        kond[kondisi] ||= 0
+        kond[kondisi] += jumlah.to_i
+      end
+    end
   end
 end

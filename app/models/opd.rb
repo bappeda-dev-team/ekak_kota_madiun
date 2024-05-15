@@ -451,7 +451,7 @@ class Opd < ApplicationRecord
   end
 
   def aset_opd(_tahun)
-    asets
+    asets.order(:created_at)
   end
 
   def nama_kode_opd
