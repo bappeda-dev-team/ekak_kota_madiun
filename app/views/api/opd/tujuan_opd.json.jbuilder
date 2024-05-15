@@ -6,6 +6,7 @@ json.data do
   json.tujuan_opd @tujuan_opds do |tujuan|
     json.id_tujuan tujuan.id_tujuan
     json.tujuan tujuan.tujuan
+    json.periode tujuan.periode_tujuan
     json.indikator_tujuan tujuan.indikators do |indikator|
       json.id_tujuan indikator.kode
       json.id_indikator indikator.id

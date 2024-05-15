@@ -55,4 +55,8 @@ class TujuanOpd < Tujuan
   def bidang_urusan_opd
     bidang_urusan&.kode_nama_bidang
   end
+
+  def periode_tujuan
+    "#{tahun_awal}-#{tahun_akhir}"
+  end
 end
