@@ -556,7 +556,8 @@ CREATE TABLE public.asets (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     kode_unik_opd character varying,
-    tahun_aset character varying[]
+    tahun_aset character varying[],
+    status_aset jsonb DEFAULT '"{}"'::jsonb
 );
 
 
@@ -6515,6 +6516,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240320032901'),
 ('20240514024919'),
 ('20240514032217'),
-('20240514032911');
+('20240514032911'),
+('20240514074839');
 
 

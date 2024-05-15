@@ -10,7 +10,7 @@
   <%= render(ColFieldComponent.new(el_class: 'text-center aset_jumlah', width: '300px').with_content(aset.jumlah)) %>
   <%= render(ColFieldComponent.new(el_class: 'text-center aset_satuan', width: '500px').with_content(aset.satuan)) %>
   <% @kondisi_aset.each do |kondisi| %>
-    <td class="fw-bolder text-wrap" data-kondisi-aset="<%= kondisi %>" data-status-kondisi="<%= aset.kondisi.include?(kondisi) %>"></td>
+    <td class="fw-bolder text-center"><%= aset.status_aset[kondisi] %></td>
   <% end %>
   <%= render(ColFieldComponent.new(el_class: 'aset_perolehan_tahun', width: '500px').with_content(aset.perolehan_aset)) %>
   <%= render(ColFieldComponent.new(el_class: 'aset_keterangan', width: '500px').with_content(aset.keterangan)) %>

@@ -6,42 +6,44 @@
 <% end %>
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout_subtitle', title: "Laporan Aset", sub_title: @opd, sub_title_2: @tahun do %>
-    <div class="table-responsive mb-5 d-grid gap-3">
-      <table class="table table-bordered align-items-center counter border">
-        <thead class="thead-light sticky-top">
-          <tr>
-            <th class="text-gray-700" scope="col" rowspan="2">No.</th>
-            <th class="text-center text-gray-700" scope="col" rowspan="2">Aset Pendukung</th>
-            <th class="text-center text-gray-700" scope="col" rowspan="2">Action</th>
-            <th class="text-center text-gray-700" scope="col" width="200px" rowspan="2">Jumlah</th>
-            <th class="text-center text-gray-700" scope="col" rowspan="2">Satuan</th>
-            <th class="text-center text-gray-700" scope="col" colspan="3">Kondisi Aset</th>
-            <th class="text-center text-gray-700" scope="col" >Perolehan Aset</th>
-            <th class="text-center text-gray-700" scope="col" rowspan="2">Keterangan</th>
-          </tr>
-          <tr>
-            <th class="text-center text-gray-700" width="100px" scope="col">Baik</th>
-            <th class="text-center text-gray-700" width="100px" scope="col">Cukup</th>
-            <th class="text-center text-gray-700" width="100px" scope="col">Kurang</th>
-            <th class="text-center text-gray-700" scope="col">Tahun</th>
-          </tr>
-        </thead>
-        <tbody id="new_aset">
-          <%= render partial: 'asets/aset', collection: @asets, as: :aset %>
-        </tbody>
-        <tfoot>
-          <td class="text-gray-900 fw-bolder text-center" colspan="3">Jumlah Keseluruhan Aset</td>
-          <td class="text-gray-900 fw-bolder text-center"><%= @jumlah_aset %></td>
-          <td class="text-gray-900 fw-bolder text-center"></td>
-          <% @kondisi_aset.each do |kondisi| %>
-            <% jumlah_kondisi = @jumlah_kondisis.dig(kondisi) || 0 %>
-            <%= render(ColFieldComponent.new(el_class: 'text-center').with_content(jumlah_kondisi)) %>
-          <% end %>
-          <td class="text-gray-900 fw-bolder text-center" colspan="2"></td>
-        </tfoot>
-      </table>
-      <%= render AddRowComponent.new(path: new_aset_path, 
-                                     target: 'new_aset', 
+    <div class="d-grid gap-3">
+      <div class="table-responsive">
+        <table class="table table-bordered align-items-center counter border">
+          <thead class="thead-light sticky-top">
+            <tr>
+              <th class="text-gray-700" scope="col" rowspan="2">No.</th>
+              <th class="text-center text-gray-700" scope="col" rowspan="2">Aset Pendukung</th>
+              <th class="text-center text-gray-700" scope="col" rowspan="2">Action</th>
+              <th class="text-center text-gray-700 px-5" scope="col" width="200px" rowspan="2">Jumlah</th>
+              <th class="text-center text-gray-700 px-5" scope="col" rowspan="2">Satuan</th>
+              <th class="text-center text-gray-700" scope="col" colspan="3">Kondisi Aset</th>
+              <th class="text-center text-gray-700" scope="col" >Perolehan Aset</th>
+              <th class="text-center text-gray-700" scope="col" rowspan="2">Keterangan</th>
+            </tr>
+            <tr>
+              <th class="text-center text-gray-700 px-5" width="100px" scope="col">Baik</th>
+              <th class="text-center text-gray-700 px-5" width="100px" scope="col">Cukup</th>
+              <th class="text-center text-gray-700 px-5" width="100px" scope="col">Kurang</th>
+              <th class="text-center text-gray-700" scope="col">Tahun</th>
+            </tr>
+          </thead>
+          <tbody id="new_aset">
+            <%= render partial: 'asets/aset', collection: @asets, as: :aset %>
+          </tbody>
+          <tfoot>
+            <td class="text-gray-900 fw-bolder text-center" colspan="3">Jumlah Keseluruhan Aset</td>
+            <td class="text-gray-900 fw-bolder text-center"><%= @jumlah_aset %></td>
+            <td class="text-gray-900 fw-bolder text-center"></td>
+            <% @kondisi_aset.each do |kondisi| %>
+              <% jumlah_kondisi = @jumlah_kondisis.dig(kondisi) || 0 %>
+              <%= render(ColFieldComponent.new(el_class: 'text-center').with_content(jumlah_kondisi)) %>
+            <% end %>
+            <td class="text-gray-900 fw-bolder text-center" colspan="2"></td>
+          </tfoot>
+        </table>
+      </div>
+      <%= render AddRowComponent.new(path: new_aset_path,
+                                     target: 'new_aset',
                                      title: 'Tambah Aset OPD') %>
     </div>
   <% end %>

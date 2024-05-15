@@ -82,6 +82,6 @@ class AsetsController < ApplicationController
     params.require(:aset).permit(:nama_aset, :jumlah,
                                  :satuan, :tahun_awal, :tahun_akhir,
                                  :keterangan, :kode_unik_opd, kondisi: [],
-                                                              tahun_aset: [])
+                                                              tahun_aset: [], status_aset: %i[Baik Cukup Kurang])
   end
 end

@@ -8,46 +8,46 @@
     <%= hidden_field_tag '_method', 'patch', { form: dom_id(aset, 'form') } unless aset.new_record? %>
     <%= form.hidden_field :kode_unik_opd, form: dom_id(aset, 'form')%>
     <%= form.text_field :nama_aset, class: 'form-control',
-        form: dom_id(aset, 'form'), placeholder: 'Aset pendukung OPD' %>
+     form: dom_id(aset, 'form'), placeholder: 'Aset pendukung OPD' %>
   </td>
   <td class="fw-bolder">
     <div class="d-grid gap-2">
-      <%= form.submit 'Simpan', class: 'btn btn-sm', style: 'margin-top: 0 !important;', 
-          form: dom_id(aset, 'form') %>
+      <%= form.submit 'Simpan', class: 'btn btn-sm', style: 'margin-top: 0 !important;',
+         form: dom_id(aset, 'form') %>
       <button class="btn btn-sm btn-outline-danger" data-action="row#batal">Batal</button>
     </div>
   </td>
   <%= render(ColFieldComponent.new(width: '200px')) do %>
-    <%= form.number_field :jumlah, class: 'form-control', placeholder: '0' , min: 0, 
-        form: dom_id(aset, 'form')%>
+    <%= form.number_field :jumlah, class: 'form-control', placeholder: '0' , min: 0,
+       form: dom_id(aset, 'form')%>
   <% end%>
   <%= render(ColFieldComponent.new(width: '500px')) do %>
-    <%= form.text_field :satuan, class: 'form-control', placeholder: 'unit/satuan aset', 
-        form: dom_id(aset, 'form')%>
+    <%= form.text_field :satuan, class: 'form-control', placeholder: 'unit/satuan aset',
+       form: dom_id(aset, 'form')%>
   <% end%>
   <% @kondisi_aset.each do |kondisi| %>
-    <%= render(ColFieldComponent.new(el_class: 'text-center', width: '100px')) do %>
-      <%= form.check_box :kondisi, { multiple: true, class: 'form-check-input', 
-          form: dom_id(aset, 'form') }, kondisi, '' %>
-    <% end%>
-  <% end %>
+    <%= form.fields_for :status_aset do |status_field|  %>
+      <%= render(ColFieldComponent.new(el_class: 'text-center', width: '100px')) do %>
+        <%= status_field.number_field kondisi.to_sym, class: 'form-control', form: dom_id(aset, 'form'), value: status_aset_value(aset.status_aset[kondisi]), min: 0 %>
+      <% end%>
+    <% end %>
+  <% end%>
   <%= render(ColFieldComponent.new()) do %>
     <div class="d-grid gap-2">
-    <% if aset.new_record? || aset.tahun_aset.nil? %>
-      <%= form.number_field :tahun_aset, multiple: true, class: 'form-control', placeholder: 'Tahun perolehan', 
-          form: dom_id(aset, 'form')%>
-      <%= render(AddNewFieldComponent.new(text: 'Tambah Tahun')) %>
-    <% else %>
-      <% aset.tahun_aset.each do |tahun| %>
-        <%= form.number_field :tahun_aset, multiple: true, class: 'form-control', placeholder: 'Tahun perolehan', 
+      <% if aset.new_record? || aset.tahun_aset.nil? %>
+        <%= form.number_field :tahun_aset, multiple: true, class: 'form-control', placeholder: 'Tahun perolehan', form: dom_id(aset, 'form')%>
+        <%= render(AddNewFieldComponent.new(text: 'Tambah Tahun')) %>
+      <% else %>
+        <% aset.tahun_aset.each do |tahun| %>
+          <%= form.number_field :tahun_aset, multiple: true, class: 'form-control', placeholder: 'Tahun perolehan',
             form: dom_id(aset, 'form'), value: tahun %>
-      <% end %>
-      <%= render(AddNewFieldComponent.new(text: 'Tambah Tahun')) %>
-    <% end%>
+        <% end %>
+        <%= render(AddNewFieldComponent.new(text: 'Tambah Tahun')) %>
+      <% end%>
     </div>
   <% end %>
   <%= render(ColFieldComponent.new()) do %>
-    <%= form.text_area :keterangan, class: 'form-control', placeholder: 'penjelasan jumlah dan kondisi aset', 
-        form: dom_id(aset, 'form'), col: 5 %>
+    <%= form.text_area :keterangan, class: 'form-control', placeholder: 'penjelasan jumlah dan kondisi aset',
+      form: dom_id(aset, 'form'), col: 5 %>
   <% end %>
 <% end %>

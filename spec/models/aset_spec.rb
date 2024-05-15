@@ -9,6 +9,7 @@
 #  kondisi       :text             default([]), is an Array
 #  nama_aset     :string
 #  satuan        :string
+#  status_aset   :jsonb
 #  tahun_akhir   :integer
 #  tahun_aset    :string           is an Array
 #  tahun_awal    :integer

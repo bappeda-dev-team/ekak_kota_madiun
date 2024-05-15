@@ -9,6 +9,7 @@
 #  kondisi       :text             default([]), is an Array
 #  nama_aset     :string
 #  satuan        :string
+#  status_aset   :jsonb
 #  tahun_akhir   :integer
 #  tahun_aset    :string           is an Array
 #  tahun_awal    :integer
@@ -27,6 +28,8 @@ class Aset < ApplicationRecord
   validates :tahun_aset, presence: true
 
   after_validation { nama_aset.upcase! }
+
+  store :status_aset
 
   scope :all_tahun, lambda { |tahun|
                       where("tahun_awal <= ?::integer", tahun)
