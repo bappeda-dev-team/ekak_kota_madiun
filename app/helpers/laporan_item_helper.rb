@@ -97,6 +97,7 @@ module LaporanItemHelper
 
   def laporan_indikators
     [
+      { title: 'RPJP', href: rpjp_opd_indikators_path, identifier: 'rpjp_opd' },
       { title: 'RB', href: indikator_rb_laporans_path, identifier: 'laporan_indikator_rb' },
       { title: 'LPPD', href: indikator_lppd_laporans_path, identifier: 'laporan_indikator_lppd' },
       { title: 'SPM', href: indikator_spm_laporans_path, identifier: 'laporan_indikator_spm' },

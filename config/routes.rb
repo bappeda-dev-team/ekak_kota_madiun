@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     collection do
       post :import
       get :rpjp_makro
+      get :rpjp_opd
       get :rpjmd_makro
       get :rkpd_makro
       get :rkpd_tujuan

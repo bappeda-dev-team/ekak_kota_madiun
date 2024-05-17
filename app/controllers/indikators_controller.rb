@@ -10,6 +10,17 @@ class IndikatorsController < ApplicationController
     @rpjp_makro = Indikator.rpjp_makro.where(tahun: @tahun).includes(:targets)
   end
 
+  def rpjp_opd
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+
+    # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+
+    @rpjp_makro = Indikator.rpjp_makro.where(tahun: @tahun, kode_opd: @kode_opd)
+                           .includes(:targets)
+  end
+
   def rpjmd_makro
     @tahun = cookies[:tahun]
 
