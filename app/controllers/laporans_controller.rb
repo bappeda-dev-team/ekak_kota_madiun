@@ -118,6 +118,17 @@ class LaporansController < ApplicationController
 
   def hasil_cascading; end
 
+  def hasil_crosscutting
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    queries = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
+    @strategi_opd = queries.strategi_opd
+    @tactical_opd = queries.tactical_opd
+    @operational_opd = queries.operational_opd
+    @staff_opd = queries.staff_opd
+    @crosscuttings = queries.pohon_opd.where(role: %w[eselon_2 eselon_3 eselon_4 staff])
+                            .group_by(&:role)
+  end
+
   def cascading_opd
     queries = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
 

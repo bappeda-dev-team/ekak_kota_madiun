@@ -540,6 +540,7 @@ Rails.application.routes.draw do
       get :rankir2
       get :penetapan
       get :hasil_cascading
+      get :hasil_crosscutting
       post :cascading_opd
       get :hasil_cascading_kota
       get :cascading_kota
