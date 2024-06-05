@@ -1,39 +1,49 @@
-<% rowspan_ind = sas.pohonable.indikators.size + 1 %>
 <% pohon = PohonKotaPresenter.new(sas) %>
+<% rowspan_help = rowspan_helper(pohon, sas) %>
+<% rowspan_ind = rowspan_help[:rowspan_ind] %>
+<% rowspan_rkn = rowspan_help[:rowspan_rekins] %>
+<% rowspan = rowspan_help[:rowspan] %>
 <tr class="<%= pohon.warna_row %>">
-    <td rowspan="<%= rowspan_ind %>" class="text-wrap text-center"><%= no %></td>
-    <td rowspan="<%= rowspan_ind %>" class="text-wrap"><%= sas.pohonable %></td>
+    <td rowspan="<%= rowspan %>" class="text-wrap text-center"><%= no %></td>
+    <td rowspan="<%= rowspan %>" class="text-wrap"><%= sas.pohonable %></td>
     <td class="p-0 m-0" colspan="3"></td>
-    <td rowspan="<%= rowspan_ind %>" class="text-wrap"><%= sas.opd %></td>
-    <td rowspan="<%= rowspan_ind %>" class="my-5 py-1">
-        <% if pohon.rencana_kinerjas %>
-            <% pohon.rencana_kinerjas.each.with_index(1) do |sasaran, no| %>
-                <% if pohon.role == 'eselon_4' %>
-                    <p class="text-wrap">
-                        <%= sasaran&.subkegiatan %>
-                    </p>
-                <% end %>
-            <% end %>
-        <% end %>
-        <% if pohon.role == 'eselon_2' || pohon.role == 'eselon_3' || pohon.role == 'sub_sub_pohon_kota' || pohon.role == 'sub_pohon_kota' || pohon.role == 'pohon_kota' %>
-            <% program_pohon(pohon.pohonable, pohon.role).each do |program| %>
-                <p class="text-wrap">
-                    <%= program&.nama_program %>
-                </p>
-            <% end %>
-        <% end %>
-    </td>
-    <td rowspan="<%= rowspan_ind %>" class="border">
-
-    </td>
-    <td rowspan="<%= rowspan_ind %>" class="border"><%= sas.keterangan %></td>
+    <td rowspan="<%= rowspan %>" class="text-wrap"><%= sas.opd %></td>
+    <td class="p-0 m-0" colspan="2"></td>
+    <td rowspan="<%= rowspan %>" class="border"><%= sas.keterangan %></td>
 </tr>
 <% sas.pohonable.indikators.each do |ind| %>
     <tr class="<%= pohon.warna_row %>">
-        <td class="text-wrap border"><%= ind %></td>
-        <td class="border"><%= ind.target %></td>
-        <td class="border"><%= ind.satuan %></td>
+        <td rowspan="<%= rowspan_rkn + 1 %>" class="text-wrap border"><%= ind %></td>
+        <td rowspan="<%= rowspan_rkn + 1 %>" class="border"><%= ind.target %></td>
+        <td rowspan="<%= rowspan_rkn + 1 %>" class="border"><%= ind.satuan %></td>
     </tr>
+<% end %>
+
+<% if pohon.role == 'eselon_2' || pohon.role == 'eselon_3' || pohon.role == 'sub_sub_pohon_kota' || pohon.role == 'sub_pohon_kota' || pohon.role == 'pohon_kota' %>
+    <% program_pohon(pohon.pohonable, pohon.role).each do |program| %>
+        <tr class="<%= pohon.warna_row %>">
+            <td class="program">
+                <%= program&.nama_program %>
+            </td>
+            <td class="pagu-program">
+                Rp. <%= pagu_pohon(pohon.pohonable, pohon.role) %>
+            </td>
+        </tr>
+    <% end %>
+<% end %>
+<% if pohon.rencana_kinerjas %>
+    <% pohon.rencana_kinerjas.each do |sasaran| %>
+        <% if pohon.role == 'eselon_4' %>
+            <tr class="<%= pohon.warna_row %>">
+                <td class="subkegiatan">
+                    <%= sasaran&.subkegiatan %>
+                </td>
+                <td class="pagu-rekin">
+                    Rp. <%= pagu_pohon(sasaran, pohon.role) %>
+                </td>
+            </tr>
+        <% end %>
+    <% end %>
 <% end %>
 
 <% sas.sub_pohons.each.with_index(1) do |sub_sas, no_sub| %>
