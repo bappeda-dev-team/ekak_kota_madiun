@@ -7,10 +7,7 @@ module Api
       @opd = queries.opd
       @nama_opd = @opd.nama_opd
 
-      @strategi_opd = queries.strategi_opd
-      @tactical_opd = queries.tactical_opd
-      @operational_opd = queries.operational_opd
-      @staff_opd = queries.staff_opd
+      @pohons = queries.all_strategi_opd
     end
 
     def pohon_kinerja_kota

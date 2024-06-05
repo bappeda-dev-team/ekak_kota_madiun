@@ -65,4 +65,8 @@ class PohonKinerjaOpdQueries
   def strategi_crosscutting
     pohon_crosscutting
   end
+
+  def all_strategi_opd
+    pohon_opd.rewhere(role: %w[eselon_2 eselon_3 eselon_4])
+  end
 end
