@@ -5,17 +5,21 @@
     <td rowspan="<%= rowspan_ind %>" class="text-wrap"><%= sas.pohonable %></td>
     <td class="p-0 m-0" colspan="3"></td>
     <td rowspan="<%= rowspan_ind %>" class="text-wrap"><%= sas.opd %></td>
-    <td rowspan="<%= rowspan_ind %>" class="text-wrap">
+    <td rowspan="<%= rowspan_ind %>" class="my-5 py-1">
         <% if pohon.rencana_kinerjas %>
             <% pohon.rencana_kinerjas.each.with_index(1) do |sasaran, no| %>
                 <% if pohon.role == 'eselon_4' %>
-                    <%= sasaran&.subkegiatan %>
+                    <p class="text-wrap">
+                        <%= sasaran&.subkegiatan %>
+                    </p>
                 <% end %>
             <% end %>
         <% end %>
         <% if pohon.role == 'eselon_2' || pohon.role == 'eselon_3' || pohon.role == 'sub_sub_pohon_kota' || pohon.role == 'sub_pohon_kota' || pohon.role == 'pohon_kota' %>
             <% program_pohon(pohon.pohonable, pohon.role).each do |program| %>
-                <%= program&.nama_program %>
+                <p class="text-wrap">
+                    <%= program&.nama_program %>
+                </p>
             <% end %>
         <% end %>
     </td>
