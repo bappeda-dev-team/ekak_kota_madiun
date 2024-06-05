@@ -7,7 +7,7 @@
             <th>Indikator</th>
             <th>Target</th>
             <th>Satuan</th>
-            <th>OPD Pelaksana</th>
+            <th class="rekap_pokin_separator" colspan="3"></th>
             <th>Keterangan</th>
         </tr>
     </thead>
@@ -17,54 +17,9 @@
             <% sub_sasaran_kota = sub.pohonable.sasaran_kotum.present? ? sub.pohonable.sasaran_kotum : sub.pohonable %>
             <tr>
                 <td rowspan="<%= rowspan_ind_sub %>" class="text-wrap text-center"><%= no %></td>
-                <td rowspan="<%= rowspan_ind_sub %>" class="py-0 text-wrap">
-                    <div class="row">
-                        <div class="col align-content-around">
-                            <%= sub_sasaran_kota %>
-                        </div>
-                        <div class="col text-center">
-                            <div class="d-grid gap-3 py-2 border-start">
-                                <% if sub.pohonable.sasaran_kotum.present? %>
-                                    <div class="tombol-edit-strategi">
-                                        <%= link_to edit_sasaran_kotum_path(sub.pohonable.sasaran_kotum), remote: true,
-                                         data: {
-                                             controller: 'form-modal',
-                                             action: 'ajax:complete->form-modal#success:prevent',
-                                             bs_toggle: 'modal',
-                                             bs_target: '#form-modal'
-                                         },
-                                         class: 'btn btn-outline-info' do %>
-                                            <i class="fa fa-edit me-2"></i>
-                                            <span>Edit</span>
-                                        <% end %>
-                                    </div>
-                                    <div class="tombol-view-rad">
-                                        <%= link_to rad_kota_sasaran_kotum_path(sub.pohonable, tahun: @tahun), class: 'btn btn-outline-primary' do %>
-                                            <i class="fa fa-book-open me-2"></i>
-                                            <span>RAD</span>
-                                        <% end %>
-                                    </div>
-                                <% else %>
-                                    <div class="tombol-input-sasaran-kota">
-                                        <%= link_to new_sasaran_kotum_path(tematik_id: sub.pohonable.id), remote: true,
-                                         data: {
-                                             controller: 'form-modal',
-                                             action: 'ajax:complete->form-modal#success:prevent',
-                                             bs_toggle: 'modal',
-                                             bs_target: '#form-modal'
-                                         },
-                                         class: 'btn btn-secondary' do %>
-                                            <i class="fa fa-plus me-2"></i>
-                                            <span>Input Sasaran</span>
-                                        <% end %>
-                                    </div>
-                                <% end %>
-                            </div>
-                        </div>
-                    </div>
-                </td>
+                <td rowspan="<%= rowspan_ind_sub %>" class="py-0 text-wrap"><%= sub_sasaran_kota %></td>
                 <td colspan="3" class="p-0 m-0 border-0"></td>
-                <td rowspan="<%= rowspan_ind_sub %>" class="text-wrap border"></td>
+                <td colspan="3" rowspan="<%= rowspan_ind_sub %>" class="text-wrap border"></td>
                 <td rowspan="<%= rowspan_ind_sub %>" class="text-wrap border"><%= sub.keterangan %></td>
             </tr>
             <% sub.pohonable.indikators.each do |indikator| %>
@@ -81,6 +36,8 @@
                 <th>Target</th>
                 <th>Satuan</th>
                 <th>OPD Pelaksana</th>
+                <th class="text-wrap">Urusan / Program / Sub Kegiatan</th>
+                <th>Pagu Anggaran</th>
                 <th>Keterangan</th>
             </tr>
             <% sub.sub_pohons.each.with_index(1) do |sub_ren, no_ren| %>
