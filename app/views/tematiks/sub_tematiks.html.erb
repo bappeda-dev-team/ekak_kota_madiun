@@ -10,20 +10,6 @@
         <div class="col">
           <h2 class="fs-5 fw-bold mb-0">Sub-Tematik Kota Tahun <%= @tahun %></h2>
         </div>
-        <div class="col text-end">
-          <%= link_to new_sub_tematiks_path,
-           remote: true,
-           data: {
-                   controller: 'form-modal',
-                   action: 'ajax:complete->form-modal#success:prevent',
-                   bs_toggle: 'modal',
-                   bs_target: '#form-modal'
-                 },
-           class: 'btn btn-sm btn-primary' do %>
-            <i class="fas fa-plus me-2"></i>
-            <span>Tambah Sub-Tema</span>
-          <% end %>
-        </div>
       </div>
     </div>
     <div class="card-body">

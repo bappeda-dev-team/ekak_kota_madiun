@@ -89,15 +89,11 @@ module SuperAdminItemHelper
         icon: 'fas fa-landmark', identifier: 'tujuan_kota'
       },
       {
-        title: 'Sasaran Kota', href: sasaran_kota_path,
+        title: 'Sasaran Kota / RAD', href: sasaran_kota_path,
         icon: 'fas fa-bullseye', identifier: 'sasaran_kota'
       },
       {
         title: 'Tematik Kota', href: tematiks_path,
-        icon: 'fas fa-folder-plus', identifier: 'tematik_kota'
-      },
-      {
-        title: 'RAD / Sub-Tematik', href: sub_tematiks_tematiks_path,
         icon: 'fas fa-folder-plus', identifier: 'tematik_kota'
       },
       {
