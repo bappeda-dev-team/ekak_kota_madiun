@@ -49,7 +49,8 @@
                 <td class="border fw-bolder text-wrap" colspan="8">Subkegiatan: <%= subkegiatan %></td>
               </tr>
               <% sasarans.each.with_index(1) do |sasaran, no| %>
-                <tr>
+                <% warning = sasaran.nip_asn_sebelumnya.present? ? 'table-danger' : '' %>
+                <tr class="<%= warning %>">
                   <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= "#{i}.#{no}" %></td>
                   <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
                   <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.strategi_sasaran %></td>

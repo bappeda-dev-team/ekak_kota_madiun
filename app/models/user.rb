@@ -204,6 +204,13 @@ class User < ApplicationRecord
     sasarans_tahun(tahun).group_by(&:program_kegiatan)
   end
 
+  def legacy_sasaran_user(tahun)
+    Sasaran.includes(%i[strategi tahapans program_kegiatan indikator_sasarans])
+           .where(nip_asn: nip, tahun: tahun)
+           .or(Sasaran.where(nip_asn_sebelumnya: nip, tahun: tahun))
+           .group_by(&:program_kegiatan)
+  end
+
   def program_sasarans_tahun(tahun)
     sasarans_tahun(tahun)
       .to_h { |str| [str, str.strategi.subkegiatans_sasarans] }

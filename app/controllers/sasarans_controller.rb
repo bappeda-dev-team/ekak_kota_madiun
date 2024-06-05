@@ -17,7 +17,7 @@ class SasaransController < ApplicationController
     @kode_opd = cookies[:opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd) || current_user.opd
     @user = User.find_by(nik: @nip_asn) || current_user
-    @sasarans = @user.subkegiatan_sasarans_all_tahun(@tahun)
+    @sasarans = @user.legacy_sasaran_user(@tahun)
   end
 
   def anggaran

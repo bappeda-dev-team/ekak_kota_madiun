@@ -513,6 +513,8 @@ class Sasaran < ApplicationRecord
 
   def nama_pemilik
     user.nama
+  rescue NoMethodError
+    'nama kosong!!'
   end
 
   def clone_dari
