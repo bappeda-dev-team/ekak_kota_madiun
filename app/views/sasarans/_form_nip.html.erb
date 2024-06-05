@@ -1,6 +1,6 @@
 <%= form_with(url: update_nip_sasaran_path(@sasaran), local: false) do |form| %>
   <div class="field">
-    <strong>Sasran Kinerja: AWD</p>
+    <strong>Sasran Kinerja: <%= @sasaran %></p>
   </div>
   <div class="field">
     <%= form.label :nip_lama, class: "form-label" %>

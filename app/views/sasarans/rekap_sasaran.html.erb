@@ -63,21 +63,18 @@
                     </td>
                   <% end %>
                   <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">
-                    <div class="row justify-content-center w-100">
-                      <div class="col">
-                        <%= link_to detail_sasaran_path(sasaran), target: "_blank", rel: "nofollow",
-                                class: "m-3 btn btn-sm btn-info w-100" do %>
-                          <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
-                          KAK
-                        <% end %>
-                      </div>
-                      <div class="col">
-                        <%= link_to edit_admin_sasaran_path(sasaran),
-                        class: "btn btn-sm btn-outline-info" do %>
-                          <i class="fas fa-pencil-alt me-2"></i>
-                          <span>Edit</span>
-                        <% end %>
-                      </div>
+                    <div class="d-grid gap-2">
+                      <%= link_to detail_sasaran_path(sasaran), target: "_blank", rel: "nofollow",
+                       class: "btn btn-sm btn-info" do %>
+                        <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
+                        KAK
+                      <% end %>
+                      <%= link_to edit_admin_sasaran_path(sasaran),
+                       class: "btn btn-sm btn-outline-info" do %>
+                        <i class="fas fa-pencil-alt me-2"></i>
+                        <span>Edit</span>
+                      <% end %>
+                      <%= render ModalButtonComponent.new(path: edit_nip_sasaran_path(sasaran), title: 'Ganti Pemilik') %>
                     </div>
                   </td>
                 </tr>
