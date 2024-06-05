@@ -3,32 +3,32 @@
     <% if pohon.rencana_kinerjas %>
       <% pohon.rencana_kinerjas.each.with_index(1) do |sasaran, no| %>
         <div class="pohon-body mb-2">
-            <%= render 'laporans/tabel_sasaran_cascading',
-                    sasaran: sasaran,
-                    role: pohon.role,
-                    no: no,
-                    size: pohon.rencana_kinerjas.size %>
+          <%= render 'laporans/tabel_sasaran_cascading',
+                     sasaran: sasaran,
+                     role: pohon.role,
+                     no: no,
+                     size: pohon.rencana_kinerjas.size %>
         </div>
         <% if pohon.role == 'eselon_4' %>
           <div class="pohon-body">
-<table class="table table-bordered mb-3">
-<tr data-controller="table-tematik">
-<td class="text-start">Subkegiatan</td>
-<td class="text-wrap text-start" colspan="2">
-<p>
-<%= sasaran&.subkegiatan || '-' %>
-(<%= sasaran.program_kegiatan&.kode_sub_giat %>)
-</p>
+            <table class="table table-bordered mb-3">
+              <tr data-controller="table-tematik">
+                <td class="text-start">Subkegiatan</td>
+                <td class="text-wrap text-start" colspan="2">
+                  <p>
+                    <%= sasaran&.subkegiatan || '-' %>
+                    (<%= sasaran.program_kegiatan&.kode_sub_giat %>)
+                  </p>
 
-<button type="button" class="mt-3 btn btn-sm btn-outline-primary" data-action="table-tematik#toggleDetail" data-table-tematik-show-param="false">Tampilkan Indikator</button>
-</td>
-<% indikator_sub = indikator_sub_rekin(@tahun, @opd, sasaran.program_kegiatan) %>
-<td class="d-none detail text-start" data-table-tematik-target="indikators"><%= indikator_sub.dig(:indikator) %></td>
-<td class="d-none detail text-start" data-table-tematik-target="indikators"><%= indikator_sub.dig(:target) %>
-<%= indikator_sub.dig(:satuan) %></td>
-</tr>
-</table>
-</div>
+                  <button type="button" class="mt-3 btn btn-sm btn-outline-primary" data-action="table-tematik#toggleDetail" data-table-tematik-show-param="false">Tampilkan Indikator</button>
+                </td>
+                <% indikator_sub = indikator_sub_rekin(@tahun, @opd, sasaran.program_kegiatan) %>
+                <td class="d-none detail text-start" data-table-tematik-target="indikators"><%= indikator_sub.dig(:indikator) %></td>
+                <td class="d-none detail text-start" data-table-tematik-target="indikators"><%= indikator_sub.dig(:target) %>
+                  <%= indikator_sub.dig(:satuan) %></td>
+              </tr>
+            </table>
+          </div>
         <% end %>
       <% end %>
     <% end %>
@@ -49,8 +49,8 @@
             <td class="text-start">Program</td>
             <td class="text-wrap text-start" colspan="2">
               <p>
-              <%= program&.nama_program || '-' %>
-              (<%= program&.kode_program || '-' %>)
+                <%= program&.nama_program || '-' %>
+                (<%= program&.kode_program || '-' %>)
               </p>
 
               <button type="button" class="mt-3 btn btn-sm btn-outline-primary" data-action="table-tematik#toggleDetail" data-table-tematik-show-param="false">Tampilkan Indikator</button>
@@ -64,17 +64,17 @@
     </div>
   <% end %>
   <% if current_user.id == 1 %>
-  <div class="pohon-body mb-2">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th colspan="2">Review</th>
-        </tr>
-      </thead>
-      <tbody>
-        <%= render partial: 'komentars/komentar', collection: pohon.komentars, as: :komentar %>
-      </tbody>
-    </table>
-  </div>
+    <div class="pohon-body mb-2">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th colspan="2">Review</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render partial: 'komentars/komentar', collection: pohon.komentars, as: :komentar %>
+        </tbody>
+      </table>
+    </div>
   <% end %>
 <% end %>
