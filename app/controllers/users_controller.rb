@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     return if opd.nil?
 
     user_search = params[:q] || ''
-    @users = opd.users.non_admin.aktif.where('users.nama ILIKE ?', "%#{user_search}%")
+    @users = opd.user_bidang.filter { |user| user.nama =~ /.*(#{user_search})/i }
   end
 
   def user_search

@@ -457,4 +457,14 @@ class Opd < ApplicationRecord
   def nama_kode_opd
     [kode_unik_opd, nama_opd]
   end
+
+  def user_bidang
+    # baru setda
+    if kode_unik_opd == '4.01.0.00.0.00.01.0000'
+      Opd.where('kode_unik_opd ILIKE ?', "4.01.0.00.0.00.01%")
+         .flat_map { |opd| opd.users.non_admin.aktif }
+    else
+      users.non_admin.aktif
+    end
+  end
 end
