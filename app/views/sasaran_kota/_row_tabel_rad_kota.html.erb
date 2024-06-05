@@ -22,7 +22,7 @@
 <% if pohon.role == 'eselon_2' || pohon.role == 'eselon_3' || pohon.role == 'sub_sub_pohon_kota' || pohon.role == 'sub_pohon_kota' || pohon.role == 'pohon_kota' %>
     <% program_pohon(pohon.pohonable, pohon.role).each do |program| %>
         <tr class="<%= pohon.warna_row %>">
-            <td class="program">
+            <td class="program text-wrap">
                 <%= program&.nama_program %>
             </td>
             <td class="pagu-program">
@@ -30,12 +30,11 @@
             </td>
         </tr>
     <% end %>
-<% end %>
-<% if pohon.rencana_kinerjas %>
+<% elsif pohon.rencana_kinerjas %>
     <% pohon.rencana_kinerjas.each do |sasaran| %>
         <% if pohon.role == 'eselon_4' %>
             <tr class="<%= pohon.warna_row %>">
-                <td class="subkegiatan">
+                <td class="subkegiatan text-wrap">
                     <%= sasaran&.subkegiatan %>
                 </td>
                 <td class="pagu-rekin">
