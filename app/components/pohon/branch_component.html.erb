@@ -3,10 +3,10 @@
         <div class="pohon">
             <%= render Pohon::TitleComponent.new(title: @branch.role) %>
             <%= render Pohon::BodyComponent.new(item: @branch) %>
-            <%= render Pohon::FootComponent.new(item: @branch) %>
+            <%= render Pohon::FootComponent.new(item: @branch, is_root: @is_root) %>
         </div>
     </div>
     <ul class='d-none childs'>
-        <%= render Pohon::BranchComponent.with_collection(childs_tematik(@branch), tahun: @tahun) %>
+        <%= render Pohon::BranchComponent.with_collection(childs_tematik(@branch), tahun: @tahun, is_root: false) %>
     </ul>
 </li>

@@ -9,7 +9,7 @@
             <% if @pohon.present? %>
                 <%= render Pohon::RootComponent.new(title: 'Pohon RAD',subtitle: @title) %>
                 <ul data-pohon-tematik-target='dahan'>
-                    <%= render Pohon::BranchComponent.new(branch: @pohon, tahun: @tahun) %>
+                    <%= render Pohon::BranchComponent.new(branch: @pohon, tahun: @tahun, is_root: true) %>
                 </ul>
             <% else %>
                 <%= render Pohon::RootComponent.new(title: @title) %>

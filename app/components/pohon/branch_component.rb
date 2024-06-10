@@ -5,10 +5,11 @@ class Pohon::BranchComponent < ViewComponent::Base
 
   with_collection_parameter :branch
 
-  def initialize(branch:, tahun:)
+  def initialize(branch:, tahun:, is_root: false)
     super
     @branch = branch
     @tahun = tahun
+    @is_root = is_root
 
     pohon = pohon_tematik
     @sub_tematik_kota = pohon.sub_tematiks

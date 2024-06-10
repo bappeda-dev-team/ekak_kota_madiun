@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class Pohon::FootComponent < ViewComponent::Base
-  def initialize(item:)
+  def initialize(item:, is_root: false)
     @item = item
+    @is_root = is_root
   end
 
   def element_class_name
@@ -12,7 +13,6 @@ class Pohon::FootComponent < ViewComponent::Base
   def can_toggle_all?
     # change to detect first child item
     # rather than checking the type
-    @item.pohonable_type == 'Tematik'
+    @is_root
   end
-
 end
