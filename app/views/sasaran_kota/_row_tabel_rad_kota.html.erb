@@ -18,9 +18,9 @@
 </tr>
 <% sas.pohonable.indikators.each do |ind| %>
     <tr class="<%= pohon.warna_row %>">
-        <td rowspan="<%= rowspan_rkn + 1 %>" class="text-wrap ind-ind"><%= ind %></td>
-        <td rowspan="<%= rowspan_rkn + 1 %>" class="ind-target"><%= ind.target %></td>
-        <td rowspan="<%= rowspan_rkn + 1 %>" class="ind-satuan"><%= ind.satuan %></td>
+        <td rowspan="<%= rowspan_rkn %>" class="text-wrap ind-ind">Indikator - <%= ind %></td>
+        <td rowspan="<%= rowspan_rkn %>" class="ind-target">Target - <%= ind.target %></td>
+        <td rowspan="<%= rowspan_rkn %>" class="ind-satuan">Satuan - <%= ind.satuan %></td>
     </tr>
 <% end %>
 
@@ -28,10 +28,10 @@
     <% program_pohon(pohon.pohonable, pohon.role).each do |program| %>
         <tr class="<%= pohon.warna_row %>">
             <td class="program text-wrap">
-                <%= program&.nama_program %>
+                Program - <%= program&.nama_program %>
             </td>
             <td class="pagu-program">
-                Rp. <%= pagu_pohon(pohon.pohonable, pohon.role) %>
+                Program - Rp. <%= pagu_pohon(pohon.pohonable, pohon.role) %>
             </td>
         </tr>
     <% end %>
@@ -40,10 +40,10 @@
         <% if pohon.role == 'eselon_4' %>
             <tr class="<%= pohon.warna_row %>">
                 <td class="subkegiatan text-wrap">
-                    <%= sasaran&.subkegiatan %>
+                    Subkegiatan - <%= sasaran&.subkegiatan %>
                 </td>
                 <td class="pagu-rekin">
-                    Rp. <%= pagu_pohon(sasaran, pohon.role) %>
+                    Subkegiatan - Rp. <%= pagu_pohon(sasaran, pohon.role) %>
                 </td>
             </tr>
         <% end %>

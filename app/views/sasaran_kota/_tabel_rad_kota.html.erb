@@ -1,22 +1,17 @@
-<table class="table table-bordered border-primary align-items-center">
+<table class="table table-bordered">
     <caption class="caption-top fw-bold">Rencana Aksi Daerah</caption>
     <thead>
-        <tr>
-            <th>No</th>
+        <tr class="text-center">
             <th>Rencana Aksi</th>
             <th>Indikator</th>
             <th>Target</th>
             <th>Satuan</th>
             <th>OPD Pelaksana</th>
-            <th class="text-wrap">Urusan / Program / Sub Kegiatan</th>
-            <th>Pagu Anggaran</th>
             <th>Keterangan</th>
             <th>Action</th>
         </tr>
     </thead>
     <tbody>
-        <% rad_sasaran_kota.each.with_index(1) do |sas, no| %>
-            <%= render 'sasaran_kota/row_tabel_rad_kota', sas: sas, no: no %>
-        <% end %>
+        <%= render SasaranKota::SasaranComponent.with_collection(rad_sasaran_kota) %>
     </tbody>
 </table>

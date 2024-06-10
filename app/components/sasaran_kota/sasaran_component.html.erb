@@ -1,0 +1,22 @@
+<tr class="<%= warna_row %>">
+    <td rowspan="<%= rowspan %>" class="text-wrap"><%= renaksi %></td>
+    <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="3"></td>
+    <td rowspan="<%= rowspan %>" class="text-wrap"><%= opd %></td>
+    <td rowspan="<%= rowspan %>" class="text-wrap"><%= keterangan %></td>
+    <td rowspan="<%= rowspan %>" class="text-wrap">
+        <%= render ButtonLinkComponent.new(text: 'Lihat Pohon',
+                                           title: 'Preview Pokin',
+                                           path: show_pokin_sasaran_kotum_path(@sasaran)) %>
+    </td>
+</tr>
+<%= render SasaranKota::IndikatorComponent.with_collection(indikators, warna_row: warna_row) %>
+
+<% if urusan? %>
+    <%= render SasaranKota::UrusanComponent.with_collection(programs, warna_row: warna_row) %>
+<% elsif program? %>
+    <%= render SasaranKota::ProgramComponent.with_collection(programs, warna_row: warna_row) %>
+<% elsif subkegiatan? %>
+    <%= render SasaranKota::SubkegiatanComponent.with_collection(subkegiatans, warna_row: warna_row) %>
+<% end %>
+
+<%= render SasaranKota::SasaranComponent.with_collection(sub_pohons) %>
