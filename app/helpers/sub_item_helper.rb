@@ -24,21 +24,11 @@ module SubItemHelper
     collapse_class('(\banggaran_ssh|\banggaran_sbu|\banggaran_hspk|\brekening)')
   end
 
-  def laporan_renja_items
-    [
-      { title: 'Ranwal', href: ranwal_laporans_path, identifier: 'laporans/ranwal' },
-      { title: 'Rankir - 1', href: rankir1_laporans_path, identifier: 'laporans/rankir' },
-      { title: 'Rankir - 2', href: rankir2_laporans_path, identifier: 'laporans/rankir' },
-      { title: 'Penetapan', href: penetapan_laporans_path, identifier: 'laporans/penetapan' }
-    ]
-  end
-
   def renja_items
     [
       { title: 'Ranwal', href: renja_ranwal_path, identifier: 'renja_ranwal' },
       { title: 'Rancangan', href: renja_rancangan_path, identifier: 'renja_rancangan' },
       { title: 'Rankir', href: renja_rankir_path, identifier: 'renja_rankir' },
-      { title: 'Penetapan', href: renja_penetapan_path, identifier: 'renja_penetapan' }
     ]
   end
 
