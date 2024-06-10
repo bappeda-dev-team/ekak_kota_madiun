@@ -10,6 +10,11 @@
     <td rowspan="<%= rowspan %>" class="text-wrap"><%= sas.opd %></td>
     <td class="p-0 m-0" colspan="2"></td>
     <td rowspan="<%= rowspan %>" class="text-wrap"><%= sas.keterangan %></td>
+    <td rowspan="<%= rowspan %>" class="text-wrap">
+        <%= render ButtonLinkComponent.new(text: 'Lihat Pohon',
+                                           title: 'Preview Pokin',
+                                           path: show_pokin_sasaran_kotum_path(sas)) %>
+    </td>
 </tr>
 <% sas.pohonable.indikators.each do |ind| %>
     <tr class="<%= pohon.warna_row %> border-primary">
