@@ -4,9 +4,10 @@ class RenjaController < ApplicationController
   def ranwal; end
 
   def ranwal_renja
+    tahun_tanpa_tambahan = @tahun.delete("^0-9")
     @user = @opd.eselon_dua_opd
     @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
-    @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
+    @tujuan_opds = @opd.tujuan_opds.by_periode(tahun_tanpa_tambahan)
 
     renja = RenjaService.new(kode_opd: @kode_opd, tahun: @tahun, jenis: 'ranwal')
     @program_kegiatans = renja.program_kegiatan_renja
@@ -15,12 +16,13 @@ class RenjaController < ApplicationController
   end
 
   def ranwal_cetak
+    tahun_tanpa_tambahan = @tahun.delete("^0-9")
     @title = "Rawnal Renja"
     @user = @opd.eselon_dua_opd
     @nama_opd = @opd.nama_opd
 
     @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
-    @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
+    @tujuan_opds = @opd.tujuan_opds.by_periode(tahun_tanpa_tambahan)
 
     renja = RenjaService.new(kode_opd: @kode_opd, tahun: @tahun, jenis: 'ranwal')
     @program_kegiatans = renja.program_kegiatan_renja
@@ -44,9 +46,10 @@ class RenjaController < ApplicationController
   def rancangan; end
 
   def rancangan_renja
+    tahun_tanpa_tambahan = @tahun.delete("^0-9")
     @user = @opd.eselon_dua_opd
     @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
-    @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
+    @tujuan_opds = @opd.tujuan_opds.by_periode(tahun_tanpa_tambahan)
 
     renja = RenjaService.new(kode_opd: @kode_opd, tahun: @tahun, jenis: 'rancangan')
     @program_kegiatans = renja.program_kegiatan_renja
@@ -55,11 +58,12 @@ class RenjaController < ApplicationController
   end
 
   def rancangan_cetak
+    tahun_tanpa_tambahan = @tahun.delete("^0-9")
     @title = "Rancangan Renja"
 
     @user = @opd.eselon_dua_opd
     @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
-    @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
+    @tujuan_opds = @opd.tujuan_opds.by_periode(tahun_tanpa_tambahan)
 
     renja = RenjaService.new(kode_opd: @kode_opd, tahun: @tahun, jenis: 'rancangan')
     @program_kegiatans = renja.program_kegiatan_renja
@@ -80,8 +84,9 @@ class RenjaController < ApplicationController
   def rankir; end
 
   def rankir_renja
+    tahun_tanpa_tambahan = @tahun.delete("^0-9")
     @user = @opd.eselon_dua_opd
-    @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
+    @tujuan_opds = @opd.tujuan_opds.by_periode(tahun_tanpa_tambahan)
     @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
 
     renja = RenjaService.new(kode_opd: @kode_opd, tahun: @tahun, jenis: 'rankir')
@@ -91,11 +96,12 @@ class RenjaController < ApplicationController
   end
 
   def rankir_cetak
+    tahun_tanpa_tambahan = @tahun.delete("^0-9")
     @title = "Rankir Renja"
 
     @user = @opd.eselon_dua_opd
     @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
-    @tujuan_opds = @opd.tujuan_opds.by_periode(@tahun)
+    @tujuan_opds = @opd.tujuan_opds.by_periode(tahun_tanpa_tambahan)
 
     renja = RenjaService.new(kode_opd: @kode_opd, tahun: @tahun, jenis: 'rankir')
     @program_kegiatans = renja.program_kegiatan_renja
