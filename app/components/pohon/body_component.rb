@@ -54,4 +54,8 @@ class Pohon::BodyComponent < ViewComponent::Base
       @item.keterangan
     end
   end
+
+  def indikator_item
+    @item.pohonable.indikators
+  end
 end
