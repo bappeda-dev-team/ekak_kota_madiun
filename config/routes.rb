@@ -808,6 +808,7 @@ Rails.application.routes.draw do
     member do
       get :rad_kota
       get :show_pokin
+      get :rad_excel_cetak
     end
   end
   resources :tujuan_kota do
