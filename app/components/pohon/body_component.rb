@@ -46,6 +46,12 @@ class Pohon::BodyComponent < ViewComponent::Base
   end
 
   def keterangan
-    'keterangan'
+    jenis_tematiks = %w[Tematik SubTematik SubSubTematik]
+
+    if @item.pohonable_type.in? jenis_tematiks
+      @item.pohonable.keterangan
+    else
+      @item.keterangan
+    end
   end
 end

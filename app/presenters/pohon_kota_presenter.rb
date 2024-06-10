@@ -48,11 +48,11 @@ class PohonKotaPresenter
   end
 
   def keterangan
-    if @pohon.pohonable_type == 'SubTematik' || @pohon.pohonable_type == 'SubSubTematik'
+    jenis_tematiks = %w[Tematik SubTematik SubSubTematik]
+    if @pohon.pohonable_type.in? jenis_tematiks
       @pohon.pohonable.keterangan
     else
       @pohon.keterangan
-
     end
   end
 
