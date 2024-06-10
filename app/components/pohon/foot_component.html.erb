@@ -1,0 +1,12 @@
+<div class="pohon-foot <%= element_class_name %>">
+    <div class="row">
+        <% if can_toggle_all? %>
+            <div class="col">
+                <button type="button" class="btn btn-sm btn-primary w-100" data-action="pohon-tematik#toggleAll" data-pohon-tematik-show-param="false">Show All</button>
+            </div>
+        <% end %>
+        <div class="col">
+            <button type="button" class="btn btn-sm btn-tertiary w-100" data-action="pohon-tematik#toggleChild" data-pohon-tematik-show-param="false">Tampilkan</button>
+        </div>
+    </div>
+</div>

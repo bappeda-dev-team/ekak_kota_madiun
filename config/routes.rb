@@ -807,6 +807,7 @@ Rails.application.routes.draw do
   resources :sasaran_kota do
     member do
       get :rad_kota
+      get :show_pokin
     end
   end
   resources :tujuan_kota do

@@ -1,0 +1,19 @@
+<%= content_for :html_title, "Hasil Cascading Kota" %>
+<%= content_for :navigation do %>
+    <li class="breadcrumb-item" aria-current="page">Pohon Kinerja</li>
+    <li class="breadcrumb-item active" aria-current="page">Hasil Cascading Kota</li>
+<% end %>
+<% content_for :view_utama do %>
+    <%= render 'shared/card_layout', title: "Pohon #{@jenis} #{@tematik} - Tahun #{@tahun}" do %>
+        <%= render 'shared/pohon' do %>
+            <%= render Pohon::RootComponent.new(title: @tematik) %>
+            <% if @pohons.any? %>
+                <ul data-pohon-tematik-target='dahan'>
+                    <%= render Pohon::BranchComponent.with_collection(@pohons, tahun: @tahun) %>
+                </ul>
+            <% else %>
+                <%= render partial: 'pohon_tematik/pohon_kosong', locals: { pohon: @tematik } %>
+            <% end %>
+        <% end %>
+    <% end %>
+<% end %>

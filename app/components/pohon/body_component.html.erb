@@ -1,0 +1,23 @@
+<div class="pohon-body">
+  <table class="table table-bordered mb-3">
+    <tr>
+      <td class="text-start"><%= jenis_item %></td>
+      <td class="text-wrap text-start" colspan="2"><%= nama_item %></td>
+    </tr>
+    <% if have_sumber_item? %>
+      <tr class="<%= hide_detail? %>">
+        <td class="text-start">Keterangan</td>
+        <td class="text-wrap text-start" colspan="2"><%= keterangan %></td>
+      </tr>
+      <% if have_perangkat_daerah? %>
+        <tr class="detail d-none">
+          <td class="text-start">Perangkat Daerah</td>
+          <td class="text-wrap text-start" colspan="2"><%= perangkat_daerah_item %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+  <% if have_perangkat_daerah? %>
+    <button type="button" class="btn btn-outline-pohon w-100" data-action="pohon-tematik#toggleDetail" data-pohon-tematik-show-param="false">Detail</button>
+  <% end %>
+</div>

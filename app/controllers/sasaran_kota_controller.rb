@@ -6,8 +6,6 @@ class SasaranKotaController < ApplicationController
     handle_filters
   end
 
-  def show; end
-
   def new
     @strategi_kota = Tematik.find(params[:tematik_id])
     @sasaran_kota = SasaranKotum.new(tematik: @strategi_kota)
@@ -60,10 +58,19 @@ class SasaranKotaController < ApplicationController
   def rad_kota
     @tahun = params[:tahun]
     @sub_tematik = Tematik.find(params[:id])
-    pohon_sub = Pohon.find_by(pohonable_id: @sub_tematik.id,
-                              tahun: @tahun)
-    @sub_sasaran_kota = pohon_sub.sub_pohons.where(tahun: @tahun, role: 'sub_sub_pohon_kota')
-    @rad_sasaran_kota = pohon_sub.sub_pohons.where(tahun: @tahun, role: 'strategi_pohon_kota')
+    @pohon_sub = Pohon.find_by(pohonable_id: @sub_tematik.id,
+                               tahun: @tahun)
+    @sub_sasaran_kota = @pohon_sub.sub_pohons.where(tahun: @tahun, role: 'sub_sub_pohon_kota')
+    @rad_sasaran_kota = @pohon_sub.sub_pohons.where(tahun: @tahun, role: 'strategi_pohon_kota')
+  end
+
+  def show_pokin
+    @tahun = cookies[:tahun]
+    tematik_id = params[:id]
+    @tematik = Tematik.find(tematik_id)
+
+    @pohons = Pohon.where(pohonable_id: tematik_id, tahun: @tahun)
+                         .includes(:pohonable)
   end
 
   private
