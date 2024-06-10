@@ -17,13 +17,10 @@
           <i class="fa fa-edit me-2"></i>
           <span>Edit</span>
         <% end %>
-        <%= link_to rad_kota_sasaran_kotum_path(sasaran, tahun: @tahun), class: 'btn btn-outline-primary' do %>
+        <%= link_to rad_kota_sasaran_kotum_path(sasaran.pohonable.id, tahun: @tahun), class: 'btn btn-outline-primary' do %>
           <i class="fa fa-book-open me-2"></i>
           <span>RAD</span>
         <% end %>
-        <%= render ButtonLinkComponent.new(text: 'Lihat Pohon',
-                                           title: 'Preview Pokin',
-                                           path: show_pokin_sasaran_kotum_path(sasaran)) %>
       <% else %>
         <%= link_to new_sasaran_kotum_path(tematik_id: sasaran.pohonable.id), remote: true,
        data: {
