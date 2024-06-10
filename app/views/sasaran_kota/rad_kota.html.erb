@@ -2,14 +2,14 @@
 <%= content_for :navigation do %>
   <li class="breadcrumb-item" aria-current="page">Perencanaan Kota</li>
   <li class="breadcrumb-item" aria-current="page">Sasaran Kota</li>
-  <li class="breadcrumb-item" aria-current="page"><%= @sub_tematik.sasaran_kotum %></li>
+  <li class="breadcrumb-item" aria-current="page"><%= @pohon_sub.pohonable.sasaran_kotum %></li>
   <li class="breadcrumb-item active" aria-current="page">Rencana Aksi Daerah</li>
 <% end %>
 <% content_for :view_utama do %>
   <div class="card border-0 shadow">
     <div class="card-header">
       <div class="sasaran-kota-rad">
-        <%= render 'sasaran_kota/tabel_sasaran_kota_rad', sasaran_kota_rad: @sub_tematik %>
+        <%= render 'sasaran_kota/tabel_sasaran_kota_rad', sasaran_kota_rad: @pohon_sub %>
       </div>
     </div>
     <div class="card-body">
