@@ -3,7 +3,7 @@
 <% rowspan_ind = rowspan_help[:rowspan_ind] %>
 <% rowspan_rkn = rowspan_help[:rowspan_rekins] %>
 <% rowspan = rowspan_help[:rowspan] %>
-<tr class="<%= pohon.warna_row %> border-primary">
+<tr class="<%= pohon.warna_row %>">
     <td rowspan="<%= rowspan %>" class="text-wrap text-center"><%= no %></td>
     <td rowspan="<%= rowspan %>" class="text-wrap"><%= sas.pohonable %></td>
     <td class="p-0 m-0" colspan="3"></td>
@@ -17,7 +17,7 @@
     </td>
 </tr>
 <% sas.pohonable.indikators.each do |ind| %>
-    <tr class="<%= pohon.warna_row %> border-primary">
+    <tr class="<%= pohon.warna_row %>">
         <td rowspan="<%= rowspan_rkn + 1 %>" class="text-wrap ind-ind"><%= ind %></td>
         <td rowspan="<%= rowspan_rkn + 1 %>" class="ind-target"><%= ind.target %></td>
         <td rowspan="<%= rowspan_rkn + 1 %>" class="ind-satuan"><%= ind.satuan %></td>
@@ -26,7 +26,7 @@
 
 <% if pohon.role == 'eselon_2' || pohon.role == 'eselon_3' || pohon.role == 'sub_sub_pohon_kota' || pohon.role == 'sub_pohon_kota' || pohon.role == 'pohon_kota' %>
     <% program_pohon(pohon.pohonable, pohon.role).each do |program| %>
-        <tr class="<%= pohon.warna_row %> border-primary">
+        <tr class="<%= pohon.warna_row %>">
             <td class="program text-wrap">
                 <%= program&.nama_program %>
             </td>
@@ -38,7 +38,7 @@
 <% elsif pohon.rencana_kinerjas %>
     <% pohon.rencana_kinerjas.each do |sasaran| %>
         <% if pohon.role == 'eselon_4' %>
-            <tr class="<%= pohon.warna_row %> border-primary">
+            <tr class="<%= pohon.warna_row %>">
                 <td class="subkegiatan text-wrap">
                     <%= sasaran&.subkegiatan %>
                 </td>

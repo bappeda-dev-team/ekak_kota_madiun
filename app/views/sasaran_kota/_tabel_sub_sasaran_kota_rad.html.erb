@@ -9,6 +9,7 @@
             <th>Satuan</th>
             <th class="rekap_pokin_separator" colspan="3"></th>
             <th>Keterangan</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -21,6 +22,11 @@
                 <td colspan="3" class="p-0 m-0 border-0"></td>
                 <td colspan="3" rowspan="<%= rowspan_ind_sub %>" class="text-wrap border"></td>
                 <td rowspan="<%= rowspan_ind_sub %>" class="text-wrap border"><%= sub.keterangan %></td>
+                <td rowspan="<%= rowspan_ind_sub %>" class="text-wrap border">
+                    <%= render ButtonLinkComponent.new(text: 'Lihat Pohon',
+                                                       title: 'Preview Pokin',
+                                                       path: show_pokin_sasaran_kotum_path(sub)) %>
+                </td>
             </tr>
             <% sub.pohonable.indikators.each do |indikator| %>
                 <tr class="skip">
@@ -29,19 +35,22 @@
                     <td class="border"><%= indikator.satuan %></td>
                 </tr>
             <% end %>
-            <tr>
-                <th>No</th>
-                <th>Rencana Aksi Sub Sasaran</th>
-                <th>Indikator</th>
-                <th>Target</th>
-                <th>Satuan</th>
-                <th>OPD Pelaksana</th>
-                <th class="text-wrap">Urusan / Program / Sub Kegiatan</th>
-                <th>Pagu Anggaran</th>
-                <th>Keterangan</th>
-            </tr>
-            <% sub.sub_pohons.each.with_index(1) do |sub_ren, no_ren| %>
-                <%= render 'sasaran_kota/row_tabel_rad_kota', sas: sub_ren, no: "#{no}.#{no_ren}" %>
+            <% if sub.sub_pohons.any? %>
+                <tr>
+                    <th>No</th>
+                    <th>Rencana Aksi Sub Sasaran</th>
+                    <th>Indikator</th>
+                    <th>Target</th>
+                    <th>Satuan</th>
+                    <th>OPD Pelaksana</th>
+                    <th class="text-wrap">Urusan / Program / Sub Kegiatan</th>
+                    <th>Pagu Anggaran</th>
+                    <th>Keterangan</th>
+                    <th>Action</th>
+                </tr>
+                <% sub.sub_pohons.each.with_index(1) do |sub_ren, no_ren| %>
+                    <%= render 'sasaran_kota/row_tabel_rad_kota', sas: sub_ren, no: "#{no}.#{no_ren}" %>
+                <% end %>
             <% end %>
         <% end %>
     </tbody>
