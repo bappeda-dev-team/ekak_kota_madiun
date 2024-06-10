@@ -48,7 +48,7 @@
                     <th>Keterangan</th>
                     <th>Action</th>
                 </tr>
-                <% sub.sub_pohons.each.with_index(1) do |sub_ren, no_ren| %>
+                <% sub.sub_pohons.select { |sub| sub.pohonable }.each.with_index(1) do |sub_ren, no_ren| %>
                     <%= render 'sasaran_kota/row_tabel_rad_kota', sas: sub_ren, no: "#{no}.#{no_ren}" %>
                 <% end %>
             <% end %>

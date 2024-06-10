@@ -50,6 +50,6 @@
     <% end %>
 <% end %>
 
-<% sas.sub_pohons.each.with_index(1) do |sub_sas, no_sub| %>
+<% sas.sub_pohons.select { |sub| sub.pohonable }.each.with_index(1) do |sub_sas, no_sub| %>
     <%= render 'sasaran_kota/row_tabel_rad_kota', sas: sub_sas, no: "#{no}.#{no_sub}" %>
 <% end %>

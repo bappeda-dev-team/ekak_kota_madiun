@@ -18,7 +18,7 @@ class SasaranKotaController < ApplicationController
   def create
     @sasaran_kota = SasaranKotum.new(sasaran_kota_params)
     if @sasaran_kota.save
-      strategi_kota = Tematik.find(sasaran_kota_params[:tematik_id])
+      strategi_kota = Pohon.find_by(pohonable_id: sasaran_kota_params[:tematik_id])
       render json: { resText: 'Sasaran ditambahkan',
                      html_content: html_content({ sasaran: strategi_kota },
                                                 partial: 'sasaran_kota/sasaran_kota') }.to_json,
@@ -33,7 +33,7 @@ class SasaranKotaController < ApplicationController
 
   def update
     if @sasaran_kota.update(sasaran_kota_params)
-      strategi_kota = Tematik.find(sasaran_kota_params[:tematik_id])
+      strategi_kota = Pohon.find_by(pohonable_id: sasaran_kota_params[:tematik_id])
       render json: { resText: 'Sasaran ditambahkan',
                      html_content: html_content({ sasaran: strategi_kota },
                                                 partial: 'sasaran_kota/sasaran_kota') }.to_json,
@@ -94,7 +94,7 @@ class SasaranKotaController < ApplicationController
              else
                tahun
              end
-    @sasaran_kota = Pohon.where(pohonable_type: %w[SubTematik SubSubTematik], tahun: @tahun).map(&:pohonable)
-                         .compact
+    @sasaran_kota = Pohon.includes(:pohonable).where(pohonable_type: %w[SubTematik SubSubTematik], tahun: @tahun)
+                         .select { |ph| ph.pohonable }
   end
 end

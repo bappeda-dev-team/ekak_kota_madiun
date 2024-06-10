@@ -1,12 +1,12 @@
-<% rowspan = sasaran.indikators.size + 1 %>
-<tr id="<%= dom_id(sasaran) %>">
+<% rowspan = sasaran.pohonable.indikators.size + 1 %>
+<tr id="<%= dom_id(sasaran.pohonable) %>">
   <td rowspan="<%= rowspan %>" class="border"></td>
-  <td rowspan="<%= rowspan %>" class="text-wrap border"><%= sasaran %></td>
-  <td rowspan="<%= rowspan %>" class="text-wrap border"><%= sasaran.sasaran_kotum %></td>
+  <td rowspan="<%= rowspan %>" class="text-wrap border"><%= sasaran.pohonable %></td>
+  <td rowspan="<%= rowspan %>" class="text-wrap border"><%= sasaran.pohonable.sasaran_kotum %></td>
   <td rowspan="<%= rowspan %>" class="border">
     <div class="d-grid gap-3">
-      <% if sasaran.sasaran_kotum.present? %>
-        <%= link_to edit_sasaran_kotum_path(sasaran.sasaran_kotum), remote: true,
+      <% if sasaran.pohonable.sasaran_kotum.present? %>
+        <%= link_to edit_sasaran_kotum_path(sasaran.pohonable.sasaran_kotum), remote: true,
        data: {
          controller: 'form-modal',
          action: 'ajax:complete->form-modal#success:prevent',
@@ -21,8 +21,11 @@
           <i class="fa fa-book-open me-2"></i>
           <span>RAD</span>
         <% end %>
+        <%= render ButtonLinkComponent.new(text: 'Lihat Pohon',
+                                           title: 'Preview Pokin',
+                                           path: show_pokin_sasaran_kotum_path(sasaran)) %>
       <% else %>
-        <%= link_to new_sasaran_kotum_path(tematik_id: sasaran.id), remote: true,
+        <%= link_to new_sasaran_kotum_path(tematik_id: sasaran.pohonable.id), remote: true,
        data: {
          controller: 'form-modal',
          action: 'ajax:complete->form-modal#success:prevent',
@@ -37,9 +40,9 @@
     </div>
   </td>
   <td colspan="3" class="p-0 m-0 border-0"></td>
-  <td class="text-wrap border" rowspan="<%= rowspan %>"><%= sasaran.keterangan %></td>
+  <td class="text-wrap border" rowspan="<%= rowspan %>"><%= sasaran.pohonable.keterangan %></td>
 </tr>
-<% sasaran.indikators.each do |indikator| %>
+<% sasaran.pohonable.indikators.each do |indikator| %>
   <tr class="skip">
     <td class="text-wrap border"><%= indikator %></td>
     <td class="border"><%= indikator.target %></td>
