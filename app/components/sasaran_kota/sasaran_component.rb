@@ -35,7 +35,7 @@ class SasaranKota::SasaranComponent < ViewComponent::Base
     when 'eselon_4'
       'table-success'
     else
-      'table-light'
+      ''
     end
   end
 
