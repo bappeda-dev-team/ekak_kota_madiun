@@ -12,7 +12,7 @@
 <%= render SasaranKota::IndikatorComponent.with_collection(indikators, warna_row: warna_row) %>
 
 <% if urusan? %>
-    <%= render SasaranKota::UrusanComponent.with_collection(programs, warna_row: warna_row) %>
+    <%= render SasaranKota::UrusanComponent.with_collection(urusans, warna_row: warna_row) %>
 <% elsif program? %>
     <%= render SasaranKota::ProgramComponent.with_collection(programs, warna_row: warna_row) %>
 <% elsif subkegiatan? %>

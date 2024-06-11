@@ -59,6 +59,10 @@ class SasaranKota::SasaranComponent < ViewComponent::Base
     role == 'eselon_4'
   end
 
+  def urusans
+    programs.uniq(&:nama_urusan)
+  end
+
   def programs
     program_pohon(@sasaran.pohonable, role)
   end

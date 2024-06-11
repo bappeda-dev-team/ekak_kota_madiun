@@ -13,6 +13,10 @@ class SasaranKota::UrusanComponent < ViewComponent::Base
     @urusan.nama_urusan
   end
 
+  def pagu_urusan
+    '-'
+  end
+
   def nomor
     @iteration.size > 1 ? @counter : ''
   end
