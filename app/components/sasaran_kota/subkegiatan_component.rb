@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 class SasaranKota::SubkegiatanComponent < ViewComponent::Base
-  def initialize(subkegiatan:, subkegiatan_counter:, subkegiatan_iteration:, warna_row:)
+  def initialize(subkegiatan:, subkegiatan_counter:, subkegiatan_iteration:, warna_row:, tahun:)
     super
     @subkegiatan = subkegiatan # this is sasaran model
     @counter = subkegiatan_counter + 1
     @iteration = subkegiatan_iteration
     @warna_row = warna_row
+    @tahun = tahun
   end
 
   def nama_subkegiatan
@@ -16,7 +17,7 @@ class SasaranKota::SubkegiatanComponent < ViewComponent::Base
   end
 
   def pagu_subkegiatan
-    pagu = @subkegiatan.anggaran_sasarans('2023_perubahan')
+    pagu = @subkegiatan.anggaran_sasarans(@tahun)
     "Rp. #{number_with_delimiter(pagu)}"
   rescue NoMethodError
     'Rp. 0'

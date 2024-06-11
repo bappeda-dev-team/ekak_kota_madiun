@@ -14,9 +14,9 @@
 <% if urusan? %>
     <%= render SasaranKota::UrusanComponent.with_collection(urusans, warna_row: warna_row) %>
 <% elsif program? %>
-    <%= render SasaranKota::ProgramComponent.with_collection(programs, warna_row: warna_row) %>
+    <%= render SasaranKota::ProgramComponent.with_collection(programs, warna_row: warna_row, sasaran: @sasaran, tahun: @tahun) %>
 <% elsif subkegiatan? %>
-    <%= render SasaranKota::SubkegiatanComponent.with_collection(subkegiatans, warna_row: warna_row) %>
+    <%= render SasaranKota::SubkegiatanComponent.with_collection(subkegiatans, warna_row: warna_row, tahun: @tahun) %>
 <% end %>
 
-<%= render SasaranKota::SasaranComponent.with_collection(sub_pohons) %>
+<%= render SasaranKota::SasaranComponent.with_collection(sub_pohons, tahun: @tahun) %>

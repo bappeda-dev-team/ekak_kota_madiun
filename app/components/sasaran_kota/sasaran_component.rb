@@ -3,10 +3,11 @@
 class SasaranKota::SasaranComponent < ViewComponent::Base
   include PohonKinerjaOpdsHelper
 
-  def initialize(sasaran:, sasaran_iteration:)
+  def initialize(sasaran:, sasaran_iteration:, tahun:)
     super
     @sasaran = sasaran
     @counter = sasaran_iteration.index + 1
+    @tahun = tahun
   end
 
   def renaksi

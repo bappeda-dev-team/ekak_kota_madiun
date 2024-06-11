@@ -12,6 +12,6 @@
         </tr>
     </thead>
     <tbody>
-        <%= render SasaranKota::SasaranComponent.with_collection(rad_sasaran_kota) %>
+        <%= render SasaranKota::SasaranComponent.with_collection(rad_sasaran_kota, tahun: @tahun) %>
     </tbody>
 </table>
