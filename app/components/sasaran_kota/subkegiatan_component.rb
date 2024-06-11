@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 class SasaranKota::SubkegiatanComponent < ViewComponent::Base
-  def initialize(subkegiatan:, subkegiatan_counter:, subkegiatan_iteration:, warna_row:, tahun:)
+  def initialize(subkegiatan:, subkegiatan_counter:, subkegiatan_iteration:, tahun:)
     super
     @subkegiatan = subkegiatan # this is sasaran model
     @counter = subkegiatan_counter + 1
     @iteration = subkegiatan_iteration
-    @warna_row = warna_row
     @tahun = tahun
   end
 
@@ -27,5 +26,7 @@ class SasaranKota::SubkegiatanComponent < ViewComponent::Base
     @iteration.size > 1 ? @counter : ''
   end
 
-  attr_reader :warna_row
+  def warna_row
+    'table-success'
+  end
 end

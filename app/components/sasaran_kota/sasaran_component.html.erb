@@ -12,11 +12,11 @@
 <%= render SasaranKota::IndikatorComponent.with_collection(indikators, warna_row: warna_row) %>
 
 <% if urusan? %>
-    <%= render SasaranKota::UrusanComponent.with_collection(urusans, warna_row: warna_row, sasaran: @sasaran, tahun: @tahun) %>
+    <%= render SasaranKota::UrusanComponent.with_collection(urusans, sasaran: @sasaran, tahun: @tahun) %>
 <% elsif program? %>
-    <%= render SasaranKota::ProgramComponent.with_collection(programs, warna_row: warna_row, sasaran: @sasaran, tahun: @tahun) %>
+    <%= render SasaranKota::ProgramComponent.with_collection(programs, sasaran: @sasaran, tahun: @tahun) %>
 <% elsif subkegiatan? %>
-    <%= render SasaranKota::SubkegiatanComponent.with_collection(subkegiatans, warna_row: warna_row, tahun: @tahun) %>
+    <%= render SasaranKota::SubkegiatanComponent.with_collection(subkegiatans, tahun: @tahun) %>
 <% end %>
 
 <%= render SasaranKota::SasaranComponent.with_collection(sub_pohons, tahun: @tahun) %>

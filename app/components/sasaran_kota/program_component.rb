@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 class SasaranKota::ProgramComponent < ViewComponent::Base
-  def initialize(program:, program_counter:, program_iteration:, warna_row:, sasaran:, tahun:)
+  def initialize(program:, program_counter:, program_iteration:, sasaran:, tahun:)
     super
     @program = program
     @counter = program_counter + 1
     @iteration = program_iteration
-    @warna_row = warna_row
     @sasaran = sasaran
     @tahun = tahun
   end
@@ -30,5 +29,7 @@ class SasaranKota::ProgramComponent < ViewComponent::Base
     @iteration.size > 1 ? @counter : ''
   end
 
-  attr_reader :warna_row
+  def warna_row
+    'table-info'
+  end
 end

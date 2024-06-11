@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 class SasaranKota::UrusanComponent < ViewComponent::Base
-  def initialize(urusan:, urusan_counter:, urusan_iteration:, warna_row:, sasaran:, tahun:)
+  def initialize(urusan:, urusan_counter:, urusan_iteration:, sasaran:, tahun:)
     super
     @urusan = urusan
     @counter = urusan_counter + 1
     @iteration = urusan_iteration
-    @warna_row = warna_row
     @sasaran = sasaran
     @tahun = tahun
   end
@@ -31,5 +30,7 @@ class SasaranKota::UrusanComponent < ViewComponent::Base
     @iteration.size > 1 ? @counter : ''
   end
 
-  attr_reader :warna_row
+  def warna_row
+    'table-danger'
+  end
 end
