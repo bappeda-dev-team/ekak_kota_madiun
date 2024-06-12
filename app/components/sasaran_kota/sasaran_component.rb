@@ -11,7 +11,11 @@ class SasaranKota::SasaranComponent < ViewComponent::Base
   end
 
   def renaksi
-    @sasaran.pohonable.to_s
+    if role == 'eselon_4'
+      @sasaran.sasaran_kinerja
+    else
+      @sasaran.pohonable.to_s
+    end
   end
 
   def opd
@@ -23,7 +27,11 @@ class SasaranKota::SasaranComponent < ViewComponent::Base
   end
 
   def indikators
-    @sasaran.pohonable.indikators
+    if role == 'eselon_4'
+      @sasaran.indikator_sasarans
+    else
+      @sasaran.pohonable.indikators
+    end
   end
 
   def warna_row
@@ -69,11 +77,17 @@ class SasaranKota::SasaranComponent < ViewComponent::Base
   end
 
   def subkegiatans
-    @sasaran.pohonable.sasarans.dengan_nip
+    @sasaran.program_kegiatan
   end
 
   def sub_pohons
-    @sasaran.sub_pohons.select(&:pohonable)
+    if role == 'eselon_3'
+      @sasaran.sub_pohons.select(&:pohonable).flat_map { |ph| ph.pohonable.sasarans.dengan_nip }
+    elsif role == 'eselon_4'
+      []
+    else
+      @sasaran.sub_pohons.select(&:pohonable)
+    end
   end
 
   def role

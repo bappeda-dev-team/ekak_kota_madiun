@@ -626,4 +626,8 @@ class Sasaran < ApplicationRecord
   rescue NoMethodError
     'User tidak ditemukan'
   end
+
+  def role
+    'operational_pohon_kota'
+  end
 end
