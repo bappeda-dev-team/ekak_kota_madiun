@@ -69,11 +69,7 @@ class SasaranKota::SasaranComponent < ViewComponent::Base
   end
 
   def subkegiatans
-    sasarans = @sasaran.pohonable
-                       .sasarans
-                       .dengan_nip
-    subkegiatan_sasarans = sasarans.group_by(&:program_kegiatan)
-    subkegiatan_sasarans.keys
+    @sasaran.pohonable.sasarans.dengan_nip
   end
 
   def sub_pohons

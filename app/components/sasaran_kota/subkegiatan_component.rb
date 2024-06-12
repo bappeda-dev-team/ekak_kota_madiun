@@ -10,13 +10,21 @@ class SasaranKota::SubkegiatanComponent < ViewComponent::Base
   end
 
   def nama_subkegiatan
-    @subkegiatan.nama_subkegiatan
+    @subkegiatan.subkegiatan
   rescue NoMethodError
     'Belum diisi'
   end
 
+  def nama_pelaksana
+    @subkegiatan.nama_pelaksana
+  end
+
+  def rekin
+    @subkegiatan.sasaran_kinerja
+  end
+
   def pagu_subkegiatan
-    pagu = @subkegiatan.anggaran_sasarans(@tahun)
+    pagu = @subkegiatan.total_anggaran
     "Rp. #{number_with_delimiter(pagu)}"
   rescue NoMethodError
     'Rp. 0'

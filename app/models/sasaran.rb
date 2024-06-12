@@ -620,4 +620,10 @@ class Sasaran < ApplicationRecord
   def dasar_hukum_sasaran
     dasar_hukums
   end
+
+  def nama_pelaksana
+    user.nama
+  rescue NoMethodError
+    'User tidak ditemukan'
+  end
 end
