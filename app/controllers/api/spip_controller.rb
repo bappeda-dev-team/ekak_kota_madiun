@@ -38,6 +38,14 @@ module Api
       }]
     end
 
+    def sasaran_opd
+      @tahun = params[:tahun]
+      kode_opd = params[:kode_opd]
+      @opd = Opd.find_by(kode_unik_opd: kode_opd)
+      spip = SpipQueries.new(TujuanKota, tahun: @tahun, opd: @opd)
+      @sasaran_opd_spip = spip.spip_sasaran_opd
+    end
+
     private
 
     def program_opd(kode_opd, tahun)
