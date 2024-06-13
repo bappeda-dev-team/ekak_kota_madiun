@@ -214,10 +214,12 @@ module Api
         atasan = sasaran.sasaran_atasan_pohon
         sasaran_atasan = Sasaran.find_by(id_rencana: atasan[:sasaran_atasan_id])
         sasaran_opd = sasaran_atasan.sasaran_atasan_pohon
+        sasaran_milik_opd = Sasaran.find_by(id_rencana: sasaran_opd[:sasaran_atasan_id])
         {
           id: sasaran.id,
           tahun: sasaran.tahun,
           sasaran_opd: sasaran_opd[:sasaran_atasan],
+          indikator_sasaran_opd: indikator_sasaran(sasaran_milik_opd),
           sasaran_program: atasan[:sasaran_atasan],
           indikator_sasaran_program: indikator_sasaran(sasaran_atasan),
           sasaran_subkegiatan: sasaran.sasaran_kinerja,
