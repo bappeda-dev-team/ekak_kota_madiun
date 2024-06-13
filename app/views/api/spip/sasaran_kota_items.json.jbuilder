@@ -1,24 +1,25 @@
 json.results do
+  json.sasaran_pemda_id @sasaran_pemda.id
   json.tahun @tahun
   json.id @pohon_sub.id
   json.sasaran_pemda @sasaran_pemda.to_s
   json.indikator_sasaran_pemda @sasaran_pemda.indikators.each do |indikator|
     json.id indikator.id
-    json.id_sasaran indikator.kode.to_i
+    json.id_sasaran @pohon_sub.id
     json.indikator indikator.to_s
     json.target indikator.target
     json.satuan indikator.satuan
   end
   results = @rad_sasaran_kota
-  json.sasaran_opds results do |sasaran|
-    sas = SasaranKota::SasaranComponent.new(sasaran: sasaran, sasaran_iteration: [], tahun: @tahun)
-    json.id sasaran.id
-    json.parent_sasaran sasaran.pohon_ref_id
+  json.sasaran_opds results do |sasaran_opd|
+    sas = SasaranKota::SasaranComponent.new(sasaran: sasaran_opd, sasaran_iteration: [], tahun: @tahun)
+    json.id sasaran_opd.id
+    json.parent_sasaran sasaran_opd.pohon_ref_id
     json.jenis sas.jenis
     json.sasaran_opd sas.renaksi
     json.indikators sas.indikators.each do |indikator|
       json.id indikator.id
-      json.id_sasaran indikator.kode.to_i
+      json.id_sasaran sasaran_opd.id
       json.indikator indikator.to_s
       json.target indikator.target
       json.satuan indikator.satuan
@@ -35,6 +36,7 @@ json.results do
         json.sasaran_program sas_tac.renaksi
         json.indikator_sasaran_program sas_tac.indikators.each do |indikator|
           json.id indikator.id
+          json.id_sasaran tactical.id
           json.indikator indikator.to_s
           json.target indikator.target
           json.satuan indikator.satuan
@@ -53,10 +55,28 @@ json.results do
             json.sasaran_kegiatan operational.pohonable.strategi
             json.indikator_sasaran_kegiatan operational.pohonable.indikators.each do |indikator|
               json.id indikator.id
-              json.id_sasaran indikator.kode.to_i
+              json.id_sasaran operational.id
               json.indikator indikator.to_s
               json.target indikator.target
               json.satuan indikator.satuan
+            end
+            sasarans = operational.pohonable.sasarans.dengan_nip.dengan_sub_kegiatan
+            json.subkegiatans sasarans.each do |sasaran|
+              subkegiatan = sasaran.program_kegiatan
+              json.id_subkegiatan subkegiatan.id
+              json.kode_subkegiatan subkegiatan.kode_sub_giat
+              json.nama_subkegiatan subkegiatan.nama_subkegiatan
+              json.id sasaran.id_rencana
+              json.parent_sasaran operational.id
+              json.jenis 'sasaran_subkegiatan'
+              json.sasaran_subkegiatan sasaran.sasaran_kinerja
+              json.indikator_sasaran_subkegiatan sasaran.indikator_sasarans.each do |indikator|
+                json.id indikator.id
+                json.id_sasaran indikator.sasaran_id
+                json.indikator indikator.indikator_kinerja
+                json.target indikator.target
+                json.satuan indikator.satuan
+              end
             end
           end
         end
