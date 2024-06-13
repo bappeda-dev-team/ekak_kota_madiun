@@ -2,6 +2,22 @@ module Api
   class SpipController < ActionController::API
     respond_to :json
 
+    def sasaran_kota
+      @tahun = params[:tahun]
+      @sasaran_kota = Pohon.includes(:pohonable).where(pohonable_type: %w[SubTematik SubSubTematik], tahun: @tahun)
+                           .select { |ph| ph.pohonable&.sasaran_kotum }
+    end
+
+    def sasaran_kota_items
+      @tahun = params[:tahun]
+      pohon_id = params[:id_sasaran_kota]
+
+      @pohon_sub = Pohon.find_by(pohonable_id: pohon_id, tahun: @tahun)
+      @sasaran_pemda = @pohon_sub.pohonable
+      @sub_sasaran_kota = @pohon_sub.sub_pohons.where(tahun: @tahun, role: 'sub_sub_pohon_kota')
+      @rad_sasaran_kota = @pohon_sub.sub_pohons.where(tahun: @tahun, role: 'strategi_pohon_kota')
+    end
+
     def program
       tahun = params[:tahun]
       kode_opd = params[:kode_opd]
@@ -60,8 +76,7 @@ module Api
           kode: pr.kode_program,
           nama: pr.nama_program,
           pagu: pagu_programs,
-          indikator_program: indikator_programs
-         }
+          indikator_program: indikator_programs }
       end
 
       item_programs = items.uniq { |pk| pk.values_at(:kode, :kode_opd) }.sort_by { |pk| pk.values_at(:kode) }
@@ -74,8 +89,7 @@ module Api
           nama: prg[:nama],
           pagu: prg[:pagu],
           indikator_program: prg[:indikator_program],
-          sasaran_program: sasaran_programs
-        }
+          sasaran_program: sasaran_programs }
       end
     end
 
@@ -91,8 +105,7 @@ module Api
           kode: pr.kode_giat,
           nama: pr.nama_kegiatan,
           pagu: pagu_kegiatans,
-          indikator_kegiatan: indikator_kegiatans,
-        }
+          indikator_kegiatan: indikator_kegiatans }
       end
 
       item_kegiatans = items.uniq { |pk| pk.values_at(:kode, :kode_opd) }.sort_by { |pk| pk.values_at(:kode) }
@@ -105,8 +118,7 @@ module Api
           nama: keg[:nama],
           pagu: keg[:pagu],
           indikator_kegiatan: keg[:indikator_kegiatan],
-          sasaran_kegiatan: sasaran_kegiatan
-        }
+          sasaran_kegiatan: sasaran_kegiatan }
       end
     end
 
@@ -223,7 +235,7 @@ module Api
           sasaran_program: atasan[:sasaran_atasan],
           indikator_sasaran_program: indikator_sasaran(sasaran_atasan),
           sasaran_subkegiatan: sasaran.sasaran_kinerja,
-          indikator_sasaran_subkegiatan: indikator_sasaran(sasaran),
+          indikator_sasaran_subkegiatan: indikator_sasaran(sasaran)
         }
       end
     end

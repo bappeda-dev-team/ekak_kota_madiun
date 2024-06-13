@@ -802,6 +802,8 @@ Rails.application.routes.draw do
       post :kegiatan
       post :subkegiatan
       get :sasaran_opd
+      get :sasaran_kota
+      get :sasaran_kota_items
     end
   end
 

@@ -102,4 +102,17 @@ class SasaranKota::SasaranComponent < ViewComponent::Base
       @sasaran.role
     end
   end
+
+  def jenis
+    case @sasaran.role
+    when 'strategi_pohon_kota'
+      'sasaran_opd'
+    when 'tactical_pohon_kota'
+      'sasaran_program'
+    when 'operational_pohon_kota'
+      'sasaran_kegiatan'
+    else
+      'sasaran_kota'
+    end
+  end
 end
