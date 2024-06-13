@@ -211,14 +211,17 @@ module Api
                         .where("program_kegiatans.kode_sub_giat ILIKE ?", "%#{program_kegiatan}%")
 
       sasarans.map do |sasaran|
+        atasan = sasaran.sasaran_atasan_pohon
+        sasaran_atasan = Sasaran.find_by(id_rencana: atasan[:sasaran_atasan_id])
+        sasaran_opd = sasaran_atasan.sasaran_atasan_pohon
         {
           id: sasaran.id,
           tahun: sasaran.tahun,
-          sasaran: sasaran.sasaran_kinerja,
-          nama: sasaran.user.nama,
-          nip: sasaran.nip_asn,
-          indikator_sasarans: indikator_sasaran(sasaran),
-          jabatan: sasaran.user.nama_jabatan_terakhir
+          sasaran_opd: sasaran_opd[:sasaran_atasan],
+          sasaran_program: atasan[:sasaran_atasan],
+          indikator_sasaran_program: indikator_sasaran(sasaran_atasan),
+          sasaran_subkegiatan: sasaran.sasaran_kinerja,
+          indikator_sasaran_subkegiatan: indikator_sasaran(sasaran),
         }
       end
     end
