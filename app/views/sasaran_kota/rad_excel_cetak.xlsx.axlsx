@@ -1,0 +1,53 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "rad") do |sheet_rad|
+  sheet_rad.add_row ['SASARAN KOTA', 'INDIKATOR', 'TARGET', 'SATUAN', 'KETERANGAN', 'OPD PELAKSANA', 'PROGRAM', 'ROLE']
+  sheet_rad.add_row [@pohon_sub.pohonable.sasaran_kotum,
+                     @pohon_sub.pohonable.indikators.first.indikator,
+                     @pohon_sub.pohonable.indikators.first.target,
+                     @pohon_sub.pohonable.indikators.first.satuan,
+                     @pohon_sub.pohonable.keterangan]
+  sheet_rad.add_row
+  sheet_rad.add_row ['RAD KOTA']
+  @rad_sasaran_kota.each do |rad_sasaran|
+    sasaran = SasaranKota::SasaranComponent.new(sasaran: rad_sasaran,
+                                                sasaran_iteration: [],
+                                                tahun: @tahun)
+    sheet_rad.add_row [sasaran.renaksi,
+                       sasaran.indikators.first&.indikator,
+                       sasaran.indikators.first&.target,
+                       sasaran.indikators.first&.satuan,
+                       sasaran.keterangan,
+                       sasaran.opd,
+                       sasaran.urusans.first&.nama_urusan,
+                       sasaran.role
+                      ]
+    sasaran.sub_pohons.each do |sub_sub|
+      sasaran_sub = SasaranKota::SasaranComponent.new(sasaran: sub_sub,
+                                                      sasaran_iteration: [],
+                                                      tahun: @tahun)
+      sheet_rad.add_row [sasaran_sub.renaksi,
+                         sasaran_sub.indikators.first.indikator,
+                         sasaran_sub.indikators.first.target,
+                         sasaran_sub.indikators.first.satuan,
+                         sasaran_sub.keterangan,
+                         sasaran_sub.opd,
+                         sasaran_sub.programs.first&.nama_program,
+                         sasaran_sub.role
+                        ]
+      sasaran_sub.sub_pohons.each do |sub_tiga|
+        sasaran_tiga = SasaranKota::SasaranComponent.new(sasaran: sub_tiga,
+                                                        sasaran_iteration: [],
+                                                        tahun: @tahun)
+        sheet_rad.add_row [sasaran_tiga.renaksi,
+                           sasaran_tiga.indikators.first.indikator,
+                           sasaran_tiga.indikators.first.target,
+                           sasaran_tiga.indikators.first.satuan,
+                           sasaran_tiga.keterangan,
+                           sasaran_tiga.opd,
+                           sasaran_tiga.subkegiatans&.nama_subkegiatan,
+                           sasaran_tiga.role
+                          ]
+      end
+    end
+  end
+end
