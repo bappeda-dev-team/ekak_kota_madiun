@@ -52,6 +52,16 @@ json.results do
           json.target indikator.target
           json.satuan indikator.satuan
         end
+        if keg.present?
+          json.kode_subkegiatan keg.kode_sub_giat
+          json.nama_subkegiatan keg.nama_subkegiatan
+          json.sasaran_subkegiatan sas_op.renaksi
+          json.indikator_sasaran_subkegiatan sas_op.indikators.each do |indikator|
+            json.indikator indikator.to_s
+            json.target indikator.target
+            json.satuan indikator.satuan
+          end
+        end
       end
     end
   end
