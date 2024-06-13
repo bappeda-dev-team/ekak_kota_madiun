@@ -11,7 +11,7 @@ json.results do
     sas = SasaranKota::SasaranComponent.new(sasaran: sasaran, sasaran_iteration: [], tahun: @tahun)
     json.opd sas.opd
     json.jenis sas.jenis
-    json.sasaran sas.renaksi
+    json.sasaran_opd sas.renaksi
     json.indikators sas.indikators.each do |indikator|
       json.indikator indikator.to_s
       json.target indikator.target
