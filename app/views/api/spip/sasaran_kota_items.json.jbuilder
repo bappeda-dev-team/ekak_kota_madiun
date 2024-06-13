@@ -6,11 +6,7 @@ json.results do
     json.target indikator.target
     json.satuan indikator.satuan
   end
-  results = if @sub_sasaran_kota.present?
-              @sub_sasaran_kota
-            else
-              @rad_sasaran_kota
-            end
+  results = @rad_sasaran_kota
   json.sasaran_opds results do |sasaran|
     sas = SasaranKota::SasaranComponent.new(sasaran: sasaran, sasaran_iteration: [], tahun: @tahun)
     json.opd sas.opd
