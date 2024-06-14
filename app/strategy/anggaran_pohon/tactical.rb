@@ -23,7 +23,8 @@ module AnggaranPohon
     private
 
     def child_pohons
-      childs = @strategi.strategi_bawahans
+      real_childs = @strategi.sub_pohons.select(&:pohonable)
+      childs = real_childs.flat_map { |ph| ph.pohonable }
       childs.map(&:sasarans)
     rescue NoMethodError
       []

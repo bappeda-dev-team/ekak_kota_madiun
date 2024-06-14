@@ -73,7 +73,7 @@ class SasaranKota::SasaranComponent < ViewComponent::Base
   end
 
   def programs
-    program_pohon(@sasaran.pohonable, role)
+    program_pohon(@sasaran, role)
   end
 
   def subkegiatans
