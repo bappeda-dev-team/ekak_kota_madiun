@@ -2,7 +2,7 @@ json.results do
   json.sasaran_pemda_id @sasaran_pemda.id
   json.tahun @tahun
   json.id @pohon_sub.id
-  json.sasaran_pemda @sasaran_pemda.to_s
+  json.sasaran_pemda @sasaran_pemda.sasaran_kotum.sasaran
   json.indikator_sasaran_pemda @sasaran_pemda.indikators.each do |indikator|
     json.id indikator.id
     json.id_sasaran @pohon_sub.id
