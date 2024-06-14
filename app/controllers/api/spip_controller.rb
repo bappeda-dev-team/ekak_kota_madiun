@@ -14,7 +14,9 @@ module Api
 
       @pohon_sub = Pohon.find_by(pohonable_id: pohon_id, tahun: @tahun)
       @sasaran_pemda = @pohon_sub.pohonable
-      @rad_sasaran_kota = @pohon_sub.sub_pohons.where(tahun: @tahun, role: 'strategi_pohon_kota')
+      @rad_sasaran_kota = @pohon_sub.sub_pohons
+                                    .where(tahun: @tahun, role: 'strategi_pohon_kota')
+                                    .select(&:pohonable)
     end
 
     def program
