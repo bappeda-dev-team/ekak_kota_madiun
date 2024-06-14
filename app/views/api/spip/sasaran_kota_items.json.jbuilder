@@ -16,6 +16,8 @@ json.results do
     json.id sasaran_opd.id
     json.parent_sasaran sasaran_opd.pohon_ref_id
     json.jenis sas.jenis
+    json.nama_opd sas.opd
+    json.kode_opd sasaran_opd.opd.kode_unik_opd
     json.sasaran_opd sas.renaksi
     json.indikators sas.indikators.each do |indikator|
       json.id indikator.id
@@ -33,6 +35,8 @@ json.results do
         json.id tactical.id
         json.parent_sasaran tactical.pohon_ref_id
         json.jenis sas_tac.jenis
+        json.nama_opd sas_tac.opd
+        json.kode_opd tactical.opd.kode_unik_opd
         json.sasaran_program sas_tac.renaksi
         json.indikator_sasaran_program sas_tac.indikators.each do |indikator|
           json.id indikator.id
@@ -43,8 +47,8 @@ json.results do
         end
         json.kegiatans tactical.sub_pohons.select(&:pohonable).each do |operational|
           kegs = operational.pohonable.sasarans.dengan_nip.dengan_sub_kegiatan
-                            .flat_map { |sas| sas.program_kegiatan }
-                            .uniq { |pr| pr.kode_giat }
+                   .flat_map { |sas| sas.program_kegiatan }
+                   .uniq { |pr| pr.kode_giat }
           kegs.each do |keg|
             json.id_kegiatan keg.id
             json.kode_kegiatan keg.kode_giat
@@ -52,6 +56,8 @@ json.results do
             json.id operational.id
             json.parent_sasaran operational.pohon_ref_id
             json.jenis 'sasaran_kegiatan'
+            json.nama_opd operational.opd.nama_opd
+            json.kode_opd operational.opd.kode_unik_opd
             json.sasaran_kegiatan operational.pohonable.strategi
             json.indikator_sasaran_kegiatan operational.pohonable.indikators.each do |indikator|
               json.id indikator.id
@@ -69,6 +75,8 @@ json.results do
               json.id sasaran.id_rencana
               json.parent_sasaran operational.id
               json.jenis 'sasaran_subkegiatan'
+              json.nama_opd sasaran.opd.nama_opd
+              json.kode_opd sasaran.opd.kode_unik_opd
               json.sasaran_subkegiatan sasaran.sasaran_kinerja
               json.indikator_sasaran_subkegiatan sasaran.indikator_sasarans.each do |indikator|
                 json.id indikator.id
