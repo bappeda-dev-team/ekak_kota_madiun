@@ -805,6 +805,9 @@ Rails.application.routes.draw do
       get :sasaran_kota
       get :sasaran_kota_items
     end
+    namespace :substansi_renstra do
+      get :strategi_arah_kebijakan
+    end
   end
 
   resources :sasaran_kota do
