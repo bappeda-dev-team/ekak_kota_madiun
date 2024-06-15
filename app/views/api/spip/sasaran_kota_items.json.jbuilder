@@ -13,7 +13,7 @@ json.results do
   results = if @sub_sasaran_kota.any?
               @sub_sasaran_kota.flat_map do |sub|
                 sub_sas = SasaranKota::SasaranComponent.new(sasaran: sub, sasaran_iteration: [], tahun: @tahun)
-                sub_sas.sub_pohons
+                sub_sas.sub_pohons + @rad_sasaran_kota
               end
             else
               @rad_sasaran_kota
