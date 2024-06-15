@@ -10,7 +10,14 @@ json.results do
     json.target indikator.target
     json.satuan indikator.satuan
   end
-  results = @rad_sasaran_kota
+  results = if @sub_sasaran_kota.any?
+              @sub_sasaran_kota.flat_map do |sub|
+                sub_sas = SasaranKota::SasaranComponent.new(sasaran: sub, sasaran_iteration: [], tahun: @tahun)
+                sub_sas.sub_pohons
+              end
+            else
+              @rad_sasaran_kota
+            end
   json.sasaran_opds results do |sasaran_opd|
     sas = SasaranKota::SasaranComponent.new(sasaran: sasaran_opd, sasaran_iteration: [], tahun: @tahun)
     json.id sasaran_opd.id
@@ -47,8 +54,8 @@ json.results do
         end
         json.kegiatans tactical.sub_pohons.select(&:pohonable).each do |operational|
           kegs = operational.pohonable.sasarans.dengan_nip.dengan_sub_kegiatan
-                   .flat_map { |sas| sas.program_kegiatan }
-                   .uniq { |pr| pr.kode_giat }
+                            .flat_map { |sas| sas.program_kegiatan }
+                            .uniq { |pr| pr.kode_giat }
           kegs.each do |keg|
             json.id_kegiatan keg.id
             json.kode_kegiatan keg.kode_giat
