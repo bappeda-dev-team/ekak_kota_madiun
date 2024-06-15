@@ -115,4 +115,21 @@ class SasaranKota::SasaranComponent < ViewComponent::Base
       'sasaran_kota'
     end
   end
+
+  def title_up
+    # suffix = @pohon.instance_of?(Pohon) ? '- Kota' : ''
+    prefix = case @sasaran.role
+             when 'pohon_kota'
+               'Tematik Kota'
+             when 'sub_pohon_kota'
+               'Sub-Tematik Kota'
+             when 'sub_sub_pohon_kota'
+               'Sub Sub-Tematik Kota'
+             when 'strategi_pohon_kota'
+               'Strategic'
+             else
+               @sasaran.role.chomp("_pohon_kota")
+             end
+    prefix.titleize
+  end
 end
