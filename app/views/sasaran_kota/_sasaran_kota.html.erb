@@ -26,10 +26,6 @@
                     <i class="fa fa-book-open me-2"></i>
                     <span>RAD</span>
                 <% end %>
-                <%= link_to rad_excel_cetak_sasaran_kotum_path(sasaran.pohonable.id, tahun: @tahun, format: :xlsx), class: 'btn btn-outline-success' do %>
-                    <i class="fa fa-file-excel me-2"></i>
-                    <span>Cetak</span>
-                <% end %>
             <% else %>
                 <%= link_to new_sasaran_kotum_path(tematik_id: sasaran.pohonable.id), remote: true,
                  data: {

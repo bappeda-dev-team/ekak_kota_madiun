@@ -17,9 +17,13 @@
             <td colspan="3" class="p-0 m-0 border-0"></td>
             <td class="text-wrap border" rowspan="<%= rowspan %>"><%= sasaran_kota_rad.pohonable.keterangan %></td>
             <td class="text-wrap border" rowspan="<%= rowspan %>">
-                <%= render ButtonLinkComponent.new(text: 'Lihat Pohon',
-                                                   title: 'Preview Pokin',
-                                                   path: show_pokin_sasaran_kotum_path(sasaran_kota_rad)) %>
+                <div class="d-grid gap-2">
+                    <%= render ButtonLinkComponent.new(text: 'Lihat Pohon',
+                                                       title: 'Preview Pokin',
+                                                       path: show_pokin_sasaran_kotum_path(sasaran_kota_rad)) %>
+                    <%= render ButtonDownloadComponent.new(text: 'Cetak',
+                                                           path: rad_excel_cetak_sasaran_kotum_path(sasaran_kota_rad.pohonable, tahun: @tahun, format: :xlsx) ) %>
+                </div>
             </td>
         </tr>
         <% sasaran_kota_rad.pohonable.indikators.each do |indikator| %>
