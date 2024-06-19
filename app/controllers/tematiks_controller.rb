@@ -54,7 +54,7 @@ class TematiksController < ApplicationController
   end
 
   def new_sub
-    @tematiks = index.collect { |tema| [tema, tema.id] }
+    @tematik = Tematik.find(params[:tematik_ref_id])
     @sub_tematik = SubTematik.new
     @sub_tematik.indikators.build
     render partial: 'form_sub_tematik', locals: { sub_tematik: @sub_tematik }, layout: false
@@ -97,9 +97,17 @@ class TematiksController < ApplicationController
   end
 
   def sub
+    @tematik = Tematik.find(sub_tematik_params[:tematik_ref_id])
     @sub_tematik = SubTematik.new(sub_tematik_params)
 
     if @sub_tematik.save
+      tahun = cookies[:tahun]
+      pohon_tema = Pohon.find_by(pohonable_id: @sub_tematik.tematik_ref_id,
+                                 pohonable_type: 'Tematik',
+                                 tahun: tahun)
+      Pohon.create(pohonable_type: 'SubTematik', pohonable_id: @sub_tematik.id,
+                   tahun: tahun,
+                   pohon_ref_id: pohon_tema.id)
       html_content = render_to_string(partial: 'tematiks/sub_tematik',
                                       formats: 'html',
                                       layout: false,
@@ -138,9 +146,14 @@ class TematiksController < ApplicationController
   #
   # PATCH/PUT /tematiks/1 or /tematiks/1.json
   def update_sub
+    @tahun = cookies[:tahun]
     @sub_tematik = SubTematik.find(params[:id])
     respond_to do |format|
       if @sub_tematik.update(sub_tematik_params)
+        tema_new = @sub_tematik.tematik
+        pohon_new = Pohon.find_by(pohonable_type: 'Tematik', tahun: @tahun, pohonable_id: tema_new.id)
+        update_pohon = Pohon.find_by(pohonable_type: 'SubTematik', pohonable_id: @sub_tematik.id)
+        update_pohon.update(pohon_ref_id: pohon_new.id)
         html_content = render_to_string(partial: 'tematiks/sub_tematik',
                                         formats: 'html',
                                         layout: false,
