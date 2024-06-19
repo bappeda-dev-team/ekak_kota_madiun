@@ -16,9 +16,12 @@ module Api
       @pohon_sub = Pohon.find_by(pohonable_id: pohon_id, tahun: @tahun)
       @sasaran_pemda = @pohon_sub.pohonable
       if @pohon_sub.pohon_khusus
-        # opd_all = Opd.opd_resmi_kota
-        # strategi_opd_ada_di_kota = opd_all.flat_map { |opd| opd.pohons.where(tahun: @tahun, role: 'strategi_pohon_kota') }.select(&:pohonable)
+        opd_all = Opd.opd_resmi_kota
+        strategi_opd_ada_di_kota = opd_all.flat_map do |opd|
+          opd.pohons.where(tahun: @tahun, role: 'strategi_pohon_kota')
+        end.flat_map(&:pohonable_id)
         @rad_sasaran_kota = StrategiPohon.where(tahun: @tahun, role: 'eselon_2')
+                                         .reject { |sp| sp.id.in? strategi_opd_ada_di_kota }
         render 'sasaran_opd_khusus'
       else
         @sub_sasaran_kota = @pohon_sub
