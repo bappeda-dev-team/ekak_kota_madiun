@@ -25,7 +25,7 @@ class SasaranOpdKhususPresenter
     # just eselon_3
     @strategi.strategi_bawahans.flat_map do |strategi|
       strategi.sasarans.map(&:program_kegiatan)
-    end.compact_blank
+    end.compact_blank.reject { |prg| prg.nama_program =~ /PROGRAM PENUNJANG/ }
   end
 
   def opd

@@ -53,6 +53,6 @@ module PohonKinerjaOpdsHelper
                  AnggaranPohon::Tactical.new(sasaran)
                end
     context = AnggaranSasaran.new(strategi)
-    context.programs
+    context.programs.reject { |prg| prg.nama_program =~ /PROGRAM PENUNJANG/ }
   end
 end
