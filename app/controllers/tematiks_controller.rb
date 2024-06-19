@@ -102,12 +102,14 @@ class TematiksController < ApplicationController
 
     if @sub_tematik.save
       tahun = cookies[:tahun]
+      pohon_khusus = params[:sub_tematik][:pohon_khusus]
       pohon_tema = Pohon.find_by(pohonable_id: @sub_tematik.tematik_ref_id,
                                  pohonable_type: 'Tematik',
                                  tahun: tahun)
       Pohon.create(pohonable_type: 'SubTematik', pohonable_id: @sub_tematik.id,
                    tahun: tahun,
                    role: 'sub_pohon_kota',
+                   pohon_khusus: pohon_khusus,
                    pohon_ref_id: pohon_tema.id)
       html_content = render_to_string(partial: 'tematiks/sub_tematik',
                                       formats: 'html',

@@ -5,6 +5,7 @@
 #  id                :bigint           not null, primary key
 #  keterangan        :string
 #  metadata          :jsonb
+#  pohon_khusus      :boolean          default(FALSE)
 #  pohonable_type    :string
 #  role              :string
 #  status            :string

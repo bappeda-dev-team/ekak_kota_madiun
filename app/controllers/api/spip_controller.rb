@@ -5,6 +5,7 @@ module Api
     def sasaran_kota
       @tahun = params[:tahun]
       @sasaran_kota = Pohon.includes(:pohonable).where(pohonable_type: %w[SubTematik SubSubTematik], tahun: @tahun)
+                           .or(Pohon.where(pohon_khusus: true, tahun: @tahun))
                            .select { |ph| ph.pohonable&.sasaran_kotum }
     end
 
@@ -14,12 +15,19 @@ module Api
 
       @pohon_sub = Pohon.find_by(pohonable_id: pohon_id, tahun: @tahun)
       @sasaran_pemda = @pohon_sub.pohonable
-      @sub_sasaran_kota = @pohon_sub
-                          .sub_pohons.where(tahun: @tahun, role: 'sub_sub_pohon_kota')
-                          .select(&:pohonable)
-      @rad_sasaran_kota = @pohon_sub.sub_pohons
-                                    .where(tahun: @tahun, role: 'strategi_pohon_kota')
-                                    .select(&:pohonable)
+      if @pohon_sub.pohon_khusus
+        # opd_all = Opd.opd_resmi_kota
+        # strategi_opd_ada_di_kota = opd_all.flat_map { |opd| opd.pohons.where(tahun: @tahun, role: 'strategi_pohon_kota') }.select(&:pohonable)
+        @rad_sasaran_kota = StrategiPohon.where(tahun: @tahun, role: 'eselon_2')
+        render 'sasaran_opd_khusus'
+      else
+        @sub_sasaran_kota = @pohon_sub
+                            .sub_pohons.where(tahun: @tahun, role: 'sub_sub_pohon_kota')
+                            .select(&:pohonable)
+        @rad_sasaran_kota = @pohon_sub.sub_pohons
+                                      .where(tahun: @tahun, role: 'strategi_pohon_kota')
+                                      .select(&:pohonable)
+      end
     end
 
     def program

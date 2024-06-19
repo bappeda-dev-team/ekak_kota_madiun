@@ -3,7 +3,7 @@ json.tahun @tahun
 json.results @sasaran_kota do |sasaran|
   first_child = sasaran.sub_pohons.where(tahun: @tahun).first
   jenis = first_child&.role
-  if jenis
+  if jenis || sasaran.pohon_khusus
     json.id sasaran.pohonable_id
     json.jenis jenis
     json.sasaran_kota sasaran.pohonable.sasaran_kotum.sasaran

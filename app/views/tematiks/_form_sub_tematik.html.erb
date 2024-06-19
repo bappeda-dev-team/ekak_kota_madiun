@@ -1,43 +1,53 @@
 <%= form_with(model: sub_tematik, local: false,
               data: {
-                controller: 'form-ajax',
-                form_ajax_element_id_value: 'sub-tematik',
-                action: 'ajax:success->form-ajax#ajaxSuccess:prevent ajax:error->form-ajax#ajaxError:prevent'
+                  controller: 'form-ajax',
+                  form_ajax_element_id_value: 'sub-tematik',
+                  action: 'ajax:success->form-ajax#ajaxSuccess:prevent ajax:error->form-ajax#ajaxError:prevent'
               }
 ) do |form| %>
-  <% if sub_tematik.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(sub_tematik.errors.count, "error") %> prohibited this tematik from being saved:</h2>
-      <ul>
-        <% sub_tematik.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <div class="field">
-    <%= form.label :tematik, class: 'form-label' %>
-    <%= form.hidden_field :tematik_ref_id, value: @tematik.id %>
-    <%= form.text_field :tematik_kota, class: 'form-control', value: @tematik.to_s, disabled: true %>
-  </div>
-  <div class="field">
-    <%= form.label :sub_tema, class: 'form-label' %>
-    <%= form.text_field :tema, class: 'form-control' %>
-  </div>
-  <div class="field row mt-0" id="indikator-subtematik">
-    <%= form.fields_for :indikators do |indikator_subtematik| %>
-      <%= render 'tematiks/indikator_sub_tematik_fields', form: indikator_subtematik %>
+    <% if sub_tematik.errors.any? %>
+        <div id="error_explanation">
+            <h2><%= pluralize(sub_tematik.errors.count, "error") %> prohibited this tematik from being saved:</h2>
+            <ul>
+                <% sub_tematik.errors.each do |error| %>
+                    <li><%= error.full_message %></li>
+                <% end %>
+            </ul>
+        </div>
     <% end %>
-  </div>
-  <%= link_to_add_nested(form, :indikators, "#indikator-subtematik",
-                             link_classes: 'btn btn-primary btn-sm',
-                             link_text: 'Tambah Indikator',
-                             partial: 'tematiks/indikator_sub_tematik_fields') %>
-  <div class="field">
-    <%= form.label :keterangan, class: 'form-label' %>
-    <%= form.text_area :keterangan, class: 'form-control' %>
-  </div>
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+    <div class="field">
+        <%= form.label :tematik, class: 'form-label' %>
+        <%= form.hidden_field :tematik_ref_id, value: @tematik.id %>
+        <%= form.text_field :tematik_kota, class: 'form-control', value: @tematik.to_s, disabled: true %>
+    </div>
+    <div class="field">
+        <%= form.label :sub_tema, class: 'form-label' %>
+        <%= form.text_field :tema, class: 'form-control' %>
+    </div>
+    <div class="field row mt-0" id="indikator-subtematik">
+        <%= form.fields_for :indikators do |indikator_subtematik| %>
+            <%= render 'tematiks/indikator_sub_tematik_fields', form: indikator_subtematik %>
+        <% end %>
+    </div>
+    <%= link_to_add_nested(form, :indikators, "#indikator-subtematik",
+                           link_classes: 'btn btn-primary btn-sm',
+                           link_text: 'Tambah Indikator',
+                           partial: 'tematiks/indikator_sub_tematik_fields') %>
+    <div class="field">
+        <%= form.label :keterangan, class: 'form-label' %>
+        <%= form.text_area :keterangan, class: 'form-control' %>
+    </div>
+    <div class="field">
+        <div class="d-grid gap-2">
+            <div>
+                <%= form.label "Pohon Khusus?", class: 'form-label' %>
+            </div>
+            <div>
+                <%= form.check_box :pohon_khusus, class: 'form-check-input' %>
+            </div>
+        </div>
+    </div>
+    <div class="actions">
+        <%= form.submit %>
+    </div>
 <% end %>

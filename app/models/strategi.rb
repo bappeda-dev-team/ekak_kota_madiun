@@ -43,7 +43,7 @@ class Strategi < ApplicationRecord
 
   accepts_nested_attributes_for :indikators, reject_if: :all_blank, allow_destroy: true
 
-  has_many :strategi_bawahans, class_name: 'Strategi',
+  has_many :strategi_bawahans, -> { where.not(role: 'deleted') }, class_name: 'Strategi',
                                primary_key: :id, foreign_key: :strategi_ref_id
 
   belongs_to :strategi_atasan, class_name: "Strategi",
