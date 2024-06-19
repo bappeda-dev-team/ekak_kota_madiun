@@ -97,6 +97,10 @@ module SuperAdminItemHelper
         icon: 'fas fa-folder-plus', identifier: 'tematik_kota'
       },
       {
+        title: 'Sub-Tematik Kota', href: sub_tematiks_tematiks_path,
+        icon: 'fas fa-folder-plus', identifier: 'tematik_kota'
+      },
+      {
         title: 'Pohon Kinerja Kota', href: kota_pohon_kinerja_index_path,
         icon: 'fas fa-tree', identifier: 'pohon_kinerja/kota'
       },
