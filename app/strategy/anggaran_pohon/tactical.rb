@@ -31,8 +31,8 @@ module AnggaranPohon
         childs = real_childs.flat_map { |ph| ph.pohonable }
       end
       childs.map(&:sasarans)
-      rescue NoMethodError
-        []
+    rescue NoMethodError
+      []
     end
 
     def anggaran_childs
