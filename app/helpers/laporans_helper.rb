@@ -112,6 +112,11 @@ module LaporansHelper
     indikators.indikator_subkegiatan
   end
 
+  def indikator_keg_rekin(tahun, opd, kegiatan)
+    indikators = IndikatorQueries.new(tahun: tahun, opd: opd, program_kegiatan: kegiatan)
+    indikators.indikator_kegiatan
+  end
+
   def indikator_prg_rekin(tahun, opd, subkegiatan)
     indikators = IndikatorQueries.new(tahun: tahun, opd: opd, program_kegiatan: subkegiatan)
     indikators.indikator_program

@@ -470,6 +470,10 @@ class Sasaran < ApplicationRecord
     }
   end
 
+  def kegiatan
+    program_kegiatan.present? ? program_kegiatan.nama_kegiatan : 'Belum diisi'
+  end
+
   def subkegiatan
     program_kegiatan.present? ? program_kegiatan.nama_subkegiatan : 'Belum diisi'
   end
