@@ -23,12 +23,16 @@ module AnggaranPohon
     private
 
     def child_pohons
-      pohon = @strategi.pohon
-      real_childs = pohon.sub_pohons.select(&:pohonable)
-      childs = real_childs.flat_map { |ph| ph.pohonable }
+      if @strategi.role.in? %w[eselon_3]
+        childs = @strategi.strategi_bawahans
+      else
+        pohon = @strategi.pohon
+        real_childs = pohon.sub_pohons.select(&:pohonable)
+        childs = real_childs.flat_map { |ph| ph.pohonable }
+      end
       childs.map(&:sasarans)
-    rescue NoMethodError
-      []
+      rescue NoMethodError
+        []
     end
 
     def anggaran_childs
