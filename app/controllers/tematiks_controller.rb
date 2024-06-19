@@ -107,6 +107,7 @@ class TematiksController < ApplicationController
                                  tahun: tahun)
       Pohon.create(pohonable_type: 'SubTematik', pohonable_id: @sub_tematik.id,
                    tahun: tahun,
+                   role: 'sub_pohon_kota',
                    pohon_ref_id: pohon_tema.id)
       html_content = render_to_string(partial: 'tematiks/sub_tematik',
                                       formats: 'html',
