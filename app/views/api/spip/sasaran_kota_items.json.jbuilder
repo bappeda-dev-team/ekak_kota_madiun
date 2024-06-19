@@ -21,7 +21,7 @@ json.results do
   json.sasaran_opds results do |sasaran_opd|
     sas = SasaranKota::SasaranComponent.new(sasaran: sasaran_opd, sasaran_iteration: [], tahun: @tahun)
     json.id sasaran_opd.id
-    json.parent_sasaran sasaran_opd.pohon_ref_id
+    json.parent_sasaran @sasaran_pemda.id
     json.jenis sas.jenis
     json.nama_opd sas.opd
     json.kode_opd sasaran_opd.opd.kode_unik_opd
