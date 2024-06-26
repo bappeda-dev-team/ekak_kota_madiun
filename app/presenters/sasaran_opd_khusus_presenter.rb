@@ -1,6 +1,5 @@
 class SasaranOpdKhususPresenter
-
-  def initialize(strategi:, tahun: )
+  def initialize(strategi:, tahun:)
     @strategi = strategi
     @tahun = tahun
   end

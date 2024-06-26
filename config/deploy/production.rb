@@ -6,9 +6,9 @@
 # server "example.com", user: "deploy", roles: %w{app db web}, my_property: :my_value
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
-server '10.91.22.180', user: 'bappeda', roles: %w[app db web]
+server '10.11.15.132', user: 'ryan', roles: %w[app db web]
 
-set :deploy_to, "/home/bappeda/app/ekak_kota_madiun"
+set :deploy_to, "/home/ryan/app/ekak_kota_madiun"
 # role-based syntax
 # ==================
 set :sidekiq_service_unit_name, 'sidekiq'
