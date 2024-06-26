@@ -2,7 +2,7 @@
 lock "~> 3.18.0"
 
 set :application, "ekak_kota_madiun"
-set :repo_url, "git@github.com:bappeda-dev-team/ekak_kota_madiun.git"
+set :repo_url, "https://github.com/bappeda-dev-team/ekak_kota_madiun.git"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
