@@ -48,8 +48,8 @@ class JabatansController < ApplicationController
 
   # PATCH/PUT /jabatans/1 or /jabatans/1.json
   def update
-    @kepegawaians = @jabatan.kepegawaians.where(tahun: @tahun, opd: @opd)
     setup_jabatan
+    # @kepegawaians = @jabatan.kepegawaians.where(tahun: @tahun, opd: @opd)
     if @jabatan.update(jabatan_params)
       update_jumlah_kepegawaian_jabatan
       update_jumlah_pendidikan_jabatan
@@ -125,7 +125,14 @@ class JabatansController < ApplicationController
     kepegawaians = status_kepegawaians.zip(jumlah_kepegawaians)
 
     @kepegawaians = kepegawaians.map do |status, jumlah|
-      @jabatan.update_jumlah_kepegawaian(@tahun, status, jumlah)
+      if @jabatan.kepegawaians.where(tahun: @tahun, status_kepegawaian: status).any?
+        @jabatan.update_jumlah_kepegawaian(@tahun, status, jumlah)
+      else
+        @jabatan.kepegawaians.create(tahun: @tahun,
+                                     status_kepegawaian: status,
+                                     jumlah: jumlah,
+                                     opd_id: @jabatan.opd.id)
+      end
     end
   end
 
@@ -134,16 +141,15 @@ class JabatansController < ApplicationController
     jumlah_pendidikan = params[:jumlah_pendidikan]
     pendidikans_all = pendidikan.zip(jumlah_pendidikan)
 
-    @pendidikans = if @jabatan.pendidikans.any?
-                     pendidikans_all.map do |pend, jumlah|
-                       @jabatan.update_jumlah_pendidikan(@tahun, pend, jumlah)
-                     end
-                   else
-                     pendidikans_all.each do |pend, jumlah|
-                       @jabatan.pendidikans.create(tahun: @tahun, jumlah: jumlah,
-                                                   pendidikan: pend,
-                                                   opd_id: @jabatan.opd.id)
-                     end
-                   end
+    @pendidikans = pendidikans_all.map do |pend, jumlah|
+      if @jabatan.pendidikans.where(tahun: @tahun, pendidikan: pend).any?
+        @jabatan.update_jumlah_pendidikan(@tahun, pend, jumlah)
+      else
+        @jabatan.pendidikans.create(tahun: @tahun,
+                                    pendidikan: pend,
+                                    jumlah: jumlah,
+                                    opd_id: @jabatan.opd.id)
+      end
+    end
   end
 end

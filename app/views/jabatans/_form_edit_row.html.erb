@@ -26,14 +26,14 @@
     </div>
   </td>
   <% @status_kepegawaian.each do |kepegawaian| %>
-    <% jumlah = @kepegawaians.find_by(status_kepegawaian: kepegawaian).jumlah %>
+    <% jumlah = @kepegawaians.find_by(status_kepegawaian: kepegawaian)&.jumlah %>
     <%= render(ColFieldComponent.new) do %>
       <%= hidden_field_tag 'status_kepegawaian[]', kepegawaian, form: dom_id(@jabatan, 'form') %>
       <%= number_field_tag 'jumlah[]', jumlah, class: 'form-control', placeholder: '0', multiple: true, min: 0, form: dom_id(@jabatan, 'form')%>
     <% end %>
   <% end %>
   <% @jenis_pendidikan.each do |pendidikan| %>
-    <% jumlah = @pendidikans.find_by(pendidikan: pendidikan)&.jumlah || 0 %>
+    <% jumlah = @pendidikans.find_by(pendidikan: pendidikan)&.jumlah %>
     <%= render(ColFieldComponent.new) do %>
       <%= hidden_field_tag 'pendidikan[]', pendidikan, form: dom_id(@jabatan, 'form') %>
       <%= number_field_tag 'jumlah_pendidikan[]', jumlah, class: 'form-control', placeholder: '0', multiple: true, min: 0, form: dom_id(@jabatan, 'form')%>
