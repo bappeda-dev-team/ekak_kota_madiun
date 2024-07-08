@@ -1,5 +1,10 @@
 <tr class="<%= warna_row %>">
-    <td rowspan="<%= rowspan %>" class="text-wrap"><%= renaksi %></td>
+    <% if jenis == 'sasaran_kota' %>
+        <td rowspan="<%= rowspan %>" colspan="2" class="text-wrap"><%= renaksi %></td>
+    <% else %>
+        <td rowspan="<%= rowspan %>" class="text-wrap"><%= title_up %></td>
+        <td rowspan="<%= rowspan %>" class="text-wrap"><%= renaksi %></td>
+    <% end %>
     <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="3"></td>
     <td rowspan="<%= rowspan %>" class="text-wrap"><%= keterangan %></td>
     <% if jenis == 'sasaran_kota' %>

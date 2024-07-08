@@ -1,9 +1,9 @@
-<% sub_sasaran_kota.each do |sub_sasaran| %>
+<% sub_sasaran_kota.each.with_index(1) do |sub_sasaran, no_sub| %>
     <table class="table table-bordered">
         <caption class="caption-top fw-bold">Sub Sasaran</caption>
         <thead>
             <tr class="text-center">
-                <th>Rencana Aksi</th>
+                <th colspan="2">Sub Sasaran <%= sub_sasaran_kota.size > 1 ? no_sub : '' %></th>
                 <th>Indikator</th>
                 <th>Target</th>
                 <th>Satuan</th>
