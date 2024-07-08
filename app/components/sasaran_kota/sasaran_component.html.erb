@@ -1,8 +1,12 @@
 <tr class="<%= warna_row %>">
     <td rowspan="<%= rowspan %>" class="text-wrap"><%= renaksi %></td>
     <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="3"></td>
-    <td rowspan="<%= rowspan %>" class="text-wrap"><%= opd %></td>
     <td rowspan="<%= rowspan %>" class="text-wrap"><%= keterangan %></td>
+    <% if jenis == 'sasaran_kota' %>
+        <td rowspan="<%= rowspan %>" class="text-wrap"><%= title_up %></td>
+    <% else %>
+        <td rowspan="<%= rowspan %>" class="text-wrap"><%= opd %></td>
+    <% end %>
     <td rowspan="<%= rowspan %>" class="text-wrap">
         <%= render ButtonLinkComponent.new(text: 'Lihat Pohon',
                                            title: 'Preview Pokin',
@@ -10,17 +14,3 @@
     </td>
 </tr>
 <%= render SasaranKota::IndikatorComponent.with_collection(indikators, warna_row: warna_row) %>
-
-<% if urusan? %>
-    <%= render SasaranKota::UrusanComponent.with_collection(urusans, sasaran: @sasaran, tahun: @tahun) %>
-<% elsif program? %>
-    <%= render SasaranKota::ProgramComponent.with_collection(programs, sasaran: @sasaran, tahun: @tahun) %>
-<% elsif subkegiatan? %>
-    <tr class="<%= warna_row %>">
-        <td colspan="7" class="text-wrap text-start fw-bolder">
-            Pelaksana: <%= @sasaran.nama_pelaksana %></td>
-    </tr>
-    <%= render SasaranKota::SubkegiatanComponent.new(subkegiatan: subkegiatans, tahun: @tahun) %>
-<% end %>
-
-<%= render SasaranKota::SasaranComponent.with_collection(sub_pohons, tahun: @tahun) %>

@@ -1,17 +1,21 @@
-<table class="table table-bordered">
-    <caption class="caption-top fw-bold">Sub Sasaran</caption>
-    <thead>
-        <tr class="text-center">
-            <th>Rencana Aksi</th>
-            <th>Indikator</th>
-            <th>Target</th>
-            <th>Satuan</th>
-            <th>OPD Pelaksana</th>
-            <th>Keterangan</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <%= render SasaranKota::SasaranComponent.with_collection(sub_sasaran_kota, tahun: @tahun) %>
-    </tbody>
-</table>
+<% sub_sasaran_kota.each do |sub_sasaran| %>
+    <table class="table table-bordered">
+        <caption class="caption-top fw-bold">Sub Sasaran</caption>
+        <thead>
+            <tr class="text-center">
+                <th>Rencana Aksi</th>
+                <th>Indikator</th>
+                <th>Target</th>
+                <th>Satuan</th>
+                <th colspan="2">Keterangan</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% view_sub_sasaran = SasaranKota::SasaranComponent.new(sasaran: sub_sasaran, tahun: @tahun) %>
+            <%= render view_sub_sasaran %>
+        </tbody>
+    </table>
+
+    <%= render 'sasaran_kota/tabel_rad_kota', rad_sasaran_kota: view_sub_sasaran.sub_pohons %>
+<% end %>
