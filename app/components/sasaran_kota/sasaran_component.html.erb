@@ -19,3 +19,17 @@
     </td>
 </tr>
 <%= render SasaranKota::IndikatorComponent.with_collection(indikators, warna_row: warna_row) %>
+
+<% if urusan? %>
+    <%= render SasaranKota::UrusanComponent.with_collection(urusans, sasaran: @sasaran, tahun: @tahun) %>
+<% elsif program? %>
+    <%= render SasaranKota::ProgramComponent.with_collection(programs, sasaran: @sasaran, tahun: @tahun) %>
+<% elsif subkegiatan? %>
+    <tr class="<%= warna_row %>">
+        <td colspan="7" class="text-wrap text-start fw-bolder">
+            Pelaksana: <%= @sasaran.nama_pelaksana %></td>
+    </tr>
+    <%= render SasaranKota::SubkegiatanComponent.new(subkegiatan: subkegiatans, tahun: @tahun) %>
+<% end %>
+
+<%= render SasaranKota::SasaranComponent.with_collection(sub_pohons, tahun: @tahun) %>
