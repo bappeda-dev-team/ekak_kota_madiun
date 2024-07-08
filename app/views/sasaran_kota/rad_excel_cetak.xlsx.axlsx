@@ -10,7 +10,6 @@ wb.add_worksheet(name: "rad") do |sheet_rad|
   sheet_rad.add_row ['RAD KOTA']
   @rad_sasaran_kota.each do |rad_sasaran|
     sasaran = SasaranKota::SasaranComponent.new(sasaran: rad_sasaran,
-                                                sasaran_iteration: [],
                                                 tahun: @tahun)
     sheet_rad.add_row [sasaran.renaksi,
                        sasaran.indikators.first&.indikator,
@@ -23,7 +22,6 @@ wb.add_worksheet(name: "rad") do |sheet_rad|
                       ]
     sasaran.sub_pohons.each do |sub_sub|
       sasaran_sub = SasaranKota::SasaranComponent.new(sasaran: sub_sub,
-                                                      sasaran_iteration: [],
                                                       tahun: @tahun)
       sheet_rad.add_row [sasaran_sub.renaksi,
                          sasaran_sub.indikators.first.indikator,
@@ -36,7 +34,6 @@ wb.add_worksheet(name: "rad") do |sheet_rad|
                         ]
       sasaran_sub.sub_pohons.each do |sub_tiga|
         sasaran_tiga = SasaranKota::SasaranComponent.new(sasaran: sub_tiga,
-                                                        sasaran_iteration: [],
                                                         tahun: @tahun)
         sheet_rad.add_row [sasaran_tiga.renaksi,
                            sasaran_tiga.indikators.first.indikator,

@@ -12,14 +12,14 @@ json.results do
   end
   results = if @sub_sasaran_kota.any?
               @sub_sasaran_kota.flat_map do |sub|
-                sub_sas = SasaranKota::SasaranComponent.new(sasaran: sub, sasaran_iteration: [], tahun: @tahun)
+                sub_sas = SasaranKota::SasaranComponent.new(sasaran: sub, tahun: @tahun)
                 sub_sas.sub_pohons + @rad_sasaran_kota
               end
             else
               @rad_sasaran_kota
             end
   json.sasaran_opds results do |sasaran_opd|
-    sas = SasaranKota::SasaranComponent.new(sasaran: sasaran_opd, sasaran_iteration: [], tahun: @tahun)
+    sas = SasaranKota::SasaranComponent.new(sasaran: sasaran_opd, tahun: @tahun)
     json.id sasaran_opd.id
     json.parent_sasaran @sasaran_pemda.id
     json.jenis sas.jenis
@@ -34,7 +34,7 @@ json.results do
       json.satuan indikator.satuan
     end
     json.programs sas.sub_pohons.each do |tactical|
-      sas_tac = SasaranKota::SasaranComponent.new(sasaran: tactical, sasaran_iteration: [], tahun: @tahun)
+      sas_tac = SasaranKota::SasaranComponent.new(sasaran: tactical, tahun: @tahun)
       sas_tac.programs.uniq(&:kode_program).each do |program|
         json.id_program program.id
         json.kode_program program.kode_program
