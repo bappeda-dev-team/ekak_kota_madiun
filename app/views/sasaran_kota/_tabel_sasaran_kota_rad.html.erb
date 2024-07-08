@@ -6,7 +6,7 @@
         </tr>
         <% sasaran_kota_rad.pohonable.indikators.each.with_index(1) do |indikator, index| %>
             <tr>
-                <th>Indikator <%= index %></th>
+                <th>Indikator <%= sasaran_kota_rad.pohonable.indikators.size > 1 ? index : '' %></th>
                 <td class="text-wrap border"><%= indikator %></td>
             </tr>
             <tr>
