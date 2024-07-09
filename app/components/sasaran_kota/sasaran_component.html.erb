@@ -6,13 +6,13 @@
         <td rowspan="<%= rowspan %>" class="text-wrap"><%= renaksi %></td>
     <% end %>
     <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="3"></td>
-    <td rowspan="<%= rowspan %>" class="text-wrap"><%= keterangan %></td>
+    <td rowspan="<%= rowspan %>" class="text-center"><%= keterangan %></td>
     <% if jenis == 'sasaran_kota' %>
-        <td rowspan="<%= rowspan %>" class="text-wrap"><%= title_up %></td>
+        <td rowspan="<%= rowspan %>" class="text-center align-middle"><%= title_up %></td>
     <% else %>
-        <td rowspan="<%= rowspan %>" class="text-wrap"><%= opd %></td>
+        <td rowspan="<%= rowspan %>" class="text-center align-middle"><%= opd %></td>
     <% end %>
-    <td rowspan="<%= rowspan %>" class="text-wrap">
+    <td rowspan="<%= rowspan %>" class="text-center align-middle">
         <%= render ButtonLinkComponent.new(text: 'Lihat Pohon',
                                            title: 'Preview Pokin',
                                            path: show_pokin_sasaran_kotum_path(@sasaran)) %>
@@ -20,16 +20,6 @@
 </tr>
 <%= render SasaranKota::IndikatorComponent.with_collection(indikators, warna_row: warna_row) %>
 
-<% if urusan? %>
-    <%= render SasaranKota::UrusanComponent.with_collection(urusans, sasaran: @sasaran, tahun: @tahun) %>
-<% elsif program? %>
-    <%= render SasaranKota::ProgramComponent.with_collection(programs, sasaran: @sasaran, tahun: @tahun) %>
-<% elsif subkegiatan? %>
-    <tr class="<%= warna_row %>">
-        <td colspan="7" class="text-wrap text-start fw-bolder">
-            Pelaksana: <%= @sasaran.nama_pelaksana %></td>
-    </tr>
-    <%= render SasaranKota::SubkegiatanComponent.new(subkegiatan: subkegiatans, tahun: @tahun) %>
+<% unless jenis == 'sasaran_kota' %>
+    <%= render SasaranKota::SasaranComponent.with_collection(sub_pohons, tahun: @tahun) %>
 <% end %>
-
-<%= render SasaranKota::SasaranComponent.with_collection(sub_pohons, tahun: @tahun) %>
