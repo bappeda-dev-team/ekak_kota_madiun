@@ -6,11 +6,21 @@
         <td rowspan="<%= rowspan %>" class="text-wrap"><%= renaksi %></td>
     <% end %>
     <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="3"></td>
+    <% if jenis == 'sasaran_kota' %>
+        <td rowspan="<%= rowspan %>" colspan="2" class="text-center">
+            Rp. XXX.XXX
+        </td>
+    <% else %>
+        <td rowspan="<%= rowspan %>" class="text-center program">Program : XXX</td>
+        <td rowspan="<%= rowspan %>" class="text-center pagu">
+            Rp. XXX.XXX
+        </td>
+    <% end %>
     <td rowspan="<%= rowspan %>" class="text-center"><%= keterangan %></td>
     <% if jenis == 'sasaran_kota' %>
         <td rowspan="<%= rowspan %>" class="text-center align-middle"><%= title_up %></td>
     <% else %>
-        <td rowspan="<%= rowspan %>" class="text-center align-middle"><%= opd %></td>
+        <td rowspan="<%= rowspan %>" class="text-center align-middle fw-bolder"><%= opd %></td>
     <% end %>
     <td rowspan="<%= rowspan %>" class="text-center align-middle">
         <%= render ButtonLinkComponent.new(text: 'Lihat Pohon',
