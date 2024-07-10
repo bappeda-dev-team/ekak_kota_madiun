@@ -6,16 +6,9 @@
         <td rowspan="<%= rowspan %>" class="text-wrap"><%= renaksi %></td>
     <% end %>
     <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="3"></td>
-    <% if jenis == 'sasaran_kota' %>
-        <td rowspan="<%= rowspan %>" colspan="2" class="text-center">
-            Rp. XXX.XXX
-        </td>
-    <% else %>
-        <td rowspan="<%= rowspan %>" class="text-center program">Program : XXX</td>
-        <td rowspan="<%= rowspan %>" class="text-center pagu">
-            Rp. XXX.XXX
-        </td>
-    <% end %>
+    <td rowspan="<%= rowspan %>" colspan="2" class="text-center">
+        <%= render SasaranKota::ProgramPaguComponent.new(program: @sasaran, pagu: '10_000',jenis: jenis) %>
+    </td>
     <td rowspan="<%= rowspan %>" class="text-wrap text-center"><%= keterangan %></td>
     <td rowspan="<%= rowspan %>" class="text-wrap text-center align-middle fw-bolder">
         <%= jenis == 'sasaran_kota' ? title_up : opd %>
