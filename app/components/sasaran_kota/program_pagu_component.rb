@@ -44,7 +44,7 @@ class SasaranKota::ProgramPaguComponent < ViewComponent::Base
     when 'eselon_4'
       'Kegiatan'
     else
-      ''
+      'Sub Sasaran'
     end
   end
 
