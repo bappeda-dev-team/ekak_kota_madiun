@@ -21,6 +21,6 @@
 </tr>
 <%= render SasaranKota::IndikatorComponent.with_collection(indikators, warna_row: jenis) %>
 
-<% unless jenis == 'sasaran_kota' %>
+<% unless jenis == 'sasaran_kota' || jenis == 'sasaran_subkegiatan' %>
     <%= render SasaranKota::SasaranComponent.with_collection(sub_pohons, tahun: @tahun) %>
 <% end %>

@@ -44,7 +44,7 @@ class Strategi < ApplicationRecord
   accepts_nested_attributes_for :indikators, reject_if: :all_blank, allow_destroy: true
 
   has_many :strategi_bawahans, -> { where.not(role: 'deleted') }, class_name: 'Strategi',
-                               primary_key: :id, foreign_key: :strategi_ref_id
+                                                                  primary_key: :id, foreign_key: :strategi_ref_id
 
   belongs_to :strategi_atasan, class_name: "Strategi",
                                foreign_key: "strategi_ref_id", optional: true
@@ -261,5 +261,11 @@ class Strategi < ApplicationRecord
 
   def strategi_diterima_opd
     StrategiPohon.where(strategi_cascade_link: id)
+  end
+
+  def total_anggaran
+    sasarans.dengan_nip.flat_map(&:total_anggaran).inject(:+)
+  rescue NoMethodError
+    0
   end
 end

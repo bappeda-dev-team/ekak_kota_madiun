@@ -20,6 +20,25 @@ module PohonKinerjaOpdsHelper
     end
   end
 
+  def anggaran_pohon(sasaran, role)
+    strategi = case role
+               when 'pohon_kota'
+                 AnggaranPohon::Tematik.new(sasaran, @tahun)
+               when 'sub_pohon_kota'
+                 AnggaranPohon::SubTematik.new(sasaran, @tahun)
+               when 'sub_sub_pohon_kota'
+                 AnggaranPohon::SubSubTematik.new(sasaran, @tahun)
+               when 'eselon_2'
+                 AnggaranPohon::Strategic.new(sasaran)
+               when 'eselon_3'
+                 AnggaranPohon::Tactical.new(sasaran)
+               else
+                 AnggaranPohon::Operational.new(sasaran)
+               end
+    anggaran = AnggaranSasaran.new(strategi)
+    anggaran.anggaran
+  end
+
   def pagu_pohon(sasaran, role)
     strategi = case role
                when 'pohon_kota'

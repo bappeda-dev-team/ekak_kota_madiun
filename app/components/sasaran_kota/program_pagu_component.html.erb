@@ -1,6 +1,6 @@
 <div class="inner-table-pagu">
   <% if jenis_program == 'Sub Sasaran' %>
-    <p class="p-3"><%= pagu_program %></p>
+    <p class="p-3">Rp. <%= number_with_delimiter(pagu_sub_sasaran) %></p>
   <% else %>
     <table class="table p-0 m-0 inner-table">
       <thead>
@@ -10,11 +10,18 @@
         </tr>
       </thead>
       <tbody>
-        <% programs.each do |program| %>
-          <tr>
-            <td class="text-wrap"><%= program %></td>
-            <td class="text-wrap">Rp. XX</td>
+        <% if jenis_program == 'Subkegiatan' %>
+          <tr class="border-none">
+            <td class="text-wrap"><%= subkegiatan[0] %></td>
+            <td class="text-wrap">Rp. <%= number_with_delimiter(subkegiatan[1]) %></td>
           </tr>
+        <% else %>
+          <% programs.first.each do |program| %>
+            <tr class="<%= programs.size > 1 ? 'border' : 'border-none' %>">
+              <td class="text-wrap"><%= program %></td>
+              <td class="text-wrap">Rp. <%= programs.last %></td>
+            </tr>
+          <% end %>
         <% end %>
       </tbody>
     </table>

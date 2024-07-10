@@ -632,6 +632,6 @@ class Sasaran < ApplicationRecord
   end
 
   def role
-    'operational_pohon_kota'
+    'sub_operational_pohon_kota'
   end
 end

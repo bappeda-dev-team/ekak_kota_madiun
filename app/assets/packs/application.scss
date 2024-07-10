@@ -641,6 +641,9 @@ table.counter {
 }
 
 .inner-table {
-  @extend .table-bordered;
   border-collapse: collapse;
+}
+
+tr.border-none {
+  border-bottom: hidden;
 }

@@ -8,7 +8,11 @@ class SasaranKota::SasaranComponent < ViewComponent::Base
   end
 
   def renaksi
-    @sasaran.pohonable.to_s
+    if jenis == 'sasaran_subkegiatan'
+      @sasaran.to_s
+    else
+      @sasaran.pohonable.to_s
+    end
   end
 
   def opd
@@ -20,7 +24,11 @@ class SasaranKota::SasaranComponent < ViewComponent::Base
   end
 
   def indikators
-    @sasaran.pohonable.indikators
+    if jenis == 'sasaran_subkegiatan'
+      @sasaran.indikator_sasarans
+    else
+      @sasaran.pohonable.indikators
+    end
   end
 
   def rowspan
@@ -29,7 +37,11 @@ class SasaranKota::SasaranComponent < ViewComponent::Base
 
   # sub_pohons dibawah operasional tidak diambil
   def sub_pohons
-    @sasaran.sub_pohons.select(&:pohonable)
+    if jenis == 'sasaran_kegiatan'
+      @sasaran.pohonable.sasarans.dengan_nip
+    else
+      @sasaran.sub_pohons.select(&:pohonable)
+    end
   end
 
   def jenis
@@ -40,6 +52,8 @@ class SasaranKota::SasaranComponent < ViewComponent::Base
       'sasaran_program'
     when 'operational_pohon_kota'
       'sasaran_kegiatan'
+    when 'sub_operational_pohon_kota'
+      'sasaran_subkegiatan'
     else
       'sasaran_kota'
     end

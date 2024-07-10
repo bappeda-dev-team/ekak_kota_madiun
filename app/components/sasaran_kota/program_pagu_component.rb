@@ -13,13 +13,10 @@ class SasaranKota::ProgramPaguComponent < ViewComponent::Base
     @sasaran.pohonable
   end
 
-  # ambil dari ProgramKegiatan
-  def program
-    @sasaran.program_kegiatan
-  end
-
-  def pagu_program
-    'Rp. XXX XXX'
+  def pagu_sub_sasaran
+    @sasaran.sub_pohons.select(&:pohonable).flat_map do |strategic|
+      anggaran_pohon(strategic.pohonable, 'eselon_2')
+    end.compact_blank.sum
   end
 
   def role
@@ -30,6 +27,8 @@ class SasaranKota::ProgramPaguComponent < ViewComponent::Base
       'eselon_3'
     when 'operational_pohon_kota'
       'eselon_4'
+    when 'sub_operational_pohon_kota'
+      'sub_eselon_4'
     else
       @sasaran.role
     end
@@ -43,6 +42,8 @@ class SasaranKota::ProgramPaguComponent < ViewComponent::Base
       'Program'
     when 'eselon_4'
       'Kegiatan'
+    when 'sub_eselon_4'
+      'Subkegiatan'
     else
       'Sub Sasaran'
     end
@@ -50,32 +51,23 @@ class SasaranKota::ProgramPaguComponent < ViewComponent::Base
 
   def programs
     program_pohons = program_pohon(@sasaran.pohonable, role)
+    pagu_pohons = pagu_pohon(@sasaran.pohonable, role)
     case role
     when 'eselon_2'
-      program_pohons.flat_map(&:nama_urusan).compact_blank.uniq
+      [program_pohons.flat_map(&:nama_urusan).compact_blank.uniq, pagu_pohons]
     when 'eselon_3'
-      program_pohons.flat_map(&:nama_program).compact_blank.uniq
+      [program_pohons.flat_map(&:nama_program).compact_blank.uniq, pagu_pohons]
     when 'eselon_4'
-      program_pohons.flat_map(&:nama_kegiatan).compact_blank.uniq
+      [program_pohons.flat_map(&:nama_kegiatan).compact_blank.uniq, pagu_pohons]
     else
       []
     end
   end
 
-  def urusan?
-    role == 'eselon_2'
-  end
+  def subkegiatan
+    return unless role == 'sub_eselon_4'
 
-  def program?
-    role == 'eselon_3'
-  end
-
-  def subkegiatan?
-    role == 'eselon_4'
-  end
-
-  def urusans
-    programs.uniq(&:nama_urusan)
+    [@sasaran.subkegiatan, @sasaran.total_anggaran]
   end
 
   def subkegiatans
