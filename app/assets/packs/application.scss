@@ -615,3 +615,15 @@ table.counter {
     background-color: rgba(242, 245, 169, 0);
   }
 }
+
+.sasaran_opd {
+  @extend .table-danger;
+}
+
+.sasaran_program {
+  @extend .table-info;
+}
+
+.sasaran_kegiatan {
+  @extend .table-success;
+}

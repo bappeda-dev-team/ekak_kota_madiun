@@ -1,4 +1,4 @@
-<tr class="<%= warna_row %>">
+<tr class="<%= jenis %>">
     <% if jenis == 'sasaran_kota' %>
         <td rowspan="<%= rowspan %>" colspan="2" class="text-wrap"><%= renaksi %></td>
     <% else %>
@@ -26,7 +26,7 @@
                                            path: show_pokin_sasaran_kotum_path(@sasaran)) %>
     </td>
 </tr>
-<%= render SasaranKota::IndikatorComponent.with_collection(indikators, warna_row: warna_row) %>
+<%= render SasaranKota::IndikatorComponent.with_collection(indikators, warna_row: jenis) %>
 
 <% unless jenis == 'sasaran_kota' %>
     <%= render SasaranKota::SasaranComponent.with_collection(sub_pohons, tahun: @tahun) %>
