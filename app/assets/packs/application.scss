@@ -627,3 +627,20 @@ table.counter {
 .sasaran_kegiatan {
   @extend .table-success;
 }
+
+.table-pagu {
+  position: relative;
+}
+
+.table-pagu > .inner-table-pagu {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.inner-table {
+  @extend .table-bordered;
+  border-collapse: collapse;
+}

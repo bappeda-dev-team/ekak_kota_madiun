@@ -6,8 +6,8 @@
         <td rowspan="<%= rowspan %>" class="text-wrap"><%= renaksi %></td>
     <% end %>
     <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="3"></td>
-    <td rowspan="<%= rowspan %>" colspan="2" class="text-center">
-        <%= render SasaranKota::ProgramPaguComponent.new(program: @sasaran, pagu: '10_000',jenis: jenis) %>
+    <td rowspan="<%= rowspan %>" colspan="2" class="p-0 m-0 tabel-pagu">
+        <%= render SasaranKota::ProgramPaguComponent.new(sasaran: @sasaran, pagu: '10_000') %>
     </td>
     <td rowspan="<%= rowspan %>" class="text-wrap text-center"><%= keterangan %></td>
     <td rowspan="<%= rowspan %>" class="text-wrap text-center align-middle fw-bolder">

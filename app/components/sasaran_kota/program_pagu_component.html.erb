@@ -1,8 +1,18 @@
-<div>
-  <% if @jenis == 'sasaran_kota' %>
-    Rp. <%= @pagu %>
-  <% else %>
-    Program: <%= @program %>
-    Pagu: XXXXX
-  <% end %>
+<div class="inner-table-pagu">
+  <table class="table p-0 m-0 inner-table">
+    <thead>
+      <tr>
+        <th><%= jenis_program %></th>
+        <th>PAGU ANGGARAN OPERATIONAL</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% programs.each do |program| %>
+        <tr>
+          <td class="text-wrap"><%= program %></td>
+          <td class="text-wrap">Rp. XX</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>

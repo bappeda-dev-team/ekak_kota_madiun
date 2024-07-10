@@ -1,28 +1,65 @@
 # frozen_string_literal: true
 
 class SasaranKota::ProgramPaguComponent < ViewComponent::Base
-  def initialize(program:, pagu:, jenis:)
+  include PohonKinerjaOpdsHelper
+
+  def initialize(sasaran:, pagu:)
     super
-    @program = program
+    @sasaran = sasaran
     @pagu = pagu
-    @jenis = jenis
   end
 
-  def nama
-    case @jenis
-    when 'Urusan'
-      @program.nama_urusan
-    when 'Program'
-      @program.nama_program
-    when 'Kegiatan'
-      @program.nama_giat
-    when 'Subkegiatan'
-      @program.nama_subkegiatan
+  def sasaran_pohon
+    @sasaran.pohonable
+  end
+
+  # ambil dari ProgramKegiatan
+  def program
+    @sasaran.program_kegiatan
+  end
+
+  def pagu_program
+    'Rp. XXX XXX'
+  end
+
+  def role
+    case @sasaran.role
+    when 'strategi_pohon_kota'
+      'eselon_2'
+    when 'tactical_pohon_kota'
+      'eselon_3'
+    when 'operational_pohon_kota'
+      'eselon_4'
+    else
+      @sasaran.role
+    end
+  end
+
+  def jenis_program
+    case role
+    when 'eselon_2'
+      'Urusan'
+    when 'eselon_3'
+      'Program'
+    when 'eselon_4'
+      'Kegiatan'
     else
       ''
     end
-  rescue NoMethodError
-    'Belum diisi'
+  end
+
+  def programs
+    program_pohons = program_pohon(@sasaran.pohonable, role)
+    case role
+    when 'eselon_2'
+      program_pohons.flat_map(&:nama_urusan).compact_blank.uniq
+    when 'eselon_3'
+      program_pohons.flat_map(&:nama_program).compact_blank.uniq
+    when 'eselon_4'
+      program_pohons.flat_map(&:nama_kegiatan).compact_blank.uniq
+    else
+      []
+    end
   end
 
   def urusan?
@@ -41,12 +78,7 @@ class SasaranKota::ProgramPaguComponent < ViewComponent::Base
     programs.uniq(&:nama_urusan)
   end
 
-  def programs
-    program_pohon(@sasaran.pohonable, role)
-  end
-
   def subkegiatans
     @sasaran.program_kegiatan
   end
-
 end

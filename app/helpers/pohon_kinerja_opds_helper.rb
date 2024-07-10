@@ -51,6 +51,8 @@ module PohonKinerjaOpdsHelper
                  AnggaranPohon::Strategic.new(sasaran)
                when 'eselon_3'
                  AnggaranPohon::Tactical.new(sasaran)
+               when 'eselon_4'
+                 AnggaranPohon::Operational.new(sasaran)
                end
     context = AnggaranSasaran.new(strategi)
     context.programs.reject { |prg| prg.nama_program =~ /PROGRAM PENUNJANG/ }

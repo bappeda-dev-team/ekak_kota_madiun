@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class SasaranKota::SasaranComponent < ViewComponent::Base
-  include PohonKinerjaOpdsHelper
-
   def initialize(sasaran:, tahun:)
     super
     @sasaran = sasaran

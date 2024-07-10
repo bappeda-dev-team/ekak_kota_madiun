@@ -28,7 +28,7 @@ module AnggaranPohon
       else
         pohon = @strategi.pohon
         real_childs = pohon.sub_pohons.select(&:pohonable)
-        childs = real_childs.flat_map { |ph| ph.pohonable }
+        childs = real_childs.flat_map(&:pohonable)
       end
       childs.map(&:sasarans)
     rescue NoMethodError
