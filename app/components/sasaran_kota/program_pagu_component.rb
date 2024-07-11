@@ -15,7 +15,9 @@ class SasaranKota::ProgramPaguComponent < ViewComponent::Base
 
   def pagu_sub_sasaran
     @sasaran.sub_pohons.select(&:pohonable).flat_map do |strategic|
-      anggaran_pohon(strategic.pohonable, 'eselon_2')
+      childs = strategic.sub_pohons.flat_map { |sub| sub.sub_pohons.flat_map(&:pohonable) }.compact_blank
+      sasarans = childs.flat_map(&:sasarans).select { |sas| sas.program_kegiatan.presence }.compact_blank
+      sasarans.flat_map(&:total_anggaran).compact_blank.sum
     end.compact_blank.sum
   end
 
@@ -50,15 +52,27 @@ class SasaranKota::ProgramPaguComponent < ViewComponent::Base
   end
 
   def programs
-    program_pohons = program_pohon(@sasaran.pohonable, role)
-    pagu_pohons = pagu_pohon(@sasaran.pohonable, role)
     case role
     when 'eselon_2'
-      [program_pohons.flat_map(&:nama_urusan).compact_blank.uniq, pagu_pohons]
+      childs = @sasaran.sub_pohons.flat_map { |sub| sub.sub_pohons.flat_map(&:pohonable) }.compact_blank
+      sasarans = childs.flat_map(&:sasarans).select { |sas| sas.program_kegiatan.presence }.compact_blank
+      urusans = sasarans.group_by do |sas|
+        "#{sas.program_kegiatan.nama_urusan}-(#{sas.program_kegiatan.kode_urusan})"
+      end
+      urusans.transform_values { |sas| sas.map(&:total_anggaran).compact_blank.sum }
     when 'eselon_3'
-      [program_pohons.flat_map(&:nama_program).compact_blank.uniq, pagu_pohons]
+      childs = @sasaran.sub_pohons.flat_map(&:pohonable).compact_blank
+      sasarans = childs.flat_map(&:sasarans).select { |sas| sas.program_kegiatan.presence }.compact_blank
+      programs = sasarans.group_by do |sas|
+        "#{sas.program_kegiatan.nama_program}-(#{sas.program_kegiatan.kode_program})"
+      end
+      programs.transform_values { |sas| sas.map(&:total_anggaran).compact_blank.sum }
     when 'eselon_4'
-      [program_pohons.flat_map(&:nama_kegiatan).compact_blank.uniq, pagu_pohons]
+      sasarans = @sasaran.pohonable.sasarans.select { |sas| sas.program_kegiatan.presence }.compact_blank
+      kegiatans = sasarans.group_by do |sas|
+        "#{sas.program_kegiatan.nama_kegiatan}-(#{sas.program_kegiatan.kode_giat})"
+      end
+      kegiatans.transform_values { |sas| sas.map(&:total_anggaran).compact_blank.sum }
     else
       []
     end
@@ -67,10 +81,6 @@ class SasaranKota::ProgramPaguComponent < ViewComponent::Base
   def subkegiatan
     return unless role == 'sub_eselon_4'
 
-    [@sasaran.subkegiatan, @sasaran.total_anggaran]
-  end
-
-  def subkegiatans
-    @sasaran.program_kegiatan
+    [@sasaran.subkegiatan_kode_sub, @sasaran.total_anggaran]
   end
 end

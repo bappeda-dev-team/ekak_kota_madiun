@@ -478,6 +478,10 @@ class Sasaran < ApplicationRecord
     program_kegiatan.present? ? program_kegiatan.nama_subkegiatan : 'Belum diisi'
   end
 
+  def subkegiatan_kode_sub
+    "#{subkegiatan}-(#{kode_subkegiatan})"
+  end
+
   def program_sasaran
     program_kegiatan.nama_program
   rescue NoMethodError
@@ -501,7 +505,7 @@ class Sasaran < ApplicationRecord
   end
 
   def kode_subkegiatan
-    program_kegiatan.present? ? program_kegiatan.kode_sub_giat : '-'
+    program_kegiatan.present? ? program_kegiatan.kode_sub_giat : ' '
   end
 
   def kode_subkegiatan_sasaran

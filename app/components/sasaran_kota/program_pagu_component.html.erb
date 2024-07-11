@@ -16,10 +16,10 @@
             <td class="text-wrap">Rp. <%= number_with_delimiter(subkegiatan[1]) %></td>
           </tr>
         <% else %>
-          <% programs.first.each do |program| %>
+          <% programs.each do |program| %>
             <tr class="<%= programs.size > 1 ? 'border' : 'border-none' %>">
-              <td class="text-wrap"><%= program %></td>
-              <td class="text-wrap">Rp. <%= programs.last %></td>
+              <td class="text-wrap"><%= program[0] %></td>
+              <td class="text-wrap">Rp. <%= number_with_delimiter(program[1]) %></td>
             </tr>
           <% end %>
         <% end %>
