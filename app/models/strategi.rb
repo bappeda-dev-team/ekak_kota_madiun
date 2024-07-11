@@ -264,7 +264,7 @@ class Strategi < ApplicationRecord
   end
 
   def total_anggaran
-    sasarans.dengan_nip.flat_map(&:total_anggaran).inject(:+)
+    sasarans.dengan_nip.flat_map(&:total_anggaran)&.inject(:+)
   rescue NoMethodError
     0
   end
