@@ -112,7 +112,7 @@ module Api
     def sasaran_pohon_kinerja_pegawai
       @nip = params[:nip]
       @tahun = params[:tahun]
-      @user = User.find_by(nik: @nip)
+      @user = User.find_by!(nik: @nip)
       @sasarans = @user.sasaran_pohon_kinerja(tahun: @tahun)
     end
 
