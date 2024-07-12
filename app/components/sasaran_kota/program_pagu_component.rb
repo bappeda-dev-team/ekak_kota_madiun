@@ -3,7 +3,7 @@
 class SasaranKota::ProgramPaguComponent < ViewComponent::Base
   include PohonKinerjaOpdsHelper
 
-  def initialize(sasaran:, pagu:)
+  def initialize(sasaran:, pagu: 0)
     super
     @sasaran = sasaran
     @pagu = pagu
