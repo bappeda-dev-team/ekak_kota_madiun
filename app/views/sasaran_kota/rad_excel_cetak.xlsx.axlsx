@@ -51,7 +51,56 @@ wb.add_worksheet(name: "rad") do |sheet|
       programs = pagu_rad1.programs.flat_map { |program| [program[0], "Rp. #{number_with_delimiter(program[1])}"] }
 
       current_rows = indikator_rad1.map do |indikatorx|
-        sheet.add_row [rad_1_view.renaksi, indikatorx.indikator, indikatorx.target, indikatorx.satuan]
+        sheet.add_row [rad_1_view.renaksi, indikatorx.indikator, indikatorx.target,
+                       indikatorx.satuan] + programs + [rad_1_view.keterangan, rad_1_view.opd]
+      end
+      size_of_sasaran = current_rows.map { |row| row.cells[0].value }
+      next unless size_of_sasaran.size > 1
+
+      the_rows = current_rows.map { |row| row.cells[0].r }
+      sheet.merge_cells "#{the_rows[0]}:#{the_rows[-1]}"
+
+      the_rows1 = current_rows.map { |row| row.cells[-1].r }
+      sheet.merge_cells "#{the_rows1[0]}:#{the_rows1[-1]}"
+
+      the_rows2 = current_rows.map { |row| row.cells[-2].r }
+      sheet.merge_cells "#{the_rows2[0]}:#{the_rows2[-1]}"
+
+      the_rows3 = current_rows.map { |row| row.cells[-3].r }
+      sheet.merge_cells "#{the_rows3[0]}:#{the_rows3[-1]}"
+
+      rad_1_view.sub_pohons.each do |rad2|
+        rad_2_view = SasaranKota::SasaranComponent.new(sasaran: rad2, tahun: @tahun)
+        pagu_rad2 = SasaranKota::ProgramPaguComponent.new(sasaran: rad2)
+        indikator_rad2 = rad_2_view.indikators
+
+        current_rows = indikator_rad2.map do |indikatorx|
+          sheet.add_row [rad_2_view.renaksi, indikatorx.indikator, indikatorx.target,
+                         indikatorx.satuan] + [pagu_rad2.programs.first[0],
+                                               "Rp. #{number_with_delimiter(pagu_rad2.programs.first[1])}"] + [
+                                                 rad_2_view.keterangan, rad_2_view.opd
+                                               ]
+        end
+        programs = pagu_rad2.programs.drop(1).map do |program|
+          sheet.add_row ['', '', '', ''] + [program[0], "Rp. #{number_with_delimiter(program[1])}"] + ['', '']
+        end
+        size_of_sasaran = current_rows.map { |row| row.cells[0].value }
+        next unless size_of_sasaran.size > 1
+
+        the_rows = current_rows.map { |row| row.cells[0].r }
+        sheet.merge_cells "#{the_rows[0]}:#{the_rows[-1]}"
+
+        the_rows1 = current_rows.map { |row| row.cells[-1].r }
+        sheet.merge_cells "#{the_rows1[0]}:#{the_rows1[-1]}"
+
+        the_rows2 = current_rows.map { |row| row.cells[-2].r }
+        sheet.merge_cells "#{the_rows2[0]}:#{the_rows2[-1]}"
+
+        the_rows3 = current_rows.map { |row| row.cells[-3].r }
+        sheet.merge_cells "#{the_rows3[0]}:#{the_rows3[-1]}"
+
+        the_rows4 = current_rows.map { |row| row.cells[-4].r }
+        sheet.merge_cells "#{the_rows4[0]}:#{the_rows4[-1]}"
       end
     end
   end
