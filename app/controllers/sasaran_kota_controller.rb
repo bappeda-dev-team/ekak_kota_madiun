@@ -61,11 +61,11 @@ class SasaranKotaController < ApplicationController
 
     @pohon_sub = Pohon.find_by(pohonable_id: pohon_id, tahun: @tahun)
     @sub_sasaran_kota = @pohon_sub
-                          .sub_pohons.where(tahun: @tahun, role: 'sub_sub_pohon_kota')
-                          .select(&:pohonable)
+                        .sub_pohons.where(tahun: @tahun, role: 'sub_sub_pohon_kota')
+                        .select(&:pohonable)
     @rad_sasaran_kota = @pohon_sub
-                          .sub_pohons.where(tahun: @tahun, role: 'strategi_pohon_kota')
-                          .select(&:pohonable)
+                        .sub_pohons.where(tahun: @tahun, role: 'strategi_pohon_kota')
+                        .select(&:pohonable)
   end
 
   def show_pokin
@@ -81,8 +81,12 @@ class SasaranKotaController < ApplicationController
     pohon_id = params[:id]
 
     @pohon_sub = Pohon.find_by(pohonable_id: pohon_id, tahun: @tahun)
-    @sub_sasaran_kota = @pohon_sub.sub_pohons.where(tahun: @tahun, role: 'sub_sub_pohon_kota')
-    @rad_sasaran_kota = @pohon_sub.sub_pohons.where(tahun: @tahun, role: 'strategi_pohon_kota')
+    @sub_sasaran_kota = @pohon_sub
+                        .sub_pohons.where(tahun: @tahun, role: 'sub_sub_pohon_kota')
+                        .select(&:pohonable)
+    @rad_sasaran_kota = @pohon_sub
+                        .sub_pohons.where(tahun: @tahun, role: 'strategi_pohon_kota')
+                        .select(&:pohonable)
   end
 
   private
