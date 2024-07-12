@@ -25,6 +25,10 @@ module ReviewerItemHelper
       {
         title: 'Cascading OPD', href: hasil_cascading_laporans_path,
         icon: 'fas fa-people-arrows', identifier: 'hasil_cascading'
+      },
+      {
+        title: 'Sasaran Kota / RAD', href: sasaran_kota_path,
+        icon: 'fas fa-bullseye', identifier: 'sasaran_kota'
       }
     ]
   end
