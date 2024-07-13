@@ -6,26 +6,32 @@ rad_sasaran_kota = @rad_sasaran_kota
 def rad_rows(sheet, rad)
   rad_view = SasaranKota::SasaranComponent.new(sasaran: rad, tahun: @tahun)
   pagu_rad = SasaranKota::ProgramPaguComponent.new(sasaran: rad)
-  indikator_rad = rad_view.indikators
 
-  current_rows = if indikator_rad.any?
-                   indikator_rad.map do |ind|
+  current_rows = if !rad_view.indikators.empty?
+                   rad_view.indikators.map do |ind|
                      sheet.add_row [rad_view.title_up, rad_view.renaksi] +
                                    [ind.indikator, ind.target, ind.satuan] +
                                    [pagu_rad.programs.first&.first,
                                     "Rp. #{number_with_delimiter(pagu_rad.programs.first&.last)}"] +
                                    [rad_view.keterangan, rad_view.opd]
                    end
-                 else
-                   pagu_rad.programs.each do |program|
+                 elsif !pagu_rad.programs.empty?
+                   pagu_rad.programs.map do |program|
                      sheet.add_row [rad_view.title_up, rad_view.renaksi] +
                                    ['-', '-', '-'] +
                                    [program&.first, "Rp. #{number_with_delimiter(program&.last)}"] +
                                    [rad_view.keterangan, rad_view.opd]
                    end
+                 else
+                   sheet.add_row([rad_view.title_up, rad_view.renaksi] +
+                                 ['-', '-', '-'] +
+                                 ['-', "Rp. #{number_with_delimiter(0)}"] +
+                                 [rad_view.keterangan, rad_view.opd])
                  end
 
-  size_of_sasaran = current_rows.map { |row| row.cells[0].value }
+  return unless current_rows.first.is_a?(Array)
+
+  size_of_sasaran = current_rows.map { |row| row.is_a?(Array) ? row.cells[0].value : row.value }
   return unless size_of_sasaran.size > 1
 
   merge_row_num = [0, 1, -1, -2, -3, -4]
@@ -48,17 +54,61 @@ wb.add_worksheet(name: "rad") do |sheet|
   end
   sheet.add_row ['KETERANGAN', sasaran_kota.pohonable.keterangan]
 
-  sub_sasaran_kota.each.with_index(1) do |_sub_sasaran_k, _no_sub|
+  sub_sasaran_kota.each.with_index(1) do |sub_sasaran_k, no_sub|
+    sheet.add_row
+    header_sub = sheet.add_row ["SUB SASARAN #{sub_sasaran_kota.size > 1 ? no_sub : ''}", '',
+                                'INDIKATOR', 'TARGET', 'SATUAN',
+                                '', 'PAGU ANGGARAN', 'KETERANGAN', '']
+    sheet.merge_cells "#{header_sub[0].r}:#{header_sub[1].r}"
+    # sheet.merge_cells "#{title_sub[5].r}:#{title_sub[6].r}"
+
+    sub_sasaran = SasaranKota::SasaranComponent.new(sasaran: sub_sasaran_k, tahun: @tahun)
+    pagu = SasaranKota::ProgramPaguComponent.new(sasaran: sub_sasaran_k)
+    indikator_sub = sub_sasaran.indikators
+    current_rows = indikator_sub.map do |indikator|
+      sheet.add_row ['Sub Sasaran', sub_sasaran.renaksi, indikator.indikator, indikator.target, indikator.satuan, '',
+                     "Rp. #{number_with_delimiter(pagu.pagu_sub_sasaran)}", sub_sasaran.keterangan, sub_sasaran.title_up]
+    end
+    size_of_sasaran = current_rows.map { |row| row.cells[0].value }
+    if size_of_sasaran.size > 1
+      merge_row_num = [0, 1, -1, -2, -3, -4]
+      merge_row_num.each do |row_num|
+        row_merger(sheet, current_rows, row_num)
+      end
+    end
+
     sheet.add_row
     header_rad = sheet.add_row ['RENCANA AKSI', '', 'INDIKATOR', 'TARGET', 'SATUAN', 'PROGRAM/KEGIATAN/SUB KEGIATAN', 'PAGU ANGGARAN', 'KETERANGAN',
                                 'PERANGKAT DAERAH']
     sheet.merge_cells "#{header_rad[0].r}:#{header_rad[1].r}"
     # Urusan
+    sub_sasaran.sub_pohons.each do |rad1|
+      rad_rows(sheet, rad1)
+      # Program
+      rad_view = SasaranKota::SasaranComponent.new(sasaran: rad1, tahun: @tahun)
+      rad_view.sub_pohons.each do |rad2|
+        rad_rows(sheet, rad2)
+        # Kegiatan
+        rad_view = SasaranKota::SasaranComponent.new(sasaran: rad2, tahun: @tahun)
+        rad_view.sub_pohons.each do |rad3|
+          rad_rows(sheet, rad3)
+          # Subkegiatan
+          rad_view = SasaranKota::SasaranComponent.new(sasaran: rad3, tahun: @tahun)
+          rad_view.sub_pohons.each do |rad4|
+            rad_rows(sheet, rad4)
+          end
+        end
+      end
+      sheet.add_row
+    end
   end
 
+  next if rad_sasaran_kota.empty?
+
   sheet.add_row
-  header_rad = sheet.add_row ['RENCANA AKSI', '', 'INDIKATOR', 'TARGET', 'SATUAN', 'PROGRAM/KEGIATAN/SUB KEGIATAN', 'PAGU ANGGARAN', 'KETERANGAN',
-                              'PERANGKAT DAERAH']
+  header_rad = sheet.add_row ['RENCANA AKSI', '', 'INDIKATOR', 'TARGET', 'SATUAN',
+                              'PROGRAM/KEGIATAN/SUB KEGIATAN', 'PAGU ANGGARAN',
+                              'KETERANGAN', 'PERANGKAT DAERAH']
   sheet.merge_cells "#{header_rad[0].r}:#{header_rad[1].r}"
   # Urusan
   rad_sasaran_kota.each do |rad1|
