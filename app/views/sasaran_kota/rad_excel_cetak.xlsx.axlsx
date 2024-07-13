@@ -56,11 +56,16 @@ wb.add_worksheet(name: "rad") do |sheet|
       rad_1_view = SasaranKota::SasaranComponent.new(sasaran: rad1, tahun: @tahun)
       pagu_rad1 = SasaranKota::ProgramPaguComponent.new(sasaran: rad1)
       indikator_rad1 = rad_1_view.indikators
-      programs = pagu_rad1.programs.flat_map { |program| [program[0], "Rp. #{number_with_delimiter(program[1])}"] }
 
       current_rows = indikator_rad1.map do |indikatorx|
         sheet.add_row [rad_1_view.title_up, rad_1_view.renaksi, indikatorx.indikator, indikatorx.target,
-                       indikatorx.satuan] + programs + [rad_1_view.keterangan, rad_1_view.opd]
+                       indikatorx.satuan] + [pagu_rad1.programs.first&.first,
+                                             "Rp. #{number_with_delimiter(pagu_rad1.programs.first&.last)}",
+                                             rad_1_view.keterangan, rad_1_view.opd]
+      end
+
+      programs = pagu_rad1.programs.drop(1).map do |program|
+        sheet.add_row ['', '', '', '', ''] + [program[0], "Rp. #{number_with_delimiter(program[1])}"] + ['', '']
       end
 
       size_of_sasaran = current_rows.map { |row| row.cells[0].value }
@@ -95,7 +100,7 @@ wb.add_worksheet(name: "rad") do |sheet|
                                                ]
         end
         programs = pagu_rad2.programs.drop(1).map do |program|
-          sheet.add_row ['', '', '', ''] + [program[0], "Rp. #{number_with_delimiter(program[1])}"] + ['', '']
+          sheet.add_row ['', '', '', '', ''] + [program[0], "Rp. #{number_with_delimiter(program[1])}"] + ['', '']
         end
 
         size_of_sasaran = current_rows.map { |row| row.cells[0].value }
@@ -133,7 +138,7 @@ wb.add_worksheet(name: "rad") do |sheet|
                                                  ]
           end
           programs = pagu_rad3.programs.drop(1).map do |program|
-            sheet.add_row ['', '', '', ''] + [program[0], "Rp. #{number_with_delimiter(program[1])}"] + ['', '']
+            sheet.add_row ['', '', '', '', ''] + [program[0], "Rp. #{number_with_delimiter(program[1])}"] + ['', '']
           end
           size_of_sasaran = current_rows.map { |row| row.cells[0].value }
           if size_of_sasaran.size > 1
@@ -202,11 +207,14 @@ wb.add_worksheet(name: "rad") do |sheet|
     rad_1_view = SasaranKota::SasaranComponent.new(sasaran: rad1, tahun: @tahun)
     pagu_rad1 = SasaranKota::ProgramPaguComponent.new(sasaran: rad1)
     indikator_rad1 = rad_1_view.indikators
-    programs = pagu_rad1.programs.flat_map { |program| [program[0], "Rp. #{number_with_delimiter(program[1])}"] }
 
     current_rows = indikator_rad1.map do |indikatorx|
       sheet.add_row [rad_1_view.title_up, rad_1_view.renaksi, indikatorx.indikator, indikatorx.target,
-                     indikatorx.satuan] + programs + [rad_1_view.keterangan, rad_1_view.opd]
+                     indikatorx.satuan] + [pagu_rad1.programs.first&.first, "Rp. #{number_with_delimiter(pagu_rad1.programs.first&.last)}",
+                                           rad_1_view.keterangan, rad_1_view.opd]
+    end
+    programs = pagu_rad1.programs.drop(1).map do |program|
+      sheet.add_row ['', '', '', '', ''] + [program[0], "Rp. #{number_with_delimiter(program[1])}"] + ['', '']
     end
 
     size_of_sasaran = current_rows.map { |row| row.cells[0].value }
@@ -241,7 +249,7 @@ wb.add_worksheet(name: "rad") do |sheet|
                                              ]
       end
       programs = pagu_rad2.programs.drop(1).map do |program|
-        sheet.add_row ['', '', '', ''] + [program[0], "Rp. #{number_with_delimiter(program[1])}"] + ['', '']
+        sheet.add_row ['', '', '', '', ''] + [program[0], "Rp. #{number_with_delimiter(program[1])}"] + ['', '']
       end
 
       size_of_sasaran = current_rows.map { |row| row.cells[0].value }
@@ -279,7 +287,7 @@ wb.add_worksheet(name: "rad") do |sheet|
                                                ]
         end
         programs = pagu_rad3.programs.drop(1).map do |program|
-          sheet.add_row ['', '', '', ''] + [program[0], "Rp. #{number_with_delimiter(program[1])}"] + ['', '']
+          sheet.add_row ['', '', '', '', ''] + [program[0], "Rp. #{number_with_delimiter(program[1])}"] + ['', '']
         end
         size_of_sasaran = current_rows.map { |row| row.cells[0].value }
         if size_of_sasaran.size > 1
