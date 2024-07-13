@@ -74,7 +74,7 @@ class SasaranKota::ProgramPaguComponent < ViewComponent::Base
       end
       kegiatans.transform_values { |sas| sas.map(&:total_anggaran).compact_blank.sum }
     else
-      []
+      [subkegiatan]
     end
   end
 
