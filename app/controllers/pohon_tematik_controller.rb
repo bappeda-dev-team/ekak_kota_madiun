@@ -216,11 +216,17 @@ class PohonTematikController < ApplicationController
     childs.each do |pohon|
       child_pohon = pohon.add_strategi_pohon(ref_id: new_pohon.id)
       pohon.update(status: 'diterima', strategi_pohon_id: child_pohon.id,
-                   metadata: { processed_by: current_user.id, processed_at: DateTime.current })
+                   metadata: { processed_by: current_user.id,
+                               processed_at: DateTime.current,
+                               deleted_by: '',
+                               deleted_at: '' })
       @tactical_opd << child_pohon
     end
     if @pohon.update(status: 'diterima', strategi_pohon_id: new_pohon.id,
-                     metadata: { processed_by: current_user.id, processed_at: DateTime.current })
+                     metadata: { processed_by: current_user.id,
+                                 processed_at: DateTime.current,
+                                 deleted_by: '',
+                                 deleted_at: '' })
       html_content = render_to_string(partial: partial,
                                       formats: 'html',
                                       layout: false,

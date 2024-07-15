@@ -128,6 +128,13 @@ class PohonKinerjaOpdsController < ApplicationController
                                deleted_by: current_user.id,
                                deleted_at: DateTime.current },
                    strategi_pohon_id: nil)
+      pokin.sub_pohons.each do |sub_ph|
+        sub_ph.update(status: '',
+                      metadata: { processed_by: '', processed_at: '',
+                                  deleted_by: current_user.id,
+                                  deleted_at: DateTime.current },
+                      strategi_pohon_id: nil)
+      end
     end
     render json: { resText: "Pohon Dihapus", result: true },
            status: :accepted
