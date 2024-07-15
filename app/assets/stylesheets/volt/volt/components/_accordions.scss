@@ -2,31 +2,29 @@
  * = Accordions
 */
 
-
 .accordion-button {
     text-align: left;
     &:not(.collapsed) {
         &::after {
-          background-image: none;
-          @include transform(rotateZ(45deg));
+            background-image: none;
+            @include transform(rotate(-180deg));
         }
     }
 
     // Accordion icon
     &::after {
         background-image: none;
-        content: '\f067';
+        content: "\f107";
         font-family: $font-awesome-5;
         font-size: $font-size-base;
         font-weight: 900;
     }
 
-    &:hover{
+    &:hover {
         background-color: $gray-200;
     }
 }
-  
-  
+
 // Flush accordion items
 //
 // Remove borders and border-radius to keep accordion items edge-to-edge.
@@ -46,7 +44,3 @@
         border: 0;
     }
 }
-
-
-
-

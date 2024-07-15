@@ -112,6 +112,6 @@ class SasaranKotaController < ApplicationController
                tahun
              end
     @sasaran_kota = Pohon.includes(:pohonable).where(pohonable_type: %w[SubTematik], tahun: @tahun)
-                         .select(&:pohonable).group_by { |ph| ph.parent_pohon }.reject { |ph| ph.pohonable.nil? }
+                         .select(&:pohonable).group_by(&:parent_pohon).reject { |ph| ph.pohonable.nil? }
   end
 end
