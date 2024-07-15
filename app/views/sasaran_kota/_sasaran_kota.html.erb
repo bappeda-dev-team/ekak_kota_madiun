@@ -1,9 +1,5 @@
 <% rowspan = sasaran.pohonable.indikators.size + 1 %>
 <% sas = SasaranKota::SasaranComponent.new(sasaran: sasaran, tahun: @tahun) %>
-<tr class="skip bg-gray-300">
-    <td class="border">Tema</td>
-    <td class="border" colspan="8"><%= sasaran.parent_pohon.pohonable %></td>
-</tr>
 <tr id="<%= dom_id(sasaran.pohonable) %>">
     <td rowspan="<%= rowspan %>" class="border"></td>
     <td rowspan="<%= rowspan %>" class="text-wrap border"><%= sasaran.pohonable %></td>
