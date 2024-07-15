@@ -121,6 +121,14 @@ class PohonKinerjaOpdsController < ApplicationController
                   prev_role: role,
                   deleted_by: current_user.id,
                   deleted_at: DateTime.current)
+    if @pohon.strategi_cascade_link.present?
+      pokin = Pohon.find_by(pohonable_id: @pohon.strategi_cascade_link)
+      pokin.update(status: '',
+                   metadata: { processed_by: '', processed_at: '',
+                               deleted_by: current_user.id,
+                               deleted_at: DateTime.current },
+                   strategi_pohon_id: nil)
+    end
     render json: { resText: "Pohon Dihapus", result: true },
            status: :accepted
   end

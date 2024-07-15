@@ -163,4 +163,10 @@ class Pohon < ApplicationRecord
 
     sp_new
   end
+
+  def strategi_dari_kota_finder
+    return if strategi_pohon_id.nil?
+
+    StrategiPohon.find(strategi_pohon_id)
+  end
 end

@@ -68,7 +68,7 @@ class PohonKinerjaPresenter
       if @pohon.status?
         case @pohon.status
         when 'diterima'
-          'pohon-accepted'
+          processed? && 'pohon-accepted'
         when 'crosscutting'
           'pohon-crosscutting'
         else
@@ -85,7 +85,9 @@ class PohonKinerjaPresenter
   def processed?
     return false unless @pohon.instance_of?(Pohon)
 
-    @pohon.status? && @pohon.metadata.key?("processed_by") && @pohon.strategi_pohon_id?
+    strategi = @pohon.strategi_dari_kota_finder
+
+    strategi.present? && strategi.role != 'deleted'
   end
 
   def taken?
