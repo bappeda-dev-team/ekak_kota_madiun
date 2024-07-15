@@ -689,6 +689,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :renstras
+    resources :renjas do
+      collection do
+        get :rankir
+      end
+    end
     namespace :programs do
       post :indikators
       post :permasalahans
