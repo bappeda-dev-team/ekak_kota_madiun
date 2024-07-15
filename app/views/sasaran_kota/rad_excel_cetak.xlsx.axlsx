@@ -92,11 +92,6 @@ wb.add_worksheet(name: "rad") do |sheet|
         rad_view = SasaranKota::SasaranComponent.new(sasaran: rad2, tahun: @tahun)
         rad_view.sub_pohons.each do |rad3|
           rad_rows(sheet, rad3)
-          # Subkegiatan
-          rad_view = SasaranKota::SasaranComponent.new(sasaran: rad3, tahun: @tahun)
-          rad_view.sub_pohons.each do |rad4|
-            rad_rows(sheet, rad4)
-          end
         end
       end
       sheet.add_row
