@@ -338,6 +338,11 @@ export default class extends Controller {
     }
   }
 
+  scrollTo(e) {
+    const strategiId = e.params.strategi;
+    document.getElementById(strategiId).scrollIntoView();
+  }
+
   partialAttacher(targetName, html_element) {
     const target = document.getElementById(targetName);
     target.innerHTML = html_element;
