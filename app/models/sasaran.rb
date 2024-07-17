@@ -196,25 +196,25 @@ class Sasaran < ApplicationRecord
   end
 
   def total_anggaran
-    tahapans.includes([:anggarans]).map { |t| t.anggarans.compact.sum(&:jumlah) }.inject(:+)
+    tahapans.includes([:anggarans]).map { |t| t.anggarans.compact.sum(&:jumlah) }.inject(:+).to_d
   rescue TypeError
     '-'
   end
 
   def total_anggaran_rankir_1
-    tahapans.includes([:anggarans]).map { |t| t.anggarans.compact.sum(&:anggaran_rankir_1) }.inject(:+)
+    tahapans.includes([:anggarans]).map { |t| t.anggarans.compact.sum(&:anggaran_rankir_1) }.inject(:+).to_d
   rescue TypeError
     '-'
   end
 
   def total_anggaran_dengan_komentar
-    tahapans.map { |t| t.anggarans.where.missing(:comments).compact.sum(&:jumlah) }.inject(:+)
+    tahapans.map { |t| t.anggarans.where.missing(:comments).compact.sum(&:jumlah) }.inject(:+).to_d
   rescue TypeError
     '-'
   end
 
   def total_anggaran_penetapan
-    tahapans.includes([:anggarans]).map(&:anggaran_tahapan_penetapan).inject(:+)
+    tahapans.includes([:anggarans]).map(&:anggaran_tahapan_penetapan).inject(:+).to_d
   rescue TypeError
     '-'
   end

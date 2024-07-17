@@ -145,6 +145,43 @@ class PohonKotaPresenter
     @pohon.role.dasherize
   end
 
+  def pagu
+    case role
+    when 'pohon_kota'
+      childs = @pohon.sub_pohons.flat_map do |suba|
+        suba.sub_pohons.flat_map do |subx|
+          subx.sub_pohons.flat_map do |sub|
+            sub.sub_pohons.flat_map { |suby| suby.sub_pohons.flat_map(&:pohonable) }.compact_blank
+          end
+        end
+      end
+      sasarans = childs.flat_map(&:sasarans).select { |sas| sas.program_kegiatan.presence }.compact_blank
+    when 'sub_pohon_kota'
+      childs = @pohon.sub_pohons.flat_map do |subx|
+        subx.sub_pohons.flat_map do |sub|
+          sub.sub_pohons.flat_map { |suby| suby.sub_pohons.flat_map(&:pohonable) }.compact_blank
+        end
+      end
+      sasarans = childs.flat_map(&:sasarans).select { |sas| sas.program_kegiatan.presence }.compact_blank
+    when 'sub_sub_pohon_kota'
+      childs = @pohon.sub_pohons.flat_map do |sub|
+        sub.sub_pohons.flat_map { |suby| suby.sub_pohons.flat_map(&:pohonable) }.compact_blank
+      end
+      sasarans = childs.flat_map(&:sasarans).select { |sas| sas.program_kegiatan.presence }.compact_blank
+    when 'eselon_2'
+      childs = @pohon.sub_pohons.flat_map { |sub| sub.sub_pohons.flat_map(&:pohonable) }.compact_blank
+      sasarans = childs.flat_map(&:sasarans).select { |sas| sas.program_kegiatan.presence }.compact_blank
+    when 'eselon_3'
+      childs = @pohon.sub_pohons.flat_map(&:pohonable).compact_blank
+      sasarans = childs.flat_map(&:sasarans).select { |sas| sas.program_kegiatan.presence }.compact_blank
+    when 'eselon_4'
+      sasarans = @pohon.pohonable.sasarans.select { |sas| sas.program_kegiatan.presence }.compact_blank
+    end
+    sasarans.sum(&:total_anggaran)
+  rescue NoMethodError
+    0
+  end
+
   def title
     # suffix = @pohon.instance_of?(Pohon) ? '- Kota' : ''
     prefix = @pohon.role.chomp("_pohon_kota")
