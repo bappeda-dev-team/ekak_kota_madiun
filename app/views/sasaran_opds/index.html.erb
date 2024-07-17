@@ -17,6 +17,8 @@
             <th class="border text-center" scope="col">Rencana Kinerja</th>
             <th class="border text-center" scope="col">Tahun</th>
             <th class="border text-center" scope="col">Indikator Rencana Kinerja</th>
+            <th class="border text-center" scope="col">Rumus Perhitungan</th>
+            <th class="border text-center" scope="col">Sumber Data</th>
             <th class="border text-center" scope="col">Target</th>
             <th class="border text-center" scope="col">Satuan</th>
           </tr>
@@ -33,14 +35,14 @@
               <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
               <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.tahun %></td>
               <% if sasaran.indikator_sasarans.any? %>
-                <%= indikator_sasaran(sasaran) %>
+                <%= indikator_sasaran_tambahan(sasaran) %>
               <% else %>
                 <td class="border" colspan="3">
                   <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
                 </td>
               <% end %>
             </tr>
-            <% row_indikator_sasaran(sasaran).each do |indikator| %>
+            <% row_indikator_sasaran_tambahan(sasaran).each do |indikator| %>
               <%= indikator %>
             <% end %>
           <% end %>
