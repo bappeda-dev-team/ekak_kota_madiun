@@ -155,7 +155,9 @@ class PohonKotaPresenter
   def program_pohon
     sasarans = sub_pohon_program_elements
     case role
-    when 'eselon_3'
+    when 'eselon_2'
+      sasarans.flat_map(&:program_kegiatan).uniq { |pk| pk.nama_urusan }
+    when 'eselon_4'
       sasarans.flat_map(&:program_kegiatan).uniq { |pk| pk.nama_kegiatan }
     else
       sasarans.flat_map(&:program_kegiatan).uniq { |pk| pk.nama_program }
