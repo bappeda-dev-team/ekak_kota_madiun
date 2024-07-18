@@ -26,10 +26,9 @@
 #
 FactoryBot.define do
   factory :strategi do
-    strategi { "MyString" }
-    tahun { "MyString" }
-    sasaran_id { "MyString" }
-    strategi_ref_id { "MyString" }
-    nip_asn { "MyString" }
+    strategi { "Contoh Strategi" }
+    tahun { "2024" }
+    role { "" }
+    association :opd
   end
 end

@@ -19,4 +19,12 @@ FactoryBot.define do
     type { "Tematik" }
     tahun { "2024" }
   end
+
+  factory :sub_tematik do
+    tema { "Sub Tema" }
+    keterangan { "contoh sub tema" }
+    type { "SubTematik" }
+    tahun { "2024" }
+    association :tematik
+  end
 end

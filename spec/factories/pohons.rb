@@ -28,6 +28,17 @@
 #
 FactoryBot.define do
   factory :pohon do
+    association :pohonable
     keterangan { "MyString" }
+    # pohonable_type { "" }
+    # pohonable_id { "" }
+    tahun { "" }
+    role { "" }
+    pohon_ref_id { "" }
+    status { nil }
+    metadata { nil }
+    opd_id { nil }
+    user_id { nil }
+    strategi_pohon_id { nil }
   end
 end
