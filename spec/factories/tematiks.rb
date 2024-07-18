@@ -13,10 +13,10 @@
 #
 FactoryBot.define do
   factory :tematik do
-    tema { "MyString" }
-    keterangan { "MyString" }
+    tema { "Tata Kelola Pemerintah yang baik" }
+    keterangan { "contoh" }
     tematik_ref_id { "" }
-    type { "" }
-    tahun { "2025" }
+    type { "Tematik" }
+    tahun { "2024" }
   end
 end

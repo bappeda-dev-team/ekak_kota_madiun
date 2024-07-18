@@ -33,5 +33,6 @@ FactoryBot.define do
     misi { "misi test" }
     tujuan { "tujuan test" }
     sasaran { "sasaran test" }
+    association :tematik
   end
 end
