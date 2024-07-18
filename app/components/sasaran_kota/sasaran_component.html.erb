@@ -1,16 +1,16 @@
 <tr class="<%= jenis %>">
     <% if jenis == 'sasaran_kota' %>
-        <td rowspan="<%= rowspan %>" colspan="2" class="text-wrap"><%= renaksi %></td>
+        <td rowspan="<%= rowspan %>" colspan="2" class="text-wrap renaksi"><%= renaksi %></td>
     <% else %>
-        <td rowspan="<%= rowspan %>" class="text-wrap"><%= title_up %></td>
-        <td rowspan="<%= rowspan %>" class="text-wrap"><%= renaksi %></td>
+        <td rowspan="<%= rowspan %>" class="text-wrap jenis-renaksi"><%= title_up %></td>
+        <td rowspan="<%= rowspan %>" class="text-wrap renaksi"><%= renaksi %></td>
     <% end %>
     <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="3"></td>
     <td rowspan="<%= rowspan %>" colspan="2" class="p-0 m-0 tabel-pagu">
         <%= render SasaranKota::ProgramPaguComponent.new(sasaran: @sasaran) %>
     </td>
     <td rowspan="<%= rowspan %>" class="text-wrap text-center"><%= keterangan %></td>
-    <td rowspan="<%= rowspan %>" class="text-wrap text-center align-middle fw-bolder">
+    <td rowspan="<%= rowspan %>" class="text-wrap text-center align-middle fw-bolder opd-pelaksana">
         <%= jenis == 'sasaran_kota' ? title_up : opd %>
     </td>
     <td rowspan="<%= rowspan %>" class="text-center align-middle">
