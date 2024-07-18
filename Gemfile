@@ -28,21 +28,14 @@ group :development, :test do
   gem 'bullet'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   # gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'database_cleaner'
   gem 'debug'
   gem 'factory_bot_rails'
-  gem 'pry-rails'
-  gem 'pry-remote'
-  gem 'pry-rescue'
-  gem 'pry-stack_explorer'
-  gem 'query_diet'
   gem 'rails-controller-testing'
   gem 'rspec-core'
   gem 'rspec-rails', '~> 6.1.0'
   gem 'ruby-lsp-rails', require: false
   gem 'ruby-lsp-rspec', require: false
   gem 'shoulda-matchers', '~> 5.0'
-  gem 'table_print'
 end
 
 group :development do
@@ -56,6 +49,7 @@ group :development do
   gem 'htmlbeautifier'
   gem 'letter_opener'
   gem 'listen', '~> 3.3'
+  gem 'query_diet'
   # Display performance information such as SQL time and flame graphs for each request in your browser.
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem 'rack-mini-profiler', '~> 2.0'
@@ -71,6 +65,7 @@ group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 3.26'
   gem 'capybara-select-2'
+  gem 'database_cleaner'
   gem 'fuubar'
   gem 'selenium-webdriver'
   gem 'show_me_the_cookies'
