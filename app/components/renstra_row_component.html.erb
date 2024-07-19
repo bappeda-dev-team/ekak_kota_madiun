@@ -2,25 +2,25 @@
   <%= render(HeaderRenstraComponent.new(title: title, indikator: with_indikator?, periode: periode, cetak: @cetak)) %>
 <% end %>
 <tr id="<%= row_id %>"
-    data-controller="calculation" 
-    data-calculation-jenis-value="<%= jenis %>" 
+    data-controller="calculation"
+    data-calculation-jenis-value="<%= jenis %>"
     data-calculation-parent-value="<%= parent %>"
-    data-calculation-kode-value="<%= kode %>" 
+    data-calculation-kode-value="<%= kode %>"
     data-calculation-anggaran-value="<%= @anggaran.to_json %>"
     data-action="calculation:sumTotal->calculation#what" >
-  <td class="text-gray-900 text-wrap border"><%= kode_tweak %></td>
+  <td class="text-gray-900 text-wrap border kode-<%= jenis %>"><%= kode_tweak %></td>
   <% if @cetak %>
     <td class="text-gray-900 text-wrap border" colspan="2" width="450px"><%= nama %></td>
   <% else %>
     <% if with_aksi? %>
-      <td class="text-gray-900 text-wrap border" width="450px"><%= nama %></td>
+      <td class="text-gray-900 text-wrap border nama-<%= jenis %>" width="450px"><%= nama %></td>
       <td class="border">
         <div class="d-grid gap-2">
           <%= render(EditButtonComponent.new(path: edit_path)) %>
         </div>
       </td>
     <% else %>
-      <td class="text-gray-900 text-wrap border" colspan="2" width="450px"><%= nama %></td>
+      <td class="text-gray-900 text-wrap border nama-<%= jenis %>" colspan="2" width="450px"><%= nama %></td>
     <% end %>
   <% end %>
   <% periode.each do |tahun| %>
