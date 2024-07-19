@@ -15,8 +15,8 @@ module SasaranOpdsHelper
       "
         <tr>
           <td class='border text-wrap'>#{indikator_s.indikator_kinerja}</td>
-          <td class='border text-wrap'>#{indikator&.rumus_perhitungan}</td>
-          <td class='border text-wrap'>#{indikator&.sumber_data}</td>
+          <td class='border text-wrap'>#{indikator_s&.rumus_perhitungan}</td>
+          <td class='border text-wrap'>#{indikator_s&.sumber_data}</td>
           <td class='border text-wrap'>#{indikator_s.target}</td>
           <td class='border text-wrap'>#{indikator_s.satuan}</td>
         </tr>
