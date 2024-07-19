@@ -31,6 +31,7 @@ module FilterHelper
       options_for_select(
         opds
           .rewhere(kode_opd: current_user.kode_opd)
+          .where.not(kode_opd: nil)
           .pluck(:nama_opd, :kode_unik_opd), current_user.opd.kode_unik_opd
       )
     end
