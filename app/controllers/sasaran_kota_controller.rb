@@ -59,12 +59,12 @@ class SasaranKotaController < ApplicationController
     @tahun = params[:tahun]
     pohon_id = params[:id]
 
-    @pohon_sub = Pohon.find_by(pohonable_id: pohon_id, tahun: @tahun)
+    @pohon_sub = Pohon.find_by(id: pohon_id, tahun: @tahun)
     @sub_sasaran_kota = @pohon_sub
                         .sub_pohons.where(tahun: @tahun, role: 'sub_sub_pohon_kota')
                         .select(&:pohonable)
     @rad_sasaran_kota = @pohon_sub
-                        .sub_pohons.where(tahun: @tahun, role: 'strategi_pohon_kota')
+                        .sub_pohons.where(tahun: @tahun)
                         .select(&:pohonable)
   end
 
@@ -80,12 +80,12 @@ class SasaranKotaController < ApplicationController
     @tahun = params[:tahun]
     pohon_id = params[:id]
 
-    @pohon_sub = Pohon.find_by(pohonable_id: pohon_id, tahun: @tahun)
+    @pohon_sub = Pohon.find_by(id: pohon_id, tahun: @tahun)
     @sub_sasaran_kota = @pohon_sub
                         .sub_pohons.where(tahun: @tahun, role: 'sub_sub_pohon_kota')
                         .select(&:pohonable)
     @rad_sasaran_kota = @pohon_sub
-                        .sub_pohons.where(tahun: @tahun, role: 'strategi_pohon_kota')
+                        .sub_pohons.where(tahun: @tahun)
                         .select(&:pohonable)
   end
 
@@ -111,7 +111,13 @@ class SasaranKotaController < ApplicationController
              else
                tahun
              end
-    @sasaran_kota = Pohon.includes(:pohonable).where(pohonable_type: %w[SubTematik], tahun: @tahun)
-                         .select(&:pohonable).group_by(&:parent_pohon).reject { |ph| ph.pohonable.nil? }
+    tematiks = Pohon.includes(:pohonable).where(pohonable_type: %w[Tematik], tahun: @tahun)
+                    .select(&:pohonable)
+
+    @sasaran_kota = tematiks.to_h do |tematik|
+      sub_pohons = tematik.sub_pohons.includes(:pohonable).where(tahun: @tahun)
+                          .select(&:pohonable)
+      [tematik, sub_pohons]
+    end
   end
 end

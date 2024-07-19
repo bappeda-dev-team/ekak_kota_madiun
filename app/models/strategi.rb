@@ -268,4 +268,8 @@ class Strategi < ApplicationRecord
   rescue NoMethodError
     0
   end
+
+  def sasaran_kotum
+    strategi
+  end
 end

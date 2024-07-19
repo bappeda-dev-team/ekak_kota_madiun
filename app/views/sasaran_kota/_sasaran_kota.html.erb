@@ -1,56 +1,67 @@
 <% rowspan = sasaran.pohonable.indikators.size + 1 %>
 <% sas = SasaranKota::SasaranComponent.new(sasaran: sasaran, tahun: @tahun) %>
 <tr id="<%= dom_id(sasaran.pohonable) %>">
-    <td rowspan="<%= rowspan %>" class="border"></td>
-    <td rowspan="<%= rowspan %>" class="text-wrap border"><%= sasaran.pohonable %></td>
-    <td rowspan="<%= rowspan %>" class="text-wrap border"><%= sasaran.pohonable.sasaran_kotum %></td>
+  <td rowspan="<%= rowspan %>" class="border"></td>
+  <td rowspan="<%= rowspan %>" class="text-wrap border"><%= sasaran.pohonable %></td>
+  <td rowspan="<%= rowspan %>" class="text-wrap border"><%= sasaran.pohonable.sasaran_kotum %></td>
+  <% if sasaran.pohonable_type == 'Strategi' %>
     <td rowspan="<%= rowspan %>" class="border">
-        <div class="d-grid gap-3">
-            <% if sasaran.pohonable.sasaran_kotum.present? %>
-                <%= link_to edit_sasaran_kotum_path(sasaran.pohonable.sasaran_kotum), remote: true,
-                 data: {
-                     controller: 'form-modal',
-                     action: 'ajax:complete->form-modal#success:prevent',
-                     bs_toggle: 'modal',
-                     bs_target: '#form-modal'
-                 },
-                 class: 'btn btn-outline-info' do %>
-                    <i class="fa fa-edit me-2"></i>
-                    <span>Edit</span>
-                <% end %>
-                <%= link_to rad_kota_sasaran_kotum_path(sasaran.pohonable.id, tahun: @tahun), class: 'btn btn-outline-primary' do %>
-                    <i class="fa fa-book-open me-2"></i>
-                    <span>RAD</span>
-                <% end %>
-            <% else %>
-                <%= link_to new_sasaran_kotum_path(tematik_id: sasaran.pohonable.id), remote: true,
-                 data: {
-                     controller: 'form-modal',
-                     action: 'ajax:complete->form-modal#success:prevent',
-                     bs_toggle: 'modal',
-                     bs_target: '#form-modal'
-                 },
-                 class: 'btn btn-secondary' do %>
-                    <i class="fa fa-plus me-2"></i>
-                    <span>Input Sasaran</span>
-                <% end %>
-            <% end %>
-        </div>
+      <div class="d-grid gap-3">
+        <%= link_to rad_kota_sasaran_kotum_path(sasaran.id, tahun: @tahun), class: 'btn btn-outline-primary' do %>
+          <i class="fa fa-book-open me-2"></i>
+          <span>RAD</span>
+        <% end %>
+      </div>
     </td>
-    <td colspan="3" class="p-0 m-0 border-0"></td>
-    <td class="text-wrap border" rowspan="<%= rowspan %>"><%= sas.title_up %></td>
-    <td class="text-wrap border" rowspan="<%= rowspan %>"><%= sasaran.pohonable.keterangan %></td>
+  <% else %>
+    <td rowspan="<%= rowspan %>" class="border">
+      <div class="d-grid gap-3">
+        <% if sasaran.pohonable.sasaran_kotum.present? %>
+          <%= link_to edit_sasaran_kotum_path(sasaran.pohonable.sasaran_kotum), remote: true,
+                      data: {
+                        controller: 'form-modal',
+                        action: 'ajax:complete->form-modal#success:prevent',
+                        bs_toggle: 'modal',
+                        bs_target: '#form-modal'
+                      },
+                      class: 'btn btn-outline-info' do %>
+            <i class="fa fa-edit me-2"></i>
+            <span>Edit</span>
+          <% end %>
+          <%= link_to rad_kota_sasaran_kotum_path(sasaran.id, tahun: @tahun), class: 'btn btn-outline-primary' do %>
+            <i class="fa fa-book-open me-2"></i>
+            <span>RAD</span>
+          <% end %>
+        <% else %>
+          <%= link_to new_sasaran_kotum_path(tematik_id: sasaran.pohonable.id), remote: true,
+                      data: {
+                        controller: 'form-modal',
+                        action: 'ajax:complete->form-modal#success:prevent',
+                        bs_toggle: 'modal',
+                        bs_target: '#form-modal'
+                      },
+                      class: 'btn btn-secondary' do %>
+            <i class="fa fa-plus me-2"></i>
+            <span>Input Sasaran</span>
+          <% end %>
+        <% end %>
+      </div>
+    </td>
+  <% end %>
+  <td colspan="3" class="p-0 m-0 border-0"></td>
+  <td class="text-wrap border" rowspan="<%= rowspan %>"><%= sas.title_up %></td>
+  <td class="text-wrap border" rowspan="<%= rowspan %>"><%= sasaran.pohonable.keterangan %></td>
 </tr>
 <% sasaran.pohonable.indikators.each do |indikator| %>
-    <tr class="skip">
-        <td class="text-wrap border"><%= indikator %></td>
-        <td class="border"><%= indikator.target %></td>
-        <td class="border"><%= indikator.satuan %></td>
-    </tr>
+  <tr class="skip">
+    <td class="text-wrap border"><%= indikator %></td>
+    <td class="border"><%= indikator.target %></td>
+    <td class="border"><%= indikator.satuan %></td>
+  </tr>
 <% end %>
 <% sas.sub_pohons.flat_map { |sub| sub.role == 'sub_sub_pohon_kota' ? sub.sub_pohons.map(&:opd) : sub.opd }.uniq.compact.each.with_index(1) do |opd, no| %>
-    <tr class="skip">
-        <td class="border">OPD <%= no %></td>
-        <td class="text-wrap border" colspan="8"><%= opd %></td>
-    </tr>
+  <tr class="skip">
+    <td class="border">OPD <%= no %></td>
+    <td class="text-wrap border" colspan="8"><%= opd %></td>
+  </tr>
 <% end %>
