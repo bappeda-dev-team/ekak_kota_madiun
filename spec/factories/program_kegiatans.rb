@@ -53,6 +53,12 @@ FactoryBot.define do
     kode_skpd { '5.01.5.05.0.00.02.0000' }
     kode_sub_skpd { '5.01.5.05.0.00.02.0000' }
     tahun { "2022" }
+    # Urusan
+    nama_urusan { "UNSUR PENUNJANG URUSAN PEMERINTAHAN" }
+    kode_urusan { "5" }
+    # Bidang Urusan
+    nama_bidang_urusan { "PERENCANAAN" }
+    kode_bidang_urusan { "5.01" }
     # Program
     nama_program { "PROGRAM PERENCANAAN, PENGENDALIAN DAN EVALUASI PEMBANGUNAN DAERAH" }
     kode_program { "5.01.01" }
