@@ -61,7 +61,7 @@ RSpec.describe SasaranKota::SasaranComponent, type: :component do
     expect(page).to have_css "td.opd-pelaksana", text: 'Test OPD'
   end
 
-  it 'renders asn pelaksana' do
+  it 'renders nama-nip pelaksana' do
     strategic = FactoryBot.create(:strategi,
                                   strategi: 'Renaksi-A',
                                   tahun: tahun,
@@ -73,7 +73,9 @@ RSpec.describe SasaranKota::SasaranComponent, type: :component do
                                                 status: 'diterima',
                                                 opd_id: opd.id)
 
-    pelaksana = FactoryBot.create(:eselon_2, opd: opd, nama: 'Kepala-OPD-X', nik: '123-456')
+    pelaksana = FactoryBot.create(:eselon_2, opd: opd,
+                                  nama: 'Kepala-OPD-X',
+                                  nik: '123-456')
     FactoryBot.create(:sasaran, tahun: tahun,
                                 user: pelaksana,
                                 strategi_id: strategic.id)
@@ -83,7 +85,7 @@ RSpec.describe SasaranKota::SasaranComponent, type: :component do
     component = described_class.new(sasaran: pohon_strategic, tahun: tahun)
 
     render_inline(component)
-    expect(page).to have_css "div.asn-pelaksana"
-    expect(page).to have_css "div.asn-pelaksana", text: 'Kepala-OPD-X'
+    expect(page).to have_css "td.nama-pelaksana", text: 'Kepala-OPD-X'
+    expect(page).to have_css "td.nip-pelaksana", text: '123-456'
   end
 end

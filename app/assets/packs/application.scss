@@ -248,11 +248,13 @@ td.wrap-text {
 }
 
 .rekap_pokin_separator {
-  background: repeating-linear-gradient(-55deg,
-      #222,
-      #222 10px,
-      #333 10px,
-      #333 20px);
+  background: repeating-linear-gradient(
+    -55deg,
+    #222,
+    #222 10px,
+    #333 10px,
+    #333 20px
+  );
   border: 0;
 }
 
@@ -302,7 +304,7 @@ td[data-tahun-pelaksanaan="success"] {
   }
 }
 
-td[data-tahun-pelaksanaan="success"]+td[data-tahun-pelaksanaan] {
+td[data-tahun-pelaksanaan="success"] + td[data-tahun-pelaksanaan] {
   background-color: #38e54d;
 
   &:before {
@@ -626,18 +628,6 @@ table.counter {
 
 .sasaran_kegiatan {
   @extend .table-success;
-}
-
-.table-pagu {
-  position: relative;
-}
-
-.table-pagu > .inner-table-pagu {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
 }
 
 .inner-table {

@@ -5,7 +5,7 @@
         <td rowspan="<%= rowspan %>" class="text-wrap jenis-renaksi"><%= title_up %></td>
         <td rowspan="<%= rowspan %>" class="text-wrap renaksi"><%= renaksi %></td>
     <% end %>
-    <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="3"></td>
+    <td class="p-0 m-0" style="height: 0px !important;" colspan="3"></td>
     <td rowspan="<%= rowspan %>" colspan="2" class="p-0 m-0 tabel-pagu">
         <%= render SasaranKota::ProgramPaguComponent.new(sasaran: @sasaran) %>
     </td>
@@ -13,11 +13,34 @@
     <td rowspan="<%= rowspan %>" class="text-wrap text-center align-middle fw-bolder opd-pelaksana">
         <%= jenis == 'sasaran_kota' ? title_up : opd %>
     </td>
-    <td rowspan="<%= rowspan %>" class="text-center align-middle">
-        <%= render ButtonLinkComponent.new(text: 'Lihat Pohon',
-                                           title: 'Preview Pokin',
-                                           path: show_pokin_sasaran_kotum_path(@sasaran)) %>
-    </td>
+    <% if jenis == 'sasaran_kota' %>
+        <td rowspan="<%= rowspan %>" class="text-center align-middle">
+            <%= render ButtonLinkComponent.new(text: 'Lihat Pohon',
+                                               title: 'Preview Pokin',
+                                               path: show_pokin_sasaran_kotum_path(@sasaran)) %>
+        </td>
+    <% else %>
+        <td rowspan="<%= rowspan %>" class="p-0 m-0">
+            <div class="asn-pelaksanas">
+                <table class="table p-0 m-0 inner-table text-center">
+                    <thead>
+                        <tr>
+                            <th>Nama Pelaksana</th>
+                            <th>NIP Pelaksana</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% nama_nip_pelaksanas.each do |pelaksana| %>
+                            <tr class="<%= nama_nip_pelaksanas.size > 1 ? 'border' : 'border-none' %>">
+                                <td class="nama-pelaksana text-wrap"><%= pelaksana[:nama] %></td>
+                                <td class="nip-pelaksana text-wrap"><%= pelaksana[:nip] %></td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </td>
+    <% end %>
 </tr>
 <%= render SasaranKota::IndikatorComponent.with_collection(indikators, warna_row: jenis) %>
 
