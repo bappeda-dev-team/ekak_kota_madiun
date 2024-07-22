@@ -311,19 +311,11 @@ class LaporanKakPdf < Prawn::Document
     ]
     table(inovasi_judul, column_widths: { 0 => 18, 1 => 17 }, cell_style: { size: 8, border_width: 0 })
 
-    # table(content_tabel, column_widths: { 0 => 150, 1 => 12 }, cell_style: { size: 8, border_width: 0 },
-    #                      width: bounds.width) do
-    #   cells.style(size: 8)
-    # end
     tabel_inovasi = [
-      ['', '', 'i.1', 'Judul inovasi', ':', sasaran.inovasi_sasaran]
+      ['', '', 'i.1', 'Judul inovasi', '', ':', sasaran.inovasi_sasaran],
+      ['', '', 'i.2', 'Nilai kebaruan', '', ':', sasaran.gambaran_nilai_kebaruan_sasaran]
     ]
-    table(tabel_inovasi, column_widths: { 0 => 18, 1 => 17 }, cell_style: { size: 8, border_width: 0 })
-
-    tabel_gambaran_kebaruan = [
-      ['', '', 'i.2', 'Nilai kebaruan', ':', sasaran.gambaran_nilai_kebaruan_sasaran]
-    ]
-    table(tabel_gambaran_kebaruan, column_widths: { 0 => 18, 1 => 17 }, cell_style: { size: 8, border_width: 0 })
+    table(tabel_inovasi, column_widths: { 0 => 18, 1 => 12, 2 => 18, 4 => 12 }, cell_style: { size: 8, border_width: 0 })
 
     move_down 30
     start_new_page if (cursor - 50).negative?
