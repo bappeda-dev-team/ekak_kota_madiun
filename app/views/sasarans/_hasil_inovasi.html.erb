@@ -5,13 +5,15 @@
   <table class="table" data-editable-table-target="main">
     <thead>
       <tr>
-        <th>Inovasi</th>
+        <th>Judul Inovasi</th>
+        <th>Gambaran Nilai Kebaruan</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td class="align-middle"><%= sasaran.metadata&.dig("inovasi_sasaran") %></td>
+        <td class="align-middle"><%= sasaran.metadata&.dig("gambaran_nilai_kebaruan") %></td>
         <td class="align-middle">
           <%= link_to edit_inovasi_sasaran_path(sasaran),
            remote: true, class: 'btn btn-outline-info',

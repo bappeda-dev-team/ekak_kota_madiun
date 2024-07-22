@@ -472,8 +472,10 @@ class SasaransController < ApplicationController
     @sasaran = Sasaran.find(params[:id])
     hasil_inovasi = sasaran_params[:hasil_inovasi]
     inovasi_sasaran = sasaran_params[:inovasi_sasaran]
+    gambaran_nilai_kebaruan = sasaran_params[:gambaran_nilai_kebaruan]
     prev_metadata = @sasaran.metadata.present? ? @sasaran.metadata : {}
     new_metadata = prev_metadata.merge({ hasil_inovasi: hasil_inovasi, inovasi_sasaran: inovasi_sasaran,
+                                         gambaran_nilai_kebaruan: gambaran_nilai_kebaruan,
                                          processed_at: DateTime.current })
     if @sasaran.update(metadata: new_metadata)
       render json: { resText: "Inovasi sasaran disimpan",
@@ -544,6 +546,7 @@ class SasaransController < ApplicationController
                                     :nama_output,
                                     :hasil_inovasi,
                                     :inovasi_sasaran,
+                                    :gambaran_nilai_kebaruan,
                                     :strategi_id,
                                     :kelompok_anggaran, :filter_file, :filter_target, :filter_type, :sasaran_milik,
                                     indikator_sasarans_attributes: %i[id indikator_kinerja aspek target satuan _destroy])

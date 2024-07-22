@@ -14,8 +14,13 @@
                       } } )%>
   </div>
   <div class="field" id="nama_inovasi" data-controller="field" data-action="toggle-inovasi-fields@document->field#toggle_visible">
-    <%= form.label :inovasi_sasaran,'Inovasi', class: "form-label" %>
+    <%= form.label :inovasi_sasaran,'Judul Inovasi', class: "form-label" %>
     <%= form.text_area :inovasi_sasaran, {class: "form-control", placeholder: 'tuliskan inovasi...', value: form.object.inovasi_sasaran} %>
+  </div>
+  <div class="field" id="gambaran_nilai_kebaruan" data-controller="field" data-action="toggle-inovasi-fields@document->field#toggle_visible">
+    <%= form.label :gambaran_nilai_kebaruan, 'Gambaran Nilai Kebaruan', class: "form-label" %>
+    <%= form.text_area :gambaran_nilai_kebaruan, {class: "form-control", placeholder: 'gambaran tentang nilai kebaruan dalam inovasi',
+                                                  value: form.object.gambaran_nilai_kebaruan_sasaran} %>
   </div>
   <div class="actions d-grid gap-3">
     <%= form.submit %>

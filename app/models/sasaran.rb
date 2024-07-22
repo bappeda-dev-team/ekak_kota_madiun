@@ -124,7 +124,7 @@ class Sasaran < ApplicationRecord
 
   enum status: { draft: 'draft', pengajuan: 'pengajuan', disetujui: 'disetujui', ditolak: 'ditolak' }
   store_accessor :metadata, :hasil_output, :nama_output, :processed_at, :deleted_at, :deleted_by, :keterangan_hapus,
-                 :clone_tahun_asal, :clone_oleh, :clone_asli, :id_rencana_sebelum, :inovasi_sasaran, :hasil_inovasi
+                 :clone_tahun_asal, :clone_oleh, :clone_asli, :id_rencana_sebelum, :inovasi_sasaran, :hasil_inovasi, :gambaran_nilai_kebaruan
 
   # DANGER, maybe broke something, uncomment this
   # def respond_to_missing?(_method, *_args)
@@ -423,6 +423,10 @@ class Sasaran < ApplicationRecord
 
   def inovasi_sasaran
     metadata&.dig("inovasi_sasaran")
+  end
+
+  def gambaran_nilai_kebaruan_sasaran
+    metadata&.dig("gambaran_nilai_kebaruan")
   end
 
   def output_sasaran
