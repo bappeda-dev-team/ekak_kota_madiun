@@ -1,7 +1,7 @@
 class LaporanKakPdf < Prawn::Document
   include ActionView::Helpers::NumberHelper
   def initialize(opd: '', tahun: '', program_kegiatan: '', sasarans: '')
-    super page_size: "LETTER"
+    super(page_size: "LETTER")
     @opd = opd
     @tahun = tahun
     @nama_opd = @opd.nama_opd
@@ -105,6 +105,12 @@ class LaporanKakPdf < Prawn::Document
       resiko(sasaran)
       rencana_aksi(sasaran)
       usulan(sasaran)
+      if sasaran.hasil_inovasi_sasaran == 'Inovasi'
+        inovasi_sasaran(sasaran)
+      else
+        move_down 30
+        start_new_page if (cursor - 50).negative?
+      end
     end
   end
 
@@ -296,6 +302,29 @@ class LaporanKakPdf < Prawn::Document
                                           column_widths: { 0 => 18, 1 => 50, 2 => 100 },
                                           cell_style: { size: 6, align: :center }, width: bounds.width, header: true)
     tabel_usulan_terakomodir.draw
+  end
+
+  def inovasi_sasaran(sasaran)
+    move_down 10
+    inovasi_judul = [
+      ['', 'i.', 'Inovasi dan nilai kebaruan']
+    ]
+    table(inovasi_judul, column_widths: { 0 => 18, 1 => 17 }, cell_style: { size: 8, border_width: 0 })
+
+    # table(content_tabel, column_widths: { 0 => 150, 1 => 12 }, cell_style: { size: 8, border_width: 0 },
+    #                      width: bounds.width) do
+    #   cells.style(size: 8)
+    # end
+    tabel_inovasi = [
+      ['', '', 'i.1', 'Judul inovasi', ':', sasaran.inovasi_sasaran]
+    ]
+    table(tabel_inovasi, column_widths: { 0 => 18, 1 => 17 }, cell_style: { size: 8, border_width: 0 })
+
+    tabel_gambaran_kebaruan = [
+      ['', '', 'i.2', 'Nilai kebaruan', ':', sasaran.gambaran_nilai_kebaruan_sasaran]
+    ]
+    table(tabel_gambaran_kebaruan, column_widths: { 0 => 18, 1 => 17 }, cell_style: { size: 8, border_width: 0 })
+
     move_down 30
     start_new_page if (cursor - 50).negative?
   end
