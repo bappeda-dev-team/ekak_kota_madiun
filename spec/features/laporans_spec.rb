@@ -32,6 +32,7 @@ RSpec.feature "Laporans", type: :feature do
       within('#inovasi-sasaran') do
         select2('Inovasi', from: 'Hasil inovasi', exact_text: true)
         fill_in('Inovasi', with: 'inovasi test')
+        fill_in('Gambaran nilai kebaruan', with: 'gambaran kebaruan test')
         click_on('Simpan Perubahan Sasaran')
       end
       click_on('Ok')
@@ -48,6 +49,8 @@ RSpec.feature "Laporans", type: :feature do
       expect(page).to have_content('SasaranTest')
       expect(page).to have_content('Inovasi')
       expect(page).to have_content('inovasi test')
+      expect(page).to have_content('GAMBARAN NILAI KEBARUAN')
+      expect(page).to have_content('gambaran kebaruan test')
     end
 
     scenario 'user(eselon_4) create sasaran with penduduk in manual ik', js: true do
