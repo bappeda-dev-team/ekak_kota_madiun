@@ -27,4 +27,10 @@ class Periode < ApplicationRecord
   def to_s
     "#{tahun_awal}-#{tahun_akhir}"
   end
+
+  def tahun_in_periode
+    awal = tahun_awal.to_i
+    akhir = tahun_akhir.to_i
+    (awal..akhir)
+  end
 end

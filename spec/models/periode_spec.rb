@@ -26,4 +26,10 @@ RSpec.describe Periode, type: :model do
       expect(find_periode).to eq periode
     end
   end
+
+  describe '#tahun_in_periode' do
+    it 'should generate range from tahun_awal to tahun_akhir' do
+      expect(periode.tahun_in_periode).to match([2025,2026])
+    end
+  end
 end
