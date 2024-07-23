@@ -209,10 +209,10 @@ class User < ApplicationRecord
   end
 
   def legacy_sasaran_user(tahun)
-    Sasaran.includes(%i[strategi tahapans program_kegiatan indikator_sasarans])
-           .where(nip_asn: nip, tahun: tahun)
-           .or(Sasaran.where(nip_asn_sebelumnya: nip, tahun: tahun))
-           .group_by(&:program_kegiatan)
+    sasarans.includes(%i[strategi tahapans program_kegiatan indikator_sasarans user])
+            .or(Sasaran.cari_nip_asn_sebelumnya(nip))
+            .filter { |sas| sas.tahun =~ /.*(#{tahun})/i }
+            .group_by(&:program_kegiatan)
   end
 
   def program_sasarans_tahun(tahun)
