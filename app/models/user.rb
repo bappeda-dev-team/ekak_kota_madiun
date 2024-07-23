@@ -94,6 +94,10 @@ class User < ApplicationRecord
     has_role?(:super_admin) && id == 1
   end
 
+  def admin?
+    has_any_role?(:super_admin, :admin)
+  end
+
   def nip_asn
     nik
   end

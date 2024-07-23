@@ -134,6 +134,16 @@ class Sasaran < ApplicationRecord
     sasaran_kinerja
   end
 
+  def self.cari_nip_asn(nip_asn)
+    where("nip_asn ILIKE ?", "%#{nip_asn}%")
+      .or(cari_nip_asn_sebelumnya(nip_asn))
+      .dengan_strategi
+  end
+
+  def self.cari_nip_asn_sebelumnya(nip_asn)
+    where("nip_asn_sebelumnya ILIKE ?", "%#{nip_asn}%")
+  end
+
   def aksi_bulan_kosong?
     tahapans.map { |t| t.aksis.map(&:id_aksi_bulan) }.flatten.include?(nil)
   end

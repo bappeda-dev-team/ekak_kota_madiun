@@ -84,11 +84,9 @@ class SasaransController < ApplicationController
 
   def sasaran_admin
     action = params[:button]
-    keyword = params[:keyword]
-    @sasarans = if keyword && action == 'cari'
-                  Sasaran.where("nip_asn ILIKE ?", "%#{keyword}%")
-                         .or(Sasaran.where("nip_asn_sebelumnya ILIKE ?", "%#{keyword}%"))
-                         .dengan_strategi
+    nip_asn = params[:nip_asn]
+    @sasarans = if nip_asn && action == 'cari'
+                  Sasaran.cari_nip_asn(nip_asn)
                 else
                   []
                 end

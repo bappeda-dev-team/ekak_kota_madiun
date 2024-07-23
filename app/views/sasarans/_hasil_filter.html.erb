@@ -31,23 +31,13 @@
           <td class="text-gray-900 text-wrap" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.nip_asn_sebelumnya %></td>
           <td class="text-gray-900 text-wrap" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.strategi.strategi %></td>
           <td class="text-gray-900 text-wrap" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
-          <td class="text-gray-900 text-wrap" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.tahun %></td>
+          <td class="text-gray-900 text-wrap text-center" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.tahun %></td>
           <td class="p-0 m-0 border-start border-end" style="height: 0px !important; border-color: transparent;"></td>
           <td class="p-0 m-0 border-start border-end" style="height: 0px !important; border-color: transparent;"></td>
           <td class="p-0 m-0 border-start border-end" style="height: 0px !important; border-color: transparent;"></td>
           <td class="fw-bolder text-gray-500 text-center" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>" id="<%= dom_id(sasaran) %>">
             <div class="d-grid gap-3">
-              <%= link_to edit_nip_sasaran_path(sasaran),remote: true,
-               data: {
-                 bs_toggle: 'modal',
-                 bs_target: '#form-sasaran-nip',
-                 controller: 'form-modal',
-                 action: 'form-modal#appendForm',
-                 form_modal_location_param: 'form-sasaran-nip-body',
-               },
-               class: "btn btn-sm btn-outline-info" do %>
-                Ganti Pemilik
-              <% end %>
+              <%= render ModalButtonComponent.new(path: edit_nip_sasaran_path(sasaran), title: 'Ganti Pemilik') %>
             </div>
           </td>
           <% sasaran.indikator_sasarans.each do |indikator| %>

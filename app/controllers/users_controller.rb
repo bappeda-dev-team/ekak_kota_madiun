@@ -28,7 +28,7 @@ class UsersController < ApplicationController
   def user_opd
     kode_opd = cookies[:opd] || ''
     opd = Opd.find_by(kode_unik_opd: kode_opd)
-    return if opd.nil?
+    return if opd.nil? || !current_user.admin?
 
     user_search = params[:q] || ''
     @users = opd.user_bidang_filter(user_search)

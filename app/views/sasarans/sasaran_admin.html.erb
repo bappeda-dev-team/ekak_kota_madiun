@@ -1,35 +1,22 @@
-<div class="row">
-  <div class="col-12">
-    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
-      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
-        <li class="breadcrumb-item">
-          <%= link_to root_path do %>
-            <i class="fas fa-home"></i>
-          <% end %>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">Master Rencana Kinerja</li>
-      </ol>
-    </nav>
-    <% flash.each do |type, msg| %>
-      <% tipe = type == 'error' ? 'danger' : type %>
-      <div class="alert alert-<%= tipe %>">
-        <%= msg %>
-      </div>
-    <% end %>
-    <div class="card">
-      <div class="card-body border-5 shadow">
-        <%= form_with url: sasaran_admin_sasarans_path,method: :get do |form| %>
-          <%= form.label :keyword %>
-          <%= form.text_field :keyword, class: 'form-control', placeholder: 'Nama / NIP / Jabatan', required: true, minlength: 3  %>
-          <%= form.button class: "btn btn-tertiary w-100 mt-5", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>  Mencari..." }, value: "cari", name: 'button' do %>
-            <i class="fa fa-search me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Cari User"></i>
-            <span>Cari</span>
-          <% end %>
+<%= content_for :html_title, "Master Rencana Kinerja" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Data Master</li>
+  <li class="breadcrumb-item active" aria-current="page">Master Rencana Kinerja</li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="card">
+    <div class="card-body border-5 shadow">
+      <%= form_with url: sasaran_admin_sasarans_path,method: :get do |form| %>
+        <%= form.label :nip_asn %>
+        <%= form.text_field :nip_asn, class: 'form-control', placeholder: 'NIP ASN', required: true, minlength: 3  %>
+        <%= form.button class: "btn btn-tertiary w-100 mt-5", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>  Mencari..." }, value: "cari", name: 'button' do %>
+          <i class="fa fa-search me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Cari User"></i>
+          <span>Cari</span>
         <% end %>
-      </div>
-      <div class="card border-0 shadow" id="sasaran_filter">
-        <%= render partial: 'sasarans/hasil_filter' %>
-      </div>
+      <% end %>
+    </div>
+    <div class="card border-1 shadow" id="sasaran_filter">
+      <%= render partial: 'sasarans/hasil_filter' %>
     </div>
   </div>
-<%= render 'shared/modal_template', modal_name: 'sasaran-nip' %>
+<% end %>
