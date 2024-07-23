@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     return if opd.nil?
 
     user_search = params[:q] || ''
-    @users = opd.user_bidang.filter { |user| user.nama =~ /.*(#{user_search})/i }
+    @users = opd.user_bidang_filter(user_search)
   end
 
   def user_search

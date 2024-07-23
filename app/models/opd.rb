@@ -467,4 +467,10 @@ class Opd < ApplicationRecord
       users.non_admin.aktif
     end
   end
+
+  def user_bidang_filter(user_search)
+    user_bidang.filter do |user|
+      user.nama =~ /.*(#{user_search})/i || user.nik =~ /.*(#{user_search})/i
+    end
+  end
 end

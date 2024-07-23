@@ -8,7 +8,14 @@
   </div>
   <div class="field">
     <%= form.label :nip_baru, class: "form-label" %>
-    <%= form.text_field :nip_baru, class: "form-control", required: true %>
+    <%= form.select :nip_baru, [],{include_blank: true},
+     { required: true,
+       data: { "placeholder": "Pilih ASN",
+         controller: 'dropdown',
+         dropdown_jenis_value: 'ajax',
+         dropdown_parent_value: '#form-modal',
+         dropdown_url_value: user_opd_users_path(format: :json)
+       } }  %>
   </div>
   <div class="actions">
     <%= form.submit %>

@@ -46,7 +46,7 @@
             <% @sasarans.each.with_index(1) do |(subkegiatan, sasarans), i| %>
               <tr>
                 <td class="border fw-bolder text-wrap"><%= i %></td>
-                <td class="border fw-bolder text-wrap" colspan="8">Subkegiatan: <%= subkegiatan %></td>
+                <td class="border fw-bolder text-wrap" colspan="8">Subkegiatan: <%= subkegiatan&.nama_subkegiatan %></td>
               </tr>
               <% sasarans.each.with_index(1) do |sasaran, no| %>
                 <% warning = sasaran.nip_asn_sebelumnya.present? ? 'table-danger' : '' %>
