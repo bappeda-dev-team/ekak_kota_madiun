@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Renjas", type: :request do
-  describe "GET /rankir.json" do
+  describe "GET /api/rankir.json" do
     def valid_params
       kode_opd = FactoryBot.create(:opd).kode_unik_opd
       tahun = '2025'
