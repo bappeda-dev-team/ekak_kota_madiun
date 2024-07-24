@@ -61,7 +61,7 @@ RSpec.describe SasaranKota::SasaranComponent, type: :component do
     expect(page).to have_css "td.opd-pelaksana", text: 'Test OPD'
   end
 
-  it 'renders nama-nip pelaksana' do
+  it 'renders nama-nip pelaksana with inovasi' do
     strategic = FactoryBot.create(:strategi,
                                   strategi: 'Renaksi-A',
                                   tahun: tahun,
@@ -87,5 +87,6 @@ RSpec.describe SasaranKota::SasaranComponent, type: :component do
     render_inline(component)
     expect(page).to have_css "td.nama-pelaksana", text: 'Kepala-OPD-X'
     expect(page).to have_css "td.nip-pelaksana", text: '123-456'
+    expect(page).to have_css "td.inovasi-pelaksana", text: 'Inovasi-X'
   end
 end
