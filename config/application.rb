@@ -42,7 +42,7 @@ module PrototypeKak
         view_specs: false,
         helper_specs: false,
         routing_specs: false,
-        request_specs: false
+        request_specs: true
       )
     end
   end
