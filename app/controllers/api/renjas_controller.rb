@@ -4,8 +4,6 @@ class Api::RenjasController < ActionController::API
   before_action :required_params
 
   def rankir
-    @kode_opd = params[:kode_opd]
-    @tahun = params[:tahun]
     @opd = Opd.find_by!(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
 
