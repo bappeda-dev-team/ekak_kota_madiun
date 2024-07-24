@@ -79,11 +79,15 @@ class SasaranKota::SasaranComponent < ViewComponent::Base
   def nama_nip_pelaksanas
     if jenis == 'sasaran_subkegiatan'
       [{ nama: @sasaran.nama_pelaksana,
-         nip: @sasaran.nip_asn }]
+         nip: @sasaran.nip_asn,
+         inovasi: @sasaran.inovasi_sasaran
+       }]
     else
       @sasaran.pohonable.sasarans.dengan_nip.flat_map do |sasaran|
         { nama: sasaran.nama_pelaksana,
-          nip: sasaran.nip_asn }
+          nip: sasaran.nip_asn,
+          inovasi: sasaran.inovasi_sasaran
+        }
       end.uniq
     end
   end
