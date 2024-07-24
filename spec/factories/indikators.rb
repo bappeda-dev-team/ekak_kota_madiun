@@ -29,6 +29,7 @@ FactoryBot.define do
     satuan { "MyString" }
     tahun { "MyString" }
     jenis { "MyString" }
+    kode_indikator { "" }
     kode { "MyString" }
   end
 end
