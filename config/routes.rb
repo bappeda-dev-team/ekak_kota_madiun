@@ -694,6 +694,7 @@ Rails.application.routes.draw do
       collection do
         get :rankir
         get :rankir_program
+        get :rankir_kegiatan
       end
     end
     namespace :programs do
