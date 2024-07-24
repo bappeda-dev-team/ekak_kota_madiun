@@ -36,14 +36,15 @@ RSpec.describe "Renjas", type: :request do
         expect(response).to have_http_status(:success)
       end
 
-      it 'returns nama opd and tahun' do
+      it 'returns nama message, nama_opd, tahun, programs' do
         get '/api/renjas/rankir_program', params: valid_params
 
         json = JSON.parse(response.body).deep_symbolize_keys
         expect(json).to eq({
                              message: 'Rankir Renja - Program - KAK',
                              nama_opd: opd.nama_opd,
-                             tahun: tahun
+                             tahun: tahun,
+                             programs: []
                            })
       end
     end
