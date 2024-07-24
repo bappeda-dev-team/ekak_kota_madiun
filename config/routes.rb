@@ -688,6 +688,7 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
+    get 'health/index'
     resources :renstras
     resources :renjas do
       collection do
