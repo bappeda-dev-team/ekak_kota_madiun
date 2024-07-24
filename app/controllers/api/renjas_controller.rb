@@ -18,6 +18,12 @@ class Api::RenjasController < ActionController::API
   def rankir_program
     @opd = Opd.find_by!(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
+    service = RenjaService.new(kode_opd: @kode_opd,
+                               tahun: @tahun,
+                               jenis: 'rankir')
+
+    @subkegiatans = service.subkegiatan_renja
+    @programs = service.program_renja
   end
 
   private
