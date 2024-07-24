@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Renjas", type: :request do
   let(:opd) { FactoryBot.create(:opd) }
-  let(:tahun) { '2025' }
+  let(:tahun) { '2024' }
   def valid_params
     kode_opd = opd.kode_unik_opd
 
@@ -39,12 +39,29 @@ RSpec.describe "Renjas", type: :request do
       it 'returns nama message, nama_opd, tahun, programs' do
         get '/api/renjas/rankir_program', params: valid_params
 
+        program = FactoryBot.create(:program_kegiatan, tahun: tahun, opd: opd)
+        indikator_program = FactoryBot.create(:indikator,
+                                              kode: program.kode_program,
+                                              indikator: 'indikator-x',
+                                              target: '100',
+                                              satuan: 'satuan-x',
+                                              jenis: 'Renstra',
+                                              sub_jenis: 'Program',
+                                              kode_indikator: "#{program.kode_program}_Renstra_Program"
+                                             )
+
         json = JSON.parse(response.body).deep_symbolize_keys
         expect(json).to eq({
                              message: 'Rankir Renja - Program - KAK',
                              nama_opd: opd.nama_opd,
                              tahun: tahun,
-                             programs: []
+                             programs: [
+                               {
+                                 jenis: 'Program',
+                                 nama: program.nama_program,
+                                 kode: program.kode_program
+                               }
+                             ]
                            })
       end
     end
