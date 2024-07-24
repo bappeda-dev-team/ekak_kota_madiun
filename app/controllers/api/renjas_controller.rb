@@ -1,6 +1,8 @@
 class Api::RenjasController < ActionController::API
   respond_to :json
 
+  before_action :required_params
+
   def rankir
     @kode_opd = params[:kode_opd]
     @tahun = params[:tahun]
@@ -13,5 +15,17 @@ class Api::RenjasController < ActionController::API
     logger.info e
     render json: { message: "Opd tidak ditemukan" },
            status: :not_found
+  end
+
+  def rankir_program
+    @opd = Opd.find_by!(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+  end
+
+  private
+
+  def required_params
+    @kode_opd = params[:kode_opd]
+    @tahun = params[:tahun]
   end
 end

@@ -693,6 +693,7 @@ Rails.application.routes.draw do
     resources :renjas do
       collection do
         get :rankir
+        get :rankir_program
       end
     end
     namespace :programs do
