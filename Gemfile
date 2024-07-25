@@ -68,6 +68,7 @@ group :test do
   gem 'capybara-select-2'
   gem 'database_cleaner'
   gem 'fuubar'
+  gem 'pdf-inspector', require: "pdf/inspector"
   gem 'selenium-webdriver'
   gem 'show_me_the_cookies'
 end

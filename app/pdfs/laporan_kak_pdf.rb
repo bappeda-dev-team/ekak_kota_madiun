@@ -97,7 +97,7 @@ class LaporanKakPdf < Prawn::Document
   def kak_content
     @sasarans.each.with_index(1) do |sasaran, index|
       sasaran_kinerja(sasaran, index)
-      dasara_hukum(sasaran)
+      dasar_hukum(sasaran)
       gambaran_umum(sasaran)
       penerima_manfaat(sasaran)
       data_terpilah(sasaran)
@@ -146,7 +146,7 @@ class LaporanKakPdf < Prawn::Document
     tabel_sasaran.draw
   end
 
-  def dasara_hukum(sasaran)
+  def dasar_hukum(sasaran)
     dasar_hukum_arr = []
     if sasaran.dasar_hukums.any?
       sasaran.dasar_hukums.each do |dasar_hukum|
