@@ -3,6 +3,7 @@ json.nama_opd @nama_opd
 json.tahun @tahun
 json.programs @kegiatans.each do |kegiatan|
   json.jenis kegiatan[:jenis].titleize
+  json.parent kegiatan[:parent]
   json.kode kegiatan[:kode]
   json.nama kegiatan[:nama]
   json.indikator kegiatan[:indikators][:indikator]

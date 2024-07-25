@@ -3,6 +3,7 @@ json.nama_opd @nama_opd
 json.tahun @tahun
 json.programs @programs.each do |program|
   json.jenis program[:jenis].titleize
+  json.parent program[:parent]
   json.kode program[:kode]
   json.nama program[:nama]
   json.indikator program[:indikators][:indikator]

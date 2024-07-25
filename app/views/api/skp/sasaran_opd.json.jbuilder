@@ -14,6 +14,8 @@ json.data do
     json.indikator_sasaran sasaran_opd.indikator_sasarans do |indikator|
       json.aspek indikator.aspek
       json.indikator indikator.indikator_kinerja
+      json.rumus_perhitungan indikator&.rumus_perhitungan
+      json.sumber_data  indikator&.sumber_data
       json.target indikator.target
       json.satuan indikator.satuan
     end
