@@ -40,6 +40,10 @@ module UsersHelper
     current_user.has_any_role?(:super_admin, :admin)
   end
 
+  def guest?
+    current_user.has_role?(:guest)
+  end
+
   def eselon_x?(*roles)
     current_user.roles.map(&:name).any? { |role| roles.include?(role) }
   end

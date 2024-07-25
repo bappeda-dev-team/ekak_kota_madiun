@@ -4,19 +4,21 @@
       <div class="col">
         <h2 class="fs-5 fw-bold mb-0">Tujuan Kota Periode <%= "#{@tahun_awal} - #{@tahun_akhir}" %></h2>
       </div>
-      <div class="col-auto">
-        <%= link_to new_tujuan_kotum_path,
-            remote: true,
-            data: {
-              controller: 'form-modal',
-              action: 'ajax:complete->form-modal#success:prevent',
-              bs_toggle: 'modal',
-              bs_target: '#form-modal'
-            },
-         class: 'btn btn-sm btn-info text-white' do %>
-          <span>Buat Tujuan Kota Baru</span>
-        <% end %>
-      </div>
+      <% unless guest? %>
+        <div class="col-auto">
+          <%= link_to new_tujuan_kotum_path,
+                      remote: true,
+                      data: {
+                        controller: 'form-modal',
+                        action: 'ajax:complete->form-modal#success:prevent',
+                        bs_toggle: 'modal',
+                        bs_target: '#form-modal'
+                      },
+                      class: 'btn btn-sm btn-info text-white' do %>
+            <span>Buat Tujuan Kota Baru</span>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </div>
   <div class="card-body">
@@ -48,29 +50,31 @@
             <tr>
               <td class="text-gray-900 text-wrap border" width='20px' scope="row" rowspan="<%= rowsize %>"><%= no_tujuan %></td>
               <td class="text-gray-900 border px-auto" scope="row" rowspan="<%= rowsize %>">
-                <div class="row justify-content-center w-100">
-                  <div class="col">
-                    <%= link_to edit_tujuan_kotum_path(tujuan),
-                     remote: true,
-                     class: "m-3 btn btn-outline-info w-100",
-                     data: {
-                       controller: 'form-modal',
-                       action: 'ajax:complete->form-modal#success:prevent',
-                       bs_toggle: 'modal',
-                       bs_target: '#form-modal' } do %>
-                      <i class="fa fa-edit"></i>
-                      <span>Edit</span>
-                    <% end %>
+                <% unless guest? %>
+                  <div class="row justify-content-center w-100">
+                    <div class="col">
+                      <%= link_to edit_tujuan_kotum_path(tujuan),
+                                  remote: true,
+                                  class: "m-3 btn btn-outline-info w-100",
+                                  data: {
+                                    controller: 'form-modal',
+                                    action: 'ajax:complete->form-modal#success:prevent',
+                                    bs_toggle: 'modal',
+                                    bs_target: '#form-modal' } do %>
+                        <i class="fa fa-edit"></i>
+                        <span>Edit</span>
+                      <% end %>
+                    </div>
+                    <div class="col">
+                      <%= link_to tujuan, method: :delete,
+                                  data: { confirm_swal: "Hapus #{tujuan.tujuan} ?"},
+                                  class: "m-3 btn btn-outline-danger w-100" do %>
+                        <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+                        <span>Hapus</span>
+                      <% end %>
+                    </div>
                   </div>
-                  <div class="col">
-                    <%= link_to tujuan, method: :delete,
-                        data: { confirm_swal: "Hapus #{tujuan.tujuan} ?"},
-                     class: "m-3 btn btn-outline-danger w-100" do %>
-                      <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
-                      <span>Hapus</span>
-                    <% end %>
-                  </div>
-                </div>
+                <% end %>
               </td>
               <td class="fw-bolder text-wrap" scope="row" rowspan="<%= rowsize %>"><%= tujuan.tujuan %></td>
               <td class="fw-bolder border" scope="row" rowspan="<%= rowsize %>"><%= tujuan.tahun_awal_akhir %></td>

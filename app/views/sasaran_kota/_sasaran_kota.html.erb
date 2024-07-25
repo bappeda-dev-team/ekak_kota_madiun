@@ -17,32 +17,38 @@
     <td rowspan="<%= rowspan %>" class="border">
       <div class="d-grid gap-3">
         <% if sasaran.pohonable.sasaran_kotum.present? %>
-          <%= link_to edit_sasaran_kotum_path(sasaran.pohonable.sasaran_kotum), remote: true,
-                      data: {
-                        controller: 'form-modal',
-                        action: 'ajax:complete->form-modal#success:prevent',
-                        bs_toggle: 'modal',
-                        bs_target: '#form-modal'
-                      },
-                      class: 'btn btn-outline-info' do %>
-            <i class="fa fa-edit me-2"></i>
-            <span>Edit</span>
+          <% unless guest? %>
+            <%= link_to edit_sasaran_kotum_path(sasaran.pohonable.sasaran_kotum), remote: true,
+                        data: {
+                          controller: 'form-modal',
+                          action: 'ajax:complete->form-modal#success:prevent',
+                          bs_toggle: 'modal',
+                          bs_target: '#form-modal'
+                        },
+                        class: 'btn btn-outline-info' do %>
+              <i class="fa fa-edit me-2"></i>
+              <span>Edit</span>
+            <% end %>
           <% end %>
           <%= link_to rad_kota_sasaran_kotum_path(sasaran.id, tahun: @tahun), class: 'btn btn-outline-primary' do %>
             <i class="fa fa-book-open me-2"></i>
             <span>RAD</span>
           <% end %>
         <% else %>
-          <%= link_to new_sasaran_kotum_path(tematik_id: sasaran.pohonable.id), remote: true,
-                      data: {
-                        controller: 'form-modal',
-                        action: 'ajax:complete->form-modal#success:prevent',
-                        bs_toggle: 'modal',
-                        bs_target: '#form-modal'
-                      },
-                      class: 'btn btn-secondary' do %>
-            <i class="fa fa-plus me-2"></i>
-            <span>Input Sasaran</span>
+          <% if guest? %>
+            <button class="btn btn-danger">Dalam Perbaikan</button>
+          <% else %>
+            <%= link_to new_sasaran_kotum_path(tematik_id: sasaran.pohonable.id), remote: true,
+                        data: {
+                          controller: 'form-modal',
+                          action: 'ajax:complete->form-modal#success:prevent',
+                          bs_toggle: 'modal',
+                          bs_target: '#form-modal'
+                        },
+                        class: 'btn btn-secondary' do %>
+              <i class="fa fa-plus me-2"></i>
+              <span>Input Sasaran</span>
+            <% end %>
           <% end %>
         <% end %>
       </div>

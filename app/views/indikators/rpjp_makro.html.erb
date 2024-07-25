@@ -6,20 +6,22 @@
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout', title: "RPJP Makro - #{@tahun}" do %>
     <div class="table-responsive mb-5 d-grid gap-2">
-      <div class="action-btn">
-        <%= link_to new_indikator_path(jenis: 'RPJP', sub_jenis: 'Makro', tahun: @tahun),
-         remote: true,
-         data: {
-           controller: 'form-modal',
-           action: 'ajax:complete->form-modal#success:prevent',
-           bs_toggle: 'modal',
-           bs_target: '#form-modal'
-         },
-         class: 'btn btn-sm btn-primary' do %>
-          <i class="fas fa-plus me-2"></i>
-          <span>Indikator RPJP Makro</span>
-        <% end %>
-      </div>
+      <% unless guest? %>
+        <div class="action-btn">
+          <%= link_to new_indikator_path(jenis: 'RPJP', sub_jenis: 'Makro', tahun: @tahun),
+                      remote: true,
+                      data: {
+                        controller: 'form-modal',
+                        action: 'ajax:complete->form-modal#success:prevent',
+                        bs_toggle: 'modal',
+                        bs_target: '#form-modal'
+                      },
+                      class: 'btn btn-sm btn-primary' do %>
+            <i class="fas fa-plus me-2"></i>
+            <span>Indikator RPJP Makro</span>
+          <% end %>
+        </div>
+      <% end %>
       <table class="table align-items-center counter">
         <%= render 'indikators/header_table_indikator' %>
         <tbody id="new_indikator">

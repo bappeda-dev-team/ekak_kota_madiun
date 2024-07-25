@@ -6,26 +6,28 @@
     <td colspan="3" class="p-0 m-0 border-0"></td>
     <td class="text-wrap" rowspan="<%= rowspan %>"><%= tema.keterangan %></td>
     <td class="text-center" rowspan="<%= rowspan %>">
-      <div class="d-grid gap-3">
-        <%= link_to edit_tematik_path(tema), remote: true,
-         data: {
-             controller: 'form-modal',
-             action: 'ajax:complete->form-modal#success:prevent',
-             bs_toggle: 'modal',
-             bs_target: '#form-modal'
-         },
-         class: 'btn btn-outline-info' do %>
-          <i class="fa fa-edit me-2"></i>
-          <span>Edit Tema</span>
-        <% end %>
-        <%= link_to tema,
-           method: :delete,
-           class: 'btn btn-outline-danger',
-           data: { confirm_swal: "Hapus #{tema}?" } do %>
-          <i class="fa fa-trash-alt me-2"></i>
-          <span>Hapus Tema</span>
-        <% end %>
-      </div>
+      <% unless guest? %>
+        <div class="d-grid gap-3">
+          <%= link_to edit_tematik_path(tema), remote: true,
+                      data: {
+                        controller: 'form-modal',
+                        action: 'ajax:complete->form-modal#success:prevent',
+                        bs_toggle: 'modal',
+                        bs_target: '#form-modal'
+                      },
+                      class: 'btn btn-outline-info' do %>
+            <i class="fa fa-edit me-2"></i>
+            <span>Edit Tema</span>
+          <% end %>
+          <%= link_to tema,
+                      method: :delete,
+                      class: 'btn btn-outline-danger',
+                      data: { confirm_swal: "Hapus #{tema}?" } do %>
+            <i class="fa fa-trash-alt me-2"></i>
+            <span>Hapus Tema</span>
+          <% end %>
+        </div>
+      <% end %>
     </td>
   </tr>
   <% tema.indikators.each do |indikator| %>

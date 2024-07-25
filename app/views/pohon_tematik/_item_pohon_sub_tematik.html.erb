@@ -30,7 +30,7 @@
       </tr>
     </table>
   </div>
-  <% if super_admin? %>
+  <% if super_admin? && !guest? %>
     <%= render partial: 'pohon_tematik/item_reviews', locals: { pohon: pohon } %>
     <div class="pohon-tombol mb-1">
       <div class="row">

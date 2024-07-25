@@ -1,17 +1,19 @@
 <div class="pohon">
   <div class="pohon-title">
     <h5 class="text-center"><strong>Tematik Kota</strong></h5>
-    <%= link_to clone_path(pohon), remote: true,
-                      data: {
-                        controller: 'form-modal',
-                        action: 'form-modal#appendForm',
-                        form_modal_location_param: 'form-modal-body',
-                        bs_toggle: 'modal',
-                        bs_target: '#form-modal'
-                      },
-                      class: "btn btn-sm btn-primary w-100 mt-3" do %>
-      <i class="fa fa-clone me-2"></i>
-      <span>Clone</span>
+    <% unless guest? %>
+      <%= link_to clone_path(pohon), remote: true,
+                  data: {
+                    controller: 'form-modal',
+                    action: 'form-modal#appendForm',
+                    form_modal_location_param: 'form-modal-body',
+                    bs_toggle: 'modal',
+                    bs_target: '#form-modal'
+                  },
+                  class: "btn btn-sm btn-primary w-100 mt-3" do %>
+        <i class="fa fa-clone me-2"></i>
+        <span>Clone</span>
+      <% end %>
     <% end %>
   </div>
   <div class="pohon-body">
@@ -42,18 +44,18 @@
       </tr>
     </table>
   </div>
-  <% if super_admin? %>
+  <% if super_admin? && !guest? %>
     <%= render partial: 'pohon_tematik/item_reviews', locals: { pohon: pohon } %>
     <div class="pohon-tombol mb-1">
       <div class="row">
         <div class="col">
           <%= link_to edit_pohon_tematik_path(pohon),
-             remote: true,
-             data: {
-                 controller: 'pohon-tematik',
-                 action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
-             },
-             class: 'btn btn-outline-info' do %>
+                      remote: true,
+                      data: {
+                        controller: 'pohon-tematik',
+                        action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
+                      },
+                      class: 'btn btn-outline-info' do %>
             <i class="fas fa-edit me-2"></i>
             <span>Edit</span>
           <% end %>
