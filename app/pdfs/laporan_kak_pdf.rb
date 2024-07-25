@@ -314,7 +314,7 @@ class LaporanKakPdf < Prawn::Document
     tabel_inovasi = [
       ['', '', 'i.1', 'Judul inovasi', '', ':', sasaran.inovasi_sasaran],
       ['', '', 'i.2', 'Jenis inovasi', '', ':', sasaran.jenis_inovasi_sasaran],
-      ['', '', 'i.3', 'Nilai kebaruan', '', ':', { content: sasaran.gambaran_nilai_kebaruan_sasaran, align: :right }]
+      ['', '', 'i.3', 'Nilai kebaruan', '', ':', { content: sasaran.gambaran_nilai_kebaruan_sasaran, align: :justify }]
     ]
     table(tabel_inovasi, column_widths: { 0 => 18, 1 => 12, 2 => 18, 4 => 12 },
                          cell_style: { size: 8, border_width: 0, inline_format: true })
