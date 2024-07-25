@@ -1,19 +1,21 @@
 <div data-controller='editable-table'>
-  <div class="form-edit d-none" data-editable-table-target="form">
+  <div class="form-edit d-none" data-editable-table-target="form" id="edit-inovasi-sasaran">
   </div>
 
   <table class="table" data-editable-table-target="main">
     <thead>
       <tr>
         <th>Judul Inovasi</th>
+        <th>Jenis Inovasi</th>
         <th>Gambaran Nilai Kebaruan</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td class="align-middle"><%= sasaran.metadata&.dig("inovasi_sasaran") %></td>
-        <td class="align-middle"><%= sasaran.metadata&.dig("gambaran_nilai_kebaruan") %></td>
+        <td class="align-middle judul-inovasi"><%= sasaran.metadata&.dig("inovasi_sasaran") %></td>
+        <td class="align-middle jenis-inovasi"><%= sasaran.metadata&.dig("jenis_inovasi") %></td>
+        <td class="align-middle gambaran-inovasi"><%= sasaran.metadata&.dig("gambaran_nilai_kebaruan") %></td>
         <td class="align-middle">
           <%= link_to edit_inovasi_sasaran_path(sasaran),
            remote: true, class: 'btn btn-outline-info',

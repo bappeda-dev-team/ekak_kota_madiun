@@ -17,6 +17,18 @@
     <%= form.label :inovasi_sasaran,'Judul Inovasi', class: "form-label" %>
     <%= form.text_area :inovasi_sasaran, {class: "form-control", placeholder: 'tuliskan inovasi...', value: form.object.inovasi_sasaran} %>
   </div>
+  <div class="field" id="jenis_inovasi" data-controller="field" data-action="toggle-inovasi-fields@document->field#toggle_visible">
+    <%= form.label :jenis_inovasi,'Jenis inovasi', class: "form-label" %>
+    <%= form.select(:jenis_inovasi,
+                    jenis_inovasi,
+                    {selected: form.object.jenis_inovasi_sasaran},
+                    {
+                      id: 'jenis-inovasi',
+                      data: {
+                        controller: 'dropdown',
+                        dropdown_parent_value: '#edit-inovasi-sasaran'
+                      } } )%>
+  </div>
   <div class="field" id="gambaran_nilai_kebaruan" data-controller="field" data-action="toggle-inovasi-fields@document->field#toggle_visible">
     <%= form.label :gambaran_nilai_kebaruan, 'Gambaran Nilai Kebaruan', class: "form-label" %>
     <%= form.text_area :gambaran_nilai_kebaruan, {class: "form-control", placeholder: 'gambaran tentang nilai kebaruan dalam inovasi',
