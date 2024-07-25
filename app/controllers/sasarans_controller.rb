@@ -470,9 +470,12 @@ class SasaransController < ApplicationController
     @sasaran = Sasaran.find(params[:id])
     hasil_inovasi = sasaran_params[:hasil_inovasi]
     inovasi_sasaran = sasaran_params[:inovasi_sasaran]
+    jenis_inovasi = sasaran_params[:jenis_inovasi]
     gambaran_nilai_kebaruan = sasaran_params[:gambaran_nilai_kebaruan]
     prev_metadata = @sasaran.metadata.present? ? @sasaran.metadata : {}
-    new_metadata = prev_metadata.merge({ hasil_inovasi: hasil_inovasi, inovasi_sasaran: inovasi_sasaran,
+    new_metadata = prev_metadata.merge({ hasil_inovasi: hasil_inovasi,
+                                         jenis_inovasi: jenis_inovasi,
+                                         inovasi_sasaran: inovasi_sasaran,
                                          gambaran_nilai_kebaruan: gambaran_nilai_kebaruan,
                                          processed_at: DateTime.current })
     if @sasaran.update(metadata: new_metadata)
@@ -544,6 +547,7 @@ class SasaransController < ApplicationController
                                     :nama_output,
                                     :hasil_inovasi,
                                     :inovasi_sasaran,
+                                    :jenis_inovasi,
                                     :gambaran_nilai_kebaruan,
                                     :strategi_id,
                                     :kelompok_anggaran, :filter_file, :filter_target, :filter_type, :sasaran_milik,

@@ -5,4 +5,8 @@ module InovasisHelper
               ditolak: 'ditolak', menunggu_persetujuan: 'Setujui?' }
     codes[code&.to_sym]
   end
+
+  def jenis_inovasi
+    ['Baru', 'Pengembangan', 'Replikasi', 'Sanggahan']
+  end
 end

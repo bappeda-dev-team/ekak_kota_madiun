@@ -431,6 +431,10 @@ class Sasaran < ApplicationRecord
     metadata&.dig("hasil_inovasi")
   end
 
+  def jenis_inovasi_sasaran
+    metadata&.dig("jenis_inovasi")
+  end
+
   def inovasi_sasaran
     metadata&.dig("inovasi_sasaran")
   end
