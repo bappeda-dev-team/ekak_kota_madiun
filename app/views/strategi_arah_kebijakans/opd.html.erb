@@ -25,17 +25,19 @@
               <th class="border-bottom text-gray-700 align-middle" scope="col"><%= nom %></th>
               <th class="border-bottom text-gray-700 align-middle" scope="col" colspan="4">
                 <%= tujuan %>
-                <%= link_to edit_strategi_arah_kebijakan_path(tujuan),
-                      remote: true,
-                      data: {
-                        controller: 'form-modal',
-                        action: 'ajax:complete->form-modal#success:prevent',
-                        bs_toggle: 'modal',
-                        bs_target: '#form-modal'
-                      },
-                      class: 'btn btn-sm btn-outline-primary ms-3' do %>
-                  <i class="fas fa-edit"></i>
-                  Pilih Strategi
+                <% unless guest? %>
+                  <%= link_to edit_strategi_arah_kebijakan_path(tujuan),
+                              remote: true,
+                              data: {
+                                controller: 'form-modal',
+                                action: 'ajax:complete->form-modal#success:prevent',
+                                bs_toggle: 'modal',
+                                bs_target: '#form-modal'
+                              },
+                              class: 'btn btn-sm btn-outline-primary ms-3' do %>
+                    <i class="fas fa-edit"></i>
+                    Pilih Strategi
+                  <% end %>
                 <% end %>
               </th>
             </tr>

@@ -3,11 +3,13 @@
   <td class="fw-bolder text-wrap"><%= dasar_hukum.judul %></td>
   <td class="fw-bolder text-wrap"><%= dasar_hukum.peraturan %></td>
   <td class="text-gray-900 border px-2">
-    <div class="d-grid gap-2">
-      <%= render(EditRowButtonComponent.new(path: edit_renstra_dasar_hukum_path(dasar_hukum))) %>
-      <%= render(DeleteButtonAjaxComponent.new(path: hapus_renstra_dasar_hukum_path(dasar_hukum), 
-                                               model: dasar_hukum, 
-                                               text: 'Hapus dasar hukum ?')) %>
-    </div>
+    <% unless guest? %>
+      <div class="d-grid gap-2">
+        <%= render(EditRowButtonComponent.new(path: edit_renstra_dasar_hukum_path(dasar_hukum))) %>
+        <%= render(DeleteButtonAjaxComponent.new(path: hapus_renstra_dasar_hukum_path(dasar_hukum),
+                                                 model: dasar_hukum,
+                                                 text: 'Hapus dasar hukum ?')) %>
+      </div>
+    <% end %>
   </td>
 </tr>

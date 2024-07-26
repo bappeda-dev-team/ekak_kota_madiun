@@ -10,20 +10,22 @@
         <div class="col">
           <h2 class="fs-5 fw-bold mb-0">Anggaran SBK</h2>
         </div>
-        <div class="col text-end">
-          <%= link_to new_anggaran_sbk_path,
-              remote: true,
-              data: {
-                      controller: 'form-modal',
-                      action: 'ajax:complete->form-modal#success:prevent',
-                      bs_toggle: 'modal',
-                      bs_target: '#form-modal'
-                    },
-              class: "btn btn-sm btn-info" do %>
-            <i class="fas fa-plus me-2"></i>
-            <span>Tambah Data</span>
-          <% end %>
-        </div>
+        <% unless guest? %>
+          <div class="col text-end">
+            <%= link_to new_anggaran_sbk_path,
+                        remote: true,
+                        data: {
+                          controller: 'form-modal',
+                          action: 'ajax:complete->form-modal#success:prevent',
+                          bs_toggle: 'modal',
+                          bs_target: '#form-modal'
+                        },
+                        class: "btn btn-sm btn-info" do %>
+              <i class="fas fa-plus me-2"></i>
+              <span>Tambah Data</span>
+            <% end %>
+          </div>
+        <% end %>
       </div>
     </div>
     <div class="table-responsive p-4">
@@ -49,8 +51,9 @@
               <td><%= anggaran_sbk.satuan %></td>
               <td><%=number_with_delimiter(anggaran_sbk.harga_satuan, delimiter: '.') %></td>
               <td class="fw-bolder text-gray-500 text-center align-middle">
-                <div class="d-grid gap-2">
-                  <%= link_to edit_anggaran_asb_path(anggaran_sbk),
+                <% unless guest? %>
+                  <div class="d-grid gap-2">
+                    <%= link_to edit_anggaran_asb_path(anggaran_sbk),
                                 remote: true,
                                 data: {
                                   controller: 'form-modal',
@@ -59,17 +62,18 @@
                                   bs_target: '#form-modal'
                                 },
                                 class: "btn btn-sm btn-info"  do %>
-                    <i class="fas fa-edit" data-bs-toggle="tooltip"></i>
-                    Edit
-                  <% end %>
-                  <%= link_to anggaran_sbk,
-                      method: :delete,
-                      class: 'btn btn-sm btn-outline-danger',
-                      data: { confirm_swal: "Hapus anggaran?" } do %>
-                    <i class="fa fa-trash-alt me-2"></i>
-                    <span>Hapus</span>
-                  <% end %>
-                </div>
+                      <i class="fas fa-edit" data-bs-toggle="tooltip"></i>
+                      Edit
+                    <% end %>
+                    <%= link_to anggaran_sbk,
+                                method: :delete,
+                                class: 'btn btn-sm btn-outline-danger',
+                                data: { confirm_swal: "Hapus anggaran?" } do %>
+                      <i class="fa fa-trash-alt me-2"></i>
+                      <span>Hapus</span>
+                    <% end %>
+                  </div>
+                <% end %>
               </td>
             </tr>
           <% end %>

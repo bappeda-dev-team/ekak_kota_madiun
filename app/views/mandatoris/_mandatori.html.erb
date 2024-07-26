@@ -6,62 +6,66 @@
   <td class="fw-bolder text-wrap"><%= mandatori.uraian %></td>
   <td class="fw-bolder text-wrap"><%= mandatori.asn_pengusul %></td>
   <td class="text-center align-middle">
-    <% unless mandatori.is_active %>
-      <button class= 'btn btn-tertiary d-inline-flex align-items-center toggle-active' disabled>
-        Usulan Disetujui
-        <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
-      </button>
-    <% else %>
-      <% if mandatori.sasaran_aktif? %>
-        <button class="btn btn-success" disabled>Usulan Digunakan
-          <i class="fas fa-check-circle icon icon-xs ms-2"></i></button>
+    <% unless guest? %>
+      <% unless mandatori.is_active %>
+        <button class= 'btn btn-tertiary d-inline-flex align-items-center toggle-active' disabled>
+          Usulan Disetujui
+          <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
+        </button>
       <% else %>
-          <button class='btn btn-primary d-inline-flex align-items-center toggle-active' disabled>
-            Usulan Aktif
-            <i class="fas fa-key text-success icon icon-xs ms-2"></i>
-          </button>
+        <% if mandatori.sasaran_aktif? %>
+          <button class="btn btn-success" disabled>Usulan Digunakan
+            <i class="fas fa-check-circle icon icon-xs ms-2"></i></button>
+        <% else %>
+            <button class='btn btn-primary d-inline-flex align-items-center toggle-active' disabled>
+              Usulan Aktif
+              <i class="fas fa-key text-success icon icon-xs ms-2"></i>
+            </button>
+        <% end %>
       <% end %>
     <% end %>
   </td>
   <td class="fw-bolder text-center align-middle">
-    <div class="d-grid gap-3">
-      <%= link_to edit_mandatori_path(mandatori),
-       remote: true,
-       class: 'btn btn-sm btn-info',
-       data: {
-         controller: 'form-modal',
-         action: 'ajax:complete->form-modal#success:prevent',
-         bs_toggle: 'modal',
-         bs_target: '#form-modal'
-       } do %>
-        <i class="fas fa-edit"></i>
-        <span>Edit</span>
-      <% end %>
-      <%= link_to mandatori_path(mandatori),
-       method: :delete,
-       remote: true,
-       class: 'btn btn-sm btn-danger',
-       data: {
-         controller: 'form-ajax',
-         form_ajax_element_id_value: dom_id(mandatori),
-         confirm_swal: 'Hapus usulan mandatori?',
-         action: 'ajax:success->form-ajax#ajaxDelete'
-       } do %>
-        <i class="fas fa-trash"></i>
-        <span>Hapus</span>
-      <% end %>
-      <%= link_to clone_mandatori_clone_path(mandatori), remote: true,
-       data: {
-         controller: 'form-modal',
-         action: 'form-modal#appendForm',
-         form_modal_location_param: 'form-modal-body',
-         bs_toggle: 'modal',
-         bs_target: '#form-modal'
-       },
-       class: "btn btn-sm btn-primary w-100 mt-3" do %>
-        <i class="fa fa-clone me-2"></i>
-        <span>Clone</span>
-      <% end %>
-    </div>
+    <% unless guest? %>
+      <div class="d-grid gap-3">
+        <%= link_to edit_mandatori_path(mandatori),
+                    remote: true,
+                    class: 'btn btn-sm btn-info',
+                    data: {
+                      controller: 'form-modal',
+                      action: 'ajax:complete->form-modal#success:prevent',
+                      bs_toggle: 'modal',
+                      bs_target: '#form-modal'
+                    } do %>
+          <i class="fas fa-edit"></i>
+          <span>Edit</span>
+        <% end %>
+        <%= link_to mandatori_path(mandatori),
+                    method: :delete,
+                    remote: true,
+                    class: 'btn btn-sm btn-danger',
+                    data: {
+                      controller: 'form-ajax',
+                      form_ajax_element_id_value: dom_id(mandatori),
+                      confirm_swal: 'Hapus usulan mandatori?',
+                      action: 'ajax:success->form-ajax#ajaxDelete'
+                    } do %>
+          <i class="fas fa-trash"></i>
+          <span>Hapus</span>
+        <% end %>
+        <%= link_to clone_mandatori_clone_path(mandatori), remote: true,
+                    data: {
+                      controller: 'form-modal',
+                      action: 'form-modal#appendForm',
+                      form_modal_location_param: 'form-modal-body',
+                      bs_toggle: 'modal',
+                      bs_target: '#form-modal'
+                    },
+                    class: "btn btn-sm btn-primary w-100 mt-3" do %>
+          <i class="fa fa-clone me-2"></i>
+          <span>Clone</span>
+        <% end %>
+      </div>
+    <% end %>
   </td>
 </tr>

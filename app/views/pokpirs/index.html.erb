@@ -10,36 +10,38 @@
         <div class="col">
           <h2 class="fs-5 fw-bold mb-0">Usulan Pokok Pikiran DPRD Tahun <%= @tahun_bener %></h2>
         </div>
-        <div class="col text-end">
-          <%= link_to "Tambah Usulan", new_pokpir_path,
-           remote: true,
-           data: {
-             controller: 'form-modal',
-             action: 'ajax:complete->form-modal#success:prevent',
-             bs_toggle: 'modal',
-             bs_target: '#form-modal'
-           },
-           class: "btn btn-sm btn-info" %>
-        </div>
-        <% if current_user.has_role? :super_admin %>
-          <div class="col-auto text-end">
-            <%= link_to sync_pokpir_path(kode_opd: '', tahun: 2023),
-                                                remote: true,
-                                                data: { disable_with: 'Memproses....'},
-                                                class:"btn btn-sm btn-primary" do %>
-              <i class="fas fa-sync me-2"></i>
-              Sync Pokok Pikiran tahun 2023
-            <% end %>
+        <% unless guest? %>
+          <div class="col text-end">
+            <%= link_to "Tambah Usulan", new_pokpir_path,
+                        remote: true,
+                        data: {
+                          controller: 'form-modal',
+                          action: 'ajax:complete->form-modal#success:prevent',
+                          bs_toggle: 'modal',
+                          bs_target: '#form-modal'
+                        },
+                        class: "btn btn-sm btn-info" %>
           </div>
-          <div class="col-auto text-end">
-            <%= link_to update_opd_pokpir_path,
-                  method: :post,
-                  data: { disable_with: 'Memproses....'},
-                  class:"btn btn-sm btn-primary" do %>
-              <i class="fas fa-sync me-2"></i>
-              Sync Kamus
-            <% end %>
-          </div>
+          <% if current_user.has_role? :super_admin %>
+            <div class="col-auto text-end">
+              <%= link_to sync_pokpir_path(kode_opd: '', tahun: 2023),
+                          remote: true,
+                          data: { disable_with: 'Memproses....'},
+                          class:"btn btn-sm btn-primary" do %>
+                <i class="fas fa-sync me-2"></i>
+                Sync Pokok Pikiran tahun 2023
+              <% end %>
+            </div>
+            <div class="col-auto text-end">
+              <%= link_to update_opd_pokpir_path,
+                          method: :post,
+                          data: { disable_with: 'Memproses....'},
+                          class:"btn btn-sm btn-primary" do %>
+                <i class="fas fa-sync me-2"></i>
+                Sync Kamus
+              <% end %>
+            </div>
+          <% end %>
         <% end %>
       </div>
     </div>

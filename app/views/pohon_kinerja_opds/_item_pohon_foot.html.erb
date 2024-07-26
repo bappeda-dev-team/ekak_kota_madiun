@@ -1,43 +1,47 @@
 <div class="pohon-foot <%= pohon.element_class_name %>">
   <% show_button = local_assigns.fetch(:show_button, true) %>
   <div class="row">
-    <% if pohon.real.instance_of?(StrategiPohon) %>
-      <% if privileged_user && show_button %>
-        <div class="col">
-          <%= link_to edit_pindah_pohon_kinerja_path(pohon.pohon_id, role_atasan: pohon.role_pohon_atas),
-           remote: true,
-           class: 'btn btn-success',
-           data: {
-             controller: 'form-modal',
-             action: 'form-modal#appendForm',
-             form_modal_location_param: 'form-modal-body',
-             bs_target: '#form-modal',
-             bs_toggle: 'modal'
-           } do %>
-            <span class="fas fa-angle-double-up me-2"></span>
-            <span>Pindah</span>
-          <% end %>
-        </div>
+    <% unless guest? %>
+      <% if pohon.real.instance_of?(StrategiPohon) %>
+        <% if privileged_user && show_button %>
+          <div class="col">
+            <%= link_to edit_pindah_pohon_kinerja_path(pohon.pohon_id, role_atasan: pohon.role_pohon_atas),
+                        remote: true,
+                        class: 'btn btn-success',
+                        data: {
+                          controller: 'form-modal',
+                          action: 'form-modal#appendForm',
+                          form_modal_location_param: 'form-modal-body',
+                          bs_target: '#form-modal',
+                          bs_toggle: 'modal'
+                        } do %>
+              <span class="fas fa-angle-double-up me-2"></span>
+              <span>Pindah</span>
+            <% end %>
+          </div>
+        <% end %>
       <% end %>
     <% end %>
     <div class="col">
       <button type="button" class="btn btn-tertiary" data-action="pohon-tematik#toggleChild" data-pohon-tematik-show-param="false">Tampilkan</button>
     </div>
-    <% if pohon.real.instance_of?(StrategiPohon) && show_button %>
-      <div class="col hide d-none">
-        <% if privileged_user || current_user.eselon_user == pohon.role_bawahan || current_user.eselon_user == pohon.role_atasan || current_user.eselon_user == pohon.role  %>
-          <%= link_to new_child_pohon_kinerja_opd_path(pohon, role: pohon.role_bawahan, title: pohon.judul_form, partial: partial),
-           remote: true,
-           data: {
-             controller: 'pohon-tematik',
-             action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
-           },
-           class: 'btn btn-info w-100' do %>
-            <i class="fas fa-plus me-2"></i>
-            <span><%= pohon.title %></span>
+    <% unless guest? %>
+      <% if pohon.real.instance_of?(StrategiPohon) && show_button %>
+        <div class="col hide d-none">
+          <% if privileged_user || current_user.eselon_user == pohon.role_bawahan || current_user.eselon_user == pohon.role_atasan || current_user.eselon_user == pohon.role  %>
+            <%= link_to new_child_pohon_kinerja_opd_path(pohon, role: pohon.role_bawahan, title: pohon.judul_form, partial: partial),
+                        remote: true,
+                        data: {
+                          controller: 'pohon-tematik',
+                          action: 'ajax:complete->pohon-tematik#addStrategiTematik:prevent',
+                        },
+                        class: 'btn btn-info w-100' do %>
+              <i class="fas fa-plus me-2"></i>
+              <span><%= pohon.title %></span>
+            <% end %>
           <% end %>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>

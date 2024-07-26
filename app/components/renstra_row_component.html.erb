@@ -15,9 +15,11 @@
     <% if with_aksi? %>
       <td class="text-gray-900 text-wrap border nama-<%= jenis %>" width="450px"><%= nama %></td>
       <td class="border">
-        <div class="d-grid gap-2">
-          <%= render(EditButtonComponent.new(path: edit_path)) %>
-        </div>
+        <% unless guest? %>
+          <div class="d-grid gap-2">
+            <%= render(EditButtonComponent.new(path: edit_path)) %>
+          </div>
+        <% end %>
       </td>
     <% else %>
       <td class="text-gray-900 text-wrap border nama-<%= jenis %>" colspan="2" width="450px"><%= nama %></td>

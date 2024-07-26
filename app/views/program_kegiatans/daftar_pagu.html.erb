@@ -20,18 +20,20 @@
       <div class="row mb-3">
         <div class="col">
         </div>
-        <div class="col-auto">
-          <%= button_to api_pagu_sync_penetapan_path,
-            remote: true,
-            class: 'btn btn-info toggle-active',
-            data: {
-                disable_with: 'Memproses.....'
-            },
-            params: { opd_id: @opd } do %>
-            <i class="fas fa-sync icon icon-xs me-2"></i>
-            Sync Pagu Penetapan
-          <% end %>
-        </div>
+        <% unless guest? %>
+          <div class="col-auto">
+            <%= button_to api_pagu_sync_penetapan_path,
+                          remote: true,
+                          class: 'btn btn-info toggle-active',
+                          data: {
+                            disable_with: 'Memproses.....'
+                          },
+                          params: { opd_id: @opd } do %>
+              <i class="fas fa-sync icon icon-xs me-2"></i>
+              Sync Pagu Penetapan
+            <% end %>
+          </div>
+        <% end %>
       </div>
       <div class="row mb-3">
         <div class="col">

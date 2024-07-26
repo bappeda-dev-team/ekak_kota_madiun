@@ -637,3 +637,11 @@ table.counter {
 tr.border-none {
   border-bottom: hidden;
 }
+
+div.strategi-sasarans-kebijakan > div.sasaran-kebijakan:first-child {
+  @extend .border-bottom;
+}
+
+div.strategi-sasarans-kebijakan > div.sasaran-kebijakan:last-child {
+  border-bottom: none !important;
+}

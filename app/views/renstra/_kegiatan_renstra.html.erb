@@ -9,48 +9,50 @@
     <% else %>
       <td class="text-gray-900 text-wrap border"><%= program.nama_kegiatan %></td>
       <td class="text-gray-900 text-wrap border px-2">
-        <div class="d-grid gap-2">
-          <%= link_to edit_renstra_path(
-            program,
-            nama: program.nama_kegiatan,
-            kode_opd: program.kode_sub_skpd,
-            kode: program.kode_giat,
-            nomor: nomor,
-            jenis: 'Renstra',
-            sub_jenis: 'Kegiatan',
-            tahun_awal: @tahun_awal,
-            tahun_akhir: @tahun_akhir),
-           remote: true, class: 'btn btn-outline-info w-100',
-           data: { controller: 'form-modal',
-             action: 'form-modal#appendForm',
-             form_modal_location_param: 'form-laporan-renstra-body',
-             bs_target: '#form-laporan-renstra',
-             bs_toggle: 'modal' } do %>
-            <span class="fas fa-edit me-2"></span>
-            Edit
-          <% end %>
-          <%= link_to edit_realisasi_renstra_path(
-            program,
-            nama: program.nama_kegiatan,
-            kode_opd: program.kode_sub_skpd,
-            kode: program.kode_giat,
-            nomor: nomor,
-            jenis: 'Renstra',
-            sub_jenis: 'Kegiatan',
-            tahun_awal: @tahun_awal,
-            tahun_akhir: @tahun_akhir),
-           remote: true, class: 'btn btn-outline-primary w-100',
-           data: { controller: 'form-modal',
-             action: 'form-modal#appendForm',
-             form_modal_location_param: 'form-laporan-renstra-body',
-             bs_target: '#form-laporan-renstra',
-             bs_toggle: 'modal' } do %>
-            <span class="fas fa-clipboard-check me-2"></span>
-            Realisasi
-          <% end %>
-        </div>
+        <% unless guest? %>
+          <div class="d-grid gap-2">
+            <%= link_to edit_renstra_path(
+              program,
+              nama: program.nama_kegiatan,
+              kode_opd: program.kode_sub_skpd,
+              kode: program.kode_giat,
+              nomor: nomor,
+              jenis: 'Renstra',
+              sub_jenis: 'Kegiatan',
+              tahun_awal: @tahun_awal,
+              tahun_akhir: @tahun_akhir),
+                        remote: true, class: 'btn btn-outline-info w-100',
+                        data: { controller: 'form-modal',
+                          action: 'form-modal#appendForm',
+                          form_modal_location_param: 'form-laporan-renstra-body',
+                          bs_target: '#form-laporan-renstra',
+                          bs_toggle: 'modal' } do %>
+              <span class="fas fa-edit me-2"></span>
+              Edit
+            <% end %>
+            <%= link_to edit_realisasi_renstra_path(
+              program,
+              nama: program.nama_kegiatan,
+              kode_opd: program.kode_sub_skpd,
+              kode: program.kode_giat,
+              nomor: nomor,
+              jenis: 'Renstra',
+              sub_jenis: 'Kegiatan',
+              tahun_awal: @tahun_awal,
+              tahun_akhir: @tahun_akhir),
+                        remote: true, class: 'btn btn-outline-primary w-100',
+                        data: { controller: 'form-modal',
+                          action: 'form-modal#appendForm',
+                          form_modal_location_param: 'form-laporan-renstra-body',
+                          bs_target: '#form-laporan-renstra',
+                          bs_toggle: 'modal' } do %>
+              <span class="fas fa-clipboard-check me-2"></span>
+              Realisasi
+            <% end %>
+          </div>
+        <% end %>
       </td>
-      <% end %>
-      <%= render 'renstra/row_indikator_renstra', indikators: indikators, periode: periode, with_capaian: disable_action %>
+    <% end %>
+    <%= render 'renstra/row_indikator_renstra', indikators: indikators, periode: periode, with_capaian: disable_action %>
   </tr>
 </tbody>

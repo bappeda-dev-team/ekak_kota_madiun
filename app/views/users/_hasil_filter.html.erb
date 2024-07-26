@@ -4,16 +4,18 @@
       <h2 class="fs-5 fw-bold mb-0">List ASN <%= opd.nama_opd %>
       </h2>
     </div>
-    <div class="col-auto text-end">
-      <% if current_user.has_role? :super_admin %>
-        <% bulan=Date.today.month %>
-        <%= link_to sync_pegawai_path(kode_opd: kode_opd, tahun: tahun_fix(@tahun), bulan: bulan), remote: true, data:
-        { disable_with: 'Memproses....' }, class:"btn btn-sm btn-primary" do %>
-          <i class="fas fa-sync me-2"></i>
-          Sync User
+    <% unless guest? %>
+      <div class="col-auto text-end">
+        <% if current_user.has_role? :super_admin %>
+          <% bulan=Date.today.month %>
+          <%= link_to sync_pegawai_path(kode_opd: kode_opd, tahun: tahun_fix(@tahun), bulan: bulan), remote: true, data:
+          { disable_with: 'Memproses....' }, class:"btn btn-sm btn-primary" do %>
+            <i class="fas fa-sync me-2"></i>
+            Sync User
+          <% end %>
         <% end %>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 </div>
 <div class="card-body">
@@ -55,21 +57,23 @@
               </ul>
             </td>
             <td class="fw-bolder text-gray-500 text-center">
-              <div class="d-grid gap-3">
-                <%= link_to set_role_user_path(user.id, dom_id: the_dom),
-                 remote: true,
-                 data: {
-                   controller: 'form-modal',
-                   action: 'form-modal#appendForm',
-                   form_modal_location_param: 'form-user-role-body',
-                   bs_target: '#form-user-role',
-                   bs_toggle: 'modal'
-                 },
-                 class: "btn btn-sm btn-info" do %>
-                  <i class="fa fa-cog me-2"></i>
-                  <span>Role</span>
-                <% end %>
-              </div>
+              <% unless guest? %>
+                <div class="d-grid gap-3">
+                  <%= link_to set_role_user_path(user.id, dom_id: the_dom),
+                              remote: true,
+                              data: {
+                                controller: 'form-modal',
+                                action: 'form-modal#appendForm',
+                                form_modal_location_param: 'form-user-role-body',
+                                bs_target: '#form-user-role',
+                                bs_toggle: 'modal'
+                              },
+                              class: "btn btn-sm btn-info" do %>
+                    <i class="fa fa-cog me-2"></i>
+                    <span>Role</span>
+                  <% end %>
+                </div>
+              <% end %>
             </td>
           </tr>
         <% end %>
