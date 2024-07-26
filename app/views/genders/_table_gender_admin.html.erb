@@ -55,20 +55,22 @@
                     <span>Cetak GAP</span>
                   <% end %>
                 </div>
-                <div class="col">
-                  <%= link_to admin_edit_gender_path(gender),
-                   remote: true,
-                   data: {
-                     controller: 'form-modal',
-                     action: 'ajax:complete->form-modal#success:prevent',
-                     bs_toggle: 'modal',
-                     bs_target: '#form-modal'
-                   },
-                   class: 'm-3 btn btn-sm btn-outline-info w-100' do %>
-                    <i class="fas fa-pencil-alt me-2"></i>
-                    Edit
-                  <% end %>
-                </div>
+                <% unless guest? %>
+                  <div class="col">
+                    <%= link_to admin_edit_gender_path(gender),
+                                remote: true,
+                                data: {
+                                  controller: 'form-modal',
+                                  action: 'ajax:complete->form-modal#success:prevent',
+                                  bs_toggle: 'modal',
+                                  bs_target: '#form-modal'
+                                },
+                                class: 'm-3 btn btn-sm btn-outline-info w-100' do %>
+                      <i class="fas fa-pencil-alt me-2"></i>
+                      Edit
+                    <% end %>
+                  </div>
+                <% end %>
               </div>
             </td>
           </tr>
