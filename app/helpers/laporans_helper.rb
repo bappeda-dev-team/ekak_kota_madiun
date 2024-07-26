@@ -92,7 +92,8 @@ module LaporansHelper
   end
 
   def tahun_fix(tahun)
-    tahun.match(/murni|perubahan/) ? tahun[/[^_]\d*/, 0] : tahun
+    tahun_string = tahun.to_s
+    tahun_string.match(/murni|perubahan/) ? tahun_string[/[^_]\d*/, 0] : tahun
   end
 
   def rekins_s(rekin_user, user_id)
