@@ -5,10 +5,12 @@
     <%= jabatan.jenis_jabatan %>
   <% end %>
   <td class="fw-bolder">
-    <div class="d-grid gap-2">
-      <%= render(EditRowButtonComponent.new(path: edit_jabatan_path(jabatan))) %>
-      <%= render(DeleteButtonComponent.new(path: jabatan_path(jabatan))) %>
-    </div>
+    <% unless guest? %>
+      <div class="d-grid gap-2">
+        <%= render(EditRowButtonComponent.new(path: edit_jabatan_path(jabatan))) %>
+        <%= render(DeleteButtonComponent.new(path: jabatan_path(jabatan))) %>
+      </div>
+    <% end %>
   </td>
   <% @status_kepegawaian.each do |kepegawaian| %>
     <%= render(ColFieldComponent.new(el_class: "text-center #{dom_class(jabatan, 'jumlah_kepegawaian')} #{kepegawaian.underscore}")) do %>

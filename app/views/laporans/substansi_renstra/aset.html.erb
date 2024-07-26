@@ -41,9 +41,11 @@
           </tfoot>
         </table>
       </div>
-      <%= render AddRowComponent.new(path: new_aset_path,
-                                     target: 'new_aset',
-                                     title: 'Tambah Aset OPD') %>
+      <% unless guest? %>
+        <%= render AddRowComponent.new(path: new_aset_path,
+                                       target: 'new_aset',
+                                       title: 'Tambah Aset OPD') %>
+      <% end %>
     </div>
   <% end %>
 <% end %>

@@ -5,8 +5,10 @@
   <%= render partial: 'pohon_kinerja_opds/item_pohon_body', locals: { pohon: presenter, show_button: show_button } %>
   <%= render partial: 'pohon_kinerja_opds/item_pohon_crosscutting', locals: { pohon: presenter, show_button: show_button } %>
   <%= render partial: 'pohon_kinerja_opds/item_reviews', locals: { pohon: presenter, show_button: show_button } %>
-  <% if show_button %>
-    <%= render partial: 'pohon_kinerja_opds/item_pohon_tombol', locals: { pohon: presenter, show_button: show_button } %>
+  <% unless guest? %>
+    <% if show_button %>
+      <%= render partial: 'pohon_kinerja_opds/item_pohon_tombol', locals: { pohon: presenter, show_button: show_button } %>
+    <% end %>
   <% end %>
   <%= render partial: 'pohon_kinerja_opds/item_pohon_foot', locals: { pohon: presenter, partial: 'pohon_kinerja_opd', show_button: show_button } %>
 </div>

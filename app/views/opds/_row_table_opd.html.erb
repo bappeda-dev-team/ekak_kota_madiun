@@ -16,18 +16,20 @@
       <td><%= opd.nip_kepala %></td>
       <td><%= opd.pangkat_kepala %></td>
       <td>
-        <div class="d-grid gap-2">
-          <%= link_to edit_full_opd_path(opd), remote: true,
-              data: { controller: 'form-modal',
-                      action: 'ajax:complete->form-modal#success:prevent',
-                   bs_toggle: 'modal',
-                   bs_target: '#form-modal'
-              },
-              class: 'btn btn-sm btn-outline-info' do %>
-            <i class="fas fa-edit me-2"></i>
-            Edit
-          <% end %>
-        </div>
+        <% unless guest? %>
+          <div class="d-grid gap-2">
+            <%= link_to edit_full_opd_path(opd), remote: true,
+                        data: { controller: 'form-modal',
+                          action: 'ajax:complete->form-modal#success:prevent',
+                          bs_toggle: 'modal',
+                          bs_target: '#form-modal'
+                        },
+                        class: 'btn btn-sm btn-outline-info' do %>
+              <i class="fas fa-edit me-2"></i>
+              Edit
+            <% end %>
+          </div>
+        <% end %>
       </td>
-    </div>
-  </tr>
+  </div>
+</tr>

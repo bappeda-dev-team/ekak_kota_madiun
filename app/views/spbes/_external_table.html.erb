@@ -81,25 +81,27 @@
               <td class="border" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.opd&.nama_opd %></td>
               <td class="border" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.keterangan %></td>
               <td class="border" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>">
-                <div class="d-grid gap-2">
-                  <% if rincian.kode_opd == @kode_opd %>
-                    <%= link_to edit_operational_opd_spbe_path(rincian,program_id: program.id), target: "_blank", rel: "nofollow",
-                                         class: "btn btn-sm btn-outline-primary" do %>
-                      Edit Rincian SPBE
+                <% unless guest? %>
+                  <div class="d-grid gap-2">
+                    <% if rincian.kode_opd == @kode_opd %>
+                      <%= link_to edit_operational_opd_spbe_path(rincian,program_id: program.id), target: "_blank", rel: "nofollow",
+                                  class: "btn btn-sm btn-outline-primary" do %>
+                        Edit Rincian SPBE
+                      <% end %>
                     <% end %>
-                  <% end %>
-                  <% if spbe.kode_opd == @kode_opd %>
-                    <hr/>
-                    <%= link_to edit_spbe_path(spbe,program_id: program.id), target: "_blank", rel: "nofollow",
-                                         class: "btn btn-sm btn-outline-info" do %>
-                      Edit SPBE
+                    <% if spbe.kode_opd == @kode_opd %>
+                      <hr/>
+                      <%= link_to edit_spbe_path(spbe,program_id: program.id), target: "_blank", rel: "nofollow",
+                                  class: "btn btn-sm btn-outline-info" do %>
+                        Edit SPBE
+                      <% end %>
+                      <%= link_to spbe_path(spbe), method: :delete, data: {confirm_swal: "Hapus SPBE Layanan '#{spbe.jenis_pelayanan}' ?"},
+                                  class: "btn btn-sm btn-outline-danger" do %>
+                        Hapus SPBE
+                      <% end %>
                     <% end %>
-                    <%= link_to spbe_path(spbe), method: :delete, data: {confirm_swal: "Hapus SPBE Layanan '#{spbe.jenis_pelayanan}' ?"},
-                                         class: "btn btn-sm btn-outline-danger" do %>
-                      Hapus SPBE
-                    <% end %>
-                  <% end %>
-                </div>
+                <% end %>
+                  </div>
               </td>
             </tr>
             <% unless sas_kasi.nil? %>

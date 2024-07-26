@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class RenstraRowComponent < ViewComponent::Base
+  include UsersHelper
+  include Devise::Controllers::Helpers
   attr_reader :periode, :parent
 
   def initialize(program: '', head: true, anggaran: 0, periode: [], cetak: true, parent: '')

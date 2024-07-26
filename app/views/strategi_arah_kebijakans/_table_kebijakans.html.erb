@@ -18,10 +18,10 @@
       <% strategis.each do |strategi| %>
         <% rowspan_bawah = @tactical_opds.select { |tact| tact.pohon_ref_id.to_i == strategi.id }.size + 1 %>
         <tr>
-          <td class="text-wrap border-end px-0 py-0" rowspan="<%= rowspan_bawah %>">
-            <div class="d-grid gap-0 w-100">
+          <td class="text-wrap border-end px-0 py-0 align-middle" rowspan="<%= rowspan_bawah %>">
+            <div class="d-grid gap-0 w-100 strategi-sasarans-kebijakan">
             <% strategi.sasarans.dengan_nip.each do |sasaran| %>
-              <div class="p-3 w-100 border"><%= sasaran %></div>
+              <div class="p-3 w-100 sasaran-kebijakan"><%= sasaran %></div>
             <% end %>
             </div>
           </td>

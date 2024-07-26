@@ -32,12 +32,6 @@ module LaporanItemHelper
       { title: 'Sasaran Penduduk', href: sasaran_penduduk_laporans_path,
         icon: 'fas fa-book-open',
         identifier: 'laporan-sasaran-kemiskinan' },
-      # {
-      #   title: 'Gender', href: "#",
-      #   multi: true, collections: gender_items,
-      #   id_target: 'gender-items',
-      #   icon: 'fas fa-people-carry', identifier: 'genders'
-      # },
       {
         title: 'Cascading Kota', href: hasil_cascading_kota_laporans_path,
         icon: 'fas fa-people-arrows', identifier: 'hasil_cascading_kota'
@@ -69,14 +63,6 @@ module LaporanItemHelper
         multi: true, collections: renja_items,
         id_target: 'renja-items',
         icon: 'fas fa-tasks', identifier: 'renja'
-      },
-      {
-        title: 'Rekap Rencana Kinerja', href: rekap_sasaran_sasarans_path,
-        icon: 'fas fa-archive', identifier: 'rekap_sasaran'
-      },
-      {
-        title: 'Rekap Strategi', href: rekap_strategi_strategis_path,
-        icon: 'fas fa-archive', identifier: 'rekap_strategi'
       }
     ]
     return items unless super_admin?
@@ -120,6 +106,19 @@ module LaporanItemHelper
       { title: 'SK Walikota', href: output_sk_walikota_laporans_path,
         icon: 'fas fa-book-open',
         identifier: 'laporan-output-raperda' }
+    ]
+  end
+
+  def rekap_items
+    [
+      {
+        title: 'Rekap Rencana Kinerja', href: rekap_sasaran_sasarans_path,
+        icon: 'fas fa-archive', identifier: 'rekap_sasaran'
+      },
+      {
+        title: 'Rekap Strategi', href: rekap_strategi_strategis_path,
+        icon: 'fas fa-archive', identifier: 'rekap_strategi'
+      }
     ]
   end
 end
