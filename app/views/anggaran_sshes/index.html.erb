@@ -51,7 +51,7 @@
               <td><%= anggaran_ssh.satuan %></td>
               <td><%= anggaran_ssh.harga_satuan %></td>
               <td class="fw-bolder text-gray-500 text-center align-middle">
-                <% unless guest %>
+                <% unless guest? %>
                   <div class="d-grid gap-2">
                     <%= link_to edit_anggaran_ssh_path(anggaran_ssh),
                                 remote: true,
