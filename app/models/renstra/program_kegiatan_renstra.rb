@@ -52,7 +52,7 @@ class Renstra::ProgramKegiatanRenstra
       kode_bidang_urusan: program.kode_bidang_urusan,
       bidang_urusan: program.nama_bidang_urusan,
       nama: program.send("nama_#{@tipe}"),
-      kode: program.send("kode_#{@kode}"),
+      kode: kode_tweak(program.send("kode_#{@kode}"), @jenis),
       tahun: @tahun
     }
     case @jenis
@@ -69,6 +69,14 @@ class Renstra::ProgramKegiatanRenstra
     end
     hasil.merge({ jumlah_indikator: indikators.size,
                   indikators: indikators })
+  end
+
+  def kode_tweak(kode, jenis)
+    if kode.scan(/\d+$/).last&.size == 2 && jenis == 'subkegiatan'
+      kode.gsub(/[.](?!.*[.])/, ".00\\1")
+    else
+      kode
+    end
   end
 
   def ind_renstras_new(program:, sub_unit: '')
