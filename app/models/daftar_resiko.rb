@@ -13,6 +13,8 @@ class DaftarResiko
 
   def sasarans_filter(tahun_sasaran, sasarans)
     sasarans.where("tahun ILIKE ?", "%#{tahun_sasaran}%")
+            .where.not(nip_asn: [nil, ""])
+            .select { |sas| sas.deleted_at.blank? }
   end
 
   def user_sasarans_filter(tahun_sasaran, sasarans, nip)

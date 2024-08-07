@@ -113,7 +113,7 @@ class ProgramKegiatan < ApplicationRecord
   accepts_nested_attributes_for :sasarans
 
   scope :with_sasarans, -> { where(id: Sasaran.pluck(:program_kegiatan_id)) }
-  scope :with_sasarans_rincian, -> {}
+  scope :with_sasarans_rincian, -> { includes(:sasarans) }
   scope :with_sasarans_lengkap, lambda { |nip_asn, tahun_sasaran|
     includes(%i[sasarans usulans])
       .where(sasarans: { nip_asn: nip_asn })

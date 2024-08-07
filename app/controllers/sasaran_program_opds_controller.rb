@@ -15,7 +15,12 @@ class SasaranProgramOpdsController < ApplicationController
     daftar_resiko = DaftarResiko.new(kode_unik_opd: @kode_opd, tahun: @tahun)
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @tahun_bener = daftar_resiko.tahun
-    @program_kegiatans = daftar_resiko.daftar_resiko_opd
+    @program_kegiatans =
+        if current_user.has_role?(:admin)
+          daftar_resiko.daftar_resiko_opd
+        else
+          daftar_resiko.daftar_resiko_asn(nip: @user.nik)
+        end
   end
 
   def add_dampak_resiko
