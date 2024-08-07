@@ -372,19 +372,24 @@ class Opd < ApplicationRecord
   end
 
   def find_sasaran_eselon3(sasaran_kinerja)
-    strategi_eselon3
-      .joins("INNER JOIN sasarans ON cast (sasarans.strategi_id as INT) = strategis.id")
-      .where("sasarans.sasaran_kinerja ILIKE ?", "%#{sasaran_kinerja}%")
-      .where.not(sasarans: { nip_asn: nil })
-      .map(&:sasaran)
+    strategi_eselon3.flat_map do |strategi|
+      sasaran_kinerja_strategi(strategi, sasaran_kinerja)
+    end
   end
 
   def find_sasaran_eselon4(sasaran_kinerja)
-    strategi_eselon4
-      .joins("INNER JOIN sasarans ON cast (sasarans.strategi_id as INT) = strategis.id")
-      .where("sasarans.sasaran_kinerja ILIKE ?", "%#{sasaran_kinerja}%")
-      .where.not(sasarans: { nip_asn: nil })
-      .map(&:sasaran)
+    strategi_eselon4.flat_map do |strategi|
+      sasaran_kinerja_strategi(strategi, sasaran_kinerja)
+    end
+  end
+
+  def sasaran_kinerja_strategi(strategi, sasaran_kinerja)
+      strategi
+        .sasarans
+        .includes(:indikator_sasarans)
+        .where("sasarans.sasaran_kinerja ILIKE ?", "%#{sasaran_kinerja}%")
+        .where.not(sasarans: { nip_asn: nil, strategi_id: nil })
+        .select { |sas| sas.indikator_sasarans.any? }
   end
 
   def list_strategi_opd(tahun: '')
