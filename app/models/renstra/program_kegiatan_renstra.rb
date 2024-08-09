@@ -16,8 +16,7 @@ class Renstra::ProgramKegiatanRenstra
 
   def program_kegiatan_opd_khusus(id_sub_unit:)
     ProgramKegiatan.includes(:opd)
-                   .where(id_sub_unit: id_sub_unit)
-                   .uniq(&:kode_sub_skpd)
+                   .where(kode_sub_skpd: id_sub_unit)
   end
 
   def indikator_programs_opd(opd:, program_kegiatans_by_opd:)
@@ -31,7 +30,7 @@ class Renstra::ProgramKegiatanRenstra
       programs = indikator_programs_opd(opd: opd, program_kegiatans_by_opd: opd.send(jenis_program_kegiatan))
       if OPD_TABLE.key?(opd.nama_opd.to_sym)
         programs = indikator_programs_opd(opd: opd,
-                                          program_kegiatans_by_opd: program_kegiatan_opd_khusus(id_sub_unit: KODE_OPD_BAGIAN[opd.nama_opd.to_sym]))
+                                          program_kegiatans_by_opd: program_kegiatan_opd_khusus(id_sub_unit: opd.kode_unik_opd))
       end
       {
         opd: opd.nama_opd,
