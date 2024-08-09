@@ -55,7 +55,7 @@ class SpbesController < ApplicationController
     @program = ProgramKegiatan.find(spbe_params[:program_kegiatan_id])
     @spbe = Spbe.new(spbe_params)
 
-    redirect_routes = current_user.has_role?(:super_admin) ? spbes_path : index_opd_spbes_path
+    redirect_routes = index_opd_spbes_path
 
     respond_to do |format|
       if @spbe.save
@@ -67,7 +67,7 @@ class SpbesController < ApplicationController
   end
 
   def update
-    redirect_routes = current_user.has_role?(:super_admin) ? spbes_path : index_opd_spbes_path
+    redirect_routes = index_opd_spbes_path
     respond_to do |format|
       if @spbe.update(spbe_params)
         format.html { redirect_to redirect_routes, success: "Entri SPBE diperbarui" }
