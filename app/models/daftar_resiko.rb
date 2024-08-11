@@ -6,13 +6,14 @@ class DaftarResiko
   end
 
   def daftar_resiko_asn(nip: '')
-    program_kegiatans_by_opd.with_sasarans_rincian.where(sasarans: { nip_asn: nip }).map do |pk|
-      sasarans_filter(tahun, pk.sasarans)
+    program_kegiatans_by_opd.with_sasarans_rincian.map do |pk|
+      sasarans_asn = pk.sasarans.where(sasarans: { nip_asn: nip })
+      sasarans_filter(tahun, sasarans_asn)
     end.compact_blank!.flatten.group_by(&:program_kegiatan)
   end
 
   def sasarans_filter(tahun_sasaran, sasarans)
-    sasarans.where("tahun ILIKE ?", "%#{tahun_sasaran}%")
+    sasarans.where(tahun: tahun_sasaran)
             .where.not(nip_asn: [nil, ""])
             .select { |sas| sas.deleted_at.blank? }
   end

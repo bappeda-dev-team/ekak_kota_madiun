@@ -4,18 +4,11 @@
   <li class="breadcrumb-item active" aria-current="page">Manajemen Resiko</li>
 <% end %>
 <% content_for :view_utama do %>
-  <div class="card border-0 shadow">
-    <div class="card-header">
-      <div class="row align-items-center">
-        <div class="col">
-          <h2 class="fs-5 fw-bold mb-0">Manajemen Resiko <%= @opd.nama_opd %></h2>
-        </div>
-        <div class="col-auto text-end">
-          <h2 class="fs-5 fw-bold"><%= @tahun %></h2>
-        </div>
-      </div>
-    </div>
-    <%= render 'filter/daftar_resiko' %>
-  </div>
+  <%= render 'shared/card_ajax',
+             title: "Manajemen Resiko",
+             data_page_attr: {
+               controller: 'page-ajax',
+               page_ajax_url_value: filter_daftar_resiko_path
+             } %>
   <%= render 'shared/modal_template', modal_name: 'dampak-daftar-resiko' %>
 <% end %>

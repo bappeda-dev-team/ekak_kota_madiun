@@ -1,31 +1,39 @@
 <div class="card border-0 shadow" id="daftar_resiko">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h5>Manajemen Resiko <%= @opd.nama_opd %> Tahun <%= @tahun %></h5>
+      </div>
+    </div>
+  </div>
   <div class="card-body">
     <div class="row align-items-end mb-3">
       <div class="col">
       </div>
       <div class="col-auto text-end">
         <%= link_to "/cetak_daftar_resiko/#{@opd.id}/#{@tahun_bener}.pdf", class: 'btn btn-sm btn-primary', target: :_blank do %>
-          PDF Daftar Resiko
+          PDF Daftar Resiko OPD
           <i class="fas fa-file-pdf ms-2"></i>
         <% end %>
       </div>
       <div class="col-auto text-end">
         <%= link_to "/cetak_daftar_resiko/#{@opd.id}/#{@tahun_bener}.xlsx", class: 'btn btn-sm btn-primary', target: :_blank do %>
-          Excel Daftar Resiko
+          Excel Daftar Resiko OPD
           <i class="fas fa-file-excel ms-2"></i>
         <% end %>
       </div>
     </div>
     <div class="table-responsive">
-      <table class="table align-items-center border" id="tabel_daftar_resiko">
+      <table class="table table-bordered align-items-center border" id="tabel_daftar_resiko">
         <thead class="thead-light">
           <tr>
             <th class="border-bottom" scope="col">No.</th>
+            <th class="border-bottom text-center border">Pelaksana</th>
             <th class="border-bottom text-center border">Rencana Kinerja</th>
             <th class="border-bottom text-center border">Indikator</th>
             <th class="border-bottom text-center border">Target</th>
             <th class="border-bottom text-center border">Satuan</th>
-            <th class="border-bottom text-center border">Pagu Sasaran</th>
+            <th class="border-bottom text-center border">Anggaran</th>
             <th class="border-bottom text-center border">Permasalahan</th>
             <th class="border-bottom text-center border text-wrap">Pernyataan Resiko</th>
             <th class="border-bottom text-center border text-wrap">Skala Kemungkinan</th>
@@ -37,12 +45,15 @@
         </thead>
         <tbody>
           <% @program_kegiatans.each.with_index(1) do |(program_kegiatan, sasarans), i| %>
+            <% pagu = sasarans.map(&:total_anggaran).compact.sum %>
             <tr>
               <td class="text-gray-900 text-wrap fw-bolder"><%= i %></td>
-              <td class="text-gray-900 text-wrap fw-bolder">Subkegiatan: <%= program_kegiatan.nama_subkegiatan %></td>
+              <td class="text-gray-900 text-wrap fw-bolder" colspan="2">Subkegiatan: <%= program_kegiatan.nama_subkegiatan %></td>
               <td class="text-gray-900 text-wrap fw-bolder"><%= program_kegiatan.indikator_program_tahun(@tahun, @opd.kode_unik_opd)[:indikator] %></td>
               <td class="text-gray-900 text-wrap fw-bolder"><%= program_kegiatan.indikator_program_tahun(@tahun, @opd.kode_unik_opd)[:target] %></td>
               <td class="text-gray-900 text-wrap fw-bolder"><%= program_kegiatan.indikator_program_tahun(@tahun, @opd.kode_unik_opd)[:satuan] %></td>
+              <td class="border">Rp. <%= number_with_delimiter(pagu) %></td>
+              <td class="border" colspan="7"></td>
             </tr>
             <tr class="border-bottom">
               <% sasarans.each.with_index(1) do |show_sasaran, no| %>
@@ -53,6 +64,7 @@
                 <% peta_resiko_ha = peta_resiko(nilai_kemungkinan, nilai_skala_dampak) %>
                 <% nilai_peta_resiko_ha = nilai_peta_resiko(peta_resiko_ha) %>
                 <td class="text-wrap border" rowspan="<%= row_indikator %>"><%= "#{i}.#{no}" %></td>
+                <td class="text-wrap border" rowspan="<%= row_indikator %>"><%= show_sasaran.nama_pemilik %></td>
                 <td class="text-wrap border" rowspan="<%= row_indikator %>"><%= show_sasaran.sasaran_kinerja %></td>
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>

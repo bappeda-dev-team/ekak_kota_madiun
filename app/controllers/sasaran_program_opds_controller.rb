@@ -8,19 +8,8 @@ class SasaranProgramOpdsController < ApplicationController
   end
 
   def daftar_resiko
-    @user = current_user
-    @tahun = cookies[:tahun] || Date.current.year
+    @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
-    # @subkegiatan_sasarans = @user.subkegiatan_sasarans_tahun(@tahun)
-    daftar_resiko = DaftarResiko.new(kode_unik_opd: @kode_opd, tahun: @tahun)
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @tahun_bener = daftar_resiko.tahun
-    @program_kegiatans =
-        if current_user.has_role?(:admin)
-          daftar_resiko.daftar_resiko_opd
-        else
-          daftar_resiko.daftar_resiko_asn(nip: @user.nik)
-        end
   end
 
   def add_dampak_resiko
