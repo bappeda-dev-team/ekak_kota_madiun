@@ -276,10 +276,10 @@ class FilterController < ApplicationController
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @tahun_bener = daftar_resiko.tahun
     @program_kegiatans =
-      if @user.has_role?(:admin)
-        daftar_resiko.daftar_resiko_opd
-      else
+      if @user.has_role?(:eselon_4)
         daftar_resiko.daftar_resiko_asn(nip: @user.nik)
+      else
+        daftar_resiko.daftar_resiko_opd
       end
     render partial: 'filter/daftar_resiko'
   end

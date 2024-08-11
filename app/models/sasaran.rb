@@ -125,7 +125,8 @@ class Sasaran < ApplicationRecord
   enum status: { draft: 'draft', pengajuan: 'pengajuan', disetujui: 'disetujui', ditolak: 'ditolak' }
   store_accessor :metadata, :hasil_output, :nama_output, :processed_at, :deleted_at, :deleted_by, :keterangan_hapus,
                  :clone_tahun_asal, :clone_oleh, :clone_asli, :id_rencana_sebelum,
-                 :inovasi_sasaran, :hasil_inovasi, :jenis_inovasi, :gambaran_nilai_kebaruan
+                 :inovasi_sasaran, :hasil_inovasi, :jenis_inovasi, :gambaran_nilai_kebaruan,
+                 :status_dampak_resiko, :komentar_dampak_resiko
 
   # DANGER, maybe broke something, uncomment this
   # def respond_to_missing?(_method, *_args)
@@ -656,5 +657,9 @@ class Sasaran < ApplicationRecord
 
   def role
     'sub_operational_pohon_kota'
+  end
+
+  def dampak_resiko_setuju?
+    status_dampak_resiko == "Setuju"
   end
 end

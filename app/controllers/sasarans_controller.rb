@@ -549,6 +549,8 @@ class SasaransController < ApplicationController
                                     :inovasi_sasaran,
                                     :jenis_inovasi,
                                     :gambaran_nilai_kebaruan,
+                                    :status_dampak_resiko,
+                                    :komentar_dampak_resiko,
                                     :strategi_id,
                                     :kelompok_anggaran, :filter_file, :filter_target, :filter_type, :sasaran_milik,
                                     indikator_sasarans_attributes: %i[id indikator_kinerja aspek target satuan _destroy])

@@ -17,6 +17,12 @@ class SasaranProgramOpdsController < ApplicationController
     @rincian = @sasaran.rincian
   end
 
+  def verifikasi_dampak_resiko
+    @sasaran = Sasaran.find params[:sasaran_program_opd_id]
+    @rincian = @sasaran.rincian
+    render partial: 'sasaran_program_opds/verifikasi_dampak_resiko'
+  end
+
   def cetak_daftar_resiko
     @tahun = params[:tahun] || Time.now.year
     @opd = Opd.find(params[:opd])

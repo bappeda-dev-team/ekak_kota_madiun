@@ -654,6 +654,7 @@ Rails.application.routes.draw do
     end
 
     get :add_dampak_resiko
+    get :verifikasi_dampak_resiko
   end
 
   resources :clone do
