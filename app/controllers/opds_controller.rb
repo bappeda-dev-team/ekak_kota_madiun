@@ -177,8 +177,8 @@ class OpdsController < ApplicationController
 
   def sasaran_tactical
     opd = Opd.find_by(kode_unik_opd: params[:kode_opd])
-    sasaran_kinerja = params[:q]
-    @sasarans = opd.find_sasaran_eselon3(sasaran_kinerja)
+    cari_sasaran = params[:q]
+    @sasarans = opd.find_sasaran_eselon3(cari_sasaran)
     return unless params[:item]
 
     @sasarans = Sasaran.where(id: params[:item])
@@ -186,8 +186,8 @@ class OpdsController < ApplicationController
 
   def sasaran_operational
     opd = Opd.find_by(kode_unik_opd: params[:kode_opd])
-    sasaran_kinerja = params[:q]
-    @sasarans = opd.find_sasaran_eselon4(sasaran_kinerja)
+    cari_sasaran = params[:q]
+    @sasarans = opd.find_sasaran_eselon4(cari_sasaran)
     return unless params[:item]
 
     @sasarans = Sasaran.where(id: params[:item])

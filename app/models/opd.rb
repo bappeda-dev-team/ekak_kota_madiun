@@ -54,7 +54,7 @@ class Opd < ApplicationRecord
   has_many :usulans, dependent: :destroy
   has_many :pohons, dependent: :destroy
   has_many :isu_strategis_opds, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd'
-  has_many :strategis, -> { where(type: nil) }
+  has_many :strategis
   has_many :komentars, lambda {
     where(jenis: "OPD")
   }, primary_key: :id, foreign_key: :item
@@ -388,8 +388,7 @@ class Opd < ApplicationRecord
         .sasarans
         .includes(:indikator_sasarans)
         .where("sasarans.sasaran_kinerja ILIKE ?", "%#{sasaran_kinerja}%")
-        .where.not(sasarans: { nip_asn: nil, strategi_id: nil })
-        .select { |sas| sas.indikator_sasarans.any? }
+        .select { |sas| sas.indikator_sasarans.any? && sas.nip_asn.present? && sas.strategi_id.present? }
   end
 
   def list_strategi_opd(tahun: '')
