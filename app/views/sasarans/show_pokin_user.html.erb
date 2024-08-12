@@ -1,0 +1,22 @@
+<%= content_for :html_title, "Pohon Kinerja Cascading" %>
+<%= content_for :navigation do %>
+    <li class="breadcrumb-item" aria-current="page">Pohon Kinerja</li>
+    <li class="breadcrumb-item active" aria-current="page">Cascading</li>
+<% end %>
+<% content_for :view_utama do %>
+    <%= render 'shared/card_layout', title: "Pohon Kinerja Cascading" do %>
+        <%= render 'shared/pohon' do %>
+            <% if @pohon.present? %>
+                <%= render Pohon::RootComponent.new(title: 'Pohon Cascading') %>
+                <ul data-pohon-tematik-target='dahan'>
+                    <%= render Pohon::BranchOpdComponent.new(branch_opd: @pohon,
+                                                             tahun: @tahun,
+                                                             kode_opd: @kode_opd,
+                                                             is_root: true) %>
+                </ul>
+            <% else %>
+                <%= render Pohon::RootComponent.new(title: @title) %>
+            <% end %>
+        <% end %>
+    <% end %>
+<% end %>

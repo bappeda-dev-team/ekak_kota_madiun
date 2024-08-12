@@ -111,17 +111,22 @@
                           <span>Verifikasi</span>
                         <% end %>
                       <% end %>
+                      <%= link_to show_pokin_user_sasaran_path(show_sasaran), target: "_blank", rel: "nofollow",
+                                  class: "btn btn-sm btn-primary" do %>
+                        <i class="fas fa-tree" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
+                        <span>Pohon Kinerja</span>
+                      <% end %>
                       <%= link_to show_kak_user_sasaran_path(show_sasaran), target: "_blank", rel: "nofollow",
-                        class: "btn btn-sm btn-info" do %>
+                                  class: "btn btn-sm btn-info" do %>
                         <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
                         <span>KAK</span>
                       <% end %>
-                    <%= link_to rincian_belanja_path(show_sasaran),
-                        target: "_blank",
-                        class: "btn btn-sm btn-primary text-white" do %>
-                      <i class="fas fa-journal-whills me-2"></i>
-                      <span>Rincian Belanja</span>
-                    <% end %>
+                      <%= link_to rincian_belanja_path(show_sasaran),
+                                  target: "_blank",
+                                  class: "btn btn-sm btn-primary text-white" do %>
+                        <i class="fas fa-journal-whills me-2"></i>
+                        <span>Rincian Belanja</span>
+                      <% end %>
                     </div>
                   <% end %>
                 </td>

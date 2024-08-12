@@ -1,0 +1,15 @@
+<li>
+    <div class="tf-nc pokin <%= warna_branch %>" id="<%= id_branch %>">
+        <div class="pohon">
+            <%= render Pohon::TitleComponent.new(title: @branch_opd.role) %>
+            <%= render Pohon::BodyOpdComponent.new(item: @branch_opd) %>
+            <%= render Pohon::FootComponent.new(item: @branch_opd, is_root: @is_root) %>
+        </div>
+    </div>
+    <ul class='d-none childs'>
+        <%= render Pohon::BranchOpdComponent.with_collection(childs(@branch_opd),
+                                                             tahun: @tahun,
+                                                             kode_opd: @kode_opd,
+                                                             is_root: false) %>
+    </ul>
+</li>

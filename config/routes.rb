@@ -431,6 +431,7 @@ Rails.application.routes.draw do
       post :hapus_program_from_sasaran
       delete 'hapus_usulan/:usulan_id', to: 'sasarans#hapus_usulan'
       get :show_kak_user
+      get :show_pokin_user
     end
     resources :rincians do
       get "subkegiatan", on: :new

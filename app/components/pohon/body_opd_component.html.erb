@@ -1,0 +1,33 @@
+<div class="pohon-body">
+  <table class="table table-bordered mb-3">
+    <% unless pohon.exists? %>
+      <tr>
+        <td class="text-start" width="30px"><%= pohon.title_up %></td>
+        <td class="text-wrap text-start" colspan="2"><%= pohon.pohonable.strategi %></td>
+      </tr>
+      <% pohon.indikators.each.with_index(1) do |indikator, i| %>
+        <tr class="detail d-none">
+          <td class="text-start" width="30px">Indikator
+            <% if pohon.indikators.size > 1 %>
+              <%= i %>
+            <% end %>
+          </td>
+          <td class="text-wrap text-start" colspan="2"><%= indikator %></td>
+        </tr>
+        <tr class="detail d-none">
+          <td class="text-start" width="30px">Target / Satuan</td>
+          <td class="text-wrap text-start" colspan="2"><%= indikator.target %> <%= indikator.satuan %></td>
+        </tr>
+      <% end %>
+      <tr class="detail d-none">
+        <td class="text-start" width="30px">Keterangan</td>
+        <td class="text-wrap text-start" colspan="2"><%= pohon.keterangan %></td>
+      </tr>
+      <tr class="detail d-none">
+        <td class="text-start" width="30px">Perangkat Daerah</td>
+        <td class="text-wrap text-start" colspan="2"><%= pohon.pohonable.opd %></td>
+      </tr>
+    <% end %>
+  </table>
+  <button type="button" class="btn btn-outline-primary w-100" data-action="pohon-tematik#toggleDetail" data-pohon-tematik-show-param="false">Detail</button>
+</div>
