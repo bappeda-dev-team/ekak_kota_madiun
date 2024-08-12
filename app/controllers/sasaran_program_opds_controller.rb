@@ -26,9 +26,17 @@ class SasaranProgramOpdsController < ApplicationController
   def cetak_daftar_resiko
     @tahun = params[:tahun] || Time.now.year
     @opd = Opd.find(params[:opd])
+    @user = current_user
     @daftar_resiko = DaftarResiko.new(kode_unik_opd: @opd.kode_unik_opd, tahun: @tahun)
     @tahun_bener = @daftar_resiko.tahun
-    @program_kegiatans = @daftar_resiko.daftar_resiko_opd
+    @program_kegiatans =
+      if @user.has_role?(:eselon_4)
+        @daftar_resiko.daftar_resiko_asn(nip: @user.nik)
+      elsif @user.has_role?(:eselon_3)
+        @daftar_resiko.daftar_resiko_eselon3(nip: @user.nik)
+      else
+        @daftar_resiko.daftar_resiko_opd
+      end
     # @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
     # @program_kegiatans = @opd.program_kegiatans.joins(:sasarans).where(sasarans: { tahun: @tahun }).group(:id)
     @filename = "LAPORAN_DAFTAR_RESIKO_#{@opd.nama_opd}_TAHUN_#{@tahun}.pdf"
