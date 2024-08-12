@@ -67,6 +67,7 @@ class SpbesController < ApplicationController
   end
 
   def update
+    @program = @spbe.program_kegiatan
     redirect_routes = index_opd_spbes_path
     respond_to do |format|
       if @spbe.update(spbe_params)
