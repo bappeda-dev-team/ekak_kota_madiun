@@ -278,6 +278,8 @@ class FilterController < ApplicationController
     @program_kegiatans =
       if @user.has_role?(:eselon_4)
         daftar_resiko.daftar_resiko_asn(nip: @user.nik)
+      elsif @user.has_role?(:eselon_3)
+        daftar_resiko.daftar_resiko_eselon3(nip: @user.nik)
       else
         daftar_resiko.daftar_resiko_opd
       end

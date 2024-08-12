@@ -5,6 +5,16 @@ class DaftarResiko
     @tahun = tahun.to_s
   end
 
+  def daftar_resiko_eselon3(nip: '')
+    sasarans = Sasaran.where(nip_asn: nip, tahun: tahun)
+    strategis = sasarans.map(&:strategi).compact_blank
+    strategi_bawahans = strategis.flat_map do |strategi|
+      strategi.strategi_bawahans.where(tahun: tahun)
+    end
+    sasaran_bawahans = strategi_bawahans.flat_map { |str| sasarans_filter(tahun, str.sasarans.dengan_sub_kegiatan) }
+    sasaran_bawahans.compact_blank!.flatten.group_by(&:program_kegiatan)
+  end
+
   def daftar_resiko_asn(nip: '')
     program_kegiatans_by_opd.with_sasarans_rincian.map do |pk|
       sasarans_asn = pk.sasarans.where(sasarans: { nip_asn: nip })
