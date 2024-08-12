@@ -550,6 +550,7 @@ Rails.application.routes.draw do
       get :indikator_lppd
       get :indikator_spm
       get :indikator_sdgs
+      get :daftar_resiko
     end
 
     member do

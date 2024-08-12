@@ -17,6 +17,10 @@ module LaporanItemHelper
         title: 'SPIP', href: spip_index_path,
         icon: 'fas fa-chalkboard', identifier: 'spip'
       },
+      {
+        title: 'ManRisk', href: daftar_resiko_laporans_path,
+        icon: 'fas fa-chalkboard', identifier: 'spip'
+      },
       { title: 'Gender', href: laporan_gap_genders_path,
         icon: 'fas fa-people-carry',
         identifier: 'genders/laporan_gap' },

@@ -91,24 +91,26 @@
                 <td class="border" rowspan="<%= row_indikator %>">
                   <% unless guest? %>
                     <div class="d-grid gap-3">
-                      <%= link_to sasaran_program_opd_add_dampak_resiko_path(show_sasaran),
-                                  { remote: true, class: 'btn btn-tertiary text-light d-inline-flex align-items-center toggle-active',
-                                    data: { 'bs-toggle': 'modal', 'bs-target': '#form-dampak-daftar-resiko'}, } do %>
-                        <i class="fas fa-pencil-alt text-success icon icon-xs me-2"></i>
-                        Edit Dampak
-                      <% end %>
-                      <% if eselon_x?('eselon_3', 'admin', 'super_admin') %>
-                        <%= link_to sasaran_program_opd_verifikasi_dampak_resiko_path(show_sasaran),
-                                    remote: true,
-                                    data: {
-                                      controller: 'form-modal',
-                                      action: 'ajax:complete->form-modal#success:prevent',
-                                      bs_toggle: 'modal',
-                                      bs_target: '#form-modal'
-                                    },
-                                    class: 'btn btn-success text-white d-inline-flex align-items-center toggle-active' do %>
-                          <i class="fas fa-check me-2"></i>
-                          <span>Verifikasi</span>
+                      <% unless @laporan == "admin" %>
+                        <%= link_to sasaran_program_opd_add_dampak_resiko_path(show_sasaran),
+                                    { remote: true, class: 'btn btn-tertiary text-light d-inline-flex align-items-center toggle-active',
+                                      data: { 'bs-toggle': 'modal', 'bs-target': '#form-dampak-daftar-resiko'}, } do %>
+                          <i class="fas fa-pencil-alt text-success icon icon-xs me-2"></i>
+                          Edit Dampak
+                        <% end %>
+                        <% if eselon_x?('eselon_3', 'admin', 'super_admin') %>
+                          <%= link_to sasaran_program_opd_verifikasi_dampak_resiko_path(show_sasaran),
+                                      remote: true,
+                                      data: {
+                                        controller: 'form-modal',
+                                        action: 'ajax:complete->form-modal#success:prevent',
+                                        bs_toggle: 'modal',
+                                        bs_target: '#form-modal'
+                                      },
+                                      class: 'btn btn-success text-white d-inline-flex align-items-center toggle-active' do %>
+                            <i class="fas fa-check me-2"></i>
+                            <span>Verifikasi</span>
+                          <% end %>
                         <% end %>
                       <% end %>
                       <%= link_to show_pokin_user_sasaran_path(show_sasaran), target: "_blank", rel: "nofollow",

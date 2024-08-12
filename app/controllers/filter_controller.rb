@@ -271,17 +271,17 @@ class FilterController < ApplicationController
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
     @user = current_user
-    # @subkegiatan_sasarans = @user.subkegiatan_sasarans_tahun(@tahun)
+    @laporan = params[:laporan]
     daftar_resiko = DaftarResiko.new(kode_unik_opd: @kode_opd, tahun: @tahun)
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @tahun_bener = daftar_resiko.tahun
     @program_kegiatans =
-      if @user.has_role?(:eselon_4)
+      if @laporan == "admin"
+        daftar_resiko.daftar_resiko_opd
+      elsif @user.has_role?(:eselon_4)
         daftar_resiko.daftar_resiko_asn(nip: @user.nik)
       elsif @user.has_role?(:eselon_3)
         daftar_resiko.daftar_resiko_eselon3(nip: @user.nik)
-      else
-        daftar_resiko.daftar_resiko_opd
       end
     render partial: 'filter/daftar_resiko'
   end

@@ -263,6 +263,11 @@ class LaporansController < ApplicationController
     end
   end
 
+  def daftar_resiko
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+  end
+
   private
 
   def set_program_kegiatans
