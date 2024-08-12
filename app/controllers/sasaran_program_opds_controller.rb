@@ -24,18 +24,19 @@ class SasaranProgramOpdsController < ApplicationController
   end
 
   def cetak_daftar_resiko
+    @laporan = params[:laporan]
     @tahun = params[:tahun] || Time.now.year
     @opd = Opd.find(params[:opd])
     @user = current_user
     @daftar_resiko = DaftarResiko.new(kode_unik_opd: @opd.kode_unik_opd, tahun: @tahun)
     @tahun_bener = @daftar_resiko.tahun
     @program_kegiatans =
-      if @user.has_role?(:eselon_4)
+      if @laporan == "admin"
+        @daftar_resiko.daftar_resiko_opd
+      elsif @user.has_role?(:eselon_4)
         @daftar_resiko.daftar_resiko_asn(nip: @user.nik)
       elsif @user.has_role?(:eselon_3)
         @daftar_resiko.daftar_resiko_eselon3(nip: @user.nik)
-      else
-        @daftar_resiko.daftar_resiko_opd
       end
     # @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
     # @program_kegiatans = @opd.program_kegiatans.joins(:sasarans).where(sasarans: { tahun: @tahun }).group(:id)

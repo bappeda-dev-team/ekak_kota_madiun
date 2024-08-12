@@ -10,18 +10,33 @@
     <div class="row align-items-end mb-3">
       <div class="col">
       </div>
-      <div class="col-auto text-end">
-        <%= link_to "/cetak_daftar_resiko/#{@opd.id}/#{@tahun_bener}.pdf", class: 'btn btn-sm btn-primary', target: :_blank do %>
-          PDF Daftar Resiko OPD
-          <i class="fas fa-file-pdf ms-2"></i>
-        <% end %>
-      </div>
-      <div class="col-auto text-end">
-        <%= link_to "/cetak_daftar_resiko/#{@opd.id}/#{@tahun_bener}.xlsx", class: 'btn btn-sm btn-primary', target: :_blank do %>
-          Excel Daftar Resiko OPD
-          <i class="fas fa-file-excel ms-2"></i>
-        <% end %>
-      </div>
+      <% if @laporan == "admin" %>
+        <div class="col-auto text-end">
+          <%= link_to "/cetak_daftar_resiko/#{@opd.id}/#{@tahun_bener}.pdf?laporan=#{@laporan}", class: 'btn btn-sm btn-primary', target: :_blank do %>
+            PDF Daftar Resiko OPD
+            <i class="fas fa-file-pdf ms-2"></i>
+          <% end %>
+        </div>
+        <div class="col-auto text-end">
+          <%= link_to "/cetak_daftar_resiko/#{@opd.id}/#{@tahun_bener}.xlsx?laporan=#{@laporan}", class: 'btn btn-sm btn-primary', target: :_blank do %>
+            Excel Daftar Resiko OPD
+            <i class="fas fa-file-excel ms-2"></i>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="col-auto text-end">
+          <%= link_to "/cetak_daftar_resiko/#{@opd.id}/#{@tahun_bener}.pdf", class: 'btn btn-sm btn-primary', target: :_blank do %>
+            PDF Daftar Resiko
+            <i class="fas fa-file-pdf ms-2"></i>
+          <% end %>
+        </div>
+        <div class="col-auto text-end">
+          <%= link_to "/cetak_daftar_resiko/#{@opd.id}/#{@tahun_bener}.xlsx", class: 'btn btn-sm btn-primary', target: :_blank do %>
+            Excel Daftar Resiko
+            <i class="fas fa-file-excel ms-2"></i>
+          <% end %>
+        </div>
+      <% end %>
     </div>
     <div class="table-responsive">
       <table class="table table-bordered align-items-center border" id="tabel_daftar_resiko">
