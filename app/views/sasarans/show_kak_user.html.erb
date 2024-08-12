@@ -1,0 +1,180 @@
+<%= content_for :html_title, "Rencana Kinerja" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">KAK</li>
+  <li class="breadcrumb-item active" aria-current="page"><%= @sasaran %></li>
+<% end %>
+<% content_for :view_utama do %>
+  <h1>Kerangka Acuan Kerja</h1>
+  <% unless @program_kegiatan.nil? %>
+    <div class="program-kegiatan">
+      <%= render 'laporans/detail_program_kegiatan', program_kegiatan: @program_kegiatan, tahun: @tahun %>
+      <hr>
+      <div class="card border-2 shadow mb-3">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h4>Rincian Anggaran</h4>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="border">
+                <tr>
+                  <th>no</th>
+                  <th>Sasaran Kinerja</th>
+                  <th>Tahun</th>
+                  <th>Indikator</th>
+                  <th>Target</th>
+                  <th class="text-end">Pagu</th>
+                  <th class="text-center">Sumber Dana</th>
+                </tr>
+              </thead>
+              <tbody class="border">
+                  <tr>
+                    <td rowspan="<%= @sasaran.indikator_sasarans.count + 1 %>">1</td>
+                    <td class="text-wrap" rowspan="<%= @sasaran.indikator_sasarans.count + 1 %>"><%= @sasaran.sasaran_kinerja %></td>
+                    <td class="text-wrap" rowspan="<%= @sasaran.indikator_sasarans.count + 1 %>"><%= @sasaran.tahun %></td>
+                    <td class="m-0 p-0" style="height: 0px !important; border-color: transparent;"></td>
+                    <td class="m-0 p-0" style="height: 0px !important; border-color: transparent;"></td>
+                    <td class="text-end border-1" rowspan="<%= @sasaran.indikator_sasarans.count + 1 %>">Rp. <%= number_with_delimiter(@sasaran.total_anggaran) %></td>
+                    <td class="text-wrap" rowspan="<%= @sasaran.indikator_sasarans.count + 1 %>"><%= @sasaran.sumber_dana || '-' %></td>
+                    <% @sasaran.indikator_sasarans.each do |indikator| %>
+                      <tr>
+                        <td class="text-wrap"><%= indikator.indikator_kinerja %></td>
+                        <td><%= "#{indikator.target} #{indikator.satuan}" %></td>
+                      </tr>
+                    <% end %>
+                  </tr>
+                <tr class="border">
+                  <% pagu = @sasaran.total_anggaran %>
+                  <td colspan="5">Total</td>
+                  <td class="text-end border-1">Rp. <%= number_with_delimiter(pagu) %></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <p class="alert alert-warning-text-dark">
+      Belum ada Program Kegiatan pada rincian ini
+    </p>
+  <% end %>
+  <div class="card border-2 shadow mb-3">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h4>A. Latar Belakang</h4>
+        </div>
+      </div>
+    </div>
+    <%= render 'sasarans/dasar_hukum_dan_gambaran_umum', sasaran: @sasaran %>
+  </div>
+  <div class="card border-2 shadow mb-3 penerima-manfaat">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h4>B. Penerima Manfaat</h4>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead class="thead-light">
+          <tr class="border">
+            <th>Sasaran Kinerja</th>
+            <th>Penerima Manfaat</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border">
+            <td class="text-wrap"><%= @sasaran.sasaran_kinerja %></td>
+            <td class="text-wrap"><%= @sasaran.penerima_manfaat || '-' %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card border-2 shadow mb-3 tahapan_pelaksanaan">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h4>C. Strategi Pencapaian Keluaran</h4>
+        </div>
+      </div>
+    </div>
+    <%= render 'sasarans/tahapan_pelaksanaan', sasaran: @sasaran %>
+  </div>
+  <div class="card border-2 shadow mb-3 kurun_waktu">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h4>D. Kurun Waktu Pencapaian Keluaran</h4>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead class="thead-light">
+          <tr class="border">
+            <th>Sasaran Kinerja</th>
+            <th>Waktu Dibutuhkan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border">
+            <td class="text-wrap"><%= @sasaran.sasaran_kinerja %></td>
+            <td class="text-wrap"><%= @sasaran.waktu_total %> Bulan</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card border-2 shadow mb-3 kurun_waktu">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h4>Tematik</h4>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <ol>
+        <% @sasaran.subkegiatan_tematiks.each do |tematik| %>
+          <li><%= tematik.nama_tematik %></li>
+        <% end %>
+      </ol>
+    </div>
+  </div>
+  <div class="card border-2 shadow mb-3 kurun_waktu">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h4>Usulan</h4>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead class="thead-light">
+          <tr class="border">
+            <th>Sasaran Kinerja</th>
+            <th>Usulan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @sasaran.usulans.each do |usulan| %>
+            <tr class="border">
+              <td class="text-wrap"><%= usulan.sasaran.sasaran_kinerja || '-' %></td>
+              <td class="text-wrap"><%= usulan.usulanable_type %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>

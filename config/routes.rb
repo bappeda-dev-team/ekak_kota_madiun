@@ -430,6 +430,7 @@ Rails.application.routes.draw do
       get :review
       post :hapus_program_from_sasaran
       delete 'hapus_usulan/:usulan_id', to: 'sasarans#hapus_usulan'
+      get :show_kak_user
     end
     resources :rincians do
       get "subkegiatan", on: :new

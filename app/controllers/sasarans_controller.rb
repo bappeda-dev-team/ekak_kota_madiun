@@ -58,6 +58,17 @@ class SasaransController < ApplicationController
     @tahun = cookies[:tahun] || Date.current.year
   end
 
+  def show_kak_user
+    @tahun = cookies[:tahun]
+    @sasaran = Sasaran.find(params[:id])
+    @program_kegiatan = @sasaran.program_kegiatan
+    indikators_pks = IndikatorQueries.new(tahun: @tahun, opd: @program_kegiatan.opd,
+                                          program_kegiatan: @program_kegiatan)
+    @indikator_program = indikators_pks.indikator_program
+    @indikator_kegiatan = indikators_pks.indikator_kegiatan
+    @indikator_subkegiatan = indikators_pks.indikator_subkegiatan
+  end
+
   # TODO: refactor and simplify
   def laporan_kak(tahun: '')
     @program_kegiatans = ProgramKegiatan.joins(:sasarans).where(sasarans: { nip_asn: current_user.nik,
