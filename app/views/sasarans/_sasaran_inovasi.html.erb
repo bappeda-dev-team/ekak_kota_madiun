@@ -13,6 +13,26 @@
   <td class="border text-wrap jenis-inovasi" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.jenis_inovasi_sasaran %></td>
   <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.gambaran_nilai_kebaruan_sasaran %></td>
   <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
+  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>">
+    <div class="d-grid gap-3">
+      <%= link_to show_pokin_user_sasaran_path(sasaran), target: "_blank", rel: "nofollow",
+                  class: "btn btn-sm btn-primary" do %>
+        <i class="fas fa-tree"></i>
+        <span>Pohon Kinerja</span>
+      <% end %>
+      <%= link_to show_kak_user_sasaran_path(sasaran), target: "_blank", rel: "nofollow",
+                  class: "btn btn-sm btn-info" do %>
+        <i class="fas fa-book-open"></i>
+        <span>RTL-KAK</span>
+      <% end %>
+      <%= link_to rincian_belanja_path(sasaran),
+                  target: "_blank",
+                  class: "btn btn-sm btn-primary text-white" do %>
+        <i class="fas fa-journal-whills me-2"></i>
+        <span>Rincian Belanja</span>
+      <% end %>
+    </div>
+  </td>
 </tr>
 <% row_indikator_sasaran(sasaran).each do |indikator| %>
   <%= indikator %>

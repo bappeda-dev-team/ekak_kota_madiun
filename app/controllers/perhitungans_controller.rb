@@ -21,7 +21,7 @@ class PerhitungansController < ApplicationController
     @selected = @perhitungan.deskripsi_anggaran
 
     @jenis_anggaran = if @perhitungan.jenis_anggaran.blank?
-                        @selected.first.searchable_type
+                        @selected.first&.searchable_type
                       else
                         @perhitungan.jenis_anggaran
                       end

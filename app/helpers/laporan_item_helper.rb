@@ -18,8 +18,8 @@ module LaporanItemHelper
         icon: 'fas fa-chalkboard', identifier: 'spip'
       },
       {
-        title: 'ManRisk', href: daftar_resiko_laporans_path,
-        icon: 'fas fa-chalkboard', identifier: 'spip'
+        title: 'Manajemen Resiko', href: daftar_resiko_laporans_path,
+        icon: 'fas fa-chart-line', identifier: 'sasaran_program_opds/daftar_resiko'
       },
       { title: 'Gender', href: laporan_gap_genders_path,
         icon: 'fas fa-people-carry',
