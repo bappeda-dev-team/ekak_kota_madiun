@@ -81,10 +81,16 @@
                 <% nilai_peta_resiko_ha = nilai_peta_resiko(peta_resiko_ha) %>
                 <td class="text-wrap border" rowspan="<%= row_indikator %>"><%= "#{i}.#{no}" %></td>
                 <td class="text-wrap border" rowspan="<%= row_indikator %>">
-                  <% if show_sasaran.dampak_resiko_setuju? %>
-                    <button class="btn btn-success text-white">
-                      <%= show_sasaran.status_dampak_resiko %>
-                    </button>
+                  <% if show_sasaran.status_dampak_resiko.present? %>
+                    <% if show_sasaran.dampak_resiko_setuju? %>
+                      <button class="btn btn-success text-white">
+                        <%= show_sasaran.status_dampak_resiko %>
+                      </button>
+                    <% else %>
+                      <button class="btn btn-secondary">
+                        <%= show_sasaran.status_dampak_resiko %>
+                      </button>
+                    <% end %>
                     <hr />
                     <span>Keterangan: </span>
                     <small><%= show_sasaran.komentar_dampak_resiko %></small>
@@ -110,11 +116,13 @@
                   <% unless guest? %>
                     <div class="d-grid gap-3">
                       <% unless @laporan == "admin" %>
-                        <%= link_to sasaran_program_opd_add_dampak_resiko_path(show_sasaran),
-                                    { remote: true, class: 'btn btn-tertiary text-light d-inline-flex align-items-center toggle-active',
-                                      data: { 'bs-toggle': 'modal', 'bs-target': '#form-dampak-daftar-resiko'}, } do %>
-                          <i class="fas fa-pencil-alt text-success icon icon-xs me-2"></i>
-                          Edit Dampak
+                        <% if eselon_x?('eselon_4', 'staff', 'admin', 'super_admin') %>
+                          <%= link_to sasaran_program_opd_add_dampak_resiko_path(show_sasaran),
+                                      { remote: true, class: 'btn btn-tertiary text-light d-inline-flex align-items-center toggle-active',
+                                        data: { 'bs-toggle': 'modal', 'bs-target': '#form-dampak-daftar-resiko'}, } do %>
+                            <i class="fas fa-pencil-alt text-success icon icon-xs me-2"></i>
+                            Edit Dampak
+                          <% end %>
                         <% end %>
                         <% if eselon_x?('eselon_3', 'admin', 'super_admin') %>
                           <% if show_sasaran.status_dampak_resiko.present? %>
