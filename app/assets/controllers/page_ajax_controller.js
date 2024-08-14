@@ -10,58 +10,65 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-        static targets = ["results"];
-        static values = {
-                opd: String,
-                tahun: String,
-                url: String,
-                jenisUsulan: String,
-                reqtype: { type: String, default: "POST" },
-        };
+  static targets = ["results"];
+  static values = {
+    opd: String,
+    tahun: String,
+    url: String,
+    jenisUsulan: String,
+    reqtype: { type: String, default: "POST" },
+  };
 
-        connect() {
-                const url = this.urlValue;
-                if (this.reqtypeValue == "POST") {
-                        this.fetcherPost(url)
-                } else {
-                        this.fetcherGet(url)
-                }
+  connect() {
+    const url = this.urlValue;
+    if (this.reqtypeValue == "POST") {
+      this.fetcherPost(url);
+    } else {
+      this.fetcherGet(url);
+    }
+  }
 
-        }
+  fetcherPost(url) {
+    const token = document.head.querySelector(
+      'meta[name="csrf-token"]',
+    ).content;
 
-        fetcherPost(url) {
-                const token = document.head.querySelector(
-                        'meta[name="csrf-token"]',
-                ).content;
+    // Build formData object.
+    let formData = new FormData();
+    formData.append("kode_opd", this.opdValue);
+    formData.append("tahun", this.tahunValue);
+    formData.append("jenis", this.jenisUsulanValue);
+    formData.append("authenticity_token", token);
 
-                // Build formData object.
-                let formData = new FormData();
-                formData.append("kode_opd", this.opdValue);
-                formData.append("tahun", this.tahunValue);
-                formData.append("jenis", this.jenisUsulanValue);
-                formData.append("authenticity_token", token);
+    fetch(url, {
+      body: formData,
+      method: this.reqtypeValue,
+    })
+      .then((response) => response.text())
+      .then((text) => {
+        this.resultsTarget.innerHTML = text;
+      })
+      .then(() => {
+        const $table = $("table.sticky-head");
+        $table.floatThead({
+          responsiveContainer: function ($table) {
+            return $table.closest(".table-responsive");
+          },
+        });
+      })
+      .catch((e) => {
+        this.resultsTarget.innerHTML = "Terjadi Kesalahan";
+      });
+  }
 
-                fetch(url, {
-                        body: formData,
-                        method: this.reqtypeValue,
-                })
-                        .then((response) => response.text())
-                        .then((text) => {
-                                this.resultsTarget.innerHTML = text;
-                        })
-                        .catch((e) => {
-                                this.resultsTarget.innerHTML = "Terjadi Kesalahan";
-                        });
-        }
-
-        fetcherGet(url) {
-                fetch(url)
-                        .then((response) => response.text())
-                        .then((text) => {
-                                this.resultsTarget.innerHTML = text;
-                        })
-                        .catch((e) => {
-                                this.resultsTarget.innerHTML = "Terjadi Kesalahan";
-                        });
-        }
+  fetcherGet(url) {
+    fetch(url)
+      .then((response) => response.text())
+      .then((text) => {
+        this.resultsTarget.innerHTML = text;
+      })
+      .catch((e) => {
+        this.resultsTarget.innerHTML = "Terjadi Kesalahan";
+      });
+  }
 }

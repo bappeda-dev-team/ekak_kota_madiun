@@ -8,7 +8,7 @@ import Turbolinks from "turbolinks";
 import * as ActiveStorage from "@rails/activestorage";
 import "../javascript/channels";
 import "../javascript/sweetalert/sweetalert";
-import '../javascript/datatables/simple-datatables';
+import "../javascript/datatables/simple-datatables";
 
 import jQuery from "jquery";
 import "@popperjs/core";
@@ -17,15 +17,16 @@ import SmoothScroll from "smooth-scroll";
 import "@fortawesome/fontawesome-free/css/all";
 import "select2";
 import "vanilla-nested";
-import 'simplebar';
-import 'simplebar/dist/simplebar.css';
+import "simplebar";
+import "simplebar/dist/simplebar.css";
+import "floatthead";
 // stimulus controllers
-import "controllers"
+import "controllers";
 
 // pokin
-import '../javascript/d3/index'
-import '../javascript/d3/pokin_opd'
-import 'treeflex/dist/css/treeflex.css'
+import "../javascript/d3/index";
+import "../javascript/d3/pokin_opd";
+import "treeflex/dist/css/treeflex.css";
 
 // images
 require.context("../images", true);
@@ -34,10 +35,9 @@ Rails.start();
 Turbolinks.start();
 ActiveStorage.start();
 
-
 window.$ = window.jQuery = jQuery;
-window.bootstrap = require('bootstrap');
+window.bootstrap = require("bootstrap");
 // window.Chartist = Chartist;
 window.SmoothScroll = SmoothScroll;
 
-require('../javascript/volt/volt');
+require("../javascript/volt/volt");
