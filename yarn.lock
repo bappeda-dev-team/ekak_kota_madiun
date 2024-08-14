@@ -7729,7 +7729,7 @@
   "version" "2.3.0"
 
 "vanilla-nested@arielj/vanilla-nested#support-3-level-nesting":
-  "resolved" "git+ssh://git@github.com/arielj/vanilla-nested.git#7d480ba7c8712600ccc7a96cbd79c2ab7b046efd"
+  "resolved" "https://codeload.github.com/arielj/vanilla-nested/tar.gz/7d480ba7c8712600ccc7a96cbd79c2ab7b046efd"
   "version" "1.7.1"
 
 "vary@~1.1.2":
