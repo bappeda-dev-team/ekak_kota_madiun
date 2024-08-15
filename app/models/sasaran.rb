@@ -424,8 +424,7 @@ class Sasaran < ApplicationRecord
   end
 
   def output_inovasi_terisi?
-    # metadata.key?("inovasi_sasaran")
-    inovasi_sasaran.present?
+    metadata.key?("hasil_inovasi")
   rescue NoMethodError
     false
   end

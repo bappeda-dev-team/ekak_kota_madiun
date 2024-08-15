@@ -13,17 +13,21 @@
     </thead>
     <tbody>
       <tr>
-        <td class="text-wrap align-middle judul-inovasi"><%= sasaran.metadata&.dig("inovasi_sasaran") %></td>
-        <td class="align-middle jenis-inovasi"><%= sasaran.metadata&.dig("jenis_inovasi") %></td>
-        <td class="text-wrap align-middle gambaran-inovasi"><%= sasaran.metadata&.dig("gambaran_nilai_kebaruan") %></td>
-        <td class="align-middle">
+        <% if sasaran.hasil_inovasi == 'Inovasi' %>
+          <td class="text-wrap align-middle judul-inovasi"><%= sasaran.metadata&.dig("inovasi_sasaran") %></td>
+          <td class="align-middle jenis-inovasi"><%= sasaran.metadata&.dig("jenis_inovasi") %></td>
+          <td class="text-wrap align-middle gambaran-inovasi"><%= sasaran.metadata&.dig("gambaran_nilai_kebaruan") %></td>
+        <% else %>
+          <td colspan="3" class="text-wrap align-middle judul-inovasi text-danger"><%= sasaran.hasil_inovasi %></td>
+        <% end %>
+        <td class="align-middle text-center">
           <%= link_to edit_inovasi_sasaran_path(sasaran),
-           remote: true, class: 'btn btn-outline-info',
-           data: {
-             action: 'ajax:complete->editable-table#edit:prevent',
-           } do %>
-            <span class="fas fa-pencil"></span>
-            <span>Edit Inovasi</span>
+                      remote: true, class: 'btn btn-outline-info',
+                      data: {
+                        action: 'ajax:complete->editable-table#edit:prevent',
+                      } do %>
+            <span class="fas fa-pencil-alt me-2"></span>
+            <span>Edit</span>
           <% end %>
       </tr>
     </tbody>
