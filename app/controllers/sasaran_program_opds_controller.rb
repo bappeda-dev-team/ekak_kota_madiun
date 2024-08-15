@@ -13,8 +13,12 @@ class SasaranProgramOpdsController < ApplicationController
   end
 
   def show_manrisk
-    @sasaran = Sasaran.find params[:sasaran_program_opd_id]
-    @rincian = @sasaran.rincian
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    daftar_resiko = DaftarResiko.new(kode_unik_opd: @kode_opd, tahun: @tahun)
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @tahun_bener = daftar_resiko.tahun
+    @program_kegiatans = daftar_resiko.daftar_resiko_sasaran(sasaran_id: params[:id])
   end
 
   def add_dampak_resiko

@@ -22,6 +22,13 @@ class DaftarResiko
     end.compact_blank!.flatten.group_by(&:program_kegiatan)
   end
 
+  def daftar_resiko_sasaran(sasaran_id: '')
+    program_kegiatans_by_opd.with_sasarans_rincian.map do |pk|
+      sasarans_asn = pk.sasarans.where(sasarans: { id: sasaran_id })
+      sasarans_filter(tahun, sasarans_asn)
+    end.compact_blank!.flatten.group_by(&:program_kegiatan)
+  end
+
   def sasarans_filter(tahun_sasaran, sasarans)
     sasarans.dengan_rincian.where(tahun: tahun_sasaran)
             .where.not(nip_asn: [nil, ""])
