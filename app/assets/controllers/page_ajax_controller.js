@@ -8,6 +8,9 @@
 // </div>
 
 import { Controller } from "stimulus";
+// Simple DataTable
+import "simple-datatables/src/style.css";
+import { DataTable } from "simple-datatables";
 
 export default class extends Controller {
   static targets = ["results"];
@@ -55,6 +58,8 @@ export default class extends Controller {
             return $table.closest(".table-responsive");
           },
         });
+
+        new DataTable("#data-table");
       })
       .catch((e) => {
         this.resultsTarget.innerHTML = "Terjadi Kesalahan";

@@ -17,6 +17,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def all; end
+
+  def all_user
+    @users = User.aktif
+    render partial: 'users/all_user'
+  end
+
   def khusus
     @users = User.khusus
   end

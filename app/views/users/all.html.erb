@@ -1,0 +1,13 @@
+<%= content_for :html_title, "Laporan Manajemen Resiko" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Data Master</li>
+  <li class="breadcrumb-item active" aria-current="page">Daftar Pengguna</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_ajax',
+             title: "List Pengguna Aplikasi",
+             data_page_attr: {
+               controller: 'page-ajax',
+               page_ajax_url_value: all_user_users_path
+             } %>
+<% end %>

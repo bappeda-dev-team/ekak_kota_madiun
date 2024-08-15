@@ -378,6 +378,8 @@ Rails.application.routes.draw do
       get :khusus
       get :dropdown_user
       get :list_all
+      get :all
+      post :all_user
       get :user_opd
       resources :reviewers
     end

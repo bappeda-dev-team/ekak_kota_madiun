@@ -22,6 +22,10 @@ module SuperAdminItemHelper
         icon: 'fas fa-people', identifier: 'jenis_jabatans'
       },
       {
+        title: 'Daftar Pengguna Aplikasi', href: all_users_path,
+        icon: 'fas fa-users', identifier: 'list_all'
+      },
+      {
         title: 'User Khusus', href: khusus_users_path,
         icon: 'fas fa-user-tie', identifier: 'khusus_users'
       },
