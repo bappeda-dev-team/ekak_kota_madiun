@@ -3528,7 +3528,8 @@ CREATE TABLE public.tahapans (
     sasaran_id bigint,
     id_rencana_aksi character varying,
     id_rencana character varying,
-    urutan character varying
+    urutan character varying,
+    metadata jsonb
 );
 
 
@@ -6519,6 +6520,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240514032217'),
 ('20240514032911'),
 ('20240514074839'),
-('20240619072216');
+('20240619072216'),
+('20240815070619');
 
 

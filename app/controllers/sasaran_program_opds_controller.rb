@@ -12,6 +12,11 @@ class SasaranProgramOpdsController < ApplicationController
     @kode_opd = cookies[:opd]
   end
 
+  def show_manrisk
+    @sasaran = Sasaran.find params[:sasaran_program_opd_id]
+    @rincian = @sasaran.rincian
+  end
+
   def add_dampak_resiko
     @sasaran = Sasaran.find params[:sasaran_program_opd_id]
     @rincian = @sasaran.rincian

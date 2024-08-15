@@ -110,7 +110,7 @@
             <% sasaran.tahapan_renaksi.each do |tahapan| %>
               <tr class="<%= tahapan.ada_komentar? ? 'higlighted' : 'clean' %>">
                 <td class="text-gray-900 fw-bolder border-start border-end" scope="row"></td>
-                <td class="text-gray-900"><%= tahapan.tahapan_kerja %></td>
+                <td class="text-gray-900"><%= tahapan.tahapan_kerja %> <span class='fw-bolder'><%= tahapan.tagging == "TL-MR" ? "- [#{tahapan.tagging}]" : '' %></span></td>
                 <td class="fw-bolder text-gray-500 text-center border-end">
                   <%= render(EditButtonComponent.new(path: edit_sasaran_tahapan_path(sasaran, tahapan))) %>
                   <%= render(DeleteButtonComponent.new(path: sasaran_tahapan_path(sasaran, tahapan), 

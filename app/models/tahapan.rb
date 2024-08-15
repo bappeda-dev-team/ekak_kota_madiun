@@ -9,6 +9,7 @@
 #  jumlah_realisasi :integer
 #  jumlah_target    :integer
 #  keterangan       :string
+#  metadata         :jsonb
 #  progress         :integer
 #  realisasi        :integer
 #  tahapan_kerja    :string
@@ -37,6 +38,8 @@ class Tahapan < ApplicationRecord
   validates :tahapan_kerja, presence: true
 
   default_scope { order(Arel.sql("nullif(regexp_replace(urutan, '[^0-9]', '', 'g'),'')::int")) }
+
+  store_accessor :metadata, :tagging
 
   def to_s
     tahapan_kerja

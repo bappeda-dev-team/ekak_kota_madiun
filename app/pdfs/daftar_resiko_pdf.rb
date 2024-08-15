@@ -73,8 +73,6 @@ class DaftarResikoPdf < Prawn::Document
   def subkegiatan
     tabel_subkegiatan = [header_tabel]
     @program_kegiatans.each.with_index(1) do |(pk, sasarans), i|
-      row_awal = sasarans.map { |sas| sas.indikator_sasarans.size }.compact.reduce(:+)
-      row_dalam = sasarans.size + row_awal
       tabel_subkegiatan << [{ content: i.to_s, valign: :top },
                             { content: pk.nama_subkegiatan, valign: :top, width: 100 }, sasarans(sasarans)]
     end

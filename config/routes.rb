@@ -658,6 +658,10 @@ Rails.application.routes.draw do
       get :daftar_resiko
     end
 
+    member do
+      get :show_manrisk
+    end
+
     get :add_dampak_resiko
     get :verifikasi_dampak_resiko
   end

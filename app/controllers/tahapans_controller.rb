@@ -104,6 +104,6 @@ class TahapansController < ApplicationController
   # Only allow a list of trusted parameters through.
   def tahapan_params
     params.require(:tahapan).permit(:sasaran_id, :tahapan_kerja, :target, :realisasi, :bulan, :jumlah_target, :urutan,
-                                    :jumlah_realisasi, :keterangan, :waktu, :progress)
+                                    :jumlah_realisasi, :keterangan, :waktu, :progress, :tagging)
   end
 end

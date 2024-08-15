@@ -9,6 +9,7 @@
 #  jumlah_realisasi :integer
 #  jumlah_target    :integer
 #  keterangan       :string
+#  metadata         :jsonb
 #  progress         :integer
 #  realisasi        :integer
 #  tahapan_kerja    :string

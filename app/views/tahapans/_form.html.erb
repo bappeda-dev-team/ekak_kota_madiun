@@ -18,6 +18,16 @@
     <%= form.text_field :tahapan_kerja, {class: "form-control", required: true}%>
   </div>
   <div class="field">
+    <%= form.label :tagging, {class: "form-label"} %>
+    <%= form.select :tagging, ['Umum', 'TL-MR'] , {include_blank: true},
+     { class: 'form-control',
+       required: true,
+       data: { placeholder: 'pilih tagging',
+         controller: 'dropdown',
+         dropdown_parent_value: '#form-renaksi-body'
+     }} %>
+  </div>
+  <div class="field">
     <%= form.label :keterangan, {class: "form-label"} %>
     <%= form.text_field :keterangan, {class: "form-control"} %>
   </div>
