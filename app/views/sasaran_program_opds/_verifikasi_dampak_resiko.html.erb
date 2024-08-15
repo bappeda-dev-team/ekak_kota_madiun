@@ -52,14 +52,15 @@
       <%= sasaran_fields.label :status_dampak_resiko, { class: "form-label" } %>
       <%= sasaran_fields.select :status_dampak_resiko,['Setuju', 'Tolak'] , {include_blank: true},
        { class: 'form-control',
-         data: { placeholder: 'Status Dampak Resiko Sasaran',
+         required: true,
+         data: { placeholder: '',
            controller: 'dropdown',
            dropdown_parent_value: '#form-modal'
        }} %>
     </div>
     <div class="field">
       <%= sasaran_fields.label :komentar_dampak_resiko, { class: "form-label" } %>
-      <%= sasaran_fields.text_area :komentar_dampak_resiko, {class: "form-control"} %>
+      <%= sasaran_fields.text_area :komentar_dampak_resiko, {class: "form-control", required: true} %>
     </div>
   <% end %>
   <div class="actions">

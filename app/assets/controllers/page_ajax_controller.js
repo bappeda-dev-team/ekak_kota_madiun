@@ -58,8 +58,12 @@ export default class extends Controller {
             return $table.closest(".table-responsive");
           },
         });
-
-        new DataTable("#data-table");
+      })
+      .then(() => {
+        const dt = document.getElementById("data-table");
+        if (dt != null) {
+          new DataTable(dt);
+        }
       })
       .catch((e) => {
         this.resultsTarget.innerHTML = "Terjadi Kesalahan";
