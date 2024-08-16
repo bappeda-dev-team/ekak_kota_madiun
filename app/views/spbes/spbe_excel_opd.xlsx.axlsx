@@ -7,6 +7,23 @@ style_heading = s.add_style(border: { style: :thin, color: '000000', edges: %i[l
                             outline: true, alignment: { horizontal: :center, vertical: :center })
 style_nama_kota = s.add_style(border: { style: :thin, color: '000000', edges: %i[left right bottom top] },
                               outline: true, alignment: { horizontal: :left, vertical: :center })
+
+def tahun_spbe(tahun_awal, tahun_akhir)
+  periode_awal = 2020
+  periode_akhir = 2024
+  th_awal = tahun_awal&.to_i
+  th_akhir = tahun_akhir&.to_i
+
+  return ["", "", "", "", ""] if tahun_awal.nil? || tahun_akhir.nil?
+
+  (periode_awal..periode_akhir).map do |tahun|
+    if tahun >= th_awal && tahun <= th_akhir
+      "v"
+    else
+      ""
+    end
+  end
+end
 # isu strategis opd / kota
 wb.add_worksheet(name: "SPBE OPD") do |sheet|
   sheet.add_row [nil, nil, nil, nil, nil, nil, "PETA RENCANA SPBE"], style: project_heading
@@ -41,11 +58,7 @@ wb.add_worksheet(name: "SPBE OPD") do |sheet|
                                  spbes.first&.spbe_rincians&.first&.detail_sasaran_kinerja,
                                  spbes.first&.spbe_rincians&.first&.sasaran&.anggaran_spbe,
                                  spbes.first&.spbe_rincians&.first&.sasaran&.subkegiatan,
-                                 "",
-                                 "",
-                                 "",
-                                 "",
-                                 "",
+                                 *tahun_spbe(spbes.first&.spbe_rincians&.first&.tahun_awal, spbes.first&.spbe_rincians&.first&.tahun_akhir),
                                  spbes.first&.spbe_rincians&.first&.opd&.nama_opd,
                                  spbes.first&.spbe_rincians&.first&.keterangan], style: style_nama_kota
     spbes.first&.sasaran&.indikator_sasarans&.each do |indikator|
@@ -112,11 +125,7 @@ wb.add_worksheet(name: "SPBE OPD") do |sheet|
                                  spbe&.spbe_rincians&.first&.detail_sasaran_kinerja,
                                  spbe&.spbe_rincians&.first&.sasaran&.anggaran_spbe,
                                  spbe&.spbe_rincians&.first&.sasaran&.subkegiatan,
-                                 "",
-                                 "",
-                                 "",
-                                 "",
-                                 "",
+                                 *tahun_spbe(spbe&.spbe_rincians&.first&.tahun_awal, spbe&.spbe_rincians&.first&.tahun_akhir),
                                  spbe&.spbe_rincians&.first&.opd&.nama_opd,
                                  spbe&.spbe_rincians&.first&.keterangan], style: style_nama_kota
       spbe&.sasaran&.indikator_sasarans&.drop(1)&.each do |indikator|
@@ -183,11 +192,7 @@ wb.add_worksheet(name: "SPBE OPD") do |sheet|
                        spbe_rincian&.detail_sasaran_kinerja,
                        spbe_rincian&.sasaran&.anggaran_spbe,
                        spbe_rincian&.sasaran&.subkegiatan,
-                       "",
-                       "",
-                       "",
-                       "",
-                       "",
+                       *tahun_spbe(spbe_rincian&.tahun_awal, spbe_rincian&.tahun_akhir),
                        spbe_rincian&.opd&.nama_opd,
                        spbe_rincian&.keterangan], style: style_nama_kota
         sheet.add_row [nil, nil,
