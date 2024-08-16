@@ -176,18 +176,20 @@ class OpdsController < ApplicationController
   end
 
   def sasaran_tactical
+    tahun = cookies[:tahun]
     opd = Opd.find_by(kode_unik_opd: params[:kode_opd])
     cari_sasaran = params[:q]
-    @sasarans = opd.find_sasaran_eselon3(cari_sasaran)
+    @sasarans = opd.find_sasaran_eselon3(cari_sasaran, tahun)
     return unless params[:item]
 
     @sasarans = Sasaran.where(id: params[:item])
   end
 
   def sasaran_operational
+    tahun = cookies[:tahun]
     opd = Opd.find_by(kode_unik_opd: params[:kode_opd])
     cari_sasaran = params[:q]
-    @sasarans = opd.find_sasaran_eselon4(cari_sasaran)
+    @sasarans = opd.find_sasaran_eselon4(cari_sasaran, tahun)
     return unless params[:item]
 
     @sasarans = Sasaran.where(id: params[:item])

@@ -371,14 +371,14 @@ class Opd < ApplicationRecord
       .map { |program| { program => program.sasarans_program(tahun) } }
   end
 
-  def find_sasaran_eselon3(sasaran_kinerja)
-    strategi_eselon3.flat_map do |strategi|
+  def find_sasaran_eselon3(sasaran_kinerja, tahun)
+    strategi_eselon3.where(tahun: tahun).flat_map do |strategi|
       sasaran_kinerja_strategi(strategi, sasaran_kinerja)
     end
   end
 
-  def find_sasaran_eselon4(sasaran_kinerja)
-    strategi_eselon4.flat_map do |strategi|
+  def find_sasaran_eselon4(sasaran_kinerja, tahun)
+    strategi_eselon4.where(tahun: tahun).flat_map do |strategi|
       sasaran_kinerja_strategi(strategi, sasaran_kinerja)
     end
   end

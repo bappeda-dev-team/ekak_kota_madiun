@@ -46,6 +46,10 @@ module SuperAdminItemHelper
         icon: 'fas fa-archive', identifier: 'adminsasarans'
       },
       {
+        title: 'Rekap Rencana Kinerja', href: rekap_sasaran_sasarans_path,
+        icon: 'fas fa-archive', identifier: 'rencana_kinerja/rekap_sasaran'
+      },
+      {
         title: 'Master Indikator', href: indikators_path,
         icon: 'fas fa-target', identifier: 'indikators'
       },
