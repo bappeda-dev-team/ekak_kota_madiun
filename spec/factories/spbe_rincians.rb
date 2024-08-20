@@ -13,6 +13,7 @@
 #  keterangan             :string
 #  kode_opd               :string
 #  kode_program           :string
+#  metadata               :jsonb
 #  subdomain_spbe         :string
 #  tahun_akhir            :string
 #  tahun_awal             :string

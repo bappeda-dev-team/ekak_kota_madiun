@@ -1,26 +1,57 @@
 <% disabled = form.object.kode_opd != @kode_opd %>
 <fieldset class="mb-5">
   <div class="field">
+    <%= form.label :domain_spbe, { class: "form-label" } %>
+    <%= form.select(:domain_spbe, (Domain.pluck(:domain)), {include_blank: true},
+                    {data: { controller: 'dropdown', placeholder: 'Pilih Domain SPBE' }}) %>
+  </div>
+  <div class="field">
+    <%= form.label :subdomain_spbe, { class: "form-label" } %>
+    <%= form.select(:subdomain_spbe, (Subdomain.pluck(:subdomain)), {include_blank: true},
+                    {data: { controller: 'dropdown', placeholder: 'Pilih Domain SPBE' }}) %>
+  </div>
+  <div class="field">
     <%= form.label :kebutuhan_spbe, { class: "form-label" } %>
     <%= form.select(:kebutuhan_spbe, (['Rancangan Aplikasi','Sarpras', 'Jaringan', 'SDM']), {},
-      { disabled: true,
-        data: { controller: 'dropdown' }}) %>
+                    { disabled: true,
+                      data: { controller: 'dropdown' }}) %>
+  </div>
+  <div class="field">
+    <%= form.label :kondisi_sekarang, { class: "form-label" } %>
+    <%= form.text_area :kondisi_sekarang, { class: "form-control", readonly: true, placeholder: 'belum terisi' } %>
   </div>
   <div class="field">
     <%= form.label :detail_kebutuhan, { class: "form-label" } %>
     <%= form.text_area :detail_kebutuhan, { class: "form-control", readonly: true } %>
   </div>
+  <% if form.object.internal_external == 'External' %>
+    <div class="field">
+      <%= form.label "Terima Permintaan ?", {class: "form-label"} %>
+      <%= form.select :status_kebutuhan_spbe, ['Setuju', 'Tolak'] , {include_blank: true, selected: 'Setuju'},
+       { class: 'form-control',
+         required: true,
+         data: {
+           placeholder: '',
+           controller: 'dropdown',
+         }
+       } %>
+    </div>
+    <div class="field">
+      <%= form.label "Keterangan", { class: "form-label" } %>
+      <%= form.text_area :keterangan_kebutuhan_spbe, { class: "form-control" } %>
+    </div>
+  <% end %>
   <div class="field mb-5">
     <%= form.select :kode_opd, [], {include_blank: true},
-        { disabled: true,
-          data: { placeholder: "OPD Pelaksana",
-                  controller: 'dropdown',
-                  dropdown_jenis_value: 'ajax_preselect',
-                  dropdown_url_value: legit_opd_opds_path(@opd, :json),
-                  dropdown_item_value: form.object.kode_opd,
-                  dropdown_kode_opd_value: @kode_opd,
-                }
-        } %>
+     { disabled: true,
+       data: { placeholder: "OPD Pelaksana",
+         controller: 'dropdown',
+         dropdown_jenis_value: 'ajax_preselect',
+         dropdown_url_value: legit_opd_opds_path(@opd, :json),
+         dropdown_item_value: form.object.kode_opd,
+         dropdown_kode_opd_value: @kode_opd,
+       }
+     } %>
   </div>
   <div class="field">
     <%= form.label :sasaran_operasional, {class: "form-label"} %>
@@ -38,14 +69,14 @@
   </div>
   <div class="field">
     <%= link_to 'Sasaran Baru', new_spbe_sasarans_path(kode_opd: @kode_opd),
-        disabled: disabled,
-        remote: true, class: 'btn btn-sm btn-primary',
-        data: { controller: 'form-modal',
-                form_modal_location_param: 'form-sasaran-body',
-                action: 'form-modal#appendForm',
-                bs_toggle: 'modal',
-                bs_target: '#form-sasaran',
-        }%>
+                disabled: disabled,
+                remote: true, class: 'btn btn-sm btn-primary',
+                data: { controller: 'form-modal',
+                  form_modal_location_param: 'form-sasaran-body',
+                  action: 'form-modal#appendForm',
+                  bs_toggle: 'modal',
+                  bs_target: '#form-sasaran',
+                }%>
   </div>
   <div class="field">
     <%= form.label :detail_sasaran_kinerja, { class: "form-label" } %>

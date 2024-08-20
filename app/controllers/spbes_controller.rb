@@ -120,6 +120,8 @@ class SpbesController < ApplicationController
                                                               subdomain_spbe
                                                               keterangan id_rencana kebutuhan_spbe
                                                               internal_external tahun_awal tahun_akhir
+                                                              status_kebutuhan_spbe keterangan_kebutuhan_spbe
+                                                              kondisi_sekarang
                                                               kode_opd kode_program _destroy])
   end
 end

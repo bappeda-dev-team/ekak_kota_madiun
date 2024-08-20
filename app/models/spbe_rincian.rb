@@ -13,6 +13,7 @@
 #  keterangan             :string
 #  kode_opd               :string
 #  kode_program           :string
+#  metadata               :jsonb
 #  subdomain_spbe         :string
 #  tahun_akhir            :string
 #  tahun_awal             :string
@@ -30,6 +31,8 @@ class SpbeRincian < ApplicationRecord
   belongs_to :sasaran, -> { order "nip_asn ASC" }, primary_key: :id, foreign_key: :id_rencana, optional: true
 
   has_one :opd, primary_key: :kode_opd, foreign_key: :kode_unik_opd
+
+  store_accessor :metadata, :status_kebutuhan_spbe, :keterangan_kebutuhan_spbe, :kondisi_sekarang
 
   def sasaran_kinerja
     sasaran.present? ? sasaran : 'Belum diisi'

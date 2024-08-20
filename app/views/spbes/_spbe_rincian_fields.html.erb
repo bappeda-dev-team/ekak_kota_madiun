@@ -16,6 +16,10 @@
       {data: { controller: 'dropdown', placeholder: 'Pilih Kebutuhan SPBE' }}) %>
   </div>
   <div class="field">
+    <%= form.label :kondisi_sekarang, { class: "form-label" } %>
+    <%= form.text_area :kondisi_sekarang, { class: "form-control", placeholder: 'terangkan kondisi kebutuhan pada saat ini' } %>
+  </div>
+  <div class="field">
     <%= form.label :detail_kebutuhan, { class: "form-label" } %>
     <%= form.text_area :detail_kebutuhan, { class: "form-control", placeholder: 'jabarkan kebutuhan spbe dari pilihan diatas' } %>
   </div>

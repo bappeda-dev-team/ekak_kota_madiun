@@ -24,6 +24,7 @@
         <th class="border text-center" scope="col">SubKegiatan</th>
         <th class="border text-center" scope="col">OPD Pelaksana</th>
         <th class="border text-center" scope="col">Keterangan</th>
+        <th class="border text-center" scope="col">Status</th>
         <th class="border text-center" scope="col">Action</th>
       </tr>
     </thead>
@@ -80,6 +81,12 @@
               <td class="border text-wrap spbe-kebutuhan subkegiatan" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>" data-subkegiatan="<%= sas_kasi&.subkegiatan&.downcase %>"><%= sas_kasi&.subkegiatan %></td>
               <td class="border" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.opd&.nama_opd %></td>
               <td class="border" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.keterangan %></td>
+              <td class="border" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>">
+                <div class="d-grid gap-2">
+                  <p><%= rincian.status_kebutuhan_spbe %></p>
+                  <p><%= rincian.keterangan_kebutuhan_spbe %></p>
+                </div>
+              </td>
               <td class="border" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>">
                 <% unless guest? %>
                   <div class="d-grid gap-2">
