@@ -66,7 +66,11 @@ module AdminItemHelper
       {
         title: 'Pagu SIPKD', href: daftar_pagu_program_kegiatans_path,
         icon: 'fas fa-chart-line', identifier: 'daftar_pagu'
-      }
+      },
+      {
+        title: 'Rekap Rencana Kinerja', href: rekap_sasaran_sasarans_path,
+        icon: 'fas fa-archive', identifier: 'rencana_kinerja/rekap_sasaran'
+      },
     ]
   end
 
