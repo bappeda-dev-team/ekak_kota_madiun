@@ -1,0 +1,53 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-sm align-items-center counter">
+    <thead class="thead-light">
+      <tr>
+        <th class="border-bottom border-end border-start" scope="col" rowspan="2">No.</th>
+        <th class="border-bottom text-wrap border-end" scope="col" rowspan="2">Tahapan Kerja</th>
+        <th class="border-bottom border-end text-center" scope="col" rowspan="2">Aksi</th>
+        <% (1..12).each do |i| %>
+          <th class="border-bottom border-end text-center" scope="col"><%= i %></th>
+        <% end %>
+        <th class="border-bottom border-end text-center" scope="col">Jumlah</th>
+        <th class="border-bottom border-end text-center" scope="col" rowspan="2">Keterangan</th>
+      </tr>
+      <tr>
+        <% (1..13).each do |item| %>
+          <td class="border border-gray-900 bg-tertiary text-center text-gray-300" scope="col">T</td>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% sasaran.tahapan_renaksi.each do |tahapan| %>
+        <tr class="<%= tahapan.ada_komentar? ? 'higlighted' : 'clean' %>">
+          <td class="text-gray-900 fw-bolder border-start border-end" scope="row"></td>
+          <td class="text-gray-900"><%= tahapan.tahapan_kerja %> <span class='fw-bolder'><%= tahapan.tagging == "RTP-MR" ? "- [#{tahapan.tagging}]" : '' %></span></td>
+          <td class="fw-bolder text-gray-500 text-center border-end">
+            <%= render(EditButtonComponent.new(path: edit_sasaran_tahapan_path(sasaran, tahapan))) %>
+            <%= render(DeleteButtonComponent.new(path: sasaran_tahapan_path(sasaran, tahapan),
+                                                 title: "Hapus Tahapan '#{tahapan.tahapan_kerja}'?" )) %>
+          </td>
+          <% (1..12).each do |bulan| %>
+            <% unless diajukan? %>
+              <%= aksi_di_bulan(sasaran, tahapan, bulan) %>
+            <% else %>
+              <%= aksi_di_bulan(sasaran, tahapan, bulan, disabled: true) %>
+            <% end %>
+          <% end %>
+          <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.jumlah_target or '-' %></td>
+          <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.keterangan %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td class="border-bottom border-start border-end" colspan="3">Total</td>
+        <% (1..12).each do |i| %>
+          <td class="border-bottom border-end text-center"><%= sasaran.total_target_aksi_bulan[i] %></td>
+        <% end %>
+        <td class="border-bottom border-end text-center"><%= sasaran.jumlah_target %></td>
+        <td class="border-bottom border-end" colspan="2"></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
