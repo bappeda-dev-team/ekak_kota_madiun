@@ -446,6 +446,7 @@ Rails.application.routes.draw do
         post :otomatis
         get :review
         get :review_anggaran
+        get :edit_tagging
       end
       resources :aksis, path: "rencana_aksi"
       resources :anggarans

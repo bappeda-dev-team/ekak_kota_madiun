@@ -1,7 +1,7 @@
 class TahapansController < ApplicationController
   before_action :get_sasaran
   before_action :set_tahapan, only: %i[show edit update destroy review review_anggaran]
-  layout false, only: %i[edit new]
+  layout false, only: %i[edit new edit_tagging]
 
   # GET /tahapans or /tahapans.json
   def index
@@ -20,6 +20,10 @@ class TahapansController < ApplicationController
 
   # GET /tahapans/1/edit
   def edit; end
+
+  def edit_tagging
+    @tahapan = @sasaran.tahapans.find(params[:id])
+  end
 
   # POST /tahapans or /tahapans.json
   def create
