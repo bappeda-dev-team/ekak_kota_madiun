@@ -82,9 +82,16 @@ class Laporans::SubstansiRenstraController < ApplicationController
   def tujuan_dan_sasaran
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
-    strategi_arah_kebijakan = StrategiArahKebijakan.new(tahun: @tahun, kode_opd: @kode_opd)
-    @opd = strategi_arah_kebijakan.opd
-    @strategi_opds = strategi_arah_kebijakan.tujuan_strategi_opds
+    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @periode = Periode.find_tahun(tahun_bener)
+    @tahun_awal = @periode.tahun_awal.to_i
+    @tahun_akhir = @periode.tahun_akhir.to_i
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    @tujuan_opds = @opd.tujuan_opds
+                       .by_periode(tahun_bener)
+    @user = @opd.eselon_dua_opd
+    @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
   end
 
   def pohon_cascading
