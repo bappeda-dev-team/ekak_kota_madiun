@@ -94,10 +94,6 @@ RSpec.describe SasaranKota::SasaranComponent, type: :component do
                                     strategi: 'Renaksi-A',
                                     tahun: tahun,
                                     opd: opd)
-      tactical = FactoryBot.create(:strategi,
-                                   strategi: 'Tactical-A',
-                                   tahun: tahun,
-                                   opd: opd)
 
       pohon_strategic = FactoryBot.create(:pohon, tahun: tahun, role: 'strategi_pohon_kota',
                                                   pohonable_type: strategic.class.name,
@@ -111,12 +107,13 @@ RSpec.describe SasaranKota::SasaranComponent, type: :component do
       sasaran = FactoryBot.create(:sasaran, tahun: tahun,
                                             user: pelaksana,
                                             strategi_id: strategic.id)
-      sasaran.metadata = {
-        hasil_inovasi: 'Inovasi',
-        inovasi_sasaran: 'Inovasi-Aplikasi-X',
-        gambaran_nilai_kebaruan: 'Kebaruan X',
-        processed_at: DateTime.current
-      }
+      sasaran.update(metadata: {
+                       hasil_inovasi: 'Inovasi',
+                       inovasi_sasaran: 'Inovasi-Aplikasi-X',
+                       gambaran_nilai_kebaruan: 'Kebaruan X',
+                       processed_at: DateTime.current
+                     })
+
       component = described_class.new(sasaran: pohon_strategic, tahun: tahun)
       render_inline(component)
       expect(page).to have_css "td.nama-pelaksana", text: 'Kepala-OPD-X'
