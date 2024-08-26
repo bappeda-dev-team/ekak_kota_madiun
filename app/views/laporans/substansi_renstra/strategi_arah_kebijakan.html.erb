@@ -6,8 +6,35 @@
 <% end %>
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout_subtitle', title: "Laporan Strategi Arah Kebijakan", sub_title: @opd, sub_title_2: @tahun do %>
-    <div id="kebijakans" class="table-responsive">
+    <div class="table-responsive mb-5">
       <table class="table table-flush">
+        <thead>
+          <tr>
+            <th class="border-bottom text-gray-700" scope="col" colspan="5">Isu Strategis:</th>
+          </tr>
+          <% @isu_strategis_opds.each.with_index(1) do |isu_strategis, no| %>
+            <tr>
+              <th class="border-bottom text-gray-700" scope="col"><%= no %></th>
+              <th class="border-bottom text-gray-700" scope="col" colspan="4"><%= isu_strategis %></th>
+            </tr>
+          <% end %>
+          <tr>
+            <th class="border-bottom text-gray-700 bg-gray-200" scope="col" colspan="5">Tujuan OPD:</th>
+          </tr>
+          <% @tujuan_opds.each.with_index(1) do |tujuan, nom| %>
+            <tr>
+              <th class="border-bottom text-gray-700 align-middle" scope="col"><%= nom %></th>
+              <th class="border-bottom text-gray-700 align-middle" scope="col" colspan="4">
+                <%= tujuan %>
+              </th>
+            </tr>
+          <% end %>
+        </thead>
+      </table>
+    </div>
+    <div id="kebijakans" class="table-responsive">
+      <h5>Strategi dan Arah Kebijakan</h5>
+      <table class="table table-bordered">
         <thead>
           <tr>
             <th class="border-bottom text-gray-700" scope="col">No.</th>

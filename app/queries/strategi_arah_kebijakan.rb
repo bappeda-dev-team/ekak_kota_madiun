@@ -30,7 +30,8 @@ class StrategiArahKebijakan
   end
 
   def tujuan_opds
-    @opd.tujuan_opds
+    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @opd.tujuan_opds.by_periode(tahun_bener)
   end
 
   def pokin_opd
