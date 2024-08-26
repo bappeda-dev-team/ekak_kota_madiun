@@ -35,6 +35,14 @@ module Api
              status: :not_found
     end
 
+    def sasaran_opd
+      @kode_opd = params[:kode_opd]
+      @tahun = params[:tahun]
+      @opd = Opd.find_by!(kode_unik_opd: @kode_opd)
+      @user = @opd.eselon_dua_opd
+      @sasaran_opds = @user.sasaran_pohon_kinerja(tahun: @tahun)
+    end
+
     def perbandingan_pagu # rubocop:disable Metrics
       tahun = params[:tahun]
       kode_opd = params[:kode_opd]

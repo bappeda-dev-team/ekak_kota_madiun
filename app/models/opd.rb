@@ -216,6 +216,8 @@ class Opd < ApplicationRecord
   end
 
   def eselon_dua_opd
+    raise 'format kode opd salah' if kode_unik_opd.length != 22
+
     if kode_unik_opd.last == '0'
       users.with_role("eselon_2").first
     else

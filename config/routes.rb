@@ -762,6 +762,7 @@ Rails.application.routes.draw do
       post :find_opd
       post :urusan_opd
       post :tujuan_opd
+      post :sasaran_opd
       post :perbandingan_pagu
       post :pagu_all
       post :daftar_pegawai

@@ -46,5 +46,6 @@ FactoryBot.define do
     akhir { "MyString" }
     periode_pelaporan { "MyString" }
     budget { "MyString" }
+    association :indikator_sasaran
   end
 end

@@ -29,6 +29,7 @@ FactoryBot.define do
     strategi { "Contoh Strategi" }
     tahun { "2024" }
     role { "" }
+    nip_asn { "" }
     association :opd
   end
 end
