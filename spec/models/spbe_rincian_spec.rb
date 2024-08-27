@@ -27,8 +27,6 @@ require 'rails_helper'
 
 RSpec.describe SpbeRincian, type: :model do
   it { should validate_presence_of :domain_spbe }
-  it { should validate_presence_of :aspek_spbe }
-  it { should validate_presence_of :subdomain_spbe }
   it { should validate_presence_of :kebutuhan_spbe }
   it { should validate_presence_of :detail_kebutuhan }
   it { should belong_to :spbe }

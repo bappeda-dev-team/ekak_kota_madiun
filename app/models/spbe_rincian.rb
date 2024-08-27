@@ -24,7 +24,7 @@
 #  strategi_ref_id        :string
 #
 class SpbeRincian < ApplicationRecord
-  validates_presence_of :domain_spbe, :subdomain_spbe, :kebutuhan_spbe, :detail_kebutuhan
+  validates_presence_of :domain_spbe, :kebutuhan_spbe, :detail_kebutuhan
 
   belongs_to :spbe, inverse_of: :spbe_rincians
 
