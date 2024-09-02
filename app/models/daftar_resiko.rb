@@ -46,7 +46,13 @@ class DaftarResiko
   end
 
   def opd
-    @opd ||= Opd.find_by(kode_unik_opd: @kode_unik_opd)
+    kode_opd = if @kode_unik_opd.last == '0'
+                 @kode_unik_opd
+               else
+                 @kode_unik_opd.gsub(/\d$/, '0')
+               end
+
+    @opd ||= Opd.find_by(kode_unik_opd: kode_opd)
   end
 
   def tahun
