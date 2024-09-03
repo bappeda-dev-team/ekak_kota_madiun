@@ -18,6 +18,7 @@ class ProgramKegiatansController < ApplicationController
     # FIXME: REFACTOR TOO MUCH LOGIC
     program_kegiatans = ProgramKegiatan.where("kode_opd ILIKE ?", "%#{current_user.kode_opd}%")
                                        .where("nama_subkegiatan ILIKE ?", "%#{query}%")
+                                       .uniq { |pk| pk.kode_sub_giat }
 
     if current_user.pegawai_puskesmas?
       program_kegiatans = program_kegiatans.select do |program|
@@ -29,7 +30,7 @@ class ProgramKegiatansController < ApplicationController
       end
     end
 
-    @program_kegiatans = program_kegiatans.take(15)
+    @program_kegiatans = program_kegiatans
   end
 
   def subkegiatans

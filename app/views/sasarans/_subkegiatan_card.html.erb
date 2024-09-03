@@ -19,12 +19,14 @@
         <p>Pilih SubKegiatan</p>
       <% end %>
       <%= form_with(model: sasaran, local: false) do |f| %>
-        <%= f.select(:program_kegiatan_id, ProgramKegiatan.where(id: sasaran.program_kegiatan_id).pluck(:nama_subkegiatan, :id), {},
-        {data: { controller: 'dropdown',
-                dropdown_jenis_value: 'ajax',
-                dropdown_url_value: "/program_kegiatans.json",
-                "ajax--cache": "true",
-                "placeholder": "Pilih SubKegiatan"}} )%>
+        <%= f.select(:program_kegiatan_id, [],
+                     {include_blank: true},
+                     {data: { placeholder: "Pilih Subkegiatan",
+                              controller: 'dropdown',
+                              dropdown_jenis_value: 'ajax_preselect',
+                              dropdown_url_value: "/program_kegiatans.json",
+                              dropdown_item_value: sasaran.program_kegiatan_id
+                     }} )%>
         <div class="actions">
           <%= f.submit "Simpan" %>
         </div>
@@ -62,8 +64,8 @@
               </td>
               <% unless diajukan? %>
                 <td class="text-center align-middle" width="50px">
-                  <%= link_to hapus_program_from_sasaran_sasaran_path(sasaran), remote: true, 
-                  method: :post, class: 'btn btn-sm btn-outline-danger text-center', data: {confirm_swal: "Hapus sub kegiatan?"} do %>
+                  <%= link_to hapus_program_from_sasaran_sasaran_path(sasaran), remote: true,
+                              method: :post, class: 'btn btn-sm btn-outline-danger text-center', data: {confirm_swal: "Hapus sub kegiatan?"} do %>
                     <i class="fa fa-trash-alt me-2"></i>
                     <span>Hapus</span>
                   <% end %>
