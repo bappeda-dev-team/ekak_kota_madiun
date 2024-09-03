@@ -21,11 +21,12 @@
       <%= form_with(model: sasaran, local: false) do |f| %>
         <%= f.select(:program_kegiatan_id, [],
                      {include_blank: true},
-                     {data: { placeholder: "Pilih Subkegiatan",
-                              controller: 'dropdown',
-                              dropdown_jenis_value: 'ajax_preselect',
-                              dropdown_url_value: "/program_kegiatans.json",
-                              dropdown_item_value: sasaran.program_kegiatan_id
+                     { class: 'form-control',
+                       data: { placeholder: "Pilih Subkegiatan",
+                               controller: 'dropdown',
+                               dropdown_jenis_value: 'ajax_preselect',
+                               dropdown_url_value: "/program_kegiatans.json",
+                               dropdown_item_value: sasaran.program_kegiatan_id
                      }} )%>
         <div class="actions">
           <%= f.submit "Simpan" %>

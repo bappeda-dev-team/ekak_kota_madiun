@@ -14,11 +14,17 @@ class ProgramKegiatansController < ApplicationController
     query = param.strip.squish
 
     # return if query.size < 5
+    opd = current_user.opd
+
+    kode_opd = if opd.kode_unik_opd.last == '0'
+                 opd.kode_unik_opd
+               else
+                 opd.kode_unik_opd.gsub(/\d$/, '0')
+               end
 
     # FIXME: REFACTOR TOO MUCH LOGIC
-    program_kegiatans = ProgramKegiatan.where("kode_opd ILIKE ?", "%#{current_user.kode_opd}%")
+    program_kegiatans = ProgramKegiatan.where("kode_skpd ILIKE ?", "%#{kode_opd}%")
                                        .where("nama_subkegiatan ILIKE ?", "%#{query}%")
-                                       .uniq { |pk| pk.kode_sub_giat }
 
     if current_user.pegawai_puskesmas?
       program_kegiatans = program_kegiatans.select do |program|
@@ -27,6 +33,10 @@ class ProgramKegiatansController < ApplicationController
     elsif current_user.pegawai_bagian?
       program_kegiatans = program_kegiatans.select do |program|
         program.nama_opd_pemilik.upcase.split("BAGIAN", 2).last.strip == current_user.petunjuk_bagian
+      end
+    elsif opd.nama_opd.upcase.include?("BAGIAN")
+      program_kegiatans = program_kegiatans.select do |program|
+        program.nama_opd_pemilik.upcase.split("BAGIAN", 2).last.strip == opd.nama_opd.upcase.split("BAGIAN", 2).last.strip
       end
     end
 
