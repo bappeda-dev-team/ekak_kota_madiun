@@ -228,7 +228,7 @@ class StrategisController < ApplicationController
       tahun: tahun,
       user_id: user,
       pohonable_type: 'StrategiPohon'
-    ).reject { |p| p.pohonable.nil? }
+    ).reject { |p| p.pohonable.nil? || p.role == 'deleted' }
   end
 
   private
