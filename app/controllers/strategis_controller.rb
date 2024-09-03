@@ -220,24 +220,15 @@ class StrategisController < ApplicationController
     tahun = cookies[:tahun]
     # user = current_user.id
     user = params[:user_id]
-    item = params[:item]
     # kode_unik_opd = cookies[:opd]
     # opd = Opd.find_by_kode_unik_opd(kode_unik_opd)
     # role = current_user.role_asn
-    @pohons = if item.present?
-                Pohon.where(
-                  tahun: tahun,
-                  user_id: user,
-                  pohonable_type: 'StrategiPohon',
-                  pohonable_id: item
-                ).reject { |p| p.pohonable.nil? }
-              else
-                Pohon.where(
-                  tahun: tahun,
-                  user_id: user,
-                  pohonable_type: 'StrategiPohon'
-                ).reject { |p| p.pohonable.nil? }
-              end
+    #
+    @pohons = Pohon.where(
+      tahun: tahun,
+      user_id: user,
+      pohonable_type: 'StrategiPohon'
+    ).reject { |p| p.pohonable.nil? }
   end
 
   private

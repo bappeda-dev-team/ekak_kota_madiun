@@ -166,8 +166,8 @@ export default class extends Controller {
         type: "GET",
         url: `/anggaran_ssh_find.json`,
         data: {
-          perhitungan_id: this.perhitunganIdValue
-        }
+          perhitungan_id: this.perhitunganIdValue,
+        },
       }).then(function (data) {
         const data_first = data.results[0];
         const options = new Option(data_first.text, data_first.id, true, true);
@@ -220,22 +220,21 @@ export default class extends Controller {
     // case "ajax_preselect":
     //   this.dropdown_ajax_preselect(this.options_with_ajax);
     const select2ed = this.dropdown_base(options);
-    if (this.itemValue.length > 0) {
-      $.ajax({
-        type: "GET",
-        url: `${this.urlValue}?item=${this.itemValue}`,
-      }).then(function (data) {
-        const data_first = data.results[0];
-        const options = new Option(data_first.text, data_first.id, true, true);
-        select2ed.append(options).trigger("change");
-        select2ed.trigger({
-          type: "select2:select",
-          params: {
-            data: data,
-          },
-        });
+    const item = this.itemValue;
+    $.ajax({
+      type: "GET",
+      url: `${this.urlValue}?item=${this.itemValue}`,
+    }).then(function (data) {
+      const data_first = data.results.filter((data) => data.id == item)[0];
+      const options = new Option(data_first.text, data_first.id, true, true);
+      select2ed.append(options).trigger("change");
+      select2ed.trigger({
+        type: "select2:select",
+        params: {
+          data: data,
+        },
       });
-    }
+    });
   }
 
   // custom_event
