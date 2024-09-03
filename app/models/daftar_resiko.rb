@@ -11,7 +11,7 @@ class DaftarResiko
     strategi_bawahans = strategis.flat_map do |strategi|
       strategi.strategi_bawahans.where(tahun: tahun)
     end
-    sasaran_bawahans = strategi_bawahans.flat_map { |str| sasarans_filter(tahun, str.sasarans.dengan_sub_kegiatan) }
+    sasaran_bawahans = strategi_bawahans.uniq.flat_map { |str| sasarans_filter(tahun, str.sasarans.dengan_sub_kegiatan) }
     sasaran_bawahans.compact_blank!.flatten.group_by(&:program_kegiatan)
   end
 
