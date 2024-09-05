@@ -289,7 +289,7 @@ export default class extends Controller {
     if (data.id == "External") {
       sasaranOpd.classList.add("d-none");
       this.select.empty().trigger("change");
-    } else {
+    } else if (data.id == "Internal") {
       const select2ed = this.select;
       if (this.kodeOpdValue.length > 0) {
         $.ajax({
@@ -307,6 +307,7 @@ export default class extends Controller {
         });
       }
       sasaranOpd.classList.remove("d-none");
+      this.element.setAttribute("disabled", true);
       this.element.value = this.kodeOpdValue;
     }
   }
