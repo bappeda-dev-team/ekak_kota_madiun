@@ -31,13 +31,13 @@
   <div class="field mb-5">
     <%= form.select :kode_opd, [], {include_blank: true,},
         { disabled: form.object.internal_external.eql?('Internal'),
-          data: { placeholder: "OPD Pelaksana",
+          data: { placeholder: "Pilih OPD Pelaksana",
                   controller: 'dropdown',
                   dropdown_jenis_value: 'ajax_preselect',
                   dropdown_url_value: legit_opd_opds_path(@opd, :json),
                   dropdown_item_value: form.object.kode_opd,
                   dropdown_kode_opd_value: @kode_opd,
-                  action: 'change-opd@document->dropdown#chain_internal_or_external_opd_target'
+                  action: 'change-opd@document->dropdown#chain_internal_or_external_spbe'
                 }
         } %>
   </div>

@@ -221,20 +221,22 @@ export default class extends Controller {
     //   this.dropdown_ajax_preselect(this.options_with_ajax);
     const select2ed = this.dropdown_base(options);
     const item = this.itemValue;
-    $.ajax({
-      type: "GET",
-      url: `${this.urlValue}?item=${this.itemValue}`,
-    }).then(function (data) {
-      const data_first = data.results.filter((data) => data.id == item)[0];
-      const options = new Option(data_first.text, data_first.id, true, true);
-      select2ed.append(options).trigger("change");
-      select2ed.trigger({
-        type: "select2:select",
-        params: {
-          data: data,
-        },
+    if (item.length > 0) {
+      $.ajax({
+        type: "GET",
+        url: `${this.urlValue}?item=${this.itemValue}`,
+      }).then(function (data) {
+        const data_first = data.results.filter((data) => data.id == item)[0];
+        const options = new Option(data_first.text, data_first.id, true, true);
+        select2ed.append(options).trigger("change");
+        select2ed.trigger({
+          type: "select2:select",
+          params: {
+            data: data,
+          },
+        });
       });
-    });
+    }
   }
 
   // custom_event
@@ -279,6 +281,34 @@ export default class extends Controller {
   chain_value_to_target(e) {
     const opd_id = e.detail.data.id;
     this.kodeOpdValue = opd_id;
+  }
+
+  chain_internal_or_external_spbe(e) {
+    const { data } = e.detail;
+    const sasaranOpd = document.getElementById("sasaran-opd");
+    if (data.id == "External") {
+      sasaranOpd.classList.add("d-none");
+      this.select.empty().trigger("change");
+    } else {
+      const select2ed = this.select;
+      if (this.kodeOpdValue.length > 0) {
+        $.ajax({
+          type: "GET",
+          url: `${this.urlValue}?item=${this.kodeOpdValue}`,
+        }).then(function (data) {
+          const data_first = data.results[0];
+          const options = new Option(
+            data_first.text,
+            data_first.id,
+            true,
+            true,
+          );
+          select2ed.append(options).trigger("change.select2");
+        });
+      }
+      sasaranOpd.classList.remove("d-none");
+      this.element.value = this.kodeOpdValue;
+    }
   }
 
   chain_internal_or_external_opd_target(e) {
