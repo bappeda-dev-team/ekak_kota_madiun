@@ -1,5 +1,5 @@
-<div class="tab-pane fade show active" id="spbe-internal" role="tabpanel" aria-labelledby="spbe-internal" tabindex="0">
-  <table class="table align-items-center table-bordered">
+<div class="tab-pane fade show active table-responsive" id="spbe-internal" role="tabpanel" aria-labelledby="spbe-internal" tabindex="0">
+  <table class="table align-items-center table-bordered sticky-head">
     <thead class="thead-light">
       <tr>
         <th class="border text-center" scope="col">No</th>
@@ -89,21 +89,21 @@
               <td class="border" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>">
                 <% unless guest? %>
                   <div class="d-grid gap-2">
-                    <% if rincian.kode_opd == @kode_opd %>
-                      <%= link_to edit_operational_opd_spbe_path(rincian,program_id: program.id), target: "_blank", rel: "nofollow",
-                                  class: "btn btn-sm btn-outline-primary" do %>
-                        Edit Rincian SPBE
-                      <% end %>
-                    <% end %>
                     <% if spbe.kode_opd == @kode_opd %>
-                      <hr/>
                       <%= link_to edit_spbe_path(spbe,program_id: program.id), target: "_blank", rel: "nofollow",
                                   class: "btn btn-sm btn-outline-info" do %>
-                        Edit SPBE
+                        Edit Usulan SPBE
                       <% end %>
                       <%= link_to spbe_path(spbe), method: :delete, data: {confirm_swal: "Hapus SPBE Layanan '#{spbe.jenis_pelayanan}' ?"},
                                   class: "btn btn-sm btn-outline-danger" do %>
-                        Hapus SPBE
+                        Hapus Usulan SPBE
+                      <% end %>
+                    <% end %>
+                    <% if rincian.kode_opd == @kode_opd %>
+                      <hr />
+                      <%= link_to edit_operational_opd_spbe_path(rincian,program_id: program.id), target: "_blank", rel: "nofollow",
+                                  class: "btn btn-sm btn-outline-primary" do %>
+                        Pemenuhan Kebutuhan Internal SPBE
                       <% end %>
                     <% end %>
                   </div>
