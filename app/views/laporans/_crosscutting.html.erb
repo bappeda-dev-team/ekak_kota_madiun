@@ -1,16 +1,18 @@
 <% pohon = PohonKinerjaPresenter.new(cross) %>
 <% rowspan = pohon.crosscuttings.size + 1  %>
-<tr>
-    <td rowspan="<%= rowspan %>" class="text-gray-900 text-wrap border" width='20px'></td>
-    <td rowspan="<%= rowspan %>" class="text-wrap border text-bolder"><%= cross %></td>
-    <td rowspan="<%= rowspan %>" class="text-wrap border text-bolder"><%= pohon.title_up %></td>
-    <td rowspan="<%= rowspan %>" class="text-wrap border text-bolder"><%= cross.opd %></td>
-    <td class="p-0 m-0 border"></td>
-</tr>
-<% pohon.crosscuttings.each do |dibagikan| %>
-    <tr class="skip">
-        <td class="text-wrap border"><%= dibagikan.opd %></td>
+<% if pohon.crosscuttings.any? %>
+    <tr>
+        <td rowspan="<%= rowspan %>" class="text-gray-900 text-wrap border" width='20px'></td>
+        <td rowspan="<%= rowspan %>" class="text-wrap border text-bolder"><%= cross %></td>
+        <td rowspan="<%= rowspan %>" class="text-wrap border text-bolder"><%= pohon.title_up %></td>
+        <td class="p-0 m-0 border"></td>
+        <td rowspan="<%= rowspan %>" class="text-wrap border text-bolder"><%= pohon.keterangan %></td>
     </tr>
+    <% pohon.crosscuttings.each do |dibagikan| %>
+        <tr class="skip">
+            <td class="text-wrap border"><%= dibagikan.opd %></td>
+        </tr>
+    <% end %>
 <% end %>
 
 <%= render partial: 'crosscutting', collection: childs(cross), as: :cross %>
