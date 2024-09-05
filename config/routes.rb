@@ -73,7 +73,12 @@ Rails.application.routes.draw do
       get :teman
     end
   end
-  resources :crosscuttings
+  resources :crosscuttings do
+    member do
+      get :edit_keterangan
+      post :update_keterangan
+    end
+  end
   resources :pohon_kinerja_opds do
     member do
       get :new_child

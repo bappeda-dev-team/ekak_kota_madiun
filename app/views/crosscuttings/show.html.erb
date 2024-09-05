@@ -12,6 +12,7 @@
       <thead>
         <th class="text-start">OPD</th>
         <th class="text-wrap text-start">Keterangan</th>
+        <th class="text-wrap text-center">Action</th>
       </thead>
       <tbody>
         <%= render partial: 'crosscutting', collection: @crosscuttings, as: :crosscutting || 'Tidak ada crosscutting' %>
@@ -25,7 +26,7 @@
          action: 'ajax:complete->form-modal#remoteForm:prevent'
      } do %>
         <i class="fas fa-edit me-2"></i>
-        <span>Edit</span>
+        <span>Ubah OPD Crosscutting</span>
       <% end %>
     </div>
   </div>

@@ -1,0 +1,20 @@
+<%= form_with url: update_keterangan_crosscutting_path(pohon),
+              local: false,
+              id: dom_id(pohon, 'form'),
+              data: {
+                action: 'ajax:complete->row#processAjax',
+              } do |form| %>
+  <td class="fw-bolder text-wrap">
+    <%= pohon.opd %>
+  </td>
+  <td class="fw-bolder text-wrap">
+    <%= form.text_area :keterangan, { class: "form-control", required: true, form: dom_id(pohon, 'form') } %>
+  </td>
+  <td class="fw-bolder">
+    <div class="d-grid gap-2">
+      <%= form.submit 'Simpan', class: 'btn btn-sm', style: 'margin-top: 0 !important;',
+         form: dom_id(pohon, 'form') %>
+      <button class="btn btn-sm btn-outline-danger" data-action="row#batal">Batal</button>
+    </div>
+  </td>
+<% end %>

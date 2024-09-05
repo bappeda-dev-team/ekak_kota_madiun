@@ -15,6 +15,27 @@ class CrosscuttingsController < ApplicationController
   # GET /crosscuttings/1/edit
   def edit; end
 
+  def edit_keterangan
+    @pohon = Pohon.find(params[:id])
+  end
+
+  def update_keterangan
+    @pohon = Pohon.find(params[:id])
+    keterangan = params[:keterangan]
+
+    if @pohon.update(keterangan: keterangan)
+      render json: { resText: 'Perubahan data disimpan',
+                     html_content: html_content({ crosscutting: @pohon },
+                                                partial: 'crosscuttings/crosscutting') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ pohon: @pohon  },
+                                                 partial: 'crosscuttings/form_keterangan') }.to_json,
+             status: :unprocessable_entity
+    end
+  end
+
   # PATCH/PUT /crosscuttings/1 or /crosscuttings/1.json
   def update
     check = params[:check]
@@ -57,27 +78,30 @@ class CrosscuttingsController < ApplicationController
     if pohons.any? || cross_baru
       strategi = @crosscutting.strategi
       render json: { resText: "Crosscutting berhasil diperbarui",
-                     html_content: html_content(strategi) }.to_json,
+                     html_content: html_content({ pohon: strategi },
+                                                partial: 'pohon_kinerja_opds/item_pohon') }.to_json,
              status: :ok
     else
-      render json: { resText: "terjadi kesalahan", errors: error_content }.to_json,
-             status: :unprocessable_entity
+      render json: { resText: "Tidak ada perubahan",
+                     html_content: html_content({ pohon: @crosscutting.strategi },
+                                                 partial: 'pohon_kinerja_opds/item_pohon') }.to_json,
+             status: :ok
     end
   end
 
-  def html_content(pohon)
-    render_to_string(partial: 'pohon_kinerja_opds/item_pohon',
-                     formats: 'html',
-                     layout: false,
-                     locals: { pohon: pohon })
-  end
+  # def html_content(pohon)
+  #   render_to_string(partial: 'pohon_kinerja_opds/item_pohon',
+  #                    formats: 'html',
+  #                    layout: false,
+  #                    locals: { pohon: pohon })
+  # end
 
-  def error_content
-    render_to_string(partial: 'form',
-                     formats: 'html',
-                     layout: false,
-                     locals: { crosscutting: @crosscutting })
-  end
+  # def error_content
+  #   render_to_string(partial: 'form',
+  #                    formats: 'html',
+  #                    layout: false,
+  #                    locals: { crosscutting: @crosscutting })
+  # end
 
   private
 

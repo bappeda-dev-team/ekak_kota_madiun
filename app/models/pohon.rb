@@ -41,7 +41,7 @@ class Pohon < ApplicationRecord
   scope :pohon_opd, -> { where(pohonable_type: "IsuStrategisOpd") }
   scope :pohon_kota, -> { where(pohonable_type: "StrategiKotum") }
 
-  store :metadata, accessors: ["keterangan"]
+  store :metadata
 
   def to_s
     pohonable.class.name.underscore.titleize

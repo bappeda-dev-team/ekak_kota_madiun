@@ -1,4 +1,6 @@
-<tr>
+<tr data-controller="row">
   <td class="text-gray-900 fw-bolder"><%= crosscutting.opd.nama_opd %></td>
   <td><%= crosscutting.keterangan %></td>
+  <td class="text-center">
+    <%= render(EditRowButtonComponent.new(title: 'Edit Keterangan',path: edit_keterangan_crosscutting_path(crosscutting))) %></td>
 </tr>

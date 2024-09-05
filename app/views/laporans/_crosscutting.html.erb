@@ -6,11 +6,11 @@
         <td rowspan="<%= rowspan %>" class="text-wrap border text-bolder"><%= cross %></td>
         <td rowspan="<%= rowspan %>" class="text-wrap border text-bolder"><%= pohon.title_up %></td>
         <td class="p-0 m-0 border"></td>
-        <td rowspan="<%= rowspan %>" class="text-wrap border text-bolder"><%= pohon.keterangan %></td>
     </tr>
     <% pohon.crosscuttings.each do |dibagikan| %>
         <tr class="skip">
             <td class="text-wrap border"><%= dibagikan.opd %></td>
+            <td class="text-wrap border"><%= dibagikan.keterangan %></td>
         </tr>
     <% end %>
 <% end %>
