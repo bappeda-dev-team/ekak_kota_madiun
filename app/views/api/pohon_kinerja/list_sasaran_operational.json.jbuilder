@@ -1,5 +1,6 @@
 json.results @sasarans do |sasaran|
   json.id sasaran.id
+  json.kode_opd @kode_opd
   json.kode_sasaran sasaran.id_rencana
   json.tahun_sasaran sasaran.tahun
   json.id_strategi_operational sasaran.strategi.id
