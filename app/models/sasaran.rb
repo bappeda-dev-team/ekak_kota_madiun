@@ -578,10 +578,6 @@ class Sasaran < ApplicationRecord
     tahapans.includes(%i[anggarans]).map(&:rekening_anggaran)
   end
 
-  def operational_objectives
-    strategi.operational_objectives
-  end
-
   def map_sasaran_atasan
     strategi.strategi_eselon_tiga.sasaran
   end

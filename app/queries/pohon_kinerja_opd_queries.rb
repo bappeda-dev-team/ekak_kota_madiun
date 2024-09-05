@@ -66,6 +66,12 @@ class PohonKinerjaOpdQueries
     pohon_crosscutting
   end
 
+  def sasaran_operational_opd
+    operational_opd.flat_map do |op|
+      op.sasarans.includes(:program_kegiatan).dengan_rincian.where(tahun: @tahun)
+    end
+  end
+
   def all_strategi_opd
     pohon_opd.rewhere(role: %w[eselon_2 eselon_3 eselon_4])
   end

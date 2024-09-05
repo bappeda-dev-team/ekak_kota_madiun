@@ -771,6 +771,7 @@ Rails.application.routes.draw do
     namespace :pohon_kinerja do
       post :pohon_kinerja_kota
       post :pohon_kinerja_opd
+      get :list_sasaran_operational
     end
     namespace :tematik do
       get :list_tematik

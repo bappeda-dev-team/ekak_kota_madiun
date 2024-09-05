@@ -20,6 +20,11 @@ module Api
       @operationals = @pohon.operational_tematiks.reject { |ph| ph.pohonable.nil? }
     end
 
+    def list_sasaran_operational
+      @opd = queries.opd
+      @sasarans = queries.sasaran_operational_opd
+    end
+
     private
 
     def queries
