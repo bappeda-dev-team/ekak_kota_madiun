@@ -34,7 +34,7 @@
           data: { placeholder: "Pilih OPD Pelaksana",
                   controller: 'dropdown',
                   dropdown_jenis_value: 'ajax_preselect',
-                  dropdown_url_value: legit_opd_opds_path(@opd, :json),
+                  dropdown_url_value: legit_opd_opds_path(format: :json),
                   dropdown_item_value: form.object.kode_opd,
                   dropdown_kode_opd_value: @kode_opd,
                   action: 'change-opd@document->dropdown#chain_internal_or_external_spbe'

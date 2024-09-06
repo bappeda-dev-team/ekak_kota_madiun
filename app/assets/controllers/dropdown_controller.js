@@ -287,10 +287,12 @@ export default class extends Controller {
     const { data } = e.detail;
     const sasaranOpd = document.getElementById("sasaran-opd");
     if (data.id == "External") {
+      this.roleValue = "";
       sasaranOpd.classList.add("d-none");
       this.select.empty().trigger("change");
     } else if (data.id == "Internal") {
       const select2ed = this.select;
+      this.roleValue = "INTERNAL";
       if (this.kodeOpdValue.length > 0) {
         $.ajax({
           type: "GET",
@@ -307,8 +309,7 @@ export default class extends Controller {
         });
       }
       sasaranOpd.classList.remove("d-none");
-      this.element.setAttribute("disabled", true);
-      this.element.value = this.kodeOpdValue;
+      this.kodeOpdValue = this.kodeOpdValue;
     }
   }
 

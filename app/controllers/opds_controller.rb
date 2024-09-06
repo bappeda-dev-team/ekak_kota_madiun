@@ -40,8 +40,12 @@ class OpdsController < ApplicationController
     nama_opd = params[:q]
     @opds = Opd.where.not(kode_unik_opd: nil).where("nama_opd ILIKE ?", "%#{nama_opd}%")
     if params[:kode_opd] || params[:kode_opd_terpilih]
-      @opds = @opds.where.not(kode_unik_opd: params[:kode_opd])
-                   .where.not(id: params[:kode_opd_terpilih])
+      @opds = if params[:role] == "INTERNAL"
+                Opd.where(kode_unik_opd: params[:kode_opd]).limit(1)
+              else
+                @opds.where.not(kode_unik_opd: params[:kode_opd])
+                     .where.not(id: params[:kode_opd_terpilih])
+              end
     end
     return unless params[:item]
 
