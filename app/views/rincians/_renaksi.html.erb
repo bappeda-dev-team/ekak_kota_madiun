@@ -99,7 +99,7 @@
             <% (1..12).each do |i| %>
               <th class="border-bottom border-end text-center" scope="col"><%= i %></th>
             <% end %>
-            <th class="border-bottom border-end text-center" scope="col">Jumlah</th>
+            <th class="border-bottom border-end text-center" scope="col">Total</th>
             <th class="border-bottom border-end text-center" scope="col" rowspan="2">Keterangan</th>
           </tr>
           <tr>
@@ -112,11 +112,13 @@
           <% sasaran.tahapan_renaksi.each do |tahapan| %>
             <tr class="<%= tahapan.ada_komentar? ? 'higlighted' : 'clean' %>">
               <td class="text-gray-900 fw-bolder border-start border-end" scope="row"></td>
-              <td class="text-gray-900"><%= tahapan.tahapan_kerja %> <span class='fw-bolder'><%= tahapan.tagging == "RTP-MR" ? "- [#{tahapan.tagging}]" : '' %></span></td>
+              <td class="text-gray-900 text-wrap"><%= tahapan.tahapan_kerja %> <span class='fw-bolder'><%= tahapan.tagging == "RTP-MR" ? "- [#{tahapan.tagging}]" : '' %></span></td>
               <td class="fw-bolder text-gray-500 text-center border-end">
-                <%= render(EditButtonComponent.new(path: edit_sasaran_tahapan_path(sasaran, tahapan))) %>
-                <%= render(DeleteButtonComponent.new(path: sasaran_tahapan_path(sasaran, tahapan),
-                                                     title: "Hapus Tahapan '#{tahapan.tahapan_kerja}'?" )) %>
+                <div class="d-grid gap-2">
+                  <%= render(EditButtonComponent.new(path: edit_sasaran_tahapan_path(sasaran, tahapan))) %>
+                  <%= render(DeleteButtonComponent.new(path: sasaran_tahapan_path(sasaran, tahapan),
+                                                       title: "Hapus Tahapan '#{tahapan.tahapan_kerja}'?" )) %>
+                </div>
               </td>
               <% (1..12).each do |bulan| %>
                 <% unless diajukan? %>

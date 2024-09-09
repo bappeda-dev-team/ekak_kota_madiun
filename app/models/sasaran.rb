@@ -458,7 +458,12 @@ class Sasaran < ApplicationRecord
   end
 
   def siap_ditarik?
-    strategi? && tahapan? && manual_ik? && target_sesuai?
+    tahun_bener = tahun[/[^_]\d*/, 0].to_i
+    if tahun_bener > 2024
+      strategi? && tahapan? && manual_ik? && target_sesuai? && manrisk_diverifikasi?
+    else
+      strategi? && tahapan? && manual_ik? && target_sesuai?
+    end
   end
 
   def sasaran_kota
@@ -657,5 +662,17 @@ class Sasaran < ApplicationRecord
 
   def dampak_resiko_setuju?
     status_dampak_resiko == "Setuju"
+  end
+
+  def manrisk_diverifikasi?
+    status_dampak_resiko.present?
+  end
+
+  def status_manrisk
+    if rincian&.resiko.present? && permasalahans.any?
+      'siap_dinilai'
+    else
+      'belum_siap'
+    end
   end
 end

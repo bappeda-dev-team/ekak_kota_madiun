@@ -8,7 +8,17 @@
   <div class="px-3">
     <div class="card border-2 shadow mb-3">
       <div class="card-body">
-        <h5>Status Sasaran: <span class="badge badge-lg bg-warning text-dark"><%= status_sasaran_pokin(@sasaran&.status_sasaran) %></span></h5>
+        <h5>Status Sasaran</h5>
+        <hr />
+        <div class="d-grid gap-2">
+          <div class="status_sasaran">
+            <%= status_sasaran_pokin(@sasaran&.status_sasaran) %>
+          </div>
+          <div class="status_manrisk">
+            <%= status_manrisk(@sasaran&.status_manrisk) %>
+          </div>
+        </div>
+        <hr />
       </div>
     </div>
     <!-- SECTION - render anggaran here -->
