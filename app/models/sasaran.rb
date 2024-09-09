@@ -665,7 +665,19 @@ class Sasaran < ApplicationRecord
   end
 
   def manrisk_diverifikasi?
-    status_dampak_resiko.present?
+    if user.eselon_user == 'eselon_3'
+      strategi_bawahans = strategi.strategi_bawahans.where(tahun: tahun)
+      sasaran_diverifikasi = strategi_bawahans.uniq.flat_map do |str|
+        str.sasarans.dengan_rincian.where(tahun: tahun)
+           .where.not(nip_asn: [nil, ""])
+           .select { |sas| sas.deleted_at.blank? }.flat_map do |sas|
+          sas.status_dampak_resiko.present?
+        end
+      end
+      sasaran_diverifikasi.all?(true)
+    else
+      status_dampak_resiko.present?
+    end
   end
 
   def status_manrisk
