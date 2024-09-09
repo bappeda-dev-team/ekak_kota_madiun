@@ -48,6 +48,10 @@ module UsersHelper
     current_user.roles.map(&:name).any? { |role| roles.include?(role) }
   end
 
+  def eselon_x_user?(user_selected, *roles)
+    user_selected.roles.map(&:name).any? { |role| roles.include?(role) }
+  end
+
   def user_aktif?
     current_user.has_role?(:asn)
   end
