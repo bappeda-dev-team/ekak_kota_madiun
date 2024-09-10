@@ -1,53 +1,68 @@
-<nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
-  <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
-    <li class="breadcrumb-item">
-      <i class="fas fa-home"></i>
-    </li>
-    <li class="breadcrumb-item">Perencanaan</li>
-    <li class="breadcrumb-item">Rincian Belanja</li>
-    <li class="breadcrumb-item">Rencana Kinerja - Gelondong</li>
-    <li class="breadcrumb-item active" aria-current="page"><%= @sasaran.sasaran_kinerja %></li>
-  </ol>
-</nav>
-<div class="px-3">
-  <div class="card border-2 shadow mb-1">
-    <div class="card-header">
-      <div class="row align-items-center">
-        <table class="table align-items-center">
-          <thead>
-            <tr>
-              <th class="border text-center" scope="col" colspan="2"></th>
-              <th class="border text-center" scope="col">Indikator</th>
-              <th class="border text-center" scope="col">Target</th>
-              <th class="border text-center" scope="col">Satuan</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% indikator_sub = @sasaran.program_kegiatan&.indikator_subkegiatan_tahun(@tahun, @kode_opd) %>
-            <tr class="table-info">
-              <th class="border fw-bolder text-gray-900">Subkegiatan:</th>
-              <td class="border text-wrap"><%= @sasaran.subkegiatan %></td>
-              <td class="border text-wrap"><%= indikator_sub&.dig(:indikator) %></td>
-              <td class="border text-wrap"><%= indikator_sub&.dig(:target) %></td>
-              <td class="border text-wrap"><%= indikator_sub&.dig(:satuan) %></td>
-            </tr>
-            <% indikator = @sasaran.indikator_sasarans.first %>
-            <tr>
-              <th class="border fw-bolder text-gray-900">Rencana Kinerja</th>
-              <td class="border text-wrap" rowspan="<%= @sasaran.indikator_sasarans.count  %>"><%= @sasaran.sasaran_kinerja %></td>
-              <td class="border text-wrap"><%= indikator&.indikator_kinerja %></td>
-              <td class="border text-wrap"><%= indikator&.target %></td>
-              <td class="border text-wrap"><%= indikator&.satuan %></td>
-            </tr>
-            <% @sasaran.indikator_sasarans.drop(1).each do |indikator_s| %>
+<%= content_for :html_title, "Edit Anggaran Penetapan" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item">Perencanaan</li>
+  <li class="breadcrumb-item">Rincian Belanja</li>
+  <li class="breadcrumb-item active" aria-current="page">Edit Penetapan</li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="px-3">
+    <% if @dikunci %>
+      <div class="card border-2 shadow mb-3">
+        <div class="card-body">
+          <h5>Status Anggaran
+            <span class="badge bg-primary p-2">
+              <span class="fas fa-lock me-2"></span>
+              <%= @dikunci&.status_kunci.titleize %>
+            </span>
+          </h5>
+          <hr />
+          <div class="d-grid gap-2">
+            <div class="keterangan_kunci">
+              Keterangan: <%= @dikunci&.keterangan.titleize %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <div class="card border-2 shadow mb-1">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <table class="table align-items-center">
+            <thead>
               <tr>
-                <td class="border text-wrap"><%= indikator_s.indikator_kinerja %></td>
-                <td class="border text-wrap"><%= indikator_s.target %></td>
-                <td class="border text-wrap"><%= indikator_s.satuan %></td>
+                <th class="border text-center" scope="col" colspan="2"></th>
+                <th class="border text-center" scope="col">Indikator</th>
+                <th class="border text-center" scope="col">Target</th>
+                <th class="border text-center" scope="col">Satuan</th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <% indikator_sub = @sasaran.program_kegiatan&.indikator_subkegiatan_tahun(@tahun, @kode_opd) %>
+              <tr class="table-info">
+                <th class="border fw-bolder text-gray-900">Subkegiatan:</th>
+                <td class="border text-wrap"><%= @sasaran.subkegiatan %></td>
+                <td class="border text-wrap"><%= indikator_sub&.dig(:indikator) %></td>
+                <td class="border text-wrap"><%= indikator_sub&.dig(:target) %></td>
+                <td class="border text-wrap"><%= indikator_sub&.dig(:satuan) %></td>
+              </tr>
+              <% indikator = @sasaran.indikator_sasarans.first %>
+              <tr>
+                <th class="border fw-bolder text-gray-900">Rencana Kinerja</th>
+                <td class="border text-wrap" rowspan="<%= @sasaran.indikator_sasarans.count  %>"><%= @sasaran.sasaran_kinerja %></td>
+                <td class="border text-wrap"><%= indikator&.indikator_kinerja %></td>
+                <td class="border text-wrap"><%= indikator&.target %></td>
+                <td class="border text-wrap"><%= indikator&.satuan %></td>
+              </tr>
+              <% @sasaran.indikator_sasarans.drop(1).each do |indikator_s| %>
+                <tr>
+                  <td class="border text-wrap"><%= indikator_s.indikator_kinerja %></td>
+                  <td class="border text-wrap"><%= indikator_s.target %></td>
+                  <td class="border text-wrap"><%= indikator_s.satuan %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
     <% @tahapans.each do |tahapan| %>
@@ -59,9 +74,11 @@
         </div>
         <div class="card-body">
           <div class="anggaran">
-            <%= link_to 'Tambah Rekening', new_sasaran_tahapan_anggaran_path(@sasaran, tahapan),
-           remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"},
-           class: "ml-5 mb-3 btn btn-outline-success" %>
+            <% unless @dikunci&.status_kunci == 'dikunci' %>
+              <%= link_to 'Tambah Rekening', new_sasaran_tahapan_anggaran_path(@sasaran, tahapan),
+                          remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"},
+                          class: "ml-5 mb-3 btn btn-outline-success" %>
+            <% end %>
             <table id="detail-anggaran">
               <thead>
                 <tr>
@@ -93,24 +110,26 @@
                       <td class="d-none text-end pe-2" data-editable-table-target="form" width="170"></td>
                       <td class="text-end pe-2" data-editable-table-target="anggaran">Rp. <%= number_with_delimiter(anggaran.jumlah) %></td>
                       <td class="text-center bg-white">
-                        <%= link_to new_pagu_anggaran_path(
-                    anggaran: anggaran.id,
-                    kode_belanja: rekening,
-                    kode_sub_belanja: rekening_anggaran(anggaran.kode_rek),
-                    jenis: "Penetapan",
-                    sub_jenis: "SubBelanja",
-                    tahun: @sasaran.tahun
-                  ),
-                    remote: true, class: 'btn btn-outline-info',
-                    data: { action: 'editable-table#appendForm',
-                            editable_table_target: 'edit'
-                          } do %>
-                          <span class="fas fa-pencil"></span>
-                          <span>Edit Anggaran</span>
+                        <% unless @dikunci&.status_kunci == 'dikunci' %>
+                          <%= link_to new_pagu_anggaran_path(
+                            anggaran: anggaran.id,
+                            kode_belanja: rekening,
+                            kode_sub_belanja: rekening_anggaran(anggaran.kode_rek),
+                            jenis: "Penetapan",
+                            sub_jenis: "SubBelanja",
+                            tahun: @sasaran.tahun
+                          ),
+                                      remote: true, class: 'btn btn-outline-info',
+                                      data: { action: 'editable-table#appendForm',
+                                        editable_table_target: 'edit'
+                                      } do %>
+                            <span class="fas fa-pencil"></span>
+                            <span>Edit Anggaran</span>
+                          <% end %>
+                          <button class="d-none btn btn-tertiary" data-editable-table-target="simpan" data-action="editable-table#simpan">Simpan</button>
+                          <button class="d-none btn btn-outline-danger" data-editable-table-target="cancel" data-action="editable-table#cancelForm">Batal</button>
+                          <%= link_to "Hapus Anggaran", sasaran_tahapan_anggaran_path(@sasaran, tahapan, anggaran), method: :delete, data: {confirm_swal: "Hapus Anggaran #{anggaran.uraian}", editable_table_target: 'hapus'}, class: "btn btn-outline-danger me-2"  %>
                         <% end %>
-                        <button class="d-none btn btn-tertiary" data-editable-table-target="simpan" data-action="editable-table#simpan">Simpan</button>
-                        <button class="d-none btn btn-outline-danger" data-editable-table-target="cancel" data-action="editable-table#cancelForm">Batal</button>
-                        <%= link_to "Hapus Anggaran", sasaran_tahapan_anggaran_path(@sasaran, tahapan, anggaran), method: :delete, data: {confirm_swal: "Hapus Anggaran #{anggaran.uraian}", editable_table_target: 'hapus'}, class: "btn btn-outline-danger me-2"  %>
                       </td>
                     </tr>
                   <% end %>
@@ -130,8 +149,8 @@
       </div>
     <% end %>
   </div>
-</div>
-<!-- SECTION - Table Anggaran -->
-<!-- !SECTION - End Table Anggaran -->
-<%= render 'shared/modal_template', modal_name: 'anggaran' %>
-<%= render 'modal_perhitungans' %>
+  <!-- SECTION - Table Anggaran -->
+  <!-- !SECTION - End Table Anggaran -->
+  <%= render 'shared/modal_template', modal_name: 'anggaran' %>
+  <%= render 'modal_perhitungans' %>
+<% end %>

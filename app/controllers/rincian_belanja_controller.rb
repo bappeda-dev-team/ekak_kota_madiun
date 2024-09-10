@@ -17,6 +17,7 @@ class RincianBelanjaController < ApplicationController
 
   def edit
     @sasaran = Sasaran.find(params[:id])
+    @dikunci = @sasaran.kuncian('rankir2')
   end
 
   def kunci_anggaran
@@ -69,11 +70,13 @@ class RincianBelanjaController < ApplicationController
   def edit_rankir_gelondong
     @sasaran = Sasaran.find(params[:id])
     @tahapans = @sasaran.tahapans.includes(%i[anggarans])
+    @dikunci = @sasaran.kuncian('rankir1')
   end
 
   def edit_penetapan
     @sasaran = Sasaran.find(params[:id])
     @tahapans = @sasaran.tahapans.includes(%i[anggarans])
+    @dikunci = @sasaran.kuncian('penetapan')
   end
 
   private
