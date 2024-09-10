@@ -9,6 +9,7 @@
           <tr>
             <th class="border-bottom border-end border-start" scope="col" rowspan="1">No.</th>
             <th class="border-bottom border-end" scope="col" rowspan="1">Tahapan Kerja</th>
+            <th class="border-bottom border-end text-center" scope="col" rowspan="1">Aksi</th>
             <% (1..12).each do |i| %>
               <th class="border-bottom border-end text-center" colspan="1" scope="col"><%= i %></th>
             <% end %>
@@ -22,6 +23,9 @@
             <tr class="border-bottom">
               <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= i %></td>
               <td class="text-gray-900 border text-wrap"><%= tahapan.tahapan_kerja %> <span class='fw-bolder'><%= tahapan.tagging == "RTP-MR" ? "- [#{tahapan.tagging}]" : '' %></span></td>
+              <td class="fw-bolder text-gray-500 text-center border-end">
+                <%= render(EditButtonComponent.new(path: edit_tagging_sasaran_tahapan_path(sasaran, tahapan))) %>
+              </td>
               <!-- Loop Tanggal-->
               <% (1..12).each do |bulan| %>
                 <td class="fw-bolder text-gray-500 border text-center">
