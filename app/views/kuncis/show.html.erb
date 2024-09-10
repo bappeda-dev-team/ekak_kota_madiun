@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Jenis:</strong>
+  <%= @kunci.jenis %>
+</p>
+
+<p>
+  <strong>Status kunci:</strong>
+  <%= @kunci.status_kunci %>
+</p>
+
+<p>
+  <strong>Item:</strong>
+  <%= @kunci.item %>
+</p>
+
+<p>
+  <strong>Dikunci oleh:</strong>
+  <%= @kunci.dikunci_oleh %>
+</p>
+
+<p>
+  <strong>Keterangan:</strong>
+  <%= @kunci.keterangan %>
+</p>
+
+<%= link_to 'Edit', edit_kunci_path(@kunci) %> |
+<%= link_to 'Back', kuncis_path %>

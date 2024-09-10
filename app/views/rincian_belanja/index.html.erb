@@ -83,6 +83,19 @@
                            class: "btn btn-sm btn-outline-warning" do %>
                         <span>Edit Penetapan</span>
                       <% end %>
+                      <hr />
+                      <%= link_to kunci_anggaran_rincian_belanja_path(sasaran),
+                           remote: true,
+                           class: "btn btn-sm btn-outline-success",
+                           data: {
+                            controller: 'form-modal',
+                            action: 'ajax:complete->form-modal#success:prevent',
+                            bs_toggle: 'modal',
+                            bs_target: '#form-modal'
+                          } do %>
+                        <i class="fas fa-key icon icon-xs me-2"></i>
+                        <span>Kunci Anggaran</span>
+                      <% end %>
                     </div>
                   </td>
                 </tr>

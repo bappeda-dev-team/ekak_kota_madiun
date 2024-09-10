@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Kuncis</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Jenis</th>
+      <th>Status kunci</th>
+      <th>Item</th>
+      <th>Dikunci oleh</th>
+      <th>Keterangan</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @kuncis.each do |kunci| %>
+      <tr>
+        <td><%= kunci.jenis %></td>
+        <td><%= kunci.status_kunci %></td>
+        <td><%= kunci.item %></td>
+        <td><%= kunci.dikunci_oleh %></td>
+        <td><%= kunci.keterangan %></td>
+        <td><%= link_to 'Show', kunci %></td>
+        <td><%= link_to 'Edit', edit_kunci_path(kunci) %></td>
+        <td><%= link_to 'Destroy', kunci, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Kunci', new_kunci_path %>

@@ -3,16 +3,20 @@ import Swal from "sweetalert2";
 
 export default class extends Controller {
   static values = {
-    element: String
+    element: String,
   };
 
   addRow(e) {
     const [xhr, status] = e.detail;
     const targetRow = document.getElementById(this.elementValue);
 
-    if (status == "OK" && targetRow != null && typeof targetRow != "undefined") {
+    if (
+      status == "OK" &&
+      targetRow != null &&
+      typeof targetRow != "undefined"
+    ) {
       const html = xhr.response;
-      targetRow.insertAdjacentHTML('beforeend', html)
+      targetRow.insertAdjacentHTML("beforeend", html);
     } else {
       this.sweetalertStatus(status.text, status);
     }
@@ -22,12 +26,16 @@ export default class extends Controller {
     const [xhr, status] = e.detail;
     const targetRow = this.element;
 
-    if (status == "OK" && targetRow != null && typeof targetRow != "undefined") {
+    if (
+      status == "OK" &&
+      targetRow != null &&
+      typeof targetRow != "undefined"
+    ) {
       const html = xhr.response;
       targetRow.classList.add("d-none");
       targetRow.insertAdjacentHTML("afterend", html);
     } else {
-      console.log({ status })
+      console.log({ status });
     }
   }
 
@@ -47,6 +55,7 @@ export default class extends Controller {
 
     if (status == "OK") {
       targetRow.outerHTML = html_content;
+      this.sweetalertStatus(resText, status);
       this.animateBackground(targetRow);
     } else {
       this.sweetalertStatus(resText, status);

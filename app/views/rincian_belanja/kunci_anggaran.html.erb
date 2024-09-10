@@ -1,0 +1,18 @@
+<div class="crosscutting-title">
+  <h5>Sasaran : <%= @sasaran.sasaran_kinerja %></h5>
+</div>
+<div class="kunci-anggaran-body my-3" data-controller="form-modal">
+  <div class="anggaran" data-form-modal-target="prevHtml">
+    <table class="table table-bordered mb-3">
+      <thead>
+        <th class="text-start">Jenis Anggaran</th>
+        <th class="text-start">Jumlah</th>
+        <th class="text-wrap text-start">Keterangan</th>
+        <th class="text-center">Action</th>
+      </thead>
+      <tbody>
+        <%= render partial: 'anggaran', collection: @sasaran.seluruh_anggaran, as: :anggaran || '-' %>
+      </tbody>
+    </table>
+  </div>
+</div>

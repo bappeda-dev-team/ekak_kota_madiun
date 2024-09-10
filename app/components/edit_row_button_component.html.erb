@@ -1,9 +1,9 @@
 <%= link_to @path,
   remote: true, 
-  class: 'btn btn-sm btn-outline-info',
+  class: style,
   data: {
     action: 'ajax:complete->row#editRow:prevent',
   } do %>
-    <span class="fas fa-pencil-alt me-2"></span>
+    <%= icon %>
     <span><%= @title %></span>
 <% end %>

@@ -19,6 +19,47 @@ class RincianBelanjaController < ApplicationController
     @sasaran = Sasaran.find(params[:id])
   end
 
+  def kunci_anggaran
+    @sasaran = Sasaran.find(params[:id])
+    render layout: false
+  end
+
+  def kunci_keterangan
+    @sasaran = Sasaran.find(params[:id])
+    @jenis = params[:jenis]
+    @total = params[:total]
+    render layout: false
+  end
+
+  def simpan_kunci
+    @sasaran = Sasaran.find(params[:id])
+    @jenis = params[:jenis]
+    @total = params[:total]
+    keterangan = params[:keterangan]
+    status_anggaran = "dikunci"
+    dikunci_oleh = current_user.nik
+
+    kunci = Kunci.new(jenis: @jenis,
+                      status_kunci: status_anggaran,
+                      kunciable_id: @sasaran.id,
+                      kunciable_type: @sasaran.class.name,
+                      keterangan: keterangan,
+                      dikunci_oleh: dikunci_oleh)
+    if kunci.save
+      anggaran = { jenis: @jenis, total: @total, keterangan: keterangan, status: kunci.status_kunci }
+
+      render json: { resText: "Anggaran #{@jenis} dikunci",
+                     html_content: html_content({ anggaran: anggaran },
+                                                partial: 'rincian_belanja/anggaran') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ sasaran: @sasaran  },
+                                                 partial: 'rincian_belanja/form_kunci_anggaran') }.to_json,
+             status: :unprocessable_entity
+    end
+  end
+
   def show_subkegiatan
     @subkegiatan = ProgramKegiatan.find(params[:id])
     @sasarans = @subkegiatan.sasarans_subkegiatan(@tahun)

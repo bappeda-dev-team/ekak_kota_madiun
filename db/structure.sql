@@ -1577,6 +1577,44 @@ ALTER SEQUENCE public.kriteria_id_seq OWNED BY public.kriteria.id;
 
 
 --
+-- Name: kuncis; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.kuncis (
+    id bigint NOT NULL,
+    jenis character varying,
+    status_kunci character varying,
+    dikunci_oleh character varying,
+    keterangan character varying,
+    tahun character varying,
+    kode_opd character varying,
+    kunciable_type character varying,
+    kunciable_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: kuncis_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.kuncis_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: kuncis_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.kuncis_id_seq OWNED BY public.kuncis.id;
+
+
+--
 -- Name: latar_belakangs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -4219,6 +4257,13 @@ ALTER TABLE ONLY public.kriteria ALTER COLUMN id SET DEFAULT nextval('public.kri
 
 
 --
+-- Name: kuncis id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.kuncis ALTER COLUMN id SET DEFAULT nextval('public.kuncis_id_seq'::regclass);
+
+
+--
 -- Name: latar_belakangs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4947,6 +4992,14 @@ ALTER TABLE ONLY public.kriteria
 
 
 --
+-- Name: kuncis kuncis_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.kuncis
+    ADD CONSTRAINT kuncis_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: latar_belakangs latar_belakangs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -5631,6 +5684,13 @@ CREATE INDEX index_koefisiens_on_perhitungan_id ON public.koefisiens USING btree
 --
 
 CREATE INDEX index_komentars_on_user_id ON public.komentars USING btree (user_id);
+
+
+--
+-- Name: index_kuncis_on_kunciable; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_kuncis_on_kunciable ON public.kuncis USING btree (kunciable_type, kunciable_id);
 
 
 --
@@ -6523,6 +6583,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240514074839'),
 ('20240619072216'),
 ('20240815070619'),
-('20240819212434');
+('20240819212434'),
+('20240909182236');
 
 

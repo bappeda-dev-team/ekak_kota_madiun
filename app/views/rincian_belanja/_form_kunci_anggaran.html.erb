@@ -1,0 +1,23 @@
+<%= form_with url: simpan_kunci_rincian_belanja_path(sasaran),
+              local: false,
+              id: dom_id(sasaran, 'form'),
+              data: {
+                action: 'ajax:complete->row#processAjax',
+              } do |form| %>
+  <td class="text-gray-900">
+    <%= form.hidden_field :jenis, form: dom_id(sasaran, 'form'), value: @jenis %>
+    <%= form.hidden_field :total, form: dom_id(sasaran, 'form'), value: @total %>
+    <%= @jenis.titleize %>
+  </td>
+  <td class="text-gray-900">Rp. <%= number_with_delimiter(@total) %></td>
+  <td class="text-gray-900">
+    <%= form.text_area :keterangan, { class: "form-control",  cols: 5, rows: 4,required: true, form: dom_id(sasaran, 'form'), placeholder: 'tuliskan alasan penguncian anggaran' } %>
+  </td>
+  <td class="text-center" style="width: 150px;">
+    <div class="d-grid gap-2">
+      <%= form.submit 'Kunci', class: 'btn btn-sm', style: 'margin-top: 0 !important;',
+         form: dom_id(sasaran, 'form') %>
+      <button class="btn btn-sm btn-outline-danger" data-action="row#batal">Batal</button>
+    </div>
+  </td>
+<% end %>

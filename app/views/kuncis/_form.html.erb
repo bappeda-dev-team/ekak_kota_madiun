@@ -1,0 +1,42 @@
+<%= form_with(model: kunci) do |form| %>
+  <% if kunci.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(kunci.errors.count, "error") %> prohibited this kunci from being saved:</h2>
+
+      <ul>
+        <% kunci.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :jenis %>
+    <%= form.text_field :jenis %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status_kunci %>
+    <%= form.text_field :status_kunci %>
+  </div>
+
+  <div class="field">
+    <%= form.label :item %>
+    <%= form.text_field :item %>
+  </div>
+
+  <div class="field">
+    <%= form.label :dikunci_oleh %>
+    <%= form.text_field :dikunci_oleh %>
+  </div>
+
+  <div class="field">
+    <%= form.label :keterangan %>
+    <%= form.text_field :keterangan %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

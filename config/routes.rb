@@ -8,6 +8,7 @@ require "sidekiq/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :kuncis
   resources :anggaran_sbks
   resources :asets
   resources :jenis_jabatans
@@ -488,6 +489,9 @@ Rails.application.routes.draw do
       get :show_subkegiatan
       get :edit_rankir_gelondong
       get :edit_penetapan
+      get :kunci_anggaran
+      get :kunci_keterangan
+      post :simpan_kunci
     end
   end
 

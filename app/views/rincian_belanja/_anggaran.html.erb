@@ -1,0 +1,15 @@
+<tr data-controller="row">
+  <td class="text-gray-900"><%= anggaran[:jenis].to_s.titleize %></td>
+  <td class="text-gray-900">Rp. <%= number_with_delimiter(anggaran[:total]) %></td>
+  <td class="text-gray-900"><%= anggaran[:keterangan] %></td>
+  <td class="text-center" style="width: 150px;">
+    <% if anggaran[:status] == 'dikunci' %>
+      <button class="btn btn-sm btn-outline-primary" disabled>
+        <span class="fas fa-lock me-2"></span>
+        <%= anggaran[:status].titleize %>
+      </button>
+    <% else %>
+      <%= render(EditRowButtonComponent.new(title: 'Kunci Anggaran',path: kunci_keterangan_rincian_belanja_path(@sasaran, jenis: anggaran[:jenis], total: anggaran[:total]), icon: 'fas fa-key')) %>
+    <% end %>
+  </td>
+</tr>

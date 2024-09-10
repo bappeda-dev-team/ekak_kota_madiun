@@ -625,6 +625,20 @@ class Sasaran < ApplicationRecord
     }
   end
 
+  def kuncian(jenis)
+    Kunci.find_by(kunciable_id: id,
+                  kunciable_type: 'Sasaran',
+                  jenis: jenis)
+  end
+
+  def seluruh_anggaran
+    [
+      { jenis: 'rankir1', total: total_anggaran_rankir_1, keterangan: kuncian('rankir1')&.keterangan, status: kuncian('rankir1')&.status_kunci },
+      { jenis: 'rankir2', total: total_anggaran, keterangan: kuncian('rankir2')&.keterangan, status: kuncian('rankir2')&.status_kunci },
+      { jenis: 'penetapan', total: total_anggaran_penetapan, keterangan: kuncian('penetapan')&.keterangan, status: kuncian('penetapan')&.status_kunci }
+    ]
+  end
+
   def anggaran_genders
     genders.map(&:anggaran_gender).flatten.sum
   end
