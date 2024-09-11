@@ -72,6 +72,8 @@ Rails.application.routes.draw do
   resources :pelaksana do
     member do
       get :teman
+      get :edit_role_tim
+      post :update_role_tim
     end
   end
   resources :crosscuttings do

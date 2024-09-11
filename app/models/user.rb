@@ -11,6 +11,7 @@
 #  id_bidang              :bigint
 #  jabatan                :string
 #  kode_opd               :string
+#  metadata               :jsonb
 #  nama                   :string
 #  nama_bidang            :string
 #  nama_pangkat           :string
@@ -85,6 +86,9 @@ class User < ApplicationRecord
   attr_writer :login
 
   self.inheritance_column = ''
+
+  store_accessor :metadata, :tim_id, :role_tim, :processed_at,
+                 :assigned_by, :keterangan_tim, :tahun_tim, :opd_tim
 
   def to_s
     nama

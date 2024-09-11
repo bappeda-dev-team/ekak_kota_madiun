@@ -1,4 +1,14 @@
-<tr>
+<tr data-controller="row">
   <td class="text-gray-900 fw-bolder"><%= pelaksana.user.nama %></td>
+  <td class="text-gray-900">
+    <% if pelaksana.user.tim_id == pelaksana.id %>
+      <%= pelaksana.user.role_tim %> - <%= pelaksana.user.keterangan_tim %>
+    <% else %>
+      -
+    <% end %>
+  </td>
   <td><%= pelaksana.keterangan %></td>
+  <td class="text-center">
+    <%= render(EditRowButtonComponent.new(title: 'Edit Role Tim',path: edit_role_tim_pelaksana_path(pelaksana.id, nip: pelaksana.user.nik))) %>
+  </td>
 </tr>

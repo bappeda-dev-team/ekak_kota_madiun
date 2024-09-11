@@ -55,7 +55,6 @@ export default class extends Controller {
 
     if (status == "OK") {
       targetRow.outerHTML = html_content;
-      this.sweetalertStatus(resText, status);
       this.animateBackground(targetRow);
     } else {
       this.sweetalertStatus(resText, status);

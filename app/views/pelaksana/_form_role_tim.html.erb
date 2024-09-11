@@ -1,0 +1,28 @@
+<%= form_with url: update_role_tim_pelaksana_path(pohon ,nip: pelaksana.nik),
+              local: false,
+              id: dom_id(pohon, 'form'),
+              data: {
+                action: 'ajax:complete->row#processAjax',
+              } do |form| %>
+  <td class="text-gray-900 fw-bolder">
+    <%= pelaksana.nama %>
+  </td>
+  <td class="text-gray-900">
+    <%= form.select :role_tim, options_for_select(@role_tim), {required: true},
+     form: dom_id(pohon, 'form'),
+     data: {
+       controller: 'dropdown',
+       dropdown_parent_value: '#form-pelaksana'
+     }  %>
+  </td>
+  <td>
+    <%= form.text_area :keterangan, { class: "form-control", cols: 5, form: dom_id(pohon, 'form') } %>
+  </td>
+  <td class="fw-bolder">
+    <div class="d-grid gap-2">
+      <%= form.submit 'Simpan', class: 'btn btn-sm', style: 'margin-top: 0 !important;',
+         form: dom_id(pohon, 'form') %>
+      <button class="btn btn-sm btn-outline-danger" data-action="row#batal">Batal</button>
+    </div>
+  </td>
+<% end %>

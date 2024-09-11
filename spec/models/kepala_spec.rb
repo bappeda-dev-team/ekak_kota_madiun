@@ -11,6 +11,7 @@
 #  id_bidang              :bigint
 #  jabatan                :string
 #  kode_opd               :string
+#  metadata               :jsonb
 #  nama                   :string
 #  nama_bidang            :string
 #  nama_pangkat           :string

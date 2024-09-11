@@ -22,6 +22,39 @@ class PelaksanaController < ApplicationController
     end
   end
 
+  def edit_role_tim
+    @pohon = Pohon.find(params[:id])
+    @pelaksana = User.find_by(nik: params[:nip])
+    @role_tim = %w[
+      Koordinator
+      Ketua
+      Anggota
+    ]
+  end
+
+  def update_role_tim
+    @pelaksana = User.find_by(nik: params[:nip])
+    @pohon = Pohon.find(params[:id])
+    @role_tim = %w[
+      Koordinator
+      Ketua
+      Anggota
+    ]
+    role_tim = params[:role_tim]
+    keterangan = params[:keterangan]
+
+    @pelaksana.update(tim_id: @pohon.id,
+                      keterangan_tim: keterangan,
+                      role_tim: role_tim,
+                      assigned_by: current_user.id,
+                      tahun_tim: @pohon.tahun,
+                      opd_tim: @pohon.pohonable.opd.kode_unik_opd)
+    render json: { resText: "Role Tim Disimpan",
+                   html_content: html_content({ pelaksana: @pohon },
+                                              partial: 'pelaksana/pelaksana') }.to_json,
+           status: :ok
+  end
+
   def teman
     param = params[:q] || ''
     role = params[:role]
@@ -73,7 +106,8 @@ class PelaksanaController < ApplicationController
     if pohons.any? || cross_baru
       strategi = @pelaksana.strategi
       render json: { resText: "Pelaksana berhasil diperbarui",
-                     html_content: html_content(strategi) }.to_json,
+                     html_content: html_content({ pohon: strategi },
+                                                partial: 'pohon_kinerja_opds/item_cascading') }.to_json,
              status: :ok
     else
       render json: { resText: "terjadi kesalahan", errors: error_content }.to_json,
@@ -81,12 +115,12 @@ class PelaksanaController < ApplicationController
     end
   end
 
-  def html_content(pohon)
-    render_to_string(partial: 'pohon_kinerja_opds/item_cascading',
-                     formats: 'html',
-                     layout: false,
-                     locals: { pohon: pohon })
-  end
+  # def html_content(pohon)
+  #   render_to_string(partial: 'pohon_kinerja_opds/item_cascading',
+  #                    formats: 'html',
+  #                    layout: false,
+  #                    locals: { pohon: pohon })
+  # end
 
   def error_content
     render_to_string(partial: 'form',

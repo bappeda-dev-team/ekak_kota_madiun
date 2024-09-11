@@ -3867,7 +3867,8 @@ CREATE TABLE public.users (
     atasan character varying,
     atasan_nama character varying,
     nip_sebelum character varying,
-    lembaga_id integer DEFAULT 1
+    lembaga_id integer DEFAULT 1,
+    metadata jsonb
 );
 
 
@@ -6584,6 +6585,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240619072216'),
 ('20240815070619'),
 ('20240819212434'),
-('20240909182236');
+('20240909182236'),
+('20240911032449');
 
 

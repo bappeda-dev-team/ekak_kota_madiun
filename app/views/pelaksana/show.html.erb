@@ -10,7 +10,9 @@
     <table class="table table-bordered mb-3">
       <thead>
         <th class="text-start">Pelaksana</th>
+        <th class="text-wrap text-start">Role Tim</th>
         <th class="text-wrap text-start">Keterangan</th>
+        <th class="text-wrap text-center">Action</th>
       </thead>
       <tbody>
         <%= render partial: 'pelaksana', collection: @pelaksanas, as: :pelaksana || 'Tidak ada pelaksana' %>
@@ -24,7 +26,7 @@
          action: 'ajax:complete->form-modal#remoteForm:prevent'
      } do %>
         <i class="fas fa-edit me-2"></i>
-        <span>Edit</span>
+        <span>Edit Pelaksana</span>
       <% end %>
     </div>
   </div>
