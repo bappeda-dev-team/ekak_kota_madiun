@@ -43,12 +43,13 @@ class PelaksanaController < ApplicationController
     role_tim = params[:role_tim]
     keterangan = params[:keterangan]
 
-    @pelaksana.update(tim_id: @pohon.id,
-                      keterangan_tim: keterangan,
-                      role_tim: role_tim,
-                      assigned_by: current_user.id,
-                      tahun_tim: @pohon.tahun,
-                      opd_tim: @pohon.pohonable.opd.kode_unik_opd)
+    @pohon.update(tim_id: @pohon.id,
+                  keterangan_tim: keterangan,
+                  role_tim: role_tim,
+                  assigned_by: current_user.id,
+                  tahun_tim: @pohon.tahun,
+                  opd_tim: @pohon.pohonable.opd.kode_unik_opd)
+
     render json: { resText: "Role Tim Disimpan",
                    html_content: html_content({ pelaksana: @pohon },
                                               partial: 'pelaksana/pelaksana') }.to_json,
