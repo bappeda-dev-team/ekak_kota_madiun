@@ -8,7 +8,7 @@
     <%= pelaksana.nama %>
   </td>
   <td class="text-gray-900">
-    <%= form.select :role_tim, options_for_select(@role_tim), {required: true},
+    <%= form.select :role_tim, options_for_select(@role_tim, selected: pohon.role_tim), {required: true},
      form: dom_id(pohon, 'form'),
      data: {
        controller: 'dropdown',
@@ -16,7 +16,7 @@
      }  %>
   </td>
   <td>
-    <%= form.text_area :keterangan, { class: "form-control", cols: 5, form: dom_id(pohon, 'form') } %>
+    <%= form.text_area :keterangan, { class: "form-control", cols: 5, form: dom_id(pohon, 'form'), value: pohon.keterangan_tim } %>
   </td>
   <td class="fw-bolder">
     <div class="d-grid gap-2">
