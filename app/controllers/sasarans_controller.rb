@@ -420,6 +420,7 @@ class SasaransController < ApplicationController
     # id_rencana_sebelum = @sasaran.id_rencana
     @sasaran.indikator_sasarans.destroy_all
     @sasaran.dasar_hukums.destroy_all
+    @sasaran.tahapans.destroy_all
     # @sasaran.update(nip_asn_sebelumnya: nip_sebelum, nip_asn: nil, strategi_id: nil,
     #                 deleted_at: DateTime.current, program_kegiatan_id: nil,
     #                 keterangan_hapus: 'dihapus user', deleted_by: current_user.id,
@@ -443,7 +444,9 @@ class SasaransController < ApplicationController
     sasaran = Sasaran.find(params[:id])
     begin
       sasaran.renaksi_cloner
-      redirect_to sasaran_path(sasaran), success: 'Renaksi diclone'
+      # redirect_to sasaran_path(sasaran), success: 'Renaksi diclone'
+      render json: { resText: "Renaksi diclone" },
+             status: :ok
     rescue ActiveRecord::RecordNotUnique
       flash.now[:error] = 'Renaksi Sudah dikloning'
       redirect_to sasaran_path(sasaran), success: 'Gagal Clone'
@@ -451,8 +454,9 @@ class SasaransController < ApplicationController
       flash.now[:error] = 'Renaksi Tidak ditemukan'
       redirect_to sasaran_path(sasaran), success: 'Gagal Clone'
     rescue StandardError
-      flash.now[:error] = 'Terjadi Kesalahan'
-      redirect_to sasaran_path(sasaran), success: 'Gagal Clone'
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: "<p class='alert alert-danger'>Error, coba clone lagi dalam beberapa saat</p>" },
+             status: :service_unavailable
     end
   end
 

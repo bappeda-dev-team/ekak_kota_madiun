@@ -7,7 +7,7 @@ export default class extends Controller {
   static targets = ["errorContainer", "button"];
   static values = {
     elementId: String,
-    withAlert: { type: Boolean, default: true }
+    withAlert: { type: Boolean, default: true },
   };
 
   ajaxSuccess(e) {
@@ -50,12 +50,36 @@ export default class extends Controller {
     target.innerHTML = html_element;
   }
 
+  processAjaxRedirect(event) {
+    // refresh if success
+    // if failed, attach server html to errorContainer id
+    const [message, status] = event.detail;
+    const { resText, html_content } = JSON.parse(message.response);
+    if (status == "OK") {
+      Swal.fire({
+        title: "Sukses",
+        text: resText,
+        icon: "success",
+        confirmButtonText: "Ok",
+      }).then(() => {
+        Turbolinks.visit(window.location, { action: "replace" });
+      });
+    } else if (status == "Service Unavailable") {
+      const errContainer = document.getElementById("errorContainer");
+      errContainer.classList.remove("d-none");
+      errContainer.innerHTML = html_content;
+    }
+  }
+
   processAjax(event) {
-    // event.preventDefault()
+    // event.preventDefault();
     const [message, status] = event.detail;
     const { resText, html_content } = JSON.parse(message.response);
     if (status == "Unprocessable Entity") {
       this.partialAttacher("form-modal-body", html_content);
+    } else if (status == "Internal Server Error") {
+      this.errorContainerTarget.classList.remove("d-none");
+      this.errorContainerTarget.innerHTML = html_content;
     } else {
       const target = document.getElementById(event.params.target);
 
@@ -78,15 +102,14 @@ export default class extends Controller {
           const new_nesteds = this.findNestedRow(new_target);
           this.animateBackground(new_target);
           new_nesteds.forEach((e) => this.animateBackground(e));
-        } else if (event.params.type == 'replace_next') {
+        } else if (event.params.type == "replace_next") {
           target.nextElementSibling.remove();
           target.outerHTML = html_content;
-        } else if (event.params.type == 'total_replace') {
-          target.outerHTML = html_content
-          const newTarget = document.getElementById(event.params.target)
+        } else if (event.params.type == "total_replace") {
+          target.outerHTML = html_content;
+          const newTarget = document.getElementById(event.params.target);
           this.animateBackground(newTarget);
-        }
-        else {
+        } else {
           target.innerHTML = html_content;
           this.animateBackground(target);
         }

@@ -1,0 +1,13 @@
+<%= form_with url: clone_tahapan_sebelum_sasaran_path(sasaran),
+              method: :post,
+              local: false,
+              data: {
+                controller: 'form-ajax',
+                action: 'ajax:complete->form-ajax#processAjaxRedirect'
+              } do |form| %>
+  <div class="d-none" data-form-ajax-target="errorContainer">
+  </div>
+  <div class="actions my-4">
+    <%= form.button "Clone Renaksi", class: 'btn btn-primary', data: { disable_with: 'Sedang clone...' } %>
+  </div>
+<% end %>

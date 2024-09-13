@@ -2,9 +2,11 @@
               method: :post,
               local: false,
               data: {
-                  controller: 'form-ajax',
-                  action: 'ajax:complete->form-ajax#processAjax'
+                controller: 'form-ajax',
+                action: 'ajax:complete->form-ajax#processAjax'
               } do |form| %>
+  <div class="d-none" data-form-ajax-target="errorContainer">
+  </div>
   <div class="field">
     <%= form.label :rencana_kinerja, { class: "form-label" } %>
     <%= form.text_field :rencana_kinerja, { class: "form-control", readonly: true, value: sasaran } %>
@@ -31,9 +33,9 @@
   <div class="field">
     <%= form.label :tahun_tujuan, { class: "form-label" } %>
     <%= form.select :tahun_tujuan, options_for_select(KelompokAnggaran.all.collect { |ka| [ka.nama_sederhana_kelompok_tahun, ka.id] } ), {include_blank: true},
-                    { data: { placeholder: "Pilih Tahun Cloning",
-                              controller: 'dropdown'
-                    } } %>
+     { data: { placeholder: "Pilih Tahun Cloning",
+       controller: 'dropdown'
+     } } %>
   </div>
   <div class="actions my-4">
     <%= form.submit "Clone" %>

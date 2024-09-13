@@ -28,9 +28,11 @@ class SasaranCloner < Clowne::Cloner
     after_persist do |origin, cloned, **|
       cloned.indikator_sasarans.each do |indikator|
         indikator.update(sasaran_id: origin.id_rencana) if indikator.keterangan == cloned.id_rencana
+        indikator.update(keterangan: '')
       end
       cloned.dasar_hukums.each do |dashu|
         dashu.update(sasaran_id: origin.id_rencana) if dashu.keterangan == cloned.id_rencana
+        dashu.update(keterangan: '')
       end
     end
   end

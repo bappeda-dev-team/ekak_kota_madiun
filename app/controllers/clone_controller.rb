@@ -200,8 +200,8 @@ class CloneController < ApplicationController
              status: :unprocessable_entity
     rescue StandardError
       render json: { resText: "Terjadi kesalahan",
-                     html_content: "<p class='alert alert-danger'>Coba lagi dalam beberapa saat</p>" },
-             status: :unprocessable_entity
+                     html_content: "<p class='alert alert-danger'>Error, coba clone lagi dalam beberapa saat</p>" },
+             status: :internal_server_error
     end
   end
 

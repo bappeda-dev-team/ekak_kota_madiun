@@ -9,8 +9,7 @@ class TahapanCloner < Clowne::Cloner
     nullify :waktu
   end
 
-  finalize do |_source, record, id_rencana_sas:, tahun:, **|
-    record.keterangan = "cloned_#{tahun}"
+  finalize do |_source, record, id_rencana_sas:, **|
     record.id_rencana = id_rencana_sas
     record.id_rencana_aksi = SecureRandom.base36(6)
     record.target = 0
