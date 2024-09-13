@@ -712,7 +712,8 @@ CREATE TABLE public.dasar_hukums (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     sasaran_id character varying,
-    usulan_id bigint
+    usulan_id bigint,
+    keterangan character varying
 );
 
 
@@ -6586,6 +6587,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240815070619'),
 ('20240819212434'),
 ('20240909182236'),
-('20240911032449');
+('20240911032449'),
+('20240913041448');
 
 

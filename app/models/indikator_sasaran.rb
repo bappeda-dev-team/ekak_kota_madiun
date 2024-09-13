@@ -20,7 +20,7 @@
 #
 class IndikatorSasaran < ApplicationRecord
   belongs_to :sasaran, foreign_key: 'sasaran_id', primary_key: 'id_rencana', optional: true
-  has_one :manual_ik
+  has_one :manual_ik, dependent: :destroy
 
   validates :indikator_kinerja, presence: true
   validates :target, presence: true

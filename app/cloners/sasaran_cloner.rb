@@ -9,6 +9,15 @@ class SasaranCloner < Clowne::Cloner
         tahun: params[:tahun]
       }
     }
+    include_association :dasar_hukums, params: proc { |params, sasaran|
+      {
+        sasaran_id: sasaran.id_rencana,
+        tahun: params[:tahun]
+      }
+    }
+    include_association :rincian
+    include_association :permasalahans
+    include_association :latar_belakangs
     nullify :id_rencana
     nullify :strategi_id
 
@@ -18,7 +27,10 @@ class SasaranCloner < Clowne::Cloner
 
     after_persist do |origin, cloned, **|
       cloned.indikator_sasarans.each do |indikator|
-        indikator.update(sasaran_id: origin.id_rencana) if indikator.keterangan == "cloned_#{cloned.tahun}"
+        indikator.update(sasaran_id: origin.id_rencana) if indikator.keterangan == cloned.id_rencana
+      end
+      cloned.dasar_hukums.each do |dashu|
+        dashu.update(sasaran_id: origin.id_rencana) if dashu.keterangan == cloned.id_rencana
       end
     end
   end

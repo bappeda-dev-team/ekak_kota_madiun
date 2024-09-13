@@ -26,13 +26,13 @@
           <li>Manual IK:
             <% if indikator.manual_ik.present? %>
               <%= link_to edit_indikator_sasaran_manual_ik_path(indikator, indikator.manual_ik),
-               class: "m-3 btn btn-sm btn-outline-info" do %>
+                          class: "m-3 btn btn-sm btn-outline-info" do %>
                 <i class="fa fa-edit me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
                 <span>Edit Manual IK</span>
               <% end %>
             <% else %>
               <%= link_to new_indikator_sasaran_manual_ik_path(indikator),
-               class: "m-3 btn btn-sm btn-outline-danger" do %>
+                          class: "m-3 btn btn-sm btn-outline-danger" do %>
                 <i class="fa fa-cog me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
                 <span>Buat Manual IK</span>
               <% end %>
@@ -51,13 +51,13 @@
           <span class="badge bg-success p-2">Sudah Terisi</span>
           <% if indikator.manual_ik.present? %>
             <%= link_to edit_indikator_sasaran_manual_ik_path(indikator, indikator.manual_ik),
-               class: "m-3 btn btn-sm btn-outline-info" do %>
+                        class: "m-3 btn btn-sm btn-outline-info" do %>
               <i class="fa fa-edit me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
               <span>Edit Manual IK</span>
             <% end %>
           <% else %>
             <%= link_to new_indikator_sasaran_manual_ik_path(indikator),
-               class: "m-3 btn btn-sm btn-outline-danger" do %>
+                        class: "m-3 btn btn-sm btn-outline-danger" do %>
               <i class="fa fa-cog me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
               <span>Buat Manual IK</span>
             <% end %>
@@ -65,8 +65,9 @@
         </li>
         <li>
           <%= button_to 'Clone Renaksi', clone_tahapan_sebelum_sasaran_path(sasaran),
-           data: { disable_with: 'Sedang Cloning...' },
-           class: 'btn btn-primary' %>
+                        remote: true,
+                        data: { disable_with: 'Sedang Cloning...' },
+                        class: 'btn btn-primary' %>
         </li>
       <% end %>
     </ul>

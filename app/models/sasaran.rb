@@ -458,6 +458,7 @@ class Sasaran < ApplicationRecord
   end
 
   def siap_ditarik?
+    return false if tahun.nil?
     tahun_bener = tahun[/[^_]\d*/, 0].to_i
     if tahun_bener > 2024
       strategi? && tahapan? && manual_ik? && target_sesuai? && manrisk_diverifikasi?
