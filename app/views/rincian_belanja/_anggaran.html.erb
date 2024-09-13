@@ -6,10 +6,10 @@
     <% if anggaran[:status] == 'dikunci' %>
       <button class="btn btn-sm btn-outline-primary" disabled>
         <span class="fas fa-lock me-2"></span>
-        <%= anggaran[:status].titleize %>
+        Anggaran Selesai
       </button>
     <% else %>
-      <%= render(EditRowButtonComponent.new(title: 'Kunci Anggaran',path: kunci_keterangan_rincian_belanja_path(@sasaran, jenis: anggaran[:jenis], total: anggaran[:total]), icon: 'fas fa-key')) %>
+      <%= render(EditRowButtonComponent.new(title: 'Anggaran Selesai',path: kunci_keterangan_rincian_belanja_path(@sasaran, jenis: anggaran[:jenis], total: anggaran[:total]), icon: 'fas fa-key')) %>
     <% end %>
   </td>
 </tr>
