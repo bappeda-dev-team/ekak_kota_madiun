@@ -7,7 +7,7 @@
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout', title: "Laporan Pohon Cascading" do %>
     <%= render 'shared/pohon' do %>
-      <%= render 'pohon_kinerja_opds/item_opd', partial: 'pohon_kinerja_opds/pohon_kinerja_opd', show_button: false %>
+      <%= render 'pohon_kinerja_opds/item_opd', partial: 'pohon_kinerja_opds/pohon_kinerja_opd', show_button: false, title: 'Pohon Cascading' %>
       <ul data-pohon-tematik-target='dahan'>
         <%= render partial: 'pohon_kinerja_opds/pohon_cascading', collection: @strategi_kota, as: :pohon, locals: { show_button: false } %>
         <%= render partial: 'pohon_kinerja_opds/pohon_cascading', collection: @strategi_opd, as: :pohon, locals: { show_button: false } %>
