@@ -679,6 +679,10 @@ class Sasaran < ApplicationRecord
     status_dampak_resiko == "Setuju"
   end
 
+  def tahapan_mr?
+    tahapans.any? { |t| t.rtp_mr? }
+  end
+
   def manrisk_diverifikasi?
     if user.eselon_user == 'eselon_3'
       strategi_bawahans = strategi.strategi_bawahans.where(tahun: tahun)

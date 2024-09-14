@@ -125,33 +125,38 @@
                           <% end %>
                         <% end %>
                         <% if eselon_x?('eselon_3', 'admin', 'super_admin') %>
-                          <% if show_sasaran.status_dampak_resiko.present? %>
-                            <%= link_to sasaran_program_opd_verifikasi_dampak_resiko_path(show_sasaran),
-                                        remote: true,
-                                        data: {
-                                          controller: 'form-modal',
-                                          action: 'ajax:complete->form-modal#success:prevent',
-                                          bs_toggle: 'modal',
-                                          bs_target: '#form-modal'
-                                        },
-                                        class: 'btn btn-secondary d-inline-flex align-items-center toggle-active' do %>
-                              <i class="fas fa-exclamation-triangle me-2"></i>
-
-                              <span>Verifikasi Ulang</span>
+                          <% if show_sasaran.tahapan_mr? %>
+                            <% if show_sasaran.status_dampak_resiko.present? %>
+                              <%= link_to sasaran_program_opd_verifikasi_dampak_resiko_path(show_sasaran),
+                                          remote: true,
+                                          data: {
+                                            controller: 'form-modal',
+                                            action: 'ajax:complete->form-modal#success:prevent',
+                                            bs_toggle: 'modal',
+                                            bs_target: '#form-modal'
+                                          },
+                                          class: 'btn btn-secondary' do %>
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                <span>Verifikasi Ulang</span>
+                              <% end %>
+                            <% else %>
+                              <%= link_to sasaran_program_opd_verifikasi_dampak_resiko_path(show_sasaran),
+                                          remote: true,
+                                          data: {
+                                            controller: 'form-modal',
+                                            action: 'ajax:complete->form-modal#success:prevent',
+                                            bs_toggle: 'modal',
+                                            bs_target: '#form-modal'
+                                          },
+                                          class: 'btn btn-success' do %>
+                                <i class="fas fa-check me-2"></i>
+                                <span>Verifikasi</span>
+                              <% end %>
                             <% end %>
                           <% else %>
-                            <%= link_to sasaran_program_opd_verifikasi_dampak_resiko_path(show_sasaran),
-                                        remote: true,
-                                        data: {
-                                          controller: 'form-modal',
-                                          action: 'ajax:complete->form-modal#success:prevent',
-                                          bs_toggle: 'modal',
-                                          bs_target: '#form-modal'
-                                        },
-                                        class: 'btn btn-success text-white d-inline-flex align-items-center toggle-active' do %>
-                              <i class="fas fa-check me-2"></i>
-                              <span>Verifikasi</span>
-                            <% end %>
+                            <p class="alert alert-warning">
+                              Belum terdapat RTP-KAK - Harap input RTP-KAK untuk dapat diverifikasi
+                            </p>
                           <% end %>
                           <hr />
                         <% end %>
