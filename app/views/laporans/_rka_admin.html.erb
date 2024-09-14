@@ -91,8 +91,8 @@
                 <%= indikator %>
               <% end %>
               <% sasaran.tahapans.each.with_index(1) do |tahapan, no_tah| %>
-                <tr>
-                  <td class="border text-wrap" colspan="6" >Renaksi <%= no_tah %>: <%= tahapan.tahapan_kerja %></td>
+                <tr class="<%= tahapan.rtp_mr? && 'tahapan-rtp' %>">
+                  <td class="border text-wrap" colspan="6">Renaksi <%= no_tah %>: <%= tahapan.tahapan_kerja %> <span class='fw-bolder'><%= tahapan.rtp_mr? && "- [#{tahapan.tagging}]" %></span></td>
                   <td class="border rankir-1">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan_rankir_1) %></td>
                   <td class="border rankir-2">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %></td>
                   <td class="border penetapan">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan_penetapan) %></td>

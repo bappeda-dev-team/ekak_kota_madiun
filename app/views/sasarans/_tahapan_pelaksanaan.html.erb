@@ -20,7 +20,7 @@
         <tbody>
           <% sasaran.tahapans.order(:created_at).each.with_index(1) do |tahapan, i| %>
             <% aksi = tahapan.aksis %>
-            <tr class="border-bottom">
+            <tr class="<%= tahapan.rtp_mr? && 'tahapan-rtp' %>">
               <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= i %></td>
               <td class="text-gray-900 border text-wrap"><%= tahapan.tahapan_kerja %> <span class='fw-bolder'><%= tahapan.tagging == "RTP-MR" ? "- [#{tahapan.tagging}]" : '' %></span></td>
               <td class="fw-bolder text-gray-500 text-center border-end">

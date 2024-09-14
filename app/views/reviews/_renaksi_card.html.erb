@@ -48,7 +48,7 @@
           </thead>
           <tbody>
             <% sasaran.tahapan_renaksi.each.with_index(1) do |tahapan, index| %>
-              <tr class="<%= tahapan.ada_komentar? ? 'higlighted' : 'clean' %>">
+              <tr class="<%= tahapan.rtp_mr? && 'tahapan-rtp' %>">
                 <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= index %></td>
                 <td class="text-gray-900"><%= tahapan.tahapan_kerja %></td>
                 <% (1..12).each do |bulan| %>
@@ -63,7 +63,7 @@
                   <span class="me-2">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %></span>
                   <% if tahapan.anggaran_tahapan > 0 %>
                     <%= link_to review_anggaran_sasaran_tahapan_path(sasaran, tahapan), target: "_blank", rel: "nofollow",
-                       class: "btn btn-sm btn-success text-white" do %>
+                                class: "btn btn-sm btn-success text-white" do %>
                       <i class="far fa-eye me-2"></i>
                       <span>Lihat</span>
                     <% end %>
@@ -74,7 +74,7 @@
                   <div class="d-grid gap-2">
                     <% if reviewer? %>
                       <%= link_to review_sasaran_tahapan_path(sasaran, tahapan), target: "_blank", rel: "nofollow",
-                       class: "btn btn-sm btn-primary text-white" do %>
+                                  class: "btn btn-sm btn-primary text-white" do %>
                         <i class="far fa-sticky-note me-2"></i>
                         <span>Review</span>
                       <% end %>

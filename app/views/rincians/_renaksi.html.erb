@@ -110,7 +110,7 @@
         </thead>
         <tbody>
           <% sasaran.tahapan_renaksi.each do |tahapan| %>
-            <tr class="<%= tahapan.ada_komentar? ? 'higlighted' : 'clean' %>">
+            <tr class="<%= tahapan.rtp_mr? && 'tahapan-rtp' %>">
               <td class="text-gray-900 fw-bolder border-start border-end" scope="row"></td>
               <td class="text-gray-900 text-wrap"><%= tahapan.tahapan_kerja %> <span class='fw-bolder'><%= tahapan.tagging == "RTP-MR" ? "- [#{tahapan.tagging}]" : '' %></span></td>
               <td class="fw-bolder text-gray-500 text-center border-end">

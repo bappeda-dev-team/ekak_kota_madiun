@@ -96,6 +96,10 @@ class Tahapan < ApplicationRecord
     anggarans.map(&:comments).any?(&:present?)
   end
 
+  def rtp_mr?
+    tagging == "RTP-MR"
+  end
+
   def grand_parent_anggaran
     anggarans.includes(%i[rekening pagu_anggaran]).order(:created_at).group_by do |angg|
       angg&.rekening&.grand_parent&.kode_rekening
