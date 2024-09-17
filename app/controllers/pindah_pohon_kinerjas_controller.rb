@@ -22,8 +22,10 @@ class PindahPohonKinerjasController < ApplicationController
     role_pohon = @role_atasan[-1]
     @list_atasan = Strategi.where(opd_id: @pindah_pohon_kinerja.opd_id,
                                   tahun: @pindah_pohon_kinerja.tahun,
+                                  type: 'StrategiPohon',
                                   role: role_strategi)
                            .where('strategi ILIKE ?', "%#{search}%")
+                           .select { |s| s.pohon.nil? }
     @pohons = Pohon.where(opd_id: @pindah_pohon_kinerja.opd_id,
                           tahun: @pindah_pohon_kinerja.tahun,
                           pohonable_type: 'Strategi',
@@ -42,7 +44,8 @@ class PindahPohonKinerjasController < ApplicationController
     role_pohon = @role_atasan[-1]
     @list_atasan = Strategi.where(opd_id: @pindah_pohon_kinerja.opd_id,
                                   tahun: @pindah_pohon_kinerja.tahun,
-                                  role: role_strategi)
+                                  type: 'StrategiPohon',
+                                  role: role_strategi).select { |s| s.pohon.nil? }
     @pohons = Pohon.where(opd_id: @pindah_pohon_kinerja.opd_id,
                           tahun: @pindah_pohon_kinerja.tahun,
                           pohonable_type: 'Strategi',
