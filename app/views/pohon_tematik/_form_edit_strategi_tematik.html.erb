@@ -27,7 +27,8 @@
               placeholder: 'Pilih OPD',
           },
           id: "opd_#{form.object_id}",
-          required: true
+          required: true,
+          readonly: true
         } %>
   </div>
   <div class="field">
@@ -46,7 +47,7 @@
                           partial: 'indikators/indikator_fields') %>
   <div class="field">
     <%= form.label :keterangan, class: 'form-label' %>
-    <%= form.text_field :keterangan, class: 'form-control', required: true, value: @pohon.keterangan, id: "pohon_keterangan_#{form.object_id.to_s}" %>
+    <%= form.text_area :keterangan, class: 'form-control', required: true, value: @pohon.keterangan, id: "pohon_keterangan_#{form.object_id.to_s}" %>
   </div>
   <div class="actions">
     <%= form.submit 'Simpan' %>
