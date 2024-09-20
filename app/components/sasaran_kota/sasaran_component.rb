@@ -37,7 +37,13 @@ class SasaranKota::SasaranComponent < ViewComponent::Base
 
   # sub_pohons dibawah operasional tidak diambil
   def sub_pohons
-    if jenis == 'sasaran_kegiatan'
+    case @sasaran.role
+    when 'strategi_pohon_kota'
+      @sasaran.sub_pohons.where(role: 'tactical_pohon_kota').select(&:pohonable)
+    when 'tactical_pohon_kota'
+      @sasaran.sub_pohons.where(role: 'operational_pohon_kota').select(&:pohonable)
+    when 'operational_pohon_kota'
+      # get sasaran with nama - nip pelaksana for operational
       @sasaran.pohonable.sasarans.dengan_nip
     else
       @sasaran.sub_pohons.select(&:pohonable)
