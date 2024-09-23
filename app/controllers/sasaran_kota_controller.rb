@@ -59,13 +59,10 @@ class SasaranKotaController < ApplicationController
     @tahun = params[:tahun]
     pohon_id = params[:id]
 
-    @pohon_sub = Pohon.find_by(id: pohon_id, tahun: @tahun)
-    @sub_sasaran_kota = @pohon_sub
-                        .sub_pohons.where(tahun: @tahun, role: 'sub_sub_pohon_kota')
-                        .select(&:pohonable)
-    @rad_sasaran_kota = @pohon_sub
-                        .sub_pohons.where(tahun: @tahun)
-                        .select(&:pohonable)
+    rad = RadKota.new(tahun: @tahun, parent_id: pohon_id)
+    @pohon_sub = rad.pohon_sub
+    @sub_sasaran_kota = rad.sub_sasaran_kota
+    @rad_sasaran_kota = rad.rad_sasaran_kota
   end
 
   def show_pokin
@@ -80,13 +77,10 @@ class SasaranKotaController < ApplicationController
     @tahun = params[:tahun]
     pohon_id = params[:id]
 
-    @pohon_sub = Pohon.find_by(id: pohon_id, tahun: @tahun)
-    @sub_sasaran_kota = @pohon_sub
-                        .sub_pohons.where(tahun: @tahun, role: 'sub_sub_pohon_kota')
-                        .select(&:pohonable)
-    @rad_sasaran_kota = @pohon_sub
-                        .sub_pohons.where(tahun: @tahun)
-                        .select(&:pohonable)
+    rad = RadKota.new(tahun: @tahun, parent_id: pohon_id)
+    @pohon_sub = rad.pohon_sub
+    @sub_sasaran_kota = rad.sub_sasaran_kota
+    @rad_sasaran_kota = rad.rad_sasaran_kota
   end
 
   private
