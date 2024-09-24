@@ -38,9 +38,9 @@ class TimKerja
 
     strategi_bawahans.flat_map do |pohon|
       sasaran_pelaksana(pohon).flat_map do |sas|
-        sas.dasar_hukums.pluck(:judul).uniq.select { |dashu| dashu.length > 1 } # avoid invalid entry
+        sas.dasar_hukums.pluck(:judul).select { |dashu| dashu.length > 1 } # avoid invalid entry
       end
-    end
+    end.uniq
   end
 
   def susunan_tim(strategi)
