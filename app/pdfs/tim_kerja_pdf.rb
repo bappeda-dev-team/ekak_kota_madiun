@@ -45,12 +45,17 @@ class TimKerjaPdf < Prawn::Document
     text 'Susunan Tim Kerja', size: 10, font_style: :bold
     move_down 5
 
-    susunan_tim = @tim_kerja[:susunan_tim].flat_map do |role, susunans|
-      susunans.map do |susunan|
-        [role[:role], susunan[:pelaksana]]
+    lebar_kolom_role = 100
+    susunan_tim = @tim_kerja[:susunan_tim].map do |role, susunans|
+      susunan_pelaksana = susunans.map do |susunan|
+        [susunan[:pelaksana]]
       end
+      tabel_pelaksana = make_table(susunan_pelaksana, width: bounds.width - lebar_kolom_role) do
+        cells.style(size: 8)
+      end
+      [role[:role], tabel_pelaksana]
     end
-    table(susunan_tim, width: bounds.width) do
+    table(susunan_tim, column_widths: { 0 => lebar_kolom_role }) do
       cells.style(size: 8)
     end
   end
