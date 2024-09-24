@@ -19,7 +19,7 @@ class TimKerja
       #                     .where.not(role: %w[opd opd-batal])
       #                     .select { |pelaksana| pelaksana.role_tim.present? }
 
-      { nama_tim: "#{strategi} - #{strategi.id}",
+      { nama_tim: strategi.strategi,
         dasar_hukum: dasar_hukum_tim(strategi),
         susunan_tim: susunan_tim(strategi),
         rincian_tugas: rincian_tugas(strategi) }
