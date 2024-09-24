@@ -35,7 +35,7 @@ class TimKerja
 
     strategi_bawahans.flat_map do |pohon|
       sasaran_pelaksana(pohon).flat_map do |sas|
-        sas.dasar_hukums.pluck(:judul).select { |dashu| dashu.length > 1 } # avoid invalid entry
+        sas.dasar_hukums.pluck(:judul).uniq.select { |dashu| dashu.length > 1 } # avoid invalid entry
       end
     end
   end
@@ -48,17 +48,24 @@ class TimKerja
       end
 
     pelaksana_strategi = pohon_strategi.flat_map do |pelaksana|
-      { role: pelaksana.role_tim,
+      {
+        role_id: role_tim_id(pelaksana.role_tim),
+        role: pelaksana.role_tim,
         pelaksana: pelaksana.user.nama,
-        sasaran_terisi: sasaran_pelaksana_terisi?(pelaksana) }
+        sasaran_terisi: sasaran_pelaksana_terisi?(pelaksana)
+      }
     end
     pelaksana_bawahan = pohon_bawahans.flat_map do |pelaksana|
-      { role: pelaksana.role_tim,
+      {
+        role_id: role_tim_id(pelaksana.role_tim),
+        role: pelaksana.role_tim,
         pelaksana: pelaksana.user.nama,
-        sasaran_terisi: sasaran_pelaksana_terisi?(pelaksana) }
+        sasaran_terisi: sasaran_pelaksana_terisi?(pelaksana)
+      }
     end
 
-    pelaksana_strategi + pelaksana_bawahan
+    all_pelaksana = pelaksana_strategi + pelaksana_bawahan
+    all_pelaksana.group_by { |pl| { id: pl[:role_id], role: pl[:role] } }.sort_by { |key, _| key[:id] }
   end
 
   def rincian_tugas(strategi)
@@ -68,6 +75,17 @@ class TimKerja
   def kepala_opd_tim; end
 
   private
+
+  def role_tim_id(role)
+    case role
+    when 'Koordinator'
+      1
+    when 'Ketua'
+      2
+    else
+      3
+    end
+  end
 
   def pelaksana(strategi)
     strategi.pohon_shareds

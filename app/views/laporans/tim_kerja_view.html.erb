@@ -39,11 +39,17 @@
             </caption>
             <table class="table table-bordered mb-3">
               <tbody>
-                <% tim[:susunan_tim].each do |susunan| %>
+                <% tim[:susunan_tim].each do |role, susunans| %>
                   <tr>
-                    <th width="15%"><%= susunan[:role] %></th>
-                    <td class="<%= susunan[:sasaran_terisi] ? 'text-success' : 'text-danger' %>"><%= susunan[:pelaksana] %></td>
+                    <th width="15%" rowspan="<%= susunans.size + 1 %>"><%= role[:role] %></th>
                   </tr>
+                  <% susunans.each do |susunan| %>
+                    <tr>
+                      <td class="<%= susunan[:sasaran_terisi] ? 'text-success' : 'text-danger' %>">
+                        <%= susunan[:pelaksana] %>
+                      </td>
+                    </tr>
+                  <% end %>
                 <% end %>
               </tbody>
             </table>
