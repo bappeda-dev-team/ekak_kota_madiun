@@ -272,10 +272,29 @@ class LaporansController < ApplicationController
   def tim_kerja; end
 
   def tim_kerja_view
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @tim_kerja = TimKerja.new(kode_opd: @kode_opd, tahun: @tahun)
-                         .tim_kerja_strategi
+    tim_opd =  TimKerja.new(kode_opd: @kode_opd, tahun: @tahun)
+    @tim_kerja = tim_opd.tim_kerja_strategi
+    @opd = tim_opd.opd
+
     render layout: false
+  end
+
+  def tim_kerja_pdf
+    strategi_id = params[:id]
+    strategi = Strategi.find(strategi_id)
+
+    tim_opd =  TimKerja.new(kode_opd: @kode_opd, tahun: @tahun)
+    tim_kerja = tim_opd.tim_kerja_hash(strategi)
+    opd = tim_opd.opd
+
+    pdf = TimKerjaPdf.new(tim_kerja: tim_kerja, opd: opd, tahun: @tahun)
+    waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
+    nama_file = strategi.to_s
+
+    @filename = "Laporan_Tim_Kerja_#{nama_file}_#{waktu}.pdf"
+    respond_to do |format|
+      format.pdf { send_data(pdf.render, filename: @filename, type: 'application/pdf', dispotition: :attachment) }
+    end
   end
 
   private

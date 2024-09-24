@@ -15,16 +15,19 @@ class TimKerja
 
   def tim_kerja_strategi
     tim_kerja = tactical_opd.flat_map do |strategi|
-      # tim_kerja = strategi.pohon_shareds
-      #                     .where.not(role: %w[opd opd-batal])
-      #                     .select { |pelaksana| pelaksana.role_tim.present? }
-
-      { nama_tim: strategi.strategi,
-        dasar_hukum: dasar_hukum_tim(strategi),
-        susunan_tim: susunan_tim(strategi),
-        rincian_tugas: rincian_tugas(strategi) }
+      tim_kerja_hash(strategi)
     end
     tim_kerja.select { |tim| tim[:susunan_tim].any? }
+  end
+
+  def tim_kerja_hash(strategi)
+    {
+      id_tim: strategi.id,
+      nama_tim: strategi.strategi,
+      dasar_hukum: dasar_hukum_tim(strategi),
+      susunan_tim: susunan_tim(strategi),
+      rincian_tugas: rincian_tugas(strategi)
+    }
   end
 
   def dasar_hukum_tim(strategi)

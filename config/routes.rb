@@ -574,6 +574,7 @@ Rails.application.routes.draw do
       get :pdf_rka
       get :show_kak
       get :buka_kak
+      get :tim_kerja_pdf
     end
   end
   namespace :laporans do

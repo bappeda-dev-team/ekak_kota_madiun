@@ -10,18 +10,23 @@
   </div>
   <div class="card-body">
     <% if @tim_kerja.any? %>
-      <div class="accordion" id="accordionTimKerja">
+      <div class="accordion accordion-flush" id="accordionTimKerja">
         <% @tim_kerja.each.with_index(1) do |tim, no| %>
           <div class="accordion-item">
-            <h5 class="accordion-header"></h5>
             <h2 class="accordion-header">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                       data-bs-target='<%= "#collapse-#{no}" %>' aria-expanded="true" aria-controls='<%= "#collapse-#{no}" %>'>
                 Tim Kerja - <%= tim[:nama_tim] %>
               </button>
             </h2>
-            <div id='<%= "collapse-#{no}" %>' class="accordion-collapse collapse" data-bs-parent="accordionTimKerja">
+            <div id='<%= "collapse-#{no}" %>' class="accordion-collapse collapse">
               <div class="accordion-body">
+                <div class="cetak mb-2">
+                  <%= link_to tim_kerja_pdf_laporan_path(tim[:id_tim], format: :pdf), class:"btn btn-outline-danger" do %>
+                    <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak Excel Ranwal Renja"></span>
+                    Unduh PDF
+                  <% end %>
+                </div>
                 <div class="card">
                   <div class="card-body dasar-hukum-tim-kerja">
                     <table class="table table-bordered caption-top">
