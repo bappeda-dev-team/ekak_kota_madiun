@@ -10,68 +10,76 @@
   </div>
   <div class="card-body">
     <% if @tim_kerja.any? %>
-      <% @tim_kerja.each do |tim| %>
-        <div class="tim-kerja-card">
-          <div class="nama-tim-kerja">
-            <h5 class="my-3">Tim Kerja - <%= tim[:nama_tim] %></h5>
-          </div>
-          <hr />
+      <div class="accordion" id="accordionTimKerja">
+        <% @tim_kerja.each.with_index(1) do |tim, no| %>
+          <div class="accordion-item">
+            <h5 class="accordion-header"></h5>
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target='<%= "#collapse-#{no}" %>' aria-expanded="true" aria-controls='<%= "#collapse-#{no}" %>'>
+                Tim Kerja - <%= tim[:nama_tim] %>
+              </button>
+            </h2>
+            <div id='<%= "collapse-#{no}" %>' class="accordion-collapse collapse" data-bs-parent="accordionTimKerja">
+              <div class="accordion-body">
+                <div class="card">
+                  <div class="card-body dasar-hukum-tim-kerja">
+                    <table class="table table-bordered caption-top">
+                      <caption>
+                        Dasar Hukum
+                      </caption>
+                      <tbody>
+                        <% tim[:dasar_hukum].each do |dasar_hukum| %>
+                          <tr>
+                            <td><%= dasar_hukum %></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
 
-          <div class="dasar-hukum-tim-kerja">
-            <caption>
-              Dasar Hukum
-            </caption>
-            <table class="table table-bordered mb-3">
-              <tbody>
-                <% tim[:dasar_hukum].each do |dasar_hukum| %>
-                  <tr>
-                    <td><%= dasar_hukum %></td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
-          <hr />
+                  <div class="card-body pelaksana-tim-kerja">
+                    <table class="table table-bordered caption-top">
+                      <caption>
+                        Susunan Tim Kerja
+                      </caption>
+                      <tbody>
+                        <% tim[:susunan_tim].each do |role, susunans| %>
+                          <tr>
+                            <th width="15%" rowspan="<%= susunans.size + 1 %>"><%= role[:role] %></th>
+                          </tr>
+                          <% susunans.each do |susunan| %>
+                            <tr>
+                              <td class="<%= susunan[:sasaran_terisi] ? 'text-success' : 'text-danger' %>">
+                                <%= susunan[:pelaksana] %>
+                              </td>
+                            </tr>
+                          <% end %>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
 
-          <div class="pelaksana-tim-kerja">
-            <caption>
-              Susunan Tim Kerja
-            </caption>
-            <table class="table table-bordered mb-3">
-              <tbody>
-                <% tim[:susunan_tim].each do |role, susunans| %>
-                  <tr>
-                    <th width="15%" rowspan="<%= susunans.size + 1 %>"><%= role[:role] %></th>
-                  </tr>
-                  <% susunans.each do |susunan| %>
-                    <tr>
-                      <td class="<%= susunan[:sasaran_terisi] ? 'text-success' : 'text-danger' %>">
-                        <%= susunan[:pelaksana] %>
-                      </td>
-                    </tr>
-                  <% end %>
-                <% end %>
-              </tbody>
-            </table>
+                  <div class="card-body rincian-tugas-tim-kerja">
+                    <table class="table table-bordered caption-top">
+                      <caption>
+                        Rincian Tugas
+                      </caption>
+                      <tbody>
+                        <% tim[:rincian_tugas].each do |tugas| %>
+                          <tr>
+                            <td><%= tugas %></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <hr />
-
-          <div class="rincian-tugas-tim-kerja">
-            <caption>
-              Rincian Tugas
-            </caption>
-            <table class="table table-bordered mb-3">
-              <tbody>
-                <% tim[:rincian_tugas].each do |tugas| %>
-                  <tr>
-                    <td><%= tugas %></td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     <% else %>
       <p class="alert alert-warning">
         <i class="fas fa-exclamation-triangle me-2"></i>
