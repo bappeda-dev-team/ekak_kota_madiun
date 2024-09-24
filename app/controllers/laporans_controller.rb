@@ -273,7 +273,8 @@ class LaporansController < ApplicationController
 
   def tim_kerja_view
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @tim_kerja = TimKerja.new(kode_opd: @kode_opd, tahun: @tahun).pelaksana
+    @tim_kerja = TimKerja.new(kode_opd: @kode_opd, tahun: @tahun)
+                         .tim_kerja_strategi
     render layout: false
   end
 

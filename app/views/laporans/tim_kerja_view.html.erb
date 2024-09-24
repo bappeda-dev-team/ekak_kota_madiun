@@ -10,19 +10,57 @@
   </div>
   <div class="card-body">
     <% if @tim_kerja.any? %>
-      <% @tim_kerja.each do |strategi| %>
-        <div class="pelaksana-body" data-controller="form-modal">
-          <p class="my-3">Tim Kerja - <%= strategi[:strategi] %></p>
-          <div class="pelaksana" data-form-modal-target="prevHtml">
+      <% @tim_kerja.each do |tim| %>
+        <div class="tim-kerja-card">
+          <div class="nama-tim-kerja">
+            <h5 class="my-3">Tim Kerja - <%= tim[:nama_tim] %></h5>
+          </div>
+          <hr />
+
+          <div class="dasar-hukum-tim-kerja">
+            <caption>
+              Dasar Hukum
+            </caption>
             <table class="table table-bordered mb-3">
-              <thead>
-                <th class="text-start">Pelaksana</th>
-                <th class="text-wrap text-start">Role Tim</th>
-                <th class="text-wrap text-start">Keterangan</th>
-                <th class="text-wrap text-center">Action</th>
-              </thead>
               <tbody>
-                <%= render partial: 'pelaksana/pelaksana', collection: strategi[:tim_kerja], as: :pelaksana || 'Tidak ada pelaksana' %>
+                <% tim[:dasar_hukum].each do |dasar_hukum| %>
+                  <tr>
+                    <td><%= dasar_hukum %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <hr />
+
+          <div class="pelaksana-tim-kerja">
+            <caption>
+              Susunan Tim Kerja
+            </caption>
+            <table class="table table-bordered mb-3">
+              <tbody>
+                <% tim[:susunan_tim].each do |susunan| %>
+                  <tr>
+                    <th width="15%"><%= susunan[:role] %></th>
+                    <td class="<%= susunan[:sasaran_terisi] ? 'text-success' : 'text-danger' %>"><%= susunan[:pelaksana] %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <hr />
+
+          <div class="rincian-tugas-tim-kerja">
+            <caption>
+              Rincian Tugas
+            </caption>
+            <table class="table table-bordered mb-3">
+              <tbody>
+                <% tim[:rincian_tugas].each do |tugas| %>
+                  <tr>
+                    <td><%= tugas %></td>
+                  </tr>
+                <% end %>
               </tbody>
             </table>
           </div>
