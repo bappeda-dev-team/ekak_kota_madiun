@@ -268,6 +268,15 @@ class LaporansController < ApplicationController
     @kode_opd = cookies[:opd]
   end
 
+  # ajax loading
+  def tim_kerja; end
+
+  def tim_kerja_view
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @tim_kerja = TimKerja.new(kode_opd: @kode_opd, tahun: @tahun).pelaksana
+    render layout: false
+  end
+
   private
 
   def set_program_kegiatans

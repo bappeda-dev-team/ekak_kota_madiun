@@ -49,6 +49,10 @@ module LaporanItemHelper
         icon: 'fas fa-puzzle', identifier: 'hasil_crosscutting'
       },
       {
+        title: 'Tim Kerja', href: tim_kerja_laporans_path,
+        icon: 'fas fa-user-friends', identifier: 'tim_kerja'
+      },
+      {
         title: 'Rencana Kinerja (KAK)', href: laporan_kak_laporans_path,
         icon: 'fas fa-bullseye', identifier: 'laporan_kak'
       },

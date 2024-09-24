@@ -565,6 +565,8 @@ Rails.application.routes.draw do
       get :indikator_spm
       get :indikator_sdgs
       get :daftar_resiko
+      get :tim_kerja
+      post :tim_kerja_view
     end
 
     member do

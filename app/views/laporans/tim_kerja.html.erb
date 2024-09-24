@@ -1,0 +1,13 @@
+<%= content_for :html_title, "Laporan Tim Kerja" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Laporan</li>
+  <li class="breadcrumb-item active" aria-current="page">Tim Kerja</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_ajax',
+             title: "Laporan Tim Kerja",
+             data_page_attr: {
+               controller: 'page-ajax',
+               page_ajax_url_value: tim_kerja_view_laporans_path
+             } %>
+<% end %>

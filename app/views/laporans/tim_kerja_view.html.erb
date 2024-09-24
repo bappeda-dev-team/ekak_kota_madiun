@@ -1,0 +1,41 @@
+<div class="card border-0 shadow">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">Laporan Tim Kerja <%= @opd.nama_opd %> - Tahun <%= @tahun %></h2>
+      </div>
+      <div class="col-auto buat-cetak-nanti">
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <% if @tim_kerja.any? %>
+      <% @tim_kerja.each do |strategi| %>
+        <div class="pelaksana-body" data-controller="form-modal">
+          <p class="my-3">Tim Kerja - <%= strategi[:strategi] %></p>
+          <div class="pelaksana" data-form-modal-target="prevHtml">
+            <table class="table table-bordered mb-3">
+              <thead>
+                <th class="text-start">Pelaksana</th>
+                <th class="text-wrap text-start">Role Tim</th>
+                <th class="text-wrap text-start">Keterangan</th>
+                <th class="text-wrap text-center">Action</th>
+              </thead>
+              <tbody>
+                <%= render partial: 'pelaksana/pelaksana', collection: strategi[:tim_kerja], as: :pelaksana || 'Tidak ada pelaksana' %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="alert alert-warning">
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        Tim Kerja belum disusun
+      </p>
+      <p class="alert alert-info">
+        Susun Tim Kerja pada menu Perencanaan OPD / Pohon Cascading
+      </p>
+    <% end %>
+  </div>
+</div>
