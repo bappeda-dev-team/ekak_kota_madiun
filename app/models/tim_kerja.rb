@@ -72,7 +72,9 @@ class TimKerja
   end
 
   def rincian_tugas(strategi)
-    strategi.strategi_bawahans.flat_map(&:strategi)
+    strategi.strategi_bawahans.flat_map do |str|
+      str.sasarans.pluck(:sasaran_kinerja)
+    end.uniq
   end
 
   def kepala_opd_tim; end
