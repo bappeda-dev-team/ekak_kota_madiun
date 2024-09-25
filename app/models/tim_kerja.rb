@@ -9,7 +9,8 @@ class TimKerja
   end
 
   def tactical_opd
-    @tactical_opd ||= opd.strategis.where(type: 'StrategiPohon', role: 'eselon_3', tahun: @tahun)
+    @tactical_opd ||= opd.strategis.includes(%i[strategi_bawahans pohon_shareds])
+                         .where(type: 'StrategiPohon', role: 'eselon_3', tahun: @tahun)
                          .select { |sp| sp.pohon_shareds.any? }
   end
 
@@ -94,6 +95,7 @@ class TimKerja
 
   def pelaksana(strategi)
     strategi.pohon_shareds
+            .includes(%i[user pohonable])
             .where.not(role: %w[opd opd-batal])
             .select { |pelaksana| pelaksana.role_tim.present? }
   end
