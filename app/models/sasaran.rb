@@ -126,7 +126,8 @@ class Sasaran < ApplicationRecord
   store_accessor :metadata, :hasil_output, :nama_output, :processed_at, :deleted_at, :deleted_by, :keterangan_hapus,
                  :clone_tahun_asal, :clone_oleh, :clone_asli, :id_rencana_sebelum,
                  :inovasi_sasaran, :hasil_inovasi, :jenis_inovasi, :gambaran_nilai_kebaruan,
-                 :status_dampak_resiko, :komentar_dampak_resiko
+                 :status_dampak_resiko, :komentar_dampak_resiko,
+                 :judul_rincian_tugas
 
   # DANGER, maybe broke something, uncomment this
   # def respond_to_missing?(_method, *_args)
@@ -459,6 +460,7 @@ class Sasaran < ApplicationRecord
 
   def siap_ditarik?
     return false if tahun.nil?
+
     tahun_bener = tahun[/[^_]\d*/, 0].to_i
     if tahun_bener > 2024
       strategi? && tahapan? && manual_ik? && target_sesuai? && manrisk_diverifikasi?
@@ -634,9 +636,12 @@ class Sasaran < ApplicationRecord
 
   def seluruh_anggaran
     [
-      { jenis: 'rankir1', total: total_anggaran_rankir_1, keterangan: kuncian('rankir1')&.keterangan, status: kuncian('rankir1')&.status_kunci },
-      { jenis: 'rankir2', total: total_anggaran, keterangan: kuncian('rankir2')&.keterangan, status: kuncian('rankir2')&.status_kunci },
-      { jenis: 'penetapan', total: total_anggaran_penetapan, keterangan: kuncian('penetapan')&.keterangan, status: kuncian('penetapan')&.status_kunci }
+      { jenis: 'rankir1', total: total_anggaran_rankir_1, keterangan: kuncian('rankir1')&.keterangan,
+        status: kuncian('rankir1')&.status_kunci },
+      { jenis: 'rankir2', total: total_anggaran, keterangan: kuncian('rankir2')&.keterangan,
+        status: kuncian('rankir2')&.status_kunci },
+      { jenis: 'penetapan', total: total_anggaran_penetapan, keterangan: kuncian('penetapan')&.keterangan,
+        status: kuncian('penetapan')&.status_kunci }
     ]
   end
 

@@ -74,7 +74,13 @@ class TimKerja
 
   def rincian_tugas(strategi)
     strategi.strategi_bawahans.flat_map do |str|
-      str.sasarans.pluck(:sasaran_kinerja)
+      str.sasarans.map do |sas|
+        if sas.judul_rincian_tugas.present?
+          [sas.id, sas.judul_rincian_tugas]
+        else
+          [sas.id, sas.sasaran_kinerja]
+        end
+      end
     end.uniq
   end
 

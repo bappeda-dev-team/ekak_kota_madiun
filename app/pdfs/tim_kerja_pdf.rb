@@ -65,7 +65,7 @@ class TimKerjaPdf < Prawn::Document
     move_down 5
 
     rincian_tugas = @tim_kerja[:rincian_tugas].map do |tugas|
-      [tugas]
+      [tugas[1]]
     end
     table(rincian_tugas, width: bounds.width) do
       cells.style(size: 8)

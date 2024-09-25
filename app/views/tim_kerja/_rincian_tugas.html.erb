@@ -1,0 +1,10 @@
+<tr data-controller="row">
+  <td width="5%"><%= no %></td>
+  <td width="90%"><%= tugas[1] %></td>
+  <td>
+    <div class="d-grid gap-2">
+      <%= render(EditRowButtonComponent.new(title: 'Edit',
+                                            path: edit_rincian_tugas_tim_kerja_path(tugas[0], no: no))) %>
+    </div>
+  </td>
+</tr>
