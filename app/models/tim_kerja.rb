@@ -39,7 +39,13 @@ class TimKerja
 
     strategi_bawahans.flat_map do |pohon|
       sasaran_pelaksana(pohon).flat_map do |sas|
-        sas.dasar_hukums.pluck(:judul).select { |dashu| dashu.length > 1 } # avoid invalid entry
+        sas.dasar_hukums.map do |das_hu|
+          if das_hu.judul_dasar_hukum_tim_kerja.present?
+            [das_hu.id, das_hu.judul_dasar_hukum_tim_kerja]
+          else
+            [das_hu.id, das_hu.judul]
+          end
+        end
       end
     end.uniq
   end

@@ -34,7 +34,7 @@ class TimKerjaPdf < Prawn::Document
     move_down 5
 
     data_dasar_hukum = @tim_kerja[:dasar_hukum].map do |dasar_hukum|
-      [dasar_hukum.force_encoding('utf-8')]
+      [dasar_hukum[1].force_encoding('utf-8')]
     end
     table(data_dasar_hukum, width: bounds.width) do
       cells.style(size: 8)

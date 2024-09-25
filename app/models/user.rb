@@ -392,7 +392,7 @@ class User < ApplicationRecord
   end
 
   def nama_nip_kurung
-    "#{nama} - (#{nik})"
+    "#{nama} ( #{nik} )"
   end
 
   def nip

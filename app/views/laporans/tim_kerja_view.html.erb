@@ -35,13 +35,7 @@
                       </caption>
                       <tbody>
                         <% tim[:dasar_hukum].each.with_index(1) do |dasar_hukum, no| %>
-                          <tr>
-                            <td width="5%"><%= no %></td>
-                            <td width="90%"><%= dasar_hukum %></td>
-                            <td>
-                              <a href="#" class="btn btn-info">Edit</a>
-                            </td>
-                          </tr>
+                          <%= render 'tim_kerja/dasar_hukum', no: no, dasar_hukum: dasar_hukum %>
                         <% end %>
                       </tbody>
                     </table>

@@ -5,6 +5,7 @@
 #  id         :bigint           not null, primary key
 #  judul      :string
 #  keterangan :string
+#  metadata   :jsonb
 #  peraturan  :text
 #  tahun      :string
 #  created_at :datetime         not null

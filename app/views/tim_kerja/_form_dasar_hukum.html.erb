@@ -1,0 +1,23 @@
+<%= form_with url: update_dasar_hukum_tim_kerja_path(dasar_hukum.id, no: no),
+              model: dasar_hukum,
+              local: false,
+              id: dom_id(dasar_hukum, 'form'),
+              data: {
+                action: 'ajax:complete->row#processAjax',
+              } do |form| %>
+  <td width="5%"><%= no %></td>
+  <td width="90%">
+    <% das_hu = dasar_hukum.judul_dasar_hukum_tim_kerja.present? ? dasar_hukum.judul_dasar_hukum_tim_kerja : dasar_hukum.judul %>
+    <%= form.text_area :judul_dasar_hukum_tim_kerja,
+     { class: "form-control", cols: 5,
+       form: dom_id(dasar_hukum, 'form'),
+       value: das_hu } %>
+  </td>
+  <td>
+    <div class="d-grid gap-2">
+      <%= form.submit 'Simpan', class: 'btn btn-sm', style: 'margin-top: 0 !important;',
+         form: dom_id(dasar_hukum, 'form') %>
+      <button class="btn btn-sm btn-outline-danger" data-action="row#batal">Batal</button>
+    </div>
+  </td>
+<% end %>

@@ -9,14 +9,15 @@ class TimKerjaController < ApplicationController
     set_dasar_hukum
 
     if @dasar_hukum.update(dasar_hukum_params)
+      das_hu = [@dasar_hukum.id, @dasar_hukum.judul_dasar_hukum_tim_kerja]
       render json: { resText: "Perubahan tersimpan",
-                     html_content: html_content({ dasar_hukum: @dasar_hukum },
-                                                partial: 'dasar_hukums/dasar_hukum_renstra') }.to_json,
+                     html_content: html_content({ dasar_hukum: das_hu, no: @no },
+                                                partial: 'tim_kerja/dasar_hukum') }.to_json,
              status: :ok
     else
       render json: { resText: "Terjadi kesalahan",
-                     html_content: error_content({ dasar_hukum: @dasar_hukum },
-                                                 partial: 'dasar_hukums/form_row') }.to_json,
+                     html_content: error_content({ dasar_hukum: @dasar_hukum, no: @no },
+                                                 partial: 'tim_kerja/form_dasar_hukum') }.to_json,
              status: :unprocessable_entity
     end
   end
@@ -59,12 +60,13 @@ class TimKerjaController < ApplicationController
   private
 
   def set_dasar_hukum
+    @no = params[:no]
     dasar_hukum_id = params[:id]
     @dasar_hukum = DasarHukum.find dasar_hukum_id
   end
 
   def dasar_hukum_params
-    params.require(:dasar_hukum).permit(:judul_baru, :status)
+    params.require(:dasar_hukum).permit(:judul_dasar_hukum_tim_kerja, :status_tim_kerja)
   end
 
   def rincian_tugas_params
