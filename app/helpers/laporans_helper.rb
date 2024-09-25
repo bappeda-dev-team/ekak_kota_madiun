@@ -69,11 +69,15 @@ module LaporansHelper
     end
   end
 
+  def renaksi_col(tahapan)
+    "Renaksi #{tahapan.urutan}: #{tahapan.tahapan_kerja} <span class='fw-bolder'>#{tahapan.rtp_mr? ? "- [#{tahapan.tagging}]" : ''}</span>".html_safe
+  end
+
   def row_tahapan_sasaran(sasaran, colspan: 7)
     sasaran.tahapans.map do |tahapan|
       "
         <tr class=#{tahapan.rtp_mr? && 'tahapan-rtp'}>
-          <td class='border text-wrap' colspan='#{colspan}'>Renaksi #{tahapan.urutan}: #{tahapan.tahapan_kerja} <span class='fw-bolder'>#{tahapan.rtp_mr? && "- [#{tahapan.tagging}]"}</span></td>
+          <td class='border text-wrap' colspan='#{colspan}'>#{renaksi_col(tahapan)}</td>
         </tr>
       ".html_safe
     end
@@ -83,7 +87,7 @@ module LaporansHelper
     sasaran.tahapans.map do |tahapan|
       "
         <tr class=#{tahapan.rtp_mr? && 'tahapan-rtp'}>
-          <td class='border text-wrap' colspan='#{colspan}'>Renaksi #{tahapan.urutan}: #{tahapan.tahapan_kerja} <span class='fw-bolder'>#{tahapan.rtp_mr? && "- [#{tahapan.tagging}]"}</span></td>
+          <td class='border text-wrap' colspan='#{colspan}'>#{renaksi_col(tahapan)}</td>
           <td class='border'>Rp. #{number_with_delimiter(tahapan.anggaran_tahapan)}</td>
           <td class='border'></td>
         </tr>
