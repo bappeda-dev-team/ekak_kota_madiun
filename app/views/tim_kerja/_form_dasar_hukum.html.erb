@@ -6,7 +6,7 @@
                 action: 'ajax:complete->row#processAjax',
               } do |form| %>
   <td width="5%"><%= no %></td>
-  <td width="90%">
+  <td class="text-wrap" width="90%">
     <% das_hu = dasar_hukum.judul_dasar_hukum_tim_kerja.present? ? dasar_hukum.judul_dasar_hukum_tim_kerja : dasar_hukum.judul %>
     <%= form.text_area :judul_dasar_hukum_tim_kerja,
      { class: "form-control", cols: 5,

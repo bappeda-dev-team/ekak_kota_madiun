@@ -6,7 +6,7 @@
                 action: 'ajax:complete->row#processAjax',
               } do |form| %>
   <td width="5%"><%= no %></td>
-  <td width="90%">
+  <td class="text-wrap" width="90%">
     <% tugas = rincian_tugas.judul_rincian_tugas.present? ? rincian_tugas.judul_rincian_tugas : rincian_tugas.sasaran_kinerja %>
     <%= form.text_area :judul_rincian_tugas,
      { class: "form-control", cols: 5,
