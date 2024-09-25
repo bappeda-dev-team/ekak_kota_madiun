@@ -79,8 +79,13 @@ class TimKerja
   end
 
   def rincian_tugas(strategi)
-    strategi.strategi_bawahans.flat_map do |str|
-      str.sasarans.map do |sas|
+    strategi_bawahans =
+      strategi.strategi_bawahans.flat_map do |sp_bawahan|
+        pelaksana(sp_bawahan)
+      end
+
+    strategi_bawahans.flat_map do |pohon|
+      sasaran_pelaksana(pohon).map do |sas|
         if sas.judul_rincian_tugas.present?
           [sas.id, sas.judul_rincian_tugas]
         else
