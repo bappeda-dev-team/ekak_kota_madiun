@@ -54,7 +54,7 @@ class TimKerja
       {
         role_id: role_tim_id(pelaksana.role_tim),
         role: pelaksana.role_tim,
-        pelaksana: pelaksana.user.nama,
+        pelaksana: pelaksana.user.nama_nip_kurung,
         sasaran_terisi: sasaran_pelaksana_terisi?(pelaksana)
       }
     end
@@ -62,7 +62,7 @@ class TimKerja
       {
         role_id: role_tim_id(pelaksana.role_tim),
         role: pelaksana.role_tim,
-        pelaksana: pelaksana.user.nama,
+        pelaksana: pelaksana.user.nama_nip_kurung,
         sasaran_terisi: sasaran_pelaksana_terisi?(pelaksana)
       }
     end
