@@ -22,5 +22,5 @@ class DasarHukum < ApplicationRecord
   validates :peraturan, presence: true
   validates :judul, presence: true
 
-  store_accessor :metadata, :judul_dasar_hukum_tim_kerja, :status_tim_kerja
+  store_accessor :metadata, :judul_dasar_hukum_tim_kerja, :status_dasar_hukum_tim_kerja
 end

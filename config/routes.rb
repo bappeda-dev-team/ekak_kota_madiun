@@ -12,10 +12,10 @@ Rails.application.routes.draw do
     member do
       get :edit_dasar_hukum
       post :update_dasar_hukum
-      post :hapus_dasar_hukum
+      delete :hapus_dasar_hukum
       get :edit_rincian_tugas
       post :update_rincian_tugas
-      post :hapus_rincian_tugas
+      delete :hapus_rincian_tugas
     end
   end
   resources :kuncis

@@ -24,6 +24,14 @@ class TimKerjaController < ApplicationController
 
   def hapus_dasar_hukum
     set_dasar_hukum
+
+    if @dasar_hukum.update(status_dasar_hukum_tim_kerja: false)
+      render json: { resText: 'Dasar Hukum dihapus' }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Gagal menghapus" }.to_json,
+             status: :unprocessable_entity
+    end
   end
 
   # rincian tugas
@@ -55,6 +63,14 @@ class TimKerjaController < ApplicationController
   def hapus_rincian_tugas
     rincian_tugas_id = params[:id]
     @rincian_tugas = Sasaran.find rincian_tugas_id
+
+    if @rincian_tugas.update(status_rincian_tugas: false)
+      render json: { resText: 'Rincian Tugas dihapus' }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Gagal menghapus" }.to_json,
+             status: :unprocessable_entity
+    end
   end
 
   private
@@ -66,10 +82,10 @@ class TimKerjaController < ApplicationController
   end
 
   def dasar_hukum_params
-    params.require(:dasar_hukum).permit(:judul_dasar_hukum_tim_kerja, :status_tim_kerja)
+    params.require(:dasar_hukum).permit(:judul_dasar_hukum_tim_kerja, :status_dasar_hukumtim_kerja)
   end
 
   def rincian_tugas_params
-    params.require(:sasaran).permit(:judul_rincian_tugas, :status)
+    params.require(:sasaran).permit(:judul_rincian_tugas, :status_rincian_tugas)
   end
 end

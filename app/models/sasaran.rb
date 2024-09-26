@@ -127,7 +127,7 @@ class Sasaran < ApplicationRecord
                  :clone_tahun_asal, :clone_oleh, :clone_asli, :id_rencana_sebelum,
                  :inovasi_sasaran, :hasil_inovasi, :jenis_inovasi, :gambaran_nilai_kebaruan,
                  :status_dampak_resiko, :komentar_dampak_resiko,
-                 :judul_rincian_tugas
+                 :judul_rincian_tugas, :status_rincian_tugas
 
   # DANGER, maybe broke something, uncomment this
   # def respond_to_missing?(_method, *_args)

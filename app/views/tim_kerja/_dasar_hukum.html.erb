@@ -1,10 +1,16 @@
 <tr data-controller="row">
-  <td width="5%"><%= no %></td>
+  <td class="row-number" width="5%"><%= no %></td>
   <td class="text-wrap" width="90%"><%= dasar_hukum[1] %></td>
   <td>
     <div class="d-grid gap-2">
-      <%= render(EditRowButtonComponent.new(title: 'Edit',
-                                            path: edit_dasar_hukum_tim_kerja_path(dasar_hukum[0], no: no))) %>
+      <%= render(EditRowButtonComponent.new(
+        title: 'Edit',
+        path: edit_dasar_hukum_tim_kerja_path(dasar_hukum[0], no: no))
+      ) %>
+      <%= render(DeleteRowButtonComponent.new(
+        message: 'Dasar hukum yang dihapus tidak dapat digunakan kembali',
+        path: hapus_dasar_hukum_tim_kerja_path(dasar_hukum[0]))
+      ) %>
     </div>
   </td>
 </tr>
