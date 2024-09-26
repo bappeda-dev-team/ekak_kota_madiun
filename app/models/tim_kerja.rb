@@ -39,12 +39,13 @@ class TimKerja
 
     strategi_bawahans.flat_map do |pohon|
       sasaran_pelaksana(pohon).flat_map do |sas|
-        sas.dasar_hukums.map do |das_hu|
-          if das_hu.judul_dasar_hukum_tim_kerja.present?
-            [das_hu.id, das_hu.judul_dasar_hukum_tim_kerja]
-          else
-            [das_hu.id, das_hu.judul]
-          end
+        sas.dasar_hukums.filter_map do |das_hu|
+          dasar_hukum = if das_hu.judul_dasar_hukum_tim_kerja.present?
+                          [das_hu.id, das_hu.judul_dasar_hukum_tim_kerja]
+                        else
+                          [das_hu.id, das_hu.judul]
+                        end
+          dasar_hukum if das_hu.status_dasar_hukum_tim_kerja != false
         end
       end
     end.uniq
@@ -85,12 +86,13 @@ class TimKerja
       end
 
     strategi_bawahans.flat_map do |pohon|
-      sasaran_pelaksana(pohon).map do |sas|
-        if sas.judul_rincian_tugas.present?
-          [sas.id, sas.judul_rincian_tugas]
-        else
-          [sas.id, sas.sasaran_kinerja]
-        end
+      sasaran_pelaksana(pohon).filter_map do |sas|
+        sasarans = if sas.judul_rincian_tugas.present?
+                     [sas.id, sas.judul_rincian_tugas]
+                   else
+                     [sas.id, sas.sasaran_kinerja]
+                   end
+        sasarans if sas.status_rincian_tugas != false
       end
     end.uniq
   end
