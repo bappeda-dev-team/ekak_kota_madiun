@@ -39,6 +39,36 @@ export default class extends Controller {
     }
   }
 
+  deleteRow(e) {
+    const [message, status] = e.detail;
+    const { resText } = JSON.parse(message.response);
+    const targetRow = this.element;
+    const parentTable = targetRow.parentElement;
+
+    if (
+      status == "OK" &&
+      targetRow != null &&
+      typeof targetRow != "undefined"
+    ) {
+      targetRow.remove();
+      this.updateRowNumbers(parentTable);
+      this.sweetalertStatus(resText, status);
+    } else {
+      console.log({ status });
+      this.sweetalertStatus(resText, status);
+    }
+  }
+
+  // get all number rows from 'parent element' target
+  // to scope the selector within 'parent element'
+  // and not disturb counter in other table
+  updateRowNumbers(parent) {
+    const rows = parent.querySelectorAll(".row-number");
+    rows.forEach((row, index) => {
+      row.textContent = index + 1; // Update nomor sesuai dengan urutan baru
+    });
+  }
+
   batal() {
     const targetRow = this.element;
 
