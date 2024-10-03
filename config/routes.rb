@@ -853,6 +853,7 @@ Rails.application.routes.draw do
     end
     namespace :substansi_renstra do
       get :strategi_arah_kebijakan
+      get :dasar_hukums
     end
   end
 

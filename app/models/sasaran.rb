@@ -664,10 +664,15 @@ class Sasaran < ApplicationRecord
 
   def mandatori_sasaran(tahun)
     mandatoris.where(tahun: tahun)
+              .select { |mand| mand.dasar_hukum.length > 1 }
   end
 
   def dasar_hukum_sasaran
-    dasar_hukums
+    dasar_hukums.select { |das_hu| das_hu.dasar_hukum.length > 1 }
+  end
+
+  def all_dasar_hukum(tahun)
+    dasar_hukum_sasaran + mandatori_sasaran(tahun)
   end
 
   def nama_pelaksana

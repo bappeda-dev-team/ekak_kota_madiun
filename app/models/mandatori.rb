@@ -70,4 +70,12 @@ class Mandatori < ApplicationRecord
   def deskripsi
     peraturan_terkait
   end
+
+  def dasar_hukum
+    peraturan_terkait
+  end
+
+  def peraturan
+    uraian
+  end
 end

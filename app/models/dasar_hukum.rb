@@ -23,4 +23,8 @@ class DasarHukum < ApplicationRecord
   validates :judul, presence: true
 
   store_accessor :metadata, :judul_dasar_hukum_tim_kerja, :status_dasar_hukum_tim_kerja
+
+  def dasar_hukum
+    judul
+  end
 end
