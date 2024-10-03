@@ -41,6 +41,10 @@ class Aset < ApplicationRecord
   end
 
   def perolehan_aset
-    tahun_aset.to_a.join(',')
+    tahun_aset.to_a.compact_blank.sort.join(',')
+  end
+
+  def tahun_perolehan_aset
+    tahun_aset.to_a.compact_blank.sort
   end
 end

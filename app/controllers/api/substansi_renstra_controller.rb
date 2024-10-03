@@ -31,5 +31,12 @@ module Api
         sasaran.all_dasar_hukum(@tahun)
       end.uniq.compact_blank
     end
+
+    def asets
+      @tahun = params[:tahun]
+      @kode_opd = params[:kode_opd]
+      @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+      @asets = @opd.aset_opd(@tahun)
+    end
   end
 end
