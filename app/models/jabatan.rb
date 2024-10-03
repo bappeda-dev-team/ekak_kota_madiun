@@ -32,21 +32,30 @@ class Jabatan < ApplicationRecord
   validates :nama_jabatan, presence: true, length: { minimum: 5 }
   after_validation { nama_jabatan.upcase! }
 
-  STATUS_KEPEGAWAIAN = %w[PNS PPPK Kontrak Upah]
+  STATUS_KEPEGAWAIAN = %w[PNS PPPK Kontrak Upah].freeze
+  PENDIDIKAN_PEGAWAI = %w[SD/SMP SMA D1/D3 D4/S1 S2/S3].freeze
 
   def to_s
     nama_jabatan
   end
 
   def jumlah_status_kepegawaian(tahun)
-    kepegawaians.where(tahun: tahun).to_h do |pegawai|
-      [pegawai.status_kepegawaian, pegawai.jumlah]
+    status_pegawai = kepegawaians.where(tahun: tahun).sort_by do |pegawai|
+      STATUS_KEPEGAWAIAN.index(pegawai.status_kepegawaian)
+    end
+
+    status_pegawai.to_h do |pegawai|
+      [pegawai.status_kepegawaian, pegawai.jumlah.to_i]
     end
   end
 
   def jumlah_pendidikan(tahun)
-    pendidikans.where(tahun: tahun).to_h do |pendidikan|
-      [pendidikan.pendidikan, pendidikan.jumlah]
+    pendidikan_pegawai = pendidikans.where(tahun: tahun).sort_by do |pendidikan|
+      PENDIDIKAN_PEGAWAI.index(pendidikan.pendidikan)
+    end
+
+    pendidikan_pegawai.to_h do |pendidikan|
+      [pendidikan.pendidikan, pendidikan.jumlah.to_i]
     end
   end
 

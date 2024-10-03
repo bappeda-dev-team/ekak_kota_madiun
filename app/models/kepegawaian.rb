@@ -35,7 +35,7 @@ class Kepegawaian < ApplicationRecord
   validates :tahun, presence: true
   validates :jumlah, numericality: { greater_than_or_equal: 0 }
 
-  JENIS_PENDIDIKAN = %w[SD/SMP SMA D1/D3 D4/S1 S2/S3]
+  JENIS_PENDIDIKAN = %w[SD/SMP SMA D1/D3 D4/S1 S2/S3].freeze
 
   def pendidikan_pegawai
     pendidikan_terakhirs.pluck(:pendidikan)

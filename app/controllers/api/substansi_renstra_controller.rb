@@ -38,5 +38,12 @@ module Api
       @opd = Opd.find_by(kode_unik_opd: @kode_opd)
       @asets = @opd.aset_opd(@tahun)
     end
+
+    def sumber_daya_manusia
+      @tahun = params[:tahun]
+      @kode_opd = params[:kode_opd]
+      @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+      @jabatans = @opd.jabatan_baru
+    end
   end
 end

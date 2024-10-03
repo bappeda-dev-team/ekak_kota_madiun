@@ -855,6 +855,7 @@ Rails.application.routes.draw do
       get :strategi_arah_kebijakan
       get :dasar_hukums
       get :asets
+      get :sumber_daya_manusia
     end
   end
 

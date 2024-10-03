@@ -386,11 +386,11 @@ class Opd < ApplicationRecord
   end
 
   def sasaran_kinerja_strategi(strategi, sasaran_kinerja)
-      strategi
-        .sasarans
-        .includes(:indikator_sasarans)
-        .where("sasarans.sasaran_kinerja ILIKE ?", "%#{sasaran_kinerja}%")
-        .select { |sas| sas.indikator_sasarans.any? && sas.nip_asn.present? && sas.strategi_id.present? }
+    strategi
+      .sasarans
+      .includes(:indikator_sasarans)
+      .where("sasarans.sasaran_kinerja ILIKE ?", "%#{sasaran_kinerja}%")
+      .select { |sas| sas.indikator_sasarans.any? && sas.nip_asn.present? && sas.strategi_id.present? }
   end
 
   def list_strategi_opd(tahun: '')
@@ -448,7 +448,7 @@ class Opd < ApplicationRecord
   end
 
   def jabatan_baru
-    jabatans.where(nilai_jabatan: nil).sort_by { |jab| jab.jenis_jabatan.nilai }
+    jabatans.where(nilai_jabatan: nil).sort_by { |jab| jab.jenis_jabatan&.nilai }
   end
 
   def kode_opd_unik
