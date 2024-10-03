@@ -53,3 +53,7 @@ dump.rdb
 *.dev_prod
 
 /config/credentials/production.key
+/.dockerdev
+/.idea
+/.vscode
+/.notes
