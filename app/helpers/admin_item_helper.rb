@@ -1,6 +1,6 @@
 module AdminItemHelper
   def perencanaan_opd_items # rubocop:disable Metrics
-    [
+    items = [
       {
         title: 'Permasalahan dan Isu Strategis', href: isu_dan_permasalahans_path,
         icon: 'fas fa-city', identifier: 'isu_permaslahaan'
@@ -8,12 +8,6 @@ module AdminItemHelper
       {
         title: 'Strategi Arah Kebijakan', href: opd_strategi_arah_kebijakans_path,
         icon: 'fas fa-city', identifier: 'strategi_kebijakan'
-      },
-      {
-        title: 'Anggaran', href: "#",
-        multi: true, collections: anggaran_admin_items,
-        id_target: "master-anggaran",
-        icon: 'fas fa-coins', identifier: 'anggaran'
       },
       {
         title: 'Master Usulan', href: "#",
@@ -52,10 +46,6 @@ module AdminItemHelper
         icon: 'fas fa-book-open', identifier: 'indikators'
       },
       {
-        title: 'Daftar ASN', href: adminusers_path,
-        icon: 'fas fa-user', identifier: 'admin_user'
-      },
-      {
         title: 'Peta Rencana SPBE', href: index_opd_spbes_path,
         icon: 'fas fa-tablet-alt', identifier: 'spbe_opd'
       },
@@ -66,12 +56,26 @@ module AdminItemHelper
       {
         title: 'Pagu SIPKD', href: daftar_pagu_program_kegiatans_path,
         icon: 'fas fa-chart-line', identifier: 'daftar_pagu'
+      }
+    ]
+    return items if guest?
+
+    items.push(
+      {
+        title: 'Anggaran', href: "#",
+        multi: true, collections: anggaran_admin_items,
+        id_target: "master-anggaran",
+        icon: 'fas fa-coins', identifier: 'anggaran'
+      },
+      {
+        title: 'Daftar ASN', href: adminusers_path,
+        icon: 'fas fa-user', identifier: 'admin_user'
       },
       {
         title: 'Rekap Rencana Kinerja', href: rekap_sasaran_sasarans_path,
         icon: 'fas fa-archive', identifier: 'rencana_kinerja/rekap_sasaran'
-      },
-    ]
+      }
+    )
   end
 
   def anggaran_admin_items

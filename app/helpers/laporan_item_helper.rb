@@ -73,7 +73,7 @@ module LaporanItemHelper
         icon: 'fas fa-tasks', identifier: 'renja'
       }
     ]
-    return items unless super_admin?
+    return items unless super_admin? && !guest?
 
     items.push({
                  title: 'Rekap Pagu', href: "#",

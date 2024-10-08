@@ -46,12 +46,12 @@
                 <% if subkegiatan %>
                   <div class="d-grid gap-2">
                     <%= link_to show_subkegiatan_rincian_belanja_path(subkegiatan), target: "_blank", rel: "nofollow",
-                    class: "btn btn-sm btn-info" do %>
+                                class: "btn btn-sm btn-info" do %>
                       <i class="fas fa-book-open me-2"></i>
                       Tampilkan
                     <% end %>
                     <%= link_to pdf_rka_laporan_path(subkegiatan, format: :pdf),
-                     class: "btn btn-sm btn-secondary" do %>
+                                class: "btn btn-sm btn-secondary" do %>
                       <span class="far fa-file-pdf me-2"></span>
                       Cetak Rincian Belanja
                     <% end %>
@@ -69,22 +69,24 @@
                 <td class="border rankir-2" rowspan="<%= rowspan_sasaran(sasaran) %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
                 <td class="border penetapan" rowspan="<%= rowspan_sasaran(sasaran) %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran_penetapan) %></td>
                 <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">
-                  <div class="d-grid gap-2">
-                    <%= link_to rincian_belanja_path(sasaran),
-                      target: "_blank",
-                      class: "btn btn-sm btn-success text-white" do %>
-                      <i class="fas fa-journal-whills me-2"></i>
-                      <span>Rincian</span>
-                    <% end %>
-                    <% if admin? %>
-                      <%= link_to edit_rankir_gelondong_rincian_belanja_path(sasaran),
-                        target: "_blank",
-                        class: "btn btn-sm btn-outline-info" do %>
-                        <i class="fas fa-pencil-alt me-2"></i>
-                        <span>Edit</span>
+                  <% unless guest? %>
+                    <div class="d-grid gap-2">
+                      <%= link_to rincian_belanja_path(sasaran),
+                                  target: "_blank",
+                                  class: "btn btn-sm btn-success text-white" do %>
+                        <i class="fas fa-journal-whills me-2"></i>
+                        <span>Rincian</span>
                       <% end %>
-                    <% end %>
-                  </div>
+                      <% if admin? %>
+                        <%= link_to edit_rankir_gelondong_rincian_belanja_path(sasaran),
+                                    target: "_blank",
+                                    class: "btn btn-sm btn-outline-info" do %>
+                          <i class="fas fa-pencil-alt me-2"></i>
+                          <span>Edit</span>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  <% end %>
                 </td>
               </tr>
               <% row_indikator_sasaran(sasaran).each do |indikator| %>
