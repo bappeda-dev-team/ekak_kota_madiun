@@ -1,14 +1,14 @@
-<%= content_for :html_title, "Manajemen Resiko" %>
+<%= content_for :html_title, "Manajemen Risiko" %>
 <%= content_for :navigation do %>
   <li class="breadcrumb-item" aria-current="page">Laporan</li>
-  <li class="breadcrumb-item active" aria-current="page">Manajemen Resiko</li>
+  <li class="breadcrumb-item active" aria-current="page">Manajemen Risiko</li>
 <% end %>
 <% content_for :view_utama do %>
 <div class="card border-0 shadow" id="daftar_resiko">
   <div class="card-header">
     <div class="row align-items-center">
       <div class="col">
-        <h5>Manajemen Resiko <%= @opd.nama_opd %> Tahun <%= @tahun %></h5>
+        <h5>Manajemen Risiko <%= @opd.nama_opd %> Tahun <%= @tahun %></h5>
       </div>
     </div>
   </div>
@@ -26,11 +26,11 @@
             <th class="border-bottom text-center border">Satuan</th>
             <th class="border-bottom text-center border">Anggaran</th>
             <th class="border-bottom text-center border">Permasalahan</th>
-            <th class="border-bottom text-center border text-wrap">Pernyataan Resiko</th>
+            <th class="border-bottom text-center border text-wrap">Pernyataan Risiko</th>
             <th class="border-bottom text-center border text-wrap">Skala Kemungkinan</th>
             <th class="border-bottom text-center border">Dampak</th>
-            <th class="border-bottom text-center border">Skala Dampak</th>
-            <th class="border-bottom text-center border text-wrap">Peta Resiko</th>
+            <th class="border-bottom text-center border">Skala Risiko</th>
+            <th class="border-bottom text-center border text-wrap">Peta Risiko</th>
             <th class="border-bottom text-center" scope="col">Action</th>
           </tr>
         </thead>

@@ -1,15 +1,15 @@
 wb = xlsx_package.workbook
 s = wb.styles
 project_heading = s.add_style sz: 16, b: true, alignment: { horizontal: :center }
-wb.add_worksheet(name: "Daftar Resiko") do |sheet|
-  sheet.add_row ['', "DAFTAR RESIKO RENCANA KINERJA"], style: project_heading
+wb.add_worksheet(name: "Daftar Risiko") do |sheet|
+  sheet.add_row ['', "DAFTAR RISIKO RENCANA KINERJA"], style: project_heading
   sheet.add_row ['', @opd.nama_opd.upcase], style: project_heading
   sheet.add_row ['', "KOTA MADIUN"], style: project_heading
   sheet.add_row ['', "TAHUN #{@tahun}"], style: project_heading
   # program_kegiatans header
   #
-  sheet.add_row ['No', "SUBKEGIATAN", "NO", "SASARAN", "INDIKATOR", "TARGET", "SATUAN", "PAGU", "RESIKO",
-                 "KEMUNGKINAN", "DAMPAK", "SKALA DAMPAK", "PETA RESIKO"]
+  sheet.add_row ['No', "SUBKEGIATAN", "NO", "SASARAN", "INDIKATOR", "TARGET", "SATUAN", "PAGU", "RISIKO",
+                 "KEMUNGKINAN", "DAMPAK", "SKALA RISIKO", "PETA RISIKO"]
   @program_kegiatans.each.with_index(1) do |(pk, sasarans), i|
     sheet.add_row [i.to_s, pk.nama_subkegiatan]
     sasarans.each.with_index(1) do |s, no|

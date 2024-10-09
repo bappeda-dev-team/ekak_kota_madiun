@@ -2,7 +2,7 @@
   <div class="card-header">
     <div class="row align-items-center">
       <div class="col">
-        <h5>Manajemen Resiko <%= @opd.nama_opd %> Tahun <%= @tahun %></h5>
+        <h5>Manajemen Risiko <%= @opd.nama_opd %> Tahun <%= @tahun %></h5>
       </div>
     </div>
   </div>
@@ -13,26 +13,26 @@
       <% if @laporan == "admin" %>
         <div class="col-auto text-end">
           <%= link_to "/cetak_daftar_resiko/#{@opd.id}/#{@tahun_bener}.pdf?laporan=#{@laporan}", class: 'btn btn-sm btn-primary', target: :_blank do %>
-            PDF Daftar Resiko OPD
+            PDF Daftar Risiko OPD
             <i class="fas fa-file-pdf ms-2"></i>
           <% end %>
         </div>
         <div class="col-auto text-end">
           <%= link_to "/cetak_daftar_resiko/#{@opd.id}/#{@tahun_bener}.xlsx?laporan=#{@laporan}", class: 'btn btn-sm btn-primary', target: :_blank do %>
-            Excel Daftar Resiko OPD
+            Excel Daftar Risiko OPD
             <i class="fas fa-file-excel ms-2"></i>
           <% end %>
         </div>
       <% else %>
         <div class="col-auto text-end">
           <%= link_to "/cetak_daftar_resiko/#{@opd.id}/#{@tahun_bener}.pdf", class: 'btn btn-sm btn-primary', target: :_blank do %>
-            PDF Daftar Resiko
+            PDF Daftar Risiko
             <i class="fas fa-file-pdf ms-2"></i>
           <% end %>
         </div>
         <div class="col-auto text-end">
           <%= link_to "/cetak_daftar_resiko/#{@opd.id}/#{@tahun_bener}.xlsx", class: 'btn btn-sm btn-primary', target: :_blank do %>
-            Excel Daftar Resiko
+            Excel Daftar Risiko
             <i class="fas fa-file-excel ms-2"></i>
           <% end %>
         </div>
@@ -51,11 +51,11 @@
             <th class="border-bottom text-center border">Satuan</th>
             <th class="border-bottom text-center border">Anggaran</th>
             <th class="border-bottom text-center border">Permasalahan</th>
-            <th class="border-bottom text-center border text-wrap">Pernyataan Resiko</th>
+            <th class="border-bottom text-center border text-wrap">Pernyataan Risiko</th>
             <th class="border-bottom text-center border text-wrap">Skala Kemungkinan</th>
             <th class="border-bottom text-center border">Dampak</th>
-            <th class="border-bottom text-center border">Skala Dampak</th>
-            <th class="border-bottom text-center border text-wrap">Peta Resiko</th>
+            <th class="border-bottom text-center border">Skala Risiko</th>
+            <th class="border-bottom text-center border text-wrap">Peta Risiko</th>
             <th class="border-bottom text-center" scope="col">Action</th>
           </tr>
         </thead>

@@ -1,11 +1,11 @@
-<%= content_for :html_title, "Laporan Manajemen Resiko" %>
+<%= content_for :html_title, "Laporan Manajemen Risiko" %>
 <%= content_for :navigation do %>
   <li class="breadcrumb-item" aria-current="page">Laporan</li>
-  <li class="breadcrumb-item active" aria-current="page">Manajemen Resiko</li>
+  <li class="breadcrumb-item active" aria-current="page">Manajemen Risiko</li>
 <% end %>
 <% content_for :view_utama do %>
   <%= render 'shared/card_ajax',
-             title: "Laporan Manajemen Resiko",
+             title: "Laporan Manajemen Risiko",
              data_page_attr: {
                controller: 'page-ajax',
                page_ajax_url_value: filter_daftar_resiko_path(laporan: "admin")

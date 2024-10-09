@@ -31,7 +31,7 @@ module ReviewerItemHelper
         icon: 'fas fa-bullseye', identifier: 'sasaran_kota'
       },
       {
-        title: 'Manajemen Resiko', href: daftar_resiko_laporans_path,
+        title: 'Manajemen Risiko', href: daftar_resiko_laporans_path,
         icon: 'fas fa-chart-line', identifier: 'sasaran_program_opds/daftar_resiko'
       }
     ]

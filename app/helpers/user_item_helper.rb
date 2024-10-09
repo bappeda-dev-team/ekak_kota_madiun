@@ -20,7 +20,7 @@ module UserItemHelper
         icon: 'fas fa-money-check', identifier: 'rincian_belanja'
       },
       {
-        title: 'Manajemen Resiko', href: daftar_resiko_sasaran_program_opds_path,
+        title: 'Manajemen Risiko', href: daftar_resiko_sasaran_program_opds_path,
         icon: 'fas fa-chart-line', identifier: 'sasaran_program_opds/daftar_resiko'
       },
       {

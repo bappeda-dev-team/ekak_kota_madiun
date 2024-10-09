@@ -12,7 +12,7 @@ prawn_document(filename: @filename, disposition: "attachment", page_layout: :lan
   width_resiko_sas_array = 80
   total_width_sas_array = width_sub_sas + width_sas_array + width_ind_sas_array + width_target_ind_sas_array + width_satuan_ind_sas_array + width_pagu_sas_array + width_resiko_sas_array
 
-  pdf.text "DAFTAR RESIKO RENCANa KINERJA", align: :center
+  pdf.text "DAFTAR RISIKO RENCANA KINERJA", align: :center
   pdf.move_down 3
   pdf.text "RENCANA KERJA #{@opd.nama_opd.upcase} #{@opd.lembaga.nama_lembaga.upcase}", align: :center
   pdf.move_down 3

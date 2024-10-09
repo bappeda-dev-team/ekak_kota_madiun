@@ -2,7 +2,7 @@ class DaftarResikoPdf < Prawn::Document
   include ActionView::Helpers::NumberHelper
 
   def initialize(opd: '', tahun: '', program_kegiatans: '')
-    super page_layout: :landscape, page_size: "LETTER"
+    super(page_layout: :landscape, page_size: "LETTER")
     @opd = opd
     @tahun = tahun
     @nama_opd = @opd.nama_opd
@@ -63,11 +63,11 @@ class DaftarResikoPdf < Prawn::Document
       { content: "T", width: 30, align: :center },
       { content: "S", width: 30, align: :center },
       { content: "PAGU", width: 65, align: :center },
-      { content: "RESIKO", width: 75, align: :center },
+      { content: "RISIKO", width: 75, align: :center },
       { content: "KEMUNGKINAN", width: 50 },
       { content: "DAMPAK", width: 75, align: :center },
-      { content: "SKALA DAMPAK", width: 50, align: :center },
-      { content: "PETA RESIKO", width: 55, align: :center }]]
+      { content: "SKALA RISIKO", width: 50, align: :center },
+      { content: "PETA RISIKO", width: 55, align: :center }]]
   end
 
   def subkegiatan
