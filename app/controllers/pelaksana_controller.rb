@@ -20,6 +20,7 @@ class PelaksanaController < ApplicationController
     else
       @roles
     end
+    @roles << 'plt'
   end
 
   def edit_role_tim
@@ -59,9 +60,9 @@ class PelaksanaController < ApplicationController
   def teman
     param = params[:q] || ''
     role = params[:role]
-    asn_list = @opd.users.where('nama ILIKE ?', "%#{param}%")
-    @temans = asn_list.with_any_role(role).reject do |u|
-      u.strategi_pohon_diterima(@pelaksana.id).any?
+    asn_list = @opd.asn_list(nama: param, role: role)
+    @temans = asn_list.reject do |u|
+      u.strategi_pohon_diterima(@pelaksana.id, @opd.id).any?
     end
   end
 

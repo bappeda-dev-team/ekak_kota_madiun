@@ -134,8 +134,10 @@ class User < ApplicationRecord
     pohons.where(strategi_id: strategi_id)
   end
 
-  def strategi_pohon_diterima(strategi_id)
-    strategi_pohons(strategi_id).where.not(status: 'pelaksana-batal', pohonable_type: ['', nil])
+  def strategi_pohon_diterima(strategi_id, opd_id)
+    sps = strategi_pohons(strategi_id)
+          .where.not(status: 'pelaksana-batal', pohonable_type: ['', nil])
+    sps.select { |sp| sp.pohonable.opd_id == opd_id.to_s }
   end
 
   def self.find_for_database_authentication(warden_conditions)

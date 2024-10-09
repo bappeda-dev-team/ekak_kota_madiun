@@ -65,7 +65,9 @@ class UsersController < ApplicationController
     @kode_unik_opd = cookies[:opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_unik_opd)
     @tahun = cookies[:tahun]
-    @users = @opd.users.non_admin
+    user_opd = @opd.users.non_admin
+    user_jabatan = JabatanUser.where(kode_opd: @kode_unik_opd).includes(:user).flat_map(&:user)
+    @users = user_opd + user_jabatan
   end
 
   def aktifkan_user
@@ -320,12 +322,14 @@ class UsersController < ApplicationController
     # @bulan = DateTime.current.month.to_i
     @bulan = params[:user][:bulan]
     @jabatan = params[:user][:jabatan]
+    @status_jabatan = params[:user][:status_jabatan]
     @jabatan_user = JabatanUser.new(nip_asn: @user.nik,
                                     kode_opd: @kode_opd, id_jabatan: @jabatan,
+                                    status: @status_jabatan,
                                     tahun: @tahun_asli, bulan: @bulan)
     if @jabatan_user.save
-      @user.update(opd: @opd)
-      @user.after_pindah
+      @user.update(opd: @opd) if params[:pindah_opd]
+      @user.after_pindah if params[:hapus_sasaran]
       render json: { resText: "Jabatan diperbarui",
                      html_content: html_content({ user: @user },
                                                 partial: 'users/user') }.to_json,
@@ -351,7 +355,8 @@ class UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:nama, :nik, :password, :kode_opd, :email, :lembaga_id, :password_confirmation)
+    params.require(:user).permit(:nama, :nik, :password, :kode_opd, :email, :lembaga_id, :password_confirmation,
+                                 :pindah_opd, :hapus_sasaran, :status_jabatan)
   end
 
   def user_detail_params

@@ -36,6 +36,7 @@ class Opd < ApplicationRecord
   has_many :asets, primary_key: :kode_unik_opd, foreign_key: :kode_unik_opd
   has_many :jabatans, -> { order('nilai_jabatan DESC') }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd'
   has_many :users, foreign_key: 'kode_opd', primary_key: 'kode_opd'
+  has_many :jabatan_users, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd'
   has_many :sasarans, through: :users
   has_many :indikator_sasarans, through: :sasarans
   has_many :program_kegiatans, foreign_key: 'kode_skpd', primary_key: 'kode_unik_opd' do
@@ -478,5 +479,23 @@ class Opd < ApplicationRecord
     user_bidang.filter do |user|
       user.nama =~ /.*(#{user_search})/i || user.nik =~ /.*(#{user_search})/i
     end
+  end
+
+  def asn_list(nama: '', role: '')
+    user_opd = users.where('nama ILIKE ?', "%#{nama}%")
+                    .with_any_role(role)
+    user_jabatan = if role == 'plt'
+                     jabatan_users
+                       .joins(:user)
+                       .where(status: %w[plt])
+                       .map(&:user)
+                   else
+                     jabatan_users
+                       .joins(:user)
+                       .where(status: %w[aktif])
+                       .map(&:user)
+                       .select { |user| user.has_any_role?(role) }
+                   end
+    user_opd + user_jabatan
   end
 end

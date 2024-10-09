@@ -1,8 +1,8 @@
 class MutasiAsnFormBuilder < ActionView::Helpers::FormBuilder
   # include ActionView::Helpers::FormOptionsHelper
 
-  def label(attribute)
-    super(attribute, { class: 'form-label' })
+  def label(attribute, options = { class: 'form-label' })
+    super(attribute, options)
   end
 
   def text_field(attribute, options = {})
@@ -52,6 +52,31 @@ class MutasiAsnFormBuilder < ActionView::Helpers::FormBuilder
                    dropdown_parent_value: '#form-modal-body'
                  }
                ))
+    end
+  end
+
+  def status_jabatans_field(attribute, choices = [], options = {}, html_options = {})
+    @template.content_tag(:div, class: 'field') do
+      label(attribute) +
+        select(attribute,
+               choices,
+               options.merge(include_blank: true),
+               html_options.merge(
+                 class: 'form-control',
+                 data: {
+                   controller: 'dropdown',
+                   placeholder: 'Status Jabatan',
+                   dropdown_parent_value: '#form-modal-body'
+                 }
+               ))
+    end
+  end
+
+  def opsi_fields(attribute, options = {})
+    @template.content_tag :div, class: 'form-check' do
+      check_box(attribute,
+                options.merge(class: 'form-check-input')) +
+        label(attribute, options.merge(class: 'form-check-label'))
     end
   end
 

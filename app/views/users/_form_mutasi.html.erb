@@ -1,19 +1,22 @@
-<%= form_with(model: user, url: update_jabatan_user_path, 
-    method: :post,
-    local: false, 
-    data: {
-      controller: 'form-ajax',
-      form_ajax_target_param: dom_id(user),
-      form_ajax_type_param: user.new_record? ? 'afterbegin' : '',
-      action: 'ajax:complete->form-ajax#processAjax'
-    },
-    builder: MutasiAsnFormBuilder) do |form| %>
+<%= form_with(model: user, url: update_jabatan_user_path,
+              method: :post,
+              local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: dom_id(user),
+                form_ajax_type_param: user.new_record? ? 'afterbegin' : '',
+                action: 'ajax:complete->form-ajax#processAjax'
+              },
+              builder: MutasiAsnFormBuilder) do |form| %>
   <%= form.text_field :tahun, readonly: true, value: @tahun_asli  %>
   <%= form.bulans_field :bulan %>
   <%= form.opds_field :kode_opd %>
   <%= form.jabatans_field :jabatan, option_jabatans %>
+  <%= form.status_jabatans_field :status_jabatan, option_status_jabatans %>
   <%= form.text_field :nip_asn, readonly: true %>
   <%= form.text_field :nama, readonly: true %>
+  <%= form.opsi_fields :pindah_opd %>
+  <%= form.opsi_fields :hapus_sasaran %>
   <div class="actions">
     <%= form.submit %>
   </div>
