@@ -1,18 +1,28 @@
 <div class="card border-0 shadow" id="user_filter">
   <div class="card-header">
-    <div class="row align-items-center">
-      <div class="col-10">
-        <h2 class="fs-5 fw-bold mb-0">SPBE <%= @opd.nama_opd %> - Tahun <%= @tahun %></h2>
-      </div>
+    <div class="row align-items-end">
       <div class="col">
-        <%= link_to excel_opd_spbes_path(format: :xlsx), class: "btn btn-sm btn-primary" do %>
-          <i class="fa fa-print me-2"></i>
-          <span>Cetak Excel</span>
-        <% end %>
+        <h5>Peta Rencana SPBE <%= @opd.nama_opd %> Tahun <%= @tahun %></h5>
       </div>
     </div>
   </div>
   <div class="card-body">
+    <div class="row align-items-end">
+      <div class="col">
+      </div>
+      <div class="col-auto text-end">
+        <%= link_to cetak_spbes_path(format: :pdf), class: "btn btn-sm btn-primary" do %>
+          <span>PDF Peta Rencana SPBE</span>
+          <i class="fas fa-file-pdf ms-2"></i>
+        <% end %>
+      </div>
+      <div class="col-auto text-end">
+        <%= link_to cetak_spbes_path(format: :xlsx), class: "btn btn-sm btn-primary" do %>
+          <span>Excel Peta Rencana SPBE</span>
+          <i class="fas fa-file-excel ms-2"></i>
+        <% end %>
+      </div>
+    </div>
     <nav class="mb-3">
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
         <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#spbe-internal" type="button" role="tab" aria-controls="spbe-internal" aria-selected="true">Internal</button>

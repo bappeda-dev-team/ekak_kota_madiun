@@ -176,7 +176,7 @@ Rails.application.routes.draw do
   resources :spbes do
     collection do
       get :index_opd
-      get :excel_opd
+      get :cetak
     end
     member do
       get :edit_operational_opd

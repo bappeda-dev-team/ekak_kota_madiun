@@ -17,20 +17,28 @@ class SpbesController < ApplicationController
     @spbes = @programs.to_h { |prg| [prg, prg.spbes.by_opd(@kode_opd)] }
   end
 
-  def excel_opd
+  def cetak
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
-    @timestamp = Time.now.to_formatted_s(:number)
-    @filename = "SPBE #{@nama_opd} #{@tahun} - #{@timestamp}.xlsx"
-
+    @timestamp = Time.now
     @programs = @opd.program_kegiatans.programs
     @spbes = @programs.to_h { |prg| [prg, prg.spbes.by_opd(@kode_opd)] }
+    @spbes_external = Spbe.by_opd_tujuan(@kode_opd).group_by(&:program_kegiatan)
 
-    if @opd.id == 145
-      render xlsx: "spbe_setda_excel", filename: @filename
-    else
-
-      render xlsx: "spbe_excel_opd", filename: @filename
+    @filename = "PETA_RENCANA_USULAN_APLIKASI_SPBE_#{@nama_opd}_#{@tahun}"
+    respond_to do |format|
+      format.pdf do
+        pdf = SpbePdf.new(opd: @opd, tahun: @tahun, programs: @programs, spbes: @spbes, timestamp: @timestamp)
+        send_data(pdf.render, filename: @filename, type: 'application/pdf', disposition: :inline)
+      end
+      format.xlsx do
+        excel_file = if @opd.id == 145
+                       "spbe_setda_excel"
+                     else
+                       "spbe_excel_opd"
+                     end
+        render xlsx: excel_file, filename: @filename, disposition: 'attachment'
+      end
     end
   end
 
