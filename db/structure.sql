@@ -1132,7 +1132,8 @@ CREATE TABLE public.jabatan_users (
     bulan character varying NOT NULL,
     tahun character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    status character varying DEFAULT 'aktif'::character varying
 );
 
 
@@ -6590,6 +6591,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240909182236'),
 ('20240911032449'),
 ('20240913041448'),
-('20240925072351');
+('20240925072351'),
+('20241009082545');
 
 

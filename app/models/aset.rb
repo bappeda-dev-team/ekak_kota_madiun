@@ -18,7 +18,7 @@
 #
 
 class Aset < ApplicationRecord
-  KONDISI_ASET = %w[Baik Cukup Kurang]
+  KONDISI_ASET = %w[Baik Cukup Kurang].freeze
 
   belongs_to :opd, foreign_key: :kode_unik_opd, primary_key: :kode_unik_opd
 

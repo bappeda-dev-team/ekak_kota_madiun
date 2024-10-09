@@ -7,6 +7,7 @@
 #  id_jabatan :bigint           not null
 #  kode_opd   :string           not null
 #  nip_asn    :string           not null
+#  status     :string           default("aktif")
 #  tahun      :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
