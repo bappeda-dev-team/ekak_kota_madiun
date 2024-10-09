@@ -1,7 +1,7 @@
 class SpbePdf < Prawn::Document
   include ActionView::Helpers::NumberHelper
 
-  def initialize(opd: '', tahun: '', programs: '', spbes: '', timestamp: '')
+  def initialize(opd: '', tahun: '', programs: '', spbes: '', current_page: '')
     super(page_layout: :landscape, page_size: "LETTER")
     @opd = opd
     @tahun = tahun
@@ -10,7 +10,8 @@ class SpbePdf < Prawn::Document
     @programs = programs
     @spbes = spbes
     @judul = "Tabel Peta Rencana Usulan Aplikasi SPBE"
-    @timestamp = timestamp
+    @current_page = current_page
+    @timestamp = Time.now
     print
   end
 
@@ -48,13 +49,9 @@ class SpbePdf < Prawn::Document
     end
   end
 
-  def my_app_name
-    "https://kak.madiunkota.go.id"
-  end
-
   def footer
-    text "Dicetak pada #{@timestamp} via #{my_app_name}", valign: :bottom,
-                                                          size: 8
+    text "Dicetak pada #{@timestamp} via #{@current_page}", valign: :bottom,
+                                                            size: 8
   end
 
   def header_tabel
@@ -72,20 +69,20 @@ class SpbePdf < Prawn::Document
   def tabel_spbe
     tabel = [header_tabel]
     @spbes.each.with_index(1) do |(program, spbes), i|
-      tabel << [
-        { content: i.to_s, valign: :top },
-        { content: program.opd.nama_opd },
-        { content: program.nama_program }
-      ]
       spbes.map do |spbe|
-        tahun_spbe = "#{spbe.spbe_rincians.first.tahun_awal}-#{spbe.spbe_rincians.first.tahun_akhir} "
-        keterangan_spbe = "#{spbe.spbe_rincians.first.keterangan}"
-        tabel << [
-          { content: spbe.jenis_pelayanan },
-          { content: spbe.nama_aplikasi },
-          { content: tahun_spbe },
-          { content: keterangan_spbe }
-        ]
+        spbe.spbe_rincians.map do |spbe_rincian|
+          tahun_spbe = "#{spbe_rincian.tahun_awal}-#{spbe_rincian.tahun_akhir} "
+          keterangan_spbe = "#{spbe_rincian.keterangan}"
+          tabel << [
+            { content: i.to_s, valign: :top },
+            { content: program.opd.nama_opd },
+            { content: program.nama_program },
+            { content: spbe.jenis_pelayanan },
+            { content: spbe.nama_aplikasi },
+            { content: tahun_spbe },
+            { content: keterangan_spbe }
+          ]
+        end
       end
     end
     table(tabel, header: true) do

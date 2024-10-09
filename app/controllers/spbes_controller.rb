@@ -6,30 +6,27 @@ class SpbesController < ApplicationController
   def index
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @spbes = Spbe.all.group_by(&:program_kegiatan)
-    @programs = @opd.program_kegiatans.programs
-    # @spbes = @programs.to_h { |prg| [prg, prg.spbes] }
   end
 
   def index_opd
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @spbes_external = Spbe.by_opd_tujuan(@kode_opd).group_by(&:program_kegiatan)
-    @programs = @opd.program_kegiatans.programs
-    @spbes = @programs.to_h { |prg| [prg, prg.spbes.by_opd(@kode_opd)] }
+    @spbes = Spbe.by_opd(@kode_opd).group_by(&:program_kegiatan)
   end
 
   def cetak
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
-    @timestamp = Time.now
-    @programs = @opd.program_kegiatans.programs
-    @spbes = @programs.to_h { |prg| [prg, prg.spbes.by_opd(@kode_opd)] }
-    @spbes_external = Spbe.by_opd_tujuan(@kode_opd).group_by(&:program_kegiatan)
+    spbe_internal = Spbe.by_opd(@kode_opd).group_by(&:program_kegiatan)
+    spbes_external = Spbe.by_opd_tujuan(@kode_opd).group_by(&:program_kegiatan)
+    @spbes = spbe_internal.merge(spbes_external)
+    current_page = request.original_url
 
     @filename = "PETA_RENCANA_USULAN_APLIKASI_SPBE_#{@nama_opd}_#{@tahun}"
     respond_to do |format|
       format.pdf do
-        pdf = SpbePdf.new(opd: @opd, tahun: @tahun, programs: @programs, spbes: @spbes, timestamp: @timestamp)
-        send_data(pdf.render, filename: @filename, type: 'application/pdf', disposition: :inline)
+        pdf = SpbePdf.new(opd: @opd, tahun: @tahun, programs: @programs, spbes: @spbes, current_page: current_page)
+        send_data(pdf.render, filename: @filename, type: 'application/pdf', disposition: :attachment)
       end
       format.xlsx do
         excel_file = if @opd.id == 145
@@ -37,7 +34,7 @@ class SpbesController < ApplicationController
                      else
                        "spbe_excel_opd"
                      end
-        render xlsx: excel_file, filename: @filename, disposition: 'attachment'
+        render xlsx: excel_file, filename: @filename, disposition: :attachment
       end
     end
   end
