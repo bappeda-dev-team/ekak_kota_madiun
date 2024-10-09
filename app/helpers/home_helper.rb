@@ -6,7 +6,7 @@ module HomeHelper
       blm_lengkap: 'text-warning',
       krg_lengkap: 'text-info',
       digunakan: 'text-success',
-      siap_ditarik: 'text-success',
+      siap_ditarik: 'text-success'
     }.freeze
     row_color[status_sasaran.to_sym]
   end
@@ -17,7 +17,7 @@ module HomeHelper
       belum_selesai: 'bg-danger',
       blm_lengkap: 'bg-warning',
       digunakan: 'bg-success',
-      siap_ditarik: 'bg-success',
+      siap_ditarik: 'bg-success'
     }.freeze
     row_color[status_sasaran.to_sym]
   end
