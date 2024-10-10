@@ -332,11 +332,13 @@ class FilterController < ApplicationController
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @lembaga = @opd.lembaga
     @nama_opd = @opd.nama_lembaga_opd
+    @jabatan_user = current_user.jabatan_user_in_opd(kode_opd: @kode_opd)
     cookies[:tahun] = @tahun_sasaran
     cookies[:opd] = @kode_opd
     cookies[:lembaga_id] = @lembaga.id
     cookies[:lembaga] = @lembaga
     cookies[:nama_opd] = @nama_opd
+    cookies[:jabatan] = @jabatan_user
     render 'shared/_notifier_v2',
            locals: { message: "Tahun Aktif: #{@tahun_sasaran}, OPD : #{@nama_opd}", status_icon: 'success',
                      form_name: 'non-exists' }

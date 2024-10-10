@@ -12,6 +12,8 @@
           <br/>
           <span class="tahun"><%= cookies[:tahun] %></span>
           <br/>
+          <span class="jabatan"><%= cookies[:jabatan] %></span>
+          <br/>
           <%= "db: " + ActiveRecord::Base.connection_db_config.database if Rails.env.to_s == 'development' %>
         </div>
       </div>

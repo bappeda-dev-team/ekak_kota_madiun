@@ -30,4 +30,8 @@ class JabatanUser < ApplicationRecord
   def bulan_tahun
     "#{bulan}/#{tahun}"
   end
+
+  def jabatan_status
+    "#{nama_jabatan} - [#{status}]"
+  end
 end

@@ -458,4 +458,21 @@ class User < ApplicationRecord
   def email=(email)
     write_attribute(:email, email.try(:strip))
   end
+
+  # list opd dalam default dan jabatan
+  # untuk menampung opd plt
+  def all_kode_opd
+    opd_default = [kode_opd]
+    opd_jabatan = jabatan_users.map { |jab| jab.opd.kode_opd }
+    opd_default.concat opd_jabatan
+  end
+
+  # jabatan_users with status and opd
+  def jabatan_user_in_opd(kode_opd: '')
+    if jabatan_users.any?
+      jabatan_users.find_by(kode_opd: kode_opd).jabatan_status
+    else
+      "#{opd} - [default]"
+    end
+  end
 end
