@@ -1,0 +1,26 @@
+<div class="pelaksana-title">
+  <div>
+    <p>Nama Pegawai: <%= @user.nama %></p>
+    <p>NIP: <%= @user.nik %></p>
+  </div>
+</div>
+<hr>
+<div class="pelaksana-body" data-controller="form-modal">
+  <div class="pelaksana" data-form-modal-target="prevHtml">
+    <caption>Jabatan Pegawai</caption>
+    <table class="table table-bordered mb-3">
+      <thead>
+        <th class="text-wrap text-start">Perangakat Daerah</th>
+        <th class="text-wrap text-start">Jabatan</th>
+        <th class="text-wrap text-start">Bulan/Tahun</th>
+        <th class="text-wrap text-start">Status</th>
+        <th class="text-wrap text-center">Action</th>
+      </thead>
+      <tbody>
+        <%= render partial: 'jabatan_asn', collection: @jabatan_users, as: :jabatan || 'Tidak ada pelaksana' %>
+      </tbody>
+    </table>
+  </div>
+  <div class="form-remote" data-form-modal-target="formRemote">
+  </div>
+</div>

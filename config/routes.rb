@@ -412,7 +412,11 @@ Rails.application.routes.draw do
       get :edit_nip
       post :update_nip
       get :mutasi_asn
+      get :jabatan_asn
+      get :edit_jabatan_asn
       post :update_jabatan
+      post :update_status_jabatan_asn
+      delete :hapus_jabatan_asn
       get :edit_profile
       get :update_password
       patch :ganti_password

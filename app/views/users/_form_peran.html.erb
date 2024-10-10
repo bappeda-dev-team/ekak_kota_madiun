@@ -1,10 +1,13 @@
 <%= form_with(
-  url: add_role_user_path(@user.id), 
+  url: add_role_user_path(@user.id),
   local: false,
   data: { controller: 'form-ajax',
-          action: 'ajax:success->form-ajax#successResponseRenderNew',
-          form_ajax_modal_param: 'form-user-role' }
-              ) do |form| %>
+    form_ajax_target_param: dom_id(@user),
+    form_ajax_modal_param: 'form-user-role',
+    form_ajax_type_param: '',
+    action: 'ajax:complete->form-ajax#processAjax'
+  }
+) do |form| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -32,11 +35,11 @@
     <%= form.label :role, class: "form-label" %>
     <ul>
       <% @roles.each do |role| %>
-          <li>
-            <%= hidden_field_tag 'uncheck[]', role -%>
-            <%= check_box_tag 'role[]', role, @user.has_role?(role) -%>
-            <%= h role -%>
-          </li>
+        <li>
+          <%= hidden_field_tag 'uncheck[]', role -%>
+          <%= check_box_tag 'role[]', role, @user.has_role?(role) -%>
+          <%= h role -%>
+        </li>
       <% end %>
     </ul>
   </div>

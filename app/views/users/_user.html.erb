@@ -10,6 +10,9 @@
       <% user.jabatan_users.each do |jabatan| %>
         <li><%= jabatan.details %> - <strong>[<%= jabatan.status %>]</strong></li>
       <% end %>
+      <li>
+        <%= user.jabatan %> - <strong>[default]</strong>
+      </li>
     </ul>
   </td>
   <td class="text-gray-900 text-wrap border" scope="row">
@@ -17,6 +20,9 @@
       <% user.jabatan_users.each do |jabatan| %>
         <li><%= jabatan.opd.nama_lembaga_opd %></li>
       <% end %>
+      <li>
+        <%= user.opd.nama_lembaga_opd %> [default]
+      </li>
     </ul>
   </td>
   <td class="fw-bolder text-gray-500 border">
@@ -85,6 +91,18 @@
                     class: "btn btn-sm btn-primary" do %>
           <i class="fa fa-cog me-2"></i>
           <span>Mutasi ASN</span>
+        <% end %>
+        <%= link_to jabatan_asn_user_path(user),
+                    remote: true,
+                    data: {
+                      controller: 'form-modal',
+                      action: 'ajax:complete->form-modal#success:prevent',
+                      bs_toggle: 'modal',
+                      bs_target: '#form-modal'
+                    },
+                    class: "btn btn-sm btn-primary" do %>
+          <i class="fa fa-cog me-2"></i>
+          <span>Edit Jabatan</span>
         <% end %>
         <%= link_to update_password_user_path(user),
                     remote: true,

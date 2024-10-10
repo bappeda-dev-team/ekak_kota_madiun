@@ -1,0 +1,25 @@
+<%= form_with url: update_status_jabatan_asn_user_path(jabatan ,user_id: user),
+              local: false,
+              model: jabatan,
+              id: dom_id(jabatan, 'form'),
+              data: {
+                action: 'ajax:complete->row#processAjax',
+              } do |form| %>
+  <td class="text-wrap text-gray-900"><%= jabatan.opd.nama_opd %></td>
+  <td class="text-wrap text-gray-900"><%= jabatan.nama_jabatan %></td>
+  <td><%= jabatan.bulan_tahun %></td>
+  <td class="text-gray-900" style="width: 200px;">
+    <%= form.select :role_tim, options_for_select(option_status_jabatans, selected: jabatan.status), {required: true},
+     form: dom_id(jabatan, 'form'),
+     data: {
+       controller: 'dropdown',
+     }  %>
+  </td>
+  <td class="fw-bolder">
+    <div class="d-grid gap-2">
+      <%= form.submit 'Simpan', class: 'btn btn-sm', style: 'margin-top: 0 !important;',
+         form: dom_id(jabatan, 'form') %>
+      <button class="btn btn-sm btn-outline-danger" data-action="row#batal">Batal</button>
+    </div>
+  </td>
+<% end %>

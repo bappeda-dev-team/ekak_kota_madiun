@@ -219,8 +219,10 @@ class UsersController < ApplicationController
         @user.remove_role(role_rem)
       end
     end
-    render json: { resText: "Data disimpan", result: { roles: @user.roles.pluck(:name), target: @dom_id } },
-           status: :accepted
+    render json: { resText: "Role User diperbarui",
+                   html_content: html_content({ user: @user },
+                                              partial: 'users/user') }.to_json,
+           status: :ok
   end
 
   def list_all
@@ -264,6 +266,55 @@ class UsersController < ApplicationController
     @tahun = cookies[:tahun]
     @tahun_asli = @tahun.gsub('_perubahan', '')
     render partial: 'form_mutasi', locals: { user: @user }
+  end
+
+  def jabatan_asn
+    @user = User.find(params[:id])
+    @tahun = cookies[:tahun]
+    @tahun_asli = @tahun.gsub('_perubahan', '')
+    @jabatan_users = @user.jabatan_users.includes(%i[jabatan opd]).order(:bulan, :tahun).reverse
+    render layout: false
+  end
+
+  def edit_jabatan_asn
+    @jabatan_user = JabatanUser.find(params[:id])
+    @user = User.find(params[:user_id])
+    @tahun = cookies[:tahun]
+    @tahun_asli = @tahun.gsub('_perubahan', '')
+    render layout: false
+  end
+
+  def hapus_jabatan_asn
+    @jabatan_user = JabatanUser.find(params[:id])
+    @user = User.find(params[:user_id])
+
+    @jabatan_user.destroy
+    render json: { resText: "Jabatan diperbarui",
+                   html_content: html_content({ user: @user },
+                                              partial: 'users/user') }.to_json,
+           status: :ok
+  end
+
+  def update_status_jabatan_asn
+    @user = User.find(params[:id])
+    @bulan = params[:user][:bulan]
+    @jabatan = params[:user][:jabatan]
+    @status_jabatan = params[:user][:status_jabatan]
+    @jabatan_user = JabatanUser.new(nip_asn: @user.nik,
+                                    kode_opd: @kode_opd, id_jabatan: @jabatan,
+                                    status: @status_jabatan,
+                                    tahun: @tahun_asli, bulan: @bulan)
+    if @jabatan_user.save
+      render json: { resText: "Jabatan diperbarui",
+                     html_content: html_content({ user: @user },
+                                                partial: 'users/user') }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: error_content({ user: @user },
+                                                 partial: 'users/form_mutasi') }.to_json,
+             status: :unprocessable_entity
+    end
   end
 
   def update_password

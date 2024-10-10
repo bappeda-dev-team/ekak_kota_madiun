@@ -1,0 +1,22 @@
+<tr data-controller="row">
+  <td class="text-wrap text-gray-900"><%= jabatan.opd.nama_opd %></td>
+  <td class="text-wrap text-gray-900"><%= jabatan.nama_jabatan %></td>
+  <td><%= jabatan.bulan_tahun %></td>
+  <td class="fw-bolder text-center"><%= jabatan.status %></td>
+  <td class="text-center">
+    <div class="d-grid gap-2">
+      <%= render(EditRowButtonComponent.new(
+        title: 'Edit',
+        path: edit_jabatan_asn_user_path(jabatan, user_id: jabatan.user))) %>
+      <%= render(DeleteRowButtonComponent.new(
+        message: 'Jabatan akan dihapus',
+        data_attr: {
+          controller: 'form-ajax',
+          form_ajax_target_param: dom_id(jabatan.user),
+          form_ajax_type_param: '',
+        },
+        data_action: 'ajax:complete->form-ajax#processAjax',
+        path: hapus_jabatan_asn_user_path(jabatan, user_id: jabatan.user))) %>
+    </div>
+  </td>
+</tr>

@@ -1,12 +1,4 @@
-<%= link_to @path,
-            method: :delete,
-            remote: true,
-            class: style,
-            data: {
-              confirm_swal: 'Konfirmasi Aksi',
-              text: @message,
-              action: 'ajax:complete->row#deleteRow:prevent',
-            } do %>
+<%= link_to @path, attrs do %>
   <%= icon %>
   <span><%= @title %></span>
 <% end %>
