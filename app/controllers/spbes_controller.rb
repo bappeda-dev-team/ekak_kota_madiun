@@ -10,15 +10,27 @@ class SpbesController < ApplicationController
 
   def index_opd
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @spbes_external = Spbe.by_opd_tujuan(@kode_opd).group_by(&:program_kegiatan)
-    @spbes = Spbe.by_opd(@kode_opd).group_by(&:program_kegiatan)
+    @domain = params[:domain]
+    spbe = if @domain.present? && @domain != 'all'
+             Spbe.includes(:spbe_rincians).where(spbe_rincians: { domain_spbe: @domain })
+           else
+             Spbe.all
+           end
+    @spbes_external = spbe.by_opd_tujuan(@kode_opd).group_by(&:program_kegiatan)
+    @spbes = spbe.by_opd(@kode_opd).group_by(&:program_kegiatan)
   end
 
   def cetak
+    @domain = params[:domain]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
-    spbe_internal = Spbe.by_opd(@kode_opd).group_by(&:program_kegiatan)
-    spbes_external = Spbe.by_opd_tujuan(@kode_opd).group_by(&:program_kegiatan)
+    spbe = if @domain.present? && @domain != 'all'
+             Spbe.includes(:spbe_rincians).where(spbe_rincians: { domain_spbe: @domain })
+           else
+             Spbe.all
+           end
+    spbe_internal = spbe.by_opd(@kode_opd).group_by(&:program_kegiatan)
+    spbes_external = spbe.by_opd_tujuan(@kode_opd).group_by(&:program_kegiatan)
     @spbes = spbe_internal.merge(spbes_external)
     current_page = request.original_url
 

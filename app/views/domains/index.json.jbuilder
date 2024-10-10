@@ -1,1 +1,4 @@
-json.array! @domains, partial: "domains/domain", as: :domain
+json.results @domains do |domain|
+  json.id domain.domain
+  json.text domain.domain
+end
