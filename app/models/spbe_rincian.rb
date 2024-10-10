@@ -37,4 +37,8 @@ class SpbeRincian < ApplicationRecord
   def sasaran_kinerja
     sasaran.present? ? sasaran : 'Belum diisi'
   end
+
+  def tahun_spbe
+    "#{tahun_awal}-#{tahun_akhir}"
+  end
 end

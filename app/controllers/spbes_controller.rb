@@ -37,7 +37,8 @@ class SpbesController < ApplicationController
     @filename = "PETA_RENCANA_USULAN_APLIKASI_SPBE_#{@nama_opd}_#{@tahun}"
     respond_to do |format|
       format.pdf do
-        pdf = SpbePdf.new(opd: @opd, tahun: @tahun, programs: @programs, spbes: @spbes, current_page: current_page)
+        pdf = SpbePdf.new(opd: @opd, tahun: @tahun, programs: @programs, spbes: @spbes, current_page: current_page,
+                          domain: @domain)
         send_data(pdf.render, filename: @filename, type: 'application/pdf', disposition: :attachment)
       end
       format.xlsx do

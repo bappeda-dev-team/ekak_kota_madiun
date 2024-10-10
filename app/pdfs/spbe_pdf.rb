@@ -1,7 +1,7 @@
 class SpbePdf < Prawn::Document
   include ActionView::Helpers::NumberHelper
 
-  def initialize(opd: '', tahun: '', programs: '', spbes: '', current_page: '')
+  def initialize(opd: '', tahun: '', programs: '', spbes: '', current_page: '', domain: '')
     super(page_layout: :landscape, page_size: "LETTER")
     @opd = opd
     @tahun = tahun
@@ -9,7 +9,8 @@ class SpbePdf < Prawn::Document
     @kota = @opd.lembaga.nama_lembaga
     @programs = programs
     @spbes = spbes
-    @judul = "Tabel Peta Rencana Usulan Aplikasi SPBE"
+    @domain = domain
+    @judul = "Tabel Peta Rencana Usulan #{@domain} SPBE"
     @current_page = current_page
     @timestamp = Time.now
     print
@@ -62,6 +63,7 @@ class SpbePdf < Prawn::Document
       { content: "Jenis Layanan pada Standar Pelayanan", align: :center },
       { content: "Nama Aplikasi", align: :center },
       { content: "Detail Kebutuhan", align: :center },
+      { content: 'Domain', align: :center },
       { content: "Tahun Pelaksanaan", align: :center },
       { content: "Keterangan", align: :center }
     ]
@@ -72,8 +74,6 @@ class SpbePdf < Prawn::Document
     @spbes.each.with_index(1) do |(program, spbes), i|
       spbes.map do |spbe|
         spbe.spbe_rincians.map do |spbe_rincian|
-          tahun_spbe = "#{spbe_rincian.tahun_awal}-#{spbe_rincian.tahun_akhir} "
-          keterangan_spbe = spbe_rincian&.keterangan
           tabel << [
             { content: i.to_s, valign: :top },
             { content: program.opd.nama_opd },
@@ -81,8 +81,9 @@ class SpbePdf < Prawn::Document
             { content: spbe.jenis_pelayanan },
             { content: spbe.nama_aplikasi },
             { content: spbe_rincian&.detail_kebutuhan },
-            { content: tahun_spbe },
-            { content: keterangan_spbe }
+            { content: spbe_rincian.domain_spbe },
+            { content: spbe_rincian.tahun_spbe },
+            { content: spbe_rincian&.keterangan }
           ]
         end
       end
@@ -90,39 +91,6 @@ class SpbePdf < Prawn::Document
     table(tabel, header: true) do
       cells.style(size: 8)
     end
-  end
-
-  def sasarans(sasarans)
-    sasaran_arr = []
-    # warning, not loop indikator
-    sasarans.each.with_index(1) do |s, no|
-      nilai_kemungkinan = s.rincian&.kemungkinan&.nilai
-      nilai_skala_dampak = s.rincian&.skala_dampak&.nilai
-      peta_resiko = ApplicationController.helpers.peta_resiko(nilai_kemungkinan, nilai_skala_dampak)
-      nilai_peta_resiko = ApplicationController.helpers.nilai_peta_resiko(peta_resiko)
-      sasaran_arr << [{ content: no.to_s, align: :center, width: 20 },
-                      { content: s.sasaran_kinerja, align: :left, width: 75 },
-                      { content: s.indikator_sasarans&.first&.indikator_kinerja, width: 75 },
-                      { content: s.indikator_sasarans&.first&.target.to_s, width: 30 },
-                      { content: s.indikator_sasarans&.first&.satuan, width: 30 },
-                      { content: "Rp. #{number_with_delimiter(s&.total_anggaran || 0)}", width: 65 },
-                      { content: s.rincian&.resiko || '-', width: 75 },
-                      { content: s.rincian&.kemungkinan&.deskripsi || '-', width: 50, align: :center },
-                      { content: s.rincian&.dampak || '-', width: 75, align: :center },
-                      { content: s.rincian&.skala_dampak&.deskripsi || '-', width: 50, align: :center },
-                      { content: "(#{peta_resiko}) #{nilai_peta_resiko}", width: 55,
-                        align: :center }]
-    end
-    tabel_maker sasaran_arr
-  end
-
-  def indikators(indikator_sasarans)
-    indikators = indikator_sasarans.map do |ind|
-      [{ content: ind.indikator_kinerja, width: 75 },
-       { content: ind.target.to_s, width: 30 },
-       { content: ind.satuan, width: 30 }]
-    end
-    tabel_maker indikators
   end
 
   private
