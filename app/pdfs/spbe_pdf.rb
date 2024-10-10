@@ -61,6 +61,7 @@ class SpbePdf < Prawn::Document
       { content: "Nama Program pada Rencana Kerja", align: :center },
       { content: "Jenis Layanan pada Standar Pelayanan", align: :center },
       { content: "Nama Aplikasi", align: :center },
+      { content: "Detail Kebutuhan", align: :center },
       { content: "Tahun Pelaksanaan", align: :center },
       { content: "Keterangan", align: :center }
     ]
@@ -72,13 +73,14 @@ class SpbePdf < Prawn::Document
       spbes.map do |spbe|
         spbe.spbe_rincians.map do |spbe_rincian|
           tahun_spbe = "#{spbe_rincian.tahun_awal}-#{spbe_rincian.tahun_akhir} "
-          keterangan_spbe = "#{spbe_rincian.keterangan}"
+          keterangan_spbe = spbe_rincian&.keterangan
           tabel << [
             { content: i.to_s, valign: :top },
             { content: program.opd.nama_opd },
             { content: program.nama_program },
             { content: spbe.jenis_pelayanan },
             { content: spbe.nama_aplikasi },
+            { content: spbe_rincian&.detail_kebutuhan },
             { content: tahun_spbe },
             { content: keterangan_spbe }
           ]
