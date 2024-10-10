@@ -55,4 +55,45 @@ RSpec.describe "Sasarans", type: :feature do
     expect(page).to have_css('td.jenis-inovasi', text: 'Baru')
     expect(page).to have_css('td.gambaran-inovasi', text: 'baru-x')
   end
+
+  scenario 'user(eselon_4) create sasaran and edit rincian', js: true do
+    sasaran_complete
+
+    click_on('Tambah Rincian Sasaran')
+
+    within('#form-rincian') do
+      fill_in('Jenis layanan', with: 'Layanan Masyarakat')
+      fill_in('Penerima manfaat', with: 'Masyarakat Kota Madiun')
+      fill_in('Data terpilah', with: 'Kota: 10')
+      fill_in('Resiko', with: 'Tidak Ada')
+      fill_in('Lokasi pelaksanaan', with: 'Kota Madiun')
+      click_on('Simpan')
+    end
+    click_on('OK')
+
+    expect(page).to have_text('Layanan Masyarakat')
+    expect(page).to have_text('Masyarakat Kota Madiun')
+    expect(page).to have_text('Kota: 10')
+    expect(page).to have_text('Tidak Ada')
+    expect(page).to have_text('Kota Madiun')
+
+    # edit it
+    click_on('Edit Rincian Sasaran')
+
+    within('#form-rincian') do
+      fill_in('Jenis layanan', with: 'lay-jen')
+      fill_in('Penerima manfaat', with: 'manfa-pen')
+      fill_in('Data terpilah', with: 'pilah-data')
+      fill_in('Resiko', with: 'risiko-x')
+      fill_in('Lokasi pelaksanaan', with: 'lokpel')
+      click_on('Simpan')
+    end
+    click_on('OK')
+
+    expect(page).to have_text('lay-jen')
+    expect(page).to have_text('manfa-pen')
+    expect(page).to have_text('pilah-data')
+    expect(page).to have_text('risiko-x')
+    expect(page).to have_text('lokpel')
+  end
 end

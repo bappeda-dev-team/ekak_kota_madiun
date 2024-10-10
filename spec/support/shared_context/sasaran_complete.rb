@@ -45,9 +45,10 @@ RSpec.shared_context 'sasaran_complete' do
   end
 
   def tahapan
-    click_on('Manual')
+    click_on('Renaksi Manual')
     fill_in('Urutan', with: 1)
     fill_in('Tahapan kerja', with: 'test_tahapan')
+    select2('Umum', from: 'Tagging', exact_text: true)
     fill_in('Keterangan', with: 'test_tahapan')
     click_on('Simpan Tahapan')
     click_on('OK')

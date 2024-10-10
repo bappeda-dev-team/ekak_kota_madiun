@@ -6,6 +6,7 @@
 #  anggaran               :integer
 #  id_rencana             :string
 #  indikator_kinerja      :string
+#  jenis_layanan          :string
 #  keterangan             :string
 #  kualitas               :integer
 #  metadata               :jsonb

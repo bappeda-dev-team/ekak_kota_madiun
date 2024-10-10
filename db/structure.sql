@@ -2983,7 +2983,8 @@ CREATE TABLE public.sasarans (
     nip_asn_sebelumnya character varying,
     opd_id bigint,
     keterangan character varying,
-    metadata jsonb
+    metadata jsonb,
+    jenis_layanan character varying
 );
 
 
@@ -6592,6 +6593,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240911032449'),
 ('20240913041448'),
 ('20240925072351'),
-('20241009082545');
+('20241009082545'),
+('20241010220432');
 
 
