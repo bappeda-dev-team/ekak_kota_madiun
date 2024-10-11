@@ -9,9 +9,10 @@
       <h2 class="banner bg-danger">INDIKATOR BELUM TERISI</h2>
     </td>
   <% end %>
+  <td class="border text-wrap jenis-layanan" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.jenis_layanan %></td>
   <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.inovasi_sasaran %></td>
   <td class="border text-wrap jenis-inovasi" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.jenis_inovasi_sasaran %></td>
-  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.gambaran_nilai_kebaruan_sasaran %></td>
+  <td class="border text-wrap gambaran-kebaruan-td" rowspan="<%= rowspan_sasaran(sasaran) %>" width="500px"><%= sasaran.gambaran_nilai_kebaruan_sasaran %></td>
   <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
   <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>">
     <div class="d-grid gap-3">
