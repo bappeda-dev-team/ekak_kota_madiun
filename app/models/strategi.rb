@@ -272,4 +272,10 @@ class Strategi < ApplicationRecord
   def sasaran_kotum
     strategi
   end
+
+  def sasaran_pohon_kinerja(tahun: nil)
+    sasarans.includes(%i[strategi indikator_sasarans])
+            .where("sasarans.tahun ILIKE ?", "%#{tahun}%")
+            .select { |s| s.tahapan? && s.manual_ik? && s.strategi? && s.target_sesuai? }
+  end
 end
