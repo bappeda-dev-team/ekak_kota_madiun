@@ -39,7 +39,7 @@ class SpbesController < ApplicationController
       format.pdf do
         pdf = SpbePdf.new(opd: @opd, tahun: @tahun, programs: @programs, spbes: @spbes, current_page: current_page,
                           domain: @domain)
-        send_data(pdf.render, filename: @filename, type: 'application/pdf', disposition: :attachment)
+        send_data(pdf.render, filename: @filename, type: 'application/pdf', disposition: :inline)
       end
       format.xlsx do
         excel_file = if @opd.id == 145
@@ -140,6 +140,7 @@ class SpbesController < ApplicationController
                                                               internal_external tahun_awal tahun_akhir
                                                               status_kebutuhan_spbe keterangan_kebutuhan_spbe
                                                               kondisi_sekarang
+                                                              tahun_awal_pemohon tahun_akhir_pemohon
                                                               kode_opd kode_program _destroy])
   end
 end

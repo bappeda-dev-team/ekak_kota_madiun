@@ -3202,7 +3202,9 @@ CREATE TABLE public.spbe_rincians (
     domain_spbe character varying,
     subdomain_spbe character varying,
     aspek_spbe character varying,
-    metadata jsonb
+    metadata jsonb,
+    tahun_awal_pemohon character varying,
+    tahun_akhir_pemohon character varying
 );
 
 
@@ -6596,6 +6598,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240925072351'),
 ('20241009082545'),
 ('20241010220432'),
-('20241014065230');
+('20241014065230'),
+('20241014081355');
 
 

@@ -15,6 +15,7 @@
         <th class="border text-center" scope="col">Domain SPBE</th>
         <th class="border text-center" scope="col">Kebutuhan SPBE</th>
         <th class="border text-center" scope="col">Detail Kebutuhan</th>
+        <th class="border text-center" scope="col">Tahun Pelaksanaan</th>
         <th class="border text-center" scope="col">Sasaran Kinerja Operasional</th>
         <th class="border text-center" scope="col">Detail Sasaran Kinerja</th>
         <th class="border text-center" scope="col">Indikator</th>
@@ -79,6 +80,7 @@
               <td class="border text-wrap" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.domain_spbe %></td>
               <td class="border text-wrap" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.kebutuhan_spbe %></td>
               <td class="border text-wrap" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.detail_kebutuhan %></td>
+              <td class="border text-wrap detail-kebutuhan" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.tahun_pemohon_spbe %></td>
               <td class="border text-wrap spbe-kebutuhan" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= sas_kasi&.sasaran_kinerja %></td>
               <td class="border text-wrap spbe-kebutuhan" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.detail_sasaran_kinerja %></td>
               <td class="p-0 m-0" colspan="3"></td>

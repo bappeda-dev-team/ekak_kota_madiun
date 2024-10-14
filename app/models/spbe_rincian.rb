@@ -16,7 +16,9 @@
 #  metadata               :jsonb
 #  subdomain_spbe         :string
 #  tahun_akhir            :string
+#  tahun_akhir_pemohon    :string
 #  tahun_awal             :string
+#  tahun_awal_pemohon     :string
 #  tahun_pelaksanaan      :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -40,5 +42,9 @@ class SpbeRincian < ApplicationRecord
 
   def tahun_spbe
     "#{tahun_awal}-#{tahun_akhir}"
+  end
+
+  def tahun_pemohon_spbe
+    "#{tahun_awal_pemohon}-#{tahun_akhir_pemohon}"
   end
 end

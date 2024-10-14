@@ -3,7 +3,7 @@
   <div class="field">
     <%= form.label :domain_spbe, { class: "form-label" } %>
     <%= form.select(:domain_spbe, (Domain.pluck(:domain)), {include_blank: true},
-      {data: { controller: 'dropdown', placeholder: 'Pilih Domain SPBE' }}) %>
+                    {data: { controller: 'dropdown', placeholder: 'Pilih Domain SPBE' }}) %>
   </div>
   <div class="field">
     <%= form.label :kondisi_sekarang, { class: "form-label" } %>
@@ -14,53 +14,53 @@
     <%= form.text_area :detail_kebutuhan, { class: "form-control", placeholder: 'jabarkan kebutuhan spbe dari pilihan diatas' } %>
   </div>
   <div class="field">
-    <%= form.label :tahun_awal, class: 'form-label' %>
-    <%= form.select :tahun_awal, [], {include_blank: true},
-     { id: 'tahun-awal-rincian',
+    <%= form.label :tahun_awal_pemohon, class: 'form-label' %>
+    <%= form.select :tahun_awal_pemohon, [], {include_blank: true},
+     {
        data: {
-       placeholder: "Tahun Awal Pemohon",
-       controller: 'dropdown',
-       dropdown_jenis_value: 'ajax_preselect',
-       dropdown_item_value: form.object.tahun_awal,
-       dropdown_url_value: tahuns_path(format: :json)
-     }
+         placeholder: "Tahun Awal Pemohon",
+         controller: 'dropdown',
+         dropdown_jenis_value: 'ajax_preselect',
+         dropdown_item_value: form.object.tahun_awal_pemohon,
+         dropdown_url_value: tahuns_path(format: :json)
+       }
      } %>
   </div>
   <div class="field">
-    <%= form.label :tahun_akhir, class: 'form-label' %>
-    <%= form.select :tahun_akhir, [], {include_blank: true},
-     { id: 'tahun-akhir-rincian',
+    <%= form.label :tahun_akhir_pemohon, class: 'form-label' %>
+    <%= form.select :tahun_akhir_pemohon, [], {include_blank: true},
+     {
        data: {
-       placeholder: "Tahun Akhir Pemohon",
-       controller: 'dropdown',
-       dropdown_jenis_value: 'ajax_preselect',
-       dropdown_item_value: form.object.tahun_akhir,
-       dropdown_url_value: tahuns_path(format: :json)
-     }
+         placeholder: "Tahun Akhir Pemohon",
+         controller: 'dropdown',
+         dropdown_jenis_value: 'ajax_preselect',
+         dropdown_item_value: form.object.tahun_akhir_pemohon,
+         dropdown_url_value: tahuns_path(format: :json)
+       }
      } %>
   </div>
   <div class="field">
     <%= form.label :opd_pelaksana, { class: "form-label" } %>
     <%= form.select :internal_external, ['Internal', 'External'], {include_blank: true},
-        { data: { placeholder: 'Pilih Internal jika dilaksanakan sendiri',
-                  controller: 'dropdown',
-                  dropdown_jenis_value: 'chain',
-                  dropdown_event_name_value: 'change-opd',
-                }
-        } %>
+     { data: { placeholder: 'Pilih Internal jika dilaksanakan sendiri',
+       controller: 'dropdown',
+       dropdown_jenis_value: 'chain',
+       dropdown_event_name_value: 'change-opd',
+     }
+     } %>
   </div>
   <div class="field mb-5">
     <%= form.select :kode_opd, [], {include_blank: true,},
-        { disabled: form.object.internal_external.eql?('Internal'),
-          data: { placeholder: "Pilih OPD Pelaksana",
-                  controller: 'dropdown',
-                  dropdown_jenis_value: 'ajax_preselect',
-                  dropdown_url_value: legit_opd_opds_path(format: :json),
-                  dropdown_item_value: form.object.kode_opd,
-                  dropdown_kode_opd_value: @kode_opd,
-                  action: 'change-opd@document->dropdown#chain_internal_or_external_spbe'
-                }
-        } %>
+     { disabled: form.object.internal_external.eql?('Internal'),
+       data: { placeholder: "Pilih OPD Pelaksana",
+         controller: 'dropdown',
+         dropdown_jenis_value: 'ajax_preselect',
+         dropdown_url_value: legit_opd_opds_path(format: :json),
+         dropdown_item_value: form.object.kode_opd,
+         dropdown_kode_opd_value: @kode_opd,
+         action: 'change-opd@document->dropdown#chain_internal_or_external_spbe'
+       }
+     } %>
   </div>
   <% if form.object.internal_external == 'External' || @spbe.new_record? %>
     <% disabled = @kode_opd == @spbe.kode_opd %>

@@ -16,7 +16,9 @@
 #  metadata               :jsonb
 #  subdomain_spbe         :string
 #  tahun_akhir            :string
+#  tahun_akhir_pemohon    :string
 #  tahun_awal             :string
+#  tahun_awal_pemohon     :string
 #  tahun_pelaksanaan      :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
