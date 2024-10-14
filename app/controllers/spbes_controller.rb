@@ -39,7 +39,7 @@ class SpbesController < ApplicationController
       format.pdf do
         pdf = SpbePdf.new(opd: @opd, tahun: @tahun, programs: @programs, spbes: @spbes, current_page: current_page,
                           domain: @domain)
-        send_data(pdf.render, filename: @filename, type: 'application/pdf', disposition: :inline)
+        send_data(pdf.render, filename: @filename, type: 'application/pdf', disposition: :attachment)
       end
       format.xlsx do
         excel_file = if @opd.id == 145
