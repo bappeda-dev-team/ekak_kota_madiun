@@ -380,6 +380,12 @@ class Opd < ApplicationRecord
     end
   end
 
+  def find_strategi_eselon3(cari, tahun)
+    strategi_eselon3.where(tahun: tahun)
+                    .where.not(type: nil)
+                    .where("strategi ILIKE ?", "%#{cari}%")
+  end
+
   def find_sasaran_eselon4(sasaran_kinerja, tahun)
     strategi_eselon4.where(tahun: tahun).flat_map do |strategi|
       sasaran_kinerja_strategi(strategi, sasaran_kinerja)

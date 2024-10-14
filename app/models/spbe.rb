@@ -16,14 +16,17 @@
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  program_kegiatan_id :bigint
+#  strategi_id         :bigint
 #  strategi_ref_id     :string
 #
 class Spbe < ApplicationRecord
-  validates_presence_of :strategi_ref_id, :nama_aplikasi, :program_kegiatan_id
+  validates_presence_of :nama_aplikasi, :program_kegiatan_id
 
   belongs_to :program_kegiatan, -> { order "kode_program" }
 
+  # for some reason strategi_ref_id is actually Sasaran
   has_one :sasaran, -> { order "nip_asn ASC" }, primary_key: :strategi_ref_id, foreign_key: :id
+  belongs_to :strategi
   has_one :opd, primary_key: :kode_opd, foreign_key: :kode_unik_opd
 
   has_many :spbe_rincians, -> { order "id ASC" }, inverse_of: :spbe

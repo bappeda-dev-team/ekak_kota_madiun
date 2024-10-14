@@ -3244,7 +3244,8 @@ CREATE TABLE public.spbes (
     pemilik_aplikasi character varying,
     output_data character varying,
     output_informasi character varying,
-    output_cetak character varying
+    output_cetak character varying,
+    strategi_id bigint
 );
 
 
@@ -6594,6 +6595,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240913041448'),
 ('20240925072351'),
 ('20241009082545'),
-('20241010220432');
+('20241010220432'),
+('20241014065230');
 
 

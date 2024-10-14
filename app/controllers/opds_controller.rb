@@ -189,6 +189,16 @@ class OpdsController < ApplicationController
     @sasarans = Sasaran.where(id: params[:item])
   end
 
+  def strategi_tactical
+    tahun = cookies[:tahun]
+    opd = Opd.find_by(kode_unik_opd: params[:kode_opd])
+    cari = params[:q]
+    @strategis = opd.find_strategi_eselon3(cari, tahun)
+    return unless params[:item]
+
+    @strategis = Strategi.where(id: params[:item])
+  end
+
   def sasaran_operational
     tahun = cookies[:tahun]
     opd = Opd.find_by(kode_unik_opd: params[:kode_opd])

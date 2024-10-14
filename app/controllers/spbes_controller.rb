@@ -123,7 +123,7 @@ class SpbesController < ApplicationController
 
   def spbe_params
     params.require(:spbe).permit(:jenis_pelayanan, :nama_aplikasi,
-                                 :strategi_ref_id, :kode_program,
+                                 :strategi_id, :kode_program,
                                  :kode_opd, :program_kegiatan_id,
                                  :terintegrasi_dengan,
                                  :output_aplikasi,

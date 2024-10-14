@@ -1,52 +1,50 @@
-<nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
-  <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
-    <li class="breadcrumb-item">
-      <i class="fas fa-home"></i>
-    </li>
-    <li class="breadcrumb-item" aria-current="page">Tematik</li>
-    <li class="breadcrumb-item active" aria-current="page">SPBE</li>
-  </ol>
-</nav>
-<div class="px-3">
-  <div class="card border-2 shadow mb-1">
-    <div class="card-header">
-      <div class="row align-items-center">
-        <table class="table align-items-center">
-          <thead>
-            <tr>
-              <th class="border text-center" scope="col" colspan="2"></th>
-              <th class="border text-center" scope="col">Indikator</th>
-              <th class="border text-center" scope="col">Target</th>
-              <th class="border text-center" scope="col">Satuan</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="table-info">
-              <th class="border fw-bolder text-gray-900">Program:</th>
-              <td class="border fw-bolder text-wrap"><%= @program.nama_program %></td>
-              <%= indikator_prg(@program, @tahun, @kode_opd) %>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="card border-2 shadow mb-3">
+<%= content_for :html_title, "Edit Usulan SPBE" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Perencanaan OPD</li>
+  <li class="breadcrumb-item" aria-current="page">Peta Rencana SPBE</li>
+  <li class="breadcrumb-item active" aria-current="page">Edit Usulan SPBE</li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="px-3">
+    <div class="card border-2 shadow mb-1">
       <div class="card-header">
         <div class="row align-items-center">
+          <table class="table align-items-center">
+            <thead>
+              <tr>
+                <th class="border text-center" scope="col" colspan="2">Program</th>
+                <th class="border text-center" scope="col">Indikator</th>
+                <th class="border text-center" scope="col">Target</th>
+                <th class="border text-center" scope="col">Satuan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="table-info">
+                <td class="border fw-bolder text-wrap" colspan="2"><%= @program.nama_program %></td>
+                <%= indikator_prg(@program, @tahun, @kode_opd) %>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card border-2 shadow mb-3">
+        <div class="card-header">
           <div class="row align-items-center">
-            <div class="col">
-              <h4 class="card-title">
-                Sasaran Tactical
-              </h4>
+            <div class="row align-items-center">
+              <div class="col">
+                <h4 class="card-title">
+                  Form Usulan SPBE
+                </h4>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="card-body">
-        <%= render 'spbes/form', spbe: @spbe %>
+        <div class="card-body">
+          <%= render 'spbes/form', spbe: @spbe %>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<%= render 'shared/modal_template', modal_name: 'sasaran' %>
-<%= render 'shared/modal_template', modal_name: 'subkegiatan' %>
+  <%= render 'shared/modal_template', modal_name: 'sasaran' %>
+  <%= render 'shared/modal_template', modal_name: 'subkegiatan' %>
+<% end %>

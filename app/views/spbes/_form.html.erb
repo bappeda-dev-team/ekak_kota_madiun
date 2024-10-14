@@ -17,16 +17,16 @@
     <% end %>
     <div class="card-body">
       <div class="field">
-        <%= form.label :sasaran_tactical, {class: "form-label"} %>
-        <%= form.select :strategi_ref_id, [], {include_blank: true},
-        { data: { placeholder: "Pilih Sasaran Tactical",
-                  controller: 'dropdown',
-                  dropdown_jenis_value: 'ajax_preselect',
-                  dropdown_kode_opd_value: @kode_opd,
-                  dropdown_item_value: form.object.strategi_ref_id,
-                  dropdown_url_value: sasaran_tactical_opds_path(format: :json),
-                }
-        } %>
+        <%= form.label :tactical, {class: "form-label"} %>
+        <%= form.select :strategi_id, [], {include_blank: true},
+         { data: { placeholder: "Pilih Strategi Tactical",
+           controller: 'dropdown',
+           dropdown_jenis_value: 'ajax_preselect',
+           dropdown_kode_opd_value: @kode_opd,
+           dropdown_item_value: form.object.strategi_id,
+           dropdown_url_value: strategi_tactical_opds_path(format: :json),
+         }
+         } %>
       </div>
       <div class="field">
         <%= form.label :jenis_pelayanan, {class: "form-label"} %>
@@ -34,17 +34,15 @@
       </div>
       <div class="field">
         <%= form.label :nama_aplikasi, {class: "form-label"} %>
-        <%= form.text_field :nama_aplikasi, {class: "form-control"}%>
+        <%= form.text_field :nama_aplikasi, {class: "form-control", placeholder: 'Tuliskan Nama Aplikasi yg diusulkan'}%>
       </div>
       <div class="field">
         <%= form.label :pemilik_aplikasi, {class: "form-label"} %>
         <%= form.select :pemilik_aplikasi, ['Pusat/Nasional', 'Provinsi/Jawa Timur', 'Kota Madiun'],
-         {},
-         {data: { controller: 'dropdown' }}%>
-      </div>
-      <div class="field">
-        <%= form.label :output_aplikasi, {class: "form-label"} %>
-        <%= form.text_field :output_aplikasi, {class: "form-control", placeholder: "keluaran aplikasi umum"}%>
+         {include_blank: true},
+         {data: {
+           placeholder: 'Aplikasi yang diusulkan akan menjadi milik..',
+           controller: 'dropdown' }}%>
       </div>
       <div class="field">
         <%= form.label :output_data, {class: "form-label"} %>
@@ -74,4 +72,4 @@
         <%= form.submit %>
       </div>
     </div>
-  <% end %>
+<% end %>

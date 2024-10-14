@@ -622,6 +622,7 @@ Rails.application.routes.draw do
       get :kotak_usulan
       get :legit_opd
       get :sasaran_tactical
+      get :strategi_tactical
       get :sasaran_operational
       get :bidang
       get :opd_resmi

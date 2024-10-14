@@ -278,4 +278,13 @@ class Strategi < ApplicationRecord
             .where("sasarans.tahun ILIKE ?", "%#{tahun}%")
             .select { |s| s.tahapan? && s.manual_ik? && s.strategi? && s.target_sesuai? }
   end
+
+  def strategi_dan_indikator
+    dari_kota = if keterangan == '--dari kota--'
+                  '(strategi kota)'
+                else
+                  ''
+                end
+    "#{strategi} #{dari_kota} - indikator: #{indikators.pluck(:indikator).flatten}"
+  end
 end

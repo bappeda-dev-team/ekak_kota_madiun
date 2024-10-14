@@ -16,6 +16,7 @@
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  program_kegiatan_id :bigint
+#  strategi_id         :bigint
 #  strategi_ref_id     :string
 #
 FactoryBot.define do
