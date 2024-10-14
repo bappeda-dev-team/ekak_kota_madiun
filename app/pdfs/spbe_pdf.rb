@@ -55,34 +55,41 @@ class SpbePdf < Prawn::Document
                                                             size: 8
   end
 
+  W_NAMA_OPD = 70
+  W_PROGRAM = 70
+  W_LAYANAN = 80
+  W_APLIKASI = 100
+  W_KEBUTUHAN = 100
+  W_DOMAIN = 70
+  W_TAHUN = 50
+  W_KET = 70
+
   def header_tabel
     [
-      { content: "No", width: 20, align: :center },
-      { content: "Nama OPD", align: :center },
-      { content: "Nama Program pada Rencana Kerja", align: :center },
-      { content: "Jenis Layanan pada Standar Pelayanan", align: :center },
-      { content: "Nama Aplikasi", align: :center },
-      { content: "Detail Kebutuhan", align: :center },
-      { content: 'Domain', align: :center },
-      { content: "Tahun Pelaksanaan", align: :center },
-      { content: "Keterangan", align: :center }
+      { content: "Nama OPD", align: :center, width: W_NAMA_OPD },
+      { content: "Nama Program pada Rencana Kerja", align: :center, width: W_PROGRAM },
+      { content: "Jenis Layanan pada Standar Pelayanan", align: :center, width: W_LAYANAN },
+      { content: "Nama Aplikasi", align: :center, width: W_APLIKASI },
+      { content: "Detail Kebutuhan", align: :center, width: W_KEBUTUHAN },
+      { content: 'Domain', align: :center, width: W_DOMAIN },
+      { content: "Tahun Pelaksanaan", align: :center, width: W_TAHUN },
+      { content: "Keterangan", align: :center, width: W_KET }
     ]
   end
 
   def tabel_spbe
     tabel = [header_tabel]
-    @spbes.each.with_index(1) do |(program, spbes), i|
+    @spbes.each do |program, spbes|
       spbes.map do |spbe|
         spbe.spbe_rincians.map do |spbe_rincian|
           tabel << [
-            { content: i.to_s, valign: :top },
             { content: program.opd.nama_opd },
             { content: program.nama_program },
             { content: spbe.jenis_pelayanan },
             { content: spbe.nama_aplikasi },
             { content: spbe_rincian&.detail_kebutuhan },
             { content: spbe_rincian.domain_spbe },
-            { content: spbe_rincian.tahun_spbe },
+            { content: spbe_rincian.tahun_pemohon_spbe },
             { content: spbe_rincian&.keterangan }
           ]
         end
