@@ -324,12 +324,25 @@ td[data-tahun-akhir-pelaksanaan="success"] {
   }
 }
 
-td.spbe-kebutuhan:empty {
-  background-color: #b73239;
-  color: #eee2de;
+tr.spbe {
+  td.wajib-input:empty {
+    background-color: #b73239;
+    color: #eee2de;
 
-  &:after {
-    content: "Belum diisi";
+    &:after {
+      content: "Lengkapi item di 'Edit Usulan SPBE'";
+    }
+  }
+}
+
+tr.spbe-external {
+  td.wajib-input:empty {
+    background-color: #b73239;
+    color: #eee2de;
+
+    &:after {
+      content: "Hubungi pengusul untuk melengkapi";
+    }
   }
 }
 

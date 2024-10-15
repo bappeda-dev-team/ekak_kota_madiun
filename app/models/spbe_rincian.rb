@@ -45,6 +45,10 @@ class SpbeRincian < ApplicationRecord
   end
 
   def tahun_pemohon_spbe
-    "#{tahun_awal_pemohon}-#{tahun_akhir_pemohon}"
+    if tahun_awal_pemohon.present? && tahun_akhir_pemohon.present?
+      "#{tahun_awal_pemohon}-#{tahun_akhir_pemohon}"
+    else
+      ''
+    end
   end
 end

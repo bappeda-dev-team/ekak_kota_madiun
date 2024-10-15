@@ -66,6 +66,7 @@ class SpbePdf < Prawn::Document
 
   def header_tabel
     [
+      { content: "No", width: 20, align: :center },
       { content: "Nama OPD", align: :center, width: W_NAMA_OPD },
       { content: "Nama Program pada Rencana Kerja", align: :center, width: W_PROGRAM },
       { content: "Jenis Layanan pada Standar Pelayanan", align: :center, width: W_LAYANAN },
@@ -79,20 +80,19 @@ class SpbePdf < Prawn::Document
 
   def tabel_spbe
     tabel = [header_tabel]
-    @spbes.each do |program, spbes|
-      spbes.map do |spbe|
-        spbe.spbe_rincians.map do |spbe_rincian|
-          tabel << [
-            { content: program.opd.nama_opd },
-            { content: program.nama_program },
-            { content: spbe.jenis_pelayanan },
-            { content: spbe.nama_aplikasi },
-            { content: spbe_rincian&.detail_kebutuhan },
-            { content: spbe_rincian.domain_spbe },
-            { content: spbe_rincian.tahun_pemohon_spbe },
-            { content: spbe_rincian&.keterangan }
-          ]
-        end
+    @spbes.each.with_index(1) do |spbe, i|
+      spbe.spbe_rincians.map do |spbe_rincian|
+        tabel << [
+          { content: i.to_s },
+          { content: spbe.opd_pemohon },
+          { content: spbe.nama_program },
+          { content: spbe.jenis_pelayanan },
+          { content: spbe.nama_aplikasi },
+          { content: spbe_rincian&.detail_kebutuhan },
+          { content: spbe_rincian.domain_spbe },
+          { content: spbe_rincian.tahun_pemohon_spbe },
+          { content: spbe_rincian&.keterangan }
+        ]
       end
     end
     table(tabel, header: true) do

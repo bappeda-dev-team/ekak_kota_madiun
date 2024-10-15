@@ -42,7 +42,22 @@ class Spbe < ApplicationRecord
       .where.not(kode_opd: kode_opd)
   }
 
+  scope :all_in_opd_by_domain, lambda { |kode_opd, domain: 'all'|
+    if domain.present? && domain != 'all'
+      internal = by_opd(kode_opd).where(spbe_rincians: { domain_spbe: domain })
+      external = by_opd_tujuan(kode_opd).where(spbe_rincians: { domain_spbe: domain })
+    else
+      internal = by_opd(kode_opd).where.not(spbe_rincians: { domain_spbe: [nil, ''] })
+      external = by_opd_tujuan(kode_opd).where.not(spbe_rincians: { domain_spbe: [nil, ''] })
+    end
+    internal + external
+  }
+
   def nama_program
     program_kegiatan.nama_program
+  end
+
+  def opd_pemohon
+    opd.nama_opd
   end
 end

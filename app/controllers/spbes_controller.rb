@@ -20,18 +20,12 @@ class SpbesController < ApplicationController
     @spbes = spbe.by_opd(@kode_opd).group_by(&:program_kegiatan)
   end
 
+  # rubocop:disable Metrics
   def cetak
     @domain = params[:domain]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
-    spbe = if @domain.present? && @domain != 'all'
-             Spbe.includes(:spbe_rincians).where(spbe_rincians: { domain_spbe: @domain })
-           else
-             Spbe.all
-           end
-    spbe_internal = spbe.by_opd(@kode_opd).group_by(&:program_kegiatan)
-    spbes_external = spbe.by_opd_tujuan(@kode_opd).group_by(&:program_kegiatan)
-    @spbes = spbe_internal.merge(spbes_external)
+    @spbes = Spbe.all_in_opd_by_domain(@kode_opd, domain: @domain)
     current_page = request.original_url
 
     @filename = "PETA_RENCANA_USULAN_APLIKASI_SPBE_#{@nama_opd}_#{@tahun}"
@@ -43,12 +37,12 @@ class SpbesController < ApplicationController
         send_data(pdf.render, filename: @filename, type: 'application/pdf', disposition: :attachment)
       end
       format.xlsx do
-        @filename << ".xlsx"
         excel_file = if @opd.id == 145
                        "spbe_setda_excel"
                      else
                        "spbe_excel_opd"
                      end
+        @filename << ".xlsx"
         render xlsx: excel_file, filename: @filename, disposition: :attachment
       end
     end
