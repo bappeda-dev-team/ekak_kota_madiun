@@ -39,9 +39,11 @@ class SpbesController < ApplicationController
       format.pdf do
         pdf = SpbePdf.new(opd: @opd, tahun: @tahun, programs: @programs, spbes: @spbes, current_page: current_page,
                           domain: @domain)
+        @filename << ".pdf"
         send_data(pdf.render, filename: @filename, type: 'application/pdf', disposition: :attachment)
       end
       format.xlsx do
+        @filename << ".xlsx"
         excel_file = if @opd.id == 145
                        "spbe_setda_excel"
                      else
