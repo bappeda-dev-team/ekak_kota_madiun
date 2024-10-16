@@ -5,6 +5,7 @@
         <th class="border text-center" scope="col">No</th>
         <th class="border text-center" scope="col">Urusan</th>
         <th class="border text-center" scope="col" colspan="2">Program</th>
+        <th class="border text-center" scope="col">Action</th>
         <th class="border text-center" scope="col">OPD Pengusul</th>
         <th class="border text-center" scope="col">Jenis Pelayanan</th>
         <th class="border text-center" scope="col">Pemillik Aplikasi</th>
@@ -28,7 +29,7 @@
     </thead>
     <tbody>
       <tr>
-        <td class="border fw-bolder" colspan="27">Internal</td>
+        <td class="border fw-bolder" colspan="29">Internal</td>
       </tr>
       <% @spbes.each.with_index(1) do |(program, spbes), i| %>
         <tr>
@@ -47,6 +48,22 @@
         <% spbes.each do |spbe| %>
           <% rowspan_sas = rowspan_rincian_spbe(spbe.spbe_rincians) %>
           <tr class="spbe">
+            <td class="border" rowspan="<%= rowspan_sas %>">
+              <% unless guest? %>
+                <div class="d-grid gap-2">
+                  <% if spbe.kode_opd == @kode_opd %>
+                    <%= link_to edit_spbe_path(spbe,program_id: program.id), target: "_blank", rel: "nofollow",
+                                class: "btn btn-sm btn-outline-info" do %>
+                      Edit Usulan SPBE
+                    <% end %>
+                    <%= link_to spbe_path(spbe), method: :delete, data: {confirm_swal: "Hapus SPBE Layanan '#{spbe.jenis_pelayanan}' ?"},
+                                class: "btn btn-sm btn-outline-danger" do %>
+                      Hapus Usulan SPBE
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            </td>
             <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>"><%= spbe.opd.nama_opd %></td>
             <td class="border text-wrap fw-bolder wajib-input" rowspan="<%= rowspan_sas %>"><%= spbe.jenis_pelayanan %></td>
             <td class="border text-wrap fw-bolder wajib-input" rowspan="<%= rowspan_sas %>"><%= spbe.pemilik_aplikasi %></td>
@@ -76,18 +93,7 @@
               <td class="border" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>">
                 <% unless guest? %>
                   <div class="d-grid gap-2">
-                    <% if spbe.kode_opd == @kode_opd %>
-                      <%= link_to edit_spbe_path(spbe,program_id: program.id), target: "_blank", rel: "nofollow",
-                                  class: "btn btn-sm btn-outline-info" do %>
-                        Edit Usulan SPBE
-                      <% end %>
-                      <%= link_to spbe_path(spbe), method: :delete, data: {confirm_swal: "Hapus SPBE Layanan '#{spbe.jenis_pelayanan}' ?"},
-                                  class: "btn btn-sm btn-outline-danger" do %>
-                        Hapus Usulan SPBE
-                      <% end %>
-                    <% end %>
                     <% if rincian.kode_opd == @kode_opd %>
-                      <hr />
                       <%= link_to edit_operational_opd_spbe_path(rincian,program_id: program.id), target: "_blank", rel: "nofollow",
                                   class: "btn btn-sm btn-outline-primary" do %>
                         Pemenuhan Kebutuhan Internal SPBE
