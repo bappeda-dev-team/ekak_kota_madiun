@@ -64,7 +64,7 @@ class SpbesController < ApplicationController
                           domain: @domain, kota: 'kota')
         pdf.print
         @filename << ".pdf"
-        send_data(pdf.render, filename: @filename, type: 'application/pdf', disposition: :inline)
+        send_data(pdf.render, filename: @filename, type: 'application/pdf', disposition: :attachment)
       end
     end
   end
