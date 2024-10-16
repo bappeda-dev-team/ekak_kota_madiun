@@ -57,7 +57,19 @@ class Spbe < ApplicationRecord
     program_kegiatan.nama_program
   end
 
+  def nama_urusan
+    program_kegiatan.nama_urusan
+  end
+
   def opd_pemohon
     opd.nama_opd
+  end
+
+  def strategi_tactical
+    if strategi.present?
+      strategi.to_s
+    else
+      ''
+    end
   end
 end

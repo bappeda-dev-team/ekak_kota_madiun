@@ -21,6 +21,10 @@ module LaporanItemHelper
         title: 'Manajemen Risiko', href: daftar_resiko_laporans_path,
         icon: 'fas fa-chart-line', identifier: 'sasaran_program_opds/daftar_resiko'
       },
+      {
+        title: 'SPBE', href: spbe_laporans_path,
+        icon: 'fas fa-tablet-alt', identifier: 'laporans/spbe'
+      },
       { title: 'Gender', href: laporan_gap_genders_path,
         icon: 'fas fa-people-carry',
         identifier: 'genders/laporan_gap' },

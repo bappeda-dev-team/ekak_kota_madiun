@@ -1,0 +1,25 @@
+<div class="card border-0 shadow" id="spbe-kota">
+  <div class="card-header">
+    <div class="row align-items-end">
+      <div class="col">
+        <h5>Laporan SPBE Tahun <%= @tahun %></h5>
+        Domain: <%= @domain || 'all' %>
+      </div>
+    </div>
+  </div>
+  <div class="card-header">
+    <div class="row align-items-end g-2">
+      <div class="col-auto text-end button-cetak">
+        <%= link_to cetak_kota_spbes_path(format: :pdf, params: { domain: @domain }), class: "btn btn-sm btn-primary" do %>
+          <span>PDF Laporan SPBE</span>
+          <i class="fas fa-file-pdf ms-2"></i>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive" id='render-spbe-kota'>
+      <%= render 'spbes/table_spbe', spbes: @spbes  %>
+    </div>
+  </div>
+</div>

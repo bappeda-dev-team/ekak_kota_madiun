@@ -1,127 +1,73 @@
-<div class="card border-0 shadow" id="user_filter">
-  <div class="card-header">
-    <div class="row align-items-center">
-      <div class="col">
-        <h2 class="fs-5 fw-bold mb-0">Rekap SPBE - Tahun <%= @tahun %></h2>
-      </div>
-    </div>
-  </div>
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table align-items-center table-bordered">
-        <thead class="thead-light">
-          <tr>
-            <th class="border text-center" rowspan="2" scope="col">No</th>
-            <th class="border text-center" rowspan="2" scope="col">Urusan</th>
-            <th class="border text-center" rowspan="2" scope="col">Program</th>
-            <th class="border text-center" rowspan="2" scope="col">OPD Pengusul</th>
-            <th class="border text-center" rowspan="2" scope="col">Jenis Pelayanan</th>
-            <th class="border text-center" rowspan="2" scope="col">Pemilik Aplikasi</th>
-            <th class="border text-center" rowspan="2" scope="col">Aplikasi</th>
-            <th class="border text-center" rowspan="2" scope="col">Output Aplikasi</th>
-            <th class="border text-center" rowspan="2" scope="col">Terintegrasi Dengan</th>
-            <th class="border text-center" rowspan="2" scope="col">Sasaran Kinerja Tactical</th>
-            <th class="border text-center" rowspan="2" scope="col">Domain SPBE</th>
-            <th class="border text-center" rowspan="2" scope="col">Kebutuhan SPBE</th>
-            <th class="border text-center" rowspan="2" scope="col">Detail Kebutuhan</th>
-            <th class="border text-center" rowspan="2" scope="col">Sasaran Kinerja Operasional</th>
-            <th class="border text-center" rowspan="2" scope="col">Detail Sasaran Kinerja</th>
-            <th class="border text-center" rowspan="2" scope="col">Indikator</th>
-            <th class="border text-center" rowspan="2" scope="col">Target</th>
-            <th class="border text-center" rowspan="2" scope="col">Satuan</th>
-            <th class="border text-center" rowspan="2" scope="col">Anggaran</th>
-            <th class="border text-center" rowspan="2" scope="col">SubKegiatan</th>
-            <th class="border text-center" colspan= "5" scope="col">Tahun Pelaksanaan</th>
-            <th class="border text-center" rowspan="2" scope="col">OPD Pelaksana</th>
-            <th class="border text-center" rowspan="2" scope="col">Keterangan</th>
-            <th class="border text-center" rowspan="2" scope="col">Action</th>
-          </tr>
-          <tr>
-            <% (2020..2024).each do |tahun| %>
-              <th class="border text-center" scope="col"><%= tahun %></th>
-            <% end %>
-          </tr>
-        </thead>
-        <tbody>
-          <% @spbes.take(3).each.with_index(1) do |(program, spbes), i| %>
-            <% rowspan_left = rowspan_left_spbes(spbes) %>
-            <tr class="row-<%= i %> nomor rowspan-<%= rowspan_left %>">
-              <td class="border fw-bolder" rowspan="<%= rowspan_left %>"><%= i %></td>
-              <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_left %>"><%= program.nama_urusan %></td>
-              <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_left %>"><%= program.nama_program %></td>
+<table class="table align-items-center table-bordered sticky-head">
+  <thead class="thead-light">
+    <tr>
+      <th class="border text-center" scope="col">No</th>
+      <th class="border text-center" scope="col">Urusan</th>
+      <th class="border text-center" scope="col">Program</th>
+      <th class="border text-center" scope="col">OPD Pengusul</th>
+      <th class="border text-center" scope="col">Jenis Pelayanan</th>
+      <th class="border text-center" scope="col">Pemillik Aplikasi</th>
+      <th class="border text-center" scope="col">Aplikasi</th>
+      <th class="border text-center" scope="col">Output Aplikasi</th>
+      <th class="border text-center" scope="col">Terintegrasi Dengan</th>
+      <th class="border text-center" scope="col">Strategi Tactical</th>
+      <th class="border text-center" scope="col">Domain SPBE</th>
+      <th class="border text-center" scope="col">Detail Kebutuhan</th>
+      <th class="border text-center" scope="col">Tahun Pelaksanaan</th>
+      <th class="border text-center" scope="col">Sasaran Kinerja Operasional</th>
+      <th class="border text-center" scope="col">Detail Sasaran Kinerja</th>
+      <th class="border text-center" scope="col">Indikator</th>
+      <th class="border text-center" scope="col">Target</th>
+      <th class="border text-center" scope="col">Satuan</th>
+      <th class="border text-center" scope="col">SubKegiatan</th>
+      <th class="border text-center" scope="col">OPD Pelaksana</th>
+      <th class="border text-center" scope="col">Keterangan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% spbes.each.with_index(1) do |spbe, i| %>
+      <% rowspan_sas = rowspan_rincian_spbe(spbe.spbe_rincians) %>
+      <tr class="spbe-x">
+        <td class="border fw-bolder" rowspan="<%= rowspan_sas %>"><%= i %></td>
+        <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>"><%= spbe.nama_urusan %></td>
+        <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>"><%= spbe.nama_program %></td>
+        <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>"><%= spbe.opd_pemohon %></td>
+        <td class="border text-wrap fw-bolder wajib-input" rowspan="<%= rowspan_sas %>"><%= spbe.jenis_pelayanan %></td>
+        <td class="border text-wrap fw-bolder wajib-input" rowspan="<%= rowspan_sas %>"><%= spbe.pemilik_aplikasi %></td>
+        <td class="border text-wrap fw-bolder wajib-input" rowspan="<%= rowspan_sas %>"><%= spbe.nama_aplikasi %></td>
+        <td class="border fw-bolder umum-data text-wrap" rowspan="<%= rowspan_sas %>">
+          <div class="d-grid gap-2">
+            <p>Data: <strong><%= spbe.output_data %></strong></p>
+            <p>Informasi: <strong><%= spbe.output_informasi %></strong></p>
+            <p>Cetak: <strong><%= spbe.output_cetak %></strong></p>
+          </div>
+        </td>
+        <td class="border text-wrap fw-bolder wajib-input" rowspan="<%= rowspan_sas %>"><%= spbe.terintegrasi_dengan %></td>
+        <td class="border text-wrap fw-bolder wajib-input" rowspan="<%= rowspan_sas %>"><%= spbe.strategi.to_s %></td>
+      </tr>
+      <% spbe.spbe_rincians.each do |rincian| %>
+        <% sas_kasi = rincian.sasaran %>
+        <tr class="spbe-x">
+          <td class="border text-wrap wajib-input" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.domain_spbe %></td>
+          <td class="border text-wrap wajib-input" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.detail_kebutuhan %></td>
+          <td class="border text-wrap wajib-input" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.tahun_pemohon_spbe %></td>
+          <td class="border text-wrap" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= sas_kasi&.sasaran_kinerja %></td>
+          <td class="border text-wrap" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.detail_sasaran_kinerja %></td>
+          <td class="p-0 m-0" colspan="3"></td>
+          <td class="border text-wrap" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= sas_kasi&.subkegiatan %></td>
+          <td class="border" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.opd&.nama_opd %></td>
+          <td class="border" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.keterangan %></td>
+        </tr>
+        <% unless sas_kasi.nil? %>
+          <% sas_kasi.indikator_sasarans.each do |indikator_s| %>
+            <tr class="indikator-sasaran">
+              <td class="border text-wrap"><%= indikator_s.indikator_kinerja %></td>
+              <td class="border text-wrap"><%= indikator_s.target %></td>
+              <td class="border text-wrap"><%= indikator_s.satuan %></td>
             </tr>
-            <% spbes.each do |spbe| %>
-              <% rowspan_sas = rowspan_left_spbe(spbe) %>
-              <tr class="row-<%= i %> spbes rowspan-<%= rowspan_sas %>">
-                <td class="border fw-bolder" rowspan="<%= rowspan_sas %>">
-                  <%= spbe&.opd&.nama_opd %>
-                </td>
-                <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
-                  <%= spbe.jenis_pelayanan %>
-                </td>
-                <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
-                  <%= spbe.pemilik_aplikasi %>
-                </td>
-                <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
-                  <%= spbe.nama_aplikasi %>
-                </td>
-                <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
-                  <%= spbe.output_aplikasi %>
-                </td>
-                <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
-                  <%= spbe.terintegrasi_dengan %>
-                </td>
-                <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>">
-                  <%= spbe.sasaran.sasaran_kinerja %>
-                </td>
-                <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="17"></td>
-                <td class="border" rowspan="<%= rowspan_sas %>">
-                  <div class="d-grid gap-2">
-                    <%= link_to edit_spbe_path(spbe,program_id: program.id), target: "_blank", rel: "nofollow",
-                class: "btn btn-sm btn-outline-info" do %>
-                      Edit SPBE
-                    <% end %>
-                    <%= link_to spbe_path(spbe), method: :delete, data: {confirm_swal: "Hapus SPBE Layanan '#{spbe.jenis_pelayanan}' ?"},
-                class: "btn btn-sm btn-outline-danger" do %>
-                      Hapus SPBE
-                    <% end %>
-                  </div>
-                </td>
-              </tr>
-              <% spbe.spbe_rincians.each do |rincian| %>
-                <% sas_kasi = rincian.sasaran %>
-                <% rowspan_rinci = rowspan_sasaran_spbe(sas_kasi) %>
-                <tr class="row-<%= i %> rincian rowspan-<%= rowspan_rinci %>">
-                  <td class="border text-wrap" rowspan="<%= rowspan_rinci %>"><%= rincian.domain_spbe %></td>
-                  <td class="border text-wrap" rowspan="<%= rowspan_rinci %>"><%= rincian.kebutuhan_spbe %></td>
-                  <td class="border text-wrap" rowspan="<%= rowspan_rinci %>"><%= rincian.detail_kebutuhan %></td>
-                  <td class="border text-wrap spbe-kebutuhan" rowspan="<%= rowspan_rinci %>"><%= sas_kasi&.sasaran_kinerja %></td>
-                  <td class="border text-wrap spbe-kebutuhan" rowspan="<%= rowspan_rinci %>"><%= rincian.detail_sasaran_kinerja %></td>
-                  <%= indikator_sasaran(sas_kasi) %>
-                  <td class="border spbe-kebutuhan" rowspan="<%= rowspan_rinci %>">Rp. <%= number_with_delimiter(sas_kasi&.anggaran_spbe) %></td>
-                  <td class="border text-wrap spbe-kebutuhan" rowspan="<%= rowspan_rinci %>" data-subkegiatan="<%= sas_kasi&.subkegiatan&.downcase %>"><%= sas_kasi&.subkegiatan %></td>
-                  <% (2020..2024).each do |th| %>
-                    <% tah = rincian.tahun_awal == th.to_s ? "success" : '' %>
-                    <% tah_ak = rincian.tahun_akhir == th.to_s ? "success" : '' %>
-                    <td class="text-center" rowspan="<%= rowspan_rinci %>" data-tahun-pelaksanaan="<%= tah %>"  data-tahun-akhir-pelaksanaan="<%= tah_ak %>"></td>
-                  <% end %>
-                  <td class="border" rowspan="<%= rowspan_rinci %>"><%= rincian.opd&.nama_opd %></td>
-                  <td class="border" rowspan="<%= rowspan_rinci %>"><%= rincian.keterangan %></td>
-                </tr>
-                <% unless sas_kasi.nil? %>
-                  <% sas_kasi.indikator_sasarans.drop(1).each do |indikator_s| %>
-                    <tr class="row-<%= i %> indikator jumlah-<%= sas_kasi.indikator_sasarans.size %>">
-                      <td class="border text-wrap"><%= indikator_s.indikator_kinerja %></td>
-                      <td class="border text-wrap"><%= indikator_s.target %></td>
-                      <td class="border text-wrap"><%= indikator_s.satuan %></td>
-                    </tr>
-                  <% end %>
-                <% end %>
-              <% end %>
-            <% end %>
           <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

@@ -177,6 +177,7 @@ Rails.application.routes.draw do
     collection do
       get :index_opd
       get :cetak
+      get :cetak_kota
     end
     member do
       get :edit_operational_opd
@@ -714,6 +715,7 @@ Rails.application.routes.draw do
   end
 
   namespace :filter do
+    post :spbe
     post :daftar_resiko
     post :isu_strategis_permasalahan
     # post :laporan_renstra

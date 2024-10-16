@@ -90,8 +90,10 @@ class LaporansController < ApplicationController
   end
 
   def spbe
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @spbe = @opd.program_kegiatans.programs
+    # @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    # @spbe = @opd.program_kegiatans.programs
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
   end
 
   def renstra

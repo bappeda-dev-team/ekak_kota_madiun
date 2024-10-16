@@ -1,19 +1,19 @@
 class SpbePdf < Prawn::Document
   include ActionView::Helpers::NumberHelper
 
-  def initialize(opd: '', tahun: '', programs: '', spbes: '', current_page: '', domain: '')
+  def initialize(opd: '', tahun: '', programs: '', spbes: '', current_page: '', domain: '', kota: '')
     super(page_layout: :landscape, page_size: "LETTER")
     @opd = opd
     @tahun = tahun
     @nama_opd = @opd.nama_opd
-    @kota = @opd.lembaga.nama_lembaga
+    @nama_kota = @opd.lembaga.nama_lembaga
     @programs = programs
     @spbes = spbes
     @domain = domain
     @judul = "Tabel Peta Rencana Usulan #{@domain} SPBE"
     @current_page = current_page
     @timestamp = Time.now
-    print
+    @kota = kota
   end
 
   def print
@@ -28,8 +28,8 @@ class SpbePdf < Prawn::Document
   def title
     text @judul.upcase, align: :center
     move_down 3
-    text @nama_opd.upcase, align: :center
-    text @kota.upcase, align: :center
+    text @nama_opd.upcase, align: :center unless @kota == 'kota'
+    text @nama_kota.upcase, align: :center
     move_down 3
     text "TAHUN #{@tahun}", align: :center
   end
@@ -57,6 +57,7 @@ class SpbePdf < Prawn::Document
 
   W_NAMA_OPD = 70
   W_PROGRAM = 70
+  W_TACTICAL = 70
   W_LAYANAN = 80
   W_APLIKASI = 100
   W_KEBUTUHAN = 100
@@ -69,6 +70,7 @@ class SpbePdf < Prawn::Document
       { content: "No", width: 20, align: :center },
       { content: "Nama OPD", align: :center, width: W_NAMA_OPD },
       { content: "Nama Program pada Rencana Kerja", align: :center, width: W_PROGRAM },
+      { content: "Strategi Tactical", align: :center, width: W_TACTICAL },
       { content: "Jenis Layanan pada Standar Pelayanan", align: :center, width: W_LAYANAN },
       { content: "Nama Aplikasi", align: :center, width: W_APLIKASI },
       { content: "Detail Kebutuhan", align: :center, width: W_KEBUTUHAN },
@@ -86,6 +88,7 @@ class SpbePdf < Prawn::Document
           { content: i.to_s },
           { content: spbe.opd_pemohon },
           { content: spbe.nama_program },
+          { content: spbe.strategi_tactical },
           { content: spbe.jenis_pelayanan },
           { content: spbe.nama_aplikasi },
           { content: spbe_rincian&.detail_kebutuhan },

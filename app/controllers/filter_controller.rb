@@ -267,6 +267,20 @@ class FilterController < ApplicationController
     # end
   end
 
+  def spbe
+    @tahun = cookies[:tahun]
+    @domain = params[:domain]
+    @spbes = if @domain.present? && @domain != 'all'
+               Spbe.includes(:program_kegiatan, :opd, :strategi, spbe_rincians: %i[opd])
+                   .joins(:opd, :spbe_rincians)
+                   .where(spbe_rincians: { domain_spbe: @domain })
+             else
+               Spbe.includes(:program_kegiatan, :opd, :strategi, spbe_rincians: %i[opd])
+                   .joins(:opd, :spbe_rincians).all
+             end
+    render partial: 'filter/spbe_kota'
+  end
+
   def daftar_resiko
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]

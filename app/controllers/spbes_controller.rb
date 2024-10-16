@@ -33,6 +33,7 @@ class SpbesController < ApplicationController
       format.pdf do
         pdf = SpbePdf.new(opd: @opd, tahun: @tahun, programs: @programs, spbes: @spbes, current_page: current_page,
                           domain: @domain)
+        pdf.print
         @filename << ".pdf"
         send_data(pdf.render, filename: @filename, type: 'application/pdf', disposition: :attachment)
       end
@@ -44,6 +45,26 @@ class SpbesController < ApplicationController
                      end
         @filename << ".xlsx"
         render xlsx: excel_file, filename: @filename, disposition: :attachment
+      end
+    end
+  end
+
+  # ambil ttd setda
+  def cetak_kota
+    @domain = params[:domain]
+    @spbes = Spbe.includes(:program_kegiatan, :opd, :strategi, spbe_rincians: %i[opd])
+                 .joins(:opd, :spbe_rincians).all
+    @opd = Opd.find(145)
+    current_page = request.original_url
+
+    @filename = "PETA_RENCANA_USULAN_APLIKASI_SPBE_KOTA_MADIUN_#{@tahun}"
+    respond_to do |format|
+      format.pdf do
+        pdf = SpbePdf.new(opd: @opd, tahun: @tahun, programs: @programs, spbes: @spbes, current_page: current_page,
+                          domain: @domain, kota: 'kota')
+        pdf.print
+        @filename << ".pdf"
+        send_data(pdf.render, filename: @filename, type: 'application/pdf', disposition: :inline)
       end
     end
   end
