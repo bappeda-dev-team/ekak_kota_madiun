@@ -17,7 +17,7 @@ module RincianBelanjaHelper
              else
                hitung.uraian_barang
              end
-    "#{uraian} #{hitung.id} <br/> #{spesifikasi} <br/> - #{tahun}".html_safe
+    "#{uraian} <br/> #{spesifikasi} <br/> - #{tahun}".html_safe
   end
 
   def spesifikasi_anggaran(kode_barang, tahun, jenis_barang)
