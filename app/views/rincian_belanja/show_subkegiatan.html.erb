@@ -1,15 +1,8 @@
-<nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
-  <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
-    <li class="breadcrumb-item">
-      <%= link_to root_path do %>
-        <i class="fas fa-home"></i>
-      <% end %>
-    </li>
-    <li class="breadcrumb-item" aria-current="page">Rincian Belanja</li>
-    <li class="breadcrumb-item" aria-current="page">Subkegiatan</li>
-    <li class="breadcrumb-item active" aria-current="page"><%= @subkegiatan.nama_subkegiatan %>
-    </ol>
-  </nav>
+<%= content_for :html_title, "Rincian Belanja Subkegiatan" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item active" aria-current="page">Rincian Belanja</li>
+<% end %>
+<% content_for :view_utama do %>
   <div class="px-3">
     <div class="card border-2 shadow mb-1">
       <div class="card-header">
@@ -92,8 +85,8 @@
                       <td></td>
                       <td><%= uraian_rincian_anggaran(hitung) %></td>
                       <td class="text-center"><% hitung.koefisiens.each.with_index(1) do |koef, index|%>
-                          <%= koef.volume %> <%= koef.satuan_volume %> <%= 'x' if index < hitung.koefisiens.length %>
-                        <% end %>
+                        <%= koef.volume %> <%= koef.satuan_volume %> <%= 'x' if index < hitung.koefisiens.length %>
+                      <% end %>
                       </td>
                       <td class="text-center"><%= hitung.satuan %></td>
                       <td class="me-1 text-end">Rp. <%= number_with_delimiter(hitung.harga) %></td>
@@ -117,4 +110,4 @@
       </div>
     </div>
   </div>
-  <%= render 'modal_perhitungans' %>
+<% end %>

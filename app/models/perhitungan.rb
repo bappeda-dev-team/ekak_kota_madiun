@@ -140,7 +140,6 @@ class Perhitungan < ApplicationRecord
 
   def deskripsi_anggaran
     uraians = Search::AllAnggaran.where(tahun: tahun,
-                                        searchable_type: jenis_anggaran,
                                         harga_satuan: harga.to_i)
                                  .where("concat_ws(' ', kode_barang, searchable_id) ILIKE ?", "%#{deskripsi}%")
     if uraians.size > 1
