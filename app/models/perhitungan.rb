@@ -139,9 +139,13 @@ class Perhitungan < ApplicationRecord
   end
 
   def deskripsi_anggaran
-    uraians = Search::AllAnggaran.where(tahun: tahun,
-                                        harga_satuan: harga.to_i)
-                                 .where("concat_ws(' ', kode_barang, searchable_id) ILIKE ?", "%#{deskripsi}%")
+    uraians = if tahun.present?
+                Search::AllAnggaran.where(tahun: tahun,
+                                          harga_satuan: harga.to_i)
+              else
+                Search::AllAnggaran.where(harga_satuan: harga.to_i)
+              end
+    uraians = uraians.where("concat_ws(' ', kode_barang, searchable_id) ILIKE ?", "%#{deskripsi}%")
     if uraians.size > 1
       uraians.select { |search| search.searchable.opd_id == opd_id }
     else
