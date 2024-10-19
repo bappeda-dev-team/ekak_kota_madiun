@@ -96,7 +96,7 @@ class UsulansController < ApplicationController
     @tahun = params[:tahun] || Time.now.year
     @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
     @filename = "Laporan_USULAN_#{@jenis_asli}_#{@nama_file}_#{@waktu}.xlsx"
-    render xlsx: "excel_usulan", filename: @filename, disposition: "inline"
+    render xlsx: "excel_usulan", filename: @filename, disposition: :attachment
   end
 
   def destroy

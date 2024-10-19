@@ -41,29 +41,29 @@ class TimKerjaPdf < Prawn::Document
     end
   end
 
+  LEBAR_KOLOM_ROLE = 100 # fixed width to set maximize child table cell width
   def susunan_tim_kerja
     text 'Susunan Tim Kerja', size: 10, font_style: :bold
     move_down 5
 
-    lebar_kolom_role = 100
+    #  [role | pelaksana]
+    #  [    |  pelaksana]
     susunan_tim = @tim_kerja[:susunan_tim].map do |role, susunans|
-      susunan_pelaksana = susunans.map do |susunan|
-        if susunan[:sasaran_terisi]
-          [susunan[:pelaksana]]
-        else
-          ['']
-        end
-      end
-      if susunans.all? { |ss| ss[:sasaran_terisi] }
-        tabel_pelaksana = make_table(susunan_pelaksana, width: bounds.width - lebar_kolom_role) do
-          cells.style(size: 8)
-        end
-        [role[:role], tabel_pelaksana]
-      else
-        []
-      end
+      [role[:role], tabel_pelaksana(susunans)]
     end
-    table(susunan_tim, column_widths: { 0 => lebar_kolom_role }) do
+    table(susunan_tim, column_widths: { 0 => LEBAR_KOLOM_ROLE }) do
+      cells.style(size: 8)
+    end
+  end
+
+  def tabel_pelaksana(susunans)
+    # pelaksana with sasaran_terisi => true
+    susunan_pelaksana = susunans.filter_map do |susunan|
+      [susunan[:pelaksana]] if susunan[:sasaran_terisi]
+    end
+
+    # this is needed for set each cell max width to fill the empty space and set font size
+    make_table(susunan_pelaksana, width: bounds.width - LEBAR_KOLOM_ROLE) do
       cells.style(size: 8)
     end
   end
