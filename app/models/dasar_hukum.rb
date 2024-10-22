@@ -27,4 +27,9 @@ class DasarHukum < ApplicationRecord
   def dasar_hukum
     judul
   end
+
+  def split_dasar_hukum
+    judul.split(/\d+\)/).compact_blank
+         .flat_map { |jd| jd.strip.gsub(/[.,;]+$/, '') }
+  end
 end

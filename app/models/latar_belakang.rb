@@ -25,4 +25,8 @@ class LatarBelakang < ApplicationRecord
   # TODO: remove dasar_hukum later, or connect it
   belongs_to :sasaran, optional: true
   validates :gambaran_umum, presence: true
+
+  def gambaran_umum_fix_encode
+    gambaran_umum.encode("Windows-1252", invalid: :replace, undef: :replace, replace: '')
+  end
 end

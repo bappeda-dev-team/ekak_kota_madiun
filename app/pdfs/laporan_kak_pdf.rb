@@ -146,11 +146,13 @@ class LaporanKakPdf < Prawn::Document
     tabel_sasaran.draw
   end
 
+  # rubocop: disable Metrics
   def dasar_hukum(sasaran)
     dasar_hukum_arr = []
     if sasaran.dasar_hukums.any?
-      sasaran.dasar_hukums.each do |dasar_hukum|
-        dasar_hukum_arr << [dasar_hukum.judul]
+      das_hus = sasaran.dasar_hukums.flat_map(&:split_dasar_hukum)
+      das_hus.each.with_index(1) do |das_hu, no|
+        dasar_hukum_arr << ["#{no}. #{das_hu}"]
       end
     else
       dasar_hukum_arr = [['-']]
@@ -168,7 +170,7 @@ class LaporanKakPdf < Prawn::Document
     latar_belakang_arr = []
     if sasaran.latar_belakangs.any?
       sasaran.latar_belakangs.each do |latar_belakang|
-        latar_belakang_arr << [latar_belakang.gambaran_umum]
+        latar_belakang_arr << [latar_belakang.gambaran_umum_fix_encode]
       end
     else
       latar_belakang_arr = [['-']]
