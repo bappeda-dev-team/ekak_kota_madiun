@@ -582,6 +582,7 @@ Rails.application.routes.draw do
       get :daftar_resiko
       get :tim_kerja
       post :tim_kerja_view
+      get :pdf_kak_opd
     end
 
     member do

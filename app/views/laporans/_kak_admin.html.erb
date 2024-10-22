@@ -9,6 +9,18 @@
       </div>
     </div>
   </div>
+  <div class="card-header">
+    <div class="row align-items-end g-2">
+      <div class="col">
+      </div>
+      <div class="col-auto text-end button-cetak">
+        <%= link_to pdf_kak_opd_laporans_path(format: :pdf), class: "btn btn-sm btn-primary" do %>
+          <span>PDF Laporan KAK</span>
+          <i class="fas fa-file-pdf ms-2"></i>
+        <% end %>
+      </div>
+    </div>
+  </div>
   <div class="card-body">
     <div class="table-responsive">
       <table class="table align-items-center table-bordered">
