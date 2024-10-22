@@ -52,8 +52,14 @@ class SpbesController < ApplicationController
   # ambil ttd setda
   def cetak_kota
     @domain = params[:domain]
-    @spbes = Spbe.includes(:program_kegiatan, :opd, :strategi, spbe_rincians: %i[opd])
-                 .joins(:opd, :spbe_rincians).all
+    @spbes = if @domain.present? && @domain != 'all'
+               Spbe.includes(:program_kegiatan, :opd, :strategi, spbe_rincians: %i[opd])
+                   .joins(:opd, :spbe_rincians)
+                   .where(spbe_rincians: { domain_spbe: @domain })
+             else
+               Spbe.includes(:program_kegiatan, :opd, :strategi, spbe_rincians: %i[opd])
+                   .joins(:opd, :spbe_rincians).all
+             end
     @opd = Opd.find(145)
     current_page = request.original_url
 

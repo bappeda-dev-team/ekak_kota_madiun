@@ -9,6 +9,34 @@
   </div>
   <div class="card-header">
     <div class="row align-items-end g-2">
+      <div class="col">
+        <div class="row button-filter">
+          <div class="col-8">
+            <%= form_with(url: spbe_laporans_path,
+                          local: true, method: :get, class: 'row',
+            ) do |form| %>
+              <div class="col">
+                <%= form.select :domain, [],{include_blank: true},
+                 { required: true,
+                   data: { "placeholder": "Pilih Domain SPBE",
+                     controller: 'dropdown',
+                     dropdown_jenis_value: 'ajax',
+                     dropdown_url_value: domains_path(format: :json)
+                   } }  %>
+              </div>
+              <div class="col-auto">
+                <%= form.submit 'Filter', name: 'filter', class: 'btn btn-inline btn-primary' %>
+              </div>
+            <% end %>
+          </div>
+          <div class="col reset">
+            <%= button_to "Reset", index_opd_spbes_path,
+                          params: { domain: 'all' },
+                          method: :get,
+                          class: 'btn btn-danger' %>
+          </div>
+        </div>
+      </div>
       <div class="col-auto text-end button-cetak">
         <%= link_to cetak_kota_spbes_path(format: :pdf, params: { domain: @domain }), class: "btn btn-sm btn-primary" do %>
           <span>PDF Laporan SPBE</span>

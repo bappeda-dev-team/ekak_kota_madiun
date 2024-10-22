@@ -80,4 +80,24 @@ export default class extends Controller {
         this.resultsTarget.innerHTML = "Terjadi Kesalahan";
       });
   }
+
+  filterGet(event) {
+    const formTarget = event.target;
+    const url = event.target.action;
+    const formData = new URLSearchParams(new FormData(formTarget)).toString();
+
+    const fullUrl = `${url}?${formData}`;
+
+    // Update the current URL without reloading the page
+    window.history.pushState({}, "", fullUrl);
+
+    fetch(fullUrl)
+      .then((response) => response.text())
+      .then((text) => {
+        this.resultsTarget.innerHTML = text;
+      })
+      .catch((e) => {
+        this.resultsTarget.innerHTML = "Terjadi Kesalahan";
+      });
+  }
 }

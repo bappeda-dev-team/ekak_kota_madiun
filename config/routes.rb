@@ -715,7 +715,7 @@ Rails.application.routes.draw do
   end
 
   namespace :filter do
-    post :spbe
+    get :spbe
     post :daftar_resiko
     post :isu_strategis_permasalahan
     # post :laporan_renstra

@@ -94,6 +94,15 @@ class LaporansController < ApplicationController
     # @spbe = @opd.program_kegiatans.programs
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
+    @domain = params[:domain]
+    @spbes = if @domain.present? && @domain != 'all'
+               Spbe.includes(:program_kegiatan, :opd, :strategi, spbe_rincians: %i[opd])
+                   .joins(:opd, :spbe_rincians)
+                   .where(spbe_rincians: { domain_spbe: @domain })
+             else
+               Spbe.includes(:program_kegiatan, :opd, :strategi, spbe_rincians: %i[opd])
+                   .joins(:opd, :spbe_rincians).all
+             end
   end
 
   def renstra

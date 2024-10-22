@@ -4,10 +4,5 @@
   <li class="breadcrumb-item active" aria-current="page">SPBE</li>
 <% end %>
 <% content_for :view_utama do %>
-  <%= render 'shared/card_ajax',
-             title: "Laporan SPBE",
-             data_page_attr: {
-               controller: 'page-ajax',
-               page_ajax_url_value: filter_spbe_path
-             } %>
+  <%= render partial: 'filter/spbe_kota' %>
 <% end %>
