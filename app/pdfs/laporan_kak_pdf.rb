@@ -150,7 +150,7 @@ class LaporanKakPdf < Prawn::Document
     dasar_hukum_arr = []
     if sasaran.dasar_hukums.any?
       sasaran.dasar_hukums.each do |dasar_hukum|
-        dasar_hukum_arr << [dasar_hukum.judul, dasar_hukum.peraturan]
+        dasar_hukum_arr << [dasar_hukum.judul]
       end
     else
       dasar_hukum_arr = [['-']]
