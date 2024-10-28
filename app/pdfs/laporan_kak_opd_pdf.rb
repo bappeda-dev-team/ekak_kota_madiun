@@ -78,30 +78,33 @@ class LaporanKakOpdPdf < Prawn::Document
       tahun_n = tahun_fix(@tahun)
       indikator = subk&.indikator_subkegiatan_tahun(tahun_n, @kode_opd)
       pagu = sasarans.map(&:total_anggaran).compact.sum
+      subkegiatan = "Subkegiatan: #{subk&.nama_subkegiatan || 'belum terisi'}"
+      bg_color = subkegiatan == 'Subkegiatan: belum terisi' ? "F3F7EC" : "FFFFFF"
       tabel << [
-        { content: i.to_s },
-        { content: "Subkegiatan: #{subk&.nama_subkegiatan || 'Belum terisi'}", colspan: 2 },
-        { content:  indikator&.dig(:indikator) },
-        { content:  indikator&.dig(:target) },
-        { content:  indikator&.dig(:satuan) },
-        { content:  "Rp. #{number_with_delimiter(pagu)}" }
+        { content: i.to_s, background_color: bg_color },
+        { content: subkegiatan, colspan: 2, background_color: bg_color },
+        { content:  indikator&.dig(:indikator), background_color: bg_color },
+        { content:  indikator&.dig(:target), background_color: bg_color },
+        { content:  indikator&.dig(:satuan), background_color: bg_color },
+        { content:  "Rp. #{number_with_delimiter(pagu)}", background_color: bg_color }
       ]
       sasarans.each.with_index(1) do |ss, index|
         tabel << [
-          { content: "#{i}.#{index}", rowspan: ss.indikator_sasarans.size },
-          { content: ss.nama_pemilik, rowspan: ss.indikator_sasarans.size },
-          { content: ss.sasaran_kinerja, rowspan: ss.indikator_sasarans.size },
-          { content: ss.indikator_sasarans.first.indikator_kinerja },
-          { content: ss.indikator_sasarans.first.target },
-          { content: ss.indikator_sasarans.first.satuan },
-          { content: "Rp. #{number_with_delimiter(ss.total_anggaran)}", rowspan: ss.indikator_sasarans.size }
+          { content: "#{i}.#{index}", rowspan: ss.indikator_sasarans.size, background_color: bg_color },
+          { content: ss.nama_pemilik, rowspan: ss.indikator_sasarans.size, background_color: bg_color },
+          { content: ss.sasaran_kinerja, rowspan: ss.indikator_sasarans.size, background_color: bg_color },
+          { content: ss.indikator_sasarans.first.indikator_kinerja, background_color: bg_color },
+          { content: ss.indikator_sasarans.first.target, background_color: bg_color },
+          { content: ss.indikator_sasarans.first.satuan, background_color: bg_color },
+          { content: "Rp. #{number_with_delimiter(ss.total_anggaran)}", rowspan: ss.indikator_sasarans.size,
+            background_color: bg_color }
         ]
 
         ss.indikator_sasarans.drop(1).each do |ind|
           tabel << [
-            { content: ind.indikator_kinerja },
-            { content: ind.target },
-            { content: ind.satuan }
+            { content: ind.indikator_kinerja, background_color: bg_color },
+            { content: ind.target, background_color: bg_color },
+            { content: ind.satuan, background_color: bg_color }
           ]
         end
       end
@@ -112,6 +115,7 @@ class LaporanKakOpdPdf < Prawn::Document
       { content: "Rp. #{number_with_delimiter(pagu_total)}" }
     ]
     table(tabel, header: true, width: bounds.width) do
+      # sub_kosong.background_color = "F3F7EC"
       cells.style(size: 8)
     end
   end
