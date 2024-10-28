@@ -58,7 +58,7 @@ class LaporanKakOpdPdf < Prawn::Document
   W_INDIKATOR = 80
   W_TARGET = 50
   W_SATUAN = 50
-  W_ANGGARAN = 70
+  W_ANGGARAN = 90
 
   def header_tabel
     [
@@ -67,32 +67,59 @@ class LaporanKakOpdPdf < Prawn::Document
       { content: "RENCANA KINERJA", align: :center, width: W_RENCANA_KINERJA },
       { content: "INDIKATOR", align: :center, width: W_INDIKATOR },
       { content: "TARGET", align: :center, width: W_TARGET },
-      { content: "SATUAN", align: :center, width: W_SATUAN }
+      { content: "SATUAN", align: :center, width: W_SATUAN },
+      { content: "ANGGARAN", align: :center, width: W_ANGGARAN }
     ]
   end
 
   def tabel_kak
     tabel = [header_tabel]
-    @sasarans.each.with_index(1) do |ss, i|
+    @sasarans.each.with_index(1) do |(subk, sasarans), i|
+      tahun_n = tahun_fix(@tahun)
+      indikator = subk&.indikator_subkegiatan_tahun(tahun_n, @kode_opd)
+      pagu = sasarans.map(&:total_anggaran).compact.sum
       tabel << [
-        { content: i.to_s, rowspan: ss.indikator_sasarans.size },
-        { content: ss.nama_pemilik, rowspan: ss.indikator_sasarans.size },
-        { content: ss.sasaran_kinerja, rowspan: ss.indikator_sasarans.size },
-        { content: ss.indikator_sasarans.first.indikator_kinerja },
-        { content: ss.indikator_sasarans.first.target },
-        { content: ss.indikator_sasarans.first.satuan }
+        { content: i.to_s },
+        { content: "Subkegiatan: #{subk&.nama_subkegiatan || 'Belum terisi'}", colspan: 2 },
+        { content:  indikator&.dig(:indikator) },
+        { content:  indikator&.dig(:target) },
+        { content:  indikator&.dig(:satuan) },
+        { content:  "Rp. #{number_with_delimiter(pagu)}" }
       ]
-
-      ss.indikator_sasarans.drop(1).each do |ind|
+      sasarans.each.with_index(1) do |ss, index|
         tabel << [
-          { content: ind.indikator_kinerja },
-          { content: ind.target },
-          { content: ind.satuan }
+          { content: "#{i}.#{index}", rowspan: ss.indikator_sasarans.size },
+          { content: ss.nama_pemilik, rowspan: ss.indikator_sasarans.size },
+          { content: ss.sasaran_kinerja, rowspan: ss.indikator_sasarans.size },
+          { content: ss.indikator_sasarans.first.indikator_kinerja },
+          { content: ss.indikator_sasarans.first.target },
+          { content: ss.indikator_sasarans.first.satuan },
+          { content: "Rp. #{number_with_delimiter(ss.total_anggaran)}", rowspan: ss.indikator_sasarans.size }
         ]
+
+        ss.indikator_sasarans.drop(1).each do |ind|
+          tabel << [
+            { content: ind.indikator_kinerja },
+            { content: ind.target },
+            { content: ind.satuan }
+          ]
+        end
       end
     end
+    pagu_total = @sasarans.values.flatten.map(&:total_anggaran).compact.sum
+    tabel << [
+      { content: "Total", colspan: 6 },
+      { content: "Rp. #{number_with_delimiter(pagu_total)}" }
+    ]
     table(tabel, header: true, width: bounds.width) do
       cells.style(size: 8)
     end
+  end
+
+  private
+
+  def tahun_fix(tahun)
+    tahun_string = tahun.to_s
+    tahun_string.match(/murni|perubahan/) ? tahun_string[/[^_]\d*/, 0] : tahun
   end
 end

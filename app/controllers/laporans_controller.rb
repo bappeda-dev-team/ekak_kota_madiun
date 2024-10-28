@@ -52,7 +52,7 @@ class LaporansController < ApplicationController
     opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = opd.nama_opd
     kak = KakQueries.new(opd: opd, tahun: @tahun)
-    @sasarans = kak.sasarans.sort_by { |sas| sas.kode_subkegiatan }
+    @sasarans = kak.pk_sasarans
     waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
     @filename = "Laporan_KAK_#{@nama_opd}_#{waktu}.pdf"
     current_page = request.original_url
