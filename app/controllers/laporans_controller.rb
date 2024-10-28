@@ -48,6 +48,28 @@ class LaporansController < ApplicationController
     end
   end
 
+  def pdf_kak_opd
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = opd.nama_opd
+    kak = KakQueries.new(opd: opd, tahun: @tahun)
+    @sasarans = kak.pk_sasarans
+    waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
+    @filename = "Laporan_KAK_#{@nama_opd}_#{waktu}.pdf"
+    current_page = request.original_url
+    respond_to do |format|
+      format.pdf do
+        pdf = LaporanKakOpdPdf.new(opd: opd,
+                                   tahun: @tahun,
+                                   sasarans: @sasarans,
+                                   current_page: current_page)
+        pdf.print
+        send_data(pdf.render, filename: @filename,
+                              type: 'application/pdf',
+                              dispotition: :attachment)
+      end
+    end
+  end
+
   def show_kak
     @program_kegiatan = ProgramKegiatan.find(params[:id])
     indikators_pks = IndikatorQueries.new(tahun: @tahun, opd: @program_kegiatan.opd,
