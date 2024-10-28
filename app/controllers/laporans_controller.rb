@@ -52,7 +52,7 @@ class LaporansController < ApplicationController
     opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = opd.nama_opd
     kak = KakQueries.new(opd: opd, tahun: @tahun)
-    @program_kegiatans = kak.pk_sasarans
+    @sasarans = kak.sasarans.sort_by { |sas| sas.kode_subkegiatan }
     waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
     @filename = "Laporan_KAK_#{@nama_opd}_#{waktu}.pdf"
     current_page = request.original_url
@@ -60,6 +60,7 @@ class LaporansController < ApplicationController
       format.pdf do
         pdf = LaporanKakOpdPdf.new(opd: opd,
                                    tahun: @tahun,
+                                   sasarans: @sasarans,
                                    current_page: current_page)
         pdf.print
         send_data(pdf.render, filename: @filename,
