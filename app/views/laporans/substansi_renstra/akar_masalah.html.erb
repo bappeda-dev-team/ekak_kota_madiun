@@ -1,0 +1,40 @@
+<%= content_for :html_title, "Bab 3 - Akar Masalah" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Substansi Renstra</li>
+  <li class="breadcrumb-item" aria-current="page">Bab 3</li>
+  <li class="breadcrumb-item active" aria-current="page">Akar Masalah</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout_subtitle', title: "Akar Masalah", sub_title: @opd, sub_title_2: @tahun do %>
+    <div class="d-grid gap-3">
+      <div class="table-responsive">
+        <table class="table table-bordered align-items-center counter border">
+          <thead class="thead-light sticky-top">
+            <tr class="border-start border-end border-top">
+              <th class="text-center">No</th>
+              <th class="text-center">Masalah Pokok</th>
+              <th class="text-center">Masalah</th>
+              <th class="text-center">Akar Masalah</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody id="new_akar_masalah">
+            <%= render partial: 'akar_masalahs/akar_masalah', collection: @akar_masalahs, as: :akar_masalah %>
+          </tbody>
+        </table>
+      </div>
+      <% unless guest? %>
+        <%= link_to new_akar_masalah_path,
+                    remote: true, class: 'btn btn-primary',
+                    data: {
+                      controller: 'row',
+                      action: 'ajax:complete->row#addRow',
+                      row_element_value: 'new_akar_masalah'
+                    } do %>
+          <span class="fas fa-plus me-2"></span>
+          <span>Masalah Pokok Baru</span>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

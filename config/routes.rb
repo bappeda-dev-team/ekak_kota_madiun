@@ -8,6 +8,7 @@ require "sidekiq/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :akar_masalahs
   resources :tim_kerja, only: [] do
     member do
       get :edit_dasar_hukum
