@@ -173,6 +173,41 @@ ALTER SEQUENCE public.active_storage_variant_records_id_seq OWNED BY public.acti
 
 
 --
+-- Name: akar_masalahs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.akar_masalahs (
+    id bigint NOT NULL,
+    masalah_pokok character varying,
+    masalah character varying,
+    akar_masalah character varying,
+    kode_opd character varying,
+    tahun character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: akar_masalahs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.akar_masalahs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: akar_masalahs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.akar_masalahs_id_seq OWNED BY public.akar_masalahs.id;
+
+
+--
 -- Name: aksis; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -4006,6 +4041,13 @@ ALTER TABLE ONLY public.active_storage_variant_records ALTER COLUMN id SET DEFAU
 
 
 --
+-- Name: akar_masalahs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.akar_masalahs ALTER COLUMN id SET DEFAULT nextval('public.akar_masalahs_id_seq'::regclass);
+
+
+--
 -- Name: aksis id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4693,6 +4735,14 @@ ALTER TABLE ONLY public.active_storage_blobs
 
 ALTER TABLE ONLY public.active_storage_variant_records
     ADD CONSTRAINT active_storage_variant_records_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: akar_masalahs akar_masalahs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.akar_masalahs
+    ADD CONSTRAINT akar_masalahs_pkey PRIMARY KEY (id);
 
 
 --
@@ -6599,6 +6649,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241009082545'),
 ('20241010220432'),
 ('20241014065230'),
-('20241014081355');
+('20241014081355'),
+('20241030041929');
 
 
