@@ -605,6 +605,7 @@ Rails.application.routes.draw do
       get :pohon_cascading
       get :strategi_arah_kebijakan
       get :matrik_renstra
+      get :akar_masalah
     end
   end
   namespace :search do

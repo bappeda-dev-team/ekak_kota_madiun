@@ -1,3 +1,4 @@
+# rubocop: disable Metrics
 module Laporans::SubstansiRenstraHelper
   def substansi_renstra_items
     [
@@ -77,6 +78,10 @@ module Laporans::SubstansiRenstraHelper
       {
         title: 'Permasalahan dan Isu Strategis', href: laporans_substansi_renstra_permasalahan_isu_strategis_path,
         identifier: 'substansi-renstra-bab-3-permasalahan'
+      },
+      {
+        title: 'Akar Masalah', href: laporans_substansi_renstra_akar_masalah_path,
+        identifier: 'substansi-renstra-bab-3-pemetaan-permasalahan'
       },
       {
         title: 'Pohon Kinerja', href: laporans_substansi_renstra_pohon_kinerja_path,

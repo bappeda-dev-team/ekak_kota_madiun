@@ -1,3 +1,4 @@
+# rubocop: disable Metrics
 class Laporans::SubstansiRenstraController < ApplicationController
   def dasar_hukum
     @kode_opd = cookies[:opd]
@@ -51,6 +52,13 @@ class Laporans::SubstansiRenstraController < ApplicationController
     @isu_strategis = @opd.isu_strategis_opds
                          .where("tahun ILIKE ?", "%#{tahun_asli}%")
                          .order(:id).group_by { |isu| "(#{isu.kode_bidang_urusan}) #{isu.bidang_urusan}" }
+  end
+
+  def akar_masalah
+    @kode_unik_opd = cookies[:opd]
+    @tahun = cookies[:tahun]
+    @opd = Opd.find_by(kode_unik_opd: @kode_unik_opd)
+    @nama_opd = @opd.nama_opd
   end
 
   def pohon_kinerja
