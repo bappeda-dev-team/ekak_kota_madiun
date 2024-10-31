@@ -55,10 +55,12 @@ class Laporans::SubstansiRenstraController < ApplicationController
   end
 
   def akar_masalah
-    @kode_unik_opd = cookies[:opd]
+    @kode_opd = cookies[:opd]
     @tahun = cookies[:tahun]
-    @opd = Opd.find_by(kode_unik_opd: @kode_unik_opd)
+    queries = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
+    @opd = queries.opd
     @nama_opd = @opd.nama_opd
+    @strategi_opd = queries.strategi_opd
   end
 
   def pohon_kinerja

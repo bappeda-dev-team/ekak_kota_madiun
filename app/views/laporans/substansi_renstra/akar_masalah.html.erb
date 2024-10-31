@@ -6,35 +6,44 @@
 <% end %>
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout_subtitle', title: "Akar Masalah", sub_title: @opd, sub_title_2: @tahun do %>
-    <div class="d-grid gap-3">
-      <div class="table-responsive">
-        <table class="table table-bordered align-items-center counter border">
-          <thead class="thead-light sticky-top">
-            <tr class="border-start border-end border-top">
-              <th class="text-center">No</th>
-              <th class="text-center">Masalah Pokok</th>
-              <th class="text-center">Masalah</th>
-              <th class="text-center">Akar Masalah</th>
-              <th class="text-center">Action</th>
+    <div class="table-responsive">
+      <table class="table table-bordered align-items-center counter border sticky-head" id="tabel-akar-masalah">
+        <thead class="thead-light">
+          <tr>
+            <th class="text-center">No</th>
+            <th class="text-center">Masalah Pokok</th>
+            <th class="text-center">Masalah</th>
+            <th class="text-center">Akar Masalah</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody id="new_akar_masalah">
+          <% @strategi_opd.each do |strategi| %>
+            <% rowspan = rowspan_masalah_pokok(strategi.strategi_bawahans) %>
+            <tr data-controller="row">
+              <td class="text-gray-900 fw-bolder align-middle" scope="row" rowspan="<%= rowspan %>"></td>
+              <td class="text-gray-900-align-middle text-wrap" rowspan="<%= rowspan %>">
+                <%= strategi.to_s %>
+              </td>
             </tr>
-          </thead>
-          <tbody id="new_akar_masalah">
-            <%= render partial: 'akar_masalahs/akar_masalah', collection: @akar_masalahs, as: :akar_masalah %>
-          </tbody>
-        </table>
-      </div>
-      <% unless guest? %>
-        <%= link_to new_akar_masalah_path,
-                    remote: true, class: 'btn btn-primary',
-                    data: {
-                      controller: 'row',
-                      action: 'ajax:complete->row#addRow',
-                      row_element_value: 'new_akar_masalah'
-                    } do %>
-          <span class="fas fa-plus me-2"></span>
-          <span>Masalah Pokok Baru</span>
-        <% end %>
-      <% end %>
+            <% strategi.strategi_bawahans.each do |tactical| %>
+              <% rowspan_tact = rowspan_masalah(tactical.strategi_bawahans) %>
+              <tr data-controller="row" class="skip">
+                <td class="text-gray-900-align-middle text-wrap" rowspan="<%= rowspan_tact %>">
+                  <%= tactical.to_s %>
+                </td>
+              </tr>
+              <% tactical.strategi_bawahans.each do |opr| %>
+                <tr data-controller="row" class="skip">
+                  <td class="text-gray-900-align-middle text-wrap">
+                    <%= opr.to_s %>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   <% end %>
 <% end %>
