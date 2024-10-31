@@ -178,11 +178,11 @@ ALTER SEQUENCE public.active_storage_variant_records_id_seq OWNED BY public.acti
 
 CREATE TABLE public.akar_masalahs (
     id bigint NOT NULL,
-    masalah_pokok character varying,
     masalah character varying,
-    akar_masalah character varying,
     kode_opd character varying,
     tahun character varying,
+    parent_id bigint,
+    jenis character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
