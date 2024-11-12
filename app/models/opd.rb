@@ -477,7 +477,7 @@ class Opd < ApplicationRecord
       Opd.where('kode_unik_opd ILIKE ?', "4.01.0.00.0.00.01%")
          .flat_map { |opd| opd.users.non_admin.aktif }
     else
-      users.non_admin.aktif
+      users.non_admin.aktif + user_jabatan
     end
   end
 
@@ -503,5 +503,12 @@ class Opd < ApplicationRecord
                        .select { |user| user.has_any_role?(role) }
                    end
     user_opd + user_jabatan
+  end
+
+  def user_jabatan
+    jabatan_users
+      .joins(:user)
+      .where(status: %w[aktif plt])
+      .map(&:user)
   end
 end
