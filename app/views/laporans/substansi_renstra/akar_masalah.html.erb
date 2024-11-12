@@ -7,34 +7,42 @@
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout_subtitle', title: "Akar Masalah", sub_title: @opd, sub_title_2: @tahun do %>
     <div class="table-responsive">
-      <table class="table table-bordered align-items-center counter border sticky-head" id="tabel-akar-masalah">
+      <table class="table table-bordered align-items-center border sticky-head" id="tabel-akar-masalah">
         <thead class="thead-light">
           <tr>
             <th class="text-center">No</th>
-            <th class="text-center">Masalah Pokok</th>
+            <th class="text-center">Jenis Masalah</th>
             <th class="text-center">Masalah</th>
-            <th class="text-center">Akar Masalah</th>
             <th class="text-center">Action</th>
           </tr>
         </thead>
         <tbody id="new_akar_masalah">
-          <% @strategi_opd.each do |strategi| %>
-            <% rowspan = rowspan_masalah_pokok(strategi.strategi_bawahans) %>
+          <% @strategi_opd.each.with_index(1) do |strategi, i| %>
             <tr data-controller="row">
-              <td class="text-gray-900 fw-bolder align-middle" scope="row" rowspan="<%= rowspan %>"></td>
-              <td class="text-gray-900-align-middle text-wrap" rowspan="<%= rowspan %>">
+              <td class="text-gray-900 fw-bolder align-middle" scope="row"><%= i %></td>
+              <td class="text-gray-900-align-middle">
+                Masalah Pokok
+              </td>
+              <td class="text-gray-900-align-middle text-wrap">
                 <%= strategi.to_s %>
               </td>
             </tr>
-            <% strategi.strategi_bawahans.each do |tactical| %>
-              <% rowspan_tact = rowspan_masalah(tactical.strategi_bawahans) %>
-              <tr data-controller="row" class="skip">
-                <td class="text-gray-900-align-middle text-wrap" rowspan="<%= rowspan_tact %>">
+            <% strategi.strategi_bawahans.each.with_index(1) do |tactical, i_tact| %>
+              <tr data-controller="row">
+                <td class="text-gray-900 fw-bolder align-middle" scope="row"><%= i %>.<%= i_tact %></td>
+                <td class="text-gray-900-align-middle">
+                  Masalah
+                </td>
+                <td class="text-gray-900-align-middle text-wrap">
                   <%= tactical.to_s %>
                 </td>
               </tr>
-              <% tactical.strategi_bawahans.each do |opr| %>
-                <tr data-controller="row" class="skip">
+              <% tactical.strategi_bawahans.each.with_index(1) do |opr, i_op| %>
+                <tr data-controller="row">
+                  <td class="text-gray-900 fw-bolder align-middle" scope="row"><%= i %>.<%= i_tact %>.<%= i_op %></td>
+                  <td class="text-gray-900-align-middle">
+                    Akar Masalah
+                  </td>
                   <td class="text-gray-900-align-middle text-wrap">
                     <%= opr.to_s %>
                   </td>
