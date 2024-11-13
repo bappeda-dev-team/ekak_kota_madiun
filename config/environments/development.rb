@@ -74,7 +74,10 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   config.file_watcher = ActiveSupport::FileUpdateChecker
-  # config.hosts << ["kak_dev.test", "app"]
+  # config.hosts << ["kak_dev.test", "app", "shepherd-fluent-octopus.ngrok-free.app"]
+  # config.hosts << /.*\.ngrok\.io/
+  # config.hosts << /.*\.ngrok-free\.app/
+  config.hosts = nil
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true

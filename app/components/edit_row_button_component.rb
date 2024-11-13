@@ -1,15 +1,20 @@
 # frozen_string_literal: true
 
 class EditRowButtonComponent < ViewComponent::Base
-  def initialize(path: '', title: 'Edit', icon: 'fas fa-pencil-alt')
+  def initialize(btn_style: '', path: '', title: 'Edit', icon: 'fas fa-pencil-alt')
     super
     @title = title
     @path = path
     @icon = icon
+    @btn_style = btn_style
   end
 
   def style
-   'btn btn-sm btn-outline-info'
+    if @btn_style.blank?
+      'btn btn-sm btn-outline-info'
+    else
+      @btn_style
+    end
   end
 
   def icon

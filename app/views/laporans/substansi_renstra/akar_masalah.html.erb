@@ -18,35 +18,11 @@
         </thead>
         <tbody id="new_akar_masalah">
           <% @strategi_opd.each.with_index(1) do |strategi, i| %>
-            <tr data-controller="row">
-              <td class="text-gray-900 fw-bolder align-middle" scope="row"><%= i %></td>
-              <td class="text-gray-900-align-middle">
-                Masalah Pokok
-              </td>
-              <td class="text-gray-900-align-middle text-wrap">
-                <%= strategi.to_s %>
-              </td>
-            </tr>
+            <%= render SubstansiRenstra::MasalahComponent.new(strategi: strategi, no_row: "#{i}") %>
             <% strategi.strategi_bawahans.each.with_index(1) do |tactical, i_tact| %>
-              <tr data-controller="row">
-                <td class="text-gray-900 fw-bolder align-middle" scope="row"><%= i %>.<%= i_tact %></td>
-                <td class="text-gray-900-align-middle">
-                  Masalah
-                </td>
-                <td class="text-gray-900-align-middle text-wrap">
-                  <%= tactical.to_s %>
-                </td>
-              </tr>
+              <%= render SubstansiRenstra::MasalahComponent.new(strategi: tactical, no_row: "#{i}.#{i_tact}") %>
               <% tactical.strategi_bawahans.each.with_index(1) do |opr, i_op| %>
-                <tr data-controller="row">
-                  <td class="text-gray-900 fw-bolder align-middle" scope="row"><%= i %>.<%= i_tact %>.<%= i_op %></td>
-                  <td class="text-gray-900-align-middle">
-                    Akar Masalah
-                  </td>
-                  <td class="text-gray-900-align-middle text-wrap">
-                    <%= opr.to_s %>
-                  </td>
-                </tr>
+                <%= render SubstansiRenstra::MasalahComponent.new(strategi: opr, no_row: "#{i}.#{i_tact}.#{i_op}") %>
               <% end %>
             <% end %>
           <% end %>
