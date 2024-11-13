@@ -5,28 +5,29 @@
 <% end %>
 <% content_for :view_utama do %>
   <% if cookies[:tahun] && cookies[:opd] %>
-    <div class="card border-0 shadow" >
+    <div class="card border-0 shadow mb-3" >
       <div class="card-body border-5 shadow">
         <h5 class="mb-2">Pohon Kinerja Kota Tahun <%= @tahun %></h5>
         <%= form_with url: cascading_kota_laporans_path, method: :get,
-            local: false,
-            data: {
-              controller: 'filter-render',
-              action: 'ajax:complete->filter-render#success:prevent',
-            } do |form| %>
+                      local: false,
+                      data: {
+                        controller: 'filter-render',
+                        action: 'ajax:success->filter-render#success:prevent
+                                 ajax:error->filter-render#error:prevent',
+                      } do |form| %>
           <%= content_tag(:label, "Tematik", class: 'form-label') %>
           <%= form.select :tematik,
-              select_pohon_tematik(@tematiks),
-              {},
-              { data: {
-                  controller: 'dropdown',
-                  placeholder: 'Tema Pohon Kinerja'
-                },
-                class: 'form-control',
-                required: true
-              } %>
+           select_pohon_tematik(@tematiks),
+           {},
+           { data: {
+             controller: 'dropdown',
+             placeholder: 'Tema Pohon Kinerja'
+           },
+             class: 'form-control',
+             required: true
+           } %>
           <%= button_tag class: "btn btn-tertiary w-100 mt-5",
-             data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>  Mencari..." } do %>
+                         data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>  Mencari..." } do %>
             <i class="fa fa-search me-2"></i>
             <span>Filter</span>
           <% end %>
