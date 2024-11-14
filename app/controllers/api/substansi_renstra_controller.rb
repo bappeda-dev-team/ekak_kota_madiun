@@ -45,5 +45,14 @@ module Api
       @opd = Opd.find_by(kode_unik_opd: @kode_opd)
       @jabatans = @opd.jabatan_baru
     end
+
+    def akar_masalah
+      @tahun = params[:tahun]
+      @kode_opd = params[:kode_opd]
+      queries = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
+      @opd = queries.opd
+      @nama_opd = @opd.nama_opd
+      @strategi_opds = queries.strategi_opd
+    end
   end
 end

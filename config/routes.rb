@@ -866,6 +866,7 @@ Rails.application.routes.draw do
       get :dasar_hukums
       get :asets
       get :sumber_daya_manusia
+      get :akar_masalah
     end
   end
 

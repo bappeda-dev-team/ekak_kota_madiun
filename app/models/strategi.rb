@@ -288,4 +288,8 @@ class Strategi < ApplicationRecord
                 end
     "#{strategi} #{dari_kota} - indikator: #{indikators.pluck(:indikator).flatten}"
   end
+
+  def masalah
+    akar_masalah.to_s
+  end
 end
