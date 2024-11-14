@@ -10,6 +10,7 @@
       <%= form.hidden_field :strategi_id, form: form_id(akar_masalah) %>
       <%= form.hidden_field :tahun, form: form_id(akar_masalah) %>
       <%= form.hidden_field :jenis, form: form_id(akar_masalah) %>
+      <%= form.hidden_field :kode_opd, form: form_id(akar_masalah) %>
       <%= form.label :masalah, @jenis, class: 'form-label' %>
       <%= form.text_area :masalah, class: 'form-control',
        form: form_id(akar_masalah), placeholder: 'Masalah pokok...', rows: 3 %>
