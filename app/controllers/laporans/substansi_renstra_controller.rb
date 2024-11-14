@@ -60,7 +60,7 @@ class Laporans::SubstansiRenstraController < ApplicationController
     queries = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
     @opd = queries.opd
     @nama_opd = @opd.nama_opd
-    @strategi_opd = queries.strategi_opd
+    @strategi_opds = queries.strategi_opd
   end
 
   def pohon_kinerja

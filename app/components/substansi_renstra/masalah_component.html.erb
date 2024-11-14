@@ -1,14 +1,16 @@
 <tr data-controller="row" class="<%= style_masalah %>">
-  <td class="text-gray-900 align-middle" scope="row"><%= @no_row %></td>
-  <td class="text-gray-900-align-middle fw-bolder">
-    <%= jenis_masalah %>
-  </td>
-  <td class="text-gray-900-align-middle text-wrap">
+  <% if role == 'eselon_2' %>
+    <td class="text-gray-900 align-middle" scope="row" rowspan="<%= rowspan %>"></td>
+  <% end %>
+  <td class="text-gray-900-align-middle text-wrap" rowspan="<%= rowspan %>">
     <%= masalah %>
   </td>
-  <td class="action">
+  <td class="action" rowspan="<%= rowspan %>">
     <div class="d-grid gap-2">
       <%= edit_button %>
     </div>
   </td>
 </tr>
+<% if role != 'eselon_4' %>
+  <%= render SubstansiRenstra::MasalahComponent.with_collection(strategi_bawahans) %>
+<% end %>

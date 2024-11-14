@@ -7,25 +7,17 @@
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout_subtitle', title: "Akar Masalah", sub_title: @opd, sub_title_2: @tahun do %>
     <div class="table-responsive">
-      <table class="table table-bordered align-items-center border sticky-head" id="tabel-akar-masalah">
-        <thead class="thead-light">
+      <table class="table table-bordered align-items-center counter border sticky-head">
+        <thead>
           <tr>
             <th class="text-center">No</th>
-            <th class="text-center">Jenis Masalah</th>
-            <th class="text-center">Masalah</th>
-            <th class="text-center">Action</th>
+            <th class="text-center" colspan="2">Masalah Pokok</th>
+            <th class="text-center" colspan="2">Masalah</th>
+            <th class="text-center" colspan="2">Akar Masalah</th>
           </tr>
         </thead>
-        <tbody id="new_akar_masalah">
-          <% @strategi_opd.each.with_index(1) do |strategi, i| %>
-            <%= render SubstansiRenstra::MasalahComponent.new(strategi: strategi, no_row: "#{i}") %>
-            <% strategi.strategi_bawahans.each.with_index(1) do |tactical, i_tact| %>
-              <%= render SubstansiRenstra::MasalahComponent.new(strategi: tactical, no_row: "#{i}.#{i_tact}") %>
-              <% tactical.strategi_bawahans.each.with_index(1) do |opr, i_op| %>
-                <%= render SubstansiRenstra::MasalahComponent.new(strategi: opr, no_row: "#{i}.#{i_tact}.#{i_op}") %>
-              <% end %>
-            <% end %>
-          <% end %>
+        <tbody>
+          <%= render SubstansiRenstra::MasalahComponent.with_collection(@strategi_opds) %>
         </tbody>
       </table>
     </div>
