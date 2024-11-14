@@ -867,6 +867,7 @@ Rails.application.routes.draw do
       get :asets
       get :sumber_daya_manusia
       get :akar_masalah
+      get :isu_strategis
     end
   end
 

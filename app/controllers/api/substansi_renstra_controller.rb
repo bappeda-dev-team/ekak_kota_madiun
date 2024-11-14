@@ -54,5 +54,16 @@ module Api
       @nama_opd = @opd.nama_opd
       @strategi_opds = queries.strategi_opd
     end
+
+    def isu_strategis
+      @kode_opd = params[:kode_opd]
+      @tahun = params[:tahun]
+      @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+      @nama_opd = @opd.nama_opd
+      tahun_asli = @tahun.include?('perubahan') ? @tahun.gsub('_perubahan', '') : @tahun
+      @isu_strategis = @opd.isu_strategis_opds
+                           .where("tahun ILIKE ?", "%#{tahun_asli}%")
+                           .order(:id)
+    end
   end
 end
