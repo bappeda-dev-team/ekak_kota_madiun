@@ -9,42 +9,53 @@ class AkarMasalahsController < ApplicationController
 
   # GET /akar_masalahs/new
   def new
-    # @akar_masalah = AkarMasalah.new
     @jenis = params[:jenis]
     @rowspan = params[:rowspan]
     @strategi_id = params[:strategi_id]
     @strategi = Strategi.find(@strategi_id)
-    @akar_masalah = AkarMasalah.new(jenis: @jenis, masalah: @strategi.strategi)
+    @kode_opd = @strategi.opd.kode_unik_opd
+    @tahun = @strategi.tahun
+    @akar_masalah = AkarMasalah.new(jenis: @jenis,
+                                    masalah: @strategi.strategi,
+                                    strategi_id: @strategi.id,
+                                    kode_opd: @kode_opd,
+                                    tahun: @tahun)
   end
 
   # GET /akar_masalahs/1/edit
-  def edit; end
+  def edit
+    @rowspan = params[:rowspan]
+  end
 
   # POST /akar_masalahs or /akar_masalahs.json
   def create
     @akar_masalah = AkarMasalah.new(akar_masalah_params)
 
-    respond_to do |format|
-      if @akar_masalah.save
-        format.html { redirect_to akar_masalah_url(@akar_masalah), notice: "Akar masalah was successfully created." }
-        format.json { render :show, status: :created, location: @akar_masalah }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @akar_masalah.errors, status: :unprocessable_entity }
-      end
+    if @akar_masalah.save
+      render json: { resText: 'Masalah Disimpan',
+                     html_content: html_content({ akar_masalah: @akar_masalah },
+                                                partial: 'akar_masalahs/akar_masalah') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ akar_masalah: @akar_masalah },
+                                                 partial: 'akar_masalahs/form_col') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /akar_masalahs/1 or /akar_masalahs/1.json
   def update
-    respond_to do |format|
-      if @akar_masalah.update(akar_masalah_params)
-        format.html { redirect_to akar_masalah_url(@akar_masalah), notice: "Akar masalah was successfully updated." }
-        format.json { render :show, status: :ok, location: @akar_masalah }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @akar_masalah.errors, status: :unprocessable_entity }
-      end
+    if @akar_masalah.update(akar_masalah_params)
+      render json: { resText: 'Masalah Disimpan',
+                     html_content: html_content({ akar_masalah: @akar_masalah },
+                                                partial: 'akar_masalahs/akar_masalah') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ akar_masalah: @akar_masalah },
+                                                 partial: 'akar_masalahs/form_col') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
@@ -67,6 +78,6 @@ class AkarMasalahsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def akar_masalah_params
-    params.fetch(:akar_masalah, {})
+    params.require(:akar_masalah).permit(:jenis, :masalah, :strategi_id, :tahun, :kode_opd)
   end
 end

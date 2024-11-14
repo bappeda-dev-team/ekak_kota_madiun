@@ -181,8 +181,8 @@ CREATE TABLE public.akar_masalahs (
     masalah character varying,
     kode_opd character varying,
     tahun character varying,
-    parent_id bigint,
     jenis character varying,
+    strategi_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -5546,6 +5546,13 @@ CREATE UNIQUE INDEX index_active_storage_blobs_on_key ON public.active_storage_b
 --
 
 CREATE UNIQUE INDEX index_active_storage_variant_records_uniqueness ON public.active_storage_variant_records USING btree (blob_id, variation_digest);
+
+
+--
+-- Name: index_akar_masalahs_on_strategi_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_akar_masalahs_on_strategi_id ON public.akar_masalahs USING btree (strategi_id);
 
 
 --

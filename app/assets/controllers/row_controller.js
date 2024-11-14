@@ -7,25 +7,37 @@ export default class extends Controller {
     element: String,
   };
 
-  editCol(e) {
-    const [xhr, status] = e.detail;
-    const targetRow = this.element;
+  editCol(event) {
+    const [xhr, status] = event.detail;
+    const targetCol = this.element;
 
     if (
       status == "OK" &&
-      targetRow != null &&
-      typeof targetRow != "undefined"
+      targetCol != null &&
+      typeof targetCol != "undefined"
     ) {
       const html = xhr.response;
       const rows = this.hideTargets;
 
-      // targetRow.classList.add("d-none");
       rows.forEach((row) => {
         row.classList.add("d-none");
       });
-      targetRow.insertAdjacentHTML("beforeend", html);
+      targetCol.insertAdjacentHTML("beforeend", html);
     } else {
       this.sweetalertStatus(status.text, status);
+    }
+  }
+
+  colProcessAjax(event) {
+    const [message, status] = event.detail;
+    const { resText, html_content } = JSON.parse(message.response);
+    const targetRow = this.element;
+
+    if (status == "OK") {
+      this.sweetalertStatus(resText, status);
+      targetRow.innerHTML = html_content;
+    } else {
+      this.sweetalertStatus(resText, status);
     }
   }
 

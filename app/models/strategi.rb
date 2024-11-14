@@ -30,6 +30,7 @@ class Strategi < ApplicationRecord
   belongs_to :opd, optional: true
   belongs_to :tujuan, optional: true
   belongs_to :user, foreign_key: 'nip_asn', primary_key: 'nik', optional: true
+  has_one :akar_masalah
   has_many :sasarans
   # has_many :pohons, as: :pohonable
   has_one :pohon, as: :pohonable

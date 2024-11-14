@@ -2,19 +2,23 @@
 #
 # Table name: akar_masalahs
 #
-#  id         :bigint           not null, primary key
-#  jenis      :string
-#  kode_opd   :string
-#  masalah    :string
-#  tahun      :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  parent_id  :bigint
+#  id          :bigint           not null, primary key
+#  jenis       :string
+#  kode_opd    :string
+#  masalah     :string
+#  tahun       :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  strategi_id :bigint
+#
+# Indexes
+#
+#  index_akar_masalahs_on_strategi_id  (strategi_id)
 #
 class AkarMasalah < ApplicationRecord
-  has_many :masalahs, -> { where(jenis: 'Masalah') }, class_name: 'AkarMasalah',
-                                                      primary_key: :id, foreign_key: :parent_id
+  belongs_to :strategi
 
-  has_many :akar_masalahs, -> { where(jenis: 'AkarMasalah') }, class_name: 'AkarMasalah',
-                                                               primary_key: :id, foreign_key: :parent_id
+  def to_s
+    masalah
+  end
 end

@@ -1,20 +1,23 @@
-<%= form_with(model: akar_masalah, local: false,
-              data: {
-                row_target: 'form',
-                action: 'ajax:complete->row#processAjax',
-              },
-              id: form_id(akar_masalah)
-) do |form| %>
-  <td rowspan="<%= rowspan %>" data-row-target="form">
-    <%= form.hidden_field :jenis, form: form_id(akar_masalah), data: { row_target: 'form' } %>
-    <%= form.text_area :masalah, class: 'form-control',
-       form: form_id(akar_masalah), placeholder: 'Masalah pokok...', cols: 7, rows: 7 %>
-  </td>
-  <td class="fw-bolder" rowspan="<%= rowspan %>" data-row-target="form" >
+<td rowspan="<%= rowspan %>" data-row-target="form" colspan="2">
+  <%= form_with(model: akar_masalah, local: false,
+                data: {
+                  row_target: 'form',
+                  action: 'ajax:complete->row#colProcessAjax',
+                },
+                id: form_id(akar_masalah)
+  ) do |form| %>
+    <div class="field">
+      <%= form.hidden_field :strategi_id, form: form_id(akar_masalah) %>
+      <%= form.hidden_field :tahun, form: form_id(akar_masalah) %>
+      <%= form.hidden_field :jenis, form: form_id(akar_masalah) %>
+      <%= form.label :masalah, @jenis, class: 'form-label' %>
+      <%= form.text_area :masalah, class: 'form-control',
+       form: form_id(akar_masalah), placeholder: 'Masalah pokok...', rows: 3 %>
+    </div>
     <div class="d-grid gap-2">
       <%= form.submit 'Simpan', class: 'btn btn-sm', style: 'margin-top: 0 !important;',
-       form: form_id(akar_masalah) %>
+          form: form_id(akar_masalah) %>
       <button class="btn btn-sm btn-outline-danger" data-action="row#colBatal">Batal</button>
     </div>
-  </td>
-<% end %>
+  <% end %>
+</td>

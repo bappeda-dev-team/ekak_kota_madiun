@@ -4,8 +4,8 @@ class CreateAkarMasalahs < ActiveRecord::Migration[6.1]
       t.string :masalah
       t.string :kode_opd
       t.string :tahun
-      t.bigint :parent_id
       t.string :jenis
+      t.belongs_to :strategi
 
       t.timestamps
     end
