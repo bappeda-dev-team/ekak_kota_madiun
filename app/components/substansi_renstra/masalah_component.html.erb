@@ -2,10 +2,10 @@
   <% if role == 'eselon_2' %>
     <td class="text-gray-900 align-middle" scope="row" rowspan="<%= rowspan %>"></td>
   <% end %>
-  <td class="text-gray-900-align-middle text-wrap" rowspan="<%= rowspan %>">
+  <td class="text-gray-900 align-middle text-wrap" rowspan="<%= rowspan %>" data-row-target="hide">
     <%= masalah %>
   </td>
-  <td class="action" rowspan="<%= rowspan %>">
+  <td class="action" rowspan="<%= rowspan %>" data-row-target="hide">
     <div class="d-grid gap-2">
       <%= edit_button %>
     </div>

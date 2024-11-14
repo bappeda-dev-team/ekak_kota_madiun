@@ -12,4 +12,9 @@
 #  parent_id  :bigint
 #
 class AkarMasalah < ApplicationRecord
+  has_many :masalahs, -> { where(jenis: 'Masalah') }, class_name: 'AkarMasalah',
+                                                      primary_key: :id, foreign_key: :parent_id
+
+  has_many :akar_masalahs, -> { where(jenis: 'AkarMasalah') }, class_name: 'AkarMasalah',
+                                                               primary_key: :id, foreign_key: :parent_id
 end

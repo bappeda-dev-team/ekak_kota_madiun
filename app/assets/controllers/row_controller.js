@@ -2,9 +2,43 @@ import { Controller } from "stimulus";
 import Swal from "sweetalert2";
 
 export default class extends Controller {
+  static targets = ["form", "hide"];
   static values = {
     element: String,
   };
+
+  editCol(e) {
+    const [xhr, status] = e.detail;
+    const targetRow = this.element;
+
+    if (
+      status == "OK" &&
+      targetRow != null &&
+      typeof targetRow != "undefined"
+    ) {
+      const html = xhr.response;
+      const rows = this.hideTargets;
+
+      // targetRow.classList.add("d-none");
+      rows.forEach((row) => {
+        row.classList.add("d-none");
+      });
+      targetRow.insertAdjacentHTML("beforeend", html);
+    } else {
+      this.sweetalertStatus(status.text, status);
+    }
+  }
+
+  colBatal() {
+    const rows = this.formTargets;
+    rows.forEach((row) => {
+      row.remove();
+    });
+    const revealRows = this.hideTargets;
+    revealRows.forEach((row) => {
+      row.classList.remove("d-none");
+    });
+  }
 
   addRow(e) {
     const [xhr, status] = e.detail;

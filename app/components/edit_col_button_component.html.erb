@@ -1,0 +1,9 @@
+<%= link_to @path,
+  remote: true,
+  class: style,
+  data: {
+    action: 'ajax:complete->row#editCol:prevent',
+  } do %>
+    <%= icon %>
+    <span><%= @title %></span>
+<% end %>

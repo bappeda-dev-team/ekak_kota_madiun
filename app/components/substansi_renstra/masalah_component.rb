@@ -42,8 +42,19 @@ class SubstansiRenstra::MasalahComponent < ViewComponent::Base
     end
   end
 
+  def jenis_masalah
+    case role
+    when 'eselon_2'
+      'Masalah Pokok'
+    when 'eselon_3'
+      'Masalah'
+    else
+      'AkarMasalah'
+    end
+  end
+
   def edit_button
-    render EditRowButtonComponent.new(path: '#',
+    render EditColButtonComponent.new(path: new_akar_masalah_path(strategi_id: @strategi, jenis: jenis_masalah, rowspan: rowspan),
                                       title: 'Input Masalah',
                                       btn_style: 'btn btn-primary')
   end

@@ -9,7 +9,12 @@ class AkarMasalahsController < ApplicationController
 
   # GET /akar_masalahs/new
   def new
-    @akar_masalah = AkarMasalah.new
+    # @akar_masalah = AkarMasalah.new
+    @jenis = params[:jenis]
+    @rowspan = params[:rowspan]
+    @strategi_id = params[:strategi_id]
+    @strategi = Strategi.find(@strategi_id)
+    @akar_masalah = AkarMasalah.new(jenis: @jenis, masalah: @strategi.strategi)
   end
 
   # GET /akar_masalahs/1/edit
