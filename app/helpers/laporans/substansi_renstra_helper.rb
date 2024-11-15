@@ -76,12 +76,12 @@ module Laporans::SubstansiRenstraHelper
   def bab_3
     [
       {
-        title: 'Permasalahan dan Isu Strategis', href: laporans_substansi_renstra_permasalahan_isu_strategis_path,
-        identifier: 'substansi-renstra-bab-3-permasalahan'
-      },
-      {
         title: 'Akar Masalah', href: laporans_substansi_renstra_akar_masalah_path,
         identifier: 'substansi-renstra-bab-3-pemetaan-permasalahan'
+      },
+      {
+        title: 'Permasalahan dan Isu Strategis', href: laporans_substansi_renstra_permasalahan_isu_strategis_path,
+        identifier: 'substansi-renstra-bab-3-permasalahan'
       },
       {
         title: 'Pohon Kinerja', href: laporans_substansi_renstra_pohon_kinerja_path,
