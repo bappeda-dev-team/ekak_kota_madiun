@@ -6,20 +6,35 @@
 <% end %>
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout_subtitle', title: "Laporan Dasar Hukum", sub_title: @opd, sub_title_2: @tahun do %>
-    <div class="table-responsive mb-5 d-grid gap-2">
-      <table class="table align-items-center counter" data-controller="sortable">
-        <thead class="thead-light">
-          <tr>
-            <th class="border-bottom text-gray-700" scope="col">No.</th>
-            <th class="border-bottom text-gray-700" scope="col">Dasar Hukum</th>
-            <th class="border-bottom text-gray-700" scope="col">Keterangan</th>
-            <th class="border-bottom text-gray-700" scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody id="new_mandatori" data-sortable-target="list">
-          <%= render SubstansiRenstra::DasarHukumComponent.with_collection(@dasar_hukums, jenis: 'DasarHukum') %>
-        </tbody>
-      </table>
+    <div data-controller="sortable" class="d-grid gap-3">
+      <div class="row">
+        <div class="col"></div>
+        <div class="col-auto">
+          <button id="simpan-urutan" data-action="click->sortable#saveOrder" class="d-none btn btn-tertiary">
+            <i class="fas fa-save me-2"></i>
+            Simpan
+          </button>
+          <button id="urutkan" class="btn btn-outline-primary" data-action="click->sortable#toggleSort">
+            <i class="fas fa-sort me-2"></i>
+            Urutkan Dasar Hukum
+          </button>
+        </div>
+      </div>
+      <div class="table-responsive mb-5 d-grid gap-2">
+        <table id="items-table" class="table align-items-center counter">
+          <thead class="thead-light">
+            <tr>
+              <th class="border-bottom text-gray-700" scope="col">No.</th>
+              <th class="border-bottom text-gray-700" scope="col">Dasar Hukum</th>
+              <th class="border-bottom text-gray-700" scope="col">Keterangan</th>
+              <th class="border-bottom text-gray-700" scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody data-sortable-target="list">
+            <%= render SubstansiRenstra::DasarHukumComponent.with_collection(@dasar_hukums, jenis: 'DasarHukum', max_item: @max_item) %>
+          </tbody>
+        </table>
+      </div>
     </div>
   <% end %>
 <% end %>

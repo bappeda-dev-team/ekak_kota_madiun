@@ -78,10 +78,12 @@ class DasarHukumsController < ApplicationController
   end
 
   def edit_renstra
+    @max_item = params[:max_item].to_i
     @dasar_hukum = DasarHukum.find(params[:id])
     render layout: false
   end
 
+  # TODO: validate max value of urutan
   def update_renstra
     @dasar_hukum = DasarHukum.find(params[:id])
     if @dasar_hukum.update(dasar_hukum_params)
@@ -104,7 +106,7 @@ class DasarHukumsController < ApplicationController
   end
 
   def sort
-    params[:item].each_with_index do |id, index| 
+    params[:item].each_with_index do |id, index|
       DasarHukum.find(id).update(urutan: index + 1)
     end
     head :ok

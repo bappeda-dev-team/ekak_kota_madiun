@@ -10,7 +10,7 @@
 #  status            :enum             default("draft")
 #  tahun             :string
 #  uraian            :string
-#  urutan            :integer
+#  urutan            :integer          default(1), not null
 #  usulan            :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null

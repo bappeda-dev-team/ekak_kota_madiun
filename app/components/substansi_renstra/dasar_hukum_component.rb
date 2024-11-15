@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class SubstansiRenstra::DasarHukumComponent < ViewComponent::Base
-  def initialize(dasar_hukum:, jenis:)
+  def initialize(dasar_hukum:, jenis:, max_item: 0)
     super
     @dasar_hukum = dasar_hukum
     @jenis = jenis
+    @max_item = max_item
   end
 
   def id_dasar_hukum
@@ -29,7 +30,7 @@ class SubstansiRenstra::DasarHukumComponent < ViewComponent::Base
 
   def edit_path
     if @jenis == 'DasarHukum'
-      edit_renstra_dasar_hukum_path(@dasar_hukum)
+      edit_renstra_dasar_hukum_path(@dasar_hukum, max_item: @max_item)
     else
       edit_renstra_mandatori_path(@dasar_hukum)
     end

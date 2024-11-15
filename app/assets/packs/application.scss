@@ -699,3 +699,15 @@ select[readonly].select2-hidden-accessible
 tr.akar-masalah {
   border: 1px solid;
 }
+
+tr.sortable {
+  cursor: move;
+  border: 1px dashed;
+}
+
+.dragged-ontop {
+  background-color: #4cc9fe;
+}
+.sortable-selected {
+  background-color: #eee;
+}

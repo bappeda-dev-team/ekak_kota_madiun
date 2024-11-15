@@ -15,8 +15,9 @@ class Laporans::SubstansiRenstraController < ApplicationController
                    .order(nip_asn: :asc)
                    .dengan_strategi
 
-    @dasar_hukums = sasarans.flat_map { |sasaran| sasaran.dasar_hukum_sasaran }
-    @mandatoris = sasarans.flat_map { |sasaran| sasaran.mandatori_sasaran(@tahun) }
+    @dasar_hukums = sasarans.flat_map(&:dasar_hukum_sasaran).sort_by(&:urutan)
+    @max_item = @dasar_hukums.size
+    # @mandatoris = sasarans.flat_map { |sasaran| sasaran.mandatori_sasaran(@tahun) }
   end
 
   def evaluasi_renstra

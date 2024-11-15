@@ -27,9 +27,7 @@ module Api
                      .dengan_sub_kegiatan
                      .dengan_strategi
 
-      @dasar_hukums = sasarans.flat_map do |sasaran|
-        sasaran.all_dasar_hukum(@tahun)
-      end.uniq.compact_blank
+      @dasar_hukums = sasarans.flat_map(&:dasar_hukum_sasaran).sort_by(&:urutan)
     end
 
     def asets

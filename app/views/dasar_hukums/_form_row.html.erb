@@ -3,23 +3,25 @@
                 action: 'ajax:complete->row#processAjax',
               },
               id: dom_id(dasar_hukum, 'form')
-            ) do |form| %>
+) do |form| %>
   <td class="text-gray-900 fw-bolder align-middle" scope="row" width="150px">
     <%= form.number_field :urutan, class: 'form-control',
-        form: dom_id(dasar_hukum, 'form') %>
+     min: 1,
+     max: @max_item,
+     form: dom_id(dasar_hukum, 'form') %>
   </td>
   <td class="fw-bolder text-wrap">
     <%= form.text_area :judul, class: 'form-control', placeholder: 'isikan peraturan mandatori',
-        form: dom_id(dasar_hukum, 'form') %>
+       form: dom_id(dasar_hukum, 'form') %>
   </td>
   <td class="fw-bolder text-wrap">
     <%= form.text_area :peraturan, class: 'form-control', placeholder: 'isikan uraian / penjabaran peraturan',
-        form: dom_id(dasar_hukum, 'form') %>
+       form: dom_id(dasar_hukum, 'form') %>
   </td>
   <td class="text-gray-900 border px-2">
     <div class="d-grid gap-2">
       <%= form.submit 'Simpan', class: 'btn btn-sm', style: 'margin-top: 0 !important;',
-        form: dom_id(dasar_hukum, 'form') %>
+         form: dom_id(dasar_hukum, 'form') %>
       <button class="btn btn-sm btn-outline-danger" data-action="row#batal">Batal</button>
     </div>
   </td>
