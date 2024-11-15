@@ -17,8 +17,8 @@
           </tr>
         </thead>
         <tbody id="new_mandatori">
-          <%= render partial: 'mandatoris/mandatori_renstra', collection: @mandatoris, as: :mandatori %>
-          <%= render partial: 'dasar_hukums/dasar_hukum_renstra', collection: @dasar_hukums, as: :dasar_hukum %>
+          <%= render SubstansiRenstra::DasarHukumComponent.with_collection(@mandatoris, jenis: 'Mandatori') %>
+          <%= render SubstansiRenstra::DasarHukumComponent.with_collection(@dasar_hukums, jenis: 'DasarHukum') %>
         </tbody>
       </table>
     </div>

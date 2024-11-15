@@ -4,7 +4,10 @@
               },
               id: dom_id(dasar_hukum, 'form')
             ) do |form| %>
-  <td class="text-gray-900 fw-bolder align-middle" scope="row"></td>
+  <td class="text-gray-900 fw-bolder align-middle" scope="row" width="150px">
+    <%= form.number_field :urutan, class: 'form-control',
+        form: dom_id(dasar_hukum, 'form') %>
+  </td>
   <td class="fw-bolder text-wrap">
     <%= form.text_area :judul, class: 'form-control', placeholder: 'isikan peraturan mandatori',
         form: dom_id(dasar_hukum, 'form') %>

@@ -8,6 +8,7 @@
 #  metadata   :jsonb
 #  peraturan  :text
 #  tahun      :string
+#  urutan     :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  sasaran_id :string

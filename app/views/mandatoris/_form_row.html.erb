@@ -4,7 +4,10 @@
               },
               id: dom_id(mandatori, 'form')
             ) do |form| %>
-  <td class="text-gray-900 fw-bolder align-middle" scope="row"></td>
+  <td class="text-gray-900 fw-bolder align-middle" scope="row" width="150px">
+    <%= form.number_field :urutan, class: 'form-control',
+        form: dom_id(mandatori, 'form') %>
+  </td>
   <td class="fw-bolder text-wrap">
     <%= form.text_area :peraturan_terkait, class: 'form-control', placeholder: 'isikan peraturan mandatori',
         form: dom_id(mandatori, 'form') %>
