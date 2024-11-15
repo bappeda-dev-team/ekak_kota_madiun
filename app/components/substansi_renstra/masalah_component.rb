@@ -43,11 +43,11 @@ class SubstansiRenstra::MasalahComponent < ViewComponent::Base
   def style_masalah
     case role
     when 'eselon_2'
-      'sasaran_opd'
+      'sasaran_opd akar-masalah'
     when 'eselon_3'
-      'sasaran_program skip'
+      'sasaran_program skip akar-masalah'
     else
-      'sasaran_kegiatan skip'
+      'sasaran_kegiatan skip akar-masalah'
     end
   end
 
