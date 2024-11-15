@@ -57,3 +57,4 @@ dump.rdb
 /.idea
 /.vscode
 /.notes
+.envrc
