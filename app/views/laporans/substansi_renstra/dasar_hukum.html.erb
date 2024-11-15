@@ -7,7 +7,7 @@
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout_subtitle', title: "Laporan Dasar Hukum", sub_title: @opd, sub_title_2: @tahun do %>
     <div class="table-responsive mb-5 d-grid gap-2">
-      <table class="table align-items-center counter">
+      <table class="table align-items-center counter" data-controller="sortable">
         <thead class="thead-light">
           <tr>
             <th class="border-bottom text-gray-700" scope="col">No.</th>
@@ -16,8 +16,7 @@
             <th class="border-bottom text-gray-700" scope="col">Action</th>
           </tr>
         </thead>
-        <tbody id="new_mandatori">
-          <%= render SubstansiRenstra::DasarHukumComponent.with_collection(@mandatoris, jenis: 'Mandatori') %>
+        <tbody id="new_mandatori" data-sortable-target="list">
           <%= render SubstansiRenstra::DasarHukumComponent.with_collection(@dasar_hukums, jenis: 'DasarHukum') %>
         </tbody>
       </table>

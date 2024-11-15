@@ -8,7 +8,7 @@ class SubstansiRenstra::DasarHukumComponent < ViewComponent::Base
   end
 
   def id_dasar_hukum
-    dom_id(@dasar_hukum)
+    @dasar_hukum.id
   end
 
   def judul

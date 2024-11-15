@@ -103,6 +103,13 @@ class DasarHukumsController < ApplicationController
     render json: { resText: "Dasar hukum berhasil dihapus", result: true }
   end
 
+  def sort
+    params[:item].each_with_index do |id, index| 
+      DasarHukum.find(id).update(urutan: index + 1)
+    end
+    head :ok
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

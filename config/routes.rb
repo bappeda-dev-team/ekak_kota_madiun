@@ -492,6 +492,9 @@ Rails.application.routes.draw do
   end
 
   resources :dasar_hukums do
+    collection do
+      patch :sort
+    end
     member do
       get :edit_renstra
       post :update_renstra
