@@ -10,7 +10,17 @@
     </div>
   <% end %>
   <% random_number = tujuan_kota.id_tujuan.nil? ? (SecureRandom.random_number(9e5) + 1e5).to_i : tujuan_kota.id_tujuan %>
+  <% random_kode_tujuan = tujuan_kota.kode_tujuan.nil? ? random_number : tujuan_kota.kode_tujuan %>
   <%= form.hidden_field :id_tujuan, :value => random_number, readonly: true %>
+  <%= form.hidden_field :kode_tujuan, :value => random_kode_tujuan, readonly: true %>
+  <div class="field">
+    <%= form.label :visi, class: 'form-label' %>
+    <%= form.text_field :visi, class: 'form-control' %>
+  </div>
+  <div class="field">
+    <%= form.label :misi, class: 'form-label' %>
+    <%= form.text_field :misi, class: 'form-control' %>
+  </div>
   <div class="field">
     <%= form.label :tujuan, class: 'form-label' %>
     <%= form.text_area :tujuan, class: 'form-control' %>
