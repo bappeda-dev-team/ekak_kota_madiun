@@ -45,6 +45,11 @@ export default class extends Controller {
     this.partialAttacher("form-modal-body", xhr.errors);
   }
 
+  ajaxErrorAlert(e) {
+    const [xhr] = e.detail;
+    this.sweetAlertFailed(xhr.resText);
+  }
+
   partialAttacher(targetName, html_element) {
     const target = document.getElementById(targetName);
     target.innerHTML = html_element;
@@ -249,8 +254,18 @@ export default class extends Controller {
     const modal = document.getElementById(event.params.modal);
     const target = document.getElementById(event.params.pohon);
     const { resText, html_content } = JSON.parse(message.response);
-    console.log(resText);
-    console.log(html_content);
+
+    Modal.getInstance(modal).hide();
+    target.innerHTML = html_content;
+    this.sweetalertStatus(resText, status);
+  }
+
+  successWithFixNow(event) {
+    const [message, status] = event.detail;
+    const modal = document.getElementById(event.params.modal);
+    const target = document.getElementById(event.params.pohon);
+    const resText = message.resText;
+    const html_content = message.html_content;
 
     Modal.getInstance(modal).hide();
     target.innerHTML = html_content;

@@ -15,6 +15,10 @@
 #  index_indikators_users_on_user_id       (user_id)
 #
 class IndikatorsUser < ApplicationRecord
+  validates :indikator_id, presence: true
+  validates :user_id, presence: true
+  validates :strategi_id, presence: true
+
   belongs_to :indikator
   belongs_to :user
 end

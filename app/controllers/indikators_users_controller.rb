@@ -67,7 +67,7 @@ class IndikatorsUsersController < ApplicationController
              status: :ok
 
     else
-      render json: { resText: "terjadi kesalahan", errors: error_content }.to_json,
+      render json: { resText: "Isian belum lengkap" }.to_json,
              status: :unprocessable_entity
     end
   end
