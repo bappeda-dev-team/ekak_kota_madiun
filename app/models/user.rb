@@ -54,7 +54,11 @@ class User < ApplicationRecord
   has_many :inovasis, foreign_key: 'nip_asn', primary_key: 'nik'
   has_many :jabatan_users, foreign_key: 'nip_asn', primary_key: 'nik'
 
-  has_and_belongs_to_many :indikators
+  has_and_belongs_to_many :indikators do
+    def by_strategi_id(strategi_id)
+      where(indikators_users: { strategi_id: strategi_id })
+    end
+  end
 
   # WARNING: many bug in here because added role
   scope :khusus, -> { with_any_role(:admin, :super_admin, :reviewer, :guest, :khusus, :admin_kabupaten) }

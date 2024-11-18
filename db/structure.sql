@@ -750,7 +750,7 @@ CREATE TABLE public.dasar_hukums (
     usulan_id bigint,
     keterangan character varying,
     metadata jsonb,
-    urutan integer DEFAULT 1 NOT NULL
+    urutan integer
 );
 
 
@@ -1021,7 +1021,8 @@ CREATE TABLE public.indikators_users (
     indikator_id bigint,
     user_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    strategi_id bigint
 );
 
 
@@ -1738,7 +1739,7 @@ CREATE TABLE public.mandatoris (
     is_active boolean DEFAULT false,
     status public.usulan_status DEFAULT 'draft'::public.usulan_status,
     uraian character varying,
-    urutan integer DEFAULT 1 NOT NULL
+    urutan integer
 );
 
 
@@ -6661,6 +6662,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241014081355'),
 ('20241030041929'),
 ('20241115035718'),
-('20241115035917');
+('20241115035917'),
+('20241118033040');
 
 

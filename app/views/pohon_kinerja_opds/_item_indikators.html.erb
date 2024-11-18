@@ -1,16 +1,13 @@
 <div class="pohon-body">
   <% pohon.pelaksana.each.with_index(1) do |dibagikan, no| %>
-    <% if dibagikan.user.indikators.any? %>
+    <% indikator_pelaksanas = dibagikan.user.indikators.by_strategi_id(pohon.real.id) %>
+    <% if indikator_pelaksanas.any? %>
       <table class="table table-bordered mb-3">
         <tr>
-          <td class="text-start" width="20px">Pelaksana
-            <% if pohon.pelaksana.size > 1 %>
-              <%= no %>
-            <% end %>
-          </td>
-          <td class="text-wrap text-start"><%= dibagikan.dibagikan_ke %></td>
+          <td class="text-start" width="20px">Pelaksana</td>
+          <td class="text-wrap text-start"><%= dibagikan.user %></td>
         </tr>
-        <% dibagikan.user.indikators.each.with_index(1) do |ind, no_i| %>
+        <% indikator_pelaksanas.each.with_index(1) do |ind, no_i| %>
           <tr>
             <td class="text-start" width="20px">Indikator
               <%= ind.jenis %>
@@ -23,21 +20,4 @@
       </table>
     <% end %>
   <% end %>
-</div>
-<div class="row">
-  <div class="col">
-    <%= link_to new_indikators_user_path(role: pohon.role, dom_id: dom_id(pohon.real), strategi_id: pohon.real.id),
-     remote: true,
-     class: 'btn btn-sm btn-primary w-100',
-     data: {
-       controller: 'form-modal',
-       action: 'form-modal#appendForm',
-       form_modal_location_param: 'form-pelaksana-body',
-       bs_target: '#form-pelaksana',
-       bs_toggle: 'modal'
-     } do %>
-      <span class="fas fa-crosshairs me-2"></span>
-      <span>Indikator</span>
-    <% end %>
-  </div>
 </div>

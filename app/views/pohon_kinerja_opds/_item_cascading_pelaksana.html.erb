@@ -36,6 +36,19 @@
               <% end %>
             <% end %>
           </tr>
+          <% indikator_pelaksanas = dibagikan.user.indikators.by_strategi_id(pohon.real.id) %>
+          <% if indikator_pelaksanas.any? %>
+            <% indikator_pelaksanas.each.with_index(1) do |ind, no_i| %>
+              <tr>
+                <td class="text-start" width="20px" colspan="2">Indikator
+                  <%= ind.jenis %>
+                  <%= ind.sub_jenis %>
+                  <%= no_i %>
+                </td>
+                <td class="text-wrap text-start" colspan="2"><%= ind %></td>
+              </tr>
+            <% end %>
+          <% end %>
         </table>
       <% end %>
     </div>

@@ -249,6 +249,8 @@ export default class extends Controller {
     const modal = document.getElementById(event.params.modal);
     const target = document.getElementById(event.params.pohon);
     const { resText, html_content } = JSON.parse(message.response);
+    console.log(resText);
+    console.log(html_content);
 
     Modal.getInstance(modal).hide();
     target.innerHTML = html_content;

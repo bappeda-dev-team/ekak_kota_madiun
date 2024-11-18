@@ -6,6 +6,7 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  indikator_id :bigint
+#  strategi_id  :bigint
 #  user_id      :bigint
 #
 # Indexes

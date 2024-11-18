@@ -26,9 +26,10 @@ class IndikatorsUsersController < ApplicationController
 
   def pelaksana_indikator
     param = params[:q] || ''
-    role = params[:role]
-    asn_list = @opd.users.where('nama ILIKE ?', "%#{param}%")
-    pelaksana = asn_list.with_any_role(role)
+    strategi_id = params[:strategi_id]
+    strategi = Strategi.find(strategi_id)
+    pelaksana = strategi.pohon_shareds.joins(:user).where.not(role: %w[opd opd-batal], user_id: nil)
+                        .where('users.nama ILIKE ?', "%#{param}%").flat_map(&:user)
     pelaksana.map! { |user| { id: user.id, text: user.nama_nip } }
     render json: { results: pelaksana }.to_json
   end
@@ -57,19 +58,12 @@ class IndikatorsUsersController < ApplicationController
 
   # POST /indikators_users or /indikators_users.json
   def create
-    strategi = Strategi.find(params[:indikators_user][:strategi_id])
-    indikators = params[:indikators_user][:indikator_id].compact_blank
-    user = params[:indikators_user][:user_id]
-
-    indikator_users = []
-    indikators.each do |ind|
-      ind_user = IndikatorsUser.create(indikator_id: ind, user_id: user)
-      indikator_users << ind_user
-    end
+    indikator_users = batch_create
 
     if indikator_users.any?
+      strategi_result = Strategi.find(params[:indikators_user][:strategi_id])
       render json: { resText: "Pelaksana Indikator diperbarui",
-                     html_content: html_content(strategi) }.to_json,
+                     html_content: html_content(strategi_result) }.to_json,
              status: :ok
 
     else
@@ -116,9 +110,18 @@ class IndikatorsUsersController < ApplicationController
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
   end
 
+  def batch_create
+    strategi = params[:indikators_user][:strategi_id]
+    indikators = params[:indikators_user][:indikator_id].compact_blank
+    user = params[:indikators_user][:user_id]
+    indikators.map do |ind|
+      IndikatorsUser.create(indikator_id: ind, user_id: user, strategi_id: strategi)
+    end
+  end
+
   # Only allow a list of trusted parameters through.
   def indikators_user_params
-    params.require(:indikators_user).permit(:indikator_id, :user_id)
+    params.require(:indikators_user).permit(:indikator_id, :user_id, :strategi_id)
   end
 
   def html_content(pohon)
