@@ -32,14 +32,16 @@
         <td class="border fw-bolder" colspan="28">External</td>
       </tr>
       <% @spbes_external.each.with_index(1) do |(program, spbes), i| %>
-        <tr>
+        <% warning_style = spbes.all?(&:status_rincian) ? '' : 'table-warning' %>
+        <% invalid_style = spbes.any?(&:valid?) ? '' : 'table-danger' %>
+        <tr class="<%= warning_style %> <%= invalid_style %>">
           <td class="border fw-bolder" rowspan="<%= rowspan_spbe(spbes) %>"><%= i %></td>
           <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_spbe(spbes) %>"><%= program.nama_urusan %></td>
           <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_spbe(spbes) %>"><%= program.nama_program %></td>
         </tr>
         <% spbes.each do |spbe| %>
           <% rowspan_sas = rowspan_rincian_spbe(spbe.spbe_rincians) %>
-          <tr class="spbe-external">
+          <tr class="spbe-external <%= warning_style %> <%= invalid_style %>">
             <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_sas %>"><%= spbe.opd&.nama_opd %></td>
             <td class="border text-wrap fw-bolder wajib-input" rowspan="<%= rowspan_sas %>"><%= spbe.jenis_pelayanan %></td>
             <td class="border text-wrap fw-bolder wajib-input" rowspan="<%= rowspan_sas %>"><%= spbe.pemilik_aplikasi %></td>
@@ -56,7 +58,8 @@
           </tr>
           <% spbe.spbe_rincians.each do |rincian| %>
             <% sas_kasi = rincian.sasaran %>
-            <tr class="spbe-external rincian-sasaran">
+            <% tolak_style = rincian.diterima? ? '' : 'table-danger' %>
+            <tr class="spbe-external rincian-sasaran <%= tolak_style %> <%= invalid_style %>">
               <td class="border text-wrap wajib-input" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.domain_spbe %></td>
               <td class="border text-wrap wajib-input" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.detail_kebutuhan %></td>
               <td class="border text-wrap wajib-input" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.tahun_pemohon_spbe %></td>
@@ -68,7 +71,7 @@
               <td class="border" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>"><%= rincian.keterangan %></td>
               <td class="border" rowspan="<%= rowspan_sasaran_spbe(sas_kasi) %>">
                 <div class="d-grid gap-2">
-                  <p><%= rincian.status_kebutuhan_spbe %></p>
+                  <p><strong><%= rincian.status_kebutuhan_spbe %></strong></p>
                   <p><%= rincian.keterangan_kebutuhan_spbe %></p>
                 </div>
               </td>
@@ -76,9 +79,20 @@
                 <% unless guest? %>
                   <div class="d-grid gap-2">
                     <% if rincian.kode_opd == @kode_opd %>
-                      <%= link_to edit_operational_opd_spbe_path(rincian,program_id: program.id), target: "_blank", rel: "nofollow",
-                                  class: "btn btn-sm btn-outline-primary" do %>
-                        Pemenuhan Kebutuhan SPBE
+                      <% if spbe.strategi.present? %>
+                        <% if rincian.status_kebutuhan_spbe.blank? %>
+                          <%= link_to edit_operational_opd_spbe_path(rincian,program_id: program.id), target: "_blank", rel: "nofollow",
+                                      class: "btn btn-sm btn-outline-primary" do %>
+                            Pemenuhan Kebutuhan SPBE
+                          <% end %>
+                        <% else %>
+                          <%= link_to edit_operational_opd_spbe_path(rincian,program_id: program.id), target: "_blank", rel: "nofollow",
+                                      class: "btn btn-sm btn-info" do %>
+                            Edit Pemenuhan Kebutuhan SPBE
+                          <% end %>
+                        <% end %>
+                      <% else %>
+                        <p class="alert alert-danger">Hubungi OPD Pengusul Untuk Melengkapi Strategi Tactical</p>
                       <% end %>
                     <% end %>
                   </div>
@@ -87,7 +101,7 @@
             </tr>
             <% unless sas_kasi.nil? %>
               <% sas_kasi.indikator_sasarans.each do |indikator_s| %>
-                <tr class="indikator-sasaran">
+                <tr class="indikator-sasaran <%= tolak_style %> <%= invalid_style %>">
                   <td class="border text-wrap"><%= indikator_s.indikator_kinerja %></td>
                   <td class="border text-wrap"><%= indikator_s.target %></td>
                   <td class="border text-wrap"><%= indikator_s.satuan %></td>

@@ -51,4 +51,8 @@ class SpbeRincian < ApplicationRecord
       ''
     end
   end
+
+  def diterima?
+    status_kebutuhan_spbe == 'Terima' || status_kebutuhan_spbe.blank?
+  end
 end

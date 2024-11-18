@@ -1,5 +1,5 @@
 <% disabled = form.object.kode_opd != @kode_opd %>
-<fieldset class="mb-5">
+<fieldset class="mb-5" data-controller="spbe-form" data-action='terima-permintaan@document->spbe-form#hideOptionalField'>
   <div class="field">
     <%= form.label :domain_spbe, { class: "form-label" } %>
     <%= form.select(:domain_spbe, (Domain.pluck(:domain)), {include_blank: true},
@@ -26,8 +26,9 @@
        { class: 'form-control',
          required: true,
          data: {
-           placeholder: '',
            controller: 'dropdown',
+           dropdown_jenis_value: 'chain',
+           dropdown_event_name_value: 'terima-permintaan'
          }
        } %>
     </div>
@@ -36,77 +37,80 @@
       <%= form.text_area :keterangan_kebutuhan_spbe, { class: "form-control" } %>
     </div>
   <% end %>
-  <div class="field mb-5">
-    <%= form.select :kode_opd, [], {include_blank: true},
-     { disabled: true,
-       data: { placeholder: "OPD Pelaksana",
+  <div data-spbe-form-target="optional">
+    <div class="field mb-5">
+      <%= form.select :kode_opd, [], {include_blank: true},
+       { disabled: true,
+         data: { placeholder: "OPD Pelaksana",
+           controller: 'dropdown',
+           dropdown_jenis_value: 'ajax_preselect',
+           dropdown_url_value: legit_opd_opds_path(@opd, :json),
+           dropdown_item_value: form.object.kode_opd,
+           dropdown_kode_opd_value: @kode_opd,
+         }
+       } %>
+    </div>
+    <div class="field">
+      <%= form.label :sasaran_operasional, {class: "form-label"} %>
+      <%= form.select :id_rencana, [], {include_blank: true},
+       { disabled: disabled,
+         data: { placeholder: "Pilih Sasaran Operasional",
+           controller: 'dropdown',
+           dropdown_jenis_value: 'ajax_preselect',
+           dropdown_kode_opd_value: @kode_opd,
+           dropdown_item_value: form.object.id_rencana,
+           dropdown_url_value: sasaran_operational_opds_path(format: :json),
+           action: 'sasaran-new@document->dropdown#set_new_sasaran'
+         }
+       } %>
+    </div>
+    <div class="field">
+      <%= link_to 'Sasaran Baru', new_spbe_sasarans_path(kode_opd: @kode_opd),
+                  disabled: disabled,
+                  remote: true, class: 'btn btn-sm btn-primary',
+                  data: { controller: 'form-modal',
+                    form_modal_location_param: 'form-sasaran-body',
+                    action: 'form-modal#appendForm',
+                    bs_toggle: 'modal',
+                    bs_target: '#form-sasaran',
+                  }%>
+    </div>
+    <div class="field">
+      <%= form.label :detail_sasaran_kinerja, { class: "form-label" } %>
+      <%= form.text_area :detail_sasaran_kinerja, { class: "form-control", disabled: disabled } %>
+    </div>
+    <div class="field">
+      <%= form.label :pelaksanaan, { class: "form-label" } %>
+    </div>
+    <div class="field">
+      <%= form.label :tahun_awal, class: 'form-label' %>
+      <%= form.select :tahun_awal, [], {include_blank: true},
+       { data: { disabled: disabled,
+         placeholder: "Tahun Awal",
          controller: 'dropdown',
          dropdown_jenis_value: 'ajax_preselect',
-         dropdown_url_value: legit_opd_opds_path(@opd, :json),
-         dropdown_item_value: form.object.kode_opd,
-         dropdown_kode_opd_value: @kode_opd,
+         dropdown_item_value: form.object.tahun_awal,
+         dropdown_url_value: tahuns_path(format: :json)
        }
-     } %>
-  </div>
-  <div class="field">
-    <%= form.label :sasaran_operasional, {class: "form-label"} %>
-    <%= form.select :id_rencana, [], {include_blank: true},
-     { disabled: disabled,
-       data: { placeholder: "Pilih Sasaran Operasional",
+       } %>
+    </div>
+    <div class="field">
+      <%= form.label :tahun_akhir, class: 'form-label' %>
+      <%= form.select :tahun_akhir, [], {include_blank: true},
+       { data: { disabled: disabled,
+         placeholder: "Tahun Akhir",
          controller: 'dropdown',
          dropdown_jenis_value: 'ajax_preselect',
-         dropdown_kode_opd_value: @kode_opd,
-         dropdown_item_value: form.object.id_rencana,
-         dropdown_url_value: sasaran_operational_opds_path(format: :json),
-         action: 'sasaran-new@document->dropdown#set_new_sasaran'
+         dropdown_item_value: form.object.tahun_akhir,
+         dropdown_url_value: tahuns_path(format: :json)
        }
-     } %>
-  </div>
-  <div class="field">
-    <%= link_to 'Sasaran Baru', new_spbe_sasarans_path(kode_opd: @kode_opd),
-                disabled: disabled,
-                remote: true, class: 'btn btn-sm btn-primary',
-                data: { controller: 'form-modal',
-                  form_modal_location_param: 'form-sasaran-body',
-                  action: 'form-modal#appendForm',
-                  bs_toggle: 'modal',
-                  bs_target: '#form-sasaran',
-                }%>
-  </div>
-  <div class="field">
-    <%= form.label :detail_sasaran_kinerja, { class: "form-label" } %>
-    <%= form.text_area :detail_sasaran_kinerja, { class: "form-control", disabled: disabled } %>
-  </div>
-  <div class="field">
-    <%= form.label :pelaksanaan, { class: "form-label" } %>
-  </div>
-  <div class="field">
-    <%= form.label :tahun_awal, class: 'form-label' %>
-    <%= form.select :tahun_awal, [], {include_blank: true},
-     { data: { disabled: disabled,
-       placeholder: "Tahun Awal",
-       controller: 'dropdown',
-       dropdown_jenis_value: 'ajax_preselect',
-       dropdown_item_value: form.object.tahun_awal,
-       dropdown_url_value: tahuns_path(format: :json)
-     }
-     } %>
-  </div>
-  <div class="field">
-    <%= form.label :tahun_akhir, class: 'form-label' %>
-    <%= form.select :tahun_akhir, [], {include_blank: true},
-     { data: { disabled: disabled,
-       placeholder: "Tahun Akhir",
-       controller: 'dropdown',
-       dropdown_jenis_value: 'ajax_preselect',
-       dropdown_item_value: form.object.tahun_akhir,
-       dropdown_url_value: tahuns_path(format: :json)
-     }
-     } %>
-  </div>
-  <div class="field">
-    <%= form.label :keterangan, { class: "form-label" } %>
-    <%= form.text_area :keterangan, { class: "form-control", disabled: disabled } %>
+       } %>
+    </div>
+    <div class="field">
+      <%= form.label :keterangan, { class: "form-label" } %>
+      <%= form.text_area :keterangan, { class: "form-control", disabled: disabled } %>
+    </div>
+
   </div>
   <% display_class = disabled || form.object.id_rencana.blank? ? 'd-none' : '' %>
   <%= link_to_remove_nested(form, link_text: 'Hapus kebutuhan spbe', link_classes: "btn btn-outline-danger #{display_class}") %>

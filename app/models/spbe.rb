@@ -72,4 +72,12 @@ class Spbe < ApplicationRecord
       ''
     end
   end
+
+  def status_rincian
+    spbe_rincians.all?(&:diterima?)
+  end
+
+  def valid?
+    strategi_tactical.length > 5
+  end
 end
