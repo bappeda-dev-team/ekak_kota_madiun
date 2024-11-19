@@ -4,7 +4,8 @@ class DomainsController < ApplicationController
 
   # GET /domains or /domains.json
   def index
-    @domains = Domain.all
+    search = params[:q] || ''
+    @domains = Domain.where('domain ILIKE ?', "%#{search}%")
   end
 
   # GET /domains/1 or /domains/1.json
