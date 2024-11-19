@@ -524,6 +524,13 @@ class SasaransController < ApplicationController
     render partial: 'form_edit_inovasi'
   end
 
+  def laporan_inovasi
+    @sasaran = Sasaran.find(params[:id])
+    @strategi = @sasaran.strategi
+    @strategi_atasan = @strategi.strategi_atasan
+    @inovasi = @sasaran.inovasi_sasaran
+  end
+
   private
 
   def errors_content(sasaran)
