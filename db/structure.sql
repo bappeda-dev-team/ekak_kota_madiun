@@ -2856,7 +2856,8 @@ CREATE TABLE public.rincians (
     updated_at timestamp(6) without time zone NOT NULL,
     dampak character varying,
     skala_id bigint,
-    kemungkinan_id integer
+    kemungkinan_id integer,
+    model_layanan character varying
 );
 
 
@@ -6663,6 +6664,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241030041929'),
 ('20241115035718'),
 ('20241115035917'),
-('20241118033040');
+('20241118033040'),
+('20241119051802');
 
 

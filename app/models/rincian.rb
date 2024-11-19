@@ -6,6 +6,7 @@
 #  dampak              :string
 #  data_terpilah       :string
 #  lokasi_pelaksanaan  :string
+#  model_layanan       :string
 #  penyebab_external   :string
 #  penyebab_internal   :string
 #  permasalahan_gender :string

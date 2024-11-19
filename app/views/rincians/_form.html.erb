@@ -15,6 +15,16 @@
     <%= form.text_area :jenis_layanan, { class: "form-control" ,value: @sasaran.jenis_layanan } %>
   </div>
   <div class="field">
+    <%= form.label :model_layanan, { class: "form-label" } %>
+    <%= form.select :model_layanan, ['Offline', 'Online'] , {include_blank: true, selected: 'Offline'},
+     { class: 'form-control',
+       required: true,
+       data: {
+         controller: 'dropdown',
+       }
+     } %>
+  </div>
+  <div class="field">
     <%= form.label :penerima_manfaat, { class: "form-label" } %>
     <%= form.text_area :penerima_manfaat, { class: "form-control" ,value: @sasaran.penerima_manfaat } %>
   </div>
