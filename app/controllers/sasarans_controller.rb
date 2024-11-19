@@ -526,9 +526,14 @@ class SasaransController < ApplicationController
 
   def laporan_inovasi
     @sasaran = Sasaran.find(params[:id])
+    @kode_opd = @sasaran.opd.kode_unik_opd
+    @tahun = @sasaran.tahun
     @strategi = @sasaran.strategi
     @strategi_atasan = @strategi.strategi_atasan
     @inovasi = @sasaran.inovasi_sasaran
+    tim_kerja = TimKerja.new(kode_opd: @kode_opd,
+                             tahun: @sasaran.tahun)
+    @tim = tim_kerja.tim_kerja_hash(@strategi_atasan)
   end
 
   private

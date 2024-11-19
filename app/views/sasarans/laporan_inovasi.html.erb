@@ -5,54 +5,93 @@
 <% end %>
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout', title: "Laporan Inovasi #{@inovasi}" do %>
-    <div class="tim-kerja">
-      <div class="accordion-body">
-        <div class="cetak mb-2">
-          <%= link_to '#', class:"btn btn-outline-danger",
-                      title:"PDF Laporan Inovasi",
-                      data: {
-                        bs_toggle:"tooltip",
-                        bs_placement:"bottom",
-                      } do %>
-            <span class="far fa-file-pdf"></span>
-            Unduh Laporan
-          <% end %>
-        </div>
-        <div class="card">
-          <div class="card-body dasar-hukum-tim-kerja">
-            <table class="table table-bordered caption-top">
-              <caption>
-                Dasar Hukum
-              </caption>
-              <tbody>
-              </tbody>
-            </table>
+    <div class="accordion accordion-flush" id="accordionTimKerja">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button" type="button">
+            Tim Kerja - <%= @tim[:nama_tim] %>
+          </button>
+        </h2>
+        <div class="accordion-body">
+          <div class="cetak mb-2">
+            <%= link_to tim_kerja_pdf_laporan_path(@tim[:id_tim], format: :pdf), class:"btn btn-outline-danger",
+                        title:"PDF Laporan Inovasi",
+                        data: {
+                          bs_toggle:"tooltip",
+                          bs_placement:"bottom",
+                        } do %>
+              <span class="far fa-file-pdf"></span>
+              Unduh Laporan
+            <% end %>
           </div>
+          <div class="card">
+            <div class="card-body dasar-hukum-tim-kerja">
+              <table class="table table-bordered caption-top">
+                <caption>
+                  Dasar Hukum
+                </caption>
+                <tbody>
+                  <% @tim[:dasar_hukum].each.with_index(1) do |dasar_hukum, no| %>
+                    <%= render 'tim_kerja/dasar_hukum', no: no, dasar_hukum: dasar_hukum %>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
 
-          <div class="card-body pelaksana-tim-kerja">
-            <table class="table table-bordered caption-top">
-              <caption>
-                Susunan Tim Kerja <%= @strategi_atasan %>
-              </caption>
-              <tbody>
-                <tr>
-                  <th>Koordinator</th>
-                </tr>
-                <tr>
-                  <td>PELAKSANA X</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+            <div class="card-body pelaksana-tim-kerja">
+              <table class="table table-bordered caption-top">
+                <caption>
+                  Susunan Tim Kerja
+                </caption>
+                <tbody>
+                  <% @tim[:susunan_tim].each do |role, susunans| %>
+                    <tr>
+                      <th width="15%" rowspan="<%= susunans.size + 1 %>"><%= role[:role] %></th>
+                    </tr>
+                    <% susunans.each.with_index(1) do |susunan, urut| %>
+                      <tr>
+                        <td class="<%= susunan[:sasaran_terisi] ? 'text-success' : 'text-danger' %>">
+                          <%= urut %> - <%= susunan[:pelaksana] %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
 
-          <div class="card-body rincian-tugas-tim-kerja">
-            <table class="table table-bordered caption-top">
-              <caption>
-                Rincian Tugas
-              </caption>
-              <tbody>
-              </tbody>
-            </table>
+            <div class="card-body inovator-tim-kerja">
+              <table class="table table-bordered caption-top">
+                <caption>
+                  Inovator
+                </caption>
+                <tbody>
+                  <tr>
+                    <td>
+                      <%= @sasaran.user %> ( <%= @sasaran.nip_asn %> )
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="card-body rincian-tugas-tim-kerja">
+              <table class="table table-bordered caption-top">
+                <caption>
+                  Rincian Tugas
+                </caption>
+                <tbody>
+                  <tr>
+                    <td class="row-number" width="5%">Key</td>
+                    <td class="text-wrap" width="90%"><%= @sasaran %></td>
+                    <td></td>
+                  </tr>
+                  <% @tim[:rincian_tugas].each.with_index(1) do |tugas, no| %>
+                    <%= render 'tim_kerja/rincian_tugas', no: no, tugas: tugas %>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
