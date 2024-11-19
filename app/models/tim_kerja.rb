@@ -1,3 +1,4 @@
+# Get Tim kerja data from Pohon Kinerja Cascading
 class TimKerja
   def initialize(kode_opd: '', tahun: '')
     @kode_opd = kode_opd
@@ -32,12 +33,7 @@ class TimKerja
   end
 
   def dasar_hukum_tim(strategi)
-    strategi_bawahans =
-      strategi.strategi_bawahans.flat_map do |sp_bawahan|
-        pelaksana(sp_bawahan)
-      end
-
-    strategi_bawahans.flat_map do |pohon|
+    strategi_bawahans(strategi).flat_map do |pohon|
       sasaran_pelaksana(pohon).flat_map do |sas|
         sas.dasar_hukums.filter_map do |das_hu|
           dasar_hukum = if das_hu.judul_dasar_hukum_tim_kerja.present?
@@ -52,40 +48,12 @@ class TimKerja
   end
 
   def susunan_tim(strategi)
-    pohon_strategi = pelaksana(strategi)
-    pohon_bawahans =
-      strategi.strategi_bawahans.flat_map do |sp_bawahan|
-        pelaksana(sp_bawahan)
-      end
-
-    pelaksana_strategi = pohon_strategi.flat_map do |pelaksana|
-      {
-        role_id: role_tim_id(pelaksana.role_tim),
-        role: pelaksana.role_tim,
-        pelaksana: pelaksana.user.nama_nip_kurung,
-        sasaran_terisi: sasaran_pelaksana_terisi?(pelaksana)
-      }
-    end
-    pelaksana_bawahan = pohon_bawahans.flat_map do |pelaksana|
-      {
-        role_id: role_tim_id(pelaksana.role_tim),
-        role: pelaksana.role_tim,
-        pelaksana: pelaksana.user.nama_nip_kurung,
-        sasaran_terisi: sasaran_pelaksana_terisi?(pelaksana)
-      }
-    end
-
-    all_pelaksana = pelaksana_strategi + pelaksana_bawahan
+    all_pelaksana = pelaksana_strategi(strategi) + pelaksana_bawahan(strategi)
     all_pelaksana.group_by { |pl| { id: pl[:role_id], role: pl[:role] } }.sort_by { |key, _| key[:id] }
   end
 
   def rincian_tugas(strategi)
-    strategi_bawahans =
-      strategi.strategi_bawahans.flat_map do |sp_bawahan|
-        pelaksana(sp_bawahan)
-      end
-
-    strategi_bawahans.flat_map do |pohon|
+    strategi_bawahans(strategi).flat_map do |pohon|
       sasaran_pelaksana(pohon).filter_map do |sas|
         sasarans = if sas.judul_rincian_tugas.present?
                      [sas.id, sas.judul_rincian_tugas]
@@ -100,6 +68,40 @@ class TimKerja
   def kepala_opd_tim; end
 
   private
+
+  def strategi_bawahans(strategi)
+    strategi.strategi_bawahans.flat_map do |sp_bawahan|
+      pelaksana(sp_bawahan)
+    end
+  end
+
+  def pohon_bawahans(strategi)
+    strategi.strategi_bawahans.flat_map do |sp_bawahan|
+      pelaksana(sp_bawahan)
+    end
+  end
+
+  def pelaksana_strategi(strategi)
+    pelaksana(strategi).flat_map do |pelaksana|
+      {
+        role_id: role_tim_id(pelaksana.role_tim),
+        role: pelaksana.role_tim,
+        pelaksana: pelaksana.user.nama_nip_kurung,
+        sasaran_terisi: sasaran_pelaksana_terisi?(pelaksana)
+      }
+    end
+  end
+
+  def pelaksana_bawahan(strategi)
+    pohon_bawahans(strategi).flat_map do |pelaksana|
+      {
+        role_id: role_tim_id(pelaksana.role_tim),
+        role: pelaksana.role_tim,
+        pelaksana: pelaksana.user.nama_nip_kurung,
+        sasaran_terisi: sasaran_pelaksana_terisi?(pelaksana)
+      }
+    end
+  end
 
   def role_tim_id(role)
     case role
