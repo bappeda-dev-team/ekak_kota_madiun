@@ -78,6 +78,6 @@ class Spbe < ApplicationRecord
   end
 
   def valid?
-    strategi_tactical.length > 5
+    strategi_tactical.present?
   end
 end
