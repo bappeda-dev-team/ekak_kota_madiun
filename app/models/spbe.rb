@@ -77,7 +77,7 @@ class Spbe < ApplicationRecord
     spbe_rincians.all?(&:diterima?)
   end
 
-  def valid?
-    strategi_tactical.present?
+  def strategi_valid?
+    strategi_tactical.length > 5
   end
 end

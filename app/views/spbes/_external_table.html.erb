@@ -33,7 +33,7 @@
       </tr>
       <% @spbes_external.each.with_index(1) do |(program, spbes), i| %>
         <% warning_style = spbes.all?(&:status_rincian) ? '' : 'table-warning' %>
-        <% invalid_style = spbes.any?(&:valid?) ? '' : 'table-danger' %>
+        <% invalid_style = spbes.any?(&:strategi_valid?) ? '' : 'table-danger' %>
         <tr class="<%= warning_style %> <%= invalid_style %>">
           <td class="border fw-bolder" rowspan="<%= rowspan_spbe(spbes) %>"><%= i %></td>
           <td class="border text-wrap fw-bolder" rowspan="<%= rowspan_spbe(spbes) %>"><%= program.nama_urusan %></td>
