@@ -4,6 +4,7 @@
   <%= render partial: 'pohon_kinerja_opds/item_pohon_title', locals: { pohon: presenter, show_button: show_button } %>
   <%= render partial: 'pohon_kinerja_opds/item_cascading_body', locals: { pohon: presenter, show_button: show_button } %>
   <%= render partial: 'pohon_kinerja_opds/item_cascading_pelaksana', locals: { pohon: presenter, show_button: show_button } %>
+  <%= render partial: 'pohon_kinerja_opds/item_cascading_inovasi', locals: { pohon: presenter } %>
   <%= render partial: 'pohon_kinerja_opds/item_reviews', locals: { pohon: presenter, show_button: show_button } %>
   <% unless guest? %>
     <% if show_button %>

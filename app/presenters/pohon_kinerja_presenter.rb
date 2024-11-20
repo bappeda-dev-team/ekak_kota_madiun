@@ -273,6 +273,26 @@ class PohonKinerjaPresenter
     pohonable.reviews
   end
 
+  def child_inovasi
+    if role == 'eselon_2'
+      pohonable.strategi_bawahans.flat_map do |chl|
+        chl.strategi_bawahans.flat_map do |stra|
+          sasaran_inovasi(stra)
+        end
+      end
+    elsif role == 'eselon_3'
+      pohonable.strategi_bawahans.flat_map do |stra|
+        sasaran_inovasi(stra)
+      end
+    else
+      sasaran_inovasi(pohonable)
+    end
+  end
+
+  def sasaran_inovasi(strategi)
+    strategi.sasarans.select { |ss| ss.hasil_inovasi_sasaran == 'Inovasi' }
+  end
+
   private
 
   def to_real_name(role)

@@ -750,7 +750,7 @@ CREATE TABLE public.dasar_hukums (
     usulan_id bigint,
     keterangan character varying,
     metadata jsonb,
-    urutan integer
+    urutan integer DEFAULT 1 NOT NULL
 );
 
 
@@ -1739,7 +1739,7 @@ CREATE TABLE public.mandatoris (
     is_active boolean DEFAULT false,
     status public.usulan_status DEFAULT 'draft'::public.usulan_status,
     uraian character varying,
-    urutan integer
+    urutan integer DEFAULT 1 NOT NULL
 );
 
 

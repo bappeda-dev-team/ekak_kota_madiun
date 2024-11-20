@@ -1,0 +1,12 @@
+<% if pohon.child_inovasi.any? %>
+  <div class="pohon-body">
+    <table class="table table-bordered table-success">
+      <tr>
+        <td class="text-start fw-bolder">Jumlah Inovasi</td>
+        <td class="text-center fw-bolder">
+          <%= pohon.child_inovasi.size %>
+        </td>
+      </tr>
+    </table>
+  </div>
+<% end %>
