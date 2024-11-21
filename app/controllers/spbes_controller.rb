@@ -27,7 +27,13 @@ class SpbesController < ApplicationController
   end
 
   def custom_tanggal_cetak
-    @domain = params[:domain]
+    @domain = params[:domain].blank? ? 'all' : params[:domain]
+    @jenis = params[:jenis]
+    @url = if @jenis == 'kota'
+             cetak_kota_spbes_path(format: :pdf)
+           else
+             cetak_spbes_path(format: :pdf)
+           end
     render layout: false
   end
 
@@ -63,6 +69,7 @@ class SpbesController < ApplicationController
   # ambil ttd setda
   def cetak_kota
     @domain = params[:domain]
+    @tanggal_cetak = params[:selected_date]
     @spbes = if @domain.present? && @domain != 'all'
                Spbe.includes(:program_kegiatan, :opd, :strategi, spbe_rincians: %i[opd])
                    .joins(:opd, :spbe_rincians)
@@ -71,13 +78,11 @@ class SpbesController < ApplicationController
                Spbe.includes(:program_kegiatan, :opd, :strategi, spbe_rincians: %i[opd])
                    .joins(:opd, :spbe_rincians).all
              end
-    @opd = Opd.find(145)
-    current_page = request.original_url
 
     @filename = "PETA_RENCANA_USULAN_APLIKASI_SPBE_KOTA_MADIUN_#{@tahun}"
     respond_to do |format|
       format.pdf do
-        pdf = SpbePdf.new(opd: @opd, tahun: @tahun, programs: @programs, spbes: @spbes, current_page: current_page,
+        pdf = SpbePdf.new(tahun: @tahun, programs: @programs, spbes: @spbes, tanggal_cetak: @tanggal_cetak,
                           domain: @domain, kota: 'kota')
         pdf.print
         @filename << ".pdf"

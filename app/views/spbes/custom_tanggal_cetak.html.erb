@@ -1,5 +1,5 @@
 <div id="pilih-tanggal-cetak" class="text-center">
-  <%= form_with url: cetak_spbes_path(format: :pdf), method: :get, local: true, data: { controller: 'form-tanggal' } do |f| %>
+  <%= form_with url: @url, method: :get, local: true, data: { controller: 'form-tanggal' } do |f| %>
     <div class="field mb-5">
       <%= f.label :domain, "Domain terpilih" %>
       <%= f.text_field :domain, value: @domain, class: "form-control", readonly: true %>

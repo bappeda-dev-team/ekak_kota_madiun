@@ -5,12 +5,17 @@ class SpbePdf < Prawn::Document
     super(page_layout: :landscape, page_size: "LETTER")
     @opd = opd
     @tahun = tahun
-    @nama_opd = @opd.nama_opd
-    @nama_kota = @opd.lembaga.nama_lembaga
+    if @opd.present?
+      @nama_opd = @opd.nama_opd
+      @nama_kota = @opd.lembaga.nama_lembaga
+    else
+      @nama_opd = ''
+      @nama_kota = 'KOTA MADIUN'
+    end
     @programs = programs
     @spbes = spbes
-    @domain = domain
-    @judul = "Tabel Peta Rencana Usulan #{@domain} SPBE"
+    @domain = domain.blank? || domain == 'all' ? '' : domain
+    @judul = "Tabel Peta Rencana SPBE"
     @tanggal_cetak = tanggal_cetak
     @timestamp = Time.now
     @kota = kota
@@ -21,11 +26,14 @@ class SpbePdf < Prawn::Document
     move_down 20
     tabel_spbe
     move_down 20
+    return if @kota == 'kota'
+
     ttd
   end
 
   def title
     text @judul.upcase, align: :center
+    text @domain.upcase, align: :center
     move_down 3
     text @nama_opd.upcase, align: :center unless @kota == 'kota'
     text @nama_kota.upcase, align: :center
@@ -77,10 +85,9 @@ class SpbePdf < Prawn::Document
 
   def tabel_spbe
     tabel = [header_tabel]
-    @spbes.each.with_index(1) do |spbe, i|
+    spbe_tabel = @spbes.flat_map do |spbe|
       spbe.spbe_rincians.map do |spbe_rincian|
-        tabel << [
-          { content: i.to_s },
+        [
           { content: spbe.opd_pemohon },
           { content: spbe.nama_program },
           { content: spbe.strategi_tactical },
@@ -93,7 +100,18 @@ class SpbePdf < Prawn::Document
         ]
       end
     end
-    table(tabel, header: true) do
+
+    sorted_tabel = spbe_tabel.sort_by do |sub_array|
+      sub_array[0][:content]
+    end
+
+    nomor_tabel = sorted_tabel.each.with_index(1) do |cont, i|
+      cont.unshift({ content: i.to_s })
+    end
+
+    cetak = tabel + nomor_tabel
+
+    table(cetak, header: true) do
       cells.style(size: 8)
     end
   end
