@@ -7,38 +7,85 @@
                 form_ajax_pohon_param: dom_id(crosscutting.strategi),
                 action: 'ajax:complete->form-ajax#successResponseNew'
               } do |form| %>
-  <div class="field">
-    <%= form.label :crosscutting, class: "form-label" %>
-    <% crosscutting.external.each do |cross| %>
-      <div class="form-check">
-        <%= hidden_field_tag 'uncheck[]', cross.id %>
-        <%= check_box_tag 'check[]', cross.id, true, class: 'form-check-input' %>
-        <%= label_tag 'check', class: 'form-check-label' do %>
-          <span class="fw-bolder"><%= cross.opd.nama_opd %></span>
-        <% end %>
+  <div data-controller="crosscutting"
+       data-action="tipeCrosscutting@document->crosscutting#aktifkanTipeTerpilih">
+    <div class="field" id="pilih-tipe-crosscutting">
+      <%= form.label :tipe_crosscutting, { class: "form-label" } %>
+      <%= form.select :tipe_crosscutting, ['Internal', 'External'],
+       {include_blank: true },
+       { class: 'form-control',
+         required: true,
+         data: {
+           placeholder: 'Pilih Tipe Crosscutting',
+           controller: 'dropdown',
+           dropdown_jenis_value: 'chain',
+           dropdown_parent_value: '#pilih-tipe-crosscutting',
+           dropdown_event_name_value: 'tipeCrosscutting',
+         }
+       } %>
+    </div>
+
+    <div id="internal" data-crosscutting-target="internal" class="d-none">
+      <div class="internal-crosscutting-field">
+        <div class="field mb-5">
+          <%= form.label :opd, { class: "form-label" } %>
+          <%= form.select :opd_list, [], {include_blank: true},
+           {
+             multiple: true,
+             data: { placeholder: "Daftar OPD",
+               controller: 'dropdown',
+               dropdown_jenis_value: 'ajax_preselect',
+               dropdown_url_value: legit_opd_opds_path(:json),
+               dropdown_kode_opd_value: crosscutting.kode_opd_pemilik,
+               dropdown_kode_opd_terpilih_value: crosscutting.daftar_terpilih,
+               dropdown_parent_value: '#form-crosscutting-body',
+             }
+           } %>
+        </div>
+        <div class="field">
+          <%= check_box_tag :mitra, 'mitra', false, class: 'form-check-input', data: { action: 'crosscutting#inputMitra' } %>
+          <%= label_tag :mitra, "Mitra", class: 'form-check-label' %>
+        </div>
+        <div class="input-mitra d-none" data-crosscutting-target="mitra">
+          <div class="field">
+            <%= form.label :nama_kerjasama, { class: "form-label" } %>
+            <%= form.text_area :nama_kerjasama, { class: "form-control", placeholder: 'input nama kerjasama' } %>
+          </div>
+          <div class="field">
+            <%= form.label :penjelasan_kerjasama, { class: "form-label" } %>
+            <%= form.text_area :penjelasan_kerjasama, { class: "form-control", placeholder: 'input deskripsi kerjasama' } %>
+          </div>
+        </div>
+        <div class="field">
+          <%= check_box_tag :inovasi, 'inovasi', false, class: 'form-check-input', data: { action: 'crosscutting#inputInovasi' } %>
+          <%= label_tag :inovasi, "Inovasi", class: 'form-check-label' %>
+        </div>
+        <div class="input-inovasi d-none" data-crosscutting-target="inovasi">
+          <div class="field">
+            <%= form.label :nama_inovasi, { class: "form-label" } %>
+            <%= form.text_area :nama_inovasi, { class: "form-control", placeholder: 'input nama inovasi' } %>
+          </div>
+          <div class="field">
+            <%= form.label :susunan_tim, { class: "form-label" } %>
+            <%= form.text_area :susunan_tim, { class: "form-control", placeholder: 'input susunan tim' } %>
+          </div>
+          <div class="field">
+            <%= form.label :jenis_inovasi, { class: "form-label" } %>
+            <%= form.text_area :jenis_inovasi, { class: "form-control", placeholder: 'apa jenis inovasinya ?' } %>
+          </div>
+          <div class="field">
+            <%= form.label :nilai_kebaruan, { class: "form-label" } %>
+            <%= form.text_area :nilai_kebaruan, { class: "form-control", placeholder: 'gambarkan nilai kebaruan inovasi' } %>
+          </div>
+        </div>
       </div>
-    <% end %>
-  </div>
-  <div class="field mb-5">
-    <%= form.label :opd, { class: "form-label" } %>
-    <%= form.select :opd_list, [], {include_blank: true},
-     {
-       multiple: true,
-       data: { placeholder: "Daftar OPD",
-         controller: 'dropdown',
-         dropdown_jenis_value: 'ajax_preselect',
-         dropdown_url_value: legit_opd_opds_path(:json),
-         dropdown_kode_opd_value: crosscutting.kode_opd_pemilik,
-         dropdown_kode_opd_terpilih_value: crosscutting.daftar_terpilih,
-         dropdown_parent_value: '#form-crosscutting-body',
-       }
-     } %>
-  </div>
-  <div class="field">
-    <%= form.label :keterangan, { class: "form-label" } %>
-    <%= form.text_area :keterangan, { class: "form-control" } %>
-  </div>
-  <div class="actions">
-    <%= form.submit "Simpan perubahan" %>
+    </div>
+    <div class="field">
+      <%= form.label :keterangan, { class: "form-label" } %>
+      <%= form.text_area :keterangan, { class: "form-control" } %>
+    </div>
+    <div class="actions">
+      <%= form.submit "Simpan perubahan" %>
+    </div>
   </div>
 <% end %>
