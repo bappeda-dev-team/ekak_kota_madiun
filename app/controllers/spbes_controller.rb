@@ -28,20 +28,21 @@ class SpbesController < ApplicationController
 
   def custom_tanggal_cetak
     @domain = params[:domain]
+    render layout: false
   end
 
   # rubocop:disable Metrics
   def cetak
     @domain = params[:domain]
+    @tanggal_cetak = params[:selected_date]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
     @spbes = Spbe.all_in_opd_by_domain(@kode_opd, domain: @domain)
-    current_page = request.original_url
 
     @filename = "PETA_RENCANA_USULAN_APLIKASI_SPBE_#{@nama_opd}_#{@tahun}"
     respond_to do |format|
       format.pdf do
-        pdf = SpbePdf.new(opd: @opd, tahun: @tahun, programs: @programs, spbes: @spbes, current_page: current_page,
+        pdf = SpbePdf.new(opd: @opd, tahun: @tahun, programs: @programs, spbes: @spbes, tanggal_cetak: @tanggal_cetak,
                           domain: @domain)
         pdf.print
         @filename << ".pdf"

@@ -1,0 +1,13 @@
+<div id="pilih-tanggal-cetak" class="text-center">
+  <%= form_with url: cetak_spbes_path(format: :pdf), method: :get, local: true, data: { controller: 'form-tanggal' } do |f| %>
+    <div class="field mb-5">
+      <%= f.label :domain, "Domain terpilih" %>
+      <%= f.text_field :domain, value: @domain, class: "form-control", readonly: true %>
+    </div>
+    <div class="field">
+      <%= f.label :selected_date, "Pilih Tanggal Cetak" %>
+      <%= f.text_field :selected_date, class: "form-control datepicker", data: { form_tanggal_target: 'input' } %>
+    </div>
+    <%= f.submit "Unduh PDF Peta Rencana SPBE", class: "btn btn-primary" %>
+  <% end %>
+</div>

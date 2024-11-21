@@ -1,7 +1,7 @@
 class SpbePdf < Prawn::Document
   include ActionView::Helpers::NumberHelper
 
-  def initialize(opd: '', tahun: '', programs: '', spbes: '', current_page: '', domain: '', kota: '')
+  def initialize(opd: '', tahun: '', programs: '', spbes: '', tanggal_cetak: '', domain: '', kota: '')
     super(page_layout: :landscape, page_size: "LETTER")
     @opd = opd
     @tahun = tahun
@@ -11,7 +11,7 @@ class SpbePdf < Prawn::Document
     @spbes = spbes
     @domain = domain
     @judul = "Tabel Peta Rencana Usulan #{@domain} SPBE"
-    @current_page = current_page
+    @tanggal_cetak = tanggal_cetak
     @timestamp = Time.now
     @kota = kota
   end
@@ -22,7 +22,6 @@ class SpbePdf < Prawn::Document
     tabel_spbe
     move_down 20
     ttd
-    footer
   end
 
   def title
@@ -34,10 +33,11 @@ class SpbePdf < Prawn::Document
     text "TAHUN #{@tahun}", align: :center
   end
 
+  # rubocop: disable Metrics
   def ttd
     start_new_page if (cursor - 111).negative?
     bounding_box([bounds.width - 370, cursor - 5], width: bounds.width - 200) do
-      text "Madiun,    #{I18n.l Date.today, format: '  %B %Y'}", size: 8, align: :center
+      text "Madiun, #{@tanggal_cetak}", size: 8, align: :center
       move_down 5
       text "<strong>#{@opd.jabatan_kepala_tanpa_opd}</strong>", size: 8, align: :center,
                                                                 inline_format: true
@@ -48,11 +48,6 @@ class SpbePdf < Prawn::Document
       text @opd.pangkat_kepala || '!! belum disetting', size: 8, align: :center
       text "NIP. #{@opd.nip_kepala_fix_plt || '!! belum disetting'}", size: 8, align: :center
     end
-  end
-
-  def footer
-    text "Dicetak pada #{@timestamp} via #{@current_page}", valign: :bottom,
-                                                            size: 8
   end
 
   W_NAMA_OPD = 70
