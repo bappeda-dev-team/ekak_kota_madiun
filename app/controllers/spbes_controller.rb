@@ -8,16 +8,26 @@ class SpbesController < ApplicationController
     @spbes = Spbe.all.group_by(&:program_kegiatan)
   end
 
+  # rubocop: disable Metrics
   def index_opd
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @programs = @opd.program_kegiatans.programs
     @domain = params[:domain]
-    spbe = if @domain.present? && @domain != 'all'
-             Spbe.includes(:spbe_rincians).where(spbe_rincians: { domain_spbe: @domain })
-           else
-             Spbe.all
-           end
+    if @domain.present? && @domain != 'all'
+      spbe = Spbe.includes(:spbe_rincians).where(spbe_rincians: { domain_spbe: @domain })
+      @spbes = @programs.to_h do |prg|
+        [prg, prg.spbes.by_opd(@kode_opd).where(spbe_rincians: { domain_spbe: @domain })]
+      end
+    else
+      spbe = Spbe.all
+      @spbes = @programs.to_h { |prg| [prg, prg.spbes.by_opd(@kode_opd)] }
+    end
     @spbes_external = spbe.by_opd_tujuan(@kode_opd).group_by(&:program_kegiatan)
-    @spbes = spbe.by_opd(@kode_opd).group_by(&:program_kegiatan)
+    # @spbes = spbe.by_opd(@kode_opd).group_by(&:program_kegiatan)
+  end
+
+  def custom_tanggal_cetak
+    @domain = params[:domain]
   end
 
   # rubocop:disable Metrics

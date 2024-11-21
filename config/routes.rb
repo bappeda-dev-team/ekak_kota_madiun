@@ -177,6 +177,7 @@ Rails.application.routes.draw do
   resources :spbes do
     collection do
       get :index_opd
+      get :custom_tanggal_cetak
       get :cetak
       get :cetak_kota
     end
