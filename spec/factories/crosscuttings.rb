@@ -17,12 +17,9 @@
 #
 #  fk_rails_...  (strategi_id => strategis.id)
 #
-class Crosscutting < ApplicationRecord
-  belongs_to :strategi
-  has_many :mitras
-  accepts_nested_attributes_for :mitras, allow_destroy: true
-
-  def nama_opd_pelaksana
-    Opd.find_by(kode_unik_opd: opd_pelaksana).nama_opd
+FactoryBot.define do
+  factory :crosscutting do
+    tipe_crosscutting { "MyString" }
+    strategi { nil }
   end
 end

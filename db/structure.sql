@@ -736,6 +736,39 @@ ALTER SEQUENCE public.comments_id_seq OWNED BY public.comments.id;
 
 
 --
+-- Name: crosscuttings; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.crosscuttings (
+    id bigint NOT NULL,
+    tipe_crosscutting character varying,
+    opd_pelaksana character varying,
+    strategi_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: crosscuttings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.crosscuttings_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: crosscuttings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.crosscuttings_id_seq OWNED BY public.crosscuttings.id;
+
+
+--
 -- Name: dasar_hukums; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2042,6 +2075,42 @@ CREATE SEQUENCE public.master_urusans_id_seq
 --
 
 ALTER SEQUENCE public.master_urusans_id_seq OWNED BY public.master_urusans.id;
+
+
+--
+-- Name: mitras; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.mitras (
+    id bigint NOT NULL,
+    jenis_mitra character varying,
+    nama_kerjasama character varying,
+    penjelasan_kerjasama character varying,
+    tahun_kerjasama character varying,
+    keterangan character varying,
+    crosscutting_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: mitras_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.mitras_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: mitras_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.mitras_id_seq OWNED BY public.mitras.id;
 
 
 --
@@ -4143,6 +4212,13 @@ ALTER TABLE ONLY public.comments ALTER COLUMN id SET DEFAULT nextval('public.com
 
 
 --
+-- Name: crosscuttings id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.crosscuttings ALTER COLUMN id SET DEFAULT nextval('public.crosscuttings_id_seq'::regclass);
+
+
+--
 -- Name: dasar_hukums id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4385,6 +4461,13 @@ ALTER TABLE ONLY public.master_subkegiatans ALTER COLUMN id SET DEFAULT nextval(
 --
 
 ALTER TABLE ONLY public.master_urusans ALTER COLUMN id SET DEFAULT nextval('public.master_urusans_id_seq'::regclass);
+
+
+--
+-- Name: mitras id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mitras ALTER COLUMN id SET DEFAULT nextval('public.mitras_id_seq'::regclass);
 
 
 --
@@ -4862,6 +4945,14 @@ ALTER TABLE ONLY public.comments
 
 
 --
+-- Name: crosscuttings crosscuttings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.crosscuttings
+    ADD CONSTRAINT crosscuttings_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: dasar_hukums dasar_hukums_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -5139,6 +5230,14 @@ ALTER TABLE ONLY public.master_subkegiatans
 
 ALTER TABLE ONLY public.master_urusans
     ADD CONSTRAINT master_urusans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: mitras mitras_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mitras
+    ADD CONSTRAINT mitras_pkey PRIMARY KEY (id);
 
 
 --
@@ -5630,6 +5729,13 @@ CREATE INDEX index_comments_on_user_id ON public.comments USING btree (user_id);
 
 
 --
+-- Name: index_crosscuttings_on_strategi_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_crosscuttings_on_strategi_id ON public.crosscuttings USING btree (strategi_id);
+
+
+--
 -- Name: index_data_dukungs_on_data_dukungable; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -5823,6 +5929,13 @@ CREATE UNIQUE INDEX index_master_subkegiatans_on_id_unik_sipd ON public.master_s
 --
 
 CREATE UNIQUE INDEX index_master_urusans_on_id_unik_sipd ON public.master_urusans USING btree (id_unik_sipd);
+
+
+--
+-- Name: index_mitras_on_crosscutting_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_mitras_on_crosscutting_id ON public.mitras USING btree (crosscutting_id);
 
 
 --
@@ -6165,6 +6278,14 @@ ALTER TABLE ONLY public.kepegawaians
 
 
 --
+-- Name: mitras fk_rails_161d22de48; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mitras
+    ADD CONSTRAINT fk_rails_161d22de48 FOREIGN KEY (crosscutting_id) REFERENCES public.crosscuttings(id);
+
+
+--
 -- Name: tematik_sasarans fk_rails_22e78acf56; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -6274,6 +6395,14 @@ ALTER TABLE ONLY public.subdomains
 
 ALTER TABLE ONLY public.komentars
     ADD CONSTRAINT fk_rails_9c85741b05 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: crosscuttings fk_rails_a8848c7a10; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.crosscuttings
+    ADD CONSTRAINT fk_rails_a8848c7a10 FOREIGN KEY (strategi_id) REFERENCES public.strategis(id);
 
 
 --
@@ -6665,6 +6794,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241115035718'),
 ('20241115035917'),
 ('20241118033040'),
-('20241119051802');
+('20241119051802'),
+('20241122020829'),
+('20241122031824');
 
 

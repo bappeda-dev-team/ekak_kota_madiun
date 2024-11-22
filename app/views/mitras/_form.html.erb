@@ -1,0 +1,33 @@
+<%= form_with(model: mitra) do |form| %>
+  <% if mitra.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(mitra.errors.count, "error") %> prohibited this mitra from being saved:</h2>
+
+      <ul>
+        <% mitra.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div id="mitra-internal">
+    <div class="field">
+      <%= form.hidden_field :jenis_mitra, value: 'opd-internal' %>
+      <%= form.label :tahun_kerjasama, { class: "form-label" } %>
+      <%= form.select(:tahun_kerjasama, options_for_select(Tahun.pluck(:tahun), form.object.tahun_kerjasama), {},
+                      { data: {"placeholder": "Pilih Tahun",
+                               controller: 'dropdown',
+                               dropdown_parent_value: '#mitra-internal'
+      }}) %>
+    </div>
+    <div class="field">
+      <%= form.label :nama_kerjasama, { class: "form-label" } %>
+      <%= form.text_area :nama_kerjasama, { class: "form-control", placeholder: 'input nama kerjasama' } %>
+    </div>
+    <div class="field">
+      <%= form.label :penjelasan_kerjasama, { class: "form-label" } %>
+      <%= form.text_area :penjelasan_kerjasama, { class: "form-control", placeholder: 'input deskripsi kerjasama' } %>
+    </div>
+  </div>
+<% end %>

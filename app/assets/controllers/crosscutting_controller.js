@@ -22,10 +22,21 @@ export default class extends Controller {
   aktifkanTipeTerpilih(event) {
     const tipeTerpilih = event.detail.data.id;
     if (tipeTerpilih == "Internal") {
-      this.internalTarget.classList.toggle("d-none");
+      this.internalForm();
     } else {
       this.externalTarget.classList.toggle("d-none");
     }
+  }
+
+  internalForm() {
+    const url = "/crosscuttings/internal";
+
+    fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+      .then((response) => response.text())
+      .then((html) => {
+        this.internalTarget.innerHTML = html;
+      })
+      .catch((error) => console.error("Error:", error));
   }
 
   aktifkanTipeInstansiTerpilih(event) {
@@ -38,7 +49,14 @@ export default class extends Controller {
   }
 
   inputMitra(_event) {
-    this.mitraTarget.classList.toggle("d-none");
+    const url = "/mitras/new_internal";
+
+    fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+      .then((response) => response.text())
+      .then((html) => {
+        this.mitraTarget.innerHTML = html;
+      })
+      .catch((error) => console.error("Error:", error));
   }
 
   inputMitraExternalPemerintah(_event) {

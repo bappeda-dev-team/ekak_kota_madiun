@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Mitras</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Jenis mitra</th>
+      <th>Nama kerjasama</th>
+      <th>Penjelasan kerjasama</th>
+      <th>Tahun kerjasama</th>
+      <th>Keterangan</th>
+      <th>Crosscutting</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @mitras.each do |mitra| %>
+      <tr>
+        <td><%= mitra.jenis_mitra %></td>
+        <td><%= mitra.nama_kerjasama %></td>
+        <td><%= mitra.penjelasan_kerjasama %></td>
+        <td><%= mitra.tahun_kerjasama %></td>
+        <td><%= mitra.keterangan %></td>
+        <td><%= mitra.crosscutting_id %></td>
+        <td><%= link_to 'Show', mitra %></td>
+        <td><%= link_to 'Edit', edit_mitra_path(mitra) %></td>
+        <td><%= link_to 'Destroy', mitra, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Mitra', new_mitra_path %>

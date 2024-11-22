@@ -1,15 +1,11 @@
 <% unless pohon.exists? %>
-  <% if pohon.crosscuttings.any? %>
+  <% if pohon.pohonable.crosscuttings.any? %>
     <div class="pohon-body">
       <table class="table table-bordered mb-3">
-        <% pohon.crosscuttings.each.with_index(1) do |dibagikan, no| %>
+        <% pohon.pohonable.crosscuttings.each.with_index(1) do |crosscut, no| %>
           <tr>
-            <td class="text-start" width="30px">Crosscutting
-              <% if pohon.crosscuttings.size > 1 %>
-                <%= no %>
-              <% end %>
-            </td>
-            <td class="text-wrap text-start"><%= dibagikan.opd.nama_opd %></td>
+            <td class="text-start" width="30px">Crosscutting <%= crosscut.tipe_crosscutting %></td>
+            <td class="text-wrap text-start"><%= crosscut.nama_opd_pelaksana %></td>
           </tr>
         <% end %>
       </table>

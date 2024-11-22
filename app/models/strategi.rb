@@ -36,7 +36,7 @@ class Strategi < ApplicationRecord
   has_one :pohon, as: :pohonable
   has_many :reviews, as: :reviewable
   # has_many :komentars, primary_key: :id, foreign_key: :item
-
+  has_many :crosscuttings
   # has_many :indikator_sasarans, through: :sasarans
   has_many :indikators, lambda {
                           where(jenis: 'Strategi', sub_jenis: 'StrategiPohon')

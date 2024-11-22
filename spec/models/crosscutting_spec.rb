@@ -17,12 +17,8 @@
 #
 #  fk_rails_...  (strategi_id => strategis.id)
 #
-class Crosscutting < ApplicationRecord
-  belongs_to :strategi
-  has_many :mitras
-  accepts_nested_attributes_for :mitras, allow_destroy: true
+require 'rails_helper'
 
-  def nama_opd_pelaksana
-    Opd.find_by(kode_unik_opd: opd_pelaksana).nama_opd
-  end
+RSpec.describe Crosscutting, type: :model do
+  pending "add some examples to (or delete) #{__FILE__}"
 end

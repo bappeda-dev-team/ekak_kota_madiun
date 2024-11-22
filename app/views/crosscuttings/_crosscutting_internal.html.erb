@@ -1,11 +1,10 @@
-<div id="internal" data-crosscutting-target="internal" class="d-none">
+<%= form_with(model: crosscutting, local: false) do |form| %>
   <div class="internal-crosscutting-field">
     <div class="field mb-5">
       <%= form.label :opd, { class: "form-label" } %>
-      <%= form.select :opd_list, [], {include_blank: true},
+      <%= form.select :opd_pelaksana, [], {},
        {
-         multiple: true,
-         data: { placeholder: "Daftar OPD",
+         data: { placeholder: "Pilih OPD Crosscutting",
            controller: 'dropdown',
            dropdown_jenis_value: 'ajax_preselect',
            dropdown_url_value: legit_opd_opds_path(:json),
@@ -14,50 +13,10 @@
        } %>
     </div>
     <div class="field">
-      <%= check_box_tag :mitra, 'mitra', false, class: 'form-check-input', data: { action: 'crosscutting#inputMitra' } %>
+      <%= check_box_tag 'mitra', "1", false, class: 'form-check-input', name: nil, data: { action: 'crosscutting#inputMitra' } %>
       <%= label_tag :mitra, "Mitra", class: 'form-check-label' %>
     </div>
-    <div class="input-mitra d-none" data-crosscutting-target="mitra">
-      <div class="field">
-        <%= form.label :nama_kerjasama, { class: "form-label" } %>
-        <%= form.text_area :nama_kerjasama, { class: "form-control", placeholder: 'input nama kerjasama' } %>
-      </div>
-      <div class="field">
-        <%= form.label :penjelasan_kerjasama, { class: "form-label" } %>
-        <%= form.text_area :penjelasan_kerjasama, { class: "form-control", placeholder: 'input deskripsi kerjasama' } %>
-      </div>
-    </div>
-    <div class="field">
-      <%= check_box_tag :inovasi, 'inovasi', false, class: 'form-check-input', data: { action: 'crosscutting#inputInovasi' } %>
-      <%= label_tag :inovasi, "Inovasi", class: 'form-check-label' %>
-    </div>
-    <div class="input-inovasi d-none" data-crosscutting-target="inovasi">
-      <div class="field">
-        <%= form.label :nama_inovasi, { class: "form-label" } %>
-        <%= form.text_area :nama_inovasi, { class: "form-control", placeholder: 'input nama inovasi' } %>
-      </div>
-      <%= form.label :susunan_tim, { class: "form-label" } %>
-      <div class="px-3 border border-2" >
-        <div class="row">
-          <div class="col">
-            <%= form.label :role_anggota, { class: "form-label" } %>
-          </div>
-          <div class="col">
-            <%= form.label :nama_anggota, { class: "form-label" } %>
-          </div>
-        </div>
-        <div class="d-grid gap-3 py-3" id="susunan-tim">
-          <%= render 'anggota_fields', form: form %>
-        </div>
-      </div>
-      <div class="field">
-        <%= form.label :jenis_inovasi, { class: "form-label" } %>
-        <%= form.text_area :jenis_inovasi, { class: "form-control", placeholder: 'apa jenis inovasinya ?' } %>
-      </div>
-      <div class="field">
-        <%= form.label :nilai_kebaruan, { class: "form-label" } %>
-        <%= form.text_area :nilai_kebaruan, { class: "form-control", placeholder: 'gambarkan nilai kebaruan inovasi' } %>
-      </div>
+    <div class="input-mitra" data-crosscutting-target="mitra">
     </div>
   </div>
-</div>
+<% end %>

@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Jenis mitra:</strong>
+  <%= @mitra.jenis_mitra %>
+</p>
+
+<p>
+  <strong>Nama kerjasama:</strong>
+  <%= @mitra.nama_kerjasama %>
+</p>
+
+<p>
+  <strong>Penjelasan kerjasama:</strong>
+  <%= @mitra.penjelasan_kerjasama %>
+</p>
+
+<p>
+  <strong>Tahun kerjasama:</strong>
+  <%= @mitra.tahun_kerjasama %>
+</p>
+
+<p>
+  <strong>Keterangan:</strong>
+  <%= @mitra.keterangan %>
+</p>
+
+<p>
+  <strong>Crosscutting:</strong>
+  <%= @mitra.crosscutting_id %>
+</p>
+
+<%= link_to 'Edit', edit_mitra_path(@mitra) %> |
+<%= link_to 'Back', mitras_path %>

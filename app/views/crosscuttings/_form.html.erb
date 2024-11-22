@@ -1,15 +1,15 @@
-<%= form_with url: crosscutting_path(crosscutting.id),
+<%= form_with model: crosscutting,
               local: false,
-              method: :patch,
               data: {
                 controller: 'form-ajax',
                 form_ajax_modal_param: 'form-crosscutting',
-                form_ajax_pohon_param: dom_id(crosscutting.strategi),
+                form_ajax_pohon_param: dom_id(@strategi),
                 action: 'ajax:complete->form-ajax#successResponseNew'
               } do |form| %>
   <div data-controller="crosscutting"
        data-action="tipeCrosscutting@document->crosscutting#aktifkanTipeTerpilih">
     <div class="field" id="pilih-tipe-crosscutting">
+      <%= form.hidden_field :strategi_id %>
       <%= form.label :tipe_crosscutting, { class: "form-label" } %>
       <%= form.select :tipe_crosscutting, ['Internal', 'External'],
        {include_blank: true },
@@ -19,18 +19,14 @@
            placeholder: 'Pilih Tipe Crosscutting',
            controller: 'dropdown',
            dropdown_jenis_value: 'chain',
-           dropdown_parent_value: '#pilih-tipe-crosscutting',
+           dropdown_parent_value: '#form-crosscutting',
            dropdown_event_name_value: 'tipeCrosscutting',
          }
        } %>
     </div>
-    <%= render 'crosscutting_internal', form: form %>
-    <%= render 'crosscutting_external', form: form %>
-
-    <div class="field">
-      <%= form.label :keterangan, { class: "form-label" } %>
-      <%= form.text_area :keterangan, { class: "form-control" } %>
+    <div id="internal" data-crosscutting-target="internal">
     </div>
+
     <div class="actions">
       <%= form.submit "Simpan perubahan" %>
     </div>
