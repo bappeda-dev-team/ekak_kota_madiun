@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nama inovasi:</strong>
+  <%= @inovasi_tim.nama_inovasi %>
+</p>
+
+<p>
+  <strong>Jenis inovasi:</strong>
+  <%= @inovasi_tim.jenis_inovasi %>
+</p>
+
+<p>
+  <strong>Nilai kebaruan:</strong>
+  <%= @inovasi_tim.nilai_kebaruan %>
+</p>
+
+<p>
+  <strong>Tahun:</strong>
+  <%= @inovasi_tim.tahun %>
+</p>
+
+<p>
+  <strong>Crosscutting:</strong>
+  <%= @inovasi_tim.crosscutting_id %>
+</p>
+
+<%= link_to 'Edit', edit_inovasi_tim_path(@inovasi_tim) %> |
+<%= link_to 'Back', inovasi_tims_path %>

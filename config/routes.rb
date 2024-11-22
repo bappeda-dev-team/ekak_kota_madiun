@@ -8,6 +8,7 @@ require "sidekiq/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :inovasi_tims
   resources :mitras do
     collection do
       get :new_internal

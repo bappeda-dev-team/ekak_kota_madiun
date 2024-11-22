@@ -1081,6 +1081,41 @@ ALTER SEQUENCE public.indikators_users_id_seq OWNED BY public.indikators_users.i
 
 
 --
+-- Name: inovasi_tims; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.inovasi_tims (
+    id bigint NOT NULL,
+    nama_inovasi character varying,
+    jenis_inovasi character varying,
+    nilai_kebaruan character varying,
+    tahun character varying,
+    crosscutting_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: inovasi_tims_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.inovasi_tims_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: inovasi_tims_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.inovasi_tims_id_seq OWNED BY public.inovasi_tims.id;
+
+
+--
 -- Name: inovasis; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -4277,6 +4312,13 @@ ALTER TABLE ONLY public.indikators_users ALTER COLUMN id SET DEFAULT nextval('pu
 
 
 --
+-- Name: inovasi_tims id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inovasi_tims ALTER COLUMN id SET DEFAULT nextval('public.inovasi_tims_id_seq'::regclass);
+
+
+--
 -- Name: inovasis id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -5016,6 +5058,14 @@ ALTER TABLE ONLY public.indikators
 
 ALTER TABLE ONLY public.indikators_users
     ADD CONSTRAINT indikators_users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: inovasi_tims inovasi_tims_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inovasi_tims
+    ADD CONSTRAINT inovasi_tims_pkey PRIMARY KEY (id);
 
 
 --
@@ -5787,6 +5837,13 @@ CREATE INDEX index_indikators_users_on_user_id ON public.indikators_users USING 
 
 
 --
+-- Name: index_inovasi_tims_on_crosscutting_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_inovasi_tims_on_crosscutting_id ON public.inovasi_tims USING btree (crosscutting_id);
+
+
+--
 -- Name: index_inovasis_on_sasaran_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -6400,6 +6457,14 @@ ALTER TABLE ONLY public.komentars
 
 
 --
+-- Name: inovasi_tims fk_rails_a533090c39; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inovasi_tims
+    ADD CONSTRAINT fk_rails_a533090c39 FOREIGN KEY (crosscutting_id) REFERENCES public.crosscuttings(id);
+
+
+--
 -- Name: crosscuttings fk_rails_a8848c7a10; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -6799,6 +6864,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241119051802'),
 ('20241122020829'),
 ('20241122031824'),
-('20241122064306');
+('20241122064306'),
+('20241122130628');
 
 

@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Inovasi Tims</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nama inovasi</th>
+      <th>Jenis inovasi</th>
+      <th>Nilai kebaruan</th>
+      <th>Tahun</th>
+      <th>Crosscutting</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @inovasi_tims.each do |inovasi_tim| %>
+      <tr>
+        <td><%= inovasi_tim.nama_inovasi %></td>
+        <td><%= inovasi_tim.jenis_inovasi %></td>
+        <td><%= inovasi_tim.nilai_kebaruan %></td>
+        <td><%= inovasi_tim.tahun %></td>
+        <td><%= inovasi_tim.crosscutting_id %></td>
+        <td><%= link_to 'Show', inovasi_tim %></td>
+        <td><%= link_to 'Edit', edit_inovasi_tim_path(inovasi_tim) %></td>
+        <td><%= link_to 'Destroy', inovasi_tim, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Inovasi Tim', new_inovasi_tim_path %>

@@ -22,6 +22,7 @@
 class Crosscutting < ApplicationRecord
   belongs_to :strategi
   has_many :mitras
+  has_many :inovasi_tims
   accepts_nested_attributes_for :mitras, allow_destroy: true
 
   def nama_opd_pelaksana

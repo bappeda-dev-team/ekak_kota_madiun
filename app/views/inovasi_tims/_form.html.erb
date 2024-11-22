@@ -1,0 +1,42 @@
+<%= form_with(model: inovasi_tim) do |form| %>
+  <% if inovasi_tim.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(inovasi_tim.errors.count, "error") %> prohibited this inovasi_tim from being saved:</h2>
+
+      <ul>
+        <% inovasi_tim.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :nama_inovasi %>
+    <%= form.text_field :nama_inovasi %>
+  </div>
+
+  <div class="field">
+    <%= form.label :jenis_inovasi %>
+    <%= form.text_field :jenis_inovasi %>
+  </div>
+
+  <div class="field">
+    <%= form.label :nilai_kebaruan %>
+    <%= form.text_field :nilai_kebaruan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tahun %>
+    <%= form.text_field :tahun %>
+  </div>
+
+  <div class="field">
+    <%= form.label :crosscutting_id %>
+    <%= form.text_field :crosscutting_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
