@@ -1,0 +1,18 @@
+<div id="mitra-external-non-pemerintah">
+  <div class="field">
+    <%= hidden_field_tag "crosscutting[mitras_attributes][0][jenis_mitra]", value: 'non-pemerintah-external' %>
+    <%= label_tag "crosscutting[mitras_attributes][0][tahun_kerjasama]", "Tahun Kerjasama", { class: "form-label" } %>
+    <%= select_tag "crosscutting[mitras_attributes][0][tahun_kerjasama]", options_for_select(Tahun.pluck(:tahun), Date.today.year.to_s),
+                   { data: {"placeholder": "Pilih Tahun",
+                            controller: 'dropdown',
+                            dropdown_parent_value: '#mitra-external-non-pemerintah'}} %>
+  </div>
+  <div class="field">
+    <%= label_tag "crosscutting[mitras_attributes][0][nama_kerjasama]", "Nama Kerjasama", { class: "form-label" } %>
+    <%= text_area_tag "crosscutting[mitras_attributes][0][nama_kerjasama]", "", class: "form-control", placeholder: 'input nama kerjasama' %>
+  </div>
+  <div class="field">
+    <%= label_tag "crosscutting[mitras_attributes][0][penjelasan_kerjasama]", "Penjelasan Kerjasama", { class: "form-label" } %>
+    <%= text_area_tag "crosscutting[mitras_attributes][0][penjelasan_kerjasama]", "", { class: "form-control", placeholder: 'input deskripsi kerjasama' } %>
+  </div>
+</div>

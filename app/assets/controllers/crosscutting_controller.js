@@ -82,7 +82,13 @@ export default class extends Controller {
   }
 
   inputMitraExternalNonPemerintah(_event) {
-    this.mitraExternalNonPemerintahTarget.classList.toggle("d-none");
+    const url = "/mitras/new_external_non_pemerintah";
+    fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+      .then((response) => response.text())
+      .then((html) => {
+        this.mitraExternalNonPemerintahTarget.innerHTML = html;
+      })
+      .catch((error) => console.error("Error:", error));
   }
 
   inputInovasi(_event) {
@@ -98,6 +104,13 @@ export default class extends Controller {
   }
 
   inputOgpExternalNonPemerintah(_event) {
-    this.ogpExternalNonPemerintahTarget.classList.toggle("d-none");
+    const url = "/mitras/new_external_non_pemerintah_ogp";
+
+    fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+      .then((response) => response.text())
+      .then((html) => {
+        this.ogpExternalNonPemerintahTarget.innerHTML = html;
+      })
+      .catch((error) => console.error("Error:", error));
   }
 }

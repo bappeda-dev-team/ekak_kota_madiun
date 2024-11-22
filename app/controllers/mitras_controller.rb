@@ -23,6 +23,14 @@ class MitrasController < ApplicationController
     render partial: 'mitra_external_pemerintah_fields'
   end
 
+  def new_external_non_pemerintah
+    render partial: 'mitra_external_non_pemerintah_fields'
+  end
+
+  def new_external_non_pemerintah_ogp
+    render partial: 'mitra_external_non_pemerintah_ogp_fields'
+  end
+
   # GET /mitras/1/edit
   def edit; end
 

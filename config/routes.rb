@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     collection do
       get :new_internal
       get :new_external_pemerintah
+      get :new_external_non_pemerintah
+      get :new_external_non_pemerintah_ogp
     end
   end
   resources :akar_masalahs
