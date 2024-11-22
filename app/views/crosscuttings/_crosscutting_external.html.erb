@@ -1,0 +1,22 @@
+<div id="external" data-crosscutting-target="external" class="d-none">
+  <div class="external-crosscutting-field"
+       data-action="tipeInstansi@document->crosscutting#aktifkanTipeInstansiTerpilih">
+    <div class="field">
+      <%= form.label :tipe_instansi, { class: "form-label" } %>
+      <%= form.select :tipe_instansi, ['Pemerintah', 'Non-Pemerintah'],
+       {include_blank: true },
+       { class: 'form-control',
+         required: true,
+         data: {
+           placeholder: 'Pilih Tipe Instansi',
+           controller: 'dropdown',
+           dropdown_jenis_value: 'chain',
+           dropdown_parent_value: '#external',
+           dropdown_event_name_value: 'tipeInstansi',
+         }
+       } %>
+    </div>
+    <%= render 'crosscutting_external_pemerintah', form: form %>
+    <%= render 'crosscutting_external_non_pemerintah', form: form %>
+  </div>
+</div>
