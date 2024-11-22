@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col">
-    <%= form.select :role_anggota, ['Koordinator', 'Ketua', 'Anggota'], {required: true, include_blank: true},
+    <%= form.select :role, ['Koordinator', 'Ketua', 'Anggota'], {required: true, include_blank: true},
      data: {
        placeholder: 'Pilih Role Anggota',
        controller: 'dropdown',
@@ -8,6 +8,6 @@
      }  %>
   </div>
   <div class="col">
-    <%= form.text_field :nama_anggota, { class: "form-control" } %>
+    <%= form.text_field :nama, { class: "form-control" } %>
   </div>
 </div>

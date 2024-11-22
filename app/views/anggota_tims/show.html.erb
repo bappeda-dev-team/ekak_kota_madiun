@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nama:</strong>
+  <%= @anggota_tim.nama %>
+</p>
+
+<p>
+  <strong>Role:</strong>
+  <%= @anggota_tim.role %>
+</p>
+
+<p>
+  <strong>Keterangan:</strong>
+  <%= @anggota_tim.keterangan %>
+</p>
+
+<p>
+  <strong>Tahun:</strong>
+  <%= @anggota_tim.tahun %>
+</p>
+
+<p>
+  <strong>Metadata:</strong>
+  <%= @anggota_tim.metadata %>
+</p>
+
+<p>
+  <strong>Tim:</strong>
+  <%= @anggota_tim.tim_id %>
+</p>
+
+<%= link_to 'Edit', edit_anggota_tim_path(@anggota_tim) %> |
+<%= link_to 'Back', anggota_tims_path %>

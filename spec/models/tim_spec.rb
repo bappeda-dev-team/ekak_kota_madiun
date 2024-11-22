@@ -2,21 +2,26 @@
 #
 # Table name: tims
 #
-#  id          :bigint           not null, primary key
-#  jabatan     :string
-#  jenis       :string
-#  keterangan  :string
-#  nama_tim    :string
-#  nip         :string
-#  tahun       :string
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  opd_id      :bigint
-#  team_ref_id :bigint
+#  id             :bigint           not null, primary key
+#  jabatan        :string
+#  jenis          :string
+#  keterangan     :string
+#  nama_tim       :string
+#  nip            :string
+#  tahun          :string
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  inovasi_tim_id :bigint           not null
+#  opd_id         :bigint
 #
 # Indexes
 #
-#  index_tims_on_opd_id  (opd_id)
+#  index_tims_on_inovasi_tim_id  (inovasi_tim_id)
+#  index_tims_on_opd_id          (opd_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (inovasi_tim_id => inovasi_tims.id)
 #
 require 'rails_helper'
 
@@ -42,21 +47,6 @@ RSpec.describe Tim, type: :model do
 
     it 'exclude tim without jenis Kota' do
       expect(Tim.tim_kota).not_to include(sub_tim)
-    end
-  end
-
-  describe "Sub Tim" do
-    it 'show collection of SubTeam' do
-      sub_teams = tim_kota.sub_tims
-      expect(sub_teams).to include(sub_tim)
-    end
-    it 'have tim kota as parent tim' do
-      expect(sub_tim.parent_tim).to eq(tim_kota)
-    end
-
-    it 'nil if no parent' do
-      sub_tim = create(:tim, nama_tim: 'Wrong Team', jenis: 'SubTeam', tahun: '2023')
-      expect(sub_tim.parent_tim).to be_nil
     end
   end
 end

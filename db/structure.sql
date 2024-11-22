@@ -564,6 +564,42 @@ ALTER SEQUENCE public.anggarans_id_seq OWNED BY public.anggarans.id;
 
 
 --
+-- Name: anggota_tims; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.anggota_tims (
+    id bigint NOT NULL,
+    nama character varying,
+    role character varying,
+    keterangan character varying,
+    tahun character varying,
+    metadata jsonb,
+    tim_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: anggota_tims_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.anggota_tims_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: anggota_tims_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.anggota_tims_id_seq OWNED BY public.anggota_tims.id;
+
+
+--
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3888,12 +3924,12 @@ CREATE TABLE public.tims (
     nip character varying,
     jabatan character varying,
     jenis character varying,
-    team_ref_id bigint,
     tahun character varying,
     keterangan character varying,
     opd_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    inovasi_tim_id bigint NOT NULL
 );
 
 
@@ -4218,6 +4254,13 @@ ALTER TABLE ONLY public.anggaran_sshes ALTER COLUMN id SET DEFAULT nextval('publ
 --
 
 ALTER TABLE ONLY public.anggarans ALTER COLUMN id SET DEFAULT nextval('public.anggarans_id_seq'::regclass);
+
+
+--
+-- Name: anggota_tims id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.anggota_tims ALTER COLUMN id SET DEFAULT nextval('public.anggota_tims_id_seq'::regclass);
 
 
 --
@@ -4946,6 +4989,14 @@ ALTER TABLE ONLY public.anggaran_sshes
 
 ALTER TABLE ONLY public.anggarans
     ADD CONSTRAINT anggarans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: anggota_tims anggota_tims_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.anggota_tims
+    ADD CONSTRAINT anggota_tims_pkey PRIMARY KEY (id);
 
 
 --
@@ -5739,6 +5790,13 @@ CREATE INDEX index_anggarans_on_tahapan_id ON public.anggarans USING btree (taha
 
 
 --
+-- Name: index_anggota_tims_on_tim_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_anggota_tims_on_tim_id ON public.anggota_tims USING btree (tim_id);
+
+
+--
 -- Name: index_background_migration_jobs_on_finished_at; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -6236,6 +6294,13 @@ CREATE INDEX index_tematik_sasarans_on_subkegiatan_tematik_id ON public.tematik_
 
 
 --
+-- Name: index_tims_on_inovasi_tim_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_tims_on_inovasi_tim_id ON public.tims USING btree (inovasi_tim_id);
+
+
+--
 -- Name: index_tims_on_opd_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -6422,6 +6487,22 @@ ALTER TABLE ONLY public.kesenjangans
 
 ALTER TABLE ONLY public.sasarans
     ADD CONSTRAINT fk_rails_78dfe7067c FOREIGN KEY (subkegiatan_tematik_id) REFERENCES public.subkegiatan_tematiks(id);
+
+
+--
+-- Name: tims fk_rails_7ef52d4072; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tims
+    ADD CONSTRAINT fk_rails_7ef52d4072 FOREIGN KEY (inovasi_tim_id) REFERENCES public.inovasi_tims(id);
+
+
+--
+-- Name: anggota_tims fk_rails_896a63612b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.anggota_tims
+    ADD CONSTRAINT fk_rails_896a63612b FOREIGN KEY (tim_id) REFERENCES public.tims(id);
 
 
 --
@@ -6865,6 +6946,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241122020829'),
 ('20241122031824'),
 ('20241122064306'),
-('20241122130628');
+('20241122130628'),
+('20241122131305'),
+('20241122131600'),
+('20241122131759');
 
 

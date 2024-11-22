@@ -21,4 +21,8 @@
 #
 class InovasiTim < ApplicationRecord
   belongs_to :crosscutting
+  has_many :tims
+
+  has_many :anggota_tims, through: :tims
+  accepts_nested_attributes_for :anggota_tims, reject_if: :all_blank, allow_destroy: true
 end

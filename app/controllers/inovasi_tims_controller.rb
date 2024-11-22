@@ -1,5 +1,5 @@
 class InovasiTimsController < ApplicationController
-  before_action :set_inovasi_tim, only: %i[ show edit update destroy ]
+  before_action :set_inovasi_tim, only: %i[show edit update destroy]
 
   # GET /inovasi_tims or /inovasi_tims.json
   def index
@@ -7,17 +7,24 @@ class InovasiTimsController < ApplicationController
   end
 
   # GET /inovasi_tims/1 or /inovasi_tims/1.json
-  def show
-  end
+  def show; end
 
   # GET /inovasi_tims/new
   def new
     @inovasi_tim = InovasiTim.new
   end
 
-  # GET /inovasi_tims/1/edit
-  def edit
+  def new_internal
+    crosscutting = Crosscutting.new
+    @inovasi_tim = crosscutting.inovasi_tims.build
+    @inovasi_tim.tims.build
+    @inovasi_tim.anggota_tims.build
+
+    render partial: 'inovasi_cross_internal_fields', locals: { inovasi_tim: @inovasi_tim }
   end
+
+  # GET /inovasi_tims/1/edit
+  def edit; end
 
   # POST /inovasi_tims or /inovasi_tims.json
   def create
@@ -58,13 +65,14 @@ class InovasiTimsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_inovasi_tim
-      @inovasi_tim = InovasiTim.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def inovasi_tim_params
-      params.require(:inovasi_tim).permit(:nama_inovasi, :jenis_inovasi, :nilai_kebaruan, :tahun, :crosscutting_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_inovasi_tim
+    @inovasi_tim = InovasiTim.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def inovasi_tim_params
+    params.require(:inovasi_tim).permit(:nama_inovasi, :jenis_inovasi, :nilai_kebaruan, :tahun, :crosscutting_id)
+  end
 end

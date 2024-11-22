@@ -92,7 +92,14 @@ export default class extends Controller {
   }
 
   inputInovasi(_event) {
-    this.inovasiTarget.classList.toggle("d-none");
+    const url = "/inovasi_tims/new_internal";
+
+    fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+      .then((response) => response.text())
+      .then((html) => {
+        this.inovasiTarget.innerHTML = html;
+      })
+      .catch((error) => console.error("Error:", error));
   }
 
   inputInovasiExternalPemerintah(_event) {
