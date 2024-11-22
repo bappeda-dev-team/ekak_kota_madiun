@@ -18,6 +18,35 @@
               <td class="text-wrap text-start"><%= mitra.tahun_kerjasama %></td>
             </tr>
           <% end %>
+          <% crosscut.inovasi_tims.each do |inovasi| %>
+            <tr>
+              <td class="text-start" width="30px">Nama Inovasi</td>
+              <td class="text-wrap text-start"><%= inovasi.nama_inovasi %></td>
+            </tr>
+            <tr>
+              <td class="text-start" width="30px">Jenis Inovasi</td>
+              <td class="text-wrap text-start"><%= inovasi.jenis_inovasi %></td>
+            </tr>
+            <tr>
+              <td class="text-start" width="30px">Tim</td>
+              <td class="text-wrap text-start"><%= inovasi.tims.map(&:nama_tim).join(',') %></td>
+            </tr>
+            <tr>
+              <td class="text-start" width="30px" colspan="2">Anggota Tim</td>
+            </tr>
+            <% inovasi.tims.each do |tim| %>
+              <% tim.anggota_tims.each do |anggota| %>
+                <tr>
+                  <td class="text-start" width="30px">Nama</td>
+                  <td class="text-wrap text-start"><%= anggota.nama %></td>
+                </tr>
+                <tr>
+                  <td class="text-start" width="30px">Role</td>
+                  <td class="text-wrap text-start"><%= anggota.role %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          <% end %>
         <% end %>
       </table>
     </div>

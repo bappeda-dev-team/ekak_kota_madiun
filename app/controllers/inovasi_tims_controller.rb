@@ -17,6 +17,7 @@ class InovasiTimsController < ApplicationController
   def new_internal
     @inovasi_tim = InovasiTim.new
     @tim = @inovasi_tim.tims.build
+    @tim.anggota_tims.build
 
     render partial: 'inovasi_cross_internal_fields', locals: { inovasi_tim: @inovasi_tim }
   end

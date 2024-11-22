@@ -42,4 +42,8 @@ class Tim < ApplicationRecord
   def tim_kota?
     jenis == 'Kota'
   end
+
+  def all_anggota
+    anggota_tims.map(&:nama)
+  end
 end
