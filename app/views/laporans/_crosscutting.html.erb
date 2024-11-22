@@ -1,16 +1,17 @@
 <% pohon = PohonKinerjaPresenter.new(cross) %>
-<% rowspan = pohon.crosscuttings.size + 1  %>
-<% if pohon.crosscuttings.any? %>
+<% rowspan = pohon.pohonable.crosscuttings.size + 1  %>
+<% if pohon.pohonable.crosscuttings.any? %>
     <tr>
         <td rowspan="<%= rowspan %>" class="text-gray-900 text-wrap border" width='20px'></td>
         <td rowspan="<%= rowspan %>" class="text-wrap border text-bolder"><%= cross %></td>
         <td rowspan="<%= rowspan %>" class="text-wrap border text-bolder"><%= pohon.title_up %></td>
         <td class="p-0 m-0 border"></td>
     </tr>
-    <% pohon.crosscuttings.each do |dibagikan| %>
-        <tr class="skip">
-            <td class="text-wrap border"><%= dibagikan.opd %></td>
-            <td class="text-wrap border"><%= dibagikan.keterangan %></td>
+    <% pohon.pohonable.crosscuttings.each do |crosscut| %>
+        <% style_instansi_pelaksana = crosscut.tipe_crosscutting == 'External' ? 'bg-warning' : '' %>
+        <tr class="skip <%= style_instansi_pelaksana %>">
+            <td class="text-wrap border"><%= crosscut.tipe_crosscutting %></td>
+            <td class="text-wrap border"><%= crosscut.nama_instansi_pelaksana %></td>
         </tr>
     <% end %>
 <% end %>
