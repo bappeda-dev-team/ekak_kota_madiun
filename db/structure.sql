@@ -745,7 +745,9 @@ CREATE TABLE public.crosscuttings (
     opd_pelaksana character varying,
     strategi_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    tipe_instansi character varying,
+    nama_instansi character varying
 );
 
 
@@ -6796,6 +6798,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241118033040'),
 ('20241119051802'),
 ('20241122020829'),
-('20241122031824');
+('20241122031824'),
+('20241122064306');
 
 

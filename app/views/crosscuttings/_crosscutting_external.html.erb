@@ -1,4 +1,4 @@
-<div id="external" data-crosscutting-target="external" class="d-none">
+<%= form_with(model: crosscutting, local: false) do |form| %>
   <div class="external-crosscutting-field"
        data-action="tipeInstansi@document->crosscutting#aktifkanTipeInstansiTerpilih">
     <div class="field">
@@ -16,7 +16,18 @@
          }
        } %>
     </div>
-    <%= render 'crosscutting_external_pemerintah', form: form %>
+    <div class="input-pemerintah d-none" data-crosscutting-target="pemerintah">
+      <div class="field">
+        <%= form.label :nama_instansi, { class: "form-label" } %>
+        <%= form.text_field :nama_instansi, class: 'form-control', placeholder: 'input nama instansi kerjasama' %>
+      </div>
+      <div class="field">
+        <%= check_box_tag 'mitra', "1", false, class: 'form-check-input', name: nil, data: { action: 'crosscutting#inputMitraExternalPemerintah' } %>
+        <%= label_tag :mitra, "Mitra", class: 'form-check-label' %>
+      </div>
+      <div class="input-mitra" data-crosscutting-target="mitraExternalPemerintah">
+      </div>
+    </div>
     <%= render 'crosscutting_external_non_pemerintah', form: form %>
   </div>
-</div>
+<% end %>

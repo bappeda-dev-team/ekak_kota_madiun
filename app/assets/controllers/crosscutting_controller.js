@@ -23,8 +23,8 @@ export default class extends Controller {
     const tipeTerpilih = event.detail.data.id;
     if (tipeTerpilih == "Internal") {
       this.internalForm();
-    } else {
-      this.externalTarget.classList.toggle("d-none");
+    } else if (tipeTerpilih == "External") {
+      this.externalForm();
     }
   }
 
@@ -35,6 +35,17 @@ export default class extends Controller {
       .then((response) => response.text())
       .then((html) => {
         this.internalTarget.innerHTML = html;
+      })
+      .catch((error) => console.error("Error:", error));
+  }
+
+  externalForm() {
+    const url = "/crosscuttings/external";
+
+    fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+      .then((response) => response.text())
+      .then((html) => {
+        this.externalTarget.innerHTML = html;
       })
       .catch((error) => console.error("Error:", error));
   }
@@ -60,7 +71,14 @@ export default class extends Controller {
   }
 
   inputMitraExternalPemerintah(_event) {
-    this.mitraExternalPemerintahTarget.classList.toggle("d-none");
+    const url = "/mitras/new_external_pemerintah";
+
+    fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+      .then((response) => response.text())
+      .then((html) => {
+        this.mitraExternalPemerintahTarget.innerHTML = html;
+      })
+      .catch((error) => console.error("Error:", error));
   }
 
   inputMitraExternalNonPemerintah(_event) {

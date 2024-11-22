@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :mitras do
     collection do
       get :new_internal
+      get :new_external_pemerintah
     end
   end
   resources :akar_masalahs

@@ -3,8 +3,10 @@
 # Table name: crosscuttings
 #
 #  id                :bigint           not null, primary key
+#  nama_instansi     :string
 #  opd_pelaksana     :string
 #  tipe_crosscutting :string
+#  tipe_instansi     :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  strategi_id       :bigint           not null

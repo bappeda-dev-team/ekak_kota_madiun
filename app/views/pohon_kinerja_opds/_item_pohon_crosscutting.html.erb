@@ -3,16 +3,17 @@
     <div class="pohon-body">
       <table class="table table-bordered mb-3">
         <% pohon.pohonable.crosscuttings.each.with_index(1) do |crosscut, no| %>
-          <tr>
+          <% style_instansi_pelaksana = crosscut.tipe_crosscutting == 'External' ? 'bg-warning' : '' %>
+          <tr class="<%= style_instansi_pelaksana %>">
             <td class="text-start" width="30px">Crosscutting <%= crosscut.tipe_crosscutting %></td>
-            <td class="text-wrap text-start"><%= crosscut.nama_opd_pelaksana %></td>
+            <td class="text-wrap text-start"><%= crosscut.nama_instansi_pelaksana %></td>
           </tr>
           <% crosscut.mitras.each do |mitra| %>
-            <tr>
+            <tr class="<%= style_instansi_pelaksana %>">
               <td class="text-start" width="30px">Kerjasama</td>
               <td class="text-wrap text-start"><%= mitra.nama_kerjasama %></td>
             </tr>
-            <tr>
+            <tr class="<%= style_instansi_pelaksana %>">
               <td class="text-start" width="30px">Tahun Kerjasama</td>
               <td class="text-wrap text-start"><%= mitra.tahun_kerjasama %></td>
             </tr>

@@ -42,8 +42,8 @@ class CrosscuttingsController < ApplicationController
   end
 
   def external
-    @crosscutting = Crosscutting.new(crosscutting_params)
-    render partial: "crosscutting_external", locals: { form: form_builder_for(@crosscutting) }
+    @crosscutting = Crosscutting.new
+    render partial: "crosscutting_external", locals: { crosscutting: @crosscutting }
   end
 
   # GET /crosscuttings/1/edit
@@ -68,6 +68,7 @@ class CrosscuttingsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def crosscutting_params
     params.require(:crosscutting).permit(:tipe_crosscutting, :strategi_id, :opd_pelaksana,
+                                         :tipe_instansi, :nama_instansi,
                                          mitras_attributes: %i[jenis_mitra nama_kerjasama penjelasan_kerjasama tahun_kerjasama _destroy])
   end
 end

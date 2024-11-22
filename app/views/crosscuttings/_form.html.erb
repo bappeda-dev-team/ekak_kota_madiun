@@ -11,7 +11,7 @@
     <div class="field" id="pilih-tipe-crosscutting">
       <%= form.hidden_field :strategi_id %>
       <%= form.label :tipe_crosscutting, { class: "form-label" } %>
-      <%= form.select :tipe_crosscutting, ['Internal'],
+      <%= form.select :tipe_crosscutting, ['Internal', 'External'],
        {include_blank: true },
        { class: 'form-control',
          required: true,
@@ -26,7 +26,8 @@
     </div>
     <div id="internal" data-crosscutting-target="internal">
     </div>
-
+    <div id="external" data-crosscutting-target="external">
+    </div>
     <div class="actions">
       <%= form.submit "Simpan perubahan" %>
     </div>
