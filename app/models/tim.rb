@@ -25,7 +25,7 @@
 #
 class Tim < ApplicationRecord
   validates_presence_of :nama_tim
-  validates :tahun, presence: true, format: { with: /(20)\d{2}\z/i, message: 'harus diatas tahun 2000' }
+  # validates :tahun, presence: true, format: { with: /(20)\d{2}\z/i, message: 'harus diatas tahun 2000' }
 
   belongs_to :opd, optional: true
   belongs_to :inovasi_tim

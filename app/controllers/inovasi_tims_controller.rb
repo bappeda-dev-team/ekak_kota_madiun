@@ -15,10 +15,8 @@ class InovasiTimsController < ApplicationController
   end
 
   def new_internal
-    crosscutting = Crosscutting.new
-    @inovasi_tim = crosscutting.inovasi_tims.build
-    @inovasi_tim.tims.build
-    @inovasi_tim.anggota_tims.build
+    @inovasi_tim = InovasiTim.new
+    @tim = @inovasi_tim.tims.build
 
     render partial: 'inovasi_cross_internal_fields', locals: { inovasi_tim: @inovasi_tim }
   end

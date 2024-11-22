@@ -1,29 +1,35 @@
-<%= form_with(model: inovasi_tim) do |form| %>
+<%= fields_for "crosscutting[inovasi_tims_attributes][0]", inovasi_tim do |form| %>
   <div id="inovasi-internal">
     <div class="field">
       <%= form.label :nama_inovasi, { class: "form-label" } %>
       <%= form.text_area :nama_inovasi, { class: "form-control", placeholder: 'input nama inovasi' } %>
     </div>
-    <%= form.label :susunan_tim, { class: "form-label" } %>
-    <div class="p-3 border border-2" >
-      <div class="row">
-        <div class="col">
-          <%= form.label :role_anggota, { class: "form-label" } %>
-        </div>
-        <div class="col">
-          <%= form.label :nama_anggota, { class: "form-label" } %>
-        </div>
+    <%= fields_for "crosscutting[inovasi_tims_attributes][0][tims_attributes][0]", @tim do |tf| %>
+      <div class="field">
+        <%= tf.label :nama_tim, { class: "form-label" } %>
+        <%= tf.text_area :nama_tim, { class: "form-control", placeholder: 'input nama tim' } %>
       </div>
-      <div class="d-grid gap-3 py-3 mb-3" id="susunan-tim">
-        <%= form.fields_for :anggota_tims do |anggota_tim| %>
-          <%= render 'anggota_tims/anggota_tim_fields', form: anggota_tim %>
-        <% end %>
+      <%= tf.label :susunan_tim, { class: "form-label" } %>
+      <div class="p-3 border border-2" >
+        <div class="row">
+          <div class="col">
+            <%= tf.label :role_anggota, { class: "form-label" } %>
+          </div>
+          <div class="col">
+            <%= tf.label :nama_anggota, { class: "form-label" } %>
+          </div>
+        </div>
+        <div class="d-grid gap-3 py-3 mb-3" id="susunan-tim">
+          <%= tf.fields_for :anggota_tims do |anggota_tim| %>
+            <%= render 'anggota_tims/anggota_tim_fields', form: anggota_tim %>
+          <% end %>
+        </div>
+        <%= link_to_add_nested(tf, :anggota_tims, "#susunan-tim",
+                               link_classes: 'btn btn-primary btn-sm',
+                               link_text: 'Tambah Anggota',
+                               partial: 'anggota_tims/anggota_tim_fields') %>
       </div>
-      <%= link_to_add_nested(form, :anggota_tims, "#susunan-tim",
-                             link_classes: 'btn btn-primary btn-sm',
-                             link_text: 'Tambah Anggota',
-                             partial: 'anggota_tims/anggota_tim_fields') %>
-    </div>
+    <% end %>
     <div class="field">
       <%= form.label :jenis_inovasi, { class: "form-label" } %>
       <%= form.text_area :jenis_inovasi, { class: "form-control", placeholder: 'apa jenis inovasinya ?' } %>
