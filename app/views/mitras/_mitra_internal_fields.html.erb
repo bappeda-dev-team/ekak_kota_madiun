@@ -1,6 +1,6 @@
 <div id="mitra-internal">
   <div class="field">
-    <%= hidden_field_tag "crosscutting[mitras_attributes][0][jenis_kerjasama]", value: 'opd-internal' %>
+    <%= hidden_field_tag "crosscutting[mitras_attributes][0][jenis_mitra]", value: 'opd-internal' %>
     <%= label_tag "crosscutting[mitras_attributes][0][tahun_kerjasama]", "Tahun Kerjasama", { class: "form-label" } %>
     <%= select_tag "crosscutting[mitras_attributes][0][tahun_kerjasama]", options_for_select(Tahun.pluck(:tahun), Date.today.year.to_s),
                    { data: {"placeholder": "Pilih Tahun",

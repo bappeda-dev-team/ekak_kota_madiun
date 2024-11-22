@@ -7,6 +7,16 @@
             <td class="text-start" width="30px">Crosscutting <%= crosscut.tipe_crosscutting %></td>
             <td class="text-wrap text-start"><%= crosscut.nama_opd_pelaksana %></td>
           </tr>
+          <% crosscut.mitras.each do |mitra| %>
+            <tr>
+              <td class="text-start" width="30px">Kerjasama</td>
+              <td class="text-wrap text-start"><%= mitra.nama_kerjasama %></td>
+            </tr>
+            <tr>
+              <td class="text-start" width="30px">Tahun Kerjasama</td>
+              <td class="text-wrap text-start"><%= mitra.tahun_kerjasama %></td>
+            </tr>
+          <% end %>
         <% end %>
       </table>
     </div>
