@@ -9,15 +9,11 @@ export default class extends Controller {
     "pemerintah",
     "nonPemerintah",
     "mitraExternalPemerintah",
-    "inovasiExternalPemerintah",
     "mitraExternalNonPemerintah",
-    "inovasiExternalNonPemerintah",
     "ogpExternalNonPemerintah",
   ];
 
-  connect() {
-    console.log("controller connected");
-  }
+  connect() {}
 
   aktifkanTipeTerpilih(event) {
     const tipeTerpilih = event.detail.data.id;
@@ -122,14 +118,6 @@ export default class extends Controller {
         this.inovasiTarget.innerHTML = html;
       })
       .catch((error) => console.error("Error:", error));
-  }
-
-  inputInovasiExternalPemerintah(_event) {
-    this.inovasiExternalPemerintahTarget.classList.toggle("d-none");
-  }
-
-  inputInovasiExternalNonPemerintah(_event) {
-    this.inovasiExternalNonPemerintahTarget.classList.toggle("d-none");
   }
 
   inputOgpExternalNonPemerintah(_event) {
