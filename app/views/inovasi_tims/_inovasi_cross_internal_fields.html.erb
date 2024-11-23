@@ -25,9 +25,11 @@
           <% end %>
         </div>
         <%= link_to_add_nested(tf, :anggota_tims, "#susunan-tim",
-                               link_classes: 'btn btn-primary btn-sm',
-                               link_text: 'Tambah Anggota',
-                               partial: 'anggota_tims/anggota_tim_fields') %>
+                               link_classes: 'btn btn-primary btn-sm add-nested-btn',
+                               partial: 'anggota_tims/anggota_tim_fields') do %>
+          <i class="fas fa-plus me-2"></i>
+          Tambah Anggota
+        <% end %>
       </div>
     <% end %>
     <div class="field">
