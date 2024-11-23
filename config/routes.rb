@@ -109,6 +109,7 @@ Rails.application.routes.draw do
     collection do
       get :internal
       get :external
+      get :external_pemerintah
     end
   end
   resources :pohon_kinerja_opds do

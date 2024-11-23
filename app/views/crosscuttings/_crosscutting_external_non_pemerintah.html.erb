@@ -1,30 +1,18 @@
-<div class="input-non-pemerintah d-none" data-crosscutting-target="nonPemerintah">
+<%= form_with(model: crosscutting, local: false) do |form| %>
   <div class="field">
-    <%= check_box_tag :mitra_external_non_pemerintah, 'mitra', false, class: 'form-check-input', data: { action: 'crosscutting#inputMitraExternalNonPemerintah' } %>
+    <%= form.label :nama_instansi, { class: "form-label" } %>
+    <%= form.text_field :nama_instansi, class: 'form-control', placeholder: 'input nama instansi kerjasama' %>
+  </div>
+  <div class="field">
+    <%= check_box_tag 'mitra', "1", false, class: 'form-check-input', name: nil, data: { action: 'crosscutting#inputMitraExternalNonPemerintah' } %>
     <%= label_tag :mitra_external_non_pemerintah, "Mitra", class: 'form-check-label' %>
   </div>
-  <div class="input-mitra d-none" data-crosscutting-target="mitraExternalNonPemerintah">
-    <div class="field">
-      <%= form.label :nama_kerjasama, { class: "form-label" } %>
-      <%= form.text_area :nama_kerjasama, { class: "form-control", placeholder: 'input nama kerjasama' } %>
-    </div>
-    <div class="field">
-      <%= form.label :penjelasan_kerjasama, { class: "form-label" } %>
-      <%= form.text_area :penjelasan_kerjasama, { class: "form-control", placeholder: 'input deskripsi kerjasama' } %>
-    </div>
+  <div class="input-mitra" data-crosscutting-target="mitraExternalNonPemerintah">
   </div>
   <div class="field">
-    <%= check_box_tag :ogp, 'ogp', false, class: 'form-check-input', data: { action: 'crosscutting#inputOgpExternalNonPemerintah' } %>
+    <%= check_box_tag 'ogp', "1", false, class: 'form-check-input', name: nil, data: { action: 'crosscutting#inputOgpExternalNonPemerintah' } %>
     <%= label_tag :ogp, "OGP", class: 'form-check-label' %>
   </div>
-  <div class="input-ogp d-none" data-crosscutting-target="ogpExternalNonPemerintah">
-    <div class="field">
-      <%= form.label :nama_kerjasama, { class: "form-label" } %>
-      <%= form.text_area :nama_kerjasama, { class: "form-control", placeholder: 'input nama kerjasama' } %>
-    </div>
-    <div class="field">
-      <%= form.label :penjelasan_kerjasama, { class: "form-label" } %>
-      <%= form.text_area :penjelasan_kerjasama, { class: "form-control", placeholder: 'input deskripsi kerjasama' } %>
-    </div>
+  <div class="input-ogp" data-crosscutting-target="ogpExternalNonPemerintah">
   </div>
-</div>
+<% end %>

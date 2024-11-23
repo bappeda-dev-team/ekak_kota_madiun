@@ -16,35 +16,9 @@
          }
        } %>
     </div>
-    <div class="input-pemerintah d-none" data-crosscutting-target="pemerintah">
-      <div class="field">
-        <%= form.label :nama_instansi, { class: "form-label" } %>
-        <%= form.text_field :nama_instansi, class: 'form-control', placeholder: 'input nama instansi kerjasama' %>
-      </div>
-      <div class="field">
-        <%= check_box_tag 'mitra', "1", false, class: 'form-check-input', name: nil, data: { action: 'crosscutting#inputMitraExternalPemerintah' } %>
-        <%= label_tag :mitra, "Mitra", class: 'form-check-label' %>
-      </div>
-      <div class="input-mitra" data-crosscutting-target="mitraExternalPemerintah">
-      </div>
+    <div class="input-pemerintah" data-crosscutting-target="pemerintah">
     </div>
     <div class="input-non-pemerintah d-none" data-crosscutting-target="nonPemerintah">
-      <div class="field">
-        <%= form.label :nama_instansi, { class: "form-label" } %>
-        <%= form.text_field :nama_instansi, class: 'form-control', placeholder: 'input nama instansi kerjasama' %>
-      </div>
-      <div class="field">
-        <%= check_box_tag 'mitra', "1", false, class: 'form-check-input', name: nil, data: { action: 'crosscutting#inputMitraExternalNonPemerintah' } %>
-        <%= label_tag :mitra_external_non_pemerintah, "Mitra", class: 'form-check-label' %>
-      </div>
-      <div class="input-mitra" data-crosscutting-target="mitraExternalNonPemerintah">
-      </div>
-      <div class="field">
-        <%= check_box_tag 'ogp', "1", false, class: 'form-check-input', name: nil, data: { action: 'crosscutting#inputOgpExternalNonPemerintah' } %>
-        <%= label_tag :ogp, "OGP", class: 'form-check-label' %>
-      </div>
-      <div class="input-ogp" data-crosscutting-target="ogpExternalNonPemerintah">
-      </div>
     </div>
   </div>
 <% end %>

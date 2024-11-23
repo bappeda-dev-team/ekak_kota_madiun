@@ -53,10 +53,21 @@ export default class extends Controller {
   aktifkanTipeInstansiTerpilih(event) {
     const tipeInstansi = event.detail.data.id;
     if (tipeInstansi == "Pemerintah") {
-      this.pemerintahTarget.classList.toggle("d-none");
+      this.externalPemerintah();
     } else if (tipeInstansi == "Non-Pemerintah") {
       this.nonPemerintahTarget.classList.toggle("d-none");
     }
+  }
+
+  externalPemerintah() {
+    const url = "/crosscuttings/external_pemerintah";
+
+    fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+      .then((response) => response.text())
+      .then((html) => {
+        this.pemerintahTarget.innerHTML = html;
+      })
+      .catch((error) => console.error("Error:", error));
   }
 
   inputMitra(_event) {
