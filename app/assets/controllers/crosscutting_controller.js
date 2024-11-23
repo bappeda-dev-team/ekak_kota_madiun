@@ -19,8 +19,10 @@ export default class extends Controller {
     const tipeTerpilih = event.detail.data.id;
     if (tipeTerpilih == "Internal") {
       this.internalForm();
+      this.externalTarget.innerHTML = "";
     } else if (tipeTerpilih == "External") {
       this.externalForm();
+      this.internalTarget.innerHTML = "";
     }
   }
 
@@ -50,8 +52,10 @@ export default class extends Controller {
     const tipeInstansi = event.detail.data.id;
     if (tipeInstansi == "Pemerintah") {
       this.externalPemerintah();
+      this.nonPemerintahTarget.innerHTML = "";
     } else if (tipeInstansi == "Non-Pemerintah") {
       this.externalNonPemerintah();
+      this.pemerintahTarget.innerHTML = "";
     }
   }
 
@@ -77,57 +81,83 @@ export default class extends Controller {
       .catch((error) => console.error("Error:", error));
   }
 
-  inputMitra(_event) {
+  inputMitra(event) {
+    const checkState = event.target.checked;
     const url = "/mitras/new_internal";
 
-    fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
-      .then((response) => response.text())
-      .then((html) => {
-        this.mitraTarget.innerHTML = html;
-      })
-      .catch((error) => console.error("Error:", error));
+    if (checkState) {
+      fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+        .then((response) => response.text())
+        .then((html) => {
+          this.mitraTarget.innerHTML = html;
+        })
+        .catch((error) => console.error("Error:", error));
+    } else {
+      this.mitraTarget.innerHTML = "";
+    }
   }
 
-  inputMitraExternalPemerintah(_event) {
+  inputMitraExternalPemerintah(event) {
+    const checkState = event.target.checked;
     const url = "/mitras/new_external_pemerintah";
 
-    fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
-      .then((response) => response.text())
-      .then((html) => {
-        this.mitraExternalPemerintahTarget.innerHTML = html;
-      })
-      .catch((error) => console.error("Error:", error));
+    if (checkState) {
+      fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+        .then((response) => response.text())
+        .then((html) => {
+          this.mitraExternalPemerintahTarget.innerHTML = html;
+        })
+        .catch((error) => console.error("Error:", error));
+    } else {
+      this.mitraExternalPemerintahTarget.innerHTML = "";
+    }
   }
 
-  inputMitraExternalNonPemerintah(_event) {
+  inputMitraExternalNonPemerintah(event) {
+    const checkState = event.target.checked;
     const url = "/mitras/new_external_non_pemerintah";
-    fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
-      .then((response) => response.text())
-      .then((html) => {
-        this.mitraExternalNonPemerintahTarget.innerHTML = html;
-      })
-      .catch((error) => console.error("Error:", error));
+
+    if (checkState) {
+      fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+        .then((response) => response.text())
+        .then((html) => {
+          this.mitraExternalNonPemerintahTarget.innerHTML = html;
+        })
+        .catch((error) => console.error("Error:", error));
+    } else {
+      this.mitraExternalNonPemerintahTarget.innerHTML = "";
+    }
   }
 
-  inputInovasi(_event) {
+  inputInovasi(event) {
+    const checkState = event.target.checked;
     const url = "/inovasi_tims/new_internal";
 
-    fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
-      .then((response) => response.text())
-      .then((html) => {
-        this.inovasiTarget.innerHTML = html;
-      })
-      .catch((error) => console.error("Error:", error));
+    if (checkState) {
+      fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+        .then((response) => response.text())
+        .then((html) => {
+          this.inovasiTarget.innerHTML = html;
+        })
+        .catch((error) => console.error("Error:", error));
+    } else {
+      this.inovasiTarget.innerHTML = "";
+    }
   }
 
-  inputOgpExternalNonPemerintah(_event) {
+  inputOgpExternalNonPemerintah(event) {
+    const checkState = event.target.checked;
     const url = "/mitras/new_external_non_pemerintah_ogp";
 
-    fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
-      .then((response) => response.text())
-      .then((html) => {
-        this.ogpExternalNonPemerintahTarget.innerHTML = html;
-      })
-      .catch((error) => console.error("Error:", error));
+    if (checkState) {
+      fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+        .then((response) => response.text())
+        .then((html) => {
+          this.ogpExternalNonPemerintahTarget.innerHTML = html;
+        })
+        .catch((error) => console.error("Error:", error));
+    } else {
+      this.ogpExternalNonPemerintahTarget.innerHTML = "";
+    }
   }
 }
