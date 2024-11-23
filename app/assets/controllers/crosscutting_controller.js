@@ -55,7 +55,7 @@ export default class extends Controller {
     if (tipeInstansi == "Pemerintah") {
       this.externalPemerintah();
     } else if (tipeInstansi == "Non-Pemerintah") {
-      this.nonPemerintahTarget.classList.toggle("d-none");
+      this.externalNonPemerintah();
     }
   }
 
@@ -66,6 +66,17 @@ export default class extends Controller {
       .then((response) => response.text())
       .then((html) => {
         this.pemerintahTarget.innerHTML = html;
+      })
+      .catch((error) => console.error("Error:", error));
+  }
+
+  externalNonPemerintah() {
+    const url = "/crosscuttings/external_non_pemerintah";
+
+    fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+      .then((response) => response.text())
+      .then((html) => {
+        this.nonPemerintahTarget.innerHTML = html;
       })
       .catch((error) => console.error("Error:", error));
   }

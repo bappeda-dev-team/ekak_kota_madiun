@@ -51,6 +51,11 @@ class CrosscuttingsController < ApplicationController
     render partial: "crosscutting_external_pemerintah", locals: { crosscutting: @crosscutting }
   end
 
+  def external_non_pemerintah
+    @crosscutting = Crosscutting.new
+    render partial: "crosscutting_external_non_pemerintah", locals: { crosscutting: @crosscutting }
+  end
+
   # GET /crosscuttings/1/edit
   def edit; end
 

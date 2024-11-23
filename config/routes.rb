@@ -110,6 +110,7 @@ Rails.application.routes.draw do
       get :internal
       get :external
       get :external_pemerintah
+      get :external_non_pemerintah
     end
   end
   resources :pohon_kinerja_opds do

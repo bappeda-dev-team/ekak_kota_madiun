@@ -15,4 +15,11 @@
   </div>
   <div class="input-ogp" data-crosscutting-target="ogpExternalNonPemerintah">
   </div>
+  <!-- Inovasi -->
+  <div class="field">
+    <%= check_box_tag 'inovasi', "1", false, class: 'form-check-input', name: nil, data: { action: 'crosscutting#inputInovasi' } %>
+    <%= label_tag :inovasi, "Inovasi", class: 'form-check-label' %>
+  </div>
+  <div class="input-inovasi" data-crosscutting-target="inovasi">
+  </div>
 <% end %>
