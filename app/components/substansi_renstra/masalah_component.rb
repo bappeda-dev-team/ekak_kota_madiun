@@ -12,16 +12,22 @@ class SubstansiRenstra::MasalahComponent < ViewComponent::Base
 
   def rowspan
     if role == 'eselon_2'
-      rowspan_masalah_pokok(@strategi.strategi_bawahans)
+      rowspan_masalah_pokok(@strategi.strategi_bawahans.where(role: 'eselon_3'))
     elsif role == 'eselon_3'
-      rowspan_masalah(@strategi.strategi_bawahans)
+      rowspan_masalah(@strategi.strategi_bawahans.where(role: 'eselon_4'))
     else
       1
     end
   end
 
   def strategi_bawahans
-    @strategi.strategi_bawahans
+    if role == 'eselon_2'
+      @strategi.strategi_bawahans.where(role: 'eselon_3')
+    elsif role == 'eselon_3'
+      @strategi.strategi_bawahans.where(role: 'eselon_4')
+    else
+      @strategi.strategi_bawahans.where(role: 'staff')
+    end
   end
 
   def have_masalah?
