@@ -14,15 +14,30 @@
     <%= form.label :jenis_layanan, { class: "form-label" } %>
     <%= form.text_area :jenis_layanan, { class: "form-control" ,value: @sasaran.jenis_layanan } %>
   </div>
-  <div class="field">
-    <%= form.label :model_layanan, { class: "form-label" } %>
-    <%= form.select :model_layanan, ['Offline', 'Online'] , {include_blank: true, selected: 'Offline'},
-     { class: 'form-control',
-       required: true,
-       data: {
-         controller: 'dropdown',
-       }
-     } %>
+  <div class="model-layanan" data-controller="rincian-layanan"
+       data-action="modelLayanan@document->rincian-layanan#aktifkanJalurLayanan"
+       data-rincian-layanan-jalur-layanan-value="<%= form.object.jalur_layanan %>">
+    <div class="field">
+      <%= form.label :model_layanan, { class: "form-label" } %>
+      <%= form.select :model_layanan, ['Offline', 'Online'] , {include_blank: true},
+       { class: 'form-control',
+         required: true,
+         data: {
+           controller: 'dropdown',
+           placeholder: "Pilih model layanan",
+           dropdown_parent_value: '#form-rincian-body',
+           dropdown_jenis_value: 'chain',
+           dropdown_event_name_value: 'modelLayanan',
+           rincian_layanan_target: 'modelLayanan'
+         }
+       } %>
+    </div>
+    <div class="field d-none" data-rincian-layanan-target="jalurLayanan">
+      <%= form.label :jalur_layanan, { class: "form-label" } %>
+      <%= form.text_area :jalur_layanan, { class: "form-control",
+        data: {rincian_layanan_target: "inputJalur" } } %>
+    </div>
+
   </div>
   <div class="field">
     <%= form.label :penerima_manfaat, { class: "form-label" } %>

@@ -8,15 +8,15 @@
       <% unless sasaran.rincian %>
         <div class="row">
           <div class="col">
-            <%= link_to "Tambah Rincian Sasaran", new_sasaran_rincian_path(sasaran), remote: true, 
-                  class: "btn btn-primary rincian", data: {'bs-toggle': 'modal', 'bs-target': '#form-rincian', 'title': 'Form Rincian Sasaran'} %>
+            <%= link_to "Tambah Rincian Sasaran", new_sasaran_rincian_path(sasaran), remote: true,
+                        class: "btn btn-primary rincian", data: {'bs-toggle': 'modal', 'bs-target': '#form-rincian', 'title': 'Form Rincian Sasaran'} %>
           </div>
         </div>
       <% else %>
         <div class="row">
           <div class="col">
-            <%= link_to "Edit Rincian Sasaran", edit_sasaran_rincian_path(sasaran, sasaran.rincian), remote: true, 
-                  class: "btn btn-primary rincian", data: {'bs-toggle': 'modal', 'bs-target': '#form-rincian', 'title': 'Form Rincian Sasaran'} %>
+            <%= link_to "Edit Rincian Sasaran", edit_sasaran_rincian_path(sasaran, sasaran.rincian), remote: true,
+                        class: "btn btn-primary rincian", data: {'bs-toggle': 'modal', 'bs-target': '#form-rincian', 'title': 'Form Rincian Sasaran'} %>
           </div>
         </div>
       <% end %>
@@ -29,6 +29,9 @@
           <ul class="list mb-0">
             <li><strong>Jenis Layanan</strong> : <%= sasaran.jenis_layanan %></li>
             <li><strong>Model Layanan</strong> : <%= sasaran.rincian.model_layanan %></li>
+            <% if sasaran.rincian.model_layanan == 'Online' %>
+              <li><strong>Jalur Layanan</strong> : <%= sasaran.rincian.jalur_layanan %></li>
+            <% end %>
             <li><strong>Penerima manfaat</strong> : <%= sasaran.penerima_manfaat %></li>
             <li><strong>Data terpilah</strong> : <%= sasaran.rincian.data_terpilah %></li>
             <li><strong>Resiko</strong> : <%= sasaran.rincian.resiko %></li>

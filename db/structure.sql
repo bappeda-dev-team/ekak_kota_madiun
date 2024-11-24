@@ -2999,7 +2999,8 @@ CREATE TABLE public.rincians (
     dampak character varying,
     skala_id bigint,
     kemungkinan_id integer,
-    model_layanan character varying
+    model_layanan character varying,
+    jalur_layanan character varying
 );
 
 
@@ -6949,6 +6950,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241122130628'),
 ('20241122131305'),
 ('20241122131600'),
-('20241122131759');
+('20241122131759'),
+('20241124030840');
 
 

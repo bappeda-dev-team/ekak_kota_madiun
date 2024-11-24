@@ -5,6 +5,7 @@
 #  id                  :bigint           not null, primary key
 #  dampak              :string
 #  data_terpilah       :string
+#  jalur_layanan       :string
 #  lokasi_pelaksanaan  :string
 #  model_layanan       :string
 #  penyebab_external   :string
