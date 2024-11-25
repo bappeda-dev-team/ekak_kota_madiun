@@ -33,8 +33,9 @@
        } %>
     </div>
     <div class="field d-none" data-rincian-layanan-target="jalurLayanan">
-      <%= form.label :jalur_layanan, { class: "form-label" } %>
+      <%= form.label :jalur_layanan, "Penjelasaan Pelayanan Online (alat yang digunakan)", { class: "form-label" } %>
       <%= form.text_area :jalur_layanan, { class: "form-control",
+        placeholder: 'Inputkan alat yang digunakan untuk melakukan pelayanan online',
         data: {rincian_layanan_target: "inputJalur" } } %>
     </div>
 
