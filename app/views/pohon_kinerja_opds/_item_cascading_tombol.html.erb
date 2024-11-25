@@ -4,6 +4,22 @@
       <div class="pohon-tombol mb-3">
         <div class="row">
           <div class="col">
+            <%= link_to new_crosscutting_path(strategi_id: pohon, partial: partial),
+                        remote: true,
+                        class: 'btn btn-sm btn-outline-gray-900',
+                        data: {
+                          controller: 'form-modal',
+                          action: 'form-modal#appendForm',
+                          form_modal_location_param: 'form-crosscutting-body',
+                          bs_target: '#form-crosscutting',
+                          bs_toggle: 'modal'
+                        },
+                        style: 'font-size: 0.8em;' do %>
+              <span class="fas fa-link me-2"></span>
+              <span>Crosscutting</span>
+            <% end %>
+          </div>
+          <div class="col">
             <%= link_to pelaksana_path(pohon),
                         remote: true,
                         class: 'btn btn-sm btn-outline-gray-900',

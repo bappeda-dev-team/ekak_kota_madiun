@@ -13,6 +13,7 @@ class CrosscuttingsController < ApplicationController
   end
 
   def new
+    @partial = params[:partial]
     strategi_id = params[:strategi_id]
     @strategi = Strategi.find(strategi_id)
     @crosscutting = @strategi.crosscuttings.build
@@ -20,18 +21,19 @@ class CrosscuttingsController < ApplicationController
   end
 
   def create
+    @partial = params[:crosscutting][:partial]
     @crosscutting = Crosscutting.new(crosscutting_params)
 
     if @crosscutting.save
       strategi = @crosscutting.strategi
       render json: { resText: "Crosscutting berhasil diperbarui",
                      html_content: html_content({ pohon: strategi },
-                                                partial: 'pohon_kinerja_opds/item_pohon') }.to_json,
+                                                partial: "pohon_kinerja_opds/#{@partial}") }.to_json,
              status: :ok
     else
       render json: { resText: "Tidak ada perubahan",
                      html_content: html_content({ pohon: @crosscutting.strategi },
-                                                partial: 'pohon_kinerja_opds/item_pohon') }.to_json,
+                                                partial: "pohon_kinerja_opds/#{@partial}") }.to_json,
              status: :ok
     end
   end

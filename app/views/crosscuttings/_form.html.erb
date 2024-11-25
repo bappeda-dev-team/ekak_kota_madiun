@@ -9,6 +9,7 @@
   <div data-controller="crosscutting"
        data-action="tipeCrosscutting@document->crosscutting#aktifkanTipeTerpilih">
     <div class="field" id="pilih-tipe-crosscutting">
+      <%= form.hidden_field :partial, value: @partial %>
       <%= form.hidden_field :strategi_id %>
       <%= form.label :tipe_crosscutting, { class: "form-label" } %>
       <%= form.select :tipe_crosscutting, ['Internal', 'External'],
