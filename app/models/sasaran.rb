@@ -717,4 +717,8 @@ class Sasaran < ApplicationRecord
       'belum_siap'
     end
   end
+
+  def punya_online?
+    rincian.model_layanan == 'Online'
+  end
 end

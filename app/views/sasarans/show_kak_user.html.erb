@@ -32,21 +32,21 @@
                 </tr>
               </thead>
               <tbody class="border">
-                  <tr>
-                    <td rowspan="<%= @sasaran.indikator_sasarans.count + 1 %>">1</td>
-                    <td class="text-wrap" rowspan="<%= @sasaran.indikator_sasarans.count + 1 %>"><%= @sasaran.sasaran_kinerja %></td>
-                    <td class="text-wrap" rowspan="<%= @sasaran.indikator_sasarans.count + 1 %>"><%= @sasaran.tahun %></td>
-                    <td class="m-0 p-0" style="height: 0px !important; border-color: transparent;"></td>
-                    <td class="m-0 p-0" style="height: 0px !important; border-color: transparent;"></td>
-                    <td class="text-end border-1" rowspan="<%= @sasaran.indikator_sasarans.count + 1 %>">Rp. <%= number_with_delimiter(@sasaran.total_anggaran) %></td>
-                    <td class="text-wrap" rowspan="<%= @sasaran.indikator_sasarans.count + 1 %>"><%= @sasaran.sumber_dana || '-' %></td>
-                    <% @sasaran.indikator_sasarans.each do |indikator| %>
-                      <tr>
-                        <td class="text-wrap"><%= indikator.indikator_kinerja %></td>
-                        <td><%= "#{indikator.target} #{indikator.satuan}" %></td>
-                      </tr>
-                    <% end %>
-                  </tr>
+                <tr>
+                  <td rowspan="<%= @sasaran.indikator_sasarans.count + 1 %>">1</td>
+                  <td class="text-wrap" rowspan="<%= @sasaran.indikator_sasarans.count + 1 %>"><%= @sasaran.sasaran_kinerja %></td>
+                  <td class="text-wrap" rowspan="<%= @sasaran.indikator_sasarans.count + 1 %>"><%= @sasaran.tahun %></td>
+                  <td class="m-0 p-0" style="height: 0px !important; border-color: transparent;"></td>
+                  <td class="m-0 p-0" style="height: 0px !important; border-color: transparent;"></td>
+                  <td class="text-end border-1" rowspan="<%= @sasaran.indikator_sasarans.count + 1 %>">Rp. <%= number_with_delimiter(@sasaran.total_anggaran) %></td>
+                  <td class="text-wrap" rowspan="<%= @sasaran.indikator_sasarans.count + 1 %>"><%= @sasaran.sumber_dana || '-' %></td>
+                  <% @sasaran.indikator_sasarans.each do |indikator| %>
+                    <tr>
+                      <td class="text-wrap"><%= indikator.indikator_kinerja %></td>
+                      <td><%= "#{indikator.target} #{indikator.satuan}" %></td>
+                    </tr>
+                  <% end %>
+                </tr>
                 <tr class="border">
                   <% pagu = @sasaran.total_anggaran %>
                   <td colspan="5">Total</td>
@@ -87,12 +87,18 @@
         <thead class="thead-light">
           <tr class="border">
             <th>Sasaran Kinerja</th>
+            <th>Jenis Layanan</th>
+            <th>Model Layanan</th>
+            <th>Penjelasaan Pelayanan Online (alat yang digunakan)</th>
             <th>Penerima Manfaat</th>
           </tr>
         </thead>
         <tbody>
           <tr class="border">
             <td class="text-wrap"><%= @sasaran.sasaran_kinerja %></td>
+            <td class="text-wrap"><%= @sasaran.jenis_layanan %></td>
+            <td class="text-wrap"><%= @sasaran.rincian.model_layanan %></td>
+            <td class="text-wrap"><%= @sasaran.rincian.jalur_layanan %></td>
             <td class="text-wrap"><%= @sasaran.penerima_manfaat || '-' %></td>
           </tr>
         </tbody>

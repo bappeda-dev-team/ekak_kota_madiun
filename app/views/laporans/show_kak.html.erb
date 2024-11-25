@@ -36,6 +36,9 @@
       <thead class="thead-light">
         <tr class="border">
           <th>Sasaran Kinerja</th>
+          <th>Jenis Layanan</th>
+          <th>Model Layanan</th>
+          <th>Penjelasaan Pelayanan Online (alat yang digunakan)</th>
           <th>Penerima Manfaat</th>
         </tr>
       </thead>
@@ -43,6 +46,9 @@
         <% @sasarans.each do |manfaat| %>
           <tr class="border">
             <td class="text-wrap"><%= manfaat.sasaran_kinerja %></td>
+            <td class="text-wrap"><%= manfaat.jenis_layanan %></td>
+            <td class="text-wrap"><%= manfaat.rincian.model_layanan %></td>
+            <td class="text-wrap"><%= manfaat.rincian.jalur_layanan %></td>
             <td class="text-wrap"><%= manfaat.penerima_manfaat || '-' %></td>
           </tr>
         <% end %>
