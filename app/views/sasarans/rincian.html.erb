@@ -241,6 +241,9 @@
             <table class="table align-items-center">
               <thead>
                 <tr>
+                  <th>Jenis Layanan</th>
+                  <th>Model Layanan</th>
+                  <th>Penjelasaan Pelayanan Online (alat yang digunakan)</th>
                   <th>Penerima Manfaat</th>
                   <th>Data Terpilah</th>
                   <th>Resiko</th>
@@ -250,6 +253,9 @@
               <tbody>
                 <% if @sasaran.rincian? %>
                   <tr>
+                    <td class='border '><%= @sasaran.jenis_layanan %></td>
+                    <td class='border '><%= @sasaran.rincian&.model_layanan %></td>
+                    <td class='border '><%= @sasaran.rincian&.jalur_layanan %></td>
                     <td class='border '><%= @sasaran.penerima_manfaat %></td>
                     <td class='border '><%= @sasaran.rincian.data_terpilah %></td>
                     <td class='border '><%= @sasaran.rincian.resiko %></td>

@@ -97,8 +97,8 @@
           <tr class="border">
             <td class="text-wrap"><%= @sasaran.sasaran_kinerja %></td>
             <td class="text-wrap"><%= @sasaran.jenis_layanan %></td>
-            <td class="text-wrap"><%= @sasaran.rincian.model_layanan %></td>
-            <td class="text-wrap"><%= @sasaran.rincian.jalur_layanan %></td>
+            <td class="text-wrap"><%= @sasaran.rincian&.model_layanan %></td>
+            <td class="text-wrap"><%= @sasaran.rincian&.jalur_layanan %></td>
             <td class="text-wrap"><%= @sasaran.penerima_manfaat || '-' %></td>
           </tr>
         </tbody>

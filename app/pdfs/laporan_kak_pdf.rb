@@ -187,8 +187,8 @@ class LaporanKakPdf < Prawn::Document
   def penerima_manfaat(sasaran)
     penerima_manfaat = [
       ['', 'c.', 'Jenis Layanan', ':', { content: sasaran.jenis_layanan || '-' }],
-      ['', '', 'Model Layanan', ':', { content: sasaran.rincian.model_layanan || '-' }],
-      ['', '', 'Penjelasan', ':', { content: sasaran.rincian.jalur_layanan || '-' }],
+      ['', '', 'Model Layanan', ':', { content: sasaran.rincian&.model_layanan || '-' }],
+      ['', '', 'Penjelasan', ':', { content: sasaran.rincian&.jalur_layanan || '-' }],
       ['', '', 'Penerima Manfaat', ':', { content: sasaran.penerima_manfaat || '-' }]
     ]
     tabel_penerima_manfaat = make_table(penerima_manfaat, column_widths: @common_widths,

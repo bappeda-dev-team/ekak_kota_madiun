@@ -47,8 +47,8 @@
           <tr class="border">
             <td class="text-wrap"><%= manfaat.sasaran_kinerja %></td>
             <td class="text-wrap"><%= manfaat.jenis_layanan %></td>
-            <td class="text-wrap"><%= manfaat.rincian.model_layanan %></td>
-            <td class="text-wrap"><%= manfaat.rincian.jalur_layanan %></td>
+            <td class="text-wrap"><%= manfaat.rincian&.model_layanan %></td>
+            <td class="text-wrap"><%= manfaat.rincian&.jalur_layanan %></td>
             <td class="text-wrap"><%= manfaat.penerima_manfaat || '-' %></td>
           </tr>
         <% end %>
