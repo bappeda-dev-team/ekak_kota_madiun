@@ -6,15 +6,8 @@ export default class extends Controller {
   }
 
   makeScrollable() {
-    // document.body.style.overflowX = "auto";
-    // document.body.style.overflowY = "auto";
-    // document.body.style.pointerEvents = "auto";
     const scrollElement = document.querySelector(".modal-open");
     scrollElement.style.overflow = "auto";
-    // const modalBase = document.querySelector(".modal");
-    // modalBase.style.zIndex = 100;
-    // const modalDia = document.querySelector(".modal-dialog");
-    // modalDia.style.pointerEvents = "auto";
   }
 
   makeDraggable() {
