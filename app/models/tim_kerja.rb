@@ -92,24 +92,25 @@ class TimKerja
 
   def pelaksana_strategi(strategi)
     pelaksana(strategi).flat_map do |pelaksana|
-      {
-        role_id: role_tim_id(pelaksana.role_tim),
-        role: pelaksana.role_tim,
-        pelaksana: pelaksana.user.nama_nip_kurung,
-        sasaran_terisi: sasaran_pelaksana_terisi?(pelaksana)
-      }
+      pelaksana_hash(pelaksana)
     end
   end
 
   def pelaksana_bawahan(strategi)
     pohon_bawahans(strategi).flat_map do |pelaksana|
-      {
-        role_id: role_tim_id(pelaksana.role_tim),
-        role: pelaksana.role_tim,
-        pelaksana: pelaksana.user.nama_nip_kurung,
-        sasaran_terisi: sasaran_pelaksana_terisi?(pelaksana)
-      }
+      pelaksana_hash(pelaksana)
     end
+  end
+
+  def pelaksana_hash(pelaksana)
+    {
+      strategi_id: pelaksana.id,
+      role_id: role_tim_id(pelaksana.role_tim),
+      role: pelaksana.role_tim,
+      pelaksana: pelaksana.user.nama_nip_kurung,
+      sasaran_terisi: sasaran_pelaksana_terisi?(pelaksana),
+      is_inovator: pelaksana.is_inovator
+    }
   end
 
   def role_tim_id(role)

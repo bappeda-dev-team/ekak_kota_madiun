@@ -40,9 +40,7 @@
               </table>
             </div>
 
-            <%= render 'tim_kerja/susunan_tim',  tim: @tim[:susunan_tim], penanggung_jawab: @tim[:penanggung_jawab] %>
-
-            <%= render 'tim_kerja/inovator', inovator: @sasaran.user.nama_nip_kurung %>
+            <%= render 'tim_kerja/susunan_tim',  tim: @tim[:susunan_tim], penanggung_jawab: @tim[:penanggung_jawab], sasaran_id: @sasaran.id %>
 
             <!-- Tugas Tim -->
             <div class="card-body rincian-tugas-tim-kerja">
@@ -56,11 +54,7 @@
                     <td class="text-wrap" width="90%">Tugas</td>
                     <td></td>
                   </tr>
-                  <tr>
-                    <td class="row-number" width="5%">1</td>
-                    <td class="text-wrap" width="90%"><%= @sasaran %></td>
-                  </tr>
-                  <% @tim[:rincian_tugas].each.with_index(2) do |tugas, no| %>
+                  <% @tim[:rincian_tugas].each.with_index(1) do |tugas, no| %>
                     <%= render 'tim_kerja/rincian_tugas', no: no, tugas: tugas %>
                   <% end %>
                 </tbody>

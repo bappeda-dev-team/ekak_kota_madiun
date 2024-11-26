@@ -43,7 +43,8 @@ class Pohon < ApplicationRecord
 
   store :metadata
   store_accessor :metadata, :tim_id, :role_tim, :processed_at,
-                 :assigned_by, :keterangan_tim, :tahun_tim, :opd_tim
+                 :assigned_by, :keterangan_tim, :tahun_tim, :opd_tim,
+                 :is_inovator
 
   def to_s
     pohonable.class.name.underscore.titleize

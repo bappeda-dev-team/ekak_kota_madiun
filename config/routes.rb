@@ -100,6 +100,9 @@ Rails.application.routes.draw do
       get :edit_role_tim
       post :update_role_tim
     end
+    collection do
+      patch :toggle_inovator
+    end
   end
   resources :crosscuttings do
     member do

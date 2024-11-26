@@ -117,6 +117,33 @@ class PelaksanaController < ApplicationController
     end
   end
 
+  # rubocop: disable Metrics
+  def toggle_inovator
+    list_pohons = params[:inovatorState]
+    # simpan pohon
+    list_pohons.each do |pohon|
+      pohonk = Pohon.find(pohon["id"])
+      checked = pohon["checked"]
+      pohonk.is_inovator = checked
+      pohonk.save
+    end
+    @sasaran = Sasaran.find(params[:sasaran_id])
+    @kode_opd = @sasaran.opd.kode_unik_opd
+    @tahun = @sasaran.tahun
+    @strategi = @sasaran.strategi
+    @strategi_atasan = @strategi.strategi_atasan
+    @inovasi = @sasaran.inovasi_sasaran
+    @kebaruan = @sasaran.gambaran_nilai_kebaruan
+    tim_kerja = TimKerja.new(kode_opd: @kode_opd,
+                             tahun: @sasaran.tahun)
+    @tim = tim_kerja.tim_kerja_hash(@strategi_atasan)
+
+    render json: { resText: "Inovator diupdate",
+                   html_content: html_content({ tim: @tim[:susunan_tim], penanggung_jawab: @tim[:penanggung_jawab], sasaran_id: @sasaran.id },
+                                              partial: 'tim_kerja/tabel_susunan_tim') }.to_json,
+           status: :ok
+  end
+
   # def html_content(pohon)
   #   render_to_string(partial: 'pohon_kinerja_opds/item_cascading',
   #                    formats: 'html',

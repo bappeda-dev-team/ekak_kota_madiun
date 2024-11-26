@@ -1,28 +1,6 @@
-<div class="card-body pelaksana-tim-kerja">
-  <table class="table table-bordered caption-top">
-    <caption>
-      Susunan Tim Kerja
-    </caption>
-    <tbody>
-      <tr>
-        <th width="15%">Penanggung Jawab</th>
-        <td><%= penanggung_jawab %></td>
-      </tr>
-      <% tim.each do |role, susunans| %>
-        <tr>
-          <th width="15%" rowspan="<%= susunans.size + 1 %>"><%= role[:role] %></th>
-        </tr>
-        <% susunans.each.with_index(1) do |susunan, urut| %>
-          <tr>
-            <td class="<%= susunan[:sasaran_terisi] ? 'text-success' : 'text-danger' %>">
-              <% if susunans.size > 1 %>
-                <%= urut %> -
-              <% end %>
-              <%= susunan[:pelaksana] %>
-            </td>
-          </tr>
-        <% end %>
-      <% end %>
-    </tbody>
-  </table>
+<div data-controller="susunans" class="card-body pelaksana-tim-kerja">
+  <div class="tabel-tim d-grid gap-3" data-susunans-target="table">
+    <%= render 'tim_kerja/tabel_susunan_tim', tim: tim, penanggung_jawab: penanggung_jawab, sasaran_id: sasaran_id %>
+  </div>
 </div>
+
