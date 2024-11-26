@@ -75,6 +75,7 @@
               </table>
             </div>
 
+            <!-- Tugas Tim -->
             <div class="card-body rincian-tugas-tim-kerja">
               <table class="table table-bordered caption-top">
                 <caption>
@@ -82,13 +83,38 @@
                 </caption>
                 <tbody>
                   <tr>
-                    <td class="row-number" width="5%">Key</td>
-                    <td class="text-wrap" width="90%"><%= @sasaran %></td>
+                    <td class="row-number" width="5%">No.</td>
+                    <td class="text-wrap" width="90%">Tugas</td>
                     <td></td>
                   </tr>
-                  <% @tim[:rincian_tugas].each.with_index(1) do |tugas, no| %>
+                  <tr>
+                    <td class="row-number" width="5%">1</td>
+                    <td class="text-wrap" width="90%"><%= @sasaran %></td>
+                  </tr>
+                  <% @tim[:rincian_tugas].each.with_index(2) do |tugas, no| %>
                     <%= render 'tim_kerja/rincian_tugas', no: no, tugas: tugas %>
                   <% end %>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Nilai kebaruan -->
+            <div class="card-body rincian-tugas-tim-kerja">
+              <table class="table table-bordered caption-top">
+                <caption>
+                  Gambaran Nilai Kebaruan Inovasi
+                </caption>
+                <tbody>
+                  <tr>
+                    <td class="row-number" width="5%">No.</td>
+                    <td class="text-wrap">Inovasi</td>
+                    <td class="text-wrap" width="65%">Nilai Kebaruan</td>
+                  </tr>
+                  <tr>
+                    <td class="row-number" width="5%">1</td>
+                    <td class="text-wrap fw-bolder"><%= @inovasi %></td>
+                    <td class="text-wrap" width="90%"><%= @kebaruan %></td>
+                  </tr>
                 </tbody>
               </table>
             </div>

@@ -531,6 +531,7 @@ class SasaransController < ApplicationController
     @strategi = @sasaran.strategi
     @strategi_atasan = @strategi.strategi_atasan
     @inovasi = @sasaran.inovasi_sasaran
+    @kebaruan = @sasaran.gambaran_nilai_kebaruan
     tim_kerja = TimKerja.new(kode_opd: @kode_opd,
                              tahun: @sasaran.tahun)
     @tim = tim_kerja.tim_kerja_hash(@strategi_atasan)

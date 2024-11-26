@@ -721,4 +721,8 @@ class Sasaran < ApplicationRecord
   def punya_online?
     rincian.model_layanan == 'Online'
   end
+
+  def punya_inovasi?
+    hasil_inovasi == 'Inovasi'
+  end
 end
