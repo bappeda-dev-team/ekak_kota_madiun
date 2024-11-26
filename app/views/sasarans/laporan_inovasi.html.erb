@@ -63,6 +63,30 @@
 
             <!-- Nilai kebaruan -->
             <%= render 'tim_kerja/nilai_kebaruan',  inovasi: @inovasi, kebaruan: @kebaruan %>
+
+            <!-- Jenis Standar Pelayanan -->
+            <div class="card-body rincian-tugas-tim-kerja">
+              <table class="table table-bordered caption-top">
+                <caption>
+                  Jenis Standar Pelayanan
+                </caption>
+                <tbody>
+                  <tr>
+                    <td class="row-number" width="5%">No.</td>
+                    <td class="text-wrap">Jenis Layanan</td>
+                    <td class="text-wrap">Model Layanan</td>
+                    <td class="text-wrap">Penjelasaan Pelayanan Online (alat yang digunakan)</td>
+                  </tr>
+                  <tr>
+                    <td class="row-number" width="5%">1</td>
+                    <td class="text-wrap"><%= @sasaran.jenis_layanan %></td>
+                    <td class="text-wrap"><%= @sasaran.rincian&.model_layanan %></td>
+                    <td class="text-wrap"><%= @sasaran.rincian&.jalur_layanan %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
           </div>
         </div>
       </div>
