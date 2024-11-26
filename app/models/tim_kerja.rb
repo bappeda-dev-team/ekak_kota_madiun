@@ -9,6 +9,12 @@ class TimKerja
     @opd ||= Opd.find_by(kode_unik_opd: @kode_opd)
   end
 
+  def strategic_opd
+    @strategic_opd ||= opd.strategis.includes(%i[strategi_bawahans pohon_shareds])
+                          .where(type: 'StrategiPohon', role: 'eselon_2', tahun: @tahun)
+                          .select { |sp| sp.pohon_shareds.any? }
+  end
+
   def tactical_opd
     @tactical_opd ||= opd.strategis.includes(%i[strategi_bawahans pohon_shareds])
                          .where(type: 'StrategiPohon', role: 'eselon_3', tahun: @tahun)
@@ -26,6 +32,7 @@ class TimKerja
     {
       id_tim: strategi.id,
       nama_tim: strategi.strategi,
+      penanggung_jawab: penanggung_jawab(strategi),
       dasar_hukum: dasar_hukum_tim(strategi),
       susunan_tim: susunan_tim(strategi),
       rincian_tugas: rincian_tugas(strategi)
@@ -65,7 +72,9 @@ class TimKerja
     end.uniq
   end
 
-  def kepala_opd_tim; end
+  def penanggung_jawab(strategi)
+    strategi.strategi_atasan.pohon_shareds.flat_map { |pl| pl.user.nama_nip_kurung }.last
+  end
 
   private
 

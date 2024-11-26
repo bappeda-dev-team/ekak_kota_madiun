@@ -1,6 +1,19 @@
-<tr data-controller="row">
-  <td class="row-number" width="5%"><%= no %></td>
-  <td class="text-wrap" width="90%"><%= inovasi[1] %></td>
-  <td class="text-wrap" width="90%"><%= inovasi[2] %></td>
-  <td></td>
-</tr>
+<div class="card-body rincian-tugas-tim-kerja">
+  <table class="table table-bordered caption-top">
+    <caption>
+      Gambaran Nilai Kebaruan Inovasi
+    </caption>
+    <tbody>
+      <tr>
+        <td class="row-number" width="5%">No.</td>
+        <td class="text-wrap">Inovasi</td>
+        <td class="text-wrap" width="65%">Nilai Kebaruan</td>
+      </tr>
+      <tr>
+        <td class="row-number" width="5%">1</td>
+        <td class="text-wrap fw-bolder"><%= inovasi %></td>
+        <td class="text-wrap" width="90%"><%= kebaruan %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

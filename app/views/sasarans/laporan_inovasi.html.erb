@@ -24,6 +24,8 @@
               Unduh Laporan
             <% end %>
           </div>
+
+          <!-- Dasar Hukum -->
           <div class="card">
             <div class="card-body dasar-hukum-tim-kerja">
               <table class="table table-bordered caption-top">
@@ -38,42 +40,9 @@
               </table>
             </div>
 
-            <div class="card-body pelaksana-tim-kerja">
-              <table class="table table-bordered caption-top">
-                <caption>
-                  Susunan Tim Kerja
-                </caption>
-                <tbody>
-                  <% @tim[:susunan_tim].each do |role, susunans| %>
-                    <tr>
-                      <th width="15%" rowspan="<%= susunans.size + 1 %>"><%= role[:role] %></th>
-                    </tr>
-                    <% susunans.each.with_index(1) do |susunan, urut| %>
-                      <tr>
-                        <td class="<%= susunan[:sasaran_terisi] ? 'text-success' : 'text-danger' %>">
-                          <%= urut %> - <%= susunan[:pelaksana] %>
-                        </td>
-                      </tr>
-                    <% end %>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
+            <%= render 'tim_kerja/susunan_tim',  tim: @tim[:susunan_tim], penanggung_jawab: @tim[:penanggung_jawab] %>
 
-            <div class="card-body inovator-tim-kerja">
-              <table class="table table-bordered caption-top">
-                <caption>
-                  Inovator
-                </caption>
-                <tbody>
-                  <tr>
-                    <td>
-                      <%= @sasaran.user %> ( <%= @sasaran.nip_asn %> )
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <%= render 'tim_kerja/inovator', inovator: @sasaran.user.nama_nip_kurung %>
 
             <!-- Tugas Tim -->
             <div class="card-body rincian-tugas-tim-kerja">
@@ -99,25 +68,7 @@
             </div>
 
             <!-- Nilai kebaruan -->
-            <div class="card-body rincian-tugas-tim-kerja">
-              <table class="table table-bordered caption-top">
-                <caption>
-                  Gambaran Nilai Kebaruan Inovasi
-                </caption>
-                <tbody>
-                  <tr>
-                    <td class="row-number" width="5%">No.</td>
-                    <td class="text-wrap">Inovasi</td>
-                    <td class="text-wrap" width="65%">Nilai Kebaruan</td>
-                  </tr>
-                  <tr>
-                    <td class="row-number" width="5%">1</td>
-                    <td class="text-wrap fw-bolder"><%= @inovasi %></td>
-                    <td class="text-wrap" width="90%"><%= @kebaruan %></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <%= render 'tim_kerja/nilai_kebaruan',  inovasi: @inovasi, kebaruan: @kebaruan %>
           </div>
         </div>
       </div>
