@@ -26,21 +26,30 @@ class PelaksanaController < ApplicationController
   def edit_role_tim
     @pohon = Pohon.find(params[:id])
     @pelaksana = User.find_by(nik: params[:nip])
-    @role_tim = %w[
-      Koordinator
-      Ketua
-      Anggota
-    ]
+    @role_tim = if @pohon.role == 'eselon_2'
+                  ['Penanggung Jawab']
+                else
+                  %w[
+                    Koordinator
+                    Ketua
+                    Anggota
+                  ]
+                end
   end
 
+  # rubocop: disable Metrics
   def update_role_tim
     @pelaksana = User.find_by(nik: params[:nip])
     @pohon = Pohon.find(params[:id])
-    @role_tim = %w[
-      Koordinator
-      Ketua
-      Anggota
-    ]
+    @role_tim = if @pohon.role == 'eselon_2'
+                  ['Penanggung Jawab']
+                else
+                  %w[
+                    Koordinator
+                    Ketua
+                    Anggota
+                  ]
+                end
     role_tim = params[:role_tim]
     keterangan = params[:keterangan]
 
@@ -106,6 +115,16 @@ class PelaksanaController < ApplicationController
     cross_baru = Pohon.create(list_pohon_baru) if list_pohon_baru.any?
 
     if pohons.any? || cross_baru
+      cross_baru.each do |pohon|
+        next if pohon.role != 'eselon_2'
+
+        pohon.update(tim_id: pohon.id,
+                     keterangan_tim: 'role-otomatis',
+                     role_tim: 'Penanggung Jawab',
+                     assigned_by: current_user.id,
+                     tahun_tim: pohon.tahun,
+                     opd_tim: pohon.pohonable.opd.kode_unik_opd)
+      end
       strategi = @pelaksana.strategi
       render json: { resText: "Pelaksana berhasil diperbarui",
                      html_content: html_content({ pohon: strategi },

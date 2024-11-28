@@ -55,7 +55,7 @@ class TimKerja
   end
 
   def susunan_tim(strategi)
-    all_pelaksana = pelaksana_strategi(strategi) + pelaksana_bawahan(strategi)
+    all_pelaksana = atasan_pelaksana(strategi) + pelaksana_strategi(strategi) + pelaksana_bawahan(strategi)
     all_pelaksana.group_by { |pl| { id: pl[:role_id], role: pl[:role] } }.sort_by { |key, _| key[:id] }
   end
 
@@ -90,6 +90,12 @@ class TimKerja
     end
   end
 
+  def atasan_pelaksana(strategi)
+    pelaksana(strategi.strategi_atasan).flat_map do |pelaksana|
+      pelaksana_hash(pelaksana)
+    end
+  end
+
   def pelaksana_strategi(strategi)
     pelaksana(strategi).flat_map do |pelaksana|
       pelaksana_hash(pelaksana)
@@ -115,6 +121,8 @@ class TimKerja
 
   def role_tim_id(role)
     case role
+    when 'Penanggung Jawab'
+      0
     when 'Koordinator'
       1
     when 'Ketua'
