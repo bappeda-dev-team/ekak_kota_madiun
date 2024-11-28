@@ -158,7 +158,7 @@ class PelaksanaController < ApplicationController
     @tim = tim_kerja.tim_kerja_hash(@strategi_atasan)
 
     render json: { resText: "Inovator diupdate",
-                   html_content: html_content({ tim: @tim[:susunan_tim], penanggung_jawab: @tim[:penanggung_jawab], sasaran_id: @sasaran.id },
+                   html_content: html_content({ tim: @tim[:susunan_tim], sasaran_id: @sasaran.id },
                                               partial: 'tim_kerja/tabel_susunan_tim') }.to_json,
            status: :ok
   end

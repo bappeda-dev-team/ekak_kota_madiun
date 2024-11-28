@@ -330,6 +330,38 @@ class LaporansController < ApplicationController
     end
   end
 
+  # rubocop: disable Metrics
+  def tim_inovasi_asn_pdf
+    sasaran = Sasaran.find(params[:id])
+    strategi = sasaran.strategi
+    strategi_atasan = strategi.strategi_atasan
+    inovasi = sasaran.inovasi_sasaran
+    tahun = sasaran.tahun
+    kode_opd = sasaran.opd.kode_unik_opd
+
+    tim_opd =  TimKerja.new(kode_opd: kode_opd, tahun: tahun)
+    tim_kerja = tim_opd.tim_kerja_hash(strategi_atasan)
+    opd = tim_opd.opd
+    @tanggal_cetak = params[:selected_date]
+
+    pdf = InovasiAsnPdf.new(tim_kerja: tim_kerja, opd: opd, tahun: tahun,
+                            tanggal_cetak: @tanggal_cetak,
+                            sasaran: sasaran, strategi_atasan: strategi_atasan)
+    waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
+    nama_file = inovasi
+
+    @filename = "Laporan_Tim_Kerja_#{nama_file}_#{waktu}.pdf"
+    respond_to do |format|
+      format.pdf { send_data(pdf.render, filename: @filename, type: 'application/pdf', dispotition: :attachment) }
+    end
+  end
+
+  def custom_tanggal_cetak
+    dl_path = params[:dl_path]
+    @url = dl_path
+    render layout: false
+  end
+
   private
 
   def set_program_kegiatans

@@ -13,15 +13,16 @@
           </button>
         </h2>
         <div class="accordion-body">
-          <div class="cetak mb-2 d-none">
-            <%= link_to tim_kerja_pdf_laporan_path(@tim[:id_tim], format: :pdf), class:"btn btn-outline-danger",
-                        title:"PDF Laporan Inovasi",
+          <div class="cetak mb-2">
+            <%= link_to custom_tanggal_cetak_laporans_path(params: { dl_path: tim_inovasi_asn_pdf_laporan_path(@sasaran, format: :pdf) }),remote: true,
                         data: {
-                          bs_toggle:"tooltip",
-                          bs_placement:"bottom",
-                        } do %>
-              <span class="far fa-file-pdf"></span>
-              Unduh Laporan
+                          controller: 'form-modal',
+                          action: 'ajax:complete->form-modal#success:prevent',
+                          bs_toggle: 'modal',
+                          bs_target: '#medium-modal'
+                        }, class: "btn btn-sm btn-primary" do %>
+              <span>Unduh Laporan</span>
+              <i class="fas fa-file-pdf ms-2"></i>
             <% end %>
           </div>
 
@@ -40,7 +41,7 @@
               </table>
             </div>
 
-            <%= render 'tim_kerja/susunan_tim',  tim: @tim[:susunan_tim], penanggung_jawab: @tim[:penanggung_jawab], sasaran_id: @sasaran.id %>
+            <%= render 'tim_kerja/susunan_tim',  tim: @tim[:susunan_tim], sasaran_id: @sasaran.id %>
 
             <!-- Tugas Tim -->
             <div class="card-body rincian-tugas-tim-kerja">
@@ -108,3 +109,5 @@
     </div>
   <% end %>
 <% end %>
+
+<%= render 'shared/medium_modal' %>

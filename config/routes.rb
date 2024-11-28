@@ -612,6 +612,7 @@ Rails.application.routes.draw do
       get :tim_kerja
       post :tim_kerja_view
       get :pdf_kak_opd
+      get :custom_tanggal_cetak
     end
 
     member do
@@ -620,6 +621,7 @@ Rails.application.routes.draw do
       get :show_kak
       get :buka_kak
       get :tim_kerja_pdf
+      get :tim_inovasi_asn_pdf
     end
   end
   namespace :laporans do

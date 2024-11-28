@@ -54,7 +54,7 @@
   </tbody>
 </table>
 
-<% inovator = tim.select { |role, susunans| susunans.any? { |ss| ss[:is_inovator] } }.flatten %>
+<% inovator = tim.select { |_, susunans| susunans.any? { |ss| ss[:is_inovator] } }.flatten %>
 <% if inovator.any? %>
   <table class="table table-bordered caption-top">
     <caption>
