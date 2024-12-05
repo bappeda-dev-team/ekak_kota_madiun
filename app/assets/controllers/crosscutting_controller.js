@@ -145,6 +145,22 @@ export default class extends Controller {
     }
   }
 
+  inputInovasiNonPemerintah(event) {
+    const checkState = event.target.checked;
+    const url = "/inovasi_tims/new_non_pemerintah";
+
+    if (checkState) {
+      fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+        .then((response) => response.text())
+        .then((html) => {
+          this.inovasiTarget.innerHTML = html;
+        })
+        .catch((error) => console.error("Error:", error));
+    } else {
+      this.inovasiTarget.innerHTML = "";
+    }
+  }
+
   inputOgpExternalNonPemerintah(event) {
     const checkState = event.target.checked;
     const url = "/mitras/new_external_non_pemerintah_ogp";

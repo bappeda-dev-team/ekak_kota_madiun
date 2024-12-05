@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :inovasi_tims do
     collection do
       get :new_internal
+      get :new_non_pemerintah
     end
   end
   resources :mitras do

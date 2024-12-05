@@ -1,0 +1,53 @@
+<%= fields_for "crosscutting[inovasi_tims_attributes][0]", inovasi_tim do |form| %>
+  <div id="inovasi-non-pemerintah">
+    <div class="field">
+      <%= form.label :nama_inovasi, { class: "form-label" } %>
+      <%= form.select :nama_inovasi, ['Internal', 'External'],
+       {include_blank: true },
+       { class: 'form-control',
+         required: true,
+         data: {
+           placeholder: 'Pilih Inovasi',
+           controller: 'dropdown',
+           dropdown_parent_value: '#inovasi-non-pemerintah',
+         }
+       } %>
+    </div>
+    <%= fields_for "crosscutting[inovasi_tims_attributes][0][tims_attributes][0]", @tim do |tf| %>
+      <div class="field">
+        <%= tf.label :nama_tim, { class: "form-label" } %>
+        <%= tf.text_area :nama_tim, { class: "form-control", placeholder: 'input nama tim' } %>
+      </div>
+      <%= tf.label :susunan_tim, { class: "form-label" } %>
+      <div class="p-3 border border-2" >
+        <div class="row">
+          <div class="col">
+            <%= tf.label :role_anggota, { class: "form-label" } %>
+          </div>
+          <div class="col">
+            <%= tf.label :nama_anggota, { class: "form-label" } %>
+          </div>
+        </div>
+        <div class="d-grid gap-3 py-3 mb-3" id="susunan-tim">
+          <%= tf.fields_for :anggota_tims do |anggota_tim| %>
+            <%= render 'anggota_tims/anggota_tim_fields', form: anggota_tim %>
+          <% end %>
+        </div>
+        <%= link_to_add_nested(tf, :anggota_tims, "#susunan-tim",
+                               link_classes: 'btn btn-primary btn-sm add-nested-btn',
+                               partial: 'anggota_tims/anggota_tim_fields') do %>
+          <i class="fas fa-plus me-2"></i>
+          Tambah Anggota
+        <% end %>
+      </div>
+    <% end %>
+    <div class="field">
+      <%= form.label :jenis_inovasi, { class: "form-label" } %>
+      <%= form.text_area :jenis_inovasi, { class: "form-control", placeholder: 'apa jenis inovasinya ?' } %>
+    </div>
+    <div class="field">
+      <%= form.label :nilai_kebaruan, { class: "form-label" } %>
+      <%= form.text_area :nilai_kebaruan, { class: "form-control", placeholder: 'gambarkan nilai kebaruan inovasi' } %>
+    </div>
+  </div>
+<% end %>

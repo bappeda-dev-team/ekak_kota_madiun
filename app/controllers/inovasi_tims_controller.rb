@@ -22,6 +22,14 @@ class InovasiTimsController < ApplicationController
     render partial: 'inovasi_cross_internal_fields', locals: { inovasi_tim: @inovasi_tim }
   end
 
+  def new_non_pemerintah
+    @inovasi_tim = InovasiTim.new
+    @tim = @inovasi_tim.tims.build
+    @tim.anggota_tims.build
+
+    render partial: 'inovasi_non_pemerintah_fields', locals: { inovasi_tim: @inovasi_tim }
+  end
+
   # GET /inovasi_tims/1/edit
   def edit; end
 
