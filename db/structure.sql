@@ -1117,6 +1117,46 @@ ALTER SEQUENCE public.indikators_users_id_seq OWNED BY public.indikators_users.i
 
 
 --
+-- Name: inovasi_masyarakats; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.inovasi_masyarakats (
+    id bigint NOT NULL,
+    nama_pelapor character varying,
+    no_whatsapp character varying,
+    alamat character varying,
+    email_pelapor character varying,
+    inovasi character varying,
+    gambaran_nilai_kebaruan character varying,
+    status_laporan character varying,
+    keterangan character varying,
+    metadata jsonb,
+    id_tiket character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: inovasi_masyarakats_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.inovasi_masyarakats_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: inovasi_masyarakats_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.inovasi_masyarakats_id_seq OWNED BY public.inovasi_masyarakats.id;
+
+
+--
 -- Name: inovasi_tims; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -4356,6 +4396,13 @@ ALTER TABLE ONLY public.indikators_users ALTER COLUMN id SET DEFAULT nextval('pu
 
 
 --
+-- Name: inovasi_masyarakats id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inovasi_masyarakats ALTER COLUMN id SET DEFAULT nextval('public.inovasi_masyarakats_id_seq'::regclass);
+
+
+--
 -- Name: inovasi_tims id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -5110,6 +5157,14 @@ ALTER TABLE ONLY public.indikators
 
 ALTER TABLE ONLY public.indikators_users
     ADD CONSTRAINT indikators_users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: inovasi_masyarakats inovasi_masyarakats_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inovasi_masyarakats
+    ADD CONSTRAINT inovasi_masyarakats_pkey PRIMARY KEY (id);
 
 
 --
@@ -5893,6 +5948,13 @@ CREATE INDEX index_indikators_users_on_indikator_id ON public.indikators_users U
 --
 
 CREATE INDEX index_indikators_users_on_user_id ON public.indikators_users USING btree (user_id);
+
+
+--
+-- Name: index_inovasi_masyarakats_on_id_tiket; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_inovasi_masyarakats_on_id_tiket ON public.inovasi_masyarakats USING btree (id_tiket);
 
 
 --
@@ -6951,6 +7013,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241122131305'),
 ('20241122131600'),
 ('20241122131759'),
-('20241124030840');
+('20241124030840'),
+('20241205024943');
 
 

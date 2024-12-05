@@ -1,0 +1,67 @@
+<%= form_with(model: inovasi_masyarakat) do |form| %>
+  <% if inovasi_masyarakat.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(inovasi_masyarakat.errors.count, "error") %> prohibited this inovasi_masyarakat from being saved:</h2>
+
+      <ul>
+        <% inovasi_masyarakat.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :nama_pelapor %>
+    <%= form.text_field :nama_pelapor %>
+  </div>
+
+  <div class="field">
+    <%= form.label :no_whatsapp %>
+    <%= form.text_field :no_whatsapp %>
+  </div>
+
+  <div class="field">
+    <%= form.label :alamat %>
+    <%= form.text_field :alamat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email_pelapor %>
+    <%= form.text_field :email_pelapor %>
+  </div>
+
+  <div class="field">
+    <%= form.label :inovasi %>
+    <%= form.text_field :inovasi %>
+  </div>
+
+  <div class="field">
+    <%= form.label :gambaran_nilai_kebaruan %>
+    <%= form.text_field :gambaran_nilai_kebaruan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status_laporan %>
+    <%= form.text_field :status_laporan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :keterangan %>
+    <%= form.text_field :keterangan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :metadata %>
+    <%= form.text_field :metadata %>
+  </div>
+
+  <div class="field">
+    <%= form.label :id_tiket %>
+    <%= form.text_field :id_tiket %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

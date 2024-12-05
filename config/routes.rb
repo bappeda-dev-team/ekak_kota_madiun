@@ -8,6 +8,7 @@ require "sidekiq/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :inovasi_masyarakats
   resources :anggota_tims
   resources :inovasi_tims do
     collection do
@@ -799,6 +800,9 @@ Rails.application.routes.draw do
     end
     namespace :sipd_client do
       get :sync_renstra
+    end
+    namespace :awaksigap_client do
+      get :sync_inovasi_masyarakat
     end
     namespace :skp do
       post :sasaran_kinerja_pegawai

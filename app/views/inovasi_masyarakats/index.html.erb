@@ -1,0 +1,53 @@
+<%= content_for :html_title, "Inovasi Masyarakat" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Usulan</li>
+  <li class="breadcrumb-item active" aria-current="page">Inovasi Masyarakat</li>
+<% end %>
+<% content_for :view_utama do %>
+  <p id="notice"><%= notice %></p>
+
+  <div class="card border-0 shadow">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h2 class="fs-5 fw-bold mb-0">Usulan Inovasi Masyarakat Tahun XX</h2>
+        </div>
+        <% unless guest? %>
+          <% if current_user.has_role? :super_admin %>
+            <div class="col-auto text-end">
+              <%= link_to api_awaksigap_client_sync_inovasi_masyarakat_path,
+                          remote: true,
+                          data: { disable_with: 'Memproses....'},
+                          class:"btn btn-sm btn-primary" do %>
+                <i class="fas fa-sync me-2"></i>
+                Sync Inovasi Masyarakat
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-flush counter" data-datatable>
+          <thead class="thead-light">
+            <tr>
+              <th class="border-bottom text-gray-700" scope="col">No.</th>
+              <th class="border-bottom text-gray-700" scope="col">ID Tiket</th>
+              <th class="border-bottom text-gray-700" scope="col">Nama pelapor</th>
+              <th class="border-bottom text-gray-700" scope="col">Email pelapor</th>
+              <th class="border-bottom text-gray-700" scope="col">Inovasi</th>
+              <th class="border-bottom text-gray-700" scope="col">Gambaran nilai kebaruan</th>
+              <th class="border-bottom text-gray-700" scope="col">Status laporan</th>
+              <th class="border-bottom text-gray-700" scope="col">Keterangan</th>
+              <th class="border-bottom text-gray-700 text-center" scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody id="new_inovasi_masyarkat">
+            <%= render @inovasi_masyarakats %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% end %>

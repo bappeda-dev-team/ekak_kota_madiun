@@ -5,7 +5,8 @@ module SubItemHelper
       { title: 'Pokok Pikiran', href: pokpirs_path, identifier: 'pokpir' },
       { title: 'Mandatori', href: mandatoris_path, identifier: 'mandatori' },
       { title: 'Mandatori SPBE', href: spbe_mandatoris_path, identifier: 'spbe_mandatori' },
-      { title: 'Inisiatif Walikota', href: inovasis_path, identifier: 'inovasi' }
+      { title: 'Inisiatif Walikota', href: inovasis_path, identifier: 'inovasi' },
+      { title: 'Inovasi Masyarakat', href: inovasi_masyarakats_path, identifier: 'masyarakat_inovasi' }
     ]
   end
 
@@ -28,7 +29,7 @@ module SubItemHelper
     [
       { title: 'Ranwal', href: renja_ranwal_path, identifier: 'renja_ranwal' },
       { title: 'Rancangan', href: renja_rancangan_path, identifier: 'renja_rancangan' },
-      { title: 'Rankir', href: renja_rankir_path, identifier: 'renja_rankir' },
+      { title: 'Rankir', href: renja_rankir_path, identifier: 'renja_rankir' }
     ]
   end
 

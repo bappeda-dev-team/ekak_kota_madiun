@@ -1,0 +1,14 @@
+<tr id="<%= dom_id(inovasi_masyarakat) %>">
+  <td class="text-gray-900 fw-bolder align-middle" scope="row"></td>
+  <td class="fw-bolder align-middle text-wrap"><%= inovasi_masyarakat.id_tiket %></td>
+  <td class="fw-bolder align-middle text-wrap"><%= inovasi_masyarakat.nama_pelapor %></td>
+  <td class="fw-bolder align-middle text-wrap"><%= inovasi_masyarakat.email_pelapor %></td>
+  <td class="fw-bolder align-middle text-wrap"><%= inovasi_masyarakat.inovasi %></td>
+  <td class="fw-bolder text-wrap"><%= inovasi_masyarakat.gambaran_nilai_kebaruan %></td>
+  <td class="fw-bolder text-wrap"><%= inovasi_masyarakat.status_laporan %></td>
+  <td class="fw-bolder text-wrap"><%= inovasi_masyarakat.keterangan %></td>
+  <td class="text-center align-middle">
+    <% unless guest? %>
+    <% end %>
+  </td>
+</tr>

@@ -1,0 +1,2 @@
+module InovasiMasyarakatsHelper
+end
