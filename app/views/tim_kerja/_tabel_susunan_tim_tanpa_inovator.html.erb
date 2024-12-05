@@ -1,0 +1,60 @@
+
+<table class="table table-bordered caption-top">
+  <caption>
+    <div class="row">
+      <div class="col">
+        Susunan Tim Kerja
+      </div>
+    </div>
+  </caption>
+  <tbody data-susunans-target="list">
+    <% if tim.any? %>
+      <% tim.each do |role, susunans| %>
+        <tr>
+          <th width="15%" rowspan="<%= susunans.size + 1 %>"><%= role[:role] %></th>
+        </tr>
+        <% susunans.each.with_index(1) do |susunan, urut| %>
+          <tr>
+            <td class="<%= susunan[:sasaran_terisi] ? 'text-success' : 'text-danger' %>">
+              <% if susunans.size > 1 %>
+                <%= urut %> -
+              <% end %>
+              <%= susunan[:pelaksana] %>
+            </td>
+            <td class="text-center">
+              <% if susunan[:is_inovator] %>
+                <button class="btn btn-sm btn-tertiary" data-susunans-target="button">
+                  <i class='far fa-check-circle me-2'></i>
+                  Inovator
+                </button>
+              <% end %>
+              <div class="radio-selector d-none" data-susunans-target="radio">
+                <%= radio_button_tag 'is_inovator', susunan[:strategi_id], susunan[:is_inovator], class: 'form-check-input inovators' %> Inovator
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    <% else %>
+      <tr class="table-danger">
+        <th colspan="3"><i class="fas fa-exclamation-triangle me-2"></i>Tim Kerja Belum Disusun</th>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% inovator = tim.select { |_, susunans| susunans.any? { |ss| ss[:is_inovator] } }.flatten %>
+<% if inovator.any? %>
+  <table class="table table-bordered caption-top">
+    <caption>
+      Inovator
+    </caption>
+    <tbody>
+      <tr>
+        <td>
+          <%= inovator.last.dig(:pelaksana) %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>
