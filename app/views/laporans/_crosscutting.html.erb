@@ -11,7 +11,17 @@
         <% style_instansi_pelaksana = crosscut.tipe_crosscutting == 'External' ? 'bg-warning' : '' %>
         <tr class="skip <%= style_instansi_pelaksana %>">
             <td class="text-wrap border"><%= crosscut.tipe_crosscutting %></td>
-            <td class="text-wrap border"><%= crosscut.nama_instansi_pelaksana %></td>
+            <td class="text-wrap border">
+                <div class="d-grid gap-2">
+                    <%= crosscut.nama_instansi_pelaksana %>
+                    <% crosscut.inovasi_tims.each do |inovasi| %>
+                        <p>Nama Inovasi: <%= inovasi.nama_inovasi %></p>
+                        <p>Jenis Inovasi: <%= inovasi.jenis_inovasi %></p>
+                        <p>Nilai Kebaruan Inovasi: <%= inovasi.nilai_kebaruan %></p>
+                        <p>Diambil Dari: <%= inovasi.inovasi_masyarakat %></p>
+                    <% end %>
+                </div>
+            </td>
         </tr>
     <% end %>
 <% end %>

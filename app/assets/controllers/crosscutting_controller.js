@@ -11,9 +11,19 @@ export default class extends Controller {
     "mitraExternalPemerintah",
     "mitraExternalNonPemerintah",
     "ogpExternalNonPemerintah",
+    "inovasiNama",
+    "inovasiKebaruan",
   ];
 
   connect() {}
+
+  fillInovasiField(event) {
+    const data = event.detail.data;
+    const namaInovasi = data.nama_inovasi;
+    const kebaruanInovasi = data.kebaruan_inovasi;
+    this.inovasiNamaTarget.value = namaInovasi;
+    this.inovasiKebaruanTarget.value = kebaruanInovasi;
+  }
 
   aktifkanTipeTerpilih(event) {
     const tipeTerpilih = event.detail.data.id;

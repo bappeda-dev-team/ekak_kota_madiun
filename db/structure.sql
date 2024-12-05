@@ -1168,7 +1168,8 @@ CREATE TABLE public.inovasi_tims (
     tahun character varying,
     crosscutting_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    inovasi_masyarakat_id bigint
 );
 
 
@@ -7014,6 +7015,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241122131600'),
 ('20241122131759'),
 ('20241124030840'),
-('20241205024943');
+('20241205024943'),
+('20241205041239');
 
 

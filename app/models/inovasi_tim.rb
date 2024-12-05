@@ -2,14 +2,15 @@
 #
 # Table name: inovasi_tims
 #
-#  id              :bigint           not null, primary key
-#  jenis_inovasi   :string
-#  nama_inovasi    :string
-#  nilai_kebaruan  :string
-#  tahun           :string
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  crosscutting_id :bigint           not null
+#  id                    :bigint           not null, primary key
+#  jenis_inovasi         :string
+#  nama_inovasi          :string
+#  nilai_kebaruan        :string
+#  tahun                 :string
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  crosscutting_id       :bigint           not null
+#  inovasi_masyarakat_id :bigint
 #
 # Indexes
 #
@@ -26,4 +27,12 @@ class InovasiTim < ApplicationRecord
 
   # has_many :anggota_tims, through: :tims
   # accepts_nested_attributes_for :anggota_tims, reject_if: :all_blank, allow_destroy: true
+
+  def inovasi_masyarakat?
+    inovasi_masyarakat_id.present?
+  end
+
+  def inovasi_masyarakat
+    inovasi_masyarakat? ? 'USULAN MASYARKAAT' : 'INTERNAL'
+  end
 end

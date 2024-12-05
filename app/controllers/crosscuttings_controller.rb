@@ -82,7 +82,7 @@ class CrosscuttingsController < ApplicationController
     params.require(:crosscutting).permit(:tipe_crosscutting, :strategi_id, :opd_pelaksana,
                                          :tipe_instansi, :nama_instansi,
                                          mitras_attributes: %i[jenis_mitra nama_kerjasama penjelasan_kerjasama tahun_kerjasama _destroy],
-                                         inovasi_tims_attributes: [:jenis_inovasi, :nama_inovasi, :nilai_kebaruan, :_destroy,
+                                         inovasi_tims_attributes: [:jenis_inovasi, :nama_inovasi, :nilai_kebaruan, :inovasi_masyarakat_id, :_destroy,
                                                                    { tims_attributes: [:nama_tim, { anggota_tims_attributes: %i[role nama _destroy] }] }])
   end
 end

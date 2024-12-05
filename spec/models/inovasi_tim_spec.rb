@@ -2,14 +2,15 @@
 #
 # Table name: inovasi_tims
 #
-#  id              :bigint           not null, primary key
-#  jenis_inovasi   :string
-#  nama_inovasi    :string
-#  nilai_kebaruan  :string
-#  tahun           :string
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  crosscutting_id :bigint           not null
+#  id                    :bigint           not null, primary key
+#  jenis_inovasi         :string
+#  nama_inovasi          :string
+#  nilai_kebaruan        :string
+#  tahun                 :string
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  crosscutting_id       :bigint           not null
+#  inovasi_masyarakat_id :bigint
 #
 # Indexes
 #
