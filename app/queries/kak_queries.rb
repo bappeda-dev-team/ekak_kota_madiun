@@ -45,7 +45,44 @@ class KakQueries
             .to_h
   end
 
+  def sasarans_program_kegiatans
+    users_eselon4.map do |user|
+      user.sasarans.includes(%i[program_kegiatan]).where(tahun: @tahun, keterangan: nil)
+          .where.not(program_kegiatan_id: nil)
+    end.flatten
+  end
+
+  def pk_with_pagu
+    pks = sasarans_program_kegiatans.group_by do |sas|
+      { kode: sas.program_kegiatan.kode_sub_fix_sipd,
+        nama: sas.program_kegiatan.nama_subkegiatan }
+    end
+
+    pks_transformer(pks)
+  end
+
   def by_subkegiatan(sasarans)
     sasarans.group_by(&:program_kegiatan)
+  end
+
+  private
+
+  def anggaran_sasarans(sasarans)
+    sasarans.flat_map { |s| s.anggarans.includes(:rekening) }
+  end
+
+  # transform program_kegiatan => sasarans
+  # into {kode: pk.kode, nama: pk.nama} => anggarans
+  def pks_transformer(pks)
+    pk_anggs = pks.transform_values { |ss| anggaran_sasarans(ss) }
+
+    pk_anggs.to_h do |pk, ss|
+      key = {
+        kode: pk[:kode],
+        nama: pk[:nama],
+        angg: ss.flat_map(&:jumlah).compact.sum
+      }
+      [key, ss]
+    end
   end
 end

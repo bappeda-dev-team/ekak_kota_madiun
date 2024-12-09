@@ -36,7 +36,8 @@ class ProgramKegiatansController < ApplicationController
       end
     elsif opd.nama_opd.upcase.include?("BAGIAN")
       program_kegiatans = program_kegiatans.select do |program|
-        program.nama_opd_pemilik.upcase.split("BAGIAN", 2).last.strip == opd.nama_opd.upcase.split("BAGIAN", 2).last.strip
+        program.nama_opd_pemilik.upcase.split("BAGIAN",
+                                              2).last.strip == opd.nama_opd.upcase.split("BAGIAN", 2).last.strip
       end
     end
 
@@ -334,12 +335,8 @@ class ProgramKegiatansController < ApplicationController
     @kode_opd = cookies[:opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     @nama_opd = @opd.nama_opd
-    @program_kegiatans = ProgramKegiatan.where(kode_sub_skpd: @opd.kode_unik_opd,
-                                               tahun: @tahun)
-                                        .order(:kode_sub_giat)
-    program_id = @program_kegiatans.map(&:id).flatten
-    sasarans = Sasaran.where(tahun: @tahun_asli, program_kegiatan_id: program_id)
-    @anggarans = sasarans.map(&:anggarans).compact.flatten
+    kak = KakQueries.new(opd: @opd, tahun: @tahun)
+    @program_kegiatans = kak.pk_with_pagu
   end
 
   private
