@@ -501,6 +501,10 @@ class ProgramKegiatan < ApplicationRecord
     '-'
   end
 
+  def kode_sub_fix_sipd
+    kode_sub_giat.gsub(/[.](?!.*[.])/, ".00\\1")
+  end
+
   def sasarans_subkegiatan(tahun)
     sasarans.joins(:user).includes(%i[indikator_sasarans user])
             .where(tahun: tahun, keterangan: nil)

@@ -60,7 +60,7 @@ module Api
                                             sub_jenis: 'SubKegiatan')
         pagu_kak = anggaran_kak&.anggaran.to_i || 0
         anggaran_sipd = PaguAnggaran.find_by(kode_opd: kode_opd,
-                                             kode: sub.kode_sub_giat,
+                                             kode: sub.kode_sub_fix_sipd,
                                              tahun: tahun,
                                              jenis: 'Penetapan',
                                              sub_jenis: 'SubKegiatan')
