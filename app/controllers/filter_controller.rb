@@ -339,23 +339,30 @@ class FilterController < ApplicationController
   end
 
   # filter tahun yang diaktifkan, dibawah logo E-KAK
+  # rubocop: disable Metrics
   def tahun_dan_opd
     @tahun_sasaran = params[:tahun_sasaran]
     @kode_opd = params[:kode_opd]
     @tahun_sasaran = @tahun_sasaran.match(/murni/) ? @tahun_sasaran[/[^_]\d*/, 0] : @tahun_sasaran
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
-    @lembaga = @opd.lembaga
-    @nama_opd = @opd.nama_lembaga_opd
-    @jabatan_user = current_user.jabatan_user_in_opd(kode_opd: @kode_opd)
-    cookies[:tahun] = @tahun_sasaran
-    cookies[:opd] = @kode_opd
-    cookies[:lembaga_id] = @lembaga.id
-    cookies[:lembaga] = @lembaga
-    cookies[:nama_opd] = @nama_opd
-    cookies[:jabatan] = @jabatan_user
-    render 'shared/_notifier_v2',
-           locals: { message: "Tahun Aktif: #{@tahun_sasaran}, OPD : #{@nama_opd}", status_icon: 'success',
-                     form_name: 'non-exists' }
+    if @kode_opd.present?
+      @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+      @lembaga = @opd.lembaga
+      @nama_opd = @opd.nama_lembaga_opd
+      @jabatan_user = current_user.jabatan_user_in_opd(kode_opd: @kode_opd)
+      cookies[:tahun] = @tahun_sasaran
+      cookies[:opd] = @kode_opd
+      cookies[:lembaga_id] = @lembaga.id
+      cookies[:lembaga] = @lembaga
+      cookies[:nama_opd] = @nama_opd
+      cookies[:jabatan] = @jabatan_user
+      render 'shared/_notifier_v2',
+             locals: { message: "Tahun Aktif: #{@tahun_sasaran}, OPD : #{@nama_opd}", status_icon: 'success',
+                       form_name: 'non-exists' }
+    else
+      render 'shared/_notifier_v2',
+             locals: { message: 'Harap Pilih OPD dan Tahun', status_icon: 'error',
+                       form_name: 'non-exists' }
+    end
   end
 
   def renstra_master
