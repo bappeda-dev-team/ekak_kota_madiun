@@ -6,19 +6,23 @@
   <% all_opd = local_assigns[:all]  %>
   <div class="input-group input-group-merge">
     <%= form.select :kode_opd,  dropdown_opd, {include_blank: true},
-     {class: "form-control", data: {"placeholder": "Perangkat Daerah",
-                                    controller: "dropdown",
-                                    dropdown_width_value: "50%",
-                                    dropdown_jenis_value: "element"
-     } } %>
+     { class: "form-control", required: true,
+       data: {
+         placeholder: "Perangkat Daerah",
+         controller: "dropdown",
+         dropdown_width_value: "50%",
+         dropdown_jenis_value: "element"
+       } } %>
     <span class="me-3"></span>
     <%= form.select :tahun_sasaran, {},  {include_blank: true},
-     { class: "form-control tahun_sasaran", data: { placeholder: "Tahun",
-       controller: 'dropdown',
-       dropdown_jenis_value: "element",
-       dropdown_width_value: "resolve",
-       'ajax--url': kelompok_anggarans_path(:json)
-     }} do %>
+     { class: "form-control tahun_sasaran", required: true,
+       data: {
+         placeholder: "Tahun",
+         controller: 'dropdown',
+         dropdown_jenis_value: "element",
+         dropdown_width_value: "resolve",
+         ajax__url: kelompok_anggarans_path(:json)
+       } } do %>
       <% if cookies[:tahun] %>
         <option value="<%= cookies[:tahun] %>" selected="selected"><%= cookies[:tahun] %></option>
       <% end %>
