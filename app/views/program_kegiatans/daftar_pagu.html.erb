@@ -56,11 +56,11 @@
           <tbody>
             <% @pagus.each.with_index(1) do |(kode_subkegiatan, pagus), nomor| %>
               <tr class="bg-success text-white">
-                <% subkegiatan = ProgramKegiatan.find_by(kode_sub_giat: kode_subkegiatan) %>
+                <% subkegiatan = ProgramKegiatan.fix_kode_sub(kode_subkegiatan) %>
                 <% sum_pagu = pagus.map(&:anggaran).compact.sum %>
                 <td class="text-wrap border"><%= nomor %></td>
                 <td class="text-wrap border"><%= kode_subkegiatan %></td>
-                <td class="text-wrap border"><%= subkegiatan.nama_subkegiatan %></td>
+                <td class="text-wrap border"><%= subkegiatan.first.pnama_subkegiatan %></td>
                 <td class="text-wrap border">Rp. <%= number_with_delimiter(sum_pagu) %></td>
               </tr>
               <tr class="header-program bg-primary text-white">

@@ -128,6 +128,12 @@ class ProgramKegiatan < ApplicationRecord
   scope :kegiatans_satunya, -> { select("DISTINCT ON(program_kegiatans.kode_giat) program_kegiatans.*") }
   scope :subkegiatans_satunya, -> { select("DISTINCT ON(program_kegiatans.kode_sub_giat) program_kegiatans.*") }
 
+  scope :fix_kode_sub, lambda { |kode|
+    kode_sub = kode.gsub(/\.0+(\d{2})$/, '.\1')
+
+    where(kode_sub_giat: kode_sub)
+  }
+
   def bidang_urusans_opd
     # super.uniq(&:kode_giat)
     # ProgramKegiatan.where("kode_program = ? and kode_opd = ?", kode_program, kode_opd)
@@ -487,6 +493,12 @@ class ProgramKegiatan < ApplicationRecord
       satuan: nil,
       pagu: 0
     }
+  end
+
+  def pnama_subkegiatan
+    nama_subkegiatan
+  rescue NoMethodError
+    '-'
   end
 
   def sasarans_subkegiatan(tahun)
