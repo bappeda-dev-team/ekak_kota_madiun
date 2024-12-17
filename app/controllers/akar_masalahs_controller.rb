@@ -1,5 +1,5 @@
 class AkarMasalahsController < ApplicationController
-  before_action :set_akar_masalah, only: %i[show edit update destroy]
+  before_action :set_akar_masalah, only: %i[show edit update destroy pilih_masalah]
   layout false, only: %i[new edit]
 
   # GET /akar_masalahs or /akar_masalahs.json
@@ -55,6 +55,20 @@ class AkarMasalahsController < ApplicationController
       render json: { resText: 'Terjadi kesalahan',
                      html_content: error_content({ akar_masalah: @akar_masalah },
                                                  partial: 'akar_masalahs/form_col') }.to_json,
+             status: :unprocessable_entity
+    end
+  end
+
+  def pilih_masalah
+    if @akar_masalah.update(terpilih: true)
+      render json: { resText: 'Masalah dipilih',
+                     html_content: html_content({ akar_masalah: @akar_masalah },
+                                                partial: 'akar_masalahs/akar_masalah') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ akar_masalah: @akar_masalah },
+                                                 partial: 'akar_masalahs/akar_masalah') }.to_json,
              status: :unprocessable_entity
     end
   end

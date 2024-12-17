@@ -1,0 +1,14 @@
+<%= link_to @path,
+  remote: true,
+  class: 'btn btn-sm btn-primary',
+  data: {
+    controller: 'confirm',
+    action: 'confirm#showConfirmationDialog',
+    confirm_message_value: 'Pilih Masalah?',
+    confirm_description_value: 'Masalah terpilih akan muncul di menu Permasalahan dan Isu Strategis',
+    confirm_is_remote_value: 'true',
+    confirm_method_value: 'POST'
+  } do %>
+  <%= icon %>
+  <span><%= @title %></span>
+<% end %>

@@ -3,6 +3,7 @@
 class SubstansiRenstra::MasalahComponent < ViewComponent::Base
   with_collection_parameter :strategi
   include AkarMasalahsHelper
+  include Rails.application.routes.url_helpers
 
   def initialize(strategi:, single: false)
     super
@@ -80,9 +81,22 @@ class SubstansiRenstra::MasalahComponent < ViewComponent::Base
     end
   end
 
+  def terpilih?
+    @strategi.akar_masalah.terpilih
+  end
+
   def edit_button
     render EditColButtonComponent.new(path: btn_style[:path],
                                       title: btn_style[:title],
                                       btn_style: btn_style[:btn_style])
+  end
+
+  def pilih_button
+    return unless have_masalah? && !terpilih?
+
+    path = pilih_masalah_akar_masalah_path(@strategi.akar_masalah)
+
+    render ButtonAjaxComponent.new(title: 'Pilih Permasalahan',
+                                   path: path)
   end
 end

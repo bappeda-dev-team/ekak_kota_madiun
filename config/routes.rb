@@ -24,7 +24,11 @@ Rails.application.routes.draw do
       get :new_external_non_pemerintah_ogp
     end
   end
-  resources :akar_masalahs
+  resources :akar_masalahs do
+    member do
+      post :pilih_masalah
+    end
+  end
   resources :tim_kerja, only: [] do
     member do
       get :edit_dasar_hukum

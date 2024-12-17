@@ -184,7 +184,8 @@ CREATE TABLE public.akar_masalahs (
     jenis character varying,
     strategi_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    terpilih boolean
 );
 
 
@@ -7016,6 +7017,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241122131759'),
 ('20241124030840'),
 ('20241205024943'),
-('20241205041239');
+('20241205041239'),
+('20241217082359');
 
 

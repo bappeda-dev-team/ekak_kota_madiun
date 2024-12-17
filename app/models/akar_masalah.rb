@@ -7,6 +7,7 @@
 #  kode_opd    :string
 #  masalah     :string
 #  tahun       :string
+#  terpilih    :boolean
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  strategi_id :bigint
