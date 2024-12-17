@@ -383,6 +383,22 @@ class Sasaran < ApplicationRecord
     Sasaran.where(sasaran_atasan_id: id_rencana).dengan_sub_kegiatan
   end
 
+  def penyebab_permasalahan
+    permasalahans.flat_map do |masalah|
+      internal = masalah.penyebab_internal.strip
+      external = masalah.penyebab_external.strip
+      [internal, external]
+    end.join(".\n")
+  end
+
+  def penyebab_permasalahan_html
+    permasalahans.flat_map do |masalah|
+      internal = masalah.penyebab_internal.strip
+      external = masalah.penyebab_external.strip
+      ["- #{internal}", "- #{external}"]
+    end.join("<br>").html_safe
+  end
+
   def permasalahan_sasaran
     permasalahans.map(&:permasalahan).join('.')
   end

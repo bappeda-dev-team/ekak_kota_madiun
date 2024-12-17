@@ -15,6 +15,10 @@
       <%= sasaran_fields.text_area :sasaran_kinerja, {class: "form-control", readonly: true} %>
     </div>
     <div class="field">
+      <%= label_tag 'penyebab_permasalahan', 'Penyebab permasalahan', class: 'form-label'  %>
+      <%= text_area_tag 'penyebab_permasalahan', @sasaran.penyebab_permasalahan, class: 'form-control', disabled: true %>
+    </div>
+    <div class="field">
       <%= sasaran_fields.label :permasalahan, { class: "form-label" } %>
       <%= sasaran_fields.text_area :permasalahan_sasaran, {class: "form-control", readonly: true, disabled: true} %>
     </div>
