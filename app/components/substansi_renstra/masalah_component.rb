@@ -31,12 +31,12 @@ class SubstansiRenstra::MasalahComponent < ViewComponent::Base
     end
   end
 
-  def have_masalah?
+  def punya_masalah?
     @strategi.akar_masalah.present?
   end
 
   def masalah
-    if have_masalah?
+    if punya_masalah?
       @strategi.akar_masalah.to_s
     else
       @strategi.to_s
@@ -70,7 +70,7 @@ class SubstansiRenstra::MasalahComponent < ViewComponent::Base
   end
 
   def btn_style
-    if have_masalah?
+    if punya_masalah?
       { title: "Edit #{jenis_masalah}",
         btn_style: 'btn btn-info',
         path: edit_akar_masalah_path(@strategi.akar_masalah, rowspan: rowspan) }
@@ -126,7 +126,7 @@ class SubstansiRenstra::MasalahComponent < ViewComponent::Base
   end
 
   def terpilih?
-    return false unless have_masalah?
+    return false unless punya_masalah?
 
     @strategi.akar_masalah.terpilih
   end
@@ -138,7 +138,7 @@ class SubstansiRenstra::MasalahComponent < ViewComponent::Base
   end
 
   def pilih_button
-    return unless have_masalah? && !terpilih? && !strategi_segaris_terpilih?
+    return unless punya_masalah? && !terpilih? && !strategi_segaris_terpilih?
 
     path = pilih_masalah_akar_masalah_path(@strategi.akar_masalah)
 
