@@ -81,6 +81,50 @@ class SubstansiRenstra::MasalahComponent < ViewComponent::Base
     end
   end
 
+  def atas_terpilih?
+    if role == 'eselon_2'
+      false
+    elsif role == 'eselon_4'
+      str = @strategi.strategi_atasan.strategi_atasan.masalah_terpilih
+      tact = @strategi.strategi_atasan.masalah_terpilih
+      str || tact
+    else
+      @strategi.strategi_atasan.masalah_terpilih
+    end
+  end
+
+  def bawah_terpilih?
+    if role == 'eselon_4'
+      false
+    elsif role == 'eselon_2'
+      strategi_bawahans.any? do |str|
+        tact = str.masalah_terpilih
+        opr = str.strategi_bawahans.any?(&:masalah_terpilih)
+        tact || opr
+      end
+    else
+      strategi_bawahans.any?(&:masalah_terpilih)
+    end
+
+    ## untuk cek dari atas semua
+    ## if role == eselon_4
+    ## false
+    ## elsif role == 'eselon_3'
+    ## str.strategi_atasan.strategi_bawahans.any? do |str|
+    ## str.strategi_bawahans.any?(&:masalah_terpilih)
+    ## end
+    ## else
+    ## str.strategi_bawahans.any? do |str|
+    ## str.strategi_bawahans.any?(&:masalah_terpilih)
+    ## end
+    ## end
+  end
+
+  def strategi_segaris_terpilih?
+    self_terpilih = @strategi.masalah_terpilih
+    self_terpilih || bawah_terpilih? || atas_terpilih?
+  end
+
   def terpilih?
     return false unless have_masalah?
 
@@ -94,7 +138,7 @@ class SubstansiRenstra::MasalahComponent < ViewComponent::Base
   end
 
   def pilih_button
-    return unless have_masalah? && !terpilih?
+    return unless have_masalah? && !terpilih? && !strategi_segaris_terpilih?
 
     path = pilih_masalah_akar_masalah_path(@strategi.akar_masalah)
 

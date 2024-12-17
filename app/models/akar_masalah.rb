@@ -22,4 +22,8 @@ class AkarMasalah < ApplicationRecord
   def to_s
     masalah
   end
+
+  def terpilih?
+    terpilih || false
+  end
 end

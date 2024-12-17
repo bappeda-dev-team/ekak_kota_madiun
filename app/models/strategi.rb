@@ -292,4 +292,10 @@ class Strategi < ApplicationRecord
   def masalah
     akar_masalah.to_s
   end
+
+  def masalah_terpilih
+    akar_masalah.terpilih?
+  rescue NoMethodError
+    false
+  end
 end
