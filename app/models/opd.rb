@@ -88,6 +88,10 @@ class Opd < ApplicationRecord
                          where(jenis: 'RB', sub_jenis: 'Output').order(id: :desc)
                        }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', class_name: 'Indikator'
 
+  has_many :masalah_terpilih, lambda {
+                                where(terpilih: true)
+                              }, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', class_name: 'AkarMasalah'
+
   accepts_nested_attributes_for :indikator_sasarans, reject_if: :all_blank, allow_destroy: true
 
   default_scope { where(is_kota: false) }

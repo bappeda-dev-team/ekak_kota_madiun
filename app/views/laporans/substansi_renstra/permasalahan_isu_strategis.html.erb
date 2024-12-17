@@ -6,6 +6,32 @@
 <% end %>
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout', title: "Laporan Permasalahan dan Isu Strategis" do %>
+    <% if @masalah_terpilih.any? %>
+      <table class="table table-flush mb-4">
+        <thead>
+          <tr>
+            <th class="border-start border-end border-top border-bottom text-gray-700">No</th>
+            <th class="border-start border-end border-top border-bottom text-gray-700">Permasalahan</th>
+            <th class="border-start border-end border-top border-bottom text-gray-700 text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @masalah_terpilih.each.with_index(1) do |masalah, no| %>
+            <tr>
+              <td class="border-start border-end border-top border-bottom align-middle"><%= no %></td>
+              <td class="border-start border-end border-top border-bottom align-middle text-wrap">
+                <p><%= masalah %></p>
+              </td>
+              <td class="border-start border-end border-top border-bottom align-middle text-center">
+                <% unless guest? %>
+                  -
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
     <div class="table-responsive mb-5 d-grid gap-2">
       <table class="table table-flush">
         <thead>

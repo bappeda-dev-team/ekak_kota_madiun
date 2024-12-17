@@ -53,6 +53,7 @@ class Laporans::SubstansiRenstraController < ApplicationController
     @isu_strategis = @opd.isu_strategis_opds
                          .where("tahun ILIKE ?", "%#{tahun_asli}%")
                          .order(:id).group_by { |isu| "(#{isu.kode_bidang_urusan}) #{isu.bidang_urusan}" }
+    @masalah_terpilih = @opd.masalah_terpilih
   end
 
   def akar_masalah

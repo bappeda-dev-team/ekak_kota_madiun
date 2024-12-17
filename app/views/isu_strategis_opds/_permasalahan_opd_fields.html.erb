@@ -6,7 +6,17 @@
 
   <div class="field mt-0">
     <%= form.label :permasalahan, { class: "form-label" } %>
-    <%= form.text_area :permasalahan, { class: "form-control" } %>
+    <% if @masalah_terpilih.none? %>
+      <%= form.text_area :permasalahan, { class: "form-control" } %>
+    <% else %>
+      <%= form.select(:tahun, options_for_select(@masalah_terpilih.pluck(:masalah), form.object.permasalahan),
+                      {include_blank: true},
+                      { data: {placeholder: "Pilih Permasalahan",
+                               controller: 'dropdown',
+                               dropdown_parent_value: '#form-modal'},
+                        required: true,
+      }) %>
+    <% end %>
   </div>
 
   <% if form.object.data_dukungs.empty? %>

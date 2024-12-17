@@ -12,33 +12,20 @@ class PermasalahanOpdsController < ApplicationController
 
   # GET /permasalahan_opds/new
   def new
+    set_tahun
     isu_strategis_opd = IsuStrategisOpd.find(params[:isu_strategis_opd])
-    kode_opd = params[:kode_opd]
-    @tahun = cookies[:tahun].present? ? cookies[:tahun] : Date.today.year.to_s
-    # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
-    # periode = Periode.find_tahun(tahun_bener)
-    # tahun_awal = periode.tahun_awal.to_i
-    # tahun_akhir = periode.tahun_akhir.to_i
-    # HARD CODED FROM REQ
-    tahun_awal = 2019
-    tahun_akhir = 2023
-    @range_tahun = tahun_akhir.downto(tahun_awal).to_a
+    opd = isu_strategis_opd.opd
     @permasalahan_opd = PermasalahanOpd.new(isu_strategis_opd: isu_strategis_opd,
                                             tahun: @tahun,
-                                            kode_opd: kode_opd)
+                                            kode_opd: isu_strategis_opd.kode_opd)
+    @masalah_terpilih = opd.masalah_terpilih
   end
 
   # GET /permasalahan_opds/1/edit
   def edit
-    @tahun = cookies[:tahun].present? ? cookies[:tahun] : Date.today.year.to_s
-    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
-    # periode = Periode.find_tahun(tahun_bener)
-    # tahun_awal = periode.tahun_awal.to_i
-    # tahun_akhir = periode.tahun_akhir.to_i
-    # HARD CODED FROM REQ
-    tahun_awal = 2019
-    tahun_akhir = 2023
-    @range_tahun = tahun_akhir.downto(tahun_awal).to_a
+    set_tahun
+    opd = @permasalahan_opd.opd
+    @masalah_terpilih = opd.masalah_terpilih
   end
 
   # POST /permasalahan_opds or /permasalahan_opds.json
@@ -76,6 +63,18 @@ class PermasalahanOpdsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_permasalahan_opd
     @permasalahan_opd = PermasalahanOpd.find(params[:id])
+  end
+
+  def set_tahun
+    @tahun = cookies[:tahun].present? ? cookies[:tahun] : Date.today.year.to_s
+    # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    # periode = Periode.find_tahun(tahun_bener)
+    # tahun_awal = periode.tahun_awal.to_i
+    # tahun_akhir = periode.tahun_akhir.to_i
+    # HARD CODED FROM REQ
+    tahun_awal = 2019
+    tahun_akhir = 2023
+    @range_tahun = tahun_akhir.downto(tahun_awal).to_a
   end
 
   # Only allow a list of trusted parameters through.

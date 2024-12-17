@@ -5,7 +5,7 @@
   </div>
   <div class="field">
     <%= form.label :nama_data, { class: "form-label" } %>
-    <%= form.text_area :nama_data, { class: "form-control" } %>
+    <%= form.text_area :nama_data, { class: "form-control", required: true } %>
   </div>
   <div class="field row mt-0" id="jumlah">
     <% @range_tahun.each do |tahun| %>

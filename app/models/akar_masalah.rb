@@ -18,6 +18,7 @@
 #
 class AkarMasalah < ApplicationRecord
   belongs_to :strategi
+  belongs_to :opd, foreign_key: 'kode_opd', primary_key: 'kode_unik_opd', optional: true
 
   def to_s
     masalah

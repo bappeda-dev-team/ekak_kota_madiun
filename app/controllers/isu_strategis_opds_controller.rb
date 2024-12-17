@@ -15,7 +15,7 @@ class IsuStrategisOpdsController < ApplicationController
   def new
     @tahun = cookies[:tahun].present? ? cookies[:tahun] : Date.today.year.to_s
 
-    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
     # @periode = Periode.find_tahun(tahun_bener)
     # @tahun_awal = @periode.tahun_awal.to_i
     # @tahun_akhir = @periode.tahun_akhir.to_i
@@ -30,6 +30,9 @@ class IsuStrategisOpdsController < ApplicationController
                                              kode_bidang_urusan: kode_bidang_urusan,
                                              kode_opd: opd, tahun: @tahun)
     @isu_strategis_opd.permasalahan_opds.build(tahun: @tahun, kode_opd: opd)
+
+    @opd = Opd.find_by(kode_unik_opd: opd)
+    @masalah_terpilih = @opd.masalah_terpilih
   end
 
   # GET /isu_strategis_opds/1/edit

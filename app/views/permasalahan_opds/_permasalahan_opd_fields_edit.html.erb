@@ -5,7 +5,17 @@
 
   <div class="field mt-0">
     <%= form.label :permasalahan, { class: "form-label" } %>
-    <%= form.text_area :permasalahan, { class: "form-control" } %>
+    <% if @masalah_terpilih.none? || form.object.permasalahan.present? %>
+      <%= form.text_area :permasalahan, { class: "form-control" } %>
+    <% else %>
+      <%= form.select(:tahun, options_for_select(@masalah_terpilih.pluck(:masalah), form.object.permasalahan),
+                      {include_blank: true},
+                      { data: {placeholder: "Pilih Permasalahan",
+                               controller: 'dropdown',
+                               dropdown_parent_value: '#form-modal'},
+                        required: true,
+      }) %>
+    <% end %>
   </div>
 
   <%= link_to_add_nested(form, :data_dukungs, "#data-dukung",
