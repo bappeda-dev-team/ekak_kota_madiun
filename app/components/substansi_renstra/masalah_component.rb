@@ -82,6 +82,8 @@ class SubstansiRenstra::MasalahComponent < ViewComponent::Base
   end
 
   def terpilih?
+    return false unless have_masalah?
+
     @strategi.akar_masalah.terpilih
   end
 
