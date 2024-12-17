@@ -18,14 +18,14 @@ class PermasalahanOpdsController < ApplicationController
     @permasalahan_opd = PermasalahanOpd.new(isu_strategis_opd: isu_strategis_opd,
                                             tahun: @tahun,
                                             kode_opd: isu_strategis_opd.kode_opd)
-    @masalah_terpilih = opd.masalah_terpilih
+    @masalah_terpilih = opd.masalah_terpilih.where(tahun: @tahun)
   end
 
   # GET /permasalahan_opds/1/edit
   def edit
     set_tahun
     opd = @permasalahan_opd.opd
-    @masalah_terpilih = opd.masalah_terpilih
+    @masalah_terpilih = opd.masalah_terpilih.where(tahun: @tahun)
   end
 
   # POST /permasalahan_opds or /permasalahan_opds.json

@@ -8,7 +8,7 @@
     <% if @masalah_terpilih.none? || form.object.permasalahan.present? %>
       <%= form.text_area :permasalahan, { class: "form-control" } %>
     <% else %>
-      <%= form.select(:tahun, options_for_select(@masalah_terpilih.pluck(:masalah), form.object.permasalahan),
+      <%= form.select(:permasalahan, options_for_select(@masalah_terpilih.pluck(:masalah), form.object.permasalahan),
                       {include_blank: true},
                       { data: {placeholder: "Pilih Permasalahan",
                                controller: 'dropdown',

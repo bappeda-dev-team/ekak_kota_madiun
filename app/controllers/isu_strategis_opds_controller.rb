@@ -13,16 +13,7 @@ class IsuStrategisOpdsController < ApplicationController
 
   # GET /isu_strategis_opds/new
   def new
-    @tahun = cookies[:tahun].present? ? cookies[:tahun] : Date.today.year.to_s
-
-    # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
-    # @periode = Periode.find_tahun(tahun_bener)
-    # @tahun_awal = @periode.tahun_awal.to_i
-    # @tahun_akhir = @periode.tahun_akhir.to_i
-    tahun_awal = 2019
-    tahun_akhir = 2023
-    @range_tahun = tahun_akhir.downto(tahun_awal).to_a
-
+    set_tahun
     kode_bidang_urusan = params[:kode_bidang_urusan]
     bidang_urusan = params[:bidang_urusan]
     opd = params[:opd]
@@ -32,20 +23,11 @@ class IsuStrategisOpdsController < ApplicationController
     @isu_strategis_opd.permasalahan_opds.build(tahun: @tahun, kode_opd: opd)
 
     @opd = Opd.find_by(kode_unik_opd: opd)
-    @masalah_terpilih = @opd.masalah_terpilih
+    @masalah_terpilih = @opd.masalah_terpilih.where(tahun: @tahun)
   end
 
   # GET /isu_strategis_opds/1/edit
-  def edit
-    @tahun = cookies[:tahun].present? ? cookies[:tahun] : Date.today.year.to_s
-    @kode_opd = cookies[:opd]
-
-    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
-    @periode = Periode.find_tahun(tahun_bener)
-    @tahun_awal = @periode.tahun_awal.to_i
-    @tahun_akhir = @periode.tahun_akhir.to_i
-    @range_tahun = @tahun_akhir.downto(@tahun_awal).to_a
-  end
+  def edit; end
 
   # GET /clone_isu_strategis_opds/1/edit
   def clone
@@ -98,6 +80,17 @@ class IsuStrategisOpdsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_isu_strategis_opd
     @isu_strategis_opd = IsuStrategisOpd.find(params[:id])
+  end
+
+  def set_tahun
+    @tahun = cookies[:tahun].present? ? cookies[:tahun] : Date.today.year.to_s
+    # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    # @periode = Periode.find_tahun(tahun_bener)
+    # @tahun_awal = @periode.tahun_awal.to_i
+    # @tahun_akhir = @periode.tahun_akhir.to_i
+    tahun_awal = 2019
+    tahun_akhir = 2023
+    @range_tahun = tahun_akhir.downto(tahun_awal).to_a
   end
 
   # Only allow a list of trusted parameters through.
