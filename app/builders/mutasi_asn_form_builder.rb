@@ -22,7 +22,7 @@ class MutasiAsnFormBuilder < ActionView::Helpers::FormBuilder
                  data: {
                    controller: 'dropdown',
                    placeholder: 'Pilih Bulan',
-                   dropdown_parent_value: '#form-body'
+                   dropdown_parent_value: '#form-modal'
                  }
                ))
     end
@@ -49,7 +49,7 @@ class MutasiAsnFormBuilder < ActionView::Helpers::FormBuilder
                  data: {
                    controller: 'dropdown',
                    placeholder: 'Pilih Jabatan',
-                   dropdown_parent_value: '#form-body'
+                   dropdown_parent_value: '#form-modal'
                  }
                ))
     end
@@ -66,7 +66,7 @@ class MutasiAsnFormBuilder < ActionView::Helpers::FormBuilder
                  data: {
                    controller: 'dropdown',
                    placeholder: 'Status Jabatan',
-                   dropdown_parent_value: '#form-body'
+                   dropdown_parent_value: '#form-modal'
                  }
                ))
     end
@@ -88,7 +88,7 @@ class MutasiAsnFormBuilder < ActionView::Helpers::FormBuilder
       data: {
         controller: 'dropdown',
         placeholder: 'Pilih OPD',
-        dropdown_parent_value: '#form-body'
+        dropdown_parent_value: '#form-modal'
       }
     }
   end
