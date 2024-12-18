@@ -1,3 +1,23 @@
+<style>
+ table {
+   border-collapse: collapse;
+   page-break-inside: auto;
+ }
+
+ tr {
+   page-break-inside: avoid;
+   page-break-after: auto;
+ }
+
+ td, th {
+   page-break-inside: avoid;
+ }
+
+ tr {
+   height: auto !important;
+   min-height: 1em !important;
+ }
+</style>
 <div class="kop">
   <div class="kop-judul">
     <h2>RENSTRA</h2>
@@ -11,7 +31,31 @@
 </div>
 <%= render partial: 'renstra/tujuan_opd', locals: { tujuan_opds: @tujuan_opds, periode: @periode } %>
 <%= render partial: 'renstra/sasaran_opd', locals: { sasaran_opds: @sasaran_opds, periode: @periode } %>
+<h5>Program/Kegiatan/Sub Kegiatan</h5>
 <div class="table-responsive">
-  <h5>Program/Kegiatan/Sub Kegiatan</h5>
   <%= render(TabelRenstraComponent.new(program_kegiatans: @program_kegiatans, periode: @periode)) %>
 </div>
+<script>
+ document.addEventListener("DOMContentLoaded", function () {
+   const table = document.querySelector("table");
+   const rows = table.querySelectorAll("tr");
+
+   rows.forEach((row) => {
+     const cells = row.querySelectorAll("td");
+     cells.forEach((cell) => {
+       if (cell.scrollHeight > 100) { // Adjust the height threshold as needed
+         splitCellContent(cell);
+       }
+     });
+   });
+
+   function splitCellContent(cell) {
+     const text = cell.innerText;
+     const maxLength = 50; // Adjust the character limit
+     if (text.length > maxLength) {
+       const parts = text.match(new RegExp(`.{1,${maxLength}}`, "g")); // Split into chunks
+       cell.innerHTML = parts.map((part) => `<div>${part}</div>`).join("");
+     }
+   }
+ });
+</script>

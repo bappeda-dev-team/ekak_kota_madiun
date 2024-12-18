@@ -125,6 +125,8 @@ class RenstraController < ApplicationController
                orientation: 'Landscape',
                page_size: 'Legal',
                layout: 'pdf.html.erb',
+               enable_local_file_access: true, # Allows local file access for JS
+               javascript_delay: 2000, # Wait for JS to execute (in ms)
                margin: { top: 10, bottom: 10, left: 10, right: 10 },
                template: 'renstra/renstra_cetak.html.erb'
       end
