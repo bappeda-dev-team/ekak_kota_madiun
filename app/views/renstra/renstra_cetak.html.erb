@@ -15,3 +15,29 @@
   <h5>Program/Kegiatan/Sub Kegiatan</h5>
   <%= render(TabelRenstraComponent.new(program_kegiatans: @program_kegiatans, periode: @periode)) %>
 </div>
+<script>
+ alert('hey')
+ console.log('hello')
+ document.addEventListener("DOMContentLoaded", function () {
+   const table = document.querySelector("table");
+   const rows = table.querySelectorAll("tr");
+
+   rows.forEach((row) => {
+     const cells = row.querySelectorAll("td");
+     cells.forEach((cell) => {
+       if (cell.scrollHeight > 100) { // Adjust the height threshold as needed
+         splitCellContent(cell);
+       }
+     });
+   });
+
+   function splitCellContent(cell) {
+     const text = cell.innerText;
+     const maxLength = 50; // Adjust the character limit
+     if (text.length > maxLength) {
+       const parts = text.match(new RegExp(`.{1,${maxLength}}`, "g")); // Split into chunks
+       cell.innerHTML = parts.map((part) => `<div>${part}</div>`).join("");
+     }
+   }
+ });
+</script>
