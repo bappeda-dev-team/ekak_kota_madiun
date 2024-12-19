@@ -5,7 +5,7 @@
         <h2 class="fs-5 fw-bold mb-0">Laporan Renstra <%= @nama_opd %>  <%= @tahun_awal %> - <%= @tahun_akhir %></h2>
       </div>
       <div class="col-auto">
-        <%= link_to renstra_cetak_renstra_index_path(format: :pdf, tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir, kode_unik_opd: @kode_opd), class:"m-3 btn btn-outline-danger" do %>
+        <%= link_to renstra_cetak_renstra_index_path(tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir, kode_unik_opd: @kode_opd), class:"m-3 btn btn-outline-danger", target: "_blank", rel: "noopener" do %>
           <span class="far fa-file-pdf me-2"></span>
           Cetak PDF Renstra
         <% end %>

@@ -103,6 +103,7 @@ class RenstraController < ApplicationController
     @tujuan_opds = @opd.tujuan_opds.where(tahun_awal: @periode, tahun_akhir: @periode)
   end
 
+  # rubocop: disable Metrics
   def renstra_cetak
     @title = "Renstra"
     @tahun_awal = params[:tahun_awal]
@@ -117,18 +118,11 @@ class RenstraController < ApplicationController
     @user = @opd.eselon_dua_opd
     @sasaran_opds = @user.sasaran_pohon_kinerja_periode(@periode)
     @tujuan_opds = @opd.tujuan_opds.where(tahun_awal: @periode, tahun_akhir: @periode)
+
+    # render template: 'renstra/renstra_cetak.html.erb', layout: 'print.html.erb'
     respond_to do |format|
-      format.html
-      format.pdf do
-        render pdf: "renstra_#{@nama_opd}_#{@tahun_awal}_#{@tahun_akhir}",
-               dispotition: 'attachment',
-               orientation: 'Landscape',
-               page_size: 'Legal',
-               layout: 'pdf.html.erb',
-               enable_local_file_access: true, # Allows local file access for JS
-               javascript_delay: 2000, # Wait for JS to execute (in ms)
-               margin: { top: 10, bottom: 10, left: 10, right: 10 },
-               template: 'renstra/renstra_cetak.html.erb'
+      format.html do
+        render template: 'renstra/renstra_cetak.html.erb', layout: 'print.html.erb'
       end
       format.xlsx do
         render filename: "renstra_#{@nama_opd}_#{@tahun_awal}_#{@tahun_akhir}"

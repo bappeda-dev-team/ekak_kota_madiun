@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cetak <%= @title %></title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= stylesheet_pack_tag "application", media: "all", 'data-turbolinks-track': "reload" %>
+    <%= javascript_pack_tag "application", 'data-turbolinks-track': "reload" %>
+    <style type="text/css">
+     table, th, td {
+       border: 1px solid black;
+       border-collapse: collapse;
+     }
+     caption {
+       caption-side: top;
+       padding: 10px;
+       font-weight: bolder;
+     }
+     .kop {
+       text-align: center;
+       border: 1px solid #000;
+       margin-bottom: 50px;
+       align-items: center;
+     }
+     .kop .kop-judul {
+       padding: 5px;
+       font-weight: bolder;
+       border-bottom: 1px solid #000;
+     }
+     .kop .kop-opd {
+       padding: 5px;
+       font-weight: bolder;
+       border-bottom: 1px solid #000;
+     }
+     .kop .kop-tahun {
+       padding: 5px;
+       font-weight: normal;
+     }
+     .border {
+       border: 1px solid ;
+     }
+     .title-one {
+       font-size: 18px ;
+       letter-spacing: 3px ;
+     }
+     .title-two {
+       font-size: 16px ;
+       letter-spacing: 1px ;
+       font-weight: bold ;
+     }
+     .alwaysbreak {
+       page-break-before: always;
+     }
+     .nobreak:before {
+       clear: both;
+     }
+     .nobreak {
+       page-break-inside: avoid;
+     }
+     .table tr {
+       page-break-inside: avoid;
+       page-break-after: avoid;
+     }
+     .table .thead-bidang-urusan th {
+       background-color: #d81c45;
+       border-color: #000000;
+     }
+     .table .thead-program th {
+       background-color: #225dc6;
+       border-color: #000000;
+     }
+     .table .thead-kegiatan th {
+       background-color: #2ca58d;
+       border-color: #000000;
+     }
+     .table .thead-subkegiatan th {
+       background-color: #10b981;
+       border-color: #000000;
+     }
+    </style>
+    <style type="text/css" media="print">
+     body {
+       font-size: 8px;
+       -webkit-print-color-adjust: exact;
+       print-color-adjust: exact;
+     }
+     .no-print { display: none; }
+
+     #cetak {
+       padding: 2rem;
+     }
+     .alwaysbreak { page-break-before: always; }
+     .nobreak:before { clear:both; }
+     .nobreak { page-break-inside: avoid; }
+     .break-after {
+       page-break-after: always;
+     }
+     table {
+       border-collapse: collapse;
+       page-break-inside: auto;
+     }
+     table, th, td {
+       border: 1px solid black;
+       border-collapse: collapse;
+     }
+     caption {
+       caption-side: top;
+       padding: 10px;
+       font-weight: bolder;
+     }
+     .kop {
+       text-align: center;
+       border: 1px solid #000;
+       margin-bottom: 50px;
+       align-items: center;
+     }
+     .kop .kop-judul {
+       padding: 5px;
+       font-weight: bolder;
+       border-bottom: 1px solid #000;
+     }
+     .kop .kop-opd {
+       padding: 5px;
+       font-weight: bolder;
+       border-bottom: 1px solid #000;
+     }
+     .kop .kop-tahun {
+       padding: 5px;
+       font-weight: normal;
+     }
+     .border {
+       border: 1px solid ;
+     }
+     .title-one {
+       font-size: 18px ;
+       letter-spacing: 3px ;
+     }
+     .title-two {
+       font-size: 16px ;
+       letter-spacing: 1px ;
+       font-weight: bold ;
+     }
+     .alwaysbreak {
+       page-break-before: always;
+     }
+     .nobreak:before {
+       clear: both;
+     }
+     .nobreak {
+       page-break-inside: avoid;
+     }
+     td, th {
+       page-break-inside: avoid;
+     }
+
+     tr {
+       height: auto !important;
+       min-height: 1em !important;
+     }
+
+     .table tr {
+       page-break-inside: avoid;
+       page-break-after: auto;
+     }
+     .thead-bidang-urusan {
+       print-color-adjust: exact
+       background-color: red;
+       border-color: #000000;
+     }
+     .thead-program {
+       print-color-adjust: exact
+       background-color: #225dc6;
+       border-color: #000000;
+     }
+     .thead-kegiatan {
+       print-color-adjust: exact
+       background-color: #2ca58d;
+       border-color: #000000;
+     }
+     .thead-subkegiatan {
+       print-color-adjust: exact
+       background-color: #10b981;
+       border-color: #000000;
+     }
+    </style>
+  </head>
+  <body class="bg-white">
+    <%= yield %>
+  </body>
+</html>
