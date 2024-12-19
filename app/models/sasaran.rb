@@ -385,16 +385,16 @@ class Sasaran < ApplicationRecord
 
   def penyebab_permasalahan
     permasalahans.flat_map do |masalah|
-      internal = masalah.penyebab_internal.strip
-      external = masalah.penyebab_external.strip
+      internal = masalah.penyebab_internal&.strip
+      external = masalah.penyebab_external&.strip
       [internal, external]
     end.join(".\n")
   end
 
   def penyebab_permasalahan_html
     permasalahans.flat_map do |masalah|
-      internal = masalah.penyebab_internal.strip
-      external = masalah.penyebab_external.strip
+      internal = masalah.penyebab_internal&.strip
+      external = masalah.penyebab_external&.strip
       ["- #{internal}", "- #{external}"]
     end.join("<br>").html_safe
   end
