@@ -69,6 +69,10 @@ module Laporans::SubstansiRenstraHelper
       {
         title: 'Evaluasi Renstra', href: laporans_substansi_renstra_evaluasi_renstra_path(periode: '2019-2024'),
         identifier: 'substansi-renstra-bab-2-evaluasi-renstra'
+      },
+      {
+        title: 'Capaian IKU', href: laporans_substansi_renstra_capaian_iku_path(periode: '2019-2024'),
+        identifier: 'substansi-renstra-bab-2-evaluasi-renstra'
       }
     ]
   end

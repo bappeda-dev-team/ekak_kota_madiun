@@ -38,6 +38,10 @@ class IndikatorSasaran < ApplicationRecord
     "#{target} #{satuan}"
   end
 
+  def target_satuan
+    "#{target} #{satuan}"
+  end
+
   def indikator
     indikator_kinerja
   end

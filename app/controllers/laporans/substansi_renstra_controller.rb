@@ -41,6 +41,26 @@ class Laporans::SubstansiRenstraController < ApplicationController
     end
   end
 
+  def capaian_iku
+    periode = params[:periode].split('-')
+    @tahun_awal = periode[0].to_i
+    @tahun_akhir = periode[-1].to_i
+    @periode = (@tahun_awal..@tahun_akhir)
+    @colspan = (@periode.size * 5) + 3
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+
+    @tahun_bener = @tahun&.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+
+    pokin_opd = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
+    opd = pokin_opd.opd
+    tujuan_opd = opd.tujuan_opds
+                    .by_periode(@tahun_bener)
+    sasaran_opd = pokin_opd.strategi_opd.map(&:sasarans).flatten.compact_blank
+    iku_opd = tujuan_opd + sasaran_opd
+    @iku_opd = iku_opd.map(&:indikators).compact_blank.flatten
+  end
+
   def permasalahan_isu_strategis
     @kode_unik_opd = cookies[:opd]
     @tahun = cookies[:tahun]

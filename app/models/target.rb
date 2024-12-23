@@ -21,6 +21,9 @@ class Target < ApplicationRecord
   belongs_to :indikator
   belongs_to :opd, optional: true
 
+  scope :by_periode, lambda { |tahun_awal, tahun_akhir|
+                       where("tahun::integer BETWEEN ?::integer AND ?::integer", tahun_awal, tahun_akhir)
+                     }
   def to_s
     target
   end
