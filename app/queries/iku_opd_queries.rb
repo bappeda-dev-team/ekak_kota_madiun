@@ -23,13 +23,17 @@ class IkuOpdQueries
 
   def sasaran_opd
     pohon_opd.where(role: "eselon_2")
-              .select { |pp| pp.deleted_at.nil? }
-              .flat_map(&:sasarans)
-              .compact_blank
+             .select { |pp| pp.deleted_at.nil? }
+             .flat_map(&:sasarans)
+             .compact_blank
   end
-  
-  def iku_opd
+
+  def indikators_opd
     indikators = tujuan_opd + sasaran_opd
     indikators.flat_map(&:indikators).compact_blank
+  end
+
+  def iku_opd
+    indikators_opd
   end
 end
