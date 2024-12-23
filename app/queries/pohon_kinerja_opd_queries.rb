@@ -35,6 +35,7 @@ class PohonKinerjaOpdQueries
   memoize :pohon_crosscutting
 
   # dynamic method
+  # PLEASE, STOP DOING THIS MAGIC.
   # Define dynamic methods for each role
   %w[strategi tactical operational staff].each do |role|
     # kota

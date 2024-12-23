@@ -10,11 +10,29 @@
       <table class="table align-items-center">
         <thead class="thead-tujuan">
           <tr class="header-tujuan">
-            <th class="border" scope="col" width="20px">No.</th>
-            <th class="border" scope="col">Indikator Kinerja sesuai Tugas dan Fungsi Perangkat Daerah</th>
-            <th class="border" scope="col" width="50px">Target NSPK</th>
-            <th class="border" scope="col" width="50px">Target IKK/IKD</th>
-            <th class="border" scope="col" width="50px">Target Indikator Lainnya</th>
+            <th class="border" scope="col" rowspan="2" width="20px">No.</th>
+            <th class="border" scope="col" rowspan="2">Indikator Kinerja sesuai Tugas dan Fungsi Perangkat Daerah</th>
+            <th class="border text-wrap text-center" scope="col" rowspan="2" width="20px">Target NSPK</th>
+            <th class="border text-wrap text-center" scope="col" rowspan="2" width="20px">Target IKK/IKD</th>
+            <th class="border text-wrap text-center" scope="col" rowspan="2" width="20px">Target Indikator Lainnya</th>
+            <th class="border text-wrap text-center" scope="col" rowspan="2" width="20px">Target Indikator Lainnya</th>
+            <th class="border text-center" scope="col" colspan="<%= @colspan %>">Target Renstra Perangkat Daerah Tahun ke-</th>
+            <th class="border text-wrap text-center" scope="col" rowspan="2" width="20px">Satuan</th>
+            <th class="border text-center" scope="col" colspan="<%= @colspan %>">Realisasi Capaian Tahun ke-</th>
+            <th class="border text-wrap text-center" scope="col" rowspan="2" width="20px">Satuan</th>
+            <th class="border text-center" scope="col" colspan="<%= @colspan %>">Rasio Capaian pada Tahun ke-</th>
+            <th class="border text-wrap text-center" scope="col" rowspan="2" width="20px">Satuan</th>
+          </tr>
+          <tr>
+            <% @periode.each do |tahun| %>
+              <th class="border target text-center" scope="col"><%= tahun %></th>
+            <% end %>
+            <% @periode.each do |tahun| %>
+              <th class="border realisasi text-center" scope="col"><%= tahun %></th>
+            <% end %>
+            <% @periode.each do |tahun| %>
+              <th class="border realisasi text-center" scope="col"><%= tahun %></th>
+            <% end %>
           </tr>
         </thead>
         <tbody>
@@ -22,15 +40,9 @@
             <tr>
               <td class="text-gray-900 text-wrap border" width='20px' scope="row"><%= no_iku %></td>
               <td class="text-gray-900 text-wrap border"><%= indikator || '-' %></td>
-              <% if indikator.class.name == 'IndikatorSasaran' %>
-                <td class="text-gray-900 text-wrap border"><%= indikator.target_satuan %></td>
-                <td class="text-gray-900 text-wrap border">IKK IKD</td>
-                <td class="text-gray-900 text-wrap border">LAINNYA</td>
-              <% else %>
-                <% target = indikator.targets.find_by(tahun: @tahun_bener) %>
-                <td class="text-gray-900 text-wrap border"><%= target.target %></td>
-                <td class="text-gray-900 text-wrap border"><%= target.satuan %></td>
-              <% end %>
+              <td class="text-gray-900 text-wrap border"></td>
+              <td class="text-gray-900 text-wrap border"></td>
+              <td class="text-gray-900 text-wrap border"></td>
             </tr>
           <% end %>
         </tbody>
