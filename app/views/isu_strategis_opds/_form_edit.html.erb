@@ -20,13 +20,13 @@
 
   <div class="field">
     <%= form.hidden_field :kode_bidang_urusan, class: 'form-control', readonly: true %>
-    <%= form.hidden_field :bidang_urusan, class: 'form-control', readonly: true %>
     <%= form.hidden_field :kode_opd, class: 'form-control', readonly: true %>
+    <%= form.hidden_field :tahun, class: 'form-control', readonly: true %>
   </div>
 
   <div class="field">
-    <%= form.label :tahun, class: 'form-label' %>
-    <%= form.text_field :tahun, required: true, class: 'form-control', readonly: true %>
+    <%= form.label :bidang_urusan, class: 'form-label' %>
+    <%= form.text_field :bidang_urusan, required: true, class: 'form-control', readonly: true %>
   </div>
 
   <div class="field">
