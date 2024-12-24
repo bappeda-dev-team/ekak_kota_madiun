@@ -5,13 +5,24 @@ class DaftarResiko
     @tahun = tahun.to_s
   end
 
+  def pohon_pelaksana(nip: '')
+    user = User.find_by(nik: nip)
+    pohon_pelaksana = Pohon.where(pohonable_type: 'StrategiPohon',
+                                  tahun: tahun,
+                                  role: 'eselon_3',
+                                  user_id: user.id)
+                           .flat_map(&:pohonable)
+    pohon_pelaksana.select { |str| str.opd_id.to_i == opd.id }
+  end
+
   def daftar_resiko_eselon3(nip: '')
-    sasarans = Sasaran.where(nip_asn: nip, tahun: tahun)
-    strategis = sasarans.map(&:strategi).compact_blank
+    strategis = pohon_pelaksana(nip: nip)
     strategi_bawahans = strategis.flat_map do |strategi|
       strategi.strategi_bawahans.where(tahun: tahun)
     end
-    sasaran_bawahans = strategi_bawahans.uniq.flat_map { |str| sasarans_filter(tahun, str.sasarans.dengan_sub_kegiatan) }
+    sasaran_bawahans = strategi_bawahans.uniq.flat_map do |str|
+      sasarans_filter(tahun, str.sasarans.dengan_sub_kegiatan)
+    end
     sasaran_bawahans.compact_blank!.flatten.group_by(&:program_kegiatan)
   end
 
