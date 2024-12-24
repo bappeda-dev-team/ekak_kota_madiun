@@ -506,7 +506,7 @@ class Opd < ApplicationRecord
                        .map(&:user)
                        .select { |user| user.has_any_role?(role) }
                    end
-    user_opd + user_jabatan
+    user_opd | user_jabatan
   end
 
   def user_jabatan

@@ -67,7 +67,7 @@ class UsersController < ApplicationController
     @tahun = cookies[:tahun]
     user_opd = @opd.users.non_admin
     user_jabatan = JabatanUser.where(kode_opd: @kode_unik_opd).includes(:user).flat_map(&:user)
-    @users = user_opd + user_jabatan
+    @users = user_opd | user_jabatan
   end
 
   def aktifkan_user
