@@ -478,8 +478,11 @@ class Sasaran < ApplicationRecord
   def siap_ditarik?
     return false if tahun.nil?
 
+    role_eselon_4 = user.has_role?(:eselon_4)
+
     tahun_bener = tahun[/[^_]\d*/, 0].to_i
-    if tahun_bener > 2024
+
+    if tahun_bener > 2024 && role_eselon_4
       strategi? && tahapan? && manual_ik? && target_sesuai? && manrisk_diverifikasi?
     else
       strategi? && tahapan? && manual_ik? && target_sesuai?
