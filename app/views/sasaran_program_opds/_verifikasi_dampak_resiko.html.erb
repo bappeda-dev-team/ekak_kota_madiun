@@ -49,15 +49,15 @@
   <% end %>
   <%= form.fields_for :sasaran, @sasaran do |sasaran_fields| %>
     <div class="field">
-      <%= sasaran_fields.label :status_dampak_resiko, "Status dampak risiko", { class: "form-label" } %>
+      <%= sasaran_fields.label :status_dampak_resiko, "Verifikasi", { class: "form-label" } %>
       <%= sasaran_fields.select :status_dampak_resiko,['Setuju', 'Tolak'] , {include_blank: true},
        { class: 'form-control',
          required: true,
-         data: { placeholder: 'Pilih status dampak risiko',
+         data: { placeholder: 'Belum disetujui',
            controller: 'dropdown',
            dropdown_parent_value: '#form-modal'
        }} %>
-      <div class="form-text text-danger">*pilih setuju/tolak</div>
+      <small class="form-text text-danger">*pilih setuju/tolak</small>
     </div>
     <div class="field">
       <%= sasaran_fields.label :komentar_dampak_resiko, "Komentar dampak risiko", { class: "form-label" } %>
