@@ -51,7 +51,7 @@ class Laporans::SubstansiRenstraController < ApplicationController
     @kode_opd = cookies[:opd]
 
     iku_opd = IkuOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd, periode: @periode)
-    opd = iku_opd.opd
+    @opd = iku_opd.opd
     @iku_opd = iku_opd.iku_opd
   end
 
