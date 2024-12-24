@@ -298,4 +298,15 @@ class Strategi < ApplicationRecord
   rescue NoMethodError
     false
   end
+
+  def sasaran_rincian_not_deleted(tahun)
+    sasarans.dengan_rincian
+            .where(tahun: tahun)
+            .where.not(nip_asn: [nil, ""])
+            .select { |sas| sas.deleted_at.blank? }
+  end
+
+  def status_dampak_resiko(tahun)
+    sasaran_rincian_not_deleted(tahun).flat_map(&:dampak_resiko_verif?)
+  end
 end

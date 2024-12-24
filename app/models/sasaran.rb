@@ -476,13 +476,7 @@ class Sasaran < ApplicationRecord
   end
 
   def siap_ditarik?
-    return false if tahun.nil?
-
-    role_eselon_4 = user.has_role?(:eselon_4)
-
-    tahun_bener = tahun[/[^_]\d*/, 0].to_i
-
-    if tahun_bener > 2024 && role_eselon_4
+    if wajib_manrisk
       strategi? && tahapan? && manual_ik? && target_sesuai? && manrisk_diverifikasi?
     else
       strategi? && tahapan? && manual_ik? && target_sesuai?
@@ -713,17 +707,29 @@ class Sasaran < ApplicationRecord
     tahapans.any? { |t| t.rtp_mr? }
   end
 
+  def dampak_resiko_verif?
+    status_dampak_resiko.present?
+  end
+
+  def strategi_bawahan_eselon3
+    return if user.eselon_user != 'eselon_3'
+
+    strategi.strategi_bawahans.where(tahun: tahun)
+  end
+
+  def sasaran_bawahan_eselon3_diverifikasi
+    return if user.eselon_user != 'eselon_3'
+
+    strategi_bawahans = strategi_bawahan_eselon3.uniq
+
+    strategi_bawahans.flat_map { |str| str.status_dampak_resiko(tahun) }
+  end
+
+  # Check this, the logic is change
+  # from sasarans to pohons
   def manrisk_diverifikasi?
     if user.eselon_user == 'eselon_3'
-      strategi_bawahans = strategi.strategi_bawahans.where(tahun: tahun)
-      sasaran_diverifikasi = strategi_bawahans.uniq.flat_map do |str|
-        str.sasarans.dengan_rincian.where(tahun: tahun)
-           .where.not(nip_asn: [nil, ""])
-           .select { |sas| sas.deleted_at.blank? }.flat_map do |sas|
-          sas.status_dampak_resiko.present?
-        end
-      end
-      sasaran_diverifikasi.all?(true)
+      sasaran_bawahan_eselon3_diverifikasi.all?(true)
     else
       status_dampak_resiko.present?
     end
@@ -743,5 +749,14 @@ class Sasaran < ApplicationRecord
 
   def punya_inovasi?
     hasil_inovasi == 'Inovasi'
+  end
+
+  private
+
+  def wajib_manrisk
+    return false if tahun.nil?
+
+    tahun_bener = tahun[/[^_]\d*/, 0].to_i
+    user.has_role?(:eselon_4) && tahun_bener > 2024
   end
 end
