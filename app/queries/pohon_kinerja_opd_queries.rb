@@ -36,17 +36,21 @@ class PohonKinerjaOpdQueries
 
   # dynamic method
   # Define dynamic methods for each role
-  %w[strategi tactical operational staff].each do |role|
+  %w[strategi tactical operational].each do |role|
     # kota
-    define_method("#{role}_kota") do
+    define_method(:"#{role}_kota") do
       pohon_kota.rewhere(role: "#{role}_pohon_kota")
     end
 
     # opd
-    define_method("#{role}_opd") do
+    define_method(:"#{role}_opd") do
       pohon_opd.rewhere(role: "eselon_#{role_index(role)}")
                .select { |pp| pp.deleted_at.nil? }
     end
+  end
+
+  def staff_opd
+    pohon_opd.rewhere(role: 'staff')
   end
 
   # Alias method to pohon_crosscutting
