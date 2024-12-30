@@ -100,6 +100,11 @@ class Tahapan < ApplicationRecord
     tagging == "RTP-MR"
   end
 
+  def tahapan_rtp
+    tag_mr = rtp_mr? ? "- [#{tagging}]" : ''
+    "#{tahapan_kerja} #{tag_mr}"
+  end
+
   def grand_parent_anggaran
     anggarans.includes(%i[rekening pagu_anggaran]).order(:created_at).group_by do |angg|
       angg&.rekening&.grand_parent&.kode_rekening

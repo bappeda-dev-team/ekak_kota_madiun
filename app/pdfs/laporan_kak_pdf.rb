@@ -261,7 +261,7 @@ class LaporanKakPdf < Prawn::Document
                          %w[1 2 3 4 5 6 7 8 9 10 11 12]]
 
     sasaran.tahapans.where.not(tahapans: { id_rencana: nil }).each.with_index(1) do |tahapan, i|
-      data_rencana_aksi << [i, tahapan.tahapan_kerja,
+      data_rencana_aksi << [i, tahapan.tahapan_rtp,
                             tahapan.find_target_bulan(1),
                             tahapan.find_target_bulan(2),
                             tahapan.find_target_bulan(3),
