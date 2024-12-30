@@ -12,7 +12,6 @@
           <tr>
             <th class="border-start border-end border-top border-bottom text-gray-700">No</th>
             <th class="border-start border-end border-top border-bottom text-gray-700">Permasalahan</th>
-            <th class="border-start border-end border-top border-bottom text-gray-700 text-center">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -22,71 +21,51 @@
               <td class="border-start border-end border-top border-bottom align-middle text-wrap">
                 <p><%= masalah %></p>
               </td>
-              <td class="border-start border-end border-top border-bottom align-middle text-center">
-                <% unless guest? %>
-                  -
-                <% end %>
-              </td>
             </tr>
           <% end %>
         </tbody>
       </table>
     <% end %>
-    <div class="table-responsive mb-5 d-grid gap-2">
-      <table class="table table-flush">
-        <thead>
-          <tr class="border-start border-end border-top">
-            <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">No</th>
-            <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Bidang Urusan</th>
-            <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Isu Strategis</th>
-            <th class="border-bottom text-gray-700 align-middle text-center" rowspan="2">Permasalahan</th>
-            <th class="border text-gray-700 align-middle text-center" rowspan="2">Data Dukung</th>
-            <th class="border text-gray-700 align-middle text-center" rowspan="2">Narasi Data Dukung</th>
-            <% @range_tahun.each do |tahun| %>
-              <th class="border text-center" scope="col" colspan="2"><%= tahun %></th>
-            <% end %>
-          </tr>
-          <tr class="border-start border-end border-top">
-            <% @range_tahun.each do %>
-              <th class="border" scope="col" width="50px">Jumlah</th>
-              <th class="border" scope="col">Satuan</th>
-            <% end %>
-          </tr>
-        </thead>
-        <tbody>
-          <% @isu_strategis.each.with_index(1) do |(bidang_urusan, isu_strategises), no| %>
-            <% rowspan_bidang = isu_strategises.map { |isu| isu.permasalahan_opds.size + isu.permasalahan_opds.map{ |pm| pm.data_dukungs.size }.flatten.sum }.flatten.sum + isu_strategises.size + 1  %>
-            <tr>
-              <td class="border-start border-end border-bottom align-middle" rowspan="<%= rowspan_bidang %>"><%= no %></td>
-              <td class="text-wrap border-start border-end border-bottom align-middle" rowspan="<%= rowspan_bidang %>"><%= bidang_urusan %></td>
-            </tr>
-            <% isu_strategises.each do |isu_strategis| %>
-              <% rowspan_isu = isu_strategis.permasalahan_opds.size + isu_strategis.permasalahan_opds.map{ |pm| pm.data_dukungs.size }.flatten.sum + 1  %>
-              <tr>
-                <td class="text-wrap border-end border-bottom align-middle" rowspan="<%= rowspan_isu %>"><%= isu_strategis %></td>
-              </tr>
-              <% isu_strategis.permasalahan_opds.each do |permasalahan| %>
-                <% rowspan_data = permasalahan.data_dukungs.size + 1  %>
-                <tr>
-                  <td class="text-wrap border align-middle" rowspan="<%= rowspan_data %>"><%= permasalahan %></td>
-                  <td colspan="<%= @range_tahun.size * 2 + 2 %>" class="p-0 m-0 border-0"></td>
-                </tr>
-                <% permasalahan.data_dukungs.each do |data| %>
-                  <tr>
-                    <td class="text-wrap border align-middle"><%= data %></td>
-                    <td class="text-wrap border align-middle"><%= data.keterangan %></td>
-                    <% @range_tahun.each do |tahun| %>
-                      <% jumlah = data.jumlahs.find_by(tahun: tahun) %>
-                      <td class="text-wrap border align-middle"><%= jumlah&.jumlah %></td>
-                      <td class="text-wrap border align-middle"><%= jumlah&.satuan %></td>
-                    <% end %>
-                  </tr>
+    <table class="table table-flush mb-4">
+      <thead>
+        <tr>
+          <th class="border-start border-end border-top border-bottom text-gray-700">No</th>
+          <th class="border-start border-end border-top border-bottom text-gray-700">Bidang Urusan OPD</th>
+          <th class="border-start border-end border-top border-bottom text-gray-700 text-center">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @list_bidang_urusans.each.with_index(1) do |bidang_urusan, no| %>
+          <tr>
+            <td class="border-start border-end border-top border-bottom align-middle"><%= no %></td>
+            <td class="border-start border-end border-top border-bottom align-middle">
+              <p>(<%= bidang_urusan[0] %>) <%= bidang_urusan[1] %></p>
+            </td>
+            <td class="border-start border-end border-top border-bottom align-middle text-center">
+              <% unless guest? %>
+                <%= link_to new_isu_strategis_opd_path(bidang_urusan: bidang_urusan[1],
+                                                       kode_bidang_urusan: bidang_urusan[0],
+                                                       opd: @opd.kode_unik_opd),
+                            remote: true,
+                            data: {
+                              controller: 'form-modal',
+                              action: 'ajax:complete->form-modal#success:prevent',
+                              bs_toggle: 'modal',
+                              bs_target: '#form-modal'
+                            },
+                            class: 'btn btn-sm btn-outline-primary ms-3' do %>
+                  <i class="fas fa-plus"></i>
+                  <span>Tambah Isu Strategis</span>
                 <% end %>
               <% end %>
-            <% end %>
-          <% end %>
-        </tbody>
-      </table>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <div id="isu-strategis" class="table-responsive">
+      <%= render 'isu_dan_permasalahans/table_isu_strategis' %>
     </div>
   <% end %>
 <% end %>
