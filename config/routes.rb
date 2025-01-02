@@ -78,6 +78,7 @@ Rails.application.routes.draw do
       get :sdgs_output
       get :rb_outcome
       get :rb_output
+      get :new_target_iku_sasaran
     end
 
     member do

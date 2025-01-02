@@ -285,9 +285,8 @@ class IndikatorsController < ApplicationController
     end
   end
 
+  # rubocop: disable Metrics
   def edit_target_iku
-    @tahun = cookies[:tahun]
-    @kode_opd = cookies[:opd]
     periode = params[:periode].split('-')
     @tahun_awal = periode[0].to_i
     @tahun_akhir = periode[-1].to_i

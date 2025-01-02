@@ -16,7 +16,7 @@ class IkuOpdQueries
   end
 
   def tujuan_opd
-    opd.tujuan_opds.by_periode(@tahun)
+    opd.tujuan_opds.by_periode(@periode.last)
   end
 
   def sasaran_opd
