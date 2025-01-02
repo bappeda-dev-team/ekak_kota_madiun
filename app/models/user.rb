@@ -158,21 +158,19 @@ class User < ApplicationRecord
     add_role(:asn) if roles.blank?
   end
 
-  def nama_opd
-    opd.nama_opd
+  delegate :nama_opd, to: :opd
+
+  def after_pindah(tahun)
+    nulify_sasaran(tahun)
+    nulify_strategi(tahun)
   end
 
-  def after_pindah
-    nulify_sasaran
-    nulify_strategi
+  def nulify_sasaran(tahun)
+    Sasaran.where(nip_asn: nik, tahun: tahun).update_all(nip_asn_sebelumnya: nik, nip_asn: nil)
   end
 
-  def nulify_sasaran
-    Sasaran.where(nip_asn: nik).update_all(nip_asn_sebelumnya: nik, nip_asn: nil)
-  end
-
-  def nulify_strategi
-    Strategi.where(nip_asn: nik).update_all(nip_asn_sebelumnya: nik, nip_asn: nil)
+  def nulify_strategi(tahun)
+    Strategi.where(nip_asn: nik, tahun: tahun).update_all(nip_asn_sebelumnya: nik, nip_asn: nil)
   end
 
   def update_sasaran
@@ -227,7 +225,7 @@ class User < ApplicationRecord
 
   def program_sasarans_tahun(tahun)
     sasarans_tahun(tahun)
-      .to_h { |str| [str, str.strategi.subkegiatans_sasarans] }
+      .index_with { |str| str.strategi.subkegiatans_sasarans }
   end
 
   def sasarans_all_tahun(tahun)

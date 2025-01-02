@@ -246,8 +246,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @nip = params[:nip]
     @user.nip_sebelum = @user.nik
-    @user.nulify_sasaran(@user.nik)
-    @user.nulify_strategi(@user.nik)
+    # @user.nulify_sasaran(@user.nik)
+    # @user.nulify_strategi(@user.nik)
     @user.nik = @nip
     @user.save
     @user.update_sasaran
@@ -380,7 +380,7 @@ class UsersController < ApplicationController
                                     tahun: @tahun_asli, bulan: @bulan)
     if @jabatan_user.save
       @user.update(opd: @opd) if params[:pindah_opd]
-      @user.after_pindah if params[:hapus_sasaran]
+      @user.after_pindah(@tahun_asli) if params[:hapus_sasaran]
       render json: { resText: "Jabatan diperbarui",
                      html_content: html_content({ user: @user },
                                                 partial: 'users/user') }.to_json,
