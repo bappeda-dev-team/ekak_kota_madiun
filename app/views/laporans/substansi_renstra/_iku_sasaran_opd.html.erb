@@ -1,0 +1,23 @@
+<tr>
+  <td class="text-gray-900 text-wrap border" width='20px' scope="row"></td>
+  <td class="text-gray-900 text-wrap border"><%= indikator %></td>
+  <td class="text-gray-900 text-wrap border"></td>
+  <td class="text-gray-900 text-wrap border"></td>
+  <!-- TARGET INDIKATOR LAINNYA -->
+  <td class="text-gray-900 text-wrap border"></td>
+  <!-- TARGET RENSTRA -->
+  <% periode.each do |tahun| %>
+    <td class="text-gray-900 text-wrap border"><%= target_iku(targets, tahun) %></td>
+  <% end %>
+  <td class="text-gray-900 text-wrap border"><%= satuan_iku(targets) %></td>
+  <!-- REALISASI RENSTRA -->
+  <% periode.each do |tahun| %>
+    <td class="text-gray-900 text-wrap border"></td>
+  <% end %>
+  <td class="text-gray-900 text-wrap border"></td>
+  <!-- RASIO RENSTRA -->
+  <% periode.each do |tahun| %>
+    <td class="text-gray-900 text-wrap border"></td>
+  <% end %>
+  <td class="text-gray-900 text-wrap border"></td>
+</tr>

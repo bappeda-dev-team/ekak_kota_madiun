@@ -10,4 +10,12 @@ module IkuHelper
   def satuan_iku(ind_targets)
     ind_targets.flat_map(&:satuan).uniq.last
   end
+
+  def target_iku_tujuan(indikator_tujuan, tahun)
+    indikator_tujuan.targets.find_by(tahun: tahun)&.target
+  end
+
+  def satuan_iku_tujuan(indikator_tujuan)
+    indikator_tujuan.targets.flat_map(&:satuan).uniq.last
+  end
 end

@@ -7,7 +7,7 @@
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout', title: "Capaian IKU - Periode #{@tahun_awal}-#{@tahun_akhir}" do %>
     <div class="table-responsive">
-      <table class="table align-items-center">
+      <table class="table align-items-center counter">
         <thead class="thead-tujuan">
           <tr class="header-tujuan">
             <th class="border" scope="col" rowspan="2" width="20px">No.</th>
@@ -35,30 +35,11 @@
           </tr>
         </thead>
         <tbody>
-          <% @komponen.each.with_index(1) do |(indikator, targets), no_iku| %>
-            <tr>
-              <td class="text-gray-900 text-wrap border" width='20px' scope="row"><%= no_iku %></td>
-              <td class="text-gray-900 text-wrap border"><%= indikator || '-' %></td>
-              <td class="text-gray-900 text-wrap border"></td>
-              <td class="text-gray-900 text-wrap border"></td>
-              <!-- TARGET INDIKATOR LAINNYA -->
-              <td class="text-gray-900 text-wrap border"></td>
-              <!-- TARGET RENSTRA -->
-              <% @periode.each do |tahun| %>
-                <td class="text-gray-900 text-wrap border"><%= target_iku(targets, tahun) %></td>
-              <% end %>
-              <td class="text-gray-900 text-wrap border"><%= satuan_iku(targets) %></td>
-              <!-- REALISASI RENSTRA -->
-              <% @periode.each do |tahun| %>
-                <td class="text-gray-900 text-wrap border"></td>
-              <% end %>
-              <td class="text-gray-900 text-wrap border">%</td>
-              <!-- RASIO RENSTRA -->
-              <% @periode.each do |tahun| %>
-                <td class="text-gray-900 text-wrap border"></td>
-              <% end %>
-              <td class="text-gray-900 text-wrap border">%</td>
-            </tr>
+          <% @indikator_tujuan.each do |ind_tujuan| %>
+            <%= render 'iku_tujuan_opd', periode: @periode, indikator: ind_tujuan %>
+          <% end %>
+          <% @indikator_sasaran.each do |ind_sasaran, targets| %>
+            <%= render 'iku_sasaran_opd', periode: @periode, indikator: ind_sasaran, targets: targets %>
           <% end %>
         </tbody>
       </table>

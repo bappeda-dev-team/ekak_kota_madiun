@@ -10,8 +10,7 @@ class IkuOpdQueries
   end
 
   def pohon_opd
-    StrategiPohon.includes(:pohon_shareds)
-                 .by_periode(@periode)
+    StrategiPohon.by_periode(@periode)
                  .where(opd_id: opd.id, role: 'eselon_2')
                  .select { |pp| pp.deleted_at.nil? }
   end
@@ -21,25 +20,16 @@ class IkuOpdQueries
   end
 
   def sasaran_opd
-    pohon_opd.flat_map(&:sasarans)
+    pohon_opd.flat_map { |ph| ph.sasarans.includes(:indikator_sasarans) }
              .select { |ss| ss.tahun.present? }
              .compact_blank
   end
 
-  def komponen_indikator
+  def komponen_indikator_sasaran
     sasaran_opd.flat_map(&:indikators).group_by(&:indikator_kinerja)
   end
 
-  def komponen_iku
-    tujuan_opd + sasaran_opd
-  end
-
-  def indikators_opd
-    indikators = tujuan_opd + sasaran_opd
-    indikators.flat_map(&:indikators).compact_blank
-  end
-
-  def iku_opd
-    indikators_opd
+  def komponen_indikator_tujuan
+    tujuan_opd.flat_map(&:indikators)
   end
 end

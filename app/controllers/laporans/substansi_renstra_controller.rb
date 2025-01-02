@@ -52,8 +52,8 @@ class Laporans::SubstansiRenstraController < ApplicationController
 
     iku_opd = IkuOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd, periode: @periode)
     @opd = iku_opd.opd
-    @iku_opd = iku_opd.iku_opd
-    @komponen = iku_opd.komponen_indikator
+    @indikator_tujuan = iku_opd.komponen_indikator_tujuan
+    @indikator_sasaran = iku_opd.komponen_indikator_sasaran
   end
 
   def permasalahan_isu_strategis
