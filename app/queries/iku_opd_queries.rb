@@ -25,11 +25,29 @@ class IkuOpdQueries
              .compact_blank
   end
 
+  def komponen_indikator_iku
+    Indikator.iku_opd
+             .includes(:targets)
+             .where(kode_opd: @kode_opd, tahun: @periode)
+             .reorder('id ASC')
+  end
+
   def komponen_indikator_sasaran
-    sasaran_opd.flat_map(&:indikators).group_by(&:indikator_kinerja)
+    iku_indikator = komponen_indikator_iku
+
+    iku_sasaran = sasaran_opd.flat_map(&:indikators)
+
+    # Filter `iku_sasaran` to exclude any entry whose `indikator` exists in `iku_indikator`
+    filtered_iku_sasaran = iku_sasaran.reject do |sasaran|
+      iku_indikator.any? { |indikator| indikator.indikator == sasaran.indikator }
+    end
+
+    filtered_iku_sasaran.group_by(&:indikator)
   end
 
   def komponen_indikator_tujuan
-    tujuan_opd.flat_map(&:indikators)
+    iku_tujuan = tujuan_opd.flat_map(&:indikators)
+
+    iku_tujuan + komponen_indikator_iku
   end
 end

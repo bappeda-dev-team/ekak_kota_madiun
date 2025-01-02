@@ -1,6 +1,6 @@
 class IndikatorsController < ApplicationController
   before_action :set_indikator, only: %i[show edit update destroy]
-  layout false, only: %i[new edit new_indikator_rb edit_target_iku]
+  layout false, only: %i[new edit new_indikator_rb edit_target_iku new_target_iku_sasaran]
 
   def rpjp_makro
     @tahun = cookies[:tahun]
@@ -304,6 +304,26 @@ class IndikatorsController < ApplicationController
     render json: { resText: 'Target disimpan',
                    html_content: html_content({ periode: (2019..2024), indikator: @indikator },
                                               partial: 'laporans/substansi_renstra/iku_tujuan_opd') }
+  end
+
+  def new_target_iku_sasaran
+    targets_indikators = params[:targets]
+    @targets = IndikatorSasaran.where(id: targets_indikators)
+    periode = params[:periode].split('-')
+    @tahun_awal = periode[0].to_i
+    @tahun_akhir = periode[-1].to_i
+    @periode = (@tahun_awal..@tahun_akhir)
+    nama_indikator = params[:nama_indikator]
+    kode_opd = cookies[:opd]
+    @indikator = Indikator.new(jenis: 'IKU',
+                               sub_jenis: 'OPD',
+                               kode_opd: kode_opd,
+                               indikator: nama_indikator,
+                               tahun: @tahun_akhir)
+    @indikator.target_ikks.build
+    @indikator.target_nspks.build
+    @indikator.target_lainnyas.build
+    @indikator.targets.build
   end
 
   private

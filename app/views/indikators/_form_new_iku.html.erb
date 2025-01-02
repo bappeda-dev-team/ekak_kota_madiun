@@ -1,0 +1,56 @@
+<%= form_with(model: indikator, local: false,
+              class: 'px-2',
+              data: {
+                controller: 'form-ajax',
+                action: 'ajax:success->form-ajax#ajaxSuccess:prevent ajax:error->form-ajax#ajaxError:prevent'
+              }
+) do |form| %>
+  <div class="field mt-0">
+    <%= form.label :indikator, { class: "form-label" } %>
+    <%= form.text_area :indikator, { class: "form-control", readonly: true } %>
+    <%= form.hidden_field :jenis %>
+    <%= form.hidden_field :sub_jenis %>
+    <%= form.hidden_field :kode_opd %>
+    <%= form.hidden_field :tahun %>
+  </div>
+
+  <%= form.fields_for :target_nspks do |f_nspk| %>
+    <div class="field mt-0">
+      <%= f_nspk.label :target_nspk, "Target NSPK", { class: "form-label" } %>
+      <%= f_nspk.number_field :target, { class: "form-control" } %>
+    </div>
+  <% end %>
+
+  <%= form.fields_for :target_ikks do |f_ikk| %>
+    <div class="field mt-0">
+      <%= f_ikk.label :target_ikk_ikd, "Target IKK/IKD", { class: "form-label" } %>
+      <%= f_ikk.number_field :target, { class: "form-control" } %>
+    </div>
+  <% end %>
+
+  <%= form.fields_for :target_lainnyas do |f_lain| %>
+    <div class="field mt-0">
+      <%= f_lain.label :target_lainnyas, "Target Lainnya", { class: "form-label" } %>
+      <%= f_lain.number_field :target, { class: "form-control" } %>
+    </div>
+  <% end %>
+
+  <h5>Target Renstra</h5>
+  <div class="field mt-0 row" id="target-indikator">
+    <% periode.each do |tahun| %>
+      <% if form.object.targets.where(tahun: tahun).any? %>
+        <% target = form.object.targets.find_by(tahun: tahun) %>
+      <% else %>
+        <% target_lama = target_iku(targets, tahun) %>
+        <% satuan_lama = satuan_iku(targets) %>
+        <% target = Target.new(tahun: tahun, target: target_lama, satuan: satuan_lama) %>
+      <% end %>
+      <%= form.fields_for :targets, target do |f_target| %>
+        <%= render 'tujuan_opds/target_fields', form: f_target %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

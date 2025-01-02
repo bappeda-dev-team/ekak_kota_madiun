@@ -53,6 +53,7 @@ class Laporans::SubstansiRenstraController < ApplicationController
     iku_opd = IkuOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd, periode: @periode)
     @opd = iku_opd.opd
     @indikator_tujuan = iku_opd.komponen_indikator_tujuan
+    @indikator_iku = iku_opd.komponen_indikator_iku
     @indikator_sasaran = iku_opd.komponen_indikator_sasaran
   end
 

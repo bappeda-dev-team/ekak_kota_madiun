@@ -5,7 +5,7 @@
     <% unless guest? %>
       <div class="row justify-content-center w-100">
         <div class="col">
-          <%= link_to '#',
+          <%= link_to new_target_iku_sasaran_indikators_path(nama_indikator: indikator, periode: '2019-2024', targets: targets),
                       remote: true,
                       class: "m-3 btn btn-outline-info w-100",
                       data: {
