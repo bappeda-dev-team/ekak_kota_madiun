@@ -52,6 +52,10 @@ class Strategi < ApplicationRecord
   belongs_to :strategi_pokin, class_name: "StrategiPohon",
                               foreign_key: 'linked_with', optional: true
 
+  scope :by_periode, lambda { |periode|
+                       where(tahun: periode)
+                     }
+
   store :metadata, accessors: %w[keterangan updated_by updated_at deleted_at deleted_by prev_role]
 
   def to_s
@@ -198,7 +202,7 @@ class Strategi < ApplicationRecord
   end
 
   def tahun_asli
-    tahun.match(/murni/) ? tahun[/[^_]\d*/, 0] : tahun
+    /murni/.match?(tahun) ? tahun[/[^_]\d*/, 0] : tahun
   rescue NoMethodError
     nil
   end

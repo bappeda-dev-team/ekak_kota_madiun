@@ -19,15 +19,21 @@
 #  index_indikator_sasarans_on_id_indikator  (id_indikator) UNIQUE
 #
 class IndikatorSasaran < ApplicationRecord
-  belongs_to :sasaran, foreign_key: 'sasaran_id', primary_key: 'id_rencana', optional: true
+  belongs_to :sasaran, primary_key: 'id_rencana', optional: true
   has_one :manual_ik, dependent: :destroy
 
   validates :indikator_kinerja, presence: true
   validates :target, presence: true
   validates :satuan, presence: true
 
+  delegate :tahun, to: :sasaran
+
   def to_s
     indikator_kinerja
+  end
+
+  def indikator_tahun
+    "#{indikator_kinerja} - #{tahun}"
   end
 
   def sasaran_kabid

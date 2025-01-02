@@ -1,6 +1,4 @@
 class IkuOpdQueries
-  extend Memoist
-
   def initialize(kode_opd: '', tahun: '', periode: '')
     @kode_opd = kode_opd
     @tahun = tahun
@@ -12,20 +10,28 @@ class IkuOpdQueries
   end
 
   def pohon_opd
-    StrategiPohon.where(opd_id: opd.id, tahun: @tahun)
-                 .includes(:indikators, :pohon_shareds)
+    StrategiPohon.includes(:pohon_shareds)
+                 .by_periode(@periode)
+                 .where(opd_id: opd.id, role: 'eselon_2')
+                 .select { |pp| pp.deleted_at.nil? }
   end
-  memoize :pohon_opd
 
   def tujuan_opd
     opd.tujuan_opds.by_periode(@tahun)
   end
 
   def sasaran_opd
-    pohon_opd.where(role: "eselon_2")
-             .select { |pp| pp.deleted_at.nil? }
-             .flat_map(&:sasarans)
+    pohon_opd.flat_map(&:sasarans)
+             .select { |ss| ss.tahun.present? }
              .compact_blank
+  end
+
+  def komponen_indikator
+    sasaran_opd.flat_map(&:indikators).group_by(&:indikator_kinerja)
+  end
+
+  def komponen_iku
+    tujuan_opd + sasaran_opd
   end
 
   def indikators_opd

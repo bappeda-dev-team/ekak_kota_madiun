@@ -15,7 +15,6 @@
             <th class="border text-wrap text-center" scope="col" rowspan="2" width="20px">Target NSPK</th>
             <th class="border text-wrap text-center" scope="col" rowspan="2" width="20px">Target IKK/IKD</th>
             <th class="border text-wrap text-center" scope="col" rowspan="2" width="20px">Target Indikator Lainnya</th>
-            <th class="border text-wrap text-center" scope="col" rowspan="2" width="20px">Target Indikator Lainnya</th>
             <th class="border text-center" scope="col" colspan="<%= @colspan %>">Target Renstra Perangkat Daerah Tahun ke-</th>
             <th class="border text-wrap text-center" scope="col" rowspan="2" width="20px">Satuan</th>
             <th class="border text-center" scope="col" colspan="<%= @colspan %>">Realisasi Capaian Tahun ke-</th>
@@ -36,13 +35,29 @@
           </tr>
         </thead>
         <tbody>
-          <% @iku_opd.each.with_index(1) do |indikator, no_iku| %>
+          <% @komponen.each.with_index(1) do |(indikator, targets), no_iku| %>
             <tr>
               <td class="text-gray-900 text-wrap border" width='20px' scope="row"><%= no_iku %></td>
               <td class="text-gray-900 text-wrap border"><%= indikator || '-' %></td>
               <td class="text-gray-900 text-wrap border"></td>
               <td class="text-gray-900 text-wrap border"></td>
+              <!-- TARGET INDIKATOR LAINNYA -->
               <td class="text-gray-900 text-wrap border"></td>
+              <!-- TARGET RENSTRA -->
+              <% @periode.each do |tahun| %>
+                <td class="text-gray-900 text-wrap border"><%= target_iku(targets, tahun) %></td>
+              <% end %>
+              <td class="text-gray-900 text-wrap border"><%= satuan_iku(targets) %></td>
+              <!-- REALISASI RENSTRA -->
+              <% @periode.each do |tahun| %>
+                <td class="text-gray-900 text-wrap border"></td>
+              <% end %>
+              <td class="text-gray-900 text-wrap border">%</td>
+              <!-- RASIO RENSTRA -->
+              <% @periode.each do |tahun| %>
+                <td class="text-gray-900 text-wrap border"></td>
+              <% end %>
+              <td class="text-gray-900 text-wrap border">%</td>
             </tr>
           <% end %>
         </tbody>

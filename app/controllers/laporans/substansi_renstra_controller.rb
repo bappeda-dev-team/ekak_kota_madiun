@@ -53,6 +53,7 @@ class Laporans::SubstansiRenstraController < ApplicationController
     iku_opd = IkuOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd, periode: @periode)
     @opd = iku_opd.opd
     @iku_opd = iku_opd.iku_opd
+    @komponen = iku_opd.komponen_indikator
   end
 
   def permasalahan_isu_strategis
@@ -98,7 +99,7 @@ class Laporans::SubstansiRenstraController < ApplicationController
     return if @tahun.nil?
 
     # TODO: extract to ajax
-    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    tahun_bener = /murni|perubahan/.match?(@tahun) ? @tahun[/[^_]\d*/, 0] : @tahun
     @tahun_awal = 2019
     @tahun_akhir = 2023
     @tujuan_opds = @opd.tujuan_opds.includes(%i[indikators urusan])
@@ -108,7 +109,7 @@ class Laporans::SubstansiRenstraController < ApplicationController
   def tujuan_dan_sasaran
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
-    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    tahun_bener = /murni|perubahan/.match?(@tahun) ? @tahun[/[^_]\d*/, 0] : @tahun
     @periode = Periode.find_tahun(tahun_bener)
     @tahun_awal = @periode.tahun_awal.to_i
     @tahun_akhir = @periode.tahun_akhir.to_i
@@ -139,7 +140,7 @@ class Laporans::SubstansiRenstraController < ApplicationController
     # TODO: extract to ajax
     return if @tahun.nil?
 
-    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    tahun_bener = /murni|perubahan/.match?(@tahun) ? @tahun[/[^_]\d*/, 0] : @tahun
     @periode = Periode.find_tahun(tahun_bener)
     @tahun_awal = 2019
     @tahun_akhir = 2023
