@@ -23,8 +23,23 @@
 #  updated_at           :datetime         not null
 #
 class Indikator < ApplicationRecord
-  has_many :targets
+  has_many :targets, dependent: :destroy
   accepts_nested_attributes_for :targets, reject_if: :all_blank, allow_destroy: true
+
+  has_many :target_nspks, lambda {
+    where(jenis: 'NSPK')
+  }, class_name: 'Target', dependent: :destroy, inverse_of: :indikator
+  accepts_nested_attributes_for :target_nspks, reject_if: :all_blank, allow_destroy: true
+
+  has_many :target_ikks, lambda {
+    where(jenis: 'IKK-IKD')
+  }, class_name: 'Target', dependent: :destroy, inverse_of: :indikator
+  accepts_nested_attributes_for :target_ikks, reject_if: :all_blank, allow_destroy: true
+
+  has_many :target_lainnyas, lambda {
+    where(jenis: 'Lainnya')
+  }, class_name: 'Target', dependent: :destroy, inverse_of: :indikator
+  accepts_nested_attributes_for :target_lainnyas, reject_if: :all_blank, allow_destroy: true
 
   has_and_belongs_to_many :users
 

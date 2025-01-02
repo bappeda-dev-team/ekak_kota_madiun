@@ -79,6 +79,11 @@ Rails.application.routes.draw do
       get :rb_outcome
       get :rb_output
     end
+
+    member do
+      get :edit_target_iku
+      patch :update_iku
+    end
   end
   resources :pindah_pohon_kinerjas, only: %i[show edit update]
   resources :permasalahan_opds

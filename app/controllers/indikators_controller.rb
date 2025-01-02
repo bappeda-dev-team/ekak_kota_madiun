@@ -1,6 +1,6 @@
 class IndikatorsController < ApplicationController
   before_action :set_indikator, only: %i[show edit update destroy]
-  layout false, only: %i[new edit new_indikator_rb]
+  layout false, only: %i[new edit new_indikator_rb edit_target_iku]
 
   def rpjp_makro
     @tahun = cookies[:tahun]
@@ -285,6 +285,28 @@ class IndikatorsController < ApplicationController
     end
   end
 
+  def edit_target_iku
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    periode = params[:periode].split('-')
+    @tahun_awal = periode[0].to_i
+    @tahun_akhir = periode[-1].to_i
+    @periode = (@tahun_awal..@tahun_akhir)
+    @indikator = Indikator.find(params[:id])
+    @indikator.target_ikks.build if @indikator.target_ikks.empty?
+    @indikator.target_nspks.build if @indikator.target_nspks.empty?
+    @indikator.target_lainnyas.build if @indikator.target_lainnyas.empty?
+  end
+
+  def update_iku
+    @indikator = Indikator.find(params[:id])
+    return unless @indikator.update(indikator_params)
+
+    render json: { resText: 'Target disimpan',
+                   html_content: html_content({ periode: (2019..2024), indikator: @indikator },
+                                              partial: 'laporans/substansi_renstra/iku_tujuan_opd') }
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -298,7 +320,27 @@ class IndikatorsController < ApplicationController
                                       :tahun, :kode_opd, :target, :satuan,
                                       :sumber_data,
                                       :rumus_perhitungan,
-                                      :keterangan)
+                                      :keterangan,
+                                      target_nspks,
+                                      target_ikks,
+                                      target_lainnyas,
+                                      target_renstras)
+  end
+
+  def target_nspks
+    { target_nspks_attributes: %i[id target] }
+  end
+
+  def target_ikks
+    { target_ikks_attributes: %i[id target] }
+  end
+
+  def target_lainnyas
+    { target_lainnyas_attributes: %i[id target] }
+  end
+
+  def target_renstras
+    { targets_attributes: %i[id target satuan tahun] }
   end
 
   def new_indikator_params

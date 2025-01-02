@@ -16,6 +16,18 @@ module IkuHelper
   end
 
   def satuan_iku_tujuan(indikator_tujuan)
-    indikator_tujuan.targets.flat_map(&:satuan).uniq.last
+    indikator_tujuan.targets.flat_map(&:satuan).compact_blank.last
+  end
+
+  def target_nspk_tujuan(indikator_tujuan)
+    indikator_tujuan.target_nspks.last&.target
+  end
+
+  def target_ikks_tujuan(indikator_tujuan)
+    indikator_tujuan.target_ikks.last&.target
+  end
+
+  def target_lainnyas_tujuan(indikator_tujuan)
+    indikator_tujuan.target_lainnyas.last&.target
   end
 end
