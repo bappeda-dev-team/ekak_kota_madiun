@@ -18,6 +18,8 @@
 #  index_targets_on_opd_id        (opd_id)
 #
 class Target < ApplicationRecord
+  has_one :realisasi, dependent: :destroy
+
   belongs_to :indikator
   belongs_to :opd, optional: true
 

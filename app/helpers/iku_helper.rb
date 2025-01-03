@@ -15,8 +15,23 @@ module IkuHelper
     indikator_tujuan.targets.find_by(tahun: tahun)&.target
   end
 
+  def realisasi_iku_tujuan(indikator_tujuan, tahun)
+    indikator_tujuan.realisasis.find_by(tahun: tahun)&.realisasi
+  end
+
+  def rasio_iku_tujuan(indikator_tujuan, tahun)
+    rasio = indikator_tujuan.realisasis.find_by(tahun: tahun)&.capaian
+    return '' if rasio.nil?
+
+    "#{rasio}%"
+  end
+
   def satuan_iku_tujuan(indikator_tujuan)
     indikator_tujuan.targets.flat_map(&:satuan).compact_blank.last
+  end
+
+  def satuan_realisasi_tujuan(indikator_tujuan)
+    indikator_tujuan.realisasis.flat_map(&:satuan).compact_blank.last
   end
 
   def target_nspk_tujuan(indikator_tujuan)

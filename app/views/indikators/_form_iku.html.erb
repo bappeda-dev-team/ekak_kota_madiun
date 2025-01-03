@@ -3,7 +3,8 @@
               class: 'px-2',
               data: {
                 controller: 'form-ajax',
-                action: 'ajax:success->form-ajax#ajaxSuccess:prevent ajax:error->form-ajax#ajaxError:prevent'
+                form_ajax_target_param: dom_id(indikator),
+                action: 'ajax:complete->form-ajax#processAjax'
               }
 ) do |form| %>
   <div class="field mt-0">

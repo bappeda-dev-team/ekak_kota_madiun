@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Tahun:</strong>
+  <%= @realisasi.tahun %>
+</p>
+
+<p>
+  <strong>Realisasi:</strong>
+  <%= @realisasi.realisasi %>
+</p>
+
+<p>
+  <strong>Satuan:</strong>
+  <%= @realisasi.satuan %>
+</p>
+
+<p>
+  <strong>Jenis:</strong>
+  <%= @realisasi.jenis %>
+</p>
+
+<p>
+  <strong>Target:</strong>
+  <%= @realisasi.target_id %>
+</p>
+
+<%= link_to 'Edit', edit_realisasi_path(@realisasi) %> |
+<%= link_to 'Back', realisasis_path %>

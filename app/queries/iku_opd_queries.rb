@@ -27,7 +27,7 @@ class IkuOpdQueries
 
   def komponen_indikator_iku
     Indikator.iku_opd
-             .includes(:targets)
+             .includes(%i[targets realisasis])
              .where(kode_opd: @kode_opd, tahun: @periode)
              .reorder('id ASC')
   end
@@ -39,10 +39,11 @@ class IkuOpdQueries
 
     # Filter `iku_sasaran` to exclude any entry whose `indikator` exists in `iku_indikator`
     filtered_iku_sasaran = iku_sasaran.reject do |sasaran|
-      iku_indikator.any? { |indikator| indikator.indikator == sasaran.indikator }
+      iku_indikator.any? { |indikator| indikator.indikator == sasaran.indikator_kinerja }
     end
 
-    filtered_iku_sasaran.group_by(&:indikator)
+    filtered_iku_sasaran.select { |ff| ff.indikator_kinerja.present? }
+                        .group_by(&:indikator_kinerja)
   end
 
   def komponen_indikator_tujuan

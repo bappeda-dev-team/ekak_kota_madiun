@@ -2,7 +2,7 @@
               class: 'px-2',
               data: {
                 controller: 'form-ajax',
-                action: 'ajax:success->form-ajax#ajaxSuccess:prevent ajax:error->form-ajax#ajaxError:prevent'
+                action: 'ajax:complete->form-ajax#afterSubmitRefresh'
               }
 ) do |form| %>
   <div class="field mt-0">

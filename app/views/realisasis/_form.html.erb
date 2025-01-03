@@ -1,0 +1,53 @@
+<%= form_with(model: indikator, url: update_realisasi_indikator_path(indikator),
+              local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: dom_id(indikator),
+                action: 'ajax:complete->form-ajax#processAjax'
+              }
+) do |form| %>
+  <div class="field mt-0">
+    <%= form.label :indikator, { class: "form-label" } %>
+    <%= form.text_area :indikator, { class: "form-control", disabled: true, value: indikator } %>
+  </div>
+
+  <h5 class="pt-2">Target Renstra</h5>
+  <div class="field mt-0 row" id="target-indikator">
+    <% periode.each do |tahun| %>
+      <% target = targets.find_by(tahun: tahun) %>
+      <% if form.object.realisasis.where(tahun: tahun).any? %>
+        <% real = form.object.realisasis.find_by(tahun: tahun) %>
+      <% else %>
+        <% real = realisasi %>
+      <% end %>
+      <% next if target.nil? %>
+      <%= form.fields_for :realisasis, real do |f_real| %>
+        <fieldset class="tahun col">
+          <div class="field">
+            <%= label "tahun", "Tahun", class: 'form-label' %>
+            <%= text_field "tahun", "tahun", class: 'form-control', disabled: true, value: target.tahun %>
+            <%= f_real.hidden_field :tahun, value: tahun %>
+            <%= f_real.hidden_field :target_id, value: target.id %>
+          </div>
+          <div class="field">
+            <%= label :target, :target, { class: "form-label" } %>
+            <%= number_field :target, :target, { class: "form-control", disabled: true, value: target.target } %>
+          </div>
+          <div class="field">
+            <%= f_real.label :realisasi, { class: "form-label" } %>
+            <%= f_real.number_field :realisasi, { class: "form-control", step: 0.01, max: target.target } %>
+          </div>
+          <div class="field">
+            <%= label :satuan, :satuan, { class: "form-label" } %>
+            <%= text_field :satuan, :satuan, { class: "form-control", disabled: true, value: target.satuan } %>
+            <%= f_real.hidden_field :satuan, value: target.satuan %>
+          </div>
+        </fieldset>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

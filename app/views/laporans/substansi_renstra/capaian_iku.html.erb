@@ -29,7 +29,7 @@
             <% end %>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="new_iku">
           <% @indikator_tujuan.each do |ind_tujuan| %>
             <%= render 'iku_tujuan_opd', periode: @periode, indikator: ind_tujuan %>
           <% end %>

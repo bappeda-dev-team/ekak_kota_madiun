@@ -306,6 +306,15 @@ class IndikatorsController < ApplicationController
                                               partial: 'laporans/substansi_renstra/iku_tujuan_opd') }
   end
 
+  def update_realisasi
+    @indikator = Indikator.find(params[:id])
+    return unless @indikator.update(indikator_params)
+
+    render json: { resText: 'Target disimpan',
+                   html_content: html_content({ periode: (2019..2024), indikator: @indikator },
+                                              partial: 'laporans/substansi_renstra/iku_tujuan_opd') }
+  end
+
   def new_target_iku_sasaran
     targets_indikators = params[:targets]
     @targets = IndikatorSasaran.where(id: targets_indikators)
@@ -343,7 +352,8 @@ class IndikatorsController < ApplicationController
                                       target_nspks,
                                       target_ikks,
                                       target_lainnyas,
-                                      target_renstras)
+                                      target_renstras,
+                                      realisasis)
   end
 
   def target_nspks
@@ -360,6 +370,10 @@ class IndikatorsController < ApplicationController
 
   def target_renstras
     { targets_attributes: %i[id target satuan tahun] }
+  end
+
+  def realisasis
+    { realisasis_attributes: %i[id realisasi satuan tahun jenis target_id] }
   end
 
   def new_indikator_params

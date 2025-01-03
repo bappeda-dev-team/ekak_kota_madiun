@@ -8,6 +8,7 @@ require "sidekiq/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :realisasis
   resources :inovasi_masyarakats
   resources :anggota_tims
   resources :inovasi_tims do
@@ -84,6 +85,7 @@ Rails.application.routes.draw do
     member do
       get :edit_target_iku
       patch :update_iku
+      patch :update_realisasi
     end
   end
   resources :pindah_pohon_kinerjas, only: %i[show edit update]

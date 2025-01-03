@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Realisasis</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tahun</th>
+      <th>Realisasi</th>
+      <th>Satuan</th>
+      <th>Jenis</th>
+      <th>Target</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @realisasis.each do |realisasi| %>
+      <tr>
+        <td><%= realisasi.tahun %></td>
+        <td><%= realisasi.realisasi %></td>
+        <td><%= realisasi.satuan %></td>
+        <td><%= realisasi.jenis %></td>
+        <td><%= realisasi.target_id %></td>
+        <td><%= link_to 'Show', realisasi %></td>
+        <td><%= link_to 'Edit', edit_realisasi_path(realisasi) %></td>
+        <td><%= link_to 'Destroy', realisasi, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Realisasi', new_realisasi_path %>
