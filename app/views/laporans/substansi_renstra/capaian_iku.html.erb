@@ -1,0 +1,43 @@
+<%= content_for :html_title, "Bab 2 - Capaian IKU" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Substansi Renstra</li>
+  <li class="breadcrumb-item" aria-current="page">Bab 2</li>
+  <li class="breadcrumb-item active" aria-current="page">Capaian IKU</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout', title: "Capaian IKU - Periode #{@tahun_awal}-#{@tahun_akhir}" do %>
+    <div class="table-responsive">
+      <table class="table align-items-center counter">
+        <thead class="thead-tujuan">
+          <tr class="header-tujuan">
+            <th class="border" scope="col" rowspan="2" width="20px">No.</th>
+            <th class="border" scope="col" rowspan="2">Indikator Kinerja sesuai Tugas dan Fungsi Perangkat Daerah</th>
+            <th class="border text-wrap text-center" scope="col" rowspan="2">Aksi</th>
+            <th class="border text-wrap text-center" scope="col" rowspan="2" width="20px">Target NSPK</th>
+            <th class="border text-wrap text-center" scope="col" rowspan="2" width="20px">Target IKK/IKD</th>
+            <th class="border text-wrap text-center" scope="col" rowspan="2" width="20px">Target Indikator Lainnya</th>
+            <th class="border text-center" scope="col" colspan="<%= @colspan %>">Target Renstra Perangkat Daerah Tahun ke-</th>
+            <th class="border text-wrap text-center" scope="col" rowspan="2" width="20px">Satuan</th>
+            <th class="border text-center" scope="col" colspan="<%= @colspan %>">Realisasi Capaian Tahun ke-</th>
+            <th class="border text-wrap text-center" scope="col" rowspan="2" width="20px">Satuan</th>
+            <th class="border text-center" scope="col" colspan="<%= @colspan %>">Rasio Capaian pada Tahun ke-</th>
+            <th class="border text-wrap text-center" scope="col" rowspan="2" width="20px">Satuan</th>
+          </tr>
+          <tr>
+            <% @periode.cycle(3).each do |tahun| %>
+              <th class="border target text-center" scope="col"><%= tahun %></th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody id="new_iku">
+          <% @indikator_tujuan.each do |ind_tujuan| %>
+            <%= render 'iku_tujuan_opd', periode: @periode, indikator: ind_tujuan %>
+          <% end %>
+          <% @indikator_sasaran.each do |ind_sasaran, targets| %>
+            <%= render 'iku_sasaran_opd', periode: @periode, indikator: ind_sasaran, targets: targets %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>

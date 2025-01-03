@@ -41,6 +41,22 @@ class Laporans::SubstansiRenstraController < ApplicationController
     end
   end
 
+  def capaian_iku
+    periode = params[:periode].split('-')
+    @tahun_awal = periode[0].to_i
+    @tahun_akhir = periode[-1].to_i
+    @periode = (@tahun_awal..@tahun_akhir)
+    @colspan = @periode.size
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+
+    iku_opd = IkuOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd, periode: @periode)
+    @opd = iku_opd.opd
+    @indikator_tujuan = iku_opd.komponen_indikator_tujuan
+    @indikator_iku = iku_opd.komponen_indikator_iku
+    @indikator_sasaran = iku_opd.komponen_indikator_sasaran
+  end
+
   def permasalahan_isu_strategis
     @kode_unik_opd = cookies[:opd]
     @tahun = cookies[:tahun]

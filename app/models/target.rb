@@ -18,9 +18,14 @@
 #  index_targets_on_opd_id        (opd_id)
 #
 class Target < ApplicationRecord
+  has_one :realisasi, dependent: :destroy
+
   belongs_to :indikator
   belongs_to :opd, optional: true
 
+  scope :by_periode, lambda { |tahun_awal, tahun_akhir|
+                       where("tahun::integer BETWEEN ?::integer AND ?::integer", tahun_awal, tahun_akhir)
+                     }
   def to_s
     target
   end

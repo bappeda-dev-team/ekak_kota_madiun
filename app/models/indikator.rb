@@ -23,8 +23,26 @@
 #  updated_at           :datetime         not null
 #
 class Indikator < ApplicationRecord
-  has_many :targets
+  has_many :targets, dependent: :destroy
   accepts_nested_attributes_for :targets, reject_if: :all_blank, allow_destroy: true
+
+  has_many :realisasis, dependent: :destroy
+  accepts_nested_attributes_for :realisasis, reject_if: :all_blank, allow_destroy: true
+
+  has_many :target_nspks, lambda {
+    where(jenis: 'NSPK')
+  }, class_name: 'Target', dependent: :destroy, inverse_of: :indikator
+  accepts_nested_attributes_for :target_nspks, reject_if: :all_blank, allow_destroy: true
+
+  has_many :target_ikks, lambda {
+    where(jenis: 'IKK-IKD')
+  }, class_name: 'Target', dependent: :destroy, inverse_of: :indikator
+  accepts_nested_attributes_for :target_ikks, reject_if: :all_blank, allow_destroy: true
+
+  has_many :target_lainnyas, lambda {
+    where(jenis: 'Lainnya')
+  }, class_name: 'Target', dependent: :destroy, inverse_of: :indikator
+  accepts_nested_attributes_for :target_lainnyas, reject_if: :all_blank, allow_destroy: true
 
   has_and_belongs_to_many :users
 
@@ -44,6 +62,7 @@ class Indikator < ApplicationRecord
   scope :spm_output, -> { where(jenis: 'SPM', sub_jenis: 'Output').order(id: :desc) }
   scope :sdgs_outcome, -> { where(jenis: 'SDGS', sub_jenis: 'Outcome').order(id: :desc) }
   scope :sdgs_output, -> { where(jenis: 'SDGS', sub_jenis: 'Output').order(id: :desc) }
+  scope :iku_opd, -> { where(jenis: 'IKU', sub_jenis: 'OPD').order(id: :desc) }
 
   def to_s
     indikator
@@ -128,5 +147,13 @@ class Indikator < ApplicationRecord
 
   def kode_bidang_urusan
     kode[0, 4]
+  end
+
+  def target_iku_opd
+    targets.where(jenis: 'IKU_OPD')
+  end
+
+  def target_by_periode(tahun_awal, tahun_akhir)
+    targets.by_periode(tahun_awal, tahun_akhir)
   end
 end

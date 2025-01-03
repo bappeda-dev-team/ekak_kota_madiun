@@ -1,0 +1,52 @@
+<%= form_with(url: update_iku_indikator_path,
+              model: indikator, local: false,
+              class: 'px-2',
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: dom_id(indikator),
+                action: 'ajax:complete->form-ajax#processAjax'
+              }
+) do |form| %>
+  <div class="field mt-0">
+    <%= form.label :indikator, { class: "form-label" } %>
+    <%= form.text_area :indikator, { class: "form-control", disabled: true } %>
+  </div>
+
+  <%= form.fields_for :target_nspks do |f_nspk| %>
+    <div class="field mt-0">
+      <%= f_nspk.label :target_nspk, "Target NSPK", { class: "form-label" } %>
+      <%= f_nspk.number_field :target, { class: "form-control" } %>
+    </div>
+  <% end %>
+
+  <%= form.fields_for :target_ikks do |f_ikk| %>
+    <div class="field mt-0">
+      <%= f_ikk.label :target_ikk_ikd, "Target IKK/IKD", { class: "form-label" } %>
+      <%= f_ikk.number_field :target, { class: "form-control" } %>
+    </div>
+  <% end %>
+
+  <%= form.fields_for :target_lainnyas do |f_lain| %>
+    <div class="field mt-0">
+      <%= f_lain.label :target_lainnyas, "Target Lainnya", { class: "form-label" } %>
+      <%= f_lain.number_field :target, { class: "form-control" } %>
+    </div>
+  <% end %>
+
+  <h5>Target Renstra</h5>
+  <div class="field mt-0 row" id="target-indikator">
+    <% periode.each do |tahun| %>
+      <% if form.object.targets.where(tahun: tahun).any? %>
+        <% target = form.object.targets.find_by(tahun: tahun) %>
+      <% else %>
+        <% target = Target.new(tahun: tahun) %>
+      <% end %>
+      <%= form.fields_for :targets, target do |f_target| %>
+        <%= render 'tujuan_opds/target_fields', form: f_target %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,6 +1,6 @@
 class IndikatorsController < ApplicationController
   before_action :set_indikator, only: %i[show edit update destroy]
-  layout false, only: %i[new edit new_indikator_rb]
+  layout false, only: %i[new edit new_indikator_rb edit_target_iku new_target_iku_sasaran]
 
   def rpjp_makro
     @tahun = cookies[:tahun]
@@ -285,6 +285,56 @@ class IndikatorsController < ApplicationController
     end
   end
 
+  # rubocop: disable Metrics
+  def edit_target_iku
+    periode = params[:periode].split('-')
+    @tahun_awal = periode[0].to_i
+    @tahun_akhir = periode[-1].to_i
+    @periode = (@tahun_awal..@tahun_akhir)
+    @indikator = Indikator.find(params[:id])
+    @indikator.target_ikks.build if @indikator.target_ikks.empty?
+    @indikator.target_nspks.build if @indikator.target_nspks.empty?
+    @indikator.target_lainnyas.build if @indikator.target_lainnyas.empty?
+  end
+
+  def update_iku
+    @indikator = Indikator.find(params[:id])
+    return unless @indikator.update(indikator_params)
+
+    render json: { resText: 'Target disimpan',
+                   html_content: html_content({ periode: (2019..2024), indikator: @indikator },
+                                              partial: 'laporans/substansi_renstra/iku_tujuan_opd') }
+  end
+
+  def update_realisasi
+    @indikator = Indikator.find(params[:id])
+    return unless @indikator.update(indikator_params)
+
+    render json: { resText: 'Target disimpan',
+                   html_content: html_content({ periode: (2019..2024), indikator: @indikator },
+                                              partial: 'laporans/substansi_renstra/iku_tujuan_opd') }
+  end
+
+  def new_target_iku_sasaran
+    targets_indikators = params[:targets]
+    @targets = IndikatorSasaran.where(id: targets_indikators)
+    periode = params[:periode].split('-')
+    @tahun_awal = periode[0].to_i
+    @tahun_akhir = periode[-1].to_i
+    @periode = (@tahun_awal..@tahun_akhir)
+    nama_indikator = params[:nama_indikator]
+    kode_opd = cookies[:opd]
+    @indikator = Indikator.new(jenis: 'IKU',
+                               sub_jenis: 'OPD',
+                               kode_opd: kode_opd,
+                               indikator: nama_indikator,
+                               tahun: @tahun_akhir)
+    @indikator.target_ikks.build
+    @indikator.target_nspks.build
+    @indikator.target_lainnyas.build
+    @indikator.targets.build
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -298,7 +348,32 @@ class IndikatorsController < ApplicationController
                                       :tahun, :kode_opd, :target, :satuan,
                                       :sumber_data,
                                       :rumus_perhitungan,
-                                      :keterangan)
+                                      :keterangan,
+                                      target_nspks,
+                                      target_ikks,
+                                      target_lainnyas,
+                                      target_renstras,
+                                      realisasis)
+  end
+
+  def target_nspks
+    { target_nspks_attributes: %i[id target] }
+  end
+
+  def target_ikks
+    { target_ikks_attributes: %i[id target] }
+  end
+
+  def target_lainnyas
+    { target_lainnyas_attributes: %i[id target] }
+  end
+
+  def target_renstras
+    { targets_attributes: %i[id target satuan tahun] }
+  end
+
+  def realisasis
+    { realisasis_attributes: %i[id realisasi satuan tahun jenis target_id] }
   end
 
   def new_indikator_params

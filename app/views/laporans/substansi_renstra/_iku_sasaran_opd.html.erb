@@ -1,0 +1,42 @@
+<tr>
+  <td class="text-gray-900 text-wrap border" width='20px' scope="row"></td>
+  <td class="text-gray-900 text-wrap border"><%= indikator %></td>
+  <td class="text-gray-900 border px-auto" scope="row">
+    <% unless guest? %>
+      <div class="row justify-content-center w-100">
+        <div class="col">
+          <%= link_to new_target_iku_sasaran_indikators_path(nama_indikator: indikator, periode: '2019-2024', targets: targets),
+                      remote: true,
+                      class: "m-3 btn btn-outline-danger w-100",
+                      data: {
+                        controller: 'form-modal',
+                        action: 'ajax:complete->form-modal#success:prevent',
+                        bs_toggle: 'modal',
+                        bs_target: '#form-modal' } do %>
+            <i class="fa fa-edit"></i>
+            <span>Input Target</span>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </td>
+  <td class="text-gray-900 text-wrap border"></td>
+  <td class="text-gray-900 text-wrap border"></td>
+  <!-- TARGET INDIKATOR LAINNYA -->
+  <td class="text-gray-900 text-wrap border"></td>
+  <!-- TARGET RENSTRA -->
+  <% periode.each do |tahun| %>
+    <td class="text-gray-900 text-wrap border"><%= target_iku(targets, tahun) %></td>
+  <% end %>
+  <td class="text-gray-900 text-wrap border"><%= satuan_iku(targets) %></td>
+  <!-- REALISASI RENSTRA -->
+  <% periode.each do |tahun| %>
+    <td class="text-gray-900 text-wrap border"></td>
+  <% end %>
+  <td class="text-gray-900 text-wrap border"></td>
+  <!-- RASIO RENSTRA -->
+  <% periode.each do |tahun| %>
+    <td class="text-gray-900 text-wrap border"></td>
+  <% end %>
+  <td class="text-gray-900 text-wrap border"></td>
+</tr>

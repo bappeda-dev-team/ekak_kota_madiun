@@ -2872,6 +2872,42 @@ ALTER SEQUENCE public.programs_id_seq OWNED BY public.programs.id;
 
 
 --
+-- Name: realisasis; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.realisasis (
+    id bigint NOT NULL,
+    tahun character varying,
+    realisasi character varying,
+    satuan character varying,
+    jenis character varying,
+    target_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    indikator_id bigint NOT NULL
+);
+
+
+--
+-- Name: realisasis_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.realisasis_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: realisasis_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.realisasis_id_seq OWNED BY public.realisasis.id;
+
+
+--
 -- Name: rekenings; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -4720,6 +4756,13 @@ ALTER TABLE ONLY public.programs ALTER COLUMN id SET DEFAULT nextval('public.pro
 
 
 --
+-- Name: realisasis id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.realisasis ALTER COLUMN id SET DEFAULT nextval('public.realisasis_id_seq'::regclass);
+
+
+--
 -- Name: rekenings id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -5530,6 +5573,14 @@ ALTER TABLE ONLY public.programs
 
 
 --
+-- Name: realisasis realisasis_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.realisasis
+    ADD CONSTRAINT realisasis_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: rekenings rekenings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -6247,6 +6298,20 @@ CREATE INDEX index_program_kegiatans_on_subkegiatan_tematik_id ON public.program
 
 
 --
+-- Name: index_realisasis_on_indikator_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_realisasis_on_indikator_id ON public.realisasis USING btree (indikator_id);
+
+
+--
+-- Name: index_realisasis_on_target_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_realisasis_on_target_id ON public.realisasis USING btree (target_id);
+
+
+--
 -- Name: index_renstras_on_id_renstra; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -6507,6 +6572,14 @@ ALTER TABLE ONLY public.perhitungans
 
 
 --
+-- Name: realisasis fk_rails_36591494bb; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.realisasis
+    ADD CONSTRAINT fk_rails_36591494bb FOREIGN KEY (target_id) REFERENCES public.targets(id);
+
+
+--
 -- Name: permasalahans fk_rails_4bce9be9f2; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -6536,6 +6609,14 @@ ALTER TABLE ONLY public.program_kegiatans
 
 ALTER TABLE ONLY public.sasarans
     ADD CONSTRAINT fk_rails_5880531b5c FOREIGN KEY (nip_asn) REFERENCES public.users(nik);
+
+
+--
+-- Name: realisasis fk_rails_5dbcbd7079; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.realisasis
+    ADD CONSTRAINT fk_rails_5dbcbd7079 FOREIGN KEY (indikator_id) REFERENCES public.indikators(id);
 
 
 --
@@ -7018,6 +7099,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241124030840'),
 ('20241205024943'),
 ('20241205041239'),
-('20241217082359');
+('20241217082359'),
+('20250102120757'),
+('20250102232607');
 
 
