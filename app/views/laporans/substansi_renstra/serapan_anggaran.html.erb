@@ -1,0 +1,57 @@
+<%= content_for :html_title, "Bab 2 - Serapan Anggaran" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Substansi Renstra</li>
+  <li class="breadcrumb-item" aria-current="page">Bab 2</li>
+  <li class="breadcrumb-item active" aria-current="page">Serapan Anggaran</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout', title: "Serapan Anggaran - Periode #{@tahun_awal}-#{@tahun_akhir}" do %>
+    <div class="table-responsive">
+      <table class="table align-items-center counter">
+        <thead class="thead-tujuan">
+          <tr class="header-tujuan">
+            <th class="border" scope="col" rowspan="2" width="20px">No.</th>
+            <th class="border" scope="col" rowspan="2">Bidang Urusan Kewenangan Perangkat Daerah</th>
+            <th class="border text-wrap text-center" scope="col" rowspan="2">Aksi</th>
+            <th class="border text-center" scope="col" colspan="<%= @colspan %>">Pagu Renstra Perangkat Daerah Tahun ke-</th>
+            <th class="border text-center" scope="col" colspan="<%= @colspan %>">Realisasi Anggaran pada Tahun ke-</th>
+            <th class="border text-center" scope="col" colspan="<%= @colspan %>">Rasio Capaian / Serapan pada Tahun ke-</th>
+            <th class="border text-wrap text-center" scope="col" colspan="2">Rata-Rata Pertumbuhan</th>
+          </tr>
+          <tr>
+            <% @periode.cycle(3).each do |tahun| %>
+              <th class="border target text-center" scope="col"><%= tahun %></th>
+            <% end %>
+            <th class="border target text-center" scope="col">Anggaran (Rp.)</th>
+            <th class="border target text-center" scope="col">Realisasi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @bidang_urusans.each do |bidang_urusan|  %>
+            <tr>
+              <td class="text-gray-900 text-wrap border" width='20px' scope="row"></td>
+              <td class="text-gray-900 text-wrap border"><%= bidang_urusan[:nama] %></td>
+              <td class="text-gray-900 text-wrap border"></td>
+              <% @periode.each do |tahun| %>
+                <td class="text-gray-900 border pagu" width="250px">
+                  Rp. <span class="uang"><%= number_with_delimiter(bidang_urusan[:pagu][tahun]) %></span>
+                </td>
+              <% end %>
+              <!-- REALISASI + CAPAIAN DUMMY -->
+              <% @periode.cycle(2).each do |tahun| %>
+                <td class="text-gray-900 border pagu" width="250px">
+                  Rp. 0
+                </td>
+              <% end %>
+              <td class="text-gray-900 border pagu" width="250px">
+                <%= growth_average(bidang_urusan[:pagu]).round(2) %>%
+              </td>
+              <td class="text-gray-900 border pagu" width="250px">
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>

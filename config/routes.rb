@@ -645,6 +645,7 @@ Rails.application.routes.draw do
       get :aset
       get :evaluasi_renstra
       get :capaian_iku
+      get :serapan_anggaran
       get :permasalahan_isu_strategis
       get :pohon_kinerja
       get :tujuan_dan_sasaran

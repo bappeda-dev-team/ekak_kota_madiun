@@ -72,7 +72,11 @@ module Laporans::SubstansiRenstraHelper
       },
       {
         title: 'Capaian IKU', href: laporans_substansi_renstra_capaian_iku_path(periode: '2019-2024'),
-        identifier: 'substansi-renstra-bab-2-evaluasi-renstra'
+        identifier: 'substansi-renstra-bab-2-capaian-iku'
+      },
+      {
+        title: 'Serapan Anggaran', href: laporans_substansi_renstra_serapan_anggaran_path(periode: '2019-2024'),
+        identifier: 'substansi-renstra-bab-2-serapan-anggaran'
       }
     ]
   end

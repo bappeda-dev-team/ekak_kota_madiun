@@ -57,6 +57,20 @@ class Laporans::SubstansiRenstraController < ApplicationController
     @indikator_sasaran = iku_opd.komponen_indikator_sasaran
   end
 
+  def serapan_anggaran
+    periode = params[:periode].split('-')
+    @tahun_awal = periode[0].to_i
+    @tahun_akhir = periode[-1].to_i
+    @periode = (@tahun_awal..@tahun_akhir)
+    @colspan = @periode.size
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+
+    serapan_anggaran = SerapanQueries.new(tahun: @tahun, kode_opd: @kode_opd, periode: @periode)
+    @opd = serapan_anggaran.opd
+    @bidang_urusans = serapan_anggaran.bidang_urusan_pagu
+  end
+
   def permasalahan_isu_strategis
     @kode_unik_opd = cookies[:opd]
     @tahun = cookies[:tahun]
