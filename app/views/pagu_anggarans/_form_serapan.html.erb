@@ -30,6 +30,10 @@
             <%= pg.label :anggaran, { class: "form-label" } %>
             <%= pg.number_field :anggaran, { class: "form-control", step: 50_000_000 } %>
           </div>
+          <div class="field">
+            <%= pg.label :realisasi, { class: "form-label" } %>
+            <%= pg.number_field :anggaran_realisasi, { class: "form-control", step: 50_000_000 } %>
+          </div>
         </fieldset>
       <% end %>
     <% end %>

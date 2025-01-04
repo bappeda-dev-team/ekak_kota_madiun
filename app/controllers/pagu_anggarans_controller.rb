@@ -27,6 +27,7 @@ class PaguAnggaransController < ApplicationController
                                         kode: @kode,
                                         kode_opd: kode_opd,
                                         tahun: @periode)
+                                 .order(tahun: :asc)
     @pagu_anggarans = if pagu_anggarans.empty?
                         @periode.map do |tahun|
                           PaguAnggaran.new(jenis: 'PaguSerapan',
@@ -43,7 +44,8 @@ class PaguAnggaransController < ApplicationController
   # for substansi renstra bab 2 / serapan anggaran
   def simpan_serapan
     pagu_params = params.permit(:authenticity_token, :commit,
-                                pagu_serapans: %i[id tahun jenis sub_jenis anggaran
+                                pagu_serapans: %i[id tahun jenis sub_jenis
+                                                  anggaran anggaran_realisasi
                                                   jenis sub_jenis kode kode_opd])
     pagus = pagu_params[:pagu_serapans]
 

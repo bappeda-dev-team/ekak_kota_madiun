@@ -16,18 +16,28 @@ class SerapanQueries
     bidang_urusans.map do |bu|
       { kode: bu[0],
         nama: bu[1],
-        pagu: pagu_periode(bu[0]) }
+        pagu: pagu_periode(bu[0]),
+        realisasi: realisasi_periode(bu[0]) }
     end
   end
 
+  def pagu_anggarans(kode)
+    PaguAnggaran.where(jenis: 'PaguSerapan',
+                       sub_jenis: 'BidangUrusan',
+                       kode: kode,
+                       kode_opd: @kode_opd,
+                       tahun: @periode)
+  end
+
   def pagu_periode(kode)
-    pagu_anggarans = PaguAnggaran.where(jenis: 'PaguSerapan',
-                                        sub_jenis: 'BidangUrusan',
-                                        kode: kode,
-                                        kode_opd: @kode_opd,
-                                        tahun: @periode)
-    pagu_anggarans.to_h do |pa|
+    pagu_anggarans(kode).to_h do |pa|
       [pa.tahun.to_i, pa.anggaran]
+    end
+  end
+
+  def realisasi_periode(kode)
+    pagu_anggarans(kode).to_h do |pa|
+      [pa.tahun.to_i, pa.anggaran_realisasi]
     end
   end
 end

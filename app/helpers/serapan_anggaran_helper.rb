@@ -1,6 +1,8 @@
 module SerapanAnggaranHelper
   # rubocop:disable Metrics
   def growth_average(data)
+    return if data.any? { |_, v| v.nil? }
+
     # data => { 2020 => 123,
     #           2021 => 124,
     #           2022 => 125,
@@ -24,6 +26,15 @@ module SerapanAnggaranHelper
 
     return 0 unless growth_rates.any?
 
-    growth_rates.sum / growth_rates.size.to_f
+    growth = (growth_rates.sum / growth_rates.size.to_f).round(2)
+    "#{growth}%"
+  end
+
+  def rasio_serapan_anggaran(anggaran, realisasi)
+    return 0 if anggaran.nil? || realisasi.nil?
+
+    rasio = ((realisasi / anggaran) * 100).round(2)
+
+    "#{rasio}%"
   end
 end
