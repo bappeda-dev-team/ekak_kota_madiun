@@ -1,16 +1,16 @@
 <%= form_with(url: simpan_serapan_pagu_anggarans_path,
-              method: :post,
-              local: false,
+              method: :post, local: false,
               class: 'px-2',
               data: {
                 controller: 'form-ajax',
-                form_ajax_target_param: "#serapan-#{kode}",
+                form_ajax_target_param: "serapan-#{kode}",
                 action: 'ajax:complete->form-ajax#processAjax'
               }
 ) do |form| %>
   <div class="field mb-3">
     <%= label_tag :bidang_urusan, "Bidang Urusan", class: 'form-label' %>
     <%= text_field :bidang_urusan, "bidang_urusan", class: 'form-control text-bold', value: bidang_urusan, disabled: true, style: "font-weight: bold;" %>
+    <%= hidden_field :kode_bidang_urusan, "kode_bidang_urusan", value: kode %>
   </div>
   <div class="field mt-3 row" id="target-indikator">
     <h5>Pagu Anggaran</h5>
@@ -28,11 +28,11 @@
           </div>
           <div class="field">
             <%= pg.label :anggaran, { class: "form-label" } %>
-            <%= pg.number_field :anggaran, { class: "form-control", step: 50_000_000 } %>
+            <%= pg.number_field :anggaran, { class: "form-control" } %>
           </div>
           <div class="field">
             <%= pg.label :realisasi, { class: "form-label" } %>
-            <%= pg.number_field :anggaran_realisasi, { class: "form-control", step: 50_000_000 } %>
+            <%= pg.number_field :anggaran_realisasi, { class: "form-control" } %>
           </div>
         </fieldset>
       <% end %>

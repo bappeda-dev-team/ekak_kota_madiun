@@ -59,11 +59,22 @@ class PaguAnggaransController < ApplicationController
     else
       pagus.each do |id, attr|
         pagu_angg = PaguAnggaran.find(id)
-        pagu_angg.update!(attr)
+        pagu_angg.update(attr)
       end
     end
 
-    render json: { message: "Pagus created successfully" }, status: :created
+    periode = (2019..2024)
+    kode_opd = cookies[:opd]
+    serapan = SerapanQueries.new(kode_opd: kode_opd,
+                                 periode: periode,
+                                 tahun: periode.last)
+    kode = params[:kode_bidang_urusan].values.first
+    bidang_urusan = serapan.bidang_urusan_pagu.find { |bid| bid[:kode] == kode }
+
+    render json: { resText: 'Anggaran dan Realisasi disimpan',
+                   html_content: html_content({ periode: periode,
+                                                bidang_urusan: bidang_urusan },
+                                              partial: 'laporans/substansi_renstra/serapan_anggaran') }
   rescue ActiveRecord::RecordInvalid => e
     render json: { error: e.message }, status: :unprocessable_entity
   end
