@@ -225,6 +225,8 @@ Rails.application.routes.draw do
   resources :pagu_anggarans do
     get :new_batasan, on: :collection
     post :create_batasan, on: :collection
+    get :edit_serapan, on: :collection
+    post :simpan_serapan, on: :collection
     member do
       get :edit_batasan
       patch :update_batasan

@@ -3,13 +3,67 @@ class PaguAnggaransController < ApplicationController
   before_action :params_from_link, only: %i[new edit]
   before_action :set_pagu, only: %i[edit]
 
-  layout false, only: %i[new_batasan edit_batasan]
+  layout false, only: %i[new_batasan edit_batasan edit_serapan]
 
   def new
     @pagu_anggaran = PaguAnggaran.new
     @kode_opd = current_user.opd.kode_opd
 
     render partial: 'form_pagu_anggaran'
+  end
+
+  # for substansi renstra bab 2 / serapan anggaran
+  # rubocop: disable Metrics
+  def edit_serapan
+    periode = params[:periode].split('-')
+    @tahun_awal = periode[0].to_i
+    @tahun_akhir = periode[-1].to_i
+    @periode = (@tahun_awal..@tahun_akhir)
+    @kode = params[:kode]
+    kode_opd = cookies[:opd]
+    @bidang_urusan = params[:nama_bidang_urusan]
+    pagu_anggarans = PaguAnggaran.where(jenis: 'PaguSerapan',
+                                        sub_jenis: 'BidangUrusan',
+                                        kode: @kode,
+                                        kode_opd: kode_opd,
+                                        tahun: @periode)
+    @pagu_anggarans = if pagu_anggarans.empty?
+                        @periode.map do |tahun|
+                          PaguAnggaran.new(jenis: 'PaguSerapan',
+                                           sub_jenis: 'BidangUrusan',
+                                           kode: @kode,
+                                           kode_opd: kode_opd,
+                                           tahun: tahun)
+                        end
+                      else
+                        pagu_anggarans
+                      end
+  end
+
+  # for substansi renstra bab 2 / serapan anggaran
+  def simpan_serapan
+    pagu_params = params.permit(:authenticity_token, :commit,
+                                pagu_serapans: %i[id tahun jenis sub_jenis anggaran
+                                                  jenis sub_jenis kode kode_opd])
+    pagus = pagu_params[:pagu_serapans]
+
+    if pagus.blank?
+      render json: { error: "No data provided" }, status: :unprocessable_entity
+      return
+    end
+
+    if pagus.is_a?(Array)
+      PaguAnggaran.create(pagus)
+    else
+      pagus.each do |id, attr|
+        pagu_angg = PaguAnggaran.find(id)
+        pagu_angg.update!(attr)
+      end
+    end
+
+    render json: { message: "Pagus created successfully" }, status: :created
+  rescue ActiveRecord::RecordInvalid => e
+    render json: { error: e.message }, status: :unprocessable_entity
   end
 
   def new_batasan
