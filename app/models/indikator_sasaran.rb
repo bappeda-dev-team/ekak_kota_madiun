@@ -6,6 +6,7 @@
 #  aspek             :string
 #  id_indikator      :string
 #  indikator_kinerja :string
+#  is_hidden         :boolean          default(FALSE), not null
 #  keterangan        :string
 #  satuan            :string
 #  target            :string
@@ -19,6 +20,8 @@
 #  index_indikator_sasarans_on_id_indikator  (id_indikator) UNIQUE
 #
 class IndikatorSasaran < ApplicationRecord
+  default_scope { where(is_hidden: false) }
+
   belongs_to :sasaran, primary_key: 'id_rencana', optional: true
   has_one :manual_ik, dependent: :destroy
 
@@ -27,6 +30,8 @@ class IndikatorSasaran < ApplicationRecord
   validates :satuan, presence: true
 
   delegate :tahun, to: :sasaran
+
+  store_accessor :metadata, :is_hidden
 
   def to_s
     indikator_kinerja

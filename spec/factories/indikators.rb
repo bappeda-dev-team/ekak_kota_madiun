@@ -5,6 +5,7 @@
 #  id                   :bigint           not null, primary key
 #  definisi_operational :jsonb
 #  indikator            :string
+#  is_hidden            :boolean          default(FALSE), not null
 #  jenis                :string
 #  keterangan           :string
 #  kode                 :string

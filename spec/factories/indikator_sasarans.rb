@@ -6,6 +6,7 @@
 #  aspek             :string
 #  id_indikator      :string
 #  indikator_kinerja :string
+#  is_hidden         :boolean          default(FALSE), not null
 #  keterangan        :string
 #  satuan            :string
 #  target            :string

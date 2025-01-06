@@ -1015,7 +1015,8 @@ CREATE TABLE public.indikator_sasarans (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     type character varying,
-    keterangan character varying
+    keterangan character varying,
+    is_hidden boolean DEFAULT false NOT NULL
 );
 
 
@@ -1061,7 +1062,8 @@ CREATE TABLE public.indikators (
     realisasi character varying,
     realisasi_pagu character varying,
     created_at timestamp(6) without time zone DEFAULT now() NOT NULL,
-    updated_at timestamp(6) without time zone DEFAULT now() NOT NULL
+    updated_at timestamp(6) without time zone DEFAULT now() NOT NULL,
+    is_hidden boolean DEFAULT false NOT NULL
 );
 
 
@@ -7103,6 +7105,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241217082359'),
 ('20250102120757'),
 ('20250102232607'),
-('20250104052804');
+('20250104052804'),
+('20250106014927'),
+('20250106014937');
 
 

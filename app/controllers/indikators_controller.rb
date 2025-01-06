@@ -315,6 +315,11 @@ class IndikatorsController < ApplicationController
                                               partial: 'laporans/substansi_renstra/iku_tujuan_opd') }
   end
 
+  def hide_iku
+    @indikator = Indikator.find(params[:id])
+    @indikator.toggle :is_hidden
+  end
+
   def new_target_iku_sasaran
     targets_indikators = params[:targets]
     @targets = IndikatorSasaran.where(id: targets_indikators)
