@@ -317,7 +317,9 @@ class IndikatorsController < ApplicationController
 
   def hide_iku
     @indikator = Indikator.find(params[:id])
-    @indikator.toggle :is_hidden
+    @indikator.toggle! :is_hidden
+    render json: { resText: 'IKU Disembunyikan' }.to_json,
+           status: :ok
   end
 
   def new_target_iku_sasaran

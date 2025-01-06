@@ -1,4 +1,4 @@
-<tr id="<%= dom_id(indikator) %>">
+<tr id="<%= dom_id(indikator) %>" data-controller="row">
   <td class="text-gray-900 text-wrap border" width='20px' scope="row"></td>
   <td class="text-gray-900 text-wrap border"><%= indikator %></td>
   <td class="text-gray-900 border px-auto" scope="row">
@@ -31,12 +31,13 @@
           <% end %>
         </div>
         <div class="col">
-          <%= link_to hide_iku_indikator_path(indikator.id),
-                      remote: true,
-                      class: "m-3 btn btn-danger w-100" do %>
-            <i class="fas fa-eye-slash"></i>
-            <span>Hide</span>
-          <% end %>
+          <%= render(DeleteRowButtonComponent.new(
+            message: 'Sembunyikan IKU ?',
+            style: 'm-3 w-100',
+            title: 'Hide',
+            icon: 'fas fa-eye-slash',
+            path: hide_iku_indikator_path(indikator.id))
+          ) %>
         </div>
       </div>
     <% end %>

@@ -86,7 +86,7 @@ Rails.application.routes.draw do
       get :edit_target_iku
       patch :update_iku
       patch :update_realisasi
-      post :hide_iku
+      delete :hide_iku
     end
   end
   resources :pindah_pohon_kinerjas, only: %i[show edit update]

@@ -1,21 +1,26 @@
 # frozen_string_literal: true
 
 class DeleteRowButtonComponent < ViewComponent::Base
-  def initialize(path: '', message: 'Hapus ?', data_attr: {}, data_action: '')
+  def initialize(path: '', message: 'Hapus ?', title: 'Hapus', data_attr: {}, data_action: '', style: '', icon: nil)
     super
-    @title = 'Hapus'
+    @title = title
     @path = path
     @message = message
     @data_attr = data_attr
     @data_action = data_action
+    @style = style
+    @icon = icon
   end
 
   def style
-    'btn btn-sm btn-outline-danger'
+    default_style = ['btn btn-sm btn-outline-danger']
+    default_style << @style
+    default_style.join(' ')
   end
 
   def icon
-    "<span class='fas fa-trash-alt me-2'></span>".html_safe
+    default_icon = @icon || 'fas fa-trash-alt'
+    "<span class='#{default_icon} me-2'></span>".html_safe
   end
 
   def data_actions
