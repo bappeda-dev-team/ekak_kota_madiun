@@ -67,8 +67,6 @@ class Indikator < ApplicationRecord
   scope :sdgs_output, -> { where(jenis: 'SDGS', sub_jenis: 'Output').order(id: :desc) }
   scope :iku_opd, -> { where(jenis: 'IKU', sub_jenis: 'OPD').order(id: :desc) }
 
-  store_accessor :metadata, :is_hidden
-
   def to_s
     indikator
   end

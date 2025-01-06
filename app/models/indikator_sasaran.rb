@@ -31,8 +31,6 @@ class IndikatorSasaran < ApplicationRecord
 
   delegate :tahun, to: :sasaran
 
-  store_accessor :metadata, :is_hidden
-
   def to_s
     indikator_kinerja
   end
