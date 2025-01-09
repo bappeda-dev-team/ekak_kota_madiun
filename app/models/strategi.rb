@@ -311,7 +311,7 @@ class Strategi < ApplicationRecord
   end
 
   def status_dampak_resiko(tahun)
-    sasaran_rincian_not_deleted(tahun).flat_map(&:dampak_resiko_verif?)
+    sasaran_rincian_not_deleted(tahun).flat_map(&:dampak_resiko_setuju?)
   end
 
   def strategi_dihapus?

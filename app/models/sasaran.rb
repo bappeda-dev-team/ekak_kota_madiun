@@ -707,6 +707,10 @@ class Sasaran < ApplicationRecord
     status_dampak_resiko == "Setuju"
   end
 
+  def dampak_resiko_ditolak?
+    status_dampak_resiko == "Tolak"
+  end
+
   def tahapan_mr?
     tahapans.any? { |t| t.rtp_mr? }
   end
@@ -735,12 +739,16 @@ class Sasaran < ApplicationRecord
     if user.eselon_user == 'eselon_3'
       sasaran_bawahan_eselon3_diverifikasi.all?(true)
     else
-      status_dampak_resiko.present?
+      dampak_resiko_setuju?
     end
   end
 
   def status_manrisk
-    if rincian&.resiko.present? && permasalahans.any?
+    if dampak_resiko_setuju?
+      'disetujui'
+    elsif dampak_resiko_ditolak?
+      'ditolak'
+    elsif rincian&.resiko.present? && permasalahans.any?
       'siap_dinilai'
     else
       'belum_siap'

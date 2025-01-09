@@ -67,6 +67,6 @@ class DaftarResiko
   end
 
   def tahun
-    @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @tahun = @tahun.include?('murni') ? @tahun[/[^_]\d*/, 0] : @tahun
   end
 end

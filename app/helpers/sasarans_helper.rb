@@ -57,15 +57,17 @@ module SasaransHelper
 
   def status_sasaran_pokin(status_sasaran)
     if status_sasaran == 'siap_ditarik'
-      '<span class="badge badge-lg bg-success text-dark w-100">SIAP DITARIK SKP</span>'.html_safe
+      '<span class="badge badge-lg bg-success w-100">SIAP DITARIK SKP</span>'.html_safe
     else
       '<span class="badge badge-lg bg-warning text-dark w-100">BELUM SIAP DITARIK SKP</span>'.html_safe
     end
   end
 
   def status_manrisk(status_manrisk)
-    if status_manrisk == 'siap_dinilai'
-      '<span class="badge badge-lg bg-success text-dark w-100">MANRISK SIAP DIVERIFIKASI</span>'.html_safe
+    if status_manrisk == 'disetujui'
+      '<span class="badge badge-lg bg-success w-100">MANRISK DISETUJUI</span>'.html_safe
+    elsif %w[siap_dinilai ditolak].include?(status_manrisk)
+      '<span class="badge badge-lg bg-warning text-dark w-100">MANRISK BELUM DIVERIFIKASI</span>'.html_safe
     else
       '<span class="badge badge-lg bg-danger w-100">MANRISK BELUM TERISI</span>'.html_safe
     end
