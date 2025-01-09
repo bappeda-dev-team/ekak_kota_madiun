@@ -407,16 +407,16 @@ class UsersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def user_params
     params.require(:user).permit(:nama, :nik, :password, :kode_opd, :email, :lembaga_id, :password_confirmation,
-                                 :pindah_opd, :hapus_sasaran, :status_jabatan)
+                                 :pindah_opd, :hapus_sasaran, :status_jabatan, :pangkat, :nama_pangkat)
   end
 
   def user_detail_params
     if params[:kepala]
-      params.require(:kepala).permit(:nama, :nama_bidang, :kode_opd, :jabatan)
+      params.require(:kepala).permit(:nama, :nama_bidang, :kode_opd, :jabatan, :pangkat, :nama_pangkat)
     elsif params[:atasan]
-      params.require(:atasan).permit(:nama, :nama_bidang, :kode_opd, :jabatan)
+      params.require(:atasan).permit(:nama, :nama_bidang, :kode_opd, :jabatan, :pangkat, :nama_pangkat)
     else
-      params.require(:user).permit(:nama, :nama_bidang, :kode_opd, :jabatan)
+      params.require(:user).permit(:nama, :nama_bidang, :kode_opd, :jabatan, :pangkat, :nama_pangkat)
     end
   end
 end
