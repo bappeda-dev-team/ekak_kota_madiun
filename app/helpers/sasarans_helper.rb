@@ -83,4 +83,8 @@ module SasaransHelper
       "<span class='badge bg-danger'><i class='fa fa-times'></i> Manual IK atau Indikator Belum terisi</span>".html_safe
     end
   end
+
+  def strategi_valid_style(strategi)
+    strategi.strategi_dihapus? || strategi == 'Kosong' ? 'text-danger' : 'text-success'
+  end
 end

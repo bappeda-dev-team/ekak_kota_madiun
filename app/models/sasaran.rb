@@ -52,16 +52,16 @@ class Sasaran < ApplicationRecord
   # belongs_to :sumber_dana, foreign_key: 'sumber_dana', primary_key: 'kode_sumber_dana', optional: true
 
   has_many :usulans, dependent: :destroy
-  has_many :dasar_hukums, foreign_key: 'sasaran_id', primary_key: 'id_rencana', class_name: 'DasarHukum',
+  has_many :dasar_hukums, primary_key: 'id_rencana', class_name: 'DasarHukum',
                           dependent: :destroy
   has_many :musrenbangs, dependent: :nullify
   has_many :pokpirs, dependent: :nullify
   has_many :mandatoris, dependent: :nullify
   has_many :inovasis, dependent: :nullify
-  has_many :indikator_sasarans, foreign_key: 'sasaran_id', primary_key: 'id_rencana', dependent: :destroy
+  has_many :indikator_sasarans, primary_key: 'id_rencana', dependent: :destroy
   has_many :tahapans, lambda {
-                        where.not(id_rencana_aksi: [nil, ''])
-                      }, foreign_key: 'id_rencana', primary_key: 'id_rencana', dependent: :nullify, inverse_of: :sasaran
+    where.not(id_rencana_aksi: [nil, ''])
+  }, foreign_key: 'id_rencana', primary_key: 'id_rencana', dependent: :nullify, inverse_of: :sasaran
   has_many :anggarans, through: :tahapans
   has_one :rincian, dependent: :destroy
   has_many :permasalahans, dependent: :destroy
@@ -87,21 +87,21 @@ class Sasaran < ApplicationRecord
   scope :hangus, -> { left_outer_joins(:usulans).where(usulans: { sasaran_id: nil }).where(program_kegiatan: nil) }
   scope :total_hangus, -> { hangus.count }
   scope :belum_ada_sub, lambda {
-                          left_outer_joins(:usulans)
-                            .where.not(usulans: { sasaran_id: nil })
-                            .where(program_kegiatan: nil)
-                        }
+    left_outer_joins(:usulans)
+      .where.not(usulans: { sasaran_id: nil })
+      .where(program_kegiatan: nil)
+  }
   scope :total_belum_lengkap, -> { belum_ada_sub.count }
   scope :sudah_lengkap, lambda {
-                          includes(:usulans, :program_kegiatan).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan: nil)
-                        }
+    includes(:usulans, :program_kegiatan).where.not(usulans: { sasaran_id: nil }).where.not(program_kegiatan: nil)
+  }
   scope :total_sudah_lengkap, -> { sudah_lengkap.count }
   scope :digunakan, -> { where(status: 'disetujui') }
   scope :total_digunakan, -> { where(status: 'disetujui').count }
   scope :dilaporan, -> { where(status: %w[pengajuan disetujui ditolak]) }
   scope :sasaran_tematik, lambda { |tematik|
-                            includes(:subkegiatan_tematiks).where(subkegiatan_tematiks: { kode_tematik: tematik })
-                          }
+    includes(:subkegiatan_tematiks).where(subkegiatan_tematiks: { kode_tematik: tematik })
+  }
   scope :kurang_lengkap, -> { select { |s| s.usulans.exists? && s.belum_ada_sub? }.size }
   scope :hijau, -> { select(&:lengkap?).size }
   scope :biru, -> { select(&:selesai?).reject(&:lengkap?).size }
@@ -115,10 +115,10 @@ class Sasaran < ApplicationRecord
   scope :dengan_nip, -> { where.not(nip_asn: [nil, '']) }
 
   scope :lengkap_strategi_tahun, lambda { |tahun|
-                                   includes(%i[strategi usulans program_kegiatan indikator_sasarans])
-                                     .where(tahun: tahun)
-                                     .select { |s| s.strategi.present? }
-                                 }
+    includes(%i[strategi usulans program_kegiatan indikator_sasarans])
+      .where(tahun: tahun)
+      .select { |s| s.strategi.present? }
+  }
 
   SUMBERS = { dana_transfer: 'Dana Transfer', dak: 'DAK', dbhcht: 'DBHCHT', bk_provinsi: 'BK Provinsi',
               blud: 'BLUD' }.freeze
@@ -617,14 +617,18 @@ class Sasaran < ApplicationRecord
   end
 
   def strategi_sasaran
-    strategi.strategi
+    if strategi.strategi_dihapus?
+      "Pohon sudah dihapus, edit rekin untuk perbaiki"
+    else
+      strategi.strategi
+    end
   rescue NoMethodError
     'Kosong'
   end
 
   def status_ekak
-    tahun_bener = tahun.match(/murni/) ? tahun[/[^_]\d*/, 0] : tahun
-    if tahun_bener.match(/perubahan/)
+    tahun_bener = /murni/.match?(tahun) ? tahun[/[^_]\d*/, 0] : tahun
+    if /perubahan/.match?(tahun_bener)
       'E-KAK Perubahan'
     else
       'E-KAK'

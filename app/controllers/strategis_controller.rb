@@ -216,7 +216,9 @@ class StrategisController < ApplicationController
     render partial: 'strategis/renaksi'
   end
 
+  # rubocop: disable Metrics
   def pokin_list
+    query = params[:q] || ''
     tahun = cookies[:tahun]
     # user = current_user.id
     user = params[:user_id]
@@ -224,11 +226,11 @@ class StrategisController < ApplicationController
     # opd = Opd.find_by_kode_unik_opd(kode_unik_opd)
     # role = current_user.role_asn
     #
-    @pohons = Pohon.where(
-      tahun: tahun,
-      user_id: user,
-      pohonable_type: 'StrategiPohon'
-    ).reject { |p| p.pohonable.nil? || p.role == 'deleted' || p.pohonable.role == 'deleted' }
+    @pohons = Pohon.where(tahun: tahun,
+                          user_id: user,
+                          pohonable_type: 'StrategiPohon')
+                   .select { |p| p.pohonable.strategi =~ /#{query}/i }
+                   .reject { |p| p.pohonable.nil? || p.role == 'deleted' || p.pohonable.role == 'deleted' }
   end
 
   private
@@ -247,7 +249,7 @@ class StrategisController < ApplicationController
                                        sasaran_attributes: [:sasaran_kinerja, :nip_asn, :strategi_id, :tahun,
                                                             :id_rencana, indikator_sasarans_params])
     tahun = strategi_parameter[:tahun]
-    tahun_bener = tahun.match(/murni/) ? tahun[/[^_]\d*/, 0] : tahun
+    tahun_bener = /murni/.match?(tahun) ? tahun[/[^_]\d*/, 0] : tahun
     strategi_parameter[:tahun] = tahun_bener
     strategi_parameter[:sasaran_attributes][:tahun] = strategi_parameter[:tahun]
     strategi_parameter
