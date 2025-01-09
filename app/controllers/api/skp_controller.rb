@@ -23,14 +23,14 @@ module Api
     end
 
     def rencana_aksi_pegawai
-      id_sasaran = params[:id_sasaran]
+      @id_sasaran = params[:id_sasaran]
       @nip = params[:nip]
       @tahun = params[:tahun]
       @user = User.find_by(nik: @nip)
       @eselon = @user.role_asn
-      @status_rencana_aksi = true
-      @sasaran = @user.sasarans.find_by(id_rencana: id_sasaran)
-      @tahapans = @sasaran.tahapan_renaksi
+      @sasaran = @user.sasarans.find_by(id_rencana: @id_sasaran)
+      @tahapans = @sasaran&.tahapan_renaksi
+      @status_rencana_aksi = @tahapans.nil?
     end
 
     def manual_ik_pegawai
@@ -64,7 +64,7 @@ module Api
         }, status: :not_found
         return
       end
-      tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+      tahun_bener = /murni|perubahan/.match?(@tahun) ? @tahun[/[^_]\d*/, 0] : @tahun
       periode = Periode.find_tahun_all(tahun_bener)
       if periode.empty?
         render json: {
@@ -125,7 +125,7 @@ module Api
     def tujuan_kota
       @tahun = params[:tahun]
 
-      tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+      tahun_bener = /murni|perubahan/.match?(@tahun) ? @tahun[/[^_]\d*/, 0] : @tahun
       @periode = Periode.find_tahun(tahun_bener)
       @tahun_awal = @periode.tahun_awal.to_i
       @tahun_akhir = @periode.tahun_akhir.to_i
