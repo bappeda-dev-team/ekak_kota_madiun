@@ -39,7 +39,7 @@ class IkuOpdQueries
 
     # Filter `iku_sasaran` to exclude any entry whose `indikator` exists in `iku_indikator`
     filtered_iku_sasaran = iku_sasaran.reject do |sasaran|
-      iku_indikator.any? { |indikator| indikator.indikator == sasaran.indikator_kinerja }
+      iku_indikator.any? { |indikator| indikator.indikator == sasaran.indikator_kinerja || !indikator.is_hidden }
     end
 
     filtered_iku_sasaran.select { |ff| ff.indikator_kinerja.present? }
