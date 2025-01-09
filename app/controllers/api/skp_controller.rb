@@ -31,6 +31,11 @@ module Api
       @sasaran = @user.sasarans.find_by(id_rencana: @id_sasaran)
       @tahapans = @sasaran&.tahapan_renaksi
       @status_rencana_aksi = @tahapans.nil?
+      if @status_rencana_aksi
+        render status: :not_found
+      else
+        render status: :ok
+      end
     end
 
     def manual_ik_pegawai
