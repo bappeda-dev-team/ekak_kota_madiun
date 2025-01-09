@@ -340,8 +340,11 @@ class User < ApplicationRecord
   end
 
   def sasaran_asn_sync_skp(tahun: nil)
-    sasarans.includes(:tahapans).where.not(tahapans: { id_rencana: nil }).where("sasarans.tahun ILIKE ?",
-                                                                                "%#{tahun}%").dengan_strategi
+    sasaran_all = sasarans.includes(:tahapans)
+                          .where.not(tahapans: { id_rencana: nil })
+                          .where("sasarans.tahun ILIKE ?", "%#{tahun}%")
+                          .dengan_strategi
+    sasaran_all.select { |ss| ss.siap_ditarik? }
   end
 
   def sasaran_pohon_kinerja(tahun: nil)
