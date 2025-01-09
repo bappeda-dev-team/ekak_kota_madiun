@@ -463,6 +463,22 @@ class Sasaran < ApplicationRecord
     metadata&.dig("gambaran_nilai_kebaruan")
   end
 
+  def sasaran_inovasi
+    punya_inovasi? ? inovasi_sasaran : ''
+  end
+
+  def sasaran_hasil_inovasi
+    punya_inovasi? ? hasil_inovasi_sasaran : ''
+  end
+
+  def sasaran_jenis_inovasi
+    punya_inovasi? ? jenis_inovasi_sasaran : ''
+  end
+
+  def sasaran_gambaran_inovasi
+    punya_inovasi? ? gambaran_nilai_kebaruan_sasaran : ''
+  end
+
   def output_sasaran
     metadata&.dig("hasil_output")
   end

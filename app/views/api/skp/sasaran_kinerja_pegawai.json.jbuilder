@@ -13,6 +13,11 @@ json.data do
     json.jenis_strategi sasaran&.strategi&.role
     json.strategi sasaran&.strategi&.strategi
     json.sasaran sasaran.sasaran_kinerja
+    json.terdapat_inovasi sasaran.punya_inovasi?
+    json.inovasi_sasaran sasaran.sasaran_inovasi
+    json.hasil_inovasi_sasaran sasaran.sasaran_hasil_inovasi
+    json.jenis_inovasi_sasaran sasaran.sasaran_jenis_inovasi
+    json.gambaran_inovasi_sasaran sasaran.sasaran_gambaran_inovasi
     json.jumlah_indikator sasaran.indikator_sasarans.size
     json.indikator_sasaran sasaran.indikator_sasarans do |indikator_sasaran|
       json.id_indikator indikator_sasaran.id
