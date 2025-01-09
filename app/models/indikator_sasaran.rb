@@ -20,8 +20,6 @@
 #  index_indikator_sasarans_on_id_indikator  (id_indikator) UNIQUE
 #
 class IndikatorSasaran < ApplicationRecord
-  default_scope { where(is_hidden: false) }
-
   belongs_to :sasaran, primary_key: 'id_rencana', optional: true
   has_one :manual_ik, dependent: :destroy
 
