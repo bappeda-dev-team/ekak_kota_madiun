@@ -1,15 +1,10 @@
+<%= content_for :html_title, "Master Program Kegiatan Subkegiatan OPD" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Data Master</li>
+  <li class="breadcrumb-item active" aria-current="page">Master Program Kegiatan Subkegiatan OPD</li>
+<% end %>
 <div class="row">
   <div class="col-12" data-controller="filter-render">
-    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
-      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
-        <li class="breadcrumb-item">
-          <%= link_to root_path do %>
-            <i class="fas fa-home"></i>
-          <% end %>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">Renja</li>
-      </ol>
-    </nav>
     <% flash.each do |type, msg| %>
       <% tipe = type == 'error' ? 'danger' : type %>
       <div class="alert alert-<%= tipe %>">
@@ -29,7 +24,7 @@
       <div class="card-body">
         <%= form_with url: @filter_url,local: false ,data: { action: 'ajax:success->filter-render#append' } do |form| %>
           <%= form.label :tahun %>
-          <%= form.select(:tahun, (['',2020,2021,2022,2023,2024]), {},
+          <%= form.select(:tahun, (['',2020,2021,2022,2023,2024, 2025, 2026, 2027]), {},
                           {
                             data: {"placeholder": "Pilih Tahun",
                                    controller: 'dropdown',

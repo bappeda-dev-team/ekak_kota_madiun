@@ -2,7 +2,7 @@
   <div class="row align-items-center">
     <div class="col">
       <% opd = Opd.find_by(kode_unik_opd: @kode_opd) %>
-      <h2 class="fs-5 fw-bold mb-0">Renja Sub Kegiatan <%= opd.nama_opd %> <%= @tahun %> </h2>
+      <h2 class="fs-5 fw-bold mb-0">Sub Kegiatan <%= opd.nama_opd %> <%= @tahun %> </h2>
     </div>
     <% if current_user.has_role? :super_admin %>
       <div class="col-2 text-end">

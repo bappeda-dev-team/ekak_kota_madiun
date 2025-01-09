@@ -38,8 +38,8 @@ module SuperAdminItemHelper
         icon: 'fas fa-building', identifier: 'master_bidang'
       },
       {
-        title: 'Master Subkegiatan', href: master_subkegiatans_path,
-        icon: 'fas fa-docs', identifier: 'master_subkegiatan'
+        title: 'Master Program Kegiatan Subkegiatan OPD', href: admin_sub_kegiatan_path,
+        icon: 'fas fa-folder-open', identifier: 'master_program_kegiatan_subkegiatan_opd'
       },
       {
         title: 'Master Rencana Kinerja', href: sasaran_admin_sasarans_path,

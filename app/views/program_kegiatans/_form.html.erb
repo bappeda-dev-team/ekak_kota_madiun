@@ -12,39 +12,44 @@
   <div class="field">
     <%= form.label :kode_opd_induk , class: "form-label" %>
     <%= form.select :kode_opd, Opd.pluck(:nama_opd, :kode_opd), {include_blank: true} ,
-      { data: { "placeholder": "Pilih OPD",
-                controller: 'dropdown',
-                dropdown_parent_value: '#form-programkegiatan'
-      } } %>
+     { data: { "placeholder": "Pilih OPD",
+       controller: 'dropdown',
+       dropdown_parent_value: '#form-programkegiatan'
+     } } %>
   </div>
   <div class="field">
     <%= form.label :kode_sub_opd , class: "form-label" %>
     <%= form.select :kode_sub_skpd, Opd.pluck(:nama_opd, :kode_unik_opd), {include_blank: true} ,
-      { data: { "placeholder": "Pilih OPD",
-                controller: 'dropdown',
-                dropdown_parent_value: '#form-programkegiatan'
-      } } %>
+     { data: { "placeholder": "Pilih OPD",
+       controller: 'dropdown',
+       dropdown_parent_value: '#form-programkegiatan'
+     } } %>
+    <p>
+      <small>Samakan dengan induk jika tidak ada sub opd</small>
+    </p>
   </div>
   <div class="field">
     <%= form.label :tahun, class: "form-label" %>
-    <%= form.select(:tahun, (['',2020,2021,2022,2023,2024]), {},
+    <%= form.select(:tahun, (['',2020,2021,2022,2023,2024,2025,2026,2027]), {},
                     {
-                     data: {"placeholder": "Pilih Tahun",
-                            controller: 'dropdown',
-                            dropdown_parent_value: '#form-programkegiatan'
-                     }}) %>
+                      data: {"placeholder": "Pilih Tahun",
+                             controller: 'dropdown',
+                             dropdown_parent_value: '#form-programkegiatan'
+    }}) %>
   </div>
   <div class="field">
     <%= form.label :kode_urusan, class: "form-label" %>
-    <%= form.text_field :kode_urusan, class: "form-control", placeholder: "..." %>
+    <%= form.text_field :kode_urusan, class: "form-control", pattern: '\d' %>
+    <small>Contoh format: 1</small>
   </div>
   <div class="field">
     <%= form.label :nama_urusan, class: "form-label" %>
-    <%= form.text_area :nama_urusan, class: "form-control", placeholder: "..." %>
+    <%= form.text_area :nama_urusan, class: "form-control", placeholder: "contoh: URUSAN WAJIB" %>
   </div>
   <div class="field">
     <%= form.label :kode_bidang_urusan, class: "form-label" %>
-    <%= form.text_field :kode_bidang_urusan, class: "form-control", placeholder: "..." %>
+    <%= form.text_field :kode_bidang_urusan, class: "form-control", pattern: '\d+\.\d{2}' %>
+    <small>Contoh format: 1.01</small>
   </div>
   <div class="field">
     <%= form.label :nama_bidang_urusan, class: "form-label" %>
@@ -53,7 +58,8 @@
   <hr/>
   <div class="field">
     <%= form.label :kode_program, class: "form-label" %>
-    <%= form.text_field :kode_program, class: "form-control", placeholder: "..." %>
+    <%= form.text_field :kode_program, class: "form-control", pattern: '\d+\.\d{2}\.\d{2}' %>
+    <small>Contoh format: 1.01.01</small>
   </div>
   <div class="field">
     <%= form.label :program, class: "form-label" %>
@@ -62,7 +68,8 @@
   <hr/>
   <div class="field">
     <%= form.label :kode_kegiatan, class: "form-label" %>
-    <%= form.text_field :kode_giat, class: "form-control", placeholder: "..." %>
+    <%= form.text_field :kode_giat, class: "form-control", pattern: '\d+\.\d{2}\.\d{2}\.\d+\.\d{2}' %>
+    <small>Contoh format: 1.01.01.2.01</small>
   </div>
   <div class="field">
     <%= form.label :kegiatan, class: "form-label" %>
@@ -71,7 +78,8 @@
   <hr/>
   <div class="field">
     <%= form.label :kode_subkegiatan, class: "form-label" %>
-    <%= form.text_field :kode_sub_giat , class: "form-control", placeholder: "..." %>
+    <%= form.text_field :kode_sub_giat , class: "form-control", pattern: '\d+\.\d{2}\.\d{2}\.\d+\.\d{2}\.\d{4}' %>
+    <small>Contoh format: 1.01.01.2.01.0001</small>
   </div>
   <div class="field">
     <%= form.label :subkegiatan, class: "form-label" %>
