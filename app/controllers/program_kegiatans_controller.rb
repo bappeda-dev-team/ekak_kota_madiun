@@ -96,11 +96,11 @@ class ProgramKegiatansController < ApplicationController
     render :admin_program_kegiatan
   end
 
+  def show; end
+
   def new
     @programKegiatan = ProgramKegiatan.new
   end
-
-  def show; end
 
   def show_to_kak; end
 
@@ -133,7 +133,7 @@ class ProgramKegiatansController < ApplicationController
     # end
     @nama_file = ProgramKegiatan.find(params[:id]).nama_subkegiatan
     @tahun = params[:tahun] || Time.now.year
-    @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @tahun = /murni/.match?(@tahun) ? @tahun[/[^_]\d*/, 0] : @tahun
     @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
     @filename = "Laporan_KAK_#{@nama_file}_#{@waktu}.pdf"
     @program_kegiatan = ProgramKegiatan.find(params[:id])
@@ -148,7 +148,7 @@ class ProgramKegiatansController < ApplicationController
   def pdf_rka
     @nama_file = ProgramKegiatan.find(params[:id]).nama_subkegiatan
     @tahun = params[:tahun] || Time.now.year
-    @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @tahun = /murni/.match?(@tahun) ? @tahun[/[^_]\d*/, 0] : @tahun
     @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
     @filename = "Laporan_RAB_#{@nama_file}_#{@waktu}.pdf"
   end
@@ -246,6 +246,7 @@ class ProgramKegiatansController < ApplicationController
     @program_kegiatan = ProgramKegiatan.find(params[:id])
   end
 
+  # rubocop: disable Metrics
   def create
     opd = Opd.find_by(kode_opd: programKegiatan_params[:kode_opd])
     sub_opd = Opd.find_by(kode_unik_opd: programKegiatan_params[:kode_sub_skpd])

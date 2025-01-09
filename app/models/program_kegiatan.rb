@@ -51,7 +51,7 @@ class ProgramKegiatan < ApplicationRecord
   validates :nama_program, presence: true
   validates :kode_program, presence: true
 
-  belongs_to :opd, foreign_key: "kode_opd", primary_key: "kode_opd"
+  belongs_to :opd, foreign_key: "kode_skpd", primary_key: "kode_unik_opd"
 
   has_many :kaks
   has_many :sasarans, dependent: :nullify
@@ -205,8 +205,8 @@ class ProgramKegiatan < ApplicationRecord
   end
 
   def indikator_renstras_alt_new(type, kode_unit, tahun)
-    send("indikator_#{type}_renstra").where(tahun: tahun, kode_opd: kode_unit)
-                                     .max_by(&:version)
+    send(:"indikator_#{type}_renstra").where(tahun: tahun, kode_opd: kode_unit)
+                                      .max_by(&:version)
   end
 
   def indikator_renstras_new(type, kode_unit)
@@ -269,7 +269,7 @@ class ProgramKegiatan < ApplicationRecord
     #                .select { |k| k.kode_opd == kode_sub_skpd }
     #                .group_by(&:version)
     # ind_programs[ind_programs.keys.max]
-    ind_programs = send("indikator_#{type}_#{jenis}").select { |k| k.kode_opd == kode_sub_skpd }
+    ind_programs = send(:"indikator_#{type}_#{jenis}").select { |k| k.kode_opd == kode_sub_skpd }
     ind_programs.group_by(&:tahun).map { |_k, v| v.max_by(&:version) }
   end
 

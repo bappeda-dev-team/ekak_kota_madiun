@@ -38,9 +38,10 @@ class FilterController < ApplicationController
   end
 
   # filter subkegiatan
+  # rubocop: disable Metrics
   def filter_subkegiatan
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
-    @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @tahun = @tahun.include?('murni') ? @tahun[/[^_]\d*/, 0] : @tahun
     @programKegiatans = ProgramKegiatan.order(:id).includes(%i[opd])
                                        .where(opds: { kode_unik_opd: @kode_opd })
                                        .where(tahun: @tahun)
@@ -53,7 +54,7 @@ class FilterController < ApplicationController
   end
 
   def filter_program
-    @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @tahun = /murni/.match?(@tahun) ? @tahun[/[^_]\d*/, 0] : @tahun
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
 
     @program_kegiatans = ProgramKegiatan.includes(:opd)
@@ -70,7 +71,7 @@ class FilterController < ApplicationController
   end
 
   def filter_kegiatan
-    @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @tahun = /murni/.match?(@tahun) ? @tahun[/[^_]\d*/, 0] : @tahun
     opd = Opd.find_by(kode_unik_opd: @kode_opd).nama_opd
     @programKegiatans = ProgramKegiatan.includes(:opd)
                                        .select("DISTINCT ON(program_kegiatans.kode_giat) program_kegiatans.*")
@@ -343,7 +344,7 @@ class FilterController < ApplicationController
   def tahun_dan_opd
     @tahun_sasaran = params[:tahun_sasaran]
     @kode_opd = params[:kode_opd]
-    @tahun_sasaran = @tahun_sasaran.match(/murni/) ? @tahun_sasaran[/[^_]\d*/, 0] : @tahun_sasaran
+    @tahun_sasaran = /murni/.match?(@tahun_sasaran) ? @tahun_sasaran[/[^_]\d*/, 0] : @tahun_sasaran
     if @kode_opd.present?
       @opd = Opd.find_by(kode_unik_opd: @kode_opd)
       @lembaga = @opd.lembaga
@@ -392,7 +393,7 @@ class FilterController < ApplicationController
   end
 
   def tahun_asli
-    @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @tahun = /murni/.match?(@tahun) ? @tahun[/[^_]\d*/, 0] : @tahun
   end
 
   def nama_opd
