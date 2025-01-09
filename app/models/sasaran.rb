@@ -617,7 +617,7 @@ class Sasaran < ApplicationRecord
   end
 
   def strategi_sasaran
-    if strategi.strategi_dihapus?
+    if strategi&.strategi_dihapus?
       "Pohon sudah dihapus, edit rekin untuk perbaiki"
     else
       strategi.strategi
