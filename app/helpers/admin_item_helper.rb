@@ -52,6 +52,10 @@ module AdminItemHelper
       {
         title: 'Pagu SIPKD', href: daftar_pagu_program_kegiatans_path,
         icon: 'fas fa-chart-line', identifier: 'daftar_pagu'
+      },
+      {
+        title: 'Master Program Kegiatan Subkegiatan OPD', href: admin_sub_kegiatan_path,
+        icon: 'fas fa-folder-open', identifier: 'master_program_kegiatan_subkegiatan_opd'
       }
     ]
     return items if guest?
