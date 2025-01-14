@@ -45,4 +45,26 @@ module IkuHelper
   def target_lainnyas_tujuan(indikator_tujuan)
     indikator_tujuan.target_lainnyas.last&.target
   end
+
+  def pertumbuhan_target(indikator_tujuan, periode)
+    target_hash = periode.to_h do |tahun|
+      [tahun.to_i, target_iku_tujuan(indikator_tujuan, tahun).to_f]
+    end
+    growth_average(target_hash)
+  end
+
+  def pertumbuhan_realisasi(indikator_tujuan, periode)
+    realisasi_hash = periode.to_h do |tahun|
+      [tahun.to_i, realisasi_iku_tujuan(indikator_tujuan, tahun).to_f]
+    end
+    growth_average(realisasi_hash)
+  end
+
+  def pertumbuhan_capaian(indikator_tujuan, periode)
+    capaian_hash = periode.to_h do |tahun|
+      rasio = indikator_tujuan.realisasis.find_by(tahun: tahun)&.capaian
+      [tahun.to_i, rasio.to_f]
+    end
+    growth_average(capaian_hash)
+  end
 end
