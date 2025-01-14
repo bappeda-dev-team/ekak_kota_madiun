@@ -77,6 +77,10 @@ module Laporans::SubstansiRenstraHelper
       {
         title: 'Serapan Anggaran', href: laporans_substansi_renstra_serapan_anggaran_path(periode: '2019-2024'),
         identifier: 'substansi-renstra-bab-2-serapan-anggaran'
+      },
+      {
+        title: 'Efektifitas dan Efisiensi', href: laporans_substansi_renstra_efektifitas_dan_efisiensi_path(periode: '2019-2024'),
+        identifier: 'substansi-renstra-bab-2-efektifitas-dan-efisiensi'
       }
     ]
   end

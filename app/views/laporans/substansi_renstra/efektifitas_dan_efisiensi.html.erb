@@ -1,0 +1,35 @@
+<%= content_for :html_title, "Bab 2 - Efektifitas dan Efisiensi" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Substansi Renstra</li>
+  <li class="breadcrumb-item" aria-current="page">Bab 2</li>
+  <li class="breadcrumb-item active" aria-current="page">Efektifitas dan Efisiensi</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout', title: "Efektifitas dan Efisiensi - Periode #{@tahun_awal}-#{@tahun_akhir}" do %>
+    <div class="table-responsive">
+      <table class="table align-items-center">
+        <thead class="thead-tujuan">
+          <tr class="header-tujuan">
+            <th class="border text-center" scope="col"></th>
+            <th class="border text-center" scope="col">RATA-RATA PERTUMBUHAN</th>
+            <th class="border text-center" scope="col">NILAI</th>
+            <th class="border text-center" scope="col">STATUS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="efektifitas-kinerja">
+            <td class="text-gray-900 text-wrap border">PERTUMBUHAN CAPAIAN KINERJA</td>
+            <td class="text-gray-900 text-wrap border"><%= @efektifitas[:kinerja] %></td>
+            <td class="text-gray-900 text-wrap border"><%= @efektifitas[:nilai_kinerja] %></td>
+            <td class="text-gray-900 text-wrap text-center border" rowspan="2">EFEKTIF-EFISIEN</td>
+          </tr>
+          <tr id="efektifitas-anggaran">
+            <td class="text-gray-900 text-wrap border">PERTUMBUHAN SERAPAN ANGGARAN</td>
+            <td class="text-gray-900 text-wrap border"><%= @efektifitas[:anggaran] %></td>
+            <td class="text-gray-900 text-wrap border"><%= @efektifitas[:nilai_anggaran] %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>

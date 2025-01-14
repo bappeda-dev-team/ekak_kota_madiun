@@ -71,6 +71,18 @@ class Laporans::SubstansiRenstraController < ApplicationController
     @bidang_urusans = serapan_anggaran.bidang_urusan_pagu
   end
 
+  def efektifitas_dan_efisiensi
+    periode = params[:periode].split('-')
+    @tahun_awal = periode[0].to_i
+    @tahun_akhir = periode[-1].to_i
+    @periode = (@tahun_awal..@tahun_akhir)
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    efektifitas = EfektifitasQueries.new(tahun: @tahun, kode_opd: @kode_opd, periode: @periode)
+    @opd = efektifitas.opd
+    @efektifitas = efektifitas.efektifitas_efisiensi_opd
+  end
+
   def permasalahan_isu_strategis
     @kode_unik_opd = cookies[:opd]
     @tahun = cookies[:tahun]
