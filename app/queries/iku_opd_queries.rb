@@ -1,4 +1,5 @@
 class IkuOpdQueries
+  include SerapanAnggaranHelper
   def initialize(kode_opd: '', tahun: '', periode: '')
     @kode_opd = kode_opd
     @tahun = tahun
@@ -50,5 +51,19 @@ class IkuOpdQueries
     iku_tujuan = tujuan_opd.flat_map(&:indikators)
 
     iku_tujuan + komponen_indikator_iku
+  end
+
+  def iku_tujuan_targets
+    komponen_indikator_tujuan.map do |ind|
+      {
+        growth_capaian: growth_average(capaian_iku(ind))
+      }
+    end
+  end
+
+  def capaian_iku(indikator)
+    indikator.targets.where(tahun: @periode).to_h do |tar|
+      [tar.tahun.to_i, tar.capaian]
+    end
   end
 end

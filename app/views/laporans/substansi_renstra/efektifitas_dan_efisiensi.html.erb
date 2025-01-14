@@ -19,14 +19,14 @@
         <tbody>
           <tr id="efektifitas-kinerja">
             <td class="text-gray-900 text-wrap border">PERTUMBUHAN CAPAIAN KINERJA</td>
-            <td class="text-gray-900 text-wrap border"><%= @efektifitas[:kinerja] %></td>
-            <td class="text-gray-900 text-wrap border"><%= @efektifitas[:nilai_kinerja] %></td>
-            <td class="text-gray-900 text-wrap text-center border" rowspan="2">EFEKTIF-EFISIEN</td>
+            <td class="text-gray-900 text-wrap border text-center"><%= number_to_percentage(@efektifitas[:kinerja], precision: 2) %></td>
+            <td class="text-gray-900 text-wrap border text-center"><%= @efektifitas[:nilai_kinerja] %></td>
+            <td class="text-gray-900 text-wrap text-center border" rowspan="2"><%= @efektifitas[:status] %></td>
           </tr>
           <tr id="efektifitas-anggaran">
             <td class="text-gray-900 text-wrap border">PERTUMBUHAN SERAPAN ANGGARAN</td>
-            <td class="text-gray-900 text-wrap border"><%= @efektifitas[:anggaran] %></td>
-            <td class="text-gray-900 text-wrap border"><%= @efektifitas[:nilai_anggaran] %></td>
+            <td class="text-gray-900 text-wrap border text-center"><%= number_to_percentage(@efektifitas[:anggaran], precision: 2) %></td>
+            <td class="text-gray-900 text-wrap border text-center"><%= @efektifitas[:nilai_anggaran] %></td>
           </tr>
         </tbody>
       </table>

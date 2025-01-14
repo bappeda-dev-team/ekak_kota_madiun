@@ -20,16 +20,20 @@ class EfektifitasQueries
   end
 
   def pertumbuhan_capaian_kinerja
-    10
+    iku_opd.iku_tujuan_targets.sum do |tar|
+      tar[:growth_capaian]
+    end
   end
 
-  def pertumbuhan_serapan_anggaran
-    0
+  def pertumbuhan_pagu_anggaran
+    serapan_anggaran.bidang_urusan_pagu.sum do |bu|
+      bu[:growth_pagu]
+    end
   end
 
   def efektifitas_efisiensi_opd
     kinerja = pertumbuhan_capaian_kinerja
-    anggaran = pertumbuhan_serapan_anggaran
+    anggaran = pertumbuhan_pagu_anggaran
 
     nilai_kinerja = if kinerja >= 0
                       'EFEKTIF'
@@ -42,9 +46,13 @@ class EfektifitasQueries
                      else
                        ''
                      end
+
+    status_kinerja_anggaran = "#{nilai_kinerja} #{nilai_anggaran}"
+
     { kinerja: kinerja,
       anggaran: anggaran,
       nilai_kinerja: nilai_kinerja,
-      nilai_anggaran: nilai_anggaran }
+      nilai_anggaran: nilai_anggaran,
+      status: status_kinerja_anggaran }
   end
 end

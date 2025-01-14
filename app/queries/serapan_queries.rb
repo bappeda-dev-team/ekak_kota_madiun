@@ -1,4 +1,6 @@
 class SerapanQueries
+  include SerapanAnggaranHelper
+
   def initialize(kode_opd: '', tahun: '', periode: '')
     @kode_opd = kode_opd
     @tahun = tahun
@@ -18,7 +20,10 @@ class SerapanQueries
         nama: bu[1],
         pagu: pagu_periode(bu[0]),
         realisasi: realisasi_periode(bu[0]),
-        serapan: serapan_periode(bu[0]) }
+        serapan: serapan_periode(bu[0]),
+        growth_pagu: growth_average(pagu_periode(bu[0])),
+        growth_realisasi: growth_average(realisasi_periode(bu[0])),
+        growth_serapan: growth_average(serapan_periode(bu[0])) }
     end
   end
 

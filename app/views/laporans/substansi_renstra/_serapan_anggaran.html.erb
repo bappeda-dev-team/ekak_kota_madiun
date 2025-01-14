@@ -40,16 +40,16 @@
   <!-- CAPAIAN -->
   <% periode.each do |tahun| %>
     <td class="text-gray-900 border pagu" width="250px">
-      <%= number_to_percentage(bidang_urusan[:serapan][tahun]) %>
+      <%= number_to_percentage(bidang_urusan[:serapan][tahun], precision: 2) %>
     </td>
   <% end %>
   <td class="text-gray-900 border pagu" width="250px">
-    <%= growth_average(bidang_urusan[:pagu]) %>
+    <%= number_to_percentage(bidang_urusan[:growth_pagu], precision: 2) %>
   </td>
   <td class="text-gray-900 border pagu" width="250px">
-    <%= growth_average(bidang_urusan[:realisasi]) %>
+    <%= number_to_percentage(bidang_urusan[:growth_realisasi], precision: 2) %>
   </td>
   <td class="text-gray-900 border pagu" width="250px">
-    <%= growth_average(bidang_urusan[:serapan]) %>
+    <%= number_to_percentage(bidang_urusan[:growth_serapan], precision: 2) %>
   </td>
 </tr>

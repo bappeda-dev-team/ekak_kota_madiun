@@ -26,7 +26,6 @@ module SerapanAnggaranHelper
 
     return 0 unless growth_rates.any?
 
-    growth = (growth_rates.sum / growth_rates.size.to_f).round(2)
-    "#{growth}%"
+    (growth_rates.sum / growth_rates.size.to_f).round(2)
   end
 end
