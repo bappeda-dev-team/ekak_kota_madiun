@@ -41,7 +41,7 @@ class EfektifitasQueries
                       'TIDAK EFEKTIF'
                     end
 
-    nilai_anggaran = if anggaran <= 0
+    nilai_anggaran = if anggaran <= 0 && nilai_kinerja == 'EFEKTIF'
                        'EFISIEN'
                      else
                        ''

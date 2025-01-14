@@ -56,7 +56,7 @@ class IkuOpdQueries
   def iku_tujuan_targets
     komponen_indikator_tujuan.map do |ind|
       {
-        growth_capaian: growth_average(capaian_iku(ind))
+        growth_capaian: growth_average_iku(capaian_iku(ind))
       }
     end
   end
