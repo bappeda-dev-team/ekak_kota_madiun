@@ -40,9 +40,7 @@
   <!-- CAPAIAN -->
   <% periode.each do |tahun| %>
     <td class="text-gray-900 border pagu" width="250px">
-      <% anggaran = bidang_urusan[:pagu][tahun] %>
-      <% realisasi = bidang_urusan[:realisasi][tahun] %>
-      <%= rasio_serapan_anggaran(anggaran, realisasi) %>
+      <%= number_to_percentage(bidang_urusan[:serapan][tahun]) %>
     </td>
   <% end %>
   <td class="text-gray-900 border pagu" width="250px">
@@ -50,5 +48,8 @@
   </td>
   <td class="text-gray-900 border pagu" width="250px">
     <%= growth_average(bidang_urusan[:realisasi]) %>
+  </td>
+  <td class="text-gray-900 border pagu" width="250px">
+    <%= growth_average(bidang_urusan[:serapan]) %>
   </td>
 </tr>

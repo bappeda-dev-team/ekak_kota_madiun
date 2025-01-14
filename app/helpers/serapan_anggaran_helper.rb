@@ -29,12 +29,4 @@ module SerapanAnggaranHelper
     growth = (growth_rates.sum / growth_rates.size.to_f).round(2)
     "#{growth}%"
   end
-
-  def rasio_serapan_anggaran(anggaran, realisasi)
-    return 0 if anggaran.nil? || realisasi.nil?
-
-    rasio = ((realisasi / anggaran) * 100).round(2)
-
-    "#{rasio}%"
-  end
 end

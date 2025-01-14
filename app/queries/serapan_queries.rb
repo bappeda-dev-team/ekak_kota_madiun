@@ -17,7 +17,8 @@ class SerapanQueries
       { kode: bu[0],
         nama: bu[1],
         pagu: pagu_periode(bu[0]),
-        realisasi: realisasi_periode(bu[0]) }
+        realisasi: realisasi_periode(bu[0]),
+        serapan: serapan_periode(bu[0]) }
     end
   end
 
@@ -39,5 +40,19 @@ class SerapanQueries
     pagu_anggarans(kode).to_h do |pa|
       [pa.tahun.to_i, pa.anggaran_realisasi]
     end
+  end
+
+  def serapan_periode(kode)
+    pagu_anggarans(kode).to_h do |pa|
+      [pa.tahun.to_i, rasio_serapan(pa.anggaran, pa.anggaran_realisasi)]
+    end
+  end
+
+  private
+
+  def rasio_serapan(anggaran, realisasi)
+    return 0 if anggaran.nil? || realisasi.nil?
+
+    ((realisasi / anggaran) * 100).round(2)
   end
 end
