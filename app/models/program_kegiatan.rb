@@ -396,7 +396,7 @@ class ProgramKegiatan < ApplicationRecord
   end
 
   def all_anggaran
-    sasarans.map(&:total_anggaran).compact.sum
+    sasarans.filter_map(&:total_anggaran).sum
   end
 
   def jumlah_sasaran
@@ -405,7 +405,7 @@ class ProgramKegiatan < ApplicationRecord
 
   def anggaran_sasarans(tahun)
     sasarans.lengkap_strategi_tahun(tahun)
-            .map(&:total_anggaran).compact.sum
+            .filter_map(&:total_anggaran).sum
   end
 
   def pagu_sub_rankir_tahun(tahun, kode_opd)
@@ -423,19 +423,19 @@ class ProgramKegiatan < ApplicationRecord
 
   def pagu_program_penetapan_tahun(tahun)
     ProgramKegiatan.where(kode_program: kode_program).map do |sub|
-      sub.sasarans.lengkap_strategi_tahun(tahun).map(&:total_anggaran_penetapan).compact.sum
+      sub.sasarans.lengkap_strategi_tahun(tahun).filter_map(&:total_anggaran_penetapan).sum
     end.sum
   end
 
   def pagu_kegiatan_penetapan_tahun(tahun)
     ProgramKegiatan.where(kode_giat: kode_giat).map do |sub|
-      sub.sasarans.lengkap_strategi_tahun(tahun).map(&:total_anggaran_penetapan).compact.sum
+      sub.sasarans.lengkap_strategi_tahun(tahun).filter_map(&:total_anggaran_penetapan).sum
     end.sum
   end
 
   def pagu_sub_penetapan_tahun(tahun)
     ProgramKegiatan.where(kode_sub_giat: kode_sub_giat).map do |sub|
-      sub.sasarans.lengkap_strategi_tahun(tahun).map(&:total_anggaran_penetapan).compact.sum
+      sub.sasarans.lengkap_strategi_tahun(tahun).filter_map(&:total_anggaran_penetapan).sum
     end.sum
   end
 
