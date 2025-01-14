@@ -10,6 +10,7 @@
   <td class="text-gray-900">
     <%= form.select :role_tim, options_for_select(@role_tim, selected: pohon.role_tim), {required: true},
      form: dom_id(pohon, 'form'),
+     id: dom_id(pohon, 'role-tim'),
      data: {
        controller: 'dropdown',
        dropdown_parent_value: '#form-pelaksana'
