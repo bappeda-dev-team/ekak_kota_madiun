@@ -27,6 +27,13 @@ class SerapanQueries
     end
   end
 
+  def growth_checker
+    bidang_urusans = opd.list_bidang_urusans
+    bidang_urusans.map do |bu|
+      { growth_check_pagu: growth_average_pagu(pagu_periode(bu[0])) }
+    end
+  end
+
   def pagu_anggarans(kode)
     PaguAnggaran.where(jenis: 'PaguSerapan',
                        sub_jenis: 'BidangUrusan',
