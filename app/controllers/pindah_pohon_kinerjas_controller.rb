@@ -25,7 +25,6 @@ class PindahPohonKinerjasController < ApplicationController
                                   type: 'StrategiPohon',
                                   role: role_strategi)
                            .where('strategi ILIKE ?', "%#{search}%")
-                           .select { |s| s.pohon.nil? }
     @pohons = Pohon.where(opd_id: @pindah_pohon_kinerja.opd_id,
                           tahun: @pindah_pohon_kinerja.tahun,
                           pohonable_type: 'Strategi',
