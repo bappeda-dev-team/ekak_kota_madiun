@@ -8,18 +8,6 @@ if @status_rencana_aksi
     json.tahun @tahun
     json.kode_opd @user.opd.kode_unik_opd
     json.opd @user.opd.nama_opd
-    json.id_sasaran @id_sasaran
-    json.message "Renaksi Tidak Ditemukan"
-  end
-else
-  json.data do
-    json.status_rencana_aksi @status_rencana_aksi
-    json.eselon @eselon
-    json.nama_asn @user.nama
-    json.nip @nip
-    json.tahun @tahun
-    json.kode_opd @user.opd.kode_unik_opd
-    json.opd @user.opd.nama_opd
     json.id_sasaran @sasaran.id_rencana
     json.sasaran @sasaran.sasaran_kinerja
     json.anggaran @sasaran.total_anggaran
@@ -40,5 +28,17 @@ else
         json.target aksi.target
       end
     end
+  end
+else
+  json.data do
+    json.status_rencana_aksi @status_rencana_aksi
+    json.eselon @eselon
+    json.nama_asn @user.nama
+    json.nip @nip
+    json.tahun @tahun
+    json.kode_opd @user.opd.kode_unik_opd
+    json.opd @user.opd.nama_opd
+    json.id_sasaran @id_sasaran
+    json.message "Renaksi Tidak Ditemukan"
   end
 end
