@@ -30,11 +30,11 @@ module Api
       @eselon = @user.role_asn
       @sasaran = @user.sasarans.find_by(id_rencana: @id_sasaran)
       @tahapans = @sasaran&.tahapan_renaksi
-      @status_rencana_aksi = @tahapans.nil?
+      @status_rencana_aksi = @tahapans.present?
       if @status_rencana_aksi
-        render status: :not_found
-      else
         render status: :ok
+      else
+        render status: :not_found
       end
     end
 
