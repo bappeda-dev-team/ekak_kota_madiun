@@ -55,7 +55,11 @@
               <tr>
                 <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= "#{i}.#{index}" %></td>
                 <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
-                <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
+                <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>">
+                  <p class="px-3"><%= sasaran.sasaran_kinerja %></p>
+                  <hr/>
+                  <p class="px-3"><span class="me-3">Status:</span> <%= status_sasaran_pokin(sasaran&.status_sasaran) %></p>
+                </td>
                 <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.tahun %></td>
                 <%= indikator_sasaran(sasaran) %>
                 <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
