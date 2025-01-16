@@ -643,8 +643,8 @@ class Sasaran < ApplicationRecord
   end
 
   def status_ekak
-    tahun_bener = /murni/.match?(tahun) ? tahun[/[^_]\d*/, 0] : tahun
-    if /perubahan/.match?(tahun_bener)
+    tahun_bener = tahun.include?('murni') ? tahun[/[^_]\d*/, 0] : tahun
+    if tahun_bener.match?('perubahan')
       'E-KAK Perubahan'
     else
       'E-KAK'
@@ -744,9 +744,7 @@ class Sasaran < ApplicationRecord
   def sasaran_bawahan_eselon3_diverifikasi
     return if user.eselon_user != 'eselon_3'
 
-    strategi_bawahans = strategi_bawahan_eselon3.uniq
-
-    strategi_bawahans.flat_map { |str| str.status_dampak_resiko(tahun) }
+    strategi_bawahan_eselon3.flat_map(&:sasaran_bawahan_manrisk)
   end
 
   # Check this, the logic is change

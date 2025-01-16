@@ -45,6 +45,7 @@
             <th class="border-bottom" scope="col">No.</th>
             <th class="border-bottom" scope="col">Status</th>
             <th class="border-bottom text-center border">Pelaksana</th>
+            <th class="border-bottom text-center border">Pokin & Pokin Atasan</th>
             <th class="border-bottom text-center border">Rencana Kinerja</th>
             <th class="border-bottom text-center border">Indikator</th>
             <th class="border-bottom text-center border">Target</th>
@@ -65,7 +66,7 @@
             <% pagu = sasarans.map(&:total_anggaran).compact.sum %>
             <tr>
               <td class="text-gray-900 text-wrap fw-bolder"><%= i %></td>
-              <td class="text-gray-900 text-wrap fw-bolder" colspan="3">Subkegiatan: <%= program_kegiatan.nama_subkegiatan %></td>
+              <td class="text-gray-900 text-wrap fw-bolder" colspan="4">Subkegiatan: <%= program_kegiatan.nama_subkegiatan %></td>
               <td class="text-gray-900 text-wrap fw-bolder"><%= program_kegiatan.indikator_program_tahun(@tahun, @opd.kode_unik_opd)[:indikator] %></td>
               <td class="text-gray-900 text-wrap fw-bolder"><%= program_kegiatan.indikator_program_tahun(@tahun, @opd.kode_unik_opd)[:target] %></td>
               <td class="text-gray-900 text-wrap fw-bolder"><%= program_kegiatan.indikator_program_tahun(@tahun, @opd.kode_unik_opd)[:satuan] %></td>
@@ -102,6 +103,11 @@
                   <% end %>
                 </td>
                 <td class="text-wrap border" rowspan="<%= row_indikator %>"><%= show_sasaran.nama_pemilik %></td>
+                <td class="text-wrap border" rowspan="<%= row_indikator %>">
+                  <b>Pokin Atasan: <%= show_sasaran.strategi.strategi_atasan %></b>
+                  <hr/>
+                  Pokin: <%= show_sasaran.strategi %>
+                </td>
                 <td class="text-wrap border" rowspan="<%= row_indikator %>"><%= show_sasaran.sasaran_kinerja %></td>
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
@@ -157,7 +163,7 @@
                             <% end %>
                           <% else %>
                             <p class="alert alert-warning">
-                              Belum terdapat RTP-KAK - Harap input RTP-KAK untuk dapat diverifikasi
+                              Belum terdapat RTP-KAK - Klik RTP-KAK untuk input
                             </p>
                           <% end %>
                           <hr />

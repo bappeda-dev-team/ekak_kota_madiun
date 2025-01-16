@@ -87,6 +87,6 @@ module SasaransHelper
   end
 
   def strategi_valid_style(strategi)
-    strategi&.strategi_dihapus? || strategi == 'Kosong' ? 'text-danger' : 'text-success'
+    strategi.include?('dihapus') || strategi == 'Kosong' ? 'text-danger' : 'text-success'
   end
 end

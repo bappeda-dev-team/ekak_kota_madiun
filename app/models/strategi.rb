@@ -317,4 +317,14 @@ class Strategi < ApplicationRecord
   def strategi_dihapus?
     deleted_at.present?
   end
+
+  def sasaran_bawahan_manrisk
+    sasaran_strategis = sasarans.dengan_rincian
+                                .where(tahun: tahun)
+                                .where.not(nip_asn: [nil, ""])
+                                .select { |sas| sas.deleted_at.blank? }
+    sasaran_strategis.flat_map do |sas|
+      sas.status_dampak_resiko.present?
+    end
+  end
 end
