@@ -161,7 +161,7 @@ class RenjaService
     ProgramKegiatan.where(kode_sub_giat: kode, kode_sub_skpd: kode_opd).map do |sub|
       sub.sasarans.includes(%i[indikator_sasarans])
          .where(tahun: @tahun, keterangan: nil)
-         .map(&:total_anggaran_rankir_1).compact.sum
+         .filter_map(&:total_anggaran_rankir_1).sum
     end.sum
   end
 
@@ -171,7 +171,8 @@ class RenjaService
           .joins(:program_kegiatan)
           .includes(%i[anggarans])
           .where(tahun: @tahun, program_kegiatans: { kode_sub_giat: kode, kode_sub_skpd: kode_opd })
-          .where.not(indikator_sasarans: [nil, ""], program_kegiatans: { kode_skpd: [nil, ""] })
+          .where.not(indikator_sasarans: [nil, ""])
+          .where.not(program_kegiatans: { kode_skpd: [nil, ""] })
           .map { |s| s.anggarans.compact.sum(&:jumlah) }
     end.compact_blank.sum
   end
