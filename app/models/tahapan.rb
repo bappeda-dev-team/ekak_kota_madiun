@@ -58,6 +58,12 @@ class Tahapan < ApplicationRecord
     '-'
   end
 
+  def tahapan_valid?
+    jumlah_target.positive?
+  rescue NoMethodError
+    false
+  end
+
   def target_total
     jumlah_target.nil? ? '-' : jumlah_target
   end
@@ -97,7 +103,7 @@ class Tahapan < ApplicationRecord
   end
 
   def rtp_mr?
-    tagging == "RTP-MR"
+    tagging == "RTP-MR" && tahapan_valid?
   end
 
   def tahapan_rtp

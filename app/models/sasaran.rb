@@ -728,7 +728,7 @@ class Sasaran < ApplicationRecord
   end
 
   def tahapan_mr?
-    tahapans.any? { |t| t.rtp_mr? }
+    tahapans.any?(&:rtp_mr?) && tahapans.any?(&:tahapan_valid?)
   end
 
   def dampak_resiko_verif?
