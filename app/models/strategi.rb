@@ -327,4 +327,12 @@ class Strategi < ApplicationRecord
       sas.status_dampak_resiko.present?
     end
   end
+
+  def strategi_eselon4
+    role == 'eselon_4'
+  end
+
+  def strategi_staff?
+    role == 'staff'
+  end
 end

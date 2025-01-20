@@ -63,7 +63,7 @@
                 </td>
                 <td class="border text-center" rowspan="<%= rowspan_sasaran(sasaran) %>">
                   <div class="d-grid gap-2">
-                    <% if sasaran.user.eselon_user == 'eselon_4' %>
+                    <% if sasaran.wajib_manrisk %>
                       <div class="status_manrisk">
                         <%= status_manrisk(sasaran&.status_manrisk) %>
                       </div>
