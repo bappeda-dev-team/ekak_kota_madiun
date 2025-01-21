@@ -51,7 +51,7 @@ module SuperAdminItemHelper
       },
       {
         title: 'Tematik', href: subkegiatan_tematiks_path,
-        icon: 'fas fa-tags', identifier: 'tematik'
+        icon: 'fas fa-tags', identifier: 'tematik-kota'
       },
       {
         title: 'Periode', href: periodes_path,

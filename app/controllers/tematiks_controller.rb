@@ -69,26 +69,20 @@ class TematiksController < ApplicationController
     @tematik = Tematik.new(tematik_params)
     tahun = cookies[:tahun]
 
-    respond_to do |format|
-      if @tematik.save
-        Pohon.create(pohonable_id: @tematik.id, pohonable_type: @tematik.class.name, role: 'pohon_kota', tahun: tahun,
-                     keterangan: '-')
-        html_content = render_to_string(partial: 'tematiks/tematik',
-                                        formats: 'html',
-                                        layout: false,
-                                        locals: { tematiks: index })
-        format.json do
-          render json: { resText: "Tematik tersimpan", attachmentPartial: html_content }.to_json, status: :created
-        end
-      else
-        error_content = render_to_string(partial: 'tematiks/form',
-                                         formats: 'html',
-                                         layout: false,
-                                         locals: { tematik: @tematik })
-        format.json do
-          render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
-        end
-      end
+    if @tematik.save
+      Pohon.create(pohonable_id: @tematik.id, pohonable_type: @tematik.class.name, role: 'pohon_kota', tahun: tahun,
+                   keterangan: '-')
+      html_content = render_to_string(partial: 'tematiks/tematik',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { tematiks: index })
+      render json: { resText: "Tematik tersimpan", attachmentPartial: html_content }.to_json, status: :created
+    else
+      error_content = render_to_string(partial: 'tematiks/form',
+                                       formats: 'html',
+                                       layout: false,
+                                       locals: { tematik: @tematik })
+      render json: { resText: "Gagal Menyimpan", errors: error_content }.to_json, status: :unprocessable_entity
     end
   end
 
@@ -127,21 +121,15 @@ class TematiksController < ApplicationController
 
   # PATCH/PUT /tematiks/1 or /tematiks/1.json
   def update
-    respond_to do |format|
-      if @tematik.update(tematik_params)
-        html_content = render_to_string(partial: 'tematiks/tematik',
-                                        formats: 'html',
-                                        layout: false,
-                                        locals: { tematiks: index })
-        format.json do
-          render json: { resText: "Tematik diperbarui", res: @tematik, attachmentPartial: html_content }.to_json,
-                 status: :ok
-        end
-      else
-        format.json do
-          render json: { resText: "Gagal memperbarui", res: @tematik.errors }.to_json, status: :unprocessable_entity
-        end
-      end
+    if @tematik.update(tematik_params)
+      html_content = render_to_string(partial: 'tematiks/tematik',
+                                      formats: 'html',
+                                      layout: false,
+                                      locals: { tematiks: index })
+      render json: { resText: "Tematik diperbarui", res: @tematik, attachmentPartial: html_content }.to_json,
+             status: :ok
+    else
+      render json: { resText: "Gagal memperbarui", res: @tematik.errors }.to_json, status: :unprocessable_entity
     end
   end
 
