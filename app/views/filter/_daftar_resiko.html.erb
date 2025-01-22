@@ -56,8 +56,9 @@
             <th class="border-bottom text-center border text-wrap">Pernyataan Risiko</th>
             <th class="border-bottom text-center border text-wrap">Skala Kemungkinan</th>
             <th class="border-bottom text-center border">Dampak</th>
-            <th class="border-bottom text-center border">Skala Risiko</th>
+            <th class="border-bottom text-center border">Skala Dampak</th>
             <th class="border-bottom text-center border text-wrap">Peta Risiko</th>
+            <th class="border-bottom text-center border text-wrap">Pihak yang terkena</th>
             <th class="border-bottom text-center" scope="col">Action</th>
           </tr>
         </thead>
@@ -120,6 +121,7 @@
                 <td class="text-wrap text-center border" rowspan="<%= row_indikator %>"><%= rincian&.dampak || '-' %></td>
                 <td class="text-wrap text-center border" rowspan="<%= row_indikator %>"><%= rincian&.skala_dampak&.deskripsi || '-' %></td>
                 <td class="text-center border" rowspan="<%= row_indikator %>"><%= "(#{peta_resiko_ha}) #{nilai_peta_resiko_ha}"  %></td>
+                <td class="text-wrap text-center border" rowspan="<%= row_indikator %>"><%= show_sasaran.penerima_manfaat  %></td>
                 <td class="border" rowspan="<%= row_indikator %>">
                   <% unless guest? %>
                     <div class="d-grid gap-3">
