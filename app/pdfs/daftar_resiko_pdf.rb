@@ -2,7 +2,7 @@ class DaftarResikoPdf < Prawn::Document
   include ActionView::Helpers::NumberHelper
 
   def initialize(opd: '', tahun: '', program_kegiatans: '')
-    super(page_layout: :landscape, page_size: "A3")
+    super(page_layout: :landscape, page_size: "LETTER")
     @opd = opd
     @tahun = tahun
     @nama_opd = @opd.nama_opd
