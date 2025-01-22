@@ -107,7 +107,7 @@
                 <td class="text-wrap border" rowspan="<%= row_indikator %>">
                   <b>Pokin Atasan: <%= show_sasaran.strategi&.strategi_atasan %></b>
                   <hr/>
-                  Pokin: <%= show_sasaran.strategi %>
+                  Pokin: <%= show_sasaran&.strategi %>
                 </td>
                 <td class="text-wrap border" rowspan="<%= row_indikator %>"><%= show_sasaran.sasaran_kinerja %></td>
                 <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
