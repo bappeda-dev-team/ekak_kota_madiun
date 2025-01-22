@@ -66,6 +66,10 @@ module SuperAdminItemHelper
         icon: 'fas fa-folder', identifier: 'kelompok_anggaran'
       },
       {
+        title: 'Skala', href: skalas_path,
+        icon: 'fas fa-table', identifier: 'skala'
+      },
+      {
         title: 'SPBE', href: "#",
         multi: true, collections: spbe_items,
         id_target: "spbe-item",
