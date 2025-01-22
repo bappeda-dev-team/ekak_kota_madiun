@@ -67,7 +67,7 @@ class DaftarResikoPdf < Prawn::Document
       { content: "KEMUNGKINAN", width: 50 },
       { content: "DAMPAK", width: 75, align: :center },
       { content: "SKALA DAMPAK", width: 50, align: :center },
-      { content: "PETA RISIKO", width: 55, align: :center },
+      { content: "SKALA / PETA RISIKO", width: 55, align: :center },
       { content: "PIHAK YANG TERKENA", width: 55, align: :center }]]
   end
 
