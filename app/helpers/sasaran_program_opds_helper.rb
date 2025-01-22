@@ -1,25 +1,29 @@
 module SasaranProgramOpdsHelper
   def peta_resiko(kemungkinan, skala_dampak)
     matrix_resiko =
-      { A: [[1, 1]],
-        B: [[1, 2], [1, 3], [2, 1], [2, 2], [3, 1]],
-        C: [[1, 4], [2, 3], [3, 2], [3, 3], [4, 1]],
-        D: [[2, 4], [3, 4], [4, 2], [4, 3], [4, 4]] }
+      { A: [[1, 1], [1, 2], [2, 1]],
+        B: [[1, 3], [1, 4], [2, 2], [3, 1], [4, 1]],
+        C: [[1, 5], [2, 3], [2, 4], [3, 2], [3, 3], [4, 2], [5, 1]],
+        D: [[2, 5], [3, 4], [4, 3], [5, 2], [5, 3]],
+        E: [[3, 5], [4, 4], [4, 5], [5, 4], [5, 5]] }
     matrik = [kemungkinan.to_i, skala_dampak.to_i]
     nilai = matrix_resiko.select { |_nilai, skor| skor.include?(matrik) }
     nilai.key(nilai.values.flatten(1)).to_s
   end
 
   def nilai_peta_resiko(peta_matrix)
+    prefix = 'Level Risiko'
     case peta_matrix
     when 'A'
-      'Level Risiko Sangat Rendah'
+      "#{prefix} Sangat Rendah"
     when 'B'
-      'Level Risiko Rendah'
+      "#{prefix} Rendah"
     when 'C'
-      'Level Risiko Tinggi'
+      "#{prefix} Sedang"
     when 'D'
-      'Level Risiko Sangat Sangat Tinggi'
+      "#{prefix} Tinggi"
+    when 'E'
+      "#{prefix} Sangat Tinggi"
     else
       '-'
     end

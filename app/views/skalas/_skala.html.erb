@@ -1,0 +1,40 @@
+<tr id="<%= dom_id(skala) %>">
+  <td class="fw-bolder" scope="row" width="20px"></td>
+  <td class="fw-bolder"><%= skala.kode_skala %></td>
+  <td class="fw-bolder"><%= skala.type.capitalize %></td>
+  <td class="fw-bolder"><%= skala.deskripsi %></td>
+  <td class="fw-bolder"><%= skala.nilai %></td>
+  <td class="fw-bolder"><%= skala.tipe_nilai %></td>
+  <td class="fw-bolder text-wrap"><%= skala.keterangan %></td>
+  <td class="text-gray-900 text-wrap border" width='200px'>
+    <% unless guest? %>
+      <div class="d-grid gap-3">
+        <%= link_to edit_skala_path(skala),
+                    remote: true,
+                    data: {
+                      controller: 'form-modal',
+                      action: 'ajax:complete->form-modal#success:prevent',
+                      bs_toggle: 'modal',
+                      bs_target: '#form-modal'
+                    },
+                    class: 'btn btn-sm btn-outline-info' do %>
+          <i class="fa fa-pencil-alt me-2"></i>
+          <span>Edit</span>
+        <% end %>
+        <%= link_to skala,
+                    method: :delete,
+                    remote: true,
+                    class: 'btn btn-outline-danger',
+                    data: {
+                      controller: 'form-ajax',
+                      confirm_swal: "Hapus skala #{skala.type}: #{skala.deskripsi}?",
+                      action: 'ajax:success->form-ajax#ajaxDelete',
+                      form_ajax_element_id_value: dom_id(skala)
+                    } do %>
+          <i class="fa fa-trash-alt me-2"></i>
+          <span>Hapus</span>
+        <% end %>
+      </div>
+    <% end %>
+  </td>
+</tr>

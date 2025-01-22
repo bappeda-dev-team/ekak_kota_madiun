@@ -5,6 +5,10 @@
 <table>
   <thead>
     <tr>
+      <th>Deskripsi</th>
+      <th>Nilai</th>
+      <th>Tipe Nilai</th>
+      <th>Kode Skala</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -12,6 +16,10 @@
   <tbody>
     <% @dampaks.each do |dampak| %>
       <tr>
+        <td><%= dampak.deskripsi %></td>
+        <td><%= dampak.nilai %></td>
+        <td><%= dampak.tipe_nilai %></td>
+        <td><%= dampak.kode_skala %></td>
         <td><%= link_to 'Show', dampak %></td>
         <td><%= link_to 'Edit', edit_dampak_path(dampak) %></td>
         <td><%= link_to 'Destroy', dampak, method: :delete, data: { confirm: 'Are you sure?' } %></td>

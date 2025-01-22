@@ -3,7 +3,7 @@ class KemungkinansController < ApplicationController
 
   # GET /kemungkinans or /kemungkinans.json
   def index
-    @kemungkinans = Kemungkinan.all
+    @kemungkinans = Kemungkinan.all.order('nilai ASC')
   end
 
   # GET /kemungkinans/1 or /kemungkinans/1.json
@@ -21,27 +21,31 @@ class KemungkinansController < ApplicationController
   def create
     @kemungkinan = Kemungkinan.new(kemungkinan_params)
 
-    respond_to do |format|
-      if @kemungkinan.save
-        format.html { redirect_to kemungkinan_url(@kemungkinan), notice: "Kemungkinan was successfully created." }
-        format.json { render :show, status: :created, location: @kemungkinan }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @kemungkinan.errors, status: :unprocessable_entity }
-      end
+    if @kemungkinan.save
+      render json: { resText: 'Kemungkinan Baru berhasil disimpan.',
+                     html_content: html_content({ skala: @kemungkinan },
+                                                partial: 'skalas/skala') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ skala: @kemungkinan },
+                                                 partial: 'skalas/form').to_json }.to_json,
+             status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /kemungkinans/1 or /kemungkinans/1.json
   def update
-    respond_to do |format|
-      if @kemungkinan.update(kemungkinan_params)
-        format.html { redirect_to kemungkinan_url(@kemungkinan), notice: "Kemungkinan was successfully updated." }
-        format.json { render :show, status: :ok, location: @kemungkinan }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @kemungkinan.errors, status: :unprocessable_entity }
-      end
+    if @kemungkinan.update(kemungkinan_params)
+      render json: { resText: 'Perubahan Kemungkinan disimpan',
+                     html_content: html_content({ skala: @kemungkinan },
+                                                partial: 'skalas/skala') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ skala: @kemungkinan },
+                                                 partial: 'skalas/form').to_json }.to_json,
+             status: :unprocessable_entity
     end
   end
 
@@ -49,10 +53,7 @@ class KemungkinansController < ApplicationController
   def destroy
     @kemungkinan.destroy
 
-    respond_to do |format|
-      format.html { redirect_to kemungkinans_url, notice: "Kemungkinan was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    render json: { resText: "Skala Kemungkinan Dihapus" }.to_json, status: :accepted
   end
 
   private

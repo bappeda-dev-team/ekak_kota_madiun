@@ -5,6 +5,10 @@
 <table>
   <thead>
     <tr>
+      <th>Deskripsi</th>
+      <th>Nilai</th>
+      <th>Tipe Nilai</th>
+      <th>Kode Skala</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -12,6 +16,10 @@
   <tbody>
     <% @kemungkinans.each do |kemungkinan| %>
       <tr>
+        <td><%= kemungkinan.deskripsi %></td>
+        <td><%= kemungkinan.nilai %></td>
+        <td><%= kemungkinan.tipe_nilai %></td>
+        <td><%= kemungkinan.kode_skala %></td>
         <td><%= link_to 'Show', kemungkinan %></td>
         <td><%= link_to 'Edit', edit_kemungkinan_path(kemungkinan) %></td>
         <td><%= link_to 'Destroy', kemungkinan, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -3,7 +3,7 @@ class DampaksController < ApplicationController
 
   # GET /dampaks or /dampaks.json
   def index
-    @dampaks = Dampak.all
+    @dampaks = Dampak.all.order('nilai ASC')
   end
 
   # GET /dampaks/1 or /dampaks/1.json
@@ -21,27 +21,31 @@ class DampaksController < ApplicationController
   def create
     @dampak = Dampak.new(dampak_params)
 
-    respond_to do |format|
-      if @dampak.save
-        format.html { redirect_to dampak_url(@dampak), notice: "Dampak was successfully created." }
-        format.json { render :show, status: :created, location: @dampak }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @dampak.errors, status: :unprocessable_entity }
-      end
+    if @dampak.save
+      render json: { resText: 'Dampak Baru berhasil disimpan.',
+                     html_content: html_content({ skala: @dampak },
+                                                partial: 'skalas/skala') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ skala: @dampak },
+                                                 partial: 'skalas/form').to_json }.to_json,
+             status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /dampaks/1 or /dampaks/1.json
   def update
-    respond_to do |format|
-      if @dampak.update(dampak_params)
-        format.html { redirect_to dampak_url(@dampak), notice: "Dampak was successfully updated." }
-        format.json { render :show, status: :ok, location: @dampak }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @dampak.errors, status: :unprocessable_entity }
-      end
+    if @dampak.update(dampak_params)
+      render json: { resText: 'Perubahan Dampak disimpan',
+                     html_content: html_content({ skala: @dampak },
+                                                partial: 'skalas/skala') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ skala: @dampak },
+                                                 partial: 'skalas/form').to_json }.to_json,
+             status: :unprocessable_entity
     end
   end
 
@@ -49,10 +53,7 @@ class DampaksController < ApplicationController
   def destroy
     @dampak.destroy
 
-    respond_to do |format|
-      format.html { redirect_to dampaks_url, notice: "Dampak was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    render json: { resText: "Skala Dampak Dihapus" }.to_json, status: :accepted
   end
 
   private
