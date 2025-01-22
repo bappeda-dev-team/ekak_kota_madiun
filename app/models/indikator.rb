@@ -24,8 +24,6 @@
 #  updated_at           :datetime         not null
 #
 class Indikator < ApplicationRecord
-  default_scope { where(is_hidden: false) }
-
   has_many :targets, dependent: :destroy
   accepts_nested_attributes_for :targets, reject_if: :all_blank, allow_destroy: true
 
@@ -66,6 +64,8 @@ class Indikator < ApplicationRecord
   scope :sdgs_outcome, -> { where(jenis: 'SDGS', sub_jenis: 'Outcome').order(id: :desc) }
   scope :sdgs_output, -> { where(jenis: 'SDGS', sub_jenis: 'Output').order(id: :desc) }
   scope :iku_opd, -> { where(jenis: 'IKU', sub_jenis: 'OPD').order(id: :desc) }
+  scope :hidden, -> { where(is_hidden: true) }
+  scope :shown, -> { where(is_hidden: false) }
 
   def to_s
     indikator
