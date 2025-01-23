@@ -286,21 +286,21 @@ class PohonTematikController < ApplicationController
   def new_tactical_tematik
     tahun = cookies[:tahun]
     parent_pohon = Pohon.find(params[:id])
-    @opd = parent_pohon.opd
-    @strategis = StrategiPohon.where(tahun: tahun, role: 'eselon_3', opd_id: @opd.id)
+    @opds = Opd.opd_resmi
+    @strategis = StrategiPohon.where(tahun: tahun, role: 'eselon_3')
     # @strategis = @opd.strategis.where(tahun: parent_pohon.tahun, role: 'eselon_3', type: nil)
-    @pohon = Pohon.new(pohonable_type: 'Strategi', role: 'tactical_pohon_kota', tahun: parent_pohon.tahun,
-                       opd_id: @opd.id,
+    @pohon = Pohon.new(pohonable_type: 'Strategi',
+                       role: 'tactical_pohon_kota',
+                       tahun: parent_pohon.tahun,
                        pohon_ref_id: parent_pohon.id)
   end
 
   def new_tactical
     parent_pohon = Pohon.find(params[:id])
     @pohon_ref_id = params[:id]
-    @opd = parent_pohon.opd
-    @tactical = Strategi.new(role: 'tactical_pohon_kota', tahun: parent_pohon.tahun,
-                             opd_id: @opd.id)
-    @tactical.indikators.build(kode_opd: @opd.kode_unik_opd)
+    @opds = Opd.opd_resmi
+    @tactical = Strategi.new(role: 'tactical_pohon_kota', tahun: parent_pohon.tahun)
+    @tactical.indikators.build
   end
 
   def edit_tactical
@@ -333,21 +333,22 @@ class PohonTematikController < ApplicationController
   def new_operational_tematik
     tahun = cookies[:tahun]
     parent_pohon = Pohon.find(params[:id])
-    @opd = parent_pohon.opd
-    @strategis = StrategiPohon.where(tahun: tahun, role: 'eselon_4', opd_id: @opd.id)
+    @opds = Opd.opd_resmi
+    @strategis = StrategiPohon.where(tahun: tahun, role: 'eselon_4')
     # @strategis = @opd.strategis.where(tahun: parent_pohon.tahun, role: 'eselon_4', type: nil)
-    @pohon = Pohon.new(pohonable_type: 'Strategi', role: 'operational_pohon_kota', tahun: parent_pohon.tahun,
-                       opd_id: @opd.id,
+    @pohon = Pohon.new(pohonable_type: 'Strategi',
+                       role: 'operational_pohon_kota',
+                       tahun: parent_pohon.tahun,
                        pohon_ref_id: parent_pohon.id)
   end
 
   def new_operational
     parent_pohon = Pohon.find(params[:id])
     @pohon_ref_id = params[:id]
-    @opd = parent_pohon.opd
-    @operational = Strategi.new(role: 'operational_pohon_kota', tahun: parent_pohon.tahun,
-                                opd_id: @opd.id)
-    @operational.indikators.build(kode_opd: @opd.kode_unik_opd)
+    @opds = Opd.opd_resmi
+    @operational = Strategi.new(role: 'operational_pohon_kota',
+                                tahun: parent_pohon.tahun)
+    @operational.indikators.build
   end
 
   def edit_operational

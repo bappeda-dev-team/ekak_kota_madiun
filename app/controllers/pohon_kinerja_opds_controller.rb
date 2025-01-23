@@ -12,6 +12,8 @@ class PohonKinerjaOpdsController < ApplicationController
     @tactical_kota = queries.tactical_kota
     @operational_kota = queries.operational_kota
 
+    @strategi_beda_opd = queries.pohon_beda_opd
+
     @strategi_crosscutting = queries.strategi_crosscutting.reject { |ph| ph.pohonable.nil? }
 
     @strategi_opd = queries.strategi_opd
@@ -37,6 +39,8 @@ class PohonKinerjaOpdsController < ApplicationController
     @strategi_kota = queries.strategi_kota.reject { |ph| ph.pohonable.nil? }
     @tactical_kota = queries.tactical_kota
     @operational_kota = queries.operational_kota
+
+    @strategi_beda_opd = queries.pohon_beda_opd
 
     @strategi_opd = queries.strategi_opd
     @tactical_opd = queries.tactical_opd

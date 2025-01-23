@@ -1,7 +1,7 @@
 <%= form_with(model: strategi, url: '/pohon_tematik/create_operational_tematik_baru', local: false,
               data: {
-                  controller: 'pohon-tematik',
-                  action: 'ajax:success->pohon-tematik#ajaxSuccess'
+                controller: 'pohon-tematik',
+                action: 'ajax:success->pohon-tematik#ajaxSuccess'
               }
 ) do |form| %>
   <% if strategi.errors.any? %>
@@ -15,10 +15,23 @@
     </div>
   <% end %>
   <div class="field">
-    <%= form.label :opd, class: 'form-label' %>
-    <%= form.text_field :opd, class: 'form-control text-center', value: @opd.nama_opd, readonly: true %>
+    <%= form.hidden_field :pohonable_type %>
+    <%= form.hidden_field :pohon_ref_id, value: @pohon_ref_id %>
     <%= form.hidden_field :tahun %>
     <%= form.hidden_field :opd_id %>
+  </div>
+  <div class="field">
+    <%= form.label :opd, class: 'form-label' %>
+    <%= form.select :opd_id, select_opd(@opds),
+     { include_blank: true },
+     { class: 'form-control text-center',
+       data: {
+         pohon_tematik_target: 'dropdown',
+         placeholder: 'Pilih OPD',
+       },
+       id: "opd_#{form.object_id}",
+       required: true
+     } %>
   </div>
   <div class="field">
     <%= form.label :operational, class: 'form-label' %>
@@ -31,13 +44,12 @@
     <% end %>
   </div>
   <%= link_to_add_nested(form, :indikators, '#indikator-pohon',
-                          link_classes: 'btn btn-outline-primary btn-sm',
-                          link_text: 'Tambah Indikator',
-                          partial: 'indikators/indikator_fields') %>
+                         link_classes: 'btn btn-outline-primary btn-sm',
+                         link_text: 'Tambah Indikator',
+                         partial: 'indikators/indikator_fields') %>
   <div class="field">
     <%= form.label :keterangan, class: 'form-label' %>
     <%= form.text_field :keterangan, class: 'form-control', required: true %>
-    <%= form.hidden_field :pohon_ref_id, value: @pohon_ref_id %>
   </div>
   <div class="actions">
     <%= form.submit 'Simpan' %>

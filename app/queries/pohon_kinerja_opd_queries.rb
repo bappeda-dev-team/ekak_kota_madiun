@@ -34,6 +34,12 @@ class PohonKinerjaOpdQueries
   end
   memoize :pohon_crosscutting
 
+  def pohon_beda_opd
+    pohon_kota.select do |pohon|
+      pohon.parent_pohon.opd != opd && pohon.role != "strategi_pohon_kota"
+    end
+  end
+
   # dynamic method
   # PLEASE, STOP DOING THIS MAGIC.
   # Define dynamic methods for each role

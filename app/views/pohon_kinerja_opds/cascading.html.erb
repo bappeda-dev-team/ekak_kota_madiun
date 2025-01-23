@@ -11,6 +11,7 @@
     <%= render 'shared/pohon' do %>
       <%= render 'item_opd', partial: 'pohon_cascading', title: 'Pohon Cascading' %>
       <ul data-pohon-tematik-target='dahan'>
+        <%= render partial: 'pohon_cascading', collection: @strategi_beda_opd, as: :pohon %>
         <%= render partial: 'pohon_cascading', collection: @strategi_kota, as: :pohon %>
         <%= render partial: 'pohon_cascading', collection: @strategi_opd, as: :pohon %>
       </ul>
