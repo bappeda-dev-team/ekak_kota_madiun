@@ -293,6 +293,15 @@ class PohonKinerjaPresenter
     strategi.sasarans.select { |ss| ss.hasil_inovasi_sasaran == 'Inovasi' }
   end
 
+  # recursion baby
+  def parent_tematik_aktif?(pohon_target)
+    if pohon_target.role == 'pohon_kota'
+      !pohon_target.is_active
+    else
+      parent_tematik_aktif?(pohon_target.parent_pohon)
+    end
+  end
+
   private
 
   def to_real_name(role)

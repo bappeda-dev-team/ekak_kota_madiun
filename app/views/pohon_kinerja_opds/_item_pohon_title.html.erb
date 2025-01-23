@@ -1,3 +1,8 @@
 <div class="pohon-title <%= pohon.status %>" id="<%= pohon.pohon_kota_id %>">
-    <h5 class="text-center"><strong><%= pohon.title_up %> <%= pohon.pohon_kota %></strong></h5>
+  <% if pohon.type == 'Pohon' %>
+    <% if pohon.parent_tematik_aktif?(pohon.real) %>
+      <h5 class="text-center bg-danger border border-3 border-primary p-2 mb-2"><strong>Non-Aktif</strong></h5>
+    <% end %>
+  <% end %>
+  <h5 class="text-center"><strong><%= pohon.title_up %> <%= pohon.pohon_kota %></strong></h5>
 </div>
