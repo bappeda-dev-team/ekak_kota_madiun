@@ -15,7 +15,7 @@ module SasaranProgramOpdsHelper
     when 'A'
       "#{prefix} Rendah"
     when 'B'
-      "#{prefix} Sedang dan Tinggi"
+      "#{prefix} Sedang"
     when 'C'
       "#{prefix} Sangat Tinggi"
     else
