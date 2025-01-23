@@ -28,6 +28,10 @@ class IndikatorSasaran < ApplicationRecord
   validates :satuan, presence: true
 
   delegate :tahun, to: :sasaran
+  delegate :opd_id, to: :sasaran
+
+  scope :hidden, -> { where(is_hidden: true) }
+  scope :shown, -> { where(is_hidden: false) }
 
   def to_s
     indikator_kinerja

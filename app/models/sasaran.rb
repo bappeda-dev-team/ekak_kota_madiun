@@ -696,6 +696,10 @@ class Sasaran < ApplicationRecord
     indikator_sasarans
   end
 
+  def shown_indikators
+    indikator_sasarans.shown
+  end
+
   def mandatori_sasaran(tahun)
     mandatoris.where(tahun: tahun)
               .select { |mand| mand.dasar_hukum.length > 1 }

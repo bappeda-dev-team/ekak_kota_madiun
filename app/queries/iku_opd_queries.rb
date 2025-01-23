@@ -27,7 +27,7 @@ class IkuOpdQueries
   end
 
   def indikator_sasaran_opd
-    sasaran_opd.flat_map(&:indikator_sasarans).uniq
+    sasaran_opd.flat_map(&:shown_indikators).uniq
   end
 
   def indikator_iku
@@ -42,12 +42,12 @@ class IkuOpdQueries
   end
 
   def komponen_indikator_iku
-    indikator_iku = hidden_indikators.where(is_hidden: true).flat_map(&:indikator)
+    indikator_ikus = hidden_indikators.flat_map(&:indikator)
     indikator_sasaran = indikator_sasaran_opd.flat_map(&:indikator_kinerja)
-    filtered = filter_indikator_sasaran(indikator_iku, indikator_sasaran)
-    indikators = hidden_indikators.where(is_hidden: false)
+    filtered = filter_indikator_sasaran(indikator_ikus, indikator_sasaran)
+    indikators = indikator_iku
     indikators.select do |ind|
-      filtered.include?(ind.indikator)
+      filtered.include?(ind.indikator) && !ind.is_hidden
     end
   end
 
@@ -57,7 +57,9 @@ class IkuOpdQueries
       indikator_iku.include?(ind_sasaran.indikator_kinerja)
     end
 
-    filtered_iku_sasaran.group_by(&:indikator_kinerja)
+    filtered_iku_sasaran.to_h do |ind|
+      [[ind.indikator_kinerja, ind.sasaran.id], [ind]]
+    end
   end
 
   def filter_indikator_sasaran(indikator_iku, indikator_sasaran)

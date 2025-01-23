@@ -322,6 +322,17 @@ class IndikatorsController < ApplicationController
            status: :ok
   end
 
+  def hide_iku_sasaran
+    sasaran_indikator = params[:id]
+    @sasaran = Sasaran.find(sasaran_indikator)
+    @indikator_sasarans = @sasaran.indikator_sasarans
+    @indikator_sasarans.each do |inds|
+      inds.toggle! :is_hidden
+    end
+    render json: { resText: 'IKU Disembunyikan' }.to_json,
+           status: :ok
+  end
+
   def new_target_iku_sasaran
     targets_indikators = params[:targets]
     @targets = IndikatorSasaran.where(id: targets_indikators)

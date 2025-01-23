@@ -1,13 +1,13 @@
-<tr>
+<tr id="<%= "iku-sasaran #{indikator[1]}" %>" data-controller="row">
   <td class="text-gray-900 text-wrap border" width='20px' scope="row"></td>
-  <td class="text-gray-900 text-wrap border"><%= indikator %></td>
+  <td class="text-gray-900 text-wrap border"><%= indikator[0] %></td>
   <td class="text-gray-900 border px-auto" scope="row">
     <% unless guest? %>
       <div class="row justify-content-center w-100">
         <div class="col">
-          <%= link_to new_target_iku_sasaran_indikators_path(nama_indikator: indikator, periode: '2019-2024', targets: targets),
+          <%= link_to new_target_iku_sasaran_indikators_path(nama_indikator: indikator[0], periode: '2019-2024', targets: targets),
                       remote: true,
-                      class: "m-3 btn btn-outline-danger w-100",
+                      class: "m-3 btn btn-warning w-100",
                       data: {
                         controller: 'form-modal',
                         action: 'ajax:complete->form-modal#success:prevent',
@@ -16,6 +16,15 @@
             <i class="fa fa-edit"></i>
             <span>Input Target</span>
           <% end %>
+        </div>
+        <div class="col">
+          <%= render(DeleteRowButtonComponent.new(
+            message: 'Sembunyikan IKU ?',
+            style: 'm-3 w-100',
+            title: 'Hide',
+            icon: 'fas fa-eye-slash',
+            path: hide_iku_sasaran_indikator_path(indikator[1]))
+          ) %>
         </div>
       </div>
     <% end %>
