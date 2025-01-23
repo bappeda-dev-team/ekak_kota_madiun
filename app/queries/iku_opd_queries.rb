@@ -57,9 +57,11 @@ class IkuOpdQueries
       indikator_iku.include?(ind_sasaran.indikator_kinerja)
     end
 
-    filtered_iku_sasaran.to_h do |ind|
+    hash_iku = filtered_iku_sasaran.to_h do |ind|
       [[ind.indikator_kinerja, ind.sasaran.id], [ind]]
     end
+
+    hash_iku.uniq { |(ind, _), _| ind }
   end
 
   def filter_indikator_sasaran(indikator_iku, indikator_sasaran)
