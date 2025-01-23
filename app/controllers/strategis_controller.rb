@@ -226,10 +226,11 @@ class StrategisController < ApplicationController
     # opd = Opd.find_by_kode_unik_opd(kode_unik_opd)
     # role = current_user.role_asn
     #
+    user_search = Regexp.escape(query)
     @pohons = Pohon.where(tahun: tahun,
                           user_id: user,
                           pohonable_type: 'StrategiPohon')
-                   .select { |p| p.pohonable.strategi =~ /#{query}/i }
+                   .select { |p| p.pohonable.strategi =~ /#{user_search}/i }
                    .reject { |p| p.pohonable.nil? || p.role == 'deleted' || p.pohonable.role == 'deleted' }
   end
 
