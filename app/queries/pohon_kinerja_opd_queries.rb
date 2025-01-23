@@ -35,7 +35,11 @@ class PohonKinerjaOpdQueries
   memoize :pohon_crosscutting
 
   def pohon_beda_opd
+    return unless pohon_kota.any?
+
     pohon_kota.select do |pohon|
+      next if pohon.parent_pohon.nil?
+
       pohon.parent_pohon.opd != opd && pohon.role != "strategi_pohon_kota"
     end
   end
