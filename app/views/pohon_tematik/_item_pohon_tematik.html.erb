@@ -6,18 +6,34 @@
     <h5 class="text-center"><strong>Tematik Kota</strong></h5>
     <% unless guest? %>
       <div class="d-grid gap-3 mt-4">
-        <%= link_to toggle_is_active_pohon_tematik_path(pohon),
-                    remote: true,
-                    method: :patch,
-                    class: 'btn btn-sm btn-danger w-100',
-                    data: {
-                      confirm_swal: "Non-Aktifkan Tematik:\n #{pohon.pohonable.tema}?",
-                      method: 'PATCH',
-                      controller: 'pohon-tematik',
-                      action: 'ajax:complete->pohon-tematik#nonAktifkanPohon:prevent'
-                    } do %>
-          <i class="fas fa-times me-2"></i>
-          <span>Non-Aktifkan</span>
+        <% if pohon.non_aktif? %>
+          <%= link_to toggle_is_active_pohon_tematik_path(pohon),
+                      remote: true,
+                      method: :patch,
+                      class: 'btn btn-sm btn-success w-100',
+                      data: {
+                        confirm_swal: "Aktifkan Tematik:\n #{pohon.pohonable.tema}?",
+                        method: 'PATCH',
+                        controller: 'pohon-tematik',
+                        action: 'ajax:complete->pohon-tematik#nonAktifkanPohon:prevent'
+                      } do %>
+            <i class="fas fa-check me-2"></i>
+            <span>Aktifkan</span>
+          <% end %>
+        <% else %>
+          <%= link_to toggle_is_active_pohon_tematik_path(pohon),
+                      remote: true,
+                      method: :patch,
+                      class: 'btn btn-sm btn-danger w-100',
+                      data: {
+                        confirm_swal: "Non-Aktifkan Tematik:\n #{pohon.pohonable.tema}?",
+                        method: 'PATCH',
+                        controller: 'pohon-tematik',
+                        action: 'ajax:complete->pohon-tematik#nonAktifkanPohon:prevent'
+                      } do %>
+            <i class="fas fa-times me-2"></i>
+            <span>Non-Aktifkan</span>
+          <% end %>
         <% end %>
         <%= link_to clone_path(pohon), remote: true,
                     data: {
