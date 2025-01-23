@@ -301,6 +301,22 @@ export default class extends Controller {
     this.partialAttacher("form-modal-body", xhr.errors);
   }
 
+  nonAktifkanPohon(e) {
+    const [xhr, status] = e.detail;
+    const response = xhr.response;
+
+    const { resText, html_content } = JSON.parse(response);
+
+    const target = e.target.closest(".pohon").parentElement;
+
+    if (status == "OK") {
+      this.sweetAlertSuccess(resText);
+      target.innerHTML = html_content;
+    } else {
+      this.sweetAlertFailed(resText);
+    }
+  }
+
   terimaPohon(e) {
     const [xhr, status] = e.detail;
     const target = e.currentTarget.closest("li");

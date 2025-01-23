@@ -3,6 +3,7 @@
 # Table name: pohons
 #
 #  id                :bigint           not null, primary key
+#  is_active         :boolean          default(TRUE), not null
 #  keterangan        :string
 #  metadata          :jsonb
 #  pohon_khusus      :boolean          default(FALSE)
@@ -40,6 +41,8 @@ class Pohon < ApplicationRecord
 
   scope :pohon_opd, -> { where(pohonable_type: "IsuStrategisOpd") }
   scope :pohon_kota, -> { where(pohonable_type: "StrategiKotum") }
+  scope :active, -> { where(is_active: true) }
+  scope :inactive, -> { where(is_active: false) }
 
   store :metadata
   store_accessor :metadata, :tim_id, :role_tim, :processed_at,
@@ -171,5 +174,9 @@ class Pohon < ApplicationRecord
     return if strategi_pohon_id.nil?
 
     StrategiPohon.find(strategi_pohon_id)
+  end
+
+  def non_aktif?
+    !is_active
   end
 end

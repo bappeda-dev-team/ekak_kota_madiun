@@ -264,6 +264,17 @@ class PohonTematikController < ApplicationController
     end
   end
 
+  def toggle_is_active
+    @pohon = Pohon.find(params[:id])
+    @pohon.toggle! :is_active
+    kata_kata_aktif = @pohon.is_active ? "Aktif" : "Non-Aktif"
+
+    render json: { resText: "Tematik #{@pohon.pohonable.tema} #{kata_kata_aktif}",
+                   html_content: html_content({ pohon: @pohon },
+                                              partial: 'pohon_tematik/item_pohon_tematik') }.to_json,
+           status: :ok
+  end
+
   def create_strategi_tematik_baru
     @strategi = Strategi.new(strategi_params)
     if @strategi.save

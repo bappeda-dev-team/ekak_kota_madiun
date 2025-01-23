@@ -2708,7 +2708,8 @@ CREATE TABLE public.pohons (
     status character varying,
     metadata jsonb,
     strategi_pohon_id bigint,
-    pohon_khusus boolean DEFAULT false
+    pohon_khusus boolean DEFAULT false,
+    is_active boolean DEFAULT true NOT NULL
 );
 
 
@@ -7107,6 +7108,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250102232607'),
 ('20250104052804'),
 ('20250106014927'),
-('20250106014937');
+('20250106014937'),
+('20250123055646');
 
 

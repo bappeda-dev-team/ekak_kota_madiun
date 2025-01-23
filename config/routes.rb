@@ -170,6 +170,7 @@ Rails.application.routes.draw do
       patch :tolak
       get :new_sub_sub
       get :edit_sub_sub
+      patch :toggle_is_active
     end
     collection do
       post :create_sub_tema

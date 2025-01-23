@@ -3,6 +3,7 @@
 # Table name: pohons
 #
 #  id                :bigint           not null, primary key
+#  is_active         :boolean          default(TRUE), not null
 #  keterangan        :string
 #  metadata          :jsonb
 #  pohon_khusus      :boolean          default(FALSE)
