@@ -29,6 +29,7 @@
        data: {
          pohon_tematik_target: 'dropdown',
          placeholder: 'Pilih OPD',
+         action: 'change->pohon-tematik#updateStrategi'
        },
        id: "opd_#{form.object_id}",
        required: true
@@ -40,9 +41,7 @@
      {include_blank: true},
      { class: 'form-control',
        data: {
-         controller: 'dropdown',
-         dropdown_jenis_value: 'action',
-         dropdown_event_name_value: 'change-tema',
+         pohon_tematik_target: 'strategi',
          placeholder: 'Pilih Operational Tematik',
        },
        id: "pohon_#{form.object_id}",

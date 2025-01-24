@@ -1,7 +1,7 @@
 <%= form_with(model: pohon, url: '/pohon_tematik/create_tactical_tematik', local: false,
               data: {
-                  controller: 'pohon-tematik',
-                  action: 'ajax:success->pohon-tematik#ajaxSuccess'
+                controller: 'pohon-tematik',
+                action: 'ajax:success->pohon-tematik#ajaxSuccess'
               }
 ) do |form| %>
   <% if pohon.errors.any? %>
@@ -24,30 +24,29 @@
   <div class="field">
     <%= form.label :opd, class: 'form-label' %>
     <%= form.select :opd_id, select_opd(@opds),
-        { include_blank: true },
-        { class: 'form-control text-center',
-          data: {
-              pohon_tematik_target: 'dropdown',
-              placeholder: 'Pilih OPD',
-          },
-          id: "opd_#{form.object_id}",
-          required: true
-        } %>
+     { include_blank: true },
+     { class: 'form-control text-center',
+       data: {
+         pohon_tematik_target: 'dropdown',
+         placeholder: 'Pilih OPD',
+         action: 'change->pohon-tematik#updateStrategi'
+       },
+       id: "opd_#{form.object_id}",
+       required: true
+     } %>
   </div>
   <div class="field">
     <%= form.label :tactical, class: 'form-label' %>
     <%= form.select :pohonable_id, select_strategi(@strategis),
-         {include_blank: true},
-         { class: 'form-control',
-           data: {
-               controller: 'dropdown',
-               dropdown_jenis_value: 'action',
-               dropdown_event_name_value: 'change-tema',
-               placeholder: 'Pilih Tactical',
-           },
-           id: "pohon_#{form.object_id}",
-           required: true
-          }%>
+     {include_blank: true},
+     { class: 'form-control',
+       data: {
+         pohon_tematik_target: 'strategi',
+         placeholder: 'Pilih Tactical',
+       },
+       id: "pohon_#{form.object_id}",
+       required: true
+     }%>
   </div>
   <div class="field">
     <%= form.label :keterangan, class: 'form-label' %>
