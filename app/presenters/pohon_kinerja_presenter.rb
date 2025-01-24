@@ -300,6 +300,8 @@ class PohonKinerjaPresenter
     else
       parent_tematik_aktif?(pohon_target.parent_pohon)
     end
+  rescue NoMethodError
+    false
   end
 
   private
