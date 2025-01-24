@@ -45,7 +45,7 @@ class Pohon < ApplicationRecord
   scope :inactive, -> { where(is_active: false) }
 
   store :metadata
-  store_accessor :metadata, :tim_id, :role_tim, :processed_at,
+  store_accessor :metadata, :tim_id, :role_tim, :processed_at, :processed_by,
                  :assigned_by, :keterangan_tim, :tahun_tim, :opd_tim,
                  :is_inovator
 

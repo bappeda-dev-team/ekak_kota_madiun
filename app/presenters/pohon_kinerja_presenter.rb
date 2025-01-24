@@ -104,10 +104,14 @@ class PohonKinerjaPresenter
 
   def diproses_oleh
     User.find(@pohon.metadata["processed_by"])
+  rescue ActiveRecord::RecordNotFound
+    'user-tidak-ditemukan'
   end
 
   def diproses_pada
     @pohon.metadata["processed_at"].to_datetime
+  rescue NoMethodError
+    Time.now
   end
 
   def keterangan_proses
