@@ -9,7 +9,7 @@ class DaftarResiko
     user = User.find_by(nik: nip)
     pohon_pelaksana = Pohon.where(pohonable_type: 'StrategiPohon',
                                   tahun: tahun,
-                                  role: 'eselon_3',
+                                  role: %w[plt eselon_3],
                                   user_id: user.id)
                            .flat_map(&:pohonable)
     pohon_pelaksana.select { |str| str.opd_id.to_i == opd.id }
