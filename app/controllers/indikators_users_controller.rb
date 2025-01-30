@@ -13,11 +13,12 @@ class IndikatorsUsersController < ApplicationController
     jenis = params[:jenis]
     sub_jenis = params[:sub_jenis]
     kode_opd = params[:kode_opd]
+    kode_kota = "0.00.0.00.0.00.00.0000" # only for pemda kota madiun # doesn't mean anything
 
     indikators = Indikator.where(jenis: jenis,
                                  sub_jenis: sub_jenis,
                                  tahun: @tahun,
-                                 kode_opd: kode_opd)
+                                 kode_opd: [kode_opd, kode_kota])
                           .where('indikator ILIKE ?', "%#{search}%")
     results = indikators.map { |ind| { id: ind.id, text: ind.jenis_sub_jenis } }
 
