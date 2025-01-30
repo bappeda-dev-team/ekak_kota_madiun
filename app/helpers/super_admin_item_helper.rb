@@ -181,6 +181,12 @@ module SuperAdminItemHelper
         multi: true, collections: indikator_sdgs_items,
         id_target: 'sdgs-indikator',
         identifier: 'sdgs'
+      },
+      {
+        title: 'Stunting', href: '#',
+        multi: true, collections: indikator_stunting_items,
+        id_target: 'stungin-indikator',
+        identifier: 'stunting-indikator'
       }
     ]
   end
@@ -258,6 +264,17 @@ module SuperAdminItemHelper
       },
       {
         title: 'Indikator Output', href: sdgs_output_indikators_path, identifier: 'sdgs_output'
+      }
+    ]
+  end
+
+  def indikator_stunting_items
+    [
+      {
+        title: 'Indikator Outcome', href: stunting_outcome_indikators_path, identifier: 'stunting_outcome'
+      },
+      {
+        title: 'Indikator Output', href: stunting_output_indikators_path, identifier: 'stunting_output'
       }
     ]
   end

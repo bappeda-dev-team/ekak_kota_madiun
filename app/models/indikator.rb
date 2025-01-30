@@ -63,6 +63,9 @@ class Indikator < ApplicationRecord
   scope :spm_output, -> { where(jenis: 'SPM', sub_jenis: 'Output').order(id: :desc) }
   scope :sdgs_outcome, -> { where(jenis: 'SDGS', sub_jenis: 'Outcome').order(id: :desc) }
   scope :sdgs_output, -> { where(jenis: 'SDGS', sub_jenis: 'Output').order(id: :desc) }
+  scope :stunting_outcome, -> { where(jenis: 'Stunting', sub_jenis: 'Outcome').order(id: :desc) }
+  scope :stunting_output, -> { where(jenis: 'Stunting', sub_jenis: 'Output').order(id: :desc) }
+
   scope :iku_opd, -> { where(jenis: 'IKU', sub_jenis: 'OPD').order(id: :desc) }
   scope :hidden, -> { where(is_hidden: true) }
   scope :shown, -> { where(is_hidden: false) }
