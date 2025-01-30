@@ -1,0 +1,2 @@
+module ManrisksHelper
+end

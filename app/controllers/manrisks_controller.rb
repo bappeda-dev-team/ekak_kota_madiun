@@ -1,0 +1,2 @@
+class ManrisksController < ApplicationController
+end

@@ -8,6 +8,12 @@ require "sidekiq/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :manrisks do
+    collection do
+      get :konteks_strategis
+      get :identifikasi_strategis
+    end
+  end
   resources :realisasis
   resources :inovasi_masyarakats
   resources :anggota_tims
