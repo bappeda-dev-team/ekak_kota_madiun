@@ -1,0 +1,22 @@
+<% unless pohon.exists? && pohon.pelaksana.any? %>
+  <div class="pohon-body">
+    <table class="table table-bordered mb-3">
+      <% pohon.indikator_users.each.with_index(1) do |(pl, inds), no_i| %>
+        <tr>
+          <td class="text-start" width="20px">Pelaksana</td>
+          <td class="text-wrap text-start"><%= pl %></td>
+        </tr>
+        <% inds.each do |ind| %>
+          <tr>
+            <td class="text-start" width="20px" colspan="2">Indikator
+              <%= ind.jenis %>
+              <%= ind.sub_jenis %>
+              <%= no_i %>
+            </td>
+            <td class="text-wrap text-start" colspan="2"><%= ind %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </table>
+  </div>
+<% end %>

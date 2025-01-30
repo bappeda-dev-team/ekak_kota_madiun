@@ -308,6 +308,13 @@ class PohonKinerjaPresenter
     false
   end
 
+  def indikator_users
+    ind_users = pelaksana.to_h do |pl|
+      [pl.user, pl.user.indikators.by_strategi_id(real.id)]
+    end
+    ind_users.select { |_, inds| inds.any? }
+  end
+
   private
 
   def to_real_name(role)
