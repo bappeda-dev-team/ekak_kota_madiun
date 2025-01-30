@@ -2,6 +2,7 @@ class TujuanKotaController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :set_tujuan_kota, only: %i[show edit update destroy]
 
+  # see admin_filter for ajax
   def index; end
 
   def admin_filter
