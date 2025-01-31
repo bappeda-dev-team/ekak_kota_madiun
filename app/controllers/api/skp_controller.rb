@@ -111,14 +111,14 @@ module Api
       @tahun = params[:tahun]
       @user = User.find_by(nik: @nip)
       @eselo_user = @user.eselon_user
-      @sasarans = @user.sasaran_pohon_kinerja(tahun: @tahun)
+      @sasarans = @user.sasaran_asn_sync_skp(tahun: @tahun)
     end
 
     def sasaran_pohon_kinerja_pegawai
       @nip = params[:nip]
       @tahun = params[:tahun]
       @user = User.find_by!(nik: @nip)
-      @sasarans = @user.sasaran_pohon_kinerja(tahun: @tahun)
+      @sasarans = @user.sasaran_asn_sync_skp(tahun: @tahun)
     end
 
     def faktor_penghambat_skp
