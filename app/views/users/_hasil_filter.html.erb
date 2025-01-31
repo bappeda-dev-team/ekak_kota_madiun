@@ -42,7 +42,9 @@
             </td>
             <td class="text-gray-900 text-wrap" scope="row">
               <% if user.jabatan_users.any? %>
-                <strong><%= user.jabatan_users.last.details %></strong>
+                <% user.jabatan_users.each do |jab| %>
+                  <strong><%= jab.details %></strong>
+                <% end %>
               <% else %>
                 <strong><%= user.jabatan %></strong>
               <% end %>

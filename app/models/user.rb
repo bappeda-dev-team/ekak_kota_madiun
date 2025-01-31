@@ -344,7 +344,7 @@ class User < ApplicationRecord
                           .where.not(tahapans: { id_rencana: nil })
                           .where("sasarans.tahun ILIKE ?", "%#{tahun}%")
                           .dengan_strategi
-    sasaran_all.select { |ss| ss.siap_ditarik? }
+    sasaran_all.select(&:siap_ditarik?)
   end
 
   def sasaran_pohon_kinerja(tahun: nil)
