@@ -12,7 +12,8 @@
         <thead class="thead-tujuan">
           <tr class="header-tujuan">
             <th class="border" scope="col" width="20px">No.</th>
-            <th class="border" scope="col">Sasaran Kota</th>
+            <th class="border" scope="col">Strategi</th>
+            <th class="border" scope="col" colspan="2">Sasaran Kota</th>
             <th class="border" scope="col">Indikator</th>
             <th class="border" scope="col" width="50px">Target</th>
             <th class="border" scope="col">Satuan</th>
@@ -23,7 +24,43 @@
             <% row_sub = sub_tema.indikators.size + 1 %>
             <tr>
               <td class="text-gray-900 text-wrap border" width='20px' scope="row" rowspan="<%= row_sub %>"><%= no_sas %></td>
-              <td class="text-gray-900 text-wrap border" scope="row" rowspan="<%= row_sub %>" ><%= sub_tema %></td>
+              <td class="text-gray-900 text-wrap border" scope="row" rowspan="<%= row_sub %>" ><%= sub_tema %> <p><b>(<%= sub_tema.type.titleize.parameterize(preserve_case: true) %>)</b></p></td>
+              <td class="text-gray-900 text-wrap border" scope="row" rowspan="<%= row_sub %>" ><%= sub_tema.sasaran_kotum %></td>
+              <td rowspan="<%= row_sub %>" class="border">
+                <div class="d-grid gap-3">
+                  <% if sub_tema.sasaran_kotum.present? %>
+                    <% unless guest? %>
+                      <%= link_to edit_sasaran_kotum_path(sub_tema.sasaran_kotum), remote: true,
+                                  data: {
+                                    controller: 'form-modal',
+                                    action: 'ajax:complete->form-modal#success:prevent',
+                                    bs_toggle: 'modal',
+                                    bs_target: '#form-modal'
+                                  },
+                                  class: 'btn btn-outline-info' do %>
+                        <i class="fa fa-edit me-2"></i>
+                        <span>Edit</span>
+                      <% end %>
+                    <% end %>
+                  <% else %>
+                    <% if guest? %>
+                      <button class="btn btn-danger">Dalam Perbaikan</button>
+                    <% else %>
+                      <%= link_to new_sasaran_kotum_path(tematik_id: sub_tema.id), remote: true,
+                                  data: {
+                                    controller: 'form-modal',
+                                    action: 'ajax:complete->form-modal#success:prevent',
+                                    bs_toggle: 'modal',
+                                    bs_target: '#form-modal'
+                                  },
+                                  class: 'btn btn-secondary' do %>
+                        <i class="fa fa-plus me-2"></i>
+                        <span>Input Sasaran</span>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                </div>
+              </td>
             </tr>
             <% sub_tema.indikators.each do |indikator_sub| %>
               <tr>
