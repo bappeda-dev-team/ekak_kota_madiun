@@ -55,6 +55,11 @@ module SasaransHelper
     end
   end
 
+  def sasaran_wajib_manrisk(sasaran)
+    tahun_bener = sasaran.tahun[/[^_]\d*/, 0].to_i
+    sasaran.strategi&.strategi_eselon4 && tahun_bener > 2024
+  end
+
   def status_sasaran_pokin(status_sasaran)
     if status_sasaran == 'siap_ditarik'
       '<span class="badge badge-lg bg-success w-100">SIAP DITARIK SKP</span>'.html_safe

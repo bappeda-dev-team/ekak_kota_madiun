@@ -39,6 +39,7 @@
               <th class="border text-center" scope="col">Indikator Kinerja</th>
               <th class="border text-center" scope="col">Target</th>
               <th class="border text-center" scope="col">Satuan</th>
+              <th class="border text-center" scope="col">Status</th>
               <th class="border text-center" scope="col">Action</th>
             </tr>
           </thead>
@@ -46,7 +47,7 @@
             <% @sasarans.each.with_index(1) do |(subkegiatan, sasarans), i| %>
               <tr>
                 <td class="border fw-bolder text-wrap"><%= i %></td>
-                <td class="border fw-bolder text-wrap" colspan="8">Subkegiatan: <%= subkegiatan&.nama_subkegiatan %></td>
+                <td class="border fw-bolder text-wrap" colspan="9">Subkegiatan: <%= subkegiatan&.nama_subkegiatan %></td>
               </tr>
               <% sasarans.each.with_index(1) do |sasaran, no| %>
                 <% warning = sasaran.nip_asn_sebelumnya.present? ? 'table-info' : '' %>
@@ -63,15 +64,29 @@
                       <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
                     </td>
                   <% end %>
+                  <td class="status-sasaran border">
+                    <% if sasaran.user.present? %>
+                      <div class="d-grid gap-2">
+                        <% if sasaran_wajib_manrisk(sasaran) %>
+                          <div class="status_manrisk">
+                            <%= status_manrisk(sasaran&.status_manrisk) %>
+                          </div>
+                        <% end %>
+                        <div class="status_sasaran">
+                          <%= status_sasaran_pokin(sasaran&.status_sasaran) %>
+                        </div>
+                      </div>
+                    <% end %>
+                  </td>
                   <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>">
                     <div class="d-grid gap-2">
                       <%= link_to detail_sasaran_path(sasaran), target: "_blank", rel: "nofollow",
-                       class: "btn btn-sm btn-info" do %>
+                                  class: "btn btn-sm btn-info" do %>
                         <i class="fas fa-book-open" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Preview KaK"></i>
                         KAK
                       <% end %>
                       <%= link_to edit_admin_sasaran_path(sasaran),
-                       class: "btn btn-sm btn-outline-info" do %>
+                                  class: "btn btn-sm btn-outline-info" do %>
                         <i class="fas fa-pencil-alt me-2"></i>
                         <span>Edit</span>
                       <% end %>
@@ -82,7 +97,7 @@
                 <% row_indikator_sasaran(sasaran).each do |indikator| %>
                   <%= indikator %>
                 <% end %>
-                <% row_tahapan_sasaran(sasaran, colspan: 9).each do |tahapan| %>
+                <% row_tahapan_sasaran(sasaran, colspan: 10).each do |tahapan| %>
                   <%= tahapan %>
                 <% end %>
               <% end %>
