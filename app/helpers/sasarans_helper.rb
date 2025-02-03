@@ -60,6 +60,21 @@ module SasaransHelper
     sasaran.strategi&.strategi_eselon4 && tahun_bener > 2024
   end
 
+  def jenis_strategi_sasaran(role)
+    case role
+    when 'eselon_2'
+      'strategic'
+    when 'eselon_3'
+      'tactical'
+    when 'eselon_4'
+      'operational'
+    when 'staff'
+      'staff'
+    else
+      'kosong'
+    end
+  end
+
   def status_sasaran_pokin(status_sasaran)
     if status_sasaran == 'siap_ditarik'
       '<span class="badge badge-lg bg-success w-100">SIAP DITARIK SKP</span>'.html_safe

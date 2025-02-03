@@ -51,20 +51,21 @@
               </tr>
               <% sasarans.each.with_index(1) do |sasaran, no| %>
                 <% warning = sasaran.nip_asn_sebelumnya.present? ? 'table-info' : '' %>
+                <% jenis_strategi = jenis_strategi_sasaran(sasaran.role_strategi_sasaran) %>
                 <tr class="<%= warning %>">
                   <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= "#{i}.#{no}" %></td>
                   <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
-                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.strategi_sasaran %></td>
+                  <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.strategi_sasaran %> <b>(<%= jenis_strategi.titleize %>)</b></td>
                   <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
                   <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.tahun %></td>
                   <% if sasaran.indikator_sasarans.any? %>
                     <%= indikator_sasaran(sasaran) %>
                   <% else %>
-                    <td class="border" colspan="3">
+                    <td class="" colspan="3">
                       <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
                     </td>
                   <% end %>
-                  <td class="status-sasaran border">
+                  <td class="status-sasaran border" rowspan="<%= rowspan_sasaran(sasaran) %>">
                     <% if sasaran.user.present? %>
                       <div class="d-grid gap-2">
                         <% if sasaran_wajib_manrisk(sasaran) %>

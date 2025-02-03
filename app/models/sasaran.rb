@@ -642,6 +642,12 @@ class Sasaran < ApplicationRecord
     'Kosong'
   end
 
+  def role_strategi_sasaran
+    strategi&.role
+  rescue NoMethodError
+    'Kosong'
+  end
+
   def status_ekak
     tahun_bener = tahun.include?('murni') ? tahun[/[^_]\d*/, 0] : tahun
     if tahun_bener.match?('perubahan')
@@ -785,6 +791,6 @@ class Sasaran < ApplicationRecord
     return false if tahun.nil?
 
     tahun_bener = tahun[/[^_]\d*/, 0].to_i
-    user.has_role?(:eselon_4) && strategi&.strategi_eselon4 && tahun_bener > 2024
+    strategi&.strategi_eselon4 && tahun_bener > 2024
   end
 end
