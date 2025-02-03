@@ -46,9 +46,10 @@
           </thead>
           <tbody>
             <% @sasarans.each.with_index(1) do |sasaran, i| %>
+              <% jenis_strategi = jenis_strategi_sasaran(sasaran.role_strategi_sasaran) %>
               <tr>
                 <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= i %></td>
-                <td class="border text-wrap <%= strategi_valid_style(sasaran.strategi_sasaran) %>" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.strategi_sasaran %></td>
+                <td class="border text-wrap <%= strategi_valid_style(sasaran.strategi_sasaran) %>" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.strategi_sasaran %> <b class="text-gray-900">(<%= jenis_strategi.titleize %>)</b></td>
                 <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
                 <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.tahun %></td>
                 <% if sasaran.indikator_sasarans.any? %>
