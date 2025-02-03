@@ -63,5 +63,7 @@ class SasaranCloner < Clowne::Cloner
     record.clone_tahun_asal = clone_tahun_asal
     record.clone_oleh = clone_oleh
     record.clone_asli = clone_asli
+    record.status_dampak_resiko = ''
+    record.komentar_dampak_resiko = ''
   end
 end
