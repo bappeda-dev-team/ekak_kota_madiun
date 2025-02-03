@@ -28,7 +28,7 @@
       <%= render 'rencana_aksi_card', sasaran: @sasaran %>
     <% else %>
       <!-- SECTION - musrenbang -->
-      <% if isi_subkegiatan?(current_user) %>
+      <% if is_eselon4?(current_user, @sasaran) %>
         <%= render(UsulanCardComponent.new(sasaran: @sasaran, jenis: 'musrenbang')) %>
         <%= render(UsulanCardComponent.new(sasaran: @sasaran, jenis: 'pokpir')) %>
         <%= render(UsulanCardComponent.new(sasaran: @sasaran, jenis: 'mandatori')) %>

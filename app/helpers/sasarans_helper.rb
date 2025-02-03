@@ -98,6 +98,10 @@ module SasaransHelper
       user.nama_bidang&.upcase&.include?("PUSKESMAS") || user.opd.nama_opd&.upcase&.include?("BENCANA")
   end
 
+  def is_eselon4?(user, sasaran)
+    isi_subkegiatan?(user) || sasaran.strategi&.strategi_eselon4
+  end
+
   def sasaran_check(checker)
     if checker
       "<i class='fa fa-check text-success'></i>".html_safe
