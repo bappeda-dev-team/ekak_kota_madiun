@@ -176,6 +176,10 @@ class Pohon < ApplicationRecord
     StrategiPohon.find(strategi_pohon_id)
   end
 
+  def aktif?
+    is_active
+  end
+
   def non_aktif?
     !is_active
   end

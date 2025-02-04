@@ -44,7 +44,7 @@ class IndikatorsController < ApplicationController
 
     tematiks = PohonTematikQueries.new(tahun: @tahun)
 
-    @tujuan_kota = tematiks.tematiks.map(&:pohonable).compact_blank
+    @tujuan_kota = tematiks.tematiks.active.map(&:pohonable).compact_blank
   end
 
   def rkpd_sasaran
@@ -54,8 +54,10 @@ class IndikatorsController < ApplicationController
 
     tematiks = PohonTematikQueries.new(tahun: @tahun)
 
-    sub_tematiks = tematiks.sub_tematiks.map(&:pohonable).compact_blank
-    sub_sub_tematiks = tematiks.sub_sub_tematiks.map(&:pohonable).compact_blank
+    sub_tematiks = tematiks.sub_tematiks.filter { |sub| sub.parent_pohon.is_active }.map(&:pohonable).compact_blank
+    sub_sub_tematiks = tematiks.sub_sub_tematiks.filter do |subsub|
+      subsub.parent_pohon.parent_pohon.is_active
+    end.map(&:pohonable).compact_blank
     @sasaran_kota = sub_tematiks + sub_sub_tematiks
   end
 
@@ -72,8 +74,8 @@ class IndikatorsController < ApplicationController
 
     tematiks = PohonTematikQueries.new(tahun: @tahun)
 
-    tujuan_kota = tematiks.tematiks.map(&:pohonable).compact_blank
-    sasaran_kota = tematiks.sub_tematiks.map(&:pohonable).compact_blank
+    tujuan_kota = tematiks.tematiks.active.map(&:pohonable).compact_blank
+    sasaran_kota = tematiks.sub_tematiks.filter { |sub| sub.parent_pohon.is_active }.map(&:pohonable).compact_blank
     iku_kota = tujuan_kota + sasaran_kota
     @iku_kota = iku_kota.map(&:indikators).compact_blank.flatten
   end
