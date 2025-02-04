@@ -142,11 +142,14 @@ module Api
 
     def sasaran_kota
       @tahun = params[:tahun]
-      @sasaran_kota = Pohon.where(pohonable_type: %w[SubTematik SubSubTematik],
-                                  tahun: @tahun).map(&:pohonable)
-                           .compact
-                           .select { |sasaran| sasaran.sasaran_kotum.present? }
-                           .reject { |sasaran| sasaran.sasaran_kotum.sasaran.blank? }
+      pohon_sasaran = Pohon.where(pohonable_type: %w[SubTematik SubSubTematik],
+                                  tahun: @tahun)
+                           .filter do |pohon|
+        tema = pohon.pohonable_type == 'SubTematik' ? pohon.parent_pohon : pohon.parent_pohon.parent_pohon
+        tema.is_active
+      end.map(&:pohonable)
+      @sasaran_kota = pohon_sasaran.select { |sasaran| sasaran.sasaran_kotum.present? }
+                                   .reject { |sasaran| sasaran.sasaran_kotum.sasaran.blank? }
     end
   end
 end
