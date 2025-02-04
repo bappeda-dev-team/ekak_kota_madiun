@@ -1,4 +1,4 @@
-$('#form-sasaran-nip').on('ajax:success', (event) => {
+$('#form-modal').on('ajax:success', (event) => {
   $(this).hide
   setTimeout(() => {
     location.reload(true);
@@ -9,7 +9,7 @@ Swal.fire(
   'Pemilik Sasaran diganti',
   'success'
 )
-$('#form-perhitungan').on('ajax:failed', (event) => {
+$('#form-modal').on('ajax:failed', (event) => {
   Swal.fire(
     'Gagal',
     'Terjadi Kesalahan',

@@ -122,17 +122,20 @@ class SasaransController < ApplicationController
 
     return unless @sasaran
 
-    @strategi = @sasaran.strategi
-
     @nip_lama = params[:nip_lama]
     @nip_baru = params[:nip_baru]
 
     @sasaran.nip_asn_sebelumnya = @nip_lama
-    @strategi.nip_asn_sebelumnya = @nip_lama
     @sasaran.nip_asn = @nip_baru
-    @strategi.nip_asn = @nip_baru
 
-    return unless @sasaran.save && @strategi.save
+    return unless @sasaran.save
+
+    @strategi = @sasaran.strategi
+
+    if @strategi.present?
+      @strategi.nip_asn = @nip_baru
+      @strategi.nip_asn_sebelumnya = @nip_lama
+    end
 
     respond_to do |f|
       f.js
