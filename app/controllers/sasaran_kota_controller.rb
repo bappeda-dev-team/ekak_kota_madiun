@@ -105,11 +105,14 @@ class SasaranKotaController < ApplicationController
              else
                tahun
              end
-    tematiks = Pohon.includes(:pohonable).where(pohonable_type: %w[Tematik], tahun: @tahun)
+    tematiks = Pohon.active.includes(:pohonable).where(pohonable_type: %w[Tematik], tahun: @tahun)
                     .select(&:pohonable)
 
     @sasaran_kota = tematiks.to_h do |tematik|
-      sub_pohons = tematik.sub_pohons.includes(:pohonable).where(tahun: @tahun, pohonable_type: %w[SubTematik SubSubTematik Strategic])
+      sub_pohons = tematik.sub_pohons.includes(:pohonable).where(tahun: @tahun,
+                                                                 pohonable_type: %w[
+                                                                   SubTematik SubSubTematik Strategic
+                                                                 ])
                           .select(&:pohonable)
       [tematik, sub_pohons]
     end
