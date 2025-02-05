@@ -83,25 +83,32 @@
                 <% peta_resiko_ha = peta_resiko(nilai_kemungkinan, nilai_skala_dampak) %>
                 <% nilai_peta_resiko_ha = nilai_peta_resiko(peta_resiko_ha) %>
                 <td class="text-wrap border" rowspan="<%= row_indikator %>"><%= "#{i}.#{no}" %></td>
-                <td class="text-wrap border" rowspan="<%= row_indikator %>">
-                  <% if show_sasaran.status_dampak_resiko.present? %>
-                    <% if show_sasaran.dampak_resiko_setuju? %>
-                      <button class="btn btn-success text-white">
-                        <%= show_sasaran.status_dampak_resiko %>
-                      </button>
+                <td class="text-wrap border text-center" rowspan="<%= row_indikator %>">
+                  <div class="d-grid gap-2">
+                    <% if show_sasaran.status_dampak_resiko.present? %>
+                      <% if show_sasaran.dampak_resiko_setuju? %>
+                        <button class="btn btn-success text-white">
+                          <%= show_sasaran.status_dampak_resiko %>
+                        </button>
+                      <% else %>
+                        <button class="btn btn-secondary">
+                          <%= show_sasaran.status_dampak_resiko %>
+                        </button>
+                      <% end %>
+                      <hr />
+                      <span>Keterangan: </span>
+                      <small><%= show_sasaran.komentar_dampak_resiko %></small>
+                      <% unless show_sasaran.rincian.valid_manrisk? %>
+                        <p class="alert alert-danger">
+                          PETA RISIKO KOSONG
+                        </p>
+                      <% end %>
                     <% else %>
-                      <button class="btn btn-secondary">
-                        <%= show_sasaran.status_dampak_resiko %>
+                      <button class="btn btn-danger text-white">
+                        Belum Diverifikasi
                       </button>
                     <% end %>
-                    <hr />
-                    <span>Keterangan: </span>
-                    <small><%= show_sasaran.komentar_dampak_resiko %></small>
-                  <% else %>
-                    <button class="btn btn-danger text-white">
-                      Belum Diverifikasi
-                    </button>
-                  <% end %>
+                  </div>
                 </td>
                 <td class="text-wrap border" rowspan="<%= row_indikator %>"><%= show_sasaran.nama_pemilik %></td>
                 <td class="text-wrap border" rowspan="<%= row_indikator %>">
@@ -150,17 +157,23 @@
                                 <span>Verifikasi Ulang</span>
                               <% end %>
                             <% else %>
-                              <%= link_to sasaran_program_opd_verifikasi_dampak_resiko_path(show_sasaran),
-                                          remote: true,
-                                          data: {
-                                            controller: 'form-modal',
-                                            action: 'ajax:complete->form-modal#success:prevent',
-                                            bs_toggle: 'modal',
-                                            bs_target: '#form-modal'
-                                          },
-                                          class: 'btn btn-success' do %>
-                                <i class="fas fa-check me-2"></i>
-                                <span>Verifikasi</span>
+                              <% if show_sasaran.rincian.valid_manrisk? %>
+                                <%= link_to sasaran_program_opd_verifikasi_dampak_resiko_path(show_sasaran),
+                                            remote: true,
+                                            data: {
+                                              controller: 'form-modal',
+                                              action: 'ajax:complete->form-modal#success:prevent',
+                                              bs_toggle: 'modal',
+                                              bs_target: '#form-modal'
+                                            },
+                                            class: 'btn btn-success' do %>
+                                  <i class="fas fa-check me-2"></i>
+                                  <span>Verifikasi</span>
+                                <% end %>
+                              <% else %>
+                                <p class="alert alert-danger">
+                                  Belum terdapat PETA RISIKO hubungi pelaksana
+                                </p>
                               <% end %>
                             <% end %>
                           <% else %>

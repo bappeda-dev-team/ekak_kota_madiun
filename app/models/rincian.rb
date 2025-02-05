@@ -68,4 +68,10 @@ class Rincian < ApplicationRecord
       C: [[2, 3], [3, 2], [4, 1], [1, 4], [3, 3]],
       D: [[4, 2], [2, 4], [3, 4]] }
   end
+
+  def valid_manrisk?
+    kemungkinan.present? && skala_dampak.present?
+  rescue NoMethodError
+    false
+  end
 end
