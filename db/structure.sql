@@ -3106,6 +3106,40 @@ ALTER SEQUENCE public.rincians_id_seq OWNED BY public.rincians.id;
 
 
 --
+-- Name: risikos; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.risikos (
+    id bigint NOT NULL,
+    konteks_strategis character varying,
+    prioritas character varying,
+    tahun_penilaian character varying,
+    tujuan_kota_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: risikos_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.risikos_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: risikos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.risikos_id_seq OWNED BY public.risikos.id;
+
+
+--
 -- Name: roles; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -4795,6 +4829,13 @@ ALTER TABLE ONLY public.rincians ALTER COLUMN id SET DEFAULT nextval('public.rin
 
 
 --
+-- Name: risikos id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.risikos ALTER COLUMN id SET DEFAULT nextval('public.risikos_id_seq'::regclass);
+
+
+--
 -- Name: roles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -5617,6 +5658,14 @@ ALTER TABLE ONLY public.rincians
 
 
 --
+-- Name: risikos risikos_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.risikos
+    ADD CONSTRAINT risikos_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: roles roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -6337,6 +6386,13 @@ CREATE INDEX index_rincians_on_skala_id ON public.rincians USING btree (skala_id
 
 
 --
+-- Name: index_risikos_on_tujuan_kota_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_risikos_on_tujuan_kota_id ON public.risikos USING btree (tujuan_kota_id);
+
+
+--
 -- Name: index_roles_on_name_and_resource_type_and_resource_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -6653,6 +6709,14 @@ ALTER TABLE ONLY public.tims
 
 ALTER TABLE ONLY public.anggota_tims
     ADD CONSTRAINT fk_rails_896a63612b FOREIGN KEY (tim_id) REFERENCES public.tims(id);
+
+
+--
+-- Name: risikos fk_rails_9499e60c6f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.risikos
+    ADD CONSTRAINT fk_rails_9499e60c6f FOREIGN KEY (tujuan_kota_id) REFERENCES public.tujuan_kota(id);
 
 
 --
@@ -7109,6 +7173,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250104052804'),
 ('20250106014927'),
 ('20250106014937'),
-('20250123055646');
+('20250123055646'),
+('20250205061950');
 
 

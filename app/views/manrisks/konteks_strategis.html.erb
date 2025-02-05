@@ -10,48 +10,7 @@
                sub_title: "Periode #{@periode}",
                sub_title_2: "Tahun Penilaian #{@tahun}" do %>
       <div class="table-responsive mb-5">
-        <table class="table table-bordered align-items-center">
-          <tbody id="tujuan-pemda">
-            <tr>
-              <td class="text-gray-900 text-wrap fw-bolder " width="300px">Tujuan Strategis RPJMD</td>
-              <td class="text-wrap">
-                <ul class="list-group">
-                  <% @tujuan_kota.each do |tujuan| %>
-                    <li class="list-group-item"><%= tujuan %></li>
-                  <% end %>
-                </ul>
-              </td>
-            </tr>
-            <tr>
-              <td class="text-gray-900 text-wrap fw-bolder">Penetapan konteks Risiko Strategis Pemda</td>
-              <td class="fw-bolder text-wrap"></td>
-            </tr>
-            <tr>
-              <td class="text-gray-900 text-wrap fw-bolder">Nama Dinas Terkait</td>
-              <td class="fw-bolder text-wrap"></td>
-            </tr>
-            <tr>
-              <td class="text-gray-900 text-wrap fw-bolder">Sasaran RPJMD</td>
-              <td class="fw-bolder text-wrap"></td>
-            </tr>
-            <tr>
-              <td class="text-gray-900 text-wrap fw-bolder">IKU Sasaran RPJMD</td>
-              <td class="fw-bolder text-wrap"></td>
-            </tr>
-            <tr>
-              <td class="text-gray-900 text-wrap fw-bolder">Prioritas pembangunan dan program unggulan</td>
-              <td class="fw-bolder text-wrap"></td>
-            </tr>
-            <tr>
-              <td class="text-gray-900 text-wrap fw-bolder">Tujuan RPJMD</td>
-              <td class="fw-bolder text-wrap"></td>
-            </tr>
-            <tr>
-              <td class="text-gray-900 text-wrap fw-bolder">Sasaran RPJMD</td>
-              <td class="fw-bolder text-wrap"></td>
-            </tr>
-          </tbody>
-        </table>
+        <%= render 'tabel_konteks_strategis', konteks: @konteks_risiko %>
       </div>
     <% end %>
   <% else %>

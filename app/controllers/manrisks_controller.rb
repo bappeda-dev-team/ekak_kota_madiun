@@ -1,9 +1,12 @@
 class ManrisksController < ApplicationController
   before_action :set_periode_pemda
+  layout false, only: [:edit_konteks_strategis]
 
   def konteks_strategis
     @tujuan_kota = TujuanKota.by_periode(@tahun)
   end
+
+  def edit_konteks_strategis; end
 
   private
 

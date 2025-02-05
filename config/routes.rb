@@ -13,6 +13,10 @@ Rails.application.routes.draw do
       get :konteks_strategis
       get :identifikasi_strategis
     end
+    member do
+      get :filter_konteks_strategis
+      get :edit_konteks_strategis
+    end
   end
   resources :realisasis
   resources :inovasi_masyarakats
