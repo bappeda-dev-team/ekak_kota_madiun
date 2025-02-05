@@ -217,7 +217,7 @@ class PohonKinerjaPresenter
   def pelaksana
     return [] if @pohon.instance_of?(Pohon)
 
-    @pohon.pohon_shareds.where.not(role: %w[opd opd-batal], user_id: nil).order(:user_id)
+    @pohon.pohon_shareds.where.not(role: %w[opd opd-batal], user_id: nil).order(:user_id).limit(10)
   rescue NoMethodError
     []
   end
