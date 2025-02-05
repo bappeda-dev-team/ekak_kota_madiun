@@ -1,9 +1,16 @@
 class ManrisksController < ApplicationController
   before_action :set_periode_pemda
-  layout false, only: [:edit_konteks_strategis]
+  layout false, only: %i[edit_konteks_strategis]
 
-  def konteks_strategis
-    @tujuan_kota = TujuanKota.by_periode(@tahun)
+  def konteks_strategis; end
+
+  def filter
+    tujuan_id = params[:filter]
+    tujuan = TujuanKota.find(tujuan_id)
+
+    render json: { html_content: html_content({ tujuan_kota: tujuan },
+                                              partial: 'manrisks/konteks_strategis') }
+      .to_json, status: :ok
   end
 
   def edit_konteks_strategis; end

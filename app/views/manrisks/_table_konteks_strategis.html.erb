@@ -1,17 +1,13 @@
 <table class="table table-bordered align-items-center">
-  <tbody id="tujuan-pemda">
+  <tbody>
     <tr>
       <td class="text-gray-900 text-wrap fw-bolder " width="300px">Tujuan Strategis RPJMD</td>
       <td class="text-wrap">
-        <%= konteks.tujuan_kota %>
+        <%= tujuan_kota %>
       </td>
     </tr>
-    <tr id="<%= dom_id(konteks) %>" data-controller="row">
-      <td class="text-gray-900 text-wrap fw-bolder">Penetapan konteks Risiko Strategis Pemda
-        <div class="d-grid gap-2">
-          <%= render(EditRowButtonComponent.new(path: edit_konteks_strategis_manrisks_path(konteks))) %>
-        </div>
-      </td>
+    <tr>
+      <td class="text-gray-900 text-wrap fw-bolder">Penetapan konteks Risiko Strategis Pemda</td>
       <td class="fw-bolder text-wrap"></td>
     </tr>
     <tr>

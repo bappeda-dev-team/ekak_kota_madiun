@@ -29,4 +29,34 @@ export default class extends Controller {
       '<div class="alert alert-danger" role="alert">Terjadi Kesalahan</div>';
     element.innerHTML = html;
   }
+
+  getRender(event) {
+    console.log('get render')
+    const form = event.currentTarget;
+    const url = new URL(form.action || window.location.href);
+    const params = new URLSearchParams(new FormData(form));
+    // Update URL with new query parameters
+    window.history.pushState({}, "", `?${params.toString()}`);
+
+    // Fetch new filtered results
+    this.loadResults(url.pathname + "?" + params.toString());
+  }
+
+  async loadResults(url) {
+    try {
+      const response = await fetch(url, {
+        headers: { "X-Requested-With": "XMLHttpRequest" },
+      });
+
+      if (response.ok) {
+        const target = "render-results";
+        const element = document.getElementById(target);
+        const data = await response.json();
+        const html = data.html_content
+        element.innerHTML = html; // Update results
+      }
+    } catch (error) {
+      console.error("Error fetching results:", error);
+    }
+  }
 }

@@ -10,6 +10,7 @@ require "sidekiq_unique_jobs/web"
 Rails.application.routes.draw do
   resources :manrisks do
     collection do
+      get :filter
       get :konteks_strategis
       get :identifikasi_strategis
     end
@@ -946,6 +947,7 @@ Rails.application.routes.draw do
   resources :tujuan_kota do
     collection do
       post :admin_filter
+      get :list_tujuan
     end
   end
   get :crosscutting_kota, to: "sasaran_kota#crosscutting_kota"

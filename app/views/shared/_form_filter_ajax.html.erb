@@ -1,0 +1,27 @@
+<div class="form-filter-ajax" id="form-filter">
+  <%= form_with url: url, method: :get,
+                local: false,
+                data: {
+                  controller: 'filter-render',
+                  action: 'submit->filter-render#getRender:prevent'
+                } do |form| %>
+    <div class="field">
+      <%= form.label :filter, filter_label %>
+      <%= form.select :filter, [], {include_blank: true, required: true},
+       { data: {
+         placeholder: placeholder,
+         controller: 'dropdown',
+         dropdown_jenis_value: 'ajax',
+         dropdown_parent_value: '#form-filter',
+         dropdown_url_value: dropdown_url
+       } } %>
+    </div>
+    <div class="field mb-0 mt-5">
+      <%= button_tag class: "btn btn-tertiary w-100",
+                     data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>  Mencari..." } do %>
+        <i class="fa fa-search me-2"></i>
+        <span>Filter</span>
+      <% end %>
+    </div>
+  <% end %>
+</div>

@@ -5,6 +5,17 @@ class TujuanKotaController < ApplicationController
   # see admin_filter for ajax
   def index; end
 
+  def list_tujuan
+    @tahun = cookies[:tahun]
+    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @periode = Periode.find_tahun(tahun_bener)
+    @tahun_awal = @periode.tahun_awal.to_i
+    @tahun_akhir = @periode.tahun_akhir.to_i
+
+    @tujuan_kota = TujuanKota.all.includes([:indikator_tujuans])
+                             .by_periode(tahun_bener)
+  end
+
   def admin_filter
     @tahun = cookies[:tahun]
 
