@@ -19,7 +19,7 @@ module SuperAdminItemHelper
       },
       {
         title: 'Master Jenis Jabatan', href: jenis_jabatans_path,
-        icon: 'fas fa-people', identifier: 'jenis_jabatans'
+        icon: 'fas fa-user-check', identifier: 'jenis_jabatans'
       },
       {
         title: 'Daftar Pengguna Aplikasi', href: all_users_path,
@@ -47,11 +47,7 @@ module SuperAdminItemHelper
       },
       {
         title: 'Master Indikator', href: indikators_path,
-        icon: 'fas fa-target', identifier: 'indikators'
-      },
-      {
-        title: 'Tematik', href: subkegiatan_tematiks_path,
-        icon: 'fas fa-tags', identifier: 'tematik-kota'
+        icon: 'fas fa-ruler', identifier: 'indikators'
       },
       {
         title: 'Periode', href: periodes_path,
@@ -81,11 +77,11 @@ module SuperAdminItemHelper
       },
       {
         title: 'External API', href: external_urls_path,
-        icon: 'fas fa-link-alt', identifier: 'external_url'
+        icon: 'fas fa-external-link-alt', identifier: 'external_url'
       },
       {
         title: 'Status Tombol', href: status_tombols_path,
-        icon: 'fas fa-link-alt', identifier: 'status_tombol'
+        icon: 'fas fa-check-square', identifier: 'status_tombol'
       }
     ]
   end

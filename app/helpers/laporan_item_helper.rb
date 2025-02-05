@@ -50,7 +50,7 @@ module LaporanItemHelper
       },
       {
         title: 'Crosscutting Opd', href: hasil_crosscutting_laporans_path,
-        icon: 'fas fa-puzzle', identifier: 'hasil_crosscutting'
+        icon: 'fas fa-puzzle-piece', identifier: 'hasil_crosscutting'
       },
       {
         title: 'Tim Kerja', href: tim_kerja_laporans_path,
