@@ -328,6 +328,10 @@ class Strategi < ApplicationRecord
     end
   end
 
+  def strategi_eselon3
+    role == 'eselon_3'
+  end
+
   def strategi_eselon4
     role == 'eselon_4'
   end

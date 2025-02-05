@@ -760,7 +760,7 @@ class Sasaran < ApplicationRecord
   # Check this, the logic is change
   # from sasarans to pohons
   def manrisk_diverifikasi?
-    if user.eselon_user == 'eselon_3'
+    if strategi&.strategi_eselon3
       sasaran_bawahan_eselon3_diverifikasi.all?(true)
     else
       dampak_resiko_setuju?
