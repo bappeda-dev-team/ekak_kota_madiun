@@ -14,7 +14,7 @@
           <div class="status_sasaran">
             <%= status_sasaran_pokin(@sasaran&.status_sasaran) %>
           </div>
-          <% if @sasaran.user.eselon_user == 'eselon_4' %>
+          <% if @sasaran.wajib_manrisk %>
             <div class="status_manrisk">
               <%= status_manrisk(@sasaran&.status_manrisk) %>
             </div>

@@ -113,10 +113,14 @@ class Pohon < ApplicationRecord
 
   def dibagikan_ke
     if user.present?
-      user.nama
+      user
     else
       "#{opd.nama_opd} (External)"
     end
+  end
+
+  def role_plt?
+    role == 'plt'
   end
 
   def sub_tema

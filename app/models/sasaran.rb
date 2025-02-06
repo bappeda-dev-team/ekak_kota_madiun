@@ -788,7 +788,7 @@ class Sasaran < ApplicationRecord
   end
 
   def user_manrisk?
-    user.has_role?(:eselon_4) && !strategi&.user&.jabatan_plt?
+    user.has_role?(:eselon_4) && !strategi&.as_plt?
   end
 
   def wajib_manrisk

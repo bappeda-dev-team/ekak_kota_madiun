@@ -336,6 +336,11 @@ class Strategi < ApplicationRecord
     role == 'eselon_4'
   end
 
+  def as_plt?
+    plt = pohon_shareds.select { |ph| ph.role == 'plt' }
+    plt.any? { |ph| ph.user == user }
+  end
+
   def strategi_staff?
     role == 'staff'
   end
