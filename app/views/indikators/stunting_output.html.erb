@@ -1,11 +1,11 @@
-<%= content_for :html_title, "Output Stunting" %>
+<%= content_for :html_title, "Output Penanganan Stunting" %>
 <%= content_for :navigation do %>
   <li class="breadcrumb-item" aria-current="page">Indikator</li>
-  <li class="breadcrumb-item" aria-current="page">Stunting</li>
+  <li class="breadcrumb-item" aria-current="page">Penanganan Stunting</li>
   <li class="breadcrumb-item active" aria-current="page">Output</li>
 <% end %>
 <% content_for :view_utama do %>
-  <%= render 'shared/card_layout', title: "Indikator Stunting Output - #{@tahun}" do %>
+  <%= render 'shared/card_layout', title: "Indikator Penanganan Stunting Output - #{@tahun}" do %>
     <div class="table-responsive mb-5 d-grid gap-2">
       <div class="action-btn">
         <%= link_to new_indikator_path(jenis: 'Stunting', sub_jenis: 'Output', kode_opd: @kode_opd, tahun: @tahun),
@@ -18,7 +18,7 @@
          },
          class: 'btn btn-sm btn-primary' do %>
           <i class="fas fa-plus me-2"></i>
-          <span>Indikator Output Stunting</span>
+          <span>Indikator Penanganan Output Stunting</span>
         <% end %>
       </div>
       <table class="table align-items-center counter">

@@ -81,6 +81,8 @@ Rails.application.routes.draw do
       get :rb_output
       get :stunting_outcome
       get :stunting_output
+      get :penanganan_tb_outcome
+      get :penanganan_tb_output
 
       get :new_target_iku_sasaran
     end

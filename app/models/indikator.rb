@@ -65,6 +65,8 @@ class Indikator < ApplicationRecord
   scope :sdgs_output, -> { where(jenis: 'SDGS', sub_jenis: 'Output').order(id: :desc) }
   scope :stunting_outcome, -> { where(jenis: 'Stunting', sub_jenis: 'Outcome').order(id: :desc) }
   scope :stunting_output, -> { where(jenis: 'Stunting', sub_jenis: 'Output').order(id: :desc) }
+  scope :penanganan_tb_outcome, -> { where(jenis: 'PenangananTB', sub_jenis: 'Outcome').order(id: :desc) }
+  scope :penanganan_tb_output, -> { where(jenis: 'PenangananTB', sub_jenis: 'Output').order(id: :desc) }
 
   scope :iku_opd, -> { where(jenis: 'IKU', sub_jenis: 'OPD').order(id: :desc) }
   scope :hidden, -> { where(is_hidden: true) }

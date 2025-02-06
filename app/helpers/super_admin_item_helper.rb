@@ -183,10 +183,16 @@ module SuperAdminItemHelper
         identifier: 'sdgs'
       },
       {
-        title: 'Stunting', href: '#',
+        title: 'Penanganan Stunting', href: '#',
         multi: true, collections: indikator_stunting_items,
-        id_target: 'stungin-indikator',
+        id_target: 'stunting-indikator',
         identifier: 'stunting-indikator'
+      },
+      {
+        title: 'Penanganan TB', href: '#',
+        multi: true, collections: indikator_tb_items,
+        id_target: 'tb-penanganan-indikator',
+        identifier: 'tb-penanganan-indikator'
       }
     ]
   end
@@ -275,6 +281,17 @@ module SuperAdminItemHelper
       },
       {
         title: 'Indikator Output', href: stunting_output_indikators_path, identifier: 'stunting_output'
+      }
+    ]
+  end
+
+  def indikator_tb_items
+    [
+      {
+        title: 'Indikator Outcome', href: penanganan_tb_outcome_indikators_path, identifier: 'tb_penanganan_outcome'
+      },
+      {
+        title: 'Indikator Output', href: penanganan_tb_output_indikators_path, identifier: 'tb_penanganan_output'
       }
     ]
   end

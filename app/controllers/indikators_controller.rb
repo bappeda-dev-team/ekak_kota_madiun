@@ -223,6 +223,18 @@ class IndikatorsController < ApplicationController
     @stunting_output = Indikator.stunting_output.where(tahun: @tahun)
   end
 
+  def penanganan_tb_outcome
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    @penanganan_tb_outcome = Indikator.penanganan_tb_outcome.where(tahun: @tahun)
+  end
+
+  def penanganan_tb_output
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    @penanganan_tb_output = Indikator.penanganan_tb_output.where(tahun: @tahun)
+  end
+
   # GET /indikators or /indikators.json
   def index
     handle_filters
