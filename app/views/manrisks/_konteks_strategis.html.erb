@@ -1,6 +1,8 @@
 <div class="card border-2 shadow mb-3">
   <div class="card-body p-3">
-    <div data-controller="form-table" class="d-grid gap-3">
+    <div data-controller="form-table"
+         data-form-table-url-value="<%= edit_konteks_strategis_manrisk_path(tujuan_kota) %>"
+         class="d-grid gap-3">
       <div class="row">
         <div class="col"></div>
         <div class="col-auto">
@@ -8,13 +10,14 @@
             <i class="fas fa-save me-2"></i>
             Simpan
           </button>
-          <button data-form-table-target="editBtn" data-action="click->form-table#toggleInput" class="btn btn-outline-primary" >
+          <button data-form-table-target="editBtn"
+                  data-action="click->form-table#toggleInput" class="btn btn-outline-primary" >
             <i class="fas fa-pencil-alt me-2"></i>
             Edit
           </button>
         </div>
       </div>
-      <div class="table-responsive mb-5 d-grid gap-2" data-form-table-target="table">
+      <div class="table-responsive mb-5 d-grid gap-2" data-form-table-target="formPlace">
         <%= render 'manrisks/table_konteks_strategis', tujuan_kota: tujuan_kota %>
       </div>
     </div>

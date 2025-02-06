@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     member do
       get :filter_konteks_strategis
       get :edit_konteks_strategis
+      post :simpan_konteks_strategis
     end
   end
   resources :realisasis

@@ -1,6 +1,5 @@
 class ManrisksController < ApplicationController
   before_action :set_periode_pemda
-  layout false, only: %i[edit_konteks_strategis]
 
   def konteks_strategis; end
 
@@ -13,7 +12,15 @@ class ManrisksController < ApplicationController
       .to_json, status: :ok
   end
 
-  def edit_konteks_strategis; end
+  # manrisk is composed by tujuan kota
+  def edit_konteks_strategis
+    tujuan = TujuanKota.find(params[:id])
+    render json: { html_content: html_content({ tujuan_kota: tujuan },
+                                              partial: 'manrisks/table_form_konteks_strategis') }
+      .to_json, status: :ok
+  end
+
+  def simpan_konteks_strategis; end
 
   private
 

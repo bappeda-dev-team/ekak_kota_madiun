@@ -31,7 +31,6 @@ export default class extends Controller {
   }
 
   getRender(event) {
-    console.log('get render')
     const form = event.currentTarget;
     const url = new URL(form.action || window.location.href);
     const params = new URLSearchParams(new FormData(form));
@@ -54,6 +53,8 @@ export default class extends Controller {
         const data = await response.json();
         const html = data.html_content
         element.innerHTML = html; // Update results
+      } else {
+        this.error()
       }
     } catch (error) {
       console.error("Error fetching results:", error);
