@@ -787,10 +787,14 @@ class Sasaran < ApplicationRecord
     hasil_inovasi == 'Inovasi'
   end
 
+  def user_manrisk?
+    user.has_role?(:eselon_4) && !user.jabatan_plt?
+  end
+
   def wajib_manrisk
     return false if tahun.nil?
 
     tahun_bener = tahun[/[^_]\d*/, 0].to_i
-    strategi&.strategi_eselon4 && tahun_bener > 2024
+    user_manrisk? && strategi&.strategi_eselon4 && tahun_bener > 2024
   end
 end

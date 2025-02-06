@@ -480,4 +480,8 @@ class User < ApplicationRecord
       "#{opd} - [default]"
     end
   end
+
+  def jabatan_plt?
+    jabatan_users.any? { |jab| jab.status == 'plt' }
+  end
 end
