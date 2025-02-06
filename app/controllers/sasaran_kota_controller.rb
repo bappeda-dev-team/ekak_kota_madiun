@@ -83,6 +83,17 @@ class SasaranKotaController < ApplicationController
     @rad_sasaran_kota = rad.rad_sasaran_kota
   end
 
+  def list_sasaran_kota
+    tahun = params[:tahun]
+    @tahun = if tahun.nil?
+               cookies[:tahun]
+             else
+               tahun
+             end
+    sasaran_rpjmd = SasaranRpjmd.new(tahun: @tahun)
+    @sasaran_kota = sasaran_rpjmd.sasaran_kota_list
+  end
+
   private
 
   def set_sasaran_kota

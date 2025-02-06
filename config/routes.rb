@@ -939,6 +939,9 @@ Rails.application.routes.draw do
   end
 
   resources :sasaran_kota do
+    collection do
+      get :list_sasaran_kota
+    end
     member do
       get :rad_kota
       get :show_pokin
