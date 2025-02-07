@@ -30,6 +30,7 @@ class TujuanKota < ApplicationRecord
   has_many :sasaran_kota, foreign_key: 'id_tujuan', primary_key: 'kode_tujuan'
   has_many :strategi_kota, through: :sasaran_kota
   has_one :risiko
+  accepts_nested_attributes_for :risiko
 
   scope :visis, -> { joins(%i[indikator_tujuans sasaran_kota]).where.not(visi: nil) }
   scope :misis, -> { joins(%i[indikator_tujuans sasaran_kota]).where.not(misi: nil) }

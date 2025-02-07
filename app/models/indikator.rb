@@ -159,4 +159,8 @@ class Indikator < ApplicationRecord
   def target_by_periode(tahun_awal, tahun_akhir)
     targets.by_periode(tahun_awal, tahun_akhir)
   end
+
+  def target_tahun(tahun)
+    targets.where(tahun: tahun).first
+  end
 end

@@ -15,6 +15,8 @@ class ManrisksController < ApplicationController
   # manrisk is composed by tujuan kota
   def edit_konteks_strategis
     tujuan = TujuanKota.find(params[:id])
+    tujuan.build_risiko(tahun_penilaian: @tahun)
+
     render json: { html_content: html_content({ tujuan_kota: tujuan },
                                               partial: 'manrisks/table_form_konteks_strategis') }
       .to_json, status: :ok

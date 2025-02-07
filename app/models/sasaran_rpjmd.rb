@@ -57,6 +57,6 @@ class SasaranRpjmd
     end
 
     list_opd.flat_map(&:to_s)
-            .uniq.compact
+            .uniq.compact_blank
   end
 end

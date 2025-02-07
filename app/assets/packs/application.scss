@@ -715,3 +715,30 @@ tr.sortable {
 tr.warning td {
   color: inherit;
 }
+
+.dinas-item {
+  padding: 5px;
+  background: #f0f0f0;
+  margin-bottom: 5px;
+  border-radius: 4px;
+}
+
+.indikator-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.indikator-table th, .indikator-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.indikator-table th {
+  background-color: #f0f0f0;
+  text-align: left;
+}
+
+.indikator-row td {
+  text-align: left;
+}
