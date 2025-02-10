@@ -3116,7 +3116,8 @@ CREATE TABLE public.risikos (
     tahun_penilaian character varying,
     tujuan_kota_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    pohon_id bigint NOT NULL
 );
 
 
@@ -6386,6 +6387,13 @@ CREATE INDEX index_rincians_on_skala_id ON public.rincians USING btree (skala_id
 
 
 --
+-- Name: index_risikos_on_pohon_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_risikos_on_pohon_id ON public.risikos USING btree (pohon_id);
+
+
+--
 -- Name: index_risikos_on_tujuan_kota_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -6589,6 +6597,14 @@ ALTER TABLE ONLY public.tematik_sasarans
 
 ALTER TABLE ONLY public.kepegawaians
     ADD CONSTRAINT fk_rails_0da5ddb7fd FOREIGN KEY (jabatan_id) REFERENCES public.jabatans(id);
+
+
+--
+-- Name: risikos fk_rails_118cc12a69; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.risikos
+    ADD CONSTRAINT fk_rails_118cc12a69 FOREIGN KEY (pohon_id) REFERENCES public.pohons(id);
 
 
 --
@@ -7174,6 +7190,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250106014927'),
 ('20250106014937'),
 ('20250123055646'),
-('20250205061950');
+('20250205061950'),
+('20250207032229');
 
 

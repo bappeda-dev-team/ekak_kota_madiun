@@ -28,7 +28,7 @@ class SasaranRpjmd
 
   def sasaran_kota_list
     hash_sasaran = sasaran_kota.flat_map do |sas|
-      id = sas.pohonable_id
+      id = sas.id
       indikators = sas.pohonable.indikators
       dinas = dinas_terkait(sas)
 

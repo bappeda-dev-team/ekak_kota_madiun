@@ -15,14 +15,28 @@ class ManrisksController < ApplicationController
   # manrisk is composed by tujuan kota
   def edit_konteks_strategis
     tujuan = TujuanKota.find(params[:id])
-    tujuan.build_risiko(tahun_penilaian: @tahun)
+    risiko = tujuan.risiko || tujuan.build_risiko(tahun_penilaian: @tahun)
 
-    render json: { html_content: html_content({ tujuan_kota: tujuan },
+    render json: { html_content: html_content({ tujuan_kota: tujuan, risiko: risiko },
                                               partial: 'manrisks/table_form_konteks_strategis') }
       .to_json, status: :ok
   end
 
-  def simpan_konteks_strategis; end
+  def simpan_konteks_strategis
+    tujuan = TujuanKota.find(params[:id])
+
+    if tujuan.risiko.update(risiko_params)
+      render json: { html_content: html_content({ tujuan_kota: tujuan },
+                                                partial: 'manrisks/table_konteks_strategis') }
+        .to_json, status: :ok
+    else
+      risiko = tujuan.risiko || tujuan.build_risiko(risiko_params)
+
+      render json: { html_content: html_content({ tujuan_kota: tujuan, risiko: risiko },
+                                                partial: 'manrisks/table_form_konteks_strategis') }
+        .to_json, status: :unprocessable_entity
+    end
+  end
 
   private
 
@@ -32,5 +46,18 @@ class ManrisksController < ApplicationController
     @periode = Periode.find_tahun(@tahun)
     @tahun_awal = @periode.tahun_awal.to_i
     @tahun_akhir = @periode.tahun_akhir.to_i
+  end
+
+  def tujuan_params
+    params.require(:tujuan_kota).permit(risiko_attributes: %i[tahun_penilaian
+                                                              konteks_strategis
+                                                              prioritas
+                                                              tujuan_kota_id
+                                                              pohon_id])
+  end
+
+  def risiko_params
+    params.require(:risiko).permit(%i[tahun_penilaian konteks_strategis
+                                      prioritas tujuan_kota_id pohon_id])
   end
 end

@@ -1,96 +1,95 @@
-<%= form_with(model: tujuan_kota,
+<%= form_with(model: risiko,
               url: simpan_konteks_strategis_manrisk_path,
+              method: :post,
               local: false,
               data: {
                 form_table_target: 'formTable',
                 action: "change-sasaran-rpjmd@document->form-table#fillAdditionalValue"
               }
-) do |form| %>
-  <%= form.fields_for :risiko do |risiko_fields| %>
-    <table class="table table-bordered align-items-center">
-      <tbody>
-        <tr>
-          <td class="text-gray-900 text-wrap fw-bolder " width="300px">Tujuan Strategis RPJMD</td>
-          <td class="text-wrap">
-            <%= form.text_field :tujuan, class: 'form-control', required: true, readonly: true %>
-          </td>
-        </tr>
-        <tr>
-          <td class="text-gray-900 text-wrap fw-bolder">Penetapan konteks Risiko Strategis Pemda</td>
-          <td class="fw-bolder text-wrap">
-            <%= risiko_fields.hidden_field :tahun_penilaian %>
-            <%= risiko_fields.text_area :konteks_strategis,
-               class: 'form-control',
-               placeholder: 'faktor-faktor apa saja yang dapat menyebabkan risiko',
-               required: true %>
-          </td>
-        </tr>
-        <tr>
-          <td class="text-gray-900 text-wrap fw-bolder">Sasaran RPJMD</td>
-          <td class="fw-bolder text-wrap" id="sasaran-rpjmd">
-            <%= select_tag :sasaran_rpjmd, nil,
-                           include_blank: true,
-                           data: {
-                             placeholder: 'Sasaran RPJMD',
-                             controller: 'dropdown',
-                             dropdown_jenis_value: 'extra',
-                             dropdown_parent_value: '#sasaran-rpjmd',
-                             dropdown_tahun_value: @tahun,
-                             dropdown_url_value: '/sasaran_kota/list_sasaran_kota.json',
-                             dropdown_event_name_value: 'change-sasaran-rpjmd',
-                           }  %>
-          </td>
-        </tr>
-        <tr>
-          <td class="text-gray-900 text-wrap fw-bolder">Nama Dinas Terkait</td>
-          <td class="fw-bolder text-wrap" data-form-table-target="dinasTerkait"></td>
-        </tr>
-        <tr>
-          <td class="text-gray-900 text-wrap fw-bolder">IKU Sasaran RPJMD</td>
-          <td class="fw-bolder text-wrap" colspan="2">
-            <div class="indikator-table" data-form-table-target="ikuSasaran">
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td class="text-gray-900 text-wrap fw-bolder">Prioritas pembangunan dan program unggulan</td>
-          <td class="fw-bolder text-wrap">
-            <%= risiko_fields.text_area :prioritas,
-               class: 'form-control',
-               placeholder: 'apa yang menjadi prioritas pembangunan pada tahun ini?',
-               required: true %>
-          </td>
-        </tr>
-        <tr>
-          <td class="text-gray-900 text-wrap fw-bolder">Tujuan RPJMD</td>
-          <td class="fw-bolder text-wrap">
-            <table class="indikator-table">
-              <thead>
-                <tr>
-                  <th>Tujuan</th>
-                  <th>Indikator</th>
-                  <th>Target</th>
-                </tr>
-              </thead>
-              <tbody>
+) do |risiko_fields| %>
+  <table class="table table-bordered align-items-center">
+    <tbody>
+      <tr>
+        <td class="text-gray-900 text-wrap fw-bolder " width="300px">Tujuan Strategis RPJMD</td>
+        <td class="text-wrap">
+          <div class="form-control"><%= tujuan_kota %></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="text-gray-900 text-wrap fw-bolder">Penetapan konteks Risiko Strategis Pemda</td>
+        <td class="fw-bolder text-wrap">
+          <%= risiko_fields.hidden_field :tahun_penilaian %>
+          <%= risiko_fields.text_area :konteks_strategis,
+             class: 'form-control',
+             placeholder: 'faktor-faktor apa saja yang dapat menyebabkan risiko',
+             required: true %>
+        </td>
+      </tr>
+      <tr>
+        <td class="text-gray-900 text-wrap fw-bolder">Sasaran RPJMD</td>
+        <td class="fw-bolder text-wrap" id="sasaran-rpjmd">
+          <%= risiko_fields.select :pohon_id, [],
+           { include_blank: true },
+           data: {
+             placeholder: 'Sasaran RPJMD',
+             controller: 'dropdown',
+             dropdown_jenis_value: 'extra',
+             dropdown_parent_value: '#sasaran-rpjmd',
+             dropdown_tahun_value: @tahun,
+             dropdown_url_value: '/sasaran_kota/list_sasaran_kota.json',
+             dropdown_event_name_value: 'change-sasaran-rpjmd',
+           }  %>
+        </td>
+      </tr>
+      <tr>
+        <td class="text-gray-900 text-wrap fw-bolder">Nama Dinas Terkait</td>
+        <td class="fw-bolder text-wrap" data-form-table-target="dinasTerkait"></td>
+      </tr>
+      <tr>
+        <td class="text-gray-900 text-wrap fw-bolder">IKU Sasaran RPJMD</td>
+        <td class="fw-bolder text-wrap" colspan="2">
+          <div class="indikator-table" data-form-table-target="ikuSasaran">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="text-gray-900 text-wrap fw-bolder">Prioritas pembangunan dan program unggulan</td>
+        <td class="fw-bolder text-wrap">
+          <%= risiko_fields.text_area :prioritas,
+             class: 'form-control',
+             placeholder: 'apa yang menjadi prioritas pembangunan pada tahun ini?',
+             required: true %>
+        </td>
+      </tr>
+      <tr>
+        <td class="text-gray-900 text-wrap fw-bolder">Tujuan RPJMD</td>
+        <td class="fw-bolder text-wrap">
+          <table class="indikator-table">
+            <thead>
+              <tr>
+                <th>Tujuan</th>
+                <th>Indikator</th>
+                <th>Target</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="indikator-row">
+                <td class="indikator-cell" rowspan="<%= tujuan_kota.indikators.size + 1 %>"><%= tujuan_kota %></td>
+              </tr>
+              <% tujuan_kota.indikator_tujuans.each do |ind| %>
                 <tr class="indikator-row">
-                  <td class="indikator-cell" rowspan="<%= tujuan_kota.indikators.size + 1 %>"><%= tujuan_kota %></td>
+                  <td class="indikator-cell"><%= ind %></td>
+                  <td class="target-cell"><%= ind.target_tahun(@tahun).target_satuan %></td>
                 </tr>
-                <% tujuan_kota.indikator_tujuans.each do |ind| %>
-                  <tr class="indikator-row">
-                    <td class="indikator-cell"><%= ind %></td>
-                    <td class="target-cell"><%= ind.target_tahun(@tahun).target_satuan %></td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td class="text-gray-900 text-wrap fw-bolder">Sasaran RPJMD</td>
-          <td class="fw-bolder text-wrap" data-form-table-target="sasaranRpjmd"></td>
-        </tr>
-      </tbody>
-    </table>
-  <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td class="text-gray-900 text-wrap fw-bolder">Sasaran RPJMD</td>
+        <td class="fw-bolder text-wrap" data-form-table-target="sasaranRpjmd"></td>
+      </tr>
+    </tbody>
+  </table>
 <% end %>
