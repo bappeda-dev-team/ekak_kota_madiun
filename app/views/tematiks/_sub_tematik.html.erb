@@ -1,12 +1,7 @@
 <% sub_tematiks.each.with_index(1) do |(tema, sub_temas), no_tema| %>
-  <% warna_row = 'tidak-aktif' unless tema.pohon.aktif? %>
-  <tr class="<%= warna_row %>">
+  <tr>
     <td class="text-wrap fw-bolder text-gray-900"><%= no_tema %></td>
-    <td class="text-wrap fw-bolder text-gray-900" colspan="5">Tema: <%= tema %>
-      <% unless tema.pohon.aktif? %>
-        <p><b>(<%= warna_row.titleize %>)</b></p>
-      <% end %>
-    </td>
+    <td class="text-wrap fw-bolder text-gray-900" colspan="5">Tema: <%= tema %></td>
     <td class="text-wrap fw-bolder text-gray-900">
       <% unless guest? %>
         <div class="d-grid gap-3">
@@ -29,7 +24,7 @@
   </tr>
   <% sub_temas.each.with_index(1) do |sub_tema, no| %>
     <% rowspan = sub_tema.indikators.size %>
-    <tr class="skip <%= warna_row %>">
+    <tr class="skip">
       <td class="text-wrap" rowspan="<%= rowspan %>"><%= "#{no_tema}.#{no}" %></td>
       <td class="text-wrap" rowspan="<%= rowspan %>"><%= sub_tema %></td>
       <td class="text-wrap"><%= sub_tema.indikators.first.indikator %></td>
@@ -67,7 +62,7 @@
       </td>
     </tr>
     <% sub_tema.indikators.drop(1).each do |indikator| %>
-      <tr class="skip <%= warna_row %>">
+      <tr class="skip">
         <td class="text-wrap"><%= indikator %></td>
         <td><%= indikator.target %></td>
         <td><%= indikator.satuan %></td>

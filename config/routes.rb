@@ -205,6 +205,7 @@ Rails.application.routes.draw do
   end
   resources :tematiks do
     collection do
+      get :list_tematik_kota
       get :sub_tematiks
       post :sub
       get :new_sub

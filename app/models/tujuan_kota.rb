@@ -14,10 +14,16 @@
 #  visi        :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  tematik_id  :bigint
 #
 # Indexes
 #
-#  index_tujuan_kota_on_id_tujuan  (id_tujuan) UNIQUE
+#  index_tujuan_kota_on_id_tujuan   (id_tujuan) UNIQUE
+#  index_tujuan_kota_on_tematik_id  (tematik_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (tematik_id => tematiks.id)
 #
 class TujuanKota < ApplicationRecord
   has_many :indikator_tujuans, -> { order(:tahun) },
@@ -30,6 +36,7 @@ class TujuanKota < ApplicationRecord
   has_many :sasaran_kota, foreign_key: 'id_tujuan', primary_key: 'kode_tujuan'
   has_many :strategi_kota, through: :sasaran_kota
   has_one :risiko
+  belongs_to :tematik
   accepts_nested_attributes_for :risiko
 
   scope :visis, -> { joins(%i[indikator_tujuans sasaran_kota]).where.not(visi: nil) }

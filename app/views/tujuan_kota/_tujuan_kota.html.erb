@@ -28,6 +28,7 @@
           <tr class="header-tujuan">
             <th class="border" rowspan="2" width="20px">No.</th>
             <th class="border text-center" rowspan="2">Aksi</th>
+            <th class="border" rowspan="2">Tematik</th>
             <th class="border" rowspan="2">Tujuan Kota</th>
             <th class="border" rowspan="2">Periode</th>
             <th class="border" rowspan="2">Indikator</th>
@@ -76,6 +77,7 @@
                   </div>
                 <% end %>
               </td>
+              <td class="fw-bolder border text-wrap" scope="row" rowspan="<%= rowsize %>"><%= tujuan.tematik %></td>
               <td class="fw-bolder text-wrap" scope="row" rowspan="<%= rowsize %>"><%= tujuan.tujuan %></td>
               <td class="fw-bolder border" scope="row" rowspan="<%= rowsize %>"><%= tujuan.tahun_awal_akhir %></td>
             </tr>

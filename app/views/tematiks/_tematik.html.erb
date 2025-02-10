@@ -1,13 +1,8 @@
 <% tematiks.each do |tema| %>
   <% rowspan = tema.indikators.size + 1 %>
-  <% warna_row = 'tidak-aktif' unless tema.pohon.aktif? %>
-  <tr class="<%= warna_row %>">
+  <tr>
     <td class="text-wrap fw-bolder text-gray-900" rowspan="<%= rowspan %>"></td>
-    <td class="text-wrap fw-bolder text-gray-900" rowspan="<%= rowspan %>"><%= tema %>
-      <% unless tema.pohon.aktif? %>
-        <p><b>(<%= warna_row.titleize %>)</b></p>
-      <% end %>
-    </td>
+    <td class="text-wrap fw-bolder text-gray-900" rowspan="<%= rowspan %>"><%= tema %></td>
     <td colspan="3" class="p-0 m-0 border-0"></td>
     <td class="text-wrap" rowspan="<%= rowspan %>"><%= tema.keterangan %></td>
     <td class="text-center" rowspan="<%= rowspan %>">
@@ -36,7 +31,7 @@
     </td>
   </tr>
   <% tema.indikators.each do |indikator| %>
-    <tr class="skip <%= warna_row %>">
+    <tr class="skip">
       <td><%= indikator %></td>
       <td><%= indikator.target %></td>
       <td><%= indikator.satuan %></td>

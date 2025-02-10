@@ -28,6 +28,7 @@ class TujuanKotaController < ApplicationController
 
     @tujuan_kota = TujuanKota.all.includes([:indikator_tujuans])
                              .by_periode(tahun_bener)
+                             .order(:id)
 
     render partial: 'tujuan_kota/tujuan_kota'
   end
@@ -70,6 +71,12 @@ class TujuanKotaController < ApplicationController
   end
 
   def update
+    @tahun = cookies[:tahun]
+    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @periode = Periode.find_tahun(tahun_bener)
+    @tahun_awal = @periode.tahun_awal.to_i
+    @tahun_akhir = @periode.tahun_akhir.to_i
+
     respond_to do |format|
       if @tujuan_kota.update(tujuan_kota_params)
         format.html { redirect_to tujuan_kota_path, success: 'Tujuan diupdate' }
@@ -95,7 +102,7 @@ class TujuanKotaController < ApplicationController
 
   def tujuan_kota_params
     params.require(:tujuan_kota).permit(:tujuan, :tahun_awal, :tahun_akhir, :id_tujuan, :kode_tujuan,
-                                        :visi, :misi,
+                                        :visi, :misi, :tematik_id,
                                         indikator_tujuans_attributes)
   end
 

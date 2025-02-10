@@ -23,7 +23,8 @@ class Tematik < ApplicationRecord
   has_many :reviews, as: :reviewable
   has_many :sub_tematiks, primary_key: :id, foreign_key: :tematik_ref_id
   has_one :sasaran_kotum
-  has_one :pohon, as: :pohonable
+  # has_one :pohon, as: :pohonable
+  has_one :tujuan_kota
 
   def to_s
     tema

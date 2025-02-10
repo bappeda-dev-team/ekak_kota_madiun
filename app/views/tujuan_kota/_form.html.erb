@@ -22,6 +22,20 @@
     <%= form.text_field :misi, class: 'form-control' %>
   </div>
   <div class="field">
+    <%= form.label :tematik, class: 'form-label' %>
+    <%= form.select :tematik_id, [],
+     { include_blank: true },
+     data: {
+       placeholder: 'Tematik',
+       controller: 'dropdown',
+       dropdown_jenis_value: 'extra',
+       dropdown_parent_value: '#form-modal',
+       dropdown_tahun_value: @tahun,
+       dropdown_url_value: '/tematiks/list_tematik_kota.json',
+       dropdown_selected_value: form.object.tematik_id,
+     }  %>
+  </div>
+  <div class="field">
     <%= form.label :tujuan, class: 'form-label' %>
     <%= form.text_area :tujuan, class: 'form-control' %>
   </div>

@@ -5,13 +5,31 @@ class TematiksController < ApplicationController
   # GET /tematiks or /tematiks.json
   def index
     @tahun = cookies[:tahun]
-    @tematiks = Pohon.where(pohonable_type: 'Tematik', tahun: @tahun).map(&:pohonable)
+    @tematiks = Pohon.active.where(pohonable_type: 'Tematik', tahun: @tahun).map(&:pohonable)
                      .compact
+  end
+
+  def list_tematik_kota
+    selected_id = params[:selected]
+    tahun = params[:tahun]
+    @tahun = if tahun.nil?
+               cookies[:tahun]
+             else
+               tahun
+             end
+    tematiks = Pohon.active.where(pohonable_type: 'Tematik', tahun: @tahun)
+                    .filter_map(&:pohonable)
+
+    @tematiks = if selected_id.present?
+                  tematiks.select { |tm| tm.id.to_s == selected_id }
+                else
+                  tematiks
+                end
   end
 
   def sub_tematiks
     @tahun = cookies[:tahun]
-    @sub_tematiks = Pohon.where(pohonable_type: 'Tematik', tahun: @tahun)
+    @sub_tematiks = Pohon.active.where(pohonable_type: 'Tematik', tahun: @tahun)
                          .map(&:pohonable)
                          .compact_blank
                          .to_h do |tema|
