@@ -717,7 +717,8 @@ tr.warning td {
 }
 
 .tidak-aktif {
-  background-color: #FFA27F;
+  background-color: #ffa27f;
+}
 
 .dinas-item {
   padding: 5px;
@@ -732,7 +733,8 @@ tr.warning td {
   margin-top: 10px;
 }
 
-.indikator-table th, .indikator-table td {
+.indikator-table th,
+.indikator-table td {
   border: 1px solid #ddd;
   padding: 8px;
 }
