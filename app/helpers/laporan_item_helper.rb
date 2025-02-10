@@ -50,7 +50,7 @@ module LaporanItemHelper
       },
       {
         title: 'Crosscutting Opd', href: hasil_crosscutting_laporans_path,
-        icon: 'fas fa-puzzle', identifier: 'hasil_crosscutting'
+        icon: 'fas fa-puzzle-piece', identifier: 'hasil_crosscutting'
       },
       {
         title: 'Tim Kerja', href: tim_kerja_laporans_path,
@@ -130,6 +130,19 @@ module LaporanItemHelper
       {
         title: 'Rekap Strategi', href: rekap_strategi_strategis_path,
         icon: 'fas fa-archive', identifier: 'rekap_strategi'
+      }
+    ]
+  end
+
+  def manrisk_items
+    [
+      {
+        title: 'Konteks Strategis', href: konteks_strategis_manrisks_path,
+        icon: 'fas fa-stream', identifier: 'konteks_strategis_manrisk'
+      },
+      {
+        title: 'Identifikasi Strategis', href: identifikasi_strategis_manrisks_path,
+        icon: 'fas fa-file-alt', identifier: 'identifikasi_strategis_manrisk'
       }
     ]
   end

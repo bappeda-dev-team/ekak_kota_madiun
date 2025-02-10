@@ -1,0 +1,24 @@
+<%= content_for :html_title, "Konteks Strategis Risiko" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Manrisk</li>
+  <li class="breadcrumb-item active" aria-current="page">Konteks Strategis</li>
+<% end %>
+<% content_for :view_utama do %>
+  <% if cookies[:tahun] && cookies[:opd] %>
+    <%= render 'shared/card_layout_filter',
+               title: "Konteks Strategis Risiko - #{@pemda}",
+               sub_title: "Periode #{@periode}",
+               sub_title_2: "Tahun Penilaian #{@tahun}",
+               warning_sign: "Pilih Tujuan Kota terlebih dahulu" do %>
+      <div class="filter-tujuan">
+        <%= render 'shared/form_filter_ajax',
+                   url: filter_manrisks_path,
+                   filter_label: 'Tujuan Kota',
+                   placeholder: 'Pilih Tujuan Kota',
+                   dropdown_url: list_tujuan_tujuan_kota_path %>
+      </div>
+    <% end %>
+  <% else %>
+    <%= render 'shared/pilih_tahun_dan_opd' %>
+  <% end %>
+<% end %>

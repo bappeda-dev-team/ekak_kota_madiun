@@ -1,9 +1,8 @@
-import { Controller } from "stimulus";
+import ApplicationController from "./application_controller";
 import { Modal } from "bootstrap";
-import Swal from "sweetalert2";
 import Turbolinks from "turbolinks";
 
-export default class extends Controller {
+export default class extends ApplicationController {
   static targets = ["errorContainer", "button"];
   static values = {
     elementId: String,
@@ -12,8 +11,8 @@ export default class extends Controller {
 
   ajaxSuccess(e) {
     const [xhr] = e.detail;
-    this.modalHider();
-    this.sweetAlertSuccess(xhr.resText);
+    super.modalHider();
+    super.sweetAlertSuccess(xhr.resText);
     if (this.hasElementIdValue) {
       this.partialAttacher(this.elementIdValue, xhr.attachmentPartial);
     }
@@ -21,8 +20,8 @@ export default class extends Controller {
 
   ajaxSuccessAttach(e) {
     const [xhr] = e.detail;
-    this.modalHider();
-    this.sweetAlertSuccess(xhr.resText);
+    super.modalHider();
+    super.sweetAlertSuccess(xhr.resText);
     if (this.hasElementIdValue) {
       const target = document.getElementById(this.elementIdValue);
       const html_element = xhr.attachmentPartial;
@@ -32,7 +31,7 @@ export default class extends Controller {
 
   ajaxDelete(e) {
     const [xhr] = e.detail;
-    this.sweetAlertSuccess(xhr.resText);
+    super.sweetAlertSuccess(xhr.resText);
     if (this.hasElementIdValue) {
       const target = document.getElementById(this.elementIdValue);
       target.remove();
@@ -41,13 +40,13 @@ export default class extends Controller {
 
   ajaxError(e) {
     const [xhr] = e.detail;
-    this.sweetAlertFailed(xhr.resText);
+    super.sweetAlertFailed(xhr.resText);
     this.partialAttacher("form-modal-body", xhr.errors);
   }
 
   ajaxErrorAlert(e) {
     const [xhr] = e.detail;
-    this.sweetAlertFailed(xhr.resText);
+    super.sweetAlertFailed(xhr.resText);
   }
 
   partialAttacher(targetName, html_element) {
@@ -124,9 +123,9 @@ export default class extends Controller {
       }
       const modal = event.params.modal;
       if (modal != null && typeof modal != "undefined") {
-        this.modalHider(modal);
+        super.modalHider(modal);
       } else {
-        this.modalHider();
+        super.modalHider();
       }
     }
   }
@@ -159,30 +158,6 @@ export default class extends Controller {
       ],
       10000,
     );
-  }
-
-  // modalName is standardize in layout/application.html.erb
-  modalHider(modalName = "form-modal") {
-    const modal = document.getElementById(modalName);
-    Modal.getInstance(modal).hide();
-  }
-
-  sweetAlertSuccess(text) {
-    Swal.fire({
-      title: "Sukses",
-      text: text,
-      icon: "success",
-      confirmButtonText: "Ok",
-    });
-  }
-
-  sweetAlertFailed(text) {
-    Swal.fire({
-      title: "Gagal",
-      text: text,
-      icon: "error",
-      confirmButtonText: "Ok",
-    });
   }
 
   afterSubmitRefresh(event) {
@@ -244,30 +219,30 @@ export default class extends Controller {
     });
     // event after successResponse
     Modal.getInstance(modal).hide();
-    this.sweetalert(message.resText);
+    super.sweetalert(message.resText);
     window.dispatchEvent(ajax_update_event);
   }
 
   successResponseNew(event) {
     // event.preventDefault()
     const [message, status, xhr] = event.detail;
-    const modal = document.getElementById(event.params.modal);
+    const modal = event.params.modal;
     const target = document.getElementById(event.params.pohon);
     const { resText, html_content } = JSON.parse(message.response);
 
-    Modal.getInstance(modal).hide();
+    super.modalHider(modal);
     target.innerHTML = html_content;
     this.sweetalertStatus(resText, status);
   }
 
   successWithFixNow(event) {
     const [message, status] = event.detail;
-    const modal = document.getElementById(event.params.modal);
+    const modal = event.params.modal;
     const target = document.getElementById(event.params.pohon);
     const resText = message.resText;
     const html_content = message.html_content;
 
-    Modal.getInstance(modal).hide();
+    super.modalHider(modal);
     target.innerHTML = html_content;
     this.sweetalertStatus(resText, status);
   }
@@ -283,13 +258,12 @@ export default class extends Controller {
   successResponseStrategiPohon(event) {
     // event.preventDefault()
     const [message, status, xhr] = event.detail;
-    const modal_target = event.params.modal;
-    const modal = document.getElementById(modal_target);
+    const modal = event.params.modal;
     const id_strategi = `strategi_pohon_${message.result}`;
     const target_element = document.getElementById(id_strategi);
     const url = `/strategis/${message.result}`;
     // event after successResponse
-    Modal.getInstance(modal).hide();
+    super.modalHider(modal);
     fetch(url, {
       method: "get",
     })
@@ -313,7 +287,7 @@ export default class extends Controller {
     });
     // event after successResponse
     Modal.getInstance(modal).hide();
-    this.sweetalert(message.resText);
+    super.sweetalert(message.resText);
     document.dispatchEvent(ajax_update_event);
   }
 
@@ -352,7 +326,7 @@ export default class extends Controller {
   successWithoutModal(event) {
     const [message, status, xhr] = event.detail;
     // event after successResponse
-    this.sweetalert(message.resText);
+    super.sweetalert(message.resText);
   }
 
   errorWithoutModal(event) {
@@ -382,14 +356,14 @@ export default class extends Controller {
 
   afterClone(event) {
     const [message, status, _xhr] = event.detail;
-    this.modalHider();
+    super.modalHider();
     const text = JSON.parse(message.response);
     this.sweetalertStatus(text.resText, status);
   }
 
   afterClonePokin(event) {
     const [message, status, _xhr] = event.detail;
-    this.modalHider();
+    super.modalHider();
     const { resText, html_content } = JSON.parse(message.response);
     this.sweetalertStatus(resText, status);
 
@@ -397,11 +371,6 @@ export default class extends Controller {
       const target = document.getElementById(this.elementIdValue);
       target.insertAdjacentHTML("beforeend", html_content);
     }
-  }
-
-  modalHider(modalName = "form-modal") {
-    const modal = document.getElementById(modalName);
-    Modal.getInstance(modal).hide();
   }
 
   sweetalert(text) {

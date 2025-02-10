@@ -8,6 +8,18 @@ require "sidekiq/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :manrisks do
+    collection do
+      get :filter
+      get :konteks_strategis
+      get :identifikasi_strategis
+    end
+    member do
+      get :filter_konteks_strategis
+      get :edit_konteks_strategis
+      post :simpan_konteks_strategis
+    end
+  end
   resources :realisasis
   resources :inovasi_masyarakats
   resources :anggota_tims
@@ -932,6 +944,9 @@ Rails.application.routes.draw do
   end
 
   resources :sasaran_kota do
+    collection do
+      get :list_sasaran_kota
+    end
     member do
       get :rad_kota
       get :show_pokin
@@ -941,6 +956,7 @@ Rails.application.routes.draw do
   resources :tujuan_kota do
     collection do
       post :admin_filter
+      get :list_tujuan
     end
   end
   get :crosscutting_kota, to: "sasaran_kota#crosscutting_kota"

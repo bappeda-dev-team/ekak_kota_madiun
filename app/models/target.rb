@@ -30,6 +30,10 @@ class Target < ApplicationRecord
     target
   end
 
+  def target_satuan
+    "#{target} #{satuan}"
+  end
+
   def capaian
     return 0 if target.to_f.zero? && realisasi&.realisasi.to_f.zero?
 
