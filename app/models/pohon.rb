@@ -35,6 +35,7 @@ class Pohon < ApplicationRecord
   has_many :strategis, -> { where(strategis: { role: "eselon_2" }) }
   has_many :komentars, primary_key: :id, foreign_key: :item
   has_many :reviews, as: :reviewable
+  has_many :tujuan_kotas
 
   has_many :sub_pohons, foreign_key: :pohon_ref_id, primary_key: :id, class_name: 'Pohon'
   belongs_to :parent_pohon, foreign_key: :pohon_ref_id, primary_key: :id, optional: true, class_name: 'Pohon'

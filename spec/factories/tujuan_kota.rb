@@ -14,16 +14,16 @@
 #  visi        :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  tematik_id  :bigint
+#  pohon_id    :bigint
 #
 # Indexes
 #
-#  index_tujuan_kota_on_id_tujuan   (id_tujuan) UNIQUE
-#  index_tujuan_kota_on_tematik_id  (tematik_id)
+#  index_tujuan_kota_on_id_tujuan  (id_tujuan) UNIQUE
+#  index_tujuan_kota_on_pohon_id   (pohon_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (tematik_id => tematiks.id)
+#  fk_rails_...  (pohon_id => pohons.id)
 #
 FactoryBot.define do
   factory :tujuan_kota do

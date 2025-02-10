@@ -102,7 +102,7 @@ class TujuanKotaController < ApplicationController
 
   def tujuan_kota_params
     params.require(:tujuan_kota).permit(:tujuan, :tahun_awal, :tahun_akhir, :id_tujuan, :kode_tujuan,
-                                        :visi, :misi, :tematik_id,
+                                        :visi, :misi, :pohon_id,
                                         indikator_tujuans_attributes)
   end
 

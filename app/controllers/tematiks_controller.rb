@@ -18,13 +18,13 @@ class TematiksController < ApplicationController
                tahun
              end
     tematiks = Pohon.active.where(pohonable_type: 'Tematik', tahun: @tahun)
-                    .filter_map(&:pohonable)
+                    .filter(&:pohonable)
 
-    @tematiks = if selected_id.present?
-                  tematiks.select { |tm| tm.id.to_s == selected_id }
-                else
-                  tematiks
-                end
+    @pohon_tematiks = if selected_id.present?
+                        tematiks.select { |tm| tm.id.to_s == selected_id }
+                      else
+                        tematiks
+                      end
   end
 
   def sub_tematiks
