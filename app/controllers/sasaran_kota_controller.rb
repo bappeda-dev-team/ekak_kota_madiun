@@ -84,6 +84,7 @@ class SasaranKotaController < ApplicationController
   end
 
   def list_sasaran_kota
+    selected_id = params[:selected]
     tahun = params[:tahun]
     @tahun = if tahun.nil?
                cookies[:tahun]
@@ -91,7 +92,12 @@ class SasaranKotaController < ApplicationController
                tahun
              end
     sasaran_rpjmd = SasaranRpjmd.new(tahun: @tahun)
-    @sasaran_kota = sasaran_rpjmd.sasaran_kota_list
+    sasaran_kota_list = sasaran_rpjmd.sasaran_kota_list
+    @sasaran_kota = if selected_id.present?
+                      sasaran_kota_list.select { |ss| ss[:id].to_s == selected_id }
+                    else
+                      sasaran_kota_list
+                    end
   end
 
   private
@@ -120,7 +126,10 @@ class SasaranKotaController < ApplicationController
                     .select(&:pohonable)
 
     @sasaran_kota = tematiks.to_h do |tematik|
-      sub_pohons = tematik.sub_pohons.includes(:pohonable).where(tahun: @tahun, pohonable_type: %w[SubTematik SubSubTematik Strategic])
+      sub_pohons = tematik.sub_pohons.includes(:pohonable).where(tahun: @tahun,
+                                                                 pohonable_type: %w[
+                                                                   SubTematik SubSubTematik Strategic
+                                                                 ])
                           .select(&:pohonable)
       [tematik, sub_pohons]
     end

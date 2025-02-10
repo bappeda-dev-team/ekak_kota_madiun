@@ -241,21 +241,34 @@ export default class extends Controller {
 
   // custom_event
   dropdown_with_action(options) {
+    let custom_event = "";
     const select2ed = this.dropdown_base(options);
     const custom_name = this.eventNameValue;
     if (this.hasSelectedValue) {
-      const newOption = new Option(
-        this.selectedValue,
-        this.selectedValue,
-        true,
-        true,
-      );
-      select2ed.append(newOption).trigger("change");
+      $.ajax({
+        type: "GET",
+        url: `${this.urlValue}?selected=${this.selectedValue}`,
+      }).then(function (data) {
+        const data_first = data.results[0];
+        const options = new Option(data_first.text, data_first.id, true, true);
+        select2ed.append(options).trigger("change");
+        select2ed.trigger({
+          type: "select2:select",
+          params: {
+            data: data_first,
+          },
+        });
+        custom_event = new CustomEvent(custom_name, {
+          detail: { data: data },
+        });
+      });
     }
     return select2ed.on("select2:select", (e) => {
-      const custom_event = new CustomEvent(custom_name, {
-        detail: { data: e.params.data },
-      });
+      if (custom_event == "") {
+        custom_event = new CustomEvent(custom_name, {
+          detail: { data: e.params.data },
+        });
+      }
       document.dispatchEvent(custom_event);
     });
   }

@@ -1,4 +1,5 @@
 import ApplicationController from "./application_controller";
+import { Modal } from "bootstrap";
 import Turbolinks from "turbolinks";
 
 export default class extends ApplicationController {
@@ -225,23 +226,23 @@ export default class extends ApplicationController {
   successResponseNew(event) {
     // event.preventDefault()
     const [message, status, xhr] = event.detail;
-    const modal = document.getElementById(event.params.modal);
+    const modal = event.params.modal;
     const target = document.getElementById(event.params.pohon);
     const { resText, html_content } = JSON.parse(message.response);
 
-    Modal.getInstance(modal).hide();
+    super.modalHider(modal);
     target.innerHTML = html_content;
     this.sweetalertStatus(resText, status);
   }
 
   successWithFixNow(event) {
     const [message, status] = event.detail;
-    const modal = document.getElementById(event.params.modal);
+    const modal = event.params.modal;
     const target = document.getElementById(event.params.pohon);
     const resText = message.resText;
     const html_content = message.html_content;
 
-    Modal.getInstance(modal).hide();
+    super.modalHider(modal);
     target.innerHTML = html_content;
     this.sweetalertStatus(resText, status);
   }
@@ -257,13 +258,12 @@ export default class extends ApplicationController {
   successResponseStrategiPohon(event) {
     // event.preventDefault()
     const [message, status, xhr] = event.detail;
-    const modal_target = event.params.modal;
-    const modal = document.getElementById(modal_target);
+    const modal = event.params.modal;
     const id_strategi = `strategi_pohon_${message.result}`;
     const target_element = document.getElementById(id_strategi);
     const url = `/strategis/${message.result}`;
     // event after successResponse
-    Modal.getInstance(modal).hide();
+    super.modalHider(modal);
     fetch(url, {
       method: "get",
     })
