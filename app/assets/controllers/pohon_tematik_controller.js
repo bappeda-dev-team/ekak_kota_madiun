@@ -1,10 +1,8 @@
-import { Controller } from "stimulus";
-import { Modal } from "bootstrap";
-import Swal from "sweetalert2";
+import ApplicationController from "./application_controller";
 import Turbolinks from "turbolinks";
 import $ from "jquery";
 
-export default class extends Controller {
+export default class extends ApplicationController {
   static targets = ["dahan", "tematik", "dropdown", "strategi"];
   static values = {
     elementId: String,
@@ -110,7 +108,7 @@ export default class extends Controller {
 
   pindahSuccess(e) {
     const [xhr] = e.detail;
-    this.sweetAlertSuccess(xhr.resText);
+    super.sweetAlertSuccess(xhr.resText);
     setTimeout(() => {
       Turbolinks.visit(window.location, { action: "replace" });
     }, 700);
@@ -274,7 +272,7 @@ export default class extends Controller {
 
   ajaxSuccess(e) {
     const [xhr] = e.detail;
-    this.sweetAlertSuccess(xhr.resText);
+    super.sweetAlertSuccess(xhr.resText);
     const target = e.currentTarget.closest("li");
     const html = xhr.attachmentPartial;
     target.innerHTML = html;
@@ -282,14 +280,14 @@ export default class extends Controller {
 
   ajaxDelete(e) {
     const [xhr] = e.detail;
-    this.sweetAlertSuccess(xhr.resText);
+    super.sweetAlertSuccess(xhr.resText);
     const target = e.target.closest("li");
     target.remove();
   }
 
   updateSuccess(e) {
     const [xhr] = e.detail;
-    this.sweetAlertSuccess(xhr.resText);
+    super.sweetAlertSuccess(xhr.resText);
     const target = e.currentTarget.closest(".tf-nc");
     const html = xhr.attachmentPartial;
     target.innerHTML = html;
@@ -297,7 +295,7 @@ export default class extends Controller {
 
   ajaxError(e) {
     const [xhr] = e.detail;
-    this.sweetAlertFailed(xhr.resText);
+    super.sweetAlertFailed(xhr.resText);
     this.partialAttacher("form-modal-body", xhr.errors);
   }
 
@@ -310,10 +308,10 @@ export default class extends Controller {
     const target = e.target.closest(".pohon").parentElement;
 
     if (status == "OK") {
-      this.sweetAlertSuccess(resText);
+      super.sweetAlertSuccess(resText);
       target.innerHTML = html_content;
     } else {
-      this.sweetAlertFailed(resText);
+      super.sweetAlertFailed(resText);
     }
   }
 
@@ -326,10 +324,10 @@ export default class extends Controller {
     const html = results.attachmentPartial;
 
     if (status == "OK") {
-      this.sweetAlertSuccess(text);
+      super.sweetAlertSuccess(text);
       target.innerHTML = html;
     } else {
-      this.sweetAlertFailed(text);
+      super.sweetAlertFailed(text);
       // const html = this.errorHtml()
       // target.insertAdjacentHTML('beforeend', html)
     }
@@ -342,13 +340,13 @@ export default class extends Controller {
     const results = JSON.parse(response);
     const text = results.resText;
     const html = results.attachmentPartial;
-    this.modalHider();
+    super.modalHider();
 
     if (status == "OK") {
-      this.sweetAlertSuccess(text);
+      super.sweetAlertSuccess(text);
       target.innerHTML = html;
     } else {
-      this.sweetAlertFailed(text);
+      super.sweetAlertFailed(text);
       // const html = this.errorHtml()
       // target.insertAdjacentHTML('beforeend', html)
     }
@@ -362,29 +360,5 @@ export default class extends Controller {
   partialAttacher(targetName, html_element) {
     const target = document.getElementById(targetName);
     target.innerHTML = html_element;
-  }
-
-  // modalName is standardize in layout/application.html.erb
-  modalHider(modalName = "form-modal") {
-    const modal = document.getElementById(modalName);
-    Modal.getInstance(modal).hide();
-  }
-
-  sweetAlertSuccess(text) {
-    Swal.fire({
-      title: "Sukses",
-      text: text,
-      icon: "success",
-      confirmButtonText: "Ok",
-    });
-  }
-
-  sweetAlertFailed(text) {
-    Swal.fire({
-      title: "Gagal",
-      text: text,
-      icon: "error",
-      confirmButtonText: "Ok",
-    });
   }
 }
