@@ -797,4 +797,8 @@ class Sasaran < ApplicationRecord
     tahun_bener = tahun[/[^_]\d*/, 0].to_i
     user_manrisk? && strategi&.strategi_eselon4 && tahun_bener > 2024
   end
+
+  def default_urutan_tahapan
+    tahapans.size
+  end
 end

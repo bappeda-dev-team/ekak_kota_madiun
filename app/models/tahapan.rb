@@ -115,6 +115,16 @@ class Tahapan < ApplicationRecord
     rtp_mr? ? "- [#{tagging}]" : ''
   end
 
+  def default_urutan
+    last_urutan = sasaran.default_urutan_tahapan
+
+    if urutan.present?
+      urutan
+    else
+      last_urutan
+    end
+  end
+
   def grand_parent_anggaran
     anggarans.includes(%i[rekening pagu_anggaran]).order(:created_at).group_by do |angg|
       angg&.rekening&.grand_parent&.kode_rekening
