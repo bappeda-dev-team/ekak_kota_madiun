@@ -139,10 +139,6 @@ module LaporanItemHelper
       {
         title: 'Konteks Strategis', href: konteks_strategis_manrisks_path,
         icon: 'fas fa-stream', identifier: 'konteks_strategis_manrisk'
-      },
-      {
-        title: 'Identifikasi Strategis', href: identifikasi_strategis_manrisks_path,
-        icon: 'fas fa-file-alt', identifier: 'identifikasi_strategis_manrisk'
       }
     ]
   end
