@@ -23,14 +23,14 @@ class ManrisksController < ApplicationController
   end
 
   def simpan_konteks_strategis
-    tujuan = TujuanKota.find(params[:id])
+    tujuan = TujuanKota.find(risiko_params[:tujuan_kota_id])
+    risiko = tujuan.risiko || tujuan.build_risiko(risiko_params)
 
-    if tujuan.risiko.update(risiko_params)
+    if risiko.update(risiko_params)
       render json: { html_content: html_content({ tujuan_kota: tujuan },
                                                 partial: 'manrisks/table_konteks_strategis') }
         .to_json, status: :ok
     else
-      risiko = tujuan.risiko || tujuan.build_risiko(risiko_params)
 
       render json: { html_content: html_content({ tujuan_kota: tujuan, risiko: risiko },
                                                 partial: 'manrisks/table_form_konteks_strategis') }
