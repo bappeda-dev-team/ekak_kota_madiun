@@ -1,8 +1,11 @@
 class SasaransController < ApplicationController
   before_action :set_user, only: %i[index new anggaran]
   before_action :set_sasaran,
-                only: %i[show edit update destroy update_program_kegiatan renaksi_update detail review rincian]
+                only: %i[show edit update destroy update_program_kegiatan renaksi_update detail review rincian
+                         input_rtp]
   before_action :set_dropdown, only: %i[new edit]
+
+  layout false, only: [:input_rtp]
 
   # GET /sasarans or /sasarans.json
   def index
@@ -538,6 +541,10 @@ class SasaransController < ApplicationController
     tim_kerja = TimKerja.new(kode_opd: @kode_opd,
                              tahun: @sasaran.tahun)
     @tim = tim_kerja.tim_kerja_hash(@strategi_atasan)
+  end
+
+  def input_rtp
+    @tahapans = @sasaran.tahapans
   end
 
   private

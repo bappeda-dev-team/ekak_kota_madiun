@@ -189,8 +189,15 @@
                         <i class="fas fa-tree"></i>
                         <span>Pohon Kinerja</span>
                       <% end %>
-                      <%= link_to show_kak_user_sasaran_path(show_sasaran), target: "_blank", rel: "nofollow",
-                                  class: "btn btn-sm btn-info" do %>
+                      <%= link_to input_rtp_sasaran_path(show_sasaran),
+                                  remote: true, class: 'btn btn-sm btn-info',
+                                  data: {
+                                    controller: 'form-modal',
+                                    action: 'form-modal#appendForm',
+                                    form_modal_location_param: 'form-modal-body',
+                                    bs_target: '#form-modal',
+                                    bs_toggle: 'modal'
+                                  } do %>
                         <i class="fas fa-book-open"></i>
                         <span>RTP-KAK</span>
                       <% end %>

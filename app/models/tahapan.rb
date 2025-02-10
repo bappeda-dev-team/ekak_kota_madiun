@@ -111,6 +111,12 @@ class Tahapan < ApplicationRecord
     "#{tahapan_kerja} #{tag_mr}"
   end
 
+  def aksi_map_bulan
+    # bulan: 12
+    bulan_map = (1..12).to_h { |bulan| [bulan, '-'] }
+    aksis.each { |aksi| bulan_map[aksi.bulan] = aksi.target if aksi.bulan }
+  end
+
   def tahapan_with_rtp_tag
     rtp_mr? ? "- [#{tagging}]" : ''
   end

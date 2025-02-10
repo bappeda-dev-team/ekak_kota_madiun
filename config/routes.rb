@@ -520,6 +520,7 @@ Rails.application.routes.draw do
       get :show_kak_user
       get :show_pokin_user
       get :laporan_inovasi
+      get :input_rtp
     end
     resources :rincians do
       get "subkegiatan", on: :new
