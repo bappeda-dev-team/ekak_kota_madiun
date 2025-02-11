@@ -19,7 +19,7 @@
        data-rincian-layanan-jalur-layanan-value="<%= form.object.jalur_layanan %>">
     <div class="field">
       <%= form.label :model_layanan, { class: "form-label" } %>
-      <%= form.select :model_layanan, ['Offline', 'Online'] , {include_blank: true},
+      <%= form.select :model_layanan, ['Offline', 'Online', 'Hibrid'] , {include_blank: true},
        { class: 'form-control',
          required: true,
          data: {
