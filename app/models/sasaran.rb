@@ -123,6 +123,9 @@ class Sasaran < ApplicationRecord
   SUMBERS = { dana_transfer: 'Dana Transfer', dak: 'DAK', dbhcht: 'DBHCHT', bk_provinsi: 'BK Provinsi',
               blud: 'BLUD' }.freeze
 
+  HASIL_OUTPUT = ['Bukan Produk Hukum', 'Raperda', 'Raperwal',
+                  'Rancang Surat Keputusan'].freeze
+
   enum status: { draft: 'draft', pengajuan: 'pengajuan', disetujui: 'disetujui', ditolak: 'ditolak' }
   store_accessor :metadata, :hasil_output, :nama_output, :processed_at, :deleted_at, :deleted_by, :keterangan_hapus,
                  :clone_tahun_asal, :clone_oleh, :clone_asli, :id_rencana_sebelum,

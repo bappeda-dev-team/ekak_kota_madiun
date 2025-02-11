@@ -25,7 +25,7 @@
         <div class="field">
           <%= f.label :hasil_output, class: "form-label" %>
           <%= f.select(:hasil_output,
-                       ['Bukan Raperda','Raperda', 'Raperwal', 'Rancang Surat Keputusan'],
+                       Sasaran::HASIL_OUTPUT,
                        {selected: f.object.output_sasaran},
                        {
                          id: 'pilihan-raperda',

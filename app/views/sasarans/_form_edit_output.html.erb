@@ -3,7 +3,7 @@
   <div class="field">
     <%= form.label :hasil_output, class: "form-label" %>
     <%= form.select(:hasil_output,
-                    ['Bukan Raperda','Raperda', 'Raperwal', 'Rancang Surat Keputusan'],
+                    Sasaran::HASIL_OUTPUT,
                     {selected: form.object.output_sasaran},
                     {
                       id: 'pilihan-raperda',
