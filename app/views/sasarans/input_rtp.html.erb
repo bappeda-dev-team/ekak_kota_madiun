@@ -1,29 +1,20 @@
-<div class="card border-2 shadow mb-3 tahapan_pelaksanaan">
-  <div class="card-header">
-    <div class="row align-items-center">
-      <div class="col">
-        <h4>C. Strategi Pencapaian Keluaran <b><%= @sasaran.sasaran_kinerja %></b></h4>
-      </div>
-    </div>
-  </div>
+<div class="card tahapan_pelaksanaan">
   <div class="card-body">
     <div class="table-responsive">
       <% if @tahapans.any? %>
-        <table class="table table-bordered table-sm align-items-center table-flush">
+        <p class="fw-bolder mb-3">Pilih Tahapan RTP</p>
+        <table class="table table-bordered align-items-center">
           <thead class="thead-light">
             <tr>
-              <th class="border-bottom border-end border-start" scope="col" rowspan="1">No.</th>
-              <th class="border-bottom border-end" scope="col" rowspan="1">Tahapan Kerja</th>
-              <th class="border-bottom border-end text-center" scope="col" rowspan="1">Aksi</th>
-              <% (1..12).each do |i| %>
-                <th class="border-bottom border-end text-center" colspan="1" scope="col"><%= i %></th>
-              <% end %>
-              <th class="border-bottom border-end text-center" colspan="1" scope="col">Total</th>
-              <th class="border-bottom border-end" scope="col" rowspan="1">Keterangan</th>
+              <th class="border-bottom border-end text-center" scope="col"></th>
+              <th class="border-bottom border-end border-start" scope="col">No.</th>
+              <th class="border-bottom border-end" scope="col">Tahapan Kerja</th>
+              <th class="border-bottom border-end text-center" colspan="1" scope="col">Total Bobot</th>
+              <th class="border-bottom border-end" scope="col">Keterangan</th>
             </tr>
           </thead>
           <tbody>
-            <%= render partial: 'sasarans/renaksi_sasaran', collection: @tahapans %>
+            <%= render partial: 'sasarans/renaksi_sasaran', collection: @tahapans, as: :tahapan %>
           </tbody>
         </table>
       <% else %>

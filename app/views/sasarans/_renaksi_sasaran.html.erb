@@ -1,18 +1,11 @@
 <tr class="<%= tahapan.rtp_mr? && 'tahapan-rtp' %>">
-  <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= i %></td>
-  <td class="text-gray-900 border text-wrap"><%= tahapan.tahapan_kerja %> <span class='fw-bolder'><%= tahapan.tagging == "RTP-MR" ? "- [#{tahapan.tagging}]" : '' %></span></td>
   <td class="fw-bolder text-gray-500 text-center border-end">
     <div class="radio-selector">
-      <%= radio_button_tag 'is_rtp', tahapan, tahapan.rtp_mr?, class: 'form-check-input' %> Set RTP
+      <%= radio_button_tag 'is_rtp', tahapan, tahapan.rtp_mr?, class: 'form-check-input' %>
     </div>
   </td>
-  <!-- Loop Tanggal-->
-  <% tahapan.aksi_map_bulan.each do |aksi| %>
-    <td class="fw-bolder text-gray-500 border text-center">
-      <%= aksi %>
-    </td>
-  <% end %>
-  <!-- Sum -->
+  <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= tahapan.urutan %></td>
+  <td class="text-gray-900 border text-wrap"><%= tahapan.tahapan_kerja %> <span class='fw-bolder'><%= tahapan.tagging == "RTP-MR" ? "- [#{tahapan.tagging}]" : '' %></span></td>
   <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.jumlah_target or '-'  %></td>
   <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.keterangan  %></td>
 </tr>

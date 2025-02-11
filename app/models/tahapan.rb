@@ -111,10 +111,17 @@ class Tahapan < ApplicationRecord
     "#{tahapan_kerja} #{tag_mr}"
   end
 
+  def bulan_aksi
+    (1..12).flat_map { |bulan| [{ bulan => 0 }] }
+  end
+
   def aksi_map_bulan
-    # bulan: 12
-    bulan_map = (1..12).to_h { |bulan| [bulan, '-'] }
-    aksis.each { |aksi| bulan_map[aksi.bulan] = aksi.target if aksi.bulan }
+    target_aksi_bulans = aksis.flat_map do |aksi|
+      [{ aksi.bulan => aksi.target }]
+    end
+    target_aksi_bulans ||= []
+    # bulan_aksi.reduce(&:merge).merge(target_aksi_bulans.reduce(&:merge))
+    bulan_aksi.reduce(&:merge).merge(target_aksi_bulans.reduce({}, :merge))
   end
 
   def tahapan_with_rtp_tag
