@@ -34,6 +34,9 @@ class Rincian < ApplicationRecord
   # validates :lokasi_pelaksanaan, presence: true
   belongs_to :skala_dampak, primary_key: 'id', foreign_key: 'skala_id', class_name: 'Dampak', optional: true
   belongs_to :kemungkinan, primary_key: 'id', foreign_key: 'kemungkinan_id', optional: true
+
+  MODEL_LAYANAN = %w[Offline Online Hibrid].freeze
+
   def lengkap
     data_terpilah.exists? && lokasi_pelaksanaan.exists?
   end
