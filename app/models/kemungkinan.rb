@@ -16,4 +16,6 @@
 class Kemungkinan < Skala
   validates :kode_skala, presence: true
   has_one :rincian
+
+  scope :pilihan, -> { all.order('nilai ASC') }
 end
