@@ -522,6 +522,7 @@ Rails.application.routes.draw do
       get :laporan_inovasi
       get :input_rtp
       post :simpan_rtp
+      patch :update_dampak
     end
     resources :rincians do
       get "subkegiatan", on: :new

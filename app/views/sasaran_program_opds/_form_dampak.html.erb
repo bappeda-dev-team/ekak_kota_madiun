@@ -1,61 +1,61 @@
-<%= form_with(url: sasaran_rincian_path(@sasaran.id, @rincian.id), local: false, method: :patch) do |form| %>
-  <% if rincian.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(rincian.errors.count, "error") %> prohibited this rincian from being saved:</h2>
-      <ul>
-        <% rincian.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <%= form.fields_for :sasaran, @sasaran do |sasaran_fields| %>
+<div id="form-dampak">
+  <%= form_with model: sasaran,
+                url: update_dampak_sasaran_path(sasaran, nomor_sasaran: nomor),
+                local: false,
+                method: :patch,
+                data: {
+                  controller: 'form-ajax',
+                  form_ajax_target_param: dom_id(sasaran),
+                  action: 'ajax:complete->form-ajax#processAjax'
+                } do |form| %>
     <div class="field">
-      <%= sasaran_fields.label :sasaran_kinerja, { class: "form-label" } %>
-      <%= sasaran_fields.text_area :sasaran_kinerja, {class: "form-control", readonly: true} %>
+      <%= form.label :sasaran_kinerja, { class: "form-label" } %>
+      <%= form.text_area :sasaran_kinerja, {class: "form-control", readonly: true} %>
     </div>
     <div class="field">
       <%= label_tag 'penyebab_permasalahan', 'Penyebab permasalahan', class: 'form-label'  %>
-      <%= text_area_tag 'penyebab_permasalahan', @sasaran.penyebab_permasalahan, class: 'form-control', disabled: true %>
+      <%= text_area_tag 'penyebab_permasalahan', sasaran.penyebab_permasalahan, class: 'form-control', disabled: true %>
     </div>
     <div class="field">
-      <%= sasaran_fields.label :permasalahan, { class: "form-label" } %>
-      <%= sasaran_fields.text_area :permasalahan_sasaran, {class: "form-control", readonly: true, disabled: true} %>
+      <%= form.label :permasalahan, { class: "form-label" } %>
+      <%= form.text_area :permasalahan_sasaran, {class: "form-control", readonly: true, disabled: true} %>
+    </div>
+    <%= form.fields_for :rincian do |rincian_fields| %>
+      <div class="field">
+        <%= rincian_fields.label :resiko, "Risiko", { class: "form-label" } %>
+        <%= rincian_fields.text_area :resiko, { class: "form-control" } %>
+      </div>
+      <!-- TODO: CHANGE TO RADIO BUTTON -->
+      <div class="field">
+        <%= rincian_fields.label :skala_kemungkinan, { class: 'form-label' } %>
+        <%= rincian_fields.select :kemungkinan_id, raw("<option value='#{rincian_fields.object.kemungkinan&.id}' selected='selected'>#{rincian_fields.object.kemungkinan&.deskripsi}</option>"), {include_blank: true},
+         { class: 'form-control',
+           data: { placeholder: 'Skala Kemungkinan',
+             controller: 'dropdown',
+             dropdown_jenis_value: 'ajax',
+             dropdown_parent_value: '#form-dampak',
+             dropdown_url_value: kemungkinans_path(:json)
+         }} %>
+      </div>
+      <div class="field">
+        <%= rincian_fields.label :dampak, { class: "form-label" } %>
+        <%= rincian_fields.text_area :dampak, { class: "form-control" } %>
+      </div>
+      <!-- TODO: CHANGE TO RADIO BUTTON -->
+      <div class="field">
+        <%= rincian_fields.label :skala_dampak, { class: 'form-label' } %>
+        <%= rincian_fields.select :skala_id, raw("<option value='#{rincian_fields.object.skala_dampak&.id}' selected='selected'>#{rincian_fields.object.skala_dampak&.deskripsi}</option>"), {include_blank: true},
+         { class: 'form-control',
+           data: { placeholder: 'pilih skala dampak',
+             controller: 'dropdown',
+             dropdown_jenis_value: 'ajax',
+             dropdown_parent_value: '#form-dampak',
+             dropdown_url_value: dampaks_path(:json)
+         }} %>
+      </div>
+    <% end %>
+    <div class="actions">
+      <%= form.submit "Simpan" %>
     </div>
   <% end %>
-  <%= form.fields_for :rincian, @rincian do |rincian_fields| %>
-    <div class="field">
-      <%= rincian_fields.label :resiko, "Risiko", { class: "form-label" } %>
-      <%= rincian_fields.text_area :resiko, { class: "form-control" } %>
-    </div>
-    <div class="field">
-      <%= rincian_fields.label :skala_kemungkinan, { class: 'form-label' } %>
-      <%= rincian_fields.select :kemungkinan_id, raw("<option value='#{@rincian.kemungkinan&.id}' selected='selected'>#{@rincian.kemungkinan&.deskripsi}</option>"), {include_blank: true},
-        { class: 'form-control',
-          data: { placeholder: 'Skala Kemungkinan',
-                  controller: 'dropdown',
-                  dropdown_jenis_value: 'ajax',
-                  dropdown_parent_value: '#form-dampak-daftar-resiko-body',
-                  dropdown_url_value: kemungkinans_path(:json)
-          }} %>
-  </div>
-  <div class="field">
-    <%= rincian_fields.label :dampak, { class: "form-label" } %>
-    <%= rincian_fields.text_area :dampak, { class: "form-control" } %>
-  </div>
-  <div class="field">
-    <%= rincian_fields.label :skala_dampak, { class: 'form-label' } %>
-    <%= rincian_fields.select :skala_id, raw("<option value='#{@rincian.skala_dampak&.id}' selected='selected'>#{@rincian.skala_dampak&.deskripsi}</option>"), {include_blank: true},
-      { class: 'form-control',
-        data: { placeholder: 'pilih skala dampak',
-                controller: 'dropdown',
-                dropdown_jenis_value: 'ajax',
-                dropdown_parent_value: '#form-dampak-daftar-resiko-body',
-                dropdown_url_value: dampaks_path(:json)
-        }} %>
 </div>
-  <% end %>
-  <div class="actions">
-    <%= form.submit "Simpan" %>
-  </div>
-<% end %>

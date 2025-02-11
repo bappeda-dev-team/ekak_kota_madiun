@@ -39,31 +39,31 @@
       <% end %>
     </div>
     <div class="table-responsive">
-      <table class="table table-bordered align-items-center border sticky-head" id="tabel_daftar_resiko">
+      <table class="table table-bordered align-items-center sticky-head" id="tabel_daftar_resiko">
         <thead class="thead-light">
           <tr>
-            <th class="border-bottom" scope="col">No.</th>
-            <th class="border-bottom" scope="col">Status</th>
-            <th class="border-bottom text-center border">Pelaksana</th>
-            <th class="border-bottom text-center border">Pokin & Pokin Atasan</th>
-            <th class="border-bottom text-center border">Rencana Kinerja</th>
-            <th class="border-bottom text-center border">Indikator</th>
-            <th class="border-bottom text-center border">Target</th>
-            <th class="border-bottom text-center border">Satuan</th>
-            <th class="border-bottom text-center border">Anggaran</th>
-            <th class="border-bottom text-center border">Penyebab Permasalahan</th>
-            <th class="border-bottom text-center border">Permasalahan</th>
-            <th class="border-bottom text-center border text-wrap">Pernyataan Risiko</th>
-            <th class="border-bottom text-center border text-wrap">Skala Kemungkinan</th>
-            <th class="border-bottom text-center border">Dampak</th>
-            <th class="border-bottom text-center border">Skala Dampak</th>
-            <th class="border-bottom text-center border text-wrap">Skala / Peta Risiko</th>
-            <th class="border-bottom text-center border text-wrap">Pihak yang terkena</th>
-            <th class="border-bottom text-center" scope="col">Action</th>
+            <th>No.</th>
+            <th>Status</th>
+            <th class="text-center border">Pelaksana</th>
+            <th class="text-center border">Pokin & Pokin Atasan</th>
+            <th class="text-center border">Rencana Kinerja</th>
+            <th class="text-center border">Indikator</th>
+            <th class="text-center border">Target</th>
+            <th class="text-center border">Satuan</th>
+            <th class="text-center border">Anggaran</th>
+            <th class="text-center border">Penyebab Permasalahan</th>
+            <th class="text-center border">Permasalahan</th>
+            <th class="text-center border text-wrap">Pernyataan Risiko</th>
+            <th class="text-center border text-wrap">Skala Kemungkinan</th>
+            <th class="text-center border">Dampak</th>
+            <th class="text-center border">Skala Dampak</th>
+            <th class="text-center border text-wrap">Skala / Peta Risiko</th>
+            <th class="text-center border text-wrap">Pihak yang terkena</th>
+            <th class="text-center">Action</th>
           </tr>
         </thead>
-        <tbody>
-          <% @program_kegiatans.each.with_index(1) do |(program_kegiatan, sasarans), i| %>
+        <% @program_kegiatans.each.with_index(1) do |(program_kegiatan, sasarans), i| %>
+          <tbody>
             <% pagu = sasarans.map(&:total_anggaran).compact.sum %>
             <tr>
               <td class="text-gray-900 text-wrap fw-bolder"><%= i %></td>
@@ -71,14 +71,14 @@
               <td class="text-gray-900 text-wrap fw-bolder"><%= program_kegiatan.indikator_program_tahun(@tahun, @opd.kode_unik_opd)[:indikator] %></td>
               <td class="text-gray-900 text-wrap fw-bolder"><%= program_kegiatan.indikator_program_tahun(@tahun, @opd.kode_unik_opd)[:target] %></td>
               <td class="text-gray-900 text-wrap fw-bolder"><%= program_kegiatan.indikator_program_tahun(@tahun, @opd.kode_unik_opd)[:satuan] %></td>
-              <td class="border">Rp. <%= number_with_delimiter(pagu) %></td>
-              <td class="border" colspan="7"></td>
+              <td>Rp. <%= number_with_delimiter(pagu) %></td>
+              <td colspan="9"></td>
             </tr>
             <% sasarans.each.with_index(1) do |show_sasaran, no| %>
               <%= render 'daftar_risiko/row_daftar_risiko', show_sasaran: show_sasaran, nomor: "#{i}.#{no}" %>
             <% end %>
-          <% end %>
-        </tbody>
+          </tbody>
+        <% end %>
       </table>
     </div>
   </div>

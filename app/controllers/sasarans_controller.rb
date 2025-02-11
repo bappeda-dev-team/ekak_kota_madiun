@@ -2,7 +2,7 @@ class SasaransController < ApplicationController
   before_action :set_user, only: %i[index new anggaran]
   before_action :set_sasaran,
                 only: %i[show edit update destroy update_program_kegiatan renaksi_update detail review rincian
-                         input_rtp simpan_rtp]
+                         input_rtp simpan_rtp update_dampak]
   before_action :set_dropdown, only: %i[new edit]
 
   layout false, only: [:input_rtp]
@@ -567,6 +567,19 @@ class SasaransController < ApplicationController
       .to_json, status: :ok
   end
 
+  def update_dampak
+    nomor = params[:nomor_sasaran]
+    if @sasaran.update(manrisk_sasaran_params)
+      render json: { html_content: html_content({ show_sasaran: @sasaran, nomor: nomor },
+                                                partial: 'daftar_risiko/row_daftar_risiko') }
+        .to_json, status: :ok
+    else
+      render json: { html_content: html_content({ sasaran: @sasaran, nomor: nomor },
+                                                partial: 'sasaran_program_opds/form_dampak') }
+        .to_json, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def errors_content(sasaran)
@@ -622,6 +635,10 @@ class SasaransController < ApplicationController
                                     :strategi_id,
                                     :kelompok_anggaran, :filter_file, :filter_target, :filter_type, :sasaran_milik,
                                     indikator_sasarans_attributes: %i[id indikator_kinerja aspek target satuan _destroy])
+  end
+
+  def manrisk_sasaran_params
+    params.require(:sasaran).permit(rincian_attributes: %i[id resiko kemungkinan_id skala_id dampak])
   end
 
   rescue_from ActionController::ParameterMissing do

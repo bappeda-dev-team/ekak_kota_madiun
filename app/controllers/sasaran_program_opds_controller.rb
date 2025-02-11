@@ -1,4 +1,6 @@
 class SasaranProgramOpdsController < ApplicationController
+  layout false, only: [:add_dampak_resiko]
+
   def spip; end
 
   def excel_spip
@@ -22,8 +24,9 @@ class SasaranProgramOpdsController < ApplicationController
   end
 
   def add_dampak_resiko
+    @nomor = params[:nomor_sasaran]
     @sasaran = Sasaran.find params[:sasaran_program_opd_id]
-    @rincian = @sasaran.rincian
+    render partial: 'sasaran_program_opds/form_dampak', locals: { sasaran: @sasaran, nomor: @nomor }
   end
 
   def verifikasi_dampak_resiko
