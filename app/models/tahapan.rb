@@ -39,7 +39,7 @@ class Tahapan < ApplicationRecord
 
   default_scope { order(Arel.sql("nullif(regexp_replace(urutan, '[^0-9]', '', 'g'),'')::int")) }
 
-  store_accessor :metadata, :tagging
+  store_accessor :metadata, :tagging, :tahun_tagging
 
   def to_s
     tahapan_kerja

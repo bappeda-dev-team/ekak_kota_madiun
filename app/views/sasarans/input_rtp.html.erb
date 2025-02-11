@@ -2,7 +2,7 @@
   <div class="card-body">
     <div class="table-responsive">
       <% if @tahapans.any? %>
-        <p class="fw-bolder mb-3">Pilih Tahapan RTP</p>
+        <p class="fw-bolder mb-3">Pilih RTP</p>
         <table class="table table-bordered align-items-center">
           <thead class="thead-light">
             <tr>
@@ -13,9 +13,23 @@
               <th class="border-bottom border-end" scope="col">Keterangan</th>
             </tr>
           </thead>
-          <tbody>
-            <%= render partial: 'sasarans/renaksi_sasaran', collection: @tahapans, as: :tahapan %>
-          </tbody>
+          <%= form_with model: @sasaran, url: simpan_rtp_sasaran_path,
+                        id: 'form-rtp', local: false,
+                        data: {
+                          controller: 'form-ajax',
+                          form_ajax_target_param: dom_id(@sasaran),
+                          action: 'ajax:complete->form-ajax#processAjax'
+                        } do |form| %>
+            <tbody>
+              <% @tahapans.each do |tahapan| %>
+                <%= render 'sasarans/renaksi_sasaran', tahapan: tahapan %>
+              <% end %>
+            </tbody>
+            <caption>
+              <%= form.hidden_field :nomor_sasaran, value: @nomor, form: 'form-rtp' %>
+              <%= form.submit 'Simpan', form: 'form-rtp' %>
+            </caption>
+          <% end %>
         </table>
       <% else %>
         <p class="text-danger">Belum Ada Tahapan</p>

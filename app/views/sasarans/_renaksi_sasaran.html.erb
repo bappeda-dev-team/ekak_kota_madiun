@@ -1,7 +1,7 @@
 <tr class="<%= tahapan.rtp_mr? && 'tahapan-rtp' %>">
   <td class="fw-bolder text-gray-500 text-center border-end">
     <div class="radio-selector">
-      <%= radio_button_tag 'is_rtp', tahapan, tahapan.rtp_mr?, class: 'form-check-input' %>
+      <%= radio_button_tag 'is_rtp', tahapan.id, tahapan.rtp_mr?, class: 'form-check-input', form: 'form-rtp' %>
     </div>
   </td>
   <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= tahapan.urutan %></td>

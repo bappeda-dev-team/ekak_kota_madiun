@@ -2,7 +2,7 @@ class SasaransController < ApplicationController
   before_action :set_user, only: %i[index new anggaran]
   before_action :set_sasaran,
                 only: %i[show edit update destroy update_program_kegiatan renaksi_update detail review rincian
-                         input_rtp]
+                         input_rtp simpan_rtp]
   before_action :set_dropdown, only: %i[new edit]
 
   layout false, only: [:input_rtp]
@@ -544,7 +544,27 @@ class SasaransController < ApplicationController
   end
 
   def input_rtp
+    @nomor = params[:nomor_sasaran]
     @tahapans = @sasaran.tahapans
+  end
+
+  def simpan_rtp
+    nomor = params[:nomor_sasaran]
+    tahapan_id = params[:is_rtp]
+    @sasaran.tahapans.each do |tahapan|
+      if tahapan.rtp_mr? && tahapan.id.to_s != tahapan_id
+        tahapan.tagging = ""
+        tahapan.tahun_tagging = ""
+        tahapan.save
+      elsif tahapan.id.to_s == tahapan_id
+        tahapan.tagging = "RTP-MR"
+        tahapan.tahun_tagging = @sasaran.tahun
+        tahapan.save
+      end
+    end
+    render json: { html_content: html_content({ show_sasaran: @sasaran, nomor: nomor },
+                                              partial: 'daftar_risiko/row_daftar_risiko') }
+      .to_json, status: :ok
   end
 
   private
