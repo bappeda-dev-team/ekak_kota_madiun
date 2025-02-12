@@ -651,7 +651,7 @@ class SasaransController < ApplicationController
   end
 
   def manrisk_sasaran_params
-    params.require(:sasaran).permit(:status_dampak_resiko, :komentar_dampak_resiko,
+    params.require(:sasaran).permit(:status_dampak_resiko, :komentar_dampak_resiko, :verifikator_dampak_resiko,
                                     rincian_attributes: %i[id resiko kemungkinan_id skala_id dampak])
   end
 

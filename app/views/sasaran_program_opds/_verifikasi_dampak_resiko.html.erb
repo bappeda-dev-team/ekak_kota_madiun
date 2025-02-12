@@ -59,6 +59,8 @@
     <% end %>
   </div>
   <div class="field">
+    <% verifikator = current_user.id %>
+    <%= form.hidden_field :verifikator_dampak_resiko, value: verifikator %>
     <%= form.label :komentar_dampak_resiko, "Komentar dampak risiko", { class: "form-label" } %>
     <%= form.text_area :komentar_dampak_resiko, {class: "form-control", required: true} %>
   </div>

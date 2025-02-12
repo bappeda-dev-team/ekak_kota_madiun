@@ -65,5 +65,6 @@ class SasaranCloner < Clowne::Cloner
     record.clone_asli = clone_asli
     record.status_dampak_resiko = ''
     record.komentar_dampak_resiko = ''
+    record.verifikator_dampak_resiko = ''
   end
 end
