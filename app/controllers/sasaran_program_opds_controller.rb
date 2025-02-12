@@ -24,15 +24,18 @@ class SasaranProgramOpdsController < ApplicationController
   end
 
   def add_dampak_resiko
+    @laporan = params[:laporan]
     @nomor = params[:nomor_sasaran]
     @sasaran = Sasaran.find params[:sasaran_program_opd_id]
-    render partial: 'sasaran_program_opds/form_dampak', locals: { sasaran: @sasaran, nomor: @nomor }
+    render partial: 'sasaran_program_opds/form_dampak', locals: { sasaran: @sasaran, nomor: @nomor, laporan: @laporan }
   end
 
   def verifikasi_dampak_resiko
+    @laporan = params[:laporan]
     @nomor = params[:nomor_sasaran]
     @sasaran = Sasaran.find params[:sasaran_program_opd_id]
-    render partial: 'sasaran_program_opds/verifikasi_dampak_resiko', locals: { sasaran: @sasaran, nomor: @nomor }
+    render partial: 'sasaran_program_opds/verifikasi_dampak_resiko',
+           locals: { sasaran: @sasaran, nomor: @nomor, laporan: @laporan }
   end
 
   def cetak_daftar_resiko

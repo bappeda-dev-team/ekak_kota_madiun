@@ -13,7 +13,7 @@
               <th class="border-bottom border-end" scope="col">Keterangan</th>
             </tr>
           </thead>
-          <%= form_with model: @sasaran, url: simpan_rtp_sasaran_path,
+          <%= form_with model: @sasaran, url: simpan_rtp_sasaran_path(nomor_sasaran: @nomor, laporan: @laporan),
                         id: 'form-rtp', local: false,
                         data: {
                           controller: 'form-ajax',
@@ -26,7 +26,6 @@
               <% end %>
             </tbody>
             <caption>
-              <%= form.hidden_field :nomor_sasaran, value: @nomor, form: 'form-rtp' %>
               <%= form.submit 'Simpan', form: 'form-rtp' %>
             </caption>
           <% end %>

@@ -56,9 +56,9 @@
     <td class="border" rowspan="<%= row_indikator %>">
       <% unless guest? %>
         <div class="d-grid gap-3">
-          <% unless @laporan == "admin" %>
+          <% unless laporan == "admin" %>
             <% if eselon_x?('eselon_4', 'staff', 'admin', 'super_admin') %>
-              <%= link_to sasaran_program_opd_add_dampak_resiko_path(show_sasaran, nomor_sasaran: nomor),
+              <%= link_to sasaran_program_opd_add_dampak_resiko_path(show_sasaran, nomor_sasaran: nomor, laporan: laporan),
                           { remote: true,
                             class: 'btn btn-sm btn-tertiary',
                             data: {
@@ -72,14 +72,14 @@
                 Edit Dampak
               <% end %>
             <% end %>
-            <%= render 'daftar_risiko/tombol_verifikasi', show_sasaran: show_sasaran, nomor: nomor %>
+            <%= render 'daftar_risiko/tombol_verifikasi', show_sasaran: show_sasaran, nomor: nomor, laporan: laporan %>
           <% end %>
           <%= link_to show_pokin_user_sasaran_path(show_sasaran), target: "_blank", rel: "nofollow",
                       class: "btn btn-sm btn-primary" do %>
             <i class="fas fa-tree me-2"></i>
             <span>Pohon Kinerja</span>
           <% end %>
-          <%= link_to input_rtp_sasaran_path(show_sasaran, nomor_sasaran: nomor),
+          <%= link_to input_rtp_sasaran_path(show_sasaran, nomor_sasaran: nomor, laporan: laporan),
                       remote: true, class: 'btn btn-sm btn-info',
                       data: {
                         controller: 'form-modal',

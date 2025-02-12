@@ -544,11 +544,13 @@ class SasaransController < ApplicationController
   end
 
   def input_rtp
+    @laporan = params[:laporan]
     @nomor = params[:nomor_sasaran]
     @tahapans = @sasaran.tahapans
   end
 
   def simpan_rtp
+    laporan = params[:laporan]
     nomor = params[:nomor_sasaran]
     tahapan_id = params[:is_rtp]
     @sasaran.tahapans.each do |tahapan|
@@ -562,15 +564,16 @@ class SasaransController < ApplicationController
         tahapan.save
       end
     end
-    render json: { html_content: html_content({ show_sasaran: @sasaran, nomor: nomor },
+    render json: { html_content: html_content({ show_sasaran: @sasaran, nomor: nomor, laporan: laporan },
                                               partial: 'daftar_risiko/row_daftar_risiko') }
       .to_json, status: :ok
   end
 
   def update_dampak
+    laporan = params[:laporan]
     nomor = params[:nomor_sasaran]
     if @sasaran.update(manrisk_sasaran_params)
-      render json: { html_content: html_content({ show_sasaran: @sasaran, nomor: nomor },
+      render json: { html_content: html_content({ show_sasaran: @sasaran, nomor: nomor, laporan: laporan },
                                                 partial: 'daftar_risiko/row_daftar_risiko') }
         .to_json, status: :ok
     else
@@ -581,13 +584,14 @@ class SasaransController < ApplicationController
   end
 
   def verifikasi_risiko
+    laporan = params[:laporan]
     nomor = params[:nomor_sasaran]
     if @sasaran.update(manrisk_sasaran_params)
-      render json: { html_content: html_content({ show_sasaran: @sasaran, nomor: nomor },
+      render json: { html_content: html_content({ show_sasaran: @sasaran, nomor: nomor, laporan: laporan },
                                                 partial: 'daftar_risiko/row_daftar_risiko') }
         .to_json, status: :ok
     else
-      render json: { html_content: html_content({ sasaran: @sasaran, nomor: nomor },
+      render json: { html_content: html_content({ sasaran: @sasaran, nomor: nomor, laporan: laporan },
                                                 partial: 'sasaran_program_opds/verifikasi_dampak_resiko') }
         .to_json, status: :unprocessable_entity
     end

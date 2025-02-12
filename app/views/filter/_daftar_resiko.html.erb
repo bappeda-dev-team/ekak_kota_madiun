@@ -75,7 +75,7 @@
               <td colspan="9"></td>
             </tr>
             <% sasarans.each.with_index(1) do |show_sasaran, no| %>
-              <%= render 'daftar_risiko/row_daftar_risiko', show_sasaran: show_sasaran, nomor: "#{i}.#{no}" %>
+              <%= render 'daftar_risiko/row_daftar_risiko', show_sasaran: show_sasaran, nomor: "#{i}.#{no}", laporan: @laporan %>
             <% end %>
           </tbody>
         <% end %>
