@@ -13,8 +13,12 @@
   </div>
   <div class="field row mt-0" id="target-indikator">
     <% (@tahun_awal..@tahun_akhir).each do |tahun| %>
-      <% target_tahun = form.object.targets.any? ? form.object.targets.where(tahun: tahun).first : form.object.targets.build(tahun: tahun) %>
-      <%= form.fields_for :targets, target_tahun do |f_target| %>
+      <% if form.object.targets.where(tahun: tahun).any? %>
+        <% target = form.object.targets.find_by(tahun: tahun) %>
+      <% else %>
+        <% target = Target.new(tahun: tahun) %>
+      <% end %>
+      <%= form.fields_for :targets, target do |f_target| %>
         <%= render 'tujuan_opds/target_fields', form: f_target %>
       <% end %>
     <% end %>
