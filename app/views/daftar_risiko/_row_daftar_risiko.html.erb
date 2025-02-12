@@ -15,7 +15,7 @@
               <%= show_sasaran.status_dampak_resiko %>
             </button>
           <% else %>
-            <button class="btn btn-secondary">
+            <button class="btn btn-danger">
               <%= show_sasaran.status_dampak_resiko %>
             </button>
           <% end %>
@@ -28,7 +28,7 @@
             </p>
           <% end %>
         <% else %>
-          <button class="btn btn-danger text-white">
+          <button class="btn btn-warning">
             Belum Diverifikasi
           </button>
         <% end %>
@@ -72,7 +72,7 @@
                 Edit Dampak
               <% end %>
             <% end %>
-            <%= render 'daftar_risiko/tombol_verifikasi', show_sasaran: show_sasaran %>
+            <%= render 'daftar_risiko/tombol_verifikasi', show_sasaran: show_sasaran, nomor: nomor %>
           <% end %>
           <%= link_to show_pokin_user_sasaran_path(show_sasaran), target: "_blank", rel: "nofollow",
                       class: "btn btn-sm btn-primary" do %>

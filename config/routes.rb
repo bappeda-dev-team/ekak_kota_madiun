@@ -523,6 +523,7 @@ Rails.application.routes.draw do
       get :input_rtp
       post :simpan_rtp
       patch :update_dampak
+      patch :verifikasi_risiko
     end
     resources :rincians do
       get "subkegiatan", on: :new

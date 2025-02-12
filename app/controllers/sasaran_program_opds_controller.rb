@@ -30,9 +30,9 @@ class SasaranProgramOpdsController < ApplicationController
   end
 
   def verifikasi_dampak_resiko
+    @nomor = params[:nomor_sasaran]
     @sasaran = Sasaran.find params[:sasaran_program_opd_id]
-    @rincian = @sasaran.rincian
-    render partial: 'sasaran_program_opds/verifikasi_dampak_resiko'
+    render partial: 'sasaran_program_opds/verifikasi_dampak_resiko', locals: { sasaran: @sasaran, nomor: @nomor }
   end
 
   def cetak_daftar_resiko

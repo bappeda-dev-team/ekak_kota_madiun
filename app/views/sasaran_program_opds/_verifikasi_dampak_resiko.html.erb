@@ -1,69 +1,67 @@
 <h5>Verifikasi Manajemen Risiko Sasaran Kinerja</h5>
-<%= form_with(url: sasaran_path(@sasaran), local: false,
+<%= form_with model: sasaran,
+              url: verifikasi_risiko_sasaran_path(sasaran, nomor: @nomor),
+              local: false,
               method: :patch,
               data: {
                 controller: 'form-ajax',
-                action: 'ajax:complete->form-ajax#processAjax'
-              }) do |form| %>
-  <%= form.fields_for :sasaran, @sasaran do |sasaran_fields| %>
-    <div class="field">
-      <%= sasaran_fields.label :sasaran_kinerja, { class: "form-label" } %>
-      <%= sasaran_fields.text_area :sasaran_kinerja, {class: "form-control", readonly: true, disabled: true} %>
-    </div>
-    <div class="field">
-      <%= sasaran_fields.label :permasalahan, { class: "form-label" } %>
-      <%= sasaran_fields.text_area :permasalahan_sasaran, {class: "form-control", readonly: true, disabled: true} %>
-    </div>
-  <% end %>
-  <%= form.fields_for :rincian, @rincian do |rincian_fields| %>
+                form_ajax_target_param: dom_id(sasaran),
+                action: 'ajax:complete->form-ajax#processAjax'} do |form| %>
+  <div class="field">
+    <%= form.label :sasaran_kinerja, { class: "form-label" } %>
+    <%= form.text_area :sasaran_kinerja, {class: "form-control", readonly: true, disabled: true} %>
+  </div>
+  <div class="field">
+    <%= form.label :permasalahan, { class: "form-label" } %>
+    <%= form.text_area :permasalahan_sasaran, {class: "form-control", readonly: true, disabled: true} %>
+  </div>
+  <%= form.fields_for :rincian do |rincian_fields| %>
     <div class="field">
       <%= rincian_fields.label :resiko, "Risiko", { class: "form-label" } %>
       <%= rincian_fields.text_area :resiko, { class: "form-control", readonly: true, disabled: true} %>
     </div>
     <div class="field">
       <%= rincian_fields.label :skala_kemungkinan, { class: 'form-label' } %>
-      <%= rincian_fields.select :kemungkinan_id, raw("<option value='#{@rincian.kemungkinan&.id}' selected='selected'>#{@rincian.kemungkinan&.deskripsi}</option>"), {include_blank: true},
-       { class: 'form-control',
-         disabled: true,
-         data: { placeholder: 'Skala Kemungkinan',
-           controller: 'dropdown',
-           dropdown_jenis_value: 'ajax',
-           dropdown_url_value: kemungkinans_path(:json)
-       }} %>
+    </div>
+    <div class="field">
+      <%= rincian_fields.collection_radio_buttons :kemungkinan_id, [[rincian_fields.object.kemungkinan_id, rincian_fields.object.kemungkinan.deskripsi]], :first, :last do |kemungkinan_b| %>
+        <div class="form-check">
+          <%= kemungkinan_b.radio_button class: 'form-check-input' %>
+          <%= kemungkinan_b.label class: 'form-check-label' %>
+        </div>
+      <% end %>
     </div>
     <div class="field">
       <%= rincian_fields.label :dampak, { class: "form-label" } %>
       <%= rincian_fields.text_area :dampak, { class: "form-control", readonly: true, disabled: true } %>
     </div>
     <div class="field">
-      <%= rincian_fields.label :skala_dampak, "Skala risiko", { class: 'form-label' } %>
-      <%= rincian_fields.select :skala_id, raw("<option value='#{@rincian.skala_dampak&.id}' selected='selected'>#{@rincian.skala_dampak&.deskripsi}</option>"), {include_blank: true},
-       { class: 'form-control',
-         disabled: true,
-         data: { placeholder: 'Skala Risiko',
-           controller: 'dropdown',
-           dropdown_jenis_value: 'ajax',
-           dropdown_url_value: dampaks_path(:json)
-       }} %>
-    </div>
-  <% end %>
-  <%= form.fields_for :sasaran, @sasaran do |sasaran_fields| %>
-    <div class="field">
-      <%= sasaran_fields.label :status_dampak_resiko, "Verifikasi", { class: "form-label" } %>
-      <%= sasaran_fields.select :status_dampak_resiko,['Setuju', 'Tolak'] , {include_blank: true},
-       { class: 'form-control',
-         required: true,
-         data: { placeholder: 'Belum disetujui',
-           controller: 'dropdown',
-           dropdown_parent_value: '#form-modal'
-       }} %>
-      <small class="form-text text-danger">*pilih setuju/tolak</small>
+      <%= rincian_fields.label :skala_dampak, { class: 'form-label' } %>
     </div>
     <div class="field">
-      <%= sasaran_fields.label :komentar_dampak_resiko, "Komentar dampak risiko", { class: "form-label" } %>
-      <%= sasaran_fields.text_area :komentar_dampak_resiko, {class: "form-control", required: true} %>
+      <%= rincian_fields.collection_radio_buttons :skala_id, [[rincian_fields.object.skala_id, rincian_fields.object.skala_dampak.deskripsi]], :first, :last do |skala_b| %>
+        <div class="form-check">
+          <%= skala_b.radio_button class: 'form-check-input' %>
+          <%= skala_b.label class: 'form-check-label' %>
+        </div>
+      <% end %>
     </div>
   <% end %>
+  <div class="field">
+    <%= form.label :status_dampak_resiko, "Verifikasi", { class: "form-label" } %>
+  </div>
+  <div class="field">
+    <%= form.collection_radio_buttons :status_dampak_resiko, [['Setuju', 'Setuju'], ['Tolak', 'Tolak']], :first, :last, required: true do |setuju_b| %>
+      <div class="form-check">
+        <%= setuju_b.radio_button class: 'form-check-input' %>
+        <%= setuju_b.label class: 'form-check-label' %>
+      </div>
+    <% end %>
+  </div>
+  <div class="field">
+    <%= form.label :komentar_dampak_resiko, "Komentar dampak risiko", { class: "form-label" } %>
+    <%= form.text_area :komentar_dampak_resiko, {class: "form-control", required: true} %>
+  </div>
   <div class="actions">
     <%= form.submit "Verifikasi" %>
   </div>
