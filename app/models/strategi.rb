@@ -337,8 +337,10 @@ class Strategi < ApplicationRecord
   end
 
   def as_plt?
-    plt = pohon_shareds.select { |ph| ph.role == 'plt' }
+    plt = strategi_pokin.pohon_shareds.select { |ph| ph.role == 'plt' }
     plt.any? { |ph| ph.user == user }
+  rescue NoMethodError
+    false
   end
 
   def strategi_staff?
