@@ -9,10 +9,14 @@
   <td class="text-center align-middle">
     <% unless guest? %>
       <% unless inovasi.is_active %>
-        <button class= 'btn btn-tertiary d-inline-flex align-items-center toggle-active' disabled>
-          Usulan Disetujui
-          <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
-        </button>
+        <% if inovasi.asn_aktif? %>
+          <%= button_to toggle_is_active_inovasi_path(inovasi), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
+            <%= statuses(code: inovasi.status) %>
+            <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
+          <% end %>
+        <% else %>
+          <button class="btn btn-warning" disabled><%= statuses(code: inovasi.status) %></button>
+        <% end %>
       <% else %>
         <% if inovasi.sasaran_aktif? %>
           <button class="btn btn-success" disabled>Usulan Digunakan
