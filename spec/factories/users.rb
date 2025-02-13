@@ -55,6 +55,14 @@ FactoryBot.define do
       end
     end
 
+    factory :admin_kota do
+      after(:create) do |user|
+        user.add_role :super_admin
+        user.add_role :asn
+        user.remove_role :non_aktif
+      end
+    end
+
     factory :reviewer do
       after(:create) do |user|
         user.add_role :reviewer

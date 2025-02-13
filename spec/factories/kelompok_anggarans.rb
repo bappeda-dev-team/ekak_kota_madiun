@@ -15,4 +15,10 @@ FactoryBot.define do
     tahun { "MyString" }
     kelompok { "MyString" }
   end
+
+  factory :base_periode, class: 'KelompokAnggaran' do
+    kode_kelompok { "murni" }
+    tahun { "2025" }
+    kelompok { "Murni" }
+  end
 end

@@ -37,4 +37,11 @@ FactoryBot.define do
     kode_unik_opd { "test_opd" }
     association :lembaga
   end
+
+  factory :bappeda, class: 'Opd' do
+    nama_opd { "Badan Perencanaan, Penelitian dan Pengembangan Daerah" }
+    kode_opd { "5.01.5.05.0.00.02.0000" }
+    kode_unik_opd { "test_opd" }
+    association :lembaga
+  end
 end

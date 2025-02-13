@@ -13,4 +13,9 @@ FactoryBot.define do
     tahun { "MyString" }
     periode { "MyString" }
   end
+
+  factory :dua_lima, class: 'Tahun' do
+    tahun { "2025" }
+    association :periode
+  end
 end
