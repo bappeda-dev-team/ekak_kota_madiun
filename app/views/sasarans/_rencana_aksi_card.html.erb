@@ -77,9 +77,9 @@
                 <%= link_to 'Renaksi Otomatis', otomatis_sasaran_tahapan_path(sasaran), method: :post, remote: true, class: 'btn btn-danger mb-4' %>
               <% elsif current_user.eselon_user == 'eselon_3' %>
                 <%= link_to 'Renaksi Otomatis', otomatis_sasaran_tahapan_path(sasaran), method: :post, remote: true, class: 'btn btn-danger mb-4' %>
-                <%= link_to 'Renaksi Manual', new_sasaran_tahapan_path(sasaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-modal', 'bs-toggle': 'modal'}, class: 'btn btn-danger mb-4' %>
+                <%= link_to 'Renaksi Manual', new_sasaran_tahapan_path(sasaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-modal'}, class: 'btn btn-danger mb-4' %>
               <% else %>
-                <%= link_to 'Renaksi Manual', new_sasaran_tahapan_path(sasaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-modal', 'bs-toggle': 'modal'}, class: 'btn btn-danger mb-4' %>
+                <%= link_to 'Renaksi Manual', new_sasaran_tahapan_path(sasaran), remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-modal'}, class: 'btn btn-danger mb-4' %>
               <% end %>
             </div>
           </li>
