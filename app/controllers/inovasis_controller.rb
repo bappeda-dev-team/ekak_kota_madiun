@@ -3,14 +3,13 @@ class InovasisController < ApplicationController
 
   # GET /inovasis or /inovasis.json
   def index
-    @tahun = cookies[:tahun] || Date.current.year.to_s
-    kode_opd = Opd.find_by(kode_unik_opd: cookies[:opd]).kode_opd
-    @inovasis = Inovasi.includes(:user).where(user: { kode_opd: kode_opd }, tahun: @tahun)
+    list_inovasis
   end
 
   def usulan_inisiatif
-    @tahun = cookies[:tahun] || Date.current.year.to_s
-    @inovasis = Inovasi.where(nip_asn: current_user.nik, tahun: @tahun)
+    list_inovasis
+    nip_pemilik = current_user.nik
+    @inovasis = @inovasis.where(nip_asn: [nip_pemilik, ''])
     render 'user_inisiatif'
   end
 
@@ -19,11 +18,13 @@ class InovasisController < ApplicationController
 
   # GET /inovasis/new
   def new
-    user = current_user.nik
-    opd = Opd.find_by_kode_unik_opd(cookies[:opd])
+    user = current_user.admin? ? '' : current_user.nik
+    @opd = cookies[:opd]
     tahun = cookies[:tahun]
-    @inovasi = Inovasi.new(tahun: tahun, nip_asn: user, opd: opd,
-                           is_active: true, status: 'disetujui')
+    @opds = Opd.opd_resmi_kota
+               .pluck(:nama_opd,
+                      :kode_unik_opd)
+    @inovasi = Inovasi.new(tahun: tahun, status: 'draft', nip_asn: user)
     render layout: false
   end
 
@@ -34,8 +35,8 @@ class InovasisController < ApplicationController
 
   # POST /inovasis or /inovasis.json
   def create
-    form_params = inovasi_params.merge(is_active: true, status: 'disetujui')
-    @inovasi = Inovasi.new(form_params)
+    # form_params = inovasi_params.merge(is_active: true, status: 'disetujui')
+    @inovasi = Inovasi.new(inovasi_params)
 
     if @inovasi.save
       render json: { resText: "Entri Inisiatif ditambahkan",
@@ -122,5 +123,15 @@ class InovasisController < ApplicationController
   # Only allow a list of trusted parameters through.
   def inovasi_params
     params.require(:inovasi).permit!
+  end
+
+  def list_inovasis
+    @tahun = cookies[:tahun] || Date.current.year.to_s
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @inovasis = Inovasi.includes(:user)
+                       .where(tahun: @tahun)
+                       .where("opd = ? OR users.kode_opd = ?", @opd.kode_unik_opd, @opd.kode_opd)
+                       .references(:user)
   end
 end

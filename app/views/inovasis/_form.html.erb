@@ -5,7 +5,7 @@
                 form_ajax_target_param: dom_id(inovasi),
                 form_ajax_type_param: inovasi.new_record? ? 'afterbegin' : '',
                 action: 'ajax:complete->form-ajax#processAjax'
-              }) do |form| %>
+}) do |form| %>
   <% if inovasi.errors.any? %>
     <div id="error_explanation">
       <h2>Terdapat <%= inovasi.errors.count %> kesalahan :</h2>
@@ -18,15 +18,24 @@
   <% end %>
   <div class="field">
     <%= form.label :opd, class: 'form-label' %>
-    <%= form.text_field :opd, class: 'form-control', readonly: true %>
-  </div>
-  <div class="field">
-    <%= form.label :nip, class: 'form-label' %>
-    <%= form.text_field :nip_asn, class: 'form-control', readonly: true %>
+    <%= form.select :opd, @opds,
+        { include_blank: true },
+     { required: true,
+       class: 'form-control',
+       data: { controller: 'dropdown',
+         placeholder: 'Pilih OPD',
+         dropdown_parent_value: '#form-modal'
+       } }%>
   </div>
   <div class="field">
     <%= form.label :tahun, class: 'form-label' %>
     <%= form.text_field :tahun, class: 'form-control', readonly: true %>
+    <%= form.hidden_field :is_active %>
+    <%= form.hidden_field :status %>
+  </div>
+  <div class="field">
+    <%= form.label :nip, class: 'form-label' %>
+    <%= form.text_field :nip_asn, class: 'form-control', readonly: true %>
   </div>
   <div class="field">
     <%= form.label :usulan, class: 'form-label' %>
