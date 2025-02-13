@@ -1,0 +1,45 @@
+<div class="table-responsive">
+  <table class="table table-bordered align-items-center" data-form-table-target="table">
+    <thead class="thead-tujuan">
+      <tr class="header-tujuan">
+        <th class="fw-bolder" rowspan="2" width="20px">No.</th>
+        <th class="fw-bolder text-center" rowspan="2">Aksi</th>
+        <th class="fw-bolder" rowspan="2">Tujuan / Sasaran Strategis</th>
+        <th class="fw-bolder" rowspan="2">Indikator</th>
+        <th class="fw-bolder" colspan="3">Risiko</th>
+        <th class="fw-bolder" colspan="2">Sebab</th>
+        <th class="fw-bolder" rowspan="2">C / UC</th>
+        <th class="fw-bolder" colspan="2">Dampak</th>
+      </tr>
+      <tr>
+        <th class="fw-bolder">Uraian</th>
+        <th class="fw-bolder">Kode Risiko</th>
+        <th class="fw-bolder">Pemilik</th>
+        <th class="fw-bolder">Uraian</th>
+        <th class="fw-bolder">Sumber</th>
+        <th class="fw-bolder">Uraian</th>
+        <th class="fw-bolder">Pihak Yang Terkena</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% rowsize = tujuan_kota.indikator_tujuans.size + 1 %>
+      <tr>
+        <td class="text-gray-900 text-wrap border" width='20px' scope="row" rowspan="<%= rowsize %>">1</td>
+        <td class="text-gray-900 border px-auto" scope="row" rowspan="<%= rowsize %>">
+          <% unless guest? %>
+            <div class="row justify-content-center w-100">
+            </div>
+          <% end %>
+        </td>
+        <td class="fw-bolder text-wrap" scope="row" rowspan="<%= rowsize %>"><%= tujuan_kota.tujuan %></td>
+        <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;"></td>
+        <td class="fw-bolder text-wrap" scope="row" rowspan="<%= rowsize %>" colspan="8"></td>
+      </tr>
+      <% tujuan_kota.indikator_tujuans.each do |indikator_tujuan| %>
+        <tr>
+          <td class="text-gray-900 text-wrap border"><%= indikator_tujuan || '-' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       get :filter
       get :konteks_strategis
       get :identifikasi_strategis
+      get :filter_identifikasi_strategis
     end
     member do
       get :filter_konteks_strategis

@@ -38,6 +38,17 @@ class ManrisksController < ApplicationController
     end
   end
 
+  def identifikasi_strategis; end
+
+  def filter_identifikasi_strategis
+    tujuan_id = params[:filter]
+    tujuan = TujuanKota.find(tujuan_id)
+
+    render json: { html_content: html_content({ tujuan_kota: tujuan },
+                                              partial: 'manrisks/identifikasi_strategis') }
+      .to_json, status: :ok
+  end
+
   private
 
   def set_periode_pemda
