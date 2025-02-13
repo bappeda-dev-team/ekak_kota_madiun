@@ -1,0 +1,20 @@
+<table class="indikator-table">
+  <thead>
+    <tr>
+      <th>Tujuan</th>
+      <th>Indikator</th>
+      <th>Target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="indikator-row">
+      <td class="indikator-cell text-wrap" rowspan="<%= tujuan_kota.indikators.size + 1 %>"><%= tujuan_kota %></td>
+    </tr>
+    <% tujuan_kota.indikator_tujuans.each do |ind| %>
+      <tr class="indikator-row">
+        <td class="indikator-cell"><%= ind %></td>
+        <td class="target-cell"><%= ind.target_tahun(tahun)&.target_satuan %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

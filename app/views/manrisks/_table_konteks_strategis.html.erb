@@ -1,112 +1,51 @@
-<% sas_kota = SasaranKota::SasaranComponent.new(sasaran: tujuan_kota.risiko&.pohon, tahun: @tahun) %>
-<table class="table table-bordered align-items-center" data-form-table-target="table">
-  <tbody>
-    <tr>
-      <td class="text-gray-900 text-wrap fw-bolder " width="300px">Tujuan Strategis RPJMD</td>
-      <td class="text-wrap">
-        <%= tujuan_kota %>
-      </td>
-    </tr>
-    <tr>
-      <td class="text-gray-900 text-wrap fw-bolder">Penetapan konteks Risiko Strategis Pemda</td>
-      <td class="fw-bolder text-wrap"><%= tujuan_kota.risiko&.konteks_strategis %></td>
-    </tr>
-    <tr>
-      <td class="text-gray-900 text-wrap fw-bolder">Sasaran RPJMD</td>
-      <td class="fw-bolder text-wrap">
-        <%= tujuan_kota&.risiko&.pohon&.pohonable&.sasaran_kotum %>
-      </td>
-    </tr>
-    <tr>
-      <td class="text-gray-900 text-wrap fw-bolder">Nama Dinas Terkait</td>
-      <td class="fw-bolder text-wrap">
-        <% if tujuan_kota.risiko.present? %>
-          <% sas_kota.sub_pohons.flat_map { |sub| sub.role == 'sub_sub_pohon_kota' ? sub.sub_pohons.map(&:opd) : sub.opd }.uniq.compact.each do |opd| %>
-            <div class="dinas-item"><%= opd %></div>
-          <% end %>
-        <% end %>
-      </td>
-    </tr>
-    <tr>
-      <td class="text-gray-900 text-wrap fw-bolder">IKU Sasaran RPJMD</td>
-      <td class="fw-bolder text-wrap">
-        <% if tujuan_kota.risiko.present? %>
-          <div class="indikator-table" data-form-table-target="ikuSasaran">
-            <table class="indikator-table">
-              <thead>
-                <tr>
-                  <th>Indikator</th>
-                  <th>Target</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% sas_kota.indikators.each do |ind| %>
-                  <tr class="indikator-row">
-                    <td class="indikator-cell"><%= ind %></td>
-                    <td class="target-cell"><%= ind.target_satuan %></td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
-        <% end %>
-      </td>
-    </tr>
-    <tr>
-      <td class="text-gray-900 text-wrap fw-bolder">Prioritas pembangunan dan program unggulan</td>
-      <td class="fw-bolder text-wrap"><%= tujuan_kota.risiko&.prioritas %></td>
-    </tr>
-    <tr>
-      <td class="text-gray-900 text-wrap fw-bolder">Tujuan RPJMD</td>
-      <td class="fw-bolder text-wrap">
-        <table class="indikator-table">
-          <thead>
-            <tr>
-              <th>Tujuan</th>
-              <th>Indikator</th>
-              <th>Target</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="indikator-row">
-              <td class="indikator-cell text-wrap" rowspan="<%= tujuan_kota.indikators.size + 1 %>"><%= tujuan_kota %></td>
-            </tr>
-            <% tujuan_kota.indikator_tujuans.each do |ind| %>
-              <tr class="indikator-row">
-                <td class="indikator-cell"><%= ind %></td>
-                <td class="target-cell"><%= ind.target_tahun(@tahun)&.target_satuan %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td class="text-gray-900 text-wrap fw-bolder">Sasaran RPJMD</td>
-      <td class="fw-bolder text-wrap">
-        <% if tujuan_kota.risiko.present? %>
-          <table class="indikator-table">
-            <thead>
-              <tr>
-                <th>Sasaran</th>
-                <th>Indikator</th>
-                <th>Target</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="indikator-row">
-                <td class="indikator-cell" rowspan="<%= sas_kota.rowspan %>"><%= tujuan_kota.risiko&.pohon&.pohonable&.sasaran_kotum %></td>
-              </tr>
-              <% sas_kota.indikators.each do |ind| %>
-                <tr class="indikator-row">
-                  <td class="indikator-cell"><%= ind %></td>
-                  <td class="target-cell"><%= ind.target_satuan %></td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        <% end %>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="card">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">Tujuan Kota Tahun Penilaian <%= @tahun %><h2>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <table class="table table-bordered align-items-center" data-form-table-target="table">
+      <tbody>
+        <tr>
+          <td class="text-gray-900 text-wrap fw-bolder " width="300px">Tujuan Strategis RPJMD</td>
+          <td class="text-wrap">
+            <%= tujuan_kota %>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-gray-900 text-wrap fw-bolder">Tujuan RPJMD</td>
+          <td class="text-wrap">
+            <%= render 'manrisks/table_tujuan_rpjmd', tujuan_kota: tujuan_kota, tahun: @tahun %>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-gray-900 text-wrap fw-bolder">Penetapan konteks Risiko Strategis Pemda</td>
+          <td class="text-wrap"><%= tujuan_kota.risiko&.konteks_strategis %></td>
+        </tr>
+        <tr>
+          <td class="text-gray-900 text-wrap fw-bolder">Prioritas pembangunan dan program unggulan</td>
+          <td class="text-wrap"><%= tujuan_kota.risiko&.prioritas %></td>
+        </tr>
+        <tr>
+          <td class="text-gray-900 text-wrap fw-bolder">Jumlah Sasaran Kota</td>
+          <td class="text-wrap"><%= tujuan_kota.pohon.sub_pohons.size %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">Sasaran Kota<h2>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <%= render 'manrisks/sasaran_rpjmd', tujuan_kota: tujuan_kota %>
+  </div>
+</div>

@@ -6,7 +6,8 @@ class SasaranRpjmd
   end
 
   def tematiks
-    Pohon.includes(:pohonable)
+    Pohon.active
+         .includes(:pohonable)
          .where(pohonable_type: %w[Tematik], tahun: @tahun)
          .select(&:pohonable)
   end

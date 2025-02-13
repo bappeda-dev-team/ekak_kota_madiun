@@ -1,0 +1,79 @@
+<div class="accordion">
+  <% tujuan_kota.pohon.sub_pohons.each do |pohon| %>
+    <% sas_kota = SasaranKota::SasaranComponent.new(sasaran: pohon, tahun: @tahun) %>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target='<%= "#collapse-#{pohon.id}" %>' aria-expanded="true" aria-controls='<%= "#collapse-#{pohon.id}" %>'>
+          <%= pohon.pohonable.sasaran_kotum %>
+        </button>
+      </h2>
+      <div id='<%= "collapse-#{pohon.id}" %>' class="accordion-collapse collapse">
+        <div class="accordion-body">
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                <tr class="sasaran-rpjmd">
+                  <td class="text-gray-900 text-wrap fw-bolder">Sasaran RPJMD</td>
+                  <td class="fw-bolder text-wrap">
+                    <table class="indikator-table">
+                      <thead>
+                        <tr>
+                          <th>Sasaran</th>
+                          <th>Indikator</th>
+                          <th>Target</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="indikator-row">
+                          <td class="indikator-cell" rowspan="<%= sas_kota.rowspan %>"><%= pohon.pohonable.sasaran_kotum %></td>
+                        </tr>
+                        <% sas_kota.indikators.each do |ind| %>
+                          <tr class="indikator-row">
+                            <td class="indikator-cell"><%= ind %></td>
+                            <td class="target-cell"><%= ind.target_satuan %></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr class="iku-sasaran-rpjmd">
+                  <td class="text-gray-900 text-wrap fw-bolder">IKU Sasaran RPJMD</td>
+                  <td class="fw-bolder text-wrap">
+                    <div class="indikator-table" data-form-table-target="ikuSasaran">
+                      <table class="indikator-table">
+                        <thead>
+                          <tr>
+                            <th>Indikator</th>
+                            <th>Target</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% sas_kota.indikators.each do |ind| %>
+                            <tr class="indikator-row">
+                              <td class="indikator-cell"><%= ind %></td>
+                              <td class="target-cell"><%= ind.target_satuan %></td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="dinas-terkait">
+                  <td class="text-gray-900 text-wrap fw-bolder">Nama Dinas Terkait</td>
+                  <td class="fw-bolder text-wrap">
+                    <% sas_kota.sub_pohons.flat_map { |sub| sub.role == 'sub_sub_pohon_kota' ? sub.sub_pohons.map(&:opd) : sub.opd }.uniq.compact.each do |opd| %>
+                      <div class="dinas-item"><%= opd %></div>
+                    <% end %>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
