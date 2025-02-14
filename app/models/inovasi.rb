@@ -46,8 +46,8 @@ class Inovasi < ApplicationRecord
     '-'
   end
 
-  def opd_pemilik
-    User.find_by(nik: nip_asn).opd.kode_opd
+  def opd_inovasi
+    opd_pemilik.nama_opd
   rescue NoMethodError
     '-'
   end
