@@ -1,0 +1,42 @@
+<%= form_with(model: visi) do |form| %>
+  <% if visi.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(visi.errors.count, "error") %> prohibited this visi from being saved:</h2>
+
+      <ul>
+        <% visi.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :visi %>
+    <%= form.text_field :visi %>
+  </div>
+
+  <div class="field">
+    <%= form.label :urutan %>
+    <%= form.text_field :urutan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :keterangan %>
+    <%= form.text_field :keterangan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tahun_awal %>
+    <%= form.text_field :tahun_awal %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tahun_akhir %>
+    <%= form.text_field :tahun_akhir %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

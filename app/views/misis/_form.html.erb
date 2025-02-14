@@ -1,0 +1,47 @@
+<%= form_with(model: misi) do |form| %>
+  <% if misi.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(misi.errors.count, "error") %> prohibited this misi from being saved:</h2>
+
+      <ul>
+        <% misi.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :misi %>
+    <%= form.text_field :misi %>
+  </div>
+
+  <div class="field">
+    <%= form.label :urutan %>
+    <%= form.number_field :urutan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :keterangan %>
+    <%= form.text_field :keterangan %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tahun_awal %>
+    <%= form.text_field :tahun_awal %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tahun_akhir %>
+    <%= form.text_field :tahun_akhir %>
+  </div>
+
+  <div class="field">
+    <%= form.label :visi_id %>
+    <%= form.text_field :visi_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

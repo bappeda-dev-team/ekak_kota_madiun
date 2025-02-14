@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Visi:</strong>
+  <%= @visi.visi %>
+</p>
+
+<p>
+  <strong>Urutan:</strong>
+  <%= @visi.urutan %>
+</p>
+
+<p>
+  <strong>Keterangan:</strong>
+  <%= @visi.keterangan %>
+</p>
+
+<p>
+  <strong>Tahun awal:</strong>
+  <%= @visi.tahun_awal %>
+</p>
+
+<p>
+  <strong>Tahun akhir:</strong>
+  <%= @visi.tahun_akhir %>
+</p>
+
+<%= link_to 'Edit', edit_visi_path(@visi) %> |
+<%= link_to 'Back', visis_path %>

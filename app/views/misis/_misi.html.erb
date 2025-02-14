@@ -1,0 +1,19 @@
+<tr id="<%= dom_id(misi) %>">
+  <td class="text-gray-900 text-wrap" width='20px' scope="row"><%= misi.urutan %></td>
+  <td class="text-gray-900" scope="row"><%= misi %></td>
+  <td class="text-gray-900" scope="row"><%= misi.periode %></td>
+  <td class="text-gray-900" scope="row"><%= misi.keterangan %></td>
+  <td class="text-gray-900" scope="row">
+    <% unless guest? %>
+      <div class="row justify-content-center w-100">
+        <div class="col">
+          <%= render(EditButtonComponent.new(path: edit_misi_path(visi))) %>
+        </div>
+        <div class="col">
+          <%= render(DeleteButtonComponent.new(path: misi_path(misi),
+                                               title: "Hapus Misi '#{misi}'?" )) %>
+        </div>
+      </div>
+    <% end %>
+  </td>
+</tr>

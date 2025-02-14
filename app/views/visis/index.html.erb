@@ -1,0 +1,26 @@
+<%= content_for :html_title, "Visi Kota" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Perencanaan Kota</li>
+  <li class="breadcrumb-item active" aria-current="page">Visi Kota</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout_subtitle', title: "Visi Kepala Daerah",
+             sub_title: @lembaga, sub_title_2: @periode do %>
+    <div class="table-responsive mb-5">
+      <table class="table table-bordered align-items-center">
+        <thead class="thead-tujuan">
+          <tr class="header-tujuan">
+            <th class="text-center" width="20px">No.</th>
+            <th class="text-center" width="500px">Visi</th>
+            <th class="text-center" width="200px">Periode</th>
+            <th class="text-center">Keterangan</th>
+            <th class="text-center"></th>
+          </tr>
+        </thead>
+        <tbody id="new_visi">
+          <%= render partial: 'visis/visi', collection: @visis %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>

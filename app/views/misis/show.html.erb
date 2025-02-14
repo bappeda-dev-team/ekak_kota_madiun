@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Misi:</strong>
+  <%= @misi.misi %>
+</p>
+
+<p>
+  <strong>Urutan:</strong>
+  <%= @misi.urutan %>
+</p>
+
+<p>
+  <strong>Keterangan:</strong>
+  <%= @misi.keterangan %>
+</p>
+
+<p>
+  <strong>Tahun awal:</strong>
+  <%= @misi.tahun_awal %>
+</p>
+
+<p>
+  <strong>Tahun akhir:</strong>
+  <%= @misi.tahun_akhir %>
+</p>
+
+<p>
+  <strong>Visi:</strong>
+  <%= @misi.visi_id %>
+</p>
+
+<%= link_to 'Edit', edit_misi_path(@misi) %> |
+<%= link_to 'Back', misis_path %>

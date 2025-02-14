@@ -89,6 +89,14 @@ module SuperAdminItemHelper
   def perencanaan_kota_items # rubocop:disable Metrics/MethodLength
     [
       {
+        title: 'Visi Kota', href: visis_path,
+        icon: 'fas fa-landmark', identifier: 'visi_kota'
+      },
+      {
+        title: 'Misi Kota', href: misis_path,
+        icon: 'fas fa-landmark', identifier: 'misi_kota'
+      },
+      {
         title: 'Tujuan Kota', href: tujuan_kota_path,
         icon: 'fas fa-landmark', identifier: 'tujuan_kota'
       },

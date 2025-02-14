@@ -2195,6 +2195,42 @@ ALTER SEQUENCE public.master_urusans_id_seq OWNED BY public.master_urusans.id;
 
 
 --
+-- Name: misis; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.misis (
+    id bigint NOT NULL,
+    misi character varying,
+    urutan integer DEFAULT 1,
+    keterangan character varying,
+    tahun_awal character varying,
+    tahun_akhir character varying,
+    visi_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: misis_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.misis_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: misis_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.misis_id_seq OWNED BY public.misis.id;
+
+
+--
 -- Name: mitras; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -4278,6 +4314,41 @@ ALTER SEQUENCE public.usulans_id_seq OWNED BY public.usulans.id;
 
 
 --
+-- Name: visis; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.visis (
+    id bigint NOT NULL,
+    visi character varying,
+    urutan integer DEFAULT 1,
+    keterangan character varying,
+    tahun_awal character varying,
+    tahun_akhir character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: visis_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.visis_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: visis_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.visis_id_seq OWNED BY public.visis.id;
+
+
+--
 -- Name: action_text_rich_texts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -4677,6 +4748,13 @@ ALTER TABLE ONLY public.master_urusans ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: misis id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.misis ALTER COLUMN id SET DEFAULT nextval('public.misis_id_seq'::regclass);
+
+
+--
 -- Name: mitras id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -5017,6 +5095,13 @@ ALTER TABLE ONLY public.usulan_perangkat_daerahs ALTER COLUMN id SET DEFAULT nex
 --
 
 ALTER TABLE ONLY public.usulans ALTER COLUMN id SET DEFAULT nextval('public.usulans_id_seq'::regclass);
+
+
+--
+-- Name: visis id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.visis ALTER COLUMN id SET DEFAULT nextval('public.visis_id_seq'::regclass);
 
 
 --
@@ -5484,6 +5569,14 @@ ALTER TABLE ONLY public.master_urusans
 
 
 --
+-- Name: misis misis_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.misis
+    ADD CONSTRAINT misis_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: mitras mitras_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -5884,6 +5977,14 @@ ALTER TABLE ONLY public.usulans
 
 
 --
+-- Name: visis visis_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.visis
+    ADD CONSTRAINT visis_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: index_action_text_rich_texts_uniqueness; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -6217,6 +6318,13 @@ CREATE UNIQUE INDEX index_master_subkegiatans_on_id_unik_sipd ON public.master_s
 --
 
 CREATE UNIQUE INDEX index_master_urusans_on_id_unik_sipd ON public.master_urusans USING btree (id_unik_sipd);
+
+
+--
+-- Name: index_misis_on_visi_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_misis_on_visi_id ON public.misis USING btree (visi_id);
 
 
 --
@@ -6621,6 +6729,14 @@ ALTER TABLE ONLY public.risikos
 
 ALTER TABLE ONLY public.mitras
     ADD CONSTRAINT fk_rails_161d22de48 FOREIGN KEY (crosscutting_id) REFERENCES public.crosscuttings(id);
+
+
+--
+-- Name: misis fk_rails_21057aead2; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.misis
+    ADD CONSTRAINT fk_rails_21057aead2 FOREIGN KEY (visi_id) REFERENCES public.visis(id);
 
 
 --
@@ -7208,6 +7324,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250123055646'),
 ('20250205061950'),
 ('20250207032229'),
-('20250210044107');
+('20250210044107'),
+('20250214223314'),
+('20250214223524');
 
 
