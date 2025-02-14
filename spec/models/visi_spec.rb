@@ -10,6 +10,15 @@
 #  visi        :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  lembaga_id  :bigint           not null
+#
+# Indexes
+#
+#  index_visis_on_lembaga_id  (lembaga_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (lembaga_id => lembagas.id)
 #
 require 'rails_helper'
 

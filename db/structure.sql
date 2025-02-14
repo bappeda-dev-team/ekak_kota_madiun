@@ -2207,7 +2207,8 @@ CREATE TABLE public.misis (
     tahun_akhir character varying,
     visi_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    lembaga_id bigint NOT NULL
 );
 
 
@@ -4325,7 +4326,8 @@ CREATE TABLE public.visis (
     tahun_awal character varying,
     tahun_akhir character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    lembaga_id bigint NOT NULL
 );
 
 
@@ -6321,6 +6323,13 @@ CREATE UNIQUE INDEX index_master_urusans_on_id_unik_sipd ON public.master_urusan
 
 
 --
+-- Name: index_misis_on_lembaga_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_misis_on_lembaga_id ON public.misis USING btree (lembaga_id);
+
+
+--
 -- Name: index_misis_on_visi_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -6692,6 +6701,13 @@ CREATE INDEX index_usulans_on_usulanable ON public.usulans USING btree (usulanab
 
 
 --
+-- Name: index_visis_on_lembaga_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_visis_on_lembaga_id ON public.visis USING btree (lembaga_id);
+
+
+--
 -- Name: comments fk_rails_03de2dc08c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -6820,6 +6836,14 @@ ALTER TABLE ONLY public.sasarans
 
 
 --
+-- Name: visis fk_rails_5b6a7154d3; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.visis
+    ADD CONSTRAINT fk_rails_5b6a7154d3 FOREIGN KEY (lembaga_id) REFERENCES public.lembagas(id);
+
+
+--
 -- Name: realisasis fk_rails_5dbcbd7079; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -6913,6 +6937,14 @@ ALTER TABLE ONLY public.inovasi_tims
 
 ALTER TABLE ONLY public.crosscuttings
     ADD CONSTRAINT fk_rails_a8848c7a10 FOREIGN KEY (strategi_id) REFERENCES public.strategis(id);
+
+
+--
+-- Name: misis fk_rails_a9da5138c5; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.misis
+    ADD CONSTRAINT fk_rails_a9da5138c5 FOREIGN KEY (lembaga_id) REFERENCES public.lembagas(id);
 
 
 --
@@ -7326,6 +7358,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250207032229'),
 ('20250210044107'),
 ('20250214223314'),
-('20250214223524');
+('20250214223524'),
+('20250214225926'),
+('20250214230121');
 
 
