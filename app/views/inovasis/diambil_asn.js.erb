@@ -1,0 +1,23 @@
+$('#notice').html("<%= j render 'shared/flash', flash: flash %>");
+var tombol_cancel = `<%= button_to diambil_asn_inovasi_path(@inovasi), remote: true, class: 'btn btn-danger d-inline-flex align-items-center toggle-active',
+params: { nip_asn: nil, status: 'draft' } do %>
+  Batalkan
+  <i class="fas fa-ban text-primary icon icon-xs ms-2"></i>
+<% end %>`
+
+var tombol_pengganti = `<button class= 'btn btn-tertiary d-inline-flex align-items-center toggle-active' disabled>
+  Usulan Diajukan
+  <i class='fas fa-check-circle text-success icon icon-xs ms-2'></i>
+  </button> ${tombol_cancel}`;
+
+var tombol_aktifkan = `<%= button_to diambil_asn_inovasi_path(@inovasi), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active',
+  params: { nip_asn: current_user.nik, status: 'pengajuan' } do %>
+    Ambil Usulan
+  <% end %>`
+
+if ("<%= @status %>" == "draft") {
+  $(".action-<%= dom_id(@inovasi) %>").html(tombol_aktifkan);
+}
+else {
+  $(".action-<%= dom_id(@inovasi) %>").html(tombol_pengganti);
+}

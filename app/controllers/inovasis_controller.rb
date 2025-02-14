@@ -113,6 +113,19 @@ class InovasisController < ApplicationController
                 .collect(&:searchable)
   end
 
+  def diambil_asn
+    @inovasi = Inovasi.find(params[:id])
+    @status = 'aktif'
+    @nip_asn = params[:nip_asn]
+    if @inovasi.update(nip_asn: @nip_asn, status: @status)
+      @inovasi.toggle! :is_active
+      flash.now[:success] = 'Usulan berhasil diambil'
+    else
+      flash.now[:error] = 'Usulan gagal diambil'
+      :unprocessable_entity
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
