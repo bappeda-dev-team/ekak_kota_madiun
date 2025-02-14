@@ -47,7 +47,11 @@ class Inovasi < ApplicationRecord
   end
 
   def opd_inovasi
-    opd_pemilik.nama_opd
+    if opd.first.match?(/\p{Alpha}/)
+      opd
+    else
+      opd_pemilik.to_s
+    end
   rescue NoMethodError
     '-'
   end
