@@ -186,9 +186,13 @@ class FilterController < ApplicationController
   def filter_usulan
     @type = params[:jenis].capitalize
     @type_alsi = @type.capitalize
+    @type_title = @type.capitalize
+    @ket_title = "Keterangan"
     if @type == "Inisiatif"
       @type = "Inovasi"
       @type_alsi = "Inisiatif Walikota"
+      @type_title = "Program Unggulan Walikota"
+      @ket_title = "ASTA KARYA"
     end
     if @kode_opd == "all"
       @program_kegiatans = ProgramKegiatan.includes(%i[opd usulans])

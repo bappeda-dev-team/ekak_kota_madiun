@@ -30,6 +30,9 @@ class InovasisController < ApplicationController
 
   # GET /inovasis/1/edit
   def edit
+    @opds = Opd.opd_resmi_kota
+               .pluck(:nama_opd,
+                      :kode_unik_opd)
     render layout: false
   end
 

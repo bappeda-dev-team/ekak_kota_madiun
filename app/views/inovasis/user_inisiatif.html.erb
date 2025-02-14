@@ -9,18 +9,18 @@
     <div class="card-header">
       <div class="row align-items-center">
         <div class="col">
-          <h2 class="fs-5 fw-bold mb-0">Usulan Inisiatif Tahun <%= @tahun %></h2>
+          <h2 class="fs-5 fw-bold mb-0">Usulan Inisiatif Walikota Tahun <%= @tahun %></h2>
         </div>
         <div class="col text-end">
           <%= link_to "Tambah Usulan", new_inovasi_path,
-           remote: true,
-           class: "btn btn-sm btn-info",
-           data: {
-             controller: 'form-modal',
-             action: 'ajax:complete->form-modal#success:prevent',
-             bs_toggle: 'modal',
-             bs_target: '#form-modal'
-           }
+                      remote: true,
+                      class: "btn btn-sm btn-info",
+                      data: {
+                        controller: 'form-modal',
+                        action: 'ajax:complete->form-modal#success:prevent',
+                        bs_toggle: 'modal',
+                        bs_target: '#form-modal'
+                      }
           %>
         </div>
       </div>
@@ -32,8 +32,8 @@
             <tr>
               <th class="border-bottom text-gray-700" scope="col">No.</th>
               <th class="border-bottom text-gray-700" scope="col">Tahun</th>
-              <th class="border-bottom text-gray-700" scope="col">Usulan</th>
-              <th class="border-bottom text-gray-700" scope="col">Manfaat</th>
+              <th class="border-bottom text-gray-700" scope="col">Program Unggulan Walikota</th>
+              <th class="border-bottom text-gray-700" scope="col">ASTA KARYA</th>
               <th class="border-bottom text-gray-700" scope="col">Uraian</th>
               <th class="border-bottom text-gray-700" scope="col">Pengusul</th>
               <th class="border-bottom text-gray-700" scope="col">Opd</th>
@@ -48,5 +48,4 @@
       </div>
     </div>
   </div>
-  <%= render 'modal' %>
 <% end %>

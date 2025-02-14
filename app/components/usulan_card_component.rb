@@ -10,20 +10,29 @@ class UsulanCardComponent < ViewComponent::Base
   def jenis_asli
     case @jenis
     when 'musrenbang'
-      { title: 'Musrenbang', deskripsi: 'Alamat', uraian: 'Permasalahan' }
+      { usulan: 'Usulan',
+        title: 'Musrenbang', deskripsi: 'Alamat', uraian: 'Permasalahan' }
     when 'pokpir'
-      { title: 'Pokok Pikiran DPRD', deskripsi: 'Alamat', uraian: 'Permasalahan' }
+      { usulan: 'Usulan',
+        title: 'Pokok Pikiran DPRD', deskripsi: 'Alamat', uraian: 'Permasalahan' }
     when 'mandatori'
-      { title: 'Mandatori', deskripsi: 'Peraturan Terkait', uraian: 'Uraian' }
+      { usulan: 'Usulan',
+        title: 'Mandatori', deskripsi: 'Peraturan Terkait', uraian: 'Uraian' }
     when 'inovasi'
-      { title: 'Inisiatif', deskripsi: 'Manfaat', uraian: 'Uraian' }
+      { usulan: 'Program Unggulan Walikota',
+        title: 'Inisiatif', deskripsi: 'ASTA KARYA', uraian: 'Uraian' }
     else
-      { title: '', deskripsi: '', uraian: '' }
+      { usulan: '',
+        title: '', deskripsi: '', uraian: '' }
     end
   end
 
   def title
     jenis_asli[:title]
+  end
+
+  def header_usulan
+    jenis_asli[:usulan]
   end
 
   def header_deskripsi
