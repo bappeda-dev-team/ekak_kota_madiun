@@ -62,10 +62,7 @@ class VisisController < ApplicationController
   def destroy
     @visi.destroy
 
-    respond_to do |format|
-      format.html { redirect_to visis_url, notice: "Visi was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    render json: { resText: "Visi Dihapus" }.to_json, status: :accepted
   end
 
   private
