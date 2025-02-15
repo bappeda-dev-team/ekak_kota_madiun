@@ -1,4 +1,10 @@
-<%= form_with(model: visi) do |form| %>
+<%= form_with model: visi, local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: dom_id(visi),
+                form_ajax_type_param: visi.new_record? ? 'prepend' : '',
+                action: 'ajax:complete->form-ajax#processAjax'
+              } do |form| %>
   <% if visi.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(visi.errors.count, "error") %> prohibited this visi from being saved:</h2>
@@ -12,28 +18,29 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :visi %>
-    <%= form.text_field :visi %>
+    <%= form.label :urutan, class: 'form-label' %>
+    <%= form.hidden_field :lembaga_id %>
+    <%= form.number_field :urutan, class: 'form-control', min: 1, required: true %>
   </div>
 
   <div class="field">
-    <%= form.label :urutan %>
-    <%= form.text_field :urutan %>
+    <%= form.label :visi, class: 'form-label' %>
+    <%= form.text_field :visi, class: 'form-control', required: true %>
   </div>
 
   <div class="field">
-    <%= form.label :keterangan %>
-    <%= form.text_field :keterangan %>
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_field :keterangan, class: 'form-control' %>
   </div>
 
   <div class="field">
-    <%= form.label :tahun_awal %>
-    <%= form.text_field :tahun_awal %>
+    <%= form.label :tahun_awal, class: 'form-label' %>
+    <%= form.text_field :tahun_awal, class: 'form-control', required: true %>
   </div>
 
   <div class="field">
-    <%= form.label :tahun_akhir %>
-    <%= form.text_field :tahun_akhir %>
+    <%= form.label :tahun_akhir, class: 'form-label' %>
+    <%= form.text_field :tahun_akhir, class: 'form-control', required: true %>
   </div>
 
   <div class="actions">

@@ -22,6 +22,7 @@
 #
 class Visi < ApplicationRecord
   has_many :misis
+  belongs_to :lembaga
 
   def to_s
     visi

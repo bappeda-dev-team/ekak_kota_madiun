@@ -5,14 +5,10 @@
   <td class="text-gray-900" scope="row"><%= visi.keterangan %></td>
   <td class="text-gray-900" scope="row">
     <% unless guest? %>
-      <div class="row justify-content-center w-100">
-        <div class="col">
-          <%= render(EditButtonComponent.new(path: edit_visi_path(visi))) %>
-        </div>
-        <div class="col">
-          <%= render(DeleteButtonComponent.new(path: visi_path(visi),
-                                               title: "Hapus Visi '#{visi}'?" )) %>
-        </div>
+      <div class="d-grid gap-2">
+        <%= render(EditButtonComponent.new(path: edit_visi_path(visi))) %>
+        <%= render(DeleteButtonComponent.new(path: visi_path(visi),
+                                             title: "Hapus Visi '#{visi}'?" )) %>
       </div>
     <% end %>
   </td>

@@ -27,5 +27,6 @@ FactoryBot.define do
     keterangan { "-" }
     tahun_awal { "2025" }
     tahun_akhir { "2026" }
+    association :lembaga
   end
 end
