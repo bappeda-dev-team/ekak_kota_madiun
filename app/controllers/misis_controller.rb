@@ -24,7 +24,9 @@ class MisisController < ApplicationController
   end
 
   # GET /misis/1/edit
-  def edit; end
+  def edit
+    @visi = @misi.visi
+  end
 
   # POST /misis or /misis.json
   def create
