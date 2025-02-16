@@ -36,6 +36,10 @@ class Misi < ApplicationRecord
     misi
   end
 
+  def urutan_by_visi
+    "#{visi.urutan}.#{urutan}"
+  end
+
   def periode
     "#{tahun_awal}-#{tahun_akhir}"
   end

@@ -26,5 +26,12 @@
 require 'rails_helper'
 
 RSpec.describe Misi, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'should have urutan visi and urutan misi in one string' do
+    lembaga = create(:lembaga)
+    visi = create(:visi, visi: 'ContohVisi', urutan: 1, lembaga: lembaga)
+    misi = create(:misi, visi: visi, urutan: 1, lembaga: lembaga)
+
+    urutan_misi = misi.urutan_by_visi
+    expect(urutan_misi).to eq("1.1")
+  end
 end

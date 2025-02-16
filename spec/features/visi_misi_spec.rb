@@ -138,6 +138,7 @@ RSpec.describe "Visi dan Misi", type: :feature do
     click_on 'Ok'
 
     expect(page).to have_text 'ContohVisi'
+    expect(page).to have_text '1.1'
     expect(page).to have_text 'Contoh Misi'
   end
 end
