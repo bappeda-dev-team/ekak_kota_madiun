@@ -25,6 +25,12 @@
 #
 class Misi < ApplicationRecord
   belongs_to :visi
+  belongs_to :lembaga
+
+  validates :misi, presence: true, length: { minimum: 5 }
+  validates :urutan, numericality: { only_integer: true }
+  validates :tahun_awal, presence: true, length: { is: 4 }
+  validates :tahun_akhir, presence: true, length: { is: 4 }
 
   def to_s
     misi

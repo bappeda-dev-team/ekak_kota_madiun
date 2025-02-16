@@ -24,8 +24,22 @@ class Visi < ApplicationRecord
   has_many :misis
   belongs_to :lembaga
 
+  validates :visi, presence: true, length: { minimum: 5 }
+  validates :urutan, numericality: { only_integer: true }
+  validates :tahun_awal, presence: true, length: { is: 4 }
+  validates :tahun_akhir, presence: true, length: { is: 4 }
+
+  scope :by_periode, lambda { |tahun|
+                       where("tahun_awal::integer <= ?::integer", tahun)
+                         .where("tahun_akhir::integer >= ?::integer", tahun)
+                     }
+
   def to_s
     visi
+  end
+
+  def visi_with_urutan_and_lembaga
+    "#{urutan}. #{visi} - #{lembaga}"
   end
 
   def periode

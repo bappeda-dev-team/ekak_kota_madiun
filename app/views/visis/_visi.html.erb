@@ -1,8 +1,8 @@
 <tr id="<%= dom_id(visi) %>">
-  <td class="text-gray-900 text-wrap" width='20px' scope="row"><%= visi.urutan %></td>
-  <td class="text-gray-900" scope="row"><%= visi %></td>
+  <td class="text-gray-900" width='20px' scope="row"><%= visi.urutan %></td>
+  <td class="text-gray-900 text-wrap" scope="row"><%= visi %></td>
   <td class="text-gray-900" scope="row"><%= visi.periode %></td>
-  <td class="text-gray-900" scope="row"><%= visi.keterangan %></td>
+  <td class="text-gray-900 text-wrap" scope="row"><%= visi.keterangan %></td>
   <td class="text-gray-900" scope="row">
     <% unless guest? %>
       <div class="d-grid gap-2">

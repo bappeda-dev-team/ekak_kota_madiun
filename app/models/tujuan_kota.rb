@@ -39,8 +39,8 @@ class TujuanKota < ApplicationRecord
   belongs_to :pohon
   accepts_nested_attributes_for :risiko
 
-  scope :visis, -> { joins(%i[indikator_tujuans sasaran_kota]).where.not(visi: nil) }
-  scope :misis, -> { joins(%i[indikator_tujuans sasaran_kota]).where.not(misi: nil) }
+  # scope :visis, -> { joins(%i[indikator_tujuans sasaran_kota]).where.not(visi: nil) }
+  # scope :misis, -> { joins(%i[indikator_tujuans sasaran_kota]).where.not(misi: nil) }
   scope :sasarans, -> { joins(:sasaran_kota) }
   scope :by_periode, lambda { |tahun|
                        where("tahun_awal::integer <= ?::integer", tahun)

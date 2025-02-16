@@ -100,4 +100,44 @@ RSpec.describe "Visi dan Misi", type: :feature do
     click_on 'OK'
     expect(page).not_to have_text('VISI CONTOH')
   end
+
+  # misi
+  scenario 'input misi kota', js: true do
+    login_as admin_kota
+    periode
+    tahun_dua_lima
+    visi = create(:visi, visi: 'ContohVisi', lembaga: admin_kota.opd.lembaga)
+
+    visit root_path
+
+    # create_cookie('opd', '2.16.2.20.2.21.04.000')
+    # create_cookie('tahun', '2025')
+    within(".filter-form") do
+      select2 '2025', xpath: '//*[@id="navbarSupportedContent"]/ul/li[1]/form/div/span[3]'
+      select2 'Dinas', xpath: '//*[@id="navbarSupportedContent"]/ul/li[1]/form/div/span[1]'
+      click_on 'Aktifkan'
+    end
+    # click the notification
+    click_on 'Ok'
+    expect(page).to have_text('Kota Madiun')
+
+    find('span.sidebar-text', text: 'Perencanaan Kota').click
+    find('span.sidebar-text', text: 'Misi Kota').click
+
+    expect(page).to have_text('Misi Kepala Daerah')
+
+    within "#visi_#{visi.id}" do
+      click_on('Tambah Misi Kepala Daerah')
+    end
+    within '#form-modal-body' do
+      fill_in 'Misi', with: 'Contoh Misi'
+      fill_in 'Keterangan', with: 'no keterangan'
+      click_button 'Simpan Misi'
+    end
+
+    click_on 'Ok'
+
+    expect(page).to have_text 'ContohVisi'
+    expect(page).to have_text 'Contoh Misi'
+  end
 end

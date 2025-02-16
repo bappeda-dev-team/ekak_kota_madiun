@@ -1,1 +1,1 @@
-json.array! @visis, partial: "visis/visi", as: :visi
+json.results @visis, partial: "visis/visi", as: :visi

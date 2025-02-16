@@ -7,7 +7,7 @@
     <% unless guest? %>
       <div class="row justify-content-center w-100">
         <div class="col">
-          <%= render(EditButtonComponent.new(path: edit_misi_path(visi))) %>
+          <%= render(EditButtonComponent.new(path: edit_misi_path(misi))) %>
         </div>
         <div class="col">
           <%= render(DeleteButtonComponent.new(path: misi_path(misi),

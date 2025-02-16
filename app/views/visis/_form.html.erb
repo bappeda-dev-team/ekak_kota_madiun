@@ -24,13 +24,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :visi, class: 'form-label' %>
+    <%= form.label :visi, "Visi Kepala Daerah", class: 'form-label' %>
     <%= form.text_field :visi, class: 'form-control', required: true %>
-  </div>
-
-  <div class="field">
-    <%= form.label :keterangan, class: 'form-label' %>
-    <%= form.text_field :keterangan, class: 'form-control' %>
   </div>
 
   <div class="field">
@@ -41,6 +36,11 @@
   <div class="field">
     <%= form.label :tahun_akhir, class: 'form-label' %>
     <%= form.text_field :tahun_akhir, class: 'form-control', required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_area :keterangan, class: 'form-control' %>
   </div>
 
   <div class="actions">
