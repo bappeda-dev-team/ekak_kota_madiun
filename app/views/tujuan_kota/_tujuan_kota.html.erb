@@ -28,6 +28,8 @@
           <tr class="header-tujuan">
             <th class="border" rowspan="2" width="20px">No.</th>
             <th class="border text-center" rowspan="2">Aksi</th>
+            <th class="border" rowspan="2">Visi</th>
+            <th class="border" rowspan="2">Misi</th>
             <th class="border" rowspan="2">Tematik</th>
             <th class="border" rowspan="2">Tujuan Kota</th>
             <th class="border" rowspan="2">Periode</th>
@@ -77,6 +79,8 @@
                   </div>
                 <% end %>
               </td>
+              <td class="fw-bolder border text-wrap" scope="row" rowspan="<%= rowsize %>"><%= tujuan.visi_kota %></td>
+              <td class="fw-bolder border text-wrap" scope="row" rowspan="<%= rowsize %>"><%= tujuan.misi_kota %></td>
               <td class="fw-bolder border text-wrap" scope="row" rowspan="<%= rowsize %>"><%= tujuan.pohon&.pohonable.to_s %></td>
               <td class="fw-bolder text-wrap" scope="row" rowspan="<%= rowsize %>"><%= tujuan.tujuan %></td>
               <td class="fw-bolder border" scope="row" rowspan="<%= rowsize %>"><%= tujuan.tahun_awal_akhir %></td>

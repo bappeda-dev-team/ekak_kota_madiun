@@ -38,6 +38,10 @@ class Misi < ApplicationRecord
     misi
   end
 
+  def misi_with_urutan
+    "#{urutan}. #{misi}"
+  end
+
   def urutan_by_visi
     "#{visi.urutan}.#{urutan}"
   end

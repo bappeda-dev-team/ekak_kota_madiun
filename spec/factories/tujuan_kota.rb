@@ -16,17 +16,20 @@
 #  updated_at  :datetime         not null
 #  misi_id     :bigint
 #  pohon_id    :bigint
+#  visi_id     :bigint
 #
 # Indexes
 #
 #  index_tujuan_kota_on_id_tujuan  (id_tujuan) UNIQUE
 #  index_tujuan_kota_on_misi_id    (misi_id)
 #  index_tujuan_kota_on_pohon_id   (pohon_id)
+#  index_tujuan_kota_on_visi_id    (visi_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (misi_id => misis.id)
 #  fk_rails_...  (pohon_id => pohons.id)
+#  fk_rails_...  (visi_id => visis.id)
 #
 FactoryBot.define do
   factory :tujuan_kota do

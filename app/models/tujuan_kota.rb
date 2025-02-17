@@ -16,17 +16,20 @@
 #  updated_at  :datetime         not null
 #  misi_id     :bigint
 #  pohon_id    :bigint
+#  visi_id     :bigint
 #
 # Indexes
 #
 #  index_tujuan_kota_on_id_tujuan  (id_tujuan) UNIQUE
 #  index_tujuan_kota_on_misi_id    (misi_id)
 #  index_tujuan_kota_on_pohon_id   (pohon_id)
+#  index_tujuan_kota_on_visi_id    (visi_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (misi_id => misis.id)
 #  fk_rails_...  (pohon_id => pohons.id)
+#  fk_rails_...  (visi_id => visis.id)
 #
 class TujuanKota < ApplicationRecord
   has_many :indikator_tujuans, -> { order(:tahun) },
@@ -42,7 +45,9 @@ class TujuanKota < ApplicationRecord
   belongs_to :pohon
   accepts_nested_attributes_for :risiko
 
-  belongs_to :misi
+  # because of the stupid fill visi misi
+  belongs_to :visi_kota, primary_key: 'id', foreign_key: 'visi_id', class_name: 'Visi'
+  belongs_to :misi_kota, primary_key: 'id', foreign_key: 'misi_id', class_name: 'Misi'
   # scope :visis, -> { joins(%i[indikator_tujuans sasaran_kota]).where.not(visi: nil) }
   # scope :misis, -> { joins(%i[indikator_tujuans sasaran_kota]).where.not(misi: nil) }
   scope :sasarans, -> { joins(:sasaran_kota) }

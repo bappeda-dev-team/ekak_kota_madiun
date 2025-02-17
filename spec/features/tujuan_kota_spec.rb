@@ -11,7 +11,13 @@ RSpec.describe "Tujuan Kota", type: :feature do
     periode
     tahun_dua_lima
     visi = create(:visi, visi: 'ContohVisi', lembaga: admin_kota.opd.lembaga)
-    misi = create(:misi, visi: visi, lembaga: admin_kota.opd.lembaga)
+    misi = create(:misi, visi: visi, misi: 'ContohMisi', lembaga: admin_kota.opd.lembaga)
+    tema = create(:tematik, tema: 'test tematik 1',
+                            keterangan: 'test tema')
+    pohon = create(:pohon, pohonable_type: 'Tematik',
+                           pohonable_id: tema.id,
+                           role: 'pohon_kota',
+                           tahun: '2025')
 
     visit root_path
 
@@ -38,5 +44,33 @@ RSpec.describe "Tujuan Kota", type: :feature do
     page.has_css?('#tujuan-kota-card')
 
     expect(page).to have_text('Tujuan Kota Periode 2025 - 2026')
+    click_on 'Buat Tujuan Kota Baru'
+
+    select2 'ContohVisi', from: 'Visi'
+    select2 'ContohMisi', from: 'Misi'
+    select2 'test tematik 1', from: 'Tematik'
+    fill_in 'Tujuan', with: 'testTujuan'
+    fill_in 'Indikator', with: 'indikatorTujuan'
+    fill_in 'Rumus perhitungan', with: 'rumusXXX'
+    fill_in 'Sumber data', with: 'sumberDataXYZ'
+    find('#tujuan_kota_indikator_tujuans_attributes_0_targets_attributes_0_target').set('20')
+    find('#tujuan_kota_indikator_tujuans_attributes_0_targets_attributes_0_satuan').set('%')
+    find('#tujuan_kota_indikator_tujuans_attributes_0_targets_attributes_1_target').set('30')
+    find('#tujuan_kota_indikator_tujuans_attributes_0_targets_attributes_1_satuan').set('%')
+    click_on 'Simpan Tujuan kota'
+
+    click_on 'OK'
+
+    expect(page).to have_text('ContohVisi')
+    expect(page).to have_text('ContohMisi')
+    expect(page).to have_text('test tematik 1')
+    expect(page).to have_text('testTujuan')
+    expect(page).to have_text('indikatorTujuan')
+    expect(page).to have_text('rumusXXX')
+    expect(page).to have_text('sumberDataXYZ')
+    expect(page).to have_text('20')
+    expect(page).to have_text('%')
+    expect(page).to have_text('30')
+    expect(page).to have_text('%')
   end
 end

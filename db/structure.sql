@@ -4125,7 +4125,8 @@ CREATE TABLE public.tujuan_kota (
     updated_at timestamp(6) without time zone NOT NULL,
     kode_tujuan character varying,
     pohon_id bigint,
-    misi_id bigint
+    misi_id bigint,
+    visi_id bigint
 );
 
 
@@ -6646,6 +6647,13 @@ CREATE INDEX index_tujuan_kota_on_pohon_id ON public.tujuan_kota USING btree (po
 
 
 --
+-- Name: index_tujuan_kota_on_visi_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_tujuan_kota_on_visi_id ON public.tujuan_kota USING btree (visi_id);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -6721,6 +6729,14 @@ CREATE INDEX index_visis_on_lembaga_id ON public.visis USING btree (lembaga_id);
 
 ALTER TABLE ONLY public.comments
     ADD CONSTRAINT fk_rails_03de2dc08c FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: tujuan_kota fk_rails_078662ce36; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tujuan_kota
+    ADD CONSTRAINT fk_rails_078662ce36 FOREIGN KEY (visi_id) REFERENCES public.visis(id);
 
 
 --
@@ -7377,6 +7393,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250214223524'),
 ('20250214225926'),
 ('20250214230121'),
-('20250216124522');
+('20250216124522'),
+('20250217001609');
 
 
