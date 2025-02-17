@@ -393,6 +393,23 @@ class UsersController < ApplicationController
     end
   end
 
+  def import
+    return redirect_to request.referer, error: 'File belum dipilih' if params[:file].nil?
+
+    redirect_to request.referer, warning: 'Upload File CSV' unless params[:file].content_type == 'text/csv'
+
+    imported_users = CsvImportService.new.import_user(params[:file])
+
+    jumlah_berhasil = imported_users[:jumlah_berhasil]
+    jumlah_gagal = imported_users[:jumlah_gagal]
+
+    if jumlah_berhasil.positive?
+      redirect_to request.referer, success: "Import #{jumlah_berhasil} data, berhasil."
+    else
+      redirect_to request.referer, error: "Tejadi kesalahan pada #{jumlah_gagal} data, data tidak sesuai"
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
