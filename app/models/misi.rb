@@ -27,6 +27,8 @@ class Misi < ApplicationRecord
   belongs_to :visi
   belongs_to :lembaga
 
+  has_many :tujuan_kotas
+
   validates :misi, presence: true, length: { minimum: 5 }
   validates :urutan, numericality: { only_integer: true }
   validates :tahun_awal, presence: true, length: { is: 4 }

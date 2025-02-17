@@ -33,5 +33,6 @@ RSpec.configure do |config|
 
   config.before(:each, type: :feature, js: true) do
     Capybara.current_driver = :selenium_debug_chrome
+    ApplicationController.allow_forgery_protection = true
   end
 end

@@ -14,15 +14,18 @@
 #  visi        :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  misi_id     :bigint
 #  pohon_id    :bigint
 #
 # Indexes
 #
 #  index_tujuan_kota_on_id_tujuan  (id_tujuan) UNIQUE
+#  index_tujuan_kota_on_misi_id    (misi_id)
 #  index_tujuan_kota_on_pohon_id   (pohon_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (misi_id => misis.id)
 #  fk_rails_...  (pohon_id => pohons.id)
 #
 class TujuanKota < ApplicationRecord
@@ -39,6 +42,7 @@ class TujuanKota < ApplicationRecord
   belongs_to :pohon
   accepts_nested_attributes_for :risiko
 
+  belongs_to :misi
   # scope :visis, -> { joins(%i[indikator_tujuans sasaran_kota]).where.not(visi: nil) }
   # scope :misis, -> { joins(%i[indikator_tujuans sasaran_kota]).where.not(misi: nil) }
   scope :sasarans, -> { joins(:sasaran_kota) }
