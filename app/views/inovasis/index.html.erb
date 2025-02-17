@@ -10,18 +10,20 @@
         <div class="col">
           <h2 class="fs-5 fw-bold mb-0">Usulan Inisiatif Walikota Tahun <%= @tahun %></h2>
         </div>
-        <div class="col text-end">
-          <%= link_to "Tambah Usulan", new_inovasi_path,
-                      remote: true,
-                      class: "btn btn-sm btn-info",
-                      data: {
-                        controller: 'form-modal',
-                        action: 'ajax:complete->form-modal#success:prevent',
-                        bs_toggle: 'modal',
-                        bs_target: '#form-modal'
-                      }
-          %>
-        </div>
+        <% unless guest? || !super_admin? %>
+          <div class="col text-end">
+            <%= link_to "Tambah Usulan", new_inovasi_path,
+                        remote: true,
+                        class: "btn btn-sm btn-info",
+                        data: {
+                          controller: 'form-modal',
+                          action: 'ajax:complete->form-modal#success:prevent',
+                          bs_toggle: 'modal',
+                          bs_target: '#form-modal'
+                        }
+            %>
+          </div>
+        <% end %>
       </div>
     </div>
     <div class="card-body">
