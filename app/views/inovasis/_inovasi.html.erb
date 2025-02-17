@@ -7,7 +7,7 @@
   <td class="fw-bolder text-wrap"><%= inovasi.asn_pengusul %></td>
   <td class="fw-bolder text-wrap"><%= inovasi.opd_inovasi %></td>
   <td class="action-<%= dom_id(inovasi) %> text-center align-middle">
-    <% unless guest? %>
+    <% unless guest? || privileged_user %>
       <% unless inovasi.is_active %>
         <% if inovasi.asn_aktif? %>
           <%= button_to toggle_is_active_inovasi_path(inovasi), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>

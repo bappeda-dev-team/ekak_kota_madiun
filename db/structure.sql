@@ -1211,7 +1211,8 @@ CREATE TABLE public.inovasis (
     sasaran_id bigint,
     is_active boolean DEFAULT false,
     status public.usulan_status DEFAULT 'draft'::public.usulan_status,
-    uraian character varying
+    uraian character varying,
+    is_from_kota boolean DEFAULT false
 );
 
 
@@ -2627,7 +2628,8 @@ CREATE TABLE public.periodes (
     tahun_awal character varying,
     tahun_akhir character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    jenis_periode character varying DEFAULT 'RPJMD'::character varying
 );
 
 
@@ -7394,6 +7396,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250214225926'),
 ('20250214230121'),
 ('20250216124522'),
-('20250217001609');
+('20250217001609'),
+('20250217005117'),
+('20250217014309');
 
 

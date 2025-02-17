@@ -25,6 +25,12 @@
     <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="tahun_akhir"></p>
   </div>
 
+  <div class="field">
+    <%= form.label :jenis_periode, class: 'form-label' %>
+    <%= form.text_field :jenis_periode, class: 'form-control' %>
+    <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="jenis_periode"></p>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

@@ -5,11 +5,21 @@ class MisisController < ApplicationController
 
   # GET /misis or /misis.json
   def index
-    @misis = Visi.where(tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir,
-                        lembaga_id: @lembaga_id)
-                 .to_h do |visi|
-      [visi, visi.misis]
-    end
+    selected_id = params[:selected]
+
+    @misis = if selected_id.present? && request.format.json?
+               Visi.includes(:misis).where(tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir,
+                                           lembaga_id: @lembaga_id, misis: { id: selected_id })
+                   .to_h do |visi|
+                 [visi, visi.misis]
+               end
+             else
+               Visi.where(tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir,
+                          lembaga_id: @lembaga_id)
+                   .to_h do |visi|
+                 [visi, visi.misis]
+               end
+             end
   end
 
   # GET /misis/1 or /misis/1.json
@@ -83,7 +93,12 @@ class MisisController < ApplicationController
     @lembaga_id = cookies[:lembaga_id]
     @lembaga = cookies[:lembaga]
     tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
-    @periode = Periode.find_tahun(tahun_bener)
+    @periode = Periode.find_tahun_rpjmd(tahun_bener)
+
+    return if @periode.empty?
+
+    @periode = @periode.first
+
     @tahun_awal = @periode.tahun_awal
     @tahun_akhir = @periode.tahun_akhir
   end

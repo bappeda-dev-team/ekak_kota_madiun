@@ -2,11 +2,12 @@
 #
 # Table name: periodes
 #
-#  id          :bigint           not null, primary key
-#  tahun_akhir :string
-#  tahun_awal  :string
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id            :bigint           not null, primary key
+#  jenis_periode :string           default("RPJMD")
+#  tahun_akhir   :string
+#  tahun_awal    :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
 #
 FactoryBot.define do
   factory :periode do

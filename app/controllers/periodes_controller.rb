@@ -1,5 +1,6 @@
 class PeriodesController < ApplicationController
   before_action :set_periode, only: %i[show edit update destroy]
+  layout false, only: %i[new]
 
   # GET /periodes or /periodes.json
   def index
@@ -61,6 +62,6 @@ class PeriodesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def periode_params
-    params.require(:periode).permit(:tahun_awal, :tahun_akhir)
+    params.require(:periode).permit(:tahun_awal, :tahun_akhir, :jenis_periode)
   end
 end

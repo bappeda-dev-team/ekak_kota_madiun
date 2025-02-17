@@ -18,13 +18,21 @@ class InovasisController < ApplicationController
 
   # GET /inovasis/new
   def new
-    user = current_user.admin? ? '' : current_user.nik
+    is_admin_kota = current_user.admin_kota?
+    user = is_admin_kota ? '' : current_user.nik
     @opd = cookies[:opd]
     tahun = cookies[:tahun]
-    @opds = Opd.opd_resmi_kota
-               .pluck(:nama_opd,
-                      :kode_unik_opd)
-    @inovasi = Inovasi.new(tahun: tahun, status: 'draft', nip_asn: user)
+    @opds = if is_admin_kota
+              Opd.opd_resmi
+                 .pluck(:nama_opd,
+                        :kode_unik_opd)
+            else
+              Opd.where(kode_opd: current_user.opd.kode_opd)
+                 .pluck(:nama_opd,
+                        :kode_unik_opd)
+            end
+    @inovasi = Inovasi.new(tahun: tahun, status: 'aktif', nip_asn: user,
+                           is_from_kota: is_admin_kota, is_active: is_admin_kota)
     render layout: false
   end
 

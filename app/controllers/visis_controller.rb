@@ -5,8 +5,15 @@ class VisisController < ApplicationController
 
   # GET /visis or /visis.json
   def index
-    @visis = Visi.where(tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir,
-                        lembaga_id: @lembaga_id)
+    selected_id = params[:selected]
+
+    @visis = if selected_id.present? && request.format.json?
+               Visi.where(tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir,
+                          lembaga_id: @lembaga_id, id: selected_id)
+             else
+               Visi.where(tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir,
+                          lembaga_id: @lembaga_id)
+             end
   end
 
   # GET /visis/1 or /visis/1.json
@@ -77,7 +84,12 @@ class VisisController < ApplicationController
     @lembaga_id = cookies[:lembaga_id]
     @lembaga = cookies[:lembaga]
     tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
-    @periode = Periode.find_tahun(tahun_bener)
+    @periode = Periode.find_tahun_rpjmd(tahun_bener)
+
+    return if @periode.empty?
+
+    @periode = @periode.first
+
     @tahun_awal = @periode.tahun_awal
     @tahun_akhir = @periode.tahun_akhir
   end

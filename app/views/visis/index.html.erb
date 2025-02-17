@@ -4,42 +4,50 @@
   <li class="breadcrumb-item active" aria-current="page">Visi Kota</li>
 <% end %>
 <% content_for :view_utama do %>
-  <%= render 'shared/card_layout_subtitle', title: "Visi Kepala Daerah",
-             sub_title: @lembaga, sub_title_2: @periode do %>
-    <div class="row align-items-center">
-      <div class="col"></div>
-      <% unless guest? %>
-        <div class="col-auto">
-          <%= link_to new_visi_path,
-                      remote: true,
-                      data: {
-                        controller: 'form-modal',
-                        action: 'ajax:complete->form-modal#success:prevent',
-                        bs_toggle: 'modal',
-                        bs_target: '#form-modal'
-                      },
-                      class: 'btn btn-sm btn-primary' do %>
-            <i class="fas fa-plus me-2"></i>
-            <span>Tambah Visi Kepala Daerah</span>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-    <div class="table-responsive mb-5">
-      <table class="table table-bordered align-items-center">
-        <thead class="thead-tujuan">
-          <tr class="header-tujuan">
-            <th class="text-center" width="20px">No.</th>
-            <th class="text-center" width="500px">Visi</th>
-            <th class="text-center" width="200px">Periode</th>
-            <th class="text-center">Keterangan</th>
-            <th class="text-center"></th>
-          </tr>
-        </thead>
-        <tbody id="new_visi">
-          <%= render partial: 'visis/visi', collection: @visis %>
-        </tbody>
-      </table>
+  <% if @periode.present?  %>
+    <%= render 'shared/card_layout_subtitle', title: "Visi Kepala Daerah",
+               sub_title: @lembaga, sub_title_2: @periode do %>
+      <div class="row align-items-center">
+        <div class="col"></div>
+        <% unless guest? %>
+          <div class="col-auto">
+            <%= link_to new_visi_path,
+                        remote: true,
+                        data: {
+                          controller: 'form-modal',
+                          action: 'ajax:complete->form-modal#success:prevent',
+                          bs_toggle: 'modal',
+                          bs_target: '#form-modal'
+                        },
+                        class: 'btn btn-sm btn-primary' do %>
+              <i class="fas fa-plus me-2"></i>
+              <span>Tambah Visi Kepala Daerah</span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <div class="table-responsive mb-5">
+        <table class="table table-bordered align-items-center">
+          <thead class="thead-tujuan">
+            <tr class="header-tujuan">
+              <th class="text-center" width="20px">No.</th>
+              <th class="text-center" width="500px">Visi</th>
+              <th class="text-center" width="200px">Periode</th>
+              <th class="text-center">Keterangan</th>
+              <th class="text-center"></th>
+            </tr>
+          </thead>
+          <tbody id="new_visi">
+            <%= render partial: 'visis/visi', collection: @visis %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="card border-0 shadow">
+      <div class="card-body">
+        <p class="alert alert-info">Periode RPJMD tahun <%= @tahun %> belum dibuat</p>
+      </div>
     </div>
   <% end %>
 <% end %>
