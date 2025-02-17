@@ -102,6 +102,10 @@ class User < ApplicationRecord
     has_role?(:super_admin) && id == 1
   end
 
+  def admin_kota?
+    has_role?(:super_admin)
+  end
+
   def admin?
     has_any_role?(:super_admin, :admin)
   end

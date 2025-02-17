@@ -26,7 +26,7 @@
   </div>
   <div class="field">
     <%= form.label :opd, class: "form-label" %>
-    <%= form.select :kode_opd, Opd.all.collect { |o| [o.nama_lembaga_opd, o.kode_opd] }, {include_blank: true},
+    <%= form.select :kode_opd, Opd.includes(:lembaga).all.collect { |o| [o.nama_lembaga_opd, o.kode_opd] }, {include_blank: true},
      {class: "form-control",
       data: { "placeholder": "Pilih Opd",
         controller: 'dropdown',

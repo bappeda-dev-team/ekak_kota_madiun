@@ -466,6 +466,7 @@ Rails.application.routes.draw do
       post :all_user
       get :user_opd
       resources :reviewers
+      post :import
     end
 
     member do

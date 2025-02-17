@@ -58,6 +58,8 @@ GEM
     activerecord (6.1.7.7)
       activemodel (= 6.1.7.7)
       activesupport (= 6.1.7.7)
+    activerecord-import (2.1.0)
+      activerecord (>= 4.2)
     activestorage (6.1.7.7)
       actionpack (= 6.1.7.7)
       activejob (= 6.1.7.7)
@@ -556,6 +558,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_link_to
+  activerecord-import
   annotate
   any_login
   bcrypt (~> 3.1.7)

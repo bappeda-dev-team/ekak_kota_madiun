@@ -74,6 +74,7 @@ group :test do
 end
 
 gem 'active_link_to'
+gem 'activerecord-import'
 gem 'any_login'
 gem 'cancancan'
 gem 'caxlsx'
