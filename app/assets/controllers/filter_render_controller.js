@@ -2,11 +2,20 @@ import { Controller } from "stimulus";
 
 export default class extends Controller {
   static targets = ["results"];
+  static values = {
+    targetId: String
+  }
 
   append(event) {
     const [_data, _status, xhr] = event.detail;
     // alert(status)
-    this.resultsTarget.innerHTML = xhr.response;
+    if (this.hasTargetIdValue) {
+      const target = document.getElementById(this.targetIdValue)
+      target.innerHTML = xhr.response;
+    } else {
+      const target = this.resultsTarget.innerHTML = xhr.response;
+      target.innerHTML = xhr.response;
+    }
   }
 
   warning(event) {

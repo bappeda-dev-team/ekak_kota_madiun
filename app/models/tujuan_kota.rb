@@ -56,6 +56,10 @@ class TujuanKota < ApplicationRecord
                          .where("tahun_akhir::integer >= ?::integer", tahun)
                      }
 
+  scope :by_tahun_awal_akhir, lambda { |tahun_awal, tahun_akhir|
+                                where("tahun_awal::integer >= ?::integer", tahun_awal)
+                                  .where("tahun_akhir::integer <= ?::integer", tahun_akhir)
+                              }
   def to_s
     tujuan
   end

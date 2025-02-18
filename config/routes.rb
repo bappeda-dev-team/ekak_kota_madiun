@@ -964,7 +964,7 @@ Rails.application.routes.draw do
   end
   resources :tujuan_kota do
     collection do
-      post :admin_filter
+      get :admin_filter
       get :list_tujuan
       get :target_indikator_fields
     end

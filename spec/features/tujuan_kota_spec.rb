@@ -50,7 +50,7 @@ RSpec.describe "Tujuan Kota", type: :feature do
     page.has_css?('#tujuan-kota-card')
 
     expect(page).to have_text('Tujuan Kota Periode 2025 - 2029')
-    click_on 'Buat Tujuan Kota Baru'
+    click_on 'Tambah Tujuan Kota'
 
     select2 'ContohVisi', from: 'Visi'
     select2 'ContohMisi', from: 'Misi'
