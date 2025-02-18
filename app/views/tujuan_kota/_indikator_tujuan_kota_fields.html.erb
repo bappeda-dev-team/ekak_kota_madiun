@@ -15,16 +15,6 @@
        data-periode-target="rangeTahun"
        data-periode-indikator-id-values="<%= form.object.id %>"
        data-periode-index-form-values="<%= form.index %>">
-    <% (@tahun_awal..@tahun_akhir).each do |tahun| %>
-      <% if form.object.targets.where(tahun: tahun).any? %>
-        <% target = form.object.targets.find_by(tahun: tahun) %>
-      <% else %>
-        <% target = Target.new(tahun: tahun) %>
-      <% end %>
-      <%= form.fields_for :targets, target do |f_target| %>
-        <%= render 'tujuan_opds/target_fields', form: f_target %>
-      <% end %>
-    <% end %>
   </div>
   <%= link_to_remove_nested(form, link_text: 'Hapus Indikator',
                             link_classes: 'btn btn-outline-danger w-100 mt-2') %>
