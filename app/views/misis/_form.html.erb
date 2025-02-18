@@ -1,9 +1,10 @@
 <%= form_with model: misi, local: false,
               data: {
-                controller: 'form-ajax',
+                controller: 'form-ajax periode',
                 form_ajax_target_param: dom_id(misi),
                 form_ajax_type_param: misi.new_record? ? 'prepend' : '',
-                action: 'ajax:complete->form-ajax#processAjax'
+                action: 'ajax:complete->form-ajax#processAjax
+                         change-periode@document->periode#fillTahunPeriode'
               } do |form| %>
   <% if misi.errors.any? %>
     <div id="error_explanation">
@@ -35,13 +36,31 @@
   </div>
 
   <div class="field">
+    <%= form.label :periode, class: 'form-label' %>
+    <%= form.select :periode, [],
+     { include_blank: true },
+     data: {
+       placeholder: 'Periode',
+       controller: 'dropdown',
+       dropdown_jenis_value: 'extra',
+       dropdown_parent_value: '#form-modal',
+       dropdown_url_value: '/periodes.json',
+       dropdown_jenis_uraian_value: 'RPJMD',
+       dropdown_event_name_value: 'change-periode',
+       dropdown_selected_value: @periode&.id
+     }  %>
+  </div>
+
+  <div class="field">
     <%= form.label :tahun_awal, class: 'form-label' %>
-    <%= form.text_field :tahun_awal, class: 'form-control', required: true, readonly: true %>
+    <%= form.text_field :tahun_awal, class: 'form-control',
+     required: true, readonly: true, data: { periode_target: 'tahunAwal' } %>
   </div>
 
   <div class="field">
     <%= form.label :tahun_akhir, class: 'form-label' %>
-    <%= form.text_field :tahun_akhir, class: 'form-control', required: true, readonly: true %>
+    <%= form.text_field :tahun_akhir, class: 'form-control',
+     required: true, readonly: true, data: { periode_target: 'tahunAkhir' } %>
   </div>
 
   <div class="field">

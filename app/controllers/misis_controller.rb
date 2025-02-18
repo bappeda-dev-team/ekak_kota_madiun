@@ -29,13 +29,14 @@ class MisisController < ApplicationController
   def new
     @visi = Visi.find(params[:visi_id])
     lembaga = Lembaga.find(cookies[:lembaga_id])
-    @misi = Misi.new(tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir,
-                     lembaga_id: lembaga.id, visi_id: @visi.id)
+    @misi = Misi.new(lembaga_id: lembaga.id, visi_id: @visi.id)
   end
 
   # GET /misis/1/edit
   def edit
     @visi = @misi.visi
+    @periode = Periode.find_by(tahun_awal: @visi.tahun_awal,
+                               tahun_akhir: @visi.tahun_akhir)
   end
 
   # POST /misis or /misis.json

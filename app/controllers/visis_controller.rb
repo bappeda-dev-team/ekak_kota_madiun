@@ -22,12 +22,14 @@ class VisisController < ApplicationController
   # GET /visis/new
   def new
     lembaga = Lembaga.find(cookies[:lembaga_id])
-    @visi = Visi.new(tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir,
-                     lembaga_id: lembaga.id)
+    @visi = Visi.new(lembaga_id: lembaga.id)
   end
 
   # GET /visis/1/edit
-  def edit; end
+  def edit
+    @periode = Periode.find_by(tahun_awal: @visi.tahun_awal,
+                               tahun_akhir: @visi.tahun_akhir)
+  end
 
   # POST /visis or /visis.json
   def create

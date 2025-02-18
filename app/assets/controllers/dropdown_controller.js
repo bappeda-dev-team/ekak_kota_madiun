@@ -245,9 +245,10 @@ export default class extends Controller {
     const select2ed = this.dropdown_base(options);
     const custom_name = this.eventNameValue;
     if (this.hasSelectedValue) {
+      const url = `${this.urlValue}?selected=${this.selectedValue}`
       $.ajax({
         type: "GET",
-        url: `${this.urlValue}?selected=${this.selectedValue}`,
+        url: url,
       }).then(function (data) {
         const data_first = data.results[0];
         const options = new Option(data_first.text, data_first.id, true, true);
@@ -258,19 +259,16 @@ export default class extends Controller {
             data: data_first,
           },
         });
-        custom_event = new CustomEvent(custom_name, {
-          detail: { data: data },
-        });
       });
     }
-    return select2ed.on("select2:select", (e) => {
-      if (custom_event == "") {
-        custom_event = new CustomEvent(custom_name, {
-          detail: { data: e.params.data },
-        });
-      }
+    select2ed.on("select2:select", (e) => {
+      custom_event = new CustomEvent(custom_name, {
+        detail: { data: e.params.data },
+      });
+
       document.dispatchEvent(custom_event);
     });
+
   }
 
   // action

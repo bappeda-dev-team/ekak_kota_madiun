@@ -30,6 +30,7 @@ RSpec.describe "Visi dan Misi", type: :feature do
 
     click_on('Tambah Visi Kepala Daerah')
     fill_in 'Visi', with: 'Contoh Visi'
+    select2 '2025-2029 (RPJMD)', xpath: '/html/body/div[2]/div/div/div[2]/form/div[3]/span'
     fill_in 'Keterangan', with: 'no keterangan'
     click_button 'Simpan Visi'
 

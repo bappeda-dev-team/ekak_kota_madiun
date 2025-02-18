@@ -4,7 +4,9 @@ class PeriodesController < ApplicationController
 
   # GET /periodes or /periodes.json
   def index
-    @periodes = Periode.all
+    @periodes = Periode.where(jenis_periode: params[:jenis_uraian])
+                       .or(Periode.where(id: params[:selected]))
+                       .presence || Periode.all
   end
 
   # GET /periodes/1 or /periodes/1.json
