@@ -54,11 +54,6 @@ export default class extends ApplicationController {
     target.innerHTML = html_element;
   }
 
-  attachElement(e) {
-    const target = this.elementIdValue;
-    console.log(e)
-  }
-
   processAjaxRedirect(event) {
     // refresh if success
     // if failed, attach server html to errorContainer id

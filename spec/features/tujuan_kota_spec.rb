@@ -54,6 +54,7 @@ RSpec.describe "Tujuan Kota", type: :feature do
 
     select2 'ContohVisi', from: 'Visi'
     select2 'ContohMisi', from: 'Misi'
+    select2 '2025', from: 'Periode'
     select2 'test tematik 1', from: 'Tematik'
     fill_in 'Tujuan', with: 'testTujuan'
     fill_in 'Indikator', with: 'indikatorTujuan'
