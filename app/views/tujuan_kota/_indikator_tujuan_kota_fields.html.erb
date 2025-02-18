@@ -11,10 +11,10 @@
     <%= form.label :sumber_data, { class: "form-label" } %>
     <%= form.text_area :sumber_data, { class: "form-control" } %>
   </div>
-  <div class="field row mt-0" id="target-indikator"
+  <div class="field row mt-0"
        data-periode-target="rangeTahun"
-       data-periode-indikator-id-values="<%= form.object.id %>"
-       data-periode-index-form-values="<%= form.index %>">
+       data-periode-indikator-id-value="<%= form.object.id %>"
+       data-periode-index-form-value="<%= form.index %>">
   </div>
   <%= link_to_remove_nested(form, link_text: 'Hapus Indikator',
                             link_classes: 'btn btn-outline-danger w-100 mt-2') %>

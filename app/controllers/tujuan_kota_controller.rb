@@ -37,11 +37,11 @@ class TujuanKotaController < ApplicationController
 
   def new
     @tahun = cookies[:tahun]
-    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
 
-    @periode = Periode.find_tahun(tahun_bener)
-    @tahun_awal = @periode.tahun_awal.to_i
-    @tahun_akhir = @periode.tahun_akhir.to_i
+    # @periode = Periode.find_tahun(tahun_bener)
+    # @tahun_awal = @periode.tahun_awal.to_i
+    # @tahun_akhir = @periode.tahun_akhir.to_i
 
     @tujuan_kota = TujuanKota.new
     @tujuan_kota.indikator_tujuans.build.targets.build
@@ -51,10 +51,11 @@ class TujuanKotaController < ApplicationController
 
   def edit
     @tahun = cookies[:tahun]
-    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
-    @periode = Periode.find_tahun(tahun_bener)
-    @tahun_awal = @periode.tahun_awal.to_i
-    @tahun_akhir = @periode.tahun_akhir.to_i
+    # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @periode = Periode.find_by(tahun_awal: @tujuan_kota.tahun_awal,
+                               tahun_akhir: @tujuan_kota.tahun_akhir)
+    # @tahun_awal = @periode.tahun_awal.to_i
+    # @tahun_akhir = @periode.tahun_akhir.to_i
     render layout: false
   end
 
@@ -72,10 +73,10 @@ class TujuanKotaController < ApplicationController
 
   def update
     @tahun = cookies[:tahun]
-    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
-    @periode = Periode.find_tahun(tahun_bener)
-    @tahun_awal = @periode.tahun_awal.to_i
-    @tahun_akhir = @periode.tahun_akhir.to_i
+    # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    # @periode = Periode.find_tahun(tahun_bener)
+    # @tahun_awal = @periode.tahun_awal.to_i
+    # @tahun_akhir = @periode.tahun_akhir.to_i
 
     respond_to do |format|
       if @tujuan_kota.update(tujuan_kota_params)
