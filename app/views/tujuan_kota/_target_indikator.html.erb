@@ -1,0 +1,10 @@
+<% (@tahun_awal..@tahun_akhir).each.with_index do |tahun, i_tahun| %>
+  <% if @indikator_id.present? %>
+    <% target = Target.find_by(tahun: tahun, indikator_id: @indikator_id) %>
+  <% else %>
+    <% target = Target.new(tahun: tahun) %>
+  <% end %>
+  <%= fields_for "tujuan_kota[indikator_tujuans_attributes][#{@index}][targets_attributes][#{i_tahun}]", target do |f_target| %>
+    <%= render 'tujuan_opds/target_fields', form: f_target %>
+  <% end %>
+<% end %>

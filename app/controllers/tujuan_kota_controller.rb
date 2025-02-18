@@ -94,6 +94,15 @@ class TujuanKotaController < ApplicationController
     end
   end
 
+  def target_indikator_fields
+    @tahun_awal = params[:tahun_awal]
+    @tahun_akhir = params[:tahun_akhir]
+    @indikator_id = params[:indikator_id]
+    @index = params[:index_form]
+
+    render partial: 'tujuan_kota/target_indikator'
+  end
+
   private
 
   def set_tujuan_kota

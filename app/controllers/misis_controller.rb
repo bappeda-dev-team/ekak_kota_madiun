@@ -14,8 +14,8 @@ class MisisController < ApplicationController
                  [visi, visi.misis]
                end
              else
-               Visi.where(tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir,
-                          lembaga_id: @lembaga_id)
+               Visi.includes(:misis).where(tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir,
+                                           lembaga_id: @lembaga_id)
                    .to_h do |visi|
                  [visi, visi.misis]
                end

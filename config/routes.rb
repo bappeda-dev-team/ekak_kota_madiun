@@ -966,6 +966,7 @@ Rails.application.routes.draw do
     collection do
       post :admin_filter
       get :list_tujuan
+      get :target_indikator_fields
     end
   end
   get :crosscutting_kota, to: "sasaran_kota#crosscutting_kota"
