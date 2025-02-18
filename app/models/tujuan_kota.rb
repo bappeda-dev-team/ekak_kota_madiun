@@ -48,8 +48,8 @@ class TujuanKota < ApplicationRecord
   # because of the stupid fill visi misi
   belongs_to :visi_kota, primary_key: 'id', foreign_key: 'visi_id', class_name: 'Visi'
   belongs_to :misi_kota, primary_key: 'id', foreign_key: 'misi_id', class_name: 'Misi'
-  # scope :visis, -> { joins(%i[indikator_tujuans sasaran_kota]).where.not(visi: nil) }
-  # scope :misis, -> { joins(%i[indikator_tujuans sasaran_kota]).where.not(misi: nil) }
+  scope :visis, -> { joins(%i[indikator_tujuans sasaran_kota]).where.not(visi: nil) }
+  scope :misis, -> { joins(%i[indikator_tujuans sasaran_kota]).where.not(misi: nil) }
   scope :sasarans, -> { joins(:sasaran_kota) }
   scope :by_periode, lambda { |tahun|
                        where("tahun_awal::integer <= ?::integer", tahun)

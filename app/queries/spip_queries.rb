@@ -32,16 +32,16 @@ class SpipQueries
   end
 
   def visi_kota
-    Visi.by_periode(@tahun)
+    @tujuan_kota.visis.group_by(&:visi)
   end
 
-  def misi_kota(visi)
-    visi.misis
+  def misi_kota(tujuans)
+    tujuans.group_by(&:misi)
   end
 
   def informasi_umum_sasaran_kota
-    visi_kota.transform_values do |visi|
-      misi_kota(visi).transform_values do |tujuans_m|
+    visi_kota.transform_values do |tujuans|
+      misi_kota(tujuans).transform_values do |tujuans_m|
         tujuans_m.to_h do |tujuan|
           [tujuan, tujuan.sasaran_kota]
         end
