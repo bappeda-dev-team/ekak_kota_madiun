@@ -27,8 +27,8 @@
        controller: 'dropdown',
        dropdown_jenis_value: 'extra',
        dropdown_parent_value: '#form-modal',
-       dropdown_tahun_value: @tahun,
        dropdown_url_value: '/visi_kota.json',
+       dropdown_event_name_value: 'change-visi',
        dropdown_selected_value: form.object.visi_id,
      }  %>
   </div>
@@ -41,9 +41,10 @@
        controller: 'dropdown',
        dropdown_jenis_value: 'extra',
        dropdown_parent_value: '#form-modal',
-       dropdown_tahun_value: @tahun,
        dropdown_url_value: '/misi_kota.json',
+       dropdown_kode_value: form.object.visi_id,
        dropdown_selected_value: form.object.misi_id,
+       action: 'change-visi@document->dropdown#updateKode'
      }  %>
   </div>
   <div class="field">

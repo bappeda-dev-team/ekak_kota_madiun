@@ -21,6 +21,7 @@ export default class extends Controller {
     item: String,
     role: String,
     selected: String,
+    kode: String,
     display: { type: Boolean, default: true },
     width: { type: String, default: "element" },
   };
@@ -55,6 +56,7 @@ export default class extends Controller {
       ajax: {
         url: this.urlValue,
         data: (params) => ({
+          kode: this.kodeValue,
           kode_opd: this.kodeOpdValue,
           kode_opd_terpilih: this.kodeOpdTerpilihValue,
           jenis_rekening: this.rekeningValue,
@@ -250,15 +252,17 @@ export default class extends Controller {
         type: "GET",
         url: url,
       }).then(function (data) {
-        const data_first = data.results[0];
-        const options = new Option(data_first.text, data_first.id, true, true);
-        select2ed.append(options).trigger("change");
-        select2ed.trigger({
-          type: "select2:select",
-          params: {
-            data: data_first,
-          },
-        });
+        if (data.results.length > 0) {
+          const data_first = data.results[0];
+          const options = new Option(data_first.text, data_first.id, true, true);
+          select2ed.append(options).trigger("change");
+          select2ed.trigger({
+            type: "select2:select",
+            params: {
+              data: data_first,
+            },
+          });
+        }
       });
     }
     select2ed.on("select2:select", (e) => {
@@ -411,5 +415,10 @@ export default class extends Controller {
       detail: { data: data },
     });
     document.dispatchEvent(custom_event);
+  }
+
+  updateKode(e) {
+    const { data } = e.detail;
+    this.kodeValue = data.id
   }
 }

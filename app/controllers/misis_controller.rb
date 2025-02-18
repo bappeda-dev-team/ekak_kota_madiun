@@ -6,17 +6,23 @@ class MisisController < ApplicationController
   # GET /misis or /misis.json
   def index
     selected_id = params[:selected]
+    visi_id = params[:kode]
 
-    @misis = if selected_id.present? && request.format.json?
-               Visi.includes(:misis).where(tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir,
-                                           lembaga_id: @lembaga_id, misis: { id: selected_id })
-                   .to_h do |visi|
+    @visi = Visi.includes(:misis).where(tahun_awal: @tahun_awal,
+                                        tahun_akhir: @tahun_akhir,
+                                        lembaga_id: @lembaga_id)
+
+    @misis = if request.format.json?
+               visi_selected = if selected_id.present?
+                                 @visi.where(misis: { id: selected_id })
+                               else
+                                 @visi.where(id: visi_id)
+                               end
+               visi_selected.to_h do |visi|
                  [visi, visi.misis]
                end
              else
-               Visi.includes(:misis).where(tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir,
-                                           lembaga_id: @lembaga_id)
-                   .to_h do |visi|
+               @visi.to_h do |visi|
                  [visi, visi.misis]
                end
              end
