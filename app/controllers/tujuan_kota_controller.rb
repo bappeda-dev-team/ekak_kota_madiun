@@ -95,21 +95,21 @@ class TujuanKotaController < ApplicationController
     @tahun_awal = tujuan_kota_params[:tahun_awal]
     @tahun_akhir = tujuan_kota_params[:tahun_akhir]
 
-    respond_to do |format|
-      if @tujuan_kota.update(tujuan_kota_params)
-        format.html { redirect_to tujuan_kota_index_path, success: 'Tujuan diupdate' }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-      end
+    if @tujuan_kota.update(tujuan_kota_params)
+      render json: { html_content: html_content({ tujuan_kota: @tujuan_kota },
+                                                partial: 'tujuan_kota/tujuan_kota_row') }
+        .to_json, status: :ok
+    else
+      render json: { html_content: html_content({ tujuan_kota: @tujuan_kota },
+                                                partial: 'tujuan_kota/form') }
+        .to_json, status: :unprocessable_entity
     end
   end
 
   def destroy
     @tujuan_kota.destroy
-    respond_to do |format|
-      format.html { redirect_to tujuan_kota_path, notice: 'Tujuan dihapus' }
-      format.json { head :no_content }
-    end
+
+    render json: { resText: "Tujuan Kota Dihapus" }.to_json, status: :accepted
   end
 
   def target_indikator_fields
@@ -139,7 +139,7 @@ class TujuanKotaController < ApplicationController
   end
 
   def targets_attributes
-    { targets_attributes: %i[id target satuan tahun indikator_id jenis _destroy] }
+    { targets_attributes: %i[id target satuan tahun indikator_id opd_id jenis _destroy] }
   end
 
   def handle_filters

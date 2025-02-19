@@ -24,6 +24,8 @@
 #  updated_at           :datetime         not null
 #
 class Indikator < ApplicationRecord
+  belongs_to :tujuan_kota, optional: true, foreign_key: 'kode',
+                           primary_key: 'id_tujuan', inverse_of: :indikator_tujuans
   has_many :targets, dependent: :destroy
   accepts_nested_attributes_for :targets, reject_if: :all_blank, allow_destroy: true
 

@@ -33,8 +33,8 @@
 #
 class TujuanKota < ApplicationRecord
   has_many :indikator_tujuans, -> { order(:tahun) },
-           class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id_tujuan'
-  has_many :targets, through: :indikators
+           class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id_tujuan', inverse_of: :tujuan_kota
+  has_many :targets, through: :indikator_tujuans
 
   accepts_nested_attributes_for :indikator_tujuans, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :targets, reject_if: :all_blank, allow_destroy: true

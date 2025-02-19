@@ -6,5 +6,6 @@
   <% end %>
   <%= fields_for "tujuan_kota[indikator_tujuans_attributes][#{@index}][targets_attributes][#{i_tahun}]", target do |f_target| %>
     <%= render 'tujuan_opds/target_fields', form: f_target %>
+    <%= f_target.hidden_field :id %>
   <% end %>
 <% end %>
