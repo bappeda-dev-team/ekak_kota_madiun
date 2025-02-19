@@ -6,7 +6,7 @@
       </div>
       <% unless guest? %>
         <div class="col-auto">
-          <%= link_to new_tujuan_kotum_path,
+          <%= link_to new_tujuan_kota_path,
                       remote: true,
                       data: {
                         controller: 'form-modal',
@@ -22,7 +22,7 @@
       <% end %>
     </div>
     <div class="table-responsive mb-5">
-      <table class="table align-items-center">
+      <table class="table align-items-center counter">
         <thead class="thead-tujuan">
           <tr class="header-tujuan">
             <th class="border" rowspan="2" width="20px">No.</th>
@@ -46,57 +46,8 @@
             <% end %>
           </tr>
         </thead>
-        <tbody id="tempat-row-sasaran">
-          <% @tujuan_kota.each.with_index(1) do |tujuan, no_tujuan| %>
-            <% rowsize = tujuan.indikator_tujuans.size + 1 %>
-            <tr>
-              <td class="text-gray-900 text-wrap border" width='20px' scope="row" rowspan="<%= rowsize %>"><%= no_tujuan %></td>
-              <td class="text-gray-900 border px-auto" scope="row" rowspan="<%= rowsize %>">
-                <% unless guest? %>
-                  <div class="row justify-content-center w-100">
-                    <div class="col">
-                      <%= link_to edit_tujuan_kotum_path(tujuan),
-                                  remote: true,
-                                  class: "m-3 btn btn-outline-info w-100",
-                                  data: {
-                                    controller: 'form-modal',
-                                    action: 'ajax:complete->form-modal#success:prevent',
-                                    bs_toggle: 'modal',
-                                    bs_target: '#form-modal' } do %>
-                        <i class="fa fa-edit"></i>
-                        <span>Edit</span>
-                      <% end %>
-                    </div>
-                    <div class="col">
-                      <%= link_to tujuan, method: :delete,
-                                  data: { confirm_swal: "Hapus #{tujuan.tujuan} ?"},
-                                  class: "m-3 btn btn-outline-danger w-100" do %>
-                        <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
-                        <span>Hapus</span>
-                      <% end %>
-                    </div>
-                  </div>
-                <% end %>
-              </td>
-              <td class="fw-bolder border text-wrap" scope="row" rowspan="<%= rowsize %>"><%= tujuan.visi_kota %></td>
-              <td class="fw-bolder border text-wrap" scope="row" rowspan="<%= rowsize %>"><%= tujuan.misi_kota %></td>
-              <td class="fw-bolder border text-wrap" scope="row" rowspan="<%= rowsize %>"><%= tujuan.pohon&.pohonable.to_s %></td>
-              <td class="fw-bolder text-wrap" scope="row" rowspan="<%= rowsize %>"><%= tujuan.tujuan %></td>
-              <td class="fw-bolder border" scope="row" rowspan="<%= rowsize %>"><%= tujuan.tahun_awal_akhir %></td>
-            </tr>
-            <% tujuan.indikator_tujuans.each do |indikator_tujuan| %>
-              <tr>
-                <td class="text-gray-900 text-wrap border"><%= indikator_tujuan || '-' %></td>
-                <td class="text-gray-900 text-wrap border"><%= indikator_tujuan.rumus_perhitungan || '-' %></td>
-                <td class="text-gray-900 text-wrap border"><%= indikator_tujuan.sumber_data || '-' %></td>
-                <% (@tahun_awal..@tahun_akhir).each do |tahun| %>
-                  <% target = indikator_tujuan.targets.find_by(tahun: tahun) %>
-                  <td class="text-gray-900 text-wrap border"><%= target %></td>
-                  <td class="text-gray-900 text-wrap border"><%= target&.satuan %></td>
-                <% end %>
-              </tr>
-            <% end %>
-          <% end %>
+        <tbody id="new_tujuan_kota">
+          <%= render partial: 'tujuan_kota_row', collection: @tujuan_kota, as: :tujuan_kota %>
         </tbody>
       </table>
     </div>

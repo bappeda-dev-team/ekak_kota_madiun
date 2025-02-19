@@ -1,19 +1,50 @@
-<tr>
-  <td class="fw-bolder" scope="row" rowspan="<%= tujuan.indikator_tujuans.size + 1 %>"><%= i %></td>
-  <td class="fw-bolder" scope="row" rowspan="<%= tujuan.indikator_tujuans.size + 1 %>">
-   <%= link_to edit_tujuan_kotum_path(tujuan),
-       class: "m-3 btn btn-outline-info" do %>
-         <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit Tujuan"></i>
-         <span>Edit</span>
-   <% end %>
-   <%= link_to tujuan_kotum_path(tujuan), method: :delete,
-     data: { confirm_swal: "Hapus #{tujuan.tujuan} ?"},
-     class: "m-3 btn btn-outline-danger" do %>
-       <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus Tujuan"></i>
-       <span>Hapus</span>
-   <% end %>
-  </td>
-  <td class="fw-bolder text-wrap" scope="row" rowspan="<%= tujuan.indikator_tujuans.size + 1 %>"><%= tujuan.tujuan %></td>
-  <td class="fw-bolder" scope="row" rowspan="<%= tujuan.indikator_tujuans.size + 1 %>"><%= tujuan.tahun_awal_akhir %></td>
-  <%= render 'indikator_tujuan_kota_row', indikator_tujuans: tujuan.indikator_tujuans %>
-</tr>
+<tbody id="<%= dom_id(tujuan_kota) %>">
+  <% rowsize = tujuan_kota.indikator_tujuans.size + 1 %>
+  <tr>
+    <td class="text-gray-900 text-wrap border" width='20px' scope="row" rowspan="<%= rowsize %>"></td>
+    <td class="text-gray-900 border px-auto" scope="row" rowspan="<%= rowsize %>">
+      <% unless guest? %>
+        <div class="row justify-content-center w-100">
+          <div class="col">
+            <%= link_to edit_tujuan_kota_path(tujuan_kota),
+                        remote: true,
+                        class: "m-3 btn btn-outline-info w-100",
+                        data: {
+                          controller: 'form-modal',
+                          action: 'ajax:complete->form-modal#success:prevent',
+                          bs_toggle: 'modal',
+                          bs_target: '#form-modal' } do %>
+              <i class="fa fa-edit"></i>
+              <span>Edit</span>
+            <% end %>
+          </div>
+          <div class="col">
+            <%= link_to tujuan_kota, method: :delete,
+                        data: { confirm_swal: "Hapus #{tujuan_kota.tujuan} ?"},
+                        class: "m-3 btn btn-outline-danger w-100" do %>
+              <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+              <span>Hapus</span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </td>
+    <td class="fw-bolder border text-wrap" scope="row" rowspan="<%= rowsize %>"><%= tujuan_kota.visi_kota %></td>
+    <td class="fw-bolder border text-wrap" scope="row" rowspan="<%= rowsize %>"><%= tujuan_kota.misi_kota %></td>
+    <td class="fw-bolder border text-wrap" scope="row" rowspan="<%= rowsize %>"><%= tujuan_kota.pohon&.pohonable.to_s %></td>
+    <td class="fw-bolder text-wrap" scope="row" rowspan="<%= rowsize %>"><%= tujuan_kota.tujuan %></td>
+    <td class="fw-bolder border" scope="row" rowspan="<%= rowsize %>"><%= tujuan_kota.tahun_awal_akhir %></td>
+  </tr>
+  <% tujuan_kota.indikator_tujuans.each do |indikator_tujuan| %>
+    <tr class="skip">
+      <td class="text-gray-900 text-wrap border"><%= indikator_tujuan || '-' %></td>
+      <td class="text-gray-900 text-wrap border"><%= indikator_tujuan.rumus_perhitungan || '-' %></td>
+      <td class="text-gray-900 text-wrap border"><%= indikator_tujuan.sumber_data || '-' %></td>
+      <% (@tahun_awal..@tahun_akhir).each do |tahun| %>
+        <% target = indikator_tujuan.targets.find_by(tahun: tahun) %>
+        <td class="text-gray-900 text-wrap border"><%= target %></td>
+        <td class="text-gray-900 text-wrap border"><%= target&.satuan %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</tbody>

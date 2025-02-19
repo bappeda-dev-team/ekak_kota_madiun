@@ -66,7 +66,7 @@ RSpec.describe "Tujuan Kota", type: :feature do
     find('#tujuan_kota_indikator_tujuans_attributes_0_targets_attributes_1_satuan').set('%')
     click_on 'Simpan Tujuan kota'
 
-    click_on 'OK'
+    click_on 'Ok'
 
     expect(page).to have_text('ContohVisi')
     expect(page).to have_text('ContohMisi')

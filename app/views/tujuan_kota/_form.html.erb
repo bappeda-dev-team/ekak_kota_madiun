@@ -1,8 +1,11 @@
-<%= form_with model: tujuan_kota, url: tujuan_kota_path,
+<%= form_with model: tujuan_kota,
+              local: false,
               data: {
-                controller: 'periode',
+                controller: 'periode form-ajax',
+                form_ajax_target_param: dom_id(tujuan_kota),
                 action: 'change-periode@document->periode#fillTahunPeriode
-                         change-periode@document->periode#updateRangePeriode'
+                         change-periode@document->periode#updateRangePeriode
+                         ajax:complete->form-ajax#processAjax'
               } do |form| %>
   <% if tujuan_kota.errors.any? %>
     <div id="error_explanation">

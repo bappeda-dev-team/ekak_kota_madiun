@@ -72,26 +72,32 @@ class TujuanKotaController < ApplicationController
 
   def create
     @tujuan_kota = TujuanKota.new(tujuan_kota_params)
+    @tahun_awal = tujuan_kota_params[:tahun_awal]
+    @tahun_akhir = tujuan_kota_params[:tahun_akhir]
 
-    respond_to do |format|
-      if @tujuan_kota.save
-        format.html { redirect_to tujuan_kota_path, success: 'Tujuan ditambahkan' }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-      end
+    if @tujuan_kota.save
+      render json: { html_content: html_content({ tujuan_kota: @tujuan_kota },
+                                                partial: 'tujuan_kota/tujuan_kota_row') }
+        .to_json, status: :ok
+    else
+      render json: { html_content: html_content({ tujuan_kota: @tujuan_kota },
+                                                partial: 'tujuan_kota/form') }
+        .to_json, status: :unprocessable_entity
     end
   end
 
   def update
-    @tahun = cookies[:tahun]
+    # @tahun = cookies[:tahun]
     # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
     # @periode = Periode.find_tahun(tahun_bener)
     # @tahun_awal = @periode.tahun_awal.to_i
     # @tahun_akhir = @periode.tahun_akhir.to_i
+    @tahun_awal = tujuan_kota_params[:tahun_awal]
+    @tahun_akhir = tujuan_kota_params[:tahun_akhir]
 
     respond_to do |format|
       if @tujuan_kota.update(tujuan_kota_params)
-        format.html { redirect_to tujuan_kota_path, success: 'Tujuan diupdate' }
+        format.html { redirect_to tujuan_kota_index_path, success: 'Tujuan diupdate' }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -133,7 +139,7 @@ class TujuanKotaController < ApplicationController
   end
 
   def targets_attributes
-    { targets_attributes: %i[id target satuan tahun indikator_id opd_id jenis _destroy] }
+    { targets_attributes: %i[id target satuan tahun indikator_id jenis _destroy] }
   end
 
   def handle_filters

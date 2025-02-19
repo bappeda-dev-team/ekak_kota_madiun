@@ -97,7 +97,7 @@ module SuperAdminItemHelper
         icon: 'fas fa-landmark', identifier: 'misi_kota'
       },
       {
-        title: 'Tujuan Kota', href: tujuan_kota_path,
+        title: 'Tujuan Kota', href: tujuan_kota_index_path,
         icon: 'fas fa-landmark', identifier: 'tujuan_kota'
       },
       {

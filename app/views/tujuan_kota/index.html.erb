@@ -9,7 +9,7 @@
                   data: {
                     controller: 'page-ajax',
                     page_ajax_reqtype_value: 'GET',
-                    page_ajax_url_value: admin_filter_tujuan_kota_path
+                    page_ajax_url_value: admin_filter_tujuan_kota_index_path
                   }  do %>
     <div class="card-header">
       <div class="row align-items-center">
@@ -17,7 +17,7 @@
           <h2 class="fs-5 fw-bold mb-0">Filter Periode</h2>
         </div>
         <div class="col filter-periode">
-          <%= form_with url: admin_filter_tujuan_kota_path, local: false,
+          <%= form_with url: admin_filter_tujuan_kota_index_path, local: false,
                         method: :get, class: 'row',
                         data: {
                           controller: 'filter-render',
