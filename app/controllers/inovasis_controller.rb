@@ -3,7 +3,21 @@ class InovasisController < ApplicationController
 
   # GET /inovasis or /inovasis.json
   def index
-    list_inovasis
+    @tahun = cookies[:tahun] || Date.current.year.to_s
+    is_admin_kota = current_user.admin_kota?
+    @kode_opd = is_admin_kota ? "0.00.0.00.0.00.00.0000" : cookies[:opd]
+    @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
+    @inovasis = if @opd.is_kota
+                  Inovasi.where(tahun: @tahun)
+                  # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
+                else
+                  Inovasi.where(tahun: @tahun)
+                         .select do |inovasi|
+                    inovasi.opd == @kode_opd || inovasi&.sasaran&.user&.opd&.kode_unik_opd == @kode_opd
+                  end
+                  # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
+                  #        .where(opd: @kode_opd)
+                end
   end
 
   def filter_opd_tahun
@@ -52,7 +66,7 @@ class InovasisController < ApplicationController
   def new
     is_admin_kota = current_user.admin_kota?
     user = is_admin_kota ? '' : current_user.nik
-    @kode_opd = is_admin_kota ? "0.00.0.00.0.00.00.0000" : cookies[:opd]
+    @kode_opd = is_admin_kota ? params[:opd] : cookies[:opd]
     # @opd = cookies[:opd]
     tahun = params[:tahun] || cookies[:tahun]
     # @opds = if is_admin_kota

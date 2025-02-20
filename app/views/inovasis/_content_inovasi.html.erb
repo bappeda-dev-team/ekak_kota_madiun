@@ -5,7 +5,7 @@
     </div>
     <% unless guest? || !super_admin? %>
       <div class="col text-end">
-        <%= link_to "Tambah Usulan", new_inovasi_path(tahun: @tahun),
+        <%= link_to "Tambah Usulan", new_inovasi_path(tahun: @tahun, opd: @kode_opd),
                     remote: true,
                     class: "btn btn-sm btn-info",
                     data: {
@@ -21,7 +21,7 @@
 </div>
 <div class="card-body">
   <div class="table-responsive">
-    <table class="table table-bordered counter" data-datatable>
+    <table class="table table-bordered counter">
       <thead class="thead-light">
         <tr>
           <th class="border-bottom text-gray-700" scope="col">No.</th>

@@ -31,9 +31,15 @@ class OpdsController < ApplicationController
   def filter_selected
     nama_opd = params[:q]
     lembaga_id = cookies[:lembaga_id]
-    @opds = Opd.opd_resmi_kota
-               .where(lembaga_id: lembaga_id, kode_unik_opd: params[:selected])
-               .presence || Opd.opd_resmi_kota.where(lembaga_id: lembaga_id)
+    @opds = if current_user.super_admin?
+              Opd.opd_resmi_kota
+                 .where(lembaga_id: lembaga_id, kode_unik_opd: params[:selected])
+                 .presence || Opd.opd_resmi_kota.where(lembaga_id: lembaga_id)
+            else
+
+              Opd.opd_resmi_kota
+                 .where(lembaga_id: lembaga_id, kode_unik_opd: params[:selected])
+            end
 
     @opds = @opds.where("nama_opd ILIKE ?", "%#{nama_opd}%")
   end
