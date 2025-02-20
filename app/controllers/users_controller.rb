@@ -379,8 +379,8 @@ class UsersController < ApplicationController
                                     status: @status_jabatan,
                                     tahun: @tahun_asli, bulan: @bulan)
     if @jabatan_user.save
-      @user.update(opd: @opd) if params[:pindah_opd]
-      @user.after_pindah(@tahun_asli) if params[:hapus_sasaran]
+      @user.update(opd: @opd) if params[:user][:pindah_opd]
+      @user.after_pindah(@tahun_asli) if params[:user][:hapus_sasaran]
       render json: { resText: "Jabatan diperbarui",
                      html_content: html_content({ user: @user },
                                                 partial: 'users/user') }.to_json,

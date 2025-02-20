@@ -17,18 +17,20 @@
       <div class="review-items" id="<%= dom_id(inovasi, 'review') %>">
         <%= render partial: 'reviews/review', collection: inovasi.reviews %>
       </div>
-      <%= link_to new_review_path(type: 'Inovasi', id: inovasi.id, target: dom_id(inovasi, 'review')),
-                  remote: true,
-                  class: 'btn btn-outline-primary',
-                  data: {
-                    controller: 'form-modal',
-                    action: 'form-modal#appendForm',
-                    form_modal_location_param: 'form-modal-body',
-                    bs_target: '#form-modal',
-                    bs_toggle: 'modal'
-                  } do %>
-        <span class="fas fa-marker me-2"></span>
-        <span>Review</span>
+      <% if admin_kota? %>
+        <%= link_to new_review_path(type: 'Inovasi', id: inovasi.id, target: dom_id(inovasi, 'review')),
+                    remote: true,
+                    class: 'btn btn-outline-primary',
+                    data: {
+                      controller: 'form-modal',
+                      action: 'form-modal#appendForm',
+                      form_modal_location_param: 'form-modal-body',
+                      bs_target: '#form-modal',
+                      bs_toggle: 'modal'
+                    } do %>
+          <span class="fas fa-marker me-2"></span>
+          <span>Review</span>
+        <% end %>
       <% end %>
     </div>
   </td>

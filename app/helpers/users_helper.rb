@@ -24,6 +24,11 @@ module UsersHelper
     current_user.has_role?(:super_admin)
   end
 
+  # alias to super_admin?
+  def admin_kota?
+    super_admin?
+  end
+
   def reviewer?
     current_user.has_any_role?(:reviewer_kak, :reviewer)
   end

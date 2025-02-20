@@ -34,4 +34,12 @@ class JabatanUser < ApplicationRecord
   def jabatan_status
     "#{nama_jabatan} - [#{status}]"
   end
+
+  def aktif?
+    status == 'aktif'
+  end
+
+  def plt?
+    status == 'plt'
+  end
 end
