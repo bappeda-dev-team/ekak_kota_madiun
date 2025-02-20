@@ -20,17 +20,18 @@ class InovasisController < ApplicationController
   def new
     is_admin_kota = current_user.admin_kota?
     user = is_admin_kota ? '' : current_user.nik
-    @opd = cookies[:opd]
+    @kode_opd = is_admin_kota ? "0.00.0.00.0.00.00.0000" : cookies[:opd]
+    # @opd = cookies[:opd]
     tahun = cookies[:tahun]
-    @opds = if is_admin_kota
-              Opd.opd_resmi
-                 .pluck(:nama_opd,
-                        :kode_unik_opd)
-            else
-              Opd.where(kode_opd: current_user.opd.kode_opd)
-                 .pluck(:nama_opd,
-                        :kode_unik_opd)
-            end
+    # @opds = if is_admin_kota
+    #           Opd.opd_resmi
+    #              .pluck(:nama_opd,
+    #                     :kode_unik_opd)
+    #         else
+    #           Opd.where(kode_opd: current_user.opd.kode_opd)
+    #              .pluck(:nama_opd,
+    #                     :kode_unik_opd)
+    #         end
     @inovasi = Inovasi.new(tahun: tahun, status: 'aktif', nip_asn: user,
                            is_from_kota: is_admin_kota, is_active: is_admin_kota)
     render layout: false
@@ -38,9 +39,11 @@ class InovasisController < ApplicationController
 
   # GET /inovasis/1/edit
   def edit
-    @opds = Opd.opd_resmi_kota
-               .pluck(:nama_opd,
-                      :kode_unik_opd)
+    # is_admin_kota = current_user.admin_kota?
+    @kode_opd = @inovasi.opd
+    # @opds = Opd.opd_resmi_kota
+    #            .pluck(:nama_opd,
+    #                   :kode_unik_opd)
     render layout: false
   end
 
@@ -152,10 +155,13 @@ class InovasisController < ApplicationController
   def list_inovasis
     @tahun = cookies[:tahun] || Date.current.year.to_s
     @kode_opd = cookies[:opd]
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @kode_kota = "0.00.0.00.0.00.00.0000"
+    @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
+    array_opd = [@opd.kode_unik_opd, @kode_kota]
     @inovasis = Inovasi.includes(:user)
+                       .where(users: { kode_opd: @opd.kode_opd })
+                       .or(Inovasi.where(opd: array_opd))
                        .where(tahun: @tahun)
-                       .where("opd = ? OR users.kode_opd = ?", @opd.kode_unik_opd, @opd.kode_opd)
                        .references(:user)
   end
 end

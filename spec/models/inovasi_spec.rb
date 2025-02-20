@@ -14,12 +14,18 @@
 #  usulan       :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  misi_id      :bigint
 #  sasaran_id   :bigint
 #
 # Indexes
 #
+#  index_inovasis_on_misi_id     (misi_id)
 #  index_inovasis_on_sasaran_id  (sasaran_id)
 #  index_inovasis_on_status      (status)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (misi_id => misis.id)
 #
 require 'rails_helper'
 

@@ -1,2 +1,2 @@
 json.id misi.id
-json.text misi.misi_with_urutan
+json.text misi.misi_with_urutan_periode

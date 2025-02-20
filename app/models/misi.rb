@@ -24,6 +24,8 @@
 #  fk_rails_...  (visi_id => visis.id)
 #
 class Misi < ApplicationRecord
+  default_scope { order(:urutan) }
+
   belongs_to :visi
   belongs_to :lembaga
 
@@ -40,6 +42,10 @@ class Misi < ApplicationRecord
 
   def misi_with_urutan
     "#{urutan}. #{misi}"
+  end
+
+  def misi_with_urutan_periode
+    "#{urutan}. #{misi} (#{periode})"
   end
 
   def urutan_by_visi

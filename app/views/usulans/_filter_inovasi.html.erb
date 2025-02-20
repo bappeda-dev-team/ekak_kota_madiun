@@ -29,10 +29,11 @@
           <% @inovasis.each do |inovasi| %>
             <tr>
               <td class="text-gray-900" width='20px'></td>
-              <td class="text-gray-900 border-end border-start text-wrap"><%= inovasi.usulan %></td>
-              <td class="text-gray-900 border-end border-start text-wrap"><%= inovasi.uraian %></td>
-              <td class="text-gray-900 border-end border-start text-wrap"><%= inovasi.manfaat %></td>
-              <td class="text-gray-900 border-end border-start text-wrap"><%= inovasi.tahun %></td>
+              <td class="fw-bolder text-wrap"><%= inovasi.usulan %></td>
+              <td class="text-gray-900 text-wrap"><%= inovasi.manfaat %></td>
+              <td class="text-gray-900 text-wrap"><%= inovasi.misi %></td>
+              <td class="text-gray-900 text-wrap"><%= inovasi.uraian %></td>
+              <td class="text-gray-900 text-wrap"><%= inovasi.tahun %></td>
             </tr>
           <% end %>
         </tbody>

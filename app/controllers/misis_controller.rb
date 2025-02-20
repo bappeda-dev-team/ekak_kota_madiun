@@ -1,6 +1,6 @@
 class MisisController < ApplicationController
   before_action :set_misi, only: %i[show edit update destroy]
-  before_action :set_periode_lembaga, only: %i[index new]
+  before_action :set_periode_lembaga, only: %i[index new lists]
   layout false, only: %i[new edit]
 
   # GET /misis or /misis.json
@@ -26,6 +26,16 @@ class MisisController < ApplicationController
                  [visi, visi.misis]
                end
              end
+  end
+
+  def lists
+    misi_dicari = params[:q]
+    selected_id = params[:selected]
+    @misis = Misi.where(id: selected_id)
+                 .presence || Misi.all
+    @misis = @misis.where("misi ILIKE ?", "%#{misi_dicari}%")
+                   .where(tahun_awal: @tahun_awal,
+                          tahun_akhir: @tahun_akhir)
   end
 
   # GET /misis/1 or /misis/1.json

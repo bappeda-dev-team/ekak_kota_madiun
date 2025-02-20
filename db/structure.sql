@@ -1212,7 +1212,8 @@ CREATE TABLE public.inovasis (
     is_active boolean DEFAULT false,
     status public.usulan_status DEFAULT 'draft'::public.usulan_status,
     uraian character varying,
-    is_from_kota boolean DEFAULT false
+    is_from_kota boolean DEFAULT false,
+    misi_id bigint
 );
 
 
@@ -6180,6 +6181,13 @@ CREATE INDEX index_inovasi_tims_on_crosscutting_id ON public.inovasi_tims USING 
 
 
 --
+-- Name: index_inovasis_on_misi_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_inovasis_on_misi_id ON public.inovasis USING btree (misi_id);
+
+
+--
 -- Name: index_inovasis_on_sasaran_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -6822,6 +6830,14 @@ ALTER TABLE ONLY public.realisasis
 
 
 --
+-- Name: inovasis fk_rails_403c3ae73c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inovasis
+    ADD CONSTRAINT fk_rails_403c3ae73c FOREIGN KEY (misi_id) REFERENCES public.misis(id);
+
+
+--
 -- Name: permasalahans fk_rails_4bce9be9f2; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -7398,6 +7414,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250216124522'),
 ('20250217001609'),
 ('20250217005117'),
-('20250217014309');
+('20250217014309'),
+('20250220001054');
 
 

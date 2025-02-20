@@ -18,14 +18,16 @@
   <% end %>
   <div class="field">
     <%= form.label :opd, class: 'form-label' %>
-    <%= form.select :opd, @opds, { include_blank: true, selected: current_user.opd.kode_unik_opd },
-     required: true,
-     class: 'form-control',
+    <%= form.select :opd, [],
+     { include_blank: true },
      data: {
+       placeholder: 'Pilih Opd',
        controller: 'dropdown',
-       placeholder: 'Pilih OPD',
-       dropdown_parent_value: '#form-modal'
-     } %>
+       dropdown_jenis_value: 'extra',
+       dropdown_parent_value: '#form-modal',
+       dropdown_url_value: '/opds/filter_selected.json',
+       dropdown_selected_value: @kode_opd,
+     }  %>
   </div>
   <div class="field">
     <%= form.label :tahun, class: 'form-label' %>
@@ -42,6 +44,22 @@
     <%= form.label :usulan, "Program Unggulan Walikota", class: 'form-label' %>
     <%= form.text_field :usulan, class: 'form-control' %>
   </div>
+
+  <div class="field">
+    <%= form.label :misi, class: 'form-label' %>
+    <%= form.select :misi_id, [],
+     { include_blank: true },
+     data: {
+       placeholder: 'Misi Kepala Daerah',
+       controller: 'dropdown',
+       dropdown_jenis_value: 'extra',
+       dropdown_parent_value: '#form-modal',
+       dropdown_url_value: '/misi_kota/lists.json',
+       dropdown_selected_value: form.object.misi_id,
+       action: 'change-visi@document->dropdown#updateKode'
+     }  %>
+  </div>
+
   <div class="field">
     <%= form.label :manfaat, "ASTA KARYA", class: 'form-label' %>
     <%= form.text_field :manfaat, class: 'form-control' %>

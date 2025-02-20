@@ -14,12 +14,18 @@
 #  usulan       :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  misi_id      :bigint
 #  sasaran_id   :bigint
 #
 # Indexes
 #
+#  index_inovasis_on_misi_id     (misi_id)
 #  index_inovasis_on_sasaran_id  (sasaran_id)
 #  index_inovasis_on_status      (status)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (misi_id => misis.id)
 #
 class Inovasi < ApplicationRecord
   validates :usulan, presence: true
@@ -31,6 +37,8 @@ class Inovasi < ApplicationRecord
   belongs_to :user, optional: true, foreign_key: 'nip_asn', primary_key: 'nik'
   belongs_to :opd_pemilik, class_name: 'Opd',
                            optional: true, foreign_key: 'opd', primary_key: 'kode_unik_opd'
+  belongs_to :misi
+
   has_many :usulans, as: :usulanable, dependent: :destroy
 
   default_scope { order(created_at: :desc) }
@@ -63,7 +71,7 @@ class Inovasi < ApplicationRecord
     if opd.first.match?(/\p{Alpha}/)
       opd
     else
-      opd_pemilik.to_s
+      Opd.unscoped.find_by(kode_unik_opd: opd).to_s
     end
   rescue NoMethodError
     '-'
@@ -91,5 +99,11 @@ class Inovasi < ApplicationRecord
 
   def dari_kota?
     is_from_kota
+  end
+
+  def misi_with_urutan
+    misi.misi_with_urutan
+  rescue NoMethodError
+    'Belum dipilih'
   end
 end
