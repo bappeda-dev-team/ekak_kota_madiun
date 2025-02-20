@@ -1,0 +1,62 @@
+<%= content_for :html_title, "Laporan Inisiatif Walikota" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Laporan</li>
+  <li class="breadcrumb-item" aria-current="page">Usulan</li>
+  <li class="breadcrumb-item active" aria-current="page">Inisiatif Walikota</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= content_tag :div,
+                  class: 'card border-0 shadow',
+                  data: {
+                    controller: 'page-ajax',
+                    page_ajax_reqtype_value: 'GET',
+                    page_ajax_url_value: filter_inovasi_usulans_path(tahun: @tahun, opd: @kode_opd)
+                  }  do %>
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h2 class="fs-5 fw-bold mb-0">Filter</h2>
+        </div>
+        <div class="col filter-form">
+          <%= form_with url: filter_inovasi_usulans_path, local: false,
+                        method: :get, class: 'row',
+                        data: {
+                          controller: 'filter-render',
+                          filter_render_target_id_value: 'inovasi-results',
+                          action: 'ajax:success->filter-render#append'
+                        } do |form| %>
+            <div class="col">
+              <%= form.select :opd, [],
+               { include_blank: true },
+               data: {
+                 placeholder: 'Opd',
+                 controller: 'dropdown',
+                 dropdown_jenis_value: 'extra',
+                 dropdown_url_value: '/opds/filter_selected.json',
+                 dropdown_selected_value: @kode_opd,
+               }  %>
+            </div>
+            <div class="col">
+              <%= form.select :tahun, [],
+               { include_blank: true },
+               data: {
+                 placeholder: 'Tahun',
+                 controller: 'dropdown',
+                 dropdown_jenis_value: 'extra',
+                 dropdown_url_value: '/tahuns.json',
+                 dropdown_selected_value: @tahun
+               }  %>
+            </div>
+            <div class="col-auto">
+              <%= form.submit 'Filter', name: 'filter', class: 'btn btn-primary' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div data-page-ajax-target="results" id="inovasi-results">
+      <%= render(LoaderComponent.new())%>
+    </div>
+  <% end %>
+<% end %>

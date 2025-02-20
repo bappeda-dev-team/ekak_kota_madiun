@@ -4,9 +4,10 @@ class TahunsController < ApplicationController
   # GET /tahuns or /tahuns.json
   def index
     @tahuns = Tahun.all.order(:tahun)
-    return unless params[:item]
+    return unless params[:item] || params[:selected]
 
     @tahuns = Tahun.where(tahun: params[:item])
+                   .or(Tahun.where(tahun: params[:selected]))
   end
 
   # GET /tahuns/1 or /tahuns/1.json

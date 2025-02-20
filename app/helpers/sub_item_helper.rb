@@ -5,7 +5,7 @@ module SubItemHelper
       { title: 'Pokok Pikiran', href: pokpirs_path, identifier: 'pokpir' },
       { title: 'Mandatori', href: mandatoris_path, identifier: 'mandatori' },
       { title: 'Mandatori SPBE', href: spbe_mandatoris_path, identifier: 'spbe_mandatori' },
-      { title: 'Inisiatif Walikota', href: inovasis_path, identifier: 'inovasi' },
+      { title: 'Inisiatif Walikota', href: inovasis_path, identifier: 'inovasis' },
       { title: 'Inovasi Masyarakat', href: inovasi_masyarakats_path, identifier: 'masyarakat_inovasi' }
     ]
   end

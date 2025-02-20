@@ -1,0 +1,42 @@
+<div class="card-body" id="tujuan-kota-card">
+  <div class="d-grid gap-4">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">Usulan Inisiatif Walikota Tahun <%= "#{@tahun}" %> - <%= @opd %></h2>
+      </div>
+    </div>
+    <div class="table-responsive mb-5">
+      <table class="table table-bordered align-items-center counter">
+        <thead>
+          <tr>
+            <th class="fw-bolder" width="20px">No.</th>
+            <th class="fw-bolder">Program Unggulan Walikota</th>
+            <th class="fw-bolder">Asta Karya</th>
+            <th class="fw-bolder">Misi Walikota</th>
+            <th class="fw-bolder">Pohon Kinerja</th>
+            <th class="fw-bolder">Rencana Kinerja</th>
+            <th class="fw-bolder">Pemilik Rencana Kinerja</th>
+            <th class="fw-bolder">Sub Kegiatan</th>
+            <th class="fw-bolder">Program</th>
+            <th class="fw-bolder">Pagu</th>
+            <th class="fw-bolder">OPD</th>
+            <th class="fw-bolder">Permasalahan/ Uraian</th>
+            <th class="fw-bolder">Inovasi</th>
+            <th class="fw-bolder">Keterangan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @inovasis.each do |inovasi| %>
+            <tr>
+              <td class="text-gray-900" width='20px'></td>
+              <td class="text-gray-900 border-end border-start text-wrap"><%= inovasi.usulan %></td>
+              <td class="text-gray-900 border-end border-start text-wrap"><%= inovasi.uraian %></td>
+              <td class="text-gray-900 border-end border-start text-wrap"><%= inovasi.manfaat %></td>
+              <td class="text-gray-900 border-end border-start text-wrap"><%= inovasi.tahun %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

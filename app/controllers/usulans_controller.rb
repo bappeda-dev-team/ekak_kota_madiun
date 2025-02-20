@@ -121,6 +121,41 @@ class UsulansController < ApplicationController
     end
   end
 
+  def laporan_inovasi
+    # @kode_opd = cookies[:opd]
+    @kode_opd = "0.00.0.00.0.00.00.0000"
+    @tahun = cookies[:tahun]
+  end
+
+  def filter_inovasi
+    @kode_opd = params[:opd]
+    @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
+    @tahun = params[:tahun]
+
+    # logic if periode
+    # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    # periode_selected = params[:periode]
+    # @periode = if periode_selected.present?
+    #              Periode.find(periode_selected)
+    #            else
+    #              Periode.find_tahun(tahun_bener)
+    #            end
+    # @tahun_awal = @periode.tahun_awal.to_i
+    # @tahun_akhir = @periode.tahun_akhir.to_i
+
+    @inovasis = if @opd.is_kota
+                  Inovasi.where(tahun: @tahun)
+                  # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
+                else
+                  Inovasi.where(opd: @kode_opd, tahun: @tahun)
+                  # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
+                  #        .where(opd: @kode_opd)
+                end
+    # @inovasis = Inovasi.where(tahun: @tahun)
+
+    render partial: 'usulans/filter_inovasi'
+  end
+
   private
 
   def check_params

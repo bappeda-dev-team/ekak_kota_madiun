@@ -28,6 +28,16 @@ class OpdsController < ApplicationController
     end
   end
 
+  def filter_selected
+    nama_opd = params[:q]
+    lembaga_id = cookies[:lembaga_id]
+    @opds = Opd.opd_resmi_kota
+               .where(lembaga_id: lembaga_id, kode_unik_opd: params[:selected])
+               .presence || Opd.opd_resmi_kota.where(lembaga_id: lembaga_id)
+
+    @opds = @opds.where("nama_opd ILIKE ?", "%#{nama_opd}%")
+  end
+
   def all_opd
     @nama_lembaga = cookies[:lembaga]
     lembaga_id = cookies[:lembaga_id]

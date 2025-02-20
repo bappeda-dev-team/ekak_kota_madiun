@@ -25,6 +25,7 @@ class Usulan < ApplicationRecord
   # has_many :pohons, lambda {
   #                     where(usulanable_type: %w[StrategiKotum Musrenbang Pokpir])
   #                   }, as: :pohonable
+  scope :inovasi, -> { where(usulanable_type: 'Inovasi') }
 
   def usulan
     usulanable.usulan

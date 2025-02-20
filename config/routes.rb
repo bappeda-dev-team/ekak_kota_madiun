@@ -533,7 +533,7 @@ Rails.application.routes.draw do
       get "subkegiatan", on: :new
     end
 
-    resources :usulans, only: [:destroy]
+    # resources :usulans, only: [:destroy]
 
     resources :tahapans do
       member do
@@ -708,6 +708,7 @@ Rails.application.routes.draw do
       get :sasaran_operational
       get :bidang
       get :opd_resmi
+      get :filter_selected
     end
     member do
       get :buat_strategi
@@ -743,7 +744,12 @@ Rails.application.routes.draw do
   resources :roles
   resources :sumber_danas, except: %i[show]
   resources :kamus_usulans
-  resources :usulans
+  resources :usulans do
+    collection do
+      get :laporan_inovasi
+      get :filter_inovasi
+    end
+  end
 
   namespace :rekaps do
     get :pagu_ranwal

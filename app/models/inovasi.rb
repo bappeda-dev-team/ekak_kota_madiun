@@ -35,6 +35,14 @@ class Inovasi < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
 
+  scope :by_periode, lambda { |tahun_awal, tahun_akhir|
+                       where("tahun::integer BETWEEN ?::integer AND ?::integer", tahun_awal, tahun_akhir)
+                     }
+
+  def to_s
+    uraian
+  end
+
   def asn_pengusul
     if nip_asn.present?
       User.find_by(nik: nip_asn).nama
