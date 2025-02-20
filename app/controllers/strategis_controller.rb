@@ -231,7 +231,7 @@ class StrategisController < ApplicationController
                           user_id: user,
                           pohonable_type: 'StrategiPohon')
                    .select { |p| p.pohonable.strategi =~ /#{user_search}/i }
-                   .reject { |p| p.pohonable.nil? || p.role == 'deleted' || p.pohonable.role == 'deleted' }
+                   .reject { |p| p.pohonable.nil? || p.role == 'deleted' || p.pohonable.role == 'deleted' || p.pohonable.strategi_dihapus? }
   end
 
   private
