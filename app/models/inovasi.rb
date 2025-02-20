@@ -144,7 +144,7 @@ class Inovasi < ApplicationRecord
   def pagu_rekin
     sasaran.total_anggaran
   rescue NoMethodError
-    '-'
+    0
   end
 
   def opd_rekin

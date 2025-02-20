@@ -147,7 +147,10 @@ class UsulansController < ApplicationController
                   Inovasi.where(tahun: @tahun)
                   # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
                 else
-                  Inovasi.where(opd: @kode_opd, tahun: @tahun)
+                  Inovasi.where(tahun: @tahun)
+                         .select do |inovasi|
+                    inovasi.opd == @kode_opd || inovasi&.sasaran&.user&.opd&.kode_unik_opd == @kode_opd
+                  end
                   # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
                   #        .where(opd: @kode_opd)
                 end
