@@ -3,19 +3,19 @@ class SearchController < ApplicationController
 
   def usulan_user
     param = params[:q] || ''
-    usulan_search = if @usulan_type == 'inovasi'
+    usulan_search = if @usulan_type == 'Inovasi'
                       "usulan ILIKE ?"
                     else
                       "sasaran_id is null and usulan ILIKE ?"
                     end
-    searchable_user = if @usulan_type == 'inovasi'
-                        where(searchable_type: @usulan_type, tahun: @tahun)
+    searchable_user = if @usulan_type == 'Inovasi'
+                        Search::AllUsulan.where(searchable_type: @usulan_type, tahun: @tahun)
                       else
-                        where(searchable_type: @usulan_type, nip_asn: @nip_asn, tahun: @tahun)
+                        Search::AllUsulan.where(searchable_type: @usulan_type, nip_asn: @nip_asn, tahun: @tahun)
                       end
-    @results = Search::AllUsulan
+
+    @results = searchable_user
                .where(usulan_search, "%#{param}%")
-               .searchable_user
                .order(searchable_id: :desc)
                .includes(:searchable)
                .collect(&:searchable)

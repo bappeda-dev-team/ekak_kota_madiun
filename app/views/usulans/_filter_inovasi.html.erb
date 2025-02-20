@@ -18,7 +18,7 @@
             <th class="fw-bolder">Pemilik Rencana Kinerja</th>
             <th class="fw-bolder">Sub Kegiatan</th>
             <th class="fw-bolder">Program</th>
-            <th class="fw-bolder">Pagu</th>
+            <th class="fw-bolder">Pagu Rencana Kinerja</th>
             <th class="fw-bolder">OPD</th>
             <th class="fw-bolder">Permasalahan/ Uraian</th>
             <th class="fw-bolder">Inovasi</th>
@@ -32,8 +32,16 @@
               <td class="fw-bolder text-wrap"><%= inovasi.usulan %></td>
               <td class="text-gray-900 text-wrap"><%= inovasi.manfaat %></td>
               <td class="text-gray-900 text-wrap"><%= inovasi.misi %></td>
+              <td class="text-gray-900 text-wrap"><%= inovasi.pokin_inovasi %></td>
+              <td class="text-gray-900 text-wrap"><%= inovasi.rekin_inovasi %></td>
+              <td class="text-gray-900 text-wrap"><%= inovasi.pemilik_rekin %></td>
+              <td class="text-gray-900 text-wrap"><%= inovasi.subkegiatan_rekin %></td>
+              <td class="text-gray-900 text-wrap"><%= inovasi.program_rekin %></td>
+              <td class="text-gray-900">Rp. <%= number_with_delimiter(inovasi.pagu_rekin) %></td>
+              <td class="text-gray-900 text-wrap"><%= inovasi.opd_rekin %></td>
               <td class="text-gray-900 text-wrap"><%= inovasi.uraian %></td>
-              <td class="text-gray-900 text-wrap"><%= inovasi.tahun %></td>
+              <td class="text-gray-900 text-wrap"><%= inovasi.inovasi_rekin %></td>
+              <td class="text-gray-900 text-wrap">-</td>
             </tr>
           <% end %>
         </tbody>

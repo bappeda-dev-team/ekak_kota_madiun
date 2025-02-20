@@ -537,7 +537,7 @@ Rails.application.routes.draw do
       get "subkegiatan", on: :new
     end
 
-    # resources :usulans, only: [:destroy]
+    resources :usulans, only: [:destroy]
 
     resources :tahapans do
       member do

@@ -106,4 +106,63 @@ class Inovasi < ApplicationRecord
   rescue NoMethodError
     'Belum dipilih'
   end
+
+  def pokin_inovasi
+    sasaran.strategi
+  rescue NoMethodError
+    'Kosong'
+  end
+
+  def rekin_inovasi
+    sasaran.sasaran_kinerja
+  rescue NoMethodError
+    'Kosong'
+  end
+
+  def pemilik_rekin
+    sasaran.nama_pemilik
+  rescue NoMethodError
+    'Kosong'
+  end
+
+  def program_kegiatan_rekin
+    sasaran.program_kegiatan
+  end
+
+  def subkegiatan_rekin
+    program_kegiatan_rekin.nama_subkegiatan
+  rescue NoMethodError
+    'Kosong'
+  end
+
+  def program_rekin
+    program_kegiatan_rekin.nama_program
+  rescue NoMethodError
+    'Kosong'
+  end
+
+  def pagu_rekin
+    sasaran.total_anggaran
+  rescue NoMethodError
+    '-'
+  end
+
+  def opd_rekin
+    sasaran.opd
+  rescue NoMethodError
+    'Kosong'
+  end
+
+  def inovasi_rekin
+    sasaran.inovasi_sasaran
+  rescue NoMethodError
+    'Kosong'
+  end
+
+  private
+
+  # for NoMethodError string
+  def default_blank_fallback
+    'Kosong'
+  end
 end
