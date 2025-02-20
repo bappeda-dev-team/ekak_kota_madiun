@@ -7,47 +7,48 @@
   <div class="card border-0 shadow">
     <div class="card-header">
       <div class="row align-items-center">
-        <div class="col">
-          <h2 class="fs-5 fw-bold mb-0">Usulan Inisiatif Walikota Tahun <%= @tahun %></h2>
+        <div class="col-3">
+          <h2 class="fs-5 fw-bold mb-0">Filter</h2>
         </div>
-        <% unless guest? || !super_admin? %>
-          <div class="col text-end">
-            <%= link_to "Tambah Usulan", new_inovasi_path,
-                        remote: true,
-                        class: "btn btn-sm btn-info",
+        <div class="col filter-form">
+          <%= form_with url: filter_opd_tahun_inovasis_path, local: false,
+                        method: :get, class: 'row',
                         data: {
-                          controller: 'form-modal',
-                          action: 'ajax:complete->form-modal#success:prevent',
-                          bs_toggle: 'modal',
-                          bs_target: '#form-modal'
-                        }
-            %>
-          </div>
-        <% end %>
+                          controller: 'filter-render',
+                          filter_render_target_id_value: 'inovasi-results',
+                          action: 'ajax:success->filter-render#append'
+                        } do |form| %>
+            <div class="col">
+              <%= form.select :opd, [],
+               { include_blank: true },
+               data: {
+                 placeholder: 'Opd',
+                 controller: 'dropdown',
+                 dropdown_jenis_value: 'extra',
+                 dropdown_url_value: '/opds/filter_selected.json',
+                 dropdown_selected_value: @kode_opd,
+               }  %>
+            </div>
+            <div class="col">
+              <%= form.select :tahun, [],
+               { include_blank: true },
+               data: {
+                 placeholder: 'Tahun',
+                 controller: 'dropdown',
+                 dropdown_jenis_value: 'extra',
+                 dropdown_url_value: '/tahuns.json',
+                 dropdown_selected_value: @tahun
+               }  %>
+            </div>
+            <div class="col-auto">
+              <%= form.submit 'Filter', name: 'filter', class: 'btn btn-primary' %>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table table-bordered counter" data-datatable>
-          <thead class="thead-light">
-            <tr>
-              <th class="border-bottom text-gray-700" scope="col">No.</th>
-              <th class="border-bottom text-gray-700" scope="col">Tahun</th>
-              <th class="border-bottom text-gray-700" scope="col">Program Unggulan Walikota</th>
-              <th class="border-bottom text-gray-700" scope="col">ASTA KARYA</th>
-              <th class="border-bottom text-gray-700" scope="col">Misi Walikota</th>
-              <th class="border-bottom text-gray-700" scope="col">Uraian</th>
-              <th class="border-bottom text-gray-700" scope="col">Pengusul</th>
-              <th class="border-bottom text-gray-700" scope="col">Opd</th>
-              <th class="border-bottom text-gray-700 text-center" scope="col">Status</th>
-              <th class="border-bottom text-gray-700 text-center" scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody id="new_inovasi">
-            <%= render @inovasis %>
-          </tbody>
-        </table>
-      </div>
+    <div id="inovasi-results">
+      <%= render 'inovasis/content_inovasi' %>
     </div>
   </div>
 <% end %>

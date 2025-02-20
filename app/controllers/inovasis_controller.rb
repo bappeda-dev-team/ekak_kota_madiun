@@ -6,6 +6,38 @@ class InovasisController < ApplicationController
     list_inovasis
   end
 
+  def filter_opd_tahun
+    @kode_opd = params[:opd]
+    @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
+    @tahun = params[:tahun]
+
+    # logic if periode
+    # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    # periode_selected = params[:periode]
+    # @periode = if periode_selected.present?
+    #              Periode.find(periode_selected)
+    #            else
+    #              Periode.find_tahun(tahun_bener)
+    #            end
+    # @tahun_awal = @periode.tahun_awal.to_i
+    # @tahun_akhir = @periode.tahun_akhir.to_i
+
+    @inovasis = if @opd.is_kota
+                  Inovasi.where(tahun: @tahun)
+                  # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
+                else
+                  Inovasi.where(tahun: @tahun)
+                         .select do |inovasi|
+                    inovasi.opd == @kode_opd || inovasi&.sasaran&.user&.opd&.kode_unik_opd == @kode_opd
+                  end
+                  # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
+                  #        .where(opd: @kode_opd)
+                end
+    # @inovasis = Inovasi.where(tahun: @tahun)
+
+    render partial: 'inovasis/content_inovasi'
+  end
+
   def usulan_inisiatif
     list_inovasis
     nip_pemilik = current_user.nik
@@ -22,7 +54,7 @@ class InovasisController < ApplicationController
     user = is_admin_kota ? '' : current_user.nik
     @kode_opd = is_admin_kota ? "0.00.0.00.0.00.00.0000" : cookies[:opd]
     # @opd = cookies[:opd]
-    tahun = cookies[:tahun]
+    tahun = params[:tahun] || cookies[:tahun]
     # @opds = if is_admin_kota
     #           Opd.opd_resmi
     #              .pluck(:nama_opd,

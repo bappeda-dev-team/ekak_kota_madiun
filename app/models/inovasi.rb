@@ -29,6 +29,10 @@
 #
 class Inovasi < ApplicationRecord
   validates :usulan, presence: true
+  validates :manfaat, presence: true
+  validates :uraian, presence: true
+  validates :opd, presence: true
+  validates :misi_id, presence: true
 
   enum status: { draft: 'draft', pengajuan: 'pengajuan', disetujui: 'disetujui', aktif: 'aktif',
                  ditolak: 'ditolak', menunggu_persetujuan: 'menunggu_persetujuan' }

@@ -19,7 +19,7 @@
   <div class="field">
     <%= form.label :opd, class: 'form-label' %>
     <%= form.select :opd, [],
-     { include_blank: true },
+     { include_blank: true, required: true },
      data: {
        placeholder: 'Pilih Opd',
        controller: 'dropdown',
@@ -48,7 +48,7 @@
   <div class="field">
     <%= form.label :misi, class: 'form-label' %>
     <%= form.select :misi_id, [],
-     { include_blank: true },
+     { include_blank: true, required: true },
      data: {
        placeholder: 'Misi Kepala Daerah',
        controller: 'dropdown',
@@ -62,11 +62,11 @@
 
   <div class="field">
     <%= form.label :manfaat, "ASTA KARYA", class: 'form-label' %>
-    <%= form.text_field :manfaat, class: 'form-control' %>
+    <%= form.text_field :manfaat, class: 'form-control', required: true %>
   </div>
   <div class="field">
     <%= form.label :uraian, class: 'form-label' %>
-    <%= form.text_area :uraian, class: 'form-control' %>
+    <%= form.text_area :uraian, class: 'form-control', required: true %>
   </div>
   <div class="actions">
     <%= form.submit "Simpan Inisiatif Walikota baru" %>
