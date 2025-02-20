@@ -557,4 +557,10 @@ class ProgramKegiatan < ApplicationRecord
       kode_sub_giat
     end
   end
+
+  def valid_kode_opd_subkegiatan
+    id_sub_unit.present? &&
+      kode_skpd.present? &&
+      kode_sub_skpd.present?
+  end
 end

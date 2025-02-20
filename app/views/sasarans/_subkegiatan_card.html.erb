@@ -23,10 +23,10 @@
                      {include_blank: true},
                      { class: 'form-control',
                        data: { placeholder: "Pilih Subkegiatan",
-                               controller: 'dropdown',
-                               dropdown_jenis_value: 'ajax_preselect',
-                               dropdown_url_value: "/program_kegiatans.json",
-                               dropdown_item_value: sasaran.program_kegiatan_id
+                         controller: 'dropdown',
+                         dropdown_jenis_value: 'ajax_preselect',
+                         dropdown_url_value: "/program_kegiatans.json",
+                         dropdown_item_value: sasaran.program_kegiatan_id
                      }} )%>
         <div class="actions">
           <%= f.submit "Simpan" %>
@@ -74,6 +74,7 @@
               <% end %>
             </tr>
           </tbody>
+          <caption class="text-danger"><%= status_subkegiatan(sasaran&.program_kegiatan) %></caption>
         </table>
       </div>
     </div>

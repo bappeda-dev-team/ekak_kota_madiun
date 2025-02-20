@@ -69,7 +69,7 @@ module AksisHelper
     if checker
       "<i class='fa fa-check text-success'></i>".html_safe
     else
-      "<span class='badge bg-danger'><i class='fa fa-times'></i> Belum terisi</span>".html_safe
+      "<span class='badge bg-danger'><i class='fa fa-times me-2'></i>BELUM SESUAI</span>".html_safe
     end
   end
 
@@ -77,7 +77,7 @@ module AksisHelper
     if checker
       "<i class='fa fa-check text-success'></i>".html_safe
     else
-      "<span class='badge bg-danger'><i class='fa fa-times'></i> Rencana aksi belum 100%</span>".html_safe
+      "<span class='badge bg-danger'><i class='fa fa-times me-2'></i>RENCANA AKSI BELUM 100%</span>".html_safe
     end
   end
 end

@@ -41,7 +41,7 @@ class ProgramKegiatansController < ApplicationController
       end
     end
 
-    @program_kegiatans = program_kegiatans
+    @program_kegiatans = program_kegiatans.select(&:valid_kode_opd_subkegiatan)
   end
 
   def subkegiatans

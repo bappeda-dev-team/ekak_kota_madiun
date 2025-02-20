@@ -93,6 +93,12 @@ module SasaransHelper
     end
   end
 
+  def status_subkegiatan(subkegiatan)
+    return if subkegiatan.valid_kode_opd_subkegiatan
+
+    '<span class="badge badge-lg bg-danger w-100">SUBKEGIATAN TIDAK VALID</span>'.html_safe
+  end
+
   def isi_subkegiatan?(user)
     user.eselon_user == 'eselon_4' || current_user.has_any_role?('eselon_4') ||
       user.nama_bidang&.upcase&.include?("PUSKESMAS") || user.opd.nama_opd&.upcase&.include?("BENCANA")

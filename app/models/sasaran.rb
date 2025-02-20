@@ -272,7 +272,7 @@ class Sasaran < ApplicationRecord
   end
 
   def subkegiatan?
-    program_kegiatan.present?
+    program_kegiatan.present? && program_kegiatan.valid_kode_opd_subkegiatan
   end
 
   def lengkap?
