@@ -1,9 +1,9 @@
 <tr id="<%= dom_id(inovasi) %>">
   <td class="border text-gray-900 fw-bolder" scope="row"></td>
   <td class="border fw-bolder text-wrap"><%= inovasi.tahun %></td>
-  <td class="border fw-bolder text-wrap"><%= inovasi.usulan %></td>
+  <td class="border fw-bolder text-wrap program-unggulan"><%= inovasi.usulan %></td>
+  <td class="border fw-bolder text-wrap asta-karya"><%= inovasi.manfaat %></td>
   <td class="border fw-bolder text-wrap"><%= inovasi.misi_with_urutan %></td>
-  <td class="border fw-bolder text-wrap"><%= inovasi.manfaat %></td>
   <td class="border fw-bolder text-wrap"><%= inovasi.uraian %></td>
   <td class="border fw-bolder text-wrap"><%= inovasi.asn_pengusul %></td>
   <td class="border fw-bolder text-wrap"><%= inovasi.opd_inovasi %></td>
@@ -42,31 +42,33 @@
   </td>
   <td class="fw-bolder border-bottom align-middle text-center">
     <% unless guest? %>
-      <%= link_to edit_inovasi_path(inovasi),
-                  remote: true,
-                  class: 'btn btn-sm btn-info',
-                  data: {
-                    controller: 'form-modal',
-                    action: 'ajax:complete->form-modal#success:prevent',
-                    bs_toggle: 'modal',
-                    bs_target: '#form-modal'
-                  } do %>
-        <i class="fas fa-edit"></i>
-        <span>Edit</span>
-      <% end %>
-      <%= link_to inovasi_path(inovasi),
-                  method: :delete,
-                  remote: true,
-                  class: 'btn btn-sm btn-danger',
-                  data: {
-                    controller: 'form-ajax',
-                    form_ajax_element_id_value: dom_id(inovasi),
-                    confirm_swal: 'Hapus usulan inisiatif?',
-                    action: 'ajax:success->form-ajax#ajaxDelete'
-                  } do %>
-        <i class="fas fa-trash"></i>
-        <span>Hapus</span>
-      <% end %>
+      <div class="d-grid gap-3">
+        <%= link_to edit_inovasi_path(inovasi),
+                    remote: true,
+                    class: 'btn btn-sm btn-info',
+                    data: {
+                      controller: 'form-modal',
+                      action: 'ajax:complete->form-modal#success:prevent',
+                      bs_toggle: 'modal',
+                      bs_target: '#form-modal'
+                    } do %>
+          <i class="fas fa-edit"></i>
+          <span>Edit</span>
+        <% end %>
+        <%= link_to inovasi_path(inovasi),
+                    method: :delete,
+                    remote: true,
+                    class: 'btn btn-sm btn-danger',
+                    data: {
+                      controller: 'form-ajax',
+                      form_ajax_element_id_value: dom_id(inovasi),
+                      confirm_swal: 'Hapus usulan inisiatif?',
+                      action: 'ajax:success->form-ajax#ajaxDelete'
+                    } do %>
+          <i class="fas fa-trash"></i>
+          <span>Hapus</span>
+        <% end %>
+      </div>
     <% end %>
   </td>
 </tr>
