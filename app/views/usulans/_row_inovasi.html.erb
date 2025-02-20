@@ -1,0 +1,35 @@
+<tr id="<%= dom_id(inovasi) %>">
+  <td class="text-gray-900" width='20px'><%= no %></td>
+  <td class="fw-bolder text-wrap"><%= inovasi.usulan %></td>
+  <td class="text-gray-900 text-wrap"><%= inovasi.manfaat %></td>
+  <td class="text-gray-900 text-wrap"><%= inovasi.misi %></td>
+  <td class="text-gray-900 text-wrap"><%= inovasi.pokin_inovasi %></td>
+  <td class="text-gray-900 text-wrap"><%= inovasi.rekin_inovasi %></td>
+  <td class="text-gray-900 text-wrap"><%= inovasi.pemilik_rekin %></td>
+  <td class="text-gray-900 text-wrap"><%= inovasi.subkegiatan_rekin %></td>
+  <td class="text-gray-900 text-wrap"><%= inovasi.program_rekin %></td>
+  <td class="text-gray-900">Rp. <%= number_with_delimiter(inovasi.pagu_rekin) %></td>
+  <td class="text-gray-900 text-wrap"><%= inovasi.opd_rekin %></td>
+  <td class="text-gray-900 text-wrap" width='700px'><%= inovasi.uraian %></td>
+  <td class="text-gray-900 text-wrap"><%= inovasi.inovasi_rekin %></td>
+  <td class="text-gray-900 text-wrap">
+    <div class="d-grid gap-2" >
+      <div class="review-items" id="<%= dom_id(inovasi, 'review') %>">
+        <%= render partial: 'reviews/review', collection: inovasi.reviews %>
+      </div>
+      <%= link_to new_review_path(type: 'Inovasi', id: inovasi.id, target: dom_id(inovasi, 'review')),
+                  remote: true,
+                  class: 'btn btn-outline-primary',
+                  data: {
+                    controller: 'form-modal',
+                    action: 'form-modal#appendForm',
+                    form_modal_location_param: 'form-modal-body',
+                    bs_target: '#form-modal',
+                    bs_toggle: 'modal'
+                  } do %>
+        <span class="fas fa-marker me-2"></span>
+        <span>Review</span>
+      <% end %>
+    </div>
+  </td>
+</tr>

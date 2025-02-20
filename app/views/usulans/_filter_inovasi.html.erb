@@ -6,43 +6,28 @@
       </div>
     </div>
     <div class="table-responsive mb-5">
-      <table class="table table-bordered align-items-center counter">
+      <table class="table table-bordered align-items-center">
         <thead>
           <tr>
             <th class="fw-bolder" width="20px">No.</th>
-            <th class="fw-bolder">Program Unggulan Walikota</th>
-            <th class="fw-bolder">Asta Karya</th>
-            <th class="fw-bolder">Misi Walikota</th>
-            <th class="fw-bolder">Pohon Kinerja</th>
-            <th class="fw-bolder">Rencana Kinerja</th>
-            <th class="fw-bolder">Pemilik Rencana Kinerja</th>
-            <th class="fw-bolder">Sub Kegiatan</th>
-            <th class="fw-bolder">Program</th>
-            <th class="fw-bolder">Pagu Rencana Kinerja</th>
-            <th class="fw-bolder">OPD</th>
-            <th class="fw-bolder">Uraian</th>
-            <th class="fw-bolder">Inovasi</th>
-            <th class="fw-bolder">Keterangan</th>
+            <th class="fw-bolder text-center">Program Unggulan Walikota</th>
+            <th class="fw-bolder text-center">Asta Karya</th>
+            <th class="fw-bolder text-center">Misi Walikota</th>
+            <th class="fw-bolder text-center">Pohon Kinerja</th>
+            <th class="fw-bolder text-center">Rencana Kinerja</th>
+            <th class="fw-bolder text-center">Pemilik Rencana Kinerja</th>
+            <th class="fw-bolder text-center">Sub Kegiatan</th>
+            <th class="fw-bolder text-center">Program</th>
+            <th class="fw-bolder text-center">Pagu Rencana Kinerja</th>
+            <th class="fw-bolder text-center">OPD</th>
+            <th class="fw-bolder text-center">Uraian</th>
+            <th class="fw-bolder text-center">Inovasi</th>
+            <th class="fw-bolder text-center">Keterangan</th>
           </tr>
         </thead>
         <tbody>
-          <% @inovasis.each do |inovasi| %>
-            <tr>
-              <td class="text-gray-900" width='20px'></td>
-              <td class="fw-bolder text-wrap"><%= inovasi.usulan %></td>
-              <td class="text-gray-900 text-wrap"><%= inovasi.manfaat %></td>
-              <td class="text-gray-900 text-wrap"><%= inovasi.misi %></td>
-              <td class="text-gray-900 text-wrap"><%= inovasi.pokin_inovasi %></td>
-              <td class="text-gray-900 text-wrap"><%= inovasi.rekin_inovasi %></td>
-              <td class="text-gray-900 text-wrap"><%= inovasi.pemilik_rekin %></td>
-              <td class="text-gray-900 text-wrap"><%= inovasi.subkegiatan_rekin %></td>
-              <td class="text-gray-900 text-wrap"><%= inovasi.program_rekin %></td>
-              <td class="text-gray-900">Rp. <%= number_with_delimiter(inovasi.pagu_rekin) %></td>
-              <td class="text-gray-900 text-wrap"><%= inovasi.opd_rekin %></td>
-              <td class="text-gray-900 text-wrap"><%= inovasi.uraian %></td>
-              <td class="text-gray-900 text-wrap"><%= inovasi.inovasi_rekin %></td>
-              <td class="text-gray-900 text-wrap">-</td>
-            </tr>
+          <% @inovasis.each.with_index(1) do |inovasi, no| %>
+            <%= render 'row_inovasi', inovasi: inovasi, no: no %>
           <% end %>
         </tbody>
         <tfoot>
