@@ -315,7 +315,8 @@ class Strategi < ApplicationRecord
   end
 
   def strategi_dihapus?
-    deleted_at.present?
+    strategi_atasan_check = (strategi_atasan.strategi_dihapus? if strategi_atasan.present?)
+    strategi_atasan_check || deleted_at.present?
   end
 
   def sasaran_bawahan_manrisk
