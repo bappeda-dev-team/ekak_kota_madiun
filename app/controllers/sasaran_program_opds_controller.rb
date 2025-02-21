@@ -31,6 +31,7 @@ class SasaranProgramOpdsController < ApplicationController
   end
 
   def verifikasi_dampak_resiko
+    @butuh_verifikasi = params[:butuh_verifikasi]
     @laporan = params[:laporan]
     @nomor = params[:nomor_sasaran]
     @sasaran = Sasaran.find params[:sasaran_program_opd_id]

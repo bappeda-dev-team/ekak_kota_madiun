@@ -544,15 +544,18 @@ class SasaransController < ApplicationController
   end
 
   def input_rtp
+    @butuh_verifikasi = params[:butuh_verifikasi]
     @laporan = params[:laporan]
     @nomor = params[:nomor_sasaran]
     @tahapans = @sasaran.tahapans
   end
 
   def simpan_rtp
+    @butuh_verifikasi = params[:butuh_verifikasi]
     laporan = params[:laporan]
     nomor = params[:nomor_sasaran]
     tahapan_id = params[:is_rtp]
+    @sasaran.butuh_verifikasi = @butuh_verifikasi
     @sasaran.tahapans.each do |tahapan|
       if tahapan.rtp_mr? && tahapan.id.to_s != tahapan_id
         tahapan.tagging = ""
@@ -584,14 +587,16 @@ class SasaransController < ApplicationController
   end
 
   def verifikasi_risiko
-    laporan = params[:laporan]
-    nomor = params[:nomor_sasaran]
+    @butuh_verifikasi = params[:butuh_verifikasi]
+    @laporan = params[:laporan]
+    @nomor = params[:nomor_sasaran]
+    @sasaran.butuh_verifikasi = @butuh_verifikasi
     if @sasaran.update(manrisk_sasaran_params)
-      render json: { html_content: html_content({ show_sasaran: @sasaran, nomor: nomor, laporan: laporan },
+      render json: { html_content: html_content({ show_sasaran: @sasaran, nomor: @nomor, laporan: @laporan },
                                                 partial: 'daftar_risiko/row_daftar_risiko') }
         .to_json, status: :ok
     else
-      render json: { html_content: html_content({ sasaran: @sasaran, nomor: nomor, laporan: laporan },
+      render json: { html_content: html_content({ sasaran: @sasaran },
                                                 partial: 'sasaran_program_opds/verifikasi_dampak_resiko') }
         .to_json, status: :unprocessable_entity
     end

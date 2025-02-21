@@ -133,6 +133,9 @@ class Sasaran < ApplicationRecord
                  :status_dampak_resiko, :komentar_dampak_resiko, :verifikator_dampak_resiko,
                  :judul_rincian_tugas, :status_rincian_tugas
 
+  # untuk user manrisk
+  attr_accessor :butuh_verifikasi
+
   # DANGER, maybe broke something, uncomment this
   # def respond_to_missing?(_method, *_args)
   #   0

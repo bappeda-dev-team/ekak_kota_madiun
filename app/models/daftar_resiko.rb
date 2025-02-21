@@ -33,6 +33,7 @@ class DaftarResiko
       sasarans_filter(tahun, str.sasarans.dengan_sub_kegiatan)
     end
     sasaran_bawahans.compact_blank!.flatten.group_by(&:program_kegiatan)
+                    .transform_values { |sas| sas.each { |ss| ss.butuh_verifikasi = true } }
   end
 
   def daftar_resiko_asn(nip: '')
