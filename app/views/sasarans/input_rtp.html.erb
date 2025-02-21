@@ -13,7 +13,7 @@
               <th class="border-bottom border-end" scope="col">Keterangan</th>
             </tr>
           </thead>
-          <%= form_with model: @sasaran, url: simpan_rtp_sasaran_path(nomor_sasaran: @nomor, laporan: @laporan),
+          <%= form_with model: @sasaran, url: simpan_rtp_sasaran_path(nomor_sasaran: @nomor, laporan: @laporan, butuh_verifikasi: @butuh_verifikasi),
                         id: 'form-rtp', local: false,
                         data: {
                           controller: 'form-ajax',

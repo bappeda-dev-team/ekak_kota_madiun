@@ -5,6 +5,15 @@ class DaftarResiko
     @tahun = tahun.to_s
   end
 
+  def tanggung_jawab_manrisk?(nip: '')
+    user = User.find_by(nik: nip)
+    tactical_role = Pohon.where(pohonable_type: 'StrategiPohon',
+                                tahun: tahun,
+                                role: %w[plt eselon_3],
+                                user_id: user.id)
+    tactical_role.any?
+  end
+
   def pohon_pelaksana(nip: '')
     user = User.find_by(nik: nip)
     pohon_pelaksana = Pohon.where(pohonable_type: 'StrategiPohon',
@@ -24,6 +33,7 @@ class DaftarResiko
       sasarans_filter(tahun, str.sasarans.dengan_sub_kegiatan)
     end
     sasaran_bawahans.compact_blank!.flatten.group_by(&:program_kegiatan)
+                    .transform_values { |sas| sas.each { |ss| ss.butuh_verifikasi = true } }
   end
 
   def daftar_resiko_asn(nip: '')
@@ -31,6 +41,13 @@ class DaftarResiko
       sasarans_asn = pk.sasarans.where(sasarans: { nip_asn: nip })
       sasarans_filter(tahun, sasarans_asn)
     end.compact_blank!.flatten.group_by(&:program_kegiatan)
+  end
+
+  def daftar_resiko_plt(nip: '')
+    verifikasi_list = daftar_resiko_eselon3(nip: nip)
+    manrisk_pelaksana = daftar_resiko_asn(nip: nip)
+
+    verifikasi_list.merge manrisk_pelaksana
   end
 
   def daftar_resiko_sasaran(sasaran_id: '')

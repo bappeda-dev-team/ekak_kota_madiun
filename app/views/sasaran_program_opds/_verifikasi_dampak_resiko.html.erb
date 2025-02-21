@@ -1,6 +1,6 @@
 <h5>Verifikasi Manajemen Risiko Sasaran Kinerja</h5>
 <%= form_with model: sasaran,
-              url: verifikasi_risiko_sasaran_path(sasaran, nomor: @nomor, laporan: @laporan),
+              url: verifikasi_risiko_sasaran_path(sasaran, nomor: @nomor, laporan: @laporan, butuh_verifikasi: @butuh_verifikasi),
               local: false,
               method: :patch,
               data: {

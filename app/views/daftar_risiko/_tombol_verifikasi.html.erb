@@ -1,7 +1,7 @@
-<% if eselon_x?('eselon_3', 'admin', 'super_admin') %>
+<% if eselon_x?('eselon_3', 'admin', 'super_admin') || show_sasaran.butuh_verifikasi %>
   <% if show_sasaran.tahapan_mr? %>
     <% if show_sasaran.status_dampak_resiko.present? && show_sasaran.rincian.valid_manrisk? %>
-      <%= link_to sasaran_program_opd_verifikasi_dampak_resiko_path(show_sasaran, nomor_sasaran: nomor, laporan: laporan),
+      <%= link_to sasaran_program_opd_verifikasi_dampak_resiko_path(show_sasaran, nomor_sasaran: nomor, laporan: laporan, butuh_verifikasi: show_sasaran.butuh_verifikasi),
                   remote: true,
                   data: {
                     controller: 'form-modal',
@@ -24,7 +24,7 @@
       <% end %>
     <% else %>
       <% if show_sasaran.rincian.valid_manrisk? %>
-        <%= link_to sasaran_program_opd_verifikasi_dampak_resiko_path(show_sasaran, nomor_sasaran: nomor, laporan: laporan),
+        <%= link_to sasaran_program_opd_verifikasi_dampak_resiko_path(show_sasaran, nomor_sasaran: nomor, laporan: laporan, butuh_verifikasi: show_sasaran.butuh_verifikasi),
                     remote: true,
                     data: {
                       controller: 'form-modal',

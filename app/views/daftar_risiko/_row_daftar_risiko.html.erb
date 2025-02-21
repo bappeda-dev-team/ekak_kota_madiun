@@ -57,7 +57,7 @@
       <% unless guest? %>
         <div class="d-grid gap-3">
           <% unless laporan == "admin" %>
-            <% if eselon_x?('eselon_4', 'staff', 'admin', 'super_admin') %>
+            <% if eselon_x?('eselon_4', 'staff', 'admin', 'super_admin') && !show_sasaran.butuh_verifikasi %>
               <%= link_to sasaran_program_opd_add_dampak_resiko_path(show_sasaran, nomor_sasaran: nomor, laporan: laporan),
                           { remote: true,
                             class: 'btn btn-sm btn-tertiary',
@@ -79,7 +79,7 @@
             <i class="fas fa-tree me-2"></i>
             <span>Pohon Kinerja</span>
           <% end %>
-          <%= link_to input_rtp_sasaran_path(show_sasaran, nomor_sasaran: nomor, laporan: laporan),
+          <%= link_to input_rtp_sasaran_path(show_sasaran, nomor_sasaran: nomor, laporan: laporan, butuh_verifikasi: show_sasaran.butuh_verifikasi),
                       remote: true, class: 'btn btn-sm btn-info',
                       data: {
                         controller: 'form-modal',
