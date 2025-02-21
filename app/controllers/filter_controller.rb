@@ -299,6 +299,8 @@ class FilterController < ApplicationController
         daftar_resiko.daftar_resiko_opd
       elsif @user.has_role?(:eselon_3)
         daftar_resiko.daftar_resiko_eselon3(nip: @user.nik)
+      elsif daftar_resiko.tanggung_jawab_manrisk?(nip: @user.nik)
+        daftar_resiko.daftar_resiko_plt(nip: @user.nik)
       else
         daftar_resiko.daftar_resiko_asn(nip: @user.nik)
       end

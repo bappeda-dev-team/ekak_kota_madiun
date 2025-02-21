@@ -800,6 +800,10 @@ class Sasaran < ApplicationRecord
     hasil_inovasi == 'Inovasi'
   end
 
+  def verifikator_manrisk?
+    strategi.role.in? %w[eselon_3 plt]
+  end
+
   def user_manrisk?
     user.has_role?(:eselon_4) && !strategi&.as_plt?
   end
