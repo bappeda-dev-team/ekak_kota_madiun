@@ -1,0 +1,81 @@
+<%= form_with(model: kolab, local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: @target,
+                form_ajax_type_param: @type,
+                action: 'ajax:complete->form-ajax#processAjax'
+              }
+) do |form| %>
+  <% if kolab.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(kolab.errors.count, "error") %> prohibited this kolab from being saved:</h2>
+
+      <ul>
+        <% kolab.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.hidden_field :kolabable_type %>
+    <%= form.hidden_field :kolabable_id %>
+    <%= form.hidden_field :jenis %>
+    <p class="form-label">Program Unggulan</p>
+    <p class="form-control"><%= @inovasi.usulan %></p>
+  </div>
+
+  <div class="field">
+    <p class="form-label">Asta Karya</p>
+    <p class="form-control"><%= @inovasi.manfaat %></p>
+  </div>
+
+  <div class="field">
+    <p class="form-label">Misi Walikota</p>
+    <p class="form-control"><%= @inovasi.misi %></p>
+  </div>
+
+  <div class="field">
+    <p class="form-label">Pohon Kinerja</p>
+    <p class="form-control"><%= @pohon_kinerja %></p>
+  </div>
+
+  <div class="field">
+    <p class="form-label">OPD Pelaksana</p>
+    <p class="form-control"><%= @opd %></p>
+  </div>
+
+  <div class="field">
+    <%= form.label :tahun, class: 'form-label' %>
+    <%= form.text_field :tahun, class: 'form-control', readonly: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :opd_kolaborator, class: 'form-label' %>
+    <%= form.select :kode_unik_opd, [], {include_blank: true},
+     {
+       data: { placeholder: "OPD Kolaborator",
+         controller: 'dropdown',
+         dropdown_jenis_value: 'ajax_preselect',
+         dropdown_url_value: legit_opd_opds_path(:json),
+         dropdown_kode_opd_value: @kode_opd,
+         dropdown_parent_value: '#form-modal',
+       }
+     } %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status, class: 'form-label' %>
+    <%= form.text_field :status, class: 'form-control disabled', readonly: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_area :keterangan, class: 'form-control' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

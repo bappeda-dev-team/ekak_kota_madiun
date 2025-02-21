@@ -12,15 +12,15 @@
   <td class="text-gray-900 text-wrap"><%= inovasi.opd_rekin %></td>
   <td class="text-gray-900 text-wrap" width='700px'><%= inovasi.uraian %></td>
   <td class="text-gray-900 text-wrap"><%= inovasi.inovasi_rekin %></td>
-  <td class="text-gray-900 text-wrap">
-    <div class="d-grid gap-2" >
+  <td class="text-gray-900 text-wrap" style="height: 1px;">
+    <div class="d-grid h-100" >
       <div class="review-items" id="<%= dom_id(inovasi, 'review') %>">
         <%= render partial: 'reviews/review', collection: inovasi.reviews %>
       </div>
       <% if admin_kota? %>
         <%= link_to new_review_path(type: 'Inovasi', id: inovasi.id, target: dom_id(inovasi, 'review')),
                     remote: true,
-                    class: 'btn btn-outline-primary',
+                    class: 'btn btn-outline-primary mt-auto',
                     data: {
                       controller: 'form-modal',
                       action: 'form-modal#appendForm',
@@ -33,5 +33,31 @@
         <% end %>
       <% end %>
     </div>
+  </td>
+  <td class="text-gray-900 text-wrap" style="height: 1px !important;">
+    <% if inovasi.sasaran_aktif? %>
+      <div class="d-grid h-100">
+        <div class="kolab-items" id="<%= dom_id(inovasi, 'kolab') %>">
+          <%= render partial: 'kolabs/kolab', collection: inovasi.kolabs %>
+        </div>
+        <% if admin_kota? %>
+          <%= link_to new_kolab_path(type: 'Inovasi', id: inovasi.id,
+                                     tahun: inovasi.tahun, kode_opd: inovasi.opd_rekin.kode_unik_opd,
+                                     target: dom_id(inovasi, 'kolab')),
+                      remote: true,
+                      class: 'btn btn-tertiary mt-auto',
+                      data: {
+                        controller: 'form-modal',
+                        action: 'form-modal#appendForm',
+                        form_modal_location_param: 'form-modal-body',
+                        bs_target: '#form-modal',
+                        bs_toggle: 'modal'
+                      } do %>
+            <span class="fas fa-plus me-2"></span>
+            <span>Tambah Kolaborator</span>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
   </td>
 </tr>

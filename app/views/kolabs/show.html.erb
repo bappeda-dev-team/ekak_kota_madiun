@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Kolabable type:</strong>
+  <%= @kolab.kolabable_type %>
+</p>
+
+<p>
+  <strong>Kolabable:</strong>
+  <%= @kolab.kolabable_id %>
+</p>
+
+<p>
+  <strong>Jenis:</strong>
+  <%= @kolab.jenis %>
+</p>
+
+<p>
+  <strong>Kode unik opd:</strong>
+  <%= @kolab.kode_unik_opd %>
+</p>
+
+<p>
+  <strong>Tahun:</strong>
+  <%= @kolab.tahun %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @kolab.status %>
+</p>
+
+<p>
+  <strong>Keterangan:</strong>
+  <%= @kolab.keterangan %>
+</p>
+
+<%= link_to 'Edit', edit_kolab_path(@kolab) %> |
+<%= link_to 'Back', kolabs_path %>

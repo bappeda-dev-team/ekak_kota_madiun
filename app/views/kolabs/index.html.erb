@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Kolabs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Kolabable type</th>
+      <th>Kolabable</th>
+      <th>Jenis</th>
+      <th>Kode unik opd</th>
+      <th>Tahun</th>
+      <th>Status</th>
+      <th>Keterangan</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @kolabs.each do |kolab| %>
+      <tr>
+        <td><%= kolab.kolabable_type %></td>
+        <td><%= kolab.kolabable_id %></td>
+        <td><%= kolab.jenis %></td>
+        <td><%= kolab.kode_unik_opd %></td>
+        <td><%= kolab.tahun %></td>
+        <td><%= kolab.status %></td>
+        <td><%= kolab.keterangan %></td>
+        <td><%= link_to 'Show', kolab %></td>
+        <td><%= link_to 'Edit', edit_kolab_path(kolab) %></td>
+        <td><%= link_to 'Destroy', kolab, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Kolab', new_kolab_path %>

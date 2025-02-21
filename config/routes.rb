@@ -8,6 +8,7 @@ require "sidekiq/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :kolabs
   resources :misis, path: "misi_kota" do
     collection do
       get :lists

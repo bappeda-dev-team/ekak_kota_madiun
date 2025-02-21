@@ -747,3 +747,8 @@ tr.warning td {
 .indikator-row td {
   text-align: left;
 }
+
+.form-control.disabled {
+  background-color: #e5e7eb;
+  opacity: 1;
+}

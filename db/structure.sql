@@ -1696,6 +1696,43 @@ ALTER SEQUENCE public.koefisiens_id_seq OWNED BY public.koefisiens.id;
 
 
 --
+-- Name: kolabs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.kolabs (
+    id bigint NOT NULL,
+    kolabable_type character varying,
+    kolabable_id bigint,
+    jenis character varying,
+    kode_unik_opd character varying,
+    tahun character varying,
+    status character varying,
+    keterangan character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: kolabs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.kolabs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: kolabs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.kolabs_id_seq OWNED BY public.kolabs.id;
+
+
+--
 -- Name: komentars; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -4664,6 +4701,13 @@ ALTER TABLE ONLY public.koefisiens ALTER COLUMN id SET DEFAULT nextval('public.k
 
 
 --
+-- Name: kolabs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.kolabs ALTER COLUMN id SET DEFAULT nextval('public.kolabs_id_seq'::regclass);
+
+
+--
 -- Name: komentars id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -5469,6 +5513,14 @@ ALTER TABLE ONLY public.kesenjangans
 
 ALTER TABLE ONLY public.koefisiens
     ADD CONSTRAINT koefisiens_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: kolabs kolabs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.kolabs
+    ADD CONSTRAINT kolabs_pkey PRIMARY KEY (id);
 
 
 --
@@ -7415,6 +7467,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250217001609'),
 ('20250217005117'),
 ('20250217014309'),
-('20250220001054');
+('20250220001054'),
+('20250221203054');
 
 

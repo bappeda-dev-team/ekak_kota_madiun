@@ -45,6 +45,7 @@ class Inovasi < ApplicationRecord
 
   has_many :usulans, as: :usulanable, dependent: :destroy
   has_many :reviews, as: :reviewable, dependent: :destroy
+  has_many :kolabs, as: :kolabable, dependent: :destroy
 
   default_scope { order(created_at: :desc) }
 
