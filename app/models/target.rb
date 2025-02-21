@@ -37,6 +37,6 @@ class Target < ApplicationRecord
   def capaian
     return 0 if target.to_f.zero? && realisasi&.realisasi.to_f.zero?
 
-    (realisasi&.realisasi.to_f / target.to_f).round(2) * 100
+    (realisasi&.realisasi.to_f / target).round(2) * 100
   end
 end
