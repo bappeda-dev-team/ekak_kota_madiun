@@ -94,7 +94,7 @@ module SasaransHelper
   end
 
   def status_subkegiatan(subkegiatan)
-    return if subkegiatan.valid_kode_opd_subkegiatan
+    return if subkegiatan&.valid_kode_opd_subkegiatan
 
     '<span class="badge badge-lg bg-danger w-100">SUBKEGIATAN TIDAK VALID</span>'.html_safe
   end
