@@ -61,15 +61,16 @@
     </td>
   </tr>
   <% if terdapat_rekin %>
-    <% inovasi.all_usulans.each do |usulan| %>
-      <tr class="skip">
+    <% inovasi.all_usulans.each.with_index(1) do |usulan, urutan| %>
+      <% leader = urutan == 1 %>
+      <tr class="skip <%= leader ? 'table-info' : '' %>">
         <td class="text-gray-900 text-wrap"><%= usulan.pokin_inovasi %></td>
         <td class="text-gray-900 text-wrap"><%= usulan.rekin_inovasi %></td>
         <td class="text-gray-900 text-wrap"><%= usulan.pemilik_rekin %></td>
         <td class="text-gray-900 text-wrap"><%= usulan.subkegiatan_rekin %></td>
         <td class="text-gray-900 text-wrap"><%= usulan.program_rekin %></td>
         <td class="text-gray-900">Rp. <%= number_with_delimiter(usulan.pagu_rekin) %></td>
-        <td class="text-gray-900 text-wrap"><%= usulan.opd_rekin %></td>
+        <td class="text-gray-900 text-wrap"><%= usulan.opd_rekin %> <b><%= leader ? '(Lead)' : '' %></b></td>
         <td class="text-gray-900 text-wrap"><%= usulan.inovasi_rekin %></td>
       </tr>
     <% end %>
