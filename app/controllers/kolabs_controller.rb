@@ -74,10 +74,8 @@ class KolabsController < ApplicationController
   def destroy
     @kolab.destroy
 
-    respond_to do |format|
-      format.html { redirect_to kolabs_url, notice: "Kolab was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    render json: { resText: "Kolaborasi dibatalkan" }.to_json,
+           status: :accepted
   end
 
   private

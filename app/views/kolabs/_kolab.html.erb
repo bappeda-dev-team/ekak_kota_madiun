@@ -2,7 +2,13 @@
   <tr>
     <td class="text-start" width="20px">Kolaborasi Dengan</td>
     <td class="fw-bolder text-gray-500 text-wrap text-start"><%= kolab.opd %></td>
-    <td class="text-wrap">Edit</td>
+    <td class="text-wrap">
+      <div class="d-grid">
+        <%= render(DeleteButtonAjaxComponent.new(path: kolab_path(kolab),
+                                                 model: kolab,
+                                                 text: 'Hapus kolaborasi?')) %>
+      </div>
+    </td>
   </tr>
   <tr>
     <td class="text-start" width="20px">Status</td>
