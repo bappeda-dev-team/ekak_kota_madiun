@@ -22,6 +22,11 @@ class SearchController < ApplicationController
                                   .order(searchable_id: :desc)
                                   .includes(:searchable)
                                   .collect(&:searchable)
+                                  .reject do |inovasi|
+                   inovasi.all_usulans.any? do |us|
+                     us.sasaran_id == kode_sasaran.to_i
+                   end
+                 end
                else
                  # search only pribadi
                  Search::AllUsulan.where(searchable_type: @usulan_type, nip_asn: @nip_asn, tahun: @tahun)
