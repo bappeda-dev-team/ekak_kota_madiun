@@ -1,6 +1,6 @@
 <tbody id="<%= dom_id(tujuan_kota) %>">
   <% rowsize = tujuan_kota.indikator_tujuans.size + 1 %>
-  <% range_tahun = (@tahun_awal..@tahun_akhir) %>
+  <% range_tahun = (@tahun_awal.to_i..@tahun_akhir.to_i) %>
   <tr>
     <td class="text-gray-900 text-wrap border" width='20px' scope="row" rowspan="<%= rowsize %>"></td>
     <td class="text-gray-900" scope="row" rowspan="<%= rowsize %>">
