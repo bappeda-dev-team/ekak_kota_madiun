@@ -28,7 +28,10 @@ class UsulansController < ApplicationController
       if u.save
         usulan_asli = u.usulanable
         sasaran_update = u.sasaran
+
         usulan_asli.update(status: 'menunggu_persetujuan')
+
+        usulan_asli.update(sasaran_id: sasaran_id) unless usulan_type == "Inovasi"
 
         if usulan_type == 'Mandatori'
           sasaran_update.dasar_hukums.create!(usulan_id: u.id,
