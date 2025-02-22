@@ -1,5 +1,6 @@
 <tbody id="<%= dom_id(tujuan_kota) %>">
   <% rowsize = tujuan_kota.indikator_tujuans.size + 1 %>
+  <% range_tahun = (@tahun_awal..@tahun_akhir) %>
   <tr>
     <td class="text-gray-900 text-wrap border" width='20px' scope="row" rowspan="<%= rowsize %>"></td>
     <td class="text-gray-900" scope="row" rowspan="<%= rowsize %>">
@@ -18,13 +19,38 @@
     <td class="fw-bolder border text-wrap" scope="row" rowspan="<%= rowsize %>"><%= tujuan_kota.pohon&.pohonable.to_s %></td>
     <td class="fw-bolder text-wrap" scope="row" rowspan="<%= rowsize %>"><%= tujuan_kota.tujuan %></td>
     <td class="fw-bolder border" scope="row" rowspan="<%= rowsize %>"><%= tujuan_kota.tahun_awal_akhir %></td>
+    <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="<%= range_tahun.size * 2 + 3 %>"></td>
+    <td class="border" style="height: 1px;" scope="row" rowspan="<%= rowsize %>">
+      <div class="d-grid h-100" >
+        <div class="review-items" id="<%= dom_id(tujuan_kota, 'review') %>">
+          <%= render partial: 'reviews/review', collection: tujuan_kota.reviews %>
+        </div>
+        <% if admin_kota? %>
+          <%= link_to new_review_path(type: 'TujuanKota',
+                                      id: tujuan_kota.id,
+                                      target: dom_id(tujuan_kota, 'review')),
+                      remote: true,
+                      class: 'btn btn-outline-primary mt-auto',
+                      data: {
+                        controller: 'form-modal',
+                        action: 'form-modal#appendForm',
+                        form_modal_location_param: 'form-modal-body',
+                        bs_target: '#form-modal',
+                        bs_toggle: 'modal'
+                      } do %>
+            <span class="fas fa-marker me-2"></span>
+            <span>Review</span>
+          <% end %>
+        <% end %>
+      </div>
+    </td>
   </tr>
   <% tujuan_kota.indikator_tujuans.each do |indikator_tujuan| %>
     <tr class="skip">
       <td class="text-gray-900 text-wrap border"><%= indikator_tujuan || '-' %></td>
       <td class="text-gray-900 text-wrap border"><%= indikator_tujuan.rumus_perhitungan || '-' %></td>
       <td class="text-gray-900 text-wrap border"><%= indikator_tujuan.sumber_data || '-' %></td>
-      <% (@tahun_awal..@tahun_akhir).each do |tahun| %>
+      <% range_tahun.each do |tahun| %>
         <% target = indikator_tujuan.targets.find_by(tahun: tahun) %>
         <td class="text-gray-900 text-wrap border"><%= target %></td>
         <td class="text-gray-900 text-wrap border"><%= target&.satuan %></td>

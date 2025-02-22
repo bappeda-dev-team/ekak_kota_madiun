@@ -472,7 +472,7 @@ table.counter {
     tr:not(.skip) {
       counter-increment: rowNumber;
 
-      td:first-child::before {
+      td:not(.skip):first-child::before {
         content: counter(rowNumber);
       }
     }

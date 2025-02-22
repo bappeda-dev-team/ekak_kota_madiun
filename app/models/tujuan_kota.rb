@@ -41,6 +41,7 @@ class TujuanKota < ApplicationRecord
 
   has_many :sasaran_kota, foreign_key: 'id_tujuan', primary_key: 'kode_tujuan'
   has_many :strategi_kota, through: :sasaran_kota
+  has_many :reviews, as: :reviewable, dependent: :destroy
   has_one :risiko
   belongs_to :pohon
   accepts_nested_attributes_for :risiko
