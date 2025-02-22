@@ -13,15 +13,22 @@ class UsulansController < ApplicationController
   end
 
   def update_sasaran_asn
-    sasaran = params[:sasaran_id]
+    sasaran_id = params[:sasaran_id]
     usulan = params[:usulan_id].to_i
     usulan_type = params[:usulan_type]
-    u = Usulan.create(usulanable_id: usulan, usulanable_type: usulan_type, sasaran_id: sasaran)
+    tahun = params[:tahun]
+    opd_id = params[:opd_id].to_i
+
+    u = Usulan.create(usulanable_id: usulan,
+                      usulanable_type: usulan_type,
+                      sasaran_id: sasaran_id, opd_id: opd_id,
+                      tahun: tahun)
     respond_to do |format|
       if u.save
         usulan = u.usulanable
         sasaran_update = u.sasaran
-        usulan.update(sasaran_id: sasaran, status: 'menunggu_persetujuan')
+        usulan.update(status: 'menunggu_persetujuan')
+
         if usulan_type == 'Mandatori'
           sasaran_update.dasar_hukums.create!(usulan_id: u.id, judul: usulan.peraturan_terkait, peraturan: usulan.uraian,
                                               tahun: usulan.tahun)
@@ -143,18 +150,19 @@ class UsulansController < ApplicationController
     # @tahun_awal = @periode.tahun_awal.to_i
     # @tahun_akhir = @periode.tahun_akhir.to_i
 
-    @inovasis = if @opd.is_kota
-                  Inovasi.where(tahun: @tahun)
-                  # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
-                else
-                  Inovasi.where(tahun: @tahun)
-                         .select do |inovasi|
-                    inovasi.opd == @kode_opd || inovasi&.sasaran&.user&.opd&.kode_unik_opd == @kode_opd
-                  end
-                  # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
-                  #        .where(opd: @kode_opd)
-                end
-    # @inovasis = Inovasi.where(tahun: @tahun)
+    # @inovasis = if @opd.is_kota
+    #               Inovasi.where(tahun: @tahun)
+    #               # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
+    #             else
+    #               Inovasi.where(tahun: @tahun)
+    #                      .select do |inovasi|
+    #                 inovasi.opd == @kode_opd || inovasi&.sasaran&.user&.opd&.kode_unik_opd == @kode_opd
+    #               end
+    #               # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
+    #               #        .where(opd: @kode_opd)
+    #             end
+    # no differentiate version
+    @inovasis = Inovasi.where(tahun: @tahun)
 
     render partial: 'usulans/filter_inovasi'
   end

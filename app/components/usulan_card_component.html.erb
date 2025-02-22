@@ -13,11 +13,14 @@
       <div class="field">
         <%= form.hidden_field :sasaran_id, value: @sasaran.id   %>
         <%= form.hidden_field :usulan_type  %>
+        <%= form.hidden_field :tahun, value: @sasaran.tahun  %>
+        <%= form.hidden_field :opd_id, value: @sasaran&.opd&.id  %>
         <%= form.select :usulan_id, [], {include_blank: true}, 
             {id: "#{@jenis}_dropdown",
              data: { "placeholder": "Pilih #{title}",
                     controller: 'dropdown',
                     dropdown_jenis_value: 'extra',
+                    dropdown_kode_value: @sasaran.id,
                     dropdown_url_value: search_usulan_user_path(format: :json, usulan_type: @jenis, nip_asn: @sasaran.user.nip_asn),
                     action: 'change-select@document->dropdown#fill_usulan_type'
             }} %>

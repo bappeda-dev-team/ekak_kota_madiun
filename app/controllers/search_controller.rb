@@ -3,22 +3,33 @@ class SearchController < ApplicationController
 
   def usulan_user
     param = params[:q] || ''
+    kode_sasaran = params[:kode]
     usulan_search = if @usulan_type == 'Inovasi'
                       "usulan ILIKE ?"
                     else
                       "sasaran_id is null and usulan ILIKE ?"
                     end
-    searchable_user = if @usulan_type == 'Inovasi'
-                        Search::AllUsulan.where(searchable_type: @usulan_type, tahun: @tahun)
-                      else
-                        Search::AllUsulan.where(searchable_type: @usulan_type, nip_asn: @nip_asn, tahun: @tahun)
-                      end
+    # searchable_user = if @usulan_type == 'Inovasi'
+    #                     Search::AllUsulan.where(searchable_type: @usulan_type, tahun: @tahun, nip_asn: ['', @nip_asn])
+    #                   else
+    #                     Search::AllUsulan.where(searchable_type: @usulan_type, nip_asn: @nip_asn, tahun: @tahun)
+    #                   end
 
-    @results = searchable_user
-               .where(usulan_search, "%#{param}%")
-               .order(searchable_id: :desc)
-               .includes(:searchable)
-               .collect(&:searchable)
+    @results = if @usulan_type == 'Inovasi'
+                 # search including kota (no nip_asn)
+                 Search::AllUsulan.where(searchable_type: @usulan_type, tahun: @tahun, nip_asn: ['', @nip_asn])
+                                  .where(usulan_search, "%#{param}%")
+                                  .order(searchable_id: :desc)
+                                  .includes(:searchable)
+                                  .collect(&:searchable)
+               else
+                 # search only pribadi
+                 Search::AllUsulan.where(searchable_type: @usulan_type, nip_asn: @nip_asn, tahun: @tahun)
+                                  .where(usulan_search, "%#{param}%")
+                                  .order(searchable_id: :desc)
+                                  .includes(:searchable)
+                                  .collect(&:searchable)
+               end
   end
 
   private
