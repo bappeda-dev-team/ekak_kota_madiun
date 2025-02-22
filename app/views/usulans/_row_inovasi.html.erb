@@ -1,51 +1,23 @@
-<tr id="<%= dom_id(inovasi) %>">
-  <td class="text-gray-900" width='20px'><%= no %></td>
-  <td class="fw-bolder text-wrap"><%= inovasi.usulan %></td>
-  <td class="text-gray-900 text-wrap"><%= inovasi.manfaat %></td>
-  <td class="text-gray-900 text-wrap"><%= inovasi.misi %></td>
-  <td class="text-gray-900 text-wrap"><%= inovasi.pokin_inovasi %></td>
-  <td class="text-gray-900 text-wrap"><%= inovasi.rekin_inovasi %></td>
-  <td class="text-gray-900 text-wrap"><%= inovasi.pemilik_rekin %></td>
-  <td class="text-gray-900 text-wrap"><%= inovasi.subkegiatan_rekin %></td>
-  <td class="text-gray-900 text-wrap"><%= inovasi.program_rekin %></td>
-  <td class="text-gray-900">Rp. <%= number_with_delimiter(inovasi.pagu_rekin) %></td>
-  <td class="text-gray-900 text-wrap"><%= inovasi.opd_rekin %></td>
-  <td class="text-gray-900 text-wrap" width='700px'><%= inovasi.uraian %></td>
-  <td class="text-gray-900 text-wrap"><%= inovasi.inovasi_rekin %></td>
-  <td class="text-gray-900 text-wrap" style="height: 1px;">
-    <div class="d-grid h-100" >
-      <div class="review-items" id="<%= dom_id(inovasi, 'review') %>">
-        <%= render partial: 'reviews/review', collection: inovasi.reviews %>
-      </div>
-      <% if admin_kota? %>
-        <%= link_to new_review_path(type: 'Inovasi', id: inovasi.id, target: dom_id(inovasi, 'review')),
-                    remote: true,
-                    class: 'btn btn-outline-primary mt-auto',
-                    data: {
-                      controller: 'form-modal',
-                      action: 'form-modal#appendForm',
-                      form_modal_location_param: 'form-modal-body',
-                      bs_target: '#form-modal',
-                      bs_toggle: 'modal'
-                    } do %>
-          <span class="fas fa-marker me-2"></span>
-          <span>Review</span>
-        <% end %>
-      <% end %>
-    </div>
-  </td>
-  <td class="text-gray-900 text-wrap" style="height: 1px;">
-    <% if inovasi.sasaran_aktif? %>
-      <div class="d-grid h-100">
-        <div class="kolab-items" id="<%= dom_id(inovasi, 'kolab') %>">
-          <%= render partial: 'kolabs/kolab', collection: inovasi.kolabs %>
+<tbody id="<%= dom_id(inovasi) %>">
+  <% rowspan = inovasi.rowspan_usulans + 1 %>
+  <tr>
+    <td class="text-gray-900" width='20px' rowspan="<%= rowspan %>"><%= no %></td>
+    <td class="fw-bolder text-wrap" rowspan="<%= rowspan %>"><%= inovasi.usulan %></td>
+    <td class="text-gray-900 text-wrap" rowspan="<%= rowspan %>"><%= inovasi.manfaat %></td>
+    <td class="text-gray-900 text-wrap" rowspan="<%= rowspan %>"><%= inovasi.misi %></td>
+    <!-- USULAN YANG DIAMBIL USER -->
+    <td class="p-0 m-0 border-start border-end" style="height: 0px !important;" colspan="8"></td>
+    <!-- END -->
+    <td class="text-gray-900 text-wrap" rowspan="<%= rowspan %>"><%= inovasi.uraian %></td>
+    <td class="text-gray-900 text-wrap" style="height: 1px;" rowspan="<%= rowspan %>">
+      <div class="d-grid h-100" >
+        <div class="review-items" id="<%= dom_id(inovasi, 'review') %>">
+          <%= render partial: 'reviews/review', collection: inovasi.reviews.includes(:user) %>
         </div>
         <% if admin_kota? %>
-          <%= link_to new_kolab_path(type: 'Inovasi', id: inovasi.id,
-                                     tahun: inovasi.tahun, kode_opd: inovasi.opd_rekin.kode_unik_opd,
-                                     target: dom_id(inovasi, 'kolab')),
+          <%= link_to new_review_path(type: 'Inovasi', id: inovasi.id, target: dom_id(inovasi, 'review')),
                       remote: true,
-                      class: 'btn btn-tertiary mt-auto',
+                      class: 'btn btn-outline-primary mt-auto',
                       data: {
                         controller: 'form-modal',
                         action: 'form-modal#appendForm',
@@ -53,11 +25,55 @@
                         bs_target: '#form-modal',
                         bs_toggle: 'modal'
                       } do %>
-            <span class="fas fa-plus me-2"></span>
-            <span>Tambah Kolaborator</span>
+            <span class="fas fa-marker me-2"></span>
+            <span>Review</span>
           <% end %>
         <% end %>
       </div>
+    </td>
+    <td class="text-gray-900 text-wrap" style="height: 1px;" rowspan="<%= rowspan %>">
+      <% if inovasi.sasaran_aktif? %>
+        <div class="d-grid h-100">
+          <div class="kolab-items" id="<%= dom_id(inovasi, 'kolab') %>">
+            <%= render partial: 'kolabs/kolab', collection: inovasi.kolabs %>
+          </div>
+          <% if admin_kota? %>
+            <%= link_to new_kolab_path(type: 'Inovasi', id: inovasi.id,
+                                       tahun: inovasi.tahun, kode_opd: inovasi.opd_rekin.kode_unik_opd,
+                                       target: dom_id(inovasi, 'kolab')),
+                        remote: true,
+                        class: 'btn btn-tertiary mt-auto',
+                        data: {
+                          controller: 'form-modal',
+                          action: 'form-modal#appendForm',
+                          form_modal_location_param: 'form-modal-body',
+                          bs_target: '#form-modal',
+                          bs_toggle: 'modal'
+                        } do %>
+              <span class="fas fa-plus me-2"></span>
+              <span>Tambah Kolaborator</span>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </td>
+  </tr>
+  <% if inovasi.all_usulans.any? %>
+    <% inovasi.all_usulans.each do |usulan| %>
+      <tr class="skip">
+        <td class="text-gray-900 text-wrap"><%= usulan.pokin_inovasi %></td>
+        <td class="text-gray-900 text-wrap"><%= usulan.rekin_inovasi %></td>
+        <td class="text-gray-900 text-wrap"><%= usulan.pemilik_rekin %></td>
+        <td class="text-gray-900 text-wrap"><%= usulan.subkegiatan_rekin %></td>
+        <td class="text-gray-900 text-wrap"><%= usulan.program_rekin %></td>
+        <td class="text-gray-900">Rp. <%= number_with_delimiter(usulan.pagu_rekin) %></td>
+        <td class="text-gray-900 text-wrap"><%= usulan.opd_rekin %></td>
+        <td class="text-gray-900 text-wrap"><%= usulan.inovasi_rekin %></td>
+      </tr>
     <% end %>
-  </td>
-</tr>
+  <% else %>
+    <tr class="skip">
+      <td class="table-danger" colspan="8"></td>
+    </tr>
+  <% end %>
+</tbody>

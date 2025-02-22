@@ -165,6 +165,20 @@ class Inovasi < ApplicationRecord
     'Kosong'
   end
 
+  def all_usulans
+    usulans.select(&:with_sasaran?)
+  end
+
+  def rowspan_usulans
+    all_usulans.size + 1
+  rescue NoMethodError
+    1
+  end
+
+  def total_pagu_usulans
+    all_usulans.sum(&:pagu_rekin)
+  end
+
   private
 
   # for NoMethodError string

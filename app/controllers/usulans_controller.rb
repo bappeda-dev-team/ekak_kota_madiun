@@ -162,7 +162,7 @@ class UsulansController < ApplicationController
     #               #        .where(opd: @kode_opd)
     #             end
     # no differentiate version
-    @inovasis = Inovasi.where(tahun: @tahun)
+    @inovasis = Inovasi.includes(%i[usulans reviews sasaran kolabs misi]).where(tahun: @tahun)
 
     render partial: 'usulans/filter_inovasi'
   end
