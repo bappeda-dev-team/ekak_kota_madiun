@@ -97,6 +97,7 @@ class InovasisController < ApplicationController
   def create
     # form_params = inovasi_params.merge(is_active: true, status: 'disetujui')
     @inovasi = Inovasi.new(inovasi_params)
+    @kode_opd = @inovasi.opd
 
     if @inovasi.save
       render json: { resText: "Entri Inisiatif ditambahkan",
