@@ -2,6 +2,7 @@
 
 class UsulanCardComponent < ViewComponent::Base
   def initialize(sasaran:, jenis:)
+    super
     @sasaran = sasaran
     @jenis = jenis
     @usulan_type = @jenis.capitalize
