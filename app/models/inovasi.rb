@@ -113,60 +113,63 @@ class Inovasi < ApplicationRecord
     'Belum dipilih'
   end
 
-  def pokin_inovasi
+  # gunakan jika diusulkan oleh user
+
+  def pokin_inovasi_user
     sasaran.strategi
   rescue NoMethodError
     'Kosong'
   end
 
-  def rekin_inovasi
+  def rekin_inovasi_user
     sasaran.sasaran_kinerja
   rescue NoMethodError
     'Kosong'
   end
 
-  def pemilik_rekin
+  def pemilik_rekin_user
     sasaran.nama_pemilik
   rescue NoMethodError
     'Kosong'
   end
 
-  def program_kegiatan_rekin
+  def program_kegiatan_rekin_user
     sasaran.program_kegiatan
   end
 
-  def subkegiatan_rekin
+  def subkegiatan_rekin_user
     program_kegiatan_rekin.nama_subkegiatan
   rescue NoMethodError
     'Kosong'
   end
 
-  def program_rekin
+  def program_rekin_user
     program_kegiatan_rekin.nama_program
   rescue NoMethodError
     'Kosong'
   end
 
-  def pagu_rekin
+  def pagu_rekin_user
     sasaran.total_anggaran
   rescue NoMethodError
     0
   end
 
-  def opd_rekin
+  def opd_rekin_user
     sasaran.opd
   rescue NoMethodError
     'Kosong'
   end
 
-  def inovasi_rekin
+  def inovasi_rekin_user
     sasaran.inovasi_sasaran
   rescue NoMethodError
     'Kosong'
   end
+  # end gunakan jika diusulkan oleh user
 
   def all_usulans
-    usulans.select(&:with_sasaran?)
+    usulans.includes(sasaran: %i[user opd strategi program_kegiatan]).select(&:with_sasaran?)
   end
 
   def rowspan_usulans
@@ -177,6 +180,10 @@ class Inovasi < ApplicationRecord
 
   def total_pagu_usulans
     all_usulans.sum(&:pagu_rekin)
+  end
+
+  def pengambil_pertama
+    all_usulans.first
   end
 
   private

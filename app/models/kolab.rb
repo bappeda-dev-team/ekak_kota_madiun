@@ -19,4 +19,16 @@ class Kolab < ApplicationRecord
 
   belongs_to :kolabable, polymorphic: true
   belongs_to :opd, foreign_key: "kode_unik_opd", primary_key: "kode_unik_opd", optional: true
+
+  # khusus inovasi walkot
+  def jumlah_rekin_opd
+    kolabable.all_usulans.count { |usulan| usulan.opd_rekin&.id == opd&.id }
+  rescue NoMethodError
+    0
+  end
+
+  # khusus inovasi walkot
+  def kolaborator_mengisi_rekin?
+    jumlah_rekin_opd.positive?
+  end
 end

@@ -1,5 +1,6 @@
 <tbody id="<%= dom_id(inovasi) %>">
   <% rowspan = inovasi.rowspan_usulans + 1 %>
+  <% terdapat_rekin = inovasi.all_usulans.any? %>
   <tr>
     <td class="text-gray-900" width='20px' rowspan="<%= rowspan %>"><%= no %></td>
     <td class="fw-bolder text-wrap" rowspan="<%= rowspan %>"><%= inovasi.usulan %></td>
@@ -32,14 +33,15 @@
       </div>
     </td>
     <td class="text-gray-900 text-wrap" style="height: 1px;" rowspan="<%= rowspan %>">
-      <% if inovasi.sasaran_aktif? %>
+      <% if terdapat_rekin %>
         <div class="d-grid h-100">
           <div class="kolab-items" id="<%= dom_id(inovasi, 'kolab') %>">
             <%= render partial: 'kolabs/kolab', collection: inovasi.kolabs %>
           </div>
           <% if admin_kota? %>
             <%= link_to new_kolab_path(type: 'Inovasi', id: inovasi.id,
-                                       tahun: inovasi.tahun, kode_opd: inovasi.opd_rekin.kode_unik_opd,
+                                       tahun: inovasi.tahun,
+                                       kode_opd: inovasi.pengambil_pertama.opd_rekin.kode_unik_opd,
                                        target: dom_id(inovasi, 'kolab')),
                         remote: true,
                         class: 'btn btn-tertiary mt-auto',
@@ -58,7 +60,7 @@
       <% end %>
     </td>
   </tr>
-  <% if inovasi.all_usulans.any? %>
+  <% if terdapat_rekin %>
     <% inovasi.all_usulans.each do |usulan| %>
       <tr class="skip">
         <td class="text-gray-900 text-wrap"><%= usulan.pokin_inovasi %></td>

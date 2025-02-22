@@ -18,37 +18,43 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.hidden_field :kolabable_type %>
-    <%= form.hidden_field :kolabable_id %>
-    <%= form.hidden_field :jenis %>
-    <p class="form-label">Program Unggulan</p>
-    <p class="form-control"><%= @inovasi.usulan %></p>
-  </div>
+  <div class="card">
+    <div class="card-body">
+      <h5>Keterangan Program Kolaborasi</h5>
+      <div class="field">
+        <%= form.label :tahun, class: 'form-label' %>
+        <%= form.text_field :tahun, class: 'form-control', readonly: true %>
+      </div>
 
-  <div class="field">
-    <p class="form-label">Asta Karya</p>
-    <p class="form-control"><%= @inovasi.manfaat %></p>
-  </div>
+      <div class="field">
+        <%= form.hidden_field :kolabable_type %>
+        <%= form.hidden_field :kolabable_id %>
+        <%= form.hidden_field :jenis %>
+        <%= form.hidden_field :status %>
+        <p class="form-label">Program Unggulan</p>
+        <p class="form-control"><%= @inovasi.usulan %></p>
+      </div>
 
-  <div class="field">
-    <p class="form-label">Misi Walikota</p>
-    <p class="form-control"><%= @inovasi.misi %></p>
-  </div>
+      <div class="field">
+        <p class="form-label">Asta Karya</p>
+        <p class="form-control"><%= @inovasi.manfaat %></p>
+      </div>
 
-  <div class="field">
-    <p class="form-label">Pohon Kinerja</p>
-    <p class="form-control"><%= @pohon_kinerja %></p>
-  </div>
+      <div class="field">
+        <p class="form-label">Misi Walikota</p>
+        <p class="form-control"><%= @inovasi.misi %></p>
+      </div>
 
-  <div class="field">
-    <p class="form-label">OPD Pelaksana</p>
-    <p class="form-control"><%= @opd %></p>
-  </div>
+      <div class="field">
+        <p class="form-label">Pohon Kinerja Lead</p>
+        <p class="form-control"><%= @pohon_kinerja %></p>
+      </div>
 
-  <div class="field">
-    <%= form.label :tahun, class: 'form-label' %>
-    <%= form.text_field :tahun, class: 'form-control', readonly: true %>
+      <div class="field">
+        <p class="form-label">OPD Lead</p>
+        <p class="form-control"><%= @opd %></p>
+      </div>
+    </div>
   </div>
 
   <div class="field">
@@ -65,10 +71,6 @@
      } %>
   </div>
 
-  <div class="field">
-    <%= form.label :status, class: 'form-label' %>
-    <%= form.text_field :status, class: 'form-control disabled', readonly: true %>
-  </div>
 
   <div class="field">
     <%= form.label :keterangan, class: 'form-label' %>

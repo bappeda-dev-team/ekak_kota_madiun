@@ -13,29 +13,33 @@ class UsulansController < ApplicationController
   end
 
   def update_sasaran_asn
-    sasaran_id = params[:sasaran_id]
-    usulan = params[:usulan_id].to_i
+    sasaran_id = params[:sasaran_id].to_i
+    usulan_id = params[:usulan_id].to_i
     usulan_type = params[:usulan_type]
     tahun = params[:tahun]
     opd_id = params[:opd_id].to_i
 
-    u = Usulan.create(usulanable_id: usulan,
+    u = Usulan.create(usulanable_id: usulan_id,
                       usulanable_type: usulan_type,
-                      sasaran_id: sasaran_id, opd_id: opd_id,
+                      sasaran_id: sasaran_id,
+                      opd_id: opd_id,
                       tahun: tahun)
     respond_to do |format|
       if u.save
-        usulan = u.usulanable
+        usulan_asli = u.usulanable
         sasaran_update = u.sasaran
-        usulan.update(status: 'menunggu_persetujuan')
+        usulan_asli.update(status: 'menunggu_persetujuan')
 
         if usulan_type == 'Mandatori'
-          sasaran_update.dasar_hukums.create!(usulan_id: u.id, judul: usulan.peraturan_terkait, peraturan: usulan.uraian,
-                                              tahun: usulan.tahun)
+          sasaran_update.dasar_hukums.create!(usulan_id: u.id,
+                                              judul: usulan_asli.peraturan_terkait,
+                                              peraturan: usulan_asli.uraian,
+                                              tahun: usulan_asli.tahun)
         else
           # usulan_id -> Usulan (polymorph) id
-          sasaran_update.permasalahans.create!(usulan_id: u.id, jenis: 'Umum', permasalahan: usulan.uraian,
-                                               tahun: usulan.tahun)
+          sasaran_update.permasalahans.create!(usulan_id: u.id, jenis: 'Umum',
+                                               permasalahan: usulan_asli.uraian,
+                                               tahun: usulan_asli.tahun)
         end
         flash.now[:success] = 'Usulan berhasil ditambahkan'
         format.js { render 'update_sasaran_asn' }

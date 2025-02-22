@@ -12,11 +12,12 @@ class KolabsController < ApplicationController
 
   # GET /kolabs/new
   def new
+    # khusus kolaborasi inisiatif walkot
     @kolab = Kolab.new(kolabable_type: params[:type],
                        kolabable_id: params[:id],
                        tahun: params[:tahun],
                        jenis: 'Dari-Kota',
-                       status: 'diajukan')
+                       status: 'diterima')
     @target = params[:target]
     @kode_opd = params[:kode_opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
@@ -24,7 +25,7 @@ class KolabsController < ApplicationController
     # TODO: break the chain
     # this makes unusable outside inovasi
     @inovasi = Inovasi.find(params[:id])
-    @pohon_kinerja = @inovasi.pokin_inovasi
+    @pohon_kinerja = @inovasi.pengambil_pertama.pokin_inovasi
     @type = 'prepend'
   end
 
@@ -42,7 +43,7 @@ class KolabsController < ApplicationController
     # TODO: break the chain
     # this makes unusable outside inovasi
     @inovasi = Inovasi.find(@kolab.kolabable_id)
-    @pohon_kinerja = @inovasi.pokin_inovasi
+    @pohon_kinerja = @inovasi.pengambil_pertama.pokin_inovasi
 
     if @kolab.save
       render json: { resText: "Kolaborator ditambahkan",
