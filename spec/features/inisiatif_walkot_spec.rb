@@ -13,6 +13,14 @@ RSpec.describe "Inisiatif Walikota", type: :feature do
   let(:tahun_anggaran) { create(:base_periode) }
   let(:asta_karya) { create(:program_unggulan, lembaga: kota_madiun, asta_karya: 'Madiun Kota Pintar') }
 
+  def setup_user_misi_and_tahun
+    admin_kota
+    tahun_dua_lima
+    tahun_anggaran
+    misi
+    asta_karya
+  end
+
   def sign_in_and_pick_tahun
     visit root_path
 
@@ -31,13 +39,7 @@ RSpec.describe "Inisiatif Walikota", type: :feature do
   end
 
   scenario 'Admin kota create inisiatif walikota with lead opd successfully', js: true do
-    admin_kota
-    tahun_dua_lima
-    tahun_anggaran
-
-    misi
-    asta_karya
-
+    setup_user_misi_and_tahun
     sign_in_and_pick_tahun
     expect(page).to have_text('Kota Madiun')
 
