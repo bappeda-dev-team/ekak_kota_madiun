@@ -2417,7 +2417,8 @@ CREATE TABLE public.opds (
     has_bidang boolean DEFAULT false,
     kode_opd_induk character varying,
     is_bidang boolean DEFAULT false,
-    is_kota boolean DEFAULT false
+    is_kota boolean DEFAULT false,
+    is_bagian boolean DEFAULT false
 );
 
 
@@ -7543,6 +7544,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250223043650'),
 ('20250223043740'),
 ('20250223043814'),
-('20250223070255');
+('20250223070255'),
+('20250223194503');
 
 
