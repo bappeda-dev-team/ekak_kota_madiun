@@ -61,7 +61,7 @@
   </tr>
   <% if terdapat_rekin %>
     <% inovasi.all_usulans.each do |usulan| %>
-      <tr class="skip">
+      <tr class="skip rekins">
         <td class="text-gray-900 text-wrap"><%= usulan.pokin_inovasi %></td>
         <td class="text-gray-900 text-wrap"><%= usulan.rekin_inovasi %></td>
         <td class="text-gray-900 text-wrap"><%= usulan.pemilik_rekin %></td>
@@ -73,7 +73,7 @@
       </tr>
     <% end %>
   <% else %>
-    <tr class="skip">
+    <tr class="skip rekins">
       <td class="table-danger" colspan="8"></td>
     </tr>
   <% end %>

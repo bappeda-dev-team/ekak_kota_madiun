@@ -67,8 +67,46 @@ RSpec.describe "Inisiatif Walikota", type: :feature do
     expect(page).to have_text('Meningkatkan pembelajaran dengan papan tulis digital pada SD dan SMP Negeri Kota Madiun')
     expect(page).to have_text('Madiun Kota Pintar')
     expect(page).to have_text('Meningkatkan pengembangan sumber daya manusia yangberkualitas dan berdaya saing global')
-    expect(page).to have_text('100 Hari Kerja')
+    expect(page).to have_text('Badan Perencanaan, Penelitian dan Pengembangan Daerah')
     expect(page).to have_text('XX-Papan-Tulis')
     expect(page).to have_text('YY-Uraian-Umum')
+  end
+
+  let(:create_inisiatif_walkot) do
+    create(:inovasi,
+           tahun: '2025',
+           opd: bappeda.kode_unik_opd,
+           usulan: 'Meningkatkan pembelajaran dengan papan tulis digital pada SD dan SMP Negeri Kota Madiun',
+           misi: misi,
+           manfaat: asta_karya.asta_karya,
+           tag: '100 Hari Kerja',
+           tag_active: true,
+           uraian_tag: 'XX-Papan-Tulis',
+           uraian: 'YY-Uraian-Umum')
+  end
+
+  scenario 'inisiatif walikota pick opd kolab', js: true do
+    setup_user_misi_and_tahun
+    create_inisiatif_walkot
+
+    sign_in_and_pick_tahun
+    expect(page).to have_text('Kota Madiun')
+
+    # find laporan / usulan / insiatif walikota
+    find('span.sidebar-text', text: 'Laporan').click
+    find('span.sidebar-text', text: 'Usulan').click
+    find('span.sidebar-text', text: 'Inisiatif Walikota').click
+
+    expect(page).to have_text('Meningkatkan pembelajaran dengan papan tulis digital pada SD dan SMP Negeri Kota Madiun')
+    expect(page).to have_text('Madiun Kota Pintar')
+    expect(page).to have_text('Meningkatkan pengembangan sumber daya manusia yangberkualitas dan berdaya saing global')
+    expect(page).to have_text('Badan Perencanaan, Penelitian dan Pengembangan Daerah (Lead)')
+    # rekin kosong indicator
+    expect(page).to have_selector('tr.rekins>td.table-danger')
+    expect(page).to have_selector('tr.rekins', text: '')
+    page.execute_script("document.querySelector('div.table-responsive').scrollLeft += 2000;")
+    # end
+    expect(page).to have_text('YY-Uraian-Umum')
+    expect(page).to have_link(text: 'Tambah Kolaborator')
   end
 end
