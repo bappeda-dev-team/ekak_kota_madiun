@@ -23,7 +23,7 @@ FactoryBot.define do
 
   factory :periode_rpjmd, class: 'Periode' do
     tahun_awal { '2025' }
-    tahun_akhir { '2029' }
+    tahun_akhir { '2030' }
     jenis_periode { 'RPJMD' }
   end
 end

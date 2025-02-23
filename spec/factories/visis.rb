@@ -26,7 +26,7 @@ FactoryBot.define do
     urutan { 1 }
     keterangan { "-" }
     tahun_awal { "2025" }
-    tahun_akhir { "2026" }
+    tahun_akhir { "2030" }
     association :lembaga
   end
 end

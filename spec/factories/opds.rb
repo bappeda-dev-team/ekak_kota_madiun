@@ -44,4 +44,13 @@ FactoryBot.define do
     kode_unik_opd { "test_opd" }
     association :lembaga
   end
+
+  factory :kota, class: 'Opd' do
+    nama_opd { "Kota Madiun" }
+    kode_opd { "5780" }
+    kode_unik_opd { "0.00.0.00.0.00.00.0000" }
+    id_opd_skp { 0 }
+    is_kota { true }
+    association :lembaga
+  end
 end

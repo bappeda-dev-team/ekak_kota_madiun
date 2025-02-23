@@ -31,17 +31,7 @@ class UsulansController < ApplicationController
 
         usulan_asli.update(status: 'menunggu_persetujuan')
 
-        if usulan_type == "Inovasi"
-          opd = Opd.find(opd_id)
-          usulan_asli.update(sasaran_id: sasaran_id)
-          @kolab = Kolab.create(kolabable_type: 'Inovasi',
-                                kolabable_id: usulan_asli.id,
-                                tahun: tahun,
-                                jenis: 'Dari-Kota',
-                                status: 'Anggota',
-                                urutan: 0,
-                                kode_unik_opd: opd.kode_unik_opd)
-        end
+        usulan_asli.update(sasaran_id: sasaran_id) if usulan_type == "Inovasi"
 
         if usulan_type == 'Mandatori'
           sasaran_update.dasar_hukums.create!(usulan_id: u.id,

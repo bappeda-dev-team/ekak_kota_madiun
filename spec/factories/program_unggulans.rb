@@ -22,11 +22,11 @@
 #
 FactoryBot.define do
   factory :program_unggulan do
-    asta_karya { "MyString" }
-    tahun_awal { "MyString" }
-    tahun_akhir { "MyString" }
+    asta_karya { "Madiun Kota Pintar" }
+    tahun_awal { "2025" }
+    tahun_akhir { "2030" }
     urutan { 1 }
-    keterangan { "MyString" }
-    lembaga { nil }
+    keterangan { "Test" }
+    association :lembaga
   end
 end

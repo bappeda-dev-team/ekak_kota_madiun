@@ -6,18 +6,19 @@ class InovasisController < ApplicationController
     @tahun = cookies[:tahun] || Date.current.year.to_s
     is_admin_kota = current_user.admin_kota?
     @kode_opd = is_admin_kota ? "0.00.0.00.0.00.00.0000" : cookies[:opd]
-    @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
-    @inovasis = if @opd.is_kota
-                  Inovasi.includes(:misi).where(tahun: @tahun)
-                  # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
-                else
-                  Inovasi.includes(:misi).where(tahun: @tahun)
-                         .select do |inovasi|
-                    inovasi.opd == @kode_opd || inovasi&.sasaran&.user&.opd&.kode_unik_opd == @kode_opd
-                  end
-                  # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
-                  #        .where(opd: @kode_opd)
-                end
+    # @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
+    # @inovasis = if @opd.is_kota
+    #               Inovasi.includes(:misi).where(tahun: @tahun)
+    #               # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
+    #             else
+    #               Inovasi.includes(:misi).where(tahun: @tahun)
+    #                      .select do |inovasi|
+    #                 inovasi.opd == @kode_opd || inovasi&.sasaran&.user&.opd&.kode_unik_opd == @kode_opd
+    #               end
+    #               # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
+    #               #        .where(opd: @kode_opd)
+    #             end
+    @inovasis = Inovasi.includes(:misi).where(tahun: @tahun)
   end
 
   def filter_opd_tahun
@@ -100,15 +101,6 @@ class InovasisController < ApplicationController
     @kode_opd = @inovasi.opd
 
     if @inovasi.save
-      # buat kolab langsung
-      @kolab = Kolab.create(kolabable_type: 'Inovasi',
-                            kolabable_id: @inovasi.id,
-                            tahun: @inovasi.tahun,
-                            jenis: 'Dari-Kota',
-                            status: 'Lead',
-                            urutan: 1,
-                            kode_unik_opd: @kode_opd)
-
       render json: { resText: "Entri Inisiatif ditambahkan",
                      html_content: html_content({ inovasi: @inovasi },
                                                 partial: 'inovasis/inovasi') }.to_json,
