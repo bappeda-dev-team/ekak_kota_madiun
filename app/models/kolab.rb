@@ -9,6 +9,7 @@
 #  kolabable_type :string
 #  status         :string
 #  tahun          :string
+#  urutan         :integer          default(0)
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  kolabable_id   :bigint
@@ -36,5 +37,9 @@ class Kolab < ApplicationRecord
 
   def sebagai
     status == 'Lead' ? '(Lead)' : ''
+  end
+
+  def lead_kolab
+    status == 'Lead' || urutan == 1
   end
 end

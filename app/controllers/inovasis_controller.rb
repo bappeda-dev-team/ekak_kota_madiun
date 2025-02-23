@@ -106,6 +106,7 @@ class InovasisController < ApplicationController
                             tahun: @inovasi.tahun,
                             jenis: 'Dari-Kota',
                             status: 'Lead',
+                            urutan: 1,
                             kode_unik_opd: @kode_opd)
 
       render json: { resText: "Entri Inisiatif ditambahkan",

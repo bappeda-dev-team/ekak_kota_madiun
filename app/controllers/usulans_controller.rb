@@ -39,11 +39,17 @@ class UsulansController < ApplicationController
                          else
                            'Anggota'
                          end
+          nomor_kolab = if status_kolab == 'Lead'
+                          1
+                        else
+                          0
+                        end
           @kolab = Kolab.create(kolabable_type: 'Inovasi',
                                 kolabable_id: usulan_asli.id,
                                 tahun: tahun,
                                 jenis: 'Dari-Kota',
                                 status: status_kolab,
+                                urutan: nomor_kolab,
                                 kode_unik_opd: opd.kode_unik_opd)
         end
 
