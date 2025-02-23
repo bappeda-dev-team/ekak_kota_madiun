@@ -2913,6 +2913,42 @@ ALTER SEQUENCE public.program_kegiatans_id_seq OWNED BY public.program_kegiatans
 
 
 --
+-- Name: program_unggulans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.program_unggulans (
+    id bigint NOT NULL,
+    asta_karya character varying,
+    tahun_awal character varying,
+    tahun_akhir character varying,
+    urutan integer DEFAULT 1,
+    keterangan character varying,
+    lembaga_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: program_unggulans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.program_unggulans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: program_unggulans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.program_unggulans_id_seq OWNED BY public.program_unggulans.id;
+
+
+--
 -- Name: programs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -4918,6 +4954,13 @@ ALTER TABLE ONLY public.program_kegiatans ALTER COLUMN id SET DEFAULT nextval('p
 
 
 --
+-- Name: program_unggulans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.program_unggulans ALTER COLUMN id SET DEFAULT nextval('public.program_unggulans_id_seq'::regclass);
+
+
+--
 -- Name: programs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -5764,6 +5807,14 @@ ALTER TABLE ONLY public.program_kegiatans
 
 
 --
+-- Name: program_unggulans program_unggulans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.program_unggulans
+    ADD CONSTRAINT program_unggulans_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: programs programs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -6534,6 +6585,13 @@ CREATE INDEX index_program_kegiatans_on_subkegiatan_tematik_id ON public.program
 
 
 --
+-- Name: index_program_unggulans_on_lembaga_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_program_unggulans_on_lembaga_id ON public.program_unggulans USING btree (lembaga_id);
+
+
+--
 -- Name: index_realisasis_on_indikator_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -7042,6 +7100,14 @@ ALTER TABLE ONLY public.crosscuttings
 
 
 --
+-- Name: program_unggulans fk_rails_a948bc8a9b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.program_unggulans
+    ADD CONSTRAINT fk_rails_a948bc8a9b FOREIGN KEY (lembaga_id) REFERENCES public.lembagas(id);
+
+
+--
 -- Name: misis fk_rails_a9da5138c5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -7468,6 +7534,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250217005117'),
 ('20250217014309'),
 ('20250220001054'),
-('20250221203054');
+('20250221203054'),
+('20250223031526');
 
 

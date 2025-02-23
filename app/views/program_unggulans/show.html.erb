@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Asta karya:</strong>
+  <%= @program_unggulan.asta_karya %>
+</p>
+
+<p>
+  <strong>Tahun awal:</strong>
+  <%= @program_unggulan.tahun_awal %>
+</p>
+
+<p>
+  <strong>Tahun akhir:</strong>
+  <%= @program_unggulan.tahun_akhir %>
+</p>
+
+<p>
+  <strong>Urutan:</strong>
+  <%= @program_unggulan.urutan %>
+</p>
+
+<p>
+  <strong>Keterangan:</strong>
+  <%= @program_unggulan.keterangan %>
+</p>
+
+<p>
+  <strong>Lembaga:</strong>
+  <%= @program_unggulan.lembaga_id %>
+</p>
+
+<%= link_to 'Edit', edit_program_unggulan_path(@program_unggulan) %> |
+<%= link_to 'Back', program_unggulans_path %>
