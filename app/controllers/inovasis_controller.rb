@@ -8,10 +8,10 @@ class InovasisController < ApplicationController
     @kode_opd = is_admin_kota ? "0.00.0.00.0.00.00.0000" : cookies[:opd]
     @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
     @inovasis = if @opd.is_kota
-                  Inovasi.where(tahun: @tahun)
+                  Inovasi.includes(:misi).where(tahun: @tahun)
                   # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
                 else
-                  Inovasi.where(tahun: @tahun)
+                  Inovasi.includes(:misi).where(tahun: @tahun)
                          .select do |inovasi|
                     inovasi.opd == @kode_opd || inovasi&.sasaran&.user&.opd&.kode_unik_opd == @kode_opd
                   end
