@@ -89,7 +89,9 @@ class KolabsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def kolab_params
-    params.require(:kolab).permit(:kolabable_type, :kolabable_id, :jenis, :kode_unik_opd, :tahun, :status,
+    params.require(:kolab).permit(:kolabable_type, :kolabable_id, :jenis,
+                                  :kode_unik_opd, :tahun, :status,
+                                  :urutan,
                                   :keterangan)
   end
 end

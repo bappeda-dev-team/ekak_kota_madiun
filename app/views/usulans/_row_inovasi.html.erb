@@ -36,7 +36,7 @@
     <td class="text-gray-900 text-wrap" style="height: 1px;" rowspan="<%= rowspan %>">
       <div class="d-grid h-100">
         <div class="kolab-items" id="<%= dom_id(inovasi, 'kolab') %>">
-          <%= render partial: 'kolabs/kolab', collection: inovasi.kolabs %>
+          <%= render partial: 'kolabs/kolab', collection: inovasi.kolaborasi %>
         </div>
         <% if admin_kota? %>
           <%= link_to new_kolab_path(type: 'Inovasi', id: inovasi.id,

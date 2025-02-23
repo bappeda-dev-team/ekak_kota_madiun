@@ -98,6 +98,10 @@ class Inovasi < ApplicationRecord
     '0.00.0.00.0.00.00.0000'
   end
 
+  def kolaborasi
+    kolabs.uniq(&:opd)
+  end
+
   def self.type
     'Inisiatif'
   end
