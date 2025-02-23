@@ -85,6 +85,16 @@ RSpec.describe "Inisiatif Walikota", type: :feature do
            uraian: 'YY-Uraian-Umum')
   end
 
+  let(:bagor) do
+    create(:opd,
+           nama_opd: 'Bagian Organisasi',
+           kode_opd: '456',
+           kode_unik_opd: '4.01.0.00.0.00.01.0002',
+           is_kota: false,
+           is_bagian: true,
+           lembaga: kota_madiun)
+  end
+
   scenario 'inisiatif walikota pick opd kolab', js: true do
     setup_user_misi_and_tahun
     create_inisiatif_walkot
@@ -108,5 +118,29 @@ RSpec.describe "Inisiatif Walikota", type: :feature do
     # end
     expect(page).to have_text('YY-Uraian-Umum')
     expect(page).to have_link(text: 'Tambah Kolaborator')
+
+    bagor
+
+    click_on 'Tambah Kolaborator'
+
+    fill_in 'Urutan', with: '1'
+    select2 'Bagian Organisasi', from: 'Opd kolaborator'
+    fill_in 'Keterangan', with: 'Kolaborasi SAKIP'
+    click_on 'Simpan Kolab'
+
+    click_on 'Ok'
+
+    page.execute_script("document.querySelector('div.table-responsive').scrollLeft += 500;")
+    # to identify absent of rekin by kolaborator
+    expect(page).to have_selector('table#kolab_1.table-danger')
+    within('table#kolab_1.table-danger') do
+      assert_text 'OPD (Anggota)'
+      assert_text 'Bagian Organisasi'
+      assert_text 'Jumlah Rekin'
+      # to identify absent of rekin by kolaborator
+      expect(page).to have_selector('td.jumlah-rekin-kolab', text: '0')
+      # keterangan
+      assert_text 'Kolaborasi SAKIP'
+    end
   end
 end

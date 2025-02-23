@@ -72,9 +72,10 @@
 
   <div class="field">
     <p class="form-label">Sebagai</p>
-    <%= form.collection_radio_buttons :status, Kolab::STATUS_KOLAB, :to_s, :to_s do |status| %>
+    <!-- AUTO CHECK SEBAGAI ANGGOTA -->
+    <%= form.collection_radio_buttons :status, Kolab::STATUS_KOLAB.drop(1), :to_s, :to_s do |status| %>
       <div class="form-check">
-        <%= status.radio_button class: 'form-check-input' %>
+        <%= status.radio_button class: 'form-check-input', checked: true %>
         <%= status.label class: 'form-check-label' %>
       </div>
     <% end %>

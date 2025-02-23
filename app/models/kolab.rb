@@ -36,7 +36,7 @@ class Kolab < ApplicationRecord
   end
 
   def sebagai
-    status == 'Lead' ? '(Lead)' : ''
+    "(#{status})"
   end
 
   def lead_kolab
