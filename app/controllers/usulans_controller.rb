@@ -34,22 +34,12 @@ class UsulansController < ApplicationController
         if usulan_type == "Inovasi"
           opd = Opd.find(opd_id)
           usulan_asli.update(sasaran_id: sasaran_id)
-          status_kolab = if usulan_asli.kolabs.empty?
-                           'Lead'
-                         else
-                           'Anggota'
-                         end
-          nomor_kolab = if status_kolab == 'Lead'
-                          1
-                        else
-                          0
-                        end
           @kolab = Kolab.create(kolabable_type: 'Inovasi',
                                 kolabable_id: usulan_asli.id,
                                 tahun: tahun,
                                 jenis: 'Dari-Kota',
-                                status: status_kolab,
-                                urutan: nomor_kolab,
+                                status: 'Anggota',
+                                urutan: 0,
                                 kode_unik_opd: opd.kode_unik_opd)
         end
 
