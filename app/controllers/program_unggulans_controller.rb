@@ -5,6 +5,7 @@ class ProgramUnggulansController < ApplicationController
 
   # GET /program_unggulans or /program_unggulans.json
   def index
+    @lembaga_id = cookies[:lembaga_id]
     @tahun = cookies[:tahun]
     tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
     @periode = Periode.find_tahun_rpjmd(tahun_bener).first
@@ -16,10 +17,10 @@ class ProgramUnggulansController < ApplicationController
     selected_id = params[:selected]
 
     @program_unggulans = if selected_id.present? && request.format.json?
-                           ProgramUnggulan.where(
-                             tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir,
-                             lembaga_id: @lembaga_id, id: selected_id
-                           )
+                           ProgramUnggulan.where(tahun_awal: @tahun_awal,
+                                                 tahun_akhir: @tahun_akhir,
+                                                 lembaga_id: @lembaga_id,
+                                                 asta_karya: selected_id)
                          else
                            ProgramUnggulan.where(tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir,
                                                  lembaga_id: @lembaga_id)

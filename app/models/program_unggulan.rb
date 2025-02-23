@@ -20,7 +20,6 @@
 #
 #  fk_rails_...  (lembaga_id => lembagas.id)
 #
-# ASTA KARYA WALKOT
 class ProgramUnggulan < ApplicationRecord
   default_scope { order(:urutan) }
   belongs_to :lembaga
