@@ -17,7 +17,7 @@
     </div>
   <% end %>
   <div class="field">
-    <%= form.label :opd, class: 'form-label' %>
+    <%= form.label :opd, "OPD Lead", class: 'form-label' %>
     <%= form.select :opd, [],
      { include_blank: true, required: true },
      data: {
@@ -36,13 +36,14 @@
     <%= form.hidden_field :is_from_kota %>
     <%= form.hidden_field :status %>
   </div>
+
   <div class="field">
     <%= form.label :nip, class: 'form-label' %>
     <%= form.text_field :nip_asn, class: 'form-control', readonly: true %>
   </div>
   <div class="field">
     <%= form.label :usulan, "Program Unggulan Walikota", class: 'form-label' %>
-    <%= form.text_field :usulan, class: 'form-control' %>
+    <%= form.text_area :usulan, class: 'form-control' %>
   </div>
 
   <div class="field">
@@ -62,12 +63,44 @@
 
   <div class="field">
     <%= form.label :manfaat, "ASTA KARYA", class: 'form-label' %>
-    <%= form.text_field :manfaat, class: 'form-control', required: true %>
+    <%= form.select :manfaat, [],
+     { include_blank: true, required: true },
+     data: {
+       placeholder: 'ASTA KARYA',
+       controller: 'dropdown',
+       dropdown_jenis_value: 'extra',
+       dropdown_parent_value: '#form-modal',
+       dropdown_url_value: program_unggulans_path(:json),
+       dropdown_selected_value: form.object.manfaat
+     }  %>
   </div>
+
   <div class="field">
-    <%= form.label :uraian, class: 'form-label' %>
+    <%= form.label :tag, "Tagging", class: 'form-label' %>
+    <%= form.select :tag, options_for_select(option_tag_inovasi),
+     { include_blank: true, required: true },
+     data: {
+       placeholder: 'Tagging Usulan',
+       controller: 'dropdown',
+       dropdown_parent_value: '#form-modal'
+     } %>
+  </div>
+
+  <div class="field">
+    <%= form.check_box :tag_active, class: 'form-check-input me-2' %>
+    <%= form.label :tag_active, "Tagging Aktif?", class: 'form-check-label' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :uraian_tag, "Uraian 100 Hari Kerja", class: 'form-label' %>
+    <%= form.text_area :uraian_tag, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :uraian, "Uraian Umum",class: 'form-label' %>
     <%= form.text_area :uraian, class: 'form-control', required: true %>
   </div>
+
   <div class="actions">
     <%= form.submit "Simpan Inisiatif Walikota baru" %>
   </div>

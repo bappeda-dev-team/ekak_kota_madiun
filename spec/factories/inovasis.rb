@@ -9,8 +9,11 @@
 #  nip_asn      :string
 #  opd          :string
 #  status       :enum             default("draft")
+#  tag          :string
+#  tag_active   :boolean          default(FALSE)
 #  tahun        :string
 #  uraian       :string
+#  uraian_tag   :string
 #  usulan       :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null

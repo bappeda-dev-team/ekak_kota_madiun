@@ -9,8 +9,11 @@
 #  nip_asn      :string
 #  opd          :string
 #  status       :enum             default("draft")
+#  tag          :string
+#  tag_active   :boolean          default(FALSE)
 #  tahun        :string
 #  uraian       :string
+#  uraian_tag   :string
 #  usulan       :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
@@ -36,6 +39,8 @@ class Inovasi < ApplicationRecord
 
   enum status: { draft: 'draft', pengajuan: 'pengajuan', disetujui: 'disetujui', aktif: 'aktif',
                  ditolak: 'ditolak', menunggu_persetujuan: 'menunggu_persetujuan' }
+
+  TAG_INOVASI = ['100 Hari Kerja', '-'].freeze
 
   belongs_to :sasaran, optional: true
   belongs_to :user, optional: true, foreign_key: 'nip_asn', primary_key: 'nik'
@@ -184,6 +189,11 @@ class Inovasi < ApplicationRecord
 
   def pengambil_pertama
     all_usulans.first
+  end
+
+  def tag_dan_status
+    uraian_status = tag_active && 'Aktif'
+    tag_active ? "#{tag}  [ #{uraian_status} ]" : ''
   end
 
   private

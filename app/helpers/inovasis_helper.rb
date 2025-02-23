@@ -7,6 +7,10 @@ module InovasisHelper
   end
 
   def jenis_inovasi
-    ['Baru', 'Pengembangan', 'Replikasi', 'Sanggahan']
+    %w[Baru Pengembangan Replikasi Sanggahan]
+  end
+
+  def option_tag_inovasi
+    Inovasi::TAG_INOVASI
   end
 end

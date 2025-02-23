@@ -1213,7 +1213,10 @@ CREATE TABLE public.inovasis (
     status public.usulan_status DEFAULT 'draft'::public.usulan_status,
     uraian character varying,
     is_from_kota boolean DEFAULT false,
-    misi_id bigint
+    misi_id bigint,
+    tag character varying,
+    uraian_tag character varying,
+    tag_active boolean DEFAULT false
 );
 
 
@@ -7535,6 +7538,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250217014309'),
 ('20250220001054'),
 ('20250221203054'),
-('20250223031526');
+('20250223031526'),
+('20250223043650'),
+('20250223043740'),
+('20250223043814');
 
 
