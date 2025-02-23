@@ -6,6 +6,7 @@
     <td class="fw-bolder text-wrap" rowspan="<%= rowspan %>"><%= inovasi.usulan %></td>
     <td class="text-gray-900 text-wrap" rowspan="<%= rowspan %>"><%= inovasi.manfaat %></td>
     <td class="text-gray-900 text-wrap" rowspan="<%= rowspan %>"><%= inovasi.misi %></td>
+    <td class="text-gray-900 text-wrap" rowspan="<%= rowspan %>"><%= inovasi.opd_lead %> <b>(Lead)</b></td>
     <!-- USULAN YANG DIAMBIL USER -->
     <td class="p-0 m-0 border-start border-end" style="height: 0px !important;" colspan="8"></td>
     <!-- END -->
@@ -33,44 +34,41 @@
       </div>
     </td>
     <td class="text-gray-900 text-wrap" style="height: 1px;" rowspan="<%= rowspan %>">
-      <% if terdapat_rekin %>
-        <div class="d-grid h-100">
-          <div class="kolab-items" id="<%= dom_id(inovasi, 'kolab') %>">
-            <%= render partial: 'kolabs/kolab', collection: inovasi.kolabs %>
-          </div>
-          <% if admin_kota? %>
-            <%= link_to new_kolab_path(type: 'Inovasi', id: inovasi.id,
-                                       tahun: inovasi.tahun,
-                                       kode_opd: inovasi.pengambil_pertama.opd_rekin.kode_unik_opd,
-                                       target: dom_id(inovasi, 'kolab')),
-                        remote: true,
-                        class: 'btn btn-tertiary mt-auto',
-                        data: {
-                          controller: 'form-modal',
-                          action: 'form-modal#appendForm',
-                          form_modal_location_param: 'form-modal-body',
-                          bs_target: '#form-modal',
-                          bs_toggle: 'modal'
-                        } do %>
-              <span class="fas fa-plus me-2"></span>
-              <span>Tambah Kolaborator</span>
-            <% end %>
-          <% end %>
+      <div class="d-grid h-100">
+        <div class="kolab-items" id="<%= dom_id(inovasi, 'kolab') %>">
+          <%= render partial: 'kolabs/kolab', collection: inovasi.kolabs %>
         </div>
-      <% end %>
+        <% if admin_kota? %>
+          <%= link_to new_kolab_path(type: 'Inovasi', id: inovasi.id,
+                                     tahun: inovasi.tahun,
+                                     kode_opd: inovasi.kode_opd_lead,
+                                     target: dom_id(inovasi, 'kolab')),
+                      remote: true,
+                      class: 'btn btn-tertiary mt-auto',
+                      data: {
+                        controller: 'form-modal',
+                        action: 'form-modal#appendForm',
+                        form_modal_location_param: 'form-modal-body',
+                        bs_target: '#form-modal',
+                        bs_toggle: 'modal'
+                      } do %>
+            <span class="fas fa-plus me-2"></span>
+            <span>Tambah Kolaborator</span>
+          <% end %>
+        <% end %>
+      </div>
     </td>
   </tr>
   <% if terdapat_rekin %>
-    <% inovasi.all_usulans.each.with_index(1) do |usulan, urutan| %>
-      <% leader = urutan == 1 %>
-      <tr class="skip <%= leader ? 'table-info' : '' %>">
+    <% inovasi.all_usulans.each do |usulan| %>
+      <tr class="skip">
         <td class="text-gray-900 text-wrap"><%= usulan.pokin_inovasi %></td>
         <td class="text-gray-900 text-wrap"><%= usulan.rekin_inovasi %></td>
         <td class="text-gray-900 text-wrap"><%= usulan.pemilik_rekin %></td>
         <td class="text-gray-900 text-wrap"><%= usulan.subkegiatan_rekin %></td>
         <td class="text-gray-900 text-wrap"><%= usulan.program_rekin %></td>
         <td class="text-gray-900">Rp. <%= number_with_delimiter(usulan.pagu_rekin) %></td>
-        <td class="text-gray-900 text-wrap"><%= usulan.opd_rekin %> <b><%= leader ? '(Lead)' : '' %></b></td>
+        <td class="text-gray-900 text-wrap"><%= usulan.opd_rekin %></td>
         <td class="text-gray-900 text-wrap"><%= usulan.inovasi_rekin %></td>
       </tr>
     <% end %>

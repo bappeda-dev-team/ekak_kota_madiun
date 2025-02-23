@@ -1,16 +1,15 @@
 <% ada_rekin = kolab.kolaborator_mengisi_rekin? %>
 <table class="table table-bordered mb-3 <%= ada_rekin ? 'table-success' : 'table-danger' %>" id="<%= dom_id(kolab) %>">
   <tr>
-    <td class="text-start" width="20px">Kolaborasi Dengan</td>
+    <td class="text-start" width="20px">OPD <b><%= kolab.sebagai %></b></td>
     <td class="fw-bolder text-gray-500 text-wrap text-start"><%= kolab.opd %></td>
     <td class="text-wrap">
-      <% unless ada_rekin %>
-        <div class="d-grid">
-          <%= render(DeleteButtonAjaxComponent.new(path: kolab_path(kolab),
-                                                   model: kolab,
-                                                   text: 'Hapus kolaborasi?')) %>
-        </div>
-      <% end %>
+      <div class="d-grid gap-3">
+        <%= render(EditButtonComponent.new(path: edit_kolab_path(kolab))) %>
+        <%= render(DeleteButtonAjaxComponent.new(path: kolab_path(kolab),
+                                                 model: kolab,
+                                                 text: 'Hapus kolaborasi?')) %>
+      </div>
     </td>
   </tr>
   <tr>

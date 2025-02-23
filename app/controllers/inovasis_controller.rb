@@ -100,6 +100,14 @@ class InovasisController < ApplicationController
     @kode_opd = @inovasi.opd
 
     if @inovasi.save
+      # buat kolab langsung
+      @kolab = Kolab.create(kolabable_type: 'Inovasi',
+                            kolabable_id: @inovasi.id,
+                            tahun: @inovasi.tahun,
+                            jenis: 'Dari-Kota',
+                            status: 'Lead',
+                            kode_unik_opd: @kode_opd)
+
       render json: { resText: "Entri Inisiatif ditambahkan",
                      html_content: html_content({ inovasi: @inovasi },
                                                 partial: 'inovasis/inovasi') }.to_json,

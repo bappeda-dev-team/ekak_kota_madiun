@@ -20,18 +20,18 @@ class KolabsController < ApplicationController
                        status: 'diterima')
     @target = params[:target]
     @kode_opd = params[:kode_opd]
-    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
 
     # TODO: break the chain
     # this makes unusable outside inovasi
     @inovasi = Inovasi.find(params[:id])
-    @pohon_kinerja = @inovasi.pengambil_pertama.pokin_inovasi
     @type = 'prepend'
   end
 
   # GET /kolabs/1/edit
   def edit
     @target = params[:target]
+    @inovasi = @kolab.kolabable
     @type = 'replace'
   end
 
@@ -43,7 +43,6 @@ class KolabsController < ApplicationController
     # TODO: break the chain
     # this makes unusable outside inovasi
     @inovasi = Inovasi.find(@kolab.kolabable_id)
-    @pohon_kinerja = @inovasi.pengambil_pertama.pokin_inovasi
 
     if @kolab.save
       render json: { resText: "Kolaborator ditambahkan",
@@ -60,14 +59,16 @@ class KolabsController < ApplicationController
 
   # PATCH/PUT /kolabs/1 or /kolabs/1.json
   def update
-    respond_to do |format|
-      if @kolab.update(kolab_params)
-        format.html { redirect_to kolab_url(@kolab), notice: "Kolab was successfully updated." }
-        format.json { render :show, status: :ok, location: @kolab }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @kolab.errors, status: :unprocessable_entity }
-      end
+    if @kolab.update(kolab_params)
+      render json: { resText: "Kolaborator ditambahkan",
+                     html_content: html_content({ kolab: @kolab },
+                                                partial: 'kolabs/kolab') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ kolab: @kolab },
+                                                 partial: 'kolabs/form_edit') }.to_json,
+             status: :unprocessable_entity
     end
   end
 

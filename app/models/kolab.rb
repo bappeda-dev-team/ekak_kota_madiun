@@ -17,6 +17,8 @@ class Kolab < ApplicationRecord
   validates :kolabable_id, presence: true
   validates :kolabable_type, presence: true
 
+  STATUS_KOLAB = %w[Lead Anggota].freeze
+
   belongs_to :kolabable, polymorphic: true
   belongs_to :opd, foreign_key: "kode_unik_opd", primary_key: "kode_unik_opd", optional: true
 
@@ -30,5 +32,9 @@ class Kolab < ApplicationRecord
   # khusus inovasi walkot
   def kolaborator_mengisi_rekin?
     jumlah_rekin_opd.positive?
+  end
+
+  def sebagai
+    status == 'Lead' ? '(Lead)' : ''
   end
 end

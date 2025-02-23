@@ -88,6 +88,16 @@ class Inovasi < ApplicationRecord
     '-'
   end
 
+  def opd_lead
+    opd_inovasi
+  end
+
+  def kode_opd_lead
+    kolabs.find_by(status: 'Lead').opd.kode_unik_opd
+  rescue NoMethodError
+    '0.00.0.00.0.00.00.0000'
+  end
+
   def self.type
     'Inisiatif'
   end
@@ -174,7 +184,12 @@ class Inovasi < ApplicationRecord
   # end gunakan jika diusulkan oleh user
 
   def all_usulans
-    usulans.includes(sasaran: %i[user opd strategi program_kegiatan]).select(&:with_sasaran?)
+    usulans.includes(sasaran: %i[user opd strategi program_kegiatan])
+           .select(&:with_sasaran?)
+           .sort_by do |us|
+      sebagai = us.usulanable.kolabs.map(&:status)
+      sebagai == 'Lead' ? 0 : 1
+    end
   end
 
   def rowspan_usulans
