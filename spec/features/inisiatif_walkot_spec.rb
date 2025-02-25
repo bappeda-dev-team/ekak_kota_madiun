@@ -21,17 +21,17 @@ RSpec.describe "Inisiatif Walikota", type: :feature do
     asta_karya
   end
 
-  def sign_in_and_pick_tahun
+  def sign_in_and_pick_tahun(user, nama_opd: '', tahun: '2025')
     visit root_path
 
     # sign in
-    fill_in 'user_login', with: admin_kota.nik
-    fill_in 'password', with: admin_kota.password
+    fill_in 'user_login', with: user.nik
+    fill_in 'password', with: user.password
     click_on 'Sign in'
 
     within(".filter-form") do
-      select2 '2025', xpath: '//*[@id="navbarSupportedContent"]/ul/li[1]/form/div/span[3]'
-      select2 bappeda.nama_opd, xpath: '//*[@id="navbarSupportedContent"]/ul/li[1]/form/div/span[1]'
+      select2 tahun, xpath: '//*[@id="navbarSupportedContent"]/ul/li[1]/form/div/span[3]'
+      select2 nama_opd, xpath: '//*[@id="navbarSupportedContent"]/ul/li[1]/form/div/span[1]'
       click_on 'Aktifkan'
     end
     # click the notification
@@ -40,7 +40,7 @@ RSpec.describe "Inisiatif Walikota", type: :feature do
 
   scenario 'Admin kota create inisiatif walikota with lead opd successfully', js: true do
     setup_user_misi_and_tahun
-    sign_in_and_pick_tahun
+    sign_in_and_pick_tahun(admin_kota, nama_opd: bappeda.nama_opd)
     expect(page).to have_text('Kota Madiun')
 
     # open data master / usulans / inisiatif walikota
@@ -99,7 +99,7 @@ RSpec.describe "Inisiatif Walikota", type: :feature do
     setup_user_misi_and_tahun
     create_inisiatif_walkot
 
-    sign_in_and_pick_tahun
+    sign_in_and_pick_tahun(admin_kota, nama_opd: bappeda.nama_opd)
     expect(page).to have_text('Kota Madiun')
 
     # find laporan / usulan / insiatif walikota
@@ -142,5 +142,95 @@ RSpec.describe "Inisiatif Walikota", type: :feature do
       # keterangan
       assert_text 'Kolaborasi SAKIP'
     end
+  end
+
+  scenario 'Kolaborator picked and user input usulan inovasi', js: true do
+    setup_user_misi_and_tahun
+    program_unggulan = create(:inovasi,
+                              tahun: '2025',
+                              opd: bappeda.kode_unik_opd,
+                              usulan: 'Meningkatkan pembelajaran dengan papan tulis digital pada SD dan SMP Negeri Kota Madiun',
+                              misi: misi,
+                              manfaat: asta_karya.asta_karya,
+                              tag: '100 Hari Kerja',
+                              tag_active: true,
+                              is_active: true,
+                              uraian_tag: 'XX-Papan-Tulis',
+                              uraian: 'YY-Uraian-Umum')
+
+    # preparation
+    # kolab with opd bagor
+    create(:kolab,
+           kolabable_type: 'Inovasi',
+           kolabable_id: program_unggulan.id,
+           jenis: 'Dari-Kota',
+           tahun: '2025',
+           status: 'Anggota',
+           kode_unik_opd: bagor.kode_unik_opd,
+           keterangan: 'Kolaborasi SAKIP')
+
+    asn_c = create(:eselon_4, nik: '19988822211132187',
+                              nama: 'Wadi Ah',
+                              email: '19988822211132187@test.com',
+                              opd: bagor)
+    strategi = create(:strategi, tahun: '2025', role: 'eselon_4',
+                                 nip_asn: asn_c.nip_asn,
+                                 opd: bagor)
+    program_kegiatan = create(:program_kegiatan,
+                              opd: bagor)
+
+    rekin_asn = create(:sasaran,
+                       sasaran_kinerja: 'sasaran-program-unggulan',
+                       user: asn_c,
+                       tahun: '2025',
+                       id_rencana: '123',
+                       program_kegiatan: program_kegiatan,
+                       strategi: strategi)
+    indikator_sasaran = create(:indikator_sasaran, sasaran: rekin_asn)
+    create(:manual_ik, indikator_sasaran: indikator_sasaran)
+    create(:rincian, sasaran: rekin_asn)
+    create(:tahapan, sasaran: rekin_asn, id_rencana_aksi: 'test-a')
+    create(:aksi, id_rencana_aksi: 'test-a', target: 100, bulan: 12)
+
+    sign_in_and_pick_tahun(asn_c, nama_opd: bagor.nama_opd)
+
+    expect(page).to have_text('Kota Madiun')
+    # end preparation
+
+    # find rencana kinerja / usulan / insiatif walikota
+    find('span.sidebar-text', text: 'Perencanaan').click
+    find('span.sidebar-text', text: 'Usulan').click
+    find('span.sidebar-text', text: 'Inisiatif Walikota').click
+    expect(page).to have_text('Usulan Inisiatif Walikota Tahun 2025')
+    expect(page).to have_text(program_unggulan.usulan)
+
+    visit sasaran_path(rekin_asn)
+    expect(page).to have_text('sasaran-program-unggulan')
+    page.execute_script("window.scrollTo(0, 1500)")
+    expect(page).to have_text('Usulan Inisiatif')
+
+    select2 program_unggulan.usulan, xpath: '/html/body/main/div/div[5]/div[2]/form/div[1]/span'
+    # click save
+    find(:xpath, '/html/body/main/div/div[5]/div[2]/form/div[2]/input').click
+
+    click_on 'OK'
+
+    expect(page).to have_text(program_unggulan.usulan)
+
+    find('span.sidebar-text', text: 'Laporan').click
+    find('span.sidebar-text', text: 'Usulan').click
+    find('span.sidebar-text', text: 'Inisiatif Walikota').click
+
+    expect(page).to have_selector('table#kolab_1.table-success')
+
+    page.execute_script("document.querySelector('div.table-responsive').scrollLeft += 2500;")
+
+    assert_text 'OPD (Anggota)'
+    assert_text 'Bagian Organisasi'
+    assert_text 'Jumlah Rekin'
+    # to identify absent of rekin by kolaborator
+    expect(page).to have_selector('td.jumlah-rekin-kolab', text: '1')
+    # keterangan
+    assert_text 'Kolaborasi SAKIP'
   end
 end

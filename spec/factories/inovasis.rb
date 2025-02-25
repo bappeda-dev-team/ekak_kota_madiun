@@ -34,5 +34,6 @@ FactoryBot.define do
   factory :inovasi do
     usulan { "Inovasi walikota a" }
     manfaat { "Pemulusan jalan" }
+    is_active { true }
   end
 end

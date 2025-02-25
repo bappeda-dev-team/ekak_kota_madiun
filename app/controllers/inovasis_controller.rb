@@ -54,9 +54,15 @@ class InovasisController < ApplicationController
   end
 
   def usulan_inisiatif
-    list_inovasis
-    nip_pemilik = current_user.nik
-    @inovasis = @inovasis.where(nip_asn: [nip_pemilik, ''])
+    @tahun = cookies[:tahun] || Date.current.year.to_s
+    @kode_opd = cookies[:opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    # nip_pemilik = current_user.nik
+    @inovasis = Inovasi.includes(%i[kolabs])
+                       .where(
+                         tahun: @tahun,
+                         kolabs: { kode_unik_opd: @kode_opd }
+                       )
     render 'user_inisiatif'
   end
 
