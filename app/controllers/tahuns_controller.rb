@@ -1,5 +1,6 @@
 class TahunsController < ApplicationController
   before_action :set_tahun, only: %i[show edit update destroy]
+  layout false, only: %i[new edit]
 
   # GET /tahuns or /tahuns.json
   def index
