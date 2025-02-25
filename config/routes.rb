@@ -813,6 +813,7 @@ Rails.application.routes.draw do
       post :transfer_ke_pohon_kinerja
       get :clone_program_unggulans
       post :program_unggulans_cloner
+      get :program_unggulans_checker
     end
   end
 

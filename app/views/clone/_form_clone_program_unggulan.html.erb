@@ -3,7 +3,9 @@
               local: false,
               data: {
                 controller: 'form-ajax',
-                action: 'ajax:complete->form-ajax#processAjax'
+                skip_check: "false",
+                action: 'ajax:beforeSend->form-ajax#checkRecord
+                         ajax:complete->form-ajax#processAjax'
               } do |form| %>
   <div class="field">
     <%= form.label :tahun_sekarang, class: "form-label" %>
@@ -19,6 +21,7 @@
      data: {
        placeholder: "Pilih Tahun Cloning",
        controller: 'dropdown',
+       form_ajax_target: 'tahun',
        dropdown_parent_value: '#form-modal'
      } %>
   </div>

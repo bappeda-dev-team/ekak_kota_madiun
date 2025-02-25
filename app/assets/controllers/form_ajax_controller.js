@@ -1,13 +1,53 @@
 import ApplicationController from "./application_controller";
 import { Modal } from "bootstrap";
 import Turbolinks from "turbolinks";
+import { get } from "@rails/request.js";
 
 export default class extends ApplicationController {
   static targets = ["errorContainer", "button"];
   static values = {
     elementId: String,
     withAlert: { type: Boolean, default: true },
+    tahun: String
   };
+
+  async checkRecord(event) {
+    if (this.element.dataset.skipCheck === "true") {
+      this.element.dataset.skipCheck = "false"; // Reset for future submissions
+      return;
+    }
+
+    event.preventDefault();
+
+    const year = document.querySelector('#tahun_tujuan').value;
+    if (!year) return;
+
+    // Make an AJAX request to check if a record exists
+    const response = await get(`/clone/program_unggulans_checker?tahun_tujuan=${year}`,
+      { responseKind: "json" });
+
+    if (response.ok) {
+      const data = await response.json
+      if (data.exists) {
+        const result = await Swal.fire({
+          title: "Data sudah ada",
+          text: `Data Program Unggulan tahun ${data.tahun_check} sudah terisi. Lanjutkan?`,
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Lanjutkan",
+          cancelButtonText: "Batalkan",
+          reverseButtons: true
+        });
+
+        if (!result.isConfirmed) {
+          return; // Stop form submission if user cancels
+        }
+      }
+    }
+
+    this.element.dataset.skipCheck = "true";
+    this.element.requestSubmit();
+  }
 
   ajaxSuccess(e) {
     const [xhr] = e.detail;

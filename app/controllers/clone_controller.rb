@@ -309,6 +309,14 @@ class CloneController < ApplicationController
            layout: false
   end
 
+  def program_unggulans_checker
+    tahun_anggaran = KelompokAnggaran.find(params[:tahun_tujuan]).kode_kelompok
+    @tahun = tahun_anggaran.match(/murni/) ? tahun_anggaran[/[^_]\d*/, 0] : tahun_anggaran
+    # @tahun_asal = params[:tahun_asal]
+    inovasis_exists = Inovasi.where(tahun: @tahun).any?
+    render json: { exists: inovasis_exists, tahun_check: @tahun }
+  end
+
   # inovasis_cloner
   def program_unggulans_cloner
     tahun_anggaran = KelompokAnggaran.find(params[:tahun_tujuan]).kode_kelompok
