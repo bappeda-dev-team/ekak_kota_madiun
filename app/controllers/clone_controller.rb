@@ -320,6 +320,17 @@ class CloneController < ApplicationController
       operation = InovasiCloner.call(inovasi, tahun: @tahun)
       operation.to_record
       operation.persist!
+      inovasi_clone = operation.to_record
+
+      kolabs = inovasi.kolabs.map do |kolab|
+        kolab_operation = KolabCloner.call(kolab,
+                                           kolabable_id: inovasi_clone.id,
+                                           tahun: @tahun)
+        kolab_operation.to_record
+        kolab_operation.persist!
+      end
+
+      inovasi_clone.present? || kolabs.all?(true)
     end
 
     if operations.all?(true)
