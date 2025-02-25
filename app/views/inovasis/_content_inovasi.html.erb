@@ -3,18 +3,31 @@
     <div class="col">
       <h2 class="fs-5 fw-bold mb-0">Usulan Inisiatif Walikota Tahun <%= @tahun %></h2>
     </div>
-    <% unless guest? || !super_admin? %>
-      <div class="col text-end">
-        <%= link_to "Tambah Usulan", new_inovasi_path(tahun: @tahun, opd: @kode_opd),
+    <% if !guest? && super_admin? %>
+      <div class="col-auto d-flex gap-2">
+        <%= link_to new_inovasi_path(tahun: @tahun, opd: @kode_opd),
                     remote: true,
-                    class: "btn btn-sm btn-info",
                     data: {
                       controller: 'form-modal',
                       action: 'ajax:complete->form-modal#success:prevent',
                       bs_toggle: 'modal',
                       bs_target: '#form-modal'
-                    }
-        %>
+                    }, class: "btn btn-sm btn-info" do %>
+          <i class="fa fa-plus me-2"></i>
+          <span>Tambah Usulan</span>
+        <% end %>
+        <%= link_to clone_program_unggulans_clone_index_path(tahun: @tahun), remote: true,
+                    data: {
+                      controller: 'form-modal',
+                      action: 'form-modal#appendForm',
+                      form_modal_location_param: 'form-modal-body',
+                      bs_toggle: 'modal',
+                      bs_target: '#form-modal'
+                    },
+                    class: "btn btn-sm btn-primary" do %>
+          <i class="fa fa-clone me-2"></i>
+          <span>Clone</span>
+        <% end %>
       </div>
     <% end %>
   </div>

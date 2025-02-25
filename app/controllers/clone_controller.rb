@@ -299,6 +299,39 @@ class CloneController < ApplicationController
     end
   end
 
+  # clone_inovasis
+  def clone_program_unggulans
+    tahun = params[:tahun]
+    url = program_unggulans_cloner_clone_index_path
+    render partial: 'clone/form_clone_program_unggulan',
+           locals: { tahun_asal: tahun,
+                     url: url },
+           layout: false
+  end
+
+  # inovasis_cloner
+  def program_unggulans_cloner
+    tahun_anggaran = KelompokAnggaran.find(params[:tahun_tujuan]).kode_kelompok
+    @tahun = tahun_anggaran.match(/murni/) ? tahun_anggaran[/[^_]\d*/, 0] : tahun_anggaran
+    @tahun_asal = params[:tahun_asal]
+    inovasis = Inovasi.where(tahun: @tahun_asal)
+
+    operations = inovasis.map do |inovasi|
+      operation = InovasiCloner.call(inovasi, tahun: @tahun)
+      operation.to_record
+      operation.persist!
+    end
+
+    if operations.all?(true)
+      render json: { resText: "Berhasil di clone ke #{@tahun}" },
+             status: :created
+    else
+      render json: { resText: "Terjadi kesalahan",
+                     html_content: "<p class='alert alert-danger'>Terjadi kesalahan</p>" },
+             status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_tahun_clone
