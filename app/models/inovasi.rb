@@ -82,7 +82,7 @@ class Inovasi < ApplicationRecord
     if opd.first.match?(/\p{Alpha}/)
       opd
     else
-      Opd.unscoped.find_by(kode_unik_opd: opd).to_s
+      Opd.unscoped.find_by(kode_unik_opd: opd)
     end
   rescue NoMethodError
     '-'

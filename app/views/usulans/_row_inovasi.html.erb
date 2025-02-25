@@ -1,4 +1,4 @@
-<tbody id="<%= dom_id(inovasi) %>">
+<tbody id="<%= dom_id(inovasi) %>" class="<%= bisa_pilih_kolab?(inovasi.opd_lead) ? 'table-info' : '' %>">
   <% rowspan = inovasi.rowspan_usulans + 1 %>
   <% terdapat_rekin = inovasi.all_usulans.any? %>
   <tr>
@@ -38,7 +38,7 @@
         <div class="kolab-items" id="<%= dom_id(inovasi, 'kolab') %>">
           <%= render partial: 'kolabs/kolab', collection: inovasi.kolaborasi %>
         </div>
-        <% if admin_kota? %>
+        <% if bisa_pilih_kolab?(inovasi.opd_lead) %>
           <%= link_to new_kolab_path(type: 'Inovasi', id: inovasi.id,
                                      tahun: inovasi.tahun,
                                      kode_opd: inovasi.kode_opd_lead,

@@ -43,7 +43,7 @@
     <% end %>
   </td>
   <td class="fw-bolder border-bottom align-middle text-center">
-    <% unless guest? %>
+    <% if !guest? && super_admin? %>
       <div class="d-grid gap-3">
         <%= link_to edit_inovasi_path(inovasi),
                     remote: true,
