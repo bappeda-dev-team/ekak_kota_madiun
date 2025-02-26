@@ -1,0 +1,10 @@
+<table class="table table-bordered mb-3" id="<%= dom_id(review) %>">
+  <tr class="skip">
+    <td class="skip text-start" width="20px">Review</td>
+    <td class="fw-bolder text-gray-500 text-wrap text-start"><%= review.penilaian %></td>
+  </tr>
+  <tr class="skip">
+    <td class="skip text-start" width="20px">Keterangan</td>
+    <td class="fw-bolder text-gray-500 text-wrap text-start"><%= review.keterangan %> (<%= review.user.nama %>)</td>
+  </tr>
+</table>
