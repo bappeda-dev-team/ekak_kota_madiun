@@ -1,17 +1,18 @@
-<div class="card-body" id="tujuan-kota-card">
-  <div class="d-grid gap-4">
-    <div class="row align-items-center">
-      <div class="col">
-        <h2 class="fs-5 fw-bold mb-0">Program Unggulan Walikota Tahun <%= @tahun %> - <%= @opd %></h2>
+<div data-controller="print" data-print-title-value="RENSTRA">
+  <button class="m-3 btn btn-outline-danger no-print" data-action="click->print#print">
+    <span class="far fa-file-pdf me-2"></span>
+    Cetak PDF
+  </button>
+  <div data-print-target="document" class="w-100" id="cetak">
+    <div class="kop">
+      <div class="kop-judul">
+        <h2>LAPORAN</h2>
       </div>
-      <div class="col-auto">
-        <%= link_to cetak_program_unggulans_usulans_path(tahun: @tahun,
-                                                        kode_opd: @kode_opd),
-                    class:"m-3 btn btn-outline-danger",
-                    target: "_blank", rel: "noopener" do %>
-          <span class="far fa-file-pdf me-2"></span>
-          Cetak Laporan Program Unggulan Walikota
-        <% end %>
+      <div class="kop-opd">
+        <h3>PROGRAM UNGGULAN WALIKOTA</h3>
+      </div>
+      <div class="kop-tahun">
+        <h3>TAHUN <%= @tahun %></h3>
       </div>
     </div>
     <div class="table-responsive mb-5">

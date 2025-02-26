@@ -174,6 +174,23 @@ class UsulansController < ApplicationController
     render partial: 'usulans/filter_inovasi'
   end
 
+  # cetak inovasi
+  def cetak_program_unggulans
+    @kode_opd = params[:opd]
+    @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
+    @tahun = params[:tahun]
+    @inovasis = Inovasi.includes(%i[usulans reviews sasaran kolabs misi]).where(tahun: @tahun)
+    respond_to do |format|
+      format.html do
+        render template: 'usulans/cetak_program_unggulans.html.erb',
+               layout: 'print.html.erb'
+      end
+      format.xlsx do
+        render filename: "program_unggulan_walikota_#{@tahun}"
+      end
+    end
+  end
+
   private
 
   def check_params

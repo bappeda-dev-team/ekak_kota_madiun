@@ -761,6 +761,7 @@ Rails.application.routes.draw do
     collection do
       get :laporan_inovasi
       get :filter_inovasi
+      get :cetak_program_unggulans
     end
   end
 
