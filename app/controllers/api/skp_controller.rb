@@ -148,7 +148,7 @@ module Api
         tema = pohon.pohonable_type == 'SubTematik' ? pohon.parent_pohon : pohon.parent_pohon.parent_pohon
         tema.is_active
       end.map(&:pohonable)
-      @sasaran_kota = pohon_sasaran.select { |sasaran| sasaran.sasaran_kotum.present? }
+      @sasaran_kota = pohon_sasaran.select { |sasaran| sasaran&.sasaran_kotum.present? }
                                    .reject { |sasaran| sasaran.sasaran_kotum.sasaran.blank? }
     end
   end
