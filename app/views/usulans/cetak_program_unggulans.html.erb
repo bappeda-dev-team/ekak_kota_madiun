@@ -23,6 +23,7 @@
             <th class="fw-bolder text-center">Program Unggulan Walikota Madiun</th>
             <th class="fw-bolder text-center">Asta Karya</th>
             <th class="fw-bolder text-center">Misi Walikota</th>
+            <th class="fw-bolder text-center" style="min-width: 300px;">Uraian 100 Hari Kerja</th>
             <th class="fw-bolder text-center">OPD Lead</th>
             <th class="fw-bolder text-center">Pohon Kinerja</th>
             <th class="fw-bolder text-center">Rencana Kinerja</th>
@@ -32,7 +33,6 @@
             <th class="fw-bolder text-center">Pagu Rencana Kinerja</th>
             <th class="fw-bolder text-center">OPD Pelaksana</th>
             <th class="fw-bolder text-center">Inovasi</th>
-            <th class="fw-bolder text-center" style="min-width: 300px;">Uraian 100 Hari Kerja</th>
             <th class="fw-bolder text-center" style="min-width: 300px;">Uraian</th>
             <th class="fw-bolder text-center">Keterangan</th>
             <th class="fw-bolder text-center">Kolaborasi</th>
@@ -45,9 +45,9 @@
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="10">Total Pagu</td>
+            <td colspan="11">Total Pagu</td>
             <td class="text-gray-900 px-3"  width="150px">Rp. <%= number_with_delimiter(@inovasis.map(&:total_pagu_usulans).compact.sum) %></td>
-            <td colspan="6"></td>
+            <td colspan="5"></td>
           </tr>
         </tfoot>
       </table>
