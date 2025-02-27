@@ -1,15 +1,3 @@
-<% ada_rekin = kolab.kolaborator_mengisi_rekin? %>
-<table class="table table-bordered mb-3 <%= ada_rekin ? 'table-success' : 'table-danger' %>" id="<%= dom_id(kolab) %>">
-  <tr>
-    <td class="text-start" width="20px">OPD <b><%= kolab.sebagai %></b></td>
-    <td class="fw-bolder text-gray-500 text-wrap text-start"><%= kolab.opd %></td>
-  </tr>
-  <tr>
-    <td class="text-start" width="20px">Jumlah Rekin</td>
-    <td class="fw-bolder text-gray-500 text-wrap text-start jumlah-rekin-kolab"><%= kolab.jumlah_rekin_opd %></td>
-  </tr>
-  <tr>
-    <td class="text-start" width="20px">Keterangan</td>
-    <td class="fw-bolder text-gray-500 text-wrap text-start"><%= kolab.keterangan %></td>
-  </tr>
-</table>
+<div class="border border-top border-bottom fw-bolder text-start px-2">
+  <%= kolab.opd %> ( <%= kolab.jumlah_rekin_opd %> )
+</div>
