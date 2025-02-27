@@ -9,7 +9,7 @@
         <h2>LAPORAN</h2>
       </div>
       <div class="kop-opd">
-        <h3>PROGRAM UNGGULAN WALIKOTA</h3>
+        <h3>PROGRAM UNGGULAN WALIKOTA MADIUN</h3>
       </div>
       <div class="kop-tahun">
         <h3>TAHUN <%= @tahun %></h3>
@@ -17,11 +17,10 @@
     </div>
     <div class="table-responsive mb-5">
       <table class="table table-bordered">
-        <caption class="caption-top fw-bold"><small>*warna biru bisa tambah kolaborator</small></caption>
         <thead>
           <tr>
             <th class="fw-bolder" width="20px">No.</th>
-            <th class="fw-bolder text-center">Program Unggulan Walikota</th>
+            <th class="fw-bolder text-center">Program Unggulan Walikota Madiun</th>
             <th class="fw-bolder text-center">Asta Karya</th>
             <th class="fw-bolder text-center">Misi Walikota</th>
             <th class="fw-bolder text-center">OPD Lead</th>
@@ -45,8 +44,8 @@
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="9">Total Pagu</td>
-            <td class="text-gray-900 border-end border-start px-3"  width="150px">Rp. <%= number_with_delimiter(@inovasis.map(&:total_pagu_usulans).compact.sum) %></td>
+            <td colspan="10">Total Pagu</td>
+            <td class="text-gray-900 px-3"  width="150px">Rp. <%= number_with_delimiter(@inovasis.map(&:total_pagu_usulans).compact.sum) %></td>
             <td colspan="5"></td>
           </tr>
         </tfoot>

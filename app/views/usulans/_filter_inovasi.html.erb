@@ -42,10 +42,10 @@
             <%= render 'row_inovasi', inovasi: inovasi, no: no %>
           <% end %>
         </tbody>
-        <tfoot>
+        <tfoot class="hide">
           <tr>
-            <td colspan="9">Total Pagu</td>
-            <td class="text-gray-900 border-end border-start px-3"  width="150px">Rp. <%= number_with_delimiter(@inovasis.map(&:total_pagu_usulans).compact.sum) %></td>
+            <td colspan="10">Total Pagu</td>
+            <td class="text-gray-900 px-3"  width="150px">Rp. <%= number_with_delimiter(@inovasis.map(&:total_pagu_usulans).compact.sum) %></td>
             <td colspan="5"></td>
           </tr>
         </tfoot>

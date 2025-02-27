@@ -11,6 +11,9 @@
        border: 1px solid black;
        border-collapse: collapse;
      }
+     tfoot.hide {
+       display: none; /* Hide tfoot by default */
+     }
      caption {
        caption-side: top;
        padding: 10px;
@@ -181,4 +184,21 @@
   <body class="bg-white">
     <%= yield %>
   </body>
+  <script>
+   window.onbeforeprint = function () {
+     let table = document.querySelector("table");
+     let tfoot = document.querySelector("tfoot");
+
+     if (table && tfoot) {
+       let clone = tfoot.cloneNode(true); // Clone tfoot
+       clone.style.display = "table-row-group"; // Ensure it stays visible in print
+
+       let rows = table.querySelectorAll("tbody");
+       let lastRow = rows[rows.length - 1];
+
+       lastRow.after(clone); // Move tfoot to the last row position
+       tfoot.style.display = "none"; // Hide original tfoot
+     }
+   };
+  </script>
 </html>
