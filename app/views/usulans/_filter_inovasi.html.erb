@@ -32,7 +32,8 @@
             <th class="fw-bolder text-center">Pagu Rencana Kinerja</th>
             <th class="fw-bolder text-center">OPD Pelaksana</th>
             <th class="fw-bolder text-center">Inovasi</th>
-            <th class="fw-bolder text-center" style="min-width: 600px;">Uraian</th>
+            <th class="fw-bolder text-center" style="min-width: 300px;">Uraian 100 Hari Kerja</th>
+            <th class="fw-bolder text-center" style="min-width: 300px;">Uraian</th>
             <th class="fw-bolder text-center">Keterangan</th>
             <th class="fw-bolder text-center">Kolaborasi</th>
           </tr>
@@ -46,7 +47,7 @@
           <tr>
             <td colspan="10">Total Pagu</td>
             <td class="text-gray-900 px-3"  width="150px">Rp. <%= number_with_delimiter(@inovasis.map(&:total_pagu_usulans).compact.sum) %></td>
-            <td colspan="5"></td>
+            <td colspan="6"></td>
           </tr>
         </tfoot>
       </table>
