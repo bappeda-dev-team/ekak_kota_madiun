@@ -158,6 +158,8 @@ class UsulansController < ApplicationController
                   Inovasi.from_kota.with_opd_kolabs(@tahun, kode_opd)
                 end
 
+    @inovasis.order(:manfaat)
+
     render partial: 'usulans/filter_inovasi'
   end
 

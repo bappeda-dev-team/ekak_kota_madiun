@@ -9,14 +9,14 @@ class InovasisController < ApplicationController
     @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
 
     @inovasis = if @opd.is_kota
-                  Inovasi.from_kota.includes(:misi, kolabs: [:opd]).where(tahun: @tahun)
+                  Inovasi.includes(:misi, kolabs: [:opd]).where(tahun: @tahun)
                 else
                   kode_opd = if @opd.setda?
                                @opd.all_kode_setda
                              else
                                [@kode_opd]
                              end
-                  Inovasi.from_kota.with_opd_kolabs(@tahun, kode_opd)
+                  Inovasi.with_opd_kolabs(@tahun, kode_opd)
                 end
   end
 
@@ -26,14 +26,14 @@ class InovasisController < ApplicationController
     @tahun = params[:tahun]
 
     @inovasis = if @opd.is_kota
-                  Inovasi.from_kota.includes(:misi, kolabs: [:opd]).where(tahun: @tahun)
+                  Inovasi.includes(:misi, kolabs: [:opd]).where(tahun: @tahun)
                 else
                   kode_opd = if @opd.setda?
                                @opd.all_kode_setda
                              else
                                [@kode_opd]
                              end
-                  Inovasi.from_kota.with_opd_kolabs(@tahun, kode_opd)
+                  Inovasi.with_opd_kolabs(@tahun, kode_opd)
                 end
 
     render partial: 'inovasis/content_inovasi'

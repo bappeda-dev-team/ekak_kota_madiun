@@ -52,7 +52,7 @@ class Inovasi < ApplicationRecord
   has_many :reviews, as: :reviewable, dependent: :destroy
   has_many :kolabs, as: :kolabable, dependent: :destroy
 
-  default_scope { order(created_at: :desc) }
+  default_scope { order(manfaat: :asc) }
 
   scope :by_periode, lambda { |tahun_awal, tahun_akhir|
                        where("tahun::integer BETWEEN ?::integer AND ?::integer", tahun_awal, tahun_akhir)
@@ -62,7 +62,7 @@ class Inovasi < ApplicationRecord
                             includes(:misi, kolabs: [:opd])
                               .where(tahun: tahun_terpilih)
                               .select do |inovasi|
-                              inovasi.from_kota_only && inovasi.get_kolaborator(kode_opd)
+                              inovasi.get_kolaborator(kode_opd)
                             end
                           }
 
@@ -82,6 +82,10 @@ class Inovasi < ApplicationRecord
     sasaran.user.opd.kode_unik_opd == kode_opd_user
   rescue NoMethodError
     false
+  end
+
+  def pengusul_kota?
+    nip_asn.blank? || dari_kota?
   end
 
   def from_kota_only
