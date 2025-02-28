@@ -14,7 +14,11 @@ class InovasisController < ApplicationController
                 else
                   Inovasi.includes(:misi).where(tahun: @tahun)
                          .select do |inovasi|
-                    inovasi.opd == @kode_opd || inovasi&.sasaran&.user&.opd&.kode_unik_opd == @kode_opd
+                    inovasi.opd == @kode_opd ||
+                      inovasi&.sasaran&.user&.opd&.kode_unik_opd == @kode_opd ||
+                      inovasi.kolabs.any? do |kl|
+                        kl.kode_unik_opd == @kode_opd
+                      end
                   end
                   # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
                   #        .where(opd: @kode_opd)
@@ -67,7 +71,11 @@ class InovasisController < ApplicationController
 
     @inovasis = Inovasi.includes(:misi, :kolabs).where(tahun: @tahun)
                        .select do |inovasi|
-      inovasi.opd == @kode_opd || inovasi&.sasaran&.user&.opd&.kode_unik_opd == @kode_opd
+      inovasi.opd == @kode_opd ||
+        inovasi&.sasaran&.user&.opd&.kode_unik_opd == @kode_opd ||
+        inovasi.kolabs.any? do |kl|
+          kl.kode_unik_opd == @kode_opd
+        end
     end
     render 'user_inisiatif'
   end

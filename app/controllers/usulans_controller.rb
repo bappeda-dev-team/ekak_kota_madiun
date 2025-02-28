@@ -157,19 +157,23 @@ class UsulansController < ApplicationController
     # @tahun_awal = @periode.tahun_awal.to_i
     # @tahun_akhir = @periode.tahun_akhir.to_i
 
-    # @inovasis = if @opd.is_kota
-    #               Inovasi.where(tahun: @tahun)
-    #               # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
-    #             else
-    #               Inovasi.where(tahun: @tahun)
-    #                      .select do |inovasi|
-    #                 inovasi.opd == @kode_opd || inovasi&.sasaran&.user&.opd&.kode_unik_opd == @kode_opd
-    #               end
-    #               # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
-    #               #        .where(opd: @kode_opd)
-    #             end
+    @inovasis = if @opd.is_kota
+                  Inovasi.where(tahun: @tahun)
+                  # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
+                else
+                  Inovasi.where(tahun: @tahun)
+                         .select do |inovasi|
+                    inovasi.opd == @kode_opd ||
+                      inovasi&.sasaran&.user&.opd&.kode_unik_opd == @kode_opd ||
+                      inovasi.kolabs.any? do |kl|
+                        kl.kode_unik_opd == @kode_opd
+                      end
+                  end
+                  # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
+                  #        .where(opd: @kode_opd)
+                end
     # no differentiate version
-    @inovasis = Inovasi.includes(%i[usulans reviews sasaran kolabs misi]).where(tahun: @tahun)
+    # @inovasis = Inovasi.includes(%i[usulans reviews sasaran kolabs misi]).where(tahun: @tahun)
 
     render partial: 'usulans/filter_inovasi'
   end
