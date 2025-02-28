@@ -17,13 +17,15 @@ class ProgramUnggulansController < ApplicationController
     selected_id = params[:selected]
 
     @program_unggulans = if selected_id.present? && request.format.json?
-                           ProgramUnggulan.where(tahun_awal: @tahun_awal,
+                           ProgramUnggulan.asta_karyas
+                                          .where(tahun_awal: @tahun_awal,
                                                  tahun_akhir: @tahun_akhir,
                                                  lembaga_id: @lembaga_id,
                                                  asta_karya: selected_id)
                          else
-                           ProgramUnggulan.where(tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir,
-                                                 lembaga_id: @lembaga_id)
+                           ProgramUnggulan.asta_karyas.where(tahun_awal: @tahun_awal,
+                                                             tahun_akhir: @tahun_akhir,
+                                                             lembaga_id: @lembaga_id)
                          end
   end
 
@@ -33,10 +35,47 @@ class ProgramUnggulansController < ApplicationController
     @tahun_awal = @periode.tahun_awal
     @tahun_akhir = @periode.tahun_akhir
 
-    @program_unggulans = ProgramUnggulan.where(tahun_awal: @tahun_awal,
-                                               tahun_akhir: @tahun_akhir,
-                                               lembaga_id: @lembaga_id)
+    @program_unggulans = ProgramUnggulan.asta_karyas.where(tahun_awal: @tahun_awal,
+                                                           tahun_akhir: @tahun_akhir,
+                                                           lembaga_id: @lembaga_id)
     render partial: 'program_unggulans/asta_karya'
+  end
+
+  def asta_cita
+    @lembaga_id = cookies[:lembaga_id]
+    @tahun = cookies[:tahun]
+    return if @tahun.nil?
+
+    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @periode = Periode.find_tahun_rpjmd(tahun_bener).first
+
+    @periode = Periode.find_tahun(tahun_bener) if @periode.nil?
+    @tahun_awal = @periode.tahun_awal
+    @tahun_akhir = @periode.tahun_akhir
+
+    selected_id = params[:selected]
+
+    @program_unggulans = if selected_id.present? && request.format.json?
+                           ProgramUnggulan.asta_cita.where(tahun_awal: @tahun_awal,
+                                                           tahun_akhir: @tahun_akhir,
+                                                           lembaga_id: @lembaga_id,
+                                                           asta_karya: selected_id)
+                         else
+                           ProgramUnggulan.asta_cita.where(tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir,
+                                                           lembaga_id: @lembaga_id)
+                         end
+  end
+
+  def filter_asta_cita
+    @lembaga_id = cookies[:lembaga_id]
+    @periode = Periode.find(params[:periode])
+    @tahun_awal = @periode.tahun_awal
+    @tahun_akhir = @periode.tahun_akhir
+
+    @program_unggulans = ProgramUnggulan.asta_cita.where(tahun_awal: @tahun_awal,
+                                                         tahun_akhir: @tahun_akhir,
+                                                         lembaga_id: @lembaga_id)
+    render partial: 'program_unggulans/asta_cita'
   end
 
   # GET /program_unggulans/1 or /program_unggulans/1.json
@@ -46,15 +85,18 @@ class ProgramUnggulansController < ApplicationController
   def new
     lembaga = Lembaga.find(cookies[:lembaga_id])
     @periode = Periode.find(params[:periode])
+    kelompok = params[:kelompok]
 
     # default urutan
     urutan = ProgramUnggulan.where(lembaga_id: lembaga.id,
                                    tahun_awal: @periode.tahun_awal,
-                                   tahun_akhir: @periode.tahun_akhir)
+                                   tahun_akhir: @periode.tahun_akhir,
+                                   kelompok: kelompok)
                             .count
     urutan += 1
     @program_unggulan = ProgramUnggulan.new(lembaga_id: lembaga.id,
-                                            urutan: urutan)
+                                            urutan: urutan,
+                                            kelompok: kelompok)
   end
 
   # GET /program_unggulans/1/edit
@@ -121,6 +163,7 @@ class ProgramUnggulansController < ApplicationController
   # Only allow a list of trusted parameters through.
   def program_unggulan_params
     params.require(:program_unggulan).permit(:asta_karya, :tahun_awal, :tahun_akhir, :urutan, :keterangan,
+                                             :kelompok,
                                              :lembaga_id)
   end
 end

@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   resources :program_unggulans do
     collection do
       get :filter
+      get :asta_cita
+      get :filter_asta_cita
     end
   end
   resources :kolabs

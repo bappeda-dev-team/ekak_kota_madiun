@@ -6,6 +6,10 @@ module SuperAdminItemHelper
         icon: 'fas fa-chalkboard', identifier: 'program_unggulan'
       },
       {
+        title: 'Asta Cita', href: asta_cita_program_unggulans_path,
+        icon: 'fas fa-chalkboard', identifier: 'asta_cita'
+      },
+      {
         title: 'Master Usulan', href: "#",
         multi: true, collections: usulan_items,
         id_target: "master-usulan",

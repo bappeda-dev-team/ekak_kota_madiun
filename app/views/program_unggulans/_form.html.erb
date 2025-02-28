@@ -19,13 +19,18 @@
   <% end %>
 
   <div class="field">
+    <%= form.label :kelompok, class: 'form-label' %>
+    <%= form.text_field :kelompok, class: 'form-control', readonly: true %>
+  </div>
+
+  <div class="field">
     <%= form.label :urutan, class: 'form-label' %>
     <%= form.number_field :urutan, class: 'form-control', min: 1, required: true %>
   </div>
 
   <div class="field">
     <%= form.hidden_field :lembaga_id %>
-    <%= form.label :asta_karya, class: 'form-label' %>
+    <%= form.label :nama_program_unggulan, class: 'form-label' %>
     <%= form.text_field :asta_karya, class: 'form-control', required: true %>
   </div>
 

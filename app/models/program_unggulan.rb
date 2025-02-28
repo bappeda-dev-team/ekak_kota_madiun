@@ -4,6 +4,7 @@
 #
 #  id          :bigint           not null, primary key
 #  asta_karya  :string
+#  kelompok    :string
 #  keterangan  :string
 #  tahun_akhir :string
 #  tahun_awal  :string
@@ -34,6 +35,10 @@ class ProgramUnggulan < ApplicationRecord
                          length: { is: 4, message: 'Tahun tidak valid' }
   validates :tahun_akhir, presence: { message: 'Tahun akhir wajib diisi' },
                           length: { is: 4, message: 'Tahun tidak valid' }
+
+  scope :asta_karyas, -> { where(kelompok: [nil, 'ASTA_KARYA']) }
+  scope :asta_cita, -> { where(kelompok: 'ASTA_CITA') }
+  scope :nawa_bhakti, -> { where(kelompok: 'NAWA_BHAKTI') }
 
   def to_s
     asta_karya

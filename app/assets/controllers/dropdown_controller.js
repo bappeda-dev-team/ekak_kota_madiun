@@ -252,6 +252,10 @@ export default class extends Controller {
       $.ajax({
         type: "GET",
         url: url,
+        data: (params) => ({
+          q: params.term
+        }),
+        delay: 800
       }).then(function (data) {
         if (data.results.length > 0) {
           const data_first = data.results[0];

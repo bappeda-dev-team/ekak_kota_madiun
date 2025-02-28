@@ -4,6 +4,7 @@
 #
 #  id          :bigint           not null, primary key
 #  asta_karya  :string
+#  kelompok    :string
 #  keterangan  :string
 #  tahun_akhir :string
 #  tahun_awal  :string

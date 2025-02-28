@@ -1,0 +1,51 @@
+<%= content_for :html_title, "ASTA CITA" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Data Master</li>
+  <li class="breadcrumb-item active" aria-current="page">ASTA CITA</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= content_tag :div,
+                  class: 'card border-0 shadow',
+                  data: {
+                    controller: 'page-ajax',
+                    page_ajax_reqtype_value: 'GET',
+                    page_ajax_url_value: filter_asta_cita_program_unggulans_path(periode: @periode.id)
+                  }  do %>
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h2 class="fs-5 fw-bold mb-0">Filter Periode</h2>
+        </div>
+        <div class="col filter-periode">
+          <%= form_with url: filter_asta_cita_program_unggulans_path, local: false,
+                        method: :get, class: 'row',
+                        data: {
+                          controller: 'filter-render',
+                          filter_render_target_id_value: 'program-unggulan-results',
+                          action: 'ajax:success->filter-render#append'
+                        } do |form| %>
+            <div class="col">
+              <%= form.select :periode, [],
+               { include_blank: true },
+               data: {
+                 placeholder: 'Periode',
+                 controller: 'dropdown',
+                 dropdown_jenis_value: 'extra',
+                 dropdown_url_value: '/periodes.json',
+                 dropdown_jenis_uraian_value: 'RPJMD',
+                 dropdown_selected_value: @periode&.id
+               }  %>
+            </div>
+            <div class="col-auto">
+              <%= form.submit 'Filter', name: 'filter', class: 'btn btn-primary' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div data-page-ajax-target="results" id="program-unggulan-results">
+      <%= render(LoaderComponent.new())%>
+    </div>
+  <% end %>
+<% end %>

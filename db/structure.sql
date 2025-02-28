@@ -2930,7 +2930,8 @@ CREATE TABLE public.program_unggulans (
     keterangan character varying,
     lembaga_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    kelompok character varying
 );
 
 
@@ -7545,6 +7546,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250223043740'),
 ('20250223043814'),
 ('20250223070255'),
-('20250223194503');
+('20250223194503'),
+('20250228024215');
 
 
