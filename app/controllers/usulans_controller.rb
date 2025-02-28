@@ -143,11 +143,11 @@ class UsulansController < ApplicationController
   def filter_inovasi
     @kode_opd = params[:opd]
     filtered_only = @kode_opd == "0.00.0.00.0.00.00.0000"
-    # @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
+    @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
     @tahun = params[:tahun]
 
     @inovasis = if filtered_only
-                  Inovasi.includes(:misi, kolabs: [:opd])
+                  Inovasi.from_kota.includes(:misi, kolabs: [:opd])
                          .where(tahun: @tahun)
                 else
                   kode_opd = if @opd.setda?
@@ -155,13 +155,13 @@ class UsulansController < ApplicationController
                              else
                                [@kode_opd]
                              end
-                  Inovasi.with_opd_kolabs(@tahun, kode_opd)
+                  Inovasi.from_kota.with_opd_kolabs(@tahun, kode_opd)
                 end
 
     render partial: 'usulans/filter_inovasi'
   end
 
-  # cetak inovasi
+  # cetak inovasi - satu kota | no option opd
   def cetak_program_unggulans
     @kode_opd = params[:opd]
     @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
