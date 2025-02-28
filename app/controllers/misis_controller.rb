@@ -109,6 +109,8 @@ class MisisController < ApplicationController
     @tahun = cookies[:tahun]
     @lembaga_id = cookies[:lembaga_id]
     @lembaga = cookies[:lembaga]
+    return if @tahun.nil?
+
     tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
     @periode = Periode.find_tahun_rpjmd(tahun_bener)
 
