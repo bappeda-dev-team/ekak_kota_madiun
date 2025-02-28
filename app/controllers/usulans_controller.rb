@@ -136,8 +136,7 @@ class UsulansController < ApplicationController
   end
 
   def laporan_inovasi
-    is_admin_kota = current_user.admin_kota?
-    @kode_opd = is_admin_kota ? "0.00.0.00.0.00.00.0000" : cookies[:opd]
+    @kode_opd = "0.00.0.00.0.00.00.0000"
     @tahun = cookies[:tahun]
   end
 
@@ -179,7 +178,7 @@ class UsulansController < ApplicationController
                   #        .where(opd: @kode_opd)
                 end
     # no differentiate version
-    # @inovasis = Inovasi.includes(%i[usulans reviews sasaran kolabs misi]).where(tahun: @tahun)
+    # @inovasis = Inovasi.includes(:misi, kolabs: [:opd]).where(tahun: @tahun)
 
     render partial: 'usulans/filter_inovasi'
   end

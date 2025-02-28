@@ -3,14 +3,16 @@
   <tr>
     <td class="text-start" width="20px">OPD <b><%= kolab.sebagai %></b></td>
     <td class="fw-bolder text-gray-500 text-wrap text-start"><%= kolab.opd %></td>
-    <td class="text-wrap">
-      <div class="d-grid gap-3">
-        <%= render(EditButtonComponent.new(path: edit_kolab_path(kolab))) %>
-        <%= render(DeleteButtonAjaxComponent.new(path: kolab_path(kolab),
-                                                 model: kolab,
-                                                 text: 'Hapus kolaborasi?')) %>
-      </div>
-    </td>
+    <% if boleh_kolab %>
+      <td class="text-wrap">
+        <div class="d-grid gap-3">
+          <%= render(EditButtonComponent.new(path: edit_kolab_path(kolab))) %>
+          <%= render(DeleteButtonAjaxComponent.new(path: kolab_path(kolab),
+                                                   model: kolab,
+                                                   text: 'Hapus kolaborasi?')) %>
+        </div>
+      </td>
+    <% end %>
   </tr>
   <tr>
     <td class="text-start" width="20px">Jumlah Rekin</td>

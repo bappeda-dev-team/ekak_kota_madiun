@@ -22,6 +22,7 @@ export default class extends Controller {
     role: String,
     selected: String,
     kode: String,
+    scope: String,
     display: { type: Boolean, default: true },
     width: { type: String, default: "element" },
   };
@@ -56,6 +57,7 @@ export default class extends Controller {
       ajax: {
         url: this.urlValue,
         data: (params) => ({
+          scope: this.scopeValue,
           kode: this.kodeValue,
           kode_opd: this.kodeOpdValue,
           kode_opd_terpilih: this.kodeOpdTerpilihValue,

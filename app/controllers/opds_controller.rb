@@ -29,9 +29,10 @@ class OpdsController < ApplicationController
   end
 
   def filter_selected
+    scope_filter = params[:scope] || ''
     nama_opd = params[:q]
     lembaga_id = cookies[:lembaga_id]
-    @opds = if current_user.super_admin?
+    @opds = if scope_filter == 'all'
               Opd.opd_resmi_kota
                  .where(lembaga_id: lembaga_id, kode_unik_opd: params[:selected])
                  .presence || Opd.opd_resmi_kota.where(lembaga_id: lembaga_id)
