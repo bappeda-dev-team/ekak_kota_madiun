@@ -40,7 +40,7 @@ class Kolab < ApplicationRecord
   end
 
   def lead_kolab
-    status == 'Lead' || urutan == 1
+    status == 'Lead'
   end
 
   def ada_kolab_opd?(kode_opd)
