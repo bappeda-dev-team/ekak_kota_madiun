@@ -36,7 +36,6 @@ class OpdsController < ApplicationController
                  .where(lembaga_id: lembaga_id, kode_unik_opd: params[:selected])
                  .presence || Opd.opd_resmi_kota.where(lembaga_id: lembaga_id)
             else
-
               Opd.opd_resmi_kota
                  .where(lembaga_id: lembaga_id, kode_unik_opd: params[:selected])
             end

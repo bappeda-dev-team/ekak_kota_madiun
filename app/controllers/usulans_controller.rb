@@ -136,8 +136,8 @@ class UsulansController < ApplicationController
   end
 
   def laporan_inovasi
-    # @kode_opd = cookies[:opd]
-    @kode_opd = "0.00.0.00.0.00.00.0000"
+    is_admin_kota = current_user.admin_kota?
+    @kode_opd = is_admin_kota ? "0.00.0.00.0.00.00.0000" : cookies[:opd]
     @tahun = cookies[:tahun]
   end
 
