@@ -46,7 +46,7 @@ class KolabsController < ApplicationController
 
     if @kolab.save
       render json: { resText: "Kolaborator ditambahkan",
-                     html_content: html_content({ kolab: @kolab },
+                     html_content: html_content({ kolab: @kolab, boleh_kolab: true },
                                                 partial: 'kolabs/kolab') }.to_json,
              status: :ok
     else
@@ -61,7 +61,7 @@ class KolabsController < ApplicationController
   def update
     if @kolab.update(kolab_params)
       render json: { resText: "Kolaborator ditambahkan",
-                     html_content: html_content({ kolab: @kolab },
+                     html_content: html_content({ kolab: @kolab, boleh_kolab: true },
                                                 partial: 'kolabs/kolab') }.to_json,
              status: :ok
     else
