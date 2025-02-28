@@ -144,20 +144,20 @@ RSpec.describe "Inisiatif Walikota", type: :feature do
     end
   end
 
-  scenario 'Kolaborator picked and user input usulan inovasi', js: true do
-    setup_user_misi_and_tahun
-    program_unggulan = create(:inovasi,
-                              tahun: '2025',
-                              opd: bappeda.kode_unik_opd,
-                              usulan: 'Meningkatkan pembelajaran dengan papan tulis digital pada SD dan SMP Negeri Kota Madiun',
-                              misi: misi,
-                              manfaat: asta_karya.asta_karya,
-                              tag: '100 Hari Kerja',
-                              tag_active: true,
-                              is_active: true,
-                              uraian_tag: 'XX-Papan-Tulis',
-                              uraian: 'YY-Uraian-Umum')
-
+  let(:program_unggulan) do
+    create(:inovasi,
+           tahun: '2025',
+           opd: bappeda.kode_unik_opd,
+           usulan: 'Meningkatkan pembelajaran dengan papan tulis digital pada SD dan SMP Negeri Kota Madiun',
+           misi: misi,
+           manfaat: asta_karya.asta_karya,
+           tag: '100 Hari Kerja',
+           tag_active: true,
+           is_active: true,
+           uraian_tag: 'XX-Papan-Tulis',
+           uraian: 'YY-Uraian-Umum')
+  end
+  let(:opd_kolab) do
     # preparation
     # kolab with opd bagor
     create(:kolab,
@@ -168,11 +168,14 @@ RSpec.describe "Inisiatif Walikota", type: :feature do
            status: 'Anggota',
            kode_unik_opd: bagor.kode_unik_opd,
            keterangan: 'Kolaborasi SAKIP')
-
-    asn_c = create(:eselon_4, nik: '19988822211132187',
-                              nama: 'Wadi Ah',
-                              email: '19988822211132187@test.com',
-                              opd: bagor)
+  end
+  let(:asn_c) do
+    create(:eselon_4, nik: '19988822211132187',
+                      nama: 'Wadi Ah',
+                      email: '19988822211132187@test.com',
+                      opd: bagor)
+  end
+  let(:rekin_eselon4) do
     strategi = create(:strategi, tahun: '2025', role: 'eselon_4',
                                  nip_asn: asn_c.nip_asn,
                                  opd: bagor)
@@ -191,46 +194,100 @@ RSpec.describe "Inisiatif Walikota", type: :feature do
     create(:rincian, sasaran: rekin_asn)
     create(:tahapan, sasaran: rekin_asn, id_rencana_aksi: 'test-a')
     create(:aksi, id_rencana_aksi: 'test-a', target: 100, bulan: 12)
+  end
 
+  scenario 'User Open Usulan Page and found it blank before kolab', js: true do
+    setup_user_misi_and_tahun
+    asn_c
     sign_in_and_pick_tahun(asn_c, nama_opd: bagor.nama_opd)
-
-    expect(page).to have_text('Kota Madiun')
-    # end preparation
-
-    # find rencana kinerja / usulan / insiatif walikota
+    # expect(page).to have_text('Kota Madiun')
     find('span.sidebar-text', text: 'Perencanaan').click
     find('span.sidebar-text', text: 'Usulan').click
     find('span.sidebar-text', text: 'Inisiatif Walikota').click
     expect(page).to have_text('Usulan Inisiatif Walikota Tahun 2025')
-    expect(page).to have_text(program_unggulan.usulan)
+    expect(page).to_not have_text('Tambah Usulan')
+    expect(page).to have_css('tbody tr', count: 0)
+  end
 
-    visit sasaran_path(rekin_asn)
-    expect(page).to have_text('sasaran-program-unggulan')
-    page.execute_script("window.scrollTo(0, 1500)")
-    expect(page).to have_text('Usulan Inisiatif')
+  context 'Called for Kolab', js: true do
+    before(:each) do
+      setup_user_misi_and_tahun
+      program_unggulan
+      opd_kolab
+      asn_c
+      rekin_eselon4
+      sign_in_and_pick_tahun(asn_c, nama_opd: bagor.nama_opd)
+      expect(page).to have_text('Kota Madiun')
+    end
 
-    select2 program_unggulan.usulan, xpath: '/html/body/main/div/div[5]/div[2]/form/div[1]/span'
-    # click save
-    find(:xpath, '/html/body/main/div/div[5]/div[2]/form/div[2]/input').click
+    scenario 'Program unggulan showed at Perencanaan / Usulan / Insiatif Walikota Menu', js: true do
+      # find rencana kinerja / usulan / insiatif walikota
+      find('span.sidebar-text', text: 'Perencanaan').click
+      find('span.sidebar-text', text: 'Usulan').click
+      find('span.sidebar-text', text: 'Inisiatif Walikota').click
+      expect(page).to have_text('Usulan Inisiatif Walikota Tahun 2025')
+      expect(page).to have_text(program_unggulan.usulan)
+    end
 
-    click_on 'OK'
+    scenario 'User add program unggulan in their standard rekin', js: true do
+      # open rekin
+      find('span.sidebar-text', text: 'Perencanaan').click
+      find('span.sidebar-text', text: 'Rencana Kinerja').click
 
-    expect(page).to have_text(program_unggulan.usulan)
+      click_on('Input Rincian')
+      expect(page).to have_text('sasaran-program-unggulan')
 
-    find('span.sidebar-text', text: 'Laporan').click
-    find('span.sidebar-text', text: 'Usulan').click
-    find('span.sidebar-text', text: 'Inisiatif Walikota').click
+      # scroll to Usulan Inisiatif
+      page.execute_script("window.scrollTo(0, 1500)")
+      expect(page).to have_text('Usulan Inisiatif')
 
-    expect(page).to have_selector('table#kolab_1.table-success')
+      # choose program unggulan
+      select2 program_unggulan.usulan, xpath: '/html/body/main/div/div[5]/div[2]/form/div[1]/span'
+      # click save
+      find(:xpath, '/html/body/main/div/div[5]/div[2]/form/div[2]/input').click
 
-    page.execute_script("document.querySelector('div.table-responsive').scrollLeft += 2500;")
+      click_on 'OK'
 
-    assert_text 'OPD (Anggota)'
-    assert_text 'Bagian Organisasi'
-    assert_text 'Jumlah Rekin'
-    # to identify absent of rekin by kolaborator
-    expect(page).to have_selector('td.jumlah-rekin-kolab', text: '1')
-    # keterangan
-    assert_text 'Kolaborasi SAKIP'
+      expect(page).to have_text(program_unggulan.usulan)
+    end
+
+    scenario 'User select program unggulan and it update count in Laporan / Usulan / Inisiatif Walikota', js: true do
+      # open rekin
+      find('span.sidebar-text', text: 'Perencanaan').click
+      find('span.sidebar-text', text: 'Rencana Kinerja').click
+
+      click_on('Input Rincian')
+      expect(page).to have_text('sasaran-program-unggulan')
+      select2 program_unggulan.usulan, xpath: '/html/body/main/div/div[5]/div[2]/form/div[1]/span'
+      find(:xpath, '/html/body/main/div/div[5]/div[2]/form/div[2]/input').click
+      click_on 'OK'
+
+      # assert
+      find('span.sidebar-text', text: 'Laporan').click
+      find('span.sidebar-text', text: 'Usulan').click
+      find('span.sidebar-text', text: 'Inisiatif Walikota').click
+
+      expect(page).to have_selector('table#kolab_1.table-success')
+      expect(page).to have_selector('.jumlah-rekin-kolab', text: '1')
+    end
+
+    scenario 'inputted rekin not chaning the pengusul in Usulan / Inisiatif Walikota', js: true do
+      # open rekin
+      find('span.sidebar-text', text: 'Perencanaan').click
+      find('span.sidebar-text', text: 'Rencana Kinerja').click
+
+      click_on('Input Rincian')
+      expect(page).to have_text('sasaran-program-unggulan')
+      select2 program_unggulan.usulan, xpath: '/html/body/main/div/div[5]/div[2]/form/div[1]/span'
+      find(:xpath, '/html/body/main/div/div[5]/div[2]/form/div[2]/input').click
+      click_on 'OK'
+
+      # assert
+      find('span.sidebar-text', text: 'Perencanaan').click
+      find('span.sidebar-text', text: 'Usulan').click
+      find('span.sidebar-text', text: 'Inisiatif Walikota').click
+
+      expect(page).to have_selector('.pengusul', text: 'Kota')
+    end
   end
 end
