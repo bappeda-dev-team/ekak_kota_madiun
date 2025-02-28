@@ -10,9 +10,12 @@ require "sidekiq_unique_jobs/web"
 Rails.application.routes.draw do
   resources :program_unggulans do
     collection do
+      get :asta_karya
       get :filter
       get :asta_cita
       get :filter_asta_cita
+      get :nawa_bhakti
+      get :filter_nawa_bhakti
     end
   end
   resources :kolabs

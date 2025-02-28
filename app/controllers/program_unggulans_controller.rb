@@ -29,6 +29,10 @@ class ProgramUnggulansController < ApplicationController
                          end
   end
 
+  def asta_karya
+    index
+  end
+
   def filter
     @lembaga_id = cookies[:lembaga_id]
     @periode = Periode.find(params[:periode])
@@ -76,6 +80,43 @@ class ProgramUnggulansController < ApplicationController
                                                          tahun_akhir: @tahun_akhir,
                                                          lembaga_id: @lembaga_id)
     render partial: 'program_unggulans/asta_cita'
+  end
+
+  def nawa_bhakti
+    @lembaga_id = cookies[:lembaga_id]
+    @tahun = cookies[:tahun]
+    return if @tahun.nil?
+
+    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @periode = Periode.find_tahun_rpjmd(tahun_bener).first
+
+    @periode = Periode.find_tahun(tahun_bener) if @periode.nil?
+    @tahun_awal = @periode.tahun_awal
+    @tahun_akhir = @periode.tahun_akhir
+
+    selected_id = params[:selected]
+
+    @program_unggulans = if selected_id.present? && request.format.json?
+                           ProgramUnggulan.nawa_bhakti.where(tahun_awal: @tahun_awal,
+                                                             tahun_akhir: @tahun_akhir,
+                                                             lembaga_id: @lembaga_id,
+                                                             asta_karya: selected_id)
+                         else
+                           ProgramUnggulan.nawa_bhakti.where(tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir,
+                                                             lembaga_id: @lembaga_id)
+                         end
+  end
+
+  def filter_nawa_bhakti
+    @lembaga_id = cookies[:lembaga_id]
+    @periode = Periode.find(params[:periode])
+    @tahun_awal = @periode.tahun_awal
+    @tahun_akhir = @periode.tahun_akhir
+
+    @program_unggulans = ProgramUnggulan.nawa_bhakti.where(tahun_awal: @tahun_awal,
+                                                           tahun_akhir: @tahun_akhir,
+                                                           lembaga_id: @lembaga_id)
+    render partial: 'program_unggulans/nawa_bhakti'
   end
 
   # GET /program_unggulans/1 or /program_unggulans/1.json

@@ -1,7 +1,7 @@
-<%= content_for :html_title, "Asta Cita" %>
+<%= content_for :html_title, "Nawa Bhakti" %>
 <%= content_for :navigation do %>
   <li class="breadcrumb-item" aria-current="page">Data Master</li>
-  <li class="breadcrumb-item active" aria-current="page">Asta Cita</li>
+  <li class="breadcrumb-item active" aria-current="page">Nawa Bhakti</li>
 <% end %>
 <% content_for :view_utama do %>
   <%= content_tag :div,
@@ -9,7 +9,7 @@
                   data: {
                     controller: 'page-ajax',
                     page_ajax_reqtype_value: 'GET',
-                    page_ajax_url_value: filter_asta_cita_program_unggulans_path(periode: @periode.id)
+                    page_ajax_url_value: filter_nawa_bhakti_program_unggulans_path(periode: @periode.id)
                   }  do %>
     <div class="card-header">
       <div class="row align-items-center">
@@ -17,7 +17,7 @@
           <h2 class="fs-5 fw-bold mb-0">Filter Periode</h2>
         </div>
         <div class="col filter-periode">
-          <%= form_with url: filter_asta_cita_program_unggulans_path, local: false,
+          <%= form_with url: filter_nawa_bhakti_program_unggulans_path, local: false,
                         method: :get, class: 'row',
                         data: {
                           controller: 'filter-render',

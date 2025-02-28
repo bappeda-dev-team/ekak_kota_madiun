@@ -2,12 +2,10 @@ module SuperAdminItemHelper
   def super_admin_items # rubocop:disable Metrics/MethodLength
     [
       {
-        title: 'Asta Karya', href: program_unggulans_path,
-        icon: 'fas fa-chalkboard', identifier: 'program_unggulan'
-      },
-      {
-        title: 'Asta Cita', href: asta_cita_program_unggulans_path,
-        icon: 'fas fa-chalkboard', identifier: 'asta_cita'
+        title: 'Program Unggulan', href: "#",
+        multi: true, collections: program_unggulan_items,
+        id_target: "master-program-unggulan",
+        icon: 'fas fa-chalkboard', identifier: 'program_unggulans'
       },
       {
         title: 'Master Usulan', href: "#",

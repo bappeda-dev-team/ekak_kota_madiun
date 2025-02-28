@@ -1,4 +1,21 @@
 module SubItemHelper
+  def program_unggulan_items
+    [
+      {
+        title: 'Asta Karya', href: asta_karya_program_unggulans_path,
+        identifier: 'asta_karya'
+      },
+      {
+        title: 'Asta Cita', href: asta_cita_program_unggulans_path,
+        identifier: 'asta_cita'
+      },
+      {
+        title: 'Nawa Bhakti', href: nawa_bhakti_program_unggulans_path,
+        identifier: 'asta_cita'
+      }
+    ]
+  end
+
   def usulan_items
     [
       { title: 'Musrenbang', href: musrenbangs_path, identifier: 'musrenbang' },
