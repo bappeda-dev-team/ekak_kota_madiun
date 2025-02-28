@@ -516,4 +516,26 @@ class Opd < ApplicationRecord
       .where(status: %w[aktif plt])
       .map(&:user)
   end
+
+  def opd_setda?
+    kode_unik_opd == '4.01.0.00.0.00.01.0000'
+  end
+
+  # get all setda whatever in which bagian
+  def setda?
+    kode_unik_opd.in? all_kode_setda
+  end
+
+  def all_kode_setda
+    [
+      '4.01.0.00.0.00.01.0000',
+      '4.01.0.00.0.00.01.0001',
+      '4.01.0.00.0.00.01.0002',
+      '4.01.0.00.0.00.01.0003',
+      '4.01.0.00.0.00.01.0004',
+      '4.01.0.00.0.00.01.0005',
+      '4.01.0.00.0.00.01.0006',
+      '4.01.0.00.0.00.01.0007'
+    ]
+  end
 end

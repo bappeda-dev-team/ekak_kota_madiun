@@ -158,15 +158,21 @@ class UsulansController < ApplicationController
     # @tahun_akhir = @periode.tahun_akhir.to_i
 
     @inovasis = if @opd.is_kota
-                  Inovasi.where(tahun: @tahun)
+                  Inovasi.includes(:misi, kolabs: [:opd])
+                         .where(tahun: @tahun)
                   # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
                 else
-                  Inovasi.where(tahun: @tahun)
+                  kode_opd = if @opd.setda?
+                               @opd.all_kode_setda
+                             else
+                               [@kode_opd]
+                             end
+                  Inovasi.includes(:misi, kolabs: [:opd]).where(tahun: @tahun)
                          .select do |inovasi|
-                    inovasi.opd == @kode_opd ||
+                    inovasi.opd.in?(kode_opd) ||
                       inovasi&.sasaran&.user&.opd&.kode_unik_opd == @kode_opd ||
                       inovasi.kolabs.any? do |kl|
-                        kl.kode_unik_opd == @kode_opd
+                        kl.kode_unik_opd.in?(kode_opd)
                       end
                   end
                   # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
