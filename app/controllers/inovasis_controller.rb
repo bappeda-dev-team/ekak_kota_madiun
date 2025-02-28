@@ -59,11 +59,16 @@ class InovasisController < ApplicationController
     @kode_opd = cookies[:opd]
     @opd = Opd.find_by(kode_unik_opd: @kode_opd)
     # nip_pemilik = current_user.nik
-    @inovasis = Inovasi.includes(%i[kolabs])
-                       .where(
-                         tahun: @tahun,
-                         kolabs: { kode_unik_opd: @kode_opd }
-                       )
+    # @inovasis = Inovasi.includes(%i[kolabs])
+    #                    .where(
+    #                      tahun: @tahun,
+    #                      kolabs: { kode_unik_opd: @kode_opd }
+    #                    )
+
+    @inovasis = Inovasi.includes(:misi, :kolabs).where(tahun: @tahun)
+                       .select do |inovasi|
+      inovasi.opd == @kode_opd || inovasi&.sasaran&.user&.opd&.kode_unik_opd == @kode_opd
+    end
     render 'user_inisiatif'
   end
 
