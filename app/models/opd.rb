@@ -522,8 +522,11 @@ class Opd < ApplicationRecord
   end
 
   # get all setda whatever in which bagian
+  # to get all setda in whichever bagian
+  # use the first line
   def setda?
-    kode_unik_opd.in? all_kode_setda
+    # kode_unik_opd.in? all_kode_setda
+    opd_setda?
   end
 
   def all_kode_setda
