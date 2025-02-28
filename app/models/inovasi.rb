@@ -57,6 +57,7 @@ class Inovasi < ApplicationRecord
   scope :by_periode, lambda { |tahun_awal, tahun_akhir|
                        where("tahun::integer BETWEEN ?::integer AND ?::integer", tahun_awal, tahun_akhir)
                      }
+  scope :from_kota, -> { where(nip_asn: ['', nil]) }
   scope :with_opd_kolabs, lambda { |tahun_terpilih, kode_opd|
                             includes(:misi, kolabs: [:opd])
                               .where(tahun: tahun_terpilih)
