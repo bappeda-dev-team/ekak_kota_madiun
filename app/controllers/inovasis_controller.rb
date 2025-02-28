@@ -10,25 +10,14 @@ class InovasisController < ApplicationController
 
     @inovasis = if @opd.is_kota
                   Inovasi.includes(:misi, kolabs: [:opd]).where(tahun: @tahun)
-                  # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
                 else
                   kode_opd = if @opd.setda?
                                @opd.all_kode_setda
                              else
                                [@kode_opd]
                              end
-                  Inovasi.includes(:misi, kolabs: [:opd]).where(tahun: @tahun)
-                         .select do |inovasi|
-                    inovasi.opd.in?(kode_opd) ||
-                      inovasi&.sasaran&.user&.opd&.kode_unik_opd == @kode_opd ||
-                      inovasi.kolabs.any? do |kl|
-                        kl.kode_unik_opd.in?(kode_opd)
-                      end
-                  end
-                  # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
-                  #        .where(opd: @kode_opd)
+                  Inovasi.with_opd_kolabs(@tahun, kode_opd)
                 end
-    # @inovasis = Inovasi.includes(:misi).where(tahun: @tahun)
   end
 
   def filter_opd_tahun
@@ -36,38 +25,16 @@ class InovasisController < ApplicationController
     @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
     @tahun = params[:tahun]
 
-    # logic if periode
-    # tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
-    # periode_selected = params[:periode]
-    # @periode = if periode_selected.present?
-    #              Periode.find(periode_selected)
-    #            else
-    #              Periode.find_tahun(tahun_bener)
-    #            end
-    # @tahun_awal = @periode.tahun_awal.to_i
-    # @tahun_akhir = @periode.tahun_akhir.to_i
-
     @inovasis = if @opd.is_kota
                   Inovasi.includes(:misi, kolabs: [:opd]).where(tahun: @tahun)
-                  # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
                 else
                   kode_opd = if @opd.setda?
                                @opd.all_kode_setda
                              else
                                [@kode_opd]
                              end
-                  Inovasi.includes(:misi, kolabs: [:opd]).where(tahun: @tahun)
-                         .select do |inovasi|
-                    inovasi.opd.in?(kode_opd) ||
-                      inovasi&.sasaran&.user&.opd&.kode_unik_opd == @kode_opd ||
-                      inovasi.kolabs.any? do |kl|
-                        kl.kode_unik_opd.in?(kode_opd)
-                      end
-                  end
-                  # Inovasi.by_periode(@tahun_awal, @tahun_akhir)
-                  #        .where(opd: @kode_opd)
+                  Inovasi.with_opd_kolabs(@tahun, kode_opd)
                 end
-    # @inovasis = Inovasi.where(tahun: @tahun)
 
     render partial: 'inovasis/content_inovasi'
   end
@@ -83,14 +50,7 @@ class InovasisController < ApplicationController
     #                      kolabs: { kode_unik_opd: @kode_opd }
     #                    )
 
-    @inovasis = Inovasi.includes(:misi, :kolabs).where(tahun: @tahun)
-                       .select do |inovasi|
-      inovasi.opd == @kode_opd ||
-        inovasi&.sasaran&.user&.opd&.kode_unik_opd == @kode_opd ||
-        inovasi.kolabs.any? do |kl|
-          kl.kode_unik_opd == @kode_opd
-        end
-    end
+    @inovasis = Inovasi.with_opd_kolabs(@tahun, @kode_opd)
     render 'user_inisiatif'
   end
 

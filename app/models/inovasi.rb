@@ -57,9 +57,34 @@ class Inovasi < ApplicationRecord
   scope :by_periode, lambda { |tahun_awal, tahun_akhir|
                        where("tahun::integer BETWEEN ?::integer AND ?::integer", tahun_awal, tahun_akhir)
                      }
+  scope :with_opd_kolabs, lambda { |tahun_terpilih, kode_opd|
+                            includes(:misi, kolabs: [:opd])
+                              .where(tahun: tahun_terpilih)
+                              .select do |inovasi|
+                              inovasi.from_kota_only && inovasi.get_kolaborator(kode_opd)
+                            end
+                          }
 
   def to_s
     uraian
+  end
+
+  def get_kolaborator(kode_opd)
+    opd.in?(kode_opd) || opd_kolabs(kode_opd)
+  end
+
+  def opd_kolabs(kode_opd)
+    kolabs.any? { |kl| kl.ada_kolab_opd?(kode_opd) }
+  end
+
+  def inovasi_sasaran_user(kode_opd_user)
+    sasaran.user.opd.kode_unik_opd == kode_opd_user
+  rescue NoMethodError
+    false
+  end
+
+  def from_kota_only
+    nip_asn.blank?
   end
 
   def asn_pengusul

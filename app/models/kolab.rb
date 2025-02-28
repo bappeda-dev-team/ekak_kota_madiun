@@ -42,4 +42,8 @@ class Kolab < ApplicationRecord
   def lead_kolab
     status == 'Lead' || urutan == 1
   end
+
+  def ada_kolab_opd?(kode_opd)
+    kode_unik_opd.in?(kode_opd)
+  end
 end
