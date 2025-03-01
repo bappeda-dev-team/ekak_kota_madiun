@@ -34,7 +34,7 @@ class SearchController < ApplicationController
                                    .collect(&:searchable)
 
     usulan_kolabs = all_usulans.select do |inovasi|
-      inovasi.from_kota_only && inovasi.get_kolaborator(kode_opd)
+      inovasi.from_kota_only && inovasi.get_kolaborator(@kode_opd)
     end
 
     if kode_sasaran.present?

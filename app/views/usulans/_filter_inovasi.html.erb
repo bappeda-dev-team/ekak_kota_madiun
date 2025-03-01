@@ -6,7 +6,7 @@
       </div>
       <div class="col-auto">
         <%= link_to cetak_program_unggulans_usulans_path(tahun: @tahun,
-                                                        kode_opd: @kode_opd),
+                                                         kode_opd: @kode_opd),
                     class:"m-3 btn btn-outline-danger",
                     target: "_blank", rel: "noopener" do %>
           <span class="far fa-file-pdf me-2"></span>
@@ -38,11 +38,9 @@
             <th class="fw-bolder text-center">Kolaborasi</th>
           </tr>
         </thead>
-        <tbody>
-          <% @inovasis.each.with_index(1) do |inovasi, no| %>
-            <%= render 'row_inovasi', inovasi: inovasi, no: no %>
-          <% end %>
-        </tbody>
+        <% @inovasis.each.with_index(1) do |inovasi, no| %>
+          <%= render 'row_inovasi', inovasi: inovasi, no: no %>
+        <% end %>
         <tfoot class="hide">
           <tr>
             <td colspan="11">Total Pagu</td>
