@@ -1,82 +1,102 @@
-<% boleh_kolab = bisa_pilih_kolab?(inovasi.opd_lead) %>
-<tbody id="<%= dom_id(inovasi) %>" class="<%= boleh_kolab ? 'table-info' : '' %>">
-  <% rowspan = inovasi.rowspan_usulans + 1 %>
-  <% terdapat_rekin = inovasi.all_usulans.any? %>
+<tbody id="<%= dom_id(inovasi) %>">
+  <% rowspan_atas = inovasi.rekin_opd_lead.count %>
   <tr>
-    <td class="text-gray-900" width='20px' rowspan="<%= rowspan %>"><%= no %></td>
-    <td class="fw-bolder text-wrap" rowspan="<%= rowspan %>"><%= inovasi.usulan %></td>
-    <td class="text-gray-900 text-wrap" rowspan="<%= rowspan %>"><%= inovasi.manfaat %></td>
-    <td class="text-gray-900 text-wrap" rowspan="<%= rowspan %>"><%= inovasi.misi %></td>
-    <td class="text-gray-900 text-wrap" rowspan="<%= rowspan %>"><%= inovasi.uraian_tag %></td>
-    <td class="text-gray-900 text-wrap" rowspan="<%= rowspan %>"><%= inovasi.opd_lead %> <b>(Lead)</b></td>
+    <td <%= rowspan_atas.positive? ? "rowspan=#{rowspan_atas}" : '' %> class="text-gray-900" width='20px'><%= no %></td>
+    <td <%= rowspan_atas.positive? ? "rowspan=#{rowspan_atas}" : '' %> class="fw-bolder text-wrap"><%= inovasi.usulan %></td>
+    <td <%= rowspan_atas.positive? ? "rowspan=#{rowspan_atas}" : '' %> class="text-gray-900 text-wrap"><%= inovasi.manfaat %></td>
+    <td <%= rowspan_atas.positive? ? "rowspan=#{rowspan_atas}" : '' %> class="text-gray-900 text-wrap"><%= inovasi.misi %></td>
+    <td <%= rowspan_atas.positive? ? "rowspan=#{rowspan_atas}" : '' %> class="text-gray-900 text-wrap"><%= inovasi.uraian_tag %></td>
+    <td <%= rowspan_atas.positive? ? "rowspan=#{rowspan_atas}" : '' %> class="text-gray-900 text-wrap"><%= inovasi.opd_lead %> <b>(Lead)</b></td>
     <!-- USULAN YANG DIAMBIL USER -->
-    <td class="p-0 m-0 border-start border-end" style="height: 0px !important;" colspan="8"></td>
+    <% rekin_lead = inovasi.rekin_opd_lead.first %>
+    <td class="text-gray-900 text-wrap"><%= rekin_lead&.pokin_inovasi %></td>
+    <td class="text-gray-900 text-wrap"><%= rekin_lead&.rekin_inovasi %></td>
+    <td class="text-gray-900 text-wrap"><%= rekin_lead&.pemilik_rekin %></td>
+    <td class="text-gray-900 text-wrap"><%= rekin_lead&.subkegiatan_rekin %></td>
+    <td class="text-gray-900 text-wrap"><%= rekin_lead&.program_rekin %></td>
+    <td class="text-gray-900"><%= number_to_currency(rekin_lead&.pagu_rekin, unit: "Rp. ", separator: ".") %></td>
+    <td class="text-gray-900 text-wrap"><%= rekin_lead&.inovasi_rekin %></td>
     <!-- END -->
-    <td class="text-gray-900 text-wrap" rowspan="<%= rowspan %>"><%= inovasi.uraian %></td>
-    <td class="text-gray-900 text-wrap" style="height: 1px;" rowspan="<%= rowspan %>">
-      <div class="d-grid h-100" >
-        <div class="review-items" id="<%= dom_id(inovasi, 'review') %>">
-          <%= render partial: 'reviews/review', collection: inovasi.reviews.includes(:user) %>
-        </div>
-        <% if admin_kota? %>
-          <%= link_to new_review_path(type: 'Inovasi', id: inovasi.id, target: dom_id(inovasi, 'review')),
-                      remote: true,
-                      class: 'btn btn-outline-primary mt-auto',
-                      data: {
-                        controller: 'form-modal',
-                        action: 'form-modal#appendForm',
-                        form_modal_location_param: 'form-modal-body',
-                        bs_target: '#form-modal',
-                        bs_toggle: 'modal'
-                      } do %>
-            <span class="fas fa-marker me-2"></span>
-            <span>Review</span>
-          <% end %>
-        <% end %>
-      </div>
-    </td>
-    <td class="text-gray-900 text-wrap" style="height: 1px;" rowspan="<%= rowspan %>">
-      <div class="d-grid h-100">
-        <div class="kolab-items" id="<%= dom_id(inovasi, 'kolab') %>">
-          <%= render partial: 'kolabs/kolab', collection: inovasi.kolaborasi, locals: { boleh_kolab: boleh_kolab } %>
-        </div>
-        <% if boleh_kolab %>
-          <%= link_to new_kolab_path(type: 'Inovasi', id: inovasi.id,
-                                     tahun: inovasi.tahun,
-                                     kode_opd: inovasi.kode_opd_lead,
-                                     target: dom_id(inovasi, 'kolab')),
-                      remote: true,
-                      class: 'btn btn-tertiary mt-auto',
-                      data: {
-                        controller: 'form-modal',
-                        action: 'form-modal#appendForm',
-                        form_modal_location_param: 'form-modal-body',
-                        bs_target: '#form-modal',
-                        bs_toggle: 'modal'
-                      } do %>
-            <span class="fas fa-plus me-2"></span>
-            <span>Tambah Kolaborator</span>
-          <% end %>
-        <% end %>
-      </div>
+    <td <%= rowspan_atas.positive? ? "rowspan=#{rowspan_atas}" : '' %> class="text-gray-900 text-wrap"><%= inovasi.uraian %></td>
+    <td <%= rowspan_atas.positive? ? "rowspan=#{rowspan_atas}" : '' %> class="text-gray-900 text-wrap" style="vertical-align: top;">
+      <%= render 'usulans/review_items', inovasi: inovasi %>
     </td>
   </tr>
-  <% if terdapat_rekin %>
-    <% inovasi.all_usulans.each do |usulan| %>
-      <tr class="skip rekins">
-        <td class="text-gray-900 text-wrap"><%= usulan.pokin_inovasi %></td>
-        <td class="text-gray-900 text-wrap"><%= usulan.rekin_inovasi %></td>
-        <td class="text-gray-900 text-wrap"><%= usulan.pemilik_rekin %></td>
-        <td class="text-gray-900 text-wrap"><%= usulan.subkegiatan_rekin %></td>
-        <td class="text-gray-900 text-wrap"><%= usulan.program_rekin %></td>
-        <td class="text-gray-900">Rp. <%= number_with_delimiter(usulan.pagu_rekin) %></td>
-        <td class="text-gray-900 text-wrap"><%= usulan.opd_rekin %></td>
-        <td class="text-gray-900 text-wrap"><%= usulan.inovasi_rekin %></td>
-      </tr>
-    <% end %>
-  <% else %>
-    <tr class="skip rekins">
-      <td class="table-danger" colspan="8"></td>
+  <% inovasi.rekin_opd_lead.drop(1).each do |rekin_lead| %>
+    <tr class="skip rekins" >
+      <td class="text-gray-900 text-wrap"><%= rekin_lead.pokin_inovasi %></td>
+      <td class="text-gray-900 text-wrap"><%= rekin_lead.rekin_inovasi %></td>
+      <td class="text-gray-900 text-wrap"><%= rekin_lead.pemilik_rekin %></td>
+      <td class="text-gray-900 text-wrap"><%= rekin_lead.subkegiatan_rekin %></td>
+      <td class="text-gray-900 text-wrap"><%= rekin_lead.program_rekin %></td>
+      <td class="text-gray-900">Rp. <%= number_with_delimiter(rekin_lead.pagu_rekin) %></td>
+      <td class="text-gray-900 text-wrap"><%= rekin_lead.inovasi_rekin %></td>
     </tr>
+  <% end %>
+</tbody>
+<tbody id="<%= dom_id(inovasi, 'new_kolab') %>">
+  <tr class="skip skip-me" class="kolab-items">
+    <td class="text-gray-900 text-wrap" colspan="5">OPD Kolaborator</td>
+    <td class="text-gray-900">
+      <% boleh_kolab = bisa_pilih_kolab?(inovasi.opd_lead) %>
+      <% if boleh_kolab %>
+        <%= link_to new_kolab_path(type: 'Inovasi', id: inovasi.id,
+                                   tahun: inovasi.tahun,
+                                   kode_opd: inovasi.kode_opd_lead,
+                                   target: dom_id(inovasi, 'new_kolab')),
+                    remote: true,
+                    class: 'btn btn-sm btn-tertiary mt-auto w-100',
+                    data: {
+                      controller: 'form-modal',
+                      action: 'form-modal#appendForm',
+                      form_modal_location_param: 'form-modal-body',
+                      bs_target: '#form-modal',
+                      bs_toggle: 'modal'
+                    } do %>
+          <span class="fas fa-plus me-2"></span>
+          <span>Tambah Kolaborator</span>
+        <% end %>
+      <% end %>
+    </td>
+    <td class="fw-bolder text-center">POHON KINERJA</td>
+    <td class="fw-bolder text-center">RENCANA KINERJA</td>
+    <td class="fw-bolder text-center">PEMILIK RENCANA KINERJA</td>
+    <td class="fw-bolder text-center">SUB KEGIATAN</td>
+    <td class="fw-bolder text-center">PROGRAM</td>
+    <td class="fw-bolder text-center">PAGU RENCANA KINERJA</td>
+    <td class="fw-bolder text-center">INOVASI</td>
+  </tr>
+  <% if inovasi.kolabs.any? %>
+    <% inovasi.kolabs.order(:id).each do |kolab| %>
+      <% rowspan_kolabs = inovasi.rekin_kolabs(kolab.opd.id).size %>
+      <tr class="skip opd-kolabs" id="<%= dom_id(kolab) %>">
+        <td <%= rowspan_kolabs.positive? ? "rowspan=#{rowspan_kolabs + 1}" : '' %> class="text-gray-900 text-wrap" colspan="5"></td>
+        <td <%= rowspan_kolabs.positive? ? "rowspan=#{rowspan_kolabs + 1}" : '' %> class="text-gray-900 text-wrap">
+          <div class="d-flex flex-column gap-2">
+            <div class="opd-anggota">
+              <%= kolab.opd %> <b>(Anggota)</b>
+            </div>
+            <div class="jumlah-rekins">
+              Jumlah Rekin: <span class="jumlah-rekin-kolab"><%= rowspan_kolabs %></span>
+            </div>
+            <div class="keterangan-kolab">
+              Keterangan: <%= kolab.keterangan %>
+            </div>
+            <% if boleh_kolab %>
+              <hr />
+              <div class="d-grid gap-2">
+                <%= render(EditButtonComponent.new(path: edit_kolab_path(kolab))) %>
+                <%= render(DeleteButtonAjaxComponent.new(path: kolab_path(kolab),
+                                                         model: kolab,
+                                                         text: 'Hapus kolaborasi?')) %>
+              </div>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+      <% if rowspan_kolabs.positive? %>
+        <%= render 'usulans/rekin_inovasi', inovasi: inovasi, opd_id: kolab.opd.id, kolab_id: kolab.id %>
+      <% end %>
+    <% end %>
   <% end %>
 </tbody>

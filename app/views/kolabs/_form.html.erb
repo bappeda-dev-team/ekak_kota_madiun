@@ -1,8 +1,8 @@
 <%= form_with(model: kolab, local: false,
               data: {
                 controller: 'form-ajax',
-                form_ajax_target_param: @target,
-                form_ajax_type_param: @type,
+                form_ajax_target_param: kolab.new_record? ? @target : dom_id(kolab),
+                form_ajax_type_param: kolab.new_record? ? 'prepend' : '',
                 action: 'ajax:complete->form-ajax#processAjax'
               }
 ) do |form| %>
@@ -58,9 +58,13 @@
        data: { placeholder: "OPD Kolaborator",
          controller: 'dropdown',
          dropdown_jenis_value: 'ajax_preselect',
-         dropdown_url_value: legit_opd_opds_path(:json),
+         dropdown_url_value: opd_kolaborator_kolabs_path(kolab_id: @inovasi.id,
+                                                         kolab_type: 'Inovasi',
+                                                         format: :json),
          dropdown_kode_opd_value: @kode_opd,
          dropdown_parent_value: '#form-modal',
+         dropdown_item_value: @item,
+         dropdown_tahun_value: @tahun
        }
      } %>
   </div>

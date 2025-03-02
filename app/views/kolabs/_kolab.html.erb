@@ -1,25 +1,25 @@
-<% ada_rekin = kolab.kolaborator_mengisi_rekin? %>
-<table class="table table-bordered mb-3 <%= ada_rekin ? 'table-success' : 'table-danger' %>" id="<%= dom_id(kolab) %>">
-  <tr>
-    <td class="text-start" width="20px">OPD <b><%= kolab.sebagai %></b></td>
-    <td class="fw-bolder text-gray-500 text-wrap text-start"><%= kolab.opd %></td>
-    <% if boleh_kolab %>
-      <td class="text-wrap">
-        <div class="d-grid gap-3">
+<tr class="skip opd-kolabs" id="<%= dom_id(kolab) %>">
+  <td class="text-gray-900 text-wrap" colspan="5"></td>
+  <td class="text-gray-900 text-wrap">
+    <div class="d-flex flex-column gap-2">
+      <div class="opd-anggota">
+        <%= kolab.opd %> <b><%= kolab.sebagai %></b>
+      </div>
+      <div class="jumlah-rekins">
+        Jumlah Rekin: <span class="jumlah-rekin-kolab">0</span>
+      </div>
+      <div class="keterangan-kolab">
+        <%= kolab.keterangan %>
+      </div>
+      <% if boleh_kolab %>
+        <hr />
+        <div class="d-grid gap-2">
           <%= render(EditButtonComponent.new(path: edit_kolab_path(kolab))) %>
           <%= render(DeleteButtonAjaxComponent.new(path: kolab_path(kolab),
                                                    model: kolab,
                                                    text: 'Hapus kolaborasi?')) %>
         </div>
-      </td>
-    <% end %>
-  </tr>
-  <tr>
-    <td class="text-start" width="20px">Jumlah Rekin</td>
-    <td class="fw-bolder text-gray-500 text-wrap text-start jumlah-rekin-kolab" colspan="2"><%= kolab.jumlah_rekin_opd %></td>
-  </tr>
-  <tr>
-    <td class="text-start" width="20px">Keterangan</td>
-    <td class="fw-bolder text-gray-500 text-wrap text-start" colspan="2"><%= kolab.keterangan %></td>
-  </tr>
-</table>
+      <% end %>
+    </div>
+  </td>
+</tr>

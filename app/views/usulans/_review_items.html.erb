@@ -1,0 +1,20 @@
+<div class="d-grid h-100" >
+  <div class="review-items" id="<%= dom_id(inovasi, 'review') %>">
+    <%= render partial: 'reviews/review', collection: inovasi.reviews.includes(:user) %>
+  </div>
+  <% if admin_kota? %>
+    <%= link_to new_review_path(type: 'Inovasi', id: inovasi.id, target: dom_id(inovasi, 'review')),
+                remote: true,
+                class: 'btn btn-outline-primary mt-auto',
+                data: {
+                  controller: 'form-modal',
+                  action: 'form-modal#appendForm',
+                  form_modal_location_param: 'form-modal-body',
+                  bs_target: '#form-modal',
+                  bs_toggle: 'modal'
+                } do %>
+      <span class="fas fa-marker me-2"></span>
+      <span>Review</span>
+    <% end %>
+  <% end %>
+</div>

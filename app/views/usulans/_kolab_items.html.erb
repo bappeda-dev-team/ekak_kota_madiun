@@ -1,0 +1,20 @@
+<div class="d-grid h-100">
+  <% if boleh_kolab %>
+    <%= link_to new_kolab_path(type: 'Inovasi', id: inovasi.id,
+                               tahun: inovasi.tahun,
+                               kode_opd: inovasi.kode_opd_lead,
+                               target: dom_id(inovasi, 'kolab')),
+                remote: true,
+                class: 'btn btn-tertiary mt-auto',
+                data: {
+                  controller: 'form-modal',
+                  action: 'form-modal#appendForm',
+                  form_modal_location_param: 'form-modal-body',
+                  bs_target: '#form-modal',
+                  bs_toggle: 'modal'
+                } do %>
+      <span class="fas fa-plus me-2"></span>
+      <span>Tambah Kolaborator</span>
+    <% end %>
+  <% end %>
+</div>

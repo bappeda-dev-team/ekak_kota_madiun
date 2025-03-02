@@ -1,0 +1,23 @@
+<% inovasi.rekin_by_kolaborasi(opd_id).each do |opd, usulans| %>
+  <tr class="skip opd-rekins" id="<%= "rekin-#{kolab_id}-#{opd_id}" %>">
+    <% usulan = usulans.first %>
+    <td class="text-gray-900 text-wrap"><%= usulan&.pokin_inovasi %></td>
+    <td class="text-gray-900 text-wrap"><%= usulan&.rekin_inovasi %></td>
+    <td class="text-gray-900 text-wrap"><%= usulan&.pemilik_rekin %></td>
+    <td class="text-gray-900 text-wrap"><%= usulan&.subkegiatan_rekin %></td>
+    <td class="text-gray-900 text-wrap"><%= usulan&.program_rekin %></td>
+    <td class="text-gray-900"><%= number_to_currency(usulan&.pagu_rekin, unit: "Rp. ", separator: ".") %></td>
+    <td class="text-gray-900 text-wrap"><%= usulan&.inovasi_rekin %></td>
+  </tr>
+  <% usulans.drop(1).each do |usulan| %>
+    <tr class="skip rekins" id="<%= dom_id(usulan) %>">
+      <td class="text-gray-900 text-wrap"><%= usulan.pokin_inovasi %></td>
+      <td class="text-gray-900 text-wrap"><%= usulan.rekin_inovasi %></td>
+      <td class="text-gray-900 text-wrap"><%= usulan.pemilik_rekin %></td>
+      <td class="text-gray-900 text-wrap"><%= usulan.subkegiatan_rekin %></td>
+      <td class="text-gray-900 text-wrap"><%= usulan.program_rekin %></td>
+      <td class="text-gray-900"><%= number_to_currency(usulan.pagu_rekin, unit: "Rp. ", separator: ".") %></td>
+      <td class="text-gray-900 text-wrap"><%= usulan.inovasi_rekin %></td>
+    </tr>
+  <% end %>
+<% end %>

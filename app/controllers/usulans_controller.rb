@@ -157,6 +157,7 @@ class UsulansController < ApplicationController
                              end
                   Inovasi.from_kota.with_opd_kolabs(@tahun, kode_opd)
                 end
+    @total_pagu = @inovasis.map(&:total_pagu_usulans).compact.sum
 
     render partial: 'usulans/filter_inovasi'
   end

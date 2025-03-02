@@ -18,7 +18,11 @@ Rails.application.routes.draw do
       get :filter_nawa_bhakti
     end
   end
-  resources :kolabs
+  resources :kolabs do
+    collection do
+      get :opd_kolaborator
+    end
+  end
   resources :misis, path: "misi_kota" do
     collection do
       get :lists

@@ -12,10 +12,11 @@ class KolabsController < ApplicationController
 
   # GET /kolabs/new
   def new
+    @tahun = params[:tahun]
     # khusus kolaborasi inisiatif walkot
     @kolab = Kolab.new(kolabable_type: params[:type],
                        kolabable_id: params[:id],
-                       tahun: params[:tahun],
+                       tahun: @tahun,
                        jenis: 'Dari-Kota',
                        status: 'diterima')
     @target = params[:target]
@@ -25,13 +26,16 @@ class KolabsController < ApplicationController
     # TODO: break the chain
     # this makes unusable outside inovasi
     @inovasi = Inovasi.find(params[:id])
-    @type = 'prepend'
+    @type = 'append'
   end
 
   # GET /kolabs/1/edit
   def edit
     @target = params[:target]
     @inovasi = @kolab.kolabable
+    @kode_opd_lead = @inovasi.opd
+    @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd_lead)
+    @item = @kolab.opd.kode_unik_opd
     @type = 'replace'
   end
 
@@ -78,6 +82,25 @@ class KolabsController < ApplicationController
 
     render json: { resText: "Kolaborasi dibatalkan" }.to_json,
            status: :accepted
+  end
+
+  def opd_kolaborator
+    @tahun = params[:tahun]
+    opd_already_in_kolab = Kolab.where(kolabable_id: params[:kolab_id],
+                                       kolabable_type: params[:kolab_type],
+                                       jenis: 'Dari-Kota',
+                                       tahun: @tahun)
+                                .pluck(:kode_unik_opd)
+    kode_opd_lead = params[:kode_opd]
+    forbidden_opd = opd_already_in_kolab << kode_opd_lead
+    nama_opd = params[:q]
+    @opds = if params[:item]
+              Opd.where(kode_unik_opd: params[:item])
+            else
+              Opd.where.not(kode_unik_opd: nil)
+                 .where("nama_opd ILIKE ?", "%#{nama_opd}%")
+                 .where.not(kode_unik_opd: forbidden_opd)
+            end
   end
 
   private
