@@ -167,7 +167,8 @@ class UsulansController < ApplicationController
     @kode_opd = params[:opd]
     @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
     @tahun = params[:tahun]
-    @inovasis = Inovasi.includes(%i[usulans reviews sasaran kolabs misi]).where(tahun: @tahun)
+    @inovasis = Inovasi.from_kota.includes(%i[usulans reviews sasaran kolabs misi]).where(tahun: @tahun)
+    @total_pagu = @inovasis.map(&:total_pagu_usulans).compact.sum
     respond_to do |format|
       format.html do
         render template: 'usulans/cetak_program_unggulans.html.erb',

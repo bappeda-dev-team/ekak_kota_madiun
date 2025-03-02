@@ -1,20 +1,75 @@
-<div class="d-grid h-100">
-  <% if boleh_kolab %>
-    <%= link_to new_kolab_path(type: 'Inovasi', id: inovasi.id,
-                               tahun: inovasi.tahun,
-                               kode_opd: inovasi.kode_opd_lead,
-                               target: dom_id(inovasi, 'kolab')),
-                remote: true,
-                class: 'btn btn-tertiary mt-auto',
-                data: {
-                  controller: 'form-modal',
-                  action: 'form-modal#appendForm',
-                  form_modal_location_param: 'form-modal-body',
-                  bs_target: '#form-modal',
-                  bs_toggle: 'modal'
-                } do %>
-      <span class="fas fa-plus me-2"></span>
-      <span>Tambah Kolaborator</span>
+<tbody id="<%= dom_id(inovasi, 'new_kolab') %>">
+  <tr class="skip skip-me" class="kolab-items">
+    <td class="text-gray-900 text-wrap" colspan="5">OPD Kolaborator</td>
+    <td class="text-gray-900">
+      <% boleh_kolab = bisa_pilih_kolab?(inovasi.opd_lead) %>
+      <% if boleh_kolab && !cetak %>
+        <%= link_to new_kolab_path(type: 'Inovasi', id: inovasi.id,
+                                   tahun: inovasi.tahun,
+                                   kode_opd: inovasi.kode_opd_lead,
+                                   target: dom_id(inovasi, 'new_kolab')),
+                    remote: true,
+                    class: 'btn btn-sm btn-tertiary mt-auto w-100',
+                    data: {
+                      controller: 'form-modal',
+                      action: 'form-modal#appendForm',
+                      form_modal_location_param: 'form-modal-body',
+                      bs_target: '#form-modal',
+                      bs_toggle: 'modal'
+                    } do %>
+          <span class="fas fa-plus me-2"></span>
+          <span>Tambah Kolaborator</span>
+        <% end %>
+      <% end %>
+    </td>
+    <td class="fw-bolder text-center">POHON KINERJA</td>
+    <td class="fw-bolder text-center">RENCANA KINERJA</td>
+    <td class="fw-bolder text-center">PEMILIK RENCANA KINERJA</td>
+    <td class="fw-bolder text-center">SUB KEGIATAN</td>
+    <td class="fw-bolder text-center">PROGRAM</td>
+    <td class="fw-bolder text-center">PAGU RENCANA KINERJA</td>
+    <td class="fw-bolder text-center">INOVASI</td>
+    <td class="fw-bolder text-center" colspan="2"></td>
+  </tr>
+  <% if inovasi.kolabs.any? %>
+    <% inovasi.kolabs.order(:id).each do |kolab| %>
+      <% rekin_kolabs = inovasi.rekin_kolabs(kolab.opd.id) %>
+      <% rowspan_kolabs = rekin_kolabs.size %>
+      <tr class="skip opd-kolabs" id="<%= dom_id(kolab) %>">
+        <td <%= rowspan_kolabs.positive? ? "rowspan=#{rowspan_kolabs}" : '' %> class="text-gray-900 text-wrap" colspan="5"></td>
+        <td <%= rowspan_kolabs.positive? ? "rowspan=#{rowspan_kolabs}" : '' %> class="text-gray-900 text-wrap">
+          <div class="d-flex flex-column gap-2">
+            <div class="opd-anggota">
+              <%= kolab.opd %> <b>(Anggota)</b>
+            </div>
+            <div class="jumlah-rekins">
+              Jumlah Rekin: <span class="jumlah-rekin-kolab"><%= rowspan_kolabs %></span>
+            </div>
+            <div class="keterangan-kolab">
+              Keterangan: <%= kolab.keterangan %>
+            </div>
+            <% if boleh_kolab && !cetak %>
+              <hr />
+              <div class="d-grid gap-2">
+                <%= render(EditButtonComponent.new(path: edit_kolab_path(kolab))) %>
+                <%= render(DeleteButtonAjaxComponent.new(path: kolab_path(kolab),
+                                                         model: kolab,
+                                                         text: 'Hapus kolaborasi?')) %>
+              </div>
+            <% end %>
+          </div>
+        </td>
+        <% usulans = rekin_kolabs %>
+        <% usulan = usulans&.first %>
+        <%= render 'usulans/rekin', usulan: usulan %>
+        <td class="fw-bolder text-center" colspan="2"></td>
+      </tr>
+      <% usulans.drop(1).each do |usulan| %>
+        <tr class="skip rekins" id="<%= dom_id(usulan) %>">
+          <%= render 'usulans/rekin', usulan: usulan %>
+          <td class="fw-bolder text-center" colspan="2"></td>
+        </tr>
+      <% end %>
     <% end %>
   <% end %>
-</div>
+</tbody>

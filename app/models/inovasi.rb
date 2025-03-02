@@ -128,10 +128,6 @@ class Inovasi < ApplicationRecord
     '0.00.0.00.0.00.00.0000'
   end
 
-  def rekin_opd_lead
-    all_usulans.filter { |usulan| usulan.opd.id == opd_lead.id }
-  end
-
   def kolaborasi
     kolabs.uniq(&:opd)
   end
@@ -139,16 +135,6 @@ class Inovasi < ApplicationRecord
   def rekin_kolabs(opd_kolab)
     all_usulans.filter do |usulan|
       usulan.opd.id == opd_kolab
-    end
-  end
-
-  def rekin_by_kolaborasi(opd_kolab)
-    kode_opd = Opd.find(opd_kolab).kode_unik_opd
-    kolaborasi.select { |kolab| kolab.kode_unik_opd == kode_opd }.to_h do |kolab|
-      sasarans = kolab.kolabable
-                      .rekin_kolabs(opd_kolab)
-
-      [kolab.opd.nama_opd, sasarans]
     end
   end
 

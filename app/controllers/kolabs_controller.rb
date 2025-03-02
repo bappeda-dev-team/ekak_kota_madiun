@@ -32,6 +32,7 @@ class KolabsController < ApplicationController
   # GET /kolabs/1/edit
   def edit
     @target = params[:target]
+    @tahun = @kolab.tahun || cookies[:tahun]
     @inovasi = @kolab.kolabable
     @kode_opd_lead = @inovasi.opd
     @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd_lead)
