@@ -2,7 +2,6 @@
   <tr class="skip skip-me" class="kolab-items">
     <td class="text-gray-900 text-wrap" colspan="5">OPD Kolaborator</td>
     <td class="text-gray-900">
-      <% boleh_kolab = bisa_pilih_kolab?(inovasi.opd_lead) %>
       <% if boleh_kolab && !cetak %>
         <%= link_to new_kolab_path(type: 'Inovasi', id: inovasi.id,
                                    tahun: inovasi.tahun,
