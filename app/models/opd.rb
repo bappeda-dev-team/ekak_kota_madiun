@@ -44,7 +44,7 @@ class Opd < ApplicationRecord
     def programs
       where.not(kode_skpd: [nil, ""])
            .uniq { |pk| pk.values_at(:kode_program, :kode_sub_skpd) }
-           .sort_by { |pk| pk.values_at(:kode_program, :kode_sub_skpd) }
+           .sort_by { |pk| pk.values_at(:kode_program, :kode_skpd) }
     end
   end
   belongs_to :lembaga
