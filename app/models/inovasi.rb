@@ -71,7 +71,7 @@ class Inovasi < ApplicationRecord
   end
 
   def get_kolaborator(kode_opd)
-    opd.include?(kode_opd) || opd_kolabs(kode_opd)
+    opd&.in?(kode_opd) || opd_kolabs(kode_opd)
   end
 
   def opd_kolabs(kode_opd)
@@ -151,7 +151,7 @@ class Inovasi < ApplicationRecord
   end
 
   def usulan_tahun
-    "#{usulan} (#{tahun})"
+    "#{usulan} (#{tahun}) - Lead: #{opd_lead}"
   end
 
   def deskripsi

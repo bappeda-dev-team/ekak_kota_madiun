@@ -26,6 +26,8 @@ class SearchController < ApplicationController
   private
 
   def usulan_inovasi_search(kode_sasaran: '')
+    @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
+
     all_usulans = Search::AllUsulan.where(searchable_type: @usulan_type,
                                           tahun: @tahun)
                                    .where("usulan ILIKE ?", "%#{@param}%")
@@ -33,6 +35,11 @@ class SearchController < ApplicationController
                                    .includes(:searchable)
                                    .collect(&:searchable)
 
+    @kode_opd = if @opd.setda?
+                  @opd.all_kode_setda
+                else
+                  [@kode_opd]
+                end
     usulan_kolabs = all_usulans.select do |inovasi|
       inovasi.from_kota_only && inovasi.get_kolaborator(@kode_opd)
     end

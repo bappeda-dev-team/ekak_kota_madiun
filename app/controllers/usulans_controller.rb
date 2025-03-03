@@ -139,24 +139,37 @@ class UsulansController < ApplicationController
   def laporan_inovasi
     @kode_opd = "0.00.0.00.0.00.00.0000"
     @tahun = cookies[:tahun]
+    @misi_id = ''
+    @asta_karya = ''
   end
 
   def filter_inovasi
     @kode_opd = params[:opd]
+    @misi_id = params[:misi_id]
+    @asta_karya = params[:manfaat] # alias of old inovasi
+
     filtered_only = @kode_opd == "0.00.0.00.0.00.00.0000"
     @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
     @tahun = params[:tahun]
 
+    kode_opd = if @opd.setda?
+                 @opd.all_kode_setda
+               else
+                 [@kode_opd]
+               end
+
     @inovasis = if filtered_only
                   Inovasi.from_kota.includes(:misi, kolabs: [:opd])
-                         .where(tahun: @tahun)
+                         .where(tahun: @tahun,
+                                misi_id: @misi_id,
+                                manfaat: @asta_karya)
                 else
-                  kode_opd = if @opd.setda?
-                               @opd.all_kode_setda
-                             else
-                               [@kode_opd]
-                             end
-                  Inovasi.from_kota.with_opd_kolabs(@tahun, kode_opd)
+                  Inovasi.includes(:misi, kolabs: [:opd])
+                         .from_kota
+                         .where(tahun: @tahun,
+                                misi_id: @misi_id,
+                                manfaat: @asta_karya)
+                         .select { |inovasi| inovasi.get_kolaborator(kode_opd) }
                 end
     @total_pagu = @inovasis.map(&:total_pagu_usulans).compact.sum
 

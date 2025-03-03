@@ -10,49 +10,75 @@
                   data: {
                     controller: 'page-ajax',
                     page_ajax_reqtype_value: 'GET',
-                    page_ajax_url_value: filter_inovasi_usulans_path(tahun: @tahun, opd: @kode_opd)
+                    page_ajax_url_value: filter_inovasi_usulans_path(tahun: @tahun, opd: @kode_opd,
+                                                                     misi_id: @misi_id, asta_karya: @asta_karya)
                   }  do %>
     <div class="card-header">
-      <div class="row align-items-center">
-        <div class="col-3">
-          <h2 class="fs-5 fw-bold mb-0">Filter</h2>
-        </div>
-        <div class="col filter-form">
-          <%= form_with url: filter_inovasi_usulans_path, local: false,
-                        method: :get, class: 'row',
-                        data: {
-                          controller: 'filter-render',
-                          filter_render_target_id_value: 'inovasi-results',
-                          action: 'ajax:success->filter-render#append'
-                        } do |form| %>
-            <div class="col">
-              <%= form.select :opd, [],
-               { include_blank: true },
-               data: {
-                 placeholder: 'Opd',
-                 controller: 'dropdown',
-                 dropdown_jenis_value: 'extra',
-                 dropdown_url_value: '/opds/filter_selected.json',
-                 dropdown_selected_value: @kode_opd,
-                 dropdown_scope_value: 'all'
-               }  %>
-            </div>
-            <div class="col">
-              <%= form.select :tahun, [],
-               { include_blank: true },
-               data: {
-                 placeholder: 'Tahun',
-                 controller: 'dropdown',
-                 dropdown_jenis_value: 'extra',
-                 dropdown_url_value: '/tahuns.json',
-                 dropdown_selected_value: @tahun
-               }  %>
-            </div>
-            <div class="col-auto">
-              <%= form.submit 'Filter', name: 'filter', class: 'btn btn-primary' %>
-            </div>
-          <% end %>
-        </div>
+      <h2 class="fs-5 fw-bold mb-0">Filter</h2>
+      <hr />
+      <div class="filter-form row w-100">
+        <%= form_with url: filter_inovasi_usulans_path, local: false,
+                      method: :get,
+                      data: {
+                        controller: 'filter-render',
+                        filter_render_target_id_value: 'inovasi-results',
+                        action: 'ajax:success->filter-render#append'
+                      } do |form| %>
+          <div class="col">
+            <%= form.label :misi, class: 'form-label' %>
+            <%= form.select :misi_id, [],
+             { include_blank: true, required: true },
+             data: {
+               placeholder: 'Misi Kepala Daerah',
+               controller: 'dropdown',
+               dropdown_jenis_value: 'extra',
+               dropdown_url_value: '/misi_kota/lists.json',
+               dropdown_selected_value: @misi_id,
+               dropdown_scope_value: 'all'
+             }  %>
+          </div>
+          <div class="col">
+            <%= form.label :manfaat, "ASTA KARYA", class: 'form-label' %>
+            <%= form.select :manfaat, [],
+             { include_blank: true, required: true },
+             data: {
+               placeholder: 'ASTA KARYA',
+               controller: 'dropdown',
+               dropdown_jenis_value: 'extra',
+               dropdown_url_value: program_unggulans_path(:json),
+               dropdown_selected_value: @asta_karya,
+               dropdown_scope_value: 'all'
+             }  %>
+          </div>
+          <div class="col">
+            <%= form.label :opd, class: 'form-label' %>
+            <%= form.select :opd, [],
+             { include_blank: true },
+             data: {
+               placeholder: 'Opd',
+               controller: 'dropdown',
+               dropdown_jenis_value: 'extra',
+               dropdown_url_value: '/opds/filter_selected.json',
+               dropdown_selected_value: @kode_opd,
+               dropdown_scope_value: 'all'
+             }  %>
+          </div>
+          <div class="col">
+            <%= form.label :tahun, class: 'form-label' %>
+            <%= form.select :tahun, [],
+             { include_blank: true },
+             data: {
+               placeholder: 'Tahun',
+               controller: 'dropdown',
+               dropdown_jenis_value: 'extra',
+               dropdown_url_value: '/tahuns.json',
+               dropdown_selected_value: @tahun
+             }  %>
+          </div>
+          <div class="col-auto mt-4">
+            <%= form.submit 'Filter', name: 'filter', class: 'btn btn-primary w-100' %>
+          </div>
+        <% end %>
       </div>
     </div>
 
