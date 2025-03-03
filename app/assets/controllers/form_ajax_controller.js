@@ -8,6 +8,7 @@ export default class extends ApplicationController {
   static values = {
     elementId: String,
     withAlert: { type: Boolean, default: true },
+    withModal: { type: Boolean, default: true },
     tahun: String
   };
 
@@ -161,11 +162,13 @@ export default class extends ApplicationController {
       if (this.withAlertValue) {
         this.sweetalertStatus(resText, status);
       }
-      const modal = event.params.modal;
-      if (modal != null && typeof modal != "undefined") {
-        super.modalHider(modal);
-      } else {
-        super.modalHider();
+      if (this.withModalValue) {
+        const modal = event.params.modal;
+        if (modal != null && typeof modal != "undefined") {
+          super.modalHider(modal);
+        } else {
+          super.modalHider();
+        }
       }
     }
   }

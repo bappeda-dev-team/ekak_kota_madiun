@@ -1,0 +1,11 @@
+<tr id="<%= dom_id(usulan) %>">
+  <td class="align-middle" width="20px"></td>
+  <td class="text-wrap align-middle" width="200px"><%= usulan.usulan %></td>
+  <td class="text-wrap align-middle" width="200px"><%= usulan.deskripsi %></td>
+  <td class="text-wrap align-middle" width="500px"><%= usulan.uraian %></td>
+  <td class="text-center align-middle" width="50px">
+    <%= render(DeleteButtonAjaxComponent.new(path: sasaran_usulan_path(sasaran, usulan),
+                                             model: usulan,
+                                             text: 'Hapus usulan?')) %>
+  </td>
+</tr>

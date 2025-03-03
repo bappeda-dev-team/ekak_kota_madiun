@@ -24,32 +24,36 @@ class UsulansController < ApplicationController
                       sasaran_id: sasaran_id,
                       opd_id: opd_id,
                       tahun: tahun)
-    respond_to do |format|
-      if u.save
-        usulan_asli = u.usulanable
-        sasaran_update = u.sasaran
+    if u.save
+      usulan_asli = u.usulanable
+      sasaran_update = u.sasaran
 
-        usulan_asli.update(status: 'menunggu_persetujuan')
+      usulan_asli.update(status: 'menunggu_persetujuan')
 
-        usulan_asli.update(sasaran_id: sasaran_id) if usulan_type == "Inovasi"
+      usulan_asli.update(sasaran_id: sasaran_id) if usulan_type == "Inovasi"
 
-        if usulan_type == 'Mandatori'
-          sasaran_update.dasar_hukums.create!(usulan_id: u.id,
-                                              judul: usulan_asli.peraturan_terkait,
-                                              peraturan: usulan_asli.uraian,
-                                              tahun: usulan_asli.tahun)
-        else
-          # usulan_id -> Usulan (polymorph) id
-          sasaran_update.permasalahans.create!(usulan_id: u.id, jenis: 'Umum',
-                                               permasalahan: usulan_asli.uraian,
-                                               tahun: usulan_asli.tahun)
-        end
-        flash.now[:success] = 'Usulan berhasil ditambahkan'
-        format.js { render 'update_sasaran_asn' }
+      if usulan_type == 'Mandatori'
+        sasaran_update.dasar_hukums.create!(usulan_id: u.id,
+                                            judul: usulan_asli.peraturan_terkait,
+                                            peraturan: usulan_asli.uraian,
+                                            tahun: usulan_asli.tahun)
       else
-        flash.now[:error] = 'Terjadi kesalahan'
-        format.js { render 'update_sasaran_asn', status: :unprocessable_entity }
+        # usulan_id -> Usulan (polymorph) id
+        sasaran_update.permasalahans.create!(usulan_id: u.id, jenis: 'Umum',
+                                             permasalahan: usulan_asli.uraian,
+                                             tahun: usulan_asli.tahun)
       end
+      render json: { resText: "Usulan berhasil ditambahkan",
+                     html_content: html_content({ usulan: u,
+                                                  sasaran: sasaran_update },
+                                                partial: 'usulans/row_usulan_card_component') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ usulan: u,
+                                                   sasaran: sasaran_update },
+                                                 partial: 'usulans/row_usulan_card_component') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
@@ -128,11 +132,8 @@ class UsulansController < ApplicationController
     #   sasaran_update.permasalahans.create!(usulan_id: u.id, jenis: 'Umum', permasalahan: usulan.uraian,
     #                                        tahun: usulan.tahun)
     # end
-
-    respond_to do |format|
-      format.html { redirect_to sasaran_path(@sasaran), success: 'Usulan berhasil dihapus' }
-      format.json { head :no_content }
-    end
+    render json: { resText: "Usulan berhasil dihapus" }.to_json,
+           status: :accepted
   end
 
   def laporan_inovasi

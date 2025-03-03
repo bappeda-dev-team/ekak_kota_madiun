@@ -47,4 +47,18 @@ class UsulanCardComponent < ViewComponent::Base
   def usulans
     @sasaran.usulans.where(usulanable_type: @usulan_type)
   end
+
+  def id_target_usulan
+    dom_id(@sasaran, @jenis)
+  end
+
+  def data_form_ajax
+    {
+      controller: 'form-ajax',
+      form_ajax_target_param: id_target_usulan,
+      form_ajax_type_param: 'prepend',
+      form_ajax_with_modal_value: 'false',
+      action: 'ajax:complete->form-ajax#processAjax'
+    }
+  end
 end

@@ -9,21 +9,22 @@
     </div>
   </div>
   <div class="card-body">
-    <%= form_with(url: '/update_sasaran_asn', local: false) do |form| %>
+    <%= form_with(url: '/update_sasaran_asn', local: false,
+                  data: data_form_ajax) do |form| %>
       <div class="field">
         <%= form.hidden_field :sasaran_id, value: @sasaran.id   %>
         <%= form.hidden_field :usulan_type  %>
         <%= form.hidden_field :tahun, value: @sasaran.tahun  %>
         <%= form.hidden_field :opd_id, value: @sasaran&.opd&.id  %>
-        <%= form.select :usulan_id, [], {include_blank: true}, 
-            {id: "#{@jenis}_dropdown",
-             data: { "placeholder": "Pilih #{title}",
-                    controller: 'dropdown',
-                    dropdown_jenis_value: 'extra',
-                    dropdown_kode_value: @sasaran.id,
-                    dropdown_url_value: search_usulan_user_path(format: :json, usulan_type: @jenis, nip_asn: @sasaran.user.nip_asn),
-                    action: 'change-select@document->dropdown#fill_usulan_type'
-            }} %>
+        <%= form.select :usulan_id, [], {include_blank: true},
+         {id: "#{@jenis}_dropdown",
+          data: { "placeholder": "Pilih #{title}",
+            controller: 'dropdown',
+            dropdown_jenis_value: 'extra',
+            dropdown_kode_value: @sasaran.id,
+            dropdown_url_value: search_usulan_user_path(format: :json, usulan_type: @jenis, nip_asn: @sasaran.user.nip_asn),
+            action: 'change-select@document->dropdown#fill_usulan_type'
+         }} %>
       </div>
       <div class="actions">
         <%= form.submit %>
@@ -42,18 +43,9 @@
             <th class="text-center align-middle" width="50px">Aksi</th>
           </tr>
         </thead>
-        <tbody>
-          <% usulans.each do |usulan| %>
-            <tr>
-              <td class="align-middle" width="20px"></td>
-              <td class="text-wrap align-middle" width="200px"><%= usulan.usulan %></td>
-              <td class="text-wrap align-middle" width="200px"><%= usulan.deskripsi %></td>
-              <td class="text-wrap align-middle" width="500px"><%= usulan.uraian %></td>
-              <td class="text-center align-middle" width="50px">
-                <%= render(DeleteButtonComponent.new(path: sasaran_usulan_path(@sasaran, usulan), title: 'Hapus usulan ?')) %>
-              </td>
-            </tr>
-          <% end %>
+        <tbody id="<%= id_target_usulan %>">
+          <%= render partial: 'usulans/row_usulan_card_component',
+                     collection: usulans, as: :usulan, locals: { sasaran: @sasaran } %>
         </tbody>
       </table>
     </div>
