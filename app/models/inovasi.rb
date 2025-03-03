@@ -122,6 +122,12 @@ class Inovasi < ApplicationRecord
     opd_inovasi
   end
 
+  def nama_opd_lead
+    opd_lead.nama_opd
+  rescue NoMethodError
+    '-'
+  end
+
   def kode_opd_lead
     opd_lead.kode_unik_opd
   rescue NoMethodError
@@ -151,7 +157,7 @@ class Inovasi < ApplicationRecord
   end
 
   def usulan_tahun
-    "#{usulan} (#{tahun}) - Lead: #{opd_lead}"
+    "#{usulan} (#{tahun})"
   end
 
   def deskripsi

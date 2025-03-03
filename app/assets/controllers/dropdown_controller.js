@@ -82,6 +82,22 @@ export default class extends Controller {
         }
       },
       cache: true,
+      templateResult: function (item) {
+        if (!item.id) {
+          // For the "All" option or placeholder
+          return item.text;
+        }
+        // Example: Custom rendering with bolded "Lead"
+if (item.decorate) {
+    return $(`<span>${item.text} - <b>Lead: ${item.decorate}</b></span>`);
+  } else {
+    return $(`<span>${item.text}</span>`);
+  }
+      },
+      escapeMarkup: function (markup) {
+        // Let our HTML (the <b> tag) pass through
+        return markup;
+      }
     };
     return options;
   }
