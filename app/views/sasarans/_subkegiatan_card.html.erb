@@ -4,7 +4,7 @@
       <div class="row align-items-center">
         <div class="col">
           <h4 class="card-title">
-            SubKegiatan
+            Subkegiatan
             <span class="ms-2"><%= sesuai?(sasaran.subkegiatan?) %></span>
           </h4>
         </div>
@@ -13,11 +13,6 @@
   </div>
   <% unless sasaran.status == 'pengajuan' || sasaran.status == 'disetujui' %>
     <div class="card-body">
-      <% if sasaran.program_kegiatan.present? %>
-        <p>SubKegiatan terpilih :</p>
-      <% else %>
-        <p>Pilih SubKegiatan</p>
-      <% end %>
       <%= form_with(url: update_subkegiatan_sasaran_path(sasaran),
                     model: sasaran, local: false, method: :patch,
                     data: {
@@ -33,9 +28,8 @@
                      { class: 'form-control',
                        data: { placeholder: "Pilih Subkegiatan",
                          controller: 'dropdown',
-                         dropdown_jenis_value: 'ajax_preselect',
+                         dropdown_jenis_value: 'ajax',
                          dropdown_url_value: "/program_kegiatans.json",
-                         dropdown_item_value: sasaran.program_kegiatan_id
                      }} )%>
         <div class="actions">
           <%= f.submit "Simpan" %>
