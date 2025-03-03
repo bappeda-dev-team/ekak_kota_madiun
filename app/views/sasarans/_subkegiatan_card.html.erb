@@ -1,4 +1,4 @@
-<div class="card border-2 shadow mb-3">
+<div class="card border-2 shadow mb-3" id="<%= dom_id(sasaran, 'subkegiatan') %>">
   <div class="card-header">
     <div class="row align-items-center">
       <div class="row align-items-center">
@@ -18,7 +18,16 @@
       <% else %>
         <p>Pilih SubKegiatan</p>
       <% end %>
-      <%= form_with(model: sasaran, local: false) do |f| %>
+      <%= form_with(url: update_subkegiatan_sasaran_path(sasaran),
+                    model: sasaran, local: false, method: :patch,
+                    data: {
+                      controller: 'form-ajax',
+                      form_ajax_target_param: dom_id(sasaran, 'subkegiatan'),
+                      form_ajax_type_param: 'total_replace',
+                      form_ajax_with_modal_value: 'false',
+                      action: 'ajax:complete->form-ajax#processAjax'
+                    }
+      ) do |f| %>
         <%= f.select(:program_kegiatan_id, [],
                      {include_blank: true},
                      { class: 'form-control',
@@ -65,9 +74,18 @@
               </td>
               <% unless diajukan? %>
                 <td class="text-center align-middle" width="50px">
-                  <%= link_to hapus_program_from_sasaran_sasaran_path(sasaran), remote: true,
-                              method: :post, class: 'btn btn-sm btn-outline-danger text-center', data: {confirm_swal: "Hapus sub kegiatan?"} do %>
-                    <i class="fa fa-trash-alt me-2"></i>
+                  <%= button_to hapus_program_from_sasaran_sasaran_path(sasaran),
+                                remote: true,
+                                class: 'btn btn-sm btn-danger',
+                                form: {
+                                  'data-controller': 'form-ajax',
+                                  'data-skip-check': 'false',
+                                  'data-form-ajax-target-param': dom_id(sasaran, 'subkegiatan'),
+                                  'data-form-ajax-type-param': 'total_replace',
+                                  'data-form-ajax-with-modal-value': 'false',
+                                  'data-action': 'ajax:beforeSend->form-ajax#confirmAction ajax:complete->form-ajax#processAjax'
+                                } do %>
+                    <i class="fas fa-trash"></i>
                     <span>Hapus</span>
                   <% end %>
                 </td>

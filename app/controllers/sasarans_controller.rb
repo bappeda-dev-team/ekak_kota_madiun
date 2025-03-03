@@ -2,7 +2,7 @@ class SasaransController < ApplicationController
   before_action :set_user, only: %i[index new anggaran]
   before_action :set_sasaran,
                 only: %i[show edit update destroy update_program_kegiatan renaksi_update detail review rincian
-                         input_rtp simpan_rtp update_dampak verifikasi_risiko]
+                         input_rtp simpan_rtp update_dampak verifikasi_risiko update_subkegiatan]
   before_action :set_dropdown, only: %i[new edit]
 
   layout false, only: [:input_rtp]
@@ -152,18 +152,15 @@ class SasaransController < ApplicationController
   def pdf_daftar_subkegiatan; end
 
   def hapus_program_from_sasaran
-    sasaran = Sasaran.find(params[:id])
-    respond_to do |format|
-      if sasaran.update(program_kegiatan_id: nil)
-        @status = 'success'
-        @text = 'Sukses menghapus program kegiatan'
-        format.js
-      else
-        @status = 'error'
-        @text = 'Terjadi kesalahan saat menghapus program kegiatan'
-        format.js :unprocessable_entity
-      end
-    end
+    @tahun = cookies[:tahun] || Date.current.year
+    @sasaran = Sasaran.find(params[:id])
+    @sasaran.update(program_kegiatan_id: nil)
+
+    render json: { resText: "Subkegiatan berhasil dihapus",
+                   html_content: html_content({ sasaran: @sasaran,
+                                                tahun: @tahun },
+                                              partial: 'sasarans/subkegiatan_card') }.to_json,
+           status: :ok
   end
 
   def hapus_tematik_from_sasaran
@@ -390,6 +387,24 @@ class SasaransController < ApplicationController
         format.html { redirect_to sasarans_path, success: 'Sasaran gagal diupdate' }
         format.json { render json: @sasaran.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def update_subkegiatan
+    @tahun = cookies[:tahun] || Date.current.year
+    if @sasaran.update(sasaran_params)
+
+      render json: { resText: "Subkegiatan ditambahkan",
+                     html_content: html_content({ sasaran: @sasaran,
+                                                  tahun: @tahun },
+                                                partial: 'sasarans/subkegiatan_card') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ sasaran: @sasaran,
+                                                   tahun: @tahun },
+                                                 partial: 'sasarans/subkegiatan_card') }.to_json,
+             status: :unprocessable_entity
     end
   end
 

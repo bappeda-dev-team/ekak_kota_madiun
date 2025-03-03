@@ -550,6 +550,7 @@ Rails.application.routes.draw do
       post :simpan_rtp
       patch :update_dampak
       patch :verifikasi_risiko
+      patch :update_subkegiatan
     end
     resources :rincians do
       get "subkegiatan", on: :new

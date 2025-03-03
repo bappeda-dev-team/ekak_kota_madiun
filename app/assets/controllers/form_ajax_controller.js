@@ -12,6 +12,29 @@ export default class extends ApplicationController {
     tahun: String
   };
 
+  async confirmAction(event) {
+    if (this.element.dataset.skipCheck === "true") {
+      this.element.dataset.skipCheck = "false"; // Reset for future submissions
+      return;
+    }
+    event.preventDefault();
+    const result = await Swal.fire({
+      title: "Subkegiatan akan dihapus",
+      text: `Lanjutkan?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Lanjutkan",
+      cancelButtonText: "Batalkan",
+      reverseButtons: true
+    });
+
+    if (!result.isConfirmed) {
+      return; // Stop form submission if user cancels
+    }
+    this.element.dataset.skipCheck = "true";
+    this.element.requestSubmit();
+  }
+
   async checkRecord(event) {
     if (this.element.dataset.skipCheck === "true") {
       this.element.dataset.skipCheck = "false"; // Reset for future submissions
