@@ -36,8 +36,18 @@ class InovasiFilter
   def filter_by_opd
     return if @params[:opd].blank? || kode_kota?
 
+    kode_opd = if kode_setda?
+                 '4.01.0.00.0.00.01.%' # dynamic pattern
+               else
+                 @params[:opd]
+               end
+
+    operator = kode_opd.include?('%') ? 'LIKE' : '='
+
     @scope = @scope.left_outer_joins(:kolabs)
-                   .where('inovasis.opd = :opd OR kolabs.kode_unik_opd = :opd', opd: @params[:opd])
+                   .where("inovasis.opd #{operator} :kode_opd OR
+                           kolabs.kode_unik_opd #{operator} :kode_opd",
+                          kode_opd: kode_opd)
   end
 
   def filter_by_manfaat

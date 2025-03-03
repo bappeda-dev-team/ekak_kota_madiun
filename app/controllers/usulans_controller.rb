@@ -123,15 +123,6 @@ class UsulansController < ApplicationController
     @usulan = @sasaran.usulans.find(usulan_id)
     @usulan.usulanable.update(sasaran_id: nil)
     @usulan.destroy
-    # logic hapus dasar_hukum / permasalahan by usulan
-    # if usulan_type == 'Mandatori'
-    #   sasaran_update.dasar_hukums.create!(usulan_id: u.id, judul: usulan.peraturan_terkait, peraturan: usulan.uraian,
-    #                                       tahun: usulan.tahun)
-    # else
-    #   # usulan_id -> Usulan (polymorph) id
-    #   sasaran_update.permasalahans.create!(usulan_id: u.id, jenis: 'Umum', permasalahan: usulan.uraian,
-    #                                        tahun: usulan.tahun)
-    # end
     render json: { resText: "Usulan berhasil dihapus" }.to_json,
            status: :accepted
   end
@@ -144,36 +135,12 @@ class UsulansController < ApplicationController
   end
 
   def filter_inovasi
-    # @scope = params[:scope]
     @tahun = params[:tahun]
-    # @misi_id = params[:misi_id]
-    # @asta_karya = params[:manfaat]
     @kode_opd = params[:opd]
-    # filtered_only = @kode_opd == "0.00.0.00.0.00.00.0000"
 
     @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
 
-    # kode_opd = if @opd.setda?
-    #              @opd.all_kode_setda
-    #            else
-    #              [@kode_opd]
-    #            end
-
-    # @inovasis = if filtered_only
-    #               Inovasi.from_kota
-    #                      .where(tahun: @tahun)
-    #                      .with_association
-    #             else
-    #               Inovasi.from_kota
-    #                      .with_opd_kolabs(@tahun, kode_opd)
-    #                      .with_association
-    #             end
-
-    # if @scope != 'all'
-    #   @inovasis = @inovasis.where(misi_id: @misi_id,
-    #                               manfaat: @asta_karya)
-    # end
-    inovasi_kota = Inovasi.from_kota.with_association
+    inovasi_kota = Inovasi.from_kota
     @inovasis = InovasiFilter.new(inovasi_kota,
                                   params)
                              .results
