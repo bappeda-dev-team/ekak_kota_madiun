@@ -12,7 +12,7 @@
     <tbody>
       <tr>
         <td class="align-middle" width="50px"><%= sasaran.metadata&.dig("hasil_output") %></td>
-        <td class="align-middle"><%= sasaran.metadata&.dig("nama_output") || '-' %></td>
+        <td class="align-middle"><%= sasaran.output_sasaran == 'Bukan Produk Hukum' ? '' : sasaran.metadata&.dig("nama_output") || '-' %></td>
         <td class="text-center align-middle" width="50px">
           <%= link_to edit_output_sasaran_path(sasaran),
            remote: true, class: 'btn btn-sm btn-outline-info',

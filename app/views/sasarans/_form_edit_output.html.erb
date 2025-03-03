@@ -1,5 +1,10 @@
 <%= form_with(model: @sasaran, url: hasil_output_sasaran_path,
-              local: false ,html: { data: { action: "ajax:complete->editable-table#processAjax" } }) do |form| %>
+              local: false ,
+              data: {
+                editable_table_target_param: dom_id(@sasaran, 'hasil-output'),
+                action: "ajax:complete->editable-table#newProcessAjax"
+              }
+) do |form| %>
   <div class="field">
     <%= form.label :hasil_output, class: "form-label" %>
     <%= form.select(:hasil_output,
@@ -14,7 +19,7 @@
                         dropdown_event_name_value: 'toggle-raperda-fields',
                       } } )%>
   </div>
-  <div class="field" id="nama_raperda" data-controller="field" data-action="toggle-raperda-fields@document->field#toggle_visible">
+  <div class="field <%= form.object.output_sasaran == 'Bukan Produk Hukum' ? 'd-none' : '' %>" id="nama_raperda" data-controller="field" data-action="toggle-raperda-fields@document->field#toggle_visible">
     <%= form.label :nama_output,'Nama output', class: "form-label" %>
     <%= form.text_area :nama_output, {class: "form-control",  placeholder: 'tuliskan nama perda / perwal / SK', value: form.object.nama_output_sasaran} %>
   </div>

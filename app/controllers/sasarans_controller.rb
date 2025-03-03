@@ -504,7 +504,7 @@ class SasaransController < ApplicationController
     if @sasaran.update(metadata: new_metadata)
       render json: { resText: "Output sasaran diupdate",
                      html_content: html_content({ sasaran: @sasaran },
-                                                partial: 'sasarans/hasil_output') }.to_json,
+                                                partial: 'sasarans/hasil_output_card') }.to_json,
              status: :ok
     else
       render json: { resText: "Terjadi kesalahan", html_content: errors_content(@sasaran) }.to_json,

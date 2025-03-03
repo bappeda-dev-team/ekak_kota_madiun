@@ -36,6 +36,23 @@ export default class extends Controller {
     }
   }
 
+  newProcessAjax(event) {
+    const [message, status] = event.detail;
+    const { resText, html_content } = JSON.parse(message.response);
+
+    const target = document.getElementById(event.params.target);
+    if (status == "Unprocessable Entity") {
+      const formElement = this.formTarget;
+      formElement.innerHTML = html_content;
+    } else {
+      target.outerHTML = html_content;
+      const newTarget = document.getElementById(event.params.target);
+      this.animateBackground(newTarget);
+      // target.replaceWith(html);
+    }
+    this.sweetalertStatus(resText, status);
+  }
+
   processAjax(event) {
     // event.preventDefault()
     const [message, status] = event.detail;

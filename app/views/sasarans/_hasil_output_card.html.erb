@@ -1,4 +1,4 @@
-<div class="card border-2 shadow mb-3">
+<div class="card border-2 shadow mb-3" id="<%= dom_id(sasaran, 'hasil-output') %>">
   <div class="card-header">
     <div class="row align-items-center">
       <div class="row align-items-center">
@@ -13,12 +13,14 @@
   </div>
   <% unless diajukan? || sasaran.output_terisi? %>
     <div class="card-body" id="raperda-sasaran">
-      <%= form_with(model: sasaran,url: hasil_output_sasaran_path,
+      <%= form_with(model: sasaran, url: hasil_output_sasaran_path,
                     local: false,
                     id: 'form-raperda',
                     data: {
                       controller: 'form-ajax',
-                      form_ajax_target_param: 'sasaran-raperda',
+                      form_ajax_target_param: dom_id(sasaran, 'hasil-output'),
+                      form_ajax_type_param: 'total_replace',
+                      form_ajax_with_modal_value: 'false',
                       action: 'ajax:complete->form-ajax#processAjax'
                     }
       ) do |f| %>
