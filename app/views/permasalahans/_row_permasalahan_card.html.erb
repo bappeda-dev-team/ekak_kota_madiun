@@ -1,0 +1,13 @@
+<tr id="<%= dom_id(permasalahan) %>">
+  <td class="align-middle"></td>
+  <td class="align-middle text-wrap"><%= permasalahan.jenis %></td>
+  <td class="align-middle text-wrap"><%= permasalahan.permasalahan %></td>
+  <td class="align-middle text-wrap"><%= permasalahan.penyebab_internal %></td>
+  <td class="align-middle text-wrap"><%= permasalahan.penyebab_external %></td>
+  <td class="text-center align-middle" width="50px">
+    <%= render(EditButtonComponent.new(path: edit_sasaran_permasalahan_path(sasaran, permasalahan))) %>
+    <%= render(DeleteButtonAjaxComponent.new(path: sasaran_permasalahan_path(sasaran, permasalahan),
+                                             model: permasalahan,
+                                             text: 'Hapus permasalahan ?')) %>
+  </td>
+</tr>

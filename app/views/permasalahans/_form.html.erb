@@ -1,4 +1,11 @@
-<%= form_with(model: [@sasaran,permasalahan], local: false) do |form| %>
+<%= form_with(model: [@sasaran,permasalahan], local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: permasalahan.new_record? ? dom_id(@sasaran, 'permasalahan') : dom_id(permasalahan),
+                form_ajax_type_param: permasalahan.new_record? ? 'total_replace' : '',
+                action: 'ajax:complete->form-ajax#processAjax'
+              }
+) do |form| %>
   <% if permasalahan.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(permasalahan.errors.count, "error") %> prohibited this permasalahan from being saved:</h2>
@@ -12,11 +19,11 @@
   <div class="field">
     <%= form.label :jenis, class: "form-label" %>
     <%= form.select :jenis, options_for_select([ "Umum" ], "Umum"),{include_blank: false},
-    { class: "form-control",
-      data: { "placeholder": "Pilih Jenis Permasalahan",
-              controller: 'dropdown',
-              dropdown_parent_value: '#form-modal'
-      }} %>
+     { class: "form-control",
+       data: { "placeholder": "Pilih Jenis Permasalahan",
+         controller: 'dropdown',
+         dropdown_parent_value: '#form-modal'
+     }} %>
   </div>
   <div class="field">
     <%= form.label :permasalahan, class: "form-label" %>

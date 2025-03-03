@@ -26,40 +26,36 @@ class PermasalahansController < ApplicationController
     @sasaran = Sasaran.find(params[:sasaran_id])
     @permasalahan = @sasaran.permasalahans.build(permasalahan_params)
 
-    respond_to do |format|
-      if @permasalahan.save
-        @status = 'success'
-        @text = 'Sukses menambah tematik'
-        flash[:success] = "Permaslahaan ditambahkan"
-        format.js { render 'create.js.erb' }
-        format.html do
-          redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Permasalahan berhasil ditambahkan"
-        end
-        format.json { render :show, status: :created, location: @permasalahan }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @permasalahan.errors, status: :unprocessable_entity }
-      end
+    if @permasalahan.save
+      render json: { resText: "Permaslahaan berhasil disimpan",
+                     html_content: html_content({ sasaran: @sasaran,
+                                                  permasalahan: @permasalahan },
+                                                partial: 'permasalahans/permasalahan_card') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ sasaran: @sasaran,
+                                                   permasalahan: @permasalahan },
+                                                 partial: 'permasalahans/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /permasalahans/1 or /permasalahans/1.json
   def update
     @sasaran = Sasaran.find(params[:sasaran_id])
-    respond_to do |format|
-      if @permasalahan.update(permasalahan_params)
-        @status = 'success'
-        @text = 'Sukses menambah tematik'
-        flash[:success] = "Edit rincian sukses"
-        format.js { render 'create.js.erb' }
-        format.html do
-          redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Permasalahan berhasil diupdate"
-        end
-        format.json { render :show, status: :ok, location: @permasalahan }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @permasalahan.errors, status: :unprocessable_entity }
-      end
+    if @permasalahan.update(permasalahan_params)
+      render json: { resText: "Permaslahaan berhasil diupdate",
+                     html_content: html_content({ sasaran: @sasaran,
+                                                  permasalahan: @permasalahan },
+                                                partial: 'permasalahans/row_permasalahan_card') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ sasaran: @sasaran,
+                                                   permasalahan: @permasalahan },
+                                                 partial: 'permasalahans/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
@@ -67,10 +63,8 @@ class PermasalahansController < ApplicationController
   def destroy
     @permasalahan.destroy
 
-    respond_to do |format|
-      format.html { redirect_to permasalahans_url, notice: "Permasalahan was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    render json: { resText: "Permasalahan dihapus." }.to_json,
+           status: :accepted
   end
 
   private

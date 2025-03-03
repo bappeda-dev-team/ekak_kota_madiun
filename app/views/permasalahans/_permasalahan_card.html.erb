@@ -1,4 +1,4 @@
-<div class="card border-2 shadow mb-3">
+<div class="card border-2 shadow mb-3" id="<%= dom_id(sasaran, 'permasalahan') %>">
   <div class="card-header">
     <h4 class="card-title">
       Permasalahan
@@ -6,46 +6,42 @@
     </h4>
     <% unless diajukan? %>
       <div class="link-tambah">
-        <%= link_to 'Tambah Permasalahan', new_sasaran_permasalahan_path(sasaran), remote: true, class: 'btn btn-primary',
-          data: {'bs-toggle': 'modal', 'bs-target': '#form-modal'} %>
+        <%= link_to new_sasaran_permasalahan_path(sasaran),
+                    remote: true,
+                    class: 'btn btn-primary',
+                    data: {
+                      controller: 'form-modal',
+                      action: 'form-modal#appendForm',
+                      form_modal_location_param: 'form-modal-body',
+                      bs_target: '#form-modal',
+                      bs_toggle: 'modal'
+                    } do %>
+          <span>Tambah Permasalahan</span>
+        <% end %>
       </div>
     <% end %>
   </div>
-  <% unless sasaran.permasalahans.nil? %>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table table-bordered counter">
-          <thead>
-            <tr>
-              <th width="20px">No.</th>
-              <th>Jenis</th>
-              <th>Permasalahan</th>
-              <th>Penyebab Internal</th>
-              <th>Penyebab External</th>
-              <% unless diajukan? %>
-                <th class="text-center align-middle" width="50px">Aksi</th>
-              <% end %>
-            </tr>
-          </thead>
-          <tbody>
-            <% sasaran.permasalahans.order(:updated_at).each do |permasalahan| %>
-              <tr>
-                <td class="align-middle"></td>
-                <td class="align-middle text-wrap"><%= permasalahan.jenis %></td>
-                <td class="align-middle text-wrap"><%= permasalahan.permasalahan %></td>
-                <td class="align-middle text-wrap"><%= permasalahan.penyebab_internal %></td>
-                <td class="align-middle text-wrap"><%= permasalahan.penyebab_external %></td>
-                <% unless diajukan? %>
-                  <td class="text-center align-middle" width="50px">
-                    <%= render(EditButtonComponent.new(path: edit_sasaran_permasalahan_path(sasaran, permasalahan))) %>
-                    <%= render(DeleteButtonComponent.new(path: sasaran_permasalahan_path(sasaran, permasalahan), title: 'Hapus permasalahan ?')) %>
-                  </td>
-                <% end %>
-              </tr>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered counter">
+        <thead>
+          <tr>
+            <th width="20px">No.</th>
+            <th>Jenis</th>
+            <th>Permasalahan</th>
+            <th>Penyebab Internal</th>
+            <th>Penyebab External</th>
+            <% unless diajukan? %>
+              <th class="text-center align-middle" width="50px">Aksi</th>
             <% end %>
-          </tbody>
-        </table>
-      </div>
+          </tr>
+        </thead>
+        <tbody>
+          <% sasaran.permasalahans.order(:updated_at).each do |permasalahan| %>
+            <%= render 'permasalahans/row_permasalahan_card', permasalahan: permasalahan, sasaran: sasaran %>
+          <% end %>
+        </tbody>
+      </table>
     </div>
-  <% end %>
+  </div>
 </div>
