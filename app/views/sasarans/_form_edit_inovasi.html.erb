@@ -1,5 +1,10 @@
 <%= form_with(model: @sasaran, url: inovasi_sasaran_path,
-              local: false ,html: { data: { action: "ajax:complete->editable-table#processAjax" } }) do |form| %>
+              local: false,
+              data: {
+                editable_table_target_param: dom_id(@sasaran, 'hasil-inovasi'),
+                action: "ajax:complete->editable-table#newProcessAjax"
+              }
+) do |form| %>
   <div class="field">
     <%= form.label :hasil_inovasi, class: "form-label" %>
     <%= form.select(:hasil_inovasi,
@@ -13,11 +18,11 @@
                         dropdown_event_name_value: 'toggle-inovasi-fields',
                       } } )%>
   </div>
-  <div class="field" id="nama_inovasi" data-controller="field" data-action="toggle-inovasi-fields@document->field#toggle_visible">
+  <div class="field <%= form.object.hasil_inovasi_sasaran == 'Bukan Inovasi' ? 'd-none' : '' %>" id="nama_inovasi" data-controller="field" data-action="toggle-inovasi-fields@document->field#toggle_visible">
     <%= form.label :inovasi_sasaran,'Judul Inovasi', class: "form-label" %>
     <%= form.text_area :inovasi_sasaran, {class: "form-control", placeholder: 'tuliskan inovasi...', value: form.object.inovasi_sasaran} %>
   </div>
-  <div class="field" id="jenis_inovasi" data-controller="field" data-action="toggle-inovasi-fields@document->field#toggle_visible">
+  <div class="field <%= form.object.hasil_inovasi_sasaran == 'Bukan Inovasi' ? 'd-none' : '' %>" id="jenis_inovasi" data-controller="field" data-action="toggle-inovasi-fields@document->field#toggle_visible">
     <%= form.label :jenis_inovasi,'Jenis inovasi', class: "form-label" %>
     <%= form.select(:jenis_inovasi,
                     jenis_inovasi,
@@ -29,7 +34,7 @@
                         dropdown_parent_value: '#edit-inovasi-sasaran'
                       } } )%>
   </div>
-  <div class="field" id="gambaran_nilai_kebaruan" data-controller="field" data-action="toggle-inovasi-fields@document->field#toggle_visible">
+  <div class="field <%= form.object.hasil_inovasi_sasaran == 'Bukan Inovasi' ? 'd-none' : '' %>" id="gambaran_nilai_kebaruan" data-controller="field" data-action="toggle-inovasi-fields@document->field#toggle_visible">
     <%= form.label :gambaran_nilai_kebaruan, 'Gambaran Nilai Kebaruan', class: "form-label" %>
     <%= form.text_area :gambaran_nilai_kebaruan, {class: "form-control", placeholder: 'gambaran tentang nilai kebaruan dalam inovasi',
                                                   value: form.object.gambaran_nilai_kebaruan_sasaran} %>

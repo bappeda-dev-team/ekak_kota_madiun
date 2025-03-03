@@ -527,7 +527,7 @@ class SasaransController < ApplicationController
     if @sasaran.update(metadata: new_metadata)
       render json: { resText: "Inovasi sasaran disimpan",
                      html_content: html_content({ sasaran: @sasaran },
-                                                partial: 'sasarans/hasil_inovasi') }.to_json,
+                                                partial: 'sasarans/hasil_output_inovasi_card') }.to_json,
              status: :ok
     else
       render json: { resText: "Terjadi kesalahan", html_content: errors_content(@sasaran) }.to_json,

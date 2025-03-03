@@ -1,5 +1,5 @@
 <%= form_with(model: @sasaran, url: hasil_output_sasaran_path,
-              local: false ,
+              local: false,
               data: {
                 editable_table_target_param: dom_id(@sasaran, 'hasil-output'),
                 action: "ajax:complete->editable-table#newProcessAjax"
