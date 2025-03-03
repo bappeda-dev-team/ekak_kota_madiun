@@ -71,7 +71,7 @@ class Inovasi < ApplicationRecord
   end
 
   def get_kolaborator(kode_opd)
-    opd.in?(kode_opd) || opd_kolabs(kode_opd)
+    opd.include?(kode_opd) || opd_kolabs(kode_opd)
   end
 
   def opd_kolabs(kode_opd)
