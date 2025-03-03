@@ -140,7 +140,7 @@ class UsulansController < ApplicationController
 
     @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
 
-    inovasi_kota = Inovasi.from_kota
+    inovasi_kota = Inovasi.from_kota.with_association
     @inovasis = InovasiFilter.new(inovasi_kota,
                                   params)
                              .results
