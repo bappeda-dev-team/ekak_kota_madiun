@@ -1,4 +1,11 @@
-<%= form_with(model: [@sasaran, rincian], local: false) do |form| %>
+<%= form_with(model: [@sasaran, rincian], local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: dom_id(@sasaran, 'rincian'),
+                form_ajax_type_param: 'total_replace',
+                action: 'ajax:complete->form-ajax#processAjax'
+              }
+) do |form| %>
   <% if rincian.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(rincian.errors.count, "error") %> prohibited this rincian from being saved:</h2>
@@ -25,7 +32,7 @@
          data: {
            controller: 'dropdown',
            placeholder: "Pilih model layanan",
-           dropdown_parent_value: '#form-rincian-body',
+           dropdown_parent_value: '#form-modal-body',
            dropdown_jenis_value: 'chain',
            dropdown_event_name_value: 'modelLayanan',
            rincian_layanan_target: 'modelLayanan'

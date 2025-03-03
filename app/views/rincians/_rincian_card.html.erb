@@ -1,4 +1,4 @@
-<div class="card border-2 shadow mb-3">
+<div class="card border-2 shadow mb-3" id="<%= dom_id(sasaran, 'rincian') %>">
   <div class="card-header">
     <h4 class="card-title">
       Rincian Sasaran
@@ -8,37 +8,69 @@
       <% unless sasaran.rincian %>
         <div class="row">
           <div class="col">
-            <%= link_to "Tambah Rincian Sasaran", new_sasaran_rincian_path(sasaran), remote: true,
-                        class: "btn btn-primary rincian", data: {'bs-toggle': 'modal', 'bs-target': '#form-rincian', 'title': 'Form Rincian Sasaran'} %>
+            <%= link_to new_sasaran_rincian_path(sasaran),
+                        remote: true,
+                        class: 'btn btn-primary rincian',
+                        data: {
+                          controller: 'form-modal',
+                          action: 'form-modal#appendForm',
+                          form_modal_location_param: 'form-modal-body',
+                          bs_target: '#form-modal',
+                          bs_toggle: 'modal'
+                        } do %>
+              <span>Tambah Rincian Sasaran</span>
+            <% end %>
           </div>
         </div>
       <% else %>
         <div class="row">
           <div class="col">
-            <%= link_to "Edit Rincian Sasaran", edit_sasaran_rincian_path(sasaran, sasaran.rincian), remote: true,
-                        class: "btn btn-primary rincian", data: {'bs-toggle': 'modal', 'bs-target': '#form-rincian', 'title': 'Form Rincian Sasaran'} %>
+            <%= link_to edit_sasaran_rincian_path(sasaran, sasaran.rincian),
+                        remote: true,
+                        class: 'btn btn-primary rincian',
+                        data: {
+                          controller: 'form-modal',
+                          action: 'ajax:complete->form-modal#success:prevent',
+                          bs_toggle: 'modal',
+                          bs_target: '#form-modal'
+                        } do %>
+              <span>Edit Rincian Sasaran</span>
+            <% end %>
           </div>
         </div>
       <% end %>
     <% end %>
   </div>
   <div class="card-body">
-    <% if sasaran.rincian %>
-      <div class="row">
-        <div class="col">
-          <ul class="list mb-0">
-            <li><strong>Jenis Layanan</strong> : <%= sasaran.jenis_layanan %></li>
-            <li><strong>Model Layanan</strong> : <%= sasaran.rincian.model_layanan %></li>
-            <% if sasaran.rincian.model_layanan == 'Online' %>
-              <li><strong>Penjelasaan Pelayanan Online (alat yang digunakan)</strong> : <%= sasaran.rincian.jalur_layanan %></li>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Jenis Layanan</th>
+            <th>Model Layanan</th>
+            <% if sasaran.rincian&.model_layanan == 'Online' %>
+              <th>Penjelasaan Pelayanan Online (alat yang digunakan)</th>
             <% end %>
-            <li><strong>Penerima manfaat</strong> : <%= sasaran.penerima_manfaat %></li>
-            <li><strong>Data terpilah</strong> : <%= sasaran.rincian.data_terpilah %></li>
-            <li><strong>Resiko</strong> : <%= sasaran.rincian.resiko %></li>
-            <li><strong>Lokasi pelaksanaan</strong> : <%= sasaran.rincian.lokasi_pelaksanaan %></li>
-          </ul>
-        </div>
-      </div>
-    <% end %>
+            <th>Penerima Manfaat</th>
+            <th>Data terpilah</th>
+            <th>Lokasi Pelaksanaan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if sasaran.rincian %>
+            <tr>
+              <td class="align-middle text-wrap"><%= sasaran.jenis_layanan %></td>
+              <td class="align-middle text-wrap"><%= sasaran.rincian.model_layanan %></td>
+              <% if sasaran.rincian.model_layanan == 'Online' %>
+                <td class="align-middle text-wrap"><%= sasaran.rincian.jalur_layanan %></td>
+              <% end %>
+              <td class="align-middle text-wrap"><%= sasaran.penerima_manfaat %></td>
+              <td class="align-middle text-wrap"><%= sasaran.rincian.data_terpilah %></td>
+              <td class="align-middle text-wrap"><%= sasaran.rincian.lokasi_pelaksanaan %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

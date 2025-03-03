@@ -2,6 +2,7 @@ class RinciansController < ApplicationController
   before_action :my_sasaran, only: %i[index new create update show edit subkegiatan sasaran]
   before_action :set_rincian, only: %i[show edit update destroy]
   before_action :set_dropdown, only: %i[new edit]
+  layout false, only: %i[show new edit]
 
   # GET /rincians or /rincians.json
   def index
@@ -32,45 +33,37 @@ class RinciansController < ApplicationController
     penerima_manfaat = params[:rincian][:penerima_manfaat]
     sasaran = Sasaran.find(params[:sasaran_id])
     sasaran.update(penerima_manfaat: penerima_manfaat, jenis_layanan: jenis_layanan)
-    respond_to do |format|
-      if @rincian.save
-        @status = 'success'
-        @text = 'Sukses menambah tematik'
-        flash[:success] = "Edit rincian sukses"
-        format.js { render 'create.js.erb' }
-        format.html do
-          redirect_to user_sasaran_path(@sasaran.user, @sasaran), success: 'Rincian berhasil ditambahkan.'
-        end
-        format.json { render :show, status: :created, location: @rincian }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @rincian.errors, status: :unprocessable_entity }
-      end
+
+    if @rincian.save
+      render json: { resText: "Rincian saaran berhasil disimpan.",
+                     html_content: html_content({ sasaran: sasaran },
+                                                partial: 'rincians/rincian_card') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ rincian: @rincian },
+                                                 partial: 'rincians/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /rincians/1 or /rincians/1.json
   def update
-    respond_to do |format|
-      jenis_layanan = params[:rincian][:jenis_layanan]
-      penerima_manfaat = params[:rincian][:penerima_manfaat]
-      if penerima_manfaat || jenis_layanan
-        sasaran = Sasaran.find(params[:sasaran_id])
-        sasaran.update(penerima_manfaat: penerima_manfaat, jenis_layanan: jenis_layanan)
-      end
-      if @rincian.update(rincian_params)
-        @status = 'success'
-        @text = 'Sukses menambah tematik'
-        flash[:success] = "Edit rincian sukses"
-        format.js { render 'create.js.erb' }
-        format.html do
-          redirect_to user_sasaran_path(@sasaran.user, @sasaran), success: 'Rincian berhasil diupdate.'
-        end
-        format.json { render :show, status: :ok, location: @rincian }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @rincian.errors, status: :unprocessable_entity }
-      end
+    jenis_layanan = params[:rincian][:jenis_layanan]
+    penerima_manfaat = params[:rincian][:penerima_manfaat]
+    sasaran = Sasaran.find(params[:sasaran_id])
+    sasaran.update(penerima_manfaat: penerima_manfaat, jenis_layanan: jenis_layanan)
+
+    if @rincian.update(rincian_params)
+      render json: { resText: "Rincian saaran berhasil disimpan.",
+                     html_content: html_content({ sasaran: sasaran },
+                                                partial: 'rincians/rincian_card') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ rincian: @rincian },
+                                                 partial: 'rincians/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
