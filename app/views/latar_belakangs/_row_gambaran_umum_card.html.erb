@@ -1,0 +1,12 @@
+<tr id="<%= dom_id(gambaran_umum) %>">
+  <td class="align-middle"></td>
+  <td class="align-middle text-wrap"><%= gambaran_umum.gambaran_umum %></td>
+  <% unless diajukan? %>
+    <td class="text-center align-middle" width="50px">
+      <%= render(EditButtonComponent.new(path: edit_sasaran_latar_belakang_path(sasaran, gambaran_umum))) %>
+      <%= render(DeleteButtonAjaxComponent.new(path: sasaran_latar_belakang_path(sasaran, gambaran_umum),
+                                               model: gambaran_umum,
+                                               text: 'Hapus gambaran umum ?')) %>
+    </td>
+  <% end %>
+</tr>

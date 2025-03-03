@@ -26,47 +26,45 @@ class LatarBelakangsController < ApplicationController
     @sasaran = Sasaran.find(params[:sasaran_id])
     @latar_belakang = @sasaran.latar_belakangs.build(latar_belakang_params)
 
-    respond_to do |format|
-      if @latar_belakang.save
-        @status = 'success'
-        @text = 'Gambaran Umum berhasil disimpan'
-        flash[:success] = "Gambaran Umum berhasil disimpan"
-        format.js { render 'create.js.erb' }
-        format.html do
-          redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Gambaran Umum berhasil ditambahkan"
-        end
-        format.json { render :show, status: :created, location: @latar_belakang }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @latar_belakang.errors, status: :unprocessable_entity }
-      end
+    if @latar_belakang.save
+      render json: { resText: "Data Gambaran Umum berhasil ditambahkan",
+                     html_content: html_content({ sasaran: @sasaran,
+                                                  gambaran_umum: @latar_belakang },
+                                                partial: 'latar_belakangs/gambaran_umum_card') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ sasaran: @sasaran,
+                                                   latar_belakang: @latar_belakang },
+                                                 partial: 'latar_belakangs/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /latar_belakangs/1 or /latar_belakangs/1.json
   def update
-    respond_to do |format|
-      if @latar_belakang.update(latar_belakang_params)
-        @status = 'success'
-        @text = 'Gambaran Umum berhasil disimpan'
-        flash[:success] = "Gambaran Umum berhasil disimpan"
-        format.js { render 'create.js.erb' }
-        format.html { redirect_to @latar_belakang, notice: "Latar belakang was successfully updated." }
-        format.json { render :show, status: :ok, location: @latar_belakang }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @latar_belakang.errors, status: :unprocessable_entity }
-      end
+    @sasaran = Sasaran.find(params[:sasaran_id])
+    if @latar_belakang.update(latar_belakang_params)
+      render json: { resText: "Data Gambaran Umum berhasil diupdate",
+                     html_content: html_content({ sasaran: @sasaran,
+                                                  gambaran_umum: @latar_belakang },
+                                                partial: 'latar_belakangs/row_gambaran_umum_card') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ sasaran: @sasaran,
+                                                   latar_belakang: @latar_belakang },
+                                                 partial: 'latar_belakangs/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
   # DELETE /latar_belakangs/1 or /latar_belakangs/1.json
   def destroy
     @latar_belakang.destroy
-    respond_to do |format|
-      format.html { redirect_to latar_belakangs_url, notice: "Latar belakang was successfully destroyed." }
-      format.json { head :no_content }
-    end
+
+    render json: { resText: "Gambaran Umum dihapus." }.to_json,
+           status: :accepted
   end
 
   private

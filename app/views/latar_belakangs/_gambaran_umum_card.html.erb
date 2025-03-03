@@ -1,4 +1,4 @@
-<div class="card border-2 shadow mb-3">
+<div class="card border-2 shadow mb-3" id="<%= dom_id(sasaran, 'gambaran-umum') %>">
   <div class="card-header">
     <h4 class="card-title">
       Gambaran Umum
@@ -6,38 +6,37 @@
     </h4>
     <% unless diajukan? %>
       <div class="link-tambah">
-        <%= link_to 'Tambah Gambaran Umum', new_sasaran_latar_belakang_path(sasaran), remote: true, class: 'btn btn-primary',
-          data: {'bs-toggle': 'modal', 'bs-target': '#form-gambaranumum'} %>
+        <%= link_to new_sasaran_latar_belakang_path(sasaran),
+                    remote: true,
+                    class: 'btn btn-primary',
+                    data: {
+                      controller: 'form-modal',
+                      action: 'form-modal#appendForm',
+                      form_modal_location_param: 'form-modal-body',
+                      bs_target: '#form-modal',
+                      bs_toggle: 'modal'
+                    } do %>
+          <span>Tambah Gambaran Umum</span>
+        <% end %>
       </div>
     <% end %>
   </div>
-  <% unless sasaran.latar_belakangs.nil? %>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table table-bordered counter">
-          <thead>
-            <tr>
-              <th width="20px">No.</th>
-              <th>Gambaran Umum</th>
-              <th class="text-center align-middle" width="50px">Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% sasaran.latar_belakangs.order(:updated_at).each do |latarbelakang| %>
-              <tr>
-                <td class="align-middle"></td>
-                <td class="align-middle text-wrap"><%= latarbelakang.gambaran_umum %></td>
-                <% unless diajukan? %>
-                  <td class="text-center align-middle" width="50px">
-                    <%= render(EditButtonComponent.new(path: edit_sasaran_latar_belakang_path(sasaran, latarbelakang))) %>
-                    <%= render(DeleteButtonComponent.new(path: sasaran_latar_belakang_path(sasaran, latarbelakang), title: 'Hapus gambaran umum ?')) %>
-                  </td>
-                <% end %>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered counter">
+        <thead>
+          <tr>
+            <th width="20px">No.</th>
+            <th>Gambaran Umum</th>
+            <th class="text-center align-middle" width="50px">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% sasaran.latar_belakangs.order(:updated_at).each do |gambaran_umum| %>
+            <%= render 'latar_belakangs/row_gambaran_umum_card', gambaran_umum: gambaran_umum, sasaran: sasaran %>
+          <% end %>
+        </tbody>
+      </table>
     </div>
-  <% end %>
+  </div>
 </div>

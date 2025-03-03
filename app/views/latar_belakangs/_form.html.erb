@@ -1,4 +1,11 @@
-<%= form_with(model: [@sasaran, latar_belakang], local: false) do |form| %>
+<%= form_with(model: [@sasaran, latar_belakang], local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: latar_belakang.new_record? ? dom_id(@sasaran, 'gambaran-umum') : dom_id(latar_belakang),
+                form_ajax_type_param: latar_belakang.new_record? ? 'total_replace' : '',
+                action: 'ajax:complete->form-ajax#processAjax'
+              }
+) do |form| %>
   <% if latar_belakang.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(latar_belakang.errors.count, "error") %> prohibited this latar_belakang from being saved:</h2>
