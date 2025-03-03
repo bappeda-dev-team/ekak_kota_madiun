@@ -88,11 +88,11 @@ export default class extends Controller {
           return item.text;
         }
         // Example: Custom rendering with bolded "Lead"
-if (item.decorate) {
-    return $(`<span>${item.text} - <b>Lead: ${item.decorate}</b></span>`);
-  } else {
-    return $(`<span>${item.text}</span>`);
-  }
+        if (item.decorate) {
+          return $(`<span>${item.text} - <b>Lead: ${item.decorate}</b></span>`);
+        } else {
+          return $(`<span>${item.text}</span>`);
+        }
       },
       escapeMarkup: function (markup) {
         // Let our HTML (the <b> tag) pass through
