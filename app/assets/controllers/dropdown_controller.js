@@ -24,6 +24,7 @@ export default class extends Controller {
     kode: String,
     scope: String,
     display: { type: Boolean, default: true },
+    withBlank: { type: Boolean, default: false },
     width: { type: String, default: "element" },
   };
 
@@ -50,6 +51,7 @@ export default class extends Controller {
   }
 
   get options_with_ajax() {
+    const withBlank = this.withBlankValue
     let options = {
       width: "100%",
       theme: "bootstrap-5",
@@ -70,6 +72,14 @@ export default class extends Controller {
           q: params.term,
         }),
         delay: 800,
+        processResults: (data) => {
+          let results = data.results;
+
+          if (withBlank) {
+            results.unshift({ id: '', text: 'All' });
+          }
+          return { results: results };
+        }
       },
       cache: true,
     };
@@ -249,6 +259,8 @@ export default class extends Controller {
     let custom_event = "";
     const select2ed = this.dropdown_base(options);
     const custom_name = this.eventNameValue;
+    const withBlank = this.withBlankValue
+
     if (this.hasSelectedValue) {
       const url = `${this.urlValue}?selected=${this.selectedValue}`
       $.ajax({
@@ -260,18 +272,28 @@ export default class extends Controller {
         delay: 800
       }).then(function (data) {
         if (data.results.length > 0) {
-          const data_first = data.results[0];
-          const options = new Option(data_first.text, data_first.id, true, true);
-          select2ed.append(options).trigger("change");
+          let firstItem = data.results[0];
+          let selectedItem = firstItem
+          let options;
+
+          if (withBlank) {
+            const allOption = new Option('All', '', true, true);
+            select2ed.append(allOption);
+
+            selectedItem = { id: '', text: 'All' };
+          } else {
+            options = new Option(firstItem.text, firstItem.id, true, true);
+            select2ed.append(options);
+          }
           select2ed.trigger({
             type: "select2:select",
-            params: {
-              data: data_first,
-            },
+            params: { data: selectedItem },
           });
         }
       });
     }
+
+    // trigger custom event
     select2ed.on("select2:select", (e) => {
       custom_event = new CustomEvent(custom_name, {
         detail: { data: e.params.data },
@@ -279,7 +301,6 @@ export default class extends Controller {
 
       document.dispatchEvent(custom_event);
     });
-
   }
 
   // action

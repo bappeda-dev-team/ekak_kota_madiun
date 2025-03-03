@@ -59,12 +59,12 @@ class Inovasi < ApplicationRecord
   }
   scope :from_kota, -> { where(nip_asn: ['', nil]) }
   scope :with_opd_kolabs, lambda { |tahun_terpilih, kode_opd|
-    includes(:misi, kolabs: [:opd])
+    left_outer_joins(:kolabs)
       .where(tahun: tahun_terpilih)
-      .select do |inovasi|
-      inovasi.get_kolaborator(kode_opd)
-    end
+      .where('inovasis.opd = :kode_opd OR kolabs.kode_unik_opd = :kode_opd',
+             kode_opd: kode_opd)
   }
+  scope :with_association, -> { includes(:misi, kolabs: [:opd]) }
 
   def to_s
     uraian
@@ -224,7 +224,7 @@ class Inovasi < ApplicationRecord
   # end gunakan jika diusulkan oleh user
 
   def all_usulans
-    usulans.includes(sasaran: %i[user opd strategi program_kegiatan])
+    usulans.includes(:opd, sasaran: %i[user opd strategi program_kegiatan])
            .select(&:with_sasaran?)
   end
 

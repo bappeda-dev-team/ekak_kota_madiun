@@ -10,8 +10,7 @@
                   data: {
                     controller: 'page-ajax',
                     page_ajax_reqtype_value: 'GET',
-                    page_ajax_url_value: filter_inovasi_usulans_path(tahun: @tahun, opd: @kode_opd,
-                                                                     misi_id: @misi_id, asta_karya: @asta_karya)
+                    page_ajax_url_value: filter_inovasi_usulans_path(tahun: @tahun, opd: @kode_opd)
                   }  do %>
     <div class="card-header">
       <h2 class="fs-5 fw-bold mb-0">Filter</h2>
@@ -27,27 +26,25 @@
           <div class="col">
             <%= form.label :misi, class: 'form-label' %>
             <%= form.select :misi_id, [],
-             { include_blank: true, required: true },
+             {},
              data: {
-               placeholder: 'Misi Kepala Daerah',
                controller: 'dropdown',
                dropdown_jenis_value: 'extra',
                dropdown_url_value: '/misi_kota/lists.json',
                dropdown_selected_value: @misi_id,
-               dropdown_scope_value: 'all'
+               dropdown_with_blank_value: 'true'
              }  %>
           </div>
           <div class="col">
             <%= form.label :manfaat, "ASTA KARYA", class: 'form-label' %>
             <%= form.select :manfaat, [],
-             { include_blank: true, required: true },
+             {},
              data: {
-               placeholder: 'ASTA KARYA',
                controller: 'dropdown',
                dropdown_jenis_value: 'extra',
                dropdown_url_value: program_unggulans_path(:json),
                dropdown_selected_value: @asta_karya,
-               dropdown_scope_value: 'all'
+               dropdown_with_blank_value: 'true'
              }  %>
           </div>
           <div class="col">

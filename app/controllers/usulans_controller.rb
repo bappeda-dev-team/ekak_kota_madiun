@@ -144,33 +144,40 @@ class UsulansController < ApplicationController
   end
 
   def filter_inovasi
-    @kode_opd = params[:opd]
-    @misi_id = params[:misi_id]
-    @asta_karya = params[:manfaat] # alias of old inovasi
-
-    filtered_only = @kode_opd == "0.00.0.00.0.00.00.0000"
-    @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
+    # @scope = params[:scope]
     @tahun = params[:tahun]
+    # @misi_id = params[:misi_id]
+    # @asta_karya = params[:manfaat]
+    @kode_opd = params[:opd]
+    # filtered_only = @kode_opd == "0.00.0.00.0.00.00.0000"
 
-    kode_opd = if @opd.setda?
-                 @opd.all_kode_setda
-               else
-                 [@kode_opd]
-               end
+    @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
 
-    @inovasis = if filtered_only
-                  Inovasi.from_kota.includes(:misi, kolabs: [:opd])
-                         .where(tahun: @tahun,
-                                misi_id: @misi_id,
-                                manfaat: @asta_karya)
-                else
-                  Inovasi.includes(:misi, kolabs: [:opd])
-                         .from_kota
-                         .where(tahun: @tahun,
-                                misi_id: @misi_id,
-                                manfaat: @asta_karya)
-                         .select { |inovasi| inovasi.get_kolaborator(kode_opd) }
-                end
+    # kode_opd = if @opd.setda?
+    #              @opd.all_kode_setda
+    #            else
+    #              [@kode_opd]
+    #            end
+
+    # @inovasis = if filtered_only
+    #               Inovasi.from_kota
+    #                      .where(tahun: @tahun)
+    #                      .with_association
+    #             else
+    #               Inovasi.from_kota
+    #                      .with_opd_kolabs(@tahun, kode_opd)
+    #                      .with_association
+    #             end
+
+    # if @scope != 'all'
+    #   @inovasis = @inovasis.where(misi_id: @misi_id,
+    #                               manfaat: @asta_karya)
+    # end
+    inovasi_kota = Inovasi.from_kota.with_association
+    @inovasis = InovasiFilter.new(inovasi_kota,
+                                  params)
+                             .results
+
     @total_pagu = @inovasis.map(&:total_pagu_usulans).compact.sum
 
     render partial: 'usulans/filter_inovasi'

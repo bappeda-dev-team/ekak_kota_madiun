@@ -5,6 +5,7 @@ class ProgramUnggulansController < ApplicationController
 
   # GET /program_unggulans or /program_unggulans.json
   def index
+    asta_karya_dicari = params[:q]
     @lembaga_id = cookies[:lembaga_id]
     @tahun = cookies[:tahun]
     tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
@@ -27,6 +28,8 @@ class ProgramUnggulansController < ApplicationController
                                                              tahun_akhir: @tahun_akhir,
                                                              lembaga_id: @lembaga_id)
                          end
+    @program_unggulans = @program_unggulans
+                         .where("asta_karya ILIKE ?", "%#{asta_karya_dicari}%")
   end
 
   def asta_karya

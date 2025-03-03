@@ -8,8 +8,12 @@ class InovasisController < ApplicationController
     @kode_opd = is_admin_kota ? "0.00.0.00.0.00.00.0000" : cookies[:opd]
     @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
 
+    # index is used by admin and super_admin
+    # so the from_kota scope is not needed
+    # since admin can see their past inovasis
     @inovasis = if @opd.is_kota
-                  Inovasi.includes(:misi, kolabs: [:opd]).where(tahun: @tahun)
+                  Inovasi.where(tahun: @tahun)
+                         .with_association
                 else
                   kode_opd = if @opd.setda?
                                @opd.all_kode_setda
@@ -17,6 +21,7 @@ class InovasisController < ApplicationController
                                [@kode_opd]
                              end
                   Inovasi.with_opd_kolabs(@tahun, kode_opd)
+                         .with_association
                 end
   end
 
@@ -26,7 +31,8 @@ class InovasisController < ApplicationController
     @tahun = params[:tahun]
 
     @inovasis = if @opd.is_kota
-                  Inovasi.includes(:misi, kolabs: [:opd]).where(tahun: @tahun)
+                  Inovasi.where(tahun: @tahun)
+                         .with_association
                 else
                   kode_opd = if @opd.setda?
                                @opd.all_kode_setda
@@ -34,6 +40,7 @@ class InovasisController < ApplicationController
                                [@kode_opd]
                              end
                   Inovasi.with_opd_kolabs(@tahun, kode_opd)
+                         .with_association
                 end
 
     render partial: 'inovasis/content_inovasi'
@@ -50,7 +57,9 @@ class InovasisController < ApplicationController
     #                      kolabs: { kode_unik_opd: @kode_opd }
     #                    )
 
-    @inovasis = Inovasi.from_kota.with_opd_kolabs(@tahun, @kode_opd)
+    @inovasis = Inovasi.from_kota
+                       .with_opd_kolabs(@tahun, @kode_opd)
+                       .with_association
     render 'user_inisiatif'
   end
 
