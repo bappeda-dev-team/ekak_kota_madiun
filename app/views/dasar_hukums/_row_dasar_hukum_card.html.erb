@@ -2,10 +2,12 @@
   <td class="align-middle"></td>
   <td class="align-middle text-wrap"><%= dasar_hukum.judul %></td>
   <td class="align-middle text-wrap"><%= dasar_hukum.peraturan %></td>
-  <td class="text-center align-middle" width="50px">
-    <%= render(EditButtonComponent.new(path: edit_sasaran_dasar_hukum_path(sasaran,dasar_hukum))) %>
-    <%= render(DeleteButtonAjaxComponent.new(path: sasaran_dasar_hukum_path(sasaran,dasar_hukum),
-                                             model: dasar_hukum,
-                                             text: 'Hapus dasar hukum ?')) %>
-  </td>
+  <% unless diajukan? %>
+    <td class="text-center align-middle" width="50px">
+      <%= render(EditButtonComponent.new(path: edit_sasaran_dasar_hukum_path(sasaran,dasar_hukum))) %>
+      <%= render(DeleteButtonAjaxComponent.new(path: sasaran_dasar_hukum_path(sasaran,dasar_hukum),
+                                               model: dasar_hukum,
+                                               text: 'Hapus dasar hukum ?')) %>
+    </td>
+  <% end %>
 </tr>
