@@ -26,41 +26,36 @@ class DasarHukumsController < ApplicationController
     @sasaran = Sasaran.find(params[:sasaran_id])
     @dasar_hukum = @sasaran.dasar_hukums.build(dasar_hukum_params)
 
-    respond_to do |format|
-      if @dasar_hukum.save
-        @status = 'success'
-        @text = 'Sukses menambah tematik'
-        flash[:success] = "Dasar Hukum ditambahkan"
-        format.js { render 'create.js.erb' }
-        format.html do
-          redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Dasar Hukum berhasil ditambahkan"
-        end
-        format.json { render :show, status: :created, location: @dasar_hukum }
-      else
-        format.js { render :new, status: :unprocessable_entity }
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @dasar_hukum.errors, status: :unprocessable_entity }
-      end
+    if @dasar_hukum.save
+      render json: { resText: "Data Dasar Hukum berhasil ditambahkan",
+                     html_content: html_content({ sasaran: @sasaran,
+                                                  dasar_hukum: @dasar_hukum },
+                                                partial: 'dasar_hukums/dasar_hukum_card') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ sasaran: @sasaran,
+                                                   dasar_hukum: @dasar_hukum },
+                                                 partial: 'dasar_hukums/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /dasar_hukums/1 or /dasar_hukums/1.json
   def update
     @sasaran = Sasaran.find(params[:sasaran_id])
-    respond_to do |format|
-      if @dasar_hukum.update(dasar_hukum_params)
-        @status = 'success'
-        @text = 'Sukses menambah tematik'
-        flash[:success] = "Edit Dasar Hukum sukses"
-        format.js { render 'create.js.erb' }
-        format.html do
-          redirect_to user_sasaran_path(current_user, @sasaran), success: "Data Dasar Hukum berhasil diupdate"
-        end
-        format.json { render :show, status: :ok, location: @dasar_hukum }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @dasar_hukum.errors, status: :unprocessable_entity }
-      end
+    if @dasar_hukum.update(dasar_hukum_params)
+      render json: { resText: "Data Dasar Hukum berhasil diupdate",
+                     html_content: html_content({ sasaran: @sasaran,
+                                                  dasar_hukum: @dasar_hukum },
+                                                partial: 'dasar_hukums/row_dasar_hukum_card') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ sasaran: @sasaran,
+                                                   dasar_hukum: @dasar_hukum },
+                                                 partial: 'dasar_hukums/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
@@ -68,13 +63,9 @@ class DasarHukumsController < ApplicationController
   def destroy
     @sasaran = Sasaran.find(params[:sasaran_id])
     @dasar_hukum.destroy
-    respond_to do |format|
-      format.js
-      format.html do
-        redirect_to user_sasaran_path(current_user, @sasaran), success: "Dasar hukum berhasil dihapus"
-      end
-      format.json { head :no_content }
-    end
+
+    render json: { resText: "Dasar hukum berhasil dihapus" }.to_json,
+           status: :accepted
   end
 
   def edit_renstra

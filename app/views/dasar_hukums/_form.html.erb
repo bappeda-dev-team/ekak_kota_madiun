@@ -1,4 +1,11 @@
-<%= form_with(model: [@sasaran,dasar_hukum], local: false) do |form| %>
+<%= form_with(model: [@sasaran,dasar_hukum], local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: dasar_hukum.new_record? ? dom_id(@sasaran, 'dasar-hukum') : dom_id(dasar_hukum),
+                form_ajax_type_param: dasar_hukum.new_record? ? 'total_replace' : '',
+                action: 'ajax:complete->form-ajax#processAjax'
+              }
+) do |form| %>
   <% if dasar_hukum.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(dasar_hukum.errors.count, "error") %> prohibited this dasar_hukum from being saved:</h2>

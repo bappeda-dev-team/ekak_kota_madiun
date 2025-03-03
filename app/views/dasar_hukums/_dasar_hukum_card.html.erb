@@ -1,4 +1,4 @@
-<div class="card border-2 shadow mb-3">
+<div class="card border-2 shadow mb-3" id="<%= dom_id(sasaran, 'dasar-hukum') %>">
   <div class="card-header">
     <h4 class="card-title">
       Dasar Hukum
@@ -6,42 +6,38 @@
     </h4>
     <% unless diajukan? %>
       <div class="link-tambah">
-        <%= link_to 'Tambah Dasar Hukum', new_sasaran_dasar_hukum_path(sasaran), remote: true, class: 'btn btn-primary',
-          data: {'bs-toggle': 'modal', 'bs-target': '#form-dasarhukum'} %>
+        <%= link_to new_sasaran_dasar_hukum_path(sasaran),
+                    remote: true,
+                    class: 'btn btn-primary',
+                    data: {
+                      controller: 'form-modal',
+                      action: 'form-modal#appendForm',
+                      form_modal_location_param: 'form-modal-body',
+                      bs_target: '#form-modal',
+                      bs_toggle: 'modal'
+                    } do %>
+          <span>Tambah Dasar Hukum</span>
+        <% end %>
       </div>
     <% end %>
   </div>
-  <% unless sasaran.dasar_hukums.nil? %>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table table-bordered counter">
-          <thead>
-            <tr>
-              <th width="20px">No.</th>
-              <th>Peraturan terkait</th>
-              <th>Uraian</th>
-              <% unless diajukan? %>
-                <th class="text-center align-middle">Aksi</th>
-              <% end %>
-            </tr>
-          </thead>
-          <tbody>
-            <% sasaran.dasar_hukums.order(:updated_at).each do |dashu| %>
-              <tr>
-                <td class="align-middle"></td>
-                <td class="align-middle text-wrap"><%= dashu.judul %></td>
-                <td class="align-middle text-wrap"><%= dashu.peraturan %></td>
-                <% unless diajukan? %>
-                  <td class="text-center align-middle" width="50px">
-                    <%= render(EditButtonComponent.new(path: edit_sasaran_dasar_hukum_path(sasaran,dashu))) %>
-                    <%= render(DeleteButtonComponent.new(path: sasaran_dasar_hukum_path(sasaran,dashu), title: 'Hapus dasar hukum ?')) %>
-                  </td>
-                <% end %>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered counter">
+        <thead>
+          <tr>
+            <th width="20px">No.</th>
+            <th>Peraturan terkait</th>
+            <th>Uraian</th>
+            <th class="text-center align-middle">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% sasaran.dasar_hukums.order(:updated_at).each do |dasar_hukum| %>
+            <%= render 'dasar_hukums/row_dasar_hukum_card', dasar_hukum: dasar_hukum, sasaran: sasaran %>
+          <% end %>
+        </tbody>
+      </table>
     </div>
-  <% end %>
+  </div>
 </div>
