@@ -52,7 +52,7 @@ class Inovasi < ApplicationRecord
   has_many :reviews, as: :reviewable, dependent: :destroy
   has_many :kolabs, as: :kolabable, dependent: :destroy
 
-  default_scope { order(manfaat: :asc) }
+  default_scope { order(manfaat: :asc, id: :asc) }
 
   scope :by_periode, lambda { |tahun_awal, tahun_akhir|
     where("tahun::integer BETWEEN ?::integer AND ?::integer", tahun_awal, tahun_akhir)
