@@ -1,0 +1,36 @@
+<li class="d-grid" style="grid-template-columns: 200px auto;">
+  <span>Indikator Kinerja</span>
+  <span>: <%= indikator.indikator_kinerja %></span>
+</li>
+<li class="d-grid" style="grid-template-columns: 200px auto;">
+  <span>Target Indikator Kinerja</span>
+  <span>: <%= indikator.target %> <%= indikator.satuan %></span>
+</li>
+<li class="d-grid" style="grid-template-columns: 200px auto;">
+  <span class="fw-bolder">Manual IK</span>
+  <span>
+    <% if indikator.manual_ik.present? %>
+      <%= link_to edit_indikator_sasaran_manual_ik_path(indikator, indikator.manual_ik),
+                  class: "btn btn-sm btn-outline-info" do %>
+        <i class="fa fa-edit me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+        <span>Edit Manual IK</span>
+      <% end %>
+      <li class="d-grid" style="grid-template-columns: 180px auto;">
+        <span>Data Output</span>
+        <ul>
+          <% indikator.manual_ik.output_data.each do |data| %>
+            <li>
+              <%= data.titleize %>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+    <% else %>
+      <%= link_to new_indikator_sasaran_manual_ik_path(indikator),
+                  class: "btn btn-sm btn-outline-danger" do %>
+        <i class="fa fa-cog me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+        <span>Buat Manual IK</span>
+      <% end %>
+    <% end %>
+  </span>
+</li>

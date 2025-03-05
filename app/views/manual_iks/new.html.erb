@@ -1,9 +1,8 @@
+<div class="px-3">
+  <%= render 'form', manual_ik: @manual_ik %>
 
-<%= render 'form', manual_ik: @manual_ik %>
-
-<div class="card-body">
-  <%= link_to sasaran_path(@sasaran), class: 'btn btn-info w-100 text-white' do %>
+  <%= link_to sasaran_path(@sasaran), class: 'btn btn-info w-100 text-white mb-5' do %>
     <span class="fas fa-arrow-left"></span>
-    <span>Kembali</span>
+    <span>Kembali ke Input Rincian (Perubahan tidak tersimpan)</span>
   <% end %>
 </div>

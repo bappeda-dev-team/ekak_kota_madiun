@@ -1,0 +1,24 @@
+<li class="d-grid" style="grid-template-columns: 200px auto;">
+  <span>NAMA OPD</span>
+  <span>: <%= sasaran.user.opd.nama_opd %></span>
+</li>
+<li class="d-grid" style="grid-template-columns: 200px auto;">
+  <span>NAMA ASN</span>
+  <span>: <%= sasaran.user.nama %></span>
+</li>
+<li class="d-grid" style="grid-template-columns: 200px auto;">
+  <span>NIP</span>
+  <span>: <%= sasaran.user.nik %></span>
+</li>
+<hr />
+<li class="d-grid" style="grid-template-columns: 200px auto;">
+  <span>Rencana Kinerja</span>
+  <span class="text-gray-900">: <%= sasaran.sasaran_kinerja %></span>
+</li>
+<li class="d-grid" style="grid-template-columns: 200px auto;">
+  <span>Tahun</span>
+  <span>: <%= sasaran.tahun %></span>
+</li>
+<% sasaran.indikator_sasarans.each do |indikator| %>
+  <%= render 'sasarans/detail_indikator_kinerja', indikator: indikator %>
+<% end %>
