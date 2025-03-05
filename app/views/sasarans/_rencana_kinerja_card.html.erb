@@ -5,7 +5,7 @@
       <span class="ms-2"><%= sasaran_check(sasaran.sasaran_sesuai?) %></span>
     </h4>
     <div class="row">
-      <div class="col mb-3">
+      <div class="col">
         <%= link_to 'Edit Sasaran', edit_sasaran_path(sasaran), class: 'btn btn-sm btn-primary' %>
       </div>
     </div>
@@ -13,48 +13,77 @@
   <div class="card-body">
     <div id="<%= dom_id(sasaran) %>">
       <% jenis_strategi = jenis_strategi_sasaran(sasaran.role_strategi_sasaran) %>
-      <ul class="list mb-0">
-        <li>OPD : <%= sasaran.user.opd.nama_opd %></li>
-        <li>ASN : <%= sasaran.user.nama %></li>
-        <li>NIP : <%= sasaran.user.nik %></li>
-        <hr />
-        <li>Pohon Kinerja : <span><%= sasaran.strategi_sasaran %></span> <b class="<%= strategi_style(sasaran.role_strategi_sasaran) %>">(<%= jenis_strategi.titleize %>)</b></li>
-        <li>Tahun : <%= sasaran.strategi.tahun %></li>
-        <% sasaran.strategi.indikators.each do |indikator_pokin| %>
-          <li>Indikator Pohon Kinerja : <span><%= indikator_pokin.indikator %></span></li>
-          <li>Target : <span><%= indikator_pokin.target %></span> <span><%= indikator_pokin.satuan %></span></li>
-        <% end %>
-        <li>Keterangan Pohon Kinerja : <span><%= sasaran.strategi.keterangan %></span></li>
-        <hr />
-        <li>Rencana Kinerja : <span class="text-gray-900"><%= sasaran.sasaran_kinerja %></span></li>
-        <li>Tahun : <%= sasaran.tahun %></li>
-        <% sasaran.indikator_sasarans.each do |indikator| %>
-          <li>Indikator Kinerja : <%= indikator.indikator_kinerja %></li>
-          <li>Target Indikator Kinerja: <%= indikator.target %> <%= indikator.satuan %></li>
-          <li>Manual IK:
-            <% if indikator.manual_ik.present? %>
-              <%= link_to edit_indikator_sasaran_manual_ik_path(indikator, indikator.manual_ik),
-                          class: "m-3 btn btn-sm btn-outline-info" do %>
-                <i class="fa fa-edit me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
-                <span>Edit Manual IK</span>
+      <% if complete %>
+        <ul class="list mb-0">
+          <li>OPD : <%= sasaran.user.opd.nama_opd %></li>
+          <li>ASN : <%= sasaran.user.nama %></li>
+          <li>NIP : <%= sasaran.user.nik %></li>
+          <hr />
+          <li>Rencana Kinerja : <span class="text-gray-900"><%= sasaran.sasaran_kinerja %></span></li>
+          <li>Tahun : <%= sasaran.tahun %></li>
+          <% sasaran.indikator_sasarans.each do |indikator| %>
+            <li>Indikator Kinerja : <%= indikator.indikator_kinerja %></li>
+            <li>Target Indikator Kinerja: <%= indikator.target %> <%= indikator.satuan %></li>
+            <li>Manual IK:
+              <% if indikator.manual_ik.present? %>
+                <%= link_to edit_indikator_sasaran_manual_ik_path(indikator, indikator.manual_ik),
+                            class: "m-3 btn btn-sm btn-outline-info" do %>
+                  <i class="fa fa-edit me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+                  <span>Edit Manual IK</span>
+                <% end %>
+                <li>Data Output:
+                  <ul>
+                    <% indikator.manual_ik.output_data.each do |data| %>
+                      <li><%= data.titleize %></li>
+                    <% end %>
+                  </ul>
+                </li>
+              <% else %>
+                <%= link_to new_indikator_sasaran_manual_ik_path(indikator),
+                            class: "m-3 btn btn-sm btn-outline-danger" do %>
+                  <i class="fa fa-cog me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+                  <span>Buat Manual IK</span>
+                <% end %>
               <% end %>
-              <li>Data Output:
-                <ul>
-                  <% indikator.manual_ik.output_data.each do |data| %>
-                    <li><%= data.titleize %></li>
-                  <% end %>
-                </ul>
-              </li>
-            <% else %>
-              <%= link_to new_indikator_sasaran_manual_ik_path(indikator),
-                          class: "m-3 btn btn-sm btn-outline-danger" do %>
-                <i class="fa fa-cog me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
-                <span>Buat Manual IK</span>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <ul class="list mb-0">
+          <li>OPD : <%= sasaran.user.opd.nama_opd %></li>
+          <li>ASN : <%= sasaran.user.nama %></li>
+          <li>NIP : <%= sasaran.user.nik %></li>
+          <hr />
+          <li>Rencana Kinerja : <span class="text-gray-900"><%= sasaran.sasaran_kinerja %></span></li>
+          <li>Tahun : <%= sasaran.tahun %></li>
+          <% sasaran.indikator_sasarans.each do |indikator| %>
+            <li>Indikator Kinerja : <%= indikator.indikator_kinerja %></li>
+            <li>Target Indikator Kinerja: <%= indikator.target %> <%= indikator.satuan %></li>
+            <li class="fw-bolder">Manual IK:
+              <% if indikator.manual_ik.present? %>
+                <%= link_to edit_indikator_sasaran_manual_ik_path(indikator, indikator.manual_ik),
+                            class: "m-3 btn btn-sm btn-outline-info" do %>
+                  <i class="fa fa-edit me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+                  <span>Edit Manual IK</span>
+                <% end %>
+                <li>Data Output:
+                  <ul>
+                    <% indikator.manual_ik.output_data.each do |data| %>
+                      <li><%= data.titleize %></li>
+                    <% end %>
+                  </ul>
+                </li>
+              <% else %>
+                <%= link_to new_indikator_sasaran_manual_ik_path(indikator),
+                            class: "m-3 btn btn-sm btn-outline-danger" do %>
+                  <i class="fa fa-cog me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+                  <span>Buat Manual IK</span>
+                <% end %>
               <% end %>
-            <% end %>
-          </li>
-        <% end %>
-      </ul>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
     </div>
   </div>
 </div>

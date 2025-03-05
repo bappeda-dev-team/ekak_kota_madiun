@@ -1,8 +1,7 @@
 <%= content_for :html_title, "Rencana Kinerja" %>
 <%= content_for :navigation do %>
   <li class="breadcrumb-item" aria-current="page">Rencana Kinerja</li>
-  <li class="breadcrumb-item" aria-current="page"><%= @sasaran.user %></li>
-  <li class="breadcrumb-item active" aria-current="page"><%= @sasaran %></li>
+  <li class="breadcrumb-item active" aria-current="page">Input Rincian</li>
 <% end %>
 <% content_for :view_utama do %>
   <div class="rekin-card px-3">
@@ -20,22 +19,39 @@
             </div>
           <% end %>
         </div>
-        <hr />
       </div>
     </div>
-    <!-- SECTION - render anggaran here -->
+    <!-- SECTION - incomplete sasaran -->
     <% unless @sasaran.tahapans.any? %>
-      <%= render 'rencana_aksi_card', sasaran: @sasaran %>
+      <div class="card border border-danger mb-3">
+        <div class="card-body border-danger">
+          <h4 class="alert alert-danger">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            Rencana Kinerja Belum lengkap
+          </h4>
+          <h5>Kekurangan: </h5>
+          <ol class="">
+            <% if !@sasaran.manual_ik? %>
+              <li>Manual IK</li>
+              <li>Rencana Aksi</li>
+            <% else %>
+              <li>Rencana Aksi</li>
+            <% end %>
+          </ol>
+        </div>
+      </div>
+      <%= render 'rencana_kinerja_card', sasaran: @sasaran, complete: false %>
+      <%= render 'tahapans/renaksi_card', sasaran: @sasaran, complete: false %>
     <% else %>
-      <!-- SECTION - musrenbang -->
+      <!-- SECTION - complete sasaran -->
       <% if @sasaran.wajib_manrisk %>
         <%= render(UsulanCardComponent.new(sasaran: @sasaran, jenis: 'musrenbang')) %>
         <%= render(UsulanCardComponent.new(sasaran: @sasaran, jenis: 'pokpir')) %>
         <%= render(UsulanCardComponent.new(sasaran: @sasaran, jenis: 'mandatori')) %>
         <%= render(UsulanCardComponent.new(sasaran: @sasaran, jenis: 'inovasi')) %>
         <%= render 'subkegiatan_card', sasaran: @sasaran, tahun: @tahun %>
-        <%= render 'rincians/renaksi', sasaran: @sasaran %>
-        <%= render 'tahapans/renaksi_card', sasaran: @sasaran %>
+        <%= render 'rencana_kinerja_card', sasaran: @sasaran, complete: true %>
+        <%= render 'tahapans/renaksi_card', sasaran: @sasaran, complete: true %>
         <%= render 'rincians/rincian_card', sasaran: @sasaran %>
         <%= render 'permasalahans/permasalahan_card', sasaran: @sasaran %>
         <%= render 'dasar_hukums/dasar_hukum_card', sasaran: @sasaran %>
@@ -44,10 +60,15 @@
         <%= render 'hasil_output_card', sasaran: @sasaran %>
         <%= render 'hasil_output_inovasi_card', sasaran: @sasaran %>
       <% else %>
-        <%= render 'rincians/renaksi', sasaran: @sasaran %>
+        <%= render 'rencana_kinerja_card', sasaran: @sasaran %>
+        <%= render 'tahapans/renaksi_card', sasaran: @sasaran %>
       <% end %>
     <% end %>
-    <!-- SECTION - Modal-->
+    <!-- SECTION - Kembali-->
     <%= render 'aksis/modal_target' %>
+    <%= link_to sasarans_path, class: 'btn btn-info w-100 text-white mb-5' do %>
+      <span class="fas fa-arrow-left"></span>
+      <span>Kembali ke Rencana Kinerja</span>
+    <% end %>
   </div>
 <% end %>

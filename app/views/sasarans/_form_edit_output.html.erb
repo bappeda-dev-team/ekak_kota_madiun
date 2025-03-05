@@ -24,7 +24,7 @@
     <%= form.text_area :nama_output, {class: "form-control",  placeholder: 'tuliskan nama perda / perwal / SK', value: form.object.nama_output_sasaran} %>
   </div>
   <div class="actions d-grid gap-3">
-    <%= form.submit %>
+    <%= form.submit "Simpan perubahan" %>
     <button type="button" class="btn btn-danger w-100" aria-label="Close" data-action="editable-table#closeForm">Batal</button>
   </div>
 <% end %>

@@ -3,7 +3,7 @@
     <div class="row align-items-center">
       <div class="row align-items-center">
         <div class="col">
-          <h5>Usulan <%= title %></h5>
+          <h5>Usulan <%= new_name %></h5>
         </div>
       </div>
     </div>
@@ -18,7 +18,7 @@
         <%= form.hidden_field :opd_id, value: @sasaran&.opd&.id  %>
         <%= form.select :usulan_id, [], {include_blank: true},
          {id: "#{@jenis}_dropdown",
-          data: { "placeholder": "Pilih #{title}",
+          data: { "placeholder": "Pilih #{new_name}",
             controller: 'dropdown',
             dropdown_jenis_value: 'extra',
             dropdown_kode_value: @sasaran.id,
@@ -27,7 +27,7 @@
          }} %>
       </div>
       <div class="actions">
-        <%= form.submit %>
+        <%= form.submit "Simpan Usulan #{new_name}" %>
       </div>
     <% end %>
   </div>

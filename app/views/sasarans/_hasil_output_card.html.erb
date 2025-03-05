@@ -4,7 +4,7 @@
       <div class="row align-items-center">
         <div class="col">
           <h4 class="card-title">
-            Hasil Output Sasaran
+            Hasil Output Rencana Kinerja
             <span class="ms-2"><%= sesuai?(sasaran.output_terisi?) %></span>
           </h4>
         </div>
@@ -43,7 +43,9 @@
           <%= f.text_area :nama_output, {class: "form-control",  placeholder: 'tuliskan nama perda / perwal / SK', value: f.object.nama_output_sasaran} %>
         </div>
         <div class="actions">
-          <%= f.submit %>
+          <%= f.submit "Simpan Hasil Output Rencana Kinerja",
+              name: 'simpan',
+              class: 'btn btn-outline-primary' %>
         </div>
       <% end %>
     </div>

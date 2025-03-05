@@ -52,6 +52,14 @@ class UsulanCardComponent < ViewComponent::Base
     dom_id(@sasaran, @jenis)
   end
 
+  def new_name
+    if title == 'Inisiatif'
+      'Program Unggulan'
+    else
+      title
+    end
+  end
+
   def data_form_ajax
     {
       controller: 'form-ajax',
