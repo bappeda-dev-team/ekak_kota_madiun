@@ -155,7 +155,7 @@ export default class extends ApplicationController {
       if (target != null && typeof target != "undefined") {
         if (event.params.type == "append") {
           target.insertAdjacentHTML("afterend", html_content);
-          this.animateBackground(target.lastElementChild);
+          this.animateBackground(target);
         } else if (event.params.type == "prepend") {
           target.insertAdjacentHTML("beforeend", html_content);
           this.animateBackground(target.lastElementChild);

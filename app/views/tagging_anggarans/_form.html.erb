@@ -1,0 +1,30 @@
+<%= form_with(model: tagging_anggaran, local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: dom_id(@anggaran, 'tagging'),
+                form_ajax_type_param: 'afterbegin',
+                action: 'ajax:complete->form-ajax#processAjax'
+              }
+) do |form| %>
+  <% if tagging_anggaran.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(tagging_anggaran.errors.count, "error") %> prohibited this tagging_anggaran from being saved:</h2>
+
+      <ul>
+        <% tagging_anggaran.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.hidden_field :anggaran_id %>
+    <%= form.label :tagging, class: 'form-label' %>
+    <%= form.text_field :tagging, class: 'form-control' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

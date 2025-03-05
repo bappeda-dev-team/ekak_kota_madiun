@@ -3973,6 +3973,38 @@ ALTER SEQUENCE public.sumber_danas_id_seq OWNED BY public.sumber_danas.id;
 
 
 --
+-- Name: tagging_anggarans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.tagging_anggarans (
+    id bigint NOT NULL,
+    tagging character varying,
+    anggaran_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: tagging_anggarans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.tagging_anggarans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: tagging_anggarans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.tagging_anggarans_id_seq OWNED BY public.tagging_anggarans.id;
+
+
+--
 -- Name: tahapans; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -5121,6 +5153,13 @@ ALTER TABLE ONLY public.sumber_danas ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: tagging_anggarans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tagging_anggarans ALTER COLUMN id SET DEFAULT nextval('public.tagging_anggarans_id_seq'::regclass);
+
+
+--
 -- Name: tahapans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -6005,6 +6044,14 @@ ALTER TABLE ONLY public.sumber_danas
 
 
 --
+-- Name: tagging_anggarans tagging_anggarans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tagging_anggarans
+    ADD CONSTRAINT tagging_anggarans_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: tahapans tahapans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -6703,6 +6750,13 @@ CREATE INDEX index_subdomains_on_domain_id ON public.subdomains USING btree (dom
 
 
 --
+-- Name: index_tagging_anggarans_on_anggaran_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_tagging_anggarans_on_anggaran_id ON public.tagging_anggarans USING btree (anggaran_id);
+
+
+--
 -- Name: index_tahapans_on_id_rencana_aksi; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -6951,6 +7005,14 @@ ALTER TABLE ONLY public.realisasis
 
 ALTER TABLE ONLY public.inovasis
     ADD CONSTRAINT fk_rails_403c3ae73c FOREIGN KEY (misi_id) REFERENCES public.misis(id);
+
+
+--
+-- Name: tagging_anggarans fk_rails_47705c89b8; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.tagging_anggarans
+    ADD CONSTRAINT fk_rails_47705c89b8 FOREIGN KEY (anggaran_id) REFERENCES public.anggarans(id);
 
 
 --
@@ -7547,6 +7609,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250223043814'),
 ('20250223070255'),
 ('20250223194503'),
-('20250228024215');
+('20250228024215'),
+('20250304054051');
 
 

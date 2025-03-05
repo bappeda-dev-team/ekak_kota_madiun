@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Tagging:</strong>
+  <%= @tagging_anggaran.tagging %>
+</p>
+
+<p>
+  <strong>Anggaran:</strong>
+  <%= @tagging_anggaran.anggaran_id_id %>
+</p>
+
+<%= link_to 'Edit', edit_tagging_anggaran_path(@tagging_anggaran) %> |
+<%= link_to 'Back', tagging_anggarans_path %>

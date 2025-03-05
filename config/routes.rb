@@ -635,6 +635,9 @@ Rails.application.routes.draw do
         get :edit_lain_lain
       end
     end
+    member do
+      resources :tagging_anggarans, only: %i[new create destroy]
+    end
   end
 
   resources :perhitungans, shallow: true do

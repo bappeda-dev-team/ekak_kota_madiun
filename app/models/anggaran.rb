@@ -35,6 +35,7 @@ class Anggaran < ApplicationRecord
 
   belongs_to :tahapan
   has_one :sasaran, through: :tahapan
+  has_many :tagging_anggarans, dependent: :destroy
   has_many :perhitungans, dependent: :destroy
   # child untuk memanggil id isian bawahnya
   has_many :childs, class_name: 'Anggaran', foreign_key: 'parent_id'

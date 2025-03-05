@@ -101,9 +101,25 @@
                   <% anggarans.each do |anggaran| %>
                     <tr class="level-0 <%= 'higlighted' if anggaran.pagu_rankir_1.present? %>" data-controller="editable-table" >
                       <td><%= rekening_anggaran(anggaran.kode_rek) %> </td>
-                      <td class="mx-auto">
-                        <div class="row">
-                          <div class="text-wrap inline col"><%= anggaran.uraian %></div>
+                      <td class="text-wrap">
+                        <%= anggaran.uraian %>
+
+                        <div class="d-flex align-items-center gap-2 mt-5">
+                          <%= link_to new_tagging_anggaran_path(anggaran),
+                                      remote: true,
+                                      data: {
+                                        controller: 'form-modal',
+                                        action: 'ajax:complete->form-modal#success:prevent',
+                                        bs_toggle: 'modal',
+                                        bs_target: '#form-modal'
+                                      },
+                                      class: 'btn btn-sm btn-outline-primary' do %>
+                            <i class="fas fa-plus me-2"></i>
+                            <span>tagging</span>
+                          <% end %>
+                          <div class="selected-tags d-flex flex-wrap gap-1" id="<%= dom_id(anggaran, 'tagging') %>">
+                            <%= render collection: anggaran.tagging_anggarans, partial: 'tagging_anggarans/tagging_anggaran', as: :tagging_anggaran  %>
+                          </div>
                         </div>
                       </td>
                       <td class="text-end pe-2" data-editable-table-target="penetapan" width="170">Rp. <%= number_with_delimiter(anggaran.anggaran_penetapan) %></td>

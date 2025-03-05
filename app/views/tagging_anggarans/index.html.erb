@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Tagging Anggarans</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tagging</th>
+      <th>Anggaran</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tagging_anggarans.each do |tagging_anggaran| %>
+      <tr>
+        <td><%= tagging_anggaran.tagging %></td>
+        <td><%= tagging_anggaran.anggaran_id_id %></td>
+        <td><%= link_to 'Show', tagging_anggaran %></td>
+        <td><%= link_to 'Edit', edit_tagging_anggaran_path(tagging_anggaran) %></td>
+        <td><%= link_to 'Destroy', tagging_anggaran, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tagging Anggaran', new_tagging_anggaran_path %>
