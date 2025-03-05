@@ -119,4 +119,17 @@ module SasaransHelper
   def strategi_valid_style(strategi)
     strategi.include?('dihapus') || strategi == 'Kosong' ? 'text-danger' : 'text-success'
   end
+
+  def strategi_style(role_strategi)
+    case role_strategi
+    when 'eselon_2'
+      'text-strategic'
+    when 'eselon_3' || 'eselon_2b'
+      'text-tactical'
+    when 'eselon_4'
+      'text-operational'
+    else
+      ''
+    end
+  end
 end

@@ -1,20 +1,33 @@
-<div class="card border-2 shadow mb-3" id="<%= dom_id(sasaran, 'rincian') %>">
-  <div class="card-body">
-    <div class="row align-items-center mb-3">
-      <div class="col-8">
-        <span class="fs-5 fw-bold mb-0">Rencana Aksi</span>
-        <span class="ms-2"><%= target_sesuai?(sasaran.target_sesuai?) %></span>
+<div class="card border-2 shadow mb-3" id="<%= dom_id(sasaran, 'tahapan') %>">
+  <div class="card-header">
+    <h4 class="card-title">
+      Rencana Aksi
+      <span class="ms-2"><%= target_sesuai?(sasaran.target_sesuai?) %></span>
+    </h4>
+    <% unless diajukan? %>
+      <div class="d-flex gap-4">
+        <%= link_to new_sasaran_tahapan_path(sasaran),
+                    remote: true,
+                    class: 'btn btn-primary',
+                    data: {
+                      controller: 'form-modal',
+                      action: 'form-modal#appendForm',
+                      form_modal_location_param: 'form-modal-body',
+                      bs_target: '#form-modal',
+                      bs_toggle: 'modal'
+                    } do %>
+          <span>Tambah Tahapan</span>
+        <% end %>
+        <div class="fix-jumlah">
+          <%= link_to 'Fix Jumlah Target',renaksi_update_path(id: sasaran.id),
+                      remote: true,
+                      method: :post,
+                      class: 'btn btn-warning' %>
+        </div>
       </div>
-      <% unless diajukan? %>
-        <div class="col text-end">
-          <%= button_to 'Fix Jumlah Target', renaksi_update_path, remote: true, method: :post, class: 'btn btn-sm btn-primary', params: {id: sasaran.id} %>
-        </div>
-        <div class="col text-end">
-          <%= link_to 'Tambah Tahapan', new_sasaran_tahapan_path(sasaran) ,remote: true,
-                      data: { 'bs-toggle': 'modal', 'bs-target': '#form-modal' },  class: "btn btn-sm btn-info" %>
-        </div>
-      <% end %>
-    </div>
+    <% end %>
+  </div>
+  <div class="card-body">
     <div class="table-responsive">
       <table class="table table-bordered table-sm align-items-center counter">
         <caption class="waktu-renaksi">
