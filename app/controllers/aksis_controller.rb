@@ -1,6 +1,7 @@
 class AksisController < ApplicationController
   before_action :set_sasaran
   before_action :set_aksi, only: %i[show edit update destroy]
+  layout false, only: %i[edit new]
 
   # GET /aksis or /aksis.json
   def index
@@ -13,8 +14,10 @@ class AksisController < ApplicationController
   # GET /aksis/new
   def new
     # @aksi = Aksi.new
-    @aksi = @tahapan.aksis.build
     @bulan = params[:bulan]
+    id_aksi_bulan = SecureRandom.base36(6)
+    @aksi = @tahapan.aksis.build(bulan: @bulan,
+                                 id_aksi_bulan: id_aksi_bulan)
   end
 
   # GET /aksis/1/edit
@@ -25,19 +28,24 @@ class AksisController < ApplicationController
 
   # POST /aksis or /aksis.json
   def create
-    @aksi = @tahapan.aksis.build(aksi_params)
-    @aksi.id_aksi_bulan = SecureRandom.base36(6)
-    respond_to do |format|
-      if @aksi.save
-        flash[:success] = "Sukses menambah target"
-        format.js { render 'update.js.erb' }
-        format.html { redirect_to sasaran_path(@sasaran), success: 'Sukses menambah target' }
-        format.json { render :show, status: :created, location: @aksi }
-      else
-        flash[:error] = "Terjadi kesalahan"
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @aksi.errors, status: :unprocessable_entity }
-      end
+    @bulan = aksi_params[:bulan]
+    @aksi = Aksi.new(aksi_params)
+    if @aksi.save
+      render json: { resText: "Target berhasil ditambahkan.",
+                     html_content: html_content({ sasaran: @sasaran,
+                                                  tahapan: @tahapan,
+                                                  aksi: @aksi,
+                                                  bulan: @bulan },
+                                                partial: 'aksis/aksi') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ sasaran: @sasaran,
+                                                   tahapan: @tahapan,
+                                                   aksi: @aksi,
+                                                   bulan: @bulan },
+                                                 partial: 'aksis/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
@@ -78,6 +86,7 @@ class AksisController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def aksi_params
-    params.require(:aksi).permit(:target, :realisasi, :bulan, :tahapan_id)
+    params.require(:aksi).permit(:target, :bulan,
+                                 :id_rencana_aksi, :id_aksi_bulan)
   end
 end

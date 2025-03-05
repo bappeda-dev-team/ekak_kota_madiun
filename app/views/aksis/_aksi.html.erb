@@ -1,0 +1,13 @@
+<td class='fw-bolder text-dark border' id="<%= id_aksi(tahapan, bulan) %>">
+  <%= link_to edit_sasaran_tahapan_aksi_path(sasaran, tahapan,
+                                             aksi, bulan: bulan),
+              remote: true,
+              data: {
+                controller: 'form-modal',
+                action: 'form-modal#appendForm',
+                form_modal_location_param: 'form-modal-body',
+                bs_target: '#form-modal',
+                bs_toggle: 'modal'} do%>
+    <%= aksi.target %>
+  <% end %>
+</td>

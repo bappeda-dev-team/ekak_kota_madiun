@@ -8,15 +8,8 @@ module AksisHelper
     end
   end
 
-  def realisasi_di_bulan(sasaran, tahapan, bulan)
-    aksi = tahapan.aksis.find_by(bulan: bulan)
-    if aksi
-      return realisasi_dengan_isi(sasaran, tahapan, aksi, bulan) if aksi.realisasi
-
-      return realisasi_tanpa_isi(sasaran, tahapan, aksi, bulan)
-
-    end
-    "<td class='fw-bolder text-gray-500 border'></td>".html_safe
+  def id_aksi(tahapan, bulan)
+    dom_id(tahapan, "aksi-#{bulan}")
   end
 
   private
@@ -28,40 +21,40 @@ module AksisHelper
   end
 
   def target_tanpa_bulan(sasaran, tahapan, bulan, disabled)
-    "<td class='fw-bolder text-dark border'>
+    "<td class='fw-bolder text-dark border' id='#{id_aksi(tahapan, bulan)}'>
       #{ if disabled
            '-'
          else
            link_to('+', new_sasaran_tahapan_aksi_path(sasaran, tahapan, bulan: bulan),
-                   remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-aksi-target' })
+                   remote: true,
+                   data: {
+                     controller: 'form-modal',
+                     action: 'form-modal#appendForm',
+                     form_modal_location_param: 'form-modal-body',
+                     bs_target: '#form-modal',
+                     bs_toggle: 'modal'
+                   })
          end
       }
     </td>".html_safe
   end
 
   def target_dengan_bulan(sasaran, tahapan, aksi, bulan, disabled)
-    "<td class='fw-bolder text-gray-500 border'>
+    "<td class='fw-bolder text-gray-500 border' id='#{id_aksi(tahapan, bulan)}'>
       #{ if disabled
            aksi.target
          else
            link_to(aksi.target, edit_sasaran_tahapan_aksi_path(sasaran, tahapan, aksi.id, bulan: bulan),
-                   remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-aksi-target' })
+                   remote: true,
+                   data: {
+                     controller: 'form-modal',
+                     action: 'form-modal#appendForm',
+                     form_modal_location_param: 'form-modal-body',
+                     bs_target: '#form-modal',
+                     bs_toggle: 'modal'
+                   })
          end
       }
-    </td>".html_safe
-  end
-
-  def realisasi_tanpa_isi(sasaran, tahapan, aksi, bulan)
-    "<td class='fw-bolder text-gray-500 border'>
-      #{link_to('+', edit_sasaran_tahapan_aksi_path(sasaran, tahapan, aksi.id, bulan: bulan, type: 'realisasi'),
-                remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-aksi-realisasi' })}
-    </td>".html_safe
-  end
-
-  def realisasi_dengan_isi(sasaran, tahapan, aksi, bulan)
-    "<td class='fw-bolder text-gray-500 border'>
-      #{link_to(aksi.realisasi, edit_sasaran_tahapan_aksi_path(sasaran, tahapan, aksi.id, bulan: bulan, type: 'realisasi'),
-                remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-aksi-realisasi' })}
     </td>".html_safe
   end
 

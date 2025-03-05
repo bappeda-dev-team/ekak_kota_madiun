@@ -192,7 +192,7 @@ class Sasaran < ApplicationRecord
   end
 
   def total_realisasi_aksi_bulan
-    tahapans.map { |t| t.aksis.group(:bulan).sum(:realisasi) }.inject do |bln, val|
+    tahapans.map { |t| t.aksis.uniq(:bulan).group(:bulan).sum(:realisasi) }.inject do |bln, val|
       bln.merge(val) do |_k, old_v, new_v|
         old_v + new_v
       end
@@ -244,7 +244,7 @@ class Sasaran < ApplicationRecord
   end
 
   def jumlah_target
-    tahapans.sum(:jumlah_target).nonzero? || '-'
+    tahapans.sum(:jumlah_target).nonzero? || 0
   end
 
   def target_sesuai?

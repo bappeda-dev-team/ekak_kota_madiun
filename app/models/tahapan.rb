@@ -46,6 +46,7 @@ class Tahapan < ApplicationRecord
   end
 
   def sync_total_renaksi
+    aksi_bulan_fixer
     self.jumlah_target = 0 if id_rencana_aksi.nil?
     self.id_rencana_aksi = SecureRandom.base36(6) if id_rencana_aksi.nil?
     save
@@ -166,5 +167,18 @@ class Tahapan < ApplicationRecord
 
   def rekening_anggaran
     anggarans.includes(:rekening)
+  end
+
+  private
+
+  # def double_aksi_bulan?(bulan)
+  #   aksis.where(bulan: bulan).size > 1
+  # end
+
+  def aksi_bulan_fixer
+    aksis.group(:bulan).having('COUNT(*) > 1').pluck(:bulan).each do |bulan|
+      redundant_aksis = aksis.where(bulan: bulan).order(:created_at).offset(1)
+      redundant_aksis.destroy_all
+    end
   end
 end

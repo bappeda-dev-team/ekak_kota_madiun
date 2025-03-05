@@ -32,8 +32,25 @@ class Aksi < ApplicationRecord
   after_destroy  :update_waktu
   # after_destroy  :update_progress
 
+  validate :target_cannot_exceed_max
   validates :target, presence: true, numericality: { only_integer: true }
+  validates :id_rencana_aksi, uniqueness: { scope: :bulan,
+                                            message: "sudah terdapat target pada bulan ini." }
   # validates :realisasi, numericality: { only_integer: true }
+  MAX = 100
+
+  def target_cannot_exceed_max
+    return false if tahapan.nil? || tahapan.sasaran.nil?
+
+    total_target_rekin = tahapan.sasaran.jumlah_target
+
+    return unless total_target_rekin + target.to_i > MAX
+
+    sisa_point = MAX - total_target_rekin
+
+    errors.add(:target, "melebihi batas maksimal (#{MAX}). Sisa target: #{sisa_point}")
+  end
+
   def sync_total
     self.id_aksi_bulan = SecureRandom.base36(6) if id_aksi_bulan.nil?
     save

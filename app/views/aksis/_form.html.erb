@@ -1,7 +1,14 @@
-<%= form_with(model: [@sasaran, @tahapan, aksi], local: true) do |form| %>
+<%= form_with(model: [sasaran, tahapan, aksi ], local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: dom_id(tahapan, "aksi-#{bulan}"),
+                form_ajax_type_param: 'total_replace',
+                action: 'ajax:complete->form-ajax#processAjax'
+              }
+) do |form| %>
   <% if aksi.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(aksi.errors.count, "error") %> prohibited this aksi from being saved:</h2>
+      <h4>Terdapat <%= aksi.errors.count %> kesalahan</h4>
       <ul>
         <% aksi.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,18 +17,20 @@
     </div>
   <% end %>
   <div class="field">
-    <%= form.label :target %>
-    <%= form.number_field :target %>
+    <p class="form-label">Bulan</p>
+    <%= form.hidden_field :id_rencana_aksi %>
+    <%= form.hidden_field :id_aksi_bulan %>
+    <%= form.number_field :bulan, class: 'form-control disabled', readonly: true %>
   </div>
   <div class="field">
-    <%= form.label :realisasi %>
-    <%= form.number_field :realisasi %>
+    <p class="form-label">Renaksi</p>
+    <p class="form-control fw-bolder disabled"><%= tahapan %></p>
   </div>
   <div class="field">
-    <%= form.label :bulan %>
-    <%= form.number_field :bulan , within: 1..12, :value => @bulan, readonly: true %>
+    <%= form.label :target , {class: "form-label"} %>
+    <%= form.number_field :target , {class: "form-control ", max: 100} %>
   </div>
-  <div class="actions">
+  <div class="action">
     <%= form.submit %>
   </div>
 <% end %>
