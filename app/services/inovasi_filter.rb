@@ -11,9 +11,9 @@ class InovasiFilter
 
   def results
     filter_by_tahun
-    filter_by_opd
     filter_by_manfaat
     filter_by_misi_id
+    filter_by_opd
     @scope
   end
 
@@ -33,20 +33,31 @@ class InovasiFilter
     @params[:opd] == '4.01.0.00.0.00.01.0000'
   end
 
+  def list_kode_setda
+    [
+      '4.01.0.00.0.00.01.0000',
+      '4.01.0.00.0.00.01.0001',
+      '4.01.0.00.0.00.01.0002',
+      '4.01.0.00.0.00.01.0003',
+      '4.01.0.00.0.00.01.0004',
+      '4.01.0.00.0.00.01.0005',
+      '4.01.0.00.0.00.01.0006',
+      '4.01.0.00.0.00.01.0007'
+    ]
+  end
+
   def filter_by_opd
     return if @params[:opd].blank? || kode_kota?
 
     kode_opd = if kode_setda?
-                 '4.01.0.00.0.00.01.%' # dynamic pattern
+                 list_kode_setda
                else
-                 @params[:opd]
+                 [@params[:opd]]
                end
 
-    operator = kode_opd.include?('%') ? 'LIKE' : '='
-
-    @scope = @scope.where("inovasis.opd #{operator} :kode_opd OR inovasis.id IN (
-                          SELECT kolabable_id FROM kolabs WHERE kolabable_type = 'Inovasi' AND kode_unik_opd #{operator} :kode_opd)",
-                          kode_opd: kode_opd)
+    @scope = @scope.select do |inovasi|
+      inovasi.get_kolaborator(kode_opd)
+    end
   end
 
   def filter_by_manfaat
