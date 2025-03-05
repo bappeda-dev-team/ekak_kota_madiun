@@ -44,9 +44,8 @@ class InovasiFilter
 
     operator = kode_opd.include?('%') ? 'LIKE' : '='
 
-    @scope = @scope.left_outer_joins(:kolabs)
-                   .where("inovasis.opd #{operator} :kode_opd OR
-                           kolabs.kode_unik_opd #{operator} :kode_opd",
+    @scope = @scope.where("inovasis.opd #{operator} :kode_opd OR inovasis.id IN (
+                          SELECT kolabable_id FROM kolabs WHERE kolabable_type = 'Inovasi' AND kode_unik_opd #{operator} :kode_opd)",
                           kode_opd: kode_opd)
   end
 
