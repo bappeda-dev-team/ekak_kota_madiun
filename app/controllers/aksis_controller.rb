@@ -51,15 +51,24 @@ class AksisController < ApplicationController
 
   # PATCH/PUT /aksis/1 or /aksis/1.json
   def update
-    @aksi.id_aksi_bulan = SecureRandom.base36(6) if @aksi.id_aksi_bulan.nil?
-    respond_to do |format|
-      if @aksi.update(aksi_params)
-        format.html { redirect_to sasaran_path(@sasaran), success: 'Aksi was successfully updated.' }
-        format.json { render :show, status: :ok, location: @aksi }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @aksi.errors, status: :unprocessable_entity }
-      end
+    @bulan = @aksi.bulan
+    # @aksi.id_aksi_bulan = SecureRandom.base36(6) if @aksi.id_aksi_bulan.nil?
+    if @aksi.update(aksi_params)
+      render json: { resText: "Target berhasil ditambahkan.",
+                     html_content: html_content({ sasaran: @sasaran,
+                                                  tahapan: @tahapan,
+                                                  aksi: @aksi,
+                                                  bulan: @bulan },
+                                                partial: 'aksis/aksi') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ sasaran: @sasaran,
+                                                   tahapan: @tahapan,
+                                                   aksi: @aksi,
+                                                   bulan: @bulan },
+                                                 partial: 'aksis/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
@@ -81,7 +90,7 @@ class AksisController < ApplicationController
   end
 
   def set_aksi
-    @aksi = @tahapan.aksis.find(params[:id])
+    @aksi = Aksi.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

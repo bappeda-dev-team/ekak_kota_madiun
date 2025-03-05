@@ -39,10 +39,15 @@ class Aksi < ApplicationRecord
   # validates :realisasi, numericality: { only_integer: true }
   MAX = 100
 
+  def to_s
+    target.to_s
+  end
+
   def target_cannot_exceed_max
     return false if tahapan.nil? || tahapan.sasaran.nil?
 
-    total_target_rekin = tahapan.sasaran.jumlah_target
+    sasaran = tahapan.sasaran
+    total_target_rekin = sasaran.cek_jumlah_target(id)
 
     return unless total_target_rekin + target.to_i > MAX
 

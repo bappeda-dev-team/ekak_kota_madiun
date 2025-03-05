@@ -247,6 +247,11 @@ class Sasaran < ApplicationRecord
     tahapans.sum(:jumlah_target).nonzero? || 0
   end
 
+  def cek_jumlah_target(aksi_id)
+    tahapans.flat_map { |t| t.aksis.where.not(id: aksi_id).pluck(:target) }
+            .sum
+  end
+
   def target_sesuai?
     jumlah_target.to_i == 100
   rescue NoMethodError

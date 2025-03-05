@@ -1,11 +1,6 @@
 module AksisHelper
   def aksi_di_bulan(sasaran, tahapan, bulan, disabled: false)
-    aksi = tahapan.aksis.find_by(bulan: bulan)
-    if aksi
-      target_dengan_bulan(sasaran, tahapan, aksi, bulan, disabled)
-    else
-      target_tanpa_bulan(sasaran, tahapan, bulan, disabled)
-    end
+    target_tanpa_bulan(sasaran, tahapan, bulan, disabled)
   end
 
   def id_aksi(tahapan, bulan)
@@ -20,41 +15,38 @@ module AksisHelper
     </td>".html_safe
   end
 
-  def target_tanpa_bulan(sasaran, tahapan, bulan, disabled)
-    "<td class='fw-bolder text-dark border' id='#{id_aksi(tahapan, bulan)}'>
-      #{ if disabled
-           '-'
-         else
-           link_to('+', new_sasaran_tahapan_aksi_path(sasaran, tahapan, bulan: bulan),
-                   remote: true,
-                   data: {
-                     controller: 'form-modal',
-                     action: 'form-modal#appendForm',
-                     form_modal_location_param: 'form-modal-body',
-                     bs_target: '#form-modal',
-                     bs_toggle: 'modal'
-                   })
-         end
-      }
-    </td>".html_safe
+  def target_link(sasaran, tahapan, bulan, aksi = nil)
+    target = aksi.nil? ? '+' : aksi.to_s
+    link = if aksi.nil?
+             new_sasaran_tahapan_aksi_path(sasaran, tahapan,
+                                           bulan: bulan)
+           else
+             edit_sasaran_tahapan_aksi_path(sasaran, tahapan,
+                                            aksi, bulan: bulan)
+           end
+    link_to(link,
+            remote: true,
+            data: {
+              controller: 'form-modal',
+              action: 'form-modal#appendForm',
+              form_modal_location_param: 'form-modal-body',
+              bs_target: '#form-modal',
+              bs_toggle: 'modal'
+            }) do
+      target
+    end
   end
 
-  def target_dengan_bulan(sasaran, tahapan, aksi, bulan, disabled)
+  def target_tanpa_bulan(sasaran, tahapan, bulan, _disabled)
+    aksi = tahapan.aksis.find_by(bulan: bulan)
+    "<td class='fw-bolder text-dark border' id='#{id_aksi(tahapan, bulan)}'>
+       #{target_link(sasaran, tahapan, bulan, aksi)}
+     </td>".html_safe
+  end
+
+  def target_dengan_bulan(sasaran, tahapan, aksi, bulan, _disabled)
     "<td class='fw-bolder text-gray-500 border' id='#{id_aksi(tahapan, bulan)}'>
-      #{ if disabled
-           aksi.target
-         else
-           link_to(aksi.target, edit_sasaran_tahapan_aksi_path(sasaran, tahapan, aksi.id, bulan: bulan),
-                   remote: true,
-                   data: {
-                     controller: 'form-modal',
-                     action: 'form-modal#appendForm',
-                     form_modal_location_param: 'form-modal-body',
-                     bs_target: '#form-modal',
-                     bs_toggle: 'modal'
-                   })
-         end
-      }
+      #{target_link(sasaran, tahapan, bulan, aksi)}
     </td>".html_safe
   end
 
