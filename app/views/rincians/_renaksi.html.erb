@@ -17,8 +17,16 @@
         <li>OPD : <%= sasaran.user.opd.nama_opd %></li>
         <li>ASN : <%= sasaran.user.nama %></li>
         <li>NIP : <%= sasaran.user.nik %></li>
-        <li>Pohon Kinerja : <span class="<%= strategi_style(sasaran.role_strategi_sasaran) %>"><%= sasaran.strategi_sasaran %></span> <b class="text-gray-900">(<%= jenis_strategi.titleize %>)</b></li>
-        <li>Rencana Kinerja : <%= sasaran.sasaran_kinerja %></li>
+        <hr />
+        <li>Pohon Kinerja : <span><%= sasaran.strategi_sasaran %></span> <b class="<%= strategi_style(sasaran.role_strategi_sasaran) %>">(<%= jenis_strategi.titleize %>)</b></li>
+        <li>Tahun : <%= sasaran.strategi.tahun %></li>
+        <% sasaran.strategi.indikators.each do |indikator_pokin| %>
+          <li>Indikator Pohon Kinerja : <span><%= indikator_pokin.indikator %></span></li>
+          <li>Target : <span><%= indikator_pokin.target %></span> <span><%= indikator_pokin.satuan %></span></li>
+        <% end %>
+        <li>Keterangan Pohon Kinerja : <span><%= sasaran.strategi.keterangan %></span></li>
+        <hr />
+        <li>Rencana Kinerja : <span class="text-gray-900"><%= sasaran.sasaran_kinerja %></span></li>
         <li>Tahun : <%= sasaran.tahun %></li>
         <% sasaran.indikator_sasarans.each do |indikator| %>
           <li>Indikator Kinerja : <%= indikator.indikator_kinerja %></li>
