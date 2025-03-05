@@ -139,8 +139,18 @@ class Inovasi < ApplicationRecord
   end
 
   def rekin_kolabs(opd_kolab)
-    all_usulans.filter do |usulan|
-      usulan.opd.id == opd_kolab
+    opd = Opd.find(opd_kolab)
+    kode_opd = opd.kode_unik_opd
+    find_bagian = Renstra::OpdKhusus::KODE_BAGIAN_SETDA[kode_opd]
+
+    if find_bagian.present?
+      all_usulans.select do |usulan|
+        usulan.sasaran.user.nama_bidang == find_bagian
+      end
+    else
+      all_usulans.filter do |usulan|
+        usulan.opd.id == opd_kolab
+      end
     end
   end
 

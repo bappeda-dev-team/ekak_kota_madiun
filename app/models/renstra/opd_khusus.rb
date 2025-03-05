@@ -31,4 +31,13 @@ module Renstra::OpdKhusus
     'Bagian Perekonomian dan Kesejahteraan Rakyat': "4401",
     'Bagian Pemerintahan': "4397"
   }.freeze
+
+  KODE_BAGIAN_SETDA = {
+    '4.01.0.00.0.00.01.0001' => 'Bagian Pemerintahan',
+    '4.01.0.00.0.00.01.0002' => 'Bagian Organisasi',
+    '4.01.0.00.0.00.01.0003' => 'Bagian Hukum',
+    '4.01.0.00.0.00.01.0004' => 'Bagian Pengadaan Barang/Jasa dan Administrasi Pembangunan',
+    '4.01.0.00.0.00.01.0005' => 'Bagian Perekonomian dan Kesejahteraan Rakyat',
+    '4.01.0.00.0.00.01.0006' => 'Bagian Umum'
+  }.freeze
 end
