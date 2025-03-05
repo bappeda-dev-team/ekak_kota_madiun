@@ -1,0 +1,11 @@
+<%= form_with(model: [sasaran],
+              local:false,
+              html: { class: 'd-flex flex gap-3' }) do |f| %>
+  <select name="sasaran[sumber_dana]" data-controller="dropdown" data-placeholder="<%= sasaran.sumber_dana || 'Sumber Dana' %>" data-width="25%">
+    <option value=""></option>
+    <% SumberDana.all.each do |sumber_dana| %>
+      <option value='<%= sumber_dana.sumber_dana %>'><%= sumber_dana.sumber_dana %></option>
+    <% end %>
+  </select>
+  <input type="submit" value="<%= sasaran.sumber_dana.nil? ? 'Simpan' : 'Ubah' %>" data-disable-with="memproses.." class="btn btn-sm btn-tertiary ml-3">
+<% end %>

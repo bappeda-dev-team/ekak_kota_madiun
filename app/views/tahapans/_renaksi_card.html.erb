@@ -97,26 +97,7 @@
           </thead>
           <tbody id="<%= dom_id(sasaran, 'tahapan') %>">
             <% sasaran.tahapan_renaksi.each do |tahapan| %>
-              <tr class="<%= tahapan.rtp_mr? && 'tahapan-rtp' %>">
-                <td class="text-gray-900 fw-bolder border-start border-end" scope="row"></td>
-                <td class="text-gray-900 text-wrap"><%= tahapan.tahapan_kerja %> <span class='fw-bolder'><%= tahapan.tagging == "RTP-MR" ? "- [#{tahapan.tagging}]" : '' %></span></td>
-                <td class="fw-bolder text-gray-500 text-center border-end">
-                  <div class="d-grid gap-2">
-                    <%= render(EditButtonComponent.new(path: edit_sasaran_tahapan_path(sasaran, tahapan))) %>
-                    <%= render(DeleteButtonComponent.new(path: sasaran_tahapan_path(sasaran, tahapan),
-                                                         title: "Hapus Tahapan '#{tahapan.tahapan_kerja}'?" )) %>
-                  </div>
-                </td>
-                <% (1..12).each do |bulan| %>
-                  <% unless diajukan? %>
-                    <%= aksi_di_bulan(sasaran, tahapan, bulan) %>
-                  <% else %>
-                    <%= aksi_di_bulan(sasaran, tahapan, bulan, disabled: true) %>
-                  <% end %>
-                <% end %>
-                <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.jumlah_target or '-' %></td>
-                <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.keterangan %></td>
-              </tr>
+              <%= render 'tahapans/tahapan', tahapan: tahapan, sasaran: sasaran %>
             <% end %>
           </tbody>
           <tfoot>

@@ -1,4 +1,11 @@
-<%= form_with(model: [@sasaran, tahapan ], local: false) do |form| %>
+<%= form_with(model: [@sasaran, tahapan ], local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: tahapan.new_record? ? dom_id(@sasaran, 'tahapan') : dom_id(tahapan),
+                form_ajax_type_param: tahapan.new_record? ? 'prepend' : '',
+                action: 'ajax:complete->form-ajax#processAjax'
+              }
+) do |form| %>
   <% if tahapan.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(tahapan.errors.count, "error") %> prohibited this tahapan from being saved:</h2>

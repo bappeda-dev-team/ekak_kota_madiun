@@ -31,42 +31,43 @@ class TahapansController < ApplicationController
     @tahapan = @sasaran.tahapans.build(tahapan_params)
     @tahapan.id_rencana = @sasaran.id_rencana
     @tahapan.id_rencana_aksi = SecureRandom.base36(6)
-    respond_to do |format|
-      if @tahapan.save
-        flash[:success] = "Sukses menambahkan tahapan"
-        format.js { render 'update.js.erb' }
-        format.html { redirect_to sasaran_path(@sasaran) }
-        format.json { render :show, status: :created, location: @tahapan }
-      else
-        flash[:error] = "Terjadi kesalahan"
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @tahapan.errors, status: :unprocessable_entity }
-      end
+    if @tahapan.save
+      render json: { resText: "Renaksi berhasil dibuat.",
+                     html_content: html_content({ sasaran: @sasaran,
+                                                  tahapan: @tahapan },
+                                                partial: 'tahapans/tahapan') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ sasaran: @sasaran,
+                                                   tahapan: @tahapan },
+                                                 partial: 'tahapans/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /tahapans/1 or /tahapans/1.json
   def update
-    respond_to do |format|
-      if @tahapan.update(tahapan_params)
-        flash[:success] = "Edit Tahapan berhasil"
-        format.js
-        format.html { redirect_to sasaran_path(@sasaran), notice: 'Tahapan was successfully updated.' }
-        format.json { render :show, status: :ok, location: @tahapan }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @tahapan.errors, status: :unprocessable_entity }
-      end
+    if @tahapan.update(tahapan_params)
+      render json: { resText: "Renaksi diupdate.",
+                     html_content: html_content({ sasaran: @sasaran,
+                                                  tahapan: @tahapan },
+                                                partial: 'tahapans/tahapan') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ sasaran: @sasaran,
+                                                   tahapan: @tahapan },
+                                                 partial: 'tahapans/form') }.to_json,
+             status: :unprocessable_entity
     end
   end
 
   # DELETE /tahapans/1 or /tahapans/1.json
   def destroy
     @tahapan.destroy
-    respond_to do |format|
-      format.html { redirect_to sasaran_path(@sasaran), notice: 'Tahapan was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    render json: { resText: "Renaksi dihapus." }.to_json,
+           status: :accepted
   end
 
   def otomatis
