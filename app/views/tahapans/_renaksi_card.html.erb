@@ -1,0 +1,100 @@
+<div class="card border-2 shadow mb-3" id="<%= dom_id(sasaran, 'rincian') %>">
+  <div class="card-body">
+    <div class="row align-items-center mb-3">
+      <div class="col-8">
+        <span class="fs-5 fw-bold mb-0">Rencana Aksi</span>
+        <span class="ms-2"><%= target_sesuai?(sasaran.target_sesuai?) %></span>
+      </div>
+      <% unless diajukan? %>
+        <div class="col text-end">
+          <%= button_to 'Fix Jumlah Target', renaksi_update_path, remote: true, method: :post, class: 'btn btn-sm btn-primary', params: {id: sasaran.id} %>
+        </div>
+        <div class="col text-end">
+          <%= link_to 'Tambah Tahapan', new_sasaran_tahapan_path(sasaran) ,remote: true,
+                      data: { 'bs-toggle': 'modal', 'bs-target': '#form-modal' },  class: "btn btn-sm btn-info" %>
+        </div>
+      <% end %>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-bordered table-sm align-items-center counter">
+        <caption class="waktu-renaksi">
+          <strong>Waktu yang dibutuhkan :</strong>
+          <%= waktu = sasaran.waktu_total == 0 ? "-" : sasaran.waktu_total %> bulan
+          <hr>
+          <div class="row">
+            <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
+              <% unless diajukan? %>
+                <div class="col-8 align-middle">
+                  <%= form_with(model: [sasaran], local:false, html: { class: 'd-flex flex gap-3' }) do |f| %>
+                    <select name="sasaran[sumber_dana]" data-controller="dropdown" data-placeholder="<%= sasaran.sumber_dana || 'Sumber Dana' %>" data-width="25%">
+                      <option value=""></option>
+                      <% SumberDana.all.each do |sumber_dana| %>
+                        <option value='<%= sumber_dana.sumber_dana %>'><%= sumber_dana.sumber_dana %></option>
+                      <% end %>
+                    </select>
+                    <input type="submit" value="<%= sasaran.sumber_dana.nil? ? 'Simpan' : 'Ubah' %>" data-disable-with="memproses.." class="btn btn-sm btn-tertiary ml-3">
+                  <% end %>
+                </div>
+              <% else %>
+                <div class="col-8 align-middle">
+                  Sumber Dana: <%= sasaran.sumber_dana %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </caption>
+        <thead class="thead-light">
+          <tr>
+            <th class="border-bottom border-end border-start" scope="col" rowspan="2">No.</th>
+            <th class="border-bottom text-wrap border-end" scope="col" rowspan="2">Tahapan Kerja</th>
+            <th class="border-bottom border-end text-center" scope="col" rowspan="2">Aksi</th>
+            <% (1..12).each do |i| %>
+              <th class="border-bottom border-end text-center" scope="col"><%= i %></th>
+            <% end %>
+            <th class="border-bottom border-end text-center" scope="col">Total</th>
+            <th class="border-bottom border-end text-center" scope="col" rowspan="2">Keterangan</th>
+          </tr>
+          <tr>
+            <% (1..13).each do |item| %>
+              <td class="border border-gray-900 bg-tertiary text-center text-gray-300" scope="col">T</td>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% sasaran.tahapan_renaksi.each do |tahapan| %>
+            <tr class="<%= tahapan.rtp_mr? && 'tahapan-rtp' %>">
+              <td class="text-gray-900 fw-bolder border-start border-end" scope="row"></td>
+              <td class="text-gray-900 text-wrap"><%= tahapan.tahapan_kerja %> <span class='fw-bolder'><%= tahapan.tagging == "RTP-MR" ? "- [#{tahapan.tagging}]" : '' %></span></td>
+              <td class="fw-bolder text-gray-500 text-center border-end">
+                <div class="d-grid gap-2">
+                  <%= render(EditButtonComponent.new(path: edit_sasaran_tahapan_path(sasaran, tahapan))) %>
+                  <%= render(DeleteButtonComponent.new(path: sasaran_tahapan_path(sasaran, tahapan),
+                                                       title: "Hapus Tahapan '#{tahapan.tahapan_kerja}'?" )) %>
+                </div>
+              </td>
+              <% (1..12).each do |bulan| %>
+                <% unless diajukan? %>
+                  <%= aksi_di_bulan(sasaran, tahapan, bulan) %>
+                <% else %>
+                  <%= aksi_di_bulan(sasaran, tahapan, bulan, disabled: true) %>
+                <% end %>
+              <% end %>
+              <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.jumlah_target or '-' %></td>
+              <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.keterangan %></td>
+            </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td class="border-bottom border-start border-end" colspan="3">Total</td>
+            <% (1..12).each do |i| %>
+              <td class="border-bottom border-end text-center"><%= sasaran.total_target_aksi_bulan[i] %></td>
+            <% end %>
+            <td class="border-bottom border-end text-center"><%= sasaran.jumlah_target %></td>
+            <td class="border-bottom border-end" colspan="2"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>

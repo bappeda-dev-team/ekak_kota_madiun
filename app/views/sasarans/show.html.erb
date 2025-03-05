@@ -35,6 +35,7 @@
         <%= render(UsulanCardComponent.new(sasaran: @sasaran, jenis: 'inovasi')) %>
         <%= render 'subkegiatan_card', sasaran: @sasaran, tahun: @tahun %>
         <%= render 'rincians/renaksi', sasaran: @sasaran %>
+        <%= render 'tahapans/renaksi_card', sasaran: @sasaran %>
         <%= render 'rincians/rincian_card', sasaran: @sasaran %>
         <%= render 'permasalahans/permasalahan_card', sasaran: @sasaran %>
         <%= render 'dasar_hukums/dasar_hukum_card', sasaran: @sasaran %>
