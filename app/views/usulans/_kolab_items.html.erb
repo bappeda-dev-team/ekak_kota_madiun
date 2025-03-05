@@ -60,12 +60,12 @@
         </td>
         <% usulans = rekin_kolabs %>
         <% usulan = usulans&.first %>
-        <%= render 'usulans/rekin', usulan: usulan %>
+        <%= render 'usulans/rekin', usulan: usulan, cetak: cetak %>
         <td class="fw-bolder text-center" colspan="2"></td>
       </tr>
       <% usulans.drop(1).each do |usulan| %>
         <tr class="skip rekins" id="<%= dom_id(usulan) %>">
-          <%= render 'usulans/rekin', usulan: usulan %>
+          <%= render 'usulans/rekin', usulan: usulan, cetak: cetak %>
           <td class="fw-bolder text-center" colspan="2"></td>
         </tr>
       <% end %>

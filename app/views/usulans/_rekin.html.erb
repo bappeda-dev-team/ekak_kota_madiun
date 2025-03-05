@@ -5,31 +5,33 @@
 <td class="text-gray-900 text-wrap"><%= usulan&.program_rekin %></td>
 <td class="text-gray-900"><%= number_to_currency(usulan&.pagu_rekin, unit: "Rp. ", separator: ".") %></td>
 <td class="text-gray-900 text-wrap"><%= usulan&.inovasi_rekin %></td>
-<td class="text-wrap">
-  <% if usulan&.sasaran.present? %>
-    <div class="d-grid gap-3">
-      <%= link_to show_pokin_user_sasaran_path(usulan.sasaran), target: "_blank", rel: "nofollow",
-                  class: "btn btn-sm btn-primary" do %>
-        <i class="fas fa-tree"></i>
-        <span>Pohon Kinerja</span>
-      <% end %>
-      <%= link_to show_kak_user_sasaran_path(usulan.sasaran), target: "_blank", rel: "nofollow",
-                  class: "btn btn-sm btn-info" do %>
-        <i class="fas fa-book-open"></i>
-        <span>KAK</span>
-      <% end %>
-      <%= link_to rincian_belanja_path(usulan.sasaran),
-                  target: "_blank",
-                  class: "btn btn-sm btn-primary text-white" do %>
-        <i class="fas fa-journal-whills me-2"></i>
-        <span>Rincian Belanja</span>
-      <% end %>
-      <%= link_to show_manrisk_sasaran_program_opd_path(usulan.sasaran),
-                  target: "_blank",
-                  class: "btn btn-sm btn-info text-white" do %>
-        <i class="fas fa-chart-line me-2"></i>
-        <span>ManRisk</span>
-      <% end %>
-    </div>
-  <% end %>
-</td>
+<% if !cetak %>
+  <td class="text-wrap">
+    <% if usulan&.sasaran.present? %>
+      <div class="d-grid gap-3">
+        <%= link_to show_pokin_user_sasaran_path(usulan.sasaran), target: "_blank", rel: "nofollow",
+                    class: "btn btn-sm btn-primary" do %>
+          <i class="fas fa-tree"></i>
+          <span>Pohon Kinerja</span>
+        <% end %>
+        <%= link_to show_kak_user_sasaran_path(usulan.sasaran), target: "_blank", rel: "nofollow",
+                    class: "btn btn-sm btn-info" do %>
+          <i class="fas fa-book-open"></i>
+          <span>KAK</span>
+        <% end %>
+        <%= link_to rincian_belanja_path(usulan.sasaran),
+                    target: "_blank",
+                    class: "btn btn-sm btn-primary text-white" do %>
+          <i class="fas fa-journal-whills me-2"></i>
+          <span>Rincian Belanja</span>
+        <% end %>
+        <%= link_to show_manrisk_sasaran_program_opd_path(usulan.sasaran),
+                    target: "_blank",
+                    class: "btn btn-sm btn-info text-white" do %>
+          <i class="fas fa-chart-line me-2"></i>
+          <span>ManRisk</span>
+        <% end %>
+      </div>
+    <% end %>
+  </td>
+<% end %>

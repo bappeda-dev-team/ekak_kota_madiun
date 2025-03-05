@@ -10,7 +10,7 @@
     <td <%= rowspan_atas.positive? ? "rowspan=#{rowspan_atas}" : '' %> class="text-gray-900 text-wrap"><%= inovasi.opd_lead %> <b>(Lead)</b></td>
     <!-- USULAN YANG DIAMBIL USER -->
     <% rekin_lead = rekin_leads.first %>
-    <%= render 'usulans/rekin', usulan: rekin_lead %>
+    <%= render 'usulans/rekin', usulan: rekin_lead, cetak: true %>
     <!-- END -->
     <td <%= rowspan_atas.positive? ? "rowspan=#{rowspan_atas}" : '' %> class="text-gray-900 text-wrap"><%= inovasi.uraian %></td>
     <td <%= rowspan_atas.positive? ? "rowspan=#{rowspan_atas}" : '' %> class="text-gray-900 text-wrap" style="vertical-align: top;">
@@ -25,7 +25,7 @@
   </tr>
   <% rekin_leads.drop(1).each do |rekin_lead| %>
     <tr class="skip rekins" >
-      <%= render 'usulans/rekin', usulan: rekin_lead %>
+      <%= render 'usulans/rekin', usulan: rekin_lead, cetak: true %>
     </tr>
   <% end %>
 </tbody>
