@@ -60,8 +60,8 @@
         <%= render 'hasil_output_card', sasaran: @sasaran %>
         <%= render 'hasil_output_inovasi_card', sasaran: @sasaran %>
       <% else %>
-        <%= render 'rencana_kinerja_card', sasaran: @sasaran %>
-        <%= render 'tahapans/renaksi_card', sasaran: @sasaran %>
+        <%= render 'rencana_kinerja_card', sasaran: @sasaran, complete: true %>
+        <%= render 'tahapans/renaksi_card', sasaran: @sasaran, complete: true %>
       <% end %>
     <% end %>
     <!-- SECTION - Kembali-->

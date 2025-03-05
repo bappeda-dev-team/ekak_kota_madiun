@@ -29,14 +29,14 @@
       <div class='d-inline-block gap-3'>
         <%= render 'clone_renaksi_button', sasaran: sasaran %>
         <% if current_user.eselon_user == 'eselon_2' %>
-          <%= link_to 'Renaksi Otomatis', otomatis_sasaran_tahapan_path(sasaran),
-                      method: :post, remote: true, class: 'btn btn-danger' %>
+          <%= link_to 'Renaksi Otomatis (dari manual ik)', otomatis_sasaran_tahapan_path(sasaran),
+                      method: :post, remote: true, class: 'btn btn-info' %>
         <% elsif current_user.eselon_user == 'eselon_3' %>
-          <%= link_to 'Renaksi Otomatis', otomatis_sasaran_tahapan_path(sasaran),
-                      method: :post, remote: true, class: 'btn btn-danger' %>
+          <%= link_to 'Renaksi Otomatis (dari manual ik)', otomatis_sasaran_tahapan_path(sasaran),
+                      method: :post, remote: true, class: 'btn btn-info' %>
           <%= link_to new_sasaran_tahapan_path(sasaran),
                       remote: true,
-                      class: 'btn btn-danger',
+                      class: 'btn btn-danger ms-3',
                       data: {
                         controller: 'form-modal',
                         action: 'form-modal#appendForm',
@@ -44,7 +44,7 @@
                         bs_target: '#form-modal',
                         bs_toggle: 'modal'
                       } do %>
-            <span>Renaksi Manual</span>
+            <span>Renaksi Manual (buat baru)</span>
           <% end %>
         <% else %>
           <%= link_to new_sasaran_tahapan_path(sasaran),
@@ -57,7 +57,7 @@
                         bs_target: '#form-modal',
                         bs_toggle: 'modal'
                       } do %>
-            <span>Renaksi Manual</span>
+            <span>Renaksi Manual (buat baru)</span>
           <% end %>
         <% end %>
       </div>
@@ -82,8 +82,7 @@
           <thead class="thead-light">
             <tr>
               <th class="border-bottom border-end border-start" scope="col" rowspan="2">No.</th>
-              <th class="border-bottom text-wrap border-end" scope="col" rowspan="2">Tahapan Kerja</th>
-              <th class="border-bottom border-end text-center" scope="col" rowspan="2">Aksi</th>
+              <th class="border-bottom text-wrap border-end" scope="col" rowspan="2" colspan="2">Renaksi</th>
               <% (1..12).each do |i| %>
                 <th class="border-bottom border-end text-center" scope="col"><%= i %></th>
               <% end %>
