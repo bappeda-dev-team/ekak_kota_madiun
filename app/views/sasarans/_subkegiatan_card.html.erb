@@ -23,16 +23,21 @@
                       action: 'ajax:complete->form-ajax#processAjax'
                     }
       ) do |f| %>
-        <%= f.select(:program_kegiatan_id, [],
-                     {include_blank: true},
-                     { class: 'form-control',
-                       data: { placeholder: "Pilih Subkegiatan",
-                         controller: 'dropdown',
-                         dropdown_jenis_value: 'ajax',
-                         dropdown_url_value: "/program_kegiatans.json",
-                     }} )%>
+        <div class="field">
+          <%= f.select(:program_kegiatan_id, [],
+                       {include_blank: true},
+                       { class: 'form-control',
+                         data: { placeholder: "Pilih Subkegiatan",
+                           controller: 'dropdown',
+                           dropdown_jenis_value: 'ajax',
+                           dropdown_url_value: "/program_kegiatans.json",
+                       }} )%>
+        </div>
         <div class="actions">
-          <%= f.submit "Simpan" %>
+          <%= f.submit "Tambahkan subkegiatan ke rencana kinerja",
+              name: 'simpan',
+              class: 'btn btn-outline-primary mt-4'
+          %>
         </div>
       <% end %>
     </div>
