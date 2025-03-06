@@ -60,7 +60,9 @@
                                                      value: f.object.gambaran_nilai_kebaruan} %>
         </div>
         <div class="actions">
-          <%= f.submit "Simpan Hasil Inovasi Rencana Kinerja" %>
+          <%= f.submit "Simpan Hasil Inovasi Rencana Kinerja",
+              name: 'simpan',
+              class: 'btn btn-outline-primary' %>
         </div>
       <% end %>
     </div>
