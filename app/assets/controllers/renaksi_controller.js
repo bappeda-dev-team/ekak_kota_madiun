@@ -60,10 +60,19 @@ export default class extends Controller {
     target.innerHTML = totalTarget
 
     this.updateWaktuPelaksanaan(jumlahTotalArray.length)
+    this.updateRenaksiChecker(totalTarget)
   }
 
   updateWaktuPelaksanaan(waktuPelaksanaan) {
     const target = document.getElementById('waktu-pelaksanaan')
     target.innerHTML = waktuPelaksanaan
+  }
+
+  updateRenaksiChecker(totalTarget) {
+    if (totalTarget == 100) {
+      const tandaCentang = "<i class='fa fa-check text-success'></i>"
+      const target = document.getElementById('renaksi-checker')
+      target.innerHTML = tandaCentang
+    }
   }
 }

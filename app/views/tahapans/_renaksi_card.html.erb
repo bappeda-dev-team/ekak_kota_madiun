@@ -2,7 +2,7 @@
   <div class="card-header">
     <h4 class="card-title">
       Rencana Aksi
-      <span class="ms-2"><%= target_sesuai?(sasaran.target_sesuai?) %></span>
+      <span class="ms-2" id="renaksi-checker"><%= target_sesuai?(sasaran.target_sesuai?) %></span>
     </h4>
     <% if complete %>
       <div class="d-flex gap-4">
