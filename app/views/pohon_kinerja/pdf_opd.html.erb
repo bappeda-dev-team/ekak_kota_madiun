@@ -6,85 +6,14 @@
           data-pohon-kinerja-tahun-value="<%= @tahun %>"
           data-action="click->pohon-kinerja#cetakOpd">DOWNLOAD POHON CASCADING</button>
 </div>
-<div class="mb-3">
-  <%= render 'pohon_kinerja/komentar_card', komentars: @opd.komentars %>
-</div>
-<%= render 'shared/komentar_button',
-           link: komentar_pokin_komentars_path(kode_opd: @opd.kode_unik_opd,
-                                               strategi_id: @opd.id,
-                                               jenis: "OPD"),
-           form_name: 'form-komentar' %>
-<div class="tf-tree mt-2" style="zoom: 0.7;" id='pokin-opd'>
-  <h1>Pohon Kinerja <%= @nama_opd %> Tahun <%= @tahun %></h1>
-  <ul data-pohon-kinerja-target="content">
+
+<div class="tf-tree tf-gap-lg mt-2 show text-center" data-controller="pohon-tematik" id='pokin-opd'>
+  <ul>
     <li>
-      <div class="tf-nc">
-        <p class="text-center"><strong>Perangkat Daerah</strong></p>
-        <hr/>
-        <p class="text-center"><strong><%= @nama_opd %></strong></p>
-      </div>
-      <% if @isu_opd.any? %>
-        <ul>
-          <% @isu_opd.each do |isu_kota, strategi_kotums| %>
-            <li>
-              <div class="tf-nc">
-                <p class="text-center"><strong>ISU STRATEGIS</strong></p>
-                <hr/>
-                <span class="text-center"><%= isu_kota.isu_strategis %></span>
-              </div>
-              <% if strategi_kotums.any? %>
-                <ul>
-                  <% strategi_kotums.each do |str_kota, str_opds| %>
-                    <li>
-                      <% judul = str_kota.to_s %>
-                      <%= render 'item_pokin', judul: judul, strategi: str_kota, tipe: 'kota' %>
-                      <% if str_opds.any? %>
-                        <ul>
-                          <% str_opds.each do |str_opd, str_kabids| %>
-                            <li>
-                              <%= render 'item_pokin', judul: "STRATEGIC OBJECTIVE", strategi: str_opd %>
-                              <% if str_kabids.any? %>
-                                <ul>
-                                  <% str_kabids.each do |str_kabid, str_kasis| %>
-                                    <li>
-                                      <%= render 'item_pokin', judul: "TACTICAL OBJECTIVE", strategi: str_kabid, show_program: true %>
-                                      <% if str_kasis.any? %>
-                                        <ul>
-                                          <% str_kasis.each do |str_kasi, str_staffs| %>
-                                            <li>
-                                              <%= render 'item_pokin', judul: "OPERATIONAL OBJECTIVE", strategi: str_kasi, show_sub: true %>
-                                              <% if str_staffs.any? %>
-                                                <ul>
-                                                  <% str_staffs.each do |str_staff| %>
-                                                    <li>
-                                                      <%= render 'item_pokin', judul: "OPERATIONAL OBJECTIVE 2", strategi: str_staff %>
-                                                    </li>
-                                                  <% end %>
-                                                </ul>
-                                              <% end %>
-                                            </li>
-                                          <% end %>
-                                        </ul>
-                                      <% end %>
-                                    </li>
-                                  <% end %>
-                                </ul>
-                              <% end %>
-                            </li>
-                          <% end %>
-                        </ul>
-                      <% end %>
-                    </li>
-                  <% end %>
-                </ul>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
+      <%= render 'laporans/parent' %>
+      <ul data-pohon-tematik-target='dahan'>
+        <%= render partial: 'cetaks/cascading_cetak', collection: @strategi_opd, as: :pohon %>
+      </ul>
     </li>
   </ul>
 </div>
-</div>
-<%= render 'shared/modal_template', modal_name: 'komentar' %>
-<%= render 'shared/modal_xl_template', modal_name: 'manual-ik' %>

@@ -420,8 +420,8 @@ class PohonKinerjaController < ApplicationController
     @filename = "Pohon Kinerja Kota #{@tahun} - #{@timestamp}.xlsx"
     @isu_kota = IsuStrategisKotum.where('tahun ILIKE ?', "%#{@tahun}%").to_h do |isu_kota|
       [isu_kota, isu_kota.strategi_kotums.to_h do |str_kota|
-        [str_kota, str_kota.pohons]
-      end]
+                   [str_kota, str_kota.pohons]
+                 end]
     end
     render xlsx: "pohon_kota_excel", filename: @filename
   end
@@ -437,29 +437,24 @@ class PohonKinerjaController < ApplicationController
   end
 
   def pdf_opd
-    @tahun = params[:tahun] || cookies[:tahun]
-    opd_params = params[:kode_opd] || cookies[:opd]
-    @opd = if opd_params
-             Opd.find_by(kode_unik_opd: opd_params)
-           else
-             current_user.opd
-           end
-    @isu_opd = @opd.pohon_kinerja_opd(@tahun)
-    # pokin = PokinQueries.new(opd: @opd, tahun: @tahun)
-    # @itungan = pokin.strategi_in_opd
-    # @strategis = pokin.strategi_by_role(pokin.strategi_in_specific_opd)
-    # @strategic = @strategis['eselon_2'].group_by(&:pohon)
-    # @tactical = @strategis['eselon_3']
-    # @operational = @strategis['eselon_4']
-    # @staff = @strategis['staff']
-    # TODO: fix queries in here and in view
+    @user = current_user
+    @kode_opd = cookies[:opd]
+    @tahun = cookies[:tahun]
+    queries = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
+
+    @opd = queries.opd
     @nama_opd = @opd.nama_opd
+
+    # @strategi_kota = queries.strategi_kota
+    # @tactical_kota = queries.tactical_kota
+    # @operational_kota = queries.operational_kota
+
+    @strategi_opd = queries.strategi_opd
+    @tactical_opd = queries.tactical_opd
+    @operational_opd = queries.operational_opd
+    @staff_opd = queries.staff_opd
     respond_to do |format|
-      if @opd.id == 145 || @opd.kode_opd == '1260'
-        format.html { render "pohon_kinerja/pdf_setda", layout: 'blank' }
-      else
-        format.html { render layout: 'blank' }
-      end
+      format.html { render layout: 'blank' }
     end
   end
 
@@ -469,8 +464,8 @@ class PohonKinerjaController < ApplicationController
     @tahun = cookies[:tahun] || '2023'
     @isu_kota = IsuStrategisKotum.where('tahun ILIKE ?', "%#{@tahun}%").to_h do |isu_kota|
       [isu_kota, isu_kota.strategi_kota_tahun(@tahun).to_h do |str_kota|
-        [str_kota, str_kota.pohons]
-      end]
+                   [str_kota, str_kota.pohons]
+                 end]
     end
     render partial: 'pohon_kinerja/filter_rekap'
   end
@@ -486,8 +481,8 @@ class PohonKinerjaController < ApplicationController
 
     @isu_kota = IsuStrategisKotum.where('tahun ILIKE ?', "%#{@tahun}%").to_h do |isu_kota|
       [isu_kota, isu_kota.strategi_kota_tahun(@tahun).to_h do |str_kota|
-        [str_kota, str_kota.pohons]
-      end]
+                   [str_kota, str_kota.pohons]
+                 end]
     end
   end
 

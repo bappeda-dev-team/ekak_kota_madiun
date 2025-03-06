@@ -158,27 +158,49 @@ export default class extends Controller {
                         });
         }
 
-        async cetakOpd() {
-                const node = document.getElementById('pokin-opd')
-                const nama_opd = this.namaOpdValue
-                const tahun = this.tahunValue
-                const judul = `POHON_KINERJA_${nama_opd}_${tahun}.png`
-                const width = node.scrollWidth > 32000 ? 20000 : node.scrollWidth;
-                const height = node.scrollHeight;
-                await html2canvas(node, {
-                        windowWidth: width + 50,
-                        windowHeight: height,
-                })
-                        .then(canvas => {
-                                canvas.toBlob((blob) => {
-                                        saveAs(blob, judul)
-                                })
-                        })
-                        .catch(function (error) {
-                                console.error('oops, something went wrong!', error);
-                                alert('terjadi kesalahan ..')
-                        });
-        }
+async cetakOpd() {
+    const node = document.getElementById('pokin-opd');
+    const nama_opd = this.namaOpdValue;
+    const tahun = this.tahunValue;
+
+    const totalWidth = node.scrollWidth;
+    const totalHeight = node.scrollHeight;
+
+    const chunkWidth = 2000;  // Adjust based on your use case
+    let offsetX = 0;
+    let segmentNumber = 1;
+
+    while (offsetX < totalWidth) {
+        // Create a temporary wrapper to isolate a chunk
+        const wrapper = document.createElement('div');
+        wrapper.style.position = 'absolute';
+        wrapper.style.left = `-${offsetX}px`;
+        wrapper.style.width = `${chunkWidth}px`;
+        wrapper.style.height = `${totalHeight}px`;
+        wrapper.style.overflow = 'hidden';
+
+        const clone = node.cloneNode(true);
+        wrapper.appendChild(clone);
+        document.body.appendChild(wrapper);
+
+        const canvas = await html2canvas(wrapper, {
+            width: chunkWidth,
+            height: totalHeight,
+            backgroundColor: '#fff'  // Set if needed
+        });
+
+        const segmentName = `POHON_KINERJA_${nama_opd}_${tahun}_SEGMENT_${segmentNumber}.png`;
+
+        canvas.toBlob((blob) => {
+            saveAs(blob, segmentName);
+        });
+
+        document.body.removeChild(wrapper);
+
+        offsetX += chunkWidth;
+        segmentNumber++;
+    }
+}
 
         mithTreeKotaRender(data, targetEl) {
                 const mitchTree = require('d3-mitch-tree')
