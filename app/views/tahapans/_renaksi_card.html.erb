@@ -69,7 +69,7 @@
         <table class="table table-bordered table-sm align-items-center counter">
           <caption class="waktu-renaksi">
             <strong>Waktu yang dibutuhkan :</strong>
-            <%= waktu = sasaran.waktu_total == 0 ? "-" : sasaran.waktu_total %> bulan
+            <span id="waktu-pelaksanaan"><%= waktu = sasaran.waktu_total == 0 ? "-" : sasaran.waktu_total %></span> bulan
             <hr>
             <div class="row">
               <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
@@ -104,9 +104,9 @@
             <tr>
               <td class="border-bottom border-start border-end" colspan="3">Total</td>
               <% (1..12).each do |i| %>
-                <td class="border-bottom border-end text-center"><%= sasaran.total_target_aksi_bulan[i] %></td>
+                <td id="<%= "total-aksi-bulan-#{i}" %>"  class="border-bottom border-end text-center"><%= sasaran.total_target_aksi_bulan[i] %></td>
               <% end %>
-              <td class="border-bottom border-end text-center"><%= sasaran.jumlah_target %></td>
+              <td id="total-jumlah-target" class="border-bottom border-end text-center"><%= sasaran.jumlah_target %></td>
               <td class="border-bottom border-end" colspan="2"></td>
             </tr>
           </tfoot>

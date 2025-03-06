@@ -1,9 +1,11 @@
 <%= form_with(model: [sasaran, tahapan, aksi], local: false,
               data: {
-                controller: 'form-ajax',
+                controller: 'form-ajax renaksi',
                 form_ajax_target_param: dom_id(tahapan, "aksi-#{bulan}"),
                 form_ajax_type_param: 'total_replace',
-                action: 'ajax:complete->form-ajax#processAjax'
+                renaksi_bulan_param: bulan,
+                action: 'ajax:complete->form-ajax#processAjax
+                         ajax:success->renaksi#refreshTotals'
               }
 ) do |form| %>
   <% if aksi.errors.any? %>
