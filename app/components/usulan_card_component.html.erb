@@ -27,7 +27,9 @@
          }} %>
       </div>
       <div class="actions">
-        <%= form.submit "Simpan Usulan #{new_name}" %>
+        <%= form.submit "Tambahkan Usulan #{new_name} ke rencana kinerja",
+         name: 'simpan',
+         class: 'btn btn-outline-primary mt-4' %>
       </div>
     <% end %>
   </div>
