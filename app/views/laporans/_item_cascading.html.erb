@@ -1,6 +1,14 @@
 <% presenter = PohonKinerjaPresenter.new(pohon) %>
 <div class="pohon">
   <%= render partial: 'laporans/item_cascading_title', locals: { pohon: presenter } %>
+  <% if pohon.role == 'eselon_2' %>
+    <%= link_to pdf_opd_pohon_kinerja_index_path(strategic_id: pohon.id),
+                class: "btn btn-tertiary w-100 mt-3",
+                target: "blank" do %>
+      <i class="fa fa-file-image"></i>
+      <span>Cetak Pohon Kinerja</span>
+    <% end %>
+  <% end %>
   <%= render partial: 'laporans/item_cascading_body', locals: { pohon: presenter } %>
   <%= render partial: 'laporans/item_cascading_subkegiatan', locals: { pohon: presenter } %>
   <%= render partial: 'laporans/item_cascading_indikators', locals: { pohon: presenter } %>

@@ -1,11 +1,4 @@
 <%= render 'shared/card_layout', title: "Pohon Cascading #{@nama_opd} - Tahun #{@tahun}" do %>
-  <%= link_to pdf_opd_pohon_kinerja_index_path,
-              class: "btn btn-warning w-100 mb-4",
-              target: "blank",
-              data: { pohon_kinerja_target: 'cetak' } do %>
-    <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom"></i>
-    <span>Cetak GAMBAR Pohon Kinerja</span>
-  <% end %>
   <%= render 'shared/pohon' do %>
     <%= render 'laporans/parent' %>
     <ul data-pohon-tematik-target='dahan'>

@@ -183,7 +183,7 @@ export default class extends Controller {
                         })
                         .catch(function (error) {
                                 console.error('oops, something went wrong!', error);
-                                alert('terjadi kesalahan ..')
+                                alert('pohon terlalu besar..')
                         });
         }
 
