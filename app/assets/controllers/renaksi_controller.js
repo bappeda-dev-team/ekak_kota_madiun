@@ -1,7 +1,15 @@
 import { Controller } from "stimulus";
-
+import Turbolinks from "turbolinks";
 
 export default class extends Controller {
+
+  reloadIfManual(event) {
+    const reload = event.params.reload
+
+    if(reload) {
+        Turbolinks.visit(window.location, { action: "replace" });
+    }
+  }
 
   renaksiUpdateEvent(event) {
     const bulan = event.params.bulan

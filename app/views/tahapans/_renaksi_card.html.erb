@@ -1,10 +1,11 @@
-<div class="card border-2 shadow mb-3 <%= complete ? '' : 'border-danger' %>">
+<% ada_renaksi = complete && sasaran.tahapans.any? %>
+<div class="card border-2 shadow mb-3 <%= ada_renaksi ? '' : 'border-danger' %>">
   <div class="card-header">
     <h4 class="card-title">
       Rencana Aksi
       <span class="ms-2" id="renaksi-checker"><%= target_sesuai?(sasaran.target_sesuai?) %></span>
     </h4>
-    <% if complete %>
+    <% if ada_renaksi %>
       <div class="d-flex gap-4">
         <%= link_to new_sasaran_tahapan_path(sasaran),
                     remote: true,
@@ -34,7 +35,7 @@
         <% elsif current_user.eselon_user == 'eselon_3' %>
           <%= link_to 'Renaksi Otomatis (dari manual ik)', otomatis_sasaran_tahapan_path(sasaran),
                       method: :post, remote: true, class: 'btn btn-info' %>
-          <%= link_to new_sasaran_tahapan_path(sasaran),
+          <%= link_to new_sasaran_tahapan_path(sasaran, reload: true),
                       remote: true,
                       class: 'btn btn-danger ms-3',
                       data: {
@@ -47,7 +48,7 @@
             <span>Renaksi Manual (buat baru)</span>
           <% end %>
         <% else %>
-          <%= link_to new_sasaran_tahapan_path(sasaran),
+          <%= link_to new_sasaran_tahapan_path(sasaran, reload: true),
                       remote: true,
                       class: 'btn btn-danger',
                       data: {
@@ -63,57 +64,55 @@
       </div>
     <% end %>
   </div>
-  <% if sasaran.tahapans.any? %>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table table-bordered table-sm align-items-center counter"
-               data-controller="renaksi"
-               data-action="update-renaksi@document->renaksi#refreshTotals">
-          <caption class="waktu-renaksi">
-            <strong>Waktu yang dibutuhkan :</strong>
-            <span id="waktu-pelaksanaan"><%= waktu = sasaran.waktu_total == 0 ? "-" : sasaran.waktu_total %></span> bulan
-            <hr>
-            <div class="row">
-              <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
-                <div class="col-8 align-middle">
-                  <%= render 'tahapans/sumber_dana_form', sasaran: sasaran %>
-                </div>
-              <% end %>
-            </div>
-          </caption>
-          <thead class="thead-light">
-            <tr>
-              <th class="border-bottom border-end border-start" scope="col" rowspan="2">No.</th>
-              <th class="border-bottom text-wrap border-end" scope="col" rowspan="2" colspan="2">Renaksi</th>
-              <% (1..12).each do |i| %>
-                <th class="border-bottom border-end text-center" scope="col"><%= i %></th>
-              <% end %>
-              <th class="border-bottom border-end text-center" scope="col">Total</th>
-              <th class="border-bottom border-end text-center" scope="col" rowspan="2">Keterangan</th>
-            </tr>
-            <tr>
-              <% (1..13).each do |item| %>
-                <td class="border border-gray-900 bg-tertiary text-center text-gray-300" scope="col">T</td>
-              <% end %>
-            </tr>
-          </thead>
-          <tbody id="<%= dom_id(sasaran, 'tahapan') %>">
-            <% sasaran.tahapan_renaksi.each do |tahapan| %>
-              <%= render 'tahapans/tahapan', tahapan: tahapan, sasaran: sasaran %>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered table-sm align-items-center counter"
+             data-controller="renaksi"
+             data-action="update-renaksi@document->renaksi#refreshTotals">
+        <caption class="waktu-renaksi">
+          <strong>Waktu yang dibutuhkan :</strong>
+          <span id="waktu-pelaksanaan"><%= waktu = sasaran.waktu_total == 0 ? "-" : sasaran.waktu_total %></span> bulan
+          <hr>
+          <div class="row">
+            <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
+              <div class="col-8 align-middle">
+                <%= render 'tahapans/sumber_dana_form', sasaran: sasaran %>
+              </div>
             <% end %>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td class="border-bottom border-start border-end" colspan="3">Total</td>
-              <% (1..12).each do |i| %>
-                <td id="<%= "total-aksi-bulan-#{i}" %>"  class="border-bottom border-end text-center total-aksi-bulan"><%= sasaran.total_target_aksi_bulan[i] %></td>
-              <% end %>
-              <td id="total-jumlah-target" class="border-bottom border-end text-center"><%= sasaran.jumlah_target %></td>
-              <td class="border-bottom border-end" colspan="2"></td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
+          </div>
+        </caption>
+        <thead class="thead-light">
+          <tr>
+            <th class="border-bottom border-end border-start" scope="col" rowspan="2">No.</th>
+            <th class="border-bottom text-wrap border-end" scope="col" rowspan="2" colspan="2">Renaksi</th>
+            <% (1..12).each do |i| %>
+              <th class="border-bottom border-end text-center" scope="col"><%= i %></th>
+            <% end %>
+            <th class="border-bottom border-end text-center" scope="col">Total</th>
+            <th class="border-bottom border-end text-center" scope="col" rowspan="2">Keterangan</th>
+          </tr>
+          <tr>
+            <% (1..13).each do |item| %>
+              <td class="border border-gray-900 bg-tertiary text-center text-gray-300" scope="col">T</td>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody id="<%= dom_id(sasaran, 'tahapan') %>">
+          <% sasaran.tahapan_renaksi.each do |tahapan| %>
+            <%= render 'tahapans/tahapan', tahapan: tahapan, sasaran: sasaran %>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td class="border-bottom border-start border-end" colspan="3">Total</td>
+            <% (1..12).each do |i| %>
+              <td id="<%= "total-aksi-bulan-#{i}" %>"  class="border-bottom border-end text-center total-aksi-bulan"><%= sasaran.total_target_aksi_bulan&.dig(i) %></td>
+            <% end %>
+            <td id="total-jumlah-target" class="border-bottom border-end text-center"><%= sasaran.jumlah_target %></td>
+            <td class="border-bottom border-end" colspan="2"></td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
-  <% end %>
+  </div>
 </div>

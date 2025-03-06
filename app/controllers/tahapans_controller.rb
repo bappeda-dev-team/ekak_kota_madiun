@@ -15,6 +15,7 @@ class TahapansController < ApplicationController
   # GET /tahapans/new
   def new
     # @tahapan = Tahapan.new
+    @reload = params[:reload]
     @tahapan = @sasaran.tahapans.build
   end
 

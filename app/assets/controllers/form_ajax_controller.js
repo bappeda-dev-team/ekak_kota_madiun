@@ -123,6 +123,7 @@ export default class extends ApplicationController {
     // if failed, attach server html to errorContainer id
     const [message, status] = event.detail;
     const { resText, html_content } = JSON.parse(message.response);
+          super.modalHider();
     if (status == "OK") {
       Swal.fire({
         title: "Sukses",
@@ -257,7 +258,7 @@ export default class extends ApplicationController {
   successResponseRefresh(event) {
     // event.preventDefault()
     const [message, status, xhr] = event.detail;
-    const modal_target = event.params.modal;
+    const modal_target = event.params.modal || 'form-modal';
     const modal = document.getElementById(modal_target);
     // event after successResponse
     Modal.getInstance(modal).hide();

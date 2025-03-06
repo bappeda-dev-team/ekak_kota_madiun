@@ -1,6 +1,19 @@
 <div class="card border-2 shadow mb-3">
   <div class="card-body">
-    <table class="table table-bordered border-primary">
+    <% if manual_ik.errors.any? %>
+      <h4 class="alert alert-danger">
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        Manual IK Belum lengkap
+      </h4>
+      <div id="error_explanation">
+        <ul>
+          <% manual_ik.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <table class="table table-bordered border-primary mt-3">
       <thead>
         <tr class="bg-gray-900">
           <th colspan="2" class="text-center text-white">MANUAL INDIKATOR KINERJA</th>
@@ -8,16 +21,6 @@
       </thead>
       <tbody>
         <%= form_with(model: [@indikator, manual_ik]) do |form| %>
-          <% if manual_ik.errors.any? %>
-            <div id="error_explanation">
-              <h2><%= pluralize(manual_ik.errors.count, "error") %>, harap isi form berikut:</h2>
-              <ul>
-                <% manual_ik.errors.each do |error| %>
-                  <li><%= error.full_message %></li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
           <tr>
             <td style="width: 10%;">
               <%= form.label :perspektif, class: "form-label" %>

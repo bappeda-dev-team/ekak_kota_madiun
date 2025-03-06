@@ -5,43 +5,11 @@
 <% end %>
 <% content_for :view_utama do %>
   <div class="rekin-card px-3">
-    <div class="card border-2 shadow mb-3">
-      <div class="card-body">
-        <h5>Status Sasaran</h5>
-        <hr />
-        <div class="d-grid gap-2">
-          <div class="status_sasaran">
-            <%= status_sasaran_pokin(@sasaran&.status_sasaran) %>
-          </div>
-          <% if @sasaran.wajib_manrisk %>
-            <div class="status_manrisk">
-              <%= status_manrisk(@sasaran&.status_manrisk) %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
+    <%= render 'sasarans/status_sasaran', sasaran: @sasaran %>
     <!-- SECTION - incomplete sasaran -->
-    <% unless @sasaran.tahapans.any? %>
-      <div class="card border border-danger mb-3">
-        <div class="card-body border-danger">
-          <h4 class="alert alert-danger">
-            <i class="fas fa-exclamation-triangle me-2"></i>
-            Rencana Kinerja Belum lengkap
-          </h4>
-          <h5>Kekurangan: </h5>
-          <ol class="">
-            <% if !@sasaran.manual_ik? %>
-              <li>Manual IK</li>
-              <li>Rencana Aksi</li>
-            <% else %>
-              <li>Rencana Aksi</li>
-            <% end %>
-          </ol>
-        </div>
-      </div>
+    <% if !@sasaran.manual_ik? %>
+      <%= render 'sasarans/belum_lengkap_card' %>
       <%= render 'rencana_kinerja_card', sasaran: @sasaran, complete: false %>
-      <%= render 'tahapans/renaksi_card', sasaran: @sasaran, complete: false %>
     <% else %>
       <!-- SECTION - complete sasaran -->
       <% if @sasaran.wajib_manrisk %>

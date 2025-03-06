@@ -1,4 +1,5 @@
-<div class="card border-2 shadow mb-3">
+<% ada_manualik = sasaran.manual_ik? %>
+<div class="card border-2 shadow mb-3 <%= ada_manualik ? '' : 'border-danger' %>">
   <div class="card-header">
     <h4 class="card-title">
       <span class="fs-5 fw-bold mb-0">Rencana Kinerja</span>

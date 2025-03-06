@@ -26,6 +26,7 @@ class ManualIksController < ApplicationController
     @sasaran = @indikator.sasaran
     @user = @sasaran.user
     @manual_ik = @indikator.build_manual_ik
+    @manual_ik.validate
   end
 
   # GET /manual_iks/1/edit

@@ -1,0 +1,16 @@
+<div class="card border-2 shadow mb-3">
+  <div class="card-body">
+    <h5>Status Sasaran</h5>
+    <hr />
+    <div class="d-grid gap-2">
+      <div class="status_sasaran">
+        <%= status_sasaran_pokin(sasaran&.status_sasaran) %>
+      </div>
+      <% if sasaran.wajib_manrisk %>
+        <div class="status_manrisk">
+          <%= status_manrisk(sasaran&.status_manrisk) %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -3,7 +3,7 @@
                 controller: 'form-ajax',
                 form_ajax_target_param: tahapan.new_record? ? dom_id(@sasaran, 'tahapan') : dom_id(tahapan),
                 form_ajax_type_param: tahapan.new_record? ? 'prepend' : '',
-                action: 'ajax:complete->form-ajax#processAjax'
+                action: @reload ? 'ajax:complete->form-ajax#processAjaxRedirect' : 'ajax:complete->form-ajax#processAjax'
               }
 ) do |form| %>
   <% if tahapan.errors.any? %>
