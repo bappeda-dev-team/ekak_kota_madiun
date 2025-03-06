@@ -33,7 +33,7 @@ module AksisHelper
               bs_target: '#form-modal',
               bs_toggle: 'modal'
             }) do
-      target
+      "<span class='aksi-bulan-#{bulan}' data-jumlah-aksi='#{target}'>#{target}</span>".html_safe
     end
   end
 
@@ -42,12 +42,6 @@ module AksisHelper
     "<td class='fw-bolder text-dark border' id='#{id_aksi(tahapan, bulan)}'>
        #{target_link(sasaran, tahapan, bulan, aksi)}
      </td>".html_safe
-  end
-
-  def target_dengan_bulan(sasaran, tahapan, aksi, bulan, _disabled)
-    "<td class='fw-bolder text-gray-500 border' id='#{id_aksi(tahapan, bulan)}'>
-      #{target_link(sasaran, tahapan, bulan, aksi)}
-    </td>".html_safe
   end
 
   def sesuai?(checker)

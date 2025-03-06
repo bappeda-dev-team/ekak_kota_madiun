@@ -66,7 +66,9 @@
   <% if sasaran.tahapans.any? %>
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-bordered table-sm align-items-center counter">
+        <table class="table table-bordered table-sm align-items-center counter"
+               data-controller="renaksi"
+               data-action="update-renaksi@document->renaksi#refreshTotals">
           <caption class="waktu-renaksi">
             <strong>Waktu yang dibutuhkan :</strong>
             <span id="waktu-pelaksanaan"><%= waktu = sasaran.waktu_total == 0 ? "-" : sasaran.waktu_total %></span> bulan
@@ -104,7 +106,7 @@
             <tr>
               <td class="border-bottom border-start border-end" colspan="3">Total</td>
               <% (1..12).each do |i| %>
-                <td id="<%= "total-aksi-bulan-#{i}" %>"  class="border-bottom border-end text-center"><%= sasaran.total_target_aksi_bulan[i] %></td>
+                <td id="<%= "total-aksi-bulan-#{i}" %>"  class="border-bottom border-end text-center total-aksi-bulan"><%= sasaran.total_target_aksi_bulan[i] %></td>
               <% end %>
               <td id="total-jumlah-target" class="border-bottom border-end text-center"><%= sasaran.jumlah_target %></td>
               <td class="border-bottom border-end" colspan="2"></td>

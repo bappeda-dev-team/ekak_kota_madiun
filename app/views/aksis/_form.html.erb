@@ -5,7 +5,7 @@
                 form_ajax_type_param: 'total_replace',
                 renaksi_bulan_param: bulan,
                 action: 'ajax:complete->form-ajax#processAjax
-                         ajax:success->renaksi#refreshTotals'
+                         ajax:success->renaksi#renaksiUpdateEvent'
               }
 ) do |form| %>
   <% if aksi.errors.any? %>
@@ -30,7 +30,7 @@
   </div>
   <div class="field">
     <%= form.label :target , {class: "form-label"} %>
-    <%= form.number_field :target , {class: "form-control ", max: 100} %>
+    <%= form.number_field :target , {class: "form-control ", max: 100, min: 0} %>
   </div>
   <div class="action">
     <%= form.submit %>
