@@ -4,13 +4,32 @@
           data-controller="pohon-kinerja"
           data-pohon-kinerja-nama-opd-value="<%= @nama_opd %>"
           data-pohon-kinerja-tahun-value="<%= @tahun %>"
+          data-pohon-kinerja-nama-pohon-value="<%= @strategi_opd.first.to_s.truncate(10) %>"
           data-action="click->pohon-kinerja#cetakOpd">DOWNLOAD POHON CASCADING</button>
 </div>
 
-<div class="tf-tree tf-gap-lg mt-2 show text-center" data-controller="pohon-tematik" id='pokin-opd'>
+<div class="tf-tree tf-gap-lg mt-2 show text-center" data-controller="pohon-kinerja" id='pokin-opd'>
   <ul>
     <li>
-      <%= render 'laporans/parent' %>
+      <div class="tf-nc bg-white" style="width: 450px;" data-pohon-kinerja-target="opd">
+        <div class="pohon">
+          <div class="pohon-title">
+            <h5 class="text-center"><strong>Cascading OPD</strong></h5>
+          </div>
+          <div class="pohon-body">
+            <table class="table table-bordered">
+              <tr>
+                <td class="text-start" width="30px">OPD</td>
+                <td class="text-wrap text-start fw-bolder"><%= @nama_opd %></td>
+              </tr>
+              <tr>
+                <td class="text-start" width="30px">Tahun</td>
+                <td class="text-wrap text-start"><%= @tahun %></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
       <ul data-pohon-tematik-target='dahan'>
         <%= render partial: 'cetaks/cascading_cetak', collection: @strategi_opd, as: :pohon %>
       </ul>

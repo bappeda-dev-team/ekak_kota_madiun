@@ -438,6 +438,7 @@ class PohonKinerjaController < ApplicationController
 
   def pdf_opd
     @user = current_user
+    @strategic_id = params[:strategic_id]
     @kode_opd = cookies[:opd]
     @tahun = cookies[:tahun]
     queries = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
@@ -449,7 +450,7 @@ class PohonKinerjaController < ApplicationController
     # @tactical_kota = queries.tactical_kota
     # @operational_kota = queries.operational_kota
 
-    @strategi_opd = queries.strategi_opd
+    @strategi_opd = queries.strategi_opd.filter { |ss| ss.id == @strategic_id.to_i }.take(1)
     @tactical_opd = queries.tactical_opd
     @operational_opd = queries.operational_opd
     @staff_opd = queries.staff_opd

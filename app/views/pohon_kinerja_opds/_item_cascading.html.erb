@@ -2,6 +2,14 @@
 <% show_button = local_assigns.fetch(:show_button, true) %>
 <div class="pohon">
   <%= render partial: 'pohon_kinerja_opds/item_pohon_title', locals: { pohon: presenter, show_button: show_button } %>
+  <% if pohon.role == 'eselon_2' %>
+    <%= link_to pdf_opd_pohon_kinerja_index_path(strategic_id: pohon.id),
+                class: "btn btn-tertiary w-100 mt-3",
+                target: "blank" do %>
+      <i class="fa fa-file-image"></i>
+      <span>Cetak Pohon Kinerja</span>
+    <% end %>
+  <% end %>
   <%= render partial: 'pohon_kinerja_opds/item_cascading_body', locals: { pohon: presenter, show_button: show_button } %>
   <%= render partial: 'pohon_kinerja_opds/item_cascading_pelaksana', locals: { pohon: presenter, show_button: show_button } %>
   <%= render partial: 'pohon_kinerja_opds/item_pohon_crosscutting', locals: { pohon: presenter, show_button: show_button } %>
