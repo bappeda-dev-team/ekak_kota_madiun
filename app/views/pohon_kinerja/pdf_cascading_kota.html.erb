@@ -1,0 +1,20 @@
+<%= content_for :html_title, "POHON CASCADING KOTA MADIUN" %>
+<div  class="mb-5">
+  <button id="cetak" class="btn btn-tertiary w-100"
+          data-controller="pohon-kinerja"
+          data-pohon-kinerja-nama-opd-value="KOTA"
+          data-pohon-kinerja-tahun-value="<%= @tahun %>"
+          data-pohon-kinerja-nama-pohon-value="<%= @tematik_kota.pohonable.to_s %>"
+          data-action="click->pohon-kinerja#cetakOpd">DOWNLOAD POHON CASCADING KOTA</button>
+</div>
+
+<div class="tf-tree tf-gap-sm mt-2 show text-center" data-controller="pohon-kinerja" id='pokin-opd'>
+  <ul>
+    <li>
+      <%= render partial: 'cetaks/kota/cascading/cascading_tematik', locals: { pohon: @tematik_kota } %>
+      <ul data-pohon-tematik-target='dahan'>
+        <%= render partial: 'cetaks/kota/cascading/cascading_sub_tematik', locals: { pohon: @sub_tematik_kota } %>
+      </ul>
+    </li>
+  </ul>
+</div>

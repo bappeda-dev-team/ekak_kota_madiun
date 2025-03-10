@@ -1,0 +1,6 @@
+<% presenter = PohonKotaPresenter.new(pohon) %>
+<div class="pohon">
+  <%= render partial: 'cetaks/kota/cascading/item_cascading_tematik_title', locals: { pohon: presenter } %>
+  <%= render partial: 'cetaks/kota/cascading/item_cascading_tematik_body', locals: { pohon: presenter } %>
+  <%= render partial: 'cetaks/kota/cascading/item_cascading_subkegiatan_tematik', locals: { pohon: presenter } %>
+</div>

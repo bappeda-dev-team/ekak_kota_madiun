@@ -1,0 +1,34 @@
+<div class="pohon-body">
+  <table class="table table-bordered mb-3">
+    <tr>
+      <td class="text-start"><%= pohon.title_up %></td>
+      <td class="text-wrap text-start" colspan="2"><%= pohon.nama %></td>
+    </tr>
+    <% unless pohon.pohonable.blank? %>
+      <% pohon.pohonable.indikators.each.with_index(1) do |indikator, i| %>
+        <tr>
+          <td class="text-start" width="30px">Indikator
+            <% if pohon.pohonable.indikators.size > 1  %>
+              <%= i %>
+            <% end %>
+          </td>
+          <td class="text-wrap text-start"><%= indikator %></td>
+        </tr>
+        <tr>
+          <td class="text-start" width="30px">Target / Satuan</td>
+          <td class="text-wrap text-start"><%= indikator.target %> <%= indikator.satuan %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td class="text-start">Keterangan</td>
+        <td class="text-wrap text-start" colspan="2"><%= pohon.keterangan %></td>
+      </tr>
+      <% if pohon.strategi? %>
+        <tr class="detail">
+          <td class="text-start">Perangkat Daerah</td>
+          <td class="text-wrap text-start" colspan="2"><%= pohon.pohonable.opd %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+</div>

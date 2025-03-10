@@ -432,11 +432,22 @@ class PohonKinerjaController < ApplicationController
     sub_tematik_id = params[:sub_tematik]
     @pohon = PohonTematikQueries.new(tahun: @tahun)
 
-    # @tematik_kota = Pohon.where(pohonable_type: 'Tematik',
-    #                             pohonable_id: tematik_id,
-    #                             tahun: @tahun,
-    #                             role: 'pohon_kota')
-    #                      .includes(:pohonable)
+    @tematik_kota = @pohon.tematiks.find_by(pohonable_id: tematik_id)
+    @sub_tematik_kota = @pohon.sub_tematiks.find(sub_tematik_id)
+    @sub_sub_tematik_kota = @pohon.sub_sub_tematiks
+    @strategi_tematiks = @pohon.strategi_tematiks
+    @tactical_tematiks = @pohon.tactical_tematiks
+    @operational_tematiks = @pohon.operational_tematiks
+    respond_to do |format|
+      format.html { render layout: 'blank' }
+    end
+  end
+
+  def pdf_cascading_kota
+    @tahun = cookies[:tahun]
+    tematik_id = params[:tematik]
+    sub_tematik_id = params[:sub_tematik]
+    @pohon = PohonTematikQueries.new(tahun: @tahun)
 
     @tematik_kota = @pohon.tematiks.find_by(pohonable_id: tematik_id)
     @sub_tematik_kota = @pohon.sub_tematiks.find(sub_tematik_id)

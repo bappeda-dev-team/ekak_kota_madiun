@@ -1,0 +1,14 @@
+<% presenter = PohonKotaPresenter.new(pohon) %>
+<li>
+  <div class="tf-nc bg-white" style="width: 450px;">
+    <%= render partial: 'cetaks/kota/cascading/item_cascading_tematik', locals: { pohon: pohon } %>
+  </div>
+  <% collections = @strategi_tematiks.select { |str| str.pohon_ref_id == pohon.id } %>
+  <% if collections.any? %>
+    <ul class='childs'>
+      <%= render partial: 'cetaks/kota/cascading/cascading_strategic',
+                 collection: collections,
+                 as: :pohon %>
+    </ul>
+  <% end %>
+</li>

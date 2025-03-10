@@ -313,6 +313,7 @@ Rails.application.routes.draw do
       get :print
       get :excel_kota
       get :pdf_pokin_kota
+      get :pdf_cascading_kota
       get :pdf_opd
       get :excel_opd
       get :rekap

@@ -1,0 +1,6 @@
+<% presenter = PohonKotaPresenter.new(pohon) %>
+<li>
+  <div class="tf-nc operational-pohon" style="width: 450px;">
+    <%= render partial: 'cetaks/kota/cascading/item_cascading_tematik', locals: { pohon: pohon } %>
+  </div>
+</li>
