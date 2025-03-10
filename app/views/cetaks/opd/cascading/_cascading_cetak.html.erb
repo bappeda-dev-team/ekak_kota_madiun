@@ -1,12 +1,12 @@
 <% presenter = PohonKinerjaPresenter.new(pohon) %>
 <li>
   <div class="tf-nc pokin <%= presenter.warna_pohon %>" id="<%= dom_id(pohon) %>">
-    <%= render partial: 'cetaks/item_cascading_cetak', locals: { pohon: pohon } %>
+    <%= render partial: 'cetaks/opd/cascading/item_cascading_cetak', locals: { pohon: pohon } %>
   </div>
   <%# self-render childs in helper %>
   <% if pohon.role != 'eselon_4' %>
     <ul class="childs">
-      <%= render partial: 'cetaks/cascading_cetak', collection: childs(pohon), as: :pohon %>
+      <%= render partial: 'cetaks/opd/cascading/cascading_cetak', collection: childs(pohon), as: :pohon %>
     </ul>
   <% end %>
 </li>

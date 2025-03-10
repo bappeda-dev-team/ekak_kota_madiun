@@ -2,7 +2,7 @@
   <% if pohon.rencana_kinerjas.any? %>
     <% pohon.rencana_kinerjas.each.with_index(1) do |sasaran, no| %>
       <div class="pohon-body mb-2">
-        <%= render 'cetaks/tabel_sasaran_cascading_cetak',
+        <%= render 'cetaks/opd/cascading/tabel_sasaran_cascading_cetak',
                    sasaran: sasaran,
                    role: pohon.role,
                    no: no,

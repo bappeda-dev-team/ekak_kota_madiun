@@ -1,7 +1,7 @@
 <% presenter = PohonKinerjaPresenter.new(pohon) %>
 <div class="pohon">
-  <%= render partial: 'cetaks/item_cascading_title_cetak', locals: { pohon: presenter } %>
-  <%= render partial: 'cetaks/item_cascading_body_cetak', locals: { pohon: presenter } %>
-  <%= render partial: 'cetaks/item_cascading_subkegiatan_cetak', locals: { pohon: presenter } %>
-  <%= render partial: 'cetaks/item_cascading_indikators_cetak', locals: { pohon: presenter } %>
+  <%= render partial: 'cetaks/opd/cascading/item_cascading_title_cetak', locals: { pohon: presenter } %>
+  <%= render partial: 'cetaks/opd/cascading/item_cascading_body_cetak', locals: { pohon: presenter } %>
+  <%= render partial: 'cetaks/opd/cascading/item_cascading_subkegiatan_cetak', locals: { pohon: presenter } %>
+  <%= render partial: 'cetaks/opd/cascading/item_cascading_indikators_cetak', locals: { pohon: presenter } %>
 </div>
