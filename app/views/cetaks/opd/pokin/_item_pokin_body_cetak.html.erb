@@ -1,0 +1,44 @@
+<div class="pohon-body">
+  <table class="table table-bordered mb-3">
+    <% unless pohon.exists? %>
+      <tr>
+        <td class="text-start"><%= pohon.title_up %></td>
+        <td class="text-wrap text-start" colspan="2"><%= pohon.pohonable.strategi %></td>
+      </tr>
+      <% pohon.indikators.each.with_index(1) do |indikator, i| %>
+        <tr class="detail">
+          <td class="text-start">Indikator
+            <% if pohon.indikators.size > 1 %>
+              <%= i %>
+            <% end %>
+          </td>
+          <td class="text-wrap text-start" colspan="2"><%= indikator %></td>
+        </tr>
+        <tr class="detail">
+          <td class="text-start">Target / Satuan</td>
+          <td class="text-wrap text-start" colspan="2"><%= indikator.target %> <%= indikator.satuan %></td>
+        </tr>
+      <% end %>
+      <tr class="detail">
+        <td class="text-start">Keterangan</td>
+        <td class="text-wrap text-start" colspan="2"><%= pohon.keterangan %></td>
+      </tr>
+      <% if pohon.processed? %>
+        <tr class="detail <%= pohon.status %>">
+          <td class="text-start"><%= pohon.status_ket %> oleh</td>
+          <td class="text-wrap text-start" colspan="2"><%= pohon.diproses_oleh %></td>
+        </tr>
+        <tr class="detail <%= pohon.status %>">
+          <td class="text-start"><%= pohon.status_ket %> pada</td>
+          <td class="text-wrap text-start" colspan="2"><%= time_tag(pohon.diproses_pada, format: :hari_jam) %></td>
+        </tr>
+        <% if pohon.status_ket == 'Ditolak' %>
+          <tr class="detail <%= pohon.status %>">
+            <td class="text-start">Keterangan</td>
+            <td class="text-wrap text-start" colspan="2"><%= pohon.keterangan_proses %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    <% end %>
+  </table>
+</div>

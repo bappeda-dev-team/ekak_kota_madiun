@@ -1,0 +1,43 @@
+<table class="table table-bordered">
+  <tr>
+    <td class="text-start" style="width: 30px;">Rencana Kinerja
+      <% if size > 1 %>
+        - <%= no %>
+      <% end %>
+    </td>
+    <td class="text-wrap text-start" colspan="2"><%= sasaran %></td>
+  </tr>
+  <% sasaran.indikator_sasarans.each do |ind| %>
+    <tr>
+      <td class="text-wrap text-start">Indikator</td>
+      <td class="text-wrap text-start" colspan="2"><%= ind %></td>
+    </tr>
+    <tr>
+      <td class="text-wrap text-start">Target / Satuan</td>
+      <td class="text-wrap text-start" colspan="2"><%= ind.target_dan_satuan %></td>
+    </tr>
+  <% end %>
+  <% if role == 'eselon_4' %>
+    <tr>
+      <td class="text-start">Anggaran</td>
+      <td class="rankir-2 text-start" colspan="2">Rp. <%= pagu_pohon(sasaran, role) %></td>
+    </tr>
+    <tr data-controller="table-tematik">
+      <td class="text-start">SubKegiatan</td>
+      <td class="text-wrap subkegiatan text-start" colspan="2">
+        <p>
+          <%= sasaran.subkegiatan %>
+          (<%= sasaran.program_kegiatan&.kode_sub_giat %>)
+        </p>
+      </td>
+      <% indikator_sub = indikator_sub_rekin(@tahun, @opd, sasaran.program_kegiatan) %>
+      <td class="d-none detail text-start" data-table-tematik-target="indikators"><%= indikator_sub.dig(:indikator) %></td>
+      <td class="d-none detail text-start" data-table-tematik-target="indikators"><%= indikator_sub.dig(:target) %>
+        <%= indikator_sub.dig(:satuan) %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td class="text-start">Pelaksana</td>
+    <td class="text-wrap text-start" colspan="2"><%= sasaran.user %></td>
+  </tr>
+</table>

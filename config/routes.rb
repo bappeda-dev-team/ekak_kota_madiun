@@ -314,7 +314,8 @@ Rails.application.routes.draw do
       get :excel_kota
       get :pdf_pokin_kota
       get :pdf_cascading_kota
-      get :pdf_opd
+      get :pdf_pokin_opd
+      get :pdf_cascading_opd
       get :excel_opd
       get :rekap
       post :filter_rekap

@@ -460,7 +460,30 @@ class PohonKinerjaController < ApplicationController
     end
   end
 
-  def pdf_opd
+  def pdf_pokin_opd
+    @user = current_user
+    @strategic_id = params[:strategic_id]
+    @kode_opd = cookies[:opd]
+    @tahun = cookies[:tahun]
+    queries = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
+
+    @opd = queries.opd
+    @nama_opd = @opd.nama_opd
+
+    # @strategi_kota = queries.strategi_kota
+    # @tactical_kota = queries.tactical_kota
+    # @operational_kota = queries.operational_kota
+
+    @strategi_opd = queries.strategi_opd.filter { |ss| ss.id == @strategic_id.to_i }.take(1)
+    @tactical_opd = queries.tactical_opd
+    @operational_opd = queries.operational_opd
+    @staff_opd = queries.staff_opd
+    respond_to do |format|
+      format.html { render layout: 'blank' }
+    end
+  end
+
+  def pdf_cascading_opd
     @user = current_user
     @strategic_id = params[:strategic_id]
     @kode_opd = cookies[:opd]
