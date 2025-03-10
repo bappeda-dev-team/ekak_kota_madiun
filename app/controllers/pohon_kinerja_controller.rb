@@ -426,7 +426,7 @@ class PohonKinerjaController < ApplicationController
     render xlsx: "pohon_kota_excel", filename: @filename
   end
 
-  def pdf_kota
+  def pdf_pokin_kota
     @tahun = cookies[:tahun]
     tematik_id = params[:tematik]
     sub_tematik_id = params[:sub_tematik]
