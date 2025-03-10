@@ -37,7 +37,7 @@
   <% collections = @operational_tematiks.select { |str| str.pohon_ref_id == pohon.id } %>
   <% if collections.any? %>
     <ul class='childs'>
-      <%= render partial: 'cetaks/kota/pokin_operational',
+      <%= render partial: 'cetaks/kota/pokin/pokin_operational',
                  collection: collections,
                  as: :pohon %>
     </ul>

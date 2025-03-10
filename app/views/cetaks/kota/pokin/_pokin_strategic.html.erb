@@ -1,14 +1,14 @@
 <li>
-  <div class="tf-nc bg-white" style="width: 450px;">
+  <div class="tf-nc strategic-pohon" style="width: 450px;">
     <div class="pohon">
       <div class="pohon-title">
-        <h5 class="text-center"><strong>Sub Sub-Tematik Kota</strong></h5>
+        <h5 class="text-center"><strong>Strategic Kota</strong></h5>
       </div>
       <div class="pohon-body">
         <table class="table table-bordered">
           <tr>
-            <td class="text-start" width="30px">Sub Sub-Tema</td>
-            <td class="text-wrap text-start"><%= pohon.sub_tema %></td>
+            <td class="text-start" width="30px">Strategic Kota</td>
+            <td class="text-wrap text-start"><%= pohon.pohonable.strategi %></td>
           </tr>
           <% unless pohon.pohonable.blank? %>
             <% pohon.pohonable.indikators.each.with_index(1) do |indikator, i| %>
@@ -37,7 +37,7 @@
   <% collections = @tactical_tematiks.select { |str| str.pohon_ref_id == pohon.id } %>
   <% if collections.any? %>
     <ul class='childs'>
-      <%= render partial: 'cetaks/kota/pokin_tactical',
+      <%= render partial: 'cetaks/kota/pokin/pokin_tactical',
                  collection: collections,
                  as: :pohon %>
     </ul>

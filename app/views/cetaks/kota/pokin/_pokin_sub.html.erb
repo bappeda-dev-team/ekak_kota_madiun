@@ -35,10 +35,10 @@
     </div>
   </div>
   <ul class='childs'>
-    <%= render partial: 'cetaks/kota/pokin_strategic',
+    <%= render partial: 'cetaks/kota/pokin/pokin_strategic',
                collection: @strategi_tematiks.select { |str| str.pohon_ref_id == pohon.id },
                as: :pohon %>
-    <%= render partial: 'cetaks/kota/pokin_sub',
+    <%= render partial: 'cetaks/kota/pokin/pokin_sub_sub',
                collection: @sub_sub_tematik_kota.select { |sub| sub.pohon_ref_id == pohon.id },
                as: :pohon %>
   </ul>

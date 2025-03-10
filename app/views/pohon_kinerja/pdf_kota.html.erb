@@ -26,12 +26,32 @@
                 <td class="text-start" width="30px">Tahun</td>
                 <td class="text-wrap text-start"><%= @tahun %></td>
               </tr>
+              <% unless @tematik_kota.pohonable.blank? %>
+                <% @tematik_kota.pohonable.indikators.each.with_index(1) do |indikator, i| %>
+                  <tr>
+                    <td class="text-start" width="30px">Indikator
+                      <% if @tematik_kota.pohonable.indikators.size > 1  %>
+                        <%= i %>
+                      <% end %>
+                    </td>
+                    <td class="text-wrap text-start"><%= indikator %></td>
+                  </tr>
+                  <tr>
+                    <td class="text-start" width="30px">Target / Satuan</td>
+                    <td class="text-wrap text-start"><%= indikator.target %> <%= indikator.satuan %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+              <tr>
+                <td class="text-start" width="30px">Keterangan</td>
+                <td class="text-wrap text-start"><%= @tematik_kota.pohonable.keterangan %></td>
+              </tr>
             </table>
           </div>
         </div>
       </div>
       <ul data-pohon-tematik-target='dahan'>
-        <%= render partial: 'cetaks/kota/pokin_sub', locals: { pohon: @sub_tematik_kota } %>
+        <%= render partial: 'cetaks/kota/pokin/pokin_sub', locals: { pohon: @sub_tematik_kota } %>
       </ul>
     </li>
   </ul>
