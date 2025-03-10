@@ -1,0 +1,37 @@
+<li>
+  <div class="tf-nc operational-pohon" style="width: 450px;">
+    <div class="pohon">
+      <div class="pohon-title">
+        <h5 class="text-center"><strong>Operational Kota</strong></h5>
+      </div>
+      <div class="pohon-body">
+        <table class="table table-bordered">
+          <tr>
+            <td class="text-start" width="30px">Operational Kota</td>
+            <td class="text-wrap text-start"><%= pohon.pohonable.strategi %></td>
+          </tr>
+          <% unless pohon.pohonable.blank? %>
+            <% pohon.pohonable.indikators.each.with_index(1) do |indikator, i| %>
+              <tr>
+                <td class="text-start" width="30px">Indikator
+                  <% if pohon.pohonable.indikators.size > 1  %>
+                    <%= i %>
+                  <% end %>
+                </td>
+                <td class="text-wrap text-start"><%= indikator %></td>
+              </tr>
+              <tr>
+                <td class="text-start" width="30px">Target / Satuan</td>
+                <td class="text-wrap text-start"><%= indikator.target %> <%= indikator.satuan %></td>
+              </tr>
+            <% end %>
+          <% end %>
+          <tr>
+            <td class="text-start" width="30px">Keterangan</td>
+            <td class="text-wrap text-start"><%= pohon.pohonable.keterangan %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</li>

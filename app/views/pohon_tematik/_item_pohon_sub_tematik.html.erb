@@ -2,6 +2,12 @@
   <div class="pohon-title <%= pohon.pohonable.blank? ? 'bg-danger text-white' : '' %>">
     <h5 class="text-center"><strong>Sub-Tematik Kota</strong></h5>
   </div>
+  <%= link_to pdf_kota_pohon_kinerja_index_path(tematik: @tematik, sub_tematik: pohon.id),
+              class: "btn btn-tertiary w-100 mt-3",
+              target: "blank" do %>
+    <i class="fa fa-file-image"></i>
+    <span>Cetak Pohon Kinerja</span>
+  <% end %>
   <div class="pohon-body">
     <table class="table table-bordered <%= pohon.pohonable.blank? ? 'bg-danger text-white' : '' %>">
       <tr>
@@ -36,24 +42,24 @@
       <div class="row">
         <div class="col">
           <%= link_to edit_sub_tematik_pohon_tematik_path(pohon),
-             remote: true,
-             data: {
-                 controller: 'pohon-tematik',
-                 action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
-             },
-             class: 'btn btn-outline-info' do %>
+                      remote: true,
+                      data: {
+                        controller: 'pohon-tematik',
+                        action: 'ajax:complete->pohon-tematik#pindahPohon:prevent',
+                      },
+                      class: 'btn btn-outline-info' do %>
             <i class="fas fa-edit me-2"></i>
             <span>Edit</span>
           <% end %>
         </div>
         <div class="col">
           <%= link_to pohon_tematik_path(pohon),
-             method: :delete,
-             remote: true,
-             class: 'btn btn-outline-danger',
-             data: { confirm_swal: "Hapus Sub-Tema #{pohon.sub_tema}?",
-                  action: 'ajax:success->pohon-tematik#ajaxDelete'
-             } do %>
+                      method: :delete,
+                      remote: true,
+                      class: 'btn btn-outline-danger',
+                      data: { confirm_swal: "Hapus Sub-Tema #{pohon.sub_tema}?",
+                        action: 'ajax:success->pohon-tematik#ajaxDelete'
+                      } do %>
             <i class="fa fa-trash-alt me-2"></i>
             <span>Hapus</span>
           <% end %>

@@ -1,0 +1,45 @@
+<li>
+  <div class="tf-nc bg-white" style="width: 450px;">
+    <div class="pohon">
+      <div class="pohon-title">
+        <h5 class="text-center"><strong>Sub-Tematik Kota</strong></h5>
+      </div>
+      <div class="pohon-body">
+        <table class="table table-bordered">
+          <tr>
+            <td class="text-start" width="30px">Sub-Tema</td>
+            <td class="text-wrap text-start"><%= pohon.sub_tema %></td>
+          </tr>
+          <% unless pohon.pohonable.blank? %>
+            <% pohon.pohonable.indikators.each.with_index(1) do |indikator, i| %>
+              <tr>
+                <td class="text-start" width="30px">Indikator
+                  <% if pohon.pohonable.indikators.size > 1  %>
+                    <%= i %>
+                  <% end %>
+                </td>
+                <td class="text-wrap text-start"><%= indikator %></td>
+              </tr>
+              <tr>
+                <td class="text-start" width="30px">Target / Satuan</td>
+                <td class="text-wrap text-start"><%= indikator.target %> <%= indikator.satuan %></td>
+              </tr>
+            <% end %>
+          <% end %>
+          <tr>
+            <td class="text-start" width="30px">Keterangan</td>
+            <td class="text-wrap text-start"><%= pohon.pohonable.keterangan %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <ul class='childs'>
+    <%= render partial: 'cetaks/kota/pokin_strategic',
+               collection: @strategi_tematiks.select { |str| str.pohon_ref_id == pohon.id },
+               as: :pohon %>
+    <%= render partial: 'cetaks/kota/pokin_sub',
+               collection: @sub_sub_tematik_kota.select { |sub| sub.pohon_ref_id == pohon.id },
+               as: :pohon %>
+  </ul>
+</li>

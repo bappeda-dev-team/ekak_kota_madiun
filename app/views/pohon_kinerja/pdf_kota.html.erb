@@ -1,58 +1,38 @@
-<%= content_for :html_title, "POHON KINERJA KOTA" %>
-<div class="mb-5">
+<%= content_for :html_title, "POHON KINERJA KOTA MADIUN" %>
+<div  class="mb-5">
   <button id="cetak" class="btn btn-tertiary w-100"
-        data-controller="pohon-kinerja"
-        data-pohon-kinerja-tahun-value="<%= @tahun %>"
-        data-action="click->pohon-kinerja#cetak">DOWNLOAD POHON KINERJA</button>
+          data-controller="pohon-kinerja"
+          data-pohon-kinerja-nama-opd-value="KOTA"
+          data-pohon-kinerja-tahun-value="<%= @tahun %>"
+          data-pohon-kinerja-nama-pohon-value="<%= @tematik_kota.pohonable.to_s.truncate(10) %>"
+          data-action="click->pohon-kinerja#cetakOpd">DOWNLOAD POHON KINERJA KOTA</button>
 </div>
-<div class="tf-tree tf-gap-lg" style="font-size: 5px;" id='pokin-kota'>
-  <h1>POHON KINERJA KOTA MADIUN TAHUN <%= @tahun %></h1>
+
+<div class="tf-tree tf-gap mt-2 show text-center" data-controller="pohon-kinerja" id='pokin-opd'>
   <ul>
     <li>
-      <span class="tf-nc">Kota Madiun</span>
-      <% if @isu_strategis_kota.any? %>
-        <ul>
-          <% @isu_strategis_kota.each do |isu_kota| %>
-            <li>
-              <div class="tf-nc">
-                <p class="text-center"><strong>ISU STRATEGIS</strong></p>
-                <hr/>
-                <span class="text-center"><%= isu_kota.isu_strategis %></span>
-              </div>
-              <% if isu_kota&.strategi_kotums.any? %>
-                <ul>
-                  <% isu_kota.strategi_kota_tahun(@tahun).each do |kotum| %>
-                    <li>
-                      <%= render 'item_pokin', judul: "STRATEGI KOTA", strategi: kotum, tipe: 'kota' %>
-                      <% if kotum&.pohons.any? %>
-                        <ul>
-                          <% kotum.pohons.each do |opd_pohon| %>
-                            <li>
-                              <div class="tf-nc">
-                                <p class="text-center"><strong><%= opd_pohon.opd.nama_opd %></strong></p>
-                              </div>
-                              <% if opd_pohon&.strategis.any? %>
-                                <ul>
-                                  <% opd_pohon.strategis.each do |strategi| %>
-                                    <li>
-                                      <%= render 'item_pokin', judul: "STRATEGIC", strategi: strategi %>
-                                    </li>
-                                  <% end %>
-                                </ul>
-                              <% end %>
-                            </li>
-                          <% end %>
-                        </ul>
-                      <% end %>
-                    </li>
-                  <% end %>
-                </ul>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
+      <div class="tf-nc bg-white" style="width: 450px;" data-pohon-kinerja-target="opd">
+        <div class="pohon">
+          <div class="pohon-title">
+            <h5 class="text-center"><strong>Tematik Kota</strong></h5>
+          </div>
+          <div class="pohon-body">
+            <table class="table table-bordered">
+              <tr>
+                <td class="text-start" width="30px">Tema</td>
+                <td class="text-wrap text-start fw-bolder"><%= @tematik_kota.pohonable.to_s %></td>
+              </tr>
+              <tr>
+                <td class="text-start" width="30px">Tahun</td>
+                <td class="text-wrap text-start"><%= @tahun %></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <ul data-pohon-tematik-target='dahan'>
+        <%= render partial: 'cetaks/kota/pokin_sub', locals: { pohon: @sub_tematik_kota } %>
+      </ul>
     </li>
   </ul>
 </div>
-<%= render 'shared/modal_template', modal_name: 'komentar' %>
