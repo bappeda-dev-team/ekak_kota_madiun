@@ -123,7 +123,6 @@ export default class extends ApplicationController {
     // if failed, attach server html to errorContainer id
     const [message, status] = event.detail;
     const { resText, html_content } = JSON.parse(message.response);
-          super.modalHider();
     if (status == "OK") {
       Swal.fire({
         title: "Sukses",
