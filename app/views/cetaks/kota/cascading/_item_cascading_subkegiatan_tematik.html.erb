@@ -4,7 +4,7 @@
       <table class="table table-bordered">
         <tr>
           <td class="text-start" style="width: 23%;">Pagu</td>
-          <td class="rankir-2 text-start">Rp. <%= number_with_delimiter(pohon.pagu) %></td>
+          <td class="rankir-2 text-start"><%= number_to_currency(pohon.pagu, locale: :id) %></td>
         </tr>
       </table>
     </div>

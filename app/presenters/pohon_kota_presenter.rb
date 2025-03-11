@@ -3,8 +3,9 @@ class PohonKotaPresenter
 
   delegate :id, :to_param, :metadata,
            to: :pohon
-  def initialize(pohon)
+  def initialize(pohon, selected = nil)
     @pohon = pohon
+    @selected = selected
   end
 
   def real
@@ -146,10 +147,57 @@ class PohonKotaPresenter
   end
 
   def pagu
-    sasarans = sub_pohon_program_elements
+    sasarans = fetch_sasarans(@pohon, role)
     sasarans.sum(&:total_anggaran)
   rescue NoMethodError
     0
+  end
+
+  def fetch_sasarans(pohon, role)
+    return [] unless pohon
+
+    case role
+    when 'pohon_kota'
+      childs = deep_fetch(pohon, 4)
+    when 'sub_pohon_kota'
+      childs = deep_fetch(pohon, 3)
+    when 'sub_sub_pohon_kota'
+      childs = deep_fetch(pohon, 2)
+    when 'eselon_2'
+      childs = deep_fetch(pohon, 1)
+    when 'eselon_3'
+      childs = fetch_pohonable(pohon)
+    when 'eselon_4'
+      return pohon.pohonable&.sasarans&.select { |sas| sas.program_kegiatan.presence } || []
+    else
+      return []
+    end
+
+    childs.flat_map { |child| child.sasarans if child.respond_to?(:sasarans) }.compact_blank
+  end
+
+  def deep_fetch(pohon, depth)
+    return [] if pohon.nil? || depth.zero?
+
+    sub_pohons = if depth == 4 && @selected.present?
+                   pohon.sub_pohons.where(id: @selected.to_i)
+                 else
+                   pohon.sub_pohons
+                 end
+    sub_pohons.flat_map do |sub|
+      # Ensure `pohonable` is not nil before calling `.flat_map`
+      next unless sub.respond_to?(:sub_pohons)
+
+      # Fetch pohonable objects at each level
+      pohonables = sub.sub_pohons.map(&:pohonable).compact_blank
+
+      # Recursively go deeper
+      pohonables + deep_fetch(sub, depth - 1)
+    end.compact_blank
+  end
+
+  def fetch_pohonable(pohon)
+    pohon.sub_pohons.map(&:pohonable).compact_blank
   end
 
   def program_pohon

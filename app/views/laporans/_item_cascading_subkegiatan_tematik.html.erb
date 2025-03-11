@@ -4,7 +4,7 @@
       <table class="table table-bordered mb-3">
         <tr>
           <td class="text-start" style="width: 23%;">Pagu</td>
-          <td class="rankir-2 text-start">Rp. <%= number_with_delimiter(pohon.pagu) %></td>
+          <td class="rankir-2 text-start"><%= number_to_currency(pohon.pagu, locale: :id) %></td>
         </tr>
       </table>
     </div>
@@ -38,18 +38,18 @@
             </tr>
           <% else %>
             <tr data-controller="table-tematik">
-            <td class="text-start">Program</td>
-            <td class="text-wrap text-start" colspan="2">
-              <p>
-                <%= program&.nama_program || '-' %>
-                (<%= program&.kode_program || '-' %>)
-              </p>
+              <td class="text-start">Program</td>
+              <td class="text-wrap text-start" colspan="2">
+                <p>
+                  <%= program&.nama_program || '-' %>
+                  (<%= program&.kode_program || '-' %>)
+                </p>
 
-              <button type="button" class="mt-3 btn btn-sm btn-outline-primary" data-action="table-tematik#toggleDetail" data-table-tematik-show-param="false">Tampilkan Indikator</button>
-            </td>
-            <% indikator_prg = indikator_prg_rekin(@tahun, @opd, program) %>
-            <td class="d-none detail text-start" data-table-tematik-target="indikators"><%= indikator_prg.dig(:indikator) %></td>
-            <td class="d-none detail text-start" data-table-tematik-target="indikators"><%= indikator_prg.dig(:target) %> <%= indikator_prg.dig(:satuan) %></td>
+                <button type="button" class="mt-3 btn btn-sm btn-outline-primary" data-action="table-tematik#toggleDetail" data-table-tematik-show-param="false">Tampilkan Indikator</button>
+              </td>
+              <% indikator_prg = indikator_prg_rekin(@tahun, @opd, program) %>
+              <td class="d-none detail text-start" data-table-tematik-target="indikators"><%= indikator_prg.dig(:indikator) %></td>
+              <td class="d-none detail text-start" data-table-tematik-target="indikators"><%= indikator_prg.dig(:target) %> <%= indikator_prg.dig(:satuan) %></td>
             </tr>
           <% end %>
         </table>

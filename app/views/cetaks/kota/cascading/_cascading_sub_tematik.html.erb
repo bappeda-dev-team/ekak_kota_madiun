@@ -1,7 +1,7 @@
 <% presenter = PohonKotaPresenter.new(pohon) %>
 <li>
   <div class="tf-nc bg-white" style="width: 450px;">
-    <%= render partial: 'cetaks/kota/cascading/item_cascading_tematik', locals: { pohon: pohon } %>
+    <%= render partial: 'cetaks/kota/cascading/item_cascading_tematik', locals: { presenter: presenter } %>
   </div>
   <ul class='childs'>
     <%= render partial: 'cetaks/kota/cascading/cascading_strategic',

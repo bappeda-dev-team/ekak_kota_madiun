@@ -1,4 +1,9 @@
-<% presenter = PohonKotaPresenter.new(pohon) %>
-<div class="tf-nc bg-white" style="width: 450px;" data-pohon-kinerja-target="opd">
-  <%= render partial: 'cetaks/kota/cascading/item_cascading_tematik', locals: { pohon: pohon } %>
-</div>
+<% presenter = PohonKotaPresenter.new(pohon, @sub_tematik_kota.id) %>
+<li>
+  <div class="tf-nc bg-white" style="width: 450px;" data-pohon-kinerja-target="opd">
+    <%= render partial: 'cetaks/kota/cascading/item_cascading_tematik', locals: { presenter: presenter } %>
+  </div>
+  <ul data-pohon-tematik-target='dahan'>
+    <%= render partial: 'cetaks/kota/cascading/cascading_sub_tematik', locals: { pohon: @sub_tematik_kota } %>
+  </ul>
+</li>

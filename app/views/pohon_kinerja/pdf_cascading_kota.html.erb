@@ -10,11 +10,6 @@
 
 <div class="tf-tree tf-gap-sm mt-2 show text-center" data-controller="pohon-kinerja" id='pokin-opd'>
   <ul>
-    <li>
-      <%= render partial: 'cetaks/kota/cascading/cascading_tematik', locals: { pohon: @tematik_kota } %>
-      <ul data-pohon-tematik-target='dahan'>
-        <%= render partial: 'cetaks/kota/cascading/cascading_sub_tematik', locals: { pohon: @sub_tematik_kota } %>
-      </ul>
-    </li>
+    <%= render partial: 'cetaks/kota/cascading/cascading_tematik', locals: { pohon: @tematik_kota } %>
   </ul>
 </div>
