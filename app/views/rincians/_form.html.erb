@@ -20,6 +20,7 @@
   <div class="field">
     <%= form.label :jenis_layanan, { class: "form-label" } %>
     <%= form.text_area :jenis_layanan, { class: "form-control" ,value: @sasaran.jenis_layanan } %>
+    <small class="form-text text-sm">Contoh: Layanan konsultasi perencanaan, layanan pengaduan masyarakat</small>
   </div>
   <div class="model-layanan" data-controller="rincian-layanan"
        data-action="modelLayanan@document->rincian-layanan#aktifkanJalurLayanan"
@@ -44,20 +45,24 @@
       <%= form.text_area :jalur_layanan, { class: "form-control",
         placeholder: 'Inputkan alat yang digunakan untuk melakukan pelayanan online',
         data: {rincian_layanan_target: "inputJalur" } } %>
+      <small class="form-text text-sm">Contoh: Zoom meeting, Whatsapp, SISTEM INFORMASI PERIZINAN</small>
     </div>
 
   </div>
   <div class="field">
     <%= form.label :penerima_manfaat, { class: "form-label" } %>
-    <%= form.text_area :penerima_manfaat, { class: "form-control" ,value: @sasaran.penerima_manfaat } %>
+    <%= form.text_area :penerima_manfaat, { class: "form-control" ,value: @sasaran.penerima_manfaat, placeholder: 'Sasaran penerima manfaat' } %>
+    <small class="form-text text-sm">Contoh: Masyarakat Kota Madiun, Penduduk Kecamatan Taman, pegawai Badan Kepegawaian</small>
   </div>
   <div class="field">
     <%= form.label :data_terpilah, { class: "form-label" } %>
-    <%= form.text_area :data_terpilah, { class: "form-control" } %>
+    <%= form.text_area :data_terpilah, { class: "form-control", placeholder: 'Data penerima manfaat' } %>
+    <small class="form-text text-sm">Contoh: data pegawai, statistik pegawai, jumlah asn</small>
   </div>
   <div class="field">
     <%= form.label :lokasi_pelaksanaan, { class: "form-label" } %>
-    <%= form.text_area :lokasi_pelaksanaan, { class: "form-control" } %>
+    <%= form.text_area :lokasi_pelaksanaan, { class: "form-control", placeholder: 'Pelaksanaan rencana kinerja' } %>
+    <small class="form-text text-sm">Contoh: Kota Madiun, Kecamatan Taman, Badan Kepegawaian</small>
   </div>
   <div class="actions">
     <%= form.submit %>

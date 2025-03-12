@@ -17,6 +17,8 @@ class JabatanUser < ApplicationRecord
   belongs_to :opd, primary_key: 'kode_unik_opd', foreign_key: 'kode_opd'
   belongs_to :user, primary_key: 'nik', foreign_key: 'nip_asn'
 
+  scope :aktif, -> { where(status: %w[aktif plt]) }
+
   STATUS_JABATAN_USER = %w[aktif pensiun plt].freeze
 
   def details

@@ -471,9 +471,11 @@ class User < ApplicationRecord
   # list opd dalam default dan jabatan
   # untuk menampung opd plt
   def all_kode_opd
-    opd_default = [kode_opd]
-    opd_jabatan = jabatan_users.map { |jab| jab.opd.kode_opd }
-    opd_default.concat opd_jabatan
+    if jabatan_users.aktif.any?
+      jabatan_users.map { |jab| jab.opd.kode_opd }
+    else
+      [kode_opd]
+    end
   end
 
   # jabatan_users with status and opd
