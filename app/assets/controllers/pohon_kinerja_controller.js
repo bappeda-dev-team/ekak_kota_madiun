@@ -175,6 +175,7 @@ export default class extends Controller {
                 await html2canvas(node, {
                         windowWidth: width + 50,
                         windowHeight: height,
+                        scale: 0.7,
                 })
                         .then(canvas => {
                                 canvas.toBlob((blob) => {
