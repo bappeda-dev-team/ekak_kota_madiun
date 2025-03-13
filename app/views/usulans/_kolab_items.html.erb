@@ -28,7 +28,12 @@
     <td class="fw-bolder text-center">PROGRAM</td>
     <td class="fw-bolder text-center">PAGU RENCANA KINERJA</td>
     <td class="fw-bolder text-center">INOVASI</td>
-    <td class="fw-bolder text-center" colspan="2"></td>
+    <% if !cetak %>
+      <td class="fw-bolder text-center" colspan="2"></td>
+    <% else %>
+      <td class="fw-bolder text-center"></td>
+    <% end %>
+    <td class="fw-bolder text-center">Keterangan</td>
   </tr>
   <% if inovasi.kolabs.any? %>
     <% inovasi.kolabs.order(:id).each do |kolab| %>
@@ -61,12 +66,13 @@
         <% usulans = rekin_kolabs %>
         <% usulan = usulans&.first %>
         <%= render 'usulans/rekin', usulan: usulan, cetak: cetak %>
-        <td class="fw-bolder text-center" colspan="2"></td>
+        <td class="fw-bolder text-center"></td>
+        <td <%= rowspan_kolabs.positive? ? "rowspan=#{rowspan_kolabs}" : '' %> class="text-gray-900 text-wrap"><%= kolab.keterangan %></td>
       </tr>
       <% usulans.drop(1).each do |usulan| %>
         <tr class="skip rekins" id="<%= dom_id(usulan) %>">
           <%= render 'usulans/rekin', usulan: usulan, cetak: cetak %>
-          <td class="fw-bolder text-center" colspan="2"></td>
+          <td class="fw-bolder text-center"></td>
         </tr>
       <% end %>
     <% end %>

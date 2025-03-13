@@ -6,8 +6,8 @@
 <td class="text-gray-900"><%= number_to_currency(usulan&.pagu_rekin, unit: "Rp. ", separator: ".") %></td>
 <td class="text-gray-900 text-wrap"><%= usulan&.inovasi_rekin %></td>
 <% if !cetak %>
-  <td class="text-wrap">
-    <% if usulan&.sasaran.present? %>
+  <% if usulan&.sasaran.present? %>
+    <td class="text-wrap">
       <div class="d-grid gap-3">
         <%= link_to show_pokin_user_sasaran_path(usulan.sasaran), target: "_blank", rel: "nofollow",
                     class: "btn btn-sm btn-primary" do %>
@@ -32,6 +32,12 @@
           <span>ManRisk</span>
         <% end %>
       </div>
-    <% end %>
-  </td>
+    </td>
+  <% else %>
+    <td class="align-middle">
+      <p class="alert alert-danger">
+        Belum Terdapat Rencana Kinerja
+      </p>
+    </td>
+  <% end %>
 <% end %>

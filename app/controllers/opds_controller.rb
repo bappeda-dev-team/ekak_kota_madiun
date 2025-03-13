@@ -32,13 +32,14 @@ class OpdsController < ApplicationController
     scope_filter = params[:scope] || ''
     nama_opd = params[:q]
     lembaga_id = cookies[:lembaga_id]
+    kode_opd_selected = params[:kode_opd] || params[:selected]
     @opds = if scope_filter == 'all'
               Opd.opd_resmi_kota
-                 .where(lembaga_id: lembaga_id, kode_unik_opd: params[:selected])
+                 .where(lembaga_id: lembaga_id, kode_unik_opd: kode_opd_selected)
                  .presence || Opd.opd_resmi_kota.where(lembaga_id: lembaga_id)
             else
               Opd.opd_resmi_kota
-                 .where(lembaga_id: lembaga_id, kode_unik_opd: params[:selected])
+                 .where(lembaga_id: lembaga_id, kode_unik_opd: kode_opd_selected)
             end
 
     @opds = @opds.where("nama_opd ILIKE ?", "%#{nama_opd}%")

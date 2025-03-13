@@ -78,6 +78,10 @@ class Inovasi < ApplicationRecord
     kolabs.any? { |kl| kl.ada_kolab_opd?(kode_opd) }
   end
 
+  def keterangan_kolabs_opd(kode_opd)
+    kolabs.select { |kl| kl.ada_kolab_opd?(kode_opd) }&.first&.keterangan
+  end
+
   def inovasi_sasaran_user(kode_opd_user)
     sasaran.user.opd.kode_unik_opd == kode_opd_user
   rescue NoMethodError
