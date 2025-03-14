@@ -37,6 +37,10 @@ export default class extends Controller {
       width: "100%",
       theme: "bootstrap-5",
       dropdownParent: this.parentValue,
+      escapeMarkup: function (markup) {
+        // Let our HTML (the <b> tag) pass through
+        return markup;
+      }
     };
     return options;
   }

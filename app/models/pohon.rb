@@ -193,7 +193,7 @@ class Pohon < ApplicationRecord
     if aktif?
       pohonable.tema
     else
-      "*#{pohonable.tema}* (non-aktif)"
+      "<span class='text-danger'>*#{pohonable.tema}* (non-aktif)</span>"
     end
   end
 end
