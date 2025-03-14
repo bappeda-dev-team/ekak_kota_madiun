@@ -188,4 +188,12 @@ class Pohon < ApplicationRecord
   def non_aktif?
     !is_active
   end
+
+  def tema_keterangan_aktif
+    if aktif?
+      pohonable.tema
+    else
+      "*#{pohonable.tema}* (non-aktif)"
+    end
+  end
 end
