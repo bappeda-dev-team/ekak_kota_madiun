@@ -126,6 +126,14 @@ class User < ApplicationRecord
     end
   end
 
+  def nama_opd_terakhir
+    if jabatan_users.any?
+      jabatan_users.last.opd.nama_opd
+    else
+      opd.nama_opd
+    end
+  end
+
   def tahun_jabatan
     if jabatan_users.any?
       jabatan_users.last.tahun
