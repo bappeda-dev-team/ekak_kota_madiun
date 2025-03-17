@@ -75,6 +75,12 @@ module SasaransHelper
     end
   end
 
+  def status_pokin_kosong(strategi_sasaran)
+    return unless strategi_sasaran == 'Kosong'
+
+    '<span class="badge badge-lg bg-danger text-dark w-100">POHON KINERJA BELUM TERISI</span>'.html_safe
+  end
+
   def status_sasaran_pokin(status_sasaran)
     if status_sasaran == 'siap_ditarik'
       '<span class="badge badge-lg bg-success w-100">SIAP DITARIK SKP</span>'.html_safe
