@@ -13,7 +13,7 @@ class PelaksanaController < ApplicationController
   def edit
     @role = params[:role]
     @roles = [@role]
-    if @role == 'eselon_3'
+    if @role == 'eselon_2' || @role == 'eselon_3'
       @roles.push('eselon_2b')
     elsif @role == 'eselon_4'
       @roles.push('staff')
