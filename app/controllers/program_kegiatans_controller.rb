@@ -14,7 +14,7 @@ class ProgramKegiatansController < ApplicationController
     query = param.strip.squish
 
     # return if query.size < 5
-    opd = current_user.opd
+    opd = current_user.opd_terakhir
 
     kode_opd = if opd.kode_unik_opd.last == '0'
                  opd.kode_unik_opd
