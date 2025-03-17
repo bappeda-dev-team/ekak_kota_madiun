@@ -32,8 +32,11 @@ class DaftarResiko
     sasaran_bawahans = strategi_bawahans.uniq.flat_map do |str|
       sasarans_filter(tahun, str.sasarans.dengan_sub_kegiatan)
     end
+    # altering butuh verif / tidak
+    # untuk menampilkan button Edit Dampak
+    # atau Verifikasi
     sasaran_bawahans.compact_blank!.flatten.group_by(&:program_kegiatan)
-                    .transform_values { |sas| sas.each { |ss| ss.butuh_verifikasi = true } }
+                    .transform_values { |sas| sas.each { |ss| ss.nip_asn != nip && ss.butuh_verifikasi = true } }
   end
 
   def daftar_resiko_asn(nip: '')
