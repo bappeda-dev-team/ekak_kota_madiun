@@ -57,7 +57,7 @@
       <% unless guest? %>
         <div class="d-grid gap-3">
           <% unless laporan == "admin" %>
-            <% if eselon_x?('eselon_4', 'staff', 'admin', 'super_admin') && !show_sasaran.butuh_verifikasi %>
+            <% if eselon_x?('eselon_4', 'staff', 'admin', 'super_admin') %>
               <%= link_to sasaran_program_opd_add_dampak_resiko_path(show_sasaran, nomor_sasaran: nomor, laporan: laporan),
                           { remote: true,
                             class: 'btn btn-sm btn-tertiary',
