@@ -44,10 +44,10 @@ class DaftarResiko
   end
 
   def daftar_resiko_plt(nip: '')
-    verifikasi_list = daftar_resiko_eselon3(nip: nip)
-    manrisk_pelaksana = daftar_resiko_asn(nip: nip)
+    daftar_resiko_eselon3(nip: nip)
+    # manrisk_pelaksana = daftar_resiko_asn(nip: nip)
 
-    verifikasi_list.merge manrisk_pelaksana
+    # verifikasi_list.merge manrisk_pelaksana
   end
 
   def daftar_resiko_sasaran(sasaran_id: '')
