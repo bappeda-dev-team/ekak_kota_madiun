@@ -127,6 +127,7 @@ Rails.application.routes.draw do
       patch :update_iku
       patch :update_realisasi
       delete :hide_iku
+      delete :hide_iku_indikator_sasaran
       delete :hide_iku_sasaran
     end
   end

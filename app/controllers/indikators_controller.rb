@@ -193,7 +193,7 @@ class IndikatorsController < ApplicationController
                     .by_periode(@tahun_bener)
     sasaran_opd = pokin_opd.strategi_opd.map(&:sasarans).flatten.compact_blank
     iku_opd = tujuan_opd + sasaran_opd
-    @iku_opd = iku_opd.map(&:indikators).compact_blank.flatten
+    @iku_opd = iku_opd.flat_map { |iku| iku.indikators.shown }.compact_blank
 
     respond_to do |format|
       format.html do
@@ -381,10 +381,35 @@ class IndikatorsController < ApplicationController
   end
 
   def hide_iku
+    partial = params[:partial]
+    tahun = params[:tahun]
     @indikator = Indikator.find(params[:id])
     @indikator.toggle! :is_hidden
-    render json: { resText: 'IKU Disembunyikan' }.to_json,
-           status: :ok
+    if partial.present?
+      render json: { resText: 'Berhasil diubah',
+                     html_content: html_content({ indikator: @indikator, no_iku: params[:no_iku], tahun: tahun },
+                                                partial: partial) }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'IKU Disembunyikan' }.to_json,
+             status: :ok
+    end
+  end
+
+  def hide_iku_indikator_sasaran
+    partial = params[:partial]
+    tahun = params[:tahun]
+    @indikator = IndikatorSasaran.find(params[:id])
+    @indikator.toggle! :is_hidden
+    if partial.present?
+      render json: { resText: 'Berhasil diubah',
+                     html_content: html_content({ indikator: @indikator, no_iku: params[:no_iku], tahun: tahun },
+                                                partial: partial) }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'IKU Disembunyikan' }.to_json,
+             status: :ok
+    end
   end
 
   def hide_iku_sasaran

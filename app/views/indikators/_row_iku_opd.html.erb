@@ -1,0 +1,39 @@
+<tr id="<%= dom_id(indikator) %>" data-controller="row" class="<%= indikator.is_hidden ? 'bg-gray-300' : 'bg-white' %>">
+  <td class="text-gray-900 text-wrap border" width='20px' scope="row"><%= no_iku %></td>
+  <td class="text-gray-900 text-wrap border"><%= indikator || '-' %></td>
+  <td class="text-gray-900 border">
+    <div class="d-grid gap-2">
+      <% if indikator.class.name == 'Indikator' %>
+        <%= render(ButtonToggleHideComponent.new(
+          title: 'IKU',
+          is_hidden: indikator.is_hidden,
+          action: 'ajax:complete->row#processAjax:prevent',
+          path: hide_iku_indikator_path(indikator.id,
+                                        no_iku: no_iku,
+                                        tahun: tahun,
+                                        partial: 'indikators/row_iku_opd'))
+        ) %>
+      <% else %>
+        <%= render(ButtonToggleHideComponent.new(
+          title: 'IKU',
+          is_hidden: indikator.is_hidden,
+          action: 'ajax:complete->row#processAjax:prevent',
+          path: hide_iku_indikator_sasaran_indikator_path(indikator.id,
+                                                          no_iku: no_iku,
+                                                          tahun: tahun,
+                                                          partial: 'indikators/row_iku_opd'))
+        ) %>
+      <% end %>
+    </div>
+  </td>
+  <td class="text-gray-900 text-wrap border"><%= indikator&.rumus_perhitungan || '-' %></td>
+  <td class="text-gray-900 text-wrap border"><%= indikator&.sumber_data || '-' %></td>
+  <% if indikator.class.name == 'IndikatorSasaran' %>
+    <td class="text-gray-900 text-wrap border"><%= indikator.target %></td>
+    <td class="text-gray-900 text-wrap border"><%= indikator.satuan %></td>
+  <% else %>
+    <% target = indikator.targets.find_by(tahun: tahun) %>
+    <td class="text-gray-900 text-wrap border"><%= target.target %></td>
+    <td class="text-gray-900 text-wrap border"><%= target.satuan %></td>
+  <% end %>
+</tr>
