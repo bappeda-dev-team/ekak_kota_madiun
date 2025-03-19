@@ -1,0 +1,38 @@
+<div data-controller="print" data-print-title-value="RENSTRA">
+  <button class="m-3 btn btn-outline-danger no-print" data-action="click->print#print">
+    <span class="far fa-file-pdf me-2"></span>
+    Cetak PDF
+  </button>
+  <div data-print-target="document" class="w-100" id="cetak">
+    <table class="table align-items-center">
+      <thead class="thead-tujuan">
+        <tr class="header-tujuan">
+          <th class="border" scope="col" width="20px">No.</th>
+          <th class="border" scope="col">Indikator</th>
+          <th class="border text-center" scope="col">Rumus Perhitungan</th>
+          <th class="border text-center" scope="col">Sumber Data</th>
+          <th class="border" scope="col" width="50px">Target</th>
+          <th class="border" scope="col">Satuan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @iku_opd.each.with_index(1) do |indikator, no_iku| %>
+          <tr>
+            <td class="text-gray-900 text-wrap border" width='20px' scope="row"><%= no_iku %></td>
+            <td class="text-gray-900 text-wrap border"><%= indikator || '-' %></td>
+            <td class="text-gray-900 text-wrap border"><%= indikator&.rumus_perhitungan || '-' %></td>
+            <td class="text-gray-900 text-wrap border"><%= indikator&.sumber_data || '-' %></td>
+            <% if indikator.class.name == 'IndikatorSasaran' %>
+              <td class="text-gray-900 text-wrap border"><%= indikator.target %></td>
+              <td class="text-gray-900 text-wrap border"><%= indikator.satuan %></td>
+            <% else %>
+              <% target = indikator.targets.find_by(tahun: @tahun_bener) %>
+              <td class="text-gray-900 text-wrap border"><%= target.target %></td>
+              <td class="text-gray-900 text-wrap border"><%= target.satuan %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

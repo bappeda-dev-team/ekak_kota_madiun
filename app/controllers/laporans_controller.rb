@@ -362,6 +362,10 @@ class LaporansController < ApplicationController
     render layout: false
   end
 
+  def status_rencana_kinerja
+    handle_filter_status_rencana_kinerja
+  end
+
   private
 
   def set_program_kegiatans
@@ -374,5 +378,17 @@ class LaporansController < ApplicationController
     @user = current_user
     @kode_opd = cookies[:opd]
     @tahun = cookies[:tahun]
+  end
+
+  def handle_filter_status_rencana_kinerja
+    filter_query = params[:filter_query]
+    if filter_query == 'opd'
+      kode_opd = params[:opd]
+      @opd = Opd.find_by(kode_unik_opd: kode_opd)
+      @users = @opd.users.non_admin.aktif
+    else
+      @opd = ''
+      @users = []
+    end
   end
 end

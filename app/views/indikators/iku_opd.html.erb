@@ -5,12 +5,23 @@
 <% end %>
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout', title: "IKU #{@nama_opd} - #{@tahun}" do %>
+    <div class="cetak d-grid gap-3">
+      <%= link_to cetak_iku_opd_indikators_path(tahun: @tahun, kode_opd: @kode_opd),
+                  class:"m-3 btn btn-outline-danger",
+                  target: "_blank", rel: "noopener" do %>
+        <span class="far fa-file-pdf me-2"></span>
+        Cetak PDF IKU
+      <% end %>
+    </div>
     <div class="table-responsive mb-5">
       <table class="table align-items-center">
         <thead class="thead-tujuan">
           <tr class="header-tujuan">
             <th class="border" scope="col" width="20px">No.</th>
             <th class="border" scope="col">Indikator</th>
+            <th class="border" scope="col">Aksi</th>
+            <th class="border text-center" scope="col">Rumus Perhitungan</th>
+            <th class="border text-center" scope="col">Sumber Data</th>
             <th class="border" scope="col" width="50px">Target</th>
             <th class="border" scope="col">Satuan</th>
           </tr>
@@ -20,6 +31,18 @@
             <tr>
               <td class="text-gray-900 text-wrap border" width='20px' scope="row"><%= no_iku %></td>
               <td class="text-gray-900 text-wrap border"><%= indikator || '-' %></td>
+              <td class="text-gray-900 border">
+                <div class="d-grid gap-2">
+                  <%= render(DeleteRowButtonComponent.new(
+                    message: 'Sembunyikan IKU ?',
+                    title: 'Sembunyikan IKU',
+                    icon: 'fas fa-eye-slash',
+                    path: hide_iku_indikator_path(indikator.id))
+                  ) %>
+                </div>
+              </td>
+              <td class="text-gray-900 text-wrap border"><%= indikator&.rumus_perhitungan || '-' %></td>
+              <td class="text-gray-900 text-wrap border"><%= indikator&.sumber_data || '-' %></td>
               <% if indikator.class.name == 'IndikatorSasaran' %>
                 <td class="text-gray-900 text-wrap border"><%= indikator.target %></td>
                 <td class="text-gray-900 text-wrap border"><%= indikator.satuan %></td>

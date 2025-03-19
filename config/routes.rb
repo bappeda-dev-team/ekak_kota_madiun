@@ -105,6 +105,7 @@ Rails.application.routes.draw do
       get :kegiatan_renja_opd
       get :subkegiatan_renja_opd
       get :iku_opd
+      get :cetak_iku_opd
       get :lppd_outcome
       get :lppd_output
       get :spm_outcome
@@ -686,6 +687,7 @@ Rails.application.routes.draw do
       post :tim_kerja_view
       get :pdf_kak_opd
       get :custom_tanggal_cetak
+      get :status_rencana_kinerja
     end
 
     member do

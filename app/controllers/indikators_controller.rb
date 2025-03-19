@@ -71,13 +71,28 @@ class IndikatorsController < ApplicationController
 
   def iku_kota
     @tahun = cookies[:tahun]
+    periode_selected = params[:periode]
+    return if @tahun.nil?
+
+    @periode = if periode_selected.present?
+                 Periode.find(periode_selected)
+               else
+                 Periode.find_tahun_rpjmd(@tahun).first
+               end
+    @tahun_awal = @periode.tahun_awal.to_i
+    @tahun_akhir = @periode.tahun_akhir.to_i
 
     tematiks = PohonTematikQueries.new(tahun: @tahun)
 
-    tujuan_kota = tematiks.tematiks.active.map(&:pohonable).compact_blank
+    tujuan_kota = TujuanKota.all.includes([:indikator_tujuans])
+                            .by_tahun_awal_akhir(@tahun_awal, @tahun_akhir)
+                            .order(:id)
+
+    # tujuan_kota = tematiks.tematiks.active.map(&:pohonable).compact_blank
     sasaran_kota = tematiks.sub_tematiks.filter { |sub| sub.parent_pohon.is_active }.map(&:pohonable).compact_blank
-    iku_kota = tujuan_kota + sasaran_kota
-    @iku_kota = iku_kota.map(&:indikators).compact_blank.flatten
+    indikator_tujuan_kota = tujuan_kota.map(&:indikator_tujuans).compact_blank.flatten
+    indikator_sasaran_kota = sasaran_kota.map(&:indikators).compact_blank.flatten
+    @iku_kota = indikator_tujuan_kota + indikator_sasaran_kota
   end
 
   # GET /indikators/renja_opd
@@ -161,6 +176,30 @@ class IndikatorsController < ApplicationController
     sasaran_opd = pokin_opd.strategi_opd.map(&:sasarans).flatten.compact_blank
     iku_opd = tujuan_opd + sasaran_opd
     @iku_opd = iku_opd.map(&:indikators).compact_blank.flatten
+  end
+
+  def cetak_iku_opd
+    @tahun = params[:tahun]
+    @kode_opd = params[:kode_opd]
+
+    @tahun_bener = @tahun&.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+
+    pokin_opd = PohonKinerjaOpdQueries.new(tahun: @tahun, kode_opd: @kode_opd)
+
+    opd = pokin_opd.opd
+    @nama_opd = opd.nama_opd
+
+    tujuan_opd = opd.tujuan_opds
+                    .by_periode(@tahun_bener)
+    sasaran_opd = pokin_opd.strategi_opd.map(&:sasarans).flatten.compact_blank
+    iku_opd = tujuan_opd + sasaran_opd
+    @iku_opd = iku_opd.map(&:indikators).compact_blank.flatten
+
+    respond_to do |format|
+      format.html do
+        render template: 'indikators/cetak_iku_opd', layout: 'print.html.erb'
+      end
+    end
   end
 
   def lppd_outcome
