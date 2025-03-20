@@ -20,10 +20,10 @@
         <tr class="header-tujuan">
           <th class="border" scope="col" width="20px">No.</th>
           <th class="border" scope="col">Indikator</th>
-          <th class="border text-center" scope="col">Rumus Perhitungan</th>
-          <th class="border text-center" scope="col">Sumber Data</th>
           <th class="border" scope="col" width="50px">Target</th>
           <th class="border" scope="col">Satuan</th>
+          <th class="border text-center" scope="col">Rumus Perhitungan</th>
+          <th class="border text-center" scope="col">Sumber Data</th>
         </tr>
       </thead>
       <tbody>
@@ -31,8 +31,6 @@
           <tr>
             <td class="text-gray-900 text-wrap border" width='20px' scope="row"><%= no_iku %></td>
             <td class="text-gray-900 text-wrap border"><%= indikator || '-' %></td>
-            <td class="text-gray-900 text-wrap border"><%= indikator&.rumus_perhitungan || '-' %></td>
-            <td class="text-gray-900 text-wrap border"><%= indikator&.sumber_data || '-' %></td>
             <% if indikator.class.name == 'IndikatorSasaran' %>
               <td class="text-gray-900 text-wrap border"><%= indikator.target %></td>
               <td class="text-gray-900 text-wrap border"><%= indikator.satuan %></td>
@@ -41,6 +39,8 @@
               <td class="text-gray-900 text-wrap border"><%= target.target %></td>
               <td class="text-gray-900 text-wrap border"><%= target.satuan %></td>
             <% end %>
+            <td class="text-gray-900 text-wrap border"><%= indikator&.rumus_perhitungan || '-' %></td>
+            <td class="text-gray-900 text-wrap border"><%= indikator&.sumber_data || '-' %></td>
           </tr>
         <% end %>
       </tbody>
