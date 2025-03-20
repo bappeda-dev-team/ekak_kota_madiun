@@ -22,6 +22,19 @@
                 <td class="text-start" width="30px">OPD</td>
                 <td class="text-wrap text-start fw-bolder"><%= @nama_opd %></td>
               </tr>
+              <% size_tujuan = @tujuan_opds.size %>
+              <% @tujuan_opds.each.with_index(1) do |tujuan, no| %>
+                <tr>
+                  <td class="text-start" width="30px">Tujuan <%= size_tujuan > 1  ? no : ''  %></td>
+                  <td class="text-wrap text-start"><%= tujuan %></td>
+                </tr>
+                <% tujuan.indikators.each do |indikator_tujuan|  %>
+                  <tr>
+                    <td class="text-start" width="30px">Indikator</td>
+                    <td class="text-wrap text-start"  ><%= indikator_tujuan || '-' %></td>
+                  </tr>
+                <% end %>
+              <% end %>
               <tr>
                 <td class="text-start" width="30px">Tahun</td>
                 <td class="text-wrap text-start"><%= @tahun %></td>

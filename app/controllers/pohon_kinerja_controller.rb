@@ -474,6 +474,9 @@ class PohonKinerjaController < ApplicationController
     # @tactical_kota = queries.tactical_kota
     # @operational_kota = queries.operational_kota
 
+    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @tujuan_opds = @opd.tujuan_opds.includes(%i[indikators urusan])
+                       .by_periode(tahun_bener)
     @strategi_opd = queries.strategi_opd.filter { |ss| ss.id == @strategic_id.to_i }.take(1)
     @tactical_opd = queries.tactical_opd
     @operational_opd = queries.operational_opd
@@ -497,6 +500,9 @@ class PohonKinerjaController < ApplicationController
     # @tactical_kota = queries.tactical_kota
     # @operational_kota = queries.operational_kota
 
+    tahun_bener = @tahun.match(/murni|perubahan/) ? @tahun[/[^_]\d*/, 0] : @tahun
+    @tujuan_opds = @opd.tujuan_opds.includes(%i[indikators urusan])
+                       .by_periode(tahun_bener)
     @strategi_opd = queries.strategi_opd.filter { |ss| ss.id == @strategic_id.to_i }.take(1)
     @tactical_opd = queries.tactical_opd
     @operational_opd = queries.operational_opd
