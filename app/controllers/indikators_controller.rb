@@ -160,6 +160,7 @@ class IndikatorsController < ApplicationController
     @subkegiatans = opd.subkegiatans_renstra
   end
 
+  # TODO: change to IkuOpdQueries
   def iku_opd
     @tahun = cookies[:tahun]
     @kode_opd = cookies[:opd]
@@ -178,6 +179,7 @@ class IndikatorsController < ApplicationController
     @iku_opd = iku_opd.map(&:indikators).compact_blank.flatten
   end
 
+  # TODO: change to IkuOpdQueries
   def cetak_iku_opd
     @tahun = params[:tahun]
     @kode_opd = params[:kode_opd]
@@ -188,6 +190,10 @@ class IndikatorsController < ApplicationController
 
     opd = pokin_opd.opd
     @nama_opd = opd.nama_opd
+    @jabatan_kepala_opd = opd.jabatan_kepala_tanpa_opd
+    @nama_kepala_opd = opd.nama_kepala
+    @nip_kepala_opd = opd.nip_kepala_fix_plt
+    @pangkat_kepala_opd = opd.pangkat_kepala
 
     tujuan_opd = opd.tujuan_opds
                     .by_periode(@tahun_bener)
