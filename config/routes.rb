@@ -130,6 +130,8 @@ Rails.application.routes.draw do
       delete :hide_iku
       delete :hide_iku_indikator_sasaran
       delete :hide_iku_sasaran
+      get :edit_keterangan
+      patch :update_keterangan
     end
   end
   resources :pindah_pohon_kinerjas, only: %i[show edit update]

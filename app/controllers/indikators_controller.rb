@@ -1,6 +1,6 @@
 class IndikatorsController < ApplicationController
   before_action :set_indikator, only: %i[show edit update destroy]
-  layout false, only: %i[new edit new_indikator_rb edit_target_iku new_target_iku_sasaran]
+  layout false, only: %i[new edit new_indikator_rb edit_target_iku new_target_iku_sasaran edit_keterangan]
 
   def rpjp_makro
     @tahun = cookies[:tahun]
@@ -301,6 +301,35 @@ class IndikatorsController < ApplicationController
     @opds = Opd.opd_resmi_kota
                .pluck(:nama_opd,
                       :kode_unik_opd)
+  end
+
+  def edit_keterangan
+    @indikator = if params[:jenis] == 'Indikator'
+                   Indikator.find(params[:id])
+                 else
+                   IndikatorSasaran.find(params[:id])
+                 end
+  end
+
+  def update_keterangan
+    @indikator = if params[:jenis] == 'Indikator'
+                   Indikator.find(params[:id])
+                 else
+                   IndikatorSasaran.find(params[:id])
+                 end
+    no_iku = 1
+    if @indikator.update(keterangan: params[:keterangan])
+      render json: { resText: 'Perubahan disimpan',
+                     html_content: html_content({ indikator: @indikator, no_iku: no_iku },
+                                                partial: 'indikators/row_iku_opd') }.to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan',
+                     html_content: error_content({ indikator: @indikator },
+                                                 partial: 'indikators/form').to_json }.to_json,
+             status: :unprocessable_entity
+
+    end
   end
 
   # POST /indikators or /indikators.json

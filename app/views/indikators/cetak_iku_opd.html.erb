@@ -24,6 +24,7 @@
           <th scope="col">Satuan</th>
           <th class="text-center" scope="col">Rumus Perhitungan</th>
           <th class="text-center" scope="col">Sumber Data</th>
+          <th class="text-center" scope="col">Keterangan</th>
         </tr>
       </thead>
       <tbody>
@@ -41,6 +42,7 @@
             <% end %>
             <td class="text-gray-900 text-wrap"><%= indikator&.rumus_perhitungan || '-' %></td>
             <td class="text-gray-900 text-wrap"><%= indikator&.sumber_data || '-' %></td>
+            <td class="text-gray-900 text-wrap"><%= indikator&.keterangan %></td>
           </tr>
         <% end %>
       </tbody>
