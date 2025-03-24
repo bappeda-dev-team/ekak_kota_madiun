@@ -33,6 +33,11 @@
                     <td class="text-start" width="30px">Indikator</td>
                     <td class="text-wrap text-start"  ><%= indikator_tujuan || '-' %></td>
                   </tr>
+                  <tr>
+                    <% target = indikator_tujuan.targets.find_by(tahun: @tahun) %>
+                    <td class="text-start" width="30px">Target</td>
+                    <td class="text-wrap text-start"  ><%= target.target_satuan %></td>
+                  </tr>
                 <% end %>
               <% end %>
               <tr>
