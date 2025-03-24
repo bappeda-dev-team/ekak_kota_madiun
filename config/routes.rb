@@ -285,6 +285,7 @@ Rails.application.routes.draw do
     end
   end
   resources :sasaran_opds
+  resources :rencana_aksi_opds
   resources :tujuan_opds do
     collection do
       post :admin_filter

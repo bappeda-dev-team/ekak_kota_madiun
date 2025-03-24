@@ -1,0 +1,41 @@
+<%= content_for :html_title, "Rencana Aksi OPD" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Perencaan OPD</li>
+  <li class="breadcrumb-item active" aria-current="page">Rencana Aksi OPD</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout_subtitle', title: "Rencana Aksi OPD",
+             sub_title: @opd, sub_title_2: @tahun do %>
+    <div class="table-responsive">
+      <table class="table align-items-center">
+        <thead class="thead-light">
+          <tr>
+            <th class="border text-center" scope="col">No</th>
+            <th class="border text-center" scope="col">Rencana Kinerja</th>
+            <th class="border text-center" scope="col">Indikator Rencana Kinerja</th>
+            <th class="border text-center" scope="col">Target</th>
+            <th class="border text-center" scope="col">Satuan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @sasaran_opds.each.with_index(1) do |sasaran, i| %>
+            <tr>
+              <td class="border" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= i %></td>
+              <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
+              <% if sasaran.indikator_sasarans.any? %>
+                <%= indikator_rencana_aksi_opd(sasaran) %>
+              <% else %>
+                <td class="border" colspan="3">
+                  <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
+                </td>
+              <% end %>
+            </tr>
+            <% row_indikator_rencana_aksi_opd(sasaran).each do |indikator| %>
+              <%= indikator %>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>

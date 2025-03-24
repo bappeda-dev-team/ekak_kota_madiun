@@ -20,6 +20,10 @@ module AdminItemHelper
         icon: 'fas fa-tasks', identifier: 'sasaran_opds'
       },
       {
+        title: 'Rencana Aksi OPD', href: rencana_aksi_opds_path,
+        icon: 'fas fa-bullseye', identifier: 'rencana_aksi_opds'
+      },
+      {
         title: 'Pohon Kinerja Kota', href: kota_pohon_kinerja_index_path,
         icon: 'fas fa-sitemap', identifier: 'pohon_kinerja/kota'
       },
