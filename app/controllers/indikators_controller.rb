@@ -176,7 +176,7 @@ class IndikatorsController < ApplicationController
                     .by_periode(@tahun_bener)
     sasaran_opd = pokin_opd.strategi_opd.map(&:sasarans).flatten.compact_blank
     iku_opd = tujuan_opd + sasaran_opd
-    @iku_opd = iku_opd.map(&:indikators).compact_blank.flatten
+    @iku_opd = iku_opd.map(&:indikators).compact_blank.flatten.sort_by(&:id)
   end
 
   # TODO: change to IkuOpdQueries
@@ -304,7 +304,11 @@ class IndikatorsController < ApplicationController
   end
 
   def edit_keterangan
-    @indikator = if params[:jenis] == 'Indikator'
+    @partial = params[:partial]
+    @tahun = params[:tahun]
+    @no_iku = params[:no_iku]
+    @jenis = params[:jenis]
+    @indikator = if @jenis == 'Indikator'
                    Indikator.find(params[:id])
                  else
                    IndikatorSasaran.find(params[:id])
@@ -312,21 +316,24 @@ class IndikatorsController < ApplicationController
   end
 
   def update_keterangan
+    @partial = params[:partial]
+    @tahun = params[:tahun]
+    @no_iku = params[:no_iku]
+    @jenis = params[:jenis]
     @indikator = if params[:jenis] == 'Indikator'
                    Indikator.find(params[:id])
                  else
                    IndikatorSasaran.find(params[:id])
                  end
-    no_iku = 1
     if @indikator.update(keterangan: params[:keterangan])
-      render json: { resText: 'Perubahan disimpan',
-                     html_content: html_content({ indikator: @indikator, no_iku: no_iku },
+      render json: { resText: 'Keterangan ditambahkan',
+                     html_content: html_content({ indikator: @indikator, no_iku: @no_iku, tahun: @tahun },
                                                 partial: 'indikators/row_iku_opd') }.to_json,
              status: :ok
     else
       render json: { resText: 'Terjadi kesalahan',
                      html_content: error_content({ indikator: @indikator },
-                                                 partial: 'indikators/form').to_json }.to_json,
+                                                 partial: 'indikators/form_keterangan').to_json }.to_json,
              status: :unprocessable_entity
 
     end

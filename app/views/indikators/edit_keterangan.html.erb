@@ -1,18 +1,1 @@
-<%= form_with url: update_keterangan_indikator_path(@indikator),
-              method: :patch,
-              local: false,
- data: {
-   controller: 'form-ajax',
-   form_ajax_target_param: dom_id(@indikator),
-   form_ajax_type_param: '',
-   action: 'ajax:complete->form-ajax#processAjax'
- } do |form| %>
-  <div class="field">
-    <%= form.label :keterangan, class: 'form-label' %>
-    <%= form.text_field :keterangan, class: 'form-control' %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+<%= render 'form_keterangan', indikator: @indikator %>

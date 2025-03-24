@@ -24,7 +24,12 @@
                                                           partial: 'indikators/row_iku_opd'))
         ) %>
       <% end %>
-      <%= render(EditButtonComponent.new(path: edit_keterangan_indikator_path(indikator, jenis: indikator.class.name))) %>
+      <%= render(EditButtonComponent.new(path: edit_keterangan_indikator_path(indikator,
+                                                                              jenis: indikator.class.name,
+                                                                              no_iku: no_iku,
+                                                                              tahun: tahun,
+                                                                              partial: 'indikators/row_iku_opd'
+      ))) %>
     </div>
   </td>
   <td class="text-gray-900 text-wrap border"><%= indikator&.rumus_perhitungan || '-' %></td>

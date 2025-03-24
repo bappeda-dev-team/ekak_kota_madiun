@@ -1,0 +1,22 @@
+<%= form_with url: update_keterangan_indikator_path(indikator),
+              method: :patch,
+              local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: dom_id(indikator),
+                form_ajax_type_param: '',
+                action: 'ajax:complete->form-ajax#processAjax'
+              } do |form| %>
+  <div class="field">
+    <%= form.hidden_field :tahun, value: @tahun %>
+    <%= form.hidden_field :partial, value: @partial %>
+    <%= form.hidden_field :no_iku, value: @no_iku %>
+    <%= form.hidden_field :jenis, value: @jenis %>
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_field :keterangan, class: 'form-control' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
