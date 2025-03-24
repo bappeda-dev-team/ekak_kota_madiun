@@ -13,7 +13,7 @@
     <%= form.hidden_field :no_iku, value: @no_iku %>
     <%= form.hidden_field :jenis, value: @jenis %>
     <%= form.label :keterangan, class: 'form-label' %>
-    <%= form.text_field :keterangan, class: 'form-control' %>
+    <%= form.text_field :keterangan, class: 'form-control', value: indikator.keterangan %>
   </div>
 
   <div class="actions">
