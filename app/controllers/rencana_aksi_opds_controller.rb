@@ -16,6 +16,7 @@ class RencanaAksiOpdsController < ApplicationController
 
   # GET /rencana_aksi_opds/new
   def new
+    @i = params[:i]
     @tahun = params[:tahun]
     @kode_opd = params[:kode_opd]
     @sasaran_opd_id = params[:sasaran_id]
@@ -31,13 +32,15 @@ class RencanaAksiOpdsController < ApplicationController
 
   # POST /rencana_aksi_opds or /rencana_aksi_opds.json
   def create
+    @i = params[:rencana_aksi_opd][:i]
+    @tahun = rencana_aksi_opd_params[:tahun]
+    @kode_opd = rencana_aksi_opd_params[:kode_opd]
     @rencana_aksi_opd = RencanaAksiOpd.new(rencana_aksi_opd_params)
     @sasaran_opd = Sasaran.find(rencana_aksi_opd_params[:sasaran_id])
-    i = 1
 
     if @rencana_aksi_opd.save
       render json: { resText: 'Renaksi OPD ditambahkan',
-                     html_content: html_content({ sasaran: @sasaran_opd, i: i },
+                     html_content: html_content({ sasaran: @sasaran_opd, i: @i },
                                                 partial: 'rencana_aksi_opds/row_rencana_aksi_opd') }
         .to_json,
              status: :ok

@@ -1,3 +1,26 @@
+<div class="form-group">
+  <p class="form-label">Rencana Kinerja OPD</p>
+  <p class="form-control disabled"><%= @sasaran %></p>
+</div>
+
+<!-- INDIKATOR   -->
+<% @sasaran.indikator_sasarans.each.with_index(1) do |indikator, index| %>
+  <div class="row">
+    <div class="form-group col-7">
+      <p class="form-label">Indikator <%= @sasaran.indikator_sasarans.size > 1 ? index : '' %></p>
+      <p class="form-control disabled"><%= indikator %></p>
+    </div>
+    <div class="form-group col-3">
+      <p class="form-label">Target</p>
+      <p class="form-control disabled"><%= indikator.target %></p>
+    </div>
+    <div class="form-group col-2">
+      <p class="form-label">Satuan</p>
+      <p class="form-control disabled"><%= indikator.satuan %></p>
+    </div>
+  </div>
+<% end %>
+
 <%= form_with model: rencana_aksi_opd, local: false,
               data: {
                 controller: 'form-ajax periode',
@@ -21,6 +44,7 @@
     <%= form.hidden_field :tahun %>
     <%= form.hidden_field :kode_opd %>
     <%= form.hidden_field :sasaran_id %>
+    <%= form.hidden_field :i, value: @i %>
   </div>
 
   <div class="field">
