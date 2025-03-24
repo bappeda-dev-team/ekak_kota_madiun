@@ -198,7 +198,7 @@ class Opd < ApplicationRecord
   end
 
   def strategi_eselon4
-    strategis.where(role: "eselon_4")
+    strategis.where(role: "eselon_4").reject(&:strategi_dihapus?)
   end
 
   def strategi_staff

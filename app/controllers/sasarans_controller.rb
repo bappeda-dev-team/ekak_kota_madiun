@@ -617,6 +617,23 @@ class SasaransController < ApplicationController
     end
   end
 
+  def renaksi_opd_list
+    q = params[:q]
+    @tahun = params[:tahun]
+    @kode_opd = params[:kode_opd]
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @sasarans = @opd.users.eselon4.flat_map do |us|
+      us.sasarans.includes(%i[strategi indikator_sasarans])
+        .where(tahun: @tahun)
+        .where("sasarans.sasaran_kinerja ILIKE ?", "%#{q}%")
+        .select(&:siap_ditarik?)
+    end
+    # @sasarans = @opd.strategi_eselon4.flat_map do |st|
+    #   st.sasaran_pohon_kinerja(tahun: @tahun)
+    # end
+    # @sasarans = @sasarans.select { |s| s.sasaran_kinerja =~ /#{q}/i }
+  end
+
   private
 
   def errors_content(sasaran)

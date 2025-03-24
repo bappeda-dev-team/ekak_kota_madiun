@@ -51,6 +51,7 @@ class Sasaran < ApplicationRecord
   has_many :subkegiatan_tematiks, through: :tematik_sasarans
   # belongs_to :sumber_dana, foreign_key: 'sumber_dana', primary_key: 'kode_sumber_dana', optional: true
 
+  has_many :rencana_aksi_opds
   has_many :usulans, dependent: :destroy
   has_many :dasar_hukums, primary_key: 'id_rencana', class_name: 'DasarHukum',
                           dependent: :destroy

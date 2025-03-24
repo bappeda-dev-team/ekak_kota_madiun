@@ -8,6 +8,7 @@ require "sidekiq/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
+  resources :rencana_aksi_opds
   resources :program_unggulans do
     collection do
       get :asta_karya
@@ -285,7 +286,6 @@ Rails.application.routes.draw do
     end
   end
   resources :sasaran_opds
-  resources :rencana_aksi_opds
   resources :tujuan_opds do
     collection do
       post :admin_filter
@@ -528,6 +528,7 @@ Rails.application.routes.draw do
       get :sasaran_admin
       get :new_spbe
       get :rekap_sasaran
+      get :renaksi_opd_list
     end
     member do
       get :edit_inovasi

@@ -3064,6 +3064,45 @@ ALTER SEQUENCE public.rekenings_id_seq OWNED BY public.rekenings.id;
 
 
 --
+-- Name: rencana_aksi_opds; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.rencana_aksi_opds (
+    id bigint NOT NULL,
+    tw1 character varying,
+    tw2 character varying,
+    tw3 character varying,
+    tw4 character varying,
+    is_hidden boolean DEFAULT false,
+    tahun character varying,
+    kode_opd character varying,
+    id_rencana_renaksi character varying NOT NULL,
+    sasaran_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: rencana_aksi_opds_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.rencana_aksi_opds_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: rencana_aksi_opds_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.rencana_aksi_opds_id_seq OWNED BY public.rencana_aksi_opds.id;
+
+
+--
 -- Name: renstras; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -5020,6 +5059,13 @@ ALTER TABLE ONLY public.rekenings ALTER COLUMN id SET DEFAULT nextval('public.re
 
 
 --
+-- Name: rencana_aksi_opds id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.rencana_aksi_opds ALTER COLUMN id SET DEFAULT nextval('public.rencana_aksi_opds_id_seq'::regclass);
+
+
+--
 -- Name: renstras id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -5884,6 +5930,14 @@ ALTER TABLE ONLY public.rekenings
 
 
 --
+-- Name: rencana_aksi_opds rencana_aksi_opds_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.rencana_aksi_opds
+    ADD CONSTRAINT rencana_aksi_opds_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: renstras renstras_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -6659,6 +6713,13 @@ CREATE INDEX index_realisasis_on_target_id ON public.realisasis USING btree (tar
 
 
 --
+-- Name: index_rencana_aksi_opds_on_sasaran_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_rencana_aksi_opds_on_sasaran_id ON public.rencana_aksi_opds USING btree (sasaran_id);
+
+
+--
 -- Name: index_renstras_on_id_renstra; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -7077,6 +7138,14 @@ ALTER TABLE ONLY public.realisasis
 
 ALTER TABLE ONLY public.kesenjangans
     ADD CONSTRAINT fk_rails_617f862287 FOREIGN KEY (rincian_id) REFERENCES public.rincians(id);
+
+
+--
+-- Name: rencana_aksi_opds fk_rails_6b6ce483b4; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.rencana_aksi_opds
+    ADD CONSTRAINT fk_rails_6b6ce483b4 FOREIGN KEY (sasaran_id) REFERENCES public.sasarans(id);
 
 
 --
@@ -7610,6 +7679,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250223070255'),
 ('20250223194503'),
 ('20250228024215'),
-('20250304054051');
+('20250304054051'),
+('20250324035206');
 
 
