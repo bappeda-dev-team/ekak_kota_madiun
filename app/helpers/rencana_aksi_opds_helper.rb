@@ -47,17 +47,17 @@ module RencanaAksiOpdsHelper
   end
 
   # rubocop: disable Metric/MethodLength
-  def sync_jadwal_button(renaksi_opd, tahun, kode_opd, sasaran, i)
+  def sync_jadwal_button(renaksi_opd, tahun, kode_opd, sasaran, index)
     button_to rencana_aksi_opd_path(renaksi_opd),
               params: {
                 rencana_aksi_opd: {
                   tahun: tahun,
                   kode_opd: kode_opd,
-                  i: i,
+                  i: index,
                   sasaran_id: sasaran.id
                 }
               },
-              class: 'btn btn-sm btn-primary',
+              class: 'btn btn-sm btn-primary w-100',
               remote: true,
               method: :patch,
               form: {
