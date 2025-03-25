@@ -22,18 +22,21 @@
     <% renaksi_rowspan = sasaran.indikator_sasarans.length %>
     <% if sasaran.rencana_aksi_opds.any? %>
       <% renaksi_opd = sasaran.rencana_aksi_opds.first %>
-      <td class="border text-wrap" rowspan="<%= renaksi_rowspan %>">
-        <%= renaksi_opd&.aksi %>
-        <div class="d-grid gap-2">
-          <%= sync_jadwal_button(renaksi_opd, @tahun, @kode_opd, sasaran, i) %>
-        </div>
-      </td>
+      <td class="border text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.aksi %></td>
       <td class="border text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw1 %></td>
       <td class="border text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw2 %></td>
       <td class="border text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw3 %></td>
       <td class="border text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw4 %></td>
+      <td class="border text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.keterangan %></td>
+      <td class="border text-wrap" rowspan="<%= renaksi_rowspan %>">
+        <div class="d-grid gap-2 mt-3">
+          <%= renaksi_opd_sync_jadwal_button(renaksi_opd, @tahun, @kode_opd, sasaran, i) %>
+          <%= render(EditButtonComponent.new(path: edit_rencana_aksi_opd_path(renaksi_opd, tahun: @tahun, kode_opd: @kode_opd, sasaran_id: sasaran.id, i: i))) %>
+          <%= renaksi_opd_delete_button(renaksi_opd, @tahun, @kode_opd, sasaran, i) %>
+        </div>
+      </td>
     <% else %>
-      <td class="border" colspan="5" rowspan="<%= renaksi_rowspan %>">
+      <td class="border" colspan="7" rowspan="<%= renaksi_rowspan %>">
         -
       </td>
     <% end %>
@@ -41,23 +44,21 @@
   <% row_indikator_rencana_aksi_opd(sasaran).each do |indikator| %>
     <%= indikator %>
   <% end %>
-  <% sasaran.rencana_aksi_opds.each do |renaksi_opd| %>
+  <% sasaran.rencana_aksi_opds.drop(1).each do |renaksi_opd| %>
     <tr class="renaksi-opd">
-      <td class="border text-wrap">
-        <%= renaksi_opd.aksi %>
-        <hr />
-        <div class="d-grid gap-2 mt-3">
-          <%= sync_jadwal_button(renaksi_opd, @tahun, @kode_opd, sasaran, i) %>
-          <%= render(EditButtonComponent.new(path: edit_rencana_aksi_opd_path(renaksi_opd, tahun: @tahun, kode_opd: @kode_opd, sasaran_id: sasaran.id, i: i))) %>
-          <%= render(DeleteButtonComponent.new(path: rencana_aksi_opd_path(renaksi_opd),
-                                               title: "Hapus Renaksi?" )) %>
-        </div>
-      </td>
+      <td class="border text-wrap"><%= renaksi_opd.aksi %></td>
       <td class="border text-wrap"><%= renaksi_opd.tw1 %></td>
       <td class="border text-wrap"><%= renaksi_opd.tw2 %></td>
       <td class="border text-wrap"><%= renaksi_opd.tw3 %></td>
       <td class="border text-wrap"><%= renaksi_opd.tw4 %></td>
       <td class="border text-wrap"><%= renaksi_opd.keterangan %></td>
+      <td class="border text-wrap">
+        <div class="d-grid gap-2 mt-3">
+          <%= renaksi_opd_sync_jadwal_button(renaksi_opd, @tahun, @kode_opd, sasaran, i) %>
+          <%= render(EditButtonComponent.new(path: edit_rencana_aksi_opd_path(renaksi_opd, tahun: @tahun, kode_opd: @kode_opd, sasaran_id: sasaran.id, i: i))) %>
+          <%= renaksi_opd_delete_button(renaksi_opd, @tahun, @kode_opd, sasaran, i) %>
+        </div>
+      </td>
     </tr>
   <% end %>
 </tbody>

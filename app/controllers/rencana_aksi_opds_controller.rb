@@ -80,9 +80,17 @@ class RencanaAksiOpdsController < ApplicationController
 
   # DELETE /rencana_aksi_opds/1 or /rencana_aksi_opds/1.json
   def destroy
+    @i = params[:rencana_aksi_opd][:i]
+    @tahun = rencana_aksi_opd_params[:tahun]
+    @kode_opd = rencana_aksi_opd_params[:kode_opd]
+    @sasaran_opd = Sasaran.find(rencana_aksi_opd_params[:sasaran_id])
     @rencana_aksi_opd.destroy
 
-    render json: { resText: "Renaksi OPD dihapus" }.to_json, status: :accepted
+    render json: { resText: 'Renaksi OPD dihapus',
+                   html_content: html_content({ sasaran: @sasaran_opd, i: @i },
+                                              partial: 'rencana_aksi_opds/row_rencana_aksi_opd') }
+      .to_json,
+           status: :ok
   end
 
   private

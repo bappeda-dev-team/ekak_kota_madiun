@@ -13,9 +13,9 @@ export default class extends Controller {
     isRemote: Boolean,
   };
 
-  showConfirmationDialog() {
+  showConfirmationDialog(event) {
+    event.preventDefault()
     const element = this.element;
-    console.log(element);
     const message = this.messageValue;
     const text = this.descriptionValue;
     const icon = this.iconValue;
@@ -33,7 +33,6 @@ export default class extends Controller {
   }
 
   confirmed(element, result) {
-    console.log("confirm");
     const isRemote = this.isRemoteValue;
     // If result `success`
     if (result.value) {
@@ -66,7 +65,6 @@ export default class extends Controller {
           },
         });
       } else {
-        console.log("horrible");
         element.removeAttribute("data-confirm-swal");
         element.click();
       }
