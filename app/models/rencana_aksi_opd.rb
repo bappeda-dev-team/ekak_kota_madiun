@@ -30,4 +30,19 @@ class RencanaAksiOpd < ApplicationRecord
   def aksi
     rencana_renaksi.to_s
   end
+
+  def update_tw_pelaksanaan
+    target_setahun = rencana_renaksi.total_target_aksi_bulan
+    tw1 = target_setahun.values_at(1, 2, 3).compact_blank.sum
+    tw2 = target_setahun.values_at(4, 5, 6).compact_blank.sum
+    tw3 = target_setahun.values_at(7, 8, 9).compact_blank.sum
+    tw4 = target_setahun.values_at(10, 11, 12).compact_blank.sum
+    renaksi_opd = self
+    renaksi_opd.update(
+      tw1: tw1,
+      tw2: tw2,
+      tw3: tw3,
+      tw4: tw4
+    )
+  end
 end

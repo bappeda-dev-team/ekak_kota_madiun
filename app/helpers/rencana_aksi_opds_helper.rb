@@ -2,19 +2,9 @@ module RencanaAksiOpdsHelper
   def rowspan_renaksi_opd(sasaran)
     return 1 if sasaran.nil?
 
-    indikator_row = sasaran.indikator_sasarans.empty? ? 1 : sasaran.indikator_sasarans.length
-    renaksi_row = sasaran.rencana_aksi_opds.empty? ? 1 : sasaran.rencana_aksi_opds.length
-    rowspan_rumit = if (indikator_row == renaksi_row && indikator_row != 1 && renaksi_row != 1) || indikator_row > renaksi_row
-                      indikator_row + 1
-                    elsif indikator_row > renaksi_row
-                      indikator_row
-                    elsif renaksi_row > indikator_row && indikator_row == 1
-                      renaksi_row
-                    elsif indikator_row > 1 && renaksi_row > indikator_row
-                      renaksi_row + 1
-                    else
-                      1
-                    end
+    indikator_row = sasaran.indikator_sasarans.empty? ? 1 : sasaran.indikator_sasarans.length # 4
+    renaksi_row = sasaran.rencana_aksi_opds.empty? ? 1 : sasaran.rencana_aksi_opds.length # 3
+    rowspan_rumit = indikator_row + renaksi_row - 1
 
     sasaran.indikator_sasarans.empty? ? 1 : rowspan_rumit
   end
@@ -27,9 +17,9 @@ module RencanaAksiOpdsHelper
                 1
               end
     "
-      <td rowspan='#{rowspan}' class='border text-wrap spbe-kebutuhan'>#{indikator&.indikator_kinerja}</td>
-      <td rowspan='#{rowspan}' class='border text-wrap spbe-kebutuhan'>#{indikator&.target}</td>
-      <td rowspan='#{rowspan}' class='border text-wrap spbe-kebutuhan'>#{indikator&.satuan}</td>
+      <td rowspan='#{rowspan}' class='border text-wrap indikator-sasaran'>#{indikator&.indikator_kinerja}</td>
+      <td rowspan='#{rowspan}' class='border text-wrap indikator-sasaran'>#{indikator&.target}</td>
+      <td rowspan='#{rowspan}' class='border text-wrap indikator-sasaran'>#{indikator&.satuan}</td>
     ".html_safe
   end
 
@@ -38,7 +28,7 @@ module RencanaAksiOpdsHelper
     sasaran.indikator_sasarans.drop(1).map do |indikator_s|
       if indikator_s == sasaran.indikator_sasarans.last
         "
-        <tr>
+        <tr class='last indikator-sasaran'>
           <td rowspan='#{rowspan}' class='border text-wrap'>#{indikator_s.indikator_kinerja}</td>
           <td rowspan='#{rowspan}' class='border text-wrap'>#{indikator_s.target}</td>
           <td rowspan='#{rowspan}' class='border text-wrap'>#{indikator_s.satuan}</td>
@@ -46,7 +36,7 @@ module RencanaAksiOpdsHelper
       ".html_safe
       else
         "
-        <tr>
+        <tr class='indikator-sasaran'>
           <td class='border text-wrap'>#{indikator_s.indikator_kinerja}</td>
           <td class='border text-wrap'>#{indikator_s.target}</td>
           <td class='border text-wrap'>#{indikator_s.satuan}</td>
