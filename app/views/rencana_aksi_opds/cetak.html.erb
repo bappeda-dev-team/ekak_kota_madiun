@@ -52,10 +52,10 @@
             <% if sasaran.rencana_aksi_opds.any? %>
               <% renaksi_opd = sasaran.rencana_aksi_opds.first %>
               <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.aksi %></td>
-              <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw1 %></td>
-              <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw2 %></td>
-              <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw3 %></td>
-              <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw4 %></td>
+              <td class="text-center" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw1 %></td>
+              <td class="text-center" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw2 %></td>
+              <td class="text-center" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw3 %></td>
+              <td class="text-center" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw4 %></td>
               <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.keterangan %></td>
             <% else %>
               <td class="" colspan="6" rowspan="<%= renaksi_rowspan %>">
@@ -69,10 +69,10 @@
           <% sasaran.rencana_aksi_opds.drop(1).each do |renaksi_opd| %>
             <tr class="renaksi-opd">
               <td class="text-wrap"><%= renaksi_opd.aksi %></td>
-              <td class="text-wrap"><%= renaksi_opd.tw1 %></td>
-              <td class="text-wrap"><%= renaksi_opd.tw2 %></td>
-              <td class="text-wrap"><%= renaksi_opd.tw3 %></td>
-              <td class="text-wrap"><%= renaksi_opd.tw4 %></td>
+              <td class="text-center"><%= renaksi_opd.tw1 %></td>
+              <td class="text-center"><%= renaksi_opd.tw2 %></td>
+              <td class="text-center"><%= renaksi_opd.tw3 %></td>
+              <td class="text-center"><%= renaksi_opd.tw4 %></td>
               <td class="text-wrap"><%= renaksi_opd.keterangan %></td>
             </tr>
           <% end %>
