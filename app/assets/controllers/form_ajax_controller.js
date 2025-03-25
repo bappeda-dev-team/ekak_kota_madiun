@@ -9,7 +9,8 @@ export default class extends ApplicationController {
     elementId: String,
     withAlert: { type: Boolean, default: true },
     withModal: { type: Boolean, default: true },
-    tahun: String
+    tahun: String,
+    confirmTitle: String
   };
 
   async confirmAction(event) {
@@ -19,7 +20,7 @@ export default class extends ApplicationController {
     }
     event.preventDefault();
     const result = await Swal.fire({
-      title: "Subkegiatan akan dihapus",
+      title: this.confirmTitleValue,
       text: `Lanjutkan?`,
       icon: "warning",
       showCancelButton: true,

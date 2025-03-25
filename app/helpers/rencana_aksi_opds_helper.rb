@@ -47,7 +47,7 @@ module RencanaAksiOpdsHelper
   end
 
   # rubocop: disable Metric/MethodLength
-  def sync_jadwal_button(renaksi_opd, tahun, kode_opd, sasaran, index)
+  def renaksi_opd_sync_jadwal_button(renaksi_opd, tahun, kode_opd, sasaran, index)
     button_to rencana_aksi_opd_path(renaksi_opd),
               params: {
                 rencana_aksi_opd: {
@@ -63,6 +63,7 @@ module RencanaAksiOpdsHelper
               form: {
                 data: {
                   controller: 'form-ajax',
+                  form_ajax_with_modal_value: false,
                   form_ajax_target_param: dom_id(sasaran),
                   form_ajax_type_param: '',
                   action: 'ajax:complete->form-ajax#processAjax'
@@ -71,7 +72,37 @@ module RencanaAksiOpdsHelper
               data: {
                 disable_with: "<i class='fa fa-sync fa-spin'></i>  Sedang sinkronisasi..."
               } do
-      "<i class='fas fa-sync me-2'></i> Sync Jadwal".html_safe
+      "<i class='fas fa-sync me-2'></i> <span>Sync Jadwal</span>".html_safe
+    end
+  end
+
+  def renaksi_opd_delete_button(renaksi_opd, tahun, kode_opd, sasaran, index)
+    button_to rencana_aksi_opd_path(renaksi_opd),
+              params: {
+                rencana_aksi_opd: {
+                  tahun: tahun,
+                  kode_opd: kode_opd,
+                  i: index,
+                  sasaran_id: sasaran.id
+                }
+              },
+              class: 'btn btn-sm btn-outline-danger w-100',
+              remote: true,
+              method: :delete,
+              form: {
+                data: {
+                  controller: 'form-ajax',
+                  form_ajax_with_modal_value: false,
+                  form_ajax_target_param: dom_id(sasaran),
+                  form_ajax_type_param: 'total_replace',
+                  form_ajax_confirm_title_value: "Renaksi '#{renaksi_opd}' akan dihapus.",
+                  action: 'ajax:beforeSend->form-ajax#confirmAction ajax:complete->form-ajax#processAjax'
+                }
+              },
+              data: {
+                disable_with: "<i class='fa fa-sync fa-spin'></i>  Menghapus..."
+              } do
+      "<i class='fas fa-trash me-2'></i> <span>Hapus</span>".html_safe
     end
   end
 end

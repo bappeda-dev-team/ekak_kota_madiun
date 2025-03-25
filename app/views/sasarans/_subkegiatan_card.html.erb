@@ -77,12 +77,15 @@
                                 remote: true,
                                 class: 'btn btn-sm btn-danger',
                                 form: {
-                                  'data-controller': 'form-ajax',
-                                  'data-skip-check': 'false',
-                                  'data-form-ajax-target-param': dom_id(sasaran, 'subkegiatan'),
-                                  'data-form-ajax-type-param': 'total_replace',
-                                  'data-form-ajax-with-modal-value': 'false',
-                                  'data-action': 'ajax:beforeSend->form-ajax#confirmAction ajax:complete->form-ajax#processAjax'
+                                  data: {
+                                    controller: 'form-ajax',
+                                    skip_check: 'false',
+                                    form_ajax_target_param: dom_id(sasaran, 'subkegiatan'),
+                                    form_ajax_type_param: 'total_replace',
+                                    form_ajax_with_modal_value: 'false',
+                                    form_ajax_confirm_title_value: 'Subkegiatan akan dihapus.',
+                                    action: 'ajax:beforeSend->form-ajax#confirmAction ajax:complete->form-ajax#processAjax'
+                                  }
                                 } do %>
                     <i class="fas fa-trash"></i>
                     <span>Hapus</span>
