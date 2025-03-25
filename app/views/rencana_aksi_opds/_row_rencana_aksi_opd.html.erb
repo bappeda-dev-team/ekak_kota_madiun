@@ -20,7 +20,12 @@
     <% renaksi_rowspan = sasaran.indikator_sasarans.length %>
     <% if sasaran.rencana_aksi_opds.any? %>
       <% renaksi_opd = sasaran.rencana_aksi_opds.first %>
-      <td class="border text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.aksi %></td>
+      <td class="border text-wrap" rowspan="<%= renaksi_rowspan %>">
+        <%= renaksi_opd&.aksi %>
+        <div class="d-grid gap-2">
+          <%= sync_jadwal_button(renaksi_opd, @tahun, @kode_opd, sasaran, i) %>
+        </div>
+      </td>
       <td class="border text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw1 %></td>
       <td class="border text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw2 %></td>
       <td class="border text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw3 %></td>
@@ -36,7 +41,12 @@
   <% end %>
   <% sasaran.rencana_aksi_opds.drop(1).each do |renaksi_opd| %>
     <tr class="renaksi-opd">
-      <td class="border text-wrap"><%= renaksi_opd.aksi %></td>
+      <td class="border text-wrap">
+        <%= renaksi_opd.aksi %>
+        <div class="d-grid gap-2">
+          <%= sync_jadwal_button(renaksi_opd, @tahun, @kode_opd, sasaran, i) %>
+        </div>
+      </td>
       <td class="border text-wrap"><%= renaksi_opd.tw1 %></td>
       <td class="border text-wrap"><%= renaksi_opd.tw2 %></td>
       <td class="border text-wrap"><%= renaksi_opd.tw3 %></td>

@@ -23,7 +23,7 @@
 
 <%= form_with model: rencana_aksi_opd, local: false,
               data: {
-                controller: 'form-ajax periode',
+                controller: 'form-ajax',
                 form_ajax_target_param: dom_id(@sasaran),
                 form_ajax_type_param: '',
                 action: 'ajax:complete->form-ajax#processAjax'

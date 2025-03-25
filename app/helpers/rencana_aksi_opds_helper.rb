@@ -45,4 +45,31 @@ module RencanaAksiOpdsHelper
       end
     end
   end
+
+  # rubocop: disable Metric/MethodLength
+  def sync_jadwal_button(renaksi_opd, tahun, kode_opd, sasaran, i)
+    button_to rencana_aksi_opd_path(renaksi_opd),
+              params: {
+                tahun: tahun,
+                kode_opd: kode_opd,
+                i: i,
+                sasaran_id: sasaran.id
+              },
+              class: 'btn btn-sm btn-primary',
+              remote: true,
+              method: :patch,
+              form: {
+                data: {
+                  controller: 'form-ajax',
+                  form_ajax_target_param: dom_id(sasaran),
+                  form_ajax_type_param: '',
+                  action: 'ajax:complete->form-ajax#processAjax'
+                }
+              },
+              data: {
+                disable_with: "<i class='fa fa-sync fa-spin'></i>  Sedang sinkronisasi..."
+              } do
+      "<i class='fas fa-sync me-2'></i> Sync Jadwal".html_safe
+    end
+  end
 end

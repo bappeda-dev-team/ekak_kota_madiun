@@ -55,16 +55,20 @@ class RencanaAksiOpdsController < ApplicationController
 
   # PATCH/PUT /rencana_aksi_opds/1 or /rencana_aksi_opds/1.json
   def update
-    respond_to do |format|
-      if @rencana_aksi_opd.update(rencana_aksi_opd_params)
-        format.html do
-          redirect_to rencana_aksi_opd_url(@rencana_aksi_opd), notice: "Rencana aksi opd was successfully updated."
-        end
-        format.json { render :show, status: :ok, location: @rencana_aksi_opd }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @rencana_aksi_opd.errors, status: :unprocessable_entity }
-      end
+    @i = params[:i]
+    @tahun = params[:tahun]
+    @kode_opd = params[:kode_opd]
+    @sasaran_opd = Sasaran.find(params[:sasaran_id])
+
+    if @rencana_aksi_opd.update_tw_pelaksanaan
+      render json: { resText: 'Sinkronisasi berhasil',
+                     html_content: html_content({ sasaran: @sasaran_opd, i: @i },
+                                                partial: 'rencana_aksi_opds/row_rencana_aksi_opd') }
+        .to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan' }.to_json,
+             status: :unprocessable_entity
     end
   end
 
@@ -72,10 +76,7 @@ class RencanaAksiOpdsController < ApplicationController
   def destroy
     @rencana_aksi_opd.destroy
 
-    respond_to do |format|
-      format.html { redirect_to rencana_aksi_opds_url, notice: "Rencana aksi opd was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    render json: { resText: "Renaksi OPD dihapus" }.to_json, status: :accepted
   end
 
   private
