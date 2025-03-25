@@ -11,6 +11,24 @@ class RencanaAksiOpdsController < ApplicationController
     # @rencana_aksi_opds = RencanaAksiOpd.all
   end
 
+  def cetak
+    @tahun = cookies[:tahun]
+    @kode_opd = cookies[:opd]
+    opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = opd.nama_opd
+    @jabatan_kepala_opd = opd.jabatan_kepala_tanpa_opd
+    @nama_kepala_opd = opd.nama_kepala
+    @nip_kepala_opd = opd.nip_kepala_fix_plt
+    @pangkat_kepala_opd = opd.pangkat_kepala
+    @sasaran_opds = opd.strategi_eselon2.flat_map { |st| st.sasaran_pohon_kinerja(tahun: @tahun) }
+
+    respond_to do |format|
+      format.html do
+        render template: 'rencana_aksi_opds/cetak', layout: 'print.html.erb'
+      end
+    end
+  end
+
   # GET /rencana_aksi_opds/1 or /rencana_aksi_opds/1.json
   def show; end
 

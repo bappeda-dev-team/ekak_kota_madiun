@@ -17,9 +17,9 @@ module RencanaAksiOpdsHelper
                 1
               end
     "
-      <td rowspan='#{rowspan}' class='border text-wrap indikator-sasaran'>#{indikator&.indikator_kinerja}</td>
-      <td rowspan='#{rowspan}' class='border text-wrap indikator-sasaran'>#{indikator&.target}</td>
-      <td rowspan='#{rowspan}' class='border text-wrap indikator-sasaran'>#{indikator&.satuan}</td>
+      <td rowspan='#{rowspan}' class='text-wrap indikator-sasaran'>#{indikator&.indikator_kinerja}</td>
+      <td rowspan='#{rowspan}' class='text-wrap indikator-sasaran'>#{indikator&.target}</td>
+      <td rowspan='#{rowspan}' class='text-wrap indikator-sasaran'>#{indikator&.satuan}</td>
     ".html_safe
   end
 
@@ -29,17 +29,17 @@ module RencanaAksiOpdsHelper
       if indikator_s == sasaran.indikator_sasarans.last
         "
         <tr class='last indikator-sasaran'>
-          <td rowspan='#{rowspan}' class='border text-wrap'>#{indikator_s.indikator_kinerja}</td>
-          <td rowspan='#{rowspan}' class='border text-wrap'>#{indikator_s.target}</td>
-          <td rowspan='#{rowspan}' class='border text-wrap'>#{indikator_s.satuan}</td>
+          <td rowspan='#{rowspan}' class='text-wrap'>#{indikator_s.indikator_kinerja}</td>
+          <td rowspan='#{rowspan}' class='text-wrap'>#{indikator_s.target}</td>
+          <td rowspan='#{rowspan}' class='text-wrap'>#{indikator_s.satuan}</td>
         </tr>
       ".html_safe
       else
         "
         <tr class='indikator-sasaran'>
-          <td class='border text-wrap'>#{indikator_s.indikator_kinerja}</td>
-          <td class='border text-wrap'>#{indikator_s.target}</td>
-          <td class='border text-wrap'>#{indikator_s.satuan}</td>
+          <td class='text-wrap'>#{indikator_s.indikator_kinerja}</td>
+          <td class='text-wrap'>#{indikator_s.target}</td>
+          <td class='text-wrap'>#{indikator_s.satuan}</td>
         </tr>
       ".html_safe
       end

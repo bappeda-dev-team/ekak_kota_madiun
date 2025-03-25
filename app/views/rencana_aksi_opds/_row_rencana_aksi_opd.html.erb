@@ -1,17 +1,17 @@
 <tbody id="<%= dom_id(sasaran) %>">
   <tr>
-    <td class="border" rowspan="<%= rowspan_renaksi_opd(sasaran) %>"><%= i %></td>
-    <td class="border text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
+    <td class="" rowspan="<%= rowspan_renaksi_opd(sasaran) %>"><%= i %></td>
+    <td class="text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
     <% if sasaran.indikator_sasarans.any? %>
       <%= indikator_rencana_aksi_opd(sasaran) %>
     <% else %>
-      <td class="border" colspan="3">
+      <td class="text-center" colspan="3">
         <p class="alert alert-danger">
           INDIKATOR SASARAN BELUM TERISI
         </p>
       </td>
     <% end %>
-    <td class="border text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran) %>">
+    <td class="text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran) %>">
       <div class="d-grid gap-2">
         <%= render ModalButtonComponent.new(path: new_rencana_aksi_opd_path(tahun: @tahun,
                                                                             kode_opd: @kode_opd,
@@ -22,13 +22,13 @@
     <% renaksi_rowspan = sasaran.indikator_sasarans.length %>
     <% if sasaran.rencana_aksi_opds.any? %>
       <% renaksi_opd = sasaran.rencana_aksi_opds.first %>
-      <td class="border text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.aksi %></td>
-      <td class="border text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw1 %></td>
-      <td class="border text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw2 %></td>
-      <td class="border text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw3 %></td>
-      <td class="border text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw4 %></td>
-      <td class="border text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.keterangan %></td>
-      <td class="border text-wrap" rowspan="<%= renaksi_rowspan %>">
+      <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.aksi %></td>
+      <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw1 %></td>
+      <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw2 %></td>
+      <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw3 %></td>
+      <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw4 %></td>
+      <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.keterangan %></td>
+      <td class="text-wrap" rowspan="<%= renaksi_rowspan %>">
         <div class="d-grid gap-2 mt-3">
           <%= renaksi_opd_sync_jadwal_button(renaksi_opd, @tahun, @kode_opd, sasaran, i) %>
           <%= render(EditButtonComponent.new(path: edit_rencana_aksi_opd_path(renaksi_opd, tahun: @tahun, kode_opd: @kode_opd, sasaran_id: sasaran.id, i: i))) %>
@@ -36,7 +36,7 @@
         </div>
       </td>
     <% else %>
-      <td class="border" colspan="7" rowspan="<%= renaksi_rowspan %>">
+      <td class="text-center" colspan="7" rowspan="<%= renaksi_rowspan %>">
         -
       </td>
     <% end %>
@@ -46,13 +46,13 @@
   <% end %>
   <% sasaran.rencana_aksi_opds.drop(1).each do |renaksi_opd| %>
     <tr class="renaksi-opd">
-      <td class="border text-wrap"><%= renaksi_opd.aksi %></td>
-      <td class="border text-wrap"><%= renaksi_opd.tw1 %></td>
-      <td class="border text-wrap"><%= renaksi_opd.tw2 %></td>
-      <td class="border text-wrap"><%= renaksi_opd.tw3 %></td>
-      <td class="border text-wrap"><%= renaksi_opd.tw4 %></td>
-      <td class="border text-wrap"><%= renaksi_opd.keterangan %></td>
-      <td class="border text-wrap">
+      <td class="text-wrap"><%= renaksi_opd.aksi %></td>
+      <td class="text-wrap"><%= renaksi_opd.tw1 %></td>
+      <td class="text-wrap"><%= renaksi_opd.tw2 %></td>
+      <td class="text-wrap"><%= renaksi_opd.tw3 %></td>
+      <td class="text-wrap"><%= renaksi_opd.tw4 %></td>
+      <td class="text-wrap"><%= renaksi_opd.keterangan %></td>
+      <td class="text-wrap">
         <div class="d-grid gap-2 mt-3">
           <%= renaksi_opd_sync_jadwal_button(renaksi_opd, @tahun, @kode_opd, sasaran, i) %>
           <%= render(EditButtonComponent.new(path: edit_rencana_aksi_opd_path(renaksi_opd, tahun: @tahun, kode_opd: @kode_opd, sasaran_id: sasaran.id, i: i))) %>

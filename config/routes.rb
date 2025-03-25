@@ -8,7 +8,11 @@ require "sidekiq/web"
 require "sidekiq_unique_jobs/web"
 
 Rails.application.routes.draw do
-  resources :rencana_aksi_opds
+  resources :rencana_aksi_opds do
+    collection do
+      get :cetak
+    end
+  end
   resources :program_unggulans do
     collection do
       get :asta_karya

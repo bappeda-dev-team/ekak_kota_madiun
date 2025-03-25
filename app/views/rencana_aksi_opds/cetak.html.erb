@@ -1,0 +1,97 @@
+<div data-controller="print" data-print-title-value="RENSTRA">
+  <button class="m-3 btn btn-outline-danger no-print" data-action="click->print#print">
+    <span class="far fa-file-pdf me-2"></span>
+    Cetak PDF
+  </button>
+  <div data-print-target="document" class="w-100" id="cetak">
+    <div class="kop">
+      <div class="kop-judul">
+        <h3>RENCANA AKSI OPD</h3>
+      </div>
+      <div class="kop-opd">
+        <h5><%= @nama_opd %></h5>
+      </div>
+      <div class="kop-tahun">
+        <h5>TAHUN <%= @tahun %></h5>
+      </div>
+    </div>
+    <table class="table align-items-center table-bordered">
+      <thead>
+        <tr>
+          <th class="text-center" rowspan="2" scope="col">No</th>
+          <th class="text-center" rowspan="2" scope="col">Rencana Kinerja</th>
+          <th class="text-center" rowspan="2" scope="col">Indikator Rencana Kinerja</th>
+          <th class="text-center" rowspan="2" scope="col">Target</th>
+          <th class="text-center" rowspan="2" scope="col">Satuan</th>
+          <th class="text-center" rowspan="2" scope="col">Aksi/Kegiatan</th>
+          <th class="text-center" scope="col" colspan="4">Jadwal Pelaksanaan</th>
+          <th class="text-center" rowspan="2" scope="col">Keterangan</th>
+        </tr>
+        <tr>
+          <th class="text-center">tw1</th>
+          <th class="text-center">tw2</th>
+          <th class="text-center">tw3</th>
+          <th class="text-center">tw4</th>
+        </tr>
+      </thead>
+      <% @sasaran_opds.each.with_index(1) do |sasaran, i| %>
+        <tbody id="<%= dom_id(sasaran) %>">
+          <tr>
+            <td class="" rowspan="<%= rowspan_renaksi_opd(sasaran) %>"><%= i %></td>
+            <td class="text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran) %>"><%= sasaran.sasaran_kinerja %></td>
+            <% if sasaran.indikator_sasarans.any? %>
+              <%= indikator_rencana_aksi_opd(sasaran) %>
+            <% else %>
+              <td class="" colspan="3">
+                <p class="alert alert-danger">
+                  INDIKATOR SASARAN BELUM TERISI
+                </p>
+              </td>
+            <% end %>
+            <% renaksi_rowspan = sasaran.indikator_sasarans.length %>
+            <% if sasaran.rencana_aksi_opds.any? %>
+              <% renaksi_opd = sasaran.rencana_aksi_opds.first %>
+              <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.aksi %></td>
+              <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw1 %></td>
+              <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw2 %></td>
+              <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw3 %></td>
+              <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw4 %></td>
+              <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.keterangan %></td>
+            <% else %>
+              <td class="" colspan="6" rowspan="<%= renaksi_rowspan %>">
+                -
+              </td>
+            <% end %>
+          </tr>
+          <% row_indikator_rencana_aksi_opd(sasaran).each do |indikator| %>
+            <%= indikator %>
+          <% end %>
+          <% sasaran.rencana_aksi_opds.drop(1).each do |renaksi_opd| %>
+            <tr class="renaksi-opd">
+              <td class="text-wrap"><%= renaksi_opd.aksi %></td>
+              <td class="text-wrap"><%= renaksi_opd.tw1 %></td>
+              <td class="text-wrap"><%= renaksi_opd.tw2 %></td>
+              <td class="text-wrap"><%= renaksi_opd.tw3 %></td>
+              <td class="text-wrap"><%= renaksi_opd.tw4 %></td>
+              <td class="text-wrap"><%= renaksi_opd.keterangan %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      <% end %>
+    </table>
+    <div class="ttd">
+      <div class="title-ttd">
+        <%= @jabatan_kepala_opd %> <%= @nama_opd %>
+      </div>
+      <div class="nama-kepala-opd">
+        <%= @nama_kepala_opd %>
+      </div>
+      <div class="jabatan-kepala-opd">
+        <%= @pangkat_kepala_opd %>
+      </div>
+      <div class="nip-kepala-opd">
+        NIP <%= @nip_kepala_opd %>
+      </div>
+    </div>
+  </div>
+</div>
