@@ -6,7 +6,9 @@
       <%= indikator_rencana_aksi_opd(sasaran) %>
     <% else %>
       <td class="border" colspan="3">
-        <%= link_to 'ISI INDIKATOR SASARAN', edit_sasaran_path(sasaran), class: 'btn btn-outline-danger w-100' %>
+        <p class="alert alert-danger">
+          INDIKATOR SASARAN BELUM TERISI
+        </p>
       </td>
     <% end %>
     <td class="border text-wrap" rowspan="<%= rowspan_renaksi_opd(sasaran) %>">
@@ -39,18 +41,23 @@
   <% row_indikator_rencana_aksi_opd(sasaran).each do |indikator| %>
     <%= indikator %>
   <% end %>
-  <% sasaran.rencana_aksi_opds.drop(1).each do |renaksi_opd| %>
+  <% sasaran.rencana_aksi_opds.each do |renaksi_opd| %>
     <tr class="renaksi-opd">
       <td class="border text-wrap">
         <%= renaksi_opd.aksi %>
-        <div class="d-grid gap-2">
+        <hr />
+        <div class="d-grid gap-2 mt-3">
           <%= sync_jadwal_button(renaksi_opd, @tahun, @kode_opd, sasaran, i) %>
+          <%= render(EditButtonComponent.new(path: edit_rencana_aksi_opd_path(renaksi_opd, tahun: @tahun, kode_opd: @kode_opd, sasaran_id: sasaran.id, i: i))) %>
+          <%= render(DeleteButtonComponent.new(path: rencana_aksi_opd_path(renaksi_opd),
+                                               title: "Hapus Renaksi?" )) %>
         </div>
       </td>
       <td class="border text-wrap"><%= renaksi_opd.tw1 %></td>
       <td class="border text-wrap"><%= renaksi_opd.tw2 %></td>
       <td class="border text-wrap"><%= renaksi_opd.tw3 %></td>
       <td class="border text-wrap"><%= renaksi_opd.tw4 %></td>
+      <td class="border text-wrap"><%= renaksi_opd.keterangan %></td>
     </tr>
   <% end %>
 </tbody>

@@ -3079,7 +3079,8 @@ CREATE TABLE public.rencana_aksi_opds (
     id_rencana_renaksi character varying NOT NULL,
     sasaran_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    keterangan character varying
 );
 
 
@@ -7680,6 +7681,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250223194503'),
 ('20250228024215'),
 ('20250304054051'),
-('20250324035206');
+('20250324035206'),
+('20250325021044');
 
 

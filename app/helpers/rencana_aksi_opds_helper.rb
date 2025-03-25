@@ -50,10 +50,12 @@ module RencanaAksiOpdsHelper
   def sync_jadwal_button(renaksi_opd, tahun, kode_opd, sasaran, i)
     button_to rencana_aksi_opd_path(renaksi_opd),
               params: {
-                tahun: tahun,
-                kode_opd: kode_opd,
-                i: i,
-                sasaran_id: sasaran.id
+                rencana_aksi_opd: {
+                  tahun: tahun,
+                  kode_opd: kode_opd,
+                  i: i,
+                  sasaran_id: sasaran.id
+                }
               },
               class: 'btn btn-sm btn-primary',
               remote: true,

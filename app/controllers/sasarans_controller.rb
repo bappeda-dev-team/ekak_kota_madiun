@@ -628,6 +628,10 @@ class SasaransController < ApplicationController
         .where("sasarans.sasaran_kinerja ILIKE ?", "%#{q}%")
         .select(&:siap_ditarik?)
     end
+
+    return unless params[:item]
+
+    @sasarans = Sasaran.where(id_rencana: params[:item])
     # @sasarans = @opd.strategi_eselon4.flat_map do |st|
     #   st.sasaran_pohon_kinerja(tahun: @tahun)
     # end

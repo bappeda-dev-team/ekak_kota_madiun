@@ -58,8 +58,14 @@
          dropdown_tahun_value: @tahun,
          dropdown_parent_value: '#form-modal',
          dropdown_kode_opd_value: @kode_opd,
+         dropdown_item_value: form.object.id_rencana_renaksi,
          dropdown_url_value: renaksi_opd_list_sasarans_path(format: :json),
        } } %>
+  </div>
+
+  <div class="field">
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_area :keterangan, class: 'form-control' %>
   </div>
 
   <div class="actions">

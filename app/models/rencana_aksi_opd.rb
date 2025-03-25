@@ -5,6 +5,7 @@
 #  id                 :bigint           not null, primary key
 #  id_rencana_renaksi :string           not null
 #  is_hidden          :boolean          default(FALSE)
+#  keterangan         :string
 #  kode_opd           :string
 #  tahun              :string
 #  tw1                :string
@@ -24,6 +25,7 @@
 #  fk_rails_...  (sasaran_id => sasarans.id)
 #
 class RencanaAksiOpd < ApplicationRecord
+  default_scope { order(:id) }
   has_one :rencana_renaksi, class_name: 'Sasaran', primary_key: :id_rencana_renaksi, foreign_key: :id_rencana
   belongs_to :sasaran
 

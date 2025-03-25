@@ -28,7 +28,13 @@ class RencanaAksiOpdsController < ApplicationController
   end
 
   # GET /rencana_aksi_opds/1/edit
-  def edit; end
+  def edit
+    @i = params[:i]
+    @tahun = params[:tahun]
+    @kode_opd = params[:kode_opd]
+    @sasaran_opd_id = params[:sasaran_id]
+    @sasaran = Sasaran.find(@sasaran_opd_id)
+  end
 
   # POST /rencana_aksi_opds or /rencana_aksi_opds.json
   def create
@@ -55,12 +61,12 @@ class RencanaAksiOpdsController < ApplicationController
 
   # PATCH/PUT /rencana_aksi_opds/1 or /rencana_aksi_opds/1.json
   def update
-    @i = params[:i]
-    @tahun = params[:tahun]
-    @kode_opd = params[:kode_opd]
-    @sasaran_opd = Sasaran.find(params[:sasaran_id])
+    @i = params[:rencana_aksi_opd][:i]
+    @tahun = rencana_aksi_opd_params[:tahun]
+    @kode_opd = rencana_aksi_opd_params[:kode_opd]
+    @sasaran_opd = Sasaran.find(rencana_aksi_opd_params[:sasaran_id])
 
-    if @rencana_aksi_opd.update_tw_pelaksanaan
+    if @rencana_aksi_opd.update(rencana_aksi_opd_params) && @rencana_aksi_opd.update_tw_pelaksanaan
       render json: { resText: 'Sinkronisasi berhasil',
                      html_content: html_content({ sasaran: @sasaran_opd, i: @i },
                                                 partial: 'rencana_aksi_opds/row_rencana_aksi_opd') }
@@ -89,6 +95,6 @@ class RencanaAksiOpdsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def rencana_aksi_opd_params
     params.require(:rencana_aksi_opd).permit(:tw1, :tw2, :tw3, :tw4, :is_hidden, :tahun, :kode_opd,
-                                             :id_rencana_renaksi, :sasaran_id)
+                                             :keterangan, :id_rencana_renaksi, :sasaran_id)
   end
 end

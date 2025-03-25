@@ -5,6 +5,7 @@
 #  id                 :bigint           not null, primary key
 #  id_rencana_renaksi :string           not null
 #  is_hidden          :boolean          default(FALSE)
+#  keterangan         :string
 #  kode_opd           :string
 #  tahun              :string
 #  tw1                :string
