@@ -39,7 +39,16 @@ class RencanaAksiOpd < ApplicationRecord
               else
                 ''
               end
-    "#{rencana_renaksi} <span class='renaksi-opd-bintang'>#{bintang}</span>".html_safe
+    bintang_biru = if rencana_renaksi.termasuk_program_unggulan?
+                     '*'
+                   else
+                     ''
+                   end
+
+    "#{rencana_renaksi}
+<span class='renaksi-opd-bintang-biru'>#{bintang_biru}</span>
+<span class='renaksi-opd-bintang'>#{bintang}</span>"
+      .html_safe
   end
 
   def update_tw_pelaksanaan

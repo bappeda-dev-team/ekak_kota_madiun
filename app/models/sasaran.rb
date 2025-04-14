@@ -827,4 +827,8 @@ class Sasaran < ApplicationRecord
   def default_urutan_tahapan
     tahapans.size
   end
+
+  def termasuk_program_unggulan?
+    usulans.any? { |us| us.usulanable_type == 'Inovasi' }
+  end
 end
