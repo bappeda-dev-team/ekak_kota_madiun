@@ -39,7 +39,7 @@ class RencanaAksiOpd < ApplicationRecord
               else
                 ''
               end
-    "#{rencana_renaksi} #{bintang}"
+    "#{rencana_renaksi} <span class='renaksi-opd-bintang'>#{bintang}</span>".html_safe
   end
 
   def update_tw_pelaksanaan
