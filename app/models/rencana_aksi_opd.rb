@@ -34,7 +34,12 @@ class RencanaAksiOpd < ApplicationRecord
   end
 
   def aksi
-    rencana_renaksi.to_s
+    bintang = if rencana_renaksi.punya_inovasi?
+                '*'
+              else
+                ''
+              end
+    "#{rencana_renaksi} #{bintang}"
   end
 
   def update_tw_pelaksanaan
