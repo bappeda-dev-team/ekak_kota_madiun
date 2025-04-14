@@ -25,6 +25,7 @@
             <th class="border text-center" rowspan="2" scope="col">Satuan</th>
             <th class="border text-center" rowspan="2" scope="col"></th>
             <th class="border text-center" rowspan="2" scope="col">Aksi/Kegiatan</th>
+            <th class="border text-center" rowspan="2" scope="col">Nama Pemilik</th>
             <th class="border text-center" scope="col" colspan="4">Jadwal Pelaksanaan</th>
             <th class="border text-center" rowspan="2" scope="col">Keterangan</th>
             <th class="border text-center" rowspan="2" scope="col"></th>
@@ -39,6 +40,10 @@
         <% @sasaran_opds.each.with_index(1) do |sasaran, i| %>
           <%= render partial: 'row_rencana_aksi_opd', locals: { sasaran: sasaran, i: i } %>
         <% end %>
+        <caption class="bottom">
+          <p class="mb-0"><span class="renaksi-opd-bintang-biru">*</span> terkait program unggulan walikota</p>
+          <p class="mt-0"><span class="renaksi-opd-bintang">*</span> terdapat inovasi</p>
+        </caption>
       </table>
     </div>
   <% end %>

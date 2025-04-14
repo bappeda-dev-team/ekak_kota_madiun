@@ -51,6 +51,10 @@ class RencanaAksiOpd < ApplicationRecord
       .html_safe
   end
 
+  def nama_pemilik
+    rencana_renaksi.nama_nip_pemilik
+  end
+
   def update_tw_pelaksanaan
     target_setahun = rencana_renaksi.total_target_aksi_bulan
     tw1 = target_setahun.values_at(1, 2, 3).compact_blank.sum

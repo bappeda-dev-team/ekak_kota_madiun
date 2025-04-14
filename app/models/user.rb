@@ -422,6 +422,10 @@ class User < ApplicationRecord
     "#{nama} ( #{nik} )"
   end
 
+  def nama_nip_kurung_small
+    "#{nama} (#{nik})"
+  end
+
   def nip
     nik
   end

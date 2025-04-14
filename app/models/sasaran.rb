@@ -595,6 +595,10 @@ class Sasaran < ApplicationRecord
     'nama kosong!!'
   end
 
+  def nama_nip_pemilik
+    user.nama_nip_kurung_small
+  end
+
   def clone_dari
     return unless id_rencana.include?('clone')
 
