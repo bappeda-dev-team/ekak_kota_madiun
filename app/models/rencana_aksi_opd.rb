@@ -61,6 +61,10 @@ class RencanaAksiOpd < ApplicationRecord
     0
   end
 
+  def subkegiatan_renaksi
+    rencana_renaksi.program_kegiatan
+  end
+
   def update_tw_pelaksanaan
     target_setahun = rencana_renaksi.total_target_aksi_bulan
     tw1 = target_setahun.values_at(1, 2, 3).compact_blank.sum

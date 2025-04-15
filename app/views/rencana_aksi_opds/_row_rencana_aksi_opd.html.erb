@@ -23,6 +23,13 @@
     <% if sasaran.rencana_aksi_opds.any? %>
       <% renaksi_opd = sasaran.rencana_aksi_opds.first %>
       <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.aksi %></td>
+      <td class="text-wrap" rowspan="<%= renaksi_rowspan %>">
+        <table>
+          <tr>
+            <%= subkegiatan_indikator_renaksi(renaksi_opd, @tahun, @kode_opd) %>
+          </tr>
+        </table>
+      </td>
       <td class="text-gray-900" rowspan="<%= renaksi_rowspan %>"><%= number_to_currency(renaksi_opd&.anggaran_renaksi, unit: "Rp. ", separator: ".") %></td>
       <td class="text-wrap" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.nama_pemilik %></td>
       <td class="text-center" rowspan="<%= renaksi_rowspan %>"><%= renaksi_opd&.tw1 %></td>
@@ -49,6 +56,13 @@
   <% sasaran.rencana_aksi_opds.drop(1).each do |renaksi_opd| %>
     <tr class="renaksi-opd">
       <td class="text-wrap"><%= renaksi_opd.aksi %></td>
+      <td class="text-wrap">
+        <table>
+          <tr>
+            <%= subkegiatan_indikator_renaksi(renaksi_opd, @tahun, @kode_opd) %>
+          </tr>
+        </table>
+      </td>
       <td class="text-gray-900"><%= number_to_currency(renaksi_opd&.anggaran_renaksi, unit: "Rp. ", separator: ".") %></td>
       <td class="text-wrap"><%= renaksi_opd.nama_pemilik %></td>
       <td class="text-center"><%= renaksi_opd.tw1 %></td>
