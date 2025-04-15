@@ -1004,6 +1004,7 @@ Rails.application.routes.draw do
   resources :sasaran_kota do
     collection do
       get :list_sasaran_kota
+      get :laporan
     end
     member do
       get :rad_kota

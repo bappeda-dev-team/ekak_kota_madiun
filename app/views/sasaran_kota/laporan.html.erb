@@ -1,0 +1,54 @@
+<%= content_for :html_title, "Sasaran Kota / RAD" %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Perencanaan Kota</li>
+  <li class="breadcrumb-item active" aria-current="page">Sasaran Kota / RAD</li>
+<% end %>
+<% content_for :view_utama do %>
+  <div class="card border-0 shadow">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h2 class="fs-5 fw-bold mb-0">Sasaran Kota Tahun <%= @tahun %>
+            <h2>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="accordion" id="accordionRad">
+        <% @sasaran_kota.each do |tema, sasarans| %>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target='<%= "#collapse-#{tema.id}" %>' aria-expanded="true" aria-controls='<%= "#collapse-#{tema.id}" %>'>
+                <%= tema %> - <%= tema.pohonable %>
+              </button>
+            </h2>
+            <div id='<%= "collapse-#{tema.id}" %>' class="accordion-collapse collapse">
+              <div class="accordion-body">
+                <div class="table-responsive">
+                  <table class="table counter">
+                    <thead>
+                      <tr>
+                        <th class="border" scope="col">No.</th>
+                        <th class="border" scope="col">Strategi Kota</th>
+                        <th class="border" scope="col" colspan="2">Sasaran Kota</th>
+                        <th class="border" scope="col">Indikator</th>
+                        <th class="border" scope="col">Target</th>
+                        <th class="border" scope="col">Satuan</th>
+                        <th class="border" scope="col">Jenis</th>
+                        <th class="border" scope="col">Keterangan</th>
+                      </tr>
+                    </thead>
+                    <tbody id="sasaran-kota">
+                      <%= render partial: 'sasaran_kota/laporan_sasaran_kota', collection: sasarans, as: :sasaran %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

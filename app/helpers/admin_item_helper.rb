@@ -2,6 +2,10 @@ module AdminItemHelper
   def perencanaan_opd_items # rubocop:disable Metrics
     items = [
       {
+        title: 'Sasaran Kota / RAD', href: laporan_sasaran_kota_path,
+        icon: 'fas fa-bullseye', identifier: 'sasaran_kota_laporan'
+      },
+      {
         title: 'Strategi Arah Kebijakan', href: opd_strategi_arah_kebijakans_path,
         icon: 'fas fa-city', identifier: 'strategi_kebijakan'
       },

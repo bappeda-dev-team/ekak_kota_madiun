@@ -6,6 +6,10 @@ class SasaranKotaController < ApplicationController
     handle_filters
   end
 
+  def laporan
+    handle_filters
+  end
+
   def new
     @strategi_kota = Tematik.find(params[:tematik_id])
     @sasaran_kota = SasaranKotum.new(tematik: @strategi_kota)
