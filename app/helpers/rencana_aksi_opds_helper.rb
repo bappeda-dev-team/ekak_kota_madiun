@@ -108,10 +108,13 @@ module RencanaAksiOpdsHelper
 
   def subkegiatan_indikator_renaksi(renaksi_opd, tahun, kode_opd)
     subkegiatan = renaksi_opd.subkegiatan_renaksi
-    indikator_sub = indikator_sub(subkegiatan, tahun, kode_opd)
+    tahun_n = tahun_fix(tahun)
+    indikator = subkegiatan&.indikator_subkegiatan_tahun(tahun_n, kode_opd)
     "
-      <td class='border text-wrap fw-bolder'>#{subkegiatan.nama_subkegiatan}</td>
-      #{indikator_sub}
+      <td style='width: 200px;' class='border border-bottom-0 text-wrap fw-bolder'>#{subkegiatan.nama_subkegiatan}</td>
+      <td style='width: 100px;' class='border border-bottom-0 text-wrap fw-bolder'>#{indikator&.dig(:indikator)}</td>
+      <td style='width: 50px;' class='border border-bottom-0 text-wrap fw-bolder'>#{indikator&.dig(:target)}</td>
+      <td style='width: 50px;' class='border border-bottom-0 text-wrap fw-bolder'>#{indikator&.dig(:satuan)}</td>
     ".html_safe
   end
 end
