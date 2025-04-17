@@ -47,6 +47,41 @@
     }}) %>
   </div>
 
+  <div class="field" id="indikator-tematiks">
+    <% @strategi_kota.indikators.each_with_index do |indikator, i| %>
+      <%= fields_for "sasaran_kotum[tematik_indikators_attributes][#{i}]", indikator do |ind_f| %>
+        <fieldset class="mb-3">
+          <div class="field mt-0">
+            <%= ind_f.hidden_field :id %>
+            <%= ind_f.label :indikator, { class: "form-label" } %>
+            <%= ind_f.text_field :indikator, { class: "form-control disabled", readonly: true } %>
+          </div>
+          <div class="field mt-0">
+            <%= ind_f.label :rumus_perhitungan, { class: "form-label" } %>
+            <%= ind_f.text_area :rumus_perhitungan, { class: "form-control" } %>
+          </div>
+          <div class="field mt-0">
+            <%= ind_f.label :sumber_data, { class: "form-label" } %>
+            <%= ind_f.text_area :sumber_data, { class: "form-control" } %>
+          </div>
+          <div class="field">
+            <%= ind_f.label :target, { class: "form-label" } %>
+            <%= ind_f.text_field :target, { class: "form-control disabled", readonly: true } %>
+          </div>
+          <div class="field">
+            <%= ind_f.label :satuan, { class: "form-label" } %>
+            <%= ind_f.text_field :satuan, { class: "form-control disabled", readonly: true } %>
+          </div>
+        </fieldset>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= form.label :keterangan, class: 'form-label' %>
+    <%= form.text_area :keterangan, class: 'form-control', value: @strategi_kota.keterangan, rows: 5 %>
+  </div>
+
   <div class="actions">
     <%= form.submit "Simpan Sasaran Kota" %>
   </div>

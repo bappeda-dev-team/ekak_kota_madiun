@@ -54,13 +54,15 @@
       </div>
     </td>
   <% end %>
-  <td colspan="3" class="p-0 m-0 border-0"></td>
+  <td colspan="5" class="p-0 m-0 border-0"></td>
   <td class="text-wrap border" rowspan="<%= rowspan %>"><%= sas.title_up %></td>
   <td class="text-wrap border" rowspan="<%= rowspan %>"><%= sasaran.pohonable.keterangan %></td>
 </tr>
 <% sasaran.pohonable.indikators.each do |indikator| %>
   <tr class="skip">
     <td class="text-wrap border"><%= indikator %></td>
+    <td class="text-wrap border"><%= indikator.rumus_perhitungan %></td>
+    <td class="text-wrap border"><%= indikator.sumber_data %></td>
     <td class="border"><%= indikator.target %></td>
     <td class="border"><%= indikator.satuan %></td>
   </tr>
@@ -68,6 +70,6 @@
 <% sas.sub_pohons.flat_map { |sub| sub.role == 'sub_sub_pohon_kota' ? sub.sub_pohons.map(&:opd) : sub.opd }.uniq.compact.each.with_index(1) do |opd, no| %>
   <tr class="skip">
     <td class="border">OPD <%= no %></td>
-    <td class="text-wrap border" colspan="8"><%= opd %></td>
+    <td class="text-wrap border" colspan="10"><%= opd %></td>
   </tr>
 <% end %>

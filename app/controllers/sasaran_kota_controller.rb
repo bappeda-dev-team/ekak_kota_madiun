@@ -20,9 +20,13 @@ class SasaranKotaController < ApplicationController
   end
 
   def create
+    update_detail_indikator_tematik
+
     @sasaran_kota = SasaranKotum.new(sasaran_kota_params)
     if @sasaran_kota.save
       strategi_kota = Pohon.find_by(pohonable_id: sasaran_kota_params[:tematik_id])
+      strategi_kota.pohonable.update!(keterangan: @keterangan)
+
       render json: { resText: 'Sasaran ditambahkan',
                      html_content: html_content({ sasaran: strategi_kota },
                                                 partial: 'sasaran_kota/sasaran_kota') }.to_json,
@@ -36,8 +40,12 @@ class SasaranKotaController < ApplicationController
   end
 
   def update
+    update_detail_indikator_tematik
+
     if @sasaran_kota.update(sasaran_kota_params)
       strategi_kota = Pohon.find_by(pohonable_id: sasaran_kota_params[:tematik_id])
+      strategi_kota.pohonable.update!(keterangan: @keterangan)
+
       render json: { resText: 'Sasaran ditambahkan',
                      html_content: html_content({ sasaran: strategi_kota },
                                                 partial: 'sasaran_kota/sasaran_kota') }.to_json,
@@ -136,6 +144,16 @@ class SasaranKotaController < ApplicationController
                                                                  ])
                           .select(&:pohonable)
       [tematik, sub_pohons]
+    end
+  end
+
+  def update_detail_indikator_tematik
+    @keterangan = params[:sasaran_kotum][:keterangan]
+    return unless params[:sasaran_kotum][:tematik_indikators_attributes]
+
+    params[:sasaran_kotum][:tematik_indikators_attributes].each_value do |indikator_attrs|
+      indikator = Indikator.find(indikator_attrs[:id])
+      indikator.update(indikator_attrs.permit(:rumus_perhitungan, :sumber_data))
     end
   end
 end
