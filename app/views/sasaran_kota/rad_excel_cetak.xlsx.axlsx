@@ -49,6 +49,8 @@ wb.add_worksheet(name: "rad") do |sheet|
   sheet.add_row ['SASARAN KOTA', sasaran_kota.pohonable.sasaran_kotum]
   sasaran_kota.pohonable.indikators.each.with_index(1) do |indikator, index|
     sheet.add_row ["INDIKATOR #{sasaran_kota.pohonable.indikators.size > 1 ? index : ''}", indikator]
+    sheet.add_row ['RUMUS PERHITUNGAN', indikator.rumus_perhitungan]
+    sheet.add_row ['SUMBER DATA', indikator.sumber_data]
     sheet.add_row ['TARGET', indikator.target]
     sheet.add_row ['SATUAN', indikator.satuan]
   end
