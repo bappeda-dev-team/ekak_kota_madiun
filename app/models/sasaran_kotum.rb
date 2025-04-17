@@ -28,11 +28,15 @@ class SasaranKotum < ApplicationRecord
   belongs_to :tujuan_kota, class_name: 'TujuanKota', foreign_key: 'id_tujuan', primary_key: 'kode_tujuan'
   belongs_to :tematik
 
-  has_many :indikator_sasarans, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id_sasaran'
-  accepts_nested_attributes_for :indikator_sasarans, reject_if: :all_blank, allow_destroy: true
+  # has_many :indikator_sasarans, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'id_sasaran'
+  # accepts_nested_attributes_for :indikator_sasarans, reject_if: :all_blank, allow_destroy: true
 
   # has_many :sasarans_opd, class_name: 'Sasaran', foreign_key: 'sasaran_atasan_id', primary_key: 'kode_sasaran'
   has_one :strategi_kotum, foreign_key: 'sasaran_kota_id', primary_key: 'kode_sasaran'
+
+  def indikators
+    tematik.indikators
+  end
 
   def to_s
     sasaran
