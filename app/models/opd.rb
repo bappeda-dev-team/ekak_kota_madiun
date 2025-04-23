@@ -221,6 +221,15 @@ class Opd < ApplicationRecord
       .map(&:sasaran)
   end
 
+  def sasaran_eselon4_limit(tahun:, limit: 25)
+    strategi_eselon4
+      .where(tahun: tahun)
+      .joins("INNER JOIN sasarans ON cast (sasarans.strategi_id as INT) = strategis.id")
+      .where(sasarans: { tahun: tahun })
+      .limit(limit)
+      .map(&:sasaran)
+  end
+
   def eselon_dua_opd
     raise 'format kode opd salah' if kode_unik_opd.length != 22
 

@@ -24,6 +24,7 @@ class KakQueries
   def sasarans
     users_eselon4.map do |user|
       user.sasarans.includes(%i[indikator_sasarans]).where(tahun: @tahun, keterangan: nil)
+          .select { |ss| ss.strategi&.role == 'eselon_4' }
     end.flatten
   end
 

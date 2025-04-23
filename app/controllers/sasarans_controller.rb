@@ -626,7 +626,7 @@ class SasaransController < ApplicationController
       us.sasarans.includes(%i[strategi indikator_sasarans])
         .where(tahun: @tahun)
         .where("sasarans.sasaran_kinerja ILIKE ?", "%#{q}%")
-        .select(&:siap_ditarik?)
+        .select { |ss| select_sasaran_valid(ss) }
     end
 
     return unless params[:item]
@@ -639,6 +639,10 @@ class SasaransController < ApplicationController
   end
 
   private
+
+  def select_sasaran_valid(ss)
+    ss.siap_ditarik? && ss.strategi&.role == 'eselon_4'
+  end
 
   def errors_content(sasaran)
     render_to_string(partial: 'error',
