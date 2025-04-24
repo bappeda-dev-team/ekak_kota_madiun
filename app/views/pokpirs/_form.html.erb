@@ -30,11 +30,11 @@
   </div>
   <div class="field mt-3">
     <%= form.label :tahun %>
-    <%= form.select(:tahun, (['',2021,2022,2023,2024]), {},
+    <%= form.select(:tahun, options_for_select(Tahun.pluck(:tahun), form.object.tahun), {},
                     { 
                      data: {"placeholder": "Pilih Tahun",
                             controller: 'dropdown',
-                            dropdown_parent_value: '#form-modal-body'
+                            dropdown_parent_value: '#form-modal'
                      }}) %>
   </div>
   <div class="actions">
