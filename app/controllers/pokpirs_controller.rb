@@ -14,9 +14,7 @@ class PokpirsController < ApplicationController
   def usulan_pokpir
     tahun = cookies[:tahun] || Date.current.year.to_s
     @tahun_bener = tahun.match(/murni|perubahan/) ? tahun[/[^_]\d*/, 0] : tahun
-    @pokpirs = Pokpir.belum_diajukan
-                     .where(tahun: @tahun_bener)
-                     .order(:created_at).select do |m|
+    @pokpirs = Pokpir.where(tahun: @tahun_bener).order(:updated_at).select do |m|
       m.opd_dituju&.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin or m.opd == current_user.opd.kode_unik_opd
     end
     render 'user_pokpir'

@@ -7,7 +7,7 @@
   <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.opd_pokpir %></td>
   <td class="fw-bolder text-gray-500 text-wrap"><%= pokpir.asn_pengambil %></td>
   <td class="action-<%= dom_id(pokpir) %> text-center align-middle">
-    <% unless guest? %>
+    <% unless guest? || privileged_user %>
       <% unless pokpir.is_active %>
         <% if pokpir.asn_aktif? %>
           <%= button_to toggle_is_active_pokpir_path(pokpir), remote: true, class: 'btn btn-primary d-inline-flex align-items-center toggle-active' do %>
@@ -19,14 +19,14 @@
         <% end %>
       <% else %>
         <% if pokpir.sasaran_aktif? %>
-          <%= button_to setujui_usulan_di_sasaran_pokpir_path(pokpir), remote: true, class: 'btn btn-tertiary text-light d-inline-flex align-items-center toggle-active' do %>
-            <%= statuses(code: pokpir.status) %>
-            <i class="fas fa-check-circle text-success icon icon-xs ms-2"></i>
-          <% end %>
+          <button class="btn btn-success" disabled>
+            Aktif
+            <i class="fas fa-check-circle icon icon-xs ms-2"></i>
+          </button>
         <% else %>
-          <button class='btn btn-primary d-inline-flex align-items-center toggle-active' disabled>
-            <%= statuses(code: pokpir.status) %>
-            <i class="fas fa-key text-success icon icon-xs ms-2"></i>
+          <button class='btn btn-primary toggle-active' disabled>
+            Siap digunakan
+            <i class="fas fa-check text-success icon icon-xs ms-2"></i>
           </button>
         <% end %>
       <% end %>

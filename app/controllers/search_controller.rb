@@ -13,6 +13,8 @@ class SearchController < ApplicationController
     @results = if @usulan_type == 'Inovasi'
                  # search including kota (no nip_asn)
                  usulan_inovasi_search(kode_sasaran: kode_sasaran)
+               elsif @usulan_type == 'Pokpir'
+                 usulan_pokpir_search(kode_sasaran: kode_sasaran)
                else
                  # search only pribadi
                  Search::AllUsulan.where(searchable_type: @usulan_type, nip_asn: @nip_asn, tahun: @tahun)
@@ -24,6 +26,26 @@ class SearchController < ApplicationController
   end
 
   private
+
+  def usulan_pokpir_search(kode_sasaran: '')
+    @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)
+
+    all_usulans = Search::AllUsulan.where(searchable_type: @usulan_type,
+                                          tahun: @tahun)
+                                   .where("usulan ILIKE ?", "%#{@param}%")
+                                   .order(searchable_id: :desc)
+                                   .includes(:searchable)
+                                   .collect(&:searchable)
+
+    # get usulan pokpir where
+    # nip asn still blank
+    # mean only one asn one rekin
+    # can take this usulan
+    # TODO: fix opd comparer, it's danger
+    all_usulans.select do |pokpir|
+      pokpir.from_kota_only && pokpir.opd_pokpir&.id == @opd.id
+    end
+  end
 
   def usulan_inovasi_search(kode_sasaran: '')
     @opd = Opd.unscoped.find_by(kode_unik_opd: @kode_opd)

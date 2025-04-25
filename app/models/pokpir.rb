@@ -52,13 +52,21 @@ class Pokpir < ApplicationRecord
   end
 
   def opd_pokpir
-    if opd_dituju.class.name == Opd.class.name
+    if opd_dituju.instance_of?(Opd.class)
       opd_dituju
     else
       Opd.find_by(kode_unik_opd: opd)
     end
   rescue NoMethodError
     '-'
+  end
+
+  # get usulan pokpir where
+  # nip asn still blank
+  # mean only one asn one rekin
+  # can take this usulan
+  def from_kota_only
+    nip_asn.blank?
   end
 
   def opd_asn
