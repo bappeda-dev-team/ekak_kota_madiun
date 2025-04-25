@@ -7,7 +7,7 @@ class PokpirsController < ApplicationController
     tahun = cookies[:tahun] || Date.current.year.to_s
     @tahun_bener = tahun.match(/murni|perubahan/) ? tahun[/[^_]\d*/, 0] : tahun
     @pokpirs = Pokpir.where(tahun: @tahun_bener).order(:updated_at).select do |m|
-      m.opd_dituju&.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin
+      m.opd_dituju&.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin or m.opd == current_user.opd.kode_unik_opd
     end
   end
 
@@ -17,7 +17,7 @@ class PokpirsController < ApplicationController
     @pokpirs = Pokpir.belum_diajukan
                      .where(tahun: @tahun_bener)
                      .order(:created_at).select do |m|
-      m.opd_dituju&.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin
+      m.opd_dituju&.id_opd_skp == current_user.opd.id_opd_skp or current_user.has_role? :super_admin or m.opd == current_user.opd.kode_unik_opd
     end
     render 'user_pokpir'
   end
@@ -104,16 +104,22 @@ class PokpirsController < ApplicationController
 
   # GET /pokpirs/new
   def new
-    @pokpir = Pokpir.new
+    is_admin_kota = current_user.admin_kota?
+    user = is_admin_kota ? '' : current_user.nik
+    tahun = cookies[:tahun] || Date.current.year.to_s
+    @kode_opd = is_admin_kota ? params[:opd] : cookies[:opd]
+    @pokpir = Pokpir.new(tahun: tahun, status: 'aktif', nip_asn: user,
+                         is_active: is_admin_kota)
   end
 
   # GET /pokpirs/1/edit
-  def edit; end
+  def edit
+    @kode_opd = @pokpir.opd
+  end
 
   # POST /pokpirs or /pokpirs.json
   def create
-    form_params = pokpir_params.merge(is_active: true, status: 'disetujui')
-    @pokpir = Pokpir.new(form_params)
+    @pokpir = Pokpir.new(pokpir_params)
 
     if @pokpir.save
       render json: { resText: "Entri Pokok Pikiran ditambahkan",

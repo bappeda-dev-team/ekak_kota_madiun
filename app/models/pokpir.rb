@@ -51,6 +51,16 @@ class Pokpir < ApplicationRecord
     '-'
   end
 
+  def opd_pokpir
+    if opd_dituju.class.name == Opd.class.name
+      opd_dituju
+    else
+      Opd.find_by(kode_unik_opd: opd)
+    end
+  rescue NoMethodError
+    '-'
+  end
+
   def opd_asn
     User.find_by(nik: nip_asn).opd.nama_opd
   rescue NoMethodError

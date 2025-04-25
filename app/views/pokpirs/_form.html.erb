@@ -28,6 +28,20 @@
     <%= form.label :permasalahan %>
     <%= form.text_area :uraian, class: 'form-control' %>
   </div>
+  <div class="field">
+    <%= form.label :opd, class: 'form-label' %>
+    <%= form.select :opd, [],
+     { include_blank: true, required: true },
+     data: {
+       placeholder: 'Pilih Opd',
+       controller: 'dropdown',
+       dropdown_jenis_value: 'extra',
+       dropdown_parent_value: '#form-modal',
+       dropdown_url_value: '/opds/filter_selected.json',
+       dropdown_selected_value: @kode_opd,
+       dropdown_scope_value: 'all'
+     }  %>
+  </div>
   <div class="field mt-3">
     <%= form.label :tahun %>
     <%= form.select(:tahun, options_for_select(Tahun.pluck(:tahun), form.object.tahun), {},
