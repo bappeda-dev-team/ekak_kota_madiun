@@ -24,6 +24,12 @@ class KakQueries
   def sasarans
     users_eselon4.map do |user|
       user.sasarans.includes(%i[indikator_sasarans]).where(tahun: @tahun, keterangan: nil)
+    end.flatten
+  end
+
+  def sasarans_eselon4
+    users_eselon4.map do |user|
+      user.sasarans.includes(%i[indikator_sasarans]).where(tahun: @tahun, keterangan: nil)
           .select { |ss| ss.strategi&.role == 'eselon_4' }
     end.flatten
   end
@@ -41,9 +47,9 @@ class KakQueries
   end
 
   def pk_sasarans
-    sasarans.group_by(&:program_kegiatan)
-            .sort_by { |pk, _| pk.nil? ? [] : pk.values_at(:kode_sub_giat) }
-            .to_h
+    sasarans_eselon4.group_by(&:program_kegiatan)
+                    .sort_by { |pk, _| pk.nil? ? [] : pk.values_at(:kode_sub_giat) }
+                    .to_h
   end
 
   def sasarans_program_kegiatans
