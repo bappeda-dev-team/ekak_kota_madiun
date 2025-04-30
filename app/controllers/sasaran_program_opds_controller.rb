@@ -49,11 +49,14 @@ class SasaranProgramOpdsController < ApplicationController
     @program_kegiatans =
       if @laporan == "admin"
         @daftar_resiko.daftar_resiko_opd
-      elsif @user.has_role?(:eselon_4)
-        @daftar_resiko.daftar_resiko_asn(nip: @user.nik)
       elsif @user.has_role?(:eselon_3)
         @daftar_resiko.daftar_resiko_eselon3(nip: @user.nik)
+      elsif @user.has_role?(:eselon_4)
+        @daftar_resiko.daftar_resiko_asn(nip: @user.nik)
       end
+    @program_kegiatans = @program_kegiatans
+                         .transform_values { |sas| sas.select(&:dampak_resiko_setuju?) }
+                         .select { |_, sas| sas.any? }
     # @tahun = @tahun.match(/murni/) ? @tahun[/[^_]\d*/, 0] : @tahun
     # @program_kegiatans = @opd.program_kegiatans.joins(:sasarans).where(sasarans: { tahun: @tahun }).group(:id)
     @filename = "LAPORAN_DAFTAR_RESIKO_#{@opd.nama_opd}_TAHUN_#{@tahun}.pdf"
