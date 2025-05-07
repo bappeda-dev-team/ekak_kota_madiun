@@ -595,6 +595,12 @@ class Sasaran < ApplicationRecord
     'nama kosong!!'
   end
 
+  def nip_pemilik
+    user.nik
+  rescue NoMethodError
+    'asn tidak aktif!!'
+  end
+
   def nama_nip_pemilik
     user.nama_nip_kurung_small
   end

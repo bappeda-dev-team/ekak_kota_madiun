@@ -913,6 +913,7 @@ Rails.application.routes.draw do
       post :faktor_penghambat_skp
       post :tujuan_kota
       post :sasaran_kota
+      get :renaksi_opd
     end
     namespace :skp_client do
       post :sync_jabatan

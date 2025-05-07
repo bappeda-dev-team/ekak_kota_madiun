@@ -151,5 +151,12 @@ module Api
       @sasaran_kota = pohon_sasaran.select { |sasaran| sasaran&.sasaran_kotum.present? }
                                    .reject { |sasaran| sasaran&.sasaran_kotum&.sasaran.blank? }
     end
+
+    def renaksi_opd
+      @tahun = params[:tahun]
+      @kode_opd = params[:kode_opd]
+      @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+      @sasaran_opds = @opd.strategi_eselon2.flat_map { |st| st.sasaran_pohon_kinerja(tahun: @tahun) }
+    end
   end
 end

@@ -33,6 +33,14 @@ class RencanaAksiOpd < ApplicationRecord
     rencana_renaksi.to_s
   end
 
+  def inovasi?
+    rencana_renaksi.punya_inovasi?
+  end
+
+  def program_unggulan?
+    rencana_renaksi.termasuk_program_unggulan?
+  end
+
   def aksi
     bintang = if rencana_renaksi.punya_inovasi?
                 '*'
@@ -53,6 +61,14 @@ class RencanaAksiOpd < ApplicationRecord
 
   def nama_pemilik
     rencana_renaksi.nama_nip_pemilik
+  end
+
+  def nama_pemilik_saja
+    rencana_renaksi.nama_pemilik
+  end
+
+  def nip_pemilik_saja
+    rencana_renaksi.nip_pemilik
   end
 
   def anggaran_renaksi
