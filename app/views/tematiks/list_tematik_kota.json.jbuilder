@@ -1,4 +1,4 @@
-json.results @pohon_tematiks do |pohon|
-  json.id pohon.id
-  json.text pohon.pohonable.to_s
+json.results @pohon_tematiks do |tema|
+  json.id tema.id
+  json.text tema.tema_keterangan_aktif
 end

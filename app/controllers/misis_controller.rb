@@ -1,6 +1,6 @@
 class MisisController < ApplicationController
   before_action :set_misi, only: %i[show edit update destroy]
-  before_action :set_periode_lembaga, only: %i[index new lists]
+  before_action :set_periode_lembaga, only: %i[index new edit lists create update]
   layout false, only: %i[new edit]
 
   # GET /misis or /misis.json
@@ -45,6 +45,9 @@ class MisisController < ApplicationController
   def new
     @visi = Visi.find(params[:visi_id])
     lembaga = Lembaga.find(cookies[:lembaga_id])
+    @urutan_misi_terakhir = Misi.where(lembaga_id: lembaga.id, visi_id: @visi.id)
+                                .last&.urutan.to_i + 1
+
     @misi = Misi.new(lembaga_id: lembaga.id, visi_id: @visi.id)
   end
 
@@ -57,6 +60,7 @@ class MisisController < ApplicationController
 
   # POST /misis or /misis.json
   def create
+    @visi = Visi.find(misi_params[:visi_id])
     @misi = Misi.new(misi_params)
 
     if @misi.save
@@ -76,6 +80,7 @@ class MisisController < ApplicationController
 
   # PATCH/PUT /misis/1 or /misis/1.json
   def update
+    @visi = Visi.find(misi_params[:visi_id])
     if @misi.update(misi_params)
       render json: { resText: 'Perubahan disimpan',
                      html_content: html_content({ misi: @misi },
@@ -126,6 +131,6 @@ class MisisController < ApplicationController
   def misi_params
     params.require(:misi).permit(:misi, :urutan,
                                  :keterangan, :tahun_awal, :tahun_akhir,
-                                 :visi_id, :lembaga_id)
+                                 :visi_id, :lembaga_id, :pohon_id)
   end
 end

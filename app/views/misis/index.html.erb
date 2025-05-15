@@ -12,6 +12,7 @@
           <thead class="thead-tujuan">
             <tr class="header-tujuan">
               <th class="text-center" width="20px">No.</th>
+              <th class="text-center" width="200px">Tema</th>
               <th class="text-center" width="500px">Visi / Misi</th>
               <th class="text-center" width="200px">Periode</th>
               <th class="text-center">Keterangan</th>
@@ -22,7 +23,7 @@
             <tbody id="<%= dom_id(visi) %>">
               <tr>
                 <td class="text-gray-900 text-wrap" width='20px' scope="row"><%= visi.urutan %></td>
-                <td class="text-gray-900 text-wrap fw-bolder" scope="row">Visi: <%= visi %></td>
+                <td class="text-gray-900 text-wrap fw-bolder" scope="row" colspan="2" width="500px">Visi: <%= visi %></td>
                 <td class="text-gray-900" scope="row"><%= visi.periode %></td>
                 <td class="text-gray-900 text-wrap" scope="row"><%= visi.keterangan %></td>
                 <td class="text-gray-900" scope="row">

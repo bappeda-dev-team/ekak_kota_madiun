@@ -25,14 +25,31 @@
   </div>
 
   <div class="field">
-    <%= form.label :urutan, class: 'form-label' %>
-    <%= form.number_field :urutan, class: 'form-control', min: 1, required: true %>
+    <%= form.label :tematik, class: 'form-label' %>
+    <%= form.select :pohon_id, [],
+     { include_blank: true },
+     data: {
+       placeholder: 'Pilih tema',
+       controller: 'dropdown',
+       dropdown_jenis_value: 'extra',
+       dropdown_parent_value: '#form-modal',
+       dropdown_tahun_value: @tahun,
+       dropdown_selected_value: form.object.pohon_id,
+       dropdown_url_value: list_tematik_kota_tematiks_path(format: :json),
+     }  %>
+  </div>
+
+  <div class="field">
+    <% default_urutan_misi = @urutan_misi_terakhir.present? ? @urutan_misi_terakhir : form.object.urutan %>
+    <%= form.label :urutan, "Nomor misi", class: 'form-label' %>
+    <%= form.number_field :urutan, class: 'form-control', min: 1, required: true,
+     value: default_urutan_misi %>
   </div>
 
   <div class="field">
     <%= form.label :misi, "Misi Kepala Daerah", class: 'form-label' %>
     <%= form.hidden_field :lembaga_id %>
-    <%= form.text_field :misi, class: 'form-control', required: true %>
+    <%= form.text_area :misi, class: 'form-control', required: true %>
   </div>
 
   <div class="field">
@@ -54,13 +71,13 @@
   <div class="field">
     <%= form.label :tahun_awal, class: 'form-label' %>
     <%= form.text_field :tahun_awal, class: 'form-control',
-     required: true, readonly: true, data: { periode_target: 'tahunAwal' } %>
+        required: true, readonly: true, data: { periode_target: 'tahunAwal' } %>
   </div>
 
   <div class="field">
     <%= form.label :tahun_akhir, class: 'form-label' %>
     <%= form.text_field :tahun_akhir, class: 'form-control',
-     required: true, readonly: true, data: { periode_target: 'tahunAkhir' } %>
+        required: true, readonly: true, data: { periode_target: 'tahunAkhir' } %>
   </div>
 
   <div class="field">

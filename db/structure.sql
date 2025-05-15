@@ -2251,7 +2251,8 @@ CREATE TABLE public.misis (
     visi_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    lembaga_id bigint NOT NULL
+    lembaga_id bigint NOT NULL,
+    pohon_id bigint
 );
 
 
@@ -6553,6 +6554,13 @@ CREATE INDEX index_misis_on_lembaga_id ON public.misis USING btree (lembaga_id);
 
 
 --
+-- Name: index_misis_on_pohon_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_misis_on_pohon_id ON public.misis USING btree (pohon_id);
+
+
+--
 -- Name: index_misis_on_visi_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -7011,6 +7019,14 @@ ALTER TABLE ONLY public.risikos
 
 ALTER TABLE ONLY public.mitras
     ADD CONSTRAINT fk_rails_161d22de48 FOREIGN KEY (crosscutting_id) REFERENCES public.crosscuttings(id);
+
+
+--
+-- Name: misis fk_rails_1e681a3146; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.misis
+    ADD CONSTRAINT fk_rails_1e681a3146 FOREIGN KEY (pohon_id) REFERENCES public.pohons(id);
 
 
 --
@@ -7682,6 +7698,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250228024215'),
 ('20250304054051'),
 ('20250324035206'),
-('20250325021044');
+('20250325021044'),
+('20250515052748');
 
 

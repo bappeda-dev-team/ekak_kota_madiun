@@ -10,6 +10,7 @@ class TematiksController < ApplicationController
   end
 
   def list_tematik_kota
+    q = params[:q]
     selected_id = params[:selected]
     tahun = params[:tahun]
     @tahun = if tahun.nil?
@@ -17,8 +18,12 @@ class TematiksController < ApplicationController
              else
                tahun
              end
-    tematiks = Pohon.active.where(pohonable_type: 'Tematik', tahun: @tahun)
-                    .filter(&:pohonable)
+    tematiks = Pohon
+               .joins("JOIN tematiks ON tematiks.id = pohons.pohonable_id")
+               .active
+               .where(pohonable_type: 'Tematik', tahun: @tahun)
+               .where("tematiks.tema ILIKE ?", "%#{q}%")
+               .reject { |tema| tema.pohonable.nil? }
 
     @pohon_tematiks = if selected_id.present?
                         tematiks.select { |tm| tm.id.to_s == selected_id }
