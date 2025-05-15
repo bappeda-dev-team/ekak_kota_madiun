@@ -18,6 +18,7 @@ class Periode < ApplicationRecord
   scope :find_tahun, lambda { |tahun|
                        where("tahun_awal::integer <= ?::integer", tahun)
                          .where("tahun_akhir::integer >= ?::integer", tahun)
+                         .order(Arel.sql("CASE WHEN jenis_periode = 'RPJMD' THEN 0 ELSE 1 END"))
                          .first
                      }
   scope :find_tahun_rpjmd, lambda { |tahun|
@@ -27,6 +28,8 @@ class Periode < ApplicationRecord
                            where("tahun_awal::integer <= ?::integer", tahun)
                              .where("tahun_akhir::integer >= ?::integer", tahun)
                          }
+
+  default_scope { order(Arel.sql("CASE WHEN jenis_periode = 'RPJMD' THEN 0 ELSE 1 END")) }
 
   def to_s
     "#{tahun_awal}-#{tahun_akhir}"

@@ -5,6 +5,7 @@ export default class extends Controller {
   static targets = ["tahun"];
   static values = {
     jenis: String,
+    jenisUraian: String,
     subJenis: String,
     eventName: { type: String, default: "change-select" },
     tipe: String,
@@ -72,6 +73,7 @@ export default class extends Controller {
           jenisUraian: this.tipeValue,
           role: this.roleValue,
           jenis: this.jenisValue,
+          jenis_uraian: this.jenisUraianValue,
           sub_jenis: this.subJenisValue,
           q: params.term,
         }),
@@ -282,7 +284,7 @@ export default class extends Controller {
     const withBlank = this.withBlankValue
 
     if (this.hasSelectedValue) {
-      const url = `${this.urlValue}?selected=${this.selectedValue}`
+      const url = `${this.urlValue}?selected=${this.selectedValue}&jenis_uraian=${this.jenisUraianValue}`
       $.ajax({
         type: "GET",
         url: url,
