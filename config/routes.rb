@@ -315,6 +315,7 @@ Rails.application.routes.draw do
     end
     collection do
       get :kota
+      get :list_tematik_kota
       get :cascading
       get :opd
       get :asn

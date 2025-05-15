@@ -360,6 +360,12 @@ class PohonKinerjaController < ApplicationController
     @tematiks = Pohon.includes(:pohonable).where(pohonable_type: 'Tematik', tahun: @tahun)
   end
 
+  def list_tematik_kota
+    tahun = cookies[:tahun]
+    @tematiks = Pohon.includes(:pohonable).where(pohonable_type: 'Tematik', tahun: tahun)
+                     .reject { |tema| tema.pohonable.nil? }
+  end
+
   def opd
     @tahun = cookies[:tahun]
     @opd = current_user.opd
