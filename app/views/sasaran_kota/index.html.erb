@@ -27,7 +27,7 @@
               <div class="accordion-body">
                 <div class="table-responsive">
                   <% tujuan_sasarans.each do |tujuan, sasarans| %>
-                    <table class="table counter mb-5" id='<%= "rencana-aksi-daerah-#{tema.id}-#{tujuan&.id}" %>'>
+                    <table class="table counter table-bordered mb-5" id='<%= "rencana-aksi-daerah-#{tema.id}-#{tujuan&.id}" %>'>
                       <colgroup>
                         <col style="width: 50px;" />
                         <col style="width: 500px;" />
@@ -35,8 +35,7 @@
                       </colgroup>
                       <thead>
                         <tr>
-                          <th class="border" scope="col">No.</th>
-                          <th class="border" scope="col" colspan="3">Tujuan Kota</th>
+                          <th class="border" scope="col" colspan="4">Tujuan Kota</th>
                           <th class="border" scope="col">Indikator</th>
                           <th class="border" scope="col">Rumus Perhitungan</th>
                           <th class="border" scope="col">Sumber Data</th>
@@ -51,8 +50,7 @@
                       <% else %>
                         <tbody>
                           <tr class="skip">
-                            <td class="border"></td>
-                            <td class="text-wrap" colspan="10">KOSONG</td>
+                            <td class="text-wrap" colspan="11">KOSONG</td>
                           </tr>
                         </tbody>
                       <% end %>
