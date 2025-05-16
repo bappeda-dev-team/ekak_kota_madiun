@@ -63,8 +63,8 @@ json.results do
             json.id operational.id
             json.parent_sasaran operational.pohon_ref_id
             json.jenis 'sasaran_kegiatan'
-            json.nama_opd operational.opd.nama_opd
-            json.kode_opd operational.opd.kode_unik_opd
+            json.nama_opd operational&.opd&.nama_opd
+            json.kode_opd operational&.opd&.kode_unik_opd
             json.sasaran_kegiatan operational.pohonable.strategi
             json.indikator_sasaran_kegiatan operational.pohonable.indikators.each do |indikator|
               json.id indikator.id
