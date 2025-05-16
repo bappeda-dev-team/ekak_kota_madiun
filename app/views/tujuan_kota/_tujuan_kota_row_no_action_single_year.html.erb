@@ -1,0 +1,26 @@
+<tbody id="<%= dom_id(tujuan_kota) %>">
+  <% rowspan = rowspan_tujuan_kota(tujuan_kota) %>
+  <tr>
+    <td class="text-gray-900 text-wrap border" scope="col" rowspan="<%= rowspan %>"></td>
+    <td class="fw-bolder text-wrap" scope="col"  rowspan="<%= rowspan %>" colspan="3"><%= tujuan_kota.tujuan %></td>
+    <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="5"></td>
+    <td class="text-wrap border" rowspan="<%= rowspan %>">Tujuan Kota</td>
+    <td class="text-wrap border" rowspan="<%= rowspan %>">-</td>
+  </tr>
+  <% if tujuan_kota.indikator_tujuans.any? %>
+    <% tujuan_kota.indikator_tujuans.each do |indikator_tujuan| %>
+      <tr class="skip">
+        <td class="text-gray-900 text-wrap border"><%= indikator_tujuan || '-' %></td>
+        <td class="text-gray-900 text-wrap border"><%= indikator_tujuan.rumus_perhitungan || '-' %></td>
+        <td class="text-gray-900 text-wrap border"><%= indikator_tujuan.sumber_data || '-' %></td>
+        <% target = indikator_tujuan.targets.find_by(tahun: tahun) %>
+        <td class="text-gray-900 text-wrap border"><%= target %></td>
+        <td class="text-gray-900 text-wrap border"><%= target&.satuan %></td>
+      </tr>
+    <% end %>
+  <% else %>
+    <tr class="skip">
+      <td class="text-gray-900 text-wrap border" colspan="5">-</td>
+    </tr>
+  <% end %>
+</tbody>

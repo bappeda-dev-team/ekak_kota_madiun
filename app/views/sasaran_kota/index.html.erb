@@ -15,7 +15,7 @@
     </div>
     <div class="card-body">
       <div class="accordion" id="accordionRad">
-        <% @sasaran_kota.each do |tema, sasarans| %>
+        <% @sasaran_kota.each do |tema, tujuan_sasarans| %>
           <div class="accordion-item">
             <h2 class="accordion-header">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -26,25 +26,53 @@
             <div id='<%= "collapse-#{tema.id}" %>' class="accordion-collapse collapse">
               <div class="accordion-body">
                 <div class="table-responsive">
-                  <table class="table counter">
-                    <thead>
-                      <tr>
-                        <th class="border" scope="col">No.</th>
-                        <th class="border" scope="col">Strategi Kota</th>
-                        <th class="border" scope="col" colspan="2">Sasaran Kota</th>
-                        <th class="border" scope="col">Indikator</th>
-                        <th class="border" scope="col">Rumus Perhitungan</th>
-                        <th class="border" scope="col">Sumber Data</th>
-                        <th class="border" scope="col">Target</th>
-                        <th class="border" scope="col">Satuan</th>
-                        <th class="border" scope="col">Jenis</th>
-                        <th class="border" scope="col">Keterangan</th>
-                      </tr>
-                    </thead>
-                    <tbody id="sasaran-kota">
-                      <%= render partial: 'sasaran_kota/sasaran_kota', collection: sasarans, as: :sasaran %>
-                    </tbody>
-                  </table>
+                  <% tujuan_sasarans.each do |tujuan, sasarans| %>
+                    <table class="table counter mb-5" id='<%= "rencana-aksi-daerah-#{tema.id}-#{tujuan&.id}" %>'>
+                      <colgroup>
+                        <col style="width: 50px;" />
+                        <col style="width: 500px;" />
+                        <col />
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th class="border" scope="col">No.</th>
+                          <th class="border" scope="col" colspan="3">Tujuan Kota</th>
+                          <th class="border" scope="col">Indikator</th>
+                          <th class="border" scope="col">Rumus Perhitungan</th>
+                          <th class="border" scope="col">Sumber Data</th>
+                          <th class="border" scope="col">Target</th>
+                          <th class="border" scope="col">Satuan</th>
+                          <th class="border" scope="col">Jenis</th>
+                          <th class="border" scope="col">Keterangan</th>
+                        </tr>
+                      </thead>
+                      <% if tujuan.present? %>
+                        <%= render 'tujuan_kota/tujuan_kota_row_no_action_single_year', tujuan_kota: tujuan, tahun: @tahun %>
+                      <% else %>
+                        <tbody>
+                          <tr class="skip">
+                            <td class="border"></td>
+                            <td class="text-wrap" colspan="10">KOSONG</td>
+                          </tr>
+                        </tbody>
+                      <% end %>
+                      <tbody>
+                        <tr class="skip">
+                          <th class="border" scope="col">No.</th>
+                          <th class="border" scope="col">Strategi Kota</th>
+                          <th class="border" scope="col" colspan="2">Sasaran Kota</th>
+                          <th class="border" scope="col">Indikator</th>
+                          <th class="border" scope="col">Rumus Perhitungan</th>
+                          <th class="border" scope="col">Sumber Data</th>
+                          <th class="border" scope="col">Target</th>
+                          <th class="border" scope="col">Satuan</th>
+                          <th class="border" scope="col">Jenis</th>
+                          <th class="border" scope="col">Keterangan</th>
+                        </tr>
+                        <%= render partial: 'sasaran_kota/sasaran_kota', collection: sasarans, as: :sasaran %>
+                      </tbody>
+                    </table>
+                  <% end %>
                 </div>
               </div>
             </div>

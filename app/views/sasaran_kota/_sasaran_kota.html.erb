@@ -1,11 +1,11 @@
 <% rowspan = sasaran.pohonable.indikators.size + 1 %>
 <% sas = SasaranKota::SasaranComponent.new(sasaran: sasaran, tahun: @tahun) %>
 <tr id="<%= dom_id(sasaran.pohonable) %>">
-  <td rowspan="<%= rowspan %>" class="border"></td>
-  <td rowspan="<%= rowspan %>" class="text-wrap border"><%= sasaran.pohonable %></td>
-  <td rowspan="<%= rowspan %>" class="text-wrap border"><%= sasaran.pohonable.sasaran_kotum %></td>
+  <td rowspan="<%= rowspan %>" scope="col" class="border"></td>
+  <td rowspan="<%= rowspan %>" scope="col" class="text-wrap border"><%= sasaran.pohonable %></td>
+  <td rowspan="<%= rowspan %>" scope="col" class="text-wrap border"><%= sasaran.pohonable.sasaran_kotum %></td>
   <% if sasaran.pohonable_type == 'Strategi' %>
-    <td rowspan="<%= rowspan %>" class="border">
+    <td rowspan="<%= rowspan %>" class="border" scope="col">
       <div class="d-grid gap-3">
         <%= link_to rad_kota_sasaran_kotum_path(sasaran.id, tahun: @tahun), class: 'btn btn-outline-primary' do %>
           <i class="fa fa-book-open me-2"></i>
@@ -14,7 +14,7 @@
       </div>
     </td>
   <% else %>
-    <td rowspan="<%= rowspan %>" class="border">
+    <td rowspan="<%= rowspan %>" class="border" scope="col">
       <div class="d-grid gap-3">
         <% if sasaran.pohonable.sasaran_kotum.present? %>
           <% unless guest? %>
@@ -54,7 +54,7 @@
       </div>
     </td>
   <% end %>
-  <td colspan="5" class="p-0 m-0 border-0"></td>
+  <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="5"></td>
   <td class="text-wrap border" rowspan="<%= rowspan %>"><%= sas.title_up %></td>
   <td class="text-wrap border" rowspan="<%= rowspan %>"><%= sasaran.pohonable.keterangan %></td>
 </tr>

@@ -143,6 +143,7 @@ class SasaranKotaController < ApplicationController
                                                                    SubTematik SubSubTematik Strategic
                                                                  ])
                           .select(&:pohonable)
+                          .group_by { |ss| ss.pohonable&.sasaran_kotum&.tujuan_kota }
       [tematik, sub_pohons]
     end
   end
