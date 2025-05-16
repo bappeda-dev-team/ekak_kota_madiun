@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SasaranKota::SasaranComponent < ViewComponent::Base
+  include PohonKinerjaOpdsHelper
+
   def initialize(sasaran:, tahun:)
     super
     @sasaran = sasaran
@@ -86,15 +88,30 @@ class SasaranKota::SasaranComponent < ViewComponent::Base
     if jenis == 'sasaran_subkegiatan'
       [{ nama: @sasaran.nama_pelaksana,
          nip: @sasaran.nip_asn,
-         inovasi: @sasaran.inovasi_sasaran
-       }]
+         inovasi: @sasaran.inovasi_sasaran }]
     else
       @sasaran.pohonable.sasarans.dengan_nip.flat_map do |sasaran|
         { nama: sasaran.nama_pelaksana,
           nip: sasaran.nip_asn,
-          inovasi: sasaran.inovasi_sasaran
-        }
+          inovasi: sasaran.inovasi_sasaran }
       end.uniq
     end
+  end
+
+  def role
+    case @sasaran.role
+    when 'strategi_pohon_kota'
+      'eselon_2'
+    when 'tactical_pohon_kota'
+      'eselon_3'
+    when 'operational_pohon_kota'
+      'eselon_4'
+    else
+      @sasaran.role
+    end
+  end
+
+  def programs
+    program_pohon(@sasaran.pohonable, role)
   end
 end
