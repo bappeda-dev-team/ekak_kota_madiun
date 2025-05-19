@@ -1063,7 +1063,8 @@ CREATE TABLE public.indikators (
     realisasi_pagu character varying,
     created_at timestamp(6) without time zone DEFAULT now() NOT NULL,
     updated_at timestamp(6) without time zone DEFAULT now() NOT NULL,
-    is_hidden boolean DEFAULT false NOT NULL
+    is_hidden boolean DEFAULT false NOT NULL,
+    sub_sub_jenis character varying
 );
 
 
@@ -7699,6 +7700,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250304054051'),
 ('20250324035206'),
 ('20250325021044'),
-('20250515052748');
+('20250515052748'),
+('20250519075232');
 
 

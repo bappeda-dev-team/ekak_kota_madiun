@@ -5,7 +5,7 @@ class RenstraRowComponent < ViewComponent::Base
   include Devise::Controllers::Helpers
   attr_reader :periode, :parent
 
-  def initialize(program: '', head: true, anggaran: 0, periode: [], cetak: true, parent: '')
+  def initialize(program: '', head: true, anggaran: 0, periode: [], cetak: true, parent: '', jenis_periode: 'RPJMD')
     super
     @program = program
     @head = head
@@ -13,6 +13,7 @@ class RenstraRowComponent < ViewComponent::Base
     @periode = periode
     @cetak = cetak
     @parent = parent
+    @jenis_periode = jenis_periode
   end
 
   def jenis
@@ -73,6 +74,7 @@ class RenstraRowComponent < ViewComponent::Base
       parent: @parent,
       jenis: 'Renstra',
       sub_jenis: title,
+      sub_sub_jenis: @jenis_periode,
       tahun_awal: @periode.first,
       tahun_akhir: @periode.last
     )

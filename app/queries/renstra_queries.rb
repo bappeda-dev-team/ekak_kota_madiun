@@ -1,8 +1,9 @@
 class RenstraQueries
-  def initialize(kode_opd: '', tahun_awal: '', tahun_akhir: '')
+  def initialize(kode_opd: '', tahun_awal: '', tahun_akhir: '', jenis_periode: 'RPJMD')
     @kode_opd = kode_opd
     @tahun_awal = tahun_awal
     @tahun_akhir = tahun_akhir
+    @jenis_periode = jenis_periode
   end
 
   def periode
@@ -153,8 +154,24 @@ class RenstraQueries
   end
 
   def indikator_renstra(kode, sub_jenis, opd, tahun)
+    indikators = Indikator.where(jenis: "Renstra",
+                                 sub_jenis: sub_jenis,
+                                 tahun: tahun,
+                                 kode: kode,
+                                 kode_opd: opd)
+                          .max_by(&:version)
+
+    if tahun.to_i < 2025
+      indikators
+    else
+      indikators.where(sub_sub_jenis: @jenis_periode)
+    end
+  end
+
+  def rpd_any?(kode, sub_jenis, opd, tahun)
     Indikator.where(jenis: "Renstra",
                     sub_jenis: sub_jenis,
+                    sub_sub_jenis: ['', 'RPD'],
                     tahun: tahun,
                     kode: kode,
                     kode_opd: opd)

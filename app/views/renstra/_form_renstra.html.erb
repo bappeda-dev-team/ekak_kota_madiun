@@ -19,6 +19,7 @@
     <%= form.hidden_field :parent, value: @parent %>
     <%= form.hidden_field :kode_opd, value: @kode_opd %>
     <%= form.hidden_field :jenis, value: @sub_jenis %>
+    <%= form.hidden_field :sub_sub_jenis, value: @sub_sub_jenis %>
   </div>
   <% @periode.each do |tahun| %>
     <div class="field hidden">
@@ -27,6 +28,7 @@
       <%= form.hidden_field "renstra[indikator][][kode_opd]", value: @kode_opd %>
       <%= form.hidden_field "renstra[indikator][][jenis]", value: @jenis %>
       <%= form.hidden_field "renstra[indikator][][sub_jenis]", value: @sub_jenis %>
+      <%= form.hidden_field "renstra[indikator][][sub_sub_jenis]", value: @sub_sub_jenis %>
       <%= form.hidden_field "renstra[indikator][][kode_indikator]", value: @kode_indikator %>
       <% version = @targets[tahun.to_s]&.[](:version).nil? ? 0 : @targets[tahun.to_s]&.[](:version) + 1 %>
       <%= form.hidden_field "renstra[indikator][][version]", value: version %>

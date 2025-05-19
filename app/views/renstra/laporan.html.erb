@@ -21,7 +21,7 @@
     <%= render partial: 'renstra/sasaran_opd', locals: { sasaran_opds: @sasaran_opds, periode: @periode } %>
     <div class="table-responsive">
       <h5>Program/Kegiatan/Sub Kegiatan</h5>
-      <%= render(TabelRenstraComponent.new(program_kegiatans: @program_kegiatans, periode: @periode, cetak: false)) %>
+      <%= render(TabelRenstraComponent.new(program_kegiatans: @program_kegiatans, periode: @periode, cetak: false, jenis_periode: @jenis_periode)) %>
     </div>
   </div>
 </div>

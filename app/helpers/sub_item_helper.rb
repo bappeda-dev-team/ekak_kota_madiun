@@ -52,12 +52,12 @@ module SubItemHelper
 
   def renstra_items
     [
-      { title: '(2019-2024)', href: renstra_index_path(periode: '2019-2024', jenis: 'RPJMD'),
-        identifier: 'renstra?jenis=RPJMD&periode=2019-2024' },
-      { title: '(2025-2026)', href: renstra_index_path(periode: '2025-2026', jenis: 'RPD'),
-        identifier: 'renstra?jenis=RPD&periode=2025-2026' },
-      { title: '(2025-2030)', href: renstra_index_path(periode: '2025-2030', jenis: 'RPJMD'),
-        identifier: 'renstra?jenis=RPJMD&periode=2025-2030' }
+      { title: '(2019-2024)', href: renstra_index_path(periode: '2019-2024', jenis_periode: 'RPJMD'),
+        identifier: 'renstra?jenis_periode=RPJMD&periode=2019-2024' },
+      { title: '(2025-2026)', href: renstra_index_path(periode: '2025-2026', jenis_periode: 'RPD'),
+        identifier: 'renstra?jenis_periode=RPD&periode=2025-2026' },
+      { title: '(2025-2030)', href: renstra_index_path(periode: '2025-2030', jenis_periode: 'RPJMD'),
+        identifier: 'renstra?jenis_periode=RPJMD&periode=2025-2030' }
     ]
   end
 end

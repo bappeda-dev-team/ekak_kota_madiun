@@ -17,6 +17,7 @@
 #  realisasi_pagu       :string
 #  satuan               :string
 #  sub_jenis            :string
+#  sub_sub_jenis        :string
 #  tahun                :string
 #  target               :string
 #  version              :integer          default(0), not null

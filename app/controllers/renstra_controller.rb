@@ -5,7 +5,7 @@ class RenstraController < ApplicationController
   def index
     # goto #laporan in this controller for data
     @periode = params[:periode]
-    @jenis = params[:jenis]
+    @jenis_periode = params[:jenis_periode]
   end
 
   def admin_renstra; end
@@ -18,14 +18,15 @@ class RenstraController < ApplicationController
     @parent = params[:parent]
     @jenis = params[:jenis]
     @sub_jenis = params[:sub_jenis]
+    @sub_sub_jenis = params[:sub_sub_jenis]
     @tahun_awal = params[:tahun_awal]
     @tahun_akhir = params[:tahun_akhir]
     @periode = (@tahun_awal..@tahun_akhir)
     @dom_target = "#{@kode}-#{@kode_opd}"
     @kode_indikator = KodeService.new(@kode, @jenis, @sub_jenis).call
-    indikator_in_periode = Indikator.where(tahun: [@tahun_awal, @tahun_akhir],
-                                           kode_indikator: @kode_indikator,
+    indikator_in_periode = Indikator.where(kode_indikator: @kode_indikator,
                                            kode_opd: @kode_opd)
+                                    .where("tahun::integer BETWEEN ?::integer AND ?::integer", @tahun_awal, @tahun_akhir)
     @targets = indikator_in_periode.to_h do |ind|
       [ind.tahun, {
         indikator: ind.indikator,
@@ -46,6 +47,7 @@ class RenstraController < ApplicationController
     @kode = params[:kode]
     @parent = params[:parent]
     @jenis = params[:jenis]
+    @sub_sub_jenis = params[:sub_sub_jenis]
 
     periode = (@tahun_awal..@tahun_akhir)
     indikator_attributes = indikator_params[:indikator]
@@ -75,6 +77,7 @@ class RenstraController < ApplicationController
                                                        cetak: false,
                                                        head: false,
                                                        parent: @parent,
+                                                       jenis_periode: @sub_sub_jenis,
                                                        anggaran: set_pagu))
     render json: { resText: 'Data disimpan',
                    html_content: partial }.to_json,
@@ -92,7 +95,9 @@ class RenstraController < ApplicationController
     periode = params[:periode].split('-')
     @tahun_awal = periode[0].to_i
     @tahun_akhir = periode[-1].to_i
-    renstra = RenstraQueries.new(kode_opd: @kode_opd, tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir)
+    @jenis_periode = params[:jenis_periode]
+    renstra = RenstraQueries.new(kode_opd: @kode_opd, tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir,
+                                 jenis_periode: @jenis_periode)
     @nama_opd = renstra.opd.nama_opd
     @program_kegiatans = renstra.program_kegiatan_renstra
     @periode = renstra.periode
@@ -145,7 +150,7 @@ class RenstraController < ApplicationController
 
   def indikator_params
     params.require(:renstra).permit(indikator: %i[indikator tahun satuan
-                                                  kode jenis sub_jenis
+                                                  kode jenis sub_jenis sub_sub_jenis
                                                   target pagu keterangan
                                                   kode_opd kode_indikator
                                                   realisasi realisasi_pagu version])
