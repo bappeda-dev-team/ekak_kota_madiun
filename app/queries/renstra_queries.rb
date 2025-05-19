@@ -154,17 +154,17 @@ class RenstraQueries
   end
 
   def indikator_renstra(kode, sub_jenis, opd, tahun)
-    indikators = Indikator.where(jenis: "Renstra",
-                                 sub_jenis: sub_jenis,
-                                 tahun: tahun,
-                                 kode: kode,
-                                 kode_opd: opd)
+    indikator_base = Indikator.where(jenis: "Renstra",
+                                     sub_jenis: sub_jenis,
+                                     tahun: tahun,
+                                     kode: kode,
+                                     kode_opd: opd)
 
-    if tahun.to_i < 2025
-      indikators
-    else
-      indikators.where(sub_sub_jenis: @jenis_periode)
-    end
+    indikators = if tahun.to_i < 2025
+                   indikator_base
+                 else
+                   indikator_base.where(sub_sub_jenis: [@jenis_periode, '', nil])
+                 end
     indikators.max_by(&:version)
   end
 

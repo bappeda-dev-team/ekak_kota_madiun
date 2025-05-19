@@ -24,9 +24,14 @@ class RenstraController < ApplicationController
     @periode = (@tahun_awal..@tahun_akhir)
     @dom_target = "#{@kode}-#{@kode_opd}"
     @kode_indikator = KodeService.new(@kode, @jenis, @sub_jenis).call
-    indikator_in_periode = Indikator.where(kode_indikator: @kode_indikator,
-                                           kode_opd: @kode_opd)
-                                    .where("tahun::integer BETWEEN ?::integer AND ?::integer", @tahun_awal, @tahun_akhir)
+    indikator_in_periode_base = Indikator.where(kode_indikator: @kode_indikator,
+                                                kode_opd: @kode_opd)
+                                         .where("tahun::integer BETWEEN ?::integer AND ?::integer", @tahun_awal, @tahun_akhir)
+    indikator_in_periode = if @sub_sub_jenis == 'RPD'
+                             indikator_in_periode_base.where(sub_sub_jenis: ['', nil, @sub_sub_jenis])
+                           else
+                             indikator_in_periode_base.where(sub_sub_jenis: @sub_sub_jenis)
+                           end
     @targets = indikator_in_periode.to_h do |ind|
       [ind.tahun, {
         indikator: ind.indikator,
