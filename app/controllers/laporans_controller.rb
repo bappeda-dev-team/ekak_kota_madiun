@@ -371,6 +371,21 @@ class LaporansController < ApplicationController
     @sasaran_programs = @opd.sasaran_program_opds
   end
 
+  def excel_sasaran_program_opd
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @nama_opd = @opd.nama_opd
+    @sasaran_programs = @opd.sasaran_program_opds
+
+    respond_to do |format|
+      format.html do
+        render template: 'laporans/sasaran_program_opd.html.erb', layout: 'print.html.erb'
+      end
+      format.xlsx do
+        render filename: "sasaran_program_opd_#{@nama_opd}_tahun_#{@tahun}"
+      end
+    end
+  end
+
   private
 
   def set_program_kegiatans

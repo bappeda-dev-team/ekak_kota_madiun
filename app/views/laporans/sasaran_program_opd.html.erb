@@ -5,6 +5,15 @@
 <% end %>
 <% content_for :view_utama do %>
   <%= render 'shared/card_layout_subtitle', title: 'Sasaran Program OPD', sub_title: @opd, sub_title_2: @tahun do %>
+    <div class="row">
+      <div class="col"></div>
+      <div class="col-auto">
+        <%= link_to excel_sasaran_program_opd_laporans_path(format: :xlsx), class:"m-3 btn btn-outline-success" do %>
+          <span class="far fa-file-excel me-2"></span>
+          Cetak Excel
+        <% end %>
+      </div>
+    </div>
     <div class="table-responsive">
       <table class="table align-items-center counter">
         <thead class="thead-light">

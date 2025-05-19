@@ -1,0 +1,12 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Sasaran Program OPD") do |sheet_renja|
+  sheet_renja.add_row ['No.', 'Program', 'Sasaran Program', 'Target', 'Satuan']
+
+  @sasaran_programs.each.with_index(1) do |program, index|
+    sasaran_program = program.indikator_renstras_new('program', @kode_opd)[:indikator_program].select do |ind|
+      ind.tahun == @tahun
+    end
+    sheet_renja.add_row [index.to_s, program.nama_program, sasaran_program.first.indikator,
+                         sasaran_program.first.target, sasaran_program.first.satuan]
+  end
+end
