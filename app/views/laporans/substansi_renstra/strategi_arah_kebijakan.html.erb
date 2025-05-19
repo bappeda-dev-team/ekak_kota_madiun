@@ -39,6 +39,7 @@
           <tr>
             <th class="border-bottom text-gray-700" scope="col">No.</th>
             <th class="border-bottom text-gray-700" scope="col">Tujuan</th>
+            <th class="border-bottom text-gray-700" scope="col">Sasaran</th>
             <th class="border-bottom text-gray-700" scope="col">Strategi</th>
             <th class="border-bottom text-gray-700" scope="col">Arah Kebijakan</th>
           </tr>
@@ -53,6 +54,15 @@
             <% strategis.each do |strategi| %>
               <% rowspan_bawah = @tactical_opds.select { |tact| tact.pohon_ref_id.to_i == strategi.id }.size + 1 %>
               <tr>
+                <td class="text-wrap align-middle px-0" rowspan="<%= rowspan_bawah %>">
+                  <div class="d-grid gap-1 w-100">
+                    <% strategi.sasarans.each_with_index do |sasaran, index| %>
+                      <div class="px-4 d-flex align-items-center <%= 'border-bottom pb-5' unless index == strategi.sasarans.size - 1 %> <%= 'pt-5' if index == strategi.sasarans.size - 1 %>">
+                        <%= sasaran %>
+                      </div>
+                    <% end %>
+                  </div>
+                </td>
                 <td class="text-wrap align-middle" rowspan="<%= rowspan_bawah %>"><%= strategi %></td>
               </tr>
               <% @tactical_opds.select { |tact| tact.pohon_ref_id.to_i == strategi.id }.each do |tactical| %>
