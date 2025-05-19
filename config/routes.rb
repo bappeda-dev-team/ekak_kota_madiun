@@ -697,6 +697,7 @@ Rails.application.routes.draw do
       get :pdf_kak_opd
       get :custom_tanggal_cetak
       get :status_rencana_kinerja
+      get :sasaran_program_opd
     end
 
     member do

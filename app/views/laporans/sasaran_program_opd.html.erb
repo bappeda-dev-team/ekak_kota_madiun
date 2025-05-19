@@ -1,0 +1,38 @@
+<%= content_for :html_title, 'Sasaran Program OPD' %>
+<%= content_for :navigation do %>
+  <li class="breadcrumb-item" aria-current="page">Laporan</li>
+  <li class="breadcrumb-item active" aria-current="page">Sasaran Program OPD</li>
+<% end %>
+<% content_for :view_utama do %>
+  <%= render 'shared/card_layout_subtitle', title: 'Sasaran Program OPD', sub_title: @opd, sub_title_2: @tahun do %>
+    <div class="table-responsive">
+      <table class="table align-items-center counter">
+        <thead class="thead-light">
+          <tr>
+            <th class="border text-center" scope="col">No.</th>
+            <th class="border text-center" scope="col">Program</th>
+            <th class="border text-center" scope="col">Sasaran Program</th>
+            <th class="border text-center" scope="col">Target</th>
+            <th class="border text-center" scope="col">Satuan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @sasaran_programs.each do |program| %>
+            <% sasaran_program = program.indikator_renstras_new('program', @kode_opd)[:indikator_program].select { |ind| ind.tahun == @tahun } %>
+            <tr id="<%= dom_id(program) %>">
+              <td class="text-gray-900 text-wrap border" width='20px' rowspan="<%= sasaran_program.size + 1 %>"></td>
+              <td class="border text-wrap" rowspan="<%= sasaran_program.size + 1 %>"><%= program.nama_program %></td>
+            </tr>
+            <% sasaran_program.each do |sas| %>
+              <tr class="skip">
+                <td class="border text-wrap"><%= sas.indikator %></td>
+                <td class="border text-wrap"><%= sas.target %></td>
+                <td class="border text-wrap"><%= sas.satuan %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>

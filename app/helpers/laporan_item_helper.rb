@@ -65,6 +65,10 @@ module LaporanItemHelper
         icon: 'fas fa-money-check', identifier: 'laporan_rka'
       },
       {
+        title: 'Sasaran Program OPD', href: sasaran_program_opd_laporans_path,
+        icon: 'fas fa-folder-open', identifier: 'laporan_sasaran_program_opd'
+      },
+      {
         title: 'Renstra', href: "#",
         multi: true, collections: renstra_items,
         id_target: 'renstra-items',

@@ -366,6 +366,11 @@ class LaporansController < ApplicationController
     handle_filter_status_rencana_kinerja
   end
 
+  def sasaran_program_opd
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @sasaran_programs = @opd.sasaran_program_opds
+  end
+
   private
 
   def set_program_kegiatans

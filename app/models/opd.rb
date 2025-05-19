@@ -127,6 +127,10 @@ class Opd < ApplicationRecord
     program_kegiatans.programs
   end
 
+  def sasaran_program_opds
+    program_renstra
+  end
+
   def pagu_program_rankir
     program_kegiatans.programs.map(&:my_pagu).compact.sum
   end
