@@ -26,7 +26,7 @@
         <% if sub_item[:multi] %>
           <%= render partial: 'shared/nav_item', locals: { item: sub_item, child: true } %>
         <% else %>
-          <%= active_link_to(sub_item[:href], wrap_tag: :li, wrap_class: 'nav-item',class: "nav-link #{'ms-3' if local_assigns[:child]}", id: sub_item[:identifier]) do %>
+          <%= active_link_to(sub_item[:href], wrap_tag: :li, wrap_class: 'nav-item', class: "nav-link #{'ms-3' if local_assigns[:child]}", id: sub_item[:identifier], active: /\b#{Regexp.escape(sub_item[:identifier].to_s)}\b/) do %>
             <span>
               <span class="sidebar-text"><%= sub_item[:title] %></span>
             </span>

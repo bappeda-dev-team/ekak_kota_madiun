@@ -5,6 +5,7 @@ class RenstraController < ApplicationController
   def index
     # goto #laporan in this controller for data
     @periode = params[:periode]
+    @jenis = params[:jenis]
   end
 
   def admin_renstra; end

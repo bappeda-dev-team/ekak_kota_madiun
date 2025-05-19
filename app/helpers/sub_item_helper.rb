@@ -11,7 +11,7 @@ module SubItemHelper
       },
       {
         title: 'Nawa Bhakti', href: nawa_bhakti_program_unggulans_path,
-        identifier: 'asta_cita'
+        identifier: 'nawa_bhakti'
       }
     ]
   end
@@ -44,16 +44,20 @@ module SubItemHelper
 
   def renja_items
     [
-      { title: 'Ranwal', href: renja_ranwal_path, identifier: 'renja_ranwal' },
-      { title: 'Rancangan', href: renja_rancangan_path, identifier: 'renja_rancangan' },
-      { title: 'Rankir', href: renja_rankir_path, identifier: 'renja_rankir' }
+      { title: 'Ranwal', href: renja_ranwal_path, identifier: 'renja/ranwal' },
+      { title: 'Rancangan', href: renja_rancangan_path, identifier: 'renja/rancangan' },
+      { title: 'Rankir', href: renja_rankir_path, identifier: 'renja/rankir' }
     ]
   end
 
   def renstra_items
     [
-      { title: '(2019-2024)', href: renstra_index_path(periode: '2019-2024'), identifier: 'renstra/(2019-2024)' },
-      { title: '(2025-2026)', href: renstra_index_path(periode: '2025-2026'), identifier: 'renstra/(2025-2026)' }
+      { title: '(2019-2024)', href: renstra_index_path(periode: '2019-2024', jenis: 'RPJMD'),
+        identifier: 'renstra?jenis=RPJMD&periode=2019-2024' },
+      { title: '(2025-2026)', href: renstra_index_path(periode: '2025-2026', jenis: 'RPD'),
+        identifier: 'renstra?jenis=RPD&periode=2025-2026' },
+      { title: '(2025-2030)', href: renstra_index_path(periode: '2025-2030', jenis: 'RPJMD'),
+        identifier: 'renstra?jenis=RPJMD&periode=2025-2030' }
     ]
   end
 end

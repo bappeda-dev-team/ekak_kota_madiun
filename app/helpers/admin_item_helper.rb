@@ -117,13 +117,13 @@ module AdminItemHelper
         title: 'Sasaran', href: sasaran_renja_opd_indikators_path, identifier: 'sasaran_renja_opd'
       },
       {
-        title: 'Program', href: program_renja_opd_indikators_path, identifier: 'sasaran_program_opd'
+        title: 'Program', href: program_renja_opd_indikators_path, identifier: 'program_renja_opd'
       },
       {
-        title: 'Kegiatan', href: kegiatan_renja_opd_indikators_path, identifier: 'sasaran_kegiatan_opd'
+        title: 'Kegiatan', href: kegiatan_renja_opd_indikators_path, identifier: 'kegiatan_renja_opd'
       },
       {
-        title: 'Subkegiatan', href: subkegiatan_renja_opd_indikators_path, identifier: 'sasaran_subkegiatan_opd'
+        title: 'Subkegiatan', href: subkegiatan_renja_opd_indikators_path, identifier: 'subkegiatan_renja_opd'
       }
     ]
   end
