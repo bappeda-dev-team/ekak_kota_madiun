@@ -34,6 +34,7 @@ Development server using overmind and tmux, to separate server, build process, a
 
 edit .env.development file to setup database connection
 
+Copy Procfile to Procfile.dev
 
 Dev server:
 ``` sh

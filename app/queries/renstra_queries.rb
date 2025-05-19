@@ -159,13 +159,13 @@ class RenstraQueries
                                  tahun: tahun,
                                  kode: kode,
                                  kode_opd: opd)
-                          .max_by(&:version)
 
     if tahun.to_i < 2025
       indikators
     else
       indikators.where(sub_sub_jenis: @jenis_periode)
     end
+    indikators.max_by(&:version)
   end
 
   def rpd_any?(kode, sub_jenis, opd, tahun)
