@@ -119,7 +119,9 @@ class RenstraController < ApplicationController
     @title = "Renstra"
     @tahun_awal = params[:tahun_awal]
     @tahun_akhir = params[:tahun_akhir]
-    renstra = RenstraQueries.new(kode_opd: @kode_unik_opd, tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir)
+    @jenis_periode = params[:jenis_periode]
+    renstra = RenstraQueries.new(kode_opd: @kode_unik_opd, tahun_awal: @tahun_awal, tahun_akhir: @tahun_akhir,
+                                 jenis_periode: @jenis_periode)
     @nama_opd = renstra.opd.nama_opd
     @program_kegiatans = renstra.program_kegiatan_renstra
     @periode = renstra.periode

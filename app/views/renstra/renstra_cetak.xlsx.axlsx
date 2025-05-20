@@ -62,7 +62,7 @@ def pagu_no_indikators(pagu)
   end
 end
 
-header_indikator = @periode.flat_map do |tahun|
+header_indikator = @periode.flat_map do |_tahun|
   ['Indikator', 'Target', 'Satuan', 'Pagu Indikatif']
 end
 
@@ -116,7 +116,7 @@ wb.add_worksheet(name: "renstra_#{@tahun_awal}_#{@tahun_akhir}") do |sheet_renja
   end
 end
 
-header_target_sasaran = @periode.flat_map do |tahun|
+header_target_sasaran = @periode.flat_map do |_tahun|
   %w[Target Satuan]
 end
 
@@ -155,7 +155,7 @@ end
 def target_tujuan(targets)
   @periode.flat_map do |tahun|
     target = targets.find_by(tahun: tahun)
-    [target.target, target.satuan] || ['-', '-']
+    [target&.target, target&.satuan] || ['-', '-']
   end
 end
 wb.add_worksheet(name: "tujuan_opd") do |sheet_tuj|
