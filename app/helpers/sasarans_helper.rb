@@ -138,4 +138,37 @@ module SasaransHelper
       ''
     end
   end
+
+  def toggle_inovasi_lolos_button(sasaran)
+    inovasi_lolos = sasaran.inovasi_lolos?
+    button_text = if inovasi_lolos
+                    "<i class='fas fa-times me-2 text-danger'></i> <span class='text-danger'>Batalkan</span>"
+                  else
+                    "<i class='fas fa-check me-2 text-success'></i> <span class='text-success'>Lolos</span>"
+                  end
+    confirm_title_text = if inovasi_lolos
+                           "Inovasi '#{sasaran.inovasi_sasaran.upcase}' akan dibatalakan kelolosannya."
+                         else
+                           "Inovasi '#{sasaran.inovasi_sasaran.upcase}' akan diloloskan."
+                         end
+    button_to toggle_inovasi_lolos_sasaran_path(sasaran),
+              class: 'btn btn-sm btn-outline-tertiary w-100',
+              remote: true,
+              method: :patch,
+              form: {
+                data: {
+                  controller: 'form-ajax',
+                  form_ajax_with_modal_value: false,
+                  form_ajax_target_param: dom_id(sasaran),
+                  form_ajax_type_param: '',
+                  form_ajax_confirm_title_value: confirm_title_text,
+                  action: 'ajax:beforeSend->form-ajax#confirmAction ajax:complete->form-ajax#processAjax'
+                }
+              },
+              data: {
+                disable_with: "<i class='fa fa-sync fa-spin'></i>  Updating..."
+              } do
+      button_text.html_safe
+    end
+  end
 end

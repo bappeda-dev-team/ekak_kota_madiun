@@ -638,6 +638,21 @@ class SasaransController < ApplicationController
     # @sasarans = @sasarans.select { |s| s.sasaran_kinerja =~ /#{q}/i }
   end
 
+  def toggle_inovasi_lolos
+    @sasaran = Sasaran.find(params[:id])
+
+    if @sasaran.toggle_inovasi_lolos
+      render json: { resText: 'Flag diubah',
+                     html_content: html_content({ sasaran: @sasaran },
+                                                partial: 'sasarans/sasaran_inovasi') }
+        .to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan' }.to_json,
+             status: :unprocessable_entity
+    end
+  end
+
   private
 
   def select_sasaran_valid(ss)

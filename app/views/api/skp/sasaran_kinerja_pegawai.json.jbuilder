@@ -16,6 +16,7 @@ json.data do
     json.is_perintah_walikota sasaran.perintah_walikota?
     json.is_sasaran_prioritas sasaran.termasuk_program_unggulan?
     json.terdapat_inovasi sasaran.punya_inovasi?
+    json.inovasi_lolos sasaran.inovasi_lolos?
     json.inovasi_sasaran sasaran.sasaran_inovasi
     json.hasil_inovasi_sasaran sasaran.sasaran_hasil_inovasi
     json.jenis_inovasi_sasaran sasaran.sasaran_jenis_inovasi
