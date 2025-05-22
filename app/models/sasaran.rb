@@ -822,7 +822,7 @@ class Sasaran < ApplicationRecord
   end
 
   def inovasi_lolos?
-    inovasi_lolos
+    !!metadata['inovasi_lolos'] # Converts the value to a boolean
   end
 
   def inovasi_lolos_button
