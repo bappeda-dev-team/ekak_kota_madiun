@@ -9,6 +9,12 @@ if @status_rencana_aksi
     json.kode_opd @user.opd.kode_unik_opd
     json.opd @user.opd.nama_opd
     json.id_sasaran @sasaran.id_rencana
+    json.is_sasaran_prioritas @sasaran.termasuk_program_unggulan?
+    json.terdapat_inovasi @sasaran.punya_inovasi?
+    json.inovasi_sasaran @sasaran.sasaran_inovasi
+    json.hasil_inovasi_sasaran @sasaran.sasaran_hasil_inovasi
+    json.jenis_inovasi_sasaran @sasaran.sasaran_jenis_inovasi
+    json.gambaran_inovasi_sasaran @sasaran.sasaran_gambaran_inovasi
     json.sasaran @sasaran.sasaran_kinerja
     json.anggaran @sasaran.total_anggaran
     json.rencana_aksi @tahapans do |renaksi|
