@@ -41,3 +41,14 @@ window.bootstrap = require("bootstrap");
 window.SmoothScroll = SmoothScroll;
 
 require("../javascript/volt/volt");
+
+// direct custom js element
+document.addEventListener("DOMContentLoaded", function () {
+  // table with sticky header
+  const stickyHead = $("table.sticky-head");
+  stickyHead.floatThead({
+    responsiveContainer: function ($table) {
+      return $table.closest(".table-responsive");
+    },
+  });
+});

@@ -34,7 +34,8 @@ module UsersHelper
   end
 
   def admin_opd?
-    current_user.kode_opd != "1234567890"
+    current_user.has_role?(:admin) &&
+      current_user.kode_opd != "1234567890"
   end
 
   def admin?

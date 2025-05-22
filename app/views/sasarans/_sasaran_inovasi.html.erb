@@ -45,7 +45,9 @@
         <i class="fas fa-chart-line me-2"></i>
         <span>ManRisk</span>
       <% end %>
-      <%= toggle_inovasi_lolos_button(sasaran) %>
+      <% if admin_opd? %>
+        <%= toggle_inovasi_lolos_button(sasaran) %>
+      <% end %>
     </div>
   </td>
 </tr>
