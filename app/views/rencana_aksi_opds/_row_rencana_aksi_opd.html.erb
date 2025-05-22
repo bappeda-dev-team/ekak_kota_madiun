@@ -38,6 +38,7 @@
           <%= renaksi_opd_sync_jadwal_button(renaksi_opd, @tahun, @kode_opd, sasaran, i) %>
           <%= render(EditButtonComponent.new(path: edit_rencana_aksi_opd_path(renaksi_opd, tahun: @tahun, kode_opd: @kode_opd, sasaran_id: sasaran.id, i: i))) %>
           <%= renaksi_opd_delete_button(renaksi_opd, @tahun, @kode_opd, sasaran, i) %>
+          <%= render 'rencana_aksi_opds/flag_renaksi', renaksi_opd: renaksi_opd, tahun: @tahun, kode_opd: @kode_opd, sasaran: sasaran, i: i %>
         </div>
       </td>
     <% else %>
@@ -67,6 +68,7 @@
           <%= renaksi_opd_sync_jadwal_button(renaksi_opd, @tahun, @kode_opd, sasaran, i) %>
           <%= render(EditButtonComponent.new(path: edit_rencana_aksi_opd_path(renaksi_opd, tahun: @tahun, kode_opd: @kode_opd, sasaran_id: sasaran.id, i: i))) %>
           <%= renaksi_opd_delete_button(renaksi_opd, @tahun, @kode_opd, sasaran, i) %>
+          <%= render 'rencana_aksi_opds/flag_renaksi', renaksi_opd: renaksi_opd, tahun: @tahun, kode_opd: @kode_opd, sasaran: sasaran, i: i %>
         </div>
       </td>
     </tr>

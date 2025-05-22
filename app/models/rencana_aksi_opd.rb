@@ -33,6 +33,10 @@ class RencanaAksiOpd < ApplicationRecord
     rencana_renaksi.to_s
   end
 
+  def perintah_walikota?
+    rencana_renaksi.is_perintah_walikota
+  end
+
   def inovasi?
     rencana_renaksi.punya_inovasi?
   end
@@ -42,18 +46,25 @@ class RencanaAksiOpd < ApplicationRecord
   end
 
   def aksi
-    bintang = if rencana_renaksi.punya_inovasi?
+    bintang = if inovasi?
                 '*'
               else
                 ''
               end
-    bintang_biru = if rencana_renaksi.termasuk_program_unggulan?
+    bintang_biru = if program_unggulan?
                      '*'
                    else
                      ''
                    end
 
+    bintang_merah = if perintah_walikota?
+                      '*'
+                    else
+                      ''
+                    end
+
     "#{rencana_renaksi}
+<span class='renaksi-opd-bintang-merah'>#{bintang_merah}</span>
 <span class='renaksi-opd-bintang-biru'>#{bintang_biru}</span>
 <span class='renaksi-opd-bintang'>#{bintang}</span>"
       .html_safe

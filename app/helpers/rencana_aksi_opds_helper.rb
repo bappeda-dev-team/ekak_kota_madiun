@@ -117,4 +117,44 @@ module RencanaAksiOpdsHelper
       <td style='width: 50px;' class='border border-bottom-0 text-wrap fw-bolder'>#{indikator&.dig(:satuan)}</td>
     ".html_safe
   end
+
+  def flag_renaksi_buttons(renaksi_opd, tahun, kode_opd, sasaran, index)
+    flag_merah = flag_perintah_walikota(renaksi_opd, tahun, kode_opd, sasaran, index)
+    [flag_merah]
+  end
+
+  def flag_perintah_walikota(renaksi_opd, tahun, kode_opd, sasaran, index)
+    button_text = if renaksi_opd.perintah_walikota?
+                    "<i class='fas fa-times me-2'></i> <span>Batalkan Flag Perintah Walikota</span>"
+                  else
+                    "<i class='fas fa-check me-2 text-primary'></i> <span class='text-primary'>Aktifkan Flag Perintah Walikota</span>"
+                  end
+    button_to toggle_sasarans_is_perintah_walikota_rencana_aksi_opd_path(renaksi_opd),
+              params: {
+                rencana_aksi_opd: {
+                  tahun: tahun,
+                  kode_opd: kode_opd,
+                  i: index,
+                  sasaran_id: sasaran.id
+                }
+              },
+              class: 'btn btn-sm btn-outline-danger w-100',
+              remote: true,
+              method: :patch,
+              form: {
+                data: {
+                  controller: 'form-ajax',
+                  form_ajax_with_modal_value: false,
+                  form_ajax_target_param: dom_id(sasaran),
+                  form_ajax_type_param: '',
+                  form_ajax_confirm_title_value: "Renaksi '#{renaksi_opd}' akan di flag sebagai Perintah Walikota.",
+                  action: 'ajax:beforeSend->form-ajax#confirmAction ajax:complete->form-ajax#processAjax'
+                }
+              },
+              data: {
+                disable_with: "<i class='fa fa-sync fa-spin'></i>  Updating..."
+              } do
+      button_text.html_safe
+    end
+  end
 end

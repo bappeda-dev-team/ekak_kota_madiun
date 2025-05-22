@@ -1,5 +1,5 @@
 class RencanaAksiOpdsController < ApplicationController
-  before_action :set_rencana_aksi_opd, only: %i[show edit update destroy]
+  before_action :set_rencana_aksi_opd, only: %i[show edit update destroy toggle_sasarans_is_perintah_walikota]
   layout false, only: %i[new edit]
 
   # GET /rencana_aksi_opds or /rencana_aksi_opds.json
@@ -109,6 +109,25 @@ class RencanaAksiOpdsController < ApplicationController
                                               partial: 'rencana_aksi_opds/row_rencana_aksi_opd') }
       .to_json,
            status: :ok
+  end
+
+  def toggle_sasarans_is_perintah_walikota
+    @i = params[:rencana_aksi_opd][:i]
+    @tahun = rencana_aksi_opd_params[:tahun]
+    @kode_opd = rencana_aksi_opd_params[:kode_opd]
+    @sasaran_opd = Sasaran.find(rencana_aksi_opd_params[:sasaran_id])
+    rencana_renaksi = @rencana_aksi_opd.rencana_renaksi
+
+    if rencana_renaksi.toggle!(:is_perintah_walikota)
+      render json: { resText: 'Flag diubah',
+                     html_content: html_content({ sasaran: @sasaran_opd, i: @i },
+                                                partial: 'rencana_aksi_opds/row_rencana_aksi_opd') }
+        .to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan' }.to_json,
+             status: :unprocessable_entity
+    end
   end
 
   private

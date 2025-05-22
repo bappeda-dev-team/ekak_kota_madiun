@@ -3444,7 +3444,8 @@ CREATE TABLE public.sasarans (
     opd_id bigint,
     keterangan character varying,
     metadata jsonb,
-    jenis_layanan character varying
+    jenis_layanan character varying,
+    is_perintah_walikota boolean DEFAULT false
 );
 
 
@@ -7701,6 +7702,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250324035206'),
 ('20250325021044'),
 ('20250515052748'),
-('20250519075232');
+('20250519075232'),
+('20250522062956');
 
 

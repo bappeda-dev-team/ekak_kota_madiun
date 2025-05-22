@@ -12,6 +12,9 @@ Rails.application.routes.draw do
     collection do
       get :cetak
     end
+    member do
+      patch :toggle_sasarans_is_perintah_walikota
+    end
   end
   resources :program_unggulans do
     collection do

@@ -17,6 +17,7 @@ json.data do
       json.id renaksi_opd.id_rencana_renaksi
       json.id_sasaran_opd renaksi_opd.sasaran_id
       json.aksi renaksi_opd.to_s
+      json.is_perintah_walikota renaksi_opd.perintah_walikota?
       json.terdapat_inovasi renaksi_opd.inovasi?
       json.is_sasaran_prioritas renaksi_opd.program_unggulan?
       json.nama_pemilik renaksi_opd.nama_pemilik_saja

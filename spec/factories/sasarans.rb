@@ -6,6 +6,7 @@
 #  anggaran               :integer
 #  id_rencana             :string
 #  indikator_kinerja      :string
+#  is_perintah_walikota   :boolean          default(FALSE)
 #  jenis_layanan          :string
 #  keterangan             :string
 #  kualitas               :integer
