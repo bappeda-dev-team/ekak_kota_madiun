@@ -9,6 +9,7 @@ if @status_rencana_aksi
     json.kode_opd @user.opd.kode_unik_opd
     json.opd @user.opd.nama_opd
     json.id_sasaran @sasaran.id_rencana
+    json.is_perintah_walikota @sasaran.perintah_walikota?
     json.is_sasaran_prioritas @sasaran.termasuk_program_unggulan?
     json.terdapat_inovasi @sasaran.punya_inovasi?
     json.inovasi_sasaran @sasaran.sasaran_inovasi

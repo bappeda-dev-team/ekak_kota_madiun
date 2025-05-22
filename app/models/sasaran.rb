@@ -848,4 +848,8 @@ class Sasaran < ApplicationRecord
   rescue NoMethodError
     '--RTP-BELUM-DIPILIH--'
   end
+
+  def perintah_walikota?
+    is_perintah_walikota
+  end
 end

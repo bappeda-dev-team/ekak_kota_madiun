@@ -13,6 +13,7 @@ json.data do
     json.jenis_strategi sasaran&.strategi&.role
     json.strategi sasaran&.strategi&.strategi
     json.sasaran sasaran.sasaran_kinerja
+    json.is_perintah_walikota sasaran.perintah_walikota?
     json.is_sasaran_prioritas sasaran.termasuk_program_unggulan?
     json.terdapat_inovasi sasaran.punya_inovasi?
     json.inovasi_sasaran sasaran.sasaran_inovasi
