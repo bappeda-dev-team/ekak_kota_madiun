@@ -8,7 +8,8 @@ wb.add_worksheet(name: "Daftar Risiko") do |sheet|
   sheet.add_row ['', "TAHUN #{@tahun}"], style: project_heading
   # program_kegiatans header
   #
-  sheet.add_row ['No', "SUBKEGIATAN", "NO", "SASARAN", "INDIKATOR", "TARGET", "SATUAN", "PAGU", "RISIKO",
+  sheet.add_row ['No', "SUBKEGIATAN", "NO", "SASARAN", "INDIKATOR", "TARGET", "SATUAN", "PAGU",
+                 "PERMASALAHAN", "RTP", "RISIKO",
                  "KEMUNGKINAN", "DAMPAK", "SKALA RISIKO", "PETA RISIKO"]
   @program_kegiatans.each.with_index(1) do |(pk, sasarans), i|
     sheet.add_row [i.to_s, pk.nama_subkegiatan]
@@ -21,6 +22,8 @@ wb.add_worksheet(name: "Daftar Risiko") do |sheet|
                      s.indikator_sasarans&.first&.indikator_kinerja, s.indikator_sasarans&.first&.target.to_s,
                      s.indikator_sasarans&.first&.satuan,
                      "Rp. #{number_with_delimiter(s&.total_anggaran || 0)}",
+                     s.permasalahan_sasaran,
+                     s.rtp_sasaran,
                      s.rincian&.resiko || '-',
                      s.rincian&.kemungkinan&.deskripsi, s.rincian&.dampak || '-',
                      s.rincian&.skala_dampak&.deskripsi || '-',

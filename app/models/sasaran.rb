@@ -841,4 +841,10 @@ class Sasaran < ApplicationRecord
   def termasuk_program_unggulan?
     usulans.any? { |us| us.usulanable_type == 'Inovasi' }
   end
+
+  def rtp_sasaran
+    tahapans.select(&:rtp_mr?).first
+  rescue NoMethodError
+    '--RTP-BELUM-DIPILIH--'
+  end
 end
