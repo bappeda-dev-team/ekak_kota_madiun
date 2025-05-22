@@ -18,6 +18,14 @@ json.data do
 
     json.tahun_sasaran sasaran.tahun
     json.nip_asn sasaran.nip_asn
+    json.jenis_strategi sasaran&.strategi&.role
+    json.strategi sasaran&.strategi&.strategi
+    json.is_sasaran_prioritas sasaran.termasuk_program_unggulan?
+    json.terdapat_inovasi sasaran.punya_inovasi?
+    json.inovasi_sasaran sasaran.sasaran_inovasi
+    json.hasil_inovasi_sasaran sasaran.sasaran_hasil_inovasi
+    json.jenis_inovasi_sasaran sasaran.sasaran_jenis_inovasi
+    json.gambaran_inovasi_sasaran sasaran.sasaran_gambaran_inovasi
     json.sasaran sasaran.sasaran_kinerja
     json.status sasaran.status_ekak
   end
