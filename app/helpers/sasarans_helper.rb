@@ -151,57 +151,32 @@ module SasaransHelper
   end
 
   def inovasi_lolos_button(sasaran)
-    button_text = "<i class='fas fa-check me-2'></i> <span>Lolos</span>"
-    confirm_title_text = "Inovasi '#{sasaran.inovasi_sasaran.upcase}' akan diloloskan."
-    button_to toggle_inovasi_lolos_sasaran_path(sasaran, status: 'lolos'),
-              class: 'btn btn-sm btn-outline-success w-100',
-              remote: true,
-              method: :patch,
-              form: {
-                data: {
-                  controller: 'form-ajax',
-                  form_ajax_with_modal_value: false,
-                  form_ajax_target_param: dom_id(sasaran),
-                  form_ajax_type_param: '',
-                  form_ajax_confirm_title_value: confirm_title_text,
-                  action: 'ajax:beforeSend->form-ajax#confirmAction ajax:complete->form-ajax#processAjax'
-                }
-              },
-              data: {
-                disable_with: "<i class='fa fa-sync fa-spin'></i>  Updating..."
-              } do
-      button_text.html_safe
-    end
+    button_text = "<i class='fas fa-check me-2'></i> <span>Lolos</span>".html_safe
+    render(ModalButtonComponent.new(path: penilaian_inovasi_sasaran_path(sasaran, status: 'lolos'),
+                                    title: button_text,
+                                    style: 'btn btn-sm btn-outline-success w-100',
+                                    icon: false))
   end
 
   def inovasi_tolak_button(sasaran)
-    button_text = "<i class='fas fa-times me-2'></i> <span>Tolak</span>"
-    confirm_title_text = "Inovasi '#{sasaran.inovasi_sasaran.upcase}' akan ditolak."
-    button_to toggle_inovasi_lolos_sasaran_path(sasaran, status: 'tolak'),
-              class: 'btn btn-sm btn-outline-danger w-100',
-              remote: true,
-              method: :patch,
-              form: {
-                data: {
-                  controller: 'form-ajax',
-                  form_ajax_with_modal_value: false,
-                  form_ajax_target_param: dom_id(sasaran),
-                  form_ajax_type_param: '',
-                  form_ajax_confirm_title_value: confirm_title_text,
-                  action: 'ajax:beforeSend->form-ajax#confirmAction ajax:complete->form-ajax#processAjax'
-                }
-              },
-              data: {
-                disable_with: "<i class='fa fa-sync fa-spin'></i>  Updating..."
-              } do
-      button_text.html_safe
-    end
+    button_text = "<i class='fas fa-times me-2'></i> <span>Tolak</span>".html_safe
+    render(ModalButtonComponent.new(path: penilaian_inovasi_sasaran_path(sasaran, status: 'tolak'),
+                                    title: button_text,
+                                    style: 'btn btn-sm btn-outline-danger w-100',
+                                    icon: false))
   end
 
   def inovasi_batal_button(sasaran)
     button_text = "<i class='fas fa-times me-2'></i> <span>Batalkan</span>"
     confirm_title_text = "akan menghapus status inovasi saat ini."
-    button_to toggle_inovasi_lolos_sasaran_path(sasaran, status: 'batal'),
+    button_to toggle_inovasi_lolos_sasaran_path(sasaran),
+              params: {
+                sasaran: {
+                  inovasi_status: 'batal',
+                  inovasi_level: '',
+                  inovasi_catatan: ''
+                }
+              },
               class: 'btn btn-sm btn-danger w-100',
               remote: true,
               method: :patch,

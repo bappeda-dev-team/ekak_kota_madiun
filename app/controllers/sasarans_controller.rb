@@ -640,9 +640,30 @@ class SasaransController < ApplicationController
 
   def toggle_inovasi_lolos
     @sasaran = Sasaran.find(params[:id])
+
+    if @sasaran.toggle_inovasi_lolos(penilaian_inovasi_sasaran_params)
+      render json: { resText: 'Flag diubah',
+                     html_content: html_content({ sasaran: @sasaran },
+                                                partial: 'sasarans/sasaran_inovasi') }
+        .to_json,
+             status: :ok
+    else
+      render json: { resText: 'Terjadi kesalahan' }.to_json,
+             status: :unprocessable_entity
+    end
+  end
+
+  def penilaian_inovasi
+    sasaran = Sasaran.find(params[:id])
     status = params[:status]
 
-    if @sasaran.toggle_inovasi_lolos(status)
+    render partial: 'sasarans/form_skor_inovasi', locals: { sasaran: sasaran, status: status }
+  end
+
+  def update_nilai_inovasi
+    @sasaran = Sasaran.find(params[:id])
+
+    if @sasaran.toggle_inovasi_lolos(penilaian_inovasi_sasaran_params)
       render json: { resText: 'Flag diubah',
                      html_content: html_content({ sasaran: @sasaran },
                                                 partial: 'sasarans/sasaran_inovasi') }
@@ -713,6 +734,10 @@ class SasaransController < ApplicationController
                                     :strategi_id,
                                     :kelompok_anggaran, :filter_file, :filter_target, :filter_type, :sasaran_milik,
                                     indikator_sasarans_attributes: %i[id indikator_kinerja aspek target satuan _destroy])
+  end
+
+  def penilaian_inovasi_sasaran_params
+    params.require(:sasaran).permit(:inovasi_status, :inovasi_level, :inovasi_catatan)
   end
 
   def manrisk_sasaran_params

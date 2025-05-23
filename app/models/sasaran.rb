@@ -825,19 +825,22 @@ class Sasaran < ApplicationRecord
     !!metadata['inovasi_lolos'] # Converts the value to a boolean
   end
 
-  def inovasi_lolos_button
-    if inovasi_status == 'tolak'
-      "<div class='btn btn-sm btn-danger text-white'><i class='fas fa-times me-2'></i>#{inovasi_status.upcase}</div>".html_safe
-    elsif inovasi_lolos?
-      "<div class='btn btn-sm btn-success text-white'><i class='fas fa-check me-2'></i>LOLOS</div>".html_safe
+  def inovasi_lolos_button(status)
+    if status == 'tolak'
+      "<div class='btn btn-sm btn-danger text-white'><i class='fas fa-times me-2'></i>#{status.upcase}</div>".html_safe
+    elsif status == 'lolos'
+      "<div class='btn btn-sm btn-success text-white'><i class='fas fa-check me-2'></i>#{status.upcase}</div>".html_safe
     else
       ''
     end
   end
 
-  def toggle_inovasi_lolos(status)
-    self.inovasi_lolos = (status == 'lolos')
-    self.inovasi_status = status
+  def toggle_inovasi_lolos(status_params)
+    self.inovasi_lolos = (status_params[:inovasi_status] == 'lolos')
+    self.inovasi_status = status_params[:inovasi_status]
+    self.inovasi_level = status_params[:inovasi_level]
+    self.inovasi_catatan = status_params[:inovasi_catatan]
+
     save
   end
 

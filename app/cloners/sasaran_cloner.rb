@@ -68,7 +68,7 @@ class SasaranCloner < Clowne::Cloner
     record.verifikator_dampak_resiko = ''
     record.inovasi_lolos = ''
     record.inovasi_status = ''
-    record.inovasi_catatan = ''
     record.inovasi_level = ''
+    record.inovasi_catatan = ''
   end
 end

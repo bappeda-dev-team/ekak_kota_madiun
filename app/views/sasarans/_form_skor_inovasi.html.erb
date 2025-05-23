@@ -1,0 +1,40 @@
+<%= form_with model: sasaran, url: update_nilai_inovasi_sasaran_path,
+              local: false,
+              data: {
+                controller: 'form-ajax',
+                form_ajax_target_param: dom_id(sasaran),
+                form_ajax_type_param: '',
+                action: 'ajax:complete->form-ajax#processAjax'
+              } do |form| %>
+
+  <div class="field">
+    <%= form.hidden_field :inovasi_status, value: status %>
+    <%= form.label :inovasi, class: "form-label" %>
+    <p class='form-control disabled'><%= sasaran.inovasi_sasaran %></p>
+  </div>
+
+  <div class="field">
+    <%= sasaran.inovasi_lolos_button(status) %>
+  </div>
+
+  <% if status == 'lolos' %>
+    <div class="field">
+      <%= form.label :level_inovasi, class: "form-label" %>
+      <%= form.collection_radio_buttons :inovasi_level, [[1, 'Level 1'], [2, 'Level 2'], [3, 'Level 3']], :first, :second do |level| %>
+        <div class="form-check">
+          <%= level.radio_button class: 'form-check-input' %>
+          <%= level.label class: 'form-check-label' %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :catatan, class: 'form-label' %>
+    <%= form.text_area :inovasi_catatan, class: 'form-control' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

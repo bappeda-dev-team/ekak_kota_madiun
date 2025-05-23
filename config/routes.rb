@@ -567,6 +567,8 @@ Rails.application.routes.draw do
       patch :verifikasi_risiko
       patch :update_subkegiatan
       patch :toggle_inovasi_lolos
+      get :penilaian_inovasi
+      patch :update_nilai_inovasi
     end
     resources :rincians do
       get "subkegiatan", on: :new

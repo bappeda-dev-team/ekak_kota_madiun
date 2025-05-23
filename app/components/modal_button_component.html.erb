@@ -1,10 +1,12 @@
 <%= link_to @path,
-  remote: true, class: 'btn btn-outline-info w-100',
-  data: { controller: 'form-modal',
-    action: 'form-modal#appendForm',
-    form_modal_location_param: 'form-modal-body',
-    bs_target: '#form-modal',
-    bs_toggle: 'modal' } do %>
-  <span class="fas fa-edit me-2"></span>
+            remote: true, class: btn_style,
+            data: { controller: 'form-modal',
+              action: 'form-modal#appendForm',
+              form_modal_location_param: 'form-modal-body',
+              bs_target: '#form-modal',
+              bs_toggle: 'modal' } do %>
+  <% if @icon %>
+    <span class="fas fa-edit me-2"></span>
+  <% end %>
   <span><%= @title %></span>
 <% end %>

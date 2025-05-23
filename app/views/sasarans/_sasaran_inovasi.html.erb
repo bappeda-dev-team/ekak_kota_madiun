@@ -14,7 +14,7 @@
   <td class="border text-wrap jenis-inovasi" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.jenis_inovasi_sasaran %></td>
   <td class="border text-wrap gambaran-kebaruan-td" rowspan="<%= rowspan_sasaran(sasaran) %>" width="500px"><%= sasaran.gambaran_nilai_kebaruan_sasaran %></td>
   <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.nama_pemilik %></td>
-  <td class="border text-wrap inovasi-lolos" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.inovasi_lolos_button %></td>
+  <td class="border text-wrap inovasi-lolos" rowspan="<%= rowspan_sasaran(sasaran) %>"><%= sasaran.inovasi_lolos_button(sasaran.inovasi_status) %></td>
   <td class="border text-wrap" rowspan="<%= rowspan_sasaran(sasaran) %>">
     <div class="d-grid gap-3">
       <%= link_to laporan_inovasi_sasaran_path(sasaran),
