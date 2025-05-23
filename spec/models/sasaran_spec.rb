@@ -255,4 +255,53 @@ RSpec.describe Sasaran, type: :model do
     sasaran.update(nip_asn: nil, nip_asn_sebelumnya: user.nik)
     expect(sasaran.pemilik_asli?).to be false
   end
+
+  describe '#toggle_inovasi_lolos' do
+    let(:sasaran) { create(:sasaran) }
+
+    context 'when given valid params' do
+      let(:params) do
+        {
+          inovasi_status: 'lolos',
+          inovasi_level: 2,
+          inovasi_catatan: 'Test note'
+        }
+      end
+
+      it 'updates inovasi_lolos to true' do
+        sasaran.toggle_inovasi_lolos(params)
+        expect(sasaran.inovasi_lolos).to be true
+      end
+
+      it 'correctly updates inovasi_status' do
+        sasaran.toggle_inovasi_lolos(params)
+        expect(sasaran.inovasi_status).to eq 'lolos'
+      end
+
+      it 'correctly updates inovasi_level' do
+        sasaran.toggle_inovasi_lolos(params)
+        expect(sasaran.inovasi_level).to eq 2
+      end
+
+      it 'correctly updates inovasi_catatan' do
+        sasaran.toggle_inovasi_lolos(params)
+        expect(sasaran.inovasi_catatan).to eq 'Test note'
+      end
+    end
+
+    context 'when given different status' do
+      let(:params) do
+        {
+          inovasi_status: 'tolak',
+          inovasi_level: 1,
+          inovasi_catatan: 'Another test note'
+        }
+      end
+
+      it 'updates inovasi_lolos to false' do
+        sasaran.toggle_inovasi_lolos(params)
+        expect(sasaran.inovasi_lolos).to be false
+      end
+    end
+  end
 end
