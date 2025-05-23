@@ -132,7 +132,7 @@ class Sasaran < ApplicationRecord
   store_accessor :metadata, :hasil_output, :nama_output, :processed_at, :deleted_at, :deleted_by, :keterangan_hapus,
                  :clone_tahun_asal, :clone_oleh, :clone_asli, :id_rencana_sebelum,
                  :inovasi_sasaran, :hasil_inovasi, :jenis_inovasi, :gambaran_nilai_kebaruan,
-                 :inovasi_lolos,
+                 :inovasi_lolos, :inovasi_level, :inovasi_catatan, :inovasi_status,
                  :status_dampak_resiko, :komentar_dampak_resiko, :verifikator_dampak_resiko,
                  :judul_rincian_tugas, :status_rincian_tugas
 
@@ -826,16 +826,31 @@ class Sasaran < ApplicationRecord
   end
 
   def inovasi_lolos_button
-    if inovasi_lolos?
+    if inovasi_status == 'tolak'
+      "<div class='btn btn-sm btn-danger text-white'><i class='fas fa-times me-2'></i>#{inovasi_status.upcase}</div>".html_safe
+    elsif inovasi_lolos?
       "<div class='btn btn-sm btn-success text-white'><i class='fas fa-check me-2'></i>LOLOS</div>".html_safe
     else
       ''
     end
   end
 
-  def toggle_inovasi_lolos
-    self.inovasi_lolos = !inovasi_lolos
+  def toggle_inovasi_lolos(status)
+    self.inovasi_lolos = (status == 'lolos')
+    self.inovasi_status = status
     save
+  end
+
+  def catatan_inovasi
+    inovasi_catatan
+  end
+
+  def status_inovasi
+    inovasi_status
+  end
+
+  def level_inovasi
+    inovasi_level
   end
 
   def verifikator_manrisk?

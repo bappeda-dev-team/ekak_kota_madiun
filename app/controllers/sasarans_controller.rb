@@ -640,8 +640,9 @@ class SasaransController < ApplicationController
 
   def toggle_inovasi_lolos
     @sasaran = Sasaran.find(params[:id])
+    status = params[:status]
 
-    if @sasaran.toggle_inovasi_lolos
+    if @sasaran.toggle_inovasi_lolos(status)
       render json: { resText: 'Flag diubah',
                      html_content: html_content({ sasaran: @sasaran },
                                                 partial: 'sasarans/sasaran_inovasi') }

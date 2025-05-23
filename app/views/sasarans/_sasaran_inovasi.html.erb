@@ -46,7 +46,8 @@
         <span>ManRisk</span>
       <% end %>
       <% if admin_opd? %>
-        <%= toggle_inovasi_lolos_button(sasaran) %>
+        <hr/>
+        <%= safe_join toggle_inovasi_buttons(sasaran) %>
       <% end %>
     </div>
   </td>
