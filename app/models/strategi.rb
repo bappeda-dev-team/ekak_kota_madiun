@@ -279,9 +279,16 @@ class Strategi < ApplicationRecord
   end
 
   def sasaran_pohon_kinerja(tahun: nil)
-    sasarans.includes(%i[strategi indikator_sasarans])
-            .where("sasarans.tahun ILIKE ?", "%#{tahun}%")
-            .select { |s| s.tahapan? && s.manual_ik? && s.strategi? && s.target_sesuai? }
+    if opd_id == "145"
+      sasarans.includes(%i[strategi indikator_sasarans])
+              .where(nip_asn: opd.nip_kepala)
+              .where("sasarans.tahun ILIKE ?", "%#{tahun}%")
+              .select { |s| s.tahapan? && s.manual_ik? && s.strategi? && s.target_sesuai? }
+    else
+      sasarans.includes(%i[strategi indikator_sasarans])
+              .where("sasarans.tahun ILIKE ?", "%#{tahun}%")
+              .select { |s| s.tahapan? && s.manual_ik? && s.strategi? && s.target_sesuai? }
+    end
   end
 
   def strategi_dan_indikator
