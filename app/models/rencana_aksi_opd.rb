@@ -110,4 +110,9 @@ class RencanaAksiOpd < ApplicationRecord
       tw4: tw4
     )
   end
+
+  def perintah_walikota_batal!
+    rencana_renaksi.is_perintah_walikota = false
+    rencana_renaksi.save
+  end
 end

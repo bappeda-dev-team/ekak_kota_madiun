@@ -102,6 +102,8 @@ class RencanaAksiOpdsController < ApplicationController
     @tahun = rencana_aksi_opd_params[:tahun]
     @kode_opd = rencana_aksi_opd_params[:kode_opd]
     @sasaran_opd = Sasaran.find(rencana_aksi_opd_params[:sasaran_id])
+    @rencana_aksi_opd.perintah_walikota_batal!
+
     @rencana_aksi_opd.destroy
 
     render json: { resText: 'Renaksi OPD dihapus',
