@@ -828,7 +828,7 @@ class Sasaran < ApplicationRecord
   end
 
   def inovasi_lolos?
-    !!metadata['inovasi_lolos'] # Converts the value to a boolean
+    !!metadata&.fetch('inovasi_lolos', false)
   end
 
   def inovasi_lolos_button(status)
