@@ -82,6 +82,10 @@ class RencanaAksiOpd < ApplicationRecord
     rencana_renaksi.nip_pemilik
   end
 
+  def jabatan_pemilik
+    rencana_renaksi.jabatan_pemilik
+  end
+
   def anggaran_renaksi
     rencana_renaksi.total_anggaran
   rescue NoMethodError

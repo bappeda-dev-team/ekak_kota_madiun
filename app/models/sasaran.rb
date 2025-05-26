@@ -603,6 +603,12 @@ class Sasaran < ApplicationRecord
     'asn tidak aktif!!'
   end
 
+  def jabatan_pemilik
+    user.nama_jabatan_terakhir
+  rescue NoMethodError
+    'JABATAN TIDAK DITEMUKAN'
+  end
+
   def nama_nip_pemilik
     user.nama_nip_kurung_small
   end

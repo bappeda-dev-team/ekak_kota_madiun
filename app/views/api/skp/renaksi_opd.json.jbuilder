@@ -22,6 +22,7 @@ json.data do
       json.is_sasaran_prioritas renaksi_opd.program_unggulan?
       json.nama_pemilik renaksi_opd.nama_pemilik_saja
       json.nip_pemilik renaksi_opd.nip_pemilik_saja
+      json.jabatan_pemilik renaksi_opd.jabatan_pemilik
       json.anggaran renaksi_opd&.anggaran_renaksi
       json.subkegiatan renaksi_opd.subkegiatan_renaksi&.nama_subkegiatan
       json.kode_subkegiatan renaksi_opd.subkegiatan_renaksi&.kode_sub_fix_sipd
