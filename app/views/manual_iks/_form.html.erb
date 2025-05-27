@@ -1,4 +1,4 @@
-<div class="card border-2 shadow mb-3">
+<div class="card border-2 shadow mb-3" data-controller='manual-ik'>
   <div class="card-body">
     <% if manual_ik.errors.any? %>
       <h4 class="alert alert-danger">
@@ -141,7 +141,7 @@
               <div class="field">
                 <% ManualIk::OUTPUT_DATA.each do |data| %>
                   <% box_check = form.object.output_data.include?(data) %>
-                  <%= check_box_tag 'manual_ik[output_data][]', data, box_check , class: 'form-check-input manual-ik-output-data' %>
+                  <%= check_box_tag 'manual_ik[output_data][]', data, box_check, class: 'form-check-input manual-ik-output-data', data: { action: 'change->manual-ik#toggleDataDanInformasiField' } %>
                   <%= form.label :output_data, class: 'form-check-label' do %>
                     <span class="fw-bolder"><%= data.titleize %></span>
                   <% end %>
@@ -149,7 +149,7 @@
               </div>
             </td>
           </tr>
-          <tr>
+          <tr data-manual-ik-target='outputData' class='d-none'>
             <td>
               <%= form.label :data_dan_informasi, class: 'form-label' %>
             </td>

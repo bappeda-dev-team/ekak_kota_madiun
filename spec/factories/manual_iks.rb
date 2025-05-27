@@ -5,6 +5,7 @@
 #  id                   :bigint           not null, primary key
 #  akhir                :string
 #  budget               :string
+#  data_dan_informasi   :string
 #  definisi             :string
 #  formula              :string
 #  indikator_kinerja    :string
