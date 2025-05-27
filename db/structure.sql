@@ -1983,7 +1983,8 @@ CREATE TABLE public.manual_iks (
     indikator_sasaran_id character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    output_data character varying[] DEFAULT '{kinerja}'::character varying[]
+    output_data character varying[] DEFAULT '{kinerja}'::character varying[],
+    data_dan_informasi character varying
 );
 
 
@@ -7703,6 +7704,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250325021044'),
 ('20250515052748'),
 ('20250519075232'),
-('20250522062956');
+('20250522062956'),
+('20250527075336');
 
 

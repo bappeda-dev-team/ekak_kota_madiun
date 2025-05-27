@@ -900,4 +900,12 @@ class Sasaran < ApplicationRecord
       ind.manual_ik.output_data.any?('spbe/pemdigi')
     end
   end
+
+  def data_dan_informasi_spbe
+    if sasaran_spbe?
+      indikator_sasarans.flat_map { |ind| ind.manual_ik.data_dan_informasi }
+    else
+      ['Bukan sasaran spbe']
+    end
+  end
 end

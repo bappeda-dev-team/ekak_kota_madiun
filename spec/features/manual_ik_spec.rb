@@ -16,6 +16,7 @@ RSpec.describe ManualIk do
     buat_manual_ik_sasaran_output_pemdigi
     sasaran_pemdigi = user.sasarans.first
     expect(sasaran_pemdigi.sasaran_spbe?).to be(true)
+    expect(sasaran_pemdigi.data_dan_informasi_spbe).to include('data test informasi test')
   end
 
   private
@@ -46,12 +47,13 @@ RSpec.describe ManualIk do
     select2('Output', xpath: '/html/body/main/div/div/div/table/tbody/tr[7]/td[2]/div/span')
     checkbox = find_all('.manual-ik-output-data')
     checkbox.each { |aa| aa.set(true) if aa.value == 'spbe/pemdigi' }
+    fill_in('manual_ik[data_dan_informasi]', with: 'data test informasi test')
     fill_in('manual_ik[penanggung_jawab]', with: 'test')
     fill_in('manual_ik[penyedia_data]', with: 'test')
     fill_in('manual_ik[sumber_data]', with: 'test')
     fill_in('manual_ik[mulai]', with: 10)
     fill_in('manual_ik[akhir]', with: 20)
-    select2('Bulanan', xpath: '/html/body/main/div/div/div/table/tbody/tr[13]/td[2]/div/span')
+    select2('Bulanan', xpath: '/html/body/main/div/div/div/table/tbody/tr[14]/td[2]/div/span')
     click_on('Simpan Manual ik')
     click_on('OK')
   end
