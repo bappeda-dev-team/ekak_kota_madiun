@@ -15,7 +15,7 @@ json.data do
     end
     json.renaksi_opds sasaran.rencana_aksi_opds do |renaksi_opd|
       json.id renaksi_opd.id
-      json.id_sasaran_opd renaksi_opd.sasaran_id
+      json.id_sasaran_opd renaksi_opd.id_sasaran_opd
       json.id_sasaran renaksi_opd.id_rencana_renaksi
       json.aksi renaksi_opd.to_s
       json.is_perintah_walikota renaksi_opd.perintah_walikota?

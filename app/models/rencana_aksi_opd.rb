@@ -29,6 +29,10 @@ class RencanaAksiOpd < ApplicationRecord
   has_one :rencana_renaksi, class_name: 'Sasaran', primary_key: :id_rencana_renaksi, foreign_key: :id_rencana
   belongs_to :sasaran
 
+  def id_sasaran_opd
+    sasaran.id_rencana
+  end
+
   def to_s
     rencana_renaksi.to_s
   end
