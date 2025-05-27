@@ -40,7 +40,10 @@ RSpec.shared_context 'sasaran_complete' do
     # before spbe don't show data dan informasi
     checkbox = find_all('.manual-ik-output-data')
     checkbox.each { |aa| aa.set(true) }
-    fill_in('manual_ik[data_dan_informasi]', with: 'data test informasi test')
+
+    click_button 'Tambah Input'
+    find_all('textarea[name="manual_ik[data_dan_informasi][]"]')[0].set('data test informasi test')
+    find_all('textarea[name="manual_ik[data_dan_informasi][]"]')[1].set('data 2')
 
     fill_in('manual_ik[penanggung_jawab]', with: 'test')
     fill_in('manual_ik[penyedia_data]', with: 'test')

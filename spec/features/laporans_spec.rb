@@ -82,6 +82,7 @@ RSpec.feature "Laporans", type: :feature do
       within('#sasaran-spbe') do
         expect(page).to have_content('SasaranTest')
         expect(page).to have_content('data test informasi test')
+        expect(page).to have_content('data 2')
       end
     end
   end

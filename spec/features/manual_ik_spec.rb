@@ -35,7 +35,7 @@ RSpec.describe ManualIk do
       buat_manual_ik_sasaran_output_pemdigi
       sasaran_pemdigi = user.sasarans.first
       expect(sasaran_pemdigi.sasaran_spbe?).to be(true)
-      expect(sasaran_pemdigi.data_dan_informasi_spbe).to include('data test informasi test')
+      expect(sasaran_pemdigi.data_dan_informasi_spbe).to eq(['data test informasi test', 'data 2'])
     end
 
     private
@@ -65,13 +65,15 @@ RSpec.describe ManualIk do
     fill_in('manual_ik[formula]', with: '(jumlah test / pass test) * 100')
     # Jenis indikator kinerja
     select2('Output', xpath: '/html/body/main/div/div/div/table/tbody/tr[7]/td[2]/div/span')
-    expect(page).not_to have_field('manual_ik[data_dan_informasi]')
+    expect(page).not_to have_field('manual_ik[data_dan_informasi][]')
 
     # before spbe don't show data dan informasi
     checkbox = find_all('.manual-ik-output-data')
     checkbox.each { |aa| aa.set(true) if aa.value == 'spbe/pemdigi' }
     sleep 1
-    fill_in('manual_ik[data_dan_informasi]', with: 'data test informasi test')
+    fill_in('manual_ik[data_dan_informasi][]', with: 'data test informasi test')
+    click_button 'Tambah Input'
+    find_all('textarea[name="manual_ik[data_dan_informasi][]"]')[1].set('data 2')
 
     fill_in('manual_ik[penanggung_jawab]', with: 'test')
     fill_in('manual_ik[penyedia_data]', with: 'test')
@@ -96,20 +98,20 @@ RSpec.describe ManualIk do
     select2('Output', xpath: '/html/body/main/div/div/div/table/tbody/tr[7]/td[2]/div/span')
 
     # before spbe don't show data dan informasi
-    expect(page).not_to have_field('manual_ik[data_dan_informasi]')
+    expect(page).not_to have_field('manual_ik[data_dan_informasi][]')
 
     checkbox = find_all('.manual-ik-output-data')
     # check pemdigi
     checkbox.each { |aa| aa.set(true) if aa.value == 'spbe/pemdigi' }
     sleep 1
     # fill data informasi
-    fill_in('manual_ik[data_dan_informasi]', with: 'data test informasi test')
+    fill_in('manual_ik[data_dan_informasi][]', with: 'data test informasi test')
 
     # uncheck  pemdigi
     checkbox.each { |aa| aa.set(false) if aa.value == 'spbe/pemdigi' }
     sleep 1
     # data dan informasi should not saved
-    expect(page).not_to have_field('manual_ik[data_dan_informasi]')
+    expect(page).not_to have_field('manual_ik[data_dan_informasi][]')
 
     fill_in('manual_ik[penanggung_jawab]', with: 'test')
     fill_in('manual_ik[penyedia_data]', with: 'test')
