@@ -78,6 +78,6 @@ class IndikatorSasaran < ApplicationRecord
   def data_dan_informasi_spbe
     manual_ik.data_dan_informasi_spbe
   rescue StandardError
-    ''
+    []
   end
 end

@@ -5,7 +5,7 @@
 #  id                   :bigint           not null, primary key
 #  akhir                :string
 #  budget               :string
-#  data_dan_informasi   :string
+#  data_dan_informasi   :string           default(["\"\""]), is an Array
 #  definisi             :string
 #  formula              :string
 #  indikator_kinerja    :string

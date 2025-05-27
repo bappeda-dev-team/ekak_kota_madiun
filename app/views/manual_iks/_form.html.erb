@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        <%= form_with(model: [@indikator, manual_ik]) do |form| %>
+        <%= form_with(model: [@indikator, manual_ik], id: form_id(manual_ik)) do |form| %>
           <tr>
             <td style="width: 10%;">
               <%= form.label :perspektif, class: "form-label" %>
@@ -149,13 +149,27 @@
               </div>
             </td>
           </tr>
-          <tr data-manual-ik-target='outputData' class='d-none'>
+          <tr data-manual-ik-target='outputData' class='<%= 'd-none' unless manual_ik.spbe? %>'>
             <td>
               <%= form.label :data_dan_informasi, class: 'form-label' %>
             </td>
             <td>
-              <div class="field">
-                <%= form.text_area :data_dan_informasi, class: "form-control" %>
+              <div data-controller="multi-input"
+                   data-multi-input-model-value="manual_ik[data_dan_informasi][]"
+                   data-multi-input-placeholder-value="Input data dan informasi"
+                   data-multi-input-element-value="textarea"
+                   data-multi-input-form-target-value="<%= form_id(manual_ik) %>">
+                <div class='field' data-multi-input-target="container">
+                  <% (manual_ik.data_dan_informasi || []).each do |info| %>
+                    <%= text_area_tag "manual_ik[data_dan_informasi][]", info, class: "form-control mb-2", placeholder: "Input data dan informasi" %>
+                  <% end %>
+
+                  <% if manual_ik.data_dan_informasi.blank? %>
+                    <%= text_area_tag "manual_ik[data_dan_informasi][]", nil, class: "form-control mb-2", placeholder: "Input data dan informasi" %>
+                  <% end %>
+                </div>
+
+                <button type="button" class="btn btn-outline-primary" data-action="multi-input#add" id='tambah-input-data-spbe'>Tambah Input</button>
               </div>
             </td>
           </tr>

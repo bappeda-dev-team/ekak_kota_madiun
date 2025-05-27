@@ -112,6 +112,6 @@ class ManualIksController < ApplicationController
     params.require(:manual_ik).permit(:perspektif, :rhk, :tujuan_rhk, :indikator_kinerja, :target, :satuan,
                                       :definisi, :key_activities, :key_milestone, :formula, :jenis_indikator,
                                       :penanggung_jawab, :penyedia_data, :sumber_data, :mulai, :akhir,
-                                      :periode_pelaporan, :budget, :data_dan_informasi, output_data: [])
+                                      :periode_pelaporan, :budget, data_dan_informasi: [], output_data: [])
   end
 end

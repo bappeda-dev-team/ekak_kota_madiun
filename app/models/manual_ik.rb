@@ -5,7 +5,7 @@
 #  id                   :bigint           not null, primary key
 #  akhir                :string
 #  budget               :string
-#  data_dan_informasi   :string
+#  data_dan_informasi   :string           default(["\"\""]), is an Array
 #  definisi             :string
 #  formula              :string
 #  indikator_kinerja    :string
@@ -70,6 +70,10 @@ class ManualIk < ApplicationRecord
     spatial
     spbe/pemdigi
   ].freeze
+
+  def spbe?
+    output_data.any?('spbe/pemdigi')
+  end
 
   def data_dan_informasi_spbe
     [data_dan_informasi]
